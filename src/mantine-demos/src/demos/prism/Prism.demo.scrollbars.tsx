@@ -1,5 +1,6 @@
 import React from 'react';
 import { Text } from '@mantine/core';
+import { MantineDemo } from '@mantine/ds';
 import { Prism } from '@mantine/prism';
 
 const code = `

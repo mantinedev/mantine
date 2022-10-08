@@ -10,14 +10,18 @@ export default createStyles((theme, _params, getRef) => ({
     color: theme.colorScheme === 'dark' ? theme.white : theme.black,
     padding: theme.spacing.md,
     borderRadius: theme.radius.md,
-    backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.white,
+    backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.white,
     border: `1px solid ${
-      theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.colors.gray[3]
+      theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[3]
     }`,
 
-    '&:hover': {
-      backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[9] : theme.colors.gray[0],
-    },
+    transition: 'box-shadow 100ms ease, transform 100ms ease',
+
+    ...theme.fn.hover({
+      backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.white,
+      boxShadow: theme.shadows.md,
+      transform: theme.colorScheme === 'dark' ? 'none' : 'scale(1.01)',
+    }),
   },
 
   body: {

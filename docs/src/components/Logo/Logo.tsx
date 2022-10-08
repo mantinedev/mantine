@@ -1,14 +1,14 @@
 import React from 'react';
 import { Link } from 'gatsby';
-import { LogoImage } from './LogoImage';
+import { MantineLogo, MantineLogoProps } from '@mantine/ds';
 import useStyles from './Logo.styles';
 
-export function Logo() {
+export function Logo(props: MantineLogoProps) {
   const { classes } = useStyles();
 
   return (
     <Link to="/" className={classes.logo} aria-label="Mantine">
-      <LogoImage className={classes.image} />
+      <MantineLogo size={30} {...props} />
     </Link>
   );
 }

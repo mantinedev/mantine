@@ -1,10 +1,11 @@
 import React from 'react';
-import { Medal } from 'tabler-icons-react';
+import { IconMedal } from '@tabler/icons';
+import { MantineDemo } from '@mantine/ds';
 import { NumberInput } from '@mantine/core';
 
 const code = `
 import { NumberInput } from '@mantine/core';
-import { Medal } from 'tabler-icons-react';
+import { IconMedal } from '@tabler/icons';
 
 function Demo() {
   return (
@@ -14,7 +15,7 @@ function Demo() {
       defaultValue={22}
       min={0}
       max={120}
-      icon={<Medal size={18} />}
+      icon={<IconMedal size={18} />}
     />
   );
 }
@@ -29,7 +30,7 @@ function Demo() {
         defaultValue={22}
         min={0}
         max={120}
-        icon={<Medal size={18} />}
+        icon={<IconMedal size={18} />}
       />
     </div>
   );

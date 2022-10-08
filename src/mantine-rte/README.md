@@ -6,7 +6,7 @@ Quill based rich text editor
 
 ## Installation
 
-```sh
+```bash
 # With yarn
 yarn add @mantine/hooks @mantine/core @mantine/rte
 

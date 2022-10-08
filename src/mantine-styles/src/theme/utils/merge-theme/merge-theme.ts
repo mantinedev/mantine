@@ -35,7 +35,9 @@ export function mergeTheme(
     acc[key] =
       typeof themeOverride[key] === 'object'
         ? { ...currentTheme[key], ...themeOverride[key] }
-        : typeof themeOverride[key] === 'number'
+        : typeof themeOverride[key] === 'number' ||
+          typeof themeOverride[key] === 'boolean' ||
+          typeof themeOverride[key] === 'function'
         ? themeOverride[key]
         : themeOverride[key] || currentTheme[key];
     return acc;

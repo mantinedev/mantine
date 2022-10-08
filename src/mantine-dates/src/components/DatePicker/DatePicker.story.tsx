@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import { storiesOf } from '@storybook/react';
 import { useDisclosure } from '@mantine/hooks';
-import { MANTINE_SIZES, MantineProvider, TextInput, Modal, Button } from '@mantine/core';
+import { MANTINE_SIZES, MantineProvider, TextInput, Modal, Button, Tooltip } from '@mantine/core';
 import { WithinOverlays, SubmitForm } from '@mantine/storybook';
 import { DatePicker } from './DatePicker';
 
@@ -70,7 +70,25 @@ const sizes = MANTINE_SIZES.map((size) => (
   />
 ));
 
+function WithInputContainer() {
+  return (
+    <div style={{ width: 300, padding: 20 }}>
+      <DatePicker
+        label="with tooltip"
+        description="with tooltip"
+        error="with tooltip"
+        inputContainer={(children) => (
+          <Tooltip label="tooltip" position="bottom-start">
+            <div>{children}</div>
+          </Tooltip>
+        )}
+      />
+    </div>
+  );
+}
+
 storiesOf('DatePicker', module)
+  .add('With inputContainer', () => <WithInputContainer />)
   .add('Sizes', () => <div style={{ maxWidth: 400, padding: 40 }}>{sizes}</div>)
   .add('Hide week days', () => (
     <div style={{ padding: 40, maxWidth: 400 }}>
@@ -90,6 +108,7 @@ storiesOf('DatePicker', module)
         placeholder="Pick date"
         label="Date picker"
         modalZIndex={4554}
+        modalProps={{ styles: { modal: { backgroundColor: 'pink' } } }}
       />
     </div>
   ))

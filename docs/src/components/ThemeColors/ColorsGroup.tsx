@@ -11,12 +11,12 @@ export function ColorsGroup({ group }: ColorsGroupProps) {
 
   const colors = theme.colors[group].map((color, index) => (
     <div key={color} className={classes.color}>
-      <ColorSwatch color={color} radius="sm" size={50} />
-      <Box mt="xs">
-        <Text size="xs">
-          {group}[{index}]
+      <ColorSwatch color={color} radius="md" size={50} />
+      <Box mt={7}>
+        <Text size="xs" className={classes.colorName}>
+          {group} {index}
         </Text>
-        <Text color="dimmed" size="xs" transform="uppercase" mt={2}>
+        <Text color="dimmed" size="xs" transform="uppercase" mt={2} sx={{ fontSize: 10 }}>
           {color}
         </Text>
       </Box>

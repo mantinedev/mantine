@@ -1,5 +1,6 @@
 import React from 'react';
-import { Search } from 'tabler-icons-react';
+import { IconSearch } from '@tabler/icons';
+import { MantineDemo } from '@mantine/ds';
 import { Wrapper } from './_wrapper';
 
 const code = `
@@ -12,7 +13,7 @@ function Demo() {
       transitionDuration={0}
       {...otherProps}
     >
-      <YourApp />
+      <App />
     </SpotlightProvider>
   );
 }
@@ -21,7 +22,7 @@ function Demo() {
 function Demo() {
   return (
     <Wrapper
-      searchIcon={<Search size={18} />}
+      searchIcon={<IconSearch size={18} />}
       transitionDuration={0}
       searchPlaceholder="Search..."
       shortcut="mod + shift + 2"

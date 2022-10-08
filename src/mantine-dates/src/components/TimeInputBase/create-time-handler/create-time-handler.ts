@@ -33,7 +33,7 @@ export function createTimeHandler({ onChange, nextRef, min, max, nextMax }: Crea
         updatedValue = padTime(allButLastDigit(parsed).toString());
         carryOver = padTime(lastDigit.toString());
       } else {
-        updatedValue = padTime(clamp({ value: parsed, min, max }).toString());
+        updatedValue = padTime(clamp(parsed, min, max).toString());
       }
 
       onChange(updatedValue, carryOver);

@@ -1,245 +1,241 @@
-import { useState } from 'react';
-import { formList, isFormList, FormList } from './form-list/form-list';
-import { validateValues, validateFieldValue } from './validate-values/validate-values';
-import { filterErrors } from './filter-errors/filter-errors';
-import { getInputOnChange } from './get-input-on-change/get-input-on-change';
-import { getErrorPath } from './get-error-path/get-error-path';
-import type {
-  FormErrors,
-  FormRules,
-  FormValidationResult,
-  FormFieldValidationResult,
+import { useState, useCallback, useRef } from 'react';
+import isEqual from 'fast-deep-equal';
+import { getInputOnChange } from './get-input-on-change';
+import { setPath, reorderPath, insertPath, getPath, removePath } from './paths';
+import { filterErrors } from './filter-errors';
+import { validateValues, validateFieldValue, shouldValidateOnChange } from './validate';
+import { getStatus } from './get-status';
+import { clearListState } from './clear-list-state';
+import {
+  UseFormReturnType,
+  UseFormInput,
+  SetErrors,
+  ClearErrors,
+  Reset,
+  SetFieldError,
+  SetFieldValue,
+  SetValues,
+  ReorderListItem,
+  RemoveListItem,
+  InsertListItem,
+  ClearFieldError,
+  Validate,
+  ValidateField,
   GetInputProps,
-  GetInputPropsFieldType,
+  OnSubmit,
+  OnReset,
+  GetFieldStatus,
+  ResetDirty,
+  IsValid,
 } from './types';
 
-export interface UseFormInput<T> {
-  initialValues: T;
-  initialErrors?: FormErrors;
-  validate?: FormRules<T>;
-  schema?: (values: Record<string, any>) => FormErrors;
-}
-
-export interface UseFormReturnType<T> {
-  values: T;
-  setValues: React.Dispatch<React.SetStateAction<T>>;
-  setFieldValue: <K extends keyof T, V extends T[K]>(field: K, value: V) => void;
-  errors: FormErrors;
-  setErrors: React.Dispatch<React.SetStateAction<FormErrors>>;
-  setFieldError: <K extends keyof T>(field: K, error: React.ReactNode) => void;
-  clearFieldError: <K extends keyof T>(field: K) => void;
-  clearErrors(): void;
-  setListItem: <K extends keyof T, V extends T[K]>(
-    field: K,
-    index: number,
-    value: V extends FormList<infer U> ? U : never
-  ) => void;
-  addListItem: <K extends keyof T, V extends T[K]>(
-    field: K,
-    payload: V extends FormList<infer U> ? U : never
-  ) => void;
-  removeListItem: <K extends keyof T>(field: K, indices: number[] | number) => void;
-  reorderListItem: <K extends keyof T>(field: K, payload: { from: number; to: number }) => void;
-  validate(): FormValidationResult;
-  validateField: (field: string) => FormFieldValidationResult;
-  onSubmit(
-    handleSubmit: (values: T, event: React.FormEvent) => void
-  ): (event?: React.FormEvent) => void;
-  reset(): void;
-  getInputProps: <K extends keyof T, L extends GetInputPropsFieldType = 'input'>(
-    field: K,
-    options?: { type?: L; withError?: boolean }
-  ) => GetInputProps<L>;
-
-  getListInputProps: <
-    K extends keyof T,
-    U extends T[K],
-    L extends GetInputPropsFieldType = 'input'
-  >(
-    field: K,
-    index: number,
-    listField: U extends FormList<infer V> ? keyof V : never,
-    options?: { type?: L; withError?: boolean }
-  ) => GetInputProps<L>;
-}
-
-export function useForm<T extends { [key: string]: any }>({
-  initialValues,
-  initialErrors,
+export function useForm<Values = Record<string, unknown>>({
+  initialValues = {} as Values,
+  initialErrors = {},
+  initialDirty = {},
+  initialTouched = {},
+  clearInputErrorOnChange = true,
+  validateInputOnChange = false,
+  validateInputOnBlur = false,
   validate: rules,
-  schema,
-}: UseFormInput<T>): UseFormReturnType<T> {
-  const [errors, setErrors] = useState(filterErrors(initialErrors));
-  const [values, setValues] = useState(initialValues);
-
-  const clearErrors = () => setErrors({});
-  const setFieldError = (field: keyof T, error: React.ReactNode) =>
-    setErrors((current) => ({ ...current, [field]: error }));
-
-  const clearFieldError = (field: keyof T) =>
-    setErrors((current) => {
-      const clone: any = { ...current };
-      delete clone[field];
-      return clone;
-    });
-
-  const setFieldValue = <K extends keyof T, V extends T[K]>(
-    field: K,
-    value: V,
-    errorPath?: string
-  ) => {
-    setValues((currentValues) => ({ ...currentValues, [field]: value }));
-    clearFieldError(errorPath || field);
+}: UseFormInput<Values> = {}): UseFormReturnType<Values> {
+  const [touched, setTouched] = useState(initialTouched);
+  const [dirty, setDirty] = useState(initialDirty);
+  const [values, _setValues] = useState(initialValues);
+  const [errors, _setErrors] = useState(filterErrors(initialErrors));
+  const _dirtyValues = useRef<Values>(initialValues);
+  const _setDirtyValues = (_values: Values) => {
+    _dirtyValues.current = _values;
   };
 
-  const setListItem = <K extends keyof T, V extends T[K]>(
-    field: K,
-    index: number,
-    value: V[K][number],
-    errorPath?: string
-  ) => {
-    const list = values[field];
-    if (isFormList(list) && list[index] !== undefined) {
-      const cloned = [...list];
-      cloned[index] = value;
-      setFieldValue(field, formList(cloned) as any, errorPath);
-    }
+  const resetTouched = useCallback(() => setTouched({}), []);
+  const resetDirty: ResetDirty<Values> = (_values) => {
+    _setDirtyValues(_values || values);
+    setDirty({});
   };
 
-  const removeListItem = <K extends keyof T>(field: K, indices: number[] | number) => {
-    const list = values[field];
+  const setErrors: SetErrors = useCallback(
+    (errs) =>
+      _setErrors((current) => filterErrors(typeof errs === 'function' ? errs(current) : errs)),
+    []
+  );
 
-    if (isFormList(list)) {
-      setFieldValue(
-        field,
-        formList(
-          list.filter((_: any, index: number) =>
-            Array.isArray(indices) ? !indices.includes(index) : indices !== index
-          )
-        ) as any
-      );
-    }
-  };
-
-  const addListItem = <K extends keyof T, V extends T[K]>(field: K, payload: V[number]) => {
-    const list = values[field];
-
-    if (isFormList(list)) {
-      setFieldValue(field, formList([...list, payload]) as any);
-    }
-  };
-
-  const reorderListItem = <K extends keyof T>(
-    field: K,
-    { from, to }: { from: number; to: number }
-  ) => {
-    const list = values[field];
-
-    if (isFormList(list) && list[from] !== undefined && list[to] !== undefined) {
-      const cloned = [...list];
-      const item = list[from];
-
-      cloned.splice(from, 1);
-      cloned.splice(to, 0, item);
-      setFieldValue(field, formList(cloned) as any);
-    }
-  };
-
-  const validate = () => {
-    const results = validateValues(schema || rules, values);
-    setErrors(results.errors);
-    return results;
-  };
-
-  const validateField = (field: string) => {
-    const results = validateFieldValue(field, schema || rules, values);
-    results.hasError ? setFieldError(field, results.error) : clearFieldError(field);
-    return results;
-  };
-
-  const onSubmit =
-    (handleSubmit: (values: T, event: React.FormEvent) => void) => (event: React.FormEvent) => {
-      event.preventDefault();
-      const results = validate();
-      !results.hasErrors && handleSubmit(values, event);
-    };
-
-  const reset = () => {
-    setValues(initialValues);
+  const clearErrors: ClearErrors = useCallback(() => _setErrors({}), []);
+  const reset: Reset = useCallback(() => {
+    _setValues(initialValues);
     clearErrors();
-  };
+    resetDirty(initialValues);
+    resetTouched();
+  }, []);
 
-  const getInputProps = <
-    K extends keyof T,
-    U extends T[K],
-    L extends GetInputPropsFieldType = 'input'
-  >(
-    field: K,
-    { type, withError = true }: { type?: L; withError?: boolean } = {}
-  ): GetInputProps<L> => {
-    const value = values[field];
-    const onChange = getInputOnChange<U>((val: U) => setFieldValue(field, val)) as any;
+  const setFieldError: SetFieldError<Values> = useCallback(
+    (path, error) => setErrors((current) => ({ ...current, [path]: error })),
+    []
+  );
 
-    const payload: any = type === 'checkbox' ? { checked: value, onChange } : { value, onChange };
+  const clearFieldError: ClearFieldError = useCallback(
+    (path) =>
+      setErrors((current) => {
+        if (typeof path !== 'string') {
+          return current;
+        }
 
-    if (withError && errors[field as any]) {
-      payload.error = errors[field as any];
-    }
+        const clone = { ...current };
+        delete clone[path];
+        return clone;
+      }),
+    []
+  );
 
-    return payload as any;
-  };
+  const setFieldValue: SetFieldValue<Values> = useCallback((path, value) => {
+    const shouldValidate = shouldValidateOnChange(path, validateInputOnChange);
+    _setValues((current) => {
+      const initialValue = getPath(path, _dirtyValues.current);
+      const isFieldDirty = !isEqual(initialValue, value);
+      setDirty((currentDirty) => ({ ...currentDirty, [path]: isFieldDirty }));
+      setTouched((currentTouched) => ({ ...currentTouched, [path]: true }));
 
-  const getListInputProps = <
-    K extends keyof T,
-    U extends T[K][number],
-    LK extends keyof U,
-    L extends GetInputPropsFieldType = 'input'
-  >(
-    field: K,
-    index: number,
-    listField: LK,
-    { type, withError = true }: { type?: L; withError?: boolean } = {}
-  ): GetInputProps<L> => {
-    const list = values[field];
+      const result = setPath(path, value, current);
 
-    if (isFormList(list) && list[index] && listField in list[index]) {
-      const listValue = list[index];
-      const value = listValue[listField];
-      const listItemErrorPath = getErrorPath([field, index, listField]);
-      const onChange = getInputOnChange<U[LK]>((val: U[LK]) =>
-        setListItem(field, index, { ...listValue, [listField]: val }, listItemErrorPath)
-      ) as any;
-      const payload: any = type === 'checkbox' ? { checked: value, onChange } : { value, onChange };
-      const error = errors[getErrorPath([field, index, listField])];
-
-      if (withError && error) {
-        payload.error = error;
+      if (shouldValidate) {
+        const validationResults = validateFieldValue(path, rules, result);
+        validationResults.hasError
+          ? setFieldError(path, validationResults.error)
+          : clearFieldError(path);
       }
 
-      return payload;
+      return result;
+    });
+
+    !shouldValidate && clearInputErrorOnChange && setFieldError(path, null);
+  }, []);
+
+  const setValues: SetValues<Values> = useCallback((payload) => {
+    _setValues((currentValues) => {
+      const valuesPartial = typeof payload === 'function' ? payload(currentValues) : payload;
+      return { ...currentValues, ...valuesPartial };
+    });
+    clearInputErrorOnChange && clearErrors();
+  }, []);
+
+  const reorderListItem: ReorderListItem<Values> = useCallback(
+    (path, payload) => _setValues((current) => reorderPath(path, payload, current)),
+    []
+  );
+
+  const removeListItem: RemoveListItem<Values> = useCallback((path, index) => {
+    _setValues((current) => removePath(path, index, current));
+    _setErrors((errs) => clearListState(path, errs));
+    setDirty((current) => clearListState(`${String(path)}.${index}`, current));
+  }, []);
+
+  const insertListItem: InsertListItem<Values> = useCallback(
+    (path, item, index) => _setValues((current) => insertPath(path, item, index, current)),
+    []
+  );
+
+  const validate: Validate = useCallback(() => {
+    const results = validateValues(rules, values);
+    _setErrors(results.errors);
+    return results;
+  }, [values, rules]);
+
+  const validateField: ValidateField<Values> = useCallback(
+    (path) => {
+      const results = validateFieldValue(path, rules, values);
+      results.hasError ? setFieldError(path, results.error) : clearFieldError(path);
+      return results;
+    },
+    [values, rules]
+  );
+
+  const getInputProps: GetInputProps<Values> = (
+    path,
+    { type = 'input', withError = type === 'input', withFocus = true } = {}
+  ) => {
+    const onChange = getInputOnChange((value) => setFieldValue(path, value as any));
+    const payload: Record<string, any> = { onChange };
+
+    if (withError) {
+      payload.error = errors[path];
     }
 
-    return {} as any;
+    if (type === 'checkbox') {
+      payload.checked = getPath(path, values);
+    } else {
+      payload.value = getPath(path, values);
+    }
+
+    if (withFocus) {
+      payload.onFocus = () => setTouched((current) => ({ ...current, [path]: true }));
+      payload.onBlur = () => {
+        if (shouldValidateOnChange(path, validateInputOnBlur)) {
+          const validationResults = validateFieldValue(path, rules, values);
+
+          validationResults.hasError
+            ? setFieldError(path, validationResults.error)
+            : clearFieldError(path);
+        }
+      };
+    }
+
+    return payload;
   };
+
+  const onSubmit: OnSubmit<Values> = (handleSubmit, handleValidationFailure) => (event) => {
+    event.preventDefault();
+    const results = validate();
+
+    if (results.hasErrors) {
+      handleValidationFailure?.(results.errors, values, event);
+    } else {
+      handleSubmit(values, event);
+    }
+  };
+
+  const onReset: OnReset = useCallback((event) => {
+    event.preventDefault();
+    reset();
+  }, []);
+
+  const isDirty: GetFieldStatus<Values> = useCallback((path) => getStatus(dirty, path), [dirty]);
+  const isTouched: GetFieldStatus<Values> = useCallback(
+    (path) => getStatus(touched, path),
+    [touched]
+  );
+
+  const isValid: IsValid<Values> = useCallback(
+    (path) =>
+      path
+        ? !validateFieldValue(path, rules, values).hasError
+        : !validateValues(rules, values).hasErrors,
+    [values, rules]
+  );
 
   return {
     values,
-    setValues,
-    setFieldValue,
     errors,
+    setValues,
     setErrors,
-    clearErrors,
-    clearFieldError,
+    setFieldValue,
     setFieldError,
-    setListItem,
-    removeListItem,
-    addListItem,
-    reorderListItem,
+    clearFieldError,
+    clearErrors,
+    reset,
     validate,
     validateField,
-    onSubmit,
-    reset,
+    reorderListItem,
+    removeListItem,
+    insertListItem,
     getInputProps,
-    getListInputProps,
+    onSubmit,
+    onReset,
+    isDirty,
+    isTouched,
+    setTouched,
+    setDirty,
+    resetTouched,
+    resetDirty,
+    isValid,
   };
 }

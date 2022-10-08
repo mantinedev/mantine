@@ -10,10 +10,11 @@ import {
   MantineShadow,
   TextInput,
   getDefaultZIndex,
-  getGroupedOptions,
   MantineNumberSize,
   MantineColor,
+  TextInputProps,
 } from '@mantine/core';
+import { getGroupedOptions } from '@mantine/utils';
 import { useScrollLock, useFocusTrap, useDidUpdate, useFocusReturn } from '@mantine/hooks';
 import { DefaultAction, DefaultActionProps } from '../DefaultAction/DefaultAction';
 import { ActionsList, ActionsListStylesNames } from '../ActionsList/ActionsList';
@@ -84,13 +85,16 @@ export interface InnerSpotlightProps
   actionsWrapperComponent?: React.FC<{ children: React.ReactNode }> | string;
 
   /** Spotlight z-index */
-  zIndex?: number;
+  zIndex?: React.CSSProperties['zIndex'];
 
   /** Should user query be highlighted in actions title */
   highlightQuery?: boolean;
 
   /** The highlight color */
   highlightColor?: MantineColor;
+
+  /** Props spread to search input */
+  searchInputProps?: TextInputProps;
 }
 
 interface SpotlightProps extends InnerSpotlightProps {
@@ -131,13 +135,14 @@ export function Spotlight({
   limit = 10,
   actionComponent = DefaultAction,
   actionsWrapperComponent: ActionsWrapper = 'div',
-  zIndex = getDefaultZIndex('modal'),
+  zIndex = getDefaultZIndex('max'),
+  searchInputProps,
   ...others
 }: SpotlightProps) {
   const [hovered, setHovered] = useState(-1);
   const [IMEOpen, setIMEOpen] = useState(false);
   const { classes, cx } = useStyles(
-    { centered, maxWidth, topOffset, radius },
+    { centered, maxWidth, topOffset, radius, zIndex },
     { classNames, styles, name: 'Spotlight' }
   );
 
@@ -150,7 +155,7 @@ export function Spotlight({
     onClose();
   };
 
-  useFocusReturn({ transitionDuration: 0, opened });
+  useFocusReturn({ opened });
 
   const filteredActions = filter(query, actions).slice(0, limit);
   const groupedWithLabels = getGroupedOptions(filteredActions).items;
@@ -169,7 +174,7 @@ export function Spotlight({
       return;
     }
 
-    switch (event.code) {
+    switch (event.key) {
       case 'ArrowDown': {
         event.preventDefault();
         setHovered((current) => (current < groupedActions.length - 1 ? current + 1 : 0));
@@ -186,7 +191,7 @@ export function Spotlight({
         event.preventDefault();
         const action = groupedActions[hovered];
         action?.onTrigger?.(action);
-        if (closeOnActionTrigger && action?.onTrigger) {
+        if ((action?.closeOnTrigger ?? closeOnActionTrigger) && action?.onTrigger) {
           handleClose();
         }
         break;
@@ -207,7 +212,7 @@ export function Spotlight({
   };
 
   return (
-    <OptionalPortal withinPortal={withinPortal} zIndex={zIndex}>
+    <OptionalPortal withinPortal={withinPortal}>
       <GroupedTransition
         onExited={() => lockScroll(false)}
         onEntered={() => lockScroll(true)}
@@ -236,6 +241,7 @@ export function Spotlight({
                 onMouseLeave={resetHovered}
               >
                 <TextInput
+                  {...searchInputProps}
                   value={query}
                   onChange={handleInputChange}
                   onKeyDown={handleInputKeyDown}
@@ -260,7 +266,7 @@ export function Spotlight({
                     onActionHover={setHovered}
                     onActionTrigger={(action) => {
                       action.onTrigger(action);
-                      closeOnActionTrigger && handleClose();
+                      (action.closeOnTrigger ?? closeOnActionTrigger) && handleClose();
                     }}
                     styles={styles}
                     classNames={classNames}

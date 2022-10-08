@@ -1,5 +1,6 @@
 import React from 'react';
 import { createStyles } from '@mantine/core';
+import { MantineDemo } from '@mantine/ds';
 import { BaseDemo } from './_base';
 
 const code = `

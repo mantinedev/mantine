@@ -3,7 +3,6 @@ import { NotificationsProviderPositioning } from '../../types';
 
 export default function getPositionStyles(
   [vertical, horizontal]: NotificationsProviderPositioning,
-  containerWidth: number,
   spacing: number
 ) {
   const styles: CSSObject = {};

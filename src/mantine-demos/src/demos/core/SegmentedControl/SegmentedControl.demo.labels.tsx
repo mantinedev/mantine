@@ -1,10 +1,11 @@
 import React from 'react';
-import { Eye, Code, ExternalLink } from 'tabler-icons-react';
+import { IconEye, IconCode, IconExternalLink } from '@tabler/icons';
+import { MantineDemo } from '@mantine/ds';
 import { Center, SegmentedControl, Box, Group } from '@mantine/core';
 
 const code = `
 import { Center, SegmentedControl, Box } from '@mantine/core';
-import { Eye, Code, ExternalLink } from 'tabler-icons-react';
+import { IconEye, IconCode, IconExternalLink } from '@tabler/icons';
 
 function Demo() {
   return (
@@ -14,7 +15,7 @@ function Demo() {
           value: 'preview',
           label: (
             <Center>
-              <Eye size={16} />
+              <IconEye size={16} />
               <Box ml={10}>Preview</Box>
             </Center>
           ),
@@ -23,7 +24,7 @@ function Demo() {
           value: 'code',
           label: (
             <Center>
-              <Code size={16} />
+              <IconCode size={16} />
               <Box ml={10}>Code</Box>
             </Center>
           ),
@@ -32,7 +33,7 @@ function Demo() {
           value: 'export',
           label: (
             <Center>
-              <ExternalLink size={16} />
+              <IconExternalLink size={16} />
               <Box ml={10}>Export</Box>
             </Center>
           ),
@@ -52,7 +53,7 @@ function Demo() {
             value: 'preview',
             label: (
               <Center>
-                <Eye size={16} />
+                <IconEye size={16} />
                 <Box ml={10}>Preview</Box>
               </Center>
             ),
@@ -61,7 +62,7 @@ function Demo() {
             value: 'code',
             label: (
               <Center>
-                <Code size={16} />
+                <IconCode size={16} />
                 <Box ml={10}>Code</Box>
               </Center>
             ),
@@ -70,7 +71,7 @@ function Demo() {
             value: 'export',
             label: (
               <Center>
-                <ExternalLink size={16} />
+                <IconExternalLink size={16} />
                 <Box ml={10}>Export</Box>
               </Center>
             ),

@@ -1,13 +1,18 @@
 {
   "name": "@mantine/dates",
   "description": "Calendars, date and time pickers based on Mantine components",
-  "version": "4.2.12",
+  "version": "5.5.4",
   "main": "cjs/index.js",
   "module": "esm/index.js",
   "types": "lib/index.d.ts",
   "license": "MIT",
   "author": "Vitaly Rtishchev <rtivital@gmail.com>",
   "homepage": "https://mantine.dev/dates/getting-started/",
+  "repository": {
+    "url": "https://github.com/mantinedev/mantine.git",
+    "type": "git",
+    "directory": "src/mantine-dates"
+  },
   "keywords": [
     "react",
     "next",
@@ -23,11 +28,13 @@
     "picker"
   ],
   "peerDependencies": {
-    "@mantine/core": "4.2.12",
-    "@mantine/hooks": "4.2.12",
-    "dayjs": "^1.10.5",
+    "@mantine/core": "5.5.4",
+    "@mantine/hooks": "5.5.4",
+    "dayjs": ">=1.0.0",
     "react": ">=16.8.0"
   },
-  "dependencies": {},
+  "dependencies": {
+    "@mantine/utils": "5.5.4"
+  },
   "devDependencies": {}
 }

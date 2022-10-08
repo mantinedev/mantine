@@ -1,4 +1,5 @@
 import React from 'react';
+import { MantineDemo } from '@mantine/ds';
 import { Text } from '@mantine/core';
 
 const code = `
@@ -14,11 +15,13 @@ function Demo() {
       <Text size="xl">Extra large text</Text>
       <Text weight={500}>Semibold</Text>
       <Text weight={700}>Bold</Text>
+      <Text italic>Italic</Text>
       <Text underline>Underlined</Text>
+      <Text strikethrough>Strikethrough</Text>
       <Text variant="link" component="a" href="https://mantine.dev">Link variant</Text>
       <Text color="red">Red text</Text>
       <Text color="blue">Blue text</Text>
-      <Text color="gray">Gray text</Text>
+      <Text color="teal">Teal text</Text>
       <Text transform="uppercase">Uppercase</Text>
       <Text transform="capitalize">capitalized text</Text>
       <Text align="center">Aligned to center</Text>
@@ -38,13 +41,15 @@ function Demo() {
       <Text size="xl">Extra large text</Text>
       <Text weight={500}>Semibold</Text>
       <Text weight={700}>Bold</Text>
+      <Text italic>Italic</Text>
       <Text underline>Underlined</Text>
+      <Text strikethrough>Strikethrough</Text>
       <Text variant="link" component="a" href="https://mantine.dev">
         Link variant
       </Text>
       <Text color="red">Red text</Text>
       <Text color="blue">Blue text</Text>
-      <Text color="gray">Gray text</Text>
+      <Text color="teal">Teal text</Text>
       <Text transform="uppercase">Uppercase</Text>
       <Text transform="capitalize">capitalized text</Text>
       <Text align="center">Aligned to center</Text>

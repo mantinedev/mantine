@@ -1,4 +1,5 @@
 import React from 'react';
+import { MantineDemo } from '@mantine/ds';
 import { Switch, Group } from '@mantine/core';
 
 const code = `
@@ -9,7 +10,7 @@ function Demo() {
 }
 `;
 
-function Label() {
+function Demo() {
   return (
     <Group position="center">
       <Switch size="xs" onLabel="ON" offLabel="OFF" />
@@ -23,6 +24,6 @@ function Label() {
 
 export const labels: MantineDemo = {
   type: 'demo',
-  component: Label,
+  component: Demo,
   code,
 };

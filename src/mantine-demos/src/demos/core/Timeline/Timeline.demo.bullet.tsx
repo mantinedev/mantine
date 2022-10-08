@@ -1,10 +1,11 @@
 import React from 'react';
 import { ThemeIcon, Text, Avatar, Timeline } from '@mantine/core';
-import { Sun, Video } from 'tabler-icons-react';
+import { MantineDemo } from '@mantine/ds';
+import { IconSun, IconVideo } from '@tabler/icons';
 
 const code = `
 import { ThemeIcon, Text, Avatar, Timeline } from '@mantine/core';
-import { Sun, Video } from 'tabler-icons-react';
+import { IconSun, IconVideo } from '@tabler/icons';
 
 function Demo() {
   return (
@@ -37,7 +38,7 @@ function Demo() {
         <Timeline.Item
           title="Icon"
           bulletSize={24}
-          bullet={<Sun size={14} />}
+          bullet={<IconSun size={14} />}
         >
           <Text color="dimmed" size="sm">
             Timeline bullet as icon
@@ -54,7 +55,7 @@ function Demo() {
               gradient={{ from: 'lime', to: 'cyan' }}
               radius="xl"
             >
-              <Video size={14} />
+              <IconVideo size={14} />
             </ThemeIcon>
           }
         >
@@ -93,7 +94,7 @@ function Demo() {
             Timeline bullet as avatar image
           </Text>
         </Timeline.Item>
-        <Timeline.Item title="Icon" bulletSize={24} bullet={<Sun size={14} />}>
+        <Timeline.Item title="Icon" bulletSize={24} bullet={<IconSun size={14} />}>
           <Text color="dimmed" size="sm">
             Timeline bullet as icon
           </Text>
@@ -108,7 +109,7 @@ function Demo() {
               gradient={{ from: 'lime', to: 'cyan' }}
               radius="xl"
             >
-              <Video size={14} />
+              <IconVideo size={14} />
             </ThemeIcon>
           }
         >

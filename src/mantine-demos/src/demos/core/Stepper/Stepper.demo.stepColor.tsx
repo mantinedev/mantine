@@ -1,10 +1,11 @@
 import React from 'react';
-import { CircleX } from 'tabler-icons-react';
+import { IconCircleX } from '@tabler/icons';
+import { MantineDemo } from '@mantine/ds';
 import { Stepper } from '@mantine/core';
 
 const code = `
 import { Stepper } from '@mantine/core';
-import { CircleX } from 'tabler-icons-react';
+import { IconCircleX } from '@tabler/icons';
 
 function Demo() {
   return (
@@ -14,7 +15,7 @@ function Demo() {
         label="Step 2"
         description="Verify email"
         color="red"
-        completedIcon={<CircleX />}
+        completedIcon={<IconCircleX />}
       />
       <Stepper.Step label="Step 3" description="Get full access" />
     </Stepper>
@@ -30,7 +31,7 @@ function Demo() {
         label="Step 2"
         description="Verify email"
         color="red"
-        completedIcon={<CircleX />}
+        completedIcon={<IconCircleX />}
       />
       <Stepper.Step label="Step 3" description="Get full access" />
     </Stepper>

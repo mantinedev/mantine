@@ -1,4 +1,5 @@
 import React from 'react';
+import { MantineDemo } from '@mantine/ds';
 import { Blockquote, BlockquoteProps } from '@mantine/core';
 
 function Wrapper(props: BlockquoteProps) {

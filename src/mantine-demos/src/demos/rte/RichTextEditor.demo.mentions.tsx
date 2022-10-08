@@ -1,10 +1,10 @@
 import React, { useState, useMemo } from 'react';
+import { MantineDemo } from '@mantine/ds';
 import { SSRWrapper } from './_SSRWrapper';
 
 const code = `
-import { useState } from 'react;
+import { useState, useMemo } from 'react';
 import { RichTextEditor } from '@mantine/rte';
-
 
 const people = [
   { id: 1, value: 'Bill Horsefighter' },
@@ -39,6 +39,7 @@ function Demo() {
 
   return (
     <RichTextEditor
+      id="rte"
       value={value}
       onChange={onChange}
       placeholder="Type @ or # to see mentions autocomplete"

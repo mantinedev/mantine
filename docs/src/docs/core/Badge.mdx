@@ -3,12 +3,13 @@ group: 'mantine-core'
 package: '@mantine/core'
 title: Badge
 order: 1
+polymorphic: true
 slug: /core/badge/
 category: 'data-display'
 description: 'Display badge, pill or tag'
 props: ['Badge']
 import: "import { Badge } from '@mantine/core';"
-source: 'mantine-core/src/components/Badge/Badge.tsx'
+source: 'mantine-core/src/Badge/Badge.tsx'
 docs: 'core/Badge.mdx'
 styles: ['Badge']
 ---
@@ -41,24 +42,8 @@ If badge cannot fit in its container, overflow content will be hidden with ellip
 
 <Demo data={BadgeDemos.sections} />
 
-## Custom component
+## Polymorphic component
 
-To change badge root element pass React element to `component` prop:
+Badge is a [polymorphic component](/guides/polymorphic/), you can change root element:
 
 <Demo data={BadgeDemos.component} />
-
-To use custom component with TypeScript provide type:
-
-```tsx
-import { Badge } from '@mantine/core';
-import { Link } from 'react-router-dom';
-
-function Demo() {
-  return (
-    <>
-      <Badge<'a'> component="a" href="#" />
-      <Badge<typeof Link> component={Link} to="/hello" />
-    </>
-  );
-}
-```

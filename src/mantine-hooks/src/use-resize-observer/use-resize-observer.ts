@@ -13,8 +13,6 @@ const defaultState: ObserverRect = {
   right: 0,
 };
 
-const browser = typeof window !== 'undefined';
-
 export function useResizeObserver<T extends HTMLElement = any>() {
   const frameID = useRef(0);
   const ref = useRef<T>(null);
@@ -23,7 +21,7 @@ export function useResizeObserver<T extends HTMLElement = any>() {
 
   const observer = useMemo(
     () =>
-      browser
+      typeof window !== 'undefined'
         ? new ResizeObserver((entries: any) => {
             const entry = entries[0];
 

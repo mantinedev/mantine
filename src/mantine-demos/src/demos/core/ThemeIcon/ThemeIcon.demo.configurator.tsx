@@ -1,5 +1,6 @@
 import React from 'react';
-import { Photo } from 'tabler-icons-react';
+import { IconPhoto } from '@tabler/icons';
+import { MantineDemo } from '@mantine/ds';
 import { ThemeIcon, ThemeIconProps } from '@mantine/core';
 
 const iconSizes = {
@@ -14,7 +15,7 @@ function Wrapper(props: ThemeIconProps) {
   return (
     <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
       <ThemeIcon {...props}>
-        <Photo size={iconSizes[props.size]} />
+        <IconPhoto size={iconSizes[props.size]} />
       </ThemeIcon>
     </div>
   );
@@ -22,12 +23,12 @@ function Wrapper(props: ThemeIconProps) {
 
 const codeTemplate = (props: string) => `
 import { ThemeIcon } from '@mantine/core';
-import { Photo } from 'tabler-icons-react';
+import { IconPhoto } from '@tabler/icons';
 
 function Demo() {
   return (
     <ThemeIcon${props}>
-      <Photo />
+      <IconPhoto />
     </ThemeIcon>
   );
 }
@@ -40,13 +41,14 @@ export const configurator: MantineDemo = {
   configurator: [
     {
       name: 'variant',
-      type: 'segmented',
+      type: 'select',
       initialValue: 'filled',
       defaultValue: 'filled',
       data: [
         { label: 'filled', value: 'filled' },
         { label: 'light', value: 'light' },
         { label: 'outline', value: 'outline' },
+        { label: 'default', value: 'default' },
       ],
     },
     { name: 'radius', type: 'size', initialValue: 'sm', defaultValue: 'sm' },

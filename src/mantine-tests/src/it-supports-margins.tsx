@@ -1,17 +1,17 @@
 import React from 'react';
 import { DEFAULT_THEME } from '@mantine/styles';
-import { renderWithAct } from './render-with-act';
+import { render } from '@testing-library/react';
 
 export function itSupportsMargins<P>(Component: React.ComponentType<P>, requiredProps: P) {
   it('supports m, mx, my, mt, mb, mr and ml props', async () => {
-    const { container: m } = await renderWithAct(<Component {...requiredProps} m={45} />);
-    const { container: theme } = await renderWithAct(<Component {...requiredProps} m="xl" />);
-    const { container: mx } = await renderWithAct(<Component {...requiredProps} mx={34} />);
-    const { container: my } = await renderWithAct(<Component {...requiredProps} my={22} />);
-    const { container: mt } = await renderWithAct(<Component {...requiredProps} mt={13} />);
-    const { container: mb } = await renderWithAct(<Component {...requiredProps} mb={43} />);
-    const { container: mr } = await renderWithAct(<Component {...requiredProps} mr={98} />);
-    const { container: ml } = await renderWithAct(<Component {...requiredProps} ml={11} />);
+    const { container: m } = render(<Component {...requiredProps} m={45} />);
+    const { container: theme } = render(<Component {...requiredProps} m="xl" />);
+    const { container: mx } = render(<Component {...requiredProps} mx={34} />);
+    const { container: my } = render(<Component {...requiredProps} my={22} />);
+    const { container: mt } = render(<Component {...requiredProps} mt={13} />);
+    const { container: mb } = render(<Component {...requiredProps} mb={43} />);
+    const { container: mr } = render(<Component {...requiredProps} mr={98} />);
+    const { container: ml } = render(<Component {...requiredProps} ml={11} />);
 
     expect(m.firstChild).toHaveStyle({ margin: '45px' });
     expect(theme.firstChild).toHaveStyle({ margin: `${DEFAULT_THEME.spacing.xl}px` });

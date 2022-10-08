@@ -1,5 +1,6 @@
 import React from 'react';
-import { Adjustments } from 'tabler-icons-react';
+import { IconAdjustments } from '@tabler/icons';
+import { MantineDemo } from '@mantine/ds';
 import { ActionIcon, ActionIconProps, Group } from '@mantine/core';
 
 const iconSizes = {
@@ -10,28 +11,50 @@ const iconSizes = {
   xl: 34,
 };
 
-function Wrapper(props: ActionIconProps<'button'>) {
+function Wrapper(props: ActionIconProps) {
   return (
     <Group position="center">
       <ActionIcon {...props}>
-        <Adjustments size={iconSizes[props.size]} />
+        <IconAdjustments size={iconSizes[props.size]} />
       </ActionIcon>
     </Group>
   );
 }
 
-const codeTemplate = (props: string) => `
+function computeChildIconSizeProp(props: string) {
+  if (props.includes('size="xs"')) {
+    return 'size={12}';
+  }
+  if (props.includes('size="sm"')) {
+    return 'size={14}';
+  }
+  if (props.includes('size="md"')) {
+    return 'size={18}';
+  }
+  if (props.includes('size="lg"')) {
+    return 'size={26}';
+  }
+  if (props.includes('size="xl"')) {
+    return 'size={34}';
+  }
+  return 'size={18}';
+}
+
+const codeTemplate = (props: string) => {
+  const childIconSizeProp = computeChildIconSizeProp(props);
+  return `
 import { ActionIcon } from '@mantine/core';
-import { Adjustments } from 'tabler-icons-react';
+import { IconAdjustments } from '@tabler/icons';
 
 function Demo() {
   return (
     <ActionIcon${props}>
-      <Adjustments />
+      <IconAdjustments ${childIconSizeProp} />
     </ActionIcon>
   );
 }
 `;
+};
 
 export const configurator: MantineDemo = {
   type: 'configurator',
@@ -46,14 +69,14 @@ export const configurator: MantineDemo = {
       type: 'select',
       data: [
         { label: 'transparent', value: 'transparent' },
-        { label: 'hover', value: 'hover' },
+        { label: 'subtle', value: 'subtle' },
         { label: 'filled', value: 'filled' },
         { label: 'light', value: 'light' },
         { label: 'outline', value: 'outline' },
         { label: 'default', value: 'default' },
       ],
-      initialValue: 'hover',
-      defaultValue: 'hover',
+      initialValue: 'subtle',
+      defaultValue: 'subtle',
     },
     { name: 'disabled', type: 'boolean', initialValue: false, defaultValue: false },
     { name: 'loading', type: 'boolean', initialValue: false, defaultValue: false },

@@ -13,10 +13,10 @@ function Test({ spy }: { spy(): void }) {
 }
 
 describe('@mantine/hooks/use-event-listener', () => {
-  it('calls given function when event is fired', () => {
+  it('calls given function when event is fired', async () => {
     const spy = jest.fn();
     render(<Test spy={spy} />);
-    userEvent.click(screen.getByRole('button'));
+    await userEvent.click(screen.getByRole('button'));
     expect(spy).toHaveBeenCalledTimes(1);
   });
 });

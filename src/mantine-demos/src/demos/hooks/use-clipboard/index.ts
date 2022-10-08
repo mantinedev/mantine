@@ -1,1 +1,0 @@
-export { useClipboardDemo } from './usage';

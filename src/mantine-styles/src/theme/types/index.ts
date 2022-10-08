@@ -1,5 +1,5 @@
 export type { ColorScheme } from './ColorScheme';
-export type { DefaultProps, Sx } from './DefaultProps';
+export type { DefaultProps, Sx, ClassNames, Styles } from './DefaultProps';
 export type {
   MantineColor,
   MantineThemeColors,
@@ -16,6 +16,4 @@ export type {
   MantineThemeBase,
   MantineThemeOther,
 } from './MantineTheme';
-export type { PolymorphicRef, PolymorphicComponentProps } from './Polymorphic';
-export type { ForwardRefWithStaticComponents } from './ForwardRefWithStaticComponents';
 export type { Tuple } from './Tuple';

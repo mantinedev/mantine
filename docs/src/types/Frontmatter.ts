@@ -17,4 +17,8 @@ export interface Frontmatter {
   release: string;
   date: string;
   search?: string;
+  error?: string;
+  componentPrefix?: string;
+  hideToc?: boolean;
+  polymorphic?: boolean;
 }

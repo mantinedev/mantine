@@ -2,15 +2,18 @@ import type { CSSProperties } from 'react';
 import type { MantineSizes, MantineSize, MantineNumberSize } from './MantineSize';
 import type { DeepPartial } from './DeepPartial';
 import type { MantineThemeColors } from './MantineColor';
+import type { MantineGradient } from './MantineGradient';
 import type { VariantInput, VariantOutput } from '../functions/fns/variant/variant';
 import type { ColorScheme } from './ColorScheme';
-import { CSSObject } from '../../tss';
+import type { CSSObject } from '../../tss';
 
 export type LoaderType = 'bars' | 'oval' | 'dots';
 export type MantineThemeOther = Record<string, any>;
+export type MantineThemeComponents = Record<string, ThemeComponent>;
 
 export interface HeadingStyle {
   fontSize: CSSProperties['fontSize'];
+  fontWeight: CSSProperties['fontWeight'];
   lineHeight: CSSProperties['lineHeight'];
 }
 
@@ -23,21 +26,28 @@ export interface MantinePrimaryShade {
 
 interface MantineThemeFunctions {
   fontStyles(): any;
-  focusStyles(): any;
+  focusStyles(selector?: string): any;
   cover(offset?: number | string): any;
-  themeColor(color: string, shade: number, primaryFallback?: boolean): string;
+  themeColor(
+    color: string,
+    shade?: number,
+    primaryFallback?: boolean,
+    useSplittedShade?: boolean
+  ): string;
   rgba(color: string, alpha: number): string;
   size(props: { size: string | number; sizes: Record<string, any> }): any;
   linearGradient(deg: number, ...colors: string[]): string;
   radialGradient(...colors: string[]): string;
+  gradient(gradient?: MantineGradient): string;
   smallerThan(breakpoint: MantineNumberSize): string;
   largerThan(breakpoint: MantineNumberSize): string;
   lighten(color: string, alpha: number): string;
   darken(color: string, alpha: number): string;
-  radius(size: MantineNumberSize | (string & {})): string | number;
+  radius(size?: MantineNumberSize | (string & {})): string | number;
   variant(payload: VariantInput): VariantOutput;
   primaryShade(colorScheme?: ColorScheme): Shade;
   hover(hoverStyle: CSSObject): any;
+  primaryColor(colorScheme?: ColorScheme): string;
 }
 
 export interface MantineTheme {
@@ -56,6 +66,9 @@ export interface MantineTheme {
   transitionTimingFunction: CSSProperties['transitionTimingFunction'];
   fontFamilyMonospace: CSSProperties['fontFamily'];
   primaryColor: keyof MantineThemeColors;
+  respectReducedMotion: boolean;
+  cursorType: 'default' | 'pointer';
+  defaultGradient: MantineGradient;
 
   fontSizes: MantineSizes;
   radius: MantineSizes;
@@ -78,11 +91,21 @@ export interface MantineTheme {
 
   fn: MantineThemeFunctions;
   other: MantineThemeOther;
-
+  activeStyles: CSSObject;
   datesLocale: string;
+  components: MantineThemeComponents;
+  globalStyles: (theme: MantineTheme) => CSSObject;
+}
+
+interface ThemeComponent {
+  defaultProps?: Record<string, any>;
+  classNames?: Record<string, string>;
+  styles?:
+    | Record<string, CSSObject>
+    | ((theme: MantineTheme, params: any) => Record<string, CSSObject>);
 }
 
 export type MantineThemeBase = Omit<MantineTheme, 'fn'>;
-export type MantineThemeOverride = DeepPartial<Omit<MantineThemeBase, 'fn' | 'other'>> & {
-  other?: MantineThemeOther;
-};
+
+export type MantineThemeOverride = DeepPartial<Omit<MantineThemeBase, 'other' | 'components'>> &
+  Partial<Pick<MantineThemeBase, 'other' | 'components'>>;

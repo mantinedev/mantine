@@ -1,5 +1,5 @@
 import React, { forwardRef, useRef, useEffect, useState } from 'react';
-import { useUncontrolled, useUuid } from '@mantine/hooks';
+import { useUncontrolled, useId } from '@mantine/hooks';
 import {
   DefaultProps,
   MantineNumberSize,
@@ -7,7 +7,7 @@ import {
   MantineColor,
   Group,
   Input,
-  InputBaseProps,
+  InputSharedProps,
   InputStylesNames,
 } from '@mantine/core';
 import useStyles from './PinInput.styles';
@@ -18,13 +18,10 @@ export type PinInputStylesNames = InputStylesNames;
 
 export interface PinInputProps
   extends DefaultProps<PinInputStylesNames>,
-    InputBaseProps,
+    InputSharedProps,
     Omit<React.ComponentPropsWithoutRef<'div'>, 'onChange'> {
   /** Input name attribute, used to bind inputs in one group, by default generated randomly with use-id hook */
   name?: string;
-
-  /** Input direction position */
-  direction?: 'horizontal' | 'vertical';
 
   /** Spacing between inputs */
   spacing?: MantineNumberSize;
@@ -88,7 +85,6 @@ export const PinInput = forwardRef<HTMLDivElement, PinInputProps>(
       className,
       value,
       defaultValue,
-      direction = 'horizontal',
       variant,
       spacing = 'sm',
       color,
@@ -112,7 +108,7 @@ export const PinInput = forwardRef<HTMLDivElement, PinInputProps>(
     }: PinInputProps,
     ref
   ) => {
-    const uuid = useUuid(name);
+    const uuid = useId(name);
     const { classes } = useStyles({ size }, { classNames, styles, name: 'PinInput' });
 
     const [focusedIndex, setFocusedIndex] = useState(-1);
@@ -122,7 +118,6 @@ export const PinInput = forwardRef<HTMLDivElement, PinInputProps>(
       defaultValue: createPinArray(length, defaultValue),
       finalValue: createPinArray(length, value),
       onChange: (values) => onChange && onChange(values.join('')),
-      rule: (val) => typeof val === 'string',
     });
 
     const inputsRef = useRef<Array<HTMLInputElement>>([]);
@@ -234,15 +229,7 @@ export const PinInput = forwardRef<HTMLDivElement, PinInputProps>(
     }, []);
 
     return (
-      <Group
-        role="group"
-        spacing={spacing}
-        ref={ref}
-        className={className}
-        sx={sx}
-        direction={direction === 'horizontal' ? 'row' : 'column'}
-        {...others}
-      >
+      <Group role="group" spacing={spacing} ref={ref} className={className} sx={sx} {...others}>
         {_values.map((char, i) => (
           <Input<'input'>
             __staticSelector="PinInput"

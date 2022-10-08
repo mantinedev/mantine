@@ -7,6 +7,7 @@ import {
   SelectItemProps,
   MultiSelectValueProps,
 } from '@mantine/core';
+import { MantineDemo } from '@mantine/ds';
 import { countriesData, flags } from './_countries-data';
 
 const code = `
@@ -161,7 +162,7 @@ export function CountriesSelect(props: Partial<MultiSelectProps>) {
       searchable
       defaultValue={['US', 'FI']}
       placeholder="Pick countries"
-      label="Which countries you visited last year?"
+      label="Which countries did you visit last year?"
       {...props}
     />
   );

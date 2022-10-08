@@ -24,6 +24,8 @@ interface TimeFieldProps
 
   /** Minimum possible value. Default 0 */
   min?: number;
+
+  unstyled?: boolean;
 }
 
 export const TimeField = forwardRef<HTMLInputElement, TimeFieldProps>(
@@ -39,12 +41,16 @@ export const TimeField = forwardRef<HTMLInputElement, TimeFieldProps>(
       max,
       min = 0,
       value,
+      unstyled,
       ...others
     }: TimeFieldProps,
     ref
   ) => {
     const [digitsEntered, setDigitsEntered] = useState(0);
-    const { classes, cx, theme } = useStyles({ size, hasValue: !!value });
+    const { classes, cx, theme } = useStyles(
+      { size, hasValue: !!value },
+      { name: 'TimeField', unstyled }
+    );
     const inputRef = useRef<HTMLInputElement>();
 
     const handleFocus = (event: React.FocusEvent<HTMLInputElement>) => {
@@ -67,10 +73,10 @@ export const TimeField = forwardRef<HTMLInputElement, TimeFieldProps>(
     };
 
     const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
-      if (event.nativeEvent.code === 'ArrowUp') {
+      if (event.key === 'ArrowUp') {
         event.preventDefault();
         const padded = padTime(
-          clamp({ value: parseInt(event.currentTarget.value, 10) + 1, max, min }).toString()
+          clamp(parseInt(event.currentTarget.value, 10) + 1, min, max).toString()
         );
 
         if (value !== padded) {
@@ -78,10 +84,10 @@ export const TimeField = forwardRef<HTMLInputElement, TimeFieldProps>(
         }
       }
 
-      if (event.nativeEvent.code === 'ArrowDown') {
+      if (event.key === 'ArrowDown') {
         event.preventDefault();
         const padded = padTime(
-          clamp({ value: parseInt(event.currentTarget.value, 10) - 1, max, min }).toString()
+          clamp(parseInt(event.currentTarget.value, 10) - 1, min, max).toString()
         );
 
         if (value !== padded) {
@@ -122,6 +128,7 @@ export const TimeField = forwardRef<HTMLInputElement, TimeFieldProps>(
         {withSeparator && (
           <Text
             size={size}
+            unstyled={unstyled}
             style={{
               lineHeight: 1,
               color: value

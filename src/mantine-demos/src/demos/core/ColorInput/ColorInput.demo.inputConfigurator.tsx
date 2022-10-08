@@ -1,3 +1,4 @@
+import { MantineDemo } from '@mantine/ds';
 import { ColorInput } from '@mantine/core';
 
 const codeTemplate = (props: string) => `
@@ -49,7 +50,7 @@ export const inputConfigurator: MantineDemo = {
     { name: 'size', type: 'size', initialValue: 'sm', defaultValue: 'sm' },
     { name: 'disabled', type: 'boolean', initialValue: false, defaultValue: false },
     {
-      name: 'required',
+      name: 'withAsterisk',
       type: 'boolean',
       initialValue: true,
       defaultValue: false,

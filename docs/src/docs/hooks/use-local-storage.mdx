@@ -13,8 +13,8 @@ source: 'mantine-hooks/src/use-local-storage/use-local-storage.ts'
 
 ## Usage
 
-use-local-storage allows you to use value from `localStorage` as react state.
-Hook works exactly the same as `useState`, but also writes the value to local storage:
+`use-local-storage` allows you to use value from `localStorage` as react state.
+Hook works the same way as `useState`, but also writes the value to `localStorage`:
 
 ```tsx
 import { useLocalStorage } from '@mantine/hooks';
@@ -38,7 +38,7 @@ Mantine docs website uses this hook to store color scheme information:
 ```tsx
 import { useLocalStorage } from '@mantine/hooks';
 import { ActionIcon, ColorScheme } from '@mantine/core';
-import { Sun, MoonStars } from 'tabler-icons-react';
+import { IconSun, IconMoonStars } from '@tabler/icons';
 
 function ColorSchemeToggle() {
   const [colorScheme, setColorScheme] = useLocalStorage<ColorScheme>({
@@ -51,18 +51,31 @@ function ColorSchemeToggle() {
 
   return (
     <ActionIcon onClick={toggleColorScheme}>
-      {colorScheme === 'dark' ? <Sun /> : <MoonStars />}
+      {colorScheme === 'dark' ? <IconSun /> : <IconMoonStars />}
     </ActionIcon>
   );
 }
 ```
 
+## Remove value
+
+Use `removeValue` callback to clean `localStorage`/`sessionStorage`:
+
+```tsx
+import { useLocalStorage } from '@mantine/hooks';
+
+const [value, setValue, removeValue] = useLocalStorage({
+  key: 'color-scheme',
+  defaultValue: 'light',
+});
+```
+
 ## Browser tabs synchronization
 
 use-local-storage subscribes to [storage event](https://developer.mozilla.org/en-US/docs/Web/API/Window/storage_event).
-When state changes in one tab it automatically updates value in all other opened browser tabs.
+When state changes in one tab, it automatically updates value in all other opened browser tabs.
 You can test this feature by opening 2 tabs with Mantine docs side by side and changing color scheme
-(button on the top right or `⌘ + J` on mac and `Ctrl + J` on Windows and Linux).
+(button on the top right or `⌘ + J` on MacOS and `Ctrl + J` on Windows and Linux).
 
 ## Serialize/deserialize json
 
@@ -97,6 +110,16 @@ const [value, setValue] = useLocalStorage({
 });
 ```
 
+## use-session-storage
+
+`use-session-storage` hook works the same way as `use-local-storage` hook but uses `window.sessionStorage` instead of `window.localStorage`:
+
+```tsx
+import { useSessionStorage } from '@mantine/hooks';
+
+const [value, setValue] = useSessionStorage({ key: 'session-key', defaultValue: 'mantine' });
+```
+
 ## TypeScript
 
 ### Definition
@@ -109,10 +132,10 @@ interface UseLocalStorage<T> {
   /** Default value that will be set if value is not found in local storage */
   defaultValue?: T;
 
-  /** If set to true, value will be update is useEffect after mount */
+  /** If set to true, value will be update in useEffect after mount */
   getInitialValueInEffect: boolean;
 
-  /** Function to serialize value into string to be save in local storage */
+  /** Function to serialize value into string to be saved in local storage */
   serialize?(value: T): string;
 
   /** Function to deserialize string value from local storage to value */
@@ -125,7 +148,11 @@ function useLocalStorage<T = string>({
   deserialize,
   serialize,
   getInitialValueInEffect,
-}: UseLocalStorage<T>): readonly [T, (val: T | ((prevState: T) => T)) => void];
+}: UseLocalStorage<T>): readonly [
+  T, // current value
+  (val: T | ((prevState: T) => T)) => void, // callback to set value in storage
+  () => void // callback to remove value from storage
+];
 ```
 
 ### Set value type

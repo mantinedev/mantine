@@ -1,4 +1,5 @@
 import React from 'react';
+import { MantineDemo } from '@mantine/ds';
 import { DatePicker } from '@mantine/dates';
 
 const code = `
@@ -26,6 +27,7 @@ function Demo() {
         inputFormat="MM/DD/YYYY"
         labelFormat="MM/YYYY"
         defaultValue={new Date()}
+        withinPortal
       />
     </div>
   );

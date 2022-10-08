@@ -33,11 +33,12 @@ export function Toolbar({
   classNames,
   styles,
   id,
+  unstyled,
   ...others
 }: ToolbarProps) {
   const { classes, cx } = useStyles(
     { sticky, stickyOffset },
-    { classNames, styles, name: 'RichTextEditor' }
+    { classNames, styles, unstyled, name: 'RichTextEditor' }
   );
 
   const groups = controls.map((group, index) => {
@@ -55,7 +56,7 @@ export function Toolbar({
             title={labels[item]}
             noActive={(CONTROLS[item] as any).noActive}
           >
-            <Icon style={{ width: 18, height: 18 }} />
+            <Icon size={18} stroke={1.5} />
           </ToolbarButton>
         );
       });

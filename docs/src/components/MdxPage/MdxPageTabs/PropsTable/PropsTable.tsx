@@ -40,7 +40,7 @@ export default function PropsTable({ component, query }: PropsTableProps) {
               color={theme.colorScheme === 'dark' ? 'red' : 'indigo'}
               size="xs"
               weight={500}
-              style={{ fontFamily: 'Menlo, Monaco, Lucida Console, monospace' }}
+              sx={{ fontFamily: 'Menlo, Monaco, Lucida Console, monospace' }}
             >
               {prop.type.name}
             </Text>
@@ -56,7 +56,7 @@ export default function PropsTable({ component, query }: PropsTableProps) {
 
   if (rows.length === 0) {
     return (
-      <Text color="gray" style={{ marginBottom: 30 }}>
+      <Text color="dimmed" mb="xl">
         Nothing found
       </Text>
     );

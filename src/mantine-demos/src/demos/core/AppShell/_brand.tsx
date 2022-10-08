@@ -1,6 +1,6 @@
 import React from 'react';
 import { Group, ActionIcon, useMantineColorScheme, Box } from '@mantine/core';
-import { Sun, MoonStars } from 'tabler-icons-react';
+import { IconSun, IconMoonStars } from '@tabler/icons';
 import { Logo } from './_logo';
 
 export function Brand() {
@@ -20,7 +20,7 @@ export function Brand() {
       <Group position="apart">
         <Logo colorScheme={colorScheme} />
         <ActionIcon variant="default" onClick={() => toggleColorScheme()} size={30}>
-          {colorScheme === 'dark' ? <Sun size={16} /> : <MoonStars size={16} />}
+          {colorScheme === 'dark' ? <IconSun size={16} /> : <IconMoonStars size={16} />}
         </ActionIcon>
       </Group>
     </Box>

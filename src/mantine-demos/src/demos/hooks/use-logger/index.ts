@@ -1,1 +1,0 @@
-export { useLoggerDemo } from './usage';

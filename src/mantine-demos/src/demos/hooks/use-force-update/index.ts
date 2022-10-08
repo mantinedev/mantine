@@ -1,1 +1,0 @@
-export { useForceUpdateDemo } from './usage';

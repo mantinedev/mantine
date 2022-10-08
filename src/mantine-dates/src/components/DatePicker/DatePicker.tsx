@@ -1,7 +1,7 @@
 import dayjs from 'dayjs';
 import React, { useState, useRef, forwardRef, useEffect } from 'react';
 import { useUncontrolled, useMergedRef, upperFirst } from '@mantine/hooks';
-import { useMantineTheme, useMantineDefaultProps } from '@mantine/core';
+import { useMantineTheme, useComponentDefaultProps } from '@mantine/core';
 import { FirstDayOfWeek } from '../../types';
 import { Calendar } from '../Calendar/Calendar';
 import { CalendarSharedProps } from '../CalendarBase/CalendarBase';
@@ -9,7 +9,7 @@ import { DatePickerBase, DatePickerBaseSharedProps } from '../DatePickerBase/Dat
 
 export interface DatePickerProps
   extends Omit<DatePickerBaseSharedProps, 'onChange'>,
-    Omit<CalendarSharedProps, 'size' | 'classNames' | 'styles' | 'onMonthChange'> {
+    Omit<CalendarSharedProps, 'size' | 'classNames' | 'styles' | 'onMonthChange' | 'onChange'> {
   /** Selected date, required with controlled input */
   value?: Date | null;
 
@@ -60,9 +60,9 @@ const defaultProps: Partial<DatePickerProps> = {
   clearable: true,
   disabled: false,
   fixOnBlur: true,
-  withinPortal: true,
+  withinPortal: false,
   firstDayOfWeek: 'monday',
-  openDropdownOnClear: true,
+  openDropdownOnClear: false,
 };
 
 export const DatePicker = forwardRef<HTMLInputElement, DatePickerProps>(
@@ -114,9 +114,15 @@ export const DatePicker = forwardRef<HTMLInputElement, DatePickerProps>(
       renderDay,
       type,
       openDropdownOnClear,
+      unstyled,
       weekendDays,
+      yearLabelFormat,
+      nextDecadeLabel,
+      nextYearLabel,
+      previousDecadeLabel,
+      previousYearLabel,
       ...others
-    } = useMantineDefaultProps('DatePicker', defaultProps, props);
+    } = useComponentDefaultProps('DatePicker', defaultProps, props);
 
     const theme = useMantineTheme();
     const finalLocale = locale || theme.datesLocale;
@@ -130,7 +136,6 @@ export const DatePicker = forwardRef<HTMLInputElement, DatePickerProps>(
       defaultValue,
       finalValue: null,
       onChange,
-      rule: (val) => val === null || val instanceof Date,
     });
     const [calendarMonth, setCalendarMonth] = useState(_value || initialMonth || new Date());
 
@@ -155,7 +160,7 @@ export const DatePicker = forwardRef<HTMLInputElement, DatePickerProps>(
       }
 
       if (value instanceof Date && !focused) {
-        setInputState(dayjs(value).locale(finalLocale).format(dateFormat));
+        setInputState(upperFirst(dayjs(value).locale(finalLocale).format(dateFormat)));
       }
     }, [value, focused]);
 
@@ -208,7 +213,7 @@ export const DatePicker = forwardRef<HTMLInputElement, DatePickerProps>(
     };
 
     const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
-      if (event.code === 'Enter' && allowFreeInput) {
+      if (event.key === 'Enter' && allowFreeInput) {
         closeDropdown();
         setDateFromInput();
       }
@@ -262,6 +267,7 @@ export const DatePicker = forwardRef<HTMLInputElement, DatePickerProps>(
         onDropdownClose={onDropdownClose}
         onDropdownOpen={onDropdownOpen}
         type={type}
+        unstyled={unstyled}
         {...others}
       >
         <Calendar
@@ -284,6 +290,7 @@ export const DatePicker = forwardRef<HTMLInputElement, DatePickerProps>(
           excludeDate={excludeDate}
           __staticSelector="DatePicker"
           fullWidth={dropdownType === 'modal'}
+          __stopPropagation={dropdownType !== 'modal'}
           size={dropdownType === 'modal' ? 'lg' : calendarSize}
           firstDayOfWeek={firstDayOfWeek}
           preventFocus={allowFreeInput}
@@ -293,7 +300,13 @@ export const DatePicker = forwardRef<HTMLInputElement, DatePickerProps>(
           hideOutsideDates={hideOutsideDates}
           hideWeekdays={hideWeekdays}
           renderDay={renderDay}
+          unstyled={unstyled}
           weekendDays={weekendDays}
+          yearLabelFormat={yearLabelFormat}
+          nextDecadeLabel={nextDecadeLabel}
+          nextYearLabel={nextYearLabel}
+          previousDecadeLabel={previousDecadeLabel}
+          previousYearLabel={previousYearLabel}
         />
       </DatePickerBase>
     );

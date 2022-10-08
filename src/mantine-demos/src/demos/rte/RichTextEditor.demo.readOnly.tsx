@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { MantineDemo } from '@mantine/ds';
 import { SSRWrapper } from './_SSRWrapper';
 
 export const html = `
@@ -6,7 +7,7 @@ export const html = `
 `;
 
 const code = `
-<RichTextEditor readOnly {...otherProps} />
+<RichTextEditor readOnly id="rte" {...otherProps} />
 `;
 
 function Demo(props: any) {

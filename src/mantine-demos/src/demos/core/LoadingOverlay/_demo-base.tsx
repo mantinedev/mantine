@@ -1,5 +1,6 @@
 import React from 'react';
 import { DEFAULT_THEME } from '@mantine/core';
+import { MantineDemo } from '@mantine/ds';
 
 export const demoBase: Partial<MantineDemo> = {
   wrapper: ({ children }: { children: React.ReactNode }) => (

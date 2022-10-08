@@ -1,6 +1,7 @@
 export { countries } from './MultiSelect.demo.countries';
 export { usage } from './MultiSelect.demo.usage';
 export { searchable } from './MultiSelect.demo.searchable';
+export { searchableControlled } from './MultiSelect.demo.searchableControlled';
 export { clearable } from './MultiSelect.demo.clearable';
 export { configurator } from './MultiSelect.demo.configurator';
 export { flip } from './MultiSelect.demo.flip';
@@ -16,3 +17,4 @@ export { icon } from './MultiSelect.demo.icon';
 export { rightSection } from './MultiSelect.demo.rightSection';
 export { scrollbars } from './MultiSelect.demo.scrollbars';
 export { maxSelectedValues } from './MultiSelect.demo.maxSelectedValues';
+export { readOnly } from './MultiSelect.demo.readOnly';

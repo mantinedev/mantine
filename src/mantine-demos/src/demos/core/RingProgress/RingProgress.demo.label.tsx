@@ -1,10 +1,11 @@
 import React from 'react';
-import { Check } from 'tabler-icons-react';
+import { IconCheck } from '@tabler/icons';
+import { MantineDemo } from '@mantine/ds';
 import { ThemeIcon, RingProgress, Group, Text, Center } from '@mantine/core';
 
 const code = `
 import { ThemeIcon, RingProgress, Text, Center } from '@mantine/core';
-import { Check } from 'tabler-icons-react';
+import { IconCheck } from '@tabler/icons';
 
 function Demo() {
   return (
@@ -23,7 +24,7 @@ function Demo() {
         label={
           <Center>
             <ThemeIcon color="teal" variant="light" radius="xl" size="xl">
-              <Check size={22} />
+              <IconCheck size={22} />
             </ThemeIcon>
           </Center>
         }
@@ -50,7 +51,7 @@ function Demo() {
         label={
           <Center>
             <ThemeIcon color="teal" variant="light" radius="xl" size="xl">
-              <Check size={22} />
+              <IconCheck size={22} />
             </ThemeIcon>
           </Center>
         }

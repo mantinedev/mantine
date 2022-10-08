@@ -1,4 +1,5 @@
 import React, { forwardRef } from 'react';
+import { MantineDemo } from '@mantine/ds';
 import { Group, Avatar, Text, Select } from '@mantine/core';
 
 const code = `

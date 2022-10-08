@@ -8,7 +8,7 @@ category: 'navigation'
 description: 'Open/close navigation button'
 props: ['Burger']
 import: "import { Burger } from '@mantine/core';"
-source: 'mantine-core/src/components/Burger/Burger.tsx'
+source: 'mantine-core/src/Burger/Burger.tsx'
 docs: 'core/Burger.mdx'
 styles: ['Burger']
 ---
@@ -49,7 +49,7 @@ import { useRef } from 'react';
 import { Burger } from '@mantine/core';
 
 function Demo() {
-  const ref = useRef<HTMLButtonElement>();
+  const ref = useRef<HTMLButtonElement>(null);
   return <Burger ref={ref} opened={false} />;
 }
 ```

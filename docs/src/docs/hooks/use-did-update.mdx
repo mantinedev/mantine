@@ -38,5 +38,5 @@ useDidUpdate(() => console.log("Won't be called when mounted"), [value]);
 ## Definition
 
 ```tsx
-function useDidUpdate(fn: () => void, dependencies?: any[]): void;
+function useDidUpdate(fn: EffectCallback, dependencies?: any[]): void;
 ```

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Container, Text, Group } from '@mantine/core';
+import { TwitterButton, DiscordButton } from '@mantine/ds';
 import { Logo } from '../Logo/Logo';
-import { SocialButton } from '../SocialButton/SocialButton';
 import { LinksGroup } from './LinksGroup/LinksGroup';
 import { FOOTER_LINKS_DATA } from './data';
 import useStyles from './Footer.styles';
@@ -41,8 +41,8 @@ export function Footer({ withNavbar }: FooterProps) {
                 </a>
               </Text>
               <div className={classes.social}>
-                <SocialButton service="discord" className={classes.socialButton} />
-                <SocialButton service="twitter" className={classes.socialButton} />
+                <DiscordButton className={classes.socialButton} />
+                <TwitterButton className={classes.socialButton} ml="md" />
               </div>
             </Group>
           </div>

@@ -19,9 +19,10 @@ export default function Navbar({ data, opened, onClose }: NavbarProps) {
     <NavbarMainLink
       key={item.to}
       to={item.to}
-      color={item.theme}
-      icon={<item.icon style={{ height: 18, width: 18 }} />}
+      color={item.color}
+      icon={<item.icon size={item.rawIcon ? 30 : 18} stroke={2.2} />}
       onClick={onClose}
+      rawIcon={item.rawIcon}
     >
       {item.label}
     </NavbarMainLink>

@@ -57,6 +57,7 @@ Examples:
 - Fork [repository](https://github.com/mantinedev/mantine), clone or download your fork
 - Install dependencies with yarn – `yarn`
 - Build local version of all packages – `npm run build:all`
+- Build local version of specific packages – `npm run build @mantine/core @mantine/demos @mantine/hooks`
 - To start storybook – `npm run storybook`
 - To start docs – `npm run docs`
 - To rebuild props descriptions – `npm run docs:docgen`
@@ -68,7 +69,7 @@ individual packages do not have dedicated scripts.
 
 ### Development scripts
 
-- `storybook` – starts storybook development server
+- `storybook` – starts storybook development server, to start storybook for specific component use `npm run storybook Tooltip` command
 - `docs` – starts docs development server
 
 ### Testing scripts

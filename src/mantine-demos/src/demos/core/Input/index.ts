@@ -1,7 +1,11 @@
 export { configurator } from './Input.demo.configurator';
-export { variants } from './Input.demo.variants';
 export { icon } from './Input.demo.icon';
-export { tooltip } from './Input.demo.tooltip';
 export { component } from './Input.demo.component';
-export { sizes } from './Input.demo.sizes';
-export { headless } from './Input.demo.headless';
+export { inputContainer } from './Input.demo.inputContainer';
+export { wrapperConfigurator } from './Input.demo.wrapperConfigurator';
+export { helpers } from './Input.demo.helpers';
+export { order } from './Input.demo.order';
+export { providerDefault } from './Input.demo.providerDefault';
+export { providerStyles } from './Input.demo.providerStyles';
+export { mask } from './Input.demo.mask';
+export { inputBase } from './Input.demo.inputBase';

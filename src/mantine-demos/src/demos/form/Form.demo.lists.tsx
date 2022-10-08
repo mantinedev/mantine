@@ -1,19 +1,20 @@
 import React from 'react';
-import { useForm, formList } from '@mantine/form';
+import { useForm } from '@mantine/form';
 import { TextInput, Switch, Group, ActionIcon, Box, Text, Button, Code } from '@mantine/core';
 import { randomId } from '@mantine/hooks';
-import { Trash } from 'tabler-icons-react';
+import { MantineDemo } from '@mantine/ds';
+import { IconTrash } from '@tabler/icons';
 
 const code = `
-import { useForm, formList } from '@mantine/form';
+import { useForm } from '@mantine/form';
 import { TextInput, Switch, Group, ActionIcon, Box, Text, Button, Code } from '@mantine/core';
 import { randomId } from '@mantine/hooks';
-import { Trash } from 'tabler-icons-react';
+import { IconTrash } from '@tabler/icons';
 
 function Demo() {
   const form = useForm({
     initialValues: {
-      employees: formList([{ name: '', active: false, key: randomId() }]),
+      employees: [{ name: '', active: false, key: randomId() }],
     },
   });
 
@@ -21,17 +22,16 @@ function Demo() {
     <Group key={item.key} mt="xs">
       <TextInput
         placeholder="John Doe"
-        required
+        withAsterisk
         sx={{ flex: 1 }}
-        {...form.getListInputProps('employees', index, 'name')}
+        {...form.getInputProps(\`employees.\${index}.name\`)}
       />
-      <Switch label="Active" {...form.getListInputProps('employees', index, 'active')} />
-      <ActionIcon
-        color="red"
-        variant="hover"
-        onClick={() => form.removeListItem('employees', index)}
-      >
-        <Trash size={16} />
+      <Switch
+        label="Active"
+        {...form.getInputProps(\`employees.\${index}.active\`, { type: 'checkbox' })}
+      />
+      <ActionIcon color="red" onClick={() => form.removeListItem('employees', index)}>
+        <IconTrash size={16} />
       </ActionIcon>
     </Group>
   ));
@@ -58,7 +58,7 @@ function Demo() {
       <Group position="center" mt="md">
         <Button
           onClick={() =>
-            form.addListItem('employees', { name: '', active: false, key: randomId() })
+            form.insertListItem('employees', { name: '', active: false, key: randomId() })
           }
         >
           Add employee
@@ -77,7 +77,7 @@ function Demo() {
 function Demo() {
   const form = useForm({
     initialValues: {
-      employees: formList([{ name: '', active: false, key: randomId() }]),
+      employees: [{ name: '', active: false, key: randomId() }],
     },
   });
 
@@ -85,17 +85,16 @@ function Demo() {
     <Group key={item.key} mt="xs">
       <TextInput
         placeholder="John Doe"
-        required
+        withAsterisk
         sx={{ flex: 1 }}
-        {...form.getListInputProps('employees', index, 'name')}
+        {...form.getInputProps(`employees.${index}.name`)}
       />
-      <Switch label="Active" {...form.getListInputProps('employees', index, 'active')} />
-      <ActionIcon
-        color="red"
-        variant="hover"
-        onClick={() => form.removeListItem('employees', index)}
-      >
-        <Trash size={16} />
+      <Switch
+        label="Active"
+        {...form.getInputProps(`employees.${index}.active`, { type: 'checkbox' })}
+      />
+      <ActionIcon color="red" onClick={() => form.removeListItem('employees', index)}>
+        <IconTrash size={16} />
       </ActionIcon>
     </Group>
   ));
@@ -122,7 +121,7 @@ function Demo() {
       <Group position="center" mt="md">
         <Button
           onClick={() =>
-            form.addListItem('employees', { name: '', active: false, key: randomId() })
+            form.insertListItem('employees', { name: '', active: false, key: randomId() })
           }
         >
           Add employee

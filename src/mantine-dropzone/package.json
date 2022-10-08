@@ -1,18 +1,18 @@
 {
   "name": "@mantine/dropzone",
   "description": "Dropzone component built with Mantine theme and components",
-  "version": "4.2.12",
+  "version": "5.5.4",
   "main": "cjs/index.js",
   "module": "esm/index.js",
   "types": "lib/index.d.ts",
   "license": "MIT",
   "author": "Vitaly Rtishchev <rtivital@gmail.com>",
   "sideEffects": false,
-  "homepage": "https://mantine.dev/others/prism/",
+  "homepage": "https://mantine.dev/others/dropzone/",
   "repository": {
     "url": "https://github.com/mantinedev/mantine.git",
     "type": "git",
-    "directory": "src/mantine-prism"
+    "directory": "src/mantine-dropzone"
   },
   "keywords": [
     "react",
@@ -28,13 +28,14 @@
     "upload"
   ],
   "peerDependencies": {
-    "@mantine/core": "4.2.12",
-    "@mantine/hooks": "4.2.12",
+    "@mantine/core": "5.5.4",
+    "@mantine/hooks": "5.5.4",
     "react": ">=16.8.0",
     "react-dom": ">=16.8.0"
   },
   "dependencies": {
-    "react-dropzone": "^11.4.2"
+    "react-dropzone": "14.2.2",
+    "@mantine/utils": "5.5.4"
   },
   "devDependencies": {}
 }

@@ -8,5 +8,7 @@ export function size(props: GetSize) {
     return props.size;
   }
 
-  return props.sizes[props.size] || props.size || props.sizes.md;
+  const computedSize = props.sizes[props.size];
+
+  return computedSize !== undefined ? computedSize : props.size || props.sizes.md;
 }

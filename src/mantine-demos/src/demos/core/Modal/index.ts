@@ -5,3 +5,5 @@ export { overlay } from './Modal.demo.overlay';
 export { overflow } from './Modal.demo.overflow';
 export { transitions } from './Modal.demo.transitions';
 export { centered } from './Modal.demo.centered';
+export { fullScreen } from './Modal.demo.fullScreen';
+export { sizeAuto } from './Modal.demo.sizeAuto';

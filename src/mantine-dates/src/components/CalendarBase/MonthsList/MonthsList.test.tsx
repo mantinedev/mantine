@@ -6,6 +6,7 @@ import { MonthsList, MonthsListProps } from './MonthsList';
 
 const defaultProps: MonthsListProps = {
   amountOfMonths: 1,
+  paginateBy: 1,
   month: new Date(2021, 11, 1),
   locale: 'en',
   allowLevelChange: true,
@@ -24,10 +25,10 @@ describe('@mantine/dates/MonthsList', () => {
     <MonthsList {...defaultProps} amountOfMonths={3} />,
   ]);
 
-  it('calls onNextLevel when level label is clicked', () => {
+  it('calls onNextLevel when level label is clicked', async () => {
     const spy = jest.fn();
     const { container } = render(<MonthsList {...defaultProps} onNextLevel={spy} />);
-    userEvent.click(container.querySelector('.mantine-MonthsList-calendarHeaderLevel'));
+    await userEvent.click(container.querySelector('.mantine-MonthsList-calendarHeaderLevel'));
     expect(spy).toHaveBeenCalled();
   });
 
@@ -36,14 +37,14 @@ describe('@mantine/dates/MonthsList', () => {
     expect(screen.getByText('December 2021')).toBeInTheDocument();
   });
 
-  it('calls onMonthChange when next/previous buttons are clicked', () => {
+  it('calls onMonthChange when next/previous buttons are clicked', async () => {
     const spy = jest.fn();
     render(<MonthsList {...defaultProps} month={new Date(2021, 11, 1)} onMonthChange={spy} />);
     const nextControl = screen.getByLabelText('test-next-month');
     const previousControl = screen.getByLabelText('test-previous-month');
-    userEvent.click(nextControl);
+    await userEvent.click(nextControl);
     expect(spy).toHaveBeenLastCalledWith(new Date(2022, 0, 1));
-    userEvent.click(previousControl);
+    await userEvent.click(previousControl);
     expect(spy).toHaveBeenLastCalledWith(new Date(2021, 10, 1));
   });
 

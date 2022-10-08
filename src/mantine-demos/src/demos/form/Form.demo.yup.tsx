@@ -1,4 +1,5 @@
 /* eslint-disable no-console */
+import { MantineDemo } from '@mantine/ds';
 import { SchemaBase } from './_schema-base';
 
 const code = `
@@ -14,7 +15,7 @@ const schema = Yup.object().shape({
 
 function Demo() {
   const form = useForm({
-    schema: yupResolver(schema),
+    validate: yupResolver(schema),
     initialValues: {
       name: '',
       email: '',
@@ -26,20 +27,20 @@ function Demo() {
     <Box sx={{ maxWidth: 340 }} mx="auto">
       <form onSubmit={form.onSubmit((values) => console.log(values))}>
         <TextInput
-          required
+          withAsterisk
           label="Email"
           placeholder="example@mail.com"
           {...form.getInputProps('email')}
         />
         <TextInput
-          required
+          withAsterisk
           label="Name"
           placeholder="John Doe"
           mt="sm"
           {...form.getInputProps('name')}
         />
         <NumberInput
-          required
+          withAsterisk
           label="Age"
           placeholder="Your age"
           mt="sm"

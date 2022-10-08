@@ -1,8 +1,9 @@
 import { DatePicker } from '@mantine/dates';
+import { MantineDemo } from '@mantine/ds';
 import React from 'react';
 
 const codeTemplate = (props: string) => `
-import { Autocomplete } from '@mantine/core';
+import { DatePicker } from '@mantine/dates';
 
 function Demo() {
   return <DatePicker placeholder="Pick date" label="Event date"${props} />;
@@ -13,7 +14,7 @@ export const flip: MantineDemo = {
   type: 'configurator',
   component: (props: any) => (
     <div style={{ maxWidth: 340, marginLeft: 'auto', marginRight: 'auto' }}>
-      <DatePicker placeholder="Pick date" label="Event date" {...props} />
+      <DatePicker placeholder="Pick date" label="Event date" {...props} withinPortal />
     </div>
   ),
   codeTemplate,
@@ -21,11 +22,11 @@ export const flip: MantineDemo = {
   configurator: [
     {
       name: 'dropdownPosition',
-      type: 'segmented',
+      type: 'select',
       data: [
-        { label: 'top', value: 'top' },
-        { label: 'bottom', value: 'bottom' },
         { label: 'flip', value: 'flip' },
+        { label: 'bottom-start', value: 'bottom-start' },
+        { label: 'top-start', value: 'top-start' },
       ],
       initialValue: 'flip',
       defaultValue: 'flip',

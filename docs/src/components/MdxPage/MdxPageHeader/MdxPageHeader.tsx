@@ -1,9 +1,11 @@
 import React from 'react';
-import { Title, Text } from '@mantine/core';
-import { MarkGithubIcon, PencilIcon, LawIcon, CalendarIcon } from '@primer/octicons-react';
+import { Title, Text, Badge } from '@mantine/core';
+import { GithubIcon, NpmIcon } from '@mantine/ds';
+import { IconPencil, IconLicense, IconCalendar } from '@tabler/icons';
+import { Link } from 'gatsby';
 import { ImportStatement } from './ImportStatement/ImportStatement';
-import { NpmIcon } from './NpmIcon';
 import { LinkItem } from './LinkItem/LinkItem';
+import { getGradient } from '../../HomePage/get-gradient';
 import { MdxPageProps } from '../../../types';
 import useStyles from './MdxPageHeader.styles';
 
@@ -24,7 +26,19 @@ export function MdxPageHeader({ frontmatter }: MdxPageProps) {
   return (
     <div className={classes.wrapper}>
       <div className={cx(classes.header, { [classes.withTabs]: hasTabs })}>
-        <Title className={classes.title}>{frontmatter.pageTitle || frontmatter.title}</Title>
+        <Title className={classes.title}>
+          {frontmatter.pageTitle || frontmatter.title}
+          {frontmatter.polymorphic && (
+            <Badge
+              component={Link}
+              to="/guides/polymorphic/"
+              variant="gradient"
+              sx={(theme) => ({ backgroundImage: getGradient(theme, 'bg'), cursor: 'pointer' })}
+            >
+              polymorphic
+            </Badge>
+          )}
+        </Title>
 
         <Text size="lg" className={classes.description}>
           {frontmatter.description}
@@ -35,7 +49,7 @@ export function MdxPageHeader({ frontmatter }: MdxPageProps) {
         {frontmatter.source && (
           <LinkItem
             label="Source"
-            icon={<MarkGithubIcon size={14} />}
+            icon={<GithubIcon size={14} />}
             link={`${SOURCE_BASE}/${frontmatter.source}`}
           >
             View source code
@@ -43,11 +57,7 @@ export function MdxPageHeader({ frontmatter }: MdxPageProps) {
         )}
 
         {frontmatter.release && (
-          <LinkItem
-            label="Source code"
-            icon={<MarkGithubIcon size={14} />}
-            link={frontmatter.release}
-          >
+          <LinkItem label="Source code" icon={<GithubIcon size={14} />} link={frontmatter.release}>
             Release on GitHub
           </LinkItem>
         )}
@@ -55,7 +65,7 @@ export function MdxPageHeader({ frontmatter }: MdxPageProps) {
         {frontmatter.date && (
           <LinkItem
             label="Release date"
-            icon={<CalendarIcon size={14} />}
+            icon={<IconCalendar size={14} stroke={1.5} />}
             link={frontmatter.release}
           >
             {frontmatter.date}
@@ -65,7 +75,7 @@ export function MdxPageHeader({ frontmatter }: MdxPageProps) {
         {frontmatter.docs && (
           <LinkItem
             label="Docs"
-            icon={<PencilIcon size={14} />}
+            icon={<IconPencil size={14} stroke={1.5} />}
             link={`${DOCS_BASE}/${frontmatter.docs}`}
           >
             Edit this page
@@ -75,7 +85,7 @@ export function MdxPageHeader({ frontmatter }: MdxPageProps) {
         {frontmatter.package && (
           <LinkItem
             label="Package"
-            icon={<NpmIcon />}
+            icon={<NpmIcon size={14} />}
             link={`https://www.npmjs.com/package/${frontmatter.package.replace(
               'mantine-',
               '@mantine/'
@@ -88,7 +98,7 @@ export function MdxPageHeader({ frontmatter }: MdxPageProps) {
         {frontmatter.license && (
           <LinkItem
             label="License"
-            icon={<LawIcon size={14} />}
+            icon={<IconLicense size={14} stroke={1.5} />}
             link="https://github.com/mantinedev/mantine/blob/master/LICENSE"
           >
             MIT

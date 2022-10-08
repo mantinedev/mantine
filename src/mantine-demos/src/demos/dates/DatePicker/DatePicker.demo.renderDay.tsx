@@ -1,5 +1,6 @@
 import React from 'react';
 import { DatePicker } from '@mantine/dates';
+import { MantineDemo } from '@mantine/ds';
 import { Indicator } from '@mantine/core';
 
 const code = `
@@ -30,6 +31,7 @@ function Demo() {
       <DatePicker
         placeholder="Pick date"
         label="Event date"
+        withinPortal
         renderDay={(date) => {
           const day = date.getDate();
           return (

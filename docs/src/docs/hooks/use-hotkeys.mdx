@@ -44,6 +44,20 @@ which should be used with `onKeyDown`:
 
 <Demo data={HooksDemos.useHotkeysDemo} />
 
+With `getHotkeyHandler` you can also add events to any dom node using `.addEventListener`:
+
+```tsx
+import { getHotkeyHandler } from '@mantine/hooks';
+
+document.body.addEventListener(
+  'keydown',
+  getHotkeyHandler([
+    ['mod+Enter', () => console.log('Submit')],
+    ['mod+S', () => console.log('Save')],
+  ])
+);
+```
+
 ## Supported formats
 
 - `mod+S` – detects `⌘+S` on macOS and `Ctrl+S` on Windows
@@ -54,5 +68,7 @@ which should be used with `onKeyDown`:
 ## Definition
 
 ```tsx
-function useHotkeys(hotKeyItem: Array<[hotkey: string, handler: (event: KeyboardEvent) => void]>): void;
+function useHotkeys(
+  hotKeyItem: Array<[hotkey: string, handler: (event: KeyboardEvent) => void]>
+): void;
 ```

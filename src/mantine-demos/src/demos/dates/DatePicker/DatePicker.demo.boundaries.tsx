@@ -1,5 +1,6 @@
 import React from 'react';
 import dayjs from 'dayjs';
+import { MantineDemo } from '@mantine/ds';
 import { DatePicker } from '@mantine/dates';
 
 const code = `
@@ -26,6 +27,7 @@ function Demo() {
         label="Event date"
         minDate={dayjs(new Date()).startOf('month').add(5, 'days').toDate()}
         maxDate={dayjs(new Date()).endOf('month').subtract(5, 'days').toDate()}
+        withinPortal
       />
     </div>
   );

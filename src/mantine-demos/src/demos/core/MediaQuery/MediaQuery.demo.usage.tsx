@@ -1,8 +1,9 @@
 import React from 'react';
-import { useMantineTheme, MediaQuery, Group, Box, CSSObject } from '@mantine/core';
+import { MantineDemo } from '@mantine/ds';
+import { useMantineTheme, MediaQuery, Stack, Box, CSSObject } from '@mantine/core';
 
 const code = `
-import { Group, Box, MediaQuery, useMantineTheme } from '@mantine/core';
+import { useMantineTheme, MediaQuery, Stack, Box, CSSObject } from '@mantine/core';
 
 function Demo() {
   const theme = useMantineTheme();
@@ -24,7 +25,7 @@ function Demo() {
   };
 
   return (
-    <Group direction="column" spacing={5}>
+    <Stack spacing={5}>
       <MediaQuery largerThan="lg" styles={highlight}>
         <Box sx={boxStyles}>- larger than lg</Box>
       </MediaQuery>
@@ -37,7 +38,7 @@ function Demo() {
       <MediaQuery smallerThan={1500} largerThan={800} styles={highlight}>
         <Box sx={boxStyles}>- Smaller than 1500px, larger than 800px</Box>
       </MediaQuery>
-    </Group>
+    </Stack>
   );
 }
 `;
@@ -62,7 +63,7 @@ function Demo() {
   };
 
   return (
-    <Group direction="column" spacing={5}>
+    <Stack spacing={5}>
       <MediaQuery largerThan="lg" styles={highlight}>
         <Box sx={boxStyles}>- larger than lg</Box>
       </MediaQuery>
@@ -75,7 +76,7 @@ function Demo() {
       <MediaQuery smallerThan={1500} largerThan={800} styles={highlight}>
         <Box sx={boxStyles}>- Smaller than 1500px, larger than 800px</Box>
       </MediaQuery>
-    </Group>
+    </Stack>
   );
 }
 

@@ -6,7 +6,7 @@ Utilities to setup Mantine server side rendering with Next.js
 
 ## Installation
 
-```sh
+```bash
 # With yarn
 yarn add @mantine/hooks @mantine/core @mantine/next
 

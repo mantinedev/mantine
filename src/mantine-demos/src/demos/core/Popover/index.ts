@@ -1,5 +1,6 @@
 export { usage } from './Popover.demo.usage';
 export { form } from './Popover.demo.form';
 export { hover } from './Popover.demo.hover';
-export { positions } from './Popover.demo.positions';
-export { configurator } from './Popover.demo.configurator';
+export { sameWidth } from './Popover.demo.sameWidth';
+export { arrow } from './Popover.demo.arrow';
+export { inline } from './Popover.demo.inline';

@@ -7,9 +7,9 @@ import {
   Selectors,
   Box,
   MantineNumberSize,
-  useMantineDefaultProps,
+  useComponentDefaultProps,
 } from '@mantine/core';
-import { useUuid, mergeRefs } from '@mantine/hooks';
+import { useId, mergeRefs } from '@mantine/hooks';
 import { Toolbar, ToolbarStylesNames } from '../Toolbar/Toolbar';
 import { DEFAULT_CONTROLS } from './default-control';
 import useStyles from './RichTextEditor.styles';
@@ -43,12 +43,15 @@ function defaultImageUpload(file: File): Promise<string> {
 
 export interface RichTextEditorProps
   extends DefaultProps<RichTextEditorStylesNames>,
-    Omit<React.ComponentPropsWithoutRef<'div'>, 'onChange'> {
+    Omit<React.ComponentPropsWithoutRef<'div'>, 'onChange' | 'defaultValue'> {
   /** HTML content, value not forced as quill works in uncontrolled mode */
-  value: string | Delta;
+  value?: string | Delta;
+
+  /** Initial value of input */
+  defaultValue?: string | Delta;
 
   /** Called each time value changes */
-  onChange(value: string, delta: Delta, sources: Sources, editor: Editor.UnprivilegedEditor): void;
+  onChange?(value: string, delta: Delta, sources: Sources, editor: Editor.UnprivilegedEditor): void;
 
   /** Called when image image is inserted in editor */
   onImageUpload?(image: File): Promise<string>;
@@ -76,6 +79,9 @@ export interface RichTextEditorProps
 
   /** Extra modules for react-quill */
   modules?: Record<string, any>;
+
+  /** List of formats that should be supported by the editor */
+  formats?: string[];
 }
 
 const defaultProps: Partial<RichTextEditorProps> = {
@@ -91,6 +97,7 @@ export const RichTextEditor = forwardRef<Editor, RichTextEditorProps>(
   (props: RichTextEditorProps, ref) => {
     const {
       value,
+      defaultValue,
       onChange,
       onImageUpload,
       sticky,
@@ -106,10 +113,12 @@ export const RichTextEditor = forwardRef<Editor, RichTextEditorProps>(
       mentions,
       readOnly,
       modules: externalModules,
+      unstyled,
+      formats,
       ...others
-    } = useMantineDefaultProps('RichTextEditor', defaultProps, props);
+    } = useComponentDefaultProps('RichTextEditor', defaultProps, props);
 
-    const uuid = useUuid(id);
+    const uuid = useId(id);
     const editorRef = useRef<Editor>();
     const { classes, cx } = useStyles(
       {
@@ -119,7 +128,7 @@ export const RichTextEditor = forwardRef<Editor, RichTextEditorProps>(
         radius,
         readOnly,
       },
-      { classNames, styles, name: 'RichTextEditor' }
+      { classNames, styles, unstyled, name: 'RichTextEditor' }
     );
 
     const modules = useMemo(
@@ -151,17 +160,20 @@ export const RichTextEditor = forwardRef<Editor, RichTextEditorProps>(
           styles={styles}
           id={uuid}
           className={classes.toolbar}
+          unstyled={unstyled}
         />
 
         <Editor
           theme="snow"
           modules={modules}
-          defaultValue={value}
+          value={value}
+          defaultValue={defaultValue}
           onChange={onChange}
           ref={mergeRefs(editorRef, ref)}
           placeholder={placeholder}
           readOnly={readOnly}
           scrollingContainer="html"
+          formats={formats}
         />
       </Box>
     );

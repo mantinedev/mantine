@@ -1,5 +1,6 @@
 import React, { useRef } from 'react';
 import { Button, Group } from '@mantine/core';
+import { MantineDemo } from '@mantine/ds';
 import { BaseDemo } from './_base';
 
 const code = `
@@ -8,7 +9,7 @@ import { Button, Group } from '@mantine/core';
 import { Dropzone } from '@mantine/dropzone';
 
 function Demo() {
-  const openRef = useRef<() => void>();
+  const openRef = useRef<() => void>(null);
 
   return (
     <>
@@ -25,7 +26,7 @@ function Demo() {
 `;
 
 function Demo() {
-  const openRef = useRef<() => void>();
+  const openRef = useRef<() => void>(null);
 
   return (
     <>

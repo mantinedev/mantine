@@ -42,8 +42,8 @@ describe('@mantine/core/Month/Day', () => {
     expect(spy).toHaveBeenCalledWith(defaultProps.value, expect.anything());
   });
 
-  it('sets data-mantine-stop-propagation attribute', () => {
-    render(<Day {...defaultProps} />);
+  it('sets data-mantine-stop-propagation attribute if stopPropagation prop is true', () => {
+    render(<Day {...defaultProps} stopPropagation />);
     expect(screen.getByRole('button')).toHaveAttribute('data-mantine-stop-propagation', 'true');
   });
 

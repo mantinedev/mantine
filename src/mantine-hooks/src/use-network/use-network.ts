@@ -2,22 +2,17 @@ import { useState, useEffect, useCallback } from 'react';
 import { useWindowEvent } from '../use-window-event/use-window-event';
 
 interface NetworkStatus {
-  downlink: number;
-  effectiveType: 'slow-2g' | '2g' | '3g' | '4g';
-  saveData: boolean;
-  rtt: number;
+  downlink?: number;
+  downlinkMax?: number;
+  effectiveType?: 'slow-2g' | '2g' | '3g' | '4g';
+  rtt?: number;
+  saveData?: boolean;
+  type?: 'bluetooth' | 'cellular' | 'ethernet' | 'wifi' | 'wimax' | 'none' | 'other' | 'unknown';
 }
-
-const defaultValue: NetworkStatus = {
-  downlink: 10,
-  effectiveType: '4g',
-  saveData: false,
-  rtt: 50,
-};
 
 function getConnection(): NetworkStatus {
   if (typeof navigator === 'undefined') {
-    return defaultValue;
+    return {};
   }
 
   const _navigator = navigator as any;
@@ -25,19 +20,23 @@ function getConnection(): NetworkStatus {
     _navigator.connection || _navigator.mozConnection || _navigator.webkitConnection;
 
   if (!connection) {
-    return defaultValue;
+    return {};
   }
 
   return {
     downlink: connection?.downlink,
+    downlinkMax: connection?.downlinkMax,
     effectiveType: connection?.effectiveType,
-    saveData: connection?.saveData,
     rtt: connection?.rtt,
+    saveData: connection?.saveData,
+    type: connection?.type,
   };
 }
 
 export function useNetwork() {
-  const [status, setStatus] = useState({ online: true, ...getConnection() });
+  const [status, setStatus] = useState<{ online: boolean } & NetworkStatus>({
+    online: true,
+  });
   const handleConnectionChange = useCallback(
     () => setStatus((current) => ({ ...current, ...getConnection() })),
     []
@@ -47,9 +46,12 @@ export function useNetwork() {
   useWindowEvent('offline', () => setStatus({ online: false, ...getConnection() }));
 
   useEffect(() => {
-    if (navigator.connection) {
-      navigator.connection.addEventListener('change', handleConnectionChange);
-      return () => navigator.connection.removeEventListener('change', handleConnectionChange);
+    const _navigator = navigator as any;
+
+    if (_navigator.connection) {
+      setStatus({ online: true, ...getConnection() });
+      _navigator.connection.addEventListener('change', handleConnectionChange);
+      return () => _navigator.connection.removeEventListener('change', handleConnectionChange);
     }
 
     return undefined;

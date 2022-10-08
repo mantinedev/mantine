@@ -20,21 +20,21 @@ import { SpotlightDemos } from '@mantine/demos';
 
 Package depends on `@mantine/core` and `@mantine/hooks`.
 
-Install with npm:
-
-```sh
-npm install @mantine/spotlight @mantine/core @mantine/hooks
-```
-
 Install with yarn:
 
-```sh
-yarn add @mantine/spotlight @mantine/core @mantine/hooks
+```bash
+yarn add @mantine/spotlight
+```
+
+Install with npm:
+
+```bash
+npm install @mantine/spotlight
 ```
 
 ## Usage
 
-Spotlight component let you build a popup search interface which can be triggered with keyboard
+`Spotlight` component let you build a popup search interface which can be triggered with keyboard
 shortcut or programmatically from anywhere inside your application. To get started, wrap your application
 with `SpotlightProvider` component:
 
@@ -46,11 +46,11 @@ Note that if you are using [MantineProvider](/theming/mantine-provider/), `Spotl
 import { MantineProvider } from '@mantine/core';
 import { SpotlightProvider } from '@mantine/spotlight';
 
-function App() {
+function Demo() {
   return (
     <MantineProvider>
-      <SpotlightProvider>
-        <YourApp />
+      <SpotlightProvider actions={[]}>
+        <App />
       </SpotlightProvider>
     </MantineProvider>
   );
@@ -68,10 +68,10 @@ You can setup multiple shortcuts, for example, Mantine documentation uses the fo
 ```tsx
 import { SpotlightProvider } from '@mantine/spotlight';
 
-function App() {
+function Demo() {
   return (
-    <SpotlightProvider shortcut={['mod + P', 'mod + K', '/']}>
-      <YourApp />
+    <SpotlightProvider shortcut={['mod + P', 'mod + K', '/']} actions={[]}>
+      <App />
     </SpotlightProvider>
   );
 }
@@ -97,10 +97,10 @@ To disabled keyboard shortcuts set `shortcut={null}`:
 ```tsx
 import { SpotlightProvider } from '@mantine/spotlight';
 
-function App() {
+function Demo() {
   return (
-    <SpotlightProvider shortcut={null}>
-      <YourApp />
+    <SpotlightProvider shortcut={null} actions={[]}>
+      <App />
     </SpotlightProvider>
   );
 }
@@ -108,7 +108,7 @@ function App() {
 
 ## use-spotlight hook
 
-`use-spotlight` hook lets you control spotlight from anywhere in your application.
+`useSpotlight` hook lets you control spotlight from anywhere in your application.
 For example, it can be used to open spotlight with button click:
 
 ```tsx
@@ -119,13 +119,13 @@ function SpotlightControl() {
   const spotlight = useSpotlight();
   return (
     <Group position="center">
-      <Button onClick={spotlight.openSpotlight}>Open spotlight</Button>
+      <Button onClick={() => spotlight.openSpotlight()}>Open spotlight</Button>
     </Group>
   );
 }
 ```
 
-`use-spotlight` returns an object with the following properties:
+`useSpotlight` returns an object with the following properties:
 
 ```tsx
 interface UseSpotlight {
@@ -246,27 +246,27 @@ import type { SpotlightAction } from '@mantine/spotlight';
 
 ## Actions filtering
 
-When user searches spotlight actions are filtered based on the following action properties:
+When user searches, spotlight actions are filtered based on the following action properties:
 
 - `title` – `string`
 - `description` – `string`
 - `keywords` – `string | string[]`
 
 You can change filtering logic by setting `filter` prop on `SpotlightProvider`.
-The following example filters actions only by title:
+The following example filters actions only by `title`:
 
 <Demo data={SpotlightDemos.filter} />
 
 ## Actions limit
 
-If you have a large list of actions, most of them will not be get to the initial list (when user have not enter any text yet).
-You can control how many actions are displayed at a time with `limit` prop:
+If you have a large list of actions, most of them won't be presented in the initial list (when user have not entered any text yet).
+You can control how many actions are displayed at a time with the `limit` prop:
 
 <Demo data={SpotlightDemos.large} />
 
 ## Register additional actions
 
-You can register any amount of additional actions with `registerActions` function on `use-spotlight` hook.
+You can register any amount of additional actions with `registerActions` function on `useSpotlight` hook.
 To remove actions from the list use `removeActions` function:
 
 <Demo data={SpotlightDemos.register} />
@@ -291,10 +291,17 @@ for example, you can add a footer:
 
 ## Close spotlight on action trigger
 
-By default, spotlight will be closed with any action is triggered with mouse click or `Enter` key.
+By default, spotlight will be closed when any action is triggered with mouse click or `Enter` key.
 To change this behavior set `closeOnActionTrigger={false}` prop on `SpotlightProvider`:
 
 <Demo data={SpotlightDemos.closeOnTrigger} />
+
+## Close spotlight on specific action trigger
+
+Other than with the global `closeOnActionTrigger` property, the `closeOnTrigger` property can be defined
+for specific actions. The action will then ignore the `closeOnActionTrigger` property and use its own definition.
+
+<Demo data={SpotlightDemos.actionsCloseOnTrigger} />
 
 ## Highlight query
 

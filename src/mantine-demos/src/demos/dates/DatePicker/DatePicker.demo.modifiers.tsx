@@ -1,5 +1,6 @@
 import React from 'react';
 import { createStyles } from '@mantine/core';
+import { MantineDemo } from '@mantine/ds';
 import { DatePicker } from '@mantine/dates';
 
 const code = `
@@ -19,7 +20,6 @@ const useStyles = createStyles((theme) => ({
     color: \`\${theme.white} !important\`,
   },
 }));
-
 
 function Demo() {
   const { classes, cx } = useStyles();
@@ -64,6 +64,7 @@ function Demo() {
         disableOutsideEvents
         placeholder="Pick date"
         label="Event date"
+        withinPortal
         dayClassName={(date, modifiers) =>
           cx({
             [classes.outside]: modifiers.outside,

@@ -7,8 +7,4 @@ export default createStyles((theme) => ({
     userSelect: 'none',
     color: theme.colorScheme === 'dark' ? theme.white : theme.black,
   },
-
-  image: {
-    height: 30,
-  },
 }));

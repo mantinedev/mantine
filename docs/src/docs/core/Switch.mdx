@@ -6,9 +6,10 @@ order: 1
 slug: /core/switch/
 category: 'inputs'
 description: 'Capture boolean input from user'
-props: ['Switch']
+componentPrefix: 'Switch'
+props: ['Switch', 'SwitchGroup']
 import: "import { Switch } from '@mantine/core';"
-source: 'mantine-core/src/components/Switch/Switch.tsx'
+source: 'mantine-core/src/Switch/Switch.tsx'
 docs: 'core/Switch.mdx'
 styles: ['Switch']
 ---
@@ -35,6 +36,36 @@ function Demo() {
 
 <Demo data={SwitchDemos.labels} />
 
+## Icon labels
+
+<Demo data={SwitchDemos.iconLabels} />
+
+## Thumb icon
+
+<Demo data={SwitchDemos.thumbIcon} />
+
+## Switch.Group
+
+<Demo data={SwitchDemos.groupConfigurator} />
+
+## Controlled Switch.Group
+
+```tsx
+import { useState } from 'react';
+import { Checkbox } from '@mantine/core';
+
+function Demo() {
+  const [value, setValue] = useState<string[]>([]);
+
+  return (
+    <Switch.Group value={value} onChange={setValue}>
+      <Switch value="react" label="React" />
+      <Switch value="svelte" label="Svelte" />
+    </Switch.Group>
+  );
+}
+```
+
 ## Get input ref
 
 ```tsx
@@ -42,7 +73,7 @@ import { useRef } from 'react';
 import { Switch } from '@mantine/core';
 
 function Demo() {
-  const ref = useRef<HTMLInputElement>();
+  const ref = useRef<HTMLInputElement>(null);
   return <Switch ref={ref} />;
 }
 ```

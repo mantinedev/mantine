@@ -1,5 +1,6 @@
 import React from 'react';
 import { Navbar } from '@mantine/core';
+import { MantineDemo } from '@mantine/ds';
 import { User } from './_user';
 import { Brand } from './_brand';
 import { MainLinks } from './_mainLinks';

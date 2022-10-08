@@ -42,13 +42,13 @@ describe('@mantine/core/MonthPicker', () => {
     expect(screen.getByText('2031')).toBeInTheDocument();
   });
 
-  it('calls onYearChange when next/previous buttons are clicked', () => {
+  it('calls onYearChange when next/previous buttons are clicked', async () => {
     const spy = jest.fn();
     const { container } = render(<MonthPicker {...defaultProps} year={2031} onYearChange={spy} />);
     const controls = container.querySelectorAll(HEADER_CONTROL_SELECTOR);
-    userEvent.click(controls[1]);
+    await userEvent.click(controls[1]);
     expect(spy).toHaveBeenLastCalledWith(2032);
-    userEvent.click(controls[0]);
+    await userEvent.click(controls[0]);
     expect(spy).toHaveBeenLastCalledWith(2030);
   });
 
@@ -73,10 +73,10 @@ describe('@mantine/core/MonthPicker', () => {
     expect(container.querySelector(ACTIVE_CONTROL_SELECTOR).textContent).toBe('Dec');
   });
 
-  it('calls onChange when month control button is clicked', () => {
+  it('calls onChange when month control button is clicked', async () => {
     const spy = jest.fn();
     const { container } = render(<MonthPicker {...defaultProps} onChange={spy} />);
-    userEvent.click(container.querySelectorAll(CONTROL_SELECTOR)[3]);
+    await userEvent.click(container.querySelectorAll(CONTROL_SELECTOR)[3]);
     expect(spy).toHaveBeenCalledWith(3);
   });
 
@@ -102,10 +102,10 @@ describe('@mantine/core/MonthPicker', () => {
     expect(screen.getByLabelText('previous-test')).toBeInTheDocument();
   });
 
-  it('calls onNextLevel when level label is clicked', () => {
+  it('calls onNextLevel when level label is clicked', async () => {
     const spy = jest.fn();
     const { container } = render(<MonthPicker {...defaultProps} onNextLevel={spy} />);
-    userEvent.click(container.querySelector(LEVEL_SELECTOR));
+    await userEvent.click(container.querySelector(LEVEL_SELECTOR));
     expect(spy).toHaveBeenCalled();
   });
 

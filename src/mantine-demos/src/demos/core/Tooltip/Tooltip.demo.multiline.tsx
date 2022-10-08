@@ -1,4 +1,5 @@
 import React from 'react';
+import { MantineDemo } from '@mantine/ds';
 import { Tooltip, Group, Button } from '@mantine/core';
 
 const code = `
@@ -7,7 +8,7 @@ import { Tooltip, Button } from '@mantine/core';
 function Demo() {
   return (
     <Tooltip
-      wrapLines
+      multiline
       width={220}
       withArrow
       transition="fade"
@@ -24,7 +25,7 @@ export function Demo() {
   return (
     <Group position="center">
       <Tooltip
-        wrapLines
+        multiline
         width={220}
         withArrow
         transition="fade"

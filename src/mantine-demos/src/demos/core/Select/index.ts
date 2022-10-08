@@ -1,5 +1,6 @@
 export { usage } from './Select.demo.usage';
 export { searchable } from './Select.demo.searchable';
+export { searchableControlled } from './Select.demo.searchableControlled';
 export { large } from './Select.demo.large';
 export { configurator } from './Select.demo.configurator';
 export { flip } from './Select.demo.flip';
@@ -15,3 +16,5 @@ export { rightSection } from './Select.demo.rightSection';
 export { group } from './Select.demo.group';
 export { scrollbars } from './Select.demo.scrollbars';
 export { deselect } from './Select.demo.deselect';
+export { stylesApi } from './Select.demo.stylesApi';
+export { readOnly } from './Select.demo.readOnly';

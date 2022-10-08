@@ -17,16 +17,18 @@ import { NotificationDemos, NotificationsDemos } from '@mantine/demos';
 
 ## Installation
 
-Install with npm:
-
-```sh
-npm install @mantine/notifications @mantine/core @mantine/hooks
-```
+Package depends on `@mantine/core` and `@mantine/hooks`.
 
 Install with yarn:
 
-```sh
-yarn add @mantine/notifications @mantine/core @mantine/hooks
+```bash
+yarn add @mantine/notifications
+```
+
+Install with npm:
+
+```bash
+npm install @mantine/notifications
 ```
 
 ## Demo
@@ -38,13 +40,14 @@ yarn add @mantine/notifications @mantine/core @mantine/hooks
 Wrap your application with NotificationsProvider:
 
 ```tsx
+import { MantineProvider } from '@mantine/core';
 import { NotificationsProvider } from '@mantine/notifications';
 
-function App() {
+function Demo() {
   return (
-    <MantineProvider>
+    <MantineProvider withNormalizeCSS withGlobalStyles>
       <NotificationsProvider>
-        <YourApp />
+        <App />
       </NotificationsProvider>
     </MantineProvider>
   );
@@ -87,6 +90,7 @@ Notification state item can have these properties:
 All properties except **message** are optional.
 
 ```tsx
+import { IconX } from '@tabler/icons';
 import { showNotification } from '@mantine/notifications';
 
 // Bare minimum – message is required for all notifications
@@ -102,7 +106,7 @@ showNotification({
   title: "You've been compromised",
   message: 'Leave the building immediately',
   color: 'red',
-  icon: <Cross1Icon />,
+  icon: <IconX />,
   className: 'my-notification-class',
   style: { backgroundColor: 'red' },
   sx: { backgroundColor: 'red' },
@@ -116,7 +120,7 @@ Notifications preview (`message` prop used as `children`):
 
 ## Customize notification styles
 
-You can use `sx`, `style`, `className` or [Styles API](/theming/styles-api/) `classNames`, `styles` props to customize notification styles:
+You can use `sx`, `style`, `className` or [Styles API](/styles/styles-api/) `classNames`, `styles` props to customize notification styles:
 
 <Demo data={NotificationsDemos.customize} />
 
@@ -135,10 +139,10 @@ Position cannot be changed per notification. NotificationsProvider supports the 
 ```tsx
 import { NotificationsProvider } from '@mantine/notifications';
 
-function App() {
+function Demo() {
   return (
     <NotificationsProvider position="top-right" zIndex={2077}>
-      <YourApp />
+      <App />
     </NotificationsProvider>
   );
 }
@@ -153,10 +157,10 @@ You can limit maximum amount of notifications that can be displayed by setting
 ```tsx
 import { NotificationsProvider } from '@mantine/notifications';
 
-function App() {
+function Demo() {
   return (
     <NotificationsProvider limit={5}>
-      <YourApp />
+      <App />
     </NotificationsProvider>
   );
 }
@@ -195,10 +199,10 @@ You can configure auto close timeout with NotificationsProvider:
 import { NotificationsProvider } from '@mantine/notifications';
 
 // All notifications will be closed automatically in 4000ms
-function App() {
+function Demo() {
   return (
     <NotificationsProvider autoClose={4000}>
-      <YourApp />
+      <App />
     </NotificationsProvider>
   );
 }

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { useForm } from '@mantine/hooks';
-import { EnvelopeClosedIcon, LockClosedIcon } from '@modulz/radix-icons';
+import { useForm } from '@mantine/form';
+import { IconLock, IconAt } from '@tabler/icons';
 import {
   TextInput,
   PasswordInput,
@@ -45,20 +45,6 @@ export function AuthenticationForm({
       password: '',
       confirmPassword: '',
       termsOfService: true,
-    },
-
-    validationRules: {
-      firstName: (value) => formType === 'login' || value.trim().length >= 2,
-      lastName: (value) => formType === 'login' || value.trim().length >= 2,
-      email: (value) => /^\S+@\S+$/.test(value),
-      password: (value) => /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$/.test(value),
-      confirmPassword: (val, values) => formType === 'login' || val === values.password,
-    },
-
-    errorMessages: {
-      email: 'Invalid email',
-      password: 'Password should contain 1 number, 1 letter and at least 6 characters',
-      confirmPassword: "Passwords don't match. Try again",
     },
   });
 
@@ -111,7 +97,7 @@ export function AuthenticationForm({
           required
           placeholder="Your email"
           label="Email"
-          icon={<EnvelopeClosedIcon />}
+          icon={<IconAt size={16} stroke={1.5} />}
           {...form.getInputProps('email')}
         />
 
@@ -120,7 +106,7 @@ export function AuthenticationForm({
           required
           placeholder="Password"
           label="Password"
-          icon={<LockClosedIcon />}
+          icon={<IconLock size={16} stroke={1.5} />}
           {...form.getInputProps('password')}
         />
 
@@ -130,7 +116,7 @@ export function AuthenticationForm({
             required
             label="Confirm Password"
             placeholder="Confirm password"
-            icon={<LockClosedIcon />}
+            icon={<IconLock size={16} stroke={1.5} />}
             {...form.getInputProps('confirmPassword')}
           />
         )}
@@ -154,7 +140,7 @@ export function AuthenticationForm({
             <Anchor
               component="button"
               type="button"
-              color="gray"
+              color="dimmed"
               onClick={toggleFormType}
               size="sm"
             >

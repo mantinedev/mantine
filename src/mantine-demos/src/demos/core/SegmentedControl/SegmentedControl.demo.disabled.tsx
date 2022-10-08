@@ -1,4 +1,5 @@
 import React from 'react';
+import { MantineDemo } from '@mantine/ds';
 import { SegmentedControl, Stack, Text } from '@mantine/core';
 
 const code = `

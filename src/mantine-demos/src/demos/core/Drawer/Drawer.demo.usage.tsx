@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Drawer, Button, Group } from '@mantine/core';
+import { MantineDemo } from '@mantine/ds';
 import { AuthenticationForm } from '../../../shared/AuthenticationForm/AuthenticationForm';
 
 const code = `

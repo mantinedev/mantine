@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'gatsby';
 import { Container, Group, Button, Text, useMantineTheme, SimpleGrid } from '@mantine/core';
-import { MarkGithubIcon } from '@primer/octicons-react';
+import { GithubIcon } from '@mantine/ds';
 import { Hero } from './Hero';
 import { FEATURES_DATA } from './features';
 import useStyles from './Jumbotron.styles';
@@ -13,7 +13,7 @@ export function Jumbotron() {
   const features = FEATURES_DATA.map((feature) => (
     <div className={classes.feature} key={feature.title}>
       <div className={classes.featureIcon}>
-        <feature.icon size={28} />
+        <feature.icon size={28} stroke={1.5} />
       </div>
 
       <div className={classes.featureBody}>
@@ -34,7 +34,7 @@ export function Jumbotron() {
 
         <Text className={classes.description}>
           Build fully functional accessible web applications faster than ever – Mantine includes
-          more than 120 customizable components and hooks to cover you in any situation
+          more than 100 customizable components and 40 hooks to cover you in any situation
         </Text>
 
         <SimpleGrid
@@ -50,7 +50,7 @@ export function Jumbotron() {
         <Group className={classes.controls}>
           <Button
             component={Link}
-            to="/getting-started/"
+            to="/pages/getting-started/"
             size="xl"
             radius="md"
             className={cx(classes.control, classes.controlPrimary)}
@@ -67,7 +67,7 @@ export function Jumbotron() {
             radius="md"
             className={cx(classes.control, classes.githubControl)}
             color={theme.colorScheme === 'dark' ? 'gray' : 'dark'}
-            leftIcon={<MarkGithubIcon size={20} />}
+            leftIcon={<GithubIcon size={22} />}
             styles={{ leftIcon: { marginRight: 12 } }}
           >
             GitHub
