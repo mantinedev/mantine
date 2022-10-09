@@ -115,7 +115,7 @@ export default createStyles(
         borderRadius: theme.fn.radius(radius),
         fontWeight: 700,
         letterSpacing: 0.25,
-        cursor: 'default',
+        cursor: 'inherit',
         textOverflow: 'ellipsis',
         overflow: 'hidden',
         ...getVariantStyles({ theme, variant, color, size, gradient }),
