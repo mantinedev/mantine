@@ -1,5 +1,5 @@
-import { DefaultProps, MantineSize, useMantineTheme } from '@mantine/core';
 import React from 'react';
+import { DefaultProps, MantineSize, useMantineTheme } from '@mantine/styles';
 
 export interface CascaderArrowIconProps
   extends DefaultProps,

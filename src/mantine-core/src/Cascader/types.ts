@@ -3,7 +3,7 @@ import {
   InputStylesNames,
   InputWrapperBaseProps,
   InputWrapperStylesNames,
-} from '@mantine/core';
+} from '../Input';
 import type { CascaderPopoverStylesNames } from './CascaderPopover/CascaderPopover';
 
 export interface CascaderItem {

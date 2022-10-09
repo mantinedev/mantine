@@ -1,5 +1,5 @@
-import { MantineSize } from '@mantine/core';
 import React, { forwardRef } from 'react';
+import { MantineSize } from '@mantine/styles';
 import { ArrowIcon } from './ArrowIcon';
 
 interface DefaultItemProps extends Omit<React.ComponentPropsWithoutRef<'div'>, 'value'> {

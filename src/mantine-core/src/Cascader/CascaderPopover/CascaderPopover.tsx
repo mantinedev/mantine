@@ -1,6 +1,8 @@
 import React from 'react';
 import { ClassNames, MantineShadow, Styles } from '@mantine/styles';
-import { Box, Popover, MantineTransition } from '@mantine/core';
+import { Box } from '../../Box';
+import { Popover } from '../../Popover';
+import { MantineTransition } from '../../Transition';
 
 export type CascaderPopoverStylesNames = 'dropdown';
 

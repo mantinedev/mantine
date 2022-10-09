@@ -1,4 +1,4 @@
-import { DefaultProps, MantineSize } from '@mantine/core';
+import { DefaultProps, MantineSize } from '@mantine/styles';
 import React from 'react';
 import { getItem } from '../getItem';
 import { CascaderItemsList } from '../CascaderItemsList/CascaderItemsList';

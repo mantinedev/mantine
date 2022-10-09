@@ -1,14 +1,8 @@
-import {
-  DefaultProps,
-  getDefaultZIndex,
-  Input,
-  MantineShadow,
-  MantineSize,
-  MantineTransition,
-  useInputProps,
-} from '@mantine/core';
-import { useDidUpdate, useMergedRef, useScrollIntoView, useUncontrolled } from '@mantine/hooks';
 import React, { forwardRef, useEffect, useRef, useState } from 'react';
+import { useDidUpdate, useMergedRef, useScrollIntoView, useUncontrolled } from '@mantine/hooks';
+import { DefaultProps, getDefaultZIndex, MantineShadow, MantineSize } from '@mantine/styles';
+import { Input, useInputProps } from '../Input';
+import { MantineTransition } from '../Transition';
 import { getSelectRightSectionProps } from '../Select/SelectRightSection/get-select-right-section-props';
 import { useStyles } from './Cascader.styles';
 import { CascaderPopover } from './CascaderPopover/CascaderPopover';
@@ -193,7 +187,6 @@ export const Cascader = forwardRef<HTMLInputElement, CascaderProps>((props, ref)
   } = useInputProps('Cascader', defaultProps, props);
 
   const { theme } = useStyles();
-  // default is true for debugging css change to initiallyOpened before merging
   const [dropdownOpened, _setDropdownOpened] = useState(initiallyOpened);
   const [hovered, setHovered] = useState<number[]>([0]);
   const inputRef = useRef<HTMLInputElement>();
