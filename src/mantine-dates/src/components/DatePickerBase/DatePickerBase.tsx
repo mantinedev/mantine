@@ -205,7 +205,7 @@ export const DatePickerBase = forwardRef<HTMLInputElement, DatePickerBaseProps>(
     });
     const { systemStyles, rest } = extractSystemStyles(others);
     const uuid = useId(id);
-    const inputRef = useRef<HTMLButtonElement>();
+    const inputRef = useRef<HTMLInputElement>();
 
     const closeDropdown = () => {
       setDropdownOpened(false);
