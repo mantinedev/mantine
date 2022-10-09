@@ -71,6 +71,7 @@ export function CascaderItems({
             if (!hoveredItem?.children) return <></>;
             return (
               <CascaderItemsList
+                key={`${uuid}-menu-${i + 1}`}
                 data={hoveredItem.children}
                 hovered={hovered}
                 classNames={classNames}

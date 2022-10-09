@@ -1,6 +1,6 @@
 import { DefaultProps, MantineSize, Selectors } from '@mantine/core';
-import { SelectScrollArea } from '@mantine/core/src/Select/SelectScrollArea/SelectScrollArea';
 import React, { forwardRef } from 'react';
+import { SelectScrollArea } from '../../Select/SelectScrollArea/SelectScrollArea';
 import { CascaderItem } from '../types';
 import { useStyles } from './CascaderItemsList.styles';
 
@@ -57,6 +57,7 @@ export const CascaderItemsList = forwardRef<HTMLDivElement, CascaderMenuProps>(
             display: 'flex',
             flexDirection: 'column',
           }}
+          aria-activedescendant={`${uuid}-menu-${nesting}-item-${hovered[nesting]}`}
         >
           {data.map((item, index) => {
             const selected = isItemSelected(item.value, nesting);
@@ -83,10 +84,17 @@ export const CascaderItemsList = forwardRef<HTMLDivElement, CascaderMenuProps>(
                     onItemSelect(item, index);
                   }
                 }}
-                id={`${uuid}-${nesting}-${index}`}
-                role="option"
+                id={`${uuid}-menu-${nesting}-item-${index}`}
+                aria-owns={
+                  hasChildren && selected
+                    ? item.children.map((_, i) => `${uuid}-menu-${nesting + 1}-item-${i}`).join(' ')
+                    : undefined
+                }
+                role="treeitem"
                 tabIndex={-1}
                 aria-selected={hovered[nesting] === index}
+                aria-expanded={hasChildren ? selected : undefined}
+                aria-level={nesting + 1}
                 ref={(node: HTMLDivElement) => {
                   if (itemsRefs && itemsRefs.current) {
                     // eslint-disable-next-line no-param-reassign
@@ -102,6 +110,7 @@ export const CascaderItemsList = forwardRef<HTMLDivElement, CascaderMenuProps>(
                     : null
                 }
                 disabled={item.disabled}
+                aria-disabled={item.disabled}
                 {...item}
               />
             );

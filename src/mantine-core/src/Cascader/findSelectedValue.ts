@@ -1,10 +1,7 @@
 import { CascaderItem } from './types';
 
 /** Returns indexes of items which match the input value */
-export function findSelectedValue(
-  items: CascaderItem[],
-  value: string[] | null
-): number[] | null {
+export function findSelectedValue(items: CascaderItem[], value: string[] | null): number[] | null {
   if (!value) return null;
   const indexes = [];
 

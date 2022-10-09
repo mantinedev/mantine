@@ -13,6 +13,7 @@ const defaultProps: CascaderProps = {
   initiallyOpened: true,
   label: 'test-label',
   withinPortal: false,
+  id: 'cascader',
   data: [
     { value: 'I love', children: [{ value: 'react' }, { value: 'svelte' }, { value: 'vue' }] },
     {
@@ -24,7 +25,7 @@ const defaultProps: CascaderProps = {
 
 describe('@mantine/core/Cascader', () => {
   checkAccessibility([<Cascader {...defaultProps} />]);
-  itSupportsFocusEvents(Cascader, defaultProps, 'input');
+  itSupportsFocusEvents(Cascader, defaultProps, 'input[type="search"]');
   itSupportsInputProps(Cascader, defaultProps, 'Cascader');
   itSupportsSystemProps({
     component: Cascader,
@@ -37,40 +38,56 @@ describe('@mantine/core/Cascader', () => {
 
   it('renders hidden input with current input value', () => {
     const { container } = render(
-      <Cascader {...defaultProps} name="custom-cascader" form="custom-form" value={['I love', 'react']} />
+      <Cascader
+        {...defaultProps}
+        name="custom-cascader"
+        form="custom-form"
+        value={['I love', 'react']}
+      />
     );
-    expect(container.querySelector('input[name="custom-cascader"]')).toHaveValue('I love, react');
+    expect(container.querySelector('input[name="custom-cascader"]')).toHaveValue('I love,react');
     expect(container.querySelector('input[name="custom-cascader"]')).toHaveAttribute(
       'form',
       'custom-form'
     );
   });
 
-  it('opens dropdown when input is clicked (searchable={false})', async () => {
+  it('opens dropdown when input is clicked', async () => {
     render(<Cascader {...defaultProps} initiallyOpened={false} />);
-    expect(screen.queryAllByRole('option')).toHaveLength(0);
+    expect(screen.queryAllByRole('treeitem')).toHaveLength(0);
 
     await userEvent.click(screen.getByRole('searchbox'));
-    expect(screen.queryAllByRole('option')).toHaveLength(defaultProps.data.length);
+    expect(screen.queryAllByRole('treeitem')).toHaveLength(defaultProps.data.length);
   });
 
   it('supports uncontrolled state', async () => {
     render(<Cascader {...defaultProps} initiallyOpened={false} />);
     await userEvent.click(screen.getByRole('searchbox'));
-    await userEvent.click(screen.getAllByRole('option')[0]);
-    expect(screen.queryAllByRole('option')).toHaveLength(0);
-    expect(screen.getByRole('searchbox')).toHaveValue('Test item 1');
+    await userEvent.click(screen.getAllByRole('treeitem')[0]);
+    await userEvent.click(
+      screen.getAllByRole('treeitem').find((el) => el.id === 'cascader-menu-1-item-0')
+    );
+    expect(screen.queryAllByRole('treeitem')).toHaveLength(0);
+    expect(screen.getByRole('searchbox')).toHaveValue('I love,react');
   });
 
   it('supports controlled state', async () => {
     const spy = jest.fn();
     render(
-      <Cascader {...defaultProps} value={['test-item-1']} initiallyOpened={false} onChange={spy} />
+      <Cascader
+        {...defaultProps}
+        value={['I love', 'react']}
+        initiallyOpened={false}
+        onChange={spy}
+      />
     );
     await userEvent.click(screen.getByRole('searchbox'));
-    await userEvent.click(screen.getAllByRole('option')[1]);
-    expect(screen.queryAllByRole('option')).toHaveLength(0);
-    expect(screen.getByRole('searchbox')).toHaveValue('Test item 1');
-    expect(spy).toHaveBeenCalledWith('test-item-2');
+    await userEvent.click(screen.getAllByRole('treeitem')[1]);
+    await userEvent.click(
+      screen.getAllByRole('treeitem').find((el) => el.id === 'cascader-menu-1-item-1')
+    );
+    expect(screen.queryAllByRole('treeitem')).toHaveLength(0);
+    expect(spy).toHaveBeenCalledWith(['I hate', 'solid']);
+    expect(screen.getByRole('searchbox')).toHaveValue('I love,react');
   });
 });

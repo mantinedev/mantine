@@ -12,7 +12,8 @@ interface DefaultItemProps extends Omit<React.ComponentPropsWithoutRef<'div'>, '
 export const DefaultItem = forwardRef<HTMLDivElement, DefaultItemProps>(
   ({ label, value, hasChildren, size, ...rest }: DefaultItemProps, ref) => (
     <div ref={ref} {...rest}>
-      {label || value}{hasChildren && <ArrowIcon size={size} />}
+      {label || value}
+      {hasChildren && <ArrowIcon size={size} />}
     </div>
   )
 );

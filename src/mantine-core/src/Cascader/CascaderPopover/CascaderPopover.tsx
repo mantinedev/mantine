@@ -11,6 +11,7 @@ interface CascaderPopoverDropdownProps {
   maxHeight?: number | string;
   direction?: React.CSSProperties['flexDirection'];
   innerRef?: React.MutableRefObject<HTMLDivElement>;
+  hovered: number[];
 }
 
 function CascaderPopoverDropdown({
@@ -20,24 +21,24 @@ function CascaderPopoverDropdown({
   direction = 'column',
   id,
   innerRef,
+  hovered,
   ...others
 }: CascaderPopoverDropdownProps) {
   return (
     <Popover.Dropdown p={4} onMouseDown={(event) => event.preventDefault()} {...others}>
       <div style={{ maxHeight, display: 'flex' }}>
         <Box<'div'>
-          component={(component || 'div') as any}
-          id={`${id}-items`}
+          component={component}
+          id={`${id}-menus`}
           aria-labelledby={`${id}-label`}
-          role="listbox"
+          role="tree"
+          aria-owns={hovered.map((i) => `${id}-menu-0-item-${i}`).join(' ')}
           onMouseDown={(event) => event.preventDefault()}
           style={{ flex: 1 }}
           data-combobox-popover
           ref={innerRef}
         >
-          <div style={{ display: 'flex', flexDirection: direction, width: '100%' }}>
-            {children}
-          </div>
+          <div style={{ display: 'flex', flexDirection: direction, width: '100%' }}>{children}</div>
         </Box>
       </div>
     </Popover.Dropdown>

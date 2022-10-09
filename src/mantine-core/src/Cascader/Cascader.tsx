@@ -193,7 +193,8 @@ export const Cascader = forwardRef<HTMLInputElement, CascaderProps>((props, ref)
   } = useInputProps('Cascader', defaultProps, props);
 
   const { theme } = useStyles();
-  const [dropdownOpened, _setDropdownOpened] = useState(true);
+  // default is true for debugging css change to initiallyOpened before merging
+  const [dropdownOpened, _setDropdownOpened] = useState(initiallyOpened);
   const [hovered, setHovered] = useState<number[]>([0]);
   const inputRef = useRef<HTMLInputElement>();
   const menuRefs = useRef<HTMLDivElement[]>([]);
@@ -507,13 +508,13 @@ export const Cascader = forwardRef<HTMLInputElement, CascaderProps>((props, ref)
         <CascaderPopover.Target>
           <div
             role="combobox"
-            aria-haspopup="listbox"
-            aria-owns={shouldShowDropdown ? `${inputProps.id}-items` : null}
+            aria-haspopup="tree"
+            aria-owns={shouldShowDropdown ? `${inputProps.id}-menus` : null}
             aria-controls={inputProps.id}
             aria-expanded={shouldShowDropdown}
             tabIndex={-1}
           >
-            <input type="hidden" name={name} value={_value || ''} form={form} />
+            <input type="hidden" name={name} value={_value || ''} form={form} disabled={disabled} />
 
             <Input<'input'>
               autoComplete="off"
@@ -522,13 +523,13 @@ export const Cascader = forwardRef<HTMLInputElement, CascaderProps>((props, ref)
               {...others}
               ref={useMergedRef(ref, inputRef)}
               onKeyDown={handleInputKeydown}
-              __staticSelector="Select"
+              __staticSelector="Cascader"
               value={inputValue}
               placeholder={placeholder}
               onChange={handleInputChange}
               aria-autocomplete="list"
-              aria-controls={shouldShowDropdown ? `${inputProps.id}-items` : null}
-              aria-activedescendant={hovered.length >= 0 ? `${inputProps.id}-${hovered}` : null}
+              aria-controls={shouldShowDropdown ? `${inputProps.id}-menus` : null}
+              aria-activedescendant={shouldShowDropdown ? `${inputProps.id}-menus` : undefined}
               onClick={handleInputClick}
               onBlur={handleInputBlur}
               onFocus={handleInputFocus}
@@ -559,6 +560,7 @@ export const Cascader = forwardRef<HTMLInputElement, CascaderProps>((props, ref)
           direction={direction}
           id={inputProps.id}
           innerRef={scrollableRef}
+          hovered={hovered}
         >
           <CascaderItems
             data={formattedData}
@@ -589,3 +591,5 @@ export const Cascader = forwardRef<HTMLInputElement, CascaderProps>((props, ref)
     </Input.Wrapper>
   );
 });
+
+Cascader.displayName = '@mantine/core/Cascader';

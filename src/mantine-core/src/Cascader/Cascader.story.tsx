@@ -1,5 +1,4 @@
 import { Button, Group } from '@mantine/core';
-import { storiesOf } from '@storybook/react';
 import React, { useState } from 'react';
 import { Cascader } from './Cascader';
 import { CascaderItem } from './types';
@@ -11,6 +10,8 @@ const DEFAULT_DATA: CascaderItem[] = [
     children: [{ value: 'react', disabled: true }, { value: 'solid' }, { value: 'angular' }],
   },
 ];
+
+export default { title: 'Cascader' };
 
 const genItems = ({ num = 10, depth = 1 } = {}) =>
   depth > 0
@@ -24,11 +25,11 @@ function Wrapper({ children }) {
   return <div style={{ padding: 40, maxWidth: 400 }}>{children}</div>;
 }
 
-function Controlled() {
+export function Controlled() {
   const [value, setValue] = useState(null);
 
   return (
-    <div>
+    <Wrapper>
       <Cascader
         value={value}
         onChange={setValue}
@@ -46,17 +47,12 @@ function Controlled() {
           Set value
         </Button>
       </Group>
-    </div>
+    </Wrapper>
   );
 }
 
-storiesOf('@mantine/labs/Cascader/stories', module)
-  .add('Controlled', () => (
-    <Wrapper>
-      <Controlled />
-    </Wrapper>
-  ))
-  .add('Many Items', () => (
+export function ManyItems() {
+  return (
     <Wrapper>
       <Cascader
         data={[
@@ -70,9 +66,13 @@ storiesOf('@mantine/labs/Cascader/stories', module)
         defaultValue={['i']}
       />
     </Wrapper>
-  ))
-  .add('Expand On Hover', () => (
+  );
+}
+
+export function ExpandOnHover() {
+  return (
     <Wrapper>
       <Cascader data={DEFAULT_DATA} expandOnHover />
     </Wrapper>
-  ));
+  );
+}

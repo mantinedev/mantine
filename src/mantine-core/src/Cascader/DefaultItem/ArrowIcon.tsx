@@ -25,7 +25,8 @@ export function ArrowIcon({ size, error, style, ...rest }: CascaderArrowIconProp
       style={{
         fontSize: _size,
         color: error ? theme.colors.red[6] : theme.colors.gray[6],
-        paddingLeft: 0.5 * _size,
+        paddingLeft: theme.dir === 'ltr' ? 0.5 * _size : undefined,
+        paddingRight: theme.dir === 'rtl' ? 0.5 * _size : undefined,
         ...style,
       }}
       {...rest}
