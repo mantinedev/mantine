@@ -9,11 +9,11 @@ export default createStyles((theme, { readonly }: RatingStylesParams, getRef) =>
   const visuallyHidden: CSSObject = {
     clip: 'rect(0, 0, 0, 0)',
     overflow: 'hidden',
-    height: '0px',
-    width: '0px',
+    height: 0,
+    width: 0,
     whiteSpace: 'nowrap',
-    padding: '0',
-    margin: '0',
+    padding: 0,
+    margin: 0,
     clipPath: 'inset(50%)',
   };
 
@@ -24,7 +24,6 @@ export default createStyles((theme, { readonly }: RatingStylesParams, getRef) =>
     },
 
     symbolGroup: {
-      ref: getRef('symbolGroup'),
       position: 'relative',
       transition: 'transform 100ms ease',
       '&[data-active="true"]': {
@@ -74,10 +73,10 @@ export default createStyles((theme, { readonly }: RatingStylesParams, getRef) =>
         position: 'relative',
         zIndex: 0,
       },
+    },
 
-      '& .symbol-label': {
-        ...visuallyHidden,
-      },
+    symbolLabel: {
+      ...visuallyHidden,
     },
 
     symbolBody: {

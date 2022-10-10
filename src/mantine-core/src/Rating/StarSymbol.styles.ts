@@ -1,13 +1,9 @@
-import { createStyles, MantineSize } from '@mantine/styles';
-
-export interface StarSymbolProps {
-  size?: MantineSize;
-  type?: 'empty' | 'full';
-}
+import { createStyles } from '@mantine/styles';
 
 export default createStyles((theme) => {
   const emptyColor = theme.colorScheme === 'light' ? theme.colors.gray[3] : theme.colors.gray[8];
-  const fullColor = theme.colorScheme === 'light' ? theme.colors.yellow[4] : theme.colors.yellow[6];
+  const fullColor = theme.fn.variant({ variant: 'filled', color: 'yellow' }).background;
+
   return {
     empty: {
       stroke: emptyColor,

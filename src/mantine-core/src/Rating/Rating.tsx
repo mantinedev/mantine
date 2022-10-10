@@ -1,54 +1,10 @@
 import React, { forwardRef, useId, useState, useRef } from 'react';
 import { DefaultProps, MantineSize, useComponentDefaultProps, Selectors } from '@mantine/styles';
-import { useUncontrolled, mergeRefs, clamp } from '@mantine/hooks';
-import { StarSymbol } from './StarSymbol';
+import { useUncontrolled, clamp, useMergedRef } from '@mantine/hooks';
 import { Box } from '../Box';
 import { roundValueTo } from './utils';
+import { RatingItem } from './RatingItem';
 import useStyles, { RatingStylesParams } from './Rating.styles';
-
-interface SymbolProps {
-  size: MantineSize;
-  getSymbolLabel: RatingProps['getSymbolLabel'];
-  value: number;
-  emptyIcon: React.ReactNode;
-  fullIcon: React.ReactNode;
-  isFull: boolean;
-  readonly: boolean;
-  inputProps: React.ComponentPropsWithoutRef<'input'>;
-  labelProps: { className: string; style: React.CSSProperties };
-  symbolBodyProps: React.ComponentPropsWithoutRef<'div'>;
-  isActive: boolean;
-}
-export function Symbol(props: SymbolProps) {
-  const {
-    value,
-    getSymbolLabel,
-    inputProps,
-    labelProps,
-    isFull,
-    emptyIcon,
-    fullIcon,
-    size,
-    symbolBodyProps,
-    readonly,
-    isActive,
-  } = props;
-  const id = useId();
-
-  return (
-    <>
-      {!readonly && <input {...inputProps} id={id} type="radio" data-active={isActive} />}
-      <Box component={readonly ? 'div' : 'label'} {...labelProps} htmlFor={id}>
-        {!readonly && <div className="symbol-label">{getSymbolLabel(value)}</div>}
-        <div {...symbolBodyProps}>
-          {isFull
-            ? fullIcon || <StarSymbol size={size} type="full" />
-            : emptyIcon || <StarSymbol size={size} type="empty" />}
-        </div>
-      </Box>
-    </>
-  );
-}
 
 export type RatingStylesNames = Selectors<typeof useStyles>;
 
@@ -142,8 +98,8 @@ export const Rating = forwardRef<HTMLInputElement, RatingProps>((props, ref) => 
   const [isClientOutside, setClientOutside] = useState(true);
 
   const stableValueRounded = roundValueTo(stableValue, decimalUnit);
-  let _value = stableValueRounded;
-  if (interactiveValue !== -1) _value = interactiveValue;
+
+  const _value = interactiveValue !== -1 ? interactiveValue : stableValueRounded;
 
   const handleMouseEnter = (event: React.MouseEvent<HTMLDivElement>) => {
     onMouseEnter?.(event);
@@ -154,18 +110,16 @@ export const Rating = forwardRef<HTMLInputElement, RatingProps>((props, ref) => 
     onMouseMove?.(event);
 
     const { left, right, width } = rootRef.current.getBoundingClientRect();
-
     const symbolWidth = width / count;
 
-    let hoverPosition;
-    if (theme.dir === 'rtl') hoverPosition = right - event.clientX;
-    else hoverPosition = event.clientX - left;
-
+    const hoverPosition = theme.dir === 'rtl' ? right - event.clientX : event.clientX - left;
     const hoverValue = hoverPosition / symbolWidth;
 
-    let rounded = roundValueTo(hoverValue + decimalUnit / 2, decimalUnit);
-
-    rounded = clamp(rounded, decimalUnit, count);
+    const rounded = clamp(
+      roundValueTo(hoverValue + decimalUnit / 2, decimalUnit),
+      decimalUnit,
+      count
+    );
 
     setInteractiveValue(rounded);
     if (onChangeHover && rounded !== interactiveValue) {
@@ -212,9 +166,10 @@ export const Rating = forwardRef<HTMLInputElement, RatingProps>((props, ref) => 
     }
   };
 
+  const integerItems = Array.from(new Array(count));
   return (
     <Box
-      ref={mergeRefs(rootRef, ref)}
+      ref={useMergedRef(rootRef, ref)}
       className={cx(classes.root, className)}
       {...(!readonly
         ? {
@@ -225,7 +180,7 @@ export const Rating = forwardRef<HTMLInputElement, RatingProps>((props, ref) => 
         : {})}
       {...others}
     >
-      {Array.from(new Array(count)).map((_, integerIndex) => {
+      {integerItems.map((_, integerIndex) => {
         const integerValue = integerIndex + 1;
         const fractionItems = Array.from(new Array(integerIndex === 0 ? fractions + 1 : fractions));
         const isGroupActive = !readonly && Math.ceil(interactiveValue) === integerValue;
@@ -233,7 +188,6 @@ export const Rating = forwardRef<HTMLInputElement, RatingProps>((props, ref) => 
         return (
           <div key={integerValue} data-active={isGroupActive} className={classes.symbolGroup}>
             {fractionItems.map((__, fractionIndex) => {
-              // first symbolGroup will have one more symbol for 0 rating
               const fractionValue =
                 decimalUnit * (integerIndex === 0 ? fractionIndex : fractionIndex + 1);
               const symbolValue = roundValueTo(integerValue - 1 + fractionValue, decimalUnit);
@@ -242,48 +196,28 @@ export const Rating = forwardRef<HTMLInputElement, RatingProps>((props, ref) => 
               const isSymbolActive = symbolValue === _value;
 
               return (
-                <Symbol
+                <RatingItem
                   key={`${integerValue}-${symbolValue}`}
+                  classes={{
+                    input: classes.input,
+                    label: classes.label,
+                    symbolBody: classes.symbolBody,
+                    symbolLabel: classes.symbolLabel,
+                  }}
                   size={size}
                   getSymbolLabel={getSymbolLabel}
-                  value={symbolValue}
-                  readonly={readonly}
-                  isActive={isSymbolActive}
-                  labelProps={{
-                    className: classes.label,
-                    style:
-                      fractionValue === 1
-                        ? {}
-                        : {
-                            zIndex: isSymbolActive ? 2 : 0,
-                          },
-                  }}
-                  symbolBodyProps={{
-                    className: classes.symbolBody,
-                    style:
-                      fractionValue === 1
-                        ? {}
-                        : {
-                            clipPath: `inset(0 ${
-                              isSymbolActive ? 100 - fractionValue * 100 : 100
-                            }% 0 0)`,
-                            WebkitClipPath: `inset(0 ${
-                              isSymbolActive ? 100 - fractionValue * 100 : 100
-                            }% 0 0)`,
-                          },
-                  }}
-                  inputProps={{
-                    className: classes.input,
-                    onBlur: handleBlur,
-                    name: name || _name,
-                    value: symbolValue,
-                    checked: isChecked,
-                    onChange: handleChange,
-                    onClick: handleClick,
-                  }}
                   emptyIcon={emptySymbol}
                   fullIcon={fullSymbol}
                   isFull={isFull}
+                  isActive={isSymbolActive}
+                  checked={isChecked}
+                  readonly={readonly}
+                  fractionValue={fractionValue}
+                  value={symbolValue}
+                  name={name || _name}
+                  onClick={handleClick}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
                 />
               );
             })}

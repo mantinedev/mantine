@@ -1,7 +1,7 @@
 import React from 'react';
 import { MantineSize } from '@mantine/styles';
 import { IconStar } from '@tabler/icons';
-import useStyles, { StarSymbolProps } from './StarSymbol.styles';
+import useStyles from './StarSymbol.styles';
 
 const sizes: Record<MantineSize, number> = {
   xs: 14,
@@ -11,6 +11,10 @@ const sizes: Record<MantineSize, number> = {
   xl: 32,
 };
 
+export interface StarSymbolProps {
+  size: MantineSize;
+  type: 'empty' | 'full';
+}
 export function StarSymbol({ size, type }: StarSymbolProps) {
   const { classes } = useStyles();
 
