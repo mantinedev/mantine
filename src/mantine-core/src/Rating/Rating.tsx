@@ -18,10 +18,10 @@ export interface RatingProps
   value?: number;
 
   /** This icon will be displayed if empty */
-  emptySymbol?: React.ReactNode;
+  emptySymbol?: React.ReactNode | ((value: number) => React.ReactNode);
 
   /** This icon will be displayed if full */
-  fullSymbol?: React.ReactNode;
+  fullSymbol?: React.ReactNode | ((value: number) => React.ReactNode);
 
   /** Rating Fraction, by default it is 1 */
   fractions?: number;
@@ -46,6 +46,8 @@ export interface RatingProps
 
   /** Readonly */
   readonly?: boolean;
+
+  highlightSelectedOnly?: boolean;
 }
 
 const defaultProps: Partial<RatingProps> = {
@@ -54,6 +56,7 @@ const defaultProps: Partial<RatingProps> = {
   count: 5,
   fractions: 1,
   readonly: false,
+  highlightSelectedOnly: false,
 };
 
 export const Rating = forwardRef<HTMLInputElement, RatingProps>((props, ref) => {
@@ -77,6 +80,7 @@ export const Rating = forwardRef<HTMLInputElement, RatingProps>((props, ref) => 
     onMouseEnter,
     onMouseMove,
     onMouseLeave,
+    highlightSelectedOnly,
     ...others
   } = useComponentDefaultProps('Rating', defaultProps, props);
 
@@ -191,7 +195,7 @@ export const Rating = forwardRef<HTMLInputElement, RatingProps>((props, ref) => 
               const fractionValue =
                 decimalUnit * (integerIndex === 0 ? fractionIndex : fractionIndex + 1);
               const symbolValue = roundValueTo(integerValue - 1 + fractionValue, decimalUnit);
-              const isFull = symbolValue <= _value;
+              const isFull = highlightSelectedOnly ? symbolValue === _value : symbolValue <= _value;
               const isChecked = symbolValue === stableValueRounded;
               const isSymbolActive = symbolValue === _value;
 

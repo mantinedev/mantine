@@ -12,8 +12,8 @@ interface RatingItemProps {
   };
   size: MantineSize;
   getSymbolLabel: (value: number) => string;
-  emptyIcon?: React.ReactNode;
-  fullIcon?: React.ReactNode;
+  emptyIcon?: React.ReactNode | ((value: number) => React.ReactNode);
+  fullIcon?: React.ReactNode | ((value: number) => React.ReactNode);
   isFull: boolean;
   isActive: boolean;
   checked: boolean;
@@ -44,6 +44,9 @@ export function RatingItem(props: RatingItemProps) {
     onBlur,
   } = props;
   const id = useId();
+
+  const _fullIcon = typeof fullIcon === 'function' ? fullIcon(value) : fullIcon;
+  const _emptyIcon = typeof emptyIcon === 'function' ? emptyIcon(value) : emptyIcon;
 
   return (
     <>
@@ -80,8 +83,8 @@ export function RatingItem(props: RatingItemProps) {
           }
         >
           {isFull
-            ? fullIcon || <StarSymbol size={size} type="full" />
-            : emptyIcon || <StarSymbol size={size} type="empty" />}
+            ? _fullIcon || <StarSymbol size={size} type="full" />
+            : _emptyIcon || <StarSymbol size={size} type="empty" />}
         </Box>
       </Box>
     </>
