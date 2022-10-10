@@ -1,7 +1,6 @@
 import React from 'react';
 import { checkAccessibility, itSupportsSystemProps } from '@mantine/tests';
 import { fireEvent, render } from '@testing-library/react';
-
 import { Rating, RatingProps } from './Rating';
 
 const defaultProps: RatingProps = {
@@ -29,18 +28,14 @@ describe('@mantine/core/Progress', () => {
     expect(nameSet.has('')).toEqual(false);
   });
 
-  it('default value should work', () => {
-    const { container } = render(
-      <div>
-        <Rating defaultValue={2} />
-      </div>
-    );
+  it('supports defaultValue', () => {
+    const { container } = render(<Rating defaultValue={2} />);
 
     const checkedInput: HTMLInputElement = container.querySelector('input[type="radio"]:checked');
     expect(checkedInput.value).toEqual('2');
   });
 
-  it('hover should work properly', () => {
+  it('supports hover events', () => {
     const spy = jest.fn();
     const { container } = render(<Rating defaultValue={2} onChangeHover={spy} />);
 
@@ -67,7 +62,7 @@ describe('@mantine/core/Progress', () => {
     expect(spy).toHaveBeenNthCalledWith(2, 2);
   });
 
-  it('should select the rating', () => {
+  it('supports uncontrolled state', () => {
     const { container } = render(<Rating name="click-test" defaultValue={2} />);
     fireEvent.click(container.querySelector('input[name="click-test"][value="5"] + label'));
     const labelCheckedInput: HTMLInputElement = container.querySelector(
@@ -82,7 +77,7 @@ describe('@mantine/core/Progress', () => {
     expect(inputCheckedInput.value).toEqual('4');
   });
 
-  it('should select the zero rating', async () => {
+  it('supports deselecting the value', async () => {
     const { container } = render(<Rating name="zero-test" defaultValue={3} />);
 
     fireEvent.click(container.querySelector('input[name="zero-test"][value="3"]'), {
@@ -96,7 +91,7 @@ describe('@mantine/core/Progress', () => {
     expect(zeroInput.value).toEqual('0');
   });
 
-  it('onChange should work properly', () => {
+  it('supports onChange', () => {
     const spy = jest.fn();
     const { container } = render(
       <Rating defaultValue={1} fractions={2} name="test-onchange" onChange={spy} />

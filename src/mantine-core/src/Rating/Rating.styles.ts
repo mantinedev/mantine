@@ -1,5 +1,4 @@
-import { createStyles, MantineSize } from '@mantine/core';
-import { CSSObject } from '@mantine/styles/src/tss/types/css-object';
+import { CSSObject, createStyles, MantineSize } from '@mantine/styles';
 
 export interface RatingStylesParams {
   size: MantineSize;
@@ -15,7 +14,6 @@ export default createStyles((theme, { readonly }: RatingStylesParams, getRef) =>
     whiteSpace: 'nowrap',
     padding: '0',
     margin: '0',
-    WebkitClipPath: 'inset(50%)',
     clipPath: 'inset(50%)',
   };
 
@@ -28,7 +26,7 @@ export default createStyles((theme, { readonly }: RatingStylesParams, getRef) =>
     symbolGroup: {
       ref: getRef('symbolGroup'),
       position: 'relative',
-      transition: 'transform 75ms ease-in-out',
+      transition: 'transform 100ms ease',
       '&[data-active="true"]': {
         zIndex: 1,
         transform: 'scale(1.2)',
@@ -63,12 +61,12 @@ export default createStyles((theme, { readonly }: RatingStylesParams, getRef) =>
       display: 'block', // this is necessary, if `inline` or `inline-block` fraction symbols with absolute position will behave weird
       boxSizing: 'border-box',
 
-      marginInline: '0.12em',
+      marginInline: 1,
 
-      top: '0px',
-      left: '0px',
+      top: 0,
+      left: 0,
 
-      cursor: readonly ? '' : 'pointer',
+      cursor: readonly ? 'default' : 'pointer',
       position: 'absolute',
       zIndex: 0,
 
@@ -83,7 +81,6 @@ export default createStyles((theme, { readonly }: RatingStylesParams, getRef) =>
     },
 
     symbolBody: {
-      ref: getRef('symbolBody'),
       display: 'grid',
       placeContent: 'center',
       placeItems: 'center',

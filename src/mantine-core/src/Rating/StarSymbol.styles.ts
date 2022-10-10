@@ -5,7 +5,7 @@ export interface StarSymbolProps {
   type?: 'empty' | 'full';
 }
 
-export default createStyles<'empty' | 'full'>((theme) => {
+export default createStyles((theme) => {
   const emptyColor = theme.colorScheme === 'light' ? theme.colors.gray[3] : theme.colors.gray[8];
   const fullColor = theme.colorScheme === 'light' ? theme.colors.yellow[4] : theme.colors.yellow[6];
   return {

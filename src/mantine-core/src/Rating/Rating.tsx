@@ -3,8 +3,8 @@ import { DefaultProps, MantineSize, useComponentDefaultProps, Selectors } from '
 import { useUncontrolled, mergeRefs, clamp } from '@mantine/hooks';
 import { StarSymbol } from './StarSymbol';
 import { Box } from '../Box';
-import useStyles, { RatingStylesParams } from './Rating.styles';
 import { roundValueTo } from './utils';
+import useStyles, { RatingStylesParams } from './Rating.styles';
 
 interface SymbolProps {
   size: MantineSize;
@@ -146,12 +146,13 @@ export const Rating = forwardRef<HTMLInputElement, RatingProps>((props, ref) => 
   if (interactiveValue !== -1) _value = interactiveValue;
 
   const handleMouseEnter = (event: React.MouseEvent<HTMLDivElement>) => {
-    if (onMouseEnter) onMouseEnter(event);
+    onMouseEnter?.(event);
     setClientOutside(false);
   };
 
   const handleMouseMove = (event: React.MouseEvent<HTMLDivElement>) => {
-    if (onMouseMove) onMouseMove(event);
+    onMouseMove?.(event);
+
     const { left, right, width } = rootRef.current.getBoundingClientRect();
 
     const symbolWidth = width / count;
@@ -167,14 +168,18 @@ export const Rating = forwardRef<HTMLInputElement, RatingProps>((props, ref) => 
     rounded = clamp(rounded, decimalUnit, count);
 
     setInteractiveValue(rounded);
-    if (onChangeHover && rounded !== interactiveValue) onChangeHover(rounded);
+    if (onChangeHover && rounded !== interactiveValue) {
+      onChangeHover(rounded);
+    }
   };
 
   const handleMouseLeave = (event: React.MouseEvent<HTMLDivElement>) => {
-    if (onMouseLeave) onMouseLeave(event);
+    onMouseLeave?.(event);
     setInteractiveValue(-1);
     setClientOutside(true);
-    if (onChangeHover && interactiveValue !== -1) onChangeHover(-1);
+    if (onChangeHover && interactiveValue !== -1) {
+      onChangeHover(-1);
+    }
   };
 
   const handleBlur = () => {
@@ -183,14 +188,8 @@ export const Rating = forwardRef<HTMLInputElement, RatingProps>((props, ref) => 
     }
   };
 
-  // const handleFocus = (event: React.FocusEvent<HTMLInputElement>) => {
-  // const resultedValue = parseFloat(event.currentTarget.value);
-  // setInteractiveValue(resultedValue);
-  // };
-
   const handleClick = (event: React.MouseEvent<HTMLInputElement>) => {
     if (event.clientX === 0 && event.clientY === 0) {
-      // called by keyboard event
       const resultedValue = parseFloat(event.currentTarget.value);
       setInteractiveValue(resultedValue);
 
@@ -215,7 +214,6 @@ export const Rating = forwardRef<HTMLInputElement, RatingProps>((props, ref) => 
 
   return (
     <Box
-      aria-label={`${stableValueRounded} star rating`}
       ref={mergeRefs(rootRef, ref)}
       className={cx(classes.root, className)}
       {...(!readonly
@@ -276,15 +274,12 @@ export const Rating = forwardRef<HTMLInputElement, RatingProps>((props, ref) => 
                   }}
                   inputProps={{
                     className: classes.input,
-                    // onFocus: handleFocus,
                     onBlur: handleBlur,
                     name: name || _name,
                     value: symbolValue,
                     checked: isChecked,
                     onChange: handleChange,
-                    onClick: (event) => {
-                      handleClick(event);
-                    },
+                    onClick: handleClick,
                   }}
                   emptyIcon={emptySymbol}
                   fullIcon={fullSymbol}
