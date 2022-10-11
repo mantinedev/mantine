@@ -141,6 +141,30 @@ describe('@mantine/core/NumberInput', () => {
     expect(spy).toHaveBeenLastCalledWith(6.123);
   });
 
+  it('supports removing trailing zero with increment/decrement', async () => {
+    const spy = jest.fn();
+    const { container } = render(
+      <NumberInput
+        defaultValue={0.05}
+        removeTrailingZeros
+        precision={2}
+        min={-1}
+        step={0.05}
+        max={1}
+        onChange={spy}
+      />
+    );
+    await clickIncrement(container);
+    expectValue('0.1');
+    expect(spy).toHaveBeenLastCalledWith(0.1);
+    await clickDecrement(container);
+    expectValue('0.05');
+    expect(spy).toHaveBeenLastCalledWith(0.05);
+    await clickDecrement(container);
+    expectValue('0');
+    expect(spy).toHaveBeenLastCalledWith(0);
+  });
+
   it('supports removing trailing zeros and decimal separator with precision', async () => {
     const spy = jest.fn();
     render(<NumberInput precision={8} removeTrailingZeros onChange={spy} />);
