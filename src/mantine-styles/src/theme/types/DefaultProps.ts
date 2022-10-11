@@ -17,7 +17,7 @@ export interface DefaultProps<
   className?: string;
   style?: CSSProperties;
   sx?: Sx | (Sx | undefined)[];
-  classNames?: StylesNames extends never ? never : ClassNames<StylesNames>;
-  styles?: StylesNames extends never ? never : Styles<StylesNames, StylesParams>;
+  classNames?: ClassNames<StylesNames>;
+  styles?: Styles<StylesNames, StylesParams>;
   unstyled?: boolean;
 }
