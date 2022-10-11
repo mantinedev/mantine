@@ -214,56 +214,13 @@ export function Modal(props: ModalProps) {
         }}
       >
         {(transitionStyles) => (
-          <Box id={baseId} className={cx(classes.root, className)} {...others}>
-            <div
-              className={classes.inner}
-              onKeyDownCapture={(event) => {
-                const shouldTrigger =
-                  (event.target as any)?.getAttribute('data-mantine-stop-propagation') !== 'true';
-                shouldTrigger && event.key === 'Escape' && closeOnEscape && onClose();
-              }}
-              ref={focusTrapRef}
-            >
-              <Paper<'div'>
-                className={classes.modal}
-                shadow={shadow}
-                p={padding}
-                radius={radius}
-                role="dialog"
-                aria-labelledby={titleId}
-                aria-describedby={bodyId}
-                aria-modal
-                tabIndex={-1}
-                style={transitionStyles.modal}
-                unstyled={unstyled}
-              >
-                {(title || withCloseButton) && (
-                  <div className={classes.header}>
-                    <Text id={titleId} className={classes.title}>
-                      {title}
-                    </Text>
-
-                    {withCloseButton && (
-                      <CloseButton
-                        iconSize={16}
-                        onClick={onClose}
-                        aria-label={closeButtonLabel}
-                        className={classes.close}
-                      />
-                    )}
-                  </div>
-                )}
-
-                <div id={bodyId} className={classes.body}>
-                  {children}
-                </div>
-              </Paper>
+          <>
+            <Box id={baseId} className={cx(classes.root, className)} {...others}>
               <div style={transitionStyles.overlay}>
                 <Overlay
                   className={classes.overlay}
                   sx={{ position: 'fixed' }}
                   zIndex={0}
-                  onMouseDown={() => closeOnClickOutside && onClose()}
                   blur={overlayBlur}
                   color={
                     overlayColor ||
@@ -273,8 +230,55 @@ export function Modal(props: ModalProps) {
                   unstyled={unstyled}
                 />
               </div>
-            </div>
-          </Box>
+              <div
+                role="presentation"
+                className={classes.inner}
+                onClick={() => closeOnClickOutside && onClose()}
+                onKeyDown={(event) => {
+                  const shouldTrigger =
+                    (event.target as any)?.getAttribute('data-mantine-stop-propagation') !== 'true';
+                  shouldTrigger && event.key === 'Escape' && closeOnEscape && onClose();
+                }}
+                ref={focusTrapRef}
+              >
+                <Paper<'div'>
+                  className={classes.modal}
+                  shadow={shadow}
+                  p={padding}
+                  radius={radius}
+                  role="dialog"
+                  aria-labelledby={titleId}
+                  aria-describedby={bodyId}
+                  aria-modal
+                  tabIndex={-1}
+                  style={transitionStyles.modal}
+                  unstyled={unstyled}
+                  onClick={(event) => event.stopPropagation()}
+                >
+                  {(title || withCloseButton) && (
+                    <div className={classes.header}>
+                      <Text id={titleId} className={classes.title}>
+                        {title}
+                      </Text>
+
+                      {withCloseButton && (
+                        <CloseButton
+                          iconSize={16}
+                          onClick={onClose}
+                          aria-label={closeButtonLabel}
+                          className={classes.close}
+                        />
+                      )}
+                    </div>
+                  )}
+
+                  <div id={bodyId} className={classes.body}>
+                    {children}
+                  </div>
+                </Paper>
+              </div>
+            </Box>
+          </>
         )}
       </GroupedTransition>
     </OptionalPortal>
