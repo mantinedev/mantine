@@ -1,6 +1,11 @@
 import React from 'react';
 import { render } from '@testing-library/react';
-import { checkAccessibility, itSupportsSystemProps, itSupportsFocusEvents } from '@mantine/tests';
+import {
+  checkAccessibility,
+  itSupportsSystemProps,
+  itSupportsFocusEvents,
+  itIsPolymorphic,
+} from '@mantine/tests';
 import { CloseButton, CloseButtonProps } from './CloseButton';
 
 const defaultProps: CloseButtonProps = {};
@@ -8,6 +13,7 @@ const defaultProps: CloseButtonProps = {};
 describe('@mantine/core/CloseButton', () => {
   checkAccessibility([<CloseButton aria-label="test" />, <CloseButton title="test" />]);
   itSupportsFocusEvents(CloseButton, defaultProps, '.mantine-ActionIcon-root');
+  itIsPolymorphic(CloseButton, defaultProps);
   itSupportsSystemProps({
     component: CloseButton as any,
     props: defaultProps,
