@@ -1,6 +1,6 @@
 import type { MantineColor } from '@mantine/styles';
 
-interface CurveData {
+interface CurveData extends React.ComponentPropsWithRef<'circle'> {
   value: number;
   color: MantineColor;
   tooltip?: React.ReactNode;

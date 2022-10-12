@@ -7,6 +7,12 @@ import useStyles from './RingProgress.styles';
 
 export type RingProgressStylesNames = Selectors<typeof useStyles>;
 
+interface RingProgressSection extends React.ComponentPropsWithRef<'circle'> {
+  value: number;
+  color: MantineColor;
+  tooltip?: React.ReactNode;
+}
+
 export interface RingProgressProps
   extends DefaultProps<RingProgressStylesNames>,
     React.ComponentPropsWithoutRef<'div'> {
@@ -23,7 +29,7 @@ export interface RingProgressProps
   roundCaps?: boolean;
 
   /** Ring sections */
-  sections: { value: number; color: MantineColor; tooltip?: React.ReactNode }[];
+  sections: RingProgressSection[];
 }
 
 const defaultProps: Partial<RingProgressProps> = {
@@ -53,18 +59,19 @@ export const RingProgress = forwardRef<HTMLDivElement, RingProgressProps>((props
     thickness,
     sections,
     renderRoundedLineCaps: roundCaps,
-  }).map((curve, index) => (
+  }).map(({ data, sum, root, lineRoundCaps, offset }, index) => (
     <Curve
+      {...data}
       key={index}
-      value={curve.data?.value}
+      value={data?.value}
       size={size}
       thickness={thickness}
-      sum={curve.sum}
-      offset={curve.offset}
-      color={curve.data?.color}
-      root={curve.root}
-      lineRoundCaps={curve.lineRoundCaps}
-      tooltip={curve.data?.tooltip}
+      sum={sum}
+      offset={offset}
+      color={data?.color}
+      root={root}
+      lineRoundCaps={lineRoundCaps}
+      tooltip={data?.tooltip}
     />
   ));
 
