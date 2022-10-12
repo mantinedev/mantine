@@ -230,38 +230,38 @@ export default createStyles(
 
       '& ol, & ul': {
         marginTop: theme.spacing.sm,
-        paddingLeft: theme.spacing.md * 2,
+        paddingLeft: `calc(${theme.spacing.md}px * 2)`,
         listStylePosition: 'outside',
       },
 
       '& h1': {
         fontSize: theme.headings.sizes.h1.fontSize,
-        marginBottom: theme.spacing.sm * (theme.headings.sizes.h1.lineHeight as number),
+        marginBottom: `calc(${theme.spacing.sm}px * ${theme.headings.sizes.h1.lineHeight})`,
       },
 
       '& h2': {
         fontSize: theme.headings.sizes.h2.fontSize,
-        marginBottom: theme.spacing.sm * (theme.headings.sizes.h2.lineHeight as number),
+        marginBottom: `calc(${theme.spacing.sm}px * ${theme.headings.sizes.h2.lineHeight})`,
       },
 
       '& h3': {
         fontSize: theme.headings.sizes.h3.fontSize,
-        marginBottom: theme.spacing.sm * (theme.headings.sizes.h3.lineHeight as number),
+        marginBottom: `calc(${theme.spacing.sm}px * ${theme.headings.sizes.h3.lineHeight})`,
       },
 
       '& h4': {
         fontSize: theme.headings.sizes.h4.fontSize,
-        marginBottom: theme.spacing.sm * (theme.headings.sizes.h4.lineHeight as number),
+        marginBottom: `calc(${theme.spacing.sm}px * ${theme.headings.sizes.h4.lineHeight})`,
       },
 
       '& h5': {
         fontSize: theme.headings.sizes.h5.fontSize,
-        marginBottom: theme.spacing.sm * (theme.headings.sizes.h5.lineHeight as number),
+        marginBottom: `calc(${theme.spacing.sm}px * ${theme.headings.sizes.h5.lineHeight})`,
       },
 
       '& h6': {
         fontSize: theme.headings.sizes.h6.fontSize,
-        marginBottom: theme.spacing.sm * (theme.headings.sizes.h6.lineHeight as number),
+        marginBottom: `calc(${theme.spacing.sm}px * ${theme.headings.sizes.h6.lineHeight})`,
       },
 
       '& p': {
@@ -296,7 +296,7 @@ export default createStyles(
         ),
         fontFamily: theme.fontFamilyMonospace,
         fontSize: theme.fontSizes.xs,
-        padding: `2px ${theme.spacing.xs / 2}px`,
+        padding: `2px calc(${theme.spacing.xs}px / 2)`,
       },
 
       '& blockquote': {

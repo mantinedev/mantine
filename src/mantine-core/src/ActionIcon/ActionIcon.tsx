@@ -5,6 +5,7 @@ import {
   MantineColor,
   Selectors,
   useComponentDefaultProps,
+  MantineGradient,
 } from '@mantine/styles';
 import { createPolymorphicComponent } from '@mantine/utils';
 import { UnstyledButton } from '../UnstyledButton';
@@ -23,6 +24,9 @@ export interface ActionIconProps
 
   /** Key of theme.colors */
   color?: MantineColor;
+
+  /** Controls gradient settings in gradient variant only */
+  gradient?: MantineGradient;
 
   /** Button border-radius from theme or number to set border-radius in px */
   radius?: MantineNumberSize;
@@ -55,6 +59,7 @@ export const _ActionIcon = forwardRef<HTMLButtonElement, ActionIconProps>((props
     radius,
     size,
     variant,
+    gradient,
     disabled,
     loaderProps,
     loading,
@@ -63,10 +68,11 @@ export const _ActionIcon = forwardRef<HTMLButtonElement, ActionIconProps>((props
   } = useComponentDefaultProps('ActionIcon', defaultProps, props);
 
   const { classes, cx, theme } = useStyles(
-    { size, radius, color, variant },
+    { size, radius, color, variant, gradient },
     { name: 'ActionIcon', unstyled }
   );
-  const colors = theme.fn.variant({ color, variant: 'light' });
+
+  const colors = theme.fn.variant({ color, variant });
 
   const loader = (
     <Loader color={colors.color} size={theme.fn.size({ size, sizes }) - 12} {...loaderProps} />
@@ -76,7 +82,7 @@ export const _ActionIcon = forwardRef<HTMLButtonElement, ActionIconProps>((props
     <UnstyledButton
       className={cx(classes.root, className)}
       ref={ref}
-      disabled={disabled || loading}
+      disabled={disabled}
       data-disabled={disabled || undefined}
       data-loading={loading || undefined}
       unstyled={unstyled}

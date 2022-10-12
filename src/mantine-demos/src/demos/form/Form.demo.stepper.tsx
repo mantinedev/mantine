@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Stepper, Button, Group, TextInput, PasswordInput, Code } from '@mantine/core';
+import { MantineDemo } from '@mantine/ds';
 import { useForm } from '@mantine/form';
 
 const code = `

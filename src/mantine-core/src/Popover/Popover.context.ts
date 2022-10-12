@@ -9,6 +9,9 @@ import { PopoverWidth } from './Popover.types';
 interface PopoverContext {
   x: number;
   y: number;
+  arrowX: number;
+  arrowY: number;
+  arrowRef: React.RefObject<HTMLDivElement>;
   opened: boolean;
   transition: MantineTransition;
   transitionDuration: number;
@@ -33,6 +36,8 @@ interface PopoverContext {
   onToggle(): void;
   withRoles: boolean;
   targetProps: Record<string, any>;
+  disabled: boolean;
+  returnFocus: boolean;
 }
 
 export const [PopoverContextProvider, usePopoverContext] = createSafeContext<PopoverContext>(

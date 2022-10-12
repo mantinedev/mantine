@@ -15,4 +15,10 @@ describe('@mantine/styles/focus-styles', () => {
     expect(styles['&:focus']).toBeDefined();
     expect(styles['&:focus:not(:focus-visible)']).toBeDefined();
   });
+
+  it('if selector is provided, then it should be used', () => {
+    const styles = focusStyles({ ...DEFAULT_THEME, primaryColor: 'red' })('.selector:focus');
+    expect(styles['.selector:focus']).toBeDefined();
+    expect(styles['.selector:focus:not(:focus-visible)']).toBeDefined();
+  });
 });

@@ -133,6 +133,7 @@ export const TimeRangeInput = forwardRef<HTMLInputElement, TimeRangeInputProps>(
       descriptionProps,
       errorProps,
       unstyled,
+      withAsterisk,
       ...others
     } = useComponentDefaultProps('TimeRangeInput', defaultProps, props);
 
@@ -209,6 +210,7 @@ export const TimeRangeInput = forwardRef<HTMLInputElement, TimeRangeInputProps>(
         descriptionProps={descriptionProps}
         labelProps={labelProps}
         unstyled={unstyled}
+        withAsterisk={withAsterisk}
         {...systemStyles}
         {...wrapperProps}
       >

@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { MantineDemo } from '@mantine/ds';
 import { SSRWrapper } from './_SSRWrapper';
 
 const code = `
@@ -10,7 +11,7 @@ const initialValue =
 
 function Demo() {
   const [value, onChange] = useState(initialValue);
-  return <RichTextEditor value={value} onChange={onChange} />;
+  return <RichTextEditor value={value} onChange={onChange} id="rte" />;
 }
 `;
 

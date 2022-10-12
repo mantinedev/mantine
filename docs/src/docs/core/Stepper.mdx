@@ -121,53 +121,36 @@ function MyStepper() {
 
 ## Wrap Stepper.Step
 
-`Stepper` component relies on `Stepper.Step` order, if you want to wrap `Stepper.Step` component you will
-need to spread wrapper component props:
+`Stepper` component relies on `Stepper.Step` order. Wrapping `Stepper.Step` is not supported,
+Instead you will need to use different approaches:
 
 ```tsx
-import { Stepper, StepProps } from '@mantine/core';
+import { Stepper } from '@mantine/core';
 
-function SecondStep(props: StepProps) {
+// This will not work, step children will not render
+function WillNotWork() {
   return (
-    <Stepper.Step label="Second" description="Second description" {...props}>
-      Second step content here
+    <Stepper.Step label="Nope" description="It will not work">
+      This part will not render
     </Stepper.Step>
   );
+}
+
+// Create a separate component for children
+function WillWork() {
+  return <div>This will work as expected!</div>;
 }
 
 function Demo() {
   return (
     <Stepper active={1}>
       <Stepper.Step label="Regular step">Fist step</Stepper.Step>
-      <SecondStep />
+      {/* Wrapped Stepper.Step will not render children, do not do that */}
+      <WillNotWork />
+      <Stepper.Step label="Step with custom content">
+        <WillWork />
+      </Stepper.Step>
       <Stepper.Step label="Regular step">Third step</Stepper.Step>
-    </Stepper>
-  );
-}
-```
-
-Note that:
-
-- `Stepper.Completed` component **cannot be wrapped with other components**
-- Any additional nodes rendered within `Stepper` will output unexpected separators
-
-```tsx
-import { Stepper } from '@mantine/core';
-
-// Do not wrap Stepper.Completed with any components,
-// create a component that will be rendered within it instead.
-function Completed() {
-  return <div>Completed</div>;
-}
-
-function Demo() {
-  return (
-    <Stepper active={1}>
-      <Stepper.Step>Fist step</Stepper.Step>
-      <Stepper.Step>Second step</Stepper.Step>
-      <Stepper.Completed>
-        <Completed />
-      </Stepper.Completed>
     </Stepper>
   );
 }

@@ -17,11 +17,11 @@ export interface ListItemProps
 }
 
 export function ListItem({ className, children, icon, ...others }: ListItemProps) {
-  const { icon: ctxIcon, spacing, center } = useListContext();
+  const { icon: ctxIcon, spacing, center, listStyleType, size, withPadding } = useListContext();
   const { classNames, styles, unstyled } = useContextStylesApi();
   const _icon = icon || ctxIcon;
   const { classes, cx } = useStyles(
-    { spacing, center },
+    { withPadding, size, listStyleType, center, spacing },
     { classNames, styles, unstyled, name: 'List' }
   );
 
@@ -33,7 +33,7 @@ export function ListItem({ className, children, icon, ...others }: ListItemProps
     >
       <div className={classes.itemWrapper}>
         {_icon && <span className={classes.itemIcon}>{_icon}</span>}
-        <span>{children}</span>
+        {children}
       </div>
     </Box>
   );

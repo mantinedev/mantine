@@ -1,4 +1,5 @@
 import React from 'react';
+import { MantineDemo } from '@mantine/ds';
 import { DatePicker } from '@mantine/dates';
 
 const code = `
@@ -20,6 +21,7 @@ function Demo() {
         placeholder="Your birthday"
         disabled
         value={new Date()}
+        withinPortal
       />
     </div>
   );

@@ -1,5 +1,6 @@
 import React from 'react';
 import { SimpleGrid, SimpleGridProps } from '@mantine/core';
+import { MantineDemo } from '@mantine/ds';
 import { defaultItems } from './_Item';
 
 function Wrapper(props: SimpleGridProps) {
@@ -33,5 +34,6 @@ export const configurator: MantineDemo = {
   configurator: [
     { name: 'cols', type: 'number', initialValue: 3, min: 1, max: 6, step: 1 },
     { name: 'spacing', type: 'size', initialValue: 'md', defaultValue: 'md' },
+    { name: 'verticalSpacing', type: 'size', initialValue: 'md', defaultValue: 'md' },
   ],
 };

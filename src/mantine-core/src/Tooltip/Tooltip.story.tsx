@@ -5,26 +5,15 @@ import { Group } from '../Group';
 
 export default { title: 'Tooltip' };
 
-export const Usage = () => {
-  const [opened, setOpened] = useState(false);
+export function Usage() {
   return (
     <div style={{ padding: 40 }}>
-      <Tooltip
-        position="bottom"
-        label="Use this button to save this information in your profile, after that you will be able to access it any time and share it via email."
-        width={300}
-        multiline
-        events={{ focus: true, hover: true, touch: false }}
-        withinPortal={false}
-        opened={opened}
-      >
-        <Button fullWidth onClick={() => setOpened(!opened)}>
-          target
-        </Button>
+      <Tooltip position="right" label="Tooltip label" withArrow>
+        <Button>target</Button>
       </Tooltip>
     </div>
   );
-};
+}
 
 export const TooltipGroup = () => (
   <Tooltip.Group openDelay={500}>
@@ -62,7 +51,7 @@ export const Controlled = () => {
 
 export const Floating = () => (
   <div style={{ padding: 0 }}>
-    <Tooltip.Floating label="Tooltip" disabled>
+    <Tooltip.Floating label="Tooltip">
       <button type="button" style={{ width: 200, height: 200 }}>
         target
       </button>
@@ -103,3 +92,26 @@ export const WithinGroup = () => (
     </Tooltip>
   </Group>
 );
+
+export const WithArrow = () => (
+  <Tooltip
+    withArrow
+    label="Tooltip button with arrow Tooltip button with arrow Tooltip button with arrow"
+  >
+    <Button type="button">Tooltip button with arrow</Button>
+  </Tooltip>
+);
+
+export function Inline() {
+  return (
+    <div style={{ padding: 40, maxWidth: 400 }}>
+      Lorem, ipsum dolor sit amet consectetur adipisicing elit. Vitae ipsam in quos aperiam magni
+      quas neque{' '}
+      <Tooltip label="Inline tooltip" inline>
+        <span style={{ background: 'pink' }}>aliquid laboriosam dolorum</span>
+      </Tooltip>
+      , eum voluptate, perferendis placeat repudiandae nesciunt explicabo quibusdam deserunt, animi
+      dicta.
+    </div>
+  );
+}

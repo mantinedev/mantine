@@ -88,7 +88,11 @@ Use `forwardRef` function to forward ref to root element:
 import { forwardRef } from 'react';
 import { Tooltip } from '@mantine/core';
 
-const MyComponent = forwardRef<HTMLDivElement>((props, ref) => <div ref={ref}>My component</div>);
+const MyComponent = forwardRef<HTMLDivElement>((props, ref) => (
+  <div ref={ref} {...props}>
+    My component
+  </div>
+));
 
 // Works correctly – ref is forwarded
 function Demo() {
@@ -142,6 +146,12 @@ function Demo() {
 To enable multiline mode set `multiline` prop to enable line breaks and `width` prop to set tooltip width in px:
 
 <Demo data={TooltipDemos.multiline} />
+
+## Inline
+
+Set `inline` prop to use `Tooltip` with inline elements:
+
+<Demo data={TooltipDemos.inline} />
 
 ## Change transition
 

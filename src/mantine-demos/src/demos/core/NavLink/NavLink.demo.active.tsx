@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { IconGauge, IconFingerprint, IconActivity, IconChevronRight } from '@tabler/icons';
+import { MantineDemo } from '@mantine/ds';
 import { Box, NavLink, Group } from '@mantine/core';
 
 const codeTemplate = (props: string) => `

@@ -1,5 +1,6 @@
 import React from 'react';
 import { Container } from '@mantine/core';
+import { MantineDemo } from '@mantine/ds';
 import { TimeInput } from '@mantine/dates';
 
 const code = `

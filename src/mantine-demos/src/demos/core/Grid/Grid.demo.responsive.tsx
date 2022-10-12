@@ -1,5 +1,6 @@
 import React from 'react';
 import { Grid } from '@mantine/core';
+import { MantineDemo } from '@mantine/ds';
 import { ColWrapper as Col } from './_col-wrapper';
 
 const code = `

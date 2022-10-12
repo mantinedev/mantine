@@ -33,7 +33,7 @@ import { useState } from 'react';
 import { Select } from '@mantine/core';
 
 function Demo() {
-  const [value, setValue] = useState('');
+  const [value, setValue] = useState<string | null>(null);
   return <Select value={value} onChange={setValue} data={[]} />;
 }
 ```
@@ -105,6 +105,12 @@ Select support two different data formats:
 Set `searchable` prop to enable search in select and `nothingFound` prop to provide label that will be shown when no options were found:
 
 <Demo data={SelectDemos.searchable} />
+
+## Controlled search
+
+Set `searchValue` and `onSearchChange` prop to enable controlled search in select:
+
+<Demo data={SelectDemos.searchableControlled} />
 
 ## Clearable
 

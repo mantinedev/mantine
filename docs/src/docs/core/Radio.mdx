@@ -49,9 +49,10 @@ function Demo() {
     <Radio.Group
       value={value}
       onChange={setValue}
+      name="favoriteFramework"
       label="Select your favorite framework/library"
       description="This is anonymous"
-      required
+      withAsterisk
     >
       <Radio value="react" label="React" />
       <Radio value="svelte" label="Svelte" />

@@ -6,9 +6,48 @@ order: 2
 search: 'Global styles with emotion, @font-face'
 ---
 
+## Global styles on theme
+
+The best way to add global styles is `theme.globalStyles`, this way you will be able to share these styles between different environments (for example, Next.js application and Storybook):
+
+```tsx
+import { MantineProvider } from '@mantine/core';
+
+function Demo() {
+  return (
+    <MantineProvider
+      theme={{
+        globalStyles: (theme) => ({
+          '*, *::before, *::after': {
+            boxSizing: 'border-box',
+          },
+
+          body: {
+            ...theme.fn.fontStyles(),
+            backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.white,
+            color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
+            lineHeight: theme.lineHeight,
+          },
+
+          '.your-class': {
+            backgroundColor: 'red',
+          },
+
+          '#your-id > [data-active]': {
+            backgroundColor: 'pink',
+          },
+        }),
+      }}
+    >
+      <App />
+    </MantineProvider>
+  );
+}
+```
+
 ## Global component
 
-To set global styles use `Global` component. `styles` prop accepts:
+`Global` component is an alternative the `theme.globalStyles`. `styles` prop accepts:
 
 - function that subscribes to theme and returns css object or an array of css objects
 - css object or an array of css objects
@@ -30,13 +69,21 @@ function Demo() {
           color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
           lineHeight: theme.lineHeight,
         },
+
+        '.your-class': {
+          backgroundColor: 'red',
+        },
+
+        '#your-id > [data-active]': {
+          backgroundColor: 'pink',
+        },
       })}
     />
   );
 }
 ```
 
-## Where to render
+## Where to render Global
 
 Usually global styles depend on theme, you can render `Global` component anywhere within [MantineProvider](/theming/mantine-provider/):
 

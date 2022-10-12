@@ -1,5 +1,5 @@
 import React from 'react';
-import { TextInput, Textarea, Checkbox } from '@mantine/core';
+import { TextInput, Textarea, Checkbox, NativeSelect } from '@mantine/core';
 import { FormBase } from './_base';
 import { useForm } from '../use-form';
 
@@ -7,7 +7,7 @@ export default { title: 'Form' };
 
 export function Usage() {
   const form = useForm({
-    initialValues: { name: '', terms: false, area: '' },
+    initialValues: { name: '', terms: false, area: '', select: '' },
     validate: {
       name: (value) => (value.length === 0 ? 'Required' : null),
     },
@@ -22,6 +22,11 @@ export function Usage() {
         {...form.getInputProps('terms', { type: 'checkbox' })}
       />
       <Textarea label="area" {...form.getInputProps('area')} />
+      <NativeSelect
+        label="native select"
+        data={['React', 'Angular']}
+        {...form.getInputProps('select')}
+      />
     </FormBase>
   );
 }

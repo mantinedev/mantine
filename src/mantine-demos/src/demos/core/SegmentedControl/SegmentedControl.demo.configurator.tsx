@@ -1,3 +1,4 @@
+import { MantineDemo } from '@mantine/ds';
 import { SegmentedControlWrapper } from './Wrapper';
 
 const codeTemplate = (props: string) => `

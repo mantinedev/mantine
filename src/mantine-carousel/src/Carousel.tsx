@@ -1,5 +1,5 @@
 /* eslint-disable react/no-unused-prop-types */
-import React, { forwardRef, useEffect, useCallback, useState } from 'react';
+import React, { forwardRef, useEffect, useCallback, useState, Children } from 'react';
 import {
   useComponentDefaultProps,
   Box,
@@ -10,6 +10,7 @@ import {
   StylesApiProvider,
   Selectors,
 } from '@mantine/core';
+import { clamp } from '@mantine/hooks';
 import useEmblaCarousel, { EmblaPluginType } from 'embla-carousel-react';
 import { ForwardRefWithStaticComponents } from '@mantine/utils';
 import { CarouselSlide, CarouselSlideStylesNames } from './CarouselSlide/CarouselSlide';
@@ -22,7 +23,7 @@ export type CarouselStylesNames = CarouselSlideStylesNames | Selectors<typeof us
 
 export interface CarouselProps
   extends DefaultProps<CarouselStylesNames, CarouselStylesParams>,
-    React.ComponentPropsWithoutRef<'div'> {
+    React.ComponentPropsWithRef<'div'> {
   /** <Carousel.Slide /> components */
   children?: React.ReactNode;
 
@@ -66,7 +67,7 @@ export interface CarouselProps
   align?: 'start' | 'center' | 'end' | number;
 
   /** Number of slides that should be scrolled with next/previous buttons */
-  slidesToScroll?: number;
+  slidesToScroll?: number | 'auto';
 
   /** Determines whether gap should be treated as part of the slide size, true by default */
   includeGapInSize?: boolean;
@@ -103,6 +104,12 @@ export interface CarouselProps
 
   /** Previous control icon */
   previousControlIcon?: React.ReactNode;
+
+  /** Allow the carousel to skip scroll snaps if it's dragged vigorously. Note that this option will be ignored if the dragFree option is set to true, false by default */
+  skipSnaps?: boolean;
+
+  /** Clear leading and trailing empty space that causes excessive scrolling. Use trimSnaps to only use snap points that trigger scrolling or keepSnaps to keep them. */
+  containScroll?: 'trimSnaps' | 'keepSnaps' | '';
 }
 
 const defaultProps: Partial<CarouselProps> = {
@@ -122,6 +129,8 @@ const defaultProps: Partial<CarouselProps> = {
   inViewThreshold: 0,
   withControls: true,
   withIndicators: false,
+  skipSnaps: false,
+  containScroll: '',
 };
 
 export const _Carousel = forwardRef<HTMLDivElement, CarouselProps>((props, ref) => {
@@ -157,11 +166,13 @@ export const _Carousel = forwardRef<HTMLDivElement, CarouselProps>((props, ref) 
     nextControlIcon,
     previousControlIcon,
     breakpoints,
+    skipSnaps,
+    containScroll,
     ...others
   } = useComponentDefaultProps('Carousel', defaultProps, props);
 
   const { classes, cx, theme } = useStyles(
-    { controlSize, controlsOffset, orientation, height },
+    { controlSize, controlsOffset, orientation, height, includeGapInSize, breakpoints, slideGap },
     { name: 'Carousel', classNames, styles, unstyled }
   );
 
@@ -177,6 +188,8 @@ export const _Carousel = forwardRef<HTMLDivElement, CarouselProps>((props, ref) 
       dragFree,
       speed,
       inViewThreshold,
+      skipSnaps,
+      containScroll,
     },
     plugins
   );
@@ -230,6 +243,16 @@ export const _Carousel = forwardRef<HTMLDivElement, CarouselProps>((props, ref) 
 
     return undefined;
   }, [embla]);
+
+  useEffect(() => {
+    if (embla) {
+      embla.reInit();
+      setSlidesCount(embla.scrollSnapList().length);
+      setSelected((currentSelected) =>
+        clamp(currentSelected, 0, Children.toArray(children).length - 1)
+      );
+    }
+  }, [Children.toArray(children).length]);
 
   const canScrollPrev = embla?.canScrollPrev() || false;
   const canScrollNext = embla?.canScrollNext() || false;

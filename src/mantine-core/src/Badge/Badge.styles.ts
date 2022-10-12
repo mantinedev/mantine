@@ -84,11 +84,11 @@ export default createStyles(
 
     return {
       leftSection: {
-        marginRight: theme.spacing.xs / 2,
+        marginRight: `calc(${theme.spacing.xs}px / 2)`,
       },
 
       rightSection: {
-        marginLeft: theme.spacing.xs / 2,
+        marginLeft: `calc(${theme.spacing.xs}px / 2)`,
       },
 
       inner: {

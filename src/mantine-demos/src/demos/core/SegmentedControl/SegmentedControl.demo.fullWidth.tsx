@@ -1,5 +1,6 @@
 import React from 'react';
 import { SegmentedControlProps } from '@mantine/core';
+import { MantineDemo } from '@mantine/ds';
 import { SegmentedControlWrapper } from './Wrapper';
 
 function Demo(props: SegmentedControlProps) {

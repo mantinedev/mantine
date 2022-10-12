@@ -1,5 +1,6 @@
 import React from 'react';
 import { IconSun } from '@tabler/icons';
+import { MantineDemo } from '@mantine/ds';
 import { Group, MANTINE_COLORS, ActionIcon, ActionIconProps } from '@mantine/core';
 
 const getColors = (props: Omit<ActionIconProps, 'children'>) =>

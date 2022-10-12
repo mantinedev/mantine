@@ -96,6 +96,23 @@ export default function AppShellDemo() {
 }
 ```
 
+## hidden prop
+
+To hide all AppShell components and render only children set `hidden` prop:
+
+```tsx
+import { AppShell, Navbar, Header } from '@mantine/core';
+
+function Demo() {
+  // Navbar and Header will not be rendered when hidden prop is set
+  return (
+    <AppShell navbar={<Navbar />} header={<Header />} hidden>
+      App content
+    </AppShell>
+  );
+}
+```
+
 ## Navbar and Aside components
 
 Navbar and Aside components can be used outside of AppShell context ([View full source code](https://github.com/mantinedev/mantine/tree/master/src/mantine-demos/src/demos/core/AppShell)):

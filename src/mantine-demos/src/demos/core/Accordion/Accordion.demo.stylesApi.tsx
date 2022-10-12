@@ -1,5 +1,6 @@
 import React from 'react';
 import { Accordion, createStyles } from '@mantine/core';
+import { MantineDemo } from '@mantine/ds';
 import { baseDemoItems } from './_base';
 
 const code = `

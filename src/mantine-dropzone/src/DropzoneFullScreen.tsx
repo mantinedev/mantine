@@ -1,4 +1,4 @@
-import React, { forwardRef, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import {
   Box,
   useComponentDefaultProps,
@@ -43,78 +43,86 @@ const fullScreenDefaultProps: Partial<DropzoneFullScreenProps> = {
   withinPortal: true,
 };
 
-export const DropzoneFullScreen = forwardRef<HTMLDivElement, DropzoneFullScreenProps>(
-  (props, ref) => {
-    const {
-      classNames,
-      styles,
-      sx,
-      className,
-      style,
-      unstyled,
-      active,
-      onDrop,
-      onReject,
-      onDragLeave,
-      zIndex,
-      withinPortal,
-      ...others
-    } = useComponentDefaultProps('DropzoneFullScreen', fullScreenDefaultProps, props);
+export function DropzoneFullScreen(props: DropzoneFullScreenProps) {
+  const {
+    classNames,
+    styles,
+    sx,
+    className,
+    style,
+    unstyled,
+    active,
+    onDrop,
+    onReject,
+    zIndex,
+    withinPortal,
+    ...others
+  } = useComponentDefaultProps('DropzoneFullScreen', fullScreenDefaultProps, props);
 
-    const [visible, { open, close }] = useDisclosure(false);
-    const { classes, cx } = useFullScreenStyles(null, {
-      name: 'DropzoneFullScreen',
-      classNames,
-      styles,
-      unstyled,
-    });
+  const [counter, setCounter] = React.useState(0);
+  const [visible, { open, close }] = useDisclosure(false);
+  const { classes, cx } = useFullScreenStyles(null, {
+    name: 'DropzoneFullScreen',
+    classNames,
+    styles,
+    unstyled,
+  });
 
-    useEffect(() => {
-      if (active) {
-        document.addEventListener('dragover', open, false);
-        return () => document.removeEventListener('dragover', open, false);
-      }
+  const handleDragEnter = () => {
+    setCounter((prev) => prev + 1);
+    open();
+  };
 
-      return undefined;
-    }, [active]);
+  const handleDragLeave = () => {
+    setCounter((prev) => prev - 1);
+  };
 
-    return (
-      <OptionalPortal withinPortal={withinPortal}>
-        <Box
-          className={cx(classes.wrapper, className)}
-          sx={sx}
-          style={{
-            ...style,
-            opacity: visible ? 1 : 0,
-            pointerEvents: visible ? 'all' : 'none',
-            zIndex,
+  useEffect(() => {
+    counter === 0 && close();
+  }, [counter]);
+
+  useEffect(() => {
+    if (!active) return undefined;
+
+    document.addEventListener('dragenter', handleDragEnter, false);
+    document.addEventListener('dragleave', handleDragLeave, false);
+
+    return () => {
+      document.removeEventListener('dragover', handleDragEnter, false);
+      document.removeEventListener('dragleave', handleDragLeave, false);
+    };
+  }, [active]);
+  return (
+    <OptionalPortal withinPortal={withinPortal}>
+      <Box
+        className={cx(classes.wrapper, className)}
+        sx={sx}
+        style={{
+          ...style,
+          opacity: visible ? 1 : 0,
+          pointerEvents: visible ? 'all' : 'none',
+          zIndex,
+        }}
+      >
+        <_Dropzone
+          {...others}
+          classNames={classNames}
+          styles={styles}
+          unstyled={unstyled}
+          className={classes.dropzone}
+          onDrop={(files: any) => {
+            onDrop?.(files);
+            close();
           }}
-        >
-          <_Dropzone
-            {...others}
-            classNames={classNames}
-            styles={styles}
-            unstyled={unstyled}
-            ref={ref}
-            className={classes.dropzone}
-            onDrop={(files: any) => {
-              onDrop?.(files);
-              close();
-            }}
-            onReject={(files: any) => {
-              onReject?.(files);
-              close();
-            }}
-            onDragLeave={(event: any) => {
-              onDragLeave?.(event);
-              close();
-            }}
-          />
-        </Box>
-      </OptionalPortal>
-    );
-  }
-);
+          onReject={(files: any) => {
+            onReject?.(files);
+            close();
+          }}
+        />
+      </Box>
+    </OptionalPortal>
+  );
+}
 
 DropzoneFullScreen.displayName = '@mantine/dropzone/DropzoneFullScreen';
 

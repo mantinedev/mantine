@@ -3,6 +3,7 @@ import type { MantineColor } from '@mantine/styles';
 interface CurveData {
   value: number;
   color: MantineColor;
+  tooltip?: React.ReactNode;
 }
 
 interface GetCurves {

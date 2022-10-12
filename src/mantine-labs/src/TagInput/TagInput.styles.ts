@@ -23,14 +23,14 @@ export default createStyles((theme, { size, invalid }: TagInputStyles) => ({
     display: 'flex',
     alignItems: 'center',
     flexWrap: 'wrap',
-    marginLeft: -theme.spacing.xs / 2,
-    paddingTop: theme.spacing.xs / 2 - 2,
-    paddingBottom: theme.spacing.xs / 2 - 2,
+    marginLeft: `calc(${-theme.spacing.xs}px / 2)`,
+    paddingTop: `calc(${theme.spacing.xs}px / 2 - 2px)`,
+    paddingBottom: `calc(${theme.spacing.xs}px / 2 - 2px)`,
     boxSizing: 'border-box',
   },
 
   value: {
-    margin: `${theme.spacing.xs / 2 - 2}px ${theme.spacing.xs / 2}px`,
+    margin: `calc(${theme.spacing.xs}px / 2 - 2px) calc(${theme.spacing.xs}px / 2)`,
   },
 
   tagInput: {
@@ -40,7 +40,7 @@ export default createStyles((theme, { size, invalid }: TagInputStyles) => ({
     outline: 0,
     fontSize: theme.fn.size({ size, sizes: theme.fontSizes }),
     padding: 0,
-    margin: theme.spacing.xs / 2,
+    margin: `calc(${theme.spacing.xs}px / 2)`,
     appearance: 'none',
     color: 'inherit',
 

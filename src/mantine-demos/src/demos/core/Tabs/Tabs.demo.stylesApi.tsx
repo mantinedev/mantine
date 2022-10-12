@@ -1,5 +1,6 @@
 import React from 'react';
 import { IconPhoto, IconMessageCircle, IconSettings } from '@tabler/icons';
+import { MantineDemo } from '@mantine/ds';
 import { Tabs, TabsProps } from '@mantine/core';
 
 const code = `

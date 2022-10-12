@@ -2,14 +2,32 @@ import React, { forwardRef } from 'react';
 import { DefaultProps, useComponentDefaultProps } from '@mantine/styles';
 import { Box } from '../../Box';
 import { useGridContext } from '../Grid.context';
-import useStyles from './Col.styles';
+import useStyles, { ColSpan } from './Col.styles';
 
 export interface ColProps extends DefaultProps, React.ComponentPropsWithoutRef<'div'> {
   /** Default col span */
-  span?: number;
+  span?: ColSpan;
 
   /** Column left offset */
   offset?: number;
+
+  /** Default col order */
+  order?: React.CSSProperties['order'];
+
+  /** Col order at (min-width: theme.breakpoints.xs) */
+  orderXs?: React.CSSProperties['order'];
+
+  /** Col order at (min-width: theme.breakpoints.sm) */
+  orderSm?: React.CSSProperties['order'];
+
+  /** Col order at (min-width: theme.breakpoints.md) */
+  orderMd?: React.CSSProperties['order'];
+
+  /** Col order at (min-width: theme.breakpoints.lg) */
+  orderLg?: React.CSSProperties['order'];
+
+  /** Col order at (min-width: theme.breakpoints.xl) */
+  orderXl?: React.CSSProperties['order'];
 
   /** Column left offset at (min-width: theme.breakpoints.xs) */
   offsetXs?: number;
@@ -27,31 +45,27 @@ export interface ColProps extends DefaultProps, React.ComponentPropsWithoutRef<'
   offsetXl?: number;
 
   /** Col span at (min-width: theme.breakpoints.xs) */
-  xs?: number;
+  xs?: ColSpan;
 
   /** Col span at (min-width: theme.breakpoints.sm) */
-  sm?: number;
+  sm?: ColSpan;
 
   /** Col span at (min-width: theme.breakpoints.md) */
-  md?: number;
+  md?: ColSpan;
 
   /** Col span at (min-width: theme.breakpoints.lg) */
-  lg?: number;
+  lg?: ColSpan;
 
   /** Col span at (min-width: theme.breakpoints.xl) */
-  xl?: number;
+  xl?: ColSpan;
 }
 
-const defaultProps: Partial<ColProps> = {
-  offset: 0,
-  offsetXs: 0,
-  offsetSm: 0,
-  offsetMd: 0,
-  offsetLg: 0,
-  offsetXl: 0,
-};
+const defaultProps: Partial<ColProps> = {};
 
-function isValidSpan(span: number) {
+function isValidSpan(span: ColSpan) {
+  if (span === 'auto' || span === 'content') {
+    return true;
+  }
   return typeof span === 'number' && span > 0 && span % 1 === 0;
 }
 
@@ -70,6 +84,12 @@ export const Col = forwardRef<HTMLDivElement, ColProps>((props: ColProps, ref) =
     md,
     lg,
     xl,
+    order,
+    orderXs,
+    orderSm,
+    orderMd,
+    orderLg,
+    orderXl,
     className,
     id,
     unstyled,
@@ -97,6 +117,12 @@ export const Col = forwardRef<HTMLDivElement, ColProps>((props: ColProps, ref) =
       md,
       lg,
       xl,
+      order,
+      orderXs,
+      orderSm,
+      orderMd,
+      orderLg,
+      orderXl,
       grow: ctx.grow,
       columns: ctx.columns,
       span: colSpan,

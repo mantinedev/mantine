@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { getHotkeyHandler, useHotkeys } from '@mantine/hooks';
 import { showNotification } from '@mantine/notifications';
+import { MantineDemo } from '@mantine/ds';
 import { TextInput } from '@mantine/core';
 
 const code = `

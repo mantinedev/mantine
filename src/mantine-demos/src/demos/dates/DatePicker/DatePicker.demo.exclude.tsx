@@ -1,4 +1,5 @@
 import React from 'react';
+import { MantineDemo } from '@mantine/ds';
 import { DatePicker } from '@mantine/dates';
 
 const code = `
@@ -16,6 +17,7 @@ function Demo() {
         placeholder="Pick date"
         label="Event date"
         excludeDate={(date) => date.getDay() === 0 || date.getDay() === 6}
+        withinPortal
       />
     </div>
   );

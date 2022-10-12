@@ -1,4 +1,5 @@
 import React from 'react';
+import { MantineDemo } from '@mantine/ds';
 import { Pagination, Group } from '@mantine/core';
 
 function Wrapper(props: any) {
@@ -27,5 +28,6 @@ export const configurator: MantineDemo = {
     { name: 'radius', type: 'size', initialValue: 'sm', defaultValue: 'sm' },
     { name: 'withControls', type: 'boolean', initialValue: true, defaultValue: true },
     { name: 'withEdges', type: 'boolean', initialValue: false, defaultValue: false },
+    { name: 'disabled', type: 'boolean', initialValue: false, defaultValue: false },
   ],
 };

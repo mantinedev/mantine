@@ -1,4 +1,4 @@
-import React, { forwardRef } from 'react';
+import React, { forwardRef, useEffect, useRef } from 'react';
 import { DefaultProps, MantineSize, Selectors } from '@mantine/styles';
 import { useUncontrolled } from '@mantine/hooks';
 import {
@@ -104,6 +104,7 @@ export const _FileInput = forwardRef<HTMLButtonElement, FileInputProps>((props, 
     clearButtonTabIndex,
     ...others
   } = useInputProps('FileInput', defaultProps, props);
+  const resetRef = useRef<() => void>();
   const { classes, theme, cx } = useStyles(null, {
     name: 'FileInput',
     classNames,
@@ -133,9 +134,22 @@ export const _FileInput = forwardRef<HTMLButtonElement, FileInputProps>((props, 
       />
     ) : null);
 
+  useEffect(() => {
+    if ((Array.isArray(_value) && _value.length === 0) || _value === null) {
+      resetRef.current();
+    }
+  }, [_value]);
+
   return (
     <Input.Wrapper {...wrapperProps} __staticSelector="FileInput">
-      <FileButton onChange={setValue} multiple={multiple} accept={accept} name={name} form={form}>
+      <FileButton
+        onChange={setValue}
+        multiple={multiple}
+        accept={accept}
+        name={name}
+        form={form}
+        resetRef={resetRef}
+      >
         {(fileButtonProps) => (
           <Input
             multiline

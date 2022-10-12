@@ -1,5 +1,6 @@
 export { usage } from './Select.demo.usage';
 export { searchable } from './Select.demo.searchable';
+export { searchableControlled } from './Select.demo.searchableControlled';
 export { large } from './Select.demo.large';
 export { configurator } from './Select.demo.configurator';
 export { flip } from './Select.demo.flip';

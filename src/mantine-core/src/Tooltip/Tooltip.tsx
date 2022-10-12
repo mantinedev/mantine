@@ -1,5 +1,5 @@
-import React, { cloneElement } from 'react';
-import { isElement } from '@mantine/utils';
+import React, { cloneElement, forwardRef, useRef } from 'react';
+import { isElement, ForwardRefWithStaticComponents } from '@mantine/utils';
 import { useMergedRef } from '@mantine/hooks';
 import { getDefaultZIndex, useComponentDefaultProps } from '@mantine/styles';
 import { TooltipGroup } from './TooltipGroup/TooltipGroup';
@@ -49,12 +49,16 @@ export interface TooltipProps extends TooltipBaseProps {
 
   /** useEffect dependencies to force update tooltip position */
   positionDependencies?: any[];
+
+  /** Set if tooltip is attached to an inline element */
+  inline?: boolean;
 }
 
 const defaultProps: Partial<TooltipProps> = {
   position: 'top',
   refProp: 'ref',
   withinPortal: false,
+  inline: false,
   arrowSize: 4,
   arrowOffset: 5,
   offset: 5,
@@ -66,7 +70,8 @@ const defaultProps: Partial<TooltipProps> = {
   positionDependencies: [],
 };
 
-export function Tooltip(props: TooltipProps) {
+const _Tooltip = forwardRef<HTMLElement, TooltipProps>((props, ref) => {
+  const arrowRef = useRef<HTMLDivElement | null>(null);
   const {
     children,
     position,
@@ -96,6 +101,10 @@ export function Tooltip(props: TooltipProps) {
     zIndex,
     disabled,
     positionDependencies,
+    onClick,
+    onMouseEnter,
+    onMouseLeave,
+    inline,
     ...others
   } = useComponentDefaultProps('Tooltip', defaultProps, props);
 
@@ -111,15 +120,17 @@ export function Tooltip(props: TooltipProps) {
     onPositionChange,
     opened,
     events,
+    arrowRef,
     offset: offset + (withArrow ? arrowSize / 2 : 0),
     positionDependencies: [...positionDependencies, children],
+    inline,
   });
 
   if (!isElement(children)) {
     throw new Error(TOOLTIP_ERRORS.children);
   }
 
-  const targetRef = useMergedRef(tooltip.reference, (children as any).ref);
+  const targetRef = useMergedRef(tooltip.reference, (children as any).ref, ref);
 
   return (
     <>
@@ -147,6 +158,9 @@ export function Tooltip(props: TooltipProps) {
               {label}
 
               <FloatingArrow
+                ref={arrowRef}
+                arrowX={tooltip.arrowX}
+                arrowY={tooltip.arrowY}
                 visible={withArrow}
                 withBorder={false}
                 position={tooltip.placement}
@@ -162,6 +176,9 @@ export function Tooltip(props: TooltipProps) {
       {cloneElement(
         children,
         tooltip.getReferenceProps({
+          onClick,
+          onMouseEnter,
+          onMouseLeave,
           [refProp]: targetRef,
           className: cx(className, children.props.className),
           ...children.props,
@@ -169,9 +186,14 @@ export function Tooltip(props: TooltipProps) {
       )}
     </>
   );
-}
+}) as any;
 
-Tooltip.Group = TooltipGroup;
-Tooltip.Floating = TooltipFloating;
+_Tooltip.Group = TooltipGroup;
+_Tooltip.Floating = TooltipFloating;
 
-Tooltip.displayName = '@mantine/core/Tooltip';
+_Tooltip.displayName = '@mantine/core/Tooltip';
+
+export const Tooltip: ForwardRefWithStaticComponents<
+  TooltipProps,
+  { Group: typeof TooltipGroup; Floating: typeof TooltipFloating }
+> = _Tooltip;

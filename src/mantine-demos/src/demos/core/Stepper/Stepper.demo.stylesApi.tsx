@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { MantineDemo } from '@mantine/ds';
 import { Stepper, createStyles } from '@mantine/core';
 
 const code = `

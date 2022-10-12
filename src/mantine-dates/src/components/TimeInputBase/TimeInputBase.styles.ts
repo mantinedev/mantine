@@ -43,7 +43,6 @@ export default createStyles((theme, { size, hasValue }: TimeInputBaseStyles) => 
   },
 
   amPmInput: {
-    width: 'auto',
     textAlign: 'left',
   },
 }));

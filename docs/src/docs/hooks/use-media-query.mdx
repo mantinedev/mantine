@@ -26,29 +26,26 @@ Resize browser window to trigger `window.matchMedia` event:
 
 ## Server Side Rendering
 
-When rendering a component on the server that uses `useMediaQuery`, it is important to pass the second argument `initialValue`,
-without it the server may generate html that cannot be correctly hydrated on client.
-
-For example, the server will generate the html for clients using a smaller device.
-After the hydration, the hook will render again and return the result of the media query:
+During server side rendering hook will always return `false` as `window.matchMedia` api is not available,
+if that is not a desired behavior, you can override initial value:
 
 ```tsx
-import { Badge } from '@mantine/core';
 import { useMediaQuery } from '@mantine/hooks';
 
 function Demo() {
-  const matches = useMediaQuery('(min-width: 900px)', false);
-
-  return (
-    <Badge color={matches ? 'teal' : 'red'} variant="filled">
-      Breakpoint {matches ? 'matches' : 'does not match'}
-    </Badge>
-  );
-}`
+  // Set initial value in second argument and getInitialValueInEffect option to false
+  const matches = useMediaQuery('(max-width: 700px)', true, { getInitialValueInEffect: false });
+}
 ```
 
 ## Definition
 
 ```tsx
-function useMediaQuery(query: string, initialValue?: boolean): boolean;
+function useMediaQuery(
+  query: string,
+  initialValue?: boolean,
+  options?: {
+    getInitialValueInEffect: boolean;
+  }
+): boolean;
 ```

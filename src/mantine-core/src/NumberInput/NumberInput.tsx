@@ -60,6 +60,9 @@ export interface NumberInputProps
   /** Amount of digits after the decimal point  */
   precision?: number;
 
+  /** Only works if a precision is given, removes the trailing zeros, false by default */
+  removeTrailingZeros?: boolean;
+
   /** Default value for uncontrolled variant only */
   defaultValue?: number | undefined;
 
@@ -74,6 +77,9 @@ export interface NumberInputProps
 
   /** Parses the value from formatter, should be used with formatter at the same time */
   parser?: Parser;
+
+  /** Input type, defaults to text */
+  type?: 'text' | 'number';
 }
 
 const defaultFormatter: Formatter = (value) => value || '';
@@ -111,8 +117,10 @@ const defaultProps: Partial<NumberInputProps> = {
   size: 'sm',
   precision: 0,
   noClampOnBlur: false,
+  removeTrailingZeros: false,
   formatter: defaultFormatter,
   parser: defaultParser,
+  type: 'text',
 };
 
 export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>((props, ref) => {
@@ -129,10 +137,13 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>((props
     stepHoldDelay,
     onBlur,
     onFocus,
+    onKeyDown,
+    onKeyUp,
     hideControls,
     radius,
     variant,
     precision,
+    removeTrailingZeros,
     defaultValue,
     noClampOnBlur,
     handlersRef,
@@ -145,6 +156,7 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>((props
     parser,
     inputMode,
     unstyled,
+    type,
     ...others
   } = useComponentDefaultProps('NumberInput', defaultProps, props);
 
@@ -153,13 +165,27 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>((props
     { classNames, styles, unstyled, name: 'NumberInput' }
   );
 
+  const parsePrecision = (val: number | undefined) => {
+    if (val === undefined) return undefined;
+
+    let result = val.toFixed(precision);
+    if (removeTrailingZeros && precision > 0) {
+      result = result.replace(new RegExp(`[0]{0,${precision}}$`), '');
+      if (result.endsWith('.') || result.endsWith(decimalSeparator)) {
+        result = result.slice(0, -1);
+      }
+    }
+
+    return result;
+  };
+
   const [focused, setFocused] = useState(false);
   const [_value, setValue] = useState(
     typeof value === 'number' ? value : typeof defaultValue === 'number' ? defaultValue : undefined
   );
   const finalValue = typeof value === 'number' ? value : _value;
   const [tempValue, setTempValue] = useState(
-    typeof finalValue === 'number' ? finalValue.toFixed(precision) : ''
+    typeof finalValue === 'number' ? parsePrecision(finalValue) : ''
   );
   const inputRef = useRef<HTMLInputElement>();
   const handleValueChange = (val: number | undefined) => {
@@ -196,9 +222,9 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>((props
   incrementRef.current = () => {
     if (_value === undefined) {
       handleValueChange(startValue ?? min ?? 0);
-      setTempValue(startValue?.toFixed(precision) ?? min?.toFixed(precision) ?? '0');
+      setTempValue(parsePrecision(startValue) ?? parsePrecision(min) ?? '0');
     } else {
-      const result = clamp(_value + step, _min, _max).toFixed(precision);
+      const result = parsePrecision(clamp(_value + step, _min, _max));
 
       handleValueChange(parseFloat(result));
       setTempValue(result);
@@ -209,9 +235,9 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>((props
   decrementRef.current = () => {
     if (_value === undefined) {
       handleValueChange(startValue ?? min ?? 0);
-      setTempValue(startValue?.toFixed(precision) ?? min?.toFixed(precision) ?? '0');
+      setTempValue(parsePrecision(startValue) ?? parsePrecision(min) ?? '0');
     } else {
-      const result = clamp(_value - step, _min, _max).toFixed(precision);
+      const result = parsePrecision(clamp(_value - step, _min, _max));
       handleValueChange(parseFloat(result));
       setTempValue(result);
     }
@@ -222,7 +248,7 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>((props
   useEffect(() => {
     if (typeof value === 'number' && !focused) {
       setValue(value);
-      setTempValue(value.toFixed(precision));
+      setTempValue(parsePrecision(value));
     }
     if (defaultValue === undefined && value === undefined && !focused) {
       setValue(value);
@@ -314,6 +340,11 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>((props
   );
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const evt = event.nativeEvent as InputEvent;
+    if (evt.isComposing) {
+      return;
+    }
+
     const val = event.target.value;
     const parsed = parseNum(val);
 
@@ -342,11 +373,11 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>((props
 
       if (!Number.isNaN(val)) {
         if (!noClampOnBlur) {
-          setTempValue(val.toFixed(precision));
-          handleValueChange(parseFloat(val.toFixed(precision)));
+          setTempValue(parsePrecision(val));
+          handleValueChange(parseFloat(parsePrecision(val)));
         }
       } else {
-        setTempValue(finalValue?.toFixed(precision) ?? '');
+        setTempValue(parsePrecision(finalValue) ?? '');
       }
     }
 
@@ -360,6 +391,7 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>((props
   };
 
   const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    typeof onKeyDown === 'function' && onKeyDown(event);
     if (
       event.repeat &&
       shouldUseStepInterval &&
@@ -377,6 +409,7 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>((props
   };
 
   const handleKeyUp = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    typeof onKeyUp === 'function' && onKeyUp(event);
     if (event.key === 'ArrowUp' || event.key === 'ArrowDown') {
       onStepDone();
     }
@@ -385,11 +418,11 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>((props
   return (
     <TextInput
       {...others}
+      type={type}
       variant={variant}
       value={formatNum(tempValue)}
       disabled={disabled}
       ref={useMergedRef(inputRef, ref)}
-      type="text"
       onChange={handleChange}
       onBlur={handleBlur}
       onFocus={handleFocus}

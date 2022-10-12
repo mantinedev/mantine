@@ -92,6 +92,12 @@ export interface SliderProps
 
   /** Thumb width and height in px */
   thumbSize?: number;
+
+  /** A transformation function, to change the scale of the slider */
+  scale?: (value: number) => number;
+
+  /** Allows the track to be inverted */
+  inverted?: boolean;
 }
 
 const defaultProps: Partial<SliderProps> = {
@@ -108,6 +114,7 @@ const defaultProps: Partial<SliderProps> = {
   thumbLabel: '',
   showLabelOnHover: true,
   disabled: false,
+  scale: (v) => v,
 };
 
 export const Slider = forwardRef<HTMLDivElement, SliderProps>((props, ref) => {
@@ -138,6 +145,8 @@ export const Slider = forwardRef<HTMLDivElement, SliderProps>((props, ref) => {
     disabled,
     unstyled,
     thumbSize,
+    scale,
+    inverted,
     ...others
   } = useComponentDefaultProps('Slider', defaultProps, props);
 
@@ -153,7 +162,8 @@ export const Slider = forwardRef<HTMLDivElement, SliderProps>((props, ref) => {
   const valueRef = useRef(_value);
   const thumb = useRef<HTMLDivElement>();
   const position = getPosition({ value: _value, min, max });
-  const _label = typeof label === 'function' ? label(_value) : label;
+  const scaledValue = scale(_value);
+  const _label = typeof label === 'function' ? label(scaledValue) : label;
 
   const handleChange = useCallback(
     ({ x }: { x: number }) => {
@@ -175,10 +185,7 @@ export const Slider = forwardRef<HTMLDivElement, SliderProps>((props, ref) => {
   const handleThumbMouseDown = (
     event: React.MouseEvent<HTMLDivElement> | React.TouchEvent<HTMLDivElement>
   ) => {
-    if (event.cancelable) {
-      event.preventDefault();
-      event.stopPropagation();
-    }
+    event.stopPropagation();
   };
 
   const handleTrackKeydownCapture = (event: React.KeyboardEvent<HTMLDivElement>) => {
@@ -262,6 +269,7 @@ export const Slider = forwardRef<HTMLDivElement, SliderProps>((props, ref) => {
       unstyled={unstyled}
     >
       <Track
+        inverted={inverted}
         offset={0}
         filled={position}
         marks={marks}
@@ -270,7 +278,7 @@ export const Slider = forwardRef<HTMLDivElement, SliderProps>((props, ref) => {
         color={color}
         min={min}
         max={max}
-        value={_value}
+        value={scaledValue}
         onChange={setValue}
         onMouseEnter={showLabelOnHover ? () => setHovered(true) : undefined}
         onMouseLeave={showLabelOnHover ? () => setHovered(false) : undefined}
@@ -282,7 +290,7 @@ export const Slider = forwardRef<HTMLDivElement, SliderProps>((props, ref) => {
         <Thumb
           max={max}
           min={min}
-          value={_value}
+          value={scaledValue}
           position={position}
           dragging={active}
           color={color}
@@ -306,7 +314,7 @@ export const Slider = forwardRef<HTMLDivElement, SliderProps>((props, ref) => {
         </Thumb>
       </Track>
 
-      <input type="hidden" name={name} value={_value} />
+      <input type="hidden" name={name} value={scaledValue} />
     </SliderRoot>
   );
 });

@@ -24,16 +24,30 @@ export interface ColorSwatchProps
 
   /** ColorSwatch children */
   children?: React.ReactNode;
+
+  /**  Determines whether swatch should have inner shadow */
+  withShadow?: boolean;
 }
 
 const defaultProps: Partial<ColorSwatchProps> = {
   size: 25,
   radius: 25,
+  withShadow: true,
 };
 
 export const _ColorSwatch = forwardRef<HTMLDivElement, ColorSwatchProps>((props, ref) => {
-  const { color, size, radius, className, children, classNames, styles, unstyled, ...others } =
-    useComponentDefaultProps('ColorSwatch', defaultProps, props);
+  const {
+    color,
+    size,
+    radius,
+    className,
+    children,
+    classNames,
+    styles,
+    unstyled,
+    withShadow,
+    ...others
+  } = useComponentDefaultProps('ColorSwatch', defaultProps, props);
   const { classes, cx } = useStyles(
     { radius, size },
     { classNames, styles, unstyled, name: 'ColorSwatch' }
@@ -42,7 +56,7 @@ export const _ColorSwatch = forwardRef<HTMLDivElement, ColorSwatchProps>((props,
   return (
     <Box className={cx(classes.root, className)} ref={ref} {...others}>
       <div className={cx(classes.alphaOverlay, classes.overlay)} />
-      <div className={cx(classes.shadowOverlay, classes.overlay)} />
+      {withShadow && <div className={cx(classes.shadowOverlay, classes.overlay)} />}
       <div className={classes.overlay} style={{ backgroundColor: color }} />
       <div className={cx(classes.children, classes.overlay)}>{children}</div>
     </Box>

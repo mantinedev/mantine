@@ -86,4 +86,27 @@ describe('@mantine/form/validate with record rules', () => {
 
     expect(hook.result.current.errors).toStrictEqual({});
   });
+
+  it('allows to validate values based on their path', () => {
+    const hook = renderHook(() =>
+      useForm({
+        initialValues: { a: [{ b: 1 }, { b: 2 }] },
+        validate: {
+          a: {
+            b: (_value, _values, path) => (path === 'a.0.b' ? 'error' : null),
+          },
+        },
+      })
+    );
+
+    act(() => {
+      const result = hook.result.current.validate();
+      expect(result).toStrictEqual({
+        hasErrors: true,
+        errors: {
+          'a.0.b': 'error',
+        },
+      });
+    });
+  });
 });

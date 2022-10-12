@@ -68,6 +68,7 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>((props, r
     inputWrapperOrder,
     inputContainer,
     unstyled,
+    withAsterisk,
     ...others
   } = useComponentDefaultProps('Textarea', defaultProps, props);
 
@@ -108,6 +109,7 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>((props, r
       inputContainer={inputContainer}
       inputWrapperOrder={inputWrapperOrder}
       unstyled={unstyled}
+      withAsterisk={withAsterisk}
       {...systemStyles}
       {...wrapperProps}
     >

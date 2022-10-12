@@ -23,7 +23,7 @@ export type TabsStylesNames =
 export interface TabsProps
   extends TabsProviderProps,
     DefaultProps<TabsStylesNames, TabsStylesParams>,
-    Omit<React.ComponentPropsWithoutRef<'div'>, keyof TabsProviderProps> {}
+    Omit<React.ComponentPropsWithRef<'div'>, keyof TabsProviderProps> {}
 
 type TabsComponent = ForwardRefWithStaticComponents<
   TabsProps,
@@ -63,6 +63,7 @@ export const Tabs: TabsComponent = forwardRef<HTMLDivElement, TabsProps>((props,
     styles,
     radius,
     inverted,
+    keepMounted,
     ...others
   } = useComponentDefaultProps('Tabs', defaultProps, props);
 
@@ -86,6 +87,7 @@ export const Tabs: TabsComponent = forwardRef<HTMLDivElement, TabsProps>((props,
         variant={variant}
         radius={radius}
         inverted={inverted}
+        keepMounted={keepMounted}
       >
         <Box {...others} className={cx(classes.root, className)} id={id} ref={ref}>
           {children}

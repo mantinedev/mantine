@@ -1,5 +1,9 @@
 import { useState, useEffect, useRef } from 'react';
 
+export interface UseMediaQueryOptions {
+  getInitialValueInEffect: boolean;
+}
+
 type MediaQueryCallback = (event: { matches: boolean; media: string }) => void;
 
 /**
@@ -17,7 +21,7 @@ function attachMediaListener(query: MediaQueryList, callback: MediaQueryCallback
 }
 
 function getInitialValue(query: string, initialValue?: boolean) {
-  if (initialValue !== undefined) {
+  if (typeof initialValue === 'boolean') {
     return initialValue;
   }
 
@@ -28,8 +32,16 @@ function getInitialValue(query: string, initialValue?: boolean) {
   return false;
 }
 
-export function useMediaQuery(query: string, initialValue?: boolean) {
-  const [matches, setMatches] = useState(getInitialValue(query, initialValue));
+export function useMediaQuery(
+  query: string,
+  initialValue?: boolean,
+  { getInitialValueInEffect }: UseMediaQueryOptions = {
+    getInitialValueInEffect: true,
+  }
+) {
+  const [matches, setMatches] = useState(
+    getInitialValueInEffect ? false : getInitialValue(query, initialValue)
+  );
   const queryRef = useRef<MediaQueryList>();
 
   useEffect(() => {

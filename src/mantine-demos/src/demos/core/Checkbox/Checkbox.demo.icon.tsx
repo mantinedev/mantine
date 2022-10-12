@@ -1,5 +1,6 @@
 import React from 'react';
 import { IconBiohazard, IconRadioactive } from '@tabler/icons';
+import { MantineDemo } from '@mantine/ds';
 import { Checkbox, CheckboxProps } from '@mantine/core';
 
 const code = `

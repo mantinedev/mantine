@@ -97,6 +97,9 @@ export interface SelectProps
   /** Called each time search value changes */
   onSearchChange?(query: string): void;
 
+  /** Controlled search input value */
+  searchValue?: string;
+
   /** Allow creatable option  */
   creatable?: boolean;
 
@@ -107,7 +110,7 @@ export interface SelectProps
   shouldCreate?(query: string, data: SelectItem[]): boolean;
 
   /** Called when create option is selected */
-  onCreate?(query: string): SelectItem | string;
+  onCreate?(query: string): SelectItem | string | null | undefined;
 
   /** Change dropdown component, can be used to add native scrollbars */
   dropdownComponent?: any;
@@ -187,6 +190,7 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>((props, ref) => 
     limit,
     disabled,
     onSearchChange,
+    searchValue,
     rightSection,
     rightSectionWidth,
     creatable,
@@ -253,7 +257,13 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>((props, ref) => 
   });
 
   const selectedValue = sortedData.find((item) => item.value === _value);
-  const [inputValue, setInputValue] = useState(selectedValue?.label || '');
+
+  const [inputValue, setInputValue] = useUncontrolled({
+    value: searchValue,
+    defaultValue: selectedValue?.label || '',
+    finalValue: undefined,
+    onChange: onSearchChange,
+  });
 
   const handleSearchChange = (val: string) => {
     setInputValue(val);
@@ -296,10 +306,12 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>((props, ref) => 
       } else {
         if (item.creatable && typeof onCreate === 'function') {
           const createdItem = onCreate(item.value);
-          if (typeof createdItem === 'string') {
-            handleChange(createdItem);
-          } else {
-            handleChange(createdItem.value);
+          if (typeof createdItem !== 'undefined' && createdItem !== null) {
+            if (typeof createdItem === 'string') {
+              handleChange(createdItem);
+            } else {
+              handleChange(createdItem.value);
+            }
           }
         } else {
           handleChange(item.value);
@@ -350,6 +362,9 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>((props, ref) => 
 
   const selectedItemIndex = _value ? filteredData.findIndex((el) => el.value === _value) : 0;
 
+  const shouldShowDropdown =
+    !readOnly && (filteredData.length > 0 ? dropdownOpened : dropdownOpened && !!nothingFound);
+
   const handlePrevious = () => {
     setHovered((current) => {
       const nextIndex = getNextIndex(
@@ -359,7 +374,7 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>((props, ref) => 
       );
 
       targetRef.current = itemsRefs.current[filteredData[nextIndex]?.value];
-      scrollIntoView({ alignment: isColumn ? 'start' : 'end' });
+      shouldShowDropdown && scrollIntoView({ alignment: isColumn ? 'start' : 'end' });
       return nextIndex;
     });
   };
@@ -373,7 +388,7 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>((props, ref) => 
       );
 
       targetRef.current = itemsRefs.current[filteredData[nextIndex]?.value];
-      scrollIntoView({ alignment: isColumn ? 'end' : 'start' });
+      shouldShowDropdown && scrollIntoView({ alignment: isColumn ? 'end' : 'start' });
       return nextIndex;
     });
   };
@@ -384,9 +399,12 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>((props, ref) => 
       scrollIntoView({ alignment: isColumn ? 'end' : 'start' });
     }, 0);
 
+  useDidUpdate(() => {
+    if (shouldShowDropdown) scrollSelectedItemIntoView();
+  }, [shouldShowDropdown]);
+
   const handleInputKeydown = (event: React.KeyboardEvent<HTMLInputElement>) => {
     typeof onKeyDown === 'function' && onKeyDown(event);
-
     switch (event.key) {
       case 'ArrowUp': {
         event.preventDefault();
@@ -426,7 +444,7 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>((props, ref) => 
 
           const firstItemIndex = filteredData.findIndex((item) => !item.disabled);
           setHovered(firstItemIndex);
-          scrollIntoView({ alignment: isColumn ? 'end' : 'start' });
+          shouldShowDropdown && scrollIntoView({ alignment: isColumn ? 'end' : 'start' });
         }
         break;
       }
@@ -441,7 +459,7 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>((props, ref) => 
 
           const lastItemIndex = filteredData.map((item) => !!item.disabled).lastIndexOf(false);
           setHovered(lastItemIndex);
-          scrollIntoView({ alignment: isColumn ? 'end' : 'start' });
+          shouldShowDropdown && scrollIntoView({ alignment: isColumn ? 'end' : 'start' });
         }
         break;
       }
@@ -455,8 +473,8 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>((props, ref) => 
 
       case ' ': {
         if (!searchable) {
+          event.preventDefault();
           if (filteredData[hovered] && dropdownOpened) {
-            event.preventDefault();
             handleItemSelect(filteredData[hovered]);
           } else {
             setDropdownOpened(true);
@@ -495,7 +513,6 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>((props, ref) => 
     typeof onFocus === 'function' && onFocus(event);
     if (searchable) {
       setDropdownOpened(true);
-      scrollSelectedItemIntoView();
     }
   };
 
@@ -514,23 +531,13 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>((props, ref) => 
 
   const handleInputClick = () => {
     if (!readOnly) {
-      let dropdownOpen = true;
+      setDropdownOpened(!dropdownOpened);
 
-      if (!searchable) {
-        dropdownOpen = !dropdownOpened;
-      }
-
-      setDropdownOpened(dropdownOpen);
-
-      if (_value && dropdownOpen) {
+      if (_value && !dropdownOpened) {
         setHovered(selectedItemIndex);
-        scrollSelectedItemIntoView();
       }
     }
   };
-
-  const shouldShowDropdown =
-    !readOnly && (filteredData.length > 0 ? dropdownOpened : dropdownOpened && !!nothingFound);
 
   return (
     <Input.Wrapper {...wrapperProps} __staticSelector="Select">
@@ -576,7 +583,7 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>((props, ref) => 
               aria-autocomplete="list"
               aria-controls={shouldShowDropdown ? `${inputProps.id}-items` : null}
               aria-activedescendant={hovered >= 0 ? `${inputProps.id}-${hovered}` : null}
-              onClick={handleInputClick}
+              onMouseDown={handleInputClick}
               onBlur={handleInputBlur}
               onFocus={handleInputFocus}
               readOnly={!searchable || readOnly}
@@ -611,6 +618,9 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>((props, ref) => 
           direction={direction}
           id={inputProps.id}
           innerRef={scrollableRef}
+          __staticSelector="Select"
+          classNames={classNames}
+          styles={styles}
         >
           <SelectItems
             data={filteredData}

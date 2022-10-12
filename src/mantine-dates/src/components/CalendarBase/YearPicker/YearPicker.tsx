@@ -20,6 +20,7 @@ export interface YearPickerProps
   previousDecadeLabel?: string;
   preventFocus?: boolean;
   yearLabelFormat?: string;
+  __stopPropagation?: boolean;
 }
 
 export function YearPicker({
@@ -37,6 +38,7 @@ export function YearPicker({
   preventFocus,
   unstyled,
   yearLabelFormat = 'YYYY',
+  __stopPropagation,
   ...others
 }: YearPickerProps) {
   const { classes, cx } = useStyles(
@@ -53,6 +55,7 @@ export function YearPicker({
       onClick={() => onChange(year)}
       disabled={year < minYear || year > maxYear}
       onMouseDown={(event) => preventFocus && event.preventDefault()}
+      data-mantine-stop-propagation={__stopPropagation || undefined}
       className={cx(classes.yearPickerControl, {
         [classes.yearPickerControlActive]: year === value,
       })}
@@ -81,6 +84,7 @@ export function YearPicker({
         classNames={classNames}
         __staticSelector={__staticSelector}
         preventFocus={preventFocus}
+        __stopPropagation={__stopPropagation}
       />
       <div className={classes.yearPickerControls}>{years}</div>
     </div>

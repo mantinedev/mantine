@@ -6,7 +6,7 @@ import { Col } from './Col/Col';
 import { GridProvider } from './Grid.context';
 import useStyles from './Grid.styles';
 
-export interface GridProps extends DefaultProps, React.ComponentPropsWithoutRef<'div'> {
+export interface GridProps extends DefaultProps, React.ComponentPropsWithRef<'div'> {
   /** <Col /> components only */
   children: React.ReactNode;
 

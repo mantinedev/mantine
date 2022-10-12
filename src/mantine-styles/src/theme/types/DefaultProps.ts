@@ -12,7 +12,7 @@ export type Styles<StylesNames extends string, StylesParams extends Record<strin
 
 export interface DefaultProps<
   StylesNames extends string = never,
-  StylesParams extends Record<string, any> = never
+  StylesParams extends Record<string, any> = Record<string, any>
 > extends MantineStyleSystemProps {
   className?: string;
   style?: CSSProperties;

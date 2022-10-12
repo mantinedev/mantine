@@ -88,6 +88,7 @@ export const ColorInput = forwardRef<HTMLInputElement, ColorInputProps>(
       inputProps,
       format,
       onChange,
+      onChangeEnd,
       onFocus,
       onBlur,
       value,
@@ -159,10 +160,12 @@ export const ColorInput = forwardRef<HTMLInputElement, ColorInputProps>(
           classNames={classNames}
           styles={styles}
           unstyled={unstyled}
+          disabled={withPicker === false && (!Array.isArray(swatches) || swatches.length === 0)}
         >
           <Popover.Target>
             <div>
               <Input<'input'>
+                autoComplete="nope"
                 {...others}
                 {...inputProps}
                 ref={ref}
@@ -171,8 +174,13 @@ export const ColorInput = forwardRef<HTMLInputElement, ColorInputProps>(
                 onBlur={handleInputBlur}
                 spellCheck={false}
                 value={_value}
-                onChange={(event) => setValue(event.currentTarget.value)}
-                autoComplete="nope"
+                onChange={(event) => {
+                  const inputValue = event.currentTarget.value;
+                  setValue(inputValue);
+                  if (isColorValid(inputValue)) {
+                    onChangeEnd?.(convertHsvaTo(format, parseColor(inputValue)));
+                  }
+                }}
                 icon={
                   icon ||
                   (withPreview ? (
@@ -196,6 +204,7 @@ export const ColorInput = forwardRef<HTMLInputElement, ColorInputProps>(
               __staticSelector="ColorInput"
               value={_value}
               onChange={setValue}
+              onChangeEnd={onChangeEnd}
               format={format}
               swatches={swatches}
               swatchesPerRow={swatchesPerRow}

@@ -1,5 +1,6 @@
 import React from 'react';
 import { Group, Button, Text } from '@mantine/core';
+import { MantineDemo } from '@mantine/ds';
 import { openConfirmModal, closeAllModals } from '@mantine/modals';
 
 const code = `

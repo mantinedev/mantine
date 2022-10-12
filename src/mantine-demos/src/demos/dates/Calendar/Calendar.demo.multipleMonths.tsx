@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Group, MediaQuery, Text } from '@mantine/core';
+import { MantineDemo } from '@mantine/ds';
 import { Calendar } from '@mantine/dates';
 
 const code = `

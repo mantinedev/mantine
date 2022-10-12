@@ -31,7 +31,7 @@ function getVariantStyles(
 
   if (variant === 'pills') {
     return {
-      gap: theme.spacing.sm / 2,
+      gap: `calc(${theme.spacing.sm}px / 2)`,
     };
   }
 
@@ -44,6 +44,7 @@ export default createStyles((theme, params: TabsListStylesParams) => {
   return {
     tabsList: {
       display: 'flex',
+      flexWrap: 'wrap',
       flexDirection: vertical ? 'column' : 'row',
       justifyContent: GROUP_POSITIONS[params.position],
 

@@ -46,3 +46,45 @@ export const WithTabs = () => (
     </Prism.Tabs>
   </div>
 );
+
+export const LargeLine = () => (
+  <Prism language="javascript" withLineNumbers>
+    Line that is so large that it will cause overflow Lorem ipsum dolor sit amet consectetur, Line
+    that is so large that it will cause overflow Lorem ipsum dolor sit amet consectetur, Line that
+    is so large that it will cause overflow Lorem ipsum dolor sit amet consectetur,
+  </Prism>
+);
+
+const demoCode = `
+import { Button } from '@mantine/core';
+
+function Demo() {
+  return <Button>Hello</Button>
+}
+
+function Usage() {
+  return <ActionIcon>Hello</ActionIcon>;
+}
+`;
+export function LinesHighlightWithCustomTheme() {
+  const deleted = { color: 'red', label: '-' };
+  const added = { color: 'green', label: '+' };
+
+  return (
+    <Prism
+      language="tsx"
+      withLineNumbers
+      colorScheme="dark"
+      highlightLines={{
+        3: deleted,
+        4: deleted,
+        5: deleted,
+        7: added,
+        8: added,
+        9: added,
+      }}
+    >
+      {demoCode}
+    </Prism>
+  );
+}

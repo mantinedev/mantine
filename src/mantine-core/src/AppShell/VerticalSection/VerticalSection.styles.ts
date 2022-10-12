@@ -12,7 +12,7 @@ interface VerticalSectionStyles {
   fixed: boolean;
   position: VerticalSectionPosition;
   zIndex: React.CSSProperties['zIndex'];
-  borderPosition: 'top' | 'bottom';
+  borderPosition: 'top' | 'bottom' | 'none';
 }
 
 export default createStyles(

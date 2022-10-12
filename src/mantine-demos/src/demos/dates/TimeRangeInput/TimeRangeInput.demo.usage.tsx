@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import dayjs from 'dayjs';
+import { MantineDemo } from '@mantine/ds';
 import { TimeRangeInput } from '@mantine/dates';
 
 const code = `

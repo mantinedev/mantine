@@ -1,4 +1,5 @@
 import { DatePicker } from '@mantine/dates';
+import { MantineDemo } from '@mantine/ds';
 import React from 'react';
 
 const codeTemplate = (props: string) => `
@@ -13,7 +14,7 @@ export const flip: MantineDemo = {
   type: 'configurator',
   component: (props: any) => (
     <div style={{ maxWidth: 340, marginLeft: 'auto', marginRight: 'auto' }}>
-      <DatePicker placeholder="Pick date" label="Event date" {...props} />
+      <DatePicker placeholder="Pick date" label="Event date" {...props} withinPortal />
     </div>
   ),
   codeTemplate,

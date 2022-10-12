@@ -61,14 +61,7 @@ export const CheckboxGroup = forwardRef<HTMLDivElement, CheckboxGroupProps>(
       orientation,
       spacing,
       size,
-      classNames,
-      styles,
       wrapperProps,
-      errorProps,
-      labelProps,
-      descriptionProps,
-      inputContainer,
-      inputWrapperOrder,
       offset,
       ...others
     } = useComponentDefaultProps('CheckboxGroup', defaultProps, props);
@@ -95,14 +88,7 @@ export const CheckboxGroup = forwardRef<HTMLDivElement, CheckboxGroupProps>(
           labelElement="div"
           size={size}
           __staticSelector="CheckboxGroup"
-          classNames={classNames}
-          styles={styles}
           ref={ref}
-          errorProps={errorProps}
-          descriptionProps={descriptionProps}
-          labelProps={labelProps}
-          inputContainer={inputContainer}
-          inputWrapperOrder={inputWrapperOrder}
           {...wrapperProps}
           {...others}
         >

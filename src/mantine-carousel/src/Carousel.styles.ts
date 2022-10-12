@@ -1,28 +1,84 @@
-import { createStyles, MantineNumberSize } from '@mantine/core';
+import { createStyles, getSortedBreakpoints, MantineNumberSize } from '@mantine/core';
+import { CarouselBreakpoint } from './types';
 
 export interface CarouselStylesParams {
   controlSize: number;
   controlsOffset: MantineNumberSize;
   orientation: 'vertical' | 'horizontal';
   height: React.CSSProperties['height'];
+  includeGapInSize: boolean;
+  breakpoints: CarouselBreakpoint[];
+  slideGap: MantineNumberSize;
 }
 
 export default createStyles(
-  (theme, { controlSize, controlsOffset, orientation, height }: CarouselStylesParams) => {
+  (
+    theme,
+    {
+      controlSize,
+      controlsOffset,
+      orientation,
+      height,
+      includeGapInSize,
+      breakpoints = [],
+      slideGap,
+    }: CarouselStylesParams
+  ) => {
     const horizontal = orientation === 'horizontal';
+
+    // Container styles by slideGap (for includeGapInSize case)
+    const getContainerStyles = (gap: MantineNumberSize) => {
+      if (!includeGapInSize) return {};
+
+      const slideGapValue = theme.fn.size({
+        size: gap,
+        sizes: theme.spacing,
+      });
+
+      return {
+        [orientation === 'horizontal' ? 'marginRight' : 'marginBottom']: slideGapValue * -1,
+      };
+    };
+
+    const hasDiff = breakpoints.some(
+      (v) => typeof v.slideGap !== 'undefined' || typeof v.slideSize !== 'undefined'
+    );
+
+    // Apply styles for breakpoints only if has different gap or size
+    const containerBreakpoints = !hasDiff
+      ? null
+      : getSortedBreakpoints(theme, breakpoints).reduce((acc, breakpoint) => {
+          const property = 'maxWidth' in breakpoint ? 'max-width' : 'min-width';
+          const breakpointSize = theme.fn.size({
+            size: (property === 'max-width' ? breakpoint.maxWidth : breakpoint.minWidth)!,
+            sizes: theme.breakpoints,
+          });
+
+          const breakpointSlideGap =
+            (typeof breakpoint.slideGap === 'undefined' ? slideGap : breakpoint.slideGap) ?? 0;
+
+          acc[`@media (${property}: ${breakpointSize - (property === 'max-width' ? 1 : 0)}px)`] =
+            getContainerStyles(breakpointSlideGap);
+
+          return acc;
+        }, {} as any);
+
     return {
       root: {
-        overflow: 'hidden',
         position: 'relative',
+      },
+      viewport: {
+        height,
+        overflow: 'hidden',
       },
 
       container: {
         display: 'flex',
         flexDirection: horizontal ? 'row' : 'column',
         height,
+        ...getContainerStyles(slideGap),
+        ...containerBreakpoints,
       },
-
-      viewport: {},
 
       controls: {
         position: 'absolute',

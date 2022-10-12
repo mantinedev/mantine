@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useDebouncedValue } from '@mantine/hooks';
+import { MantineDemo } from '@mantine/ds';
 import { TextInput, Text, Button } from '@mantine/core';
 
 const code = `
@@ -57,7 +58,7 @@ function Demo() {
         </Button>
       </div>
 
-      <div style={{ maxWidth: 400, margin: 'auto', marginTop: 15 }}>
+      <div style={{ maxWidth: 400, margin: 'auto', marginTop: 15, overflowWrap: 'break-word' }}>
         <Text>
           <Text component="span" color="dimmed" size="sm">
             Value:

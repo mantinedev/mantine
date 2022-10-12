@@ -1,4 +1,5 @@
 import React from 'react';
+import { MantineDemo } from '@mantine/ds';
 import { Avatar, Indicator } from '@mantine/core';
 
 const code = `
@@ -6,7 +7,7 @@ import { Avatar, Indicator } from '@mantine/core';
 
 function Demo() {
   return (
-    <Indicator inline size={16} offset={7} position="bottom-end" color="red" withBorder>
+    <Indicator dot inline size={16} offset={7} position="bottom-end" color="red" withBorder>
       <Avatar
         size="lg"
         radius="xl"
@@ -19,7 +20,7 @@ function Demo() {
 
 function Demo() {
   return (
-    <Indicator inline size={16} offset={7} position="bottom-end" color="red" withBorder>
+    <Indicator dot inline size={16} offset={7} position="bottom-end" color="red" withBorder>
       <Avatar
         size="lg"
         radius="xl"

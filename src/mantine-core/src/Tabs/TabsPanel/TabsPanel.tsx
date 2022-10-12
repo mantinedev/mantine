@@ -30,17 +30,20 @@ export const TabsPanel = forwardRef<HTMLDivElement, TabsPanelProps>(
       { name: 'Tabs', unstyled, classNames, styles }
     );
 
+    const active = ctx.value === value;
+    const content = ctx.keepMounted ? children : active ? children : null;
+
     return (
       <Box
         {...others}
         ref={ref}
-        sx={[{ display: ctx.value !== value ? 'none' : undefined }, ...packSx(sx)]}
+        sx={[{ display: !active ? 'none' : undefined }, ...packSx(sx)]}
         className={cx(classes.panel, className)}
         role="tabpanel"
         id={ctx.getPanelId(value)}
         aria-labelledby={ctx.getTabId(value)}
       >
-        {children}
+        {content}
       </Box>
     );
   }

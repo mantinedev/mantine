@@ -51,9 +51,4 @@ describe('@mantine/core/Image', () => {
     expect(withoutCaption.querySelectorAll('figcaption')).toHaveLength(0);
     expect(withCaption.querySelector('figcaption').textContent).toBe('test-caption');
   });
-
-  it('renders given placeholder if image was not loaded', () => {
-    render(<Image {...defaultProps} withPlaceholder placeholder="test-placeholder" />);
-    expect(screen.getByText('test-placeholder')).toBeInTheDocument();
-  });
 });

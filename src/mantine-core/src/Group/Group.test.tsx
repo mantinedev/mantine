@@ -17,6 +17,6 @@ describe('@mantine/core/Group', () => {
   it('has no falsy children', () => {
     const children = [undefined, null, <div key="1" />];
     const { container } = render(<Group>{children}</Group>);
-    expect(container.querySelectorAll('.mantine-Group-child')).toHaveLength(1);
+    expect(container.querySelectorAll('.mantine-Group-root > *')).toHaveLength(1);
   });
 });

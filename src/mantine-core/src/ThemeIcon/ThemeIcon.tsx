@@ -34,7 +34,6 @@ export interface ThemeIconProps
 const defaultProps: Partial<ThemeIconProps> = {
   size: 'md',
   variant: 'filled',
-  gradient: { from: 'blue', to: 'cyan', deg: 45 },
 };
 
 export const ThemeIcon = forwardRef<HTMLDivElement, ThemeIconProps>((props, ref) => {

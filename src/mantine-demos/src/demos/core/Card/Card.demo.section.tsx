@@ -1,6 +1,7 @@
 import React from 'react';
 import { Card, Group, Text, Menu, ActionIcon, Image, SimpleGrid } from '@mantine/core';
 import { IconDots, IconEye, IconFileZip, IconTrash } from '@tabler/icons';
+import { MantineDemo } from '@mantine/ds';
 import { demoBase } from './_demo-base';
 
 const code = `

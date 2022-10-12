@@ -1,5 +1,6 @@
 import React from 'react';
 import { useDebouncedState } from '@mantine/hooks';
+import { MantineDemo } from '@mantine/ds';
 import { TextInput, Text } from '@mantine/core';
 
 const code = `
@@ -46,7 +47,7 @@ function Demo() {
           onChange={(event) => setValue(event.currentTarget.value)}
         />
       </div>
-      <div style={{ maxWidth: 400, margin: 'auto', marginTop: 15 }}>
+      <div style={{ maxWidth: 400, margin: 'auto', marginTop: 15, overflowWrap: 'break-word' }}>
         <Text>
           <Text component="span" color="dimmed" size="sm">
             Debounced value:

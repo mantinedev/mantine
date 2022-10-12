@@ -1,4 +1,5 @@
 import React, { useState, useMemo } from 'react';
+import { MantineDemo } from '@mantine/ds';
 import { SSRWrapper } from './_SSRWrapper';
 
 const code = `
@@ -38,6 +39,7 @@ function Demo() {
 
   return (
     <RichTextEditor
+      id="rte"
       value={value}
       onChange={onChange}
       placeholder="Type @ or # to see mentions autocomplete"

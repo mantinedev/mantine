@@ -1,5 +1,6 @@
 import React from 'react';
 import { useMantineTheme, MantineColor } from '@mantine/styles';
+import { Tooltip } from '../../Tooltip';
 import { getCurveProps } from './get-curve-props';
 
 interface CurveProps {
@@ -11,6 +12,7 @@ interface CurveProps {
   lineRoundCaps: boolean;
   root?: boolean;
   color?: MantineColor;
+  tooltip?: React.ReactNode;
 }
 
 export function Curve({
@@ -22,6 +24,7 @@ export function Curve({
   root,
   color,
   lineRoundCaps,
+  tooltip,
 }: CurveProps) {
   const theme = useMantineTheme();
   const stroke = theme.fn.themeColor(
@@ -31,12 +34,14 @@ export function Curve({
   );
 
   return (
-    <circle
-      fill="none"
-      strokeLinecap={lineRoundCaps ? 'round' : 'butt'}
-      stroke={stroke}
-      {...getCurveProps({ sum, size, thickness, value, offset, root })}
-    />
+    <Tooltip.Floating disabled={!tooltip} label={tooltip}>
+      <circle
+        fill="none"
+        strokeLinecap={lineRoundCaps ? 'round' : 'butt'}
+        stroke={stroke}
+        {...getCurveProps({ sum, size, thickness, value, offset, root })}
+      />
+    </Tooltip.Floating>
   );
 }
 

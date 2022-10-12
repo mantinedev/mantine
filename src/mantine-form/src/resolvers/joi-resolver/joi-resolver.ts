@@ -16,10 +16,10 @@ interface JoiSchema {
   validate(values: Record<string, any>, options: { abortEarly: boolean }): JoiResults;
 }
 
-export function joiResolver(schema: any) {
+export function joiResolver(schema: any, options?: any) {
   const _schema: JoiSchema = schema;
   return (values: Record<string, any>): FormErrors => {
-    const parsed = _schema.validate(values, { abortEarly: false });
+    const parsed = _schema.validate(values, { abortEarly: false, ...options });
 
     if (!parsed.error) {
       return {};

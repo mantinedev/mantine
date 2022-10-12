@@ -9,14 +9,17 @@ import {
 } from '@mantine/styles';
 import { INPUT_SIZES } from '../Input';
 
-export type ButtonVariant =
-  | 'filled'
-  | 'outline'
-  | 'light'
-  | 'gradient'
-  | 'white'
-  | 'default'
-  | 'subtle';
+export const BUTTON_VARIANTS = [
+  'filled',
+  'outline',
+  'light',
+  'white',
+  'default',
+  'subtle',
+  'gradient',
+] as const;
+
+export type ButtonVariant = typeof BUTTON_VARIANTS[number];
 
 export interface ButtonStylesParams {
   color: MantineColor;
@@ -132,11 +135,13 @@ export default createStyles(
 
       '&:active': theme.activeStyles,
 
-      '&[data-disabled]': {
+      '&:disabled, &[data-disabled]': {
         borderColor: 'transparent',
         backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[2],
         color: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[5],
         cursor: 'not-allowed',
+        backgroundImage: 'none',
+        pointerEvents: 'none',
 
         '&:active': {
           transform: 'none',

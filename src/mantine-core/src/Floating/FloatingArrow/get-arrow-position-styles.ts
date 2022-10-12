@@ -2,11 +2,11 @@ import type { FloatingPosition, FloatingSide, FloatingPlacement } from '../types
 
 function horizontalSide(
   placement: FloatingPlacement | 'center',
-  arrowSize: number,
+  arrowY: number,
   arrowOffset: number
 ) {
   if (placement === 'center') {
-    return { top: `calc(50% - ${arrowSize / 2}px)` };
+    return { top: arrowY };
   }
 
   if (placement === 'end') {
@@ -22,12 +22,12 @@ function horizontalSide(
 
 function verticalSide(
   placement: FloatingPlacement | 'center',
-  arrowSize: number,
+  arrowX: number,
   arrowOffset: number,
   dir: 'rtl' | 'ltr'
 ) {
   if (placement === 'center') {
-    return { left: `calc(50% - ${arrowSize / 2}px)` };
+    return { [dir === 'ltr' ? 'left' : 'right']: arrowX };
   }
 
   if (placement === 'end') {
@@ -46,12 +46,16 @@ export function getArrowPositionStyles({
   withBorder,
   arrowSize,
   arrowOffset,
+  arrowX,
+  arrowY,
   dir,
 }: {
   position: FloatingPosition;
   withBorder: boolean;
   arrowSize: number;
   arrowOffset: number;
+  arrowX: number;
+  arrowY: number;
   dir: 'rtl' | 'ltr';
 }) {
   const [side, placement = 'center'] = position.split('-') as [FloatingSide, FloatingPlacement];
@@ -67,9 +71,9 @@ export function getArrowPositionStyles({
   if (side === 'left') {
     return {
       ...baseStyles,
-      ...horizontalSide(placement, arrowSize, arrowOffset),
-      [dir === 'ltr' ? 'right' : 'left']: arrowPosition,
-      [dir === 'ltr' ? 'borderLeft' : 'borderRight']: 0,
+      ...horizontalSide(placement, arrowY, arrowOffset),
+      right: arrowPosition,
+      borderLeft: 0,
       borderBottom: 0,
     };
   }
@@ -77,9 +81,9 @@ export function getArrowPositionStyles({
   if (side === 'right') {
     return {
       ...baseStyles,
-      ...horizontalSide(placement, arrowSize, arrowOffset),
-      [dir === 'ltr' ? 'left' : 'right']: arrowPosition,
-      [dir === 'ltr' ? 'borderRight' : 'borderLeft']: 0,
+      ...horizontalSide(placement, arrowY, arrowOffset),
+      left: arrowPosition,
+      borderRight: 0,
       borderTop: 0,
     };
   }
@@ -87,7 +91,7 @@ export function getArrowPositionStyles({
   if (side === 'top') {
     return {
       ...baseStyles,
-      ...verticalSide(placement, arrowSize, arrowOffset, dir),
+      ...verticalSide(placement, arrowX, arrowOffset, dir),
       bottom: arrowPosition,
       borderTop: 0,
       [dir === 'ltr' ? 'borderLeft' : 'borderRight']: 0,
@@ -97,7 +101,7 @@ export function getArrowPositionStyles({
   if (side === 'bottom') {
     return {
       ...baseStyles,
-      ...verticalSide(placement, arrowSize, arrowOffset, dir),
+      ...verticalSide(placement, arrowX, arrowOffset, dir),
       top: arrowPosition,
       borderBottom: 0,
       [dir === 'ltr' ? 'borderRight' : 'borderLeft']: 0,

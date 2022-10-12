@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { MantineDemo } from '@mantine/ds';
 import { DateRangePicker, DateRangePickerValue } from '@mantine/dates';
 
 const code = `
@@ -34,6 +35,7 @@ function Demo() {
         placeholder="Pick dates range"
         value={value}
         onChange={setValue}
+        withinPortal
       />
     </div>
   );

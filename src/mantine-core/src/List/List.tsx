@@ -16,7 +16,7 @@ export type ListStylesNames = ListItemStylesNames | Selectors<typeof useStyles>;
 
 export interface ListProps
   extends DefaultProps<ListStylesNames>,
-    React.ComponentPropsWithoutRef<'ul'> {
+    React.ComponentPropsWithRef<'ul'> {
   /** <List.Item /> components only */
   children: React.ReactNode;
 
@@ -69,13 +69,13 @@ export const List: ListComponent = forwardRef<HTMLUListElement, ListProps>(
     } = useComponentDefaultProps('List', defaultProps, props);
 
     const { classes, cx } = useStyles(
-      { withPadding, size, listStyleType },
+      { withPadding, size, listStyleType, center, spacing },
       { classNames, styles, name: 'List', unstyled }
     );
 
     return (
       <StylesApiProvider classNames={classNames} styles={styles} unstyled={unstyled}>
-        <ListContext.Provider value={{ spacing, center, icon }}>
+        <ListContext.Provider value={{ spacing, center, icon, listStyleType, size, withPadding }}>
           <Box<any>
             component={type === 'unordered' ? 'ul' : 'ol'}
             className={cx(classes.root, className)}

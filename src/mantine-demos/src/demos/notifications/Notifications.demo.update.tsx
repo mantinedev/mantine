@@ -1,6 +1,7 @@
 import React from 'react';
 import { IconCheck } from '@tabler/icons';
 import { Group, Button } from '@mantine/core';
+import { MantineDemo } from '@mantine/ds';
 import { showNotification, updateNotification } from '@mantine/notifications';
 
 const code = `

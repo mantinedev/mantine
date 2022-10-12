@@ -1,4 +1,5 @@
 import React from 'react';
+import { MantineDemo } from '@mantine/ds';
 import { Stepper, StepperProps } from '@mantine/core';
 
 function Wrapper(props: Partial<StepperProps>) {

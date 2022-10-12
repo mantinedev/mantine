@@ -32,6 +32,15 @@ Notification component has 3 variants:
 
 <Demo data={NotificationDemos.configurator} />
 
+## CloseButtonProps
+
+To customize CloseButton inside Notification, you can pass `CloseButtonProps`.
+
+```tsx
+<Notification closeButtonProps={{ color: 'red' }} />
+<Notification closeButtonProps={{ iconSize: 20 }} />
+```
+
 ## Accessibility
 
 To support screen readers set close button aria-label or title with `closeButtonProps`:

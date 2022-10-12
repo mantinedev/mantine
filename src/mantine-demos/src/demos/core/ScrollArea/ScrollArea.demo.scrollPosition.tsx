@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Stack, Code, Text, ScrollArea } from '@mantine/core';
+import { MantineDemo } from '@mantine/ds';
 import { Content } from './_content';
 
 const code = `

@@ -6,6 +6,8 @@ import {
   MantineTheme,
 } from '@mantine/styles';
 
+export type ColSpan = number | 'auto' | 'content';
+
 interface ColStyles {
   gutter: MantineNumberSize;
   columns: number;
@@ -16,40 +18,72 @@ interface ColStyles {
   offsetMd: number;
   offsetLg: number;
   offsetXl: number;
-  span: number;
-  xs: number;
-  sm: number;
-  md: number;
-  lg: number;
-  xl: number;
+  span: ColSpan;
+  xs: ColSpan;
+  sm: ColSpan;
+  md: ColSpan;
+  lg: ColSpan;
+  xl: ColSpan;
+  order: React.CSSProperties['order'];
+  orderXs: React.CSSProperties['order'];
+  orderSm: React.CSSProperties['order'];
+  orderMd: React.CSSProperties['order'];
+  orderLg: React.CSSProperties['order'];
+  orderXl: React.CSSProperties['order'];
 }
 
-const getColumnWidth = (colSpan: number, columns: number) => `${100 / (columns / colSpan)}%`;
+const getColumnFlexBasis = (colSpan: ColSpan, columns: number) => {
+  if (colSpan === 'content') {
+    return 'auto';
+  }
+  if (colSpan === 'auto') {
+    return '0px';
+  }
+  return colSpan ? `${100 / (columns / colSpan)}%` : undefined;
+};
+
+const getColumnMaxWidth = (colSpan: ColSpan, columns: number, grow: boolean) => {
+  if (grow || colSpan === 'auto' || colSpan === 'content') {
+    return 'unset';
+  }
+  return getColumnFlexBasis(colSpan, columns);
+};
+
+const getColumnFlexGrow = (colSpan: ColSpan, grow: boolean) => {
+  if (!colSpan) {
+    return undefined;
+  }
+  return colSpan === 'auto' || grow ? 1 : 0;
+};
+
 const getColumnOffset = (offset: number, columns: number) =>
-  offset ? `${100 / (columns / offset)}%` : undefined;
+  offset === 0 ? 0 : offset ? `${100 / (columns / offset)}%` : undefined;
 
 function getBreakpointsStyles({
   sizes,
   offsets,
+  orders,
   theme,
   columns,
   grow,
 }: {
-  sizes: Record<MantineSize, number>;
+  sizes: Record<MantineSize, ColSpan>;
   offsets: Record<MantineSize, number>;
+  orders: Record<MantineSize, React.CSSProperties['order']>;
   grow: boolean;
   theme: MantineTheme;
   columns: number;
 }) {
   return MANTINE_SIZES.reduce((acc, size) => {
-    if (typeof sizes[size] === 'number') {
-      acc[`@media (min-width: ${theme.breakpoints[size] + 1}px)`] = {
-        flexBasis: getColumnWidth(sizes[size], columns),
-        flexShrink: 0,
-        maxWidth: grow ? 'unset' : getColumnWidth(sizes[size], columns),
-        marginLeft: getColumnOffset(offsets[size], columns),
-      };
-    }
+    acc[`@media (min-width: ${theme.breakpoints[size]}px)`] = {
+      order: orders[size],
+      flexBasis: getColumnFlexBasis(sizes[size], columns),
+      flexShrink: 0,
+      width: sizes[size] === 'content' ? 'auto' : undefined,
+      maxWidth: getColumnMaxWidth(sizes[size], columns, grow),
+      marginLeft: getColumnOffset(offsets[size], columns),
+      flexGrow: getColumnFlexGrow(sizes[size], grow),
+    };
     return acc;
   }, {});
 }
@@ -73,19 +107,28 @@ export default createStyles(
       md,
       lg,
       xl,
+      order,
+      orderXs,
+      orderSm,
+      orderMd,
+      orderLg,
+      orderXl,
     }: ColStyles
   ) => ({
     root: {
       boxSizing: 'border-box',
-      flexGrow: grow ? 1 : 0,
+      flexGrow: getColumnFlexGrow(span, grow),
+      order,
       padding: theme.fn.size({ size: gutter, sizes: theme.spacing }) / 2,
       marginLeft: getColumnOffset(offset, columns),
-      flexBasis: getColumnWidth(span, columns),
+      flexBasis: getColumnFlexBasis(span, columns),
       flexShrink: 0,
-      maxWidth: grow ? 'unset' : getColumnWidth(span, columns),
+      width: span === 'content' ? 'auto' : undefined,
+      maxWidth: getColumnMaxWidth(span, columns, grow),
       ...getBreakpointsStyles({
         sizes: { xs, sm, md, lg, xl },
         offsets: { xs: offsetXs, sm: offsetSm, md: offsetMd, lg: offsetLg, xl: offsetXl },
+        orders: { xs: orderXs, sm: orderSm, md: orderMd, lg: orderLg, xl: orderXl },
         theme,
         columns,
         grow,

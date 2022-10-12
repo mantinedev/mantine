@@ -1,5 +1,6 @@
 import React from 'react';
 import { Group, ActionIcon, useMantineColorScheme } from '@mantine/core';
+import { MantineDemo } from '@mantine/ds';
 import { IconSun, IconMoonStars } from '@tabler/icons';
 
 const code = `

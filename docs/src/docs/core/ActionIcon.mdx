@@ -3,6 +3,7 @@ group: 'mantine-core'
 package: '@mantine/core'
 title: ActionIcon
 order: 1
+polymorphic: true
 slug: /core/action-icon/
 category: 'buttons'
 description: 'Icon button'
@@ -24,7 +25,7 @@ import { ActionIconDemos } from '@mantine/demos';
 
 ## Colors
 
-ActionIcon `color` prop accepts only keys of `theme.colors`, hex, rgba, hsl and other CSS colors are not supported:
+ActionIcon `color` prop accepts only keys of `theme.colors` (including colors index reference, i. e. `blue.3`). Hex, rgba, hsl and other CSS colors are not supported:
 
 <Demo data={ActionIconDemos.colors} />
 
@@ -35,7 +36,7 @@ ActionIcon has the following attributes on the root element:
 - `data-disabled` when `disabled` prop is `true`
 - `data-loading` when `loading` prop is `true`
 
-You can customize disabled and loading styles with these attributes:
+You can customize `disabled` and `loading` styles with these attributes:
 
 ```tsx
 import { ActionIcon } from '@mantine/core';

@@ -1,4 +1,5 @@
 import React from 'react';
+import { MantineDemo } from '@mantine/ds';
 import { Tooltip, Group, Button } from '@mantine/core';
 
 const code = `

@@ -1,20 +1,11 @@
 import React, { useState } from 'react';
-import { storiesOf } from '@storybook/react';
 import { DEFAULT_THEME, MANTINE_SIZES } from '@mantine/styles';
 import { WithinOverlays } from '@mantine/storybook';
 import { ColorInput } from './ColorInput';
 
-const sizes = MANTINE_SIZES.map((size) => (
-  <ColorInput
-    size={size}
-    label="Color input"
-    placeholder="Pick color"
-    format="rgba"
-    style={{ marginTop: 20 }}
-  />
-));
+export default { title: 'ColorInput' };
 
-function ControlledInput() {
+export function Controlled() {
   const [value, setValue] = useState('rgba(84, 37, 186, 0.81)');
   return (
     <div style={{ margin: 'auto', maxWidth: 400, marginTop: 15 }}>
@@ -41,10 +32,21 @@ function ControlledInput() {
   );
 }
 
-storiesOf('ColorInput', module)
-  .add('Controlled', () => <ControlledInput />)
-  .add('Sizes', () => <div style={{ padding: 40 }}>{sizes}</div>)
-  .add('Within overlays', () => (
+export function Sizes() {
+  const sizes = MANTINE_SIZES.map((size) => (
+    <ColorInput
+      size={size}
+      label="Color input"
+      placeholder="Pick color"
+      format="rgba"
+      style={{ marginTop: 20 }}
+    />
+  ));
+  return <div style={{ padding: 40 }}>{sizes}</div>;
+}
+
+export function Overlays() {
+  return (
     <WithinOverlays>
       <ColorInput
         format="rgba"
@@ -57,4 +59,13 @@ storiesOf('ColorInput', module)
         withinPortal={false}
       />
     </WithinOverlays>
-  ));
+  );
+}
+
+export function WithoutPickerAndSwatches() {
+  return (
+    <div style={{ padding: 40, maxWidth: 400 }}>
+      <ColorInput withPicker={false} swatches={[]} />
+    </div>
+  );
+}

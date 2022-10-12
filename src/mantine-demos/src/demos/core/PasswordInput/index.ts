@@ -5,3 +5,4 @@ export { validation } from './PasswordInput.demo.validation';
 export { disabled } from './PasswordInput.demo.disabled';
 export { icon } from './PasswordInput.demo.icon';
 export { visibilityIcon } from './PasswordInput.demo.visibilityIcon';
+export { controlledVisibility } from './PasswordInput.demo.controlledVisibility';

@@ -1,6 +1,6 @@
 /* eslint-disable react/no-unused-prop-types */
 
-import React from 'react';
+import React, { useRef, useState } from 'react';
 import { useId, useClickOutside } from '@mantine/hooks';
 import {
   useMantineTheme,
@@ -79,6 +79,12 @@ export interface PopoverBaseProps {
 
   /** Key of theme.shadow or any other valid css box-shadow value */
   shadow?: MantineShadow;
+
+  /** If set, popover dropdown will not render */
+  disabled?: boolean;
+
+  /** Determines whether focus should be automatically returned to control when dropdown closes, false by default */
+  returnFocus?: boolean;
 }
 
 export interface PopoverProps extends PopoverBaseProps {
@@ -124,7 +130,7 @@ const defaultProps: Partial<PopoverProps> = {
   positionDependencies: [],
   transition: 'fade',
   transitionDuration: 150,
-  middlewares: { flip: true, shift: true },
+  middlewares: { flip: true, shift: true, inline: false },
   arrowSize: 7,
   arrowOffset: 5,
   closeOnClickOutside: true,
@@ -132,12 +138,14 @@ const defaultProps: Partial<PopoverProps> = {
   closeOnEscape: true,
   trapFocus: false,
   withRoles: true,
+  returnFocus: false,
   clickOutsideEvents: ['mousedown', 'touchstart'],
   zIndex: getDefaultZIndex('popover'),
   __staticSelector: 'Popover',
 };
 
 export function Popover(props: PopoverProps) {
+  const arrowRef = useRef<HTMLDivElement | null>(null);
   const {
     children,
     position,
@@ -171,8 +179,13 @@ export function Popover(props: PopoverProps) {
     exitTransitionDuration,
     __staticSelector,
     withRoles,
+    disabled,
+    returnFocus,
     ...others
   } = useComponentDefaultProps('Popover', defaultProps, props);
+
+  const [targetNode, setTargetNode] = useState<HTMLElement>(null);
+  const [dropdownNode, setDropdownNode] = useState<HTMLElement>(null);
 
   const uid = useId(id);
   const theme = useMantineTheme();
@@ -181,6 +194,7 @@ export function Popover(props: PopoverProps) {
     width,
     position: getFloatingPosition(theme.dir, position),
     offset: offset + (withArrow ? arrowSize / 2 : 0),
+    arrowRef,
     onPositionChange,
     positionDependencies,
     opened,
@@ -191,8 +205,8 @@ export function Popover(props: PopoverProps) {
   });
 
   useClickOutside(() => closeOnClickOutside && popover.onClose(), clickOutsideEvents, [
-    popover.floating.refs.floating.current,
-    popover.floating.refs.reference.current as any,
+    targetNode,
+    dropdownNode,
   ]);
 
   return (
@@ -204,12 +218,23 @@ export function Popover(props: PopoverProps) {
     >
       <PopoverContextProvider
         value={{
+          returnFocus,
+          disabled,
           controlled: popover.controlled,
-          reference: popover.floating.reference,
-          floating: popover.floating.floating,
+          reference: (node) => {
+            setTargetNode(node as HTMLElement);
+            popover.floating.reference(node);
+          },
+          floating: (node) => {
+            setDropdownNode(node);
+            popover.floating.floating(node);
+          },
           x: popover.floating.x,
           y: popover.floating.y,
+          arrowX: popover.floating?.middlewareData?.arrow?.x,
+          arrowY: popover.floating?.middlewareData?.arrow?.y,
           opened: popover.opened,
+          arrowRef,
           transition,
           transitionDuration,
           exitTransitionDuration,

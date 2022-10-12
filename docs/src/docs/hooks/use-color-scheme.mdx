@@ -26,5 +26,10 @@ and will always return `light` if the api is not available (e.g. during server s
 ## Definition
 
 ```tsx
-function useColorScheme(initialValue?: 'dark' | 'light'): 'dark' | 'light';
+function useColorScheme(
+  initialValue?: 'dark' | 'light',
+  options?: {
+    getInitialValueInEffect: boolean;
+  }
+): 'dark' | 'light';
 ```

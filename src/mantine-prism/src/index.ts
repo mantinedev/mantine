@@ -3,6 +3,8 @@ import { ForwardRefWithStaticComponents } from '@mantine/utils';
 import { PrismTabs, PrismPanel } from './PrismTabs/PrismTabs';
 import { Prism, PrismProps } from './Prism/Prism';
 
+export type { PrismTheme } from 'prism-react-renderer';
+
 export type { PrismProps, PrismStylesNames } from './Prism/Prism';
 export type { PrismStylesParams } from './Prism/Prism.styles';
 

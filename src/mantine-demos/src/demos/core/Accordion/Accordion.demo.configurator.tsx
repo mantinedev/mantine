@@ -1,5 +1,6 @@
 import React from 'react';
 import { AccordionProps } from '@mantine/core';
+import { MantineDemo } from '@mantine/ds';
 import { BaseDemo } from './_base';
 
 function Wrapper(props: Partial<AccordionProps>) {
@@ -58,15 +59,6 @@ export const configurator: MantineDemo = {
       ],
       initialValue: 'right',
       defaultValue: 'right',
-    },
-    {
-      name: 'chevronSize',
-      type: 'number',
-      initialValue: 24,
-      defaultValue: 24,
-      min: 10,
-      max: 40,
-      step: 4,
     },
     { name: 'disableChevronRotation', type: 'boolean', initialValue: false, defaultValue: false },
   ],

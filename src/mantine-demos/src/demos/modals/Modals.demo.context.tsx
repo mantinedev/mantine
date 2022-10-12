@@ -1,5 +1,6 @@
 import React from 'react';
 import { Group, Button } from '@mantine/core';
+import { MantineDemo } from '@mantine/ds';
 import { openContextModal } from '@mantine/modals';
 
 const code = `

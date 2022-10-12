@@ -1,4 +1,5 @@
 import React from 'react';
+import { MantineDemo } from '@mantine/ds';
 import { CheckboxGroupProps, Checkbox } from '@mantine/core';
 
 const codeTemplate = (props: string) => `
@@ -49,7 +50,7 @@ export const groupConfigurator: MantineDemo = {
     { name: 'label', type: 'string', initialValue: 'Select your favorite framework/library' },
     { name: 'description', type: 'string', initialValue: 'This is anonymous' },
     { name: 'error', type: 'string', initialValue: '' },
-    { name: 'required', type: 'boolean', initialValue: true, defaultValue: false },
+    { name: 'withAsterisk', type: 'boolean', initialValue: true, defaultValue: false },
     { name: 'spacing', type: 'size', initialValue: 'lg', defaultValue: 'lg' },
     { name: 'offset', type: 'size', initialValue: 'xs', defaultValue: 'xs' },
     { name: 'size', type: 'size', initialValue: 'sm', defaultValue: 'sm' },

@@ -1,4 +1,5 @@
 import React from 'react';
+import { MantineDemo } from '@mantine/ds';
 import { useMantineTheme, MediaQuery, Stack, Box, CSSObject } from '@mantine/core';
 
 const code = `

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Paper, Button, Group, useMantineTheme } from '@mantine/core';
+import { MantineDemo } from '@mantine/ds';
 import { useClickOutside } from '@mantine/hooks';
 
 const code = `

@@ -23,7 +23,7 @@ export default createStyles(
       borderRadius: theme.fn.radius(radius),
       width: '100%',
       maxWidth,
-      overflow: 'hidden',
+      overflow: 'auto',
       marginLeft: 'calc(var(--removed-scroll-width, 0px) * -1)',
     },
 

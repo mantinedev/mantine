@@ -27,7 +27,7 @@ Set open and close delays in ms with `openDelay` and `closeDelay` props:
 
 ## With interactive elements
 
-HoverCard is displayed only when mouse is over target element or dropdown,
+`HoverCard` is displayed only when mouse is over target element or dropdown,
 you can use anchors and buttons within dropdowns, using inputs is not recommended:
 
 <Demo data={HoverCardDemos.profile} />
@@ -105,7 +105,11 @@ Use `forwardRef` function to forward ref to root element:
 import { forwardRef } from 'react';
 import { HoverCard } from '@mantine/core';
 
-const MyComponent = forwardRef((props, ref) => <div ref={ref}>My component</div>);
+const MyComponent = forwardRef((props, ref) => (
+  <div ref={ref} {...props}>
+    My component
+  </div>
+));
 
 // Works correctly – ref is forwarded
 function Demo() {
@@ -121,5 +125,5 @@ function Demo() {
 
 ## Accessibility
 
-HoverCard is ignored by screen readers and cannot be activated with keyboard, use it to display only additional information
+`HoverCard` is ignored by screen readers and cannot be activated with keyboard, use it to display only additional information
 that is not required to understand the context.

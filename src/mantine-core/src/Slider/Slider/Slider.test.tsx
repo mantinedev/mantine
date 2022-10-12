@@ -42,6 +42,12 @@ describe('@mantine/core/Slider', () => {
     expect(spy).toHaveBeenLastCalledWith(40);
   });
 
+  it('should scale the value', async () => {
+    const { container } = render(<Slider value={50} scale={(v) => v * 2} />);
+    await pressArrow('right');
+    expectInputValue('100', container);
+  });
+
   it('supports uncontrolled state', async () => {
     const { container } = render(<Slider defaultValue={50} step={10} />);
     expectInputValue('50', container);

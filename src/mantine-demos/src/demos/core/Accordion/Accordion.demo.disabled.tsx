@@ -1,5 +1,6 @@
 import { Accordion, Box } from '@mantine/core';
 import React from 'react';
+import { MantineDemo } from '@mantine/ds';
 import { baseAccordionMockdata } from './_mockdata';
 
 const code = `

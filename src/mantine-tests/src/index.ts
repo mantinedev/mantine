@@ -28,3 +28,4 @@ export { itSupportsWrapperProps } from './inputs/it-supports-wrapper-props';
 export { itSupportsInputWrapperProps } from './inputs/it-supports-input-wrapper-props';
 export { itSupportsInputProps } from './inputs/it-supports-input-props';
 export { itSupportsInputStylesApi } from './inputs/it-supports-input-styles-api';
+export { itSupportsInputAsterisk } from './inputs/it-supports-input-asterisk';
