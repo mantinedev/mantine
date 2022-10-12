@@ -362,6 +362,9 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>((props, ref) => 
 
   const selectedItemIndex = _value ? filteredData.findIndex((el) => el.value === _value) : 0;
 
+  const shouldShowDropdown =
+    !readOnly && (filteredData.length > 0 ? dropdownOpened : dropdownOpened && !!nothingFound);
+
   const handlePrevious = () => {
     setHovered((current) => {
       const nextIndex = getNextIndex(
@@ -371,7 +374,7 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>((props, ref) => 
       );
 
       targetRef.current = itemsRefs.current[filteredData[nextIndex]?.value];
-      scrollIntoView({ alignment: isColumn ? 'start' : 'end' });
+      shouldShowDropdown && scrollIntoView({ alignment: isColumn ? 'start' : 'end' });
       return nextIndex;
     });
   };
@@ -385,7 +388,7 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>((props, ref) => 
       );
 
       targetRef.current = itemsRefs.current[filteredData[nextIndex]?.value];
-      scrollIntoView({ alignment: isColumn ? 'end' : 'start' });
+      shouldShowDropdown && scrollIntoView({ alignment: isColumn ? 'end' : 'start' });
       return nextIndex;
     });
   };
@@ -396,9 +399,12 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>((props, ref) => 
       scrollIntoView({ alignment: isColumn ? 'end' : 'start' });
     }, 0);
 
+  useDidUpdate(() => {
+    if (shouldShowDropdown) scrollSelectedItemIntoView();
+  }, [shouldShowDropdown]);
+
   const handleInputKeydown = (event: React.KeyboardEvent<HTMLInputElement>) => {
     typeof onKeyDown === 'function' && onKeyDown(event);
-
     switch (event.key) {
       case 'ArrowUp': {
         event.preventDefault();
@@ -438,7 +444,7 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>((props, ref) => 
 
           const firstItemIndex = filteredData.findIndex((item) => !item.disabled);
           setHovered(firstItemIndex);
-          scrollIntoView({ alignment: isColumn ? 'end' : 'start' });
+          shouldShowDropdown && scrollIntoView({ alignment: isColumn ? 'end' : 'start' });
         }
         break;
       }
@@ -453,7 +459,7 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>((props, ref) => 
 
           const lastItemIndex = filteredData.map((item) => !!item.disabled).lastIndexOf(false);
           setHovered(lastItemIndex);
-          scrollIntoView({ alignment: isColumn ? 'end' : 'start' });
+          shouldShowDropdown && scrollIntoView({ alignment: isColumn ? 'end' : 'start' });
         }
         break;
       }
@@ -507,7 +513,6 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>((props, ref) => 
     typeof onFocus === 'function' && onFocus(event);
     if (searchable) {
       setDropdownOpened(true);
-      scrollSelectedItemIntoView();
     }
   };
 
@@ -526,23 +531,13 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>((props, ref) => 
 
   const handleInputClick = () => {
     if (!readOnly) {
-      let dropdownOpen = true;
+      setDropdownOpened(!dropdownOpened);
 
-      if (!searchable) {
-        dropdownOpen = !dropdownOpened;
-      }
-
-      setDropdownOpened(dropdownOpen);
-
-      if (_value && dropdownOpen) {
+      if (_value && !dropdownOpened) {
         setHovered(selectedItemIndex);
-        scrollSelectedItemIntoView();
       }
     }
   };
-
-  const shouldShowDropdown =
-    !readOnly && (filteredData.length > 0 ? dropdownOpened : dropdownOpened && !!nothingFound);
 
   return (
     <Input.Wrapper {...wrapperProps} __staticSelector="Select">
@@ -588,7 +583,7 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>((props, ref) => 
               aria-autocomplete="list"
               aria-controls={shouldShowDropdown ? `${inputProps.id}-items` : null}
               aria-activedescendant={hovered >= 0 ? `${inputProps.id}-${hovered}` : null}
-              onClick={handleInputClick}
+              onMouseDown={handleInputClick}
               onBlur={handleInputBlur}
               onFocus={handleInputFocus}
               readOnly={!searchable || readOnly}

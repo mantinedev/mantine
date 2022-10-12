@@ -49,7 +49,6 @@ const defaultProps: Partial<AvatarProps> = {
   size: 'md',
   color: 'gray',
   variant: 'light',
-  gradient: { from: 'blue', to: 'cyan', deg: 45 },
 };
 
 export const _Avatar = forwardRef<HTMLDivElement, AvatarProps>((props, ref) => {

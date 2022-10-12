@@ -117,7 +117,7 @@ const defaultProps: Partial<NumberInputProps> = {
   size: 'sm',
   precision: 0,
   noClampOnBlur: false,
-  removeTrailingZeros: true,
+  removeTrailingZeros: false,
   formatter: defaultFormatter,
   parser: defaultParser,
   type: 'text',
@@ -165,13 +165,27 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>((props
     { classNames, styles, unstyled, name: 'NumberInput' }
   );
 
+  const parsePrecision = (val: number | undefined) => {
+    if (val === undefined) return undefined;
+
+    let result = val.toFixed(precision);
+    if (removeTrailingZeros && precision > 0) {
+      result = result.replace(new RegExp(`[0]{0,${precision}}$`), '');
+      if (result.endsWith('.') || result.endsWith(decimalSeparator)) {
+        result = result.slice(0, -1);
+      }
+    }
+
+    return result;
+  };
+
   const [focused, setFocused] = useState(false);
   const [_value, setValue] = useState(
     typeof value === 'number' ? value : typeof defaultValue === 'number' ? defaultValue : undefined
   );
   const finalValue = typeof value === 'number' ? value : _value;
   const [tempValue, setTempValue] = useState(
-    typeof finalValue === 'number' ? finalValue.toFixed(precision) : ''
+    typeof finalValue === 'number' ? parsePrecision(finalValue) : ''
   );
   const inputRef = useRef<HTMLInputElement>();
   const handleValueChange = (val: number | undefined) => {
@@ -208,9 +222,9 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>((props
   incrementRef.current = () => {
     if (_value === undefined) {
       handleValueChange(startValue ?? min ?? 0);
-      setTempValue(startValue?.toFixed(precision) ?? min?.toFixed(precision) ?? '0');
+      setTempValue(parsePrecision(startValue) ?? parsePrecision(min) ?? '0');
     } else {
-      const result = clamp(_value + step, _min, _max).toFixed(precision);
+      const result = parsePrecision(clamp(_value + step, _min, _max));
 
       handleValueChange(parseFloat(result));
       setTempValue(result);
@@ -221,9 +235,9 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>((props
   decrementRef.current = () => {
     if (_value === undefined) {
       handleValueChange(startValue ?? min ?? 0);
-      setTempValue(startValue?.toFixed(precision) ?? min?.toFixed(precision) ?? '0');
+      setTempValue(parsePrecision(startValue) ?? parsePrecision(min) ?? '0');
     } else {
-      const result = clamp(_value - step, _min, _max).toFixed(precision);
+      const result = parsePrecision(clamp(_value - step, _min, _max));
       handleValueChange(parseFloat(result));
       setTempValue(result);
     }
@@ -234,7 +248,7 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>((props
   useEffect(() => {
     if (typeof value === 'number' && !focused) {
       setValue(value);
-      setTempValue(value.toFixed(precision));
+      setTempValue(parsePrecision(value));
     }
     if (defaultValue === undefined && value === undefined && !focused) {
       setValue(value);
@@ -359,25 +373,11 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>((props
 
       if (!Number.isNaN(val)) {
         if (!noClampOnBlur) {
-          if (removeTrailingZeros) {
-            const valNoZeros = val
-              .toFixed(precision)
-              .replace(new RegExp(`[0]{0,${precision}}$`), '');
-
-            if (valNoZeros.endsWith(decimalSeparator) || valNoZeros.endsWith('.')) {
-              setTempValue(valNoZeros.slice(0, -1));
-              handleValueChange(parseFloat(valNoZeros.slice(0, -1)));
-            } else {
-              setTempValue(valNoZeros);
-              handleValueChange(parseFloat(valNoZeros));
-            }
-          } else {
-            setTempValue(val.toFixed(precision));
-            handleValueChange(parseFloat(val.toFixed(precision)));
-          }
+          setTempValue(parsePrecision(val));
+          handleValueChange(parseFloat(parsePrecision(val)));
         }
       } else {
-        setTempValue(finalValue?.toFixed(precision) ?? '');
+        setTempValue(parsePrecision(finalValue) ?? '');
       }
     }
 

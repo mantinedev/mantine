@@ -12,4 +12,5 @@ export const Radio: Record<RadioStylesNames, string> = {
   icon: 'Radio button icon',
   error: 'Error message',
   description: 'Description',
+  label: 'Label',
 };

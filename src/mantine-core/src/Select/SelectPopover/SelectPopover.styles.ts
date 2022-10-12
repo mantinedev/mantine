@@ -7,5 +7,6 @@ export default createStyles(() => ({
     padding: 4,
     display: 'flex',
     width: '100%',
+    boxSizing: 'border-box',
   },
 }));

@@ -60,14 +60,7 @@ export interface ColProps extends DefaultProps, React.ComponentPropsWithoutRef<'
   xl?: ColSpan;
 }
 
-const defaultProps: Partial<ColProps> = {
-  offset: 0,
-  offsetXs: 0,
-  offsetSm: 0,
-  offsetMd: 0,
-  offsetLg: 0,
-  offsetXl: 0,
-};
+const defaultProps: Partial<ColProps> = {};
 
 function isValidSpan(span: ColSpan) {
   if (span === 'auto' || span === 'content') {

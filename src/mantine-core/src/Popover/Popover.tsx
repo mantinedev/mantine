@@ -82,6 +82,9 @@ export interface PopoverBaseProps {
 
   /** If set, popover dropdown will not render */
   disabled?: boolean;
+
+  /** Determines whether focus should be automatically returned to control when dropdown closes, false by default */
+  returnFocus?: boolean;
 }
 
 export interface PopoverProps extends PopoverBaseProps {
@@ -135,6 +138,7 @@ const defaultProps: Partial<PopoverProps> = {
   closeOnEscape: true,
   trapFocus: false,
   withRoles: true,
+  returnFocus: false,
   clickOutsideEvents: ['mousedown', 'touchstart'],
   zIndex: getDefaultZIndex('popover'),
   __staticSelector: 'Popover',
@@ -176,6 +180,7 @@ export function Popover(props: PopoverProps) {
     __staticSelector,
     withRoles,
     disabled,
+    returnFocus,
     ...others
   } = useComponentDefaultProps('Popover', defaultProps, props);
 
@@ -213,6 +218,7 @@ export function Popover(props: PopoverProps) {
     >
       <PopoverContextProvider
         value={{
+          returnFocus,
           disabled,
           controlled: popover.controlled,
           reference: (node) => {

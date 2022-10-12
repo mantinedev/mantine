@@ -49,7 +49,7 @@ export function WithArrow() {
   );
 }
 
-export function Usage() {
+export function Controlled() {
   const [opened, setState] = useState(false);
 
   return (
@@ -61,17 +61,15 @@ export function Usage() {
         position="bottom"
         withArrow
         trapFocus
-        width={300}
         radius="md"
+        returnFocus
       >
         <Popover.Target>
           <Button onClick={() => setState((c) => !c)}>Toggle popover</Button>
         </Popover.Target>
 
         <Popover.Dropdown>
-          <input />
-          <input data-autofocus />
-          <input />
+          <Button onClick={() => setState(false)}>Close</Button>
         </Popover.Dropdown>
       </Popover>
     </div>
