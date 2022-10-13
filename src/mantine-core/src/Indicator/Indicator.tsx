@@ -116,7 +116,7 @@ export const Indicator = forwardRef<HTMLDivElement, IndicatorProps>((props, ref)
 
   const isShowIndicator = useMemo(
     () => !disabled && (dot || (label != null && !(label <= 0 && !showZero))),
-    [disabled, label, showZero]
+    [disabled, label, showZero, dot]
   );
 
   return (
