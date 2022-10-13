@@ -17,16 +17,16 @@ export interface RatingProps
   /** Rating value */
   value?: number;
 
-  /** This icon will be displayed if empty */
+  /** This icon will be displayed if symbol is empty */
   emptySymbol?: React.ReactNode | ((value: number) => React.ReactNode);
 
-  /** This icon will be displayed if full */
+  /** This icon will be displayed if symbol is full */
   fullSymbol?: React.ReactNode | ((value: number) => React.ReactNode);
 
   /** Rating Fraction, by default it is 1 */
   fractions?: number;
 
-  /** Size */
+  /** Predefined sizes for rating */
   size?: MantineSize;
 
   /** No of ratings */
@@ -44,9 +44,10 @@ export interface RatingProps
   /** name of rating, should be unique within the page */
   name?: string;
 
-  /** Readonly */
+  /** If true, you won't be able to interact */
   readonly?: boolean;
 
+  /** If true, only the selected symbol will change to full symbol */
   highlightSelectedOnly?: boolean;
 }
 
