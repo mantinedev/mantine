@@ -7,7 +7,7 @@ release: https://github.com/mantinedev/mantine/releases/tag/5.6.0
 date: 'October 2nd, 2022'
 ---
 
-import { ProgressDemos, RingProgressDemos, TabsDemos } from '@mantine/demos';
+import { ProgressDemos, RingProgressDemos, TabsDemos, FormDemos } from '@mantine/demos';
 
 ## Progress sections props
 
@@ -29,6 +29,12 @@ Vertical [Tabs](https://mantine.dev/core/tabs/) now support `placement` prop:
 New [use-favicon](https://mantine.dev/hooks/use-favicon/) hook:
 
 <Demo data={HooksDemos.useFaviconUsage} />
+
+## Form index reference in validateInputOnBlur and validateInputOnChange
+
+You can now use `FORM_INDEX` in [use-form](https://mantine.dev/form/validation/) to validate nested array fields with `validateInputOnBlur` and `validateInputOnChange` settings:
+
+<Demo data={FormDemos.liveFieldValidation} />
 
 ## Other changes
 
