@@ -44,6 +44,7 @@ export const Tab = forwardRef<HTMLButtonElement, TabProps>(
         variant: ctx.variant,
         radius: ctx.radius,
         inverted: ctx.inverted,
+        placement: ctx.placement,
       },
       { name: 'Tabs', unstyled, classNames, styles }
     );

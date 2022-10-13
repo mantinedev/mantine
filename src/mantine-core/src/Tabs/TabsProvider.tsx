@@ -4,7 +4,7 @@ import { useUncontrolled, useId } from '@mantine/hooks';
 import { MantineColor, MantineNumberSize } from '@mantine/styles';
 import { TabsContextProvider } from './Tabs.context';
 import { TABS_ERRORS } from './Tabs.errors';
-import { TabsValue, TabsOrientation, TabsVariant } from './Tabs.types';
+import { TabsValue, TabsOrientation, TabsVariant, TabsPlacement } from './Tabs.types';
 
 export interface TabsProviderProps {
   /** Default value for uncontrolled component */
@@ -18,6 +18,9 @@ export interface TabsProviderProps {
 
   /** Tabs orientation, vertical or horizontal */
   orientation?: TabsOrientation;
+
+  /** Tabs.List placement relative to Tabs.Panel, applicable only for orientation="vertical", left by default */
+  placement?: TabsPlacement;
 
   /** Base id, used to generate ids that connect labels with controls, by default generated randomly */
   id?: string;
@@ -64,6 +67,7 @@ export function TabsProvider({
   color,
   radius,
   inverted,
+  placement,
   keepMounted = true,
 }: TabsProviderProps) {
   const uid = useId(id);
@@ -78,6 +82,7 @@ export function TabsProvider({
   return (
     <TabsContextProvider
       value={{
+        placement,
         value: _value,
         orientation,
         id: uid,

@@ -42,6 +42,7 @@ const defaultProps: Partial<TabsProps> = {
   unstyled: false,
   inverted: false,
   variant: 'default',
+  placement: 'left',
 };
 
 export const Tabs: TabsComponent = forwardRef<HTMLDivElement, TabsProps>((props, ref) => {
@@ -64,11 +65,12 @@ export const Tabs: TabsComponent = forwardRef<HTMLDivElement, TabsProps>((props,
     radius,
     inverted,
     keepMounted,
+    placement,
     ...others
   } = useComponentDefaultProps('Tabs', defaultProps, props);
 
   const { classes, cx } = useStyles(
-    { orientation, color, variant, radius, inverted },
+    { orientation, color, variant, radius, inverted, placement },
     { unstyled, name: 'Tabs', classNames, styles }
   );
 
@@ -88,6 +90,7 @@ export const Tabs: TabsComponent = forwardRef<HTMLDivElement, TabsProps>((props,
         radius={radius}
         inverted={inverted}
         keepMounted={keepMounted}
+        placement={placement}
       >
         <Box {...others} className={cx(classes.root, className)} id={id} ref={ref}>
           {children}

@@ -10,3 +10,4 @@ export { rightSection } from './Tabs.demo.rightSection';
 export { deactivate } from './Tabs.demo.deactivate';
 export { keyboardActivation } from './Tabs.demo.keyboardActivation';
 export { inverted } from './Tabs.demo.inverted';
+export { placementConfigurator } from './Tabs.demo.placementConfigurator';

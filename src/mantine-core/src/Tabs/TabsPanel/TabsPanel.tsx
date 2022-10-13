@@ -26,6 +26,7 @@ export const TabsPanel = forwardRef<HTMLDivElement, TabsPanelProps>(
         color: ctx.color,
         radius: ctx.radius,
         inverted: ctx.inverted,
+        placement: ctx.placement,
       },
       { name: 'Tabs', unstyled, classNames, styles }
     );
