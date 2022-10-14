@@ -36,6 +36,13 @@ You can now use `FORM_INDEX` in [use-form](https://mantine.dev/form/validation/)
 
 <Demo data={FormDemos.liveFieldValidation} />
 
+## use-form transformValues
+
+[use-form](https://mantine.dev/form/values/) now supports `transformValues` options, it transforms values before they get submitted in `onSubmit` handler.
+For example, it can be used to merge several fields into one or to convert types:
+
+<Demo data={FormDemos.transformValues} />
+
 ## Other changes
 
 - [CloseButton](https://mantine.dev/core/close-button/) is now a polymorphic component
