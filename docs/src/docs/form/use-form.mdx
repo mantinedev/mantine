@@ -222,6 +222,13 @@ As second parameter options can be passed.
 <Checkbox {...form.getInputProps('accepted', { type: 'checkbox' })} />
 ```
 
+### getSubmitButtonProps
+
+`form.getSubmitButtonProps` returns an object with `loading` that should be spread on the submit button of your form.
+
+This will make you button enter in a loading state while your `form.onSubmit` handler is executing. If it returns a promise,
+  the loading state will be kept until the promise resolve or reject.
+
 ## UseFormReturnType
 
 `UseFormReturnType` can be used when you want to pass `form` as a prop to another component:

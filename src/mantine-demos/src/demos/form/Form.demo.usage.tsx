@@ -20,9 +20,17 @@ function Demo() {
     },
   });
 
+  const submit = async (values) => {
+    await new Promise(resolve => {
+      setTimeout(resolve, 1000);
+    });
+
+    console.log(values);
+  };
+
   return (
     <Box sx={{ maxWidth: 300 }} mx="auto">
-      <form onSubmit={form.onSubmit((values) => console.log(values))}>
+      <form onSubmit={form.onSubmit(submit)}>
         <TextInput
           withAsterisk
           label="Email"
@@ -37,7 +45,9 @@ function Demo() {
         />
 
         <Group position="right" mt="md">
-          <Button type="submit">Submit</Button>
+          <Button type="submit" {...form.getSubmitButtonProps()}>
+            Submit
+          </Button>
         </Group>
       </form>
     </Box>
@@ -59,9 +69,17 @@ function Demo() {
     },
   });
 
+  const submit = async (values) => {
+    await new Promise<void>(resolve => {
+      setTimeout(resolve, 1000);
+    });
+
+    console.log(values);
+  };
+
   return (
     <Box sx={{ maxWidth: 300 }} mx="auto">
-      <form onSubmit={form.onSubmit((values) => console.log(values))}>
+      <form onSubmit={form.onSubmit(submit)}>
         <TextInput
           withAsterisk
           label="Email"
@@ -76,7 +94,9 @@ function Demo() {
         />
 
         <Group position="right" mt="md">
-          <Button type="submit">Submit</Button>
+          <Button type="submit" {...form.getSubmitButtonProps()}>
+            Submit
+          </Button>
         </Group>
       </form>
     </Box>
