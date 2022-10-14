@@ -27,6 +27,8 @@ import {
   GetFieldStatus,
   ResetDirty,
   IsValid,
+  SubmitButtonState,
+  GetSubmitButtonProps,
 } from './types';
 
 export function useForm<Values = Record<string, unknown>>({
@@ -43,6 +45,7 @@ export function useForm<Values = Record<string, unknown>>({
   const [dirty, setDirty] = useState(initialDirty);
   const [values, _setValues] = useState(initialValues);
   const [errors, _setErrors] = useState(filterErrors(initialErrors));
+  const [submitButtonState, setSubmitButtonState] = useState<SubmitButtonState>();
   const _dirtyValues = useRef<Values>(initialValues);
   const _setDirtyValues = (_values: Values) => {
     _dirtyValues.current = _values;
@@ -182,14 +185,23 @@ export function useForm<Values = Record<string, unknown>>({
     return payload;
   };
 
-  const onSubmit: OnSubmit<Values> = (handleSubmit, handleValidationFailure) => (event) => {
+  const getSubmitButtonProps: GetSubmitButtonProps = () => ({
+    loading: submitButtonState === 'loading',
+  });
+
+  const onSubmit: OnSubmit<Values> = (handleSubmit, handleValidationFailure) => async (event) => {
     event.preventDefault();
     const results = validate();
 
     if (results.hasErrors) {
       handleValidationFailure?.(results.errors, values, event);
     } else {
-      handleSubmit(values, event);
+      setSubmitButtonState('loading');
+      try {
+        await handleSubmit(values, event);
+      } finally {
+        setSubmitButtonState('done');
+      }
     }
   };
 
@@ -228,6 +240,7 @@ export function useForm<Values = Record<string, unknown>>({
     removeListItem,
     insertListItem,
     getInputProps,
+    getSubmitButtonProps,
     onSubmit,
     onReset,
     isDirty,

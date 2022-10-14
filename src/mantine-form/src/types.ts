@@ -46,7 +46,7 @@ export type SetErrors = React.Dispatch<React.SetStateAction<FormErrors>>;
 export type SetFormStatus = React.Dispatch<React.SetStateAction<FormStatus>>;
 
 export type OnSubmit<Values> = (
-  handleSubmit: (values: Values, event: React.FormEvent<HTMLFormElement>) => void,
+  handleSubmit: (values: Values, event: React.FormEvent<HTMLFormElement>) => void | Promise<void>,
   handleValidationFailure?: (
     errors: FormErrors,
     values: Values,
@@ -60,6 +60,10 @@ export type GetInputProps<Values> = <Field extends LooseKeys<Values>>(
   path: Field,
   options?: { type?: GetInputPropsType; withError?: boolean; withFocus?: boolean }
 ) => any;
+
+export type GetSubmitButtonProps = () => {
+  loading: boolean;
+};
 
 export type SetFieldValue<Values> = <Field extends LooseKeys<Values>>(
   path: Field,
@@ -112,6 +116,8 @@ export interface UseFormInput<Values> {
   validateInputOnBlur?: boolean | LooseKeys<Values>[];
 }
 
+export type SubmitButtonState = 'loading' | 'done';
+
 export interface UseFormReturnType<Values> {
   values: Values;
   errors: FormErrors;
@@ -128,6 +134,7 @@ export interface UseFormReturnType<Values> {
   removeListItem: RemoveListItem<Values>;
   insertListItem: InsertListItem<Values>;
   getInputProps: GetInputProps<Values>;
+  getSubmitButtonProps: GetSubmitButtonProps;
   onSubmit: OnSubmit<Values>;
   onReset: OnReset;
   isDirty: GetFieldStatus<Values>;
