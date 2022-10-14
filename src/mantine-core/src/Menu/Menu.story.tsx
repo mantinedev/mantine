@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { IconTable, IconSearch } from '@tabler/icons';
 import { WithinOverlays } from '@mantine/storybook';
 import { Menu } from './Menu';
