@@ -71,6 +71,7 @@ interface SelectPopoverProps {
   classNames?: ClassNames<SelectPopoverStylesNames>;
   styles?: Styles<SelectPopoverStylesNames>;
   unstyled?: boolean;
+  readOnly?: boolean;
 }
 
 export function SelectPopover({
@@ -89,6 +90,7 @@ export function SelectPopover({
   classNames,
   styles,
   unstyled,
+  readOnly,
 }: SelectPopoverProps) {
   return (
     <Popover
@@ -107,6 +109,7 @@ export function SelectPopover({
       transition={transition}
       transitionDuration={transitionDuration}
       shadow={shadow}
+      disabled={readOnly}
       onPositionChange={(nextPosition) =>
         switchDirectionOnFlip &&
         onDirectionChange?.(nextPosition === 'top' ? 'column-reverse' : 'column')
