@@ -69,3 +69,11 @@ export function WithoutPickerAndSwatches() {
     </div>
   );
 }
+
+export function ReadOnly() {
+  return (
+    <div style={{ padding: 40, maxWidth: 400 }}>
+      <ColorInput label="Read only" placeholder="Read only" readOnly />
+    </div>
+  );
+}

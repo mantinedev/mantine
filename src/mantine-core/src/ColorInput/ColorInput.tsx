@@ -109,6 +109,7 @@ export const ColorInput = forwardRef<HTMLInputElement, ColorInputProps>(
       classNames,
       styles,
       unstyled,
+      readOnly,
       ...others
     } = useInputProps('ColorInput', defaultProps, props);
 
@@ -160,7 +161,10 @@ export const ColorInput = forwardRef<HTMLInputElement, ColorInputProps>(
           classNames={classNames}
           styles={styles}
           unstyled={unstyled}
-          disabled={withPicker === false && (!Array.isArray(swatches) || swatches.length === 0)}
+          disabled={
+            readOnly ||
+            (withPicker === false && (!Array.isArray(swatches) || swatches.length === 0))
+          }
         >
           <Popover.Target>
             <div>
@@ -190,7 +194,7 @@ export const ColorInput = forwardRef<HTMLInputElement, ColorInputProps>(
                     />
                   ) : null)
                 }
-                readOnly={disallowInput}
+                readOnly={disallowInput || readOnly}
                 sx={{ cursor: disallowInput ? 'pointer' : undefined }}
                 unstyled={unstyled}
                 classNames={classNames}
