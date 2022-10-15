@@ -23,25 +23,25 @@ export interface RatingProps
   /** This icon will be displayed if symbol is full */
   fullSymbol?: React.ReactNode | ((value: number) => React.ReactNode);
 
-  /** Rating Fraction, by default it is 1 */
+  /** Rating fractions, by default it is 1 */
   fractions?: number;
 
   /** Predefined sizes for rating */
   size?: MantineSize;
 
-  /** No of ratings */
+  /** Total number of ratings */
   count?: number;
 
-  /** called on onChange event */
+  /** It will be called if value changes */
   onChange?: (value: number) => void;
 
-  /** called if hover change */
+  /** It will be called if hover changes */
   onChangeHover?: (value: number) => void;
 
-  /** return labelText for a symbol, by default the function return the value */
+  /** Function should return labelText for the symbols*/
   getSymbolLabel?: (value: number) => string;
 
-  /** name of rating, should be unique within the page */
+  /** Name of rating, should be unique within the page */
   name?: string;
 
   /** If true, you won't be able to interact */
