@@ -33,5 +33,6 @@ export const configurator: MantineDemo = {
       initialValue: 1,
       defaultValue: 1,
     },
+    { name: 'highlightSelectedOnly', type: 'boolean', initialValue: false, defaultValue: false },
   ],
 };

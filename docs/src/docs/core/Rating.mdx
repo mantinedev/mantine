@@ -14,7 +14,6 @@ docs: 'core/Rating.mdx'
 ---
 
 import { RatingDemos } from '@mantine/demos';
-import { RadioDemos } from '@mantine/demos';
 
 ## Usage
 
@@ -34,6 +33,39 @@ function Demo() {
 
 ## Fractions
 
-## Custom Icon
+```tsx
+import { Rating } from '@mantine/core';
 
-## Selected Only
+function Demo() {
+  return <Rating fractions={1} />; // by default it is 1
+  return <Rating fractions={2} />; // half
+  return <Rating fractions={4} />; // quarter
+}
+```
+
+## Highlight selected only
+
+Instead of highlighting all the stars before the selected symbol. You can only highlight the selected one.
+
+```tsx
+import { Rating } from '@mantine/core';
+
+function Demo() {
+  return <Rating highlightSelectedOnly />;
+}
+```
+
+## Custom symbol
+
+```tsx
+import { Rating } from '@mantine/core';
+import { SunIcon, MoonIcon } from '@tabler/icon';
+
+function Demo() {
+  return <Rating emptySymbol={<SunIcon />} fullSymbol={<MoonIcon />} />;
+}
+```
+
+If you want more control, you can pass function to these props.
+
+<Demo data={RatingDemos.customSymbol} />
