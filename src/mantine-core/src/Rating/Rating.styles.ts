@@ -1,7 +1,6 @@
-import { CSSObject, createStyles, MantineSize } from '@mantine/styles';
+import { CSSObject, createStyles } from '@mantine/styles';
 
 export interface RatingStylesParams {
-  size: MantineSize;
   readonly: boolean;
 }
 

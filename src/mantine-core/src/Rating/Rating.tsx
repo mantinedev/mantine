@@ -86,7 +86,7 @@ export const Rating = forwardRef<HTMLInputElement, RatingProps>((props, ref) => 
   } = useComponentDefaultProps('Rating', defaultProps, props);
 
   const { classes, cx, theme } = useStyles(
-    { size, readonly },
+    { readonly },
     { name: 'Rating', classNames, styles, unstyled }
   );
 
