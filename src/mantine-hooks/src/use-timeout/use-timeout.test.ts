@@ -88,4 +88,19 @@ describe('@mantine/hooks/use-timeout', () => {
     expect(setTimeout).toHaveBeenCalled();
     expect(clearTimeout).toHaveBeenCalled();
   });
+
+  it('start function passes parameters to callback', () => {
+    const { timeout, advanceTimerToNextTick } = setupTimer(10);
+    const hook = renderHook(() => useTimeout(callback, timeout));
+
+    const MOCK_CALLBACK_VALUE = 'MOCK_CALLBACK_VALUE';
+    act(() => {
+      hook.result.current.start(MOCK_CALLBACK_VALUE);
+    });
+
+    advanceTimerToNextTick();
+
+    expect(setTimeout).toHaveBeenCalled();
+    expect(callback).toBeCalledWith(MOCK_CALLBACK_VALUE);
+  });
 });

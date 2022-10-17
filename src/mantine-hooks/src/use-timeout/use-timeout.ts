@@ -1,16 +1,16 @@
 import { useRef, useEffect } from 'react';
 
 export function useTimeout(
-  fn: () => void,
+  callback: (callbackParams?: any) => void,
   delay: number,
   options: { autoInvoke: boolean } = { autoInvoke: false }
 ) {
   const timeoutRef = useRef<number>(null);
 
-  const start = () => {
+  const start = (callbackParams?: any) => {
     if (!timeoutRef.current) {
       timeoutRef.current = window.setTimeout(() => {
-        fn();
+        callback(callbackParams);
         timeoutRef.current = null;
       }, delay);
     }
