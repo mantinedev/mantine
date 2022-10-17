@@ -586,7 +586,7 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>((props, ref) => 
               onMouseDown={handleInputClick}
               onBlur={handleInputBlur}
               onFocus={handleInputFocus}
-              readOnly={!searchable || readOnly}
+              readOnly={readOnly}
               disabled={disabled}
               data-mantine-stop-propagation={shouldShowDropdown}
               name={null}
