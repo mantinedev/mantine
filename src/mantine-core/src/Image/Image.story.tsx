@@ -32,8 +32,13 @@ storiesOf('Image', module)
     </>
   ))
   .add('src changes over time', () => <ImageChangesOverTime />)
-  .add('Placeholder with custom size', () => (
+  .add('Placeholder with custom size and container is larger than image size', () => (
     <Container size={60}>
+      <Image radius="sm" src={null} withPlaceholder width={50} height={50} />
+    </Container>
+  ))
+  .add('Placeholder with custom size and container is smaller than image size', () => (
+    <Container size={40}>
       <Image radius="sm" src={null} withPlaceholder width={50} height={50} />
     </Container>
   ));
