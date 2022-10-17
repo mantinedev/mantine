@@ -65,20 +65,34 @@ export function useCollapse({
   }
 
   useDidUpdate(() => {
+    let isCanceled = false;
     if (opened) {
       raf(() => {
-        mergeStyles({ willChange: 'height', display: 'block', overflow: 'hidden' });
-        raf(() => {
-          const height = getElementHeight(el);
-          mergeStyles({ ...getTransitionStyles(height), height });
-        });
+        if (!isCanceled) {
+          mergeStyles({ willChange: 'height', display: 'block', overflow: 'hidden' });
+          raf(() => {
+            if (!isCanceled) {
+              const height = getElementHeight(el);
+              mergeStyles({ ...getTransitionStyles(height), height });
+            }
+          });
+        }
       });
     } else {
       raf(() => {
-        const height = getElementHeight(el);
-        mergeStyles({ ...getTransitionStyles(height), willChange: 'height', height });
-        raf(() => mergeStyles({ height: collapsedHeight, overflow: 'hidden' }));
+        if (!isCanceled) {
+          const height = getElementHeight(el);
+          mergeStyles({ ...getTransitionStyles(height), willChange: 'height', height });
+          raf(() => {
+            if (!isCanceled) {
+              mergeStyles({ height: collapsedHeight, overflow: 'hidden' })
+            }
+          });
+        }
       });
+    }
+    return () => {
+      isCanceled = true;
     }
   }, [opened]);
 
