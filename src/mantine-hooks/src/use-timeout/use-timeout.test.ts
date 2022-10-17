@@ -101,6 +101,6 @@ describe('@mantine/hooks/use-timeout', () => {
     advanceTimerToNextTick();
 
     expect(setTimeout).toHaveBeenCalled();
-    expect(callback).toBeCalledWith(MOCK_CALLBACK_VALUE);
+    expect(callback).toBeCalledWith([MOCK_CALLBACK_VALUE]);
   });
 });
