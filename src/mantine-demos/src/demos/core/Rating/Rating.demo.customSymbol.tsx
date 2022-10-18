@@ -1,6 +1,6 @@
 import React from 'react';
 import { MantineDemo } from '@mantine/ds';
-import { Rating, useMantineTheme } from '@mantine/core';
+import { Rating, useMantineTheme, Group } from '@mantine/core';
 import {
   IconMoodCry,
   IconMoodSad,
@@ -115,9 +115,9 @@ function Demo() {
     }
   };
   return (
-    <div style={{ maxWidth: 320, margin: 'auto' }}>
+    <Group position="center">
       <Rating emptySymbol={getEmptyIcon} fullSymbol={getFullIcon} highlightSelectedOnly />
-    </div>
+    </Group>
   );
 }
 
