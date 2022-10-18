@@ -38,13 +38,13 @@ Return object:
 
 ```tsx
 function useTimeout(
-  callback: () => void,
+  callback: (...callbackParams: any[]) => void,
   delay: number,
   options?: {
     autoInvoke: boolean;
   }
 ): {
-  start: () => void;
+  start: (...callbackParams: any[]) => void;
   clear: () => void;
 };
 ```
