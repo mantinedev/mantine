@@ -8,6 +8,7 @@ import {
   size,
   Middleware,
   inline,
+  limitShift,
 } from '@floating-ui/react-dom-interactions';
 import { FloatingPosition, useFloatingAutoUpdate } from '../Floating';
 import { PopoverWidth, PopoverMiddlewares } from './Popover.types';
@@ -31,7 +32,7 @@ function getPopoverMiddlewares(options: UsePopoverOptions) {
   const middlewares: Middleware[] = [offset(options.offset)];
 
   if (options.middlewares.shift) {
-    middlewares.push(shift());
+    middlewares.push(shift({ limiter: limitShift() }));
   }
 
   if (options.middlewares.flip) {
