@@ -9,22 +9,21 @@ export function useFocusTrap(active = true): (instance: HTMLElement | null) => v
 
   const setRef = useCallback(
     (node: HTMLElement | null) => {
-      if (restoreAria.current) {
-        restoreAria.current();
-      }
-
       if (!active) {
         return;
       }
 
-      if (node === ref.current || node === null) {
+      if (node === null) {
+        return;
+      }
+
+      restoreAria.current = createAriaHider(node);
+      if (ref.current === node) {
         return;
       }
 
       if (node) {
-        const processNode = (_node: HTMLElement) => {
-          restoreAria.current = createAriaHider(_node);
-
+        const processNode = () => {
           let focusElement: HTMLElement = node.querySelector('[data-autofocus]');
 
           if (!focusElement) {
@@ -47,7 +46,7 @@ export function useFocusTrap(active = true): (instance: HTMLElement | null) => v
         // Delay processing the HTML node by a frame. This ensures focus is assigned correctly.
         setTimeout(() => {
           if (node.ownerDocument) {
-            processNode(node);
+            processNode();
           } else if (process.env.NODE_ENV === 'development') {
             // eslint-disable-next-line no-console
             console.warn('[@mantine/hooks/use-focus-trap] Ref node is not part of the dom', node);
@@ -76,6 +75,10 @@ export function useFocusTrap(active = true): (instance: HTMLElement | null) => v
     document.addEventListener('keydown', handleKeyDown);
     return () => {
       document.removeEventListener('keydown', handleKeyDown);
+
+      if (restoreAria.current) {
+        restoreAria.current();
+      }
     };
   }, [active]);
 
