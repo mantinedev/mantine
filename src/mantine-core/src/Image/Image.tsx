@@ -88,12 +88,7 @@ export const Image = forwardRef<HTMLDivElement, ImageProps>((props: ImageProps, 
   }, [src]);
 
   return (
-    <Box
-      className={cx(classes.root, className)}
-      ref={ref}
-      style={{ width, height, ...style }}
-      {...others}
-    >
+    <Box className={cx(classes.root, className)} ref={ref} style={{ width, ...style }} {...others}>
       <figure className={classes.figure}>
         <div className={classes.imageWrapper}>
           <img
