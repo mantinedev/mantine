@@ -110,7 +110,11 @@ export const Image = forwardRef<HTMLDivElement, ImageProps>((props: ImageProps, 
 
           {isPlaceholder && (
             <div className={classes.placeholder} title={alt}>
-              {placeholder || <ImageIcon style={{ width: 40, height: 40 }} />}
+              {placeholder || (
+                <div>
+                  <ImageIcon style={{ width: 40, height: 40 }} />
+                </div>
+              )}
             </div>
           )}
         </div>

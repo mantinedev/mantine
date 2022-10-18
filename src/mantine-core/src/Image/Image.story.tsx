@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { storiesOf } from '@storybook/react';
 import { useInterval } from '@mantine/hooks';
+import { MantineProvider } from '@mantine/styles';
 import { Container } from '../Container';
 import { Image } from './Image';
+import { AspectRatio } from '../AspectRatio';
 
 const images = [
   'https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=3748&q=80',
@@ -41,4 +43,18 @@ storiesOf('Image', module)
     <Container size={40}>
       <Image radius="sm" src={null} withPlaceholder width={50} height={50} />
     </Container>
+  ))
+  .add('Responsive Image with AspectRatio', () => (
+    <MantineProvider withGlobalStyles withNormalizeCSS>
+      <div style={{ width: 400, padding: 20, backgroundColor: '#fdf' }}>
+        <p>Responsive Image with AspectRatio</p>
+        <AspectRatio ratio={2}>
+          <Image src="https://picsum.photos/600/600" withPlaceholder />
+        </AspectRatio>
+        <p>Responsive Placeholder with AspectRatio</p>
+        <AspectRatio ratio={2}>
+          <Image withPlaceholder />
+        </AspectRatio>
+      </div>
+    </MantineProvider>
   ));
