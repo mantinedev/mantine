@@ -1,4 +1,4 @@
-import React, { cloneElement, forwardRef, useEffect } from 'react';
+import React, { cloneElement, forwardRef } from 'react';
 import { isElement, createEventHandler } from '@mantine/utils';
 import { useMenuContext } from '../Menu.context';
 import { Popover } from '../../Popover';
@@ -34,8 +34,6 @@ export const MenuTarget = forwardRef<HTMLElement, MenuTargetProps>(
       children.props.onMouseLeave,
       () => ctx.trigger === 'hover' && ctx.closeDropdown()
     );
-
-    useEffect(() => ctx.closeDropdown, [children]);
 
     return (
       <Popover.Target refProp={refProp} popupType="menu" ref={ref} {...others}>

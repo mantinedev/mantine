@@ -5,7 +5,11 @@ import { isSameDate } from '../../utils';
 import { DayModifiers } from '../Month';
 import { CalendarBase, CalendarBaseProps } from '../CalendarBase/CalendarBase';
 
-export interface RangeCalendarProps extends Omit<CalendarBaseProps, 'value' | 'onChange'> {
+export interface RangeCalendarProps
+  extends Omit<
+    CalendarBaseProps,
+    'value' | 'onChange' | 'isDateInRange' | 'isDateFirstInRange' | 'isDateLastInRange'
+  > {
   /** Selected dates */
   value: [Date | null, Date | null];
 

@@ -4,7 +4,10 @@ import { CalendarBase, CalendarBaseProps } from '../CalendarBase/CalendarBase';
 import { isSameDate } from '../../utils';
 
 export interface CalendarProps<Multiple extends boolean = false>
-  extends Omit<CalendarBaseProps, 'value' | 'onChange'> {
+  extends Omit<
+    CalendarBaseProps,
+    'value' | 'onChange' | 'isDateInRange' | 'isDateFirstInRange' | 'isDateLastInRange'
+  > {
   multiple?: Multiple;
   value?: Multiple extends true ? Date[] : Date | null;
   onChange?(value: Multiple extends true ? Date[] : Date | null): void;

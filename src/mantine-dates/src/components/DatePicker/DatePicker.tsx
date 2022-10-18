@@ -9,7 +9,18 @@ import { DatePickerBase, DatePickerBaseSharedProps } from '../DatePickerBase/Dat
 
 export interface DatePickerProps
   extends Omit<DatePickerBaseSharedProps, 'onChange'>,
-    Omit<CalendarSharedProps, 'size' | 'classNames' | 'styles' | 'onMonthChange' | 'onChange'> {
+    Omit<
+      CalendarSharedProps,
+      | 'size'
+      | 'classNames'
+      | 'styles'
+      | 'onMonthChange'
+      | 'onChange'
+      | 'isDateInRange'
+      | 'isDateFirstInRange'
+      | 'isDateLastInRange'
+      | 'month'
+    > {
   /** Selected date, required with controlled input */
   value?: Date | null;
 
