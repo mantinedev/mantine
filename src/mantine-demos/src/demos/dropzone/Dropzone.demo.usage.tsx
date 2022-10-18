@@ -1,3 +1,4 @@
+import { MantineDemo } from '@mantine/ds';
 import { BaseDemo } from './_base';
 
 const code = `

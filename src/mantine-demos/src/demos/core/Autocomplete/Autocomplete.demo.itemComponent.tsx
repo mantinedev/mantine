@@ -1,4 +1,5 @@
 import React, { forwardRef } from 'react';
+import { MantineDemo } from '@mantine/ds';
 import { Group, Avatar, Text, MantineColor, SelectItemProps, Autocomplete } from '@mantine/core';
 
 const code = `

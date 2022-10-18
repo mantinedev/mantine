@@ -21,19 +21,50 @@ export interface CheckboxStylesParams {
   radius: MantineNumberSize;
   color: MantineColor;
   transitionDuration: number;
+  labelPosition: 'left' | 'right';
+  error: boolean;
+  indeterminate: boolean;
 }
 
 export default createStyles(
-  (theme, { size, radius, color, transitionDuration }: CheckboxStylesParams, getRef) => {
+  (
+    theme,
+    {
+      size,
+      radius,
+      color,
+      transitionDuration,
+      labelPosition,
+      error,
+      indeterminate,
+    }: CheckboxStylesParams,
+    getRef
+  ) => {
     const _size = theme.fn.size({ size, sizes });
     const colors = theme.fn.variant({ variant: 'filled', color });
+    const errorColor = theme.fn.variant({ variant: 'filled', color: 'red' }).background;
 
     return {
+      description: {
+        marginTop: `calc(${theme.spacing.xs}px / 2)`,
+        [labelPosition === 'left' ? 'paddingRight' : 'paddingLeft']: theme.spacing.sm,
+      },
+
+      error: {
+        marginTop: `calc(${theme.spacing.xs}px / 2)`,
+        [labelPosition === 'left' ? 'paddingRight' : 'paddingLeft']: theme.spacing.sm,
+      },
+
+      label: {
+        cursor: theme.cursorType,
+        [labelPosition === 'left' ? 'paddingRight' : 'paddingLeft']: theme.spacing.sm,
+      },
+
       icon: {
         ref: getRef('icon'),
-        color: theme.white,
-        transform: 'translateY(5px) scale(0.5)',
-        opacity: 0,
+        color: indeterminate ? 'inherit' : theme.white,
+        transform: indeterminate ? 'none' : 'translateY(5px) scale(0.5)',
+        opacity: indeterminate ? 1 : 0,
         transitionProperty: 'opacity, transform',
         transitionTimingFunction: 'ease',
         transitionDuration: `${transitionDuration}ms`,
@@ -52,26 +83,29 @@ export default createStyles(
         },
       },
 
-      root: {
+      root: {},
+
+      body: {
         display: 'flex',
-        alignItems: 'center',
       },
 
       inner: {
         position: 'relative',
         width: _size,
         height: _size,
+        order: labelPosition === 'left' ? 2 : 1,
       },
 
-      label: {
+      labelWrapper: {
         ...theme.fn.fontStyles(),
         WebkitTapHighlightColor: 'transparent',
-        paddingLeft: theme.spacing.sm,
         fontSize: theme.fn.size({ size, sizes: theme.fontSizes }),
         lineHeight: `${_size}px`,
         color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
         cursor: theme.cursorType,
-        '&[data-disabled]': {
+        order: labelPosition === 'left' ? 1 : 2,
+
+        '& label[data-disabled]': {
           color: theme.colorScheme === 'dark' ? theme.colors.dark[3] : theme.colors.gray[5],
         },
       },
@@ -81,7 +115,11 @@ export default createStyles(
         appearance: 'none',
         backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.white,
         border: `1px solid ${
-          theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[4]
+          error
+            ? errorColor
+            : theme.colorScheme === 'dark'
+            ? theme.colors.dark[4]
+            : theme.colors.gray[4]
         }`,
         width: _size,
         height: _size,
@@ -98,6 +136,7 @@ export default createStyles(
 
           [`& + .${getRef('icon')}`]: {
             opacity: 1,
+            color: theme.white,
             transform: 'translateY(0) scale(1)',
           },
         },

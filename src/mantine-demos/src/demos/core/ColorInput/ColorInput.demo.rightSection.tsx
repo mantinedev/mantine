@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { IconRefresh } from '@tabler/icons';
+import { MantineDemo } from '@mantine/ds';
 import { ActionIcon, ColorInput } from '@mantine/core';
 
 const code = `

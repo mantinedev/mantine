@@ -1,5 +1,6 @@
 import React from 'react';
 import { Prism } from '@mantine/prism';
+import { MantineDemo } from '@mantine/ds';
 
 export const go = `
 package main
@@ -43,6 +44,7 @@ body, .usertext {
 }
 
 @import url(print.css);
+
 @media print {
   a[href^=http]::after {
     content: attr(href)

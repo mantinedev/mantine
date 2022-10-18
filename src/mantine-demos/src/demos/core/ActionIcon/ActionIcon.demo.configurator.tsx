@@ -1,5 +1,6 @@
 import React from 'react';
 import { IconAdjustments } from '@tabler/icons';
+import { MantineDemo } from '@mantine/ds';
 import { ActionIcon, ActionIconProps, Group } from '@mantine/core';
 
 const iconSizes = {

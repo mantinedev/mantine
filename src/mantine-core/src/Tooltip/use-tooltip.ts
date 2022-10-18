@@ -12,6 +12,7 @@ import {
   useDismiss,
   useDelayGroupContext,
   useDelayGroup,
+  inline,
 } from '@floating-ui/react-dom-interactions';
 import { useId, useDidUpdate } from '@mantine/hooks';
 import { useTooltipGroupContext } from './TooltipGroup/TooltipGroup.context';
@@ -27,6 +28,7 @@ interface UseTooltip {
   arrowRef?: React.RefObject<HTMLDivElement>;
   events: { hover: boolean; focus: boolean; touch: boolean };
   positionDependencies: any[];
+  inline: boolean;
 }
 
 export function useTooltip(settings: UseTooltip) {
@@ -67,9 +69,8 @@ export function useTooltip(settings: UseTooltip) {
       offset(settings.offset),
       shift({ padding: 8 }),
       flip(),
-      arrow({
-        element: settings.arrowRef,
-      }),
+      arrow({ element: settings.arrowRef }),
+      ...(settings.inline ? [inline()] : []),
     ],
   });
 

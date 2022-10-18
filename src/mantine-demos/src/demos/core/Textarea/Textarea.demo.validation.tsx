@@ -1,4 +1,5 @@
 import React from 'react';
+import { MantineDemo } from '@mantine/ds';
 import { Textarea } from '@mantine/core';
 
 const code = `

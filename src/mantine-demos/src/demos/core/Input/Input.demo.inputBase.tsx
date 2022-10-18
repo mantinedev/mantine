@@ -1,5 +1,6 @@
 import React from 'react';
 import { InputBase } from '@mantine/core';
+import { MantineDemo } from '@mantine/ds';
 import InputMask from 'react-input-mask';
 
 const code = `

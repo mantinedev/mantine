@@ -1,4 +1,5 @@
 import React, { useState, useMemo } from 'react';
+import { MantineDemo } from '@mantine/ds';
 import { SSRWrapper } from './_SSRWrapper';
 
 const code = `

@@ -1,5 +1,6 @@
 import React from 'react';
 import { Carousel } from '@mantine/carousel';
+import { MantineDemo } from '@mantine/ds';
 import { Slides } from './_slides';
 
 const code = `

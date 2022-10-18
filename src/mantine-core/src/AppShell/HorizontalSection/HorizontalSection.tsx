@@ -39,7 +39,7 @@ export interface HorizontalSectionSharedProps extends DefaultProps {
 
 export interface HorizontalSectionProps
   extends HorizontalSectionSharedProps,
-    Omit<React.ComponentPropsWithoutRef<'nav'>, 'children'> {
+    Omit<React.ComponentPropsWithRef<'nav'>, 'children'> {
   section: 'navbar' | 'aside';
   __staticSelector: string;
 }
@@ -84,7 +84,7 @@ export const HorizontalSection = forwardRef<HTMLElement, HorizontalSectionProps>
 
     const breakpoints = getSortedBreakpoints(width, theme).reduce(
       (acc, [breakpoint, breakpointSize]) => {
-        acc[`@media (min-width: ${breakpoint + 1}px)`] = {
+        acc[`@media (min-width: ${breakpoint}px)`] = {
           [`--mantine-${section}-width`]: `${breakpointSize}px`,
         };
 

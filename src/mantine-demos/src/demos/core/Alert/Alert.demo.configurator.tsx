@@ -1,5 +1,6 @@
 import React from 'react';
 import { IconAlertCircle } from '@tabler/icons';
+import { MantineDemo } from '@mantine/ds';
 import { Alert } from '@mantine/core';
 
 function Wrapper(props: React.ComponentPropsWithoutRef<typeof Alert>) {

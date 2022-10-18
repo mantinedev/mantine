@@ -101,3 +101,17 @@ export const WithArrow = () => (
     <Button type="button">Tooltip button with arrow</Button>
   </Tooltip>
 );
+
+export function Inline() {
+  return (
+    <div style={{ padding: 40, maxWidth: 400 }}>
+      Lorem, ipsum dolor sit amet consectetur adipisicing elit. Vitae ipsam in quos aperiam magni
+      quas neque{' '}
+      <Tooltip label="Inline tooltip" inline>
+        <span style={{ background: 'pink' }}>aliquid laboriosam dolorum</span>
+      </Tooltip>
+      , eum voluptate, perferendis placeat repudiandae nesciunt explicabo quibusdam deserunt, animi
+      dicta.
+    </div>
+  );
+}

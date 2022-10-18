@@ -9,16 +9,12 @@ import { Section } from '../HorizontalSection/Section/Section';
 
 export interface NavbarProps
   extends HorizontalSectionSharedProps,
-    React.ComponentPropsWithoutRef<'nav'> {
+    React.ComponentPropsWithRef<'nav'> {
   /** Navbar content */
   children: React.ReactNode;
 }
 
-type NavbarComponent = ForwardRefWithStaticComponents<
-  HTMLElement,
-  NavbarProps,
-  { Section: typeof Section }
->;
+type NavbarComponent = ForwardRefWithStaticComponents<NavbarProps, { Section: typeof Section }>;
 
 const defaultProps: Partial<NavbarProps> = {
   fixed: false,

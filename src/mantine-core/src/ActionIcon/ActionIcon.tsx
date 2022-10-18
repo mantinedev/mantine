@@ -82,7 +82,7 @@ export const _ActionIcon = forwardRef<HTMLButtonElement, ActionIconProps>((props
     <UnstyledButton
       className={cx(classes.root, className)}
       ref={ref}
-      disabled={disabled || loading}
+      disabled={disabled}
       data-disabled={disabled || undefined}
       data-loading={loading || undefined}
       unstyled={unstyled}

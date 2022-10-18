@@ -1,4 +1,5 @@
 import React from 'react';
+import { MantineDemo } from '@mantine/ds';
 import { Switch, Group } from '@mantine/core';
 
 const code = `

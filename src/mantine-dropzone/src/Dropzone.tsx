@@ -19,7 +19,7 @@ export type DropzoneStylesNames = Selectors<typeof useStyles>;
 
 export interface DropzoneProps
   extends DefaultProps<DropzoneStylesNames>,
-    Omit<React.ComponentPropsWithoutRef<'div'>, 'onDrop'> {
+    Omit<React.ComponentPropsWithRef<'div'>, 'onDrop'> {
   /** Padding from theme.spacing, or number to set padding in px */
   padding?: MantineNumberSize;
 
@@ -199,7 +199,6 @@ _Dropzone.Reject = DropzoneReject;
 _Dropzone.Idle = DropzoneIdle;
 
 export const Dropzone: ForwardRefWithStaticComponents<
-  HTMLDivElement,
   DropzoneProps,
   {
     Accept: typeof DropzoneAccept;

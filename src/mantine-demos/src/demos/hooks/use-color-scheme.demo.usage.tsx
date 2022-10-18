@@ -1,5 +1,6 @@
 import React from 'react';
 import { Group, Badge } from '@mantine/core';
+import { MantineDemo } from '@mantine/ds';
 import { useColorScheme } from '@mantine/hooks';
 
 const code = `

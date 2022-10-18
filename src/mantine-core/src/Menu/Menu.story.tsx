@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { IconTable, IconSearch } from '@tabler/icons';
 import { WithinOverlays } from '@mantine/storybook';
 import { Menu } from './Menu';
@@ -84,6 +84,45 @@ export function MenuTargetWithTooltip() {
           <Menu.Item>Item 2</Menu.Item>
         </Menu.Dropdown>
       </Menu>
+    </div>
+  );
+}
+
+export function WithinStickyHeaderPortal() {
+  const [isSticky, setIsSticky] = useState(false);
+
+  useEffect(() => {
+    const makeSticky = () => {
+      setIsSticky(window.scrollY > 0);
+    };
+
+    document.addEventListener('scroll', makeSticky);
+
+    return () => {
+      document.removeEventListener('scroll', makeSticky);
+    };
+  });
+
+  return (
+    <div style={{ padding: 40, height: 2000 }}>
+      <div
+        className="header"
+        style={{ display: 'flex', position: 'sticky', top: 0, backgroundColor: 'lightgray' }}
+      >
+        <div>Header</div>
+        <div style={{ visibility: isSticky ? 'hidden' : 'visible' }}>
+          <Menu withinPortal>
+            <Menu.Target>
+              <Button>Open Menu</Button>
+            </Menu.Target>
+
+            <Menu.Dropdown>
+              <Menu.Item>Item 1</Menu.Item>
+              <Menu.Item>Item 2</Menu.Item>
+            </Menu.Dropdown>
+          </Menu>
+        </div>
+      </div>
     </div>
   );
 }

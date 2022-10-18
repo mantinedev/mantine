@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Switch, Group, useMantineTheme } from '@mantine/core';
+import { MantineDemo } from '@mantine/ds';
 import { IconCheck, IconX } from '@tabler/icons';
 
 const code = `

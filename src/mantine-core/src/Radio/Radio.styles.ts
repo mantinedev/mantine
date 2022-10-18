@@ -4,6 +4,8 @@ export interface RadioStylesParams {
   size: MantineSize;
   color: MantineColor;
   transitionDuration: number;
+  labelPosition: 'left' | 'right';
+  error: boolean;
 }
 
 const sizes = {
@@ -23,18 +25,36 @@ const iconSizes = {
 };
 
 export default createStyles(
-  (theme, { size, color, transitionDuration }: RadioStylesParams, getRef) => {
+  (theme, { size, color, transitionDuration, labelPosition, error }: RadioStylesParams, getRef) => {
     const colors = theme.fn.variant({ variant: 'filled', color });
+    const errorColor = theme.fn.variant({ variant: 'filled', color: 'red' }).background;
 
     return {
-      radioWrapper: {
+      root: {},
+
+      description: {
+        marginTop: `calc(${theme.spacing.xs}px / 2)`,
+        [labelPosition === 'left' ? 'paddingRight' : 'paddingLeft']: theme.spacing.sm,
+      },
+
+      error: {
+        marginTop: `calc(${theme.spacing.xs}px / 2)`,
+        [labelPosition === 'left' ? 'paddingRight' : 'paddingLeft']: theme.spacing.sm,
+      },
+
+      label: {
+        cursor: theme.cursorType,
+        [labelPosition === 'left' ? 'paddingRight' : 'paddingLeft']: theme.spacing.sm,
+      },
+
+      body: {
         display: 'flex',
-        alignItems: 'center',
-        WebkitTapHighlightColor: 'transparent',
       },
 
       inner: {
+        order: labelPosition === 'left' ? 2 : 1,
         position: 'relative',
+        alignSelf: 'flex-start',
       },
 
       icon: {
@@ -55,7 +75,11 @@ export default createStyles(
         ...theme.fn.focusStyles(),
         backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.white,
         border: `1px solid ${
-          theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[4]
+          error
+            ? errorColor
+            : theme.colorScheme === 'dark'
+            ? theme.colors.dark[4]
+            : theme.colors.gray[4]
         }`,
         position: 'relative',
         appearance: 'none',
@@ -92,17 +116,15 @@ export default createStyles(
         },
       },
 
-      label: {
+      labelWrapper: {
         ...theme.fn.fontStyles(),
-        display: 'flex',
-        alignItems: 'flex-start',
         fontSize: theme.fontSizes[size] || theme.fontSizes.md,
         lineHeight: `${theme.fn.size({ sizes, size })}px`,
         color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
-        paddingLeft: theme.spacing.sm,
         cursor: theme.cursorType,
+        order: labelPosition === 'left' ? 1 : 2,
 
-        '&[data-disabled]': {
+        '& label[data-disabled]': {
           color: theme.colorScheme === 'dark' ? theme.colors.dark[3] : theme.colors.gray[5],
         },
       },

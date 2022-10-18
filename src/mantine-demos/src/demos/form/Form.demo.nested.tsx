@@ -1,5 +1,6 @@
 import React from 'react';
 import { useForm } from '@mantine/form';
+import { MantineDemo } from '@mantine/ds';
 import { TextInput, Checkbox, Code, Text } from '@mantine/core';
 
 const code = `

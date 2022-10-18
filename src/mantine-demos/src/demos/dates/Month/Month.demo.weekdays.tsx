@@ -1,5 +1,6 @@
 import React from 'react';
 import { Group } from '@mantine/core';
+import { MantineDemo } from '@mantine/ds';
 import { Month } from '@mantine/dates';
 
 const code = `

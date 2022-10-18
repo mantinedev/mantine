@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Button } from '../Button';
 import { SegmentedControl } from './SegmentedControl';
 
 export default { title: 'SegmentedControl' };
@@ -16,6 +17,18 @@ export function Usage() {
 
 export function EmptyData() {
   return <SegmentedControl data={[]} />;
+}
+
+export function ToggleEmptyData() {
+  const [emptyData, setEmptyData] = useState(true);
+
+  return (
+    <>
+      <Button onClick={() => setEmptyData((e) => !e)}>Toggle Data</Button>
+      <br />
+      <SegmentedControl data={emptyData ? [] : data} />
+    </>
+  );
 }
 
 export function EmptyStringValue() {

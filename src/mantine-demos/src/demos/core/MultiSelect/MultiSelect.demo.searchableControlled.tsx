@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { MultiSelect } from '@mantine/core';
+import { MantineDemo } from '@mantine/ds';
 import { data } from './_data';
 
 const code = `

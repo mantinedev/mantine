@@ -1,5 +1,6 @@
 import React from 'react';
 import { IconPhoto } from '@tabler/icons';
+import { MantineDemo } from '@mantine/ds';
 import { ThemeIcon, ThemeIconProps } from '@mantine/core';
 
 const iconSizes = {

@@ -49,12 +49,16 @@ export interface TooltipProps extends TooltipBaseProps {
 
   /** useEffect dependencies to force update tooltip position */
   positionDependencies?: any[];
+
+  /** Set if tooltip is attached to an inline element */
+  inline?: boolean;
 }
 
 const defaultProps: Partial<TooltipProps> = {
   position: 'top',
   refProp: 'ref',
   withinPortal: false,
+  inline: false,
   arrowSize: 4,
   arrowOffset: 5,
   offset: 5,
@@ -100,6 +104,7 @@ const _Tooltip = forwardRef<HTMLElement, TooltipProps>((props, ref) => {
     onClick,
     onMouseEnter,
     onMouseLeave,
+    inline,
     ...others
   } = useComponentDefaultProps('Tooltip', defaultProps, props);
 
@@ -118,6 +123,7 @@ const _Tooltip = forwardRef<HTMLElement, TooltipProps>((props, ref) => {
     arrowRef,
     offset: offset + (withArrow ? arrowSize / 2 : 0),
     positionDependencies: [...positionDependencies, children],
+    inline,
   });
 
   if (!isElement(children)) {
@@ -188,7 +194,6 @@ _Tooltip.Floating = TooltipFloating;
 _Tooltip.displayName = '@mantine/core/Tooltip';
 
 export const Tooltip: ForwardRefWithStaticComponents<
-  HTMLElement,
   TooltipProps,
   { Group: typeof TooltipGroup; Floating: typeof TooltipFloating }
 > = _Tooltip;

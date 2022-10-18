@@ -160,10 +160,12 @@ export const ColorInput = forwardRef<HTMLInputElement, ColorInputProps>(
           classNames={classNames}
           styles={styles}
           unstyled={unstyled}
+          disabled={withPicker === false && (!Array.isArray(swatches) || swatches.length === 0)}
         >
           <Popover.Target>
             <div>
               <Input<'input'>
+                autoComplete="nope"
                 {...others}
                 {...inputProps}
                 ref={ref}
@@ -179,7 +181,6 @@ export const ColorInput = forwardRef<HTMLInputElement, ColorInputProps>(
                     onChangeEnd?.(convertHsvaTo(format, parseColor(inputValue)));
                   }
                 }}
-                autoComplete="nope"
                 icon={
                   icon ||
                   (withPreview ? (

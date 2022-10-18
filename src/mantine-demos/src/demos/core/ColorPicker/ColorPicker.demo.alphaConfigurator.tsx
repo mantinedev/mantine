@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { MantineDemo } from '@mantine/ds';
 import { Text, DEFAULT_THEME, AlphaSlider, AlphaSliderProps } from '@mantine/core';
 
 function Wrapper(props: AlphaSliderProps) {

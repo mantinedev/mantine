@@ -1,4 +1,5 @@
 import React from 'react';
+import { MantineDemo } from '@mantine/ds';
 import { HoverCard, Avatar, Text, Group, Anchor, Stack } from '@mantine/core';
 
 const code = `

@@ -1,6 +1,7 @@
 import React from 'react';
 import { useScrollLock } from '@mantine/hooks';
 import { IconLock, IconLockOpen } from '@tabler/icons';
+import { MantineDemo } from '@mantine/ds';
 import { Group, Button } from '@mantine/core';
 
 const code = `

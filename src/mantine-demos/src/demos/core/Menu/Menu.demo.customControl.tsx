@@ -1,6 +1,7 @@
 import React, { forwardRef } from 'react';
 import { IconChevronRight } from '@tabler/icons';
 import { Group, Avatar, Text, UnstyledButton, Menu } from '@mantine/core';
+import { MantineDemo } from '@mantine/ds';
 import { DemoMenuItems } from './_menu-items';
 
 const code = `

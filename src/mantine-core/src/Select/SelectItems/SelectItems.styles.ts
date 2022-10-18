@@ -6,6 +6,7 @@ interface SelectItemsStyles {
 
 export default createStyles((theme, { size }: SelectItemsStyles) => ({
   item: {
+    ...theme.fn.fontStyles(),
     boxSizing: 'border-box',
     textAlign: 'left',
     width: '100%',

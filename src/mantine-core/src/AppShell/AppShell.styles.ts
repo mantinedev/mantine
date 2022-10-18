@@ -29,11 +29,11 @@ function getPositionStyles(props: AppShellStylesParams, theme: MantineTheme): CS
     paddingLeft: `calc(var(--mantine-navbar-width, 0px) + ${padding}px)`,
     paddingRight: `calc(var(--mantine-aside-width, 0px) + ${padding}px)`,
 
-    [`@media (max-width: ${navbarOffset}px)`]: {
+    [`@media (max-width: ${navbarOffset - 1}px)`]: {
       paddingLeft: padding,
     },
 
-    [`@media (max-width: ${asideOffset}px)`]: {
+    [`@media (max-width: ${asideOffset - 1}px)`]: {
       paddingRight: padding,
     },
   };

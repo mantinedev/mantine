@@ -38,6 +38,9 @@ export default createStyles((theme) => ({
     marginBottom: theme.spacing.xs / 2,
     fontWeight: 900,
     color: theme.colorScheme === 'dark' ? theme.white : theme.black,
+    display: 'flex',
+    alignItems: 'center',
+    gap: theme.spacing.xl,
 
     [`@media (max-width: ${BREAKPOINT}px)`]: {
       fontSize: 32,

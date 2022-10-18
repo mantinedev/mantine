@@ -1,5 +1,6 @@
 import React from 'react';
 import { TextInput, Text } from '@mantine/core';
+import { MantineDemo } from '@mantine/ds';
 import { usePrevious, useInputState } from '@mantine/hooks';
 
 const code = `

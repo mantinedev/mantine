@@ -1,17 +1,16 @@
-import { createStyles, MantineNumberSize } from '@mantine/styles';
+import { createStyles } from '@mantine/styles';
+import type { ListStylesParams } from '../List.styles';
 
-interface ListItemStyles {
-  spacing: MantineNumberSize;
-  center: boolean;
-}
-
-export default createStyles((theme, { spacing, center }: ListItemStyles, getRef) => ({
+export default createStyles((theme, { spacing, center }: ListStylesParams, getRef) => ({
   itemWrapper: {
     ref: getRef('itemWrapper'),
-    display: 'inline',
+    display: 'inline-flex',
+    flexDirection: 'column',
+    whiteSpace: 'normal',
   },
 
   item: {
+    whiteSpace: 'nowrap',
     lineHeight: center ? 1 : theme.lineHeight,
 
     '&:not(:first-of-type)': {
@@ -25,6 +24,7 @@ export default createStyles((theme, { spacing, center }: ListItemStyles, getRef)
     [`& .${getRef('itemWrapper')}`]: {
       display: 'inline-flex',
       alignItems: center ? 'center' : 'flex-start',
+      flexDirection: 'row',
     },
   },
 

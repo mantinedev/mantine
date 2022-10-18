@@ -1,5 +1,6 @@
 import React from 'react';
 import { IconPaint } from '@tabler/icons';
+import { MantineDemo } from '@mantine/ds';
 import { ColorInput } from '@mantine/core';
 
 const code = `

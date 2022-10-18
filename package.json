@@ -4,13 +4,14 @@
   "workspaces": [
     "src/*"
   ],
-  "version": "5.4.1",
+  "version": "5.5.5",
   "description": "Mantine Components Monorepo",
   "main": "index.js",
   "repository": "https://github.com/mantinedev/mantine.git",
   "author": "Vitaly Rtishchev <rtivital@gmail.com>",
   "license": "MIT",
   "scripts": {
+    "demos": "esno scripts/demo-import",
     "sync-branches": "sh scripts/sync-branches.sh",
     "changelog": "esno scripts/changelog",
     "postinstall": "npm run docs:docgen && cd docs && yarn",
@@ -103,7 +104,7 @@
     "new-github-release-url": "^1.0.0",
     "next": "^12.2.0",
     "open": "^8.2.0",
-    "prettier": "^2.7.1",
+    "prettier": "^2.4.1",
     "react-beautiful-dnd": "^13.1.0",
     "react-docgen-typescript": "2.1.0",
     "react-dom": "18.1.0",

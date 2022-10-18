@@ -1,5 +1,6 @@
 import React from 'react';
 import { MantineProvider } from '@mantine/core';
+import { MantineDemo } from '@mantine/ds';
 import { DatePicker } from '@mantine/dates';
 
 function Demo() {

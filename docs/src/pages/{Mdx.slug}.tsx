@@ -62,6 +62,7 @@ export const query = graphql`
         date
         componentPrefix
         hideToc
+        polymorphic
       }
       body
     }

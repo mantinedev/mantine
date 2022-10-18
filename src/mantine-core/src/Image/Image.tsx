@@ -17,7 +17,7 @@ export interface ImageProps
   extends DefaultProps<ImageStylesNames, ImageStylesParams>,
     Omit<React.ComponentPropsWithoutRef<'div'>, 'placeholder'> {
   /** Image src */
-  src?: string;
+  src?: string | null;
 
   /** Image alt text, used as title for placeholder if image was not loaded */
   alt?: string;
@@ -78,7 +78,7 @@ export const Image = forwardRef<HTMLDivElement, ImageProps>((props: ImageProps, 
     ...others
   } = useComponentDefaultProps('Image', defaultProps, props);
   const { classes, cx } = useStyles({ radius }, { classNames, styles, unstyled, name: 'Image' });
-  const [loaded, setLoaded] = useState(false);
+  const [loaded, setLoaded] = useState(!!src);
   const [error, setError] = useState(!src);
   const isPlaceholder = withPlaceholder && (!loaded || error);
 

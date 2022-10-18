@@ -111,7 +111,10 @@ export function useForm<Values = Record<string, unknown>>({
   }, []);
 
   const setValues: SetValues<Values> = useCallback((payload) => {
-    _setValues(payload);
+    _setValues((currentValues) => {
+      const valuesPartial = typeof payload === 'function' ? payload(currentValues) : payload;
+      return { ...currentValues, ...valuesPartial };
+    });
     clearInputErrorOnChange && clearErrors();
   }, []);
 

@@ -1,5 +1,6 @@
 import React from 'react';
 import { IconBrandTwitter, IconAlertCircle } from '@tabler/icons';
+import { MantineDemo } from '@mantine/ds';
 import { Input, Tooltip } from '@mantine/core';
 
 const code = `

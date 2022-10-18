@@ -1,4 +1,5 @@
 import React from 'react';
+import { MantineDemo } from '@mantine/ds';
 import { Checkbox, CheckboxProps } from '@mantine/core';
 
 const codeTemplate = (props: string) => `
@@ -22,10 +23,18 @@ export const configurator: MantineDemo = {
   },
   configurator: [
     {
-      name: 'label',
-      type: 'string',
-      initialValue: 'I agree to sell my privacy',
+      name: 'labelPosition',
+      type: 'segmented',
+      data: [
+        { value: 'right', label: 'Right' },
+        { value: 'left', label: 'Left' },
+      ],
+      initialValue: 'right',
+      defaultValue: 'right',
     },
+    { name: 'label', type: 'string', initialValue: 'I agree to sell my privacy' },
+    { name: 'description', type: 'string', initialValue: '' },
+    { name: 'error', type: 'string', initialValue: '' },
     { name: 'color', type: 'color', initialValue: 'blue', defaultValue: 'blue' },
     { name: 'radius', type: 'size', initialValue: 'sm', defaultValue: 'sm' },
     { name: 'size', type: 'size', initialValue: 'sm', defaultValue: 'sm' },

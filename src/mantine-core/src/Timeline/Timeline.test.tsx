@@ -39,12 +39,6 @@ describe('@mantine/core/Timeline', () => {
     );
   });
 
-  it('supports getting Timeline ref', () => {
-    const ref = React.createRef<HTMLDivElement>();
-    render(<Timeline ref={ref} {...defaultProps} />);
-    expect(ref.current instanceof HTMLDivElement).toBe(true);
-  });
-
   it('exposes TimelineItem as Timeline.Item', () => {
     expect(Timeline.Item).toBe(TimelineItem);
   });

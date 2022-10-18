@@ -1,6 +1,3 @@
-// Demos components
-export { Demo, CodeDemo, Configurator } from './components/Demo/Demo';
-
 // Inline demos
 export { AuthenticationForm } from './shared/AuthenticationForm/AuthenticationForm';
 export { AccordionDemo } from './demos/core/Accordion/Accordion.demo.label';

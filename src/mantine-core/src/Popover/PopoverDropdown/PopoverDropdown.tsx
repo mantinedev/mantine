@@ -15,7 +15,13 @@ export interface PopoverDropdownProps extends DefaultProps, React.ComponentProps
   children?: React.ReactNode;
 }
 
-export function PopoverDropdown({ style, className, children, ...others }: PopoverDropdownProps) {
+export function PopoverDropdown({
+  style,
+  className,
+  children,
+  onKeyDownCapture,
+  ...others
+}: PopoverDropdownProps) {
   const { classNames, styles, unstyled, staticSelector } = useContextStylesApi();
   const ctx = usePopoverContext();
   const { classes, cx } = useStyles(
@@ -25,7 +31,7 @@ export function PopoverDropdown({ style, className, children, ...others }: Popov
 
   const returnFocus = useFocusReturn({
     opened: ctx.opened,
-    shouldReturnFocus: false,
+    shouldReturnFocus: ctx.returnFocus,
   });
 
   const accessibleProps = ctx.withRoles
@@ -35,6 +41,10 @@ export function PopoverDropdown({ style, className, children, ...others }: Popov
         role: 'dialog',
       }
     : {};
+
+  if (ctx.disabled) {
+    return null;
+  }
 
   return (
     <OptionalPortal withinPortal={ctx.withinPortal}>
@@ -66,6 +76,7 @@ export function PopoverDropdown({ style, className, children, ...others }: Popov
               onKeyDownCapture={closeOnEscape(ctx.onClose, {
                 active: ctx.closeOnEscape,
                 onTrigger: returnFocus,
+                onKeyDown: onKeyDownCapture,
               })}
               data-position={ctx.placement}
               {...others}

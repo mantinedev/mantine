@@ -15,12 +15,13 @@ import { CheckboxIcon } from './CheckboxIcon';
 import { CheckboxGroup } from './CheckboxGroup/CheckboxGroup';
 import { useCheckboxGroupContext } from './CheckboxGroup.context';
 import useStyles, { CheckboxStylesParams } from './Checkbox.styles';
+import { Input } from '../Input';
 
 export type CheckboxStylesNames = Selectors<typeof useStyles>;
 
 export interface CheckboxProps
   extends DefaultProps<CheckboxStylesNames, CheckboxStylesParams>,
-    Omit<React.ComponentPropsWithoutRef<'input'>, 'type' | 'size'> {
+    Omit<React.ComponentPropsWithRef<'input'>, 'type' | 'size'> {
   /** Key of theme.colors */
   color?: MantineColor;
 
@@ -47,16 +48,25 @@ export interface CheckboxProps
 
   /** Icon rendered when checkbox has checked or indeterminate state */
   icon?: React.FC<{ indeterminate: boolean; className: string }>;
+
+  /** Position of label */
+  labelPosition?: 'left' | 'right';
+
+  /** description, displayed after label */
+  description?: React.ReactNode;
+
+  /** Displays error message after input */
+  error?: React.ReactNode;
 }
 
 const defaultProps: Partial<CheckboxProps> = {
   size: 'sm',
   transitionDuration: 100,
   icon: CheckboxIcon,
+  labelPosition: 'right',
 };
 
 type CheckboxComponent = ForwardRefWithStaticComponents<
-  HTMLInputElement,
   CheckboxProps,
   { Group: typeof CheckboxGroup }
 >;
@@ -82,6 +92,9 @@ export const Checkbox: CheckboxComponent = forwardRef<HTMLInputElement, Checkbox
       transitionDuration,
       icon: Icon,
       unstyled,
+      labelPosition,
+      description,
+      error,
       ...others
     } = useComponentDefaultProps('Checkbox', defaultProps, props);
 
@@ -89,7 +102,15 @@ export const Checkbox: CheckboxComponent = forwardRef<HTMLInputElement, Checkbox
     const uuid = useId(id);
     const { systemStyles, rest } = extractSystemStyles(others);
     const { classes, cx } = useStyles(
-      { size: ctx?.size || size, radius, color, transitionDuration },
+      {
+        size: ctx?.size || size,
+        radius,
+        color,
+        transitionDuration,
+        labelPosition,
+        error: !!error,
+        indeterminate,
+      },
       { name: 'Checkbox', classNames, styles, unstyled }
     );
 
@@ -103,31 +124,48 @@ export const Checkbox: CheckboxComponent = forwardRef<HTMLInputElement, Checkbox
     return (
       <Box
         className={cx(classes.root, className)}
-        style={style}
         sx={sx}
+        style={style}
         {...systemStyles}
         {...wrapperProps}
       >
-        <div className={classes.inner}>
-          <input
-            id={uuid}
-            ref={ref}
-            type="checkbox"
-            className={classes.input}
-            checked={indeterminate || checked}
-            disabled={disabled}
-            {...rest}
-            {...contextProps}
-          />
+        <div className={cx(classes.body)}>
+          <div className={classes.inner}>
+            <input
+              id={uuid}
+              ref={ref}
+              type="checkbox"
+              className={classes.input}
+              checked={checked}
+              disabled={disabled}
+              {...rest}
+              {...contextProps}
+            />
 
-          <Icon indeterminate={indeterminate} className={classes.icon} />
+            <Icon indeterminate={indeterminate} className={classes.icon} />
+          </div>
+
+          <div className={classes.labelWrapper}>
+            {label && (
+              <label
+                className={classes.label}
+                data-disabled={disabled || undefined}
+                htmlFor={uuid}
+                data-testid="label"
+              >
+                {label}
+              </label>
+            )}
+
+            {description && (
+              <Input.Description className={classes.description}>{description}</Input.Description>
+            )}
+
+            {error && error !== 'boolean' && (
+              <Input.Error className={classes.error}>{error}</Input.Error>
+            )}
+          </div>
         </div>
-
-        {label && (
-          <label data-disabled={disabled || undefined} className={classes.label} htmlFor={uuid}>
-            {label}
-          </label>
-        )}
       </Box>
     );
   }

@@ -95,6 +95,9 @@ export interface SliderProps
 
   /** A transformation function, to change the scale of the slider */
   scale?: (value: number) => number;
+
+  /** Allows the track to be inverted */
+  inverted?: boolean;
 }
 
 const defaultProps: Partial<SliderProps> = {
@@ -143,6 +146,7 @@ export const Slider = forwardRef<HTMLDivElement, SliderProps>((props, ref) => {
     unstyled,
     thumbSize,
     scale,
+    inverted,
     ...others
   } = useComponentDefaultProps('Slider', defaultProps, props);
 
@@ -265,6 +269,7 @@ export const Slider = forwardRef<HTMLDivElement, SliderProps>((props, ref) => {
       unstyled={unstyled}
     >
       <Track
+        inverted={inverted}
         offset={0}
         filled={position}
         marks={marks}

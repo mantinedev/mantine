@@ -14,7 +14,7 @@ export type ScrollAreaStylesNames = Selectors<typeof useStyles>;
 
 export interface ScrollAreaProps
   extends DefaultProps<ScrollAreaStylesNames, ScrollAreaStylesParams>,
-    React.ComponentPropsWithoutRef<'div'> {
+    React.ComponentPropsWithRef<'div'> {
   /** Scrollbar size in px */
   scrollbarSize?: number;
 
@@ -164,7 +164,6 @@ _ScrollArea.displayName = '@mantine/core/ScrollArea';
 _ScrollArea.Autosize = ScrollAreaAutosize;
 
 export const ScrollArea: ForwardRefWithStaticComponents<
-  HTMLDivElement,
   ScrollAreaProps,
   {
     Autosize: typeof ScrollAreaAutosize;

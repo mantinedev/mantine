@@ -23,10 +23,9 @@ export type TabsStylesNames =
 export interface TabsProps
   extends TabsProviderProps,
     DefaultProps<TabsStylesNames, TabsStylesParams>,
-    Omit<React.ComponentPropsWithoutRef<'div'>, keyof TabsProviderProps> {}
+    Omit<React.ComponentPropsWithRef<'div'>, keyof TabsProviderProps> {}
 
 type TabsComponent = ForwardRefWithStaticComponents<
-  HTMLDivElement,
   TabsProps,
   {
     List: typeof TabsList;

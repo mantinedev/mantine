@@ -23,7 +23,7 @@ export type CarouselStylesNames = CarouselSlideStylesNames | Selectors<typeof us
 
 export interface CarouselProps
   extends DefaultProps<CarouselStylesNames, CarouselStylesParams>,
-    React.ComponentPropsWithoutRef<'div'> {
+    React.ComponentPropsWithRef<'div'> {
   /** <Carousel.Slide /> components */
   children?: React.ReactNode;
 
@@ -67,7 +67,7 @@ export interface CarouselProps
   align?: 'start' | 'center' | 'end' | number;
 
   /** Number of slides that should be scrolled with next/previous buttons */
-  slidesToScroll?: number;
+  slidesToScroll?: number | 'auto';
 
   /** Determines whether gap should be treated as part of the slide size, true by default */
   includeGapInSize?: boolean;
@@ -172,7 +172,7 @@ export const _Carousel = forwardRef<HTMLDivElement, CarouselProps>((props, ref) 
   } = useComponentDefaultProps('Carousel', defaultProps, props);
 
   const { classes, cx, theme } = useStyles(
-    { controlSize, controlsOffset, orientation, height },
+    { controlSize, controlsOffset, orientation, height, includeGapInSize, breakpoints, slideGap },
     { name: 'Carousel', classNames, styles, unstyled }
   );
 
@@ -344,7 +344,6 @@ _Carousel.Slide = CarouselSlide;
 _Carousel.displayName = '@mantine/carousel/Carousel';
 
 export const Carousel: ForwardRefWithStaticComponents<
-  HTMLDivElement,
   CarouselProps,
   { Slide: typeof CarouselSlide }
 > = _Carousel;

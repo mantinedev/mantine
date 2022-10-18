@@ -25,6 +25,7 @@ export interface MonthPickerProps
   previousYearLabel?: string;
   preventFocus?: boolean;
   yearLabelFormat?: string;
+  __stopPropagation?: boolean;
 }
 
 export function MonthPicker({
@@ -46,6 +47,7 @@ export function MonthPicker({
   preventFocus,
   unstyled,
   yearLabelFormat = 'YYYY',
+  __stopPropagation,
   ...others
 }: MonthPickerProps) {
   const { classes, cx } = useStyles(
@@ -66,6 +68,7 @@ export function MonthPicker({
       })}
       disabled={!isMonthInRange({ date: new Date(year, index), minDate, maxDate })}
       onMouseDown={(event) => preventFocus && event.preventDefault()}
+      data-mantine-stop-propagation={__stopPropagation || undefined}
     >
       {month}
     </UnstyledButton>
@@ -88,6 +91,7 @@ export function MonthPicker({
         previousLabel={previousYearLabel}
         preventFocus={preventFocus}
         unstyled={unstyled}
+        __stopPropagation={__stopPropagation}
       />
       <div className={classes.monthPickerControls}>{months}</div>
     </div>

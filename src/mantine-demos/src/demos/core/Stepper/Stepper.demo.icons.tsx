@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { IconUserCheck, IconMailOpened, IconShieldCheck, IconCircleCheck } from '@tabler/icons';
+import { MantineDemo } from '@mantine/ds';
 import { Stepper } from '@mantine/core';
 
 const code = `
