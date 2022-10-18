@@ -150,8 +150,8 @@ const _Tooltip = forwardRef<HTMLElement, TooltipProps>((props, ref) => {
                   ...style,
                   ...transitionStyles,
                   zIndex,
-                  top: tooltip.y ?? '',
-                  left: tooltip.x ?? '',
+                  top: tooltip.y ?? 0,
+                  left: tooltip.x ?? 0,
                 },
               })}
             >
