@@ -9,16 +9,16 @@ export function useFocusTrap(active = true): (instance: HTMLElement | null) => v
 
   const setRef = useCallback(
     (node: HTMLElement | null) => {
+      if (restoreAria.current) {
+        restoreAria.current();
+      }
+
       if (!active) {
         return;
       }
 
       if (node === ref.current || node === null) {
         return;
-      }
-
-      if (restoreAria.current) {
-        restoreAria.current();
       }
 
       if (node) {
