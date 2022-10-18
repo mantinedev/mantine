@@ -13,7 +13,18 @@ export interface DateRangePickerProps
   extends Omit<DatePickerBaseSharedProps, 'value' | 'onChange' | 'fixOnBlur'>,
     Omit<
       CalendarSharedProps,
-      'size' | 'styles' | 'classNames' | 'value' | 'onChange' | 'onMonthChange'
+      | 'size'
+      | 'styles'
+      | 'classNames'
+      | 'value'
+      | 'onChange'
+      | 'onMonthChange'
+      | 'onMonthChange'
+      | 'onChange'
+      | 'isDateInRange'
+      | 'isDateFirstInRange'
+      | 'isDateLastInRange'
+      | 'month'
     > {
   /** Selected date, required with controlled input */
   value?: DateRangePickerValue;
