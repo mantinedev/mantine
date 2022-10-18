@@ -1,4 +1,5 @@
 import React from 'react';
+import { MantineDemo } from '@mantine/ds';
 import { Rating, useMantineTheme } from '@mantine/core';
 import {
   IconMoodCry,
