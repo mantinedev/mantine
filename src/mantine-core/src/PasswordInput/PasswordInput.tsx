@@ -98,6 +98,8 @@ export const PasswordInput = forwardRef<HTMLInputElement, PasswordInputProps>((p
     unstyled,
     visibilityToggleLabel,
     withAsterisk,
+    inputContainer,
+    iconWidth,
     inputWrapperOrder,
     visible,
     defaultVisible,
@@ -166,6 +168,7 @@ export const PasswordInput = forwardRef<HTMLInputElement, PasswordInputProps>((p
       unstyled={unstyled}
       withAsterisk={withAsterisk}
       inputWrapperOrder={inputWrapperOrder}
+      inputContainer={inputContainer}
       {...systemStyles}
       {...wrapperProps}
     >
@@ -183,6 +186,7 @@ export const PasswordInput = forwardRef<HTMLInputElement, PasswordInputProps>((p
         rightSection={!disabled && rightSection}
         variant={variant}
         unstyled={unstyled}
+        iconWidth={iconWidth}
       >
         <input
           type={_visible ? 'text' : 'password'}

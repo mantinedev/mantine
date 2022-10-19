@@ -36,6 +36,7 @@ export * from './PinInput.styles-api';
 export * from './Popover.styles-api';
 export * from './Progress.styles-api';
 export * from './Radio.styles-api';
+export * from './Rating.styles-api';
 export * from './RingProgress.styles-api';
 export * from './ScrollArea.styles-api';
 export * from './SegmentedControl.styles-api';

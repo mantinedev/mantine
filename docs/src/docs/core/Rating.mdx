@@ -1,0 +1,71 @@
+---
+group: 'mantine-core'
+package: '@mantine/core'
+title: Rating
+order: 1
+slug: /core/rating/
+category: 'inputs'
+description: 'Rating Component'
+props: ['Rating']
+styles: ['Rating']
+import: "import { Rating } from '@mantine/core';"
+source: 'mantine-core/src/Rating/Rating.tsx'
+docs: 'core/Rating.mdx'
+---
+
+import { RatingDemos } from '@mantine/demos';
+
+## Usage
+
+<Demo data={RatingDemos.configurator} />
+
+## Controlled
+
+```tsx
+import { useState } from 'react';
+import { Rating } from '@mantine/core';
+
+function Demo() {
+  const [value, setValue] = useState(2);
+  return <Rating value={value} onChange={(currValue) => setValue(currValue)} />;
+}
+```
+
+## Fractions
+
+```tsx
+import { Rating } from '@mantine/core';
+
+function Demo() {
+  return <Rating fractions={1} />; // by default it is 1
+  return <Rating fractions={2} />; // half
+  return <Rating fractions={4} />; // quarter
+}
+```
+
+## Highlight selected only
+
+Instead of highlighting all the stars before the selected symbol. You can only highlight the selected one.
+
+```tsx
+import { Rating } from '@mantine/core';
+
+function Demo() {
+  return <Rating highlightSelectedOnly />;
+}
+```
+
+## Custom symbol
+
+```tsx
+import { Rating } from '@mantine/core';
+import { SunIcon, MoonIcon } from '@tabler/icon';
+
+function Demo() {
+  return <Rating emptySymbol={<SunIcon />} fullSymbol={<MoonIcon />} />;
+}
+```
+
+If you want more control, you can pass function to these props.
+
+<Demo data={RatingDemos.customSymbol} />
