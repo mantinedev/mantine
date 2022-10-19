@@ -7,14 +7,24 @@ interface TimelineItemStyles {
   align: 'right' | 'left';
   lineVariant: 'solid' | 'dashed' | 'dotted';
   lineWidth: number;
+  fullWidth: boolean;
 }
 
 export default createStyles(
-  (theme, { bulletSize, color, radius, align, lineVariant, lineWidth }: TimelineItemStyles) => {
+  (
+    theme,
+    { bulletSize, color, radius, align, lineVariant, lineWidth, fullWidth }: TimelineItemStyles
+  ) => {
     const colors = theme.fn.variant({ variant: 'filled', color });
 
     return {
-      itemBody: {},
+      itemBody: fullWidth
+        ? {
+            marginLeft: `-${bulletSize / 2 + lineWidth / 2}px`,
+            marginRight: `-${bulletSize / 2 + lineWidth / 2}px`,
+            position: 'relative',
+          }
+        : {},
       itemContent: {},
 
       itemBullet: {
@@ -30,7 +40,7 @@ export default createStyles(
         top: 0,
         left: align === 'left' ? -bulletSize / 2 - lineWidth / 2 : 'auto',
         right: align === 'right' ? -bulletSize / 2 - lineWidth / 2 : 'auto',
-        display: 'flex',
+        display: fullWidth ? 'none' : 'flex',
         alignItems: 'center',
         justifyContent: 'center',
         color: theme.white,
@@ -57,8 +67,8 @@ export default createStyles(
         position: 'relative',
         boxSizing: 'border-box',
         color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
-        paddingLeft: align === 'left' ? theme.spacing.xl : 0,
-        paddingRight: align === 'right' ? theme.spacing.xl : 0,
+        paddingLeft: fullWidth ? 0 : align === 'left' ? theme.spacing.xl : 0,
+        paddingRight: fullWidth ? 0 : align === 'right' ? theme.spacing.xl : 0,
         textAlign: align,
 
         '&:not(:last-of-type)::before': {

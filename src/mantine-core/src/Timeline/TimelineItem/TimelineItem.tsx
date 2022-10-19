@@ -21,6 +21,9 @@ export interface TimelineItemProps
   /** Radius from theme.radius, or number to set border-radius in px */
   radius?: MantineNumberSize;
 
+  /** Timeline item takes full width of the Timeline container and does not have a bullet. */
+  fullWidth?: boolean;
+
   /** React node that will be rendered after title */
   children?: React.ReactNode;
 
@@ -48,6 +51,7 @@ export function TimelineItem({
   bullet,
   title,
   bulletSize = 20,
+  fullWidth = false,
   radius = 'xl',
   lineWidth = 4,
   active,
@@ -62,7 +66,7 @@ export function TimelineItem({
   ...others
 }: TimelineItemProps) {
   const { classes, cx } = useStyles(
-    { bulletSize, color, radius, align, lineVariant, lineWidth },
+    { bulletSize, color, radius, align, lineVariant, lineWidth, fullWidth },
     { classNames, styles, unstyled, name: 'Timeline' }
   );
 
