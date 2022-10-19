@@ -65,6 +65,7 @@ export * from './Popover';
 export * from './Portal';
 export * from './Progress';
 export * from './Radio';
+export * from './Rating';
 export * from './RingProgress';
 export * from './ScrollArea';
 export * from './SegmentedControl';
