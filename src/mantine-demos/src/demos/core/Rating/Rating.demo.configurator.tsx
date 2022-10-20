@@ -3,7 +3,7 @@ import { MantineDemo } from '@mantine/ds';
 import { RatingProps, Rating, Group } from '@mantine/core';
 
 const codeTemplate = (props: string) => `
-import { Radio } from '@mantine/core';
+import { Rating } from '@mantine/core';
 
 function Demo() {
   return <Rating defaultValue={2}${props} />
