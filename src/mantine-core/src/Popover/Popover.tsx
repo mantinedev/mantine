@@ -1,6 +1,6 @@
 /* eslint-disable react/no-unused-prop-types */
 
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useCallback } from 'react';
 import { useId, useClickOutside } from '@mantine/hooks';
 import {
   useMantineTheme,
@@ -209,6 +209,22 @@ export function Popover(props: PopoverProps) {
     dropdownNode,
   ]);
 
+  const reference = useCallback(
+    (node: HTMLElement) => {
+      setTargetNode(node);
+      popover.floating.reference(node);
+    },
+    [popover.floating.reference]
+  );
+
+  const floating = useCallback(
+    (node: HTMLElement) => {
+      setDropdownNode(node);
+      popover.floating.floating(node);
+    },
+    [popover.floating.floating]
+  );
+
   return (
     <StylesApiProvider
       classNames={classNames}
@@ -221,14 +237,8 @@ export function Popover(props: PopoverProps) {
           returnFocus,
           disabled,
           controlled: popover.controlled,
-          reference: (node) => {
-            setTargetNode(node as HTMLElement);
-            popover.floating.reference(node);
-          },
-          floating: (node) => {
-            setDropdownNode(node);
-            popover.floating.floating(node);
-          },
+          reference,
+          floating,
           x: popover.floating.x,
           y: popover.floating.y,
           arrowX: popover.floating?.middlewareData?.arrow?.x,
