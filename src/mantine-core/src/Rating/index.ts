@@ -1,4 +1,3 @@
 export { Rating } from './Rating';
-
-export type { RatingStylesParams } from './Rating.styles';
+export { StarIcon } from './StarSymbol/StarIcon';
 export type { RatingStylesNames, RatingProps } from './Rating';
