@@ -96,12 +96,14 @@ export const Rating = forwardRef<HTMLInputElement, RatingProps>((props, ref) => 
     onMouseLeave,
     highlightSelectedOnly,
     color,
+    id,
     ...others
   } = useComponentDefaultProps('Rating', defaultProps, props);
 
   const { classes, cx, theme } = useStyles(null, { name: 'Rating', classNames, styles, unstyled });
 
   const _name = useId(name);
+  const _id = useId(id);
   const rootRef = useRef<HTMLDivElement>(null);
 
   const [_value, setValue] = useUncontrolled({
@@ -167,16 +169,15 @@ export const Rating = forwardRef<HTMLInputElement, RatingProps>((props, ref) => 
 
   const items = Array(count)
     .fill(0)
-    .map((_, integerIndex) => {
-      const integerValue = integerIndex + 1;
-      const fractionItems = Array.from(new Array(integerIndex === 0 ? fractions + 1 : fractions));
+    .map((_, index) => {
+      const integerValue = index + 1;
+      const fractionItems = Array.from(new Array(index === 0 ? fractions + 1 : fractions));
       const isGroupActive = !readOnly && Math.ceil(hovered) === integerValue;
 
       return (
         <div key={integerValue} data-active={isGroupActive} className={classes.symbolGroup}>
           {fractionItems.map((__, fractionIndex) => {
-            const fractionValue =
-              decimalUnit * (integerIndex === 0 ? fractionIndex : fractionIndex + 1);
+            const fractionValue = decimalUnit * (index === 0 ? fractionIndex : fractionIndex + 1);
             const symbolValue = roundValueTo(integerValue - 1 + fractionValue, decimalUnit);
 
             return (
@@ -201,6 +202,7 @@ export const Rating = forwardRef<HTMLInputElement, RatingProps>((props, ref) => 
                 styles={styles}
                 unstyled={unstyled}
                 color={color}
+                id={`${_id}-${index}`}
               />
             );
           })}

@@ -1,4 +1,4 @@
-import React, { useId } from 'react';
+import React from 'react';
 import { MantineSize, Selectors, DefaultProps, MantineColor } from '@mantine/styles';
 import { Box } from '../../Box';
 import { StarSymbol } from '../StarSymbol/StarSymbol';
@@ -18,6 +18,7 @@ export interface RatingItemProps
   active: boolean;
   fractionValue: number;
   value: number;
+  id: string;
 }
 
 export function RatingItem({
@@ -34,9 +35,9 @@ export function RatingItem({
   styles,
   unstyled,
   color,
+  id,
   ...others
 }: RatingItemProps) {
-  const id = useId();
   const { classes } = useStyles(null, { name: 'Rating', classNames, styles, unstyled });
   const _fullIcon = typeof fullIcon === 'function' ? fullIcon(value) : fullIcon;
   const _emptyIcon = typeof emptyIcon === 'function' ? emptyIcon(value) : emptyIcon;
