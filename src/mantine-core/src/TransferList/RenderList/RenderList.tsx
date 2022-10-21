@@ -20,8 +20,11 @@ export interface RenderListProps extends DefaultProps<RenderListStylesNames> {
   selection: string[];
   itemComponent: TransferListItemComponent;
   searchPlaceholder: string;
+  query?: string;
+  onSearch(value: string): void;
   filter(query: string, item: TransferListItem): boolean;
   nothingFound?: React.ReactNode;
+  placeholder?: React.ReactNode;
   title?: React.ReactNode;
   reversed?: boolean;
   showTransferAll?: boolean;
@@ -59,8 +62,11 @@ export function RenderList({
   transferIcon: TransferIcon,
   transferAllIcon: TransferAllIcon,
   searchPlaceholder,
+  query,
+  onSearch,
   filter,
   nothingFound,
+  placeholder,
   title,
   showTransferAll,
   reversed,
@@ -79,7 +85,6 @@ export function RenderList({
   );
   const unGroupedItems: React.ReactElement<any>[] = [];
   const groupedItems: React.ReactElement<any>[] = [];
-  const [query, setQuery] = useState('');
   const [hovered, setHovered] = useState(-1);
   const filteredData = data.filter((item) => filter(query, item)).slice(0, limit);
   const ListComponent = listComponent || 'div';
@@ -202,7 +207,7 @@ export function RenderList({
             unstyled={unstyled}
             value={query}
             onChange={(event) => {
-              setQuery(event.currentTarget.value);
+              onSearch(event.currentTarget.value);
               setHovered(0);
             }}
             onFocus={() => setHovered(0)}
@@ -254,7 +259,7 @@ export function RenderList({
             </>
           ) : (
             <Text color="dimmed" unstyled={unstyled} size="sm" align="center" mt="sm">
-              {nothingFound}
+              {!query && placeholder ? placeholder : nothingFound}
             </Text>
           )}
         </ListComponent>

@@ -1,5 +1,6 @@
 import React, { forwardRef } from 'react';
 import { DefaultProps, MantineNumberSize, useComponentDefaultProps } from '@mantine/styles';
+import { useUncontrolled } from '@mantine/hooks';
 import { RenderList, RenderListStylesNames } from './RenderList/RenderList';
 import { SelectScrollArea } from '../Select/SelectScrollArea/SelectScrollArea';
 import { DefaultItem } from './DefaultItem/DefaultItem';
@@ -11,7 +12,7 @@ export type TransferListStylesNames = RenderListStylesNames;
 
 export interface TransferListProps
   extends DefaultProps<TransferListStylesNames>,
-    Omit<React.ComponentPropsWithoutRef<'div'>, 'value' | 'onChange'> {
+    Omit<React.ComponentPropsWithoutRef<'div'>, 'value' | 'onChange' | 'placeholder'> {
   /** Current value */
   value: TransferListData;
 
@@ -24,11 +25,20 @@ export interface TransferListProps
   /** Custom item component */
   itemComponent?: TransferListItemComponent;
 
+  /** Controlled search queries */
+  searchValues?: [string, string];
+
+  /** Called when one of the search queries changes */
+  onSearch?(value: [string, string]): void;
+
   /** Search fields placeholder */
-  searchPlaceholder?: string;
+  searchPlaceholder?: string | [string, string];
 
   /** Nothing found message */
-  nothingFound?: React.ReactNode;
+  nothingFound?: React.ReactNode | [React.ReactNode, React.ReactNode];
+
+  /** Displayed when a list is empty and there is no search query */
+  placeholder?: React.ReactNode | [React.ReactNode, React.ReactNode];
 
   /** Function to filter search results */
   filter?(query: string, item: TransferListItem): boolean;
@@ -69,6 +79,7 @@ const defaultProps: Partial<TransferListProps> = {
   itemComponent: DefaultItem,
   filter: defaultFilter,
   titles: [null, null],
+  placeholder: [null, null],
   listHeight: 150,
   listComponent: SelectScrollArea,
   showTransferAll: true,
@@ -81,8 +92,11 @@ export const TransferList = forwardRef<HTMLDivElement, TransferListProps>((props
     onChange,
     itemComponent,
     searchPlaceholder,
+    searchValues,
+    onSearch,
     filter,
     nothingFound,
+    placeholder,
     titles,
     initialSelection,
     listHeight,
@@ -100,6 +114,12 @@ export const TransferList = forwardRef<HTMLDivElement, TransferListProps>((props
   } = useComponentDefaultProps('TransferList', defaultProps, props);
 
   const [selection, handlers] = useSelectionState(initialSelection);
+  const [search, handleSearch] = useUncontrolled({
+    value: searchValues,
+    defaultValue: ['', ''],
+    finalValue: ['', ''],
+    onChange: onSearch,
+  });
 
   const handleMoveAll = (listIndex: 0 | 1) => {
     const items: TransferListData = Array(2) as any;
@@ -136,9 +156,7 @@ export const TransferList = forwardRef<HTMLDivElement, TransferListProps>((props
     listComponent,
     transferIcon,
     transferAllIcon,
-    searchPlaceholder,
     filter,
-    nothingFound,
     height: listHeight,
     showTransferAll,
     classNames,
@@ -164,6 +182,13 @@ export const TransferList = forwardRef<HTMLDivElement, TransferListProps>((props
         onMoveAll={() => handleMoveAll(0)}
         onMove={() => handleMove(0)}
         title={titles[0]}
+        placeholder={Array.isArray(placeholder) ? placeholder[0] : placeholder}
+        searchPlaceholder={
+          Array.isArray(searchPlaceholder) ? searchPlaceholder[0] : searchPlaceholder
+        }
+        nothingFound={Array.isArray(nothingFound) ? nothingFound[0] : nothingFound}
+        query={search[0]}
+        onSearch={(query) => handleSearch([query, search[1]])}
         unstyled={unstyled}
       />
 
@@ -175,6 +200,13 @@ export const TransferList = forwardRef<HTMLDivElement, TransferListProps>((props
         onMoveAll={() => handleMoveAll(1)}
         onMove={() => handleMove(1)}
         title={titles[1]}
+        placeholder={Array.isArray(placeholder) ? placeholder[1] : placeholder}
+        searchPlaceholder={
+          Array.isArray(searchPlaceholder) ? searchPlaceholder[1] : searchPlaceholder
+        }
+        nothingFound={Array.isArray(nothingFound) ? nothingFound[1] : nothingFound}
+        query={search[1]}
+        onSearch={(query) => handleSearch([search[0], query])}
         reversed
         unstyled={unstyled}
       />
