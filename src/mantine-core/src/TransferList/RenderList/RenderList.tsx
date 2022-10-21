@@ -7,7 +7,7 @@ import { UnstyledButton } from '../../UnstyledButton';
 import { ActionIcon } from '../../ActionIcon';
 import { TextInput } from '../../TextInput';
 import { Text } from '../../Text';
-import { Divider } from '../../Divider/Divider';
+import { Divider } from '../../Divider';
 import { LastIcon, NextIcon, FirstIcon, PrevIcon } from '../../Pagination/icons';
 import { TransferListItem, TransferListItemComponent } from '../types';
 import useStyles from './RenderList.styles';
@@ -31,6 +31,8 @@ export interface RenderListProps extends DefaultProps<RenderListStylesNames> {
   radius: MantineNumberSize;
   listComponent?: React.FC<any>;
   limit?: number;
+  transferIcon?: React.FunctionComponent<{ reversed }>;
+  transferAllIcon?: React.FunctionComponent<{ reversed }>;
 }
 
 const icons = {
@@ -54,6 +56,8 @@ export function RenderList({
   selection,
   itemComponent: ItemComponent,
   listComponent,
+  transferIcon: TransferIcon,
+  transferAllIcon: TransferAllIcon,
   searchPlaceholder,
   filter,
   nothingFound,
@@ -181,6 +185,9 @@ export function RenderList({
     }
   };
 
+  const transferIcon = reversed ? <Icons.Prev /> : <Icons.Next />;
+  const transferAllIcon = reversed ? <Icons.First /> : <Icons.Last />;
+
   return (
     <div className={cx(classes.transferList, className)}>
       {title && (
@@ -216,7 +223,7 @@ export function RenderList({
             onClick={onMove}
             unstyled={unstyled}
           >
-            {reversed ? <Icons.Prev /> : <Icons.Next />}
+            {TransferIcon ? <TransferIcon reversed={reversed} /> : transferIcon}
           </ActionIcon>
 
           {showTransferAll && (
@@ -229,7 +236,7 @@ export function RenderList({
               onClick={onMoveAll}
               unstyled={unstyled}
             >
-              {reversed ? <Icons.First /> : <Icons.Last />}
+              {TransferAllIcon ? <TransferAllIcon reversed={reversed} /> : transferAllIcon}
             </ActionIcon>
           )}
         </div>

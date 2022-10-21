@@ -53,6 +53,12 @@ export interface TransferListProps
 
   /** Limit amount of items showed at a time */
   limit?: number;
+
+  /** Change icon used for the transfer selected control */
+  transferIcon?: React.FunctionComponent<{ reversed: boolean }>;
+
+  /** Change icon used for the transfer all control */
+  transferAllIcon?: React.FunctionComponent<{ reversed: boolean }>;
 }
 
 export function defaultFilter(query: string, item: TransferListItem) {
@@ -88,6 +94,8 @@ export const TransferList = forwardRef<HTMLDivElement, TransferListProps>((props
     styles,
     limit,
     unstyled,
+    transferIcon,
+    transferAllIcon,
     ...others
   } = useComponentDefaultProps('TransferList', defaultProps, props);
 
@@ -126,6 +134,8 @@ export const TransferList = forwardRef<HTMLDivElement, TransferListProps>((props
   const sharedListProps = {
     itemComponent,
     listComponent,
+    transferIcon,
+    transferAllIcon,
     searchPlaceholder,
     filter,
     nothingFound,
