@@ -8,9 +8,8 @@ const defaultProps: RatingProps = {
   defaultValue: 80,
 };
 
-describe('@mantine/core/Progress', () => {
+describe('@mantine/core/Rating', () => {
   checkAccessibility([<Rating defaultValue={3.5} fractions={2} aria-label="test-rating" />]);
-
   itSupportsSystemProps({
     component: Rating,
     props: defaultProps,
@@ -19,26 +18,23 @@ describe('@mantine/core/Progress', () => {
     providerName: 'Rating',
   });
 
-  it('should always have name property', () => {
+  it('has correct name', () => {
     const { container } = render(<Rating defaultValue={1} />);
-
     const inputs = Array.from(container.querySelectorAll('input'));
     const nameSet = new Set(inputs.map((item) => item.name));
-
     expect(nameSet.size).toEqual(1);
     expect(nameSet.has('')).toEqual(false);
   });
 
   it('supports defaultValue', () => {
     const { container } = render(<Rating defaultValue={2} />);
-
     const checkedInput: HTMLInputElement = container.querySelector('input[type="radio"]:checked');
     expect(checkedInput.value).toEqual('2');
   });
 
   it('supports hover events', async () => {
     const spy = jest.fn();
-    const { container } = render(<Rating defaultValue={2} onChangeHover={spy} />);
+    const { container } = render(<Rating defaultValue={2} onHover={spy} />);
 
     container.firstElementChild.getBoundingClientRect = jest
       .fn()
@@ -53,7 +49,6 @@ describe('@mantine/core/Progress', () => {
     const secondInput: HTMLInputElement = container.querySelector('input[data-active="true"]');
 
     expect(secondInput.value).toEqual('2');
-
     expect(spy).toHaveBeenCalledTimes(2);
     expect(spy).toHaveBeenNthCalledWith(1, 1);
     expect(spy).toHaveBeenNthCalledWith(2, 2);
@@ -74,53 +69,12 @@ describe('@mantine/core/Progress', () => {
     expect(inputCheckedInput.value).toEqual('4');
   });
 
-  it('supports deselecting the value', async () => {
-    const { container } = render(<Rating name="zero-test" defaultValue={3} />);
-
-    userEvent.pointer({
-      target: container.querySelector('input[name="zero-test"][value="3"]'),
-      keys: '[MouseLeft]',
-      coords: {
-        clientX: 1,
-      },
-    });
-
-    const zeroInput: HTMLInputElement = container.querySelector(
-      'input[name="zero-test"][value="0"]:checked'
-    );
-
-    expect(zeroInput.value).toEqual('0');
-  });
-
-  it('supports onChange', async () => {
-    const spy = jest.fn();
-    const { container } = render(
-      <Rating defaultValue={1} fractions={2} name="test-onchange" onChange={spy} />
-    );
-
-    await userEvent.click(container.querySelector('input[value="3"]'));
-    await userEvent.click(container.querySelector('input[value="4.5"]'));
-    await userEvent.click(container.querySelector('input[value="4"]'));
-    await userEvent.click(container.querySelector('input[value="2.5"]'));
-    await userEvent.click(container.querySelector('input[value="1"]'));
-    await userEvent.pointer({
-      target: container.querySelector('input[value="1"]'),
-      keys: '[MouseLeft]',
-      coords: {
-        clientX: 1,
-      },
-    });
-
-    expect(spy).toBeCalledTimes(6);
-    expect(spy.mock.calls).toEqual([[3], [4.5], [4], [2.5], [1], [0]]);
-  });
-
   it('selects 0, if value or defaultValue is null', () => {
     const { container } = render(
-      <div>
+      <>
         <Rating value={null} name="rating-null-value" />
         <Rating defaultValue={null} name="rating-null-defaultValue" />
-      </div>
+      </>
     );
 
     const checkedInputI: HTMLInputElement = container.querySelector(

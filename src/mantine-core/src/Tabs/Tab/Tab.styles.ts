@@ -8,22 +8,37 @@ interface TabStylesParams extends TabsStylesParams {
 
 function getVariantStyles(
   theme: MantineTheme,
-  { variant, orientation, color, radius, inverted }: TabStylesParams
+  { variant, orientation, color, radius, inverted, placement }: TabStylesParams
 ): CSSObject {
   const vertical = orientation === 'vertical';
   const filledScheme = theme.fn.variant({ color, variant: 'filled' });
   const radiusValue = theme.fn.radius(radius);
+
   const borderRadius =
     orientation === 'vertical'
-      ? `${radiusValue}px 0 0 ${radiusValue}px`
+      ? placement === 'left'
+        ? `${radiusValue}px 0 0 ${radiusValue}px`
+        : ` 0 ${radiusValue}px ${radiusValue}px 0`
       : inverted
       ? `0 0 ${radiusValue}px ${radiusValue}px`
       : `${radiusValue}px ${radiusValue}px 0 0`;
 
   if (variant === 'default') {
     return {
-      [vertical ? 'borderRight' : inverted ? 'borderTop' : 'borderBottom']: '2px solid transparent',
-      [vertical ? 'marginRight' : inverted ? 'marginTop' : 'marginBottom']: -2,
+      [vertical
+        ? placement === 'left'
+          ? 'borderRight'
+          : 'borderLeft'
+        : inverted
+        ? 'borderTop'
+        : 'borderBottom']: '2px solid transparent',
+      [vertical
+        ? placement === 'left'
+          ? 'marginRight'
+          : 'marginLeft'
+        : inverted
+        ? 'marginTop'
+        : 'marginBottom']: -2,
       borderRadius,
 
       ...theme.fn.hover({
@@ -43,7 +58,13 @@ function getVariantStyles(
     return {
       borderRadius,
       border: '1px solid transparent',
-      [vertical ? 'borderRight' : inverted ? 'borderTop' : 'borderBottom']: 'none',
+      [vertical
+        ? placement === 'left'
+          ? 'borderRight'
+          : 'borderLeft'
+        : inverted
+        ? 'borderTop'
+        : 'borderBottom']: 'none',
 
       '&[data-active]': {
         borderColor: theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[3],
@@ -55,8 +76,8 @@ function getVariantStyles(
           bottom: vertical ? 0 : inverted ? 'unset' : -1,
           top: vertical ? 0 : inverted ? -1 : 'unset',
           [vertical ? 'width' : 'height']: 1,
-          right: vertical ? -1 : 0,
-          left: vertical ? 'unset' : 0,
+          right: vertical ? (placement === 'left' ? -1 : 'unset') : 0,
+          left: vertical ? (placement === 'left' ? 'unset' : -1) : 0,
         },
       },
     };

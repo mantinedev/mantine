@@ -150,6 +150,45 @@ export const VerticalVariants = () => (
   </Box>
 );
 
+export const VerticalPlacement = () => (
+  <Box sx={{ maxWidth: 400 }} mx="auto" mt={40}>
+    <Wrapper
+      defaultValue="react"
+      orientation="vertical"
+      variant="default"
+      mt={10}
+      mb={50}
+      radius="md"
+      placement="right"
+    >
+      {verticalBase}
+    </Wrapper>
+
+    <Wrapper
+      defaultValue="react"
+      orientation="vertical"
+      variant="outline"
+      mt={10}
+      mb={50}
+      radius="md"
+      placement="right"
+    >
+      {verticalBase}
+    </Wrapper>
+
+    <Wrapper
+      defaultValue="react"
+      orientation="vertical"
+      variant="pills"
+      mt={10}
+      radius="md"
+      placement="right"
+    >
+      {verticalBase}
+    </Wrapper>
+  </Box>
+);
+
 export const WithIcon = () => (
   <Wrapper defaultValue="react" variant="outline">
     <Tabs.List>

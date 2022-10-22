@@ -24,6 +24,9 @@ export interface FileButtonProps<Multiple extends boolean = false> {
 
   /** Function that should be called when value changes to null or empty array */
   resetRef?: React.ForwardedRef<() => void>;
+
+  /** Disables file picker */
+  disabled?: boolean;
 }
 
 const defaultProps: Partial<FileButtonProps> = {
@@ -36,13 +39,13 @@ type FileButtonComponent = (<Multiple extends boolean = false>(
 
 export const FileButton: FileButtonComponent = forwardRef<HTMLInputElement, FileButtonProps>(
   (props, ref) => {
-    const { onChange, children, multiple, accept, name, form, resetRef, ...others } =
+    const { onChange, children, multiple, accept, name, form, resetRef, disabled, ...others } =
       useComponentDefaultProps('FileButton', defaultProps, props);
 
     const inputRef = useRef<HTMLInputElement>();
 
     const onClick = () => {
-      inputRef.current.click();
+      !disabled && inputRef.current.click();
     };
 
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
