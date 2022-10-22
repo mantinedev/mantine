@@ -142,6 +142,7 @@ const defaultProps: Partial<PopoverProps> = {
   clickOutsideEvents: ['mousedown', 'touchstart'],
   zIndex: getDefaultZIndex('popover'),
   __staticSelector: 'Popover',
+  width: 'max-content',
 };
 
 export function Popover(props: PopoverProps) {
