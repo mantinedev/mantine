@@ -116,7 +116,10 @@ export const Rating = forwardRef<HTMLInputElement, RatingProps>((props, ref) => 
   const [hovered, setHovered] = useState(-1);
   const [isOutside, setOutside] = useState(true);
 
-  const decimalUnit = 1 / fractions;
+  const _fractions = Math.floor(fractions);
+  const _count = Math.floor(count);
+
+  const decimalUnit = 1 / _fractions;
   const stableValueRounded = roundValueTo(_value, decimalUnit);
   const finalValue = hovered !== -1 ? hovered : stableValueRounded;
 
@@ -133,7 +136,7 @@ export const Rating = forwardRef<HTMLInputElement, RatingProps>((props, ref) => 
     }
 
     const { left, right, width } = rootRef.current.getBoundingClientRect();
-    const symbolWidth = width / count;
+    const symbolWidth = width / _count;
 
     const hoverPosition = theme.dir === 'rtl' ? right - event.clientX : event.clientX - left;
     const hoverValue = hoverPosition / symbolWidth;
@@ -141,7 +144,7 @@ export const Rating = forwardRef<HTMLInputElement, RatingProps>((props, ref) => 
     const rounded = clamp(
       roundValueTo(hoverValue + decimalUnit / 2, decimalUnit),
       decimalUnit,
-      count
+      _count
     );
 
     setHovered(rounded);
@@ -167,11 +170,11 @@ export const Rating = forwardRef<HTMLInputElement, RatingProps>((props, ref) => 
     setValue(resultedValue);
   };
 
-  const items = Array(count)
+  const items = Array(_count)
     .fill(0)
     .map((_, index) => {
       const integerValue = index + 1;
-      const fractionItems = Array.from(new Array(index === 0 ? fractions + 1 : fractions));
+      const fractionItems = Array.from(new Array(index === 0 ? _fractions + 1 : _fractions));
       const isGroupActive = !readOnly && Math.ceil(hovered) === integerValue;
 
       return (
