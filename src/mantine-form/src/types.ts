@@ -118,7 +118,10 @@ export interface UseFormInput<Values, TransformValues extends _TransformValues<V
   validateInputOnBlur?: boolean | LooseKeys<Values>[];
 }
 
-export interface UseFormReturnType<Values, TransformValues extends _TransformValues<Values>> {
+export interface UseFormReturnType<
+  Values,
+  TransformValues extends _TransformValues<Values> = (values: Values) => Values
+> {
   values: Values;
   errors: FormErrors;
   setValues: SetValues<Values>;
