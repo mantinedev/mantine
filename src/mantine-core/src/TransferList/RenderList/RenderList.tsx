@@ -7,7 +7,7 @@ import { UnstyledButton } from '../../UnstyledButton';
 import { ActionIcon } from '../../ActionIcon';
 import { TextInput } from '../../TextInput';
 import { Text } from '../../Text';
-import { Divider } from '../../Divider/Divider';
+import { Divider } from '../../Divider';
 import { LastIcon, NextIcon, FirstIcon, PrevIcon } from '../../Pagination/icons';
 import { TransferListItem, TransferListItemComponent } from '../types';
 import useStyles from './RenderList.styles';
@@ -20,8 +20,11 @@ export interface RenderListProps extends DefaultProps<RenderListStylesNames> {
   selection: string[];
   itemComponent: TransferListItemComponent;
   searchPlaceholder: string;
+  query?: string;
+  onSearch(value: string): void;
   filter(query: string, item: TransferListItem): boolean;
   nothingFound?: React.ReactNode;
+  placeholder?: React.ReactNode;
   title?: React.ReactNode;
   reversed?: boolean;
   showTransferAll?: boolean;
@@ -31,6 +34,8 @@ export interface RenderListProps extends DefaultProps<RenderListStylesNames> {
   radius: MantineNumberSize;
   listComponent?: React.FC<any>;
   limit?: number;
+  transferIcon?: React.FunctionComponent<{ reversed }>;
+  transferAllIcon?: React.FunctionComponent<{ reversed }>;
 }
 
 const icons = {
@@ -54,9 +59,14 @@ export function RenderList({
   selection,
   itemComponent: ItemComponent,
   listComponent,
+  transferIcon: TransferIcon,
+  transferAllIcon: TransferAllIcon,
   searchPlaceholder,
+  query,
+  onSearch,
   filter,
   nothingFound,
+  placeholder,
   title,
   showTransferAll,
   reversed,
@@ -75,7 +85,6 @@ export function RenderList({
   );
   const unGroupedItems: React.ReactElement<any>[] = [];
   const groupedItems: React.ReactElement<any>[] = [];
-  const [query, setQuery] = useState('');
   const [hovered, setHovered] = useState(-1);
   const filteredData = data.filter((item) => filter(query, item)).slice(0, limit);
   const ListComponent = listComponent || 'div';
@@ -181,6 +190,9 @@ export function RenderList({
     }
   };
 
+  const transferIcon = reversed ? <Icons.Prev /> : <Icons.Next />;
+  const transferAllIcon = reversed ? <Icons.First /> : <Icons.Last />;
+
   return (
     <div className={cx(classes.transferList, className)}>
       {title && (
@@ -195,7 +207,7 @@ export function RenderList({
             unstyled={unstyled}
             value={query}
             onChange={(event) => {
-              setQuery(event.currentTarget.value);
+              onSearch(event.currentTarget.value);
               setHovered(0);
             }}
             onFocus={() => setHovered(0)}
@@ -216,7 +228,7 @@ export function RenderList({
             onClick={onMove}
             unstyled={unstyled}
           >
-            {reversed ? <Icons.Prev /> : <Icons.Next />}
+            {TransferIcon ? <TransferIcon reversed={reversed} /> : transferIcon}
           </ActionIcon>
 
           {showTransferAll && (
@@ -229,7 +241,7 @@ export function RenderList({
               onClick={onMoveAll}
               unstyled={unstyled}
             >
-              {reversed ? <Icons.First /> : <Icons.Last />}
+              {TransferAllIcon ? <TransferAllIcon reversed={reversed} /> : transferAllIcon}
             </ActionIcon>
           )}
         </div>
@@ -247,7 +259,7 @@ export function RenderList({
             </>
           ) : (
             <Text color="dimmed" unstyled={unstyled} size="sm" align="center" mt="sm">
-              {nothingFound}
+              {!query && placeholder ? placeholder : nothingFound}
             </Text>
           )}
         </ListComponent>
