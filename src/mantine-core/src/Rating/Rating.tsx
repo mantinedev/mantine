@@ -205,7 +205,7 @@ export const Rating = forwardRef<HTMLInputElement, RatingProps>((props, ref) => 
                 styles={styles}
                 unstyled={unstyled}
                 color={color}
-                id={`${_id}-${index}`}
+                id={`${_id}-${index}-${fractionIndex}`}
               />
             );
           })}

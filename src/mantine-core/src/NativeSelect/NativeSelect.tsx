@@ -36,6 +36,7 @@ export interface NativeSelectProps
 
 const defaultProps: Partial<NativeSelectProps> = {
   size: 'sm',
+  defaultValue: '',
 };
 
 export const NativeSelect = forwardRef<HTMLSelectElement, NativeSelectProps>((props, ref) => {
@@ -66,7 +67,7 @@ export const NativeSelect = forwardRef<HTMLSelectElement, NativeSelectProps>((pr
 
   if (placeholder) {
     options.unshift(
-      <option key="placeholder" value="" selected disabled hidden>
+      <option key="placeholder" value="" disabled hidden>
         {placeholder}
       </option>
     );
