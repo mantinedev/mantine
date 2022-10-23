@@ -1,0 +1,32 @@
+---
+group: 'mantine-core'
+package: '@mantine/core'
+title: Headroom
+order: 1
+slug: /core/headroom/
+category: 'layout'
+description: 'Hide your header until you need it'
+props: ['Headroom']
+import: "import { Headroom } from '@mantine/core';"
+source: 'mantine-core/src/Headroom/Headroom.tsx'
+docs: 'core/Headroom.mdx'
+
+---
+
+import { HeadroomDemos } from '@mantine/demos';
+
+<Demo data={HeadroomDemos.configurator} />
+
+## Basic usage
+
+```tsx
+import { Headroom } from '@mantine/core';
+
+function BasicDemo() {
+  return (
+    <Headroom>
+      <MyCustomHeader />
+    </Headroom>
+  );
+}
+```
