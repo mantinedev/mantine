@@ -37,6 +37,7 @@ export * from './FileInput';
 export * from './FocusTrap';
 export * from './Grid';
 export * from './Group';
+export * from './Headroom';
 export * from './Highlight';
 export * from './HoverCard';
 export * from './Image';
