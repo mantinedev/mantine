@@ -30,7 +30,7 @@ export function useHeadroom(params?: Params) {
   }, [scroll, fixAt, onFix]);
 
   useEffect(() => {
-    if (isReleased(scroll, scrollRef.current)) onRelease?.();
+    if (isReleased(scroll, scrollRef.current, fixAt)) onRelease?.();
   }, [scroll, onRelease]);
 
   useEffect(() => {
