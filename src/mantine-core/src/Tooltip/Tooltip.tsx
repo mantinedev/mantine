@@ -38,6 +38,9 @@ export interface TooltipProps extends TooltipBaseProps {
   /** Arrow offset in px */
   arrowOffset?: number;
 
+  /** Arrow radius in px */
+  arrowRadius?: number;
+
   /** One of premade transitions ot transition object */
   transition?: MantineTransition;
 
@@ -61,6 +64,7 @@ const defaultProps: Partial<TooltipProps> = {
   inline: false,
   arrowSize: 4,
   arrowOffset: 5,
+  arrowRadius: 0,
   offset: 5,
   transition: 'fade',
   transitionDuration: 100,
@@ -92,6 +96,7 @@ const _Tooltip = forwardRef<HTMLElement, TooltipProps>((props, ref) => {
     withArrow,
     arrowSize,
     arrowOffset,
+    arrowRadius,
     offset,
     transition,
     transitionDuration,
@@ -166,6 +171,7 @@ const _Tooltip = forwardRef<HTMLElement, TooltipProps>((props, ref) => {
                 position={tooltip.placement}
                 arrowSize={arrowSize}
                 arrowOffset={arrowOffset}
+                arrowRadius={arrowRadius}
                 className={classes.arrow}
               />
             </Box>

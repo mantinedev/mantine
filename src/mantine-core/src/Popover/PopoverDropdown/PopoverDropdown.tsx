@@ -91,6 +91,7 @@ export function PopoverDropdown({
                 withBorder
                 position={ctx.placement}
                 arrowSize={ctx.arrowSize}
+                arrowRadius={ctx.arrowRadius}
                 arrowOffset={ctx.arrowOffset}
                 className={classes.arrow}
               />
