@@ -7,7 +7,7 @@ import { PACKAGES_DATA } from './data';
 function getInstallationCommand(
   selection: string[],
   extraPackages: string[],
-  type: 'yarn' | 'npm'
+  type: 'yarn' | 'npm' | 'pnpm'
 ) {
   const packages = selection.reduce<string[]>((acc, item) => {
     acc.push(...PACKAGES_DATA.find((i) => i.package === item).dependencies);
@@ -17,7 +17,7 @@ function getInstallationCommand(
   const unique = Array.from(
     new Set(['@mantine/core', '@mantine/hooks', ...packages, ...extraPackages, '@emotion/react'])
   );
-  const prefix = type === 'yarn' ? 'yarn add' : 'npm install';
+  const prefix = type === 'yarn' ? 'yarn add' : `${type} install`;
   return `${prefix} ${unique.join(' ')}`;
 }
 
@@ -103,6 +103,9 @@ export function PackagesInstallation({ extraPackages = [] }: PackagesInstallatio
         </Prism.Panel>
         <Prism.Panel value="npm" language="bash">
           {getInstallationCommand(selection, extraPackages, 'npm')}
+        </Prism.Panel>
+        <Prism.Panel value="pnpm" language="bash">
+          {getInstallationCommand(selection, extraPackages, 'pnpm')}
         </Prism.Panel>
       </Prism.Tabs>
     </>
