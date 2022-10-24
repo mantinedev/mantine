@@ -38,13 +38,13 @@ export default createStyles((theme, { sticky, stickyOffset }: ToolbarStyles) => 
     },
 
     '&:first-of-type': {
-      borderTopLeftRadius: theme.radius.sm,
-      borderBottomLeftRadius: theme.radius.sm,
+      borderTopLeftRadius: theme.fn.radius(theme.defaultRadius),
+      borderBottomLeftRadius: theme.fn.radius(theme.defaultRadius),
     },
 
     '&:last-of-type': {
-      borderTopRightRadius: theme.radius.sm,
-      borderBottomRightRadius: theme.radius.sm,
+      borderTopRightRadius: theme.fn.radius(theme.defaultRadius),
+      borderBottomRightRadius: theme.fn.radius(theme.defaultRadius),
     },
   },
 }));
