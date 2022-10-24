@@ -68,6 +68,9 @@ export interface PopoverBaseProps {
   /** Arrow offset in px */
   arrowOffset?: number;
 
+  /** Arrow radius in px */
+  arrowRadius?: number;
+
   /** Determines whether dropdown should be rendered within Portal, defaults to false */
   withinPortal?: boolean;
 
@@ -133,6 +136,7 @@ const defaultProps: Partial<PopoverProps> = {
   middlewares: { flip: true, shift: true, inline: false },
   arrowSize: 7,
   arrowOffset: 5,
+  arrowRadius: 0,
   closeOnClickOutside: true,
   withinPortal: false,
   closeOnEscape: true,
@@ -161,6 +165,7 @@ export function Popover(props: PopoverProps) {
     withArrow,
     arrowSize,
     arrowOffset,
+    arrowRadius,
     unstyled,
     classNames,
     styles,
@@ -253,6 +258,7 @@ export function Popover(props: PopoverProps) {
           withArrow,
           arrowSize,
           arrowOffset,
+          arrowRadius,
           placement: popover.floating.placement,
           trapFocus,
           withinPortal,
