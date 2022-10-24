@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Table, Checkbox, Code, Text, Box } from '@mantine/core';
 import { Prism } from '@mantine/prism';
-import { NpmIcon, YarnIcon } from '@mantine/ds';
+import { NpmIcon, YarnIcon, PnpmIcon } from '@mantine/ds';
 import { PACKAGES_DATA } from './data';
 
 function getInstallationCommand(
@@ -95,6 +95,9 @@ export function PackagesInstallation({ extraPackages = [] }: PackagesInstallatio
           </Prism.Tab>
           <Prism.Tab value="npm" icon={<NpmIcon size={16} />}>
             npm
+          </Prism.Tab>
+          <Prism.Tab value="pnpm" icon={<PnpmIcon size={16} />}>
+            pnpm
           </Prism.Tab>
         </Prism.TabsList>
 
