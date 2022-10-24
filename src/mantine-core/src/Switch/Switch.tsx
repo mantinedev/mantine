@@ -10,13 +10,12 @@ import {
   useComponentDefaultProps,
 } from '@mantine/styles';
 import { ForwardRefWithStaticComponents } from '@mantine/utils';
-import { Box } from '../Box';
-import useStyles, { SwitchStylesParams } from './Switch.styles';
 import { SwitchGroup } from './SwitchGroup/SwitchGroup';
 import { useSwitchGroupContext } from './SwitchGroup.context';
-import { Input } from '../Input';
+import { InlineInput, InlineInputStylesNames } from '../InlineInput';
+import useStyles, { SwitchStylesParams } from './Switch.styles';
 
-export type SwitchStylesNames = Selectors<typeof useStyles>;
+export type SwitchStylesNames = Selectors<typeof useStyles> | InlineInputStylesNames;
 
 export interface SwitchProps
   extends DefaultProps<SwitchStylesNames, SwitchStylesParams>,
@@ -92,12 +91,13 @@ export const Switch: SwitchComponent = forwardRef<HTMLInputElement, SwitchProps>
     labelPosition,
     description,
     error,
+    disabled,
     ...others
   } = useComponentDefaultProps('Switch', defaultProps, props);
 
   const ctx = useSwitchGroupContext();
 
-  const { classes, cx } = useStyles(
+  const { classes } = useStyles(
     { size: ctx?.size || size, color, radius, labelPosition, error: !!error },
     { unstyled, styles, classNames, name: 'Switch' }
   );
@@ -119,53 +119,43 @@ export const Switch: SwitchComponent = forwardRef<HTMLInputElement, SwitchProps>
   });
 
   return (
-    <Box
-      className={cx(classes.root, className)}
-      style={style}
+    <InlineInput
+      className={className}
       sx={sx}
+      style={style}
+      id={uuid}
+      size={ctx?.size || size}
+      labelPosition={labelPosition}
+      label={label}
+      description={description}
+      error={error}
+      disabled={disabled}
+      __staticSelector="Switch"
+      classNames={classNames}
+      styles={styles}
+      unstyled={unstyled}
       {...systemStyles}
       {...wrapperProps}
     >
-      <div className={classes.body}>
-        <input
-          {...rest}
-          checked={_checked}
-          onChange={(event) => {
-            ctx ? contextProps.onChange(event) : onChange?.(event);
-            handleChange(event.currentTarget.checked);
-          }}
-          id={uuid}
-          ref={ref}
-          type="checkbox"
-          className={classes.input}
-        />
+      <input
+        {...rest}
+        disabled={disabled}
+        checked={_checked}
+        onChange={(event) => {
+          ctx ? contextProps.onChange(event) : onChange?.(event);
+          handleChange(event.currentTarget.checked);
+        }}
+        id={uuid}
+        ref={ref}
+        type="checkbox"
+        className={classes.input}
+      />
 
-        <label htmlFor={uuid} className={classes.track}>
-          <div className={classes.thumb}>{thumbIcon}</div>
-          <div className={classes.trackLabel}>{_checked ? onLabel : offLabel}</div>
-        </label>
-
-        <div className={classes.labelWrapper}>
-          {label && (
-            <label
-              className={classes.label}
-              data-disabled={rest.disabled || undefined}
-              htmlFor={uuid}
-              data-testid="label"
-            >
-              {label}
-            </label>
-          )}
-          {description && (
-            <Input.Description className={classes.description}>{description}</Input.Description>
-          )}
-
-          {error && error !== 'boolean' && (
-            <Input.Error className={classes.error}>{error}</Input.Error>
-          )}
-        </div>
-      </div>
-    </Box>
+      <label htmlFor={uuid} className={classes.track}>
+        <div className={classes.thumb}>{thumbIcon}</div>
+        <div className={classes.trackLabel}>{_checked ? onLabel : offLabel}</div>
+      </label>
+    </InlineInput>
   );
 }) as any;
 
