@@ -43,3 +43,12 @@ export function SizeAuto() {
     </div>
   );
 }
+
+export function WithPageScrollbars() {
+  return (
+    <div style={{ padding: 40 }}>
+      <WrappedModal>Wrapped modal</WrappedModal>
+      {content}
+    </div>
+  );
+}
