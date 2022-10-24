@@ -30,11 +30,7 @@ describe('@mantine/core/NativeSelect', () => {
   ]);
 
   it('renders correct amount of options', () => {
-    const { container: withoutPlaceholder } = render(<NativeSelect {...defaultProps} />);
-    const { container: withPlaceholder } = render(
-      <NativeSelect {...defaultProps} placeholder="$" />
-    );
-    expect(withoutPlaceholder.querySelectorAll('option')).toHaveLength(defaultProps.data.length);
-    expect(withPlaceholder.querySelectorAll('option')).toHaveLength(defaultProps.data.length + 1);
+    const { container } = render(<NativeSelect {...defaultProps} />);
+    expect(container.querySelectorAll('option')).toHaveLength(defaultProps.data.length);
   });
 });
