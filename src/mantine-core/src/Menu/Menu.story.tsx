@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { IconTable, IconSearch } from '@tabler/icons';
 import { WithinOverlays } from '@mantine/storybook';
 import { Menu } from './Menu';
@@ -79,6 +79,23 @@ export function MenuTargetWithTooltip() {
           </Tooltip>
         </Menu.Target>
 
+        <Menu.Dropdown>
+          <Menu.Item>Item 1</Menu.Item>
+          <Menu.Item>Item 2</Menu.Item>
+        </Menu.Dropdown>
+      </Menu>
+    </div>
+  );
+}
+
+export function Controlled() {
+  const [opened, setOpened] = useState(false);
+  return (
+    <div style={{ padding: 100 }}>
+      <Menu opened={opened} onChange={setOpened}>
+        <Menu.Target>
+          <Button>Toggle controlled menu</Button>
+        </Menu.Target>
         <Menu.Dropdown>
           <Menu.Item>Item 1</Menu.Item>
           <Menu.Item>Item 2</Menu.Item>
