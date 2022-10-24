@@ -49,7 +49,6 @@ export * as FileInputDemos from './demos/core/FileInput';
 export * as FocusTrapDemos from './demos/core/FocusTrap';
 export * as GridDemos from './demos/core/Grid';
 export * as GroupDemos from './demos/core/Group';
-export * as HeadroomDemos from './demos/core/Headroom';
 export * as HighlightDemos from './demos/core/Highlight';
 export * as HoverCardDemos from './demos/core/HoverCard';
 export * as ImageDemos from './demos/core/Image';
