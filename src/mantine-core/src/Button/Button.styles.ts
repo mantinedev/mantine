@@ -181,6 +181,13 @@ export default createStyles(
       marginLeft: 10,
     },
 
+    centerLoader: {
+      position: 'absolute',
+      left: '50%',
+      transform: 'translateX(-50%)',
+      opacity: 0.5,
+    },
+
     inner: {
       display: 'flex',
       alignItems: 'center',

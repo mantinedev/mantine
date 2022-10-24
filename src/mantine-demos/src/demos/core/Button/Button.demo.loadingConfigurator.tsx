@@ -39,6 +39,7 @@ export const loadingConfigurator: MantineDemo = {
       data: [
         { label: 'Left', value: 'left' },
         { label: 'Right', value: 'right' },
+        { label: 'Center', value: 'center' },
       ],
       initialValue: 'left',
       defaultValue: 'left',
