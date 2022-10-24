@@ -14,7 +14,7 @@ export interface UseStylesOptions<Key extends string> {
   classNames?: Partial<Record<Key, string>>;
   styles?:
     | Partial<Record<Key, CSSObject>>
-    | ((theme: MantineTheme, params: Record<string, any>) => Partial<Record<Key, CSSObject>>);
+    | ((theme: MantineTheme, params: any) => Partial<Record<Key, CSSObject>>);
   name: string | string[];
   unstyled?: boolean;
 }
