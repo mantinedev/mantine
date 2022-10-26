@@ -10,6 +10,10 @@ export function GlobalStyles({ theme }: { theme: MantineTheme }) {
           boxSizing: 'border-box',
         },
 
+        html: {
+          colorScheme: theme.colorScheme === 'dark' ? 'dark' : 'light',
+        },
+
         body: {
           ...theme.fn.fontStyles(),
           backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.white,
