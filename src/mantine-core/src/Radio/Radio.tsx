@@ -116,6 +116,7 @@ export const Radio: RadioComponent = forwardRef<HTMLInputElement, RadioProps>((p
       classNames={classNames}
       styles={styles}
       unstyled={unstyled}
+      data-checked={contextProps.checked || undefined}
       {...systemStyles}
       {...wrapperProps}
     >

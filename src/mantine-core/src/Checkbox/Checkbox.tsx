@@ -136,6 +136,7 @@ export const Checkbox: CheckboxComponent = forwardRef<HTMLInputElement, Checkbox
         classNames={classNames}
         styles={styles}
         unstyled={unstyled}
+        data-checked={contextProps.checked || undefined}
         {...systemStyles}
         {...wrapperProps}
       >

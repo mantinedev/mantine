@@ -134,6 +134,7 @@ export const Switch: SwitchComponent = forwardRef<HTMLInputElement, SwitchProps>
       classNames={classNames}
       styles={styles}
       unstyled={unstyled}
+      data-checked={contextProps.checked || undefined}
       {...systemStyles}
       {...wrapperProps}
     >
