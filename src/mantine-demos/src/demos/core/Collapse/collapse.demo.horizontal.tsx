@@ -38,8 +38,12 @@ function Demo() {
         <Text
           p="md"
           sx={(theme) => ({
+            minWidth: 400,
             backgroundColor:
               theme.colorScheme === 'light' ? theme.colors.gray[1] : theme.colors.gray[7],
+            [theme.fn.smallerThan('sm')]: {
+              minWidth: 300,
+            },
           })}
         >
           From Bulbapedia: Bulbasaur is a small, quadrupedal Pokémon that has blue-green skin with
