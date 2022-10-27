@@ -6,6 +6,7 @@ import useStyles, {
   VerticalSectionHeight,
   VerticalSectionPosition,
 } from './VerticalSection.styles';
+import { getSortedBreakpoints } from '../HorizontalSection/get-sorted-breakpoints/get-sorted-breakpoints';
 
 export interface VerticalSectionSharedProps extends DefaultProps {
   /** Section content */
@@ -55,7 +56,7 @@ export const VerticalSection = forwardRef<HTMLElement, VerticalSectionProps>(
   ) => {
     const ctx = useAppShellContext();
 
-    const { classes, cx } = useStyles(
+    const { classes, cx, theme } = useStyles(
       {
         height,
         fixed: ctx.fixed || fixed,
@@ -65,6 +66,17 @@ export const VerticalSection = forwardRef<HTMLElement, VerticalSectionProps>(
       },
       { name: __staticSelector, classNames, styles, unstyled }
     );
+    const breakpoints =
+      typeof height === 'object' && height !== null
+        ? getSortedBreakpoints(height, theme).reduce((acc, [breakpoint, breakpointSize]) => {
+            acc[`@media (min-width: ${breakpoint}px)`] = {
+              height: breakpointSize,
+              minHeight: breakpointSize,
+            };
+
+            return acc;
+          }, {})
+        : null;
 
     return (
       <Box
@@ -77,7 +89,9 @@ export const VerticalSection = forwardRef<HTMLElement, VerticalSectionProps>(
         <Global
           styles={() => ({
             ':root': {
-              [`--mantine-${section}-height`]: `${height}px`,
+              [`--mantine-${section}-height`]:
+                typeof height === 'object' ? `${height?.base}px` || '100%' : `${height}px`,
+              ...breakpoints,
             },
           })}
         />
