@@ -106,7 +106,10 @@ export type IsValid<Values> = <Field extends LooseKeys<Values>>(path?: Field) =>
 
 export type _TransformValues<Values> = (values: Values) => unknown;
 
-export interface UseFormInput<Values, TransformValues extends _TransformValues<Values>> {
+export interface UseFormInput<
+  Values,
+  TransformValues extends _TransformValues<Values> = (values: Values) => Values
+> {
   initialValues?: Values;
   initialErrors?: FormErrors;
   initialTouched?: FormStatus;
