@@ -2,14 +2,17 @@ import React, { forwardRef } from 'react';
 import { DefaultProps, getDefaultZIndex, Global } from '@mantine/styles';
 import { Box } from '../../Box';
 import { useAppShellContext } from '../AppShell.context';
-import useStyles, { VerticalSectionPosition } from './VerticalSection.styles';
+import useStyles, {
+  VerticalSectionHeight,
+  VerticalSectionPosition,
+} from './VerticalSection.styles';
 
 export interface VerticalSectionSharedProps extends DefaultProps {
   /** Section content */
   children: React.ReactNode;
 
-  /** Section height */
-  height: number | string;
+  /** Component height with breakpoints */
+  height: VerticalSectionHeight;
 
   /** Border */
   withBorder?: boolean;
