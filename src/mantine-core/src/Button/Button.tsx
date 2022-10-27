@@ -57,7 +57,7 @@ export interface ButtonProps extends DefaultProps<ButtonStylesNames, ButtonStyle
   loaderProps?: LoaderProps;
 
   /** Loader position relative to button label */
-  loaderPosition?: 'left' | 'right';
+  loaderPosition?: 'left' | 'right' | 'center';
 
   /** Button label */
   children?: React.ReactNode;
@@ -140,6 +140,10 @@ export const _Button = forwardRef<HTMLButtonElement, ButtonProps>((props, ref) =
           <span className={cx(classes.icon, classes.leftIcon)}>
             {loading && loaderPosition === 'left' ? loader : leftIcon}
           </span>
+        )}
+
+        {loading && loaderPosition === 'center' && (
+          <span className={classes.centerLoader}>{loader}</span>
         )}
 
         <span
