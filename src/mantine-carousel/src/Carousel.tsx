@@ -33,6 +33,9 @@ export interface CarouselProps
   /** Called when user clicks previous button */
   onPreviousSlide?(): void;
 
+  /** Called with slide index when slide changes */
+  onSlideChange?(index: number): void;
+
   /** Get embla API as ref */
   getEmblaApi?(embla: Embla): void;
 
@@ -140,6 +143,7 @@ export const _Carousel = forwardRef<HTMLDivElement, CarouselProps>((props, ref) 
     getEmblaApi,
     onNextSlide,
     onPreviousSlide,
+    onSlideChange,
     nextControlLabel,
     previousControlLabel,
     controlSize,
@@ -201,7 +205,9 @@ export const _Carousel = forwardRef<HTMLDivElement, CarouselProps>((props, ref) 
 
   const handleSelect = useCallback(() => {
     if (!embla) return;
-    setSelected(embla.selectedScrollSnap());
+    const slide = embla.selectedScrollSnap();
+    setSelected(slide);
+    onSlideChange?.(slide);
   }, [embla, setSelected]);
 
   const handlePrevious = useCallback(() => {
