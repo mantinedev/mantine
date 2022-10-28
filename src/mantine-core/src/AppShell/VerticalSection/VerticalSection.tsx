@@ -70,8 +70,7 @@ export const VerticalSection = forwardRef<HTMLElement, VerticalSectionProps>(
       typeof height === 'object' && height !== null
         ? getSortedBreakpoints(height, theme).reduce((acc, [breakpoint, breakpointSize]) => {
             acc[`@media (min-width: ${breakpoint}px)`] = {
-              height: breakpointSize,
-              minHeight: breakpointSize,
+              [`--mantine-${section}-height`]: `${breakpointSize}px`,
             };
 
             return acc;
