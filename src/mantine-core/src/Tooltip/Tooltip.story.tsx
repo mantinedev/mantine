@@ -102,6 +102,16 @@ export const WithArrow = () => (
   </Tooltip>
 );
 
+export const WithArrowRadius = () => (
+  <Tooltip
+    withArrow
+    label="Tooltip button with arrow Tooltip button with arrow Tooltip button with arrow"
+    arrowRadius={4}
+  >
+    <Button type="button">Tooltip button with arrow radius</Button>
+  </Tooltip>
+);
+
 export function Inline() {
   return (
     <div style={{ padding: 40, maxWidth: 400 }}>

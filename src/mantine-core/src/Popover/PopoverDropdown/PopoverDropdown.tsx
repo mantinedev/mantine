@@ -68,8 +68,8 @@ export function PopoverDropdown({
                 ...style,
                 ...transitionStyles,
                 zIndex: ctx.zIndex,
-                top: ctx.y ?? '',
-                left: ctx.x ?? '',
+                top: ctx.y ?? 0,
+                left: ctx.x ?? 0,
                 width: ctx.width === 'target' ? undefined : ctx.width,
               }}
               className={cx(classes.dropdown, className)}
@@ -91,6 +91,7 @@ export function PopoverDropdown({
                 withBorder
                 position={ctx.placement}
                 arrowSize={ctx.arrowSize}
+                arrowRadius={ctx.arrowRadius}
                 arrowOffset={ctx.arrowOffset}
                 className={classes.arrow}
               />

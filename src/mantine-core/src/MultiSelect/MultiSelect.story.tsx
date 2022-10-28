@@ -15,6 +15,14 @@ export function ReadOnly() {
   );
 }
 
+export function FilledVariant() {
+  return (
+    <div style={{ padding: 40 }}>
+      <MultiSelect data={data} clearable defaultValue={['React']} variant="filled" />
+    </div>
+  );
+}
+
 export function EmptyGroup() {
   return (
     <MultiSelect

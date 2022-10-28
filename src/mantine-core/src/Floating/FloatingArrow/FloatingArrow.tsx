@@ -8,13 +8,27 @@ interface FloatingArrowProps extends React.ComponentPropsWithoutRef<'div'> {
   position: FloatingPosition;
   arrowSize: number;
   arrowOffset: number;
+  arrowRadius: number;
   arrowX: number;
   arrowY: number;
   visible: boolean;
 }
 
 export const FloatingArrow = forwardRef<HTMLDivElement, FloatingArrowProps>(
-  ({ withBorder, position, arrowSize, arrowOffset, visible, arrowX, arrowY, ...others }, ref) => {
+  (
+    {
+      withBorder,
+      position,
+      arrowSize,
+      arrowOffset,
+      arrowRadius,
+      visible,
+      arrowX,
+      arrowY,
+      ...others
+    },
+    ref
+  ) => {
     const theme = useMantineTheme();
 
     if (!visible) {
@@ -30,6 +44,7 @@ export const FloatingArrow = forwardRef<HTMLDivElement, FloatingArrowProps>(
           position,
           arrowSize,
           arrowOffset,
+          arrowRadius,
           dir: theme.dir,
           arrowX,
           arrowY,

@@ -20,17 +20,15 @@ export default createStyles((theme, { size }: ColorSliderStyles, getRef) => ({
     outline: 0,
 
     [`&:focus .${getRef('sliderThumb')}`]: {
-      outline: 'none',
-      boxShadow:
+      outlineOffset: 2,
+      outline:
         theme.focusRing === 'always' || theme.focusRing === 'auto'
-          ? `0 0 0 2px ${
-              theme.colorScheme === 'dark' ? theme.colors.dark[9] : theme.white
-            }, 0 0 0 4px ${theme.colors[theme.primaryColor][theme.colorScheme === 'dark' ? 7 : 5]}`
-          : undefined,
+          ? `2px solid ${theme.colors[theme.primaryColor][theme.colorScheme === 'dark' ? 7 : 5]}`
+          : 'none',
     },
 
     [`&:focus:not(:focus-visible) .${getRef('sliderThumb')}`]: {
-      boxShadow: theme.focusRing === 'auto' || theme.focusRing === 'never' ? 'none' : undefined,
+      outline: theme.focusRing === 'auto' || theme.focusRing === 'never' ? 'none' : undefined,
     },
   },
 

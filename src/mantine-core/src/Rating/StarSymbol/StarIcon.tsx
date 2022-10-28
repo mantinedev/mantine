@@ -14,3 +14,5 @@ export function StarIcon(props: React.ComponentPropsWithoutRef<'svg'>) {
     </svg>
   );
 }
+
+StarIcon.displayName = '@mantine/core/StarIcon';

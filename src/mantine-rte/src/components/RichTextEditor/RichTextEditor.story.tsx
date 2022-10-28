@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Accordion } from '@mantine/core';
+import { Accordion, MantineProvider } from '@mantine/core';
 import { RichTextEditor } from './RichTextEditor';
 
 export default { title: 'RichTextEditor' };
@@ -46,6 +46,27 @@ export function Usage() {
         onImageUpload={handleImageUpload}
         stickyOffset={0}
       />
+    </div>
+  );
+}
+
+export function WithThemeProvider() {
+  const [value, onChange] = useState(html);
+  return (
+    <div style={{ padding: 40, maxWidth: 800, margin: 'auto' }}>
+      <MantineProvider
+        theme={{
+          defaultRadius: 'lg',
+          primaryColor: 'indigo',
+        }}
+      >
+        <RichTextEditor
+          value={value}
+          onChange={onChange}
+          onImageUpload={handleImageUpload}
+          stickyOffset={0}
+        />
+      </MantineProvider>
     </div>
   );
 }

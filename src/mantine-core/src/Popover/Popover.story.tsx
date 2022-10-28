@@ -49,6 +49,20 @@ export function WithArrow() {
   );
 }
 
+export function WithArrowRadius() {
+  return (
+    <div style={{ padding: 40 }}>
+      <Popover withArrow width={400} arrowRadius={4}>
+        <Popover.Target>
+          <Button>arrow popover</Button>
+        </Popover.Target>
+
+        <Popover.Dropdown>Dropdown with arrow radius</Popover.Dropdown>
+      </Popover>
+    </div>
+  );
+}
+
 export function Controlled() {
   const [opened, setState] = useState(false);
 

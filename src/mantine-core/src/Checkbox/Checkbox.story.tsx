@@ -61,7 +61,7 @@ export function labelPosition() {
   );
 }
 
-export function WithDesciprtion() {
+export function WithDescription() {
   return (
     <Stack sx={{ width: 300, padding: 20 }}>
       <Checkbox

@@ -20,10 +20,10 @@ export interface TabsListProps extends DefaultProps, React.ComponentPropsWithout
 
 export const TabsList = forwardRef<HTMLDivElement, TabsListProps>(
   ({ children, className, grow = false, position = 'left', ...others }, ref) => {
-    const { orientation, variant, color, radius, inverted } = useTabsContext();
+    const { orientation, variant, color, radius, inverted, placement } = useTabsContext();
     const { classNames, styles, unstyled } = useContextStylesApi();
     const { classes, cx } = useStyles(
-      { orientation, grow, variant, color, position, radius, inverted },
+      { orientation, grow, variant, color, position, radius, inverted, placement },
       { name: 'Tabs', unstyled, classNames, styles }
     );
 

@@ -1,33 +1,10 @@
 import React, { useState } from 'react';
 import { IconMoon } from '@tabler/icons';
-import { Group } from '../Group';
 import { Stack } from '../Stack';
-import { StarSymbol } from './StarSymbol';
 import { Rating } from './Rating';
 import { Box } from '../Box';
 
 export default { title: 'Rating' };
-
-export function StarSymbols() {
-  return (
-    <div>
-      <Group p="md">
-        <StarSymbol size="xs" type="empty" />
-        <StarSymbol size="sm" type="empty" />
-        <StarSymbol size="md" type="empty" />
-        <StarSymbol size="lg" type="empty" />
-        <StarSymbol size="xl" type="empty" />
-      </Group>
-      <Group p="md">
-        <StarSymbol size="xs" type="full" />
-        <StarSymbol size="sm" type="full" />
-        <StarSymbol size="md" type="full" />
-        <StarSymbol size="lg" type="full" />
-        <StarSymbol size="xl" type="full" />
-      </Group>
-    </div>
-  );
-}
 
 export function Sizes() {
   return (
@@ -104,21 +81,18 @@ export function WithCustomSymbol() {
 export function Readonly() {
   return (
     <Stack p="md">
-      <Rating size="lg" fractions={2} readonly defaultValue={3.5} />
+      <Rating size="lg" fractions={2} readOnly defaultValue={3.5} />
     </Stack>
   );
 }
 
 export function Controlled() {
-  const [value, setValue] = useState(1);
-
-  const handleChange = (currentValue: number) => {
-    setValue(currentValue);
-  };
+  const [value, setValue] = useState(0);
 
   return (
     <Stack p="md">
-      <Rating size="lg" defaultValue={1} value={value} onChange={handleChange} />
+      <Rating size="lg" value={value} onChange={setValue} />
+      <div>Value: {value}</div>
     </Stack>
   );
 }

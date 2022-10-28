@@ -13,7 +13,7 @@ import useStyles, { ProgressStylesParams } from './Progress.styles';
 
 export type ProgressStylesNames = Selectors<typeof useStyles>;
 
-interface ProgressSection {
+interface ProgressSection extends React.ComponentPropsWithRef<'div'> {
   value: number;
   color: MantineColor;
   label?: string;
@@ -93,24 +93,37 @@ export const Progress = forwardRef<HTMLDivElement, ProgressProps>((props, ref) =
   );
 
   const segments = Array.isArray(sections)
-    ? getCumulativeSections(sections).map((section, index) => (
-        <Tooltip.Floating label={section.tooltip} disabled={!section.tooltip} key={index}>
-          <Box
-            className={classes.bar}
-            sx={{
-              width: `${section.value}%`,
-              left: `${section.accumulated}%`,
-              backgroundColor: theme.fn.variant({
-                variant: 'filled',
-                primaryFallback: false,
-                color: section.color || theme.primaryColor,
-              }).background,
-            }}
-          >
-            {section.label && <Text className={classes.label}>{section.label}</Text>}
-          </Box>
-        </Tooltip.Floating>
-      ))
+    ? getCumulativeSections(sections).map(
+        (
+          {
+            tooltip,
+            accumulated,
+            value: sectionValue,
+            label: sectionLabel,
+            color: sectionColor,
+            ...sectionProps
+          },
+          index
+        ) => (
+          <Tooltip.Floating label={tooltip} disabled={!tooltip} key={index}>
+            <Box
+              {...sectionProps}
+              className={cx(classes.bar, sectionProps.className)}
+              sx={{
+                width: `${sectionValue}%`,
+                left: `${accumulated}%`,
+                backgroundColor: theme.fn.variant({
+                  variant: 'filled',
+                  primaryFallback: false,
+                  color: sectionColor || theme.primaryColor,
+                }).background,
+              }}
+            >
+              {sectionLabel && <Text className={classes.label}>{sectionLabel}</Text>}
+            </Box>
+          </Tooltip.Floating>
+        )
+      )
     : null;
 
   return (

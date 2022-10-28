@@ -21,9 +21,6 @@ export interface NativeSelectProps
   /** id is used to bind input and label, if not passed unique id will be generated for each input */
   id?: string;
 
-  /** Adds hidden option to select and sets it as selected if value is not present */
-  placeholder?: string;
-
   /** Data used to render options */
   data: (string | SelectItem)[];
 
@@ -43,7 +40,6 @@ export const NativeSelect = forwardRef<HTMLSelectElement, NativeSelectProps>((pr
     inputProps,
     wrapperProps,
     data,
-    placeholder,
     onChange,
     value,
     classNames,
@@ -63,14 +59,6 @@ export const NativeSelect = forwardRef<HTMLSelectElement, NativeSelectProps>((pr
       {item.label}
     </option>
   ));
-
-  if (placeholder) {
-    options.unshift(
-      <option key="placeholder" value="" disabled hidden>
-        {placeholder}
-      </option>
-    );
-  }
 
   return (
     <Input.Wrapper {...wrapperProps} __staticSelector="NativeSelect">

@@ -27,9 +27,13 @@ import {
   GetFieldStatus,
   ResetDirty,
   IsValid,
+  _TransformValues,
 } from './types';
 
-export function useForm<Values = Record<string, unknown>>({
+export function useForm<
+  Values = Record<string, unknown>,
+  TransformValues extends _TransformValues<Values> = (values: Values) => Values
+>({
   initialValues = {} as Values,
   initialErrors = {},
   initialDirty = {},
@@ -37,8 +41,9 @@ export function useForm<Values = Record<string, unknown>>({
   clearInputErrorOnChange = true,
   validateInputOnChange = false,
   validateInputOnBlur = false,
+  transformValues = ((values) => values) as any,
   validate: rules,
-}: UseFormInput<Values> = {}): UseFormReturnType<Values> {
+}: UseFormInput<Values, TransformValues> = {}): UseFormReturnType<Values, TransformValues> {
   const [touched, setTouched] = useState(initialTouched);
   const [dirty, setDirty] = useState(initialDirty);
   const [values, _setValues] = useState(initialValues);
@@ -182,16 +187,17 @@ export function useForm<Values = Record<string, unknown>>({
     return payload;
   };
 
-  const onSubmit: OnSubmit<Values> = (handleSubmit, handleValidationFailure) => (event) => {
-    event.preventDefault();
-    const results = validate();
+  const onSubmit: OnSubmit<Values, TransformValues> =
+    (handleSubmit, handleValidationFailure) => (event) => {
+      event.preventDefault();
+      const results = validate();
 
-    if (results.hasErrors) {
-      handleValidationFailure?.(results.errors, values, event);
-    } else {
-      handleSubmit(values, event);
-    }
-  };
+      if (results.hasErrors) {
+        handleValidationFailure?.(results.errors, values, event);
+      } else {
+        handleSubmit(transformValues(values) as any, event);
+      }
+    };
 
   const onReset: OnReset = useCallback((event) => {
     event.preventDefault();

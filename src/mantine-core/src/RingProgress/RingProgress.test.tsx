@@ -1,5 +1,6 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import { itSupportsSystemProps } from '@mantine/tests';
 import { RingProgress, RingProgressProps } from './RingProgress';
 
@@ -35,5 +36,23 @@ describe('@mantine/core/RingProgress', () => {
   it('renders given label', () => {
     render(<RingProgress {...defaultProps} label="test-label" />);
     expect(screen.getByText('test-label')).toBeInTheDocument();
+  });
+
+  it('supports props on sections', async () => {
+    const spy = jest.fn();
+    const { container } = render(
+      <RingProgress
+        sections={[
+          { value: 20, color: 'cyan', onClick: spy },
+          { value: 30, color: 'orange' },
+        ]}
+      />
+    );
+
+    // 0 is root section
+    await userEvent.click(container.querySelectorAll('circle')[1]);
+    expect(spy).toHaveBeenCalledTimes(1);
+    await userEvent.click(container.querySelectorAll('.mantine-Progress-bar')[2]);
+    expect(spy).toHaveBeenCalledTimes(1);
   });
 });

@@ -45,8 +45,11 @@ export type SetValues<Values> = React.Dispatch<React.SetStateAction<Partial<Valu
 export type SetErrors = React.Dispatch<React.SetStateAction<FormErrors>>;
 export type SetFormStatus = React.Dispatch<React.SetStateAction<FormStatus>>;
 
-export type OnSubmit<Values> = (
-  handleSubmit: (values: Values, event: React.FormEvent<HTMLFormElement>) => void,
+export type OnSubmit<Values, TransformValues extends _TransformValues<Values>> = (
+  handleSubmit: (
+    values: ReturnType<TransformValues>,
+    event: React.FormEvent<HTMLFormElement>
+  ) => void,
   handleValidationFailure?: (
     errors: FormErrors,
     values: Values,
@@ -101,18 +104,27 @@ export type ResetStatus = () => void;
 export type ResetDirty<Values> = (values?: Values) => void;
 export type IsValid<Values> = <Field extends LooseKeys<Values>>(path?: Field) => boolean;
 
-export interface UseFormInput<Values> {
+export type _TransformValues<Values> = (values: Values) => unknown;
+
+export interface UseFormInput<
+  Values,
+  TransformValues extends _TransformValues<Values> = (values: Values) => Values
+> {
   initialValues?: Values;
   initialErrors?: FormErrors;
   initialTouched?: FormStatus;
   initialDirty?: FormStatus;
+  transformValues?: TransformValues;
   validate?: FormValidateInput<Values>;
   clearInputErrorOnChange?: boolean;
   validateInputOnChange?: boolean | LooseKeys<Values>[];
   validateInputOnBlur?: boolean | LooseKeys<Values>[];
 }
 
-export interface UseFormReturnType<Values> {
+export interface UseFormReturnType<
+  Values,
+  TransformValues extends _TransformValues<Values> = (values: Values) => Values
+> {
   values: Values;
   errors: FormErrors;
   setValues: SetValues<Values>;
@@ -128,7 +140,7 @@ export interface UseFormReturnType<Values> {
   removeListItem: RemoveListItem<Values>;
   insertListItem: InsertListItem<Values>;
   getInputProps: GetInputProps<Values>;
-  onSubmit: OnSubmit<Values>;
+  onSubmit: OnSubmit<Values, TransformValues>;
   onReset: OnReset;
   isDirty: GetFieldStatus<Values>;
   isTouched: GetFieldStatus<Values>;
@@ -139,6 +151,7 @@ export interface UseFormReturnType<Values> {
   isValid: IsValid<Values>;
 }
 
-export type UseForm<Values = Record<string, unknown>> = (
-  input?: UseFormInput<Values>
-) => UseFormReturnType<Values>;
+export type UseForm<
+  Values = Record<string, unknown>,
+  TransformValues extends _TransformValues<Values> = (values: Values) => Values
+> = (input?: UseFormInput<Values, TransformValues>) => UseFormReturnType<Values, TransformValues>;

@@ -65,6 +65,9 @@ export interface ModalProps
   /** Duration in ms of modal transitions, set to 0 to disable all animations */
   transitionDuration?: number;
 
+  /** Exit transition duration in ms, 0 by default */
+  exitTransitionDuration?: number;
+
   /** Modal body transitionTimingFunction, defaults to theme.transitionTimingFunction */
   transitionTimingFunction?: string;
 
@@ -120,6 +123,7 @@ const defaultProps: Partial<ModalProps> = {
   withFocusReturn: true,
   overlayBlur: 0,
   zIndex: getDefaultZIndex('modal'),
+  exitTransitionDuration: 0,
 };
 
 export function Modal(props: ModalProps) {
@@ -133,6 +137,7 @@ export function Modal(props: ModalProps) {
     overlayOpacity,
     size,
     transitionDuration,
+    exitTransitionDuration,
     closeButtonLabel,
     overlayColor,
     overflow,
@@ -173,7 +178,7 @@ export function Modal(props: ModalProps) {
       ? 0.85
       : 0.75;
 
-  const [, lockScroll] = useScrollLock();
+  useScrollLock(shouldLockScroll && opened);
 
   const closeOnEscapePress = (event: KeyboardEvent) => {
     if (!trapFocus && event.key === 'Escape' && closeOnEscape) {
@@ -195,11 +200,9 @@ export function Modal(props: ModalProps) {
   return (
     <OptionalPortal withinPortal={withinPortal} target={target}>
       <GroupedTransition
-        onExited={() => shouldLockScroll && lockScroll(false)}
-        onEntered={() => shouldLockScroll && lockScroll(true)}
         mounted={opened}
         duration={transitionDuration}
-        exitDuration={transitionDuration}
+        exitDuration={exitTransitionDuration}
         timingFunction={transitionTimingFunction}
         transitions={{
           modal: {

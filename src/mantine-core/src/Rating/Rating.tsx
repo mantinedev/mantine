@@ -1,54 +1,68 @@
-import React, { forwardRef, useId, useState, useRef } from 'react';
-import { DefaultProps, MantineSize, useComponentDefaultProps, Selectors } from '@mantine/styles';
-import { useUncontrolled, clamp, useMergedRef } from '@mantine/hooks';
+import React, { forwardRef, useState, useRef } from 'react';
+import {
+  DefaultProps,
+  MantineSize,
+  useComponentDefaultProps,
+  Selectors,
+  MantineColor,
+} from '@mantine/styles';
+import { useUncontrolled, clamp, useMergedRef, useId } from '@mantine/hooks';
 import { Box } from '../Box';
-import { roundValueTo } from './utils';
-import { RatingItem } from './RatingItem';
-import useStyles, { RatingStylesParams } from './Rating.styles';
+import { RatingItem, RatingItemStylesNames } from './RatingItem/RatingItem';
+import useStyles from './Rating.styles';
 
-export type RatingStylesNames = Selectors<typeof useStyles>;
+function roundValueTo(value: number, to: number) {
+  const rounded = Math.round(value / to) * to;
+  const precision = `${to}`.split('.')[1]?.length || 0;
+  return Number(rounded.toFixed(precision));
+}
+
+export type RatingStylesNames = Selectors<typeof useStyles> | RatingItemStylesNames;
 
 export interface RatingProps
-  extends DefaultProps<RatingStylesNames, RatingStylesParams>,
+  extends DefaultProps<RatingStylesNames>,
     Omit<React.ComponentPropsWithoutRef<'div'>, 'onChange'> {
-  /** Rating default value */
+  /** Default value for uncontrolled component */
   defaultValue?: number;
 
-  /** Rating value */
+  /** Value for controlled component */
   value?: number;
 
-  /** This icon will be displayed if symbol is empty */
+  /** Called when value changes */
+  onChange?(value: number): void;
+
+  /** The icon that is displayed when symbol is empty */
   emptySymbol?: React.ReactNode | ((value: number) => React.ReactNode);
 
-  /** This icon will be displayed if symbol is full */
+  /** This icon that is displayed when symbol is full */
   fullSymbol?: React.ReactNode | ((value: number) => React.ReactNode);
 
-  /** Rating fractions, by default it is 1 */
+  /** Number of fractions each item can be divided into, 1 by default */
   fractions?: number;
 
-  /** Predefined sizes for rating */
+  /** Controls component size */
   size?: MantineSize;
 
-  /** Total number of ratings */
+  /** Number of controls that should be rendered */
   count?: number;
 
-  /** It will be called if value changes */
-  onChange?: (value: number) => void;
+  /** Called when item is hovered */
+  onHover?(value: number): void;
 
-  /** It will be called if hover changes */
-  onChangeHover?: (value: number) => void;
-
-  /** Function should return labelText for the symbols*/
+  /** Function should return labelText for the symbols */
   getSymbolLabel?: (value: number) => string;
 
   /** Name of rating, should be unique within the page */
   name?: string;
 
   /** If true, you won't be able to interact */
-  readonly?: boolean;
+  readOnly?: boolean;
 
   /** If true, only the selected symbol will change to full symbol */
   highlightSelectedOnly?: boolean;
+
+  /** Key of theme.colors or any CSS color value, yellow by default */
+  color?: MantineColor;
 }
 
 const defaultProps: Partial<RatingProps> = {
@@ -56,8 +70,7 @@ const defaultProps: Partial<RatingProps> = {
   getSymbolLabel: (value) => `${value}`,
   count: 5,
   fractions: 1,
-  readonly: false,
-  highlightSelectedOnly: false,
+  color: 'yellow',
 };
 
 export const Rating = forwardRef<HTMLInputElement, RatingProps>((props, ref) => {
@@ -70,10 +83,10 @@ export const Rating = forwardRef<HTMLInputElement, RatingProps>((props, ref) => 
     count,
     fractions,
     onChange,
-    onChangeHover,
+    onHover,
     getSymbolLabel,
     name,
-    readonly,
+    readOnly,
     className,
     classNames,
     styles,
@@ -82,40 +95,48 @@ export const Rating = forwardRef<HTMLInputElement, RatingProps>((props, ref) => 
     onMouseMove,
     onMouseLeave,
     highlightSelectedOnly,
+    color,
+    id,
     ...others
   } = useComponentDefaultProps('Rating', defaultProps, props);
 
-  const { classes, cx, theme } = useStyles(
-    { readonly },
-    { name: 'Rating', classNames, styles, unstyled }
-  );
+  const { classes, cx, theme } = useStyles(null, { name: 'Rating', classNames, styles, unstyled });
 
-  const _name = useId();
+  const _name = useId(name);
+  const _id = useId(id);
   const rootRef = useRef<HTMLDivElement>(null);
-  const [stableValue, setStableValue] = useUncontrolled({
+
+  const [_value, setValue] = useUncontrolled({
     value,
     defaultValue,
     finalValue: 0,
+    onChange,
   });
-  const decimalUnit = 1 / fractions;
 
-  const [interactiveValue, setInteractiveValue] = useState(-1);
-  const [isClientOutside, setClientOutside] = useState(true);
+  const [hovered, setHovered] = useState(-1);
+  const [isOutside, setOutside] = useState(true);
 
-  const stableValueRounded = roundValueTo(stableValue, decimalUnit);
+  const _fractions = Math.floor(fractions);
+  const _count = Math.floor(count);
 
-  const _value = interactiveValue !== -1 ? interactiveValue : stableValueRounded;
+  const decimalUnit = 1 / _fractions;
+  const stableValueRounded = roundValueTo(_value, decimalUnit);
+  const finalValue = hovered !== -1 ? hovered : stableValueRounded;
 
   const handleMouseEnter = (event: React.MouseEvent<HTMLDivElement>) => {
     onMouseEnter?.(event);
-    setClientOutside(false);
+    !readOnly && setOutside(false);
   };
 
   const handleMouseMove = (event: React.MouseEvent<HTMLDivElement>) => {
     onMouseMove?.(event);
 
+    if (readOnly) {
+      return;
+    }
+
     const { left, right, width } = rootRef.current.getBoundingClientRect();
-    const symbolWidth = width / count;
+    const symbolWidth = width / _count;
 
     const hoverPosition = theme.dir === 'rtl' ? right - event.clientX : event.clientX - left;
     const hoverValue = hoverPosition / symbolWidth;
@@ -123,112 +144,85 @@ export const Rating = forwardRef<HTMLInputElement, RatingProps>((props, ref) => 
     const rounded = clamp(
       roundValueTo(hoverValue + decimalUnit / 2, decimalUnit),
       decimalUnit,
-      count
+      _count
     );
 
-    setInteractiveValue(rounded);
-    if (onChangeHover && rounded !== interactiveValue) {
-      onChangeHover(rounded);
-    }
+    setHovered(rounded);
+    rounded !== hovered && onHover?.(rounded);
   };
 
   const handleMouseLeave = (event: React.MouseEvent<HTMLDivElement>) => {
     onMouseLeave?.(event);
-    setInteractiveValue(-1);
-    setClientOutside(true);
-    if (onChangeHover && interactiveValue !== -1) {
-      onChangeHover(-1);
-    }
-  };
 
-  const handleBlur = () => {
-    if (isClientOutside) {
-      setInteractiveValue(-1);
-    }
-  };
-
-  const handleClick = (event: React.MouseEvent<HTMLInputElement>) => {
-    if (event.clientX === 0 && event.clientY === 0) {
-      const resultedValue = parseFloat(event.currentTarget.value);
-      setInteractiveValue(resultedValue);
-
+    if (readOnly) {
       return;
     }
 
-    setStableValue(0);
-    setInteractiveValue(-1);
-    if (onChange && parseFloat(event.currentTarget.value) === stableValueRounded) {
-      onChange(0);
-    }
+    setHovered(-1);
+    setOutside(true);
+    hovered !== -1 && onHover?.(-1);
   };
+
+  const handleItemBlur = () => isOutside && setHovered(-1);
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const resultedValue = parseFloat(event.target.value);
-
-    setStableValue(resultedValue);
-    if (onChange) {
-      onChange(resultedValue);
-    }
+    setValue(resultedValue);
   };
 
-  const integerItems = Array.from(new Array(count));
+  const items = Array(_count)
+    .fill(0)
+    .map((_, index) => {
+      const integerValue = index + 1;
+      const fractionItems = Array.from(new Array(index === 0 ? _fractions + 1 : _fractions));
+      const isGroupActive = !readOnly && Math.ceil(hovered) === integerValue;
+
+      return (
+        <div key={integerValue} data-active={isGroupActive} className={classes.symbolGroup}>
+          {fractionItems.map((__, fractionIndex) => {
+            const fractionValue = decimalUnit * (index === 0 ? fractionIndex : fractionIndex + 1);
+            const symbolValue = roundValueTo(integerValue - 1 + fractionValue, decimalUnit);
+
+            return (
+              <RatingItem
+                key={`${integerValue}-${symbolValue}`}
+                size={size}
+                getSymbolLabel={getSymbolLabel}
+                emptyIcon={emptySymbol}
+                fullIcon={fullSymbol}
+                full={
+                  highlightSelectedOnly ? symbolValue === finalValue : symbolValue <= finalValue
+                }
+                active={symbolValue === finalValue}
+                checked={symbolValue === stableValueRounded}
+                readOnly={readOnly}
+                fractionValue={fractionValue}
+                value={symbolValue}
+                name={_name}
+                onChange={handleChange}
+                onBlur={handleItemBlur}
+                classNames={classNames}
+                styles={styles}
+                unstyled={unstyled}
+                color={color}
+                id={`${_id}-${index}-${fractionIndex}`}
+              />
+            );
+          })}
+        </div>
+      );
+    });
+
   return (
     <Box
       ref={useMergedRef(rootRef, ref)}
       className={cx(classes.root, className)}
-      {...(!readonly
-        ? {
-            onMouseMove: handleMouseMove,
-            onMouseEnter: handleMouseEnter,
-            onMouseLeave: handleMouseLeave,
-          }
-        : {})}
+      onMouseMove={handleMouseMove}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
       {...others}
     >
-      {integerItems.map((_, integerIndex) => {
-        const integerValue = integerIndex + 1;
-        const fractionItems = Array.from(new Array(integerIndex === 0 ? fractions + 1 : fractions));
-        const isGroupActive = !readonly && Math.ceil(interactiveValue) === integerValue;
-
-        return (
-          <div key={integerValue} data-active={isGroupActive} className={classes.symbolGroup}>
-            {fractionItems.map((__, fractionIndex) => {
-              const fractionValue =
-                decimalUnit * (integerIndex === 0 ? fractionIndex : fractionIndex + 1);
-              const symbolValue = roundValueTo(integerValue - 1 + fractionValue, decimalUnit);
-              const isFull = highlightSelectedOnly ? symbolValue === _value : symbolValue <= _value;
-              const isChecked = symbolValue === stableValueRounded;
-              const isSymbolActive = symbolValue === _value;
-
-              return (
-                <RatingItem
-                  key={`${integerValue}-${symbolValue}`}
-                  classes={{
-                    input: classes.input,
-                    label: classes.label,
-                    symbolBody: classes.symbolBody,
-                    symbolLabel: classes.symbolLabel,
-                  }}
-                  size={size}
-                  getSymbolLabel={getSymbolLabel}
-                  emptyIcon={emptySymbol}
-                  fullIcon={fullSymbol}
-                  isFull={isFull}
-                  isActive={isSymbolActive}
-                  checked={isChecked}
-                  readonly={readonly}
-                  fractionValue={fractionValue}
-                  value={symbolValue}
-                  name={name || _name}
-                  onClick={handleClick}
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                />
-              );
-            })}
-          </div>
-        );
-      })}
+      {items}
     </Box>
   );
 });

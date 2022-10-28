@@ -1,5 +1,5 @@
 import React from 'react';
-import { queryByTestId, render, screen } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import {
   checkAccessibility,
   itSupportsSystemProps,
@@ -32,14 +32,6 @@ describe('@mantine/core/Checkbox', () => {
     refType: HTMLInputElement,
     othersSelector: 'input',
     providerName: 'Checkbox',
-  });
-
-  it('renders label based on label prop', () => {
-    const { container: withLabel, getByText } = render(<Checkbox label="test-label" />);
-    const { container: withoutLabel } = render(<Checkbox />);
-    expect(queryByTestId(withLabel, 'label')).toBeInTheDocument();
-    expect(queryByTestId(withoutLabel, 'label')).toBeNull();
-    expect(getByText('test-label')).toBeInTheDocument();
   });
 
   it('sets disabled attribute on input based on disabled prop', () => {

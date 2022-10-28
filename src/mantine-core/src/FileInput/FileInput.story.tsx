@@ -11,6 +11,14 @@ export function Usage() {
   );
 }
 
+export function ReadOnly() {
+  return (
+    <div style={{ padding: 40 }}>
+      <FileInput label="Pick file" required placeholder="File input" clearable readOnly />
+    </div>
+  );
+}
+
 export function Controlled() {
   const [singleValue, setSingleValue] = useState<File | null>(null);
   const [multipleValue, setMultipleValue] = useState<File[]>([]);

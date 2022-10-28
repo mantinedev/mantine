@@ -1,3 +1,4 @@
+import { CSSObject } from '@mantine/styles';
 import type { FloatingPosition, FloatingSide, FloatingPlacement } from '../types';
 
 function horizontalSide(
@@ -41,11 +42,28 @@ function verticalSide(
   return {};
 }
 
+const radiusByFloatingSide: Record<
+  FloatingSide,
+  keyof Pick<
+    CSSObject,
+    | 'borderBottomLeftRadius'
+    | 'borderBottomRightRadius'
+    | 'borderTopLeftRadius'
+    | 'borderTopRightRadius'
+  >
+> = {
+  bottom: 'borderTopLeftRadius',
+  left: 'borderTopRightRadius',
+  right: 'borderBottomLeftRadius',
+  top: 'borderBottomRightRadius',
+};
+
 export function getArrowPositionStyles({
   position,
   withBorder,
   arrowSize,
   arrowOffset,
+  arrowRadius,
   arrowX,
   arrowY,
   dir,
@@ -54,6 +72,7 @@ export function getArrowPositionStyles({
   withBorder: boolean;
   arrowSize: number;
   arrowOffset: number;
+  arrowRadius: number;
   arrowX: number;
   arrowY: number;
   dir: 'rtl' | 'ltr';
@@ -64,6 +83,7 @@ export function getArrowPositionStyles({
     height: arrowSize,
     transform: 'rotate(45deg)',
     position: 'absolute',
+    [radiusByFloatingSide[side]]: arrowRadius,
   };
 
   const arrowPosition = withBorder ? -arrowSize / 2 - 1 : -arrowSize / 2;

@@ -45,6 +45,7 @@ export const JsonInput = forwardRef<HTMLTextAreaElement, JsonInputProps>((props,
     validationError,
     classNames,
     unstyled,
+    readOnly,
     ...others
   } = useComponentDefaultProps('JsonInput', defaultProps, props);
 
@@ -66,8 +67,8 @@ export const JsonInput = forwardRef<HTMLTextAreaElement, JsonInputProps>((props,
   const handleBlur = (event: React.FocusEvent<HTMLTextAreaElement>) => {
     typeof onBlur === 'function' && onBlur(event);
     const isValid = validateJson(event.currentTarget.value);
-    formatOnBlur &&
-      isValid &&
+    formatOnBlur && !readOnly;
+    isValid &&
       event.currentTarget.value.trim() !== '' &&
       setValue(JSON.stringify(JSON.parse(event.currentTarget.value), null, 2));
     setValid(isValid);
@@ -85,6 +86,7 @@ export const JsonInput = forwardRef<HTMLTextAreaElement, JsonInputProps>((props,
       autoComplete="nope"
       ref={ref}
       unstyled={unstyled}
+      readOnly={readOnly}
       {...others}
     />
   );

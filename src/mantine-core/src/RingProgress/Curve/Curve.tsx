@@ -3,7 +3,7 @@ import { useMantineTheme, MantineColor } from '@mantine/styles';
 import { Tooltip } from '../../Tooltip';
 import { getCurveProps } from './get-curve-props';
 
-interface CurveProps {
+interface CurveProps extends React.ComponentPropsWithRef<'circle'> {
   value?: number;
   size: number;
   offset: number;
@@ -25,6 +25,7 @@ export function Curve({
   color,
   lineRoundCaps,
   tooltip,
+  ...others
 }: CurveProps) {
   const theme = useMantineTheme();
   const stroke = theme.fn.themeColor(
@@ -36,6 +37,7 @@ export function Curve({
   return (
     <Tooltip.Floating disabled={!tooltip} label={tooltip}>
       <circle
+        {...others}
         fill="none"
         strokeLinecap={lineRoundCaps ? 'round' : 'butt'}
         stroke={stroke}

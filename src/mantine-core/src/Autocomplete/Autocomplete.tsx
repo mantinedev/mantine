@@ -90,6 +90,7 @@ export const Autocomplete = forwardRef<HTMLInputElement, AutocompleteProps>((pro
     maxDropdownHeight,
     dropdownComponent,
     positionDependencies,
+    readOnly,
     ...others
   } = useInputProps('Autocomplete', defaultProps, props);
   const { classes } = useStyles(null, { classNames, styles, name: 'Autocomplete', unstyled });
@@ -210,6 +211,7 @@ export const Autocomplete = forwardRef<HTMLInputElement, AutocompleteProps>((pro
         classNames={classNames}
         styles={styles}
         unstyled={unstyled}
+        readOnly={readOnly}
       >
         <SelectPopover.Target>
           <div
@@ -227,6 +229,7 @@ export const Autocomplete = forwardRef<HTMLInputElement, AutocompleteProps>((pro
               autoComplete="off"
               {...inputProps}
               {...others}
+              readOnly={readOnly}
               data-mantine-stop-propagation={dropdownOpened}
               ref={useMergedRef(ref, inputRef)}
               onKeyDown={handleInputKeydown}

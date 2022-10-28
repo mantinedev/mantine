@@ -58,27 +58,6 @@ export default createStyles(
     const errorColor = theme.fn.variant({ variant: 'filled', color: 'red' }).background;
 
     return {
-      root: {},
-
-      description: {
-        marginTop: `calc(${theme.spacing.xs}px / 2)`,
-        [labelPosition === 'left' ? 'paddingRight' : 'paddingLeft']: theme.spacing.sm,
-      },
-
-      error: {
-        marginTop: `calc(${theme.spacing.xs}px / 2)`,
-        [labelPosition === 'left' ? 'paddingRight' : 'paddingLeft']: theme.spacing.sm,
-      },
-
-      label: {
-        cursor: theme.cursorType,
-        [labelPosition === 'left' ? 'paddingRight' : 'paddingLeft']: theme.spacing.sm,
-      },
-
-      body: {
-        display: 'flex',
-      },
-
       input: {
         clip: 'rect(1px, 1px, 1px, 1px)',
         height: '1px',
@@ -173,20 +152,6 @@ export default createStyles(
           borderColor: theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[2],
           backgroundColor:
             theme.colorScheme === 'dark' ? theme.colors.dark[3] : theme.colors.gray[0],
-        },
-      },
-
-      labelWrapper: {
-        ...theme.fn.fontStyles(),
-        WebkitTapHighlightColor: 'transparent',
-        fontSize: theme.fn.size({ size, sizes: theme.fontSizes }),
-        fontFamily: theme.fontFamily,
-        color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
-        cursor: theme.cursorType,
-        order: labelPosition === 'left' ? 1 : 2,
-
-        '& label[data-disabled]': {
-          color: theme.colorScheme === 'dark' ? theme.colors.dark[3] : theme.colors.gray[5],
         },
       },
 
