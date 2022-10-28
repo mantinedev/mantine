@@ -7,6 +7,18 @@ release: https://github.com/mantinedev/mantine/releases/tag/5.7.0
 date: 'October 20th, 2022'
 ---
 
+## Responsive Header and Footer height
+
+[Header and Footer](https://mantine.dev/core/app-shell/) components now support responsive height:
+
+```tsx
+import { Header } from '@mantine/core';
+
+function Demo() {
+  return <Header height={{ base: 50, sm: 60, lg: 70 }} />;
+}
+```
+
 ## Other changes
 
 - [Collapse](https://mantine.dev/core/collapse/) component now supports `axis` prop, it is now possible to animate width
