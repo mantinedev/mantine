@@ -19,13 +19,13 @@ export default createStyles((theme, { size, radius, color }: PaginationStylesPar
 
   return {
     item: {
+      ...theme.fn.fontStyles(),
       ...theme.fn.focusStyles(),
       cursor: 'pointer',
       userSelect: 'none',
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'center',
-      fontWeight: 500,
       border: `1px solid ${
         theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[4]
       }`,
