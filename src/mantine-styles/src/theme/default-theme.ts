@@ -93,6 +93,24 @@ export const _DEFAULT_THEME: MantineThemeBase = {
   activeStyles: { transform: 'translateY(1px)' },
   datesLocale: 'en',
   globalStyles: undefined,
+  focusRingStyles: {
+    styles: (theme) => ({
+      outlineOffset: 2,
+      outline: `2px solid ${
+        theme.colors[theme.primaryColor][theme.colorScheme === 'dark' ? 7 : 5]
+      }`,
+    }),
+    resetStyles: () => ({ outline: 'none' }),
+    inputStyles: (theme) => ({
+      outline: 'none',
+      borderColor:
+        theme.colors[theme.primaryColor][
+          typeof theme.primaryShade === 'object'
+            ? theme.primaryShade[theme.colorScheme]
+            : theme.primaryShade
+        ],
+    }),
+  },
 };
 
 export const DEFAULT_THEME = attachFunctions(_DEFAULT_THEME);

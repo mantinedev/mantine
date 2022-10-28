@@ -6,17 +6,17 @@ export function focusStyles(theme: MantineThemeBase) {
     WebkitTapHighlightColor: 'transparent',
 
     [selector || '&:focus']: {
-      outlineOffset: 2,
-      outline:
-        theme.focusRing === 'always' || theme.focusRing === 'auto'
-          ? `2px solid ${theme.colors[theme.primaryColor][theme.colorScheme === 'dark' ? 7 : 5]}`
-          : 'none',
+      ...(theme.focusRing === 'always' || theme.focusRing === 'auto'
+        ? theme.focusRingStyles.styles(theme)
+        : theme.focusRingStyles.resetStyles(theme)),
     },
 
     [selector
       ? selector.replace(':focus', ':focus:not(:focus-visible)')
       : '&:focus:not(:focus-visible)']: {
-      outline: theme.focusRing === 'auto' || theme.focusRing === 'never' ? 'none' : undefined,
+      ...(theme.focusRing === 'auto' || theme.focusRing === 'never'
+        ? theme.focusRingStyles.resetStyles(theme)
+        : null),
     },
   });
 }
