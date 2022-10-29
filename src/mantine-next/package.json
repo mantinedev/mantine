@@ -26,7 +26,9 @@
   },
   "dependencies": {
     "@mantine/ssr": "5.6.3",
-    "@mantine/styles": "5.6.3"
+    "@mantine/styles": "5.6.3",
+    "@emotion/react": ">=11.9.0",
+    "@emotion/server": ">=11.4.0"
   },
   "devDependencies": {}
 }
