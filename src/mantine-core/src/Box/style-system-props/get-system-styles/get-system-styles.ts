@@ -20,7 +20,18 @@ export function getSystemStyles(systemStyles: MantineStyleSystemProps, theme: Ma
   }, []);
 
   return styles.reduce((acc, stylesPartial) => {
-    const result = { ...acc, ...stylesPartial };
-    return result;
+    Object.keys(stylesPartial).forEach((property) => {
+      if (typeof stylesPartial[property] === 'object' && stylesPartial[property] !== null) {
+        if (!(property in acc)) {
+          acc[property] = stylesPartial[property];
+        } else {
+          acc[property] = { ...acc[property], ...stylesPartial[property] };
+        }
+      } else {
+        acc[property] = stylesPartial[property];
+      }
+    });
+
+    return acc;
   }, {});
 }
