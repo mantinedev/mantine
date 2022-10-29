@@ -61,6 +61,9 @@ export interface FileInputProps<Multiple extends boolean = false>
 
   /** Set the clear button tab index to disabled or default after input field */
   clearButtonTabIndex?: -1 | 0;
+
+  /** Determines whether the user can change value */
+  readOnly?: boolean;
 }
 
 const DefaultValue: FileInputProps['valueComponent'] = ({ value }) => (
@@ -102,6 +105,7 @@ export const _FileInput = forwardRef<HTMLButtonElement, FileInputProps>((props, 
     clearable,
     clearButtonLabel,
     clearButtonTabIndex,
+    readOnly,
     ...others
   } = useInputProps('FileInput', defaultProps, props);
   const resetRef = useRef<() => void>();
@@ -123,7 +127,7 @@ export const _FileInput = forwardRef<HTMLButtonElement, FileInputProps>((props, 
 
   const _rightSection =
     rightSection ||
-    (clearable && hasValue ? (
+    (clearable && hasValue && !readOnly ? (
       <CloseButton
         variant="transparent"
         aria-label={clearButtonLabel}
@@ -149,6 +153,7 @@ export const _FileInput = forwardRef<HTMLButtonElement, FileInputProps>((props, 
         name={name}
         form={form}
         resetRef={resetRef}
+        disabled={readOnly}
       >
         {(fileButtonProps) => (
           <Input

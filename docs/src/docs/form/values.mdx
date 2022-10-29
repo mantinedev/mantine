@@ -57,6 +57,13 @@ form.values; // -> { name: 'John', email: '', age: 21 }
 
 <Demo data={FormDemos.reset} />
 
+## transformValues
+
+Use `transformValues` to transform values before they get submitted in `onSubmit` handler.
+For example, it can be used to merge several fields into one or to convert types:
+
+<Demo data={FormDemos.transformValues} />
+
 ## Get values type
 
 ```tsx

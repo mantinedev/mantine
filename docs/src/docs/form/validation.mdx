@@ -90,7 +90,9 @@ const form = useForm({ validateInputOnChange: true });
 You can also provide an array of fields paths to validate only those values:
 
 ```tsx
-const form = useForm({ validateInputOnChange: ['name', 'email'] });
+import { FORM_INDEX, useForm } from '@mantine/form';
+
+const form = useForm({ validateInputOnChange: ['name', 'email', `jobs.${FORM_INDEX}.title`] });
 ```
 
 <Demo data={FormDemos.liveFieldValidation} demoProps={{ toggle: true }} />
@@ -108,7 +110,9 @@ const form = useForm({ validateInputOnBlur: true });
 You can also provide an array of fields paths to validate only those values:
 
 ```tsx
-const form = useForm({ validateInputOnBlur: ['name', 'email'] });
+import { FORM_INDEX, useForm } from '@mantine/form';
+
+const form = useForm({ validateInputOnBlur: ['name', 'email', `jobs.${FORM_INDEX}.title`] });
 ```
 
 <Demo data={FormDemos.blurFieldValidation} demoProps={{ toggle: true }} />

@@ -1,6 +1,6 @@
 /* eslint-disable react/no-unused-prop-types */
 
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useCallback } from 'react';
 import { useId, useClickOutside } from '@mantine/hooks';
 import {
   useMantineTheme,
@@ -68,6 +68,9 @@ export interface PopoverBaseProps {
   /** Arrow offset in px */
   arrowOffset?: number;
 
+  /** Arrow radius in px */
+  arrowRadius?: number;
+
   /** Determines whether dropdown should be rendered within Portal, defaults to false */
   withinPortal?: boolean;
 
@@ -133,6 +136,7 @@ const defaultProps: Partial<PopoverProps> = {
   middlewares: { flip: true, shift: true, inline: false },
   arrowSize: 7,
   arrowOffset: 5,
+  arrowRadius: 0,
   closeOnClickOutside: true,
   withinPortal: false,
   closeOnEscape: true,
@@ -142,6 +146,7 @@ const defaultProps: Partial<PopoverProps> = {
   clickOutsideEvents: ['mousedown', 'touchstart'],
   zIndex: getDefaultZIndex('popover'),
   __staticSelector: 'Popover',
+  width: 'max-content',
 };
 
 export function Popover(props: PopoverProps) {
@@ -160,6 +165,7 @@ export function Popover(props: PopoverProps) {
     withArrow,
     arrowSize,
     arrowOffset,
+    arrowRadius,
     unstyled,
     classNames,
     styles,
@@ -209,6 +215,22 @@ export function Popover(props: PopoverProps) {
     dropdownNode,
   ]);
 
+  const reference = useCallback(
+    (node: HTMLElement) => {
+      setTargetNode(node);
+      popover.floating.reference(node);
+    },
+    [popover.floating.reference]
+  );
+
+  const floating = useCallback(
+    (node: HTMLElement) => {
+      setDropdownNode(node);
+      popover.floating.floating(node);
+    },
+    [popover.floating.floating]
+  );
+
   return (
     <StylesApiProvider
       classNames={classNames}
@@ -221,14 +243,8 @@ export function Popover(props: PopoverProps) {
           returnFocus,
           disabled,
           controlled: popover.controlled,
-          reference: (node) => {
-            setTargetNode(node as HTMLElement);
-            popover.floating.reference(node);
-          },
-          floating: (node) => {
-            setDropdownNode(node);
-            popover.floating.floating(node);
-          },
+          reference,
+          floating,
           x: popover.floating.x,
           y: popover.floating.y,
           arrowX: popover.floating?.middlewareData?.arrow?.x,
@@ -242,6 +258,7 @@ export function Popover(props: PopoverProps) {
           withArrow,
           arrowSize,
           arrowOffset,
+          arrowRadius,
           placement: popover.floating.placement,
           trapFocus,
           withinPortal,

@@ -16,7 +16,7 @@ function Demo() {
       <NativeSelect
         data={['React', 'Angular', 'Svelte', 'Vue']}
         label="Your favorite frameworks/libraries"
-        placeholder="Pick all that you like"
+        placeholder="Pick one"
         error
       />
 
@@ -24,7 +24,7 @@ function Demo() {
         style={{ marginTop: 15 }}
         data={['React', 'Angular', 'Svelte', 'Vue']}
         label="Your favorite frameworks/libraries"
-        placeholder="Pick all that you like"
+        placeholder="Pick one"
         error="Pick at least one item"
       />
     </div>

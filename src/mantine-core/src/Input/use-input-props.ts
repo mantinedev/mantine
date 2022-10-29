@@ -8,9 +8,9 @@ interface BaseProps extends InputWrapperBaseProps, InputSharedProps, DefaultProp
   id?: string;
 }
 
-export function useInputProps<T extends BaseProps>(
+export function useInputProps<T extends BaseProps, U extends Partial<T>>(
   component: string,
-  defaultProps: Partial<T>,
+  defaultProps: U,
   props: T
 ) {
   const {
@@ -35,7 +35,7 @@ export function useInputProps<T extends BaseProps>(
     inputWrapperOrder,
     withAsterisk,
     ...others
-  } = useComponentDefaultProps(component, defaultProps, props);
+  } = useComponentDefaultProps<T>(component, defaultProps, props);
 
   const uid = useId(id);
 

@@ -52,6 +52,14 @@ Component is based on [react-dropzone](https://react-dropzone.js.org/) and suppo
 
 <Demo data={DropzoneDemos.usage} />
 
+## Dropzone.Accept, Dropzone.Reject and Dropzone.Idle
+
+`Dropzone.Accept`, `Dropzone.Reject` and `Dropzone.Idle` components are visible only when the user performs certain action:
+
+- `Dropzone.Accept` is visible only when the user drags file that can be accepted over the dropzone
+- `Dropzone.Reject` is visible only when the user drags file that cannot be accepted over the dropzone
+- `Dropzone.Idle` is visible when the user does not drag anything over dropzone
+
 ## Loading state
 
 Set `loading` prop to indicate loading state with [LoadingOverlay](/core/loading-overlay/) component.

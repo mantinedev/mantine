@@ -10,14 +10,13 @@ import {
 } from '@mantine/styles';
 import { ForwardRefWithStaticComponents } from '@mantine/utils';
 import { useId } from '@mantine/hooks';
-import { Box } from '../Box';
 import { CheckboxIcon } from './CheckboxIcon';
 import { CheckboxGroup } from './CheckboxGroup/CheckboxGroup';
 import { useCheckboxGroupContext } from './CheckboxGroup.context';
+import { InlineInput, InlineInputStylesNames } from '../InlineInput';
 import useStyles, { CheckboxStylesParams } from './Checkbox.styles';
-import { Input } from '../Input';
 
-export type CheckboxStylesNames = Selectors<typeof useStyles>;
+export type CheckboxStylesNames = Selectors<typeof useStyles> | InlineInputStylesNames;
 
 export interface CheckboxProps
   extends DefaultProps<CheckboxStylesNames, CheckboxStylesParams>,
@@ -101,7 +100,7 @@ export const Checkbox: CheckboxComponent = forwardRef<HTMLInputElement, Checkbox
     const ctx = useCheckboxGroupContext();
     const uuid = useId(id);
     const { systemStyles, rest } = extractSystemStyles(others);
-    const { classes, cx } = useStyles(
+    const { classes } = useStyles(
       {
         size: ctx?.size || size,
         radius,
@@ -122,51 +121,40 @@ export const Checkbox: CheckboxComponent = forwardRef<HTMLInputElement, Checkbox
       : {};
 
     return (
-      <Box
-        className={cx(classes.root, className)}
+      <InlineInput
+        className={className}
         sx={sx}
         style={style}
+        id={uuid}
+        size={ctx?.size || size}
+        labelPosition={labelPosition}
+        label={label}
+        description={description}
+        error={error}
+        disabled={disabled}
+        __staticSelector="Checkbox"
+        classNames={classNames}
+        styles={styles}
+        unstyled={unstyled}
+        data-checked={contextProps.checked || undefined}
         {...systemStyles}
         {...wrapperProps}
       >
-        <div className={cx(classes.body)}>
-          <div className={classes.inner}>
-            <input
-              id={uuid}
-              ref={ref}
-              type="checkbox"
-              className={classes.input}
-              checked={checked}
-              disabled={disabled}
-              {...rest}
-              {...contextProps}
-            />
+        <div className={classes.inner}>
+          <input
+            id={uuid}
+            ref={ref}
+            type="checkbox"
+            className={classes.input}
+            checked={checked}
+            disabled={disabled}
+            {...rest}
+            {...contextProps}
+          />
 
-            <Icon indeterminate={indeterminate} className={classes.icon} />
-          </div>
-
-          <div className={classes.labelWrapper}>
-            {label && (
-              <label
-                className={classes.label}
-                data-disabled={disabled || undefined}
-                htmlFor={uuid}
-                data-testid="label"
-              >
-                {label}
-              </label>
-            )}
-
-            {description && (
-              <Input.Description className={classes.description}>{description}</Input.Description>
-            )}
-
-            {error && error !== 'boolean' && (
-              <Input.Error className={classes.error}>{error}</Input.Error>
-            )}
-          </div>
+          <Icon indeterminate={indeterminate} className={classes.icon} />
         </div>
-      </Box>
+      </InlineInput>
     );
   }
 ) as any;

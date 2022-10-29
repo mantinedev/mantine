@@ -5,6 +5,5 @@ export const Rating: Record<RatingStylesNames, string> = {
   symbolGroup: 'Container for fraction symbols',
   input: 'Input element',
   label: 'Label element',
-  symbolLabel: 'A div element inside label for the label text',
-  symbolBody: 'A div element inside label, which hold symbol icon',
+  symbolBody: 'Element inside label that hold symbol icon',
 };

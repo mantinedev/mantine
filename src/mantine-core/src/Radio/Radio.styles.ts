@@ -30,27 +30,6 @@ export default createStyles(
     const errorColor = theme.fn.variant({ variant: 'filled', color: 'red' }).background;
 
     return {
-      root: {},
-
-      description: {
-        marginTop: `calc(${theme.spacing.xs}px / 2)`,
-        [labelPosition === 'left' ? 'paddingRight' : 'paddingLeft']: theme.spacing.sm,
-      },
-
-      error: {
-        marginTop: `calc(${theme.spacing.xs}px / 2)`,
-        [labelPosition === 'left' ? 'paddingRight' : 'paddingLeft']: theme.spacing.sm,
-      },
-
-      label: {
-        cursor: theme.cursorType,
-        [labelPosition === 'left' ? 'paddingRight' : 'paddingLeft']: theme.spacing.sm,
-      },
-
-      body: {
-        display: 'flex',
-      },
-
       inner: {
         order: labelPosition === 'left' ? 2 : 1,
         position: 'relative',
@@ -113,19 +92,6 @@ export default createStyles(
           [`& + .${getRef('icon')}`]: {
             color: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[4],
           },
-        },
-      },
-
-      labelWrapper: {
-        ...theme.fn.fontStyles(),
-        fontSize: theme.fontSizes[size] || theme.fontSizes.md,
-        lineHeight: `${theme.fn.size({ sizes, size })}px`,
-        color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
-        cursor: theme.cursorType,
-        order: labelPosition === 'left' ? 1 : 2,
-
-        '& label[data-disabled]': {
-          color: theme.colorScheme === 'dark' ? theme.colors.dark[3] : theme.colors.gray[5],
         },
       },
     };

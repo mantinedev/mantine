@@ -26,46 +26,23 @@ import { useState } from 'react';
 import { Rating } from '@mantine/core';
 
 function Demo() {
-  const [value, setValue] = useState(2);
+  const [value, setValue] = useState(0);
   return <Rating value={value} onChange={(currValue) => setValue(currValue)} />;
 }
 ```
 
+## Read only
+
+<Demo data={RatingDemos.readOnly} />
+
 ## Fractions
 
-```tsx
-import { Rating } from '@mantine/core';
-
-function Demo() {
-  return <Rating fractions={1} />; // by default it is 1
-  return <Rating fractions={2} />; // half
-  return <Rating fractions={4} />; // quarter
-}
-```
-
-## Highlight selected only
-
-Instead of highlighting all the stars before the selected symbol. You can only highlight the selected one.
-
-```tsx
-import { Rating } from '@mantine/core';
-
-function Demo() {
-  return <Rating highlightSelectedOnly />;
-}
-```
+<Demo data={RatingDemos.fractions} />
 
 ## Custom symbol
 
-```tsx
-import { Rating } from '@mantine/core';
-import { SunIcon, MoonIcon } from '@tabler/icon';
+<Demo data={RatingDemos.symbol} />
 
-function Demo() {
-  return <Rating emptySymbol={<SunIcon />} fullSymbol={<MoonIcon />} />;
-}
-```
-
-If you want more control, you can pass function to these props.
+## Symbols for each item
 
 <Demo data={RatingDemos.customSymbol} />

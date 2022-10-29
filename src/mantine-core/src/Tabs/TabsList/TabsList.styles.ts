@@ -8,14 +8,20 @@ interface TabsListStylesParams extends TabsStylesParams {
 }
 
 function getVariantStyles(
-  { variant, orientation, inverted }: TabsListStylesParams,
+  { variant, orientation, inverted, placement }: TabsListStylesParams,
   theme: MantineTheme
 ): CSSObject {
   const vertical = orientation === 'vertical';
 
   if (variant === 'default') {
     return {
-      [vertical ? 'borderRight' : inverted ? 'borderTop' : 'borderBottom']: `2px solid ${
+      [vertical
+        ? placement === 'left'
+          ? 'borderRight'
+          : 'borderLeft'
+        : inverted
+        ? 'borderTop'
+        : 'borderBottom']: `2px solid ${
         theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[3]
       }`,
     };
@@ -23,7 +29,13 @@ function getVariantStyles(
 
   if (variant === 'outline') {
     return {
-      [vertical ? 'borderRight' : inverted ? 'borderTop' : 'borderBottom']: `1px solid ${
+      [vertical
+        ? placement === 'left'
+          ? 'borderRight'
+          : 'borderLeft'
+        : inverted
+        ? 'borderTop'
+        : 'borderBottom']: `1px solid ${
         theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[3]
       }`,
     };

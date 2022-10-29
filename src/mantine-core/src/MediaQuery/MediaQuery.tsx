@@ -1,5 +1,10 @@
 import React, { Children } from 'react';
-import { MantineNumberSize, CSSObject, useComponentDefaultProps } from '@mantine/styles';
+import {
+  MantineNumberSize,
+  CSSObject,
+  useComponentDefaultProps,
+  MantineTheme,
+} from '@mantine/styles';
 import useStyles from './MediaQuery.styles';
 
 export interface MediaQueryProps {
@@ -18,7 +23,7 @@ export interface MediaQueryProps {
   query?: string;
 
   /** Styles applied to child when breakpoint matches */
-  styles: CSSObject;
+  styles: CSSObject | ((theme: MantineTheme) => CSSObject);
 }
 
 export function MediaQuery(props: MediaQueryProps) {

@@ -3,7 +3,7 @@ import { MantineDemo } from '@mantine/ds';
 import { RatingProps, Rating, Group } from '@mantine/core';
 
 const codeTemplate = (props: string) => `
-import { Radio } from '@mantine/core';
+import { Rating } from '@mantine/core';
 
 function Demo() {
   return <Rating defaultValue={2}${props} />
@@ -23,17 +23,9 @@ export const configurator: MantineDemo = {
   component: Wrapper,
   codeTemplate,
   configurator: [
+    { name: 'color', type: 'color', initialValue: 'yellow', defaultValue: 'yellow' },
     { name: 'size', type: 'size', initialValue: 'md', defaultValue: 'md' },
     { name: 'count', type: 'number', initialValue: 5, defaultValue: 5, min: 1, max: 15 },
-    { name: 'readonly', type: 'boolean', initialValue: false, defaultValue: false },
-    {
-      name: 'fractions',
-      type: 'number',
-      min: 1,
-      max: 5,
-      initialValue: 1,
-      defaultValue: 1,
-    },
     { name: 'highlightSelectedOnly', type: 'boolean', initialValue: false, defaultValue: false },
   ],
 };

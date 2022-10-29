@@ -535,6 +535,7 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>((props
     .map((item) => (
       <Value
         {...item}
+        variant={variant}
         disabled={disabled}
         className={classes.value}
         readOnly={readOnly}
