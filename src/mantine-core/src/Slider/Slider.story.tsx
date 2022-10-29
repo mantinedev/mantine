@@ -45,6 +45,24 @@ function ThumbSize() {
   );
 }
 
+function OnChangeEnd() {
+  const [value, setValue] = useState(32);
+
+  return (
+    <div style={{ padding: 40 }}>
+      <Slider
+        value={value}
+        min={32}
+        max={128}
+        sx={{
+          width: 256,
+        }}
+        onChangeEnd={(v) => setValue(v)}
+      />
+    </div>
+  );
+}
+
 function Disabled() {
   const [disabled, handlers] = useDisclosure(true);
 
@@ -179,11 +197,12 @@ storiesOf('Slider', module)
   .add('Thumb size', () => <ThumbSize />)
   .add('Min and max numbers', () => (
     <div style={{ padding: 40 }}>
-      <Slider labelAlwaysOn min={1} max={100} step={10} />
+      <Slider labelAlwaysOn min={2} max={100} step={10} />
     </div>
   ))
   .add('Negative min number', () => (
     <div style={{ padding: 40 }}>
       <Slider labelAlwaysOn min={-100} max={10} step={10} />
     </div>
-  ));
+  ))
+  .add('On change end', () => <OnChangeEnd />);
