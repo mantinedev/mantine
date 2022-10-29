@@ -4,16 +4,16 @@ import {
   MantineSize,
   MantineColor,
   Selectors,
-  extractSystemStyles,
   MantineNumberSize,
   useComponentDefaultProps,
 } from '@mantine/styles';
 import { ForwardRefWithStaticComponents } from '@mantine/utils';
 import { useId } from '@mantine/hooks';
-import { CheckboxIcon } from './CheckboxIcon';
-import { CheckboxGroup } from './CheckboxGroup/CheckboxGroup';
-import { useCheckboxGroupContext } from './CheckboxGroup.context';
+import { extractSystemStyles } from '../Box';
 import { InlineInput, InlineInputStylesNames } from '../InlineInput';
+import { useCheckboxGroupContext } from './CheckboxGroup.context';
+import { CheckboxGroup } from './CheckboxGroup/CheckboxGroup';
+import { CheckboxIcon } from './CheckboxIcon';
 import useStyles, { CheckboxStylesParams } from './Checkbox.styles';
 
 export type CheckboxStylesNames = Selectors<typeof useStyles> | InlineInputStylesNames;

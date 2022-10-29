@@ -1,6 +1,7 @@
 import React, { forwardRef } from 'react';
-import { DefaultProps, extractSystemStyles } from '@mantine/styles';
+import { DefaultProps } from '@mantine/styles';
 import { createPolymorphicComponent } from '@mantine/utils';
+import { extractSystemStyles } from './style-system-props/extract-system-styles/extract-system-styles';
 import { useSx } from './use-sx/use-sx';
 
 export interface BoxProps extends DefaultProps {

@@ -1,5 +1,6 @@
-import { useComponentDefaultProps, DefaultProps, extractSystemStyles } from '@mantine/styles';
+import { useComponentDefaultProps, DefaultProps } from '@mantine/styles';
 import { useId } from '@mantine/hooks';
+import { extractSystemStyles } from '../Box';
 import { InputWrapperBaseProps } from './InputWrapper/InputWrapper';
 import { InputSharedProps } from './Input';
 

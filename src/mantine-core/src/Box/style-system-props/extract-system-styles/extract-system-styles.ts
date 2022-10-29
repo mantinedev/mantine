@@ -1,5 +1,4 @@
-import type { MantineStyleSystemProps } from '../../types';
-import { filterProps } from '../filter-props/filter-props';
+import { MantineStyleSystemProps, filterProps } from '@mantine/styles';
 
 export function extractSystemStyles<T extends Record<string, any>>(
   others: MantineStyleSystemProps & T

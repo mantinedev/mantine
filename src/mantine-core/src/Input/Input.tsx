@@ -4,11 +4,10 @@ import {
   MantineNumberSize,
   MantineSize,
   Selectors,
-  extractSystemStyles,
   useComponentDefaultProps,
 } from '@mantine/styles';
 import { createPolymorphicComponent } from '@mantine/utils';
-import { Box } from '../Box';
+import { Box, extractSystemStyles } from '../Box';
 import { InputWrapper } from './InputWrapper/InputWrapper';
 import { InputDescription } from './InputDescription/InputDescription';
 import { InputLabel } from './InputLabel/InputLabel';
