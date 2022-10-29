@@ -6,7 +6,15 @@ export default { title: 'Box' };
 export function SystemProps() {
   return (
     <div style={{ padding: 40 }}>
-      <Box sx={{ backgroundColor: 'pink' }} pl={{ base: 30, sm: 100, md: 200 }}>
+      <Box
+        bg={{
+          base: 'red',
+          xs: 'pink.5',
+          sm: '#e5e5e5',
+        }}
+        pl={{ base: 30, xs: 100 }}
+        pt="xl"
+      >
         Some box
       </Box>
     </div>

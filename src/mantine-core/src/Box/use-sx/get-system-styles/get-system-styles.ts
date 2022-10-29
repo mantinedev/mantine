@@ -23,17 +23,10 @@ const SYSTEM: Record<string, SystemProp> = {
   pr: { type: 'spacing', property: 'paddingRight' },
   px: { type: 'spacing', property: ['paddingRight', 'paddingLeft'] },
   py: { type: 'spacing', property: ['paddingTop', 'paddingBottom'] },
+
+  bg: { type: 'color', property: 'background' },
+  c: { type: 'color', property: 'color' },
 };
-
-const NEGATIVE_VALUES = ['-xs', '-sm', '-md', '-lg', '-xl'];
-
-function getSizeValue(size: any, theme: MantineTheme) {
-  if (NEGATIVE_VALUES.includes(size)) {
-    return theme.fn.size({ size: size.replace('-', ''), sizes: theme.spacing }) * -1;
-  }
-
-  return theme.fn.size({ size, sizes: theme.spacing });
-}
 
 interface GetResponsiveStyles {
   value: any;
@@ -48,7 +41,7 @@ function getResponsiveValue({ value, theme, getValue, property }: GetResponsiveS
   }
 
   if (typeof value === 'object') {
-    const results = Object.keys(value).reduce<CSSObject>((acc, breakpointKey) => {
+    return Object.keys(value).reduce<CSSObject>((acc, breakpointKey) => {
       if (breakpointKey === 'base' && value.base !== undefined) {
         const baseValue = getValue(value.base, theme);
 
@@ -81,9 +74,6 @@ function getResponsiveValue({ value, theme, getValue, property }: GetResponsiveS
 
       return acc;
     }, {});
-
-    console.log(results);
-    return results;
   }
 
   const cssValue = getValue(value, theme);
@@ -98,30 +88,24 @@ function getResponsiveValue({ value, theme, getValue, property }: GetResponsiveS
   return { [property]: cssValue };
 }
 
-// interface GetPropertyStyles {
-//   value: any;
-//   type: 'spacing' | 'color' | 'default';
-//   theme: MantineTheme;
-//   property: string | string[];
-// }
+const NEGATIVE_VALUES = ['-xs', '-sm', '-md', '-lg', '-xl'];
 
-// function getPropertyStyles({ value, type, theme, property }: GetPropertyStyles): CSSObject {
-//   const cssValue = type === 'spacing' ? getSizeValue(value, theme) : value;
+function getSpacingValue(size: any, theme: MantineTheme) {
+  if (NEGATIVE_VALUES.includes(size)) {
+    return theme.fn.size({ size: size.replace('-', ''), sizes: theme.spacing }) * -1;
+  }
 
-//   if (Array.isArray(property)) {
-//     return property.reduce((acc, prop) => {
-//       acc[prop] = cssValue;
-//       return acc;
-//     }, {});
-//   }
+  return theme.fn.size({ size, sizes: theme.spacing });
+}
 
-//   return { [property]: cssValue };
-// }
+function getColorValue(color: any, theme: MantineTheme) {
+  return theme.fn.variant({ variant: 'filled', color, primaryFallback: false }).background;
+}
 
 const valueGetters = {
-  spacing: getSizeValue,
+  spacing: getSpacingValue,
+  color: getColorValue,
   default: (value: any) => value,
-  color: (value: any) => value,
 };
 
 export function getSystemStyles(systemStyles: MantineStyleSystemProps, theme: MantineTheme) {
