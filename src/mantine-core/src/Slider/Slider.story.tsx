@@ -179,7 +179,7 @@ storiesOf('Slider', module)
   .add('Thumb size', () => <ThumbSize />)
   .add('Min and max numbers', () => (
     <div style={{ padding: 40 }}>
-      <Slider labelAlwaysOn min={2} max={100} step={10} />
+      <Slider labelAlwaysOn min={1} max={100} step={10} />
     </div>
   ))
   .add('Negative min number', () => (
