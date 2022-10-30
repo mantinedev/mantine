@@ -68,6 +68,9 @@ form.values;
 // Set all form values
 form.setValues(values);
 
+// Set all form values using the previous state
+form.setValues((prev) => ({ ...prev, ...values }));
+
 // Set value of single field
 form.setFieldValue('path', value);
 
