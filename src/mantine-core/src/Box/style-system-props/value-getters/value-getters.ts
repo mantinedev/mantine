@@ -9,3 +9,5 @@ export const valueGetters = {
   fontSize: getFontSizeValue,
   spacing: getSpacingValue,
 };
+
+export type SystemValueType = keyof typeof valueGetters;

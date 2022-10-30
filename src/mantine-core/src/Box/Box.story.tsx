@@ -12,7 +12,7 @@ export function SystemProps() {
           xs: 'pink.5',
           sm: '#e5e5e5',
         }}
-        pl={{ base: 30, xs: 300 }}
+        pl={{ base: 30, md: 100, xs: 300 }}
         pt="xl"
       >
         Some box

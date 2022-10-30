@@ -1,8 +1,9 @@
-export type SystemPropType = 'spacing' | 'color' | 'default';
+import type { StyleProperty } from '../get-responsive-value/get-responsive-value';
+import type { SystemValueType } from '../value-getters/value-getters';
 
 export interface SystemProp {
-  type: SystemPropType;
-  property: keyof React.CSSProperties | (keyof React.CSSProperties)[];
+  type: SystemValueType;
+  property: StyleProperty;
 }
 
 export const SYSTEM_PROPS: Record<string, SystemProp> = {
