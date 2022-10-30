@@ -45,24 +45,6 @@ function ThumbSize() {
   );
 }
 
-function OnChangeEnd() {
-  const [value, setValue] = useState(32);
-
-  return (
-    <div style={{ padding: 40 }}>
-      <Slider
-        value={value}
-        min={32}
-        max={128}
-        sx={{
-          width: 256,
-        }}
-        onChangeEnd={(v) => setValue(v)}
-      />
-    </div>
-  );
-}
-
 function Disabled() {
   const [disabled, handlers] = useDisclosure(true);
 
@@ -204,5 +186,4 @@ storiesOf('Slider', module)
     <div style={{ padding: 40 }}>
       <Slider labelAlwaysOn min={-100} max={10} step={10} />
     </div>
-  ))
-  .add('On change end', () => <OnChangeEnd />);
+  ));
