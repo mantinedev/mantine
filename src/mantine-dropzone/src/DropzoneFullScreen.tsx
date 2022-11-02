@@ -90,7 +90,7 @@ export function DropzoneFullScreen(props: DropzoneFullScreenProps) {
     document.addEventListener('dragleave', handleDragLeave, false);
 
     return () => {
-      document.removeEventListener('dragover', handleDragEnter, false);
+      document.removeEventListener('dragenter', handleDragEnter, false);
       document.removeEventListener('dragleave', handleDragLeave, false);
     };
   }, [active]);
