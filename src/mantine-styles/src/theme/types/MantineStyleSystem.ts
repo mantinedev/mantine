@@ -1,3 +1,4 @@
+import { CSSProperties } from 'react';
 import { MantineColor } from './MantineColor';
 import type { MantineNumberSize, MantineSize } from './MantineSize';
 
@@ -24,6 +25,35 @@ export interface MantineStyleSystemProps {
 
   bg?: SystemProp<MantineColor>;
   c?: SystemProp<MantineColor>;
+  opacity?: SystemProp<CSSProperties['opacity']>;
+
+  ff?: SystemProp<CSSProperties['fontFamily']>;
+  fz?: SystemProp<SpacingValue>;
+  fw?: SystemProp<CSSProperties['fontWeight']>;
+  lts?: SystemProp<CSSProperties['letterSpacing']>;
+  ta?: SystemProp<CSSProperties['textAlign']>;
+  lh?: SystemProp<CSSProperties['lineHeight']>;
+  fs?: SystemProp<CSSProperties['fontStyle']>;
+  tt?: SystemProp<CSSProperties['textTransform']>;
+  td?: SystemProp<CSSProperties['textDecoration']>;
+
+  w?: SystemProp<CSSProperties['width']>;
+  miw?: SystemProp<CSSProperties['minWidth']>;
+  maw?: SystemProp<CSSProperties['maxWidth']>;
+  h?: SystemProp<CSSProperties['height']>;
+  mih?: SystemProp<CSSProperties['minHeight']>;
+  mah?: SystemProp<CSSProperties['maxHeight']>;
+
+  bgsz?: SystemProp<CSSProperties['backgroundSize']>;
+  bgp?: SystemProp<CSSProperties['backgroundPosition']>;
+  bgr?: SystemProp<CSSProperties['backgroundRepeat']>;
+  bga?: SystemProp<CSSProperties['backgroundAttachment']>;
+
+  pos?: SystemProp<CSSProperties['position']>;
+  top?: SystemProp<CSSProperties['top']>;
+  left?: SystemProp<CSSProperties['left']>;
+  bottom?: SystemProp<CSSProperties['bottom']>;
+  inset?: SystemProp<CSSProperties['inset']>;
 }
 
 export type MantineStyleSystemSize = keyof MantineStyleSystemProps;

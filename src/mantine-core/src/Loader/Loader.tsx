@@ -26,7 +26,9 @@ const sizes = {
   xl: 58,
 };
 
-export interface LoaderProps extends DefaultProps, React.ComponentPropsWithoutRef<'svg'> {
+export interface LoaderProps
+  extends DefaultProps,
+    Omit<React.ComponentPropsWithoutRef<'svg'>, 'opacity'> {
   /** Defines width of loader */
   size?: MantineNumberSize;
 

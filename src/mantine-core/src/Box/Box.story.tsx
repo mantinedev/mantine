@@ -14,6 +14,8 @@ export function SystemProps() {
         }}
         pl={{ base: 30, md: 100, xs: 300 }}
         pt="xl"
+        w={400}
+        h={560}
       >
         Some box
       </Box>

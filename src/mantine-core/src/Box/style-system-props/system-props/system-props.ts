@@ -25,4 +25,33 @@ export const SYSTEM_PROPS: Record<string, SystemProp> = {
 
   bg: { type: 'color', property: 'background' },
   c: { type: 'color', property: 'color' },
+  opacity: { type: 'default', property: 'opacity' },
+
+  ff: { type: 'default', property: 'fontFamily' },
+  fz: { type: 'fontSize', property: 'fontSize' },
+  fw: { type: 'default', property: 'fontWeight' },
+  lts: { type: 'default', property: 'letterSpacing' },
+  ta: { type: 'default', property: 'textAlign' },
+  lh: { type: 'default', property: 'lineHeight' },
+  fs: { type: 'default', property: 'fontStyle' },
+  tt: { type: 'default', property: 'textTransform' },
+  td: { type: 'default', property: 'textDecoration' },
+
+  w: { type: 'default', property: 'width' },
+  miw: { type: 'default', property: 'minWidth' },
+  maw: { type: 'default', property: 'maxWidth' },
+  h: { type: 'default', property: 'height' },
+  mih: { type: 'default', property: 'minHeight' },
+  mah: { type: 'default', property: 'maxHeight' },
+
+  bgsz: { type: 'default', property: 'background-size' },
+  bgp: { type: 'default', property: 'background-position' },
+  bgr: { type: 'default', property: 'background-repeat' },
+  bga: { type: 'default', property: 'background-attachment' },
+
+  pos: { type: 'default', property: 'position' },
+  top: { type: 'default', property: 'top' },
+  left: { type: 'default', property: 'left' },
+  bottom: { type: 'default', property: 'bottom' },
+  inset: { type: 'default', property: 'inset' },
 };
