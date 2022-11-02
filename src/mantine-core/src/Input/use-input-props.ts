@@ -9,11 +9,16 @@ interface BaseProps extends InputWrapperBaseProps, InputSharedProps, DefaultProp
   id?: string;
 }
 
+interface UseInputPropsReturnType extends Record<string, any> {
+  wrapperProps: Record<string, any>;
+  inputProps: Record<string, any>;
+}
+
 export function useInputProps<T extends BaseProps, U extends Partial<T>>(
   component: string,
   defaultProps: U,
   props: T
-) {
+): UseInputPropsReturnType {
   const {
     label,
     description,
