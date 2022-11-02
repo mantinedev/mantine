@@ -7,7 +7,7 @@ const code = `
 <PasswordInput error />
 
 // Error as React node – red border color and message below input
-<PasswordInput error="Invalid email" />
+<PasswordInput error="Invalid password" />
 `;
 
 function Demo() {

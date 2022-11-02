@@ -8,7 +8,7 @@ import { useRef } from 'react';
 import { ScrollArea, Button, Stack, Group } from '@mantine/core';
 
 function Demo() {
-  const viewport = useRef<HTMLDivElement>();
+  const viewport = useRef<HTMLDivElement>(null);
 
   const scrollToBottom = () =>
     viewport.current.scrollTo({ top: viewport.current.scrollHeight, behavior: 'smooth' });
@@ -41,7 +41,7 @@ function Demo() {
 `;
 
 function Demo() {
-  const viewport = useRef<HTMLDivElement>();
+  const viewport = useRef<HTMLDivElement>(null);
   const scrollToBottom = () =>
     viewport.current.scrollTo({ top: viewport.current.scrollHeight, behavior: 'smooth' });
   const scrollToCenter = () =>
