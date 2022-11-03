@@ -15,6 +15,9 @@ export type ScrollAreaStylesNames = Selectors<typeof useStyles>;
 export interface ScrollAreaProps
   extends DefaultProps<ScrollAreaStylesNames, ScrollAreaStylesParams>,
     React.ComponentPropsWithRef<'div'> {
+      
+  children?: React.ReactNode;
+
   /** Scrollbar size in px */
   scrollbarSize?: number;
 
