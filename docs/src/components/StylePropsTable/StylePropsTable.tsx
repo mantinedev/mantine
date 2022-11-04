@@ -8,9 +8,13 @@ const THEME_KEYS = {
   spacing: 'theme.spacing',
 };
 
-export function StylePropsTable() {
-  const data = Object.keys(__unsafe_do_no_use_SYSTEM_PROPS).map((propName) => {
-    const propData = __unsafe_do_no_use_SYSTEM_PROPS[propName];
+export function StylePropsTable({
+  source = __unsafe_do_no_use_SYSTEM_PROPS,
+}: {
+  source: typeof __unsafe_do_no_use_SYSTEM_PROPS;
+}) {
+  const data = Object.keys(source).map((propName) => {
+    const propData = source[propName];
     const themeKey = THEME_KEYS[propData.type];
     return [
       <Code key="1">{propName}</Code>,
