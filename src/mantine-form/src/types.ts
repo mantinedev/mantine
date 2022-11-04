@@ -55,7 +55,7 @@ export type OnSubmit<Values, TransformValues extends _TransformValues<Values>> =
     values: Values,
     event: React.FormEvent<HTMLFormElement>
   ) => void
-) => (event: React.FormEvent<HTMLFormElement>) => void;
+) => (event?: React.FormEvent<HTMLFormElement>) => void;
 
 export type OnReset = (event: React.FormEvent<HTMLFormElement>) => void;
 
