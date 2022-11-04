@@ -38,10 +38,10 @@ function Demo() {
 
 ## With Next.js Link
 
-Next.js link does not work in the same way as other similar components. You will need to either
-wrap your component with it, or use `NextLink` component exported from `@mantine/next` package:
+Next.js link does not work in the same way as other similar components in all Next.js version:
 
 ```tsx
+// For Next.js 12 and below
 import Link from 'next/link';
 import { Button } from '@mantine/core';
 
@@ -55,13 +55,13 @@ function Demo() {
 ```
 
 ```tsx
-// Same as above
-import { NextLink } from '@mantine/next';
+// For Next.js 13 and above
+import Link from 'next/link';
 import { Button } from '@mantine/core';
 
 function Demo() {
   return (
-    <Button component={NextLink} href="/hello">
+    <Button component={Link} href="/hello">
       Next link button
     </Button>
   );

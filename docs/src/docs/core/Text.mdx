@@ -67,7 +67,7 @@ function Demo() {
 }
 ```
 
-### span prop
+## span prop
 
 Use `span` prop as a shorthand for `component="span"`:
 
@@ -80,36 +80,6 @@ function Demo() {
       <Text span>Same as below</Text>
       <Text component="span">Same as above</Text>
     </>
-  );
-}
-```
-
-### Usage with react-router
-
-```tsx
-import { Link } from 'react-router-dom';
-import { Text } from '@mantine/core';
-
-function Demo() {
-  return (
-    <Text component={Link} to="/react-router">
-      React router link
-    </Text>
-  );
-}
-```
-
-### Usage with Next.js
-
-```tsx
-import Link from 'next/link';
-import { Text } from '@mantine/core';
-
-function Demo() {
-  return (
-    <Link href="/hello" passHref>
-      <Text component="a">Next link</Text>
-    </Link>
   );
 }
 ```

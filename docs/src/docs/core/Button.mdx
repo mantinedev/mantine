@@ -139,36 +139,6 @@ Button is a [polymorphic component](/guides/polymorphic/), you can change root e
 
 <Demo data={ButtonDemos.component} />
 
-### Usage with react-router
-
-```tsx
-import { Link } from 'react-router-dom';
-import { Button } from '@mantine/core';
-
-function Demo() {
-  return (
-    <Button component={Link} to="/react-router">
-      React router link
-    </Button>
-  );
-}
-```
-
-### Usage with Next.js
-
-```tsx
-import Link from 'next/link';
-import { Button } from '@mantine/core';
-
-function Demo() {
-  return (
-    <Link href="/hello" passHref>
-      <Button component="a">Next link</Button>
-    </Link>
-  );
-}
-```
-
 ## Get ref
 
 ```tsx
