@@ -1,5 +1,7 @@
 # Mantine Form
 
+[![npm](https://img.shields.io/npm/dm/@mantine/form)](https://www.npmjs.com/package/@mantine/form)
+
 Form management library
 
 [View documentation](https://mantine.dev/)

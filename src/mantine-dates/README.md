@@ -1,5 +1,7 @@
 # Mantine dates
 
+[![npm](https://img.shields.io/npm/dm/@mantine/dates)](https://www.npmjs.com/package/@mantine/dates)
+
 Calendars, date and time pickers
 
 [View documentation](https://mantine.dev/)
