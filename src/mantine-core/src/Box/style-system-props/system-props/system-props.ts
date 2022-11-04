@@ -1,12 +1,12 @@
 import type { StyleProperty } from '../get-responsive-value/get-responsive-value';
 import type { SystemValueType } from '../value-getters/value-getters';
 
-export interface SystemProp {
+export interface SystemPropData {
   type: SystemValueType;
   property: StyleProperty;
 }
 
-export const SYSTEM_PROPS: Record<string, SystemProp> = {
+export const SYSTEM_PROPS: Record<string, SystemPropData> = {
   m: { type: 'spacing', property: 'margin' },
   mt: { type: 'spacing', property: 'marginTop' },
   mb: { type: 'spacing', property: 'marginBottom' },

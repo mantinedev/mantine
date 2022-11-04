@@ -2,9 +2,9 @@ import { CSSProperties } from 'react';
 import { MantineColor } from './MantineColor';
 import type { MantineNumberSize, MantineSize } from './MantineSize';
 
-type SystemProp<Value> = Value | Partial<Record<MantineSize | (string & {}), Value>>;
+export type SystemProp<Value> = Value | Partial<Record<MantineSize | (string & {}), Value>>;
 
-type SpacingValue = MantineNumberSize | (string & {});
+export type SpacingValue = MantineNumberSize | (string & {});
 
 export interface MantineStyleSystemProps {
   m?: SystemProp<SpacingValue>;
