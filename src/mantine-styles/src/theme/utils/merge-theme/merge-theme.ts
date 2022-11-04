@@ -10,7 +10,7 @@ export function mergeTheme(
   }
 
   // @ts-ignore
-  return Object.keys(currentTheme).reduce((acc, key) => {
+  const result: MantineThemeBase = Object.keys(currentTheme).reduce((acc, key) => {
     if (key === 'headings' && themeOverride.headings) {
       const sizes = themeOverride.headings.sizes
         ? Object.keys(currentTheme.headings.sizes).reduce((headingsAcc, h) => {
@@ -42,6 +42,14 @@ export function mergeTheme(
         : themeOverride[key] || currentTheme[key];
     return acc;
   }, {} as MantineThemeBase);
+
+  if (!(result.primaryColor in result.colors)) {
+    throw new Error(
+      'MantineProvider: Invalid theme.primaryColor, it accepts only key of theme.colors, learn more – https://mantine.dev/theming/colors/#primary-color'
+    );
+  }
+
+  return result;
 }
 
 export function mergeThemeWithFunctions(
