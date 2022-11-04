@@ -113,6 +113,9 @@ export interface CarouselProps
 
   /** Clear leading and trailing empty space that causes excessive scrolling. Use trimSnaps to only use snap points that trigger scrolling or keepSnaps to keep them. */
   containScroll?: 'trimSnaps' | 'keepSnaps' | '';
+
+  /** Determines whether arrow key should switch slides, true by default */
+  withKeyboardEvents?: boolean;
 }
 
 const defaultProps: Partial<CarouselProps> = {
@@ -134,6 +137,7 @@ const defaultProps: Partial<CarouselProps> = {
   withIndicators: false,
   skipSnaps: false,
   containScroll: '',
+  withKeyboardEvents: true,
 };
 
 export const _Carousel = forwardRef<HTMLDivElement, CarouselProps>((props, ref) => {
@@ -172,6 +176,7 @@ export const _Carousel = forwardRef<HTMLDivElement, CarouselProps>((props, ref) 
     breakpoints,
     skipSnaps,
     containScroll,
+    withKeyboardEvents,
     ...others
   } = useComponentDefaultProps('Carousel', defaultProps, props);
 
@@ -222,14 +227,16 @@ export const _Carousel = forwardRef<HTMLDivElement, CarouselProps>((props, ref) 
 
   const handleKeydown = useCallback(
     (event: React.KeyboardEvent<HTMLDivElement>) => {
-      if (event.key === 'ArrowRight') {
-        event.preventDefault();
-        handleNext();
-      }
+      if (withKeyboardEvents) {
+        if (event.key === 'ArrowRight') {
+          event.preventDefault();
+          handleNext();
+        }
 
-      if (event.key === 'ArrowLeft') {
-        event.preventDefault();
-        handlePrevious();
+        if (event.key === 'ArrowLeft') {
+          event.preventDefault();
+          handlePrevious();
+        }
       }
     },
     [embla]
