@@ -42,8 +42,10 @@ const { argv }: { argv: any } = yargs(hideBin(process.argv))
   if (argv._[0] === 'all' || argv.all) {
     await buildAllPackages(argv as BuildOptions);
   } else if (argv._[0] || argv.project) {
-    for (const item of argv._) {
-      await buildPackage((item || argv.project) as string, argv as BuildOptions);
+    const pkgList = argv._.length ? argv._ : [argv.project];
+
+    for (const item of pkgList) {
+      await buildPackage(item as string, argv as BuildOptions);
     }
   }
 })();
