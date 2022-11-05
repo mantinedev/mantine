@@ -1,12 +1,7 @@
 import React, { forwardRef } from 'react';
 import { useReducedMotion } from '@mantine/hooks';
-import {
-  extractSystemStyles,
-  DefaultProps,
-  useComponentDefaultProps,
-  useMantineTheme,
-} from '@mantine/styles';
-import { Box } from '../Box';
+import { DefaultProps, useComponentDefaultProps, useMantineTheme } from '@mantine/styles';
+import { Box, extractSystemStyles } from '../Box';
 import { useCollapse } from './use-collapse';
 
 export interface CollapseProps extends DefaultProps, React.ComponentPropsWithoutRef<'div'> {

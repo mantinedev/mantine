@@ -85,56 +85,6 @@ Core `createStyles` features overview:
 
 ## Components props
 
-### Shared props
-
-All Mantine components support these props:
-
-- `className` – adds class to root element.
-- `sx` – adds style to root element.
-- Margin props:
-  - `m` – sets `margin` property on root element.
-  - `my` – sets `margin-top` and `margin-bottom` properties on root element.
-  - `mx` – sets `margin-right` and `margin-left` properties on root element.
-  - `mt` – sets `margin-top` property on root element.
-  - `mb` – sets `margin-bottom` property on root element.
-  - `ml` – sets `margin-left` property on root element.
-  - `mr` – sets `margin-right` property on root element.
-- Padding props:
-  - `p` – sets `padding` property on root element
-  - `py` – sets `padding-top` and `padding-bottom` properties on root element
-  - `px` – sets `padding-right` and `padding-left` properties on root element
-  - `pt` – sets `padding-top` property on root element
-  - `pb` – sets `padding-bottom` property on root element
-  - `pl` – sets `padding-left` property on root element
-  - `pr` – sets `padding-right` property on root element
-
-```tsx
-import { Button } from '@mantine/core';
-
-function Demo() {
-  return (
-    <Button className="my-button" sx={{ backgroundColor: '#fff' }} mx={20} pt="xl">
-      My button
-    </Button>
-  );
-}
-```
-
-Margin props can get value from `theme.spacing`:
-
-```tsx
-<Button mt="xl" /> // -> margin-top: theme.spacing.xl
-<Button ml="-md" /> // -> margin-left: theme.spacing.md * -1
-<Button m={20} /> // -> margin: 20px
-```
-
-Same is applied to padding props:
-
-```tsx
-<Paper p="xl" /> // -> padding: theme.spacing.xl
-<Container px={30} /> // -> padding-left: 30px, padding-right: 30px
-```
-
 ### Color prop
 
 Mantine components work with colors defined in [theme.colors](/theming/colors/).

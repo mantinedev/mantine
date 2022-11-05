@@ -3,10 +3,10 @@ import { useId, useUncontrolled } from '@mantine/hooks';
 import {
   Selectors,
   DefaultProps,
-  extractSystemStyles,
   useMantineTheme,
   useComponentDefaultProps,
 } from '@mantine/styles';
+import { extractSystemStyles } from '../Box';
 import { ActionIcon } from '../ActionIcon';
 import { TextInputProps, TextInputStylesNames } from '../TextInput';
 import { Input } from '../Input';

@@ -9,11 +9,11 @@ import {
 import {
   DefaultProps,
   Selectors,
-  extractSystemStyles,
   getDefaultZIndex,
   useComponentDefaultProps,
 } from '@mantine/styles';
 import { groupOptions } from '@mantine/utils';
+import { extractSystemStyles } from '../Box';
 import { Input } from '../Input';
 import { DefaultValue, DefaultValueStylesNames } from './DefaultValue/DefaultValue';
 import { DefaultItem } from '../Select/DefaultItem/DefaultItem';

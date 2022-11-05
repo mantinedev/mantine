@@ -5,7 +5,7 @@ import {
   useCss,
   useMantineTheme,
 } from '@mantine/styles';
-import { getSystemStyles } from './get-system-styles/get-system-styles';
+import { getSystemStyles } from '../style-system-props/get-system-styles/get-system-styles';
 
 function extractSx(sx: Sx, theme: MantineTheme) {
   return typeof sx === 'function' ? sx(theme) : sx;

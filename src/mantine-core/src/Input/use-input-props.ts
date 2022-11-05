@@ -1,5 +1,6 @@
-import { useComponentDefaultProps, DefaultProps, extractSystemStyles } from '@mantine/styles';
+import { useComponentDefaultProps, DefaultProps } from '@mantine/styles';
 import { useId } from '@mantine/hooks';
+import { extractSystemStyles } from '../Box';
 import { InputWrapperBaseProps } from './InputWrapper/InputWrapper';
 import { InputSharedProps } from './Input';
 
@@ -8,11 +9,16 @@ interface BaseProps extends InputWrapperBaseProps, InputSharedProps, DefaultProp
   id?: string;
 }
 
+interface UseInputPropsReturnType extends Record<string, any> {
+  wrapperProps: Record<string, any>;
+  inputProps: Record<string, any>;
+}
+
 export function useInputProps<T extends BaseProps, U extends Partial<T>>(
   component: string,
   defaultProps: U,
   props: T
-) {
+): UseInputPropsReturnType {
   const {
     label,
     description,

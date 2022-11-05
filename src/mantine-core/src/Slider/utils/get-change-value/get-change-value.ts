@@ -19,11 +19,12 @@ export function getChangeValue({
     ? value
     : Math.min(Math.max(value, 0), containerWidth) / containerWidth;
   const dx = left * (max - min);
-  const minIsNegative = min <= 0;
-  const nextValue =
-    dx !== 0 ? Math.round(dx / step) * step + (minIsNegative ? min : 0) : Math.min(min, 0);
-  const nextValueWithPrecision = precision ? Number(nextValue.toFixed(precision)) : nextValue;
-  const finalValue = Math.min(nextValueWithPrecision, max);
+  const nextValue = (dx !== 0 ? Math.round(dx / step) * step : 0) + min;
+  const nextValueWithinStep = Math.max(nextValue - (nextValue % step), min);
 
-  return finalValue <= min ? min : finalValue;
+  if (precision !== undefined) {
+    return Number(nextValueWithinStep.toFixed(precision));
+  }
+
+  return nextValueWithinStep;
 }

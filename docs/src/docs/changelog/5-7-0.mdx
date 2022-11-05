@@ -4,10 +4,28 @@ title: 'Version 5.7.0'
 order: 1
 slug: /changelog/5-7-0/
 release: https://github.com/mantinedev/mantine/releases/tag/5.7.0
-date: 'October 20th, 2022'
+date: 'November 4th, 2022'
 ---
 
-import { ThemeDemos } from '@mantine/demos';
+import { StylePropsTable } from '../../components/StylePropsTable/StylePropsTable';
+import { ThemeDemos, FlexDemos } from '@mantine/demos';
+
+## Style props
+
+All Mantine components now support the following [style props](https://mantine.dev/styles/style-props/):
+
+<StylePropsTable />
+
+Style props support responsive styles:
+
+<Demo data={ThemeDemos.systemProps} />
+
+## Flex component
+
+[Flex](https://mantine.dev/core/flex/) component is an alternative to [Group](https://mantine.dev/core/group/) and [Stack](https://mantine.dev/core/stack/) components.
+It supports new responsive style props:
+
+<Demo data={FlexDemos.responsive} />
 
 ## Focus ring styles on theme
 
@@ -32,3 +50,6 @@ function Demo() {
 - [Collapse](https://mantine.dev/core/collapse/) component now supports `axis` prop, it is now possible to animate width
 - [Button](https://mantine.dev/core/button/) component now supports `loaderPosition="center"`
 - [Carousel](https://mantine.dev/others/carousel/) now supports `onSlideChange` prop
+- [MantineProvider](https://mantine.dev/theming/mantine-provider/) now includes [theme.primaryColor](https://mantine.dev/theming/colors/#primary-color) validation – it will throw an error if primary color was set to an invalid value
+- [use-form](https://mantine.dev/form/use-form/) `onSubmit` can now be called without form event
+- [Carousel](https://mantine.dev/others/carousel/) now supports `withKeyboardEvents` prop that allows to disable keyboard events handling
