@@ -1,5 +1,11 @@
 import React, { useEffect } from 'react';
-import { useScrollLock, useFocusTrap, useFocusReturn, useId } from '@mantine/hooks';
+import {
+  useScrollLock,
+  useFocusTrap,
+  useFocusReturn,
+  useId,
+  useClickOutside,
+} from '@mantine/hooks';
 import {
   DefaultProps,
   MantineNumberSize,
@@ -171,6 +177,7 @@ export function Modal(props: ModalProps) {
     { unstyled, classNames, styles, name: 'Modal' }
   );
   const focusTrapRef = useFocusTrap(trapFocus && opened);
+  const modalRef = useClickOutside(() => closeOnClickOutside && onClose());
   const _overlayOpacity =
     typeof overlayOpacity === 'number'
       ? overlayOpacity
@@ -179,7 +186,6 @@ export function Modal(props: ModalProps) {
       : 0.75;
 
   useScrollLock(shouldLockScroll && opened);
-
   const closeOnEscapePress = (event: KeyboardEvent) => {
     if (!trapFocus && event.key === 'Escape' && closeOnEscape) {
       onClose();
@@ -236,7 +242,6 @@ export function Modal(props: ModalProps) {
               <div
                 role="presentation"
                 className={classes.inner}
-                onClick={() => closeOnClickOutside && onClose()}
                 onKeyDown={(event) => {
                   const shouldTrigger =
                     (event.target as any)?.getAttribute('data-mantine-stop-propagation') !== 'true';
@@ -245,6 +250,7 @@ export function Modal(props: ModalProps) {
                 ref={focusTrapRef}
               >
                 <Paper<'div'>
+                  ref={modalRef}
                   className={classes.modal}
                   shadow={shadow}
                   p={padding}
