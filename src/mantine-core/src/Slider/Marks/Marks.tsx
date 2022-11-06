@@ -17,7 +17,7 @@ export interface MarksProps extends DefaultProps<MarksStylesNames> {
   onChange(value: number): void;
   offset?: number;
   disabled: boolean;
-  inverted?: boolean
+  inverted?: boolean;
 }
 
 export function Marks({
