@@ -27,7 +27,7 @@ import { Rating } from '@mantine/core';
 
 function Demo() {
   const [value, setValue] = useState(0);
-  return <Rating value={value} onChange={(currValue) => setValue(currValue)} />;
+  return <Rating value={value} onChange={setValue} />;
 }
 ```
 
