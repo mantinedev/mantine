@@ -162,9 +162,7 @@ export function parseColor(color: string): HsvaColor {
   // eslint-disable-next-line no-restricted-syntax
   for (const [rule, regexp] of Object.entries(VALIDATION_REGEXP)) {
     if (regexp.test(trimmed)) {
-      const result = CONVERTERS[rule](trimmed);
-
-      return result;
+      return CONVERTERS[rule](trimmed);
     }
   }
 
