@@ -53,5 +53,6 @@ export const SYSTEM_PROPS: Record<string, SystemPropData> = {
   top: { type: 'default', property: 'top' },
   left: { type: 'default', property: 'left' },
   bottom: { type: 'default', property: 'bottom' },
+  right: { type: 'default', property: 'right' },
   inset: { type: 'default', property: 'inset' },
 };

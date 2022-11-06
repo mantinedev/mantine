@@ -53,6 +53,7 @@ export interface MantineStyleSystemProps {
   top?: SystemProp<CSSProperties['top']>;
   left?: SystemProp<CSSProperties['left']>;
   bottom?: SystemProp<CSSProperties['bottom']>;
+  right?: SystemProp<CSSProperties['right']>;
   inset?: SystemProp<CSSProperties['inset']>;
 }
 
