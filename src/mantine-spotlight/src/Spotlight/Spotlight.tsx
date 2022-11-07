@@ -241,6 +241,7 @@ export function Spotlight({
                 onMouseLeave={resetHovered}
               >
                 <TextInput
+                  autoComplete="chrome-please-just-do-not-show-it-thanks"
                   {...searchInputProps}
                   value={query}
                   onChange={handleInputChange}
@@ -252,7 +253,6 @@ export function Spotlight({
                   placeholder={searchPlaceholder}
                   icon={searchIcon}
                   onMouseEnter={resetHovered}
-                  autoComplete="chrome-please-just-do-not-show-it-thanks"
                 />
                 <ActionsWrapper>
                   <ActionsList

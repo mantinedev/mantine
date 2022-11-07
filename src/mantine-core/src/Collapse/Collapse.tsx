@@ -1,12 +1,7 @@
 import React, { forwardRef } from 'react';
 import { useReducedMotion } from '@mantine/hooks';
-import {
-  extractSystemStyles,
-  DefaultProps,
-  useComponentDefaultProps,
-  useMantineTheme,
-} from '@mantine/styles';
-import { Box } from '../Box';
+import { DefaultProps, useComponentDefaultProps, useMantineTheme } from '@mantine/styles';
+import { Box, extractSystemStyles } from '../Box';
 import { useCollapse } from './use-collapse';
 
 export interface CollapseProps extends DefaultProps, React.ComponentPropsWithoutRef<'div'> {
@@ -27,12 +22,16 @@ export interface CollapseProps extends DefaultProps, React.ComponentPropsWithout
 
   /** Should opacity be animated */
   animateOpacity?: boolean;
+
+  /** Axis of collapse  */
+  axis?: 'x' | 'y';
 }
 
 const defaultProps: Partial<CollapseProps> = {
   transitionDuration: 200,
   transitionTimingFunction: 'ease',
   animateOpacity: true,
+  axis: 'y',
 };
 
 export const Collapse = forwardRef<HTMLDivElement, CollapseProps>((props, ref) => {
@@ -44,6 +43,7 @@ export const Collapse = forwardRef<HTMLDivElement, CollapseProps>((props, ref) =
     style,
     onTransitionEnd,
     animateOpacity,
+    axis,
     ...others
   } = useComponentDefaultProps('Collapse', defaultProps, props);
   const theme = useMantineTheme();
@@ -58,6 +58,7 @@ export const Collapse = forwardRef<HTMLDivElement, CollapseProps>((props, ref) =
     transitionDuration: duration,
     transitionTimingFunction,
     onTransitionEnd,
+    axis,
   });
 
   if (duration === 0) {

@@ -23,6 +23,13 @@ interface MantineTheme {
   // never – focus ring is always hidden (not recommended)
   focusRing: 'auto' | 'always' | 'never';
 
+  // Change focus ring styles
+  focusRingStyles: {
+    styles(theme: MantineThemeBase): CSSObject;
+    resetStyles(theme: MantineThemeBase): CSSObject;
+    inputStyles(theme: MantineThemeBase): CSSObject;
+  };
+
   // Determines whether motion based animations should be disabled for
   // users who prefer to reduce motion in their OS settings
   respectReducedMotion: boolean;
@@ -179,6 +186,14 @@ learn how to setup dark theme in your application.
 - `never` – focus ring is always hidden, it is not recommended – users who navigate with keyboard will not have visual indication of current focused element
 
 <Demo data={ThemeDemos.focusRing} />
+
+### focusRingStyles
+
+`theme.focusRingStyles` allows you to customize focus ring styles that are applied to all `<button />`,
+`<a />` and `<input />` elements that are the part of the component. Note that `theme` object that is
+passed as an argument to `resetStyles`, `styles` and `inputStyles` functions does not have [theme.fn](/theming/functions/).
+
+<Demo data={ThemeDemos.focusRingStyles} />
 
 ### defaultRadius
 

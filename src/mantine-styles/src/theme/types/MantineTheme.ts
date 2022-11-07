@@ -24,6 +24,12 @@ export interface MantinePrimaryShade {
   dark: Shade;
 }
 
+interface MantineFocusRingStyles {
+  styles(theme: MantineThemeBase): CSSObject;
+  resetStyles(theme: MantineThemeBase): CSSObject;
+  inputStyles(theme: MantineThemeBase): CSSObject;
+}
+
 interface MantineThemeFunctions {
   fontStyles(): any;
   focusStyles(selector?: string): any;
@@ -95,6 +101,7 @@ export interface MantineTheme {
   datesLocale: string;
   components: MantineThemeComponents;
   globalStyles: (theme: MantineTheme) => CSSObject;
+  focusRingStyles: MantineFocusRingStyles;
 }
 
 interface ThemeComponent {

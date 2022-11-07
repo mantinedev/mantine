@@ -145,11 +145,22 @@ storiesOf('AppShell/AppShell', module)
       {content}
     </AppShell>
   ))
+  .add('Fixed with Header breakpoints', () => (
+    <AppShell fixed header={<Header height={{ base: 50, sm: 80, md: 100 }}>Header</Header>}>
+      {content}
+    </AppShell>
+  ))
   .add('Fixed with Navbar breakpoints', () => (
     <AppShell fixed navbar={<Navbar width={{ base: 100, sm: 200, md: 300 }}>Navbar</Navbar>}>
       {content}
     </AppShell>
   ))
+  .add('Fixed with Footer breakpoints', () => (
+    <AppShell fixed footer={<Footer height={{ base: 50, sm: 80, md: 100 }}>Footer</Footer>}>
+      {content}
+    </AppShell>
+  ))
+
   .add('With offset breakpoint', () => (
     <AppShell
       fixed

@@ -27,15 +27,15 @@ export default createStyles((theme, { size }: SaturationStyles, getRef) => ({
     WebkitTapHighlightColor: 'transparent',
 
     [`&:focus .${getRef('saturationThumb')}`]: {
-      outlineOffset: 2,
-      outline:
-        theme.focusRing === 'always' || theme.focusRing === 'auto'
-          ? `2px solid ${theme.colors[theme.primaryColor][theme.colorScheme === 'dark' ? 7 : 5]}`
-          : 'none',
+      ...(theme.focusRing === 'always' || theme.focusRing === 'auto'
+        ? theme.focusRingStyles.styles(theme)
+        : theme.focusRingStyles.resetStyles(theme)),
     },
 
     [`&:focus:not(:focus-visible) .${getRef('saturationThumb')}`]: {
-      outline: theme.focusRing === 'auto' || theme.focusRing === 'never' ? 'none' : undefined,
+      ...(theme.focusRing === 'auto' || theme.focusRing === 'never'
+        ? theme.focusRingStyles.resetStyles(theme)
+        : null),
     },
   },
 

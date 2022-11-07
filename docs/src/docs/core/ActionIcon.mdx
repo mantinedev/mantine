@@ -69,36 +69,6 @@ function Demo() {
 }
 ```
 
-### Usage with react-router
-
-```tsx
-import { Link } from 'react-router-dom';
-import { ActionIcon } from '@mantine/core';
-
-function Demo() {
-  return (
-    <ActionIcon component={Link} to="/react-router">
-      React router link
-    </ActionIcon>
-  );
-}
-```
-
-### Usage with Next.js
-
-```tsx
-import Link from 'next/link';
-import { ActionIcon } from '@mantine/core';
-
-function Demo() {
-  return (
-    <Link href="/hello" passHref>
-      <ActionIcon component="a">Next link</ActionIcon>
-    </Link>
-  );
-}
-```
-
 ## Get element ref
 
 ```tsx

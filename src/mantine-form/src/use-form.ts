@@ -41,7 +41,7 @@ export function useForm<
   clearInputErrorOnChange = true,
   validateInputOnChange = false,
   validateInputOnBlur = false,
-  transformValues = ((values) => values) as any,
+  transformValues = ((values: Values) => values) as any,
   validate: rules,
 }: UseFormInput<Values, TransformValues> = {}): UseFormReturnType<Values, TransformValues> {
   const [touched, setTouched] = useState(initialTouched);
@@ -189,7 +189,7 @@ export function useForm<
 
   const onSubmit: OnSubmit<Values, TransformValues> =
     (handleSubmit, handleValidationFailure) => (event) => {
-      event.preventDefault();
+      event?.preventDefault();
       const results = validate();
 
       if (results.hasErrors) {

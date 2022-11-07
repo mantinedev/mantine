@@ -65,8 +65,8 @@ export const _MenuItem = forwardRef<HTMLButtonElement, MenuItemProps>(
     return (
       <Box
         component="button"
-        {...others}
         type="button"
+        {...others}
         tabIndex={-1}
         onFocus={handleFocus}
         className={cx(classes.item, className)}

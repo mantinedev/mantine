@@ -1,12 +1,8 @@
 import React, { forwardRef } from 'react';
 import TextareaAutosize from 'react-textarea-autosize';
 import { useId } from '@mantine/hooks';
-import {
-  DefaultProps,
-  MantineSize,
-  extractSystemStyles,
-  useComponentDefaultProps,
-} from '@mantine/styles';
+import { DefaultProps, MantineSize, useComponentDefaultProps } from '@mantine/styles';
+import { extractSystemStyles } from '../Box';
 import { InputWrapperBaseProps, Input, InputSharedProps } from '../Input';
 import { TextInputStylesNames } from '../TextInput/TextInput';
 import useStyles from './Textarea.styles';

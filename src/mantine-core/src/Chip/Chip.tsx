@@ -6,11 +6,10 @@ import {
   MantineSize,
   MantineColor,
   Selectors,
-  extractSystemStyles,
   useComponentDefaultProps,
 } from '@mantine/styles';
 import { ForwardRefWithStaticComponents } from '@mantine/utils';
-import { Box } from '../Box';
+import { Box, extractSystemStyles } from '../Box';
 import { CheckIcon } from '../Checkbox';
 import { ChipGroup } from './ChipGroup/ChipGroup';
 import { useChipGroup } from './ChipGroup.context';
