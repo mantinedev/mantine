@@ -1,21 +1,13 @@
-import { useState } from 'react';
+import { useReducer } from 'react';
+import { isFunction } from '../utils';
 
-export function useToggle<T = boolean>(options: readonly [T, T] = [false, true] as any) {
-  const [state, setState] = useState(options[0]);
+export function useToggle<T = boolean>(options: readonly T[] = [false, true] as any) {
+  const [[option], toggle] = useReducer((state: T[], action: React.SetStateAction<T>) => {
+    const value = isFunction(action) ? action(state[0]) : action;
+    const index = Math.abs(state.indexOf(value));
 
-  const toggle = (value?: React.SetStateAction<T>) => {
-    if (typeof value !== 'undefined') {
-      setState(value);
-    } else {
-      setState((current) => {
-        if (current === options[0]) {
-          return options[1];
-        }
+    return state.slice(index).concat(state.slice(0, index));
+  }, options as T[]);
 
-        return options[0];
-      });
-    }
-  };
-
-  return [state, toggle] as const;
+  return [option, toggle as (value?: React.SetStateAction<T>) => void] as const;
 }
