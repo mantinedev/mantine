@@ -30,13 +30,43 @@ export function RadioGroup() {
 
 export function Sizes() {
   const items = MANTINE_SIZES.map((size) => (
-    <Radio.Group defaultValue="ng" key={size} size={size} mt="xl">
+    <Radio.Group defaultValue="ng" key={size} size={size}>
       <Radio label="React" value="react" />
       <Radio label="Angular" value="ng" />
       <Radio label="Svelte" value="sv" disabled />
     </Radio.Group>
   ));
-  return <div style={{ padding: 20 }}>{items}</div>;
+
+  return (
+    <div style={{ padding: 20 }}>
+      <Stack>
+        <div>
+          Independent Radio buttons:
+          <Radio label="React" value="react" size="xs" />
+          <Radio label="React" value="react" size="sm" />
+          <Radio label="React" value="react" size="md" />
+          <Radio label="React" value="react" size="lg" />
+          <Radio label="React" value="react" size="xl" />
+        </div>
+        <div>
+          Radio Group:
+          {items}
+        </div>
+        <div>
+          Override size of specific radio button in group:
+          <Radio.Group size="sm">
+            <Radio label="default" value="def1" />
+            <Radio label="xs" value="xs" size="xs" />
+            <Radio label="sm" value="sm" size="sm" />
+            <Radio label="md" value="md" size="md" />
+            <Radio label="lg" value="lg" size="lg" />
+            <Radio label="xl" value="xl" size="xl" />
+            <Radio label="default" value="def2" />
+          </Radio.Group>
+        </div>
+      </Stack>
+    </div>
+  );
 }
 
 export function ComparedToCheckbox() {
