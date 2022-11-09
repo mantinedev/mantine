@@ -160,9 +160,9 @@ export const _NavLink = forwardRef<HTMLButtonElement, NavLinkProps>((props, ref)
           </span>
         )}
       </UnstyledButton>
-      <Collapse in={_opened}>
+      {withChildren && <Collapse in={_opened}>
         <div className={classes.children}>{children}</div>
-      </Collapse>
+      </Collapse> }
     </>
   );
 });
