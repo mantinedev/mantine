@@ -10,6 +10,7 @@ function Demo() {
     <Select
       placeholder="Custom active styles"
       label="Custom active styles"
+      defaultValue="Vue"
       data={['React', 'Angular', 'Vue', 'Svelte']}
       styles={(theme) => ({
         item: {
@@ -37,6 +38,7 @@ function Demo() {
       <Select
         placeholder="Custom active styles"
         label="Custom active styles"
+        defaultValue="Vue"
         data={['React', 'Angular', 'Vue', 'Svelte']}
         styles={(theme) => ({
           item: {
