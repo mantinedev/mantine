@@ -1,189 +1,67 @@
-/* eslint-disable no-console */
 import React, { useState } from 'react';
-import { storiesOf } from '@storybook/react';
-import { IconHeart } from '@tabler/icons';
-import { useDisclosure } from '@mantine/hooks';
-import { Slider } from './Slider/Slider';
-import { RangeSlider } from './RangeSlider/RangeSlider';
-import { Button } from '../Button';
+import { Slider } from './index';
 
-const paragraph =
-  'Lorem ipsum dolor sit amet consectetur adipisicing elit. Iusto magnam veniam excepturi numquam facere odio eveniet nihil quidem iure. Saepe et illo, earum quia tenetur incidunt quae cum iure iusto!';
+export default { title: 'Slider' };
 
-function Wrapper(props: Omit<React.ComponentPropsWithoutRef<typeof Slider>, 'value' | 'onChange'>) {
-  const [value, setValue] = useState(50);
-  return (
-    <>
-      <Slider value={value} onChange={setValue} mb={30} {...props} />
-      <button type="button" onClick={() => setValue(25)}>
-        Set value
-      </button>
-    </>
-  );
-}
-
-function RangeWrapper(
-  props: Omit<React.ComponentPropsWithoutRef<typeof RangeSlider>, 'value' | 'onChange'>
-) {
-  const [value, setValue] = useState<[number, number]>([50, 100]);
-  return (
-    <>
-      <RangeSlider value={value} onChange={setValue} mb={30} {...props} />
-      <button type="button" onClick={() => setValue([25, 50])}>
-        Set range
-      </button>
-    </>
-  );
-}
-
-function ThumbSize() {
-  return (
-    <div style={{ width: 380, padding: 40 }}>
-      <Slider thumbSize={40} defaultValue={20} />
-      <RangeSlider thumbSize={40} mt="xl" defaultValue={[20, 80]} />
-    </div>
-  );
-}
-
-function Disabled() {
-  const [disabled, handlers] = useDisclosure(true);
+export function StepIssue() {
+  const [value1to9, setValue1to9] = useState(1);
+  const [value0to9, setValue0to9] = useState(0);
 
   return (
-    <div style={{ width: 380, padding: 40 }}>
+    <div style={{ maxWidth: 400, padding: 40 }}>
+      <p>
+        Odd number min and 2 per step. Should be 1, 3, 5, 7, 9. The dragging also seem to be lagging
+        behind.
+      </p>
+      Value: {value1to9}
       <Slider
-        disabled={disabled}
-        defaultValue={50}
+        value={value1to9}
+        onChange={(valNew) => setValue1to9(valNew)}
         marks={[
-          { value: 0, label: 'xs' },
-          { value: 25, label: 'sm' },
-          { value: 50, label: 'md' },
-          { value: 75, label: 'lg' },
-          { value: 100, label: 'xl' },
+          { value: 1, label: '1' },
+          { value: 3, label: '3' },
+          { value: 5, label: '5' },
+          { value: 7, label: '7' },
+          { value: 9, label: '9' },
         ]}
+        min={1}
+        max={9}
+        step={2}
       />
-
-      <RangeSlider
-        mt="xl"
-        step={25}
-        minRange={25}
-        disabled={disabled}
+      <p style={{ marginTop: 60 }}>
+        Even number min, odd number max and 2 per step. Should not go to 9
+      </p>
+      Value: {value0to9}
+      <Slider
+        value={value0to9}
+        onChange={(valNew) => setValue0to9(valNew)}
         marks={[
-          { value: 0, label: 'xs' },
-          { value: 25, label: 'sm' },
-          { value: 50, label: 'md' },
-          { value: 75, label: 'lg' },
-          { value: 100, label: 'xl' },
+          { value: 0, label: '0' },
+          { value: 2, label: '2' },
+          { value: 4, label: '4' },
+          { value: 6, label: '6' },
+          { value: 8, label: '8' },
         ]}
+        min={0}
+        max={9}
+        step={2}
       />
-      <Button onClick={handlers.toggle} mt={30}>
-        Toggle
-      </Button>
     </div>
   );
 }
 
-storiesOf('Slider', module)
-  .add('Controlled', () => (
-    <div style={{ width: 380, padding: 40 }}>
-      <Wrapper
-        step={25}
-        color="red"
-        marks={[
-          { value: 0, label: 'xs' },
-          { value: 25, label: 'sm' },
-          { value: 50, label: 'md' },
-          { value: 75, label: 'lg' },
-          { value: 100, label: 'xl' },
-        ]}
-      />
+export function NegativeValues() {
+  return (
+    <div style={{ maxWidth: 400, padding: 40 }}>
+      <Slider min={-20} max={-10} />
+    </div>
+  );
+}
 
-      <RangeWrapper
-        styles={{ root: { marginTop: 25 } }}
-        step={25}
-        minRange={25}
-        color="red"
-        marks={[
-          { value: 0, label: 'xs' },
-          { value: 25, label: 'sm' },
-          { value: 50, label: 'md' },
-          { value: 75, label: 'lg' },
-          { value: 100, label: 'xl' },
-        ]}
-      />
+export function DecimalValues() {
+  return (
+    <div style={{ maxWidth: 400, padding: 40 }}>
+      <Slider min={1} max={2} step={0.01} precision={2} />
     </div>
-  ))
-  .add('Disabled', () => <Disabled />)
-  .add('Near text: user-select', () => (
-    <div style={{ maxWidth: 500, margin: 'auto' }}>
-      <Slider mt="xl" />
-      <RangeSlider mt="xl" />
-      <p>{paragraph}</p>
-    </div>
-  ))
-  .add('onChangeEnd', () => (
-    <div style={{ maxWidth: 500, margin: 'auto' }}>
-      <Slider mt="xl" onChangeEnd={console.log} />
-      <RangeSlider mt="xl" onChangeEnd={console.log} />
-    </div>
-  ))
-  .add('With thumb children', () => (
-    <div style={{ width: 380, padding: 40 }}>
-      <Slider
-        thumbChildren={<IconHeart />}
-        color="red"
-        defaultValue={40}
-        styles={{ thumb: { borderWidth: 2, height: 26, width: 26, padding: 3 } }}
-      />
-    </div>
-  ))
-  .add('Boundaries', () => (
-    <div style={{ width: 380, padding: 40 }}>
-      <div style={{ backgroundColor: '#b8d2fc', height: 30, marginBottom: 5 }} />
-
-      <div style={{ backgroundColor: '#b8d2fc' }}>
-        <Slider
-          color="red"
-          defaultValue={40}
-          marks={[
-            { value: 0, label: 'xs' },
-            { value: 25, label: 'sm' },
-            { value: 50, label: 'md' },
-            { value: 75, label: 'lg' },
-            { value: 100, label: 'xl' },
-          ]}
-        />
-      </div>
-    </div>
-  ))
-  .add('Negative marks', () => (
-    <div style={{ width: 380, padding: 40 }}>
-      <RangeSlider
-        mt="xl"
-        min={-100}
-        max={100}
-        defaultValue={[-100, 100]}
-        marks={[
-          { value: -100, label: '-100' },
-          { value: -75, label: '-75' },
-          { value: -50, label: '-50' },
-          { value: -25, label: '-25' },
-          { value: 0 },
-          { value: 25, label: '25' },
-          { value: 50, label: '50' },
-          { value: 75, label: '75' },
-          { value: 100, label: '100' },
-        ]}
-      />
-    </div>
-  ))
-  .add('Thumb size', () => <ThumbSize />)
-  .add('Min and max numbers', () => (
-    <div style={{ padding: 40 }}>
-      <Slider labelAlwaysOn min={1} max={100} step={10} />
-    </div>
-  ))
-  .add('Negative min number', () => (
-    <div style={{ padding: 40 }}>
-      <Slider labelAlwaysOn min={-100} max={10} step={10} />
-    </div>
-  ));
+  );
+}
