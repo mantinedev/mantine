@@ -35,6 +35,14 @@ const variants = (['default', 'filled', 'unstyled'] as const).map((variant) => (
     <TextInput label="Text input" placeholder="Text input" variant={variant} />
   </Group>
 ));
+const inputFieldPositions = (['inside', 'top', 'bottom'] as const).map((inputFieldPosition) => (
+  <TagInput
+    label={`inputFieldPosition ${inputFieldPosition}`}
+    defaultValue={['react', 'ng']}
+    placeholder="Input tag"
+    inputFieldPosition={inputFieldPosition}
+  />
+));
 
 storiesOf('TagInput', module)
   .add('Alignment', () => (
@@ -56,6 +64,11 @@ storiesOf('TagInput', module)
   .add('Controlled', () => <Controlled />)
   .add('Sizes', () => <div style={{ padding: 40 }}>{sizes}</div>)
   .add('Variants', () => <div style={{ padding: 40 }}>{variants}</div>)
+  .add('inputFieldPositions', () => (
+    <div style={{ padding: 40 }}>
+      <Stack spacing={100}>{inputFieldPositions}</Stack>
+    </div>
+  ))
   .add('Max Selected Values', () => (
     <Group style={{ padding: 40, paddingBottom: 0 }} grow align="flex-start">
       <TagInput
