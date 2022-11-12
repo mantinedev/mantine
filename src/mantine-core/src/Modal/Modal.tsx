@@ -208,14 +208,15 @@ export function Modal(props: ModalProps) {
   useFocusReturn({ opened, shouldReturnFocus: trapFocus && withFocusReturn });
 
   const clickTarget = useRef<EventTarget>(null);
+
   useWindowEvent('mousedown', (e) => {
     clickTarget.current = e.target;
   });
 
   const handleOutsideClick = () => {
-    if (clickTarget.current !== overlayRef.current) return;
-
-    closeOnClickOutside && onClose();
+    if (clickTarget.current === overlayRef.current) {
+      closeOnClickOutside && onClose();
+    }
   };
 
   return (
