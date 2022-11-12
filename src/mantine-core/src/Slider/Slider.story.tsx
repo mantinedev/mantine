@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Slider } from './index';
+import { Slider, RangeSlider } from './index';
 
 export default { title: 'Slider' };
 
@@ -62,6 +62,14 @@ export function DecimalValues() {
   return (
     <div style={{ maxWidth: 400, padding: 40 }}>
       <Slider min={1} max={2} step={0.01} precision={2} />
+    </div>
+  );
+}
+
+export function MinRangeWithNegativeValues() {
+  return (
+    <div style={{ maxWidth: 400, padding: 40 }}>
+      <RangeSlider min={-10} max={10} defaultValue={[-10, 0]} />
     </div>
   );
 }

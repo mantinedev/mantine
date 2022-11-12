@@ -199,11 +199,11 @@ export const RangeSlider = forwardRef<HTMLDivElement, RangeSliderProps>((props, 
     clone[index] = val;
 
     if (index === 0) {
-      if (val > clone[1] - minRange) {
+      if (val > clone[1] - (minRange - 0.000000001)) {
         clone[1] = Math.min(val + minRange, max);
       }
 
-      if (val > (max - minRange || min)) {
+      if (val > (max - (minRange - 0.000000001) || min)) {
         clone[index] = valueRef.current[index];
       }
     }
