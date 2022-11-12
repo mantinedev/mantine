@@ -46,6 +46,7 @@ export function extractSystemStyles<T extends Record<string, any>>(
     bottom,
     right,
     inset,
+    display,
     ...rest
   } = others;
   const systemStyles = filterProps({
@@ -91,6 +92,7 @@ export function extractSystemStyles<T extends Record<string, any>>(
     bottom,
     right,
     inset,
+    display,
   });
 
   return { systemStyles, rest: rest as unknown as T };
