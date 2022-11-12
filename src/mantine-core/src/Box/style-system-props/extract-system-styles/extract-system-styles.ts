@@ -44,6 +44,7 @@ export function extractSystemStyles<T extends Record<string, any>>(
     top,
     left,
     bottom,
+    right,
     inset,
     ...rest
   } = others;
@@ -88,6 +89,7 @@ export function extractSystemStyles<T extends Record<string, any>>(
     top,
     left,
     bottom,
+    right,
     inset,
   });
 

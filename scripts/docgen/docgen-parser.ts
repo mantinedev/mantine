@@ -47,6 +47,7 @@ const EXCLUDE_PROPS = [
   'miw',
   'opacity',
   'pos',
+  'right',
   'ta',
   'td',
   'top',
