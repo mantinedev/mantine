@@ -84,8 +84,11 @@ export const Radio: RadioComponent = forwardRef<HTMLInputElement, RadioProps>((p
   } = useComponentDefaultProps('Radio', defaultProps, props);
   const ctx = useRadioGroupContext();
 
+  const contextSize = ctx?.size ?? size;
+  const componentSize = props.size ? size : contextSize;
+
   const { classes } = useStyles(
-    { color, size: ctx?.size || size, transitionDuration, labelPosition, error: !!error },
+    { color, size: componentSize, transitionDuration, labelPosition, error: !!error },
     { classNames, styles, unstyled, name: 'Radio' }
   );
 
@@ -106,7 +109,7 @@ export const Radio: RadioComponent = forwardRef<HTMLInputElement, RadioProps>((p
       sx={sx}
       style={style}
       id={uuid}
-      size={ctx?.size || size}
+      size={componentSize}
       labelPosition={labelPosition}
       label={label}
       description={description}
