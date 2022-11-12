@@ -17,6 +17,7 @@ export interface MarksProps extends DefaultProps<MarksStylesNames> {
   onChange(value: number): void;
   offset?: number;
   disabled: boolean;
+  inverted?: boolean;
 }
 
 export function Marks({
@@ -32,6 +33,7 @@ export function Marks({
   onChange,
   disabled,
   unstyled,
+  inverted,
 }: MarksProps) {
   const { classes, cx } = useStyles(
     { size, color, disabled },
@@ -46,7 +48,7 @@ export function Marks({
     >
       <div
         className={cx(classes.mark, {
-          [classes.markFilled]: isMarkFilled({ mark, value, offset }),
+          [classes.markFilled]: isMarkFilled({ mark, value, offset, inverted }),
         })}
       />
       {mark.label && (
