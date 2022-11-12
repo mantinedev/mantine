@@ -89,7 +89,8 @@ Modal is built with [Transition](/core/transition/) component.
 You can change transitions with props:
 
 - **transition** – predefined transition name or transition object
-- **transitionDuration** – transition duration in ms, defaults to 300ms. Note that, modal has two elements which are animated: overlay and modal body. Overlay changes opacity during transition and its animation is twice as fast as modal body.
+- **transitionDuration** – enter transition duration in ms, defaults to 300ms. Note that, modal has two elements which are animated: overlay and modal body. Overlay changes opacity during transition and its animation is twice as fast as modal body.
+- **exitTransitionDuration** – exit transition duration in md, defaults to 0ms
 - **transitionTimingFunction** – timing function, defaults to `theme.transitionTimingFunction`
 
 <Demo data={ModalDemos.transitions} />
