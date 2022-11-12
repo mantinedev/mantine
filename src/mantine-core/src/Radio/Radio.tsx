@@ -23,9 +23,6 @@ export interface RadioProps
   /** Radio label */
   label?: React.ReactNode;
 
-  /** Radio value */
-  value: string;
-
   /** Active radio color from theme.colors */
   color?: MantineColor;
 
