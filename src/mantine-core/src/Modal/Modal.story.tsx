@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Modal } from './Modal';
 import { Button } from '../Button';
+import { ColorInput } from '../ColorInput';
 
 export default { title: 'Modal' };
 
@@ -49,6 +50,17 @@ export function WithPageScrollbars() {
     <div style={{ padding: 40 }}>
       <WrappedModal>Wrapped modal</WrappedModal>
       {content}
+    </div>
+  );
+}
+
+export function WithPortalChildren() {
+  return (
+    <div style={{ padding: 40 }}>
+      <WrappedModal>
+        <ColorInput label="No Portal" mb="md" />
+        <ColorInput label="Within Portal" mb="md" withinPortal />
+      </WrappedModal>
     </div>
   );
 }
