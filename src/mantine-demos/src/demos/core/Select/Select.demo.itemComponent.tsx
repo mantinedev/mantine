@@ -48,7 +48,7 @@ const SelectItem = forwardRef<HTMLDivElement, ItemProps>(
 
         <div>
           <Text size="sm">{label}</Text>
-          <Text size="xs" color="dimmed">
+          <Text size="xs" opacity={0.65}>
             {description}
           </Text>
         </div>
@@ -118,7 +118,7 @@ const SelectItem = forwardRef<HTMLDivElement, ItemProps>(
 
         <div>
           <Text size="sm">{label}</Text>
-          <Text size="xs" color="dimmed">
+          <Text size="xs" opacity={0.65}>
             {description}
           </Text>
         </div>
