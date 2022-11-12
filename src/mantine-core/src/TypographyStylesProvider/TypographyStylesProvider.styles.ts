@@ -57,6 +57,11 @@ export default createStyles((theme) => {
         marginBottom: theme.spacing.lg,
       },
 
+      '& mark': {
+        backgroundColor: theme.fn.themeColor('yellow', theme.colorScheme === 'dark' ? 5 : 2),
+        color: theme.colorScheme === 'dark' ? theme.colors.dark[9] : 'inherit',
+      },
+
       '& hr': {
         marginTop: theme.spacing.md,
         marginBottom: theme.spacing.sm,
