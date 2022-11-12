@@ -32,6 +32,7 @@ const EXCLUDE_PROPS = [
   'bgsz',
   'bottom',
   'c',
+  'display',
   'ff',
   'fs',
   'fw',

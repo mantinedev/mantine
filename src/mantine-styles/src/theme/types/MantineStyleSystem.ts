@@ -54,6 +54,8 @@ export interface MantineStyleSystemProps {
   left?: SystemProp<CSSProperties['left']>;
   bottom?: SystemProp<CSSProperties['bottom']>;
   inset?: SystemProp<CSSProperties['inset']>;
+
+  display?: SystemProp<CSSProperties['display']>;
 }
 
 export type MantineStyleSystemSize = keyof MantineStyleSystemProps;
