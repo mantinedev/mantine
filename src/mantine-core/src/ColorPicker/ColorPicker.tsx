@@ -10,7 +10,7 @@ import { AlphaSlider } from './AlphaSlider/AlphaSlider';
 import { Saturation, SaturationStylesNames } from './Saturation/Saturation';
 import { Swatches, SwatchesStylesNames } from './Swatches/Swatches';
 import { ThumbStylesNames } from './Thumb/Thumb';
-import { HsvaColor } from './types';
+import { ColorFormat, HsvaColor } from './types';
 import useStyles from './ColorPicker.styles';
 
 export type ColorPickerStylesNames =
@@ -34,7 +34,7 @@ export interface ColorPickerBaseProps {
   onChangeEnd?(color: string): void;
 
   /** Color format */
-  format?: 'hex' | 'rgba' | 'rgb' | 'hsl' | 'hsla';
+  format?: ColorFormat;
 
   /** Set to false to display swatches only */
   withPicker?: boolean;
@@ -120,7 +120,7 @@ export const ColorPicker = forwardRef<HTMLDivElement, ColorPickerProps>(
     const formatRef = useRef(format);
     const valueRef = useRef<string>(null);
     const updateRef = useRef(true);
-    const withAlpha = format === 'rgba' || format === 'hsla';
+    const withAlpha = format === 'hexa' || format === 'rgba' || format === 'hsla';
 
     const [_value, setValue] = useUncontrolled({
       value,
