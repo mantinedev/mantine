@@ -105,7 +105,7 @@ export interface MantineTheme {
 }
 
 interface ThemeComponent {
-  defaultProps?: Record<string, any>;
+  defaultProps?: Record<string, any> | ((theme: MantineTheme) => Record<string, any>);
   classNames?: Record<string, string>;
   styles?:
     | Record<string, CSSObject>
