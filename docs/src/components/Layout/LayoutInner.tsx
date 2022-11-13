@@ -36,6 +36,7 @@ const query = graphql`
             description
             package
             search
+            hidden
           }
         }
       }
