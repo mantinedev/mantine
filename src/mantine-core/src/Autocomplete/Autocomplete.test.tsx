@@ -1,5 +1,6 @@
 import React from 'react';
 import { render } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import {
   itSupportsSystemProps,
   itSupportsInputProps,
@@ -74,5 +75,24 @@ describe('@mantine/core/Autocomplete', () => {
       <Autocomplete {...defaultProps} data={largeDataSet} initiallyOpened limit={10} />
     );
     expect(queries.getItems(container)).toHaveLength(10);
+  });
+
+  it('emits value for the item not in the list', async () => {
+    const onNewItem = jest.fn();
+    const onItemSubmit = jest.fn();
+    const { container } = render(
+      <Autocomplete
+        {...defaultProps}
+        data={['A', 'B', 'C']}
+        onNewItem={onNewItem}
+        onItemSubmit={onItemSubmit}
+      />
+    );
+    const input = container.getElementsByTagName('input')[0];
+
+    await userEvent.type(input, 'new value{enter}');
+
+    expect(onNewItem).toHaveBeenCalledWith({ value: 'new value' });
+    expect(onItemSubmit).not.toHaveBeenCalled();
   });
 });

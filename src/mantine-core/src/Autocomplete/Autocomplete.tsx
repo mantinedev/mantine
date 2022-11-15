@@ -33,6 +33,9 @@ export interface AutocompleteProps
 
   /** Called when item from dropdown was selected */
   onItemSubmit?(item: AutocompleteItem): void;
+
+  /** Called when pressing Enter for item that is not in the list */
+  onNewItem?(item: AutocompleteItem): void;
 }
 
 export function defaultFilter(value: string, item: AutocompleteItem) {
@@ -69,6 +72,7 @@ export const Autocomplete = forwardRef<HTMLInputElement, AutocompleteProps>((pro
     unstyled,
     itemComponent,
     onItemSubmit,
+    onNewItem,
     onKeyDown,
     onFocus,
     onBlur,
@@ -158,12 +162,14 @@ export const Autocomplete = forwardRef<HTMLInputElement, AutocompleteProps>((pro
       }
 
       case 'Enter': {
+        event.preventDefault();
         if (filteredData[hovered] && dropdownOpened) {
-          event.preventDefault();
           handleChange(filteredData[hovered].value);
           typeof onItemSubmit === 'function' && onItemSubmit(filteredData[hovered]);
-          setDropdownOpened(false);
+        } else {
+          typeof onNewItem === 'function' && onNewItem({ value: _value });
         }
+        setDropdownOpened(false);
         break;
       }
 
