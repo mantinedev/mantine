@@ -225,7 +225,28 @@ with any `RichTextEditor` controls. Floating menu will appear in an empty line:
 
 ## Sticky toolbar
 
+Set `sticky` prop on `RichTextEditor.Toolbar` component to make toolbar sticky,
+control `top` property with `stickyOffset`. For example, on mantine.dev documentation
+website there is a header with `60px` height, in this case we will need to
+set `stickyOffset={60}` to make sticky position correctly with fixed positioned element.
+
+<Demo data={TipTapDemos.usage} demoProps={{ toggle: true }} />
+
 ## Editor context
+
+Use `useRichTextEditorContext` hook to get [Editor](https://tiptap.dev/api/editor) from
+the context. This hook can be used to create custom control or run any operations supported
+by the Tiptap [editor API](https://tiptap.dev/api/editor).
+
+```tsx
+import { useRichTextEditorContext } from '@mantine/tiptap';
+import { Button } from '@mantine/core';
+
+function Demo() {
+  const { editor } = useRichTextEditorContext();
+  return <Button onClick={() => editor?.chain().focus().toggleBold().run()}>Make bold</Button>;
+}
+```
 
 ## Custom controls
 
