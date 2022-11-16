@@ -3,7 +3,7 @@ export { RichTextEditor } from './RichTextEditor';
 export { useRichTextEditorContext } from './RichTextEditor.context';
 export { DEFAULT_LABELS } from './labels';
 
-export type { RichTextEditorProps } from './RichTextEditor';
+export type { RichTextEditorProps, RichTextEditorStylesNames } from './RichTextEditor';
 export type { RichTextEditorToolbarProps } from './Toolbar/Toolbar';
 export type { RichTextEditorControlProps } from './controls/Control/Control';
 export type { RichTextEditorColorControlProps } from './controls/ColorControl/ColorControl';
