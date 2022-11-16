@@ -7,8 +7,8 @@ export function scopeTab(node: HTMLElement, event: KeyboardEvent) {
     return;
   }
   const finalTabbable = tabbable[event.shiftKey ? 0 : tabbable.length - 1];
-  const leavingFinalTabbable =
-    finalTabbable === document.activeElement || node === document.activeElement;
+  const { activeElement } = node.getRootNode();
+  const leavingFinalTabbable = finalTabbable === activeElement || node === activeElement;
 
   if (!leavingFinalTabbable) {
     return;
