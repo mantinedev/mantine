@@ -121,7 +121,7 @@ function Demo() {
     ],
   });
 
-  return <RichTextEditor>{/* content */}</RichTextEditor>;
+  return <RichTextEditor editor={editor}>{/* content */}</RichTextEditor>;
 }
 ```
 
@@ -166,6 +166,48 @@ You can change code highlight styles using [Styles API](/styles/styles-api/):
 <Demo data={TipTapDemos.codeHighlightStyles} demoProps={{ toggle: true }} />
 
 ## Typography styles
+
+By default, `RichTextEditor` renders content with [TypographyStylesProvider](/core/typography-styles-provider/) and some additional styles.
+You can disable these styles by setting `withTypographyStyles={false}`:
+
+```tsx
+import { RichTextEditor } from '@mantine/tiptap';
+import { useEditor } from '@tiptap/react';
+
+function Demo() {
+  const editor = useEditor({
+    extensions: [
+      // ... your extensions
+    ],
+  });
+
+  return (
+    <RichTextEditor editor={editor} withTypographyStyles={false}>
+      {/* content */}
+    </RichTextEditor>
+  );
+}
+```
+
+Then you will be able to add your own styles either with [global styles](/styles/global/)
+or with [Styles API](/styles/styles-api/):
+
+```tsx
+// ...
+<RichTextEditor
+  editor={editor}
+  withTypographyStyles={false}
+  styles={{
+    content: {
+      '& p': {
+        color: 'silver',
+      },
+    },
+  }}
+>
+  {/* content */}
+</RichTextEditor>
+```
 
 ## Bubble menu
 
