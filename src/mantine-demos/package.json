@@ -20,6 +20,8 @@
     "@tiptap/react": "*",
     "@tiptap/core": "*",
     "@tiptap/extension-link": "*",
+    "@tiptap/extension-color": "*",
+    "@tiptap/extension-text-style": "*",
     "@tiptap/extension-highlight": "*",
     "@tiptap/starter-kit": "*",
     "@tiptap/extension-underline": "*",

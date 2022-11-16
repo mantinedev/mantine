@@ -30,9 +30,67 @@ Install with npm:
 npm install @mantine/tiptap @mantine/core @mantine/hooks @tabler/icons @tiptap/react @tiptap/extension-link @tiptap/starter-kit
 ```
 
+## TipTap editor
+
+`@mantine/tiptap` provides a UI for [Tiptap](https://tiptap.dev/). `RichTextEditor` component
+works with [Editor](https://tiptap.dev/api/editor) instance of tiptap.
+This means that you have full control over the editor [state and configuration](https://tiptap.dev/guide/configuration)
+with [useEditor hook](https://tiptap.dev/installation/react).
+
+In other words, `RichTextEditor` component does not manage state for you,
+controls just execute operations on the `Editor` instance. If you want to
+implement something that is related to state or component value (e.g. controlled mode, value transforms to HTML/Markdown),
+you should look for documentation on [tiptap.dev](https://tiptap.dev/) website.
+
 ## Usage
 
 <Demo data={TipTapDemos.usage} />
+
+## Available controls
+
+Included with `@tiptap/starter-kit`:
+
+- `RichTextEditor.H1`
+- `RichTextEditor.H2`
+- `RichTextEditor.H3`
+- `RichTextEditor.H4`
+- `RichTextEditor.H5`
+- `RichTextEditor.H6`
+- `RichTextEditor.BulletList`
+- `RichTextEditor.OrderedList`
+- `RichTextEditor.Bold`
+- `RichTextEditor.Italic`
+- `RichTextEditor.Strikethrough`
+- `RichTextEditor.ClearFormatting`
+- `RichTextEditor.Blockquote`
+- `RichTextEditor.Code`
+- `RichTextEditor.CodeBlock`
+- `RichTextEditor.Hr`
+
+Controls that require [@tiptap/extension-link](https://www.npmjs.com/package/@tiptap/extension-link)
+
+- `RichTextEditor.Link`
+- `RichTextEditor.Unlink`
+
+Controls that require [@tiptap/extension-text-align](https://www.npmjs.com/package/@tiptap/extension-text-align):
+
+- `RichTextEditor.AlignLeft`
+- `RichTextEditor.AlignRight`
+- `RichTextEditor.AlignCenter`
+- `RichTextEditor.AlignJustify`
+
+Controls that require [@tiptap/extension-color](https://www.npmjs.com/package/@tiptap/extension-color) and [@tiptap/extension-text-style](https://www.npmjs.com/package/@tiptap/extension-text-style) extensions:
+
+- `RichTextEditor.ColorPicker`
+- `RichTextEditor.Color`
+- `RichTextEditor.UnsetColor`
+
+Other controls with required extensions:
+
+- `RichTextEditor.Underline` requires [@tiptap/extension-underline](https://www.npmjs.com/package/@tiptap/extension-underline)
+- `RichTextEditor.Superscript` requires [@tiptap/extension-superscript](https://www.npmjs.com/package/@tiptap/extension-superscript)
+- `RichTextEditor.Subscript` requires [@tiptap/extension-subscript](https://www.npmjs.com/package/@tiptap/extension-subscript)
+- `RichTextEditor.Highlight` requires [@tiptap/extension-highlight](https://www.npmjs.com/package/@tiptap/extension-highlight)
 
 ## Link extension
 
@@ -58,6 +116,24 @@ function Demo() {
 
 ## Text color
 
+To use text color you will need to install additional packages:
+
+```bash
+yarn add @tiptap/extension-color @tiptap/extension-text-style
+```
+
+```bash
+npm install @tiptap/extension-color @tiptap/extension-text-style
+```
+
+You can use the following controls to change text color:
+
+- `RichTextEditor.ColorPicker` – allows to pick colors from given predefined color swatches and with [ColorPicker](/core/color-picker/) component
+- `RichTextEditor.Color` – allows to apply given color with one click
+- `RichTextEditor.UnsetColor` – clears color styles
+
+<Demo data={TipTapDemos.colors} />
+
 ## Code highlight
 
 ## Typography styles
@@ -67,3 +143,9 @@ function Demo() {
 ## Floating menu
 
 ## Sticky toolbar
+
+## Editor context
+
+## Custom controls
+
+## Labels and localization
