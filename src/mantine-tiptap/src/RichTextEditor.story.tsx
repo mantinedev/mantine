@@ -25,7 +25,7 @@ lowlight.registerLanguage('css', css);
 lowlight.registerLanguage('js', js);
 lowlight.registerLanguage('ts', ts);
 
-export default { title: 'Editor' };
+export default { title: 'TipTap' };
 
 function BasicEditor({
   editorProps,

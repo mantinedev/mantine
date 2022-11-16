@@ -36,6 +36,26 @@ npm install @mantine/tiptap @mantine/core @mantine/hooks @tabler/icons @tiptap/r
 
 ## Link extension
 
+`@mantine/tiptap` provides custom `Link` extension that is required to be used instead of
+`@tiptap/extension-link` in order for `Ctrl + K` keyboard shortcut to work:
+
+```tsx
+// Use Link extension exported from the @mantine/tiptap package
+import { RichTextEditor, Link } from '@mantine/tiptap';
+import { useEditor } from '@tiptap/react';
+
+function Demo() {
+  const editor = useEditor({
+    extensions: [
+      Link,
+      // ... other extensions
+    ],
+  });
+
+  return <RichTextEditor>{/* content */}</RichTextEditor>;
+}
+```
+
 ## Text color
 
 ## Code highlight

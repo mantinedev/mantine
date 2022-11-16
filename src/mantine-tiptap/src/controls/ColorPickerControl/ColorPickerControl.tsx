@@ -28,13 +28,10 @@ export interface ColorPickerControlProps
 
   /** List of colors that the user can choose from */
   colors: string[];
-
-  /** Determines whether tooltips over controls should be visible */
-  disableTooltips?: boolean;
 }
 
 export const ColorPickerControl = forwardRef<HTMLButtonElement, ColorPickerControlProps>(
-  ({ popoverProps, colors, disableTooltips, colorPickerProps, ...others }, ref) => {
+  ({ popoverProps, colors, colorPickerProps, ...others }, ref) => {
     const { unstyled } = useContextStylesApi();
     const { editor, labels } = useRichTextEditorContext();
     const [opened, { toggle, close }] = useDisclosure(false);
@@ -110,77 +107,59 @@ export const ColorPickerControl = forwardRef<HTMLButtonElement, ColorPickerContr
           <Tooltip.Group closeDelay={200}>
             <Group position="right" spacing="xs" mt="sm">
               {state === 'palette' && (
-                <Tooltip
-                  label={labels.colorPickerCancel}
-                  withArrow
-                  withinPortal
+                <ActionIcon
+                  variant="default"
+                  onClick={close}
                   unstyled={unstyled}
-                  disabled={disableTooltips}
+                  title={labels.colorPickerCancel}
+                  aria-label={labels.colorPickerCancel}
                 >
-                  <ActionIcon variant="default" onClick={close} unstyled={unstyled}>
-                    <IconX stroke={1.5} size={16} />
-                  </ActionIcon>
-                </Tooltip>
+                  <IconX stroke={1.5} size={16} />
+                </ActionIcon>
               )}
 
-              <Tooltip
-                label={labels.colorPickerClear}
-                withArrow
-                withinPortal
+              <ActionIcon
+                variant="default"
+                onClick={handleClear}
                 unstyled={unstyled}
-                disabled={disableTooltips}
+                title={labels.colorPickerClear}
+                aria-label={labels.colorPickerClear}
               >
-                <ActionIcon variant="default" onClick={handleClear} unstyled={unstyled}>
-                  <IconCircleOff stroke={1.5} size={16} />
-                </ActionIcon>
-              </Tooltip>
+                <IconCircleOff stroke={1.5} size={16} />
+              </ActionIcon>
 
               {state === 'palette' ? (
-                <Tooltip
-                  label={labels.colorPickerColorPicker}
-                  withArrow
-                  withinPortal
+                <ActionIcon
+                  variant="default"
+                  onClick={() => setState('colorPicker')}
                   unstyled={unstyled}
-                  disabled={disableTooltips}
+                  title={labels.colorPickerColorPicker}
+                  aria-label={labels.colorPickerColorPicker}
                 >
-                  <ActionIcon
-                    variant="default"
-                    onClick={() => setState('colorPicker')}
-                    unstyled={unstyled}
-                  >
-                    <IconColorPicker stroke={1.5} size={16} />
-                  </ActionIcon>
-                </Tooltip>
+                  <IconColorPicker stroke={1.5} size={16} />
+                </ActionIcon>
               ) : (
-                <Tooltip
-                  label={labels.colorPickerPalette}
-                  withArrow
-                  withinPortal
-                  disabled={disableTooltips}
+                <ActionIcon
+                  variant="default"
+                  onClick={() => setState('palette')}
                   unstyled={unstyled}
+                  aria-label={labels.colorPickerPalette}
+                  title={labels.colorPickerPalette}
                 >
-                  <ActionIcon
-                    variant="default"
-                    onClick={() => setState('palette')}
-                    unstyled={unstyled}
-                  >
-                    <IconPalette stroke={1.5} size={16} />
-                  </ActionIcon>
-                </Tooltip>
+                  <IconPalette stroke={1.5} size={16} />
+                </ActionIcon>
               )}
 
               {state === 'colorPicker' && (
-                <Tooltip
-                  label={labels.colorPickerSave}
-                  withArrow
-                  withinPortal
-                  disabled={disableTooltips}
+                <ActionIcon
+                  variant="default"
+                  onClick={close}
                   unstyled={unstyled}
+                  title={labels.colorPickerSave}
+                  aria-label={labels.colorPickerSave}
                 >
-                  <ActionIcon variant="default" onClick={close} unstyled={unstyled}>
-                    <IconCheck stroke={1.5} size={16} />
-                  </ActionIcon>
-                </Tooltip>
+                  <IconCheck stroke={1.5} size={16} />
+                </ActionIcon>
               )}
             </Group>
           </Tooltip.Group>

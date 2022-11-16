@@ -95,19 +95,19 @@ export interface RichTextEditorLabels {
   /** Save button content in link editor */
   linkEditorSave: string;
 
-  /** Cancel button tooltip text in color picker control */
+  /** Cancel button title text in color picker control */
   colorPickerCancel: string;
 
-  /** Clear button tooltip text in color picker control */
+  /** Clear button title text in color picker control */
   colorPickerClear: string;
 
-  /** Color picker button tooltip text in color picker control */
+  /** Color picker button title text in color picker control */
   colorPickerColorPicker: string;
 
-  /** Palette button tooltip text in color picker control */
+  /** Palette button title text in color picker control */
   colorPickerPalette: string;
 
-  /** Save button tooltip text in color picker control */
+  /** Save button title text in color picker control */
   colorPickerSave: string;
 
   /** aria-label for color palette colors */
