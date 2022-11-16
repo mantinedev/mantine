@@ -46,9 +46,20 @@ you should look for documentation on [tiptap.dev](https://tiptap.dev/) website.
 
 <Demo data={TipTapDemos.usage} />
 
-## Available controls
+## Controls and extensions
 
-Included with `@tiptap/starter-kit`:
+Some controls require installation of additional [Tiptap extensions](https://tiptap.dev/extensions).
+For example, if you want to use `RichTextEditor.Underline` control, you will need to install `@tiptap/extension-underline` package:
+
+```bash
+yarn add @tiptap/extension-underline
+```
+
+```bash
+npm install @tiptap/extension-underline
+```
+
+Included with `@tiptap/starter-kit` (should be installed by default):
 
 - `RichTextEditor.H1`
 - `RichTextEditor.H2`
@@ -67,12 +78,12 @@ Included with `@tiptap/starter-kit`:
 - `RichTextEditor.CodeBlock`
 - `RichTextEditor.Hr`
 
-Controls that require [@tiptap/extension-link](https://www.npmjs.com/package/@tiptap/extension-link)
+Controls that require [@tiptap/extension-link](https://www.npmjs.com/package/@tiptap/extension-link) extension:
 
 - `RichTextEditor.Link`
 - `RichTextEditor.Unlink`
 
-Controls that require [@tiptap/extension-text-align](https://www.npmjs.com/package/@tiptap/extension-text-align):
+Controls that require [@tiptap/extension-text-align](https://www.npmjs.com/package/@tiptap/extension-text-align) extension:
 
 - `RichTextEditor.AlignLeft`
 - `RichTextEditor.AlignRight`
