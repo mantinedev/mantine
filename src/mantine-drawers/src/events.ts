@@ -1,10 +1,6 @@
 import { createUseExternalEvents } from '@mantine/utils';
 
-import {
-  DrawerSettings,
-  OpenConfirmDrawer,
-  OpenContextDrawer,
-} from './context';
+import { DrawerSettings, OpenConfirmDrawer, OpenContextDrawer } from './context';
 
 type DrawersEvents = {
   openDrawer(payload: DrawerSettings): void;

@@ -21,7 +21,7 @@ interface CloseAllAction {
 
 export function drawersReducer(
   state: DrawersState,
-  action: OpenAction | CloseAction | CloseAllAction,
+  action: OpenAction | CloseAction | CloseAllAction
 ): DrawersState {
   switch (action.type) {
     case 'OPEN': {

@@ -11,9 +11,8 @@ export type DrawerSettings = Partial<Omit<DrawerProps, 'opened'>> & {
 export type ConfirmLabels = Record<'confirm' | 'cancel', ReactNode>;
 
 export interface OpenConfirmDrawer extends DrawerSettings, ConfirmDrawerProps {}
-export interface OpenContextDrawer<
-  CustomProps extends Record<string, unknown> = {},
-> extends DrawerSettings {
+export interface OpenContextDrawer<CustomProps extends Record<string, unknown> = {}>
+  extends DrawerSettings {
   innerProps: CustomProps;
 }
 
@@ -34,7 +33,7 @@ export interface DrawersContextProps {
   openConfirmDrawer: (props: OpenConfirmDrawer) => string;
   openContextDrawer: <CustomProps extends Record<string, unknown>>(
     drawer: string,
-    props: OpenContextDrawer<CustomProps>,
+    props: OpenContextDrawer<CustomProps>
   ) => string;
   closeDrawer: (id: string | undefined, canceled?: boolean) => void;
   closeAll: () => void;

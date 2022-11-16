@@ -7,7 +7,7 @@ export function useDrawers() {
 
   if (!ctx) {
     throw new Error(
-      '[@mantine/drawers] useDrawers hook was called outside of context, wrap your app with DrawersProvider component',
+      '[@mantine/drawers] useDrawers hook was called outside of context, wrap your app with DrawersProvider component'
     );
   }
 

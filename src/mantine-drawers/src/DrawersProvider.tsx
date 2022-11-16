@@ -68,12 +68,7 @@ function separateConfirmDrawerProps(props: OpenConfirmDrawer) {
   };
 }
 
-export function DrawersProvider({
-  children,
-  drawerProps,
-  labels,
-  drawers,
-}: DrawersProviderProps) {
+export function DrawersProvider({ children, drawerProps, labels, drawers }: DrawersProviderProps) {
   const [state, dispatch] = useReducer(drawersReducer, {
     drawers: [],
     current: null,
@@ -90,7 +85,7 @@ export function DrawersProvider({
       });
       dispatch({ type: 'CLOSE_ALL' });
     },
-    [state.drawers],
+    [state.drawers]
   );
 
   const openDrawer = ({ drawerId, ...props }: DrawerSettings) => {
@@ -120,10 +115,7 @@ export function DrawersProvider({
     return id;
   };
 
-  const openContextDrawer = (
-    drawer: string,
-    { drawerId, ...props }: OpenContextDrawer,
-  ) => {
+  const openContextDrawer = (drawer: string, { drawerId, ...props }: OpenContextDrawer) => {
     const id = drawerId || randomId();
     dispatch({
       type: 'OPEN',
@@ -152,14 +144,13 @@ export function DrawersProvider({
       drawer?.props?.onClose?.();
       dispatch({ type: 'CLOSE', payload: drawer.id });
     },
-    [closeAll, state.drawers],
+    [closeAll, state.drawers]
   );
 
   useDrawersEvents({
     openDrawer,
     openConfirmDrawer,
-    openContextDrawer: ({ drawer, ...payload }) =>
-      openContextDrawer(drawer, payload),
+    openContextDrawer: ({ drawer, ...payload }) => openContextDrawer(drawer, payload),
     closeDrawer,
     closeAllDrawers: closeAll,
   });
@@ -173,7 +164,7 @@ export function DrawersProvider({
       closeDrawer,
       closeAll,
     }),
-    [closeAll, state.drawers, closeDrawer],
+    [closeAll, state.drawers, closeDrawer]
   );
 
   const getCurrentDrawer = () => {
@@ -185,19 +176,13 @@ export function DrawersProvider({
         return {
           drawerProps: rest,
           content: ContextDrawer ? (
-            <ContextDrawer
-              innerProps={innerProps}
-              context={ctx}
-              id={state.current.id}
-            />
+            <ContextDrawer innerProps={innerProps} context={ctx} id={state.current.id} />
           ) : null,
         };
       }
       case 'confirm': {
-        const {
-          drawerProps: separatedDrawerProps,
-          confirmProps: separatedConfirmProps,
-        } = separateConfirmDrawerProps(state.current.props);
+        const { drawerProps: separatedDrawerProps, confirmProps: separatedConfirmProps } =
+          separateConfirmDrawerProps(state.current.props);
 
         return {
           drawerProps: separatedDrawerProps,
@@ -211,8 +196,7 @@ export function DrawersProvider({
         };
       }
       case 'content': {
-        const { children: currentDrawerChildren, ...rest } =
-          state.current.props;
+        const { children: currentDrawerChildren, ...rest } = state.current.props;
 
         return {
           drawerProps: rest,

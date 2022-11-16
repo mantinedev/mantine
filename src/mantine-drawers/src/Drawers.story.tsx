@@ -61,10 +61,9 @@ function Demo() {
       closeOnConfirm: false,
       children: (
         <Text size="sm" color="dimmed">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Ratione
-          magnam modi vitae molestias unde tempora exercitationem fugit, ex
-          repellat doloribus maiores facilis quo quis, itaque temporibus
-          obcaecati vel iusto praesentium.
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Ratione magnam modi vitae
+          molestias unde tempora exercitationem fugit, ex repellat doloribus maiores facilis quo
+          quis, itaque temporibus obcaecati vel iusto praesentium.
         </Text>
       ),
       onCancel: () => console.log('Cancel'),
@@ -91,11 +90,7 @@ function Demo() {
 storiesOf('Drawers Manager', module).add('Custom drawer', () => (
   <DrawersProvider
     drawers={{
-      hello: ({
-        context,
-        id,
-        innerProps,
-      }: ContextDrawerProps<{ contextProp: string }>) => {
+      hello: ({ context, id, innerProps }: ContextDrawerProps<{ contextProp: string }>) => {
         console.log(innerProps, id, context);
         return (
           <div>
