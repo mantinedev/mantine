@@ -45,13 +45,9 @@ export function useComponentDefaultProps<T extends Record<string, any>, U extend
   component: string,
   defaultProps: U,
   props: T
-): [keyof U] extends [keyof T]
-  ? T
-  : {
-      [Key in Exclude<keyof T, keyof U>]: T[Key];
-    } & {
-      [Key in Extract<keyof T, keyof U>]-?: U[Key] & T[Key];
-    } {
+): T & {
+  [Key in Extract<keyof T, keyof U>]-?: U[Key] & T[Key];
+} {
   const theme = useMantineTheme();
   const contextProps = theme.components[component]?.defaultProps;
   return { ...defaultProps, ...contextProps, ...filterProps(props) };
