@@ -114,5 +114,6 @@ RichTextEditor.ColorPicker = controls.ColorPickerControl;
 RichTextEditor.Color = controls.ColorControl;
 RichTextEditor.Highlight = controls.HighlightControl;
 RichTextEditor.Hr = controls.HrControl;
+RichTextEditor.UnsetColor = controls.UnsetColorControl;
 
 RichTextEditor.displayName = '@mantine/tiptap/RichTextEditor';

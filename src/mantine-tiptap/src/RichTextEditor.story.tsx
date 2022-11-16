@@ -131,6 +131,7 @@ function BasicEditor({
             <RichTextEditor.Color color="#1098AD" />
             <RichTextEditor.Color color="#37B24D" />
             <RichTextEditor.Color color="#F59F00" />
+            <RichTextEditor.UnsetColor />
           </RichTextEditor.ControlsGroup>
         </RichTextEditor.Toolbar>
 

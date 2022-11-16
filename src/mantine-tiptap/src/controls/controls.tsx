@@ -24,6 +24,7 @@ import {
   IconCode,
   IconHighlight,
   IconLineDashed,
+  IconCircleOff,
 } from '@tabler/icons';
 import { createControl } from './ControlBase/create-control';
 
@@ -193,4 +194,10 @@ export const HrControl = createControl({
   label: 'highlightControlLabel',
   icon: (props) => <IconLineDashed {...props} stroke={1.5} />,
   operation: { name: 'setHorizontalRule' },
+});
+
+export const UnsetColorControl = createControl({
+  label: 'unsetColorControlLabel',
+  icon: (props) => <IconCircleOff {...props} stroke={1.5} />,
+  operation: { name: 'unsetColor' },
 });

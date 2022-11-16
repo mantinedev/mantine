@@ -74,6 +74,9 @@ export interface RichTextEditorLabels {
   /** RichTextEditor.ColorPicker control aria-label */
   colorPickerControlLabel: string;
 
+  /** RichTextEditor.UnsetColor control aria-label */
+  unsetColorControlLabel: string;
+
   /** RichTextEditor.Highlight control aria-label */
   highlightControlLabel: string;
 
@@ -143,6 +146,7 @@ export const DEFAULT_LABELS: RichTextEditorLabels = {
   codeBlockControlLabel: 'Code block',
   subscriptControlLabel: 'Subscript',
   superscriptControlLabel: 'Superscript',
+  unsetColorControlLabel: 'Unset color',
 
   // Link editor
   linkEditorInputLabel: 'Enter URL',
