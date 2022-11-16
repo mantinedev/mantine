@@ -103,6 +103,7 @@ export default createStyles(
     },
 
     content: {
+      backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.white,
       padding: theme.spacing.md,
 
       '& .ProseMirror': {
