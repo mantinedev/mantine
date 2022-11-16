@@ -26,7 +26,7 @@
 - [`@mantine/notifications`](https://mantine.dev/others/notifications/) – a fully featured notifications system
 - [`@mantine/spotlight`](https://mantine.dev/others/spotlight/) – `Ctrl + K` command center for your application
 - [`@mantine/prism`](https://mantine.dev/others/prism/) – code highlight built with [prism-react-renderer](https://github.com/FormidableLabs/prism-react-renderer)
-- [`@mantine/rte`](https://mantine.dev/others/rte/) – a Quill based rich text editor
+- [`@mantine/tiptap`](https://mantine.dev/others/tiptap/) – a Tiptap based rich text editor
 - [`@mantine/dropzone`](https://mantine.dev/others/dropzone/) – manages files drag 'n' drop to an area or entire screen
 - [`@mantine/carousel`](https://mantine.dev/others/carousel/) – Carousel component
 - [`@mantine/nprogress`](https://mantine.dev/others/nprogress/) – navigation progress
