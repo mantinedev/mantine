@@ -133,6 +133,13 @@ function Demo() {
 }
 ```
 
+## Disabled button with tooltip
+
+Disabled buttons do not trigger `onMouseLeave` ([react issue](https://github.com/facebook/react/issues/18753)).
+If you need to display tooltip for disabled button, do not use `disabled` prop, instead set `data-disabled` attribute:
+
+<Demo data={ButtonDemos.disabledTooltip} />
+
 ## Polymorphic component
 
 Button is a [polymorphic component](/guides/polymorphic/), you can change root element:
