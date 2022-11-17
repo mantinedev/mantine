@@ -7,8 +7,8 @@ export function createAriaHider(
   containerNode: HTMLElement,
   selector: string = 'body > :not(script)'
 ) {
-  const rootNodes: Value[] = Array.from<HTMLElement>(document.querySelectorAll(selector))
-    .map((node) => {
+  const rootNodes: Value[] = Array.from<HTMLElement>(document.querySelectorAll(selector)).map(
+    (node) => {
       if (node?.shadowRoot?.contains(containerNode) || node.contains(containerNode)) {
         return undefined;
       }
@@ -20,7 +20,8 @@ export function createAriaHider(
       }
 
       return { node, ariaHidden };
-    });
+    }
+  );
 
   return () => {
     rootNodes.forEach((item) => {
