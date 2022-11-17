@@ -26,6 +26,7 @@ function Demo() {
         transition="pop-top-left"
         transitionDuration={80}
         transitionTimingFunction="ease"
+        withinPortal
       />
     </div>
   );

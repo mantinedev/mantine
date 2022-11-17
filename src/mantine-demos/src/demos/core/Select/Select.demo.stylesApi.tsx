@@ -40,6 +40,7 @@ function Demo() {
         label="Custom active styles"
         defaultValue="Vue"
         data={['React', 'Angular', 'Vue', 'Svelte']}
+        withinPortal
         styles={(theme) => ({
           item: {
             // applies styles to selected item

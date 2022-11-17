@@ -16,6 +16,7 @@ export const flip: MantineDemo = {
     <Select
       placeholder="Pick one"
       label="Your favorite framework/library"
+      withinPortal
       data={[
         { value: 'react', label: 'React' },
         { value: 'ng', label: 'Angular' },

@@ -46,6 +46,7 @@ export function Demo() {
         nothingFound="Nothing found"
         searchable
         creatable
+        withinPortal
         getCreateLabel={(query) => `+ Create ${query}`}
         onCreate={(query) => {
           const item = { value: query, label: query };

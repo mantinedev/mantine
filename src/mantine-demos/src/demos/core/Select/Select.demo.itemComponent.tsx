@@ -137,6 +137,7 @@ export function CustomSelectDemo(props: any) {
       searchable
       maxDropdownHeight={400}
       nothingFound="Nobody here"
+      withinPortal
       filter={(value, item) =>
         item.label.toLowerCase().includes(value.toLowerCase().trim()) ||
         item.description.toLowerCase().includes(value.toLowerCase().trim())

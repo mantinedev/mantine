@@ -27,6 +27,7 @@ function Demo() {
       <Select
         label="Your favorite framework/library"
         placeholder="Pick one"
+        withinPortal
         data={[
           { value: 'react', label: 'React' },
           { value: 'ng', label: 'Angular' },
