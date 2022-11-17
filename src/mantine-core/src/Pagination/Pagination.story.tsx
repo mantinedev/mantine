@@ -12,3 +12,11 @@ export function Controlled() {
     </>
   );
 }
+
+export function DecimalTotal() {
+  return <Pagination total={45.331} />;
+}
+
+export function NegativeTotal() {
+  return <Pagination total={-10} />;
+}
