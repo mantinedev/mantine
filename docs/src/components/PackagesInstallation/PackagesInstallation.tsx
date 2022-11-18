@@ -44,7 +44,10 @@ export function PackagesInstallation({ extraPackages = [] }: PackagesInstallatio
       onClick={() => toggleSelection(item.package)}
     >
       <td>
-        <Checkbox checked={selection.includes(item.package)} sx={{ pointerEvents: 'none', display: 'flex' }} />
+        <Checkbox
+          checked={selection.includes(item.package)}
+          sx={{ pointerEvents: 'none', display: 'flex' }}
+        />
       </td>
       <td>
         <Code>{item.package}</Code>
