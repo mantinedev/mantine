@@ -191,7 +191,7 @@ export const HighlightControl = createControl({
 });
 
 export const HrControl = createControl({
-  label: 'highlightControlLabel',
+  label: 'hrControlLabel',
   icon: (props) => <IconLineDashed {...props} stroke={1.5} />,
   operation: { name: 'setHorizontalRule' },
 });

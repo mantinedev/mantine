@@ -2,6 +2,9 @@ export interface RichTextEditorLabels {
   /** RichTextEditor.Bold control aria-label */
   boldControlLabel: string;
 
+  /** RichTextEditor.Hr control aria-label */
+  hrControlLabel: string;
+
   /** RichTextEditor.Italic control aria-label */
   italicControlLabel: string;
 
@@ -147,6 +150,7 @@ export const DEFAULT_LABELS: RichTextEditorLabels = {
   subscriptControlLabel: 'Subscript',
   superscriptControlLabel: 'Superscript',
   unsetColorControlLabel: 'Unset color',
+  hrControlLabel: 'Horizontal line',
 
   // Link editor
   linkEditorInputLabel: 'Enter URL',
