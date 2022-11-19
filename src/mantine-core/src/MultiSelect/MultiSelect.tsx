@@ -223,7 +223,6 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>((props
   );
   const { systemStyles, rest } = extractSystemStyles(others);
   const inputRef = useRef<HTMLInputElement>();
-  const wrapperRef = useRef<HTMLDivElement>();
   const itemsRefs = useRef<Record<string, HTMLDivElement>>({});
   const uuid = useId(id);
   const [dropdownOpened, setDropdownOpened] = useState(initiallyOpened);
@@ -624,7 +623,6 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>((props
             aria-expanded={dropdownOpened}
             onMouseLeave={() => setHovered(-1)}
             tabIndex={-1}
-            ref={wrapperRef}
           >
             <input
               type="hidden"
