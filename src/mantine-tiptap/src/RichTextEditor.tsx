@@ -88,7 +88,7 @@ RichTextEditor.Toolbar = Toolbar;
 // Controls components
 RichTextEditor.Bold = controls.BoldControl;
 RichTextEditor.Italic = controls.ItalicControl;
-RichTextEditor.Strikethrough = controls.StrikeThoughControl;
+RichTextEditor.Strikethrough = controls.StrikeThroughControl;
 RichTextEditor.Underline = controls.UnderlineControl;
 RichTextEditor.ClearFormatting = controls.ClearFormattingControl;
 RichTextEditor.H1 = controls.H1Control;
