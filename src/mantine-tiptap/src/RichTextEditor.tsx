@@ -30,7 +30,7 @@ export interface RichTextEditorProps
   extends DefaultProps<RichTextEditorStylesNames>,
     React.ComponentPropsWithoutRef<'div'> {
   /** Tiptap editor instance */
-  editor: Editor;
+  editor: Editor | null;
 
   /** Determines whether code highlight styles should be added, true by default */
   withCodeHighlightStyles?: boolean;
