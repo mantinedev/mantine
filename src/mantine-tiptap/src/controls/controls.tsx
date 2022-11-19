@@ -49,7 +49,7 @@ export const UnderlineControl = createControl({
   operation: { name: 'toggleUnderline' },
 });
 
-export const StrikeThoughControl = createControl({
+export const StrikeThroughControl = createControl({
   label: 'strikeControlLabel',
   icon: (props) => <IconStrikethrough {...props} stroke={1.5} />,
   isActive: { name: 'strike' },
