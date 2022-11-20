@@ -13,6 +13,7 @@ import { AvatarPlaceholderIcon } from './AvatarPlaceholderIcon';
 import { AvatarGroup } from './AvatarGroup/AvatarGroup';
 import { useAvatarGroupContext } from './AvatarGroup/AvatarGroup.context';
 import useStyles, { AvatarStylesParams, AvatarVariant } from './Avatar.styles';
+import { AvatarCustomComponentProps } from './AvatarCustomComponentProps';
 
 export type AvatarStylesNames = Selectors<typeof useStyles>;
 
@@ -41,6 +42,9 @@ export interface AvatarProps extends DefaultProps<AvatarStylesNames, AvatarStyle
   /** img element attributes */
   imageProps?: Record<string, any>;
 
+  /** Custom image component */
+  imageComponent?: React.FunctionComponent<AvatarCustomComponentProps>;
+
   /** Custom placeholder */
   children?: React.ReactNode;
 }
@@ -65,10 +69,12 @@ export const _Avatar = forwardRef<HTMLDivElement, AvatarProps>((props, ref) => {
     classNames,
     styles,
     imageProps,
+    imageComponent,
     unstyled,
     ...others
   } = useComponentDefaultProps('Avatar', defaultProps, props);
 
+  const ImageComponent = imageComponent;
   const ctx = useAvatarGroupContext();
   const [error, setError] = useState(!src);
 
@@ -87,6 +93,14 @@ export const _Avatar = forwardRef<HTMLDivElement, AvatarProps>((props, ref) => {
         <div className={classes.placeholder} title={alt}>
           {children || <AvatarPlaceholderIcon className={classes.placeholderIcon} />}
         </div>
+      ) : imageComponent ? (
+        <ImageComponent
+          {...imageProps}
+          className={classes.image}
+          src={src}
+          alt={alt}
+          onError={() => setError(true)}
+        />
       ) : (
         <img
           {...imageProps}
