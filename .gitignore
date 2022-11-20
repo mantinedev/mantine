@@ -5,7 +5,6 @@
 .idea/
 .vscode/
 .nova/
-.gitpod.yml
 
 # node
 node_modules/
