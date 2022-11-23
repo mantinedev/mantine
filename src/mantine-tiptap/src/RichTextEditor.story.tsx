@@ -10,6 +10,7 @@ import Underline from '@tiptap/extension-underline';
 import TextAlign from '@tiptap/extension-text-align';
 import Superscript from '@tiptap/extension-superscript';
 import SubScript from '@tiptap/extension-subscript';
+import Placeholder from '@tiptap/extension-placeholder';
 import { lowlight } from 'lowlight';
 import css from 'highlight.js/lib/languages/css';
 import js from 'highlight.js/lib/languages/javascript';
@@ -286,4 +287,19 @@ export function Bubble() {
 
 export function Unstyled() {
   return <BasicEditor editorProps={{ unstyled: true }} />;
+}
+
+export function PlaceholderExtension() {
+  const editor = useEditor({
+    extensions: [StarterKit, Placeholder.configure({ placeholder: 'This is placeholder' })],
+    content: '',
+  });
+
+  return (
+    <div style={{ padding: 40 }}>
+      <RichTextEditor editor={editor}>
+        <RichTextEditor.Content />
+      </RichTextEditor>
+    </div>
+  );
 }

@@ -138,6 +138,7 @@
     "@tiptap/extension-color": "^2.0.0-beta.202",
     "@tiptap/extension-highlight": "^2.0.0-beta.202",
     "@tiptap/extension-link": "^2.0.0-beta.202",
+    "@tiptap/extension-placeholder": "^2.0.0-beta.202",
     "@tiptap/extension-subscript": "^2.0.0-beta.202",
     "@tiptap/extension-superscript": "^2.0.0-beta.202",
     "@tiptap/extension-text-align": "^2.0.0-beta.202",

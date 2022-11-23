@@ -114,6 +114,15 @@ export default createStyles(
         marginBottom: 0,
       },
 
+      '& .ProseMirror p.is-editor-empty:first-child::before': {
+        content: 'attr(data-placeholder)',
+        userSelect: 'none',
+        float: 'left',
+        height: 0,
+        pointerEvents: 'none',
+        color: theme.colorScheme === 'dark' ? theme.colors.dark[3] : theme.colors.gray[5],
+      },
+
       ...getCodeHighlight(withCodeHighlightStyles, theme),
     },
   })
