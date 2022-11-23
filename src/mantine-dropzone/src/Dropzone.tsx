@@ -32,7 +32,10 @@ export interface DropzoneProps
   /** Disable files capturing */
   disabled?: boolean;
 
-  /** Called when files are dropped into dropzone */
+  /** Called when any files are dropped into dropzone */
+  onDropAny?(files: FileWithPath[], fileRejections: FileRejection[]): void;
+
+  /** Called when valid files are dropped into dropzone */
   onDrop(files: FileWithPath[]): void;
 
   /** Called when selected files don't meet file restrictions */
@@ -122,6 +125,7 @@ export function _Dropzone(props: DropzoneProps) {
     maxSize,
     accept,
     children,
+    onDropAny,
     onDrop,
     onReject,
     openRef,
@@ -149,6 +153,7 @@ export function _Dropzone(props: DropzoneProps) {
   );
 
   const { getRootProps, getInputProps, isDragAccept, isDragReject, open } = useDropzone({
+    onDrop: onDropAny,
     onDropAccepted: onDrop,
     onDropRejected: onReject,
     disabled: disabled || loading,
