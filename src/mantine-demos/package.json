@@ -24,6 +24,7 @@
     "@tiptap/extension-text-style": "*",
     "@tiptap/extension-code-block": "*",
     "@tiptap/extension-code-block-lowlight": "*",
+    "@tiptap/extension-placeholder": "*",
     "highlight.js": "*",
     "lowlight": "*",
     "@tiptap/extension-highlight": "*",
