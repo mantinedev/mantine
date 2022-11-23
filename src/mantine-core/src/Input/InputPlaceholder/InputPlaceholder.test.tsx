@@ -8,7 +8,7 @@ describe('@mantine/core/InputPlaceholder', () => {
   itSupportsSystemProps({
     component: InputPlaceholder,
     props: defaultProps,
-    refType: HTMLDivElement,
+    refType: HTMLSpanElement,
     displayName: '@mantine/core/InputPlaceholder',
     providerName: 'Input.Placeholder',
   });
