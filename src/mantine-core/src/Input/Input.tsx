@@ -12,6 +12,7 @@ import { InputWrapper } from './InputWrapper/InputWrapper';
 import { InputDescription } from './InputDescription/InputDescription';
 import { InputLabel } from './InputLabel/InputLabel';
 import { InputError } from './InputError/InputError';
+import { InputPlaceholder } from './InputPlaceholder/InputPlaceholder';
 import { useInputWrapperContext } from './InputWrapper.context';
 import useStyles, { InputVariant } from './Input.styles';
 
@@ -156,6 +157,7 @@ _Input.Wrapper = InputWrapper;
 _Input.Label = InputLabel;
 _Input.Description = InputDescription;
 _Input.Error = InputError;
+_Input.Placeholder = InputPlaceholder;
 
 export const Input = createPolymorphicComponent<
   'input',
@@ -165,5 +167,6 @@ export const Input = createPolymorphicComponent<
     Label: typeof InputLabel;
     Description: typeof InputDescription;
     Error: typeof InputError;
+    Placeholder: typeof InputPlaceholder;
   }
 >(_Input);
