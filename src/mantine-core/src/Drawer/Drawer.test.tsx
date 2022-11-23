@@ -36,6 +36,12 @@ describe('@mantine/core/Drawer', () => {
     expect(screen.getByText('test-title')).toBeInTheDocument();
   });
 
+  it('uses the provided id prop on the title and body', () => {
+    const { container } = render(<Drawer {...defaultProps} id="my-drawer" />);
+    expect(container.querySelectorAll('#my-drawer-title')).toHaveLength(1);
+    expect(container.querySelectorAll('#my-drawer-body')).toHaveLength(1);
+  });
+
   it('allows to hide close button with withCloseButton={false} prop', () => {
     const { container: withCloseButton } = render(<Drawer {...defaultProps} />);
     const { container: withoutCloseButton } = render(
