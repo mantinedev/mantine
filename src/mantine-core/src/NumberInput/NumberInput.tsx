@@ -255,7 +255,7 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>((props
       setValue(value);
       setTempValue('');
     }
-  }, [value]);
+  }, [value, precision]);
 
   const shouldUseStepInterval = stepHoldDelay !== undefined && stepHoldInterval !== undefined;
   const onStepTimeoutRef = useRef<number>(null);
