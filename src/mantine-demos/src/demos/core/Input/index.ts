@@ -9,3 +9,5 @@ export { providerDefault } from './Input.demo.providerDefault';
 export { providerStyles } from './Input.demo.providerStyles';
 export { mask } from './Input.demo.mask';
 export { inputBase } from './Input.demo.inputBase';
+export { placeholder } from './Input.demo.placeholder';
+export { basePlaceholder } from './Input.demo.basePlaceholder';
