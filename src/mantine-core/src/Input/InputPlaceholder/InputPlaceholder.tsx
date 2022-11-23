@@ -5,14 +5,19 @@ import { Box } from '../../Box';
 
 export interface InputPlaceholderProps
   extends DefaultProps,
-    React.ComponentPropsWithoutRef<'div'> {}
+    React.ComponentPropsWithoutRef<'span'> {}
 
 const defaultProps: Partial<InputPlaceholderProps> = {};
 
-export const InputPlaceholder = forwardRef<HTMLDivElement, InputPlaceholderProps>((props, ref) => {
+export const InputPlaceholder = forwardRef<HTMLSpanElement, InputPlaceholderProps>((props, ref) => {
   const { sx, ...others } = useComponentDefaultProps('Input.Placeholder', defaultProps, props);
   return (
-    <Box sx={[(theme) => theme.fn.placeholderStyles(), ...packSx(sx)]} ref={ref} {...others} />
+    <Box
+      component="span"
+      sx={[(theme) => theme.fn.placeholderStyles(), ...packSx(sx)]}
+      ref={ref}
+      {...others}
+    />
   );
 });
 
