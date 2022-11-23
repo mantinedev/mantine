@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { useScrollLock, useFocusTrap, useFocusReturn } from '@mantine/hooks';
+import { useScrollLock, useFocusTrap, useFocusReturn, useId } from '@mantine/hooks';
 import {
   DefaultProps,
   MantineNumberSize,
@@ -86,6 +86,9 @@ export interface DrawerProps
   /** Close button aria-label */
   closeButtonLabel?: string;
 
+  /** id base, used to generate ids to connect drawer title and body with aria- attributes, defaults to random id */
+  id?: string;
+
   /** Target element or selector where drawer portal should be rendered */
   target?: HTMLElement | string;
 
@@ -149,6 +152,7 @@ export function Drawer(props: DrawerProps) {
     children,
     withOverlay,
     shadow,
+    id,
     padding,
     title,
     withCloseButton,
@@ -162,6 +166,9 @@ export function Drawer(props: DrawerProps) {
     withFocusReturn,
     ...others
   } = useComponentDefaultProps('Drawer', defaultProps, props);
+  const baseId = useId(id);
+  const titleId = `${baseId}-title`;
+  const bodyId = `${baseId}-body`;
 
   const { classes, cx, theme } = useStyles(
     { size, position, zIndex, withOverlay },
@@ -216,7 +223,14 @@ export function Drawer(props: DrawerProps) {
         }}
       >
         {(transitionStyles) => (
-          <Box className={cx(classes.root, className)} role="dialog" aria-modal {...others}>
+          <Box
+            className={cx(classes.root, className)}
+            role="dialog"
+            aria-modal
+            aria-labelledby={titleId}
+            aria-describedby={bodyId}
+            {...others}
+          >
             <Paper<'div'>
               className={cx(classes.drawer, className)}
               ref={focusTrapRef}
@@ -235,7 +249,7 @@ export function Drawer(props: DrawerProps) {
             >
               {(title || withCloseButton) && (
                 <div className={classes.header}>
-                  <Text className={classes.title} unstyled={unstyled}>
+                  <Text id={titleId} className={classes.title} unstyled={unstyled}>
                     {title}
                   </Text>
 
@@ -250,7 +264,8 @@ export function Drawer(props: DrawerProps) {
                   )}
                 </div>
               )}
-              {children}
+
+              <div id={bodyId}>{children}</div>
             </Paper>
 
             {withOverlay && (
