@@ -15,10 +15,14 @@ import { HooksDemos } from '@mantine/demos';
 
 ## Usage
 
-use-hotkeys accepts an array of hotkeys and handler tuples:
+use-hotkeys accepts as its first argument an array of hotkeys and handler tuples:
 
 - `hotkey` - hotkey string e.g. `ctrl+E`, `shift+alt+L`, `mod+S`
 - `handler` - event handler called when given combination was pressed
+
+The second argument is a list of HTML tags:
+
+- `tagsToIgnore` - HTML tag names that hotkeys will not trigger on
 
 ```tsx
 import { useHotkeys } from '@mantine/hooks';
