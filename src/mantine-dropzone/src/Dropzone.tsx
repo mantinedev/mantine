@@ -1,19 +1,27 @@
-import React from 'react';
-import { useDropzone, FileRejection, Accept, FileWithPath } from 'react-dropzone';
 import {
-  DefaultProps,
-  Selectors,
-  MantineNumberSize,
-  LoadingOverlay,
   Box,
-  useComponentDefaultProps,
+  DefaultProps,
+  LoadingOverlay,
+  MantineNumberSize,
+  Selectors,
+  useComponentDefaultProps
 } from '@mantine/core';
 import { assignRef } from '@mantine/hooks';
 import { ForwardRefWithStaticComponents } from '@mantine/utils';
+import { fromEvent } from 'file-selector';
+import React from 'react';
+import {
+  Accept,
+  DropEvent,
+  FileError,
+  FileRejection,
+  FileWithPath,
+  useDropzone
+} from 'react-dropzone';
 import { DropzoneProvider } from './Dropzone.context';
-import { DropzoneAccept, DropzoneIdle, DropzoneReject } from './DropzoneStatus';
-import type { DropzoneFullScreenType } from './DropzoneFullScreen';
 import useStyles from './Dropzone.styles';
+import type { DropzoneFullScreenType } from './DropzoneFullScreen';
+import { DropzoneAccept, DropzoneIdle, DropzoneReject } from './DropzoneStatus';
 
 export type DropzoneStylesNames = Selectors<typeof useStyles>;
 
@@ -97,6 +105,12 @@ export interface DropzoneProps
 
   /** Set to true to use the File System Access API to open the file picker instead of using an <input type="file"> click event, defaults to true */
   useFsAccessApi?: boolean;
+
+  /** Use this to provide a custom file aggregator */
+  getFilesFromEvent?: (event: DropEvent) => Promise<Array<File | DataTransferItem>>;
+
+  /** Custom validation function. It must return null if there's no errors. */
+  validator?: <T extends File>(file: T) => FileError | FileError[] | null;
 }
 
 export const defaultProps: Partial<DropzoneProps> = {
@@ -110,6 +124,8 @@ export const defaultProps: Partial<DropzoneProps> = {
   dragEventsBubbling: true,
   activateOnKeyboard: true,
   useFsAccessApi: true,
+  getFilesFromEvent: fromEvent,
+  validator: null,
 };
 
 export function _Dropzone(props: DropzoneProps) {
@@ -144,6 +160,8 @@ export function _Dropzone(props: DropzoneProps) {
     onFileDialogOpen,
     preventDropOnDocument,
     useFsAccessApi,
+    getFilesFromEvent,
+    validator,
     ...others
   } = useComponentDefaultProps('Dropzone', defaultProps, props);
 
@@ -173,7 +191,9 @@ export function _Dropzone(props: DropzoneProps) {
     onFileDialogOpen,
     preventDropOnDocument,
     useFsAccessApi,
-  });
+    getFilesFromEvent,
+    validator,
+``  });
 
   assignRef(openRef, open);
 
