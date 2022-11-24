@@ -10,5 +10,6 @@ describe('@mantine/core/InputError', () => {
     props: defaultProps,
     refType: HTMLDivElement,
     displayName: '@mantine/core/InputError',
+    providerName: 'InputError',
   });
 });

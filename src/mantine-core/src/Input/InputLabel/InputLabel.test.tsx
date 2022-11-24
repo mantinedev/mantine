@@ -12,6 +12,7 @@ describe('@mantine/core/InputLabel', () => {
     props: defaultProps,
     displayName: '@mantine/core/InputLabel',
     refType: HTMLLabelElement,
+    providerName: 'InputLabel',
   });
 
   it('renders required asterisk if required prop is true', () => {
