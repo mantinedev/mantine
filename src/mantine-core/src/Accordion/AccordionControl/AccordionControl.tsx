@@ -1,5 +1,10 @@
 import React, { forwardRef } from 'react';
-import { useContextStylesApi, DefaultProps, Selectors } from '@mantine/styles';
+import {
+  useContextStylesApi,
+  DefaultProps,
+  Selectors,
+  useComponentDefaultProps,
+} from '@mantine/styles';
 import { createScopedKeydownHandler } from '@mantine/utils';
 import { UnstyledButton } from '../../UnstyledButton';
 import { useAccordionContext } from '../Accordion.context';
@@ -24,20 +29,12 @@ export interface AccordionControlProps
   icon?: React.ReactNode;
 }
 
+const defaultProps: Partial<AccordionControlProps> = {};
+
 export const AccordionControl = forwardRef<HTMLButtonElement, AccordionControlProps>(
-  (
-    {
-      disabled,
-      onKeyDown,
-      onClick,
-      chevron,
-      children,
-      className,
-      icon,
-      ...others
-    }: AccordionControlProps,
-    ref
-  ) => {
+  (props: AccordionControlProps, ref) => {
+    const { disabled, onKeyDown, onClick, chevron, children, className, icon, ...others } =
+      useComponentDefaultProps('AccordionControl', defaultProps, props);
     const ctx = useAccordionContext();
     const { value } = useAccordionItemContext();
     const { classNames, styles, unstyled } = useContextStylesApi();

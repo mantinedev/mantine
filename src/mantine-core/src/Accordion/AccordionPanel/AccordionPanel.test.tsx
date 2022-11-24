@@ -32,5 +32,6 @@ describe('@mantine/core/AccordionPanel', () => {
     component: TestContainer,
     props: defaultProps,
     displayName: '@mantine/core/AccordionPanel',
+    providerName: 'AccordionPanel',
   });
 });
