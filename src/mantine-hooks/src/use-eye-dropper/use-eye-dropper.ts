@@ -2,7 +2,6 @@ import { useCallback, useState } from 'react';
 import { useIsomorphicEffect } from '../use-isomorphic-effect/use-isomorphic-effect';
 
 interface EyeDropperOpenOptions {
-  /** AbortSignal to cancel */
   signal?: AbortSignal;
 }
 
