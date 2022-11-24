@@ -60,3 +60,4 @@ export type { UseMovePosition } from './use-move/use-move';
 export type { OS } from './use-os/use-os';
 export type { HotkeyItem } from './use-hotkeys/use-hotkeys';
 export type { UseListStateHandlers } from './use-list-state/use-list-state';
+export type { EyeDropperOpenReturnType } from './use-eye-dropper/use-eye-dropper';

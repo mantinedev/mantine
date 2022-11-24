@@ -6,7 +6,7 @@ interface EyeDropperOpenOptions {
   signal?: AbortSignal;
 }
 
-interface EyeDropperOpenReturnType {
+export interface EyeDropperOpenReturnType {
   sRGBHex: string;
 }
 
