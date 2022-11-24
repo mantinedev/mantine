@@ -7,7 +7,9 @@ import { HOVER_CARD_ERRORS } from '../HoverCard.errors';
 
 export interface HoverCardTargetProps extends PopoverTargetProps {}
 
-const defaultProps: Partial<HoverCardTargetProps> = {};
+const defaultProps: Partial<HoverCardTargetProps> = {
+  refProp: 'ref',
+};
 
 export const HoverCardTarget = forwardRef<HTMLElement, HoverCardTargetProps>((props, ref) => {
   const { children, refProp, ...others } = useComponentDefaultProps(
