@@ -21,7 +21,7 @@ const defaultProps: Partial<RichTextEditorContentProps> = {};
 
 export const Content = forwardRef<HTMLDivElement, RichTextEditorContentProps>((props, ref) => {
   const { className, ...others } = useComponentDefaultProps(
-    'RichTextEditor.Content',
+    'RichTextEditorContent',
     defaultProps,
     props
   );
