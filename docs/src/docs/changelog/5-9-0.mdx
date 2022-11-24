@@ -7,6 +7,45 @@ release: https://github.com/mantinedev/mantine/releases/tag/5.9.0
 date: 'November 16th, 2022'
 ---
 
+## Static components default props
+
+All static components now support [default props on MantineProvider](/theming/default-props/).
+The following example demonstrates how to add default props to `Menu.Item`, `Tabs.List` and
+`RichTextEditor.Toolbar` components:
+
+```tsx
+import { MantineProvider, Button } from '@mantine/core';
+
+function Demo() {
+  return (
+    <MantineProvider
+      theme={{
+        components: {
+          MenuItem: {
+            defaultProps: { color: 'red' },
+          },
+
+          TabsList: {
+            defaultProps: {
+              position: 'right',
+            },
+          },
+
+          RichTextEditorToolbar: {
+            defaultProps: {
+              sticky: true,
+              stickyOffset: 60,
+            },
+          },
+        },
+      }}
+    >
+      <App />
+    </MantineProvider>
+  );
+}
+```
+
 ## Input.Placeholder component
 
 `Input.Placeholder` component can be used to add placeholder to [Input and InputBase](https://mantine.dev/core/input/) components that are based on `button` element
