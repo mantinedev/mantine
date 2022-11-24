@@ -1,14 +1,22 @@
 import React, { cloneElement } from 'react';
 import { upperFirst } from '@mantine/hooks';
 import { isElement } from '@mantine/utils';
+import { useComponentDefaultProps } from '@mantine/core';
 import { DropzoneContextValue, useDropzoneContext } from './Dropzone.context';
 
 export interface DropzoneStatusProps {
+  // eslint-disable-next-line react/no-unused-prop-types
   children: React.ReactNode;
 }
 
 function createDropzoneStatus(status: keyof DropzoneContextValue) {
-  const Component = ({ children, ...others }: DropzoneStatusProps): JSX.Element => {
+  const Component = (props: DropzoneStatusProps): JSX.Element => {
+    const { children, ...others } = useComponentDefaultProps(
+      `Dropzone${upperFirst(status)}`,
+      {},
+      props
+    );
+
     const ctx = useDropzoneContext();
     const _children = isElement(children) ? children : <span>{children}</span>;
 
