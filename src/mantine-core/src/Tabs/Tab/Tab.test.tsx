@@ -28,6 +28,7 @@ describe('@mantine/core/Tab', () => {
     props: defaultProps,
     refType: HTMLButtonElement,
     displayName: '@mantine/core/Tab',
+    providerName: 'TabsTab',
   });
 
   it('calls onClick function from props', async () => {
