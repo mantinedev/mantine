@@ -1,27 +1,27 @@
+import React from 'react';
 import {
-  Box,
+  useDropzone,
+  FileRejection,
+  Accept,
+  FileWithPath,
+  DropEvent,
+  FileError,
+} from 'react-dropzone';
+import { fromEvent } from 'file-selector';
+import {
   DefaultProps,
-  LoadingOverlay,
-  MantineNumberSize,
   Selectors,
-  useComponentDefaultProps
+  MantineNumberSize,
+  LoadingOverlay,
+  Box,
+  useComponentDefaultProps,
 } from '@mantine/core';
 import { assignRef } from '@mantine/hooks';
 import { ForwardRefWithStaticComponents } from '@mantine/utils';
-import { fromEvent } from 'file-selector';
-import React from 'react';
-import {
-  Accept,
-  DropEvent,
-  FileError,
-  FileRejection,
-  FileWithPath,
-  useDropzone
-} from 'react-dropzone';
 import { DropzoneProvider } from './Dropzone.context';
-import useStyles from './Dropzone.styles';
-import type { DropzoneFullScreenType } from './DropzoneFullScreen';
 import { DropzoneAccept, DropzoneIdle, DropzoneReject } from './DropzoneStatus';
+import type { DropzoneFullScreenType } from './DropzoneFullScreen';
+import useStyles from './Dropzone.styles';
 
 export type DropzoneStylesNames = Selectors<typeof useStyles>;
 
@@ -124,8 +124,6 @@ export const defaultProps: Partial<DropzoneProps> = {
   dragEventsBubbling: true,
   activateOnKeyboard: true,
   useFsAccessApi: true,
-  getFilesFromEvent: fromEvent,
-  validator: null,
 };
 
 export function _Dropzone(props: DropzoneProps) {
@@ -191,9 +189,9 @@ export function _Dropzone(props: DropzoneProps) {
     onFileDialogOpen,
     preventDropOnDocument,
     useFsAccessApi,
-    getFilesFromEvent,
-    validator,
-``  });
+    getFilesFromEvent: getFilesFromEvent || fromEvent,
+    validator: validator || null,
+  });
 
   assignRef(openRef, open);
 
