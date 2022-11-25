@@ -3,6 +3,11 @@ import type { MantineNumberSize } from '@mantine/styles';
 
 interface GridContextValue {
   gutter: MantineNumberSize;
+  gutterXs: MantineNumberSize;
+  gutterSm: MantineNumberSize;
+  gutterMd: MantineNumberSize;
+  gutterLg: MantineNumberSize;
+  gutterXl: MantineNumberSize;
   grow: boolean;
   columns: number;
 }

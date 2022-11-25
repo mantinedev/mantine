@@ -102,6 +102,11 @@ export const Col = forwardRef<HTMLDivElement, ColProps>((props: ColProps, ref) =
   const { classes, cx } = useStyles(
     {
       gutter: ctx.gutter,
+      gutterXs: ctx.gutterXs,
+      gutterSm: ctx.gutterSm,
+      gutterMd: ctx.gutterMd,
+      gutterLg: ctx.gutterLg,
+      gutterXl: ctx.gutterXl,
       offset,
       offsetXs,
       offsetSm,
@@ -131,7 +136,7 @@ export const Col = forwardRef<HTMLDivElement, ColProps>((props: ColProps, ref) =
   }
 
   return (
-    <Box className={cx(classes.root, className)} ref={ref} {...others}>
+    <Box className={cx(classes.col, className)} ref={ref} {...others}>
       {children}
     </Box>
   );
