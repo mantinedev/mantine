@@ -21,7 +21,8 @@ export const iconSizes = {
 export default createStyles(
   (
     theme,
-    { color, iconSize, size, radius, allowStepClick, iconPosition, orientation }: StepStylesParams
+    { color, iconSize, size, radius, allowStepClick, iconPosition, orientation }: StepStylesParams,
+    getRef
   ) => {
     const _iconSize = iconSize || theme.fn.size({ size, sizes: iconSizes });
     const iconMargin = size === 'xl' || size === 'lg' ? theme.spacing.md : theme.spacing.sm;
@@ -35,13 +36,11 @@ export default createStyles(
         minHeight: `calc(${_iconSize}px + ${theme.spacing.xl}px + ${separatorDistanceFromIcon}px)`,
         marginTop: `${separatorDistanceFromIcon}px`,
         overflow: 'hidden',
-
         '&:first-of-type': {
           marginTop: 0,
         },
-
-        '&:last-of-type': {
-          minHeight: 'auto',
+        [`&:last-of-type .${getRef('verticalSeparator')}`]: {
+          display: 'none',
         },
       },
     } as const;
@@ -72,6 +71,7 @@ export default createStyles(
         borderLeft: `2px solid ${
           theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[1]
         }`,
+        ref: getRef('verticalSeparator'),
       },
 
       verticalSeparatorActive: {
