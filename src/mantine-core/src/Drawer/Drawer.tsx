@@ -265,7 +265,7 @@ export function Drawer(props: DrawerProps) {
                 </div>
               )}
 
-              <div id={bodyId}>{children}</div>
+              <div id={bodyId} className={classes.body}>{children}</div>
             </Paper>
 
             {withOverlay && (
