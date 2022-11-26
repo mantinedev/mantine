@@ -21,7 +21,6 @@ interface PopoverContext {
   width?: PopoverWidth;
   withArrow: boolean;
   arrowSize: number;
-  arrowOffset: number;
   arrowRadius: number;
   trapFocus: boolean;
   placement: FloatingPosition;
