@@ -71,7 +71,11 @@ document.body.addEventListener(
 ```tsx
 function useHotkeys(
   hotKeyItem: Array<
-    [hotkey: string, handler: (event: KeyboardEvent) => void, options?: HotkeyItemOptions]
+    [
+      hotkey: string,
+      handler: (event: KeyboardEvent) => void,
+      options?: { preventDefault?: boolean }
+    ]
   >
 ): void;
 ```
