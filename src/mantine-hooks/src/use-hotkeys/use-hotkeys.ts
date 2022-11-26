@@ -1,9 +1,9 @@
 import { useEffect } from 'react';
-import { getHotkeyMatcher, getHotkeyHandler } from './parse-hotkey';
+import { getHotkeyMatcher, getHotkeyHandler, HotkeyItemOptions } from './parse-hotkey';
 
-export { getHotkeyHandler };
+export { getHotkeyHandler, HotkeyItemOptions };
 
-export type HotkeyItem = [string, (event: KeyboardEvent) => void];
+export type HotkeyItem = [string, (event: KeyboardEvent) => void, HotkeyItemOptions?];
 
 function shouldFireEvent(event: KeyboardEvent) {
   if (event.target instanceof HTMLElement) {
@@ -18,9 +18,12 @@ function shouldFireEvent(event: KeyboardEvent) {
 export function useHotkeys(hotkeys: HotkeyItem[]) {
   useEffect(() => {
     const keydownListener = (event: KeyboardEvent) => {
-      hotkeys.forEach(([hotkey, handler]) => {
+      hotkeys.forEach(([hotkey, handler, options = { preventDefault: true }]) => {
         if (getHotkeyMatcher(hotkey)(event) && shouldFireEvent(event)) {
-          event.preventDefault();
+          if (options.preventDefault) {
+            event.preventDefault();
+          }
+
           handler(event);
         }
       });
