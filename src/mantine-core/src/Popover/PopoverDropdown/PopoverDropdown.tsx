@@ -63,6 +63,7 @@ export function PopoverDropdown({
             <Box
               {...accessibleProps}
               tabIndex={-1}
+              key={ctx.placement}
               ref={ctx.floating}
               style={{
                 ...style,
@@ -92,7 +93,6 @@ export function PopoverDropdown({
                 position={ctx.placement}
                 arrowSize={ctx.arrowSize}
                 arrowRadius={ctx.arrowRadius}
-                arrowOffset={ctx.arrowOffset}
                 className={classes.arrow}
               />
             </Box>

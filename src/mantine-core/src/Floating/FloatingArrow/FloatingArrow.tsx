@@ -1,5 +1,4 @@
 import React, { forwardRef } from 'react';
-import { useMantineTheme } from '@mantine/styles';
 import { getArrowPositionStyles } from './get-arrow-position-styles';
 import { FloatingPosition } from '../types';
 
@@ -7,7 +6,6 @@ interface FloatingArrowProps extends React.ComponentPropsWithoutRef<'div'> {
   withBorder: boolean;
   position: FloatingPosition;
   arrowSize: number;
-  arrowOffset: number;
   arrowRadius: number;
   arrowX: number;
   arrowY: number;
@@ -15,22 +13,7 @@ interface FloatingArrowProps extends React.ComponentPropsWithoutRef<'div'> {
 }
 
 export const FloatingArrow = forwardRef<HTMLDivElement, FloatingArrowProps>(
-  (
-    {
-      withBorder,
-      position,
-      arrowSize,
-      arrowOffset,
-      arrowRadius,
-      visible,
-      arrowX,
-      arrowY,
-      ...others
-    },
-    ref
-  ) => {
-    const theme = useMantineTheme();
-
+  ({ withBorder, position, arrowSize, arrowRadius, visible, arrowX, arrowY, ...others }, ref) => {
     if (!visible) {
       return null;
     }
@@ -43,9 +26,7 @@ export const FloatingArrow = forwardRef<HTMLDivElement, FloatingArrowProps>(
           withBorder,
           position,
           arrowSize,
-          arrowOffset,
           arrowRadius,
-          dir: theme.dir,
           arrowX,
           arrowY,
         })}
