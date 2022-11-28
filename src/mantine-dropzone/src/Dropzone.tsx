@@ -7,7 +7,6 @@ import {
   DropEvent,
   FileError,
 } from 'react-dropzone';
-import { fromEvent } from 'file-selector';
 import {
   DefaultProps,
   Selectors,
@@ -189,8 +188,8 @@ export function _Dropzone(props: DropzoneProps) {
     onFileDialogOpen,
     preventDropOnDocument,
     useFsAccessApi,
-    getFilesFromEvent: getFilesFromEvent || fromEvent,
-    validator: validator || null,
+    getFilesFromEvent,
+    validator,
   });
 
   assignRef(openRef, open);
