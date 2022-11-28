@@ -26,6 +26,11 @@ export function filterData({
   const selected = value != null ? data.find((item) => item.value === value) || null : null;
 
   if (selected && !filterDataOnExactSearchMatch && selected?.label === searchValue) {
+    if (limit) {
+      const firstIndex = data.indexOf(selected);
+      const lastIndex = firstIndex + limit;
+        return data.slice(firstIndex, lastIndex);
+    }
     return data;
   }
 
