@@ -1,5 +1,5 @@
 /* eslint-disable react/no-unused-prop-types */
-import React, { useMemo } from 'react';
+import React, { useMemo, forwardRef } from 'react';
 import {
   Box,
   useComponentDefaultProps,
@@ -50,7 +50,7 @@ const defaultProps: Partial<RichTextEditorProps> = {
   withTypographyStyles: true,
 };
 
-export function RichTextEditor(props: RichTextEditorProps) {
+export const RichTextEditor = forwardRef<HTMLDivElement, RichTextEditorProps>((props, ref) => {
   const {
     editor,
     children,
@@ -63,7 +63,12 @@ export function RichTextEditor(props: RichTextEditorProps) {
     unstyled,
     ...others
   } = useComponentDefaultProps('RichTextEditor', defaultProps, props);
-  const { classes, cx } = useStyles(null, { name: 'RichTextEditor', classNames, styles, unstyled });
+  const { classes, cx } = useStyles(null, {
+    name: 'RichTextEditor',
+    classNames,
+    styles,
+    unstyled,
+  });
   const mergedLabels = useMemo(() => ({ ...DEFAULT_LABELS, ...labels }), [labels]);
 
   return (
@@ -71,13 +76,13 @@ export function RichTextEditor(props: RichTextEditorProps) {
       <RichTextEditorProvider
         value={{ editor, labels: mergedLabels, withCodeHighlightStyles, withTypographyStyles }}
       >
-        <Box className={cx(classes.root, className)} {...others}>
+        <Box className={cx(classes.root, className)} {...others} ref={ref}>
           {children}
         </Box>
       </RichTextEditorProvider>
     </StylesApiProvider>
   );
-}
+}) as any;
 
 // Generic components
 RichTextEditor.Content = Content;
