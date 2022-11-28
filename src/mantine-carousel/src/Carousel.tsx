@@ -255,7 +255,7 @@ export const _Carousel = forwardRef<HTMLDivElement, CarouselProps>((props, ref) 
     }
 
     return undefined;
-  }, [embla]);
+  }, [embla, slidesToScroll]);
 
   useEffect(() => {
     if (embla) {
@@ -265,7 +265,7 @@ export const _Carousel = forwardRef<HTMLDivElement, CarouselProps>((props, ref) 
         clamp(currentSelected, 0, Children.toArray(children).length - 1)
       );
     }
-  }, [Children.toArray(children).length]);
+  }, [Children.toArray(children).length, slidesToScroll]);
 
   const canScrollPrev = embla?.canScrollPrev() || false;
   const canScrollNext = embla?.canScrollNext() || false;
