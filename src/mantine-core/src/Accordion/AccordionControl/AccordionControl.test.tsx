@@ -36,6 +36,7 @@ describe('@mantine/core/AccordionControl', () => {
     props: defaultProps,
     displayName: '@mantine/core/AccordionControl',
     refType: HTMLButtonElement,
+    providerName: 'AccordionControl',
   });
 
   it('calls onClick function from props', async () => {

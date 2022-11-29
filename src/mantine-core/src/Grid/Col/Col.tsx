@@ -94,18 +94,19 @@ export const Col = forwardRef<HTMLDivElement, ColProps>((props: ColProps, ref) =
     id,
     unstyled,
     ...others
-  } = useComponentDefaultProps('Grid.Col', defaultProps, props);
+  } = useComponentDefaultProps('GridCol', defaultProps, props);
 
   const ctx = useGridContext();
-
-  if (!ctx) {
-    throw new Error('[@mantine/core] Grid.Col was used outside of Grid context');
-  }
 
   const colSpan = span || ctx.columns;
   const { classes, cx } = useStyles(
     {
       gutter: ctx.gutter,
+      gutterXs: ctx.gutterXs,
+      gutterSm: ctx.gutterSm,
+      gutterMd: ctx.gutterMd,
+      gutterLg: ctx.gutterLg,
+      gutterXl: ctx.gutterXl,
       offset,
       offsetXs,
       offsetSm,
@@ -127,7 +128,7 @@ export const Col = forwardRef<HTMLDivElement, ColProps>((props: ColProps, ref) =
       columns: ctx.columns,
       span: colSpan,
     },
-    { unstyled, name: 'Col' }
+    { unstyled, name: 'Grid' }
   );
 
   if (!isValidSpan(colSpan) || colSpan > ctx.columns) {
@@ -135,7 +136,7 @@ export const Col = forwardRef<HTMLDivElement, ColProps>((props: ColProps, ref) =
   }
 
   return (
-    <Box className={cx(classes.root, className)} ref={ref} {...others}>
+    <Box className={cx(classes.col, className)} ref={ref} {...others}>
       {children}
     </Box>
   );

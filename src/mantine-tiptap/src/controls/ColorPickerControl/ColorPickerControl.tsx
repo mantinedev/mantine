@@ -11,6 +11,7 @@ import {
   Tooltip,
   ColorPickerProps,
   useContextStylesApi,
+  useComponentDefaultProps,
 } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import { IconCircleOff, IconColorPicker, IconX, IconPalette, IconCheck } from '@tabler/icons';
@@ -30,8 +31,16 @@ export interface ColorPickerControlProps
   colors: string[];
 }
 
+const defaultProps: Partial<ColorPickerControlProps> = {};
+
 export const ColorPickerControl = forwardRef<HTMLButtonElement, ColorPickerControlProps>(
-  ({ popoverProps, colors, colorPickerProps, ...others }, ref) => {
+  (props, ref) => {
+    const { popoverProps, colors, colorPickerProps, ...others } = useComponentDefaultProps(
+      'RichTextEditorColorPickerControl',
+      defaultProps,
+      props
+    );
+
     const { unstyled } = useContextStylesApi();
     const { editor, labels } = useRichTextEditorContext();
     const [opened, { toggle, close }] = useDisclosure(false);

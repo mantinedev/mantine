@@ -19,5 +19,6 @@ describe('@mantine/core/MenuDropdown', () => {
     component: TestContainer,
     props: defaultProps,
     displayName: '@mantine/core/MenuDropdown',
+    providerName: 'MenuDropdown',
   });
 });

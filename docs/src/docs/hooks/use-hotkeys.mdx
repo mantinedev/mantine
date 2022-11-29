@@ -19,6 +19,7 @@ use-hotkeys accepts as its first argument an array of hotkeys and handler tuples
 
 - `hotkey` - hotkey string e.g. `ctrl+E`, `shift+alt+L`, `mod+S`
 - `handler` - event handler called when given combination was pressed
+- `options` - object with extra options for hotkey handler
 
 The second argument is a list of HTML tags:
 
@@ -73,6 +74,12 @@ document.body.addEventListener(
 
 ```tsx
 function useHotkeys(
-  hotKeyItem: Array<[hotkey: string, handler: (event: KeyboardEvent) => void]>
+  hotKeyItem: Array<
+    [
+      hotkey: string,
+      handler: (event: KeyboardEvent) => void,
+      options?: { preventDefault?: boolean }
+    ]
+  >
 ): void;
 ```

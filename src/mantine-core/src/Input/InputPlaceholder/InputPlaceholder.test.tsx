@@ -10,6 +10,6 @@ describe('@mantine/core/InputPlaceholder', () => {
     props: defaultProps,
     refType: HTMLSpanElement,
     displayName: '@mantine/core/InputPlaceholder',
-    providerName: 'Input.Placeholder',
+    providerName: 'InputPlaceholder',
   });
 });

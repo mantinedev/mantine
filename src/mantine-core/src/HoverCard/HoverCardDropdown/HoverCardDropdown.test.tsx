@@ -22,5 +22,6 @@ describe('@mantine/core/HoverCardDropdown', () => {
     component: TestContainer,
     props: defaultProps,
     displayName: '@mantine/core/HoverCardDropdown',
+    providerName: 'HoverCardDropdown',
   });
 });

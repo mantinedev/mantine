@@ -35,7 +35,7 @@ const defaultProps: Partial<RichTextEditorLinkControlProps> = {};
 export const LinkControl = forwardRef<HTMLButtonElement, RichTextEditorLinkControlProps>(
   (props, ref) => {
     const { icon, popoverProps, disableTooltips, ...others } = useComponentDefaultProps(
-      'RichTextEditor.LinkControl',
+      'RichTextEditorLinkControl',
       defaultProps,
       props
     );

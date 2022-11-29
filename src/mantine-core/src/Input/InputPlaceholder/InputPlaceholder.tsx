@@ -10,7 +10,7 @@ export interface InputPlaceholderProps
 const defaultProps: Partial<InputPlaceholderProps> = {};
 
 export const InputPlaceholder = forwardRef<HTMLSpanElement, InputPlaceholderProps>((props, ref) => {
-  const { sx, ...others } = useComponentDefaultProps('Input.Placeholder', defaultProps, props);
+  const { sx, ...others } = useComponentDefaultProps('InputPlaceholder', defaultProps, props);
   return (
     <Box
       component="span"
