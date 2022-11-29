@@ -1,23 +1,23 @@
-import React, { useState } from 'react';
 import {
-  OptionalPortal,
+  DefaultProps,
+  getDefaultZIndex,
   GroupedTransition,
+  MantineColor,
+  MantineNumberSize,
+  MantineShadow,
   MantineTransition,
+  OptionalPortal,
   Overlay,
   Paper,
-  DefaultProps,
   Selectors,
-  MantineShadow,
   TextInput,
-  getDefaultZIndex,
-  MantineNumberSize,
-  MantineColor,
   TextInputProps,
 } from '@mantine/core';
+import { useDidUpdate, useFocusReturn, useFocusTrap, useScrollLock } from '@mantine/hooks';
 import { getGroupedOptions } from '@mantine/utils';
-import { useScrollLock, useFocusTrap, useDidUpdate, useFocusReturn } from '@mantine/hooks';
-import { DefaultAction, DefaultActionProps } from '../DefaultAction/DefaultAction';
+import React, { useRef, useState } from 'react';
 import { ActionsList, ActionsListStylesNames } from '../ActionsList/ActionsList';
+import { DefaultAction, DefaultActionProps } from '../DefaultAction/DefaultAction';
 import type { SpotlightAction } from '../types';
 import { filterActions } from './filter-actions/filter-actions';
 import useStyles from './Spotlight.styles';
@@ -149,6 +149,8 @@ export function Spotlight({
   const [, lockScroll] = useScrollLock();
   const focusTrapRef = useFocusTrap(opened);
 
+  const paperRef = useRef<HTMLDivElement>(null);
+
   const resetHovered = () => setHovered(-1);
   const handleClose = () => {
     resetHovered();
@@ -177,13 +179,72 @@ export function Spotlight({
     switch (event.key) {
       case 'ArrowDown': {
         event.preventDefault();
-        setHovered((current) => (current < groupedActions.length - 1 ? current + 1 : 0));
+        setHovered((current) => {
+          const newIndex = current < groupedActions.length - 1 ? current + 1 : 0;
+
+          // get the element using its index
+          const element = paperRef.current.querySelector(
+            `.mantine-Spotlight-action:nth-child(${newIndex + 1})`
+          ) as HTMLElement;
+
+          if (element) {
+            // get element offset so parent paper scroll to it
+            const elementOffset = element.offsetTop ?? 0;
+
+            // check if element is visible in the window
+            const elementIsVisible =
+              elementOffset >= paperRef.current.scrollTop &&
+              elementOffset <= paperRef.current.scrollTop + paperRef.current.clientHeight;
+
+            if (elementIsVisible === false) {
+              const elementHeight = element.offsetHeight ?? 0;
+              const paperHeight = paperRef.current.offsetHeight ?? 0;
+
+              // scroll to element
+              paperRef.current.scrollTo({
+                top: elementOffset - paperHeight + elementHeight,
+              });
+            }
+          }
+
+          return newIndex;
+        });
         break;
       }
 
       case 'ArrowUp': {
         event.preventDefault();
-        setHovered((current) => (current > 0 ? current - 1 : groupedActions.length - 1));
+        setHovered((current) => {
+          const newIndex = current > 0 ? current - 1 : groupedActions.length - 1;
+
+          // get the element using its index
+          const element = paperRef.current.querySelector(
+            `.mantine-Spotlight-action:nth-child(${newIndex + 1})`
+          ) as HTMLElement;
+
+          if (element) {
+            // get element offset so parent paper scroll to it
+            const elementOffset = element.offsetTop ?? 0;
+
+            // check if element is visible in the window
+            const elementIsVisible =
+              elementOffset >= paperRef.current.scrollTop &&
+              elementOffset <= paperRef.current.scrollTop + paperRef.current.clientHeight;
+
+            if (elementIsVisible === false) {
+              // we want to scroll to the bottom of the paper and towards the element
+              const elementHeight = element.offsetHeight ?? 0;
+              const paperHeight = paperRef.current.offsetHeight ?? 0;
+
+              // scroll to element
+              paperRef.current.scrollTo({
+                top: elementOffset - paperHeight + elementHeight,
+              });
+            }
+          }
+
+          return newIndex;
+        });
         break;
       }
 
@@ -239,6 +300,7 @@ export function Spotlight({
                 shadow={shadow}
                 radius={radius}
                 onMouseLeave={resetHovered}
+                ref={paperRef}
               >
                 <TextInput
                   autoComplete="chrome-please-just-do-not-show-it-thanks"
