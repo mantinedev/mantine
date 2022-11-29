@@ -88,6 +88,7 @@ export function useMove<T extends HTMLElement = HTMLDivElement>(
 
     const onMouseDown = (event: MouseEvent) => {
       startScrubbing();
+      event.preventDefault();
       onMouseMove(event);
     };
 
