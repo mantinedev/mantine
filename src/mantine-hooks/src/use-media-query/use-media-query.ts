@@ -35,9 +35,12 @@ function getInitialValue(query: string, initialValue?: boolean) {
 export function useMediaQuery(
   query: string,
   initialValue?: boolean,
+  { getInitialValueInEffect }: UseMediaQueryOptions = {
+    getInitialValueInEffect: true,
+  }
 ) {
   const [matches, setMatches] = useState(
-    getInitialValue(query, initialValue)
+    getInitialValueInEffect ? initialValue : getInitialValue(query, initialValue)
   );
   const queryRef = useRef<MediaQueryList>();
 
