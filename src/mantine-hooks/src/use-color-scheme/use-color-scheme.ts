@@ -1,7 +1,7 @@
-import { useMediaQuery, UseMediaQueryOptions } from '../use-media-query/use-media-query';
+import { useMediaQuery } from '../use-media-query/use-media-query';
 
-export function useColorScheme(initialValue?: 'dark' | 'light', options?: UseMediaQueryOptions) {
-  return useMediaQuery('(prefers-color-scheme: dark)', initialValue === undefined ? undefined : initialValue === 'dark', options)
+export function useColorScheme() {
+  return useMediaQuery('(prefers-color-scheme: dark)')
     ? 'dark'
     : 'light';
 }
