@@ -135,6 +135,13 @@ on [MantineProvider](/theming/mantine-provider/) to add styles to all Inputs:
 
 <Demo data={InputDemos.providerStyles} />
 
+## Customize focus styles
+
+`Input` component is used as a base for other inputs ([PasswordInput](/core/password-input/), [Select](/core/select/), [MultiSelect](/core/multi-select/), etc.).
+To customize focus styles of any inputs that are built on top of the `Input` component, use `&:focus-within` selector instead of `&:focus`:
+
+<Demo data={InputDemos.focus} />
+
 ## Get input ref
 
 ```tsx
