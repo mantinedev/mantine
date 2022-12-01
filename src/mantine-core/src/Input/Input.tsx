@@ -23,13 +23,13 @@ export interface InputSharedProps {
   icon?: React.ReactNode;
 
   /** Width of icon section in px */
-  iconWidth?: number;
+  iconWidth?: React.CSSProperties['width'];
 
   /** Right section of input, similar to icon but on the right */
   rightSection?: React.ReactNode;
 
   /** Width of right section, is used to calculate input padding-right */
-  rightSectionWidth?: number;
+  rightSectionWidth?: React.CSSProperties['width'];
 
   /** Props spread to rightSection div element */
   rightSectionProps?: Record<string, any>;

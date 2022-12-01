@@ -8,9 +8,9 @@ export interface InputStylesParams {
   variant: InputVariant;
   multiline: boolean;
   invalid: boolean;
-  rightSectionWidth: number;
+  rightSectionWidth: string | number;
   withRightSection: boolean;
-  iconWidth: number;
+  iconWidth: string | number;
   offsetBottom: boolean;
   offsetTop: boolean;
   pointer: boolean;
