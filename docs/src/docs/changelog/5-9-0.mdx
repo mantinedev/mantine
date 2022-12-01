@@ -7,6 +7,7 @@ release: https://github.com/mantinedev/mantine/releases/tag/5.9.0
 date: 'November 16th, 2022'
 ---
 
+import { Anchor } from '@mantine/core';
 import { HooksDemos, ColorInputDemos } from '@mantine/demos';
 
 ## use-eye-dropper hook
@@ -23,6 +24,14 @@ This feature depends on [EyeDropper API](https://developer.mozilla.org/en-US/doc
 the eye dropper will not be rendered if the API is not supported.
 
 <Demo data={ColorInputDemos.eyeDropper} />
+
+## AppShell alt layout
+
+[AppShell](https://mantine.dev/core/) component now supports placing `Navbar` and `Aside` components on top of `Header` and `Footer` with `layout="alt"` prop.
+
+<Anchor href="/app-shell-demo-alt/" target="_blank" mb="xl" style={{ display: 'block' }}>
+  Open alt layout example in new tab
+</Anchor>
 
 ## Responsive Grid gutter
 
