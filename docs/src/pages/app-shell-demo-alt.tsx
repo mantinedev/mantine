@@ -24,6 +24,7 @@ export default function AppShellDemo() {
             background: theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.colors.gray[0],
           },
         }}
+        layout="alt"
         navbarOffsetBreakpoint="sm"
         asideOffsetBreakpoint="sm"
         fixed
