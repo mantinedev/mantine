@@ -55,13 +55,14 @@ export const VerticalSection = forwardRef<HTMLElement, VerticalSectionProps>(
     ref
   ) => {
     const ctx = useAppShellContext();
+    const _zIndex = ctx.zIndex || zIndex;
 
     const { classes, cx, theme } = useStyles(
       {
         height,
         fixed: ctx.fixed || fixed,
         position,
-        zIndex: ctx.zIndex || zIndex,
+        zIndex: typeof _zIndex === 'number' && ctx.layout === 'default' ? _zIndex + 1 : _zIndex,
         layout: ctx.layout,
         borderPosition: withBorder ? (section === 'header' ? 'bottom' : 'top') : 'none',
       },
