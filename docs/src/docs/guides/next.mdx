@@ -8,7 +8,58 @@ search: 'Get started with Next.js'
 import { NextSteps } from '../../components/NextSteps/NextSteps.tsx';
 import { PackagesInstallation } from '../../components/PackagesInstallation/PackagesInstallation.tsx';
 
-# Usage with Next.js
+# [New] Usage with Next.js (v13)
+
+## Generate new application
+
+Init new application:
+
+```bash
+yarn create-next-app --typescript
+```
+
+<PackagesInstallation extraPackages={['@mantine/next', '@emotion/server']} />
+
+Add [MantineProvider](/theming/mantine-provider/) to `pages/_app.tsx`:
+
+```tsx
+import { AppProps } from 'next/app';
+import Head from 'next/head';
+import { MantineProvider } from '@mantine/core';
+
+export default function App(props: AppProps) {
+  const { Component, pageProps } = props;
+
+  return (
+    <>
+      <Head>
+        <title>Page title</title>
+        <meta name="viewport" content="minimum-scale=1, initial-scale=1, width=device-width" />
+      </Head>
+
+      <MantineProvider
+        withGlobalStyles
+        withNormalizeCSS
+        theme={{
+          /** Put your mantine theme override here */
+          colorScheme: 'light',
+        }}
+      >
+        <Component {...pageProps} />
+      </MantineProvider>
+    </>
+  );
+}
+```
+
+All set! Start development server:
+
+```bash
+npm run dev
+```
+
+
+# Usage with Next.js (v12 or below)
 
 ## Get started with template
 
@@ -25,7 +76,7 @@ The easiest way to get started is to use [default](https://github.com/mantinedev
 Init new application:
 
 ```bash
-yarn create next-app --typescript
+yarn create-next-app --typescript
 ```
 
 <PackagesInstallation extraPackages={['@mantine/next', '@emotion/server']} />
@@ -127,6 +178,7 @@ export default class _Document extends Document {
 Follow [custom emotion cache guide](/theming/emotion-cache/#server-side-rendering-with-custom-cache)
 to setup server side rendering with emotion cache. If you do not follow this guide, server side rendering will not work.
 
-## Next steps
+
+# Next steps
 
 <NextSteps />
