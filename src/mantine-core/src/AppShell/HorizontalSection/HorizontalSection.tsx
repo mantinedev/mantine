@@ -78,6 +78,7 @@ export const HorizontalSection = forwardRef<HTMLElement, HorizontalSectionProps>
         zIndex: ctx.zIndex || zIndex,
         section,
         withBorder,
+        layout: ctx.layout,
       },
       { classNames, styles, name: __staticSelector, unstyled }
     );
