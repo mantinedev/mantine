@@ -1,47 +1,6 @@
 import { CSSObject } from '@mantine/styles';
 import type { FloatingPosition, FloatingSide, FloatingPlacement } from '../types';
 
-function horizontalSide(
-  placement: FloatingPlacement | 'center',
-  arrowY: number,
-  arrowOffset: number
-) {
-  if (placement === 'center') {
-    return { top: arrowY };
-  }
-
-  if (placement === 'end') {
-    return { bottom: arrowOffset };
-  }
-
-  if (placement === 'start') {
-    return { top: arrowOffset };
-  }
-
-  return {};
-}
-
-function verticalSide(
-  placement: FloatingPlacement | 'center',
-  arrowX: number,
-  arrowOffset: number,
-  dir: 'rtl' | 'ltr'
-) {
-  if (placement === 'center') {
-    return { [dir === 'ltr' ? 'left' : 'right']: arrowX };
-  }
-
-  if (placement === 'end') {
-    return { [dir === 'ltr' ? 'right' : 'left']: arrowOffset };
-  }
-
-  if (placement === 'start') {
-    return { [dir === 'ltr' ? 'left' : 'right']: arrowOffset };
-  }
-
-  return {};
-}
-
 const radiusByFloatingSide: Record<
   FloatingSide,
   keyof Pick<
@@ -62,22 +21,18 @@ export function getArrowPositionStyles({
   position,
   withBorder,
   arrowSize,
-  arrowOffset,
   arrowRadius,
   arrowX,
   arrowY,
-  dir,
 }: {
   position: FloatingPosition;
   withBorder: boolean;
   arrowSize: number;
-  arrowOffset: number;
   arrowRadius: number;
   arrowX: number;
   arrowY: number;
-  dir: 'rtl' | 'ltr';
 }) {
-  const [side, placement = 'center'] = position.split('-') as [FloatingSide, FloatingPlacement];
+  const [side] = position.split('-') as [FloatingSide, FloatingPlacement];
   const baseStyles = {
     width: arrowSize,
     height: arrowSize,
@@ -91,7 +46,7 @@ export function getArrowPositionStyles({
   if (side === 'left') {
     return {
       ...baseStyles,
-      ...horizontalSide(placement, arrowY, arrowOffset),
+      top: arrowY,
       right: arrowPosition,
       borderLeft: 0,
       borderBottom: 0,
@@ -101,7 +56,7 @@ export function getArrowPositionStyles({
   if (side === 'right') {
     return {
       ...baseStyles,
-      ...horizontalSide(placement, arrowY, arrowOffset),
+      top: arrowY,
       left: arrowPosition,
       borderRight: 0,
       borderTop: 0,
@@ -111,20 +66,20 @@ export function getArrowPositionStyles({
   if (side === 'top') {
     return {
       ...baseStyles,
-      ...verticalSide(placement, arrowX, arrowOffset, dir),
+      left: arrowX,
       bottom: arrowPosition,
       borderTop: 0,
-      [dir === 'ltr' ? 'borderLeft' : 'borderRight']: 0,
+      borderLeft: 0,
     };
   }
 
   if (side === 'bottom') {
     return {
       ...baseStyles,
-      ...verticalSide(placement, arrowX, arrowOffset, dir),
+      left: arrowX,
       top: arrowPosition,
       borderBottom: 0,
-      [dir === 'ltr' ? 'borderRight' : 'borderLeft']: 0,
+      borderRight: 0,
     };
   }
 

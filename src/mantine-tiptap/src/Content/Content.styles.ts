@@ -115,7 +115,7 @@ export default createStyles(
         marginBottom: 0,
       },
 
-      '& .ProseMirror p.is-editor-empty:first-child::before': {
+      '& .ProseMirror p.is-editor-empty:first-of-type::before': {
         content: 'attr(data-placeholder)',
         userSelect: 'none',
         float: 'left',

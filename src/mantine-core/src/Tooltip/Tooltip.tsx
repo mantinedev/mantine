@@ -126,6 +126,7 @@ const _Tooltip = forwardRef<HTMLElement, TooltipProps>((props, ref) => {
     opened,
     events,
     arrowRef,
+    arrowOffset,
     offset: offset + (withArrow ? arrowSize / 2 : 0),
     positionDependencies: [...positionDependencies, children],
     inline,
@@ -170,7 +171,6 @@ const _Tooltip = forwardRef<HTMLElement, TooltipProps>((props, ref) => {
                 withBorder={false}
                 position={tooltip.placement}
                 arrowSize={arrowSize}
-                arrowOffset={arrowOffset}
                 arrowRadius={arrowRadius}
                 className={classes.arrow}
               />
