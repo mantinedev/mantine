@@ -173,7 +173,7 @@ export const _FileInput = forwardRef<HTMLButtonElement, FileInputProps>((props, 
             classNames={{ ...classNames, input: cx(classes.input, (classNames as any)?.input) }}
           >
             {!hasValue ? (
-              <span className={classes.placeholder}>{placeholder}</span>
+              <Input.Placeholder className={classes.placeholder}>{placeholder}</Input.Placeholder>
             ) : (
               <ValueComponent value={_value} />
             )}

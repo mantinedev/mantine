@@ -81,7 +81,11 @@ export default createStyles(
       },
 
       separatorActive: {
-        backgroundColor: theme.fn.variant({ variant: 'filled', color }).background,
+        backgroundColor: theme.fn.variant({
+          variant: 'filled',
+          color: color || theme.primaryColor,
+          primaryFallback: false,
+        }).background,
       },
 
       content: {

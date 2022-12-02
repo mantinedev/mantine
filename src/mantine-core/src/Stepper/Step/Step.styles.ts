@@ -27,7 +27,11 @@ export default createStyles(
     const _iconSize = iconSize || theme.fn.size({ size, sizes: iconSizes });
     const iconMargin = size === 'xl' || size === 'lg' ? theme.spacing.md : theme.spacing.sm;
     const _radius = theme.fn.size({ size: radius, sizes: theme.radius });
-    const colors = theme.fn.variant({ variant: 'filled', color });
+    const colors = theme.fn.variant({
+      variant: 'filled',
+      color: color || theme.primaryColor,
+      primaryFallback: false,
+    });
     const separatorDistanceFromIcon = theme.spacing.xs / 2;
 
     const verticalOrientationStyles = {

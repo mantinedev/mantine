@@ -9,7 +9,7 @@ import {
 import { ForwardRefWithStaticComponents } from '@mantine/utils';
 import { Box } from '../Box';
 import { ListItem, ListItemStylesNames } from './ListItem/ListItem';
-import { ListContext } from './List.context';
+import { ListProvider } from './List.context';
 import useStyles from './List.styles';
 
 export type ListStylesNames = ListItemStylesNames | Selectors<typeof useStyles>;
@@ -75,7 +75,7 @@ export const List: ListComponent = forwardRef<HTMLUListElement, ListProps>(
 
     return (
       <StylesApiProvider classNames={classNames} styles={styles} unstyled={unstyled}>
-        <ListContext.Provider value={{ spacing, center, icon, listStyleType, size, withPadding }}>
+        <ListProvider value={{ spacing, center, icon, listStyleType, size, withPadding }}>
           <Box<any>
             component={type === 'unordered' ? 'ul' : 'ol'}
             className={cx(classes.root, className)}
@@ -84,7 +84,7 @@ export const List: ListComponent = forwardRef<HTMLUListElement, ListProps>(
           >
             {children}
           </Box>
-        </ListContext.Provider>
+        </ListProvider>
       </StylesApiProvider>
     );
   }

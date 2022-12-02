@@ -25,6 +25,7 @@ describe('@mantine/core/MenuItem', () => {
     props: defaultProps,
     refType: HTMLButtonElement,
     displayName: '@mantine/core/MenuItem',
+    providerName: 'MenuItem',
   });
 
   it('allows to add onMouseEnter and onMouseLeave events', async () => {

@@ -54,6 +54,7 @@ interface MantineThemeFunctions {
   primaryShade(colorScheme?: ColorScheme): Shade;
   hover(hoverStyle: CSSObject): any;
   primaryColor(colorScheme?: ColorScheme): string;
+  placeholderStyles(): any;
 }
 
 export interface MantineTheme {

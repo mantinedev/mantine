@@ -31,7 +31,7 @@ const defaultProps: Partial<RichTextEditorControlProps> = {
 
 export const Control = forwardRef<HTMLButtonElement, RichTextEditorControlProps>((props, ref) => {
   const { className, active, children, interactive, ...others } = useComponentDefaultProps(
-    'RichTextEditor.Control',
+    'RichTextEditorControl',
     defaultProps,
     props
   );
