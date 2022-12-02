@@ -5,11 +5,9 @@ export function useHash() {
   const [hash, setHashValue] = useState<string>('');
 
   const setHash = (value: string) => {
-    if (!value.startsWith('#')) {
-      value = '#' + value;
-    }
-    window.location.hash = value;
-    setHashValue(value);
+    const valueWithHash = value.startsWith('#') ? value : `#${value}`;
+    window.location.hash = valueWithHash;
+    setHashValue(valueWithHash);
   };
 
   useWindowEvent('hashchange', () => {
