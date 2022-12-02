@@ -21,7 +21,7 @@ export interface ReorderPayload {
 
 type Rule<Value, Values> = (value: Value, values: Values, path: string) => React.ReactNode;
 
-type FormRule<Value, Values> = Value extends Array<infer ListValue>
+type FormRule<Value, Values> = NonNullable<Value> extends Array<infer ListValue>
   ?
       | Partial<{
           [Key in keyof ListValue]: ListValue[Key] extends Array<infer NestedListItem>
@@ -29,7 +29,7 @@ type FormRule<Value, Values> = Value extends Array<infer ListValue>
             : FormRulesRecord<ListValue[Key]> | Rule<ListValue[Key], Values>;
         }>
       | Rule<Value, Values>
-  : Value extends Record<string, unknown>
+  : NonNullable<Value> extends Record<string, unknown>
   ? FormRulesRecord<Value> | Rule<Value, Values>
   : Rule<Value, Values>;
 
