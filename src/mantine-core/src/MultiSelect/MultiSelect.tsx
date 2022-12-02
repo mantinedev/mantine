@@ -68,6 +68,9 @@ export interface MultiSelectProps
   /** Controlled search input value */
   searchValue?: string;
 
+  /** Hovers the first result when search query changes */
+  hoverOnSearchChange?: boolean;
+
   /** Allow creatable option  */
   creatable?: boolean;
 
@@ -214,6 +217,7 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>((props
     inputWrapperOrder,
     readOnly,
     withAsterisk,
+    hoverOnSearchChange,
     ...others
   } = useComponentDefaultProps('MultiSelect', defaultProps, props);
 
@@ -305,8 +309,12 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>((props
   };
 
   useDidUpdate(() => {
-    setHovered(-1);
-  }, [_searchValue]);
+    if (hoverOnSearchChange && _searchValue) {
+      setHovered(0);
+    } else {
+      setHovered(-1);
+    }
+  }, [_searchValue, hoverOnSearchChange]);
 
   useDidUpdate(() => {
     if (!disabled && _value.length > data.length) {
