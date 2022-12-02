@@ -15,7 +15,7 @@ export interface VerticalSectionSharedProps extends DefaultProps {
   /** Component height with breakpoints */
   height: VerticalSectionHeight;
 
-  /** Border */
+  /** Determines whether the element should have border */
   withBorder?: boolean;
 
   /** Changes position to fixed, controlled by AppShell component if rendered inside */
