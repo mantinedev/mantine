@@ -20,7 +20,7 @@ export const ControlsGroup = forwardRef<HTMLDivElement, RichTextEditorControlsGr
   (props, ref) => {
     const { classNames, styles, unstyled } = useContextStylesApi();
     const { className, children, ...others } = useComponentDefaultProps(
-      'RichTextEditor.ControlsGroup',
+      'RichTextEditorControlsGroup',
       defaultProps,
       props
     );

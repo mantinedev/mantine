@@ -77,3 +77,15 @@ export function ReadOnly() {
     </div>
   );
 }
+
+export function WithEyeDropper() {
+  return (
+    <div style={{ padding: 40, maxWidth: 400 }}>
+      <ColorInput size="xs" label="With eye dropper" placeholder="Read only" withEyeDropper />
+      <ColorInput size="sm" label="With eye dropper" placeholder="Read only" withEyeDropper />
+      <ColorInput size="md" label="With eye dropper" placeholder="Read only" withEyeDropper />
+      <ColorInput size="lg" label="With eye dropper" placeholder="Read only" withEyeDropper />
+      <ColorInput size="xl" label="With eye dropper" placeholder="Read only" withEyeDropper />
+    </div>
+  );
+}

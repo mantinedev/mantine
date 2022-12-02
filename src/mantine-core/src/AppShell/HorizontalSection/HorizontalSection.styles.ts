@@ -18,6 +18,7 @@ interface HorizontalSectionStyles {
   fixed: boolean;
   zIndex: React.CSSProperties['zIndex'];
   section: 'navbar' | 'aside';
+  layout: 'default' | 'alt';
   withBorder: boolean;
 }
 
@@ -33,6 +34,7 @@ export default createStyles(
       zIndex,
       section,
       withBorder,
+      layout,
     }: HorizontalSectionStyles
   ) => {
     const breakpoints =
@@ -59,12 +61,14 @@ export default createStyles(
       root: {
         ...theme.fn.fontStyles(),
         ...position,
-        top: position?.top || 'var(--mantine-header-height)',
+        top: layout === 'alt' ? 0 : position?.top || 'var(--mantine-header-height)',
         bottom: 0,
         zIndex,
         height:
           height ||
-          'calc(100vh - var(--mantine-header-height, 0px) - var(--mantine-footer-height, 0px))',
+          (layout === 'alt'
+            ? 'auto'
+            : 'calc(100vh - var(--mantine-header-height, 0px) - var(--mantine-footer-height, 0px))'),
         width: width?.base || '100%',
         position: fixed ? 'fixed' : 'static',
         boxSizing: 'border-box',

@@ -43,9 +43,8 @@ export default createStyles((theme, { size, rightSectionWidth }: PasswordInputSt
     },
 
     '&::placeholder': {
+      ...theme.fn.placeholderStyles(),
       opacity: 1,
-      userSelect: 'none',
-      color: theme.colorScheme === 'dark' ? theme.colors.dark[3] : theme.colors.gray[5],
     },
   },
 

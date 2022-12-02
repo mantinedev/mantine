@@ -1,5 +1,10 @@
-import React from 'react';
-import { DefaultProps, Selectors, useContextStylesApi } from '@mantine/styles';
+import React, { forwardRef } from 'react';
+import {
+  DefaultProps,
+  Selectors,
+  useComponentDefaultProps,
+  useContextStylesApi,
+} from '@mantine/styles';
 import { Box } from '../../Box';
 import { useListContext } from '../List.context';
 import useStyles from './ListItem.styles';
@@ -16,7 +21,15 @@ export interface ListItemProps
   children: React.ReactNode;
 }
 
-export function ListItem({ className, children, icon, ...others }: ListItemProps) {
+const defaultProps: Partial<ListItemProps> = {};
+
+export const ListItem = forwardRef<HTMLLIElement, ListItemProps>((props, ref) => {
+  const { className, children, icon, ...others } = useComponentDefaultProps(
+    'ListItem',
+    defaultProps,
+    props
+  );
+
   const { icon: ctxIcon, spacing, center, listStyleType, size, withPadding } = useListContext();
   const { classNames, styles, unstyled } = useContextStylesApi();
   const _icon = icon || ctxIcon;
@@ -29,6 +42,7 @@ export function ListItem({ className, children, icon, ...others }: ListItemProps
     <Box
       component="li"
       className={cx(classes.item, { [classes.withIcon]: _icon }, className)}
+      ref={ref}
       {...others}
     >
       <div className={classes.itemWrapper}>
@@ -37,6 +51,6 @@ export function ListItem({ className, children, icon, ...others }: ListItemProps
       </div>
     </Box>
   );
-}
+});
 
 ListItem.displayName = '@mantine/core/ListItem';

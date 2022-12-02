@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 import React, { useRef } from 'react';
-import { DefaultProps } from '@mantine/styles';
+import { DefaultProps, useComponentDefaultProps } from '@mantine/styles';
 import { createEventHandler } from '@mantine/utils';
 import { Popover } from '../../Popover';
 import { useMenuContext } from '../Menu.context';
@@ -10,12 +10,15 @@ export interface MenuDropdownProps extends DefaultProps, React.ComponentPropsWit
   children?: React.ReactNode;
 }
 
-export function MenuDropdown({
-  children,
-  onMouseEnter,
-  onMouseLeave,
-  ...others
-}: MenuDropdownProps) {
+const defaultProps: Partial<MenuDropdownProps> = {};
+
+export function MenuDropdown(props: MenuDropdownProps) {
+  const { children, onMouseEnter, onMouseLeave, ...others } = useComponentDefaultProps(
+    'MenuDropdown',
+    defaultProps,
+    props
+  );
+
   const wrapperRef = useRef<HTMLDivElement>();
   const ctx = useMenuContext();
 

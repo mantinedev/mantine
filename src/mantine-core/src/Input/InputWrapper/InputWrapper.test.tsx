@@ -27,6 +27,7 @@ describe('@mantine/core/InputWrapper', () => {
     props: defaultProps,
     displayName: '@mantine/core/InputWrapper',
     refType: HTMLDivElement,
+    providerName: 'InputWrapper',
   });
 
   it('renders correct error, description and label', () => {

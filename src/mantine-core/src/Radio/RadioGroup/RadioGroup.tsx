@@ -1,5 +1,5 @@
 import React, { forwardRef } from 'react';
-import { useUncontrolled } from '@mantine/hooks';
+import { useUncontrolled, useId } from '@mantine/hooks';
 import {
   DefaultProps,
   MantineNumberSize,
@@ -70,6 +70,7 @@ export const RadioGroup = forwardRef<HTMLDivElement, RadioGroupProps>(
       name,
       ...others
     } = useComponentDefaultProps('RadioGroup', defaultProps, props);
+    const _name = useId(name);
 
     const [_value, setValue] = useUncontrolled({
       value,
@@ -82,7 +83,7 @@ export const RadioGroup = forwardRef<HTMLDivElement, RadioGroupProps>(
       setValue(event.currentTarget.value);
 
     return (
-      <RadioGroupProvider value={{ value: _value, onChange: handleChange, size, name }}>
+      <RadioGroupProvider value={{ value: _value, onChange: handleChange, size, name: _name }}>
         <Input.Wrapper
           labelElement="div"
           size={size}

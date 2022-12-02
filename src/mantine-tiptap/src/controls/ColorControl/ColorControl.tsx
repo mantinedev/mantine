@@ -20,7 +20,7 @@ const defaultProps: Partial<RichTextEditorColorControlProps> = {};
 export const ColorControl = forwardRef<HTMLButtonElement, RichTextEditorColorControlProps>(
   (props, ref) => {
     const { color, ...others } = useComponentDefaultProps(
-      'RichTextEditor.ColorControl',
+      'RichTextEditorColorControl',
       defaultProps,
       props
     );

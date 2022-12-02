@@ -111,6 +111,15 @@ form layouts if default `Input.Wrapper` layout does not fit your requirements.
 
 <Demo data={InputDemos.inputBase} />
 
+## Input.Placeholder
+
+`Input.Placeholder` component can be used to add placeholder to `Input` and `InputBase` components that are based on `button` element
+or do not support placeholder property natively:
+
+<Demo data={InputDemos.placeholder} />
+
+<Demo data={InputDemos.basePlaceholder} />
+
 ## Default props on MantineProvider
 
 You can add [default props](/theming/default-props/) on [MantineProvider](/theming/mantine-provider/)
@@ -125,6 +134,13 @@ Same as with default props you can use `Input` and `Input.Wrapper` [Styles API](
 on [MantineProvider](/theming/mantine-provider/) to add styles to all Inputs:
 
 <Demo data={InputDemos.providerStyles} />
+
+## Customize focus styles
+
+`Input` component is used as a base for other inputs ([PasswordInput](/core/password-input/), [Select](/core/select/), [MultiSelect](/core/multi-select/), etc.).
+To customize focus styles of any inputs that are built on top of the `Input` component, use `&:focus-within` selector instead of `&:focus`:
+
+<Demo data={InputDemos.focus} />
 
 ## Get input ref
 

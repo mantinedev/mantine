@@ -20,5 +20,6 @@ describe('@mantine/core/PopoverDropdown', () => {
     component: TestContainer,
     props: defaultProps,
     displayName: '@mantine/core/PopoverDropdown',
+    providerName: 'PopoverDropdown',
   });
 });

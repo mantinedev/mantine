@@ -16,10 +16,11 @@ interface VerticalSectionStyles {
   position: VerticalSectionPosition;
   zIndex: React.CSSProperties['zIndex'];
   borderPosition: 'top' | 'bottom' | 'none';
+  layout: 'default' | 'alt';
 }
 
 export default createStyles(
-  (theme, { height, fixed, position, zIndex, borderPosition }: VerticalSectionStyles) => {
+  (theme, { height, fixed, position, zIndex, borderPosition, layout }: VerticalSectionStyles) => {
     const breakpoints =
       typeof height === 'object' && height !== null
         ? getSortedBreakpoints(height, theme).reduce((acc, [breakpoint, breakpointSize]) => {
@@ -36,6 +37,8 @@ export default createStyles(
         ...theme.fn.fontStyles(),
         ...position,
         zIndex,
+        left: layout === 'alt' ? 'var(--mantine-navbar-width, 0)' : 0,
+        right: layout === 'alt' ? 'var(--mantine-aside-width, 0)' : 0,
         height: typeof height === 'object' ? height?.base || '100%' : height,
         maxHeight: typeof height === 'object' ? height?.base || '100%' : height,
         position: fixed ? 'fixed' : 'static',

@@ -73,3 +73,18 @@ export function MinRangeWithNegativeValues() {
     </div>
   );
 }
+
+export function MinMaxSliderDistance() {
+  return (
+    <div style={{ maxWidth: 400, padding: 40 }}>
+      <RangeSlider
+        min={0}
+        max={100}
+        minRange={5}
+        maxRange={20}
+        step={0.5}
+        defaultValue={[0, 100]}
+      />
+    </div>
+  );
+}
