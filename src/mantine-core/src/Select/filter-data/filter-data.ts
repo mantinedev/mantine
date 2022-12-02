@@ -36,7 +36,7 @@ export function filterData({
       if (firstIndexOffset > 0) {
         return data.slice(firstIndex - firstIndexOffset);
       }
-        return data.slice(firstIndex, lastIndex);
+      return data.slice(firstIndex, lastIndex);
     }
     return data;
   }
