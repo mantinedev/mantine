@@ -13,7 +13,7 @@ import {
   useComponentDefaultProps,
 } from '@mantine/styles';
 import { MantineTransition } from '../Transition';
-import { getFloatingPosition, FloatingPosition } from '../Floating';
+import { getFloatingPosition, FloatingPosition, ArrowPosition } from '../Floating';
 import { usePopover } from './use-popover';
 import { PopoverContextProvider } from './Popover.context';
 import {
@@ -70,6 +70,9 @@ export interface PopoverBaseProps {
 
   /** Arrow radius in px */
   arrowRadius?: number;
+
+  /** Arrow position **/
+  arrowPosition?: ArrowPosition;
 
   /** Determines whether dropdown should be rendered within Portal, defaults to false */
   withinPortal?: boolean;
@@ -137,6 +140,7 @@ const defaultProps: Partial<PopoverProps> = {
   arrowSize: 7,
   arrowOffset: 5,
   arrowRadius: 0,
+  arrowPosition: 'side',
   closeOnClickOutside: true,
   withinPortal: false,
   closeOnEscape: true,
@@ -166,6 +170,7 @@ export function Popover(props: PopoverProps) {
     arrowSize,
     arrowOffset,
     arrowRadius,
+    arrowPosition,
     unstyled,
     classNames,
     styles,
@@ -258,7 +263,9 @@ export function Popover(props: PopoverProps) {
           width,
           withArrow,
           arrowSize,
+          arrowOffset,
           arrowRadius,
+          arrowPosition,
           placement: popover.floating.placement,
           trapFocus,
           withinPortal,
