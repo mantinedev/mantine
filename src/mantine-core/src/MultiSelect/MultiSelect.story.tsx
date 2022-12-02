@@ -1,5 +1,5 @@
 import React from 'react';
-import { SelectItem } from 'src/Select';
+import { SelectItem } from '../Select/types';
 import { Stack } from '../Stack';
 import { TextInput } from '../TextInput';
 import { MultiSelect } from './MultiSelect';
