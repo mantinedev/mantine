@@ -7,7 +7,7 @@ interface FilterData {
   searchValue: string;
   filter(value: string, selected: boolean, item: SelectItem): boolean;
   value: string[];
-  disableSelectedItemFiltering: boolean;
+  disableSelectedItemFiltering?: boolean;
 }
 
 export function filterData({
