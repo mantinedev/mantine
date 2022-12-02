@@ -20,9 +20,14 @@ export function RadioGroup() {
   return (
     <div style={{ padding: 20 }}>
       <Radio.Group defaultValue="ng">
-        <Radio label="React" value="react" name="hello" />
-        <Radio label="Angular" value="ng" name="hello" />
-        <Radio label="Svelte" value="sv" disabled name="hello" />
+        <Radio label="React" value="react" />
+        <Radio label="Angular" value="ng" />
+        <Radio label="Svelte" value="sv" />
+      </Radio.Group>
+      <Radio.Group>
+        <Radio label="React" value="react" />
+        <Radio label="Angular" value="ng" />
+        <Radio label="Svelte" value="sv" />
       </Radio.Group>
     </div>
   );
