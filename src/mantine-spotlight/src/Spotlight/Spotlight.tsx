@@ -120,7 +120,7 @@ export function Spotlight({
   overlayOpacity = 0.25,
   overlayBlur = 3,
   shadow = 'md',
-  radius = 'sm',
+  radius,
   centered = false,
   closeOnActionTrigger = true,
   highlightQuery = false,
