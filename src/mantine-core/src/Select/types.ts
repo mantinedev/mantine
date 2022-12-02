@@ -10,6 +10,7 @@ import type { SelectPopoverStylesNames } from './SelectPopover/SelectPopover';
 export interface SelectItem {
   value: string;
   label?: string;
+  selected?: boolean;
   disabled?: boolean;
   group?: string;
   [key: string]: any;
