@@ -51,9 +51,7 @@ describe('@mantine/core/MultiSelect', () => {
   });
 
   it('Has un-filtered list when disableSelectedItemFiltering is disabled', () => {
-    const { container } = render(
-      <MultiSelect {...defaultProps} initiallyOpened />
-    );
+    const { container } = render(<MultiSelect {...defaultProps} initiallyOpened />);
 
     expect(container.querySelectorAll('.mantine-MultiSelect-item')).toHaveLength(2);
   });
