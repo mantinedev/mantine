@@ -64,7 +64,7 @@ export function UnFilteredSelected() {
       label="Your favorite Rick and Morty character"
       placeholder="Pick all that you like"
       itemComponent={({ selected, value, ...rest }: SelectItem) => (
-        <div {...rest} style={selected ? { backgroundColor: 'blue' } : null}>
+        <div {...rest} style={selected ? { backgroundColor: 'green' } : null}>
           {value}
         </div>
       )}
