@@ -11,8 +11,8 @@ import {
   itSupportsInputContainer,
   itSupportsInputAsterisk,
 } from '@mantine/tests';
-import { MultiSelect, MultiSelectProps } from './MultiSelect';
 import { render } from '@testing-library/react';
+import { MultiSelect, MultiSelectProps } from './MultiSelect';
 
 const defaultProps: MultiSelectProps = {
   withinPortal: false,
