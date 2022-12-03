@@ -79,9 +79,8 @@ export default createStyles(
           '&:last-of-type': {
             borderRight: 'none',
             borderLeft: withColumnBorders ? border : 'none',
-          }
+          },
         },
-
 
         '&[data-striped] tbody tr:nth-of-type(odd)': {
           backgroundColor:
