@@ -70,6 +70,7 @@ export type SetFieldValue<Values> = <Field extends LooseKeys<Values>>(
 ) => void;
 
 export type ClearFieldError = (path: unknown) => void;
+export type ClearFieldDirty = (path: unknown) => void;
 export type ClearErrors = () => void;
 export type Reset = () => void;
 export type Validate = () => FormValidationResult;
