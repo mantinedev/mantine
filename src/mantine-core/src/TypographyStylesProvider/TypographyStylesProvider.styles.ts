@@ -177,6 +177,9 @@ export default createStyles((theme) => {
         borderBottomRightRadius: theme.radius.sm,
         padding: `${theme.spacing.md}px ${theme.spacing.lg}px`,
         color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
+        borderLeft: `6px solid ${
+          theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[3]
+        }`,
 
         '& cite': {
           display: 'block',
