@@ -1,5 +1,5 @@
 import React, { useRef } from 'react';
-import { Button } from '@mantine/core';
+import { Button, Group } from '@mantine/core';
 import { Dropzone } from '@mantine/dropzone';
 import { MantineDemo } from '@mantine/ds';
 
@@ -15,14 +15,18 @@ function Demo() {
     <>
       <Dropzone
         openRef={openRef}
+        onDrop={() => {}}
         activateOnClick={false}
         styles={{ inner: { pointerEvents: 'all' } }}
       >
-        <Button onClick={() => openRef.current()}>Select files</Button>
+        <Group position="center">
+          <Button onClick={() => openRef.current()}>Select files</Button>
+        </Group>
       </Dropzone>
     </>
   );
 }
+
 `;
 
 function Demo() {
@@ -36,7 +40,9 @@ function Demo() {
         activateOnClick={false}
         styles={{ inner: { pointerEvents: 'all' } }}
       >
-        <Button onClick={() => openRef.current()}>Select files</Button>
+        <Group position="center">
+          <Button onClick={() => openRef.current()}>Select files</Button>
+        </Group>
       </Dropzone>
     </>
   );
