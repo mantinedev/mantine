@@ -1,7 +1,10 @@
 import React from 'react';
 import { Tooltip, TooltipProps, Group, Button } from '@mantine/core';
 import { MantineDemo } from '@mantine/ds';
-import { FLOATING_POSITION_DATA } from '../../../shared/floating-position-data';
+import {
+  FLOATING_ARROW_POSITION_DATA,
+  FLOATING_POSITION_DATA,
+} from '../../../shared/floating-position-data';
 
 const Wrapper = (props: TooltipProps) => (
   <div style={{ padding: 30 }}>
@@ -51,5 +54,12 @@ export const configurator: MantineDemo = {
       defaultValue: 'top',
     },
     { name: 'withArrow', type: 'boolean', initialValue: true, defaultValue: false },
+    {
+      name: 'arrowPosition',
+      type: 'select',
+      data: FLOATING_ARROW_POSITION_DATA,
+      initialValue: 'side',
+      defaultValue: 'side',
+    },
   ],
 };

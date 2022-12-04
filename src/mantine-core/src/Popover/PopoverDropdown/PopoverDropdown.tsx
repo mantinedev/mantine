@@ -95,6 +95,8 @@ export function PopoverDropdown(props: PopoverDropdownProps) {
                 position={ctx.placement}
                 arrowSize={ctx.arrowSize}
                 arrowRadius={ctx.arrowRadius}
+                arrowOffset={ctx.arrowOffset}
+                arrowPosition={ctx.arrowPosition}
                 className={classes.arrow}
               />
             </Box>
