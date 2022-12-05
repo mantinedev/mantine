@@ -30,11 +30,11 @@ type FormRule<Value, Values> = NonNullable<Value> extends Array<infer ListValue>
         }>
       | Rule<Value, Values>
   : NonNullable<Value> extends Record<string, unknown>
-  ? FormRulesRecord<Value> | Rule<Value, Values>
+  ? FormRulesRecord<Value, Values> | Rule<Value, Values>
   : Rule<Value, Values>;
 
-export type FormRulesRecord<Values> = Partial<{
-  [Key in keyof Values]: FormRule<Values[Key], Values>;
+export type FormRulesRecord<Values, InitValues = Values> = Partial<{
+  [Key in keyof Values]: FormRule<Values[Key], InitValues>;
 }>;
 
 export type FormValidateInput<Values> = FormRulesRecord<Values> | ((values: Values) => FormErrors);
