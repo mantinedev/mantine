@@ -68,6 +68,7 @@ export default createStyles(
       position: 'relative',
       transition: 'background-color 150ms ease',
       display: hidden ? 'none' : undefined,
+      overflow: 'hidden',
 
       '&::before': {
         content: '""',
@@ -77,6 +78,8 @@ export default createStyles(
         transform: 'translate(-50%, -50%)',
         width: '100%',
         height: '100%',
+        minWidth: 44,
+        minHeight: 44,
       },
     },
 

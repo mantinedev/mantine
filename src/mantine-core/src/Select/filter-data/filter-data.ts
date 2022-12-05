@@ -26,6 +26,18 @@ export function filterData({
   const selected = value != null ? data.find((item) => item.value === value) || null : null;
 
   if (selected && !filterDataOnExactSearchMatch && selected?.label === searchValue) {
+    if (limit) {
+      if (limit >= data.length) {
+        return data;
+      }
+      const firstIndex = data.indexOf(selected);
+      const lastIndex = firstIndex + limit;
+      const firstIndexOffset = lastIndex - data.length;
+      if (firstIndexOffset > 0) {
+        return data.slice(firstIndex - firstIndexOffset);
+      }
+      return data.slice(firstIndex, lastIndex);
+    }
     return data;
   }
 

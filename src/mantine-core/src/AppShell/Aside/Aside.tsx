@@ -1,5 +1,5 @@
 import React, { forwardRef } from 'react';
-import { getDefaultZIndex, useComponentDefaultProps } from '@mantine/styles';
+import { useComponentDefaultProps } from '@mantine/styles';
 import { ForwardRefWithStaticComponents } from '@mantine/utils';
 import {
   HorizontalSection,
@@ -19,7 +19,6 @@ type AsideComponent = ForwardRefWithStaticComponents<AsideProps, { Section: type
 const defaultProps: Partial<AsideProps> = {
   fixed: false,
   position: { top: 0, right: 0 },
-  zIndex: getDefaultZIndex('app'),
   hiddenBreakpoint: 'md',
   hidden: false,
 };

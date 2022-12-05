@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef } from 'react';
 import { flushSync } from 'react-dom';
 import { useDidUpdate, mergeRefs } from '@mantine/hooks';
 
@@ -16,16 +16,9 @@ export function getElementHeight(
   return el?.current ? el.current.scrollHeight : 'auto';
 }
 
-export function getElementWidth(
-  el: React.RefObject<HTMLElement> | { current?: { scrollWidth: number } }
-) {
-  return el?.current ? el.current.scrollWidth : 'auto';
-}
-
 const raf = typeof window !== 'undefined' && window.requestAnimationFrame;
 
 interface UseCollapse {
-  axis: 'x' | 'y';
   opened: boolean;
   transitionDuration?: number;
   transitionTimingFunction?: string;
@@ -45,12 +38,15 @@ export function useCollapse({
   transitionTimingFunction = 'ease',
   onTransitionEnd = () => {},
   opened,
-  axis,
 }: UseCollapse): (props: GetCollapseProps) => Record<string, any> {
   const el = useRef<HTMLElement | null>(null);
   const collapsedHeight = '0px';
-  const [styles, setStylesRaw] = useState<React.CSSProperties>({});
-
+  const collapsedStyles = {
+    display: 'none',
+    height: '0px',
+    overflow: 'hidden',
+  };
+  const [styles, setStylesRaw] = useState<React.CSSProperties>(opened ? {} : collapsedStyles);
   const setStyles = (newStyles: {} | ((oldStyles: {}) => {})): void => {
     flushSync(() => setStylesRaw(newStyles));
   };
@@ -60,50 +56,15 @@ export function useCollapse({
   };
 
   function getTransitionStyles(height: number | string): {
-    transition?: string;
-    transitionProperty?: string;
-    transitionDuration?: string;
-    transitionTimingFunction?: string;
+    transition: string;
   } {
     const _duration = transitionDuration || getAutoHeightDuration(height);
     return {
-      transitionProperty: `${axis === 'x' ? 'width' : 'height'}`,
-      transitionDuration: `${_duration}ms`,
-      transitionTimingFunction: `${transitionTimingFunction}`,
+      transition: `height ${_duration}ms ${transitionTimingFunction}`,
     };
   }
 
-  const getDefaultSizes = () => {
-    const oldStyles = styles;
-    setStyles({});
-    const sizes = { width: getElementWidth(el), height: getElementHeight(el) };
-    setStyles(oldStyles);
-    return sizes;
-  };
-
-  const getCollapsedStyles = () => {
-    const { height } = getDefaultSizes();
-    return {
-      x: { height, width: '0px', overflow: 'hidden' },
-      y: { display: 'none', height: '0px', overflow: 'hidden' },
-    };
-  };
-
-  useEffect(() => {
-    raf(() => {
-      const { x, y } = getCollapsedStyles();
-      if (axis === 'x' && !opened) {
-        setStyles({ ...x });
-      } else if (axis === 'y' && !opened) {
-        setStyles({ ...y });
-      }
-    });
-  }, []);
-
-  // y axis
   useDidUpdate(() => {
-    if (axis === 'x') return;
-
     if (opened) {
       raf(() => {
         mergeStyles({ willChange: 'height', display: 'block', overflow: 'hidden' });
@@ -121,56 +82,29 @@ export function useCollapse({
     }
   }, [opened]);
 
-  // x axis
-  useDidUpdate(() => {
-    if (axis === 'y') return;
-
-    if (opened) {
-      raf(() => {
-        const { width } = getDefaultSizes();
-        mergeStyles({
-          display: 'block',
-          overflow: 'hidden',
-          willChange: 'width',
-          flexShrink: 0,
-        });
-        raf(() => {
-          mergeStyles({ ...getTransitionStyles(width), width });
-        });
-      });
-    } else {
-      raf(() => {
-        const { width, height } = getDefaultSizes();
-        mergeStyles({
-          ...getTransitionStyles(width),
-          flexShrink: 0,
-          willChange: 'width',
-          width,
-          height,
-        });
-        raf(() => mergeStyles({ width: '0px', overflow: 'hidden' }));
-      });
-    }
-  }, [opened]);
-
   const handleTransitionEnd = (e: React.TransitionEvent): void => {
-    if (e.target !== el.current || !(e.propertyName === 'width' || 'height')) {
+    if (e.target !== el.current || e.propertyName !== 'height') {
       return;
     }
 
-    onTransitionEnd();
     if (opened) {
-      setStyles({});
-    } else {
-      const { x, y } = getCollapsedStyles();
-      if (axis === 'x') setStyles(x);
-      else setStyles(y);
+      const height = getElementHeight(el);
+
+      if (height === styles.height) {
+        setStyles({});
+      } else {
+        mergeStyles({ height });
+      }
+
+      onTransitionEnd();
+    } else if (styles.height === collapsedHeight) {
+      setStyles(collapsedStyles);
+      onTransitionEnd();
     }
   };
 
   function getCollapseProps({ style = {}, refKey = 'ref', ...rest }: GetCollapseProps = {}) {
     const theirRef: any = rest[refKey];
-
     return {
       'aria-hidden': !opened,
       ...rest,

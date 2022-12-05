@@ -1,7 +1,7 @@
 import { ReferenceType } from '@floating-ui/react-dom-interactions';
 import { createSafeContext } from '@mantine/utils';
 import { MantineNumberSize, MantineShadow } from '@mantine/styles';
-import { FloatingPosition } from '../Floating';
+import { FloatingPosition, ArrowPosition } from '../Floating';
 import { MantineTransition } from '../Transition';
 import { POPOVER_ERRORS } from './Popover.errors';
 import { PopoverWidth } from './Popover.types';
@@ -21,7 +21,9 @@ interface PopoverContext {
   width?: PopoverWidth;
   withArrow: boolean;
   arrowSize: number;
+  arrowOffset: number;
   arrowRadius: number;
+  arrowPosition: ArrowPosition;
   trapFocus: boolean;
   placement: FloatingPosition;
   withinPortal: boolean;

@@ -18,7 +18,7 @@ export interface HorizontalSectionSharedProps extends DefaultProps {
   /** HorizontalSection content */
   children: React.ReactNode;
 
-  /** Border */
+  /** Determines whether the element should have border */
   withBorder?: boolean;
 
   /** Set position to fixed */
@@ -51,7 +51,7 @@ export const HorizontalSection = forwardRef<HTMLElement, HorizontalSectionProps>
       height,
       fixed = false,
       position,
-      zIndex = getDefaultZIndex('app'),
+      zIndex,
       hiddenBreakpoint = 'md',
       hidden = false,
       withBorder = true,
@@ -75,7 +75,7 @@ export const HorizontalSection = forwardRef<HTMLElement, HorizontalSectionProps>
         fixed: ctx.fixed || fixed,
         position,
         hiddenBreakpoint,
-        zIndex: ctx.zIndex || zIndex,
+        zIndex: zIndex || ctx.zIndex || getDefaultZIndex('app'),
         section,
         withBorder,
         layout: ctx.layout,
