@@ -1,5 +1,5 @@
 import React, { forwardRef } from 'react';
-import { getDefaultZIndex, useComponentDefaultProps } from '@mantine/styles';
+import { useComponentDefaultProps } from '@mantine/styles';
 import { VerticalSection, VerticalSectionSharedProps } from '../VerticalSection/VerticalSection';
 
 export interface HeaderProps
@@ -12,7 +12,6 @@ export interface HeaderProps
 const defaultProps: Partial<HeaderProps> = {
   fixed: false,
   position: { top: 0, left: 0, right: 0 },
-  zIndex: getDefaultZIndex('app'),
 };
 
 export const Header = forwardRef<HTMLElement, HeaderProps>((props: HeaderProps, ref) => {

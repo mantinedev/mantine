@@ -75,14 +75,25 @@ export function getHotkeyMatcher(hotkey: string): CheckHotkeyMatch {
   return (event) => isExactHotkey(parseHotkey(hotkey), event);
 }
 
-type HotkeyItem = [string, (event: React.KeyboardEvent<HTMLElement> | KeyboardEvent) => void];
+export interface HotkeyItemOptions {
+  preventDefault?: boolean;
+}
+
+type HotkeyItem = [
+  string,
+  (event: React.KeyboardEvent<HTMLElement> | KeyboardEvent) => void,
+  HotkeyItemOptions?
+];
 
 export function getHotkeyHandler(hotkeys: HotkeyItem[]) {
   return (event: React.KeyboardEvent<HTMLElement> | KeyboardEvent) => {
     const _event = 'nativeEvent' in event ? event.nativeEvent : event;
-    hotkeys.forEach(([hotkey, handler]) => {
+    hotkeys.forEach(([hotkey, handler, options = { preventDefault: true }]) => {
       if (getHotkeyMatcher(hotkey)(_event)) {
-        event.preventDefault();
+        if (options.preventDefault) {
+          event.preventDefault();
+        }
+
         handler(_event);
       }
     });

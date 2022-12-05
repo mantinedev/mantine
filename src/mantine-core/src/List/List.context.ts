@@ -1,4 +1,4 @@
-import { createContext, useContext } from 'react';
+import { createSafeContext } from '@mantine/utils';
 import { MantineNumberSize } from '@mantine/styles';
 
 interface ListContextValue {
@@ -10,8 +10,6 @@ interface ListContextValue {
   size?: MantineNumberSize;
 }
 
-export const ListContext = createContext<ListContextValue>(null);
-
-export function useListContext(): ListContextValue {
-  return useContext(ListContext) || {};
-}
+export const [ListProvider, useListContext] = createSafeContext<ListContextValue>(
+  'List component was not found in tree'
+);

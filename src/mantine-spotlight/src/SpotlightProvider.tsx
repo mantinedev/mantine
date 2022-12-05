@@ -1,11 +1,11 @@
-import React, { useState, useRef } from 'react';
 import { useDidUpdate, useDisclosure } from '@mantine/hooks';
+import React, { useRef, useState } from 'react';
+import { useSpotlightEvents } from './events';
+import { SpotlightContext } from './Spotlight.context';
+import { InnerSpotlightProps, Spotlight } from './Spotlight/Spotlight';
+import type { SpotlightAction } from './types';
 import { useActionsState } from './use-actions-state/use-actions-state';
 import { useSpotlightShortcuts } from './use-spotlight-shortcuts/use-spotlight-shortcuts';
-import { Spotlight, InnerSpotlightProps } from './Spotlight/Spotlight';
-import { useSpotlightEvents } from './events';
-import type { SpotlightAction } from './types';
-import { SpotlightContext } from './Spotlight.context';
 
 export interface SpotlightProviderProps extends InnerSpotlightProps {
   /** Actions list */
@@ -31,6 +31,9 @@ export interface SpotlightProviderProps extends InnerSpotlightProps {
 
   /** Spotlight will not render if disabled is set to true */
   disabled?: boolean;
+
+  /** Tags to ignore shortcut hotkeys on. */
+  tagsToIgnore?: string[];
 }
 
 export function SpotlightProvider({
@@ -43,6 +46,7 @@ export function SpotlightProvider({
   cleanQueryOnClose = true,
   transitionDuration = 150,
   disabled = false,
+  tagsToIgnore = ['INPUT', 'TEXTAREA', 'SELECT'],
   ...others
 }: SpotlightProviderProps) {
   const timeoutRef = useRef<number>(-1);
@@ -86,7 +90,7 @@ export function SpotlightProvider({
     query,
   };
 
-  useSpotlightShortcuts(shortcut, open);
+  useSpotlightShortcuts(shortcut, open, tagsToIgnore);
   useSpotlightEvents({ open, close, toggle, registerActions, removeActions, triggerAction });
 
   return (

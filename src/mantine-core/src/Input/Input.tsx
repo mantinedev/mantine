@@ -12,6 +12,7 @@ import { InputWrapper } from './InputWrapper/InputWrapper';
 import { InputDescription } from './InputDescription/InputDescription';
 import { InputLabel } from './InputLabel/InputLabel';
 import { InputError } from './InputError/InputError';
+import { InputPlaceholder } from './InputPlaceholder/InputPlaceholder';
 import { useInputWrapperContext } from './InputWrapper.context';
 import useStyles, { InputVariant } from './Input.styles';
 
@@ -22,13 +23,13 @@ export interface InputSharedProps {
   icon?: React.ReactNode;
 
   /** Width of icon section in px */
-  iconWidth?: number;
+  iconWidth?: React.CSSProperties['width'];
 
   /** Right section of input, similar to icon but on the right */
   rightSection?: React.ReactNode;
 
   /** Width of right section, is used to calculate input padding-right */
-  rightSectionWidth?: number;
+  rightSectionWidth?: React.CSSProperties['width'];
 
   /** Props spread to rightSection div element */
   rightSectionProps?: Record<string, any>;
@@ -156,6 +157,7 @@ _Input.Wrapper = InputWrapper;
 _Input.Label = InputLabel;
 _Input.Description = InputDescription;
 _Input.Error = InputError;
+_Input.Placeholder = InputPlaceholder;
 
 export const Input = createPolymorphicComponent<
   'input',
@@ -165,5 +167,6 @@ export const Input = createPolymorphicComponent<
     Label: typeof InputLabel;
     Description: typeof InputDescription;
     Error: typeof InputError;
+    Placeholder: typeof InputPlaceholder;
   }
 >(_Input);

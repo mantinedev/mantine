@@ -54,6 +54,7 @@ interface MantineThemeFunctions {
   primaryShade(colorScheme?: ColorScheme): Shade;
   hover(hoverStyle: CSSObject): any;
   primaryColor(colorScheme?: ColorScheme): string;
+  placeholderStyles(): any;
 }
 
 export interface MantineTheme {
@@ -105,7 +106,7 @@ export interface MantineTheme {
 }
 
 interface ThemeComponent {
-  defaultProps?: Record<string, any>;
+  defaultProps?: Record<string, any> | ((theme: MantineTheme) => Record<string, any>);
   classNames?: Record<string, string>;
   styles?:
     | Record<string, CSSObject>

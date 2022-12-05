@@ -26,7 +26,7 @@ const defaultProps: Partial<RichTextEditorToolbarProps> = {
 
 export const Toolbar = forwardRef<HTMLDivElement, RichTextEditorToolbarProps>((props, ref) => {
   const { className, children, sticky, stickyOffset, ...others } = useComponentDefaultProps(
-    'RichTextEditor.Toolbar',
+    'RichTextEditorToolbar',
     defaultProps,
     props
   );
