@@ -1,6 +1,6 @@
 import { matches } from './matches';
 
-const TEST_ERROR = 'test-error';
+const TEST_ERROR = 'matches-error';
 
 describe('@mantine/form/matches', () => {
   it('correctly detects values that do not match', () => {

@@ -1,6 +1,6 @@
 import { notEmpty } from './not-empty';
 
-const TEST_ERROR = 'test-error';
+const TEST_ERROR = 'not-empty-error';
 
 describe('@mantine/form/notEmpty', () => {
   it('correctly detects empty values', () => {
