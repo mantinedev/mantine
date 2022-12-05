@@ -4,7 +4,6 @@ import {
   DefaultProps,
   Selectors,
   MantineStyleSystemSize,
-  getDefaultZIndex,
   useComponentDefaultProps,
 } from '@mantine/styles';
 import { Box } from '../Box';
@@ -54,7 +53,6 @@ export interface AppShellProps
 
 const defaultProps: Partial<AppShellProps> = {
   fixed: true,
-  zIndex: getDefaultZIndex('app'),
   padding: 'md',
 };
 

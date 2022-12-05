@@ -32,6 +32,7 @@ export function AltLayout() {
   return (
     <AppShell
       layout="alt"
+      zIndex={342}
       header={
         <Header height={60}>
           <Group position="apart">
@@ -41,7 +42,11 @@ export function AltLayout() {
         </Header>
       }
       footer={<Footer height={40}>Footer</Footer>}
-      navbar={<Navbar width={{ base: 250 }}>Navbar</Navbar>}
+      navbar={
+        <Navbar width={{ base: 250 }} zIndex={412}>
+          Navbar
+        </Navbar>
+      }
       aside={<Aside width={{ base: 150 }}>Aside</Aside>}
     >
       Content
