@@ -223,7 +223,7 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>((props
   );
   const { systemStyles, rest } = extractSystemStyles(others);
   const inputRef = useRef<HTMLInputElement>();
-  const itemsRefs = useRef<Record<string, HTMLDivElement>>({});
+  const itemsRefs = useRef<Record<string, HTMLButtonElement>>({});
   const uuid = useId(id);
   const [dropdownOpened, setDropdownOpened] = useState(initiallyOpened);
   const [hovered, setHovered] = useState(-1);
