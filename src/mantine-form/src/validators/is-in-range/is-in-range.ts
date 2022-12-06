@@ -6,9 +6,11 @@ interface IsInRangePayload {
 }
 
 export function isInRange({ min, max }: IsInRangePayload, error: React.ReactNode) {
+  const _error = error || true;
+
   return (value: unknown) => {
     if (typeof value !== 'number') {
-      return error;
+      return _error;
     }
 
     let valid = true;
@@ -21,6 +23,6 @@ export function isInRange({ min, max }: IsInRangePayload, error: React.ReactNode
       valid = false;
     }
 
-    return valid ? null : error;
+    return valid ? null : _error;
   };
 }

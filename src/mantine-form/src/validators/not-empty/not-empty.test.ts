@@ -10,6 +10,7 @@ describe('@mantine/form/notEmpty', () => {
     expect(validator(null)).toBe(TEST_ERROR);
     expect(validator(undefined)).toBe(TEST_ERROR);
     expect(validator([])).toBe(TEST_ERROR);
+    expect(validator(false)).toBe(TEST_ERROR);
   });
 
   it('correctly detects non empty values', () => {
@@ -20,5 +21,6 @@ describe('@mantine/form/notEmpty', () => {
     expect(validator(0)).toBe(null);
     expect(validator(10)).toBe(null);
     expect(validator(NaN)).toBe(null);
+    expect(validator(true)).toBe(null);
   });
 });

@@ -16,6 +16,10 @@ export function notEmpty(error?: React.ReactNode) {
       return _error;
     }
 
+    if (value === false) {
+      return _error;
+    }
+
     return null;
   };
 }
