@@ -76,14 +76,6 @@ export function SelectItems({
               }
             : null
         }
-        onMouseDown={
-          !item.disabled
-            ? (event: React.MouseEvent<HTMLDivElement>) => {
-                event.preventDefault();
-                onItemSelect(item);
-              }
-            : null
-        }
         disabled={item.disabled}
         {...item}
       />
@@ -113,16 +105,12 @@ export function SelectItems({
     const creatableDataItem = data[creatableDataIndex];
     unGroupedItems.push(
       // eslint-disable-next-line jsx-a11y/no-static-element-interactions
-      <div
+      <button
         key={randomId()}
         className={classes.item}
         data-hovered={hovered === creatableDataIndex || undefined}
         onMouseEnter={() => onItemHover(creatableDataIndex)}
         onClick={(event: React.MouseEvent<HTMLDivElement>) => {
-          event.preventDefault();
-          onItemSelect(creatableDataItem);
-        }}
-        onMouseDown={(event: React.MouseEvent<HTMLDivElement>) => {
           event.preventDefault();
           onItemSelect(creatableDataItem);
         }}
@@ -135,7 +123,7 @@ export function SelectItems({
         }}
       >
         {createLabel}
-      </div>
+      </button>
     );
   }
 
