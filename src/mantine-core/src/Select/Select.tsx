@@ -220,7 +220,7 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>((props, ref) => 
   const [dropdownOpened, _setDropdownOpened] = useState(initiallyOpened);
   const [hovered, setHovered] = useState(-1);
   const inputRef = useRef<HTMLInputElement>();
-  const itemsRefs = useRef<Record<string, HTMLDivElement>>({});
+  const itemsRefs = useRef<Record<string, HTMLButtonElement>>({});
   const [direction, setDirection] = useState<React.CSSProperties['flexDirection']>('column');
   const isColumn = direction === 'column';
   const { scrollIntoView, targetRef, scrollableRef } = useScrollIntoView({
