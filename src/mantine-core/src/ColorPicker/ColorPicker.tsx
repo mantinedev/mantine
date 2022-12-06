@@ -70,6 +70,9 @@ export interface ColorPickerProps
 
   /** Alpha slider aria-label */
   alphaLabel?: string;
+
+  /** Called when color swatch is clicked */
+  onColorSwatchClick?(color: string): void;
 }
 
 const SWATCH_SIZES = {
@@ -110,6 +113,7 @@ export const ColorPicker = forwardRef<HTMLDivElement, ColorPickerProps>(
       styles,
       classNames,
       unstyled,
+      onColorSwatchClick,
       ...others
     } = useComponentDefaultProps('ColorPicker', defaultProps, props);
 
@@ -236,7 +240,9 @@ export const ColorPicker = forwardRef<HTMLDivElement, ColorPickerProps>(
             __staticSelector={__staticSelector}
             setValue={setValue}
             onChangeEnd={(color) => {
-              onChangeEnd?.(convertHsvaTo(format, parseColor(color)));
+              const convertedColor = convertHsvaTo(format, parseColor(color));
+              onColorSwatchClick?.(convertedColor);
+              onChangeEnd?.(convertedColor);
             }}
           />
         )}
