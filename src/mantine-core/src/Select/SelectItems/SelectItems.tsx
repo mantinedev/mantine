@@ -68,7 +68,7 @@ export function SelectItems({
             itemsRefs.current[item.value] = node;
           }
         }}
-        onMouseDown={
+        onClick={
           !item.disabled
             ? (event: React.MouseEvent<HTMLDivElement>) => {
                 event.preventDefault();
@@ -110,7 +110,7 @@ export function SelectItems({
         className={classes.item}
         data-hovered={hovered === creatableDataIndex || undefined}
         onMouseEnter={() => onItemHover(creatableDataIndex)}
-        onMouseDown={(event: React.MouseEvent<HTMLDivElement>) => {
+        onClick={(event: React.MouseEvent<HTMLDivElement>) => {
           event.preventDefault();
           onItemSelect(creatableDataItem);
         }}
