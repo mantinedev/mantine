@@ -126,19 +126,17 @@ import { useForm, hasLength } from '@mantine/form';
 
 const form = useForm({
   initialValues: {
-    maxLength: 0,
-    minLength: 0,
-    minMaxLength: 0,
+    exact: '',
+    maxLength: '',
+    minLength: '',
+    minMaxLength: '',
   },
 
   validate: {
-    maxLength: hasLength({ max: 20 }, 'Value must be 20 or less'),
-    minLength: hasLength({ min: 10 }, 'Value must be 10 or more'),
-    minMaxLength: hasLength({ min: 10, max: 20 }, 'Value must be between 10 and 20'),
+    exact: hasLength(5, 'Values must have exactly 5 characters')
+    maxLength: hasLength({ max: 20 }, 'Value must have 20 or less characters'),
+    minLength: hasLength({ min: 10 }, 'Value must have 10  or more characters'),
+    minMaxLength: hasLength({ min: 10, max: 20 }, 'Value must have 10-20 characters'),
   },
 });
-```
-
-```
-
 ```
