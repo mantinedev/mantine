@@ -26,7 +26,7 @@ function isLengthValid(payload: HasLengthPayload, value: any) {
   return valid;
 }
 
-export function hasLength(payload: HasLengthPayload, error: React.ReactNode) {
+export function hasLength(payload: HasLengthPayload, error?: React.ReactNode) {
   const _error = error || true;
 
   return (value: unknown) => {
