@@ -156,3 +156,7 @@ export type UseForm<
   Values = Record<string, unknown>,
   TransformValues extends _TransformValues<Values> = (values: Values) => Values
 > = (input?: UseFormInput<Values, TransformValues>) => UseFormReturnType<Values, TransformValues>;
+
+export type TransformedValues<Form extends UseFormReturnType<any>> = Parameters<
+  Parameters<Form['onSubmit']>[0]
+>[0];
