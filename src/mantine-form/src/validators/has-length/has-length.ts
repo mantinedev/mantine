@@ -31,7 +31,7 @@ export function hasLength(payload: HasLengthPayload, error?: React.ReactNode) {
 
   return (value: unknown) => {
     if (typeof value === 'string') {
-      return isLengthValid(payload, value) ? null : _error;
+      return isLengthValid(payload, value.trim()) ? null : _error;
     }
 
     if (typeof value === 'object' && value !== null && 'length' in value) {
