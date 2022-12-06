@@ -106,6 +106,7 @@ export function SelectItems({
     unGroupedItems.push(
       // eslint-disable-next-line jsx-a11y/no-static-element-interactions
       <button
+        type="button"
         key={randomId()}
         className={classes.item}
         data-hovered={hovered === creatableDataIndex || undefined}
