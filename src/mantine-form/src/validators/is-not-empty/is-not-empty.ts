@@ -1,6 +1,6 @@
 import React from 'react';
 
-export function notEmpty(error?: React.ReactNode) {
+export function isNotEmpty(error?: React.ReactNode) {
   const _error = error || true;
 
   return (value: unknown) => {
