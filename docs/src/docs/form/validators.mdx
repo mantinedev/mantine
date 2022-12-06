@@ -1,0 +1,49 @@
+---
+group: 'mantine-form'
+package: '@mantine/form'
+title: 'Form validators'
+order: 2
+slug: /form/validators/
+description: 'Premade validation functions'
+docs: 'form/validators.mdx'
+source: 'mantine-form/src'
+---
+
+import { FormDemos } from '@mantine/demos';
+
+## Usage
+
+`@mantine/form` package exports several functions that can be used in [validation rules object](/form/validation/#validation-with-rules-object).
+Validation functions are tiny in size and provide basic validation, if you have complex validation requirements, use other types of [validation](/form/validation/).
+
+<Demo data={FormDemos.validators} />
+
+## isNotEmpty
+
+```tsx
+import { useForm, isNotEmpty } from '@mantine/form';
+
+const form = useForm({
+  initialValues: {
+    name: '',
+    acceptTermsOfUse: false,
+    location: null,
+    previousJobs: [],
+  },
+
+  validate: {
+    // Empty strings are considered to be invalid,
+    // strings are trimmed before validation
+    name: isNotEmpty('Name cannot be empty'),
+
+    // False value is considered to be invalid
+    acceptTermsOfUse: isNotEmpty('You must accept terms of use'),
+
+    // null is considered to be invalid
+    location: isNotEmpty('Pick your location'),
+
+    // Empty arrays are considered to be invalid
+    previousJobs: isNotEmpty('Enter at least one job'),
+  },
+});
+```
