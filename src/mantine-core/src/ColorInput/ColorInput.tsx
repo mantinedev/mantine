@@ -61,11 +61,14 @@ export interface ColorInputProps
   /** Dropdown box-shadow, key of theme.shadows */
   shadow?: MantineShadow;
 
-  /** Determines whether eye dropper button should be displayed in the right section */
+  /** Determines whether eye dropper button should be displayed in the right section, true by default */
   withEyeDropper?: boolean;
 
   /** Replaces default eye dropper icon */
   eyeDropperIcon?: React.ReactNode;
+
+  /** Determines whether the dropdown should be closed when color swatch is clicked, false by default */
+  closeOnColorSwatchClick?: boolean;
 }
 
 const SWATCH_SIZES = {
@@ -104,7 +107,7 @@ const defaultProps: Partial<ColorInputProps> = {
   transitionDuration: 0,
   withinPortal: true,
   shadow: 'md',
-  withEyeDropper: false,
+  withEyeDropper: true,
 };
 
 export const ColorInput = forwardRef<HTMLInputElement, ColorInputProps>((props, ref) => {
@@ -116,6 +119,7 @@ export const ColorInput = forwardRef<HTMLInputElement, ColorInputProps>((props, 
     onChangeEnd,
     onFocus,
     onBlur,
+    onClick,
     value,
     defaultValue,
     disallowInput,
@@ -139,6 +143,7 @@ export const ColorInput = forwardRef<HTMLInputElement, ColorInputProps>((props, 
     eyeDropperIcon,
     rightSection,
     rightSectionWidth,
+    closeOnColorSwatchClick,
     ...others
   } = useInputProps('ColorInput', defaultProps, props);
 
@@ -171,14 +176,19 @@ export const ColorInput = forwardRef<HTMLInputElement, ColorInputProps>((props, 
   );
 
   const handleInputFocus = (event: React.FocusEvent<HTMLInputElement>) => {
-    typeof onFocus === 'function' && onFocus(event);
+    onFocus?.(event);
     setDropdownOpened(true);
   };
 
   const handleInputBlur = (event: React.FocusEvent<HTMLInputElement>) => {
-    typeof onBlur === 'function' && onBlur(event);
+    onBlur?.(event);
     setDropdownOpened(false);
     fixOnBlur && setValue(lastValidValue);
+  };
+
+  const handleInputClick = (event: React.MouseEvent<HTMLInputElement>) => {
+    onClick?.(event);
+    setDropdownOpened(true);
   };
 
   useEffect(() => {
@@ -222,6 +232,7 @@ export const ColorInput = forwardRef<HTMLInputElement, ColorInputProps>((props, 
               __staticSelector="ColorInput"
               onFocus={handleInputFocus}
               onBlur={handleInputBlur}
+              onClick={handleInputClick}
               spellCheck={false}
               value={_value}
               onChange={(event) => {
@@ -245,7 +256,9 @@ export const ColorInput = forwardRef<HTMLInputElement, ColorInputProps>((props, 
               unstyled={unstyled}
               classNames={classNames}
               styles={styles}
-              rightSection={rightSection || (eyeDropperSupported ? eyeDropper : null)}
+              rightSection={
+                rightSection || (withEyeDropper ? (eyeDropperSupported ? eyeDropper : null) : null)
+              }
               rightSectionWidth={
                 rightSectionWidth ??
                 theme.fn.size({ size: inputProps.size, sizes: RIGHT_SECTION_WIDTH })
@@ -269,6 +282,7 @@ export const ColorInput = forwardRef<HTMLInputElement, ColorInputProps>((props, 
             unstyled={unstyled}
             styles={styles}
             classNames={classNames}
+            onColorSwatchClick={() => closeOnColorSwatchClick && setDropdownOpened(false)}
           />
         </Popover.Dropdown>
       </Popover>
