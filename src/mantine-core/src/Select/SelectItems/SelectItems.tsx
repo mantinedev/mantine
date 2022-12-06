@@ -14,7 +14,7 @@ export interface SelectItemsProps extends DefaultProps<SelectItemsStylesNames> {
   __staticSelector: string;
   isItemSelected?(itemValue: string): boolean;
   uuid: string;
-  itemsRefs?: React.MutableRefObject<Record<string, HTMLDivElement>>;
+  itemsRefs?: React.MutableRefObject<Record<string, HTMLButtonElement>>;
   onItemHover(index: number): void;
   onItemSelect(item: SelectItem): void;
   size: MantineSize;
@@ -62,7 +62,7 @@ export function SelectItems({
         // data-ignore-outside-clicks
         tabIndex={-1}
         aria-selected={hovered === index}
-        ref={(node: HTMLDivElement) => {
+        ref={(node: HTMLButtonElement) => {
           if (itemsRefs && itemsRefs.current) {
             // eslint-disable-next-line no-param-reassign
             itemsRefs.current[item.value] = node;
@@ -70,7 +70,7 @@ export function SelectItems({
         }}
         onClick={
           !item.disabled
-            ? (event: React.MouseEvent<HTMLDivElement>) => {
+            ? (event: React.MouseEvent<HTMLButtonElement>) => {
                 event.preventDefault();
                 onItemSelect(item);
               }
@@ -110,12 +110,12 @@ export function SelectItems({
         className={classes.item}
         data-hovered={hovered === creatableDataIndex || undefined}
         onMouseEnter={() => onItemHover(creatableDataIndex)}
-        onClick={(event: React.MouseEvent<HTMLDivElement>) => {
+        onClick={(event: React.MouseEvent<HTMLButtonElement>) => {
           event.preventDefault();
           onItemSelect(creatableDataItem);
         }}
         tabIndex={-1}
-        ref={(node: HTMLDivElement) => {
+        ref={(node: HTMLButtonElement) => {
           if (itemsRefs && itemsRefs.current) {
             // eslint-disable-next-line no-param-reassign
             itemsRefs.current[creatableDataItem.value] = node;
