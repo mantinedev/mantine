@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 import { Table, Checkbox, Code, Text, Box } from '@mantine/core';
 import { Prism } from '@mantine/prism';
-import { NpmIcon, YarnIcon } from '@mantine/ds';
+import { NpmIcon, YarnIcon, PnpmIcon } from '@mantine/ds';
 import { PACKAGES_DATA } from './data';
 
 function getInstallationCommand(
   selection: string[],
   extraPackages: string[],
-  type: 'yarn' | 'npm'
+  type: 'yarn' | 'npm' | 'pnpm'
 ) {
   const packages = selection.reduce<string[]>((acc, item) => {
     acc.push(...PACKAGES_DATA.find((i) => i.package === item).dependencies);
@@ -17,7 +17,7 @@ function getInstallationCommand(
   const unique = Array.from(
     new Set(['@mantine/core', '@mantine/hooks', ...packages, ...extraPackages, '@emotion/react'])
   );
-  const prefix = type === 'yarn' ? 'yarn add' : 'npm install';
+  const prefix = type === 'yarn' ? 'yarn add' : type === 'pnpm' ? 'pnpm add' : 'npm install';
   return `${prefix} ${unique.join(' ')}`;
 }
 
@@ -99,6 +99,9 @@ export function PackagesInstallation({ extraPackages = [] }: PackagesInstallatio
           <Prism.Tab value="npm" icon={<NpmIcon size={16} />}>
             npm
           </Prism.Tab>
+          <Prism.Tab value="pnpm" icon={<PnpmIcon size={16} />}>
+            pnpm
+          </Prism.Tab>
         </Prism.TabsList>
 
         <Prism.Panel value="yarn" language="bash">
@@ -106,6 +109,9 @@ export function PackagesInstallation({ extraPackages = [] }: PackagesInstallatio
         </Prism.Panel>
         <Prism.Panel value="npm" language="bash">
           {getInstallationCommand(selection, extraPackages, 'npm')}
+        </Prism.Panel>
+        <Prism.Panel value="pnpm" language="bash">
+          {getInstallationCommand(selection, extraPackages, 'pnpm')}
         </Prism.Panel>
       </Prism.Tabs>
     </>
