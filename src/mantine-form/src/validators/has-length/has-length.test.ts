@@ -6,13 +6,11 @@ describe('@mantine/form/hasLength', () => {
   it('detects valid value', () => {
     const numberValidator = hasLength(3, TEST_ERROR);
     expect(numberValidator('hel')).toBe(null);
-    expect(numberValidator('he ')).toBe(null);
     expect(numberValidator([1, 2, 3])).toBe(null);
     expect(numberValidator({ length: 3 })).toBe(null);
 
     const minValidator = hasLength({ min: 2 }, TEST_ERROR);
     expect(minValidator('test')).toBe(null);
-    expect(minValidator('  ')).toBe(null);
     expect(minValidator([1, 2])).toBe(null);
     expect(minValidator({ length: 2 })).toBe(null);
 
@@ -33,7 +31,6 @@ describe('@mantine/form/hasLength', () => {
   it('detects invalid value', () => {
     const numberValidator = hasLength(3, TEST_ERROR);
     expect(numberValidator('test')).toBe(TEST_ERROR);
-    expect(numberValidator('tes ')).toBe(TEST_ERROR);
     expect(numberValidator([1, 2, 3, 4])).toBe(TEST_ERROR);
     expect(numberValidator({ length: 5 })).toBe(TEST_ERROR);
     expect(numberValidator(null)).toBe(TEST_ERROR);
