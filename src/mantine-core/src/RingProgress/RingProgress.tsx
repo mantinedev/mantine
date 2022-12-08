@@ -31,7 +31,7 @@ export interface RingProgressProps
   /** Ring sections */
   sections: RingProgressSection[];
 
-  /** Root color */
+  /** Color of the root section, key of theme.colors or CSS color value */
   rootColor?: MantineColor;
 }
 
