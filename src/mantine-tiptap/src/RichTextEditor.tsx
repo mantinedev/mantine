@@ -8,6 +8,7 @@ import {
   StylesApiProvider,
 } from '@mantine/core';
 import { Editor } from '@tiptap/react';
+import { ForwardRefWithStaticComponents } from '@mantine/utils';
 import { RichTextEditorProvider } from './RichTextEditor.context';
 import * as controls from './controls';
 import { Content, ContentStylesNames } from './Content/Content';
@@ -50,7 +51,49 @@ const defaultProps: Partial<RichTextEditorProps> = {
   withTypographyStyles: true,
 };
 
-export const RichTextEditor = forwardRef<HTMLDivElement, RichTextEditorProps>((props, ref) => {
+type RichTextEditorComponent = ForwardRefWithStaticComponents<
+  RichTextEditorProps,
+  {
+    Content: typeof Content;
+    Control: typeof Control;
+    ControlsGroup: typeof ControlsGroup;
+    Toolbar: typeof Toolbar;
+    Bold: typeof controls.BoldControl;
+    Italic: typeof controls.ItalicControl;
+    Strikethrough: typeof controls.StrikeThroughControl;
+    Underline: typeof controls.UnderlineControl;
+    ClearFormatting: typeof controls.ClearFormattingControl;
+    H1: typeof controls.H1Control;
+    H2: typeof controls.H2Control;
+    H3: typeof controls.H3Control;
+    H4: typeof controls.H4Control;
+    H5: typeof controls.H5Control;
+    H6: typeof controls.H6Control;
+    BulletList: typeof controls.BulletListControl;
+    OrderedList: typeof controls.OrderedListControl;
+    Link: typeof controls.LinkControl;
+    Unlink: typeof controls.UnlinkControl;
+    Blockquote: typeof controls.BlockquoteControl;
+    AlignLeft: typeof controls.AlignLeftControl;
+    AlignRight: typeof controls.AlignRightControl;
+    AlignCenter: typeof controls.AlignCenterControl;
+    AlignJustify: typeof controls.AlignJustifyControl;
+    Superscript: typeof controls.SuperscriptControl;
+    Subscript: typeof controls.SubscriptControl;
+    Code: typeof controls.CodeControl;
+    CodeBlock: typeof controls.CodeBlockControl;
+    ColorPicker: typeof controls.ColorPickerControl;
+    Color: typeof controls.ColorControl;
+    Highlight: typeof controls.HighlightControl;
+    Hr: typeof controls.HrControl;
+    UnsetColor: typeof controls.UnsetColorControl;
+  }
+>;
+
+export const RichTextEditor: RichTextEditorComponent = forwardRef<
+  HTMLDivElement,
+  RichTextEditorProps
+>((props, ref) => {
   const {
     editor,
     children,
