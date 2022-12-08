@@ -62,6 +62,14 @@ function getTextColor({ theme, color, variant }: GetTextColor) {
 
 function getLineClamp(lineClamp: number): CSSObject {
   if (typeof lineClamp === 'number') {
+    if (lineClamp === 1) {
+      return {
+        overflow: 'hidden',
+        textOverflow: 'ellipsis',
+        whiteSpace: 'nowrap'
+      };
+    }
+
     return {
       overflow: 'hidden',
       textOverflow: 'ellipsis',
