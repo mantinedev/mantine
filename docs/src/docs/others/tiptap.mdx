@@ -21,13 +21,43 @@ import { TipTapDemos } from '@mantine/demos';
 Install with yarn:
 
 ```bash
-yarn add @mantine/tiptap @mantine/core @mantine/hooks @tabler/icons @tiptap/react @tiptap/extension-link @tiptap/starter-kit
+yarn add @mantine/tiptap @mantine/core @mantine/hooks @emotion/react @tabler/icons @tiptap/react @tiptap/extension-link @tiptap/starter-kit
 ```
 
 Install with npm:
 
 ```bash
-npm install @mantine/tiptap @mantine/core @mantine/hooks @tabler/icons @tiptap/react @tiptap/extension-link @tiptap/starter-kit
+npm install @mantine/tiptap @mantine/core @mantine/hooks @emotion/react @tabler/icons @tiptap/react @tiptap/extension-link @tiptap/starter-kit
+```
+
+### Important note for 2.0.0-beta.205 and higher
+Since Tiptap is based on Prosemirror, you will need to install the Prosemirror dependencies if you don't have them installed already to avoid version clashes.
+
+Note: If you use NPM 7 or higher, peerDependencies are automatically installed.
+
+```shell
+# Installation with NPM 6 or lower
+npm install prosemirror-commands prosemirror-keymap prosemirror-model prosemirror-schema-list prosemirror-state prosemirror-transform prosemirror-view
+
+# Installation with yarn
+yarn add prosemirror-commands prosemirror-keymap prosemirror-model prosemirror-schema-list prosemirror-state prosemirror-transform prosemirror-view
+
+# Installation with pnpm
+pnpm install prosemirror-commands prosemirror-keymap prosemirror-model prosemirror-schema-list prosemirror-state prosemirror-transform prosemirror-view
+```
+
+If you use `@tiptap/starter-kit`
+Inside the StarterKit we also use `prosemirror-history`, `prosemirror-dropcursor`, and `prosemirror-gapcursor`.
+
+```shell
+# Installation with NPM 6 or lower
+npm install prosemirror-history prosemirror-dropcursor prosemirror-gapcursor
+
+# Installation with yarn
+yarn add prosemirror-history prosemirror-dropcursor prosemirror-gapcursor
+
+# Installation with pnpm
+pnpm install prosemirror-history prosemirror-dropcursor prosemirror-gapcursor
 ```
 
 ## TipTap editor
