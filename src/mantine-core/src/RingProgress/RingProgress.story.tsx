@@ -54,3 +54,18 @@ export function WithSectionProps() {
     </div>
   );
 }
+
+export function WithRootColor() {
+  return (
+    <div style={{ padding: 40 }}>
+      <RingProgress
+        sections={[
+          { value: 40, color: 'cyan' },
+          { value: 20, color: 'blue' },
+          { value: 15, color: 'indigo' },
+        ]}
+        rootColor="red"
+      />
+    </div>
+  );
+}
