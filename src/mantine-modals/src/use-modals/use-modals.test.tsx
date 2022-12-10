@@ -18,6 +18,7 @@ describe('@mantine/modals/use-modals', () => {
 
     expect(current.closeAll).toBeDefined();
     expect(current.closeModal).toBeDefined();
+    expect(current.closeContextModal).toBeDefined();
     expect(current.modals).toBeDefined();
     expect(current.openConfirmModal).toBeDefined();
     expect(current.openContextModal).toBeDefined();

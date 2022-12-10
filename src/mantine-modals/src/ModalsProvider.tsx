@@ -140,6 +140,7 @@ export function ModalsProvider({ children, modalProps, labels, modals }: ModalsP
     openConfirmModal,
     openContextModal: ({ modal, ...payload }) => openContextModal(modal, payload),
     closeModal,
+    closeContextModal: closeModal,
     closeAllModals: closeAll,
   });
 
@@ -149,6 +150,7 @@ export function ModalsProvider({ children, modalProps, labels, modals }: ModalsP
     openConfirmModal,
     openContextModal,
     closeModal,
+    closeContextModal: closeModal,
     closeAll,
   };
 
