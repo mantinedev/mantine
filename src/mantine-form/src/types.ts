@@ -29,7 +29,7 @@ type FormRule<Value, Values> = NonNullable<Value> extends Array<infer ListValue>
             : FormRulesRecord<ListValue[Key]> | Rule<ListValue[Key], Values>;
         }>
       | Rule<Value, Values>
-  : NonNullable<Value> extends Record<string, unknown>
+  : NonNullable<Value> extends Record<string, any>
   ? FormRulesRecord<Value, Values> | Rule<Value, Values>
   : Rule<Value, Values>;
 
