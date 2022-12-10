@@ -7,12 +7,12 @@ export type ModalSettings = Partial<Omit<ModalProps, 'opened'>> & { modalId?: st
 export type ConfirmLabels = Record<'confirm' | 'cancel', ReactNode>;
 
 export interface OpenConfirmModal extends ModalSettings, ConfirmModalProps {}
-export interface OpenContextModal<CustomProps extends Record<string, unknown> = {}>
+export interface OpenContextModal<CustomProps extends Record<string, any> = {}>
   extends ModalSettings {
   innerProps: CustomProps;
 }
 
-export interface ContextModalProps<T extends Record<string, unknown> = {}> {
+export interface ContextModalProps<T extends Record<string, any> = {}> {
   context: ModalsContextProps;
   innerProps: T;
   id: string;
@@ -27,7 +27,7 @@ export interface ModalsContextProps {
   modals: ModalState[];
   openModal: (props: ModalSettings) => string;
   openConfirmModal: (props: OpenConfirmModal) => string;
-  openContextModal: <CustomProps extends Record<string, unknown>>(
+  openContextModal: <CustomProps extends Record<string, any>>(
     modal: string,
     props: OpenContextModal<CustomProps>
   ) => string;
