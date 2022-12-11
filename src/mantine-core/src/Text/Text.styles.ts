@@ -80,11 +80,11 @@ function getTruncate(truncate: boolean): CSSObject {
     return {
       overflow: 'hidden',
       textOverflow: 'ellipsis',
-      whiteSpace: 'nowrap'
+      whiteSpace: 'nowrap',
     };
   }
 
-  return null
+  return null;
 }
 
 export default createStyles(
