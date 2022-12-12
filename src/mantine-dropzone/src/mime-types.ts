@@ -27,6 +27,7 @@ export const IMAGE_MIME_TYPE = [
   MIME_TYPES.jpeg,
   MIME_TYPES.svg,
   MIME_TYPES.webp,
+  MIMI_TYPES.avif,
 ];
 
 export const PDF_MIME_TYPE = [MIME_TYPES.pdf];
