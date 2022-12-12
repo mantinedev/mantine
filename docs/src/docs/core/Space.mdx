@@ -6,7 +6,6 @@ order: 1
 slug: /core/space/
 category: 'layout'
 description: 'Add horizontal or vertical spacing from theme'
-props: ['Space']
 import: "import { Space } from '@mantine/core';"
 source: 'mantine-core/src/Space/Space.tsx'
 docs: 'core/Space.mdx'
@@ -42,17 +41,4 @@ Space component to skip direct theme subscription:
 <Space h="md" />
 // Margin props are not available on div, use Space to add spacing from theme
 <div>Second line</div>
-```
-
-## h and w props
-
-`h` and `w` are shortcuts for height and width, you can use values from `theme.spacing`
-(xs, sm, md, lg, xl) or number to set width or height in px:
-
-```tsx
-// Height will be set from theme.spacing.md
-<Space h="md" />
-
-// Width will be set to 30px
-<Space w={30} />
 ```
