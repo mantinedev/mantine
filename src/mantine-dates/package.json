@@ -6,6 +6,7 @@
   "module": "esm/index.js",
   "types": "lib/index.d.ts",
   "license": "MIT",
+  "sideEffects": false,
   "author": "Vitaly Rtishchev <rtivital@gmail.com>",
   "homepage": "https://mantine.dev/dates/getting-started/",
   "repository": {
