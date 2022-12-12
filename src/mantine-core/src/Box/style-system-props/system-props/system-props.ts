@@ -37,12 +37,12 @@ export const SYSTEM_PROPS: Record<string, SystemPropData> = {
   tt: { type: 'default', property: 'textTransform' },
   td: { type: 'default', property: 'textDecoration' },
 
-  w: { type: 'default', property: 'width' },
-  miw: { type: 'default', property: 'minWidth' },
-  maw: { type: 'default', property: 'maxWidth' },
-  h: { type: 'default', property: 'height' },
-  mih: { type: 'default', property: 'minHeight' },
-  mah: { type: 'default', property: 'maxHeight' },
+  w: { type: 'spacing', property: 'width' },
+  miw: { type: 'spacing', property: 'minWidth' },
+  maw: { type: 'spacing', property: 'maxWidth' },
+  h: { type: 'spacing', property: 'height' },
+  mih: { type: 'spacing', property: 'minHeight' },
+  mah: { type: 'spacing', property: 'maxHeight' },
 
   bgsz: { type: 'default', property: 'background-size' },
   bgp: { type: 'default', property: 'background-position' },

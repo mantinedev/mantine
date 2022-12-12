@@ -31,7 +31,7 @@ export const InputError = forwardRef<HTMLDivElement, InputErrorProps>((props, re
   );
 
   return (
-    <Text className={cx(classes.error, className)} ref={ref} role="alert" {...others}>
+    <Text className={cx(classes.error, className)} ref={ref} {...others}>
       {children}
     </Text>
   );

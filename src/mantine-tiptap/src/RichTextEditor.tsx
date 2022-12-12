@@ -1,12 +1,6 @@
 /* eslint-disable react/no-unused-prop-types */
 import React, { useMemo, forwardRef } from 'react';
-import {
-  Box,
-  useComponentDefaultProps,
-  DefaultProps,
-  Selectors,
-  StylesApiProvider,
-} from '@mantine/core';
+import { Box, useComponentDefaultProps, DefaultProps, Selectors } from '@mantine/core';
 import { Editor } from '@tiptap/react';
 import { ForwardRefWithStaticComponents } from '@mantine/utils';
 import { RichTextEditorProvider } from './RichTextEditor.context';
@@ -115,15 +109,21 @@ export const RichTextEditor: RichTextEditorComponent = forwardRef<
   const mergedLabels = useMemo(() => ({ ...DEFAULT_LABELS, ...labels }), [labels]);
 
   return (
-    <StylesApiProvider classNames={classNames} styles={styles} unstyled={unstyled}>
-      <RichTextEditorProvider
-        value={{ editor, labels: mergedLabels, withCodeHighlightStyles, withTypographyStyles }}
-      >
-        <Box className={cx(classes.root, className)} {...others} ref={ref}>
-          {children}
-        </Box>
-      </RichTextEditorProvider>
-    </StylesApiProvider>
+    <RichTextEditorProvider
+      value={{
+        editor,
+        labels: mergedLabels,
+        withCodeHighlightStyles,
+        withTypographyStyles,
+        classNames,
+        styles,
+        unstyled,
+      }}
+    >
+      <Box className={cx(classes.root, className)} {...others} ref={ref}>
+        {children}
+      </Box>
+    </RichTextEditorProvider>
   );
 }) as any;
 

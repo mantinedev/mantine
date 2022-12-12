@@ -1,10 +1,17 @@
 import React from 'react';
 import { getSafeId } from '@mantine/utils';
 import { useUncontrolled, useId } from '@mantine/hooks';
-import { MantineColor, MantineNumberSize } from '@mantine/styles';
+import { ClassNames, MantineColor, MantineNumberSize, Styles } from '@mantine/styles';
 import { TabsContextProvider } from './Tabs.context';
 import { TABS_ERRORS } from './Tabs.errors';
-import { TabsValue, TabsOrientation, TabsVariant, TabsPlacement } from './Tabs.types';
+import {
+  TabsValue,
+  TabsOrientation,
+  TabsVariant,
+  TabsPlacement,
+  TabsStylesParams,
+} from './Tabs.types';
+import type { TabsStylesNames } from './Tabs';
 
 export interface TabsProviderProps {
   /** Default value for uncontrolled component */
@@ -53,6 +60,12 @@ export interface TabsProviderProps {
   keepMounted?: boolean;
 }
 
+interface _TabsProviderProps extends TabsProviderProps {
+  classNames?: ClassNames<TabsStylesNames>;
+  styles?: Styles<TabsStylesNames, TabsStylesParams>;
+  unstyled?: boolean;
+}
+
 export function TabsProvider({
   defaultValue,
   value,
@@ -69,7 +82,10 @@ export function TabsProvider({
   inverted,
   placement,
   keepMounted = true,
-}: TabsProviderProps) {
+  classNames,
+  styles,
+  unstyled,
+}: _TabsProviderProps) {
   const uid = useId(id);
 
   const [_value, onChange] = useUncontrolled<TabsValue>({
@@ -97,6 +113,9 @@ export function TabsProvider({
         radius,
         inverted,
         keepMounted,
+        classNames,
+        styles,
+        unstyled,
       }}
     >
       {children}

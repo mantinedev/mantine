@@ -1,10 +1,5 @@
 import React, { forwardRef } from 'react';
-import {
-  DefaultProps,
-  useComponentDefaultProps,
-  StylesApiProvider,
-  Selectors,
-} from '@mantine/styles';
+import { DefaultProps, useComponentDefaultProps, Selectors } from '@mantine/styles';
 import { ForwardRefWithStaticComponents } from '@mantine/utils';
 import { Box } from '../Box';
 import { TabsList, TabsListStylesNames } from './TabsList/TabsList';
@@ -75,28 +70,29 @@ export const Tabs: TabsComponent = forwardRef<HTMLDivElement, TabsProps>((props,
   );
 
   return (
-    <StylesApiProvider classNames={classNames} styles={styles} unstyled={unstyled}>
-      <TabsProvider
-        activateTabWithKeyboard={activateTabWithKeyboard}
-        defaultValue={defaultValue}
-        orientation={orientation}
-        onTabChange={onTabChange}
-        value={value}
-        id={id}
-        loop={loop}
-        allowTabDeactivation={allowTabDeactivation}
-        color={color}
-        variant={variant}
-        radius={radius}
-        inverted={inverted}
-        keepMounted={keepMounted}
-        placement={placement}
-      >
-        <Box {...others} className={cx(classes.root, className)} id={id} ref={ref}>
-          {children}
-        </Box>
-      </TabsProvider>
-    </StylesApiProvider>
+    <TabsProvider
+      activateTabWithKeyboard={activateTabWithKeyboard}
+      defaultValue={defaultValue}
+      orientation={orientation}
+      onTabChange={onTabChange}
+      value={value}
+      id={id}
+      loop={loop}
+      allowTabDeactivation={allowTabDeactivation}
+      color={color}
+      variant={variant}
+      radius={radius}
+      inverted={inverted}
+      keepMounted={keepMounted}
+      placement={placement}
+      classNames={classNames}
+      styles={styles}
+      unstyled={unstyled}
+    >
+      <Box {...others} className={cx(classes.root, className)} id={id} ref={ref}>
+        {children}
+      </Box>
+    </TabsProvider>
   );
 }) as any;
 
