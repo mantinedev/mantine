@@ -116,6 +116,11 @@ export const InputWrapper = forwardRef<HTMLDivElement, InputWrapperProps>((props
   };
 
   const isRequired = typeof withAsterisk === 'boolean' ? withAsterisk : required;
+  const errorId = id ? `${id}-error` : errorProps?.id;
+  const descriptionId = id ? `${id}-description` : descriptionProps?.id;
+  const hasError = !!error && typeof error !== 'boolean';
+  const _describedBy = `${hasError ? errorId : ''} ${description ? descriptionId : ''}`;
+  const describedBy = _describedBy.trim().length > 0 ? _describedBy.trim() : undefined;
 
   const _label = label && (
     <InputLabel
@@ -137,6 +142,7 @@ export const InputWrapper = forwardRef<HTMLDivElement, InputWrapperProps>((props
       {...descriptionProps}
       {...sharedProps}
       size={descriptionProps?.size || sharedProps.size}
+      id={descriptionProps?.id || descriptionId}
     >
       {description}
     </InputDescription>
@@ -150,6 +156,7 @@ export const InputWrapper = forwardRef<HTMLDivElement, InputWrapperProps>((props
       {...sharedProps}
       size={errorProps?.size || sharedProps.size}
       key="error"
+      id={errorProps?.id || errorId}
     >
       {error}
     </InputError>
@@ -172,10 +179,13 @@ export const InputWrapper = forwardRef<HTMLDivElement, InputWrapperProps>((props
 
   return (
     <InputWrapperProvider
-      value={getInputOffsets(inputWrapperOrder, {
-        hasDescription: !!_description,
-        hasError: !!_error,
-      })}
+      value={{
+        describedBy,
+        ...getInputOffsets(inputWrapperOrder, {
+          hasDescription: !!_description,
+          hasError: !!_error,
+        }),
+      }}
     >
       <Box className={cx(classes.root, className)} ref={ref} {...others}>
         {content}
