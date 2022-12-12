@@ -1,11 +1,5 @@
 import React, { forwardRef } from 'react';
-import {
-  DefaultProps,
-  Selectors,
-  useContextStylesApi,
-  MantineColor,
-  useComponentDefaultProps,
-} from '@mantine/styles';
+import { DefaultProps, Selectors, MantineColor, useComponentDefaultProps } from '@mantine/styles';
 import { createScopedKeydownHandler } from '@mantine/utils';
 import { UnstyledButton } from '../../UnstyledButton';
 import { useTabsContext } from '../Tabs.context';
@@ -36,7 +30,6 @@ export const Tab = forwardRef<HTMLButtonElement, TabProps>((props, ref) => {
   const { value, children, onKeyDown, onClick, className, icon, rightSection, color, ...others } =
     useComponentDefaultProps('TabsTab', defaultProps, props);
   const ctx = useTabsContext();
-  const { classNames, styles, unstyled } = useContextStylesApi();
 
   const hasIcon = !!icon;
   const hasRightSection = !!rightSection;
@@ -52,7 +45,7 @@ export const Tab = forwardRef<HTMLButtonElement, TabProps>((props, ref) => {
       inverted: ctx.inverted,
       placement: ctx.placement,
     },
-    { name: 'Tabs', unstyled, classNames, styles }
+    { name: 'Tabs', unstyled: ctx.unstyled, classNames: ctx.classNames, styles: ctx.styles }
   );
 
   const isActive = value === ctx.value;
@@ -64,7 +57,7 @@ export const Tab = forwardRef<HTMLButtonElement, TabProps>((props, ref) => {
   return (
     <UnstyledButton<'button'>
       {...others}
-      unstyled={unstyled}
+      unstyled={ctx.unstyled}
       className={cx(classes.tab, className)}
       data-active={isActive || undefined}
       ref={ref}

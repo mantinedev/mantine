@@ -6,7 +6,6 @@ import {
   useMantineTheme,
   ClassNames,
   Styles,
-  StylesApiProvider,
   MantineNumberSize,
   MantineShadow,
   getDefaultZIndex,
@@ -238,52 +237,49 @@ export function Popover(props: PopoverProps) {
   );
 
   return (
-    <StylesApiProvider
-      classNames={classNames}
-      styles={styles}
-      unstyled={unstyled}
-      staticSelector={__staticSelector}
+    <PopoverContextProvider
+      value={{
+        returnFocus,
+        disabled,
+        controlled: popover.controlled,
+        reference,
+        floating,
+        x: popover.floating.x,
+        y: popover.floating.y,
+        arrowX: popover.floating?.middlewareData?.arrow?.x,
+        arrowY: popover.floating?.middlewareData?.arrow?.y,
+        opened: popover.opened,
+        arrowRef,
+        transition,
+        transitionDuration,
+        exitTransitionDuration,
+        width,
+        withArrow,
+        arrowSize,
+        arrowOffset,
+        arrowRadius,
+        arrowPosition,
+        placement: popover.floating.placement,
+        trapFocus,
+        withinPortal,
+        zIndex,
+        radius,
+        shadow,
+        closeOnEscape,
+        onClose: popover.onClose,
+        onToggle: popover.onToggle,
+        getTargetId: () => `${uid}-target`,
+        getDropdownId: () => `${uid}-dropdown`,
+        withRoles,
+        targetProps: others,
+        __staticSelector,
+        classNames,
+        styles,
+        unstyled,
+      }}
     >
-      <PopoverContextProvider
-        value={{
-          returnFocus,
-          disabled,
-          controlled: popover.controlled,
-          reference,
-          floating,
-          x: popover.floating.x,
-          y: popover.floating.y,
-          arrowX: popover.floating?.middlewareData?.arrow?.x,
-          arrowY: popover.floating?.middlewareData?.arrow?.y,
-          opened: popover.opened,
-          arrowRef,
-          transition,
-          transitionDuration,
-          exitTransitionDuration,
-          width,
-          withArrow,
-          arrowSize,
-          arrowOffset,
-          arrowRadius,
-          arrowPosition,
-          placement: popover.floating.placement,
-          trapFocus,
-          withinPortal,
-          zIndex,
-          radius,
-          shadow,
-          closeOnEscape,
-          onClose: popover.onClose,
-          onToggle: popover.onToggle,
-          getTargetId: () => `${uid}-target`,
-          getDropdownId: () => `${uid}-dropdown`,
-          withRoles,
-          targetProps: others,
-        }}
-      >
-        {children}
-      </PopoverContextProvider>
-    </StylesApiProvider>
+      {children}
+    </PopoverContextProvider>
   );
 }
 

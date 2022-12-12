@@ -7,7 +7,6 @@ import {
   UnstyledButton,
   ChevronIcon,
   MantineNumberSize,
-  StylesApiProvider,
   Selectors,
 } from '@mantine/core';
 import { clamp } from '@mantine/hooks';
@@ -284,72 +283,80 @@ export const _Carousel = forwardRef<HTMLDivElement, CarouselProps>((props, ref) 
     ));
 
   return (
-    <StylesApiProvider classNames={classNames} styles={styles} unstyled={unstyled}>
-      <CarouselProvider
-        value={{ slideGap, slideSize, embla, orientation, includeGapInSize, breakpoints }}
+    <CarouselProvider
+      value={{
+        slideGap,
+        slideSize,
+        embla,
+        orientation,
+        includeGapInSize,
+        breakpoints,
+        classNames,
+        styles,
+        unstyled,
+      }}
+    >
+      <Box
+        className={cx(classes.root, className)}
+        ref={ref}
+        onKeyDownCapture={handleKeydown}
+        {...others}
       >
-        <Box
-          className={cx(classes.root, className)}
-          ref={ref}
-          onKeyDownCapture={handleKeydown}
-          {...others}
-        >
-          <div className={classes.viewport} ref={emblaRefElement}>
-            <div className={classes.container}>{children}</div>
+        <div className={classes.viewport} ref={emblaRefElement}>
+          <div className={classes.container}>{children}</div>
+        </div>
+
+        {withIndicators && <div className={classes.indicators}>{indicators}</div>}
+
+        {withControls && (
+          <div className={classes.controls}>
+            <UnstyledButton
+              onClick={handlePrevious}
+              className={classes.control}
+              aria-label={previousControlLabel}
+              data-inactive={!canScrollPrev || undefined}
+              tabIndex={canScrollPrev ? 0 : -1}
+            >
+              {typeof previousControlIcon !== 'undefined' ? (
+                previousControlIcon
+              ) : (
+                <ChevronIcon
+                  style={{
+                    transform: `rotate(${getChevronRotation({
+                      dir: theme.dir,
+                      orientation,
+                      direction: 'previous',
+                    })}deg)`,
+                  }}
+                />
+              )}
+            </UnstyledButton>
+
+            <UnstyledButton
+              onClick={handleNext}
+              className={classes.control}
+              aria-label={nextControlLabel}
+              data-inactive={!canScrollNext || undefined}
+              tabIndex={canScrollNext ? 0 : -1}
+            >
+              {typeof nextControlIcon !== 'undefined' ? (
+                nextControlIcon
+              ) : (
+                <ChevronIcon
+                  style={{
+                    transform: `rotate(${getChevronRotation({
+                      dir: theme.dir,
+                      orientation,
+                      direction: 'next',
+                    })}deg)`,
+                  }}
+                />
+              )}
+            </UnstyledButton>
           </div>
-
-          {withIndicators && <div className={classes.indicators}>{indicators}</div>}
-
-          {withControls && (
-            <div className={classes.controls}>
-              <UnstyledButton
-                onClick={handlePrevious}
-                className={classes.control}
-                aria-label={previousControlLabel}
-                data-inactive={!canScrollPrev || undefined}
-                tabIndex={canScrollPrev ? 0 : -1}
-              >
-                {typeof previousControlIcon !== 'undefined' ? (
-                  previousControlIcon
-                ) : (
-                  <ChevronIcon
-                    style={{
-                      transform: `rotate(${getChevronRotation({
-                        dir: theme.dir,
-                        orientation,
-                        direction: 'previous',
-                      })}deg)`,
-                    }}
-                  />
-                )}
-              </UnstyledButton>
-
-              <UnstyledButton
-                onClick={handleNext}
-                className={classes.control}
-                aria-label={nextControlLabel}
-                data-inactive={!canScrollNext || undefined}
-                tabIndex={canScrollNext ? 0 : -1}
-              >
-                {typeof nextControlIcon !== 'undefined' ? (
-                  nextControlIcon
-                ) : (
-                  <ChevronIcon
-                    style={{
-                      transform: `rotate(${getChevronRotation({
-                        dir: theme.dir,
-                        orientation,
-                        direction: 'next',
-                      })}deg)`,
-                    }}
-                  />
-                )}
-              </UnstyledButton>
-            </div>
-          )}
-        </Box>
-      </CarouselProvider>
-    </StylesApiProvider>
+        )}
+      </Box>
+    </CarouselProvider>
   );
 }) as any;
 

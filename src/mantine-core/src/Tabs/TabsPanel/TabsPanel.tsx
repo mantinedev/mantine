@@ -1,10 +1,5 @@
 import React, { forwardRef } from 'react';
-import {
-  Selectors,
-  DefaultProps,
-  useContextStylesApi,
-  useComponentDefaultProps,
-} from '@mantine/styles';
+import { Selectors, DefaultProps, useComponentDefaultProps } from '@mantine/styles';
 import { packSx } from '@mantine/utils';
 import { Box } from '../../Box';
 import { useTabsContext } from '../Tabs.context';
@@ -30,7 +25,6 @@ export const TabsPanel = forwardRef<HTMLDivElement, TabsPanelProps>((props, ref)
   );
 
   const ctx = useTabsContext();
-  const { classNames, styles, unstyled } = useContextStylesApi();
   const { classes, cx } = useStyles(
     {
       orientation: ctx.orientation,
@@ -40,7 +34,7 @@ export const TabsPanel = forwardRef<HTMLDivElement, TabsPanelProps>((props, ref)
       inverted: ctx.inverted,
       placement: ctx.placement,
     },
-    { name: 'Tabs', unstyled, classNames, styles }
+    { name: 'Tabs', unstyled: ctx.unstyled, classNames: ctx.classNames, styles: ctx.styles }
   );
 
   const active = ctx.value === value;
