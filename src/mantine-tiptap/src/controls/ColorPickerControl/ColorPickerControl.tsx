@@ -10,7 +10,6 @@ import {
   ActionIcon,
   Tooltip,
   ColorPickerProps,
-  useContextStylesApi,
   useComponentDefaultProps,
 } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
@@ -41,8 +40,7 @@ export const ColorPickerControl = forwardRef<HTMLButtonElement, ColorPickerContr
       props
     );
 
-    const { unstyled } = useContextStylesApi();
-    const { editor, labels } = useRichTextEditorContext();
+    const { editor, labels, unstyled } = useRichTextEditorContext();
     const [opened, { toggle, close }] = useDisclosure(false);
     const [state, setState] = useState<'palette' | 'colorPicker'>('palette');
     const currentColor = editor?.getAttributes('textStyle').color || '#000';
