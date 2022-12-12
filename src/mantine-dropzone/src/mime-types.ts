@@ -5,6 +5,7 @@ export const MIME_TYPES = {
   jpeg: 'image/jpeg',
   svg: 'image/svg+xml',
   webp: 'image/webp',
+  avif: 'image/avif',
 
   // Documents
   mp4: 'video/mp4',
