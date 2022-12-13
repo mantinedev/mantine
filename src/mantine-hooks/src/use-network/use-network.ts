@@ -35,7 +35,7 @@ function getConnection(): NetworkStatus {
 
 export function useNetwork() {
   const [status, setStatus] = useState<{ online: boolean } & NetworkStatus>({
-    online: typeof navigator === 'undefined' ? true : navigator.onLine,
+    online: true,
   });
   const handleConnectionChange = useCallback(
     () => setStatus((current) => ({ ...current, ...getConnection() })),
