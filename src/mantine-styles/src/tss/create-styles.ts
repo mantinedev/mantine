@@ -17,6 +17,8 @@ export interface UseStylesOptions<Key extends string> {
     | ((theme: MantineTheme, params: any) => Partial<Record<Key, CSSObject>>);
   name: string | string[];
   unstyled?: boolean;
+  variant?: string;
+  size?: number | string;
 }
 
 function createRef(refName: string) {
@@ -56,7 +58,14 @@ export function createStyles<
 >(
   input:
     | ((theme: MantineTheme, params: Params, createRef: (refName: string) => string) => Input)
-    | Input
+    | Input,
+  resolvers?: (
+    theme: MantineTheme,
+    params: Params
+  ) => {
+    variants?: (variant: string) => Record<string, CSSObject>;
+    sizes?: (size: string | number) => Record<string, CSSObject>;
+  }
 ) {
   const getCssObject = typeof input === 'function' ? input : () => input;
 
@@ -70,11 +79,17 @@ export function createStyles<
 
     const componentStyles = getStyles(options?.styles, theme, params);
     const providerStyles = getStyles(context, theme, params);
+    const resolvedStyles = resolvers?.(theme, params);
+    const variantStyles =
+      (options?.variant && resolvedStyles?.variants?.(options?.variant)) || null;
+    const sizeStyles = (options?.size && resolvedStyles?.sizes?.(options?.size)) || null;
 
     const classes = Object.fromEntries(
       Object.keys(cssObject).map((key) => {
         const mergedStyles = cx(
           { [css(cssObject[key])]: !options?.unstyled },
+          variantStyles && css(variantStyles[key]),
+          sizeStyles && css(sizeStyles[key]),
           css(providerStyles[key]),
           css(componentStyles[key])
         );
