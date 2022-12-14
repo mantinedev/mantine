@@ -22,3 +22,4 @@ export type {
   MantineThemeOther,
 } from './MantineTheme';
 export type { Tuple } from './Tuple';
+export type { Variants } from './Variants';
