@@ -56,6 +56,9 @@ export interface StepperProps
 
   /** Breakpoint at which orientation will change from horizontal to vertical */
   breakpoint?: MantineNumberSize;
+
+  /** Whether to enable click on upcoming steps by default. Defaults to true **/
+  allowNextStepsSelect?: boolean;
 }
 
 type StepperComponent = ForwardRefWithStaticComponents<
@@ -72,6 +75,7 @@ const defaultProps: Partial<StepperProps> = {
   radius: 'xl',
   orientation: 'horizontal',
   iconPosition: 'left',
+  allowNextStepsSelect: true,
 };
 
 export const Stepper: StepperComponent = forwardRef<HTMLDivElement, StepperProps>((props, ref) => {
@@ -90,6 +94,7 @@ export const Stepper: StepperComponent = forwardRef<HTMLDivElement, StepperProps
     orientation,
     breakpoint,
     iconPosition,
+    allowNextStepsSelect,
     classNames,
     styles,
     unstyled,
@@ -106,18 +111,19 @@ export const Stepper: StepperComponent = forwardRef<HTMLDivElement, StepperProps
   const completedStep = convertedChildren.find((item) => item.type === StepCompleted);
 
   const items = _children.reduce<React.ReactElement[]>((acc, item, index) => {
-    const shouldAllowSelect =
-      typeof item.props.allowStepSelect === 'boolean'
-        ? item.props.allowStepSelect
-        : typeof onStepClick === 'function';
+    const state =
+      active === index ? 'stepProgress' : active > index ? 'stepCompleted' : 'stepInactive';
+    const shouldAllowSelect = state === 'stepCompleted' || allowNextStepsSelect;
+    typeof item.props.allowStepSelect === 'boolean'
+      ? item.props.allowStepSelect
+      : typeof onStepClick === 'function';
 
     acc.push(
       cloneElement(item, {
         __staticSelector: 'Stepper',
         icon: item.props.icon || index + 1,
         key: index,
-        state:
-          active === index ? 'stepProgress' : active > index ? 'stepCompleted' : 'stepInactive',
+        state,
         onClick: () => shouldAllowSelect && typeof onStepClick === 'function' && onStepClick(index),
         allowStepClick: shouldAllowSelect && typeof onStepClick === 'function',
         completedIcon: item.props.completedIcon || completedIcon,
