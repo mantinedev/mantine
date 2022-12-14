@@ -111,6 +111,8 @@ interface ThemeComponent {
   styles?:
     | Record<string, CSSObject>
     | ((theme: MantineTheme, params: any) => Record<string, CSSObject>);
+  variants?: (theme: MantineTheme, variant: string, params: any) => Record<string, CSSObject>;
+  sizes?: (theme: MantineTheme, size: string | number, params: any) => Record<string, CSSObject>;
 }
 
 export type MantineThemeBase = Omit<MantineTheme, 'fn'>;

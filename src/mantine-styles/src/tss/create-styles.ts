@@ -25,6 +25,20 @@ function createRef(refName: string) {
   return `__mantine-ref-${refName || ''}`;
 }
 
+function assignAccStyles(acc: Record<string, CSSObject>, styles: Record<string, CSSObject>) {
+  if (styles) {
+    Object.keys(styles).forEach((key) => {
+      if (!acc[key]) {
+        acc[key] = { ...styles[key] };
+      } else {
+        acc[key] = { ...acc[key], ...styles[key] };
+      }
+    });
+  }
+
+  return acc;
+}
+
 function getStyles<Key extends string>(
   styles: UseStylesOptions<Key>['styles'] | ContextStyles,
   theme: MantineTheme,
@@ -36,19 +50,26 @@ function getStyles<Key extends string>(
   if (Array.isArray(styles)) {
     return styles
       .map((item) => extractStyles(item.styles))
-      .reduce<Record<string, CSSObject>>((acc, item) => {
-        Object.keys(item).forEach((key) => {
-          if (!acc[key]) {
-            acc[key] = { ...item[key] };
-          } else {
-            acc[key] = { ...acc[key], ...item[key] };
-          }
-        });
-        return acc;
-      }, {});
+      .reduce<Record<string, CSSObject>>((acc, item) => assignAccStyles(acc, item), {});
   }
 
   return extractStyles(styles);
+}
+
+interface GetContextVariations {
+  ctx: ContextStyles;
+  theme: MantineTheme;
+  params: Record<string, any>;
+  variant: string;
+  size: number | string;
+}
+
+function getContextVariation({ ctx, theme, params, variant, size }: GetContextVariations) {
+  return ctx.reduce<Record<string, CSSObject>>((acc, item) => {
+    assignAccStyles(acc, item.variants?.(theme, variant, params));
+    assignAccStyles(acc, item.sizes?.(theme, size, params));
+    return acc;
+  }, {});
 }
 
 export function createStyles<
@@ -83,6 +104,13 @@ export function createStyles<
     const variantStyles =
       (options?.variant && resolvedStyles?.variants?.(options?.variant)) || null;
     const sizeStyles = (options?.size && resolvedStyles?.sizes?.(options?.size)) || null;
+    const contextVariations = getContextVariation({
+      ctx: context,
+      theme,
+      params,
+      variant: options?.variant,
+      size: options?.size,
+    });
 
     const classes = Object.fromEntries(
       Object.keys(cssObject).map((key) => {
@@ -90,6 +118,7 @@ export function createStyles<
           { [css(cssObject[key])]: !options?.unstyled },
           variantStyles && css(variantStyles[key]),
           sizeStyles && css(sizeStyles[key]),
+          css(contextVariations[key]),
           css(providerStyles[key]),
           css(componentStyles[key])
         );

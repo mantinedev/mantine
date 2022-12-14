@@ -28,6 +28,8 @@ export function useMantineProviderStyles(component: string | string[]) {
   const getStyles = (name: string) => ({
     styles: theme.components[name]?.styles || {},
     classNames: theme.components[name]?.classNames || {},
+    variants: theme.components[name]?.variants,
+    sizes: theme.components[name]?.sizes,
   });
 
   if (Array.isArray(component)) {
