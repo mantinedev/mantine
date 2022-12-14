@@ -7,7 +7,7 @@ export interface AccordionControlStylesParams extends AccordionStylesParams {
   chevronSize: number;
 }
 
-function getVariantStyles(theme: MantineTheme, { variant }: AccordionStylesParams): CSSObject {
+function getVariantStyles(theme: MantineTheme, variant: string): CSSObject {
   if (variant === 'default' || variant === 'contained') {
     return theme.fn.hover({
       backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[0],
@@ -18,10 +18,7 @@ function getVariantStyles(theme: MantineTheme, { variant }: AccordionStylesParam
 }
 
 export default createStyles(
-  (
-    theme,
-    { transitionDuration, chevronPosition, chevronSize, ...params }: AccordionControlStylesParams
-  ) => ({
+  (theme, { transitionDuration, chevronPosition, chevronSize }: AccordionControlStylesParams) => ({
     icon: {
       display: 'flex',
       alignItems: 'center',
@@ -61,7 +58,6 @@ export default createStyles(
     control: {
       ...theme.fn.focusStyles(),
       ...theme.fn.fontStyles(),
-      ...getVariantStyles(theme, params),
       width: '100%',
       display: 'flex',
       alignItems: 'center',
@@ -77,5 +73,10 @@ export default createStyles(
         ...theme.fn.hover({ backgroundColor: 'transparent' }),
       },
     },
+  }),
+  (theme) => ({
+    variants: (variant) => ({
+      control: getVariantStyles(theme, variant),
+    }),
   })
 );

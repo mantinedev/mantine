@@ -25,8 +25,14 @@ export const AccordionItem = forwardRef<HTMLDivElement, AccordionItemProps>((pro
 
   const ctx = useAccordionContext();
   const { classes, cx } = useStyles(
-    { variant: ctx.variant, radius: ctx.radius },
-    { name: 'Accordion', classNames: ctx.classNames, styles: ctx.styles, unstyled: ctx.unstyled }
+    { radius: ctx.radius },
+    {
+      name: 'Accordion',
+      classNames: ctx.classNames,
+      styles: ctx.styles,
+      unstyled: ctx.unstyled,
+      variant: ctx.variant,
+    }
   );
 
   return (

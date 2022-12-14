@@ -3,7 +3,8 @@ import { AccordionStylesParams } from '../Accordion.types';
 
 function getVariantStyles(
   theme: MantineTheme,
-  { variant, radius }: AccordionStylesParams
+  variant: string,
+  { radius }: AccordionStylesParams
 ): CSSObject {
   const borderColor = theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[3];
   const filledColor = theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[0];
@@ -82,6 +83,8 @@ function getVariantStyles(
   return {};
 }
 
-export default createStyles((theme, params: AccordionStylesParams) => ({
-  item: getVariantStyles(theme, params),
+export default createStyles({ item: {} }, (theme, params: AccordionStylesParams) => ({
+  variants: (variant) => ({
+    item: getVariantStyles(theme, variant, params),
+  }),
 }));

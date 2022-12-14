@@ -37,10 +37,15 @@ export const AccordionControl = forwardRef<HTMLButtonElement, AccordionControlPr
         transitionDuration: ctx.transitionDuration,
         chevronPosition: ctx.chevronPosition,
         chevronSize: ctx.chevronSize,
-        variant: ctx.variant,
         radius: ctx.radius,
       },
-      { name: 'Accordion', classNames: ctx.classNames, styles: ctx.styles, unstyled: ctx.unstyled }
+      {
+        name: 'Accordion',
+        classNames: ctx.classNames,
+        styles: ctx.styles,
+        unstyled: ctx.unstyled,
+        variant: ctx.variant,
+      }
     );
 
     const isActive = ctx.isItemActive(value);
