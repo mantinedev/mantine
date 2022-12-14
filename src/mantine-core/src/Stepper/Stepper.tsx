@@ -9,7 +9,7 @@ import {
 } from '@mantine/styles';
 import { ForwardRefWithStaticComponents } from '@mantine/utils';
 import { Box } from '../Box';
-import { Step, StepStylesNames } from './Step/Step';
+import { Step, StepStylesNames, StepFragmentComponent } from './Step/Step';
 import { StepCompleted } from './StepCompleted/StepCompleted';
 import useStyles from './Stepper.styles';
 
@@ -27,11 +27,14 @@ export interface StepperProps
   /** Active step index */
   active: number;
 
+  /** Step icon, defaults to step index + 1 when rendered within Stepper */
+  icon?: React.ReactNode | StepFragmentComponent;
+
   /** Step icon displayed when step is completed */
-  completedIcon?: React.ReactNode;
+  completedIcon?: React.ReactNode | StepFragmentComponent;
 
   /** Step icon displayed when step is in progress */
-  progressIcon?: React.ReactNode;
+  progressIcon?: React.ReactNode | StepFragmentComponent;
 
   /** Active and progress Step colors from theme.colors */
   color?: MantineColor;
@@ -84,6 +87,7 @@ export const Stepper: StepperComponent = forwardRef<HTMLDivElement, StepperProps
     children,
     onStepClick,
     active,
+    icon,
     completedIcon,
     progressIcon,
     color,
@@ -121,8 +125,9 @@ export const Stepper: StepperComponent = forwardRef<HTMLDivElement, StepperProps
     acc.push(
       cloneElement(item, {
         __staticSelector: 'Stepper',
-        icon: item.props.icon || index + 1,
+        icon: item.props.icon || icon || index + 1,
         key: index,
+        step: index,
         state,
         onClick: () => shouldAllowSelect && typeof onStepClick === 'function' && onStepClick(index),
         allowStepClick: shouldAllowSelect && typeof onStepClick === 'function',
