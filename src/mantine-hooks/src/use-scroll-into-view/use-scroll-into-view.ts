@@ -111,7 +111,7 @@ export function useScrollIntoView<
       }
       animateScroll();
     },
-    [scrollableRef.current]
+    [axis, duration, easing, isList, offset, onScrollFinish, reducedMotion]
   );
 
   const handleStop = () => {

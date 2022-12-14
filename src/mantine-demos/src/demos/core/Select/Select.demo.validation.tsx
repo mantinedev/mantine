@@ -17,6 +17,7 @@ function Demo() {
         data={['React', 'Angular', 'Svelte', 'Vue']}
         label="Your favorite frameworks/libraries"
         placeholder="Pick all that you like"
+        withinPortal
         error
       />
 
@@ -26,6 +27,7 @@ function Demo() {
         label="Your favorite frameworks/libraries"
         placeholder="Pick all that you like"
         error="Pick at least one item"
+        withinPortal
       />
     </div>
   );

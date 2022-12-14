@@ -52,6 +52,14 @@ Component is based on [react-dropzone](https://react-dropzone.js.org/) and suppo
 
 <Demo data={DropzoneDemos.usage} />
 
+## Dropzone.Accept, Dropzone.Reject and Dropzone.Idle
+
+`Dropzone.Accept`, `Dropzone.Reject` and `Dropzone.Idle` components are visible only when the user performs certain action:
+
+- `Dropzone.Accept` is visible only when the user drags file that can be accepted over the dropzone
+- `Dropzone.Reject` is visible only when the user drags file that cannot be accepted over the dropzone
+- `Dropzone.Idle` is visible when the user does not drag anything over dropzone
+
 ## Loading state
 
 Set `loading` prop to indicate loading state with [LoadingOverlay](/core/loading-overlay/) component.
@@ -71,6 +79,13 @@ Same as with `loading`, when `Dropzone` is disabled user cannot drop or select n
 To open files browser from outside of component use `openRef` prop to get function that will trigger file browser:
 
 <Demo data={DropzoneDemos.manual} />
+
+## Enable child pointer event
+
+By default, Dropzone disables pointer events on its children for dragging events to work. So when we set `activateOnClick` to `false`,
+clicking on any children inside Dropzone will do nothing. However, You can set style `pointerEvents: 'all'` to make children events to work:
+
+<Demo data={DropzoneDemos.enableChildPointerEvent} />
 
 ## Mime types
 

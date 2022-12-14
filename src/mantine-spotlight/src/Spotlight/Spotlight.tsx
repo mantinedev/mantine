@@ -120,7 +120,7 @@ export function Spotlight({
   overlayOpacity = 0.25,
   overlayBlur = 3,
   shadow = 'md',
-  radius = 'sm',
+  radius,
   centered = false,
   closeOnActionTrigger = true,
   highlightQuery = false,
@@ -241,6 +241,7 @@ export function Spotlight({
                 onMouseLeave={resetHovered}
               >
                 <TextInput
+                  autoComplete="chrome-please-just-do-not-show-it-thanks"
                   {...searchInputProps}
                   value={query}
                   onChange={handleInputChange}
@@ -252,7 +253,6 @@ export function Spotlight({
                   placeholder={searchPlaceholder}
                   icon={searchIcon}
                   onMouseEnter={resetHovered}
-                  autoComplete="chrome-please-just-do-not-show-it-thanks"
                 />
                 <ActionsWrapper>
                   <ActionsList

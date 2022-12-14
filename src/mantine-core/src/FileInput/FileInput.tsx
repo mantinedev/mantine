@@ -9,6 +9,7 @@ import {
   InputWrapperBaseProps,
   InputWrapperStylesNames,
 } from '../Input';
+import { Text } from '../Text';
 import { CloseButton } from '../CloseButton';
 import { FileButton } from '../FileButton';
 import useStyles from './FileInput.styles';
@@ -67,7 +68,9 @@ export interface FileInputProps<Multiple extends boolean = false>
 }
 
 const DefaultValue: FileInputProps['valueComponent'] = ({ value }) => (
-  <span>{Array.isArray(value) ? value.map((file) => file.name).join(', ') : value?.name}</span>
+  <Text sx={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+    {Array.isArray(value) ? value.map((file) => file.name).join(', ') : value?.name}
+  </Text>
 );
 
 const defaultProps: Partial<FileInputProps> = {
@@ -173,7 +176,7 @@ export const _FileInput = forwardRef<HTMLButtonElement, FileInputProps>((props, 
             classNames={{ ...classNames, input: cx(classes.input, (classNames as any)?.input) }}
           >
             {!hasValue ? (
-              <span className={classes.placeholder}>{placeholder}</span>
+              <Input.Placeholder className={classes.placeholder}>{placeholder}</Input.Placeholder>
             ) : (
               <ValueComponent value={_value} />
             )}

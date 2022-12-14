@@ -1,6 +1,6 @@
 import React from 'react';
 import { MantineDemo } from '@mantine/ds';
-import { RadioProps, Radio, Group } from '@mantine/core';
+import { RadioProps, Radio } from '@mantine/core';
 
 const codeTemplate = (props: string) => `
 import { Radio } from '@mantine/core';
@@ -16,9 +16,9 @@ function Demo() {
 
 function Wrapper(props: RadioProps) {
   return (
-    <Group position="center">
-      <Radio value="react" label="Radio button" {...props} />
-    </Group>
+    <Radio.Group name="demo" defaultValue="react">
+      <Radio value="react" {...props} />
+    </Radio.Group>
   );
 }
 
@@ -40,7 +40,7 @@ export const configurator: MantineDemo = {
       initialValue: 'right',
       defaultValue: 'right',
     },
-    { name: 'label', type: 'string', initialValue: 'I agree to sell my privacy' },
+    { name: 'label', type: 'string', initialValue: 'I cannot be unchecked' },
     { name: 'description', type: 'string', initialValue: '' },
     { name: 'error', type: 'string', initialValue: '' },
     { name: 'size', type: 'size', initialValue: 'sm', defaultValue: 'sm' },

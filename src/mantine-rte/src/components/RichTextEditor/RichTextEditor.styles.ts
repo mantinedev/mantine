@@ -71,7 +71,7 @@ export default createStyles(
         lineHeight: '32px',
         backgroundColor: theme.fn.variant({ variant: 'filled' }).background,
         color: theme.white,
-        borderRadius: theme.radius.sm,
+        borderRadius: theme.fn.radius(theme.defaultRadius),
         fontWeight: 500,
         padding: `0 ${theme.spacing.md}px`,
         marginRight: theme.spacing.sm,
@@ -131,7 +131,7 @@ export default createStyles(
         textAlign: 'left',
         paddingLeft: theme.spacing.sm,
         paddingRight: theme.spacing.sm,
-        borderRadius: theme.radius.sm,
+        borderRadius: theme.fn.radius(theme.defaultRadius),
         marginRight: theme.spacing.md,
         border: `1px solid ${
           theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[4]
@@ -140,8 +140,7 @@ export default createStyles(
 
         '&::placeholder': {
           opacity: 1,
-          userSelect: 'none',
-          color: theme.colorScheme === 'dark' ? theme.colors.dark[3] : theme.colors.gray[5],
+          ...theme.fn.placeholderStyles(),
         },
 
         '&:focus': {
@@ -203,7 +202,7 @@ export default createStyles(
           theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors[theme.primaryColor][0],
         padding: '3px 5px',
         marginRight: 2,
-        borderRadius: theme.radius.sm,
+        borderRadius: theme.fn.radius(theme.defaultRadius),
         userSelect: 'all',
         pointerEvents: 'none',
       },

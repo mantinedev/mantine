@@ -50,3 +50,4 @@ export { useWindowScrollDemo } from './use-window-scroll.demo.usage';
 export { useTextSelectionUsage } from './use-text-selection.demo.usage';
 export { usePreviousUsage } from './use-previous.demo.usage';
 export { useFaviconUsage } from './use-favicon.demo.usage';
+export { useEyeDropperUsage } from './use-eye-dropper.demo.usage';

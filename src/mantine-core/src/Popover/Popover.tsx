@@ -6,14 +6,13 @@ import {
   useMantineTheme,
   ClassNames,
   Styles,
-  StylesApiProvider,
   MantineNumberSize,
   MantineShadow,
   getDefaultZIndex,
   useComponentDefaultProps,
 } from '@mantine/styles';
 import { MantineTransition } from '../Transition';
-import { getFloatingPosition, FloatingPosition } from '../Floating';
+import { getFloatingPosition, FloatingPosition, ArrowPosition } from '../Floating';
 import { usePopover } from './use-popover';
 import { PopoverContextProvider } from './Popover.context';
 import {
@@ -67,6 +66,12 @@ export interface PopoverBaseProps {
 
   /** Arrow offset in px */
   arrowOffset?: number;
+
+  /** Arrow radius in px */
+  arrowRadius?: number;
+
+  /** Arrow position **/
+  arrowPosition?: ArrowPosition;
 
   /** Determines whether dropdown should be rendered within Portal, defaults to false */
   withinPortal?: boolean;
@@ -133,6 +138,8 @@ const defaultProps: Partial<PopoverProps> = {
   middlewares: { flip: true, shift: true, inline: false },
   arrowSize: 7,
   arrowOffset: 5,
+  arrowRadius: 0,
+  arrowPosition: 'side',
   closeOnClickOutside: true,
   withinPortal: false,
   closeOnEscape: true,
@@ -161,6 +168,8 @@ export function Popover(props: PopoverProps) {
     withArrow,
     arrowSize,
     arrowOffset,
+    arrowRadius,
+    arrowPosition,
     unstyled,
     classNames,
     styles,
@@ -196,6 +205,7 @@ export function Popover(props: PopoverProps) {
     position: getFloatingPosition(theme.dir, position),
     offset: offset + (withArrow ? arrowSize / 2 : 0),
     arrowRef,
+    arrowOffset,
     onPositionChange,
     positionDependencies,
     opened,
@@ -227,50 +237,49 @@ export function Popover(props: PopoverProps) {
   );
 
   return (
-    <StylesApiProvider
-      classNames={classNames}
-      styles={styles}
-      unstyled={unstyled}
-      staticSelector={__staticSelector}
+    <PopoverContextProvider
+      value={{
+        returnFocus,
+        disabled,
+        controlled: popover.controlled,
+        reference,
+        floating,
+        x: popover.floating.x,
+        y: popover.floating.y,
+        arrowX: popover.floating?.middlewareData?.arrow?.x,
+        arrowY: popover.floating?.middlewareData?.arrow?.y,
+        opened: popover.opened,
+        arrowRef,
+        transition,
+        transitionDuration,
+        exitTransitionDuration,
+        width,
+        withArrow,
+        arrowSize,
+        arrowOffset,
+        arrowRadius,
+        arrowPosition,
+        placement: popover.floating.placement,
+        trapFocus,
+        withinPortal,
+        zIndex,
+        radius,
+        shadow,
+        closeOnEscape,
+        onClose: popover.onClose,
+        onToggle: popover.onToggle,
+        getTargetId: () => `${uid}-target`,
+        getDropdownId: () => `${uid}-dropdown`,
+        withRoles,
+        targetProps: others,
+        __staticSelector,
+        classNames,
+        styles,
+        unstyled,
+      }}
     >
-      <PopoverContextProvider
-        value={{
-          returnFocus,
-          disabled,
-          controlled: popover.controlled,
-          reference,
-          floating,
-          x: popover.floating.x,
-          y: popover.floating.y,
-          arrowX: popover.floating?.middlewareData?.arrow?.x,
-          arrowY: popover.floating?.middlewareData?.arrow?.y,
-          opened: popover.opened,
-          arrowRef,
-          transition,
-          transitionDuration,
-          exitTransitionDuration,
-          width,
-          withArrow,
-          arrowSize,
-          arrowOffset,
-          placement: popover.floating.placement,
-          trapFocus,
-          withinPortal,
-          zIndex,
-          radius,
-          shadow,
-          closeOnEscape,
-          onClose: popover.onClose,
-          onToggle: popover.onToggle,
-          getTargetId: () => `${uid}-target`,
-          getDropdownId: () => `${uid}-dropdown`,
-          withRoles,
-          targetProps: others,
-        }}
-      >
-        {children}
-      </PopoverContextProvider>
-    </StylesApiProvider>
+      {children}
+    </PopoverContextProvider>
   );
 }
 

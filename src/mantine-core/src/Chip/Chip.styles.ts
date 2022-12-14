@@ -145,20 +145,16 @@ export default createStyles((theme, { radius, size, color }: ChipStylesParams, g
       outline: 'none',
 
       [`& + .${getRef('label')}`]: {
-        outline: 'none',
-        boxShadow:
-          theme.focusRing === 'always' || theme.focusRing === 'auto'
-            ? `0 0 0 2px ${
-                theme.colorScheme === 'dark' ? theme.colors.dark[9] : theme.white
-              }, 0 0 0 4px ${
-                theme.colors[theme.primaryColor][theme.colorScheme === 'dark' ? 7 : 5]
-              }`
-            : undefined,
+        ...(theme.focusRing === 'always' || theme.focusRing === 'auto'
+          ? theme.focusRingStyles.styles(theme)
+          : theme.focusRingStyles.resetStyles(theme)),
       },
 
       '&:focus:not(:focus-visible)': {
         [`& + .${getRef('label')}`]: {
-          boxShadow: theme.focusRing === 'auto' || theme.focusRing === 'never' ? 'none' : undefined,
+          ...(theme.focusRing === 'auto' || theme.focusRing === 'never'
+            ? theme.focusRingStyles.resetStyles(theme)
+            : null),
         },
       },
     },

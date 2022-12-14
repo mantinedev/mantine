@@ -78,12 +78,10 @@ export const Image = forwardRef<HTMLDivElement, ImageProps>((props: ImageProps, 
     ...others
   } = useComponentDefaultProps('Image', defaultProps, props);
   const { classes, cx } = useStyles({ radius }, { classNames, styles, unstyled, name: 'Image' });
-  const [loaded, setLoaded] = useState(!!src);
   const [error, setError] = useState(!src);
-  const isPlaceholder = withPlaceholder && (!loaded || error);
+  const isPlaceholder = withPlaceholder && error;
 
   useDidUpdate(() => {
-    setLoaded(false);
     setError(false);
   }, [src]);
 
@@ -97,10 +95,6 @@ export const Image = forwardRef<HTMLDivElement, ImageProps>((props: ImageProps, 
             alt={alt}
             style={{ objectFit: fit, width, height }}
             ref={imageRef}
-            onLoad={(event) => {
-              setLoaded(true);
-              typeof imageProps?.onLoad === 'function' && imageProps.onLoad(event);
-            }}
             onError={(event) => {
               setError(true);
               typeof imageProps?.onError === 'function' && imageProps.onError(event);

@@ -34,7 +34,7 @@ const data = [
     demo: RichText,
     icon: IconBold,
     name: 'Rich text editor',
-    description: 'Quill based rich text editor',
+    description: 'Tiptap based rich text editor',
   },
   { demo: Carousel, icon: IconSlideshow, name: 'Carousel', description: 'Embla based carousel' },
 ];

@@ -1,7 +1,7 @@
 import React from 'react';
-import { useMantineTheme, DefaultProps, MantineSize } from '@mantine/styles';
+import { useMantineTheme, MantineSize } from '@mantine/styles';
 
-interface ChevronIconProps extends DefaultProps, React.ComponentPropsWithoutRef<'svg'> {
+interface ChevronIconProps extends React.ComponentPropsWithoutRef<'svg'> {
   size: MantineSize;
   error: any;
 }

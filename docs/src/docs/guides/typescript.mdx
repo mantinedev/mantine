@@ -73,3 +73,17 @@ Other types exported from `@mantine/core` package:
 - `MantineGradient` – `{ from: string; to: string; deg?: number; }`
 - `MantineColor` – key of [theme.colors](/theming/colors/)
 - `ColorScheme` – `'light' | 'dark'`
+
+## Polymorphic components type
+
+[Polymorphic components](/guides/polymorphic/) require passing a type is you need to use props that require callback functions:
+
+```tsx
+import { Button } from '@mantine/core';
+
+// Works correctly, type is not required
+<Button component="a" href="/">Link</Button>
+
+// Type is required, callback prop is used
+<Button<'a'> component="a" onClick={event => {}}>Link</Button>
+```

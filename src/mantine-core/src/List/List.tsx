@@ -4,12 +4,11 @@ import {
   MantineNumberSize,
   Selectors,
   useComponentDefaultProps,
-  StylesApiProvider,
 } from '@mantine/styles';
 import { ForwardRefWithStaticComponents } from '@mantine/utils';
 import { Box } from '../Box';
 import { ListItem, ListItemStylesNames } from './ListItem/ListItem';
-import { ListContext } from './List.context';
+import { ListProvider } from './List.context';
 import useStyles from './List.styles';
 
 export type ListStylesNames = ListItemStylesNames | Selectors<typeof useStyles>;
@@ -74,18 +73,28 @@ export const List: ListComponent = forwardRef<HTMLUListElement, ListProps>(
     );
 
     return (
-      <StylesApiProvider classNames={classNames} styles={styles} unstyled={unstyled}>
-        <ListContext.Provider value={{ spacing, center, icon, listStyleType, size, withPadding }}>
-          <Box<any>
-            component={type === 'unordered' ? 'ul' : 'ol'}
-            className={cx(classes.root, className)}
-            ref={ref}
-            {...others}
-          >
-            {children}
-          </Box>
-        </ListContext.Provider>
-      </StylesApiProvider>
+      <ListProvider
+        value={{
+          spacing,
+          center,
+          icon,
+          listStyleType,
+          size,
+          withPadding,
+          classNames,
+          styles,
+          unstyled,
+        }}
+      >
+        <Box<any>
+          component={type === 'unordered' ? 'ul' : 'ol'}
+          className={cx(classes.root, className)}
+          ref={ref}
+          {...others}
+        >
+          {children}
+        </Box>
+      </ListProvider>
     );
   }
 ) as any;

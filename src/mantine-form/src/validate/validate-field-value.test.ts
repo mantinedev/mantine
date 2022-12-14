@@ -29,6 +29,16 @@ describe('@mantine/form/validate-field-value', () => {
     ).toStrictEqual({ hasError: true, error: 'error-b' });
   });
 
+  it('validates parent of nested field with rules record', () => {
+    expect(
+      validateFieldValue(
+        'a',
+        { a: { b: (value) => (value === 1 ? 'error-b' : null) } },
+        { a: [{ b: 2 }, { b: 1 }] }
+      )
+    ).toStrictEqual({ hasError: true, error: 'error-b' });
+  });
+
   it('validates array field with rules record', () => {
     expect(
       validateFieldValue(

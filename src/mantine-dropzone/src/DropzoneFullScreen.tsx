@@ -68,9 +68,11 @@ export function DropzoneFullScreen(props: DropzoneFullScreenProps) {
     unstyled,
   });
 
-  const handleDragEnter = () => {
-    setCounter((prev) => prev + 1);
-    open();
+  const handleDragEnter = (event: DragEvent) => {
+    if (event.dataTransfer.types.includes('Files')) {
+      setCounter((prev) => prev + 1);
+      open();
+    }
   };
 
   const handleDragLeave = () => {
@@ -88,10 +90,11 @@ export function DropzoneFullScreen(props: DropzoneFullScreenProps) {
     document.addEventListener('dragleave', handleDragLeave, false);
 
     return () => {
-      document.removeEventListener('dragover', handleDragEnter, false);
+      document.removeEventListener('dragenter', handleDragEnter, false);
       document.removeEventListener('dragleave', handleDragLeave, false);
     };
   }, [active]);
+
   return (
     <OptionalPortal withinPortal={withinPortal}>
       <Box

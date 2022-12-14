@@ -27,6 +27,7 @@ describe('@mantine/core/InputWrapper', () => {
     props: defaultProps,
     displayName: '@mantine/core/InputWrapper',
     refType: HTMLDivElement,
+    providerName: 'InputWrapper',
   });
 
   it('renders correct error, description and label', () => {
@@ -76,5 +77,11 @@ describe('@mantine/core/InputWrapper', () => {
     const { container: div } = render(<InputWrapper {...defaultProps} labelElement="div" />);
     expect(queries.getLabel(label)).toHaveAttribute('for', 'test-id');
     expect(queries.getLabel(div)).not.toHaveAttribute('for');
+  });
+
+  it('generates correct ids for description and error', () => {
+    const { container } = render(<InputWrapper {...defaultProps} id="test45" />);
+    expect(queries.getDescription(container)).toHaveAttribute('id', 'test45-description');
+    expect(queries.getError(container)).toHaveAttribute('id', 'test45-error');
   });
 });

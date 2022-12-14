@@ -1,11 +1,13 @@
-import type { FloatingPosition, FloatingSide, FloatingPlacement } from '../types';
+import { CSSObject } from '@mantine/styles';
+import type { FloatingPosition, FloatingSide, FloatingPlacement, ArrowPosition } from '../types';
 
 function horizontalSide(
   placement: FloatingPlacement | 'center',
   arrowY: number,
-  arrowOffset: number
+  arrowOffset: number,
+  arrowPosition: ArrowPosition
 ) {
-  if (placement === 'center') {
+  if (placement === 'center' || arrowPosition === 'center') {
     return { top: arrowY };
   }
 
@@ -24,10 +26,11 @@ function verticalSide(
   placement: FloatingPlacement | 'center',
   arrowX: number,
   arrowOffset: number,
+  arrowPosition: ArrowPosition,
   dir: 'rtl' | 'ltr'
 ) {
-  if (placement === 'center') {
-    return { [dir === 'ltr' ? 'left' : 'right']: arrowX };
+  if (placement === 'center' || arrowPosition === 'center') {
+    return { left: arrowX };
   }
 
   if (placement === 'end') {
@@ -41,11 +44,29 @@ function verticalSide(
   return {};
 }
 
+const radiusByFloatingSide: Record<
+  FloatingSide,
+  keyof Pick<
+    CSSObject,
+    | 'borderBottomLeftRadius'
+    | 'borderBottomRightRadius'
+    | 'borderTopLeftRadius'
+    | 'borderTopRightRadius'
+  >
+> = {
+  bottom: 'borderTopLeftRadius',
+  left: 'borderTopRightRadius',
+  right: 'borderBottomLeftRadius',
+  top: 'borderBottomRightRadius',
+};
+
 export function getArrowPositionStyles({
   position,
   withBorder,
   arrowSize,
   arrowOffset,
+  arrowRadius,
+  arrowPosition,
   arrowX,
   arrowY,
   dir,
@@ -54,6 +75,8 @@ export function getArrowPositionStyles({
   withBorder: boolean;
   arrowSize: number;
   arrowOffset: number;
+  arrowRadius: number;
+  arrowPosition: ArrowPosition;
   arrowX: number;
   arrowY: number;
   dir: 'rtl' | 'ltr';
@@ -64,15 +87,16 @@ export function getArrowPositionStyles({
     height: arrowSize,
     transform: 'rotate(45deg)',
     position: 'absolute',
+    [radiusByFloatingSide[side]]: arrowRadius,
   };
 
-  const arrowPosition = withBorder ? -arrowSize / 2 - 1 : -arrowSize / 2;
+  const arrowPlacement = withBorder ? -arrowSize / 2 - 1 : -arrowSize / 2;
 
   if (side === 'left') {
     return {
       ...baseStyles,
-      ...horizontalSide(placement, arrowY, arrowOffset),
-      right: arrowPosition,
+      ...horizontalSide(placement, arrowY, arrowOffset, arrowPosition),
+      right: arrowPlacement,
       borderLeft: 0,
       borderBottom: 0,
     };
@@ -81,8 +105,8 @@ export function getArrowPositionStyles({
   if (side === 'right') {
     return {
       ...baseStyles,
-      ...horizontalSide(placement, arrowY, arrowOffset),
-      left: arrowPosition,
+      ...horizontalSide(placement, arrowY, arrowOffset, arrowPosition),
+      left: arrowPlacement,
       borderRight: 0,
       borderTop: 0,
     };
@@ -91,20 +115,20 @@ export function getArrowPositionStyles({
   if (side === 'top') {
     return {
       ...baseStyles,
-      ...verticalSide(placement, arrowX, arrowOffset, dir),
-      bottom: arrowPosition,
+      ...verticalSide(placement, arrowX, arrowOffset, arrowPosition, dir),
+      bottom: arrowPlacement,
       borderTop: 0,
-      [dir === 'ltr' ? 'borderLeft' : 'borderRight']: 0,
+      borderLeft: 0,
     };
   }
 
   if (side === 'bottom') {
     return {
       ...baseStyles,
-      ...verticalSide(placement, arrowX, arrowOffset, dir),
-      top: arrowPosition,
+      ...verticalSide(placement, arrowX, arrowOffset, arrowPosition, dir),
+      top: arrowPlacement,
       borderBottom: 0,
-      [dir === 'ltr' ? 'borderRight' : 'borderLeft']: 0,
+      borderRight: 0,
     };
   }
 

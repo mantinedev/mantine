@@ -88,7 +88,9 @@ const verticalSizes = MANTINE_SIZES.map((size, index) => (
 storiesOf('Stepper', module)
   .add('General usage', () => (
     <div style={{ padding: 40 }}>
-      <Wrapper color="teal" />
+      <Wrapper color="#ffbb00" />
+      <Wrapper mt="xl" color="pink.9" />
+      <Wrapper mt="xl" />
     </div>
   ))
   .add('Vertical orientation', () => (

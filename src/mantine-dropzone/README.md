@@ -1,5 +1,7 @@
 # Mantine Dropzone
 
+[![npm](https://img.shields.io/npm/dm/@mantine/dropzone)](https://www.npmjs.com/package/@mantine/dropzone)
+
 Capture files from user
 
 [View documentation](https://mantine.dev/)

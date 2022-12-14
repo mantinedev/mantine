@@ -9,11 +9,11 @@ import {
 import {
   DefaultProps,
   Selectors,
-  extractSystemStyles,
   getDefaultZIndex,
   useComponentDefaultProps,
 } from '@mantine/styles';
 import { groupOptions } from '@mantine/utils';
+import { extractSystemStyles } from '../Box';
 import { Input } from '../Input';
 import { DefaultValue, DefaultValueStylesNames } from './DefaultValue/DefaultValue';
 import { DefaultItem } from '../Select/DefaultItem/DefaultItem';
@@ -223,7 +223,6 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>((props
   );
   const { systemStyles, rest } = extractSystemStyles(others);
   const inputRef = useRef<HTMLInputElement>();
-  const wrapperRef = useRef<HTMLDivElement>();
   const itemsRefs = useRef<Record<string, HTMLDivElement>>({});
   const uuid = useId(id);
   const [dropdownOpened, setDropdownOpened] = useState(initiallyOpened);
@@ -535,6 +534,7 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>((props
     .map((item) => (
       <Value
         {...item}
+        variant={variant}
         disabled={disabled}
         className={classes.value}
         readOnly={readOnly}
@@ -623,7 +623,6 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>((props
             aria-expanded={dropdownOpened}
             onMouseLeave={() => setHovered(-1)}
             tabIndex={-1}
-            ref={wrapperRef}
           >
             <input
               type="hidden"

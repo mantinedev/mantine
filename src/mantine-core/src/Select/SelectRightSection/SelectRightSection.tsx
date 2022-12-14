@@ -29,6 +29,7 @@ export function SelectRightSection({
       onClick={onClear}
       size={size}
       tabIndex={clearButtonTabIndex}
+      onMouseDown={(event) => event.preventDefault()}
     />
   ) : (
     <ChevronIcon error={error} size={size} />

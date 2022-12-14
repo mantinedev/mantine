@@ -27,6 +27,7 @@ function Demo() {
         placeholder="Pick a hashtag"
         data={['React', 'Angular', 'Svelte', 'Vue']}
         icon={<IconHash size={14} />}
+        withinPortal
       />
     </div>
   );

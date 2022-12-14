@@ -11,5 +11,6 @@ describe('@mantine/core/CardSection', () => {
     props: defaultProps,
     displayName: '@mantine/core/CardSection',
     refType: HTMLDivElement,
+    providerName: 'CardSection',
   });
 });

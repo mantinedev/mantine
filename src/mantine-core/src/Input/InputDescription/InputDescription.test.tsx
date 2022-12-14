@@ -10,5 +10,6 @@ describe('@mantine/core/InputDescription', () => {
     props: defaultProps,
     refType: HTMLDivElement,
     displayName: '@mantine/core/InputDescription',
+    providerName: 'InputDescription',
   });
 });

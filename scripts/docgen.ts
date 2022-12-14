@@ -88,7 +88,7 @@ const EXTRA_FILES_PATHS = [
   '../src/mantine-prism/src/Prism/Prism.tsx',
   '../src/mantine-spotlight/src/SpotlightProvider.tsx',
   '../src/mantine-modals/src/ModalsProvider.tsx',
-  '../src/mantine-rte/src/components/RichTextEditor/RichTextEditor.tsx',
+  '../src/mantine-tiptap/src/RichTextEditor.tsx',
   '../src/mantine-nprogress/src/NavigationProgress.tsx',
   '../src/mantine-dropzone/src/Dropzone.tsx',
   '../src/mantine-dropzone/src/DropzoneFullScreen.tsx',

@@ -8,9 +8,9 @@ export interface InputStylesParams {
   variant: InputVariant;
   multiline: boolean;
   invalid: boolean;
-  rightSectionWidth: number;
+  rightSectionWidth: string | number;
   withRightSection: boolean;
-  iconWidth: number;
+  iconWidth: string | number;
   offsetBottom: boolean;
   offsetTop: boolean;
   pointer: boolean;
@@ -37,11 +37,7 @@ function getVariantStyles({ theme, variant }: GetVariantStylesInput) {
       }`,
       backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.white,
       transition: 'border-color 100ms ease',
-
-      '&:focus, &:focus-within': {
-        outline: 'none',
-        borderColor: theme.colors[theme.primaryColor][theme.fn.primaryShade()],
-      },
+      '&:focus, &:focus-within': theme.focusRingStyles.inputStyles(theme),
     };
   }
 
@@ -49,11 +45,7 @@ function getVariantStyles({ theme, variant }: GetVariantStylesInput) {
     return {
       border: '1px solid transparent',
       backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[1],
-
-      '&:focus, &:focus-within': {
-        outline: 'none',
-        borderColor: `${theme.colors[theme.primaryColor][theme.fn.primaryShade()]} !important`,
-      },
+      '&:focus, &:focus-within': theme.focusRingStyles.inputStyles(theme),
     };
   }
 
@@ -148,9 +140,8 @@ export default createStyles(
         },
 
         '&::placeholder': {
+          ...theme.fn.placeholderStyles(),
           opacity: 1,
-          userSelect: 'none',
-          color: theme.colorScheme === 'dark' ? theme.colors.dark[3] : theme.colors.gray[5],
         },
 
         '&::-webkit-inner-spin-button, &::-webkit-outer-spin-button, &::-webkit-search-decoration, &::-webkit-search-cancel-button, &::-webkit-search-results-button, &::-webkit-search-results-decoration':

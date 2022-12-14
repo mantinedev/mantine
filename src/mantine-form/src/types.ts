@@ -21,7 +21,7 @@ export interface ReorderPayload {
 
 type Rule<Value, Values> = (value: Value, values: Values, path: string) => React.ReactNode;
 
-type FormRule<Value, Values> = Value extends Array<infer ListValue>
+type FormRule<Value, Values> = NonNullable<Value> extends Array<infer ListValue>
   ?
       | Partial<{
           [Key in keyof ListValue]: ListValue[Key] extends Array<infer NestedListItem>
@@ -29,12 +29,12 @@ type FormRule<Value, Values> = Value extends Array<infer ListValue>
             : FormRulesRecord<ListValue[Key]> | Rule<ListValue[Key], Values>;
         }>
       | Rule<Value, Values>
-  : Value extends Record<string, unknown>
-  ? FormRulesRecord<Value> | Rule<Value, Values>
+  : NonNullable<Value> extends Record<string, any>
+  ? FormRulesRecord<Value, Values> | Rule<Value, Values>
   : Rule<Value, Values>;
 
-export type FormRulesRecord<Values> = Partial<{
-  [Key in keyof Values]: FormRule<Values[Key], Values>;
+export type FormRulesRecord<Values, InitValues = Values> = Partial<{
+  [Key in keyof Values]: FormRule<Values[Key], InitValues>;
 }>;
 
 export type FormValidateInput<Values> = FormRulesRecord<Values> | ((values: Values) => FormErrors);
@@ -55,7 +55,7 @@ export type OnSubmit<Values, TransformValues extends _TransformValues<Values>> =
     values: Values,
     event: React.FormEvent<HTMLFormElement>
   ) => void
-) => (event: React.FormEvent<HTMLFormElement>) => void;
+) => (event?: React.FormEvent<HTMLFormElement>) => void;
 
 export type OnReset = (event: React.FormEvent<HTMLFormElement>) => void;
 
@@ -70,6 +70,7 @@ export type SetFieldValue<Values> = <Field extends LooseKeys<Values>>(
 ) => void;
 
 export type ClearFieldError = (path: unknown) => void;
+export type ClearFieldDirty = (path: unknown) => void;
 export type ClearErrors = () => void;
 export type Reset = () => void;
 export type Validate = () => FormValidationResult;
@@ -106,7 +107,10 @@ export type IsValid<Values> = <Field extends LooseKeys<Values>>(path?: Field) =>
 
 export type _TransformValues<Values> = (values: Values) => unknown;
 
-export interface UseFormInput<Values, TransformValues extends _TransformValues<Values>> {
+export interface UseFormInput<
+  Values,
+  TransformValues extends _TransformValues<Values> = (values: Values) => Values
+> {
   initialValues?: Values;
   initialErrors?: FormErrors;
   initialTouched?: FormStatus;

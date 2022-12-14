@@ -21,7 +21,7 @@ function visible(element: HTMLElement) {
 
   let parentElement: HTMLElement = element;
   while (parentElement) {
-    if (parentElement === document.body) {
+    if (parentElement === document.body || parentElement.nodeType === 11) {
       break;
     }
 

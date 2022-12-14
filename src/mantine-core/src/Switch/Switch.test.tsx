@@ -1,5 +1,5 @@
 import React from 'react';
-import { queryByTestId, render, screen } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import {
   checkAccessibility,
   itHandlesBooleanState,
@@ -28,14 +28,6 @@ describe('@mantine/core/Switch', () => {
     refType: HTMLInputElement,
     othersSelector: 'input',
     providerName: 'Switch',
-  });
-
-  it('renders label based on label prop', () => {
-    const { container: withLabel, getByText } = render(<Switch label="test-label" />);
-    const { container: withoutLabel } = render(<Switch />);
-    expect(queryByTestId(withLabel, 'label')).toBeInTheDocument();
-    expect(queryByTestId(withoutLabel, 'label')).toBeNull();
-    expect(getByText('test-label')).toBeInTheDocument();
   });
 
   it('render thumb icon', () => {

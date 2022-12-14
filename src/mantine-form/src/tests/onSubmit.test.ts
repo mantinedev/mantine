@@ -68,4 +68,11 @@ describe('@mantine/form/onSubmit', () => {
       event
     );
   });
+
+  it('allows to call onSubmit without event', () => {
+    const hook = renderHook(() => useForm({ initialValues: { a: 1 } }));
+    const handleSubmit = jest.fn();
+    act(() => hook.result.current.onSubmit(handleSubmit)());
+    expect(handleSubmit).toHaveBeenCalledWith({ a: 1 }, undefined);
+  });
 });
