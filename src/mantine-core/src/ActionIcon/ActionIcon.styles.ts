@@ -4,6 +4,7 @@ import {
   MantineColor,
   MantineTheme,
   MantineGradient,
+  CSSObject,
 } from '@mantine/styles';
 
 export const ACTION_ICON_VARIANTS = [
@@ -14,15 +15,12 @@ export const ACTION_ICON_VARIANTS = [
   'default',
   'transparent',
   'gradient',
-] as const;
-
-export type ActionIconVariant = typeof ACTION_ICON_VARIANTS[number];
+];
 
 export interface ActionIconStylesParams {
   color: MantineColor;
-  size: MantineNumberSize;
   radius: MantineNumberSize;
-  variant: ActionIconVariant;
+  variant: string;
   gradient: MantineGradient;
 }
 
@@ -35,13 +33,13 @@ export const sizes = {
 };
 
 interface GetVariantStyles {
-  variant: ActionIconVariant;
+  variant: string;
   theme: MantineTheme;
   color: MantineColor;
   gradient: MantineGradient;
 }
 
-function getVariantStyles({ variant, theme, color, gradient }: GetVariantStyles) {
+function getVariantStyles({ variant, theme, color, gradient }: GetVariantStyles): CSSObject {
   const colors = theme.fn.variant({ color, variant, gradient });
 
   if (variant === 'gradient') {
@@ -56,25 +54,24 @@ function getVariantStyles({ variant, theme, color, gradient }: GetVariantStyles)
     };
   }
 
-  return {
-    border: `1px solid ${colors.border}`,
-    backgroundColor: colors.background,
-    color: colors.color,
-    ...theme.fn.hover({
-      backgroundColor: colors.hover,
-    }),
-  };
+  if (ACTION_ICON_VARIANTS.includes(variant)) {
+    return {
+      border: `1px solid ${colors.border}`,
+      backgroundColor: colors.background,
+      color: colors.color,
+      ...theme.fn.hover({
+        backgroundColor: colors.hover,
+      }),
+    };
+  }
+
+  return null;
 }
 
 export default createStyles(
-  (theme, { color, size, radius, variant, gradient }: ActionIconStylesParams) => ({
+  (theme, { radius, variant }: ActionIconStylesParams) => ({
     root: {
-      ...getVariantStyles({ variant, theme, color, gradient }),
       position: 'relative',
-      height: theme.fn.size({ size, sizes }),
-      minHeight: theme.fn.size({ size, sizes }),
-      width: theme.fn.size({ size, sizes }),
-      minWidth: theme.fn.size({ size, sizes }),
       borderRadius: theme.fn.radius(radius),
       padding: 0,
       lineHeight: 1,
@@ -83,6 +80,10 @@ export default createStyles(
       justifyContent: 'center',
 
       '&:active': theme.activeStyles,
+
+      '& [data-action-icon-loader]': {
+        maxWidth: '70%',
+      },
 
       '&:disabled, &[data-disabled]': {
         color: theme.colors.gray[theme.colorScheme === 'dark' ? 6 : 4],
@@ -122,5 +123,18 @@ export default createStyles(
         },
       },
     },
+  }),
+  (theme, { color, gradient }: ActionIconStylesParams) => ({
+    variants: (variant) => ({
+      root: getVariantStyles({ variant, theme, color, gradient }),
+    }),
+    sizes: (size) => ({
+      root: {
+        height: theme.fn.size({ size, sizes }),
+        minHeight: theme.fn.size({ size, sizes }),
+        width: theme.fn.size({ size, sizes }),
+        minWidth: theme.fn.size({ size, sizes }),
+      },
+    }),
   })
 );

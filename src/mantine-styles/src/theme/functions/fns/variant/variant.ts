@@ -6,15 +6,7 @@ import { primaryShade } from '../primary-shade/primary-shade';
 import { gradient } from '../gradient/gradient';
 
 export interface VariantInput {
-  variant:
-    | 'filled'
-    | 'light'
-    | 'outline'
-    | 'default'
-    | 'gradient'
-    | 'white'
-    | 'subtle'
-    | 'transparent';
+  variant: string;
   color?: MantineColor;
   gradient?: MantineGradient;
   primaryFallback?: boolean;

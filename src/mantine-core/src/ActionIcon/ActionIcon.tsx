@@ -6,10 +6,11 @@ import {
   Selectors,
   useComponentDefaultProps,
   MantineGradient,
+  Variants,
 } from '@mantine/styles';
 import { createPolymorphicComponent } from '@mantine/utils';
 import { UnstyledButton } from '../UnstyledButton';
-import useStyles, { sizes, ActionIconVariant, ActionIconStylesParams } from './ActionIcon.styles';
+import useStyles, { ActionIconStylesParams } from './ActionIcon.styles';
 import { Loader, LoaderProps } from '../Loader';
 
 export type ActionIconStylesNames = Selectors<typeof useStyles>;
@@ -19,22 +20,24 @@ export interface ActionIconProps
   /** Icon */
   children?: React.ReactNode;
 
-  /** Controls appearance */
-  variant?: ActionIconVariant;
+  /** Controls appearance, subtle by default */
+  variant?: Variants<
+    'subtle' | 'filled' | 'outline' | 'light' | 'default' | 'transparent' | 'gradient'
+  >;
 
   /** Key of theme.colors */
   color?: MantineColor;
 
-  /** Controls gradient settings in gradient variant only */
+  /** Gradient input, only used when variant="gradient", theme.defaultGradient by default */
   gradient?: MantineGradient;
 
-  /** Button border-radius from theme or number to set border-radius in px */
+  /** Key of theme.radius or number to set border-radius in px, theme.defaultRadius by default */
   radius?: MantineNumberSize;
 
-  /** Predefined icon size or number to set width and height in px */
+  /** Predefined button size or any valid CSS value to set width and height */
   size?: MantineNumberSize;
 
-  /** Props spread to Loader component */
+  /** Props added to Loader component (only visible when `loading` prop is set) */
   loaderProps?: LoaderProps;
 
   /** Indicates loading state */
@@ -48,7 +51,6 @@ const defaultProps: Partial<ActionIconProps> = {
   color: 'gray',
   size: 'md',
   variant: 'subtle',
-  loading: false,
 };
 
 export const _ActionIcon = forwardRef<HTMLButtonElement, ActionIconProps>((props, ref) => {
@@ -68,14 +70,17 @@ export const _ActionIcon = forwardRef<HTMLButtonElement, ActionIconProps>((props
   } = useComponentDefaultProps('ActionIcon', defaultProps, props);
 
   const { classes, cx, theme } = useStyles(
-    { size, radius, color, variant, gradient },
-    { name: 'ActionIcon', unstyled }
+    { radius, color, variant, gradient },
+    { name: 'ActionIcon', unstyled, size, variant }
   );
 
-  const colors = theme.fn.variant({ color, variant });
-
   const loader = (
-    <Loader color={colors.color} size={theme.fn.size({ size, sizes }) - 12} {...loaderProps} />
+    <Loader
+      color={theme.fn.variant({ color, variant }).color}
+      size="100%"
+      data-action-icon-loader
+      {...loaderProps}
+    />
   );
 
   return (
