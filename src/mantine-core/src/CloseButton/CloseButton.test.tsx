@@ -5,6 +5,8 @@ import {
   itSupportsSystemProps,
   itSupportsFocusEvents,
   itIsPolymorphic,
+  itSupportsProviderSize,
+  itSupportsProviderVariant,
 } from '@mantine/tests';
 import { CloseButton, CloseButtonProps } from './CloseButton';
 
@@ -12,8 +14,10 @@ const defaultProps: CloseButtonProps = {};
 
 describe('@mantine/core/CloseButton', () => {
   checkAccessibility([<CloseButton aria-label="test" />, <CloseButton title="test" />]);
-  itSupportsFocusEvents(CloseButton, defaultProps, '.mantine-ActionIcon-root');
+  itSupportsFocusEvents(CloseButton, defaultProps, '.mantine-CloseButton-root');
   itIsPolymorphic(CloseButton, defaultProps);
+  itSupportsProviderSize(CloseButton, defaultProps, 'CloseButton');
+  itSupportsProviderVariant(CloseButton, defaultProps, 'CloseButton');
   itSupportsSystemProps({
     component: CloseButton as any,
     props: defaultProps,

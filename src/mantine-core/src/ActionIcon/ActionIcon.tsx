@@ -17,6 +17,8 @@ export type ActionIconStylesNames = Selectors<typeof useStyles>;
 
 export interface ActionIconProps
   extends DefaultProps<ActionIconStylesNames, ActionIconStylesParams> {
+  __staticSelector?: string;
+
   /** Icon */
   children?: React.ReactNode;
 
@@ -66,12 +68,13 @@ export const _ActionIcon = forwardRef<HTMLButtonElement, ActionIconProps>((props
     loaderProps,
     loading,
     unstyled,
+    __staticSelector,
     ...others
   } = useComponentDefaultProps('ActionIcon', defaultProps, props);
 
   const { classes, cx, theme } = useStyles(
     { radius, color, variant, gradient, size },
-    { name: 'ActionIcon', unstyled, size, variant }
+    { name: ['ActionIcon', __staticSelector], unstyled, size, variant }
   );
 
   const loader = (
