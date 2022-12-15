@@ -1,4 +1,5 @@
 import React from 'react';
+import { MantineProvider } from '@mantine/styles';
 import { Group } from '../Group';
 import { Header } from './Header/Header';
 import { Navbar } from './Navbar/Navbar';
@@ -51,5 +52,30 @@ export function AltLayout() {
     >
       Content
     </AppShell>
+  );
+}
+
+export function ProviderVariant() {
+  return (
+    <MantineProvider
+      inherit
+      theme={{
+        components: {
+          Navbar: {
+            variants: (theme, variant) => {
+              if (variant === 'provider') {
+                return { root: { backgroundColor: theme.colors.blue[6], color: theme.white } };
+              }
+
+              return null;
+            },
+          },
+        },
+      }}
+    >
+      <Navbar height={500} width={{ base: 300 }} withBorder variant="provider">
+        Navbar
+      </Navbar>
+    </MantineProvider>
   );
 }

@@ -9,6 +9,8 @@ import useStyles, {
 import { getSortedBreakpoints } from '../HorizontalSection/get-sorted-breakpoints/get-sorted-breakpoints';
 
 export interface VerticalSectionSharedProps extends DefaultProps {
+  variant?: string;
+
   /** Section content */
   children: React.ReactNode;
 
@@ -50,6 +52,7 @@ export const VerticalSection = forwardRef<HTMLElement, VerticalSectionProps>(
       section,
       unstyled,
       __staticSelector,
+      variant,
       ...others
     }: VerticalSectionProps,
     ref
@@ -66,7 +69,7 @@ export const VerticalSection = forwardRef<HTMLElement, VerticalSectionProps>(
         layout: ctx.layout,
         borderPosition: withBorder ? (section === 'header' ? 'bottom' : 'top') : 'none',
       },
-      { name: __staticSelector, classNames, styles, unstyled }
+      { name: __staticSelector, classNames, styles, unstyled, variant }
     );
     const breakpoints =
       typeof height === 'object' && height !== null

@@ -14,6 +14,8 @@ export type AppShellStylesNames = Selectors<typeof useStyles>;
 
 export interface AppShellProps
   extends Omit<DefaultProps<AppShellStylesNames>, MantineStyleSystemSize> {
+  variant?: string;
+
   /** Determines how Navbar and Aside components are positioned relative to Header and Footer components */
   layout?: 'default' | 'alt';
 
@@ -74,12 +76,13 @@ export const AppShell = forwardRef<HTMLDivElement, AppShellProps>((props: AppShe
     unstyled,
     hidden,
     layout,
+    variant,
     ...others
   } = useComponentDefaultProps('AppShell', defaultProps, props);
 
   const { classes, cx } = useStyles(
     { padding, fixed, navbarOffsetBreakpoint, asideOffsetBreakpoint },
-    { styles, classNames, unstyled, name: 'AppShell' }
+    { styles, classNames, unstyled, name: 'AppShell', variant }
   );
 
   if (hidden) {

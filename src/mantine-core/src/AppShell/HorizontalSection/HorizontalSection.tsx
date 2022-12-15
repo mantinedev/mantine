@@ -9,6 +9,8 @@ import useStyles, {
 } from './HorizontalSection.styles';
 
 export interface HorizontalSectionSharedProps extends DefaultProps {
+  variant?: string;
+
   /** Component width with breakpoints */
   width?: HorizontalSectionWidth;
 
@@ -62,6 +64,7 @@ export const HorizontalSection = forwardRef<HTMLElement, HorizontalSectionProps>
       section,
       __staticSelector,
       unstyled,
+      variant,
       ...others
     }: HorizontalSectionProps,
     ref
@@ -80,7 +83,7 @@ export const HorizontalSection = forwardRef<HTMLElement, HorizontalSectionProps>
         withBorder,
         layout: ctx.layout,
       },
-      { classNames, styles, name: __staticSelector, unstyled }
+      { classNames, styles, name: __staticSelector, unstyled, variant }
     );
 
     const breakpoints = getSortedBreakpoints(width, theme).reduce(
