@@ -3,10 +3,10 @@ import { useId, useUncontrolled } from '@mantine/hooks';
 import {
   DefaultProps,
   MantineNumberSize,
-  MantineSize,
   MantineColor,
   Selectors,
   useComponentDefaultProps,
+  Variants,
 } from '@mantine/styles';
 import { ForwardRefWithStaticComponents } from '@mantine/utils';
 import { Box, extractSystemStyles } from '../Box';
@@ -24,13 +24,13 @@ export interface ChipProps
   radius?: MantineNumberSize;
 
   /** Predefined chip size */
-  size?: MantineSize;
+  size?: MantineNumberSize;
 
   /** Chip input type */
   type?: 'radio' | 'checkbox';
 
   /** Controls chip appearance, defaults to filled with dark theme and to outline in light theme */
-  variant?: 'outline' | 'filled';
+  variant?: Variants<'outline' | 'filled'>;
 
   /** Chip label */
   children: React.ReactNode;
@@ -86,13 +86,13 @@ export const Chip: ChipComponent = forwardRef<HTMLInputElement, ChipProps>((prop
     unstyled,
     ...others
   } = useComponentDefaultProps('Chip', defaultProps, props);
-  const ctx = useChipGroup();
 
+  const ctx = useChipGroup();
   const uuid = useId(id);
   const { systemStyles, rest } = extractSystemStyles(others);
   const { classes, cx } = useStyles(
     { radius, size, color },
-    { classNames, styles, unstyled, name: 'Chip' }
+    { classNames, styles, unstyled, name: 'Chip', variant, size }
   );
 
   const [_value, setValue] = useUncontrolled({
@@ -109,6 +109,7 @@ export const Chip: ChipComponent = forwardRef<HTMLInputElement, ChipProps>((prop
         type: ctx.multiple ? 'checkbox' : 'radio',
       }
     : {};
+
   const _checked = contextProps.checked || _value;
 
   return (

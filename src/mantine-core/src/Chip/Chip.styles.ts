@@ -1,4 +1,4 @@
-import { createStyles, MantineNumberSize, MantineSize, MantineColor } from '@mantine/styles';
+import { createStyles, MantineNumberSize, MantineColor } from '@mantine/styles';
 
 export const sizes = {
   xs: 24,
@@ -34,7 +34,7 @@ const checkedPadding = {
 
 export interface ChipStylesParams {
   radius: MantineNumberSize;
-  size: MantineSize;
+  size: MantineNumberSize;
   color: MantineColor;
 }
 
