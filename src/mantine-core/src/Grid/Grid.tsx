@@ -7,6 +7,8 @@ import { GridProvider } from './Grid.context';
 import useStyles from './Grid.styles';
 
 export interface GridProps extends DefaultProps, React.ComponentPropsWithRef<'div'> {
+  variant?: string;
+
   /** <Col /> components only */
   children: React.ReactNode;
 
@@ -66,11 +68,12 @@ export const Grid: GridComponent = forwardRef<HTMLDivElement, GridProps>((props,
     className,
     id,
     unstyled,
+    variant,
     ...others
   } = useComponentDefaultProps('Grid', defaultProps, props);
   const { classes, cx } = useStyles(
     { gutter, justify, align, gutterXs, gutterSm, gutterMd, gutterLg, gutterXl },
-    { unstyled, name: 'Grid' }
+    { unstyled, name: 'Grid', variant }
   );
 
   return (
