@@ -1,7 +1,11 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { checkAccessibility, itSupportsSystemProps } from '@mantine/tests';
+import {
+  checkAccessibility,
+  itSupportsSystemProps,
+  itSupportsProviderVariant,
+} from '@mantine/tests';
 import { Accordion } from './Accordion';
 import { AccordionItem } from './AccordionItem/AccordionItem';
 import { AccordionControl } from './AccordionControl/AccordionControl';
@@ -36,6 +40,8 @@ describe('@mantine/core/Accordion', () => {
     displayName: '@mantine/core/Accordion',
     providerName: 'Accordion',
   });
+
+  itSupportsProviderVariant(Accordion, defaultProps, 'Accordion', 'control');
 
   it('renders correct amount of items', () => {
     const { container } = render(<Accordion {...defaultProps} />);

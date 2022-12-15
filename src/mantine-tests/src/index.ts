@@ -15,6 +15,7 @@ export { itHandlesBooleanState } from './it-handles-boolean-state';
 export { createContextContainer } from './create-context-container';
 export { itThrowsContextError } from './it-throws-context-error';
 export { itSupportsProviderDefaultProps } from './it-supports-provider-default-props';
+export { itSupportsProviderVariant } from './it-supports-provider-variant';
 export { patchConsoleError } from './patch-console-error';
 export { wait } from './wait';
 export { renderWithAct } from './render-with-act';

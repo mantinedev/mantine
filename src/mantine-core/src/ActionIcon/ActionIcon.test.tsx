@@ -6,6 +6,7 @@ import {
   itIsPolymorphic,
   itSupportsFocusEvents,
   itSupportsSystemProps,
+  itSupportsProviderVariant,
 } from '@mantine/tests';
 import { ActionIcon, ActionIconProps } from './ActionIcon';
 
@@ -17,6 +18,7 @@ describe('@mantine/core/ActionIcon', () => {
   itIsPolymorphic(ActionIcon, defaultProps);
   itRendersChildren(ActionIcon, defaultProps);
   itSupportsFocusEvents(ActionIcon, defaultProps, 'button');
+  itSupportsProviderVariant(ActionIcon, defaultProps, 'ActionIcon');
   itSupportsSystemProps({
     component: ActionIcon,
     props: defaultProps,
