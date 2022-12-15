@@ -7,6 +7,7 @@ import useStyles from './Card.styles';
 import { CardProvider } from './Card.context';
 
 export interface CardProps extends Omit<PaperProps, 'p'> {
+  variant?: string;
   p?: MantineNumberSize;
 
   /** Card content */
@@ -18,17 +19,18 @@ const defaultProps: Partial<CardProps> = {
 };
 
 export const _Card = forwardRef<HTMLDivElement, CardProps>((props, ref) => {
-  const { className, p, radius, children, unstyled, ...others } = useComponentDefaultProps(
+  const { className, p, radius, children, unstyled, variant, ...others } = useComponentDefaultProps(
     'Card',
     defaultProps,
     props
   );
-  const { classes, cx } = useStyles(null, { name: 'Card', unstyled });
+  const { classes, cx } = useStyles(null, { name: 'Card', unstyled, variant });
   const _children = Children.toArray(children);
 
   const content = _children.map((child, index) => {
     if (typeof child === 'object' && child && 'type' in child && child.type === CardSection) {
       return cloneElement(child, {
+        variant,
         padding: p,
         'data-first': index === 0 || undefined,
         'data-last': index === _children.length - 1 || undefined,
