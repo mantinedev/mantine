@@ -5,6 +5,8 @@ import { AvatarGroupProvider } from './AvatarGroup.context';
 import useStyles from './AvatarGroup.styles';
 
 export interface AvatarGroupProps extends DefaultProps, React.ComponentPropsWithoutRef<'div'> {
+  variant?: string;
+
   /** Avatar components */
   children: React.ReactNode;
 
@@ -20,9 +22,10 @@ export const AvatarGroup = forwardRef<HTMLDivElement, AvatarGroupProps>((props, 
     spacing = 'sm',
     unstyled,
     className,
+    variant,
     ...others
   } = useComponentDefaultProps('AvatarGroup', defaultProps, props);
-  const { classes, cx } = useStyles({ spacing }, { name: 'AvatarGroup', unstyled });
+  const { classes, cx } = useStyles({ spacing }, { name: 'AvatarGroup', unstyled, variant });
 
   return (
     <AvatarGroupProvider spacing={spacing}>

@@ -1,6 +1,11 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
-import { checkAccessibility, itIsPolymorphic, itSupportsSystemProps } from '@mantine/tests';
+import {
+  checkAccessibility,
+  itIsPolymorphic,
+  itSupportsSystemProps,
+  itSupportsProviderVariant,
+} from '@mantine/tests';
 import { Avatar, AvatarProps } from './Avatar';
 
 const defaultProps: AvatarProps = {
@@ -14,6 +19,7 @@ describe('@mantine/core/Avatar', () => {
     <Avatar src={null} alt="It's me!" />,
   ]);
 
+  itSupportsProviderVariant(Avatar, defaultProps, 'Avatar');
   itSupportsSystemProps({
     component: Avatar,
     props: defaultProps,
