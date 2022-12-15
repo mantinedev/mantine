@@ -18,6 +18,8 @@ export type DialogStylesNames = Selectors<typeof useStyles>;
 export interface DialogProps
   extends Omit<DefaultProps<DialogStylesNames, DialogStylesParams>, MantineStyleSystemSize>,
     Omit<PaperProps, 'classNames' | 'styles'> {
+  variant?: string;
+
   /** Display close button at the top right corner */
   withCloseButton?: boolean;
 
@@ -81,10 +83,14 @@ export function DialogBody(props: DialogProps) {
     transitionDuration,
     transitionTimingFunction,
     unstyled,
+    variant,
     ...others
   } = useComponentDefaultProps('Dialog', defaultProps, props);
 
-  const { classes, cx } = useStyles({ size }, { classNames, styles, unstyled, name: 'Dialog' });
+  const { classes, cx } = useStyles(
+    { size },
+    { classNames, styles, unstyled, name: 'Dialog', variant, size }
+  );
 
   return (
     <Transition
