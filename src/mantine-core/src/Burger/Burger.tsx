@@ -13,6 +13,8 @@ export type BurgerStylesNames = Selectors<typeof useStyles>;
 export interface BurgerProps
   extends DefaultProps<BurgerStylesNames, BurgerStylesParams>,
     React.ComponentPropsWithoutRef<'button'> {
+  variant?: string;
+
   /** Burger state: true for cross, false for burger */
   opened: boolean;
 
@@ -32,12 +34,21 @@ const defaultProps: Partial<BurgerProps> = {
 };
 
 export const Burger = forwardRef<HTMLButtonElement, BurgerProps>((props: BurgerProps, ref) => {
-  const { className, opened, color, size, classNames, styles, transitionDuration, ...others } =
-    useComponentDefaultProps('Burger', defaultProps, props);
+  const {
+    className,
+    opened,
+    color,
+    size,
+    classNames,
+    styles,
+    transitionDuration,
+    variant,
+    ...others
+  } = useComponentDefaultProps('Burger', defaultProps, props);
 
   const { classes, cx } = useStyles(
     { color, size, transitionDuration },
-    { classNames, styles, name: 'Burger' }
+    { classNames, styles, name: 'Burger', variant, size }
   );
 
   return (
