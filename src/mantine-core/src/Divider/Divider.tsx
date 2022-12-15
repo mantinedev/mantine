@@ -4,6 +4,7 @@ import {
   MantineNumberSize,
   MantineColor,
   useComponentDefaultProps,
+  Variants,
 } from '@mantine/styles';
 import useStyles from './Divider.styles';
 import { Text } from '../Text';
@@ -14,26 +15,26 @@ export type DividerStylesNames = 'label';
 export interface DividerProps
   extends DefaultProps<DividerStylesNames>,
     React.ComponentPropsWithoutRef<'div'> {
-  /** Line color from theme, defaults to gray in light color scheme and to dark in dark color scheme */
+  /** Key of theme.colors, defaults to "gray" in light color scheme and to "dark" in dark color scheme */
   color?: MantineColor;
 
-  /** Line orientation */
+  /** Divider orientation */
   orientation?: 'horizontal' | 'vertical';
 
-  /** Sets height in horizontal orientation and width in vertical */
+  /** Sets height when orientation="horizontal" and width when orientation="vertical" */
   size?: MantineNumberSize;
 
-  /** Adds text after line in horizontal orientation */
+  /** Text inside the divider, only applicable when orientation="horizontal" */
   label?: React.ReactNode;
 
-  /** Label position */
+  /** Label position, only applicable when orientation="horizontal" */
   labelPosition?: 'left' | 'center' | 'right';
 
-  /** Props spread to Text component in label */
+  /** Props added to the label element */
   labelProps?: Record<string, any>;
 
-  /** Divider borderStyle */
-  variant?: 'solid' | 'dashed' | 'dotted';
+  /** Controls appearance */
+  variant?: Variants<'solid' | 'dashed' | 'dotted'>;
 }
 
 const defaultProps: Partial<DividerProps> = {
@@ -61,7 +62,7 @@ export const Divider = forwardRef<HTMLDivElement, DividerProps>((props: DividerP
 
   const { classes, cx } = useStyles(
     { color, size, variant },
-    { classNames, styles, unstyled, name: 'Divider' }
+    { classNames, styles, unstyled, name: 'Divider', variant, size }
   );
 
   const vertical = orientation === 'vertical';

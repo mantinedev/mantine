@@ -2,7 +2,7 @@ import { createStyles, MantineNumberSize, MantineColor, MantineTheme } from '@ma
 
 export interface DividerStylesParams {
   size: MantineNumberSize;
-  variant: 'solid' | 'dashed' | 'dotted';
+  variant: any;
   color: MantineColor;
 }
 
