@@ -2,7 +2,7 @@ import { createStyles, MantineNumberSize } from '@mantine/styles';
 
 export interface ColorSwatchStylesParams {
   radius: MantineNumberSize;
-  size: number;
+  size: number | string;
 }
 
 export default createStyles((theme, { size, radius }: ColorSwatchStylesParams) => {
