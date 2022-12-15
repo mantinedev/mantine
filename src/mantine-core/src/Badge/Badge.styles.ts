@@ -79,60 +79,54 @@ function getVariantStyles({ theme, variant, color, size, gradient }: GetVariantS
 }
 
 export default createStyles(
-  (theme, { radius, fullWidth }: BadgeStylesParams) => ({
-    leftSection: {
-      marginRight: `calc(${theme.spacing.xs}px / 2)`,
-    },
+  (theme, { color, size, radius, gradient, fullWidth, variant }: BadgeStylesParams) => {
+    const { fontSize, height } = size in sizes ? sizes[size] : sizes.md;
 
-    rightSection: {
-      marginLeft: `calc(${theme.spacing.xs}px / 2)`,
-    },
+    return {
+      leftSection: {
+        marginRight: `calc(${theme.spacing.xs}px / 2)`,
+      },
 
-    inner: {
-      whiteSpace: 'nowrap',
-      overflow: 'hidden',
-      textOverflow: 'ellipsis',
-    },
+      rightSection: {
+        marginLeft: `calc(${theme.spacing.xs}px / 2)`,
+      },
 
-    root: {
-      ...theme.fn.focusStyles(),
-      ...theme.fn.fontStyles(),
-      WebkitTapHighlightColor: 'transparent',
-      textDecoration: 'none',
-      boxSizing: 'border-box',
-      display: fullWidth ? 'flex' : 'inline-flex',
-      alignItems: 'center',
-      justifyContent: 'center',
-      width: fullWidth ? '100%' : 'auto',
-      textTransform: 'uppercase',
-      borderRadius: theme.fn.radius(radius),
-      fontWeight: 700,
-      letterSpacing: 0.25,
-      cursor: 'inherit',
-      textOverflow: 'ellipsis',
-      overflow: 'hidden',
-    },
-  }),
+      inner: {
+        whiteSpace: 'nowrap',
+        overflow: 'hidden',
+        textOverflow: 'ellipsis',
+      },
 
-  (theme, { color, size, gradient }: BadgeStylesParams) => ({
-    variants: (variant) => {
-      if (BADGE_VARIANTS.includes(variant)) {
-        return { root: getVariantStyles({ theme, variant, color, size, gradient }) };
-      }
+      root: {
+        ...theme.fn.focusStyles(),
+        ...theme.fn.fontStyles(),
+        fontSize,
+        height,
+        WebkitTapHighlightColor: 'transparent',
+        lineHeight: `${height - 2}px`,
+        textDecoration: 'none',
+        padding: `0 ${theme.fn.size({ size, sizes: theme.spacing }) / 1.5}px`,
+        boxSizing: 'border-box',
+        display: fullWidth ? 'flex' : 'inline-flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        width: fullWidth ? '100%' : 'auto',
+        textTransform: 'uppercase',
+        borderRadius: theme.fn.radius(radius),
+        fontWeight: 700,
+        letterSpacing: 0.25,
+        cursor: 'inherit',
+        textOverflow: 'ellipsis',
+        overflow: 'hidden',
+        ...getVariantStyles({ theme, variant, color, size, gradient }),
+      },
+    };
+  },
+  (variant, theme, { color, size, gradient }) => {
+    if (BADGE_VARIANTS.includes(variant)) {
+      return { root: getVariantStyles({ theme, variant, color, size, gradient }) };
+    }
 
-      return null;
-    },
-
-    sizes: (_size) => {
-      const { fontSize, height } = _size in sizes ? sizes[_size] : sizes.md;
-      return {
-        root: {
-          fontSize,
-          height,
-          padding: `0 ${theme.fn.size({ size: _size, sizes: theme.spacing }) / 1.5}px`,
-          lineHeight: `${height - 2}px`,
-        },
-      };
-    },
-  })
+    return null;
+  }
 );

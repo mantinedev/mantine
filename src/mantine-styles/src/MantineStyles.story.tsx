@@ -14,24 +14,16 @@ const useStyles = createStyles(
       fontWeight: 700,
     },
   }),
-  (theme, { color }: { color: string }) => ({
-    variants: (variant: 'filled' | 'light') => {
-      if (variant === 'filled' || variant === 'light') {
-        const colors = theme.fn.variant({ variant, color });
-        return {
-          body: { backgroundColor: colors.background },
-          title: { color: colors.color },
-        };
-      }
-      return null;
-    },
-
-    sizes: (size) => ({
-      title: {
-        fontSize: theme.fn.size({ size, sizes: theme.fontSizes }),
-      },
-    }),
-  })
+  (variant: 'filled' | 'light', theme, { color }: { color: string }) => {
+    if (variant === 'filled' || variant === 'light') {
+      const colors = theme.fn.variant({ variant, color });
+      return {
+        body: { backgroundColor: colors.background },
+        title: { color: colors.color },
+      };
+    }
+    return null;
+  }
 );
 
 function VariantComponent({

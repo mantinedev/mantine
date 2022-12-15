@@ -80,13 +80,11 @@ export function createStyles<
   input:
     | ((theme: MantineTheme, params: Params, createRef: (refName: string) => string) => Input)
     | Input,
-  resolvers?: (
+  variantResolver?: (
+    variant: string,
     theme: MantineTheme,
     params: Params
-  ) => {
-    variants?: (variant: string) => Record<string, CSSObject>;
-    sizes?: (size: string | number) => Record<string, CSSObject>;
-  }
+  ) => Record<string, CSSObject>
 ) {
   const getCssObject = typeof input === 'function' ? input : () => input;
 
@@ -100,10 +98,7 @@ export function createStyles<
 
     const componentStyles = getStyles(options?.styles, theme, params);
     const providerStyles = getStyles(context, theme, params);
-    const resolvedStyles = resolvers?.(theme, params);
-    const variantStyles =
-      (options?.variant && resolvedStyles?.variants?.(options?.variant)) || null;
-    const sizeStyles = (options?.size && resolvedStyles?.sizes?.(options?.size)) || null;
+    const variantStyles = variantResolver?.(options?.variant, theme, params);
     const contextVariations = getContextVariation({
       ctx: context,
       theme,
@@ -117,7 +112,6 @@ export function createStyles<
         const mergedStyles = cx(
           { [css(cssObject[key])]: !options?.unstyled },
           variantStyles && css(variantStyles[key]),
-          sizeStyles && css(sizeStyles[key]),
           css(contextVariations[key]),
           css(providerStyles[key]),
           css(componentStyles[key])

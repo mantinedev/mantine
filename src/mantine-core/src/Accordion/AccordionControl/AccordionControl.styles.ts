@@ -74,9 +74,7 @@ export default createStyles(
       },
     },
   }),
-  (theme) => ({
-    variants: (variant) => ({
-      control: getVariantStyles(theme, variant),
-    }),
+  (variant, theme) => ({
+    control: getVariantStyles(theme, variant),
   })
 );

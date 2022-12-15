@@ -116,19 +116,17 @@ export default createStyles(
       color: 'inherit',
     },
   }),
-  (theme, { color }: AlertStylesParams) => ({
-    variants: (variant) => ({
-      root: getVariantStyles({ variant, color, theme }),
-      message: {
-        color:
-          variant === 'filled'
+  (variant, theme, { color }: AlertStylesParams) => ({
+    root: getVariantStyles({ variant, color, theme }),
+    message: {
+      color:
+        variant === 'filled'
+          ? theme.white
+          : theme.colorScheme === 'dark'
+          ? variant === 'light'
             ? theme.white
-            : theme.colorScheme === 'dark'
-            ? variant === 'light'
-              ? theme.white
-              : theme.colors.dark[0]
-            : theme.black,
-      },
-    }),
+            : theme.colors.dark[0]
+          : theme.black,
+    },
   })
 );

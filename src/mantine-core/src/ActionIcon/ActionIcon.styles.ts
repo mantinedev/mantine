@@ -19,6 +19,7 @@ export const ACTION_ICON_VARIANTS = [
 
 export interface ActionIconStylesParams {
   color: MantineColor;
+  size: MantineNumberSize;
   radius: MantineNumberSize;
   variant: string;
   gradient: MantineGradient;
@@ -69,7 +70,7 @@ function getVariantStyles({ variant, theme, color, gradient }: GetVariantStyles)
 }
 
 export default createStyles(
-  (theme, { radius, variant }: ActionIconStylesParams) => ({
+  (theme, { radius, variant, size }: ActionIconStylesParams) => ({
     root: {
       position: 'relative',
       borderRadius: theme.fn.radius(radius),
@@ -78,6 +79,10 @@ export default createStyles(
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'center',
+      height: theme.fn.size({ size, sizes }),
+      minHeight: theme.fn.size({ size, sizes }),
+      width: theme.fn.size({ size, sizes }),
+      minWidth: theme.fn.size({ size, sizes }),
 
       '&:active': theme.activeStyles,
 
@@ -124,17 +129,7 @@ export default createStyles(
       },
     },
   }),
-  (theme, { color, gradient }: ActionIconStylesParams) => ({
-    variants: (variant) => ({
-      root: getVariantStyles({ variant, theme, color, gradient }),
-    }),
-    sizes: (size) => ({
-      root: {
-        height: theme.fn.size({ size, sizes }),
-        minHeight: theme.fn.size({ size, sizes }),
-        width: theme.fn.size({ size, sizes }),
-        minWidth: theme.fn.size({ size, sizes }),
-      },
-    }),
+  (variant, theme, { color, gradient }: ActionIconStylesParams) => ({
+    root: getVariantStyles({ variant, theme, color, gradient }),
   })
 );

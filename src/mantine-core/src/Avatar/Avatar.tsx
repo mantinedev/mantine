@@ -74,7 +74,7 @@ export const _Avatar = forwardRef<HTMLDivElement, AvatarProps>((props, ref) => {
   const [error, setError] = useState(!src);
 
   const { classes, cx } = useStyles(
-    { color, radius, withinGroup: ctx.withinGroup, spacing: ctx.spacing, gradient },
+    { color, radius, withinGroup: ctx.withinGroup, spacing: ctx.spacing, gradient, size },
     { classNames, styles, unstyled, name: 'Avatar', variant, size }
   );
 

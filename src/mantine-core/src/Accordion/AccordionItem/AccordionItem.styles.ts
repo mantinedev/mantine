@@ -83,8 +83,6 @@ function getVariantStyles(
   return {};
 }
 
-export default createStyles({ item: {} }, (theme, params: AccordionStylesParams) => ({
-  variants: (variant) => ({
-    item: getVariantStyles(theme, variant, params),
-  }),
+export default createStyles({ item: {} }, (variant, theme, params: AccordionStylesParams) => ({
+  item: getVariantStyles(theme, variant, params),
 }));

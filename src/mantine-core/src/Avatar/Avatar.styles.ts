@@ -14,6 +14,7 @@ export interface AvatarStylesParams {
   color: MantineColor;
   withinGroup: boolean;
   spacing: MantineNumberSize;
+  size: MantineNumberSize;
   gradient: MantineGradient;
 }
 
@@ -44,7 +45,7 @@ function getGroupStyles({ withinGroup, spacing, theme }: GetGroupStylesInput): C
 }
 
 export default createStyles(
-  (theme, { radius, withinGroup, spacing }: AvatarStylesParams) => ({
+  (theme, { radius, withinGroup, spacing, size }: AvatarStylesParams) => ({
     root: {
       ...theme.fn.focusStyles(),
       WebkitTapHighlightColor: 'transparent',
@@ -58,6 +59,9 @@ export default createStyles(
       border: 0,
       backgroundColor: 'transparent',
       padding: 0,
+      width: theme.fn.size({ size, sizes }),
+      minWidth: theme.fn.size({ size, sizes }),
+      height: theme.fn.size({ size, sizes }),
       ...getGroupStyles({ withinGroup, spacing, theme }),
     },
 
@@ -78,6 +82,7 @@ export default createStyles(
       height: '100%',
       userSelect: 'none',
       borderRadius: theme.fn.radius(radius),
+      fontSize: theme.fn.size({ size, sizes }) / 2.5,
     },
 
     placeholderIcon: {
@@ -85,37 +90,24 @@ export default createStyles(
       height: '70%',
     },
   }),
-  (theme, { color, gradient }: AvatarStylesParams) => ({
-    variants: (variant) => {
-      const colors = theme.fn.variant({ variant, color, gradient });
+  (variant, theme, { color, gradient }: AvatarStylesParams) => {
+    const colors = theme.fn.variant({ variant, color, gradient });
 
-      if (AVATAR_VARIANTS.includes(variant)) {
-        return {
-          placeholder: {
-            color: colors.color,
-            backgroundColor: colors.background,
-            backgroundImage: variant === 'gradient' ? colors.background : undefined,
-            border: `${variant === 'gradient' ? 0 : 1}px solid ${colors.border}`,
-          },
+    if (AVATAR_VARIANTS.includes(variant)) {
+      return {
+        placeholder: {
+          color: colors.color,
+          backgroundColor: colors.background,
+          backgroundImage: variant === 'gradient' ? colors.background : undefined,
+          border: `${variant === 'gradient' ? 0 : 1}px solid ${colors.border}`,
+        },
 
-          placeholderIcon: {
-            color: colors.color,
-          },
-        };
-      }
+        placeholderIcon: {
+          color: colors.color,
+        },
+      };
+    }
 
-      return null;
-    },
-
-    sizes: (size) => ({
-      root: {
-        width: theme.fn.size({ size, sizes }),
-        minWidth: theme.fn.size({ size, sizes }),
-        height: theme.fn.size({ size, sizes }),
-      },
-      placeholder: {
-        fontSize: theme.fn.size({ size, sizes }) / 2.5,
-      },
-    }),
-  })
+    return null;
+  }
 );
