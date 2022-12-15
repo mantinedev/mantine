@@ -1,4 +1,4 @@
-import { createStyles, MantineSize, MantineColor, MantineNumberSize } from '@mantine/styles';
+import { createStyles, MantineColor, MantineNumberSize } from '@mantine/styles';
 
 const sizes = {
   xs: 16,
@@ -8,16 +8,8 @@ const sizes = {
   xl: 36,
 };
 
-const iconSizes = {
-  xs: 8,
-  sm: 10,
-  md: 14,
-  lg: 16,
-  xl: 20,
-};
-
 export interface CheckboxStylesParams {
-  size: MantineSize;
+  size: MantineNumberSize;
   radius: MantineNumberSize;
   color: MantineColor;
   transitionDuration: number;
@@ -42,7 +34,6 @@ export default createStyles(
   ) => {
     const _size = theme.fn.size({ size, sizes });
     const colors = theme.fn.variant({ variant: 'filled', color });
-    const errorColor = theme.fn.variant({ variant: 'filled', color: 'red' }).background;
 
     return {
       icon: {
@@ -54,7 +45,7 @@ export default createStyles(
         transitionTimingFunction: 'ease',
         transitionDuration: `${transitionDuration}ms`,
         pointerEvents: 'none',
-        width: theme.fn.size({ size, sizes: iconSizes }),
+        width: '60%',
         position: 'absolute',
         zIndex: 1,
         top: 0,
@@ -81,7 +72,7 @@ export default createStyles(
         backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.white,
         border: `1px solid ${
           error
-            ? errorColor
+            ? theme.fn.variant({ variant: 'filled', color: 'red' }).background
             : theme.colorScheme === 'dark'
             ? theme.colors.dark[4]
             : theme.colors.gray[4]

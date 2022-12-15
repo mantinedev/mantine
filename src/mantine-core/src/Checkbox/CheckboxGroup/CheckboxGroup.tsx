@@ -16,13 +16,15 @@ export interface CheckboxGroupProps
   extends DefaultProps<CheckboxGroupStylesNames>,
     InputWrapperBaseProps,
     Omit<React.ComponentPropsWithoutRef<'div'>, 'onChange'> {
-  /** <Checkbox /> components only */
+  variant?: string;
+
+  /** <Checkbox /> components */
   children: React.ReactNode;
 
-  /** Value of currently selected checkbox */
+  /** Value of selected checkboxes, use for controlled components */
   value?: string[];
 
-  /** Initial value for uncontrolled component */
+  /** Initial selected checkboxes, use for uncontrolled components, overridden by value prop */
   defaultValue?: string[];
 
   /** Called when value changes */
@@ -37,10 +39,10 @@ export interface CheckboxGroupProps
   /** Space between label and inputs */
   offset?: MantineNumberSize;
 
-  /** Predefined label fontSize, checkbox width, height and border-radius */
+  /** Controls label font-size and checkbox width and height */
   size?: MantineSize;
 
-  /** Props spread to InputWrapper */
+  /** Props added to Input.Wrapper component (root element) */
   wrapperProps?: Record<string, any>;
 }
 

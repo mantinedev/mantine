@@ -1,4 +1,4 @@
-import { createStyles, MantineSize } from '@mantine/styles';
+import { createStyles, MantineNumberSize } from '@mantine/styles';
 
 const sizes = {
   xs: 16,
@@ -9,7 +9,7 @@ const sizes = {
 };
 
 export interface InlineInputStylesParams {
-  size: MantineSize;
+  size: MantineNumberSize;
   labelPosition: 'left' | 'right';
 }
 
@@ -25,8 +25,8 @@ export default createStyles((theme, { labelPosition, size }: InlineInputStylesPa
     display: 'inline-flex',
     flexDirection: 'column',
     WebkitTapHighlightColor: 'transparent',
-    fontSize: theme.fn.size({ size, sizes: theme.fontSizes }),
-    lineHeight: `${theme.fn.size({ size, sizes })}px`,
+    fontSize: size in sizes ? theme.fn.size({ size, sizes: theme.fontSizes }) : undefined,
+    lineHeight: size in sizes ? `${theme.fn.size({ size, sizes })}px` : undefined,
     color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
     cursor: theme.cursorType,
     order: labelPosition === 'left' ? 1 : 2,

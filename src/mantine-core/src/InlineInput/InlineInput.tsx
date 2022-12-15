@@ -1,5 +1,5 @@
 import React from 'react';
-import { DefaultProps, MantineSize, Selectors } from '@mantine/styles';
+import { DefaultProps, MantineNumberSize, Selectors } from '@mantine/styles';
 import { Box } from '../Box';
 import { Input } from '../Input';
 import useStyles from './InlineInput.styles';
@@ -9,13 +9,14 @@ export type InlineInputStylesNames = Selectors<typeof useStyles>;
 export interface InlineInputProps
   extends DefaultProps<InlineInputStylesNames>,
     React.ComponentPropsWithoutRef<'div'> {
+  variant?: string;
   __staticSelector: string;
   label: React.ReactNode;
   description: React.ReactNode;
   id: string;
   disabled: boolean;
   error: React.ReactNode;
-  size: MantineSize;
+  size: MantineNumberSize;
   labelPosition: 'left' | 'right';
 }
 
@@ -33,11 +34,12 @@ export function InlineInput({
   error,
   size,
   labelPosition,
+  variant,
   ...others
 }: InlineInputProps) {
   const { classes, cx } = useStyles(
     { size, labelPosition },
-    { name: __staticSelector, styles, classNames, unstyled }
+    { name: __staticSelector, styles, classNames, unstyled, variant, size }
   );
 
   return (
