@@ -5,6 +5,7 @@ import {
   itIsPolymorphic,
   itSupportsSystemProps,
   itSupportsProviderVariant,
+  itSupportsProviderSize,
 } from '@mantine/tests';
 import { Badge, BadgeProps } from './Badge';
 
@@ -14,6 +15,7 @@ describe('@mantine/core/Badge', () => {
   itRendersChildren(Badge, defaultProps);
   itIsPolymorphic(Badge, defaultProps);
   itSupportsProviderVariant(Badge, defaultProps, 'Badge');
+  itSupportsProviderSize(Badge, defaultProps, 'Badge');
   itSupportsSystemProps({
     component: Badge,
     props: defaultProps,

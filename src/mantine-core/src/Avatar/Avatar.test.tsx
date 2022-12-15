@@ -5,6 +5,7 @@ import {
   itIsPolymorphic,
   itSupportsSystemProps,
   itSupportsProviderVariant,
+  itSupportsProviderSize,
 } from '@mantine/tests';
 import { Avatar, AvatarProps } from './Avatar';
 
@@ -20,6 +21,7 @@ describe('@mantine/core/Avatar', () => {
   ]);
 
   itSupportsProviderVariant(Avatar, defaultProps, 'Avatar');
+  itSupportsProviderSize(Avatar, defaultProps, 'Avatar');
   itSupportsSystemProps({
     component: Avatar,
     props: defaultProps,

@@ -7,6 +7,7 @@ import {
   itSupportsFocusEvents,
   itSupportsSystemProps,
   itSupportsProviderVariant,
+  itSupportsProviderSize,
 } from '@mantine/tests';
 import { ActionIcon, ActionIconProps } from './ActionIcon';
 
@@ -19,6 +20,7 @@ describe('@mantine/core/ActionIcon', () => {
   itRendersChildren(ActionIcon, defaultProps);
   itSupportsFocusEvents(ActionIcon, defaultProps, 'button');
   itSupportsProviderVariant(ActionIcon, defaultProps, 'ActionIcon');
+  itSupportsProviderSize(ActionIcon, defaultProps, 'ActionIcon');
   itSupportsSystemProps({
     component: ActionIcon,
     props: defaultProps,
