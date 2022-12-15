@@ -1,7 +1,12 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { checkAccessibility, itSupportsSystemProps } from '@mantine/tests';
+import {
+  checkAccessibility,
+  itSupportsSystemProps,
+  itSupportsProviderVariant,
+  itSupportsProviderSize,
+} from '@mantine/tests';
 import { Drawer, DrawerProps } from './Drawer';
 
 const defaultProps: DrawerProps = {
@@ -12,6 +17,8 @@ const defaultProps: DrawerProps = {
 
 describe('@mantine/core/Drawer', () => {
   itSupportsSystemProps({ component: Drawer, props: defaultProps });
+  itSupportsProviderVariant(Drawer, defaultProps, 'Drawer');
+  itSupportsProviderSize(Drawer, defaultProps, 'Drawer');
   checkAccessibility([
     <Drawer
       {...defaultProps}

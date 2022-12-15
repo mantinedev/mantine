@@ -23,6 +23,8 @@ export type DrawerStylesNames = Exclude<Selectors<typeof useStyles>, 'withOverla
 export interface DrawerProps
   extends Omit<DefaultProps<DrawerStylesNames>, MantineStyleSystemSize>,
     Omit<React.ComponentPropsWithoutRef<'div'>, 'title'> {
+  variant?: string;
+
   /** If true drawer is mounted to the dom */
   opened: boolean;
 
@@ -164,6 +166,7 @@ export function Drawer(props: DrawerProps) {
     overlayBlur,
     unstyled,
     withFocusReturn,
+    variant,
     ...others
   } = useComponentDefaultProps('Drawer', defaultProps, props);
   const baseId = useId(id);
@@ -172,7 +175,7 @@ export function Drawer(props: DrawerProps) {
 
   const { classes, cx, theme } = useStyles(
     { size, position, zIndex, withOverlay },
-    { classNames, styles, unstyled, name: 'Drawer' }
+    { classNames, styles, unstyled, name: 'Drawer', variant, size }
   );
 
   const focusTrapRef = useFocusTrap(trapFocus && opened);
