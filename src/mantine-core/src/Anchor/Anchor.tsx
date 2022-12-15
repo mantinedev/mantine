@@ -13,12 +13,12 @@ const defaultProps: Partial<AnchorProps> = {};
 
 export const _Anchor = forwardRef<HTMLAnchorElement, AnchorProps & { component: any }>(
   (props, ref) => {
-    const { component, className, unstyled, variant, ...others } = useComponentDefaultProps(
+    const { component, className, unstyled, variant, size, ...others } = useComponentDefaultProps(
       'Anchor',
       defaultProps as AnchorProps & { component: any },
       props
     );
-    const { classes, cx } = useStyles(null, { name: 'Anchor', unstyled, variant });
+    const { classes, cx } = useStyles(null, { name: 'Anchor', unstyled, variant, size });
     const buttonProps = component === 'button' ? { type: 'button' } : null;
 
     return (
@@ -26,6 +26,7 @@ export const _Anchor = forwardRef<HTMLAnchorElement, AnchorProps & { component: 
         component={component || 'a'}
         ref={ref}
         className={cx(classes.root, className)}
+        size={size}
         {...buttonProps}
         {...others}
       />

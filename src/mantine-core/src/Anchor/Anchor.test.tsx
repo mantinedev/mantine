@@ -5,6 +5,7 @@ import {
   itIsPolymorphic,
   itSupportsSystemProps,
   itSupportsProviderVariant,
+  itSupportsProviderSize,
 } from '@mantine/tests';
 import { Anchor, AnchorProps } from './Anchor';
 
@@ -14,6 +15,7 @@ describe('@mantine/core/Anchor', () => {
   itRendersChildren(Anchor, defaultProps);
   itIsPolymorphic(Anchor, defaultProps);
   itSupportsProviderVariant(Anchor, defaultProps, 'Anchor');
+  itSupportsProviderSize(Anchor, defaultProps, 'Anchor');
   itSupportsSystemProps({
     component: Anchor,
     props: defaultProps,

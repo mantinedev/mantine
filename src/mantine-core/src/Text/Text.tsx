@@ -12,6 +12,8 @@ import { Box } from '../Box';
 import useStyles from './Text.styles';
 
 export interface TextProps extends DefaultProps {
+  __staticSelector?: string;
+
   /** Text content */
   children?: React.ReactNode;
 
@@ -86,6 +88,7 @@ export const _Text = forwardRef<HTMLDivElement, TextProps>((props, ref) => {
     styles,
     unstyled,
     span,
+    __staticSelector,
     ...others
   } = useComponentDefaultProps('Text', defaultProps, props);
 
@@ -105,7 +108,7 @@ export const _Text = forwardRef<HTMLDivElement, TextProps>((props, ref) => {
       align,
       gradient,
     },
-    { unstyled, name: 'Text', variant }
+    { unstyled, name: __staticSelector || 'Text', variant, size }
   );
 
   return (
