@@ -7,10 +7,11 @@ import {
   MantineColor,
   Selectors,
   useComponentDefaultProps,
+  Variants,
 } from '@mantine/styles';
 import { createPolymorphicComponent } from '@mantine/utils';
 import { Box } from '../Box';
-import useStyles, { BadgeStylesParams, BadgeVariant } from './Badge.styles';
+import useStyles, { BadgeStylesParams } from './Badge.styles';
 
 export type BadgeStylesNames = Selectors<typeof useStyles>;
 
@@ -19,7 +20,7 @@ export interface BadgeProps extends DefaultProps<BadgeStylesNames, BadgeStylesPa
   color?: MantineColor;
 
   /** Controls appearance */
-  variant?: BadgeVariant;
+  variant?: Variants<'light' | 'filled' | 'outline' | 'dot' | 'gradient'>;
 
   /** Controls gradient, applied to gradient variant only */
   gradient?: MantineGradient;
@@ -76,7 +77,7 @@ export const _Badge = forwardRef<HTMLDivElement, BadgeProps>((props, ref) => {
       variant,
       gradient,
     },
-    { classNames, styles, name: 'Badge', unstyled }
+    { classNames, styles, name: 'Badge', unstyled, variant, size }
   );
 
   return (

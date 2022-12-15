@@ -7,14 +7,14 @@ import {
   MantineTheme,
 } from '@mantine/styles';
 
-export type BadgeVariant = 'light' | 'filled' | 'outline' | 'dot' | 'gradient';
+const BADGE_VARIANTS = ['light', 'filled', 'outline', 'dot', 'gradient'];
 
 export interface BadgeStylesParams {
   color: MantineColor;
   size: MantineSize;
   radius: MantineNumberSize;
   gradient: MantineGradient;
-  variant: BadgeVariant;
+  variant: string;
   fullWidth: boolean;
 }
 
@@ -36,7 +36,7 @@ const dotSizes = {
 
 interface GetVariantStylesInput {
   theme: MantineTheme;
-  variant: BadgeVariant;
+  variant: string;
   color: MantineColor;
   size: MantineSize;
   gradient: MantineGradient;
@@ -79,47 +79,60 @@ function getVariantStyles({ theme, variant, color, size, gradient }: GetVariantS
 }
 
 export default createStyles(
-  (theme, { color, size, radius, gradient, fullWidth, variant }: BadgeStylesParams) => {
-    const { fontSize, height } = size in sizes ? sizes[size] : sizes.md;
+  (theme, { radius, fullWidth }: BadgeStylesParams) => ({
+    leftSection: {
+      marginRight: `calc(${theme.spacing.xs}px / 2)`,
+    },
 
-    return {
-      leftSection: {
-        marginRight: `calc(${theme.spacing.xs}px / 2)`,
-      },
+    rightSection: {
+      marginLeft: `calc(${theme.spacing.xs}px / 2)`,
+    },
 
-      rightSection: {
-        marginLeft: `calc(${theme.spacing.xs}px / 2)`,
-      },
+    inner: {
+      whiteSpace: 'nowrap',
+      overflow: 'hidden',
+      textOverflow: 'ellipsis',
+    },
 
-      inner: {
-        whiteSpace: 'nowrap',
-        overflow: 'hidden',
-        textOverflow: 'ellipsis',
-      },
+    root: {
+      ...theme.fn.focusStyles(),
+      ...theme.fn.fontStyles(),
+      WebkitTapHighlightColor: 'transparent',
+      textDecoration: 'none',
+      boxSizing: 'border-box',
+      display: fullWidth ? 'flex' : 'inline-flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      width: fullWidth ? '100%' : 'auto',
+      textTransform: 'uppercase',
+      borderRadius: theme.fn.radius(radius),
+      fontWeight: 700,
+      letterSpacing: 0.25,
+      cursor: 'inherit',
+      textOverflow: 'ellipsis',
+      overflow: 'hidden',
+    },
+  }),
 
-      root: {
-        ...theme.fn.focusStyles(),
-        ...theme.fn.fontStyles(),
-        fontSize,
-        height,
-        WebkitTapHighlightColor: 'transparent',
-        lineHeight: `${height - 2}px`,
-        textDecoration: 'none',
-        padding: `0 ${theme.fn.size({ size, sizes: theme.spacing }) / 1.5}px`,
-        boxSizing: 'border-box',
-        display: fullWidth ? 'flex' : 'inline-flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        width: fullWidth ? '100%' : 'auto',
-        textTransform: 'uppercase',
-        borderRadius: theme.fn.radius(radius),
-        fontWeight: 700,
-        letterSpacing: 0.25,
-        cursor: 'inherit',
-        textOverflow: 'ellipsis',
-        overflow: 'hidden',
-        ...getVariantStyles({ theme, variant, color, size, gradient }),
-      },
-    };
-  }
+  (theme, { color, size, gradient }: BadgeStylesParams) => ({
+    variants: (variant) => {
+      if (BADGE_VARIANTS.includes(variant)) {
+        return { root: getVariantStyles({ theme, variant, color, size, gradient }) };
+      }
+
+      return null;
+    },
+
+    sizes: (_size) => {
+      const { fontSize, height } = _size in sizes ? sizes[_size] : sizes.md;
+      return {
+        root: {
+          fontSize,
+          height,
+          padding: `0 ${theme.fn.size({ size: _size, sizes: theme.spacing }) / 1.5}px`,
+          lineHeight: `${height - 2}px`,
+        },
+      };
+    },
+  })
 );
