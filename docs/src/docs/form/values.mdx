@@ -80,6 +80,36 @@ function Demo() {
 }
 ```
 
+## Get transformed values type
+
+To get transformed values (output of [transformValues](#transformvalues)) use `TransformedValues` type.
+It is useful when you want to create a custom submit function:
+
+```tsx
+import { useForm, TransformedValues } from '@mantine/form';
+
+function Demo() {
+  const form = useForm({
+    initialValues: {
+      name: '',
+      locationId: '2',
+    },
+
+    transformValues: (values) => ({
+      ...values,
+      locationId: Number(values.locationId),
+    }),
+  });
+
+  type Transformed = TransformedValues<typeof useForm>;
+  // -> { name: string, locationId: number }
+
+  const handleSubmit = (values: TransformedValues<typeof useForm>) => {};
+
+  return <form onSubmit={form.onSubmit(handleSubmit)} />;
+}
+```
+
 ## Set values type
 
 By default, form values types will be inferred from `initialValues`.

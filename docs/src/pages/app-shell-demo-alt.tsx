@@ -10,14 +10,12 @@ import {
   Burger,
   useMantineTheme,
 } from '@mantine/core';
-import Head from '../components/Head/Head';
 
 export default function AppShellDemo() {
   const theme = useMantineTheme();
   const [opened, setOpened] = useState(false);
   return (
     <>
-      <Head title="AppShell demo" />
       <AppShell
         styles={{
           main: {

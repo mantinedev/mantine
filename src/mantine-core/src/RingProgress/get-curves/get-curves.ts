@@ -6,22 +6,33 @@ interface CurveData extends React.ComponentPropsWithRef<'circle'> {
   tooltip?: React.ReactNode;
 }
 
+interface RootCurveData extends React.ComponentPropsWithRef<'circle'> {
+  color?: MantineColor;
+}
+
 interface GetCurves {
   sections: CurveData[];
   size: number;
   thickness: number;
   renderRoundedLineCaps: boolean;
+  rootColor?: MantineColor;
 }
 
 interface Curve {
   sum: number;
   offset: number;
   root: boolean;
-  data: CurveData;
+  data: CurveData | RootCurveData;
   lineRoundCaps?: boolean;
 }
 
-export function getCurves({ size, thickness, sections, renderRoundedLineCaps }: GetCurves) {
+export function getCurves({
+  size,
+  thickness,
+  sections,
+  renderRoundedLineCaps,
+  rootColor,
+}: GetCurves) {
   const sum = sections.reduce((acc, current) => acc + current.value, 0);
   const accumulated = Math.PI * ((size * 0.9 - thickness * 2) / 2) * 2;
   let offset = accumulated;
@@ -33,7 +44,7 @@ export function getCurves({ size, thickness, sections, renderRoundedLineCaps }: 
     offset -= (sections[i].value / 100) * accumulated;
   }
 
-  curves.push({ sum, offset, data: null, root: true });
+  curves.push({ sum, offset, data: { color: rootColor }, root: true });
 
   // Reorder curves to layer appropriately and selectively set caps to round
 

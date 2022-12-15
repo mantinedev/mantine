@@ -1,6 +1,5 @@
 import React from 'react';
 import { Box } from '@mantine/core';
-import Head from '../Head/Head';
 import { Jumbotron } from './Jumbotron/Jumbotron';
 import { Components } from './Components/Components';
 import { Banner } from './Banner/Banner';
@@ -18,7 +17,6 @@ import { Waves } from './Waves/Waves';
 export function HomePage() {
   return (
     <>
-      <Head title="Mantine" disableTitleTemplate />
       <Box sx={(theme) => ({ position: 'relative', zIndex: 1, boxShadow: theme.shadows.sm })}>
         <Jumbotron />
         <Waves height={40} width={150} />
