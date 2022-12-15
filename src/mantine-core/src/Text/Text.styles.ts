@@ -9,7 +9,6 @@ import {
 
 export interface TextStylesParams {
   color: 'dimmed' | MantineColor;
-  variant: 'text' | 'link' | 'gradient';
   size: MantineNumberSize;
   lineClamp: number;
   truncate: boolean;
@@ -27,7 +26,6 @@ export interface TextStylesParams {
 interface GetTextColor {
   theme: MantineTheme;
   color: 'dimmed' | MantineColor;
-  variant: TextStylesParams['variant'];
 }
 
 function getTextDecoration({
@@ -49,15 +47,13 @@ function getTextDecoration({
   return styles.length > 0 ? styles.join(' ') : 'none';
 }
 
-function getTextColor({ theme, color, variant }: GetTextColor) {
+function getTextColor({ theme, color }: GetTextColor) {
   if (color === 'dimmed') {
     return theme.colorScheme === 'dark' ? theme.colors.dark[2] : theme.colors.gray[6];
   }
 
   return typeof color === 'string' && (color in theme.colors || color.split('.')[0] in theme.colors)
     ? theme.fn.variant({ variant: 'filled', color }).background
-    : variant === 'link'
-    ? theme.colors[theme.primaryColor][theme.colorScheme === 'dark' ? 4 : 7]
     : color || 'inherit';
 }
 
@@ -92,7 +88,6 @@ export default createStyles(
     theme,
     {
       color,
-      variant,
       size,
       lineClamp,
       truncate,
@@ -115,7 +110,7 @@ export default createStyles(
         ...theme.fn.focusStyles(),
         ...getLineClamp(lineClamp),
         ...getTruncate(truncate),
-        color: getTextColor({ color, theme, variant }),
+        color: getTextColor({ color, theme }),
         fontFamily: inherit ? 'inherit' : theme.fontFamily,
         fontSize:
           inherit || size === undefined
@@ -128,14 +123,6 @@ export default createStyles(
         textTransform: transform,
         textAlign: align,
         fontStyle: italic ? 'italic' : undefined,
-
-        ...theme.fn.hover(
-          variant === 'link' && underline === undefined
-            ? {
-                textDecoration: 'underline',
-              }
-            : undefined
-        ),
       },
 
       gradient: {

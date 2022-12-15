@@ -5,6 +5,7 @@ import {
   useComponentDefaultProps,
   MantineColor,
   MantineNumberSize,
+  Variants,
 } from '@mantine/styles';
 import { createPolymorphicComponent } from '@mantine/utils';
 import { Box } from '../Box';
@@ -30,7 +31,7 @@ export interface TextProps extends DefaultProps {
   align?: React.CSSProperties['textAlign'];
 
   /** Link or text variant */
-  variant?: 'text' | 'link' | 'gradient';
+  variant?: Variants<'text' | 'gradient'>;
 
   /** CSS -webkit-line-clamp property */
   lineClamp?: number;
@@ -90,7 +91,6 @@ export const _Text = forwardRef<HTMLDivElement, TextProps>((props, ref) => {
 
   const { classes, cx } = useStyles(
     {
-      variant,
       color,
       size,
       lineClamp,
@@ -105,7 +105,7 @@ export const _Text = forwardRef<HTMLDivElement, TextProps>((props, ref) => {
       align,
       gradient,
     },
-    { unstyled, name: 'Text' }
+    { unstyled, name: 'Text', variant }
   );
 
   return (

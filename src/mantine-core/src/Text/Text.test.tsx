@@ -1,6 +1,11 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
-import { itRendersChildren, itIsPolymorphic, itSupportsSystemProps } from '@mantine/tests';
+import {
+  itRendersChildren,
+  itIsPolymorphic,
+  itSupportsSystemProps,
+  itSupportsProviderVariant,
+} from '@mantine/tests';
 import { Text, TextProps } from './Text';
 
 const defaultProps: TextProps = {
@@ -16,6 +21,7 @@ const expectStyle = (props: TextProps, style: Record<string, any>) => {
 describe('@mantine/core/Text', () => {
   itRendersChildren(Text, defaultProps);
   itIsPolymorphic(Text, defaultProps);
+  itSupportsProviderVariant(Text, defaultProps, 'Text');
   itSupportsSystemProps({
     component: Text,
     props: defaultProps,
