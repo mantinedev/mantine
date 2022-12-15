@@ -1,6 +1,11 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
-import { checkAccessibility, itRendersChildren, itSupportsSystemProps } from '@mantine/tests';
+import {
+  checkAccessibility,
+  itRendersChildren,
+  itSupportsSystemProps,
+  itSupportsProviderVariant,
+} from '@mantine/tests';
 import { Blockquote, BlockquoteProps } from './Blockquote';
 
 const defaultProps: BlockquoteProps = {
@@ -11,6 +16,7 @@ const defaultProps: BlockquoteProps = {
 describe('@mantine/core/Blockquote', () => {
   checkAccessibility([<Blockquote {...defaultProps} />]);
   itRendersChildren(Blockquote, defaultProps);
+  itSupportsProviderVariant(Blockquote, defaultProps, 'Blockquote');
   itSupportsSystemProps({
     component: Blockquote,
     props: defaultProps,
