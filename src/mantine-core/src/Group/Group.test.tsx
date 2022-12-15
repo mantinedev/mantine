@@ -1,12 +1,17 @@
 import React from 'react';
 import { render } from '@testing-library/react';
-import { itRendersChildren, itSupportsSystemProps } from '@mantine/tests';
+import {
+  itRendersChildren,
+  itSupportsSystemProps,
+  itSupportsProviderVariant,
+} from '@mantine/tests';
 import { Group, GroupProps } from './Group';
 
 const defaultProps: GroupProps = {};
 
 describe('@mantine/core/Group', () => {
   itRendersChildren(Group, defaultProps);
+  itSupportsProviderVariant(Group, defaultProps, 'Group');
   itSupportsSystemProps({
     component: Group,
     props: defaultProps,
