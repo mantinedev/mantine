@@ -10,6 +10,7 @@ interface Position {
 }
 
 export interface ThumbProps extends DefaultProps<ThumbStylesNames> {
+  variant?: string;
   position: Position;
   size: MantineSize;
   __staticSelector: string;
@@ -24,10 +25,11 @@ export function Thumb({
   size,
   __staticSelector,
   unstyled,
+  variant,
 }: ThumbProps) {
   const { classes, cx } = useStyles(
     { size },
-    { classNames, styles, name: __staticSelector, unstyled }
+    { classNames, styles, name: __staticSelector, unstyled, size, variant }
   );
 
   return (

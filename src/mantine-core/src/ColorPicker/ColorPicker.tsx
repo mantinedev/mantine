@@ -53,6 +53,8 @@ export interface ColorPickerProps
   extends DefaultProps<ColorPickerStylesNames>,
     ColorPickerBaseProps,
     Omit<React.ComponentPropsWithoutRef<'div'>, 'onChange' | 'value' | 'defaultValue'> {
+  variant?: string;
+
   /** Force picker to take 100% width of its container */
   fullWidth?: boolean;
 
@@ -114,12 +116,13 @@ export const ColorPicker = forwardRef<HTMLDivElement, ColorPickerProps>(
       classNames,
       unstyled,
       onColorSwatchClick,
+      variant,
       ...others
     } = useComponentDefaultProps('ColorPicker', defaultProps, props);
 
     const { classes, cx, theme } = useStyles(
       { size, fullWidth },
-      { classNames, styles, name: __staticSelector, unstyled }
+      { classNames, styles, name: __staticSelector, unstyled, variant, size }
     );
     const formatRef = useRef(format);
     const valueRef = useRef<string>(null);

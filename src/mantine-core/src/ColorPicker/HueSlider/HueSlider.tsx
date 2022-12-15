@@ -1,10 +1,19 @@
 import React, { forwardRef } from 'react';
+import { useComponentDefaultProps } from '@mantine/styles';
 import { ColorSlider, BaseColorSliderProps } from '../ColorSlider/ColorSlider';
 
 export type HueSliderProps = BaseColorSliderProps;
 
-export const HueSlider = forwardRef<HTMLDivElement, HueSliderProps>(
-  ({ value, onChange, onChangeEnd, ...others }: HueSliderProps, ref) => (
+const defaultProps: Partial<HueSliderProps> = {};
+
+export const HueSlider = forwardRef<HTMLDivElement, HueSliderProps>((props, ref) => {
+  const { value, onChange, onChangeEnd, __staticSelector, ...others } = useComponentDefaultProps(
+    'HueSlider',
+    defaultProps,
+    props
+  );
+
+  return (
     <ColorSlider
       {...others}
       ref={ref}
@@ -14,6 +23,7 @@ export const HueSlider = forwardRef<HTMLDivElement, HueSliderProps>(
       maxValue={360}
       thumbColor={`hsl(${value}, 100%, 50%)`}
       round
+      __staticSelector={__staticSelector || 'HueSlider'}
       overlays={[
         {
           backgroundImage:
@@ -24,7 +34,7 @@ export const HueSlider = forwardRef<HTMLDivElement, HueSliderProps>(
         },
       ]}
     />
-  )
-);
+  );
+});
 
 HueSlider.displayName = '@mantine/core/HueSlider';

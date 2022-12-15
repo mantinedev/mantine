@@ -1,6 +1,11 @@
 import React from 'react';
 import { fireEvent, render } from '@testing-library/react';
-import { checkAccessibility, itSupportsSystemProps } from '@mantine/tests';
+import {
+  checkAccessibility,
+  itSupportsSystemProps,
+  itSupportsProviderSize,
+  itSupportsProviderVariant,
+} from '@mantine/tests';
 import { DEFAULT_THEME } from '@mantine/styles';
 import { ColorPicker, ColorPickerProps } from './ColorPicker';
 
@@ -8,6 +13,8 @@ const swatches = DEFAULT_THEME.colors.red;
 const defaultProps: ColorPickerProps = {};
 
 describe('@mantine/core/ColorPicker', () => {
+  itSupportsProviderSize(ColorPicker, defaultProps, 'ColorPicker', 'wrapper');
+  itSupportsProviderVariant(ColorPicker, defaultProps, 'ColorPicker', 'wrapper');
   itSupportsSystemProps({
     component: ColorPicker,
     props: defaultProps,

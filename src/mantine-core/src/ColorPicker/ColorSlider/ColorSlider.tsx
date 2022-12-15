@@ -18,6 +18,7 @@ export type ColorSliderStylesNames =
 export interface BaseColorSliderProps
   extends DefaultProps<ColorSliderStylesNames>,
     Omit<React.ComponentPropsWithoutRef<'div'>, 'value' | 'onChange'> {
+  variant?: string;
   value: number;
   onChange(value: number): void;
   onChangeEnd(value: number): void;
@@ -50,13 +51,14 @@ export const ColorSlider = forwardRef<HTMLDivElement, ColorSliderProps>(
       styles,
       className,
       unstyled,
+      variant,
       ...others
     }: ColorSliderProps,
     ref
   ) => {
     const { classes, cx } = useStyles(
       { size },
-      { classNames, styles, name: __staticSelector, unstyled }
+      { classNames, styles, name: __staticSelector, unstyled, variant, size }
     );
     const [position, setPosition] = useState({ y: 0, x: value / maxValue });
     const positionRef = useRef(position);
