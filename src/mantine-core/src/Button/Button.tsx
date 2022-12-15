@@ -7,12 +7,13 @@ import {
   MantineColor,
   Selectors,
   useComponentDefaultProps,
+  Variants,
 } from '@mantine/styles';
 import { createPolymorphicComponent } from '@mantine/utils';
 import { UnstyledButton } from '../UnstyledButton';
 import { Loader, LoaderProps } from '../Loader';
 import { ButtonGroup } from './ButtonGroup/ButtonGroup';
-import useStyles, { sizes, ButtonVariant, ButtonStylesParams } from './Button.styles';
+import useStyles, { sizes, ButtonStylesParams } from './Button.styles';
 
 export type ButtonStylesNames = Selectors<typeof useStyles>;
 
@@ -39,7 +40,7 @@ export interface ButtonProps extends DefaultProps<ButtonStylesNames, ButtonStyle
   radius?: MantineNumberSize;
 
   /** Controls button appearance */
-  variant?: ButtonVariant;
+  variant?: Variants<'filled' | 'outline' | 'light' | 'white' | 'default' | 'subtle' | 'gradient'>;
 
   /** Controls gradient settings in gradient variant only */
   gradient?: MantineGradient;
@@ -106,11 +107,10 @@ export const _Button = forwardRef<HTMLButtonElement, ButtonProps>((props, ref) =
       fullWidth,
       compact,
       gradient,
-      variant,
       withLeftIcon: !!leftIcon,
       withRightIcon: !!rightIcon,
     },
-    { name: 'Button', unstyled, classNames, styles }
+    { name: 'Button', unstyled, classNames, styles, variant, size }
   );
 
   const colors = theme.fn.variant({ color, variant });

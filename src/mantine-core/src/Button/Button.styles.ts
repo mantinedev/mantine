@@ -17,9 +17,7 @@ export const BUTTON_VARIANTS = [
   'default',
   'subtle',
   'gradient',
-] as const;
-
-export type ButtonVariant = typeof BUTTON_VARIANTS[number];
+];
 
 export interface ButtonStylesParams {
   color: MantineColor;
@@ -28,7 +26,6 @@ export interface ButtonStylesParams {
   fullWidth: boolean;
   compact: boolean;
   gradient: MantineGradient;
-  variant: ButtonVariant;
   withRightIcon: boolean;
   withLeftIcon: boolean;
 }
@@ -60,6 +57,10 @@ function getSizeStyles({ compact, size, withLeftIcon, withRightIcon }: GetSizeSt
 
   const _sizes = sizes[size];
 
+  if (!_sizes) {
+    return {};
+  }
+
   return {
     ..._sizes,
     paddingLeft: withLeftIcon ? _sizes.paddingLeft / 1.5 : _sizes.paddingLeft,
@@ -75,7 +76,7 @@ const getWidthStyles = (fullWidth: boolean) => ({
 interface GetVariantStyles {
   theme: MantineTheme;
   color: MantineColor;
-  variant: ButtonVariant;
+  variant: string;
   gradient: MantineGradient;
 }
 
@@ -87,10 +88,7 @@ function getVariantStyles({ variant, theme, color, gradient }: GetVariantStyles)
       border: 0,
       backgroundImage: colors.background,
       color: colors.color,
-
-      '&:hover': theme.fn.hover({
-        backgroundSize: '200%',
-      }),
+      ...theme.fn.hover({ backgroundSize: '200%' }),
     };
   }
 
@@ -98,26 +96,14 @@ function getVariantStyles({ variant, theme, color, gradient }: GetVariantStyles)
     border: `1px solid ${colors.border}`,
     backgroundColor: colors.background,
     color: colors.color,
-    ...theme.fn.hover({
-      backgroundColor: colors.hover,
-    }),
+    '&:not([data-disabled])': theme.fn.hover({ backgroundColor: colors.hover }),
   };
 }
 
 export default createStyles(
   (
     theme,
-    {
-      color,
-      size,
-      radius,
-      fullWidth,
-      compact,
-      gradient,
-      variant,
-      withLeftIcon,
-      withRightIcon,
-    }: ButtonStylesParams
+    { size, radius, fullWidth, compact, withLeftIcon, withRightIcon }: ButtonStylesParams
   ) => ({
     root: {
       ...getSizeStyles({ compact, size, withLeftIcon, withRightIcon }),
@@ -131,7 +117,6 @@ export default createStyles(
       fontSize: theme.fn.size({ size, sizes: theme.fontSizes }),
       userSelect: 'none',
       cursor: 'pointer',
-      ...getVariantStyles({ variant, theme, color, gradient }),
 
       '&:active': theme.activeStyles,
 
@@ -203,5 +188,12 @@ export default createStyles(
       display: 'flex',
       alignItems: 'center',
     },
-  })
+  }),
+  (variant, theme, { color, gradient }: ButtonStylesParams) => {
+    if (BUTTON_VARIANTS.includes(variant)) {
+      return { root: getVariantStyles({ variant, theme, color, gradient }) };
+    }
+
+    return null;
+  }
 );
