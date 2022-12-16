@@ -12,6 +12,8 @@ import { Box } from '../Box';
 import useStyles from './LoadingOverlay.styles';
 
 export interface LoadingOverlayProps extends DefaultProps, React.ComponentPropsWithoutRef<'div'> {
+  variant?: string;
+
   /** Provide custom loader */
   loader?: React.ReactNode;
 
@@ -64,9 +66,10 @@ export const LoadingOverlay = forwardRef<HTMLDivElement, LoadingOverlayProps>((p
     radius,
     overlayBlur,
     unstyled,
+    variant,
     ...others
   } = useComponentDefaultProps('LoadingOverlay', defaultProps, props);
-  const { classes, cx, theme } = useStyles(null, { name: 'LoadingOverlay', unstyled });
+  const { classes, cx, theme } = useStyles(null, { name: 'LoadingOverlay', unstyled, variant });
   const _zIndex = `calc(${zIndex} + 1)` as any;
 
   return (
