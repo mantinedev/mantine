@@ -2,13 +2,20 @@ import React from 'react';
 import { render } from '@testing-library/react';
 import { MantineProvider } from '@mantine/styles';
 
+const randomColor = () => `#${Math.floor(Math.random() * 16777215).toString(16)}`;
+
 export function itSupportsProviderSize<P>(
   Component: React.ComponentType<P>,
   requiredProps: P,
   componentName: string,
-  selector = 'root'
+  selector: string | string[] = 'root'
 ) {
   it('supports size on MantineProvider', () => {
+    const selectors = Array.isArray(selector) ? selector : [selector];
+    const colors = Array(selectors.length)
+      .fill(0)
+      .map(() => randomColor());
+
     const { container } = render(
       <MantineProvider
         theme={{
@@ -16,7 +23,10 @@ export function itSupportsProviderSize<P>(
             [componentName]: {
               sizes: (_theme, size) => {
                 if (size === 'provider-size') {
-                  return { [selector]: { backgroundColor: 'tomato' } };
+                  return selectors.reduce((acc, part, index) => {
+                    acc[part] = { backgroundColor: colors[index] };
+                    return acc;
+                  }, {});
                 }
 
                 return null;
@@ -29,8 +39,10 @@ export function itSupportsProviderSize<P>(
       </MantineProvider>
     );
 
-    expect(container.querySelector(`.mantine-${componentName}-${selector}`)).toHaveStyle({
-      backgroundColor: 'tomato',
+    selectors.forEach((part, index) => {
+      expect(container.querySelector(`.mantine-${componentName}-${part}`)).toHaveStyle({
+        backgroundColor: colors[index],
+      });
     });
   });
 }

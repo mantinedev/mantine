@@ -5,6 +5,8 @@ import {
   itSupportsInputProps,
   checkAccessibility,
   itSupportsFocusEvents,
+  itSupportsProviderVariant,
+  itSupportsProviderSize,
 } from '@mantine/tests';
 import { Autocomplete, AutocompleteProps } from './Autocomplete';
 
@@ -29,6 +31,8 @@ const queries = {
 describe('@mantine/core/Autocomplete', () => {
   checkAccessibility([<Autocomplete {...defaultProps} />]);
   itSupportsInputProps(Autocomplete, defaultProps, 'Autocomplete');
+  itSupportsProviderVariant(Autocomplete, defaultProps, 'Autocomplete', ['root', 'input', 'label']);
+  itSupportsProviderSize(Autocomplete, defaultProps, 'Autocomplete', ['root', 'input', 'label']);
   itSupportsFocusEvents(Autocomplete, defaultProps, '.mantine-Autocomplete-input');
   itSupportsSystemProps({
     component: Autocomplete,
