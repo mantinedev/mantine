@@ -1,11 +1,9 @@
 import { createStyles, MantineNumberSize, MantineSize, MantineTheme } from '@mantine/styles';
 
-export type InputVariant = 'default' | 'filled' | 'unstyled';
-
 export interface InputStylesParams {
   radius: MantineNumberSize;
   size: MantineSize;
-  variant: InputVariant;
+  variant: string;
   multiline: boolean;
   invalid: boolean;
   rightSectionWidth: string | number;
@@ -26,7 +24,7 @@ export const sizes = {
 
 interface GetVariantStylesInput {
   theme: MantineTheme;
-  variant: InputVariant;
+  variant: string;
 }
 
 function getVariantStyles({ theme, variant }: GetVariantStylesInput) {
@@ -152,8 +150,6 @@ export default createStyles(
         '&[type=number]': {
           MozAppearance: 'textfield',
         },
-
-        ...getVariantStyles({ theme, variant }),
       },
 
       withIcon: {
@@ -210,5 +206,8 @@ export default createStyles(
         width: rightSectionWidth,
       },
     };
-  }
+  },
+  (variant, theme) => ({
+    input: getVariantStyles({ theme, variant }),
+  })
 );

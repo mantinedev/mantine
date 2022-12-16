@@ -5,6 +5,7 @@ import {
   MantineSize,
   Selectors,
   useComponentDefaultProps,
+  Variants,
 } from '@mantine/styles';
 import { createPolymorphicComponent } from '@mantine/utils';
 import { Box, extractSystemStyles } from '../Box';
@@ -14,7 +15,7 @@ import { InputLabel } from './InputLabel/InputLabel';
 import { InputError } from './InputError/InputError';
 import { InputPlaceholder } from './InputPlaceholder/InputPlaceholder';
 import { useInputWrapperContext } from './InputWrapper.context';
-import useStyles, { InputVariant } from './Input.styles';
+import useStyles from './Input.styles';
 
 export type InputStylesNames = Selectors<typeof useStyles>;
 
@@ -44,7 +45,7 @@ export interface InputSharedProps {
   radius?: MantineNumberSize;
 
   /** Defines input appearance, defaults to default in light color scheme and filled in dark */
-  variant?: InputVariant;
+  variant?: Variants<'default' | 'filled' | 'unstyled'>;
 
   /** Disabled input state */
   disabled?: boolean;
@@ -114,7 +115,7 @@ export const _Input = forwardRef<HTMLInputElement, InputProps>((props, ref) => {
       offsetTop,
       pointer,
     },
-    { classNames, styles, name: ['Input', __staticSelector], unstyled }
+    { classNames, styles, name: ['Input', __staticSelector], unstyled, variant, size }
   );
 
   const { systemStyles, rest } = extractSystemStyles(others);

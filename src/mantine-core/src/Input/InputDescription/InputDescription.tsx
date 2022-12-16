@@ -8,6 +8,8 @@ export type InputDescriptionStylesNames = Selectors<typeof useStyles>;
 export interface InputDescriptionProps
   extends DefaultProps<InputDescriptionStylesNames, InputDescriptionStylesParams>,
     React.ComponentPropsWithoutRef<'div'> {
+  variant?: string;
+
   /** Description content */
   children?: React.ReactNode;
 
@@ -22,12 +24,21 @@ const defaultProps: Partial<InputDescriptionProps> = {
 };
 
 export const InputDescription = forwardRef<HTMLDivElement, InputDescriptionProps>((props, ref) => {
-  const { children, className, classNames, styles, unstyled, size, __staticSelector, ...others } =
-    useComponentDefaultProps('InputDescription', defaultProps, props);
+  const {
+    children,
+    className,
+    classNames,
+    styles,
+    unstyled,
+    size,
+    __staticSelector,
+    variant,
+    ...others
+  } = useComponentDefaultProps('InputDescription', defaultProps, props);
 
   const { classes, cx } = useStyles(
     { size },
-    { name: ['InputWrapper', __staticSelector], classNames, styles, unstyled }
+    { name: ['InputWrapper', __staticSelector], classNames, styles, unstyled, variant, size }
   );
 
   return (

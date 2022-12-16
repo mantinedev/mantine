@@ -8,6 +8,8 @@ export type InputErrorStylesNames = Selectors<typeof useStyles>;
 export interface InputErrorProps
   extends DefaultProps<InputErrorStylesNames, InputErrorStylesParams>,
     React.ComponentPropsWithoutRef<'div'> {
+  variant?: string;
+
   /** Error content */
   children?: React.ReactNode;
 
@@ -22,12 +24,21 @@ const defaultProps: Partial<InputErrorProps> = {
 };
 
 export const InputError = forwardRef<HTMLDivElement, InputErrorProps>((props, ref) => {
-  const { children, className, classNames, styles, unstyled, size, __staticSelector, ...others } =
-    useComponentDefaultProps('InputError', defaultProps, props);
+  const {
+    children,
+    className,
+    classNames,
+    styles,
+    unstyled,
+    size,
+    __staticSelector,
+    variant,
+    ...others
+  } = useComponentDefaultProps('InputError', defaultProps, props);
 
   const { classes, cx } = useStyles(
     { size },
-    { name: ['InputWrapper', __staticSelector], classNames, styles, unstyled }
+    { name: ['InputWrapper', __staticSelector], classNames, styles, unstyled, variant, size }
   );
 
   return (

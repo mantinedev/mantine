@@ -53,6 +53,8 @@ export interface InputWrapperProps
   extends DefaultProps<InputWrapperStylesNames>,
     InputWrapperBaseProps,
     React.ComponentPropsWithoutRef<'div'> {
+  variant?: string;
+
   /** Input that should be wrapped */
   children: React.ReactNode;
 
@@ -97,6 +99,7 @@ export const InputWrapper = forwardRef<HTMLDivElement, InputWrapperProps>((props
     unstyled,
     inputWrapperOrder,
     withAsterisk,
+    variant,
     ...others
   } = useComponentDefaultProps('InputWrapper', defaultProps, props);
 
@@ -105,6 +108,8 @@ export const InputWrapper = forwardRef<HTMLDivElement, InputWrapperProps>((props
     styles,
     name: ['InputWrapper', __staticSelector],
     unstyled,
+    variant,
+    size,
   });
 
   const sharedProps = {
@@ -112,6 +117,7 @@ export const InputWrapper = forwardRef<HTMLDivElement, InputWrapperProps>((props
     styles,
     unstyled,
     size,
+    variant,
     __staticSelector,
   };
 

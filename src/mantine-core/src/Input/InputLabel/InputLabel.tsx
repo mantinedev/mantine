@@ -9,6 +9,8 @@ export type InputLabelStylesNames = Selectors<typeof useStyles>;
 export interface InputLabelProps
   extends DefaultProps<InputLabelStylesNames, InputLabelStylesParams>,
     React.ComponentPropsWithoutRef<'label'> {
+  variant?: string;
+
   /** Label content */
   children?: React.ReactNode;
 
@@ -41,12 +43,13 @@ export const InputLabel = forwardRef<HTMLLabelElement, InputLabelProps>((props, 
     className,
     htmlFor,
     __staticSelector,
+    variant,
     ...others
   } = useComponentDefaultProps('InputLabel', defaultProps, props);
 
   const { classes, cx } = useStyles(
     { size },
-    { name: ['InputWrapper', __staticSelector], classNames, styles, unstyled }
+    { name: ['InputWrapper', __staticSelector], classNames, styles, unstyled, variant, size }
   );
 
   return (

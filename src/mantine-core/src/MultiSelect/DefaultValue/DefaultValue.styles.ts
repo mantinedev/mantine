@@ -3,7 +3,7 @@ import { createStyles, MantineNumberSize, MantineSize } from '@mantine/styles';
 interface DefaultLabelStyles {
   size: MantineSize;
   radius: MantineNumberSize;
-  variant: 'filled' | 'default' | 'unstyled';
+  variant: string;
   disabled: boolean;
   readOnly: boolean;
 }
