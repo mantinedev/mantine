@@ -32,6 +32,7 @@ export function PopoverDropdown(props: PopoverDropdownProps) {
       classNames: ctx.classNames,
       styles: ctx.styles,
       unstyled: ctx.unstyled,
+      variant: ctx.variant,
     }
   );
 

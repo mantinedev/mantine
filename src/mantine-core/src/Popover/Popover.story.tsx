@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { MantineProvider } from '@mantine/styles';
 import { Popover } from './Popover';
 import { Button } from '../Button';
 import { MultiSelect } from '../MultiSelect';
@@ -179,5 +180,34 @@ export function Inline() {
       , eum voluptate, perferendis placeat repudiandae nesciunt explicabo quibusdam deserunt, animi
       dicta.
     </div>
+  );
+}
+
+export function ProviderVariant() {
+  return (
+    <MantineProvider
+      inherit
+      theme={{
+        components: {
+          Popover: {
+            variants: (_theme, variant) => {
+              if (variant === 'provider') {
+                return { dropdown: { backgroundColor: 'pink' } };
+              }
+
+              return null;
+            },
+          },
+        },
+      }}
+    >
+      <Popover variant="provider">
+        <Popover.Target>
+          <Button>Toggle popover</Button>
+        </Popover.Target>
+
+        <Popover.Dropdown>Dropdown</Popover.Dropdown>
+      </Popover>
+    </MantineProvider>
   );
 }

@@ -123,6 +123,7 @@ export interface PopoverProps extends PopoverBaseProps {
   /** Determines whether dropdown and target element should have accessible roles, defaults to true */
   withRoles?: boolean;
 
+  variant?: string;
   unstyled?: boolean;
   classNames?: ClassNames<PopoverStylesNames>;
   styles?: Styles<PopoverStylesNames, PopoverStylesParams>;
@@ -191,6 +192,7 @@ export function Popover(props: PopoverProps) {
     withRoles,
     disabled,
     returnFocus,
+    variant,
     ...others
   } = useComponentDefaultProps('Popover', defaultProps, props);
 
@@ -276,6 +278,7 @@ export function Popover(props: PopoverProps) {
         classNames,
         styles,
         unstyled,
+        variant,
       }}
     >
       {children}

@@ -44,6 +44,7 @@ interface PopoverContext {
   styles: Styles<PopoverStylesNames, PopoverStylesParams>;
   unstyled: boolean;
   __staticSelector: string;
+  variant: string;
 }
 
 export const [PopoverContextProvider, usePopoverContext] = createSafeContext<PopoverContext>(
