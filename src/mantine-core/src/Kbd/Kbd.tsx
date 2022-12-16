@@ -4,13 +4,22 @@ import { Box } from '../Box';
 import useStyles from './Kbd.styles';
 
 export interface KbdProps extends DefaultProps, React.ComponentPropsWithoutRef<'kbd'> {
+  variant?: string;
+
   /** Keyboard key */
   children: React.ReactNode;
 }
 
+const defaultProps: Partial<KbdProps> = {};
+
 export const Kbd = forwardRef<HTMLElement, KbdProps>((props: KbdProps, ref) => {
-  const { className, children, unstyled, ...others } = useComponentDefaultProps('Kbd', {}, props);
-  const { classes, cx } = useStyles(null, { name: 'Kbd', unstyled });
+  const { className, children, unstyled, variant, ...others } = useComponentDefaultProps(
+    'Kbd',
+    defaultProps,
+    props
+  );
+
+  const { classes, cx } = useStyles(null, { name: 'Kbd', unstyled, variant });
 
   return (
     <Box component="kbd" className={cx(classes.root, className)} ref={ref} {...others}>
