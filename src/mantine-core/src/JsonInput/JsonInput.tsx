@@ -87,6 +87,7 @@ export const JsonInput = forwardRef<HTMLTextAreaElement, JsonInputProps>((props,
       ref={ref}
       unstyled={unstyled}
       readOnly={readOnly}
+      size={size}
       {...others}
     />
   );
