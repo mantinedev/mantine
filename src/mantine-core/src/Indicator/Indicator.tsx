@@ -18,6 +18,8 @@ export type IndicatorStylesNames = Selectors<typeof useStyles>;
 export interface IndicatorProps
   extends DefaultProps<IndicatorStylesNames, IndicatorStylesParams>,
     React.ComponentPropsWithoutRef<'div'> {
+  variant?: string;
+
   /** Element that should have an indicator */
   children: React.ReactNode;
 
@@ -99,12 +101,13 @@ export const Indicator = forwardRef<HTMLDivElement, IndicatorProps>((props, ref)
     zIndex,
     unstyled,
     processing,
+    variant,
     ...others
   } = useComponentDefaultProps('Indicator', defaultProps, props);
 
   const { classes, cx } = useStyles(
     { position, offset, size, radius, inline, color, withBorder, zIndex, withLabel: !!label },
-    { name: 'Indicator', classNames, styles, unstyled }
+    { name: 'Indicator', classNames, styles, unstyled, variant, size }
   );
 
   const renderLabel = useMemo(() => {
