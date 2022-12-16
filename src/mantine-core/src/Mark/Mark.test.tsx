@@ -1,4 +1,8 @@
-import { itRendersChildren, itSupportsSystemProps } from '@mantine/tests';
+import {
+  itRendersChildren,
+  itSupportsSystemProps,
+  itSupportsProviderVariant,
+} from '@mantine/tests';
 import { Mark, MarkProps } from './Mark';
 
 const defaultProps: MarkProps = {
@@ -7,6 +11,7 @@ const defaultProps: MarkProps = {
 
 describe('@mantine/core/Mark', () => {
   itRendersChildren(Mark, defaultProps);
+  itSupportsProviderVariant(Mark, defaultProps, 'Mark');
   itSupportsSystemProps({
     component: Mark,
     props: defaultProps,
