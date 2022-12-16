@@ -16,6 +16,8 @@ export type ListStylesNames = ListItemStylesNames | Selectors<typeof useStyles>;
 export interface ListProps
   extends DefaultProps<ListStylesNames>,
     React.ComponentPropsWithRef<'ul'> {
+  variant?: string;
+
   /** <List.Item /> components only */
   children: React.ReactNode;
 
@@ -64,12 +66,13 @@ export const List: ListComponent = forwardRef<HTMLUListElement, ListProps>(
       styles,
       classNames,
       unstyled,
+      variant,
       ...others
     } = useComponentDefaultProps('List', defaultProps, props);
 
     const { classes, cx } = useStyles(
       { withPadding, size, listStyleType, center, spacing },
-      { classNames, styles, name: 'List', unstyled }
+      { classNames, styles, name: 'List', unstyled, variant }
     );
 
     return (
@@ -84,6 +87,7 @@ export const List: ListComponent = forwardRef<HTMLUListElement, ListProps>(
           classNames,
           styles,
           unstyled,
+          variant,
         }}
       >
         <Box<any>

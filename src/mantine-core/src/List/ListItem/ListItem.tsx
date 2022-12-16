@@ -35,12 +35,13 @@ export const ListItem = forwardRef<HTMLLIElement, ListItemProps>((props, ref) =>
     classNames,
     styles,
     unstyled,
+    variant,
   } = useListContext();
 
   const _icon = icon || ctxIcon;
   const { classes, cx } = useStyles(
     { withPadding, size, listStyleType, center, spacing },
-    { classNames, styles, unstyled, name: 'List' }
+    { classNames, styles, unstyled, name: 'List', variant }
   );
 
   return (
