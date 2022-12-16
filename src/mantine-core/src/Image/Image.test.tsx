@@ -1,6 +1,10 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
-import { checkAccessibility, itSupportsSystemProps } from '@mantine/tests';
+import {
+  checkAccessibility,
+  itSupportsSystemProps,
+  itSupportsProviderVariant,
+} from '@mantine/tests';
 import { Image, ImageProps } from './Image';
 
 const defaultProps: ImageProps = {
@@ -15,6 +19,7 @@ describe('@mantine/core/Image', () => {
     <Image {...defaultProps} src={null} withPlaceholder />,
   ]);
 
+  itSupportsProviderVariant(Image, defaultProps, 'Image');
   itSupportsSystemProps({
     component: Image,
     props: defaultProps,

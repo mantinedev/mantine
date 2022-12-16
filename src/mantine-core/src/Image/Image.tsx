@@ -16,6 +16,8 @@ export type ImageStylesNames = Selectors<typeof useStyles>;
 export interface ImageProps
   extends DefaultProps<ImageStylesNames, ImageStylesParams>,
     Omit<React.ComponentPropsWithoutRef<'div'>, 'placeholder'> {
+  variant?: string;
+
   /** Image src */
   src?: string | null;
 
@@ -75,9 +77,15 @@ export const Image = forwardRef<HTMLDivElement, ImageProps>((props: ImageProps, 
     caption,
     unstyled,
     style,
+    variant,
     ...others
   } = useComponentDefaultProps('Image', defaultProps, props);
-  const { classes, cx } = useStyles({ radius }, { classNames, styles, unstyled, name: 'Image' });
+
+  const { classes, cx } = useStyles(
+    { radius },
+    { classNames, styles, unstyled, name: 'Image', variant }
+  );
+
   const [error, setError] = useState(!src);
   const isPlaceholder = withPlaceholder && error;
 
