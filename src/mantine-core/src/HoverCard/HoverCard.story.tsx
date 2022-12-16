@@ -1,4 +1,5 @@
 import React from 'react';
+import { MantineProvider } from '@mantine/styles';
 import { Button } from '../Button';
 import { Tooltip } from '../Tooltip';
 import { HoverCard } from './HoverCard';
@@ -42,5 +43,34 @@ export function TargetWithTooltip() {
         <HoverCard.Dropdown>Dropdown</HoverCard.Dropdown>
       </HoverCard>
     </div>
+  );
+}
+
+export function ProviderVariant() {
+  return (
+    <MantineProvider
+      inherit
+      theme={{
+        components: {
+          HoverCard: {
+            variants: (_theme, variant) => {
+              if (variant === 'provider') {
+                return { dropdown: { backgroundColor: 'pink' } };
+              }
+
+              return null;
+            },
+          },
+        },
+      }}
+    >
+      <HoverCard variant="provider">
+        <HoverCard.Target>
+          <Button>Hover me</Button>
+        </HoverCard.Target>
+
+        <HoverCard.Dropdown>Dropdown</HoverCard.Dropdown>
+      </HoverCard>
+    </MantineProvider>
   );
 }

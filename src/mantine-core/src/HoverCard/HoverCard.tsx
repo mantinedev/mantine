@@ -8,6 +8,8 @@ import { HoverCardDropdown } from './HoverCardDropdown/HoverCardDropdown';
 import { HoverCardTarget } from './HoverCardTarget/HoverCardTarget';
 
 export interface HoverCardProps extends PopoverBaseProps {
+  variant?: string;
+
   /** HoverCard.Target and HoverCard.Dropdown components */
   children?: React.ReactNode;
 
