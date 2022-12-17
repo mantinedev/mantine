@@ -5,6 +5,7 @@ import {
   itRendersChildren,
   itSupportsFocusEvents,
   itIsPolymorphic,
+  itSupportsProviderVariant,
 } from '@mantine/tests';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
@@ -31,6 +32,7 @@ describe('@mantine/core/NavLink', () => {
     providerName: 'NavLink',
   });
 
+  itSupportsProviderVariant(NavLink, defaultProps, 'NavLink');
   itRendersChildren(NavLink, defaultProps);
   itIsPolymorphic(NavLink, defaultProps);
   itSupportsFocusEvents(NavLink, defaultProps, 'button');

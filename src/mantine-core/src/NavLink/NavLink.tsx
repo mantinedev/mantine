@@ -6,6 +6,7 @@ import {
   MantineNumberSize,
   Selectors,
   useComponentDefaultProps,
+  Variants,
 } from '@mantine/styles';
 import { createPolymorphicComponent } from '@mantine/utils';
 import { useUncontrolled } from '@mantine/hooks';
@@ -37,7 +38,7 @@ export interface NavLinkProps extends DefaultProps<NavLinkStylesNames, NavLinkSt
   color?: MantineColor;
 
   /** Active link variant */
-  variant?: 'filled' | 'light' | 'subtle';
+  variant?: Variants<'filled' | 'light' | 'subtle'>;
 
   /** If prop is set then label and description will not wrap on the next line */
   noWrap?: boolean;
@@ -96,8 +97,8 @@ export const _NavLink = forwardRef<HTMLButtonElement, NavLinkProps>((props, ref)
   } = useComponentDefaultProps('NavLink', defaultProps, props);
 
   const { classes, cx } = useStyles(
-    { color, variant, noWrap, childrenOffset, alignIcon: description ? 'top' : 'center' },
-    { name: 'NavLink', classNames, styles, unstyled }
+    { color, noWrap, childrenOffset, alignIcon: description ? 'top' : 'center' },
+    { name: 'NavLink', classNames, styles, unstyled, variant }
   );
 
   const [_opened, setOpened] = useUncontrolled({
