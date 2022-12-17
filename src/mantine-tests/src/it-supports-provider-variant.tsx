@@ -24,7 +24,7 @@ export function itSupportsProviderVariant<P>(
               variants: (_theme, variant) => {
                 if (variant === 'provider-variant') {
                   return selectors.reduce((acc, part, index) => {
-                    acc[part] = { backgroundColor: colors[index] };
+                    acc[part] = { borderRightColor: colors[index] };
                     return acc;
                   }, {});
                 }
@@ -41,7 +41,7 @@ export function itSupportsProviderVariant<P>(
 
     selectors.forEach((part, index) => {
       expect(container.querySelector(`.mantine-${componentName}-${part}`)).toHaveStyle({
-        backgroundColor: colors[index],
+        borderRightColor: colors[index],
       });
     });
   });

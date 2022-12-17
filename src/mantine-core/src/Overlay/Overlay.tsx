@@ -10,6 +10,8 @@ import { Box } from '../Box';
 import useStyles, { OverlayStylesParams } from './Overlay.styles';
 
 export interface OverlayProps extends DefaultProps<never, OverlayStylesParams> {
+  variant?: string;
+
   /** Overlay opacity */
   opacity?: React.CSSProperties['opacity'];
 
@@ -38,9 +40,20 @@ const defaultProps: Partial<OverlayProps> = {
 };
 
 export const _Overlay = forwardRef<HTMLDivElement, OverlayProps>((props, ref) => {
-  const { opacity, blur, color, gradient, zIndex, radius, sx, unstyled, className, ...others } =
-    useComponentDefaultProps('Overlay', defaultProps, props);
-  const { classes, cx } = useStyles({ zIndex }, { name: 'Overlay', unstyled });
+  const {
+    opacity,
+    blur,
+    color,
+    gradient,
+    zIndex,
+    radius,
+    sx,
+    unstyled,
+    className,
+    variant,
+    ...others
+  } = useComponentDefaultProps('Overlay', defaultProps, props);
+  const { classes, cx } = useStyles({ zIndex }, { name: 'Overlay', unstyled, variant });
   const background = gradient ? { backgroundImage: gradient } : { backgroundColor: color };
 
   const innerOverlay = (otherProps?: Record<string, any>) => (
