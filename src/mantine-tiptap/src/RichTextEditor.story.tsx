@@ -318,7 +318,7 @@ export function ControlStylesApi() {
         <RichTextEditor.Toolbar>
           <RichTextEditor.ControlsGroup>
             <RichTextEditor.Bold />
-            <RichTextEditor.Link />
+            <RichTextEditor.Link icon={() => <div>$</div>} />
           </RichTextEditor.ControlsGroup>
         </RichTextEditor.Toolbar>
 
