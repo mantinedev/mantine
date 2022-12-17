@@ -23,6 +23,8 @@ interface ProgressSection extends React.ComponentPropsWithRef<'div'> {
 export interface ProgressProps
   extends DefaultProps<ProgressStylesNames, ProgressStylesParams>,
     React.ComponentPropsWithoutRef<'div'> {
+  variant?: string;
+
   /** Percent of filled bar (0-100) */
   value?: number;
 
@@ -84,12 +86,13 @@ export const Progress = forwardRef<HTMLDivElement, ProgressProps>((props, ref) =
     styles,
     sections,
     unstyled,
+    variant,
     ...others
   } = useComponentDefaultProps('Progress', defaultProps, props);
 
   const { classes, cx, theme } = useStyles(
     { color, size, radius, striped: striped || animate, animate },
-    { classNames, styles, unstyled, name: 'Progress' }
+    { name: 'Progress', classNames, styles, unstyled, variant }
   );
 
   const segments = Array.isArray(sections)
