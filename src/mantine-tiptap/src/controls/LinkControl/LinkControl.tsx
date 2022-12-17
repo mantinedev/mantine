@@ -33,11 +33,12 @@ const defaultProps: Partial<RichTextEditorLinkControlProps> = {};
 
 export const LinkControl = forwardRef<HTMLButtonElement, RichTextEditorLinkControlProps>(
   (props, ref) => {
-    const { icon, popoverProps, disableTooltips, ...others } = useComponentDefaultProps(
-      'RichTextEditorLinkControl',
-      defaultProps,
-      props
-    );
+    const {
+      icon = LinkIcon,
+      popoverProps,
+      disableTooltips,
+      ...others
+    } = useComponentDefaultProps('RichTextEditorLinkControl', defaultProps, props);
 
     const { editor, labels, classNames, styles, unstyled } = useRichTextEditorContext();
     const { classes } = useStyles(null, { name: 'RichTextEditor', classNames, styles, unstyled });
@@ -93,7 +94,7 @@ export const LinkControl = forwardRef<HTMLButtonElement, RichTextEditorLinkContr
       >
         <Popover.Target>
           <ControlBase
-            icon={LinkIcon}
+            icon={icon}
             aria-label={labels.linkControlLabel}
             title={labels.linkControlLabel}
             onClick={handleOpen}
