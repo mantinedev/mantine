@@ -6,6 +6,8 @@ import {
   checkAccessibility,
   itSupportsSystemProps,
   itSupportsInputProps,
+  itSupportsProviderVariant,
+  itSupportsProviderSize,
 } from '@mantine/tests';
 import { Select, SelectProps } from './Select';
 
@@ -21,6 +23,8 @@ const defaultProps: SelectProps = {
 
 describe('@mantine/core/Select', () => {
   checkAccessibility([<Select {...defaultProps} />]);
+  itSupportsProviderVariant(Select, defaultProps, 'Select', ['root', 'input', 'label']);
+  itSupportsProviderSize(Select, defaultProps, 'Select', ['root', 'input', 'label']);
   itSupportsFocusEvents(Select, defaultProps, 'input[type="search"]');
   itSupportsInputProps(Select, defaultProps, 'Select');
   itSupportsSystemProps({
