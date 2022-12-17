@@ -556,6 +556,7 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>((props, ref) => 
         classNames={classNames}
         styles={styles}
         unstyled={unstyled}
+        variant={inputProps.variant}
       >
         <SelectPopover.Target>
           <div
@@ -640,6 +641,7 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>((props, ref) => 
             createLabel={createLabel}
             aria-label={wrapperProps.label}
             unstyled={unstyled}
+            variant={inputProps.variant}
           />
         </SelectPopover.Dropdown>
       </SelectPopover>

@@ -212,6 +212,7 @@ export const Autocomplete = forwardRef<HTMLInputElement, AutocompleteProps>((pro
         styles={styles}
         unstyled={unstyled}
         readOnly={readOnly}
+        variant={inputProps.variant}
       >
         <SelectPopover.Target>
           <div
@@ -274,6 +275,7 @@ export const Autocomplete = forwardRef<HTMLInputElement, AutocompleteProps>((pro
             itemComponent={itemComponent}
             size={inputProps.size}
             nothingFound={nothingFound}
+            variant={inputProps.variant}
           />
         </SelectPopover.Dropdown>
       </SelectPopover>

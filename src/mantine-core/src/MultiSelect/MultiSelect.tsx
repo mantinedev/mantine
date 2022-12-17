@@ -594,6 +594,7 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>((props
       inputWrapperOrder={inputWrapperOrder}
       unstyled={unstyled}
       withAsterisk={withAsterisk}
+      variant={variant}
       {...systemStyles}
       {...wrapperProps}
     >
@@ -612,6 +613,7 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>((props
         classNames={classNames}
         styles={styles}
         unstyled={unstyled}
+        variant={variant}
       >
         <SelectPopover.Target>
           <div
@@ -727,6 +729,7 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>((props
             creatable={creatable && !!createLabel}
             createLabel={createLabel}
             unstyled={unstyled}
+            variant={variant}
           />
         </SelectPopover.Dropdown>
       </SelectPopover>

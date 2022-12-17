@@ -72,6 +72,7 @@ interface SelectPopoverProps {
   styles?: Styles<SelectPopoverStylesNames>;
   unstyled?: boolean;
   readOnly?: boolean;
+  variant: string;
 }
 
 export function SelectPopover({
@@ -91,6 +92,7 @@ export function SelectPopover({
   styles,
   unstyled,
   readOnly,
+  variant,
 }: SelectPopoverProps) {
   return (
     <Popover
@@ -114,6 +116,7 @@ export function SelectPopover({
         switchDirectionOnFlip &&
         onDirectionChange?.(nextPosition === 'top' ? 'column-reverse' : 'column')
       }
+      variant={variant}
     >
       {children}
     </Popover>
