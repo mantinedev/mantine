@@ -163,7 +163,7 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>((props
 
   const { classes, cx, theme } = useStyles(
     { radius, size },
-    { classNames, styles, unstyled, name: 'NumberInput' }
+    { classNames, styles, unstyled, name: 'NumberInput', variant, size }
   );
 
   const parsePrecision = (val: number | undefined) => {

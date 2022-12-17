@@ -7,10 +7,14 @@ import {
   itSupportsSystemProps,
   itSupportsInputProps,
   itSupportsFocusEvents,
+  itSupportsProviderVariant,
+  itSupportsProviderSize,
 } from '@mantine/tests';
 import { NumberInput, NumberInputHandlers, NumberInputProps } from './NumberInput';
 
-const defaultProps: NumberInputProps = {};
+const defaultProps: NumberInputProps = {
+  label: 'test-label',
+};
 
 const getRightSection = (container: HTMLElement) =>
   container.querySelector('.mantine-NumberInput-rightSection');
@@ -40,6 +44,20 @@ describe('@mantine/core/NumberInput', () => {
     othersSelector: 'input',
     providerName: 'NumberInput',
   });
+
+  itSupportsProviderVariant(NumberInput, defaultProps, 'NumberInput', [
+    'root',
+    'input',
+    'label',
+    'control',
+  ]);
+
+  itSupportsProviderSize(NumberInput, defaultProps, 'NumberInput', [
+    'root',
+    'input',
+    'label',
+    'control',
+  ]);
 
   itSupportsInputProps(NumberInput, defaultProps, 'NumberInput');
   itSupportsFocusEvents(NumberInput, defaultProps, 'input');
