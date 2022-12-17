@@ -6,6 +6,8 @@ import useStyles, { SkeletonStylesParams } from './Skeleton.styles';
 export interface SkeletonProps
   extends DefaultProps<never, SkeletonStylesParams>,
     React.ComponentPropsWithoutRef<'div'> {
+  variant?: string;
+
   /** Should skeleton overlay be displayed */
   visible?: boolean;
 
@@ -33,12 +35,22 @@ const defaultProps: Partial<SkeletonProps> = {
 };
 
 export const Skeleton = forwardRef<HTMLDivElement, SkeletonProps>((props, ref) => {
-  const { height, width, visible, animate, className, circle, radius, unstyled, ...others } =
-    useComponentDefaultProps('Skeleton', defaultProps, props);
+  const {
+    height,
+    width,
+    visible,
+    animate,
+    className,
+    circle,
+    radius,
+    unstyled,
+    variant,
+    ...others
+  } = useComponentDefaultProps('Skeleton', defaultProps, props);
 
   const { classes, cx } = useStyles(
     { height, width, circle, radius, animate },
-    { unstyled, name: 'Skeleton' }
+    { name: 'Skeleton', unstyled, variant }
   );
 
   return (
