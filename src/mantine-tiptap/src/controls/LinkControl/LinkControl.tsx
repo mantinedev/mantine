@@ -93,7 +93,7 @@ export const LinkControl = forwardRef<HTMLButtonElement, RichTextEditorLinkContr
       >
         <Popover.Target>
           <ControlBase
-            icon={LinkIcon}
+            icon={icon || LinkIcon}
             aria-label={labels.linkControlLabel}
             title={labels.linkControlLabel}
             onClick={handleOpen}
