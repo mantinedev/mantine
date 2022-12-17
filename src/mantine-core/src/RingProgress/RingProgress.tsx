@@ -16,6 +16,8 @@ interface RingProgressSection extends React.ComponentPropsWithRef<'circle'> {
 export interface RingProgressProps
   extends DefaultProps<RingProgressStylesNames>,
     React.ComponentPropsWithoutRef<'div'> {
+  variant?: string;
+
   /** Label displayed in the center of the ring */
   label?: React.ReactNode;
 
@@ -53,10 +55,17 @@ export const RingProgress = forwardRef<HTMLDivElement, RingProgressProps>((props
     roundCaps,
     rootColor,
     unstyled,
+    variant,
     ...others
   } = useComponentDefaultProps('RingProgress', defaultProps, props);
 
-  const { classes, cx } = useStyles(null, { classNames, styles, unstyled, name: 'RingProgress' });
+  const { classes, cx } = useStyles(null, {
+    name: 'RingProgress',
+    classNames,
+    styles,
+    unstyled,
+    variant,
+  });
 
   const curves = getCurves({
     size,
