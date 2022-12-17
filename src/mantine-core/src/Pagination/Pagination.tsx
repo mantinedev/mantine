@@ -16,6 +16,8 @@ export type PaginationStylesNames = Selectors<typeof useStyles>;
 export interface PaginationProps
   extends DefaultProps<PaginationStylesNames, PaginationStylesParams>,
     Omit<GroupProps, 'classNames' | 'styles' | 'onChange'> {
+  variant?: string;
+
   /** Change item component */
   itemComponent?: React.FC<PaginationItemProps>;
 
@@ -78,6 +80,7 @@ const defaultProps: Partial<PaginationProps> = {
 export const Pagination = forwardRef<HTMLDivElement, PaginationProps>((props, ref) => {
   const {
     itemComponent: Item,
+    className,
     classNames,
     styles,
     page,
@@ -96,12 +99,13 @@ export const Pagination = forwardRef<HTMLDivElement, PaginationProps>((props, re
     sx,
     unstyled,
     disabled,
+    variant,
     ...others
   } = useComponentDefaultProps('Pagination', defaultProps, props);
 
-  const { classes, theme } = useStyles(
+  const { classes, theme, cx } = useStyles(
     { color, size, radius },
-    { classNames, styles, unstyled, name: 'Pagination' }
+    { name: 'Pagination', classNames, styles, unstyled, variant }
   );
 
   const { range, setPage, next, previous, active, first, last } = usePagination({
@@ -135,6 +139,7 @@ export const Pagination = forwardRef<HTMLDivElement, PaginationProps>((props, re
 
   return (
     <Group
+      className={cx(classes.root, className)}
       role="navigation"
       spacing={spacing || theme.fn.size({ size, sizes: theme.spacing }) / 2}
       ref={ref}

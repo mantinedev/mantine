@@ -18,6 +18,8 @@ export default createStyles((theme, { size, radius, color }: PaginationStylesPar
   const colors = theme.fn.variant({ color, variant: 'filled' });
 
   return {
+    root: {},
+
     item: {
       ...theme.fn.fontStyles(),
       ...theme.fn.focusStyles(),
