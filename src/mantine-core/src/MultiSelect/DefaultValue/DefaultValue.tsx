@@ -55,7 +55,7 @@ export function DefaultValue({
           radius={2}
           color="blue"
           variant="transparent"
-          iconSize={buttonSizes[size] / 2}
+          iconSize="70%"
           className={classes.defaultValueRemove}
           tabIndex={-1}
         />

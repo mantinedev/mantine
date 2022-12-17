@@ -5,16 +5,21 @@ import {
   itSupportsSystemProps,
   itSupportsInputProps,
   itSupportsFocusEvents,
+  itSupportsProviderVariant,
+  itSupportsProviderSize,
 } from '@mantine/tests';
 import { NativeSelect, NativeSelectProps } from './NativeSelect';
 
 const defaultProps: NativeSelectProps = {
+  label: 'test-label',
   data: ['test-item-1', 'test-item-2', 'test-item-3'],
 };
 
 describe('@mantine/core/NativeSelect', () => {
   itSupportsInputProps(NativeSelect, defaultProps, 'NativeSelect');
   itSupportsFocusEvents(NativeSelect, defaultProps, 'select');
+  itSupportsProviderVariant(NativeSelect, defaultProps, 'NativeSelect', ['root', 'input', 'label']);
+  itSupportsProviderSize(NativeSelect, defaultProps, 'NativeSelect', ['root', 'input', 'label']);
   itSupportsSystemProps({
     component: NativeSelect,
     props: defaultProps,

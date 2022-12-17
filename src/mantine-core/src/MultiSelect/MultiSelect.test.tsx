@@ -10,6 +10,8 @@ import {
   itSupportsInputWrapperProps,
   itSupportsInputContainer,
   itSupportsInputAsterisk,
+  itSupportsProviderSize,
+  itSupportsProviderVariant,
 } from '@mantine/tests';
 import { MultiSelect, MultiSelectProps } from './MultiSelect';
 
@@ -23,6 +25,8 @@ const defaultProps: MultiSelectProps = {
 };
 
 describe('@mantine/core/MultiSelect', () => {
+  itSupportsProviderVariant(MultiSelect, defaultProps, 'MultiSelect', ['root', 'input', 'label']);
+  itSupportsProviderSize(MultiSelect, defaultProps, 'MultiSelect', ['root', 'input', 'label']);
   checkAccessibility([<MultiSelect {...defaultProps} initiallyOpened />]);
   itSupportsFocusEvents(MultiSelect, defaultProps, '#test-multi-select');
   itSupportsInputIcon(MultiSelect, defaultProps);

@@ -8,7 +8,7 @@ export interface CloseButtonProps
   extends Omit<ActionIconProps, 'children'>,
     Omit<React.ComponentPropsWithoutRef<'button'>, 'color'> {
   /** Width and height of X icon */
-  iconSize?: number;
+  iconSize?: number | string;
 }
 
 const defaultProps: Partial<CloseButtonProps> = {};
