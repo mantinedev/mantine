@@ -10,6 +10,8 @@ import { Box } from '../Box';
 import useStyles, { PaperStylesParams } from './Paper.styles';
 
 export interface PaperProps extends DefaultProps<never, PaperStylesParams> {
+  variant?: string;
+
   /** Predefined box-shadow from theme.shadows (xs, sm, md, lg, xl) or any valid css box-shadow property */
   shadow?: MantineShadow;
 
@@ -26,9 +28,13 @@ export interface PaperProps extends DefaultProps<never, PaperStylesParams> {
 const defaultProps: Partial<PaperProps> = {};
 
 export const _Paper = forwardRef<HTMLDivElement, PaperProps>((props, ref) => {
-  const { className, children, radius, withBorder, shadow, unstyled, ...others } =
+  const { className, children, radius, withBorder, shadow, unstyled, variant, ...others } =
     useComponentDefaultProps('Paper', defaultProps, props);
-  const { classes, cx } = useStyles({ radius, shadow, withBorder }, { name: 'Paper', unstyled });
+
+  const { classes, cx } = useStyles(
+    { radius, shadow, withBorder },
+    { name: 'Paper', unstyled, variant }
+  );
 
   return (
     <Box className={cx(classes.root, className)} ref={ref} {...others}>
