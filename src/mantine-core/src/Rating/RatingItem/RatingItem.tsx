@@ -9,6 +9,7 @@ export type RatingItemStylesNames = Selectors<typeof useStyles>;
 export interface RatingItemProps
   extends DefaultProps<RatingItemStylesNames>,
     Omit<React.ComponentPropsWithoutRef<'input'>, 'value' | 'size'> {
+  variant: string;
   size: MantineSize;
   getSymbolLabel: (value: number) => string;
   emptyIcon?: React.ReactNode | ((value: number) => React.ReactNode);
@@ -36,9 +37,17 @@ export function RatingItem({
   unstyled,
   color,
   id,
+  variant,
   ...others
 }: RatingItemProps) {
-  const { classes } = useStyles(null, { name: 'Rating', classNames, styles, unstyled });
+  const { classes } = useStyles(null, {
+    name: 'Rating',
+    classNames,
+    styles,
+    unstyled,
+    size,
+    variant,
+  });
   const _fullIcon = typeof fullIcon === 'function' ? fullIcon(value) : fullIcon;
   const _emptyIcon = typeof emptyIcon === 'function' ? emptyIcon(value) : emptyIcon;
 
