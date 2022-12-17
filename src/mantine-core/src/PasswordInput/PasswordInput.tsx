@@ -111,7 +111,7 @@ export const PasswordInput = forwardRef<HTMLInputElement, PasswordInputProps>((p
   const rightSectionWidth = theme.fn.size({ size, sizes: rightSectionSizes });
   const { classes, cx } = useStyles(
     { size, rightSectionWidth },
-    { name: 'PasswordInput', classNames, styles, unstyled }
+    { name: 'PasswordInput', classNames, styles, unstyled, size, variant }
   );
   const uuid = useId(id);
   const { systemStyles, rest } = extractSystemStyles(others);
@@ -169,6 +169,7 @@ export const PasswordInput = forwardRef<HTMLInputElement, PasswordInputProps>((p
       withAsterisk={withAsterisk}
       inputWrapperOrder={inputWrapperOrder}
       inputContainer={inputContainer}
+      variant={variant}
       {...systemStyles}
       {...wrapperProps}
     >
