@@ -20,6 +20,7 @@ interface MenuContext {
   classNames: ClassNames<MenuStylesNames>;
   styles: Styles<MenuStylesNames>;
   unstyled: boolean;
+  variant?: string;
 }
 
 export const [MenuContextProvider, useMenuContext] = createSafeContext<MenuContext>(

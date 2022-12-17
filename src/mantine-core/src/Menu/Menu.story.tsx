@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { MantineProvider } from '@mantine/styles';
 import { IconTable, IconSearch } from '@tabler/icons';
 import { WithinOverlays } from '@mantine/storybook';
 import { Menu } from './Menu';
@@ -102,5 +103,37 @@ export function Controlled() {
         </Menu.Dropdown>
       </Menu>
     </div>
+  );
+}
+
+export function ProviderVariant() {
+  return (
+    <MantineProvider
+      inherit
+      theme={{
+        components: {
+          Menu: {
+            variants: (_theme, variant) => {
+              if (variant === 'provider') {
+                return { dropdown: { backgroundColor: 'pink' }, item: { backgroundColor: 'red' } };
+              }
+
+              return null;
+            },
+          },
+        },
+      }}
+    >
+      <Menu variant="provider">
+        <Menu.Target>
+          <Button>Provider menu</Button>
+        </Menu.Target>
+
+        <Menu.Dropdown>
+          <Menu.Item>Item 1</Menu.Item>
+          <Menu.Item>Item 2</Menu.Item>
+        </Menu.Dropdown>
+      </Menu>
+    </MantineProvider>
   );
 }

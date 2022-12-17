@@ -34,13 +34,20 @@ const defaultProps: Partial<DefaultProps> = {};
 export const _MenuItem = forwardRef<HTMLButtonElement, MenuItemProps>((props, ref) => {
   const { children, className, color, closeMenuOnClick, icon, rightSection, ...others } =
     useComponentDefaultProps('MenuItem', defaultProps, props);
+
   const ctx = useMenuContext();
   const { classes, cx, theme } = useStyles(
     { radius: ctx.radius, color },
-    { name: 'Menu', classNames: ctx.classNames, styles: ctx.styles, unstyled: ctx.unstyled }
+    {
+      name: 'Menu',
+      classNames: ctx.classNames,
+      styles: ctx.styles,
+      unstyled: ctx.unstyled,
+      variant: ctx.variant,
+    }
   );
-  const itemRef = useRef<HTMLButtonElement>();
 
+  const itemRef = useRef<HTMLButtonElement>();
   const itemIndex = ctx.getItemIndex(itemRef.current);
   const _others: any = others;
 
