@@ -15,6 +15,8 @@ export type ScrollAreaStylesNames = Selectors<typeof useStyles>;
 export interface ScrollAreaProps
   extends DefaultProps<ScrollAreaStylesNames, ScrollAreaStylesParams>,
     React.ComponentPropsWithRef<'div'> {
+  variant?: string;
+
   /** Scrollbar size in px */
   scrollbarSize?: number;
 
@@ -58,6 +60,7 @@ export const _ScrollArea = forwardRef<HTMLDivElement, ScrollAreaProps>((props, r
     viewportRef,
     onScrollPositionChange,
     unstyled,
+    variant,
     ...others
   } = useComponentDefaultProps('ScrollArea', defaultProps, props);
 
@@ -65,7 +68,7 @@ export const _ScrollArea = forwardRef<HTMLDivElement, ScrollAreaProps>((props, r
   const theme = useMantineTheme();
   const { classes, cx } = useStyles(
     { scrollbarSize, offsetScrollbars, scrollbarHovered, hidden: type === 'never' },
-    { name: 'ScrollArea', classNames, styles, unstyled }
+    { name: 'ScrollArea', classNames, styles, unstyled, variant }
   );
 
   return (
@@ -135,6 +138,7 @@ const ScrollAreaAutosize = forwardRef<HTMLDivElement, ScrollAreaAutosizeProps>((
     onScrollPositionChange,
     unstyled,
     sx,
+    variant,
     ...others
   } = useComponentDefaultProps<ScrollAreaAutosizeProps>('ScrollAreaAutosize', defaultProps, props);
   return (
@@ -151,6 +155,7 @@ const ScrollAreaAutosize = forwardRef<HTMLDivElement, ScrollAreaAutosizeProps>((
           viewportRef={viewportRef}
           onScrollPositionChange={onScrollPositionChange}
           unstyled={unstyled}
+          variant={variant}
         >
           {children}
         </_ScrollArea>
