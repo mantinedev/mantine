@@ -33,6 +33,8 @@ export type SegmentedControlStylesNames = Selectors<typeof useStyles>;
 export interface SegmentedControlProps
   extends DefaultProps<SegmentedControlStylesNames, SegmentedControlStylesParams>,
     Omit<React.ComponentPropsWithoutRef<'div'>, 'value' | 'onChange'> {
+  variant?: string;
+
   /** Data based on which controls are rendered */
   data: string[] | SegmentedControlItem[];
 
@@ -98,6 +100,7 @@ export const SegmentedControl = forwardRef<HTMLDivElement, SegmentedControlProps
     defaultValue,
     orientation,
     unstyled,
+    variant,
     ...others
   } = useComponentDefaultProps('SegmentedControl', defaultProps, props);
   const theme = useMantineTheme();
@@ -131,7 +134,7 @@ export const SegmentedControl = forwardRef<HTMLDivElement, SegmentedControlProps
       transitionTimingFunction,
       orientation,
     },
-    { classNames, styles, unstyled, name: 'SegmentedControl' }
+    { name: 'SegmentedControl', classNames, styles, unstyled, variant, size }
   );
 
   const [activePosition, setActivePosition] = useState({
