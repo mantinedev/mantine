@@ -10,6 +10,8 @@ export type SpoilerStylesNames = Selectors<typeof useStyles>;
 export interface SpoilerProps
   extends DefaultProps<SpoilerStylesNames, SpoilerStylesParams>,
     React.ComponentPropsWithoutRef<'div'> {
+  variant?: string;
+
   /** Max height of visible content, when this point is reached spoiler appears */
   maxHeight: number;
 
@@ -48,12 +50,13 @@ export const Spoiler = forwardRef<HTMLDivElement, SpoilerProps>((props, ref) => 
     classNames,
     styles,
     unstyled,
+    variant,
     ...others
   } = useComponentDefaultProps('Spoiler', defaultProps, props);
 
   const { classes, cx } = useStyles(
     { transitionDuration },
-    { classNames, styles, unstyled, name: 'Spoiler' }
+    { name: 'Spoiler', classNames, styles, unstyled, variant }
   );
 
   const [show, setShowState] = useState(initialState);
