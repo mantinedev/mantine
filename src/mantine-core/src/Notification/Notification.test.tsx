@@ -1,6 +1,11 @@
 import React from 'react';
 import { render } from '@testing-library/react';
-import { checkAccessibility, itRendersChildren, itSupportsSystemProps } from '@mantine/tests';
+import {
+  checkAccessibility,
+  itRendersChildren,
+  itSupportsSystemProps,
+  itSupportsProviderVariant,
+} from '@mantine/tests';
 import { Notification, NotificationProps } from './Notification';
 
 const defaultProps: NotificationProps = {
@@ -11,6 +16,7 @@ const defaultProps: NotificationProps = {
 
 describe('@mantine/core/Notification', () => {
   itRendersChildren(Notification, defaultProps);
+  itSupportsProviderVariant(Notification, defaultProps, 'Notification');
   checkAccessibility([<Notification {...defaultProps} />]);
   itSupportsSystemProps({
     component: Notification,

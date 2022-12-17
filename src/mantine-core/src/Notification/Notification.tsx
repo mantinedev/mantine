@@ -17,6 +17,8 @@ export type NotificationStylesNames = Exclude<Selectors<typeof useStyles>, 'with
 export interface NotificationProps
   extends DefaultProps<NotificationStylesNames, NotificationStylesParams>,
     Omit<React.ComponentPropsWithoutRef<'div'>, 'title'> {
+  variant?: string;
+
   /** Called when close button is clicked */
   onClose?(): void;
 
@@ -60,18 +62,18 @@ export const Notification = forwardRef<HTMLDivElement, NotificationProps>((props
     classNames,
     styles,
     unstyled,
+    variant,
     ...others
   } = useComponentDefaultProps('Notification', {}, props);
 
   const { classes, cx } = useStyles(
     { color, radius, withTitle: !!title },
-    { classNames, styles, unstyled, name: 'Notification' }
+    { classNames, styles, unstyled, name: 'Notification', variant }
   );
-  const withIcon = icon || loading;
 
   return (
     <Box
-      className={cx(classes.root, { [classes.withIcon]: withIcon }, className)}
+      className={cx(classes.root, { [classes.withIcon]: icon || loading }, className)}
       role="alert"
       ref={ref}
       {...others}
