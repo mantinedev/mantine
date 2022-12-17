@@ -24,6 +24,8 @@ export type SliderStylesNames =
 export interface SliderProps
   extends DefaultProps<SliderStylesNames>,
     Omit<React.ComponentPropsWithoutRef<'div'>, 'value' | 'onChange'> {
+  variant?: string;
+
   /** Color from theme.colors */
   color?: MantineColor;
 
@@ -147,6 +149,7 @@ export const Slider = forwardRef<HTMLDivElement, SliderProps>((props, ref) => {
     thumbSize,
     scale,
     inverted,
+    variant,
     ...others
   } = useComponentDefaultProps('Slider', defaultProps, props);
 
@@ -267,6 +270,7 @@ export const Slider = forwardRef<HTMLDivElement, SliderProps>((props, ref) => {
       styles={styles}
       disabled={disabled}
       unstyled={unstyled}
+      variant={variant}
     >
       <Track
         inverted={inverted}
@@ -286,6 +290,7 @@ export const Slider = forwardRef<HTMLDivElement, SliderProps>((props, ref) => {
         styles={styles}
         disabled={disabled}
         unstyled={unstyled}
+        variant={variant}
       >
         <Thumb
           max={max}
@@ -309,6 +314,7 @@ export const Slider = forwardRef<HTMLDivElement, SliderProps>((props, ref) => {
           disabled={disabled}
           unstyled={unstyled}
           thumbSize={thumbSize}
+          variant={variant}
         >
           {thumbChildren}
         </Thumb>

@@ -24,6 +24,7 @@ export interface TrackProps extends DefaultProps<TrackStylesNames> {
   onMouseLeave?(event?: React.MouseEvent<HTMLDivElement>): void;
   disabled: boolean;
   inverted?: boolean;
+  variant: string;
 }
 
 export function Track({
@@ -41,11 +42,12 @@ export function Track({
   marksOffset,
   unstyled,
   inverted,
+  variant,
   ...others
 }: TrackProps) {
   const { classes } = useStyles(
     { color, size, radius, disabled, inverted },
-    { classNames, styles, unstyled, name: 'Slider' }
+    { name: 'Slider', classNames, styles, unstyled, variant, size }
   );
 
   return (
@@ -70,6 +72,7 @@ export function Track({
         disabled={disabled}
         unstyled={unstyled}
         inverted={inverted}
+        variant={variant}
       />
     </div>
   );
