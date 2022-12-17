@@ -30,6 +30,8 @@ export type ModalStylesNames = Selectors<typeof useStyles>;
 export interface ModalProps
   extends Omit<DefaultProps<ModalStylesNames, ModalStylesParams>, MantineStyleSystemSize>,
     Omit<React.ComponentPropsWithoutRef<'div'>, 'title'> {
+  variant?: string;
+
   /** Mounts modal if true */
   opened: boolean;
 
@@ -168,6 +170,7 @@ export function Modal(props: ModalProps) {
     unstyled,
     lockScroll: shouldLockScroll,
     withFocusReturn,
+    variant,
     ...others
   } = useComponentDefaultProps('Modal', defaultProps, props);
   const baseId = useId(id);
@@ -175,7 +178,7 @@ export function Modal(props: ModalProps) {
   const bodyId = `${baseId}-body`;
   const { classes, cx, theme } = useStyles(
     { size, overflow, centered, zIndex, fullScreen },
-    { unstyled, classNames, styles, name: 'Modal' }
+    { unstyled, classNames, styles, name: 'Modal', variant, size }
   );
   const focusTrapRef = useFocusTrap(trapFocus && opened);
   const overlayRef = useRef<HTMLDivElement>(null);

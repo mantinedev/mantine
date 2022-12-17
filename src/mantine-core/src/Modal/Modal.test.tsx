@@ -1,7 +1,13 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { checkAccessibility, itRendersChildren, itSupportsSystemProps } from '@mantine/tests';
+import {
+  checkAccessibility,
+  itRendersChildren,
+  itSupportsSystemProps,
+  itSupportsProviderSize,
+  itSupportsProviderVariant,
+} from '@mantine/tests';
 import { Modal, ModalProps } from './Modal';
 
 const defaultProps: ModalProps = {
@@ -14,6 +20,8 @@ const defaultProps: ModalProps = {
 };
 
 describe('@mantine/core/Modal', () => {
+  itSupportsProviderSize(Modal, defaultProps, 'Modal');
+  itSupportsProviderVariant(Modal, defaultProps, 'Modal');
   checkAccessibility([<Modal {...defaultProps} />]);
   itSupportsSystemProps({ component: Modal, props: defaultProps });
   itRendersChildren(Modal, defaultProps);
