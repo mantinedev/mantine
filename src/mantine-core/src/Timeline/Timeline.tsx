@@ -13,6 +13,8 @@ import { TimelineItem, TimelineItemStylesNames } from './TimelineItem/TimelineIt
 export interface TimelineProps
   extends DefaultProps<TimelineItemStylesNames>,
     React.ComponentPropsWithRef<'div'> {
+  variant?: string;
+
   /** <Timeline.Item /> components only */
   children: React.ReactNode;
 
@@ -67,12 +69,14 @@ export const Timeline: TimelineComponent = forwardRef<HTMLDivElement, TimelinePr
       sx,
       reverseActive,
       unstyled,
+      variant,
       ...others
     } = useComponentDefaultProps('Timeline', defaultProps, props);
 
     const _children = Children.toArray(children);
     const items = _children.map((item: React.ReactElement, index) =>
       React.cloneElement(item, {
+        variant,
         classNames,
         styles,
         align,

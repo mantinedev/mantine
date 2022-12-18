@@ -15,6 +15,8 @@ export type TimelineItemStylesNames = Selectors<typeof useStyles>;
 export interface TimelineItemProps
   extends DefaultProps<TimelineItemStylesNames>,
     Omit<React.ComponentPropsWithoutRef<'div'>, 'title'> {
+  variant?: string;
+
   /** Item title, rendered next to bullet */
   title?: React.ReactNode;
 
@@ -73,12 +75,13 @@ export const TimelineItem = forwardRef<HTMLDivElement, TimelineItemProps>((props
     align,
     lineVariant,
     unstyled,
+    variant,
     ...others
   } = useComponentDefaultProps('TimelineItem', defaultProps, props);
 
   const { classes, cx } = useStyles(
     { bulletSize, color, radius, align, lineVariant, lineWidth },
-    { classNames, styles, unstyled, name: 'Timeline' }
+    { name: 'Timeline', classNames, styles, unstyled, variant }
   );
 
   return (
