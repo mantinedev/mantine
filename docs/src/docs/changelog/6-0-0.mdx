@@ -7,6 +7,29 @@ release: https://github.com/mantinedev/mantine/releases/tag/6.0.0
 date: 'December 1st, 2022'
 ---
 
+## createStyles changes
+
+[createStyles](https://mantine.dev/styles/create-styles/) function no longer receives `getRef`
+as a third argument. Use `getStylesRef` exported from `@mantine/core` package instead:
+
+```tsx
+// in 5.x, will not work in 6.x
+import { createStyles } from '@mantine/core';
+
+createStyles((theme, params, getRef) => {
+  child: { ref: getRef('child') },
+  parent: { [`& .${getRef('child')}`]: { color: 'red' } },
+});
+
+// in 6.x use getStylesRef function
+import { createStyles, getStylesRef } from '@mantine/core';
+
+createStyles((theme, params) => {
+  child: { ref: getStylesRef('child') },
+  parent: { [`& .${getStylesRef('child')}`]: { color: 'red' } },
+});
+```
+
 ## Other breaking changes
 
 - [Text](https://mantine.dev/core/text/) no longer supports `variant="link"`, use [Anchor](https://mantine.dev/core/anchor/) instead
