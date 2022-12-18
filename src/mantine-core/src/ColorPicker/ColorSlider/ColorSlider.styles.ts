@@ -1,14 +1,13 @@
-import { createStyles, MantineSize } from '@mantine/styles';
-
+import { createStyles, MantineSize, getStylesRef } from '@mantine/styles';
 import { THUMB_SIZES } from '../Thumb/Thumb.styles';
 
 interface ColorSliderStyles {
   size: MantineSize;
 }
 
-export default createStyles((theme, { size }: ColorSliderStyles, getRef) => ({
+export default createStyles((theme, { size }: ColorSliderStyles) => ({
   sliderThumb: {
-    ref: getRef('sliderThumb'),
+    ref: getStylesRef('sliderThumb'),
   },
 
   slider: {
@@ -19,13 +18,13 @@ export default createStyles((theme, { size }: ColorSliderStyles, getRef) => ({
     marginRight: theme.fn.size({ size, sizes: THUMB_SIZES }) / 2,
     outline: 0,
 
-    [`&:focus .${getRef('sliderThumb')}`]: {
+    [`&:focus .${getStylesRef('sliderThumb')}`]: {
       ...(theme.focusRing === 'always' || theme.focusRing === 'auto'
         ? theme.focusRingStyles.styles(theme)
         : theme.focusRingStyles.resetStyles(theme)),
     },
 
-    [`&:focus:not(:focus-visible) .${getRef('sliderThumb')}`]: {
+    [`&:focus:not(:focus-visible) .${getStylesRef('sliderThumb')}`]: {
       ...(theme.focusRing === 'auto' || theme.focusRing === 'never'
         ? theme.focusRingStyles.resetStyles(theme)
         : null),

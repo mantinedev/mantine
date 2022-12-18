@@ -1,6 +1,6 @@
-import { createStyles } from '@mantine/styles';
+import { createStyles, getStylesRef } from '@mantine/styles';
 
-export default createStyles((theme, _params, getRef) => ({
+export default createStyles((theme) => ({
   input: {
     height: 0,
     width: 0,
@@ -10,7 +10,7 @@ export default createStyles((theme, _params, getRef) => ({
     opacity: 0,
 
     '&:focus': {
-      [`& + .${getRef('label')}`]: {
+      [`& + .${getStylesRef('label')}`]: {
         outline:
           theme.focusRing === 'always' || theme.focusRing === 'auto'
             ? `1px solid ${theme.colors[theme.primaryColor][theme.colorScheme === 'dark' ? 7 : 5]}`
@@ -18,7 +18,7 @@ export default createStyles((theme, _params, getRef) => ({
       },
 
       '&:focus:not(:focus-visible)': {
-        [`& + .${getRef('label')}`]: {
+        [`& + .${getStylesRef('label')}`]: {
           outline: theme.focusRing === 'auto' || theme.focusRing === 'never' ? 'none' : undefined,
         },
       },
@@ -26,7 +26,7 @@ export default createStyles((theme, _params, getRef) => ({
   },
 
   label: {
-    ref: getRef('label'),
+    ref: getStylesRef('label'),
     display: 'block',
     boxSizing: 'border-box',
     marginInline: 1,

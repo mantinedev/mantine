@@ -2,6 +2,7 @@ import React from 'react';
 import { render, screen } from '@testing-library/react';
 import { DEFAULT_THEME, MantineProvider } from '../theme';
 import { createStyles } from './create-styles';
+import { getStylesRef } from './get-styles-ref';
 import { CSSObject } from './types';
 
 function expectStyles(Component: React.FC<any>, styles: CSSObject) {
@@ -25,12 +26,12 @@ const paramsStyles = createStyles((_theme, params: { radius: number }) => ({
   testParams: { borderRadius: params.radius },
 }));
 
-const getRefStyles = createStyles((_theme, _params, getRef) => ({
-  overrideRef: { ref: getRef('override') },
+const getRefStyles = createStyles(() => ({
+  overrideRef: { ref: getStylesRef('override') },
   testRef: {
     backgroundColor: 'red',
 
-    [`&.${getRef('override')}`]: {
+    [`&.${getStylesRef('override')}`]: {
       backgroundColor: 'blue',
     },
   },

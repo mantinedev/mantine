@@ -1,4 +1,4 @@
-import { createStyles, MantineSize, MantineColor } from '@mantine/styles';
+import { createStyles, MantineSize, MantineColor, getStylesRef } from '@mantine/styles';
 
 export interface RadioStylesParams {
   size: MantineSize;
@@ -25,7 +25,7 @@ const iconSizes = {
 };
 
 export default createStyles(
-  (theme, { size, color, transitionDuration, labelPosition, error }: RadioStylesParams, getRef) => {
+  (theme, { size, color, transitionDuration, labelPosition, error }: RadioStylesParams) => {
     const colors = theme.fn.variant({ variant: 'filled', color });
     const errorColor = theme.fn.variant({ variant: 'filled', color: 'red' }).background;
 
@@ -37,7 +37,7 @@ export default createStyles(
       },
 
       icon: {
-        ref: getRef('icon'),
+        ref: getStylesRef('icon'),
         color: theme.white,
         opacity: 0,
         transform: 'scale(0.75) translateY(2px)',
@@ -78,7 +78,7 @@ export default createStyles(
           background: colors.background,
           borderColor: colors.background,
 
-          [`& + .${getRef('icon')}`]: {
+          [`& + .${getStylesRef('icon')}`]: {
             opacity: 1,
             transform: 'scale(1)',
           },
@@ -89,7 +89,7 @@ export default createStyles(
           backgroundColor:
             theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[1],
 
-          [`& + .${getRef('icon')}`]: {
+          [`& + .${getStylesRef('icon')}`]: {
             color: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[4],
           },
         },

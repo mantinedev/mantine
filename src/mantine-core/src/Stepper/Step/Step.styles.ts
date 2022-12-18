@@ -1,4 +1,10 @@
-import { createStyles, MantineColor, MantineNumberSize, MantineSize } from '@mantine/styles';
+import {
+  createStyles,
+  MantineColor,
+  MantineNumberSize,
+  MantineSize,
+  getStylesRef,
+} from '@mantine/styles';
 
 export interface StepStylesParams {
   color: MantineColor;
@@ -21,8 +27,7 @@ export const iconSizes = {
 export default createStyles(
   (
     theme,
-    { color, iconSize, size, radius, allowStepClick, iconPosition, orientation }: StepStylesParams,
-    getRef
+    { color, iconSize, size, radius, allowStepClick, iconPosition, orientation }: StepStylesParams
   ) => {
     const _iconSize = iconSize || theme.fn.size({ size, sizes: iconSizes });
     const iconMargin = size === 'xl' || size === 'lg' ? theme.spacing.md : theme.spacing.sm;
@@ -43,7 +48,7 @@ export default createStyles(
         '&:first-of-type': {
           marginTop: 0,
         },
-        [`&:last-of-type .${getRef('verticalSeparator')}`]: {
+        [`&:last-of-type .${getStylesRef('verticalSeparator')}`]: {
           display: 'none',
         },
       },
@@ -75,7 +80,7 @@ export default createStyles(
         borderLeft: `2px solid ${
           theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[1]
         }`,
-        ref: getRef('verticalSeparator'),
+        ref: getStylesRef('verticalSeparator'),
       },
 
       verticalSeparatorActive: {

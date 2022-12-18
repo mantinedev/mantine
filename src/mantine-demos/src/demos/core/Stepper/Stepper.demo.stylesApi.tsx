@@ -6,7 +6,7 @@ const code = `
 import { useState } from 'react';
 import { Stepper, createStyles } from '@mantine/core';
 
-const useStyles = createStyles((theme, _params, getRef) => ({
+const useStyles = createStyles((theme) => ({
   root: {
     padding: theme.spacing.md,
     backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[0],
@@ -25,7 +25,6 @@ const useStyles = createStyles((theme, _params, getRef) => ({
   },
 
   stepIcon: {
-    ref: getRef('stepIcon'),
     borderColor: 'transparent',
     backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.white,
     borderWidth: 0,
@@ -59,7 +58,7 @@ function Demo() {
 }
 `;
 
-const useStyles = createStyles((theme, _params, getRef) => ({
+const useStyles = createStyles((theme) => ({
   root: {
     padding: theme.spacing.md,
     backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[0],
@@ -80,7 +79,6 @@ const useStyles = createStyles((theme, _params, getRef) => ({
   },
 
   stepIcon: {
-    ref: getRef('stepIcon'),
     borderColor: 'transparent',
     backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.white,
     borderWidth: 0,

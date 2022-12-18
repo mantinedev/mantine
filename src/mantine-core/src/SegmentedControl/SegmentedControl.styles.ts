@@ -1,4 +1,10 @@
-import { createStyles, MantineNumberSize, MantineSize, MantineColor } from '@mantine/styles';
+import {
+  createStyles,
+  MantineNumberSize,
+  MantineSize,
+  MantineColor,
+  getStylesRef,
+} from '@mantine/styles';
 
 export const WRAPPER_PADDING = 4;
 
@@ -33,15 +39,14 @@ export default createStyles(
       transitionTimingFunction,
       size,
       orientation,
-    }: SegmentedControlStylesParams,
-    getRef
+    }: SegmentedControlStylesParams
   ) => {
     const vertical = orientation === 'vertical';
     const colors = theme.fn.variant({ variant: 'filled', color });
 
     return {
       label: {
-        ref: getRef('label'),
+        ref: getStylesRef('label'),
         ...theme.fn.focusStyles(),
         ...theme.fn.fontStyles(),
         WebkitTapHighlightColor: 'transparent',
@@ -67,7 +72,7 @@ export default createStyles(
       },
 
       control: {
-        ref: getRef('control'),
+        ref: getStylesRef('control'),
         position: 'relative',
         boxSizing: 'border-box',
         flex: 1,
@@ -95,14 +100,14 @@ export default createStyles(
         '&:focus': {
           outline: 'none',
 
-          [`& + .${getRef('label')}`]: {
+          [`& + .${getStylesRef('label')}`]: {
             ...(theme.focusRing === 'always' || theme.focusRing === 'auto'
               ? theme.focusRingStyles.styles(theme)
               : theme.focusRingStyles.resetStyles(theme)),
           },
 
           '&:focus:not(:focus-visible)': {
-            [`& + .${getRef('label')}`]: {
+            [`& + .${getStylesRef('label')}`]: {
               ...(theme.focusRing === 'auto' || theme.focusRing === 'never'
                 ? theme.focusRingStyles.resetStyles(theme)
                 : null),
@@ -126,7 +131,7 @@ export default createStyles(
         borderLeftColor: 'transparent !important',
         borderTopColor: 'transparent !important',
 
-        [`& + .${getRef('control')}`]: {
+        [`& + .${getStylesRef('control')}`]: {
           borderLeftColor: 'transparent !important',
           borderTopColor: 'transparent !important',
         },

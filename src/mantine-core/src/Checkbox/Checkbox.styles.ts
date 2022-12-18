@@ -1,4 +1,4 @@
-import { createStyles, MantineColor, MantineNumberSize } from '@mantine/styles';
+import { createStyles, MantineColor, MantineNumberSize, getStylesRef } from '@mantine/styles';
 
 const sizes = {
   xs: 16,
@@ -29,15 +29,14 @@ export default createStyles(
       labelPosition,
       error,
       indeterminate,
-    }: CheckboxStylesParams,
-    getRef
+    }: CheckboxStylesParams
   ) => {
     const _size = theme.fn.size({ size, sizes });
     const colors = theme.fn.variant({ variant: 'filled', color });
 
     return {
       icon: {
-        ref: getRef('icon'),
+        ref: getStylesRef('icon'),
         color: indeterminate ? 'inherit' : theme.white,
         transform: indeterminate ? 'none' : 'translateY(5px) scale(0.5)',
         opacity: indeterminate ? 1 : 0,
@@ -90,7 +89,7 @@ export default createStyles(
           backgroundColor: colors.background,
           borderColor: colors.background,
 
-          [`& + .${getRef('icon')}`]: {
+          [`& + .${getStylesRef('icon')}`]: {
             opacity: 1,
             color: theme.white,
             transform: 'translateY(0) scale(1)',
@@ -103,7 +102,7 @@ export default createStyles(
           borderColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[3],
           cursor: 'not-allowed',
 
-          [`& + .${getRef('icon')}`]: {
+          [`& + .${getStylesRef('icon')}`]: {
             color: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[5],
           },
         },

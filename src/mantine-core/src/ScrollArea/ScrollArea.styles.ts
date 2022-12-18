@@ -1,4 +1,4 @@
-import { createStyles } from '@mantine/styles';
+import { createStyles, getStylesRef } from '@mantine/styles';
 
 export interface ScrollAreaStylesParams {
   scrollbarSize: number;
@@ -10,8 +10,7 @@ export interface ScrollAreaStylesParams {
 export default createStyles(
   (
     theme,
-    { scrollbarSize, offsetScrollbars, scrollbarHovered, hidden }: ScrollAreaStylesParams,
-    getRef
+    { scrollbarSize, offsetScrollbars, scrollbarHovered, hidden }: ScrollAreaStylesParams
   ) => ({
     root: {
       overflow: 'hidden',
@@ -34,7 +33,7 @@ export default createStyles(
 
       '&:hover': {
         backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.colors.gray[0],
-        [`& .${getRef('thumb')}`]: {
+        [`& .${getStylesRef('thumb')}`]: {
           backgroundColor:
             theme.colorScheme === 'dark'
               ? theme.fn.rgba(theme.white, 0.5)
@@ -58,7 +57,7 @@ export default createStyles(
     },
 
     thumb: {
-      ref: getRef('thumb'),
+      ref: getStylesRef('thumb'),
       flex: 1,
       backgroundColor:
         theme.colorScheme === 'dark'

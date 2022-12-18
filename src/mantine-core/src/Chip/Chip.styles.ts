@@ -1,4 +1,4 @@
-import { createStyles, MantineNumberSize, MantineColor } from '@mantine/styles';
+import { createStyles, MantineNumberSize, MantineColor, getStylesRef } from '@mantine/styles';
 
 export const sizes = {
   xs: 24,
@@ -38,11 +38,11 @@ export interface ChipStylesParams {
   color: MantineColor;
 }
 
-export default createStyles((theme, { radius, size, color }: ChipStylesParams, getRef) => ({
+export default createStyles((theme, { radius, size, color }: ChipStylesParams) => ({
   root: {},
 
   label: {
-    ref: getRef('label'),
+    ref: getStylesRef('label'),
     ...theme.fn.fontStyles(),
     boxSizing: 'border-box',
     color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
@@ -92,7 +92,7 @@ export default createStyles((theme, { radius, size, color }: ChipStylesParams, g
         backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[1],
       }),
 
-      [`& .${getRef('iconWrapper')}`]: {
+      [`& .${getStylesRef('iconWrapper')}`]: {
         color: theme.colorScheme === 'dark' ? theme.colors.dark[3] : theme.colors.gray[5],
       },
     },
@@ -114,7 +114,7 @@ export default createStyles((theme, { radius, size, color }: ChipStylesParams, g
   },
 
   iconWrapper: {
-    ref: getRef('iconWrapper'),
+    ref: getStylesRef('iconWrapper'),
     color: theme.fn.variant({ variant: 'filled', color }).background,
     width:
       theme.fn.size({ size, sizes: iconSizes }) +
@@ -144,14 +144,14 @@ export default createStyles((theme, { radius, size, color }: ChipStylesParams, g
     '&:focus': {
       outline: 'none',
 
-      [`& + .${getRef('label')}`]: {
+      [`& + .${getStylesRef('label')}`]: {
         ...(theme.focusRing === 'always' || theme.focusRing === 'auto'
           ? theme.focusRingStyles.styles(theme)
           : theme.focusRingStyles.resetStyles(theme)),
       },
 
       '&:focus:not(:focus-visible)': {
-        [`& + .${getRef('label')}`]: {
+        [`& + .${getStylesRef('label')}`]: {
           ...(theme.focusRing === 'auto' || theme.focusRing === 'never'
             ? theme.focusRingStyles.resetStyles(theme)
             : null),

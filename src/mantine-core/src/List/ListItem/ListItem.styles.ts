@@ -1,9 +1,9 @@
-import { createStyles } from '@mantine/styles';
+import { createStyles, getStylesRef } from '@mantine/styles';
 import type { ListStylesParams } from '../List.styles';
 
-export default createStyles((theme, { spacing, center }: ListStylesParams, getRef) => ({
+export default createStyles((theme, { spacing, center }: ListStylesParams) => ({
   itemWrapper: {
-    ref: getRef('itemWrapper'),
+    ref: getStylesRef('itemWrapper'),
     display: 'inline-flex',
     flexDirection: 'column',
     whiteSpace: 'normal',
@@ -21,7 +21,7 @@ export default createStyles((theme, { spacing, center }: ListStylesParams, getRe
   withIcon: {
     listStyle: 'none',
 
-    [`& .${getRef('itemWrapper')}`]: {
+    [`& .${getStylesRef('itemWrapper')}`]: {
       display: 'inline-flex',
       alignItems: center ? 'center' : 'flex-start',
       flexDirection: 'row',

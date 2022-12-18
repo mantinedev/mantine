@@ -21,10 +21,6 @@ export interface UseStylesOptions<Key extends string> {
   size?: number | string;
 }
 
-function createRef(refName: string) {
-  return `__mantine-ref-${refName || ''}`;
-}
-
 function assignAccStyles(acc: Record<string, CSSObject>, styles: Record<string, CSSObject>) {
   if (styles) {
     Object.keys(styles).forEach((key) => {
@@ -77,9 +73,7 @@ export function createStyles<
   Params = void,
   Input extends Record<Key, CSSObject> = Record<Key, CSSObject>
 >(
-  input:
-    | ((theme: MantineTheme, params: Params, createRef: (refName: string) => string) => Input)
-    | Input,
+  input: ((theme: MantineTheme, params: Params) => Input) | Input,
   variantResolver?: (
     variant: string,
     theme: MantineTheme,
@@ -94,7 +88,7 @@ export function createStyles<
     const cache = useMantineEmotionCache();
 
     const { css, cx } = useCss();
-    const cssObject = getCssObject(theme, params, createRef);
+    const cssObject = getCssObject(theme, params);
 
     const componentStyles = getStyles(options?.styles, theme, params);
     const providerStyles = getStyles(context, theme, params);

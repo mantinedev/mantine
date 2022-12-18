@@ -1,4 +1,4 @@
-import { createStyles, MantineSize } from '@mantine/styles';
+import { createStyles, MantineSize, getStylesRef } from '@mantine/styles';
 import { THUMB_SIZES } from '../Thumb/Thumb.styles';
 
 interface SaturationStyles {
@@ -13,9 +13,9 @@ const SATURATION_HEIGHTS = {
   xl: 160,
 };
 
-export default createStyles((theme, { size }: SaturationStyles, getRef) => ({
+export default createStyles((theme, { size }: SaturationStyles) => ({
   saturationThumb: {
-    ref: getRef('saturationThumb'),
+    ref: getStylesRef('saturationThumb'),
   },
 
   saturation: {
@@ -26,13 +26,13 @@ export default createStyles((theme, { size }: SaturationStyles, getRef) => ({
     margin: theme.fn.size({ size, sizes: THUMB_SIZES }) / 2,
     WebkitTapHighlightColor: 'transparent',
 
-    [`&:focus .${getRef('saturationThumb')}`]: {
+    [`&:focus .${getStylesRef('saturationThumb')}`]: {
       ...(theme.focusRing === 'always' || theme.focusRing === 'auto'
         ? theme.focusRingStyles.styles(theme)
         : theme.focusRingStyles.resetStyles(theme)),
     },
 
-    [`&:focus:not(:focus-visible) .${getRef('saturationThumb')}`]: {
+    [`&:focus:not(:focus-visible) .${getStylesRef('saturationThumb')}`]: {
       ...(theme.focusRing === 'auto' || theme.focusRing === 'never'
         ? theme.focusRingStyles.resetStyles(theme)
         : null),

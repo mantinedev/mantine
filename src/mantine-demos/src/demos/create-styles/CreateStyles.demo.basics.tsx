@@ -1,11 +1,11 @@
 import React from 'react';
 import { MantineDemo } from '@mantine/ds';
-import { createStyles } from '@mantine/core';
+import { createStyles, getStylesRef } from '@mantine/core';
 
 const code = `
-import { createStyles } from '@mantine/core';
+import { createStyles, getStylesRef } from '@mantine/core';
 
-const useStyles = createStyles((theme, _params, getRef) => ({
+const useStyles = createStyles((theme) => ({
   wrapper: {
     // subscribe to color scheme changes right in your styles
     backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[1],
@@ -21,8 +21,8 @@ const useStyles = createStyles((theme, _params, getRef) => ({
 
     // Dynamic media queries, define breakpoints in theme, use anywhere
     [\`@media (max-width: \${theme.breakpoints.sm}px)\`]: {
-      // Type safe child reference in nested selectors via ref
-      [\`& .\${getRef('child')}\`]: {
+      // Child reference in nested selectors via ref
+      [\`& .\${getStylesRef('child')}\`]: {
         fontSize: theme.fontSizes.xs,
       },
     },
@@ -30,7 +30,7 @@ const useStyles = createStyles((theme, _params, getRef) => ({
 
   child: {
     // assign ref to element
-    ref: getRef('child'),
+    ref: getStylesRef('child'),
     backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.white,
     padding: theme.spacing.md,
     borderRadius: theme.radius.sm,
@@ -50,7 +50,7 @@ function Demo() {
 }
 `;
 
-const useStyles = createStyles((theme, _params, getRef) => ({
+const useStyles = createStyles((theme) => ({
   wrapper: {
     // subscribe to color scheme changes right in your styles
     backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[1],
@@ -66,8 +66,8 @@ const useStyles = createStyles((theme, _params, getRef) => ({
 
     // Dynamic media queries, define breakpoints in theme, use anywhere
     [`@media (max-width: ${theme.breakpoints.sm}px)`]: {
-      // Type safe child reference in nested selectors via ref
-      [`& .${getRef('child')}`]: {
+      // Child reference in nested selectors via ref
+      [`& .${getStylesRef('child')}`]: {
         fontSize: theme.fontSizes.xs,
       },
     },
@@ -75,7 +75,7 @@ const useStyles = createStyles((theme, _params, getRef) => ({
 
   child: {
     // assign ref to element
-    ref: getRef('child'),
+    ref: getStylesRef('child'),
     backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.white,
     padding: theme.spacing.md,
     borderRadius: theme.radius.sm,

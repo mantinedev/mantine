@@ -1,11 +1,11 @@
 import React from 'react';
 import { MantineDemo } from '@mantine/ds';
-import { Chip, createStyles } from '@mantine/core';
+import { Chip, createStyles, getStylesRef } from '@mantine/core';
 
 const code = `
-import { createStyles, Chip } from '@mantine/core';
+import { createStyles, Chip, getStylesRef } from '@mantine/core';
 
-const useStyles = createStyles((theme, _params, getRef) => ({
+const useStyles = createStyles((theme) => ({
   label: {
     '&[data-checked]': {
       '&, &:hover': {
@@ -13,17 +13,16 @@ const useStyles = createStyles((theme, _params, getRef) => ({
         color: theme.white,
       },
 
-      [\`& .\${getRef('iconWrapper')}\`]: {
+      [\`& .\${getStylesRef('iconWrapper')}\`]: {
         color: theme.white,
       },
     },
   },
 
   iconWrapper: {
-    ref: getRef('iconWrapper'),
+    ref: getStylesRef('iconWrapper'),
   },
 }));
-
 
 function Demo() {
   const { classes } = useStyles();
@@ -39,7 +38,7 @@ function Demo() {
 }
 `;
 
-const useStyles = createStyles((theme, _params, getRef) => ({
+const useStyles = createStyles((theme) => ({
   label: {
     '&[data-checked]': {
       '&, &:hover': {
@@ -47,14 +46,14 @@ const useStyles = createStyles((theme, _params, getRef) => ({
         color: theme.white,
       },
 
-      [`& .${getRef('iconWrapper')}`]: {
+      [`& .${getStylesRef('iconWrapper')}`]: {
         color: theme.white,
       },
     },
   },
 
   iconWrapper: {
-    ref: getRef('iconWrapper'),
+    ref: getStylesRef('iconWrapper'),
   },
 }));
 

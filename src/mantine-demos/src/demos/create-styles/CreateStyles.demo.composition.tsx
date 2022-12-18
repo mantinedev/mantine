@@ -1,14 +1,14 @@
 import React from 'react';
 import { MantineDemo } from '@mantine/ds';
-import { createStyles } from '@mantine/core';
+import { createStyles, getStylesRef } from '@mantine/core';
 
 const code = `
-import { createStyles } from '@mantine/core';
+import { createStyles, getStylesRef } from '@mantine/core';
 
-const useStyles = createStyles((theme, _params, getRef) => ({
+const useStyles = createStyles((theme) => ({
   button: {
     // assign reference to selector
-    ref: getRef('button'),
+    ref: getStylesRef('button'),
 
     // and add any other properties
     backgroundColor: theme.colors.blue[6],
@@ -26,7 +26,7 @@ const useStyles = createStyles((theme, _params, getRef) => ({
     padding: theme.spacing.xl,
 
     // reference button with nested selector
-    [\`&:hover .\${getRef('button')}\`]: {
+    [\`&:hover .\${getStylesRef('button')}\`]: {
       backgroundColor: theme.colors.violet[6],
     },
   },
@@ -44,10 +44,10 @@ function Demo() {
 }
 `;
 
-const useStyles = createStyles((theme, _params, getRef) => ({
+const useStyles = createStyles((theme) => ({
   button: {
     // assign reference to selector
-    ref: getRef('button'),
+    ref: getStylesRef('button'),
 
     // and add any other properties
     backgroundColor: theme.colors.blue[6],
@@ -65,7 +65,7 @@ const useStyles = createStyles((theme, _params, getRef) => ({
     padding: theme.spacing.xl,
 
     // reference button with nested selector
-    [`&:hover .${getRef('button')}`]: {
+    [`&:hover .${getStylesRef('button')}`]: {
       backgroundColor: theme.colors.violet[6],
     },
   },
