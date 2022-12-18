@@ -5,9 +5,10 @@ import {
   MantineGradient,
   MantineColor,
   useComponentDefaultProps,
+  Variants,
 } from '@mantine/styles';
 import { Box } from '../Box';
-import useStyles, { ThemeIconVariant, ThemeIconStylesParams } from './ThemeIcon.styles';
+import useStyles, { ThemeIconStylesParams } from './ThemeIcon.styles';
 
 export interface ThemeIconProps
   extends DefaultProps<never, ThemeIconStylesParams>,
@@ -25,7 +26,7 @@ export interface ThemeIconProps
   color?: MantineColor;
 
   /** Controls appearance */
-  variant?: ThemeIconVariant;
+  variant?: Variants<'filled' | 'light' | 'gradient' | 'outline' | 'default'>;
 
   /** Controls gradient settings in gradient variant only */
   gradient?: MantineGradient;
@@ -42,7 +43,7 @@ export const ThemeIcon = forwardRef<HTMLDivElement, ThemeIconProps>((props, ref)
 
   const { classes, cx } = useStyles(
     { variant, radius, color, size, gradient },
-    { name: 'ThemeIcon', unstyled }
+    { name: 'ThemeIcon', unstyled, variant, size }
   );
 
   return (

@@ -1,12 +1,16 @@
-import { createStyles, MantineNumberSize, MantineColor, MantineGradient } from '@mantine/styles';
-
-export type ThemeIconVariant = 'filled' | 'light' | 'gradient' | 'outline' | 'default';
+import {
+  createStyles,
+  MantineNumberSize,
+  MantineColor,
+  MantineGradient,
+  MantineTheme,
+} from '@mantine/styles';
 
 export interface ThemeIconStylesParams {
   color: MantineColor;
   size: MantineNumberSize;
   radius: MantineNumberSize;
-  variant: ThemeIconVariant;
+  variant: string;
   gradient: MantineGradient;
 }
 
@@ -18,15 +22,37 @@ const sizes = {
   xl: 40,
 };
 
-export default createStyles(
-  (theme, { color, size, radius, gradient, variant }: ThemeIconStylesParams) => {
-    const colors = theme.fn.variant({
-      variant,
-      color: color || theme.primaryColor,
-      gradient,
-      primaryFallback: false,
-    });
+const THEME_ICON_VARIANTS = ['filled', 'light', 'gradient', 'outline', 'default'];
 
+interface GetVariantStylesInput {
+  theme: MantineTheme;
+  variant: string;
+  color: MantineColor;
+  gradient: MantineGradient;
+}
+
+function getVariantStyles({ theme, variant, color, gradient }: GetVariantStylesInput) {
+  if (!THEME_ICON_VARIANTS.includes(variant)) {
+    return null;
+  }
+
+  const colors = theme.fn.variant({
+    variant,
+    color: color || theme.primaryColor,
+    gradient,
+    primaryFallback: false,
+  });
+
+  return {
+    backgroundColor: colors.background,
+    color: colors.color,
+    backgroundImage: variant === 'gradient' ? colors.background : undefined,
+    border: `${variant === 'gradient' ? 0 : 1}px solid ${colors.border}`,
+  };
+}
+
+export default createStyles(
+  (theme, { color, size, radius, gradient }: ThemeIconStylesParams, { variant }) => {
     const iconSize = theme.fn.size({ size, sizes });
 
     return {
@@ -41,10 +67,7 @@ export default createStyles(
         minWidth: iconSize,
         minHeight: iconSize,
         borderRadius: theme.fn.radius(radius),
-        backgroundColor: colors.background,
-        color: colors.color,
-        backgroundImage: variant === 'gradient' ? colors.background : undefined,
-        border: `${variant === 'gradient' ? 0 : 1}px solid ${colors.border}`,
+        ...getVariantStyles({ theme, variant, gradient, color }),
       },
     };
   }

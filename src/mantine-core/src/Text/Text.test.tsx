@@ -5,6 +5,7 @@ import {
   itIsPolymorphic,
   itSupportsSystemProps,
   itSupportsProviderVariant,
+  itSupportsProviderSize,
 } from '@mantine/tests';
 import { Text, TextProps } from './Text';
 
@@ -22,6 +23,7 @@ describe('@mantine/core/Text', () => {
   itRendersChildren(Text, defaultProps);
   itIsPolymorphic(Text, defaultProps);
   itSupportsProviderVariant(Text, defaultProps, 'Text');
+  itSupportsProviderSize(Text, defaultProps, 'Text');
   itSupportsSystemProps({
     component: Text,
     props: defaultProps,
