@@ -23,6 +23,8 @@ export type CarouselStylesNames = CarouselSlideStylesNames | Selectors<typeof us
 export interface CarouselProps
   extends DefaultProps<CarouselStylesNames, CarouselStylesParams>,
     React.ComponentPropsWithRef<'div'> {
+  variant?: string;
+
   /** <Carousel.Slide /> components */
   children?: React.ReactNode;
 
@@ -176,12 +178,13 @@ export const _Carousel = forwardRef<HTMLDivElement, CarouselProps>((props, ref) 
     skipSnaps,
     containScroll,
     withKeyboardEvents,
+    variant,
     ...others
   } = useComponentDefaultProps('Carousel', defaultProps, props);
 
   const { classes, cx, theme } = useStyles(
     { controlSize, controlsOffset, orientation, height, includeGapInSize, breakpoints, slideGap },
-    { name: 'Carousel', classNames, styles, unstyled }
+    { name: 'Carousel', classNames, styles, unstyled, variant }
   );
 
   const [emblaRefElement, embla] = useEmblaCarousel(
@@ -294,6 +297,7 @@ export const _Carousel = forwardRef<HTMLDivElement, CarouselProps>((props, ref) 
         classNames,
         styles,
         unstyled,
+        variant,
       }}
     >
       <Box

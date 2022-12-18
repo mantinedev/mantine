@@ -27,7 +27,13 @@ export const CarouselSlide = forwardRef<HTMLDivElement, CarouselSlideProps>(
         includeGapInSize: ctx.includeGapInSize,
         breakpoints: ctx.breakpoints,
       },
-      { name: 'Carousel', classNames: ctx.classNames, styles: ctx.styles, unstyled: ctx.unstyled }
+      {
+        name: 'Carousel',
+        classNames: ctx.classNames,
+        styles: ctx.styles,
+        unstyled: ctx.unstyled,
+        variant: ctx.variant,
+      }
     );
 
     const handleClick = useCallback(
@@ -36,7 +42,7 @@ export const CarouselSlide = forwardRef<HTMLDivElement, CarouselSlideProps>(
           onClick?.(event);
         }
       },
-      [ctx.embla]
+      [ctx.embla, onClick]
     );
 
     return (
