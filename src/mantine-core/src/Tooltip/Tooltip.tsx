@@ -14,6 +14,8 @@ import { TooltipBaseProps } from './Tooltip.types';
 import useStyles from './Tooltip.styles';
 
 export interface TooltipProps extends TooltipBaseProps {
+  variant?: string;
+
   /** Called when tooltip position changes */
   onPositionChange?(position: FloatingPosition): void;
 
@@ -115,12 +117,13 @@ const _Tooltip = forwardRef<HTMLElement, TooltipProps>((props, ref) => {
     onMouseEnter,
     onMouseLeave,
     inline,
+    variant,
     ...others
   } = useComponentDefaultProps('Tooltip', defaultProps, props);
 
   const { classes, cx, theme } = useStyles(
     { radius, color, width, multiline },
-    { name: 'Tooltip', classNames, styles, unstyled }
+    { name: 'Tooltip', classNames, styles, unstyled, variant }
   );
 
   const tooltip = useTooltip({

@@ -1,5 +1,10 @@
 import React from 'react';
-import { itSupportsSystemProps, checkAccessibility, patchConsoleError } from '@mantine/tests';
+import {
+  itSupportsSystemProps,
+  checkAccessibility,
+  patchConsoleError,
+  itSupportsProviderVariant,
+} from '@mantine/tests';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { Tooltip, TooltipProps } from './Tooltip';
@@ -17,6 +22,7 @@ const defaultProps: TooltipProps = {
 
 describe('@mantine/core/Tooltip', () => {
   checkAccessibility([<Tooltip {...defaultProps} />]);
+  itSupportsProviderVariant(Tooltip, defaultProps, 'Tooltip', ['tooltip']);
   itSupportsSystemProps({
     component: Tooltip,
     props: defaultProps,
