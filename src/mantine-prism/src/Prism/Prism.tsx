@@ -23,6 +23,8 @@ export type PrismStylesNames = Selectors<typeof useStyles>;
 export interface PrismProps
   extends DefaultProps<PrismStylesNames>,
     Omit<React.ComponentPropsWithRef<'div'>, 'children'> {
+  variant?: string;
+
   /** Code which will be highlighted */
   children: string;
 
@@ -89,6 +91,7 @@ export const Prism = forwardRef<HTMLDivElement, PrismProps>((props: PrismProps, 
     unstyled,
     radius,
     getPrismTheme,
+    variant,
     ...others
   } = useComponentDefaultProps('Prism', prismDefaultProps, props);
   const code = trim && typeof children === 'string' ? children.trim() : children;
@@ -104,7 +107,7 @@ export const Prism = forwardRef<HTMLDivElement, PrismProps>((props: PrismProps, 
       maxLineSize,
       radius,
     },
-    { classNames, styles, unstyled, name: 'Prism' }
+    { name: 'Prism', classNames, styles, unstyled, variant }
   );
 
   return (

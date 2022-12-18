@@ -1,6 +1,6 @@
 import React from 'react';
 import { render } from '@testing-library/react';
-import { itSupportsSystemProps } from '@mantine/tests';
+import { itSupportsSystemProps, itSupportsProviderVariant } from '@mantine/tests';
 import { Prism, PrismProps } from './Prism';
 
 const defaultProps: PrismProps = {
@@ -10,6 +10,7 @@ const defaultProps: PrismProps = {
 };
 
 describe('@mantine/prism/Prism', () => {
+  itSupportsProviderVariant(Prism, defaultProps, 'Prism');
   itSupportsSystemProps({
     component: Prism,
     props: defaultProps,
