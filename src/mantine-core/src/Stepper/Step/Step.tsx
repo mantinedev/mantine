@@ -21,6 +21,8 @@ export type StepFragmentComponent = FunctionComponent<{ step: number }>;
 export interface StepProps
   extends DefaultProps<StepStylesNames>,
     React.ComponentPropsWithoutRef<'button'> {
+  variant?: string;
+
   /** Step index, controlled by Steps component **/
   step?: number;
 
@@ -125,12 +127,13 @@ export const Step = forwardRef<HTMLButtonElement, StepProps>((props: StepProps, 
     styles,
     unstyled,
     orientation,
+    variant,
     ...others
   } = useComponentDefaultProps('StepperStep', defaultProps, props);
 
   const { classes, cx, theme } = useStyles(
     { color, iconSize, size, radius, allowStepClick, iconPosition, orientation },
-    { name: __staticSelector, classNames, styles, unstyled }
+    { name: __staticSelector, classNames, styles, unstyled, variant, size }
   );
 
   const _iconSize = theme.fn.size({ size, sizes: defaultIconSizes });

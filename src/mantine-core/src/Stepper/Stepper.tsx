@@ -18,6 +18,8 @@ export type StepperStylesNames = Selectors<typeof useStyles> | StepStylesNames;
 export interface StepperProps
   extends DefaultProps<StepperStylesNames>,
     React.ComponentPropsWithRef<'div'> {
+  variant?: string;
+
   /** <Stepper.Step /> components only */
   children: React.ReactNode;
 
@@ -102,12 +104,13 @@ export const Stepper: StepperComponent = forwardRef<HTMLDivElement, StepperProps
     classNames,
     styles,
     unstyled,
+    variant,
     ...others
   } = useComponentDefaultProps('Stepper', defaultProps, props);
 
   const { classes, cx } = useStyles(
     { contentPadding, color, orientation, iconPosition, size, iconSize, breakpoint },
-    { classNames, styles, unstyled, name: 'Stepper' }
+    { name: 'Stepper', classNames, styles, unstyled, variant, size }
   );
 
   const convertedChildren = Children.toArray(children) as React.ReactElement[];
@@ -128,6 +131,7 @@ export const Stepper: StepperComponent = forwardRef<HTMLDivElement, StepperProps
         icon: item.props.icon || icon || index + 1,
         key: index,
         step: index,
+        variant,
         state,
         onClick: () => shouldAllowSelect && typeof onStepClick === 'function' && onStepClick(index),
         allowStepClick: shouldAllowSelect && typeof onStepClick === 'function',
