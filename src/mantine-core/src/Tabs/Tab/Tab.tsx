@@ -40,12 +40,17 @@ export const Tab = forwardRef<HTMLButtonElement, TabProps>((props, ref) => {
       withRightSection: hasRightSection || (hasIcon && !children),
       orientation: ctx.orientation,
       color: color || ctx.color,
-      variant: ctx.variant,
       radius: ctx.radius,
       inverted: ctx.inverted,
       placement: ctx.placement,
     },
-    { name: 'Tabs', unstyled: ctx.unstyled, classNames: ctx.classNames, styles: ctx.styles }
+    {
+      name: 'Tabs',
+      unstyled: ctx.unstyled,
+      classNames: ctx.classNames,
+      styles: ctx.styles,
+      variant: ctx.variant,
+    }
   );
 
   const isActive = value === ctx.value;
