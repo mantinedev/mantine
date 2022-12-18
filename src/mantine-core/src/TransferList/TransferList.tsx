@@ -13,6 +13,8 @@ export type TransferListStylesNames = RenderListStylesNames;
 export interface TransferListProps
   extends DefaultProps<TransferListStylesNames>,
     Omit<React.ComponentPropsWithoutRef<'div'>, 'value' | 'onChange' | 'placeholder'> {
+  variant?: string;
+
   /** Current value */
   value: TransferListData;
 
@@ -110,6 +112,7 @@ export const TransferList = forwardRef<HTMLDivElement, TransferListProps>((props
     unstyled,
     transferIcon,
     transferAllIcon,
+    variant,
     ...others
   } = useComponentDefaultProps('TransferList', defaultProps, props);
 
@@ -190,6 +193,7 @@ export const TransferList = forwardRef<HTMLDivElement, TransferListProps>((props
         query={search[0]}
         onSearch={(query) => handleSearch([query, search[1]])}
         unstyled={unstyled}
+        variant={variant}
       />
 
       <RenderList
@@ -209,6 +213,7 @@ export const TransferList = forwardRef<HTMLDivElement, TransferListProps>((props
         onSearch={(query) => handleSearch([search[0], query])}
         reversed
         unstyled={unstyled}
+        variant={variant}
       />
     </SimpleGrid>
   );
