@@ -39,8 +39,15 @@ export const LinkControl = forwardRef<HTMLButtonElement, RichTextEditorLinkContr
       props
     );
 
-    const { editor, labels, classNames, styles, unstyled } = useRichTextEditorContext();
-    const { classes } = useStyles(null, { name: 'RichTextEditor', classNames, styles, unstyled });
+    const { editor, labels, classNames, styles, unstyled, variant } = useRichTextEditorContext();
+    const { classes } = useStyles(null, {
+      name: 'RichTextEditor',
+      classNames,
+      styles,
+      unstyled,
+      variant,
+    });
+
     const [url, setUrl] = useInputState('');
     const [external, setExternal] = useState(false);
     const [opened, { open, close }] = useDisclosure(false);

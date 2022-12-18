@@ -31,12 +31,13 @@ export const Control = forwardRef<HTMLButtonElement, RichTextEditorControlProps>
     props
   );
 
-  const { classNames, styles, unstyled } = useRichTextEditorContext();
+  const { classNames, styles, unstyled, variant } = useRichTextEditorContext();
   const { classes, cx } = useStyles(null, {
     name: 'RichTextEditor',
     classNames,
     styles,
     unstyled,
+    variant,
   });
 
   return (
