@@ -6,6 +6,8 @@ import useStyles, { TableStylesParams } from './Table.styles';
 export interface TableProps
   extends DefaultProps<never, TableStylesParams>,
     React.ComponentPropsWithoutRef<'table'> {
+  variant?: string;
+
   /** If true every odd row of table will have gray background color */
   striped?: boolean;
 
@@ -55,12 +57,13 @@ export const Table = forwardRef<HTMLTableElement, TableProps>((props, ref) => {
     unstyled,
     withBorder,
     withColumnBorders,
+    variant,
     ...others
   } = useComponentDefaultProps('Table', defaultProps, props);
 
   const { classes, cx } = useStyles(
     { captionSide, verticalSpacing, horizontalSpacing, fontSize, withBorder, withColumnBorders },
-    { unstyled, name: 'Table' }
+    { unstyled, name: 'Table', variant }
   );
 
   return (
