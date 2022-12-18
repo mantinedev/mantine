@@ -14,7 +14,6 @@ export interface BadgeStylesParams {
   size: MantineSize;
   radius: MantineNumberSize;
   gradient: MantineGradient;
-  variant: string;
   fullWidth: boolean;
 }
 
@@ -43,6 +42,10 @@ interface GetVariantStylesInput {
 }
 
 function getVariantStyles({ theme, variant, color, size, gradient }: GetVariantStylesInput) {
+  if (!BADGE_VARIANTS.includes(variant)) {
+    return null;
+  }
+
   if (variant === 'dot') {
     const dotSize = theme.fn.size({ size, sizes: dotSizes });
     return {
@@ -79,7 +82,7 @@ function getVariantStyles({ theme, variant, color, size, gradient }: GetVariantS
 }
 
 export default createStyles(
-  (theme, { color, size, radius, gradient, fullWidth, variant }: BadgeStylesParams) => {
+  (theme, { color, size, radius, gradient, fullWidth }: BadgeStylesParams, { variant }) => {
     const { fontSize, height } = size in sizes ? sizes[size] : sizes.md;
 
     return {
@@ -121,12 +124,5 @@ export default createStyles(
         ...getVariantStyles({ theme, variant, color, size, gradient }),
       },
     };
-  },
-  (variant, theme, { color, size, gradient }) => {
-    if (BADGE_VARIANTS.includes(variant)) {
-      return { root: getVariantStyles({ theme, variant, color, size, gradient }) };
-    }
-
-    return null;
   }
 );

@@ -18,7 +18,11 @@ function getVariantStyles(theme: MantineTheme, variant: string): CSSObject {
 }
 
 export default createStyles(
-  (theme, { transitionDuration, chevronPosition, chevronSize }: AccordionControlStylesParams) => ({
+  (
+    theme,
+    { transitionDuration, chevronPosition, chevronSize }: AccordionControlStylesParams,
+    { variant }
+  ) => ({
     icon: {
       display: 'flex',
       alignItems: 'center',
@@ -58,6 +62,7 @@ export default createStyles(
     control: {
       ...theme.fn.focusStyles(),
       ...theme.fn.fontStyles(),
+      ...getVariantStyles(theme, variant),
       width: '100%',
       display: 'flex',
       alignItems: 'center',
@@ -73,8 +78,5 @@ export default createStyles(
         ...theme.fn.hover({ backgroundColor: 'transparent' }),
       },
     },
-  }),
-  (variant, theme) => ({
-    control: getVariantStyles(theme, variant),
   })
 );

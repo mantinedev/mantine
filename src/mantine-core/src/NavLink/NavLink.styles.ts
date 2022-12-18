@@ -1,4 +1,4 @@
-import { createStyles, MantineColor, MantineNumberSize } from '@mantine/styles';
+import { createStyles, MantineColor, MantineNumberSize, MantineTheme } from '@mantine/styles';
 
 export interface NavLinkStylesParams {
   color: MantineColor;
@@ -9,14 +9,37 @@ export interface NavLinkStylesParams {
 
 const NAV_LINK_VARIANTS = ['filled', 'light', 'subtle'];
 
+interface GetVariantStylesInput {
+  theme: MantineTheme;
+  variant: string;
+  color: MantineColor;
+}
+
+function getVariantStyles({ theme, variant, color }: GetVariantStylesInput) {
+  if (!NAV_LINK_VARIANTS.includes(variant)) {
+    return null;
+  }
+
+  const colors = theme.fn.variant({ variant, color });
+
+  return {
+    '&[data-active]': {
+      backgroundColor: colors.background,
+      color: colors.color,
+      ...theme.fn.hover({ backgroundColor: colors.hover }),
+    },
+  };
+}
+
 export default createStyles(
-  (theme, { noWrap, childrenOffset, alignIcon }: NavLinkStylesParams) => ({
+  (theme, { noWrap, childrenOffset, alignIcon, color }: NavLinkStylesParams, { variant }) => ({
     root: {
       display: 'flex',
       alignItems: 'center',
       width: '100%',
       padding: `8px ${theme.spacing.sm}px`,
       userSelect: 'none',
+      ...getVariantStyles({ theme, variant, color }),
 
       ...theme.fn.hover({
         backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[0],
@@ -69,21 +92,5 @@ export default createStyles(
     children: {
       paddingLeft: theme.fn.size({ size: childrenOffset, sizes: theme.spacing }),
     },
-  }),
-  (variant, theme, { color }: NavLinkStylesParams) => {
-    if (NAV_LINK_VARIANTS.includes(variant)) {
-      const colors = theme.fn.variant({ variant, color });
-      return {
-        root: {
-          '&[data-active]': {
-            backgroundColor: colors.background,
-            color: colors.color,
-            ...theme.fn.hover({ backgroundColor: colors.hover }),
-          },
-        },
-      };
-    }
-
-    return null;
-  }
+  })
 );

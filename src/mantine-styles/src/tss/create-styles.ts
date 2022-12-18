@@ -68,18 +68,16 @@ function getContextVariation({ ctx, theme, params, variant, size }: GetContextVa
   }, {});
 }
 
+interface Variations {
+  variant?: string;
+  size: string | number;
+}
+
 export function createStyles<
   Key extends string = string,
   Params = void,
   Input extends Record<Key, CSSObject> = Record<Key, CSSObject>
->(
-  input: ((theme: MantineTheme, params: Params) => Input) | Input,
-  variantResolver?: (
-    variant: string,
-    theme: MantineTheme,
-    params: Params
-  ) => Record<string, CSSObject>
-) {
+>(input: ((theme: MantineTheme, params: Params, variations: Variations) => Input) | Input) {
   const getCssObject = typeof input === 'function' ? input : () => input;
 
   function useStyles(params: Params, options?: UseStylesOptions<Key>) {
@@ -88,11 +86,13 @@ export function createStyles<
     const cache = useMantineEmotionCache();
 
     const { css, cx } = useCss();
-    const cssObject = getCssObject(theme, params);
+    const cssObject = getCssObject(theme, params, {
+      variant: options?.variant,
+      size: options?.size,
+    });
 
     const componentStyles = getStyles(options?.styles, theme, params);
     const providerStyles = getStyles(context, theme, params);
-    const variantStyles = variantResolver?.(options?.variant, theme, params);
     const contextVariations = getContextVariation({
       ctx: context,
       theme,
@@ -105,7 +105,6 @@ export function createStyles<
       Object.keys(cssObject).map((key) => {
         const mergedStyles = cx(
           { [css(cssObject[key])]: !options?.unstyled },
-          variantStyles && css(variantStyles[key]),
           css(contextVariations[key]),
           css(providerStyles[key]),
           css(componentStyles[key])

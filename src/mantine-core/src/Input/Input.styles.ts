@@ -22,12 +22,18 @@ export const sizes = {
   xl: 60,
 };
 
+const INPUT_VARIANTS = ['default', 'filled', 'unstyled'];
+
 interface GetVariantStylesInput {
   theme: MantineTheme;
   variant: string;
 }
 
 function getVariantStyles({ theme, variant }: GetVariantStylesInput) {
+  if (!INPUT_VARIANTS.includes(variant)) {
+    return null;
+  }
+
   if (variant === 'default') {
     return {
       border: `1px solid ${
@@ -123,6 +129,7 @@ export default createStyles(
         display: 'block',
         textAlign: 'left',
         cursor: pointer ? 'pointer' : undefined,
+        ...getVariantStyles({ theme, variant }),
         ...sizeStyles,
 
         '&:disabled': {
@@ -206,8 +213,5 @@ export default createStyles(
         width: rightSectionWidth,
       },
     };
-  },
-  (variant, theme) => ({
-    input: getVariantStyles({ theme, variant }),
-  })
+  }
 );

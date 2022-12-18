@@ -81,6 +81,10 @@ interface GetVariantStyles {
 }
 
 function getVariantStyles({ variant, theme, color, gradient }: GetVariantStyles) {
+  if (!BUTTON_VARIANTS.includes(variant)) {
+    return null;
+  }
+
   const colors = theme.fn.variant({ color, variant, gradient });
 
   if (variant === 'gradient') {
@@ -103,7 +107,17 @@ function getVariantStyles({ variant, theme, color, gradient }: GetVariantStyles)
 export default createStyles(
   (
     theme,
-    { size, radius, fullWidth, compact, withLeftIcon, withRightIcon }: ButtonStylesParams
+    {
+      size,
+      radius,
+      fullWidth,
+      compact,
+      withLeftIcon,
+      withRightIcon,
+      color,
+      gradient,
+    }: ButtonStylesParams,
+    { variant }
   ) => ({
     root: {
       ...getSizeStyles({ compact, size, withLeftIcon, withRightIcon }),
@@ -117,6 +131,7 @@ export default createStyles(
       fontSize: theme.fn.size({ size, sizes: theme.fontSizes }),
       userSelect: 'none',
       cursor: 'pointer',
+      ...getVariantStyles({ variant, theme, color, gradient }),
 
       '&:active': theme.activeStyles,
 
@@ -188,12 +203,5 @@ export default createStyles(
       display: 'flex',
       alignItems: 'center',
     },
-  }),
-  (variant, theme, { color, gradient }: ButtonStylesParams) => {
-    if (BUTTON_VARIANTS.includes(variant)) {
-      return { root: getVariantStyles({ variant, theme, color, gradient }) };
-    }
-
-    return null;
-  }
+  })
 );

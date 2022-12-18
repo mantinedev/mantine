@@ -73,7 +73,7 @@ export const _ActionIcon = forwardRef<HTMLButtonElement, ActionIconProps>((props
   } = useComponentDefaultProps('ActionIcon', defaultProps, props);
 
   const { classes, cx, theme } = useStyles(
-    { radius, color, variant, gradient, size },
+    { radius, color, gradient, size },
     { name: ['ActionIcon', __staticSelector], unstyled, size, variant }
   );
 

@@ -49,84 +49,78 @@ function getVariantStyles({ variant, color, theme }: GetVariantStylesInput): CSS
   return null;
 }
 
-export default createStyles(
-  (theme, { radius }: AlertStylesParams) => ({
-    root: {
-      ...theme.fn.fontStyles(),
-      position: 'relative',
-      overflow: 'hidden',
-      padding: `${theme.spacing.sm}px ${theme.spacing.md}px`,
-      borderRadius: theme.fn.radius(radius),
-      border: '1px solid transparent',
-    },
+export default createStyles((theme, { radius, color }: AlertStylesParams, { variant }) => ({
+  root: {
+    ...theme.fn.fontStyles(),
+    position: 'relative',
+    overflow: 'hidden',
+    padding: `${theme.spacing.sm}px ${theme.spacing.md}px`,
+    borderRadius: theme.fn.radius(radius),
+    border: '1px solid transparent',
+    ...getVariantStyles({ variant, color, theme }),
+  },
 
-    wrapper: {
-      display: 'flex',
-    },
+  wrapper: {
+    display: 'flex',
+  },
 
-    body: {
-      flex: 1,
-    },
+  body: {
+    flex: 1,
+  },
 
-    title: {
-      boxSizing: 'border-box',
-      margin: 0,
-      marginBottom: 7,
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'space-between',
-      lineHeight: theme.lineHeight,
-      fontSize: theme.fontSizes.sm,
-      fontWeight: 700,
+  title: {
+    boxSizing: 'border-box',
+    margin: 0,
+    marginBottom: 7,
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    lineHeight: theme.lineHeight,
+    fontSize: theme.fontSizes.sm,
+    fontWeight: 700,
 
-      '&[data-with-close-button]': {
-        paddingRight: theme.spacing.md,
-      },
+    '&[data-with-close-button]': {
+      paddingRight: theme.spacing.md,
     },
+  },
 
-    label: {
-      display: 'block',
-      overflow: 'hidden',
-      textOverflow: 'ellipsis',
-    },
+  label: {
+    display: 'block',
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
+  },
 
-    icon: {
-      lineHeight: 1,
-      width: 20,
-      height: 20,
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'flex-start',
-      marginRight: theme.spacing.md,
-      marginTop: 1,
-    },
+  icon: {
+    lineHeight: 1,
+    width: 20,
+    height: 20,
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'flex-start',
+    marginRight: theme.spacing.md,
+    marginTop: 1,
+  },
 
-    message: {
-      ...theme.fn.fontStyles(),
-      lineHeight: theme.lineHeight,
-      textOverflow: 'ellipsis',
-      overflow: 'hidden',
-      fontSize: theme.fontSizes.sm,
-    },
-
-    closeButton: {
-      position: 'absolute',
-      top: theme.spacing.sm,
-      right: theme.spacing.sm,
-      color: 'inherit',
-    },
-  }),
-  (variant, theme, { color }: AlertStylesParams) => ({
-    root: getVariantStyles({ variant, color, theme }),
-    message: {
-      color:
-        variant === 'filled'
+  message: {
+    ...theme.fn.fontStyles(),
+    lineHeight: theme.lineHeight,
+    textOverflow: 'ellipsis',
+    overflow: 'hidden',
+    fontSize: theme.fontSizes.sm,
+    color:
+      variant === 'filled'
+        ? theme.white
+        : theme.colorScheme === 'dark'
+        ? variant === 'light'
           ? theme.white
-          : theme.colorScheme === 'dark'
-          ? variant === 'light'
-            ? theme.white
-            : theme.colors.dark[0]
-          : theme.black,
-    },
-  })
-);
+          : theme.colors.dark[0]
+        : theme.black,
+  },
+
+  closeButton: {
+    position: 'absolute',
+    top: theme.spacing.sm,
+    right: theme.spacing.sm,
+    color: 'inherit',
+  },
+}));
