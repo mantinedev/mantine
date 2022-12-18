@@ -27,6 +27,8 @@ export type SpotlightStylesNames = Selectors<typeof useStyles> | ActionsListStyl
 export interface InnerSpotlightProps
   extends DefaultProps<SpotlightStylesNames>,
     React.ComponentPropsWithoutRef<'div'> {
+  variant?: string;
+
   /** Should spotlight be rendered within Portal */
   withinPortal?: boolean;
 
@@ -137,13 +139,14 @@ export function Spotlight({
   actionsWrapperComponent: ActionsWrapper = 'div',
   zIndex = getDefaultZIndex('max'),
   searchInputProps,
+  variant,
   ...others
 }: SpotlightProps) {
   const [hovered, setHovered] = useState(-1);
   const [IMEOpen, setIMEOpen] = useState(false);
   const { classes, cx } = useStyles(
     { centered, maxWidth, topOffset, radius, zIndex },
-    { classNames, styles, name: 'Spotlight' }
+    { name: 'Spotlight', classNames, styles, variant }
   );
 
   const [, lockScroll] = useScrollLock();
@@ -271,6 +274,7 @@ export function Spotlight({
                     styles={styles}
                     classNames={classNames}
                     radius={radius}
+                    variant={variant}
                   />
                 </ActionsWrapper>
               </Paper>

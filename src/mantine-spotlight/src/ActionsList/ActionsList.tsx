@@ -19,6 +19,7 @@ export interface ActionsListProps extends DefaultProps<ActionsListStylesNames> {
   highlightQuery: boolean;
   highlightColor: MantineColor;
   radius: MantineNumberSize;
+  variant: string;
 }
 
 export function ActionsList({
@@ -34,8 +35,9 @@ export function ActionsList({
   highlightQuery,
   highlightColor,
   radius,
+  variant,
 }: ActionsListProps) {
-  const { classes } = useStyles(null, { classNames, styles, name: 'Spotlight' });
+  const { classes } = useStyles(null, { name: 'Spotlight', classNames, styles, variant });
 
   const items = actions.map((item) => {
     if (item.type === 'item') {
