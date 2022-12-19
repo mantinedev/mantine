@@ -1,5 +1,10 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
+import {
+  itSupportsSystemProps,
+  itSupportsProviderVariant,
+  itSupportsProviderSize,
+} from '@mantine/tests';
 import { MonthLevelGroup, MonthLevelGroupProps } from './MonthLevelGroup';
 import {
   itSupportsMonthProps,
@@ -16,6 +21,24 @@ const defaultProps: MonthLevelGroupProps = {
 };
 
 describe('@mantine/dates/MonthLevelGroup', () => {
+  itSupportsSystemProps({
+    component: MonthLevelGroup,
+    props: defaultProps,
+    refType: HTMLDivElement,
+    providerName: 'MonthLevelGroup',
+    displayName: '@mantine/dates/MonthLevelGroup',
+  });
+
+  itSupportsProviderVariant(MonthLevelGroup, defaultProps, 'MonthLevelGroup', [
+    'monthLevelGroup',
+    'monthLevel',
+  ]);
+
+  itSupportsProviderSize(MonthLevelGroup, defaultProps, 'MonthLevelGroup', [
+    'monthLevelGroup',
+    'monthLevel',
+  ]);
+
   itSupportsMonthProps(MonthLevelGroup, defaultProps);
   itSupportsHeaderProps(MonthLevelGroup, defaultProps);
   itSupportsOnDayClick(MonthLevelGroup, defaultProps);

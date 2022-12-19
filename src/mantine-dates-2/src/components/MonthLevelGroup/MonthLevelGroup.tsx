@@ -11,6 +11,7 @@ export interface MonthLevelGroupProps
   extends DefaultProps<MonthLevelGroupStylesNames>,
     Omit<MonthLevelSettings, 'withPrevious' | 'withNext' | '__onDayKeyDown' | '__getDayRef'>,
     React.ComponentPropsWithoutRef<'div'> {
+  variant?: string;
   __staticSelector?: string;
 
   /** Number of columns to render next to each other */
@@ -68,14 +69,18 @@ export const MonthLevelGroup = forwardRef<HTMLDivElement, MonthLevelGroupProps>(
     levelControlAriaLabel,
     monthLabelFormat,
     __staticSelector,
+    size,
+    variant,
     ...others
   } = useComponentDefaultProps('MonthLevelGroup', defaultProps, props);
 
   const { classes, cx } = useStyles(null, {
+    name: ['MonthLevelGroup', __staticSelector],
     classNames,
     styles,
     unstyled,
-    name: ['MonthLevelGroup', __staticSelector],
+    variant,
+    size,
   });
 
   const daysRefs = useRef<HTMLButtonElement[][][]>([]);
@@ -147,6 +152,8 @@ export const MonthLevelGroup = forwardRef<HTMLDivElement, MonthLevelGroupProps>(
           styles={styles}
           unstyled={unstyled}
           __staticSelector={__staticSelector || 'MonthLevelGroup'}
+          size={size}
+          variant={variant}
         />
       );
     });

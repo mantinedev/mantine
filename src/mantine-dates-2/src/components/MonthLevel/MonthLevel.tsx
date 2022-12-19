@@ -122,7 +122,7 @@ export const MonthLevel = forwardRef<HTMLDivElement, MonthLevelProps>((props, re
       : false;
 
   return (
-    <Box className={cx(classes.monthLevel, className)} ref={ref} {...others}>
+    <Box className={cx(classes.monthLevel, className)} data-month-level ref={ref} {...others}>
       <CalendarHeader
         label={
           typeof monthLabelFormat === 'function'
