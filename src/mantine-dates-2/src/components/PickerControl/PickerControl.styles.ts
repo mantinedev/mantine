@@ -9,8 +9,8 @@ export default createStyles((theme, _, { size }) => {
     pickerControl: {
       fontSize: theme.fn.size({ size, sizes: theme.fontSizes }),
       height: theme.fn.size({ size, sizes }),
+      width: (theme.fn.size({ size, sizes }) * 7) / 3 + 1.5,
       display: 'flex',
-      width: '100%',
       justifyContent: 'center',
       alignItems: 'center',
       userSelect: 'none',

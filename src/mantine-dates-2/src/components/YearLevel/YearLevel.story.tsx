@@ -1,3 +1,4 @@
+import { MANTINE_SIZES } from '@mantine/core';
 import dayjs from 'dayjs';
 import React, { useState } from 'react';
 import { YearLevel } from './YearLevel';
@@ -56,4 +57,11 @@ export function WithControls() {
       />
     </div>
   );
+}
+
+export function Sizes() {
+  const sizes = MANTINE_SIZES.map((size) => (
+    <YearLevel year={new Date()} size={size} key={size} mt="xl" />
+  ));
+  return <div style={{ padding: 40 }}>{sizes}</div>;
 }

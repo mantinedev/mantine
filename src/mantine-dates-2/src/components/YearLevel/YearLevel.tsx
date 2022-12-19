@@ -24,6 +24,7 @@ export interface YearLevelProps
   extends DefaultProps<YearLevelStylesNames>,
     YearLevelSettings,
     React.ComponentPropsWithoutRef<'div'> {
+  variant?: string;
   __staticSelector?: string;
 
   /** Year that is currently displayed */
@@ -35,6 +36,7 @@ export interface YearLevelProps
 
 const defaultProps: Partial<YearLevelProps> = {
   yearLabelFormat: 'YYYY',
+  size: 'sm',
 };
 
 export const YearLevel = forwardRef<HTMLDivElement, YearLevelProps>((props, ref) => {
@@ -74,6 +76,8 @@ export const YearLevel = forwardRef<HTMLDivElement, YearLevelProps>((props, ref)
     styles,
     unstyled,
     __staticSelector,
+    size,
+    variant,
     ...others
   } = useComponentDefaultProps('YearLevel', defaultProps, props);
 
@@ -82,15 +86,19 @@ export const YearLevel = forwardRef<HTMLDivElement, YearLevelProps>((props, ref)
     classNames,
     styles,
     unstyled,
+    size,
+    variant,
   });
 
   const ctx = useDatesContext();
 
   const stylesApiProps = {
+    __staticSelector: __staticSelector || 'YearLevel',
     classNames,
     styles,
     unstyled,
-    __staticSelector: __staticSelector || 'YearLevel',
+    size,
+    variant,
   };
 
   const _nextDisabled =
@@ -152,3 +160,5 @@ export const YearLevel = forwardRef<HTMLDivElement, YearLevelProps>((props, ref)
     </Box>
   );
 });
+
+YearLevel.displayName = '@mantine/dates/YearLevel';
