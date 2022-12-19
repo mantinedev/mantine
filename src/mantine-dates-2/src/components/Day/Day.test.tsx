@@ -1,6 +1,11 @@
 import React from 'react';
 import lodash from 'lodash';
 import { render, screen } from '@testing-library/react';
+import {
+  itSupportsSystemProps,
+  itSupportsProviderVariant,
+  itSupportsProviderSize,
+} from '@mantine/tests';
 import { Day, DayProps } from './Day';
 
 const defaultProps: DayProps = {
@@ -22,6 +27,16 @@ function validateDataAttribute(prop: string) {
 }
 
 describe('@mantine/dates/Day', () => {
+  itSupportsProviderVariant(Day, defaultProps, 'Day', 'day');
+  itSupportsProviderSize(Day, defaultProps, 'Day', 'day');
+  itSupportsSystemProps({
+    component: Day,
+    props: defaultProps,
+    refType: HTMLButtonElement,
+    providerName: 'Day',
+    displayName: '@mantine/dates/Day',
+  });
+
   validateDataAttribute('weekend');
   validateDataAttribute('outside');
   validateDataAttribute('selected');

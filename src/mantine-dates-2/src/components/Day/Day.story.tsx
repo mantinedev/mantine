@@ -1,3 +1,4 @@
+import { MANTINE_SIZES } from '@mantine/core';
 import React from 'react';
 import { Day } from './Day';
 
@@ -45,4 +46,9 @@ export function Range() {
       <Day date={new Date()} lastInRange inRange selected />
     </div>
   );
+}
+
+export function Sizes() {
+  const sizes = MANTINE_SIZES.map((size) => <Day date={new Date()} selected size={size} />);
+  return <div style={{ padding: 40 }}>{sizes}</div>;
 }

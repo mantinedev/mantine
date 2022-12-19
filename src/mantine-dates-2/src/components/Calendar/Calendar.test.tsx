@@ -1,6 +1,7 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import { itSupportsSystemProps } from '@mantine/tests';
 import { Calendar, CalendarProps } from './Calendar';
 import {
   itSupportsMonthProps,
@@ -48,6 +49,14 @@ async function clickPrevious(level: 'month' | 'year' | 'decade') {
 }
 
 describe('@mantine/dates/Calendar', () => {
+  itSupportsSystemProps({
+    component: Calendar,
+    props: defaultProps,
+    refType: HTMLDivElement,
+    providerName: 'Calendar',
+    displayName: '@mantine/dates/Calendar',
+  });
+
   itSupportsMonthProps(Calendar, defaultProps);
   itHandlesMonthKeyboardEvents(Calendar, defaultProps);
   itHandlesControlsKeyboardEvents(Calendar, 'year', '.mantine-MonthsList-monthsList', {

@@ -14,6 +14,7 @@ export type DayStylesNames = Selectors<typeof useStyles>;
 export interface DayProps
   extends DefaultProps<DayStylesNames, DayStylesParams>,
     Omit<React.ComponentPropsWithoutRef<'button'>, 'type'> {
+  variant?: string;
   __staticSelector?: string;
 
   /** Determines which element should be used as root, button by default, div if static prop is set */
@@ -24,6 +25,9 @@ export interface DayProps
 
   /** Key of theme.radius or number to set border-radius in px */
   radius?: MantineNumberSize;
+
+  /** Day size */
+  size?: MantineNumberSize;
 
   /** Determines whether the day should be considered to be a weekend */
   weekend?: boolean;
@@ -52,6 +56,7 @@ export interface DayProps
 
 const defaultProps: Partial<DayProps> = {
   tabIndex: 0,
+  size: 'sm',
 };
 
 export const Day = forwardRef<HTMLButtonElement, DayProps>((props, ref) => {
@@ -73,12 +78,14 @@ export const Day = forwardRef<HTMLButtonElement, DayProps>((props, ref) => {
     lastInRange,
     hidden,
     static: isStatic,
+    variant,
+    size,
     ...others
   } = useComponentDefaultProps('Day', defaultProps, props);
 
   const { classes, cx } = useStyles(
     { radius, isStatic },
-    { classNames, styles, unstyled, name: ['Day', __staticSelector] }
+    { name: ['Day', __staticSelector], classNames, styles, unstyled, variant, size }
   );
 
   return (
