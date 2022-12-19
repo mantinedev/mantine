@@ -1,6 +1,6 @@
 import dayjs from 'dayjs';
 import React, { useState } from 'react';
-import { Code, Indicator } from '@mantine/core';
+import { Code, Indicator, MANTINE_SIZES } from '@mantine/core';
 import { Month, MonthProps } from './Month';
 
 export default { title: 'Month' };
@@ -75,4 +75,9 @@ export function Static() {
 
 export function Unstyled() {
   return <Wrapper unstyled />;
+}
+
+export function Sizes() {
+  const sizes = MANTINE_SIZES.map((size) => <Wrapper size={size} key={size} />);
+  return <>{sizes}</>;
 }

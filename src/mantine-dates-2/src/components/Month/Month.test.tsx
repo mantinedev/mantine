@@ -1,6 +1,11 @@
 import React from 'react';
 import { render } from '@testing-library/react';
 import {
+  itSupportsSystemProps,
+  itSupportsProviderVariant,
+  itSupportsProviderSize,
+} from '@mantine/tests';
+import {
   itSupportsMonthProps,
   itSupportsGetDayRef,
   itSupportsOnDayKeydown,
@@ -13,6 +18,16 @@ const defaultProps: MonthProps = {
 };
 
 describe('@mantine/core/Month', () => {
+  itSupportsSystemProps({
+    component: Month,
+    props: defaultProps,
+    refType: HTMLTableElement,
+    providerName: 'Month',
+    displayName: '@mantine/dates/Month',
+  });
+
+  itSupportsProviderVariant(Month, defaultProps, 'Month', ['month', 'day', 'weekdaysRow']);
+  itSupportsProviderSize(Month, defaultProps, 'Month', ['month', 'day', 'weekdaysRow']);
   itSupportsMonthProps(Month, defaultProps);
   itSupportsGetDayRef(Month, defaultProps);
   itSupportsOnDayKeydown(Month, defaultProps);

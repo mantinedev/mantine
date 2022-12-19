@@ -1,7 +1,7 @@
 /* eslint-disable react/no-unused-prop-types */
 import dayjs from 'dayjs';
 import React, { forwardRef } from 'react';
-import { DefaultProps, Selectors, Box, useComponentDefaultProps } from '@mantine/core';
+import { DefaultProps, Selectors, Box, useComponentDefaultProps, MantineSize } from '@mantine/core';
 import { useDatesContext } from '../DatesProvider';
 import { WeekdaysRow, WeekdaysRowStylesNames } from '../WeekdaysRow';
 import { Day, DayStylesNames, DayProps } from '../Day';
@@ -71,12 +71,16 @@ export interface MonthSettings {
 
   /** Assigns aria-label to days based on date */
   getDayAriaLabel?(date: Date): string;
+
+  /** Controls size */
+  size?: MantineSize;
 }
 
 export interface MonthProps
   extends DefaultProps<MonthStylesNames>,
     MonthSettings,
     React.ComponentPropsWithoutRef<'table'> {
+  variant?: string;
   __staticSelector?: string;
 
   /** Month to display */
@@ -86,7 +90,9 @@ export interface MonthProps
   static?: boolean;
 }
 
-const defaultProps: Partial<MonthProps> = {};
+const defaultProps: Partial<MonthProps> = {
+  size: 'sm',
+};
 
 export const Month = forwardRef<HTMLTableElement, MonthProps>((props, ref) => {
   const {
@@ -114,23 +120,29 @@ export const Month = forwardRef<HTMLTableElement, MonthProps>((props, ref) => {
     __onDayClick,
     __onDayMouseEnter,
     __preventFocus,
+    size,
+    variant,
     ...others
   } = useComponentDefaultProps('Month', defaultProps, props);
 
   const ctx = useDatesContext();
 
   const { classes, cx } = useStyles(null, {
+    name: ['Month', __staticSelector],
     classNames,
     styles,
     unstyled,
-    name: ['Month', __staticSelector],
+    variant,
+    size,
   });
 
   const stylesApiProps = {
+    __staticSelector: __staticSelector || 'Month',
     classNames,
     styles,
     unstyled,
-    __staticSelector: __staticSelector || 'Month',
+    variant,
+    size,
   };
 
   const rows = getMonthDays(month, ctx.getFirstDayOfWeek(firstDayOfWeek)).map((row, rowIndex) => {

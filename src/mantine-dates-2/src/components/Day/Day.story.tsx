@@ -49,6 +49,8 @@ export function Range() {
 }
 
 export function Sizes() {
-  const sizes = MANTINE_SIZES.map((size) => <Day date={new Date()} selected size={size} />);
+  const sizes = MANTINE_SIZES.map((size) => (
+    <Day date={new Date()} selected size={size} key={size} />
+  ));
   return <div style={{ padding: 40 }}>{sizes}</div>;
 }
