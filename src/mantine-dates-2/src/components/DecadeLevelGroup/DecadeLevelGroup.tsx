@@ -14,6 +14,7 @@ export interface DecadeLevelGroupProps
       'withPrevious' | 'withNext' | '__onControlKeyDown' | '__getControlRef'
     >,
     React.ComponentPropsWithoutRef<'div'> {
+  variant?: string;
   __staticSelector?: string;
 
   /** Number of columns to render next to each other */
@@ -64,14 +65,18 @@ export const DecadeLevelGroup = forwardRef<HTMLDivElement, DecadeLevelGroupProps
     numberOfColumns,
     levelControlAriaLabel,
     decadeLabelFormat,
+    variant,
+    size,
     ...others
   } = useComponentDefaultProps('DecadeLevelGroup', defaultProps, props);
 
   const { classes, cx } = useStyles(null, {
+    name: ['DecadeLevelGroup', __staticSelector],
     styles,
     classNames,
     unstyled,
-    name: ['DecadeLevelGroup', __staticSelector],
+    variant,
+    size,
   });
 
   const controlsRefs = useRef<HTMLButtonElement[][][]>([]);
@@ -86,6 +91,8 @@ export const DecadeLevelGroup = forwardRef<HTMLDivElement, DecadeLevelGroupProps
       return (
         <DecadeLevel
           key={decadeIndex}
+          variant={variant}
+          size={size}
           yearsListFormat={yearsListFormat}
           decade={currentDecade}
           withNext={decadeIndex === numberOfColumns - 1}

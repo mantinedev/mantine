@@ -1,5 +1,10 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
+import {
+  itSupportsSystemProps,
+  itSupportsProviderVariant,
+  itSupportsProviderSize,
+} from '@mantine/tests';
 import { DecadeLevelGroup, DecadeLevelGroupProps } from './DecadeLevelGroup';
 import {
   itSupportsYearsListProps,
@@ -17,6 +22,23 @@ const defaultProps: DecadeLevelGroupProps = {
 };
 
 describe('@mantine/dates/DecadeLevelGroup', () => {
+  itSupportsSystemProps({
+    component: DecadeLevelGroup,
+    props: defaultProps,
+    refType: HTMLDivElement,
+    providerName: 'DecadeLevelGroup',
+    displayName: '@mantine/dates/DecadeLevelGroup',
+  });
+
+  itSupportsProviderVariant(DecadeLevelGroup, defaultProps, 'DecadeLevelGroup', [
+    'decadeLevelGroup',
+    'decadeLevel',
+  ]);
+  itSupportsProviderSize(DecadeLevelGroup, defaultProps, 'DecadeLevelGroup', [
+    'decadeLevelGroup',
+    'decadeLevel',
+  ]);
+
   itSupportsYearsListProps(DecadeLevelGroup, defaultProps);
   itSupportsHeaderProps(DecadeLevelGroup, defaultProps);
   itSupportsOnControlClick(DecadeLevelGroup, defaultProps);
