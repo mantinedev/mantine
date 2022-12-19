@@ -25,6 +25,7 @@ export interface DecadeLevelProps
   extends DefaultProps<DecadeLevelStylesNames>,
     DecadeLevelSettings,
     React.ComponentPropsWithoutRef<'div'> {
+  variant?: string;
   __staticSelector?: string;
 
   /** Decade that is currently displayed */
@@ -75,6 +76,8 @@ export const DecadeLevel = forwardRef<HTMLDivElement, DecadeLevelProps>((props, 
     styles,
     unstyled,
     __staticSelector,
+    variant,
+    size,
     ...others
   } = useComponentDefaultProps('DecadeLevel', defaultProps, props);
 
@@ -83,16 +86,20 @@ export const DecadeLevel = forwardRef<HTMLDivElement, DecadeLevelProps>((props, 
     classNames,
     styles,
     unstyled,
+    variant,
+    size,
   });
 
   const ctx = useDatesContext();
   const [startOfDecade, endOfDecade] = getDecadeRange(decade);
 
   const stylesApiProps = {
+    __staticSelector: __staticSelector || 'DecadeLevel',
     classNames,
     styles,
     unstyled,
-    __staticSelector: __staticSelector || 'DecadeLevel',
+    variant,
+    size,
   };
 
   const _nextDisabled =
@@ -115,7 +122,7 @@ export const DecadeLevel = forwardRef<HTMLDivElement, DecadeLevelProps>((props, 
       .format(format);
 
   return (
-    <Box className={cx(classes.decadeLevel, className)} ref={ref} {...others}>
+    <Box className={cx(classes.decadeLevel, className)} data-decade-level ref={ref} {...others}>
       <CalendarHeader
         label={
           typeof decadeLabelFormat === 'function'
@@ -160,3 +167,5 @@ export const DecadeLevel = forwardRef<HTMLDivElement, DecadeLevelProps>((props, 
     </Box>
   );
 });
+
+DecadeLevel.displayName = '@mantine/dates/DecadeLevel';

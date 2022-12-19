@@ -1,6 +1,11 @@
 import 'dayjs/locale/ru';
 import React from 'react';
 import { render, screen } from '@testing-library/react';
+import {
+  itSupportsSystemProps,
+  itSupportsProviderVariant,
+  itSupportsProviderSize,
+} from '@mantine/tests';
 import { DecadeLevel, DecadeLevelProps } from './DecadeLevel';
 import {
   itSupportsHeaderProps,
@@ -24,6 +29,26 @@ const defaultProps: DecadeLevelProps = {
 };
 
 describe('@mantine/dates/DecadeLevel', () => {
+  itSupportsSystemProps({
+    component: DecadeLevel,
+    props: defaultProps,
+    refType: HTMLDivElement,
+    providerName: 'DecadeLevel',
+    displayName: '@mantine/dates/DecadeLevel',
+  });
+
+  itSupportsProviderVariant(DecadeLevel, defaultProps, 'DecadeLevel', [
+    'decadeLevel',
+    'calendarHeader',
+    'yearsList',
+  ]);
+
+  itSupportsProviderSize(DecadeLevel, defaultProps, 'DecadeLevel', [
+    'decadeLevel',
+    'calendarHeader',
+    'yearsList',
+  ]);
+
   itSupportsHeaderProps(DecadeLevel, defaultProps);
   itSupportsWithNextPrevious(DecadeLevel, defaultProps);
   itSupportsYearsListProps(DecadeLevel, defaultProps);
