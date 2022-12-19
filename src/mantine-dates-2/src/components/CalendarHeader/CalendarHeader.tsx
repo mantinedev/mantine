@@ -5,6 +5,7 @@ import {
   Box,
   useComponentDefaultProps,
   UnstyledButton,
+  MantineSize,
 } from '@mantine/core';
 import { Chevron } from './Chevron';
 import useStyles from './CalendarHeader.styles';
@@ -49,12 +50,16 @@ export interface CalendarHeaderSettings {
 
   /** Determines whether previous control should be rendered, defaults to true */
   withPrevious?: boolean;
+
+  /** Component size */
+  size?: MantineSize;
 }
 
 export interface CalendarHeaderProps
   extends DefaultProps<CalendarHeaderStylesNames>,
     CalendarHeaderSettings,
     React.ComponentPropsWithoutRef<'div'> {
+  variant?: string;
   __staticSelector?: string;
 
   /** Label displayed between next and previous buttons */
@@ -70,6 +75,7 @@ const defaultProps: Partial<CalendarHeaderProps> = {
   hasNextLevel: true,
   withNext: true,
   withPrevious: true,
+  size: 'sm',
 };
 
 export const CalendarHeader = forwardRef<HTMLDivElement, CalendarHeaderProps>((props, ref) => {
@@ -94,6 +100,8 @@ export const CalendarHeader = forwardRef<HTMLDivElement, CalendarHeaderProps>((p
     withPrevious,
     __staticSelector,
     __preventFocus,
+    size,
+    variant,
     ...others
   } = useComponentDefaultProps('CalendarHeader', defaultProps, props);
 
@@ -102,6 +110,8 @@ export const CalendarHeader = forwardRef<HTMLDivElement, CalendarHeaderProps>((p
     classNames,
     styles,
     unstyled,
+    size,
+    variant,
   });
 
   const preventFocus = __preventFocus
@@ -166,3 +176,5 @@ export const CalendarHeader = forwardRef<HTMLDivElement, CalendarHeaderProps>((p
     </Box>
   );
 });
+
+CalendarHeader.displayName = '@mantine/dates/CalendarHeader';

@@ -2,7 +2,7 @@ import { createStyles } from '@mantine/core';
 
 export default createStyles((theme) => ({
   monthLevel: {
-    width: 252,
+    // width: 252,
   },
 
   calendarHeader: {

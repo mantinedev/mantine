@@ -1,5 +1,10 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
+import {
+  itSupportsSystemProps,
+  itSupportsProviderVariant,
+  itSupportsProviderSize,
+} from '@mantine/tests';
 import { itSupportsHeaderProps, itSupportsWithNextPrevious } from '../../tests';
 import { CalendarHeader, CalendarHeaderProps } from './CalendarHeader';
 
@@ -10,6 +15,16 @@ const defaultProps: CalendarHeaderProps = {
 };
 
 describe('@mantine/dates/CalendarHeader', () => {
+  itSupportsSystemProps({
+    component: CalendarHeader,
+    props: defaultProps,
+    refType: HTMLDivElement,
+    providerName: 'CalendarHeader',
+    displayName: '@mantine/dates/CalendarHeader',
+  });
+
+  itSupportsProviderVariant(CalendarHeader, defaultProps, 'CalendarHeader', 'calendarHeader');
+  itSupportsProviderSize(CalendarHeader, defaultProps, 'CalendarHeader', 'calendarHeader');
   itSupportsHeaderProps(CalendarHeader, defaultProps);
   itSupportsWithNextPrevious(CalendarHeader, defaultProps);
 

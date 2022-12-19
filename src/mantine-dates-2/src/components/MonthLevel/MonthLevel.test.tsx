@@ -1,6 +1,11 @@
 import 'dayjs/locale/ru';
 import React from 'react';
 import { render, screen } from '@testing-library/react';
+import {
+  itSupportsSystemProps,
+  itSupportsProviderVariant,
+  itSupportsProviderSize,
+} from '@mantine/tests';
 import { MonthLevel, MonthLevelProps } from './MonthLevel';
 import {
   itSupportsMonthProps,
@@ -23,6 +28,16 @@ const defaultProps: MonthLevelProps = {
 };
 
 describe('@mantine/dates/MonthLevel', () => {
+  itSupportsSystemProps({
+    component: MonthLevel,
+    props: defaultProps,
+    refType: HTMLDivElement,
+    providerName: 'MonthLevel',
+    displayName: '@mantine/dates/MonthLevel',
+  });
+
+  itSupportsProviderVariant(MonthLevel, defaultProps, 'MonthLevel', ['monthLevel', 'month']);
+  itSupportsProviderSize(MonthLevel, defaultProps, 'MonthLevel', ['monthLevel', 'month']);
   itSupportsHeaderProps(MonthLevel, defaultProps);
   itSupportsMonthProps(MonthLevel, defaultProps);
   itSupportsGetDayRef(MonthLevel, defaultProps);

@@ -1,66 +1,69 @@
 import { createStyles } from '@mantine/core';
+import { sizes } from '../Day/Day.styles';
 
-const MOCK_CONTROL_SIZE = 36;
+export default createStyles((theme, _, { size }) => {
+  const controlSize = theme.fn.size({ size, sizes });
+  return {
+    calendarHeaderControlIcon: {},
 
-export default createStyles((theme) => ({
-  calendarHeaderControlIcon: {},
+    calendarHeader: {
+      display: 'flex',
+      maxWidth: controlSize * 7 + 7,
+    },
 
-  calendarHeader: {
-    display: 'flex',
-  },
+    calendarHeaderControl: {
+      width: controlSize,
+      height: controlSize,
+      borderRadius: theme.fn.radius(),
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
+      userSelect: 'none',
 
-  calendarHeaderControl: {
-    width: MOCK_CONTROL_SIZE,
-    height: MOCK_CONTROL_SIZE,
-    borderRadius: theme.fn.radius(),
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    userSelect: 'none',
+      ...theme.fn.hover({
+        backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[0],
+      }),
 
-    ...theme.fn.hover({
-      backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[0],
-    }),
+      '&:active': theme.activeStyles,
 
-    '&:active': theme.activeStyles,
+      '&[data-disabled]': {
+        opacity: 0.2,
+        cursor: 'not-allowed',
+        ...theme.fn.hover({ backgroundColor: 'transparent' }),
 
-    '&[data-disabled]': {
-      opacity: 0.2,
-      cursor: 'not-allowed',
-      ...theme.fn.hover({ backgroundColor: 'transparent' }),
-
-      '&:active': {
-        transform: 'none',
+        '&:active': {
+          transform: 'none',
+        },
       },
     },
-  },
 
-  calendarHeaderLevel: {
-    height: MOCK_CONTROL_SIZE,
-    borderRadius: theme.fn.radius(),
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    userSelect: 'none',
-    flex: 1,
-    fontSize: theme.fontSizes.sm,
-    fontWeight: 500,
-    textTransform: 'capitalize',
+    calendarHeaderLevel: {
+      height: controlSize,
+      borderRadius: theme.fn.radius(),
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
+      userSelect: 'none',
+      flex: 1,
+      fontSize: theme.fn.size({ size, sizes: theme.fontSizes }),
+      fontWeight: 500,
+      textTransform: 'capitalize',
 
-    ...theme.fn.hover({
-      backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[0],
-    }),
+      ...theme.fn.hover({
+        backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[0],
+      }),
 
-    '&:active': theme.activeStyles,
+      '&:active': theme.activeStyles,
 
-    '&[data-static]': {
-      cursor: 'default',
-      userSelect: 'unset',
-      ...theme.fn.hover({ backgroundColor: 'transparent' }),
+      '&[data-static]': {
+        cursor: 'default',
+        userSelect: 'unset',
+        ...theme.fn.hover({ backgroundColor: 'transparent' }),
 
-      '&:active': {
-        transform: 'none',
+        '&:active': {
+          transform: 'none',
+        },
       },
     },
-  },
-}));
+  };
+});

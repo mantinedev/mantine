@@ -1,6 +1,7 @@
 import 'dayjs/locale/ru';
 import dayjs from 'dayjs';
 import React, { useState } from 'react';
+import { MANTINE_SIZES } from '@mantine/core';
 import { MonthLevel, MonthLevelProps } from './MonthLevel';
 
 export default { title: 'MonthLevel' };
@@ -40,4 +41,9 @@ export function MinDate() {
 
 export function MaxDate() {
   return <Wrapper maxDate={new Date(2022, 3, 11)} />;
+}
+
+export function Sizes() {
+  const sizes = MANTINE_SIZES.map((size) => <Wrapper size={size} key={size} />);
+  return <>{sizes}</>;
 }

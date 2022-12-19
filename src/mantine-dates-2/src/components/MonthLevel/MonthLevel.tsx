@@ -24,6 +24,7 @@ export interface MonthLevelProps
   extends DefaultProps<MonthLevelStylesNames>,
     MonthLevelSettings,
     React.ComponentPropsWithoutRef<'div'> {
+  variant?: string;
   __staticSelector?: string;
 
   /** Month that is currently displayed */
@@ -81,6 +82,8 @@ export const MonthLevel = forwardRef<HTMLDivElement, MonthLevelProps>((props, re
     styles,
     unstyled,
     __staticSelector,
+    size,
+    variant,
     ...others
   } = useComponentDefaultProps('MonthLevel', defaultProps, props);
 
@@ -89,15 +92,19 @@ export const MonthLevel = forwardRef<HTMLDivElement, MonthLevelProps>((props, re
     classNames,
     styles,
     unstyled,
+    variant,
+    size,
   });
 
   const ctx = useDatesContext();
 
   const stylesApiProps = {
+    __staticSelector: __staticSelector || 'MonthLevel',
     classNames,
     styles,
     unstyled,
-    __staticSelector: __staticSelector || 'MonthLevel',
+    variant,
+    size,
   };
 
   const _nextDisabled =
@@ -166,3 +173,5 @@ export const MonthLevel = forwardRef<HTMLDivElement, MonthLevelProps>((props, re
     </Box>
   );
 });
+
+MonthLevel.displayName = '@mantine/dates/MonthLevel';
