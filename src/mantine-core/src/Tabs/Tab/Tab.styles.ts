@@ -8,7 +8,8 @@ interface TabStylesParams extends TabsStylesParams {
 
 function getVariantStyles(
   theme: MantineTheme,
-  { variant, orientation, color, radius, inverted, placement }: TabStylesParams
+  { orientation, color, radius, inverted, placement }: TabStylesParams,
+  variant: string
 ): CSSObject {
   const vertical = orientation === 'vertical';
   const filledScheme = theme.fn.variant({ color, variant: 'filled' });
@@ -101,7 +102,7 @@ function getVariantStyles(
   return {};
 }
 
-export default createStyles((theme, params: TabStylesParams) => ({
+export default createStyles((theme, params: TabStylesParams, { variant }) => ({
   tabLabel: {},
 
   tab: {
@@ -127,7 +128,7 @@ export default createStyles((theme, params: TabStylesParams) => ({
       zIndex: 1,
     },
 
-    ...getVariantStyles(theme, params),
+    ...getVariantStyles(theme, params, variant),
   },
 
   tabRightSection: {

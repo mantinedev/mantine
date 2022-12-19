@@ -8,8 +8,9 @@ interface TabsListStylesParams extends TabsStylesParams {
 }
 
 function getVariantStyles(
-  { variant, orientation, inverted, placement }: TabsListStylesParams,
-  theme: MantineTheme
+  { orientation, inverted, placement }: TabsListStylesParams,
+  theme: MantineTheme,
+  variant: string
 ): CSSObject {
   const vertical = orientation === 'vertical';
 
@@ -50,7 +51,7 @@ function getVariantStyles(
   return {};
 }
 
-export default createStyles((theme, params: TabsListStylesParams) => {
+export default createStyles((theme, params: TabsListStylesParams, { variant }) => {
   const vertical = params.orientation === 'vertical';
 
   return {
@@ -64,7 +65,7 @@ export default createStyles((theme, params: TabsListStylesParams) => {
         flex: params.grow ? 1 : undefined,
       },
 
-      ...getVariantStyles(params, theme),
+      ...getVariantStyles(params, theme, variant),
     },
   };
 });
