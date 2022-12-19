@@ -2,6 +2,11 @@ import 'dayjs/locale/ru';
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import {
+  itSupportsSystemProps,
+  itSupportsProviderVariant,
+  itSupportsProviderSize,
+} from '@mantine/tests';
+import {
   itSupportsGetControlRef,
   itSupportsYearsListProps,
   itSupportsOnControlKeydown,
@@ -15,6 +20,16 @@ const defaultProps: YearsListProps = {
 };
 
 describe('@mantine/dates/YearsList', () => {
+  itSupportsSystemProps({
+    component: YearsList,
+    props: defaultProps,
+    refType: HTMLTableElement,
+    providerName: 'YearsList',
+    displayName: '@mantine/dates/YearsList',
+  });
+
+  itSupportsProviderVariant(YearsList, defaultProps, 'YearsList', ['yearsList', 'pickerControl']);
+  itSupportsProviderSize(YearsList, defaultProps, 'YearsList', ['yearsList', 'pickerControl']);
   itSupportsGetControlRef(YearsList, 10, defaultProps);
   itSupportsYearsListProps(YearsList, defaultProps);
   itSupportsOnControlKeydown(YearsList, defaultProps);

@@ -1,7 +1,7 @@
 /* eslint-disable react/no-unused-prop-types */
 import dayjs from 'dayjs';
 import React, { forwardRef } from 'react';
-import { DefaultProps, Box, Selectors, useComponentDefaultProps } from '@mantine/core';
+import { DefaultProps, Box, Selectors, useComponentDefaultProps, MantineSize } from '@mantine/core';
 import { PickerControl, PickerControlStylesNames, PickerControlProps } from '../PickerControl';
 import { ControlsGroupSettings } from '../../types';
 import { useDatesContext } from '../DatesProvider';
@@ -20,12 +20,16 @@ export interface YearsListSettings extends ControlsGroupSettings {
 
   /** Adds props to year picker control based on date */
   getYearControlProps?(date: Date): Partial<PickerControlProps>;
+
+  /** Component size */
+  size?: MantineSize;
 }
 
 export interface YearsListProps
   extends DefaultProps<YearsListStylesNames>,
     YearsListSettings,
     React.ComponentPropsWithoutRef<'table'> {
+  variant?: string;
   __staticSelector?: string;
 
   /** Decade for which years list should be displayed */
@@ -34,6 +38,7 @@ export interface YearsListProps
 
 const defaultProps: Partial<YearsListProps> = {
   yearsListFormat: 'YYYY',
+  size: 'sm',
 };
 
 export const YearsList = forwardRef<HTMLTableElement, YearsListProps>((props, ref) => {
@@ -54,14 +59,18 @@ export const YearsList = forwardRef<HTMLTableElement, YearsListProps>((props, re
     __onControlClick,
     __onControlMouseEnter,
     __preventFocus,
+    size,
+    variant,
     ...others
   } = useComponentDefaultProps('YearsList', defaultProps, props);
 
   const { classes, cx } = useStyles(null, {
+    name: ['YearsList', __staticSelector],
     classNames,
     styles,
     unstyled,
-    name: ['YearsList', __staticSelector],
+    variant,
+    size,
   });
 
   const ctx = useDatesContext();
@@ -74,6 +83,8 @@ export const YearsList = forwardRef<HTMLTableElement, YearsListProps>((props, re
       return (
         <td key={cellIndex} className={classes.yearsListCell}>
           <PickerControl
+            size={size}
+            variant={variant}
             classNames={classNames}
             styles={styles}
             unstyled={unstyled}
