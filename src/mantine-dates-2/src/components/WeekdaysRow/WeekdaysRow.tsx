@@ -1,5 +1,5 @@
 import React, { forwardRef } from 'react';
-import { DefaultProps, Selectors, useComponentDefaultProps, Box } from '@mantine/core';
+import { DefaultProps, Selectors, useComponentDefaultProps, Box, MantineSize } from '@mantine/core';
 import type { DayOfWeek } from '../../types';
 import { useDatesContext } from '../DatesProvider';
 import { getWeekdayNames } from './get-weekdays-names/get-weekdays-names';
@@ -10,7 +10,11 @@ export type WeekdaysRowStylesNames = Selectors<typeof useStyles>;
 export interface WeekdaysRowProps
   extends DefaultProps<WeekdaysRowStylesNames>,
     React.ComponentPropsWithoutRef<'tr'> {
+  variant?: string;
   __staticSelector?: string;
+
+  /** Controls size */
+  size?: MantineSize;
 
   /** dayjs locale, defaults to value defined in DatesProvider */
   locale?: string;
@@ -28,6 +32,7 @@ export interface WeekdaysRowProps
 const defaultProps: Partial<WeekdaysRowProps> = {
   weekdayFormat: 'dd',
   cellComponent: 'th',
+  size: 'sm',
 };
 
 export const WeekdaysRow = forwardRef<HTMLTableRowElement, WeekdaysRowProps>((props, ref) => {
@@ -41,16 +46,20 @@ export const WeekdaysRow = forwardRef<HTMLTableRowElement, WeekdaysRowProps>((pr
     classNames,
     styles,
     unstyled,
+    variant,
+    size,
     ...others
   } = useComponentDefaultProps('WeekdaysRow', defaultProps, props);
 
   const ctx = useDatesContext();
 
   const { classes, cx } = useStyles(null, {
+    name: ['WeekdaysRow', __staticSelector],
     classNames,
     styles,
     unstyled,
-    name: ['WeekdaysRow', __staticSelector],
+    variant,
+    size,
   });
 
   const weekdays = getWeekdayNames({
@@ -70,4 +79,4 @@ export const WeekdaysRow = forwardRef<HTMLTableRowElement, WeekdaysRowProps>((pr
   );
 });
 
-WeekdaysRow.displayName = '@mantine/dates/WeekdayRow';
+WeekdaysRow.displayName = '@mantine/dates/WeekdaysRow';

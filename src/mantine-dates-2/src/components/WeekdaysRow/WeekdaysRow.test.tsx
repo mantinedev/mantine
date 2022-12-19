@@ -1,6 +1,12 @@
 import 'dayjs/locale/ru';
 import React from 'react';
 import { render, screen } from '@testing-library/react';
+import {
+  itSupportsSystemProps,
+  patchConsoleError,
+  itSupportsProviderVariant,
+  itSupportsProviderSize,
+} from '@mantine/tests';
 import { WeekdaysRow, WeekdaysRowProps } from './WeekdaysRow';
 import { itSupportsWeekdaysProps } from '../../tests';
 
@@ -17,6 +23,19 @@ function Wrapper(props: Partial<WeekdaysRowProps>) {
 }
 
 describe('@mantine/dates/WeekdaysRow', () => {
+  beforeAll(patchConsoleError);
+  afterAll(patchConsoleError.release);
+
+  itSupportsProviderVariant(WeekdaysRow, defaultProps, 'WeekdaysRow', 'weekdaysRow');
+  itSupportsProviderSize(WeekdaysRow, defaultProps, 'WeekdaysRow', 'weekdaysRow');
+  itSupportsSystemProps({
+    component: WeekdaysRow,
+    props: defaultProps,
+    refType: HTMLTableRowElement,
+    displayName: '@mantine/dates/WeekdaysRow',
+    providerName: 'WeekdaysRow',
+  });
+
   itSupportsWeekdaysProps(Wrapper, defaultProps);
 
   it('supports changing cell component', () => {

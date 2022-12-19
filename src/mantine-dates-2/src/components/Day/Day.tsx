@@ -5,6 +5,7 @@ import {
   useComponentDefaultProps,
   MantineNumberSize,
   Selectors,
+  MantineSize,
 } from '@mantine/core';
 import dayjs from 'dayjs';
 import useStyles, { DayStylesParams } from './Day.styles';
@@ -27,7 +28,7 @@ export interface DayProps
   radius?: MantineNumberSize;
 
   /** Day size */
-  size?: MantineNumberSize;
+  size?: MantineSize;
 
   /** Determines whether the day should be considered to be a weekend */
   weekend?: boolean;

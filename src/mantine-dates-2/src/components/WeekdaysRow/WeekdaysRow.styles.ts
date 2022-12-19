@@ -1,11 +1,11 @@
 import { createStyles } from '@mantine/core';
 
-export default createStyles((theme) => ({
+export default createStyles((theme, _, { size }) => ({
   weekdaysRow: {},
   weekday: {
     color: theme.colorScheme === 'dark' ? theme.colors.dark[1] : theme.colors.gray[5],
     fontWeight: 400,
-    fontSize: theme.fontSizes.sm,
+    fontSize: theme.fn.size({ size, sizes: theme.fontSizes }),
     textTransform: 'capitalize',
     paddingBottom: theme.spacing.xs / 2,
   },
