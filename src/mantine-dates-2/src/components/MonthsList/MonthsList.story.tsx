@@ -1,3 +1,4 @@
+import { MANTINE_SIZES } from '@mantine/core';
 import dayjs from 'dayjs';
 import React, { useState } from 'react';
 import { MonthsList } from './MonthsList';
@@ -50,4 +51,18 @@ export function WithSelection() {
       />
     </div>
   );
+}
+
+export function Sizes() {
+  const sizes = MANTINE_SIZES.map((size) => (
+    <MonthsList
+      year={new Date()}
+      size={size}
+      key={size}
+      getMonthControlProps={() => ({ selected: true })}
+      mt="xl"
+    />
+  ));
+
+  return <div style={{ padding: 40 }}>{sizes}</div>;
 }

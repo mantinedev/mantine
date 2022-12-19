@@ -2,6 +2,11 @@ import 'dayjs/locale/ru';
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import {
+  itSupportsSystemProps,
+  itSupportsProviderVariant,
+  itSupportsProviderSize,
+} from '@mantine/tests';
+import {
   itSupportsGetControlRef,
   itSupportsMonthsListProps,
   itSupportsOnControlKeydown,
@@ -15,6 +20,20 @@ const defaultProps: MonthsListProps = {
 };
 
 describe('@mantine/dates/MonthsList', () => {
+  itSupportsSystemProps({
+    component: MonthsList,
+    props: defaultProps,
+    refType: HTMLTableElement,
+    providerName: 'MonthsList',
+    displayName: '@mantine/dates/MonthsList',
+  });
+
+  itSupportsProviderSize(MonthsList, defaultProps, 'MonthsList', ['monthsList', 'pickerControl']);
+  itSupportsProviderVariant(MonthsList, defaultProps, 'MonthsList', [
+    'monthsList',
+    'pickerControl',
+  ]);
+
   itSupportsGetControlRef(MonthsList, 12, defaultProps);
   itSupportsMonthsListProps(MonthsList, defaultProps);
   itSupportsOnControlKeydown(MonthsList, defaultProps);

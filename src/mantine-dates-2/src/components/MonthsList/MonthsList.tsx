@@ -1,7 +1,7 @@
 /* eslint-disable react/no-unused-prop-types */
 import dayjs from 'dayjs';
 import React, { forwardRef } from 'react';
-import { DefaultProps, Box, Selectors, useComponentDefaultProps } from '@mantine/core';
+import { DefaultProps, Box, Selectors, useComponentDefaultProps, MantineSize } from '@mantine/core';
 import { PickerControl, PickerControlStylesNames, PickerControlProps } from '../PickerControl';
 import { ControlsGroupSettings } from '../../types';
 import { useDatesContext } from '../DatesProvider';
@@ -23,6 +23,7 @@ export interface MonthsListProps
   extends DefaultProps<MonthsListStylesNames>,
     MonthsListSettings,
     React.ComponentPropsWithoutRef<'table'> {
+  variant?: string;
   __staticSelector?: string;
 
   /** Prevents focus shift when buttons are clicked */
@@ -30,10 +31,14 @@ export interface MonthsListProps
 
   /** Year for which months list should be displayed */
   year: Date;
+
+  /** Component size */
+  size?: MantineSize;
 }
 
 const defaultProps: Partial<MonthsListProps> = {
   monthsListFormat: 'MMM',
+  size: 'sm',
 };
 
 export const MonthsList = forwardRef<HTMLTableElement, MonthsListProps>((props, ref) => {
@@ -54,13 +59,17 @@ export const MonthsList = forwardRef<HTMLTableElement, MonthsListProps>((props, 
     __onControlClick,
     __onControlMouseEnter,
     __preventFocus,
+    size,
+    variant,
     ...others
   } = useComponentDefaultProps('MonthsList', defaultProps, props);
   const { classes, cx } = useStyles(null, {
+    name: ['MonthsList', __staticSelector],
     classNames,
     styles,
     unstyled,
-    name: ['MonthsList', __staticSelector],
+    variant,
+    size,
   });
 
   const ctx = useDatesContext();
@@ -73,6 +82,8 @@ export const MonthsList = forwardRef<HTMLTableElement, MonthsListProps>((props, 
       return (
         <td key={cellIndex} className={classes.monthsListCell}>
           <PickerControl
+            variant={variant}
+            size={size}
             classNames={classNames}
             styles={styles}
             unstyled={unstyled}

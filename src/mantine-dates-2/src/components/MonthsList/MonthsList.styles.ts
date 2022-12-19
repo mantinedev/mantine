@@ -5,6 +5,7 @@ export default createStyles(() => ({
     width: '100%',
     borderCollapse: 'collapse',
     borderWidth: 0,
+    cursor: 'pointer',
   },
 
   monthsListCell: {
