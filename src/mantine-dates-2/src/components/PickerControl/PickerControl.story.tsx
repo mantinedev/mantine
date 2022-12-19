@@ -1,3 +1,4 @@
+import { MANTINE_SIZES } from '@mantine/core';
 import React from 'react';
 import { PickerControl } from './PickerControl';
 
@@ -34,4 +35,14 @@ export function Range() {
       </PickerControl>
     </div>
   );
+}
+
+export function Sizes() {
+  const sizes = MANTINE_SIZES.map((size) => (
+    <PickerControl selected size={size} key={size} mt="md">
+      {size}
+    </PickerControl>
+  ));
+
+  return <div style={{ padding: 40 }}>{sizes}</div>;
 }

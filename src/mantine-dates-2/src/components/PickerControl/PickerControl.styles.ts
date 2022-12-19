@@ -1,13 +1,14 @@
 import { createStyles } from '@mantine/core';
+import { sizes } from '../Day/Day.styles';
 
-export default createStyles((theme) => {
+export default createStyles((theme, _, { size }) => {
   const colors = theme.fn.variant({ variant: 'filled' });
   const lightColors = theme.fn.variant({ variant: 'light' });
 
   return {
     pickerControl: {
-      padding: `${theme.spacing.xs}px ${theme.spacing.md}px`,
-      fontSize: theme.fontSizes.sm,
+      fontSize: theme.fn.size({ size, sizes: theme.fontSizes }),
+      height: theme.fn.size({ size, sizes }),
       display: 'flex',
       width: '100%',
       justifyContent: 'center',

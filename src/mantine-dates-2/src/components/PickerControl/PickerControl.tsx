@@ -1,6 +1,12 @@
 /* eslint-disable react/no-unused-prop-types */
 import React, { forwardRef } from 'react';
-import { DefaultProps, UnstyledButton, Selectors, useComponentDefaultProps } from '@mantine/core';
+import {
+  DefaultProps,
+  UnstyledButton,
+  Selectors,
+  useComponentDefaultProps,
+  MantineSize,
+} from '@mantine/core';
 import useStyles from './PickerControl.styles';
 
 export type PickerControlStylesNames = Selectors<typeof useStyles>;
@@ -8,6 +14,7 @@ export type PickerControlStylesNames = Selectors<typeof useStyles>;
 export interface PickerControlProps
   extends DefaultProps<PickerControlStylesNames>,
     React.ComponentPropsWithoutRef<'button'> {
+  variant?: string;
   __staticSelector?: string;
 
   /** Control children */
@@ -27,9 +34,14 @@ export interface PickerControlProps
 
   /** Determines whether control is last in range selection */
   lastInRange?: boolean;
+
+  /** Component size */
+  size?: MantineSize;
 }
 
-const defaultProps: Partial<PickerControlProps> = {};
+const defaultProps: Partial<PickerControlProps> = {
+  size: 'sm',
+};
 
 export const PickerControl = forwardRef<HTMLButtonElement, PickerControlProps>((props, ref) => {
   const {
@@ -44,6 +56,8 @@ export const PickerControl = forwardRef<HTMLButtonElement, PickerControlProps>((
     lastInRange,
     inRange,
     __staticSelector,
+    size,
+    variant,
     ...others
   } = useComponentDefaultProps('PickerControl', defaultProps, props);
 
@@ -52,6 +66,8 @@ export const PickerControl = forwardRef<HTMLButtonElement, PickerControlProps>((
     classNames,
     styles,
     unstyled,
+    variant,
+    size,
   });
 
   return (

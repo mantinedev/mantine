@@ -1,6 +1,11 @@
 import React from 'react';
 import lodash from 'lodash';
 import { render, screen } from '@testing-library/react';
+import {
+  itSupportsSystemProps,
+  itSupportsProviderVariant,
+  itSupportsProviderSize,
+} from '@mantine/tests';
 import { PickerControl, PickerControlProps } from './PickerControl';
 
 const defaultProps: PickerControlProps = {};
@@ -20,6 +25,16 @@ function validateDataAttribute(prop: string) {
 }
 
 describe('@mantine/dates/PickerControl', () => {
+  itSupportsSystemProps({
+    component: PickerControl,
+    props: defaultProps,
+    refType: HTMLButtonElement,
+    providerName: 'PickerControl',
+    displayName: '@mantine/dates/PickerControl',
+  });
+
+  itSupportsProviderVariant(PickerControl, defaultProps, 'PickerControl', 'pickerControl');
+  itSupportsProviderSize(PickerControl, defaultProps, 'PickerControl', 'pickerControl');
   validateDataAttribute('inRange');
   validateDataAttribute('firstInRange');
   validateDataAttribute('lastInRange');
