@@ -1,3 +1,4 @@
+import { MANTINE_SIZES } from '@mantine/core';
 import React from 'react';
 import { YearLevelGroup } from './YearLevelGroup';
 
@@ -16,4 +17,17 @@ export function Usage() {
       <YearLevelGroup numberOfColumns={3} year={new Date(2022, 3, 11)} mb={50} mt="xs" />
     </div>
   );
+}
+
+export function Sizes() {
+  const sizes = MANTINE_SIZES.map((size) => (
+    <YearLevelGroup
+      numberOfColumns={3}
+      size={size}
+      key={size}
+      mt="xl"
+      year={new Date(2022, 3, 11)}
+    />
+  ));
+  return <div style={{ padding: 40 }}>{sizes}</div>;
 }

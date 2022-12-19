@@ -11,6 +11,7 @@ export interface YearLevelGroupProps
   extends DefaultProps<YearLevelGroupStylesNames>,
     Omit<YearLevelSettings, 'withPrevious' | 'withNext' | '__onControlKeyDown' | '__getControlRef'>,
     React.ComponentPropsWithoutRef<'div'> {
+  variant?: string;
   __staticSelector?: string;
 
   /** Number of columns to render next to each other */
@@ -25,6 +26,7 @@ export interface YearLevelGroupProps
 
 const defaultProps: Partial<YearLevelGroupProps> = {
   numberOfColumns: 1,
+  size: 'sm',
 };
 
 export const YearLevelGroup = forwardRef<HTMLDivElement, YearLevelGroupProps>((props, ref) => {
@@ -61,14 +63,18 @@ export const YearLevelGroup = forwardRef<HTMLDivElement, YearLevelGroupProps>((p
     numberOfColumns,
     levelControlAriaLabel,
     yearLabelFormat,
+    variant,
+    size,
     ...others
   } = useComponentDefaultProps('YearLevelGroup', defaultProps, props);
 
   const { classes, cx } = useStyles(null, {
+    name: ['YearLevelGroup', __staticSelector],
     styles,
     classNames,
     unstyled,
-    name: ['YearLevelGroup', __staticSelector],
+    variant,
+    size,
   });
 
   const controlsRefs = useRef<HTMLButtonElement[][][]>([]);
@@ -81,6 +87,8 @@ export const YearLevelGroup = forwardRef<HTMLDivElement, YearLevelGroupProps>((p
       return (
         <YearLevel
           key={yearIndex}
+          variant={variant}
+          size={size}
           monthsListFormat={monthsListFormat}
           year={currentYear}
           withNext={yearIndex === numberOfColumns - 1}

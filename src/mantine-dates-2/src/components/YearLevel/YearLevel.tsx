@@ -116,7 +116,7 @@ export const YearLevel = forwardRef<HTMLDivElement, YearLevelProps>((props, ref)
       : false;
 
   return (
-    <Box className={cx(classes.yearLevel, className)} ref={ref} {...others}>
+    <Box className={cx(classes.yearLevel, className)} data-year-level ref={ref} {...others}>
       <CalendarHeader
         label={
           typeof yearLabelFormat === 'function'

@@ -1,5 +1,10 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
+import {
+  itSupportsSystemProps,
+  itSupportsProviderVariant,
+  itSupportsProviderSize,
+} from '@mantine/tests';
 import { YearLevelGroup, YearLevelGroupProps } from './YearLevelGroup';
 import {
   itSupportsMonthsListProps,
@@ -17,6 +22,23 @@ const defaultProps: YearLevelGroupProps = {
 };
 
 describe('@mantine/dates/YearLevelGroup', () => {
+  itSupportsSystemProps({
+    component: YearLevelGroup,
+    props: defaultProps,
+    refType: HTMLDivElement,
+    providerName: 'YearLevelGroup',
+    displayName: '@mantine/dates/YearLevelGroup',
+  });
+
+  itSupportsProviderVariant(YearLevelGroup, defaultProps, 'YearLevelGroup', [
+    'yearLevelGroup',
+    'yearLevel',
+  ]);
+  itSupportsProviderSize(YearLevelGroup, defaultProps, 'YearLevelGroup', [
+    'yearLevelGroup',
+    'yearLevel',
+  ]);
+
   itSupportsMonthsListProps(YearLevelGroup, defaultProps);
   itSupportsHeaderProps(YearLevelGroup, defaultProps);
   itSupportsOnControlClick(YearLevelGroup, defaultProps);

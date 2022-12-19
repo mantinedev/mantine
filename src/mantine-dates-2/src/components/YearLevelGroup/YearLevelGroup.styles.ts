@@ -1,8 +1,11 @@
 import { createStyles } from '@mantine/core';
 
-export default createStyles((theme) => ({
+export default createStyles((theme, _, { size }) => ({
   yearLevelGroup: {
     display: 'flex',
-    gap: theme.spacing.md,
+
+    '& [data-year-level]:not(:last-of-type)': {
+      marginRight: theme.fn.size({ size, sizes: theme.spacing }),
+    },
   },
 }));
