@@ -8,7 +8,7 @@ export default createStyles((theme, { radius }: ImageStylesParams) => ({
   root: {},
 
   imageWrapper: {
-    position: 'relative',
+    position: 'static',
   },
 
   figure: {
