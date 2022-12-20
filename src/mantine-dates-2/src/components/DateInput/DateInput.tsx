@@ -72,6 +72,7 @@ const defaultProps: Partial<DateInputProps> = {
   valueFormat: 'MMMM D, YYYY',
   fixOnBlur: true,
   preserveTime: true,
+  size: 'sm',
 };
 
 export const DateInput = forwardRef<HTMLInputElement, DateInputProps>((props, ref) => {
@@ -201,22 +202,24 @@ export const DateInput = forwardRef<HTMLInputElement, DateInputProps>((props, re
           {...popoverProps}
         >
           <Popover.Target>
-            <Input
-              data-dates-input
-              data-read-only={readOnly || undefined}
-              autoComplete="off"
-              ref={ref}
-              value={inputValue}
-              onChange={handleInputChange}
-              onBlur={handleInputBlur}
-              onFocus={handleInputFocus}
-              onClick={handleInputClick}
-              readOnly={readOnly}
-              rightSection={_rightSection}
-              {...inputProps}
-              {...others}
-              __staticSelector="DateInput"
-            />
+            <div>
+              <Input
+                data-dates-input
+                data-read-only={readOnly || undefined}
+                autoComplete="off"
+                ref={ref}
+                value={inputValue}
+                onChange={handleInputChange}
+                onBlur={handleInputBlur}
+                onFocus={handleInputFocus}
+                onClick={handleInputClick}
+                readOnly={readOnly}
+                rightSection={_rightSection}
+                {...inputProps}
+                {...others}
+                __staticSelector="DateInput"
+              />
+            </div>
           </Popover.Target>
           <Popover.Dropdown onMouseDown={(event) => event.preventDefault()} data-dates-dropdown>
             <Calendar
@@ -231,6 +234,7 @@ export const DateInput = forwardRef<HTMLInputElement, DateInputProps>((props, re
               maxDate={maxDate}
               locale={locale}
               getDayProps={_getDayProps}
+              size={inputProps.size}
             />
           </Popover.Dropdown>
         </Popover>
@@ -239,3 +243,5 @@ export const DateInput = forwardRef<HTMLInputElement, DateInputProps>((props, re
     </>
   );
 });
+
+DateInput.displayName = '@mantine/dates/DateInput';

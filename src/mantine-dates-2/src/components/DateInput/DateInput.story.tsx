@@ -154,3 +154,11 @@ export function UncontrolledFormValues() {
     </form>
   );
 }
+
+export function Size() {
+  return (
+    <div style={{ padding: 40, maxWidth: 400 }}>
+      <DateInput size="xl" placeholder="Date input" popoverProps={{ opened: true }} id="test-id" />
+    </div>
+  );
+}

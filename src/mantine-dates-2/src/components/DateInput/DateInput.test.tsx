@@ -2,6 +2,14 @@ import React from 'react';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import {
+  itSupportsSystemProps,
+  itSupportsProviderVariant,
+  itSupportsProviderSize,
+  itSupportsInputProps,
+  itSupportsFocusEvents,
+  checkAccessibility,
+} from '@mantine/tests';
+import {
   expectNoPopover,
   expectOpenedPopover,
   expectValue,
@@ -33,13 +41,40 @@ function getInput(container: HTMLElement) {
 }
 
 describe('@mantine/dates/DateInput', () => {
+  checkAccessibility([<DateInput {...defaultProps} label="test-label" />]);
+  itSupportsSystemProps({
+    component: DateInput,
+    props: defaultProps,
+    refType: HTMLInputElement,
+    providerName: 'DateInput',
+    othersSelector: 'input',
+    displayName: '@mantine/dates/DateInput',
+  });
+
+  itSupportsProviderVariant(
+    DateInput,
+    { ...defaultProps, popoverProps: { opened: true, withinPortal: false, transitionDuration: 0 } },
+    'DateInput',
+    ['root', 'input']
+  );
+  itSupportsProviderSize(
+    DateInput,
+    { ...defaultProps, popoverProps: { opened: true, withinPortal: false, transitionDuration: 0 } },
+    'DateInput',
+    ['root', 'input']
+  );
+
+  itSupportsInputProps(DateInput, defaultProps, 'DateInput');
+  itSupportsFocusEvents(DateInput, defaultProps, 'input');
   itSupportsClearableProps(DateInput, { ...defaultProps, defaultValue: new Date(2022, 3, 11) });
+
   itSupportsYearsListProps(DateInput, {
     ...defaultProps,
     defaultLevel: 'decade',
     defaultValue: new Date(2022, 3, 11),
     popoverProps: { opened: true, withinPortal: false, transitionDuration: 0 },
   });
+
   itSupportsMonthsListProps(DateInput, {
     ...defaultProps,
     defaultLevel: 'year',
