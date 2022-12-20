@@ -1,3 +1,4 @@
+import { MANTINE_SIZES } from '@mantine/core';
 import React from 'react';
 import { Calendar } from './Calendar';
 
@@ -56,4 +57,9 @@ export function InitialLevelDecade() {
       <Calendar defaultLevel="decade" />
     </div>
   );
+}
+
+export function Sizes() {
+  const sizes = MANTINE_SIZES.map((size) => <Calendar size={size} key={size} mt="xl" />);
+  return <div style={{ padding: 40 }}>{sizes}</div>;
 }

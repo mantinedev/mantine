@@ -96,6 +96,8 @@ export interface CalendarBaseProps {
 }
 
 export interface CalendarProps extends CalendarSettings, CalendarBaseProps, CalendarSystemProps {
+  variant?: string;
+
   /** Max level that user can go up to (decade, year, month), defaults to decade */
   maxLevel?: CalendarLevel;
 
@@ -164,15 +166,19 @@ export const Calendar = forwardRef<HTMLDivElement, CalendarProps>((props, ref) =
     styles,
     __staticSelector,
     unstyled,
+    variant,
+    size,
     __preventFocus,
     ...others
   } = useComponentDefaultProps('Calendar', defaultProps, props);
 
   const { classes, cx } = useStyles(null, {
+    name: ['Calendar', __staticSelector],
     classNames,
     styles,
     unstyled,
-    name: ['Calendar', __staticSelector],
+    variant,
+    size,
   });
 
   const [_level, setLevel] = useUncontrolled({
@@ -190,10 +196,12 @@ export const Calendar = forwardRef<HTMLDivElement, CalendarProps>((props, ref) =
   });
 
   const stylesApiProps = {
+    __staticSelector: __staticSelector || 'Calendar',
     styles,
     classNames,
     unstyled,
-    __staticSelector: __staticSelector || 'Calendar',
+    variant,
+    size,
   };
 
   const _columnsToScroll = columnsToScroll || numberOfColumns || 1;

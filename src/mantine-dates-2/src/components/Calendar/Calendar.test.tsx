@@ -1,7 +1,11 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { itSupportsSystemProps } from '@mantine/tests';
+import {
+  itSupportsSystemProps,
+  itSupportsProviderVariant,
+  itSupportsProviderSize,
+} from '@mantine/tests';
 import { Calendar, CalendarProps } from './Calendar';
 import {
   itSupportsMonthProps,
@@ -57,6 +61,8 @@ describe('@mantine/dates/Calendar', () => {
     displayName: '@mantine/dates/Calendar',
   });
 
+  itSupportsProviderVariant(Calendar, defaultProps, 'Calendar', 'calendar');
+  itSupportsProviderSize(Calendar, defaultProps, 'Calendar', 'calendar');
   itSupportsMonthProps(Calendar, defaultProps);
   itHandlesMonthKeyboardEvents(Calendar, defaultProps);
   itHandlesControlsKeyboardEvents(Calendar, 'year', '.mantine-MonthsList-monthsList', {
