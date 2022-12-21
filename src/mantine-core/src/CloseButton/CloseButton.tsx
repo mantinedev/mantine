@@ -11,7 +11,9 @@ export interface CloseButtonProps
   iconSize?: number | string;
 }
 
-const defaultProps: Partial<CloseButtonProps> = {};
+const defaultProps: Partial<CloseButtonProps> = {
+  iconSize: 16,
+};
 
 export const _CloseButton = forwardRef<HTMLButtonElement, CloseButtonProps>((props, ref) => {
   const { iconSize, ...others } = useComponentDefaultProps('CloseButton', defaultProps, props);
