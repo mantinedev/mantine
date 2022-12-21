@@ -5,7 +5,6 @@ import {
   itSupportsSystemProps,
   itSupportsProviderVariant,
   itSupportsProviderSize,
-  itSupportsInputProps,
   itSupportsFocusEvents,
   checkAccessibility,
 } from '@mantine/tests';
@@ -64,7 +63,6 @@ describe('@mantine/dates/DateInput', () => {
     ['root', 'input']
   );
 
-  itSupportsInputProps(DateInput, defaultProps, 'DateInput');
   itSupportsFocusEvents(DateInput, defaultProps, 'input');
   itSupportsClearableProps(DateInput, { ...defaultProps, defaultValue: new Date(2022, 3, 11) });
 

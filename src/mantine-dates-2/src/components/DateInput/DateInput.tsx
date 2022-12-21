@@ -202,24 +202,22 @@ export const DateInput = forwardRef<HTMLInputElement, DateInputProps>((props, re
           {...popoverProps}
         >
           <Popover.Target>
-            <div>
-              <Input
-                data-dates-input
-                data-read-only={readOnly || undefined}
-                autoComplete="off"
-                ref={ref}
-                value={inputValue}
-                onChange={handleInputChange}
-                onBlur={handleInputBlur}
-                onFocus={handleInputFocus}
-                onClick={handleInputClick}
-                readOnly={readOnly}
-                rightSection={_rightSection}
-                {...inputProps}
-                {...others}
-                __staticSelector="DateInput"
-              />
-            </div>
+            <Input
+              data-dates-input
+              data-read-only={readOnly || undefined}
+              autoComplete="off"
+              ref={ref}
+              value={inputValue}
+              onChange={handleInputChange}
+              onBlur={handleInputBlur}
+              onFocus={handleInputFocus}
+              onClick={handleInputClick}
+              readOnly={readOnly}
+              rightSection={_rightSection}
+              {...inputProps}
+              {...others}
+              __staticSelector="DateInput"
+            />
           </Popover.Target>
           <Popover.Dropdown onMouseDown={(event) => event.preventDefault()} data-dates-dropdown>
             <Calendar

@@ -1,3 +1,4 @@
+import { MANTINE_SIZES } from '@mantine/core';
 import dayjs from 'dayjs';
 import React from 'react';
 import { DatePickerInput } from './DatePickerInput';
@@ -100,4 +101,18 @@ export function Clearable() {
       <DatePickerInput label="Range" type="range" clearable />
     </div>
   );
+}
+
+export function Sizes() {
+  const sizes = MANTINE_SIZES.map((size) => (
+    <DatePickerInput
+      size={size}
+      key={size}
+      placeholder={size}
+      label={size}
+      mt="xl"
+      dropdownType="modal"
+    />
+  ));
+  return <div style={{ padding: 40 }}>{sizes}</div>;
 }

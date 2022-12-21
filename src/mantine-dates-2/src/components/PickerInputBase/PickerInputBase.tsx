@@ -97,10 +97,12 @@ export const PickerInputBase = forwardRef<HTMLButtonElement, PickerInputBaseProp
   } = useInputProps(props.__staticSelector, defaultProps, props);
 
   const { classes, cx } = useStyles(null, {
+    name: inputProps.__staticSelector,
     classNames,
     styles,
     unstyled,
-    name: inputProps.__staticSelector,
+    variant: inputProps.variant,
+    size: inputProps.size,
   });
 
   const _rightSection =

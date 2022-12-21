@@ -41,6 +41,8 @@ export const DatePickerInput: DatePickerInputComponent = forwardRef((props, ref)
     styles,
     unstyled,
     closeOnChange,
+    size,
+    variant,
     ...rest
   } = useComponentDefaultProps('DatePickerInput', defaultProps, props);
 
@@ -78,10 +80,14 @@ export const DatePickerInput: DatePickerInputComponent = forwardRef((props, ref)
       shouldClear={shouldClear}
       value={_value}
       type={type}
+      size={size}
+      variant={variant}
       {...others}
     >
       <DatePicker
         {...calendarProps}
+        size={size}
+        variant={variant}
         type={type}
         value={_value}
         defaultDate={Array.isArray(_value) ? _value[0] || undefined : _value || undefined}
