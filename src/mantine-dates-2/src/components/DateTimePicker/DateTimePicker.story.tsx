@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Button, Group } from '@mantine/core';
+import { Button, Group, MANTINE_SIZES } from '@mantine/core';
 import { DateTimePicker } from './DateTimePicker';
 
 export default { title: 'DateTimePicker' };
@@ -64,4 +64,18 @@ export function Controlled() {
       </Group>
     </div>
   );
+}
+
+export function Sizes() {
+  const sizes = MANTINE_SIZES.map((size) => (
+    <DateTimePicker
+      placeholder="Date time picker"
+      defaultValue={new Date(2022, 3, 11)}
+      clearable
+      size={size}
+      key={size}
+    />
+  ));
+
+  return <div style={{ padding: 40 }}>{sizes}</div>;
 }

@@ -112,6 +112,7 @@ export const PickerInputBase = forwardRef<HTMLButtonElement, PickerInputBaseProp
         variant="transparent"
         onClick={onClear}
         unstyled={unstyled}
+        size={inputProps.size}
         {...clearButtonProps}
       />
     ) : null);

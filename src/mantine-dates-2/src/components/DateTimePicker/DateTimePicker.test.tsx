@@ -2,6 +2,12 @@ import 'dayjs/locale/ru';
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import {
+  itSupportsSystemProps,
+  itSupportsProviderVariant,
+  itSupportsProviderSize,
+  itSupportsFocusEvents,
+} from '@mantine/tests';
 import { DatesProvider } from '../DatesProvider';
 import {
   itSupportsMonthsListProps,
@@ -40,6 +46,17 @@ const getSubmitButton = () => screen.getByLabelText('test-submit');
 const getClearButton = () => screen.queryAllByLabelText('test-clear')[0];
 
 describe('@mantine/dates/DateTimePicker', () => {
+  itSupportsSystemProps({
+    component: DateTimePicker,
+    props: defaultProps,
+    providerName: 'DateTimePicker',
+    othersSelector: '.mantine-DateTimePicker-input',
+    displayName: '@mantine/dates/DateTimePicker',
+  });
+
+  itSupportsFocusEvents(DateTimePicker, defaultProps, '.mantine-DateTimePicker-input');
+  itSupportsProviderVariant(DateTimePicker, defaultProps, 'DateTimePicker', ['root', 'input']);
+  itSupportsProviderSize(DateTimePicker, defaultProps, 'DateTimePicker', ['root', 'input']);
   itSupportsClearableProps(DateTimePicker, { ...defaultProps, defaultValue: new Date() });
   itSupportsYearsListProps(DateTimePicker, {
     ...defaultProps,

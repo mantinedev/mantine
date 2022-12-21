@@ -4,6 +4,7 @@ import {
   itSupportsSystemProps,
   itSupportsProviderVariant,
   itSupportsProviderSize,
+  itSupportsFocusEvents,
 } from '@mantine/tests';
 import {
   itSupportsClearableProps,
@@ -29,6 +30,7 @@ describe('@mantine/dates/DatePickerInput', () => {
     displayName: '@mantine/dates/DatePickerInput',
   });
 
+  itSupportsFocusEvents(DatePickerInput, defaultProps, '.mantine-DatePickerInput-input');
   itSupportsProviderVariant(DatePickerInput, defaultProps, 'DatePickerInput', ['root', 'input']);
   itSupportsProviderSize(DatePickerInput, defaultProps, 'DatePickerInput', ['root', 'input']);
   itSupportsDateInputProps(DatePickerInput, defaultProps);

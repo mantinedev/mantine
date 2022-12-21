@@ -11,15 +11,28 @@ export interface CloseButtonProps
   iconSize?: number | string;
 }
 
+const iconSizes = {
+  xs: 14,
+  sm: 16,
+  md: 18,
+  lg: 20,
+  xl: 22,
+};
+
 const defaultProps: Partial<CloseButtonProps> = {
-  iconSize: 16,
+  size: 'sm',
 };
 
 export const _CloseButton = forwardRef<HTMLButtonElement, CloseButtonProps>((props, ref) => {
-  const { iconSize, ...others } = useComponentDefaultProps('CloseButton', defaultProps, props);
+  const { iconSize, size, ...others } = useComponentDefaultProps(
+    'CloseButton',
+    defaultProps,
+    props
+  );
+  const _iconSize = iconSize || iconSizes[size];
   return (
-    <ActionIcon ref={ref} __staticSelector="CloseButton" {...others}>
-      <CloseIcon width={iconSize} height={iconSize} />
+    <ActionIcon ref={ref} __staticSelector="CloseButton" size={size} {...others}>
+      <CloseIcon width={_iconSize} height={_iconSize} />
     </ActionIcon>
   );
 });

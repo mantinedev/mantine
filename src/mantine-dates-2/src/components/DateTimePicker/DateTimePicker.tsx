@@ -7,6 +7,7 @@ import {
   ActionIconProps,
   Selectors,
   DefaultProps,
+  INPUT_SIZES,
 } from '@mantine/core';
 import { useDisclosure, useUncontrolled, useDidUpdate } from '@mantine/hooks';
 import { assignTime } from '../../utils';
@@ -51,7 +52,9 @@ export interface DateTimePickerProps
   withSeconds?: boolean;
 }
 
-const defaultProps: Partial<DateTimePickerProps> = {};
+const defaultProps: Partial<DateTimePickerProps> = {
+  size: 'sm',
+};
 
 export const DateTimePicker = forwardRef<HTMLButtonElement, DateTimePickerProps>((props, ref) => {
   const {
@@ -68,12 +71,21 @@ export const DateTimePicker = forwardRef<HTMLButtonElement, DateTimePickerProps>
     withSeconds,
     level,
     defaultLevel,
+    size,
+    variant,
     ...rest
   } = useComponentDefaultProps('DateTimePicker', defaultProps, props);
 
   const _valueFormat = valueFormat || (withSeconds ? 'DD/MM/YYYY HH:mm:ss' : 'DD/MM/YYYY HH:mm');
 
-  const { classes, cx } = useStyles(null, { name: 'DateTimePicker', classNames, styles, unstyled });
+  const { classes, cx } = useStyles(null, {
+    name: 'DateTimePicker',
+    classNames,
+    styles,
+    unstyled,
+    variant,
+    size,
+  });
 
   const timeInputRef = useRef<HTMLInputElement>();
 
@@ -150,10 +162,14 @@ export const DateTimePicker = forwardRef<HTMLButtonElement, DateTimePickerProps>
       shouldClear={!!_value}
       value={_value}
       type="default"
+      size={size}
+      variant={variant}
       {...others}
     >
       <DatePicker
         {...calendarProps}
+        size={size}
+        variant={variant}
         type="default"
         value={_value}
         defaultDate={_value}
@@ -182,11 +198,12 @@ export const DateTimePicker = forwardRef<HTMLButtonElement, DateTimePickerProps>
             className={cx(classes.timeInput, timeInputProps?.className)}
             onChange={handleTimeChange}
             onKeyDown={handleTimeInputKeyDown}
+            size={size}
           />
 
           <ActionIcon<'button'>
             variant="default"
-            size={36}
+            size={INPUT_SIZES[size]}
             onClick={(event) => {
               submitButtonProps?.onClick?.(event);
               dropdownHandlers.close();
