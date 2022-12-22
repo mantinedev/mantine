@@ -30,6 +30,31 @@ createStyles((theme, params) => {
 });
 ```
 
+## Theme object changes
+
+You can no longer define `dateFormat` and `datesLocale` in [theme](https://mantine.dev/theming/theme-object/),
+use components prop to specify format instead:
+
+```tsx
+// 5.x, will not work in 6.x
+import { MantineProvider } from '@mantine/core';
+
+function Demo() {
+  return (
+    <MantineProvider theme={{ dateFormat: 'MMMM DD YYYY', datesLocale: 'es' }}>
+      <App />
+    </MantineProvider>
+  );
+}
+
+// 6.x – use components props
+import { DatePickerInput } from '@mantine/dates';
+
+function Demo() {
+  return <DatePickerInput valueFormat="MMMM D, YYYY" />;
+}
+```
+
 ## Other breaking changes
 
 - [Text](https://mantine.dev/core/text/) no longer supports `variant="link"`, use [Anchor](https://mantine.dev/core/anchor/) instead
