@@ -12,7 +12,7 @@ function Demo() {
   const [value, setValue] = useState<[Date | null, Date | null]>([null, null]);
   return (
     <Group position="center">
-      <YearPicker type="range" value={value} onChange={setValue} />
+      <YearPicker type="range" allowSingleDateInRange value={value} onChange={setValue} />
     </Group>
   );
 }

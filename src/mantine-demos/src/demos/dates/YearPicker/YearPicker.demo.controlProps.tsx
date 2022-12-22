@@ -25,6 +25,10 @@ function Demo() {
             };
           }
 
+          if (date.getFullYear() === new Date().getFullYear() + 1) {
+            return { disabled: true };
+          }
+
           return {};
         }}
       />
@@ -48,6 +52,10 @@ function Demo() {
                 fontWeight: 700,
               }),
             };
+          }
+
+          if (date.getFullYear() === new Date().getFullYear() + 1) {
+            return { disabled: true };
           }
 
           return {};
