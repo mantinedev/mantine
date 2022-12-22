@@ -27,6 +27,7 @@ const defaultProps: Partial<MonthPickerInputProps> = {
   type: 'default',
   valueFormat: 'MMMM YYYY',
   closeOnChange: true,
+  dropdownType: 'popover',
 };
 
 export const MonthPickerInput: MonthPickerInputComponent = forwardRef((props, ref) => {
@@ -43,6 +44,7 @@ export const MonthPickerInput: MonthPickerInputComponent = forwardRef((props, re
     closeOnChange,
     variant,
     size,
+    dropdownType,
     ...rest
   } = useComponentDefaultProps('MonthPickerInput', defaultProps, props);
 
@@ -82,6 +84,7 @@ export const MonthPickerInput: MonthPickerInputComponent = forwardRef((props, re
       type={type}
       variant={variant}
       size={size}
+      dropdownType={dropdownType}
       {...others}
     >
       <MonthPicker
@@ -95,6 +98,7 @@ export const MonthPickerInput: MonthPickerInputComponent = forwardRef((props, re
         styles={styles}
         unstyled={unstyled}
         __staticSelector="MonthPickerInput"
+        __stopPropagation={dropdownType === 'popover'}
         variant={variant}
         size={size}
       />

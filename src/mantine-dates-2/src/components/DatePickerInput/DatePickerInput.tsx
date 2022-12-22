@@ -27,6 +27,7 @@ const defaultProps: Partial<DatePickerInputProps> = {
   type: 'default',
   valueFormat: 'MMMM D, YYYY',
   closeOnChange: true,
+  dropdownType: 'popover',
 };
 
 export const DatePickerInput: DatePickerInputComponent = forwardRef((props, ref) => {
@@ -43,6 +44,7 @@ export const DatePickerInput: DatePickerInputComponent = forwardRef((props, ref)
     closeOnChange,
     size,
     variant,
+    dropdownType,
     ...rest
   } = useComponentDefaultProps('DatePickerInput', defaultProps, props);
 
@@ -82,6 +84,7 @@ export const DatePickerInput: DatePickerInputComponent = forwardRef((props, ref)
       type={type}
       size={size}
       variant={variant}
+      dropdownType={dropdownType}
       {...others}
     >
       <DatePicker
@@ -97,6 +100,7 @@ export const DatePickerInput: DatePickerInputComponent = forwardRef((props, ref)
         styles={styles}
         unstyled={unstyled}
         __staticSelector="DatePickerInput"
+        __stopPropagation={dropdownType === 'popover'}
       />
     </PickerInputBase>
   );

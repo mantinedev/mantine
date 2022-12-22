@@ -1,6 +1,7 @@
 import dayjs from 'dayjs';
 import React from 'react';
 import { Button, MANTINE_SIZES } from '@mantine/core';
+import { WithinOverlays } from '@mantine/storybook';
 import { YearPickerInput } from './YearPickerInput';
 
 export default { title: 'YearPickerInput' };
@@ -102,4 +103,12 @@ export function Sizes() {
     <YearPickerInput size={size} key={size} placeholder={size} label={size} mt="xl" />
   ));
   return <div style={{ padding: 40 }}>{sizes}</div>;
+}
+
+export function InOverlays() {
+  return (
+    <WithinOverlays>
+      <YearPickerInput popoverProps={{ withinPortal: true }} />
+    </WithinOverlays>
+  );
 }

@@ -60,6 +60,7 @@ export const YearLevelGroup = forwardRef<HTMLDivElement, YearLevelGroupProps>((p
     styles,
     unstyled,
     __staticSelector,
+    __stopPropagation,
     numberOfColumns,
     levelControlAriaLabel,
     yearLabelFormat,
@@ -94,6 +95,7 @@ export const YearLevelGroup = forwardRef<HTMLDivElement, YearLevelGroupProps>((p
           withNext={yearIndex === numberOfColumns - 1}
           withPrevious={yearIndex === 0}
           yearLabelFormat={yearLabelFormat}
+          __stopPropagation={__stopPropagation}
           __onControlClick={__onControlClick}
           __onControlMouseEnter={__onControlMouseEnter}
           __onControlKeyDown={(event, payload) =>

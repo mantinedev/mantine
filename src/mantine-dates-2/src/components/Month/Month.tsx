@@ -18,6 +18,9 @@ export type MonthStylesNames =
   | DayStylesNames;
 
 export interface MonthSettings {
+  /** Determines whether propagation for Escape key should be stopped */
+  __stopPropagation?: boolean;
+
   /** Prevents focus shift when buttons are clicked */
   __preventFocus?: boolean;
 
@@ -120,6 +123,7 @@ export const Month = forwardRef<HTMLTableElement, MonthProps>((props, ref) => {
     __onDayClick,
     __onDayMouseEnter,
     __preventFocus,
+    __stopPropagation,
     size,
     variant,
     ...others
@@ -159,6 +163,7 @@ export const Month = forwardRef<HTMLTableElement, MonthProps>((props, ref) => {
         <td key={date.toString()} className={classes.monthCell}>
           <Day
             {...stylesApiProps}
+            data-mantine-stop-propagation={__stopPropagation || undefined}
             renderDay={renderDay}
             date={date}
             weekend={ctx.getWeekendDays(weekendDays).includes(date.getDay() as DayOfWeek)}

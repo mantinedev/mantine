@@ -76,6 +76,7 @@ export const YearLevel = forwardRef<HTMLDivElement, YearLevelProps>((props, ref)
     styles,
     unstyled,
     __staticSelector,
+    __stopPropagation,
     size,
     variant,
     ...others
@@ -127,6 +128,7 @@ export const YearLevel = forwardRef<HTMLDivElement, YearLevelProps>((props, ref)
         }
         className={classes.calendarHeader}
         __preventFocus={__preventFocus}
+        __stopPropagation={__stopPropagation}
         nextIcon={nextIcon}
         previousIcon={previousIcon}
         nextLabel={nextLabel}
@@ -155,6 +157,7 @@ export const YearLevel = forwardRef<HTMLDivElement, YearLevelProps>((props, ref)
         __onControlClick={__onControlClick}
         __onControlMouseEnter={__onControlMouseEnter}
         __preventFocus={__preventFocus}
+        __stopPropagation={__stopPropagation}
         {...stylesApiProps}
       />
     </Box>

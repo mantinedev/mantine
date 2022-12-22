@@ -76,6 +76,7 @@ export const DecadeLevel = forwardRef<HTMLDivElement, DecadeLevelProps>((props, 
     styles,
     unstyled,
     __staticSelector,
+    __stopPropagation,
     variant,
     size,
     ...others
@@ -134,6 +135,7 @@ export const DecadeLevel = forwardRef<HTMLDivElement, DecadeLevelProps>((props, 
         }
         className={classes.calendarHeader}
         __preventFocus={__preventFocus}
+        __stopPropagation={__stopPropagation}
         nextIcon={nextIcon}
         previousIcon={previousIcon}
         nextLabel={nextLabel}
@@ -162,6 +164,7 @@ export const DecadeLevel = forwardRef<HTMLDivElement, DecadeLevelProps>((props, 
         __onControlClick={__onControlClick}
         __onControlMouseEnter={__onControlMouseEnter}
         __preventFocus={__preventFocus}
+        __stopPropagation={__stopPropagation}
         {...stylesApiProps}
       />
     </Box>

@@ -17,6 +17,9 @@ export interface MonthsListSettings extends ControlsGroupSettings {
 
   /** Adds props to month picker control based on date */
   getMonthControlProps?(date: Date): Partial<PickerControlProps>;
+
+  /** Determines whether propagation for Escape key should be stopped */
+  __stopPropagation?: boolean;
 }
 
 export interface MonthsListProps
@@ -61,6 +64,7 @@ export const MonthsList = forwardRef<HTMLTableElement, MonthsListProps>((props, 
     __preventFocus,
     size,
     variant,
+    __stopPropagation,
     ...others
   } = useComponentDefaultProps('MonthsList', defaultProps, props);
   const { classes, cx } = useStyles(null, {
@@ -88,6 +92,7 @@ export const MonthsList = forwardRef<HTMLTableElement, MonthsListProps>((props, 
             styles={styles}
             unstyled={unstyled}
             __staticSelector={__staticSelector || 'MonthsList'}
+            data-mantine-stop-propagation={__stopPropagation || undefined}
             disabled={isMonthDisabled(month, minDate, maxDate)}
             ref={(node) => __getControlRef?.(rowIndex, cellIndex, node)}
             {...controlProps}

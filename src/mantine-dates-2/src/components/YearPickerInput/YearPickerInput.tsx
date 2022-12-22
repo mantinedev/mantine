@@ -27,6 +27,7 @@ const defaultProps: Partial<YearPickerInputProps> = {
   type: 'default',
   valueFormat: 'YYYY',
   closeOnChange: true,
+  dropdownType: 'popover',
 };
 
 export const YearPickerInput: YearPickerInputComponent = forwardRef((props, ref) => {
@@ -43,6 +44,7 @@ export const YearPickerInput: YearPickerInputComponent = forwardRef((props, ref)
     closeOnChange,
     size,
     variant,
+    dropdownType,
     ...rest
   } = useComponentDefaultProps('YearPickerInput', defaultProps, props);
 
@@ -82,6 +84,7 @@ export const YearPickerInput: YearPickerInputComponent = forwardRef((props, ref)
       type={type}
       size={size}
       variant={variant}
+      dropdownType={dropdownType}
       {...others}
     >
       <YearPicker
@@ -97,6 +100,7 @@ export const YearPickerInput: YearPickerInputComponent = forwardRef((props, ref)
         styles={styles}
         unstyled={unstyled}
         __staticSelector="YearPickerInput"
+        __stopPropagation={dropdownType === 'popover'}
       />
     </PickerInputBase>
   );

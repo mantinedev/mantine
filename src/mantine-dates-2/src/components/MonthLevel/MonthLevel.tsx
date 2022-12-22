@@ -61,6 +61,7 @@ export const MonthLevel = forwardRef<HTMLDivElement, MonthLevelProps>((props, re
 
     // CalendarHeader settings
     __preventFocus,
+    __stopPropagation,
     nextIcon,
     previousIcon,
     nextLabel,
@@ -133,6 +134,7 @@ export const MonthLevel = forwardRef<HTMLDivElement, MonthLevelProps>((props, re
         }
         className={classes.calendarHeader}
         __preventFocus={__preventFocus}
+        __stopPropagation={__stopPropagation}
         nextIcon={nextIcon}
         previousIcon={previousIcon}
         nextLabel={nextLabel}
@@ -168,6 +170,7 @@ export const MonthLevel = forwardRef<HTMLDivElement, MonthLevelProps>((props, re
         __onDayClick={__onDayClick}
         __onDayMouseEnter={__onDayMouseEnter}
         __preventFocus={__preventFocus}
+        __stopPropagation={__stopPropagation}
         {...stylesApiProps}
       />
     </Box>

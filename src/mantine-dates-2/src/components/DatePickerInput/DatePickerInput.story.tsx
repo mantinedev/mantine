@@ -1,4 +1,5 @@
 import { MANTINE_SIZES } from '@mantine/core';
+import { WithinOverlays } from '@mantine/storybook';
 import dayjs from 'dayjs';
 import React from 'react';
 import { DatePickerInput } from './DatePickerInput';
@@ -115,4 +116,12 @@ export function Sizes() {
     />
   ));
   return <div style={{ padding: 40 }}>{sizes}</div>;
+}
+
+export function InOverlays() {
+  return (
+    <WithinOverlays>
+      <DatePickerInput />
+    </WithinOverlays>
+  );
 }

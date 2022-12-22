@@ -54,6 +54,7 @@ export interface DateTimePickerProps
 
 const defaultProps: Partial<DateTimePickerProps> = {
   size: 'sm',
+  dropdownType: 'popover',
 };
 
 export const DateTimePicker = forwardRef<HTMLButtonElement, DateTimePickerProps>((props, ref) => {
@@ -73,6 +74,7 @@ export const DateTimePicker = forwardRef<HTMLButtonElement, DateTimePickerProps>
     defaultLevel,
     size,
     variant,
+    dropdownType,
     ...rest
   } = useComponentDefaultProps('DateTimePicker', defaultProps, props);
 
@@ -148,6 +150,8 @@ export const DateTimePicker = forwardRef<HTMLButtonElement, DateTimePickerProps>
     }
   }, [_value, dropdownOpened]);
 
+  const __stopPropagation = dropdownType === 'popover';
+
   return (
     <PickerInputBase
       formattedValue={formattedValue}
@@ -164,6 +168,7 @@ export const DateTimePicker = forwardRef<HTMLButtonElement, DateTimePickerProps>
       type="default"
       size={size}
       variant={variant}
+      dropdownType={dropdownType}
       {...others}
     >
       <DatePicker
@@ -179,6 +184,7 @@ export const DateTimePicker = forwardRef<HTMLButtonElement, DateTimePickerProps>
         styles={styles}
         unstyled={unstyled}
         __staticSelector="DateTimePicker"
+        __stopPropagation={__stopPropagation}
         level={level}
         defaultLevel={defaultLevel}
         onLevelChange={(_level) => {
@@ -199,6 +205,7 @@ export const DateTimePicker = forwardRef<HTMLButtonElement, DateTimePickerProps>
             onChange={handleTimeChange}
             onKeyDown={handleTimeInputKeyDown}
             size={size}
+            data-mantine-stop-propagation={__stopPropagation || undefined}
           />
 
           <ActionIcon<'button'>
@@ -211,6 +218,7 @@ export const DateTimePicker = forwardRef<HTMLButtonElement, DateTimePickerProps>
             // eslint-disable-next-line react/no-children-prop
             children={<CheckIcon width={12} />}
             unstyled={unstyled}
+            data-mantine-stop-propagation={__stopPropagation || undefined}
             {...submitButtonProps}
           />
         </div>

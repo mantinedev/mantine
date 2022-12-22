@@ -169,6 +169,7 @@ export const Calendar = forwardRef<HTMLDivElement, CalendarProps>((props, ref) =
     variant,
     size,
     __preventFocus,
+    __stopPropagation,
     ...others
   } = useComponentDefaultProps('Calendar', defaultProps, props);
 
@@ -238,6 +239,7 @@ export const Calendar = forwardRef<HTMLDivElement, CalendarProps>((props, ref) =
           __onDayClick={__onDayClick}
           __onDayMouseEnter={__onDayMouseEnter}
           __preventFocus={__preventFocus}
+          __stopPropagation={__stopPropagation}
           {...stylesApiProps}
         />
       )}
@@ -266,6 +268,7 @@ export const Calendar = forwardRef<HTMLDivElement, CalendarProps>((props, ref) =
             onMonthSelect?.(payload);
           }}
           __preventFocus={__preventFocus}
+          __stopPropagation={__stopPropagation}
           {...stylesApiProps}
         />
       )}
@@ -305,6 +308,7 @@ export const Calendar = forwardRef<HTMLDivElement, CalendarProps>((props, ref) =
             onYearSelect?.(payload);
           }}
           __preventFocus={__preventFocus}
+          __stopPropagation={__stopPropagation}
           {...stylesApiProps}
         />
       )}

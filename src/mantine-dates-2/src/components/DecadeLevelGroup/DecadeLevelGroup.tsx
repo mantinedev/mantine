@@ -62,6 +62,7 @@ export const DecadeLevelGroup = forwardRef<HTMLDivElement, DecadeLevelGroupProps
     styles,
     unstyled,
     __staticSelector,
+    __stopPropagation,
     numberOfColumns,
     levelControlAriaLabel,
     decadeLabelFormat,
@@ -130,6 +131,7 @@ export const DecadeLevelGroup = forwardRef<HTMLDivElement, DecadeLevelGroupProps
           minDate={minDate}
           maxDate={maxDate}
           __preventFocus={__preventFocus}
+          __stopPropagation={__stopPropagation}
           nextIcon={nextIcon}
           previousIcon={previousIcon}
           nextLabel={nextLabel}

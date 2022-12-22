@@ -69,6 +69,7 @@ export const MonthLevelGroup = forwardRef<HTMLDivElement, MonthLevelGroupProps>(
     levelControlAriaLabel,
     monthLabelFormat,
     __staticSelector,
+    __stopPropagation,
     size,
     variant,
     ...others
@@ -97,6 +98,7 @@ export const MonthLevelGroup = forwardRef<HTMLDivElement, MonthLevelGroupProps>(
           withNext={monthIndex === numberOfColumns - 1}
           withPrevious={monthIndex === 0}
           monthLabelFormat={monthLabelFormat}
+          __stopPropagation={__stopPropagation}
           __onDayClick={__onDayClick}
           __onDayMouseEnter={__onDayMouseEnter}
           __onDayKeyDown={(event, payload) =>

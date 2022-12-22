@@ -23,6 +23,9 @@ export interface YearsListSettings extends ControlsGroupSettings {
 
   /** Component size */
   size?: MantineSize;
+
+  /** Determines whether propagation for Escape key should be stopped */
+  __stopPropagation?: boolean;
 }
 
 export interface YearsListProps
@@ -59,6 +62,7 @@ export const YearsList = forwardRef<HTMLTableElement, YearsListProps>((props, re
     __onControlClick,
     __onControlMouseEnter,
     __preventFocus,
+    __stopPropagation,
     size,
     variant,
     ...others
@@ -89,6 +93,7 @@ export const YearsList = forwardRef<HTMLTableElement, YearsListProps>((props, re
             styles={styles}
             unstyled={unstyled}
             __staticSelector={__staticSelector || 'YearsList'}
+            data-mantine-stop-propagation={__stopPropagation || undefined}
             disabled={isYearDisabled(year, minDate, maxDate)}
             ref={(node) => __getControlRef?.(rowIndex, cellIndex, node)}
             {...controlProps}
