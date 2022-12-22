@@ -2,6 +2,11 @@ import React from 'react';
 import { render } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import {
+  itSupportsSystemProps,
+  itSupportsProviderVariant,
+  itSupportsProviderSize,
+} from '@mantine/tests';
+import {
   itSupportsMonthsListProps,
   itHandlesControlsKeyboardEvents,
   itSupportsYearsListProps,
@@ -11,6 +16,16 @@ import { MonthPicker } from './MonthPicker';
 const defaultProps = {};
 
 describe('@mantine/dates/MonthPicker', () => {
+  itSupportsSystemProps({
+    component: MonthPicker,
+    props: defaultProps,
+    refType: HTMLDivElement,
+    providerName: 'MonthPicker',
+    displayName: '@mantine/dates/MonthPicker',
+  });
+
+  itSupportsProviderVariant(MonthPicker, defaultProps, 'MonthPicker', 'calendar');
+  itSupportsProviderSize(MonthPicker, defaultProps, 'MonthPicker', 'calendar');
   itSupportsYearsListProps(MonthPicker, { ...defaultProps, defaultLevel: 'decade' });
   itSupportsMonthsListProps(MonthPicker, defaultProps);
   itHandlesControlsKeyboardEvents(
