@@ -7,7 +7,7 @@ import {
   TimeRangeInput,
   Calendar,
   RangeCalendar,
-} from '@mantine/dates';
+} from '@mantine/dates-old';
 import dayjs from 'dayjs';
 
 function CalendarWrapper() {

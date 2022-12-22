@@ -2,7 +2,7 @@ import React from 'react';
 import 'dayjs/locale/ru';
 import { MantineProvider } from '@mantine/core';
 import { MantineDemo } from '@mantine/ds';
-import { DatePicker } from '@mantine/dates';
+import { DatePicker } from '@mantine/dates-old';
 
 function Demo() {
   return (

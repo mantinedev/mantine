@@ -1,4 +1,4 @@
-import type { DatePickerStylesNames } from '@mantine/dates';
+import type { DatePickerStylesNames } from '@mantine/dates-old';
 import { Input } from './Input.styles-api';
 import { InputWrapper } from './InputWrapper.styles-api';
 import { Calendar } from './Calendar.styles-api';

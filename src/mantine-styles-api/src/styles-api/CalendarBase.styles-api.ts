@@ -1,4 +1,4 @@
-import type { CalendarBaseStylesNames } from '@mantine/dates';
+import type { CalendarBaseStylesNames } from '@mantine/dates-old';
 import { Month } from './Month.styles-api';
 
 export const CalendarBase: Record<CalendarBaseStylesNames, string> = {

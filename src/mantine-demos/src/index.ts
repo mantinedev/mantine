@@ -103,15 +103,6 @@ export * as TransitionDemos from './demos/core/Transition';
 export * as TypographyStylesProviderDemos from './demos/core/TypographyStylesProvider';
 export * as UnstyledButtonDemos from './demos/core/UnstyledButton';
 
-// @mantine/dates
-export * as CalendarDemos from './demos/dates/Calendar';
-export * as DatePickerDemos from './demos/dates/DatePicker';
-export * as DateRangePickerDemos from './demos/dates/DateRangePicker';
-export * as MonthDemos from './demos/dates/Month';
-export * as RangeCalendarDemos from './demos/dates/RangeCalendar';
-export * as TimeInputDemos from './demos/dates/TimeInput';
-export * as TimeRangeInputDemos from './demos/dates/TimeRangeInput';
-
 // Other packages
 export * as DropzoneDemos from './demos/dropzone';
 export * as NotificationsDemos from './demos/notifications';

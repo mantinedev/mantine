@@ -1,4 +1,4 @@
-import type { TimeInputStylesNames } from '@mantine/dates';
+import type { TimeInputStylesNames } from '@mantine/dates-old';
 import { Input } from './Input.styles-api';
 import { InputWrapper } from './InputWrapper.styles-api';
 

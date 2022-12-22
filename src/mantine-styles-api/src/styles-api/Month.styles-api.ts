@@ -1,4 +1,4 @@
-import type { MonthStylesNames } from '@mantine/dates';
+import type { MonthStylesNames } from '@mantine/dates-old';
 
 export const Month: Record<MonthStylesNames, string> = {
   month: 'Root element',
