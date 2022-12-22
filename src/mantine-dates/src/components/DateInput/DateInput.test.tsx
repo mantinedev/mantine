@@ -25,7 +25,6 @@ const defaultProps: DateInputProps = {
   ariaLabels: {
     monthLevelControl: 'level-control',
     yearLevelControl: 'level-control',
-    decadeLevelControl: 'level-control',
     nextMonth: 'next',
     previousMonth: 'previous',
     nextYear: 'next',

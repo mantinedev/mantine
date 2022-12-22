@@ -16,10 +16,14 @@ export type DecadeLevelStylesNames =
   | YearsListStylesNames
   | CalendarHeaderStylesNames;
 
-export interface DecadeLevelSettings extends YearsListSettings, CalendarHeaderSettings {
+export interface DecadeLevelBaseSettings extends YearsListSettings {
   /** dayjs label format to display decade label or a function that returns decade label based on date value, defaults to "YYYY" */
   decadeLabelFormat?: string | ((startOfDecade: Date, endOfDecade: Date) => React.ReactNode);
 }
+
+export interface DecadeLevelSettings
+  extends DecadeLevelBaseSettings,
+    Omit<CalendarHeaderSettings, 'onLevelClick' | 'hasNextLevel'> {}
 
 export interface DecadeLevelProps
   extends DefaultProps<DecadeLevelStylesNames>,
@@ -61,10 +65,8 @@ export const DecadeLevel = forwardRef<HTMLDivElement, DecadeLevelProps>((props, 
     previousLabel,
     onNext,
     onPrevious,
-    onLevelClick,
     nextDisabled,
     previousDisabled,
-    hasNextLevel,
     levelControlAriaLabel,
     withNext,
     withPrevious,
@@ -142,10 +144,9 @@ export const DecadeLevel = forwardRef<HTMLDivElement, DecadeLevelProps>((props, 
         previousLabel={previousLabel}
         onNext={onNext}
         onPrevious={onPrevious}
-        onLevelClick={onLevelClick}
         nextDisabled={_nextDisabled}
         previousDisabled={_previousDisabled}
-        hasNextLevel={hasNextLevel}
+        hasNextLevel={false}
         levelControlAriaLabel={levelControlAriaLabel}
         withNext={withNext}
         withPrevious={withPrevious}

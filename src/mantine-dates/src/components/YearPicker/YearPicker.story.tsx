@@ -8,7 +8,10 @@ export default { title: 'YearPicker' };
 export function Usage() {
   return (
     <div style={{ padding: 40 }}>
-      <YearPicker />
+      <YearPicker
+        onNextDecade={(date) => console.log('next', date)}
+        onPreviousDecade={(date) => console.log('previous', date)}
+      />
     </div>
   );
 }

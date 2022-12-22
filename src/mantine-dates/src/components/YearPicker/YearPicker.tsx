@@ -1,14 +1,14 @@
 import React, { forwardRef } from 'react';
 import { useComponentDefaultProps } from '@mantine/core';
 import { useDatesState } from '../../hooks';
-import { DecadeLevelSettings } from '../DecadeLevel';
+import { DecadeLevelBaseSettings } from '../DecadeLevel';
 import { PickerBaseProps, DatePickerType } from '../../types';
 import { Calendar, CalendarBaseProps, CalendarSystemProps } from '../Calendar';
 
 export interface YearPickerBaseProps<Type extends DatePickerType = 'default'>
   extends PickerBaseProps<Type>,
-    DecadeLevelSettings,
-    CalendarBaseProps {}
+    DecadeLevelBaseSettings,
+    Omit<CalendarBaseProps, 'onNextYear' | 'onPreviousYear' | 'onNextMonth' | 'onPreviousMonth'> {}
 
 export interface YearPickerProps<Type extends DatePickerType = 'default'>
   extends YearPickerBaseProps<Type>,

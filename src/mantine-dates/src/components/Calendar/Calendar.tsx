@@ -22,7 +22,6 @@ export type CalendarStylesNames =
 export interface CalendarAriaLabels {
   monthLevelControl?: string;
   yearLevelControl?: string;
-  decadeLevelControl?: string;
 
   nextMonth?: string;
   previousMonth?: string;
@@ -35,9 +34,9 @@ export interface CalendarAriaLabels {
 }
 
 export interface CalendarSettings
-  extends DecadeLevelSettings,
-    YearLevelSettings,
-    MonthLevelSettings {
+  extends Omit<DecadeLevelSettings, 'onNext' | 'onPrevious'>,
+    Omit<YearLevelSettings, 'onNext' | 'onPrevious'>,
+    Omit<MonthLevelSettings, 'onNext' | 'onPrevious'> {
   /** Initial level displayed to the user (decade, year, month), used for uncontrolled component */
   defaultLevel?: CalendarLevel;
 
@@ -90,11 +89,29 @@ export interface CalendarBaseProps {
   /** Number of columns to render next to each other */
   numberOfColumns?: number;
 
-  /** Number of columns to scroll when user clicks next/prev month, defaults to numberOfColumns */
+  /** Number of columns to scroll when user clicks next/prev buttons, defaults to numberOfColumns */
   columnsToScroll?: number;
 
   /** aria-label attributes for controls on different levels */
   ariaLabels?: CalendarAriaLabels;
+
+  /** Called when next decade button is clicked */
+  onNextDecade?(date: Date): void;
+
+  /** Called when previous decade button is clicked */
+  onPreviousDecade?(date: Date): void;
+
+  /** Called when next year button is clicked */
+  onNextYear?(date: Date): void;
+
+  /** Called when previous year button is clicked */
+  onPreviousYear?(date: Date): void;
+
+  /** Called when next month button is clicked */
+  onNextMonth?(date: Date): void;
+
+  /** Called when previous month button is clicked */
+  onPreviousMonth?(date: Date): void;
 }
 
 export interface CalendarProps extends CalendarSettings, CalendarBaseProps, CalendarSystemProps {
@@ -170,6 +187,12 @@ export const Calendar = forwardRef<HTMLDivElement, CalendarProps>((props, ref) =
     size,
     __preventFocus,
     __stopPropagation,
+    onNextDecade,
+    onPreviousDecade,
+    onNextYear,
+    onPreviousYear,
+    onNextMonth,
+    onPreviousMonth,
     ...others
   } = useComponentDefaultProps('Calendar', defaultProps, props);
 
@@ -208,6 +231,46 @@ export const Calendar = forwardRef<HTMLDivElement, CalendarProps>((props, ref) =
   const _columnsToScroll = columnsToScroll || numberOfColumns || 1;
   const currentDate = _date || new Date();
 
+  const handleNextMonth = () => {
+    const nextDate = dayjs(currentDate).add(_columnsToScroll, 'month').toDate();
+    onNextMonth?.(nextDate);
+    setDate(nextDate);
+  };
+
+  const handlePreviousMonth = () => {
+    const nextDate = dayjs(currentDate).subtract(_columnsToScroll, 'month').toDate();
+    onPreviousMonth?.(nextDate);
+    setDate(nextDate);
+  };
+
+  const handleNextYear = () => {
+    const nextDate = dayjs(currentDate).add(_columnsToScroll, 'year').toDate();
+    onNextYear?.(nextDate);
+    setDate(nextDate);
+  };
+
+  const handlePreviousYear = () => {
+    const nextDate = dayjs(currentDate).subtract(_columnsToScroll, 'year').toDate();
+    onPreviousYear?.(nextDate);
+    setDate(nextDate);
+  };
+
+  const handleNextDecade = () => {
+    const nextDate = dayjs(currentDate)
+      .add(10 * _columnsToScroll, 'year')
+      .toDate();
+    onNextDecade?.(nextDate);
+    setDate(nextDate);
+  };
+
+  const handlePreviousDecade = () => {
+    const nextDate = dayjs(currentDate)
+      .subtract(10 * _columnsToScroll, 'year')
+      .toDate();
+    onPreviousDecade?.(nextDate);
+    setDate(nextDate);
+  };
+
   return (
     <Box className={cx(classes.calendar, className)} ref={ref} {...others}>
       {_level === 'month' && (
@@ -224,10 +287,8 @@ export const Calendar = forwardRef<HTMLDivElement, CalendarProps>((props, ref) =
           hideOutsideDates={hideOutsideDates}
           hideWeekdays={hideWeekdays}
           getDayAriaLabel={getDayAriaLabel}
-          onNext={() => setDate(dayjs(currentDate).add(_columnsToScroll, 'month').toDate())}
-          onPrevious={() =>
-            setDate(dayjs(currentDate).subtract(_columnsToScroll, 'month').toDate())
-          }
+          onNext={handleNextMonth}
+          onPrevious={handlePreviousMonth}
           hasNextLevel={maxLevel !== 'month'}
           onLevelClick={() => setLevel('year')}
           numberOfColumns={numberOfColumns}
@@ -253,8 +314,8 @@ export const Calendar = forwardRef<HTMLDivElement, CalendarProps>((props, ref) =
           monthsListFormat={monthsListFormat}
           getMonthControlProps={getMonthControlProps}
           locale={locale}
-          onNext={() => setDate(dayjs(currentDate).add(_columnsToScroll, 'year').toDate())}
-          onPrevious={() => setDate(dayjs(currentDate).subtract(_columnsToScroll, 'year').toDate())}
+          onNext={handleNextYear}
+          onPrevious={handlePreviousYear}
           hasNextLevel={maxLevel !== 'month' && maxLevel !== 'year'}
           onLevelClick={() => setLevel('decade')}
           levelControlAriaLabel={ariaLabels?.yearLevelControl}
@@ -281,23 +342,9 @@ export const Calendar = forwardRef<HTMLDivElement, CalendarProps>((props, ref) =
           yearsListFormat={yearsListFormat}
           getYearControlProps={getYearControlProps}
           locale={locale}
-          onNext={() =>
-            setDate(
-              dayjs(currentDate)
-                .add(10 * _columnsToScroll, 'year')
-                .toDate()
-            )
-          }
-          onPrevious={() =>
-            setDate(
-              dayjs(currentDate)
-                .subtract(10 * _columnsToScroll, 'year')
-                .toDate()
-            )
-          }
-          hasNextLevel={false}
+          onNext={handleNextDecade}
+          onPrevious={handlePreviousDecade}
           numberOfColumns={numberOfColumns}
-          levelControlAriaLabel={ariaLabels?.decadeLevelControl}
           nextLabel={ariaLabels?.nextDecade}
           previousLabel={ariaLabels?.previousDecade}
           decadeLabelFormat={decadeLabelFormat}

@@ -51,10 +51,8 @@ export const DecadeLevelGroup = forwardRef<HTMLDivElement, DecadeLevelGroupProps
     previousLabel,
     onNext,
     onPrevious,
-    onLevelClick,
     nextDisabled,
     previousDisabled,
-    hasNextLevel,
 
     // Other settings
     className,
@@ -138,10 +136,8 @@ export const DecadeLevelGroup = forwardRef<HTMLDivElement, DecadeLevelGroupProps
           previousLabel={previousLabel}
           onNext={onNext}
           onPrevious={onPrevious}
-          onLevelClick={onLevelClick}
           nextDisabled={nextDisabled}
           previousDisabled={previousDisabled}
-          hasNextLevel={hasNextLevel}
           getYearControlProps={getYearControlProps}
           __staticSelector={__staticSelector || 'DecadeLevelGroup'}
           classNames={classNames}

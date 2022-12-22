@@ -18,7 +18,6 @@ const defaultProps: CalendarProps = {
   ariaLabels: {
     monthLevelControl: 'month-level',
     yearLevelControl: 'year-level',
-    decadeLevelControl: 'decade-level',
     nextMonth: 'next-month',
     previousMonth: 'previous-month',
     nextYear: 'next-year',
