@@ -1,6 +1,12 @@
 import React from 'react';
 import { render } from '@testing-library/react';
 import {
+  itSupportsFocusEvents,
+  itSupportsProviderSize,
+  itSupportsProviderVariant,
+  itSupportsSystemProps,
+} from '@mantine/tests';
+import {
   itSupportsClearableProps,
   itSupportsYearsListProps,
   itSupportsDateInputProps,
@@ -14,6 +20,18 @@ const defaultProps = {
 };
 
 describe('@mantine/dates/YearPickerInput', () => {
+  itSupportsSystemProps({
+    component: YearPickerInput,
+    props: defaultProps,
+    refType: HTMLButtonElement,
+    providerName: 'YearPickerInput',
+    othersSelector: '.mantine-YearPickerInput-input',
+    displayName: '@mantine/dates/YearPickerInput',
+  });
+
+  itSupportsFocusEvents(YearPickerInput, defaultProps, '.mantine-YearPickerInput-input');
+  itSupportsProviderVariant(YearPickerInput, defaultProps, 'YearPickerInput', ['root', 'input']);
+  itSupportsProviderSize(YearPickerInput, defaultProps, 'YearPickerInput', ['root', 'input']);
   itSupportsDateInputProps(YearPickerInput, defaultProps);
   itSupportsClearableProps(YearPickerInput, { ...defaultProps, defaultValue: new Date() });
   itSupportsYearsListProps(YearPickerInput, {

@@ -41,6 +41,8 @@ export const YearPickerInput: YearPickerInputComponent = forwardRef((props, ref)
     styles,
     unstyled,
     closeOnChange,
+    size,
+    variant,
     ...rest
   } = useComponentDefaultProps('YearPickerInput', defaultProps, props);
 
@@ -78,10 +80,14 @@ export const YearPickerInput: YearPickerInputComponent = forwardRef((props, ref)
       shouldClear={shouldClear}
       value={_value}
       type={type}
+      size={size}
+      variant={variant}
       {...others}
     >
       <YearPicker
         {...calendarProps}
+        size={size}
+        variant={variant}
         type={type}
         value={_value}
         defaultDate={Array.isArray(_value) ? _value[0] || undefined : _value || undefined}
