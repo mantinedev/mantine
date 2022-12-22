@@ -64,6 +64,10 @@ export const docgenParser = withCustomConfig(path.join(__dirname, '../../tsconfi
       return false;
     }
 
+    if (prop.name === 'variant' && prop.type.name === 'string') {
+      return false;
+    }
+
     if (prop.declarations !== undefined && prop.declarations.length > 0) {
       return Boolean(
         prop.declarations.find((declaration) => !declaration.fileName.includes('node_modules'))
