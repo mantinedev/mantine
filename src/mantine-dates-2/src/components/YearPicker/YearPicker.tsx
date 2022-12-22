@@ -39,7 +39,7 @@ export const YearPicker: YearPickerComponent = forwardRef(
       onMouseLeave,
       onYearSelect,
       ...others
-    } = useComponentDefaultProps('YearsPicker', defaultProps, props as any);
+    } = useComponentDefaultProps('YearPicker', defaultProps, props as any);
 
     const { onDateChange, onRootMouseLeave, onHoveredDateChange, getControlProps } =
       useDatesState<Type>({

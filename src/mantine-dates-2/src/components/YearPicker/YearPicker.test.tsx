@@ -1,12 +1,27 @@
 import React from 'react';
 import { render } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import {
+  itSupportsSystemProps,
+  itSupportsProviderVariant,
+  itSupportsProviderSize,
+} from '@mantine/tests';
 import { itSupportsYearsListProps, itHandlesControlsKeyboardEvents } from '../../tests';
 import { YearPicker } from './YearPicker';
 
 const defaultProps = {};
 
 describe('@mantine/dates/YearPicker', () => {
+  itSupportsSystemProps({
+    component: YearPicker,
+    props: defaultProps,
+    refType: HTMLDivElement,
+    providerName: 'YearPicker',
+    displayName: '@mantine/dates/YearPicker',
+  });
+
+  itSupportsProviderVariant(YearPicker, defaultProps, 'YearPicker', 'calendar');
+  itSupportsProviderSize(YearPicker, defaultProps, 'YearPicker', 'calendar');
   itSupportsYearsListProps(YearPicker, defaultProps);
   itHandlesControlsKeyboardEvents(
     YearPicker,
