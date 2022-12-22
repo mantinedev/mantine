@@ -1,6 +1,12 @@
 import React from 'react';
 import { render } from '@testing-library/react';
 import {
+  itSupportsSystemProps,
+  itSupportsProviderVariant,
+  itSupportsProviderSize,
+  itSupportsFocusEvents,
+} from '@mantine/tests';
+import {
   itSupportsClearableProps,
   itSupportsYearsListProps,
   itSupportsMonthsListProps,
@@ -15,6 +21,18 @@ const defaultProps = {
 };
 
 describe('@mantine/dates/MonthPickerInput', () => {
+  itSupportsSystemProps({
+    component: MonthPickerInput,
+    props: defaultProps,
+    refType: HTMLButtonElement,
+    providerName: 'MonthPickerInput',
+    othersSelector: '.mantine-MonthPickerInput-input',
+    displayName: '@mantine/dates/MonthPickerInput',
+  });
+
+  itSupportsFocusEvents(MonthPickerInput, defaultProps, '.mantine-MonthPickerInput-input');
+  itSupportsProviderVariant(MonthPickerInput, defaultProps, 'MonthPickerInput', ['root', 'input']);
+  itSupportsProviderSize(MonthPickerInput, defaultProps, 'MonthPickerInput', ['root', 'input']);
   itSupportsDateInputProps(MonthPickerInput, defaultProps);
   itSupportsClearableProps(MonthPickerInput, { ...defaultProps, defaultValue: new Date() });
   itSupportsYearsListProps(MonthPickerInput, {

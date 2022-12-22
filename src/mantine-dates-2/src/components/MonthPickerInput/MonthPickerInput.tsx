@@ -41,6 +41,8 @@ export const MonthPickerInput: MonthPickerInputComponent = forwardRef((props, re
     styles,
     unstyled,
     closeOnChange,
+    variant,
+    size,
     ...rest
   } = useComponentDefaultProps('MonthPickerInput', defaultProps, props);
 
@@ -78,6 +80,8 @@ export const MonthPickerInput: MonthPickerInputComponent = forwardRef((props, re
       shouldClear={shouldClear}
       value={_value}
       type={type}
+      variant={variant}
+      size={size}
       {...others}
     >
       <MonthPicker
@@ -91,6 +95,8 @@ export const MonthPickerInput: MonthPickerInputComponent = forwardRef((props, re
         styles={styles}
         unstyled={unstyled}
         __staticSelector="MonthPickerInput"
+        variant={variant}
+        size={size}
       />
     </PickerInputBase>
   );
