@@ -17,18 +17,29 @@ export interface TimeInputProps extends TextInputProps {
 const defaultProps: Partial<TimeInputProps> = {};
 
 export const TimeInput = forwardRef<HTMLInputElement, TimeInputProps>((props, ref) => {
-  const { classNames, withSeconds, ...others } = useComponentDefaultProps(
-    'TimeInput',
-    defaultProps,
-    props
-  );
-  const { classes, cx } = useStyles();
+  const { classNames, withSeconds, variant, size, styles, unstyled, ...others } =
+    useComponentDefaultProps('TimeInput', defaultProps, props);
+
+  const { classes, cx } = useStyles(null, {
+    name: 'TimeInput',
+    classNames,
+    styles,
+    unstyled,
+    variant,
+    size,
+  });
+
   return (
     <TextInput
       type="time"
       step={withSeconds ? 1 : 60}
-      classNames={{ input: cx(classes.input, classNames?.input) }}
+      classNames={{ ...classNames, input: cx(classes.input, classNames?.input) }}
+      styles={styles}
+      unstyled={unstyled}
+      variant={variant}
+      size={size}
       ref={ref}
+      __staticSelector="TimeInput"
       {...others}
     />
   );
