@@ -120,3 +120,6 @@ export * as TipTapDemos from './demos/tiptap';
 // @mantine/labs
 export * as PinInputDemos from './demos/labs/PinInput';
 export * as TagInputDemos from './demos/labs/TagInput';
+
+// @mantine/dates
+export * as YearPickerDemos from './demos/dates/YearPicker';
