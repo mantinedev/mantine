@@ -101,3 +101,67 @@ Use `yearsListFormat` to change [dayjs format](https://day.js.org/docs/en/displa
 Use `decadeLabelFormat` to change [dayjs format](https://day.js.org/docs/en/display/format) of decade label:
 
 <Demo data={YearPickerDemos.decadeLabelFormat} />
+
+## Accessibility
+
+### Aria labels
+
+Set `ariaLabels` prop to specify `aria-label` attributes for next/previous controls:
+
+```tsx
+import { YearPicker } from '@mantine/dates';
+
+function Demo() {
+  return (
+    <YearPicker
+      ariaLabels={{
+        nextDecade: 'Next decade',
+        previousDecade: 'Previous decade',
+      }}
+    />
+  );
+}
+```
+
+### Year control aria-label
+
+Use `getYearControlProps` to customize `aria-label` attribute:
+
+```tsx
+import { YearPicker } from '@mantine/dates';
+
+function Demo() {
+  return (
+    <YearPicker
+      getYearControlProps={(date) => ({
+        'aria-label': `Select year ${date.getFullYear()}`,
+      })}
+    />
+  );
+}
+```
+
+### Keyboard interactions
+
+Note that the following events will only trigger if focus is on year control.
+
+<KeyboardEventsTable
+  data={[
+    {
+      key: 'ArrowRight',
+      description: 'Focuses next year in a row that is not disabled',
+    },
+    {
+      key: 'ArrowLeft',
+      description: 'Focuses previous year in a row that is not disabled',
+    },
+    {
+      key: 'ArrowDown',
+      description: 'Focuses next year in a column that is not disabled',
+    },
+    {
+      key: 'ArrowUp',
+      description: 'Focuses previous year in a column that is not disabled',
+    },
+  ]}
+/>
