@@ -46,6 +46,25 @@ To change this behavior set `allowSingleDateInRange` prop. `allowSingleDateInRan
 
 <Demo data={YearPickerDemos.singleRange} />
 
+## Default date
+
+Use `defaultDate` prop to set date value that will be used to determine which decade should be displayed initially.
+For example to display `2040 – 2049` decade set `defaultDate={new Date(2040, 1)}`. If value is not specified,
+then `defaultDate` will use `new Date()`. Month, day, minutes and seconds are ignored in provided date object, only year is used –
+you can specify any date value.
+
+Note that if you set `date` prop, then `defaultDate` value will be ignored.
+
+<Demo data={YearPickerDemos.defaultDate} />
+
+## Controlled date
+
+Set `date`, `onNextDecade` and `onPreviousDecade` props to make currently displayed decade controlled.
+By doing so, you can customize date picking experience, for example, when user selects first date in range,
+you can add 20 years to current date value:
+
+<Demo data={YearPickerDemos.controlledDate} />
+
 ## Min and max date
 
 Set `minDate` and `maxDate` props to define min and max dates. If previous/next page is not available

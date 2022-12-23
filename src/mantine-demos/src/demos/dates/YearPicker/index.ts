@@ -9,3 +9,5 @@ export { numberOfColumns } from './YearPicker.demo.numberOfColumns';
 export { sizeConfigurator } from './YearPicker.demo.sizeConfigurator';
 export { yearsListFormat } from './YearPicker.demo.yearsListFormat';
 export { decadeLabelFormat } from './YearPicker.demo.decadeLabelFormat';
+export { defaultDate } from './YearPicker.demo.defaultDate';
+export { controlledDate } from './YearPicker.demo.controlledDate';
