@@ -55,11 +55,7 @@ export * from './Tooltip.styles-api';
 export * from './TransferList.styles-api';
 
 // @mantine/dates
-export * from './Calendar.styles-api';
-export * from './CalendarBase.styles-api';
-export * from './DatePicker.styles-api';
-export * from './Month.styles-api';
-export * from './TimeInput.styles-api';
+export * from './Dates.styles-api';
 
 // Other packages
 export * from './Dropzone.styles-api';
