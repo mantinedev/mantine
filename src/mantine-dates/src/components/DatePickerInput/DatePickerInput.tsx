@@ -27,6 +27,7 @@ const defaultProps: Partial<DatePickerInputProps> = {
   type: 'default',
   valueFormat: 'MMMM D, YYYY',
   closeOnChange: true,
+  sortDates: true,
   dropdownType: 'popover',
 };
 
@@ -45,6 +46,7 @@ export const DatePickerInput: DatePickerInputComponent = forwardRef((props, ref)
     size,
     variant,
     dropdownType,
+    sortDates,
     ...rest
   } = useComponentDefaultProps('DatePickerInput', defaultProps, props);
 
@@ -66,6 +68,7 @@ export const DatePickerInput: DatePickerInputComponent = forwardRef((props, ref)
     locale,
     format: valueFormat,
     closeOnChange,
+    sortDates,
   });
 
   return (

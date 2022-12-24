@@ -12,6 +12,7 @@ interface UseDatesInput<Type extends DatePickerType = 'default'> {
   locale: string;
   format: string;
   closeOnChange: boolean;
+  sortDates: boolean;
 }
 
 export function useDatesInput<Type extends DatePickerType = 'default'>({
@@ -22,6 +23,7 @@ export function useDatesInput<Type extends DatePickerType = 'default'>({
   locale,
   format,
   closeOnChange,
+  sortDates,
 }: UseDatesInput<Type>) {
   const ctx = useDatesContext();
 
@@ -52,7 +54,11 @@ export function useDatesInput<Type extends DatePickerType = 'default'>({
       }
     }
 
-    _setValue(val);
+    if (sortDates && type === 'multiple') {
+      _setValue([...val].sort((a, b) => a.getTime() - b.getTime()));
+    } else {
+      _setValue(val);
+    }
   };
 
   const onClear = () => setValue(type === 'range' ? [null, null] : type === 'multiple' ? [] : null);

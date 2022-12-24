@@ -51,6 +51,9 @@ export interface DateInputSharedProps
 
   /** Determines whether the user can modify the value */
   readOnly?: boolean;
+
+  /** Determines whether dates value should be sorted before onChange call, only applicable when type="multiple", true by default */
+  sortDates?: boolean;
 }
 
 export interface PickerInputBaseProps extends DateInputSharedProps {
