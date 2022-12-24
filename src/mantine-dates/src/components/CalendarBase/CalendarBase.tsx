@@ -41,6 +41,9 @@ export interface CalendarSharedProps extends DefaultProps<CalendarBaseStylesName
   /** Allow to change level (date – month – year) */
   allowLevelChange?: boolean;
 
+  /** Allow to change level (date – month – year) */
+  allowedLevels?: ('date' | 'month' | 'year')[];
+
   /** Initial date selection level */
   initialLevel?: 'date' | 'month' | 'year';
 
@@ -104,6 +107,7 @@ export const CalendarBase = forwardRef<HTMLDivElement, CalendarBaseProps>(
       amountOfMonths = 1,
       paginateBy = amountOfMonths,
       size = 'sm',
+      allowedLevels = ['date', 'month', 'year'],
       allowLevelChange = true,
       initialLevel = 'date',
       minDate,
@@ -256,7 +260,7 @@ export const CalendarBase = forwardRef<HTMLDivElement, CalendarBaseProps>(
 
     return (
       <Box className={cx(classes.calendarBase, className)} ref={ref} {...others}>
-        {selectionState === 'year' && (
+        {selectionState === 'year' && allowedLevels.includes('year') && (
           <YearPicker
             size={size}
             value={yearSelection}
@@ -264,7 +268,12 @@ export const CalendarBase = forwardRef<HTMLDivElement, CalendarBaseProps>(
             maxYear={maxYear}
             onChange={(year) => {
               setYearSelection(year);
-              setSelectionState('month');
+
+              if (allowedLevels.includes('month')) {
+                setSelectionState('month');
+              } else {
+                onChange?.(new Date(year, 1, 1));
+              }
             }}
             classNames={classNames}
             styles={styles}
@@ -278,19 +287,28 @@ export const CalendarBase = forwardRef<HTMLDivElement, CalendarBaseProps>(
           />
         )}
 
-        {selectionState === 'month' && (
+        {selectionState === 'month' && allowedLevels.includes('month') && (
           <MonthPicker
             size={size}
             value={{ month: _month.getMonth(), year: _month.getFullYear() }}
             year={yearSelection}
             onYearChange={setYearSelection}
-            onNextLevel={() => setSelectionState('year')}
+            onNextLevel={() => {
+              if (allowedLevels.includes('year')) {
+                setSelectionState('year');
+              }
+            }}
             locale={finalLocale}
             minDate={minDate}
             maxDate={maxDate}
             onChange={(monthValue) => {
               setMonth(new Date(yearSelection, monthValue, 1));
-              setSelectionState('date');
+
+              if (allowedLevels.includes('date')) {
+                setSelectionState('date');
+              } else {
+                onChange?.(new Date(yearSelection, monthValue, 1));
+              }
             }}
             classNames={classNames}
             styles={styles}
@@ -312,11 +330,15 @@ export const CalendarBase = forwardRef<HTMLDivElement, CalendarBaseProps>(
             locale={finalLocale}
             minDate={minDate}
             maxDate={maxDate}
-            allowLevelChange={allowLevelChange}
+            allowLevelChange={allowLevelChange && allowedLevels.some(x => x !== 'date')}
             size={size}
             daysRefs={daysRefs}
             onMonthChange={setMonth}
-            onNextLevel={() => setSelectionState('month')}
+            onNextLevel={() => {
+              if (allowedLevels.includes('month')) {
+                setSelectionState('month');
+              }
+            }}
             onDayKeyDown={handleDayKeyDown}
             classNames={classNames}
             styles={styles}

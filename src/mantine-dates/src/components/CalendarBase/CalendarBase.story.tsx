@@ -26,6 +26,18 @@ storiesOf('CalendarBase', module)
   .add('3 months', () => <Wrapper amountOfMonths={3} />)
   .add('First day of week sunday', () => <Wrapper amountOfMonths={2} firstDayOfWeek="sunday" />)
   .add('Disallow level change', () => <Wrapper amountOfMonths={2} allowLevelChange={false} />)
+  .add('Only show specific levels', () => (
+    <>
+      <p style={{ paddingLeft: 30 }}>Only <code>year</code> and <code>month</code></p>
+      <Wrapper initialLevel="month" allowedLevels={['year', 'month']} />
+      <p style={{ paddingLeft: 30 }}>Only <code>year</code></p>
+      <Wrapper initialLevel="year" allowedLevels={['year']} />
+      <p style={{ paddingLeft: 30 }}>Only <code>month</code></p>
+      <Wrapper initialLevel="month" allowedLevels={['month']} />
+      <p style={{ paddingLeft: 30 }}>Only <code>date</code></p>
+      <Wrapper initialLevel="date" allowedLevels={['date']} />
+    </>
+  ))
   .add('Initial level: month', () => <Wrapper amountOfMonths={2} initialLevel="month" />)
   .add('Initial level: year', () => <Wrapper amountOfMonths={2} initialLevel="year" />)
   .add('Sizes: date', () => <div style={{ padding: 40 }}>{getSizes({})}</div>)
