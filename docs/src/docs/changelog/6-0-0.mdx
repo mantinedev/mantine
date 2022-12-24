@@ -7,6 +7,8 @@ release: https://github.com/mantinedev/mantine/releases/tag/6.0.0
 date: 'December 1st, 2022'
 ---
 
+import { YearPickerInputDemos, YearPickerDemos } from '@mantine/demos';
+
 ## createStyles changes
 
 [createStyles](https://mantine.dev/styles/create-styles/) function no longer receives `getRef`
@@ -58,3 +60,17 @@ function Demo() {
 ## Other breaking changes
 
 - [Text](https://mantine.dev/core/text/) no longer supports `variant="link"`, use [Anchor](https://mantine.dev/core/anchor/) instead
+
+## New components
+
+### YearPicker
+
+New [YearPicker](https://mantine.dev/dates/year-picker/) component:
+
+<Demo data={YearPickerDemos.usage} />
+
+### YearPickerInput
+
+New [YearPickerInput](https://mantine.dev/dates/year-picker-input/) component:
+
+<Demo data={YearPickerInputDemos.usage} />
