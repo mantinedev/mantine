@@ -1,8 +1,7 @@
-export { usage } from './YearPickerInput.demo.usage';
-export { multiple } from './YearPickerInput.demo.multiple';
-export { range } from './YearPickerInput.demo.range';
-export { configurator } from './YearPickerInput.demo.configurator';
-export { clearable } from './YearPickerInput.demo.clearable';
-export { icon } from './YearPickerInput.demo.icon';
-export { modal } from './YearPickerInput.demo.modal';
+import { YearPickerInput } from '@mantine/dates';
+import { getSharedPickerInputDemos } from '../_shared';
+
+export const { usage, multiple, range, configurator, modal, icon, clearable } =
+  getSharedPickerInputDemos(YearPickerInput);
+
 export { valueFormat } from './YearPickerInput.demo.valueFormat';
