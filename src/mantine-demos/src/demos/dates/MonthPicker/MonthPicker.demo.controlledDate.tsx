@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { MantineDemo } from '@mantine/ds';
 import { Group } from '@mantine/core';
-import { YearPicker } from '@mantine/dates';
+import { MonthPicker } from '@mantine/dates';
 
 const code = `
 import { Group } from '@mantine/core';
-import { YearPicker } from '@mantine/dates';
+import { MonthPicker } from '@mantine/dates';
 
 function Demo() {
   const [value, setValue] = useState<[Date | null, Date | null]>([null, null]);
@@ -13,7 +13,7 @@ function Demo() {
 
   const handleChange = (val: [Date | null, Date | null]) => {
     if (val[0] !== null && val[1] === null) {
-      setDate((current) => new Date(current.getFullYear() + 20, 1));
+      setDate((current) => new Date(current.getFullYear() + 1, 1));
     }
 
     setValue(val);
@@ -21,10 +21,12 @@ function Demo() {
 
   return (
     <Group position="center">
-      <YearPicker
+      <MonthPicker
         date={date}
         onNextDecade={setDate}
         onPreviousDecade={setDate}
+        onNextYear={setDate}
+        onPreviousYear={setDate}
         type="range"
         value={value}
         onChange={handleChange}
@@ -32,6 +34,7 @@ function Demo() {
     </Group>
   );
 }
+
 `;
 
 function Demo() {
@@ -40,7 +43,7 @@ function Demo() {
 
   const handleChange = (val: [Date | null, Date | null]) => {
     if (val[0] !== null && val[1] === null) {
-      setDate((current) => new Date(current.getFullYear() + 20, 1));
+      setDate((current) => new Date(current.getFullYear() + 1, 1));
     }
 
     setValue(val);
@@ -48,10 +51,12 @@ function Demo() {
 
   return (
     <Group position="center">
-      <YearPicker
+      <MonthPicker
         date={date}
         onNextDecade={setDate}
         onPreviousDecade={setDate}
+        onNextYear={setDate}
+        onPreviousYear={setDate}
         type="range"
         value={value}
         onChange={handleChange}
