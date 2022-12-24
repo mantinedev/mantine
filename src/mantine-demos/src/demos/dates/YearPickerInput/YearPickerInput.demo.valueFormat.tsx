@@ -8,7 +8,8 @@ import { YearPickerInput } from '@mantine/dates';
 function Demo() {
   return (
     <YearPickerInput
-      dropdownType="modal"
+      valueFormat="YY"
+      type="multiple"
       label="Pick year"
       placeholder="Pick year"
       mx="auto"
@@ -21,7 +22,8 @@ function Demo() {
 function Demo() {
   return (
     <YearPickerInput
-      dropdownType="modal"
+      valueFormat="YY"
+      type="multiple"
       label="Pick year"
       placeholder="Pick year"
       mx="auto"
@@ -30,7 +32,7 @@ function Demo() {
   );
 }
 
-export const modal: MantineDemo = {
+export const valueFormat: MantineDemo = {
   type: 'demo',
   component: Demo,
   code,

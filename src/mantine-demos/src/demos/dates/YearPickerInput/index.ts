@@ -5,3 +5,4 @@ export { configurator } from './YearPickerInput.demo.configurator';
 export { clearable } from './YearPickerInput.demo.clearable';
 export { icon } from './YearPickerInput.demo.icon';
 export { modal } from './YearPickerInput.demo.modal';
+export { valueFormat } from './YearPickerInput.demo.valueFormat';
