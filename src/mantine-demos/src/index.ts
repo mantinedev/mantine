@@ -124,3 +124,4 @@ export * as TagInputDemos from './demos/labs/TagInput';
 // @mantine/dates
 export * as YearPickerDemos from './demos/dates/YearPicker';
 export * as YearPickerInputDemos from './demos/dates/YearPickerInput';
+export * as MonthPickerDemos from './demos/dates/MonthPicker';
