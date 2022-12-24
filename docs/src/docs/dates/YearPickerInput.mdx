@@ -35,6 +35,13 @@ Set `type="range"` to allow user to pick dates range:
 
 <Demo data={YearPickerInputDemos.range} />
 
+## Open picker in modal
+
+By default, [YearPicker](/dates/year-picker/) is rendered inside [Popover](/core/popover/).
+You can change that to [Modal](/core/modal/) by setting `dropdownType="modal"`:
+
+<Demo data={YearPickerInputDemos.modal} />
+
 ## Clearable
 
 Set `clearable` prop to display clear button in the right section. Note that if you set `rightSection`
@@ -44,7 +51,7 @@ prop, clear button will not be displayed.
 
 ## Input props
 
-`YearPickerInput` supports all props from [Input and Input.Wrapper](https://mantine.dev/core/input/)
+`YearPickerInput` supports all props from [Input and Input.Wrapper](/core/input/)
 components:
 
 <Demo data={YearPickerInputDemos.configurator} />
@@ -57,7 +64,7 @@ components:
 
 ### YearPicker labels
 
-Follow [YearPicker](https://mantine.dev/dates/year-picker/#accessibility) documentation
+Follow [YearPicker](/dates/year-picker/#accessibility) documentation
 to add all required labels to the year picker inside popover.
 
 ### Input label
