@@ -15,10 +15,12 @@ export type YearLevelStylesNames =
   | MonthsListStylesNames
   | CalendarHeaderStylesNames;
 
-export interface YearLevelSettings extends MonthsListSettings, CalendarHeaderSettings {
+export interface YearLevelBaseSettings extends MonthsListSettings {
   /** dayjs label format to display year label or a function that returns year label based on year value, defaults to "YYYY" */
   yearLabelFormat?: string | ((year: Date) => React.ReactNode);
 }
+
+export interface YearLevelSettings extends YearLevelBaseSettings, CalendarHeaderSettings {}
 
 export interface YearLevelProps
   extends DefaultProps<YearLevelStylesNames>,
