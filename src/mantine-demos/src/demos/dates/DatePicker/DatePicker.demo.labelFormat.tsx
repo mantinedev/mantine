@@ -13,6 +13,7 @@ function Demo() {
   return (
     <Group position="center">
       <DatePicker
+        defaultLevel="decade"
         decadeLabelFormat="YY"
         yearLabelFormat="YYYY [year]"
         monthLabelFormat="MM/YY"
@@ -29,6 +30,7 @@ function Demo() {
   return (
     <Group position="center">
       <DatePicker
+        defaultLevel="decade"
         decadeLabelFormat="YY"
         yearLabelFormat="YYYY [year]"
         monthLabelFormat="MM/YY"
