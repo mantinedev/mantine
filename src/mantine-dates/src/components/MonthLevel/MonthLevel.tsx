@@ -15,10 +15,12 @@ export type MonthLevelStylesNames =
   | MonthStylesNames
   | CalendarHeaderStylesNames;
 
-export interface MonthLevelSettings extends MonthSettings, CalendarHeaderSettings {
+export interface MonthLevelBaseSettings extends MonthSettings {
   /** dayjs label format to display month label or a function that returns month label based on month value, defaults to "MMMM YYYY" */
   monthLabelFormat?: string | ((month: Date) => React.ReactNode);
 }
+
+export interface MonthLevelSettings extends MonthLevelBaseSettings, CalendarHeaderSettings {}
 
 export interface MonthLevelProps
   extends DefaultProps<MonthLevelStylesNames>,
