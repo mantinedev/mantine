@@ -10,10 +10,10 @@ Mantine core components library.
 
 ```bash
 # With yarn
-yarn add @mantine/core @mantine/hooks
+yarn add @mantine/core @mantine/core
 
 # With npm
-npm install @mantine/core @mantine/hooks
+npm install @mantine/core @mantine/core
 ```
 
 ## License
