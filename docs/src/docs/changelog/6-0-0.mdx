@@ -12,6 +12,7 @@ import {
   YearPickerDemos,
   MonthPickerDemos,
   MonthPickerInputDemos,
+  DatePickerInputDemos,
 } from '@mantine/demos';
 
 ## createStyles breaking changes
@@ -83,28 +84,40 @@ function Demo() {
 
 - [Text](https://mantine.dev/core/text/) no longer supports `variant="link"`, use [Anchor](https://mantine.dev/core/anchor/) instead
 
-## New components
+## Updated @mantine/dates package
 
-### YearPicker
+`@mantine/dates` package was rebuilt from scratch, it now includes new components to
+pick [year](https://mantine.dev/dates/year-picker/), [month](https://mantine.dev/dates/month-picker/)
+and [dates](https://mantine.dev/dates/date-picker/). All new pickers support `type` prop that can be:
 
-New [YearPicker](https://mantine.dev/dates/year-picker/) component:
+- `default` – `Date | null` – user can pick one date
+- `multiple` – `Date[]` – user can pick any number of dates
+- `range` – `[Date | null, Date | null]` – user can pick a range of two dates
+
+`type="default"` example with [DatePickerInput](https://mantine.dev/dates/date-picker-input/) component:
+
+<Demo data={DatePickerInputDemos.usage} />
+
+`type="multiple"` example with [MonthPickerInput](https://mantine.dev/dates/month-picker-input/) component:
+
+<Demo data={MonthPickerInputDemos.multiple} />
+
+`type="range"` example with [YearPickerInput](https://mantine.dev/dates/year-picker-input/) component:
+
+<Demo data={YearPickerInputDemos.range} />
+
+### [YearPicker component](https://mantine.dev/dates/year-picker/)
 
 <Demo data={YearPickerDemos.usage} />
 
-### YearPickerInput
-
-New [YearPickerInput](https://mantine.dev/dates/year-picker-input/) component:
+### [YearPickerInput](https://mantine.dev/dates/year-picker-input/)
 
 <Demo data={YearPickerInputDemos.usage} />
 
-### MonthPicker
-
-New [MonthPicker](https://mantine.dev/dates/month-picker/) component:
+### [MonthPicker](https://mantine.dev/dates/month-picker/)
 
 <Demo data={MonthPickerDemos.usage} />
 
-### MonthPickerInput
-
-New [MonthPickerInput](https://mantine.dev/dates/month-picker-input/) component:
+### [MonthPickerInput](https://mantine.dev/dates/month-picker-input/)
 
 <Demo data={MonthPickerInputDemos.usage} />
