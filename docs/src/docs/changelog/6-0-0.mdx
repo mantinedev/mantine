@@ -7,9 +7,14 @@ release: https://github.com/mantinedev/mantine/releases/tag/6.0.0
 date: 'December 1st, 2022'
 ---
 
-import { YearPickerInputDemos, YearPickerDemos } from '@mantine/demos';
+import {
+  YearPickerInputDemos,
+  YearPickerDemos,
+  MonthPickerDemos,
+  MonthPickerInputDemos,
+} from '@mantine/demos';
 
-## createStyles changes
+## createStyles breaking changes
 
 [createStyles](https://mantine.dev/styles/create-styles/) function no longer receives `getRef`
 as a third argument. Use `getStylesRef` exported from `@mantine/core` package instead:
@@ -32,6 +37,23 @@ createStyles((theme, params) => {
 });
 ```
 
+## @mantine/dates breaking changes
+
+All components from `@mantine/dates` package were rebuilt from scratch.
+Note that the following list is not full as it is difficult to include all breaking changes
+after a full package revamp – follow documentation of component that you use to find out about
+all breaking changes.
+
+- Styles API selectors of components were changed
+- `DatePicker` component was renamed to `DatePickerInput`
+- `Calendar` component was renamed to `DatePicker`
+- `TimeInput` component was migrated to native `input[type="time"]` as it provides better UX in most browsers
+- `TimeRangeInput` component was removed – it is no longer exported from the package
+- `DateRangePicker` and `RangeCalendar` components were removed – you can now setup dates range picking in [DatePicker](https://mantine.dev/dates/date-picker/) and [DatePickerInput](https://mantine.dev/dates/date-picker-input/)
+- `amountOfMonths` prop was renamed to `numberOfColumns` in all components
+- `DatePickerInput` (previously `DatePicker`) component no longer supports `allowFreeInput` prop – use [DateInput](https://mantine.dev/dates/date-input/) component instead
+- `DatePicker` (previously `Calendar`) component no longer supports `dayClassName` and `dayStyle` props – use `getDayProps` instead
+
 ## Theme object changes
 
 You can no longer define `dateFormat` and `datesLocale` in [theme](https://mantine.dev/theming/theme-object/),
@@ -53,7 +75,7 @@ function Demo() {
 import { DatePickerInput } from '@mantine/dates';
 
 function Demo() {
-  return <DatePickerInput valueFormat="MMMM D, YYYY" />;
+  return <DatePickerInput valueFormat="MMMM D, YYYY" locale="es" />;
 }
 ```
 
@@ -74,3 +96,15 @@ New [YearPicker](https://mantine.dev/dates/year-picker/) component:
 New [YearPickerInput](https://mantine.dev/dates/year-picker-input/) component:
 
 <Demo data={YearPickerInputDemos.usage} />
+
+### MonthPicker
+
+New [MonthPicker](https://mantine.dev/dates/month-picker/) component:
+
+<Demo data={MonthPickerDemos.usage} />
+
+### MonthPickerInput
+
+New [MonthPickerInput](https://mantine.dev/dates/month-picker-input/) component:
+
+<Demo data={MonthPickerInputDemos.usage} />
