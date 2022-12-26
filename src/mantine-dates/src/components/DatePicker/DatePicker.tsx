@@ -75,7 +75,6 @@ export const DatePicker: DatePickerComponent = forwardRef(
       <Calendar
         ref={ref}
         minLevel="month"
-        __updateDateOnMonthSelect={false}
         __staticSelector={__staticSelector || 'DatePicker'}
         onMouseLeave={onRootMouseLeave}
         hideOutsideDates={numberOfColumns !== 1}
