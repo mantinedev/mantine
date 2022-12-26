@@ -1,17 +1,17 @@
 import React from 'react';
 import { MantineDemo } from '@mantine/ds';
-import { MonthPickerInput } from '@mantine/dates';
+import { DatePickerInput } from '@mantine/dates';
 
 const code = `
-import { MonthPickerInput } from '@mantine/dates';
+import { DatePickerInput } from '@mantine/dates';
 
 function Demo() {
   return (
-    <MonthPickerInput
-      valueFormat="YYYY MMM"
+    <DatePickerInput
+      valueFormat="YYYY MMM DD"
       type="multiple"
-      label="Pick month"
-      placeholder="Pick month"
+      label="Pick date"
+      placeholder="Pick date"
       mx="auto"
       maw={400}
     />
@@ -21,11 +21,11 @@ function Demo() {
 
 function Demo() {
   return (
-    <MonthPickerInput
-      valueFormat="YYYY MMM"
+    <DatePickerInput
+      valueFormat="YYYY MMM DD"
       type="multiple"
-      label="Pick month"
-      placeholder="Pick month"
+      label="Pick date"
+      placeholder="Pick date"
       mx="auto"
       maw={400}
     />
