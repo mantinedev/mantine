@@ -65,6 +65,47 @@ you can add one month to the current date value:
 
 <Demo data={DatePickerDemos.controlledDate} />
 
+## Default level
+
+Set `defaultLevel` prop to configure initial level that will be displayed:
+
+<Demo data={DatePickerDemos.defaultLevel} />
+
+## Hide outside dates
+
+Set `hideOutsideDates` prop to remove all dates that do not belong to the current month:
+
+<Demo data={DatePickerDemos.hideOutsideDates} />
+
+## First day of week
+
+Set `firstDayOfWeek` prop to configure first day of week. The prop accepts number from 0 to 6,
+where 0 is Sunday and 6 is Saturday. Default value is 1 – Monday. You can also configure this option
+for all components with [DatesProvider](/dates/dates-provider/).
+
+<Demo data={DatePickerDemos.firstDayOfWeek} />
+
+## Hide weekdays
+
+Set `hideWeekdays` prop to hide weekdays names:
+
+<Demo data={DatePickerDemos.hideWeekdays} />
+
+## Weekend days
+
+Use `weekendDays` prop to configure weekend days. The prop accepts an array of numbers from 0 to 6,
+where 0 is Sunday and 6 is Saturday. Default value is `[0, 6]` – Saturday and Sunday. You can also configure this option
+for all components with [DatesProvider](/dates/dates-provider/).
+
+<Demo data={DatePickerDemos.weekendDays} />
+
+## Render day function
+
+You can customize day rendering with `renderDay` prop. For example, it can be used to add
+[Indicator](/core/indicator/) to certain days.
+
+<Demo data={DatePickerDemos.renderDay} />
+
 ## Min and max date
 
 Set `minDate` and `maxDate` props to define min and max dates. If previous/next page is not available
