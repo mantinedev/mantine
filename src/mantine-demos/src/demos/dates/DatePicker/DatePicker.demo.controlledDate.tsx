@@ -23,12 +23,7 @@ function Demo() {
     <Group position="center">
       <DatePicker
         date={date}
-        onNextDecade={setDate}
-        onPreviousDecade={setDate}
-        onNextYear={setDate}
-        onPreviousYear={setDate}
-        onNextMonth={setDate}
-        onPreviousMonth={setDate}
+        onDateChange={setDate}
         type="range"
         value={value}
         onChange={handleChange}
@@ -55,12 +50,7 @@ function Demo() {
     <Group position="center">
       <DatePicker
         date={date}
-        onNextDecade={setDate}
-        onPreviousDecade={setDate}
-        onNextYear={setDate}
-        onPreviousYear={setDate}
-        onNextMonth={setDate}
-        onPreviousMonth={setDate}
+        onDateChange={setDate}
         type="range"
         value={value}
         onChange={handleChange}

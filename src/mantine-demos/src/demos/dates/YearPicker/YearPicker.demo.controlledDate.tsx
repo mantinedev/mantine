@@ -23,8 +23,7 @@ function Demo() {
     <Group position="center">
       <YearPicker
         date={date}
-        onNextDecade={setDate}
-        onPreviousDecade={setDate}
+        onDateChange={setDate}
         type="range"
         value={value}
         onChange={handleChange}
@@ -50,8 +49,7 @@ function Demo() {
     <Group position="center">
       <YearPicker
         date={date}
-        onNextDecade={setDate}
-        onPreviousDecade={setDate}
+        onDateChange={setDate}
         type="range"
         value={value}
         onChange={handleChange}
