@@ -128,3 +128,4 @@ export * as MonthPickerDemos from './demos/dates/MonthPicker';
 export * as MonthPickerInputDemos from './demos/dates/MonthPickerInput';
 export * as DatePickerDemos from './demos/dates/DatePicker';
 export * as DatePickerInputDemos from './demos/dates/DatePickerInput';
+export * as TimeInputDemos from './demos/dates/TimeInput';
