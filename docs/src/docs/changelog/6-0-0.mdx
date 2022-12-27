@@ -12,7 +12,8 @@ import {
   YearPickerDemos,
   MonthPickerDemos,
   MonthPickerInputDemos,
-  DatePickerInputDemos,
+  DatePickerInputDemos,,
+  DatesProviderDemos
 } from '@mantine/demos';
 
 ## createStyles breaking changes
@@ -121,3 +122,10 @@ and [dates](https://mantine.dev/dates/date-picker/). All new pickers support `ty
 ### [MonthPickerInput](https://mantine.dev/dates/month-picker-input/)
 
 <Demo data={MonthPickerInputDemos.usage} />
+
+### [DatesProvider](https://mantine.dev/dates/dates-provider/)
+
+`DatesProvider` component lets you set various settings that are shared across all
+components exported from `@mantine/dates` package:
+
+<Demo data={DatesProviderDemos.usage} />
