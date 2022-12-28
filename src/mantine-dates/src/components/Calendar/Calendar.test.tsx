@@ -27,10 +27,9 @@ const defaultProps: CalendarProps = {
   },
 };
 
-function expectLevelsCount([monthsCount, yearsCount, decadesCount]: [number, number, number]) {
+function expectLevelsCount([monthsCount, yearsCount]: [number, number]) {
   expect(screen.queryAllByLabelText('month-level')).toHaveLength(monthsCount);
   expect(screen.queryAllByLabelText('year-level')).toHaveLength(yearsCount);
-  expect(screen.queryAllByLabelText('decade-level')).toHaveLength(decadesCount);
 }
 
 function expectHeaderLevel(level: 'month' | 'year' | 'decade', label: string) {
@@ -77,7 +76,6 @@ describe('@mantine/dates/Calendar', () => {
     const testLabels = {
       monthLevelControl: 'test-month-level',
       yearLevelControl: 'test-year-level',
-      decadeLevelControl: 'test-decade-level',
       nextMonth: 'test-next-month',
       previousMonth: 'test-previous-month',
       nextYear: 'test-next-year',
@@ -100,60 +98,45 @@ describe('@mantine/dates/Calendar', () => {
     expect(screen.getByLabelText('test-previous-year')).toBeInTheDocument();
 
     rerender(<Calendar {...defaultProps} ariaLabels={testLabels} level="decade" />);
-    expect(screen.getByLabelText('test-decade-level')).toBeInTheDocument();
     expect(screen.getByLabelText('test-next-decade')).toBeInTheDocument();
     expect(screen.getByLabelText('test-previous-decade')).toBeInTheDocument();
   });
 
   it('supports numberOfColumns', () => {
     const { rerender } = render(<Calendar {...defaultProps} numberOfColumns={1} level="month" />);
-    expectLevelsCount([1, 0, 0]);
+    expectLevelsCount([1, 0]);
 
     rerender(<Calendar {...defaultProps} numberOfColumns={2} level="month" />);
-    expectLevelsCount([2, 0, 0]);
+    expectLevelsCount([2, 0]);
 
     rerender(<Calendar {...defaultProps} numberOfColumns={1} level="year" />);
-    expectLevelsCount([0, 1, 0]);
+    expectLevelsCount([0, 1]);
 
     rerender(<Calendar {...defaultProps} numberOfColumns={2} level="year" />);
-    expectLevelsCount([0, 2, 0]);
-
-    rerender(<Calendar {...defaultProps} numberOfColumns={1} level="decade" />);
-    expectLevelsCount([0, 0, 1]);
-
-    rerender(<Calendar {...defaultProps} numberOfColumns={2} level="decade" />);
-    expectLevelsCount([0, 0, 2]);
+    expectLevelsCount([0, 2]);
   });
 
   it('changes level correctly', async () => {
     const { container } = render(<Calendar {...defaultProps} />);
-    expectLevelsCount([1, 0, 0]);
+    expectLevelsCount([1, 0]);
 
     await userEvent.click(screen.getByLabelText('month-level'));
-    expectLevelsCount([0, 1, 0]);
-
-    await userEvent.click(screen.getByLabelText('year-level'));
-    expectLevelsCount([0, 0, 1]);
+    expectLevelsCount([0, 1]);
 
     await userEvent.click(container.querySelector('table button'));
-    expectLevelsCount([0, 1, 0]);
-
-    await userEvent.click(container.querySelector('table button'));
-    expectLevelsCount([1, 0, 0]);
+    expectLevelsCount([1, 0]);
   });
 
   it('supports defaultLevel prop (uncontrolled)', async () => {
     render(<Calendar {...defaultProps} defaultLevel="year" />);
-    expectLevelsCount([0, 1, 0]);
-    await userEvent.click(screen.getByLabelText('year-level'));
-    expectLevelsCount([0, 0, 1]);
+    expectLevelsCount([0, 1]);
   });
 
   it('supports level prop (controlled)', async () => {
     render(<Calendar {...defaultProps} level="year" />);
-    expectLevelsCount([0, 1, 0]);
+    expectLevelsCount([0, 1]);
     await userEvent.click(screen.getByLabelText('year-level'));
-    expectLevelsCount([0, 1, 0]);
+    expectLevelsCount([0, 1]);
   });
 
   it('calls onLevelChange when level changes', async () => {
@@ -181,7 +164,7 @@ describe('@mantine/dates/Calendar', () => {
     expectHeaderLevel('year', '2021');
 
     await userEvent.click(screen.getByLabelText('year-level'));
-    expectHeaderLevel('decade', '2020 – 2029');
+    expect(screen.getByText('2020 – 2029')).toBeInTheDocument();
   });
 
   it('renders correct header labels with date (controlled)', async () => {
@@ -192,7 +175,7 @@ describe('@mantine/dates/Calendar', () => {
     expectHeaderLevel('year', '2021');
 
     await userEvent.click(screen.getByLabelText('year-level'));
-    expectHeaderLevel('decade', '2020 – 2029');
+    expect(screen.getByText('2020 – 2029')).toBeInTheDocument();
   });
 
   it('changes displayed date when next/previous controls are clicked with defaultDate prop (uncontrolled)', async () => {
@@ -211,11 +194,11 @@ describe('@mantine/dates/Calendar', () => {
     expectHeaderLevel('year', '2022');
 
     rerender(<Calendar {...defaultProps} level="decade" />);
-    expectHeaderLevel('decade', '2020 – 2029');
+    expect(screen.getByText('2020 – 2029')).toBeInTheDocument();
     await clickNext('decade');
-    expectHeaderLevel('decade', '2030 – 2039');
+    expect(screen.getByText('2030 – 2039')).toBeInTheDocument();
     await clickPrevious('decade');
-    expectHeaderLevel('decade', '2020 – 2029');
+    expect(screen.getByText('2020 – 2029')).toBeInTheDocument();
   });
 
   it('does not change date when next/previous controls are clicked with date prop (controlled)', async () => {
@@ -232,9 +215,9 @@ describe('@mantine/dates/Calendar', () => {
     expectHeaderLevel('year', '2022');
 
     rerender(<Calendar {...defaultProps} date={new Date(2022, 3, 11)} level="decade" />);
-    expectHeaderLevel('decade', '2020 – 2029');
+    expect(screen.getByText('2020 – 2029')).toBeInTheDocument();
     await clickNext('decade');
-    expectHeaderLevel('decade', '2020 – 2029');
+    expect(screen.getByText('2020 – 2029')).toBeInTheDocument();
   });
 
   it('calls onDateChange when date changes', async () => {
@@ -272,24 +255,24 @@ describe('@mantine/dates/Calendar', () => {
 
   it('supports maxLevel', async () => {
     render(<Calendar {...defaultProps} defaultLevel="month" maxLevel="year" />);
-    expectLevelsCount([1, 0, 0]);
+    expectLevelsCount([1, 0]);
     await userEvent.click(screen.getByLabelText('month-level'));
-    expectLevelsCount([0, 1, 0]);
+    expectLevelsCount([0, 1]);
     await userEvent.click(screen.getByLabelText('year-level'));
-    expectLevelsCount([0, 1, 0]);
+    expectLevelsCount([0, 1]);
   });
 
   it('supports minLevel', async () => {
     const { container } = render(
       <Calendar {...defaultProps} defaultLevel="decade" minLevel="year" />
     );
-    expectLevelsCount([0, 0, 1]);
+    expectLevelsCount([0, 0]);
 
     await userEvent.click(container.querySelector('table button'));
-    expectLevelsCount([0, 1, 0]);
+    expectLevelsCount([0, 1]);
 
     await userEvent.click(container.querySelector('table button'));
-    expectLevelsCount([0, 1, 0]);
+    expectLevelsCount([0, 1]);
   });
 
   it('calls onYearSelect when year control is clicked', async () => {
@@ -355,7 +338,7 @@ describe('@mantine/dates/Calendar', () => {
 
   it('supports changing decade label format', () => {
     render(<Calendar {...defaultProps} level="decade" decadeLabelFormat="MM/YY" />);
-    expectHeaderLevel('decade', '01/20 – 01/29');
+    expect(screen.getByText('01/20 – 01/29')).toBeInTheDocument();
   });
 
   it('supports changing decade label with callback', () => {
@@ -369,6 +352,6 @@ describe('@mantine/dates/Calendar', () => {
       />
     );
 
-    expectHeaderLevel('decade', '0/2020 – 0/2029');
+    expect(screen.getByText('0/2020 – 0/2029')).toBeInTheDocument();
   });
 });
