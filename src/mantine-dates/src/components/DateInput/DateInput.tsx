@@ -215,6 +215,7 @@ export const DateInput = forwardRef<HTMLInputElement, DateInputProps>((props, re
           trapFocus={false}
           position="bottom-start"
           disabled={readOnly}
+          withRoles={false}
           {...popoverProps}
         >
           <Popover.Target>

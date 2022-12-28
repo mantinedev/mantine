@@ -20,7 +20,6 @@ import {
 import { DateInput, DateInputProps } from './DateInput';
 
 const defaultProps: DateInputProps = {
-  defaultDate: new Date(2022, 3, 11),
   popoverProps: { transitionDuration: 0, withinPortal: false },
   ariaLabels: {
     monthLevelControl: 'level-control',
@@ -128,7 +127,7 @@ describe('@mantine/dates/DateInput', () => {
   });
 
   it('supports uncontrolled state (dropdown click)', async () => {
-    const { container } = render(<DateInput {...defaultProps} />);
+    const { container } = render(<DateInput date={new Date(2022, 3, 11)} {...defaultProps} />);
     await userEvent.tab();
     await clickControl(container, 4);
     expectValue(container, 'April 1, 2022');
@@ -137,7 +136,12 @@ describe('@mantine/dates/DateInput', () => {
   it('supports controlled state (dropdown click)', async () => {
     const spy = jest.fn();
     const { container } = render(
-      <DateInput {...defaultProps} value={new Date(2022, 3, 11)} onChange={spy} />
+      <DateInput
+        {...defaultProps}
+        date={new Date(2022, 3, 11)}
+        value={new Date(2022, 3, 11)}
+        onChange={spy}
+      />
     );
     await userEvent.tab();
     await clickControl(container, 4);
@@ -146,7 +150,7 @@ describe('@mantine/dates/DateInput', () => {
   });
 
   it('supports uncontrolled state (free input)', async () => {
-    const { container } = render(<DateInput {...defaultProps} />);
+    const { container } = render(<DateInput date={new Date(2022, 3, 11)} {...defaultProps} />);
     await userEvent.tab();
     await userEvent.type(getInput(container), 'April 1, 2022');
     await userEvent.tab();
