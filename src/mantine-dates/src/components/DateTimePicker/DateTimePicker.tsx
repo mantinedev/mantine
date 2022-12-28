@@ -217,10 +217,11 @@ export const DateTimePicker = forwardRef<HTMLButtonElement, DateTimePickerProps>
             }}
             unstyled={unstyled}
             data-mantine-stop-propagation={__stopPropagation || undefined}
+            // children prop is required to allow overriding icon with submitButtonProps
+            // eslint-disable-next-line react/no-children-prop
+            children={<CheckIcon width={INPUT_SIZES[size] / 3} />}
             {...submitButtonProps}
-          >
-            <CheckIcon width={INPUT_SIZES[size] / 3} />
-          </ActionIcon>
+          />
         </div>
       )}
     </PickerInputBase>
