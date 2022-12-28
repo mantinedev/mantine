@@ -1,6 +1,6 @@
 import React from 'react';
 import { MDXProvider } from '@mdx-js/react';
-import { Code, Text } from '@mantine/core';
+import { Code, Anchor } from '@mantine/core';
 import { Prism } from '@mantine/prism';
 import { Demo } from '@mantine/ds';
 import { KeyboardEventsTable } from './KeyboardEventsTable/KeyboardEventsTable';
@@ -29,11 +29,7 @@ export const components = {
       return <GatsbyLink to={href.replace('https://mantine.dev', '')}>{children}</GatsbyLink>;
     }
 
-    return (
-      <Text component="a" variant="link" href={href}>
-        {children}
-      </Text>
-    );
+    return <Anchor href={href}>{children}</Anchor>;
   },
   p: (props: any) => <p {...props} style={{ lineHeight: 1.55 }} />,
   ul: (props: any) => (
