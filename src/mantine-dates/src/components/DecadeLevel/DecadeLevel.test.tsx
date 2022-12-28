@@ -8,7 +8,6 @@ import {
 } from '@mantine/tests';
 import { DecadeLevel, DecadeLevelProps } from './DecadeLevel';
 import {
-  itSupportsHeaderProps,
   itSupportsWithNextPrevious,
   itSupportsYearsListProps,
   itSupportsGetControlRef,
@@ -49,7 +48,6 @@ describe('@mantine/dates/DecadeLevel', () => {
     'yearsList',
   ]);
 
-  itSupportsHeaderProps(DecadeLevel, defaultProps);
   itSupportsWithNextPrevious(DecadeLevel, defaultProps);
   itSupportsYearsListProps(DecadeLevel, defaultProps);
   itSupportsGetControlRef(DecadeLevel, 10, defaultProps);

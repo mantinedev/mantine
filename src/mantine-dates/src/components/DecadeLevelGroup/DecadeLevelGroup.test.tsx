@@ -8,7 +8,6 @@ import {
 import { DecadeLevelGroup, DecadeLevelGroupProps } from './DecadeLevelGroup';
 import {
   itSupportsYearsListProps,
-  itSupportsHeaderProps,
   itSupportsOnControlClick,
   itHandlesControlsKeyboardEvents,
   itSupportsOnControlMouseEnter,
@@ -40,7 +39,6 @@ describe('@mantine/dates/DecadeLevelGroup', () => {
   ]);
 
   itSupportsYearsListProps(DecadeLevelGroup, defaultProps);
-  itSupportsHeaderProps(DecadeLevelGroup, defaultProps);
   itSupportsOnControlClick(DecadeLevelGroup, defaultProps);
   itSupportsOnControlMouseEnter(DecadeLevelGroup, defaultProps);
   itHandlesControlsKeyboardEvents(
