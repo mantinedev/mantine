@@ -36,7 +36,7 @@ export interface DateInputProps
     MonthLevelSettings,
     Omit<React.ComponentPropsWithoutRef<'input'>, 'size' | 'value' | 'defaultValue' | 'onChange'> {
   /** Parses user input to convert it to Date object */
-  dateParser?: (value: string) => Date;
+  dateParser?: (value: string) => Date | null;
 
   /** Value for controlled component */
   value?: DateValue;

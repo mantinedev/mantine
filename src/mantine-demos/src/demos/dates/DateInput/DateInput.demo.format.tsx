@@ -1,17 +1,14 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { MantineDemo } from '@mantine/ds';
 import { DateInput } from '@mantine/dates';
 
 const code = `
-import { useState } from 'react';
 import { DateInput } from '@mantine/dates';
 
 function Demo() {
-  const [value, setValue] = useState<Date | null>(null);
   return (
     <DateInput
-      value={value}
-      onChange={setValue}
+      valueFormat="YYYY MMM DD"
       label="Date input"
       placeholder="Date input"
       maw={400}
@@ -22,11 +19,9 @@ function Demo() {
 `;
 
 function Demo() {
-  const [value, setValue] = useState<Date | null>(null);
   return (
     <DateInput
-      value={value}
-      onChange={setValue}
+      valueFormat="YYYY MMM DD"
       label="Date input"
       placeholder="Date input"
       maw={400}
@@ -35,7 +30,7 @@ function Demo() {
   );
 }
 
-export const usage: MantineDemo = {
+export const format: MantineDemo = {
   type: 'demo',
   component: Demo,
   code,
