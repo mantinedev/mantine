@@ -112,8 +112,10 @@ export const DateInput = forwardRef<HTMLInputElement, DateInputProps>((props, re
   } = useInputProps('DateInput', defaultProps, props);
   const { calendarProps, others } = pickCalendarProps(rest);
   const ctx = useDatesContext();
-  const defaultDateParser = (val: string) =>
-    dateStringParser(val) || dayjs(val, valueFormat, ctx.getLocale(locale)).toDate();
+  const defaultDateParser = (val: string) => {
+    const parsedDate = dayjs(val, valueFormat, ctx.getLocale(locale)).toDate();
+    return Number.isNaN(parsedDate.getTime()) ? dateStringParser(val) : parsedDate;
+  };
 
   const _dateParser = dateParser || defaultDateParser;
   const _allowDeselect = clearable || allowDeselect;
