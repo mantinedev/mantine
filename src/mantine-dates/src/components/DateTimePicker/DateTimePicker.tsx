@@ -29,7 +29,7 @@ export interface DateTimePickerProps
   extends DefaultProps<DateTimePickerStylesNames>,
     Omit<DateInputSharedProps, 'classNames' | 'styles' | 'closeOnChange'>,
     Omit<CalendarBaseProps, 'defaultDate'>,
-    CalendarSettings {
+    Omit<CalendarSettings, 'onYearMouseEnter' | 'onMonthMouseEnter'> {
   /** Dayjs format to display input value, "DD/MM/YYYY HH:mm" by default  */
   valueFormat?: string;
 
