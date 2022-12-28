@@ -22,6 +22,7 @@ import { assignTime } from '../../utils';
 import { DateValue } from '../../types';
 import { useDatesContext } from '../DatesProvider';
 import { isDateValid } from './is-date-valid/is-date-valid';
+import { dateStringParser } from './date-string-parser/date-string-parser';
 
 export type DateInputStylesNames = CalendarStylesNames | InputStylesNames | InputWrapperStylesNames;
 
@@ -112,7 +113,7 @@ export const DateInput = forwardRef<HTMLInputElement, DateInputProps>((props, re
   const { calendarProps, others } = pickCalendarProps(rest);
   const ctx = useDatesContext();
   const defaultDateParser = (val: string) =>
-    dayjs(val, valueFormat, ctx.getLocale(locale)).toDate();
+    dateStringParser(val) || dayjs(val, valueFormat, ctx.getLocale(locale)).toDate();
 
   const _dateParser = dateParser || defaultDateParser;
   const _allowDeselect = clearable || allowDeselect;

@@ -3,6 +3,11 @@ import { MantineDemo } from '@mantine/ds';
 import { DateInput } from '@mantine/dates';
 
 const code = `
+import { DateInput } from '@mantine/dates';
+
+function Demo() {
+  return <DateInput label="Date input" placeholder="Date input" maw={400} mx="auto" />;
+}
 `;
 
 function Demo() {
