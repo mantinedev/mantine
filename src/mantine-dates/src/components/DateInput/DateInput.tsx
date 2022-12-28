@@ -104,6 +104,9 @@ export const DateInput = forwardRef<HTMLInputElement, DateInputProps>((props, re
     styles,
     allowDeselect,
     preserveTime,
+    date,
+    defaultDate,
+    onDateChange,
     ...rest
   } = useInputProps('DateInput', defaultProps, props);
   const { calendarProps, others } = pickCalendarProps(rest);
@@ -121,6 +124,13 @@ export const DateInput = forwardRef<HTMLInputElement, DateInputProps>((props, re
     onChange,
   });
 
+  const [_date, setDate] = useUncontrolled({
+    value: date,
+    defaultValue,
+    finalValue: null,
+    onChange: onDateChange,
+  });
+
   const formatValue = (val: Date) =>
     val ? dayjs(val).locale(ctx.getLocale(locale)).format(valueFormat) : '';
 
@@ -135,7 +145,10 @@ export const DateInput = forwardRef<HTMLInputElement, DateInputProps>((props, re
       setValue(null);
     } else {
       const dateValue = _dateParser(val);
-      isDateValid({ date: dateValue, minDate, maxDate }) && setValue(dateValue);
+      if (isDateValid({ date: dateValue, minDate, maxDate })) {
+        setValue(dateValue);
+        setDate(dateValue);
+      }
     }
   };
 
@@ -155,13 +168,13 @@ export const DateInput = forwardRef<HTMLInputElement, DateInputProps>((props, re
     setDropdownOpened(true);
   };
 
-  const _getDayProps = (date: Date) => ({
-    ...getDayProps?.(date),
-    selected: dayjs(_value).isSame(date, 'day'),
+  const _getDayProps = (day: Date) => ({
+    ...getDayProps?.(day),
+    selected: dayjs(_value).isSame(day, 'day'),
     onClick: () => {
-      const valueWithTime = preserveTime ? assignTime(_value, date) : date;
+      const valueWithTime = preserveTime ? assignTime(_value, day) : day;
       const val = _allowDeselect
-        ? dayjs(_value).isSame(date, 'day')
+        ? dayjs(_value).isSame(day, 'day')
           ? null
           : valueWithTime
         : valueWithTime;
@@ -222,7 +235,6 @@ export const DateInput = forwardRef<HTMLInputElement, DateInputProps>((props, re
           <Popover.Dropdown onMouseDown={(event) => event.preventDefault()} data-dates-dropdown>
             <Calendar
               __staticSelector="DateInput"
-              defaultDate={_value || undefined}
               {...calendarProps}
               classNames={classNames}
               styles={styles}
@@ -233,6 +245,8 @@ export const DateInput = forwardRef<HTMLInputElement, DateInputProps>((props, re
               locale={locale}
               getDayProps={_getDayProps}
               size={inputProps.size}
+              date={_date}
+              onDateChange={setDate}
             />
           </Popover.Dropdown>
         </Popover>
