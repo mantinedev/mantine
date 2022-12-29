@@ -132,3 +132,4 @@ export * as TimeInputDemos from './demos/dates/TimeInput';
 export * as DatesProviderDemos from './demos/dates/DatesProvider';
 export * as DateTimePickerDemos from './demos/dates/DateTimePicker';
 export * as DateInputDemos from './demos/dates/DateInput';
+export * as CalendarDemos from './demos/dates/Calendar';
