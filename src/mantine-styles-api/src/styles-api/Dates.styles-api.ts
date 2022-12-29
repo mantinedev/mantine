@@ -4,7 +4,9 @@ import type {
   YearLevelGroupStylesNames,
   CalendarHeaderStylesNames,
   MonthLevelGroupStylesNames,
+  DateTimePickerStylesNames,
 } from '@mantine/dates';
+import { TextInput } from './TextInput.styles-api';
 
 const CalendarHeader: Record<CalendarHeaderStylesNames, string> = {
   calendarHeader: 'Calendar header root element',
@@ -35,16 +37,16 @@ const YearLevelGroup: Record<YearLevelGroupStylesNames, string> = {
 
 const MonthLevelGroup: Record<MonthLevelGroupStylesNames, string> = {
   ...CalendarHeader,
-  monthLevelGroup: '',
-  monthLevel: '',
-  monthThead: '',
-  monthRow: '',
-  monthTbody: '',
-  monthCell: '',
-  month: '',
-  weekdaysRow: '',
-  weekday: '',
-  day: '',
+  monthLevelGroup: 'Group or month levels',
+  monthLevel: 'Month level root element',
+  monthThead: 'thead element of month table',
+  monthRow: 'tr element of month table',
+  monthTbody: 'tbody element of month table',
+  monthCell: 'td element of month table',
+  month: 'Month table element',
+  weekdaysRow: 'Weekdays tr element',
+  weekday: 'Weekday th element',
+  day: 'Month day control',
 };
 
 const CalendarBase = {
@@ -60,5 +62,48 @@ export const Calendar: Record<CalendarStylesNames, string> = {
 
 export const YearPicker = {
   ...CalendarBase,
+  ...DecadeLevelGroup,
+};
+
+export const MonthPicker = {
+  ...CalendarBase,
+  ...DecadeLevelGroup,
   ...YearLevelGroup,
 };
+
+export const DatePicker = {
+  ...CalendarBase,
+  ...DecadeLevelGroup,
+  ...YearLevelGroup,
+  ...MonthLevelGroup,
+};
+
+export const YearPickerInput = {
+  ...TextInput,
+  ...YearPicker,
+};
+
+export const MonthPickerInput = {
+  ...TextInput,
+  ...MonthPicker,
+};
+
+export const DatePickerInput = {
+  ...TextInput,
+  ...DatePicker,
+};
+
+export const DateInput = {
+  ...TextInput,
+  ...DatePicker,
+};
+
+export const DateTimePicker: Record<DateTimePickerStylesNames, string> = {
+  ...TextInput,
+  ...DatePicker,
+  placeholder: 'Placeholder element',
+  timeWrapper: 'Wrapper around time input and submit button',
+  timeInput: 'TimeInput',
+};
+
+export const TimeInput = TextInput;
