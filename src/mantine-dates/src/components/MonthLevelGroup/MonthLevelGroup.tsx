@@ -22,6 +22,9 @@ export interface MonthLevelGroupProps
 
   /** Function that returns level control aria-label based on month date */
   levelControlAriaLabel?: ((month: Date) => string) | string;
+
+  /** Determines whether days should be static, static days can be used to display month if it is not expected that user will interact with the component in any way  */
+  static?: boolean;
 }
 
 const defaultProps: Partial<MonthLevelGroupProps> = {
@@ -72,6 +75,7 @@ export const MonthLevelGroup = forwardRef<HTMLDivElement, MonthLevelGroupProps>(
     __stopPropagation,
     size,
     variant,
+    static: isStatic,
     ...others
   } = useComponentDefaultProps('MonthLevelGroup', defaultProps, props);
 
@@ -156,6 +160,7 @@ export const MonthLevelGroup = forwardRef<HTMLDivElement, MonthLevelGroupProps>(
           __staticSelector={__staticSelector || 'MonthLevelGroup'}
           size={size}
           variant={variant}
+          static={isStatic}
         />
       );
     });

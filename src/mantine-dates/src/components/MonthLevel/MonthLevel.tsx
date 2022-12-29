@@ -34,6 +34,9 @@ export interface MonthLevelProps
 
   /** aria-label for change level control */
   levelControlAriaLabel?: string;
+
+  /** Determines whether days should be static, static days can be used to display month if it is not expected that user will interact with the component in any way  */
+  static?: boolean;
 }
 
 const defaultProps: Partial<MonthLevelProps> = {
@@ -87,6 +90,7 @@ export const MonthLevel = forwardRef<HTMLDivElement, MonthLevelProps>((props, re
     __staticSelector,
     size,
     variant,
+    static: isStatic,
     ...others
   } = useComponentDefaultProps('MonthLevel', defaultProps, props);
 
@@ -173,6 +177,7 @@ export const MonthLevel = forwardRef<HTMLDivElement, MonthLevelProps>((props, re
         __onDayMouseEnter={__onDayMouseEnter}
         __preventFocus={__preventFocus}
         __stopPropagation={__stopPropagation}
+        static={isStatic}
         {...stylesApiProps}
       />
     </Box>

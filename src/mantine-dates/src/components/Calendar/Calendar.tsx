@@ -120,6 +120,9 @@ export interface CalendarProps extends CalendarSettings, CalendarBaseProps, Cale
 
   /** Min level that user can go down to (decade, year, month), defaults to month */
   minLevel?: CalendarLevel;
+
+  /** Determines whether days should be static, static days can be used to display month if it is not expected that user will interact with the component in any way  */
+  static?: boolean;
 }
 
 const defaultProps: Partial<CalendarProps> = {
@@ -193,6 +196,7 @@ export const Calendar = forwardRef<HTMLDivElement, CalendarProps>((props, ref) =
     onPreviousYear,
     onNextMonth,
     onPreviousMonth,
+    static: isStatic,
     ...others
   } = useComponentDefaultProps('Calendar', defaultProps, props);
 
@@ -301,6 +305,7 @@ export const Calendar = forwardRef<HTMLDivElement, CalendarProps>((props, ref) =
           __onDayMouseEnter={__onDayMouseEnter}
           __preventFocus={__preventFocus}
           __stopPropagation={__stopPropagation}
+          static={isStatic}
           {...stylesApiProps}
         />
       )}
