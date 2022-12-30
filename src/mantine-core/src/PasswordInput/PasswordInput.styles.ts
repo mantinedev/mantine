@@ -46,18 +46,18 @@ export default createStyles((theme, { size, rightSectionWidth }: PasswordInputSt
       ...theme.fn.placeholderStyles(),
       opacity: 1,
     },
-  },
 
-  invalid: {
-    color: theme.fn.variant({ variant: 'filled', color: 'red' }).background,
-
-    '&::placeholder': {
-      opacity: 1,
+    '&[data-invalid]': {
       color: theme.fn.variant({ variant: 'filled', color: 'red' }).background,
-    },
-  },
 
-  withIcon: {
-    paddingLeft: `${theme.fn.size({ size, sizes: INPUT_SIZES })}px !important`,
+      '&::placeholder': {
+        opacity: 1,
+        color: theme.fn.variant({ variant: 'filled', color: 'red' }).background,
+      },
+    },
+
+    '&[data-with-icon]': {
+      paddingLeft: theme.fn.size({ size, sizes: INPUT_SIZES }),
+    },
   },
 }));

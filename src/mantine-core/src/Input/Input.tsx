@@ -138,11 +138,10 @@ export const _Input = forwardRef<HTMLInputElement, InputProps>((props, ref) => {
         aria-invalid={invalid}
         aria-describedby={describedBy}
         disabled={disabled}
-        className={cx(classes[`${variant}Variant`], classes.input, {
-          [classes.withIcon]: icon,
-          [classes.invalid]: invalid,
-          [classes.disabled]: disabled,
-        })}
+        data-disabled={disabled || undefined}
+        data-with-icon={!!icon || undefined}
+        data-invalid={invalid || undefined}
+        className={classes.input}
       />
 
       {rightSection && (

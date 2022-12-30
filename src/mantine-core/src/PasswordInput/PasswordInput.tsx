@@ -109,7 +109,7 @@ export const PasswordInput = forwardRef<HTMLInputElement, PasswordInputProps>((p
 
   const theme = useMantineTheme();
   const rightSectionWidth = theme.fn.size({ size, sizes: rightSectionSizes });
-  const { classes, cx } = useStyles(
+  const { classes } = useStyles(
     { size, rightSectionWidth },
     { name: 'PasswordInput', classNames, styles, unstyled, size, variant }
   );
@@ -192,10 +192,9 @@ export const PasswordInput = forwardRef<HTMLInputElement, PasswordInputProps>((p
         <input
           type={_visible ? 'text' : 'password'}
           required={required}
-          className={cx(classes.innerInput, {
-            [classes.withIcon]: icon,
-            [classes.invalid]: !!error,
-          })}
+          data-invalid={!!error || undefined}
+          data-with-icon={!!icon || undefined}
+          className={classes.innerInput}
           disabled={disabled}
           id={uuid}
           ref={ref}

@@ -132,7 +132,7 @@ export default createStyles(
         ...getVariantStyles({ theme, variant }),
         ...sizeStyles,
 
-        '&:disabled': {
+        '&:disabled, &[data-disabled]': {
           backgroundColor:
             theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[1],
           color: theme.colors.dark[2],
@@ -142,6 +142,20 @@ export default createStyles(
           '&::placeholder': {
             color: theme.colors.dark[2],
           },
+        },
+
+        '&[data-invalid]': {
+          color: invalidColor,
+          borderColor: invalidColor,
+
+          '&::placeholder': {
+            opacity: 1,
+            color: invalidColor,
+          },
+        },
+
+        '&[data-with-icon]': {
+          paddingLeft: typeof iconWidth === 'number' ? iconWidth : theme.fn.size({ size, sizes }),
         },
 
         '&::placeholder': {
@@ -156,31 +170,6 @@ export default createStyles(
 
         '&[type=number]': {
           MozAppearance: 'textfield',
-        },
-      },
-
-      withIcon: {
-        paddingLeft: typeof iconWidth === 'number' ? iconWidth : theme.fn.size({ size, sizes }),
-      },
-
-      invalid: {
-        color: invalidColor,
-        borderColor: invalidColor,
-
-        '&::placeholder': {
-          opacity: 1,
-          color: invalidColor,
-        },
-      },
-
-      disabled: {
-        backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[1],
-        color: theme.colors.dark[2],
-        opacity: 0.6,
-        cursor: 'not-allowed',
-
-        '&::placeholder': {
-          color: theme.colors.dark[2],
         },
       },
 

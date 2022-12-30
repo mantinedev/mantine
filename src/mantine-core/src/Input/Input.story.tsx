@@ -42,10 +42,13 @@ export function ProviderVariant() {
 
 export function Variants() {
   return (
-    <>
+    <div style={{ padding: 40 }}>
       <Input placeholder="default" />
-      <Input placeholder="filled" variant="filled" />
-      <Input placeholder="unstyled" variant="unstyled" />
-    </>
+      <Input placeholder="invalid" mt="md" invalid />
+      <Input placeholder="disabled" mt="md" disabled />
+      <Input placeholder="with icon" mt="md" icon="$" />
+      <Input placeholder="filled" variant="filled" mt="md" />
+      <Input placeholder="unstyled" variant="unstyled" mt="md" />
+    </div>
   );
 }
