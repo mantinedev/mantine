@@ -12,12 +12,12 @@ function Demo() {
         components: {
           Button: {
             // Subscribe to theme and component params
-            styles: (theme, params: ButtonStylesParams) => ({
+            styles: (theme, params: ButtonStylesParams, { variant }) => ({
               root: {
                 height: 42,
                 padding: '0 30px',
                 backgroundColor:
-                  params.variant === 'filled'
+                  variant === 'filled'
                     ? theme.colors[params.color || theme.primaryColor][9]
                     : undefined,
               },
@@ -33,9 +33,11 @@ function Demo() {
         },
       }}
     >
-      <Button variant="outline">Outline button</Button>
-      <Button variant="filled" color="cyan">Filled button</Button>
-      <Badge variant="dot">Dot badge</Badge>
+      <Group position="center">
+        <Button variant="outline">Outline button</Button>
+        <Button variant="filled" color="cyan">Filled button</Button>
+        <Badge variant="dot">Dot badge</Badge>
+      </Group>
     </MantineProvider>
   );
 }
@@ -49,11 +51,14 @@ function Demo() {
         components: {
           Button: {
             // Subscribe to theme and component params
-            styles: (theme, params: ButtonStylesParams) => ({
+            styles: (theme, params: ButtonStylesParams, { variant }) => ({
               root: {
                 height: 42,
                 padding: '0 30px',
-                backgroundColor: theme.colors[params.color || theme.primaryColor][9],
+                backgroundColor:
+                  variant === 'filled'
+                    ? theme.colors[params.color || theme.primaryColor][9]
+                    : undefined,
               },
             }),
           },
