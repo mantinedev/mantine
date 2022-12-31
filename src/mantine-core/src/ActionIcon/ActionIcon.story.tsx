@@ -21,20 +21,10 @@ export function ProviderVariant() {
       theme={{
         components: {
           ActionIcon: {
-            variants: (theme, variant) => {
-              if (variant === 'provider-variant') {
-                return { root: { backgroundColor: theme.colors.pink[9], color: theme.white } };
-              }
-
-              return null;
-            },
-
-            sizes: (_theme, size) => {
-              if (size === 'provider-size') {
-                return { root: { width: 100, height: 200 } };
-              }
-
-              return null;
+            sizes: {
+              'provider-size': () => ({
+                root: { width: 100, height: 200, backgroundColor: 'orange' },
+              }),
             },
           },
         },

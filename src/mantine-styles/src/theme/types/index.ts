@@ -20,6 +20,7 @@ export type {
   MantineThemeOverride,
   MantineThemeBase,
   MantineThemeOther,
+  ContextStylesParams,
 } from './MantineTheme';
 export type { Tuple } from './Tuple';
 export type { Variants } from './Variants';

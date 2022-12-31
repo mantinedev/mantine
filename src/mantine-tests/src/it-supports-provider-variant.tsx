@@ -21,15 +21,12 @@ export function itSupportsProviderVariant<P>(
         theme={{
           components: {
             [componentName]: {
-              variants: (_theme, variant) => {
-                if (variant === 'provider-variant') {
-                  return selectors.reduce((acc, part, index) => {
+              variants: {
+                'provider-variant': () =>
+                  selectors.reduce((acc, part, index) => {
                     acc[part] = { borderRightColor: colors[index] };
                     return acc;
-                  }, {});
-                }
-
-                return null;
+                  }, {}),
               },
             },
           },

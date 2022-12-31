@@ -105,14 +105,29 @@ export interface MantineTheme {
   focusRingStyles: MantineFocusRingStyles;
 }
 
+export interface ContextStylesParams {
+  variant?: string;
+  size?: string | number;
+}
+
 interface ThemeComponent {
   defaultProps?: Record<string, any> | ((theme: MantineTheme) => Record<string, any>);
   classNames?: Record<string, string>;
   styles?:
     | Record<string, CSSObject>
-    | ((theme: MantineTheme, params: any) => Record<string, CSSObject>);
-  variants?: (theme: MantineTheme, variant: string, params: any) => Record<string, CSSObject>;
-  sizes?: (theme: MantineTheme, size: string | number, params: any) => Record<string, CSSObject>;
+    | ((
+        theme: MantineTheme,
+        params: any,
+        context: ContextStylesParams
+      ) => Record<string, CSSObject>);
+  variants?: Record<
+    PropertyKey,
+    (theme: MantineTheme, params: any, context: ContextStylesParams) => Record<string, CSSObject>
+  >;
+  sizes?: Record<
+    PropertyKey,
+    (theme: MantineTheme, params: any, context: ContextStylesParams) => Record<string, CSSObject>
+  >;
 }
 
 export type MantineThemeBase = Omit<MantineTheme, 'fn'>;

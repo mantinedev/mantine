@@ -21,15 +21,12 @@ export function itSupportsProviderSize<P>(
         theme={{
           components: {
             [componentName]: {
-              sizes: (_theme, size) => {
-                if (size === 'provider-size') {
-                  return selectors.reduce((acc, part, index) => {
-                    acc[part] = { backgroundColor: colors[index] };
+              sizes: {
+                'provider-size': () =>
+                  selectors.reduce((acc, part, index) => {
+                    acc[part] = { borderRightColor: colors[index] };
                     return acc;
-                  }, {});
-                }
-
-                return null;
+                  }, {}),
               },
             },
           },
@@ -41,7 +38,7 @@ export function itSupportsProviderSize<P>(
 
     selectors.forEach((part, index) => {
       expect(container.querySelector(`.mantine-${componentName}-${part}`)).toHaveStyle({
-        backgroundColor: colors[index],
+        borderRightColor: colors[index],
       });
     });
   });
