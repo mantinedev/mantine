@@ -1,7 +1,6 @@
-import { createStyles, MantineSize, MantineColor, getStylesRef } from '@mantine/styles';
+import { createStyles, MantineColor, getStylesRef } from '@mantine/styles';
 
 export interface RadioStylesParams {
-  size: MantineSize;
   color: MantineColor;
   transitionDuration: number;
   labelPosition: 'left' | 'right';
@@ -25,7 +24,7 @@ const iconSizes = {
 };
 
 export default createStyles(
-  (theme, { size, color, transitionDuration, labelPosition, error }: RadioStylesParams) => {
+  (theme, { color, transitionDuration, labelPosition, error }: RadioStylesParams, { size }) => {
     const colors = theme.fn.variant({ variant: 'filled', color });
     const errorColor = theme.fn.variant({ variant: 'filled', color: 'red' }).background;
 

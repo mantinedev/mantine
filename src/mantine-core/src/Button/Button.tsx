@@ -103,7 +103,6 @@ export const _Button = forwardRef<HTMLButtonElement, ButtonProps>((props, ref) =
     {
       radius,
       color,
-      size,
       fullWidth,
       compact,
       gradient,

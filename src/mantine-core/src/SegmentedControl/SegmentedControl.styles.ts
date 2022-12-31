@@ -1,10 +1,4 @@
-import {
-  createStyles,
-  MantineNumberSize,
-  MantineSize,
-  MantineColor,
-  getStylesRef,
-} from '@mantine/styles';
+import { createStyles, MantineNumberSize, MantineColor, getStylesRef } from '@mantine/styles';
 
 export const WRAPPER_PADDING = 4;
 
@@ -15,7 +9,6 @@ export interface SegmentedControlStylesParams {
   shouldAnimate: boolean;
   transitionDuration: number;
   transitionTimingFunction: string;
-  size: MantineSize;
   orientation: 'vertical' | 'horizontal';
 }
 
@@ -37,9 +30,9 @@ export default createStyles(
       shouldAnimate,
       transitionDuration,
       transitionTimingFunction,
-      size,
       orientation,
-    }: SegmentedControlStylesParams
+    }: SegmentedControlStylesParams,
+    { size }
   ) => {
     const vertical = orientation === 'vertical';
     const colors = theme.fn.variant({ variant: 'filled', color });

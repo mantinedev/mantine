@@ -5,7 +5,6 @@ type HeadingElement = 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
 
 export interface TitleStylesParams {
   element: HeadingElement;
-  size: TitleSize;
   weight: React.CSSProperties['fontWeight'];
   inline: boolean;
 }
@@ -26,7 +25,7 @@ function getLineHeight(size: TitleSize, element: HeadingElement, theme: MantineT
   return theme.headings.sizes[element].lineHeight;
 }
 
-export default createStyles((theme, { element, weight, size, inline }: TitleStylesParams) => ({
+export default createStyles((theme, { element, weight, inline }: TitleStylesParams, { size }) => ({
   root: {
     ...theme.fn.fontStyles(),
     fontFamily: theme.headings.fontFamily,

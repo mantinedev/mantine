@@ -1,8 +1,7 @@
-import { createStyles, MantineNumberSize, MantineSize, MantineColor } from '@mantine/styles';
+import { createStyles, MantineNumberSize, MantineColor } from '@mantine/styles';
 
 export interface SwitchStylesParams {
   color: MantineColor;
-  size: MantineSize;
   radius: MantineNumberSize;
   labelPosition: 'left' | 'right';
   error: boolean;
@@ -49,7 +48,7 @@ const trackLabelPaddings = {
 };
 
 export default createStyles(
-  (theme, { size, radius, color, labelPosition, error }: SwitchStylesParams) => {
+  (theme, { radius, color, labelPosition, error }: SwitchStylesParams, { size }) => {
     const handleSize = theme.fn.size({ size, sizes: handleSizes });
     const borderRadius = theme.fn.size({ size: radius, sizes: theme.radius });
     const colors = theme.fn.variant({ variant: 'filled', color });

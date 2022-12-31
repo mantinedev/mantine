@@ -91,7 +91,7 @@ export const Chip: ChipComponent = forwardRef<HTMLInputElement, ChipProps>((prop
   const uuid = useId(id);
   const { systemStyles, rest } = extractSystemStyles(others);
   const { classes, cx } = useStyles(
-    { radius, size, color },
+    { radius, color },
     { classNames, styles, unstyled, name: 'Chip', variant, size }
   );
 

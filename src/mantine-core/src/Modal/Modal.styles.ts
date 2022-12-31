@@ -10,7 +10,6 @@ const sizes = {
 
 export interface ModalStylesParams {
   overflow: 'outside' | 'inside';
-  size: string | number;
   centered: boolean;
   zIndex: React.CSSProperties['zIndex'];
   fullScreen: boolean;
@@ -33,7 +32,7 @@ function getFullScreenStyles(fullScreen: boolean): CSSObject {
 }
 
 export default createStyles(
-  (theme, { overflow, size, centered, zIndex, fullScreen }: ModalStylesParams) => ({
+  (theme, { overflow, centered, zIndex, fullScreen }: ModalStylesParams, { size }) => ({
     close: {},
 
     overlay: {

@@ -1,14 +1,13 @@
-import { createStyles, MantineNumberSize, MantineColor } from '@mantine/styles';
+import { createStyles, MantineColor } from '@mantine/styles';
 import { sizes } from '../SliderRoot/SliderRoot.styles';
 
 interface ThumbStyles {
   color: MantineColor;
-  size: MantineNumberSize;
   disabled: boolean;
   thumbSize: number;
 }
 
-export default createStyles((theme, { color, size, disabled, thumbSize }: ThumbStyles) => ({
+export default createStyles((theme, { color, disabled, thumbSize }: ThumbStyles, { size }) => ({
   label: {
     position: 'absolute',
     top: -36,

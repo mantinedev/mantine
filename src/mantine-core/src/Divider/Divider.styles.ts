@@ -1,8 +1,6 @@
-import { createStyles, MantineNumberSize, MantineColor, MantineTheme } from '@mantine/styles';
+import { createStyles, MantineColor, MantineTheme } from '@mantine/styles';
 
 export interface DividerStylesParams {
-  size: MantineNumberSize;
-  variant: any;
   color: MantineColor;
 }
 
@@ -26,7 +24,7 @@ function getColor(theme: MantineTheme, color: MantineColor) {
     : color;
 }
 
-export default createStyles((theme, { size, variant, color }: DividerStylesParams) => ({
+export default createStyles((theme, { color }: DividerStylesParams, { size, variant }) => ({
   root: {},
 
   withLabel: {
@@ -80,7 +78,7 @@ export default createStyles((theme, { size, variant, color }: DividerStylesParam
     border: 0,
     borderTopWidth: theme.fn.size({ size, sizes }),
     borderTopColor: getColor(theme, color),
-    borderTopStyle: variant,
+    borderTopStyle: variant as any,
     margin: 0,
   },
 
@@ -90,6 +88,6 @@ export default createStyles((theme, { size, variant, color }: DividerStylesParam
     height: 'auto',
     borderLeftWidth: theme.fn.size({ size, sizes }),
     borderLeftColor: getColor(theme, color),
-    borderLeftStyle: variant,
+    borderLeftStyle: variant as any,
   },
 }));

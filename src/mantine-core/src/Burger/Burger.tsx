@@ -47,7 +47,7 @@ export const Burger = forwardRef<HTMLButtonElement, BurgerProps>((props: BurgerP
   } = useComponentDefaultProps('Burger', defaultProps, props);
 
   const { classes, cx } = useStyles(
-    { color, size, transitionDuration },
+    { color, transitionDuration },
     { classNames, styles, name: 'Burger', variant, size }
   );
 

@@ -69,7 +69,7 @@ export const _Badge = forwardRef<HTMLDivElement, BadgeProps>((props, ref) => {
   } = useComponentDefaultProps('Badge', defaultProps, props);
 
   const { classes, cx } = useStyles(
-    { size, fullWidth, color, radius, gradient },
+    { fullWidth, color, radius, gradient },
     { classNames, styles, name: 'Badge', unstyled, variant, size }
   );
 

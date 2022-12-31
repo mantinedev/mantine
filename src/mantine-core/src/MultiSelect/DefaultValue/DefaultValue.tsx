@@ -36,11 +36,12 @@ export function DefaultValue({
   size,
   radius = 'sm',
   variant,
+  unstyled,
   ...others
 }: MultiSelectValueProps) {
   const { classes, cx } = useStyles(
-    { size, disabled, readOnly, radius, variant },
-    { classNames, styles, name: 'MultiSelect' }
+    { disabled, readOnly, radius },
+    { name: 'MultiSelect', classNames, styles, unstyled, size, variant }
   );
 
   return (
@@ -58,6 +59,7 @@ export function DefaultValue({
           iconSize="70%"
           className={classes.defaultValueRemove}
           tabIndex={-1}
+          unstyled={unstyled}
         />
       )}
     </div>

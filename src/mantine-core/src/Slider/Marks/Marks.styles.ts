@@ -1,13 +1,12 @@
-import { createStyles, MantineNumberSize, MantineColor } from '@mantine/styles';
+import { createStyles, MantineColor } from '@mantine/styles';
 import { sizes } from '../SliderRoot/SliderRoot.styles';
 
 interface MarksStyles {
   color: MantineColor;
-  size: MantineNumberSize;
   disabled: boolean;
 }
 
-export default createStyles((theme, { size, color, disabled }: MarksStyles) => ({
+export default createStyles((theme, { color, disabled }: MarksStyles, { size }) => ({
   markWrapper: {
     position: 'absolute',
     top: 0,

@@ -46,7 +46,7 @@ export function Track({
   ...others
 }: TrackProps) {
   const { classes } = useStyles(
-    { color, size, radius, disabled, inverted },
+    { color, radius, disabled, inverted },
     { name: 'Slider', classNames, styles, unstyled, variant, size }
   );
 

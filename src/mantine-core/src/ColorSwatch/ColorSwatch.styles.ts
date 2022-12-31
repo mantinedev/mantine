@@ -2,10 +2,9 @@ import { createStyles, MantineNumberSize } from '@mantine/styles';
 
 export interface ColorSwatchStylesParams {
   radius: MantineNumberSize;
-  size: number | string;
 }
 
-export default createStyles((theme, { size, radius }: ColorSwatchStylesParams) => {
+export default createStyles((theme, { radius }: ColorSwatchStylesParams, { size }) => {
   const overlayColor = theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[3];
 
   return {

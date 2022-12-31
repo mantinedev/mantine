@@ -56,10 +56,15 @@ export const ColorSlider = forwardRef<HTMLDivElement, ColorSliderProps>(
     }: ColorSliderProps,
     ref
   ) => {
-    const { classes, cx } = useStyles(
-      { size },
-      { classNames, styles, name: __staticSelector, unstyled, variant, size }
-    );
+    const { classes, cx } = useStyles(null, {
+      classNames,
+      styles,
+      name: __staticSelector,
+      unstyled,
+      variant,
+      size,
+    });
+
     const [position, setPosition] = useState({ y: 0, x: value / maxValue });
     const positionRef = useRef(position);
     const getChangeValue = (val: number) => (round ? Math.round(val * maxValue) : val * maxValue);

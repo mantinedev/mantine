@@ -44,10 +44,15 @@ export function SelectItems({
   unstyled,
   variant,
 }: SelectItemsProps) {
-  const { classes } = useStyles(
-    { size },
-    { classNames, styles, unstyled, name: __staticSelector, variant, size }
-  );
+  const { classes } = useStyles(null, {
+    classNames,
+    styles,
+    unstyled,
+    name: __staticSelector,
+    variant,
+    size,
+  });
+
   const unGroupedItems: React.ReactElement<any>[] = [];
   const groupedItems: React.ReactElement<any>[] = [];
   let creatableDataIndex = null;

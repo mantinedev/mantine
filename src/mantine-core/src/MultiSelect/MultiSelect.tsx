@@ -213,8 +213,8 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>((props
   } = useComponentDefaultProps('MultiSelect', defaultProps, props);
 
   const { classes, cx, theme } = useStyles(
-    { size, invalid: !!error },
-    { classNames, styles, unstyled, name: 'MultiSelect' }
+    { invalid: !!error },
+    { name: 'MultiSelect', classNames, styles, unstyled, size, variant }
   );
   const { systemStyles, rest } = extractSystemStyles(others);
   const inputRef = useRef<HTMLInputElement>();

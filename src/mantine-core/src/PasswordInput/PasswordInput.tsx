@@ -110,7 +110,7 @@ export const PasswordInput = forwardRef<HTMLInputElement, PasswordInputProps>((p
   const theme = useMantineTheme();
   const rightSectionWidth = theme.fn.size({ size, sizes: rightSectionSizes });
   const { classes } = useStyles(
-    { size, rightSectionWidth },
+    { rightSectionWidth },
     { name: 'PasswordInput', classNames, styles, unstyled, size, variant }
   );
   const uuid = useId(id);

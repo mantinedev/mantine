@@ -1,10 +1,6 @@
-import { createStyles, MantineSize } from '@mantine/styles';
+import { createStyles } from '@mantine/styles';
 
-export interface InputLabelStylesParams {
-  size: MantineSize;
-}
-
-export default createStyles((theme, { size }: InputLabelStylesParams) => ({
+export default createStyles((theme, _params, { size }) => ({
   label: {
     display: 'inline-block',
     fontSize: theme.fn.size({ size, sizes: theme.fontSizes }),

@@ -14,7 +14,6 @@ export type DrawerPosition = 'top' | 'bottom' | 'left' | 'right';
 
 export interface DrawerStylesParams {
   position: DrawerPosition;
-  size: number | string;
   zIndex: React.CSSProperties['zIndex'];
   withOverlay: boolean;
 }
@@ -49,7 +48,7 @@ function getPositionStyles({
 }
 
 export default createStyles(
-  (theme, { position, size, zIndex, withOverlay }: DrawerStylesParams) => ({
+  (theme, { position, zIndex, withOverlay }: DrawerStylesParams, { size }) => ({
     closeButton: {},
     overlay: {},
     body: {},

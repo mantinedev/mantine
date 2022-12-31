@@ -104,7 +104,7 @@ export const Pagination = forwardRef<HTMLDivElement, PaginationProps>((props, re
   } = useComponentDefaultProps('Pagination', defaultProps, props);
 
   const { classes, theme, cx } = useStyles(
-    { color, size, radius },
+    { color, radius },
     { name: 'Pagination', classNames, styles, unstyled, variant }
   );
 

@@ -9,7 +9,6 @@ import { IndicatorPosition } from './Indicator.types';
 
 export interface IndicatorStylesParams {
   radius: MantineNumberSize;
-  size: number;
   color: MantineColor;
   position: IndicatorPosition;
   offset: number;
@@ -77,7 +76,6 @@ export default createStyles(
     theme,
     {
       radius,
-      size,
       color,
       position,
       offset,
@@ -85,7 +83,8 @@ export default createStyles(
       withBorder,
       withLabel,
       zIndex,
-    }: IndicatorStylesParams
+    }: IndicatorStylesParams,
+    { size }
   ) => {
     const { background } = theme.fn.variant({
       variant: 'filled',

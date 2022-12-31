@@ -1,12 +1,12 @@
 import React, { forwardRef } from 'react';
 import { DefaultProps, MantineSize, Selectors, useComponentDefaultProps } from '@mantine/styles';
 import { Text } from '../../Text';
-import useStyles, { InputErrorStylesParams } from './InputError.styles';
+import useStyles from './InputError.styles';
 
 export type InputErrorStylesNames = Selectors<typeof useStyles>;
 
 export interface InputErrorProps
-  extends DefaultProps<InputErrorStylesNames, InputErrorStylesParams>,
+  extends DefaultProps<InputErrorStylesNames>,
     React.ComponentPropsWithoutRef<'div'> {
   variant?: string;
 
@@ -36,10 +36,14 @@ export const InputError = forwardRef<HTMLDivElement, InputErrorProps>((props, re
     ...others
   } = useComponentDefaultProps('InputError', defaultProps, props);
 
-  const { classes, cx } = useStyles(
-    { size },
-    { name: ['InputWrapper', __staticSelector], classNames, styles, unstyled, variant, size }
-  );
+  const { classes, cx } = useStyles(null, {
+    name: ['InputWrapper', __staticSelector],
+    classNames,
+    styles,
+    unstyled,
+    variant,
+    size,
+  });
 
   return (
     <Text className={cx(classes.error, className)} ref={ref} {...others}>

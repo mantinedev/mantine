@@ -8,7 +8,6 @@ import {
 
 export interface ThemeIconStylesParams {
   color: MantineColor;
-  size: MantineNumberSize;
   radius: MantineNumberSize;
   variant: string;
   gradient: MantineGradient;
@@ -52,7 +51,7 @@ function getVariantStyles({ theme, variant, color, gradient }: GetVariantStylesI
 }
 
 export default createStyles(
-  (theme, { color, size, radius, gradient }: ThemeIconStylesParams, { variant }) => {
+  (theme, { color, radius, gradient }: ThemeIconStylesParams, { variant, size }) => {
     const iconSize = theme.fn.size({ size, sizes });
 
     return {

@@ -46,10 +46,11 @@ export const JsonInput = forwardRef<HTMLTextAreaElement, JsonInputProps>((props,
     classNames,
     unstyled,
     readOnly,
+    variant,
     ...others
   } = useComponentDefaultProps('JsonInput', defaultProps, props);
 
-  const { classes, cx } = useStyles({ size }, { name: 'JsonInput', unstyled });
+  const { classes, cx } = useStyles(null, { name: 'JsonInput', unstyled, size, variant });
   const [_value, setValue] = useUncontrolled({
     value,
     defaultValue,
@@ -88,6 +89,7 @@ export const JsonInput = forwardRef<HTMLTextAreaElement, JsonInputProps>((props,
       unstyled={unstyled}
       readOnly={readOnly}
       size={size}
+      variant={variant}
       {...others}
     />
   );

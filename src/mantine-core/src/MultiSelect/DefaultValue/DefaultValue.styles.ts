@@ -1,9 +1,7 @@
-import { createStyles, MantineNumberSize, MantineSize } from '@mantine/styles';
+import { createStyles, MantineNumberSize } from '@mantine/styles';
 
 interface DefaultLabelStyles {
-  size: MantineSize;
   radius: MantineNumberSize;
-  variant: string;
   disabled: boolean;
   readOnly: boolean;
 }
@@ -25,7 +23,7 @@ const fontSizes = {
 };
 
 export default createStyles(
-  (theme, { size, disabled, radius, readOnly, variant }: DefaultLabelStyles) => ({
+  (theme, { disabled, radius, readOnly }: DefaultLabelStyles, { size, variant }) => ({
     defaultValue: {
       display: 'flex',
       alignItems: 'center',

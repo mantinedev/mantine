@@ -53,7 +53,7 @@ export const _ColorSwatch = forwardRef<HTMLDivElement, ColorSwatchProps>((props,
   } = useComponentDefaultProps('ColorSwatch', defaultProps, props);
 
   const { classes, cx } = useStyles(
-    { radius, size },
+    { radius },
     { classNames, styles, unstyled, name: 'ColorSwatch', size, variant }
   );
 

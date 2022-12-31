@@ -132,7 +132,7 @@ export const Step = forwardRef<HTMLButtonElement, StepProps>((props: StepProps, 
   } = useComponentDefaultProps('StepperStep', defaultProps, props);
 
   const { classes, cx, theme } = useStyles(
-    { color, iconSize, size, radius, allowStepClick, iconPosition, orientation },
+    { color, iconSize, radius, allowStepClick, iconPosition, orientation },
     { name: __staticSelector, classNames, styles, unstyled, variant, size }
   );
 

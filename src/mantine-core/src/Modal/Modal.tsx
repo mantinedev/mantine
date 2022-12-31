@@ -177,7 +177,7 @@ export function Modal(props: ModalProps) {
   const titleId = `${baseId}-title`;
   const bodyId = `${baseId}-body`;
   const { classes, cx, theme } = useStyles(
-    { size, overflow, centered, zIndex, fullScreen },
+    { overflow, centered, zIndex, fullScreen },
     { unstyled, classNames, styles, name: 'Modal', variant, size }
   );
   const focusTrapRef = useFocusTrap(trapFocus && opened);

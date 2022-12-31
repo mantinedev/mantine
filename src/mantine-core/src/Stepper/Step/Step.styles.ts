@@ -1,15 +1,8 @@
-import {
-  createStyles,
-  MantineColor,
-  MantineNumberSize,
-  MantineSize,
-  getStylesRef,
-} from '@mantine/styles';
+import { createStyles, MantineColor, MantineNumberSize, getStylesRef } from '@mantine/styles';
 
 export interface StepStylesParams {
   color: MantineColor;
   iconSize: number;
-  size: MantineSize;
   radius: MantineNumberSize;
   allowStepClick: boolean;
   iconPosition: 'right' | 'left';
@@ -27,7 +20,8 @@ export const iconSizes = {
 export default createStyles(
   (
     theme,
-    { color, iconSize, size, radius, allowStepClick, iconPosition, orientation }: StepStylesParams
+    { color, iconSize, radius, allowStepClick, iconPosition, orientation }: StepStylesParams,
+    { size }
   ) => {
     const _iconSize = iconSize || theme.fn.size({ size, sizes: iconSizes });
     const iconMargin = size === 'xl' || size === 'lg' ? theme.spacing.md : theme.spacing.sm;

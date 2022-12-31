@@ -1,10 +1,6 @@
-import { createStyles, MantineSize } from '@mantine/styles';
+import { createStyles } from '@mantine/styles';
 
-interface SelectItemsStyles {
-  size: MantineSize;
-}
-
-export default createStyles((theme, { size }: SelectItemsStyles) => ({
+export default createStyles((theme, _params, { size }) => ({
   item: {
     ...theme.fn.fontStyles(),
     boxSizing: 'border-box',

@@ -71,8 +71,8 @@ export const List: ListComponent = forwardRef<HTMLUListElement, ListProps>(
     } = useComponentDefaultProps('List', defaultProps, props);
 
     const { classes, cx } = useStyles(
-      { withPadding, size, listStyleType, center, spacing },
-      { classNames, styles, name: 'List', unstyled, variant }
+      { withPadding, listStyleType, center, spacing },
+      { classNames, styles, name: 'List', unstyled, size, variant }
     );
 
     return (

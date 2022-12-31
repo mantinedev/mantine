@@ -61,7 +61,7 @@ export const Divider = forwardRef<HTMLDivElement, DividerProps>((props: DividerP
   } = useComponentDefaultProps('Divider', defaultProps, props);
 
   const { classes, cx } = useStyles(
-    { color, size, variant },
+    { color },
     { classNames, styles, unstyled, name: 'Divider', variant, size }
   );
 

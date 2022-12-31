@@ -1,10 +1,6 @@
-import { createStyles, MantineSize } from '@mantine/styles';
+import { createStyles } from '@mantine/styles';
 
-export interface InputErrorStylesParams {
-  size: MantineSize;
-}
-
-export default createStyles((theme, { size }: InputErrorStylesParams) => ({
+export default createStyles((theme, _params, { size }) => ({
   error: {
     wordBreak: 'break-word',
     color: theme.fn.variant({ variant: 'filled', color: 'red' }).background,

@@ -9,7 +9,6 @@ const sizes = {
 };
 
 export interface CheckboxStylesParams {
-  size: MantineNumberSize;
   radius: MantineNumberSize;
   color: MantineColor;
   transitionDuration: number;
@@ -22,14 +21,14 @@ export default createStyles(
   (
     theme,
     {
-      size,
       radius,
       color,
       transitionDuration,
       labelPosition,
       error,
       indeterminate,
-    }: CheckboxStylesParams
+    }: CheckboxStylesParams,
+    { size }
   ) => {
     const _size = theme.fn.size({ size, sizes });
     const colors = theme.fn.variant({ variant: 'filled', color });

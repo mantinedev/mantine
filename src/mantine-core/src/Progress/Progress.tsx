@@ -91,8 +91,8 @@ export const Progress = forwardRef<HTMLDivElement, ProgressProps>((props, ref) =
   } = useComponentDefaultProps('Progress', defaultProps, props);
 
   const { classes, cx, theme } = useStyles(
-    { color, size, radius, striped: striped || animate, animate },
-    { name: 'Progress', classNames, styles, unstyled, variant }
+    { color, radius, striped: striped || animate, animate },
+    { name: 'Progress', classNames, styles, unstyled, variant, size }
   );
 
   const segments = Array.isArray(sections)

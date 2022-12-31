@@ -11,7 +11,6 @@ const sizes = {
 export interface ProgressStylesParams {
   color: MantineColor;
   radius: MantineNumberSize;
-  size: MantineNumberSize;
   striped: boolean;
   animate: boolean;
 }
@@ -22,7 +21,7 @@ const stripesAnimation = keyframes({
 });
 
 export default createStyles(
-  (theme, { color, radius, size, striped, animate }: ProgressStylesParams) => ({
+  (theme, { color, radius, striped, animate }: ProgressStylesParams, { size }) => ({
     root: {
       position: 'relative',
       height: theme.fn.size({ size, sizes }),

@@ -36,10 +36,15 @@ export function Saturation({
   unstyled,
   variant,
 }: SaturationProps) {
-  const { classes } = useStyles(
-    { size },
-    { classNames, styles, name: __staticSelector, unstyled, variant, size }
-  );
+  const { classes } = useStyles(null, {
+    classNames,
+    styles,
+    name: __staticSelector,
+    unstyled,
+    variant,
+    size,
+  });
+
   const [position, setPosition] = useState({ x: value.s / 100, y: 1 - value.v / 100 });
   const positionRef = useRef(position);
 

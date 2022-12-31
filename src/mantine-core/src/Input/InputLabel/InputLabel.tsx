@@ -2,12 +2,12 @@
 import React, { forwardRef } from 'react';
 import { DefaultProps, MantineSize, Selectors, useComponentDefaultProps } from '@mantine/styles';
 import { Box } from '../../Box';
-import useStyles, { InputLabelStylesParams } from './InputLabel.styles';
+import useStyles from './InputLabel.styles';
 
 export type InputLabelStylesNames = Selectors<typeof useStyles>;
 
 export interface InputLabelProps
-  extends DefaultProps<InputLabelStylesNames, InputLabelStylesParams>,
+  extends DefaultProps<InputLabelStylesNames>,
     React.ComponentPropsWithoutRef<'label'> {
   variant?: string;
 
@@ -47,10 +47,14 @@ export const InputLabel = forwardRef<HTMLLabelElement, InputLabelProps>((props, 
     ...others
   } = useComponentDefaultProps('InputLabel', defaultProps, props);
 
-  const { classes, cx } = useStyles(
-    { size },
-    { name: ['InputWrapper', __staticSelector], classNames, styles, unstyled, variant, size }
-  );
+  const { classes, cx } = useStyles(null, {
+    name: ['InputWrapper', __staticSelector],
+    classNames,
+    styles,
+    unstyled,
+    variant,
+    size,
+  });
 
   return (
     <Box<'label'>

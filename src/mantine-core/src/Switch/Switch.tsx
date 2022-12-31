@@ -102,7 +102,7 @@ export const Switch: SwitchComponent = forwardRef<HTMLInputElement, SwitchProps>
   const _size = ctx?.size || size;
 
   const { classes } = useStyles(
-    { size: _size, color, radius, labelPosition, error: !!error },
+    { color, radius, labelPosition, error: !!error },
     { name: 'Switch', classNames, styles, unstyled, size: _size, variant }
   );
 

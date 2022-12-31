@@ -61,7 +61,7 @@ export const Thumb = forwardRef<HTMLDivElement, ThumbProps>(
     ref
   ) => {
     const { classes, cx, theme } = useStyles(
-      { color, size, disabled, thumbSize },
+      { color, disabled, thumbSize },
       { name: 'Slider', classNames, styles, unstyled, variant, size }
     );
     const [focused, setFocused] = useState(false);

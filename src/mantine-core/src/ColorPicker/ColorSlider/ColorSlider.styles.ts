@@ -1,11 +1,7 @@
-import { createStyles, MantineSize, getStylesRef } from '@mantine/styles';
+import { createStyles, getStylesRef } from '@mantine/styles';
 import { THUMB_SIZES } from '../Thumb/Thumb.styles';
 
-interface ColorSliderStyles {
-  size: MantineSize;
-}
-
-export default createStyles((theme, { size }: ColorSliderStyles) => ({
+export default createStyles((theme, _params, { size }) => ({
   sliderThumb: {
     ref: getStylesRef('sliderThumb'),
   },

@@ -109,7 +109,7 @@ export const Stepper: StepperComponent = forwardRef<HTMLDivElement, StepperProps
   } = useComponentDefaultProps('Stepper', defaultProps, props);
 
   const { classes, cx } = useStyles(
-    { contentPadding, color, orientation, iconPosition, size, iconSize, breakpoint },
+    { contentPadding, color, orientation, iconPosition, iconSize, breakpoint },
     { name: 'Stepper', classNames, styles, unstyled, variant, size }
   );
 

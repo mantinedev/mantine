@@ -1,9 +1,5 @@
 import { createStyles } from '@mantine/styles';
 
-export interface DialogStylesParams {
-  size: string | number;
-}
-
 const sizes = {
   xs: 160,
   sm: 200,
@@ -12,7 +8,7 @@ const sizes = {
   xl: 500,
 };
 
-export default createStyles((theme, { size }: DialogStylesParams) => ({
+export default createStyles((theme, _params, { size }) => ({
   root: {
     ...theme.fn.fontStyles(),
     color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,

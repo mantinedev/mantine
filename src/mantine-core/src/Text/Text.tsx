@@ -95,7 +95,6 @@ export const _Text = forwardRef<HTMLDivElement, TextProps>((props, ref) => {
   const { classes, cx } = useStyles(
     {
       color,
-      size,
       lineClamp,
       truncate,
       inline,

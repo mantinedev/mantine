@@ -42,7 +42,7 @@ export const ThemeIcon = forwardRef<HTMLDivElement, ThemeIconProps>((props, ref)
     useComponentDefaultProps('ThemeIcon', defaultProps, props);
 
   const { classes, cx } = useStyles(
-    { variant, radius, color, size, gradient },
+    { variant, radius, color, gradient },
     { name: 'ThemeIcon', unstyled, variant, size }
   );
 

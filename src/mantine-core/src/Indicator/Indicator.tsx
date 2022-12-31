@@ -106,7 +106,7 @@ export const Indicator = forwardRef<HTMLDivElement, IndicatorProps>((props, ref)
   } = useComponentDefaultProps('Indicator', defaultProps, props);
 
   const { classes, cx } = useStyles(
-    { position, offset, size, radius, inline, color, withBorder, zIndex, withLabel: !!label },
+    { position, offset, radius, inline, color, withBorder, zIndex, withLabel: !!label },
     { name: 'Indicator', classNames, styles, unstyled, variant, size }
   );
 

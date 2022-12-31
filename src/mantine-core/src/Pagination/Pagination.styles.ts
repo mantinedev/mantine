@@ -1,7 +1,6 @@
 import { createStyles, MantineNumberSize, MantineColor } from '@mantine/styles';
 
 export interface PaginationStylesParams {
-  size: MantineNumberSize;
   radius: MantineNumberSize;
   color: MantineColor;
 }
@@ -14,7 +13,7 @@ const sizes = {
   xl: 44,
 };
 
-export default createStyles((theme, { size, radius, color }: PaginationStylesParams) => {
+export default createStyles((theme, { radius, color }: PaginationStylesParams, { size }) => {
   const colors = theme.fn.variant({ color, variant: 'filled' });
 
   return {

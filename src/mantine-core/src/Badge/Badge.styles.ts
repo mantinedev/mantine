@@ -1,6 +1,5 @@
 import {
   createStyles,
-  MantineSize,
   MantineNumberSize,
   MantineColor,
   MantineGradient,
@@ -11,7 +10,6 @@ const BADGE_VARIANTS = ['light', 'filled', 'outline', 'dot', 'gradient'];
 
 export interface BadgeStylesParams {
   color: MantineColor;
-  size: MantineSize;
   radius: MantineNumberSize;
   gradient: MantineGradient;
   fullWidth: boolean;
@@ -37,7 +35,7 @@ interface GetVariantStylesInput {
   theme: MantineTheme;
   variant: string;
   color: MantineColor;
-  size: MantineSize;
+  size: string | number;
   gradient: MantineGradient;
 }
 
@@ -82,7 +80,7 @@ function getVariantStyles({ theme, variant, color, size, gradient }: GetVariantS
 }
 
 export default createStyles(
-  (theme, { color, size, radius, gradient, fullWidth }: BadgeStylesParams, { variant }) => {
+  (theme, { color, radius, gradient, fullWidth }: BadgeStylesParams, { variant, size }) => {
     const { fontSize, height } = size in sizes ? sizes[size] : sizes.md;
 
     return {

@@ -174,7 +174,7 @@ export function Drawer(props: DrawerProps) {
   const bodyId = `${baseId}-body`;
 
   const { classes, cx, theme } = useStyles(
-    { size, position, zIndex, withOverlay },
+    { position, zIndex, withOverlay },
     { classNames, styles, unstyled, name: 'Drawer', variant, size }
   );
 

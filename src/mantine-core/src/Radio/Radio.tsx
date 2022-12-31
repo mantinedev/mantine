@@ -88,8 +88,8 @@ export const Radio: RadioComponent = forwardRef<HTMLInputElement, RadioProps>((p
   const componentSize = props.size ? size : contextSize;
 
   const { classes } = useStyles(
-    { color, size: componentSize, transitionDuration, labelPosition, error: !!error },
-    { name: 'Radio', classNames, styles, unstyled, variant, size }
+    { color, transitionDuration, labelPosition, error: !!error },
+    { name: 'Radio', classNames, styles, unstyled, variant, size: componentSize }
   );
 
   const { systemStyles, rest } = extractSystemStyles(others);

@@ -37,7 +37,7 @@ export const Container = forwardRef<HTMLDivElement, ContainerProps>(
       useComponentDefaultProps('Container', defaultProps, props);
 
     const { classes, cx } = useStyles(
-      { fluid, size, sizes },
+      { fluid, sizes },
       { unstyled, name: 'Container', variant, size }
     );
 

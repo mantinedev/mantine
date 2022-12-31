@@ -34,11 +34,10 @@ const checkedPadding = {
 
 export interface ChipStylesParams {
   radius: MantineNumberSize;
-  size: MantineNumberSize;
   color: MantineColor;
 }
 
-export default createStyles((theme, { radius, size, color }: ChipStylesParams) => ({
+export default createStyles((theme, { radius, color }: ChipStylesParams, { size }) => ({
   root: {},
 
   label: {

@@ -125,7 +125,6 @@ export const SegmentedControl = forwardRef<HTMLDivElement, SegmentedControlProps
 
   const { classes, cx } = useStyles(
     {
-      size,
       fullWidth,
       color,
       radius,

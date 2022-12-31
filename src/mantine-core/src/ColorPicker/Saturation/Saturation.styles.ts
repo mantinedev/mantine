@@ -1,9 +1,5 @@
-import { createStyles, MantineSize, getStylesRef } from '@mantine/styles';
+import { createStyles, getStylesRef } from '@mantine/styles';
 import { THUMB_SIZES } from '../Thumb/Thumb.styles';
-
-interface SaturationStyles {
-  size: MantineSize;
-}
 
 const SATURATION_HEIGHTS = {
   xs: 100,
@@ -13,7 +9,7 @@ const SATURATION_HEIGHTS = {
   xl: 160,
 };
 
-export default createStyles((theme, { size }: SaturationStyles) => ({
+export default createStyles((theme, _params, { size }) => ({
   saturationThumb: {
     ref: getStylesRef('saturationThumb'),
   },

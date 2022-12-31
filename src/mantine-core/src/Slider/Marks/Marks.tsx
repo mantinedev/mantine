@@ -38,7 +38,7 @@ export function Marks({
   variant,
 }: MarksProps) {
   const { classes, cx } = useStyles(
-    { size, color, disabled },
+    { color, disabled },
     { name: 'Slider', classNames, styles, unstyled, variant, size }
   );
 

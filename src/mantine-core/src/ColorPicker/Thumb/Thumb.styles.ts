@@ -1,8 +1,4 @@
-import { createStyles, MantineSize } from '@mantine/styles';
-
-interface ThumbStyles {
-  size: MantineSize;
-}
+import { createStyles } from '@mantine/styles';
 
 export const THUMB_SIZES = {
   xs: 8,
@@ -12,7 +8,7 @@ export const THUMB_SIZES = {
   xl: 22,
 };
 
-export default createStyles((theme, { size }: ThumbStyles) => {
+export default createStyles((theme, _params, { size }) => {
   const _size = theme.fn.size({ size, sizes: THUMB_SIZES });
   return {
     thumb: {

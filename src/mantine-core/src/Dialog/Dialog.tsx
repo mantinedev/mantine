@@ -11,12 +11,12 @@ import { Transition, MantineTransition } from '../Transition';
 import { CloseButton } from '../CloseButton';
 import { Affix } from '../Affix';
 import { Paper, PaperProps } from '../Paper';
-import useStyles, { DialogStylesParams } from './Dialog.styles';
+import useStyles from './Dialog.styles';
 
 export type DialogStylesNames = Selectors<typeof useStyles>;
 
 export interface DialogProps
-  extends Omit<DefaultProps<DialogStylesNames, DialogStylesParams>, MantineStyleSystemSize>,
+  extends Omit<DefaultProps<DialogStylesNames>, MantineStyleSystemSize>,
     Omit<PaperProps, 'classNames' | 'styles'> {
   variant?: string;
 
@@ -87,10 +87,14 @@ export function DialogBody(props: DialogProps) {
     ...others
   } = useComponentDefaultProps('Dialog', defaultProps, props);
 
-  const { classes, cx } = useStyles(
-    { size },
-    { classNames, styles, unstyled, name: 'Dialog', variant, size }
-  );
+  const { classes, cx } = useStyles(null, {
+    classNames,
+    styles,
+    unstyled,
+    name: 'Dialog',
+    variant,
+    size,
+  });
 
   return (
     <Transition

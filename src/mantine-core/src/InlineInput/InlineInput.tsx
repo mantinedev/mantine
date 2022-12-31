@@ -38,7 +38,7 @@ export function InlineInput({
   ...others
 }: InlineInputProps) {
   const { classes, cx } = useStyles(
-    { size, labelPosition },
+    { labelPosition },
     { name: __staticSelector, styles, classNames, unstyled, variant, size }
   );
 

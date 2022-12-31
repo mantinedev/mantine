@@ -14,7 +14,6 @@ export interface AvatarStylesParams {
   color: MantineColor;
   withinGroup: boolean;
   spacing: MantineNumberSize;
-  size: MantineNumberSize;
   gradient: MantineGradient;
 }
 
@@ -75,8 +74,8 @@ function getVariantStyles({ theme, variant, color, gradient }: GetVariantStylesI
 export default createStyles(
   (
     theme,
-    { radius, withinGroup, spacing, size, color, gradient }: AvatarStylesParams,
-    { variant }
+    { radius, withinGroup, spacing, color, gradient }: AvatarStylesParams,
+    { variant, size }
   ) => {
     const variantStyles = getVariantStyles({ theme, color, gradient, variant });
     return {

@@ -1,12 +1,11 @@
-import { createStyles, MantineSize } from '@mantine/styles';
+import { createStyles } from '@mantine/styles';
 import { INPUT_SIZES } from '../Input';
 
 export interface MultiSelectStylesParams {
-  size: MantineSize;
   invalid: boolean;
 }
 
-export default createStyles((theme, { size, invalid }: MultiSelectStylesParams) => ({
+export default createStyles((theme, { invalid }: MultiSelectStylesParams, { size }) => ({
   wrapper: {
     position: 'relative',
   },

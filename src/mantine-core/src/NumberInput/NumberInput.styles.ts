@@ -1,8 +1,7 @@
-import { createStyles, MantineNumberSize, MantineSize } from '@mantine/styles';
+import { createStyles, MantineNumberSize } from '@mantine/styles';
 
 export interface NumberInputStylesParams {
   radius: MantineNumberSize;
-  size: MantineSize;
 }
 
 export const CONTROL_SIZES = {
@@ -13,7 +12,7 @@ export const CONTROL_SIZES = {
   xl: 36,
 };
 
-export default createStyles((theme, { radius, size }: NumberInputStylesParams) => ({
+export default createStyles((theme, { radius }: NumberInputStylesParams, { size }) => ({
   rightSection: {
     display: 'flex',
     flexDirection: 'column',

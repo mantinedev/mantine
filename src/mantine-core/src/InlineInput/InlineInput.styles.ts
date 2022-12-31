@@ -1,4 +1,4 @@
-import { createStyles, MantineNumberSize } from '@mantine/styles';
+import { createStyles } from '@mantine/styles';
 
 const sizes = {
   xs: 16,
@@ -9,11 +9,10 @@ const sizes = {
 };
 
 export interface InlineInputStylesParams {
-  size: MantineNumberSize;
   labelPosition: 'left' | 'right';
 }
 
-export default createStyles((theme, { labelPosition, size }: InlineInputStylesParams) => ({
+export default createStyles((theme, { labelPosition }: InlineInputStylesParams, { size }) => ({
   root: {},
 
   body: {

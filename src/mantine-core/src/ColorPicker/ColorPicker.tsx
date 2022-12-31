@@ -121,7 +121,7 @@ export const ColorPicker = forwardRef<HTMLDivElement, ColorPickerProps>(
     } = useComponentDefaultProps('ColorPicker', defaultProps, props);
 
     const { classes, cx, theme } = useStyles(
-      { size, fullWidth },
+      { fullWidth },
       { classNames, styles, name: __staticSelector, unstyled, variant, size }
     );
     const formatRef = useRef(format);

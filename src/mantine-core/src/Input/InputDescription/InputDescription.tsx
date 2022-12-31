@@ -1,12 +1,12 @@
 import React, { forwardRef } from 'react';
 import { DefaultProps, MantineSize, Selectors, useComponentDefaultProps } from '@mantine/styles';
 import { Text } from '../../Text';
-import useStyles, { InputDescriptionStylesParams } from './InputDescription.styles';
+import useStyles from './InputDescription.styles';
 
 export type InputDescriptionStylesNames = Selectors<typeof useStyles>;
 
 export interface InputDescriptionProps
-  extends DefaultProps<InputDescriptionStylesNames, InputDescriptionStylesParams>,
+  extends DefaultProps<InputDescriptionStylesNames>,
     React.ComponentPropsWithoutRef<'div'> {
   variant?: string;
 
@@ -36,10 +36,14 @@ export const InputDescription = forwardRef<HTMLDivElement, InputDescriptionProps
     ...others
   } = useComponentDefaultProps('InputDescription', defaultProps, props);
 
-  const { classes, cx } = useStyles(
-    { size },
-    { name: ['InputWrapper', __staticSelector], classNames, styles, unstyled, variant, size }
-  );
+  const { classes, cx } = useStyles(null, {
+    name: ['InputWrapper', __staticSelector],
+    classNames,
+    styles,
+    unstyled,
+    variant,
+    size,
+  });
 
   return (
     <Text

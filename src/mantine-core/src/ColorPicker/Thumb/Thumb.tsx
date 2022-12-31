@@ -27,10 +27,14 @@ export function Thumb({
   unstyled,
   variant,
 }: ThumbProps) {
-  const { classes, cx } = useStyles(
-    { size },
-    { classNames, styles, name: __staticSelector, unstyled, size, variant }
-  );
+  const { classes, cx } = useStyles(null, {
+    classNames,
+    styles,
+    name: __staticSelector,
+    unstyled,
+    size,
+    variant,
+  });
 
   return (
     <div

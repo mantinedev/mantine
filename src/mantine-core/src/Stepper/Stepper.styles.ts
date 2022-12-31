@@ -1,10 +1,9 @@
-import { createStyles, MantineNumberSize, MantineColor, MantineSize } from '@mantine/styles';
+import { createStyles, MantineNumberSize, MantineColor } from '@mantine/styles';
 import { iconSizes } from './Step/Step.styles';
 
 export interface StepperStylesParams {
   contentPadding: MantineNumberSize;
   iconSize?: number;
-  size: MantineSize;
   color: MantineColor;
   orientation: 'vertical' | 'horizontal';
   iconPosition: 'right' | 'left';
@@ -14,15 +13,8 @@ export interface StepperStylesParams {
 export default createStyles(
   (
     theme,
-    {
-      contentPadding,
-      color,
-      orientation,
-      iconPosition,
-      iconSize,
-      size,
-      breakpoint,
-    }: StepperStylesParams
+    { contentPadding, color, orientation, iconPosition, iconSize, breakpoint }: StepperStylesParams,
+    { size }
   ) => {
     const shouldBeResponsive = typeof breakpoint !== 'undefined';
     const breakpointValue = theme.fn.size({ size: breakpoint, sizes: theme.breakpoints });

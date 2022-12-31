@@ -101,7 +101,6 @@ export const Checkbox: CheckboxComponent = forwardRef<HTMLInputElement, Checkbox
     const { systemStyles, rest } = extractSystemStyles(others);
     const { classes } = useStyles(
       {
-        size: ctx?.size || size,
         radius,
         color,
         transitionDuration,
@@ -109,7 +108,7 @@ export const Checkbox: CheckboxComponent = forwardRef<HTMLInputElement, Checkbox
         error: !!error,
         indeterminate,
       },
-      { name: 'Checkbox', classNames, styles, unstyled, variant, size }
+      { name: 'Checkbox', classNames, styles, unstyled, variant, size: ctx?.size || size }
     );
 
     const contextProps = ctx

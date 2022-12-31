@@ -1,10 +1,6 @@
-import { createStyles, MantineSize } from '@mantine/styles';
+import { createStyles } from '@mantine/styles';
 
-export interface InputDescriptionStylesParams {
-  size: MantineSize;
-}
-
-export default createStyles((theme, { size }: InputDescriptionStylesParams) => ({
+export default createStyles((theme, _params, { size }) => ({
   description: {
     wordBreak: 'break-word',
     color: theme.colorScheme === 'dark' ? theme.colors.dark[2] : theme.colors.gray[6],

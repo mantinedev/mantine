@@ -29,7 +29,7 @@ export const SliderRoot = forwardRef<HTMLDivElement, SliderRootProps>(
     ref
   ) => {
     const { classes, cx } = useStyles(
-      { size, disabled },
+      { disabled },
       { name: 'Slider', classNames, styles, unstyled, variant, size }
     );
     return <Box {...others} tabIndex={-1} className={cx(classes.root, className)} ref={ref} />;

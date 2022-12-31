@@ -28,7 +28,7 @@ export const Title = forwardRef<HTMLHeadingElement, TitleProps>((props, ref) => 
     useComponentDefaultProps('Title', defaultProps, props);
 
   const { classes, cx } = useStyles(
-    { element: `h${order}`, weight, size, inline },
+    { element: `h${order}`, weight, inline },
     { name: 'Title', unstyled, variant, size }
   );
 

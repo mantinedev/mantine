@@ -4,12 +4,10 @@ import {
   CSSObject,
   MantineColor,
   MantineGradient,
-  MantineNumberSize,
 } from '@mantine/styles';
 
 export interface TextStylesParams {
   color: 'dimmed' | MantineColor;
-  size: MantineNumberSize;
   lineClamp: number;
   truncate: boolean;
   inline: boolean;
@@ -88,7 +86,6 @@ export default createStyles(
     theme,
     {
       color,
-      size,
       lineClamp,
       truncate,
       inline,
@@ -100,7 +97,8 @@ export default createStyles(
       align,
       strikethrough,
       italic,
-    }: TextStylesParams
+    }: TextStylesParams,
+    { size }
   ) => {
     const colors = theme.fn.variant({ variant: 'gradient', gradient });
 
