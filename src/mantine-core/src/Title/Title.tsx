@@ -7,7 +7,7 @@ export type TitleOrder = 1 | 2 | 3 | 4 | 5 | 6;
 export type TitleSize = `h${TitleOrder}` | React.CSSProperties['fontSize'];
 
 export interface TitleProps
-  extends Omit<TextProps, 'size' | 'styles' | 'classNames'>,
+  extends Omit<TextProps, 'size' | 'styles' | 'classNames' | 'span'>,
     DefaultProps<never, TitleStylesParams>,
     Omit<React.ComponentPropsWithoutRef<'h1'>, 'color'> {
   variant?: string;

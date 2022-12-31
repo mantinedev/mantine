@@ -35,6 +35,9 @@ export interface ScrollAreaProps
   /** Get viewport ref */
   viewportRef?: React.ForwardedRef<HTMLDivElement>;
 
+  /** Props added to the viewport element */
+  viewportProps?: React.ComponentPropsWithRef<'div'>;
+
   /** Subscribe to scroll position changes */
   onScrollPositionChange?(position: { x: number; y: number }): void;
 }
@@ -61,6 +64,7 @@ export const _ScrollArea = forwardRef<HTMLDivElement, ScrollAreaProps>((props, r
     onScrollPositionChange,
     unstyled,
     variant,
+    viewportProps,
     ...others
   } = useComponentDefaultProps('ScrollArea', defaultProps, props);
 
@@ -81,6 +85,7 @@ export const _ScrollArea = forwardRef<HTMLDivElement, ScrollAreaProps>((props, r
     >
       <Box className={cx(classes.root, className)} {...others}>
         <RadixScrollArea.Viewport
+          {...viewportProps}
           className={classes.viewport}
           ref={viewportRef}
           onScroll={

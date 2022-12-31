@@ -54,7 +54,7 @@ export function TooltipFloating(props: TooltipFloatingProps) {
 
   const { classes, cx } = useStyles(
     { radius, color, multiline, width },
-    { name: 'Tooltip', classNames, styles, unstyled, variant }
+    { name: 'TooltipFloating', classNames, styles, unstyled, variant }
   );
 
   if (!isElement(children)) {
