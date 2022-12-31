@@ -10,7 +10,7 @@ function assignSizeVariables(
   Object.keys(sizes).forEach((size) => {
     // eslint-disable-next-line no-param-reassign
     variables[`--mantine-${name}-${size}`] =
-      typeof sizes[size] === 'number' ? `${sizes[size]}px` : sizes[size];
+      typeof sizes[size] === 'number' ? `${sizes[size]}px` : (sizes[size] as string);
   });
 }
 

@@ -16,6 +16,7 @@ import {
   DatesProviderDemos,
   DateTimePickerDemos,
   DateInputDemos,
+  ThemeDemos,
 } from '@mantine/demos';
 
 ## createStyles breaking changes
@@ -96,6 +97,19 @@ function Demo() {
 - [PasswordInput](https://mantine.dev/core/password-input/) Styles API was changed – `invalid` and `withIcon` selectors are no longer available, use `data-invalid` and `data-with-icon` attributes with `innerInput` selector
 - `invalid` prop was renamed to `error` in [Input](https://mantine.dev/core/input/) component
 - [FileInput](https://mantine.dev/core/file-input/), [Select](https://mantine.dev/core/select/) and [MultiSelect](https://mantine.dev/core/multi-select/) components no longer support `clearButtonLabel` and `clearButtonTabIndex` props, use `clearButtonProps` instead to add any extra props to the clear button
+
+## Variants and sizes on MantineProvider
+
+You can now use [MantineProvider](https://mantine.dev/theming/mantine-provider/) to add variants to all Mantine components that support [Styles API](https://mantine.dev/styles/styles-api/)
+and sizes to components that support `size` prop.
+
+Variants:
+
+<Demo data={ThemeDemos.variants} />
+
+Sizes:
+
+<Demo data={ThemeDemos.sizes} />
 
 ## Updated @mantine/dates package
 

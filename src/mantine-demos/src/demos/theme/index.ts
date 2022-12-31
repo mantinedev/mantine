@@ -17,3 +17,5 @@ export { colorsIndex } from './Theme.demo.colorsIndex';
 export { focusRingStyles } from './Theme.demo.focusRingStyles';
 export { systemProps } from './Theme.demo.systemProps';
 export { defaultPropsTheme } from './Theme.demo.defaultPropsTheme';
+export { variants } from './Theme.demo.variants';
+export { sizes } from './Theme.demo.sizes';
