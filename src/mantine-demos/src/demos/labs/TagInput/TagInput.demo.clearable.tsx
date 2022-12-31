@@ -7,7 +7,6 @@ const code = `
   label="Technologies that you're interested in"
   placeholder="Add as many as you like"
   defaultValue={['react', 'next']}
-  clearButtonLabel="Clear selection"
   clearable
 />`;
 
@@ -18,7 +17,6 @@ function Demo() {
         label="Technologies that you're interested in"
         placeholder="Add as many as you like"
         defaultValue={['react', 'next']}
-        clearButtonLabel="Clear selection"
         clearable
       />
     </div>

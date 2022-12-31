@@ -56,9 +56,6 @@ export interface MultiSelectProps
   /** Allow to clear item */
   clearable?: boolean;
 
-  /** aria-label for clear button */
-  clearButtonLabel?: string;
-
   /** Clear search field value on blur */
   clearSearchOnBlur?: boolean;
 
@@ -89,8 +86,8 @@ export interface MultiSelectProps
   /** Select highlighted item on blur */
   selectOnBlur?: boolean;
 
-  /** Set the clear button tab index to disabled or default after input field */
-  clearButtonTabIndex?: -1 | 0;
+  /** Props added to clear button */
+  clearButtonProps?: React.ComponentPropsWithoutRef<'button'>;
 }
 
 export function defaultFilter(value: string, selected: boolean, item: SelectItem) {
@@ -139,7 +136,6 @@ const defaultProps: Partial<MultiSelectProps> = {
   switchDirectionOnFlip: false,
   zIndex: getDefaultZIndex('popover'),
   selectOnBlur: false,
-  clearButtonTabIndex: 0,
   positionDependencies: [],
 };
 
@@ -177,7 +173,6 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>((props
     clearSearchOnChange,
     clearable,
     clearSearchOnBlur,
-    clearButtonLabel,
     variant,
     onSearchChange,
     searchValue,
@@ -205,7 +200,6 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>((props
     errorProps,
     labelProps,
     descriptionProps,
-    clearButtonTabIndex,
     form,
     positionDependencies,
     onKeyDown,
@@ -214,6 +208,7 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>((props
     inputWrapperOrder,
     readOnly,
     withAsterisk,
+    clearButtonProps,
     ...others
   } = useComponentDefaultProps('MultiSelect', defaultProps, props);
 
@@ -663,11 +658,10 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>((props
                 styles,
                 size,
                 shouldClear: clearable && _value.length > 0,
-                clearButtonLabel,
                 onClear: handleClear,
                 error,
                 disabled,
-                clearButtonTabIndex,
+                clearButtonProps,
                 readOnly,
               })}
             >

@@ -91,9 +91,6 @@ export interface SelectProps
   /** Allow to clear item */
   clearable?: boolean;
 
-  /** aria-label for clear button */
-  clearButtonLabel?: string;
-
   /** Called each time search value changes */
   onSearchChange?(query: string): void;
 
@@ -124,8 +121,8 @@ export interface SelectProps
   /** Should data be filtered when search value exactly matches selected item */
   filterDataOnExactSearchMatch?: boolean;
 
-  /** Set the clear button tab index to disabled or default after input field */
-  clearButtonTabIndex?: -1 | 0;
+  /** Props added to clear button */
+  clearButtonProps?: React.ComponentPropsWithoutRef<'button'>;
 }
 
 export function defaultFilter(value: string, item: SelectItem) {
@@ -156,7 +153,6 @@ const defaultProps: Partial<SelectProps> = {
   switchDirectionOnFlip: false,
   filterDataOnExactSearchMatch: false,
   zIndex: getDefaultZIndex('popover'),
-  clearButtonTabIndex: 0,
   positionDependencies: [],
   dropdownPosition: 'flip',
 };
@@ -186,7 +182,6 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>((props, ref) => 
     searchable,
     clearable,
     nothingFound,
-    clearButtonLabel,
     limit,
     disabled,
     onSearchChange,
@@ -209,10 +204,10 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>((props, ref) => 
     allowDeselect,
     placeholder,
     filterDataOnExactSearchMatch,
-    clearButtonTabIndex,
     form,
     positionDependencies,
     readOnly,
+    clearButtonProps,
     ...others
   } = useInputProps('Select', defaultProps, props);
 
@@ -602,10 +597,9 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>((props, ref) => 
                 styles,
                 size: inputProps.size,
                 shouldClear: clearable && !!selectedValue,
-                clearButtonLabel,
                 onClear: handleClear,
                 error: wrapperProps.error,
-                clearButtonTabIndex,
+                clearButtonProps,
                 disabled,
                 readOnly,
               })}

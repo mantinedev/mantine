@@ -13,7 +13,7 @@ function Demo() {
       label="Your favorite frameworks/libraries"
       placeholder="Pick all that you like"
       defaultValue={['react', 'next']}
-      clearButtonLabel="Clear selection"
+      clearButtonProps={{ 'aria-label': 'Clear selection' }}
       clearable
     />
   );
@@ -28,7 +28,7 @@ function Demo() {
         label="Your favorite frameworks/libraries"
         placeholder="Pick all that you like"
         defaultValue={['react', 'next']}
-        clearButtonLabel="Clear selection"
+        clearButtonProps={{ 'aria-label': 'Clear selection' }}
         clearable
       />
     </div>

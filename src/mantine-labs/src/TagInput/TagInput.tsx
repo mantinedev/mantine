@@ -44,9 +44,6 @@ export interface TagInputProps extends DefaultProps<TagInputStylesNames>, BaseSe
   /** Allow to clear item */
   clearable?: boolean;
 
-  /** aria-label for clear button */
-  clearButtonLabel?: string;
-
   /** Clear input field value on blur */
   clearInputOnBlur?: boolean;
 
@@ -126,7 +123,6 @@ export const TagInput = forwardRef<HTMLInputElement, TagInputProps>(
       placeholder,
       clearable = false,
       clearInputOnBlur = false,
-      clearButtonLabel,
       variant,
       onChangeInput,
       disabled = false,
@@ -343,12 +339,7 @@ export const TagInput = forwardRef<HTMLInputElement, TagInputProps>(
             }}
             rightSection={
               !disabled && clearable && _value.length > 0 ? (
-                <CloseButton
-                  variant="transparent"
-                  aria-label={clearButtonLabel}
-                  onClick={handleClear}
-                  size={size}
-                />
+                <CloseButton variant="transparent" onClick={handleClear} size={size} />
               ) : (
                 rightSection
               )
