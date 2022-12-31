@@ -242,6 +242,7 @@ export function Spotlight({
               >
                 <TextInput
                   autoComplete="chrome-please-just-do-not-show-it-thanks"
+                  size="lg"
                   {...searchInputProps}
                   value={query}
                   onChange={handleInputChange}
@@ -249,7 +250,6 @@ export function Spotlight({
                   onCompositionStart={() => setIMEOpen(true)}
                   onCompositionEnd={() => setIMEOpen(false)}
                   classNames={{ input: classes.searchInput }}
-                  size="lg"
                   placeholder={searchPlaceholder}
                   icon={searchIcon}
                   onMouseEnter={resetHovered}
