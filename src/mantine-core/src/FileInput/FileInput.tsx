@@ -79,14 +79,6 @@ const defaultProps: Partial<FileInputProps> = {
   clearButtonTabIndex: 0,
 };
 
-const RIGHT_SECTION_WIDTH = {
-  xs: 24,
-  sm: 30,
-  md: 34,
-  lg: 40,
-  xl: 44,
-};
-
 export const _FileInput = forwardRef<HTMLButtonElement, FileInputProps>((props, ref) => {
   const {
     inputProps,
@@ -104,7 +96,6 @@ export const _FileInput = forwardRef<HTMLButtonElement, FileInputProps>((props, 
     unstyled,
     valueComponent: ValueComponent,
     rightSection,
-    rightSectionWidth,
     clearable,
     clearButtonLabel,
     clearButtonTabIndex,
@@ -112,7 +103,7 @@ export const _FileInput = forwardRef<HTMLButtonElement, FileInputProps>((props, 
     ...others
   } = useInputProps('FileInput', defaultProps, props);
   const resetRef = useRef<() => void>();
-  const { classes, theme, cx } = useStyles(null, {
+  const { classes, cx } = useStyles(null, {
     name: 'FileInput',
     classNames,
     styles,
@@ -169,10 +160,6 @@ export const _FileInput = forwardRef<HTMLButtonElement, FileInputProps>((props, 
             ref={ref}
             __staticSelector="FileInput"
             rightSection={_rightSection}
-            rightSectionWidth={
-              rightSectionWidth ||
-              theme.fn.size({ size: inputProps.size, sizes: RIGHT_SECTION_WIDTH })
-            }
             classNames={{ ...classNames, input: cx(classes.input, (classNames as any)?.input) }}
           >
             {!hasValue ? (

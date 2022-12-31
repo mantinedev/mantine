@@ -435,7 +435,7 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>((props
         rightSection ||
         (disabled || readOnly || hideControls || variant === 'unstyled' ? null : controls)
       }
-      rightSectionWidth={rightSectionWidth || theme.fn.size({ size, sizes: CONTROL_SIZES }) + 1}
+      rightSectionWidth={rightSectionWidth ?? theme.fn.size({ size, sizes: CONTROL_SIZES }) + 1}
       radius={radius}
       max={max}
       min={min}

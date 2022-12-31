@@ -87,14 +87,6 @@ const EYE_DROPPER_SIZES = {
   xl: 22,
 };
 
-const RIGHT_SECTION_WIDTH = {
-  xs: 28,
-  sm: 32,
-  md: 38,
-  lg: 44,
-  xl: 58,
-};
-
 const defaultProps: Partial<ColorInputProps> = {
   size: 'sm',
   format: 'hex',
@@ -142,7 +134,6 @@ export const ColorInput = forwardRef<HTMLInputElement, ColorInputProps>((props, 
     withEyeDropper,
     eyeDropperIcon,
     rightSection,
-    rightSectionWidth,
     closeOnColorSwatchClick,
     ...others
   } = useInputProps('ColorInput', defaultProps, props);
@@ -258,10 +249,6 @@ export const ColorInput = forwardRef<HTMLInputElement, ColorInputProps>((props, 
               styles={styles}
               rightSection={
                 rightSection || (withEyeDropper ? (eyeDropperSupported ? eyeDropper : null) : null)
-              }
-              rightSectionWidth={
-                rightSectionWidth ??
-                theme.fn.size({ size: inputProps.size, sizes: RIGHT_SECTION_WIDTH })
               }
             />
           </div>

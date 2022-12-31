@@ -11,8 +11,8 @@ import {
   extractSystemStyles,
   BaseSelectProps,
 } from '@mantine/core';
-import useStyles, { RIGHT_SECTION_WIDTH } from './TagInput.styles';
 import { DefaultValue, DefaultValueStylesNames } from './DefaultValue/DefaultValue';
+import useStyles from './TagInput.styles';
 
 export type TagInputStylesNames =
   | DefaultValueStylesNames
@@ -133,7 +133,6 @@ export const TagInput = forwardRef<HTMLInputElement, TagInputProps>(
       radius = 'sm',
       icon,
       rightSection,
-      rightSectionWidth,
       sx,
       maxTags,
       name,
@@ -146,7 +145,7 @@ export const TagInput = forwardRef<HTMLInputElement, TagInputProps>(
     }: TagInputProps,
     ref
   ) => {
-    const { classes, cx, theme } = useStyles(
+    const { classes, cx } = useStyles(
       { size, invalid: !!error },
       { classNames, styles, name: 'TagInput' }
     );
@@ -342,7 +341,6 @@ export const TagInput = forwardRef<HTMLInputElement, TagInputProps>(
             classNames={{
               ...classNames,
             }}
-            rightSectionWidth={theme.fn.size({ size, sizes: RIGHT_SECTION_WIDTH }) as number}
             rightSection={
               !disabled && clearable && _value.length > 0 ? (
                 <CloseButton
