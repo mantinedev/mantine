@@ -44,7 +44,7 @@ export function Variants() {
   return (
     <div style={{ padding: 40 }}>
       <Input placeholder="default" />
-      <Input placeholder="invalid" mt="md" invalid />
+      <Input placeholder="invalid" mt="md" error />
       <Input placeholder="disabled" mt="md" disabled />
       <Input placeholder="with icon" mt="md" icon="$" />
       <Input placeholder="filled" variant="filled" mt="md" />

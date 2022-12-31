@@ -58,8 +58,8 @@ export interface InputProps extends InputSharedProps, DefaultProps<InputStylesNa
   /** Static css selector base */
   __staticSelector?: string;
 
-  /** Sets border color to red and aria-invalid=true on input element */
-  invalid?: boolean;
+  /** Determines whether input has error styles */
+  error?: React.ReactNode;
 
   /** Will input have multiple lines? */
   multiline?: boolean;
@@ -77,7 +77,7 @@ const defaultProps: Partial<InputProps> = {
 export const _Input = forwardRef<HTMLInputElement, InputProps>((props, ref) => {
   const {
     className,
-    invalid,
+    error,
     required,
     disabled,
     variant,
@@ -107,7 +107,7 @@ export const _Input = forwardRef<HTMLInputElement, InputProps>((props, ref) => {
       size,
       multiline,
       variant,
-      invalid,
+      invalid: !!error,
       rightSectionWidth,
       iconWidth,
       withRightSection: !!rightSection,
@@ -135,12 +135,12 @@ export const _Input = forwardRef<HTMLInputElement, InputProps>((props, ref) => {
         {...rest}
         ref={ref}
         required={required}
-        aria-invalid={invalid}
+        aria-invalid={!!error}
         aria-describedby={describedBy}
         disabled={disabled}
         data-disabled={disabled || undefined}
         data-with-icon={!!icon || undefined}
-        data-invalid={invalid || undefined}
+        data-invalid={!!error || undefined}
         className={classes.input}
       />
 

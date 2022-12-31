@@ -86,7 +86,7 @@ export function useInputProps<T extends BaseProps, U extends Partial<T>>(
       id: uid,
       size,
       __staticSelector,
-      invalid: !!error,
+      error,
       variant,
     },
   };

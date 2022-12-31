@@ -29,7 +29,7 @@ describe('@mantine/core/Input', () => {
   checkAccessibility([
     <Input aria-label="test-input" />,
     <Input placeholder="test-input" />,
-    <Input placeholder="test-input" invalid />,
+    <Input placeholder="test-input" error />,
   ]);
 
   itSupportsSystemProps({

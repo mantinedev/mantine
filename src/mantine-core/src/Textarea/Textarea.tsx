@@ -75,7 +75,7 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>((props, r
   const sharedProps = {
     required,
     ref,
-    invalid: !!error,
+    error,
     id: uuid,
     classNames: { ...classNames, input: cx(classes.input, classNames?.input) },
     styles,

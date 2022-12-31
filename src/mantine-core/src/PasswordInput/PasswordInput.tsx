@@ -175,7 +175,7 @@ export const PasswordInput = forwardRef<HTMLInputElement, PasswordInputProps>((p
     >
       <Input<'div'>
         component="div"
-        invalid={!!error}
+        error={error}
         icon={icon}
         size={size}
         classNames={{ ...classNames, input: classes.input }}

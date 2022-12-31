@@ -243,7 +243,7 @@ export const PinInput = forwardRef<HTMLDivElement, PinInputProps>(
             onPaste={handlePaste}
             type={mask ? 'password' : type === 'number' ? 'tel' : 'text'}
             radius={radius}
-            invalid={invalid}
+            error={invalid}
             color={color}
             variant={variant}
             size={size}
