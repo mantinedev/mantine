@@ -1,5 +1,5 @@
 import React from 'react';
-import { MantineProvider } from '@mantine/styles';
+import { MantineProvider, MANTINE_SIZES } from '@mantine/styles';
 import { Input } from './Input';
 
 export default { title: 'Input' };
@@ -51,4 +51,20 @@ export function Variants() {
       <Input placeholder="unstyled" variant="unstyled" mt="md" />
     </div>
   );
+}
+
+export function Sizes() {
+  const sizes = MANTINE_SIZES.map((size) => (
+    <Input
+      placeholder={`Input ${size}`}
+      size={size}
+      key={size}
+      icon={size}
+      rightSection={size}
+      mt="md"
+      styles={{ rightSection: { backgroundColor: 'pink' }, icon: { backgroundColor: 'cyan' } }}
+    />
+  ));
+
+  return <div style={{ padding: 40 }}>{sizes}</div>;
 }

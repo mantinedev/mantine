@@ -1,9 +1,7 @@
-import { createStyles, MantineNumberSize, MantineSize, MantineTheme } from '@mantine/styles';
+import { createStyles, MantineNumberSize, MantineTheme } from '@mantine/styles';
 
 export interface InputStylesParams {
   radius: MantineNumberSize;
-  size: MantineSize;
-  variant: string;
   multiline: boolean;
   invalid: boolean;
   rightSectionWidth: string | number;
@@ -80,10 +78,8 @@ export default createStyles(
   (
     theme,
     {
-      size,
       multiline,
       radius,
-      variant,
       invalid,
       rightSectionWidth,
       withRightSection,
@@ -91,7 +87,8 @@ export default createStyles(
       offsetBottom,
       offsetTop,
       pointer,
-    }: InputStylesParams
+    }: InputStylesParams,
+    { variant, size }
   ) => {
     const invalidColor = theme.fn.variant({ variant: 'filled', color: 'red' }).background;
     const sizeStyles =
@@ -199,7 +196,10 @@ export default createStyles(
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        width: rightSectionWidth,
+        width:
+          typeof rightSectionWidth === 'number'
+            ? rightSectionWidth
+            : theme.fn.size({ size, sizes }),
       },
     };
   }

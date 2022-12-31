@@ -69,7 +69,6 @@ export interface InputProps extends InputSharedProps, DefaultProps<InputStylesNa
 }
 
 const defaultProps: Partial<InputProps> = {
-  rightSectionWidth: 36,
   size: 'sm',
   variant: 'default',
 };
@@ -104,9 +103,7 @@ export const _Input = forwardRef<HTMLInputElement, InputProps>((props, ref) => {
   const { classes, cx } = useStyles(
     {
       radius,
-      size,
       multiline,
-      variant,
       invalid: !!error,
       rightSectionWidth,
       iconWidth,
