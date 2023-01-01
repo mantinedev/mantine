@@ -42,6 +42,27 @@ createStyles((theme, params) => {
 });
 ```
 
+## @mantine/notifications breaking changes
+
+[@mantine/notifications](https://mantine.dev/others/notifications/) package no longer exports
+`NotificationsProvider` component. Instead you should add `Notifications` component to any
+part of your application. This change allows to avoid unnecessary rerenders of child components
+when notifications state change. Also `useNotifications` hook is no longer exported from the package.
+
+```tsx
+import { MantineProvider } from '@mantine/core';
+import { Notifications } from '@mantine/notifications';
+
+function Demo() {
+  return (
+    <MantineProvider withNormalizeCSS withGlobalStyles>
+      <Notifications />
+      <App />
+    </MantineProvider>
+  );
+}
+```
+
 ## @mantine/rte package deprecation
 
 `@mantine/rte` package is deprecated – it will no longer receive updates (last version will remain 5.x)
