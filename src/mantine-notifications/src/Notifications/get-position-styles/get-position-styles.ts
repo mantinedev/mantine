@@ -1,8 +1,8 @@
 import { CSSObject } from '@mantine/core';
-import { NotificationsProviderPositioning } from '../../types';
+import { NotificationsPositioning } from '../../types';
 
 export default function getPositionStyles(
-  [vertical, horizontal]: NotificationsProviderPositioning,
+  [vertical, horizontal]: NotificationsPositioning,
   spacing: number
 ) {
   const styles: CSSObject = {};

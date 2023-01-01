@@ -4,7 +4,7 @@ group: 'Other packages'
 package: '@mantine/notifications'
 title: Notifications system
 slug: /others/notifications/
-props: ['NotificationsProvider']
+props: ['Notifications']
 source: 'mantine-notifications/src'
 docs: 'others/notifications.mdx'
 pageTitle: 'Mantine Notifications'
@@ -37,18 +37,18 @@ npm install @mantine/notifications
 
 ## Usage
 
-Wrap your application with NotificationsProvider:
+Add `Notifications` component anywhere in your application, usually it is placed
+inside [MantineProvider](/theming/mantine-provider/) next to your `App` component:
 
 ```tsx
 import { MantineProvider } from '@mantine/core';
-import { NotificationsProvider } from '@mantine/notifications';
+import { Notifications } from '@mantine/notifications';
 
 function Demo() {
   return (
     <MantineProvider withNormalizeCSS withGlobalStyles>
-      <NotificationsProvider>
-        <App />
-      </NotificationsProvider>
+      <Notifications />
+      <App />
     </MantineProvider>
   );
 }
@@ -85,7 +85,7 @@ Notification state item can have these properties:
 - **onOpen** – calls when notification is mounted
 - **autoClose** – defines timeout in ms on which notification will be automatically closed, use `false` to disable auto close
 - **message** – required notification body
-- **color, icon, title, radius, className, style, sx, loading** – props spread to [Notification](/core/notification/) component
+- **color, icon, title, radius, className, style, sx, loading** – props added to [Notification](/core/notification/) component
 
 All properties except **message** are optional.
 
@@ -126,8 +126,8 @@ You can use `sx`, `style`, `className` or [Styles API](/styles/styles-api/) `cla
 
 ## Notifications container position
 
-NotificationsProvider renders notifications container with fixed position inside [Portal](/core/portal/).
-Position cannot be changed per notification. NotificationsProvider supports the following positions:
+`Notifications` renders notifications container with fixed position inside [Portal](/core/portal/).
+Position cannot be changed per notification. `Notifications` supports the following positions:
 
 - `top-left`
 - `top-right`
@@ -137,32 +137,24 @@ Position cannot be changed per notification. NotificationsProvider supports the 
 - `bottom-center`
 
 ```tsx
-import { NotificationsProvider } from '@mantine/notifications';
+import { Notifications } from '@mantine/notifications';
 
 function Demo() {
-  return (
-    <NotificationsProvider position="top-right" zIndex={2077}>
-      <App />
-    </NotificationsProvider>
-  );
+  return <Notifications position="top-right" zIndex={2077} />;
 }
 ```
 
 ## Limit and queue
 
-NotificationsProvider uses [use-queue](/hooks/use-queue/) hook to manage state.
+`Notifications` uses [use-queue](/hooks/use-queue/) hook to manage state.
 You can limit maximum amount of notifications that can be displayed by setting
-`limit` prop on NotificationsProvider:
+`limit` prop on `Notifications`:
 
 ```tsx
-import { NotificationsProvider } from '@mantine/notifications';
+import { Notifications } from '@mantine/notifications';
 
 function Demo() {
-  return (
-    <NotificationsProvider limit={5}>
-      <App />
-    </NotificationsProvider>
-  );
+  return <Notifications limit={5} />;
 }
 ```
 
@@ -193,18 +185,14 @@ Use `cleanNotificationsQueue` function to remove all notifications that are not 
 
 ## Auto close
 
-You can configure auto close timeout with NotificationsProvider:
+You can configure auto close timeout with `Notifications`:
 
 ```tsx
-import { NotificationsProvider } from '@mantine/notifications';
+import { Notifications } from '@mantine/notifications';
 
 // All notifications will be closed automatically in 4000ms
 function Demo() {
-  return (
-    <NotificationsProvider autoClose={4000}>
-      <App />
-    </NotificationsProvider>
-  );
+  return <Notifications autoClose={4000} />;
 }
 ```
 
@@ -228,33 +216,3 @@ updateNotification({
 `showNotification` and `updateNotification` functions `autoClose` prop always has higher priority.
 
 <Demo data={NotificationsDemos.autoclose} />
-
-## use-notifications hook
-
-To subscribe to notifications state use `useNotifications` hook, it returns object with the following properties:
-
-- **notifications** – array of notifications that are currently displayed
-- **queue** – array of notifications in queue
-
-```tsx
-function useNotifications(): {
-  notifications: NotificationProps[];
-  queue: NotificationProps[];
-};
-
-interface NotificationProps {
-  id?: string;
-  color?: string;
-  radius?: MantineNumberSize;
-  className?: string;
-  style?: React.CSSProperties;
-  icon?: React.ReactNode;
-  title?: React.ReactNode;
-  loading?: boolean;
-  message: React.ReactNode;
-  autoClose?: boolean | number;
-  disallowClose?: boolean;
-  onClose?(props: NotificationProps): void;
-  onOpen?(props: NotificationProps): void;
-}
-```

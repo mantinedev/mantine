@@ -9,13 +9,12 @@ import {
   PortalProps,
 } from '@mantine/core';
 import { useReducedMotion, useForceUpdate, useDidUpdate } from '@mantine/hooks';
-import { NotificationsContext } from '../Notifications.context';
-import { NotificationsProviderPositioning } from '../types';
+import { NotificationsPositioning } from '../types';
 import { useNotificationsEvents } from '../events';
 import getPositionStyles from './get-position-styles/get-position-styles';
 import getNotificationStateStyles from './get-notification-state-styles/get-notification-state-styles';
 import NotificationContainer from '../NotificationContainer/NotificationContainer';
-import useStyles from './NotificationsProvider.styles';
+import useStyles from './Notifications.styles';
 import useNotificationsState from './use-notifications-state/use-notifications-state';
 
 const POSITIONS = [
@@ -27,7 +26,7 @@ const POSITIONS = [
   'bottom-center',
 ] as const;
 
-export interface NotificationProviderProps
+export interface NotificationsProps
   extends Omit<DefaultProps, MantineStyleSystemSize>,
     React.ComponentPropsWithoutRef<'div'> {
   /** Notifications position */
@@ -57,14 +56,11 @@ export interface NotificationProviderProps
   /** Notifications container z-index */
   zIndex?: React.CSSProperties['zIndex'];
 
-  /** Your application */
-  children?: React.ReactNode;
-
   /** Target element of Portal component */
   target?: PortalProps['target'];
 }
 
-export function NotificationsProvider({
+export function Notifications({
   className,
   position = 'bottom-right',
   autoClose = 4000,
@@ -77,13 +73,12 @@ export function NotificationsProvider({
   children,
   target,
   ...others
-}: NotificationProviderProps) {
+}: NotificationsProps) {
   const forceUpdate = useForceUpdate();
   const refs = useRef<Record<string, HTMLDivElement>>({});
   const previousLength = useRef<number>(0);
   const {
     notifications,
-    queue,
     showNotification,
     updateNotification,
     hideNotification,
@@ -97,7 +92,7 @@ export function NotificationsProvider({
   const duration = reduceMotion ? 1 : transitionDuration;
   const positioning = (POSITIONS.includes(position) ? position : 'bottom-right').split(
     '-'
-  ) as NotificationsProviderPositioning;
+  ) as NotificationsPositioning;
 
   useDidUpdate(() => {
     if (notifications.length > previousLength.current) {
@@ -147,24 +142,20 @@ export function NotificationsProvider({
   ));
 
   return (
-    <NotificationsContext.Provider value={{ notifications, queue }}>
-      <Portal target={target}>
-        <Box
-          className={cx(classes.notifications, className)}
-          style={style}
-          sx={{
-            maxWidth: containerWidth,
-            ...getPositionStyles(positioning, theme.spacing.md),
-          }}
-          {...others}
-        >
-          <TransitionGroup>{items}</TransitionGroup>
-        </Box>
-      </Portal>
-
-      {children}
-    </NotificationsContext.Provider>
+    <Portal target={target}>
+      <Box
+        className={cx(classes.notifications, className)}
+        style={style}
+        sx={{
+          maxWidth: containerWidth,
+          ...getPositionStyles(positioning, theme.spacing.md),
+        }}
+        {...others}
+      >
+        <TransitionGroup>{items}</TransitionGroup>
+      </Box>
+    </Portal>
   );
 }
 
-NotificationsProvider.displayName = '@mantine/notifications/NotificationsProvider';
+Notifications.displayName = '@mantine/notifications/Notifications';

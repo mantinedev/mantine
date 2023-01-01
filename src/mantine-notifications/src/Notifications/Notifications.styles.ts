@@ -1,10 +1,10 @@
 import { createStyles } from '@mantine/core';
 
-interface NotificationsProviderStylesParams {
+interface NotificationsStylesParams {
   zIndex: React.CSSProperties['zIndex'];
 }
 
-export default createStyles((theme, { zIndex }: NotificationsProviderStylesParams) => ({
+export default createStyles((theme, { zIndex }: NotificationsStylesParams) => ({
   notifications: {
     width: `calc(100% - ${theme.spacing.md * 2}px)`,
     boxSizing: 'border-box',

@@ -3,7 +3,7 @@ import { IconCheck } from '@tabler/icons';
 import { storiesOf } from '@storybook/react';
 import { Button, Group, MantineProvider } from '@mantine/core';
 import { showNotification, updateNotification } from './events';
-import { NotificationsProvider } from './NotificationsProvider/NotificationsProvider';
+import { Notifications } from './Notifications/Notifications';
 
 function NotificationsDemo() {
   return (
@@ -114,44 +114,38 @@ storiesOf('Notifications System', module)
   .add('bottom-right (default)', () => (
     <React.StrictMode>
       <MantineProvider inherit>
-        <NotificationsProvider>
-          <NotificationsDemo />
-        </NotificationsProvider>
+        <Notifications />
+        <NotificationsDemo />
       </MantineProvider>
     </React.StrictMode>
   ))
   .add('top-right', () => (
     <MantineProvider inherit>
-      <NotificationsProvider position="top-right" limit={2}>
-        <NotificationsDemo />
-      </NotificationsProvider>
+      <Notifications position="top-right" limit={2} />
+      <NotificationsDemo />
     </MantineProvider>
   ))
   .add('top-left', () => (
     <MantineProvider inherit>
-      <NotificationsProvider position="top-left">
-        <NotificationsDemo />
-      </NotificationsProvider>
+      <Notifications position="top-left" />
+      <NotificationsDemo />
     </MantineProvider>
   ))
   .add('bottom-left', () => (
     <MantineProvider inherit>
-      <NotificationsProvider position="bottom-left">
-        <NotificationsDemo />
-      </NotificationsProvider>
+      <Notifications position="bottom-left" />
+      <NotificationsDemo />
     </MantineProvider>
   ))
   .add('bottom-center', () => (
     <MantineProvider inherit>
-      <NotificationsProvider position="bottom-center">
-        <NotificationsDemo />
-      </NotificationsProvider>
+      <Notifications position="bottom-center" />
+      <NotificationsDemo />
     </MantineProvider>
   ))
   .add('top-center', () => (
     <MantineProvider inherit>
-      <NotificationsProvider position="top-center">
-        <NotificationsDemo />
-      </NotificationsProvider>
+      <Notifications position="top-center" />
+      <NotificationsDemo />
     </MantineProvider>
   ));

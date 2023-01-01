@@ -1,11 +1,11 @@
 import { TransitionStatus } from 'react-transition-group';
 import { CSSObject } from '@mantine/core';
-import { NotificationsProviderPositioning } from '../../types';
+import { NotificationsPositioning } from '../../types';
 
 interface NotificationStateStylesProps {
   state: TransitionStatus;
   maxHeight: number;
-  positioning: NotificationsProviderPositioning;
+  positioning: NotificationsPositioning;
   transitionDuration: number;
 }
 

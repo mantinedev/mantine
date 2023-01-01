@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { graphql, useStaticQuery, navigate } from 'gatsby';
 import { randomId, useMediaQuery } from '@mantine/hooks';
-import { NotificationsProvider } from '@mantine/notifications';
+import { Notifications } from '@mantine/notifications';
 import { ModalsProvider, ContextModalProps } from '@mantine/modals';
 import { SpotlightProvider, SpotlightAction } from '@mantine/spotlight';
 import { Text, Button } from '@mantine/core';
@@ -119,6 +119,7 @@ export function LayoutInner({ children, location }: LayoutProps) {
         transitionProperty: 'transform, opacity',
       }}
     >
+      <Notifications />
       <div
         className={cx({
           [classes.withNavbar]: shouldRenderNavbar,
@@ -139,9 +140,7 @@ export function LayoutInner({ children, location }: LayoutProps) {
               labels={{ confirm: 'Confirm', cancel: 'Cancel' }}
               modals={{ demonstration: demonstrationModal }}
             >
-              <NotificationsProvider>
-                <MdxProvider>{children}</MdxProvider>
-              </NotificationsProvider>
+              <MdxProvider>{children}</MdxProvider>
             </ModalsProvider>
           </div>
         </main>

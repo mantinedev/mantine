@@ -84,7 +84,7 @@ const EXTRA_FILES_PATHS = [
   '../src/mantine-carousel/src/CarouselSlide/CarouselSlide.tsx',
 
   // Other
-  '../src/mantine-notifications/src/NotificationsProvider/NotificationsProvider.tsx',
+  '../src/mantine-notifications/src/Notifications/Notifications.tsx',
   '../src/mantine-prism/src/Prism/Prism.tsx',
   '../src/mantine-spotlight/src/SpotlightProvider.tsx',
   '../src/mantine-modals/src/ModalsProvider.tsx',
