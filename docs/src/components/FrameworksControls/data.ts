@@ -6,4 +6,5 @@ export const FRAMEWORKS_DATA = [
   { id: 'cra', title: 'Create React App', icon: icons.ReactIcon, link: '/guides/cra/' },
   { id: 'remix', title: 'Remix', icon: icons.RemixIcon, link: '/guides/remix/' },
   { id: 'gatsby', title: 'Gatsby', icon: icons.GatsbyIcon, link: '/guides/gatsby/' },
+  { id: 'plasmo', title: 'Plasmo', icon: icons.PlasmoIcon, link: '/guides/plasmo/' },
 ];
