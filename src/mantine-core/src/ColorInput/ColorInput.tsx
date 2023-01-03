@@ -144,6 +144,7 @@ export const ColorInput = forwardRef<HTMLInputElement, ColorInputProps>((props, 
     rightSection,
     rightSectionWidth,
     closeOnColorSwatchClick,
+    disabled,
     ...others
   } = useInputProps('ColorInput', defaultProps, props);
 
@@ -228,6 +229,7 @@ export const ColorInput = forwardRef<HTMLInputElement, ColorInputProps>((props, 
               autoComplete="nope"
               {...others}
               {...inputProps}
+              disabled={disabled}
               ref={ref}
               __staticSelector="ColorInput"
               onFocus={handleInputFocus}
@@ -257,7 +259,10 @@ export const ColorInput = forwardRef<HTMLInputElement, ColorInputProps>((props, 
               classNames={classNames}
               styles={styles}
               rightSection={
-                rightSection || (withEyeDropper ? (eyeDropperSupported ? eyeDropper : null) : null)
+                rightSection ||
+                (withEyeDropper && !disabled && !readOnly && eyeDropperSupported
+                  ? eyeDropper
+                  : null)
               }
               rightSectionWidth={
                 rightSectionWidth ??
