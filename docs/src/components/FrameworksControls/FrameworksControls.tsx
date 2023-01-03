@@ -17,7 +17,7 @@ export function FrameworksControls() {
 
   return (
     <SimpleGrid
-      cols={5}
+      cols={6}
       breakpoints={[
         { maxWidth: 'md', cols: 3 },
         { maxWidth: 'sm', cols: 1 },

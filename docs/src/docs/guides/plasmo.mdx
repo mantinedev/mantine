@@ -1,0 +1,81 @@
+---
+group: 'guides'
+title: Usage with Plasmo
+slug: /guides/plasmo/
+search: 'Get started with plasmo'
+---
+
+import { NextSteps } from '../../components/NextSteps/NextSteps.tsx';
+import { PackagesInstallation } from '../../components/PackagesInstallation/PackagesInstallation.tsx';
+
+# Usage with plasmo
+
+## Generate new web extension
+
+Init new extension:
+
+```bash
+yarn create plasmo
+```
+
+<PackagesInstallation />
+
+Change `popup.tsx` file:
+
+```tsx
+import { MantineProvider, Text } from '@mantine/core';
+
+export default function Popup() {
+  return (
+    <MantineProvider withGlobalStyles withNormalizeCSS>
+      <Text>Welcome to Mantine!</Text>
+    </MantineProvider>
+  );
+}
+```
+
+All set! Start development server:
+
+```bash
+yarn dev
+```
+
+Then load the extension into your browser and open the popup.
+
+## Content Scripts UI with custom Emotion Cache
+
+Create `content.tsx` file:
+
+```tsx
+import { MantineProvider, Text, createEmotionCache } from '@mantine/core';
+
+import React from 'react';
+
+export const config: PlasmoContentScript = {
+  matches: ['https://mantine.dev/*'],
+};
+
+const styleElement = document.createElement('style');
+
+const styleCache = createEmotionCache({
+  key: 'mantine-plasmo-csui',
+  prepend: true,
+  container: styleElement,
+});
+
+export default function MantineCsui() {
+  return (
+    <MantineProvider emotionCache={cache}>
+      <Text>Welcome to Mantine!</Text>
+    </MantineProvider>
+  );
+}
+```
+
+Load the extension into your browser, and navigate to [https://mantine.dev/](https://mantine.dev/). The CSUI should be injected into the page.
+
+For more info about custom emotion cache, see [custom emotion cache guide](/theming/emotion-cache/#server-side-rendering-with-custom-cache). This technique is required to mount the style into the CSUI ShadowDOM.
+
+## Next steps
+
+<NextSteps />
