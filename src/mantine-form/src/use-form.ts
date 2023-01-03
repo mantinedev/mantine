@@ -171,7 +171,7 @@ export function useForm<
     { type = 'input', withError = type === 'input', withFocus = true } = {}
   ) => {
     const onChange = getInputOnChange((value) => setFieldValue(path, value as any));
-    const payload: Record<string, any> = { onChange };
+    const payload: any = { onChange };
 
     if (withError) {
       payload.error = errors[path];
