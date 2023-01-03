@@ -13,7 +13,9 @@ import {
 } from '../../tests';
 import { MonthPicker } from './MonthPicker';
 
-const defaultProps = {};
+const defaultProps = {
+  defaultDate: new Date(2022, 3, 11),
+};
 
 describe('@mantine/dates/MonthPicker', () => {
   itSupportsSystemProps({

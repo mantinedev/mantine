@@ -34,16 +34,19 @@ describe('@mantine/dates/MonthPickerInput', () => {
   itSupportsProviderVariant(MonthPickerInput, defaultProps, 'MonthPickerInput', ['root', 'input']);
   itSupportsProviderSize(MonthPickerInput, defaultProps, 'MonthPickerInput', ['root', 'input']);
   itSupportsDateInputProps(MonthPickerInput, defaultProps);
-  itSupportsClearableProps(MonthPickerInput, { ...defaultProps, defaultValue: new Date() });
+  itSupportsClearableProps(MonthPickerInput, {
+    ...defaultProps,
+    defaultValue: new Date(2022, 3, 11),
+  });
   itSupportsYearsListProps(MonthPickerInput, {
     ...defaultProps,
     defaultLevel: 'decade',
-    defaultValue: new Date(),
+    defaultValue: new Date(2022, 3, 11),
     popoverProps: { opened: true, withinPortal: false, transitionDuration: 0 },
   });
   itSupportsMonthsListProps(MonthPickerInput, {
     ...defaultProps,
-    defaultValue: new Date(),
+    defaultValue: new Date(2022, 3, 11),
     popoverProps: { opened: true, withinPortal: false, transitionDuration: 0 },
   });
 

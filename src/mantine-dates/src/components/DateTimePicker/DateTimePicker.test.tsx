@@ -56,17 +56,20 @@ describe('@mantine/dates/DateTimePicker', () => {
   itSupportsFocusEvents(DateTimePicker, defaultProps, '.mantine-DateTimePicker-input');
   itSupportsProviderVariant(DateTimePicker, defaultProps, 'DateTimePicker', ['root', 'input']);
   itSupportsProviderSize(DateTimePicker, defaultProps, 'DateTimePicker', ['root', 'input']);
-  itSupportsClearableProps(DateTimePicker, { ...defaultProps, defaultValue: new Date() });
+  itSupportsClearableProps(DateTimePicker, {
+    ...defaultProps,
+    defaultValue: new Date(2022, 3, 11),
+  });
   itSupportsYearsListProps(DateTimePicker, {
     ...defaultProps,
     defaultLevel: 'decade',
-    defaultValue: new Date(),
+    defaultValue: new Date(2022, 3, 11),
     popoverProps: { opened: true, withinPortal: false, transitionDuration: 0 },
   });
   itSupportsMonthsListProps(DateTimePicker, {
     ...defaultProps,
     defaultLevel: 'year',
-    defaultValue: new Date(),
+    defaultValue: new Date(2022, 3, 11),
     popoverProps: { opened: true, withinPortal: false, transitionDuration: 0 },
   });
 
