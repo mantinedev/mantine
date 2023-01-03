@@ -62,6 +62,9 @@ export interface FileInputProps<Multiple extends boolean = false>
 
   /** Determines whether the user can change value */
   readOnly?: boolean;
+
+  /** Specifies that, optionally, a new file should be captured, and which device should be used to capture that new media of a type defined by the accept attribute. */
+  capture?: boolean | 'user' | 'environment';
 }
 
 const DefaultValue: FileInputProps['valueComponent'] = ({ value }) => (
@@ -95,6 +98,7 @@ export const _FileInput = forwardRef<HTMLButtonElement, FileInputProps>((props, 
     clearable,
     clearButtonProps,
     readOnly,
+    capture,
     ...others
   } = useInputProps('FileInput', defaultProps, props);
   const resetRef = useRef<() => void>();
@@ -142,6 +146,7 @@ export const _FileInput = forwardRef<HTMLButtonElement, FileInputProps>((props, 
         form={form}
         resetRef={resetRef}
         disabled={readOnly}
+        capture={capture}
       >
         {(fileButtonProps) => (
           <Input
