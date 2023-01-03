@@ -47,7 +47,8 @@ export const ListItem = forwardRef<HTMLLIElement, ListItemProps>((props, ref) =>
   return (
     <Box
       component="li"
-      className={cx(classes.item, { [classes.withIcon]: _icon }, className)}
+      className={cx(classes.item, className)}
+      data-with-icon={!!_icon || undefined}
       ref={ref}
       {...others}
     >

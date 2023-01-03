@@ -16,15 +16,15 @@ export default createStyles((theme, { spacing, center }: ListStylesParams) => ({
     '&:not(:first-of-type)': {
       marginTop: theme.fn.size({ size: spacing, sizes: theme.spacing }),
     },
-  },
 
-  withIcon: {
-    listStyle: 'none',
+    '&[data-with-icon]': {
+      listStyle: 'none',
 
-    [`& .${getStylesRef('itemWrapper')}`]: {
-      display: 'inline-flex',
-      alignItems: center ? 'center' : 'flex-start',
-      flexDirection: 'row',
+      [`& .${getStylesRef('itemWrapper')}`]: {
+        display: 'inline-flex',
+        alignItems: center ? 'center' : 'flex-start',
+        flexDirection: 'row',
+      },
     },
   },
 
