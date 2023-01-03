@@ -41,6 +41,54 @@ To disable transitions, set `transitionDuration` to 0:
 
 <Demo data={AccordionDemos.disableTransitions} />
 
+## Default opened items
+
+When `multiple={false}`, set `defaultValue` as string:
+
+```tsx
+import { Accordion } from '@mantine/core';
+
+function Demo() {
+  // Second item will be opened by default
+  return (
+    <Accordion defaultValue="item-2">
+      <Accordion.Item value="item-1">
+        <Accordion.Control>control-1</Accordion.Control>
+        <Accordion.Panel>panel-1</Accordion.Panel>
+      </Accordion.Item>
+
+      <Accordion.Item value="item-2">
+        <Accordion.Control>control-2</Accordion.Control>
+        <Accordion.Panel>panel-2</Accordion.Panel>
+      </Accordion.Item>
+    </Accordion>
+  );
+}
+```
+
+When `multiple={true}`, set `defaultValue` as an array of strings:
+
+```tsx
+import { Accordion } from '@mantine/core';
+
+function Demo() {
+  // Both items will be opened by default
+  return (
+    <Accordion defaultValue={['item-1', 'item-2']}>
+      <Accordion.Item value="item-1">
+        <Accordion.Control>control-1</Accordion.Control>
+        <Accordion.Panel>panel-1</Accordion.Panel>
+      </Accordion.Item>
+
+      <Accordion.Item value="item-2">
+        <Accordion.Control>control-2</Accordion.Control>
+        <Accordion.Panel>panel-2</Accordion.Panel>
+      </Accordion.Item>
+    </Accordion>
+  );
+}
+```
+
 ## Control state
 
 When `multiple={false}`, set `value` as string:
