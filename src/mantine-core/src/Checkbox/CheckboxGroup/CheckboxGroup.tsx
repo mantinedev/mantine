@@ -1,13 +1,7 @@
 import React, { forwardRef } from 'react';
 import { useUncontrolled } from '@mantine/hooks';
-import {
-  DefaultProps,
-  MantineNumberSize,
-  MantineSize,
-  useComponentDefaultProps,
-} from '@mantine/styles';
+import { DefaultProps, MantineSize, useComponentDefaultProps } from '@mantine/styles';
 import { Input, InputWrapperBaseProps, InputWrapperStylesNames } from '../../Input';
-import { InputsGroup } from './InputsGroup';
 import { CheckboxGroupProvider } from '../CheckboxGroup.context';
 
 export type CheckboxGroupStylesNames = InputWrapperStylesNames;
@@ -30,15 +24,6 @@ export interface CheckboxGroupProps
   /** Called when value changes */
   onChange?(value: string[]): void;
 
-  /** Horizontal or vertical orientation */
-  orientation?: 'horizontal' | 'vertical';
-
-  /** Spacing between checkboxes in horizontal orientation */
-  spacing?: MantineNumberSize;
-
-  /** Space between label and inputs */
-  offset?: MantineNumberSize;
-
   /** Controls label font-size and checkbox width and height */
   size?: MantineSize;
 
@@ -47,26 +32,13 @@ export interface CheckboxGroupProps
 }
 
 const defaultProps: Partial<CheckboxGroupProps> = {
-  orientation: 'horizontal',
-  spacing: 'lg',
   size: 'sm',
-  offset: 'xs',
 };
 
 export const CheckboxGroup = forwardRef<HTMLDivElement, CheckboxGroupProps>(
   (props: CheckboxGroupProps, ref) => {
-    const {
-      children,
-      value,
-      defaultValue,
-      onChange,
-      orientation,
-      spacing,
-      size,
-      wrapperProps,
-      offset,
-      ...others
-    } = useComponentDefaultProps('CheckboxGroup', defaultProps, props);
+    const { children, value, defaultValue, onChange, size, wrapperProps, ...others } =
+      useComponentDefaultProps('CheckboxGroup', defaultProps, props);
 
     const [_value, setValue] = useUncontrolled({
       value,
@@ -94,9 +66,7 @@ export const CheckboxGroup = forwardRef<HTMLDivElement, CheckboxGroupProps>(
           {...wrapperProps}
           {...others}
         >
-          <InputsGroup spacing={spacing} orientation={orientation} offset={offset}>
-            {children}
-          </InputsGroup>
+          {children}
         </Input.Wrapper>
       </CheckboxGroupProvider>
     );
