@@ -1,9 +1,9 @@
 import React from 'react';
 import { MantineDemo } from '@mantine/ds';
-import { Chip, createStyles, getStylesRef } from '@mantine/core';
+import { Chip, createStyles, getStylesRef, Group } from '@mantine/core';
 
 const code = `
-import { createStyles, Chip, getStylesRef } from '@mantine/core';
+import { createStyles, Chip, getStylesRef, Group } from '@mantine/core';
 
 const useStyles = createStyles((theme) => ({
   label: {
@@ -28,11 +28,21 @@ function Demo() {
   const { classes } = useStyles();
 
   return (
-    <Chip.Group position="center" multiple defaultValue={['react']}>
-      <Chip classNames={classes} value="react">React</Chip>
-      <Chip classNames={classes} value="ng">Angular</Chip>
-      <Chip classNames={classes} value="vue">Vue</Chip>
-      <Chip classNames={classes} value="svelte">Svelte</Chip>
+    <Chip.Group multiple defaultValue={['react']}>
+      <Group position="center">
+        <Chip classNames={classes} value="react">
+          React
+        </Chip>
+        <Chip classNames={classes} value="ng">
+          Angular
+        </Chip>
+        <Chip classNames={classes} value="vue">
+          Vue
+        </Chip>
+        <Chip classNames={classes} value="svelte">
+          Svelte
+        </Chip>
+      </Group>
     </Chip.Group>
   );
 }
@@ -61,19 +71,21 @@ function Demo() {
   const { classes } = useStyles();
 
   return (
-    <Chip.Group position="center" multiple defaultValue={['react']}>
-      <Chip classNames={classes} value="react">
-        React
-      </Chip>
-      <Chip classNames={classes} value="ng">
-        Angular
-      </Chip>
-      <Chip classNames={classes} value="vue">
-        Vue
-      </Chip>
-      <Chip classNames={classes} value="svelte">
-        Svelte
-      </Chip>
+    <Chip.Group multiple defaultValue={['react']}>
+      <Group position="center">
+        <Chip classNames={classes} value="react">
+          React
+        </Chip>
+        <Chip classNames={classes} value="ng">
+          Angular
+        </Chip>
+        <Chip classNames={classes} value="vue">
+          Vue
+        </Chip>
+        <Chip classNames={classes} value="svelte">
+          Svelte
+        </Chip>
+      </Group>
     </Chip.Group>
   );
 }
