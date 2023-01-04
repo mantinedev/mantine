@@ -1,6 +1,7 @@
 /* eslint-disable react/no-unused-prop-types */
 import React from 'react';
 import { useComponentDefaultProps } from '@mantine/styles';
+import { OptionalPortal } from '../Portal';
 import { TransitionProps } from '../Transition';
 import { ModalBaseProvider } from './ModalBase.context';
 import { ModalBaseCloseButton } from './ModalBaseCloseButton/ModalBaseCloseButton';
@@ -24,6 +25,12 @@ export interface ModalBaseSettings {
 
   /** Props added to Transition component that used to animate overlay and body, use to configure duration and animation type, { duration: 300, transition: 'pop' } by default */
   transitionProps?: Partial<Omit<TransitionProps, 'mounted'>>;
+
+  /** Determines whether component should be rendered inside Portal, true by default */
+  withinPortal?: boolean;
+
+  /** Target element or selector where Portal should be rendered, by default new element is created and appended to the document.body */
+  target?: HTMLElement | string;
 }
 
 interface ModalBaseProps extends ModalBaseSettings {
@@ -33,19 +40,30 @@ interface ModalBaseProps extends ModalBaseSettings {
 
 const defaultProps: Partial<ModalBaseProps> = {
   closeOnClickOutside: true,
+  withinPortal: true,
   transitionProps: { duration: 300, transition: 'pop' },
 };
 
 export function ModalBase(props: ModalBaseProps) {
-  const { opened, onClose, children, closeOnClickOutside, __staticSelector, transitionProps } =
-    useComponentDefaultProps(props.__staticSelector, defaultProps, props);
+  const {
+    opened,
+    onClose,
+    children,
+    closeOnClickOutside,
+    __staticSelector,
+    transitionProps,
+    withinPortal,
+    target,
+  } = useComponentDefaultProps(props.__staticSelector, defaultProps, props);
 
   return (
-    <ModalBaseProvider
-      value={{ __staticSelector, opened, onClose, closeOnClickOutside, transitionProps }}
-    >
-      {children}
-    </ModalBaseProvider>
+    <OptionalPortal withinPortal={withinPortal} target={target}>
+      <ModalBaseProvider
+        value={{ __staticSelector, opened, onClose, closeOnClickOutside, transitionProps }}
+      >
+        {children}
+      </ModalBaseProvider>
+    </OptionalPortal>
   );
 }
 
