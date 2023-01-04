@@ -13,8 +13,14 @@ const defaultProps: Partial<ModalBaseCloseButtonProps> = {
 
 export const ModalBaseCloseButton = forwardRef<HTMLButtonElement, ModalBaseCloseButtonProps>(
   (props, ref) => {
-    const { ...others } = useComponentDefaultProps('ModalBaseCloseButton', defaultProps, props);
     const ctx = useModalBaseContext();
+
+    const { ...others } = useComponentDefaultProps(
+      `${ctx.__staticSelector}CloseButton`,
+      defaultProps,
+      props
+    );
+
     return <CloseButton ref={ref} onClick={ctx.onClose} {...others} />;
   }
 );

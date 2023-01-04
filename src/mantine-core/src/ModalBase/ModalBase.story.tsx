@@ -1,5 +1,7 @@
 import React from 'react';
+import { useDisclosure } from '@mantine/hooks';
 import { ModalBase } from './ModalBase';
+import { Button } from '../Button';
 
 export default { title: 'ModalBase' };
 
@@ -18,12 +20,15 @@ export default { title: 'ModalBase' };
 // }
 
 export function Usage() {
+  const [opened, { open, close }] = useDisclosure(false);
   return (
     <div style={{ padding: 40 }}>
-      <ModalBase opened onClose={() => console.log('Close')} __staticSelector="Modal">
+      <ModalBase opened={opened} onClose={close} __staticSelector="Modal">
         <ModalBase.CloseButton aria-label="Test button" />
         <ModalBase.Overlay />
       </ModalBase>
+
+      <Button onClick={open}>Open modal</Button>
     </div>
   );
 }
