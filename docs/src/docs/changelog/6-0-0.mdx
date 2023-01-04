@@ -17,6 +17,7 @@ import {
   DateTimePickerDemos,
   DateInputDemos,
   ThemeDemos,
+  OverlayDemos,
 } from '@mantine/demos';
 
 ## createStyles breaking changes
@@ -188,6 +189,16 @@ and [dates](https://mantine.dev/dates/date-picker/). All new pickers support `ty
 components exported from `@mantine/dates` package:
 
 <Demo data={DatesProviderDemos.usage} />
+
+## Overlay component improvements
+
+[Overlay](https://mantine.dev/core/overlay/) component now supports the following new features:
+
+- You can now render `children` inside `Overlay`
+- When `center` prop is set overlay children will be centered vertically and horizontally
+- New `fixed` prop controls `position`, when it is set `position: fixed`, when it is not set `position: absolute`
+
+<Demo data={OverlayDemos.blur} />
 
 ## Other changes
 
