@@ -1,5 +1,6 @@
 /* eslint-disable react/no-unused-prop-types */
 import React from 'react';
+import { RemoveScroll } from 'react-remove-scroll';
 import { useComponentDefaultProps } from '@mantine/styles';
 import { OptionalPortal } from '../Portal';
 import { TransitionProps } from '../Transition';
@@ -31,6 +32,9 @@ export interface ModalBaseSettings {
 
   /** Target element or selector where Portal should be rendered, by default new element is created and appended to the document.body */
   target?: HTMLElement | string;
+
+  /** Determines whether scroll should be locked when opened={true}, defaults to true */
+  lockScroll?: boolean;
 }
 
 interface ModalBaseProps extends ModalBaseSettings {
@@ -41,6 +45,7 @@ interface ModalBaseProps extends ModalBaseSettings {
 const defaultProps: Partial<ModalBaseProps> = {
   closeOnClickOutside: true,
   withinPortal: true,
+  lockScroll: true,
   transitionProps: { duration: 300, transition: 'pop' },
 };
 
@@ -54,16 +59,19 @@ export function ModalBase(props: ModalBaseProps) {
     transitionProps,
     withinPortal,
     target,
+    lockScroll,
   } = useComponentDefaultProps(props.__staticSelector, defaultProps, props);
 
   return (
-    <OptionalPortal withinPortal={withinPortal} target={target}>
-      <ModalBaseProvider
-        value={{ __staticSelector, opened, onClose, closeOnClickOutside, transitionProps }}
-      >
-        {children}
-      </ModalBaseProvider>
-    </OptionalPortal>
+    <RemoveScroll enabled={opened && lockScroll}>
+      <OptionalPortal withinPortal={withinPortal} target={target}>
+        <ModalBaseProvider
+          value={{ __staticSelector, opened, onClose, closeOnClickOutside, transitionProps }}
+        >
+          {children}
+        </ModalBaseProvider>
+      </OptionalPortal>
+    </RemoveScroll>
   );
 }
 
