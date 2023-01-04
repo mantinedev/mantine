@@ -136,7 +136,6 @@ export const Chip: ChipComponent = forwardRef<HTMLInputElement, ChipProps>((prop
         htmlFor={uuid}
         data-checked={_checked || undefined}
         data-disabled={disabled || undefined}
-        data-variant={variant}
         className={classes.label}
       >
         {_checked && (

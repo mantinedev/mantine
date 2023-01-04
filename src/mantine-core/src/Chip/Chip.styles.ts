@@ -1,4 +1,10 @@
-import { createStyles, MantineNumberSize, MantineColor, getStylesRef } from '@mantine/styles';
+import {
+  createStyles,
+  MantineNumberSize,
+  MantineColor,
+  getStylesRef,
+  MantineTheme,
+} from '@mantine/styles';
 
 export const sizes = {
   xs: 24,
@@ -37,125 +43,145 @@ export interface ChipStylesParams {
   color: MantineColor;
 }
 
-export default createStyles((theme, { radius, color }: ChipStylesParams, { size }) => ({
-  root: {},
-
-  label: {
-    ref: getStylesRef('label'),
-    ...theme.fn.fontStyles(),
-    boxSizing: 'border-box',
-    color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
-    display: 'inline-block',
-    alignItems: 'center',
-    userSelect: 'none',
-    border: '1px solid transparent',
-    borderRadius: theme.fn.radius(radius),
-    height: theme.fn.size({ size, sizes }),
-    fontSize: theme.fn.size({ size, sizes: theme.fontSizes }),
-    lineHeight: `${theme.fn.size({ size, sizes }) - 2}px`,
-    paddingLeft: theme.fn.size({ size, sizes: padding }),
-    paddingRight: theme.fn.size({ size, sizes: padding }),
-    cursor: 'pointer',
-    whiteSpace: 'nowrap',
-    transition: 'background-color 100ms ease',
-    WebkitTapHighlightColor: 'transparent',
-
-    '&[data-variant="filled"]': {
-      backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[1],
-
-      ...theme.fn.hover({
-        backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[0],
-      }),
-    },
-
-    '&[data-variant="outline"]': {
-      backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.white,
-      borderColor: theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[4],
-
-      ...theme.fn.hover({
-        backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[0],
-      }),
-    },
-
-    '&[data-disabled]': {
-      backgroundColor: `${
-        theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[1]
-      } !important`,
-      borderColor: `${
-        theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[1]
-      } !important`,
-      color: theme.colorScheme === 'dark' ? theme.colors.dark[3] : theme.colors.gray[5],
-      cursor: 'not-allowed',
-
-      ...theme.fn.hover({
-        backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[1],
-      }),
-
-      [`& .${getStylesRef('iconWrapper')}`]: {
-        color: theme.colorScheme === 'dark' ? theme.colors.dark[3] : theme.colors.gray[5],
-      },
-    },
-
-    '&[data-checked]': {
-      paddingLeft: theme.fn.size({ size, sizes: checkedPadding }),
-      paddingRight: theme.fn.size({ size, sizes: checkedPadding }),
-
-      '&[data-variant="outline"]': {
-        border: `1px solid ${theme.fn.variant({ variant: 'filled', color }).background}`,
+function getVariantStyles(
+  theme: MantineTheme,
+  { color }: { color: MantineColor },
+  variant: string
+) {
+  if (variant === 'filled') {
+    return {
+      label: {
+        backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[1],
+        ...theme.fn.hover({
+          backgroundColor:
+            theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[0],
+        }),
       },
 
-      '&[data-variant="filled"]': {
+      checked: {
         '&, &:hover': {
           backgroundColor: theme.fn.variant({ variant: 'light', color }).background,
         },
       },
-    },
-  },
+    };
+  }
 
-  iconWrapper: {
-    ref: getStylesRef('iconWrapper'),
-    color: theme.fn.variant({ variant: 'filled', color }).background,
-    width:
-      theme.fn.size({ size, sizes: iconSizes }) +
-      theme.fn.size({ size, sizes: theme.spacing }) / 1.5,
-    maxWidth:
-      theme.fn.size({ size, sizes: iconSizes }) +
-      theme.fn.size({ size, sizes: theme.spacing }) / 1.5,
-    height: theme.fn.size({ size, sizes: iconSizes }),
-    display: 'inline-block',
-    verticalAlign: 'middle',
-    overflow: 'hidden',
-  },
+  if (variant === 'outline') {
+    return {
+      label: {
+        backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.white,
+        borderColor: theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[4],
 
-  checkIcon: {
-    width: theme.fn.size({ size, sizes: iconSizes }),
-    height: theme.fn.size({ size, sizes: iconSizes }) / 1.1,
-    display: 'block',
-  },
-
-  input: {
-    width: 0,
-    height: 0,
-    padding: 0,
-    opacity: 0,
-    margin: 0,
-
-    '&:focus': {
-      outline: 'none',
-
-      [`& + .${getStylesRef('label')}`]: {
-        ...(theme.focusRing === 'always' || theme.focusRing === 'auto'
-          ? theme.focusRingStyles.styles(theme)
-          : theme.focusRingStyles.resetStyles(theme)),
+        ...theme.fn.hover({
+          backgroundColor:
+            theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[0],
+        }),
       },
 
-      '&:focus:not(:focus-visible)': {
+      checked: {
+        border: `1px solid ${theme.fn.variant({ variant: 'filled', color }).background}`,
+      },
+    };
+  }
+
+  return { label: null, checked: null };
+}
+
+export default createStyles((theme, { radius, color }: ChipStylesParams, { size, variant }) => {
+  const variantStyles = getVariantStyles(theme, { color }, variant);
+
+  return {
+    root: {},
+
+    label: {
+      ref: getStylesRef('label'),
+      ...theme.fn.fontStyles(),
+      boxSizing: 'border-box',
+      color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
+      display: 'inline-block',
+      alignItems: 'center',
+      userSelect: 'none',
+      border: '1px solid transparent',
+      borderRadius: theme.fn.radius(radius),
+      height: theme.fn.size({ size, sizes }),
+      fontSize: theme.fn.size({ size, sizes: theme.fontSizes }),
+      lineHeight: `${theme.fn.size({ size, sizes }) - 2}px`,
+      paddingLeft: theme.fn.size({ size, sizes: padding }),
+      paddingRight: theme.fn.size({ size, sizes: padding }),
+      cursor: 'pointer',
+      whiteSpace: 'nowrap',
+      transition: 'background-color 100ms ease',
+      WebkitTapHighlightColor: 'transparent',
+      ...variantStyles.label,
+
+      '&[data-disabled]': {
+        backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[1],
+        borderColor: theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[1],
+        color: theme.colorScheme === 'dark' ? theme.colors.dark[3] : theme.colors.gray[5],
+        cursor: 'not-allowed',
+
+        ...theme.fn.hover({
+          backgroundColor:
+            theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[1],
+        }),
+
+        [`& .${getStylesRef('iconWrapper')}`]: {
+          color: theme.colorScheme === 'dark' ? theme.colors.dark[3] : theme.colors.gray[5],
+        },
+      },
+
+      '&[data-checked]': {
+        paddingLeft: theme.fn.size({ size, sizes: checkedPadding }),
+        paddingRight: theme.fn.size({ size, sizes: checkedPadding }),
+        '&:not([data-disabled])': variantStyles.checked,
+      },
+    },
+
+    iconWrapper: {
+      ref: getStylesRef('iconWrapper'),
+      color: theme.fn.variant({ variant: 'filled', color }).background,
+      width:
+        theme.fn.size({ size, sizes: iconSizes }) +
+        theme.fn.size({ size, sizes: theme.spacing }) / 1.5,
+      maxWidth:
+        theme.fn.size({ size, sizes: iconSizes }) +
+        theme.fn.size({ size, sizes: theme.spacing }) / 1.5,
+      height: theme.fn.size({ size, sizes: iconSizes }),
+      display: 'inline-block',
+      verticalAlign: 'middle',
+      overflow: 'hidden',
+    },
+
+    checkIcon: {
+      width: theme.fn.size({ size, sizes: iconSizes }),
+      height: theme.fn.size({ size, sizes: iconSizes }) / 1.1,
+      display: 'block',
+    },
+
+    input: {
+      width: 0,
+      height: 0,
+      padding: 0,
+      opacity: 0,
+      margin: 0,
+
+      '&:focus': {
+        outline: 'none',
+
         [`& + .${getStylesRef('label')}`]: {
-          ...(theme.focusRing === 'auto' || theme.focusRing === 'never'
-            ? theme.focusRingStyles.resetStyles(theme)
-            : null),
+          ...(theme.focusRing === 'always' || theme.focusRing === 'auto'
+            ? theme.focusRingStyles.styles(theme)
+            : theme.focusRingStyles.resetStyles(theme)),
+        },
+
+        '&:focus:not(:focus-visible)': {
+          [`& + .${getStylesRef('label')}`]: {
+            ...(theme.focusRing === 'auto' || theme.focusRing === 'never'
+              ? theme.focusRingStyles.resetStyles(theme)
+              : null),
+          },
         },
       },
     },
-  },
-}));
+  };
+});
