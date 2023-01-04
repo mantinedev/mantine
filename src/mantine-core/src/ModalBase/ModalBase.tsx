@@ -1,7 +1,6 @@
 /* eslint-disable react/no-unused-prop-types */
-import React, { useRef, useState, useEffect } from 'react';
+import React from 'react';
 import { RemoveScroll } from 'react-remove-scroll';
-import { useReducedMotion } from '@mantine/hooks';
 import { getDefaultZIndex, useComponentDefaultProps } from '@mantine/styles';
 import { OptionalPortal } from '../Portal';
 import { TransitionOverride } from '../Transition';
@@ -9,6 +8,7 @@ import { ModalBaseProvider } from './ModalBase.context';
 import { ModalBaseCloseButton } from './ModalBaseCloseButton/ModalBaseCloseButton';
 import { ModalBaseOverlay } from './ModalBaseOverlay/ModalBaseOverlay';
 import { ModalBaseContent } from './ModalBaseContent/ModalBaseContent';
+import { useLockScroll } from './use-lock-scroll';
 
 export interface ModalBaseSettings {
   /** Determines whether modal is opened */
@@ -68,24 +68,10 @@ export function ModalBase(props: ModalBaseProps) {
     zIndex,
     lockScroll,
   } = useComponentDefaultProps(props.__staticSelector, defaultProps, props);
+  const transitionDuration =
+    typeof transitionProps.duration === 'number' ? transitionProps.duration : 200;
 
-  const [shouldLockScroll, setShouldLockScroll] = useState(opened);
-  const timeout = useRef<number>();
-  const reduceMotion = useReducedMotion();
-  const transitionDuration = reduceMotion ? 0 : transitionProps.duration;
-
-  useEffect(() => {
-    if (opened) {
-      setShouldLockScroll(true);
-      window.clearTimeout(timeout.current);
-    } else if (transitionDuration === 0) {
-      setShouldLockScroll(false);
-    } else {
-      timeout.current = window.setTimeout(() => setShouldLockScroll(false), transitionDuration);
-    }
-
-    return () => window.clearTimeout(timeout.current);
-  }, [opened, transitionDuration]);
+  const shouldLockScroll = useLockScroll({ opened, transitionDuration });
 
   return (
     <OptionalPortal withinPortal={withinPortal} target={target}>
@@ -95,7 +81,7 @@ export function ModalBase(props: ModalBaseProps) {
           opened,
           onClose,
           closeOnClickOutside,
-          transitionProps,
+          transitionProps: { ...transitionProps, duration: transitionDuration },
           zIndex,
         }}
       >
