@@ -21,6 +21,20 @@ function Demo() {
 
       <Chip.Group multiple value={['checked', 'checked-disabled']}>
         <Group position="center" mt="md">
+          <Chip value="default" variant="light">
+            Light default
+          </Chip>
+          <Chip value="checked" variant="light">
+            Light checked
+          </Chip>
+          <Chip value="checked-disabled" disabled variant="light">
+            Light checked disabled
+          </Chip>
+        </Group>
+      </Chip.Group>
+
+      <Chip.Group multiple value={['checked', 'checked-disabled']}>
+        <Group position="center" mt="md">
           <Chip value="default" variant="filled">
             Filled default
           </Chip>

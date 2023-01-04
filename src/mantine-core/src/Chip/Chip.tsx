@@ -30,7 +30,7 @@ export interface ChipProps
   type?: 'radio' | 'checkbox';
 
   /** Controls chip appearance, defaults to filled with dark theme and to outline in light theme */
-  variant?: Variants<'outline' | 'filled'>;
+  variant?: Variants<'outline' | 'filled' | 'light'>;
 
   /** Chip label */
   children: React.ReactNode;

@@ -48,10 +48,13 @@ function getVariantStyles(
   { color }: { color: MantineColor },
   variant: string
 ) {
-  if (variant === 'filled') {
+  const filledColors = theme.fn.variant({ variant: 'filled', color });
+  const lightColors = theme.fn.variant({ variant: 'light', color });
+
+  if (variant === 'light') {
     return {
       label: {
-        backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[1],
+        backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[1],
         ...theme.fn.hover({
           backgroundColor:
             theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[0],
@@ -59,9 +62,30 @@ function getVariantStyles(
       },
 
       checked: {
+        color: lightColors.color,
+        backgroundColor: lightColors.background,
+        ...theme.fn.hover({ backgroundColor: lightColors.hover }),
         '&, &:hover': {
           backgroundColor: theme.fn.variant({ variant: 'light', color }).background,
         },
+      },
+    };
+  }
+
+  if (variant === 'filled') {
+    return {
+      label: {
+        backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[1],
+        ...theme.fn.hover({
+          backgroundColor:
+            theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[0],
+        }),
+      },
+
+      checked: {
+        color: filledColors.color,
+        backgroundColor: filledColors.background,
+        ...theme.fn.hover({ backgroundColor: filledColors.hover }),
       },
     };
   }
@@ -79,7 +103,7 @@ function getVariantStyles(
       },
 
       checked: {
-        border: `1px solid ${theme.fn.variant({ variant: 'filled', color }).background}`,
+        border: `1px solid ${filledColors.background}`,
       },
     };
   }
@@ -139,7 +163,10 @@ export default createStyles((theme, { radius, color }: ChipStylesParams, { size,
 
     iconWrapper: {
       ref: getStylesRef('iconWrapper'),
-      color: theme.fn.variant({ variant: 'filled', color }).background,
+      color:
+        variant === 'filled'
+          ? theme.white
+          : theme.fn.variant({ variant: 'filled', color }).background,
       width:
         theme.fn.size({ size, sizes: iconSizes }) +
         theme.fn.size({ size, sizes: theme.spacing }) / 1.5,
