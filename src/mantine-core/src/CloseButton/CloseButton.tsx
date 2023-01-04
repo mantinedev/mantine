@@ -24,7 +24,7 @@ const defaultProps: Partial<CloseButtonProps> = {
 };
 
 export const _CloseButton = forwardRef<HTMLButtonElement, CloseButtonProps>((props, ref) => {
-  const { iconSize, size, ...others } = useComponentDefaultProps(
+  const { iconSize, size, children, ...others } = useComponentDefaultProps(
     'CloseButton',
     defaultProps,
     props
@@ -32,7 +32,7 @@ export const _CloseButton = forwardRef<HTMLButtonElement, CloseButtonProps>((pro
   const _iconSize = iconSize || iconSizes[size];
   return (
     <ActionIcon ref={ref} __staticSelector="CloseButton" size={size} {...others}>
-      <CloseIcon width={_iconSize} height={_iconSize} />
+      {children || <CloseIcon width={_iconSize} height={_iconSize} />}
     </ActionIcon>
   );
 });

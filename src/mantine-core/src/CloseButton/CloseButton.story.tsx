@@ -10,3 +10,7 @@ export function Sizes() {
   ));
   return <div style={{ padding: 40 }}>{sizes}</div>;
 }
+
+export function CustomCloseIcon() {
+  return <CloseButton>XX</CloseButton>;
+}
