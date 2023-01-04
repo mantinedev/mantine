@@ -1,5 +1,6 @@
 import React from 'react';
 import { ModalBaseProvider } from './ModalBase.context';
+import { ModalBaseCloseButton } from './ModalBaseCloseButton/ModalBaseCloseButton';
 
 interface ModalBaseProps {
   /** Determines whether modal is opened */
@@ -15,3 +16,5 @@ interface ModalBaseProps {
 export function ModalBase({ opened, onClose, children }: ModalBaseProps) {
   return <ModalBaseProvider value={{ opened, onClose }}>{children}</ModalBaseProvider>;
 }
+
+ModalBase.CloseButton = ModalBaseCloseButton;

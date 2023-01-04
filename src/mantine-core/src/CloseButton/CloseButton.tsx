@@ -12,11 +12,11 @@ export interface CloseButtonProps
 }
 
 const iconSizes = {
-  xs: 14,
+  xs: 12,
   sm: 16,
-  md: 18,
-  lg: 20,
-  xl: 22,
+  md: 20,
+  lg: 28,
+  xl: 34,
 };
 
 const defaultProps: Partial<CloseButtonProps> = {

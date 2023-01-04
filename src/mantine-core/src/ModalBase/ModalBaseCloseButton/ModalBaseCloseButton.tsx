@@ -1,0 +1,20 @@
+import React, { forwardRef } from 'react';
+import { useComponentDefaultProps } from '@mantine/styles';
+import { CloseButton, CloseButtonProps } from '../../CloseButton';
+import { useModalBaseContext } from '../ModalBase.context';
+
+export interface ModalBaseCloseButtonProps
+  extends CloseButtonProps,
+    Omit<React.ComponentPropsWithoutRef<'button'>, keyof CloseButtonProps> {}
+
+const defaultProps: Partial<ModalBaseCloseButtonProps> = {
+  size: 'md',
+};
+
+export const ModalBaseCloseButton = forwardRef<HTMLButtonElement, ModalBaseCloseButtonProps>(
+  (props, ref) => {
+    const { ...others } = useComponentDefaultProps('ModalBaseCloseButton', defaultProps, props);
+    const ctx = useModalBaseContext();
+    return <CloseButton ref={ref} onClick={ctx.onClose} {...others} />;
+  }
+);

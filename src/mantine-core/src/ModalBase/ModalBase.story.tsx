@@ -20,7 +20,9 @@ export default { title: 'ModalBase' };
 export function Usage() {
   return (
     <div style={{ padding: 40 }}>
-      <ModalBase opened onClose={() => {}} />
+      <ModalBase opened onClose={() => console.log('Close')}>
+        <ModalBase.CloseButton aria-label="Test button" />
+      </ModalBase>
     </div>
   );
 }
