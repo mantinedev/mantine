@@ -164,6 +164,7 @@
     "react-dropzone": "14.2.3",
     "react-input-mask": "^2.0.4",
     "react-quill": "2.0.0",
+    "react-remove-scroll": "^2.5.5",
     "react-textarea-autosize": "8.3.4",
     "react-transition-group": "4.4.2",
     "stylis-plugin-rtl": "^2.1.1",
