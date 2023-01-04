@@ -67,7 +67,7 @@ const _Overlay = forwardRef<HTMLDivElement, OverlayProps>((props, ref) => {
   } = useComponentDefaultProps('Overlay', defaultProps, props);
 
   const { classes, cx } = useStyles(
-    { color, opacity, blur, radius, gradient, fixed },
+    { color, opacity, blur, radius, gradient, fixed, zIndex },
     { name: 'Overlay', classNames, styles, unstyled, variant }
   );
 
