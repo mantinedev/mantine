@@ -20,8 +20,9 @@ export default { title: 'ModalBase' };
 export function Usage() {
   return (
     <div style={{ padding: 40 }}>
-      <ModalBase opened onClose={() => console.log('Close')}>
+      <ModalBase opened onClose={() => console.log('Close')} __staticSelector="Modal">
         <ModalBase.CloseButton aria-label="Test button" />
+        <ModalBase.Overlay />
       </ModalBase>
     </div>
   );
