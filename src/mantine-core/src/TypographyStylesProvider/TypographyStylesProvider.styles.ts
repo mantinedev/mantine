@@ -35,18 +35,6 @@ export default createStyles((theme) => {
 
       ...headings,
 
-      '& .ql-align-center': {
-        textAlign: 'center',
-      },
-
-      '& .ql-align-right': {
-        textAlign: 'right',
-      },
-
-      '& .ql-align-left': {
-        textAlign: 'left',
-      },
-
       '& img': {
         maxWidth: '100%',
         marginBottom: theme.spacing.xs,
