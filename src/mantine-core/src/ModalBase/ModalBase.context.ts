@@ -1,3 +1,4 @@
+import { MantineNumberSize } from '@mantine/styles';
 import { createSafeContext } from '@mantine/utils';
 import { TransitionOverride } from '../Transition';
 
@@ -8,6 +9,7 @@ interface ModalBaseContext {
   closeOnClickOutside: boolean;
   transitionProps: TransitionOverride;
   zIndex: number;
+  padding: MantineNumberSize;
 }
 
 export const [ModalBaseProvider, useModalBaseContext] = createSafeContext<ModalBaseContext>(

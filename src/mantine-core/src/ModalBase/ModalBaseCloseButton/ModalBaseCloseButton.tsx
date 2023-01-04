@@ -8,7 +8,7 @@ export interface ModalBaseCloseButtonProps
     Omit<React.ComponentPropsWithoutRef<'button'>, keyof CloseButtonProps> {}
 
 const defaultProps: Partial<ModalBaseCloseButtonProps> = {
-  size: 'md',
+  size: 'sm',
 };
 
 export const ModalBaseCloseButton = forwardRef<HTMLButtonElement, ModalBaseCloseButtonProps>(

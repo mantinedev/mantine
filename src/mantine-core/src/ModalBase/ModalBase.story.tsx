@@ -26,12 +26,17 @@ const content = Array(20)
   .map((_, index) => <p key={index}>{lorem}</p>);
 
 export function Usage() {
-  const [opened, { open, close }] = useDisclosure(false);
+  const [opened, { open, close }] = useDisclosure(true);
   return (
     <div style={{ padding: 40 }}>
       <ModalBase opened={opened} onClose={close} __staticSelector="Modal">
-        {/* <ModalBase.CloseButton aria-label="Test button" /> */}
-        <ModalBase.Content>Modal content</ModalBase.Content>
+        <ModalBase.Content>
+          <ModalBase.Header>
+            <div>Header</div>
+            <ModalBase.CloseButton />
+          </ModalBase.Header>
+          Modal content
+        </ModalBase.Content>
         <ModalBase.Overlay />
       </ModalBase>
 

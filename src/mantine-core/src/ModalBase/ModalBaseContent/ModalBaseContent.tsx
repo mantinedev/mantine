@@ -12,7 +12,9 @@ export interface ModalBaseContentProps
   transitionProps?: TransitionOverride;
 }
 
-const defaultProps: Partial<ModalBaseContentProps> = {};
+const defaultProps: Partial<ModalBaseContentProps> = {
+  shadow: 'xl',
+};
 
 export const ModalBaseContent = forwardRef<HTMLDivElement, ModalBaseContentProps>((props, ref) => {
   const ctx = useModalBaseContext();

@@ -1,13 +1,14 @@
 /* eslint-disable react/no-unused-prop-types */
 import React from 'react';
 import { RemoveScroll } from 'react-remove-scroll';
-import { getDefaultZIndex, useComponentDefaultProps } from '@mantine/styles';
+import { getDefaultZIndex, MantineNumberSize, useComponentDefaultProps } from '@mantine/styles';
 import { OptionalPortal } from '../Portal';
 import { TransitionOverride } from '../Transition';
 import { ModalBaseProvider } from './ModalBase.context';
 import { ModalBaseCloseButton } from './ModalBaseCloseButton/ModalBaseCloseButton';
 import { ModalBaseOverlay } from './ModalBaseOverlay/ModalBaseOverlay';
 import { ModalBaseContent } from './ModalBaseContent/ModalBaseContent';
+import { ModalBaseHeader } from './ModalBaseHeader/ModalBaseHeader';
 import { useLockScroll } from './use-lock-scroll';
 
 export interface ModalBaseSettings {
@@ -40,6 +41,9 @@ export interface ModalBaseSettings {
 
   /** z-index CSS property of root element, 200 by default */
   zIndex?: number;
+
+  /** Key of theme.spacing or number to set content, header and footer padding in px, 'md' by default */
+  padding?: MantineNumberSize;
 }
 
 interface ModalBaseProps extends ModalBaseSettings {
@@ -53,6 +57,7 @@ const defaultProps: Partial<ModalBaseProps> = {
   lockScroll: true,
   transitionProps: { duration: 200, transition: 'pop' },
   zIndex: getDefaultZIndex('modal'),
+  padding: 'md',
 };
 
 export function ModalBase(props: ModalBaseProps) {
@@ -67,7 +72,9 @@ export function ModalBase(props: ModalBaseProps) {
     target,
     zIndex,
     lockScroll,
+    padding,
   } = useComponentDefaultProps(props.__staticSelector, defaultProps, props);
+
   const transitionDuration =
     typeof transitionProps.duration === 'number' ? transitionProps.duration : 200;
 
@@ -83,6 +90,7 @@ export function ModalBase(props: ModalBaseProps) {
           closeOnClickOutside,
           transitionProps: { ...transitionProps, duration: transitionDuration },
           zIndex,
+          padding,
         }}
       >
         <RemoveScroll enabled={shouldLockScroll && lockScroll}>{children}</RemoveScroll>
@@ -94,3 +102,4 @@ export function ModalBase(props: ModalBaseProps) {
 ModalBase.CloseButton = ModalBaseCloseButton;
 ModalBase.Overlay = ModalBaseOverlay;
 ModalBase.Content = ModalBaseContent;
+ModalBase.Header = ModalBaseHeader;

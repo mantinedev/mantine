@@ -15,7 +15,9 @@ export default createStyles((theme, { zIndex }: ModalBaseContentStylesParams) =>
   },
 
   content: {
-    padding: theme.spacing.md,
     pointerEvents: 'all',
+    width: 400,
+    margin: 'auto',
+    marginTop: 40,
   },
 }));
