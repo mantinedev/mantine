@@ -12,13 +12,10 @@ export default createStyles((theme, { zIndex }: ModalBaseContentStylesParams) =>
     bottom: 0,
     zIndex,
     pointerEvents: 'none',
-    display: 'flex',
-    justifyContent: 'flex-end',
   },
 
   content: {
-    // padding: theme.spacing.md,
+    padding: theme.spacing.md,
     pointerEvents: 'all',
-    width: 400,
   },
 }));

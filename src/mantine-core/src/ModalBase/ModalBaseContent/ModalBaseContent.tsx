@@ -25,7 +25,7 @@ export const ModalBaseContent = forwardRef<HTMLDivElement, ModalBaseContentProps
   const { classes, cx } = useStyles({ zIndex: ctx.zIndex + 1 }, { name: ctx.__staticSelector });
 
   return (
-    <Transition mounted={ctx.opened} transition="slide-left">
+    <Transition mounted={ctx.opened} transition="pop" {...ctx.transitionProps} {...transitionProps}>
       {(styles) => (
         <div className={cx(classes.inner)}>
           <Paper

@@ -51,7 +51,7 @@ const defaultProps: Partial<ModalBaseProps> = {
   closeOnClickOutside: true,
   withinPortal: true,
   lockScroll: true,
-  transitionProps: { duration: 200, transition: 'fade' },
+  transitionProps: { duration: 200, transition: 'pop' },
   zIndex: getDefaultZIndex('modal'),
 };
 
