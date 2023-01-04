@@ -1,12 +1,13 @@
 import { createSafeContext } from '@mantine/utils';
-import { TransitionProps } from '../Transition';
+import { TransitionOverride } from '../Transition';
 
 interface ModalBaseContext {
   __staticSelector: string;
   opened: boolean;
   onClose(): void;
   closeOnClickOutside: boolean;
-  transitionProps: Partial<Omit<TransitionProps, 'mounted'>>;
+  transitionProps: TransitionOverride;
+  zIndex: number;
 }
 
 export const [ModalBaseProvider, useModalBaseContext] = createSafeContext<ModalBaseContext>(

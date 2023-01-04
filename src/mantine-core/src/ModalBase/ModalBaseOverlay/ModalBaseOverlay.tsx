@@ -1,6 +1,6 @@
 import { useComponentDefaultProps } from '@mantine/styles';
 import React, { forwardRef } from 'react';
-import { Transition, TransitionProps } from '../../Transition';
+import { Transition, TransitionOverride } from '../../Transition';
 import { Overlay, OverlayProps } from '../../Overlay';
 import { useModalBaseContext } from '../ModalBase.context';
 
@@ -8,7 +8,7 @@ export interface ModalBaseOverlayProps
   extends OverlayProps,
     Omit<React.ComponentPropsWithoutRef<'div'>, keyof OverlayProps> {
   /** Props added to Transition component */
-  transitionProps?: Partial<Omit<TransitionProps, 'mounted'>>;
+  transitionProps?: TransitionOverride;
 }
 
 const defaultProps: Partial<ModalBaseOverlayProps> = {};

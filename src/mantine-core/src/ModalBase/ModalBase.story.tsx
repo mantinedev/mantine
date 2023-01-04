@@ -31,6 +31,7 @@ export function Usage() {
     <div style={{ padding: 40 }}>
       <ModalBase opened={opened} onClose={close} __staticSelector="Modal">
         {/* <ModalBase.CloseButton aria-label="Test button" /> */}
+        <ModalBase.Content>Modal content</ModalBase.Content>
         <ModalBase.Overlay />
       </ModalBase>
 
