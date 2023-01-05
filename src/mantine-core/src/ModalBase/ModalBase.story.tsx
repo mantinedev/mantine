@@ -32,7 +32,7 @@ export function Usage() {
       <ModalBase opened={opened} onClose={close} __staticSelector="Modal">
         <ModalBase.Content>
           <ModalBase.Header>
-            <div>Header</div>
+            <ModalBase.Title>Modal title</ModalBase.Title>
             <ModalBase.CloseButton />
           </ModalBase.Header>
           Modal content

@@ -9,6 +9,7 @@ import { ModalBaseCloseButton } from './ModalBaseCloseButton/ModalBaseCloseButto
 import { ModalBaseOverlay } from './ModalBaseOverlay/ModalBaseOverlay';
 import { ModalBaseContent } from './ModalBaseContent/ModalBaseContent';
 import { ModalBaseHeader } from './ModalBaseHeader/ModalBaseHeader';
+import { ModalBaseTitle } from './ModalBaseTitle/ModalBaseTitle';
 import { useLockScroll } from './use-lock-scroll';
 
 export interface ModalBaseSettings {
@@ -103,3 +104,4 @@ ModalBase.CloseButton = ModalBaseCloseButton;
 ModalBase.Overlay = ModalBaseOverlay;
 ModalBase.Content = ModalBaseContent;
 ModalBase.Header = ModalBaseHeader;
+ModalBase.Title = ModalBaseTitle;
