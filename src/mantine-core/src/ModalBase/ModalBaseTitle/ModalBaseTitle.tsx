@@ -1,4 +1,4 @@
-import React, { forwardRef } from 'react';
+import React, { forwardRef, useEffect } from 'react';
 import { DefaultProps, useComponentDefaultProps } from '@mantine/styles';
 import { Box } from '../../Box';
 import { useModalBaseContext } from '../ModalBase.context';
@@ -18,5 +18,18 @@ export const ModalBaseTitle = forwardRef<HTMLHeadingElement, ModalBaseTitleProps
 
   const { classes, cx } = useStyles();
 
-  return <Box component="h2" className={cx(classes.title, className)} ref={ref} {...others} />;
+  useEffect(() => {
+    ctx.setTitleMounted(true);
+    return () => ctx.setTitleMounted(false);
+  }, []);
+
+  return (
+    <Box
+      component="h2"
+      id={ctx.getTitleId()}
+      className={cx(classes.title, className)}
+      ref={ref}
+      {...others}
+    />
+  );
 });

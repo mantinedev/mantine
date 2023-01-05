@@ -1,6 +1,7 @@
 /* eslint-disable react/no-unused-prop-types */
 import React from 'react';
 import { RemoveScroll } from 'react-remove-scroll';
+import { useId } from '@mantine/hooks';
 import { getDefaultZIndex, MantineNumberSize, useComponentDefaultProps } from '@mantine/styles';
 import { OptionalPortal } from '../Portal';
 import { TransitionOverride } from '../Transition';
@@ -45,6 +46,9 @@ export interface ModalBaseSettings {
 
   /** Key of theme.spacing or number to set content, header and footer padding in px, 'md' by default */
   padding?: MantineNumberSize;
+
+  /** Id used to connect modal with body and title */
+  id?: string;
 }
 
 interface ModalBaseProps extends ModalBaseSettings {
@@ -74,7 +78,10 @@ export function ModalBase(props: ModalBaseProps) {
     zIndex,
     lockScroll,
     padding,
+    id,
   } = useComponentDefaultProps(props.__staticSelector, defaultProps, props);
+
+  const _id = useId(id);
 
   const transitionDuration =
     typeof transitionProps.duration === 'number' ? transitionProps.duration : 200;
@@ -92,6 +99,9 @@ export function ModalBase(props: ModalBaseProps) {
           transitionProps: { ...transitionProps, duration: transitionDuration },
           zIndex,
           padding,
+          id: _id,
+          getTitleId: () => `${_id}-title`,
+          getBodyId: () => `${_id}-body`,
         }}
       >
         <RemoveScroll enabled={shouldLockScroll && lockScroll}>{children}</RemoveScroll>

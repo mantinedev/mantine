@@ -16,7 +16,7 @@ const defaultProps: Partial<ModalBaseContentProps> = {
   shadow: 'xl',
 };
 
-export const ModalBaseContent = forwardRef<HTMLDivElement, ModalBaseContentProps>((props, ref) => {
+export const ModalBaseContent = forwardRef<HTMLElement, ModalBaseContentProps>((props, ref) => {
   const ctx = useModalBaseContext();
   const { className, transitionProps, style, ...others } = useComponentDefaultProps(
     `${ctx.__staticSelector}Content`,
@@ -31,6 +31,12 @@ export const ModalBaseContent = forwardRef<HTMLDivElement, ModalBaseContentProps
       {(styles) => (
         <div className={cx(classes.inner)}>
           <Paper
+            component="section"
+            role="dialog"
+            tabIndex={-1}
+            aria-modal
+            aria-describedby={ctx.bodyMounted ? ctx.getBodyId() : undefined}
+            aria-labelledby={ctx.titleMounted ? ctx.getTitleId() : undefined}
             ref={ref}
             className={cx(classes.content, className)}
             style={{ ...style, ...styles }}
