@@ -55,6 +55,7 @@ interface MantineThemeFunctions {
   hover(hoverStyle: CSSObject): any;
   primaryColor(colorScheme?: ColorScheme): string;
   placeholderStyles(): any;
+  calc(value: unknown, operation: string): string;
 }
 
 export interface MantineTheme {
