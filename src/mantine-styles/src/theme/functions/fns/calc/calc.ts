@@ -1,11 +1,5 @@
-function numberToPx(value: unknown) {
-  if (typeof value === 'number') {
-    return `${value}px`;
-  }
-
-  return `${value}`;
-}
+import { sizeUnit } from '../size-unit/size-unit';
 
 export function calc(value: unknown, operation: string) {
-  return `calc(${numberToPx(value)} ${operation})`;
+  return `calc(${sizeUnit(value)} ${operation})`;
 }

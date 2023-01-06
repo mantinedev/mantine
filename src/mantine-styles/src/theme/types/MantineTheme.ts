@@ -56,6 +56,7 @@ interface MantineThemeFunctions {
   primaryColor(colorScheme?: ColorScheme): string;
   placeholderStyles(): any;
   calc(value: unknown, operation: string): string;
+  sizeUnit(value: unknown): string;
 }
 
 export interface MantineTheme {
