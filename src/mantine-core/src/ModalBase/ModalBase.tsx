@@ -90,7 +90,7 @@ export interface ModalBaseProps extends ModalBaseSettings {
   __staticSelector: string;
 }
 
-const defaultProps: Partial<ModalBaseProps> = {
+export const ModalBaseDefaultProps: Partial<ModalBaseProps> = {
   closeOnClickOutside: true,
   withinPortal: true,
   lockScroll: true,
@@ -124,7 +124,7 @@ export function ModalBase(props: ModalBaseProps) {
     variant,
     classNames,
     styles,
-  } = useComponentDefaultProps(props.__staticSelector, defaultProps, props);
+  } = useComponentDefaultProps(props.__staticSelector, ModalBaseDefaultProps, props);
 
   const _id = useId(id);
   const [titleMounted, setTitleMounted] = useState(false);
