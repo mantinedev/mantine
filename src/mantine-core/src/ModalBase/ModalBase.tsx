@@ -1,7 +1,7 @@
 /* eslint-disable react/no-unused-prop-types */
 import React, { useState } from 'react';
 import { RemoveScroll } from 'react-remove-scroll';
-import { useId, useWindowEvent } from '@mantine/hooks';
+import { useId, useWindowEvent, useFocusReturn } from '@mantine/hooks';
 import { getDefaultZIndex, MantineNumberSize, useComponentDefaultProps } from '@mantine/styles';
 import { OptionalPortal } from '../Portal';
 import { TransitionOverride } from '../Transition';
@@ -92,6 +92,7 @@ export function ModalBase(props: ModalBaseProps) {
     lockScroll,
     trapFocus,
     closeOnEscape,
+    returnFocus,
     padding,
     id,
   } = useComponentDefaultProps(props.__staticSelector, defaultProps, props);
@@ -110,6 +111,8 @@ export function ModalBase(props: ModalBaseProps) {
       onClose();
     }
   });
+
+  useFocusReturn({ opened, shouldReturnFocus: trapFocus && returnFocus });
 
   return (
     <OptionalPortal withinPortal={withinPortal} target={target}>
