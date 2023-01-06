@@ -114,3 +114,17 @@ it will make the component less accessible.
 - `closeOnEscape` – determines whether the modal should be closed when `Escape` key is pressed
 - `closeOnClickOutside` – determines whether the modal should be closed when user clicks on the overlay
 - `returnFocus` – determines whether focus should be returned to the element that was focused before the modal was opened
+
+## Modular components
+
+You can use the following modular components to have full control over the `Modal` rendering:
+
+- `Modal.Root` – context provider
+- `Modal.Overlay` – render [Overlay](/core/overlay/)
+- `Modal.Content` – main modal element, should include all modal content
+- `Modal.Header` – sticky header, usually contains `Modal.Title` and `Modal.CloseButton`
+- `Modal.Title` – `h2` element, `aria-labelledby` of `Modal.Content` is pointing to this element, usually is rendered inside `Modal.Header`
+- `Modal.CloseButton` – close button, usually rendered inside `Modal.Header`
+- `Modal.Body` – a place for main content, `aria-describedby` of `Modal.Content` is pointing to this element
+
+<Demo data={ModalDemos.composition} />
