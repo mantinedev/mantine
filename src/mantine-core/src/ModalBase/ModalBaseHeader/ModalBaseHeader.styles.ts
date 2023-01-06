@@ -11,12 +11,9 @@ export default createStyles((theme, { padding }: ModalBaseHeaderStylesParams) =>
       display: 'flex',
       justifyContent: 'space-between',
       alignItems: 'center',
-      borderBottom: `1px solid ${theme.colors.gray[2]}`,
-      paddingTop: theme.fn.calc(paddingValue, '/ 2'),
-      paddingBottom: theme.fn.calc(paddingValue, '/ 2'),
-      paddingLeft: paddingValue,
+      padding: paddingValue,
+      paddingBottom: 0,
       paddingRight: theme.fn.calc(paddingValue, '- 5px'),
-      marginBottom: theme.fn.calc(paddingValue, '/ 2'),
     },
   };
 });

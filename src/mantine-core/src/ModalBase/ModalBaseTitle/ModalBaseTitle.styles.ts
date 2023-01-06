@@ -5,7 +5,7 @@ export default createStyles((theme) => ({
     lineHeight: 1,
     padding: 0,
     margin: 0,
-    fontWeight: 500,
+    fontWeight: 400,
     fontSize: theme.fontSizes.md,
   },
 }));

@@ -35,7 +35,7 @@ export function Usage() {
             <ModalBase.Title>Modal title</ModalBase.Title>
             <ModalBase.CloseButton />
           </ModalBase.Header>
-          Modal content
+          <ModalBase.Body>Modal content</ModalBase.Body>
         </ModalBase.Content>
         <ModalBase.Overlay />
       </ModalBase>

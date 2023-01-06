@@ -1,5 +1,5 @@
 /* eslint-disable react/no-unused-prop-types */
-import React from 'react';
+import React, { useState } from 'react';
 import { RemoveScroll } from 'react-remove-scroll';
 import { useId } from '@mantine/hooks';
 import { getDefaultZIndex, MantineNumberSize, useComponentDefaultProps } from '@mantine/styles';
@@ -11,6 +11,7 @@ import { ModalBaseOverlay } from './ModalBaseOverlay/ModalBaseOverlay';
 import { ModalBaseContent } from './ModalBaseContent/ModalBaseContent';
 import { ModalBaseHeader } from './ModalBaseHeader/ModalBaseHeader';
 import { ModalBaseTitle } from './ModalBaseTitle/ModalBaseTitle';
+import { ModalBaseBody } from './ModalBaseBody/ModalBaseBody';
 import { useLockScroll } from './use-lock-scroll';
 
 export interface ModalBaseSettings {
@@ -82,6 +83,8 @@ export function ModalBase(props: ModalBaseProps) {
   } = useComponentDefaultProps(props.__staticSelector, defaultProps, props);
 
   const _id = useId(id);
+  const [titleMounted, setTitleMounted] = useState(false);
+  const [bodyMounted, setBodyMounted] = useState(false);
 
   const transitionDuration =
     typeof transitionProps.duration === 'number' ? transitionProps.duration : 200;
@@ -102,6 +105,10 @@ export function ModalBase(props: ModalBaseProps) {
           id: _id,
           getTitleId: () => `${_id}-title`,
           getBodyId: () => `${_id}-body`,
+          titleMounted,
+          bodyMounted,
+          setTitleMounted,
+          setBodyMounted,
         }}
       >
         <RemoveScroll enabled={shouldLockScroll && lockScroll}>{children}</RemoveScroll>
@@ -115,3 +122,4 @@ ModalBase.Overlay = ModalBaseOverlay;
 ModalBase.Content = ModalBaseContent;
 ModalBase.Header = ModalBaseHeader;
 ModalBase.Title = ModalBaseTitle;
+ModalBase.Body = ModalBaseBody;
