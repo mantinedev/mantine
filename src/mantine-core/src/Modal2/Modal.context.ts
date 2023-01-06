@@ -1,3 +1,4 @@
+import { MantineNumberSize } from '@mantine/styles';
 import { createSafeContext } from '@mantine/utils';
 
 export type ScrollAreaComponent = React.FC<{
@@ -7,6 +8,7 @@ export type ScrollAreaComponent = React.FC<{
 
 interface ModalContext {
   yOffset: string | number;
+  radius: MantineNumberSize;
   scrollAreaComponent: ScrollAreaComponent;
 }
 

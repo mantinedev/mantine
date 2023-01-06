@@ -15,9 +15,7 @@ export interface ModalBaseContentProps
   transitionProps?: TransitionOverride;
 }
 
-const defaultProps: Partial<ModalBaseContentProps> = {
-  shadow: 'xl',
-};
+const defaultProps: Partial<ModalBaseContentProps> = {};
 
 export const ModalBaseContent = forwardRef<HTMLElement, ModalBaseContentProps>((props, ref) => {
   const ctx = useModalBaseContext();
@@ -52,6 +50,7 @@ export const ModalBaseContent = forwardRef<HTMLElement, ModalBaseContentProps>((
               ref={ref}
               className={cx(classes.content, className)}
               style={{ ...style, ...styles }}
+              shadow={ctx.shadow}
               {...others}
             >
               {others.children}

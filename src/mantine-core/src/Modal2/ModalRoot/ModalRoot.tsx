@@ -1,8 +1,11 @@
 import React from 'react';
-import { useComponentDefaultProps } from '@mantine/styles';
+import { MantineNumberSize, useComponentDefaultProps } from '@mantine/styles';
 import { ModalBase, ModalBaseDefaultProps, ModalBaseSettings } from '../../ModalBase';
 import { ModalProvider, ScrollAreaComponent } from '../Modal.context';
 import useStyles from './ModalRoot.styles';
+
+// centered
+// fullScreen
 
 export interface ModalRootProps extends ModalBaseSettings {
   /** Top/bottom modal offset, 5vh by default */
@@ -13,6 +16,9 @@ export interface ModalRootProps extends ModalBaseSettings {
 
   /** Scroll area component, ScrollArea.Autosize by default */
   scrollAreaComponent?: ScrollAreaComponent;
+
+  /** Key of theme.radius or number to set Modal content border-radius in px, defaults to theme.defaultRadius */
+  radius?: MantineNumberSize;
 }
 
 const defaultProps: Partial<ModalRootProps> = {
@@ -22,13 +28,13 @@ const defaultProps: Partial<ModalRootProps> = {
 };
 
 export function ModalRoot(props: ModalRootProps) {
-  const { classNames, variant, size, yOffset, xOffset, scrollAreaComponent, ...others } =
+  const { classNames, variant, size, yOffset, xOffset, scrollAreaComponent, radius, ...others } =
     useComponentDefaultProps('ModalRoot', defaultProps, props);
 
   const { classes, cx } = useStyles({ yOffset, xOffset }, { name: 'Modal', variant, size });
 
   return (
-    <ModalProvider value={{ yOffset, scrollAreaComponent }}>
+    <ModalProvider value={{ yOffset, scrollAreaComponent, radius }}>
       <ModalBase
         __staticSelector="Modal"
         size={size}

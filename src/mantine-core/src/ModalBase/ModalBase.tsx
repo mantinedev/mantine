@@ -8,6 +8,7 @@ import {
   useComponentDefaultProps,
   ClassNames,
   Styles,
+  MantineShadow,
 } from '@mantine/styles';
 import { OptionalPortal } from '../Portal';
 import { TransitionOverride } from '../Transition';
@@ -84,6 +85,9 @@ export interface ModalBaseSettings {
 
   /** Controls content width, 'md' by default */
   size?: MantineNumberSize;
+
+  /** Key of theme.shadows or any valid css box-shadow value, 'xl' by default */
+  shadow?: MantineShadow;
 }
 
 export interface ModalBaseProps extends ModalBaseSettings {
@@ -102,6 +106,7 @@ export const ModalBaseDefaultProps: Partial<ModalBaseProps> = {
   zIndex: getDefaultZIndex('modal'),
   padding: 'md',
   size: 'md',
+  shadow: 'xl',
 };
 
 export function ModalBase(props: ModalBaseProps) {
@@ -120,6 +125,7 @@ export function ModalBase(props: ModalBaseProps) {
     closeOnEscape,
     returnFocus,
     padding,
+    shadow,
     id,
     size,
     variant,
@@ -164,6 +170,7 @@ export function ModalBase(props: ModalBaseProps) {
           setBodyMounted,
           trapFocus,
           closeOnEscape,
+          shadow,
           stylesApi: {
             name: __staticSelector,
             size,

@@ -26,7 +26,7 @@ export const ModalContent = forwardRef<HTMLElement, ModalContentProps>((props, r
   const Scroll = scrollAreaComponent || ctx.scrollAreaComponent || ScrollArea.Autosize;
 
   return (
-    <ModalBase.Content ref={ref} {...others}>
+    <ModalBase.Content ref={ref} radius={ctx.radius} {...others}>
       <Scroll maxHeight={`calc(100vh - (${theme.fn.sizeUnit(ctx.yOffset)} * 2))`}>
         {children}
       </Scroll>

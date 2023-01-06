@@ -1,4 +1,4 @@
-import { ClassNames, MantineNumberSize, Styles } from '@mantine/styles';
+import { ClassNames, MantineNumberSize, MantineShadow, Styles } from '@mantine/styles';
 import { createSafeContext } from '@mantine/utils';
 import { TransitionOverride } from '../Transition';
 import type { ModalBaseStylesNames } from './ModalBase';
@@ -20,6 +20,7 @@ interface ModalBaseContext {
   setBodyMounted(mounted: boolean): void;
   trapFocus: boolean;
   closeOnEscape: boolean;
+  shadow: MantineShadow;
   stylesApi: {
     name: string;
     size: MantineNumberSize;
