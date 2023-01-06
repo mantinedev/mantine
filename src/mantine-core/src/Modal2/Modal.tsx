@@ -7,6 +7,7 @@ import {
   ModalBaseCloseButtonProps,
 } from '../ModalBase';
 import { ModalRoot, ModalRootProps } from './ModalRoot/ModalRoot';
+import { ModalContent } from './ModalContent/ModalContent';
 
 export interface ModalProps extends ModalRootProps {
   /** Modal title */
@@ -48,14 +49,14 @@ export function Modal(props: ModalProps) {
   return (
     <ModalRoot {...others}>
       {withOverlay && <ModalBase.Overlay {...overlayProps} />}
-      <ModalBase.Content>
+      <ModalContent>
         <ModalBase.Header>
           {title && <ModalBase.Title>{title}</ModalBase.Title>}
           {withCloseButton && <ModalBase.CloseButton {...closeButtonProps} />}
         </ModalBase.Header>
 
         <ModalBase.Body>{children}</ModalBase.Body>
-      </ModalBase.Content>
+      </ModalContent>
     </ModalRoot>
   );
 }
@@ -63,7 +64,8 @@ export function Modal(props: ModalProps) {
 Modal.Root = ModalRoot;
 Modal.CloseButton = ModalBase.CloseButton;
 Modal.Overlay = ModalBase.Overlay;
-Modal.Content = ModalBase.Content;
+Modal.Content = ModalContent;
 Modal.Header = ModalBase.Header;
 Modal.Title = ModalBase.Title;
 Modal.Body = ModalBase.Body;
+Modal.NativeScrollArea = ModalBase.NativeScrollArea;

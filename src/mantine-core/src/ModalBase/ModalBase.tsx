@@ -21,6 +21,7 @@ import { ModalBaseContent, ModalBaseContentStylesNames } from './ModalBaseConten
 import { ModalBaseHeader, ModalBaseHeaderStylesNames } from './ModalBaseHeader/ModalBaseHeader';
 import { ModalBaseTitle, ModalBaseTitleStylesNames } from './ModalBaseTitle/ModalBaseTitle';
 import { ModalBaseBody, ModalBaseBodyStylesNames } from './ModalBaseBody/ModalBaseBody';
+import { NativeScrollArea } from './NativeScrollArea/NativeScrollArea';
 import { useLockScroll } from './use-lock-scroll';
 
 export type ModalBaseStylesNames =
@@ -184,3 +185,4 @@ ModalBase.Content = ModalBaseContent;
 ModalBase.Header = ModalBaseHeader;
 ModalBase.Title = ModalBaseTitle;
 ModalBase.Body = ModalBaseBody;
+ModalBase.NativeScrollArea = NativeScrollArea;

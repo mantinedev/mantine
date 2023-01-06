@@ -9,17 +9,21 @@ const sizes = {
 };
 
 interface ModalRootStylesParams {
-  topOffset: number | string;
+  yOffset: number | string;
+  xOffset: number | string;
 }
 
-export default createStyles((theme, { topOffset }: ModalRootStylesParams, { size }) => ({
+export default createStyles((theme, { yOffset }: ModalRootStylesParams, { size }) => ({
   content: {
     flex: `0 0 ${theme.fn.sizeUnit(theme.fn.size({ size, sizes }))}`,
     maxWidth: '100%',
+    maxHeight: `calc(100vh - (${theme.fn.sizeUnit(yOffset)} * 2))`,
+    overflowY: 'auto',
   },
 
   inner: {
-    paddingTop: topOffset,
+    paddingTop: yOffset,
+    paddingBottom: yOffset,
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'flex-start',
