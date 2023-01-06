@@ -10,6 +10,7 @@ export default createStyles((theme, { zIndex }: ModalBaseContentStylesParams) =>
     width: '100%',
     top: 0,
     bottom: 0,
+    maxHeight: '100%',
     zIndex,
     pointerEvents: 'none',
   },

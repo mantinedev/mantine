@@ -3,17 +3,12 @@ import { useComponentDefaultProps } from '@mantine/styles';
 import {
   ModalBase,
   ModalBaseDefaultProps,
-  ModalBaseSettings,
   ModalBaseOverlayProps,
   ModalBaseCloseButtonProps,
 } from '../ModalBase';
+import { ModalRoot, ModalRootProps } from './ModalRoot/ModalRoot';
 
-function ModalRoot(props: ModalBaseSettings) {
-  const { ...others } = useComponentDefaultProps('ModalRoot', ModalBaseDefaultProps, props);
-  return <ModalBase __staticSelector="Modal" {...others} />;
-}
-
-export interface ModalProps extends ModalBaseSettings {
+export interface ModalProps extends ModalRootProps {
   /** Modal title */
   title?: React.ReactNode;
 
