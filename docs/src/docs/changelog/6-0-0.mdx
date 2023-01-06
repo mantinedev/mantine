@@ -112,6 +112,21 @@ function Demo() {
 }
 ```
 
+## Modal and Drawer breaking changes
+
+[Modal](https://mantine.dev/core/modal/) and [Drawer](https://mantine.dev/core/drawer/) components
+props were renamed:
+
+- `withFocusReturn` → `returnFocus`
+- `overflow` → `scrollAreaComponent` (scroll now is always handled inside modal/drawer)
+- `overlayBlur` → `overlayProps.blur`
+- `overlayColor` → `overlayProps.color`
+- `overlayOpacity` → `overlayProps.opacity`
+- `exitTransitionDuration` → `transitionProps.exitDuration`
+- `transition` → `transitionProps.transition`
+- `transitionDuration` → `transitionProps.transition`
+- `transitionTimingFunction` → `transitionProps.timingFunction`
+
 ## Other breaking changes
 
 - [Text](https://mantine.dev/core/text/) no longer supports `variant="link"`, use [Anchor](https://mantine.dev/core/anchor/) instead
