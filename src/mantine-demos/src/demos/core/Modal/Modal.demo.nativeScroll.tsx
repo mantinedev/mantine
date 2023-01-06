@@ -16,7 +16,12 @@ function Demo() {
 
   return (
     <>
-      <Modal opened={opened} onClose={close} title="Header is sticky">
+      <Modal
+        opened={opened}
+        onClose={close}
+        title="Header is sticky"
+        scrollAreaComponent={Modal.NativeScrollArea}
+      >
         {content}
       </Modal>
 
@@ -37,7 +42,12 @@ function Demo() {
 
   return (
     <>
-      <Modal opened={opened} onClose={close} title="Header is sticky">
+      <Modal
+        opened={opened}
+        onClose={close}
+        title="Header is sticky"
+        scrollAreaComponent={Modal.NativeScrollArea}
+      >
         {content}
       </Modal>
 
@@ -48,7 +58,7 @@ function Demo() {
   );
 }
 
-export const overflow: MantineDemo = {
+export const nativeScroll: MantineDemo = {
   type: 'demo',
   code,
   component: Demo,

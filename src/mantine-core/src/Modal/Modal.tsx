@@ -46,14 +46,18 @@ export function Modal(props: ModalProps) {
     ...others
   } = useComponentDefaultProps('Modal', defaultProps, props);
 
+  const hasHeader = !!title || withCloseButton;
+
   return (
     <ModalRoot {...others}>
       {withOverlay && <ModalBase.Overlay {...overlayProps} />}
       <ModalContent>
-        <ModalBase.Header>
-          {title && <ModalBase.Title>{title}</ModalBase.Title>}
-          {withCloseButton && <ModalBase.CloseButton {...closeButtonProps} />}
-        </ModalBase.Header>
+        {hasHeader && (
+          <ModalBase.Header>
+            {title && <ModalBase.Title>{title}</ModalBase.Title>}
+            {withCloseButton && <ModalBase.CloseButton {...closeButtonProps} />}
+          </ModalBase.Header>
+        )}
 
         <ModalBase.Body>{children}</ModalBase.Body>
       </ModalContent>

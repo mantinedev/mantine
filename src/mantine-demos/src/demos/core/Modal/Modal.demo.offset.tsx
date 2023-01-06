@@ -13,8 +13,8 @@ function Demo() {
 
   return (
     <>
-      <Modal opened={opened} onClose={close} title="Authentication">
-        {/* Modal content */}
+      <Modal opened={opened} onClose={close} title="Authentication" yOffset="1vh" xOffset={0}>
+        <AuthenticationForm noShadow noPadding />
       </Modal>
 
       <Group position="center">
@@ -30,7 +30,7 @@ function Demo() {
 
   return (
     <>
-      <Modal opened={opened} onClose={close} title="Authentication">
+      <Modal opened={opened} onClose={close} title="Authentication" yOffset="1vh" xOffset={0}>
         <AuthenticationForm noShadow noPadding />
       </Modal>
 
@@ -41,7 +41,7 @@ function Demo() {
   );
 }
 
-export const usage: MantineDemo = {
+export const offset: MantineDemo = {
   type: 'demo',
   code,
   component: Demo,

@@ -1,15 +1,15 @@
 import React from 'react';
-import { useDisclosure } from '@mantine/hooks';
-import { Modal, Group, Button, Text } from '@mantine/core';
+import { useDisclosure, useMediaQuery } from '@mantine/hooks';
+import { Modal, Group, Button } from '@mantine/core';
 import { MantineDemo } from '@mantine/ds';
-import { AuthenticationForm } from '../../../shared/AuthenticationForm/AuthenticationForm';
 
 const code = `
-import { useDisclosure } from '@mantine/hooks';
+import { useDisclosure, useMediaQuery } from '@mantine/hooks';
 import { Modal, Button, Group } from '@mantine/core';
 
 function Demo() {
   const [opened, { open, close }] = useDisclosure(false);
+  const isMobile = useMediaQuery('(max-width: 600px)');
 
   return (
     <>
@@ -17,10 +17,10 @@ function Demo() {
         opened={opened}
         onClose={close}
         title="This is a fullscreen modal"
-        fullScreen
+        fullScreen={isMobile}
         transitionProps={{ transition: 'fade', duration: 200 }}
       >
-        {/* Modal content */}
+        The Modal will be full screen only on mobile
       </Modal>
 
       <Group position="center">
@@ -33,6 +33,7 @@ function Demo() {
 
 function Demo() {
   const [opened, { open, close }] = useDisclosure(false);
+  const isMobile = useMediaQuery('(max-width: 600px)');
 
   return (
     <>
@@ -40,16 +41,10 @@ function Demo() {
         opened={opened}
         onClose={close}
         title="This is a fullscreen modal"
-        fullScreen
+        fullScreen={isMobile}
         transitionProps={{ transition: 'fade', duration: 200 }}
       >
-        <Text mb="xl">
-          It takes the entire screen and does not not have overlay and border-radius, you can use it
-          small screens to save up some space. It also has fade transition by default, but you can
-          change that with transition prop. Now here is an authentication form used in previous
-          examples to see the difference.
-        </Text>
-        <AuthenticationForm noPadding noShadow />
+        The Modal will be full screen only on mobile
       </Modal>
 
       <Group position="center">
@@ -59,7 +54,7 @@ function Demo() {
   );
 }
 
-export const fullScreen: MantineDemo = {
+export const fullScreenMobile: MantineDemo = {
   type: 'demo',
   code,
   component: Demo,
