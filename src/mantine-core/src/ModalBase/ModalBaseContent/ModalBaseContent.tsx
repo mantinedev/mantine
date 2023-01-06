@@ -19,13 +19,20 @@ const defaultProps: Partial<ModalBaseContentProps> = {
 
 export const ModalBaseContent = forwardRef<HTMLElement, ModalBaseContentProps>((props, ref) => {
   const ctx = useModalBaseContext();
-  const { className, transitionProps, style, ...others } = useComponentDefaultProps(
+  const { className, transitionProps, style, onKeyDown, ...others } = useComponentDefaultProps(
     `${ctx.__staticSelector}Content`,
     defaultProps,
     props
   );
 
   const { classes, cx } = useStyles({ zIndex: ctx.zIndex + 1 }, { name: ctx.__staticSelector });
+
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
+    const shouldTrigger =
+      (event.target as HTMLElement)?.getAttribute('data-mantine-stop-propagation') !== 'true';
+    shouldTrigger && event.key === 'Escape' && ctx.closeOnEscape && ctx.onClose();
+    onKeyDown?.(event);
+  };
 
   return (
     <Transition mounted={ctx.opened} transition="pop" {...ctx.transitionProps} {...transitionProps}>
@@ -39,6 +46,7 @@ export const ModalBaseContent = forwardRef<HTMLElement, ModalBaseContentProps>((
               aria-modal
               aria-describedby={ctx.bodyMounted ? ctx.getBodyId() : undefined}
               aria-labelledby={ctx.titleMounted ? ctx.getTitleId() : undefined}
+              onKeyDown={handleKeyDown}
               ref={ref}
               className={cx(classes.content, className)}
               style={{ ...style, ...styles }}

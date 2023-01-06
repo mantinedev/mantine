@@ -1,7 +1,7 @@
 /* eslint-disable react/no-unused-prop-types */
 import React, { useState } from 'react';
 import { RemoveScroll } from 'react-remove-scroll';
-import { useId } from '@mantine/hooks';
+import { useId, useWindowEvent } from '@mantine/hooks';
 import { getDefaultZIndex, MantineNumberSize, useComponentDefaultProps } from '@mantine/styles';
 import { OptionalPortal } from '../Portal';
 import { TransitionOverride } from '../Transition';
@@ -53,6 +53,12 @@ export interface ModalBaseSettings {
 
   /** Id used to connect modal with body and title */
   id?: string;
+
+  /** Determines whether focus should be returned to the last active element onClose is called, true by default */
+  returnFocus?: boolean;
+
+  /** Determines whether onClose should be called when user presses escape key, true by default */
+  closeOnEscape?: boolean;
 }
 
 interface ModalBaseProps extends ModalBaseSettings {
@@ -65,6 +71,8 @@ const defaultProps: Partial<ModalBaseProps> = {
   withinPortal: true,
   lockScroll: true,
   trapFocus: true,
+  returnFocus: true,
+  closeOnEscape: true,
   transitionProps: { duration: 200, transition: 'pop' },
   zIndex: getDefaultZIndex('modal'),
   padding: 'md',
@@ -83,6 +91,7 @@ export function ModalBase(props: ModalBaseProps) {
     zIndex,
     lockScroll,
     trapFocus,
+    closeOnEscape,
     padding,
     id,
   } = useComponentDefaultProps(props.__staticSelector, defaultProps, props);
@@ -95,6 +104,12 @@ export function ModalBase(props: ModalBaseProps) {
     typeof transitionProps.duration === 'number' ? transitionProps.duration : 200;
 
   const shouldLockScroll = useLockScroll({ opened, transitionDuration });
+
+  useWindowEvent('keydown', (event) => {
+    if (!trapFocus && event.key === 'Escape' && closeOnEscape) {
+      onClose();
+    }
+  });
 
   return (
     <OptionalPortal withinPortal={withinPortal} target={target}>
@@ -115,6 +130,7 @@ export function ModalBase(props: ModalBaseProps) {
           setTitleMounted,
           setBodyMounted,
           trapFocus,
+          closeOnEscape,
         }}
       >
         <RemoveScroll enabled={shouldLockScroll && lockScroll}>{children}</RemoveScroll>

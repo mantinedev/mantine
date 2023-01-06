@@ -18,6 +18,7 @@ interface ModalBaseContext {
   setTitleMounted(mounted: boolean): void;
   setBodyMounted(mounted: boolean): void;
   trapFocus: boolean;
+  closeOnEscape: boolean;
 }
 
 export const [ModalBaseProvider, useModalBaseContext] = createSafeContext<ModalBaseContext>(
