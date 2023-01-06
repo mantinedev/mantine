@@ -42,6 +42,9 @@ export interface ModalBaseSettings {
   /** Determines whether scroll should be locked when opened={true}, defaults to true */
   lockScroll?: boolean;
 
+  /** Determines whether focus should be trapped, true by default */
+  trapFocus?: boolean;
+
   /** z-index CSS property of root element, 200 by default */
   zIndex?: number;
 
@@ -61,6 +64,7 @@ const defaultProps: Partial<ModalBaseProps> = {
   closeOnClickOutside: true,
   withinPortal: true,
   lockScroll: true,
+  trapFocus: true,
   transitionProps: { duration: 200, transition: 'pop' },
   zIndex: getDefaultZIndex('modal'),
   padding: 'md',
@@ -78,6 +82,7 @@ export function ModalBase(props: ModalBaseProps) {
     target,
     zIndex,
     lockScroll,
+    trapFocus,
     padding,
     id,
   } = useComponentDefaultProps(props.__staticSelector, defaultProps, props);
@@ -109,6 +114,7 @@ export function ModalBase(props: ModalBaseProps) {
           bodyMounted,
           setTitleMounted,
           setBodyMounted,
+          trapFocus,
         }}
       >
         <RemoveScroll enabled={shouldLockScroll && lockScroll}>{children}</RemoveScroll>

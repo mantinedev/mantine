@@ -2,6 +2,7 @@ import React, { forwardRef } from 'react';
 import { useComponentDefaultProps } from '@mantine/styles';
 import { Paper, PaperProps } from '../../Paper';
 import { Transition, TransitionOverride } from '../../Transition';
+import { FocusTrap } from '../../FocusTrap';
 import { useModalBaseContext } from '../ModalBase.context';
 import useStyles from './ModalBaseContent.styles';
 
@@ -30,20 +31,22 @@ export const ModalBaseContent = forwardRef<HTMLElement, ModalBaseContentProps>((
     <Transition mounted={ctx.opened} transition="pop" {...ctx.transitionProps} {...transitionProps}>
       {(styles) => (
         <div className={cx(classes.inner)}>
-          <Paper
-            component="section"
-            role="dialog"
-            tabIndex={-1}
-            aria-modal
-            aria-describedby={ctx.bodyMounted ? ctx.getBodyId() : undefined}
-            aria-labelledby={ctx.titleMounted ? ctx.getTitleId() : undefined}
-            ref={ref}
-            className={cx(classes.content, className)}
-            style={{ ...style, ...styles }}
-            {...others}
-          >
-            {others.children}
-          </Paper>
+          <FocusTrap active={ctx.opened && ctx.trapFocus}>
+            <Paper
+              component="section"
+              role="dialog"
+              tabIndex={-1}
+              aria-modal
+              aria-describedby={ctx.bodyMounted ? ctx.getBodyId() : undefined}
+              aria-labelledby={ctx.titleMounted ? ctx.getTitleId() : undefined}
+              ref={ref}
+              className={cx(classes.content, className)}
+              style={{ ...style, ...styles }}
+              {...others}
+            >
+              {others.children}
+            </Paper>
+          </FocusTrap>
         </div>
       )}
     </Transition>
