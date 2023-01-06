@@ -1,11 +1,6 @@
 import React from 'react';
-import {
-  CloseButton,
-  DefaultProps,
-  MantineSize,
-  MantineNumberSize,
-  Selectors,
-} from '@mantine/core';
+import { DefaultProps, MantineSize, MantineNumberSize, Selectors } from '@mantine/styles';
+import { CloseButton } from '../../CloseButton';
 import useStyles from './DefaultValue.styles';
 
 export type DefaultValueStylesNames = Selectors<typeof useStyles>;
@@ -65,4 +60,4 @@ export function DefaultValue({
   );
 }
 
-DefaultValue.displayName = '@mantine/labs/TagInput/DefaultValue';
+DefaultValue.displayName = '@mantine/core/TagInput/DefaultValue';

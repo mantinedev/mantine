@@ -1,8 +1,14 @@
 import React, { useState } from 'react';
 import { storiesOf } from '@storybook/react';
-import { MANTINE_SIZES, Group, Stack, TextInput } from '@mantine/core';
+import { MANTINE_SIZES } from '@mantine/styles';
 import { SubmitForm } from '@mantine/storybook';
+import { Stack } from '../Stack';
+import { TextInput } from '../TextInput';
+import { Group } from '../Group';
+
 import { TagInput } from './TagInput';
+
+export default { title: 'TagInput' };
 
 function Controlled() {
   const [value, setValue] = useState([]);

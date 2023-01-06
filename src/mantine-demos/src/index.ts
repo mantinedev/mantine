@@ -91,6 +91,7 @@ export * as StepperDemos from './demos/core/Stepper';
 export * as SwitchDemos from './demos/core/Switch';
 export * as TableDemos from './demos/core/Table';
 export * as TabsDemos from './demos/core/Tabs';
+export * as TagInputDemos from './demos/core/TagInput';
 export * as TextDemos from './demos/core/Text';
 export * as TextareaDemos from './demos/core/Textarea';
 export * as TextInputDemos from './demos/core/TextInput';
@@ -119,7 +120,6 @@ export * as TipTapDemos from './demos/tiptap';
 
 // @mantine/labs
 export * as PinInputDemos from './demos/labs/PinInput';
-export * as TagInputDemos from './demos/labs/TagInput';
 
 // @mantine/dates
 export * as YearPickerDemos from './demos/dates/YearPicker';

@@ -43,6 +43,6 @@ describe('@mantine/labs/TagInput/DefaultValue', () => {
   });
 
   it('has correct displayName', () => {
-    expect(DefaultValue.displayName).toEqual('@mantine/labs/TagInput/DefaultValue');
+    expect(DefaultValue.displayName).toEqual('@mantine/core/TagInput/DefaultValue');
   });
 });

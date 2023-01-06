@@ -27,7 +27,7 @@ describe('@mantine/labs/TagInput', () => {
   itSupportsSystemProps({
     component: TagInput,
     props: defaultProps,
-    displayName: '@mantine/labs/TagInput',
+    displayName: '@mantine/core/TagInput',
     refType: HTMLInputElement,
     excludeOthers: true,
   });
