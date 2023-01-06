@@ -1,3 +1,19 @@
+import type {
+  ModalBaseBodyProps,
+  ModalBaseCloseButtonProps,
+  ModalBaseHeaderProps,
+  ModalBaseOverlayProps,
+  ModalBaseStylesNames,
+  ModalBaseTitleProps,
+} from '../ModalBase';
+
 export { Modal } from './Modal';
-export type { ModalProps, ModalStylesNames } from './Modal';
-export type { ModalStylesParams } from './Modal.styles';
+export type { ModalProps } from './Modal';
+export type { ModalContentProps } from './ModalContent/ModalContent';
+export type ModalStylesNames = ModalBaseStylesNames;
+
+export type ModalBodyProps = ModalBaseBodyProps;
+export type ModalCloseButtonProps = ModalBaseCloseButtonProps;
+export type ModalHeaderProps = ModalBaseHeaderProps;
+export type ModalOverlayProps = ModalBaseOverlayProps;
+export type ModalTitleProps = ModalBaseTitleProps;
