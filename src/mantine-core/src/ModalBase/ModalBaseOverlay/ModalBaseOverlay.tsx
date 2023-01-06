@@ -1,8 +1,11 @@
-import { useComponentDefaultProps } from '@mantine/styles';
+import { Selectors, useComponentDefaultProps } from '@mantine/styles';
 import React, { forwardRef } from 'react';
 import { Transition, TransitionOverride } from '../../Transition';
 import { Overlay, OverlayProps } from '../../Overlay';
 import { useModalBaseContext } from '../ModalBase.context';
+import useStyles from './ModalBaseOverlay.styles';
+
+export type ModalBaseOverlayStylesNames = Selectors<typeof useStyles>;
 
 export interface ModalBaseOverlayProps
   extends OverlayProps,
@@ -16,11 +19,13 @@ const defaultProps: Partial<ModalBaseOverlayProps> = {};
 export const ModalBaseOverlay = forwardRef<HTMLDivElement, ModalBaseOverlayProps>((props, ref) => {
   const ctx = useModalBaseContext();
 
-  const { onClick, transitionProps, style, ...others } = useComponentDefaultProps(
+  const { onClick, transitionProps, style, className, ...others } = useComponentDefaultProps(
     `${ctx.__staticSelector}Overlay`,
     defaultProps,
     props
   );
+
+  const { classes, cx } = useStyles(null, ctx.stylesApi);
 
   const handleClick = (event: React.MouseEvent<HTMLDivElement>) => {
     onClick?.(event);
@@ -40,6 +45,7 @@ export const ModalBaseOverlay = forwardRef<HTMLDivElement, ModalBaseOverlayProps
           onClick={handleClick}
           fixed
           style={{ ...style, ...styles }}
+          className={cx(classes.overlay, className)}
           {...others}
         />
       )}

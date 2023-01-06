@@ -1,8 +1,10 @@
 import React, { forwardRef, useEffect } from 'react';
-import { DefaultProps, useComponentDefaultProps } from '@mantine/styles';
+import { DefaultProps, Selectors, useComponentDefaultProps } from '@mantine/styles';
 import { Box } from '../../Box';
 import { useModalBaseContext } from '../ModalBase.context';
 import useStyles from './ModalBaseBody.styles';
+
+export type ModalBaseBodyStylesNames = Selectors<typeof useStyles>;
 
 export interface ModalBaseBodyProps extends DefaultProps, React.ComponentPropsWithoutRef<'h2'> {}
 
@@ -16,7 +18,7 @@ export const ModalBaseBody = forwardRef<HTMLHeadingElement, ModalBaseBodyProps>(
     props
   );
 
-  const { classes, cx } = useStyles({ padding: ctx.padding }, { name: ctx.__staticSelector });
+  const { classes, cx } = useStyles({ padding: ctx.padding }, ctx.stylesApi);
 
   useEffect(() => {
     ctx.setBodyMounted(true);

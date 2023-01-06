@@ -1,8 +1,10 @@
 import React, { forwardRef } from 'react';
-import { DefaultProps, useComponentDefaultProps } from '@mantine/styles';
+import { DefaultProps, Selectors, useComponentDefaultProps } from '@mantine/styles';
 import { Box } from '../../Box';
-import useStyles from './ModalBaseHeader.styles';
 import { useModalBaseContext } from '../ModalBase.context';
+import useStyles from './ModalBaseHeader.styles';
+
+export type ModalBaseHeaderStylesNames = Selectors<typeof useStyles>;
 
 export interface ModalBaseHeaderProps extends DefaultProps, React.ComponentPropsWithoutRef<'div'> {}
 
@@ -16,7 +18,7 @@ export const ModalBaseHeader = forwardRef<HTMLDivElement, ModalBaseHeaderProps>(
     props
   );
 
-  const { classes, cx } = useStyles({ padding: ctx.padding }, { name: ctx.__staticSelector });
+  const { classes, cx } = useStyles({ padding: ctx.padding }, ctx.stylesApi);
 
   return <Box ref={ref} className={cx(classes.header, className)} {...others} />;
 });

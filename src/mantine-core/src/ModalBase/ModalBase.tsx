@@ -2,19 +2,40 @@
 import React, { useState } from 'react';
 import { RemoveScroll } from 'react-remove-scroll';
 import { useId, useWindowEvent, useFocusReturn } from '@mantine/hooks';
-import { getDefaultZIndex, MantineNumberSize, useComponentDefaultProps } from '@mantine/styles';
+import {
+  getDefaultZIndex,
+  MantineNumberSize,
+  useComponentDefaultProps,
+  ClassNames,
+  Styles,
+} from '@mantine/styles';
 import { OptionalPortal } from '../Portal';
 import { TransitionOverride } from '../Transition';
 import { ModalBaseProvider } from './ModalBase.context';
-import { ModalBaseCloseButton } from './ModalBaseCloseButton/ModalBaseCloseButton';
-import { ModalBaseOverlay } from './ModalBaseOverlay/ModalBaseOverlay';
-import { ModalBaseContent } from './ModalBaseContent/ModalBaseContent';
-import { ModalBaseHeader } from './ModalBaseHeader/ModalBaseHeader';
-import { ModalBaseTitle } from './ModalBaseTitle/ModalBaseTitle';
-import { ModalBaseBody } from './ModalBaseBody/ModalBaseBody';
+import {
+  ModalBaseCloseButton,
+  ModalBaseCloseButtonStylesNames,
+} from './ModalBaseCloseButton/ModalBaseCloseButton';
+import { ModalBaseOverlay, ModalBaseOverlayStylesNames } from './ModalBaseOverlay/ModalBaseOverlay';
+import { ModalBaseContent, ModalBaseContentStylesNames } from './ModalBaseContent/ModalBaseContent';
+import { ModalBaseHeader, ModalBaseHeaderStylesNames } from './ModalBaseHeader/ModalBaseHeader';
+import { ModalBaseTitle, ModalBaseTitleStylesNames } from './ModalBaseTitle/ModalBaseTitle';
+import { ModalBaseBody, ModalBaseBodyStylesNames } from './ModalBaseBody/ModalBaseBody';
 import { useLockScroll } from './use-lock-scroll';
 
+export type ModalBaseStylesNames =
+  | ModalBaseCloseButtonStylesNames
+  | ModalBaseOverlayStylesNames
+  | ModalBaseContentStylesNames
+  | ModalBaseHeaderStylesNames
+  | ModalBaseTitleStylesNames
+  | ModalBaseBodyStylesNames;
+
 export interface ModalBaseSettings {
+  variant?: string;
+  classNames?: ClassNames<ModalBaseStylesNames>;
+  styles?: Styles<ModalBaseStylesNames>;
+
   /** Determines whether modal is opened */
   opened: boolean;
 
@@ -59,6 +80,9 @@ export interface ModalBaseSettings {
 
   /** Determines whether onClose should be called when user presses escape key, true by default */
   closeOnEscape?: boolean;
+
+  /** Controls content width, 'md' by default */
+  size?: MantineNumberSize;
 }
 
 interface ModalBaseProps extends ModalBaseSettings {
@@ -76,6 +100,7 @@ const defaultProps: Partial<ModalBaseProps> = {
   transitionProps: { duration: 200, transition: 'pop' },
   zIndex: getDefaultZIndex('modal'),
   padding: 'md',
+  size: 'md',
 };
 
 export function ModalBase(props: ModalBaseProps) {
@@ -95,6 +120,10 @@ export function ModalBase(props: ModalBaseProps) {
     returnFocus,
     padding,
     id,
+    size,
+    variant,
+    classNames,
+    styles,
   } = useComponentDefaultProps(props.__staticSelector, defaultProps, props);
 
   const _id = useId(id);
@@ -134,6 +163,13 @@ export function ModalBase(props: ModalBaseProps) {
           setBodyMounted,
           trapFocus,
           closeOnEscape,
+          stylesApi: {
+            name: __staticSelector,
+            size,
+            variant,
+            classNames,
+            styles,
+          },
         }}
       >
         <RemoveScroll enabled={shouldLockScroll && lockScroll}>{children}</RemoveScroll>

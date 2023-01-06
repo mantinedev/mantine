@@ -1,7 +1,10 @@
 import React, { forwardRef } from 'react';
-import { useComponentDefaultProps } from '@mantine/styles';
+import { Selectors, useComponentDefaultProps } from '@mantine/styles';
 import { CloseButton, CloseButtonProps } from '../../CloseButton';
 import { useModalBaseContext } from '../ModalBase.context';
+import useStyles from './ModalBaseCloseButton.styles';
+
+export type ModalBaseCloseButtonStylesNames = Selectors<typeof useStyles>;
 
 export interface ModalBaseCloseButtonProps
   extends CloseButtonProps,
@@ -15,12 +18,21 @@ export const ModalBaseCloseButton = forwardRef<HTMLButtonElement, ModalBaseClose
   (props, ref) => {
     const ctx = useModalBaseContext();
 
-    const { ...others } = useComponentDefaultProps(
+    const { className, ...others } = useComponentDefaultProps(
       `${ctx.__staticSelector}CloseButton`,
       defaultProps,
       props
     );
 
-    return <CloseButton ref={ref} onClick={ctx.onClose} {...others} />;
+    const { classes, cx } = useStyles(null, ctx.stylesApi);
+
+    return (
+      <CloseButton
+        className={cx(classes.close, className)}
+        ref={ref}
+        onClick={ctx.onClose}
+        {...others}
+      />
+    );
   }
 );

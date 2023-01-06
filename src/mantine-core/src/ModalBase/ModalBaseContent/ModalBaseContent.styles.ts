@@ -16,8 +16,5 @@ export default createStyles((theme, { zIndex }: ModalBaseContentStylesParams) =>
 
   content: {
     pointerEvents: 'all',
-    width: 400,
-    margin: 'auto',
-    marginTop: 40,
   },
 }));

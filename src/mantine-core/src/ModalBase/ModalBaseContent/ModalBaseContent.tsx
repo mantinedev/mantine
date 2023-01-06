@@ -1,10 +1,12 @@
 import React, { forwardRef } from 'react';
-import { useComponentDefaultProps } from '@mantine/styles';
+import { Selectors, useComponentDefaultProps } from '@mantine/styles';
 import { Paper, PaperProps } from '../../Paper';
 import { Transition, TransitionOverride } from '../../Transition';
 import { FocusTrap } from '../../FocusTrap';
 import { useModalBaseContext } from '../ModalBase.context';
 import useStyles from './ModalBaseContent.styles';
+
+export type ModalBaseContentStylesNames = Selectors<typeof useStyles>;
 
 export interface ModalBaseContentProps
   extends PaperProps,
@@ -25,7 +27,7 @@ export const ModalBaseContent = forwardRef<HTMLElement, ModalBaseContentProps>((
     props
   );
 
-  const { classes, cx } = useStyles({ zIndex: ctx.zIndex + 1 }, { name: ctx.__staticSelector });
+  const { classes, cx } = useStyles({ zIndex: ctx.zIndex + 1 }, ctx.stylesApi);
 
   const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
     const shouldTrigger =
