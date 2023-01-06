@@ -21,7 +21,14 @@ import {
   ModalDemos,
 } from '@mantine/demos';
 
-## createStyles breaking changes
+## Breaking changes
+
+The following changes are breaking. Note that although
+we've tried to include all breaking changes with migration guides in the list you still may
+experience undocumented changes. If you think that these changes worth including in this list,
+let us know by [opening an issue on GitHub](https://github.com/mantinedev/mantine/issues/new/choose).
+
+### createStyles breaking changes
 
 [createStyles](https://mantine.dev/styles/create-styles/) function no longer receives `getRef`
 as a third argument. Use `getStylesRef` exported from `@mantine/core` package instead:
@@ -44,7 +51,7 @@ createStyles((theme, params) => {
 });
 ```
 
-## @mantine/notifications breaking changes
+### @mantine/notifications breaking changes
 
 [@mantine/notifications](https://mantine.dev/others/notifications/) package no longer exports
 `NotificationsProvider` component. Instead you should add `Notifications` component to any
@@ -65,13 +72,13 @@ function Demo() {
 }
 ```
 
-## @mantine/rte package deprecation
+### @mantine/rte package deprecation
 
 `@mantine/rte` package is deprecated – it will no longer receive updates (last version will remain 5.x)
 and it may no longer be compatible with `@mantine/core` and `@mantine/hooks` packages (6.x and later versions).
 Migrate to [@mantine/tiptap](https://mantine.dev/others/tiptap/) as soon as possible.
 
-## @mantine/dates breaking changes
+### @mantine/dates breaking changes
 
 All components from `@mantine/dates` package were rebuilt from scratch.
 Note that the following list is not full as it is difficult to include all breaking changes
@@ -88,7 +95,7 @@ all breaking changes.
 - `DatePickerInput` (previously `DatePicker`) component no longer supports `allowFreeInput` prop – use [DateInput](https://mantine.dev/dates/date-input/) component instead
 - `DatePicker` (previously `Calendar`) component no longer supports `dayClassName` and `dayStyle` props – use `getDayProps` instead
 
-## Theme object changes
+### Theme object changes
 
 You can no longer define `dateFormat` and `datesLocale` in [theme](https://mantine.dev/theming/theme-object/),
 use components prop to specify format instead:
@@ -113,7 +120,7 @@ function Demo() {
 }
 ```
 
-## Modal and Drawer breaking changes
+### Modal and Drawer breaking changes
 
 [Modal](https://mantine.dev/core/modal/) and [Drawer](https://mantine.dev/core/drawer/) components
 props were renamed:
@@ -138,7 +145,7 @@ props were renamed:
 - `root` selector was removed – root element is no longer rendered
 - `drawer` selector was renamed to `content`
 
-## Other breaking changes
+### Other breaking changes
 
 - [Text](https://mantine.dev/core/text/) no longer supports `variant="link"`, use [Anchor](https://mantine.dev/core/anchor/) instead
 - [Input](https://mantine.dev/core/input/) Styles API was changed – `disabled`, `invalid` and `withIcon` selectors are no longer available, they were migrated to `data-disabled`, `data-invalid` and `data-with-icon` attributes
