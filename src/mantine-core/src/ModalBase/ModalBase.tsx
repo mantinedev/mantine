@@ -85,7 +85,7 @@ export interface ModalBaseSettings {
   size?: MantineNumberSize;
 }
 
-interface ModalBaseProps extends ModalBaseSettings {
+export interface ModalBaseProps extends ModalBaseSettings {
   /** Base component name for styles and components default props */
   __staticSelector: string;
 }
