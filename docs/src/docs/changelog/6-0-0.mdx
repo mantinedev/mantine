@@ -18,6 +18,7 @@ import {
   DateInputDemos,
   ThemeDemos,
   OverlayDemos,
+  ModalDemos,
 } from '@mantine/demos';
 
 ## createStyles breaking changes
@@ -225,6 +226,31 @@ components exported from `@mantine/dates` package:
 - New `fixed` prop controls `position`, when it is set `position: fixed`, when it is not set `position: absolute`
 
 <Demo data={OverlayDemos.blur} />
+
+## Modal and Drawer components improvements
+
+### Modular components
+
+[Modal](https://mantine.dev/core/modal/) and [Drawer](https://mantine.dev/core/drawer/) components
+now expose modular components that can be used to build custom modals and drawers. This feature
+allows you to have full control over the component rendering. Previous approach with single
+`Modal`/`Drawer` component will still work the same way as before.
+
+<Demo data={ModalDemos.composition} />
+
+### Built in ScrollArea
+
+[Modal](https://mantine.dev/core/modal/) and [Drawer](https://mantine.dev/core/drawer/) components
+now use [ScrollArea](https://mantine.dev/core/scroll-area/) component to handle scroll:
+
+<Demo data={ModalDemos.overflow} />
+
+### Modal offset
+
+[Modal](https://mantine.dev/core/modal/) component now supports `xOffset` and `yOffset` props
+to control vertical and horizontal offsets of the modal content:
+
+<Demo data={ModalDemos.offset} />
 
 ## Other changes
 
