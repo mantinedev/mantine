@@ -4,9 +4,6 @@ import { ModalBase, ModalBaseDefaultProps, ModalBaseSettings } from '../../Modal
 import { ModalProvider, ScrollAreaComponent } from '../Modal.context';
 import useStyles from './ModalRoot.styles';
 
-// centered
-// fullScreen
-
 export interface ModalRootProps extends ModalBaseSettings {
   /** Top/bottom modal offset, 5vh by default */
   yOffset?: React.CSSProperties['marginTop'];
@@ -19,6 +16,12 @@ export interface ModalRootProps extends ModalBaseSettings {
 
   /** Key of theme.radius or number to set Modal content border-radius in px, defaults to theme.defaultRadius */
   radius?: MantineNumberSize;
+
+  /** Determines whether the modal should be centered vertically, false by default */
+  centered?: boolean;
+
+  /** Determines whether the modal should take the entire screen */
+  fullScreen?: boolean;
 }
 
 const defaultProps: Partial<ModalRootProps> = {
@@ -28,10 +31,23 @@ const defaultProps: Partial<ModalRootProps> = {
 };
 
 export function ModalRoot(props: ModalRootProps) {
-  const { classNames, variant, size, yOffset, xOffset, scrollAreaComponent, radius, ...others } =
-    useComponentDefaultProps('ModalRoot', defaultProps, props);
+  const {
+    classNames,
+    variant,
+    size,
+    yOffset,
+    xOffset,
+    scrollAreaComponent,
+    radius,
+    centered,
+    fullScreen,
+    ...others
+  } = useComponentDefaultProps('ModalRoot', defaultProps, props);
 
-  const { classes, cx } = useStyles({ yOffset, xOffset }, { name: 'Modal', variant, size });
+  const { classes, cx } = useStyles(
+    { yOffset, xOffset, centered, fullScreen },
+    { name: 'Modal', variant, size }
+  );
 
   return (
     <ModalProvider value={{ yOffset, scrollAreaComponent, radius }}>

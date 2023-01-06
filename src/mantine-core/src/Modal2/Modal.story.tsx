@@ -50,6 +50,26 @@ export function CustomTransition() {
   );
 }
 
+export function Centered() {
+  return (
+    <div style={{ padding: 40 }}>
+      <Modal opened onClose={() => {}} title="Just a Modal" centered>
+        Centered modal
+      </Modal>
+    </div>
+  );
+}
+
+export function FullScreen() {
+  return (
+    <div style={{ padding: 40 }}>
+      <Modal opened onClose={() => {}} title="Just a Modal" fullScreen>
+        Fullscreen modal
+      </Modal>
+    </div>
+  );
+}
+
 export function WithScroll() {
   return (
     <div style={{ padding: 40 }}>
