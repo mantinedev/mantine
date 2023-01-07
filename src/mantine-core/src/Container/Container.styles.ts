@@ -2,7 +2,7 @@ import { createStyles, MantineSize } from '@mantine/styles';
 
 export interface ContainerStylesParams {
   fluid: boolean;
-  sizes: Record<MantineSize, number>;
+  sizes: Record<MantineSize, number | string>;
 }
 
 export default createStyles((theme, { fluid, sizes }: ContainerStylesParams, { size }) => ({
