@@ -1,10 +1,10 @@
-import { createStyles, MantineTheme, CSSObject } from '@mantine/styles';
+import { createStyles, MantineTheme, CSSObject, rem } from '@mantine/styles';
 import { AccordionStylesParams, AccordionChevronPosition } from '../Accordion.types';
 
 export interface AccordionControlStylesParams extends AccordionStylesParams {
   chevronPosition: AccordionChevronPosition;
   transitionDuration: number;
-  chevronSize: number;
+  chevronSize: number | string;
 }
 
 function getVariantStyles(theme: MantineTheme, variant: string): CSSObject {
@@ -67,8 +67,13 @@ export default createStyles(
       display: 'flex',
       alignItems: 'center',
       flexDirection: chevronPosition === 'right' ? 'row-reverse' : 'row',
-      padding: `${theme.spacing.md}px ${theme.spacing.md / 2}px`,
-      paddingLeft: chevronPosition === 'right' ? `calc(${theme.spacing.sm}px + 4px)` : null,
+      paddingTop: theme.spacing.md,
+      paddingBottom: theme.spacing.md,
+      paddingRight: theme.fn.calc(theme.spacing.md, '/ 2'),
+      paddingLeft:
+        chevronPosition === 'right'
+          ? theme.fn.calc(theme.spacing.sm, `+ ${rem(4)}`)
+          : theme.spacing.xs,
       textAlign: 'left',
       color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
 

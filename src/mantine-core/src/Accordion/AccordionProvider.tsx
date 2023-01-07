@@ -43,8 +43,8 @@ export interface AccordionProviderProps<Multiple extends boolean = false> {
   /** Determines position of the chevron */
   chevronPosition?: AccordionChevronPosition;
 
-  /** Chevron size in px */
-  chevronSize?: number;
+  /** Chevron size */
+  chevronSize?: number | string;
 
   /** Heading order, has no effect on visuals */
   order?: AccordionHeadingOrder;

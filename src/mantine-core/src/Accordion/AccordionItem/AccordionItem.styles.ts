@@ -1,4 +1,4 @@
-import { createStyles, CSSObject, MantineTheme } from '@mantine/styles';
+import { createStyles, CSSObject, MantineTheme, rem } from '@mantine/styles';
 import { AccordionStylesParams } from '../Accordion.types';
 
 function getVariantStyles(
@@ -13,13 +13,13 @@ function getVariantStyles(
   if (variant === 'default') {
     return {
       color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
-      borderBottom: `1px solid ${borderColor}`,
+      borderBottom: `${rem(1)} solid ${borderColor}`,
     };
   }
 
   if (variant === 'contained') {
     return {
-      border: `1px solid ${borderColor}`,
+      border: `${rem(1)} solid ${borderColor}`,
       transition: 'background-color 150ms ease',
 
       '&[data-active]': {
@@ -66,7 +66,7 @@ function getVariantStyles(
     return {
       borderRadius,
       backgroundColor: filledColor,
-      border: '1px solid transparent',
+      border: `${rem(1)} solid transparent`,
       transition: 'background-color 150ms ease',
 
       '& + &': {
