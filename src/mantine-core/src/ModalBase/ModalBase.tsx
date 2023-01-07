@@ -137,7 +137,7 @@ export function ModalBase(props: ModalBaseProps) {
   const [bodyMounted, setBodyMounted] = useState(false);
 
   const transitionDuration =
-    typeof transitionProps.duration === 'number' ? transitionProps.duration : 200;
+    typeof transitionProps?.duration === 'number' ? transitionProps?.duration : 200;
 
   const shouldLockScroll = useLockScroll({ opened, transitionDuration });
 
