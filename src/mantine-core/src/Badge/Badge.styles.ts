@@ -4,6 +4,7 @@ import {
   MantineColor,
   MantineGradient,
   MantineTheme,
+  rem,
 } from '@mantine/styles';
 
 const BADGE_VARIANTS = ['light', 'filled', 'outline', 'dot', 'gradient'];
@@ -16,19 +17,19 @@ export interface BadgeStylesParams {
 }
 
 const sizes = {
-  xs: { fontSize: 9, height: 16 },
-  sm: { fontSize: 10, height: 18 },
-  md: { fontSize: 11, height: 20 },
-  lg: { fontSize: 13, height: 26 },
-  xl: { fontSize: 16, height: 32 },
+  xs: { fontSize: rem(9), height: rem(16) },
+  sm: { fontSize: rem(10), height: rem(18) },
+  md: { fontSize: rem(11), height: rem(20) },
+  lg: { fontSize: rem(13), height: rem(26) },
+  xl: { fontSize: rem(16), height: rem(32) },
 };
 
 const dotSizes = {
-  xs: 4,
-  sm: 4,
-  md: 6,
-  lg: 8,
-  xl: 10,
+  xs: rem(4),
+  sm: rem(4),
+  md: rem(6),
+  lg: rem(8),
+  xl: rem(10),
 };
 
 interface GetVariantStylesInput {
@@ -49,10 +50,12 @@ function getVariantStyles({ theme, variant, color, size, gradient }: GetVariantS
     return {
       backgroundColor: 'transparent',
       color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.colors.gray[7],
-      border: `1px solid ${
+      border: `${rem(1)} solid ${
         theme.colorScheme === 'dark' ? theme.colors.dark[3] : theme.colors.gray[3]
       }`,
-      paddingLeft: theme.fn.size({ size, sizes: theme.spacing }) / 1.5 - dotSize / 2,
+      paddingLeft: `calc(${rem(
+        theme.fn.size({ size, sizes: theme.spacing })
+      )} / 1.5 - ${dotSize} / 2)`,
 
       '&::before': {
         content: '""',
@@ -75,7 +78,7 @@ function getVariantStyles({ theme, variant, color, size, gradient }: GetVariantS
   return {
     background: colors.background,
     color: colors.color,
-    border: `${variant === 'gradient' ? 0 : 1}px solid ${colors.border}`,
+    border: `${rem(variant === 'gradient' ? 0 : 1)} solid ${colors.border}`,
   };
 }
 
@@ -85,11 +88,11 @@ export default createStyles(
 
     return {
       leftSection: {
-        marginRight: `calc(${theme.spacing.xs}px / 2)`,
+        marginRight: theme.fn.calc(theme.spacing.xs, '/ 2'),
       },
 
       rightSection: {
-        marginLeft: `calc(${theme.spacing.xs}px / 2)`,
+        marginLeft: theme.fn.calc(theme.spacing.xs, '/ 2'),
       },
 
       inner: {
@@ -104,9 +107,9 @@ export default createStyles(
         fontSize,
         height,
         WebkitTapHighlightColor: 'transparent',
-        lineHeight: `${height - 2}px`,
+        lineHeight: `calc(${height} - ${rem(2)})`,
         textDecoration: 'none',
-        padding: `0 ${theme.fn.size({ size, sizes: theme.spacing }) / 1.5}px`,
+        padding: `0 ${theme.fn.calc(theme.fn.size({ size, sizes: theme.spacing }), '/ 1.5')}`,
         boxSizing: 'border-box',
         display: fullWidth ? 'flex' : 'inline-flex',
         alignItems: 'center',
@@ -115,7 +118,7 @@ export default createStyles(
         textTransform: 'uppercase',
         borderRadius: theme.fn.radius(radius),
         fontWeight: 700,
-        letterSpacing: 0.25,
+        letterSpacing: rem(0.25),
         cursor: 'inherit',
         textOverflow: 'ellipsis',
         overflow: 'hidden',
