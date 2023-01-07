@@ -22,11 +22,11 @@ export function expectNoPopover(container: HTMLElement) {
 }
 
 export function expectOpenedModal(container: HTMLElement) {
-  expect(container.querySelector('[data-dates-modal]')).toBeInTheDocument();
+  expect(container.querySelector('.mantine-Modal-content')).toBeInTheDocument();
 }
 
 export function expectNoModal(container: HTMLElement) {
-  expect(container.querySelectorAll('[data-dates-modal]')).toHaveLength(0);
+  expect(container.querySelectorAll('.mantine-Modal-content')).toHaveLength(0);
 }
 
 export function clickControl(container: HTMLElement, index: number) {
