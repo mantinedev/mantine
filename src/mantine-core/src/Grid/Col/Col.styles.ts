@@ -4,6 +4,7 @@ import {
   MANTINE_SIZES,
   MantineSize,
   MantineTheme,
+  rem,
 } from '@mantine/styles';
 
 export type ColSpan = number | 'auto' | 'content';
@@ -51,6 +52,7 @@ const getColumnMaxWidth = (colSpan: ColSpan, columns: number, grow: boolean) => 
   if (grow || colSpan === 'auto' || colSpan === 'content') {
     return 'unset';
   }
+
   return getColumnFlexBasis(colSpan, columns);
 };
 
@@ -66,7 +68,7 @@ const getColumnOffset = (offset: number, columns: number) =>
 
 const getGutterSize = (gutter: MantineNumberSize, theme: MantineTheme) =>
   typeof gutter !== 'undefined'
-    ? theme.fn.size({ size: gutter, sizes: theme.spacing }) / 2
+    ? `calc(${rem(theme.fn.size({ size: gutter, sizes: theme.spacing }))} / 2)`
     : undefined;
 
 function getBreakpointsStyles({
@@ -87,7 +89,7 @@ function getBreakpointsStyles({
   columns: number;
 }) {
   return MANTINE_SIZES.reduce((acc, size) => {
-    acc[`@media (min-width: ${theme.breakpoints[size]}px)`] = {
+    acc[`@media (min-width: ${rem(theme.breakpoints[size])})`] = {
       order: orders[size],
       flexBasis: getColumnFlexBasis(sizes[size], columns),
       padding: getGutterSize(gutters[size], theme),
