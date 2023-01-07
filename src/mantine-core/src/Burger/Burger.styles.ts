@@ -1,4 +1,4 @@
-import { createStyles, MantineColor } from '@mantine/styles';
+import { createStyles, MantineColor, rem } from '@mantine/styles';
 
 export interface BurgerStylesParams {
   color: MantineColor;
@@ -6,11 +6,11 @@ export interface BurgerStylesParams {
 }
 
 const sizes = {
-  xs: 12,
-  sm: 18,
-  md: 24,
-  lg: 34,
-  xl: 42,
+  xs: rem(12),
+  sm: rem(18),
+  md: rem(24),
+  lg: rem(34),
+  xl: rem(42),
 };
 
 export default createStyles(
@@ -21,9 +21,9 @@ export default createStyles(
     return {
       root: {
         borderRadius: theme.radius.sm,
-        width: `calc(${sizeValue}px + ${theme.spacing.xs}px)`,
-        height: `calc(${sizeValue}px + ${theme.spacing.xs}px)`,
-        padding: `calc(${theme.spacing.xs}px / 2)`,
+        width: `calc(${sizeValue} + ${rem(theme.spacing.xs)})`,
+        height: `calc(${sizeValue} + ${rem(theme.spacing.xs)})`,
+        padding: `calc(${rem(theme.spacing.xs)} / 2)`,
         cursor: 'pointer',
       },
 
@@ -35,9 +35,9 @@ export default createStyles(
         '&, &::before, &::after': {
           display: 'block',
           width: sizeValue,
-          height: Math.ceil(sizeValue / 12),
+          height: `calc(${sizeValue} / 12)`,
           backgroundColor: _color,
-          outline: '1px solid transparent',
+          outline: `${rem(1)} solid transparent`,
           transitionProperty: 'background-color, transform',
           transitionDuration: `${transitionDuration}ms`,
 
@@ -53,22 +53,22 @@ export default createStyles(
         },
 
         '&::before': {
-          top: (sizeValue / 3) * -1,
+          top: `calc((${sizeValue} / 3) * -1)`,
         },
 
         '&::after': {
-          top: sizeValue / 3,
+          top: `calc(${sizeValue} / 3)`,
         },
 
         '&[data-opened]': {
           backgroundColor: 'transparent',
 
           '&::before': {
-            transform: `translateY(${sizeValue / 3}px) rotate(45deg)`,
+            transform: `translateY(calc(${sizeValue} / 3)) rotate(45deg)`,
           },
 
           '&::after': {
-            transform: `translateY(-${sizeValue / 3}px) rotate(-45deg)`,
+            transform: `translateY(calc(-${sizeValue} / 3)) rotate(-45deg)`,
           },
         },
       },
