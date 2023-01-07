@@ -4,38 +4,39 @@ import {
   MantineColor,
   getStylesRef,
   MantineTheme,
+  rem,
 } from '@mantine/styles';
 
 export const sizes = {
-  xs: 24,
-  sm: 28,
-  md: 32,
-  lg: 36,
-  xl: 40,
+  xs: rem(24),
+  sm: rem(28),
+  md: rem(32),
+  lg: rem(36),
+  xl: rem(40),
 };
 
 const iconSizes = {
-  xs: 10,
-  sm: 12,
-  md: 14,
-  lg: 16,
-  xl: 18,
+  xs: rem(10),
+  sm: rem(12),
+  md: rem(14),
+  lg: rem(16),
+  xl: rem(18),
 };
 
 const padding = {
-  xs: 16,
-  sm: 20,
-  md: 24,
-  lg: 28,
-  xl: 32,
+  xs: rem(16),
+  sm: rem(20),
+  md: rem(24),
+  lg: rem(28),
+  xl: rem(32),
 };
 
 const checkedPadding = {
-  xs: 7.5,
-  sm: 10,
-  md: 11.5,
-  lg: 13,
-  xl: 15,
+  xs: rem(7.5),
+  sm: rem(10),
+  md: rem(11.5),
+  lg: rem(13),
+  xl: rem(15),
 };
 
 export interface ChipStylesParams {
@@ -103,7 +104,7 @@ function getVariantStyles(
       },
 
       checked: {
-        border: `1px solid ${filledColors.background}`,
+        border: `${rem(1)} solid ${filledColors.background}`,
       },
     };
   }
@@ -125,11 +126,11 @@ export default createStyles((theme, { radius, color }: ChipStylesParams, { size,
       display: 'inline-block',
       alignItems: 'center',
       userSelect: 'none',
-      border: '1px solid transparent',
+      border: `${rem(1)} solid transparent`,
       borderRadius: theme.fn.radius(radius),
       height: theme.fn.size({ size, sizes }),
       fontSize: theme.fn.size({ size, sizes: theme.fontSizes }),
-      lineHeight: `${theme.fn.size({ size, sizes }) - 2}px`,
+      lineHeight: theme.fn.calc(theme.fn.size({ size, sizes }), `- ${rem(2)}`),
       paddingLeft: theme.fn.size({ size, sizes: padding }),
       paddingRight: theme.fn.size({ size, sizes: padding }),
       cursor: 'pointer',
@@ -167,12 +168,14 @@ export default createStyles((theme, { radius, color }: ChipStylesParams, { size,
         variant === 'filled'
           ? theme.white
           : theme.fn.variant({ variant: 'filled', color }).background,
-      width:
-        theme.fn.size({ size, sizes: iconSizes }) +
-        theme.fn.size({ size, sizes: theme.spacing }) / 1.5,
-      maxWidth:
-        theme.fn.size({ size, sizes: iconSizes }) +
-        theme.fn.size({ size, sizes: theme.spacing }) / 1.5,
+      width: `calc(${theme.fn.size({ size, sizes: iconSizes })} + (${theme.fn.size({
+        size,
+        sizes: theme.spacing,
+      })} / 1.5))`,
+      maxWidth: `calc(${theme.fn.size({ size, sizes: iconSizes })} + (${theme.fn.size({
+        size,
+        sizes: theme.spacing,
+      })} / 1.5))`,
       height: theme.fn.size({ size, sizes: iconSizes }),
       display: 'inline-block',
       verticalAlign: 'middle',
@@ -181,7 +184,7 @@ export default createStyles((theme, { radius, color }: ChipStylesParams, { size,
 
     checkIcon: {
       width: theme.fn.size({ size, sizes: iconSizes }),
-      height: theme.fn.size({ size, sizes: iconSizes }) / 1.1,
+      height: `calc(${theme.fn.size({ size, sizes: iconSizes })} / 1.1)`,
       display: 'block',
     },
 
