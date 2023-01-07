@@ -4,6 +4,7 @@ import {
   MantineColor,
   MantineNumberSize,
   MantineTheme,
+  rem,
 } from '@mantine/styles';
 
 export type AlertVariant = 'filled' | 'outline' | 'light';
@@ -54,9 +55,12 @@ export default createStyles((theme, { radius, color }: AlertStylesParams, { vari
     ...theme.fn.fontStyles(),
     position: 'relative',
     overflow: 'hidden',
-    padding: `${theme.spacing.sm}px ${theme.spacing.md}px`,
+    paddingTop: theme.spacing.sm,
+    paddingBottom: theme.spacing.sm,
+    paddingLeft: theme.spacing.md,
+    paddingRight: theme.spacing.md,
     borderRadius: theme.fn.radius(radius),
-    border: '1px solid transparent',
+    border: `${rem(1)} solid transparent`,
     ...getVariantStyles({ variant, color, theme }),
   },
 
@@ -71,7 +75,7 @@ export default createStyles((theme, { radius, color }: AlertStylesParams, { vari
   title: {
     boxSizing: 'border-box',
     margin: 0,
-    marginBottom: 7,
+    marginBottom: theme.spacing.xs,
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'space-between',
@@ -92,8 +96,8 @@ export default createStyles((theme, { radius, color }: AlertStylesParams, { vari
 
   icon: {
     lineHeight: 1,
-    width: 20,
-    height: 20,
+    width: rem(20),
+    height: rem(20),
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'flex-start',
