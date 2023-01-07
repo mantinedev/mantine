@@ -8,17 +8,29 @@ const sizes = {
   xl: 780,
 };
 
-export default createStyles((theme, _params, { size }) => ({
+interface DrawerRootStylesParams {
+  position: 'bottom' | 'left' | 'right' | 'top';
+}
+
+export default createStyles((theme, { position }: DrawerRootStylesParams, { size }) => ({
   content: {
-    flex: `0 0 ${theme.fn.sizeUnit(theme.fn.size({ size, sizes }))}`,
+    flex:
+      position === 'right' || position === 'left'
+        ? `0 0 ${theme.fn.sizeUnit(theme.fn.size({ size, sizes }))}`
+        : '0 0 100%',
     maxWidth: '100%',
-    height: '100%',
+    maxHeight: '100%',
+    height:
+      position === 'right' || position === 'left'
+        ? '100%'
+        : theme.fn.sizeUnit(theme.fn.size({ size, sizes })),
     borderRadius: 0,
     overflowY: 'auto',
   },
 
   inner: {
     display: 'flex',
-    justifyContent: 'flex-start',
+    justifyContent: position === 'right' ? 'flex-end' : 'flex-start',
+    alignItems: position === 'bottom' ? 'flex-end' : 'flex-start',
   },
 }));

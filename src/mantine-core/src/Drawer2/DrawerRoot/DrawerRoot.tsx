@@ -1,50 +1,46 @@
 import React from 'react';
-import { MantineNumberSize, useComponentDefaultProps } from '@mantine/styles';
+import { useComponentDefaultProps } from '@mantine/styles';
+import { MantineTransition } from '../../Transition';
 import { ModalBase, ModalBaseDefaultProps, ModalBaseSettings } from '../../ModalBase';
 import { DrawerProvider, ScrollAreaComponent } from '../Drawer.context';
 import useStyles from './DrawerRoot.styles';
 
+export type DrawerPosition = 'bottom' | 'left' | 'right' | 'top';
+
 export interface DrawerRootProps extends ModalBaseSettings {
-  /** Top/bottom modal offset, 5vh by default */
-  yOffset?: React.CSSProperties['marginTop'];
-
-  /** Left/right modal offset, 5vw by default */
-  xOffset?: React.CSSProperties['marginLeft'];
-
   /** Scroll area component, ScrollArea.Autosize by default */
   scrollAreaComponent?: ScrollAreaComponent;
 
-  /** Key of theme.radius or number to set Modal content border-radius in px, defaults to theme.defaultRadius */
-  radius?: MantineNumberSize;
-
-  /** Determines whether the modal should be centered vertically, false by default */
-  centered?: boolean;
-
-  /** Determines whether the modal should take the entire screen */
-  fullScreen?: boolean;
+  /** Side of the screen where drawer will be opened, 'left' by default */
+  position?: 'bottom' | 'left' | 'right' | 'top';
 }
+
+const transitions: Record<DrawerPosition, MantineTransition> = {
+  top: 'slide-down',
+  bottom: 'slide-up',
+  left: 'slide-right',
+  right: 'slide-left',
+};
+
+const rtlTransitions: Record<DrawerPosition, MantineTransition> = {
+  top: 'slide-down',
+  bottom: 'slide-up',
+  right: 'slide-right',
+  left: 'slide-left',
+};
 
 const defaultProps: Partial<DrawerRootProps> = {
   ...ModalBaseDefaultProps,
-  yOffset: '5vh',
-  xOffset: '5vw',
+  position: 'left',
 };
 
 export function DrawerRoot(props: DrawerRootProps) {
-  const {
-    classNames,
-    variant,
-    size,
-    yOffset,
-    xOffset,
-    scrollAreaComponent,
-    radius,
-    centered,
-    fullScreen,
-    ...others
-  } = useComponentDefaultProps('DrawerRoot', defaultProps, props);
+  const { classNames, variant, size, scrollAreaComponent, position, transitionProps, ...others } =
+    useComponentDefaultProps('DrawerRoot', defaultProps, props);
 
-  const { classes, cx } = useStyles(null, { name: 'Modal', variant, size });
+  const { classes, cx, theme } = useStyles({ position }, { name: 'Modal', variant, size });
+
+  const drawerTransition = (theme.dir === 'rtl' ? rtlTransitions : transitions)[position];
 
   return (
     <DrawerProvider value={{ scrollAreaComponent }}>
@@ -52,6 +48,7 @@ export function DrawerRoot(props: DrawerRootProps) {
         __staticSelector="Modal"
         size={size}
         variant={variant}
+        transitionProps={{ transition: drawerTransition, duration: 200, ...transitionProps }}
         classNames={{
           ...classNames,
           content: cx(classes.content, classNames?.content),

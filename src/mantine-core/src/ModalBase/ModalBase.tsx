@@ -102,7 +102,6 @@ export const ModalBaseDefaultProps: Partial<ModalBaseProps> = {
   trapFocus: true,
   returnFocus: true,
   closeOnEscape: true,
-  transitionProps: { duration: 200, transition: 'pop' },
   zIndex: getDefaultZIndex('modal'),
   padding: 'md',
   size: 'md',

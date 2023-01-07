@@ -31,6 +31,7 @@ export interface ModalProps extends ModalRootProps {
 
 const defaultProps: Partial<ModalProps> = {
   ...ModalBaseDefaultProps,
+  transitionProps: { duration: 200, transition: 'pop' },
   withOverlay: true,
   withCloseButton: true,
 };
