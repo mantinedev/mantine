@@ -1,18 +1,18 @@
 import React from 'react';
-import { Modal, Group, Button, TextInput } from '@mantine/core';
+import { Drawer, Group, Button, TextInput } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import { MantineDemo } from '@mantine/ds';
 
 const code = `
 import { useDisclosure } from '@mantine/hooks';
-import { Modal, Group, Button, TextInput } from '@mantine/core';
+import { Drawer, Group, Button, TextInput } from '@mantine/core';
 
 function Demo() {
   const [opened, { open, close }] = useDisclosure(false);
 
   return (
     <>
-      <Modal opened={opened} onClose={close} title="Focus demo">
+      <Drawer opened={opened} onClose={close} title="Focus demo">
         <TextInput label="First input" placeholder="First input" />
         <TextInput
           data-autofocus
@@ -20,10 +20,10 @@ function Demo() {
           placeholder="It has data-autofocus attribute"
           mt="md"
         />
-      </Modal>
+      </Drawer>
 
       <Group position="center">
-        <Button onClick={open}>Open modal</Button>
+        <Button onClick={open}>Open drawer</Button>
       </Group>
     </>
   );
@@ -35,7 +35,7 @@ function Demo() {
 
   return (
     <>
-      <Modal opened={opened} onClose={close} title="Focus demo">
+      <Drawer opened={opened} onClose={close} title="Focus demo">
         <TextInput label="First input" placeholder="First input" />
         <TextInput
           data-autofocus
@@ -43,10 +43,10 @@ function Demo() {
           placeholder="It has data-autofocus attribute"
           mt="md"
         />
-      </Modal>
+      </Drawer>
 
       <Group position="center">
-        <Button onClick={open}>Open modal</Button>
+        <Button onClick={open}>Open drawer</Button>
       </Group>
     </>
   );
