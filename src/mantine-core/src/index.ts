@@ -62,6 +62,7 @@ export * from './Overlay';
 export * from './Pagination';
 export * from './Paper';
 export * from './PasswordInput';
+export * from './PinInput';
 export * from './Popover';
 export * from './Portal';
 export * from './Progress';

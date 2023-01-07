@@ -17,7 +17,7 @@ const defaultProps: TagInputValueProps = {
   radius: 'sm',
 };
 
-describe('@mantine/labs/TagInput/DefaultValue', () => {
+describe('@mantine/core/TagInput/DefaultValue', () => {
   checkAccessibility([<DefaultValue {...defaultProps} />]);
   itSupportsClassName(DefaultValue, defaultProps);
   itSupportsStyle(DefaultValue, defaultProps);

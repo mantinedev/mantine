@@ -1,7 +1,5 @@
 import React, { useState } from 'react';
-import { storiesOf } from '@storybook/react';
 import { MANTINE_SIZES } from '@mantine/styles';
-import { SubmitForm } from '@mantine/storybook';
 import { Stack } from '../Stack';
 import { TextInput } from '../TextInput';
 import { Group } from '../Group';
@@ -10,7 +8,7 @@ import { TagInput } from './TagInput';
 
 export default { title: 'TagInput' };
 
-function Controlled() {
+export function Controlled() {
   const [value, setValue] = useState([]);
   return (
     <div style={{ padding: 40, maxWidth: 400 }}>
@@ -22,28 +20,40 @@ function Controlled() {
   );
 }
 
-const sizes = MANTINE_SIZES.map((size) => (
-  <Stack key={size} style={{ marginTop: 30 }}>
-    <TagInput
-      size={size}
-      variant="unstyled"
-      label="Tag Input"
-      defaultValue={['react', 'ng']}
-      placeholder="Input Tag"
-    />
-    <TextInput label="Text input" placeholder="Text input" size={size} />
-  </Stack>
-));
+export function Sizes() {
+  return (
+    <>
+      {MANTINE_SIZES.map((size) => (
+        <Stack key={size} style={{ marginTop: 30 }}>
+          <TagInput
+            size={size}
+            variant="unstyled"
+            label="Tag Input"
+            defaultValue={['react', 'ng']}
+            placeholder="Input Tag"
+          />
+          <TextInput label="Text input" placeholder="Text input" size={size} />
+        </Stack>
+      ))}
+    </>
+  );
+}
 
-const variants = (['default', 'filled', 'unstyled'] as const).map((variant) => (
-  <Group grow key={variant} style={{ marginTop: 30 }}>
-    <TagInput variant={variant} label="Tag Input" placeholder="Input Tag" />
-    <TextInput label="Text input" placeholder="Text input" variant={variant} />
-  </Group>
-));
+export function Variants() {
+  return (
+    <>
+      {(['default', 'filled', 'unstyled'] as const).map((variant) => (
+        <Group grow key={variant} style={{ marginTop: 30 }}>
+          <TagInput variant={variant} label="Tag Input" placeholder="Input Tag" />
+          <TextInput label="Text input" placeholder="Text input" variant={variant} />
+        </Group>
+      ))}
+    </>
+  );
+}
 
-storiesOf('TagInput', module)
-  .add('Alignment', () => (
+export function Alignment() {
+  return (
     <>
       <Group style={{ padding: 40, paddingBottom: 0 }} grow align="flex-start">
         <TagInput label="Tag Input" defaultValue={['react', 'ng']} placeholder="Input tag" />
@@ -58,11 +68,10 @@ storiesOf('TagInput', module)
         />
       </Group>
     </>
-  ))
-  .add('Controlled', () => <Controlled />)
-  .add('Sizes', () => <div style={{ padding: 40 }}>{sizes}</div>)
-  .add('Variants', () => <div style={{ padding: 40 }}>{variants}</div>)
-  .add('Max Selected Values', () => (
+  );
+}
+export function MaxSelected() {
+  return (
     <Group style={{ padding: 40, paddingBottom: 0 }} grow align="flex-start">
       <TagInput
         label=" with Max Selectable Values"
@@ -71,9 +80,5 @@ storiesOf('TagInput', module)
         maxTags={5}
       />
     </Group>
-  ))
-  .add('Within form', () => (
-    <SubmitForm>
-      <TagInput label="Submit with enter" defaultValue={['react', 'ng']} placeholder="Input tag" />
-    </SubmitForm>
-  ));
+  );
+}
