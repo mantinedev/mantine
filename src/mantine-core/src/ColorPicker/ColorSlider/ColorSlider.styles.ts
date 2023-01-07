@@ -1,4 +1,4 @@
-import { createStyles, getStylesRef } from '@mantine/styles';
+import { createStyles, getStylesRef, rem } from '@mantine/styles';
 import { THUMB_SIZES } from '../Thumb/Thumb.styles';
 
 export default createStyles((theme, _params, { size }) => ({
@@ -8,10 +8,10 @@ export default createStyles((theme, _params, { size }) => ({
 
   slider: {
     position: 'relative',
-    height: theme.fn.size({ size, sizes: THUMB_SIZES }) + 2,
+    height: `calc(${theme.fn.size({ size, sizes: THUMB_SIZES })} + ${rem(2)})`,
     boxSizing: 'border-box',
-    marginLeft: theme.fn.size({ size, sizes: THUMB_SIZES }) / 2,
-    marginRight: theme.fn.size({ size, sizes: THUMB_SIZES }) / 2,
+    marginLeft: `calc(${theme.fn.size({ size, sizes: THUMB_SIZES })} / 2)`,
+    marginRight: `calc(${theme.fn.size({ size, sizes: THUMB_SIZES })} / 2)`,
     outline: 0,
 
     [`&:focus .${getStylesRef('sliderThumb')}`]: {
@@ -32,8 +32,8 @@ export default createStyles((theme, _params, { size }) => ({
     boxSizing: 'border-box',
     top: 0,
     bottom: 0,
-    left: -theme.fn.size({ size, sizes: THUMB_SIZES }) / 2 - 1,
-    right: -theme.fn.size({ size, sizes: THUMB_SIZES }) / 2 - 1,
+    left: `calc(${theme.fn.size({ size, sizes: THUMB_SIZES })} * -1 / 2 - ${rem(1)})`,
+    right: `calc(${theme.fn.size({ size, sizes: THUMB_SIZES })} * -1 / 2 - ${rem(1)})`,
     borderRadius: 1000,
   },
 }));

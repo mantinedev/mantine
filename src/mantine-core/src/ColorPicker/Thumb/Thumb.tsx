@@ -40,8 +40,8 @@ export function Thumb({
     <div
       className={cx(classes.thumb, className)}
       style={{
-        left: `calc(${position.x * 100}% - ${THUMB_SIZES[size] / 2}px)`,
-        top: `calc(${position.y * 100}% - ${THUMB_SIZES[size] / 2}px)`,
+        left: `calc(${position.x * 100}% - ${THUMB_SIZES[size]} / 2)`,
+        top: `calc(${position.y * 100}% - ${THUMB_SIZES[size]} / 2)`,
         ...style,
       }}
     />

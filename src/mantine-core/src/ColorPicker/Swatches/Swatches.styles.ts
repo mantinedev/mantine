@@ -1,4 +1,4 @@
-import { createStyles } from '@mantine/styles';
+import { createStyles, rem } from '@mantine/styles';
 
 interface SwatchesStyles {
   swatchesPerRow: number;
@@ -6,17 +6,17 @@ interface SwatchesStyles {
 
 export default createStyles((_theme, { swatchesPerRow }: SwatchesStyles) => ({
   swatch: {
-    width: `calc(${100 / swatchesPerRow}% - 4px)`,
+    width: `calc(${100 / swatchesPerRow}% - ${rem(4)})`,
     height: 0,
-    paddingBottom: `calc(${100 / swatchesPerRow}% - 4px)`,
-    margin: 2,
+    paddingBottom: `calc(${100 / swatchesPerRow}% - ${rem(4)})`,
+    margin: rem(2),
     boxSizing: 'content-box',
   },
 
   swatches: {
     boxSizing: 'border-box',
-    marginLeft: -2,
-    marginRight: -2,
+    marginLeft: rem(-2),
+    marginRight: rem(-2),
     display: 'flex',
     flexWrap: 'wrap',
   },

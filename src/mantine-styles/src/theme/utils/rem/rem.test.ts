@@ -7,6 +7,7 @@ describe('@mantine/styles/rem', () => {
 
   it('converts numbers to rem', () => {
     expect(rem(16)).toBe('1rem');
+    expect(rem(-32)).toBe('-2rem');
   });
 
   it('converts string px to rems', () => {
