@@ -119,3 +119,33 @@ import { RemoveScroll } from '@mantine/core';
 // to make "right: 0"
 <div className={RemoveScroll.classNames.zeroRight} />
 ```
+
+## Accessibility
+
+`Drawer` component follows [WAI-ARIA recommendations](https://www.w3.org/WAI/ARIA/apg/example-index/dialog-modal/dialog) on accessibility.
+
+### Labels
+
+Set `title` props to make component accessible, will add `aria-labelledby` to the content element:
+
+```tsx
+import { Drawer } from '@mantine/core';
+
+function Demo() {
+  return <Drawer title="Drawer label" opened onClose={() => {}} />;
+}
+```
+
+To set close button `aria-label` use `closeButtonProps`:
+
+```tsx
+import { Drawer } from '@mantine/core';
+
+function Demo() {
+  return <Drawer closeButtonProps={{ 'aria-label': 'Close modal' }} opened onClose={() => {}} />;
+}
+```
+
+### Keyboard interactions
+
+<KeyboardEventsTable data={[{ key: 'Escape', description: 'Close modal' }]} />
