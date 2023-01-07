@@ -1,5 +1,5 @@
 import React, { forwardRef } from 'react';
-import { useComponentDefaultProps } from '@mantine/styles';
+import { useComponentDefaultProps, rem } from '@mantine/styles';
 import { createPolymorphicComponent } from '@mantine/utils';
 import { ActionIcon, ActionIconProps } from '../ActionIcon/ActionIcon';
 import { CloseIcon } from './CloseIcon';
@@ -12,11 +12,11 @@ export interface CloseButtonProps
 }
 
 const iconSizes = {
-  xs: 12,
-  sm: 16,
-  md: 20,
-  lg: 28,
-  xl: 34,
+  xs: rem(12),
+  sm: rem(16),
+  md: rem(20),
+  lg: rem(28),
+  xl: rem(34),
 };
 
 const defaultProps: Partial<CloseButtonProps> = {
