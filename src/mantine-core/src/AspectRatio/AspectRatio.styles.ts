@@ -25,10 +25,7 @@ export default createStyles((_theme, { ratio }: AspectRatioStylesParams) => ({
     '& > *:not(style)': {
       overflow: 'hidden',
       position: 'absolute',
-      top: 0,
-      right: 0,
-      bottom: 0,
-      left: 0,
+      inset: 0,
       display: 'flex',
       justifyContent: 'center',
       alignItems: 'center',

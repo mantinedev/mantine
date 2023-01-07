@@ -5,6 +5,7 @@ import {
   CSSObject,
   MantineTheme,
   MantineGradient,
+  rem,
 } from '@mantine/styles';
 
 export const AVATAR_VARIANTS = ['filled', 'light', 'gradient', 'outline'];
@@ -18,11 +19,11 @@ export interface AvatarStylesParams {
 }
 
 export const sizes = {
-  xs: 16,
-  sm: 26,
-  md: 38,
-  lg: 56,
-  xl: 84,
+  xs: rem(16),
+  sm: rem(26),
+  md: rem(38),
+  lg: rem(56),
+  xl: rem(84),
 };
 
 interface GetGroupStylesInput {
@@ -37,9 +38,9 @@ function getGroupStyles({ withinGroup, spacing, theme }: GetGroupStylesInput): C
   }
 
   return {
-    marginLeft: -theme.fn.size({ size: spacing, sizes: theme.spacing }),
+    marginLeft: theme.fn.calc(theme.fn.size({ size: spacing, sizes: theme.spacing }), '* -1'),
     backgroundColor: `${theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.white}`,
-    border: `2px solid ${theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.white}`,
+    border: `${rem(2)} solid ${theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.white}`,
   };
 }
 
@@ -59,7 +60,7 @@ function getVariantStyles({ theme, variant, color, gradient }: GetVariantStylesI
         color: colors.color,
         backgroundColor: colors.background,
         backgroundImage: variant === 'gradient' ? colors.background : undefined,
-        border: `${variant === 'gradient' ? 0 : 1}px solid ${colors.border}`,
+        border: `${rem(variant === 'gradient' ? 0 : 1)} solid ${colors.border}`,
       },
 
       placeholderIcon: {
@@ -115,7 +116,7 @@ export default createStyles(
         height: '100%',
         userSelect: 'none',
         borderRadius: theme.fn.radius(radius),
-        fontSize: theme.fn.size({ size, sizes }) / 2.5,
+        fontSize: theme.fn.calc(theme.fn.size({ size, sizes }), '/ 2.5'),
         ...variantStyles.placeholder,
       },
 
