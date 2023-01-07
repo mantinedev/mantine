@@ -28,3 +28,17 @@ export function Usage() {
     </div>
   );
 }
+
+export function Scroll() {
+  const [opened, { open, close }] = useDisclosure(false);
+  return (
+    <div style={{ padding: 40 }}>
+      <Button onClick={open}>Open drawer</Button>
+      {content}
+      <Button onClick={open}>Open drawer</Button>
+      <Drawer opened={opened} onClose={close} title="A drawer" position="right">
+        {content}
+      </Drawer>
+    </div>
+  );
+}
