@@ -4,6 +4,7 @@ import {
   MantineNumberSize,
   useComponentDefaultProps,
   Selectors,
+  rem,
 } from '@mantine/styles';
 import { createPolymorphicComponent } from '@mantine/utils';
 import { Box } from '../Box';
@@ -21,7 +22,7 @@ export interface ColorSwatchProps
   /** Width and height */
   size?: number | string;
 
-  /** Key of theme.radius or number to set border-radius in px, 25px by default */
+  /** Key of theme.radius or number to set border-radius in px */
   radius?: MantineNumberSize;
 
   /** ColorSwatch children */
@@ -32,8 +33,8 @@ export interface ColorSwatchProps
 }
 
 const defaultProps: Partial<ColorSwatchProps> = {
-  size: 25,
-  radius: 25,
+  size: rem(25),
+  radius: rem(25),
   withShadow: true,
 };
 
