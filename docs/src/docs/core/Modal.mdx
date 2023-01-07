@@ -128,3 +128,18 @@ You can use the following modular components to have full control over the `Moda
 - `Modal.Body` – a place for main content, `aria-describedby` of `Modal.Content` is pointing to this element
 
 <Demo data={ModalDemos.composition} />
+
+## Fixed elements offset
+
+`Modal` component uses [react-remove-scroll](https://github.com/theKashey/react-remove-scroll)
+package to lock scroll. To properly size these `elements` add a `className` to them ([documentation](https://github.com/theKashey/react-remove-scroll#positionfixed-elements)):
+
+```tsx
+import { RemoveScroll } from '@mantine/core';
+
+// to make "width: 100%"
+<div className={RemoveScroll.classNames.fullWidth} />
+
+// to make "right: 0"
+<div className={RemoveScroll.classNames.zeroRight} />
+```
