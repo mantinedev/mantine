@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { checkAccessibility, itSupportsSystemProps } from '@mantine/tests';
+import { checkAccessibility } from '@mantine/tests';
 import { ChipGroup } from './ChipGroup';
 import { Chip } from '../Chip';
 
@@ -22,12 +22,6 @@ const clickChip = (index: number, type: 'radio' | 'checkbox') =>
 
 describe('@mantine/core/ChipGroup', () => {
   checkAccessibility([<ChipGroup {...defaultProps} />]);
-  itSupportsSystemProps({
-    component: ChipGroup,
-    props: defaultProps,
-    displayName: '@mantine/core/ChipGroup',
-    providerName: 'ChipGroup',
-  });
 
   it('sets chip type based on multiple prop', () => {
     const { container: multiple } = render(<ChipGroup multiple {...defaultProps} value={['1']} />);
