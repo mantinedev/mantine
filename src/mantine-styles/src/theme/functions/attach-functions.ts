@@ -17,7 +17,6 @@ export function attachFunctions(themeBase: MantineThemeBase): MantineTheme {
       size: fns.size,
       cover: fns.cover,
       calc: fns.calc,
-      sizeUnit: fns.sizeUnit,
       lighten: fns.lighten,
       darken: fns.darken,
       primaryShade: fns.primaryShade(themeBase),

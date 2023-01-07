@@ -1,5 +1,5 @@
-import { sizeUnit } from '../size-unit/size-unit';
+import { rem } from '../../../utils';
 
 export function calc(value: unknown, operation: string) {
-  return `calc(${sizeUnit(value)} ${operation})`;
+  return `calc(${rem(value)} ${operation})`;
 }

@@ -1,4 +1,8 @@
 export function rem(px: unknown) {
+  if (px === 0) {
+    return 0;
+  }
+
   if (typeof px === 'number') {
     return `${px / 16}rem`;
   }

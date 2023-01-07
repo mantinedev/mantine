@@ -1,6 +1,10 @@
 import { rem } from './rem';
 
 describe('@mantine/styles/rem', () => {
+  it('does not convert 0', () => {
+    expect(rem(0)).toBe(0);
+  });
+
   it('converts numbers to rem', () => {
     expect(rem(16)).toBe('1rem');
   });
