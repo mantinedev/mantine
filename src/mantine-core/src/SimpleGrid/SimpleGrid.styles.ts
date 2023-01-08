@@ -1,4 +1,4 @@
-import { createStyles, MantineNumberSize } from '@mantine/styles';
+import { createStyles, MantineNumberSize, getBreakpointValue, rem } from '@mantine/styles';
 import { getSortedBreakpoints } from './get-sorted-breakpoints/get-sorted-breakpoints';
 
 export interface SimpleGridBreakpoint {
@@ -27,15 +27,22 @@ export default createStyles(
         sizes: theme.breakpoints,
       });
 
-      acc[`@media (${property}: ${breakpointSize - (property === 'max-width' ? 1 : 0)}px)`] = {
+      const breakpointValue =
+        getBreakpointValue(breakpointSize) - (property === 'max-width' ? 1 : 0);
+
+      acc[`@media (${property}: ${rem(breakpointValue)})`] = {
         gridTemplateColumns: `repeat(${breakpoint.cols}, minmax(0, 1fr))`,
-        gap: `${theme.fn.size({
-          size: breakpoint.verticalSpacing || (hasVerticalSpacing ? verticalSpacing : spacing),
-          sizes: theme.spacing,
-        })}px ${theme.fn.size({
-          size: breakpoint.spacing || spacing,
-          sizes: theme.spacing,
-        })}px`,
+        gap: `${rem(
+          theme.fn.size({
+            size: breakpoint.verticalSpacing || (hasVerticalSpacing ? verticalSpacing : spacing),
+            sizes: theme.spacing,
+          })
+        )} ${rem(
+          theme.fn.size({
+            size: breakpoint.spacing || spacing,
+            sizes: theme.spacing,
+          })
+        )}`,
       };
 
       return acc;
@@ -46,13 +53,17 @@ export default createStyles(
         boxSizing: 'border-box',
         display: 'grid',
         gridTemplateColumns: `repeat(${cols}, minmax(0, 1fr))`,
-        gap: `${theme.fn.size({
-          size: hasVerticalSpacing ? verticalSpacing : spacing,
-          sizes: theme.spacing,
-        })}px ${theme.fn.size({
-          size: spacing,
-          sizes: theme.spacing,
-        })}px`,
+        gap: `${rem(
+          theme.fn.size({
+            size: hasVerticalSpacing ? verticalSpacing : spacing,
+            sizes: theme.spacing,
+          })
+        )} ${rem(
+          theme.fn.size({
+            size: spacing,
+            sizes: theme.spacing,
+          })
+        )}`,
         ...gridBreakpoints,
       },
     };
