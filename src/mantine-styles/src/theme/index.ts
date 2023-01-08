@@ -8,4 +8,6 @@ export { ColorSchemeProvider, useMantineColorScheme } from './ColorSchemeProvide
 export { GlobalStyles } from './GlobalStyles';
 export { NormalizeCSS } from './NormalizeCSS';
 
+export { getBreakpointValue } from './functions/fns/breakpoints/breakpoints';
+
 export type { MantineProviderProps } from './MantineProvider';

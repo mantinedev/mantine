@@ -2,7 +2,7 @@ import type { MantineThemeBase, MantineNumberSize } from '../../../types';
 import { size } from '../size/size';
 import { rem } from '../../../utils';
 
-function getBreakpointValue(value: string | number) {
+export function getBreakpointValue(value: string | number) {
   if (typeof value === 'number') {
     return value;
   }
