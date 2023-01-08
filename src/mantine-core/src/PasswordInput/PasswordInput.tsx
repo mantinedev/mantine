@@ -5,6 +5,7 @@ import {
   DefaultProps,
   useMantineTheme,
   useComponentDefaultProps,
+  rem,
 } from '@mantine/styles';
 import { extractSystemStyles } from '../Box';
 import { ActionIcon } from '../ActionIcon';
@@ -38,27 +39,27 @@ export interface PasswordInputProps
 }
 
 const buttonSizes = {
-  xs: 22,
-  sm: 26,
-  md: 28,
-  lg: 32,
-  xl: 40,
+  xs: rem(22),
+  sm: rem(26),
+  md: rem(28),
+  lg: rem(32),
+  xl: rem(40),
 };
 
 const iconSizes = {
-  xs: 12,
-  sm: 15,
-  md: 17,
-  lg: 19,
-  xl: 21,
+  xs: rem(12),
+  sm: rem(15),
+  md: rem(17),
+  lg: rem(19),
+  xl: rem(21),
 };
 
 const rightSectionSizes = {
-  xs: 28,
-  sm: 32,
-  md: 34,
-  lg: 44,
-  xl: 54,
+  xs: rem(28),
+  sm: rem(32),
+  md: rem(34),
+  lg: rem(44),
+  xl: rem(54),
 };
 
 const defaultProps: Partial<PasswordInputProps> = {

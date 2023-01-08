@@ -1,4 +1,4 @@
-import { createStyles } from '@mantine/styles';
+import { createStyles, rem } from '@mantine/styles';
 import { INPUT_SIZES } from '../Input';
 
 export interface PasswordInputStylesParams {
@@ -16,23 +16,19 @@ export default createStyles(
 
     innerInput: {
       ...theme.fn.fontStyles(),
+      ...theme.fn.cover(0),
       backgroundColor: 'transparent',
       border: '1px solid transparent',
       borderLeftWidth: 0,
       borderRightWidth: 0,
       boxSizing: 'border-box',
-      position: 'absolute',
       display: 'block',
-      width: `calc(100% - ${rightSectionWidth}px)`,
-      paddingLeft: theme.fn.size({ size, sizes: INPUT_SIZES }) / 3,
+      width: `calc(100% - ${rem(rightSectionWidth)})`,
+      paddingLeft: `calc(${theme.fn.size({ size, sizes: INPUT_SIZES })}  / 3)`,
       fontSize: theme.fn.size({ size, sizes: theme.fontSizes }),
-      height: theme.fn.size({ size, sizes: INPUT_SIZES }) - 2,
-      lineHeight: `${theme.fn.size({ size, sizes: INPUT_SIZES }) - 4}px`,
+      height: `calc(${theme.fn.size({ size, sizes: INPUT_SIZES })} - ${rem(2)})`,
+      lineHeight: `calc(${theme.fn.size({ size, sizes: INPUT_SIZES })} - ${rem(4)})`,
       color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
-      top: 0,
-      bottom: 0,
-      left: 0,
-      right: 0,
 
       '&:focus': {
         outline: 0,
