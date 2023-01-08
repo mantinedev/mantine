@@ -1,4 +1,4 @@
-import { createStyles, MantineColor, getStylesRef } from '@mantine/styles';
+import { createStyles, MantineColor, getStylesRef, rem } from '@mantine/styles';
 
 export interface RadioStylesParams {
   color: MantineColor;
@@ -8,19 +8,19 @@ export interface RadioStylesParams {
 }
 
 const sizes = {
-  xs: 16,
-  sm: 20,
-  md: 24,
-  lg: 30,
-  xl: 36,
+  xs: rem(16),
+  sm: rem(20),
+  md: rem(24),
+  lg: rem(30),
+  xl: rem(36),
 };
 
 const iconSizes = {
-  xs: 6,
-  sm: 8,
-  md: 10,
-  lg: 14,
-  xl: 16,
+  xs: rem(6),
+  sm: rem(8),
+  md: rem(10),
+  lg: rem(14),
+  xl: rem(16),
 };
 
 export default createStyles(
@@ -39,20 +39,20 @@ export default createStyles(
         ref: getStylesRef('icon'),
         color: theme.white,
         opacity: 0,
-        transform: 'scale(0.75) translateY(2px)',
+        transform: `scale(0.75) translateY(${rem(2)})`,
         transition: `opacity ${transitionDuration}ms ${theme.transitionTimingFunction}`,
         pointerEvents: 'none',
         width: theme.fn.size({ sizes: iconSizes, size }),
         height: theme.fn.size({ sizes: iconSizes, size }),
         position: 'absolute',
-        top: `calc(50% - ${theme.fn.size({ sizes: iconSizes, size }) / 2}px)`,
-        left: `calc(50% - ${theme.fn.size({ sizes: iconSizes, size }) / 2}px)`,
+        top: `calc(50% - ${theme.fn.size({ sizes: iconSizes, size })} / 2)`,
+        left: `calc(50% - ${theme.fn.size({ sizes: iconSizes, size })} / 2)`,
       },
 
       radio: {
         ...theme.fn.focusStyles(),
         backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.white,
-        border: `1px solid ${
+        border: `${rem(1)} solid ${
           error
             ? errorColor
             : theme.colorScheme === 'dark'
