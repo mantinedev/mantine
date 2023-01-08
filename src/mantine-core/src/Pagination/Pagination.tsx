@@ -141,7 +141,7 @@ export const Pagination = forwardRef<HTMLDivElement, PaginationProps>((props, re
     <Group
       className={cx(classes.root, className)}
       role="navigation"
-      spacing={spacing || theme.fn.size({ size, sizes: theme.spacing }) / 2}
+      spacing={spacing || `calc(${theme.fn.size({ size, sizes: theme.spacing })} / 2)`}
       ref={ref}
       sx={sx}
       unstyled={unstyled}

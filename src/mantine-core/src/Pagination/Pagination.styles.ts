@@ -1,4 +1,4 @@
-import { createStyles, MantineNumberSize, MantineColor } from '@mantine/styles';
+import { createStyles, MantineNumberSize, MantineColor, rem } from '@mantine/styles';
 
 export interface PaginationStylesParams {
   radius: MantineNumberSize;
@@ -6,11 +6,11 @@ export interface PaginationStylesParams {
 }
 
 const sizes = {
-  xs: 22,
-  sm: 26,
-  md: 32,
-  lg: 38,
-  xl: 44,
+  xs: rem(22),
+  sm: rem(26),
+  md: rem(32),
+  lg: rem(38),
+  xl: rem(44),
 };
 
 export default createStyles((theme, { radius, color }: PaginationStylesParams, { size }) => {
@@ -27,13 +27,13 @@ export default createStyles((theme, { radius, color }: PaginationStylesParams, {
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'center',
-      border: `1px solid ${
+      border: `${rem(1)} solid ${
         theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[4]
       }`,
       color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
       height: theme.fn.size({ size, sizes }),
       minWidth: theme.fn.size({ size, sizes }),
-      padding: `0 ${theme.fn.size({ size, sizes: theme.spacing }) / 2}px`,
+      padding: `0 calc(${theme.fn.size({ size, sizes: theme.spacing })}) / 2`,
       fontSize: theme.fn.size({ size, sizes: theme.fontSizes }),
       borderRadius: theme.fn.radius(radius),
       lineHeight: 1,
