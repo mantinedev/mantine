@@ -12,7 +12,7 @@ export type MantineThemeOther = Record<string, any>;
 export type MantineThemeComponents = Record<string, ThemeComponent>;
 
 export interface HeadingStyle {
-  fontSize: CSSProperties['fontSize'];
+  fontSize: string;
   fontWeight: CSSProperties['fontWeight'];
   lineHeight: CSSProperties['lineHeight'];
 }
