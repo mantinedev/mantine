@@ -1,4 +1,4 @@
-import { createStyles } from '@mantine/styles';
+import { createStyles, rem } from '@mantine/styles';
 import { keys } from '@mantine/utils';
 
 export default createStyles((theme) => {
@@ -14,8 +14,8 @@ export default createStyles((theme) => {
       marginBottom: theme.spacing.sm,
       ...values,
 
-      '@media (max-width: 755px)': {
-        fontSize: typeof values.fontSize === 'number' && (values.fontSize as number) / 1.3,
+      [`@media (max-width: ${theme.breakpoints.sm})`]: {
+        fontSize: `calc(${rem(values.fontSize)} / 1.3)`,
       },
     };
 
@@ -29,7 +29,7 @@ export default createStyles((theme) => {
       lineHeight: theme.lineHeight,
       fontSize: theme.fontSizes.md,
 
-      '@media (max-width: 755px)': {
+      [`@media (max-width: ${theme.breakpoints.sm})`]: {
         fontSize: theme.fontSizes.sm,
       },
 
@@ -56,7 +56,7 @@ export default createStyles((theme) => {
         borderBottom: 0,
         borderLeft: 0,
         borderRight: 0,
-        borderTop: `1px dashed ${theme.colors.gray[theme.colorScheme === 'dark' ? 4 : 6]}`,
+        borderTop: `${rem(1)} dashed ${theme.colors.gray[theme.colorScheme === 'dark' ? 4 : 6]}`,
       },
 
       '& a': {
@@ -92,13 +92,13 @@ export default createStyles((theme) => {
 
       '& code': {
         lineHeight: theme.lineHeight,
-        padding: '1px 5px',
+        padding: `${rem(1)} ${rem(5)}`,
         borderRadius: theme.radius.sm,
         color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
         backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[9] : theme.colors.gray[0],
         fontFamily: theme.fontFamilyMonospace,
         fontSize: theme.fontSizes.xs,
-        border: `1px solid ${
+        border: `${rem(1)} solid ${
           theme.colorScheme === 'dark' ? theme.colors.dark[9] : theme.colors.gray[3]
         }`,
       },
@@ -129,24 +129,24 @@ export default createStyles((theme) => {
           fontWeight: 'bold',
           color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.colors.gray[7],
           fontSize: 14,
-          padding: '7px 10px',
+          padding: `${rem(7)} ${rem(10)}`,
         },
 
         '& thead th': {
-          borderBottom: `1px solid ${
+          borderBottom: `${rem(1)} solid ${
             theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[3]
           }`,
         },
 
         '& tfoot th': {
-          borderTop: `1px solid ${
+          borderTop: `${rem(1)} solid ${
             theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[3]
           }`,
         },
 
         '& td': {
-          padding: '7px 10px',
-          borderBottom: `1px solid ${
+          padding: `${rem(7)} ${rem(10)}`,
+          borderBottom: `${rem(1)} solid ${
             theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[3]
           }`,
           fontSize: 14,
@@ -160,12 +160,12 @@ export default createStyles((theme) => {
       '& blockquote': {
         fontSize: theme.fontSizes.lg,
         lineHeight: theme.lineHeight,
-        margin: `${theme.spacing.md}px 0`,
+        margin: `${theme.spacing.md} 0`,
         borderTopRightRadius: theme.radius.sm,
         borderBottomRightRadius: theme.radius.sm,
-        padding: `${theme.spacing.md}px ${theme.spacing.lg}px`,
+        padding: `${theme.spacing.md} ${theme.spacing.lg}`,
         color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
-        borderLeft: `6px solid ${
+        borderLeft: `${rem(6)} solid ${
           theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[3]
         }`,
 
