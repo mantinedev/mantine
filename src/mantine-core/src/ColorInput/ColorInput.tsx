@@ -1,6 +1,12 @@
 import React, { useState, useEffect, forwardRef } from 'react';
 import { useUncontrolled, useDidUpdate, useEyeDropper } from '@mantine/hooks';
-import { DefaultProps, getDefaultZIndex, MantineShadow, useMantineTheme } from '@mantine/styles';
+import {
+  DefaultProps,
+  getDefaultZIndex,
+  MantineShadow,
+  useMantineTheme,
+  rem,
+} from '@mantine/styles';
 import { noop } from '@mantine/utils';
 import {
   InputWrapperBaseProps,
@@ -72,19 +78,19 @@ export interface ColorInputProps
 }
 
 const SWATCH_SIZES = {
-  xs: 16,
-  sm: 18,
-  md: 22,
-  lg: 28,
-  xl: 36,
+  xs: rem(16),
+  sm: rem(18),
+  md: rem(22),
+  lg: rem(28),
+  xl: rem(36),
 };
 
 const EYE_DROPPER_SIZES = {
-  xs: 14,
-  sm: 16,
-  md: 18,
-  lg: 20,
-  xl: 22,
+  xs: rem(14),
+  sm: rem(16),
+  md: rem(18),
+  lg: rem(20),
+  xl: rem(22),
 };
 
 const defaultProps: Partial<ColorInputProps> = {
