@@ -1,4 +1,4 @@
-import { createStyles, MantineNumberSize, MantineShadow } from '@mantine/styles';
+import { createStyles, MantineNumberSize, MantineShadow, rem } from '@mantine/styles';
 
 export interface PaperStylesParams {
   radius: MantineNumberSize;
@@ -18,7 +18,9 @@ export default createStyles((theme, { radius, shadow, withBorder }: PaperStylesP
     borderRadius: theme.fn.radius(radius),
     boxShadow: theme.shadows[shadow] || shadow || 'none',
     border: withBorder
-      ? `1px solid ${theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[3]}`
+      ? `${rem(1)} solid ${
+          theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[3]
+        }`
       : undefined,
   },
 }));
