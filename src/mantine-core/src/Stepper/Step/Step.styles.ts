@@ -1,4 +1,4 @@
-import { createStyles, MantineColor, MantineNumberSize, getStylesRef } from '@mantine/styles';
+import { createStyles, MantineColor, MantineNumberSize, getStylesRef, rem } from '@mantine/styles';
 
 export interface StepStylesParams {
   color: MantineColor;
@@ -10,11 +10,11 @@ export interface StepStylesParams {
 }
 
 export const iconSizes = {
-  xs: 34,
-  sm: 36,
-  md: 42,
-  lg: 48,
-  xl: 52,
+  xs: rem(34),
+  sm: rem(36),
+  md: rem(42),
+  lg: rem(48),
+  xl: rem(52),
 };
 
 export default createStyles(
@@ -23,21 +23,21 @@ export default createStyles(
     { color, iconSize, radius, allowStepClick, iconPosition, orientation }: StepStylesParams,
     { size }
   ) => {
-    const _iconSize = iconSize || theme.fn.size({ size, sizes: iconSizes });
+    const _iconSize = iconSize ? rem(iconSize) : theme.fn.size({ size, sizes: iconSizes });
     const iconMargin = size === 'xl' || size === 'lg' ? theme.spacing.md : theme.spacing.sm;
-    const _radius = theme.fn.size({ size: radius, sizes: theme.radius });
+    const _radius = theme.fn.radius(radius);
     const colors = theme.fn.variant({
       variant: 'filled',
       color: color || theme.primaryColor,
       primaryFallback: false,
     });
-    const separatorDistanceFromIcon = theme.spacing.xs / 2;
+    const separatorDistanceFromIcon = `calc(${theme.spacing.xs} / 2)`;
 
     const verticalOrientationStyles = {
       step: {
         justifyContent: 'flex-start',
-        minHeight: `calc(${_iconSize}px + ${theme.spacing.xl}px + ${separatorDistanceFromIcon}px)`,
-        marginTop: `${separatorDistanceFromIcon}px`,
+        minHeight: `calc(${_iconSize} + ${theme.spacing.xl} + ${separatorDistanceFromIcon})`,
+        marginTop: separatorDistanceFromIcon,
         overflow: 'hidden',
         '&:first-of-type': {
           marginTop: 0,
@@ -67,11 +67,11 @@ export default createStyles(
       },
 
       verticalSeparator: {
-        top: `${_iconSize + separatorDistanceFromIcon}px`,
-        left: `${_iconSize / 2}px`,
+        top: `calc(${_iconSize} + ${separatorDistanceFromIcon})`,
+        left: `calc(${_iconSize} / 2)`,
         height: '100vh',
         position: 'absolute',
-        borderLeft: `2px solid ${
+        borderLeft: `${rem(2)} solid ${
           theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[1]
         }`,
         ref: getStylesRef('verticalSeparator'),
@@ -91,7 +91,7 @@ export default createStyles(
         alignItems: 'center',
         justifyContent: 'center',
         backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[1],
-        border: `2px solid ${
+        border: `${rem(2)} solid ${
           theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[1]
         }`,
         transition: 'background-color 150ms ease, border-color 150ms ease',
@@ -124,15 +124,7 @@ export default createStyles(
         flexDirection: 'column',
         marginLeft: iconPosition === 'left' ? iconMargin : undefined,
         marginRight: iconPosition === 'right' ? iconMargin : undefined,
-
-        ...(orientation === 'vertical'
-          ? {
-              marginTop:
-                _iconSize > theme.fn.size({ size, sizes: theme.fontSizes }) * 4
-                  ? _iconSize / 4
-                  : _iconSize / 12,
-            }
-          : null),
+        ...(orientation === 'vertical' ? { marginTop: `calc(${iconSize} / 4)` } : null),
       },
 
       stepLabel: {
@@ -144,9 +136,9 @@ export default createStyles(
 
       stepDescription: {
         textAlign: iconPosition,
-        marginTop: theme.fn.size({ size, sizes: theme.spacing }) / 3,
-        marginBottom: theme.fn.size({ size, sizes: theme.spacing }) / 3,
-        fontSize: theme.fn.size({ size, sizes: theme.fontSizes }) - 2,
+        marginTop: `calc(${theme.fn.size({ size, sizes: theme.spacing })} / 3)`,
+        marginBottom: `calc(${theme.fn.size({ size, sizes: theme.spacing })} / 3)`,
+        fontSize: `calc(${theme.fn.size({ size, sizes: theme.fontSizes })} - ${rem(2)})`,
         lineHeight: 1,
       },
     };
