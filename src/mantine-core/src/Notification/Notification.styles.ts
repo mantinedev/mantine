@@ -1,4 +1,4 @@
-import { createStyles, MantineColor, MantineNumberSize, getStylesRef } from '@mantine/styles';
+import { createStyles, MantineColor, MantineNumberSize, getStylesRef, rem } from '@mantine/styles';
 
 export interface NotificationStylesParams {
   color: MantineColor;
@@ -7,8 +7,7 @@ export interface NotificationStylesParams {
 }
 
 export default createStyles((theme, { color, radius, withTitle }: NotificationStylesParams) => {
-  const _radius = theme.fn.radius(radius) as number;
-  const topBottom = Math.min(Math.max(_radius / 1.2, 4), 30);
+  const _radius = theme.fn.radius(radius);
   const colors = theme.fn.variant({ variant: 'filled', color });
 
   return {
@@ -20,9 +19,9 @@ export default createStyles((theme, { color, radius, withTitle }: NotificationSt
       ref: getStylesRef('icon'),
       boxSizing: 'border-box',
       marginRight: theme.spacing.md,
-      width: 28,
-      height: 28,
-      borderRadius: 28,
+      width: rem(28),
+      height: rem(28),
+      borderRadius: rem(28),
       display: 'flex',
       flex: 'none',
       alignItems: 'center',
@@ -43,14 +42,14 @@ export default createStyles((theme, { color, radius, withTitle }: NotificationSt
       position: 'relative',
       display: 'flex',
       alignItems: 'center',
-      paddingLeft: 22,
-      paddingRight: 5,
+      paddingLeft: rem(22),
+      paddingRight: theme.spacing.xs,
       paddingTop: theme.spacing.xs,
       paddingBottom: theme.spacing.xs,
       borderRadius: _radius,
       backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.white,
       boxShadow: theme.shadows.lg,
-      border: `1px solid ${
+      border: `${rem(1)} solid ${
         theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[2]
       }`,
 
@@ -58,10 +57,10 @@ export default createStyles((theme, { color, radius, withTitle }: NotificationSt
         content: '""',
         display: 'block',
         position: 'absolute',
-        width: 6,
-        top: topBottom,
-        bottom: topBottom,
-        left: 4,
+        width: rem(6),
+        top: _radius,
+        bottom: _radius,
+        left: rem(4),
         borderRadius: _radius,
         backgroundColor: colors.background,
       },
@@ -75,7 +74,7 @@ export default createStyles((theme, { color, radius, withTitle }: NotificationSt
     body: {
       flex: 1,
       overflow: 'hidden',
-      marginRight: 10,
+      marginRight: theme.spacing.xs,
     },
 
     loader: {
@@ -84,7 +83,7 @@ export default createStyles((theme, { color, radius, withTitle }: NotificationSt
 
     title: {
       lineHeight: 1.4,
-      marginBottom: 2,
+      marginBottom: rem(2),
       overflow: 'hidden',
       textOverflow: 'ellipsis',
       color: theme.colorScheme === 'dark' ? theme.white : theme.colors.gray[9],
