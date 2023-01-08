@@ -1,4 +1,4 @@
-import { createStyles, MantineColor } from '@mantine/styles';
+import { createStyles, MantineColor, rem } from '@mantine/styles';
 
 export interface StarSymbolStylesParams {
   type: 'empty' | 'full';
@@ -6,11 +6,11 @@ export interface StarSymbolStylesParams {
 }
 
 const sizes = {
-  xs: 14,
-  sm: 18,
-  md: 20,
-  lg: 28,
-  xl: 32,
+  xs: rem(14),
+  sm: rem(18),
+  md: rem(20),
+  lg: rem(28),
+  xl: rem(32),
 };
 
 export default createStyles((theme, { type, color }: StarSymbolStylesParams, { size }) => {

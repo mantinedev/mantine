@@ -1,4 +1,4 @@
-import { createStyles, getStylesRef } from '@mantine/styles';
+import { createStyles, getStylesRef, rem } from '@mantine/styles';
 
 export default createStyles((theme) => ({
   input: {
@@ -13,7 +13,9 @@ export default createStyles((theme) => ({
       [`& + .${getStylesRef('label')}`]: {
         outline:
           theme.focusRing === 'always' || theme.focusRing === 'auto'
-            ? `1px solid ${theme.colors[theme.primaryColor][theme.colorScheme === 'dark' ? 7 : 5]}`
+            ? `${rem(1)} solid ${
+                theme.colors[theme.primaryColor][theme.colorScheme === 'dark' ? 7 : 5]
+              }`
             : undefined,
       },
 
@@ -29,7 +31,7 @@ export default createStyles((theme) => ({
     ref: getStylesRef('label'),
     display: 'block',
     boxSizing: 'border-box',
-    marginInline: 1,
+    margin: rem(1),
     top: 0,
     left: 0,
     cursor: 'pointer',
