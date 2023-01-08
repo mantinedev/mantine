@@ -1,4 +1,4 @@
-import { createStyles, MantineNumberSize, MantineColor, getStylesRef } from '@mantine/styles';
+import { createStyles, MantineNumberSize, MantineColor, getStylesRef, rem } from '@mantine/styles';
 
 export const WRAPPER_PADDING = 4;
 
@@ -13,11 +13,11 @@ export interface SegmentedControlStylesParams {
 }
 
 const sizes = {
-  xs: '3px 6px',
-  sm: '5px 10px',
-  md: '7px 14px',
-  lg: '9px 16px',
-  xl: '12px 20px',
+  xs: `${rem(3)} ${rem(6)}`,
+  sm: `${rem(5)} ${rem(10)}`,
+  md: `${rem(7)} ${rem(14)}`,
+  lg: `${rem(9)} ${rem(16)}`,
+  xl: `${rem(12)} ${rem(20)}`,
 };
 
 export default createStyles(
@@ -76,7 +76,7 @@ export default createStyles(
 
         '&:not(:first-of-type)': {
           borderStyle: 'solid',
-          borderWidth: vertical ? '1px 0 0 0' : '0 0 0 1px',
+          borderWidth: vertical ? `${rem(1)} 0 0 0` : `0 0 0 ${rem(1)}`,
           borderColor: theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[3],
         },
       },

@@ -15,6 +15,7 @@ import {
   Selectors,
   useComponentDefaultProps,
   useMantineTheme,
+  rem,
 } from '@mantine/styles';
 import { Box } from '../Box';
 import useStyles, {
@@ -223,7 +224,9 @@ export const SegmentedControl = forwardRef<HTMLDivElement, SegmentedControlProps
           sx={{
             width: activePosition.width,
             height: activePosition.height,
-            transform: `translate(${activePosition.translate[0]}px, ${activePosition.translate[1]}px )`,
+            transform: `translate(${rem(activePosition.translate[0])}, ${rem(
+              activePosition.translate[1]
+            )})`,
           }}
         />
       )}
