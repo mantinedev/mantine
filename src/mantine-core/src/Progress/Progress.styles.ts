@@ -1,11 +1,11 @@
-import { createStyles, MantineNumberSize, MantineColor, keyframes } from '@mantine/styles';
+import { createStyles, MantineNumberSize, MantineColor, keyframes, rem } from '@mantine/styles';
 
 const sizes = {
-  xs: 3,
-  sm: 5,
-  md: 8,
-  lg: 12,
-  xl: 16,
+  xs: rem(3),
+  sm: rem(5),
+  md: rem(8),
+  lg: rem(12),
+  xl: rem(16),
 };
 
 export interface ProgressStylesParams {
@@ -17,7 +17,7 @@ export interface ProgressStylesParams {
 
 const stripesAnimation = keyframes({
   from: { backgroundPosition: '0 0' },
-  to: { backgroundPosition: '40px 0' },
+  to: { backgroundPosition: `${rem(40)} 0` },
 });
 
 export default createStyles(
@@ -26,7 +26,7 @@ export default createStyles(
       position: 'relative',
       height: theme.fn.size({ size, sizes }),
       backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[2],
-      borderRadius: theme.fn.size({ size: radius, sizes: theme.radius }),
+      borderRadius: theme.fn.radius(radius),
       overflow: 'hidden',
     },
 
@@ -46,19 +46,19 @@ export default createStyles(
       }).background,
       transition: 'width 100ms linear',
       animation: animate ? `${stripesAnimation} 1000ms linear infinite` : 'none',
-      backgroundSize: '20px 20px',
+      backgroundSize: `${rem(20)} ${rem(20)}`,
       backgroundImage: striped
         ? 'linear-gradient(45deg, rgba(255, 255, 255, 0.15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, transparent 75%, transparent)'
         : 'none',
 
       '&:last-of-type': {
-        borderTopRightRadius: theme.fn.size({ size: radius, sizes: theme.radius }),
-        borderBottomRightRadius: theme.fn.size({ size: radius, sizes: theme.radius }),
+        borderTopRightRadius: theme.fn.radius(radius),
+        borderBottomRightRadius: theme.fn.radius(radius),
       },
 
       '&:first-of-type': {
-        borderTopLeftRadius: theme.fn.size({ size: radius, sizes: theme.radius }),
-        borderBottomLeftRadius: theme.fn.size({ size: radius, sizes: theme.radius }),
+        borderTopLeftRadius: theme.fn.radius(radius),
+        borderBottomLeftRadius: theme.fn.radius(radius),
       },
 
       '@media (prefers-reduced-motion)': {
@@ -68,7 +68,7 @@ export default createStyles(
 
     label: {
       color: theme.white,
-      fontSize: theme.fn.size({ size, sizes }) * 0.65,
+      fontSize: `calc(${theme.fn.size({ size, sizes })} * 0.65)`,
       fontWeight: 700,
       userSelect: 'none',
       overflow: 'hidden',
