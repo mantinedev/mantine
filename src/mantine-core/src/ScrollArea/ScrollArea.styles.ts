@@ -1,7 +1,7 @@
-import { createStyles, getStylesRef } from '@mantine/styles';
+import { createStyles, getStylesRef, rem } from '@mantine/styles';
 
 export interface ScrollAreaStylesParams {
-  scrollbarSize: number;
+  scrollbarSize: number | string;
   offsetScrollbars: boolean;
   scrollbarHovered: boolean;
   hidden: boolean;
@@ -19,8 +19,8 @@ export default createStyles(
     viewport: {
       width: '100%',
       height: '100%',
-      paddingRight: offsetScrollbars ? scrollbarSize : undefined,
-      paddingBottom: offsetScrollbars ? scrollbarSize : undefined,
+      paddingRight: offsetScrollbars ? rem(scrollbarSize) : undefined,
+      paddingBottom: offsetScrollbars ? rem(scrollbarSize) : undefined,
     },
 
     scrollbar: {
@@ -28,7 +28,7 @@ export default createStyles(
       userSelect: 'none',
       touchAction: 'none',
       boxSizing: 'border-box',
-      padding: scrollbarSize / 5,
+      padding: `calc(${rem(scrollbarSize)}  / 5)`,
       transition: 'background-color 150ms ease, opacity 150ms ease',
 
       '&:hover': {
@@ -42,12 +42,12 @@ export default createStyles(
       },
 
       '&[data-orientation="vertical"]': {
-        width: scrollbarSize,
+        width: rem(scrollbarSize),
       },
 
       '&[data-orientation="horizontal"]': {
         flexDirection: 'column',
-        height: scrollbarSize,
+        height: rem(scrollbarSize),
       },
 
       '&[data-state="hidden"]': {
@@ -63,7 +63,7 @@ export default createStyles(
         theme.colorScheme === 'dark'
           ? theme.fn.rgba(theme.white, 0.4)
           : theme.fn.rgba(theme.black, 0.4),
-      borderRadius: scrollbarSize,
+      borderRadius: rem(scrollbarSize),
       position: 'relative',
       transition: 'background-color 150ms ease',
       display: hidden ? 'none' : undefined,
@@ -77,8 +77,8 @@ export default createStyles(
         transform: 'translate(-50%, -50%)',
         width: '100%',
         height: '100%',
-        minWidth: 44,
-        minHeight: 44,
+        minWidth: rem(44),
+        minHeight: rem(44),
       },
     },
 
