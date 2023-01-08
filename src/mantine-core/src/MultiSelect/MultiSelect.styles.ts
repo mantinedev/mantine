@@ -1,4 +1,4 @@
-import { createStyles } from '@mantine/styles';
+import { createStyles, rem } from '@mantine/styles';
 import { INPUT_SIZES } from '../Input';
 
 export interface MultiSelectStylesParams {
@@ -11,31 +11,31 @@ export default createStyles((theme, { invalid }: MultiSelectStylesParams, { size
   },
 
   values: {
-    minHeight: theme.fn.size({ size, sizes: INPUT_SIZES }) - 2,
+    minHeight: `calc(${theme.fn.size({ size, sizes: INPUT_SIZES })} - ${rem(2)})`,
     display: 'flex',
     alignItems: 'center',
     flexWrap: 'wrap',
-    marginLeft: `calc(${-theme.spacing.xs}px / 2)`,
+    marginLeft: `calc(-${theme.spacing.xs} / 2)`,
     boxSizing: 'border-box',
   },
 
   value: {
-    margin: `calc(${theme.spacing.xs}px / 2 - 2px) calc(${theme.spacing.xs}px / 2)`,
+    margin: `calc(${theme.spacing.xs} / 2 - ${rem(2)}) calc(${theme.spacing.xs} / 2)`,
   },
 
   searchInput: {
     ...theme.fn.fontStyles(),
     flex: 1,
-    minWidth: 60,
+    minWidth: rem(60),
     backgroundColor: 'transparent',
     border: 0,
     outline: 0,
     fontSize: theme.fn.size({ size, sizes: theme.fontSizes }),
     padding: 0,
-    marginLeft: `calc(${theme.spacing.xs}px / 2)`,
+    marginLeft: `calc(${theme.spacing.xs} / 2)`,
     appearance: 'none',
     color: 'inherit',
-    lineHeight: `${theme.fn.size({ size, sizes: INPUT_SIZES }) - 2}px`,
+    lineHeight: `calc(${theme.fn.size({ size, sizes: INPUT_SIZES })} - ${rem(2)})`,
 
     '&::placeholder': {
       opacity: 1,

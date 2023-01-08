@@ -6,10 +6,10 @@ export default createStyles((theme, _params, { size }) => ({
     boxSizing: 'border-box',
     textAlign: 'left',
     width: '100%',
-    padding: `${theme.fn.size({ size, sizes: theme.spacing }) / 1.5}px ${theme.fn.size({
+    padding: `calc(${theme.fn.size({ size, sizes: theme.spacing })} / 1.5) ${theme.fn.size({
       size,
       sizes: theme.spacing,
-    })}px`,
+    })}`,
     cursor: 'pointer',
     fontSize: theme.fn.size({ size, sizes: theme.fontSizes }),
     color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
@@ -34,8 +34,8 @@ export default createStyles((theme, _params, { size }) => ({
   nothingFound: {
     boxSizing: 'border-box',
     color: theme.colors.gray[6],
-    paddingTop: theme.fn.size({ size, sizes: theme.spacing }) / 2,
-    paddingBottom: theme.fn.size({ size, sizes: theme.spacing }) / 2,
+    paddingTop: `calc(${theme.fn.size({ size, sizes: theme.spacing })} / 2)`,
+    paddingBottom: `calc(${theme.fn.size({ size, sizes: theme.spacing })} / 2)`,
     textAlign: 'center',
   },
 
@@ -43,10 +43,10 @@ export default createStyles((theme, _params, { size }) => ({
     boxSizing: 'border-box',
     textAlign: 'left',
     width: '100%',
-    padding: `${theme.fn.size({ size, sizes: theme.spacing }) / 1.5}px ${theme.fn.size({
+    padding: `calc(${theme.fn.size({ size, sizes: theme.spacing })} / 1.5) ${theme.fn.size({
       size,
       sizes: theme.spacing,
-    })}px`,
+    })}`,
   },
 
   separatorLabel: {

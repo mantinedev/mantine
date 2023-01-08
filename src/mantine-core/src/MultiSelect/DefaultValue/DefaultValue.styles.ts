@@ -1,4 +1,4 @@
-import { createStyles, MantineNumberSize } from '@mantine/styles';
+import { createStyles, MantineNumberSize, rem } from '@mantine/styles';
 
 interface DefaultLabelStyles {
   radius: MantineNumberSize;
@@ -7,19 +7,19 @@ interface DefaultLabelStyles {
 }
 
 const sizes = {
-  xs: 16,
-  sm: 22,
-  md: 26,
-  lg: 30,
-  xl: 36,
+  xs: rem(16),
+  sm: rem(22),
+  md: rem(26),
+  lg: rem(30),
+  xl: rem(36),
 };
 
 const fontSizes = {
-  xs: 10,
-  sm: 12,
-  md: 14,
-  lg: 16,
-  xl: 18,
+  xs: rem(10),
+  sm: rem(12),
+  md: rem(14),
+  lg: rem(16),
+  xl: rem(18),
 };
 
 export default createStyles(
@@ -51,12 +51,12 @@ export default createStyles(
       borderRadius: theme.fn.size({ size: radius, sizes: theme.radius }),
       cursor: disabled ? 'not-allowed' : 'default',
       userSelect: 'none',
-      maxWidth: 'calc(100% - 20px)',
+      maxWidth: `calc(100% - ${rem(20)})`,
     },
 
     defaultValueRemove: {
       color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.colors.gray[7],
-      marginLeft: theme.fn.size({ size, sizes: theme.spacing }) / 6,
+      marginLeft: `calc(${theme.fn.size({ size, sizes: theme.spacing })} / 6)`,
     },
 
     defaultValueLabel: {
