@@ -185,7 +185,7 @@ export default createStyles(
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        width: typeof iconWidth === 'number' ? rem(iconWidth) : theme.fn.size({ size, sizes }),
+        width: iconWidth ? rem(iconWidth) : theme.fn.size({ size, sizes }),
         color: invalid
           ? theme.colors.red[theme.colorScheme === 'dark' ? 6 : 7]
           : theme.colorScheme === 'dark'
@@ -201,10 +201,7 @@ export default createStyles(
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        width:
-          typeof rightSectionWidth === 'number'
-            ? rem(rightSectionWidth)
-            : theme.fn.size({ size, sizes }),
+        width: rightSectionWidth || theme.fn.size({ size, sizes }),
       },
     };
   }
