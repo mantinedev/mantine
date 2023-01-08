@@ -55,8 +55,8 @@ export function Track({
       <Box
         className={classes.bar}
         sx={(theme) => ({
-          left: `calc(${offset}% - ${theme.fn.size({ size, sizes })}px)`,
-          width: `calc(${filled}% + ${theme.fn.size({ size, sizes })}px)`,
+          left: `calc(${offset}% - ${theme.fn.size({ size, sizes })})`,
+          width: `calc(${filled}% + ${theme.fn.size({ size, sizes })})`,
         })}
       />
 
