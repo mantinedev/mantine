@@ -13,7 +13,7 @@ export default createStyles((theme, { color }: BlockquoteStylesParams) => ({
     margin: 0,
     borderTopRightRadius: theme.radius.sm,
     borderBottomRightRadius: theme.radius.sm,
-    padding: `${rem(theme.spacing.md)} ${rem(theme.spacing.lg)}`,
+    padding: `${theme.spacing.md} ${theme.spacing.lg}`,
   },
 
   inner: {

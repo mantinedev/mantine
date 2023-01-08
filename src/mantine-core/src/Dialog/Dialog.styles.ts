@@ -20,7 +20,7 @@ export default createStyles((theme, _params, { size }) => ({
 
   closeButton: {
     position: 'absolute',
-    top: `calc(${rem(theme.spacing.md)} / 2)`,
-    right: `calc(${rem(theme.spacing.md)} / 2)`,
+    top: `calc(${theme.spacing.md} / 2)`,
+    right: `calc(${theme.spacing.md} / 2)`,
   },
 }));

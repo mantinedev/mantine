@@ -106,8 +106,8 @@ export default createStyles(
     return {
       wrapper: {
         position: 'relative',
-        marginTop: offsetTop ? `calc(${rem(theme.spacing.xs)} / 2)` : undefined,
-        marginBottom: offsetBottom ? `calc(${rem(theme.spacing.xs)} / 2)` : undefined,
+        marginTop: offsetTop ? `calc(${theme.spacing.xs} / 2)` : undefined,
+        marginBottom: offsetBottom ? `calc(${theme.spacing.xs} / 2)` : undefined,
       },
 
       input: {
@@ -120,11 +120,11 @@ export default createStyles(
         WebkitTapHighlightColor: 'transparent',
         lineHeight: multiline
           ? theme.lineHeight
-          : `calc(${rem(theme.fn.size({ size, sizes }))} - ${rem(2)})`,
+          : `calc(${theme.fn.size({ size, sizes })} - ${rem(2)})`,
         appearance: 'none',
         resize: 'none',
         boxSizing: 'border-box',
-        fontSize: rem(theme.fn.size({ size, sizes: theme.fontSizes })),
+        fontSize: theme.fn.size({ size, sizes: theme.fontSizes }),
         width: '100%',
         color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
         display: 'block',

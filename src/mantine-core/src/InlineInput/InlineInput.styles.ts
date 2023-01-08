@@ -32,12 +32,12 @@ export default createStyles((theme, { labelPosition }: InlineInputStylesParams, 
   },
 
   description: {
-    marginTop: `calc(${rem(theme.spacing.xs)} / 2)`,
+    marginTop: `calc(${theme.spacing.xs} / 2)`,
     [labelPosition === 'left' ? 'paddingRight' : 'paddingLeft']: theme.spacing.sm,
   },
 
   error: {
-    marginTop: `calc(${rem(theme.spacing.xs)} / 2)`,
+    marginTop: `calc(${theme.spacing.xs} / 2)`,
     [labelPosition === 'left' ? 'paddingRight' : 'paddingLeft']: theme.spacing.sm,
   },
 

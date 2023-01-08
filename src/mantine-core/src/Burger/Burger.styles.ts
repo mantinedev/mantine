@@ -21,9 +21,9 @@ export default createStyles(
     return {
       root: {
         borderRadius: theme.radius.sm,
-        width: `calc(${sizeValue} + ${rem(theme.spacing.xs)})`,
-        height: `calc(${sizeValue} + ${rem(theme.spacing.xs)})`,
-        padding: `calc(${rem(theme.spacing.xs)} / 2)`,
+        width: `calc(${sizeValue} + ${theme.spacing.xs})`,
+        height: `calc(${sizeValue} + ${theme.spacing.xs})`,
+        padding: `calc(${theme.spacing.xs} / 2)`,
         cursor: 'pointer',
       },
 

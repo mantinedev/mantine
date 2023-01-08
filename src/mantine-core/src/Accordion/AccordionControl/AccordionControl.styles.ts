@@ -69,11 +69,9 @@ export default createStyles(
       flexDirection: chevronPosition === 'right' ? 'row-reverse' : 'row',
       paddingTop: theme.spacing.md,
       paddingBottom: theme.spacing.md,
-      paddingRight: theme.fn.calc(theme.spacing.md, '/ 2'),
+      paddingRight: `calc(${theme.spacing.md} / 2)`,
       paddingLeft:
-        chevronPosition === 'right'
-          ? theme.fn.calc(theme.spacing.sm, `+ ${rem(4)}`)
-          : theme.spacing.xs,
+        chevronPosition === 'right' ? `calc(${theme.spacing.md} + ${rem(4)})` : theme.spacing.xs,
       textAlign: 'left',
       color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
 

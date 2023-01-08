@@ -53,9 +53,7 @@ function getVariantStyles({ theme, variant, color, size, gradient }: GetVariantS
       border: `${rem(1)} solid ${
         theme.colorScheme === 'dark' ? theme.colors.dark[3] : theme.colors.gray[3]
       }`,
-      paddingLeft: `calc(${rem(
-        theme.fn.size({ size, sizes: theme.spacing })
-      )} / 1.5 - ${dotSize} / 2)`,
+      paddingLeft: `calc(${theme.fn.size({ size, sizes: theme.spacing })} / 1.5 - ${dotSize} / 2)`,
 
       '&::before': {
         content: '""',
@@ -88,11 +86,11 @@ export default createStyles(
 
     return {
       leftSection: {
-        marginRight: theme.fn.calc(theme.spacing.xs, '/ 2'),
+        marginRight: `calc(${theme.spacing.xs} / 2)`,
       },
 
       rightSection: {
-        marginLeft: theme.fn.calc(theme.spacing.xs, '/ 2'),
+        marginLeft: `calc(${theme.spacing.xs} / 2)`,
       },
 
       inner: {
@@ -109,7 +107,7 @@ export default createStyles(
         WebkitTapHighlightColor: 'transparent',
         lineHeight: `calc(${height} - ${rem(2)})`,
         textDecoration: 'none',
-        padding: `0 ${theme.fn.calc(theme.fn.size({ size, sizes: theme.spacing }), '/ 1.5')}`,
+        padding: `0 calc(${theme.fn.size({ size, sizes: theme.spacing })} / 1.5)`,
         boxSizing: 'border-box',
         display: fullWidth ? 'flex' : 'inline-flex',
         alignItems: 'center',

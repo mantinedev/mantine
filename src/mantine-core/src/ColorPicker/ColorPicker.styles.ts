@@ -24,7 +24,7 @@ export default createStyles((theme, { fullWidth }: ColorPickerStylesParams, { si
   body: {
     display: 'flex',
     boxSizing: 'border-box',
-    paddingTop: `calc(${rem(theme.fn.size({ size, sizes: theme.spacing }))} / 2)`,
+    paddingTop: `calc(${theme.fn.size({ size, sizes: theme.spacing })} / 2)`,
   },
 
   sliders: {
