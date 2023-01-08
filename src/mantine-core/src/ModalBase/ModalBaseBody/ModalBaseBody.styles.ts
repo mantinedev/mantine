@@ -1,4 +1,4 @@
-import { createStyles, MantineNumberSize } from '@mantine/styles';
+import { createStyles, MantineNumberSize, rem } from '@mantine/styles';
 
 interface ModalBaseBodyStylesParams {
   padding: MantineNumberSize;
@@ -6,7 +6,7 @@ interface ModalBaseBodyStylesParams {
 
 export default createStyles((theme, { padding }: ModalBaseBodyStylesParams) => ({
   body: {
-    padding: theme.fn.size({ size: padding, sizes: theme.spacing }),
+    padding: rem(theme.fn.size({ size: padding, sizes: theme.spacing })),
 
     '&:not(:only-child)': {
       paddingTop: 0,

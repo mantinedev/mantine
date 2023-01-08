@@ -4,7 +4,7 @@ interface ModalBaseContentStylesParams {
   zIndex: number;
 }
 
-export default createStyles((theme, { zIndex }: ModalBaseContentStylesParams) => ({
+export default createStyles((_theme, { zIndex }: ModalBaseContentStylesParams) => ({
   inner: {
     position: 'fixed',
     width: '100%',
