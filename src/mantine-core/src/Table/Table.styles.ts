@@ -1,4 +1,4 @@
-import { createStyles, MantineNumberSize } from '@mantine/styles';
+import { createStyles, MantineNumberSize, rem } from '@mantine/styles';
 
 export interface TableStylesParams {
   captionSide: 'top' | 'bottom';
@@ -21,9 +21,10 @@ export default createStyles(
       withColumnBorders,
     }: TableStylesParams
   ) => {
-    const border = `1px solid ${
+    const border = `${rem(1)} solid ${
       theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[3]
     }`;
+
     return {
       root: {
         ...theme.fn.fontStyles(),
@@ -32,7 +33,7 @@ export default createStyles(
         captionSide,
         color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
         lineHeight: theme.lineHeight,
-        border: withBorder ? border : '',
+        border: withBorder ? border : undefined,
 
         '& caption': {
           marginTop: captionSide === 'top' ? 0 : theme.spacing.xs,
@@ -46,10 +47,12 @@ export default createStyles(
           fontWeight: 'bold',
           color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.colors.gray[7],
           fontSize: theme.fn.size({ size: fontSize, sizes: theme.fontSizes }),
-          padding: `${theme.fn.size({
-            size: verticalSpacing,
-            sizes: theme.spacing,
-          })}px ${theme.fn.size({ size: horizontalSpacing, sizes: theme.spacing })}px`,
+          padding: `${rem(
+            theme.fn.size({
+              size: verticalSpacing,
+              sizes: theme.spacing,
+            })
+          )} ${rem(theme.fn.size({ size: horizontalSpacing, sizes: theme.spacing }))}`,
         },
 
         '& thead tr th': {
@@ -61,10 +64,12 @@ export default createStyles(
         },
 
         '& tbody tr td': {
-          padding: `${theme.fn.size({
-            size: verticalSpacing,
-            sizes: theme.spacing,
-          })}px ${theme.fn.size({ size: horizontalSpacing, sizes: theme.spacing })}px`,
+          padding: `${rem(
+            theme.fn.size({
+              size: verticalSpacing,
+              sizes: theme.spacing,
+            })
+          )} ${rem(theme.fn.size({ size: horizontalSpacing, sizes: theme.spacing }))}`,
           borderTop: border,
           fontSize: theme.fn.size({ size: fontSize, sizes: theme.fontSizes }),
         },
