@@ -27,17 +27,17 @@ function Demo() {
   const [searchValue, onSearchChange] = useState('');
 
   return (
-    <div style={{ maxWidth: 400, marginLeft: 'auto', marginRight: 'auto' }}>
-      <MultiSelect
-        data={data}
-        label="Your favorite frameworks/libraries"
-        placeholder="Pick all that you like"
-        searchable
-        searchValue={searchValue}
-        onSearchChange={onSearchChange}
-        nothingFound="Nothing found"
-      />
-    </div>
+    <MultiSelect
+      maw={400}
+      mx="auto"
+      data={data}
+      label="Your favorite frameworks/libraries"
+      placeholder="Pick all that you like"
+      searchable
+      searchValue={searchValue}
+      onSearchChange={onSearchChange}
+      nothingFound="Nothing found"
+    />
   );
 }
 

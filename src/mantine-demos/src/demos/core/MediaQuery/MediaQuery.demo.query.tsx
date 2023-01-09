@@ -1,6 +1,6 @@
 import React from 'react';
 import { MantineDemo } from '@mantine/ds';
-import { MediaQuery, Text } from '@mantine/core';
+import { MediaQuery, Text, rem } from '@mantine/core';
 
 const code = `
 import { MediaQuery, Text } from '@mantine/core';
@@ -9,7 +9,7 @@ function Demo() {
   return (
     <MediaQuery
       query="(max-width: 1200px) and (min-width: 800px)"
-      styles={{ fontSize: 20, '&:hover': { backgroundColor: 'silver' } }}
+      styles={{ fontSize: rem(20), '&:hover': { backgroundColor: 'silver' } }}
     >
       <Text>(max-width: 1200px) and (min-width: 800px) breakpoints</Text>
     </MediaQuery>
@@ -21,7 +21,7 @@ function Demo() {
   return (
     <MediaQuery
       query="(max-width: 1200px) and (min-width: 800px)"
-      styles={{ fontSize: 20, '&:hover': { backgroundColor: 'silver' } }}
+      styles={{ fontSize: rem(20), '&:hover': { backgroundColor: 'silver' } }}
     >
       <Text>(max-width: 1200px) and (min-width: 800px) breakpoints</Text>
     </MediaQuery>

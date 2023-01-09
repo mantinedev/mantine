@@ -1,40 +1,41 @@
-import React, { useState } from 'react';
-import { LoadingOverlay, Button, Group, useMantineTheme } from '@mantine/core';
+import React from 'react';
+import { LoadingOverlay, Button, Group, useMantineTheme, Box, rem } from '@mantine/core';
+import { useDisclosure } from '@mantine/hooks';
 import { MantineDemo } from '@mantine/ds';
 import { AuthenticationForm } from '../../../shared/AuthenticationForm/AuthenticationForm';
 import { demoBase } from './_demo-base';
 
 const code = `
-import { useState } from 'react';
-import { LoadingOverlay, Button, Group } from '@mantine/core';
+import { useDisclosure } from '@mantine/hooks';
+import { LoadingOverlay, Button, Group, Box } from '@mantine/core';
 
 function Demo() {
-  const [visible, setVisible] = useState(false);
+  const [visible, { toggle }] = useDisclosure(false);
 
   // Note that position: relative is required
   return (
     <>
-      <div style={{ width: 400, position: 'relative' }}>
+      <Box maw={400} pos="relative">
         <LoadingOverlay visible={visible} overlayBlur={2} />
         {/* ...other content */}
-      </div>
+      </Box>
 
       <Group position="center">
-        <Button onClick={() => setVisible((v) => !v)}>Toggle overlay</Button>
+        <Button onClick={toggle}>Toggle overlay</Button>
       </Group>
     </>
   );
 }`;
 
 export function Demo() {
-  const [visible, setVisible] = useState(false);
+  const [visible, { toggle }] = useDisclosure(false);
   const theme = useMantineTheme();
 
   return (
     <>
-      <div
+      <Box
         style={{
-          borderRadius: 4,
+          borderRadius: rem(4),
           position: 'relative',
           margin: 'auto',
         }}
@@ -42,14 +43,14 @@ export function Demo() {
         <LoadingOverlay
           visible={visible}
           zIndex={1000}
-          style={{ borderRadius: 4 }}
+          sx={{ borderRadius: rem(4) }}
           overlayBlur={2}
         />
         <AuthenticationForm noSubmit noShadow={theme.colorScheme === 'dark'} />
-      </div>
+      </Box>
 
-      <Group position="center" style={{ marginTop: 20 }}>
-        <Button onClick={() => setVisible((v) => !v)}>Toggle overlay</Button>
+      <Group position="center" mt="xl">
+        <Button onClick={toggle}>Toggle overlay</Button>
       </Group>
     </>
   );

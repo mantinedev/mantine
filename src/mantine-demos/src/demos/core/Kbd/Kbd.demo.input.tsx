@@ -1,19 +1,19 @@
 import React from 'react';
 import { IconSearch } from '@tabler/icons';
 import { MantineDemo } from '@mantine/ds';
-import { Kbd, TextInput } from '@mantine/core';
+import { Kbd, TextInput, Flex } from '@mantine/core';
 
 const code = `
-import { Kbd, TextInput } from '@mantine/core';
+import { Kbd, TextInput, Flex } from '@mantine/core';
 import { IconSearch } from '@tabler/icons';
 
 function Demo() {
   const rightSection = (
-    <div style={{ display: 'flex', alignItems: 'center' }}>
-      <Kbd>Ctrl</Kbd>
-      <span style={{ margin: '0 5px' }}>+</span>
-      <Kbd>K</Kbd>
-    </div>
+    <Flex align="center">
+      <Kbd mr={5}>Ctrl</Kbd>
+      <span>+</span>
+      <Kbd ml={5}>K</Kbd>
+    </Flex>
   );
 
   return (
@@ -30,11 +30,11 @@ function Demo() {
 
 function Demo() {
   const rightSection = (
-    <div style={{ display: 'flex', alignItems: 'center' }}>
-      <Kbd>Ctrl</Kbd>
-      <span style={{ margin: '0 5px' }}>+</span>
-      <Kbd>K</Kbd>
-    </div>
+    <Flex align="center">
+      <Kbd mr={5}>Ctrl</Kbd>
+      <span>+</span>
+      <Kbd ml={5}>K</Kbd>
+    </Flex>
   );
 
   return (

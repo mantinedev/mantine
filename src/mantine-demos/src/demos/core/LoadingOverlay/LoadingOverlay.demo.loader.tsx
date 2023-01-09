@@ -1,5 +1,13 @@
 import React, { useState } from 'react';
-import { LoadingOverlay, Button, Group, useMantineTheme, DEFAULT_THEME } from '@mantine/core';
+import {
+  LoadingOverlay,
+  Button,
+  Group,
+  useMantineTheme,
+  DEFAULT_THEME,
+  rem,
+  Box,
+} from '@mantine/core';
 import { MantineDemo } from '@mantine/ds';
 import { AuthenticationForm } from '../../../shared/AuthenticationForm/AuthenticationForm';
 import { demoBase } from './_demo-base';
@@ -70,9 +78,9 @@ export function Demo() {
 
   return (
     <>
-      <div
-        style={{
-          borderRadius: 4,
+      <Box
+        sx={{
+          borderRadius: rem(4),
           position: 'relative',
           margin: 'auto',
         }}
@@ -80,13 +88,13 @@ export function Demo() {
         <LoadingOverlay
           visible={visible}
           zIndex={1000}
-          style={{ borderRadius: 4 }}
+          sx={{ borderRadius: rem(4) }}
           loader={customLoader}
         />
         <AuthenticationForm noSubmit noShadow={theme.colorScheme === 'dark'} />
-      </div>
+      </Box>
 
-      <Group position="center" style={{ marginTop: 20 }}>
+      <Group position="center" mt="xl">
         <Button onClick={() => setVisible((v) => !v)}>Toggle overlay</Button>
       </Group>
     </>

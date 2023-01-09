@@ -15,14 +15,14 @@ function Demo() {
 
 function Demo() {
   return (
-    <div style={{ maxWidth: 400, marginLeft: 'auto', marginRight: 'auto' }}>
-      <MultiSelect
-        data={data}
-        label="Pick hashtags"
-        placeholder="Pick all that you like"
-        icon={<IconHash size={14} />}
-      />
-    </div>
+    <MultiSelect
+      maw={400}
+      mx="auto"
+      data={data}
+      label="Pick hashtags"
+      placeholder="Pick all that you like"
+      icon={<IconHash size={14} />}
+    />
   );
 }
 
