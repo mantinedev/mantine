@@ -176,11 +176,6 @@ export default createStyles(
       marginLeft: theme.spacing.xs,
     },
 
-    loader: {
-      maxWidth: '100%',
-      maxHeight: '5%',
-    },
-
     centerLoader: {
       position: 'absolute',
       left: '50%',
