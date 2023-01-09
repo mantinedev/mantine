@@ -1,4 +1,4 @@
-import { createStyles, MantineNumberSize, rem } from '@mantine/styles';
+import { createStyles, MantineNumberSize, rem, getSize } from '@mantine/styles';
 
 export interface NumberInputStylesParams {
   radius: MantineNumberSize;
@@ -31,7 +31,7 @@ export default createStyles((theme, { radius }: NumberInputStylesParams, { size 
     alignItems: 'center',
     justifyContent: 'center',
     boxSizing: 'border-box',
-    width: theme.fn.size({ size, sizes: CONTROL_SIZES }),
+    width: getSize({ size, sizes: CONTROL_SIZES }),
     padding: 0,
     WebkitTapHighlightColor: 'transparent',
     borderBottom: `${rem(1)} solid ${

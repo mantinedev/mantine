@@ -5,6 +5,7 @@ import {
   MantineGradient,
   MantineTheme,
   rem,
+  getSize,
 } from '@mantine/styles';
 
 export interface ThemeIconStylesParams {
@@ -53,7 +54,7 @@ function getVariantStyles({ theme, variant, color, gradient }: GetVariantStylesI
 
 export default createStyles(
   (theme, { color, radius, gradient }: ThemeIconStylesParams, { variant, size }) => {
-    const iconSize = rem(theme.fn.size({ size, sizes }));
+    const iconSize = getSize({ size, sizes });
 
     return {
       root: {

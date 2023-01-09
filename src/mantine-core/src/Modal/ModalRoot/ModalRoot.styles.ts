@@ -1,4 +1,4 @@
-import { createStyles, rem } from '@mantine/styles';
+import { createStyles, rem, getSize } from '@mantine/styles';
 
 const sizes = {
   xs: rem(320),
@@ -18,7 +18,7 @@ interface ModalRootStylesParams {
 export default createStyles(
   (theme, { yOffset, xOffset, centered, fullScreen }: ModalRootStylesParams, { size }) => ({
     content: {
-      flex: fullScreen ? '0 0 100%' : `0 0 ${rem(theme.fn.size({ size, sizes }))}`,
+      flex: fullScreen ? '0 0 100%' : `0 0 ${getSize({ size, sizes })}`,
       maxWidth: '100%',
       maxHeight: fullScreen ? undefined : `calc(100vh - (${rem(yOffset)} * 2))`,
       height: fullScreen ? '100vh' : undefined,

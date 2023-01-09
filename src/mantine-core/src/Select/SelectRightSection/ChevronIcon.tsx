@@ -1,5 +1,5 @@
 import React from 'react';
-import { useMantineTheme, MantineSize } from '@mantine/styles';
+import { useMantineTheme, MantineSize, getSize } from '@mantine/styles';
 
 interface ChevronIconProps extends React.ComponentPropsWithoutRef<'svg'> {
   size: MantineSize;
@@ -16,7 +16,7 @@ const iconSizes = {
 
 export function ChevronIcon({ size, error, style, ...others }: ChevronIconProps) {
   const theme = useMantineTheme();
-  const _size = theme.fn.size({ size, sizes: iconSizes });
+  const _size = getSize({ size, sizes: iconSizes });
 
   return (
     <svg

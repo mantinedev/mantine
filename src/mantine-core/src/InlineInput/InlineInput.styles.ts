@@ -1,4 +1,4 @@
-import { createStyles, rem } from '@mantine/styles';
+import { createStyles, rem, getSize } from '@mantine/styles';
 
 const sizes = {
   xs: rem(16),
@@ -24,8 +24,8 @@ export default createStyles((theme, { labelPosition }: InlineInputStylesParams, 
     display: 'inline-flex',
     flexDirection: 'column',
     WebkitTapHighlightColor: 'transparent',
-    fontSize: size in sizes ? theme.fn.size({ size, sizes: theme.fontSizes }) : undefined,
-    lineHeight: size in sizes ? theme.fn.size({ size, sizes }) : undefined,
+    fontSize: size in sizes ? getSize({ size, sizes: theme.fontSizes }) : undefined,
+    lineHeight: size in sizes ? getSize({ size, sizes }) : undefined,
     color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
     cursor: theme.cursorType,
     order: labelPosition === 'left' ? 1 : 2,

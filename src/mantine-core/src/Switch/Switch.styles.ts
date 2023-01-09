@@ -1,4 +1,4 @@
-import { createStyles, MantineNumberSize, MantineColor, rem } from '@mantine/styles';
+import { createStyles, MantineNumberSize, MantineColor, rem, getSize } from '@mantine/styles';
 
 export interface SwitchStylesParams {
   color: MantineColor;
@@ -49,10 +49,10 @@ const trackLabelPaddings = {
 
 export default createStyles(
   (theme, { radius, color, labelPosition, error }: SwitchStylesParams, { size }) => {
-    const handleSize = theme.fn.size({ size, sizes: handleSizes });
-    const borderRadius = theme.fn.size({ size: radius, sizes: theme.radius });
+    const handleSize = getSize({ size, sizes: handleSizes });
+    const borderRadius = getSize({ size: radius, sizes: theme.radius });
     const colors = theme.fn.variant({ variant: 'filled', color });
-    const trackWidth = theme.fn.size({ size, sizes: switchWidth });
+    const trackWidth = getSize({ size, sizes: switchWidth });
     const trackPadding = rem(size === 'xs' ? 1 : 2);
     const errorColor = theme.fn.variant({ variant: 'filled', color: 'red' }).background;
 
@@ -83,7 +83,7 @@ export default createStyles(
             ? theme.colors.dark[4]
             : theme.colors.gray[3]
         }`,
-        height: theme.fn.size({ size, sizes: switchHeight }),
+        height: getSize({ size, sizes: switchHeight }),
         minWidth: trackWidth,
         margin: 0,
         transitionProperty: 'background-color, border-color',
@@ -93,7 +93,7 @@ export default createStyles(
         appearance: 'none',
         display: 'flex',
         alignItems: 'center',
-        fontSize: theme.fn.size({ size, sizes: labelFontSizes }),
+        fontSize: getSize({ size, sizes: labelFontSizes }),
         fontWeight: 600,
         order: labelPosition === 'left' ? 2 : 1,
         userSelect: 'none',
@@ -158,7 +158,7 @@ export default createStyles(
         placeContent: 'center',
 
         minWidth: `calc(${trackWidth} - ${handleSize})`,
-        paddingInline: theme.fn.size({ size, sizes: trackLabelPaddings }),
+        paddingInline: getSize({ size, sizes: trackLabelPaddings }),
         margin: `0 0 0 calc(${handleSize} + ${trackPadding})`,
         transition: `margin 150ms ${theme.transitionTimingFunction}`,
 

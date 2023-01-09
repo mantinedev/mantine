@@ -1,4 +1,4 @@
-import { createStyles, getStylesRef } from '@mantine/styles';
+import { createStyles, getStylesRef, getSize } from '@mantine/styles';
 import type { ListStylesParams } from '../List.styles';
 
 export default createStyles((theme, { spacing, center }: ListStylesParams) => ({
@@ -14,7 +14,7 @@ export default createStyles((theme, { spacing, center }: ListStylesParams) => ({
     lineHeight: center ? 1 : theme.lineHeight,
 
     '&:not(:first-of-type)': {
-      marginTop: theme.fn.size({ size: spacing, sizes: theme.spacing }),
+      marginTop: getSize({ size: spacing, sizes: theme.spacing }),
     },
 
     '&[data-with-icon]': {

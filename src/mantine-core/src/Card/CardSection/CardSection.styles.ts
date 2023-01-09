@@ -1,4 +1,4 @@
-import { createStyles } from '@mantine/styles';
+import { createStyles, getSize } from '@mantine/styles';
 
 interface CardSectionStyles {
   padding: string | number;
@@ -7,7 +7,7 @@ interface CardSectionStyles {
 }
 
 export default createStyles((theme, { padding, withBorder, inheritPadding }: CardSectionStyles) => {
-  const spacing = theme.fn.size({ size: padding, sizes: theme.spacing });
+  const spacing = getSize({ size: padding, sizes: theme.spacing });
   const offset = -1 * spacing;
   const borderColor = theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[3];
 

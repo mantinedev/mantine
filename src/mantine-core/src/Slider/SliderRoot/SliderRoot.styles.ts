@@ -1,4 +1,4 @@
-import { createStyles, rem } from '@mantine/styles';
+import { createStyles, rem, getSize } from '@mantine/styles';
 
 interface SliderRootStyles {
   disabled: boolean;
@@ -17,7 +17,7 @@ export default createStyles((theme, { disabled }: SliderRootStyles, { size }) =>
     ...theme.fn.fontStyles(),
     WebkitTapHighlightColor: 'transparent',
     outline: 0,
-    height: `calc(${theme.fn.size({ sizes, size })} * 2)`,
+    height: `calc(${getSize({ sizes, size })} * 2)`,
     display: 'flex',
     alignItems: 'center',
     cursor: disabled ? 'not-allowed' : 'pointer',

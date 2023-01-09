@@ -2,7 +2,7 @@ import React from 'react';
 
 export interface PasswordToggleIconProps {
   reveal: boolean;
-  size: number;
+  size: number | string;
 }
 
 export type PasswordInputVisibilityToggleIcon = React.FC<PasswordToggleIconProps>;

@@ -4,7 +4,6 @@ import { themeColor } from './theme-color/theme-color';
 import { linearGradient, radialGradient, gradient } from './gradient/gradient';
 import { smallerThan, largerThan } from './breakpoints/breakpoints';
 import { rgba } from './rgba/rgba';
-import { size } from './size/size';
 import { cover } from './cover/cover';
 import { darken } from './darken/darken';
 import { lighten } from './lighten/lighten';
@@ -24,7 +23,6 @@ export const fns = {
   smallerThan,
   largerThan,
   rgba,
-  size,
   cover,
   darken,
   lighten,

@@ -1,4 +1,4 @@
-import { createStyles, MantineNumberSize } from '@mantine/core';
+import { createStyles, MantineNumberSize, getSize } from '@mantine/core';
 
 export const sizes = {
   xs: 30,
@@ -18,9 +18,9 @@ export default createStyles((theme, { radius, isStatic }: DayStylesParams, { siz
   const lightColors = theme.fn.variant({ variant: 'light' });
   return {
     day: {
-      width: theme.fn.size({ size, sizes }),
-      height: theme.fn.size({ size, sizes }),
-      fontSize: theme.fn.size({ size, sizes: theme.fontSizes }),
+      width: getSize({ size, sizes }),
+      height: getSize({ size, sizes }),
+      fontSize: getSize({ size, sizes: theme.fontSizes }),
       display: 'inline-flex',
       justifyContent: 'center',
       alignItems: 'center',

@@ -1,7 +1,7 @@
 import React from 'react';
 
 interface ChevronProps {
-  size: number;
+  size: number | string;
   direction: 'up' | 'down';
 }
 

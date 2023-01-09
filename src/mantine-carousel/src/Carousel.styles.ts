@@ -4,6 +4,7 @@ import {
   MantineNumberSize,
   rem,
   getBreakpointValue,
+  getSize,
 } from '@mantine/core';
 import { CarouselBreakpoint } from './types';
 
@@ -36,7 +37,7 @@ export default createStyles(
     const getContainerStyles = (gap: MantineNumberSize) => {
       if (!includeGapInSize) return {};
 
-      const slideGapValue = rem(theme.fn.size({ size: gap, sizes: theme.spacing }));
+      const slideGapValue = getSize({ size: gap, sizes: theme.spacing });
 
       return {
         [orientation === 'horizontal'
@@ -54,7 +55,7 @@ export default createStyles(
       ? null
       : getSortedBreakpoints(theme, breakpoints).reduce((acc, breakpoint) => {
           const property = 'maxWidth' in breakpoint ? 'max-width' : 'min-width';
-          const breakpointSize = theme.fn.size({
+          const breakpointSize = getSize({
             size: (property === 'max-width' ? breakpoint.maxWidth : breakpoint.minWidth)!,
             sizes: theme.breakpoints,
           });
@@ -100,16 +101,16 @@ export default createStyles(
         alignItems: 'center',
         justifyContent: 'space-between',
         paddingLeft: horizontal
-          ? rem(theme.fn.size({ size: controlsOffset, sizes: theme.spacing }))
+          ? getSize({ size: controlsOffset, sizes: theme.spacing })
           : undefined,
         paddingRight: horizontal
-          ? rem(theme.fn.size({ size: controlsOffset, sizes: theme.spacing }))
+          ? getSize({ size: controlsOffset, sizes: theme.spacing })
           : undefined,
         paddingTop: !horizontal
-          ? rem(theme.fn.size({ size: controlsOffset, sizes: theme.spacing }))
+          ? getSize({ size: controlsOffset, sizes: theme.spacing })
           : undefined,
         paddingBottom: !horizontal
-          ? rem(theme.fn.size({ size: controlsOffset, sizes: theme.spacing }))
+          ? getSize({ size: controlsOffset, sizes: theme.spacing })
           : undefined,
         pointerEvents: 'none',
       },

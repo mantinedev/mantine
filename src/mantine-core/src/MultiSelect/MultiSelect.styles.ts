@@ -1,4 +1,4 @@
-import { createStyles, rem } from '@mantine/styles';
+import { createStyles, rem, getSize } from '@mantine/styles';
 import { INPUT_SIZES } from '../Input';
 
 export interface MultiSelectStylesParams {
@@ -11,7 +11,7 @@ export default createStyles((theme, { invalid }: MultiSelectStylesParams, { size
   },
 
   values: {
-    minHeight: `calc(${theme.fn.size({ size, sizes: INPUT_SIZES })} - ${rem(2)})`,
+    minHeight: `calc(${getSize({ size, sizes: INPUT_SIZES })} - ${rem(2)})`,
     display: 'flex',
     alignItems: 'center',
     flexWrap: 'wrap',
@@ -30,12 +30,12 @@ export default createStyles((theme, { invalid }: MultiSelectStylesParams, { size
     backgroundColor: 'transparent',
     border: 0,
     outline: 0,
-    fontSize: theme.fn.size({ size, sizes: theme.fontSizes }),
+    fontSize: getSize({ size, sizes: theme.fontSizes }),
     padding: 0,
     marginLeft: `calc(${theme.spacing.xs} / 2)`,
     appearance: 'none',
     color: 'inherit',
-    lineHeight: `calc(${theme.fn.size({ size, sizes: INPUT_SIZES })} - ${rem(2)})`,
+    lineHeight: `calc(${getSize({ size, sizes: INPUT_SIZES })} - ${rem(2)})`,
 
     '&::placeholder': {
       opacity: 1,

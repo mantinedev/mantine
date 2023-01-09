@@ -5,6 +5,7 @@ import {
   MantineTheme,
   rem,
   getBreakpointValue,
+  getSize,
 } from '@mantine/styles';
 
 export interface MediaQueryStylesParams {
@@ -17,8 +18,8 @@ export interface MediaQueryStylesParams {
 export default createStyles(
   (theme, { smallerThan, largerThan, query, styles }: MediaQueryStylesParams) => {
     const media: CSSObject = {};
-    const minWidth = theme.fn.size({ size: largerThan, sizes: theme.breakpoints });
-    const maxWidth = theme.fn.size({ size: smallerThan, sizes: theme.breakpoints });
+    const minWidth = getSize({ size: largerThan, sizes: theme.breakpoints });
+    const maxWidth = getSize({ size: smallerThan, sizes: theme.breakpoints });
     const _styles = typeof styles === 'function' ? styles(theme) : styles;
 
     if (largerThan !== undefined && smallerThan !== undefined) {
@@ -29,17 +30,14 @@ export default createStyles(
       ] = _styles;
     } else {
       if (largerThan !== undefined) {
-        media[
-          `@media (min-width: ${rem(
-            theme.fn.size({ size: largerThan, sizes: theme.breakpoints })
-          )})`
-        ] = _styles;
+        media[`@media (min-width: ${getSize({ size: largerThan, sizes: theme.breakpoints })})`] =
+          _styles;
       }
 
       if (smallerThan !== undefined) {
         media[
           `@media (max-width: ${rem(
-            getBreakpointValue(theme.fn.size({ size: smallerThan, sizes: theme.breakpoints })) - 1
+            getBreakpointValue(getSize({ size: smallerThan, sizes: theme.breakpoints })) - 1
           )})`
         ] = _styles;
       }

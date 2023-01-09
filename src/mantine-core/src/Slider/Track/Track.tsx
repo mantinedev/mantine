@@ -1,5 +1,5 @@
 import React from 'react';
-import { DefaultProps, MantineNumberSize, MantineColor, Selectors } from '@mantine/styles';
+import { DefaultProps, MantineNumberSize, MantineColor, Selectors, getSize } from '@mantine/styles';
 import { Box } from '../../Box';
 import { Marks, MarksStylesNames } from '../Marks/Marks';
 import { sizes } from '../SliderRoot/SliderRoot.styles';
@@ -54,10 +54,10 @@ export function Track({
     <div className={classes.track} onMouseLeave={onMouseLeave} onMouseEnter={onMouseEnter}>
       <Box
         className={classes.bar}
-        sx={(theme) => ({
-          left: `calc(${offset}% - ${theme.fn.size({ size, sizes })})`,
-          width: `calc(${filled}% + ${theme.fn.size({ size, sizes })})`,
-        })}
+        sx={{
+          left: `calc(${offset}% - ${getSize({ size, sizes })})`,
+          width: `calc(${filled}% + ${getSize({ size, sizes })})`,
+        }}
       />
 
       {children}

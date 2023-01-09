@@ -1,4 +1,11 @@
-import { createStyles, MantineColor, MantineNumberSize, getStylesRef, rem } from '@mantine/styles';
+import {
+  createStyles,
+  MantineColor,
+  MantineNumberSize,
+  getStylesRef,
+  rem,
+  getSize,
+} from '@mantine/styles';
 
 export interface StepStylesParams {
   color: MantineColor;
@@ -23,7 +30,7 @@ export default createStyles(
     { color, iconSize, radius, allowStepClick, iconPosition, orientation }: StepStylesParams,
     { size }
   ) => {
-    const _iconSize = iconSize ? rem(iconSize) : theme.fn.size({ size, sizes: iconSizes });
+    const _iconSize = iconSize ? rem(iconSize) : getSize({ size, sizes: iconSizes });
     const iconMargin = size === 'xl' || size === 'lg' ? theme.spacing.md : theme.spacing.sm;
     const _radius = theme.fn.radius(radius);
     const colors = theme.fn.variant({
@@ -98,7 +105,7 @@ export default createStyles(
         position: 'relative',
         fontWeight: 700,
         color: theme.colorScheme === 'dark' ? theme.colors.dark[1] : theme.colors.gray[7],
-        fontSize: theme.fn.size({ size, sizes: theme.fontSizes }),
+        fontSize: getSize({ size, sizes: theme.fontSizes }),
 
         '&[data-progress]': {
           borderColor: colors.background,
@@ -130,15 +137,15 @@ export default createStyles(
       stepLabel: {
         textAlign: iconPosition,
         fontWeight: 500,
-        fontSize: theme.fn.size({ size, sizes: theme.fontSizes }),
+        fontSize: getSize({ size, sizes: theme.fontSizes }),
         lineHeight: 1,
       },
 
       stepDescription: {
         textAlign: iconPosition,
-        marginTop: `calc(${theme.fn.size({ size, sizes: theme.spacing })} / 3)`,
-        marginBottom: `calc(${theme.fn.size({ size, sizes: theme.spacing })} / 3)`,
-        fontSize: `calc(${theme.fn.size({ size, sizes: theme.fontSizes })} - ${rem(2)})`,
+        marginTop: `calc(${getSize({ size, sizes: theme.spacing })} / 3)`,
+        marginBottom: `calc(${getSize({ size, sizes: theme.spacing })} / 3)`,
+        fontSize: `calc(${getSize({ size, sizes: theme.fontSizes })} - ${rem(2)})`,
         lineHeight: 1,
       },
     };

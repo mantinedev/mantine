@@ -6,6 +6,7 @@ import {
   MantineColor,
   Selectors,
   useComponentDefaultProps,
+  getSize,
 } from '@mantine/styles';
 import { Group, GroupProps } from '../Group/Group';
 import { DefaultItem, PaginationItemProps } from './DefaultItem/DefaultItem';
@@ -141,7 +142,7 @@ export const Pagination = forwardRef<HTMLDivElement, PaginationProps>((props, re
     <Group
       className={cx(classes.root, className)}
       role="navigation"
-      spacing={spacing || `calc(${theme.fn.size({ size, sizes: theme.spacing })} / 2)`}
+      spacing={spacing || `calc(${getSize({ size, sizes: theme.spacing })} / 2)`}
       ref={ref}
       sx={sx}
       unstyled={unstyled}

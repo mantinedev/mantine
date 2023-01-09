@@ -1,4 +1,11 @@
-import { createStyles, MantineNumberSize, MantineColor, keyframes, rem } from '@mantine/styles';
+import {
+  createStyles,
+  MantineNumberSize,
+  MantineColor,
+  keyframes,
+  rem,
+  getSize,
+} from '@mantine/styles';
 
 const sizes = {
   xs: rem(3),
@@ -24,7 +31,7 @@ export default createStyles(
   (theme, { color, radius, striped, animate }: ProgressStylesParams, { size }) => ({
     root: {
       position: 'relative',
-      height: theme.fn.size({ size, sizes }),
+      height: getSize({ size, sizes }),
       backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[2],
       borderRadius: theme.fn.radius(radius),
       overflow: 'hidden',
@@ -68,7 +75,7 @@ export default createStyles(
 
     label: {
       color: theme.white,
-      fontSize: `calc(${theme.fn.size({ size, sizes })} * 0.65)`,
+      fontSize: `calc(${getSize({ size, sizes })} * 0.65)`,
       fontWeight: 700,
       userSelect: 'none',
       overflow: 'hidden',

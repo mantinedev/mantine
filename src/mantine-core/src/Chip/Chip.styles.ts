@@ -5,6 +5,7 @@ import {
   getStylesRef,
   MantineTheme,
   rem,
+  getSize,
 } from '@mantine/styles';
 
 export const sizes = {
@@ -128,11 +129,11 @@ export default createStyles((theme, { radius, color }: ChipStylesParams, { size,
       userSelect: 'none',
       border: `${rem(1)} solid transparent`,
       borderRadius: theme.fn.radius(radius),
-      height: theme.fn.size({ size, sizes }),
-      fontSize: theme.fn.size({ size, sizes: theme.fontSizes }),
-      lineHeight: `calc(${theme.fn.size({ size, sizes })} - ${rem(2)})`,
-      paddingLeft: theme.fn.size({ size, sizes: padding }),
-      paddingRight: theme.fn.size({ size, sizes: padding }),
+      height: getSize({ size, sizes }),
+      fontSize: getSize({ size, sizes: theme.fontSizes }),
+      lineHeight: `calc(${getSize({ size, sizes })} - ${rem(2)})`,
+      paddingLeft: getSize({ size, sizes: padding }),
+      paddingRight: getSize({ size, sizes: padding }),
       cursor: 'pointer',
       whiteSpace: 'nowrap',
       transition: 'background-color 100ms ease',
@@ -156,8 +157,8 @@ export default createStyles((theme, { radius, color }: ChipStylesParams, { size,
       },
 
       '&[data-checked]': {
-        paddingLeft: theme.fn.size({ size, sizes: checkedPadding }),
-        paddingRight: theme.fn.size({ size, sizes: checkedPadding }),
+        paddingLeft: getSize({ size, sizes: checkedPadding }),
+        paddingRight: getSize({ size, sizes: checkedPadding }),
         '&:not([data-disabled])': variantStyles.checked,
       },
     },
@@ -168,23 +169,23 @@ export default createStyles((theme, { radius, color }: ChipStylesParams, { size,
         variant === 'filled'
           ? theme.white
           : theme.fn.variant({ variant: 'filled', color }).background,
-      width: `calc(${theme.fn.size({ size, sizes: iconSizes })} + (${theme.fn.size({
+      width: `calc(${getSize({ size, sizes: iconSizes })} + (${getSize({
         size,
         sizes: theme.spacing,
       })} / 1.5))`,
-      maxWidth: `calc(${theme.fn.size({ size, sizes: iconSizes })} + (${theme.fn.size({
+      maxWidth: `calc(${getSize({ size, sizes: iconSizes })} + (${getSize({
         size,
         sizes: theme.spacing,
       })} / 1.5))`,
-      height: theme.fn.size({ size, sizes: iconSizes }),
+      height: getSize({ size, sizes: iconSizes }),
       display: 'inline-block',
       verticalAlign: 'middle',
       overflow: 'hidden',
     },
 
     checkIcon: {
-      width: theme.fn.size({ size, sizes: iconSizes }),
-      height: `calc(${theme.fn.size({ size, sizes: iconSizes })} / 1.1)`,
+      width: getSize({ size, sizes: iconSizes }),
+      height: `calc(${getSize({ size, sizes: iconSizes })} / 1.1)`,
       display: 'block',
     },
 

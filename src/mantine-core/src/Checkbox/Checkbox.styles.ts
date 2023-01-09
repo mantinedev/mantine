@@ -1,4 +1,11 @@
-import { createStyles, MantineColor, MantineNumberSize, getStylesRef, rem } from '@mantine/styles';
+import {
+  createStyles,
+  MantineColor,
+  MantineNumberSize,
+  getStylesRef,
+  rem,
+  getSize,
+} from '@mantine/styles';
 
 const sizes = {
   xs: rem(16),
@@ -30,7 +37,7 @@ export default createStyles(
     }: CheckboxStylesParams,
     { size }
   ) => {
-    const _size = theme.fn.size({ size, sizes });
+    const _size = getSize({ size, sizes });
     const colors = theme.fn.variant({ variant: 'filled', color });
 
     return {

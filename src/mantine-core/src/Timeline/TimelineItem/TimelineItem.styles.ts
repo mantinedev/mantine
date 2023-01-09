@@ -23,7 +23,7 @@ export default createStyles(
         boxSizing: 'border-box',
         width: _bulletSize,
         height: _bulletSize,
-        borderRadius: theme.fn.size({ size: radius, sizes: theme.radius }),
+        borderRadius: theme.fn.radius(radius),
         border: `${_lineWidth} solid ${
           theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[3]
         }`,

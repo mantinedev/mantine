@@ -1,4 +1,4 @@
-import { createStyles, MantineNumberSize, MantineTheme, rem } from '@mantine/styles';
+import { createStyles, MantineNumberSize, MantineTheme, rem, getSize } from '@mantine/styles';
 
 export interface InputStylesParams {
   radius: MantineNumberSize;
@@ -94,11 +94,11 @@ export default createStyles(
     const sizeStyles =
       variant === 'default' || variant === 'filled'
         ? {
-            minHeight: theme.fn.size({ size, sizes }),
-            paddingLeft: `calc(${theme.fn.size({ size, sizes })}  / 3)`,
+            minHeight: getSize({ size, sizes }),
+            paddingLeft: `calc(${getSize({ size, sizes })}  / 3)`,
             paddingRight: withRightSection
               ? rem(rightSectionWidth)
-              : `calc(${theme.fn.size({ size, sizes })}  / 3)`,
+              : `calc(${getSize({ size, sizes })}  / 3)`,
             borderRadius: theme.fn.radius(radius),
           }
         : null;
@@ -116,15 +116,13 @@ export default createStyles(
           ? variant === 'unstyled'
             ? undefined
             : 'auto'
-          : theme.fn.size({ size, sizes }),
+          : getSize({ size, sizes }),
         WebkitTapHighlightColor: 'transparent',
-        lineHeight: multiline
-          ? theme.lineHeight
-          : `calc(${theme.fn.size({ size, sizes })} - ${rem(2)})`,
+        lineHeight: multiline ? theme.lineHeight : `calc(${getSize({ size, sizes })} - ${rem(2)})`,
         appearance: 'none',
         resize: 'none',
         boxSizing: 'border-box',
-        fontSize: theme.fn.size({ size, sizes: theme.fontSizes }),
+        fontSize: getSize({ size, sizes: theme.fontSizes }),
         width: '100%',
         color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
         display: 'block',
@@ -156,8 +154,7 @@ export default createStyles(
         },
 
         '&[data-with-icon]': {
-          paddingLeft:
-            typeof iconWidth === 'number' ? rem(iconWidth) : theme.fn.size({ size, sizes }),
+          paddingLeft: typeof iconWidth === 'number' ? rem(iconWidth) : getSize({ size, sizes }),
         },
 
         '&::placeholder': {
@@ -185,7 +182,7 @@ export default createStyles(
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        width: iconWidth ? rem(iconWidth) : theme.fn.size({ size, sizes }),
+        width: iconWidth ? rem(iconWidth) : getSize({ size, sizes }),
         color: invalid
           ? theme.colors.red[theme.colorScheme === 'dark' ? 6 : 7]
           : theme.colorScheme === 'dark'
@@ -201,7 +198,7 @@ export default createStyles(
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        width: rightSectionWidth || theme.fn.size({ size, sizes }),
+        width: rightSectionWidth || getSize({ size, sizes }),
       },
     };
   }

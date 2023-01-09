@@ -7,6 +7,7 @@ import {
   useMantineTheme,
   useComponentDefaultProps,
   rem,
+  getSize,
 } from '@mantine/styles';
 import { Box } from '../Box';
 import { Bars } from './loaders/Bars';
@@ -57,7 +58,7 @@ export function Loader(props: LoaderProps) {
     <Box
       role="presentation"
       component={LOADERS[defaultLoader] || LOADERS.bars}
-      size={theme.fn.size({ size, sizes })}
+      size={getSize({ size, sizes })}
       color={
         theme.fn.variant({
           variant: 'filled',

@@ -1,4 +1,4 @@
-import { createStyles, getStylesRef, rem } from '@mantine/styles';
+import { createStyles, getStylesRef, rem, getSize } from '@mantine/styles';
 import { THUMB_SIZES } from '../Thumb/Thumb.styles';
 
 const SATURATION_HEIGHTS = {
@@ -17,9 +17,9 @@ export default createStyles((theme, _params, { size }) => ({
   saturation: {
     boxSizing: 'border-box',
     position: 'relative',
-    height: theme.fn.size({ size, sizes: SATURATION_HEIGHTS }),
+    height: getSize({ size, sizes: SATURATION_HEIGHTS }),
     borderRadius: theme.radius.sm,
-    margin: `calc(${theme.fn.size({ size, sizes: THUMB_SIZES })} / 2)`,
+    margin: `calc(${getSize({ size, sizes: THUMB_SIZES })} / 2)`,
     WebkitTapHighlightColor: 'transparent',
 
     [`&:focus .${getStylesRef('saturationThumb')}`]: {
@@ -38,6 +38,6 @@ export default createStyles((theme, _params, { size }) => ({
   saturationOverlay: {
     boxSizing: 'border-box',
     borderRadius: theme.radius.sm,
-    ...theme.fn.cover(`calc(${theme.fn.size({ size, sizes: THUMB_SIZES })} * -1 / 2 - ${rem(1)})`),
+    ...theme.fn.cover(`calc(${getSize({ size, sizes: THUMB_SIZES })} * -1 / 2 - ${rem(1)})`),
   },
 }));

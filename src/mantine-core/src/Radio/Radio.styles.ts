@@ -1,4 +1,4 @@
-import { createStyles, MantineColor, getStylesRef, rem } from '@mantine/styles';
+import { createStyles, MantineColor, getStylesRef, rem, getSize } from '@mantine/styles';
 
 export interface RadioStylesParams {
   color: MantineColor;
@@ -42,11 +42,11 @@ export default createStyles(
         transform: `scale(0.75) translateY(${rem(2)})`,
         transition: `opacity ${transitionDuration}ms ${theme.transitionTimingFunction}`,
         pointerEvents: 'none',
-        width: theme.fn.size({ sizes: iconSizes, size }),
-        height: theme.fn.size({ sizes: iconSizes, size }),
+        width: getSize({ sizes: iconSizes, size }),
+        height: getSize({ sizes: iconSizes, size }),
         position: 'absolute',
-        top: `calc(50% - ${theme.fn.size({ sizes: iconSizes, size })} / 2)`,
-        left: `calc(50% - ${theme.fn.size({ sizes: iconSizes, size })} / 2)`,
+        top: `calc(50% - ${getSize({ sizes: iconSizes, size })} / 2)`,
+        left: `calc(50% - ${getSize({ sizes: iconSizes, size })} / 2)`,
       },
 
       radio: {
@@ -61,9 +61,9 @@ export default createStyles(
         }`,
         position: 'relative',
         appearance: 'none',
-        width: theme.fn.size({ sizes, size }),
-        height: theme.fn.size({ sizes, size }),
-        borderRadius: theme.fn.size({ sizes, size }),
+        width: getSize({ sizes, size }),
+        height: getSize({ sizes, size }),
+        borderRadius: getSize({ sizes, size }),
         margin: 0,
         display: 'flex',
         alignItems: 'center',

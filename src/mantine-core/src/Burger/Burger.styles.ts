@@ -1,4 +1,4 @@
-import { createStyles, MantineColor, rem } from '@mantine/styles';
+import { createStyles, MantineColor, rem, getSize } from '@mantine/styles';
 
 export interface BurgerStylesParams {
   color: MantineColor;
@@ -15,7 +15,7 @@ const sizes = {
 
 export default createStyles(
   (theme, { color, transitionDuration }: BurgerStylesParams, { size }) => {
-    const sizeValue = theme.fn.size({ size, sizes });
+    const sizeValue = getSize({ size, sizes });
     const _color = color || (theme.colorScheme === 'dark' ? theme.white : theme.black);
 
     return {

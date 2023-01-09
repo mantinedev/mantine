@@ -1,4 +1,4 @@
-import { createStyles, MantineNumberSize, MantineColor } from '@mantine/styles';
+import { createStyles, MantineNumberSize, MantineColor, getSize } from '@mantine/styles';
 import { sizes } from '../SliderRoot/SliderRoot.styles';
 
 interface TrackStyles {
@@ -12,10 +12,10 @@ export default createStyles(
   (theme, { radius, color, disabled, inverted }: TrackStyles, { size }) => ({
     track: {
       position: 'relative',
-      height: theme.fn.size({ sizes, size }),
+      height: getSize({ sizes, size }),
       width: '100%',
-      marginRight: theme.fn.size({ size, sizes }),
-      marginLeft: theme.fn.size({ size, sizes }),
+      marginRight: getSize({ size, sizes }),
+      marginLeft: getSize({ size, sizes }),
 
       '&::before': {
         content: '""',
@@ -23,8 +23,8 @@ export default createStyles(
         top: 0,
         bottom: 0,
         borderRadius: theme.fn.radius(radius),
-        right: `calc(${theme.fn.size({ size, sizes })} * -1)`,
-        left: `calc(${theme.fn.size({ size, sizes })} * -1)`,
+        right: `calc(${getSize({ size, sizes })} * -1)`,
+        left: `calc(${getSize({ size, sizes })} * -1)`,
         backgroundColor: inverted
           ? disabled
             ? theme.colorScheme === 'dark'

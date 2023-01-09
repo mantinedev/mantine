@@ -1,8 +1,8 @@
-import { createStyles } from '@mantine/core';
+import { createStyles, getSize } from '@mantine/core';
 import { sizes } from '../Day/Day.styles';
 
 export default createStyles((theme, _, { size }) => {
-  const controlSize = theme.fn.size({ size, sizes });
+  const controlSize = getSize({ size, sizes });
   return {
     calendarHeaderControlIcon: {},
 
@@ -45,7 +45,7 @@ export default createStyles((theme, _, { size }) => {
       alignItems: 'center',
       userSelect: 'none',
       flex: 1,
-      fontSize: theme.fn.size({ size, sizes: theme.fontSizes }),
+      fontSize: getSize({ size, sizes: theme.fontSizes }),
       fontWeight: 500,
       textTransform: 'capitalize',
 

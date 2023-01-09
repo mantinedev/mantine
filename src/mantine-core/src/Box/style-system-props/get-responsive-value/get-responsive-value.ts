@@ -1,12 +1,12 @@
-import { MantineTheme, CSSObject } from '@mantine/styles';
+import { MantineTheme, CSSObject, getSize } from '@mantine/styles';
 
 function getSortedKeys(value: Record<string, any>, theme: MantineTheme) {
   const sorted = Object.keys(value)
     .filter((breakpoint) => breakpoint !== 'base')
     .sort(
       (a, b) =>
-        theme.fn.size({ size: a, sizes: theme.breakpoints }) -
-        theme.fn.size({ size: b, sizes: theme.breakpoints })
+        getSize({ size: a, sizes: theme.breakpoints }) -
+        getSize({ size: b, sizes: theme.breakpoints })
     );
   return 'base' in value ? ['base', ...sorted] : sorted;
 }

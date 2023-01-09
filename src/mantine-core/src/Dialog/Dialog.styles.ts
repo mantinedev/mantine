@@ -1,4 +1,4 @@
-import { createStyles, rem } from '@mantine/styles';
+import { createStyles, rem, getSize } from '@mantine/styles';
 
 const sizes = {
   xs: rem(160),
@@ -13,7 +13,7 @@ export default createStyles((theme, _params, { size }) => ({
     ...theme.fn.fontStyles(),
     color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
     position: 'relative',
-    width: theme.fn.size({ size, sizes }),
+    width: getSize({ size, sizes }),
     maxWidth: '100%',
     minHeight: rem(50),
   },

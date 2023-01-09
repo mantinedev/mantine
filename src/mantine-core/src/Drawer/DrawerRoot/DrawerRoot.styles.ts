@@ -1,4 +1,4 @@
-import { createStyles, rem } from '@mantine/styles';
+import { createStyles, rem, getSize } from '@mantine/styles';
 
 const sizes = {
   xs: rem(320),
@@ -15,13 +15,10 @@ interface DrawerRootStylesParams {
 export default createStyles((theme, { position }: DrawerRootStylesParams, { size }) => ({
   content: {
     flex:
-      position === 'right' || position === 'left'
-        ? `0 0 ${rem(theme.fn.size({ size, sizes }))}`
-        : '0 0 100%',
+      position === 'right' || position === 'left' ? `0 0 ${getSize({ size, sizes })}` : '0 0 100%',
     maxWidth: '100%',
     maxHeight: '100%',
-    height:
-      position === 'right' || position === 'left' ? '100%' : rem(theme.fn.size({ size, sizes })),
+    height: position === 'right' || position === 'left' ? '100%' : getSize({ size, sizes }),
     borderRadius: 0,
     overflowY: 'auto',
   },

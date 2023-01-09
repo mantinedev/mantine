@@ -1,12 +1,6 @@
 import React, { forwardRef } from 'react';
 import { useId, useUncontrolled } from '@mantine/hooks';
-import {
-  Selectors,
-  DefaultProps,
-  useMantineTheme,
-  useComponentDefaultProps,
-  rem,
-} from '@mantine/styles';
+import { Selectors, DefaultProps, useComponentDefaultProps, rem, getSize } from '@mantine/styles';
 import { extractSystemStyles } from '../Box';
 import { ActionIcon } from '../ActionIcon';
 import { TextInputProps, TextInputStylesNames } from '../TextInput';
@@ -23,7 +17,7 @@ export interface PasswordInputProps
   toggleTabIndex?: -1 | 0;
 
   /** Provide your own visibility toggle icon */
-  visibilityToggleIcon?: React.FC<{ reveal: boolean; size: number }>;
+  visibilityToggleIcon?: React.FC<{ reveal: boolean; size: number | string }>;
 
   /** aria-label for visibility toggle button */
   visibilityToggleLabel?: string;
@@ -108,8 +102,7 @@ export const PasswordInput = forwardRef<HTMLInputElement, PasswordInputProps>((p
     ...others
   } = useComponentDefaultProps('PasswordInput', defaultProps, props);
 
-  const theme = useMantineTheme();
-  const rightSectionWidth = theme.fn.size({ size, sizes: rightSectionSizes });
+  const rightSectionWidth = getSize({ size, sizes: rightSectionSizes });
   const { classes } = useStyles(
     { rightSectionWidth },
     { name: 'PasswordInput', classNames, styles, unstyled, size, variant }
@@ -130,7 +123,7 @@ export const PasswordInput = forwardRef<HTMLInputElement, PasswordInputProps>((p
       className={classes.visibilityToggle}
       tabIndex={toggleTabIndex}
       radius={radius}
-      size={theme.fn.size({ size, sizes: buttonSizes })}
+      size={getSize({ size, sizes: buttonSizes })}
       aria-hidden={!visibilityToggleLabel}
       aria-label={visibilityToggleLabel}
       unstyled={unstyled}
@@ -145,7 +138,7 @@ export const PasswordInput = forwardRef<HTMLInputElement, PasswordInputProps>((p
         }
       }}
     >
-      <VisibilityToggleIcon reveal={_visible} size={theme.fn.size({ size, sizes: iconSizes })} />
+      <VisibilityToggleIcon reveal={_visible} size={getSize({ size, sizes: iconSizes })} />
     </ActionIcon>
   );
 

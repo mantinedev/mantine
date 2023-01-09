@@ -6,6 +6,7 @@ import {
   MantineGradient,
   CSSObject,
   rem,
+  getSize,
 } from '@mantine/styles';
 
 export const ACTION_ICON_VARIANTS = [
@@ -78,10 +79,10 @@ export default createStyles(
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'center',
-      height: theme.fn.size({ size, sizes }),
-      minHeight: theme.fn.size({ size, sizes }),
-      width: theme.fn.size({ size, sizes }),
-      minWidth: theme.fn.size({ size, sizes }),
+      height: getSize({ size, sizes }),
+      minHeight: getSize({ size, sizes }),
+      width: getSize({ size, sizes }),
+      minWidth: getSize({ size, sizes }),
       ...getVariantStyles({ variant, theme, color, gradient }),
 
       '&:active': theme.activeStyles,

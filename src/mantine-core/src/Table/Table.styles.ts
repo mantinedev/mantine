@@ -1,4 +1,4 @@
-import { createStyles, MantineNumberSize, rem } from '@mantine/styles';
+import { createStyles, MantineNumberSize, rem, getSize } from '@mantine/styles';
 
 export interface TableStylesParams {
   captionSide: 'top' | 'bottom';
@@ -46,13 +46,11 @@ export default createStyles(
           textAlign: 'left',
           fontWeight: 'bold',
           color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.colors.gray[7],
-          fontSize: theme.fn.size({ size: fontSize, sizes: theme.fontSizes }),
-          padding: `${rem(
-            theme.fn.size({
-              size: verticalSpacing,
-              sizes: theme.spacing,
-            })
-          )} ${rem(theme.fn.size({ size: horizontalSpacing, sizes: theme.spacing }))}`,
+          fontSize: getSize({ size: fontSize, sizes: theme.fontSizes }),
+          padding: `${getSize({ size: verticalSpacing, sizes: theme.spacing })} ${getSize({
+            size: horizontalSpacing,
+            sizes: theme.spacing,
+          })}`,
         },
 
         '& thead tr th': {
@@ -64,14 +62,12 @@ export default createStyles(
         },
 
         '& tbody tr td': {
-          padding: `${rem(
-            theme.fn.size({
-              size: verticalSpacing,
-              sizes: theme.spacing,
-            })
-          )} ${rem(theme.fn.size({ size: horizontalSpacing, sizes: theme.spacing }))}`,
+          padding: `${getSize({
+            size: verticalSpacing,
+            sizes: theme.spacing,
+          })} ${getSize({ size: horizontalSpacing, sizes: theme.spacing })}`,
           borderTop: border,
-          fontSize: theme.fn.size({ size: fontSize, sizes: theme.fontSizes }),
+          fontSize: getSize({ size: fontSize, sizes: theme.fontSizes }),
         },
 
         '& tbody tr:first-of-type td': {

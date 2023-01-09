@@ -1,4 +1,4 @@
-import { createStyles, MantineNumberSize, MantineColor, rem } from '@mantine/styles';
+import { createStyles, MantineNumberSize, MantineColor, rem, getSize } from '@mantine/styles';
 
 export interface PaginationStylesParams {
   radius: MantineNumberSize;
@@ -31,10 +31,10 @@ export default createStyles((theme, { radius, color }: PaginationStylesParams, {
         theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[4]
       }`,
       color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
-      height: theme.fn.size({ size, sizes }),
-      minWidth: theme.fn.size({ size, sizes }),
-      padding: `0 calc(${theme.fn.size({ size, sizes: theme.spacing })}) / 2`,
-      fontSize: theme.fn.size({ size, sizes: theme.fontSizes }),
+      height: getSize({ size, sizes }),
+      minWidth: getSize({ size, sizes }),
+      padding: `0 calc(${getSize({ size, sizes: theme.spacing })}) / 2`,
+      fontSize: getSize({ size, sizes: theme.fontSizes }),
       borderRadius: theme.fn.radius(radius),
       lineHeight: 1,
       backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.white,

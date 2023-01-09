@@ -1,4 +1,4 @@
-import { createStyles, MantineNumberSize, getBreakpointValue, rem } from '@mantine/styles';
+import { createStyles, MantineNumberSize, getBreakpointValue, rem, getSize } from '@mantine/styles';
 import { getSortedBreakpoints } from './get-sorted-breakpoints/get-sorted-breakpoints';
 
 export interface SimpleGridBreakpoint {
@@ -22,7 +22,7 @@ export default createStyles(
 
     const gridBreakpoints = getSortedBreakpoints(theme, breakpoints).reduce((acc, breakpoint) => {
       const property = 'maxWidth' in breakpoint ? 'max-width' : 'min-width';
-      const breakpointSize = theme.fn.size({
+      const breakpointSize = getSize({
         size: property === 'max-width' ? breakpoint.maxWidth : breakpoint.minWidth,
         sizes: theme.breakpoints,
       });
@@ -32,17 +32,13 @@ export default createStyles(
 
       acc[`@media (${property}: ${rem(breakpointValue)})`] = {
         gridTemplateColumns: `repeat(${breakpoint.cols}, minmax(0, 1fr))`,
-        gap: `${rem(
-          theme.fn.size({
-            size: breakpoint.verticalSpacing || (hasVerticalSpacing ? verticalSpacing : spacing),
-            sizes: theme.spacing,
-          })
-        )} ${rem(
-          theme.fn.size({
-            size: breakpoint.spacing || spacing,
-            sizes: theme.spacing,
-          })
-        )}`,
+        gap: `${getSize({
+          size: breakpoint.verticalSpacing || (hasVerticalSpacing ? verticalSpacing : spacing),
+          sizes: theme.spacing,
+        })} ${getSize({
+          size: breakpoint.spacing || spacing,
+          sizes: theme.spacing,
+        })}`,
       };
 
       return acc;
@@ -53,17 +49,10 @@ export default createStyles(
         boxSizing: 'border-box',
         display: 'grid',
         gridTemplateColumns: `repeat(${cols}, minmax(0, 1fr))`,
-        gap: `${rem(
-          theme.fn.size({
-            size: hasVerticalSpacing ? verticalSpacing : spacing,
-            sizes: theme.spacing,
-          })
-        )} ${rem(
-          theme.fn.size({
-            size: spacing,
-            sizes: theme.spacing,
-          })
-        )}`,
+        gap: `${getSize({
+          size: hasVerticalSpacing ? verticalSpacing : spacing,
+          sizes: theme.spacing,
+        })} ${getSize({ size: spacing, sizes: theme.spacing })}`,
         ...gridBreakpoints,
       },
     };

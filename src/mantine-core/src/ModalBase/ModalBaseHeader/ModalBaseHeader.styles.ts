@@ -1,11 +1,11 @@
-import { createStyles, MantineNumberSize, rem } from '@mantine/styles';
+import { createStyles, MantineNumberSize, rem, getSize } from '@mantine/styles';
 
 interface ModalBaseHeaderStylesParams {
   padding: MantineNumberSize;
 }
 
 export default createStyles((theme, { padding }: ModalBaseHeaderStylesParams) => {
-  const paddingValue = rem(theme.fn.size({ size: padding, sizes: theme.spacing }));
+  const paddingValue = getSize({ size: padding, sizes: theme.spacing });
   return {
     header: {
       display: 'flex',

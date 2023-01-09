@@ -4,6 +4,7 @@ import {
   getSortedBreakpoints,
   rem,
   getBreakpointValue,
+  getSize,
 } from '@mantine/core';
 import { CarouselOrientation, CarouselBreakpoint } from '../types';
 
@@ -22,12 +23,10 @@ export default createStyles(
   ) => {
     // Slide styles by slideGap and slideSize
     const getSlideStyles = (slideGap: MantineNumberSize, slideSize: string | number) => {
-      const slideGapValue = rem(
-        theme.fn.size({
-          size: slideGap,
-          sizes: theme.spacing,
-        })
-      );
+      const slideGapValue = getSize({
+        size: slideGap,
+        sizes: theme.spacing,
+      });
 
       const flexBasisValue = rem(slideSize);
 
@@ -54,7 +53,7 @@ export default createStyles(
       ? null
       : getSortedBreakpoints(theme, breakpoints).reduce((acc, breakpoint) => {
           const property = 'maxWidth' in breakpoint ? 'max-width' : 'min-width';
-          const breakpointSize = theme.fn.size({
+          const breakpointSize = getSize({
             size: property === 'max-width' ? breakpoint.maxWidth : breakpoint.minWidth,
             sizes: theme.breakpoints,
           });

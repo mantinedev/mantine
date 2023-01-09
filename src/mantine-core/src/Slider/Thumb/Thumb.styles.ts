@@ -1,4 +1,4 @@
-import { createStyles, MantineColor, rem } from '@mantine/styles';
+import { createStyles, MantineColor, rem, getSize } from '@mantine/styles';
 import { sizes } from '../SliderRoot/SliderRoot.styles';
 
 interface ThumbStyles {
@@ -27,8 +27,8 @@ export default createStyles((theme, { color, disabled, thumbSize }: ThumbStyles,
     boxSizing: 'border-box',
     position: 'absolute',
     display: disabled ? 'none' : 'flex',
-    height: thumbSize ? rem(thumbSize) : `calc(${theme.fn.size({ sizes, size })} * 2)`,
-    width: thumbSize ? rem(thumbSize) : `calc(${theme.fn.size({ sizes, size })} * 2)`,
+    height: thumbSize ? rem(thumbSize) : `calc(${getSize({ sizes, size })} * 2)`,
+    width: thumbSize ? rem(thumbSize) : `calc(${getSize({ sizes, size })} * 2)`,
     backgroundColor:
       theme.colorScheme === 'dark'
         ? theme.fn.themeColor(color, theme.fn.primaryShade())

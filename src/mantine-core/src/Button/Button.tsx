@@ -8,6 +8,7 @@ import {
   Selectors,
   useComponentDefaultProps,
   Variants,
+  getSize,
 } from '@mantine/styles';
 import { createPolymorphicComponent } from '@mantine/utils';
 import { UnstyledButton } from '../UnstyledButton';
@@ -115,11 +116,7 @@ export const _Button = forwardRef<HTMLButtonElement, ButtonProps>((props, ref) =
   const colors = theme.fn.variant({ color, variant });
 
   const loader = (
-    <Loader
-      color={colors.color}
-      size={theme.fn.size({ size, sizes }).height / 2}
-      {...loaderProps}
-    />
+    <Loader color={colors.color} size={getSize({ size, sizes }).height / 2} {...loaderProps} />
   );
 
   return (

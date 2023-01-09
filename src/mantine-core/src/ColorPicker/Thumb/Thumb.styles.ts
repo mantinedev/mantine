@@ -1,4 +1,4 @@
-import { createStyles, rem } from '@mantine/styles';
+import { createStyles, rem, getSize } from '@mantine/styles';
 
 export const THUMB_SIZES = {
   xs: rem(8),
@@ -9,7 +9,7 @@ export const THUMB_SIZES = {
 };
 
 export default createStyles((theme, _params, { size }) => {
-  const _size = theme.fn.size({ size, sizes: THUMB_SIZES });
+  const _size = getSize({ size, sizes: THUMB_SIZES });
   return {
     thumb: {
       overflow: 'hidden',

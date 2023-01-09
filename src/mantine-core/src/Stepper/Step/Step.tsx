@@ -6,6 +6,7 @@ import {
   MantineSize,
   MantineNumberSize,
   useComponentDefaultProps,
+  getSize,
 } from '@mantine/styles';
 import { Text } from '../../Text';
 import { Loader } from '../../Loader';
@@ -131,12 +132,12 @@ export const Step = forwardRef<HTMLButtonElement, StepProps>((props: StepProps, 
     ...others
   } = useComponentDefaultProps('StepperStep', defaultProps, props);
 
-  const { classes, cx, theme } = useStyles(
+  const { classes, cx } = useStyles(
     { color, iconSize, radius, allowStepClick, iconPosition, orientation },
     { name: __staticSelector, classNames, styles, unstyled, variant, size }
   );
 
-  const _iconSize = theme.fn.size({ size, sizes: defaultIconSizes });
+  const _iconSize = getSize({ size, sizes: defaultIconSizes });
   const _icon = state === 'stepCompleted' ? null : state === 'stepProgress' ? progressIcon : icon;
   const dataAttributes = {
     'data-progress': state === 'stepProgress' || undefined,

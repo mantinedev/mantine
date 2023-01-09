@@ -1,6 +1,12 @@
 import React, { useState, useRef, forwardRef } from 'react';
 import { useDidUpdate, useUncontrolled } from '@mantine/hooks';
-import { DefaultProps, MantineSize, Selectors, useComponentDefaultProps } from '@mantine/styles';
+import {
+  DefaultProps,
+  MantineSize,
+  Selectors,
+  useComponentDefaultProps,
+  getSize,
+} from '@mantine/styles';
 import { Box } from '../Box';
 import { ColorSwatch } from '../ColorSwatch/ColorSwatch';
 import { convertHsvaTo, isColorValid, parseColor } from './converters';
@@ -120,7 +126,7 @@ export const ColorPicker = forwardRef<HTMLDivElement, ColorPickerProps>(
       ...others
     } = useComponentDefaultProps('ColorPicker', defaultProps, props);
 
-    const { classes, cx, theme } = useStyles(
+    const { classes, cx } = useStyles(
       { fullWidth },
       { classNames, styles, name: __staticSelector, unstyled, variant, size }
     );
@@ -224,7 +230,7 @@ export const ColorPicker = forwardRef<HTMLDivElement, ColorPickerProps>(
                 <ColorSwatch
                   color={_value}
                   radius="sm"
-                  size={theme.fn.size({ size, sizes: SWATCH_SIZES })}
+                  size={getSize({ size, sizes: SWATCH_SIZES })}
                   className={classes.preview}
                 />
               )}

@@ -5,6 +5,7 @@ import {
   MantineGradient,
   MantineTheme,
   rem,
+  getSize,
 } from '@mantine/styles';
 
 const BADGE_VARIANTS = ['light', 'filled', 'outline', 'dot', 'gradient'];
@@ -46,14 +47,14 @@ function getVariantStyles({ theme, variant, color, size, gradient }: GetVariantS
   }
 
   if (variant === 'dot') {
-    const dotSize = theme.fn.size({ size, sizes: dotSizes });
+    const dotSize = getSize({ size, sizes: dotSizes });
     return {
       backgroundColor: 'transparent',
       color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.colors.gray[7],
       border: `${rem(1)} solid ${
         theme.colorScheme === 'dark' ? theme.colors.dark[3] : theme.colors.gray[3]
       }`,
-      paddingLeft: `calc(${theme.fn.size({ size, sizes: theme.spacing })} / 1.5 - ${dotSize} / 2)`,
+      paddingLeft: `calc(${getSize({ size, sizes: theme.spacing })} / 1.5 - ${dotSize} / 2)`,
 
       '&::before': {
         content: '""',
@@ -107,7 +108,7 @@ export default createStyles(
         WebkitTapHighlightColor: 'transparent',
         lineHeight: `calc(${height} - ${rem(2)})`,
         textDecoration: 'none',
-        padding: `0 calc(${theme.fn.size({ size, sizes: theme.spacing })} / 1.5)`,
+        padding: `0 calc(${getSize({ size, sizes: theme.spacing })} / 1.5)`,
         boxSizing: 'border-box',
         display: fullWidth ? 'flex' : 'inline-flex',
         alignItems: 'center',

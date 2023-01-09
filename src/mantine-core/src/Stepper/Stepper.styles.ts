@@ -4,6 +4,7 @@ import {
   MantineColor,
   rem,
   getBreakpointValue,
+  getSize,
 } from '@mantine/styles';
 import { iconSizes } from './Step/Step.styles';
 
@@ -24,12 +25,12 @@ export default createStyles(
   ) => {
     const shouldBeResponsive = typeof breakpoint !== 'undefined';
     const breakpointValue = getBreakpointValue(
-      theme.fn.size({ size: breakpoint, sizes: theme.breakpoints })
+      getSize({ size: breakpoint, sizes: theme.breakpoints })
     );
     const separatorOffset =
       typeof iconSize !== 'undefined'
         ? `calc(${rem(iconSize)} / 2 - ${rem(1)})`
-        : `calc(${theme.fn.size({ size, sizes: iconSizes })} / 2 - ${rem(1)})`;
+        : `calc(${getSize({ size, sizes: iconSizes })} / 2 - ${rem(1)})`;
 
     const verticalOrientationStyles = {
       steps: {
@@ -90,7 +91,7 @@ export default createStyles(
 
       content: {
         ...theme.fn.fontStyles(),
-        paddingTop: theme.fn.size({ size: contentPadding, sizes: theme.spacing }),
+        paddingTop: getSize({ size: contentPadding, sizes: theme.spacing }),
       },
     };
   }

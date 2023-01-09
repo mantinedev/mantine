@@ -5,6 +5,7 @@ import {
   MantineSize,
   MantineTheme,
   rem,
+  getSize,
 } from '@mantine/styles';
 
 export type ColSpan = number | 'auto' | 'content';
@@ -43,7 +44,7 @@ const getColumnFlexBasis = (colSpan: ColSpan, columns: number) => {
     return 'auto';
   }
   if (colSpan === 'auto') {
-    return '0px';
+    return '0rem';
   }
   return colSpan ? `${100 / (columns / colSpan)}%` : undefined;
 };
@@ -68,7 +69,7 @@ const getColumnOffset = (offset: number, columns: number) =>
 
 const getGutterSize = (gutter: MantineNumberSize, theme: MantineTheme) =>
   typeof gutter !== 'undefined'
-    ? `calc(${rem(theme.fn.size({ size: gutter, sizes: theme.spacing }))} / 2)`
+    ? `calc(${getSize({ size: gutter, sizes: theme.spacing })} / 2)`
     : undefined;
 
 function getBreakpointsStyles({

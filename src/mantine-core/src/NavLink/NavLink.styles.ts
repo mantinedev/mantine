@@ -1,4 +1,11 @@
-import { createStyles, MantineColor, MantineNumberSize, MantineTheme, rem } from '@mantine/styles';
+import {
+  createStyles,
+  MantineColor,
+  MantineNumberSize,
+  MantineTheme,
+  rem,
+  getSize,
+} from '@mantine/styles';
 
 export interface NavLinkStylesParams {
   color: MantineColor;
@@ -90,7 +97,7 @@ export default createStyles(
     },
 
     children: {
-      paddingLeft: rem(theme.fn.size({ size: childrenOffset, sizes: theme.spacing })),
+      paddingLeft: getSize({ size: childrenOffset, sizes: theme.spacing }),
     },
   })
 );

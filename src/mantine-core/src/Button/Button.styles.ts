@@ -5,6 +5,7 @@ import {
   MantineTheme,
   MantineGradient,
   CSSObject,
+  getSize,
 } from '@mantine/styles';
 import { INPUT_SIZES } from '../Input';
 
@@ -125,7 +126,7 @@ export default createStyles(
       fontWeight: 600,
       position: 'relative',
       lineHeight: 1,
-      fontSize: theme.fn.size({ size, sizes: theme.fontSizes }),
+      fontSize: getSize({ size, sizes: theme.fontSizes }),
       userSelect: 'none',
       cursor: 'pointer',
       ...getVariantStyles({ variant, theme, color, gradient }),

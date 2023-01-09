@@ -6,6 +6,7 @@ import {
   MantineShadow,
   useMantineTheme,
   rem,
+  getSize,
 } from '@mantine/styles';
 import { noop } from '@mantine/utils';
 import {
@@ -168,7 +169,7 @@ export const ColorInput = forwardRef<HTMLInputElement, ColorInputProps>((props, 
       }
     >
       {eyeDropperIcon || (
-        <EyeDropperIcon size={theme.fn.size({ size: inputProps.size, sizes: EYE_DROPPER_SIZES })} />
+        <EyeDropperIcon size={getSize({ size: inputProps.size, sizes: EYE_DROPPER_SIZES })} />
       )}
     </ActionIcon>
   );
@@ -246,7 +247,7 @@ export const ColorInput = forwardRef<HTMLInputElement, ColorInputProps>((props, 
                 (withPreview ? (
                   <ColorSwatch
                     color={isColorValid(_value) ? _value : '#fff'}
-                    size={theme.fn.size({ size: inputProps.size, sizes: SWATCH_SIZES })}
+                    size={getSize({ size: inputProps.size, sizes: SWATCH_SIZES })}
                   />
                 ) : null)
               }
