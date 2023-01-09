@@ -76,15 +76,16 @@ export default createStyles(
       root: {
         position: 'relative',
       },
+
       viewport: {
-        height,
+        height: rem(height),
         overflow: 'hidden',
       },
 
       container: {
         display: 'flex',
         flexDirection: horizontal ? 'row' : 'column',
-        height,
+        height: rem(height),
         ...getContainerStyles(slideGap),
         ...containerBreakpoints,
       },

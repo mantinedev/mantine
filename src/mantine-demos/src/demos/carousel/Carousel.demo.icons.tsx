@@ -11,7 +11,7 @@ import { IconArrowRight, IconArrowLeft } from '@tabler/icons';
 function Demo() {
   return (
     <Carousel
-      sx={{ maxWidth: 320 }}
+      maw={320}
       mx="auto"
       height={180}
       nextControlIcon={<IconArrowRight size={16} />}
@@ -29,7 +29,7 @@ function Demo() {
 function Demo() {
   return (
     <Carousel
-      sx={{ maxWidth: 320 }}
+      maw={320}
       mx="auto"
       height={180}
       nextControlIcon={<IconArrowRight size={16} />}

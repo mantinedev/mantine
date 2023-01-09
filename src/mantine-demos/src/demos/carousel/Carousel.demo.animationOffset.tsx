@@ -22,7 +22,7 @@ function Demo() {
       </Group>
       <Modal
         opened={opened}
-        size="300px"
+        size={300}
         padding={0}
         transitionDuration={TRANSITION_DURATION}
         withCloseButton={false}
@@ -71,7 +71,7 @@ function Demo() {
       </Group>
       <Modal
         opened={opened}
-        size="300px"
+        size={300}
         padding={0}
         transitionDuration={TRANSITION_DURATION}
         withCloseButton={false}

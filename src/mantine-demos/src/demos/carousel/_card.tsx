@@ -1,9 +1,9 @@
 import React from 'react';
-import { createStyles, Paper, Text, Title, Button } from '@mantine/core';
+import { createStyles, Paper, Text, Title, Button, rem } from '@mantine/core';
 
 const useStyles = createStyles((theme) => ({
   card: {
-    height: 440,
+    height: rem(440),
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'space-between',
@@ -17,7 +17,7 @@ const useStyles = createStyles((theme) => ({
     fontWeight: 900,
     color: theme.white,
     lineHeight: 1.2,
-    fontSize: 32,
+    fontSize: rem(32),
     marginTop: theme.spacing.xs,
   },
 
