@@ -116,7 +116,11 @@ export const _Button = forwardRef<HTMLButtonElement, ButtonProps>((props, ref) =
   const colors = theme.fn.variant({ color, variant });
 
   const loader = (
-    <Loader color={colors.color} size={getSize({ size, sizes }).height / 2} {...loaderProps} />
+    <Loader
+      color={colors.color}
+      size={`calc(${(getSize({ size, sizes }) as any).height} / 2)`}
+      {...loaderProps}
+    />
   );
 
   return (

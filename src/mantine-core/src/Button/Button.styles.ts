@@ -6,6 +6,7 @@ import {
   MantineGradient,
   CSSObject,
   getSize,
+  rem,
 } from '@mantine/styles';
 import { INPUT_SIZES } from '../Input';
 
@@ -30,16 +31,16 @@ export interface ButtonStylesParams {
 }
 
 export const sizes = {
-  xs: { height: INPUT_SIZES.xs, paddingLeft: 14, paddingRight: 14 },
-  sm: { height: INPUT_SIZES.sm, paddingLeft: 18, paddingRight: 18 },
-  md: { height: INPUT_SIZES.md, paddingLeft: 22, paddingRight: 22 },
-  lg: { height: INPUT_SIZES.lg, paddingLeft: 26, paddingRight: 26 },
-  xl: { height: INPUT_SIZES.xl, paddingLeft: 32, paddingRight: 32 },
-  'compact-xs': { height: 22, paddingLeft: 7, paddingRight: 7 },
-  'compact-sm': { height: 26, paddingLeft: 8, paddingRight: 8 },
-  'compact-md': { height: 30, paddingLeft: 10, paddingRight: 10 },
-  'compact-lg': { height: 34, paddingLeft: 12, paddingRight: 12 },
-  'compact-xl': { height: 40, paddingLeft: 14, paddingRight: 14 },
+  xs: { height: INPUT_SIZES.xs, paddingLeft: rem(14), paddingRight: rem(14) },
+  sm: { height: INPUT_SIZES.sm, paddingLeft: rem(18), paddingRight: rem(18) },
+  md: { height: INPUT_SIZES.md, paddingLeft: rem(22), paddingRight: rem(22) },
+  lg: { height: INPUT_SIZES.lg, paddingLeft: rem(26), paddingRight: rem(26) },
+  xl: { height: INPUT_SIZES.xl, paddingLeft: rem(32), paddingRight: rem(32) },
+  'compact-xs': { height: rem(22), paddingLeft: rem(7), paddingRight: rem(7) },
+  'compact-sm': { height: rem(26), paddingLeft: rem(8), paddingRight: rem(8) },
+  'compact-md': { height: rem(30), paddingLeft: rem(10), paddingRight: rem(10) },
+  'compact-lg': { height: rem(34), paddingLeft: rem(12), paddingRight: rem(12) },
+  'compact-xl': { height: rem(40), paddingLeft: rem(14), paddingRight: rem(14) },
 };
 
 interface GetSizeStyles {
@@ -54,7 +55,7 @@ function getSizeStyles({ compact, size, withLeftIcon, withRightIcon }: GetSizeSt
     return sizes[`compact-${size}`];
   }
 
-  const _sizes = sizes[size];
+  const _sizes: typeof sizes[keyof typeof sizes] = sizes[size];
 
   if (!_sizes) {
     return {};
@@ -62,8 +63,8 @@ function getSizeStyles({ compact, size, withLeftIcon, withRightIcon }: GetSizeSt
 
   return {
     ..._sizes,
-    paddingLeft: withLeftIcon ? _sizes.paddingLeft / 1.5 : _sizes.paddingLeft,
-    paddingRight: withRightIcon ? _sizes.paddingRight / 1.5 : _sizes.paddingRight,
+    paddingLeft: withLeftIcon ? `calc(${_sizes.paddingLeft}  / 1.5)` : _sizes.paddingLeft,
+    paddingRight: withRightIcon ? `calc(${_sizes.paddingRight}  / 1.5)` : _sizes.paddingRight,
   };
 }
 
@@ -96,7 +97,7 @@ function getVariantStyles({ variant, theme, color, gradient }: GetVariantStyles)
   }
 
   return {
-    border: `1px solid ${colors.border}`,
+    border: `${rem(1)} solid ${colors.border}`,
     backgroundColor: colors.background,
     color: colors.color,
     '&:not([data-disabled])': theme.fn.hover({ backgroundColor: colors.hover }),
@@ -151,11 +152,7 @@ export default createStyles(
 
         '&::before': {
           content: '""',
-          position: 'absolute',
-          top: -1,
-          left: -1,
-          right: -1,
-          bottom: -1,
+          ...theme.fn.cover(rem(-1)),
           backgroundColor:
             theme.colorScheme === 'dark'
               ? theme.fn.rgba(theme.colors.dark[7], 0.5)
@@ -172,11 +169,16 @@ export default createStyles(
     },
 
     leftIcon: {
-      marginRight: 10,
+      marginRight: theme.spacing.xs,
     },
 
     rightIcon: {
-      marginLeft: 10,
+      marginLeft: theme.spacing.xs,
+    },
+
+    loader: {
+      maxWidth: '100%',
+      maxHeight: '5%',
     },
 
     centerLoader: {
