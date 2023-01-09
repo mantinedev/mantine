@@ -29,7 +29,7 @@ export default createStyles((theme: MantineTheme) => ({
   group: {
     display: 'flex',
     flexWrap: 'wrap',
-    margin: -theme.spacing.xs / 2,
+    margin: `calc(-1 * ${theme.spacing.xs}  / 2)`,
   },
 
   colorName: {

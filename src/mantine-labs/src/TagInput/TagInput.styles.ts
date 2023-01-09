@@ -23,7 +23,7 @@ export default createStyles((theme, { size, invalid }: TagInputStyles) => ({
     display: 'flex',
     alignItems: 'center',
     flexWrap: 'wrap',
-    marginLeft: `calc(${-theme.spacing.xs}px / 2)`,
+    marginLeft: `calc(-1 * ${theme.spacing.xs}px / 2)`,
     paddingTop: `calc(${theme.spacing.xs}px / 2 - 2px)`,
     paddingBottom: `calc(${theme.spacing.xs}px / 2 - 2px)`,
     boxSizing: 'border-box',

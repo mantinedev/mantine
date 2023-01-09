@@ -29,7 +29,7 @@ export default createStyles((theme, { sticky, stickyOffset }: ToolbarStyles) => 
   toolbarInner: {
     display: 'flex',
     flexWrap: 'wrap',
-    margin: `calc(${-theme.spacing.md}px / 2)`,
+    margin: `calc(-1* ${theme.spacing.md}px / 2)`,
   },
 
   toolbarControl: {
