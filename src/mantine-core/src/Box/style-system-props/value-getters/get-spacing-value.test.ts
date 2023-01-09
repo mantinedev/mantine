@@ -8,8 +8,8 @@ describe('@mantine/core/Box/get-spacing-value', () => {
   });
 
   it('returns correct value for negative spacing from theme', () => {
-    expect(getSpacingValue('-xs', DEFAULT_THEME)).toBe(DEFAULT_THEME.spacing.xs * -1);
-    expect(getSpacingValue('-lg', DEFAULT_THEME)).toBe(DEFAULT_THEME.spacing.lg * -1);
+    expect(getSpacingValue('-xs', DEFAULT_THEME)).toBe(`calc(${DEFAULT_THEME.spacing.xs} * -1)`);
+    expect(getSpacingValue('-lg', DEFAULT_THEME)).toBe(`calc(${DEFAULT_THEME.spacing.lg} * -1)`);
   });
 
   it('returns correct value for values that are not part of theme', () => {

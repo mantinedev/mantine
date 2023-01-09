@@ -8,7 +8,7 @@ const Wrapper = (props: TooltipFloatingProps) => (
       <Tooltip.Floating label="Tooltip" {...props}>
         <Box
           sx={(theme) => ({
-            padding: theme.spacing.xl * 1.5,
+            padding: theme.spacing.xl,
             cursor: 'default',
             backgroundColor:
               theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[0],
@@ -29,7 +29,7 @@ function Demo() {
     <Tooltip.Floating label="Tooltip"${props}>
       <Box
         sx={(theme) => ({
-          padding: theme.spacing.xl * 1.5,
+          padding: theme.spacing.xl,
           cursor: 'default',
           backgroundColor:
             theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[0],

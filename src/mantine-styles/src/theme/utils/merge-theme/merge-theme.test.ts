@@ -22,14 +22,14 @@ describe('@mantine/styles/merge-theme', () => {
     expect(
       mergeTheme(themeBase, {
         colors: { stone: ['#ccc', '#ddd', '#eee'], red: ['red'] },
-        spacing: { xl: 900 },
+        spacing: { xl: '900rem' },
       })
     ).toStrictEqual({
       ...themeBase,
       colors: { ...themeBase.colors, stone: ['#ccc', '#ddd', '#eee'], red: ['red'] },
       spacing: {
         ...themeBase.spacing,
-        xl: 900,
+        xl: '900rem',
       },
     });
   });
@@ -38,7 +38,7 @@ describe('@mantine/styles/merge-theme', () => {
     const themeBase = getThemeBase();
     expect(
       mergeTheme(themeBase, {
-        headings: { fontFamily: 'sans-serif', sizes: { h3: { fontSize: 500 } } },
+        headings: { fontFamily: 'sans-serif', sizes: { h3: { fontSize: '500rem' } } },
       })
     ).toStrictEqual({
       ...themeBase,
@@ -49,7 +49,7 @@ describe('@mantine/styles/merge-theme', () => {
           ...themeBase.headings.sizes,
           h3: {
             ...themeBase.headings.sizes.h3,
-            fontSize: 500,
+            fontSize: '500rem',
           },
         },
       },
