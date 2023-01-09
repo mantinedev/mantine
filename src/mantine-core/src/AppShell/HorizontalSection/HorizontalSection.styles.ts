@@ -64,11 +64,11 @@ export default createStyles(
         top: layout === 'alt' ? 0 : position?.top || 'var(--mantine-header-height)',
         bottom: 0,
         zIndex,
-        height:
-          height ||
-          (layout === 'alt'
-            ? 'auto'
-            : 'calc(100vh - var(--mantine-header-height, 0) - var(--mantine-footer-height, 0))'),
+        height: height
+          ? rem(height)
+          : layout === 'alt'
+          ? 'auto'
+          : 'calc(100vh - var(--mantine-header-height, 0) - var(--mantine-footer-height, 0))',
         width: width?.base ? rem(width?.base) : '100%',
         position: fixed ? 'fixed' : 'static',
         boxSizing: 'border-box',

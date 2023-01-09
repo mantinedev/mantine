@@ -1,6 +1,6 @@
 import React from 'react';
 import { IconChevronRight, IconChevronLeft } from '@tabler/icons';
-import { UnstyledButton, Group, Avatar, Text, Box, useMantineTheme } from '@mantine/core';
+import { UnstyledButton, Group, Avatar, Text, Box, useMantineTheme, rem } from '@mantine/core';
 
 export function User() {
   const theme = useMantineTheme();
@@ -9,7 +9,7 @@ export function User() {
     <Box
       sx={{
         paddingTop: theme.spacing.sm,
-        borderTop: `1px solid ${
+        borderTop: `${rem(1)} solid ${
           theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[2]
         }`,
       }}

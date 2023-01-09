@@ -1,13 +1,13 @@
 import React from 'react';
 import { IconAlertCircle } from '@tabler/icons';
 import { MantineDemo } from '@mantine/ds';
-import { Alert } from '@mantine/core';
+import { Alert, Box } from '@mantine/core';
 
 function Wrapper(props: React.ComponentPropsWithoutRef<typeof Alert>) {
   return (
-    <div style={{ maxWidth: 400, margin: 'auto' }}>
+    <Box maw={400} mx="auto">
       <Alert {...props} icon={<IconAlertCircle size={16} />} />
-    </div>
+    </Box>
   );
 }
 

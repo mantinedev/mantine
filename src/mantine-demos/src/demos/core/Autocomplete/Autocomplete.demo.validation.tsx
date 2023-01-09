@@ -1,6 +1,6 @@
 import React from 'react';
 import { MantineDemo } from '@mantine/ds';
-import { Autocomplete } from '@mantine/core';
+import { Autocomplete, Box } from '@mantine/core';
 
 const code = `
 import { Autocomplete } from '@mantine/core';
@@ -20,7 +20,7 @@ function Demo() {
 
 function Demo() {
   return (
-    <div style={{ maxWidth: 320, marginLeft: 'auto', marginRight: 'auto' }}>
+    <Box maw={320} mx="auto">
       <Autocomplete
         data={['React', 'Angular', 'Svelte', 'Vue']}
         label="Your favorite frameworks/libraries"
@@ -35,7 +35,7 @@ function Demo() {
         placeholder="Pick one that you like"
         error="Field is required"
       />
-    </div>
+    </Box>
   );
 }
 
