@@ -1,7 +1,7 @@
 import React from 'react';
 import { IconPhoto, IconPrinter, IconCameraSelfie } from '@tabler/icons';
 import { MantineDemo } from '@mantine/ds';
-import { Accordion, AccordionProps, useMantineTheme } from '@mantine/core';
+import { Accordion, AccordionProps, useMantineTheme, Box } from '@mantine/core';
 
 const code = `
 import { IconPhoto, IconPrinter, IconCameraSelfie } from '@tabler/icons';
@@ -70,9 +70,9 @@ export function IconsReplacementDemo(props: Partial<AccordionProps>) {
 
 function Demo() {
   return (
-    <div style={{ maxWidth: 340, marginLeft: 'auto', marginRight: 'auto' }}>
+    <Box maw={400} mx="auto">
       <IconsReplacementDemo />
-    </div>
+    </Box>
   );
 }
 

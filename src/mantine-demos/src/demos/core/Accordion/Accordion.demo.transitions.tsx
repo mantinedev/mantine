@@ -2,14 +2,26 @@ import React from 'react';
 import { MantineDemo } from '@mantine/ds';
 import { BaseDemo } from './_base';
 
+const getCode = (prop: string) => `
+import { Accordion } from '@mantine/core';
+
+function Demo() {
+  return (
+    <Accordion ${prop}>
+      {/* ...content */}
+    </Accordion>
+  )
+}
+`;
+
 export const disableTransitions: MantineDemo = {
   type: 'demo',
-  component: () => <BaseDemo transitionDuration={0} sx={{ maxWidth: 380 }} mx="auto" />,
-  code: '<Accordion transitionDuration={0} />',
+  component: () => <BaseDemo transitionDuration={0} maw={380} mx="auto" />,
+  code: getCode('transitionDuration={0}'),
 };
 
 export const customTransitions: MantineDemo = {
   type: 'demo',
-  component: () => <BaseDemo transitionDuration={1000} sx={{ maxWidth: 380 }} mx="auto" />,
-  code: '<Accordion transitionDuration={1000} /> // -> 1000ms transition duration',
+  component: () => <BaseDemo transitionDuration={1000} maw={380} mx="auto" />,
+  code: getCode('transitionDuration={1000}'),
 };

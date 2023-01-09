@@ -20,7 +20,7 @@ function AccordionControl(props: AccordionControlProps) {
 
 function Demo() {
   return (
-    <Accordion chevronPosition="left" sx={{ maxWidth: 400 }} mx="auto">
+    <Accordion chevronPosition="left" maw={400} mx="auto">
       <Accordion.Item value="item-1">
         <AccordionControl>Control 1</AccordionControl>
         <Accordion.Panel>Panel 1</Accordion.Panel>
@@ -53,7 +53,7 @@ function AccordionControl(props: AccordionControlProps) {
 
 function Demo() {
   return (
-    <Accordion chevronPosition="left" sx={{ maxWidth: 400 }} mx="auto">
+    <Accordion chevronPosition="left" maw={400} mx="auto">
       <Accordion.Item value="item-1">
         <AccordionControl>Control 1</AccordionControl>
         <Accordion.Panel>Panel 1</Accordion.Panel>
