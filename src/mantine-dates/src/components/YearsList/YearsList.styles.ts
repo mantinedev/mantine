@@ -1,4 +1,4 @@
-import { createStyles } from '@mantine/core';
+import { createStyles, rem } from '@mantine/core';
 
 export default createStyles(() => ({
   yearsList: {
@@ -7,7 +7,7 @@ export default createStyles(() => ({
   },
 
   yearsListCell: {
-    padding: 0.5,
+    padding: rem(0.5),
   },
 
   yearsListRow: {},

@@ -1,4 +1,4 @@
-import { createStyles, getSize } from '@mantine/core';
+import { createStyles, getSize, rem } from '@mantine/core';
 import { sizes } from '../Day/Day.styles';
 
 export default createStyles((theme, _, { size }) => {
@@ -9,7 +9,7 @@ export default createStyles((theme, _, { size }) => {
     pickerControl: {
       fontSize: getSize({ size, sizes: theme.fontSizes }),
       height: getSize({ size, sizes }),
-      width: (getSize({ size, sizes }) * 7) / 3 + 1.5,
+      width: `calc((${getSize({ size, sizes })} * 7) / 3 + ${rem(1.5)})`,
       display: 'flex',
       justifyContent: 'center',
       alignItems: 'center',

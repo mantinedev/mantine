@@ -1,11 +1,11 @@
-import { createStyles, MantineNumberSize, getSize } from '@mantine/core';
+import { createStyles, MantineNumberSize, getSize, rem } from '@mantine/core';
 
 export const sizes = {
-  xs: 30,
-  sm: 36,
-  md: 42,
-  lg: 48,
-  xl: 54,
+  xs: rem(30),
+  sm: rem(36),
+  md: rem(42),
+  lg: rem(48),
+  xl: rem(54),
 };
 
 export interface DayStylesParams {

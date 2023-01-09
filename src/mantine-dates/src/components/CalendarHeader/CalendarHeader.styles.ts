@@ -1,4 +1,4 @@
-import { createStyles, getSize } from '@mantine/core';
+import { createStyles, getSize, rem } from '@mantine/core';
 import { sizes } from '../Day/Day.styles';
 
 export default createStyles((theme, _, { size }) => {
@@ -8,7 +8,7 @@ export default createStyles((theme, _, { size }) => {
 
     calendarHeader: {
       display: 'flex',
-      maxWidth: controlSize * 7 + 7,
+      maxWidth: `calc(${controlSize} * 7 + ${rem(7)})`,
     },
 
     calendarHeaderControl: {
