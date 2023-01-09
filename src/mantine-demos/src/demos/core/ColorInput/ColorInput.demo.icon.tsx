@@ -1,7 +1,7 @@
 import React from 'react';
 import { IconPaint } from '@tabler/icons';
 import { MantineDemo } from '@mantine/ds';
-import { ColorInput } from '@mantine/core';
+import { ColorInput, Box } from '@mantine/core';
 
 const code = `
 import { IconPaint } from '@tabler/icons';
@@ -30,7 +30,7 @@ function Demo() {
 
 function Demo() {
   return (
-    <div style={{ maxWidth: 320, marginLeft: 'auto', marginRight: 'auto' }}>
+    <Box maw={320} mx="auto">
       <ColorInput label="Without preview" placeholder="No color preview" withPreview={false} />
 
       <ColorInput
@@ -39,7 +39,7 @@ function Demo() {
         label="With icon"
         placeholder="With icon"
       />
-    </div>
+    </Box>
   );
 }
 

@@ -14,9 +14,13 @@ function Demo() {
 
 function Demo() {
   return (
-    <div style={{ maxWidth: 320, marginLeft: 'auto', marginRight: 'auto' }}>
-      <FileInput label="Your resume" placeholder="Your resume" icon={<IconUpload size={14} />} />
-    </div>
+    <FileInput
+      maw={320}
+      mx="auto"
+      label="Your resume"
+      placeholder="Your resume"
+      icon={<IconUpload size={14} />}
+    />
   );
 }
 

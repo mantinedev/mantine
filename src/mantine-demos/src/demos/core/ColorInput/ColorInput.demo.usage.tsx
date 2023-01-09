@@ -12,9 +12,13 @@ function Demo() {
 
 function Demo() {
   return (
-    <div style={{ maxWidth: 320, marginLeft: 'auto', marginRight: 'auto' }}>
-      <ColorInput placeholder="Pick color" label="Your favorite color" defaultValue="#ffffff" />
-    </div>
+    <ColorInput
+      maw={320}
+      mx="auto"
+      placeholder="Pick color"
+      label="Your favorite color"
+      defaultValue="#ffffff"
+    />
   );
 }
 

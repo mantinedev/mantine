@@ -1,14 +1,14 @@
 import React from 'react';
 import { IconAt } from '@tabler/icons';
 import { MantineDemo } from '@mantine/ds';
-import { Input, InputProps } from '@mantine/core';
+import { Input, InputProps, rem } from '@mantine/core';
 
 const iconSizes = {
-  xs: 14,
-  sm: 16,
-  md: 18,
-  lg: 22,
-  xl: 24,
+  xs: rem(14),
+  sm: rem(16),
+  md: rem(18),
+  lg: rem(22),
+  xl: rem(24),
 };
 
 function Wrapper(props: InputProps) {

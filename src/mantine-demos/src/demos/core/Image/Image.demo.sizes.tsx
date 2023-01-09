@@ -12,25 +12,13 @@ function Demo() {
   return (
     <>
       {/* By default image will have object-fit: cover */}
-      <Image
-        width={200}
-        height={80}
-        src="https://images.unsplash.com/long-image-url-was-here.jpg"
-      />
+      <Image width={200} height={80} src="./image.png" />
 
       {/* Set fit="contain" to preserve image proportions in this case image wrapper will still have given width and height */}
-      <Image
-        width={200}
-        height={80}
-        fit="contain"
-        src="https://images.unsplash.com/long-image-url-was-here.jpg"
-      />
+      <Image width={200} height={80} fit="contain" src="./image.png" />
 
       {/* It's not necessary to use both width and height */}
-      <Image
-        height={80}
-        src="https://images.unsplash.com/long-image-url-was-here.jpg"
-      />
+      <Image height={80} src="./image.png" />
     </>
   );
 }

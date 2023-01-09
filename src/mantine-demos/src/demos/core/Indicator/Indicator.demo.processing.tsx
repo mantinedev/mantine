@@ -8,7 +8,7 @@ import { Avatar, Indicator } from '@mantine/core';
 function Demo() {
   return (
     <Indicator inline dot processing size={12}>
-      <Avatar size="lg" src="avatar.png" />
+      <Avatar size="lg" src="./avatar.png" />
     </Indicator>
   );
 }
