@@ -1,7 +1,7 @@
 import React from 'react';
 
 interface YarnIconProps extends React.ComponentPropsWithoutRef<'svg'> {
-  size?: number;
+  size?: number | string;
 }
 
 export function YarnIcon({ size, ...others }: YarnIconProps) {

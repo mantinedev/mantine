@@ -1,7 +1,7 @@
 import React from 'react';
 
 interface GithubIconProps extends React.ComponentPropsWithoutRef<'svg'> {
-  size?: number;
+  size?: number | string;
 }
 
 export function GithubIcon({ size, ...others }: GithubIconProps) {

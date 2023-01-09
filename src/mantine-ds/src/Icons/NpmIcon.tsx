@@ -1,7 +1,7 @@
 import React from 'react';
 
 interface NpmIconProps extends React.ComponentPropsWithoutRef<'svg'> {
-  size?: number;
+  size?: number | string;
 }
 
 export function NpmIcon({ size, ...others }: NpmIconProps) {

@@ -1,14 +1,14 @@
-import { createStyles } from '@mantine/core';
+import { createStyles, rem } from '@mantine/core';
 
 export default createStyles((theme) => ({
   root: {
-    height: 34,
+    height: rem(34),
     paddingLeft: theme.spacing.sm,
-    paddingRight: 5,
+    paddingRight: rem(5),
     borderRadius: theme.radius.md,
     color: theme.colorScheme === 'dark' ? theme.colors.dark[2] : theme.colors.gray[5],
     backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.white,
-    border: `1px solid ${
+    border: `${rem(1)} solid ${
       theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[3]
     }`,
 
@@ -21,12 +21,12 @@ export default createStyles((theme) => ({
   },
 
   shortcut: {
-    fontSize: 11,
+    fontSize: rem(11),
     lineHeight: 1,
-    padding: '4px 7px',
+    padding: `${rem(4)} ${rem(7)}`,
     borderRadius: theme.radius.sm,
     color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.colors.gray[7],
-    border: `1px solid ${
+    border: `${rem(1)} solid ${
       theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.colors.gray[2]
     }`,
     backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.colors.gray[0],

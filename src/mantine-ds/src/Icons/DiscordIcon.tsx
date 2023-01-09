@@ -1,7 +1,7 @@
 import React from 'react';
 
 interface DiscordIconProps extends React.ComponentPropsWithoutRef<'svg'> {
-  size?: number;
+  size?: number | string;
 }
 
 export function DiscordIcon({ size, ...others }: DiscordIconProps) {

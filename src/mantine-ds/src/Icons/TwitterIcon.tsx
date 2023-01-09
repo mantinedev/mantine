@@ -1,7 +1,7 @@
 import React from 'react';
 
 interface TwitterIconProps extends React.ComponentPropsWithoutRef<'svg'> {
-  size?: number;
+  size?: number | string;
 }
 
 export function TwitterIcon({ size, ...others }: TwitterIconProps) {
