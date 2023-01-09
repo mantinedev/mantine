@@ -1,4 +1,4 @@
-import { DEFAULT_THEME } from '@mantine/styles';
+import { DEFAULT_THEME, rem } from '@mantine/styles';
 import { getSystemStyles } from './get-system-styles';
 
 describe('@mantine/core/Box/get-system-styles', () => {
@@ -33,41 +33,41 @@ describe('@mantine/core/Box/get-system-styles', () => {
 
   it('correctly transforms margins', () => {
     expect(getSystemStyles({ m: 1, mt: 2, mb: 3, mr: 4, ml: 5 }, DEFAULT_THEME)).toStrictEqual({
-      margin: 1,
-      marginTop: 2,
-      marginBottom: 3,
-      marginRight: 4,
-      marginLeft: 5,
+      margin: rem(1),
+      marginTop: rem(2),
+      marginBottom: rem(3),
+      marginRight: rem(4),
+      marginLeft: rem(5),
     });
 
     expect(getSystemStyles({ mx: 6 }, DEFAULT_THEME)).toStrictEqual({
-      marginLeft: 6,
-      marginRight: 6,
+      marginLeft: rem(6),
+      marginRight: rem(6),
     });
 
     expect(getSystemStyles({ my: 7 }, DEFAULT_THEME)).toStrictEqual({
-      marginTop: 7,
-      marginBottom: 7,
+      marginTop: rem(7),
+      marginBottom: rem(7),
     });
   });
 
   it('correctly transforms paddings', () => {
     expect(getSystemStyles({ p: 1, pt: 2, pb: 3, pr: 4, pl: 5 }, DEFAULT_THEME)).toStrictEqual({
-      padding: 1,
-      paddingTop: 2,
-      paddingBottom: 3,
-      paddingRight: 4,
-      paddingLeft: 5,
+      padding: rem(1),
+      paddingTop: rem(2),
+      paddingBottom: rem(3),
+      paddingRight: rem(4),
+      paddingLeft: rem(5),
     });
 
     expect(getSystemStyles({ px: 6 }, DEFAULT_THEME)).toStrictEqual({
-      paddingLeft: 6,
-      paddingRight: 6,
+      paddingLeft: rem(6),
+      paddingRight: rem(6),
     });
 
     expect(getSystemStyles({ py: 7 }, DEFAULT_THEME)).toStrictEqual({
-      paddingTop: 7,
-      paddingBottom: 7,
+      paddingTop: rem(7),
+      paddingBottom: rem(7),
     });
   });
 
@@ -80,6 +80,15 @@ describe('@mantine/core/Box/get-system-styles', () => {
   it('correctly transforms background', () => {
     expect(getSystemStyles({ bg: '#545454' }, DEFAULT_THEME)).toStrictEqual({
       background: '#545454',
+    });
+  });
+
+  it('correctly transforms width, max-width, height and max-height', () => {
+    expect(getSystemStyles({ w: 200, h: 300, maw: 400, mah: 500 }, DEFAULT_THEME)).toStrictEqual({
+      width: rem(200),
+      height: rem(300),
+      maxWidth: rem(400),
+      maxHeight: rem(500),
     });
   });
 });

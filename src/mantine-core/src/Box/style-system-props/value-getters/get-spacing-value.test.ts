@@ -1,4 +1,4 @@
-import { DEFAULT_THEME } from '@mantine/styles';
+import { DEFAULT_THEME, rem } from '@mantine/styles';
 import { getSpacingValue } from './get-spacing-value';
 
 describe('@mantine/core/Box/get-spacing-value', () => {
@@ -13,7 +13,7 @@ describe('@mantine/core/Box/get-spacing-value', () => {
   });
 
   it('returns correct value for values that are not part of theme', () => {
-    expect(getSpacingValue(10, DEFAULT_THEME)).toBe(10);
+    expect(getSpacingValue(10, DEFAULT_THEME)).toBe(rem(10));
     expect(getSpacingValue('15rem', DEFAULT_THEME)).toBe('15rem');
   });
 });
