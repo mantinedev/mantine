@@ -6,7 +6,7 @@ export function getBreakpointValue(value: string | number) {
     return value;
   }
 
-  if (value.includes('rem')) {
+  if (typeof value === 'string' && value.includes('rem')) {
     return Number(value.replace('rem', '')) * 16;
   }
 
