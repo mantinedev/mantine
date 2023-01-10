@@ -31,7 +31,7 @@ function Demo() {
           setActive(false);
         }}
       >
-        <Group position="center" spacing="xl" style={{ minHeight: 220, pointerEvents: 'none' }}>
+        <Group position="center" spacing="xl" mih={220} sx={{ pointerEvents: 'none' }}>
           <Dropzone.Accept>
             <IconUpload
               size={50}
