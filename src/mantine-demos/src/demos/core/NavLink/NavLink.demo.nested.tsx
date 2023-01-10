@@ -9,7 +9,7 @@ import { IconGauge, IconFingerprint } from '@tabler/icons';
 
 function Demo() {
   return (
-    <Box sx={{ width: 240 }}>
+    <Box w={240}>
       <NavLink
         label="First parent link"
         icon={<IconGauge size={16} stroke={1.5} />}
@@ -42,7 +42,7 @@ function Demo() {
 function Demo() {
   return (
     <Group position="center">
-      <Box sx={{ width: 240 }}>
+      <Box w={240}>
         <NavLink
           label="First parent link"
           icon={<IconGauge size={16} stroke={1.5} />}

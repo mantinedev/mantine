@@ -20,13 +20,13 @@ function Demo() {
 
 function Demo() {
   return (
-    <div style={{ maxWidth: 320, marginLeft: 'auto', marginRight: 'auto' }}>
-      <PasswordInput
-        label="Your password"
-        placeholder="Your password"
-        icon={<IconLock size={16} />}
-      />
-    </div>
+    <PasswordInput
+      maw={320}
+      mx="auto"
+      label="Your password"
+      placeholder="Your password"
+      icon={<IconLock size={16} />}
+    />
   );
 }
 

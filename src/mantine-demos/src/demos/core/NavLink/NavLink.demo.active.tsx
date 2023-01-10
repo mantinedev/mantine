@@ -33,7 +33,7 @@ function Demo() {
     />
   ));
 
-  return <Box sx={{ width: 220 }}>{items}</Box>;
+  return <Box w={220}>{items}</Box>;
 }
 `;
 
@@ -65,7 +65,7 @@ function Demo(props: any) {
 
   return (
     <Group position="center">
-      <Box sx={{ width: 220 }}>{items}</Box>
+      <Box w={220}>{items}</Box>
     </Group>
   );
 }

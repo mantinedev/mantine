@@ -21,14 +21,14 @@ function Demo() {
 
 function Demo() {
   return (
-    <div style={{ maxWidth: 320, marginLeft: 'auto', marginRight: 'auto' }}>
-      <NativeSelect
-        label="Pick a hashtag"
-        placeholder="Pick a hashtag"
-        data={['React', 'Angular', 'Svelte', 'Vue']}
-        icon={<IconHash size={14} />}
-      />
-    </div>
+    <NativeSelect
+      maw={320}
+      mx="auto"
+      label="Pick a hashtag"
+      placeholder="Pick a hashtag"
+      data={['React', 'Angular', 'Svelte', 'Vue']}
+      icon={<IconHash size={14} />}
+    />
   );
 }
 

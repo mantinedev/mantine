@@ -22,15 +22,15 @@ function Demo() {
 
 function Demo() {
   return (
-    <div style={{ maxWidth: 320, marginLeft: 'auto', marginRight: 'auto' }}>
-      <NativeSelect
-        label="Your favorite library/framework"
-        placeholder="Your favorite library/framework"
-        data={['React', 'Angular', 'Svelte', 'Vue']}
-        rightSection={<IconChevronDown size={14} />}
-        rightSectionWidth={30}
-      />
-    </div>
+    <NativeSelect
+      maw={320}
+      mx="auto"
+      label="Your favorite library/framework"
+      placeholder="Your favorite library/framework"
+      data={['React', 'Angular', 'Svelte', 'Vue']}
+      rightSection={<IconChevronDown size={14} />}
+      rightSectionWidth={30}
+    />
   );
 }
 

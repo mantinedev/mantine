@@ -51,7 +51,7 @@ function Demo() {
   const color = strength === 100 ? 'teal' : strength > 50 ? 'yellow' : 'red';
 
   return (
-    <div style={{ maxWidth: 340, margin: 'auto' }}>
+    <Box maw={340} mx="auto">
       <Popover opened={popoverOpened} position="bottom" width="target" transition="pop">
         <Popover.Target>
           <div
@@ -68,12 +68,12 @@ function Demo() {
           </div>
         </Popover.Target>
         <Popover.Dropdown>
-          <Progress color={color} value={strength} size={5} style={{ marginBottom: 10 }} />
+          <Progress color={color} value={strength} size={5} mb="xs" />
           <PasswordRequirement label="Includes at least 6 characters" meets={value.length > 5} />
           {checks}
         </Popover.Dropdown>
       </Popover>
-    </div>
+    </Box>
   );
 }
 `;
@@ -121,7 +121,7 @@ function Demo() {
   const color = strength === 100 ? 'teal' : strength > 50 ? 'yellow' : 'red';
 
   return (
-    <div style={{ maxWidth: 340, margin: 'auto' }}>
+    <Box maw={340} mx="auto">
       <Popover opened={popoverOpened} position="bottom" width="target" transition="pop">
         <Popover.Target>
           <div
@@ -138,12 +138,12 @@ function Demo() {
           </div>
         </Popover.Target>
         <Popover.Dropdown>
-          <Progress color={color} value={strength} size={5} style={{ marginBottom: 10 }} />
+          <Progress color={color} value={strength} size={5} mb="xs" />
           <PasswordRequirement label="Includes at least 6 characters" meets={value.length > 5} />
           {checks}
         </Popover.Dropdown>
       </Popover>
-    </div>
+    </Box>
   );
 }
 

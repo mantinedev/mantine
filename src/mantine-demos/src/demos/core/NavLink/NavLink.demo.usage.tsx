@@ -9,7 +9,7 @@ import { IconHome2, IconGauge, IconChevronRight, IconActivity, IconCircleOff } f
 
 function Demo() {
   return (
-    <Box sx={{ width: 240 }}>
+    <Box w={240}>
       <NavLink label="With icon" icon={<IconHome2 size={16} stroke={1.5} />} />
       <NavLink
         label="With right section"
@@ -21,7 +21,7 @@ function Demo() {
         label="With description"
         description="Additional information"
         icon={
-          <Badge size="xs" variant="filled" color="red" sx={{ width: 16, height: 16, padding: 0 }}>
+          <Badge size="xs" variant="filled" color="red" w={16} h={16} p={0}>
             3
           </Badge>
         }
@@ -54,7 +54,7 @@ function Demo() {
 function Demo() {
   return (
     <Group position="center">
-      <Box sx={{ width: 240 }}>
+      <Box w={240}>
         <NavLink label="With icon" icon={<IconHome2 size={16} stroke={1.5} />} />
         <NavLink
           label="With right section"
@@ -66,12 +66,7 @@ function Demo() {
           label="With description"
           description="Additional information"
           icon={
-            <Badge
-              size="xs"
-              variant="filled"
-              color="red"
-              sx={{ width: 16, height: 16, padding: 0 }}
-            >
+            <Badge size="xs" variant="filled" color="red" w={16} h={16} p={0}>
               3
             </Badge>
           }

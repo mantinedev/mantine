@@ -43,7 +43,7 @@ function Demo() {
       </Notification>
 
       <Notification
-        style={{ marginTop: 15 }}
+        mt="md"
         icon={<IconCheck size={18} />}
         color="teal"
         title="Teal notification"
@@ -52,17 +52,12 @@ function Demo() {
         This is teal notification with icon
       </Notification>
 
-      <Notification
-        style={{ marginTop: 15 }}
-        icon={<IconX size={18} />}
-        color="red"
-        onClose={() => {}}
-      >
+      <Notification mt="md" icon={<IconX size={18} />} color="red" onClose={() => {}}>
         Bummer! Notification without title
       </Notification>
 
       <Notification
-        style={{ marginTop: 15 }}
+        mt="md"
         loading
         title="Uploading data to the server"
         disallowClose
