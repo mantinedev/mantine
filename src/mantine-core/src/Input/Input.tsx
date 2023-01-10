@@ -98,7 +98,7 @@ export const _Input = forwardRef<HTMLInputElement, InputProps>((props, ref) => {
     pointer,
     ...others
   } = useComponentDefaultProps('Input', defaultProps, props);
-  const { offsetBottom, offsetTop } = useInputWrapperContext();
+  const { offsetBottom, offsetTop, describedBy } = useInputWrapperContext();
 
   const { classes, cx } = useStyles(
     {
@@ -135,6 +135,7 @@ export const _Input = forwardRef<HTMLInputElement, InputProps>((props, ref) => {
         ref={ref}
         required={required}
         aria-invalid={invalid}
+        aria-describedby={describedBy}
         disabled={disabled}
         className={cx(classes[`${variant}Variant`], classes.input, {
           [classes.withIcon]: icon,

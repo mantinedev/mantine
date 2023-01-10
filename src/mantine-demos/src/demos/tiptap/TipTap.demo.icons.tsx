@@ -11,6 +11,9 @@ import StarterKit from '@tiptap/starter-kit';
 import { RichTextEditor } from '@mantine/tiptap';
 import { IconBold, IconItalic } from '@tabler/icons';
 
+const BoldIcon = () => <IconBold size={18} stroke={3.5} />;
+const ItalicIcon = () => <IconItalic size={18} stroke={3.5} />;
+
 function Demo() {
   const editor = useEditor({
     extensions: [StarterKit],
@@ -21,8 +24,8 @@ function Demo() {
     <RichTextEditor editor={editor}>
       <RichTextEditor.Toolbar>
         <RichTextEditor.ControlsGroup>
-          <RichTextEditor.Bold icon={({ size }) => <IconBold size={size} stroke={3.5} />} />
-          <RichTextEditor.Italic icon={({ size }) => <IconItalic size={size} stroke={3.5} />} />
+          <RichTextEditor.Bold icon={BoldIcon} />
+          <RichTextEditor.Italic icon={ItalicIcon} />
         </RichTextEditor.ControlsGroup>
       </RichTextEditor.Toolbar>
 
@@ -32,6 +35,9 @@ function Demo() {
 }
 `;
 
+const BoldIcon = () => <IconBold size={18} stroke={3.5} />;
+const ItalicIcon = () => <IconItalic size={18} stroke={3.5} />;
+
 function Demo() {
   const editor = useEditor({
     extensions: [StarterKit],
@@ -42,8 +48,8 @@ function Demo() {
     <RichTextEditor editor={editor}>
       <RichTextEditor.Toolbar>
         <RichTextEditor.ControlsGroup>
-          <RichTextEditor.Bold icon={({ size }) => <IconBold size={size} stroke={3.5} />} />
-          <RichTextEditor.Italic icon={({ size }) => <IconItalic size={size} stroke={3.5} />} />
+          <RichTextEditor.Bold icon={BoldIcon} />
+          <RichTextEditor.Italic icon={ItalicIcon} />
         </RichTextEditor.ControlsGroup>
       </RichTextEditor.Toolbar>
 

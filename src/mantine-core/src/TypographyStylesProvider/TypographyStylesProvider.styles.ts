@@ -104,7 +104,7 @@ export default createStyles((theme) => {
 
       '& code': {
         lineHeight: theme.lineHeight,
-        padding: `1px calc(${theme.spacing.xs}px  / 1)`,
+        padding: '1px 5px',
         borderRadius: theme.radius.sm,
         color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
         backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[9] : theme.colors.gray[0],
@@ -117,7 +117,7 @@ export default createStyles((theme) => {
 
       '& ul, & ol': {
         marginBottom: theme.spacing.md,
-        paddingLeft: `calc(${theme.spacing.lg}px * 2)`,
+        paddingLeft: 38,
 
         '& li': {
           marginTop: theme.spacing.xs,

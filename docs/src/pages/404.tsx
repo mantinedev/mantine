@@ -2,15 +2,14 @@
 import React from 'react';
 import { Container } from '@mantine/core';
 import GatsbyLink from '../components/MdxPage/MdxProvider/GatsbyLink/GatsbyLink';
-import Head from '../components/Head/Head';
 import { components } from '../components/MdxPage/MdxProvider/MdxProvider';
+import { PageHead } from '../components/PageHead/PageHead';
 
 export default function PageNotFound() {
   const { li: Li, ul: Ul, h1: H1, a: A, p: P } = components;
 
   return (
     <>
-      <Head title="404" disableTitleTemplate />
       <Container size={1100}>
         <P>
           <H1>Congratulations!</H1>
@@ -46,3 +45,5 @@ export default function PageNotFound() {
     </>
   );
 }
+
+export const Head = () => <PageHead title="404" disableTitleTemplate />;

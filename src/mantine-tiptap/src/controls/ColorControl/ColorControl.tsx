@@ -1,10 +1,5 @@
 import React, { forwardRef } from 'react';
-import {
-  ColorSwatch,
-  DefaultProps,
-  useComponentDefaultProps,
-  useContextStylesApi,
-} from '@mantine/core';
+import { ColorSwatch, DefaultProps, useComponentDefaultProps } from '@mantine/core';
 import { Control } from '../Control/Control';
 import { useRichTextEditorContext } from '../../RichTextEditor.context';
 
@@ -24,8 +19,7 @@ export const ColorControl = forwardRef<HTMLButtonElement, RichTextEditorColorCon
       defaultProps,
       props
     );
-    const { unstyled } = useContextStylesApi();
-    const { editor, labels } = useRichTextEditorContext();
+    const { editor, labels, unstyled } = useRichTextEditorContext();
     const currentColor = editor?.getAttributes('textStyle').color || null;
     const label = labels.colorControlLabel(color);
 

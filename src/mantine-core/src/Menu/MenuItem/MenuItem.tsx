@@ -1,11 +1,5 @@
 import React, { useRef, forwardRef } from 'react';
-import {
-  DefaultProps,
-  MantineColor,
-  Selectors,
-  useContextStylesApi,
-  useComponentDefaultProps,
-} from '@mantine/styles';
+import { DefaultProps, MantineColor, Selectors, useComponentDefaultProps } from '@mantine/styles';
 import {
   createEventHandler,
   createPolymorphicComponent,
@@ -41,10 +35,9 @@ export const _MenuItem = forwardRef<HTMLButtonElement, MenuItemProps>((props, re
   const { children, className, color, closeMenuOnClick, icon, rightSection, ...others } =
     useComponentDefaultProps('MenuItem', defaultProps, props);
   const ctx = useMenuContext();
-  const { classNames, styles, unstyled } = useContextStylesApi();
   const { classes, cx, theme } = useStyles(
     { radius: ctx.radius, color },
-    { name: 'Menu', classNames, styles, unstyled }
+    { name: 'Menu', classNames: ctx.classNames, styles: ctx.styles, unstyled: ctx.unstyled }
   );
   const itemRef = useRef<HTMLButtonElement>();
 

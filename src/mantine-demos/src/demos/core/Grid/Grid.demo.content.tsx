@@ -9,8 +9,8 @@ import { Grid } from '@mantine/core';
 function Demo() {
   return (
     <Grid>
-      <Grid.Col span="content">fit content</Col>
-      <Grid.Col span={6}>2</Col>
+      <Col span="content">fit content</Col>
+      <Col span={6}>2</Col>
     </Grid>
   );
 }

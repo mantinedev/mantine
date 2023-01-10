@@ -1,6 +1,6 @@
 import React from 'react';
 
-export function notEmpty(error?: React.ReactNode) {
+export function isNotEmpty(error?: React.ReactNode) {
   const _error = error || true;
 
   return (value: unknown) => {
@@ -13,6 +13,10 @@ export function notEmpty(error?: React.ReactNode) {
     }
 
     if (value === null || value === undefined) {
+      return _error;
+    }
+
+    if (value === false) {
       return _error;
     }
 

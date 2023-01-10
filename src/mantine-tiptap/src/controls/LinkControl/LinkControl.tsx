@@ -9,7 +9,6 @@ import {
   PopoverProps,
   Selectors,
   useComponentDefaultProps,
-  useContextStylesApi,
 } from '@mantine/core';
 import { useDisclosure, useInputState, useWindowEvent } from '@mantine/hooks';
 import { ControlBase, RichTextEditorControlBaseProps } from '../ControlBase/ControlBase';
@@ -40,9 +39,8 @@ export const LinkControl = forwardRef<HTMLButtonElement, RichTextEditorLinkContr
       props
     );
 
-    const { classNames, styles, unstyled } = useContextStylesApi();
+    const { editor, labels, classNames, styles, unstyled } = useRichTextEditorContext();
     const { classes } = useStyles(null, { name: 'RichTextEditor', classNames, styles, unstyled });
-    const { editor, labels } = useRichTextEditorContext();
     const [url, setUrl] = useInputState('');
     const [external, setExternal] = useState(false);
     const [opened, { open, close }] = useDisclosure(false);
@@ -95,7 +93,7 @@ export const LinkControl = forwardRef<HTMLButtonElement, RichTextEditorLinkContr
       >
         <Popover.Target>
           <ControlBase
-            icon={LinkIcon}
+            icon={icon || LinkIcon}
             aria-label={labels.linkControlLabel}
             title={labels.linkControlLabel}
             onClick={handleOpen}

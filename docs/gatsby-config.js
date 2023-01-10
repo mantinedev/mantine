@@ -16,7 +16,6 @@ module.exports = {
   plugins: [
     'gatsby-plugin-cname',
     'gatsby-plugin-tsconfig-paths',
-    'gatsby-plugin-react-helmet',
     {
       resolve: 'gatsby-plugin-layout',
       options: {

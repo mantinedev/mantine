@@ -32,9 +32,15 @@ To use gradient as Text color:
 
 <Demo data={TextDemos.gradient} />
 
+## Truncate
+
+Set `truncate` prop to add `text-overflow: ellipsis` styles:
+
+<Demo data={TextDemos.truncate} />
+
 ## Line clamp
 
-Specify maximum amount of lines with `lineClamp` prop. This option uses [-webkit-line-clamp](https://developer.mozilla.org/en-US/docs/Web/CSS/-webkit-line-clamp)
+Specify maximum number of lines with `lineClamp` prop. This option uses [-webkit-line-clamp](https://developer.mozilla.org/en-US/docs/Web/CSS/-webkit-line-clamp)
 CSS property ([caniuse](https://caniuse.com/css-line-clamp)). Note that `padding-bottom` cannot be set on text element:
 
 <Demo data={TextDemos.linesConfigurator} />

@@ -305,3 +305,25 @@ export function PlaceholderExtension() {
     </div>
   );
 }
+
+export function ControlStylesApi() {
+  const editor = useEditor({
+    extensions: [StarterKit, Link],
+    content: '',
+  });
+
+  return (
+    <div style={{ padding: 40 }}>
+      <RichTextEditor editor={editor} styles={{ control: { backgroundColor: 'pink' } }}>
+        <RichTextEditor.Toolbar>
+          <RichTextEditor.ControlsGroup>
+            <RichTextEditor.Bold />
+            <RichTextEditor.Link icon={() => <div>$</div>} />
+          </RichTextEditor.ControlsGroup>
+        </RichTextEditor.Toolbar>
+
+        <RichTextEditor.Content />
+      </RichTextEditor>
+    </div>
+  );
+}

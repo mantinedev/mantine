@@ -29,7 +29,7 @@ type FormRule<Value, Values> = NonNullable<Value> extends Array<infer ListValue>
             : FormRulesRecord<ListValue[Key]> | Rule<ListValue[Key], Values>;
         }>
       | Rule<Value, Values>
-  : NonNullable<Value> extends Record<string, unknown>
+  : NonNullable<Value> extends Record<string, any>
   ? FormRulesRecord<Value, Values> | Rule<Value, Values>
   : Rule<Value, Values>;
 
@@ -62,7 +62,7 @@ export type OnReset = (event: React.FormEvent<HTMLFormElement>) => void;
 export type GetInputProps<Values> = <Field extends LooseKeys<Values>>(
   path: Field,
   options?: { type?: GetInputPropsType; withError?: boolean; withFocus?: boolean }
-) => any;
+) => { value: any; onChange: any; checked?: any; error?: any; onFocus?: any };
 
 export type SetFieldValue<Values> = <Field extends LooseKeys<Values>>(
   path: Field,
@@ -156,3 +156,7 @@ export type UseForm<
   Values = Record<string, unknown>,
   TransformValues extends _TransformValues<Values> = (values: Values) => Values
 > = (input?: UseFormInput<Values, TransformValues>) => UseFormReturnType<Values, TransformValues>;
+
+export type TransformedValues<Form extends UseFormReturnType<any>> = Parameters<
+  Parameters<Form['onSubmit']>[0]
+>[0];

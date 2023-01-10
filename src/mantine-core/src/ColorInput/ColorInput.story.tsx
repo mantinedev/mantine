@@ -19,6 +19,7 @@ export function Controlled() {
           ...Object.keys(DEFAULT_THEME.colors).map((color) => DEFAULT_THEME.colors[color][6]),
           'rgba(0, 0, 0, 0)',
         ]}
+        closeOnColorSwatchClick
         mb="md"
       />
 

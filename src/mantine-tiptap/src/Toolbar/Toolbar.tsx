@@ -1,11 +1,6 @@
 import React, { forwardRef } from 'react';
-import {
-  Group,
-  DefaultProps,
-  useComponentDefaultProps,
-  Selectors,
-  useContextStylesApi,
-} from '@mantine/core';
+import { Group, DefaultProps, useComponentDefaultProps, Selectors } from '@mantine/core';
+import { useRichTextEditorContext } from '../RichTextEditor.context';
 import useStyles from './Toolbar.styles';
 
 export type ToolbarStylesNames = Selectors<typeof useStyles>;
@@ -31,10 +26,15 @@ export const Toolbar = forwardRef<HTMLDivElement, RichTextEditorToolbarProps>((p
     props
   );
 
-  const { classNames, styles, unstyled } = useContextStylesApi();
+  const ctx = useRichTextEditorContext();
   const { classes, cx } = useStyles(
     { sticky, stickyOffset },
-    { name: 'RichTextEditor', classNames, styles, unstyled }
+    {
+      name: 'RichTextEditor',
+      classNames: ctx.classNames,
+      styles: ctx.styles,
+      unstyled: ctx.unstyled,
+    }
   );
 
   return (
