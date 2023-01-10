@@ -1,9 +1,9 @@
 import React from 'react';
 import { MantineDemo } from '@mantine/ds';
-import { Slider } from '@mantine/core';
+import { Slider, rem } from '@mantine/core';
 
 const code = `
-import { Slider } from '@mantine/core';
+import { Slider, rem } from '@mantine/core';
 
 const marks = [
   { value: 20, label: '20%' },
@@ -24,21 +24,21 @@ function Demo() {
             theme.colorScheme === 'dark' ? theme.colors.dark[3] : theme.colors.blue[1],
         },
         mark: {
-          width: 6,
-          height: 6,
-          borderRadius: 6,
-          transform: 'translateX(-3px) translateY(-2px)',
+          width: rem(6),
+          height: rem(6),
+          borderRadius: rem(6),
+          transform: \`translateX(-\${rem(3)}) translateY(-\${rem(2)})\`,
           borderColor: theme.colorScheme === 'dark' ? theme.colors.dark[3] : theme.colors.blue[1],
         },
         markFilled: {
           borderColor: theme.colors.blue[6],
         },
-        markLabel: { fontSize: theme.fontSizes.xs, marginBottom: 5, marginTop: 0 },
+        markLabel: { fontSize: theme.fontSizes.xs, marginBottom: rem(5), marginTop: 0 },
         thumb: {
-          height: 16,
-          width: 16,
+          height: rem(16),
+          width: rem(16),
           backgroundColor: theme.white,
-          borderWidth: 1,
+          borderWidth: rem(1),
           boxShadow: theme.shadows.sm,
         },
       })}
@@ -69,21 +69,21 @@ function Demo() {
             },
           },
           mark: {
-            width: 6,
-            height: 6,
-            borderRadius: 6,
-            transform: 'translateX(-3px) translateY(-2px)',
+            width: rem(6),
+            height: rem(6),
+            borderRadius: rem(6),
+            transform: `translateX(-${rem(3)}) translateY(-${rem(2)})`,
             borderColor: theme.colorScheme === 'dark' ? theme.colors.dark[3] : theme.colors.blue[1],
           },
           markFilled: {
             borderColor: theme.colors.blue[6],
           },
-          markLabel: { fontSize: theme.fontSizes.xs, marginBottom: 5, marginTop: 0 },
+          markLabel: { fontSize: theme.fontSizes.xs, marginBottom: rem(5), marginTop: 0 },
           thumb: {
-            height: 16,
-            width: 16,
+            height: rem(16),
+            width: rem(16),
             backgroundColor: theme.white,
-            borderWidth: 1,
+            borderWidth: rem(1),
             boxShadow: theme.shadows.sm,
           },
         })}

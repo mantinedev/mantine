@@ -23,17 +23,17 @@ function Demo() {
 
 function Demo() {
   return (
-    <div style={{ maxWidth: 320, marginLeft: 'auto', marginRight: 'auto' }}>
-      <Select
-        label="Your favorite framework/library"
-        placeholder="Pick one"
-        rightSection={<IconChevronDown size={14} />}
-        rightSectionWidth={30}
-        styles={{ rightSection: { pointerEvents: 'none' } }}
-        data={['React', 'Angular', 'Svelte', 'Vue']}
-        withinPortal
-      />
-    </div>
+    <Select
+      maw={320}
+      mx="auto"
+      label="Your favorite framework/library"
+      placeholder="Pick one"
+      rightSection={<IconChevronDown size={14} />}
+      rightSectionWidth={30}
+      styles={{ rightSection: { pointerEvents: 'none' } }}
+      data={['React', 'Angular', 'Svelte', 'Vue']}
+      withinPortal
+    />
   );
 }
 
