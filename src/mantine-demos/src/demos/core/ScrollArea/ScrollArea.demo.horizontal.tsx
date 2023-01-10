@@ -1,17 +1,17 @@
 import React from 'react';
-import { Group, ScrollArea } from '@mantine/core';
+import { Group, ScrollArea, Box } from '@mantine/core';
 import { MantineDemo } from '@mantine/ds';
 import { Content } from './_content';
 
 const code = `
-import { ScrollArea } from '@mantine/core';
+import { ScrollArea, Box } from '@mantine/core';
 
 function Demo() {
   return (
-    <ScrollArea style={{ width: 300, height: 200 }}>
-      <div style={{ width: 600 }}>
+    <ScrollArea w={300} h={200}>
+      <Box w={600}>
         {/* ... content */}
-      </div>
+      </Box>
     </ScrollArea>
   );
 }
@@ -20,10 +20,10 @@ function Demo() {
 function Demo() {
   return (
     <Group position="center">
-      <ScrollArea style={{ width: 300, height: 200 }}>
-        <div style={{ width: 600 }}>
+      <ScrollArea w={300} h={200}>
+        <Box w={600}>
           <Content />
-        </div>
+        </Box>
       </ScrollArea>
     </Group>
   );

@@ -9,7 +9,7 @@ function Demo() {
   return (
     <Popover width="target" position="bottom" withArrow shadow="md">
       <Popover.Target>
-        <Button sx={{ width: 280 }}>Toggle popover</Button>
+        <Button w={280}>Toggle popover</Button>
       </Popover.Target>
       <Popover.Dropdown>
         <Text size="sm">
@@ -26,7 +26,7 @@ function Demo() {
   return (
     <Popover width="target" position="bottom" withArrow shadow="md">
       <Popover.Target>
-        <Button sx={{ width: 280 }}>Toggle popover</Button>
+        <Button w={280}>Toggle popover</Button>
       </Popover.Target>
       <Popover.Dropdown>
         <Text size="sm">
