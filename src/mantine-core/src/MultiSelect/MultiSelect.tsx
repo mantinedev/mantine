@@ -64,6 +64,9 @@ export interface MultiSelectProps
 
   /** Called each time search query changes */
   onSearchChange?(query: string): void;
+  
+  /** Called each time filtered data changes */
+  onFilteredChange?(filteredData: SelectItem[]): void;
 
   /** Controlled search input value */
   searchValue?: string;
@@ -214,6 +217,7 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>((props
     inputWrapperOrder,
     readOnly,
     withAsterisk,
+    onFilteredChange,
     ...others
   } = useComponentDefaultProps('MultiSelect', defaultProps, props);
 
@@ -572,6 +576,10 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>((props
     const handler = shouldRenderDropdown ? onDropdownOpen : onDropdownClose;
     typeof handler === 'function' && handler();
   }, [shouldRenderDropdown]);
+  
+  useDidUpdate(() => {
+     onFilteredChange?.(filteredData)
+  }, [filteredData]);
 
   return (
     <Input.Wrapper
