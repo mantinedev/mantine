@@ -185,10 +185,6 @@ const styles = {
   template: {
     display: 'none',
   },
-
-  '[hidden]': {
-    display: 'none',
-  },
 } as const;
 
 export function NormalizeCSS() {
