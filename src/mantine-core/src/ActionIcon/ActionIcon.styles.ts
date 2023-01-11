@@ -115,8 +115,7 @@ export default createStyles(
 
         '&::before': {
           content: '""',
-          position: 'absolute',
-          inset: rem(-1),
+          ...theme.fn.cover(rem(-1)),
           backgroundColor:
             theme.colorScheme === 'dark'
               ? theme.fn.rgba(theme.colors.dark[7], 0.5)

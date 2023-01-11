@@ -23,9 +23,9 @@ export default createStyles((theme, { radius }: ColorSwatchStylesParams, { size 
     },
 
     overlay: {
+      ...theme.fn.cover(),
       position: 'absolute',
       borderRadius: theme.fn.radius(radius),
-      inset: 0,
     },
 
     children: {

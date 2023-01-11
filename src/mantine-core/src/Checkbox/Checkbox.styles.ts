@@ -42,6 +42,7 @@ export default createStyles(
 
     return {
       icon: {
+        ...theme.fn.cover(),
         ref: getStylesRef('icon'),
         color: indeterminate ? 'inherit' : theme.white,
         transform: indeterminate ? 'none' : `translateY(${rem(5)}) scale(0.5)`,
@@ -53,7 +54,6 @@ export default createStyles(
         width: '60%',
         position: 'absolute',
         zIndex: 1,
-        inset: 0,
         margin: 'auto',
 
         '@media (prefers-reduced-motion)': {

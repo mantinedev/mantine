@@ -4,7 +4,7 @@ export interface AspectRatioStylesParams {
   ratio: number;
 }
 
-export default createStyles((_theme, { ratio }: AspectRatioStylesParams) => ({
+export default createStyles((theme, { ratio }: AspectRatioStylesParams) => ({
   root: {
     position: 'relative',
     maxWidth: '100%',
@@ -23,9 +23,8 @@ export default createStyles((_theme, { ratio }: AspectRatioStylesParams) => ({
     },
 
     '& > *:not(style)': {
+      ...theme.fn.cover(),
       overflow: 'hidden',
-      position: 'absolute',
-      inset: 0,
       display: 'flex',
       justifyContent: 'center',
       alignItems: 'center',

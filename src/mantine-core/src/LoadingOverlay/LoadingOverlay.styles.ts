@@ -1,12 +1,11 @@
 import { createStyles } from '@mantine/styles';
 
-export default createStyles({
+export default createStyles((theme) => ({
   root: {
-    position: 'absolute',
-    inset: 0,
+    ...theme.fn.cover(),
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
     overflow: 'hidden',
   },
-});
+}));
