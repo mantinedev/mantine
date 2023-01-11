@@ -1,5 +1,5 @@
 import React from 'react';
-import { Slider } from '@mantine/core';
+import { Slider, rem } from '@mantine/core';
 import { MantineDemo } from '@mantine/ds';
 import styled from '@emotion/styled';
 
@@ -15,8 +15,8 @@ const StyledSlider = styled(Slider)\`
   & .mantine-Slider-thumb {
     border-color: pink;
     background-color: white;
-    width: 24px;
-    height: 24px;
+    width: ${rem(24)};
+    height: ${rem(24)};
   }
 \`;
 
@@ -33,8 +33,8 @@ const StyledSlider = styled(Slider)`
   & .mantine-Slider-thumb {
     border-color: pink;
     background-color: white;
-    width: 24px;
-    height: 24px;
+    width: ${rem(24)};
+    height: ${rem(24)};
   }
 `;
 

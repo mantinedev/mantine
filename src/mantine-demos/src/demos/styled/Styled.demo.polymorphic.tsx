@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, ButtonProps, createPolymorphicComponent } from '@mantine/core';
+import { Button, ButtonProps, createPolymorphicComponent, rem } from '@mantine/core';
 import { MantineDemo } from '@mantine/ds';
 import styled from '@emotion/styled';
 
@@ -8,7 +8,7 @@ import { Button, ButtonProps, createPolymorphicComponent } from '@mantine/core';
 import styled from '@emotion/styled';
 
 const _StyledButton = styled(Button)\`
-  border-width: 2px;
+  border-width: ${rem(2)};
   color: \${({ theme }) => (theme.colorScheme === 'dark' ? theme.white : theme.black)};
 \`;
 
@@ -25,7 +25,7 @@ function Demo() {
 `;
 
 const _StyledButton = styled(Button)`
-  border-width: 2px;
+  border-width: ${rem(2)};
   color: ${({ theme }) => (theme.colorScheme === 'dark' ? theme.white : theme.black)};
 `;
 
