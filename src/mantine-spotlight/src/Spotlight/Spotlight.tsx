@@ -194,7 +194,7 @@ export function Spotlight({
             // check if element is visible in the window
             const elementIsVisible =
               elementOffset >= paperRef.current.scrollTop &&
-              elementOffset <= paperRef.current.scrollTop + paperRef.current.clientHeight;
+              elementOffset <= paperRef.current.scrollTop + paperRef.current.clientHeight - 20;
 
             if (elementIsVisible === false) {
               const elementHeight = element.offsetHeight ?? 0;
