@@ -1,6 +1,6 @@
 import React from 'react';
 import { MantineDemo } from '@mantine/ds';
-import { MantineProvider, Button, Badge, Group, ButtonStylesParams } from '@mantine/core';
+import { MantineProvider, Button, Badge, Group, ButtonStylesParams, rem } from '@mantine/core';
 
 const code = `
 import { MantineProvider, Button, Badge, ButtonStylesParams } from '@mantine/core';
@@ -14,8 +14,8 @@ function Demo() {
             // Subscribe to theme and component params
             styles: (theme, params: ButtonStylesParams, { variant }) => ({
               root: {
-                height: 42,
-                padding: '0 30px',
+                height: ${rem(42)},
+                padding: '0 ${rem(30)}',
                 backgroundColor:
                   variant === 'filled'
                     ? theme.colors[params.color || theme.primaryColor][9]
@@ -27,7 +27,7 @@ function Demo() {
           Badge: {
             // Use raw styles object if you do not need theme dependency
             styles: {
-              root: { borderWidth: 2 },
+              root: { borderWidth: ${rem(2)} },
             },
           },
         },
@@ -53,8 +53,8 @@ function Demo() {
             // Subscribe to theme and component params
             styles: (theme, params: ButtonStylesParams, { variant }) => ({
               root: {
-                height: 42,
-                padding: '0 30px',
+                height: rem(42),
+                padding: `0 ${rem(30)}`,
                 backgroundColor:
                   variant === 'filled'
                     ? theme.colors[params.color || theme.primaryColor][9]
@@ -66,7 +66,7 @@ function Demo() {
           Badge: {
             // Use raw styles object if you do not need theme dependency
             styles: {
-              root: { borderWidth: 2 },
+              root: { borderWidth: rem(2) },
             },
           },
         },
