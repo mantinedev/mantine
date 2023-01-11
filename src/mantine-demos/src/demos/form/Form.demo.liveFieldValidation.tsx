@@ -2,11 +2,11 @@
 import React from 'react';
 import { FORM_INDEX, useForm } from '@mantine/form';
 import { MantineDemo } from '@mantine/ds';
-import { NumberInput, TextInput, Button } from '@mantine/core';
+import { NumberInput, TextInput, Button, Box } from '@mantine/core';
 
 const code = `
 import { useForm, FORM_INDEX } from '@mantine/form';
-import { NumberInput, TextInput, Button } from '@mantine/core';
+import { NumberInput, TextInput, Button, Box } from '@mantine/core';
 
 function Demo() {
   const form = useForm({
@@ -30,33 +30,35 @@ function Demo() {
   });
 
   return (
-    <form style={{ maxWidth: 320, margin: 'auto' }} onSubmit={form.onSubmit(console.log)}>
-      <TextInput label="Name" placeholder="Name" {...form.getInputProps('name')} />
-      <TextInput mt="sm" label="Email" placeholder="Email" {...form.getInputProps('email')} />
-      <NumberInput
-        mt="sm"
-        label="Age"
-        placeholder="Age"
-        min={0}
-        max={99}
-        {...form.getInputProps('age')}
-      />
-      <TextInput
-        mt="sm"
-        label="Job 1"
-        placeholder="Job 1"
-        {...form.getInputProps('jobs.0.title')}
-      />
-      <TextInput
-        mt="sm"
-        label="Job 2"
-        placeholder="Job 2"
-        {...form.getInputProps('jobs.1.title')}
-      />
-      <Button type="submit" mt="sm">
-        Submit
-      </Button>
-    </form>
+    <Box maw={320} mx="auto">
+      <form onSubmit={form.onSubmit(console.log)}>
+        <TextInput label="Name" placeholder="Name" {...form.getInputProps('name')} />
+        <TextInput mt="sm" label="Email" placeholder="Email" {...form.getInputProps('email')} />
+        <NumberInput
+          mt="sm"
+          label="Age"
+          placeholder="Age"
+          min={0}
+          max={99}
+          {...form.getInputProps('age')}
+        />
+        <TextInput
+          mt="sm"
+          label="Job 1"
+          placeholder="Job 1"
+          {...form.getInputProps('jobs.0.title')}
+        />
+        <TextInput
+          mt="sm"
+          label="Job 2"
+          placeholder="Job 2"
+          {...form.getInputProps('jobs.1.title')}
+        />
+        <Button type="submit" mt="sm">
+          Submit
+        </Button>
+      </form>
+    </Box>
   );
 }
 `;
@@ -83,33 +85,35 @@ function Demo() {
   });
 
   return (
-    <form style={{ maxWidth: 320, margin: 'auto' }} onSubmit={form.onSubmit(console.log)}>
-      <TextInput label="Name" placeholder="Name" {...form.getInputProps('name')} />
-      <TextInput mt="sm" label="Email" placeholder="Email" {...form.getInputProps('email')} />
-      <NumberInput
-        mt="sm"
-        label="Age"
-        placeholder="Age"
-        min={0}
-        max={99}
-        {...form.getInputProps('age')}
-      />
-      <TextInput
-        mt="sm"
-        label="Job 1"
-        placeholder="Job 1"
-        {...form.getInputProps('jobs.0.title')}
-      />
-      <TextInput
-        mt="sm"
-        label="Job 2"
-        placeholder="Job 2"
-        {...form.getInputProps('jobs.1.title')}
-      />
-      <Button type="submit" mt="sm">
-        Submit
-      </Button>
-    </form>
+    <Box maw={320} mx="auto">
+      <form onSubmit={form.onSubmit(console.log)}>
+        <TextInput label="Name" placeholder="Name" {...form.getInputProps('name')} />
+        <TextInput mt="sm" label="Email" placeholder="Email" {...form.getInputProps('email')} />
+        <NumberInput
+          mt="sm"
+          label="Age"
+          placeholder="Age"
+          min={0}
+          max={99}
+          {...form.getInputProps('age')}
+        />
+        <TextInput
+          mt="sm"
+          label="Job 1"
+          placeholder="Job 1"
+          {...form.getInputProps('jobs.0.title')}
+        />
+        <TextInput
+          mt="sm"
+          label="Job 2"
+          placeholder="Job 2"
+          {...form.getInputProps('jobs.1.title')}
+        />
+        <Button type="submit" mt="sm">
+          Submit
+        </Button>
+      </form>
+    </Box>
   );
 }
 

@@ -42,7 +42,7 @@ function Demo() {
   ));
 
   return (
-    <Box sx={{ maxWidth: 500 }} mx="auto">
+    <Box maw={500} mx="auto">
       <DragDropContext
         onDragEnd={({ destination, source }) =>
           form.reorderListItem('employees', { from: source.index, to: destination.index })
@@ -104,7 +104,7 @@ function Demo() {
   ));
 
   return (
-    <Box sx={{ maxWidth: 500 }} mx="auto">
+    <Box maw={500} mx="auto">
       <DragDropContext
         onDragEnd={({ destination, source }) =>
           form.reorderListItem('employees', { from: source.index, to: destination.index })

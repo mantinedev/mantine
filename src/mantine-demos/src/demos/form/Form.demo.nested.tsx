@@ -1,11 +1,11 @@
 import React from 'react';
 import { useForm } from '@mantine/form';
 import { MantineDemo } from '@mantine/ds';
-import { TextInput, Checkbox, Code, Text } from '@mantine/core';
+import { TextInput, Checkbox, Code, Text, Box } from '@mantine/core';
 
 const code = `
 import { useForm } from '@mantine/form';
-import { TextInput, Checkbox, Code, Text } from '@mantine/core';
+import { TextInput, Checkbox, Code, Text, Box } from '@mantine/core';
 
 function Demo() {
   const form = useForm({
@@ -19,7 +19,7 @@ function Demo() {
   });
 
   return (
-    <div style={{ maxWidth: 320, margin: 'auto' }}>
+    <Box maw={320} mx="auto">
       <TextInput
         label="First name"
         placeholder="First name"
@@ -43,7 +43,7 @@ function Demo() {
       <Code block mt={5}>
         {JSON.stringify(form.values, null, 2)}
       </Code>
-    </div>
+    </Box>
   );
 }
 `;
@@ -60,7 +60,7 @@ function Demo() {
   });
 
   return (
-    <div style={{ maxWidth: 320, margin: 'auto' }}>
+    <Box maw={320} mx="auto">
       <TextInput
         label="First name"
         placeholder="First name"
@@ -84,7 +84,7 @@ function Demo() {
       <Code block mt={5}>
         {JSON.stringify(form.values, null, 2)}
       </Code>
-    </div>
+    </Box>
   );
 }
 

@@ -37,7 +37,7 @@ function Demo() {
   ));
 
   return (
-    <Box sx={{ maxWidth: 500 }} mx="auto">
+    <Box maw={500} mx="auto">
       {fields.length > 0 ? (
         <Group mb="xs">
           <Text weight={500} size="sm" sx={{ flex: 1 }}>
@@ -100,7 +100,7 @@ function Demo() {
   ));
 
   return (
-    <Box sx={{ maxWidth: 500 }} mx="auto">
+    <Box maw={500} mx="auto">
       {fields.length > 0 ? (
         <Group mb="xs">
           <Text weight={500} size="sm" sx={{ flex: 1 }}>
