@@ -14,7 +14,7 @@ export default createStyles((theme, { shouldRenderHeader }: LayoutStyles) => ({
   },
 
   withNavbar: {
-    paddingLeft: NAVBAR_WIDTH,
+    paddingLeft: rem(NAVBAR_WIDTH),
 
     [`@media (max-width: ${rem(NAVBAR_BREAKPOINT)})`]: {
       paddingLeft: 0,
@@ -28,10 +28,12 @@ export default createStyles((theme, { shouldRenderHeader }: LayoutStyles) => ({
   },
 
   main: {
-    scrollMarginTop: HEADER_HEIGHT,
+    scrollMarginTop: rem(HEADER_HEIGHT),
     flex: 1,
     // aligns page top most heading with navigation and table of contents
-    paddingTop: shouldRenderHeader ? `calc(${HEADER_HEIGHT} - ${theme.spacing.xl} - ${rem(2)})` : 0,
+    paddingTop: shouldRenderHeader
+      ? `calc(${rem(HEADER_HEIGHT)} - ${theme.spacing.xl} - ${rem(2)})`
+      : 0,
 
     [`@media (max-width: ${rem(NAVBAR_BREAKPOINT)})`]: {
       paddingLeft: 0,

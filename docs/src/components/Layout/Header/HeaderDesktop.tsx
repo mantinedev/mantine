@@ -1,7 +1,7 @@
 /* eslint-disable import/no-relative-packages */
 import React from 'react';
 import { IconChevronDown, IconExternalLink } from '@tabler/icons';
-import { Code, Menu, UnstyledButton, Text, RemoveScroll } from '@mantine/core';
+import { Code, Menu, UnstyledButton, Text, RemoveScroll, rem } from '@mantine/core';
 import { useSpotlight } from '@mantine/spotlight';
 import { HeaderControls } from '@mantine/ds';
 import corePackageJson from '../../../../../package.json';
@@ -27,7 +27,7 @@ export function HeaderDesktop() {
       component="a"
       href={item.link}
       target="_blank"
-      rightSection={<IconExternalLink size={14} stroke={1.5} />}
+      rightSection={<IconExternalLink size={rem(14)} stroke={1.5} />}
     >
       <b>{item.v}</b>{' '}
       <Text span color="dimmed" fz="xs">
@@ -49,7 +49,7 @@ export function HeaderDesktop() {
               <UnstyledButton mt={2}>
                 <Code className={classes.version}>
                   v{corePackageJson.version}{' '}
-                  <IconChevronDown size={12} className={classes.chevron} />
+                  <IconChevronDown size={rem(12)} className={classes.chevron} />
                 </Code>
               </UnstyledButton>
             </Menu.Target>

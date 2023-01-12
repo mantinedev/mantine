@@ -12,16 +12,16 @@ const code = `
 function Demo() {
   const styles = (theme) => ({
     track: { '&::before': { backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[3] : theme.colors.blue[1] } },
-    mark: { width: ${rem(6)}, height: ${rem(6)}, borderRadius: ${rem(
+    mark: { width: '${rem(6)}', height: '${rem(6)}', borderRadius: '${rem(
   6
-)}, transform: 'translateX(-${rem(
-  3
-)}) translateY(-$rem(2)})', borderColor: theme.colorScheme === 'dark' ? theme.colors.dark[3] : theme.colors.blue[1] },
+)}', transform: 'translateX(-${rem(3)}) translateY(-${rem(
+  2
+)})', borderColor: theme.colorScheme === 'dark' ? theme.colors.dark[3] : theme.colors.blue[1] },
     markFilled: { borderColor: theme.colors.blue[6] },
-    markLabel: { fontSize: theme.fontSizes.xs, marginBottom: ${rem(5)}, marginTop: 0 },
-    thumb: { height: ${rem(16)}, width: ${rem(
+    markLabel: { fontSize: theme.fontSizes.xs, marginBottom: '${rem(5)}', marginTop: 0 },
+    thumb: { height: '${rem(16)}', width: '${rem(
   16
-)}, backgroundColor: theme.white, borderWidth: ${rem(1)}, boxShadow: theme.shadows.sm },
+)}', backgroundColor: theme.white, borderWidth: '${rem(1)}', boxShadow: theme.shadows.sm },
   });
 
   return (

@@ -10,14 +10,14 @@ function Demo() {
   return (
     <Text
       sx={{
-        fontSize: ${rem(18)},
+        fontSize: '${rem(18)}',
 
         '&:hover': {
           backgroundColor: '#eee',
         },
 
         '@media (max-width: ${rem(755)})': {
-          fontSize: ${rem(14)},
+          fontSize: '${rem(14)}',
         },
       }}
     >

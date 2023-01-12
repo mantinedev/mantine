@@ -16,7 +16,7 @@ const useStyles = createStyles({
   },
 
   child: {
-    fontSize: ${rem(14)},
+    fontSize: '${rem(14)}',
     lineHeight: 1.45,
   },
 

@@ -37,7 +37,7 @@ export default createStyles((theme: MantineTheme) => ({
     paddingRight: theme.spacing.md,
     paddingBottom: `calc(${theme.spacing.xl} * 2)`,
     paddingLeft: theme.spacing.md,
-    paddingTop: `calc$(${HEADER_HEIGHT} + ${theme.spacing.md})`,
+    paddingTop: `calc(${rem(HEADER_HEIGHT)} + ${theme.spacing.md})`,
 
     [`@media (max-width: ${rem(NAVBAR_BREAKPOINT)})`]: {
       paddingBottom: rem(120),

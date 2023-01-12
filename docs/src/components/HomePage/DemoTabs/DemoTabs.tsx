@@ -39,7 +39,7 @@ export function DemoTabs({ data, title }: DemoTabsProps) {
       className={classes.control}
     >
       <div className={classes.controlInner}>
-        <item.icon size={28} stroke={1.5} className={classes.controlIcon} />
+        <item.icon size={rem(28)} stroke={1.5} className={classes.controlIcon} />
         <div>
           <Text className={classes.controlTitle}>{item.name}</Text>
           <Text color="dimmed" size="sm" className={classes.controlDescription}>
