@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
-import { Button, Modal, Group } from '@mantine/core';
+import { Button, Modal, Group, rem } from '@mantine/core';
 import { MantineDemo } from '@mantine/ds';
 import { Carousel, Embla, useAnimationOffsetEffect } from '@mantine/carousel';
 
 const code = `
 import { useState } from 'react';
-import { Button, Modal, Group } from '@mantine/core';
+import { Button, Modal, Group, rem } from '@mantine/core';
 import { Carousel, useAnimationOffsetEffect } from '@mantine/carousel';
 
 function Demo() {
@@ -28,26 +28,26 @@ function Demo() {
         withCloseButton={false}
         onClose={() => setOpened(false)}
       >
-        <Carousel loop getEmblaApi={setEmbla}>
+        <Carousel loop getEmblaApi={setEmbla} maw={300}>
           <Carousel.Slide>
             <img
               src="https://cataas.com/cat"
-              alt=""
-              style={{ width: 300, height: 200, objectFit: 'cover' }}
+              alt="Cat"
+              style={{ width: rem(300), height: rem(200), objectFit: 'cover' }}
             />
           </Carousel.Slide>
           <Carousel.Slide>
             <img
               src="https://cataas.com/cat/cute"
-              alt=""
-              style={{ width: 300, height: 200, objectFit: 'cover' }}
+              alt="Cat"
+              style={{ width: rem(300), height: rem(200), objectFit: 'cover' }}
             />
           </Carousel.Slide>
           <Carousel.Slide>
             <img
               src="https://cataas.com/cat/angry"
-              alt=""
-              style={{ width: 300, height: 200, objectFit: 'cover' }}
+              alt="Cat"
+              style={{ width: rem(300), height: rem(200), objectFit: 'cover' }}
             />
           </Carousel.Slide>
         </Carousel>
@@ -77,26 +77,26 @@ function Demo() {
         withCloseButton={false}
         onClose={() => setOpened(false)}
       >
-        <Carousel loop getEmblaApi={setEmbla}>
+        <Carousel loop getEmblaApi={setEmbla} maw={300}>
           <Carousel.Slide>
             <img
               src="https://cataas.com/cat"
-              alt=""
-              style={{ width: 300, height: 200, objectFit: 'cover' }}
+              alt="Cat"
+              style={{ width: rem(300), height: rem(200), objectFit: 'cover' }}
             />
           </Carousel.Slide>
           <Carousel.Slide>
             <img
               src="https://cataas.com/cat/cute"
-              alt=""
-              style={{ width: 300, height: 200, objectFit: 'cover' }}
+              alt="Cat"
+              style={{ width: rem(300), height: rem(200), objectFit: 'cover' }}
             />
           </Carousel.Slide>
           <Carousel.Slide>
             <img
               src="https://cataas.com/cat/angry"
-              alt=""
-              style={{ width: 300, height: 200, objectFit: 'cover' }}
+              alt="Cat"
+              style={{ width: rem(300), height: rem(200), objectFit: 'cover' }}
             />
           </Carousel.Slide>
         </Carousel>
