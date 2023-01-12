@@ -79,7 +79,7 @@ export interface PopoverBaseProps {
   /** Dropdown z-index */
   zIndex?: React.CSSProperties['zIndex'];
 
-  /** Radius from theme.radius or number to set border-radius in px */
+  /** Key of theme.radius or any valid CSS value to set border-radius, theme.defaultRadius by default */
   radius?: MantineNumberSize;
 
   /** Key of theme.shadow or any other valid css box-shadow value */

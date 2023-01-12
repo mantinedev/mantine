@@ -12,7 +12,7 @@ export interface BackgroundImageProps
   /** Image url */
   src: string;
 
-  /** Key of theme.radius or number to set border-radius in px */
+  /** Key of theme.radius or any valid CSS value to set border-radius, 0 by default */
   radius?: MantineNumberSize;
 }
 

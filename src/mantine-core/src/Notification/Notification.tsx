@@ -25,7 +25,7 @@ export interface NotificationProps
   /** Notification line or icon color */
   color?: MantineColor;
 
-  /** Radius from theme.radius, or number to set border-radius in px */
+  /** Key of theme.radius or any valid CSS value to set border-radius, theme.defaultRadius by default */
   radius?: MantineNumberSize;
 
   /** Notification icon, replaces color line */

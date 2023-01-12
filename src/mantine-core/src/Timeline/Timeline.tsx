@@ -24,7 +24,7 @@ export interface TimelineProps
   /** Active color from theme */
   color?: MantineColor;
 
-  /** Radius from theme.radius, or number to set border-radius in px */
+  /** Key of theme.radius or any valid CSS value to set border-radius, "xl" by default */
   radius?: MantineNumberSize;
 
   /** Bullet size in px */

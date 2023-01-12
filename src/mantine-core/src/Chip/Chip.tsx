@@ -20,7 +20,7 @@ export type ChipStylesNames = Selectors<typeof useStyles>;
 export interface ChipProps
   extends DefaultProps<ChipStylesNames, ChipStylesParams>,
     Omit<React.ComponentPropsWithRef<'input'>, 'size' | 'onChange'> {
-  /** Chip radius from theme or number to set value in px */
+  /** Key of theme.radius or any valid CSS value to set border-radius, "xl" by default */
   radius?: MantineNumberSize;
 
   /** Predefined chip size */

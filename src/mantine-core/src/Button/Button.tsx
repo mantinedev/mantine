@@ -37,7 +37,7 @@ export interface ButtonProps extends DefaultProps<ButtonStylesNames, ButtonStyle
   /** Sets button width to 100% of parent element */
   fullWidth?: boolean;
 
-  /** Button border-radius from theme or number to set border-radius in px */
+  /** Key of theme.radius or any valid CSS value to set border-radius, theme.defaultRadius by default */
   radius?: MantineNumberSize;
 
   /** Controls button appearance */

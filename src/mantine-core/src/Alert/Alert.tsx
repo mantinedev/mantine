@@ -41,7 +41,7 @@ export interface AlertProps
   /** Close button aria-label */
   closeButtonLabel?: string;
 
-  /** Key of theme.radius, or number to set border-radius in px, defaults to theme.defaultRadius */
+  /** Key of theme.radius or any valid CSS value to set border-radius, theme.defaultRadius by default */
   radius?: MantineNumberSize;
 }
 

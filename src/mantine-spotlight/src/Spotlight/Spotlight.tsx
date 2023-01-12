@@ -50,7 +50,7 @@ export interface InnerSpotlightProps
   /** Value from theme.shadows or any valid css box-shadow value */
   shadow?: MantineShadow;
 
-  /** Radius from theme.radius, or number to set border-radius in px, defaults to theme.defaultRadius */
+  /** Key of theme.radius or any valid CSS value to set border-radius, theme.defaultRadius by default */
   radius?: MantineNumberSize;
 
   /** Should spotlight be rendered in the center of the screen */

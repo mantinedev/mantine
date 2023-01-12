@@ -55,7 +55,7 @@ export interface AccordionProviderProps<Multiple extends boolean = false> {
   /** Controls visuals */
   variant?: AccordionVariant;
 
-  /** border-radius from theme.radius or number to set value in px, will not be applied to default variant  */
+  /** Key of theme.radius or any valid CSS value to set border-radius, ignored when variant="default" */
   radius?: MantineNumberSize;
 }
 

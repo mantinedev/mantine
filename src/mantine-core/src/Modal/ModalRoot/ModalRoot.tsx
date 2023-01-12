@@ -14,7 +14,7 @@ export interface ModalRootProps extends ModalBaseSettings {
   /** Scroll area component, ScrollArea.Autosize by default */
   scrollAreaComponent?: ScrollAreaComponent;
 
-  /** Key of theme.radius or number to set Modal content border-radius in px, defaults to theme.defaultRadius */
+  /** Key of theme.radius or any valid CSS value to set border-radius, theme.defaultRadius by default */
   radius?: MantineNumberSize;
 
   /** Determines whether the modal should be centered vertically, false by default */

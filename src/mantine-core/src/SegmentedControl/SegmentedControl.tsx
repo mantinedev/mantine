@@ -60,7 +60,7 @@ export interface SegmentedControlProps
   /** Controls font-size, paddings and height */
   size?: MantineSize;
 
-  /** Border-radius from theme or number to set border-radius in px */
+  /** Key of theme.radius or any valid CSS value to set border-radius, theme.defaultRadius by default */
   radius?: MantineNumberSize;
 
   /** Transition duration in ms, set to 0 to turn off transitions */

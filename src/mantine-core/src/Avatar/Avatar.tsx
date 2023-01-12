@@ -27,7 +27,7 @@ export interface AvatarProps extends DefaultProps<AvatarStylesNames, AvatarStyle
   /** Avatar width and height */
   size?: MantineNumberSize;
 
-  /** Value from theme.radius or number to set border-radius in px */
+  /** Key of theme.radius or any valid CSS value to set border-radius, "xl" by default */
   radius?: MantineNumberSize;
 
   /** Key of theme.colors */

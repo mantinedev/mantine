@@ -71,7 +71,7 @@ export interface RichTextEditorProps
   /** Top toolbar position in any valid css value */
   stickyOffset?: number | string;
 
-  /** Radius from theme.radius, or number to set border-radius in px */
+  /** Key of theme.radius or any valid CSS value to set border-radius, theme.defaultRadius by default */
   radius?: MantineNumberSize;
 
   /** Make quill editor read only */

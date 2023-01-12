@@ -57,7 +57,7 @@ export interface TransferListProps
   /** Breakpoint at which list will collapse to single column layout */
   breakpoint?: MantineNumberSize;
 
-  /** Predefined border-radius value from theme.radius or number for border-radius in px */
+  /** Key of theme.radius or any valid CSS value to set border-radius, theme.defaultRadius by default */
   radius?: MantineNumberSize;
 
   /** Whether to hide the transfer all button */

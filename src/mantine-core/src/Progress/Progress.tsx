@@ -34,7 +34,7 @@ export interface ProgressProps
   /** Predefined progress height or number for height in px */
   size?: MantineNumberSize;
 
-  /** Predefined progress radius from theme.radius or number for height in px */
+  /** Key of theme.radius or any valid CSS value to set border-radius, theme.defaultRadius by default */
   radius?: MantineNumberSize;
 
   /** Adds stripes */

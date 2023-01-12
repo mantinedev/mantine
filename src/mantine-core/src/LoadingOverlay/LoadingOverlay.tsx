@@ -41,13 +41,14 @@ export interface LoadingOverlayProps extends DefaultProps, React.ComponentPropsW
   /** Exit transition duration in ms */
   exitTransitionDuration?: number;
 
-  /** Value from theme.radius or number to set border-radius in px */
+  /** Key of theme.radius or any valid CSS value to set border-radius, 0 by default */
   radius?: MantineNumberSize;
 }
 
 const defaultProps: Partial<LoadingOverlayProps> = {
   overlayOpacity: 0.75,
   transitionDuration: 0,
+  radius: 0,
   zIndex: getDefaultZIndex('overlay'),
 };
 

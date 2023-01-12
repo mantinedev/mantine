@@ -40,7 +40,7 @@ export interface SwitchProps
   /** Predefined size value */
   size?: MantineSize;
 
-  /** Radius from theme.radius or number to set border-radius in px */
+  /** Key of theme.radius or any valid CSS value to set border-radius, "xl" by default */
   radius?: MantineNumberSize;
 
   /** Props spread to wrapper element */

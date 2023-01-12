@@ -26,7 +26,7 @@ export interface TimelineItemProps
   /** Bullet width, height and border-radius in px, controlled by Timeline component */
   bulletSize?: number;
 
-  /** Radius from theme.radius, or number to set border-radius in px */
+  /** Key of theme.radius or any valid CSS value to set border-radius, "xl" by default */
   radius?: MantineNumberSize;
 
   /** React node that will be rendered after title */

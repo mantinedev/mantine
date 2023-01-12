@@ -56,7 +56,7 @@ export interface StepperProps
   /** Component size */
   size?: MantineSize;
 
-  /** Radius from theme.radius, or number to set border-radius in px */
+  /** Key of theme.radius or any valid CSS value to set border-radius, "xl" by default */
   radius?: MantineNumberSize;
 
   /** Breakpoint at which orientation will change from horizontal to vertical */

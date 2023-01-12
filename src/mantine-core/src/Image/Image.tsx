@@ -34,7 +34,7 @@ export interface ImageProps
   /** Image height, defaults to original image height adjusted to given width */
   height?: number | string;
 
-  /** Predefined border-radius value from theme.radius or number for border-radius in px */
+  /** Key of theme.radius or any valid CSS value to set border-radius, 0 by default */
   radius?: MantineNumberSize;
 
   /** Enable placeholder when image is loading and when image fails to load */

@@ -22,7 +22,7 @@ export interface ColorSwatchProps
   /** Width and height */
   size?: number | string;
 
-  /** Key of theme.radius or number to set border-radius in px */
+  /** Key of theme.radius or any valid CSS value to set border-radius, theme.defaultRadius by default */
   radius?: MantineNumberSize;
 
   /** ColorSwatch children */

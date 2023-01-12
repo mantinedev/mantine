@@ -29,7 +29,7 @@ export interface SliderProps
   /** Color from theme.colors */
   color?: MantineColor;
 
-  /** Track border-radius from theme or number to set border-radius in px */
+  /** Key of theme.radius or any valid CSS value to set border-radius, "xl" by default */
   radius?: MantineNumberSize;
 
   /** Predefined track and thumb size, number to set sizes in px */

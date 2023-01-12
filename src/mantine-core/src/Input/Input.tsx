@@ -42,7 +42,7 @@ export interface InputSharedProps {
   /** Sets required on input element */
   required?: boolean;
 
-  /** Input border-radius from theme or number to set border-radius in px */
+  /** Key of theme.radius or any valid CSS value to set border-radius, theme.defaultRadius by default */
   radius?: MantineNumberSize;
 
   /** Defines input appearance, defaults to default in light color scheme and filled in dark */

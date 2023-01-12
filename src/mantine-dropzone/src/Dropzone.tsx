@@ -32,7 +32,7 @@ export interface DropzoneProps
   /** Padding from theme.spacing, or number to set padding in px */
   padding?: MantineNumberSize;
 
-  /** Border radius from theme.radius or number to set border-radius in px */
+  /** Key of theme.radius or any valid CSS value to set border-radius, theme.defaultRadius by default */
   radius?: MantineNumberSize;
 
   /** Dropzone statues */

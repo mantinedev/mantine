@@ -54,7 +54,7 @@ export interface PaginationProps
   /** Predefined item size or number to set width and height in px */
   size?: MantineNumberSize;
 
-  /** Predefined item radius or number to set border-radius in px */
+  /** Key of theme.radius or any valid CSS value to set border-radius, theme.defaultRadius by default */
   radius?: MantineNumberSize;
 
   /** Show/hide jump to start/end controls */
