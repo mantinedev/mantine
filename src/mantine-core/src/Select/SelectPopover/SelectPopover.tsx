@@ -1,5 +1,5 @@
 import React from 'react';
-import { ClassNames, MantineShadow, Styles, Selectors, DefaultProps } from '@mantine/styles';
+import { ClassNames, MantineShadow, Styles, Selectors, DefaultProps, rem } from '@mantine/styles';
 import { SelectScrollArea } from '../SelectScrollArea/SelectScrollArea';
 import { Popover } from '../../Popover';
 import { Box } from '../../Box';
@@ -35,7 +35,7 @@ function SelectPopoverDropdown({
 
   return (
     <Popover.Dropdown p={0} onMouseDown={(event) => event.preventDefault()} {...others}>
-      <div style={{ maxHeight, display: 'flex' }}>
+      <div style={{ maxHeight: rem(maxHeight), display: 'flex' }}>
         <Box<'div'>
           component={(component || 'div') as any}
           id={`${id}-items`}
