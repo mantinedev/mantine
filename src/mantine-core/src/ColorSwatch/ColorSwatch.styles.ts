@@ -10,8 +10,8 @@ export default createStyles((theme, { radius }: ColorSwatchStylesParams, { size 
   return {
     root: {
       ...theme.fn.focusStyles(),
-      width: size,
-      height: size,
+      width: rem(size),
+      height: rem(size),
       WebkitTapHighlightColor: 'transparent',
       border: 0,
       borderRadius: theme.fn.radius(radius),
