@@ -1,5 +1,5 @@
 import React from 'react';
-import { Tooltip } from '@mantine/core';
+import { rem, Tooltip } from '@mantine/core';
 import { useClipboard, useMediaQuery } from '@mantine/hooks';
 import { Prism } from '@mantine/prism';
 import { Language } from 'prism-react-renderer';
@@ -14,7 +14,7 @@ interface ImportStatementProps {
 export function HeaderCode({ code, icon, language }: ImportStatementProps) {
   const clipboard = useClipboard();
   const { classes } = useStyles();
-  const mobile = useMediaQuery('(max-width: 500px)');
+  const mobile = useMediaQuery(`(max-width: ${rem(500)})`);
 
   return (
     <div className={classes.wrapper}>

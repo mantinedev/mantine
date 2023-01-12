@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react';
-import { Container, Grid, UnstyledButton, Text } from '@mantine/core';
+import { Container, Grid, UnstyledButton, Text, rem } from '@mantine/core';
 import { IconForms } from '@tabler/icons';
 import { useMediaQuery } from '@mantine/hooks';
 import { SectionTitle } from '../SectionTitle/SectionTitle';
@@ -20,7 +20,7 @@ export function DemoTabs({ data, title }: DemoTabsProps) {
   const { classes, theme } = useStyles({ shouldAnimate });
   const animationTimeout = useRef<number>();
   const [active, setActive] = useState(0);
-  const controlSize = useMediaQuery(`(max-width: ${theme.breakpoints.sm}px)`) ? 60 : 80;
+  const controlSize = useMediaQuery(`(max-width: ${theme.breakpoints.sm})`) ? 60 : 80;
 
   const handleActiveChange = (index: number) => {
     setActive(index);
@@ -61,7 +61,10 @@ export function DemoTabs({ data, title }: DemoTabsProps) {
             <div className={classes.controls}>
               <div
                 className={classes.controlsIndicator}
-                style={{ height: controlSize, transform: `translateY(${controlSize * active}px)` }}
+                style={{
+                  height: rem(controlSize),
+                  transform: `translateY(${rem(controlSize * active)})`,
+                }}
               />
               {controls}
             </div>

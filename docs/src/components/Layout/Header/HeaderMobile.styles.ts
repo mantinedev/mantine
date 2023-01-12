@@ -1,4 +1,4 @@
-import { createStyles } from '@mantine/core';
+import { createStyles, rem } from '@mantine/core';
 import { NAVBAR_BREAKPOINT } from '../Navbar/Navbar.styles';
 import { HEADER_HEIGHT } from './HeaderDesktop.styles';
 
@@ -7,14 +7,13 @@ export default createStyles((theme) => ({
     top: 0,
     left: 0,
     right: 0,
-    height: HEADER_HEIGHT,
+    height: rem(HEADER_HEIGHT),
     zIndex: 6,
     position: 'fixed',
     backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.white,
-    borderBottom: `1px solid ${
+    borderBottom: `${rem(1)} solid ${
       theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.colors.gray[2]
     }`,
-    paddingRight: 'var(--removed-scroll-width, 0px)',
 
     [theme.fn.largerThan(NAVBAR_BREAKPOINT)]: {
       display: 'none',
@@ -31,8 +30,8 @@ export default createStyles((theme) => ({
   },
 
   logo: {
-    height: HEADER_HEIGHT,
-    paddingTop: 6,
+    height: rem(HEADER_HEIGHT),
+    paddingTop: rem(6),
     display: 'flex',
     alignItems: 'center',
   },
@@ -52,7 +51,7 @@ export default createStyles((theme) => ({
     ...theme.fn.focusStyles(),
     fontWeight: 700,
     textDecoration: 'none',
-    marginTop: 2,
+    marginTop: rem(2),
 
     [theme.fn.smallerThan(860)]: {
       display: 'none',

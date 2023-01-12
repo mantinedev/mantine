@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'gatsby';
-import { Container, Group, Button, Text, useMantineTheme, SimpleGrid } from '@mantine/core';
+import { Container, Group, Button, Text, useMantineTheme, SimpleGrid, rem } from '@mantine/core';
 import { GithubIcon } from '@mantine/ds';
 import { Hero } from './Hero';
 import { FEATURES_DATA } from './features';
@@ -39,7 +39,7 @@ export function Jumbotron() {
 
         <SimpleGrid
           cols={3}
-          sx={{ maxWidth: 800 }}
+          sx={{ maxWidth: rem(800) }}
           spacing={30}
           mt={40}
           breakpoints={[{ maxWidth: 800, cols: 1 }]}
@@ -68,7 +68,7 @@ export function Jumbotron() {
             className={cx(classes.control, classes.githubControl)}
             color={theme.colorScheme === 'dark' ? 'gray' : 'dark'}
             leftIcon={<GithubIcon size={22} />}
-            styles={{ leftIcon: { marginRight: 12 } }}
+            styles={{ leftIcon: { marginRight: rem(12) } }}
           >
             GitHub
           </Button>

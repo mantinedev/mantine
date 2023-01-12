@@ -1,5 +1,5 @@
 import React from 'react';
-import { Table, Text, Highlight, useMantineTheme } from '@mantine/core';
+import { Table, Text, Highlight, useMantineTheme, rem } from '@mantine/core';
 import DocsSection from '../../../DocsSection/DocsSection';
 import PROPS_DATA from '../../../../../.docgen/docgen.json';
 
@@ -65,7 +65,7 @@ export default function PropsTable({ component, query }: PropsTableProps) {
   return (
     <DocsSection>
       <div style={{ overflowX: 'auto' }}>
-        <div style={{ minWidth: 500 }}>
+        <div style={{ minWidth: rem(500) }}>
           <Table>
             <thead>
               <tr>

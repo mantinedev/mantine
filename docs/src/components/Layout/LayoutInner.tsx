@@ -4,7 +4,7 @@ import { randomId, useMediaQuery } from '@mantine/hooks';
 import { Notifications } from '@mantine/notifications';
 import { ModalsProvider, ContextModalProps } from '@mantine/modals';
 import { SpotlightProvider, SpotlightAction } from '@mantine/spotlight';
-import { Text, Button } from '@mantine/core';
+import { Text, Button, rem } from '@mantine/core';
 import { IconSearch } from '@tabler/icons';
 import MdxProvider from '../MdxPage/MdxProvider/MdxProvider';
 import Navbar from './Navbar/Navbar';
@@ -94,7 +94,7 @@ function getActions(data: ReturnType<typeof getDocsData>): SpotlightAction[] {
 }
 
 export function LayoutInner({ children, location }: LayoutProps) {
-  const navbarCollapsed = useMediaQuery(`(max-width: ${NAVBAR_BREAKPOINT}px)`);
+  const navbarCollapsed = useMediaQuery(`(max-width: ${rem(NAVBAR_BREAKPOINT)})`);
   const shouldRenderHeader = !shouldExcludeHeader(location.pathname);
   const shouldRenderNavbar = !shouldExcludeNavbar(location.pathname) || navbarCollapsed;
   const { classes, cx } = useStyles({ shouldRenderHeader });
@@ -115,7 +115,7 @@ export function LayoutInner({ children, location }: LayoutProps) {
       }}
       transition={{
         in: { transform: 'translateY(0)', opacity: 1 },
-        out: { transform: 'translateY(-20px)', opacity: 0 },
+        out: { transform: `translateY(-${rem(20)})`, opacity: 0 },
         transitionProperty: 'transform, opacity',
       }}
     >

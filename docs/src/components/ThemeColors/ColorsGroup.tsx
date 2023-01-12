@@ -1,5 +1,5 @@
 import React from 'react';
-import { ColorSwatch, Text, Box } from '@mantine/core';
+import { ColorSwatch, Text, Box, rem } from '@mantine/core';
 import useStyles from './ColorsGroup.styles';
 
 interface ColorsGroupProps {
@@ -16,7 +16,7 @@ export function ColorsGroup({ group }: ColorsGroupProps) {
         <Text size="xs" className={classes.colorName}>
           {group} {index}
         </Text>
-        <Text color="dimmed" size="xs" transform="uppercase" mt={2} sx={{ fontSize: 10 }}>
+        <Text color="dimmed" size="xs" transform="uppercase" mt={2} sx={{ fontSize: rem(10) }}>
           {color}
         </Text>
       </Box>
