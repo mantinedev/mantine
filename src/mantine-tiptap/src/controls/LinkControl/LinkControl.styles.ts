@@ -16,7 +16,7 @@ export default createStyles((theme) => {
     linkEditorExternalControl: {
       backgroundColor:
         theme.colorScheme === 'dark' ? theme.fn.rgba(theme.colors.dark[7], 0.5) : theme.white,
-      border: `1px solid ${
+      border: `${rem(1)} solid ${
         theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[4]
       }`,
       height: rem(24),

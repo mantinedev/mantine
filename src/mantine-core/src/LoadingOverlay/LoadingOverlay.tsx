@@ -26,8 +26,8 @@ export interface LoadingOverlayProps extends DefaultProps, React.ComponentPropsW
   /** Sets overlay color, defaults to theme.white in light theme and to theme.colors.dark[5] in dark theme */
   overlayColor?: string;
 
-  /** Sets overlay blur in px */
-  overlayBlur?: number;
+  /** Sets overlay blur */
+  overlayBlur?: number | string;
 
   /** Loading overlay z-index */
   zIndex?: React.CSSProperties['zIndex'];

@@ -27,14 +27,14 @@ export interface TimelineProps
   /** Key of theme.radius or any valid CSS value to set border-radius, "xl" by default */
   radius?: MantineNumberSize;
 
-  /** Bullet size in px */
-  bulletSize?: number;
+  /** Bullet size */
+  bulletSize?: number | string;
 
   /** Timeline alignment */
   align?: 'right' | 'left';
 
-  /** Line width in px */
-  lineWidth?: number;
+  /** Line width */
+  lineWidth?: number | string;
 
   /** Reverse active direction without reversing items */
   reverseActive?: boolean;

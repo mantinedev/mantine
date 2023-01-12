@@ -50,8 +50,8 @@ describe('@mantine/dates/Day', () => {
   });
 
   it('supports radius prop', () => {
-    render(<Day {...defaultProps} radius={45} />);
-    expect(screen.getByRole('button')).toHaveStyle({ borderRadius: '45px' });
+    render(<Day {...defaultProps} radius={32} />);
+    expect(screen.getByRole('button')).toHaveStyle({ borderRadius: '2rem' });
   });
 
   it('adds correct disabled attributes when disabled prop is set', () => {

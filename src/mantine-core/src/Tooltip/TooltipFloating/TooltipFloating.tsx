@@ -12,7 +12,7 @@ import { useFloatingTooltip } from './use-floating-tooltip';
 export interface TooltipFloatingProps extends TooltipBaseProps {
   variant?: string;
 
-  /** Offset from mouse in px */
+  /** Offset from mouse */
   offset?: number;
 }
 

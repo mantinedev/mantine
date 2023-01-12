@@ -9,7 +9,7 @@ export default createStyles((theme) => {
       fontWeight: values.fontWeight || theme.headings.fontWeight,
       marginTop:
         typeof values.lineHeight === 'number'
-          ? `calc(${theme.spacing.xl}px * ${values.lineHeight})`
+          ? `calc(${theme.spacing.xl} * ${values.lineHeight})`
           : theme.spacing.xl,
       marginBottom: theme.spacing.sm,
       ...values,

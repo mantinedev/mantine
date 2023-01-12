@@ -41,8 +41,8 @@ export interface MultiSelectProps
   /** Component used to render values */
   valueComponent?: React.FC<any>;
 
-  /** Maximum dropdown height in px */
-  maxDropdownHeight?: number;
+  /** Maximum dropdown height */
+  maxDropdownHeight?: number | string;
 
   /** Enable items searching */
   searchable?: boolean;

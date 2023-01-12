@@ -17,10 +17,10 @@ export interface TableProps
   /** Table caption position */
   captionSide?: 'top' | 'bottom';
 
-  /** Horizontal cells spacing from theme.spacing or number to set value in px */
+  /** Horizontal cells spacing from theme.spacing or any valid CSS value */
   horizontalSpacing?: MantineNumberSize;
 
-  /** Vertical cells spacing from theme.spacing or number to set value in px */
+  /** Vertical cells spacing from theme.spacing or any valid CSS value */
   verticalSpacing?: MantineNumberSize;
 
   /** Sets font size of all text inside table */

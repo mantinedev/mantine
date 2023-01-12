@@ -58,7 +58,7 @@ export interface NavLinkProps extends DefaultProps<NavLinkStylesNames, NavLinkSt
   /** If set to true, right section will not rotate when collapse is opened */
   disableRightSectionRotation?: boolean;
 
-  /** Key of theme.spacing or number to set collapsed links padding-left in px */
+  /** Key of theme.spacing or any valid CSS value to set collapsed links padding-left */
   childrenOffset?: MantineNumberSize;
 
   /** Adds disabled styles to root element */

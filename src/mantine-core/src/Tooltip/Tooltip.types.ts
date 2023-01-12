@@ -31,7 +31,7 @@ export interface TooltipBaseProps
   /** Defines whether content should be wrapped on to the next line */
   multiline?: boolean;
 
-  /** Tooltip width in px */
+  /** Tooltip width */
   width?: number | 'auto';
 
   /** Tooltip z-index */

@@ -12,7 +12,7 @@ function Demo() {
   return (
     <>
       <textarea ref={ref} style={{ width: rem(400), height: rem(120) }} />
-      <div>Width: {width}px, height: {height}px</div>
+      <div>Width: {width}, height: {height}</div>
     </>
   );
 }`;
@@ -41,7 +41,7 @@ function Demo() {
         />
       </Group>
       <Text align="center" mt="sm">
-        Width: {width}px, height: {height}px
+        Width: {width}, height: {height}
       </Text>
     </>
   );

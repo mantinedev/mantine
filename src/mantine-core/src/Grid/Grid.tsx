@@ -12,7 +12,7 @@ export interface GridProps extends DefaultProps, React.ComponentPropsWithRef<'di
   /** <Col /> components only */
   children: React.ReactNode;
 
-  /** Spacing between columns, key of theme.spacing or number for value in px  */
+  /** Spacing between columns, key of theme.spacing or number for value */
   gutter?: MantineNumberSize;
 
   /** Gutter when screen size is larger than theme.breakpoints.xs */

@@ -51,7 +51,7 @@ export interface StepProps
   /** Step description */
   description?: React.ReactNode | StepFragmentComponent;
 
-  /** Icon wrapper size in px */
+  /** Icon wrapper size */
   iconSize?: number;
 
   /** Icon position relative to step body */

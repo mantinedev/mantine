@@ -44,7 +44,7 @@ export interface InnerSpotlightProps
   /** Backdrop overlay opacity (0-1), e.g. 0.65 */
   overlayOpacity?: number;
 
-  /** Backdrop overlay blur in px */
+  /** Backdrop overlay blur */
   overlayBlur?: number;
 
   /** Value from theme.shadows or any valid css box-shadow value */

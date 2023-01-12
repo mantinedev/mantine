@@ -29,7 +29,7 @@ export interface DropzoneProps
     Omit<React.ComponentPropsWithRef<'div'>, 'onDrop'> {
   variant?: string;
 
-  /** Padding from theme.spacing, or number to set padding in px */
+  /** Padding from theme.spacing, or any valid CSS value to set padding */
   padding?: MantineNumberSize;
 
   /** Key of theme.radius or any valid CSS value to set border-radius, theme.defaultRadius by default */

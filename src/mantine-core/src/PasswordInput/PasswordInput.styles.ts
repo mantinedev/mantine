@@ -18,7 +18,7 @@ export default createStyles(
       ...theme.fn.fontStyles(),
       ...theme.fn.cover(0),
       backgroundColor: 'transparent',
-      border: '1px solid transparent',
+      border: `${rem(1)} solid transparent`,
       borderLeftWidth: 0,
       borderRightWidth: 0,
       boxSizing: 'border-box',

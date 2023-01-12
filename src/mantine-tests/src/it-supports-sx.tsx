@@ -3,7 +3,7 @@ import { render } from '@testing-library/react';
 
 export function itSupportsSx<P>(Component: React.ComponentType<P>, requiredProps: P) {
   it('supports sx', async () => {
-    const styles = { border: '1px solid aquamarine', background: 'beige' };
+    const styles = { border: '1rem solid aquamarine', background: 'beige' };
     const fn = () => styles;
 
     const { container: withFunction } = render(<Component {...requiredProps} sx={fn} />);

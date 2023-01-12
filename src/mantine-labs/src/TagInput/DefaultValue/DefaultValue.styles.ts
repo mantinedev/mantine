@@ -1,4 +1,4 @@
-import { createStyles, MantineNumberSize, MantineSize, getSize } from '@mantine/core';
+import { createStyles, MantineNumberSize, MantineSize, getSize, rem } from '@mantine/core';
 
 interface DefaultLabelStyles {
   size: MantineSize;
@@ -49,12 +49,11 @@ export default createStyles((theme, { size, disabled, radius }: DefaultLabelStyl
     borderRadius: getSize({ size: radius, sizes: theme.radius }),
     cursor: disabled ? 'not-allowed' : 'default',
     userSelect: 'none',
-    maxWidth: 'calc(100% - 20px)',
+    maxWidth: `calc(100% - ${rem(20)})`,
   },
 
   defaultValueRemove: {
     color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.colors.gray[7],
-    // marginLeft: getSize({ size, sizes: theme.spacing }) / 6,
   },
 
   label: {

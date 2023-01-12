@@ -20,7 +20,7 @@ const useStyles = createStyles((theme) => ({
     borderRadius: theme.radius.sm,
 
     // Dynamic media queries, define breakpoints in theme, use anywhere
-    [\`@media (max-width: \${theme.breakpoints.sm}px)\`]: {
+    [\`@media (max-width: \${theme.breakpoints.sm})\`]: {
       // Child reference in nested selectors via ref
       [\`& .\${getStylesRef('child')}\`]: {
         fontSize: theme.fontSizes.xs,
@@ -65,7 +65,7 @@ const useStyles = createStyles((theme) => ({
     borderRadius: theme.radius.sm,
 
     // Dynamic media queries, define breakpoints in theme, use anywhere
-    [`@media (max-width: ${theme.breakpoints.sm}px)`]: {
+    [`@media (max-width: ${theme.breakpoints.sm})`]: {
       // Child reference in nested selectors via ref
       [`& .${getStylesRef('child')}`]: {
         fontSize: theme.fontSizes.xs,

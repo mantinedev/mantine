@@ -36,7 +36,7 @@ function Demo() {
         <Box sx={boxStyles}>- Smaller than xl, larger than sm</Box>
       </MediaQuery>
       <MediaQuery smallerThan={1500} largerThan={800} styles={highlight}>
-        <Box sx={boxStyles}>- Smaller than 1500px, larger than 800px</Box>
+        <Box sx={boxStyles}>- Smaller than 1500, larger than 800</Box>
       </MediaQuery>
     </Stack>
   );
@@ -74,7 +74,7 @@ function Demo() {
         <Box sx={boxStyles}>- Smaller than xl, larger than sm</Box>
       </MediaQuery>
       <MediaQuery smallerThan={1500} largerThan={800} styles={highlight}>
-        <Box sx={boxStyles}>- Smaller than 1500px, larger than 800px</Box>
+        <Box sx={boxStyles}>- Smaller than 1500, larger than 800</Box>
       </MediaQuery>
     </Stack>
   );

@@ -41,10 +41,10 @@ export interface StepperProps
   /** Active and progress Step colors from theme.colors */
   color?: MantineColor;
 
-  /** Step icon size in px */
+  /** Step icon size */
   iconSize?: number;
 
-  /** Content padding-top from theme.spacing or number to set value in px */
+  /** Key of theme.spacing or any valid CSS value to set content padding-top */
   contentPadding?: MantineNumberSize;
 
   /** Component orientation */

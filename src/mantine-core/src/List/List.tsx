@@ -27,13 +27,13 @@ export interface ListProps
   /** Include padding-left to offset list from main content */
   withPadding?: boolean;
 
-  /** Font size from theme or number to set value in px */
+  /** Font size from theme or number to set value */
   size?: MantineNumberSize;
 
   /** Icon that should replace list item dot */
   icon?: React.ReactNode;
 
-  /** Spacing between items from theme or number to set value in px */
+  /** Spacing between items from theme or number to set value */
   spacing?: MantineNumberSize;
 
   /** Center items with icon */

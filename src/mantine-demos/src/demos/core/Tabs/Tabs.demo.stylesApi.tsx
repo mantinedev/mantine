@@ -17,7 +17,7 @@ function StyledTabs(props: TabsProps) {
           backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.white,
           color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.colors.gray[9],
           border: \`\${rem(1)} solid \${theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[4]}\`,
-          padding: \`\${theme.spacing.xs}px \${theme.spacing.md}px\`,
+          padding: \`\${theme.spacing.xs} \${theme.spacing.md}\`,
           cursor: 'pointer',
           fontSize: theme.fontSizes.sm,
           display: 'flex',
@@ -95,7 +95,7 @@ function StyledTabs(props: TabsProps) {
           border: `${rem(1)} solid ${
             theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[4]
           }`,
-          padding: `${theme.spacing.xs}px ${theme.spacing.md}px`,
+          padding: `${theme.spacing.xs} ${theme.spacing.md}`,
           cursor: 'pointer',
           fontSize: theme.fontSizes.sm,
           display: 'flex',

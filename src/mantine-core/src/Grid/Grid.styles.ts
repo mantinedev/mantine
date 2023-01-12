@@ -21,7 +21,7 @@ export interface GridStylesParams {
 function getGutterStyles(gutters: Record<MantineSize, MantineNumberSize>, theme: MantineTheme) {
   return MANTINE_SIZES.reduce((acc, size) => {
     if (typeof gutters[size] !== 'undefined') {
-      acc[`@media (min-width: ${theme.breakpoints[size]}px)`] = {
+      acc[`@media (min-width: ${theme.breakpoints[size]})`] = {
         margin: `calc(-${getSize({ size: gutters[size], sizes: theme.spacing })} / 2)`,
       };
     }

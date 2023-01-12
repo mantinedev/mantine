@@ -32,8 +32,8 @@ export interface IndicatorProps
   /** Determines whether indicator container should be an inline element */
   inline?: boolean;
 
-  /** Size in px */
-  size?: number;
+  /** Indicator width and height */
+  size?: number | string;
 
   /** Indicator label */
   label?: React.ReactNode;

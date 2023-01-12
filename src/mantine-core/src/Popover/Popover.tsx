@@ -28,7 +28,7 @@ export interface PopoverBaseProps {
   /** Dropdown position relative to target */
   position?: FloatingPosition;
 
-  /** Space between target element and dropdown in px */
+  /** Space between target element and dropdown */
   offset?: number;
 
   /** Called when dropdown position changes */
@@ -61,13 +61,13 @@ export interface PopoverBaseProps {
   /** Determines whether component should have an arrow */
   withArrow?: boolean;
 
-  /** Arrow size in px */
+  /** Arrow size */
   arrowSize?: number;
 
-  /** Arrow offset in px */
+  /** Arrow offset */
   arrowOffset?: number;
 
-  /** Arrow radius in px */
+  /** Arrow border-radius */
   arrowRadius?: number;
 
   /** Arrow position **/

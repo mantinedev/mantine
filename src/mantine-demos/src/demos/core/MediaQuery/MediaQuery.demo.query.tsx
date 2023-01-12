@@ -8,10 +8,10 @@ import { MediaQuery, Text } from '@mantine/core';
 function Demo() {
   return (
     <MediaQuery
-      query="(max-width: 1200px) and (min-width: 800px)"
+      query="(max-width: ${rem(1200)}) and (min-width: ${rem(800)})"
       styles={{ fontSize: rem(20), '&:hover': { backgroundColor: 'silver' } }}
     >
-      <Text>(max-width: 1200px) and (min-width: 800px) breakpoints</Text>
+      <Text>(max-width: ${rem(1200)}) and (min-width: ${rem(800)}) breakpoints</Text>
     </MediaQuery>
   );
 }
@@ -20,10 +20,12 @@ function Demo() {
 function Demo() {
   return (
     <MediaQuery
-      query="(max-width: 1200px) and (min-width: 800px)"
+      query={`(max-width: ${rem(1200)}) and (min-width: ${rem(800)})`}
       styles={{ fontSize: rem(20), '&:hover': { backgroundColor: 'silver' } }}
     >
-      <Text>(max-width: 1200px) and (min-width: 800px) breakpoints</Text>
+      <Text>
+        (max-width: {rem(1200)}) and (min-width: {rem(800)}) breakpoints
+      </Text>
     </MediaQuery>
   );
 }

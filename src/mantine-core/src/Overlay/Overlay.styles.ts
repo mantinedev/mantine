@@ -3,7 +3,7 @@ import { createStyles, MantineNumberSize, rem } from '@mantine/styles';
 export interface OverlayStylesParams {
   color: string;
   opacity: number;
-  blur: number;
+  blur: number | string;
   radius: MantineNumberSize;
   gradient: string;
   fixed: boolean;

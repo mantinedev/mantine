@@ -40,7 +40,7 @@ export const css = `
 body, .usertext {
   color: #F0F0F0; background: #600;
   font-family: Chunkfive, sans;
-  --heading-1: 30px/32px Helvetica, sans-serif;
+  --heading-1: 2rem/2rem Helvetica, sans-serif;
 }
 
 @import url(print.css);

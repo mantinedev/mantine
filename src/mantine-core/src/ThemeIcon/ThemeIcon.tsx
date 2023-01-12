@@ -16,7 +16,7 @@ export interface ThemeIconProps
   /** Icon */
   children: React.ReactNode;
 
-  /** Predefined width and height or number for width and height in px */
+  /** Width and height of theme icon */
   size?: MantineNumberSize;
 
   /** Key of theme.radius or any valid CSS value to set border-radius, theme.defaultRadius by default */

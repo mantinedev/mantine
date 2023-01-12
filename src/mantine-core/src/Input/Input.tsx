@@ -24,7 +24,7 @@ export interface InputSharedProps {
   /** Adds icon on the left side of input */
   icon?: React.ReactNode;
 
-  /** Width of icon section in px */
+  /** Width of icon section */
   iconWidth?: React.CSSProperties['width'];
 
   /** Right section of input, similar to icon but on the right */

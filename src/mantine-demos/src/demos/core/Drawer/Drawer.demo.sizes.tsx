@@ -12,7 +12,7 @@ function Demo() {
 
   const controls = (['xs', 'sm', 'md', 'lg', 'xl', '100%', '40rem', '25%'] as const).map((s) => (
     <Button variant="outline" onClick={() => open(s)} key={s}>
-      {typeof s === 'string' ? s : `${s}px`}
+      {s}
     </Button>
   ));
 

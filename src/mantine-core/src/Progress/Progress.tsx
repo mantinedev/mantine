@@ -31,7 +31,7 @@ export interface ProgressProps
   /** Progress color from theme */
   color?: MantineColor;
 
-  /** Predefined progress height or number for height in px */
+  /** Height of progress bar */
   size?: MantineNumberSize;
 
   /** Key of theme.radius or any valid CSS value to set border-radius, theme.defaultRadius by default */

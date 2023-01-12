@@ -82,7 +82,7 @@ export interface SelectProps
   extends DefaultProps<BaseSelectStylesNames>,
     BaseSelectProps,
     SelectSharedProps<SelectItem, string | null> {
-  /** Maximum dropdown height in px */
+  /** Maximum dropdown height */
   maxDropdownHeight?: number;
 
   /** Set to true to enable search */

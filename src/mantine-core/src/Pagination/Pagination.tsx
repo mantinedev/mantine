@@ -48,10 +48,10 @@ export interface PaginationProps
     page: number | 'dots' | 'prev' | 'next' | 'first' | 'last'
   ) => string | undefined;
 
-  /** Spacing between items from theme or number to set value in px, defaults to theme.spacing.xs / 2 */
+  /** Key of theme.spacing or any valid CSS value, defaults to theme.spacing.xs / 2 */
   spacing?: MantineNumberSize;
 
-  /** Predefined item size or number to set width and height in px */
+  /** Sets item width and height */
   size?: MantineNumberSize;
 
   /** Key of theme.radius or any valid CSS value to set border-radius, theme.defaultRadius by default */
