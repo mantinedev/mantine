@@ -8,15 +8,15 @@ function horizontalSide(
   arrowPosition: ArrowPosition
 ) {
   if (placement === 'center' || arrowPosition === 'center') {
-    return { top: rem(arrowY) };
+    return { top: arrowY };
   }
 
   if (placement === 'end') {
-    return { bottom: rem(arrowOffset) };
+    return { bottom: arrowOffset };
   }
 
   if (placement === 'start') {
-    return { top: rem(arrowOffset) };
+    return { top: arrowOffset };
   }
 
   return {};
@@ -30,15 +30,15 @@ function verticalSide(
   dir: 'rtl' | 'ltr'
 ) {
   if (placement === 'center' || arrowPosition === 'center') {
-    return { left: rem(arrowX) };
+    return { left: arrowX };
   }
 
   if (placement === 'end') {
-    return { [dir === 'ltr' ? 'right' : 'left']: rem(arrowOffset) };
+    return { [dir === 'ltr' ? 'right' : 'left']: arrowOffset };
   }
 
   if (placement === 'start') {
-    return { [dir === 'ltr' ? 'left' : 'right']: rem(arrowOffset) };
+    return { [dir === 'ltr' ? 'left' : 'right']: arrowOffset };
   }
 
   return {};
@@ -96,7 +96,7 @@ export function getArrowPositionStyles({
     return {
       ...baseStyles,
       ...horizontalSide(placement, arrowY, arrowOffset, arrowPosition),
-      right: rem(arrowPlacement),
+      right: arrowPlacement,
       borderLeft: 0,
       borderBottom: 0,
     };
@@ -106,7 +106,7 @@ export function getArrowPositionStyles({
     return {
       ...baseStyles,
       ...horizontalSide(placement, arrowY, arrowOffset, arrowPosition),
-      left: rem(arrowPlacement),
+      left: arrowPlacement,
       borderRight: 0,
       borderTop: 0,
     };
@@ -116,7 +116,7 @@ export function getArrowPositionStyles({
     return {
       ...baseStyles,
       ...verticalSide(placement, arrowX, arrowOffset, arrowPosition, dir),
-      bottom: rem(arrowPlacement),
+      bottom: arrowPlacement,
       borderTop: 0,
       borderLeft: 0,
     };
@@ -126,7 +126,7 @@ export function getArrowPositionStyles({
     return {
       ...baseStyles,
       ...verticalSide(placement, arrowX, arrowOffset, arrowPosition, dir),
-      top: rem(arrowPlacement),
+      top: arrowPlacement,
       borderBottom: 0,
       borderRight: 0,
     };
