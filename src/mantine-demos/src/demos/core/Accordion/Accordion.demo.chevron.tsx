@@ -11,7 +11,7 @@ import { IconPlus } from '@tabler/icons';
 function Demo() {
   return (
     <Accordion
-      chevron={<IconPlus size={16} />}
+      chevron={<IconPlus size="1rem" />}
       styles={{
         chevron: {
           '&[data-rotate]': {
@@ -29,7 +29,7 @@ function Demo() {
 export function IconReplaceDemo() {
   return (
     <BaseDemo
-      chevron={<IconPlus size={16} />}
+      chevron={<IconPlus size="1rem" />}
       styles={{
         chevron: {
           '&[data-rotate]': {

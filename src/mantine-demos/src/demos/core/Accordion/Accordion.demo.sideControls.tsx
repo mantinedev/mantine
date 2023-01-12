@@ -12,7 +12,7 @@ function AccordionControl(props: AccordionControlProps) {
     <Box sx={{ display: 'flex', alignItems: 'center' }}>
       <Accordion.Control {...props} />
       <ActionIcon size="lg">
-        <IconDots size={16} />
+        <IconDots size="1rem" />
       </ActionIcon>
     </Box>
   );
@@ -45,7 +45,7 @@ function AccordionControl(props: AccordionControlProps) {
     <Box sx={{ display: 'flex', alignItems: 'center' }}>
       <Accordion.Control {...props} />
       <ActionIcon size="lg">
-        <IconDots size={16} />
+        <IconDots size="1rem" />
       </ActionIcon>
     </Box>
   );
