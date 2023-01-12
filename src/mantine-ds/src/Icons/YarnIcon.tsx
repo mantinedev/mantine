@@ -1,4 +1,5 @@
 import React from 'react';
+import { rem } from '@mantine/core';
 
 interface YarnIconProps extends React.ComponentPropsWithoutRef<'svg'> {
   size?: number | string;
@@ -10,8 +11,8 @@ export function YarnIcon({ size, ...others }: YarnIconProps) {
       xmlns="http://www.w3.org/2000/svg"
       preserveAspectRatio="xMidYMid"
       viewBox="0 0 256 256"
-      height={size}
-      width={size}
+      height={rem(size)}
+      width={rem(size)}
       {...others}
     >
       <path
