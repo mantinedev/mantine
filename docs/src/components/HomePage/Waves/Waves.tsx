@@ -11,7 +11,7 @@ interface WavesProps {
 export function Waves({ height, width, flip, alt }: WavesProps) {
   const { classes } = useStyles({ height, width, flip, alt });
   return (
-    <div className={classes.root} style={{ overflow: 'hidden' }}>
+    <div className={classes.root}>
       <svg
         preserveAspectRatio="none"
         viewBox="0 0 1200 120"

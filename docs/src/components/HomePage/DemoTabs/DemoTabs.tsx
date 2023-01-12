@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react';
-import { Container, Grid, UnstyledButton, Text, rem } from '@mantine/core';
+import { Container, Grid, UnstyledButton, Text, Box, rem } from '@mantine/core';
 import { IconForms } from '@tabler/icons';
 import { useMediaQuery } from '@mantine/hooks';
 import { SectionTitle } from '../SectionTitle/SectionTitle';
@@ -59,9 +59,9 @@ export function DemoTabs({ data, title }: DemoTabsProps) {
         <Grid gutter={0} mt="md">
           <Grid.Col md={4}>
             <div className={classes.controls}>
-              <div
+              <Box
                 className={classes.controlsIndicator}
-                style={{
+                sx={{
                   height: rem(controlSize),
                   transform: `translateY(${rem(controlSize * active)})`,
                 }}

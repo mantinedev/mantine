@@ -9,6 +9,7 @@ interface WavesStylesParams {
 
 export default createStyles((theme, { width, height, flip, alt }: WavesStylesParams) => ({
   root: {
+    overflow: 'hidden',
     backgroundColor:
       theme.colorScheme === 'dark'
         ? theme.colors.dark[alt ? 8 : 7]

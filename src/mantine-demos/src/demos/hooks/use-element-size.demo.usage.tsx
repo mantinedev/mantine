@@ -1,5 +1,5 @@
 import React from 'react';
-import { useMantineTheme, Text, Group } from '@mantine/core';
+import { useMantineTheme, Text, Group, rem } from '@mantine/core';
 import { MantineDemo } from '@mantine/ds';
 import { useElementSize } from '@mantine/hooks';
 
@@ -11,7 +11,7 @@ function Demo() {
 
   return (
     <>
-      <textarea ref={ref} style={{ width: 400, height: 120 }} />
+      <textarea ref={ref} style={{ width: rem(400), height: rem(120) }} />
       <div>Width: {width}px, height: {height}px</div>
     </>
   );
@@ -31,8 +31,8 @@ function Demo() {
         <textarea
           ref={ref}
           style={{
-            width: 400,
-            height: 120,
+            width: rem(400),
+            height: rem(120),
             border: 'none',
             backgroundColor:
               theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[2],

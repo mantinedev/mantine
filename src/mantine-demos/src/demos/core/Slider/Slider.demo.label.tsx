@@ -30,7 +30,7 @@ function Demo() {
 
 function Demo() {
   return (
-    <Box maw={400} mx="autp" style={{ maxWidth: 400, margin: 'auto' }}>
+    <Box maw={400} mx="auto">
       <Text>No label</Text>
       <Slider defaultValue={40} label={null} />
 

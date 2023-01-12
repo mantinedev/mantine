@@ -40,7 +40,7 @@ function LogoAsset({ image, code, fileName, imageWidth, background, ...others }:
   return (
     <div {...others}>
       <div className={classes.imageWrapper} style={{ backgroundColor: background }}>
-        <img src={image} alt={fileName} style={{ maxWidth: '100%', width: imageWidth }} />
+        <img src={image} alt={fileName} style={{ maxWidth: '100%', width: rem(imageWidth) }} />
       </div>
 
       <Group noWrap grow mt={10}>

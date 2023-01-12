@@ -1,5 +1,5 @@
 import React, { forwardRef } from 'react';
-import { useMantineTheme, useComponentDefaultProps } from '@mantine/styles';
+import { useMantineTheme, useComponentDefaultProps, rem } from '@mantine/styles';
 import { ColorSlider, BaseColorSliderProps } from '../ColorSlider/ColorSlider';
 import { round } from '../converters/parsers';
 
@@ -30,14 +30,16 @@ export const AlphaSlider = forwardRef<HTMLDivElement, AlphaSliderProps>((props, 
           backgroundImage: `linear-gradient(45deg, ${_color} 25%, transparent 25%), linear-gradient(-45deg, ${_color} 25%, transparent 25%), linear-gradient(45deg, transparent 75%, ${_color} 75%), linear-gradient(-45deg, ${
             theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.white
           } 75%, ${_color} 75%)`,
-          backgroundSize: '8px 8px',
-          backgroundPosition: '0 0, 0 4px, 4px -4px, -4px 0px',
+          backgroundSize: `${rem(8)} ${rem(8)}`,
+          backgroundPosition: `0 0, 0 ${rem(4)}, ${rem(4)} -${rem(4)}, -${rem(4)} 0`,
         },
         {
           backgroundImage: `linear-gradient(90deg, transparent, ${color})`,
         },
         {
-          boxShadow: 'rgba(0, 0, 0, .1) 0px 0px 0px 1px inset, rgb(0, 0, 0, .15) 0px 0px 4px inset',
+          boxShadow: `rgba(0, 0, 0, .1) 0 0 0 ${rem(1)} inset, rgb(0, 0, 0, .15) 0 0 ${rem(
+            4
+          )} inset`,
         },
       ]}
     />

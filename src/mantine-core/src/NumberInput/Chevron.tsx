@@ -1,4 +1,5 @@
 import React from 'react';
+import { rem } from '@mantine/styles';
 
 interface ChevronProps {
   size: number | string;
@@ -9,8 +10,8 @@ export function Chevron({ direction, size }: ChevronProps) {
   return (
     <svg
       style={{ transform: direction === 'up' ? 'rotate(180deg)' : undefined }}
-      width={size}
-      height={size}
+      width={rem(size)}
+      height={rem(size)}
       viewBox="0 0 15 15"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"

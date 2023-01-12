@@ -29,7 +29,7 @@ function Demo() {
       />
 
       <Autocomplete
-        style={{ marginTop: 15 }}
+        mt="md"
         data={['React', 'Angular', 'Svelte', 'Vue']}
         label="Your favorite frameworks/libraries"
         placeholder="Pick one that you like"

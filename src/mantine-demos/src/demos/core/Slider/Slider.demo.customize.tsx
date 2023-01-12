@@ -1,6 +1,6 @@
 import React from 'react';
 import { MantineDemo } from '@mantine/ds';
-import { Slider, rem } from '@mantine/core';
+import { Slider, Box, rem } from '@mantine/core';
 
 const code = `
 import { Slider, rem } from '@mantine/core';
@@ -55,7 +55,7 @@ const marks = [
 
 function Demo() {
   return (
-    <div style={{ paddingTop: 15, paddingBottom: 20, maxWidth: 400, margin: 'auto' }}>
+    <Box maw={400} pt={15} pb={20} mx="auto">
       <Slider
         defaultValue={40}
         marks={marks}
@@ -88,7 +88,7 @@ function Demo() {
           },
         })}
       />
-    </div>
+    </Box>
   );
 }
 

@@ -1,5 +1,5 @@
 import React, { useState, useEffect, forwardRef } from 'react';
-import { DefaultProps, Selectors, useComponentDefaultProps } from '@mantine/styles';
+import { DefaultProps, Selectors, useComponentDefaultProps, rem } from '@mantine/styles';
 import { useElementSize } from '@mantine/hooks';
 import { Anchor } from '../Anchor';
 import { Box } from '../Box';
@@ -74,7 +74,7 @@ export const Spoiler = forwardRef<HTMLDivElement, SpoilerProps>((props, ref) => 
       <div
         className={classes.content}
         style={{
-          maxHeight: !show ? maxHeight : height || undefined,
+          maxHeight: !show ? rem(maxHeight) : height ? rem(height) : undefined,
         }}
       >
         <div ref={contentRef}>{children}</div>

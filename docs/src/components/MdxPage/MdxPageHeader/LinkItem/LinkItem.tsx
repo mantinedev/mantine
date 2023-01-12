@@ -15,7 +15,7 @@ export function LinkItem({ label, icon, children, link }: LinkItemProps) {
 
   return (
     <HeaderItem label={label}>
-      <div className={classes.wrapper} style={{ display: 'flex', alignItems: 'center' }}>
+      <div className={classes.wrapper}>
         <Anchor className={classes.link} href={link} size="sm">
           <div className={classes.icon}>{icon}</div>
           {children}

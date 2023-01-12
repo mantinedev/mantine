@@ -1,7 +1,7 @@
 import React from 'react';
 import { useListState, randomId } from '@mantine/hooks';
 import { MantineDemo } from '@mantine/ds';
-import { Checkbox } from '@mantine/core';
+import { Checkbox, Box } from '@mantine/core';
 
 const code = `
 import { useListState, randomId } from '@mantine/hooks';
@@ -72,7 +72,7 @@ export function Demo() {
   ));
 
   return (
-    <div style={{ maxWidth: 400, margin: 'auto' }}>
+    <Box maw={400} mx="auto">
       <Checkbox
         checked={allChecked}
         indeterminate={indeterminate}
@@ -85,7 +85,7 @@ export function Demo() {
         }
       />
       {items}
-    </div>
+    </Box>
   );
 }
 

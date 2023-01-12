@@ -89,8 +89,8 @@ export function TooltipFloating(props: TooltipFloatingProps) {
             ...style,
             zIndex,
             display: opened ? 'block' : 'none',
-            top: y ?? '',
-            left: Math.round(x) ?? '',
+            top: y ?? 0,
+            left: Math.round(x) ?? 0,
           }}
         >
           {label}

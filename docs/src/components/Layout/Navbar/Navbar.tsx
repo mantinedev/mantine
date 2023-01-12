@@ -34,7 +34,7 @@ export default function Navbar({ data, opened, onClose }: NavbarProps) {
 
   return (
     <nav className={cx(classes.navbar, { [classes.opened]: opened })}>
-      <ScrollArea style={{ height: '100vh' }} type="scroll">
+      <ScrollArea h="100vh" type="scroll">
         <div className={classes.body}>
           {main}
           <div className={classes.docs}>{docs}</div>

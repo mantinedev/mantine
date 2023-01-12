@@ -6,7 +6,8 @@ export function ReactIcon() {
     <svg
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 170.96 159.93"
-      style={{ display: 'block', width: rem(70), height: rem(70) }}
+      width={rem(70)}
+      height={rem(70)}
     >
       <path
         fill="#09d3ac"

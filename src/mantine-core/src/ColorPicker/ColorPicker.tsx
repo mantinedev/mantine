@@ -6,6 +6,7 @@ import {
   Selectors,
   useComponentDefaultProps,
   getSize,
+  rem,
 } from '@mantine/styles';
 import { Box } from '../Box';
 import { ColorSwatch } from '../ColorSwatch/ColorSwatch';
@@ -216,7 +217,7 @@ export const ColorPicker = forwardRef<HTMLDivElement, ColorPickerProps>(
                     }}
                     size={size}
                     color={convertHsvaTo('hex', parsed)}
-                    style={{ marginTop: 6 }}
+                    style={{ marginTop: rem(6) }}
                     styles={styles}
                     classNames={classNames}
                     focusable={focusable}
@@ -241,7 +242,7 @@ export const ColorPicker = forwardRef<HTMLDivElement, ColorPickerProps>(
         {Array.isArray(swatches) && (
           <Swatches
             data={swatches}
-            style={{ marginTop: 5 }}
+            style={{ marginTop: rem(5) }}
             swatchesPerRow={swatchesPerRow}
             focusable={focusable}
             classNames={classNames}
