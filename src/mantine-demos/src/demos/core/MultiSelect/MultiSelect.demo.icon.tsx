@@ -1,6 +1,6 @@
 import React from 'react';
 import { IconHash } from '@tabler/icons';
-import { MultiSelect } from '@mantine/core';
+import { MultiSelect, rem } from '@mantine/core';
 import { MantineDemo } from '@mantine/ds';
 import { data } from './_data';
 
@@ -21,7 +21,7 @@ function Demo() {
       data={data}
       label="Pick hashtags"
       placeholder="Pick all that you like"
-      icon={<IconHash size={14} />}
+      icon={<IconHash size={rem(14)} />}
     />
   );
 }

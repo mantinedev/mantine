@@ -36,10 +36,10 @@ function MainLink({ icon, color, label }: MainLinkProps) {
 }
 
 const data = [
-  { icon: <IconGitPullRequest size={16} />, color: 'blue', label: 'Pull Requests' },
-  { icon: <IconAlertCircle size={16} />, color: 'teal', label: 'Open Issues' },
-  { icon: <IconMessages size={16} />, color: 'violet', label: 'Discussions' },
-  { icon: <IconDatabase size={16} />, color: 'grape', label: 'Databases' },
+  { icon: <IconGitPullRequest size="1rem" />, color: 'blue', label: 'Pull Requests' },
+  { icon: <IconAlertCircle size="1rem" />, color: 'teal', label: 'Open Issues' },
+  { icon: <IconMessages size="1rem" />, color: 'violet', label: 'Discussions' },
+  { icon: <IconDatabase size="1rem" />, color: 'grape', label: 'Databases' },
 ];
 
 export function MainLinks() {

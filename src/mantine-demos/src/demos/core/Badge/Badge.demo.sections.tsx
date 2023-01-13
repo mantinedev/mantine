@@ -1,10 +1,10 @@
 import React from 'react';
 import { IconX } from '@tabler/icons';
 import { MantineDemo } from '@mantine/ds';
-import { Group, Badge, ActionIcon, Avatar } from '@mantine/core';
+import { Group, Badge, ActionIcon, Avatar, rem } from '@mantine/core';
 
 const code = `
-import { ActionIcon, Avatar, Badge, Group } from '@mantine/core';
+import { ActionIcon, Avatar, Badge, Group, rem } from '@mantine/core';
 import { IconX } from '@tabler/icons';
 
 const avatar = (
@@ -18,7 +18,7 @@ const avatar = (
 
 const removeButton = (
   <ActionIcon size="xs" color="blue" radius="xl" variant="transparent">
-    <IconX size={10} />
+    <IconX size={rem(10)} />
   </ActionIcon>
 );
 
@@ -50,7 +50,7 @@ const avatar = (
 
 const removeButton = (
   <ActionIcon size="xs" color="blue" radius="xl" variant="transparent">
-    <IconX size={10} />
+    <IconX size={rem(10)} />
   </ActionIcon>
 );
 

@@ -4,6 +4,7 @@ import {
   DefaultProps,
   MantineColor,
   MantineNumberSize,
+  rem,
   Selectors,
   useComponentDefaultProps,
   Variants,
@@ -155,7 +156,11 @@ export const _NavLink = forwardRef<HTMLButtonElement, NavLinkProps>((props, ref)
           >
             {withChildren
               ? rightSection || (
-                  <ChevronIcon width={14} height={14} style={{ transform: 'rotate(-90deg)' }} />
+                  <ChevronIcon
+                    width={rem(14)}
+                    height={rem(14)}
+                    style={{ transform: 'rotate(-90deg)' }}
+                  />
                 )
               : rightSection}
           </span>

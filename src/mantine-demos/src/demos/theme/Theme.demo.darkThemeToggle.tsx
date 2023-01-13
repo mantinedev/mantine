@@ -18,7 +18,7 @@ function Demo() {
       onClick={() => toggleColorScheme()}
       title="Toggle color scheme"
     >
-      {dark ? <IconSun size={18} /> : <IconMoonStars size={18} />}
+      {dark ? <IconSun size="1.1rem" /> : <IconMoonStars size="1.1rem" />}
     </ActionIcon>
   );
 }
@@ -36,7 +36,7 @@ function Demo() {
         onClick={() => toggleColorScheme()}
         title="Toggle color scheme"
       >
-        {dark ? <IconSun size={18} /> : <IconMoonStars size={18} />}
+        {dark ? <IconSun size="1.1rem" /> : <IconMoonStars size="1.1rem" />}
       </ActionIcon>
     </Group>
   );

@@ -19,7 +19,7 @@ function Demo() {
         <Transition transition="slide-up" mounted={scroll.y > 0}>
           {(transitionStyles) => (
             <Button
-              leftIcon={<IconArrowUp size={16} />}
+              leftIcon={<IconArrowUp size="1rem" />}
               style={transitionStyles}
               onClick={() => scrollTo({ y: 0 })}
             >
@@ -43,7 +43,7 @@ function Demo() {
         <Transition transition="slide-up" mounted={scroll.y > 0}>
           {(transitionStyles) => (
             <Button
-              leftIcon={<IconArrowUp size={16} />}
+              leftIcon={<IconArrowUp size="1rem" />}
               style={transitionStyles}
               onClick={() => scrollTo({ y: 0 })}
             >

@@ -10,13 +10,13 @@ import { IconHome2, IconGauge, IconChevronRight, IconActivity, IconCircleOff } f
 function Demo() {
   return (
     <Box w={240}>
-      <NavLink label="With icon" icon={<IconHome2 size={16} stroke={1.5} />} />
+      <NavLink label="With icon" icon={<IconHome2 size="1rem" stroke={1.5} />} />
       <NavLink
         label="With right section"
-        icon={<IconGauge size={16} stroke={1.5} />}
-        rightSection={<IconChevronRight size={12} stroke={1.5} />}
+        icon={<IconGauge size="1rem" stroke={1.5} />}
+        rightSection={<IconChevronRight size="0.8rem" stroke={1.5} />}
       />
-      <NavLink label="Disabled" icon={<IconCircleOff size={16} stroke={1.5} />} disabled />
+      <NavLink label="Disabled" icon={<IconCircleOff size="1rem" stroke={1.5} />} disabled />
       <NavLink
         label="With description"
         description="Additional information"
@@ -28,21 +28,21 @@ function Demo() {
       />
       <NavLink
         label="Active subtle"
-        icon={<IconActivity size={16} stroke={1.5} />}
-        rightSection={<IconChevronRight size={12} stroke={1.5} />}
+        icon={<IconActivity size="1rem" stroke={1.5} />}
+        rightSection={<IconChevronRight size="0.8rem" stroke={1.5} />}
         variant="subtle"
         active
       />
       <NavLink
         label="Active light"
-        icon={<IconActivity size={16} stroke={1.5} />}
-        rightSection={<IconChevronRight size={12} stroke={1.5} />}
+        icon={<IconActivity size="1rem" stroke={1.5} />}
+        rightSection={<IconChevronRight size="0.8rem" stroke={1.5} />}
         active
       />
       <NavLink
         label="Active filled"
-        icon={<IconActivity size={16} stroke={1.5} />}
-        rightSection={<IconChevronRight size={12} stroke={1.5} />}
+        icon={<IconActivity size="1rem" stroke={1.5} />}
+        rightSection={<IconChevronRight size="0.8rem" stroke={1.5} />}
         variant="filled"
         active
       />
@@ -55,13 +55,13 @@ function Demo() {
   return (
     <Group position="center">
       <Box w={240}>
-        <NavLink label="With icon" icon={<IconHome2 size={16} stroke={1.5} />} />
+        <NavLink label="With icon" icon={<IconHome2 size="1rem" stroke={1.5} />} />
         <NavLink
           label="With right section"
-          icon={<IconGauge size={16} stroke={1.5} />}
-          rightSection={<IconChevronRight size={12} stroke={1.5} />}
+          icon={<IconGauge size="1rem" stroke={1.5} />}
+          rightSection={<IconChevronRight size="0.8rem" stroke={1.5} />}
         />
-        <NavLink label="Disabled" icon={<IconCircleOff size={16} stroke={1.5} />} disabled />
+        <NavLink label="Disabled" icon={<IconCircleOff size="1rem" stroke={1.5} />} disabled />
         <NavLink
           label="With description"
           description="Additional information"
@@ -73,21 +73,21 @@ function Demo() {
         />
         <NavLink
           label="Active subtle"
-          icon={<IconActivity size={16} stroke={1.5} />}
-          rightSection={<IconChevronRight size={12} stroke={1.5} />}
+          icon={<IconActivity size="1rem" stroke={1.5} />}
+          rightSection={<IconChevronRight size="0.8rem" stroke={1.5} />}
           variant="subtle"
           active
         />
         <NavLink
           label="Active light"
-          icon={<IconActivity size={16} stroke={1.5} />}
-          rightSection={<IconChevronRight size={12} stroke={1.5} />}
+          icon={<IconActivity size="1rem" stroke={1.5} />}
+          rightSection={<IconChevronRight size="0.8rem" stroke={1.5} />}
           active
         />
         <NavLink
           label="Active filled"
-          icon={<IconActivity size={16} stroke={1.5} />}
-          rightSection={<IconChevronRight size={12} stroke={1.5} />}
+          icon={<IconActivity size="1rem" stroke={1.5} />}
+          rightSection={<IconChevronRight size="0.8rem" stroke={1.5} />}
           variant="filled"
           active
         />

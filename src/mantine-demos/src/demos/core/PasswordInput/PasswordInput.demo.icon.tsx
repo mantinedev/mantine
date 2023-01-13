@@ -12,7 +12,7 @@ function Demo() {
     <PasswordInput
       label="Your password"
       placeholder="Your password"
-      icon={<IconLock size={16} />}
+      icon={<IconLock size="1rem" />}
     />
   );
 }
@@ -25,7 +25,7 @@ function Demo() {
       mx="auto"
       label="Your password"
       placeholder="Your password"
-      icon={<IconLock size={16} />}
+      icon={<IconLock size="1rem" />}
     />
   );
 }

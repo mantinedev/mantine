@@ -15,7 +15,7 @@ function Demo() {
       center
       icon={
         <ThemeIcon color="teal" size={24} radius="xl">
-          <IconCircleCheck size={16} />
+          <IconCircleCheck size="1rem" />
         </ThemeIcon>
       }
     >
@@ -26,7 +26,7 @@ function Demo() {
       <List.Item
         icon={
           <ThemeIcon color="blue" size={24} radius="xl">
-            <IconCircleDashed size={16} />
+            <IconCircleDashed size="1rem" />
           </ThemeIcon>
         }
       >
@@ -47,7 +47,7 @@ function Demo() {
       center
       icon={
         <ThemeIcon color="teal" size={24} radius="xl">
-          <IconCircleCheck size={16} />
+          <IconCircleCheck size="1rem" />
         </ThemeIcon>
       }
     >
@@ -58,7 +58,7 @@ function Demo() {
       <List.Item
         icon={
           <ThemeIcon color="blue" size={24} radius="xl">
-            <IconCircleDashed size={16} />
+            <IconCircleDashed size="1rem" />
           </ThemeIcon>
         }
       >

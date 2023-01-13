@@ -25,7 +25,7 @@ function Demo() {
 function Demo() {
   return (
     <Wrapper
-      searchIcon={<IconSearch size={18} />}
+      searchIcon={<IconSearch size="1.2rem" />}
       searchPlaceholder="Search..."
       shortcut="mod + alt + V"
       nothingFoundMessage="Nothing found..."

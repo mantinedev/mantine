@@ -19,7 +19,7 @@ function Demo() {
 
       {/* Replace color preview with any React node */}
       <ColorInput
-        icon={<IconPaint size={16} />}
+        icon={<IconPaint size="1rem" />}
         label="With icon"
         placeholder="With icon"
       />
@@ -35,7 +35,7 @@ function Demo() {
 
       <ColorInput
         mt="md"
-        icon={<IconPaint size={16} />}
+        icon={<IconPaint size="1rem" />}
         label="With icon"
         placeholder="With icon"
       />

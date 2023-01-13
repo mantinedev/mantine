@@ -23,7 +23,7 @@ function CompletedIcon(props: { step: number }) {
   return (
     <Group spacing={0} noWrap>
       <Text>{props.step + 1}</Text>
-      <IconCheck size={16} />
+      <IconCheck size="1rem" />
     </Group>
   );
 }
@@ -51,7 +51,7 @@ function CompletedIcon(props: { step: number }) {
   return (
     <Group spacing={0} noWrap>
       <Text>{props.step + 1}</Text>
-      <IconCheck size={16} />
+      <IconCheck size="1rem" />
     </Group>
   );
 }

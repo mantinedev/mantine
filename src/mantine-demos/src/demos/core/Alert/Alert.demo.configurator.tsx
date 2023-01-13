@@ -6,7 +6,7 @@ import { Alert, Box } from '@mantine/core';
 function Wrapper(props: React.ComponentPropsWithoutRef<typeof Alert>) {
   return (
     <Box maw={400} mx="auto">
-      <Alert {...props} icon={<IconAlertCircle size={16} />} />
+      <Alert {...props} icon={<IconAlertCircle size="1rem" />} />
     </Box>
   );
 }
@@ -17,7 +17,7 @@ import { IconAlertCircle } from '@tabler/icons';
 
 function Demo() {
   return (
-    <Alert icon={<IconAlertCircle size={16} />}${props}>
+    <Alert icon={<IconAlertCircle size="1rem" />}${props}>
       ${children}
     </Alert>
   );

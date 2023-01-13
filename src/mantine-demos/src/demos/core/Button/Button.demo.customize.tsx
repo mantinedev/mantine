@@ -15,7 +15,7 @@ function Demo() {
         target="_blank"
         rel="noopener noreferrer"
         href="https://twitter.com/mantinedev"
-        leftIcon={<IconBrandTwitter size={18} />}
+        leftIcon={<IconBrandTwitter size={rem(18)} />}
         styles={(theme) => ({
           root: {
             backgroundColor: '#00acee',
@@ -48,7 +48,7 @@ function Demo() {
         target="_blank"
         rel="noopener noreferrer"
         href="https://twitter.com/mantinedev"
-        leftIcon={<IconBrandTwitter size={18} />}
+        leftIcon={<IconBrandTwitter size={rem(18)} />}
         styles={(theme) => ({
           root: {
             backgroundColor: '#00acee',

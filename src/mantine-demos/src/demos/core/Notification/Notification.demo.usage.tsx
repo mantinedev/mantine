@@ -15,11 +15,11 @@ function Demo() {
         This is default notification with title and body
       </Notification>
 
-      <Notification icon={<IconCheck size={18} />} color="teal" title="Teal notification">
+      <Notification icon={<IconCheck size="1.1rem" />} color="teal" title="Teal notification">
         This is teal notification with icon
       </Notification>
 
-      <Notification icon={<IconX size={18} />} color="red">
+      <Notification icon={<IconX size="1.1rem" />} color="red">
         Bummer! Notification without title
       </Notification>
 
@@ -44,7 +44,7 @@ function Demo() {
 
       <Notification
         mt="md"
-        icon={<IconCheck size={18} />}
+        icon={<IconCheck size="1.1rem" />}
         color="teal"
         title="Teal notification"
         onClose={() => {}}
@@ -52,7 +52,7 @@ function Demo() {
         This is teal notification with icon
       </Notification>
 
-      <Notification mt="md" icon={<IconX size={18} />} color="red" onClose={() => {}}>
+      <Notification mt="md" icon={<IconX size="1.1rem" />} color="red" onClose={() => {}}>
         Bummer! Notification without title
       </Notification>
 

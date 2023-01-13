@@ -9,7 +9,7 @@ import { IconExternalLink } from '@tabler/icons';
 
 function Demo() {
   return (
-    <Button component="a" href="#" variant="outline" leftIcon={<IconExternalLink size={14} />}>
+    <Button component="a" href="#" variant="outline" leftIcon={<IconExternalLink size="0.9rem" />}>
       Open in new tab
     </Button>
   );
@@ -23,7 +23,7 @@ function Demo() {
         component="a"
         href="#"
         variant="outline"
-        leftIcon={<IconExternalLink size={14} />}
+        leftIcon={<IconExternalLink size="0.9rem" />}
       >
         Open in new tab
       </Button>

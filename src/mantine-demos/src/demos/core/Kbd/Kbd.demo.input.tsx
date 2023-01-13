@@ -19,7 +19,7 @@ function Demo() {
   return (
     <TextInput
       placeholder="Search"
-      icon={<IconSearch size={16} />}
+      icon={<IconSearch size="1rem" />}
       rightSectionWidth={90}
       rightSection={rightSection}
       styles={{ rightSection: { pointerEvents: 'none' } }}
@@ -40,7 +40,7 @@ function Demo() {
   return (
     <TextInput
       placeholder="Search"
-      icon={<IconSearch size={16} />}
+      icon={<IconSearch size="1rem" />}
       rightSectionWidth={90}
       rightSection={rightSection}
       styles={{ rightSection: { pointerEvents: 'none' } }}

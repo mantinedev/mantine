@@ -1,14 +1,14 @@
 import React from 'react';
 import { IconUpload } from '@tabler/icons';
 import { MantineDemo } from '@mantine/ds';
-import { FileInput } from '@mantine/core';
+import { FileInput, rem } from '@mantine/core';
 
 const code = `
-import { FileInput } from '@mantine/core';
+import { FileInput, rem } from '@mantine/core';
 import { IconUpload } from '@tabler/icons';
 
 function Demo() {
-  return <FileInput label="Your resume" placeholder="Your resume" icon={<IconUpload size={14} />} />;
+  return <FileInput label="Your resume" placeholder="Your resume" icon={<IconUpload size={rem(14)} />} />;
 }
 `;
 
@@ -19,7 +19,7 @@ function Demo() {
       mx="auto"
       label="Your resume"
       placeholder="Your resume"
-      icon={<IconUpload size={14} />}
+      icon={<IconUpload size={rem(14)} />}
     />
   );
 }

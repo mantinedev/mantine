@@ -12,7 +12,7 @@ function Demo() {
     <Select
       label="Your favorite framework/library"
       placeholder="Pick one"
-      rightSection={<IconChevronDown size={14} />}
+      rightSection={<IconChevronDown size="1rem" />}
       rightSectionWidth={30}
       styles={{ rightSection: { pointerEvents: 'none' } }}
       data={['React', 'Angular', 'Svelte', 'Vue']}
@@ -28,7 +28,7 @@ function Demo() {
       mx="auto"
       label="Your favorite framework/library"
       placeholder="Pick one"
-      rightSection={<IconChevronDown size={14} />}
+      rightSection={<IconChevronDown size="1rem" />}
       rightSectionWidth={30}
       styles={{ rightSection: { pointerEvents: 'none' } }}
       data={['React', 'Angular', 'Svelte', 'Vue']}

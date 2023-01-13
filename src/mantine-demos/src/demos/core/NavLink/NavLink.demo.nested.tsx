@@ -12,7 +12,7 @@ function Demo() {
     <Box w={240}>
       <NavLink
         label="First parent link"
-        icon={<IconGauge size={16} stroke={1.5} />}
+        icon={<IconGauge size="1rem" stroke={1.5} />}
         childrenOffset={28}
       >
         <NavLink label="First child link" />
@@ -26,7 +26,7 @@ function Demo() {
 
       <NavLink
         label="Second parent link"
-        icon={<IconFingerprint size={16} stroke={1.5} />}
+        icon={<IconFingerprint size="1rem" stroke={1.5} />}
         childrenOffset={28}
         defaultOpened
       >
@@ -45,7 +45,7 @@ function Demo() {
       <Box w={240}>
         <NavLink
           label="First parent link"
-          icon={<IconGauge size={16} stroke={1.5} />}
+          icon={<IconGauge size="1rem" stroke={1.5} />}
           childrenOffset={28}
         >
           <NavLink label="First child link" />
@@ -59,7 +59,7 @@ function Demo() {
 
         <NavLink
           label="Second parent link"
-          icon={<IconFingerprint size={16} stroke={1.5} />}
+          icon={<IconFingerprint size="1rem" stroke={1.5} />}
           childrenOffset={28}
           defaultOpened
         >

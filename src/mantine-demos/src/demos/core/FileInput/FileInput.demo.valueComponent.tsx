@@ -18,7 +18,7 @@ function Value({ file }: { file: File }) {
         borderRadius: theme.radius.sm,
       })}
     >
-      <IconPhoto size={14} style={{ marginRight: rem(5) }} />
+      <IconPhoto size={rem(14)} style={{ marginRight: rem(5) }} />
       <span
         style={{
           whiteSpace: 'nowrap',
@@ -69,7 +69,7 @@ function Value({ file }: { file: File }) {
         borderRadius: theme.radius.sm,
       })}
     >
-      <IconPhoto size={14} style={{ marginRight: rem(5) }} />
+      <IconPhoto size={rem(14)} style={{ marginRight: rem(5) }} />
       <span
         style={{
           whiteSpace: 'nowrap',

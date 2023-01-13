@@ -8,7 +8,7 @@ function Wrapper(props: NotificationProps) {
   return (
     <Box maw={400} mx="auto">
       <Notification onClose={() => {}} {...props} />
-      <Notification mt="md" icon={<IconCheck size={20} />} onClose={() => {}} {...props} />
+      <Notification mt="md" icon={<IconCheck size="1.2rem" />} onClose={() => {}} {...props} />
     </Box>
   );
 }
@@ -24,7 +24,7 @@ function Demo() {
         ${children}
       </Notification>
 
-      <Notification icon={<IconCheck size={20} />}${props}>
+      <Notification icon={<IconCheck size="1.2rem" />}${props}>
         ${children}
       </Notification>
     </>

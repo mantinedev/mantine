@@ -42,7 +42,11 @@ export function User() {
             </Text>
           </Box>
 
-          {theme.dir === 'ltr' ? <IconChevronRight size={18} /> : <IconChevronLeft size={18} />}
+          {theme.dir === 'ltr' ? (
+            <IconChevronRight size={rem(18)} />
+          ) : (
+            <IconChevronLeft size={rem(18)} />
+          )}
         </Group>
       </UnstyledButton>
     </Box>

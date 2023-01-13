@@ -11,20 +11,20 @@ export function DropzoneDemoChildren() {
     <Group position="center" spacing="xl" mih={220} sx={{ pointerEvents: 'none' }}>
       <Dropzone.Accept>
         <IconUpload
-          size={50}
+          size="3.2rem"
           stroke={1.5}
           color={theme.colors[theme.primaryColor][theme.colorScheme === 'dark' ? 4 : 6]}
         />
       </Dropzone.Accept>
       <Dropzone.Reject>
         <IconX
-          size={50}
+          size="3.2rem"
           stroke={1.5}
           color={theme.colors.red[theme.colorScheme === 'dark' ? 4 : 6]}
         />
       </Dropzone.Reject>
       <Dropzone.Idle>
-        <IconPhoto size={50} stroke={1.5} />
+        <IconPhoto size="3.2rem" stroke={1.5} />
       </Dropzone.Idle>
 
       <div>

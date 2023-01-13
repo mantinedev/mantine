@@ -20,7 +20,7 @@ function Demo() {
       onChange={onChange}
       rightSection={
         <ActionIcon onClick={() => onChange(randomColor())}>
-          <IconRefresh size={16} />
+          <IconRefresh size="1rem" />
         </ActionIcon>
       }
     />
@@ -42,7 +42,7 @@ function Demo() {
       onChange={onChange}
       rightSection={
         <ActionIcon onClick={() => onChange(randomColor())}>
-          <IconRefresh size={16} />
+          <IconRefresh size="1rem" />
         </ActionIcon>
       }
     />

@@ -76,7 +76,7 @@ function Demo() {
   return (
     <Wrapper
       actionsWrapperComponent={ActionsWrapper}
-      searchIcon={<IconSearch size={18} />}
+      searchIcon={<IconSearch size="1.2rem" />}
       searchPlaceholder="Search..."
       shortcut="mod + alt + T"
       buttonLabel="Open spotlight"

@@ -13,7 +13,7 @@ function Demo() {
       label="Your favorite library/framework"
       placeholder="Your favorite library/framework"
       data={['React', 'Angular', 'Svelte', 'Vue']}
-      rightSection={<IconChevronDown size={14} />}
+      rightSection={<IconChevronDown size="1rem" />}
       rightSectionWidth={40}
     />
   );
@@ -28,7 +28,7 @@ function Demo() {
       label="Your favorite library/framework"
       placeholder="Your favorite library/framework"
       data={['React', 'Angular', 'Svelte', 'Vue']}
-      rightSection={<IconChevronDown size={14} />}
+      rightSection={<IconChevronDown size="1rem" />}
       rightSectionWidth={30}
     />
   );

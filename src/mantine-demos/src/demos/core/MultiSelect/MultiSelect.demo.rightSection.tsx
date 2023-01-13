@@ -14,7 +14,7 @@ function Demo() {
       data={['React', 'Angular', 'Svelte', 'Vue', 'Riot', 'Next.js', 'Blitz.js']}
       label="Your favorite frameworks/libraries"
       placeholder="Pick all that you like"
-      rightSection={<IconChevronDown size={14} />}
+      rightSection={<IconChevronDown size="1rem" />}
       styles={{ rightSection: { pointerEvents: 'none' } }}
       rightSectionWidth={40}
     />
@@ -30,7 +30,7 @@ function Demo() {
       data={data}
       label="Your favorite frameworks/libraries"
       placeholder="Pick all that you like"
-      rightSection={<IconChevronDown size={14} />}
+      rightSection={<IconChevronDown size="1rem" />}
       styles={{ rightSection: { pointerEvents: 'none' } }}
       rightSectionWidth={40}
     />

@@ -7,7 +7,7 @@ import { Button, Flex, Box } from '@mantine/core';
 
 function Demo() {
   return (
-    <Flex>
+    <Flex gap="md">
       <Box w={200}>
         <Button fullWidth variant="outline">
           Full width button
@@ -26,7 +26,7 @@ function Demo() {
 
 function Demo() {
   return (
-    <Flex>
+    <Flex gap="md">
       <Box w={200}>
         <Button fullWidth variant="outline">
           Full width button

@@ -15,7 +15,7 @@ function Demo() {
       defaultValue={22}
       min={0}
       max={120}
-      icon={<IconMedal size={18} />}
+      icon={<IconMedal size="1rem" />}
     />
   );
 }
@@ -31,7 +31,7 @@ function Demo() {
       defaultValue={22}
       min={0}
       max={120}
-      icon={<IconMedal size={18} />}
+      icon={<IconMedal size="1rem" />}
     />
   );
 }

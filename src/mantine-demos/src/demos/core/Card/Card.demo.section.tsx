@@ -1,11 +1,11 @@
 import React from 'react';
-import { Card, Group, Text, Menu, ActionIcon, Image, SimpleGrid } from '@mantine/core';
+import { Card, Group, Text, Menu, ActionIcon, Image, SimpleGrid, rem } from '@mantine/core';
 import { IconDots, IconEye, IconFileZip, IconTrash } from '@tabler/icons';
 import { MantineDemo } from '@mantine/ds';
 import { demoBase } from './_demo-base';
 
 const code = `
-import { Card, Group, Text, Menu, ActionIcon, Image, SimpleGrid } from '@mantine/core';
+import { Card, Group, Text, Menu, ActionIcon, Image, SimpleGrid, rem } from '@mantine/core';
 import { IconDots, IconEye, IconFileZip, IconTrash } from '@tabler/icons';
 
 const images = [
@@ -23,14 +23,14 @@ function Demo() {
           <Menu withinPortal position="bottom-end" shadow="sm">
             <Menu.Target>
               <ActionIcon>
-                <IconDots size={16} />
+                <IconDots size="1rem" />
               </ActionIcon>
             </Menu.Target>
 
             <Menu.Dropdown>
-              <Menu.Item icon={<IconFileZip size={14} />}>Download zip</Menu.Item>
-              <Menu.Item icon={<IconEye size={14} />}>Preview all</Menu.Item>
-              <Menu.Item icon={<IconTrash size={14} />} color="red">
+              <Menu.Item icon={<IconFileZip size={rem(14)} />}>Download zip</Menu.Item>
+              <Menu.Item icon={<IconEye size={rem(14)} />}>Preview all</Menu.Item>
+              <Menu.Item icon={<IconTrash size={rem(14)} />} color="red">
                 Delete all
               </Menu.Item>
             </Menu.Dropdown>
@@ -76,14 +76,14 @@ function Demo() {
           <Menu withinPortal position="bottom-end" shadow="sm">
             <Menu.Target>
               <ActionIcon>
-                <IconDots size={16} />
+                <IconDots size="1rem" />
               </ActionIcon>
             </Menu.Target>
 
             <Menu.Dropdown>
-              <Menu.Item icon={<IconFileZip size={14} />}>Download zip</Menu.Item>
-              <Menu.Item icon={<IconEye size={14} />}>Preview all</Menu.Item>
-              <Menu.Item icon={<IconTrash size={14} />} color="red">
+              <Menu.Item icon={<IconFileZip size={rem(14)} />}>Download zip</Menu.Item>
+              <Menu.Item icon={<IconEye size={rem(14)} />}>Preview all</Menu.Item>
+              <Menu.Item icon={<IconTrash size={rem(14)} />} color="red">
                 Delete all
               </Menu.Item>
             </Menu.Dropdown>

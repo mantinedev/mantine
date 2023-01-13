@@ -27,7 +27,7 @@ function Demo() {
             color: 'teal',
             title: 'You did great',
             message: 'Data was saved',
-            icon: <IconCheck size={16} />,
+            icon: <IconCheck size="1rem" />,
           })
         }
       >
@@ -98,7 +98,7 @@ function Demo() {
               color: 'teal',
               title: 'Data was loaded',
               message: 'Notification will close in 3 seconds, you can close this notification now',
-              icon: <IconCheck size={16} />,
+              icon: <IconCheck size="1rem" />,
               autoClose: 3000,
             });
           }, 3000);

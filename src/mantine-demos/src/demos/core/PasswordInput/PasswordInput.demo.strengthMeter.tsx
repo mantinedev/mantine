@@ -16,7 +16,7 @@ function PasswordRequirement({ meets, label }: { meets: boolean; label: string }
       mt={7}
       size="sm"
     >
-      {meets ? <IconCheck size={14} /> : <IconX size={14} />} <Box ml={10}>{label}</Box>
+      {meets ? <IconCheck size="0.9rem" /> : <IconX size="0.9rem" />} <Box ml={10}>{label}</Box>
     </Text>
   );
 }
@@ -86,7 +86,7 @@ function PasswordRequirement({ meets, label }: { meets: boolean; label: string }
       mt={7}
       size="sm"
     >
-      {meets ? <IconCheck size={14} /> : <IconX size={14} />} <Box ml={10}>{label}</Box>
+      {meets ? <IconCheck size="0.9rem" /> : <IconX size="0.9rem" />} <Box ml={10}>{label}</Box>
     </Text>
   );
 }

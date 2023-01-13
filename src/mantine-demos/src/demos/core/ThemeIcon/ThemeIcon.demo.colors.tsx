@@ -10,15 +10,15 @@ function Demo() {
   return (
     <>
       <Group position="center">
-        {getThemes({ children: <IconPhoto size={16} />, variant: 'outline' })}
+        {getThemes({ children: <IconPhoto size="1rem" />, variant: 'outline' })}
       </Group>
 
       <Group position="center" mt="md">
-        {getThemes({ children: <IconPhoto size={16} />, variant: 'light' })}
+        {getThemes({ children: <IconPhoto size="1rem" />, variant: 'light' })}
       </Group>
 
       <Group position="center" mt="md">
-        {getThemes({ children: <IconPhoto size={16} />, variant: 'filled' })}
+        {getThemes({ children: <IconPhoto size="1rem" />, variant: 'filled' })}
       </Group>
     </>
   );

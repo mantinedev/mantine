@@ -31,7 +31,7 @@ function Demo() {
             Timeline bullet as avatar image
           </Text>
         </Timeline.Item>
-        <Timeline.Item title="Icon" bulletSize={24} bullet={<IconSun size={14} />}>
+        <Timeline.Item title="Icon" bulletSize={24} bullet={<IconSun size="0.8rem" />}>
           <Text color="dimmed" size="sm">
             Timeline bullet as icon
           </Text>
@@ -46,7 +46,7 @@ function Demo() {
               gradient={{ from: 'lime', to: 'cyan' }}
               radius="xl"
             >
-              <IconVideo size={14} />
+              <IconVideo size="0.8rem" />
             </ThemeIcon>
           }
         >
@@ -84,7 +84,7 @@ function Demo() {
             Timeline bullet as avatar image
           </Text>
         </Timeline.Item>
-        <Timeline.Item title="Icon" bulletSize={24} bullet={<IconSun size={14} />}>
+        <Timeline.Item title="Icon" bulletSize={24} bullet={<IconSun size="0.8rem" />}>
           <Text color="dimmed" size="sm">
             Timeline bullet as icon
           </Text>
@@ -99,7 +99,7 @@ function Demo() {
               gradient={{ from: 'lime', to: 'cyan' }}
               radius="xl"
             >
-              <IconVideo size={14} />
+              <IconVideo size="0.8rem" />
             </ThemeIcon>
           }
         >

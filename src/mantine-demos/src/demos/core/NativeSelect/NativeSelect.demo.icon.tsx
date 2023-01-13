@@ -13,7 +13,7 @@ function Demo() {
       label="Pick a hashtag"
       placeholder="Pick a hashtag"
       data={['React', 'Angular', 'Svelte', 'Vue']}
-      icon={<IconHash size={14} />}
+      icon={<IconHash size="1rem" />}
     />
   );
 }
@@ -27,7 +27,7 @@ function Demo() {
       label="Pick a hashtag"
       placeholder="Pick a hashtag"
       data={['React', 'Angular', 'Svelte', 'Vue']}
-      icon={<IconHash size={14} />}
+      icon={<IconHash size="1rem" />}
     />
   );
 }

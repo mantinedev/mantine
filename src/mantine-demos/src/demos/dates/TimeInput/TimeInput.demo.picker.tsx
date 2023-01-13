@@ -19,7 +19,7 @@ function Demo() {
       ref={ref}
       rightSection={
         <ActionIcon onClick={() => ref.current.showPicker()}>
-          <IconClock size={16} stroke={1.5} />
+          <IconClock size="1rem" stroke={1.5} />
         </ActionIcon>
       }
       maw={400}
@@ -38,7 +38,7 @@ function Demo() {
       ref={ref}
       rightSection={
         <ActionIcon onClick={() => ref.current.showPicker()}>
-          <IconClock size={16} stroke={1.5} />
+          <IconClock size="1rem" stroke={1.5} />
         </ActionIcon>
       }
       maw={400}

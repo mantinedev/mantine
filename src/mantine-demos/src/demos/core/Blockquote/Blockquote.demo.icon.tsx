@@ -11,7 +11,7 @@ function Demo() {
   return (
     <Blockquote
       cite="– Your poor i3 from 2012 struggling its best"
-      icon={<IconFlame size={24} />}
+      icon={<IconFlame size="1.5rem" />}
     >
       webpack built caa9bf3d1a0a0914ed84 in 28259ms
     </Blockquote>
@@ -25,7 +25,7 @@ function Demo() {
       maw={420}
       mx="auto"
       cite="– Your poor i3 from 2012 struggling its best"
-      icon={<IconFlame size={24} />}
+      icon={<IconFlame size="1.5rem" />}
     >
       webpack built 40a9bf3d1a0a0914ed84 in 28259ms
     </Blockquote>

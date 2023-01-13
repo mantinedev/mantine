@@ -10,7 +10,7 @@ function Demo() {
   const [value, setValue] = useState<Date | null>(null);
   return (
     <${name}
-      icon={<IconCalendar size={18} stroke={1.5} />}
+      icon={<IconCalendar size="1.1rem" stroke={1.5} />}
       label="Pick date"
       placeholder="Pick date"
       value={value}
@@ -27,7 +27,7 @@ function getDemo(Component: React.FC<any>) {
     const [value, setValue] = useState<Date | null>(null);
     return (
       <Component
-        icon={<IconCalendar size={18} stroke={1.5} />}
+        icon={<IconCalendar size="1.1rem" stroke={1.5} />}
         label="Pick date"
         placeholder="Pick date"
         value={value}
