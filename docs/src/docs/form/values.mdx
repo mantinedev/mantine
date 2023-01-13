@@ -101,10 +101,10 @@ function Demo() {
     }),
   });
 
-  type Transformed = TransformedValues<typeof useForm>;
+  type Transformed = TransformedValues<typeof form>;
   // -> { name: string, locationId: number }
 
-  const handleSubmit = (values: TransformedValues<typeof useForm>) => {};
+  const handleSubmit = (values: TransformedValues<typeof form>) => {};
 
   return <form onSubmit={form.onSubmit(handleSubmit)} />;
 }

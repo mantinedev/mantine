@@ -22,7 +22,7 @@ export interface StackProps
 const defaultProps: Partial<StackProps> = {
   spacing: 'md',
   align: 'stretch',
-  justify: 'top',
+  justify: 'flex-start',
 };
 
 export const Stack = forwardRef<HTMLDivElement, StackProps>((props, ref) => {

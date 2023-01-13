@@ -18,7 +18,7 @@ function Demo() {
     },
 
     validate: {
-      name: hasLength({ min: 2, max: 10 }, 'Name must be 2-22 characters long'),
+      name: hasLength({ min: 2, max: 10 }, 'Name must be 2-10 characters long'),
       job: isNotEmpty('Enter your current job'),
       email: isEmail('Invalid email'),
       favoriteColor: matches(/^#([0-9a-f]{3}){1,2}$/, 'Enter a valid hex color'),
