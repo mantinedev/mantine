@@ -9,7 +9,7 @@ export interface PremadeControlProps
   extends DefaultProps,
     React.ComponentPropsWithoutRef<'button'> {
   /** Icon component, should support size prop */
-  icon?: React.FC<{ size: number }>;
+  icon?: React.FC<{ size: number | string }>;
 }
 
 export interface RichTextEditorControlProps extends PremadeControlProps {

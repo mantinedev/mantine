@@ -19,7 +19,7 @@ function InsertStarControl() {
       aria-label="Insert star emoji"
       title="Insert star emoji"
     >
-      <IconStar stroke={1.5} size={16} />
+      <IconStar stroke={1.5} size="1rem" />
     </RichTextEditor.Control>
   );
 }
@@ -50,7 +50,7 @@ function InsertStarControl() {
       aria-label="Insert star emoji"
       title="Insert star emoji"
     >
-      <IconStar stroke={1.5} size={16} />
+      <IconStar stroke={1.5} size="1rem" />
     </RichTextEditor.Control>
   );
 }
