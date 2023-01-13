@@ -35,6 +35,8 @@ export interface TransitionProps {
   onEntered?: () => void;
 }
 
+export type TransitionOverride = Partial<Omit<TransitionProps, 'mounted'>>;
+
 export function Transition({
   transition,
   duration = 250,

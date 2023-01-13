@@ -17,7 +17,7 @@ import { DatePickerInput } from './DatePickerInput';
 
 const defaultProps = {
   popoverProps: { withinPortal: false, transitionDuration: 0 },
-  modalProps: { withinPortal: false, transitionDuration: 0 },
+  modalProps: { withinPortal: false, transitionProps: { duration: 0 } },
 };
 
 describe('@mantine/dates/DatePickerInput', () => {

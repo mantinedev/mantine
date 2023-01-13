@@ -1,3 +1,4 @@
+export { RemoveScroll } from 'react-remove-scroll';
 export { createPolymorphicComponent, packSx } from '@mantine/utils';
 export * from '@mantine/styles';
 

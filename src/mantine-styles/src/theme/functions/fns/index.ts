@@ -13,6 +13,8 @@ import { variant } from './variant/variant';
 import { primaryShade } from './primary-shade/primary-shade';
 import { primaryColor } from './primary-color/primary-color';
 import { hover } from './hover/hover';
+import { calc } from './calc/calc';
+import { sizeUnit } from './size-unit/size-unit';
 import { placeholderStyles } from './placeholder-styles/placeholder-styles';
 
 export const fns = {
@@ -35,4 +37,6 @@ export const fns = {
   gradient,
   primaryColor,
   placeholderStyles,
+  calc,
+  sizeUnit,
 };

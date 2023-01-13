@@ -7,10 +7,11 @@ export interface OverlayStylesParams {
   radius: MantineNumberSize;
   gradient: string;
   fixed: boolean;
+  zIndex: any;
 }
 
 export default createStyles(
-  (theme, { color, opacity, blur, radius, gradient, fixed }: OverlayStylesParams) => ({
+  (theme, { color, opacity, blur, radius, gradient, fixed, zIndex }: OverlayStylesParams) => ({
     root: {
       position: fixed ? 'fixed' : 'absolute',
       top: 0,
@@ -21,6 +22,7 @@ export default createStyles(
       backgroundImage: gradient,
       backdropFilter: blur ? `blur(${blur}px)` : undefined,
       borderRadius: theme.fn.radius(radius),
+      zIndex,
 
       '&[data-center]': {
         display: 'flex',

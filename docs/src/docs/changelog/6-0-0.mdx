@@ -18,9 +18,17 @@ import {
   DateInputDemos,
   ThemeDemos,
   OverlayDemos,
+  ModalDemos,
 } from '@mantine/demos';
 
-## createStyles breaking changes
+## Breaking changes
+
+The following changes are breaking. Note that although
+we've tried to include all breaking changes with migration guides in the list you still may
+experience undocumented changes. If you think that these changes worth including in this list,
+let us know by [opening an issue on GitHub](https://github.com/mantinedev/mantine/issues/new/choose).
+
+### createStyles breaking changes
 
 [createStyles](https://mantine.dev/styles/create-styles/) function no longer receives `getRef`
 as a third argument. Use `getStylesRef` exported from `@mantine/core` package instead:
@@ -43,7 +51,7 @@ createStyles((theme, params) => {
 });
 ```
 
-## @mantine/notifications breaking changes
+### @mantine/notifications breaking changes
 
 [@mantine/notifications](https://mantine.dev/others/notifications/) package no longer exports
 `NotificationsProvider` component. Instead you should add `Notifications` component to any
@@ -64,13 +72,13 @@ function Demo() {
 }
 ```
 
-## @mantine/rte package deprecation
+### @mantine/rte package deprecation
 
 `@mantine/rte` package is deprecated – it will no longer receive updates (last version will remain 5.x)
 and it may no longer be compatible with `@mantine/core` and `@mantine/hooks` packages (6.x and later versions).
 Migrate to [@mantine/tiptap](https://mantine.dev/others/tiptap/) as soon as possible.
 
-## @mantine/dates breaking changes
+### @mantine/dates breaking changes
 
 All components from `@mantine/dates` package were rebuilt from scratch.
 Note that the following list is not full as it is difficult to include all breaking changes
@@ -87,7 +95,7 @@ all breaking changes.
 - `DatePickerInput` (previously `DatePicker`) component no longer supports `allowFreeInput` prop – use [DateInput](https://mantine.dev/dates/date-input/) component instead
 - `DatePicker` (previously `Calendar`) component no longer supports `dayClassName` and `dayStyle` props – use `getDayProps` instead
 
-## Theme object changes
+### Theme object changes
 
 You can no longer define `dateFormat` and `datesLocale` in [theme](https://mantine.dev/theming/theme-object/),
 use components prop to specify format instead:
@@ -112,7 +120,32 @@ function Demo() {
 }
 ```
 
-## Other breaking changes
+### Modal and Drawer breaking changes
+
+[Modal](https://mantine.dev/core/modal/) and [Drawer](https://mantine.dev/core/drawer/) components
+props were renamed:
+
+- `withFocusReturn` → `returnFocus`
+- `overflow` → `scrollAreaComponent` (scroll now is always handled inside modal/drawer)
+- `overlayBlur` → `overlayProps.blur`
+- `overlayColor` → `overlayProps.color`
+- `overlayOpacity` → `overlayProps.opacity`
+- `exitTransitionDuration` → `transitionProps.exitDuration`
+- `transition` → `transitionProps.transition`
+- `transitionDuration` → `transitionProps.transition`
+- `transitionTimingFunction` → `transitionProps.timingFunction`
+
+`Modal` styles API changes:
+
+- `root` selector was removed – root element is no longer rendered
+- `modal` selector was renamed to `content`
+
+`Drawer` styles API changes:
+
+- `root` selector was removed – root element is no longer rendered
+- `drawer` selector was renamed to `content`
+
+### Other breaking changes
 
 - [Text](https://mantine.dev/core/text/) no longer supports `variant="link"`, use [Anchor](https://mantine.dev/core/anchor/) instead
 - [Input](https://mantine.dev/core/input/) Styles API was changed – `disabled`, `invalid` and `withIcon` selectors are no longer available, they were migrated to `data-disabled`, `data-invalid` and `data-with-icon` attributes
@@ -123,6 +156,7 @@ function Demo() {
 - [Checkbox.Group](https://mantine.dev/core/checkbox/), [Switch.Group](https://mantine.dev/core/switch/) and [Radio.Group](https://mantine.dev/core/radio/) components no longer include [Group](https://mantine.dev/core/group/) – `orientation`, `offset` and `spacing` props are no longer supported. This change gives you more freedom on how to organize inputs layout.
 - [Chip.Group](https://mantine.dev/core/chip/) no longer includes `Group` – you need to manage layout on your side
 - [List](https://mantine.dev/core/list/) component Styles API was changed, it no longer has `withIcon` selector, use `data-with-icon` attribute instead
+- `withFocusReturn` prop was renamed to `returnFocus` in [Modal](https://mantine.dev/core/modal/) and [Drawer](https://mantine.dev/core/drawer/) components
 
 ## Variants and sizes on MantineProvider
 
@@ -199,6 +233,31 @@ components exported from `@mantine/dates` package:
 - New `fixed` prop controls `position`, when it is set `position: fixed`, when it is not set `position: absolute`
 
 <Demo data={OverlayDemos.blur} />
+
+## Modal and Drawer components improvements
+
+### Modular components
+
+[Modal](https://mantine.dev/core/modal/) and [Drawer](https://mantine.dev/core/drawer/) components
+now expose modular components that can be used to build custom modals and drawers. This feature
+allows you to have full control over the component rendering. Previous approach with single
+`Modal`/`Drawer` component will still work the same way as before.
+
+<Demo data={ModalDemos.composition} />
+
+### Built in ScrollArea
+
+[Modal](https://mantine.dev/core/modal/) and [Drawer](https://mantine.dev/core/drawer/) components
+now use [ScrollArea](https://mantine.dev/core/scroll-area/) component to handle scroll:
+
+<Demo data={ModalDemos.overflow} />
+
+### Modal offset
+
+[Modal](https://mantine.dev/core/modal/) component now supports `xOffset` and `yOffset` props
+to control vertical and horizontal offsets of the modal content:
+
+<Demo data={ModalDemos.offset} />
 
 ## Other changes
 

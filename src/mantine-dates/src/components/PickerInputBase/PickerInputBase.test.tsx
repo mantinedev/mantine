@@ -12,7 +12,7 @@ const defaultProps: PickerInputBaseProps = {
   formattedValue: 'test-value',
   __staticSelector: 'PickerInputBase',
   children: 'test-children',
-  modalProps: { withinPortal: false, transitionDuration: 0 },
+  modalProps: { withinPortal: false, transitionProps: { duration: 0 } },
   popoverProps: { transitionDuration: 0 },
   onClear: noop,
   shouldClear: true,
@@ -60,12 +60,12 @@ describe('@mantine/dates/PickerInputBase', () => {
     );
 
     expect(container.querySelector('.mantine-Popover-dropdown')).toBeInTheDocument();
-    expect(container.querySelector('.mantine-Modal-root')).not.toBeInTheDocument();
+    expect(container.querySelector('.mantine-Modal-content')).not.toBeInTheDocument();
     expect(screen.getByText('test-children')).toBeInTheDocument();
 
     rerender(<PickerInputBase {...defaultProps} dropdownOpened dropdownType="modal" />);
     expect(container.querySelector('.mantine-Popover-dropdown')).not.toBeInTheDocument();
-    expect(container.querySelector('.mantine-Modal-root')).toBeInTheDocument();
+    expect(container.querySelector('.mantine-Modal-content')).toBeInTheDocument();
     expect(screen.getByText('test-children')).toBeInTheDocument();
   });
 

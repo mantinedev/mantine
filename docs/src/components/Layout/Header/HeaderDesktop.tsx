@@ -1,7 +1,7 @@
 /* eslint-disable import/no-relative-packages */
 import React from 'react';
 import { IconChevronDown, IconExternalLink } from '@tabler/icons';
-import { Code, Menu, UnstyledButton, Text } from '@mantine/core';
+import { Code, Menu, UnstyledButton, Text, RemoveScroll } from '@mantine/core';
 import { useSpotlight } from '@mantine/spotlight';
 import { HeaderControls } from '@mantine/ds';
 import corePackageJson from '../../../../../package.json';
@@ -17,7 +17,7 @@ const versions = [
 ];
 
 export function HeaderDesktop() {
-  const { classes } = useStyles();
+  const { classes, cx } = useStyles();
   const { dir, toggleDirection } = useDirectionContext();
   const spotlight = useSpotlight();
 
@@ -37,7 +37,7 @@ export function HeaderDesktop() {
   ));
 
   return (
-    <div className={classes.header}>
+    <div className={cx(classes.header, RemoveScroll.classNames.fullWidth)}>
       <div className={classes.mainSection}>
         <div className={classes.logoWrapper}>
           <div className={classes.logo}>

@@ -1,49 +1,48 @@
-import React, { useState } from 'react';
-import { MantineDemo } from '@mantine/ds';
+import React from 'react';
+import { useDisclosure } from '@mantine/hooks';
 import { Modal, Group, Button } from '@mantine/core';
+import { MantineDemo } from '@mantine/ds';
 
 const code = `
-// (default) – overflow is handled by modal wrapper
-<Modal overflow="outside" />
-
-// overflow is handled by modal body
-<Modal overflow="inside" />
-`;
+import { useDisclosure } from '@mantine/hooks';
+import { Modal, Group, Button } from '@mantine/core';
 
 function Demo() {
-  const [insideOpened, setInsideOpened] = useState(false);
-  const [outsideOpened, setOutsideOpened] = useState(false);
+  const [opened, { open, close }] = useDisclosure(false);
+
   const content = Array(100)
     .fill(0)
-    .map((_, index) => <p key={index}>React is not a framework</p>);
+    .map((_, index) => <p key={index}>Modal with scroll</p>);
 
   return (
     <>
-      <Modal
-        opened={outsideOpened}
-        onClose={() => setOutsideOpened(false)}
-        title="Please consider this"
-        overflow="outside"
-      >
-        {content}
-      </Modal>
-
-      <Modal
-        opened={insideOpened}
-        onClose={() => setInsideOpened(false)}
-        title="Please consider this"
-        overflow="inside"
-      >
+      <Modal opened={opened} onClose={close} title="Header is sticky">
         {content}
       </Modal>
 
       <Group position="center">
-        <Button onClick={() => setOutsideOpened(true)} color="pink">
-          Outside overflow
-        </Button>
-        <Button onClick={() => setInsideOpened(true)} color="cyan">
-          Inside overflow
-        </Button>
+        <Button onClick={open}>Open modal</Button>
+      </Group>
+    </>
+  );
+}
+`;
+
+function Demo() {
+  const [opened, { open, close }] = useDisclosure(false);
+
+  const content = Array(100)
+    .fill(0)
+    .map((_, index) => <p key={index}>Modal with scroll</p>);
+
+  return (
+    <>
+      <Modal opened={opened} onClose={close} title="Header is sticky">
+        {content}
+      </Modal>
+
+      <Group position="center">
+        <Button onClick={open}>Open modal</Button>
       </Group>
     </>
   );
@@ -51,6 +50,6 @@ function Demo() {
 
 export const overflow: MantineDemo = {
   type: 'demo',
-  component: Demo,
   code,
+  component: Demo,
 };
