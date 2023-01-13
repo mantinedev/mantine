@@ -8,7 +8,7 @@ export interface ToolbarStylesParams {
 export default createStyles((theme, { sticky, stickyOffset }: ToolbarStylesParams) => ({
   toolbar: {
     position: sticky ? 'sticky' : 'static',
-    top: sticky ? stickyOffset : undefined,
+    top: sticky ? rem(stickyOffset) : undefined,
     padding: `${theme.spacing.xs} ${theme.spacing.md}`,
     backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.white,
     zIndex: 1,
