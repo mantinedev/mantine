@@ -73,6 +73,7 @@ export * as OverlayDemos from './demos/core/Overlay';
 export * as PaginationDemos from './demos/core/Pagination';
 export * as PaperDemos from './demos/core/Paper';
 export * as PasswordInputDemos from './demos/core/PasswordInput';
+export * as PinInputDemos from './demos/core/PinInput';
 export * as PopoverDemos from './demos/core/Popover';
 export * as ProgressDemos from './demos/core/Progress';
 export * as RadioDemos from './demos/core/Radio';
@@ -91,6 +92,7 @@ export * as StepperDemos from './demos/core/Stepper';
 export * as SwitchDemos from './demos/core/Switch';
 export * as TableDemos from './demos/core/Table';
 export * as TabsDemos from './demos/core/Tabs';
+export * as TagInputDemos from './demos/core/TagInput';
 export * as TextDemos from './demos/core/Text';
 export * as TextareaDemos from './demos/core/Textarea';
 export * as TextInputDemos from './demos/core/TextInput';
@@ -116,10 +118,6 @@ export * as NProgressDemos from './demos/nprogress';
 export * as CarouselDemos from './demos/carousel';
 export * as MantineLogoDemos from './demos/logo';
 export * as TipTapDemos from './demos/tiptap';
-
-// @mantine/labs
-export * as PinInputDemos from './demos/labs/PinInput';
-export * as TagInputDemos from './demos/labs/TagInput';
 
 // @mantine/dates
 export * as YearPickerDemos from './demos/dates/YearPicker';

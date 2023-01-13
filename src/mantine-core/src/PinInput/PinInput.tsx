@@ -1,15 +1,10 @@
 import React, { forwardRef, useRef, useEffect, useState } from 'react';
 import { useUncontrolled, useId } from '@mantine/hooks';
-import {
-  DefaultProps,
-  MantineNumberSize,
-  MantineSize,
-  MantineColor,
-  Group,
-  Input,
-  InputSharedProps,
-  InputStylesNames,
-} from '@mantine/core';
+import { DefaultProps, MantineNumberSize, MantineSize, MantineColor } from '@mantine/styles';
+
+import { Group } from '../Group';
+import { Input, InputSharedProps, InputStylesNames } from '../Input';
+
 import useStyles from './PinInput.styles';
 import { createPinArray } from './create-pin-array/create-pin-array';
 import { regex } from './regex/regex';

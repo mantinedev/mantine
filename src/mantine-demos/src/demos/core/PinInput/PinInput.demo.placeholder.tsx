@@ -1,6 +1,6 @@
 import React from 'react';
 import { MantineDemo } from '@mantine/ds';
-import { PinInput } from '@mantine/labs';
+import { PinInput } from '@mantine/core';
 
 function Demo() {
   return <PinInput length={4} placeholder="⭐️" />;

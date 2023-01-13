@@ -1,32 +1,30 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { MantineDemo } from '@mantine/ds';
-import { TagInput } from '@mantine/labs';
+import { TagInput } from '@mantine/core';
 
 const code = `
 <TagInput
   label="Technologies that you're interested in"
   placeholder="Add as many as you like"
-  clearable
-  value={value}
-  onChange={(item) => setValue(item)}
+  defaultValue={['react', 'next']}
+  onlyUnique
 />
 `;
 
 function Demo() {
-  const [value, setValue] = useState(['React']);
   return (
     <div style={{ maxWidth: 400, marginLeft: 'auto', marginRight: 'auto' }}>
       <TagInput
         label="Technologies that you're interested in"
         placeholder="Add as many as you like"
-        value={value}
-        onChange={(item) => setValue(item)}
+        defaultValue={['react', 'next']}
+        onlyUnique
       />
     </div>
   );
 }
 
-export const controlable: MantineDemo = {
+export const onlyUnique: MantineDemo = {
   type: 'demo',
   code,
   component: Demo,

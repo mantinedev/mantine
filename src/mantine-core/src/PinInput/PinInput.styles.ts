@@ -1,4 +1,4 @@
-import { createStyles, MantineNumberSize, getSize } from '@mantine/core';
+import { createStyles, MantineNumberSize, getSize } from '@mantine/styles';
 
 interface PinInputStyles {
   size: MantineNumberSize;

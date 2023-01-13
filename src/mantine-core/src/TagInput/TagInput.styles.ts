@@ -1,4 +1,5 @@
-import { createStyles, MantineSize, INPUT_SIZES, getSize } from '@mantine/core';
+import { createStyles, MantineSize, getSize } from '@mantine/styles';
+import { INPUT_SIZES } from '../Input';
 
 interface TagInputStyles {
   size: MantineSize;

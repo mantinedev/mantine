@@ -1,16 +1,10 @@
 import React, { useState, useRef, forwardRef } from 'react';
 import { useUncontrolled, useMergedRef, useId } from '@mantine/hooks';
-import {
-  DefaultProps,
-  MantineSize,
-  Selectors,
-  InputWrapperStylesNames,
-  Input,
-  InputStylesNames,
-  CloseButton,
-  extractSystemStyles,
-  BaseSelectProps,
-} from '@mantine/core';
+import { DefaultProps, MantineSize, Selectors } from '@mantine/styles';
+import { Input } from '../Input';
+import { extractSystemStyles } from '../Box';
+import { CloseButton } from '../CloseButton';
+import { BaseSelectProps, BaseSelectStylesNames } from '../Select/types';
 import { DefaultValue, DefaultValueStylesNames } from './DefaultValue/DefaultValue';
 import useStyles from './TagInput.styles';
 
@@ -20,8 +14,16 @@ export type TagInputStylesNames =
       Selectors<typeof useStyles>,
       'tagInputEmpty' | 'tagInputInputHidden' | 'tagInputPointer'
     >
-  | InputStylesNames
-  | InputWrapperStylesNames;
+  | Exclude<
+      BaseSelectStylesNames,
+      | 'selected'
+      | 'item'
+      | 'nothingFound'
+      | 'separator'
+      | 'separatorLabel'
+      | 'itemsWrapper'
+      | 'dropdown'
+    >;
 export interface TagInputProps extends DefaultProps<TagInputStylesNames>, BaseSelectProps {
   /** Input size */
   size?: MantineSize;
@@ -379,4 +381,4 @@ export const TagInput = forwardRef<HTMLInputElement, TagInputProps>(
   }
 );
 
-TagInput.displayName = '@mantine/labs/TagInput';
+TagInput.displayName = '@mantine/core/TagInput';
