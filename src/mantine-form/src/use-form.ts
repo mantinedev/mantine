@@ -1,4 +1,4 @@
-import { useState, useCallback, useRef } from 'react';
+import { useState, useCallback, useRef, useEffect } from 'react';
 import isEqual from 'fast-deep-equal';
 import { getInputOnChange } from './get-input-on-change';
 import { setPath, reorderPath, insertPath, getPath, removePath } from './paths';
@@ -42,6 +42,7 @@ export function useForm<
   clearInputErrorOnChange = true,
   validateInputOnChange = false,
   validateInputOnBlur = false,
+  revaluateInitialValues = false,
   transformValues = ((values: Values) => values) as any,
   validate: rules,
 }: UseFormInput<Values, TransformValues> = {}): UseFormReturnType<Values, TransformValues> {
@@ -65,14 +66,19 @@ export function useForm<
       _setErrors((current) => filterErrors(typeof errs === 'function' ? errs(current) : errs)),
     []
   );
-
   const clearErrors: ClearErrors = useCallback(() => _setErrors({}), []);
   const reset: Reset = useCallback(() => {
     _setValues(initialValues);
     clearErrors();
     resetDirty(initialValues);
     resetTouched();
-  }, []);
+  }, [revaluateInitialValues ? initialValues : undefined]);
+
+  useEffect(() => {
+    if (revaluateInitialValues && values !== initialValues) {
+      reset();
+    }
+  }, [revaluateInitialValues, initialValues]);
 
   const setFieldError: SetFieldError<Values> = useCallback(
     (path, error) => setErrors((current) => ({ ...current, [path]: error })),
@@ -211,10 +217,13 @@ export function useForm<
       }
     };
 
-  const onReset: OnReset = useCallback((event) => {
-    event.preventDefault();
-    reset();
-  }, []);
+  const onReset: OnReset = useCallback(
+    (event) => {
+      event.preventDefault();
+      reset();
+    },
+    [revaluateInitialValues ? initialValues : undefined]
+  );
 
   const isDirty: GetFieldStatus<Values> = (path) => {
     const isOverridden = Object.keys(dirty).length > 0;

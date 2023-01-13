@@ -120,6 +120,7 @@ export interface UseFormInput<
   clearInputErrorOnChange?: boolean;
   validateInputOnChange?: boolean | LooseKeys<Values>[];
   validateInputOnBlur?: boolean | LooseKeys<Values>[];
+  revaluateInitialValues?: boolean;
 }
 
 export interface UseFormReturnType<
