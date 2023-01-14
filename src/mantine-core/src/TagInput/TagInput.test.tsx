@@ -13,13 +13,11 @@ import { TagInput, TagInputProps } from './TagInput';
 const defaultProps: TagInputProps = {
   label: 'test-tag-input',
   defaultValue: ['react', 'ng'],
-  placeholder: 'Input Tag',
-  id: 'test-tag-input',
 };
 
 describe('@mantine/core/TagInput', () => {
   checkAccessibility([<TagInput {...defaultProps} />]);
-  itSupportsFocusEvents(TagInput, defaultProps, '#test-tag-input');
+  itSupportsFocusEvents(TagInput, defaultProps, 'input');
   itSupportsInputIcon(TagInput, defaultProps);
   itSupportsInputRightSection(TagInput, defaultProps);
   itSupportsWrapperProps(TagInput, defaultProps);
@@ -29,6 +27,7 @@ describe('@mantine/core/TagInput', () => {
     props: defaultProps,
     displayName: '@mantine/core/TagInput',
     refType: HTMLInputElement,
-    excludeOthers: true,
+    othersSelector: 'input',
+    providerName: 'TagInput',
   });
 });

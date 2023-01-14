@@ -1,4 +1,4 @@
-import { createStyles, MantineSize, getSize } from '@mantine/styles';
+import { createStyles, MantineSize, getSize, rem } from '@mantine/styles';
 import { INPUT_SIZES } from '../Input';
 
 interface TagInputStyles {
@@ -6,44 +6,37 @@ interface TagInputStyles {
   invalid: boolean;
 }
 
-export const RIGHT_SECTION_WIDTH = {
-  xs: 24,
-  sm: 30,
-  md: 34,
-  lg: 44,
-  xl: 54,
-};
-
 export default createStyles((theme, { size, invalid }: TagInputStyles) => ({
   wrapper: {
     position: 'relative',
+    cursor: 'text',
   },
 
   values: {
-    minHeight: getSize({ size, sizes: INPUT_SIZES }),
+    minHeight: `calc(${getSize({ size, sizes: INPUT_SIZES })} - ${rem(2)})`,
     display: 'flex',
     alignItems: 'center',
     flexWrap: 'wrap',
-    marginLeft: `calc(-1 * ${theme.spacing.xs}px / 2)`,
-    paddingTop: `calc(${theme.spacing.xs}px / 2 - 2px)`,
-    paddingBottom: `calc(${theme.spacing.xs}px / 2 - 2px)`,
+    marginLeft: `calc(-1 * ${theme.spacing.xs} / 2)`,
+    paddingTop: `calc(${theme.spacing.xs} / 2 - ${rem(2)})`,
+    paddingBottom: `calc(${theme.spacing.xs} / 2 - ${rem(2)})`,
     boxSizing: 'border-box',
+    cursor: 'text',
   },
 
   value: {
-    margin: `calc(${theme.spacing.xs}px / 2 - 2px) calc(${theme.spacing.xs}px / 2)`,
+    margin: `calc(${theme.spacing.xs} / 2 - ${rem(2)}) calc(${theme.spacing.xs} / 2)`,
   },
 
   tagInput: {
-    width: 60,
+    width: rem(60),
     backgroundColor: 'transparent',
     border: 0,
     outline: 0,
     fontSize: getSize({ size, sizes: theme.fontSizes }),
     padding: 0,
-    margin: `calc(${theme.spacing.xs}px / 2)`,
-    appearance: 'none',
-    color: 'inherit',
+    margin: `calc(${theme.spacing.xs} / 2)`,
+    cursor: 'text',
 
     '&::placeholder': {
       color: invalid
@@ -56,30 +49,17 @@ export default createStyles((theme, { size, invalid }: TagInputStyles) => ({
     '&:disabled': {
       cursor: 'not-allowed',
     },
-  },
 
-  tagInputEmpty: {
-    width: '100%',
-  },
-
-  tagInputInputHidden: {
-    width: 0,
-    height: 0,
-    margin: 0,
-    overflow: 'hidden',
-  },
-
-  tagInputPointer: {
-    cursor: 'pointer',
-
-    '&:disabled': {
-      cursor: 'not-allowed',
+    '&[data-empty]': {
+      width: '100%',
     },
   },
 
   input: {
-    '&:not(:disabled)': {
-      cursor: 'pointer',
-    },
+    cursor: 'text',
+  },
+
+  inputWrapper: {
+    cursor: 'text',
   },
 }));

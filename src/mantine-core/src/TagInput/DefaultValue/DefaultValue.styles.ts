@@ -7,19 +7,19 @@ interface DefaultLabelStyles {
 }
 
 const sizes = {
-  xs: 16,
-  sm: 22,
-  md: 26,
-  lg: 30,
-  xl: 36,
+  xs: rem(16),
+  sm: rem(20),
+  md: rem(26),
+  lg: rem(30),
+  xl: rem(36),
 };
 
 const fontSizes = {
-  xs: 10,
-  sm: 12,
-  md: 14,
-  lg: 16,
-  xl: 18,
+  xs: rem(10),
+  sm: rem(12),
+  md: rem(14),
+  lg: rem(16),
+  xl: rem(18),
 };
 
 export default createStyles((theme, { size, disabled, radius }: DefaultLabelStyles) => ({
@@ -42,11 +42,11 @@ export default createStyles((theme, { size, disabled, radius }: DefaultLabelStyl
       : theme.colors.gray[7],
     lineHeight: 1,
     height: getSize({ size, sizes }),
-    paddingLeft: getSize({ size, sizes: theme.spacing }),
-    paddingRight: disabled ? getSize({ size, sizes: theme.spacing }) : 0,
+    paddingLeft: `calc(${getSize({ size, sizes: theme.spacing })} / 1.5)`,
+    paddingRight: disabled ? `calc(${getSize({ size, sizes: theme.spacing })} / 1.5)` : 0,
     fontWeight: 500,
     fontSize: getSize({ size, sizes: fontSizes }),
-    borderRadius: getSize({ size: radius, sizes: theme.radius }),
+    borderRadius: theme.fn.radius(radius),
     cursor: disabled ? 'not-allowed' : 'default',
     userSelect: 'none',
     maxWidth: `calc(100% - ${rem(20)})`,
@@ -58,8 +58,11 @@ export default createStyles((theme, { size, disabled, radius }: DefaultLabelStyl
 
   label: {
     display: 'block',
+    height: '100%',
+    lineHeight: getSize({ size, sizes }),
     overflow: 'hidden',
     textOverflow: 'ellipsis',
     whiteSpace: 'nowrap',
+    marginRight: rem(2),
   },
 }));

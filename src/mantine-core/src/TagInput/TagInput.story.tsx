@@ -3,7 +3,6 @@ import { MANTINE_SIZES } from '@mantine/styles';
 import { Stack } from '../Stack';
 import { TextInput } from '../TextInput';
 import { Group } from '../Group';
-
 import { TagInput } from './TagInput';
 
 export default { title: 'TagInput' };
@@ -27,7 +26,6 @@ export function Sizes() {
         <Stack key={size} style={{ marginTop: 30 }}>
           <TagInput
             size={size}
-            variant="unstyled"
             label="Tag Input"
             defaultValue={['react', 'ng']}
             placeholder="Input Tag"
@@ -70,6 +68,7 @@ export function Alignment() {
     </>
   );
 }
+
 export function MaxSelected() {
   return (
     <Group style={{ padding: 40, paddingBottom: 0 }} grow align="flex-start">
