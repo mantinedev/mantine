@@ -12,7 +12,7 @@ import { createPinArray } from './create-pin-array/create-pin-array';
 import useStyles from './PinInput.styles';
 
 const regex = {
-  numeric: /^[0-9]+$/,
+  number: /^[0-9]+$/,
   alphanumeric: /^[a-zA-Z0-9]+$/i,
 };
 
@@ -28,55 +28,55 @@ export interface PinInputProps
   /** Hidden input form attribute */
   form?: string;
 
-  /** Spacing between inputs */
+  /** Key of theme.spacing or any valid CSS value to set spacing between inputs */
   spacing?: MantineNumberSize;
 
-  /** Input border radius */
-  radius?: MantineSize;
+  /** Key of theme.radius or any valid CSS value to set border-radius, theme.defaultRadius by default */
+  radius?: MantineNumberSize;
 
-  /** Predefined label fontSize, radio width, height and border-radius */
+  /** Input width and height */
   size?: MantineSize;
 
-  /** If `true`, the pin input receives focus on mount */
+  /** If set, first input is focused when component is mounted */
   autoFocus?: boolean;
 
-  /** The value of the the pin input */
+  /** Value for controlled component */
   value?: string;
 
-  /** Initial value for uncontrolled component */
+  /** Default value for uncontrolled component */
   defaultValue?: string;
 
-  /** Function called on input change */
+  /** Called when value changes */
   onChange?: (value: string) => void;
 
-  /** Function called when all inputs have valid values */
-  onComplete?: (value: string) => void;
+  /** Called when user enters value to all inputs */
+  onComplete?(value: string): void;
 
-  /** The placeholder for the pin input */
+  /** Placeholder for every input field */
   placeholder?: string;
 
-  /** If `true`, focus will move automatically to the next input once filled */
+  /** Determines whether focus should be moved automatically to the next input once filled */
   manageFocus?: boolean;
 
-  /** If `true`, the pin input component signals to its fields that they should use `autocomplete="one-time-code"`. */
+  /** Determines whether autocomplete="one-time-code" attribute should be set on all inputs */
   oneTimeCode?: boolean;
 
-  /** The top-level id string that will be applied to the input fields */
+  /** The top-level id that is used as a base in all input fields */
   id?: string;
 
-  /** input disabled state */
+  /** Sets inputs disabled attribute */
   disabled?: boolean;
 
-  /** input invalid state */
-  invalid?: boolean;
+  /** Adds error styles to all inputs */
+  error?: boolean;
 
-  /** The type of values the pin-input should allow */
+  /** The type of allowed values */
   type?: 'alphanumeric' | 'number' | RegExp;
 
-  /** If `true`, the input's value will be masked just like `type=password` */
+  /** Changes input type to "password" */
   mask?: boolean;
 
-  /** amount of input boxes */
+  /** Number of input boxes */
   length?: number;
 }
 
@@ -108,7 +108,7 @@ export const PinInput = forwardRef<HTMLDivElement, PinInputProps>((props, ref) =
     onComplete,
     manageFocus,
     autoFocus,
-    invalid,
+    error,
     radius,
     disabled,
     oneTimeCode,
@@ -134,26 +134,8 @@ export const PinInput = forwardRef<HTMLDivElement, PinInputProps>((props, ref) =
   const inputsRef = useRef<Array<HTMLInputElement>>([]);
 
   const validate = (code: string) => {
-    let matcher: RegExp;
-
-    switch (type) {
-      case 'alphanumeric':
-        matcher = regex.alphanumeric;
-        break;
-
-      case 'number':
-        matcher = regex.numeric;
-        break;
-
-      default:
-        if (type instanceof RegExp) {
-          matcher = type;
-        } else {
-          throw new Error('[@mantine/core] PinInput: Invalid regex format');
-        }
-    }
-
-    return matcher.test(code);
+    const re = type instanceof RegExp ? type : type in regex ? regex[type] : null;
+    return re?.test(code);
   };
 
   const focusInputField = (dir: 'next' | 'prev', index: number) => {
@@ -237,6 +219,7 @@ export const PinInput = forwardRef<HTMLDivElement, PinInputProps>((props, ref) =
         sx={sx}
         unstyled={unstyled}
         id={uuid}
+        noWrap
         {...others}
       >
         {createPinArray(length, _value).map((char, index) => (
@@ -252,7 +235,7 @@ export const PinInput = forwardRef<HTMLDivElement, PinInputProps>((props, ref) =
             onPaste={handlePaste}
             type={mask ? 'password' : type === 'number' ? 'tel' : 'text'}
             radius={radius}
-            error={invalid}
+            error={error}
             variant={variant}
             size={size}
             disabled={disabled}

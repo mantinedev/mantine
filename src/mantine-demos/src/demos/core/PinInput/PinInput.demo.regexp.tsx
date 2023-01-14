@@ -8,7 +8,7 @@ import { PinInput, Group } from '@mantine/core';
 function Demo() {
   return (
     <Group position="center">
-      <PinInput />
+      <PinInput type={/^[0-3]+/} />
     </Group>
   );
 }
@@ -17,12 +17,12 @@ function Demo() {
 function Demo() {
   return (
     <Group position="center">
-      <PinInput />
+      <PinInput type={/^[0-3]+/} />
     </Group>
   );
 }
 
-export const usage: MantineDemo = {
+export const regexp: MantineDemo = {
   type: 'demo',
   component: Demo,
   code,

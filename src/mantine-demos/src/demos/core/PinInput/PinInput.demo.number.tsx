@@ -8,7 +8,7 @@ import { PinInput, Group } from '@mantine/core';
 function Demo() {
   return (
     <Group position="center">
-      <PinInput />
+      <PinInput type="number" />
     </Group>
   );
 }
@@ -17,12 +17,12 @@ function Demo() {
 function Demo() {
   return (
     <Group position="center">
-      <PinInput />
+      <PinInput type="number" />
     </Group>
   );
 }
 
-export const usage: MantineDemo = {
+export const number: MantineDemo = {
   type: 'demo',
   component: Demo,
   code,
