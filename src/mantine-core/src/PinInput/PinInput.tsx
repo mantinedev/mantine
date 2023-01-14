@@ -1,11 +1,20 @@
-import React, { forwardRef, useRef, useEffect, useState } from 'react';
+import React, { forwardRef, useRef, useState } from 'react';
 import { useUncontrolled, useId } from '@mantine/hooks';
-import { DefaultProps, MantineNumberSize, MantineSize, MantineColor } from '@mantine/styles';
+import {
+  DefaultProps,
+  MantineNumberSize,
+  MantineSize,
+  useComponentDefaultProps,
+} from '@mantine/styles';
 import { Group } from '../Group';
 import { Input, InputSharedProps, InputStylesNames } from '../Input';
 import { createPinArray } from './create-pin-array/create-pin-array';
-import { regex } from './regex/regex';
 import useStyles from './PinInput.styles';
+
+const regex = {
+  numeric: /^[0-9]+$/,
+  alphanumeric: /^[a-zA-Z0-9]+$/i,
+};
 
 export type PinInputStylesNames = InputStylesNames;
 
@@ -13,14 +22,14 @@ export interface PinInputProps
   extends DefaultProps<PinInputStylesNames>,
     InputSharedProps,
     Omit<React.ComponentPropsWithoutRef<'div'>, 'onChange'> {
-  /** Input name attribute, used to bind inputs in one group, by default generated randomly with use-id hook */
+  /** Hidden input name attribute */
   name?: string;
+
+  /** Hidden input form attribute */
+  form?: string;
 
   /** Spacing between inputs */
   spacing?: MantineNumberSize;
-
-  /** Active input color from theme.colors */
-  color?: MantineColor;
 
   /** Input border radius */
   radius?: MantineSize;
@@ -71,187 +80,199 @@ export interface PinInputProps
   length?: number;
 }
 
-export const PinInput = forwardRef<HTMLDivElement, PinInputProps>(
-  (
-    {
-      name,
-      className,
-      value,
-      defaultValue,
-      variant,
-      spacing = 'sm',
-      color,
-      size = 'sm',
-      classNames,
-      styles,
-      sx,
-      length = 4,
-      onChange,
-      onComplete,
-      manageFocus = true,
-      autoFocus = false,
-      invalid,
-      radius = 'md',
-      disabled,
-      oneTimeCode,
-      placeholder = '●',
-      type = 'alphanumeric',
-      mask,
-      ...others
-    }: PinInputProps,
-    ref
-  ) => {
-    const uuid = useId(name);
-    const { classes } = useStyles({ size }, { classNames, styles, name: 'PinInput' });
+const defaultProps: Partial<PinInputProps> = {
+  spacing: 'sm',
+  size: 'sm',
+  length: 4,
+  manageFocus: true,
+  placeholder: '○',
+  type: 'alphanumeric',
+};
 
-    const [focusedIndex, setFocusedIndex] = useState(-1);
+export const PinInput = forwardRef<HTMLDivElement, PinInputProps>((props, ref) => {
+  const {
+    name,
+    form,
+    className,
+    value,
+    defaultValue,
+    variant,
+    spacing,
+    size,
+    classNames,
+    styles,
+    unstyled,
+    sx,
+    length,
+    onChange,
+    onComplete,
+    manageFocus,
+    autoFocus,
+    invalid,
+    radius,
+    disabled,
+    oneTimeCode,
+    placeholder,
+    type,
+    mask,
+    'aria-label': ariaLabel,
+    ...others
+  } = useComponentDefaultProps('PinInput', defaultProps, props);
 
-    const [_value, setValues] = useUncontrolled({
-      value,
-      defaultValue,
-      finalValue: '',
-      onChange,
-    });
+  const uuid = useId(name);
+  const { classes } = useStyles({ size }, { classNames, styles, name: 'PinInput' });
 
-    const inputsRef = useRef<Array<HTMLInputElement>>([]);
+  const [focusedIndex, setFocusedIndex] = useState(-1);
 
-    const validate = (code: string) => {
-      let matcher: RegExp;
+  const [_value, setValues] = useUncontrolled({
+    value,
+    defaultValue,
+    finalValue: '',
+    onChange,
+  });
 
-      switch (type) {
-        case 'alphanumeric':
-          matcher = regex.alphanumeric;
-          break;
+  const inputsRef = useRef<Array<HTMLInputElement>>([]);
 
-        case 'number':
-          matcher = regex.numeric;
-          break;
+  const validate = (code: string) => {
+    let matcher: RegExp;
 
-        default:
-          if (type instanceof RegExp) {
-            matcher = type;
-          } else {
-            throw new Error('[@mantine/core] PinInput: Invalid regex format');
-          }
-      }
+    switch (type) {
+      case 'alphanumeric':
+        matcher = regex.alphanumeric;
+        break;
 
-      return matcher.test(code);
-    };
+      case 'number':
+        matcher = regex.numeric;
+        break;
 
-    const focusInputField = (dir: 'next' | 'prev', index: number) => {
-      if (!manageFocus) return;
-
-      if (dir === 'next') {
-        const nextIndex = index + 1;
-        inputsRef.current[nextIndex < length ? nextIndex : index].focus();
-      }
-
-      if (dir === 'prev') {
-        const nextIndex = index - 1;
-
-        inputsRef.current[nextIndex > -1 ? nextIndex : index].focus();
-      }
-    };
-
-    const setFieldValue = (val: string, index: number) => {
-      const values = [...createPinArray(length, _value)];
-      values[index] = val;
-      setValues(values.join(''));
-    };
-
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement>, index: number) => {
-      const inputValue = e.target.value;
-      const nextChar =
-        inputValue.length > 1 ? inputValue.split('')[inputValue.length - 1] : inputValue;
-
-      const isValid = validate(nextChar);
-
-      if (isValid) {
-        setFieldValue(nextChar, index);
-        const isComplete = _value.length === length;
-
-        if (isComplete) {
-          onComplete?.(_value);
+      default:
+        if (type instanceof RegExp) {
+          matcher = type;
         } else {
-          focusInputField('next', index);
+          throw new Error('[@mantine/core] PinInput: Invalid regex format');
         }
+    }
+
+    return matcher.test(code);
+  };
+
+  const focusInputField = (dir: 'next' | 'prev', index: number) => {
+    if (!manageFocus) return;
+
+    if (dir === 'next') {
+      const nextIndex = index + 1;
+      inputsRef.current[nextIndex < length ? nextIndex : index].focus();
+    }
+
+    if (dir === 'prev') {
+      const nextIndex = index - 1;
+
+      inputsRef.current[nextIndex > -1 ? nextIndex : index].focus();
+    }
+  };
+
+  const setFieldValue = (val: string, index: number) => {
+    const values = [...createPinArray(length, _value)];
+    values[index] = val;
+    setValues(values.join(''));
+  };
+
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>, index: number) => {
+    const inputValue = event.target.value;
+    const nextChar =
+      inputValue.length > 1 ? inputValue.split('')[inputValue.length - 1] : inputValue;
+
+    const isValid = validate(nextChar);
+
+    if (isValid) {
+      setFieldValue(nextChar, index);
+      const isComplete = _value.length === length;
+
+      if (isComplete) {
+        onComplete?.(_value);
       } else {
+        focusInputField('next', index);
+      }
+    } else {
+      setFieldValue('', index);
+    }
+  };
+
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>, index: number) => {
+    if (event.key === 'Backspace') {
+      if ((event.target as HTMLInputElement).value !== '') {
         setFieldValue('', index);
+      } else {
+        focusInputField('prev', index);
       }
-    };
+    }
+  };
 
-    const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>, index: number) => {
-      if (e.key === 'Backspace') {
-        const target = e.target as HTMLInputElement;
+  const handleFocus = (event: React.FocusEvent<HTMLInputElement>, index: number) => {
+    event.target.select();
+    setFocusedIndex(index);
+  };
 
-        if (target.value !== '') {
-          setFieldValue('', index);
-        } else {
-          focusInputField('prev', index);
-        }
-      }
-    };
+  const handleBlur = () => {
+    setFocusedIndex(-1);
+  };
 
-    const handleFocus = (event: React.FocusEvent<HTMLInputElement>, index: number) => {
-      event.target.select();
+  const handlePaste = (event: React.ClipboardEvent<HTMLInputElement>) => {
+    event.preventDefault();
+    const copyValue = event.clipboardData.getData('Text');
+    const isValid = validate(copyValue);
 
-      setFocusedIndex(index);
-    };
+    if (isValid) {
+      setValues(copyValue);
+    }
+  };
 
-    const handleBlur = () => {
-      setFocusedIndex(-1);
-    };
-
-    const handlePaste = (e: React.ClipboardEvent<HTMLInputElement>) => {
-      const copyValue = e.clipboardData.getData('Text');
-      const isValid = validate(copyValue);
-
-      if (isValid) {
-        setValues(copyValue);
-      }
-
-      e.preventDefault();
-    };
-
-    useEffect(() => {
-      if (autoFocus) {
-        inputsRef.current[0].focus();
-      }
-    }, []);
-
-    return (
-      <Group role="group" spacing={spacing} ref={ref} className={className} sx={sx} {...others}>
-        {createPinArray(length, _value).map((char, i) => (
+  return (
+    <>
+      <Group
+        role="group"
+        spacing={spacing}
+        ref={ref}
+        className={className}
+        sx={sx}
+        unstyled={unstyled}
+        id={uuid}
+        {...others}
+      >
+        {createPinArray(length, _value).map((char, index) => (
           <Input<'input'>
             __staticSelector="PinInput"
-            id={`${uuid}-${i + 1}`}
-            key={`${uuid}-${i}`}
+            id={`${uuid}-${index + 1}`}
+            key={`${uuid}-${index}`}
             inputMode={type === 'number' ? 'numeric' : 'text'}
-            onChange={(e) => handleChange(e, i)}
-            onKeyDown={(e) => handleKeyDown(e, i)}
-            onFocus={(e) => handleFocus(e, i)}
+            onChange={(event) => handleChange(event, index)}
+            onKeyDown={(event) => handleKeyDown(event, index)}
+            onFocus={(event) => handleFocus(event, index)}
             onBlur={handleBlur}
             onPaste={handlePaste}
             type={mask ? 'password' : type === 'number' ? 'tel' : 'text'}
             radius={radius}
             error={invalid}
-            color={color}
             variant={variant}
             size={size}
             disabled={disabled}
-            ref={(el) => {
-              inputsRef.current[i] = el;
+            ref={(node) => {
+              inputsRef.current[index] = node;
             }}
             autoComplete={oneTimeCode ? 'one-time-code' : 'off'}
-            placeholder={focusedIndex === i ? '' : placeholder}
-            classNames={classes}
+            placeholder={focusedIndex === index ? '' : placeholder}
             value={char}
+            autoFocus={autoFocus && index === 0}
+            classNames={classes}
             styles={styles}
+            unstyled={unstyled}
+            aria-label={ariaLabel}
           />
         ))}
       </Group>
-    );
-  }
-);
+      <input type="hidden" name={name} form={form} value={_value} />
+    </>
+  );
+});
 
 PinInput.displayName = '@mantine/core/PinInput';
