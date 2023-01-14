@@ -22,8 +22,7 @@
       "@mantine/form": ["../mantine-form/src"],
       "@mantine/spotlight": ["../mantine-spotlight/src"],
       "@mantine/carousel": ["../mantine-carousel/src"],
-      "@mantine/tiptap": ["../mantine-tiptap/src"],
-      "@mantine/rte": ["../mantine-rte/src"]
+      "@mantine/tiptap": ["../mantine-tiptap/src"]
     }
   },
   "references": [
@@ -38,7 +37,6 @@
     { "path": "../mantine-nprogress" },
     { "path": "../mantine-spotlight" },
     { "path": "../mantine-form" },
-    { "path": "../mantine-tiptap" },
-    { "path": "../mantine-rte" }
+    { "path": "../mantine-tiptap" }
   ]
 }

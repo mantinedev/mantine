@@ -108,7 +108,6 @@ export * as UnstyledButtonDemos from './demos/core/UnstyledButton';
 export * as DropzoneDemos from './demos/dropzone';
 export * as NotificationsDemos from './demos/notifications';
 export * as PrismDemos from './demos/prism';
-export * as RichTextEditorDemos from './demos/rte';
 export * as ModalsDemos from './demos/modals';
 export * as HooksDemos from './demos/hooks';
 export * as SpotlightDemos from './demos/spotlight';
