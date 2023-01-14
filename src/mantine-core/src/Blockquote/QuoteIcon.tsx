@@ -1,5 +1,5 @@
 import React from 'react';
-import { rem } from '@mantine/core';
+import { rem } from '@mantine/styles';
 
 export function QuoteIcon(props: React.ComponentPropsWithoutRef<'svg'>) {
   return (
