@@ -1,13 +1,16 @@
-export const createPinArray = (length: number, value: string) => {
-  const arr = new Array(length).fill('');
+export function createPinArray(length: number, value: string): string[] {
+  if (length < 1) {
+    return [];
+  }
 
-  value &&
-    value
-      .trim()
-      .split('')
-      .forEach((char, i) => {
-        arr[i] = char;
-      });
+  const values = new Array<string>(length).fill('');
 
-  return arr;
-};
+  if (value) {
+    const splitted = value.trim().split('');
+    for (let i = 0; i < Math.min(length, splitted.length); i += 1) {
+      values[i] = splitted[i];
+    }
+  }
+
+  return values;
+}

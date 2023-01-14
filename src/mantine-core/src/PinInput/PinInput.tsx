@@ -1,13 +1,11 @@
 import React, { forwardRef, useRef, useEffect, useState } from 'react';
 import { useUncontrolled, useId } from '@mantine/hooks';
 import { DefaultProps, MantineNumberSize, MantineSize, MantineColor } from '@mantine/styles';
-
 import { Group } from '../Group';
 import { Input, InputSharedProps, InputStylesNames } from '../Input';
-
-import useStyles from './PinInput.styles';
 import { createPinArray } from './create-pin-array/create-pin-array';
 import { regex } from './regex/regex';
+import useStyles from './PinInput.styles';
 
 export type PinInputStylesNames = InputStylesNames;
 
@@ -108,11 +106,11 @@ export const PinInput = forwardRef<HTMLDivElement, PinInputProps>(
 
     const [focusedIndex, setFocusedIndex] = useState(-1);
 
-    const [_values, setValues] = useUncontrolled({
-      value: createPinArray(length, value),
-      defaultValue: createPinArray(length, defaultValue),
-      finalValue: createPinArray(length, value),
-      onChange: (values) => onChange && onChange(values.join('')),
+    const [_value, setValues] = useUncontrolled({
+      value,
+      defaultValue,
+      finalValue: '',
+      onChange,
     });
 
     const inputsRef = useRef<Array<HTMLInputElement>>([]);
@@ -156,11 +154,9 @@ export const PinInput = forwardRef<HTMLDivElement, PinInputProps>(
     };
 
     const setFieldValue = (val: string, index: number) => {
-      const values = [..._values];
-
+      const values = [...createPinArray(length, _value)];
       values[index] = val;
-
-      setValues(values);
+      setValues(values.join(''));
     };
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>, index: number) => {
@@ -172,10 +168,10 @@ export const PinInput = forwardRef<HTMLDivElement, PinInputProps>(
 
       if (isValid) {
         setFieldValue(nextChar, index);
-        const isComplete = _values.join('').length === length;
+        const isComplete = _value.length === length;
 
         if (isComplete) {
-          onComplete && onComplete(_values.join(''));
+          onComplete?.(_value);
         } else {
           focusInputField('next', index);
         }
@@ -211,7 +207,7 @@ export const PinInput = forwardRef<HTMLDivElement, PinInputProps>(
       const isValid = validate(copyValue);
 
       if (isValid) {
-        setValues(createPinArray(length, copyValue));
+        setValues(copyValue);
       }
 
       e.preventDefault();
@@ -225,7 +221,7 @@ export const PinInput = forwardRef<HTMLDivElement, PinInputProps>(
 
     return (
       <Group role="group" spacing={spacing} ref={ref} className={className} sx={sx} {...others}>
-        {_values.map((char, i) => (
+        {createPinArray(length, _value).map((char, i) => (
           <Input<'input'>
             __staticSelector="PinInput"
             id={`${uuid}-${i + 1}`}
