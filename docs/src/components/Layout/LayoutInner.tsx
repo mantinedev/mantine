@@ -103,7 +103,7 @@ export function LayoutInner({ children, location }: LayoutProps) {
   return (
     <SpotlightProvider
       actions={getActions(data)}
-      searchIcon={<IconSearch size={18} />}
+      searchIcon={<IconSearch size="1.2rem" />}
       searchPlaceholder="Search documentation"
       shortcut={['mod + K', 'mod + P', '/']}
       highlightQuery
@@ -112,10 +112,12 @@ export function LayoutInner({ children, location }: LayoutProps) {
         name: randomId(),
         autoComplete: 'nope',
       }}
-      transition={{
-        in: { transform: 'translateY(0)', opacity: 1 },
-        out: { transform: `translateY(-${rem(20)})`, opacity: 0 },
-        transitionProperty: 'transform, opacity',
+      transitionProps={{
+        transition: {
+          in: { transform: 'translateY(0)', opacity: 1 },
+          out: { transform: `translateY(-${rem(20)})`, opacity: 0 },
+          transitionProperty: 'transform, opacity',
+        },
       }}
     >
       <Notifications />

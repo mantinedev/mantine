@@ -25,7 +25,10 @@ export type SpotlightStylesNames =
   | ActionsListStylesNames;
 
 export interface InnerSpotlightProps
-  extends Omit<ModalProps, 'styles' | 'classNames' | 'title' | 'withCloseButton'>,
+  extends Omit<
+      ModalProps,
+      'styles' | 'classNames' | 'title' | 'withCloseButton' | 'opened' | 'onClose'
+    >,
     DefaultProps<SpotlightStylesNames>,
     React.ComponentPropsWithoutRef<'div'> {
   variant?: string;
