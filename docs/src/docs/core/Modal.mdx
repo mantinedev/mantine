@@ -31,14 +31,14 @@ To remove header set `withCloseButton={false}`
 
 ## Change size
 
-You can change modal width by setting `size` prop to predefined size or any valid width, for example, `55%` or `200px`.
+You can change modal width by setting `size` prop to predefined size or any valid width, for example, `55%` or `50rem`.
 `Modal` width cannot exceed `100vw`.
 
 ```tsx
 <Modal size="sm" /> // -> predefined small size
-<Modal size={378} /> // -> size in px
+<Modal size={320} /> // -> size in rem –> 320 -> 20rem
 <Modal size="55%" /> // -> size in %
-<Modal size="calc(100vw - 87px)" /> // -> size with calc
+<Modal size="calc(100vw - 3rem)" /> // -> size with calc
 ```
 
 <Demo data={ModalDemos.sizes} />

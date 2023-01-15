@@ -57,7 +57,7 @@ Now you can write styles for your component with createStyles function
 or any other styling tools and languages:
 
 ```tsx
-import { Slider, createStyles } from '@mantine/core';
+import { Slider, createStyles, rem } from '@mantine/core';
 
 const useStyles = createStyles((theme) => ({
   track: {
@@ -67,7 +67,7 @@ const useStyles = createStyles((theme) => ({
     width: 6,
     height: 6,
     borderRadius: 6,
-    transform: 'translateX(-3px) translateY(-2px)',
+    transform: `translateX(-${rem(3)}) translateY(-${rem(2)})`,
     borderColor: theme.colorScheme === 'dark' ? theme.colors.dark[3] : theme.colors.blue[1],
   },
   markFilled: {
