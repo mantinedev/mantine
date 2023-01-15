@@ -16,7 +16,7 @@ export default createStyles((theme, { radius }: DefaultActionStylesParams) => ({
     }),
 
     '&[data-hovered]': {
-      backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[1],
+      backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[1],
     },
   },
 

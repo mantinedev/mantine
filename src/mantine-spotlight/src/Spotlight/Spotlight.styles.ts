@@ -5,6 +5,6 @@ export default createStyles((theme) => ({
     border: 0,
     borderBottomRightRadius: 0,
     borderBottomLeftRadius: 0,
-    backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.white,
+    backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.white,
   },
 }));
