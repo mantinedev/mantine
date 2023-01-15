@@ -251,6 +251,21 @@ props were renamed:
 - `root` selector was removed – root element is no longer rendered
 - `drawer` selector was renamed to `content`
 
+### Spotlight breaking changes
+
+[Spotlight](https://mantine.dev/others/spotlight/) component was migrated to use [Modal](https://mantine.dev/core/modal/)
+under the hood. Its Styles API selectors and some props names were changed – it now supports all [Modal](https://mantine.dev/core/modal/) component props.
+
+Renamed props:
+
+- `overlayBlur` → `overlayProps.blur`
+- `overlayColor` → `overlayProps.color`
+- `overlayOpacity` → `overlayProps.opacity`
+- `exitTransitionDuration` → `transitionProps.exitDuration`
+- `transition` → `transitionProps.transition`
+- `transitionDuration` → `transitionProps.transition`
+- `transitionTimingFunction` → `transitionProps.timingFunction`
+
 ### Other breaking changes
 
 - [Text](https://mantine.dev/core/text/) no longer supports `variant="link"`, use [Anchor](https://mantine.dev/core/anchor/) instead
