@@ -39,11 +39,12 @@ export function DefaultAction({
   radius,
   ...others
 }: DefaultActionProps) {
-  const { classes, cx } = useStyles({ radius }, { styles, classNames, name: 'Spotlight' });
+  const { classes } = useStyles({ radius }, { styles, classNames, name: 'Spotlight' });
 
   return (
     <UnstyledButton
-      className={cx(classes.action, { [classes.actionHovered]: hovered })}
+      className={classes.action}
+      data-hovered={hovered || undefined}
       tabIndex={-1}
       onMouseDown={(event) => event.preventDefault()}
       onClick={onTrigger}

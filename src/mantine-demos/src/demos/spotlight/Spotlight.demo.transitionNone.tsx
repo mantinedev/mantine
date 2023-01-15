@@ -23,7 +23,7 @@ function Demo() {
   return (
     <Wrapper
       searchIcon={<IconSearch size="1.2rem" />}
-      transitionDuration={0}
+      transitionProps={{ duration: 0 }}
       searchPlaceholder="Search..."
       shortcut="mod + shift + 2"
       buttonLabel="Open spotlight without transition"

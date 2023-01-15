@@ -14,7 +14,7 @@ export interface ActionsListProps extends DefaultProps<ActionsListStylesNames> {
   hovered: number;
   query: string;
   nothingFoundMessage?: React.ReactNode;
-  onActionHover(index: number): void;
+  onActionHover(): void;
   onActionTrigger(action: SpotlightAction): void;
   highlightQuery: boolean;
   highlightColor: MantineColor;
@@ -47,7 +47,7 @@ export function ActionsList({
           key={item.item.id}
           action={item.item}
           hovered={item.index === hovered}
-          onMouseEnter={() => onActionHover(item.index)}
+          onMouseEnter={onActionHover}
           classNames={classNames}
           styles={styles}
           radius={radius}

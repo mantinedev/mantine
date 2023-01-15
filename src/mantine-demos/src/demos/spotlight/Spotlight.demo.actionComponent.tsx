@@ -56,10 +56,13 @@ const useStyles = createStyles((theme) => ({
     width: '100%',
     padding: \`\${rem(10)} \${rem(12)}\`,
     borderRadius: theme.radius.sm,
-  },
+    ...theme.fn.hover({
+      backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[1],
+    }),
 
-  actionHovered: {
-    backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[1],
+    '&[data-hovered]': {
+      backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[1],
+    },
   },
 }));
 
@@ -71,11 +74,12 @@ function CustomAction({
   onTrigger,
   ...others
 }: SpotlightActionProps) {
-  const { classes, cx } = useStyles(null, { styles, classNames, name: 'Spotlight' });
+  const { classes } = useStyles(null, { styles, classNames, name: 'Spotlight' });
 
   return (
     <UnstyledButton
-      className={cx(classes.action, { [classes.actionHovered]: hovered })}
+      className={classes.action}
+      data-hovered={hovered || undefined}
       tabIndex={-1}
       onMouseDown={(event) => event.preventDefault()}
       onClick={onTrigger}
@@ -157,10 +161,13 @@ const useStyles = createStyles((theme) => ({
     width: '100%',
     padding: `${rem(10)} ${rem(12)}`,
     borderRadius: theme.radius.sm,
-  },
+    ...theme.fn.hover({
+      backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[1],
+    }),
 
-  actionHovered: {
-    backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[1],
+    '&[data-hovered]': {
+      backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[1],
+    },
   },
 }));
 
@@ -172,11 +179,12 @@ function CustomAction({
   onTrigger,
   ...others
 }: SpotlightActionProps) {
-  const { classes, cx } = useStyles(null, { styles, classNames, name: 'Spotlight' });
+  const { classes } = useStyles(null, { styles, classNames, name: 'Spotlight' });
 
   return (
     <UnstyledButton
-      className={cx(classes.action, { [classes.actionHovered]: hovered })}
+      className={classes.action}
+      data-hovered={hovered || undefined}
       tabIndex={-1}
       onMouseDown={(event) => event.preventDefault()}
       onClick={onTrigger}

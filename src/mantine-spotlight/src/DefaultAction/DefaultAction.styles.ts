@@ -11,10 +11,13 @@ export default createStyles((theme, { radius }: DefaultActionStylesParams) => ({
     width: '100%',
     padding: `${rem(10)} ${rem(12)}`,
     borderRadius: theme.fn.radius(radius),
-  },
+    ...theme.fn.hover({
+      backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[1],
+    }),
 
-  actionHovered: {
-    backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[1],
+    '&[data-hovered]': {
+      backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[1],
+    },
   },
 
   actionIcon: {

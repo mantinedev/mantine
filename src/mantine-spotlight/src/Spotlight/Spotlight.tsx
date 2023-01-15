@@ -1,66 +1,34 @@
 import React, { useState } from 'react';
 import {
-  OptionalPortal,
-  GroupedTransition,
-  MantineTransition,
-  Overlay,
-  Paper,
   DefaultProps,
   Selectors,
-  MantineShadow,
   TextInput,
   getDefaultZIndex,
-  MantineNumberSize,
   MantineColor,
   TextInputProps,
+  Modal,
+  ModalProps,
+  ModalStylesNames,
+  useComponentDefaultProps,
 } from '@mantine/core';
 import { getGroupedOptions } from '@mantine/utils';
-import { useScrollLock, useFocusTrap, useDidUpdate, useFocusReturn } from '@mantine/hooks';
+import { useDidUpdate } from '@mantine/hooks';
 import { DefaultAction, DefaultActionProps } from '../DefaultAction/DefaultAction';
 import { ActionsList, ActionsListStylesNames } from '../ActionsList/ActionsList';
 import type { SpotlightAction } from '../types';
 import { filterActions } from './filter-actions/filter-actions';
 import useStyles from './Spotlight.styles';
 
-export type SpotlightStylesNames = Selectors<typeof useStyles> | ActionsListStylesNames;
+export type SpotlightStylesNames =
+  | Selectors<typeof useStyles>
+  | Exclude<ModalStylesNames, 'close' | 'header' | 'title'>
+  | ActionsListStylesNames;
 
 export interface InnerSpotlightProps
-  extends DefaultProps<SpotlightStylesNames>,
+  extends Omit<ModalProps, 'styles' | 'classNames' | 'title' | 'withCloseButton'>,
+    DefaultProps<SpotlightStylesNames>,
     React.ComponentPropsWithoutRef<'div'> {
   variant?: string;
-
-  /** Should spotlight be rendered within Portal */
-  withinPortal?: boolean;
-
-  /** Premade transition or transition object */
-  transition?: MantineTransition;
-
-  /** Transition duration in ms, set to 0 to disable all transitions */
-  transitionDuration?: number;
-
-  /** Backdrop overlay color, e.g. #000 */
-  overlayColor?: string;
-
-  /** Backdrop overlay opacity (0-1), e.g. 0.65 */
-  overlayOpacity?: number;
-
-  /** Backdrop overlay blur */
-  overlayBlur?: number;
-
-  /** Value from theme.shadows or any valid css box-shadow value */
-  shadow?: MantineShadow;
-
-  /** Key of theme.radius or any valid CSS value to set border-radius, theme.defaultRadius by default */
-  radius?: MantineNumberSize;
-
-  /** Should spotlight be rendered in the center of the screen */
-  centered?: boolean;
-
-  /** Max spotlight width */
-  maxWidth?: number;
-
-  /** Top offset when spotlight is not centered */
-  topOffset?: number;
 
   /** Search input placeholder */
   searchPlaceholder?: string;
@@ -86,9 +54,6 @@ export interface InnerSpotlightProps
   /** Component that is used to wrap actions list */
   actionsWrapperComponent?: React.FC<{ children: React.ReactNode }> | string;
 
-  /** Spotlight z-index */
-  zIndex?: React.CSSProperties['zIndex'];
-
   /** Should user query be highlighted in actions title */
   highlightQuery?: boolean;
 
@@ -107,58 +72,55 @@ interface SpotlightProps extends InnerSpotlightProps {
   onQueryChange(query: string): void;
 }
 
-export function Spotlight({
-  query,
-  onQueryChange,
-  actions,
-  onClose,
-  opened,
-  withinPortal,
-  transition = 'pop',
-  transitionDuration,
-  classNames,
-  styles,
-  overlayColor = '#000',
-  overlayOpacity = 0.25,
-  overlayBlur = 3,
-  shadow = 'md',
-  radius,
-  centered = false,
-  closeOnActionTrigger = true,
-  highlightQuery = false,
-  highlightColor,
-  maxWidth = 600,
-  topOffset = 120,
-  className,
-  searchPlaceholder,
-  searchIcon,
-  filter = filterActions,
-  nothingFoundMessage,
-  limit = 10,
-  actionComponent = DefaultAction,
-  actionsWrapperComponent: ActionsWrapper = 'div',
-  zIndex = getDefaultZIndex('max'),
-  searchInputProps,
-  variant,
-  ...others
-}: SpotlightProps) {
+const defaultProps: Partial<SpotlightProps> = {
+  closeOnActionTrigger: true,
+  highlightQuery: false,
+  size: 600,
+  yOffset: 120,
+  filter: filterActions,
+  limit: 10,
+  actionComponent: DefaultAction,
+  actionsWrapperComponent: 'div',
+  zIndex: getDefaultZIndex('max'),
+  overlayProps: { opacity: 0.2, blur: 7 },
+};
+
+export function Spotlight(props: SpotlightProps) {
+  const {
+    query,
+    onQueryChange,
+    actions,
+    onClose,
+    opened,
+    classNames,
+    styles,
+    closeOnActionTrigger,
+    highlightQuery,
+    highlightColor,
+    className,
+    searchPlaceholder,
+    searchIcon,
+    filter,
+    nothingFoundMessage,
+    limit,
+    actionComponent,
+    actionsWrapperComponent: ActionsWrapper,
+    searchInputProps,
+    variant,
+    target,
+    radius,
+    ...others
+  } = useComponentDefaultProps('Spotlight', defaultProps, props);
+
   const [hovered, setHovered] = useState(-1);
   const [IMEOpen, setIMEOpen] = useState(false);
-  const { classes, cx } = useStyles(
-    { centered, maxWidth, topOffset, radius, zIndex },
-    { name: 'Spotlight', classNames, styles, variant }
-  );
-
-  const [, lockScroll] = useScrollLock();
-  const focusTrapRef = useFocusTrap(opened);
+  const { classes } = useStyles(null, { name: 'Spotlight', classNames, styles, variant });
 
   const resetHovered = () => setHovered(-1);
   const handleClose = () => {
     resetHovered();
     onClose();
   };
-
-  useFocusReturn({ opened });
 
   const filteredActions = filter(query, actions).slice(0, limit);
   const groupedWithLabels = getGroupedOptions(filteredActions).items;
@@ -215,85 +177,50 @@ export function Spotlight({
   };
 
   return (
-    <OptionalPortal withinPortal={withinPortal}>
-      <GroupedTransition
-        onExited={() => lockScroll(false)}
-        onEntered={() => lockScroll(true)}
-        mounted={opened}
-        transitions={{
-          spotlight: {
-            duration: transitionDuration,
-            transition,
-            timingFunction: 'ease',
-          },
-          overlay: {
-            duration: transitionDuration / 2,
-            transition: 'fade',
-            timingFunction: 'ease',
-          },
-        }}
-      >
-        {(transitionStyles) => (
-          <div className={cx(classes.root, className)} {...others}>
-            <div className={classes.inner} ref={focusTrapRef}>
-              <Paper
-                style={transitionStyles.spotlight}
-                className={classes.spotlight}
-                shadow={shadow}
-                radius={radius}
-                onMouseLeave={resetHovered}
-              >
-                <TextInput
-                  autoComplete="chrome-please-just-do-not-show-it-thanks"
-                  size="lg"
-                  {...searchInputProps}
-                  value={query}
-                  onChange={handleInputChange}
-                  onKeyDown={handleInputKeyDown}
-                  onCompositionStart={() => setIMEOpen(true)}
-                  onCompositionEnd={() => setIMEOpen(false)}
-                  classNames={{ input: classes.searchInput }}
-                  placeholder={searchPlaceholder}
-                  icon={searchIcon}
-                  onMouseEnter={resetHovered}
-                />
-                <ActionsWrapper>
-                  <ActionsList
-                    highlightQuery={highlightQuery}
-                    highlightColor={highlightColor}
-                    actions={groupedWithLabels}
-                    actionComponent={actionComponent}
-                    hovered={hovered}
-                    query={query}
-                    nothingFoundMessage={nothingFoundMessage}
-                    onActionHover={setHovered}
-                    onActionTrigger={(action) => {
-                      action.onTrigger(action);
-                      (action.closeOnTrigger ?? closeOnActionTrigger) && handleClose();
-                    }}
-                    styles={styles}
-                    classNames={classNames}
-                    radius={radius}
-                    variant={variant}
-                  />
-                </ActionsWrapper>
-              </Paper>
-
-              <div style={transitionStyles.overlay}>
-                <Overlay
-                  className={classes.overlay}
-                  zIndex={1}
-                  onMouseDown={handleClose}
-                  color={overlayColor}
-                  opacity={overlayOpacity}
-                  blur={overlayBlur}
-                />
-              </div>
-            </div>
-          </div>
-        )}
-      </GroupedTransition>
-    </OptionalPortal>
+    <Modal
+      opened={opened}
+      onClose={handleClose}
+      padding={0}
+      radius={radius}
+      classNames={classNames}
+      styles={styles}
+      withCloseButton={false}
+      {...others}
+    >
+      <TextInput
+        size="lg"
+        {...searchInputProps}
+        value={query}
+        onChange={handleInputChange}
+        onKeyDown={handleInputKeyDown}
+        onCompositionStart={() => setIMEOpen(true)}
+        onCompositionEnd={() => setIMEOpen(false)}
+        classNames={{ input: classes.searchInput }}
+        placeholder={searchPlaceholder}
+        icon={searchIcon}
+        onMouseEnter={resetHovered}
+      />
+      <ActionsWrapper>
+        <ActionsList
+          highlightQuery={highlightQuery}
+          highlightColor={highlightColor}
+          actions={groupedWithLabels}
+          actionComponent={actionComponent}
+          hovered={hovered}
+          query={query}
+          nothingFoundMessage={nothingFoundMessage}
+          onActionHover={() => setHovered(-1)}
+          onActionTrigger={(action) => {
+            action.onTrigger(action);
+            (action.closeOnTrigger ?? closeOnActionTrigger) && handleClose();
+          }}
+          styles={styles}
+          classNames={classNames}
+          radius={radius}
+          variant={variant}
+        />
+      </ActionsWrapper>
+    </Modal>
   );
 }
 
