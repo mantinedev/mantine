@@ -66,7 +66,7 @@ export const Machine = forwardRef<HTMLDivElement, MachineNumberProps>(({ value =
           newOriginalNumber={newValue}
         />
       ))}
-      {typeof max === 'number' && value > max && <span>+</span>}
+      {typeof max === 'number' && value > max && <span className={classes.plus}>+</span>}
     </span>
   );
 });

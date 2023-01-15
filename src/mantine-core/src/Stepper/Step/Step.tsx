@@ -6,6 +6,7 @@ import {
   MantineSize,
   MantineNumberSize,
   useComponentDefaultProps,
+  getSize,
 } from '@mantine/styles';
 import { Text } from '../../Text';
 import { Loader } from '../../Loader';
@@ -50,7 +51,7 @@ export interface StepProps
   /** Step description */
   description?: React.ReactNode | StepFragmentComponent;
 
-  /** Icon wrapper size in px */
+  /** Icon wrapper size */
   iconSize?: number;
 
   /** Icon position relative to step body */
@@ -59,7 +60,7 @@ export interface StepProps
   /** Component size */
   size?: MantineSize;
 
-  /** Radius from theme.radius, or number to set border-radius in px */
+  /** Key of theme.radius or any valid CSS value to set border-radius, "xl" by default */
   radius?: MantineNumberSize;
 
   /** Indicates loading state on step */
@@ -131,12 +132,12 @@ export const Step = forwardRef<HTMLButtonElement, StepProps>((props: StepProps, 
     ...others
   } = useComponentDefaultProps('StepperStep', defaultProps, props);
 
-  const { classes, cx, theme } = useStyles(
+  const { classes, cx } = useStyles(
     { color, iconSize, radius, allowStepClick, iconPosition, orientation },
     { name: __staticSelector, classNames, styles, unstyled, variant, size }
   );
 
-  const _iconSize = theme.fn.size({ size, sizes: defaultIconSizes });
+  const _iconSize = getSize({ size, sizes: defaultIconSizes });
   const _icon = state === 'stepCompleted' ? null : state === 'stepProgress' ? progressIcon : icon;
   const dataAttributes = {
     'data-progress': state === 'stepProgress' || undefined,

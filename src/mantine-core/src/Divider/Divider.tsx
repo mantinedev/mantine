@@ -5,6 +5,7 @@ import {
   MantineColor,
   useComponentDefaultProps,
   Variants,
+  rem,
 } from '@mantine/styles';
 import useStyles from './Divider.styles';
 import { Text } from '../Text';
@@ -90,7 +91,7 @@ export const Divider = forwardRef<HTMLDivElement, DividerProps>((props: DividerP
         <Text
           {...labelProps}
           size={labelProps?.size || 'xs'}
-          sx={{ marginTop: 2 }}
+          mt={rem(2)}
           className={cx(classes.label, classes[labelPosition], {
             [classes.labelDefaultStyles]: useLabelDefaultStyles,
           })}

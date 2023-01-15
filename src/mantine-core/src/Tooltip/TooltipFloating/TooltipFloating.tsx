@@ -12,7 +12,7 @@ import { useFloatingTooltip } from './use-floating-tooltip';
 export interface TooltipFloatingProps extends TooltipBaseProps {
   variant?: string;
 
-  /** Offset from mouse in px */
+  /** Offset from mouse */
   offset?: number;
 }
 
@@ -89,8 +89,8 @@ export function TooltipFloating(props: TooltipFloatingProps) {
             ...style,
             zIndex,
             display: opened ? 'block' : 'none',
-            top: y ?? '',
-            left: Math.round(x) ?? '',
+            top: y ?? 0,
+            left: Math.round(x) ?? 0,
           }}
         >
           {label}

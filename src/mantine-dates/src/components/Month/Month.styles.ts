@@ -1,4 +1,4 @@
-import { createStyles } from '@mantine/core';
+import { createStyles, rem } from '@mantine/core';
 
 export default createStyles((theme) => ({
   monthThead: {},
@@ -6,7 +6,7 @@ export default createStyles((theme) => ({
   monthTbody: {},
 
   monthCell: {
-    padding: 0.5,
+    padding: rem(0.5),
   },
 
   month: {

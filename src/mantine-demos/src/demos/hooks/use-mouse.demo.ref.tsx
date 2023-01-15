@@ -1,27 +1,26 @@
 import React from 'react';
-import { useMantineTheme, Group, Text, Code } from '@mantine/core';
+import { Group, Text, Code, Box } from '@mantine/core';
 import { MantineDemo } from '@mantine/ds';
 import { useMouse } from '@mantine/hooks';
 
 const code = `
-import { useMantineTheme, Text, Code, Group } from '@mantine/core';
+import { Text, Code, Group, Box } from '@mantine/core';
 import { useMouse } from '@mantine/hooks';
 
 function Demo() {
-  const theme = useMantineTheme();
   const { ref, x, y } = useMouse();
 
   return (
     <>
       <Group position="center">
-        <div
+        <Box
           ref={ref}
-          style={{
-            width: 300,
-            height: 180,
+          w={300}
+          h={180}
+          sx={(theme) => ({
             backgroundColor:
               theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[1],
-          }}
+          })}
         />
       </Group>
       <Text align="center">
@@ -33,23 +32,22 @@ function Demo() {
 `;
 
 function Demo() {
-  const theme = useMantineTheme();
   const { ref, x, y } = useMouse();
 
   return (
     <>
       <Group position="center">
-        <div
+        <Box
           ref={ref}
-          style={{
-            width: 300,
-            height: 180,
+          w={300}
+          h={180}
+          sx={(theme) => ({
             backgroundColor:
               theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[1],
-          }}
+          })}
         />
       </Group>
-      <Text align="center" style={{ marginTop: theme.spacing.sm }}>
+      <Text align="center" mt="sm">
         Mouse coordinates <Code>{`{ x: ${x}, y: ${y} }`}</Code>
       </Text>
     </>

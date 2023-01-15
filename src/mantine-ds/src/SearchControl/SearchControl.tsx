@@ -1,6 +1,6 @@
 import React from 'react';
 import { IconSearch } from '@tabler/icons';
-import { UnstyledButton, Text, Group, DefaultProps } from '@mantine/core';
+import { UnstyledButton, Text, Group, DefaultProps, rem } from '@mantine/core';
 import { useOs } from '@mantine/hooks';
 import useStyles from './SearchControl.styles';
 
@@ -15,7 +15,7 @@ export function SearchControl({ className, ...others }: SearchControlProps) {
   return (
     <UnstyledButton {...others} className={cx(classes.root, className)}>
       <Group spacing="xs">
-        <IconSearch size={14} stroke={1.5} />
+        <IconSearch size={rem(14)} stroke={1.5} />
         <Text size="sm" color="dimmed" pr={80}>
           Search
         </Text>

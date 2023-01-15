@@ -32,8 +32,8 @@ export interface IndicatorProps
   /** Determines whether indicator container should be an inline element */
   inline?: boolean;
 
-  /** Size in px */
-  size?: number;
+  /** Indicator width and height */
+  size?: number | string;
 
   /** Indicator label */
   label?: React.ReactNode;
@@ -43,7 +43,7 @@ export interface IndicatorProps
 
   dot?: boolean;
 
-  /** border-radius from theme.radius or number value to set radius in px */
+  /** Key of theme.radius or any valid CSS value to set border-radius, 1000rem by default */
   radius?: MantineNumberSize;
 
   /** Color from theme.colors or any other valid CSS color value */

@@ -21,7 +21,7 @@ export interface BurgerProps
   /** Burger color value, not connected to theme.colors, defaults to theme.black with light color scheme and theme.white with dark */
   color?: string;
 
-  /** Predefined burger size or number to set width and height in px */
+  /** Predefined burger size or number to set width and height */
   size?: MantineNumberSize;
 
   /** Transition duration in ms */

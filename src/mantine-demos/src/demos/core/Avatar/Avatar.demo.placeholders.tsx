@@ -21,7 +21,7 @@ function Demo() {
 
       {/* Placeholder with custom icon */}
       <Avatar color="blue" radius="xl">
-        <IconStar size={24} />
+        <IconStar size="1.5rem" />
       </Avatar>
     </>
   );
@@ -39,7 +39,7 @@ function Demo() {
           VR
         </Avatar>
         <Avatar color="blue" radius="xl">
-          <IconStar size={24} />
+          <IconStar size="1.5rem" />
         </Avatar>
       </Group>
     </Group>

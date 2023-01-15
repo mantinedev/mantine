@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useDebouncedValue } from '@mantine/hooks';
 import { MantineDemo } from '@mantine/ds';
-import { TextInput, Text, Button } from '@mantine/core';
+import { TextInput, Text, Button, Flex, Box } from '@mantine/core';
 
 const code = `
 import { useState } from 'react';
@@ -17,10 +17,10 @@ function Demo() {
       <TextInput
         label="Enter value to see debounce"
         value={value}
-        style={{ flex: 1 }}
         onChange={(event) => setValue(event.currentTarget.value)}
       />
-      <Button onClick={cancel} size="lg" style={{ marginLeft: 15 }}>
+
+      <Button onClick={cancel} size="lg">
         Cancel
       </Button>
 
@@ -36,43 +36,33 @@ function Demo() {
   const [debounced, cancel] = useDebouncedValue(value, 1000);
 
   return (
-    <>
-      <div
-        style={{
-          display: 'flex',
-          alignItems: 'flex-end',
-          justifyContent: 'center',
-          maxWidth: 400,
-          margin: 'auto',
-        }}
-      >
+    <Box maw={400} mx="auto">
+      <Flex align="flex-end">
         <TextInput
           label="Enter value to see debounce effect"
           placeholder="Enter value to see debounce effect"
           value={value}
-          style={{ flex: 1 }}
+          sx={{ flex: 1 }}
           onChange={(event) => setValue(event.currentTarget.value)}
         />
         <Button onClick={cancel} ml={15}>
           Cancel
         </Button>
-      </div>
+      </Flex>
 
-      <div style={{ maxWidth: 400, margin: 'auto', marginTop: 15, overflowWrap: 'break-word' }}>
-        <Text>
-          <Text component="span" color="dimmed" size="sm">
-            Value:
-          </Text>{' '}
-          {value.trim() || '[empty string]'}
-        </Text>
-        <Text>
-          <Text component="span" color="dimmed" size="sm">
-            Debounced value:
-          </Text>{' '}
-          {debounced.trim() || '[empty string]'}
-        </Text>
-      </div>
-    </>
+      <Text mt="sm">
+        <Text component="span" color="dimmed" size="sm">
+          Value:
+        </Text>{' '}
+        {value.trim() || '[empty string]'}
+      </Text>
+      <Text>
+        <Text component="span" color="dimmed" size="sm">
+          Debounced value:
+        </Text>{' '}
+        {debounced.trim() || '[empty string]'}
+      </Text>
+    </Box>
   );
 }
 

@@ -1,4 +1,4 @@
-import { createStyles, keyframes } from '@mantine/styles';
+import { createStyles, keyframes, rem } from '@mantine/styles';
 
 const currentScrollDownKeyframes = keyframes({
   from: {
@@ -46,7 +46,7 @@ const oldNumberScrollDownKeyframes = keyframes({
 
 export default createStyles(() => ({
   baseNumber: {
-    height: 18,
+    height: rem(18),
     width: '0.6em',
     maxWidth: '0.6em',
     position: 'relative',

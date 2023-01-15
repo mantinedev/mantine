@@ -1,19 +1,19 @@
-import { createStyles, keyframes } from '@mantine/core';
+import { createStyles, keyframes, rem } from '@mantine/core';
 
 const fadeId = keyframes({
-  from: { opacity: 0, transform: 'translateY(-20px) scale(0.95) skewX(-2deg)' },
+  from: { opacity: 0, transform: `translateY(-${rem(20)}) scale(0.95) skewX(-2deg)` },
   to: { opacity: 1, transform: 'translateY(0) scale(1) rotate(0)' },
 });
 
 export default createStyles((theme, { shouldAnimate }: { shouldAnimate: boolean }) => ({
   root: {
-    paddingTop: 100,
-    paddingBottom: 100,
+    paddingTop: rem(100),
+    paddingBottom: rem(100),
     backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.colors.gray[0],
 
     [theme.fn.smallerThan('sm')]: {
-      paddingTop: 60,
-      paddingBottom: 60,
+      paddingTop: rem(60),
+      paddingBottom: rem(60),
     },
   },
 
@@ -27,7 +27,7 @@ export default createStyles((theme, { shouldAnimate }: { shouldAnimate: boolean 
     left: 0,
     right: 0,
     backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.white,
-    border: `1px solid ${
+    border: `${rem(1)} solid ${
       theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[3]
     }`,
     boxShadow: theme.shadows.md,
@@ -38,10 +38,10 @@ export default createStyles((theme, { shouldAnimate }: { shouldAnimate: boolean 
 
   control: {
     width: '100%',
-    padding: `${theme.spacing.md}px ${theme.spacing.lg}px`,
+    padding: `${theme.spacing.md} ${theme.spacing.lg}`,
     borderRadius: theme.radius.md,
     position: 'relative',
-    height: 80,
+    height: rem(80),
 
     '&:hover': theme.fn.hover({
       backgroundColor:
@@ -51,8 +51,8 @@ export default createStyles((theme, { shouldAnimate }: { shouldAnimate: boolean 
     }),
 
     [theme.fn.smallerThan('sm')]: {
-      height: 60,
-      padding: `${theme.spacing.xs}px ${theme.spacing.md}px`,
+      height: rem(60),
+      padding: `${theme.spacing.xs} ${theme.spacing.md}`,
     },
   },
 
@@ -86,7 +86,7 @@ export default createStyles((theme, { shouldAnimate }: { shouldAnimate: boolean 
   },
 
   demo: {
-    paddingLeft: theme.spacing.xl * 2,
+    paddingLeft: `calc(${theme.spacing.xl} * 2)`,
     animation: shouldAnimate ? `${fadeId} 300ms ease` : 'none',
 
     [theme.fn.smallerThan('md')]: {

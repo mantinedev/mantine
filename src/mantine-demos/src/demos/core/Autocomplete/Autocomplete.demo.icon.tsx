@@ -1,7 +1,7 @@
 import React from 'react';
 import { IconHash } from '@tabler/icons';
 import { MantineDemo } from '@mantine/ds';
-import { Autocomplete } from '@mantine/core';
+import { Autocomplete, rem } from '@mantine/core';
 
 const code = `
 import { Autocomplete } from '@mantine/core';
@@ -14,14 +14,14 @@ function Demo() {
 
 function Demo() {
   return (
-    <div style={{ maxWidth: 320, marginLeft: 'auto', marginRight: 'auto' }}>
-      <Autocomplete
-        label="Enter a hashtag"
-        placeholder="Enter a hashtag"
-        data={['React', 'Angular', 'Svelte', 'Vue']}
-        icon={<IconHash size={14} />}
-      />
-    </div>
+    <Autocomplete
+      maw={320}
+      mx="auto"
+      label="Enter a hashtag"
+      placeholder="Enter a hashtag"
+      data={['React', 'Angular', 'Svelte', 'Vue']}
+      icon={<IconHash size={rem(14)} />}
+    />
   );
 }
 

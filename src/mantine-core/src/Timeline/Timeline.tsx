@@ -5,6 +5,7 @@ import {
   MantineNumberSize,
   CSSObject,
   useComponentDefaultProps,
+  rem,
 } from '@mantine/styles';
 import { ForwardRefWithStaticComponents, packSx } from '@mantine/utils';
 import { Box } from '../Box';
@@ -24,17 +25,17 @@ export interface TimelineProps
   /** Active color from theme */
   color?: MantineColor;
 
-  /** Radius from theme.radius, or number to set border-radius in px */
+  /** Key of theme.radius or any valid CSS value to set border-radius, "xl" by default */
   radius?: MantineNumberSize;
 
-  /** Bullet size in px */
-  bulletSize?: number;
+  /** Bullet size */
+  bulletSize?: number | string;
 
   /** Timeline alignment */
   align?: 'right' | 'left';
 
-  /** Line width in px */
-  lineWidth?: number;
+  /** Line width */
+  lineWidth?: number | string;
 
   /** Reverse active direction without reversing items */
   reverseActive?: boolean;
@@ -96,8 +97,8 @@ export const Timeline: TimelineComponent = forwardRef<HTMLDivElement, TimelinePr
 
     const offset: CSSObject =
       align === 'left'
-        ? { paddingLeft: bulletSize / 2 + lineWidth / 2 }
-        : { paddingRight: bulletSize / 2 + lineWidth / 2 };
+        ? { paddingLeft: `calc(${rem(bulletSize)} / 2 + ${rem(lineWidth)} / 2)` }
+        : { paddingRight: `calc(${rem(bulletSize)} / 2 + ${rem(lineWidth)} / 2)` };
 
     return (
       <Box ref={ref} sx={[offset, ...packSx(sx)]} {...others}>

@@ -47,7 +47,7 @@ function Demo() {
           <Group sx={{ height: '100%' }} px={20} position="apart">
             <Logo colorScheme={colorScheme} />
             <ActionIcon variant="default" onClick={() => toggleColorScheme()} size={30}>
-              {colorScheme === 'dark' ? <IconSun size={16} /> : <IconMoonStars size={16} />}
+              {colorScheme === 'dark' ? <IconSun size="1rem" /> : <IconMoonStars size="1rem" />}
             </ActionIcon>
           </Group>
         </Header>

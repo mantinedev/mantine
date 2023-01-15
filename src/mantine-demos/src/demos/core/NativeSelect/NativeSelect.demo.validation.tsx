@@ -1,6 +1,6 @@
 import React from 'react';
 import { MantineDemo } from '@mantine/ds';
-import { NativeSelect } from '@mantine/core';
+import { NativeSelect, Box } from '@mantine/core';
 
 const code = `
 // Error as boolean – red border color
@@ -12,7 +12,7 @@ const code = `
 
 function Demo() {
   return (
-    <div style={{ maxWidth: 320, marginLeft: 'auto', marginRight: 'auto' }}>
+    <Box maw={320} mx="auto">
       <NativeSelect
         data={['React', 'Angular', 'Svelte', 'Vue']}
         label="Your favorite frameworks/libraries"
@@ -21,13 +21,13 @@ function Demo() {
       />
 
       <NativeSelect
-        style={{ marginTop: 15 }}
+        mt="md"
         data={['React', 'Angular', 'Svelte', 'Vue']}
         label="Your favorite frameworks/libraries"
         placeholder="Pick one"
         error="Pick at least one item"
       />
-    </div>
+    </Box>
   );
 }
 

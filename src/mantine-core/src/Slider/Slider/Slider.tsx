@@ -29,10 +29,10 @@ export interface SliderProps
   /** Color from theme.colors */
   color?: MantineColor;
 
-  /** Track border-radius from theme or number to set border-radius in px */
+  /** Key of theme.radius or any valid CSS value to set border-radius, "xl" by default */
   radius?: MantineNumberSize;
 
-  /** Predefined track and thumb size, number to set sizes in px */
+  /** Controls size of track and thumb */
   size?: MantineNumberSize;
 
   /** Minimal possible value */
@@ -92,7 +92,7 @@ export interface SliderProps
   /** Disables slider */
   disabled?: boolean;
 
-  /** Thumb width and height in px */
+  /** Thumb width and height */
   thumbSize?: number;
 
   /** A transformation function, to change the scale of the slider */

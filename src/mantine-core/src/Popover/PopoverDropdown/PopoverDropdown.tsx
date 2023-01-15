@@ -1,5 +1,5 @@
 import React from 'react';
-import { DefaultProps, useComponentDefaultProps } from '@mantine/styles';
+import { DefaultProps, useComponentDefaultProps, rem } from '@mantine/styles';
 import { closeOnEscape } from '@mantine/utils';
 import { useFocusReturn } from '@mantine/hooks';
 import { FloatingArrow } from '../../Floating';
@@ -78,7 +78,7 @@ export function PopoverDropdown(props: PopoverDropdownProps) {
                 zIndex: ctx.zIndex,
                 top: ctx.y ?? 0,
                 left: ctx.x ?? 0,
-                width: ctx.width === 'target' ? undefined : ctx.width,
+                width: ctx.width === 'target' ? undefined : rem(ctx.width),
               }}
               className={cx(classes.dropdown, className)}
               onKeyDownCapture={closeOnEscape(ctx.onClose, {

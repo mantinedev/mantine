@@ -9,10 +9,10 @@ export interface CarouselSlideProps extends DefaultProps, React.ComponentPropsWi
   /** Slide content */
   children?: React.ReactNode;
 
-  /** Slide width, defaults to 100%, examples: 200px, 50% */
+  /** Slide width, defaults to 100%, examples: 40rem, 50% */
   size?: string | number;
 
-  /** Key of theme.spacing or number to set gap between slides in px */
+  /** Key of theme.spacing or number to set gap between slides */
   gap?: MantineNumberSize;
 }
 

@@ -55,7 +55,7 @@ export interface PrismProps
   /** Defines whether the code should be trimmed, defaults to true */
   trim?: boolean;
 
-  /** Key of theme.radius or number to set border-radius in px */
+  /** Key of theme.radius or any valid CSS value to set border-radius, theme.defaultRadius by default */
   radius?: MantineNumberSize;
 
   /** Provide custom color scheme */

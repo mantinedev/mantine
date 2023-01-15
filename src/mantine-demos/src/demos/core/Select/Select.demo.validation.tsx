@@ -1,6 +1,6 @@
 import React from 'react';
 import { MantineDemo } from '@mantine/ds';
-import { Select } from '@mantine/core';
+import { Select, Box } from '@mantine/core';
 
 const code = `
 // Error as boolean – red border color
@@ -12,7 +12,7 @@ const code = `
 
 function Demo() {
   return (
-    <div style={{ maxWidth: 320, marginLeft: 'auto', marginRight: 'auto' }}>
+    <Box maw={320} mx="auto">
       <Select
         data={['React', 'Angular', 'Svelte', 'Vue']}
         label="Your favorite frameworks/libraries"
@@ -22,14 +22,14 @@ function Demo() {
       />
 
       <Select
-        style={{ marginTop: 15 }}
+        mt="md"
         data={['React', 'Angular', 'Svelte', 'Vue']}
         label="Your favorite frameworks/libraries"
         placeholder="Pick all that you like"
         error="Pick at least one item"
         withinPortal
       />
-    </div>
+    </Box>
   );
 }
 

@@ -1,39 +1,36 @@
 import React, { useRef } from 'react';
 import { useIntersection } from '@mantine/hooks';
 import { MantineDemo } from '@mantine/ds';
-import { Text, Paper, useMantineTheme } from '@mantine/core';
+import { Text, Paper, Box } from '@mantine/core';
 
 const code = `
 import { useRef } from 'react';
 import { useIntersection } from '@mantine/hooks';
-import { Paper, Text, useMantineTheme } from '@mantine/core';
+import { Text, Paper, Box } from '@mantine/core';
 
 function Demo() {
   const containerRef = useRef();
-  const theme = useMantineTheme();
   const { ref, entry } = useIntersection({
     root: containerRef.current,
     threshold: 1,
   });
 
   return (
-    <Paper ref={containerRef} style={{ overflowY: 'scroll', height: 300 }}>
-      <div style={{ paddingTop: 260, paddingBottom: 280 }}>
+    <Paper ref={containerRef} h={300} sx={{ overflowY: 'scroll' }}>
+      <Box pt={260} pb={280}>
         <Paper
           ref={ref}
           p="xl"
-          style={{
-            backgroundColor: entry?.isIntersecting
-              ? theme.colors.green[9]
-              : theme.colors.red[9],
+          sx={(theme) => ({
+            backgroundColor: entry?.isIntersecting ? theme.colors.green[9] : theme.colors.red[9],
             minWidth: '50%',
-          }}
+          })}
         >
-          <Text style={{ color: theme.white }} weight={700}>
+          <Text c="#fff" weight={700}>
             {entry?.isIntersecting ? 'Fully visible' : 'Obscured'}
           </Text>
         </Paper>
-      </div>
+      </Box>
     </Paper>
   );
 }
@@ -41,28 +38,27 @@ function Demo() {
 
 function Demo() {
   const containerRef = useRef();
-  const theme = useMantineTheme();
   const { ref, entry } = useIntersection({
     root: containerRef.current,
     threshold: 1,
   });
 
   return (
-    <Paper ref={containerRef} style={{ overflowY: 'scroll', height: 300 }}>
-      <div style={{ paddingTop: 260, paddingBottom: 280 }}>
+    <Paper ref={containerRef} h={300} sx={{ overflowY: 'scroll' }}>
+      <Box pt={260} pb={280}>
         <Paper
           ref={ref}
           p="xl"
-          style={{
+          sx={(theme) => ({
             backgroundColor: entry?.isIntersecting ? theme.colors.green[9] : theme.colors.red[9],
             minWidth: '50%',
-          }}
+          })}
         >
-          <Text style={{ color: theme.white }} weight={700}>
+          <Text c="#fff" weight={700}>
             {entry?.isIntersecting ? 'Fully visible' : 'Obscured'}
           </Text>
         </Paper>
-      </div>
+      </Box>
     </Paper>
   );
 }

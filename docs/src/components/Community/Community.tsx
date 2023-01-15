@@ -9,14 +9,14 @@ export function Community() {
   return (
     <SimpleGrid cols={3} spacing="xl" breakpoints={[{ maxWidth: 'md', cols: 1 }]}>
       <Card
-        p="lg"
+        padding="lg"
         component="a"
         radius="md"
         href={meta.discordLink}
         className={cx(classes.card, classes.discord)}
       >
         <Group noWrap>
-          <DiscordIcon width={24} height={24} />
+          <DiscordIcon size={24} />
           <Text size="md" weight={600}>
             Join Discord community
           </Text>
@@ -29,7 +29,7 @@ export function Community() {
       </Card>
 
       <Card
-        p="lg"
+        padding="lg"
         component="a"
         radius="md"
         href="https://twitter.com/mantinedev"
@@ -49,7 +49,7 @@ export function Community() {
       </Card>
 
       <Card
-        p="lg"
+        padding="lg"
         component="a"
         radius="md"
         href="https://github.com/mantinedev/mantine/discussions"

@@ -15,7 +15,7 @@ function Demo() {
       defaultValue={22}
       min={0}
       max={120}
-      icon={<IconMedal size={18} />}
+      icon={<IconMedal size="1rem" />}
     />
   );
 }
@@ -23,16 +23,16 @@ function Demo() {
 
 function Demo() {
   return (
-    <div style={{ maxWidth: 320, marginLeft: 'auto', marginRight: 'auto' }}>
-      <NumberInput
-        label="Age when you graduated"
-        placeholder="Age when you graduated"
-        defaultValue={22}
-        min={0}
-        max={120}
-        icon={<IconMedal size={18} />}
-      />
-    </div>
+    <NumberInput
+      maw={320}
+      mx="auto"
+      label="Age when you graduated"
+      placeholder="Age when you graduated"
+      defaultValue={22}
+      min={0}
+      max={120}
+      icon={<IconMedal size="1rem" />}
+    />
   );
 }
 

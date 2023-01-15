@@ -1,6 +1,13 @@
 import React, { useState, useEffect, forwardRef } from 'react';
 import { useUncontrolled, useDidUpdate, useEyeDropper } from '@mantine/hooks';
-import { DefaultProps, getDefaultZIndex, MantineShadow, useMantineTheme } from '@mantine/styles';
+import {
+  DefaultProps,
+  getDefaultZIndex,
+  MantineShadow,
+  useMantineTheme,
+  rem,
+  getSize,
+} from '@mantine/styles';
 import { noop } from '@mantine/utils';
 import {
   InputWrapperBaseProps,
@@ -72,19 +79,19 @@ export interface ColorInputProps
 }
 
 const SWATCH_SIZES = {
-  xs: 16,
-  sm: 18,
-  md: 22,
-  lg: 28,
-  xl: 36,
+  xs: rem(16),
+  sm: rem(18),
+  md: rem(22),
+  lg: rem(28),
+  xl: rem(36),
 };
 
 const EYE_DROPPER_SIZES = {
-  xs: 14,
-  sm: 16,
-  md: 18,
-  lg: 20,
-  xl: 22,
+  xs: rem(14),
+  sm: rem(16),
+  md: rem(18),
+  lg: rem(20),
+  xl: rem(22),
 };
 
 const defaultProps: Partial<ColorInputProps> = {
@@ -162,7 +169,7 @@ export const ColorInput = forwardRef<HTMLInputElement, ColorInputProps>((props, 
       }
     >
       {eyeDropperIcon || (
-        <EyeDropperIcon size={theme.fn.size({ size: inputProps.size, sizes: EYE_DROPPER_SIZES })} />
+        <EyeDropperIcon size={getSize({ size: inputProps.size, sizes: EYE_DROPPER_SIZES })} />
       )}
     </ActionIcon>
   );
@@ -240,7 +247,7 @@ export const ColorInput = forwardRef<HTMLInputElement, ColorInputProps>((props, 
                 (withPreview ? (
                   <ColorSwatch
                     color={isColorValid(_value) ? _value : '#fff'}
-                    size={theme.fn.size({ size: inputProps.size, sizes: SWATCH_SIZES })}
+                    size={getSize({ size: inputProps.size, sizes: SWATCH_SIZES })}
                   />
                 ) : null)
               }

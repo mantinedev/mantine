@@ -1,5 +1,6 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
+import { rem } from '@mantine/core';
 import {
   checkAccessibility,
   itSupportsSystemProps,
@@ -37,8 +38,8 @@ describe('@mantine/core/Image', () => {
   it('sets given width, height and object-fit on img element', () => {
     render(<Image {...defaultProps} width={478} height={207} fit="contain" />);
     expect(screen.getByRole('img')).toHaveStyle({
-      width: '478px',
-      height: '207px',
+      width: rem(478),
+      height: rem(207),
       objectFit: 'contain',
     });
   });

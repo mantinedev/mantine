@@ -23,16 +23,16 @@ function Demo() {
 
 function Demo() {
   return (
-    <div style={{ maxWidth: 320, marginLeft: 'auto', marginRight: 'auto' }}>
-      <PasswordInput
-        label="Change visibility toggle icon"
-        placeholder="Change visibility toggle icon"
-        defaultValue="secret"
-        visibilityToggleIcon={({ reveal, size }) =>
-          reveal ? <IconEyeOff size={size} /> : <IconEyeCheck size={size} />
-        }
-      />
-    </div>
+    <PasswordInput
+      maw={320}
+      mx="auto"
+      label="Change visibility toggle icon"
+      placeholder="Change visibility toggle icon"
+      defaultValue="secret"
+      visibilityToggleIcon={({ reveal, size }) =>
+        reveal ? <IconEyeOff size={size} /> : <IconEyeCheck size={size} />
+      }
+    />
   );
 }
 

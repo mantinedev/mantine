@@ -1,6 +1,6 @@
 import React from 'react';
 import { MantineDemo } from '@mantine/ds';
-import { MantineProvider, Center, Group } from '@mantine/core';
+import { MantineProvider, Center, Group, rem } from '@mantine/core';
 
 const code = `
 import { MantineProvider, Center, Group } from '@mantine/core';
@@ -10,7 +10,7 @@ function Demo() {
       <Group position="center" grow>
         <Center
           sx={(theme) => ({
-            height: 40,
+            height: ${rem(40)},
             backgroundImage: theme.fn.gradient(),
             color: theme.white,
           })}
@@ -20,7 +20,7 @@ function Demo() {
 
         <Center
           sx={(theme) => ({
-            height: 40,
+            height: ${rem(40)},
             backgroundImage: theme.fn.gradient({ from: 'red', to: 'orange', deg: 45 }),
             color: theme.white,
           })}
@@ -39,7 +39,7 @@ function Demo() {
       <Group position="center" grow>
         <Center
           sx={(theme) => ({
-            height: 40,
+            height: rem(40),
             backgroundImage: theme.fn.gradient(),
             color: theme.white,
           })}
@@ -49,7 +49,7 @@ function Demo() {
 
         <Center
           sx={(theme) => ({
-            height: 40,
+            height: rem(40),
             backgroundImage: theme.fn.gradient({ from: 'red', to: 'orange', deg: 45 }),
             color: theme.white,
           })}

@@ -28,7 +28,7 @@ export interface BadgeProps extends DefaultProps<BadgeStylesNames, BadgeStylesPa
   /** Badge height and font size */
   size?: MantineSize;
 
-  /** Key of theme.radius or number to set border-radius in px */
+  /** Key of theme.radius or any valid CSS value to set border-radius, "xl" by default */
   radius?: MantineNumberSize;
 
   /** Sets badge width to 100% of parent element, hides overflow text with text-overflow: ellipsis */

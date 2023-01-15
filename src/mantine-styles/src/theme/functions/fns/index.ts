@@ -4,7 +4,6 @@ import { themeColor } from './theme-color/theme-color';
 import { linearGradient, radialGradient, gradient } from './gradient/gradient';
 import { smallerThan, largerThan } from './breakpoints/breakpoints';
 import { rgba } from './rgba/rgba';
-import { size } from './size/size';
 import { cover } from './cover/cover';
 import { darken } from './darken/darken';
 import { lighten } from './lighten/lighten';
@@ -13,8 +12,6 @@ import { variant } from './variant/variant';
 import { primaryShade } from './primary-shade/primary-shade';
 import { primaryColor } from './primary-color/primary-color';
 import { hover } from './hover/hover';
-import { calc } from './calc/calc';
-import { sizeUnit } from './size-unit/size-unit';
 import { placeholderStyles } from './placeholder-styles/placeholder-styles';
 
 export const fns = {
@@ -26,7 +23,6 @@ export const fns = {
   smallerThan,
   largerThan,
   rgba,
-  size,
   cover,
   darken,
   lighten,
@@ -37,6 +33,4 @@ export const fns = {
   gradient,
   primaryColor,
   placeholderStyles,
-  calc,
-  sizeUnit,
 };

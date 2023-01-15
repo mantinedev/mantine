@@ -6,7 +6,7 @@ import { DEFAULT_THEME, Button, Group, ButtonProps } from '@mantine/core';
 function Wrapper(props: ButtonProps) {
   return (
     <Group position="center">
-      <Button leftIcon={<IconDatabase size={14} />} variant="white" {...props}>
+      <Button leftIcon={<IconDatabase size="1rem" />} variant="white" {...props}>
         Connect to database
       </Button>
     </Group>

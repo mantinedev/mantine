@@ -1,6 +1,6 @@
 import React from 'react';
 import { MantineDemo } from '@mantine/ds';
-import { MantineProvider, Button, Group } from '@mantine/core';
+import { MantineProvider, Button, Group, rem } from '@mantine/core';
 
 const code = `
 import { MantineProvider, Button, Group } from '@mantine/core';
@@ -14,16 +14,16 @@ function Demo() {
             sizes: {
               xxxs: () => ({
                 root: {
-                  height: 20,
-                  padding: 5,
-                  fontSize: 8,
+                  height: ${rem(20)},
+                  padding: ${rem(5)},
+                  fontSize: ${rem(8)},
                 },
               }),
 
               xxl: (theme) => ({
                 root: {
-                  fontSize: 28,
-                  height: 80,
+                  fontSize: ${rem(28)},
+                  height: ${rem(80)},
                   padding: theme.spacing.xl,
                 },
               }),
@@ -51,16 +51,16 @@ function Demo() {
             sizes: {
               xxxs: () => ({
                 root: {
-                  height: 20,
-                  padding: 5,
-                  fontSize: 8,
+                  height: rem(20),
+                  padding: rem(5),
+                  fontSize: rem(8),
                 },
               }),
 
               xxl: (theme) => ({
                 root: {
-                  fontSize: 28,
-                  height: 80,
+                  fontSize: rem(28),
+                  height: rem(80),
                   padding: theme.spacing.xl,
                 },
               }),

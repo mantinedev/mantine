@@ -3,7 +3,7 @@ import { NotificationsPositioning } from '../../types';
 
 export default function getPositionStyles(
   [vertical, horizontal]: NotificationsPositioning,
-  spacing: number
+  spacing: number | string
 ) {
   const styles: CSSObject = {};
 

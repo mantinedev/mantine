@@ -39,12 +39,12 @@ export const ModalBaseOverlay = forwardRef<HTMLDivElement, ModalBaseOverlayProps
       {...transitionProps}
       transition="fade"
     >
-      {(styles) => (
+      {(transitionStyles) => (
         <Overlay
           ref={ref}
           onClick={handleClick}
           fixed
-          style={{ ...style, ...styles }}
+          style={{ ...style, ...transitionStyles }}
           className={cx(classes.overlay, className)}
           {...others}
         />

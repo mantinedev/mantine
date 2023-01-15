@@ -30,7 +30,7 @@ function Demo() {
               color: 'teal',
               title: 'Data was loaded',
               message: 'Notification will close in 2 seconds, you can close this notification now',
-              icon: <IconCheck size={16} />,
+              icon: <IconCheck size="1rem" />,
               autoClose: 2000,
             });
           }, 3000);
@@ -64,7 +64,7 @@ function Demo() {
               color: 'teal',
               title: 'Data was loaded',
               message: 'Notification will close in 2 seconds, you can close this notification now',
-              icon: <IconCheck size={16} />,
+              icon: <IconCheck size="1rem" />,
               autoClose: 2000,
             });
           }, 3000);

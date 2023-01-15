@@ -15,7 +15,7 @@ function Demo() {
         label="Step 2"
         description="Verify email"
         color="red"
-        completedIcon={<IconCircleX />}
+        completedIcon={<IconCircleX size="1.1rem" />}
       />
       <Stepper.Step label="Step 3" description="Get full access" />
     </Stepper>
@@ -31,7 +31,7 @@ function Demo() {
         label="Step 2"
         description="Verify email"
         color="red"
-        completedIcon={<IconCircleX />}
+        completedIcon={<IconCircleX size="1.1rem" />}
       />
       <Stepper.Step label="Step 3" description="Get full access" />
     </Stepper>

@@ -1,9 +1,7 @@
 import { createStyles } from '@mantine/core';
 
 export default createStyles((theme) => ({
-  monthLevel: {
-    // width: 252,
-  },
+  monthLevel: {},
 
   calendarHeader: {
     marginBottom: theme.spacing.xs,

@@ -59,7 +59,7 @@ describe('@mantine/core/Overlay', () => {
   });
 
   it('sets border-radius styles based on radius prop', () => {
-    const { container } = render(<Overlay radius={500} />);
-    expect(container.firstChild).toHaveStyle({ borderRadius: '500px' });
+    const { container } = render(<Overlay radius={32} />);
+    expect(container.firstChild).toHaveStyle({ borderRadius: '2rem' });
   });
 });

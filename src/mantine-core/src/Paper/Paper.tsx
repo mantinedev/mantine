@@ -15,10 +15,10 @@ export interface PaperProps extends DefaultProps<never, PaperStylesParams> {
   /** Predefined box-shadow from theme.shadows (xs, sm, md, lg, xl) or any valid css box-shadow property */
   shadow?: MantineShadow;
 
-  /** Predefined border-radius value from theme.radius or number for border-radius in px */
+  /** Key of theme.radius or any valid CSS value to set border-radius, theme.defaultRadius by default */
   radius?: MantineNumberSize;
 
-  /** Adds 1px border with theme.colors.gray[3] color in light color scheme and theme.colors.dark[4] in dark color scheme */
+  /** Adds border styles */
   withBorder?: boolean;
 
   /** Paper children */

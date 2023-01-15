@@ -13,7 +13,7 @@ function Demo() {
       label="Pick a hashtag"
       placeholder="Pick a hashtag"
       data={['React', 'Angular', 'Svelte', 'Vue']}
-      icon={<IconHash size={14} />}
+      icon={<IconHash size="1rem" />}
     />
   );
 }
@@ -21,15 +21,15 @@ function Demo() {
 
 function Demo() {
   return (
-    <div style={{ maxWidth: 320, marginLeft: 'auto', marginRight: 'auto' }}>
-      <Select
-        label="Pick a hashtag"
-        placeholder="Pick a hashtag"
-        data={['React', 'Angular', 'Svelte', 'Vue']}
-        icon={<IconHash size={14} />}
-        withinPortal
-      />
-    </div>
+    <Select
+      maw={320}
+      mx="auto"
+      label="Pick a hashtag"
+      placeholder="Pick a hashtag"
+      data={['React', 'Angular', 'Svelte', 'Vue']}
+      icon={<IconHash size="1rem" />}
+      withinPortal
+    />
   );
 }
 

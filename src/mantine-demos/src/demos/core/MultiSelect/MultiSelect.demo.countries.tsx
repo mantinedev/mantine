@@ -6,6 +6,8 @@ import {
   CloseButton,
   SelectItemProps,
   MultiSelectValueProps,
+  rem,
+  Flex,
 } from '@mantine/core';
 import { MantineDemo } from '@mantine/ds';
 import { countriesData, flags } from './_countries-data';
@@ -14,11 +16,12 @@ const code = `
 import { forwardRef } from 'react';
 import {
   MultiSelect,
-  MultiSelectProps,
   Box,
   CloseButton,
   SelectItemProps,
   MultiSelectValueProps,
+  rem,
+  Flex,
 } from '@mantine/core';
 
 const countriesData = [
@@ -47,15 +50,17 @@ function Value({
           cursor: 'default',
           alignItems: 'center',
           backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.white,
-          border: \`1px solid \${theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.colors.gray[4]}\`,
-          paddingLeft: 10,
-          borderRadius: 4,
+          border: \`\${rem(1)} solid \${
+            theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.colors.gray[4]
+          }\`,
+          paddingLeft: theme.spacing.xs,
+          borderRadius: theme.radius.sm,
         })}
       >
         <Box mr={10}>
           <Flag />
         </Box>
-        <Box sx={{ lineHeight: 1, fontSize: 12 }}>{label}</Box>
+        <Box sx={{ lineHeight: 1, fontSize: rem(12) }}>{label}</Box>
         <CloseButton
           onMouseDown={onRemove}
           variant="transparent"
@@ -72,17 +77,17 @@ const Item = forwardRef<HTMLDivElement, SelectItemProps>(({ label, value, ...oth
   const Flag = flags[value];
   return (
     <div ref={ref} {...others}>
-      <Box sx={{ display: 'flex', alignItems: 'center' }}>
+      <Flex align="center">
         <Box mr={10}>
           <Flag />
         </Box>
         <div>{label}</div>
-      </Box>
+      </Flex>
     </div>
   );
 });
 
-function Demo(props: Partial<MultiSelectProps>) {
+function Demo() {
   return (
     <MultiSelect
       data={countriesData}
@@ -92,8 +97,7 @@ function Demo(props: Partial<MultiSelectProps>) {
       searchable
       defaultValue={['US', 'FI']}
       placeholder="Pick countries"
-      label="Which countries you visited last year?"
-      {...props}
+      label="Which countries did you visit last year?"
     />
   );
 }
@@ -115,17 +119,17 @@ function Value({
           cursor: 'default',
           alignItems: 'center',
           backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.white,
-          border: `1px solid ${
+          border: `${rem(1)} solid ${
             theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.colors.gray[4]
           }`,
-          paddingLeft: 10,
-          borderRadius: 4,
+          paddingLeft: theme.spacing.xs,
+          borderRadius: theme.radius.sm,
         })}
       >
         <Box mr={10}>
           <Flag />
         </Box>
-        <Box sx={{ lineHeight: 1, fontSize: 12 }}>{label}</Box>
+        <Box sx={{ lineHeight: 1, fontSize: rem(12) }}>{label}</Box>
         <CloseButton
           onMouseDown={onRemove}
           variant="transparent"
@@ -142,12 +146,12 @@ const Item = forwardRef<HTMLDivElement, SelectItemProps>(({ label, value, ...oth
   const Flag = flags[value];
   return (
     <div ref={ref} {...others}>
-      <Box sx={{ display: 'flex', alignItems: 'center' }}>
+      <Flex align="center">
         <Box mr={10}>
           <Flag />
         </Box>
         <div>{label}</div>
-      </Box>
+      </Flex>
     </div>
   );
 });
@@ -170,9 +174,9 @@ export function CountriesSelect(props: Partial<MultiSelectProps>) {
 
 function Demo() {
   return (
-    <div style={{ maxWidth: 400, marginLeft: 'auto', marginRight: 'auto' }}>
+    <Box maw={400} mx="auto">
       <CountriesSelect />
-    </div>
+    </Box>
   );
 }
 

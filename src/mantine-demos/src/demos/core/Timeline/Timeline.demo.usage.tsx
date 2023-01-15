@@ -1,5 +1,6 @@
 import React from 'react';
 import { MantineDemo } from '@mantine/ds';
+import { Box } from '@mantine/core';
 import { TimelineBase } from './_base';
 
 const code = `
@@ -35,9 +36,9 @@ function Demo() {
 
 function Demo() {
   return (
-    <div style={{ maxWidth: 320, marginLeft: 'auto', marginRight: 'auto' }}>
+    <Box maw={320} mx="auto">
       <TimelineBase />
-    </div>
+    </Box>
   );
 }
 

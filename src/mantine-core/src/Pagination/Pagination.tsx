@@ -6,6 +6,7 @@ import {
   MantineColor,
   Selectors,
   useComponentDefaultProps,
+  getSize,
 } from '@mantine/styles';
 import { Group, GroupProps } from '../Group/Group';
 import { DefaultItem, PaginationItemProps } from './DefaultItem/DefaultItem';
@@ -47,13 +48,13 @@ export interface PaginationProps
     page: number | 'dots' | 'prev' | 'next' | 'first' | 'last'
   ) => string | undefined;
 
-  /** Spacing between items from theme or number to set value in px, defaults to theme.spacing.xs / 2 */
+  /** Key of theme.spacing or any valid CSS value, defaults to theme.spacing.xs / 2 */
   spacing?: MantineNumberSize;
 
-  /** Predefined item size or number to set width and height in px */
+  /** Sets item width and height */
   size?: MantineNumberSize;
 
-  /** Predefined item radius or number to set border-radius in px */
+  /** Key of theme.radius or any valid CSS value to set border-radius, theme.defaultRadius by default */
   radius?: MantineNumberSize;
 
   /** Show/hide jump to start/end controls */
@@ -141,7 +142,7 @@ export const Pagination = forwardRef<HTMLDivElement, PaginationProps>((props, re
     <Group
       className={cx(classes.root, className)}
       role="navigation"
-      spacing={spacing || theme.fn.size({ size, sizes: theme.spacing }) / 2}
+      spacing={spacing || `calc(${getSize({ size, sizes: theme.spacing })} / 2)`}
       ref={ref}
       sx={sx}
       unstyled={unstyled}

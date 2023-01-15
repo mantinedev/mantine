@@ -1,8 +1,8 @@
-import { createStyles } from '@mantine/styles';
+import { createStyles, rem, getSize } from '@mantine/styles';
 
 export default createStyles((theme, _params, { size }) => ({
   input: {
     fontFamily: theme.fontFamilyMonospace,
-    fontSize: theme.fn.size({ size, sizes: theme.fontSizes }) - 2,
+    fontSize: `calc(${getSize({ size, sizes: theme.fontSizes })} - ${rem(2)})`,
   },
 }));

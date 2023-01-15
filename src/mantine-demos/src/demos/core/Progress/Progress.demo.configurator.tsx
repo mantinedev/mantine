@@ -3,11 +3,7 @@ import { MantineDemo } from '@mantine/ds';
 import { Progress, ProgressProps } from '@mantine/core';
 
 function Wrapper(props: ProgressProps) {
-  return (
-    <div style={{ width: '100%', margin: 'auto' }}>
-      <Progress {...props} />
-    </div>
-  );
+  return <Progress {...props} />;
 }
 
 const codeTemplate = (props: string) => `

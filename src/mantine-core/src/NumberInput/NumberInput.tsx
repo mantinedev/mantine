@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef, forwardRef } from 'react';
 import { useMergedRef, assignRef, useOs, clamp } from '@mantine/hooks';
-import { DefaultProps, Selectors, useComponentDefaultProps } from '@mantine/styles';
+import { DefaultProps, Selectors, useComponentDefaultProps, rem, getSize } from '@mantine/styles';
 import { TextInput } from '../TextInput';
 import { InputStylesNames, InputWrapperStylesNames } from '../Input';
 import { getInputMode } from './get-input-mode/get-input-mode';
@@ -104,11 +104,11 @@ const defaultParser: Parser = (num) => {
 };
 
 const CHEVRON_SIZES = {
-  xs: 10,
-  sm: 14,
-  md: 16,
-  lg: 18,
-  xl: 20,
+  xs: rem(10),
+  sm: rem(14),
+  md: rem(16),
+  lg: rem(18),
+  xl: rem(20),
 };
 
 const defaultProps: Partial<NumberInputProps> = {
@@ -161,7 +161,7 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>((props
     ...others
   } = useComponentDefaultProps('NumberInput', defaultProps, props);
 
-  const { classes, cx, theme } = useStyles(
+  const { classes, cx } = useStyles(
     { radius },
     { classNames, styles, unstyled, name: 'NumberInput', variant, size }
   );
@@ -321,7 +321,7 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>((props
         onPointerUp={onStepDone}
         onPointerLeave={onStepDone}
       >
-        <Chevron size={theme.fn.size({ size, sizes: CHEVRON_SIZES })} direction="up" />
+        <Chevron size={getSize({ size, sizes: CHEVRON_SIZES })} direction="up" />
       </button>
       <button
         type="button"
@@ -335,7 +335,7 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>((props
         onPointerUp={onStepDone}
         onPointerLeave={onStepDone}
       >
-        <Chevron size={theme.fn.size({ size, sizes: CHEVRON_SIZES })} direction="down" />
+        <Chevron size={getSize({ size, sizes: CHEVRON_SIZES })} direction="down" />
       </button>
     </div>
   );
@@ -435,7 +435,9 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>((props
         rightSection ||
         (disabled || readOnly || hideControls || variant === 'unstyled' ? null : controls)
       }
-      rightSectionWidth={rightSectionWidth ?? theme.fn.size({ size, sizes: CONTROL_SIZES }) + 1}
+      rightSectionWidth={
+        rightSectionWidth ?? `calc(${getSize({ size, sizes: CONTROL_SIZES })} + ${rem(1)})`
+      }
       radius={radius}
       max={max}
       min={min}

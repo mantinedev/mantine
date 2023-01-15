@@ -17,8 +17,8 @@ export interface ScrollAreaProps
     React.ComponentPropsWithRef<'div'> {
   variant?: string;
 
-  /** Scrollbar size in px */
-  scrollbarSize?: number;
+  /** Scrollbar size */
+  scrollbarSize?: number | string;
 
   /** Scrollbars type */
   type?: 'auto' | 'always' | 'scroll' | 'hover' | 'never';

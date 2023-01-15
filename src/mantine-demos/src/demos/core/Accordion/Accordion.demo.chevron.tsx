@@ -1,6 +1,7 @@
 import React from 'react';
 import { IconPlus } from '@tabler/icons';
 import { MantineDemo } from '@mantine/ds';
+import { Box } from '@mantine/core';
 import { BaseDemo } from './_base';
 
 const code = `
@@ -10,7 +11,7 @@ import { IconPlus } from '@tabler/icons';
 function Demo() {
   return (
     <Accordion
-      chevron={<IconPlus size={16} />}
+      chevron={<IconPlus size="1rem" />}
       styles={{
         chevron: {
           '&[data-rotate]': {
@@ -19,7 +20,7 @@ function Demo() {
         },
       }}
     >
-      {/* <Accordion.Item /> components */}
+      {/* ... content */}
     </Accordion>
   );
 }
@@ -28,7 +29,7 @@ function Demo() {
 export function IconReplaceDemo() {
   return (
     <BaseDemo
-      chevron={<IconPlus size={16} />}
+      chevron={<IconPlus size="1rem" />}
       styles={{
         chevron: {
           '&[data-rotate]': {
@@ -42,9 +43,9 @@ export function IconReplaceDemo() {
 
 function Demo() {
   return (
-    <div style={{ maxWidth: 380, marginLeft: 'auto', marginRight: 'auto' }}>
+    <Box maw={380} mx="auto">
       <IconReplaceDemo />
-    </div>
+    </Box>
   );
 }
 

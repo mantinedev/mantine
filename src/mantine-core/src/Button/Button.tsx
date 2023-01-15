@@ -8,6 +8,7 @@ import {
   Selectors,
   useComponentDefaultProps,
   Variants,
+  getSize,
 } from '@mantine/styles';
 import { createPolymorphicComponent } from '@mantine/utils';
 import { UnstyledButton } from '../UnstyledButton';
@@ -36,7 +37,7 @@ export interface ButtonProps extends DefaultProps<ButtonStylesNames, ButtonStyle
   /** Sets button width to 100% of parent element */
   fullWidth?: boolean;
 
-  /** Button border-radius from theme or number to set border-radius in px */
+  /** Key of theme.radius or any valid CSS value to set border-radius, theme.defaultRadius by default */
   radius?: MantineNumberSize;
 
   /** Controls button appearance */
@@ -117,7 +118,7 @@ export const _Button = forwardRef<HTMLButtonElement, ButtonProps>((props, ref) =
   const loader = (
     <Loader
       color={colors.color}
-      size={theme.fn.size({ size, sizes }).height / 2}
+      size={`calc(${(getSize({ size, sizes }) as any).height} / 2)`}
       {...loaderProps}
     />
   );

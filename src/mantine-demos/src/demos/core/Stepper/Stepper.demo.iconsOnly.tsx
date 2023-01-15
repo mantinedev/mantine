@@ -13,9 +13,9 @@ function Demo() {
 
   return (
     <Stepper active={active} onStepClick={setActive}>
-      <Stepper.Step icon={<IconUserCheck size={18} />} />
-      <Stepper.Step icon={<IconMailOpened size={18} />} />
-      <Stepper.Step icon={<IconShieldCheck size={18} />} />
+      <Stepper.Step icon={<IconUserCheck size="1.1rem" />} />
+      <Stepper.Step icon={<IconMailOpened size="1.1rem" />} />
+      <Stepper.Step icon={<IconShieldCheck size="1.1rem" />} />
     </Stepper>
   );
 }
@@ -25,9 +25,9 @@ function Demo() {
   const [active, setActive] = useState(0);
   return (
     <Stepper active={active} onStepClick={setActive}>
-      <Stepper.Step icon={<IconUserCheck size={18} />} />
-      <Stepper.Step icon={<IconMailOpened size={18} />} />
-      <Stepper.Step icon={<IconShieldCheck size={18} />} />
+      <Stepper.Step icon={<IconUserCheck size="1.1rem" />} />
+      <Stepper.Step icon={<IconMailOpened size="1.1rem" />} />
+      <Stepper.Step icon={<IconShieldCheck size="1.1rem" />} />
     </Stepper>
   );
 }

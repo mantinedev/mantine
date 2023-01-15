@@ -11,7 +11,7 @@ function Demo() {
   const networkStatus = useNetwork();
 
   return (
-    <Table sx={{ maxWidth: 300, tableLayout: 'fixed' }} mx="auto">
+    <Table maw={300} sx={{ tableLayout: 'fixed' }} mx="auto">
       <thead>
         <tr>
           <th>Property</th>
@@ -62,7 +62,7 @@ function Demo() {
   const networkStatus = useNetwork();
 
   return (
-    <Table sx={{ maxWidth: 300, tableLayout: 'fixed' }} mx="auto">
+    <Table maw={300} sx={{ tableLayout: 'fixed' }} mx="auto">
       <thead>
         <tr>
           <th>Property</th>

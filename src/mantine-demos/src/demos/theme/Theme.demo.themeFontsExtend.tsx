@@ -34,7 +34,7 @@ function Demo() {
         headings: { fontFamily: 'Greycliff CF, sans-serif' },
       }}
     >
-      <Title style={{ textAlign: 'center', marginBottom: 10 }} order={3}>
+      <Title mb="xs" style={{ textAlign: 'center' }} order={3}>
         Greycliff CF or sans-serif title
       </Title>
 

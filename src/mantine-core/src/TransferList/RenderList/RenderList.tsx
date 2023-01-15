@@ -1,5 +1,5 @@
 import React, { useRef, useState } from 'react';
-import { DefaultProps, Selectors, MantineNumberSize } from '@mantine/styles';
+import { DefaultProps, Selectors, MantineNumberSize, rem } from '@mantine/styles';
 import { useScrollIntoView } from '@mantine/hooks';
 import { groupOptions } from '@mantine/utils';
 import { SelectScrollArea } from '../../Select/SelectScrollArea/SelectScrollArea';
@@ -252,7 +252,7 @@ export function RenderList({
           ref={scrollableRef}
           onMouseLeave={() => setHovered(-1)}
           className={classes.transferListItems}
-          style={{ height, position: 'relative', overflowX: 'hidden' }}
+          style={{ height: rem(height), position: 'relative', overflowX: 'hidden' }}
         >
           {groupedItems.length > 0 || unGroupedItems.length > 0 ? (
             <>

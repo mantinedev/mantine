@@ -4,6 +4,7 @@ import {
   DefaultProps,
   MantineColor,
   MantineNumberSize,
+  rem,
   Selectors,
   useComponentDefaultProps,
   Variants,
@@ -58,7 +59,7 @@ export interface NavLinkProps extends DefaultProps<NavLinkStylesNames, NavLinkSt
   /** If set to true, right section will not rotate when collapse is opened */
   disableRightSectionRotation?: boolean;
 
-  /** Key of theme.spacing or number to set collapsed links padding-left in px */
+  /** Key of theme.spacing or any valid CSS value to set collapsed links padding-left */
   childrenOffset?: MantineNumberSize;
 
   /** Adds disabled styles to root element */
@@ -155,7 +156,11 @@ export const _NavLink = forwardRef<HTMLButtonElement, NavLinkProps>((props, ref)
           >
             {withChildren
               ? rightSection || (
-                  <ChevronIcon width={14} height={14} style={{ transform: 'rotate(-90deg)' }} />
+                  <ChevronIcon
+                    width={rem(14)}
+                    height={rem(14)}
+                    style={{ transform: 'rotate(-90deg)' }}
+                  />
                 )
               : rightSection}
           </span>

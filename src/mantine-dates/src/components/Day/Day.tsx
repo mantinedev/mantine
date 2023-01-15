@@ -24,7 +24,7 @@ export interface DayProps
   /** Date that should be displayed */
   date: Date;
 
-  /** Key of theme.radius or number to set border-radius in px */
+  /** Key of theme.radius or any valid CSS value to set border-radius, theme.defaultRadius by default */
   radius?: MantineNumberSize;
 
   /** Day size */

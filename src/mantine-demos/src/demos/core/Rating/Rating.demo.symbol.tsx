@@ -10,7 +10,7 @@ import { IconSun, IconMoon } from '@tabler/icons';
 function Demo() {
   return (
     <Group position="center">
-      <Rating emptySymbol={<IconSun />} fullSymbol={<IconMoon />} />
+      <Rating emptySymbol={<IconSun size="1rem" />} fullSymbol={<IconMoon size="1rem" />} />
     </Group>
   );
 }
@@ -19,7 +19,7 @@ function Demo() {
 function Demo() {
   return (
     <Group position="center">
-      <Rating emptySymbol={<IconSun />} fullSymbol={<IconMoon />} />
+      <Rating emptySymbol={<IconSun size="1rem" />} fullSymbol={<IconMoon size="1rem" />} />
     </Group>
   );
 }

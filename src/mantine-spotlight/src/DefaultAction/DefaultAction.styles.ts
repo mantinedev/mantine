@@ -1,4 +1,4 @@
-import { createStyles, MantineNumberSize } from '@mantine/core';
+import { createStyles, MantineNumberSize, rem } from '@mantine/core';
 
 export interface DefaultActionStylesParams {
   radius: MantineNumberSize;
@@ -9,7 +9,7 @@ export default createStyles((theme, { radius }: DefaultActionStylesParams) => ({
     position: 'relative',
     display: 'block',
     width: '100%',
-    padding: '10px 12px',
+    padding: `${rem(10)} ${rem(12)}`,
     borderRadius: theme.fn.radius(radius),
   },
 

@@ -5,6 +5,8 @@ import {
   MantineTheme,
   MantineGradient,
   CSSObject,
+  rem,
+  getSize,
 } from '@mantine/styles';
 
 export const ACTION_ICON_VARIANTS = [
@@ -24,11 +26,11 @@ export interface ActionIconStylesParams {
 }
 
 export const sizes = {
-  xs: 18,
-  sm: 22,
-  md: 28,
-  lg: 34,
-  xl: 44,
+  xs: rem(18),
+  sm: rem(22),
+  md: rem(28),
+  lg: rem(34),
+  xl: rem(44),
 };
 
 interface GetVariantStyles {
@@ -55,7 +57,7 @@ function getVariantStyles({ variant, theme, color, gradient }: GetVariantStyles)
 
   if (ACTION_ICON_VARIANTS.includes(variant)) {
     return {
-      border: `1px solid ${colors.border}`,
+      border: `${rem(1)} solid ${colors.border}`,
       backgroundColor: colors.background,
       color: colors.color,
       ...theme.fn.hover({
@@ -77,10 +79,10 @@ export default createStyles(
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'center',
-      height: theme.fn.size({ size, sizes }),
-      minHeight: theme.fn.size({ size, sizes }),
-      width: theme.fn.size({ size, sizes }),
-      minWidth: theme.fn.size({ size, sizes }),
+      height: getSize({ size, sizes }),
+      minHeight: getSize({ size, sizes }),
+      width: getSize({ size, sizes }),
+      minWidth: getSize({ size, sizes }),
       ...getVariantStyles({ variant, theme, color, gradient }),
 
       '&:active': theme.activeStyles,
@@ -113,11 +115,7 @@ export default createStyles(
 
         '&::before': {
           content: '""',
-          position: 'absolute',
-          top: -1,
-          left: -1,
-          right: -1,
-          bottom: -1,
+          ...theme.fn.cover(rem(-1)),
           backgroundColor:
             theme.colorScheme === 'dark'
               ? theme.fn.rgba(theme.colors.dark[7], 0.5)

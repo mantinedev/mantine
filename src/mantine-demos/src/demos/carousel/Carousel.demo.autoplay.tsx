@@ -13,7 +13,7 @@ function Demo() {
   const autoplay = useRef(Autoplay({ delay: 2000 }));
   return (
     <Carousel
-      sx={{ maxWidth: 320 }}
+      maw={320}
       mx="auto"
       withIndicators
       height={200}
@@ -35,7 +35,7 @@ function Demo() {
 
   return (
     <Carousel
-      sx={{ maxWidth: 320 }}
+      maw={320}
       mx="auto"
       withIndicators
       height={200}

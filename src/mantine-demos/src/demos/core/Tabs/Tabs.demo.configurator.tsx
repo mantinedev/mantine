@@ -8,13 +8,13 @@ function Wrapper(props: TabsProps) {
   return (
     <Tabs defaultValue="gallery" {...props}>
       <Tabs.List>
-        <Tabs.Tab value="gallery" icon={<IconPhoto size={14} />}>
+        <Tabs.Tab value="gallery" icon={<IconPhoto size="0.8rem" />}>
           Gallery
         </Tabs.Tab>
-        <Tabs.Tab value="messages" icon={<IconMessageCircle size={14} />}>
+        <Tabs.Tab value="messages" icon={<IconMessageCircle size="0.8rem" />}>
           Messages
         </Tabs.Tab>
-        <Tabs.Tab value="settings" icon={<IconSettings size={14} />}>
+        <Tabs.Tab value="settings" icon={<IconSettings size="0.8rem" />}>
           Settings
         </Tabs.Tab>
       </Tabs.List>
@@ -44,9 +44,9 @@ function Demo() {
   return (
     <Tabs${props} defaultValue="gallery">
       <Tabs.List>
-        <Tabs.Tab value="gallery" icon={<IconPhoto size={14} />}>Gallery</Tabs.Tab>
-        <Tabs.Tab value="messages" icon={<IconMessageCircle size={14} />}>Messages</Tabs.Tab>
-        <Tabs.Tab value="settings" icon={<IconSettings size={14} />}>Settings</Tabs.Tab>
+        <Tabs.Tab value="gallery" icon={<IconPhoto size="0.8rem" />}>Gallery</Tabs.Tab>
+        <Tabs.Tab value="messages" icon={<IconMessageCircle size="0.8rem" />}>Messages</Tabs.Tab>
+        <Tabs.Tab value="settings" icon={<IconSettings size="0.8rem" />}>Settings</Tabs.Tab>
       </Tabs.List>
 
       <Tabs.Panel value="gallery" ${panelProps}>

@@ -1,15 +1,15 @@
-import { createStyles } from '@mantine/styles';
+import { createStyles, rem, getSize } from '@mantine/styles';
 
 export interface ColorPickerStylesParams {
   fullWidth: boolean;
 }
 
 export const sizes = {
-  xs: 180,
-  sm: 200,
-  md: 240,
-  lg: 280,
-  xl: 320,
+  xs: rem(180),
+  sm: rem(200),
+  md: rem(240),
+  lg: rem(280),
+  xl: rem(320),
 };
 
 export default createStyles((theme, { fullWidth }: ColorPickerStylesParams, { size }) => ({
@@ -17,14 +17,14 @@ export default createStyles((theme, { fullWidth }: ColorPickerStylesParams, { si
 
   wrapper: {
     boxSizing: 'border-box',
-    width: fullWidth ? '100%' : theme.fn.size({ size, sizes }),
-    padding: 1,
+    width: fullWidth ? '100%' : getSize({ size, sizes }),
+    padding: rem(1),
   },
 
   body: {
     display: 'flex',
     boxSizing: 'border-box',
-    paddingTop: theme.fn.size({ size, sizes: theme.spacing }) / 2,
+    paddingTop: `calc(${getSize({ size, sizes: theme.spacing })} / 2)`,
   },
 
   sliders: {
@@ -40,7 +40,7 @@ export default createStyles((theme, { fullWidth }: ColorPickerStylesParams, { si
     boxSizing: 'border-box',
 
     '& + &': {
-      marginTop: 5,
+      marginTop: rem(5),
     },
   },
 

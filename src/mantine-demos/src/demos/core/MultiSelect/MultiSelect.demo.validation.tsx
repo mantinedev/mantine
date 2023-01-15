@@ -1,5 +1,5 @@
 import React from 'react';
-import { MultiSelect } from '@mantine/core';
+import { MultiSelect, Box } from '@mantine/core';
 import { MantineDemo } from '@mantine/ds';
 import { data } from './_data';
 
@@ -13,7 +13,7 @@ const code = `
 
 function Demo() {
   return (
-    <div style={{ maxWidth: 400, marginLeft: 'auto', marginRight: 'auto' }}>
+    <Box maw={400} mx="auto">
       <MultiSelect
         data={data}
         label="Your favorite frameworks/libraries"
@@ -22,13 +22,13 @@ function Demo() {
       />
 
       <MultiSelect
-        style={{ marginTop: 15 }}
+        mt="md"
         data={data}
         label="Your favorite frameworks/libraries"
         placeholder="Pick all that you like"
         error="Pick at least one item"
       />
-    </div>
+    </Box>
   );
 }
 

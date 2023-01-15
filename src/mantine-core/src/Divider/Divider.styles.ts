@@ -1,15 +1,15 @@
-import { createStyles, MantineColor, MantineTheme } from '@mantine/styles';
+import { createStyles, MantineColor, MantineTheme, rem, getSize } from '@mantine/styles';
 
 export interface DividerStylesParams {
   color: MantineColor;
 }
 
 const sizes = {
-  xs: 1,
-  sm: 2,
-  md: 3,
-  lg: 4,
-  xl: 5,
+  xs: rem(1),
+  sm: rem(2),
+  md: rem(3),
+  lg: rem(4),
+  xl: rem(5),
 };
 
 function getColor(theme: MantineTheme, color: MantineColor) {
@@ -50,15 +50,15 @@ export default createStyles((theme, { color }: DividerStylesParams, { size, vari
     '&::before': {
       content: '""',
       flex: 1,
-      height: 1,
-      borderTop: `${theme.fn.size({ size, sizes })}px ${variant} ${getColor(theme, color)}`,
+      height: rem(1),
+      borderTop: `${getSize({ size, sizes })} ${variant} ${getColor(theme, color)}`,
       marginRight: theme.spacing.xs,
     },
 
     '&::after': {
       content: '""',
       flex: 1,
-      borderTop: `${theme.fn.size({ size, sizes })}px ${variant} ${getColor(theme, color)}`,
+      borderTop: `${getSize({ size, sizes })} ${variant} ${getColor(theme, color)}`,
       marginLeft: theme.spacing.xs,
     },
   },
@@ -76,7 +76,7 @@ export default createStyles((theme, { color }: DividerStylesParams, { size, vari
 
   horizontal: {
     border: 0,
-    borderTopWidth: theme.fn.size({ size, sizes }),
+    borderTopWidth: rem(getSize({ size, sizes })),
     borderTopColor: getColor(theme, color),
     borderTopStyle: variant as any,
     margin: 0,
@@ -86,7 +86,7 @@ export default createStyles((theme, { color }: DividerStylesParams, { size, vari
     border: 0,
     alignSelf: 'stretch',
     height: 'auto',
-    borderLeftWidth: theme.fn.size({ size, sizes }),
+    borderLeftWidth: rem(getSize({ size, sizes })),
     borderLeftColor: getColor(theme, color),
     borderLeftStyle: variant as any,
   },

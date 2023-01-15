@@ -9,6 +9,7 @@ import {
   PopoverProps,
   Selectors,
   useComponentDefaultProps,
+  rem,
 } from '@mantine/core';
 import { useDisclosure, useInputState, useWindowEvent } from '@mantine/hooks';
 import { ControlBase, RichTextEditorControlBaseProps } from '../ControlBase/ControlBase';
@@ -142,7 +143,7 @@ export const LinkControl = forwardRef<HTMLButtonElement, RichTextEditorLinkContr
                     className={classes.linkEditorExternalControl}
                     unstyled={unstyled}
                   >
-                    <IconExternalLink size={14} stroke={1.5} />
+                    <IconExternalLink size={rem(14)} stroke={1.5} />
                   </UnstyledButton>
                 </Tooltip>
               }

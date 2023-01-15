@@ -1,5 +1,5 @@
 import React from 'react';
-import { Group, Avatar, Text, Accordion, AccordionProps } from '@mantine/core';
+import { Group, Avatar, Text, Accordion, AccordionProps, Box } from '@mantine/core';
 import { MantineDemo } from '@mantine/ds';
 import { charactersList } from './_mockdata';
 
@@ -109,9 +109,9 @@ export function AccordionDemo(props: Partial<AccordionProps>) {
 
 function Demo() {
   return (
-    <div style={{ maxWidth: 540, marginLeft: 'auto', marginRight: 'auto' }}>
+    <Box maw={540} mx="auto">
       <AccordionDemo />
-    </div>
+    </Box>
   );
 }
 

@@ -28,19 +28,19 @@ export interface TooltipProps extends TooltipBaseProps {
   /** Controls opened state */
   opened?: boolean;
 
-  /** Space between target element and tooltip in px */
+  /** Space between target element and tooltip */
   offset?: number;
 
   /** Determines whether component should have an arrow */
   withArrow?: boolean;
 
-  /** Arrow size in px */
+  /** Arrow size */
   arrowSize?: number;
 
-  /** Arrow offset in px */
+  /** Arrow offset */
   arrowOffset?: number;
 
-  /** Arrow radius in px */
+  /** Arrow radius */
   arrowRadius?: number;
 
   /** Arrow position **/

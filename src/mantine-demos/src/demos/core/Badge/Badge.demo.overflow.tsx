@@ -1,43 +1,44 @@
 import React from 'react';
 import { MantineDemo } from '@mantine/ds';
-import { Badge } from '@mantine/core';
+import { Badge, Box, Flex } from '@mantine/core';
 
 const code = `
-import { Badge } from '@mantine/core';
+import { Badge, Box, Flex } from '@mantine/core';
+
 function Demo() {
   return (
-    <>
-      <div style={{ width: 200 }}>
+    <Flex>
+      <Box w={200}>
         <Badge variant="filled" fullWidth>
           Full width badge
         </Badge>
-      </div>
+      </Box>
 
-      <div style={{ width: 120 }}>
+      <Box w={120} ml="md">
         <Badge variant="filled" fullWidth>
           Badge with overflow
         </Badge>
-      </div>
-    </>
+      </Box>
+    </Flex>
   );
 }
 `;
 
 function Demo() {
   return (
-    <div style={{ display: 'flex' }}>
-      <div style={{ width: 200 }}>
+    <Flex>
+      <Box w={200}>
         <Badge variant="filled" fullWidth>
           Full width badge
         </Badge>
-      </div>
+      </Box>
 
-      <div style={{ width: 120, marginLeft: 15 }}>
+      <Box w={120} ml="md">
         <Badge variant="filled" fullWidth>
           Badge with overflow
         </Badge>
-      </div>
-    </div>
+      </Box>
+    </Flex>
   );
 }
 

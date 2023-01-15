@@ -1,11 +1,11 @@
-import { createStyles } from '@mantine/styles';
+import { createStyles, rem, getSize } from '@mantine/styles';
 
 const sizes = {
-  xs: 320,
-  sm: 380,
-  md: 440,
-  lg: 620,
-  xl: 780,
+  xs: rem(320),
+  sm: rem(380),
+  md: rem(440),
+  lg: rem(620),
+  xl: rem(780),
 };
 
 interface ModalRootStylesParams {
@@ -18,9 +18,9 @@ interface ModalRootStylesParams {
 export default createStyles(
   (theme, { yOffset, xOffset, centered, fullScreen }: ModalRootStylesParams, { size }) => ({
     content: {
-      flex: fullScreen ? '0 0 100%' : `0 0 ${theme.fn.sizeUnit(theme.fn.size({ size, sizes }))}`,
+      flex: fullScreen ? '0 0 100%' : `0 0 ${getSize({ size, sizes })}`,
       maxWidth: '100%',
-      maxHeight: fullScreen ? undefined : `calc(100vh - (${theme.fn.sizeUnit(yOffset)} * 2))`,
+      maxHeight: fullScreen ? undefined : `calc(100vh - (${rem(yOffset)} * 2))`,
       height: fullScreen ? '100vh' : undefined,
       borderRadius: fullScreen ? 0 : undefined,
       overflowY: 'auto',

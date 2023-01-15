@@ -36,7 +36,7 @@ export const ModalBaseContent = forwardRef<HTMLElement, ModalBaseContentProps>((
 
   return (
     <Transition mounted={ctx.opened} transition="pop" {...ctx.transitionProps} {...transitionProps}>
-      {(styles) => (
+      {(transitionStyles) => (
         <div className={cx(classes.inner)}>
           <FocusTrap active={ctx.opened && ctx.trapFocus}>
             <Paper
@@ -49,7 +49,7 @@ export const ModalBaseContent = forwardRef<HTMLElement, ModalBaseContentProps>((
               onKeyDown={handleKeyDown}
               ref={ref}
               className={cx(classes.content, className)}
-              style={{ ...style, ...styles }}
+              style={{ ...style, ...transitionStyles }}
               shadow={ctx.shadow}
               {...others}
             >

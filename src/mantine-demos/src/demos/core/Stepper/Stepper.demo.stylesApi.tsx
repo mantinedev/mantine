@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { MantineDemo } from '@mantine/ds';
-import { Stepper, createStyles } from '@mantine/core';
+import { Stepper, createStyles, rem } from '@mantine/core';
 
 const code = `
 import { useState } from 'react';
-import { Stepper, createStyles } from '@mantine/core';
+import { Stepper, createStyles, rem } from '@mantine/core';
 
 const useStyles = createStyles((theme) => ({
   root: {
@@ -13,8 +13,8 @@ const useStyles = createStyles((theme) => ({
   },
 
   separator: {
-    height: 2,
-    borderTop: \`2px dashed \${theme.colorScheme === 'dark' ? theme.colors.dark[3] : theme.colors.gray[4]}\`,
+    height: rem(2),
+    borderTop: \`\${rem(2)} dashed \${theme.colorScheme === 'dark' ? theme.colors.dark[3] : theme.colors.gray[4]}\`,
     borderRadius: theme.radius.xl,
     backgroundColor: 'transparent',
   },
@@ -65,8 +65,8 @@ const useStyles = createStyles((theme) => ({
   },
 
   separator: {
-    height: 2,
-    borderTop: `2px dashed ${
+    height: rem(2),
+    borderTop: `${rem(2)} dashed ${
       theme.colorScheme === 'dark' ? theme.colors.dark[3] : theme.colors.gray[4]
     }`,
     borderRadius: theme.radius.xl,

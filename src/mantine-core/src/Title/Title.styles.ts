@@ -1,4 +1,4 @@
-import { createStyles, MantineTheme } from '@mantine/styles';
+import { createStyles, MantineTheme, rem } from '@mantine/styles';
 import type { TitleSize } from './Title';
 
 type HeadingElement = 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
@@ -11,7 +11,7 @@ export interface TitleStylesParams {
 
 function getFontSize(size: TitleSize, element: HeadingElement, theme: MantineTheme) {
   if (typeof size !== 'undefined') {
-    return size in theme.headings.sizes ? theme.headings.sizes[size].fontSize : size;
+    return size in theme.headings.sizes ? theme.headings.sizes[size].fontSize : rem(size);
   }
 
   return theme.headings.sizes[element].fontSize;

@@ -1,4 +1,11 @@
-import { createStyles, MantineColor, MantineNumberSize, MantineTheme } from '@mantine/styles';
+import {
+  createStyles,
+  MantineColor,
+  MantineNumberSize,
+  MantineTheme,
+  rem,
+  getSize,
+} from '@mantine/styles';
 
 export interface NavLinkStylesParams {
   color: MantineColor;
@@ -37,7 +44,7 @@ export default createStyles(
       display: 'flex',
       alignItems: 'center',
       width: '100%',
-      padding: `8px ${theme.spacing.sm}px`,
+      padding: `${rem(8)} ${theme.spacing.sm}`,
       userSelect: 'none',
       ...getVariantStyles({ theme, variant, color }),
 
@@ -57,7 +64,7 @@ export default createStyles(
       justifyContent: 'center',
       alignItems: 'center',
       alignSelf: alignIcon === 'center' ? 'center' : 'flex-start',
-      paddingTop: alignIcon === 'center' ? undefined : 4,
+      paddingTop: alignIcon === 'center' ? undefined : rem(4),
     },
 
     rightSection: {
@@ -90,7 +97,7 @@ export default createStyles(
     },
 
     children: {
-      paddingLeft: theme.fn.size({ size: childrenOffset, sizes: theme.spacing }),
+      paddingLeft: getSize({ size: childrenOffset, sizes: theme.spacing }),
     },
   })
 );

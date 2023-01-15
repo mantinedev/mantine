@@ -1,9 +1,9 @@
-import { createStyles } from '@mantine/styles';
+import { createStyles, getSize } from '@mantine/styles';
 
 export default createStyles((theme, _params, { size }) => ({
   label: {
     display: 'inline-block',
-    fontSize: theme.fn.size({ size, sizes: theme.fontSizes }),
+    fontSize: getSize({ size, sizes: theme.fontSizes }),
     fontWeight: 500,
     color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.colors.gray[9],
     wordBreak: 'break-word',

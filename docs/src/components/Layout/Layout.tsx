@@ -5,6 +5,7 @@ import {
   ColorScheme,
   Global,
   createEmotionCache,
+  rem,
 } from '@mantine/core';
 import { useHotkeys, useLocalStorage } from '@mantine/hooks';
 import rtlPlugin from 'stylis-plugin-rtl';
@@ -64,7 +65,7 @@ export default function Layout({ children, location }: LayoutProps) {
             styles={(theme) => ({
               body: {
                 color: theme.colorScheme === 'dark' ? theme.colors.dark[1] : theme.colors.gray[8],
-                fontSize: 15,
+                fontSize: rem(15),
               },
             })}
           />

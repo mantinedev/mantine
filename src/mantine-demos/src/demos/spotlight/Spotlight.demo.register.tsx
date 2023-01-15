@@ -40,14 +40,14 @@ function SpotlightControls() {
                 id: 'secret-action-1',
                 title: 'Secret action',
                 description: 'It was registered with a button click',
-                icon: <IconAlien size={18} />,
+                icon: <IconAlien size="1.2rem" />,
                 onTrigger: () => console.log('Secret'),
               },
               {
                 id: 'secret-action-2',
                 title: 'Another secret action',
                 description: 'You can register multiple actions with just one command',
-                icon: <IconAlien size={18} />,
+                icon: <IconAlien size="1.2rem" />,
                 onTrigger: () => console.log('Secret'),
               },
             ]);
@@ -66,7 +66,7 @@ export function Demo() {
   return (
     <SpotlightProvider
       actions={actions}
-      searchIcon={<IconSearch size={18} />}
+      searchIcon={<IconSearch size="1.2rem" />}
       searchPlaceholder="Search..."
       shortcut="mod + shift + C"
     >
@@ -105,14 +105,14 @@ function SpotlightControls() {
                 id: 'secret-action-1',
                 title: 'Secret action',
                 description: 'It was registered with a button click',
-                icon: <IconAlien size={18} />,
+                icon: <IconAlien size="1.2rem" />,
                 onTrigger: () => console.log('Secret'),
               },
               {
                 id: 'secret-action-2',
                 title: 'Another secret action',
                 description: 'You can register multiple actions with just one command',
-                icon: <IconAlien size={18} />,
+                icon: <IconAlien size="1.2rem" />,
                 onTrigger: () => console.log('Secret'),
               },
             ]);
@@ -129,7 +129,7 @@ export function Demo() {
   return (
     <SpotlightProvider
       actions={actions}
-      searchIcon={<IconSearch size={18} />}
+      searchIcon={<IconSearch size="1.2rem" />}
       shortcut="mod + shift + C"
       searchPlaceholder="Search..."
     >

@@ -33,7 +33,7 @@ export interface ActionIconProps
   /** Gradient input, only used when variant="gradient", theme.defaultGradient by default */
   gradient?: MantineGradient;
 
-  /** Key of theme.radius or number to set border-radius in px, theme.defaultRadius by default */
+  /** Key of theme.radius or any valid CSS value to set border-radius, theme.defaultRadius by default */
   radius?: MantineNumberSize;
 
   /** Predefined button size or any valid CSS value to set width and height */

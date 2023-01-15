@@ -1,6 +1,6 @@
 import React from 'react';
 import { MantineDemo } from '@mantine/ds';
-import { Rating, useMantineTheme, Group } from '@mantine/core';
+import { Rating, useMantineTheme, Group, rem } from '@mantine/core';
 import {
   IconMoodCry,
   IconMoodSad,
@@ -11,7 +11,7 @@ import {
 } from '@tabler/icons';
 
 const code = `
-import { Rating, useMantineTheme } from '@mantine/core';
+import { Rating, useMantineTheme, rem } from '@mantine/core';
 import {
   IconMoodEmpty,
   IconMoodCry,
@@ -24,10 +24,7 @@ import {
 function Demo() {
 
   const getEmptyIcon = (value: number) => {
-    const defaultProps = {
-      size: 24,
-      color: 'gray',
-    };
+    const defaultProps = { size: rem(24), color: 'gray' };
     switch (value) {
       case 1:
         return <IconMoodCry {...defaultProps} />;
@@ -45,9 +42,7 @@ function Demo() {
   };
 
   const getFullIcon = (value: number) => {
-    const defaultProps = {
-      size: 24,
-    };
+    const defaultProps = { size: rem(24) };
     const theme = useMantineTheme();
 
     switch (value) {
@@ -74,10 +69,8 @@ function Demo() {
 
 function Demo() {
   const getEmptyIcon = (value: number) => {
-    const defaultProps = {
-      size: 24,
-      color: 'gray',
-    };
+    const defaultProps = { size: rem(24), color: 'gray' };
+
     switch (value) {
       case 1:
         return <IconMoodCry {...defaultProps} />;
@@ -93,10 +86,9 @@ function Demo() {
         return <IconMoodEmpty {...defaultProps} />;
     }
   };
+
   const getFullIcon = (value: number) => {
-    const defaultProps = {
-      size: 24,
-    };
+    const defaultProps = { size: rem(24) };
     const theme = useMantineTheme();
 
     switch (value) {

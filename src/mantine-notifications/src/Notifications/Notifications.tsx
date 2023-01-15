@@ -7,6 +7,7 @@ import {
   getDefaultZIndex,
   Box,
   PortalProps,
+  rem,
 } from '@mantine/core';
 import { useReducedMotion, useForceUpdate, useDidUpdate } from '@mantine/hooks';
 import { NotificationsPositioning } from '../types';
@@ -44,11 +45,11 @@ export interface NotificationsProps
   /** Notification transitions duration, 0 to turn transitions off */
   transitionDuration?: number;
 
-  /** Notification width in px, cannot exceed 100% */
-  containerWidth?: number;
+  /** Notification width, cannot exceed 100% */
+  containerWidth?: number | string;
 
-  /** Notification max-height in px, used for transitions */
-  notificationMaxHeight?: number;
+  /** Notification max-height, used for transitions */
+  notificationMaxHeight?: number | string;
 
   /** Maximum amount of notifications displayed at a time, other new notifications will be added to queue */
   limit?: number;
@@ -65,8 +66,8 @@ export function Notifications({
   position = 'bottom-right',
   autoClose = 4000,
   transitionDuration = 250,
-  containerWidth = 440,
-  notificationMaxHeight = 200,
+  containerWidth = rem(440),
+  notificationMaxHeight = rem(200),
   limit = 5,
   zIndex = getDefaultZIndex('overlay'),
   style,

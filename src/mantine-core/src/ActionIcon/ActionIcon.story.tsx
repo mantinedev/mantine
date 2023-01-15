@@ -5,7 +5,7 @@ import { ActionIcon } from './ActionIcon';
 export default { title: 'ActionIcon' };
 
 export function Loading() {
-  const sizes = ['xs', 'sm', 'md', 'lg', 'xl', 60, 100, 200].map((size) => (
+  const sizes = ['xs', 'sm', 'md', 'lg', 'xl', '15rem'].map((size) => (
     <ActionIcon key={size} size={size} variant="filled" color="blue" mt="md" loading>
       $
     </ActionIcon>

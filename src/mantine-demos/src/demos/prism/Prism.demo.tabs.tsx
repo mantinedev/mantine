@@ -93,13 +93,13 @@ function Demo() {
   return (
     <Prism.Tabs defaultValue="styles.css">
       <Prism.TabsList>
-        <Prism.Tab value="styles.css" icon={<CSSIcon width={16} height={16} />}>
+        <Prism.Tab value="styles.css" icon={<CSSIcon width="1rem" height="1rem" />}>
           styles.css
         </Prism.Tab>
-        <Prism.Tab value="decorator.py" icon={<PythonIcon width={16} height={16} />}>
+        <Prism.Tab value="decorator.py" icon={<PythonIcon width="1rem" height="1rem" />}>
           decorator.py
         </Prism.Tab>
-        <Prism.Tab value="component.tsx" icon={<TsIcon width={16} height={16} />}>
+        <Prism.Tab value="component.tsx" icon={<TsIcon width="1rem" height="1rem" />}>
           component.tsx
         </Prism.Tab>
       </Prism.TabsList>
@@ -122,13 +122,13 @@ function Demo() {
   return (
     <Prism.Tabs defaultValue="styles.css">
       <Prism.TabsList>
-        <Prism.Tab value="styles.css" icon={<CSSIcon width={16} height={16} />}>
+        <Prism.Tab value="styles.css" icon={<CSSIcon width="1rem" height="1rem" />}>
           styles.css
         </Prism.Tab>
-        <Prism.Tab value="decorator.py" icon={<PythonIcon width={16} height={16} />}>
+        <Prism.Tab value="decorator.py" icon={<PythonIcon width="1rem" height="1rem" />}>
           decorator.py
         </Prism.Tab>
-        <Prism.Tab value="component.tsx" icon={<TsIcon width={16} height={16} />}>
+        <Prism.Tab value="component.tsx" icon={<TsIcon width="1rem" height="1rem" />}>
           component.tsx
         </Prism.Tab>
       </Prism.TabsList>

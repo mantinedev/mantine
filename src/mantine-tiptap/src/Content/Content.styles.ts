@@ -1,4 +1,4 @@
-import { createStyles, MantineTheme } from '@mantine/core';
+import { createStyles, MantineTheme, rem } from '@mantine/core';
 
 interface ContentStylesParams {
   withCodeHighlightStyles: boolean;
@@ -21,7 +21,7 @@ function getCodeHighlight(withCodeHighlightStyles: boolean, theme: MantineTheme)
       borderRadius: theme.fn.radius(),
       color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.colors.gray[9],
       fontFamily: theme.fontFamilyMonospace,
-      padding: `${theme.spacing.md}px ${theme.spacing.xl}px`,
+      padding: `${theme.spacing.md} ${theme.spacing.xl}`,
 
       '& code': {
         background: 'none',
@@ -78,16 +78,16 @@ function getTypographyStyles(withTypographyStyles: boolean) {
     },
 
     '& ul li, & ol li': {
-      marginTop: 2,
+      marginTop: rem(2),
     },
 
     '& ul, & ol': {
-      marginTop: 5,
-      marginBottom: 5,
+      marginTop: rem(5),
+      marginBottom: rem(5),
     },
 
     '& p': {
-      marginBottom: 7,
+      marginBottom: rem(7),
     },
 
     '& h1, & h2, & h3, & h4, & h5, & h6, & p': {

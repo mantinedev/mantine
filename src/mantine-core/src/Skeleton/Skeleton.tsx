@@ -20,7 +20,7 @@ export interface SkeletonProps
   /** If Skeleton is a circle, it's width and border-radius will be equal to height */
   circle?: boolean;
 
-  /** Radius from theme.radius or number to set border-radius in px */
+  /** Key of theme.radius or any valid CSS value to set border-radius, theme.defaultRadius by default */
   radius?: MantineNumberSize;
 
   /** Whether to show the animation effect */

@@ -1,11 +1,11 @@
-import { createStyles, MantineNumberSize } from '@mantine/core';
+import { createStyles, MantineNumberSize, getSize, rem } from '@mantine/core';
 
 export const sizes = {
-  xs: 30,
-  sm: 36,
-  md: 42,
-  lg: 48,
-  xl: 54,
+  xs: rem(30),
+  sm: rem(36),
+  md: rem(42),
+  lg: rem(48),
+  xl: rem(54),
 };
 
 export interface DayStylesParams {
@@ -18,9 +18,9 @@ export default createStyles((theme, { radius, isStatic }: DayStylesParams, { siz
   const lightColors = theme.fn.variant({ variant: 'light' });
   return {
     day: {
-      width: theme.fn.size({ size, sizes }),
-      height: theme.fn.size({ size, sizes }),
-      fontSize: theme.fn.size({ size, sizes: theme.fontSizes }),
+      width: getSize({ size, sizes }),
+      height: getSize({ size, sizes }),
+      fontSize: getSize({ size, sizes: theme.fontSizes }),
       display: 'inline-flex',
       justifyContent: 'center',
       alignItems: 'center',

@@ -3,6 +3,7 @@ import {
   DefaultProps,
   MantineNumberSize,
   MantineSize,
+  rem,
   Selectors,
   useComponentDefaultProps,
   Variants,
@@ -23,7 +24,7 @@ export interface InputSharedProps {
   /** Adds icon on the left side of input */
   icon?: React.ReactNode;
 
-  /** Width of icon section in px */
+  /** Width of icon section */
   iconWidth?: React.CSSProperties['width'];
 
   /** Right section of input, similar to icon but on the right */
@@ -41,7 +42,7 @@ export interface InputSharedProps {
   /** Sets required on input element */
   required?: boolean;
 
-  /** Input border-radius from theme or number to set border-radius in px */
+  /** Key of theme.radius or any valid CSS value to set border-radius, theme.defaultRadius by default */
   radius?: MantineNumberSize;
 
   /** Defines input appearance, defaults to default in light color scheme and filled in dark */
@@ -105,7 +106,7 @@ export const _Input = forwardRef<HTMLInputElement, InputProps>((props, ref) => {
       radius,
       multiline,
       invalid: !!error,
-      rightSectionWidth,
+      rightSectionWidth: rem(rightSectionWidth),
       iconWidth,
       withRightSection: !!rightSection,
       offsetBottom,

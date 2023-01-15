@@ -71,7 +71,7 @@ export interface ModalBaseSettings {
   /** z-index CSS property of root element, 200 by default */
   zIndex?: number;
 
-  /** Key of theme.spacing or number to set content, header and footer padding in px, 'md' by default */
+  /** Key of theme.spacing or any valid CSS value to set content, header and footer padding, 'md' by default */
   padding?: MantineNumberSize;
 
   /** Id used to connect modal with body and title */

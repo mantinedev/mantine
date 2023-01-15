@@ -1,4 +1,4 @@
-import { createStyles, CSSObject, MantineTheme } from '@mantine/styles';
+import { createStyles, CSSObject, MantineTheme, rem } from '@mantine/styles';
 import { GROUP_POSITIONS } from '../../Group/Group.styles';
 import { TabsStylesParams, TabsPosition } from '../Tabs.types';
 
@@ -22,7 +22,7 @@ function getVariantStyles(
           : 'borderLeft'
         : inverted
         ? 'borderTop'
-        : 'borderBottom']: `2px solid ${
+        : 'borderBottom']: `${rem(2)} solid ${
         theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[3]
       }`,
     };
@@ -36,7 +36,7 @@ function getVariantStyles(
           : 'borderLeft'
         : inverted
         ? 'borderTop'
-        : 'borderBottom']: `1px solid ${
+        : 'borderBottom']: `${rem(1)} solid ${
         theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[3]
       }`,
     };
@@ -44,7 +44,7 @@ function getVariantStyles(
 
   if (variant === 'pills') {
     return {
-      gap: `calc(${theme.spacing.sm}px / 2)`,
+      gap: `calc(${theme.spacing.sm} / 2)`,
     };
   }
 

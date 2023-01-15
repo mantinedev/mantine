@@ -17,7 +17,7 @@ export interface TextProps extends DefaultProps {
   /** Text content */
   children?: React.ReactNode;
 
-  /** Key of theme.fontSizes or number to set font-size in px */
+  /** Key of theme.fontSizes or any valid CSS value to set font-size */
   size?: MantineNumberSize;
 
   /** Key of theme.colors or any valid CSS color */

@@ -41,10 +41,10 @@ export interface StepperProps
   /** Active and progress Step colors from theme.colors */
   color?: MantineColor;
 
-  /** Step icon size in px */
+  /** Step icon size */
   iconSize?: number;
 
-  /** Content padding-top from theme.spacing or number to set value in px */
+  /** Key of theme.spacing or any valid CSS value to set content padding-top */
   contentPadding?: MantineNumberSize;
 
   /** Component orientation */
@@ -56,7 +56,7 @@ export interface StepperProps
   /** Component size */
   size?: MantineSize;
 
-  /** Radius from theme.radius, or number to set border-radius in px */
+  /** Key of theme.radius or any valid CSS value to set border-radius, "xl" by default */
   radius?: MantineNumberSize;
 
   /** Breakpoint at which orientation will change from horizontal to vertical */

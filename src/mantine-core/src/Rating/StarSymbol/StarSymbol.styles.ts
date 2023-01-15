@@ -1,4 +1,4 @@
-import { createStyles, MantineColor } from '@mantine/styles';
+import { createStyles, MantineColor, rem, getSize } from '@mantine/styles';
 
 export interface StarSymbolStylesParams {
   type: 'empty' | 'full';
@@ -6,11 +6,11 @@ export interface StarSymbolStylesParams {
 }
 
 const sizes = {
-  xs: 14,
-  sm: 18,
-  md: 20,
-  lg: 28,
-  xl: 32,
+  xs: rem(14),
+  sm: rem(18),
+  md: rem(20),
+  lg: rem(28),
+  xl: rem(32),
 };
 
 export default createStyles((theme, { type, color }: StarSymbolStylesParams, { size }) => {
@@ -21,8 +21,8 @@ export default createStyles((theme, { type, color }: StarSymbolStylesParams, { s
     icon: {
       stroke: type === 'empty' ? emptyColor : fullColor,
       fill: type === 'empty' ? emptyColor : fullColor,
-      width: theme.fn.size({ size, sizes }),
-      height: theme.fn.size({ size, sizes }),
+      width: getSize({ size, sizes }),
+      height: getSize({ size, sizes }),
     },
   };
 });

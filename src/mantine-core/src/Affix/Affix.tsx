@@ -21,7 +21,7 @@ export interface AffixProps
   /** Determines whether component should be rendered within portal, defaults to true */
   withinPortal?: boolean;
 
-  /** Fixed position in px, defaults to { bottom: 0, right: 0 } */
+  /** Affix position on screen, defaults to { bottom: 0, right: 0 } */
   position?: {
     top?: string | number;
     left?: string | number;

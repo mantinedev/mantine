@@ -1,11 +1,18 @@
-import { createStyles, MantineColor, MantineNumberSize, getStylesRef } from '@mantine/styles';
+import {
+  createStyles,
+  MantineColor,
+  MantineNumberSize,
+  getStylesRef,
+  rem,
+  getSize,
+} from '@mantine/styles';
 
 const sizes = {
-  xs: 16,
-  sm: 20,
-  md: 24,
-  lg: 30,
-  xl: 36,
+  xs: rem(16),
+  sm: rem(20),
+  md: rem(24),
+  lg: rem(30),
+  xl: rem(36),
 };
 
 export interface CheckboxStylesParams {
@@ -30,14 +37,15 @@ export default createStyles(
     }: CheckboxStylesParams,
     { size }
   ) => {
-    const _size = theme.fn.size({ size, sizes });
+    const _size = getSize({ size, sizes });
     const colors = theme.fn.variant({ variant: 'filled', color });
 
     return {
       icon: {
+        ...theme.fn.cover(),
         ref: getStylesRef('icon'),
         color: indeterminate ? 'inherit' : theme.white,
-        transform: indeterminate ? 'none' : 'translateY(5px) scale(0.5)',
+        transform: indeterminate ? 'none' : `translateY(${rem(5)}) scale(0.5)`,
         opacity: indeterminate ? 1 : 0,
         transitionProperty: 'opacity, transform',
         transitionTimingFunction: 'ease',
@@ -46,10 +54,6 @@ export default createStyles(
         width: '60%',
         position: 'absolute',
         zIndex: 1,
-        top: 0,
-        bottom: 0,
-        left: 0,
-        right: 0,
         margin: 'auto',
 
         '@media (prefers-reduced-motion)': {
@@ -68,7 +72,7 @@ export default createStyles(
         ...theme.fn.focusStyles(),
         appearance: 'none',
         backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.white,
-        border: `1px solid ${
+        border: `${rem(1)} solid ${
           error
             ? theme.fn.variant({ variant: 'filled', color: 'red' }).background
             : theme.colorScheme === 'dark'

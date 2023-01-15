@@ -44,13 +44,13 @@ export interface InnerSpotlightProps
   /** Backdrop overlay opacity (0-1), e.g. 0.65 */
   overlayOpacity?: number;
 
-  /** Backdrop overlay blur in px */
+  /** Backdrop overlay blur */
   overlayBlur?: number;
 
   /** Value from theme.shadows or any valid css box-shadow value */
   shadow?: MantineShadow;
 
-  /** Radius from theme.radius, or number to set border-radius in px, defaults to theme.defaultRadius */
+  /** Key of theme.radius or any valid CSS value to set border-radius, theme.defaultRadius by default */
   radius?: MantineNumberSize;
 
   /** Should spotlight be rendered in the center of the screen */

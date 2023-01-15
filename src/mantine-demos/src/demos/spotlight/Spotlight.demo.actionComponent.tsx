@@ -1,11 +1,20 @@
 import React from 'react';
 import { SpotlightAction, SpotlightActionProps } from '@mantine/spotlight';
-import { createStyles, UnstyledButton, Group, Text, Image, Center, Badge } from '@mantine/core';
+import {
+  createStyles,
+  UnstyledButton,
+  Group,
+  Text,
+  Image,
+  Center,
+  Badge,
+  rem,
+} from '@mantine/core';
 import { MantineDemo } from '@mantine/ds';
 import { Wrapper } from './_wrapper';
 
 const code = `
-import { createStyles, UnstyledButton, Group, Text, Image, Center, Badge } from '@mantine/core';
+import { createStyles, UnstyledButton, Group, Text, Image, Center, Badge, rem } from '@mantine/core';
 import { SpotlightProvider, SpotlightAction, SpotlightActionProps } from '@mantine/spotlight';
 
 const actions: SpotlightAction[] = [
@@ -45,7 +54,7 @@ const useStyles = createStyles((theme) => ({
     position: 'relative',
     display: 'block',
     width: '100%',
-    padding: '10px 12px',
+    padding: \`\${rem(10)} \${rem(12)}\`,
     borderRadius: theme.radius.sm,
   },
 
@@ -146,7 +155,7 @@ const useStyles = createStyles((theme) => ({
     position: 'relative',
     display: 'block',
     width: '100%',
-    padding: '10px 12px',
+    padding: `${rem(10)} ${rem(12)}`,
     borderRadius: theme.radius.sm,
   },
 

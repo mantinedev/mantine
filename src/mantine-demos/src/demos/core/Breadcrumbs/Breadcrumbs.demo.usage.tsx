@@ -19,7 +19,7 @@ function Demo() {
   return (
     <>
       <Breadcrumbs>{items}</Breadcrumbs>
-      <Breadcrumbs separator="→">{items}</Breadcrumbs>
+      <Breadcrumbs separator="→" mt="xs">{items}</Breadcrumbs>
     </>
   );
 }
@@ -41,7 +41,7 @@ function Demo() {
   return (
     <>
       <Breadcrumbs>{items}</Breadcrumbs>
-      <Breadcrumbs separator={theme.dir === 'ltr' ? '→' : '←'} style={{ marginTop: 10 }}>
+      <Breadcrumbs separator={theme.dir === 'ltr' ? '→' : '←'} mt="xs">
         {items}
       </Breadcrumbs>
     </>

@@ -1,6 +1,6 @@
 import React from 'react';
 import { MantineDemo } from '@mantine/ds';
-import { TypographyStylesProvider } from '@mantine/core';
+import { TypographyStylesProvider, Box } from '@mantine/core';
 
 const html = `
 <h1>Example article</h1>
@@ -40,11 +40,11 @@ function Demo() {
 
 function Demo() {
   return (
-    <div style={{ maxWidth: 560, marginLeft: 'auto', marginRight: 'auto' }}>
+    <Box maw={560} mx="auto">
       <TypographyStylesProvider>
         <div dangerouslySetInnerHTML={{ __html: html }} />
       </TypographyStylesProvider>
-    </div>
+    </Box>
   );
 }
 

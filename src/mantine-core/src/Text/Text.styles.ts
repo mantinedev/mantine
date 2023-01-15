@@ -4,6 +4,7 @@ import {
   CSSObject,
   MantineColor,
   MantineGradient,
+  getSize,
 } from '@mantine/styles';
 
 export interface TextStylesParams {
@@ -111,9 +112,7 @@ export default createStyles(
         color: getTextColor({ color, theme }),
         fontFamily: inherit ? 'inherit' : theme.fontFamily,
         fontSize:
-          inherit || size === undefined
-            ? 'inherit'
-            : theme.fn.size({ size, sizes: theme.fontSizes }),
+          inherit || size === undefined ? 'inherit' : getSize({ size, sizes: theme.fontSizes }),
         lineHeight: inherit ? 'inherit' : inline ? 1 : theme.lineHeight,
         textDecoration: getTextDecoration({ underline, strikethrough }),
         WebkitTapHighlightColor: 'transparent',

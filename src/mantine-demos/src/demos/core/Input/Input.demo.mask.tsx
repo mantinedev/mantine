@@ -22,11 +22,9 @@ function Demo() {
 function Demo() {
   const id = useId();
   return (
-    <div style={{ maxWidth: 320, marginLeft: 'auto', marginRight: 'auto' }}>
-      <Input.Wrapper id={id} label="Your phone" required>
-        <Input component={InputMask} mask="+7 (999) 999-99-99" id={id} placeholder="Your phone" />
-      </Input.Wrapper>
-    </div>
+    <Input.Wrapper id={id} label="Your phone" required maw={320} mx="auto">
+      <Input component={InputMask} mask="+7 (999) 999-99-99" id={id} placeholder="Your phone" />
+    </Input.Wrapper>
   );
 }
 

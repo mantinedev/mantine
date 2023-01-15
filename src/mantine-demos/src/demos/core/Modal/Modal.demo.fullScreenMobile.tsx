@@ -1,6 +1,6 @@
 import React from 'react';
 import { useDisclosure, useMediaQuery } from '@mantine/hooks';
-import { Modal, Group, Button } from '@mantine/core';
+import { Modal, Group, Button, rem } from '@mantine/core';
 import { MantineDemo } from '@mantine/ds';
 
 const code = `
@@ -9,7 +9,7 @@ import { Modal, Button, Group } from '@mantine/core';
 
 function Demo() {
   const [opened, { open, close }] = useDisclosure(false);
-  const isMobile = useMediaQuery('(max-width: 600px)');
+  const isMobile = useMediaQuery("(max-width: ${rem(800)})");
 
   return (
     <>
@@ -33,7 +33,7 @@ function Demo() {
 
 function Demo() {
   const [opened, { open, close }] = useDisclosure(false);
-  const isMobile = useMediaQuery('(max-width: 600px)');
+  const isMobile = useMediaQuery(`(max-width: ${rem(800)})`);
 
   return (
     <>

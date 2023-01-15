@@ -37,21 +37,21 @@ export function Demo() {
   ]);
 
   return (
-    <div style={{ maxWidth: 400, marginLeft: 'auto', marginRight: 'auto' }}>
-      <MultiSelect
-        label="Creatable MultiSelect"
-        data={data}
-        placeholder="Select items"
-        searchable
-        creatable
-        getCreateLabel={(query) => `+ Create ${query}`}
-        onCreate={(query) => {
-          const item = { value: query, label: query };
-          setData((current) => [...current, item]);
-          return item;
-        }}
-      />
-    </div>
+    <MultiSelect
+      maw={400}
+      mx="auto"
+      label="Creatable MultiSelect"
+      data={data}
+      placeholder="Select items"
+      searchable
+      creatable
+      getCreateLabel={(query) => `+ Create ${query}`}
+      onCreate={(query) => {
+        const item = { value: query, label: query };
+        setData((current) => [...current, item]);
+        return item;
+      }}
+    />
   );
 }
 

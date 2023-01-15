@@ -1,5 +1,5 @@
 import React from 'react';
-import { InputBase } from '@mantine/core';
+import { InputBase, Box } from '@mantine/core';
 import { MantineDemo } from '@mantine/ds';
 import InputMask from 'react-input-mask';
 
@@ -29,7 +29,7 @@ function Demo() {
 
 function Demo() {
   return (
-    <div style={{ maxWidth: 320, margin: 'auto' }}>
+    <Box maw={320} mx="auto">
       <InputBase
         label="Input mask"
         placeholder="Your phone"
@@ -41,7 +41,7 @@ function Demo() {
         <option value="react">Angular</option>
         <option value="svelte">Svelte</option>
       </InputBase>
-    </div>
+    </Box>
   );
 }
 

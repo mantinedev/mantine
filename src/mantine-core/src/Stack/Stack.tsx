@@ -9,7 +9,7 @@ export interface StackProps
     React.ComponentPropsWithoutRef<'div'> {
   variant?: string;
 
-  /** Key of theme.spacing or number to set gap in px */
+  /** Key of theme.spacing or any valid CSS value to set gap */
   spacing?: MantineNumberSize;
 
   /** align-items CSS property */

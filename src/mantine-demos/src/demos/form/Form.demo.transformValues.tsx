@@ -25,7 +25,7 @@ function Demo() {
   });
 
   return (
-    <Box sx={{ maxWidth: 400 }} mx="auto">
+    <Box maw={400} mx="auto">
       <form
         onSubmit={form.onSubmit((values) => setSubmittedValues(JSON.stringify(values, null, 2)))}
       >
@@ -75,7 +75,7 @@ function Demo() {
   });
 
   return (
-    <Box sx={{ maxWidth: 400 }} mx="auto">
+    <Box maw={400} mx="auto">
       <form
         onSubmit={form.onSubmit((values) => setSubmittedValues(JSON.stringify(values, null, 2)))}
       >

@@ -46,16 +46,16 @@ export interface CarouselProps
   /** Previous control aria-label */
   previousControlLabel?: string;
 
-  /** Previous/next controls size in px */
+  /** Previous/next controls size */
   controlSize?: number;
 
   /** Key of theme.spacing or number to set space between next/previous control and carousel boundary */
   controlsOffset?: MantineNumberSize;
 
-  /** Slide width, defaults to 100%, examples: 200px, 50% */
+  /** Slide width, defaults to 100%, examples: 40rem 50% */
   slideSize?: string | number;
 
-  /** Key of theme.spacing or number to set gap between slides in px */
+  /** Key of theme.spacing or number to set gap between slides */
   slideGap?: MantineNumberSize;
 
   /** Control slideSize and slideGap at different viewport sizes */

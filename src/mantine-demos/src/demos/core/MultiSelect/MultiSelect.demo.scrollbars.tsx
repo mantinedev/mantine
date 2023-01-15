@@ -25,14 +25,14 @@ const data = Array(50)
 
 function Demo() {
   return (
-    <div style={{ maxWidth: 320, marginLeft: 'auto', marginRight: 'auto' }}>
-      <MultiSelect
-        data={data}
-        label="MultiSelect with native scrollbars"
-        placeholder="Dropdown rendered as div element"
-        dropdownComponent="div"
-      />
-    </div>
+    <MultiSelect
+      maw={320}
+      mx="auto"
+      data={data}
+      label="MultiSelect with native scrollbars"
+      placeholder="Dropdown rendered as div element"
+      dropdownComponent="div"
+    />
   );
 }
 

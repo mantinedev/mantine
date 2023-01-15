@@ -4,7 +4,7 @@ import { NotificationsPositioning } from '../../types';
 
 interface NotificationStateStylesProps {
   state: TransitionStatus;
-  maxHeight: number;
+  maxHeight: number | string;
   positioning: NotificationsPositioning;
   transitionDuration: number;
 }

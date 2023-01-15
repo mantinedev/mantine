@@ -21,7 +21,7 @@ export default createStyles((theme, { radius }: ImageStylesParams) => ({
     width: '100%',
     height: '100%',
     border: 0,
-    borderRadius: theme.fn.size({ size: radius, sizes: theme.radius }),
+    borderRadius: theme.fn.radius(radius),
   },
 
   caption: {
@@ -36,6 +36,6 @@ export default createStyles((theme, { radius }: ImageStylesParams) => ({
     justifyContent: 'center',
     color: theme.colorScheme === 'dark' ? theme.colors.dark[2] : theme.colors.gray[6],
     backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.colors.gray[0],
-    borderRadius: theme.fn.size({ size: radius, sizes: theme.radius }),
+    borderRadius: theme.fn.radius(radius),
   },
 }));

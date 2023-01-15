@@ -1,11 +1,11 @@
-import { createStyles } from '@mantine/styles';
+import { createStyles, rem, getSize } from '@mantine/styles';
 
 const sizes = {
-  xs: 320,
-  sm: 380,
-  md: 440,
-  lg: 620,
-  xl: 780,
+  xs: rem(320),
+  sm: rem(380),
+  md: rem(440),
+  lg: rem(620),
+  xl: rem(780),
 };
 
 interface DrawerRootStylesParams {
@@ -15,15 +15,10 @@ interface DrawerRootStylesParams {
 export default createStyles((theme, { position }: DrawerRootStylesParams, { size }) => ({
   content: {
     flex:
-      position === 'right' || position === 'left'
-        ? `0 0 ${theme.fn.sizeUnit(theme.fn.size({ size, sizes }))}`
-        : '0 0 100%',
+      position === 'right' || position === 'left' ? `0 0 ${getSize({ size, sizes })}` : '0 0 100%',
     maxWidth: '100%',
     maxHeight: '100%',
-    height:
-      position === 'right' || position === 'left'
-        ? '100%'
-        : theme.fn.sizeUnit(theme.fn.size({ size, sizes })),
+    height: position === 'right' || position === 'left' ? '100%' : getSize({ size, sizes }),
     borderRadius: 0,
     overflowY: 'auto',
   },

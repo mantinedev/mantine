@@ -29,7 +29,7 @@ describe('@mantine/core/Affix', () => {
         {...defaultProps}
         position={{
           right: '45%',
-          bottom: 120,
+          bottom: '16rem',
           top: '76vh',
           left: '34em',
         }}
@@ -37,7 +37,7 @@ describe('@mantine/core/Affix', () => {
     );
     expect(container.firstChild).toHaveStyle({
       right: '45%',
-      bottom: '120px',
+      bottom: '16rem',
       top: '76vh',
       left: '34em',
     });

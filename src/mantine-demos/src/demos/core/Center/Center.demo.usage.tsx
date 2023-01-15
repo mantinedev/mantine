@@ -1,13 +1,13 @@
 import React from 'react';
 import { MantineDemo } from '@mantine/ds';
-import { Center, useMantineTheme } from '@mantine/core';
+import { Center, Box } from '@mantine/core';
 
 const code = `
 import { Center } from '@mantine/core';
 
 function Demo() {
   return (
-    <Center style={{ width: 400, height: 200 }}>
+    <Center maw={400} h={100} mx="auto">
       <div>All elements inside Center are centered</div>
     </Center>
   );
@@ -15,24 +15,23 @@ function Demo() {
 `;
 
 function Demo() {
-  const theme = useMantineTheme();
   return (
     <Center
-      style={{
-        margin: 'auto',
-        maxWidth: 400,
-        height: 100,
+      maw={400}
+      h={100}
+      mx="auto"
+      sx={(theme) => ({
         backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.colors.blue[0],
-      }}
+      })}
     >
-      <div
-        style={{
+      <Box
+        sx={(theme) => ({
           backgroundColor:
             theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.blue[1],
-        }}
+        })}
       >
         All elements inside Center are centered
-      </div>
+      </Box>
     </Center>
   );
 }

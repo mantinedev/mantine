@@ -24,7 +24,7 @@ export interface RingProgressProps
   /** Ring thickness */
   thickness?: number;
 
-  /** Width and height of the progress ring in px */
+  /** Width and height of the progress ring */
   size?: number;
 
   /** Sets whether the edges of the progress circle are rounded */

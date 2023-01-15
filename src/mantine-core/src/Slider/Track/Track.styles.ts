@@ -1,4 +1,4 @@
-import { createStyles, MantineNumberSize, MantineColor } from '@mantine/styles';
+import { createStyles, MantineNumberSize, MantineColor, getSize } from '@mantine/styles';
 import { sizes } from '../SliderRoot/SliderRoot.styles';
 
 interface TrackStyles {
@@ -12,19 +12,19 @@ export default createStyles(
   (theme, { radius, color, disabled, inverted }: TrackStyles, { size }) => ({
     track: {
       position: 'relative',
-      height: theme.fn.size({ sizes, size }),
+      height: getSize({ sizes, size }),
       width: '100%',
-      marginRight: theme.fn.size({ size, sizes }),
-      marginLeft: theme.fn.size({ size, sizes }),
+      marginRight: getSize({ size, sizes }),
+      marginLeft: getSize({ size, sizes }),
 
       '&::before': {
         content: '""',
         position: 'absolute',
         top: 0,
         bottom: 0,
-        borderRadius: theme.fn.size({ size: radius, sizes: theme.radius }),
-        right: -theme.fn.size({ size, sizes }),
-        left: -theme.fn.size({ size, sizes }),
+        borderRadius: theme.fn.radius(radius),
+        right: `calc(${getSize({ size, sizes })} * -1)`,
+        left: `calc(${getSize({ size, sizes })} * -1)`,
         backgroundColor: inverted
           ? disabled
             ? theme.colorScheme === 'dark'
@@ -52,7 +52,7 @@ export default createStyles(
           ? theme.colors.dark[3]
           : theme.colors.gray[4]
         : theme.fn.variant({ variant: 'filled', color }).background,
-      borderRadius: theme.fn.size({ size: radius, sizes: theme.radius }),
+      borderRadius: theme.fn.radius(radius),
     },
   })
 );

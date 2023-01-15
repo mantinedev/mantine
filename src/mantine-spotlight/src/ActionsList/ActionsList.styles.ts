@@ -1,11 +1,11 @@
-import { createStyles } from '@mantine/core';
+import { createStyles, rem } from '@mantine/core';
 
 export default createStyles((theme) => ({
   nothingFound: {},
 
   actions: {
-    padding: `calc(${theme.spacing.xs}px / 2)`,
-    borderTop: `1px solid ${
+    padding: `calc(${theme.spacing.xs} / 2)`,
+    borderTop: `${rem(1)} solid ${
       theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[2]
     }`,
   },
@@ -14,8 +14,8 @@ export default createStyles((theme) => ({
     textTransform: 'uppercase',
     fontSize: theme.spacing.xs,
     fontWeight: 700,
-    padding: '10px 12px',
+    padding: `${rem(10)} ${rem(12)}`,
     paddingBottom: 0,
-    paddingTop: 15,
+    paddingTop: theme.spacing.md,
   },
 }));

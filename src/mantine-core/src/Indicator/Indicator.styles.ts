@@ -4,6 +4,7 @@ import {
   MantineColor,
   MantineNumberSize,
   keyframes,
+  rem,
 } from '@mantine/styles';
 import { IndicatorPosition } from './Indicator.types';
 
@@ -21,11 +22,11 @@ export interface IndicatorStylesParams {
 const processingAnimation = (color: string) =>
   keyframes({
     from: {
-      boxShadow: `0 0 0.5px 0 ${color}`,
+      boxShadow: `0 0 ${rem(0.5)} 0 ${color}`,
       opacity: 0.6,
     },
     to: {
-      boxShadow: `0 0 0.5px 4.4px ${color}`,
+      boxShadow: `0 0 ${rem(0.5)} ${rem(4.4)} ${color}`,
       opacity: 0,
     },
   });
@@ -91,6 +92,9 @@ export default createStyles(
       primaryFallback: false,
       color: color || theme.primaryColor,
     });
+
+    const _size = rem(size);
+
     return {
       root: {
         position: 'relative',
@@ -101,22 +105,22 @@ export default createStyles(
         ...getPositionStyles(position, offset),
         zIndex,
         position: 'absolute',
-        [withLabel ? 'minWidth' : 'width']: size,
-        height: size,
+        [withLabel ? 'minWidth' : 'width']: _size,
+        height: _size,
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
         fontSize: theme.fontSizes.xs,
-        paddingLeft: withLabel ? `calc(${theme.spacing.xs}px / 2)` : 0,
-        paddingRight: withLabel ? `calc(${theme.spacing.xs}px / 2)` : 0,
-        borderRadius: theme.fn.size({ size: radius, sizes: theme.radius }),
+        paddingLeft: withLabel ? `calc(${theme.spacing.xs} / 2)` : 0,
+        paddingRight: withLabel ? `calc(${theme.spacing.xs} / 2)` : 0,
+        borderRadius: theme.fn.radius(radius),
         backgroundColor: theme.fn.variant({
           variant: 'filled',
           primaryFallback: false,
           color: color || theme.primaryColor,
         }).background,
         border: withBorder
-          ? `2px solid ${theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.white}`
+          ? `${rem(2)} solid ${theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.white}`
           : undefined,
         color: theme.white,
         whiteSpace: 'nowrap',
@@ -129,9 +133,9 @@ export default createStyles(
       common: {
         ...getPositionStyles(position, offset),
         position: 'absolute',
-        [withLabel ? 'minWidth' : 'width']: size,
-        height: size,
-        borderRadius: theme.fn.size({ size: radius, sizes: theme.radius }),
+        [withLabel ? 'minWidth' : 'width']: _size,
+        height: _size,
+        borderRadius: theme.fn.radius(radius),
       },
     };
   }

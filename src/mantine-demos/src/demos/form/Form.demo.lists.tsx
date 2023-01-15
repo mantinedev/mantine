@@ -31,13 +31,13 @@ function Demo() {
         {...form.getInputProps(\`employees.\${index}.active\`, { type: 'checkbox' })}
       />
       <ActionIcon color="red" onClick={() => form.removeListItem('employees', index)}>
-        <IconTrash size={16} />
+        <IconTrash size="1rem" />
       </ActionIcon>
     </Group>
   ));
 
   return (
-    <Box sx={{ maxWidth: 500 }} mx="auto">
+    <Box maw={500} mx="auto">
       {fields.length > 0 ? (
         <Group mb="xs">
           <Text weight={500} size="sm" sx={{ flex: 1 }}>
@@ -94,13 +94,13 @@ function Demo() {
         {...form.getInputProps(`employees.${index}.active`, { type: 'checkbox' })}
       />
       <ActionIcon color="red" onClick={() => form.removeListItem('employees', index)}>
-        <IconTrash size={16} />
+        <IconTrash size="1rem" />
       </ActionIcon>
     </Group>
   ));
 
   return (
-    <Box sx={{ maxWidth: 500 }} mx="auto">
+    <Box maw={500} mx="auto">
       {fields.length > 0 ? (
         <Group mb="xs">
           <Text weight={500} size="sm" sx={{ flex: 1 }}>

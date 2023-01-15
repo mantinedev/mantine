@@ -1,4 +1,4 @@
-import { CSSObject } from '@mantine/styles';
+import { CSSObject, rem } from '@mantine/styles';
 import type { FloatingPosition, FloatingSide, FloatingPlacement, ArrowPosition } from '../types';
 
 function horizontalSide(
@@ -83,11 +83,11 @@ export function getArrowPositionStyles({
 }) {
   const [side, placement = 'center'] = position.split('-') as [FloatingSide, FloatingPlacement];
   const baseStyles = {
-    width: arrowSize,
-    height: arrowSize,
+    width: rem(arrowSize),
+    height: rem(arrowSize),
     transform: 'rotate(45deg)',
     position: 'absolute',
-    [radiusByFloatingSide[side]]: arrowRadius,
+    [radiusByFloatingSide[side]]: rem(arrowRadius),
   };
 
   const arrowPlacement = withBorder ? -arrowSize / 2 - 1 : -arrowSize / 2;

@@ -12,7 +12,7 @@ export type MantineThemeOther = Record<string, any>;
 export type MantineThemeComponents = Record<string, ThemeComponent>;
 
 export interface HeadingStyle {
-  fontSize: CSSProperties['fontSize'];
+  fontSize: string;
   fontWeight: CSSProperties['fontWeight'];
   lineHeight: CSSProperties['lineHeight'];
 }
@@ -41,7 +41,6 @@ interface MantineThemeFunctions {
     useSplittedShade?: boolean
   ): string;
   rgba(color: string, alpha: number): string;
-  size(props: { size: string | number; sizes: Record<string, any> }): any;
   linearGradient(deg: number, ...colors: string[]): string;
   radialGradient(...colors: string[]): string;
   gradient(gradient?: MantineGradient): string;
@@ -55,8 +54,6 @@ interface MantineThemeFunctions {
   hover(hoverStyle: CSSObject): any;
   primaryColor(colorScheme?: ColorScheme): string;
   placeholderStyles(): any;
-  calc(value: unknown, operation: string): string;
-  sizeUnit(value: unknown): string;
 }
 
 export interface MantineTheme {

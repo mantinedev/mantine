@@ -18,8 +18,8 @@ export interface OverlayProps extends DefaultProps<never, OverlayStylesParams> {
   /** Overlay background-color, #000 by default */
   color?: React.CSSProperties['backgroundColor'];
 
-  /** Overlay background blur in px, 0 by default */
-  blur?: number;
+  /** Overlay background blur, 0 by default */
+  blur?: number | string;
 
   /** Changes overlay to gradient, if set color prop is ignored */
   gradient?: string;
@@ -27,7 +27,7 @@ export interface OverlayProps extends DefaultProps<never, OverlayStylesParams> {
   /** Overlay z-index, 200 by default */
   zIndex?: React.CSSProperties['zIndex'];
 
-  /** Key of theme.radius or number to set border-radius in px */
+  /** Key of theme.radius or any valid CSS value to set border-radius, theme.defaultRadius by default */
   radius?: MantineNumberSize;
 
   /** Content rendered inside overlay */

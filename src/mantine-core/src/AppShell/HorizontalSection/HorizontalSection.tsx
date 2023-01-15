@@ -1,5 +1,5 @@
 import React, { forwardRef } from 'react';
-import { DefaultProps, MantineNumberSize, getDefaultZIndex, Global } from '@mantine/styles';
+import { DefaultProps, MantineNumberSize, getDefaultZIndex, Global, rem } from '@mantine/styles';
 import { Box } from '../../Box';
 import { useAppShellContext } from '../AppShell.context';
 import { getSortedBreakpoints } from './get-sorted-breakpoints/get-sorted-breakpoints';
@@ -88,8 +88,8 @@ export const HorizontalSection = forwardRef<HTMLElement, HorizontalSectionProps>
 
     const breakpoints = getSortedBreakpoints(width, theme).reduce(
       (acc, [breakpoint, breakpointSize]) => {
-        acc[`@media (min-width: ${breakpoint}px)`] = {
-          [`--mantine-${section}-width`]: `${breakpointSize}px`,
+        acc[`@media (min-width: ${rem(breakpoint)})`] = {
+          [`--mantine-${section}-width`]: rem(breakpointSize),
         };
 
         return acc;
@@ -110,7 +110,7 @@ export const HorizontalSection = forwardRef<HTMLElement, HorizontalSectionProps>
         <Global
           styles={() => ({
             ':root': {
-              [`--mantine-${section}-width`]: width?.base ? `${width.base}px` : '0px',
+              [`--mantine-${section}-width`]: width?.base ? rem(width.base) : '0rem',
               ...breakpoints,
             },
           })}

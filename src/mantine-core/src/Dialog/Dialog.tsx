@@ -52,7 +52,7 @@ export interface DialogProps
   /** Transition timing function, defaults to theme.transitionTimingFunction */
   transitionTimingFunction?: string;
 
-  /** Predefined dialog width or number to set width in px */
+  /** Dialog width */
   size?: string | number;
 }
 

@@ -13,12 +13,12 @@ function Demo() {
       height={200}
       slideSize="33.333333%"
       slideGap="md"
+      loop
+      align="start"
       breakpoints={[
         { maxWidth: 'md', slideSize: '50%' },
         { maxWidth: 'sm', slideSize: '100%', slideGap: 0 },
       ]}
-      loop
-      align="start"
     >
       <Carousel.Slide>1</Carousel.Slide>
       <Carousel.Slide>2</Carousel.Slide>
@@ -36,12 +36,12 @@ function Demo() {
       height={200}
       slideSize="33.333333%"
       slideGap="md"
+      loop
+      align="start"
       breakpoints={[
         { maxWidth: 'md', slideSize: '50%' },
         { maxWidth: 'sm', slideSize: '100%', slideGap: 0 },
       ]}
-      loop
-      align="start"
     >
       <Slides count={6} />
     </Carousel>

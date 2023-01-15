@@ -1,11 +1,6 @@
 import React, { forwardRef } from 'react';
 import { useId, useUncontrolled } from '@mantine/hooks';
-import {
-  Selectors,
-  DefaultProps,
-  useMantineTheme,
-  useComponentDefaultProps,
-} from '@mantine/styles';
+import { Selectors, DefaultProps, useComponentDefaultProps, rem, getSize } from '@mantine/styles';
 import { extractSystemStyles } from '../Box';
 import { ActionIcon } from '../ActionIcon';
 import { TextInputProps, TextInputStylesNames } from '../TextInput';
@@ -22,7 +17,7 @@ export interface PasswordInputProps
   toggleTabIndex?: -1 | 0;
 
   /** Provide your own visibility toggle icon */
-  visibilityToggleIcon?: React.FC<{ reveal: boolean; size: number }>;
+  visibilityToggleIcon?: React.FC<{ reveal: boolean; size: number | string }>;
 
   /** aria-label for visibility toggle button */
   visibilityToggleLabel?: string;
@@ -38,27 +33,27 @@ export interface PasswordInputProps
 }
 
 const buttonSizes = {
-  xs: 22,
-  sm: 26,
-  md: 28,
-  lg: 32,
-  xl: 40,
+  xs: rem(22),
+  sm: rem(26),
+  md: rem(28),
+  lg: rem(32),
+  xl: rem(40),
 };
 
 const iconSizes = {
-  xs: 12,
-  sm: 15,
-  md: 17,
-  lg: 19,
-  xl: 21,
+  xs: rem(12),
+  sm: rem(15),
+  md: rem(17),
+  lg: rem(19),
+  xl: rem(21),
 };
 
 const rightSectionSizes = {
-  xs: 28,
-  sm: 32,
-  md: 34,
-  lg: 44,
-  xl: 54,
+  xs: rem(28),
+  sm: rem(32),
+  md: rem(34),
+  lg: rem(44),
+  xl: rem(54),
 };
 
 const defaultProps: Partial<PasswordInputProps> = {
@@ -107,8 +102,7 @@ export const PasswordInput = forwardRef<HTMLInputElement, PasswordInputProps>((p
     ...others
   } = useComponentDefaultProps('PasswordInput', defaultProps, props);
 
-  const theme = useMantineTheme();
-  const rightSectionWidth = theme.fn.size({ size, sizes: rightSectionSizes });
+  const rightSectionWidth = getSize({ size, sizes: rightSectionSizes });
   const { classes } = useStyles(
     { rightSectionWidth },
     { name: 'PasswordInput', classNames, styles, unstyled, size, variant }
@@ -129,7 +123,7 @@ export const PasswordInput = forwardRef<HTMLInputElement, PasswordInputProps>((p
       className={classes.visibilityToggle}
       tabIndex={toggleTabIndex}
       radius={radius}
-      size={theme.fn.size({ size, sizes: buttonSizes })}
+      size={getSize({ size, sizes: buttonSizes })}
       aria-hidden={!visibilityToggleLabel}
       aria-label={visibilityToggleLabel}
       unstyled={unstyled}
@@ -144,7 +138,7 @@ export const PasswordInput = forwardRef<HTMLInputElement, PasswordInputProps>((p
         }
       }}
     >
-      <VisibilityToggleIcon reveal={_visible} size={theme.fn.size({ size, sizes: iconSizes })} />
+      <VisibilityToggleIcon reveal={_visible} size={getSize({ size, sizes: iconSizes })} />
     </ActionIcon>
   );
 

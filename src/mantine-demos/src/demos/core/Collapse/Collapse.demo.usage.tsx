@@ -1,37 +1,36 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { MantineDemo } from '@mantine/ds';
-import { Button, Group, Text, Collapse } from '@mantine/core';
+import { useDisclosure } from '@mantine/hooks';
+import { Button, Group, Text, Collapse, Box } from '@mantine/core';
 
 const code = `
-import { useState } from 'react';
-import { Button, Collapse } from '@mantine/core';
+import { Button, Group, Text, Collapse, Box } from '@mantine/core';
+import { useDisclosure } from '@mantine/hooks';
 
 function Demo() {
-  const [opened, setOpened] = useState(false);
+  const [opened, { toggle }] = useDisclosure(false);
 
   return (
-    <>
-      <Button onClick={() => setOpened((o) => !o)}>
-        Toggle content
-      </Button>
+    <Box maw={400} mx="auto">
+      <Group position="center" mb={5}>
+        <Button onClick={toggle}>Toggle content</Button>
+      </Group>
 
       <Collapse in={opened}>
-        {/* content... */}
+        <Text>{/* ... content */}</Text>
       </Collapse>
-    </>
+    </Box>
   );
 }
 `;
 
 function Demo() {
-  const [opened, setOpened] = useState(false);
+  const [opened, { toggle }] = useDisclosure(false);
 
   return (
-    <div style={{ maxWidth: 400, marginLeft: 'auto', marginRight: 'auto' }}>
-      <Group position="center" style={{ marginBottom: 5 }}>
-        <Button onClick={() => setOpened((o) => !o)} style={{ marginBottom: 5 }}>
-          Toggle content
-        </Button>
+    <Box maw={400} mx="auto">
+      <Group position="center" mb={5}>
+        <Button onClick={toggle}>Toggle content</Button>
       </Group>
 
       <Collapse in={opened}>
@@ -46,7 +45,7 @@ function Demo() {
           contained within.
         </Text>
       </Collapse>
-    </div>
+    </Box>
   );
 }
 

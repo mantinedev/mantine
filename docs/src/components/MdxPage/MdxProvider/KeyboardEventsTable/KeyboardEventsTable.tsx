@@ -1,5 +1,5 @@
 import React from 'react';
-import { Kbd, Table, Code } from '@mantine/core';
+import { Kbd, Table, Code, rem } from '@mantine/core';
 
 interface KeyboardEventsTableProps {
   data: { key: string; description: string; condition: string }[];
@@ -19,7 +19,7 @@ export function KeyboardEventsTable({ data }: KeyboardEventsTableProps) {
 
   return (
     <div style={{ overflowX: 'auto' }}>
-      <div style={{ minWidth: 500 }}>
+      <div style={{ minWidth: rem(500) }}>
         <Table verticalSpacing="md">
           <thead>
             <tr>

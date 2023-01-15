@@ -1,5 +1,5 @@
 import React, { forwardRef } from 'react';
-import { DefaultProps, getDefaultZIndex, Global } from '@mantine/styles';
+import { DefaultProps, getDefaultZIndex, Global, rem } from '@mantine/styles';
 import { Box } from '../../Box';
 import { useAppShellContext } from '../AppShell.context';
 import useStyles, {
@@ -74,8 +74,8 @@ export const VerticalSection = forwardRef<HTMLElement, VerticalSectionProps>(
     const breakpoints =
       typeof height === 'object' && height !== null
         ? getSortedBreakpoints(height, theme).reduce((acc, [breakpoint, breakpointSize]) => {
-            acc[`@media (min-width: ${breakpoint}px)`] = {
-              [`--mantine-${section}-height`]: `${breakpointSize}px`,
+            acc[`@media (min-width: ${rem(breakpoint)})`] = {
+              [`--mantine-${section}-height`]: rem(breakpointSize),
             };
 
             return acc;
@@ -94,7 +94,7 @@ export const VerticalSection = forwardRef<HTMLElement, VerticalSectionProps>(
           styles={() => ({
             ':root': {
               [`--mantine-${section}-height`]:
-                typeof height === 'object' ? `${height?.base}px` || '100%' : `${height}px`,
+                typeof height === 'object' ? rem(height?.base) || '100%' : rem(height),
               ...breakpoints,
             },
           })}

@@ -6,6 +6,7 @@ import {
   Affix,
   ActionIcon,
   createEmotionCache,
+  rem,
 } from '@mantine/core';
 import { useHotkeys } from '@mantine/hooks';
 import rtlPlugin from 'stylis-plugin-rtl';
@@ -39,11 +40,11 @@ function ThemeWrapper(props: any) {
           <ActionIcon
             onClick={toggleRtl}
             variant="default"
-            style={{
+            sx={{
               borderBottom: 0,
               borderRight: 0,
-              borderTopLeftRadius: 4,
-              width: 60,
+              borderTopLeftRadius: rem(4),
+              width: rem(60),
               fontWeight: 700,
             }}
             radius={0}

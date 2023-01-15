@@ -25,7 +25,7 @@ export interface CheckboxProps
   /** Key of theme.colors */
   color?: MantineColor;
 
-  /** Key of theme.radius or number to set border-radius in px */
+  /** Key of theme.radius or any valid CSS value to set border-radius, theme.defaultRadius by default */
   radius?: MantineNumberSize;
 
   /** Controls label font-size and checkbox width and height */

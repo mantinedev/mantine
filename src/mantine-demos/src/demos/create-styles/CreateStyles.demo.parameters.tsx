@@ -26,7 +26,7 @@ function Button({ color, radius }: ButtonProps) {
   const { classes } = useStyles({ color, radius });
   return (
     <button type="button" className={classes.button}>
-      {color} button with {radius}px radius
+      {color} button with {radius} radius
     </button>
   );
 }
@@ -62,7 +62,7 @@ function Button({ color, radius }: ButtonProps) {
   const { classes } = useStyles({ color, radius });
   return (
     <button type="button" className={classes.button}>
-      {color} button with {radius}px radius
+      {color} button with {radius} radius
     </button>
   );
 }

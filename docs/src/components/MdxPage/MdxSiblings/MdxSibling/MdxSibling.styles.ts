@@ -1,4 +1,4 @@
-import { createStyles, getStylesRef } from '@mantine/core';
+import { createStyles, getStylesRef, rem } from '@mantine/core';
 
 export default createStyles((theme) => ({
   control: {
@@ -11,7 +11,7 @@ export default createStyles((theme) => ({
     padding: theme.spacing.md,
     borderRadius: theme.radius.md,
     backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.white,
-    border: `1px solid ${
+    border: `${rem(1)} solid ${
       theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[3]
     }`,
 

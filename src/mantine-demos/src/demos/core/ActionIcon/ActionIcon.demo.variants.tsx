@@ -10,18 +10,18 @@ import { IconSettings } from '@tabler/icons';
 function Demo() {
   return (
     <>
-      <ActionIcon variant="transparent"><IconSettings size={16} /></ActionIcon>
-      <ActionIcon variant="subtle"><IconSettings size={16} /></ActionIcon>
-      <ActionIcon variant="default"><IconSettings size={16} /></ActionIcon>
-      <ActionIcon variant="outline"><IconSettings size={16} /></ActionIcon>
-      <ActionIcon variant="filled"><IconSettings size={16} /></ActionIcon>
-      <ActionIcon variant="light"><IconSettings size={16} /></ActionIcon>
+      <ActionIcon variant="transparent"><IconSettings size="1rem" /></ActionIcon>
+      <ActionIcon variant="subtle"><IconSettings size="1rem" /></ActionIcon>
+      <ActionIcon variant="default"><IconSettings size="1rem" /></ActionIcon>
+      <ActionIcon variant="outline"><IconSettings size="1rem" /></ActionIcon>
+      <ActionIcon variant="filled"><IconSettings size="1rem" /></ActionIcon>
+      <ActionIcon variant="light"><IconSettings size="1rem" /></ActionIcon>
     </>
   );
 }
 `;
 
-const icon = <IconSettings size={16} />;
+const icon = <IconSettings size="1rem" />;
 
 export function Demo() {
   return (

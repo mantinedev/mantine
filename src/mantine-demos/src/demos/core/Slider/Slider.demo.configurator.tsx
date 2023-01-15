@@ -1,13 +1,13 @@
 import React from 'react';
 import { MantineDemo } from '@mantine/ds';
-import { Slider, RangeSlider } from '@mantine/core';
+import { Slider, RangeSlider, Box } from '@mantine/core';
 
 function Wrapper(props: any) {
   const { type, ...others } = props;
   const Component = type === 'range' ? RangeSlider : Slider;
 
   return (
-    <div style={{ maxWidth: 400, margin: 'auto' }}>
+    <Box maw={400} mx="auto">
       <Component
         defaultValue={type === 'range' ? [20, 80] : 40}
         marks={[
@@ -17,7 +17,7 @@ function Wrapper(props: any) {
         ]}
         {...others}
       />
-    </div>
+    </Box>
   );
 }
 

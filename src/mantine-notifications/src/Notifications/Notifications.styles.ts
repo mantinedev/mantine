@@ -6,7 +6,7 @@ interface NotificationsStylesParams {
 
 export default createStyles((theme, { zIndex }: NotificationsStylesParams) => ({
   notifications: {
-    width: `calc(100% - ${theme.spacing.md * 2}px)`,
+    width: `calc(100% - ${theme.spacing.md} * 2)`,
     boxSizing: 'border-box',
     position: 'fixed',
     zIndex,

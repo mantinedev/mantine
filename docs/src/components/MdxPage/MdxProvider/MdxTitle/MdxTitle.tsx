@@ -1,5 +1,5 @@
 import React from 'react';
-import { Title } from '@mantine/core';
+import { Title, rem } from '@mantine/core';
 import useStyles from './MdxTitle.styles';
 
 export default function MdxTitle({
@@ -12,7 +12,7 @@ export default function MdxTitle({
 
   if (order === 1) {
     return (
-      <Title className={classes.title} sx={{ fontWeight: 900, fontSize: 44 }}>
+      <Title className={classes.title} sx={{ fontWeight: 900, fontSize: rem(44) }}>
         {children}
       </Title>
     );

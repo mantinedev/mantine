@@ -6,24 +6,23 @@ import { CardSection } from './CardSection/CardSection';
 import useStyles from './Card.styles';
 import { CardProvider } from './Card.context';
 
-export interface CardProps extends Omit<PaperProps, 'p'> {
+export interface CardProps extends PaperProps {
   variant?: string;
-  p?: MantineNumberSize;
+
+  /** Card padding used to offset Card.Section, use it instead of p prop */
+  padding?: MantineNumberSize;
 
   /** Card content */
   children: React.ReactNode;
 }
 
 const defaultProps: Partial<CardProps> = {
-  p: 'md',
+  padding: 'md',
 };
 
 export const _Card = forwardRef<HTMLDivElement, CardProps>((props, ref) => {
-  const { className, p, radius, children, unstyled, variant, ...others } = useComponentDefaultProps(
-    'Card',
-    defaultProps,
-    props
-  );
+  const { className, padding, radius, children, unstyled, variant, ...others } =
+    useComponentDefaultProps('Card', defaultProps, props);
   const { classes, cx } = useStyles(null, { name: 'Card', unstyled, variant });
   const _children = Children.toArray(children);
 
@@ -31,7 +30,7 @@ export const _Card = forwardRef<HTMLDivElement, CardProps>((props, ref) => {
     if (typeof child === 'object' && child && 'type' in child && child.type === CardSection) {
       return cloneElement(child, {
         variant,
-        padding: p,
+        padding,
         'data-first': index === 0 || undefined,
         'data-last': index === _children.length - 1 || undefined,
       });
@@ -41,8 +40,14 @@ export const _Card = forwardRef<HTMLDivElement, CardProps>((props, ref) => {
   });
 
   return (
-    <CardProvider value={{ padding: p }}>
-      <Paper className={cx(classes.root, className)} radius={radius} p={p} ref={ref} {...others}>
+    <CardProvider value={{ padding }}>
+      <Paper
+        className={cx(classes.root, className)}
+        radius={radius}
+        p={padding}
+        ref={ref}
+        {...others}
+      >
         {content}
       </Paper>
     </CardProvider>

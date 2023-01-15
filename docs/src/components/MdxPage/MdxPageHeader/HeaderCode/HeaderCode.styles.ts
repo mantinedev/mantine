@@ -1,4 +1,4 @@
-import { createStyles } from '@mantine/core';
+import { createStyles, rem } from '@mantine/core';
 
 export default createStyles((theme) => ({
   wrapper: {
@@ -6,13 +6,13 @@ export default createStyles((theme) => ({
     alignItems: 'center',
 
     '& + &': {
-      marginTop: 5,
+      marginTop: rem(5),
     },
   },
 
   icon: {
     marginRight: theme.spacing.sm,
-    marginTop: 1,
+    marginTop: rem(1),
   },
 
   code: {

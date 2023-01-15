@@ -1,15 +1,15 @@
 import React from 'react';
 import { IconCheck } from '@tabler/icons';
-import { Notification, NotificationProps } from '@mantine/core';
+import { Notification, NotificationProps, Box } from '@mantine/core';
 import { MantineDemo } from '@mantine/ds';
 import { demoBase } from './_demo-base';
 
 function Wrapper(props: NotificationProps) {
   return (
-    <div style={{ maxWidth: 400, margin: 'auto' }}>
+    <Box maw={400} mx="auto">
       <Notification onClose={() => {}} {...props} />
-      <Notification mt="md" icon={<IconCheck size={20} />} onClose={() => {}} {...props} />
-    </div>
+      <Notification mt="md" icon={<IconCheck size="1.2rem" />} onClose={() => {}} {...props} />
+    </Box>
   );
 }
 
@@ -24,7 +24,7 @@ function Demo() {
         ${children}
       </Notification>
 
-      <Notification icon={<IconCheck size={20} />}${props}>
+      <Notification icon={<IconCheck size="1.2rem" />}${props}>
         ${children}
       </Notification>
     </>
