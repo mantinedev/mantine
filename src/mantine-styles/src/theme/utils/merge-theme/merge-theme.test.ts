@@ -63,4 +63,17 @@ describe('@mantine/styles/merge-theme', () => {
       other: { prop: 1, test: { nested: true } },
     });
   });
+
+  it('sets headings font-family based on theme.fontFamily if theme.headings.fontFamily is not defined', () => {
+    const withoutHeading = mergeTheme(getThemeBase(), { fontFamily: 'test' });
+    expect(withoutHeading.fontFamily).toBe('test');
+    expect(withoutHeading.headings.fontFamily).toBe('test');
+
+    const withHeading = mergeTheme(getThemeBase(), {
+      fontFamily: 'test',
+      headings: { fontFamily: 'test-heading' },
+    });
+    expect(withHeading.fontFamily).toBe('test');
+    expect(withHeading.headings.fontFamily).toBe('test-heading');
+  });
 });
