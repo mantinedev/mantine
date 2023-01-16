@@ -68,7 +68,13 @@ export function Demo() {
       }}
     >
       <Button onClick={() => setOpened(true)}>Open dropdown</Button>
-      <Transition mounted={opened} transition={scaleY} duration={200} timingFunction="ease">
+      <Transition
+        mounted={opened}
+        transition={scaleY}
+        duration={200}
+        timingFunction="ease"
+        keepMounted
+      >
         {(styles) => (
           <Paper
             shadow="md"
