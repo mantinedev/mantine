@@ -39,7 +39,7 @@ export interface NotificationsProps
     | 'bottom-right'
     | 'bottom-center';
 
-  /** Auto close timeout for all notifications, false to disable auto close, can be overwritten for individual notifications by showNotification function */
+  /** Auto close timeout for all notifications, false to disable auto close, can be overwritten for individual notifications by notifications.show function */
   autoClose?: number | false;
 
   /** Notification transitions duration, 0 to turn transitions off */

@@ -2,11 +2,11 @@ import React from 'react';
 import { IconCheck } from '@tabler/icons';
 import { Group, Button } from '@mantine/core';
 import { MantineDemo } from '@mantine/ds';
-import { showNotification, updateNotification } from '@mantine/notifications';
+import { notifications } from '@mantine/notifications';
 
 const code = `
 import { Group, Button } from '@mantine/core';
-import { showNotification, updateNotification } from '@mantine/notifications';
+import { notifications } from '@mantine/notifications';
 import { IconCheck } from '@tabler/icons';
 
 function Demo() {
@@ -15,7 +15,7 @@ function Demo() {
       <Button
         variant="outline"
         onClick={() => {
-          showNotification({
+          notifications.show({
             id: 'load-data',
             loading: true,
             title: 'Loading your data',
@@ -25,7 +25,7 @@ function Demo() {
           });
 
           setTimeout(() => {
-            updateNotification({
+            notifications.update({
               id: 'load-data',
               color: 'teal',
               title: 'Data was loaded',
@@ -49,7 +49,7 @@ function Demo() {
       <Button
         variant="outline"
         onClick={() => {
-          showNotification({
+          notifications.show({
             id: 'load-data',
             loading: true,
             title: 'Loading your data',
@@ -59,7 +59,7 @@ function Demo() {
           });
 
           setTimeout(() => {
-            updateNotification({
+            notifications.update({
               id: 'load-data',
               color: 'teal',
               title: 'Data was loaded',

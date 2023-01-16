@@ -2,7 +2,7 @@ import React from 'react';
 import { IconCheck } from '@tabler/icons';
 import { Group, Button } from '@mantine/core';
 import { MantineDemo } from '@mantine/ds';
-import { showNotification, updateNotification } from '@mantine/notifications';
+import { notifications } from '@mantine/notifications';
 
 function Demo() {
   return (
@@ -10,7 +10,7 @@ function Demo() {
       <Button
         variant="outline"
         onClick={() =>
-          showNotification({
+          notifications.show({
             title: 'Default notification',
             message: 'Hey there, your code is awesome! 🤥',
           })
@@ -23,7 +23,7 @@ function Demo() {
         variant="outline"
         color="teal"
         onClick={() =>
-          showNotification({
+          notifications.show({
             color: 'teal',
             title: 'You did great',
             message: 'Data was saved',
@@ -38,7 +38,7 @@ function Demo() {
         variant="outline"
         color="red"
         onClick={() =>
-          showNotification({
+          notifications.show({
             color: 'red',
             title: 'Bummer!',
             message: 'You have no right to do this',
@@ -52,7 +52,7 @@ function Demo() {
         variant="outline"
         color="grape"
         onClick={() =>
-          showNotification({
+          notifications.show({
             color: 'grape',
             title: 'I will never close',
             message: 'unless you click X',
@@ -67,7 +67,7 @@ function Demo() {
         variant="outline"
         color="indigo"
         onClick={() =>
-          showNotification({
+          notifications.show({
             color: 'indigo',
             title: 'Custom autoClose timeout',
             message: 'notification will be closed in 10 seconds',
@@ -82,7 +82,7 @@ function Demo() {
         variant="outline"
         color="cyan"
         onClick={() => {
-          showNotification({
+          notifications.show({
             id: 'data-loading',
             color: 'cyan',
             loading: true,
@@ -93,7 +93,7 @@ function Demo() {
           });
 
           setTimeout(() => {
-            updateNotification({
+            notifications.update({
               id: 'data-loading',
               color: 'teal',
               title: 'Data was loaded',

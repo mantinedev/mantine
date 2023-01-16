@@ -3,12 +3,12 @@ import React from 'react';
 import { useForm } from '@mantine/form';
 import { TextInput, Button, Box } from '@mantine/core';
 import { MantineDemo } from '@mantine/ds';
-import { showNotification } from '@mantine/notifications';
+import { notifications } from '@mantine/notifications';
 
 const code = `
 import { useForm } from '@mantine/form';
 import { TextInput, Button, Box } from '@mantine/core';
-import { showNotification } from '@mantine/notifications';
+import { notifications } from '@mantine/notifications';
 
 function Demo() {
   const form = useForm({
@@ -21,9 +21,9 @@ function Demo() {
 
   const handleError = (errors: typeof form.errors) => {
     if (errors.name) {
-      showNotification({ message: 'Please fill name field', color: 'red' });
+      notifications.show({ message: 'Please fill name field', color: 'red' });
     } else if (errors.email) {
-      showNotification({ message: 'Please provide a valid email', color: 'red' });
+      notifications.show({ message: 'Please provide a valid email', color: 'red' });
     }
   };
 
@@ -54,9 +54,9 @@ function Demo() {
 
   const handleError = (errors: typeof form.errors) => {
     if (errors.name) {
-      showNotification({ message: 'Please fill name field', color: 'red' });
+      notifications.show({ message: 'Please fill name field', color: 'red' });
     } else if (errors.email) {
-      showNotification({ message: 'Please provide a valid email', color: 'red' });
+      notifications.show({ message: 'Please provide a valid email', color: 'red' });
     }
   };
 

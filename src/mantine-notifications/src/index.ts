@@ -5,6 +5,7 @@ export {
   hideNotification,
   cleanNotifications,
   cleanNotificationsQueue,
+  notifications,
 } from './events';
 export type { NotificationProps } from './types';
 export type { NotificationsProps } from './Notifications/Notifications';

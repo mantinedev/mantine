@@ -2,7 +2,7 @@ import React from 'react';
 import { Group, Button, Text } from '@mantine/core';
 import { openConfirmModal } from '@mantine/modals';
 import { MantineDemo } from '@mantine/ds';
-import { showNotification } from '@mantine/notifications';
+import { notifications } from '@mantine/notifications';
 
 const code = `
 import { Button, Text } from '@mantine/core';
@@ -38,13 +38,13 @@ function Demo() {
         </Text>
       ),
       onCancel: () =>
-        showNotification({
+        notifications.show({
           title: 'Canceled',
           message: 'Confirm modal was canceled',
           color: 'gray',
         }),
       onConfirm: () =>
-        showNotification({
+        notifications.show({
           title: 'Confirmed',
           message: 'Confirm modal was confirmed',
           color: 'teal',
