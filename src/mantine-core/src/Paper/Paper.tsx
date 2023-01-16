@@ -31,13 +31,15 @@ export const _Paper = forwardRef<HTMLDivElement, PaperProps>((props, ref) => {
   const { className, children, radius, withBorder, shadow, unstyled, variant, ...others } =
     useComponentDefaultProps('Paper', defaultProps, props);
 
-  const { classes, cx } = useStyles(
-    { radius, shadow, withBorder },
-    { name: 'Paper', unstyled, variant }
-  );
+  const { classes, cx } = useStyles({ radius, shadow }, { name: 'Paper', unstyled, variant });
 
   return (
-    <Box className={cx(classes.root, className)} ref={ref} {...others}>
+    <Box
+      className={cx(classes.root, className)}
+      data-with-border={withBorder || undefined}
+      ref={ref}
+      {...others}
+    >
       {children}
     </Box>
   );
