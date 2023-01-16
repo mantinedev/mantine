@@ -38,16 +38,19 @@ export interface ModalBaseSettings {
   classNames?: ClassNames<ModalBaseStylesNames>;
   styles?: Styles<ModalBaseStylesNames>;
 
-  /** Determines whether modal is opened */
+  /** If set modal/drawer will not be unmounted from the DOM when it is hidden, display: none styles will be added instead */
+  keepMounted?: boolean;
+
+  /** Determines whether modal/drawer is opened */
   opened: boolean;
 
-  /** Called when modal is closed */
+  /** Called when modal/drawer is closed */
   onClose(): void;
 
   /** Child component */
   children?: React.ReactNode;
 
-  /** Determines whether the modal should be closed when user clicks on the overlay, true by default */
+  /** Determines whether the modal/drawer should be closed when user clicks on the overlay, true by default */
   closeOnClickOutside?: boolean;
 
   /** Transition duration in ms */
@@ -74,7 +77,7 @@ export interface ModalBaseSettings {
   /** Key of theme.spacing or any valid CSS value to set content, header and footer padding, 'md' by default */
   padding?: MantineNumberSize;
 
-  /** Id used to connect modal with body and title */
+  /** Id used to connect modal/drawer with body and title */
   id?: string;
 
   /** Determines whether focus should be returned to the last active element onClose is called, true by default */
@@ -102,6 +105,7 @@ export const ModalBaseDefaultProps: Partial<ModalBaseProps> = {
   trapFocus: true,
   returnFocus: true,
   closeOnEscape: true,
+  keepMounted: false,
   zIndex: getDefaultZIndex('modal'),
   padding: 'md',
   size: 'md',
@@ -117,6 +121,7 @@ export function ModalBase(props: ModalBaseProps) {
     __staticSelector,
     transitionProps,
     withinPortal,
+    keepMounted,
     target,
     zIndex,
     lockScroll,
@@ -157,7 +162,7 @@ export function ModalBase(props: ModalBaseProps) {
           opened,
           onClose,
           closeOnClickOutside,
-          transitionProps: { ...transitionProps, duration: transitionDuration },
+          transitionProps: { ...transitionProps, duration: transitionDuration, keepMounted },
           zIndex,
           padding,
           id: _id,

@@ -15,7 +15,12 @@ export function Usage() {
   const [opened, { open, close }] = useDisclosure(true);
   return (
     <div style={{ padding: 40 }}>
-      <ModalBase opened={opened} onClose={close} __staticSelector="Modal">
+      <ModalBase
+        opened={opened}
+        onClose={close}
+        __staticSelector="Modal"
+        transitionProps={{ keepMounted: true }}
+      >
         <ModalBase.Content>
           <ModalBase.Header>
             <ModalBase.Title>Modal title</ModalBase.Title>

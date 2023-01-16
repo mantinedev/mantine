@@ -4,7 +4,7 @@ import { useTransition } from './use-transition';
 import { MantineTransition } from './transitions';
 
 export interface TransitionProps {
-  /** If set element will not bu unmounted from the DOM when it is hidden, display: none styles will be added instead */
+  /** If set element will not be unmounted from the DOM when it is hidden, display: none styles will be added instead */
   keepMounted?: boolean;
 
   /** Predefined transition name or transition styles */
