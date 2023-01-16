@@ -43,6 +43,9 @@ export interface PopoverBaseProps {
   /** Called when dropdown opens */
   onOpen?(): void;
 
+  /** If set dropdown will not be unmounted from the DOM when it is hidden, display: none styles will be added instead */
+  keepMounted?: boolean;
+
   /** One of premade transitions ot transition object */
   transition?: MantineTransition;
 
@@ -193,6 +196,7 @@ export function Popover(props: PopoverProps) {
     disabled,
     returnFocus,
     variant,
+    keepMounted,
     ...others
   } = useComponentDefaultProps('Popover', defaultProps, props);
 
@@ -279,6 +283,7 @@ export function Popover(props: PopoverProps) {
         styles,
         unstyled,
         variant,
+        keepMounted,
       }}
     >
       {children}

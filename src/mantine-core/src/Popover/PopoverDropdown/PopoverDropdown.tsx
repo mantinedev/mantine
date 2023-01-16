@@ -59,6 +59,7 @@ export function PopoverDropdown(props: PopoverDropdownProps) {
         mounted={ctx.opened}
         transition={ctx.transition}
         duration={ctx.transitionDuration}
+        keepMounted={ctx.keepMounted}
         exitDuration={
           typeof ctx.exitTransitionDuration === 'number'
             ? ctx.exitTransitionDuration

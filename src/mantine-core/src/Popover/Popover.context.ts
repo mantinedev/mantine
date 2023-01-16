@@ -45,6 +45,7 @@ interface PopoverContext {
   unstyled: boolean;
   __staticSelector: string;
   variant: string;
+  keepMounted: boolean;
 }
 
 export const [PopoverContextProvider, usePopoverContext] = createSafeContext<PopoverContext>(

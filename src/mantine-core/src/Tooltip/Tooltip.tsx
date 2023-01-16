@@ -60,6 +60,9 @@ export interface TooltipProps extends TooltipBaseProps {
 
   /** Set if tooltip is attached to an inline element */
   inline?: boolean;
+
+  /** If set tooltip will not be unmounted from the DOM when it is hidden, display: none styles will be added instead */
+  keepMounted?: boolean;
 }
 
 const defaultProps: Partial<TooltipProps> = {
@@ -118,6 +121,7 @@ const _Tooltip = forwardRef<HTMLElement, TooltipProps>((props, ref) => {
     onMouseLeave,
     inline,
     variant,
+    keepMounted,
     ...others
   } = useComponentDefaultProps('Tooltip', defaultProps, props);
 
@@ -150,6 +154,7 @@ const _Tooltip = forwardRef<HTMLElement, TooltipProps>((props, ref) => {
     <>
       <OptionalPortal withinPortal={withinPortal}>
         <Transition
+          keepMounted={keepMounted}
           mounted={!disabled && tooltip.opened}
           transition={transition}
           duration={tooltip.isGroupPhase ? 10 : transitionDuration}

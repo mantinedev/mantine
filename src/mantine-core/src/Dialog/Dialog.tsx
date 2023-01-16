@@ -20,6 +20,9 @@ export interface DialogProps
     Omit<PaperProps, 'classNames' | 'styles'> {
   variant?: string;
 
+  /** If set dialog will not be unmounted from the DOM when it is hidden, display: none styles will be added instead */
+  keepMounted?: boolean;
+
   /** Display close button at the top right corner */
   withCloseButton?: boolean;
 
@@ -84,6 +87,7 @@ export function DialogBody(props: DialogProps) {
     transitionTimingFunction,
     unstyled,
     variant,
+    keepMounted,
     ...others
   } = useComponentDefaultProps('Dialog', defaultProps, props);
 
@@ -98,6 +102,7 @@ export function DialogBody(props: DialogProps) {
 
   return (
     <Transition
+      keepMounted={keepMounted}
       mounted={opened}
       transition={transition}
       duration={transitionDuration}

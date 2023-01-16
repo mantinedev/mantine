@@ -14,6 +14,9 @@ import useStyles from './LoadingOverlay.styles';
 export interface LoadingOverlayProps extends DefaultProps, React.ComponentPropsWithoutRef<'div'> {
   variant?: string;
 
+  /** If set loading overlay will not be unmounted from the DOM when it is hidden, display: none styles will be added instead */
+  keepMounted?: boolean;
+
   /** Provide custom loader */
   loader?: React.ReactNode;
 
@@ -68,6 +71,7 @@ export const LoadingOverlay = forwardRef<HTMLDivElement, LoadingOverlayProps>((p
     overlayBlur,
     unstyled,
     variant,
+    keepMounted,
     ...others
   } = useComponentDefaultProps('LoadingOverlay', defaultProps, props);
   const { classes, cx, theme } = useStyles(null, { name: 'LoadingOverlay', unstyled, variant });
@@ -75,6 +79,7 @@ export const LoadingOverlay = forwardRef<HTMLDivElement, LoadingOverlayProps>((p
 
   return (
     <Transition
+      keepMounted={keepMounted}
       duration={transitionDuration}
       exitDuration={exitTransitionDuration}
       mounted={visible}

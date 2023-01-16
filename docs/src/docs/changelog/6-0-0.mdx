@@ -389,6 +389,22 @@ to control vertical and horizontal offsets of the modal content:
 
 <Demo data={ModalDemos.offset} />
 
+## keepMounted prop
+
+Components that use [Transition](https://mantine.dev/core/transition/) now support `keepMounted`.
+When `keepMounted` prop is set component will not be unmounted from the DOM and instead it will
+be hidden with `display: none` styles.
+
+`keepMounted` prop is supported by the following components:
+
+- [Transition](https://mantine.dev/core/transition/)
+- [Modal](https://mantine.dev/core/modal/)
+- [Drawer](https://mantine.dev/core/drawer/)
+- [Dialog](https://mantine.dev/core/dialog/)
+- [LoadingOverlay](https://mantine.dev/core/loading-overlay/)
+- [Popover](https://mantine.dev/core/popover/)
+- [Tooltip](https://mantine.dev/core/tooltip/)
+
 ## Other changes
 
 - `rightSection` of all inputs is now based on `size` prop by default (previously it was a static value)
