@@ -54,6 +54,7 @@ export * from './Mark';
 export * from './MediaQuery';
 export * from './Menu';
 export * from './Modal';
+export * from './ModalBase';
 export * from './MultiSelect';
 export * from './NativeSelect';
 export * from './NavLink';
