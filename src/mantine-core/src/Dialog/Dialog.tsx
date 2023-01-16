@@ -62,7 +62,7 @@ export interface DialogProps
 const defaultProps: Partial<DialogProps> = {
   shadow: 'md',
   p: 'md',
-  withBorder: true,
+  withBorder: false,
   size: 'md',
   transition: 'pop-top-right',
   transitionDuration: 200,
