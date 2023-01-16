@@ -91,7 +91,7 @@ export const Progress = forwardRef<HTMLDivElement, ProgressProps>((props, ref) =
   } = useComponentDefaultProps('Progress', defaultProps, props);
 
   const { classes, cx, theme } = useStyles(
-    { color, radius, striped: striped || animate, animate },
+    { color, radius },
     { name: 'Progress', classNames, styles, unstyled, variant, size }
   );
 
@@ -112,6 +112,8 @@ export const Progress = forwardRef<HTMLDivElement, ProgressProps>((props, ref) =
             <Box
               {...sectionProps}
               className={cx(classes.bar, sectionProps.className)}
+              data-striped={striped || animate || undefined}
+              data-animate={animate || undefined}
               sx={{
                 width: `${sectionValue}%`,
                 left: `${accumulated}%`,
@@ -140,6 +142,8 @@ export const Progress = forwardRef<HTMLDivElement, ProgressProps>((props, ref) =
           aria-label={ariaLabel}
           className={classes.bar}
           style={{ width: `${value}%` }}
+          data-striped={striped || animate || undefined}
+          data-animate={animate || undefined}
         >
           {label ? <Text className={classes.label}>{label}</Text> : ''}
         </div>
