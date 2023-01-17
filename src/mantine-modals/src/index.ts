@@ -6,6 +6,7 @@ export {
   closeAllModals,
   openConfirmModal,
   openContextModal,
+  modals,
 } from './events';
 
 export type { ModalsProviderProps } from './ModalsProvider';

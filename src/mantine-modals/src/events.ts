@@ -17,3 +17,11 @@ export const closeModal = createEvent('closeModal');
 export const closeAllModals = createEvent('closeAllModals');
 export const openConfirmModal = createEvent('openConfirmModal');
 export const openContextModal = createEvent('openContextModal');
+
+export const modals = {
+  open: openModal,
+  close: closeModal,
+  closeAll: closeAllModals,
+  openConfirmModal,
+  openContextModal,
+};
