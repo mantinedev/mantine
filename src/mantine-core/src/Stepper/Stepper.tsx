@@ -120,10 +120,20 @@ export const Stepper: StepperComponent = forwardRef<HTMLDivElement, StepperProps
   const items = _children.reduce<React.ReactElement[]>((acc, item, index) => {
     const state =
       active === index ? 'stepProgress' : active > index ? 'stepCompleted' : 'stepInactive';
-    const shouldAllowSelect = state === 'stepCompleted' || allowNextStepsSelect;
-    typeof item.props.allowStepSelect === 'boolean'
-      ? item.props.allowStepSelect
-      : typeof onStepClick === 'function';
+
+    const shouldAllowSelect = () => {
+      if (typeof onStepClick !== 'function') {
+        return false;
+      }
+
+      if (typeof item.props.allowStepSelect === 'boolean') {
+        return item.props.allowStepSelect;
+      }
+
+      return state === 'stepCompleted' || allowNextStepsSelect;
+    };
+
+    const isStepSelectionEnabled = shouldAllowSelect();
 
     acc.push(
       cloneElement(item, {
@@ -133,8 +143,8 @@ export const Stepper: StepperComponent = forwardRef<HTMLDivElement, StepperProps
         step: index,
         variant,
         state,
-        onClick: () => shouldAllowSelect && typeof onStepClick === 'function' && onStepClick(index),
-        allowStepClick: shouldAllowSelect && typeof onStepClick === 'function',
+        onClick: () => isStepSelectionEnabled && onStepClick(index),
+        allowStepClick: isStepSelectionEnabled,
         completedIcon: item.props.completedIcon || completedIcon,
         progressIcon: item.props.progressIcon || progressIcon,
         color: item.props.color || color,

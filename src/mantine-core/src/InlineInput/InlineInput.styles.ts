@@ -16,7 +16,7 @@ export default createStyles((theme, { labelPosition }: InlineInputStylesParams, 
   root: {},
 
   body: {
-    display: 'inline-flex',
+    display: 'flex',
   },
 
   labelWrapper: {
