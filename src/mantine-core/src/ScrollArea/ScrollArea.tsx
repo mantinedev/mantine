@@ -124,13 +124,10 @@ export const _ScrollArea = forwardRef<HTMLDivElement, ScrollAreaProps>((props, r
   );
 }) as any;
 
-export interface ScrollAreaAutosizeProps extends ScrollAreaProps {
-  maxHeight: React.CSSProperties['maxHeight'];
-}
+export interface ScrollAreaAutosizeProps extends ScrollAreaProps {}
 
 const ScrollAreaAutosize = forwardRef<HTMLDivElement, ScrollAreaAutosizeProps>((props, ref) => {
   const {
-    maxHeight,
     children,
     classNames,
     styles,
@@ -147,7 +144,7 @@ const ScrollAreaAutosize = forwardRef<HTMLDivElement, ScrollAreaAutosizeProps>((
     ...others
   } = useComponentDefaultProps<ScrollAreaAutosizeProps>('ScrollAreaAutosize', defaultProps, props);
   return (
-    <Box {...others} ref={ref} sx={[{ display: 'flex', maxHeight }, ...packSx(sx)]}>
+    <Box {...others} ref={ref} sx={[{ display: 'flex' }, ...packSx(sx)]}>
       <Box sx={{ display: 'flex', flexDirection: 'column', flex: 1 }}>
         <_ScrollArea
           classNames={classNames}
