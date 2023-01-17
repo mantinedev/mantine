@@ -122,11 +122,6 @@ export function ModalsProvider({ children, modalProps, labels, modals }: ModalsP
   };
 
   const closeModal = (id: string, canceled?: boolean) => {
-    if (state.modals.length <= 1) {
-      closeAll(canceled);
-      return;
-    }
-
     const modal = state.modals.find((item) => item.id === id);
     if (modal?.type === 'confirm' && canceled) {
       modal.props?.onCancel?.();
