@@ -78,14 +78,14 @@ export const AccordionControl = forwardRef<HTMLButtonElement, AccordionControlPr
           onKeyDown,
         })}
       >
-        <div
+        <span
           className={classes.chevron}
           data-rotate={(!ctx.disableChevronRotation && isActive) || undefined}
         >
           {chevron || ctx.chevron}
-        </div>
-        <div className={classes.label}>{children}</div>
-        {icon && <div className={classes.icon}>{icon}</div>}
+        </span>
+        <span className={classes.label}>{children}</span>
+        {icon && <span className={classes.icon}>{icon}</span>}
       </UnstyledButton>
     );
 
