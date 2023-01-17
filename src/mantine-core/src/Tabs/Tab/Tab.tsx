@@ -83,9 +83,9 @@ export const Tab = forwardRef<HTMLButtonElement, TabProps>((props, ref) => {
         onKeyDown,
       })}
     >
-      {icon && <div className={classes.tabIcon}>{icon}</div>}
-      {children && <div className={classes.tabLabel}>{children}</div>}
-      {rightSection && <div className={classes.tabRightSection}>{rightSection}</div>}
+      {icon && <span className={classes.tabIcon}>{icon}</span>}
+      {children && <span className={classes.tabLabel}>{children}</span>}
+      {rightSection && <span className={classes.tabRightSection}>{rightSection}</span>}
     </UnstyledButton>
   );
 });
