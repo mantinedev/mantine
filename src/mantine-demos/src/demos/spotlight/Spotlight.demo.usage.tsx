@@ -5,14 +5,14 @@ import { Wrapper } from './_wrapper';
 
 const code = `
 import { Button, Group } from '@mantine/core';
-import { SpotlightProvider, openSpotlight } from '@mantine/spotlight';
+import { SpotlightProvider, spotlight } from '@mantine/spotlight';
 import type { SpotlightAction } from '@mantine/spotlight';
 import { IconHome, IconDashboard, IconFileText, IconSearch } from '@tabler/icons';
 
 function SpotlightControl() {
   return (
     <Group position="center">
-      <Button onClick={() => openSpotlight()}>Open spotlight</Button>
+      <Button onClick={spotlight.open}>Open spotlight</Button>
     </Group>
   );
 }

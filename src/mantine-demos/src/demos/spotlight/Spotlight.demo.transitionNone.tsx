@@ -10,7 +10,7 @@ function Demo() {
   return (
     <SpotlightProvider
       shortcut="mod + shift + 2"
-      transitionDuration={0}
+      transitionProps={{ duration: 0 }}
       {...otherProps}
     >
       <App />
