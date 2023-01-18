@@ -97,11 +97,7 @@ export default function TableOfContents({ headings, withTabs }: TableOfContentsP
             <IconList size={20} stroke={1.5} />
             <Text className={classes.title}>Table of contents</Text>
           </div>
-          <ScrollArea.Autosize
-            maxHeight={`calc(100vh - ${rem(140)})`}
-            type="scroll"
-            offsetScrollbars
-          >
+          <ScrollArea.Autosize mah={`calc(100vh - ${rem(140)})`} type="scroll" offsetScrollbars>
             <div className={classes.items}>{items}</div>
           </ScrollArea.Autosize>
         </div>
