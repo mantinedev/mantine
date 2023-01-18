@@ -218,9 +218,9 @@ export function useForm<
 
   const isDirty: GetFieldStatus<Values> = (path) => {
     if (path) {
-      const overridenValue = getPath(path, dirty);
-      if (typeof overridenValue === 'boolean') {
-        return overridenValue;
+      const overriddenValue = getPath(path, dirty);
+      if (typeof overriddenValue === 'boolean') {
+        return overriddenValue;
       }
 
       const sliceOfValues = getPath(path, values);
