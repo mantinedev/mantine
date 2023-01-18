@@ -207,7 +207,7 @@ export function useForm<
       if (results.hasErrors) {
         handleValidationFailure?.(results.errors, values, event);
       } else {
-        handleSubmit(transformValues(values) as any, event);
+        handleSubmit?.(transformValues(values) as any, event);
       }
     };
 
