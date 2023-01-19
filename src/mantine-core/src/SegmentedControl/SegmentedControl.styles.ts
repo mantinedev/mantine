@@ -62,6 +62,19 @@ export default createStyles(
         '&:hover': {
           color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
         },
+
+        '&[data-disabled]': {
+          '&, &:hover': {
+            color: theme.colorScheme === 'dark' ? theme.colors.dark[3] : theme.colors.gray[5],
+            cursor: 'not-allowed',
+          },
+        },
+
+        '&[data-active]': {
+          '&, &:hover': {
+            color: color || theme.colorScheme === 'dark' ? theme.white : theme.black,
+          },
+        },
       },
 
       control: {
@@ -143,20 +156,7 @@ export default createStyles(
           : undefined,
       },
 
-      labelActive: {
-        '&, &:hover': {
-          color: color || theme.colorScheme === 'dark' ? theme.white : theme.black,
-        },
-      },
-
-      disabled: {
-        '&, &:hover': {
-          color: theme.colorScheme === 'dark' ? theme.colors.dark[3] : theme.colors.gray[5],
-          cursor: 'not-allowed',
-        },
-      },
-
-      active: {
+      indicator: {
         boxSizing: 'border-box',
         borderRadius: theme.fn.radius(radius),
         position: 'absolute',

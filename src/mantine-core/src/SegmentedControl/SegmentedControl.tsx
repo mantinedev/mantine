@@ -194,10 +194,9 @@ export const SegmentedControl = forwardRef<HTMLDivElement, SegmentedControlProps
       />
 
       <label
-        className={cx(classes.label, {
-          [classes.labelActive]: _value === item.value,
-          [classes.disabled]: disabled || item.disabled,
-        })}
+        className={classes.label}
+        data-active={(_value === item.value && !(disabled || item.disabled)) || undefined}
+        data-disabled={disabled || item.disabled || undefined}
         htmlFor={`${uuid}-${item.value}`}
         ref={(node) => {
           refs.current[item.value] = node;
@@ -219,7 +218,7 @@ export const SegmentedControl = forwardRef<HTMLDivElement, SegmentedControlProps
       {typeof _value === 'string' && shouldAnimate && (
         <Box
           component="span"
-          className={classes.active}
+          className={classes.indicator}
           sx={{
             width: activePosition.width,
             height: activePosition.height,

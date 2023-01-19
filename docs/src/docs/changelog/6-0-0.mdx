@@ -282,6 +282,7 @@ Renamed props:
 - `@mantine/core` package no longer exports `GroupedTransition` component, use multiple [Transition](https://mantine.dev/core/transition/) components instead
 - `use-scroll-lock` hook is deprecated, all Mantine components now use [react-remove-scroll](https://github.com/theKashey/react-remove-scroll)
 - [ScrollArea.Autosize](https://mantine.dev/core/scroll-area/) component prop `maxHeight` is removed, it is replaced with `mah` [style prop](https://mantine.dev/styles/style-props/)
+- [SegmentedControl](https://mantine.dev/core/segmented-control/) component Styles API was changed – `labelActive` and `disabled` selectors were removed (replaced with `data-active` and `data-disabled` attributes on `label` selector), `active` selector was renamed to `indicator`
 
 ## Variants and sizes on MantineProvider
 
