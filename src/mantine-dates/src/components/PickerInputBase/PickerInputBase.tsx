@@ -163,7 +163,9 @@ export const PickerInputBase = forwardRef<HTMLButtonElement, PickerInputBaseProp
               classNames={{ ...classNames, input: cx(classes.input, (classNames as any)?.input) }}
               {...others}
             >
-              {formattedValue || <div className={classes.placeholder}>{placeholder}</div>}
+              {formattedValue || (
+                <Input.Placeholder className={classes.placeholder}>{placeholder}</Input.Placeholder>
+              )}
             </Input>
           </Popover.Target>
 

@@ -1,7 +1,7 @@
 import { createStyles } from '@mantine/core';
 
-export default createStyles((theme) => ({
-  placeholder: theme.fn.placeholderStyles(),
+export default createStyles(() => ({
+  placeholder: {},
 
   input: {
     cursor: 'pointer',
