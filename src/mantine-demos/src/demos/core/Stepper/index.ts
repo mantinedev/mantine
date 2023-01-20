@@ -7,7 +7,6 @@ export { orientation } from './Stepper.demo.orientation';
 export { iconPosition } from './Stepper.demo.iconPosition';
 export { loading } from './Stepper.demo.loading';
 export { stepColor } from './Stepper.demo.stepColor';
-export { stepFragmentComponents } from './Stepper.demo.stepFragmentComponents';
 export { stylesApi } from './Stepper.demo.stylesApi';
 export { stylesApi2 } from './Stepper.demo.stylesApi2';
 export { allowStepSelect } from './Stepper.demo.allowStepSelect';
