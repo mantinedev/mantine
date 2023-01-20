@@ -1,4 +1,4 @@
-import { createStyles, MantineColor, MantineNumberSize, getStylesRef, rem } from '@mantine/styles';
+import { createStyles, MantineColor, MantineNumberSize, rem } from '@mantine/styles';
 
 export interface NotificationStylesParams {
   color: MantineColor;
@@ -16,7 +16,6 @@ export default createStyles((theme, { color, radius, withTitle }: NotificationSt
     }),
 
     icon: {
-      ref: getStylesRef('icon'),
       boxSizing: 'border-box',
       marginRight: theme.spacing.md,
       width: rem(28),
@@ -26,15 +25,8 @@ export default createStyles((theme, { color, radius, withTitle }: NotificationSt
       flex: 'none',
       alignItems: 'center',
       justifyContent: 'center',
+      backgroundColor: colors.background,
       color: theme.white,
-    },
-
-    withIcon: {
-      paddingLeft: theme.spacing.xs,
-
-      '&::before': {
-        display: 'none',
-      },
     },
 
     root: {
@@ -65,9 +57,12 @@ export default createStyles((theme, { color, radius, withTitle }: NotificationSt
         backgroundColor: colors.background,
       },
 
-      [`& .${getStylesRef('icon')}`]: {
-        backgroundColor: colors.background,
-        color: theme.white,
+      '&[data-with-icon]': {
+        paddingLeft: theme.spacing.xs,
+
+        '&::before': {
+          display: 'none',
+        },
       },
     },
 

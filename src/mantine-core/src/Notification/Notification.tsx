@@ -12,7 +12,7 @@ import { CloseButton } from '../CloseButton';
 import { Box } from '../Box';
 import useStyles, { NotificationStylesParams } from './Notification.styles';
 
-export type NotificationStylesNames = Exclude<Selectors<typeof useStyles>, 'withIcon'>;
+export type NotificationStylesNames = Selectors<typeof useStyles>;
 
 export interface NotificationProps
   extends DefaultProps<NotificationStylesNames, NotificationStylesParams>,
@@ -68,12 +68,13 @@ export const Notification = forwardRef<HTMLDivElement, NotificationProps>((props
 
   const { classes, cx } = useStyles(
     { color, radius, withTitle: !!title },
-    { classNames, styles, unstyled, name: 'Notification', variant }
+    { name: 'Notification', classNames, styles, unstyled, variant }
   );
 
   return (
     <Box
-      className={cx(classes.root, { [classes.withIcon]: icon || loading }, className)}
+      className={cx(classes.root, className)}
+      data-with-icon={!!icon || loading || undefined}
       role="alert"
       ref={ref}
       {...others}
