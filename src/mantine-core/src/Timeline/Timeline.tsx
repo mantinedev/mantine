@@ -6,13 +6,17 @@ import {
   CSSObject,
   useComponentDefaultProps,
   rem,
+  Selectors,
 } from '@mantine/styles';
 import { ForwardRefWithStaticComponents, packSx } from '@mantine/utils';
 import { Box } from '../Box';
 import { TimelineItem, TimelineItemStylesNames } from './TimelineItem/TimelineItem';
+import useStyles from './Timeline.styles';
+
+export type TimelineStylesNames = Selectors<typeof useStyles> | TimelineItemStylesNames;
 
 export interface TimelineProps
-  extends DefaultProps<TimelineItemStylesNames>,
+  extends DefaultProps<TimelineStylesNames>,
     React.ComponentPropsWithRef<'div'> {
   variant?: string;
 
@@ -58,6 +62,7 @@ const defaultProps: Partial<TimelineProps> = {
 export const Timeline: TimelineComponent = forwardRef<HTMLDivElement, TimelineProps>(
   (props, ref) => {
     const {
+      className,
       children,
       active,
       color,
@@ -73,6 +78,14 @@ export const Timeline: TimelineComponent = forwardRef<HTMLDivElement, TimelinePr
       variant,
       ...others
     } = useComponentDefaultProps('Timeline', defaultProps, props);
+
+    const { classes, cx } = useStyles(null, {
+      name: 'Timeline',
+      classNames,
+      styles,
+      unstyled,
+      variant,
+    });
 
     const _children = Children.toArray(children);
     const items = _children.map((item: React.ReactElement, index) =>
@@ -101,7 +114,12 @@ export const Timeline: TimelineComponent = forwardRef<HTMLDivElement, TimelinePr
         : { paddingRight: `calc(${rem(bulletSize)} / 2 + ${rem(lineWidth)} / 2)` };
 
     return (
-      <Box ref={ref} sx={[offset, ...packSx(sx)]} {...others}>
+      <Box
+        className={cx(classes.root, className)}
+        ref={ref}
+        sx={[offset, ...packSx(sx)]}
+        {...others}
+      >
         {items}
       </Box>
     );

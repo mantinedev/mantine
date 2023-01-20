@@ -15,7 +15,7 @@ const defaultProps = {
 };
 
 describe('@mantine/core/Timeline', () => {
-  itSupportsProviderVariant(Timeline, defaultProps, 'Timeline', ['item']);
+  itSupportsProviderVariant(Timeline, defaultProps, 'Timeline', ['root', 'item']);
   itSupportsSystemProps({
     component: Timeline,
     props: defaultProps,
