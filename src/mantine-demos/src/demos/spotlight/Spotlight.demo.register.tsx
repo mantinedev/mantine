@@ -59,12 +59,14 @@ function SpotlightControls() {
   );
 }
 
-const actions = [/* ... see in previous demos */];
-
 export function Demo() {
+  // It is required to store actions in state for register/remove functions to work
+  const [actions, setActions] = useState([/* ... see in previous demos */]);
+
   return (
     <SpotlightProvider
       actions={actions}
+      onActionChange={setActions}
       searchIcon={<IconSearch size="1.2rem" />}
       searchPlaceholder="Search..."
       shortcut="mod + shift + C"
@@ -125,9 +127,11 @@ function SpotlightControls() {
 }
 
 export function Demo() {
+  const [_actions, setActions] = useState(actions);
   return (
     <SpotlightProvider
-      actions={actions}
+      actions={_actions}
+      onActionsChange={setActions}
       searchIcon={<IconSearch size="1.2rem" />}
       shortcut="mod + shift + C"
       searchPlaceholder="Search..."

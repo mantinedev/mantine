@@ -1,4 +1,4 @@
-import { useDidUpdate, useDisclosure } from '@mantine/hooks';
+import { useDisclosure } from '@mantine/hooks';
 import React, { useRef, useState } from 'react';
 import { useSpotlightEvents } from './events';
 import { SpotlightContext } from './Spotlight.context';
@@ -9,7 +9,10 @@ import { useSpotlightShortcuts } from './use-spotlight-shortcuts/use-spotlight-s
 
 export interface SpotlightProviderProps extends InnerSpotlightProps {
   /** Actions list */
-  actions: SpotlightAction[] | ((query: string) => SpotlightAction[]);
+  actions: SpotlightAction[];
+
+  /** Called when actions change (registered or removed) */
+  onActionsChange?(actions: SpotlightAction[]): void;
 
   /** Your application */
   children?: React.ReactNode;
@@ -37,12 +40,13 @@ export interface SpotlightProviderProps extends InnerSpotlightProps {
 }
 
 export function SpotlightProvider({
-  actions: initialActions,
+  actions,
   children,
   shortcut = 'mod + K',
   onSpotlightClose,
   onSpotlightOpen,
   onQueryChange,
+  onActionsChange,
   cleanQueryOnClose = true,
   transitionDuration = 150,
   disabled = false,
@@ -51,12 +55,10 @@ export function SpotlightProvider({
 }: SpotlightProviderProps) {
   const timeoutRef = useRef<number>(-1);
   const [query, setQuery] = useState('');
-  const [actions, { registerActions, updateActions, removeActions, triggerAction }] =
-    useActionsState(initialActions, query);
-
-  useDidUpdate(() => {
-    updateActions(initialActions);
-  }, [initialActions]);
+  const [_actions, { registerActions, removeActions, triggerAction }] = useActionsState({
+    actions,
+    onActionsChange,
+  });
 
   const handleQueryChange = (value: string) => {
     setQuery(value);
@@ -86,7 +88,7 @@ export function SpotlightProvider({
     removeActions,
     triggerAction,
     opened,
-    actions,
+    actions: _actions,
     query,
   };
 
@@ -97,7 +99,7 @@ export function SpotlightProvider({
     <SpotlightContext.Provider value={ctx}>
       {!disabled && (
         <Spotlight
-          actions={actions}
+          actions={_actions}
           onClose={close}
           opened={opened}
           query={query}

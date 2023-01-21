@@ -20,6 +20,7 @@ import {
   OverlayDemos,
   ModalDemos,
   PinInputDemos,
+  SpotlightDemos,
 } from '@mantine/demos';
 
 ## Breaking changes
@@ -177,6 +178,15 @@ function Demo() {
   );
 }
 ```
+
+### @mantine/spotlight changes
+
+[Spotlight](https://mantine.dev/others/spotlight/) actions are now fully controlled:
+
+- `actions` prop no longer accept a callback function, only a list of actions
+- To make register/remove features to work you will need to store actions in state
+
+<Demo data={SpotlightDemos.register} />
 
 ### @mantine/rte package deprecation
 

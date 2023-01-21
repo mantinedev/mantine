@@ -260,7 +260,8 @@ You can control how many actions are displayed at a time with the `limit` prop:
 ## Register additional actions
 
 You can register any amount of additional actions with `registerActions` function on `useSpotlight` hook.
-To remove actions from the list use `removeActions` function:
+To remove actions from the list use `removeActions` function. Note that to register/remove actions features
+to work you need to store actions array in state:
 
 <Demo data={SpotlightDemos.register} />
 
