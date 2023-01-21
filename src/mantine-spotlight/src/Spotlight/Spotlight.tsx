@@ -10,6 +10,8 @@ import {
   ModalProps,
   ModalStylesNames,
   useComponentDefaultProps,
+  ScrollArea,
+  ScrollAreaAutosizeProps,
 } from '@mantine/core';
 import { getGroupedOptions } from '@mantine/utils';
 import { useDidUpdate } from '@mantine/hooks';
@@ -18,6 +20,10 @@ import { ActionsList, ActionsListStylesNames } from '../ActionsList/ActionsList'
 import type { SpotlightAction } from '../types';
 import { filterActions } from './filter-actions/filter-actions';
 import useStyles from './Spotlight.styles';
+
+function SpotlightScrollArea(props: ScrollAreaAutosizeProps) {
+  return <ScrollArea.Autosize mah="30rem" {...props} />;
+}
 
 export type SpotlightStylesNames =
   | Selectors<typeof useStyles>
@@ -65,6 +71,9 @@ export interface InnerSpotlightProps
 
   /** Props spread to search input */
   searchInputProps?: TextInputProps;
+
+  /** Component used as scrollable container for actions list, defaults to ScrollArea.Autosize */
+  scrollAreaComponent?: React.FC<{ children: React.ReactNode }>;
 }
 
 interface SpotlightProps extends InnerSpotlightProps {
@@ -83,6 +92,7 @@ const defaultProps: Partial<SpotlightProps> = {
   filter: filterActions,
   limit: 10,
   actionComponent: DefaultAction,
+  scrollAreaComponent: SpotlightScrollArea,
   actionsWrapperComponent: 'div',
   zIndex: getDefaultZIndex('max'),
   overlayProps: { opacity: 0.2, blur: 7 },
@@ -108,6 +118,7 @@ export function Spotlight(props: SpotlightProps) {
     limit,
     actionComponent,
     actionsWrapperComponent: ActionsWrapper,
+    scrollAreaComponent: ScrollAreaComponent,
     searchInputProps,
     variant,
     target,
@@ -117,7 +128,7 @@ export function Spotlight(props: SpotlightProps) {
 
   const [hovered, setHovered] = useState(-1);
   const [IMEOpen, setIMEOpen] = useState(false);
-  const { classes } = useStyles(null, { name: 'Spotlight', classNames, styles, variant });
+  const { classes, cx } = useStyles(null, { name: 'Spotlight', classNames, styles, variant });
 
   const resetHovered = () => setHovered(-1);
   const handleClose = () => {
@@ -185,7 +196,11 @@ export function Spotlight(props: SpotlightProps) {
       onClose={handleClose}
       padding={0}
       radius={radius}
-      classNames={classNames}
+      scrollAreaComponent={Modal.NativeScrollArea}
+      classNames={{
+        ...classNames,
+        content: cx(classes.content, classNames?.content),
+      }}
       styles={styles}
       withCloseButton={false}
       {...others}
@@ -204,24 +219,26 @@ export function Spotlight(props: SpotlightProps) {
         onMouseEnter={resetHovered}
       />
       <ActionsWrapper>
-        <ActionsList
-          highlightQuery={highlightQuery}
-          highlightColor={highlightColor}
-          actions={groupedWithLabels}
-          actionComponent={actionComponent}
-          hovered={hovered}
-          query={query}
-          nothingFoundMessage={nothingFoundMessage}
-          onActionHover={() => setHovered(-1)}
-          onActionTrigger={(action) => {
-            action.onTrigger(action);
-            (action.closeOnTrigger ?? closeOnActionTrigger) && handleClose();
-          }}
-          styles={styles}
-          classNames={classNames}
-          radius={radius}
-          variant={variant}
-        />
+        <ScrollAreaComponent>
+          <ActionsList
+            highlightQuery={highlightQuery}
+            highlightColor={highlightColor}
+            actions={groupedWithLabels}
+            actionComponent={actionComponent}
+            hovered={hovered}
+            query={query}
+            nothingFoundMessage={nothingFoundMessage}
+            onActionHover={() => setHovered(-1)}
+            onActionTrigger={(action) => {
+              action.onTrigger(action);
+              (action.closeOnTrigger ?? closeOnActionTrigger) && handleClose();
+            }}
+            styles={styles}
+            classNames={classNames}
+            radius={radius}
+            variant={variant}
+          />
+        </ScrollAreaComponent>
       </ActionsWrapper>
     </Modal>
   );

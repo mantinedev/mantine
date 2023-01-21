@@ -76,7 +76,7 @@ export function SpotlightProvider({
     onQueryChange?.(value);
   };
 
-  const [opened, { open, close, toggle }] = useDisclosure(false, {
+  const [opened, { open, close, toggle }] = useDisclosure(true, {
     onClose: () => {
       onSpotlightClose?.();
       if (cleanQueryOnClose) {

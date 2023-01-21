@@ -5,9 +5,6 @@ export default createStyles((theme) => ({
 
   actions: {
     padding: `calc(${theme.spacing.xs} / 2)`,
-    borderTop: `${rem(1)} solid ${
-      theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[2]
-    }`,
   },
 
   actionsGroup: {
