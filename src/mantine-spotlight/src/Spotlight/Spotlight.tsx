@@ -22,7 +22,7 @@ import { filterActions } from './filter-actions/filter-actions';
 import useStyles from './Spotlight.styles';
 
 function SpotlightScrollArea(props: ScrollAreaAutosizeProps) {
-  return <ScrollArea.Autosize mah="30rem" {...props} />;
+  return <ScrollArea.Autosize mah="calc(100vh - 18rem)" {...props} />;
 }
 
 export type SpotlightStylesNames =
