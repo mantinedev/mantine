@@ -5,6 +5,7 @@ import {
   MantineNumberSize,
   MantineSize,
   useComponentDefaultProps,
+  Selectors,
 } from '@mantine/styles';
 import { Group } from '../Group';
 import { Input, InputSharedProps, InputStylesNames } from '../Input';
@@ -16,7 +17,7 @@ const regex = {
   alphanumeric: /^[a-zA-Z0-9]+$/i,
 };
 
-export type PinInputStylesNames = InputStylesNames;
+export type PinInputStylesNames = Selectors<typeof useStyles> | InputStylesNames;
 
 export interface PinInputProps
   extends DefaultProps<PinInputStylesNames>,
@@ -78,6 +79,9 @@ export interface PinInputProps
 
   /** Number of input boxes */
   length?: number;
+
+  /** Determines whether the user can edit input content */
+  readOnly?: boolean;
 }
 
 const defaultProps: Partial<PinInputProps> = {
@@ -116,11 +120,19 @@ export const PinInput = forwardRef<HTMLDivElement, PinInputProps>((props, ref) =
     type,
     mask,
     'aria-label': ariaLabel,
+    readOnly,
     ...others
   } = useComponentDefaultProps('PinInput', defaultProps, props);
 
   const uuid = useId(name);
-  const { classes } = useStyles({ size }, { classNames, styles, name: 'PinInput' });
+  const { classes, cx } = useStyles(null, {
+    name: 'PinInput',
+    classNames,
+    styles,
+    unstyled,
+    variant,
+    size,
+  });
 
   const [focusedIndex, setFocusedIndex] = useState(-1);
 
@@ -215,7 +227,7 @@ export const PinInput = forwardRef<HTMLDivElement, PinInputProps>((props, ref) =
         role="group"
         spacing={spacing}
         ref={ref}
-        className={className}
+        className={cx(classes.root)}
         sx={sx}
         unstyled={unstyled}
         id={uuid}
@@ -246,10 +258,14 @@ export const PinInput = forwardRef<HTMLDivElement, PinInputProps>((props, ref) =
             placeholder={focusedIndex === index ? '' : placeholder}
             value={char}
             autoFocus={autoFocus && index === 0}
-            classNames={classes}
+            classNames={{
+              ...classNames,
+              input: cx(classes.input, classNames?.input),
+            }}
             styles={styles}
             unstyled={unstyled}
             aria-label={ariaLabel}
+            readOnly={readOnly}
           />
         ))}
       </Group>

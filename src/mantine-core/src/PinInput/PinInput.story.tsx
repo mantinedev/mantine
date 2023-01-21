@@ -12,6 +12,14 @@ export function Usage() {
   );
 }
 
+export function ReadOnly() {
+  return (
+    <div style={{ padding: 40 }}>
+      <PinInput readOnly />
+    </div>
+  );
+}
+
 export function Autofocus() {
   return (
     <div style={{ padding: 40 }}>

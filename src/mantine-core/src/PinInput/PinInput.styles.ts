@@ -1,8 +1,4 @@
-import { createStyles, MantineNumberSize, getSize, rem } from '@mantine/styles';
-
-interface PinInputStyles {
-  size: MantineNumberSize;
-}
+import { createStyles, getSize, rem } from '@mantine/styles';
 
 const sizes = {
   xs: rem(28),
@@ -12,7 +8,8 @@ const sizes = {
   xl: rem(48),
 };
 
-export default createStyles((_theme, { size }: PinInputStyles) => ({
+export default createStyles((_theme, _params, { size }) => ({
+  root: {},
   input: {
     width: getSize({ size, sizes }),
     height: getSize({ size, sizes }),
