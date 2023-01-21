@@ -179,15 +179,6 @@ function Demo() {
 }
 ```
 
-### @mantine/spotlight changes
-
-[Spotlight](https://mantine.dev/others/spotlight/) actions are now fully controlled:
-
-- `actions` prop no longer accept a callback function, only a list of actions
-- To make register/remove features to work you will need to store actions in state
-
-<Demo data={SpotlightDemos.register} />
-
 ### @mantine/rte package deprecation
 
 `@mantine/rte` package is deprecated – it will no longer receive updates (last version will remain 5.x)
@@ -261,7 +252,7 @@ props were renamed:
 - `root` selector was removed – root element is no longer rendered
 - `drawer` selector was renamed to `content`
 
-### Spotlight breaking changes
+### @mantine/spotlight breaking changes
 
 [Spotlight](https://mantine.dev/others/spotlight/) component was migrated to use [Modal](https://mantine.dev/core/modal/)
 under the hood. Its Styles API selectors and some props names were changed – it now supports all [Modal](https://mantine.dev/core/modal/) component props.
@@ -275,6 +266,11 @@ Renamed props:
 - `transition` → `transitionProps.transition`
 - `transitionDuration` → `transitionProps.transition`
 - `transitionTimingFunction` → `transitionProps.timingFunction`
+
+[Spotlight](https://mantine.dev/others/spotlight/) actions are now fully controlled:
+
+- `actions` prop no longer accept a callback function, only a list of actions
+- To make register/remove features to work you will need to store actions in state
 
 ### Other breaking changes
 
@@ -416,6 +412,20 @@ be hidden with `display: none` styles.
 - [LoadingOverlay](https://mantine.dev/core/loading-overlay/)
 - [Popover](https://mantine.dev/core/popover/)
 - [Tooltip](https://mantine.dev/core/tooltip/)
+
+## @mantine/spotlight improvements
+
+### Controlled actions
+
+You can now fully control actions state:
+
+<Demo data={SpotlightDemos.register} />
+
+### Controlled search query
+
+You can now fully control search query:
+
+<Demo data={SpotlightDemos.controlledQuery} />
 
 ## Other changes
 

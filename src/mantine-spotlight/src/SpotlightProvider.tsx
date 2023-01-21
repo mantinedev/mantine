@@ -1,5 +1,5 @@
-import { useDisclosure } from '@mantine/hooks';
-import React, { useRef, useState } from 'react';
+import React, { useRef } from 'react';
+import { useDisclosure, useUncontrolled } from '@mantine/hooks';
 import { useSpotlightEvents } from './events';
 import { SpotlightContext } from './Spotlight.context';
 import { InnerSpotlightProps, Spotlight } from './Spotlight/Spotlight';
@@ -14,6 +14,12 @@ export interface SpotlightProviderProps extends InnerSpotlightProps {
   /** Called when actions change (registered or removed) */
   onActionsChange?(actions: SpotlightAction[]): void;
 
+  /** Controlled search query */
+  query?: string;
+
+  /** Called when user enters text in search input */
+  onQueryChange?(query: string): void;
+
   /** Your application */
   children?: React.ReactNode;
 
@@ -22,9 +28,6 @@ export interface SpotlightProviderProps extends InnerSpotlightProps {
 
   /** Called when spotlight closes */
   onSpotlightClose?(): void;
-
-  /** Called when user enters text in search input */
-  onQueryChange?(query: string): void;
 
   /** Keyboard shortcut or list of shortcuts to trigger spotlight */
   shortcut?: string | string[] | null;
@@ -43,6 +46,7 @@ export function SpotlightProvider({
   actions,
   children,
   shortcut = 'mod + K',
+  query,
   onSpotlightClose,
   onSpotlightOpen,
   onQueryChange,
@@ -54,7 +58,14 @@ export function SpotlightProvider({
   ...others
 }: SpotlightProviderProps) {
   const timeoutRef = useRef<number>(-1);
-  const [query, setQuery] = useState('');
+
+  const [_query, setQuery] = useUncontrolled({
+    value: query,
+    defaultValue: '',
+    finalValue: '',
+    onChange: onQueryChange,
+  });
+
   const [_actions, { registerActions, removeActions, triggerAction }] = useActionsState({
     actions,
     onActionsChange,
@@ -89,7 +100,7 @@ export function SpotlightProvider({
     triggerAction,
     opened,
     actions: _actions,
-    query,
+    query: _query,
   };
 
   useSpotlightShortcuts(shortcut, open, tagsToIgnore);
@@ -102,7 +113,7 @@ export function SpotlightProvider({
           actions={_actions}
           onClose={close}
           opened={opened}
-          query={query}
+          query={_query}
           onQueryChange={handleQueryChange}
           transitionDuration={transitionDuration}
           {...others}
