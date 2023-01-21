@@ -21,6 +21,7 @@ import {
   ModalDemos,
   PinInputDemos,
   SpotlightDemos,
+  CalendarDemos,
 } from '@mantine/demos';
 
 ## Breaking changes
@@ -348,6 +349,13 @@ and [dates](https://mantine.dev/dates/date-picker/). All new pickers support `ty
 ### [MonthPickerInput](https://mantine.dev/dates/month-picker-input/)
 
 <Demo data={MonthPickerInputDemos.usage} />
+
+### [Calendar](https://mantine.dev/dates/calendar/)
+
+`Calendar` component can now be used as a base for date pickers with custom logic.
+For example, you can build week picker component with it:
+
+<Demo data={CalendarDemos.weekPicker} />
 
 ### [DatesProvider](https://mantine.dev/dates/dates-provider/)
 
