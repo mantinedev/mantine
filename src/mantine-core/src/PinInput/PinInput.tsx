@@ -227,7 +227,7 @@ export const PinInput = forwardRef<HTMLDivElement, PinInputProps>((props, ref) =
         role="group"
         spacing={spacing}
         ref={ref}
-        className={cx(classes.root)}
+        className={cx(classes.root, className)}
         sx={sx}
         unstyled={unstyled}
         id={uuid}
