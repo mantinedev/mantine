@@ -9,7 +9,6 @@ import {
 import { Notification, NotificationProps } from './Notification';
 
 const defaultProps: NotificationProps = {
-  icon: 'test-icon',
   title: 'test-notification',
   closeButtonProps: { title: 'test-close' },
 };
@@ -41,8 +40,12 @@ describe('@mantine/core/Notification', () => {
   });
 
   it('displays loader when loading prop is true', () => {
-    const { container: loading } = render(<Notification {...defaultProps} loading />);
-    const { container: notLoading } = render(<Notification {...defaultProps} loading={false} />);
+    const { container: loading } = render(
+      <Notification {...defaultProps} loading icon="test-icon" />
+    );
+    const { container: notLoading } = render(
+      <Notification {...defaultProps} icon="test-icon" loading={false} />
+    );
     expect(loading.querySelector('.mantine-Notification-loader')).toBeInTheDocument();
     expect(loading.querySelector('.mantine-Notification-icon')).toBe(null);
     expect(notLoading.querySelector('.mantine-Notification-loader')).toBe(null);

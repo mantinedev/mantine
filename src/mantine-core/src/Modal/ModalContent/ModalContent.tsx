@@ -25,7 +25,7 @@ export const ModalContent = forwardRef<HTMLElement, ModalContentProps>((props, r
 
   return (
     <ModalBase.Content ref={ref} radius={ctx.radius} {...others}>
-      <Scroll maxHeight={`calc(100vh - (${rem(ctx.yOffset)} * 2))`}>{children}</Scroll>
+      <Scroll mah={`calc(100vh - (${rem(ctx.yOffset)} * 2))`}>{children}</Scroll>
     </ModalBase.Content>
   );
 });

@@ -26,7 +26,7 @@ export const DrawerContent = forwardRef<HTMLElement, DrawerContentProps>((props,
 
   return (
     <ModalBase.Content ref={ref} radius={0} {...others}>
-      <Scroll maxHeight="100vh">{children}</Scroll>
+      <Scroll mah="100vh">{children}</Scroll>
     </ModalBase.Content>
   );
 });

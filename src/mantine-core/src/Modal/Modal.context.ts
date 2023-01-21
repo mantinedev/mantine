@@ -2,7 +2,7 @@ import { MantineNumberSize } from '@mantine/styles';
 import { createSafeContext } from '@mantine/utils';
 
 export type ScrollAreaComponent = React.FC<{
-  maxHeight: React.CSSProperties['maxHeight'];
+  mah: React.CSSProperties['maxHeight'];
   children: React.ReactNode;
 }>;
 
