@@ -73,6 +73,9 @@ export interface SegmentedControlProps
 
   /** Display Vertically */
   orientation?: 'vertical' | 'horizontal';
+
+  /** Determines whether the user can change value */
+  readOnly?: boolean;
 }
 
 const defaultProps: Partial<SegmentedControlProps> = {
@@ -101,6 +104,7 @@ export const SegmentedControl = forwardRef<HTMLDivElement, SegmentedControlProps
     orientation,
     unstyled,
     variant,
+    readOnly,
     ...others
   } = useComponentDefaultProps('SegmentedControl', defaultProps, props);
   const theme = useMantineTheme();
@@ -190,7 +194,7 @@ export const SegmentedControl = forwardRef<HTMLDivElement, SegmentedControlProps
         value={item.value}
         id={`${uuid}-${item.value}`}
         checked={_value === item.value}
-        onChange={() => handleValueChange(item.value)}
+        onChange={() => !readOnly && handleValueChange(item.value)}
       />
 
       <label
