@@ -25,11 +25,15 @@ describe('@mantine/core/Notification', () => {
     providerName: 'Notification',
   });
 
-  it('does not render close button if disallowClose is true', () => {
-    const { container: allowClose } = render(<Notification {...defaultProps} />);
-    const { container: disallowClose } = render(<Notification {...defaultProps} disallowClose />);
-    expect(allowClose.querySelectorAll('.mantine-Notification-closeButton')).toHaveLength(1);
-    expect(disallowClose.querySelectorAll('.mantine-Notification-closeButton')).toHaveLength(0);
+  it('does not render close button if withCloseButton is false', () => {
+    const { container: withCloseButton } = render(<Notification {...defaultProps} />);
+    const { container: withoutCloseButton } = render(
+      <Notification {...defaultProps} withCloseButton={false} />
+    );
+    expect(withCloseButton.querySelectorAll('.mantine-Notification-closeButton')).toHaveLength(1);
+    expect(withoutCloseButton.querySelectorAll('.mantine-Notification-closeButton')).toHaveLength(
+      0
+    );
   });
 
   it('renders given icon', () => {

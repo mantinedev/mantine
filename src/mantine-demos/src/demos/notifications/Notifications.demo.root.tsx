@@ -89,7 +89,7 @@ function Demo() {
             title: 'Loading your data',
             message: 'Data will be loaded in 3 seconds, you cannot close this yet',
             autoClose: false,
-            disallowClose: true,
+            withCloseButton: false,
           });
 
           setTimeout(() => {

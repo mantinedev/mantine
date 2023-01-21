@@ -26,7 +26,7 @@ function Demo() {
       <Notification
         loading
         title="Uploading data to the server"
-        disallowClose
+        withCloseButton={false}
       >
         Please wait until data is uploaded, you cannot close this notification yet
       </Notification>
@@ -60,7 +60,7 @@ function Demo() {
         mt="md"
         loading
         title="Uploading data to the server"
-        disallowClose
+        withCloseButton={false}
         onClose={() => {}}
       >
         Please wait until data is uploaded, you cannot close this notification yet

@@ -10,7 +10,7 @@ export function Usage() {
       <div style={{ maxWidth: 400, marginLeft: 'auto', marginRight: 'auto' }}>
         <Notification
           loading
-          disallowClose
+          withCloseButton={false}
           color="indigo"
           onClose={() => {}}
           title="You will not close this notification"
@@ -160,7 +160,7 @@ export function Usage() {
         <Notification
           color="pink"
           onClose={() => {}}
-          disallowClose
+          withCloseButton={false}
           mt="xl"
           icon={<IconMoodSmile size={18} />}
           title="NotificationWithIconDisallowCloseAndTitleSoLargeThatItWillUseOverflowEllipsisOption"

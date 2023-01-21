@@ -40,12 +40,16 @@ export interface NotificationProps
   /** Replaces colored line or icon with Loader component */
   loading?: boolean;
 
-  /** Removes close button */
-  disallowClose?: boolean;
+  /** Determines whether close button should be visible, true by default */
+  withCloseButton?: boolean;
 
   /** Props spread to close button */
   closeButtonProps?: Record<string, any>;
 }
+
+const defaultProps: Partial<NotificationProps> = {
+  withCloseButton: true,
+};
 
 export const Notification = forwardRef<HTMLDivElement, NotificationProps>((props, ref) => {
   const {
@@ -53,7 +57,7 @@ export const Notification = forwardRef<HTMLDivElement, NotificationProps>((props
     color,
     radius,
     loading,
-    disallowClose,
+    withCloseButton,
     title,
     icon,
     children,
@@ -64,7 +68,7 @@ export const Notification = forwardRef<HTMLDivElement, NotificationProps>((props
     unstyled,
     variant,
     ...others
-  } = useComponentDefaultProps('Notification', {}, props);
+  } = useComponentDefaultProps('Notification', defaultProps, props);
 
   const { classes, cx } = useStyles(
     { color, radius, withTitle: !!title },
@@ -94,7 +98,7 @@ export const Notification = forwardRef<HTMLDivElement, NotificationProps>((props
         </Text>
       </div>
 
-      {!disallowClose && (
+      {withCloseButton && (
         <CloseButton
           iconSize={16}
           color="gray"

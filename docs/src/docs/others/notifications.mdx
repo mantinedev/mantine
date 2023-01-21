@@ -80,7 +80,7 @@ import { notifications } from '@mantine/notifications';
 Notification state item can have these properties:
 
 - **id** – notification id, it is used to update and remove notification, by default id is randomly generated
-- **disallowClose** – removes close button, notification can be closed only programmatically
+- **withCloseButton** – determines whether close button should be visible
 - **onClose** – calls when notification is unmounted
 - **onOpen** – calls when notification is mounted
 - **autoClose** – defines timeout in ms on which notification will be automatically closed, use `false` to disable auto close
@@ -99,7 +99,7 @@ notifications.show({ message: 'Hello' });
 // Most used notification props
 notifications.show({
   id: 'hello-there',
-  disallowClose: true,
+  withCloseButton: true,
   onClose: () => console.log('unmounted'),
   onOpen: () => console.log('mounted'),
   autoClose: 5000,
