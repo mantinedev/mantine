@@ -29,6 +29,7 @@ import {
   IsValid,
   _TransformValues,
   ClearFieldDirty,
+  GetTransformedValues,
 } from './types';
 
 export function useForm<
@@ -211,6 +212,9 @@ export function useForm<
       }
     };
 
+  const getTransformedValues: GetTransformedValues<Values, TransformValues> = (input) =>
+    (transformValues as any)(input || values);
+
   const onReset: OnReset = useCallback((event) => {
     event.preventDefault();
     reset();
@@ -274,5 +278,6 @@ export function useForm<
     resetTouched,
     resetDirty,
     isValid,
+    getTransformedValues,
   };
 }
