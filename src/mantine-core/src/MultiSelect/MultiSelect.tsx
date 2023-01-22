@@ -665,7 +665,7 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>((props
                 readOnly,
               })}
             >
-              <div className={classes.values}>
+              <div className={classes.values} data-clearable={clearable || undefined}>
                 {selectedItems}
 
                 <input

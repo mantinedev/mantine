@@ -1,5 +1,6 @@
 import { createStyles, rem, getSize } from '@mantine/styles';
 import { INPUT_SIZES } from '../Input';
+import { sizes as DEFAULT_VALUE_SIZES } from './DefaultValue/DefaultValue.styles';
 
 export interface MultiSelectStylesParams {
   invalid: boolean;
@@ -17,6 +18,10 @@ export default createStyles((theme, { invalid }: MultiSelectStylesParams, { size
     flexWrap: 'wrap',
     marginLeft: `calc(-${theme.spacing.xs} / 2)`,
     boxSizing: 'border-box',
+
+    '&[data-clearable]': {
+      marginRight: getSize({ size, sizes: INPUT_SIZES }),
+    },
   },
 
   value: {
@@ -36,6 +41,7 @@ export default createStyles((theme, { invalid }: MultiSelectStylesParams, { size
     appearance: 'none',
     color: 'inherit',
     lineHeight: `calc(${getSize({ size, sizes: INPUT_SIZES })} - ${rem(2)})`,
+    maxHeight: getSize({ size, sizes: DEFAULT_VALUE_SIZES }),
 
     '&::placeholder': {
       opacity: 1,
@@ -57,6 +63,7 @@ export default createStyles((theme, { invalid }: MultiSelectStylesParams, { size
 
   searchInputInputHidden: {
     width: 0,
+    minWidth: 0,
     height: 0,
     margin: 0,
     overflow: 'hidden',

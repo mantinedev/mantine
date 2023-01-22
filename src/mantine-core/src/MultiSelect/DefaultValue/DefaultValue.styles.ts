@@ -6,7 +6,7 @@ interface DefaultLabelStyles {
   readOnly: boolean;
 }
 
-const sizes = {
+export const sizes = {
   xs: rem(16),
   sm: rem(22),
   md: rem(26),
@@ -44,7 +44,7 @@ export default createStyles(
         ? theme.colors.dark[0]
         : theme.colors.gray[7],
       height: getSize({ size, sizes }),
-      paddingLeft: getSize({ size, sizes: theme.spacing }),
+      paddingLeft: `calc(${getSize({ size, sizes: theme.spacing })} / 1.5)`,
       paddingRight: disabled || readOnly ? getSize({ size, sizes: theme.spacing }) : 0,
       fontWeight: 500,
       fontSize: getSize({ size, sizes: fontSizes }),

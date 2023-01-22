@@ -1,3 +1,4 @@
+import { MANTINE_SIZES } from '@mantine/styles';
 import React from 'react';
 import { Stack } from '../Stack';
 import { TextInput } from '../TextInput';
@@ -6,6 +7,21 @@ import { MultiSelect } from './MultiSelect';
 export default { title: 'MultiSelect' };
 
 const data = ['React', 'Angular', 'Vue', 'Svelte'];
+
+export function MultipleRows() {
+  const sizes = MANTINE_SIZES.map((size) => (
+    <MultiSelect
+      size={size}
+      key={size}
+      data={data}
+      clearable
+      defaultValue={['React', 'Angular', 'Vue']}
+      searchable
+      mt="md"
+    />
+  ));
+  return <div style={{ padding: 40, maxWidth: 1000 }}>{sizes}</div>;
+}
 
 export function ReadOnly() {
   return (
