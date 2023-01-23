@@ -11,6 +11,8 @@ export function validateFieldValue<T>(
   }
 
   const results = validateValues(rules, values);
-  const hasError = path in results.errors;
-  return { hasError, error: hasError ? results.errors[path] : null };
+  const pathInError = Object.keys(results.errors).find((errorKey) =>
+    path.split('.').every((pathPart, i) => pathPart === errorKey.split('.')[i])
+  );
+  return { hasError: !!pathInError, error: pathInError ? results.errors[pathInError] : null };
 }

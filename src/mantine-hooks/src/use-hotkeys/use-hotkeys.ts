@@ -1,7 +1,8 @@
 import { useEffect } from 'react';
 import { getHotkeyHandler, getHotkeyMatcher, HotkeyItemOptions } from './parse-hotkey';
 
-export { getHotkeyHandler, HotkeyItemOptions };
+export type { HotkeyItemOptions };
+export { getHotkeyHandler };
 
 export type HotkeyItem = [string, (event: KeyboardEvent) => void, HotkeyItemOptions?];
 
@@ -14,7 +15,7 @@ function shouldFireEvent(
     if (triggerOnContentEditable) {
       return !tagsToIgnore.includes(event.target.tagName);
     }
-
+    
     return !event.target.isContentEditable && !tagsToIgnore.includes(event.target.tagName);
   }
 

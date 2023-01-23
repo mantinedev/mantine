@@ -23,13 +23,13 @@ export interface InputSharedProps {
   icon?: React.ReactNode;
 
   /** Width of icon section in px */
-  iconWidth?: number;
+  iconWidth?: React.CSSProperties['width'];
 
   /** Right section of input, similar to icon but on the right */
   rightSection?: React.ReactNode;
 
   /** Width of right section, is used to calculate input padding-right */
-  rightSectionWidth?: number;
+  rightSectionWidth?: React.CSSProperties['width'];
 
   /** Props spread to rightSection div element */
   rightSectionProps?: Record<string, any>;
@@ -98,7 +98,7 @@ export const _Input = forwardRef<HTMLInputElement, InputProps>((props, ref) => {
     pointer,
     ...others
   } = useComponentDefaultProps('Input', defaultProps, props);
-  const { offsetBottom, offsetTop } = useInputWrapperContext();
+  const { offsetBottom, offsetTop, describedBy } = useInputWrapperContext();
 
   const { classes, cx } = useStyles(
     {
@@ -135,6 +135,7 @@ export const _Input = forwardRef<HTMLInputElement, InputProps>((props, ref) => {
         ref={ref}
         required={required}
         aria-invalid={invalid}
+        aria-describedby={describedBy}
         disabled={disabled}
         className={cx(classes[`${variant}Variant`], classes.input, {
           [classes.withIcon]: icon,

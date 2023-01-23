@@ -28,6 +28,10 @@ lowlight.registerLanguage('ts', ts);
 
 export default { title: 'TipTap' };
 
+const lorem =
+  'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Veritatis necessitatibus, impedit tempora, provident voluptate aliquid eos eveniet expedita iusto mollitia accusamus illum sunt fugiat quisquam tempore molestias nulla voluptatem cumque!';
+const htmlContent = Array.from({ length: 10 }).fill(`<p>${lorem}</p>`).join('');
+
 function BasicEditor({
   editorProps,
   content,
@@ -51,7 +55,7 @@ function BasicEditor({
         types: ['heading', 'paragraph'],
       }),
     ],
-    content: content || '<p>Hello World!</p>',
+    content: content || htmlContent,
   });
 
   return (
@@ -219,8 +223,6 @@ export function CodeHighlight() {
   );
 }
 
-const lorem =
-  'Lorem ipsum dolor sit amet consectetur adipisicing elit. Harum dicta praesentium perferendis tenetur provident ratione iste, at quo ea enim excepturi, delectus alias nesciunt dolorem. Modi doloremque sed facere nam.';
 const largeContent = Array(20)
   .fill(0)
   .map(() => `<p>${lorem}</p>`)
@@ -298,6 +300,28 @@ export function PlaceholderExtension() {
   return (
     <div style={{ padding: 40 }}>
       <RichTextEditor editor={editor}>
+        <RichTextEditor.Content />
+      </RichTextEditor>
+    </div>
+  );
+}
+
+export function ControlStylesApi() {
+  const editor = useEditor({
+    extensions: [StarterKit, Link],
+    content: '',
+  });
+
+  return (
+    <div style={{ padding: 40 }}>
+      <RichTextEditor editor={editor} styles={{ control: { backgroundColor: 'pink' } }}>
+        <RichTextEditor.Toolbar>
+          <RichTextEditor.ControlsGroup>
+            <RichTextEditor.Bold />
+            <RichTextEditor.Link icon={() => <div>$</div>} />
+          </RichTextEditor.ControlsGroup>
+        </RichTextEditor.Toolbar>
+
         <RichTextEditor.Content />
       </RichTextEditor>
     </div>

@@ -1,5 +1,6 @@
 import { createSafeContext } from '@mantine/utils';
-import { MantineNumberSize } from '@mantine/styles';
+import { MantineNumberSize, ClassNames, Styles } from '@mantine/styles';
+import type { ListStylesNames } from './List';
 
 interface ListContextValue {
   spacing?: MantineNumberSize;
@@ -8,6 +9,9 @@ interface ListContextValue {
   listStyleType?: string;
   withPadding?: boolean;
   size?: MantineNumberSize;
+  classNames?: ClassNames<ListStylesNames>;
+  styles?: Styles<ListStylesNames>;
+  unstyled?: boolean;
 }
 
 export const [ListProvider, useListContext] = createSafeContext<ListContextValue>(

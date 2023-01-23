@@ -78,4 +78,10 @@ describe('@mantine/core/InputWrapper', () => {
     expect(queries.getLabel(label)).toHaveAttribute('for', 'test-id');
     expect(queries.getLabel(div)).not.toHaveAttribute('for');
   });
+
+  it('generates correct ids for description and error', () => {
+    const { container } = render(<InputWrapper {...defaultProps} id="test45" />);
+    expect(queries.getDescription(container)).toHaveAttribute('id', 'test45-description');
+    expect(queries.getError(container)).toHaveAttribute('id', 'test45-error');
+  });
 });

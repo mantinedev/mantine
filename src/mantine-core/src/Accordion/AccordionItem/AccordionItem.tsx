@@ -1,10 +1,5 @@
 import React, { forwardRef } from 'react';
-import {
-  DefaultProps,
-  Selectors,
-  useContextStylesApi,
-  useComponentDefaultProps,
-} from '@mantine/styles';
+import { DefaultProps, Selectors, useComponentDefaultProps } from '@mantine/styles';
 import { Box } from '../../Box';
 import { AccordionItemContextProvider } from '../AccordionItem.context';
 import useStyles from './AccordionItem.styles';
@@ -28,11 +23,10 @@ export const AccordionItem = forwardRef<HTMLDivElement, AccordionItemProps>((pro
     props
   );
 
-  const { classNames, styles, unstyled } = useContextStylesApi();
   const ctx = useAccordionContext();
   const { classes, cx } = useStyles(
     { variant: ctx.variant, radius: ctx.radius },
-    { name: 'Accordion', classNames, styles, unstyled }
+    { name: 'Accordion', classNames: ctx.classNames, styles: ctx.styles, unstyled: ctx.unstyled }
   );
 
   return (

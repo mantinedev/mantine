@@ -2,7 +2,7 @@ export const meta = {
   docsLink: 'https://mantine.dev',
   uiLink: 'https://ui.mantine.dev/',
 
-  discordLink: 'https://discord.gg/eUZpPbpxb4',
+  discordLink: 'https://discord.gg/wbH82zuWMN',
   twitterLink: 'https://twitter.com/mantinedev',
 
   npmLink: 'https://www.npmjs.com/org/mantine',

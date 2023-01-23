@@ -1,5 +1,5 @@
 import React, { useReducer } from 'react';
-import { Modal } from '@mantine/core';
+import { Modal, getDefaultZIndex } from '@mantine/core';
 import { randomId } from '@mantine/hooks';
 import {
   ModalsContext,
@@ -122,11 +122,6 @@ export function ModalsProvider({ children, modalProps, labels, modals }: ModalsP
   };
 
   const closeModal = (id: string, canceled?: boolean) => {
-    if (state.modals.length <= 1) {
-      closeAll(canceled);
-      return;
-    }
-
     const modal = state.modals.find((item) => item.id === id);
     if (modal?.type === 'confirm' && canceled) {
       modal.props?.onCancel?.();
@@ -200,6 +195,7 @@ export function ModalsProvider({ children, modalProps, labels, modals }: ModalsP
   return (
     <ModalsContext.Provider value={ctx}>
       <Modal
+        zIndex={getDefaultZIndex('modal') + 1}
         {...modalProps}
         {...currentModalProps}
         opened={state.modals.length > 0}

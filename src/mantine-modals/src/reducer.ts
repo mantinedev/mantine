@@ -31,9 +31,10 @@ export function modalsReducer(
       };
     }
     case 'CLOSE': {
+      const modals = state.modals.filter((m) => m.id !== action.payload);
       return {
-        current: state.modals[state.modals.length - 2] || null,
-        modals: state.modals.filter((m) => m.id !== action.payload),
+        current: modals[modals.length - 1],
+        modals,
       };
     }
     case 'CLOSE_ALL': {

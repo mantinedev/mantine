@@ -1,11 +1,6 @@
 import React, { forwardRef } from 'react';
-import {
-  UnstyledButton,
-  DefaultProps,
-  Selectors,
-  useContextStylesApi,
-  useComponentDefaultProps,
-} from '@mantine/core';
+import { UnstyledButton, DefaultProps, Selectors, useComponentDefaultProps } from '@mantine/core';
+import { useRichTextEditorContext } from '../../RichTextEditor.context';
 import useStyles from './Control.styles';
 
 export type ControlStylesNames = Selectors<typeof useStyles>;
@@ -36,7 +31,7 @@ export const Control = forwardRef<HTMLButtonElement, RichTextEditorControlProps>
     props
   );
 
-  const { classNames, styles, unstyled } = useContextStylesApi();
+  const { classNames, styles, unstyled } = useRichTextEditorContext();
   const { classes, cx } = useStyles(null, {
     name: 'RichTextEditor',
     classNames,

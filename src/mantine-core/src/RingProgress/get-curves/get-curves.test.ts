@@ -11,6 +11,7 @@ describe('@mantine/core/RingProgress/get-curves', () => {
         { value: 9, color: 'blue' },
       ],
       renderRoundedLineCaps: false,
+      rootColor: 'blue',
     });
     const expectedCurves = [
       {
@@ -34,7 +35,13 @@ describe('@mantine/core/RingProgress/get-curves', () => {
         sum: 71.345,
         lineRoundCaps: false,
       },
-      { data: null, offset: 261.9650020918711, root: true, sum: 71.345, lineRoundCaps: false },
+      {
+        data: { color: 'blue' },
+        offset: 261.9650020918711,
+        root: true,
+        sum: 71.345,
+        lineRoundCaps: false,
+      },
     ];
     expect(curves.length).toStrictEqual(expectedCurves.length);
     expect(curves).toStrictEqual(expect.arrayContaining(expectedCurves));

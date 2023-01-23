@@ -104,19 +104,20 @@ export default createStyles(
 
     content: {
       backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.white,
-      padding: theme.spacing.md,
       borderRadius: theme.fn.radius(),
 
       '& .ProseMirror': {
         outline: 0,
+        padding: theme.spacing.md,
       },
 
       '& .ProseMirror > *:last-child': {
         marginBottom: 0,
       },
 
-      '& .ProseMirror p.is-editor-empty:first-child::before': {
+      '& .ProseMirror p.is-editor-empty:first-of-type::before': {
         content: 'attr(data-placeholder)',
+        pointerEvents: 'none',
         userSelect: 'none',
         float: 'left',
         height: 0,

@@ -60,13 +60,14 @@ export default createStyles(
     return {
       input: {
         clip: 'rect(1px, 1px, 1px, 1px)',
-        height: '1px',
+        height: 0,
+        width: 0,
         overflow: 'hidden',
-        width: '1px',
         whiteSpace: 'nowrap',
-        padding: '0',
+        padding: 0,
         WebkitClipPath: 'inset(50%)',
         clipPath: 'inset(50%)',
+        position: 'absolute',
       },
 
       track: {

@@ -1,13 +1,8 @@
 /* eslint-disable react/no-unused-prop-types */
-import React, { useMemo } from 'react';
-import {
-  Box,
-  useComponentDefaultProps,
-  DefaultProps,
-  Selectors,
-  StylesApiProvider,
-} from '@mantine/core';
+import React, { useMemo, forwardRef } from 'react';
+import { Box, useComponentDefaultProps, DefaultProps, Selectors } from '@mantine/core';
 import { Editor } from '@tiptap/react';
+import { ForwardRefWithStaticComponents } from '@mantine/utils';
 import { RichTextEditorProvider } from './RichTextEditor.context';
 import * as controls from './controls';
 import { Content, ContentStylesNames } from './Content/Content';
@@ -50,7 +45,49 @@ const defaultProps: Partial<RichTextEditorProps> = {
   withTypographyStyles: true,
 };
 
-export function RichTextEditor(props: RichTextEditorProps) {
+type RichTextEditorComponent = ForwardRefWithStaticComponents<
+  RichTextEditorProps,
+  {
+    Content: typeof Content;
+    Control: typeof Control;
+    ControlsGroup: typeof ControlsGroup;
+    Toolbar: typeof Toolbar;
+    Bold: typeof controls.BoldControl;
+    Italic: typeof controls.ItalicControl;
+    Strikethrough: typeof controls.StrikeThroughControl;
+    Underline: typeof controls.UnderlineControl;
+    ClearFormatting: typeof controls.ClearFormattingControl;
+    H1: typeof controls.H1Control;
+    H2: typeof controls.H2Control;
+    H3: typeof controls.H3Control;
+    H4: typeof controls.H4Control;
+    H5: typeof controls.H5Control;
+    H6: typeof controls.H6Control;
+    BulletList: typeof controls.BulletListControl;
+    OrderedList: typeof controls.OrderedListControl;
+    Link: typeof controls.LinkControl;
+    Unlink: typeof controls.UnlinkControl;
+    Blockquote: typeof controls.BlockquoteControl;
+    AlignLeft: typeof controls.AlignLeftControl;
+    AlignRight: typeof controls.AlignRightControl;
+    AlignCenter: typeof controls.AlignCenterControl;
+    AlignJustify: typeof controls.AlignJustifyControl;
+    Superscript: typeof controls.SuperscriptControl;
+    Subscript: typeof controls.SubscriptControl;
+    Code: typeof controls.CodeControl;
+    CodeBlock: typeof controls.CodeBlockControl;
+    ColorPicker: typeof controls.ColorPickerControl;
+    Color: typeof controls.ColorControl;
+    Highlight: typeof controls.HighlightControl;
+    Hr: typeof controls.HrControl;
+    UnsetColor: typeof controls.UnsetColorControl;
+  }
+>;
+
+export const RichTextEditor: RichTextEditorComponent = forwardRef<
+  HTMLDivElement,
+  RichTextEditorProps
+>((props, ref) => {
   const {
     editor,
     children,
@@ -63,21 +100,32 @@ export function RichTextEditor(props: RichTextEditorProps) {
     unstyled,
     ...others
   } = useComponentDefaultProps('RichTextEditor', defaultProps, props);
-  const { classes, cx } = useStyles(null, { name: 'RichTextEditor', classNames, styles, unstyled });
+  const { classes, cx } = useStyles(null, {
+    name: 'RichTextEditor',
+    classNames,
+    styles,
+    unstyled,
+  });
   const mergedLabels = useMemo(() => ({ ...DEFAULT_LABELS, ...labels }), [labels]);
 
   return (
-    <StylesApiProvider classNames={classNames} styles={styles} unstyled={unstyled}>
-      <RichTextEditorProvider
-        value={{ editor, labels: mergedLabels, withCodeHighlightStyles, withTypographyStyles }}
-      >
-        <Box className={cx(classes.root, className)} {...others}>
-          {children}
-        </Box>
-      </RichTextEditorProvider>
-    </StylesApiProvider>
+    <RichTextEditorProvider
+      value={{
+        editor,
+        labels: mergedLabels,
+        withCodeHighlightStyles,
+        withTypographyStyles,
+        classNames,
+        styles,
+        unstyled,
+      }}
+    >
+      <Box className={cx(classes.root, className)} {...others} ref={ref}>
+        {children}
+      </Box>
+    </RichTextEditorProvider>
   );
-}
+}) as any;
 
 // Generic components
 RichTextEditor.Content = Content;

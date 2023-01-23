@@ -1,11 +1,7 @@
 import React, { forwardRef } from 'react';
-import {
-  DefaultProps,
-  Selectors,
-  useContextStylesApi,
-  useComponentDefaultProps,
-} from '@mantine/styles';
+import { DefaultProps, Selectors, useComponentDefaultProps } from '@mantine/styles';
 import { Text } from '../../Text';
+import { useMenuContext } from '../Menu.context';
 import useStyles from './MenuLabel.styles';
 
 export type MenuLabelStylesName = Selectors<typeof useStyles>;
@@ -23,7 +19,7 @@ export const MenuLabel = forwardRef<HTMLDivElement, MenuLabelProps>((props, ref)
     defaultProps,
     props
   );
-  const { classNames, styles, unstyled } = useContextStylesApi();
+  const { classNames, styles, unstyled } = useMenuContext();
   const { classes, cx } = useStyles(null, { name: 'Menu', classNames, styles, unstyled });
   return (
     <Text className={cx(classes.label, className)} ref={ref} {...others}>

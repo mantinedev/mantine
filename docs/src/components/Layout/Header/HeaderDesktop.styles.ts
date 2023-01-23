@@ -49,7 +49,9 @@ export default createStyles((theme) => ({
   version: {
     fontWeight: 700,
     position: 'relative',
-    paddingRight: 18,
+    paddingRight: 20,
+    display: 'block',
+    marginTop: 2,
 
     [theme.fn.smallerThan(860)]: {
       display: 'none',
@@ -58,7 +60,7 @@ export default createStyles((theme) => ({
 
   chevron: {
     position: 'absolute',
-    right: 2,
-    top: 3,
+    right: 4,
+    top: 5,
   },
 }));
