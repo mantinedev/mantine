@@ -49,7 +49,7 @@
     "@mantine/spotlight": "5.10.1",
     "@mantine/carousel": "5.10.1",
     "@mantine/ds": "5.10.1",
-    "@tabler/icons": "*",
+    "@tabler/icons-react": "^2.0.0",
     "react-beautiful-dnd": "*",
     "embla-carousel-autoplay": "*",
     "react-input-mask": "*",

@@ -1,11 +1,11 @@
 import React from 'react';
-import { IconArrowLeft, IconArrowRight } from '@tabler/icons';
+import { IconArrowLeft, IconArrowRight } from '@tabler/icons-react';
 import { MantineDemo } from '@mantine/ds';
 import { Center, useMantineTheme, Anchor, Box } from '@mantine/core';
 
 const code = `
 import { Center, Anchor, Box } from '@mantine/core';
-import { IconArrowLeft } from '@tabler/icons';
+import { IconArrowLeft } from '@tabler/icons-react';
 
 function Demo() {
   return (

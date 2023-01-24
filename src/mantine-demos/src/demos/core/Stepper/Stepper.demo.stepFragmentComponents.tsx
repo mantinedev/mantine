@@ -1,11 +1,11 @@
 import React from 'react';
-import { IconCheck } from '@tabler/icons';
+import { IconCheck } from '@tabler/icons-react';
 import { MantineDemo } from '@mantine/ds';
 import { Group, Stepper, Text } from '@mantine/core';
 
 const code = `
 import { Stepper, Group, Text } from '@mantine/core';
-import { IconCheck } from '@tabler/icons';
+import { IconCheck } from '@tabler/icons-react';
 
 function Label(props: { step: number }) {
   return (

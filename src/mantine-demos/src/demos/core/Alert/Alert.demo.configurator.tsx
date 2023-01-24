@@ -1,5 +1,5 @@
 import React from 'react';
-import { IconAlertCircle } from '@tabler/icons';
+import { IconAlertCircle } from '@tabler/icons-react';
 import { MantineDemo } from '@mantine/ds';
 import { Alert } from '@mantine/core';
 
@@ -13,7 +13,7 @@ function Wrapper(props: React.ComponentPropsWithoutRef<typeof Alert>) {
 
 const codeTemplate = (props: string, children: string) => `
 import { Alert } from '@mantine/core';
-import { IconAlertCircle } from '@tabler/icons';
+import { IconAlertCircle } from '@tabler/icons-react';
 
 function Demo() {
   return (

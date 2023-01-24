@@ -3,13 +3,13 @@ import { MantineDemo } from '@mantine/ds';
 import { useEditor } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
 import { RichTextEditor } from '@mantine/tiptap';
-import { IconBold, IconItalic } from '@tabler/icons';
+import { IconBold, IconItalic } from '@tabler/icons-react';
 
 const code = `
 import { useEditor } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
 import { RichTextEditor } from '@mantine/tiptap';
-import { IconBold, IconItalic } from '@tabler/icons';
+import { IconBold, IconItalic } from '@tabler/icons-react';
 
 const BoldIcon = () => <IconBold size={18} stroke={3.5} />;
 const ItalicIcon = () => <IconItalic size={18} stroke={3.5} />;

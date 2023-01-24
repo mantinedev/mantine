@@ -1,11 +1,11 @@
 import React from 'react';
 import { Slider, RangeSlider } from '@mantine/core';
 import { MantineDemo } from '@mantine/ds';
-import { IconHeart, IconHeartBroken } from '@tabler/icons';
+import { IconHeart, IconHeartBroken } from '@tabler/icons-react';
 
 const code = `
 import { Slider, RangeSlider } from '@mantine/core';
-import { IconHeart, IconHeartBroken } from '@tabler/icons';
+import { IconHeart, IconHeartBroken } from '@tabler/icons-react';
 
 function Demo() {
   return (

@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
-import { IconRefresh } from '@tabler/icons';
+import { IconRefresh } from '@tabler/icons-react';
 import { MantineDemo } from '@mantine/ds';
 import { ActionIcon, ColorInput } from '@mantine/core';
 
 const code = `
 import { useState } from 'react';
-import { IconRefresh } from '@tabler/icons';
+import { IconRefresh } from '@tabler/icons-react';
 import { ActionIcon, ColorInput } from '@mantine/core';
 
 const randomColor = () => \`#\${Math.floor(Math.random() * 16777215).toString(16)}\`;

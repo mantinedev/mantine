@@ -1,11 +1,11 @@
 import React from 'react';
-import { IconExternalLink } from '@tabler/icons';
+import { IconExternalLink } from '@tabler/icons-react';
 import { MantineDemo } from '@mantine/ds';
 import { Menu, Group, Button } from '@mantine/core';
 
 const code = `
 import { Menu, Button } from '@mantine/core';
-import { IconExternalLink } from '@tabler/icons';
+import { IconExternalLink } from '@tabler/icons-react';
 
 function Demo() {
   return (

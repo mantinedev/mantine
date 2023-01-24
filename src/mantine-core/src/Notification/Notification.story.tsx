@@ -1,6 +1,6 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
-import { IconMoodSmile, IconCheck, IconX, IconExclamationMark, IconBookmark } from '@tabler/icons';
+import { IconMoodSmile, IconCheck, IconX, IconExclamationMark, IconBookmark } from '@tabler/icons-react';
 import { Notification } from './Notification';
 
 const demo = (

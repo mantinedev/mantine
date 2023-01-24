@@ -1,5 +1,5 @@
 import React from 'react';
-import { IconTextDirectionLtr, IconTextDirectionRtl } from '@tabler/icons';
+import { IconTextDirectionLtr, IconTextDirectionRtl } from '@tabler/icons-react';
 import { HeaderControl } from './HeaderControl';
 
 interface DirectionControlProps {

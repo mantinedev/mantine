@@ -3,7 +3,7 @@ import { BaseDemo } from './_base';
 
 const code = `
 import { Group, Text, useMantineTheme } from '@mantine/core';
-import { IconUpload, IconPhoto, IconX } from '@tabler/icons';
+import { IconUpload, IconPhoto, IconX } from '@tabler/icons-react';
 import { Dropzone, DropzoneProps, IMAGE_MIME_TYPE } from '@mantine/dropzone';
 
 export function BaseDemo(props: Partial<DropzoneProps>) {

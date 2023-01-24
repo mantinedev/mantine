@@ -1,5 +1,5 @@
 import React from 'react';
-import { IconSun, IconMoonStars } from '@tabler/icons';
+import { IconSun, IconMoonStars } from '@tabler/icons-react';
 import { AppShell, Navbar, Header, Group, ActionIcon, useMantineColorScheme } from '@mantine/core';
 import { MantineDemo } from '@mantine/ds';
 import { MainLinks } from './_mainLinks';

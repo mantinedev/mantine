@@ -1,5 +1,5 @@
 import React from 'react';
-import { IconCheck } from '@tabler/icons';
+import { IconCheck } from '@tabler/icons-react';
 import { storiesOf } from '@storybook/react';
 import { Button, Group, MantineProvider } from '@mantine/core';
 import { showNotification, updateNotification } from './events';

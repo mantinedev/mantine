@@ -1,11 +1,11 @@
 import React from 'react';
-import { IconHash } from '@tabler/icons';
+import { IconHash } from '@tabler/icons-react';
 import { MantineDemo } from '@mantine/ds';
 import { Select } from '@mantine/core';
 
 const code = `
 import { Select } from '@mantine/core';
-import { IconHash } from '@tabler/icons';
+import { IconHash } from '@tabler/icons-react';
 
 function Demo() {
   return (

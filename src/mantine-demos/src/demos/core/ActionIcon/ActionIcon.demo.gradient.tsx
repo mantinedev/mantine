@@ -1,7 +1,7 @@
 import React from 'react';
 import { ActionIcon, Group } from '@mantine/core';
 import { MantineDemo } from '@mantine/ds';
-import { IconSun } from '@tabler/icons';
+import { IconSun } from '@tabler/icons-react';
 
 const code = `
 import { ActionIcon, Group } from '@mantine/core';

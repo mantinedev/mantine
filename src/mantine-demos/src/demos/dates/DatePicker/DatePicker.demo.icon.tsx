@@ -1,11 +1,11 @@
 import React from 'react';
-import { IconCalendar } from '@tabler/icons';
+import { IconCalendar } from '@tabler/icons-react';
 import { MantineDemo } from '@mantine/ds';
 import { DatePicker } from '@mantine/dates';
 
 const code = `
 import { DatePicker } from '@mantine/dates';
-import { IconCalendar } from '@tabler/icons';
+import { IconCalendar } from '@tabler/icons-react';
 
 function Demo() {
   return (

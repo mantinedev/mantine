@@ -2,7 +2,7 @@
 import React, { useEffect } from 'react';
 import { storiesOf } from '@storybook/react';
 import { Button, Box } from '@mantine/core';
-import { IconSearch } from '@tabler/icons';
+import { IconSearch } from '@tabler/icons-react';
 import {
   SpotlightProvider,
   useSpotlight,

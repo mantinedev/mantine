@@ -1,5 +1,5 @@
 import React from 'react';
-import { IconAdjustments } from '@tabler/icons';
+import { IconAdjustments } from '@tabler/icons-react';
 import { MantineDemo } from '@mantine/ds';
 import { ActionIcon, ActionIconProps, Group } from '@mantine/core';
 
@@ -44,7 +44,7 @@ const codeTemplate = (props: string) => {
   const childIconSizeProp = computeChildIconSizeProp(props);
   return `
 import { ActionIcon } from '@mantine/core';
-import { IconAdjustments } from '@tabler/icons';
+import { IconAdjustments } from '@tabler/icons-react';
 
 function Demo() {
   return (

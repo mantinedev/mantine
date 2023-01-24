@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import { Switch, Group, useMantineTheme } from '@mantine/core';
 import { MantineDemo } from '@mantine/ds';
-import { IconCheck, IconX } from '@tabler/icons';
+import { IconCheck, IconX } from '@tabler/icons-react';
 
 const code = `
 import { useState } from 'react';
 import { Switch, Group, useMantineTheme } from '@mantine/core';
-import { IconCheck, IconX } from '@tabler/icons';
+import { IconCheck, IconX } from '@tabler/icons-react';
 
 function Demo() {
   const theme = useMantineTheme();

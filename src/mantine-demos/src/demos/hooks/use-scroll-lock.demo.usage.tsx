@@ -1,13 +1,13 @@
 import React from 'react';
 import { useScrollLock } from '@mantine/hooks';
-import { IconLock, IconLockOpen } from '@tabler/icons';
+import { IconLock, IconLockOpen } from '@tabler/icons-react';
 import { MantineDemo } from '@mantine/ds';
 import { Group, Button } from '@mantine/core';
 
 const code = `
 import { useScrollLock } from '@mantine/hooks';
 import { Button, Group } from '@mantine/core';
-import { IconLock, IconLockOpen } from '@tabler/icons';
+import { IconLock, IconLockOpen } from '@tabler/icons-react';
 
 function Demo() {
   const [scrollLocked, setScrollLocked] = useScrollLock();

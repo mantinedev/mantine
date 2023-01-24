@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useLocation } from '@reach/router';
 import { navigate } from 'gatsby';
 import { Tabs, Title, TextInput } from '@mantine/core';
-import { IconSearch } from '@tabler/icons';
+import { IconSearch } from '@tabler/icons-react';
 import { useMediaQuery } from '@mantine/hooks';
 import { MDXRenderer } from 'gatsby-plugin-mdx';
 import { MdxSiblings } from '../MdxSiblings/MdxSiblings';

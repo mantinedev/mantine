@@ -8,7 +8,7 @@ import {
   IconMoodHappy,
   IconMoodCrazyHappy,
   IconMoodEmpty,
-} from '@tabler/icons';
+} from '@tabler/icons-react';
 
 const code = `
 import { Rating, useMantineTheme } from '@mantine/core';
@@ -19,7 +19,7 @@ import {
   IconMoodSmile,
   IconMoodHappy,
   IconMoodCrazyHappy,
-} from '@tabler/icons';
+} from '@tabler/icons-react';
 
 function Demo() {
 

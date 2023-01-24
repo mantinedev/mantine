@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'gatsby';
 import { Text } from '@mantine/core';
 import { upperFirst } from '@mantine/hooks';
-import { IconArrowLeft, IconArrowRight } from '@tabler/icons';
+import { IconArrowLeft, IconArrowRight } from '@tabler/icons-react';
 import { Frontmatter } from '../../../../types';
 import useStyles from './MdxSibling.styles';
 

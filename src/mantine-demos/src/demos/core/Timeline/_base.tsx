@@ -1,5 +1,5 @@
 import React from 'react';
-import { IconGitBranch, IconGitPullRequest, IconGitCommit, IconMessageDots } from '@tabler/icons';
+import { IconGitBranch, IconGitPullRequest, IconGitCommit, IconMessageDots } from '@tabler/icons-react';
 import { Text, Timeline, TimelineProps } from '@mantine/core';
 
 export function TimelineBase(props: Partial<TimelineProps> & { noIcon?: boolean }) {

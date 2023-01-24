@@ -8,11 +8,11 @@ import {
   IconMessageCircle,
   IconTrash,
   IconArrowsLeftRight,
-} from '@tabler/icons';
+} from '@tabler/icons-react';
 
 const code = `
 import { Menu, Button } from '@mantine/core';
-import { IconSearch } from '@tabler/icons';
+import { IconSearch } from '@tabler/icons-react';
 
 function Demo() {
   return (

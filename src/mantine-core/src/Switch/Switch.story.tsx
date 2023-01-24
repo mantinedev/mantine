@@ -1,6 +1,6 @@
 import React from 'react';
 import { MantineProvider } from '@mantine/styles';
-import { IconBadge } from '@tabler/icons';
+import { IconBadge } from '@tabler/icons-react';
 import { Group } from '../Group';
 import { Switch } from './Switch';
 import { Stack } from '../Stack';

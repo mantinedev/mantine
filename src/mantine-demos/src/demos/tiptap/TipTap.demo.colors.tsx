@@ -1,7 +1,7 @@
 import React from 'react';
 import { MantineDemo } from '@mantine/ds';
 import { useEditor } from '@tiptap/react';
-import { IconColorPicker } from '@tabler/icons';
+import { IconColorPicker } from '@tabler/icons-react';
 import { Color } from '@tiptap/extension-color';
 import TextStyle from '@tiptap/extension-text-style';
 import StarterKit from '@tiptap/starter-kit';
@@ -9,7 +9,7 @@ import { RichTextEditor } from '@mantine/tiptap';
 
 const code = `
 import { useEditor } from '@tiptap/react';
-import { IconColorPicker } from '@tabler/icons';
+import { IconColorPicker } from '@tabler/icons-react';
 import { Color } from '@tiptap/extension-color';
 import TextStyle from '@tiptap/extension-text-style';
 import StarterKit from '@tiptap/starter-kit';

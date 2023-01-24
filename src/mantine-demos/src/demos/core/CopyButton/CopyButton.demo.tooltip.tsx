@@ -1,11 +1,11 @@
 import React from 'react';
 import { Group, CopyButton, ActionIcon, Tooltip } from '@mantine/core';
 import { MantineDemo } from '@mantine/ds';
-import { IconCopy, IconCheck } from '@tabler/icons';
+import { IconCopy, IconCheck } from '@tabler/icons-react';
 
 const code = `
 import { CopyButton, ActionIcon, Tooltip } from '@mantine/core';
-import { IconCopy, IconCheck } from '@tabler/icons';
+import { IconCopy, IconCheck } from '@tabler/icons-react';
 
 function Demo() {
   return (

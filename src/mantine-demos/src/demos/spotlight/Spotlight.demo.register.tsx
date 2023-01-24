@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import { Group, Button } from '@mantine/core';
 import { SpotlightProvider, useSpotlight } from '@mantine/spotlight';
-import { IconAlien, IconSearch } from '@tabler/icons';
+import { IconAlien, IconSearch } from '@tabler/icons-react';
 import { MantineDemo } from '@mantine/ds';
 import { actions } from './_actions';
 
@@ -10,7 +10,7 @@ const code = `
 import { useState } from 'react';
 import { Group, Button } from '@mantine/core';
 import { SpotlightProvider, registerSpotlightActions, openSpotlight, removeSpotlightActions } from '@mantine/spotlight';
-import { IconAlien, IconSearch } from '@tabler/icons';
+import { IconAlien, IconSearch } from '@tabler/icons-react';
 
 function SpotlightControls() {
   const [registered, setRegistered] = useState(false);

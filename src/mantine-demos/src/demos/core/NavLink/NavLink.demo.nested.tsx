@@ -1,11 +1,11 @@
 import React from 'react';
 import { Box, NavLink, Group } from '@mantine/core';
 import { MantineDemo } from '@mantine/ds';
-import { IconGauge, IconFingerprint } from '@tabler/icons';
+import { IconGauge, IconFingerprint } from '@tabler/icons-react';
 
 const code = `
 import { Box, NavLink } from '@mantine/core';
-import { IconGauge, IconFingerprint } from '@tabler/icons';
+import { IconGauge, IconFingerprint } from '@tabler/icons-react';
 
 function Demo() {
   return (

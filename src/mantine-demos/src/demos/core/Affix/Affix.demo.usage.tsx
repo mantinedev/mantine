@@ -1,11 +1,11 @@
 import React from 'react';
-import { IconArrowUp } from '@tabler/icons';
+import { IconArrowUp } from '@tabler/icons-react';
 import { useWindowScroll } from '@mantine/hooks';
 import { MantineDemo } from '@mantine/ds';
 import { Button, Text, Transition, Affix } from '@mantine/core';
 
 const code = `
-import { IconArrowUp } from '@tabler/icons';
+import { IconArrowUp } from '@tabler/icons-react';
 import { useWindowScroll } from '@mantine/hooks';
 import { Affix, Button, Text, Transition } from '@mantine/core';
 

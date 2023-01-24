@@ -3,7 +3,7 @@ import Slugger from 'github-slugger';
 import { navigate } from 'gatsby';
 import { useLocation } from '@reach/router';
 import { Text, ScrollArea, useMantineTheme } from '@mantine/core';
-import { IconList } from '@tabler/icons';
+import { IconList } from '@tabler/icons-react';
 import useStyles from './TableOfContents.styles';
 
 interface Heading {

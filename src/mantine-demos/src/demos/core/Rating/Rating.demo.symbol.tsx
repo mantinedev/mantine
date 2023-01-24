@@ -1,11 +1,11 @@
 import React from 'react';
 import { MantineDemo } from '@mantine/ds';
 import { Group, Rating } from '@mantine/core';
-import { IconSun, IconMoon } from '@tabler/icons';
+import { IconSun, IconMoon } from '@tabler/icons-react';
 
 const code = `
 import { Group, Rating } from '@mantine/core';
-import { IconSun, IconMoon } from '@tabler/icons';
+import { IconSun, IconMoon } from '@tabler/icons-react';
 
 function Demo() {
   return (

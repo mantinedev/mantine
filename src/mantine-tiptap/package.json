@@ -30,7 +30,7 @@
   "peerDependencies": {
     "@mantine/core": "5.10.1",
     "@mantine/hooks": "5.10.1",
-    "@tabler/icons": "*",
+    "@tabler/icons-react": "^2.0.0",
     "@tiptap/extension-link": "^2.0.0-beta.202",
     "@tiptap/react": "^2.0.0-beta.202",
     "react": ">=16.8.0"

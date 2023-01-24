@@ -1,5 +1,5 @@
 import React from 'react';
-import { IconSearch } from '@tabler/icons';
+import { IconSearch } from '@tabler/icons-react';
 import { Group, Text, Anchor } from '@mantine/core';
 import { MantineDemo } from '@mantine/ds';
 import { Wrapper } from './_wrapper';

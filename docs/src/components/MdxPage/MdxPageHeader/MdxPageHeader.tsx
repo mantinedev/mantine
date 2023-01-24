@@ -1,7 +1,7 @@
 import React from 'react';
 import { Title, Text, Badge } from '@mantine/core';
 import { GithubIcon, NpmIcon } from '@mantine/ds';
-import { IconPencil, IconLicense, IconCalendar } from '@tabler/icons';
+import { IconPencil, IconLicense, IconCalendar } from '@tabler/icons-react';
 import { Link } from 'gatsby';
 import { ImportStatement } from './ImportStatement/ImportStatement';
 import { LinkItem } from './LinkItem/LinkItem';

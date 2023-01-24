@@ -1,10 +1,10 @@
 import React from 'react';
-import { IconPaint } from '@tabler/icons';
+import { IconPaint } from '@tabler/icons-react';
 import { MantineDemo } from '@mantine/ds';
 import { ColorInput } from '@mantine/core';
 
 const code = `
-import { IconPaint } from '@tabler/icons';
+import { IconPaint } from '@tabler/icons-react';
 import { ColorInput } from '@mantine/core';
 
 function Demo() {

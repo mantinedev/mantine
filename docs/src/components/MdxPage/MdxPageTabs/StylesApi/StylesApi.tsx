@@ -1,6 +1,6 @@
 import React from 'react';
 import { Box, Group } from '@mantine/core';
-import { IconArrowRight } from '@tabler/icons';
+import { IconArrowRight } from '@tabler/icons-react';
 import GatsbyLink from '../../MdxProvider/GatsbyLink/GatsbyLink';
 import { StylesApiItem } from './StylesApiItem/StylesApiItem';
 

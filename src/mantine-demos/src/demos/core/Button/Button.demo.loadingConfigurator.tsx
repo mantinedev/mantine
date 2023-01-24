@@ -1,5 +1,5 @@
 import React from 'react';
-import { IconDatabase } from '@tabler/icons';
+import { IconDatabase } from '@tabler/icons-react';
 import { MantineDemo } from '@mantine/ds';
 import { Button, Group, ButtonProps } from '@mantine/core';
 
@@ -14,7 +14,7 @@ function Wrapper(props: ButtonProps) {
 }
 
 const codeTemplate = (props: string) => `
-import { IconDatabase } from '@tabler/icons';
+import { IconDatabase } from '@tabler/icons-react';
 import { Button } from '@mantine/core';
 
 function Demo() {

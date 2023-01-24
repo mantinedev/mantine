@@ -1,6 +1,6 @@
 /* eslint-disable import/no-relative-packages */
 import React from 'react';
-import { IconChevronDown, IconExternalLink } from '@tabler/icons';
+import { IconChevronDown, IconExternalLink } from '@tabler/icons-react';
 import { Code, Menu, UnstyledButton, Text } from '@mantine/core';
 import { useSpotlight } from '@mantine/spotlight';
 import { HeaderControls } from '@mantine/ds';

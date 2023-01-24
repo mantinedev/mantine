@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { IconMoon } from '@tabler/icons';
+import { IconMoon } from '@tabler/icons-react';
 import { Stack } from '../Stack';
 import { Rating } from './Rating';
 import { Box } from '../Box';

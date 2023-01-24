@@ -1,11 +1,11 @@
 import React from 'react';
 import { ThemeIcon, Text, Avatar, Timeline } from '@mantine/core';
 import { MantineDemo } from '@mantine/ds';
-import { IconSun, IconVideo } from '@tabler/icons';
+import { IconSun, IconVideo } from '@tabler/icons-react';
 
 const code = `
 import { ThemeIcon, Text, Avatar, Timeline } from '@mantine/core';
-import { IconSun, IconVideo } from '@tabler/icons';
+import { IconSun, IconVideo } from '@tabler/icons-react';
 
 function Demo() {
   return (

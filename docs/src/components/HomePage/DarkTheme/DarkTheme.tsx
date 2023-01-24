@@ -1,7 +1,7 @@
 import React from 'react';
 import { Button, Image, SimpleGrid, Text, useMantineColorScheme, Group } from '@mantine/core';
 import { Prism } from '@mantine/prism';
-import { IconMoonStars, IconSun } from '@tabler/icons';
+import { IconMoonStars, IconSun } from '@tabler/icons-react';
 import { PageSection } from '../PageSection/PageSection';
 import image from './dark-theme-image.png';
 import useStyles from './DarkTheme.styles';

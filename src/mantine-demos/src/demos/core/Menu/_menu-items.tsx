@@ -6,7 +6,7 @@ import {
   IconMessageCircle,
   IconTrash,
   IconArrowsLeftRight,
-} from '@tabler/icons';
+} from '@tabler/icons-react';
 import { Menu, Text, Button } from '@mantine/core';
 
 export function DemoMenuItems({ widthRightSection = true, withTarget = true }) {

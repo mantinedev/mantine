@@ -22,7 +22,7 @@ import {
   IconSuperscript,
   IconSubscript,
   IconPhoto,
-} from '@tabler/icons';
+} from '@tabler/icons-react';
 
 export const CONTROLS = {
   code: {

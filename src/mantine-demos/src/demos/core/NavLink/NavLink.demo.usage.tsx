@@ -1,11 +1,11 @@
 import React from 'react';
 import { Badge, Box, NavLink, Group } from '@mantine/core';
 import { MantineDemo } from '@mantine/ds';
-import { IconHome2, IconGauge, IconChevronRight, IconActivity, IconCircleOff } from '@tabler/icons';
+import { IconHome2, IconGauge, IconChevronRight, IconActivity, IconCircleOff } from '@tabler/icons-react';
 
 const code = `
 import { Badge, Box, NavLink } from '@mantine/core';
-import { IconHome2, IconGauge, IconChevronRight, IconActivity, IconCircleOff } from '@tabler/icons';
+import { IconHome2, IconGauge, IconChevronRight, IconActivity, IconCircleOff } from '@tabler/icons-react';
 
 function Demo() {
   return (

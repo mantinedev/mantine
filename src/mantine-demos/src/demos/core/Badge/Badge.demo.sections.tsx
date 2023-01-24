@@ -1,11 +1,11 @@
 import React from 'react';
-import { IconX } from '@tabler/icons';
+import { IconX } from '@tabler/icons-react';
 import { MantineDemo } from '@mantine/ds';
 import { Group, Badge, ActionIcon, Avatar } from '@mantine/core';
 
 const code = `
 import { ActionIcon, Avatar, Badge, Group } from '@mantine/core';
-import { IconX } from '@tabler/icons';
+import { IconX } from '@tabler/icons-react';
 
 function Demo() {
   const avatar = (

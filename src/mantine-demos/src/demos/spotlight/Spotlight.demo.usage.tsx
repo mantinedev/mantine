@@ -1,5 +1,5 @@
 import React from 'react';
-import { IconSearch } from '@tabler/icons';
+import { IconSearch } from '@tabler/icons-react';
 import { MantineDemo } from '@mantine/ds';
 import { Wrapper } from './_wrapper';
 
@@ -7,7 +7,7 @@ const code = `
 import { Button, Group } from '@mantine/core';
 import { SpotlightProvider, openSpotlight } from '@mantine/spotlight';
 import type { SpotlightAction } from '@mantine/spotlight';
-import { IconHome, IconDashboard, IconFileText, IconSearch } from '@tabler/icons';
+import { IconHome, IconDashboard, IconFileText, IconSearch } from '@tabler/icons-react';
 
 function SpotlightControl() {
   return (

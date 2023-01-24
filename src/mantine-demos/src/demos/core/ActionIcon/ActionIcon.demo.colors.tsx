@@ -1,5 +1,5 @@
 import React from 'react';
-import { IconSun } from '@tabler/icons';
+import { IconSun } from '@tabler/icons-react';
 import { MantineDemo } from '@mantine/ds';
 import { Group, MANTINE_COLORS, ActionIcon, ActionIconProps } from '@mantine/core';
 

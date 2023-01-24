@@ -1,5 +1,5 @@
 import React from 'react';
-import { IconPhoto } from '@tabler/icons';
+import { IconPhoto } from '@tabler/icons-react';
 import { MantineDemo } from '@mantine/ds';
 import { ThemeIcon, ThemeIconProps } from '@mantine/core';
 
@@ -23,7 +23,7 @@ function Wrapper(props: ThemeIconProps) {
 
 const codeTemplate = (props: string) => `
 import { ThemeIcon } from '@mantine/core';
-import { IconPhoto } from '@tabler/icons';
+import { IconPhoto } from '@tabler/icons-react';
 
 function Demo() {
   return (

@@ -5,7 +5,7 @@ import { DemoMenuItems } from './_menu-items';
 
 const code = `
 import { Menu, Button, Text } from '@mantine/core';
-import { IconSettings, IconSearch, IconPhoto, IconMessageCircle, IconTrash, IconArrowsLeftRight } from '@tabler/icons';
+import { IconSettings, IconSearch, IconPhoto, IconMessageCircle, IconTrash, IconArrowsLeftRight } from '@tabler/icons-react';
 
 function Demo() {
   return (

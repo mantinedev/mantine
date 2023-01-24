@@ -4,7 +4,7 @@ import { TimelineBase } from './_base';
 
 const code = `
 import { Timeline, Text } from '@mantine/core';
-import { IconGitBranch, IconGitPullRequest, IconGitCommit, IconMessageDots } from '@tabler/icons';
+import { IconGitBranch, IconGitPullRequest, IconGitCommit, IconMessageDots } from '@tabler/icons-react';
 
 function Demo() {
   return (

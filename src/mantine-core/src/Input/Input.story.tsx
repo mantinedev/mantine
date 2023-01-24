@@ -2,7 +2,7 @@ import React from 'react';
 import { useDisclosure } from '@mantine/hooks';
 import { storiesOf } from '@storybook/react';
 import { MANTINE_SIZES } from '@mantine/styles';
-import { IconSearch } from '@tabler/icons';
+import { IconSearch } from '@tabler/icons-react';
 import Textarea from 'react-textarea-autosize';
 import { ActionIcon } from '../ActionIcon/ActionIcon';
 import { Input } from './Input';
