@@ -14,7 +14,7 @@ import { filterData } from './filter-data/filter-data';
 import useStyles from './Select.styles';
 
 export interface SelectSharedProps<Item, Value> {
-  /** Select data used to renderer items in dropdown */
+  /** Select data used to render items in dropdown */
   data: (string | Item)[];
 
   /** Controlled input value */
