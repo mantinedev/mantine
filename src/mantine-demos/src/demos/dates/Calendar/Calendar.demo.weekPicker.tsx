@@ -36,6 +36,7 @@ function Demo() {
   return (
     <Group position="center">
       <Calendar
+        withCellSpacing={false}
         getDayProps={(date) => {
           const isHovered = isInWeekRange(date, hovered);
           const isSelected = isInWeekRange(date, value);
@@ -82,6 +83,7 @@ function Demo() {
   return (
     <Group position="center">
       <Calendar
+        withCellSpacing={false}
         getDayProps={(date) => {
           const isHovered = isInWeekRange(date, hovered);
           const isSelected = isInWeekRange(date, value);

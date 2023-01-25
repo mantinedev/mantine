@@ -26,6 +26,9 @@ export interface YearsListSettings extends ControlsGroupSettings {
 
   /** Determines whether propagation for Escape key should be stopped */
   __stopPropagation?: boolean;
+
+  /** Determines whether controls should be separated by spacing, true by default */
+  withCellSpacing?: boolean;
 }
 
 export interface YearsListProps
@@ -42,6 +45,7 @@ export interface YearsListProps
 const defaultProps: Partial<YearsListProps> = {
   yearsListFormat: 'YYYY',
   size: 'sm',
+  withCellSpacing: true,
 };
 
 export const YearsList = forwardRef<HTMLTableElement, YearsListProps>((props, ref) => {
@@ -65,6 +69,7 @@ export const YearsList = forwardRef<HTMLTableElement, YearsListProps>((props, re
     __stopPropagation,
     size,
     variant,
+    withCellSpacing,
     ...others
   } = useComponentDefaultProps('YearsList', defaultProps, props);
 
@@ -85,7 +90,11 @@ export const YearsList = forwardRef<HTMLTableElement, YearsListProps>((props, re
     const cells = yearsRow.map((year, cellIndex) => {
       const controlProps = getYearControlProps?.(year);
       return (
-        <td key={cellIndex} className={classes.yearsListCell}>
+        <td
+          key={cellIndex}
+          className={classes.yearsListCell}
+          data-with-spacing={withCellSpacing || undefined}
+        >
           <PickerControl
             size={size}
             variant={variant}

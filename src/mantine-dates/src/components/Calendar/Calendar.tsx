@@ -166,6 +166,7 @@ export const Calendar = forwardRef<HTMLDivElement, CalendarProps>((props, ref) =
     monthLabelFormat,
     __onDayClick,
     __onDayMouseEnter,
+    withCellSpacing,
 
     // YearLevelGroup props
     monthsListFormat,
@@ -306,6 +307,7 @@ export const Calendar = forwardRef<HTMLDivElement, CalendarProps>((props, ref) =
           __preventFocus={__preventFocus}
           __stopPropagation={__stopPropagation}
           static={isStatic}
+          withCellSpacing={withCellSpacing}
           {...stylesApiProps}
         />
       )}
@@ -335,6 +337,7 @@ export const Calendar = forwardRef<HTMLDivElement, CalendarProps>((props, ref) =
           }}
           __preventFocus={__preventFocus}
           __stopPropagation={__stopPropagation}
+          withCellSpacing={withCellSpacing}
           {...stylesApiProps}
         />
       )}
@@ -361,6 +364,7 @@ export const Calendar = forwardRef<HTMLDivElement, CalendarProps>((props, ref) =
           }}
           __preventFocus={__preventFocus}
           __stopPropagation={__stopPropagation}
+          withCellSpacing={withCellSpacing}
           {...stylesApiProps}
         />
       )}

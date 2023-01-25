@@ -77,6 +77,9 @@ export interface MonthSettings {
 
   /** Controls size */
   size?: MantineSize;
+
+  /** Determines whether controls should be separated by spacing, true by default */
+  withCellSpacing?: boolean;
 }
 
 export interface MonthProps
@@ -95,6 +98,7 @@ export interface MonthProps
 
 const defaultProps: Partial<MonthProps> = {
   size: 'sm',
+  withCellSpacing: true,
 };
 
 export const Month = forwardRef<HTMLTableElement, MonthProps>((props, ref) => {
@@ -124,6 +128,7 @@ export const Month = forwardRef<HTMLTableElement, MonthProps>((props, ref) => {
     __onDayMouseEnter,
     __preventFocus,
     __stopPropagation,
+    withCellSpacing,
     size,
     variant,
     ...others
@@ -160,7 +165,11 @@ export const Month = forwardRef<HTMLTableElement, MonthProps>((props, ref) => {
       const dayProps = getDayProps?.(date);
 
       return (
-        <td key={date.toString()} className={classes.monthCell}>
+        <td
+          key={date.toString()}
+          className={classes.monthCell}
+          data-with-spacing={withCellSpacing || undefined}
+        >
           <Day
             {...stylesApiProps}
             data-mantine-stop-propagation={__stopPropagation || undefined}

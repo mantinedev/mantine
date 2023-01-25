@@ -42,6 +42,7 @@ export const DecadeLevelGroup = forwardRef<HTMLDivElement, DecadeLevelGroupProps
     getYearControlProps,
     __onControlClick,
     __onControlMouseEnter,
+    withCellSpacing,
 
     // CalendarHeader settings
     __preventFocus,
@@ -143,6 +144,7 @@ export const DecadeLevelGroup = forwardRef<HTMLDivElement, DecadeLevelGroupProps
           classNames={classNames}
           styles={styles}
           unstyled={unstyled}
+          withCellSpacing={withCellSpacing}
         />
       );
     });

@@ -20,6 +20,9 @@ export interface MonthsListSettings extends ControlsGroupSettings {
 
   /** Determines whether propagation for Escape key should be stopped */
   __stopPropagation?: boolean;
+
+  /** Determines whether controls should be separated by spacing, true by default */
+  withCellSpacing?: boolean;
 }
 
 export interface MonthsListProps
@@ -42,6 +45,7 @@ export interface MonthsListProps
 const defaultProps: Partial<MonthsListProps> = {
   monthsListFormat: 'MMM',
   size: 'sm',
+  withCellSpacing: true,
 };
 
 export const MonthsList = forwardRef<HTMLTableElement, MonthsListProps>((props, ref) => {
@@ -65,6 +69,7 @@ export const MonthsList = forwardRef<HTMLTableElement, MonthsListProps>((props, 
     size,
     variant,
     __stopPropagation,
+    withCellSpacing,
     ...others
   } = useComponentDefaultProps('MonthsList', defaultProps, props);
   const { classes, cx } = useStyles(null, {
@@ -84,7 +89,11 @@ export const MonthsList = forwardRef<HTMLTableElement, MonthsListProps>((props, 
     const cells = monthsRow.map((month, cellIndex) => {
       const controlProps = getMonthControlProps?.(month);
       return (
-        <td key={cellIndex} className={classes.monthsListCell}>
+        <td
+          key={cellIndex}
+          className={classes.monthsListCell}
+          data-with-spacing={withCellSpacing || undefined}
+        >
           <PickerControl
             variant={variant}
             size={size}

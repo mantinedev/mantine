@@ -7,7 +7,11 @@ export default createStyles(() => ({
   },
 
   yearsListCell: {
-    padding: rem(0.5),
+    padding: 0,
+
+    '&[data-with-spacing]': {
+      padding: rem(0.5),
+    },
   },
 
   yearsListRow: {},

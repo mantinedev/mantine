@@ -8,7 +8,11 @@ export default createStyles(() => ({
   },
 
   monthsListCell: {
-    padding: rem(0.5),
+    padding: 0,
+
+    '&[data-with-spacing]': {
+      padding: rem(0.5),
+    },
   },
 
   monthsListRow: {},

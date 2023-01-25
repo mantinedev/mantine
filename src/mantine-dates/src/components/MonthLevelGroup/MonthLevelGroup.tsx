@@ -49,6 +49,7 @@ export const MonthLevelGroup = forwardRef<HTMLDivElement, MonthLevelGroupProps>(
     getDayAriaLabel,
     __onDayClick,
     __onDayMouseEnter,
+    withCellSpacing,
 
     // CalendarHeader settings
     __preventFocus,
@@ -161,6 +162,7 @@ export const MonthLevelGroup = forwardRef<HTMLDivElement, MonthLevelGroupProps>(
           size={size}
           variant={variant}
           static={isStatic}
+          withCellSpacing={withCellSpacing}
         />
       );
     });

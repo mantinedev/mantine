@@ -54,6 +54,7 @@ export const YearLevel = forwardRef<HTMLDivElement, YearLevelProps>((props, ref)
     __onControlKeyDown,
     __onControlClick,
     __onControlMouseEnter,
+    withCellSpacing,
 
     // CalendarHeader settings
     __preventFocus,
@@ -160,6 +161,7 @@ export const YearLevel = forwardRef<HTMLDivElement, YearLevelProps>((props, ref)
         __onControlMouseEnter={__onControlMouseEnter}
         __preventFocus={__preventFocus}
         __stopPropagation={__stopPropagation}
+        withCellSpacing={withCellSpacing}
         {...stylesApiProps}
       />
     </Box>

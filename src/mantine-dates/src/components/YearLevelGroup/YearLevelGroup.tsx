@@ -40,6 +40,7 @@ export const YearLevelGroup = forwardRef<HTMLDivElement, YearLevelGroupProps>((p
     getMonthControlProps,
     __onControlClick,
     __onControlMouseEnter,
+    withCellSpacing,
 
     // CalendarHeader settings
     __preventFocus,
@@ -143,6 +144,7 @@ export const YearLevelGroup = forwardRef<HTMLDivElement, YearLevelGroupProps>((p
           styles={styles}
           unstyled={unstyled}
           __staticSelector={__staticSelector || 'YearLevelGroup'}
+          withCellSpacing={withCellSpacing}
         />
       );
     });
