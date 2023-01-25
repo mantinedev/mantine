@@ -45,8 +45,20 @@ export function Range() {
 
 export function Multiple() {
   return (
-    <div style={{ padding: 40 }}>
-      <MonthPickerInput type="multiple" label="Month picker input" />
+    <div style={{ padding: 40, maxWidth: 300 }}>
+      <MonthPickerInput
+        type="multiple"
+        label="Month picker input"
+        defaultValue={[
+          new Date(2022, 1, 0),
+          new Date(2022, 2, 0),
+          new Date(2022, 3, 0),
+          new Date(2022, 4, 0),
+          new Date(2022, 5, 0),
+          new Date(2022, 6, 0),
+          new Date(2022, 7, 0),
+        ]}
+      />
     </div>
   );
 }

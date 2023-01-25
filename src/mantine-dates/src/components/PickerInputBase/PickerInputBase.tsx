@@ -153,6 +153,7 @@ export const PickerInputBase = forwardRef<HTMLButtonElement, PickerInputBaseProp
               data-read-only={readOnly || undefined}
               component="button"
               type="button"
+              multiline
               onClick={(event) => {
                 onClick?.(event);
                 dropdownHandlers.toggle();
