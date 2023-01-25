@@ -10,4 +10,9 @@ export {
 } from './events';
 
 export type { ModalsProviderProps } from './ModalsProvider';
-export type { ContextModalProps } from './context';
+export type {
+  ContextModalProps,
+  MantineModalsOverride,
+  MantineModals,
+  MantineModal,
+} from './context';
