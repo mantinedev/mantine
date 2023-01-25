@@ -16,8 +16,8 @@ export interface TooltipStylesParams {
 function getColors(theme: MantineTheme, color?: MantineColor): CSSObject {
   if (!color) {
     return {
-      backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[9],
-      color: theme.white,
+      backgroundColor: theme.colorScheme === 'dark' ? theme.colors.gray[2] : theme.colors.gray[9],
+      color: theme.colorScheme === 'dark' ? theme.black : theme.white,
     };
   }
 
