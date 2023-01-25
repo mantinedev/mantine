@@ -23,6 +23,7 @@ export function attachFunctions(themeBase: MantineThemeBase): MantineTheme {
       hover: fns.hover,
       primaryColor: fns.primaryColor(themeBase),
       placeholderStyles: fns.placeholderStyles(themeBase),
+      dimmed: fns.dimmed(themeBase),
     },
   };
 }

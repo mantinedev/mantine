@@ -48,7 +48,7 @@ function getTextDecoration({
 
 function getTextColor({ theme, color }: GetTextColor) {
   if (color === 'dimmed') {
-    return theme.colorScheme === 'dark' ? theme.colors.dark[2] : theme.colors.gray[6];
+    return theme.fn.dimmed();
   }
 
   return typeof color === 'string' && (color in theme.colors || color.split('.')[0] in theme.colors)

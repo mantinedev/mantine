@@ -13,6 +13,7 @@ import { primaryShade } from './primary-shade/primary-shade';
 import { primaryColor } from './primary-color/primary-color';
 import { hover } from './hover/hover';
 import { placeholderStyles } from './placeholder-styles/placeholder-styles';
+import { dimmed } from './dimmed/dimmed';
 
 export const fns = {
   fontStyles,
@@ -33,4 +34,5 @@ export const fns = {
   gradient,
   primaryColor,
   placeholderStyles,
+  dimmed,
 };
