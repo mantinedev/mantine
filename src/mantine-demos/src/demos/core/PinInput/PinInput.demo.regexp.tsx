@@ -8,7 +8,7 @@ import { PinInput, Group } from '@mantine/core';
 function Demo() {
   return (
     <Group position="center">
-      <PinInput type={/^[0-3]+/} />
+      <PinInput type={/^[0-3]+/} inputType="tel" inputMode="numeric" />
     </Group>
   );
 }
@@ -17,7 +17,7 @@ function Demo() {
 function Demo() {
   return (
     <Group position="center">
-      <PinInput type={/^[0-3]+/} />
+      <PinInput type={/^[0-3]+/} inputType="tel" inputMode="numeric" />
     </Group>
   );
 }

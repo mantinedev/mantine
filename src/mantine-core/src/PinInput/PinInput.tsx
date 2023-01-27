@@ -82,6 +82,21 @@ export interface PinInputProps
 
   /** Determines whether the user can edit input content */
   readOnly?: boolean;
+
+  /** Inputs type attribute, inferred from type prop if not specified */
+  inputType?: React.HTMLInputTypeAttribute;
+
+  /** inputmode attr, inferred from type prop if not specified */
+  inputMode?:
+    | 'none'
+    | 'text'
+    | 'tel'
+    | 'url'
+    | 'email'
+    | 'numeric'
+    | 'decimal'
+    | 'search'
+    | undefined;
 }
 
 const defaultProps: Partial<PinInputProps> = {
@@ -121,6 +136,8 @@ export const PinInput = forwardRef<HTMLDivElement, PinInputProps>((props, ref) =
     mask,
     'aria-label': ariaLabel,
     readOnly,
+    inputType,
+    inputMode,
     ...others
   } = useComponentDefaultProps('PinInput', defaultProps, props);
 
@@ -239,13 +256,13 @@ export const PinInput = forwardRef<HTMLDivElement, PinInputProps>((props, ref) =
             __staticSelector="PinInput"
             id={`${uuid}-${index + 1}`}
             key={`${uuid}-${index}`}
-            inputMode={type === 'number' ? 'numeric' : 'text'}
+            inputMode={inputMode || (type === 'number' ? 'numeric' : 'text')}
             onChange={(event) => handleChange(event, index)}
             onKeyDown={(event) => handleKeyDown(event, index)}
             onFocus={(event) => handleFocus(event, index)}
             onBlur={handleBlur}
             onPaste={handlePaste}
-            type={mask ? 'password' : type === 'number' ? 'tel' : 'text'}
+            type={inputType || (mask ? 'password' : type === 'number' ? 'tel' : 'text')}
             radius={radius}
             error={error}
             variant={variant}
