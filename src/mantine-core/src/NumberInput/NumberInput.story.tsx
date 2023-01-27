@@ -7,10 +7,9 @@ export default { title: 'NumberInput' };
 
 export function Usage() {
   const [value, setValue] = useState<number | ''>(0);
-  console.log(value);
   return (
     <div style={{ padding: 40, maxWidth: 400 }}>
-      <NumberInput value={value} onChange={setValue} mb="md" min={10} />
+      <NumberInput value={value} onChange={setValue} onBlur={() => setValue(15)} mb="md" min={10} />
       <Group>
         <Button
           onMouseDown={(event) => {
@@ -29,6 +28,14 @@ export function Usage() {
           Set 10
         </Button>
       </Group>
+    </div>
+  );
+}
+
+export function FixedValue() {
+  return (
+    <div style={{ padding: 40, maxWidth: 400 }}>
+      <NumberInput value={4} />
     </div>
   );
 }

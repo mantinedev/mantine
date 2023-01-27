@@ -357,6 +357,11 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>((props
   };
 
   const handleBlur = (event: React.FocusEvent<HTMLInputElement>) => {
+    if (typeof value === 'number' || value === '') {
+      setTempValue(parsePrecision(value));
+      return;
+    }
+
     if (event.target.value === '') {
       setTempValue('');
       handleValueChange('');
