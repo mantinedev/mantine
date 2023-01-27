@@ -1,7 +1,7 @@
-import { MANTINE_SIZES } from '@mantine/core';
+import React, { useState } from 'react';
+import { Button, Group, MANTINE_SIZES } from '@mantine/core';
 import { WithinOverlays } from '@mantine/storybook';
 import dayjs from 'dayjs';
-import React from 'react';
 import { DatePickerInput } from './DatePickerInput';
 
 export default { title: 'DatePickerInput' };
@@ -15,6 +15,26 @@ export function Usage() {
         numberOfColumns={3}
         allowDeselect
       />
+    </div>
+  );
+}
+
+export function ControlledValues() {
+  const [value, setValue] = useState(new Date());
+  const incrementDate = () => setValue((current) => dayjs(current).add(1, 'month').toDate());
+
+  return (
+    <div style={{ padding: 40, maxWidth: 400 }}>
+      <DatePickerInput
+        label="Date picker input"
+        placeholder="Pick date"
+        value={value}
+        onChange={setValue}
+      />
+      <Group mt="md">
+        <Button onClick={incrementDate}>Increment</Button>
+        <Button onClick={() => setValue(new Date())}>Today</Button>
+      </Group>
     </div>
   );
 }

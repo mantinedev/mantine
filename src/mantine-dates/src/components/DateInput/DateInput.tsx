@@ -1,5 +1,5 @@
 import dayjs from 'dayjs';
-import React, { forwardRef, useState } from 'react';
+import React, { forwardRef, useState, useEffect } from 'react';
 import {
   DefaultProps,
   InputSharedProps,
@@ -133,6 +133,12 @@ export const DateInput = forwardRef<HTMLInputElement, DateInputProps>((props, re
     finalValue: null,
     onChange: onDateChange,
   });
+
+  useEffect(() => {
+    if (controlled) {
+      setDate(value);
+    }
+  }, [controlled, value]);
 
   const formatValue = (val: Date) =>
     val ? dayjs(val).locale(ctx.getLocale(locale)).format(valueFormat) : '';

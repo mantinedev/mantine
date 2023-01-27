@@ -1,7 +1,7 @@
 import dayjs from 'dayjs';
 import React, { useState } from 'react';
 import customParseFormat from 'dayjs/plugin/customParseFormat';
-import { TextInput, Button } from '@mantine/core';
+import { TextInput, Button, Group } from '@mantine/core';
 import { DateInput } from './DateInput';
 
 dayjs.extend(customParseFormat);
@@ -12,6 +12,26 @@ export function Usage() {
   return (
     <div style={{ padding: 40, maxWidth: 400 }}>
       <DateInput placeholder="Enter date" defaultDate={new Date(2022, 3, 11)} />
+    </div>
+  );
+}
+
+export function ControlledValues() {
+  const [value, setValue] = useState(new Date());
+  const incrementDate = () => setValue((current) => dayjs(current).add(1, 'month').toDate());
+
+  return (
+    <div style={{ padding: 40, maxWidth: 400 }}>
+      <DateInput
+        label="Date picker input"
+        placeholder="Pick date"
+        value={value}
+        onChange={setValue}
+      />
+      <Group mt="md">
+        <Button onClick={incrementDate}>Increment</Button>
+        <Button onClick={() => setValue(new Date())}>Today</Button>
+      </Group>
     </div>
   );
 }
