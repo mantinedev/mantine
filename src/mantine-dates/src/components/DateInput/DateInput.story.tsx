@@ -1,4 +1,5 @@
 import dayjs from 'dayjs';
+import 'dayjs/locale/ru';
 import React, { useState } from 'react';
 import customParseFormat from 'dayjs/plugin/customParseFormat';
 import { TextInput, Button, Group } from '@mantine/core';
@@ -12,6 +13,19 @@ export function Usage() {
   return (
     <div style={{ padding: 40, maxWidth: 400 }}>
       <DateInput placeholder="Enter date" defaultDate={new Date(2022, 3, 11)} />
+    </div>
+  );
+}
+
+export function LocaleChanges() {
+  const [locale, setLocale] = useState('en');
+  return (
+    <div style={{ padding: 40, maxWidth: 400 }}>
+      <DateInput label="Date picker input" placeholder="Pick date" locale={locale} />
+      <Group mt="md">
+        <Button onClick={() => setLocale('en')}>En locale</Button>
+        <Button onClick={() => setLocale('ru')}>Ru locale</Button>
+      </Group>
     </div>
   );
 }

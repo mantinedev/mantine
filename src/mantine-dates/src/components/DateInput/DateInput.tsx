@@ -120,6 +120,9 @@ export const DateInput = forwardRef<HTMLInputElement, DateInputProps>((props, re
   const _dateParser = dateParser || defaultDateParser;
   const _allowDeselect = clearable || allowDeselect;
 
+  const formatValue = (val: Date) =>
+    val ? dayjs(val).locale(ctx.getLocale(locale)).format(valueFormat) : '';
+
   const [_value, setValue, controlled] = useUncontrolled({
     value,
     defaultValue,
@@ -140,10 +143,12 @@ export const DateInput = forwardRef<HTMLInputElement, DateInputProps>((props, re
     }
   }, [controlled, value]);
 
-  const formatValue = (val: Date) =>
-    val ? dayjs(val).locale(ctx.getLocale(locale)).format(valueFormat) : '';
-
   const [inputValue, setInputValue] = useState(formatValue(_value));
+
+  useEffect(() => {
+    setInputValue(formatValue(_value));
+  }, [locale]);
+
   const [dropdownOpened, setDropdownOpened] = useState(false);
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
