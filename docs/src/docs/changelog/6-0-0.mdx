@@ -253,6 +253,23 @@ props were renamed:
 - `root` selector was removed – root element is no longer rendered
 - `drawer` selector was renamed to `content`
 
+## NumberInput breaking changes
+
+[NumberInput](https://mantine.dev/core/number-input/) component types for `value`, `defaultValue`
+and `onChange` props were changed. It now expects value to be `number | ''` (number or empty string) instead
+of `number | undefined`. This change was made to address multiple bugs that happened because it was
+not possible to differentiate controlled and uncontrolled `NumberInput`.
+
+```tsx
+import { useState } from 'react';
+import { NumberInput } from '@mantine/core';
+
+function Demo() {
+  const [value, setValue] = useState<number | ''>(0);
+  return <NumberInput value={value} onChange={setValue} />;
+}
+```
+
 ### @mantine/spotlight breaking changes
 
 [Spotlight](https://mantine.dev/others/spotlight/) component was migrated to use [Modal](https://mantine.dev/core/modal/)

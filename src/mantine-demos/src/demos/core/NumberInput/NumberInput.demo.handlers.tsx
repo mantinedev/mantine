@@ -14,7 +14,7 @@ import { useState, useRef } from 'react';
 import { NumberInput, Group, ActionIcon, NumberInputHandlers, rem } from '@mantine/core';
 
 function Demo() {
-  const [value, setValue] = useState(0);
+  const [value, setValue] = useState<number | ''>(0);
   const handlers = useRef<NumberInputHandlers>();
 
   return (
@@ -44,7 +44,7 @@ function Demo() {
 
 function Demo() {
   const theme = useMantineTheme();
-  const [value, setValue] = useState(0);
+  const [value, setValue] = useState<number | ''>(0);
   const handlers = useRef<NumberInputHandlers>();
 
   const controlStyles = {

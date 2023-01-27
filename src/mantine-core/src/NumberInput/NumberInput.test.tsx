@@ -110,12 +110,12 @@ describe('@mantine/core/NumberInput', () => {
     expect(spy).toHaveBeenLastCalledWith(10);
   });
 
-  it('returns undefined when input is empty', async () => {
+  it('returns empty string when input is empty', async () => {
     const spy = jest.fn();
     render(<NumberInput value={5} max={10} min={0} step={6} onChange={spy} />);
     expectValue('5');
     await enterText('{backspace}');
-    expect(spy).toHaveBeenLastCalledWith(undefined);
+    expect(spy).toHaveBeenLastCalledWith('');
     expectValue('');
   });
 
