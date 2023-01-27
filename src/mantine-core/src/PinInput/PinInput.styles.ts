@@ -15,8 +15,8 @@ export default createStyles((_theme, _params, { size }) => ({
     height: getSize({ size, sizes }),
     textAlign: 'center',
     minHeight: 'auto',
-    paddingRight: 0,
-    paddingLeft: 0,
+    padding: 0,
+    lineHeight: getSize({ size, sizes }),
 
     '&::selection': {
       background: 'transparent',
