@@ -206,6 +206,7 @@ export const TransferList = forwardRef<HTMLDivElement, TransferListProps>((props
         query={search[0]}
         onSearch={(query) => handleSearch([query, search[1]])}
         unstyled={unstyled}
+        transferAllMatchingFilter={transferAllMatchingFilter}
       />
 
       <RenderList
@@ -225,6 +226,7 @@ export const TransferList = forwardRef<HTMLDivElement, TransferListProps>((props
         onSearch={(query) => handleSearch([search[0], query])}
         reversed
         unstyled={unstyled}
+        transferAllMatchingFilter={transferAllMatchingFilter}
       />
     </SimpleGrid>
   );
