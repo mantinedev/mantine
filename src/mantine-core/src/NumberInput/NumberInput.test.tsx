@@ -243,4 +243,13 @@ describe('@mantine/core/NumberInput', () => {
     await enterText('{arrowup}');
     expect(getInput()).toHaveValue('3');
   });
+
+  it('resets displayed value to value prop when input is controlled', async () => {
+    render(<NumberInput value={3} />);
+    expectValue('3');
+    await enterText('45');
+    expectValue('345');
+    await userEvent.tab();
+    expectValue('3');
+  });
 });
