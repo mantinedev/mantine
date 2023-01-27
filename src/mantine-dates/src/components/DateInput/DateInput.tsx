@@ -147,7 +147,7 @@ export const DateInput = forwardRef<HTMLInputElement, DateInputProps>((props, re
 
   useEffect(() => {
     setInputValue(formatValue(_value));
-  }, [locale]);
+  }, [ctx.getLocale(locale)]);
 
   const [dropdownOpened, setDropdownOpened] = useState(false);
 

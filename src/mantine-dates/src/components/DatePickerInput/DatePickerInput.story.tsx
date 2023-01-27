@@ -3,6 +3,7 @@ import { Button, Group, MANTINE_SIZES } from '@mantine/core';
 import { WithinOverlays } from '@mantine/storybook';
 import dayjs from 'dayjs';
 import { DatePickerInput } from './DatePickerInput';
+import { DatesProvider } from '../DatesProvider';
 
 export default { title: 'DatePickerInput' };
 
@@ -16,6 +17,34 @@ export function Usage() {
         allowDeselect
       />
     </div>
+  );
+}
+
+export function LocaleChanges() {
+  const [locale, setLocale] = useState('en');
+  return (
+    <div style={{ padding: 40, maxWidth: 400 }}>
+      <DatePickerInput label="Date picker input" placeholder="Pick date" locale={locale} />
+      <Group mt="md">
+        <Button onClick={() => setLocale('en')}>En locale</Button>
+        <Button onClick={() => setLocale('ru')}>Ru locale</Button>
+      </Group>
+    </div>
+  );
+}
+
+export function LocaleChangesDatesProvider() {
+  const [locale, setLocale] = useState('en');
+  return (
+    <DatesProvider settings={{ locale }}>
+      <div style={{ padding: 40, maxWidth: 400 }}>
+        <DatePickerInput label="Date picker input" placeholder="Pick date" />
+        <Group mt="md">
+          <Button onClick={() => setLocale('en')}>En locale</Button>
+          <Button onClick={() => setLocale('ru')}>Ru locale</Button>
+        </Group>
+      </div>
+    </DatesProvider>
   );
 }
 
