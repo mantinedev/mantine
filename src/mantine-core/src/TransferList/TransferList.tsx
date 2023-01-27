@@ -69,6 +69,9 @@ export interface TransferListProps
 
   /** Change icon used for the transfer all control */
   transferAllIcon?: React.FunctionComponent<{ reversed: boolean }>;
+
+  /** Whether to transfer only items matching {@link filter} when clicking the transfer all control */
+  transferAllMatchingFilter?: boolean;
 }
 
 export function defaultFilter(query: string, item: TransferListItem) {
@@ -84,6 +87,7 @@ const defaultProps: Partial<TransferListProps> = {
   listComponent: SelectScrollArea,
   showTransferAll: true,
   limit: Infinity,
+  transferAllMatchingFilter: false,
 };
 
 export const TransferList = forwardRef<HTMLDivElement, TransferListProps>((props, ref) => {
@@ -110,6 +114,7 @@ export const TransferList = forwardRef<HTMLDivElement, TransferListProps>((props
     unstyled,
     transferIcon,
     transferAllIcon,
+    transferAllMatchingFilter,
     ...others
   } = useComponentDefaultProps('TransferList', defaultProps, props);
 
@@ -124,8 +129,19 @@ export const TransferList = forwardRef<HTMLDivElement, TransferListProps>((props
   const handleMoveAll = (listIndex: 0 | 1) => {
     const items: TransferListData = Array(2) as any;
     const moveToIndex = listIndex === 0 ? 1 : 0;
-    items[listIndex] = [];
-    items[moveToIndex] = [...value[moveToIndex], ...value[listIndex]];
+
+    if (transferAllMatchingFilter) {
+      const query = search[listIndex];
+      const shownItems = value[listIndex].filter((item) => filter(query, item)).slice(0, limit);
+      const hiddenItems = value[listIndex].filter((item) => !filter(query, item));
+
+      items[listIndex] = hiddenItems;
+      items[moveToIndex] = [...value[moveToIndex], ...shownItems];
+    } else {
+      items[listIndex] = [];
+      items[moveToIndex] = [...value[moveToIndex], ...value[listIndex]];
+    }
+
     onChange(items);
     handlers.deselectAll(listIndex);
   };
