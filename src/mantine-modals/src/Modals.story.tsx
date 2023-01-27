@@ -19,6 +19,7 @@ export function Usage() {
       modalId: 'context-modal',
       modal: 'hello',
       title: 'Context modal',
+      centered: true,
       onClose: () => console.log('context modal closed'),
       innerProps: {
         contextProp: 'test-modal',
@@ -72,6 +73,7 @@ export function Usage() {
 
   return (
     <ModalsProvider
+      modalProps={{ centered: true }}
       modals={{
         hello: ({ context, id, innerProps }: ContextModalProps<{ contextProp: string }>) => {
           console.log(innerProps, id, context);
