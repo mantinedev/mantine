@@ -36,7 +36,7 @@ export const PACKAGES_DATA = [
       '@mantine/hooks',
       '@mantine/core',
       '@mantine/tiptap',
-      '@tabler/icons',
+      '@tabler/icons@1.119.0',
       '@tiptap/react',
       '@tiptap/extension-link',
       '@tiptap/starter-kit',
