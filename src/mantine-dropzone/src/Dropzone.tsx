@@ -1,5 +1,12 @@
 import React from 'react';
-import { useDropzone, FileRejection, Accept, FileWithPath } from 'react-dropzone';
+import {
+  useDropzone,
+  FileRejection,
+  Accept,
+  FileWithPath,
+  DropEvent,
+  FileError,
+} from 'react-dropzone';
 import {
   DefaultProps,
   Selectors,
@@ -32,7 +39,10 @@ export interface DropzoneProps
   /** Disable files capturing */
   disabled?: boolean;
 
-  /** Called when files are dropped into dropzone */
+  /** Called when any files are dropped into dropzone */
+  onDropAny?(files: FileWithPath[], fileRejections: FileRejection[]): void;
+
+  /** Called when valid files are dropped into dropzone */
   onDrop(files: FileWithPath[]): void;
 
   /** Called when selected files don't meet file restrictions */
@@ -94,6 +104,12 @@ export interface DropzoneProps
 
   /** Set to true to use the File System Access API to open the file picker instead of using an <input type="file"> click event, defaults to true */
   useFsAccessApi?: boolean;
+
+  /** Use this to provide a custom file aggregator */
+  getFilesFromEvent?: (event: DropEvent) => Promise<Array<File | DataTransferItem>>;
+
+  /** Custom validation function. It must return null if there's no errors. */
+  validator?: <T extends File>(file: T) => FileError | FileError[] | null;
 }
 
 export const defaultProps: Partial<DropzoneProps> = {
@@ -122,6 +138,7 @@ export function _Dropzone(props: DropzoneProps) {
     maxSize,
     accept,
     children,
+    onDropAny,
     onDrop,
     onReject,
     openRef,
@@ -140,6 +157,8 @@ export function _Dropzone(props: DropzoneProps) {
     onFileDialogOpen,
     preventDropOnDocument,
     useFsAccessApi,
+    getFilesFromEvent,
+    validator,
     ...others
   } = useComponentDefaultProps('Dropzone', defaultProps, props);
 
@@ -149,6 +168,7 @@ export function _Dropzone(props: DropzoneProps) {
   );
 
   const { getRootProps, getInputProps, isDragAccept, isDragReject, open } = useDropzone({
+    onDrop: onDropAny,
     onDropAccepted: onDrop,
     onDropRejected: onReject,
     disabled: disabled || loading,
@@ -168,6 +188,8 @@ export function _Dropzone(props: DropzoneProps) {
     onFileDialogOpen,
     preventDropOnDocument,
     useFsAccessApi,
+    validator,
+    ...(getFilesFromEvent ? { getFilesFromEvent } : null),
   });
 
   assignRef(openRef, open);

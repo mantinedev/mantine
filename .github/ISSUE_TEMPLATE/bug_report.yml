@@ -17,7 +17,7 @@ body:
         - '@mantine/hooks'
         - '@mantine/form'
         - '@mantine/notifications'
-        - '@mantine/rte'
+        - '@mantine/tiptap'
         - '@mantine/prism'
         - '@mantine/modals'
         - '@mantine/dropzone'

@@ -35,6 +35,9 @@ export interface TextProps extends DefaultProps {
   /** CSS -webkit-line-clamp property */
   lineClamp?: number;
 
+  /** CSS truncate overflowing text with an ellipsis */
+  truncate?: boolean;
+
   /** Sets line-height to 1 for centering */
   inline?: boolean;
 
@@ -71,6 +74,7 @@ export const _Text = forwardRef<HTMLDivElement, TextProps>((props, ref) => {
     align,
     variant,
     lineClamp,
+    truncate,
     gradient,
     inline,
     inherit,
@@ -90,6 +94,7 @@ export const _Text = forwardRef<HTMLDivElement, TextProps>((props, ref) => {
       color,
       size,
       lineClamp,
+      truncate,
       inline,
       inherit,
       underline,

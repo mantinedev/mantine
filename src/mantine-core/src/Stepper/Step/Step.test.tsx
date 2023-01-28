@@ -12,6 +12,7 @@ describe('@mantine/core/Step', () => {
     props: defaultProps,
     displayName: '@mantine/core/Step',
     refType: HTMLButtonElement,
+    providerName: 'StepperStep',
   });
 
   it('renders icon when withIcon is true', () => {

@@ -22,6 +22,7 @@ function Demo() {
         label="Your favorite framework/library"
         placeholder="Pick one"
         clearable
+        withinPortal
         data={[
           { value: 'react', label: 'React' },
           { value: 'ng', label: 'Angular' },
@@ -35,7 +36,8 @@ function Demo() {
         placeholder="Pick one"
         clearable
         searchable
-        style={{ marginTop: 15 }}
+        withinPortal
+        mt="md"
         data={[
           { value: 'react', label: 'React' },
           { value: 'ng', label: 'Angular' },

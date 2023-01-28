@@ -48,7 +48,7 @@ const SelectItem = forwardRef<HTMLDivElement, ItemProps>(
 
         <div>
           <Text size="sm">{label}</Text>
-          <Text size="xs" color="dimmed">
+          <Text size="xs" opacity={0.65}>
             {description}
           </Text>
         </div>
@@ -118,7 +118,7 @@ const SelectItem = forwardRef<HTMLDivElement, ItemProps>(
 
         <div>
           <Text size="sm">{label}</Text>
-          <Text size="xs" color="dimmed">
+          <Text size="xs" opacity={0.65}>
             {description}
           </Text>
         </div>
@@ -137,6 +137,7 @@ export function CustomSelectDemo(props: any) {
       searchable
       maxDropdownHeight={400}
       nothingFound="Nobody here"
+      withinPortal
       filter={(value, item) =>
         item.label.toLowerCase().includes(value.toLowerCase().trim()) ||
         item.description.toLowerCase().includes(value.toLowerCase().trim())

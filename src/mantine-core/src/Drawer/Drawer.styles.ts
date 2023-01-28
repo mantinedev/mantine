@@ -52,6 +52,7 @@ export default createStyles(
   (theme, { position, size, zIndex, withOverlay }: DrawerStylesParams) => ({
     closeButton: {},
     overlay: {},
+    body: {},
 
     root: {
       position: 'fixed',

@@ -45,6 +45,9 @@ export interface RangeSliderProps
   /** Minimal range interval */
   minRange?: number;
 
+  /** Maximum range interval */
+  maxRange?: number;
+
   /** Number by which value will be incremented/decremented with thumb drag and arrows */
   step?: number;
 
@@ -141,6 +144,7 @@ export const RangeSlider = forwardRef<HTMLDivElement, RangeSliderProps>((props, 
     min,
     max,
     minRange,
+    maxRange,
     step,
     precision,
     defaultValue,
@@ -199,12 +203,16 @@ export const RangeSlider = forwardRef<HTMLDivElement, RangeSliderProps>((props, 
     clone[index] = val;
 
     if (index === 0) {
-      if (val > clone[1] - minRange) {
+      if (val > clone[1] - (minRange - 0.000000001)) {
         clone[1] = Math.min(val + minRange, max);
       }
 
-      if (val > (max - minRange || min)) {
+      if (val > (max - (minRange - 0.000000001) || min)) {
         clone[index] = valueRef.current[index];
+      }
+
+      if (clone[1] - val > maxRange) {
+        clone[1] = val + maxRange;
       }
     }
 
@@ -215,6 +223,10 @@ export const RangeSlider = forwardRef<HTMLDivElement, RangeSliderProps>((props, 
 
       if (val < clone[0] + minRange) {
         clone[index] = valueRef.current[index];
+      }
+
+      if (val - clone[0] > maxRange) {
+        clone[0] = val - maxRange;
       }
     }
 

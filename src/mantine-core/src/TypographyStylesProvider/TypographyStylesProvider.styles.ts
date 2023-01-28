@@ -57,6 +57,11 @@ export default createStyles((theme) => {
         marginBottom: theme.spacing.lg,
       },
 
+      '& mark': {
+        backgroundColor: theme.fn.themeColor('yellow', theme.colorScheme === 'dark' ? 5 : 2),
+        color: theme.colorScheme === 'dark' ? theme.colors.dark[9] : 'inherit',
+      },
+
       '& hr': {
         marginTop: theme.spacing.md,
         marginBottom: theme.spacing.sm,
@@ -99,7 +104,7 @@ export default createStyles((theme) => {
 
       '& code': {
         lineHeight: theme.lineHeight,
-        padding: `1px calc(${theme.spacing.xs}px  / 1)`,
+        padding: '1px 5px',
         borderRadius: theme.radius.sm,
         color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
         backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[9] : theme.colors.gray[0],
@@ -112,7 +117,7 @@ export default createStyles((theme) => {
 
       '& ul, & ol': {
         marginBottom: theme.spacing.md,
-        paddingLeft: `calc(${theme.spacing.lg}px * 2)`,
+        paddingLeft: 38,
 
         '& li': {
           marginTop: theme.spacing.xs,
@@ -172,6 +177,9 @@ export default createStyles((theme) => {
         borderBottomRightRadius: theme.radius.sm,
         padding: `${theme.spacing.md}px ${theme.spacing.lg}px`,
         color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
+        borderLeft: `6px solid ${
+          theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[3]
+        }`,
 
         '& cite': {
           display: 'block',

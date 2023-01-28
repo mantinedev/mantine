@@ -144,6 +144,9 @@ export function Menu(props: MenuProps) {
         loop,
         trigger,
         radius,
+        classNames,
+        styles,
+        unstyled,
       }}
     >
       <Popover

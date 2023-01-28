@@ -7,3 +7,4 @@ export { customIcons } from './TransferList.demo.customIcons';
 export { placeholder } from './TransferList.demo.placeholder';
 export { controlledSearch } from './TransferList.demo.controlledSearch';
 export { differentPlaceholders } from './TransferList.demo.differentPlaceholders';
+export { transferAllMatchingFilter } from './TransferList.demo.transferAllMatchingFilter';

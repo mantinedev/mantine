@@ -27,6 +27,7 @@ export function Demo() {
       <Select
         label="Select with disabled items"
         placeholder="Select something"
+        withinPortal
         data={[
           { value: 'react', label: 'React', disabled: true },
           { value: 'ng', label: 'Angular', disabled: true },

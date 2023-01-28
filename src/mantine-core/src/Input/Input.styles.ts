@@ -8,9 +8,9 @@ export interface InputStylesParams {
   variant: InputVariant;
   multiline: boolean;
   invalid: boolean;
-  rightSectionWidth: number;
+  rightSectionWidth: string | number;
   withRightSection: boolean;
-  iconWidth: number;
+  iconWidth: string | number;
   offsetBottom: boolean;
   offsetTop: boolean;
   pointer: boolean;
@@ -140,9 +140,8 @@ export default createStyles(
         },
 
         '&::placeholder': {
+          ...theme.fn.placeholderStyles(),
           opacity: 1,
-          userSelect: 'none',
-          color: theme.colorScheme === 'dark' ? theme.colors.dark[3] : theme.colors.gray[5],
         },
 
         '&::-webkit-inner-spin-button, &::-webkit-outer-spin-button, &::-webkit-search-decoration, &::-webkit-search-cancel-button, &::-webkit-search-results-button, &::-webkit-search-results-decoration':

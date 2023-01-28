@@ -11,6 +11,8 @@ describe('@mantine/core/TimelineItem', () => {
     component: TimelineItem,
     props: defaultProps,
     displayName: '@mantine/core/TimelineItem',
+    refType: HTMLDivElement,
+    providerName: 'TimelineItem',
   });
 
   it('renders given bullet', () => {

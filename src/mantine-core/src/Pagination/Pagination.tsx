@@ -113,6 +113,10 @@ export const Pagination = forwardRef<HTMLDivElement, PaginationProps>((props, re
     boundaries,
   });
 
+  if (total <= 0) {
+    return null;
+  }
+
   const items = range.map((pageNumber, index) => (
     <Item
       key={index}

@@ -8,3 +8,4 @@ export { responsive } from './Grid.demo.responsive';
 export { columns } from './Grid.demo.columns';
 export { auto } from './Grid.demo.auto';
 export { content } from './Grid.demo.content';
+export { gutter } from './Grid.demo.gutter';

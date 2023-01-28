@@ -9,7 +9,7 @@ export function createAriaHider(
 ) {
   const rootNodes: Value[] = Array.from<HTMLElement>(document.querySelectorAll(selector)).map(
     (node) => {
-      if (node.contains(containerNode)) {
+      if (node?.shadowRoot?.contains(containerNode) || node.contains(containerNode)) {
         return undefined;
       }
 

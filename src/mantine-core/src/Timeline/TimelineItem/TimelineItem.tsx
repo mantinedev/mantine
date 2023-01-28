@@ -1,5 +1,11 @@
-import React from 'react';
-import { DefaultProps, MantineColor, Selectors, MantineNumberSize } from '@mantine/styles';
+import React, { forwardRef } from 'react';
+import {
+  DefaultProps,
+  MantineColor,
+  Selectors,
+  MantineNumberSize,
+  useComponentDefaultProps,
+} from '@mantine/styles';
 import { Text } from '../../Text';
 import { Box } from '../../Box';
 import useStyles from './TimelineItem.styles';
@@ -43,24 +49,33 @@ export interface TimelineItemProps
   lineWidth?: number;
 }
 
-export function TimelineItem({
-  className,
-  bullet,
-  title,
-  bulletSize = 20,
-  radius = 'xl',
-  lineWidth = 4,
-  active,
-  lineActive,
-  classNames,
-  styles,
-  children,
-  color,
-  align,
-  lineVariant = 'solid',
-  unstyled,
-  ...others
-}: TimelineItemProps) {
+const defaultProps: Partial<TimelineItemProps> = {
+  bulletSize: 20,
+  radius: 'xl',
+  lineWidth: 4,
+  lineVariant: 'solid',
+};
+
+export const TimelineItem = forwardRef<HTMLDivElement, TimelineItemProps>((props, ref) => {
+  const {
+    className,
+    bullet,
+    title,
+    bulletSize,
+    radius,
+    lineWidth,
+    active,
+    lineActive,
+    classNames,
+    styles,
+    children,
+    color,
+    align,
+    lineVariant,
+    unstyled,
+    ...others
+  } = useComponentDefaultProps('TimelineItem', defaultProps, props);
+
   const { classes, cx } = useStyles(
     { bulletSize, color, radius, align, lineVariant, lineWidth },
     { classNames, styles, unstyled, name: 'Timeline' }
@@ -71,6 +86,7 @@ export function TimelineItem({
       className={cx(classes.item, className)}
       data-line-active={lineActive || undefined}
       data-active={active || undefined}
+      ref={ref}
       {...others}
     >
       <div
@@ -87,6 +103,6 @@ export function TimelineItem({
       </div>
     </Box>
   );
-}
+});
 
 TimelineItem.displayName = '@mantine/core/TimelineItem';

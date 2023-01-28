@@ -49,14 +49,14 @@ function getStyles<Key extends string>(
   return extractStyles(styles);
 }
 
-export function createStyles<Key extends string = string, Params = void>(
+export function createStyles<
+  Key extends string = string,
+  Params = void,
+  Input extends Record<Key, CSSObject> = Record<Key, CSSObject>
+>(
   input:
-    | ((
-        theme: MantineTheme,
-        params: Params,
-        createRef: (refName: string) => string
-      ) => Record<Key, CSSObject>)
-    | Record<Key, CSSObject>
+    | ((theme: MantineTheme, params: Params, createRef: (refName: string) => string) => Input)
+    | Input
 ) {
   const getCssObject = typeof input === 'function' ? input : () => input;
 
@@ -80,14 +80,18 @@ export function createStyles<Key extends string = string, Params = void>(
         );
         return [key, mergedStyles];
       })
-    ) as Record<Key, string>;
+    ) as {
+      [key in keyof Input]: string;
+    };
 
     return {
-      classes: mergeClassNames({
+      classes: mergeClassNames<{ [key in keyof Input]: string }>({
         cx,
         classes,
         context,
-        classNames: options?.classNames,
+        classNames: options?.classNames as {
+          [key in keyof Input]: string;
+        },
         name: options?.name,
         cache,
       }),

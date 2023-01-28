@@ -1,5 +1,5 @@
 import React, { forwardRef } from 'react';
-import { getDefaultZIndex, useComponentDefaultProps } from '@mantine/styles';
+import { useComponentDefaultProps } from '@mantine/styles';
 import { ForwardRefWithStaticComponents } from '@mantine/utils';
 import {
   HorizontalSection,
@@ -19,7 +19,6 @@ type NavbarComponent = ForwardRefWithStaticComponents<NavbarProps, { Section: ty
 const defaultProps: Partial<NavbarProps> = {
   fixed: false,
   position: { top: 0, left: 0 },
-  zIndex: getDefaultZIndex('app'),
   hiddenBreakpoint: 'md',
   hidden: false,
 };

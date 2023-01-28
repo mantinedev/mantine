@@ -23,7 +23,10 @@ function Demo() {
   const form = useForm<FormValues>({ initialValues: { email: '', terms: false } });
 
   useEffect(() => {
-    loadInitialValues().then((values) => form.setValues(values));
+    loadInitialValues().then((values) => {
+      form.setValues(values);
+      form.resetDirty(values);
+    });
   }, []);
 
   return (
@@ -54,7 +57,10 @@ function Demo() {
   const form = useForm<FormValues>({ initialValues: { email: '', terms: false } });
 
   useEffect(() => {
-    loadInitialValues().then((values) => form.setValues(values));
+    loadInitialValues().then((values) => {
+      form.setValues(values);
+      form.resetDirty(values);
+    });
   }, []);
 
   return (

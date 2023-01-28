@@ -64,21 +64,8 @@ By default:
 - When drawer is opened focus is trapped inside and document.body scroll is locked in current position
 - When user clicks on overlay or presses escape drawer is closed
 - Drawer transitions use disabled when user prefers to reduce motion
-- Drawer body has `aria-modal` and `role="dialog"` attributes
-
-Add [aria-labelledby](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/ARIA_Techniques/Using_the_aria-labelledby_attribute), [aria-describedby](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/ARIA_Techniques/Using_the_aria-describedby_attribute)
-and `closeButtonLabel` props for better screen readers support:
-
-```tsx
-<Drawer
-  aria-labelledby="drawer-title"
-  aria-describedby="drawer-body"
-  closeButtonLabel="Close drawer"
->
-  <h1 id="drawer-title">Title</h1>
-  <div id="drawer-body">Body</div>
-</Drawer>
-```
+- Drawer wrapper has `aria-modal="true"` and `role="dialog"` attributes
+- Drawer wrapper has `aria-labelledby` and `aria-describedby` pointing to drawer title and body
 
 ## Initial focus
 

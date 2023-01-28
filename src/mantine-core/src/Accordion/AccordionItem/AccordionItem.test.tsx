@@ -23,5 +23,6 @@ describe('@mantine/core/AccordionItem', () => {
     props: defaultProps,
     refType: HTMLDivElement,
     displayName: '@mantine/core/AccordionItem',
+    providerName: 'AccordionItem',
   });
 });

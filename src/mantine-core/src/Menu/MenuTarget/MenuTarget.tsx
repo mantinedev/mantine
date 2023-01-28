@@ -1,5 +1,6 @@
 import React, { cloneElement, forwardRef } from 'react';
 import { isElement, createEventHandler } from '@mantine/utils';
+import { useComponentDefaultProps } from '@mantine/styles';
 import { useMenuContext } from '../Menu.context';
 import { Popover } from '../../Popover';
 import { MENU_ERRORS } from '../Menu.errors';
@@ -12,40 +13,48 @@ export interface MenuTargetProps {
   refProp?: string;
 }
 
-export const MenuTarget = forwardRef<HTMLElement, MenuTargetProps>(
-  ({ children, refProp = 'ref', ...others }, ref) => {
-    if (!isElement(children)) {
-      throw new Error(MENU_ERRORS.children);
-    }
+const defaultProps: Partial<MenuTargetProps> = {
+  refProp: 'ref',
+};
 
-    const ctx = useMenuContext();
+export const MenuTarget = forwardRef<HTMLElement, MenuTargetProps>((props, ref) => {
+  const { children, refProp, ...others } = useComponentDefaultProps(
+    'MenuTarget',
+    defaultProps,
+    props
+  );
 
-    const onClick = createEventHandler(
-      children.props.onClick,
-      () => ctx.trigger === 'click' && ctx.toggleDropdown()
-    );
-
-    const onMouseEnter = createEventHandler(
-      children.props.onMouseEnter,
-      () => ctx.trigger === 'hover' && ctx.openDropdown()
-    );
-
-    const onMouseLeave = createEventHandler(
-      children.props.onMouseLeave,
-      () => ctx.trigger === 'hover' && ctx.closeDropdown()
-    );
-
-    return (
-      <Popover.Target refProp={refProp} popupType="menu" ref={ref} {...others}>
-        {cloneElement(children, {
-          onClick,
-          onMouseEnter,
-          onMouseLeave,
-          'data-expanded': ctx.opened ? true : undefined,
-        })}
-      </Popover.Target>
-    );
+  if (!isElement(children)) {
+    throw new Error(MENU_ERRORS.children);
   }
-);
+
+  const ctx = useMenuContext();
+
+  const onClick = createEventHandler(
+    children.props.onClick,
+    () => ctx.trigger === 'click' && ctx.toggleDropdown()
+  );
+
+  const onMouseEnter = createEventHandler(
+    children.props.onMouseEnter,
+    () => ctx.trigger === 'hover' && ctx.openDropdown()
+  );
+
+  const onMouseLeave = createEventHandler(
+    children.props.onMouseLeave,
+    () => ctx.trigger === 'hover' && ctx.closeDropdown()
+  );
+
+  return (
+    <Popover.Target refProp={refProp} popupType="menu" ref={ref} {...others}>
+      {cloneElement(children, {
+        onClick,
+        onMouseEnter,
+        onMouseLeave,
+        'data-expanded': ctx.opened ? true : undefined,
+      })}
+    </Popover.Target>
+  );
+});
 
 MenuTarget.displayName = '@mantine/core/MenuTarget';

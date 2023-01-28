@@ -8,3 +8,4 @@ export { loadingConfigurator } from './Button.demo.loadingConfigurator';
 export { gradient } from './Button.demo.gradient';
 export { whiteConfigurator } from './Button.demo.whiteConfigurator';
 export { group } from './Button.demo.group';
+export { disabledTooltip } from './Button.demo.disabledTooltip';

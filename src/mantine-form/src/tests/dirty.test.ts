@@ -40,4 +40,23 @@ describe('@mantine/form/dirty', () => {
     act(() => hook.result.current.resetDirty());
     expect(hook.result.current.isDirty()).toBe(false);
   });
+
+  it('sets list field as dirty if list item changes', () => {
+    const hook = renderHook(() => useForm({ initialValues: { a: [{ b: 1 }, { b: 2 }] } }));
+    act(() => hook.result.current.setFieldValue('a.0', 3));
+    expect(hook.result.current.isDirty('a.0')).toBe(true);
+    expect(hook.result.current.isDirty('a')).toBe(true);
+
+    act(() => hook.result.current.setFieldValue('a', [{ b: 1 }, { b: 2 }]));
+    expect(hook.result.current.isDirty('a.0')).toBe(false);
+    expect(hook.result.current.isDirty('a')).toBe(false);
+
+    act(() => hook.result.current.insertListItem('a', [{ b: 3 }]));
+    expect(hook.result.current.isDirty('a.2')).toBe(true);
+    expect(hook.result.current.isDirty('a')).toBe(true);
+
+    act(() => hook.result.current.removeListItem('a', 2));
+    expect(hook.result.current.isDirty('a.2')).toBe(false);
+    expect(hook.result.current.isDirty('a')).toBe(false);
+  });
 });

@@ -4,7 +4,7 @@ export function getStatus(status: FormStatus, path?: unknown) {
   const paths = Object.keys(status);
 
   if (typeof path === 'string') {
-    const nestedPaths = paths.filter((statusPath) => statusPath.includes(`${path}.`));
+    const nestedPaths = paths.filter((statusPath) => statusPath.startsWith(`${path}.`));
     return status[path] || nestedPaths.some((statusPath) => status[statusPath]) || false;
   }
 

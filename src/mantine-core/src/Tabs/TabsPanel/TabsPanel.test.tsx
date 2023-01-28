@@ -23,5 +23,6 @@ describe('@mantine/core/TabsPanel', () => {
     props: defaultProps,
     refType: HTMLDivElement,
     displayName: '@mantine/core/TabsPanel',
+    providerName: 'TabsPanel',
   });
 });

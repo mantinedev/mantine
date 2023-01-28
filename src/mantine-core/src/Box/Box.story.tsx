@@ -16,6 +16,7 @@ export function SystemProps() {
         pt="xl"
         w={400}
         h={560}
+        display="flex"
       >
         Some box
       </Box>

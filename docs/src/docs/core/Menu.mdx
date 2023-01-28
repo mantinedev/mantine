@@ -68,36 +68,6 @@ By default, `Menu.Item` renders as button element, to change that set `component
 
 <Demo data={MenuDemos.component} />
 
-## Menu.Item with react-router Link
-
-```tsx
-import { Menu } from '@mantine/core';
-import { Link } from 'react-router-dom';
-
-function Demo() {
-  return (
-    <Menu.Item component={Link} to="/hello">
-      Hello
-    </Menu.Item>
-  );
-}
-```
-
-## Menu.Item as Next.js Link
-
-```tsx
-import { Menu } from '@mantine/core';
-import { NextLink } from '@mantine/next';
-
-function Demo() {
-  return (
-    <Menu.Item component={NextLink} href="/hello">
-      Hello
-    </Menu.Item>
-  );
-}
-```
-
 ## Custom component as target
 
 <Demo data={MenuDemos.customControl} />
