@@ -186,8 +186,9 @@ export const _Carousel = forwardRef<HTMLDivElement, CarouselProps>((props, ref) 
 
   const [emblaRefElement, embla] = useEmblaCarousel(
     {
-      axis: orientation === 'horizontal' ? 'x' : 'y',
-      direction: theme.dir,
+      axis: orientation === 'horizontal' ? 'x' : 'y',      
+      // keep direction undefined for vertical orientation if the current theme is RTL
+      direction: orientation === 'horizontal' ? theme.dir : undefined,
       startIndex: initialSlide,
       loop,
       align,
