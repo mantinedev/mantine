@@ -20,6 +20,22 @@ export function Usage() {
   );
 }
 
+export function DisabledCurrentDate() {
+  const nextMonth = new Date();
+  nextMonth.setMonth(nextMonth.getMonth() + 1);
+
+  return (
+    <div style={{ padding: 40, maxWidth: 400 }}>
+      <DatePickerInput
+        label="Date picker input"
+        placeholder="Pick date"
+        minDate={nextMonth}
+        defaultValue={new Date()}
+      />
+    </div>
+  );
+}
+
 export function LocaleChanges() {
   const [locale, setLocale] = useState('en');
   return (
