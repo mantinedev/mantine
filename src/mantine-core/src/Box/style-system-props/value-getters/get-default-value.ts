@@ -1,5 +1,9 @@
 import { rem } from '@mantine/styles';
 
-export function getDefaultValue<T>(value: T) {
+export function getSizeValue<T>(value: T) {
   return rem(value);
+}
+
+export function identity<T>(value: T) {
+  return value;
 }
