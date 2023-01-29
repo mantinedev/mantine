@@ -9,7 +9,7 @@ import {
 import { DrawerRoot, DrawerRootProps } from './DrawerRoot/DrawerRoot';
 import { DrawerContent } from './DrawerContent/DrawerContent';
 
-export interface DrawerProps extends DrawerRootProps {
+export interface DrawerProps extends Omit<DrawerRootProps, 'title'> {
   /** Modal title */
   title?: React.ReactNode;
 

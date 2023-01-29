@@ -9,7 +9,7 @@ import {
 import { ModalRoot, ModalRootProps } from './ModalRoot/ModalRoot';
 import { ModalContent } from './ModalContent/ModalContent';
 
-export interface ModalProps extends ModalRootProps {
+export interface ModalProps extends Omit<ModalRootProps, 'title'> {
   /** Modal title */
   title?: React.ReactNode;
 

@@ -1,6 +1,7 @@
 import type { ModalStylesNames } from '@mantine/core';
 
 export const Modal: Record<ModalStylesNames, string> = {
+  root: 'Root element',
   inner: 'Element used to center modal, has fixed position, takes entire screen',
   content: 'Modal.Content root element',
   header: 'Contains title and close button',

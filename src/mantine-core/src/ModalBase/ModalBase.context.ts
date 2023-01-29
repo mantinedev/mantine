@@ -27,6 +27,7 @@ interface ModalBaseContext {
     variant: string;
     classNames: ClassNames<ModalBaseStylesNames>;
     styles: Styles<ModalBaseStylesNames>;
+    unstyled: boolean;
   };
 }
 

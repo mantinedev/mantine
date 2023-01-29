@@ -1,6 +1,7 @@
 import type { SpotlightStylesNames } from '@mantine/spotlight';
 
 export const SpotlightProvider: Record<SpotlightStylesNames, string> = {
+  root: 'Root element',
   inner: 'Element used to center spotlight, has fixed position, takes entire screen',
   content: 'Spotlight content root element',
   overlay: 'Overlay displayed under the Spotlight',

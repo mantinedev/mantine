@@ -9,6 +9,7 @@ import {
   ClassNames,
   Styles,
   MantineShadow,
+  Selectors,
 } from '@mantine/styles';
 import { OptionalPortal } from '../Portal';
 import { TransitionOverride } from '../Transition';
@@ -24,8 +25,10 @@ import { ModalBaseTitle, ModalBaseTitleStylesNames } from './ModalBaseTitle/Moda
 import { ModalBaseBody, ModalBaseBodyStylesNames } from './ModalBaseBody/ModalBaseBody';
 import { NativeScrollArea } from './NativeScrollArea/NativeScrollArea';
 import { useLockScroll } from './use-lock-scroll';
+import useStyles from './ModalBase.styles';
 
 export type ModalBaseStylesNames =
+  | Selectors<typeof useStyles>
   | ModalBaseCloseButtonStylesNames
   | ModalBaseOverlayStylesNames
   | ModalBaseContentStylesNames
@@ -33,10 +36,11 @@ export type ModalBaseStylesNames =
   | ModalBaseTitleStylesNames
   | ModalBaseBodyStylesNames;
 
-export interface ModalBaseSettings {
+export interface ModalBaseSettings extends React.ComponentPropsWithoutRef<'div'> {
   variant?: string;
   classNames?: ClassNames<ModalBaseStylesNames>;
   styles?: Styles<ModalBaseStylesNames>;
+  unstyled?: boolean;
 
   /** If set modal/drawer will not be unmounted from the DOM when it is hidden, display: none styles will be added instead */
   keepMounted?: boolean;
@@ -134,8 +138,20 @@ export function ModalBase(props: ModalBaseProps) {
     size,
     variant,
     classNames,
+    unstyled,
     styles,
+    className,
+    ...others
   } = useComponentDefaultProps(props.__staticSelector, ModalBaseDefaultProps, props);
+
+  const { classes, cx } = useStyles(null, {
+    name: __staticSelector,
+    classNames,
+    styles,
+    unstyled,
+    variant,
+    size,
+  });
 
   const _id = useId(id);
   const [titleMounted, setTitleMounted] = useState(false);
@@ -181,10 +197,15 @@ export function ModalBase(props: ModalBaseProps) {
             variant,
             classNames,
             styles,
+            unstyled,
           },
         }}
       >
-        <RemoveScroll enabled={shouldLockScroll && lockScroll}>{children}</RemoveScroll>
+        <RemoveScroll enabled={shouldLockScroll && lockScroll}>
+          <div className={cx(classes.root, className)} {...others}>
+            {children}
+          </div>
+        </RemoveScroll>
       </ModalBaseProvider>
     </OptionalPortal>
   );
