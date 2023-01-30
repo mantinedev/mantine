@@ -48,6 +48,7 @@ export function useForm<
   const [touched, setTouched] = useState(initialTouched);
   const [dirty, setDirty] = useState(initialDirty);
   const [values, _setValues] = useState(initialValues);
+  const valuesRef = useRef<Values>(values);
   const [errors, _setErrors] = useState(filterErrors(initialErrors));
   const _dirtyValues = useRef<Values>(initialValues);
   const _setDirtyValues = (_values: Values) => {
@@ -120,6 +121,8 @@ export function useForm<
           ? setFieldError(path, validationResults.error)
           : clearFieldError(path);
       }
+
+      valuesRef.current = result;
 
       return result;
     });
@@ -251,6 +254,7 @@ export function useForm<
 
   return {
     values,
+    valuesRef,
     errors,
     setValues,
     setErrors,

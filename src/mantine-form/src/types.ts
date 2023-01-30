@@ -127,6 +127,7 @@ export interface UseFormReturnType<
   TransformValues extends _TransformValues<Values> = (values: Values) => Values
 > {
   values: Values;
+  valuesRef: MutableRefObject<Values>;
   errors: FormErrors;
   setValues: SetValues<Values>;
   setErrors: SetErrors;
