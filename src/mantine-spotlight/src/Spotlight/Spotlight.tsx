@@ -217,6 +217,8 @@ export function Spotlight({
         onExited={() => lockScroll(false)}
         onEntered={() => lockScroll(true)}
         mounted={opened}
+        duration={transitionDuration}
+        exitDuration={transitionDuration}
         transitions={{
           spotlight: {
             duration: transitionDuration,
