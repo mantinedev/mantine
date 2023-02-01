@@ -78,6 +78,9 @@ export interface InnerSpotlightProps
   /** Should spotlight be closed when action is triggered */
   closeOnActionTrigger?: boolean;
 
+  /** Should focus be returned when spotlight is closed */
+  returnFocusOnClose?: boolean;
+
   /** Component that is used to render actions */
   actionComponent?: React.FC<DefaultActionProps>;
 
@@ -123,6 +126,7 @@ export function Spotlight({
   radius,
   centered = false,
   closeOnActionTrigger = true,
+  returnFocusOnClose = true,
   highlightQuery = false,
   highlightColor,
   maxWidth = 600,
@@ -155,7 +159,9 @@ export function Spotlight({
     onClose();
   };
 
-  useFocusReturn({ opened });
+  if (returnFocusOnClose) {
+    useFocusReturn({ opened });
+  }
 
   const filteredActions = filter(query, actions).slice(0, limit);
   const groupedWithLabels = getGroupedOptions(filteredActions).items;
