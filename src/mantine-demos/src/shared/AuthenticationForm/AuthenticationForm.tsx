@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useForm } from '@mantine/form';
-import { IconLock, IconAt } from '@tabler/icons';
+import { IconLock, IconAt } from '@tabler/icons-react';
 import {
   TextInput,
   PasswordInput,

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Language } from 'prism-react-renderer';
-import { IconCode } from '@tabler/icons';
+import { IconCode } from '@tabler/icons-react';
 import { Paper, Stack, ActionIcon, Tooltip, Box, MantineNumberSize } from '@mantine/core';
 import { Prism } from '@mantine/prism';
 import useStyles from './CodeDemo.styles';

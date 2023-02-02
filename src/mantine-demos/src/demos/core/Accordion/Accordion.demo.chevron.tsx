@@ -1,12 +1,12 @@
 import React from 'react';
-import { IconPlus } from '@tabler/icons';
+import { IconPlus } from '@tabler/icons-react';
 import { MantineDemo } from '@mantine/ds';
 import { Box } from '@mantine/core';
 import { BaseDemo } from './_base';
 
 const code = `
 import { Accordion } from '@mantine/core';
-import { IconPlus } from '@tabler/icons';
+import { IconPlus } from '@tabler/icons-react';
 
 function Demo() {
   return (

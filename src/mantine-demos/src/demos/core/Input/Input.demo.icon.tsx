@@ -1,11 +1,11 @@
 import React from 'react';
-import { IconBrandTwitter, IconAlertCircle } from '@tabler/icons';
+import { IconBrandTwitter, IconAlertCircle } from '@tabler/icons-react';
 import { MantineDemo } from '@mantine/ds';
 import { Input, Tooltip } from '@mantine/core';
 
 const code = `
 import { Input, Tooltip } from '@mantine/core';
-import { IconBrandTwitter, IconAlertCircle } from '@tabler/icons';
+import { IconBrandTwitter, IconAlertCircle } from '@tabler/icons-react';
 
 function Demo() {
   return (

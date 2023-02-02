@@ -1,11 +1,11 @@
 import React from 'react';
-import { IconLock } from '@tabler/icons';
+import { IconLock } from '@tabler/icons-react';
 import { MantineDemo } from '@mantine/ds';
 import { PasswordInput } from '@mantine/core';
 
 const code = `
 import { PasswordInput } from '@mantine/core';
-import { IconLock } from '@tabler/icons';
+import { IconLock } from '@tabler/icons-react';
 
 function Demo() {
   return (

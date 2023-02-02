@@ -1,11 +1,11 @@
 import React from 'react';
-import { IconEyeCheck, IconEyeOff } from '@tabler/icons';
+import { IconEyeCheck, IconEyeOff } from '@tabler/icons-react';
 import { MantineDemo } from '@mantine/ds';
 import { PasswordInput } from '@mantine/core';
 
 const code = `
 import { PasswordInput } from '@mantine/core';
-import { IconEyeCheck, IconEyeOff } from '@tabler/icons';
+import { IconEyeCheck, IconEyeOff } from '@tabler/icons-react';
 
 function Demo() {
   return (

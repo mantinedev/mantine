@@ -21,7 +21,7 @@
     "@mantine/core": "6.0.0-alpha.3",
     "@mantine/hooks": "6.0.0-alpha.3",
     "@mantine/prism": "6.0.0-alpha.3",
-    "@tabler/icons": "*",
+    "@tabler/icons-react": "*",
     "react": ">=16.8.0",
     "react-dom": ">=16.8.0"
   },

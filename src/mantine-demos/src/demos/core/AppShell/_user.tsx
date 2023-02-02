@@ -1,5 +1,5 @@
 import React from 'react';
-import { IconChevronRight, IconChevronLeft } from '@tabler/icons';
+import { IconChevronRight, IconChevronLeft } from '@tabler/icons-react';
 import { UnstyledButton, Group, Avatar, Text, Box, useMantineTheme, rem } from '@mantine/core';
 
 export function User() {

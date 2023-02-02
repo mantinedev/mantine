@@ -1,5 +1,11 @@
 import React from 'react';
-import { IconMoodSmile, IconCheck, IconX, IconExclamationMark, IconBookmark } from '@tabler/icons';
+import {
+  IconMoodSmile,
+  IconCheck,
+  IconX,
+  IconExclamationMark,
+  IconBookmark,
+} from '@tabler/icons-react';
 import { Notification } from './Notification';
 
 export default { title: 'Notification' };

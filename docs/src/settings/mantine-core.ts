@@ -8,7 +8,7 @@ import {
   IconLetterCase,
   IconSpeakerphone,
   IconComponents,
-} from '@tabler/icons';
+} from '@tabler/icons-react';
 import { Category } from './types';
 
 export const MANTINE_CORE_ORDER = [

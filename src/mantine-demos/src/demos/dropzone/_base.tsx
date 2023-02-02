@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
 import React from 'react';
 import { Group, Text, useMantineTheme } from '@mantine/core';
-import { IconUpload, IconPhoto, IconX } from '@tabler/icons';
+import { IconUpload, IconPhoto, IconX } from '@tabler/icons-react';
 import { Dropzone, DropzoneProps, IMAGE_MIME_TYPE } from '@mantine/dropzone';
 
 export function DropzoneDemoChildren() {

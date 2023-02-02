@@ -1,12 +1,12 @@
 import React, { forwardRef } from 'react';
-import { IconChevronRight } from '@tabler/icons';
+import { IconChevronRight } from '@tabler/icons-react';
 import { Group, Avatar, Text, UnstyledButton, Menu } from '@mantine/core';
 import { MantineDemo } from '@mantine/ds';
 import { DemoMenuItems } from './_menu-items';
 
 const code = `
 import { forwardRef } from 'react';
-import { IconChevronRight } from '@tabler/icons';
+import { IconChevronRight } from '@tabler/icons-react';
 import { Group, Avatar, Text, Menu, UnstyledButton } from '@mantine/core';
 
 interface UserButtonProps extends React.ComponentPropsWithoutRef<'button'> {

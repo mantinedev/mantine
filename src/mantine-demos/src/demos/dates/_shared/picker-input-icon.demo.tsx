@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { MantineDemo } from '@mantine/ds';
-import { IconCalendar } from '@tabler/icons';
+import { IconCalendar } from '@tabler/icons-react';
 
 const getCode = (name: string) => `
 import { useState } from 'react';

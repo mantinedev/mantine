@@ -10,7 +10,7 @@ import {
   itSupportsProviderVariant,
   itSupportsProviderSize,
 } from '@mantine/tests';
-import { IconCrown } from '@tabler/icons';
+import { IconCrown } from '@tabler/icons-react';
 import { Switch, SwitchProps } from './Switch';
 
 const defaultProps: SwitchProps = {

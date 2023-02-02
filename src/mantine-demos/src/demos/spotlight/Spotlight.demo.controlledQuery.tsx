@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { IconSearch } from '@tabler/icons';
+import { IconSearch } from '@tabler/icons-react';
 import { MantineDemo } from '@mantine/ds';
 import { SpotlightAction } from '@mantine/spotlight';
 import { Wrapper } from './_wrapper';

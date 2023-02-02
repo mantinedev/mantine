@@ -1,5 +1,5 @@
 import React from 'react';
-import { IconCheck } from '@tabler/icons';
+import { IconCheck } from '@tabler/icons-react';
 import { Group, Button } from '@mantine/core';
 import { MantineDemo } from '@mantine/ds';
 import { notifications } from '@mantine/notifications';
@@ -7,7 +7,7 @@ import { notifications } from '@mantine/notifications';
 const code = `
 import { Group, Button } from '@mantine/core';
 import { notifications } from '@mantine/notifications';
-import { IconCheck } from '@tabler/icons';
+import { IconCheck } from '@tabler/icons-react';
 
 function Demo() {
   return (

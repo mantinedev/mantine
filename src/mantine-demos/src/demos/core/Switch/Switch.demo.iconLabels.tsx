@@ -1,11 +1,11 @@
 import React from 'react';
 import { Switch, Group, useMantineTheme } from '@mantine/core';
 import { MantineDemo } from '@mantine/ds';
-import { IconSun, IconMoonStars } from '@tabler/icons';
+import { IconSun, IconMoonStars } from '@tabler/icons-react';
 
 const code = `
 import { Switch, Group, useMantineTheme } from '@mantine/core';
-import { IconSun, IconMoonStars } from '@tabler/icons';
+import { IconSun, IconMoonStars } from '@tabler/icons-react';
 
 function Demo() {
   const theme = useMantineTheme();

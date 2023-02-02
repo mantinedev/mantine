@@ -1,11 +1,11 @@
 import React from 'react';
 import { Accordion, ActionIcon, AccordionControlProps, Box } from '@mantine/core';
 import { MantineDemo } from '@mantine/ds';
-import { IconDots } from '@tabler/icons';
+import { IconDots } from '@tabler/icons-react';
 
 const code = `
 import { Accordion, ActionIcon, AccordionControlProps, Box } from '@mantine/core';
-import { IconDots } from '@tabler/icons';
+import { IconDots } from '@tabler/icons-react';
 
 function AccordionControl(props: AccordionControlProps) {
   return (

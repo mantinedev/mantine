@@ -1,11 +1,11 @@
 import React from 'react';
-import { IconSearch } from '@tabler/icons';
+import { IconSearch } from '@tabler/icons-react';
 import { MantineDemo } from '@mantine/ds';
 import { Kbd, TextInput, Flex } from '@mantine/core';
 
 const code = `
 import { Kbd, TextInput, Flex } from '@mantine/core';
-import { IconSearch } from '@tabler/icons';
+import { IconSearch } from '@tabler/icons-react';
 
 function Demo() {
   const rightSection = (

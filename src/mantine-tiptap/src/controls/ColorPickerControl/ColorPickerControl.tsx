@@ -13,7 +13,7 @@ import {
   useComponentDefaultProps,
 } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
-import { IconCircleOff, IconColorPicker, IconX, IconPalette, IconCheck } from '@tabler/icons';
+import { IconCircleOff, IconColorPicker, IconX, IconPalette, IconCheck } from '@tabler/icons-react';
 import { Control } from '../Control/Control';
 import { useRichTextEditorContext } from '../../RichTextEditor.context';
 

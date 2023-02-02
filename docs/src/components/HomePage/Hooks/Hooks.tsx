@@ -7,7 +7,7 @@ import {
   IconHandOff,
   IconMaximize,
   IconResize,
-} from '@tabler/icons';
+} from '@tabler/icons-react';
 import { Demo } from '@mantine/ds';
 import { FormDemos, HooksDemos } from '@mantine/demos';
 import { DemoTabs } from '../DemoTabs/DemoTabs';

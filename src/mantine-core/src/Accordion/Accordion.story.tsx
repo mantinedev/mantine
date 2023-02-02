@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { IconPictureInPicture } from '@tabler/icons';
+import { IconPictureInPicture } from '@tabler/icons-react';
 import { Accordion } from './Accordion';
 
 export default { title: 'Accordion' };

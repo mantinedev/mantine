@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
-import { IconUserCheck, IconMailOpened, IconShieldCheck } from '@tabler/icons';
+import { IconUserCheck, IconMailOpened, IconShieldCheck } from '@tabler/icons-react';
 import { MantineDemo } from '@mantine/ds';
 import { Stepper } from '@mantine/core';
 
 const code = `
 import { useState } from 'react';
 import { Stepper } from '@mantine/core';
-import { IconUserCheck, IconMailOpened, IconShieldCheck } from '@tabler/icons';
+import { IconUserCheck, IconMailOpened, IconShieldCheck } from '@tabler/icons-react';
 
 function Demo() {
   const [active, setActive] = useState(0);

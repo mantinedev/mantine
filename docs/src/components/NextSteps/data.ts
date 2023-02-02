@@ -1,4 +1,4 @@
-import { IconStar, IconPalette, IconCode } from '@tabler/icons';
+import { IconStar, IconPalette, IconCode } from '@tabler/icons-react';
 
 export const NEXT_STEPS_DATA = [
   {

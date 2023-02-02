@@ -1,11 +1,11 @@
 import React from 'react';
-import { IconMedal } from '@tabler/icons';
+import { IconMedal } from '@tabler/icons-react';
 import { MantineDemo } from '@mantine/ds';
 import { NumberInput } from '@mantine/core';
 
 const code = `
 import { NumberInput } from '@mantine/core';
-import { IconMedal } from '@tabler/icons';
+import { IconMedal } from '@tabler/icons-react';
 
 function Demo() {
   return (

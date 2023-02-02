@@ -1,5 +1,10 @@
 import React from 'react';
-import { IconGitPullRequest, IconAlertCircle, IconMessages, IconDatabase } from '@tabler/icons';
+import {
+  IconGitPullRequest,
+  IconAlertCircle,
+  IconMessages,
+  IconDatabase,
+} from '@tabler/icons-react';
 import { ThemeIcon, UnstyledButton, Group, Text } from '@mantine/core';
 
 interface MainLinkProps {

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'gatsby';
-import { IconArrowRight } from '@tabler/icons';
+import { IconArrowRight } from '@tabler/icons-react';
 import { Text, SimpleGrid, Slider, Button, rem } from '@mantine/core';
 import { Prism } from '@mantine/prism';
 import { Slider as SliderStylesApi } from '@mantine/styles-api';

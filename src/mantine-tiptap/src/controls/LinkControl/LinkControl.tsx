@@ -1,5 +1,5 @@
 import React, { forwardRef, useState } from 'react';
-import { IconLink, IconExternalLink } from '@tabler/icons';
+import { IconLink, IconExternalLink } from '@tabler/icons-react';
 import {
   Popover,
   TextInput,

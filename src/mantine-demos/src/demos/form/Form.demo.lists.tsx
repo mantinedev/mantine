@@ -3,13 +3,13 @@ import { useForm } from '@mantine/form';
 import { TextInput, Switch, Group, ActionIcon, Box, Text, Button, Code } from '@mantine/core';
 import { randomId } from '@mantine/hooks';
 import { MantineDemo } from '@mantine/ds';
-import { IconTrash } from '@tabler/icons';
+import { IconTrash } from '@tabler/icons-react';
 
 const code = `
 import { useForm } from '@mantine/form';
 import { TextInput, Switch, Group, ActionIcon, Box, Text, Button, Code } from '@mantine/core';
 import { randomId } from '@mantine/hooks';
-import { IconTrash } from '@tabler/icons';
+import { IconTrash } from '@tabler/icons-react';
 
 function Demo() {
   const form = useForm({

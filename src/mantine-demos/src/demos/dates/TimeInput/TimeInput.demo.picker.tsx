@@ -1,6 +1,6 @@
 import React, { useRef } from 'react';
 import { MantineDemo } from '@mantine/ds';
-import { IconClock } from '@tabler/icons';
+import { IconClock } from '@tabler/icons-react';
 import { ActionIcon } from '@mantine/core';
 import { TimeInput } from '@mantine/dates';
 
@@ -8,7 +8,7 @@ const code = `
 import { useRef } from 'react';
 import { ActionIcon } from '@mantine/core';
 import { TimeInput } from '@mantine/dates';
-import { IconClock } from '@tabler/icons';
+import { IconClock } from '@tabler/icons-react';
 
 function Demo() {
   const ref = useRef<HTMLInputElement>();

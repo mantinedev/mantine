@@ -5,7 +5,7 @@ import { Notifications } from '@mantine/notifications';
 import { ModalsProvider, ContextModalProps } from '@mantine/modals';
 import { SpotlightProvider, SpotlightAction } from '@mantine/spotlight';
 import { Text, Button, rem } from '@mantine/core';
-import { IconSearch } from '@tabler/icons';
+import { IconSearch } from '@tabler/icons-react';
 import MdxProvider from '../MdxPage/MdxProvider/MdxProvider';
 import Navbar from './Navbar/Navbar';
 import Header from './Header/Header';

@@ -1,10 +1,10 @@
 import React from 'react';
 import { MantineDemo } from '@mantine/ds';
-import { IconClock } from '@tabler/icons';
+import { IconClock } from '@tabler/icons-react';
 import { TimeInput } from '@mantine/dates';
 
 const code = `
-import { IconClock } from '@tabler/icons';
+import { IconClock } from '@tabler/icons-react';
 import { TimeInput } from '@mantine/dates';
 
 function Demo() {
