@@ -126,11 +126,12 @@ export function Spotlight(props: SpotlightProps) {
     ...others
   } = useComponentDefaultProps('Spotlight', defaultProps, props);
 
+  const [shouldReset, setShouldReset] = useState(false);
   const [hovered, setHovered] = useState(-1);
   const [IMEOpen, setIMEOpen] = useState(false);
   const { classes, cx } = useStyles(null, { name: 'Spotlight', classNames, styles, variant });
 
-  const resetHovered = () => setHovered(-1);
+  const resetHovered = () => shouldReset && setHovered(-1);
   const handleClose = () => {
     resetHovered();
     onClose();
@@ -147,6 +148,19 @@ export function Spotlight(props: SpotlightProps) {
       setHovered(groupedActions.length - 1);
     }
   }, [groupedActions.length]);
+
+  useDidUpdate(() => {
+    let timeout = -1;
+    if (opened) {
+      timeout = window.setTimeout(() => setShouldReset(true), 300);
+      return () => {
+        window.clearTimeout(timeout);
+        setShouldReset(false);
+      };
+    }
+
+    return () => setShouldReset(false);
+  }, [opened]);
 
   const handleInputKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (IMEOpen) {

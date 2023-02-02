@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   DefaultProps,
   Selectors,
@@ -37,17 +37,33 @@ export function DefaultAction({
   highlightColor,
   query,
   radius,
+  onMouseEnter,
   ...others
 }: DefaultActionProps) {
   const { classes } = useStyles({ radius }, { styles, classNames, name: 'Spotlight' });
+  // extra logic for hover state is required to prevent spotlight from showing
+  // multiple hovered items when it was opened with keyboard and user's mouse
+  // was over one of the spotlight items
+  const [shouldBeHovered, setShouldBeHovered] = useState(false);
+  const [isMouseOver, setIsMouseOver] = useState(false);
+
+  useEffect(() => {
+    const timeout = window.setTimeout(() => setShouldBeHovered(true), 300);
+    return () => window.clearTimeout(timeout);
+  }, []);
 
   return (
     <UnstyledButton
       className={classes.action}
-      data-hovered={hovered || undefined}
+      data-hovered={hovered || isMouseOver || undefined}
       tabIndex={-1}
       onMouseDown={(event) => event.preventDefault()}
       onClick={onTrigger}
+      onMouseEnter={(event) => {
+        onMouseEnter?.(event);
+        shouldBeHovered && setIsMouseOver(true);
+      }}
+      onMouseLeave={() => setIsMouseOver(false)}
       {...others}
     >
       <Group noWrap>
