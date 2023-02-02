@@ -23,7 +23,7 @@ export function Usage() {
       {content}
       <Button onClick={open}>Open modal</Button>
       <Modal opened={opened} onClose={close} title="Just a Modal" size="md">
-        Modal with some content
+        <input data-autofocus />
       </Modal>
     </div>
   );

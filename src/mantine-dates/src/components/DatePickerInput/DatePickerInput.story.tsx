@@ -186,7 +186,7 @@ export function Sizes() {
 export function InOverlays() {
   return (
     <WithinOverlays>
-      <DatePickerInput />
+      <DatePickerInput popoverProps={{ withinPortal: true }} />
     </WithinOverlays>
   );
 }
