@@ -8,13 +8,14 @@ export type ActionsListStylesNames = Selectors<typeof useStyles> | DefaultAction
 type GetGroupOptionsItem<T extends any[]> = { type: 'item'; item: T[number]; index: number };
 type GetGroupOptionsLabel = { type: 'label'; label: string };
 
-export interface ActionsListProps extends DefaultProps<ActionsListStylesNames> {
+export interface ActionsListProps
+  extends DefaultProps<ActionsListStylesNames>,
+    React.ComponentPropsWithoutRef<'div'> {
   actions: (GetGroupOptionsItem<SpotlightAction[]> | GetGroupOptionsLabel)[];
   actionComponent?: React.FC<DefaultActionProps>;
   hovered: number;
   query: string;
   nothingFoundMessage?: React.ReactNode;
-  onActionHover(): void;
   onActionTrigger(action: SpotlightAction): void;
   highlightQuery: boolean;
   highlightColor: MantineColor;
@@ -28,7 +29,6 @@ export function ActionsList({
   classNames,
   actionComponent: Action,
   hovered,
-  onActionHover,
   onActionTrigger,
   query,
   nothingFoundMessage,
@@ -36,6 +36,7 @@ export function ActionsList({
   highlightColor,
   radius,
   variant,
+  ...others
 }: ActionsListProps) {
   const { classes } = useStyles(null, { name: 'Spotlight', classNames, styles, variant });
 
@@ -47,7 +48,6 @@ export function ActionsList({
           key={item.item.id}
           action={item.item}
           hovered={item.index === hovered}
-          onMouseEnter={onActionHover}
           classNames={classNames}
           styles={styles}
           radius={radius}
@@ -71,11 +71,11 @@ export function ActionsList({
   return (
     <>
       {shouldRenderActions && (
-        <div className={classes.actions}>
+        <div className={classes.actions} {...others}>
           {items.length > 0 ? (
             items
           ) : (
-            <Text color="dimmed" className={classes.nothingFound} align="center" size="lg" py="md">
+            <Text c="dimmed" className={classes.nothingFound} ta="center" fz="lg" py="md">
               {nothingFoundMessage}
             </Text>
           )}

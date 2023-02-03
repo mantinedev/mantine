@@ -11,17 +11,35 @@ export default createStyles((theme, { radius }: DefaultActionStylesParams) => ({
     width: '100%',
     padding: `${rem(10)} ${rem(12)}`,
     borderRadius: theme.fn.radius(radius),
-    // ...theme.fn.hover({
-    //   backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[1],
-    // }),
+    ...theme.fn.hover({
+      backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[1],
+    }),
 
     '&[data-hovered]': {
-      backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[1],
+      backgroundColor: theme.fn.primaryColor(),
+      color: theme.white,
+      ...theme.fn.hover({
+        backgroundColor: theme.fn.primaryColor(),
+      }),
+    },
+  },
+
+  actionDescription: {
+    color: theme.fn.dimmed(),
+
+    '&[data-hovered]': {
+      color: theme.white,
+      opacity: 0.7,
     },
   },
 
   actionIcon: {
     color: theme.colorScheme === 'dark' ? theme.colors.dark[2] : theme.colors.gray[6],
+
+    '&[data-hovered]': {
+      color: theme.white,
+      opacity: 0.7,
+    },
   },
 
   actionBody: {},
