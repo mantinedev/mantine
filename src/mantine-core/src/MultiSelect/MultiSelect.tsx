@@ -147,7 +147,7 @@ const defaultProps: Partial<MultiSelectProps> = {
   selectOnBlur: false,
   clearButtonTabIndex: 0,
   positionDependencies: [],
-  dropdownPosition: "flip"
+  dropdownPosition: 'flip',
 };
 
 export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>((props, ref) => {
