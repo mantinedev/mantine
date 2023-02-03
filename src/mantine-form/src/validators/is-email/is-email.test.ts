@@ -16,5 +16,6 @@ describe('@mantine/form/isEmail', () => {
     const validator = isEmail(TEST_ERROR);
     expect(validator('test@email.com')).toBe(null);
     expect(validator('another@test.cn')).toBe(null);
+    expect(validator('another@test.party')).toBe(null);
   });
 });
