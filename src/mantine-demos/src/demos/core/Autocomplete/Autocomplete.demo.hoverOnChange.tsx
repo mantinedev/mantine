@@ -11,7 +11,7 @@ function Demo() {
       label="Your favorite framework/library"
       placeholder="Pick one"
       data={['React', 'Angular', 'Svelte', 'Vue']}
-      hoverOnChange
+      hoverOnSearchChange
     />
   );
 }
@@ -24,7 +24,7 @@ function Demo() {
         label="Your favorite framework/library"
         placeholder="Pick one"
         data={['React', 'Angular', 'Svelte', 'Vue']}
-        hoverOnChange
+        hoverOnSearchChange
       />
     </div>
   );
