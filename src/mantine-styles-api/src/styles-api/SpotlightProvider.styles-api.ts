@@ -11,7 +11,8 @@ export const SpotlightProvider: Record<SpotlightStylesNames, string> = {
   nothingFound: 'Nothing found message',
   actions: 'Actions list',
   actionsGroup: 'Actions group label',
-  action: 'Action',
-  actionIcon: 'Action icon wrapper',
-  actionBody: 'Action body',
+  action: 'Default action',
+  actionIcon: 'Default action icon wrapper',
+  actionBody: 'Default action body',
+  actionDescription: 'Default action description',
 };
