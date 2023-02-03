@@ -5,22 +5,24 @@ interface ZodError {
   message: string;
 }
 
-interface ZodResults {
-  success: boolean;
+interface ZodParseSuccess {
+  success: true;
+}
+
+interface ZodParseError {
+  success: false;
   error: {
     errors: ZodError[];
   };
 }
 
-interface ZodSchema {
-  safeParse(values: Record<string, any>): ZodResults;
+interface ZodSchema<T extends Record<string, any>> {
+  safeParse(values: T): ZodParseSuccess | ZodParseError;
 }
 
-export function zodResolver<T extends Record<string, any>>(schema: any) {
-  const _schema: ZodSchema = schema;
-
+export function zodResolver<T extends Record<string, any>>(schema: ZodSchema<T>) {
   return (values: T): FormErrors => {
-    const parsed = _schema.safeParse(values);
+    const parsed = schema.safeParse(values);
 
     if (parsed.success) {
       return {};
@@ -28,7 +30,7 @@ export function zodResolver<T extends Record<string, any>>(schema: any) {
 
     const results = {};
 
-    parsed.error.errors.forEach((error) => {
+    (parsed as ZodParseError).error.errors.forEach((error) => {
       results[error.path.join('.')] = error.message;
     });
 
