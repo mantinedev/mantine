@@ -18,3 +18,4 @@ export { rightSection } from './MultiSelect.demo.rightSection';
 export { scrollbars } from './MultiSelect.demo.scrollbars';
 export { maxSelectedValues } from './MultiSelect.demo.maxSelectedValues';
 export { readOnly } from './MultiSelect.demo.readOnly';
+export { hoverOnSearchChange } from './MultiSelect.demo.hoverOnSearchChange';

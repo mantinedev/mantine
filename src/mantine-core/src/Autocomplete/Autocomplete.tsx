@@ -33,6 +33,9 @@ export interface AutocompleteProps
 
   /** Called when item from dropdown was selected */
   onItemSubmit?(item: AutocompleteItem): void;
+
+  /** Hovers the first result when input changes */
+  hoverOnChange?: boolean;
 }
 
 export function defaultFilter(value: string, item: AutocompleteItem) {
@@ -91,6 +94,7 @@ export const Autocomplete = forwardRef<HTMLInputElement, AutocompleteProps>((pro
     dropdownComponent,
     positionDependencies,
     readOnly,
+    hoverOnChange,
     ...others
   } = useInputProps('Autocomplete', defaultProps, props);
   const { classes } = useStyles(null, { classNames, styles, name: 'Autocomplete', unstyled });
@@ -113,8 +117,12 @@ export const Autocomplete = forwardRef<HTMLInputElement, AutocompleteProps>((pro
   };
 
   useDidUpdate(() => {
-    setHovered(-1);
-  }, [_value]);
+    if (hoverOnChange && _value) {
+      setHovered(0);
+    } else {
+      setHovered(-1);
+    }
+  }, [_value, hoverOnChange]);
 
   const handleItemClick = (item: AutocompleteItem) => {
     handleChange(item.value);
