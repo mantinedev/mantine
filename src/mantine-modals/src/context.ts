@@ -7,12 +7,12 @@ export type ModalSettings = Partial<Omit<ModalProps, 'opened'>> & { modalId?: st
 export type ConfirmLabels = Record<'confirm' | 'cancel', ReactNode>;
 
 export interface OpenConfirmModal extends ModalSettings, ConfirmModalProps {}
-export interface OpenContextModal<CustomProps extends Record<string, unknown> = {}>
+export interface OpenContextModal<CustomProps extends Record<string, any> = {}>
   extends ModalSettings {
   innerProps: CustomProps;
 }
 
-export interface ContextModalProps<T extends Record<string, unknown> = {}> {
+export interface ContextModalProps<T extends Record<string, any> = {}> {
   context: ModalsContextProps;
   innerProps: T;
   id: string;
@@ -27,13 +27,28 @@ export interface ModalsContextProps {
   modals: ModalState[];
   openModal: (props: ModalSettings) => string;
   openConfirmModal: (props: OpenConfirmModal) => string;
-  openContextModal: <CustomProps extends Record<string, unknown>>(
-    modal: string,
-    props: OpenContextModal<CustomProps>
+  openContextModal: <TKey extends MantineModal>(
+    modal: TKey,
+    props: OpenContextModal<Parameters<MantineModals[TKey]>[0]['innerProps']>
   ) => string;
   closeModal: (id: string, canceled?: boolean) => void;
+  closeContextModal: <TKey extends MantineModal>(id: TKey, canceled?: boolean) => void;
   closeAll: () => void;
 }
+
+export type MantineModalsOverride = {};
+
+export type MantineModalsOverwritten = MantineModalsOverride extends {
+  modals: Record<string, React.FC<ContextModalProps<any>>>;
+}
+  ? MantineModalsOverride
+  : {
+      modals: Record<string, React.FC<ContextModalProps<any>>>;
+    };
+
+export type MantineModals = MantineModalsOverwritten['modals'];
+
+export type MantineModal = keyof MantineModals;
 
 export const ModalsContext = createContext<ModalsContextProps>(null);
 ModalsContext.displayName = '@mantine/modals/ModalsContext';
