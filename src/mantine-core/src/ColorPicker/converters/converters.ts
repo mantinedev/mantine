@@ -56,8 +56,15 @@ export function hsvaToHex(color: HsvaColor) {
   return `#${formatHexPart(r)}${formatHexPart(g)}${formatHexPart(b)}`;
 }
 
+export function hsvaToHexa(color: HsvaColor) {
+  const a = Math.round(color.a * 255);
+
+  return `${hsvaToHex(color)}${formatHexPart(a)}`;
+}
+
 const CONVERTERS: Record<ColorFormat, (color: HsvaColor) => string> = {
   hex: hsvaToHex,
+  hexa: (color) => hsvaToHexa(color),
   rgb: (color) => hsvaToRgba(color, false),
   rgba: (color) => hsvaToRgba(color, true),
   hsl: (color) => hsvaToHsl(color, false),

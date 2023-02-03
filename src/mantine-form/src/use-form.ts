@@ -28,6 +28,7 @@ import {
   ResetDirty,
   IsValid,
   _TransformValues,
+  ClearFieldDirty,
 } from './types';
 
 export function useForm<
@@ -92,14 +93,25 @@ export function useForm<
     []
   );
 
+  const clearFieldDirty: ClearFieldDirty = useCallback(
+    (path) =>
+      setDirty((current) => {
+        if (typeof path !== 'string') {
+          return current;
+        }
+
+        const result = clearListState(path, current);
+        delete result[path];
+        return result;
+      }),
+    []
+  );
+
   const setFieldValue: SetFieldValue<Values> = useCallback((path, value) => {
     const shouldValidate = shouldValidateOnChange(path, validateInputOnChange);
+    clearFieldDirty(path);
+    setTouched((currentTouched) => ({ ...currentTouched, [path]: true }));
     _setValues((current) => {
-      const initialValue = getPath(path, _dirtyValues.current);
-      const isFieldDirty = !isEqual(initialValue, value);
-      setDirty((currentDirty) => ({ ...currentDirty, [path]: isFieldDirty }));
-      setTouched((currentTouched) => ({ ...currentTouched, [path]: true }));
-
       const result = setPath(path, value, current);
 
       if (shouldValidate) {
@@ -123,21 +135,21 @@ export function useForm<
     clearInputErrorOnChange && clearErrors();
   }, []);
 
-  const reorderListItem: ReorderListItem<Values> = useCallback(
-    (path, payload) => _setValues((current) => reorderPath(path, payload, current)),
-    []
-  );
-
-  const removeListItem: RemoveListItem<Values> = useCallback((path, index) => {
-    _setValues((current) => removePath(path, index, current));
-    _setErrors((errs) => clearListState(path, errs));
-    setDirty((current) => clearListState(`${String(path)}.${index}`, current));
+  const reorderListItem: ReorderListItem<Values> = useCallback((path, payload) => {
+    clearFieldDirty(path);
+    _setValues((current) => reorderPath(path, payload, current));
   }, []);
 
-  const insertListItem: InsertListItem<Values> = useCallback(
-    (path, item, index) => _setValues((current) => insertPath(path, item, index, current)),
-    []
-  );
+  const removeListItem: RemoveListItem<Values> = useCallback((path, index) => {
+    clearFieldDirty(path);
+    _setValues((current) => removePath(path, index, current));
+    _setErrors((errs) => clearListState(path, errs));
+  }, []);
+
+  const insertListItem: InsertListItem<Values> = useCallback((path, item, index) => {
+    clearFieldDirty(path);
+    _setValues((current) => insertPath(path, item, index, current));
+  }, []);
 
   const validate: Validate = useCallback(() => {
     const results = validateValues(rules, values);
@@ -159,7 +171,7 @@ export function useForm<
     { type = 'input', withError = type === 'input', withFocus = true } = {}
   ) => {
     const onChange = getInputOnChange((value) => setFieldValue(path, value as any));
-    const payload: Record<string, any> = { onChange };
+    const payload: any = { onChange };
 
     if (withError) {
       payload.error = errors[path];
@@ -204,7 +216,26 @@ export function useForm<
     reset();
   }, []);
 
-  const isDirty: GetFieldStatus<Values> = useCallback((path) => getStatus(dirty, path), [dirty]);
+  const isDirty: GetFieldStatus<Values> = (path) => {
+    if (path) {
+      const overridenValue = getPath(path, dirty);
+      if (typeof overridenValue === 'boolean') {
+        return overridenValue;
+      }
+
+      const sliceOfValues = getPath(path, values);
+      const sliceOfInitialValues = getPath(path, _dirtyValues.current);
+      return !isEqual(sliceOfValues, sliceOfInitialValues);
+    }
+
+    const isOverridden = Object.keys(dirty).length > 0;
+    if (isOverridden) {
+      return getStatus(dirty);
+    }
+
+    return !isEqual(values, _dirtyValues.current);
+  };
+
   const isTouched: GetFieldStatus<Values> = useCallback(
     (path) => getStatus(touched, path),
     [touched]

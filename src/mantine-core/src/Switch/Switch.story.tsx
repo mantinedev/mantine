@@ -104,3 +104,7 @@ export function WithError() {
     </Stack>
   );
 }
+
+export function Alignment() {
+  return <Switch />;
+}

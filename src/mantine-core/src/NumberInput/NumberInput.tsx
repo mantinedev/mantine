@@ -125,6 +125,7 @@ const defaultProps: Partial<NumberInputProps> = {
 
 export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>((props, ref) => {
   const {
+    readOnly,
     disabled,
     value,
     onChange,
@@ -254,7 +255,7 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>((props
       setValue(value);
       setTempValue('');
     }
-  }, [value]);
+  }, [value, precision]);
 
   const shouldUseStepInterval = stepHoldDelay !== undefined && stepHoldInterval !== undefined;
   const onStepTimeoutRef = useRef<number>(null);
@@ -400,11 +401,12 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>((props
       event.preventDefault();
       return;
     }
-
-    if (event.key === 'ArrowUp') {
-      onStep(event, true);
-    } else if (event.key === 'ArrowDown') {
-      onStep(event, false);
+    if (!readOnly) {
+      if (event.key === 'ArrowUp') {
+        onStep(event, true);
+      } else if (event.key === 'ArrowDown') {
+        onStep(event, false);
+      }
     }
   };
 
@@ -422,6 +424,7 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>((props
       variant={variant}
       value={formatNum(tempValue)}
       disabled={disabled}
+      readOnly={readOnly}
       ref={useMergedRef(inputRef, ref)}
       onChange={handleChange}
       onBlur={handleBlur}
@@ -429,7 +432,8 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>((props
       onKeyDown={handleKeyDown}
       onKeyUp={handleKeyUp}
       rightSection={
-        rightSection || (disabled || hideControls || variant === 'unstyled' ? null : controls)
+        rightSection ||
+        (disabled || readOnly || hideControls || variant === 'unstyled' ? null : controls)
       }
       rightSectionWidth={rightSectionWidth || theme.fn.size({ size, sizes: CONTROL_SIZES }) + 1}
       radius={radius}

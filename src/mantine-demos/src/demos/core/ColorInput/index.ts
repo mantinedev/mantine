@@ -8,3 +8,4 @@ export { validation } from './ColorInput.demo.validation';
 export { icon } from './ColorInput.demo.icon';
 export { swatchesOnly } from './ColorInput.demo.swatchesOnly';
 export { rightSection } from './ColorInput.demo.rightSection';
+export { eyeDropper } from './ColorInput.demo.eyeDropper';

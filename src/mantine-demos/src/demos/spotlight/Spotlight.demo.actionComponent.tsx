@@ -52,10 +52,6 @@ const useStyles = createStyles((theme) => ({
   actionHovered: {
     backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[1],
   },
-
-  actionBody: {
-    flex: 1,
-  },
 }));
 
 function CustomAction({
@@ -83,7 +79,7 @@ function CustomAction({
           </Center>
         )}
 
-        <div className={classes.actionBody}>
+        <div style={{ flex: 1 }}>
           <Text>{action.title}</Text>
 
           {action.description && (
@@ -157,10 +153,6 @@ const useStyles = createStyles((theme) => ({
   actionHovered: {
     backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[1],
   },
-
-  actionBody: {
-    flex: 1,
-  },
 }));
 
 function CustomAction({
@@ -188,7 +180,7 @@ function CustomAction({
           </Center>
         )}
 
-        <div className={classes.actionBody}>
+        <div style={{ flex: 1 }}>
           <Text>{action.title}</Text>
 
           {action.description && (

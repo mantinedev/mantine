@@ -27,6 +27,7 @@ function Demo() {
       <Select
         label="Your favorite Rick and Morty character"
         placeholder="Pick one"
+        withinPortal
         data={[
           { value: 'rick', label: 'Rick', group: 'Used to be a pickle' },
           { value: 'morty', label: 'Morty', group: 'Never was a pickle' },

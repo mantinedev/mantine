@@ -5,7 +5,7 @@ import { getDefaultZIndex, useComponentDefaultProps } from '@mantine/styles';
 import { TooltipGroup } from './TooltipGroup/TooltipGroup';
 import { TooltipFloating } from './TooltipFloating/TooltipFloating';
 import { useTooltip } from './use-tooltip';
-import { FloatingArrow, getFloatingPosition, FloatingPosition } from '../Floating';
+import { FloatingArrow, getFloatingPosition, FloatingPosition, ArrowPosition } from '../Floating';
 import { MantineTransition, Transition } from '../Transition';
 import { OptionalPortal } from '../Portal';
 import { Box } from '../Box';
@@ -41,6 +41,9 @@ export interface TooltipProps extends TooltipBaseProps {
   /** Arrow radius in px */
   arrowRadius?: number;
 
+  /** Arrow position **/
+  arrowPosition?: ArrowPosition;
+
   /** One of premade transitions ot transition object */
   transition?: MantineTransition;
 
@@ -65,6 +68,7 @@ const defaultProps: Partial<TooltipProps> = {
   arrowSize: 4,
   arrowOffset: 5,
   arrowRadius: 0,
+  arrowPosition: 'side',
   offset: 5,
   transition: 'fade',
   transitionDuration: 100,
@@ -97,6 +101,7 @@ const _Tooltip = forwardRef<HTMLElement, TooltipProps>((props, ref) => {
     arrowSize,
     arrowOffset,
     arrowRadius,
+    arrowPosition,
     offset,
     transition,
     transitionDuration,
@@ -126,6 +131,7 @@ const _Tooltip = forwardRef<HTMLElement, TooltipProps>((props, ref) => {
     opened,
     events,
     arrowRef,
+    arrowOffset,
     offset: offset + (withArrow ? arrowSize / 2 : 0),
     positionDependencies: [...positionDependencies, children],
     inline,
@@ -172,6 +178,7 @@ const _Tooltip = forwardRef<HTMLElement, TooltipProps>((props, ref) => {
                 arrowSize={arrowSize}
                 arrowOffset={arrowOffset}
                 arrowRadius={arrowRadius}
+                arrowPosition={arrowPosition}
                 className={classes.arrow}
               />
             </Box>

@@ -45,6 +45,13 @@ describe('@mantine/core/Image', () => {
     expect(withoutPlaceholder.querySelectorAll('.mantine-Image-placeholder')).toHaveLength(0);
   });
 
+  it('renders a placeholder after having src updated to null', () => {
+    const { rerender, container } = render(<Image src="test-src" withPlaceholder />);
+    expect(container.querySelectorAll('.mantine-Image-placeholder')).toHaveLength(0);
+    rerender(<Image src={null} withPlaceholder />);
+    expect(container.querySelectorAll('.mantine-Image-placeholder')).toHaveLength(1);
+  });
+
   it('renders given caption', () => {
     const { container: withoutCaption } = render(<Image src="test" />);
     const { container: withCaption } = render(<Image src="test" caption="test-caption" />);

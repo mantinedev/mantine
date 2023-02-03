@@ -47,13 +47,20 @@ export default createStyles((theme) => ({
   },
 
   version: {
-    ...theme.fn.focusStyles(),
     fontWeight: 700,
-    textDecoration: 'none',
+    position: 'relative',
+    paddingRight: 20,
+    display: 'block',
     marginTop: 2,
 
     [theme.fn.smallerThan(860)]: {
       display: 'none',
     },
+  },
+
+  chevron: {
+    position: 'absolute',
+    right: 4,
+    top: 5,
   },
 }));

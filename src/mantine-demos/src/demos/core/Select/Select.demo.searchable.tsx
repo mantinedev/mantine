@@ -27,6 +27,7 @@ function Demo() {
         searchable
         nothingFound="No options"
         data={['React', 'Angular', 'Svelte', 'Vue']}
+        withinPortal
       />
     </div>
   );

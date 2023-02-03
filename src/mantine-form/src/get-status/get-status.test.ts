@@ -27,5 +27,6 @@ describe('@mantine/form/get-status', () => {
     expect(getStatus(TEST_STATUS, 'a.5')).toBe(false);
     expect(getStatus(TEST_STATUS, 'l.d.0')).toBe(true);
     expect(getStatus(TEST_STATUS, 'l.d.0.2')).toBe(false);
+    expect(getStatus(TEST_STATUS, 'd.0')).toBe(false);
   });
 });

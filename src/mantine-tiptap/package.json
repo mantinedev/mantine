@@ -1,0 +1,42 @@
+{
+  "name": "@mantine/tiptap",
+  "description": "Rich text editor based on tiptap",
+  "version": "5.10.2",
+  "main": "cjs/index.js",
+  "module": "esm/index.js",
+  "types": "lib/index.d.ts",
+  "license": "MIT",
+  "sideEffects": false,
+  "author": "Vitaly Rtishchev <rtivital@gmail.com>",
+  "homepage": "https://mantine.dev/others/tiptap",
+  "repository": {
+    "url": "https://github.com/mantinedev/mantine.git",
+    "type": "git",
+    "directory": "src/mantine-tiptap"
+  },
+  "keywords": [
+    "react",
+    "next",
+    "nextjs",
+    "ui",
+    "components",
+    "ui-kit",
+    "library",
+    "frontend",
+    "tiptap",
+    "rte",
+    "rich-text-editor"
+  ],
+  "peerDependencies": {
+    "@mantine/core": "5.10.2",
+    "@mantine/hooks": "5.10.2",
+    "@tabler/icons": "^1.119.0",
+    "@tiptap/extension-link": "^2.0.0-beta.202",
+    "@tiptap/react": "^2.0.0-beta.202",
+    "react": ">=16.8.0"
+  },
+  "dependencies": {
+    "@mantine/utils": "5.10.2"
+  },
+  "devDependencies": {}
+}

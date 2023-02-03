@@ -49,7 +49,10 @@ export function useComponentDefaultProps<T extends Record<string, any>, U extend
   [Key in Extract<keyof T, keyof U>]-?: U[Key] | NonNullable<T[Key]>;
 } {
   const theme = useMantineTheme();
-  const contextProps = theme.components[component]?.defaultProps;
+  const contextPropsPayload = theme.components[component]?.defaultProps;
+  const contextProps =
+    typeof contextPropsPayload === 'function' ? contextPropsPayload(theme) : contextPropsPayload;
+
   return { ...defaultProps, ...contextProps, ...filterProps(props) };
 }
 

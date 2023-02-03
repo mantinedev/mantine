@@ -31,6 +31,7 @@ function Demo() {
         rightSectionWidth={30}
         styles={{ rightSection: { pointerEvents: 'none' } }}
         data={['React', 'Angular', 'Svelte', 'Vue']}
+        withinPortal
       />
     </div>
   );

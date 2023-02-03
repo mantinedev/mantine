@@ -45,7 +45,7 @@ export function useFocusTrap(active = true): (instance: HTMLElement | null) => v
 
         // Delay processing the HTML node by a frame. This ensures focus is assigned correctly.
         setTimeout(() => {
-          if (node.ownerDocument) {
+          if (node.getRootNode()) {
             processNode();
           } else if (process.env.NODE_ENV === 'development') {
             // eslint-disable-next-line no-console

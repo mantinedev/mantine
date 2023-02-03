@@ -18,7 +18,7 @@ function Demo() {
 export const configurator: MantineDemo = {
   type: 'configurator',
   component: (props: SelectProps) => (
-    <Select data={['React', 'Angular', 'Svelte', 'Vue']} {...props} />
+    <Select data={['React', 'Angular', 'Svelte', 'Vue']} withinPortal {...props} />
   ),
   codeTemplate,
   configuratorProps: { multiline: 3 },

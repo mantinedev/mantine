@@ -34,6 +34,7 @@ function Demo() {
         searchable
         nothingFound="No options"
         maxDropdownHeight={280}
+        withinPortal
         data={data}
       />
     </div>

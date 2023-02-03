@@ -12,3 +12,8 @@ export const FLOATING_POSITION_DATA = [
   { label: 'bottom-start', value: 'bottom-start' },
   { label: 'bottom-end', value: 'bottom-end' },
 ];
+
+export const FLOATING_ARROW_POSITION_DATA = [
+  { label: 'side', value: 'side' },
+  { label: 'center', value: 'center' },
+];

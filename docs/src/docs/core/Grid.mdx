@@ -21,13 +21,10 @@ import { GridDemos } from '@mantine/demos';
 
 ## Gutter
 
-Customize spacing between columns with `gutter` prop on Grid component.
-Use xs, sm, md, lg, xl values to set spacing from `theme.spacing` or number to set spacing in px:
+Set `gutter`, `gutterXs`, `gutterSm`, `gutterMd`, `gutterLg`, `gutterXl` props to `Grid` component
+to control spacing between columns:
 
-```tsx
-<Grid gutter="xl" /> // -> theme.spacing.xl
-<Grid gutter={40} /> // -> 40px
-```
+<Demo data={GridDemos.gutter} />
 
 ## Grow
 
@@ -92,3 +89,26 @@ Note that in this case, columns span and offset will be calculated relative to t
 In this example, first column takes 50% with 12 span (12/24), second and third take 25% (6/24):
 
 <Demo data={GridDemos.columns} />
+
+## Negative margins
+
+`Grid` component includes negative margins to align it with the rest of the content.
+Due to this you may have horizontal scrollbar if you use `Grid` in an element without padding.
+To fix this issue either wrap `Grid` with [Container](/core/container/) or remove margin with
+`m` prop:
+
+```tsx
+import { Grid, Container } from '@mantine/core';
+
+function WithContainer() {
+  return (
+    <Container fluid>
+      <Grid>{/* ...cols */}</Grid>
+    </Container>
+  );
+}
+
+function WithMargin() {
+  return <Grid m={0}>{/* ...cols */}</Grid>;
+}
+```

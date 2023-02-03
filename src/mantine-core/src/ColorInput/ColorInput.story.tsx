@@ -19,6 +19,7 @@ export function Controlled() {
           ...Object.keys(DEFAULT_THEME.colors).map((color) => DEFAULT_THEME.colors[color][6]),
           'rgba(0, 0, 0, 0)',
         ]}
+        closeOnColorSwatchClick
         mb="md"
       />
 
@@ -74,6 +75,18 @@ export function ReadOnly() {
   return (
     <div style={{ padding: 40, maxWidth: 400 }}>
       <ColorInput label="Read only" placeholder="Read only" readOnly />
+    </div>
+  );
+}
+
+export function WithEyeDropper() {
+  return (
+    <div style={{ padding: 40, maxWidth: 400 }}>
+      <ColorInput size="xs" label="With eye dropper" placeholder="Read only" withEyeDropper />
+      <ColorInput size="sm" label="With eye dropper" placeholder="Read only" withEyeDropper />
+      <ColorInput size="md" label="With eye dropper" placeholder="Read only" withEyeDropper />
+      <ColorInput size="lg" label="With eye dropper" placeholder="Read only" withEyeDropper />
+      <ColorInput size="xl" label="With eye dropper" placeholder="Read only" withEyeDropper />
     </div>
   );
 }

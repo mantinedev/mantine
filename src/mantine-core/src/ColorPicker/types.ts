@@ -1,4 +1,4 @@
-export type ColorFormat = 'hex' | 'rgba' | 'rgb' | 'hsl' | 'hsla';
+export type ColorFormat = 'hex' | 'hexa' | 'rgba' | 'rgb' | 'hsl' | 'hsla';
 
 export interface HsvaColor {
   h: number;

@@ -23,9 +23,16 @@ import { StepperDemos } from '@mantine/demos';
 ## Allow step select
 
 To disable step selection set `allowStepSelect` prop on `Stepper.Step` component.
-It can be used to prevent user from reaching next steps:
+It can be used to prevent user from reaching next steps while letting them go back and forth between steps they've already reached before:
 
 <Demo data={StepperDemos.allowStepSelect} />
+
+## Disable next steps selection
+
+Another way to disable selection of upcoming steps is to use the `allowNextStepsSelect` directly on the `Stepper` component.
+This is useful when you don't need to control the behavior specifically for each step.
+
+<Demo data={StepperDemos.allowNextStepsSelect} />
 
 ## Color, radius and size
 
@@ -55,6 +62,15 @@ set `aria-label` or `title` on Step component to make it accessible:
 You can also change completed icon for each step, for example, to indicate error state:
 
 <Demo data={StepperDemos.stepColor} />
+
+## Step-aware components for customization
+
+All props accepting a React Node for customizing a step (`label`, `icon`, `completedIcon`...) can also take a React _Component_
+instead, which will receive the step's index as props.
+
+This allows easily using a custom component for each steps.
+
+<Demo data={StepperDemos.stepFragmentComponents} />
 
 ## Vertical orientation
 
@@ -144,7 +160,7 @@ function WillWork() {
 function Demo() {
   return (
     <Stepper active={1}>
-      <Stepper.Step label="Regular step">Fist step</Stepper.Step>
+      <Stepper.Step label="Regular step">First step</Stepper.Step>
       {/* Wrapped Stepper.Step will not render children, do not do that */}
       <WillNotWork />
       <Stepper.Step label="Step with custom content">
