@@ -73,9 +73,9 @@ export interface SegmentedControlProps
   orientation?: 'vertical' | 'horizontal';
 }
 
-const defaultProps: Partial<SegmentedControlProps> = {
+const defaultProps = {
   disabled: false,
-  size: 'sm',
+  size: 'sm' as const,
   transitionDuration: 200,
 };
 
