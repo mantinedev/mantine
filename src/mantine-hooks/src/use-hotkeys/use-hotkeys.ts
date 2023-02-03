@@ -15,7 +15,7 @@ function shouldFireEvent(
     if (triggerOnContentEditable) {
       return !tagsToIgnore.includes(event.target.tagName);
     }
-    
+
     return !event.target.isContentEditable && !tagsToIgnore.includes(event.target.tagName);
   }
 
