@@ -24,6 +24,7 @@ use-hotkeys accepts as its first argument an array of hotkeys and handler tuples
 The second argument is a list of HTML tags:
 
 - `tagsToIgnore` - HTML tag names that hotkeys will not trigger on
+- `triggerOnContentEditable` - Whether shortcuts should trigger when based on contentEditable
 
 ```tsx
 import { useHotkeys } from '@mantine/hooks';
