@@ -56,6 +56,9 @@ export interface MultiSelectProps
   /** Allow to clear item */
   clearable?: boolean;
 
+  /** Disable removing selected items from the list */
+  disableSelectedItemFiltering?: boolean;
+
   /** aria-label for clear button */
   clearButtonLabel?: string;
 
@@ -214,6 +217,7 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>((props
     inputWrapperOrder,
     readOnly,
     withAsterisk,
+    disableSelectedItemFiltering,
     ...others
   } = useComponentDefaultProps('MultiSelect', defaultProps, props);
 
@@ -289,6 +293,7 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>((props
     limit,
     filter,
     value: _value,
+    disableSelectedItemFiltering,
   });
 
   const getNextIndex = (
@@ -551,6 +556,8 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>((props
       />
     ));
 
+  const isItemSelected = (itemValue: string) => _value.includes(itemValue);
+
   const handleClear = () => {
     handleSearchChange('');
     setValue([]);
@@ -608,7 +615,7 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>((props
         switchDirectionOnFlip={switchDirectionOnFlip}
         zIndex={zIndex}
         dropdownPosition={dropdownPosition}
-        positionDependencies={positionDependencies}
+        positionDependencies={[...positionDependencies, _searchValue]}
         classNames={classNames}
         styles={styles}
         unstyled={unstyled}
@@ -724,6 +731,7 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>((props
             itemComponent={itemComponent}
             size={size}
             nothingFound={nothingFound}
+            isItemSelected={isItemSelected}
             creatable={creatable && !!createLabel}
             createLabel={createLabel}
             unstyled={unstyled}

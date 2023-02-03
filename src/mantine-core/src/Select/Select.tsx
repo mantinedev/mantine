@@ -552,7 +552,7 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>((props, ref) => 
         switchDirectionOnFlip={switchDirectionOnFlip}
         zIndex={zIndex}
         dropdownPosition={dropdownPosition}
-        positionDependencies={positionDependencies}
+        positionDependencies={[...positionDependencies, inputValue]}
         classNames={classNames}
         styles={styles}
         unstyled={unstyled}

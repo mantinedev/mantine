@@ -51,6 +51,14 @@ be a tuple of two strings, one for each list:
 
 <Demo data={TransferListDemos.controlledSearch} />
 
+## Transferring only found items
+
+By default, TransferList transfers **all** items when you click the `transferAll` button.
+
+By setting the `transferAllMatchingFilter` prop to `true`, TransferList will only transfer the items that match the current filter.
+
+<Demo data={TransferListDemos.transferAllMatchingFilter} />
+
 ## Empty search VS empty list
 
 You can specify a `placeholder` prop, which will be used in place of the `nothingFound` when a list is completely empty,

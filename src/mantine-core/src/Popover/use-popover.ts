@@ -9,7 +9,7 @@ import {
   Middleware,
   inline,
   limitShift,
-} from '@floating-ui/react-dom-interactions';
+} from '@floating-ui/react';
 import { FloatingPosition, useFloatingAutoUpdate } from '../Floating';
 import { PopoverWidth, PopoverMiddlewares } from './Popover.types';
 

@@ -25,7 +25,7 @@ export default createStyles(
 
     visible: {
       overflow: 'hidden',
-      
+
       '&::before': {
         content: '""',
         position: 'absolute',

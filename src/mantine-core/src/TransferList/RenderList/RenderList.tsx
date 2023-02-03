@@ -36,6 +36,7 @@ export interface RenderListProps extends DefaultProps<RenderListStylesNames> {
   limit?: number;
   transferIcon?: React.FunctionComponent<{ reversed }>;
   transferAllIcon?: React.FunctionComponent<{ reversed }>;
+  transferAllMatchingFilter: boolean;
 }
 
 const icons = {
@@ -61,6 +62,7 @@ export function RenderList({
   listComponent,
   transferIcon: TransferIcon,
   transferAllIcon: TransferAllIcon,
+  transferAllMatchingFilter,
   searchPlaceholder,
   query,
   onSearch,
@@ -237,7 +239,7 @@ export function RenderList({
               size={36}
               radius={0}
               className={classes.transferListControl}
-              disabled={data.length === 0}
+              disabled={transferAllMatchingFilter ? filteredData.length === 0 : data.length === 0}
               onClick={onMoveAll}
               unstyled={unstyled}
             >
