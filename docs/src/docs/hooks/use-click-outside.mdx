@@ -56,8 +56,8 @@ import { useClickOutside } from '@mantine/hooks';
 import { Portal } from '@mantine/core';
 
 function Demo() {
-  const [dropdown, setDropdown] = useState(null);
-  const [control, setControl] = useState(null);
+  const [dropdown, setDropdown] = useState<HTMLDivElement | null>(null);
+  const [control, setControl] = useState<HTMLDivElement | null>(null);
 
   useClickOutside(() => console.log('outside'), null, [control, dropdown]);
 

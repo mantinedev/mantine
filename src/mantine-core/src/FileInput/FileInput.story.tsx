@@ -5,7 +5,7 @@ export default { title: 'FileInput' };
 
 export function Usage() {
   return (
-    <div style={{ padding: 40 }}>
+    <div style={{ padding: 40, maxWidth: 200 }}>
       <FileInput label="Pick file" required placeholder="File input" clearable />
     </div>
   );

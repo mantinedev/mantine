@@ -1,5 +1,5 @@
 import React from 'react';
-import { DefaultProps, useContextStylesApi, useComponentDefaultProps } from '@mantine/styles';
+import { DefaultProps, useComponentDefaultProps } from '@mantine/styles';
 import { closeOnEscape } from '@mantine/utils';
 import { useFocusReturn } from '@mantine/hooks';
 import { FloatingArrow } from '../../Floating';
@@ -24,11 +24,15 @@ export function PopoverDropdown(props: PopoverDropdownProps) {
     props
   );
 
-  const { classNames, styles, unstyled, staticSelector } = useContextStylesApi();
   const ctx = usePopoverContext();
   const { classes, cx } = useStyles(
     { radius: ctx.radius, shadow: ctx.shadow },
-    { name: staticSelector, classNames, styles, unstyled }
+    {
+      name: ctx.__staticSelector,
+      classNames: ctx.classNames,
+      styles: ctx.styles,
+      unstyled: ctx.unstyled,
+    }
   );
 
   const returnFocus = useFocusReturn({
@@ -95,6 +99,8 @@ export function PopoverDropdown(props: PopoverDropdownProps) {
                 position={ctx.placement}
                 arrowSize={ctx.arrowSize}
                 arrowRadius={ctx.arrowRadius}
+                arrowOffset={ctx.arrowOffset}
+                arrowPosition={ctx.arrowPosition}
                 className={classes.arrow}
               />
             </Box>

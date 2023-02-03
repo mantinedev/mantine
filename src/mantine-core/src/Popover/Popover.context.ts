@@ -1,10 +1,10 @@
-import { ReferenceType } from '@floating-ui/react-dom-interactions';
+import { ReferenceType } from '@floating-ui/react';
 import { createSafeContext } from '@mantine/utils';
-import { MantineNumberSize, MantineShadow } from '@mantine/styles';
-import { FloatingPosition } from '../Floating';
+import { MantineNumberSize, MantineShadow, ClassNames, Styles } from '@mantine/styles';
+import { FloatingPosition, ArrowPosition } from '../Floating';
 import { MantineTransition } from '../Transition';
 import { POPOVER_ERRORS } from './Popover.errors';
-import { PopoverWidth } from './Popover.types';
+import { PopoverWidth, PopoverStylesNames, PopoverStylesParams } from './Popover.types';
 
 interface PopoverContext {
   x: number;
@@ -21,7 +21,9 @@ interface PopoverContext {
   width?: PopoverWidth;
   withArrow: boolean;
   arrowSize: number;
+  arrowOffset: number;
   arrowRadius: number;
+  arrowPosition: ArrowPosition;
   trapFocus: boolean;
   placement: FloatingPosition;
   withinPortal: boolean;
@@ -38,6 +40,10 @@ interface PopoverContext {
   targetProps: Record<string, any>;
   disabled: boolean;
   returnFocus: boolean;
+  classNames: ClassNames<PopoverStylesNames>;
+  styles: Styles<PopoverStylesNames, PopoverStylesParams>;
+  unstyled: boolean;
+  __staticSelector: string;
 }
 
 export const [PopoverContextProvider, usePopoverContext] = createSafeContext<PopoverContext>(

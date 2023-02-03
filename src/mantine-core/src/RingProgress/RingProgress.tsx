@@ -30,6 +30,9 @@ export interface RingProgressProps
 
   /** Ring sections */
   sections: RingProgressSection[];
+
+  /** Color of the root section, key of theme.colors or CSS color value */
+  rootColor?: MantineColor;
 }
 
 const defaultProps: Partial<RingProgressProps> = {
@@ -48,6 +51,7 @@ export const RingProgress = forwardRef<HTMLDivElement, RingProgressProps>((props
     classNames,
     styles,
     roundCaps,
+    rootColor,
     unstyled,
     ...others
   } = useComponentDefaultProps('RingProgress', defaultProps, props);
@@ -59,11 +63,11 @@ export const RingProgress = forwardRef<HTMLDivElement, RingProgressProps>((props
     thickness,
     sections,
     renderRoundedLineCaps: roundCaps,
+    rootColor,
   }).map(({ data, sum, root, lineRoundCaps, offset }, index) => (
     <Curve
       {...data}
       key={index}
-      value={data?.value}
       size={size}
       thickness={thickness}
       sum={sum}
@@ -71,7 +75,6 @@ export const RingProgress = forwardRef<HTMLDivElement, RingProgressProps>((props
       color={data?.color}
       root={root}
       lineRoundCaps={lineRoundCaps}
-      tooltip={data?.tooltip}
     />
   ));
 

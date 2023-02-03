@@ -14,7 +14,7 @@ import { filterData } from './filter-data/filter-data';
 import useStyles from './Select.styles';
 
 export interface SelectSharedProps<Item, Value> {
-  /** Select data used to renderer items in dropdown */
+  /** Select data used to render items in dropdown */
   data: (string | Item)[];
 
   /** Controlled input value */
@@ -560,7 +560,7 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>((props, ref) => 
         switchDirectionOnFlip={switchDirectionOnFlip}
         zIndex={zIndex}
         dropdownPosition={dropdownPosition}
-        positionDependencies={positionDependencies}
+        positionDependencies={[...positionDependencies, inputValue]}
         classNames={classNames}
         styles={styles}
         unstyled={unstyled}

@@ -1,4 +1,4 @@
-import React, { forwardRef } from 'react';
+import React, { forwardRef, FunctionComponent } from 'react';
 import {
   DefaultProps,
   MantineColor,
@@ -16,9 +16,14 @@ import useStyles from './Step.styles';
 
 export type StepStylesNames = Selectors<typeof useStyles>;
 
+export type StepFragmentComponent = FunctionComponent<{ step: number }>;
+
 export interface StepProps
   extends DefaultProps<StepStylesNames>,
     React.ComponentPropsWithoutRef<'button'> {
+  /** Step index, controlled by Steps component **/
+  step?: number;
+
   /** Step state, controlled by Steps component */
   state?: 'stepInactive' | 'stepProgress' | 'stepCompleted';
 
@@ -29,19 +34,19 @@ export interface StepProps
   withIcon?: boolean;
 
   /** Step icon, defaults to step index + 1 when rendered within Stepper */
-  icon?: React.ReactNode;
+  icon?: React.ReactNode | StepFragmentComponent;
 
   /** Step icon displayed when step is completed */
-  completedIcon?: React.ReactNode;
+  completedIcon?: React.ReactNode | StepFragmentComponent;
 
   /** Step icon displayed when step is in progress */
-  progressIcon?: React.ReactNode;
+  progressIcon?: React.ReactNode | StepFragmentComponent;
 
   /** Step label, render after icon */
-  label?: React.ReactNode;
+  label?: React.ReactNode | StepFragmentComponent;
 
   /** Step description */
-  description?: React.ReactNode;
+  description?: React.ReactNode | StepFragmentComponent;
 
   /** Icon wrapper size in px */
   iconSize?: number;
@@ -88,9 +93,18 @@ const defaultProps: Partial<StepProps> = {
   __staticSelector: 'Step',
 };
 
+const getStepFragment = (Fragment: StepFragmentComponent | React.ReactNode, step: number) => {
+  if (typeof Fragment === 'function') {
+    return <Fragment step={step} />;
+  }
+
+  return Fragment;
+};
+
 export const Step = forwardRef<HTMLButtonElement, StepProps>((props: StepProps, ref) => {
   const {
     className,
+    step,
     state,
     color,
     icon,
@@ -143,7 +157,7 @@ export const Step = forwardRef<HTMLButtonElement, StepProps>((props: StepProps, 
                   {loading ? (
                     <Loader color="#fff" size={_iconSize} className={classes.stepLoader} />
                   ) : (
-                    completedIcon || (
+                    getStepFragment(completedIcon, step) || (
                       <CheckboxIcon indeterminate={false} width={_iconSize} height={_iconSize} />
                     )
                   )}
@@ -155,7 +169,7 @@ export const Step = forwardRef<HTMLButtonElement, StepProps>((props: StepProps, 
               loading ? (
                 <Loader size={_iconSize} color={color} />
               ) : (
-                _icon || icon
+                getStepFragment(_icon || icon, step)
               )
             ) : null}
           </div>
@@ -171,10 +185,10 @@ export const Step = forwardRef<HTMLButtonElement, StepProps>((props: StepProps, 
 
       {(label || description) && (
         <div className={classes.stepBody}>
-          {label && <Text className={classes.stepLabel}>{label}</Text>}
+          {label && <Text className={classes.stepLabel}>{getStepFragment(label, step)}</Text>}
           {description && (
             <Text className={classes.stepDescription} color="dimmed">
-              {description}
+              {getStepFragment(description, step)}
             </Text>
           )}
         </div>

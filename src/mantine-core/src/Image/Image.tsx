@@ -82,7 +82,7 @@ export const Image = forwardRef<HTMLDivElement, ImageProps>((props: ImageProps, 
   const isPlaceholder = withPlaceholder && error;
 
   useDidUpdate(() => {
-    setError(false);
+    setError(!src);
   }, [src]);
 
   return (

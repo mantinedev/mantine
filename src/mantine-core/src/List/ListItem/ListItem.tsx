@@ -1,10 +1,5 @@
 import React, { forwardRef } from 'react';
-import {
-  DefaultProps,
-  Selectors,
-  useComponentDefaultProps,
-  useContextStylesApi,
-} from '@mantine/styles';
+import { DefaultProps, Selectors, useComponentDefaultProps } from '@mantine/styles';
 import { Box } from '../../Box';
 import { useListContext } from '../List.context';
 import useStyles from './ListItem.styles';
@@ -30,8 +25,18 @@ export const ListItem = forwardRef<HTMLLIElement, ListItemProps>((props, ref) =>
     props
   );
 
-  const { icon: ctxIcon, spacing, center, listStyleType, size, withPadding } = useListContext();
-  const { classNames, styles, unstyled } = useContextStylesApi();
+  const {
+    icon: ctxIcon,
+    spacing,
+    center,
+    listStyleType,
+    size,
+    withPadding,
+    classNames,
+    styles,
+    unstyled,
+  } = useListContext();
+
   const _icon = icon || ctxIcon;
   const { classes, cx } = useStyles(
     { withPadding, size, listStyleType, center, spacing },

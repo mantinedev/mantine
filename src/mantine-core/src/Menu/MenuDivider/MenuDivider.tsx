@@ -1,11 +1,7 @@
 import React, { forwardRef } from 'react';
-import {
-  DefaultProps,
-  Selectors,
-  useContextStylesApi,
-  useComponentDefaultProps,
-} from '@mantine/styles';
+import { DefaultProps, Selectors, useComponentDefaultProps } from '@mantine/styles';
 import { Box } from '../../Box';
+import { useMenuContext } from '../Menu.context';
 import useStyles from './MenuDivider.styles';
 
 export type MenuDividerStylesNames = Selectors<typeof useStyles>;
@@ -21,7 +17,7 @@ export const MenuDivider = forwardRef<HTMLDivElement, MenuDividerProps>((props, 
     props
   );
 
-  const { classNames, styles, unstyled } = useContextStylesApi();
+  const { classNames, styles, unstyled } = useMenuContext();
   const { classes, cx } = useStyles(null, { name: 'Menu', classNames, styles, unstyled });
   return <Box className={cx(classes.divider, className)} ref={ref} {...others} />;
 });

@@ -9,6 +9,7 @@ import {
   InputWrapperBaseProps,
   InputWrapperStylesNames,
 } from '../Input';
+import { Text } from '../Text';
 import { CloseButton } from '../CloseButton';
 import { FileButton } from '../FileButton';
 import useStyles from './FileInput.styles';
@@ -64,10 +65,15 @@ export interface FileInputProps<Multiple extends boolean = false>
 
   /** Determines whether the user can change value */
   readOnly?: boolean;
+
+  /** Specifies that, optionally, a new file should be captured, and which device should be used to capture that new media of a type defined by the accept attribute. */
+  capture?: boolean | 'user' | 'environment';
 }
 
 const DefaultValue: FileInputProps['valueComponent'] = ({ value }) => (
-  <span>{Array.isArray(value) ? value.map((file) => file.name).join(', ') : value?.name}</span>
+  <Text sx={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+    {Array.isArray(value) ? value.map((file) => file.name).join(', ') : value?.name}
+  </Text>
 );
 
 const defaultProps: Partial<FileInputProps> = {
@@ -106,6 +112,7 @@ export const _FileInput = forwardRef<HTMLButtonElement, FileInputProps>((props, 
     clearButtonLabel,
     clearButtonTabIndex,
     readOnly,
+    capture,
     ...others
   } = useInputProps('FileInput', defaultProps, props);
   const resetRef = useRef<() => void>();
@@ -154,6 +161,7 @@ export const _FileInput = forwardRef<HTMLButtonElement, FileInputProps>((props, 
         form={form}
         resetRef={resetRef}
         disabled={readOnly}
+        capture={capture}
       >
         {(fileButtonProps) => (
           <Input

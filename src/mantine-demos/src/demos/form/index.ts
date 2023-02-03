@@ -22,3 +22,6 @@ export { status } from './Form.demo.status';
 export { blurValidation } from './Form.demo.blurValidation';
 export { blurFieldValidation } from './Form.demo.blurFieldValidation';
 export { transformValues } from './Form.demo.transformValues';
+export { validators } from './Form.demo.validators';
+export { validatorsEmpty } from './Form.demo.validatorsEmpty';
+export { superstruct } from './Form.demo.superstruct';

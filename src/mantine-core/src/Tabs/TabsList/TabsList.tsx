@@ -1,10 +1,5 @@
 import React, { forwardRef } from 'react';
-import {
-  DefaultProps,
-  Selectors,
-  useContextStylesApi,
-  useComponentDefaultProps,
-} from '@mantine/styles';
+import { DefaultProps, Selectors, useComponentDefaultProps } from '@mantine/styles';
 import { Box } from '../../Box';
 import { TabsPosition } from '../Tabs.types';
 import { useTabsContext } from '../Tabs.context';
@@ -35,8 +30,8 @@ export const TabsList = forwardRef<HTMLDivElement, TabsListProps>((props, ref) =
     props
   );
 
-  const { orientation, variant, color, radius, inverted, placement } = useTabsContext();
-  const { classNames, styles, unstyled } = useContextStylesApi();
+  const { orientation, variant, color, radius, inverted, placement, classNames, styles, unstyled } =
+    useTabsContext();
   const { classes, cx } = useStyles(
     { orientation, grow, variant, color, position, radius, inverted, placement },
     { name: 'Tabs', unstyled, classNames, styles }

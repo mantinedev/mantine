@@ -4,7 +4,6 @@ import {
   DefaultProps,
   TypographyStylesProvider,
   Selectors,
-  useContextStylesApi,
   useComponentDefaultProps,
 } from '@mantine/core';
 import { EditorContent } from '@tiptap/react';
@@ -26,8 +25,8 @@ export const Content = forwardRef<HTMLDivElement, RichTextEditorContentProps>((p
     props
   );
 
-  const { classNames, styles, unstyled } = useContextStylesApi();
-  const { editor, withCodeHighlightStyles, withTypographyStyles } = useRichTextEditorContext();
+  const { editor, withCodeHighlightStyles, withTypographyStyles, classNames, styles, unstyled } =
+    useRichTextEditorContext();
   const { classes, cx } = useStyles(
     { withCodeHighlightStyles, withTypographyStyles },
     { name: 'RichTextEditor', classNames, styles, unstyled }

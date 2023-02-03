@@ -193,6 +193,7 @@ export const DatePickerBase = forwardRef<HTMLInputElement, DatePickerBaseProps>(
       inputWrapperOrder,
       modalProps,
       withAsterisk,
+      readOnly,
       ...others
     }: DatePickerBaseProps,
     ref
@@ -229,16 +230,17 @@ export const DatePickerBase = forwardRef<HTMLInputElement, DatePickerBaseProps>(
       }
     };
 
-    const rightSection = clearable ? (
-      <CloseButton
-        variant="transparent"
-        aria-label={clearButtonLabel}
-        onClick={onClear}
-        size={size}
-        tabIndex={clearButtonTabIndex}
-        unstyled={unstyled}
-      />
-    ) : null;
+    const rightSection =
+      clearable && !readOnly ? (
+        <CloseButton
+          variant="transparent"
+          aria-label={clearButtonLabel}
+          onClick={onClear}
+          size={size}
+          tabIndex={clearButtonTabIndex}
+          unstyled={unstyled}
+        />
+      ) : null;
 
     const handleInputBlur = (event: React.FocusEvent<HTMLInputElement>) => {
       typeof onBlur === 'function' && onBlur(event);
@@ -305,6 +307,7 @@ export const DatePickerBase = forwardRef<HTMLInputElement, DatePickerBaseProps>(
           classNames={classNames}
           styles={styles}
           unstyled={unstyled}
+          disabled={readOnly}
         >
           <Popover.Target>
             <div className={classes.wrapper}>

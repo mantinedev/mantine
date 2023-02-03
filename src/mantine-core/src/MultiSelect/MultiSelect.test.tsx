@@ -11,6 +11,7 @@ import {
   itSupportsInputContainer,
   itSupportsInputAsterisk,
 } from '@mantine/tests';
+import { render } from '@testing-library/react';
 import { MultiSelect, MultiSelectProps } from './MultiSelect';
 
 const defaultProps: MultiSelectProps = {
@@ -39,5 +40,19 @@ describe('@mantine/core/MultiSelect', () => {
     refType: HTMLInputElement,
     othersSelector: '#test-multi-select',
     providerName: 'MultiSelect',
+  });
+
+  it('Has un-filtered list when disableSelectedItemFiltering is enabled', () => {
+    const { container } = render(
+      <MultiSelect {...defaultProps} initiallyOpened disableSelectedItemFiltering />
+    );
+
+    expect(container.querySelectorAll('.mantine-MultiSelect-item')).toHaveLength(4);
+  });
+
+  it('Has un-filtered list when disableSelectedItemFiltering is disabled', () => {
+    const { container } = render(<MultiSelect {...defaultProps} initiallyOpened />);
+
+    expect(container.querySelectorAll('.mantine-MultiSelect-item')).toHaveLength(2);
   });
 });

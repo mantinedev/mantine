@@ -1,4 +1,4 @@
-import { useHotkeys, HotkeyItem } from '@mantine/hooks';
+import { HotkeyItem, useHotkeys } from '@mantine/hooks';
 
 export function getHotkeysPayload(
   shortcuts: string | string[],
@@ -15,6 +15,10 @@ export function getHotkeysPayload(
   return [[shortcuts, onToggle]];
 }
 
-export function useSpotlightShortcuts(shortcuts: string | string[], onToggle: () => void) {
-  useHotkeys(getHotkeysPayload(shortcuts, onToggle));
+export function useSpotlightShortcuts(
+  shortcuts: string | string[],
+  onToggle: () => void,
+  tagsToIgnore?: string[]
+) {
+  useHotkeys(getHotkeysPayload(shortcuts, onToggle), tagsToIgnore);
 }

@@ -27,6 +27,9 @@ export interface FileButtonProps<Multiple extends boolean = false> {
 
   /** Disables file picker */
   disabled?: boolean;
+
+  /** Specifies that, optionally, a new file should be captured, and which device should be used to capture that new media of a type defined by the accept attribute. */
+  capture?: boolean | 'user' | 'environment';
 }
 
 const defaultProps: Partial<FileButtonProps> = {
@@ -39,8 +42,18 @@ type FileButtonComponent = (<Multiple extends boolean = false>(
 
 export const FileButton: FileButtonComponent = forwardRef<HTMLInputElement, FileButtonProps>(
   (props, ref) => {
-    const { onChange, children, multiple, accept, name, form, resetRef, disabled, ...others } =
-      useComponentDefaultProps('FileButton', defaultProps, props);
+    const {
+      onChange,
+      children,
+      multiple,
+      accept,
+      name,
+      form,
+      resetRef,
+      disabled,
+      capture,
+      ...others
+    } = useComponentDefaultProps('FileButton', defaultProps, props);
 
     const inputRef = useRef<HTMLInputElement>();
 
@@ -75,6 +88,7 @@ export const FileButton: FileButtonComponent = forwardRef<HTMLInputElement, File
           ref={useMergedRef(ref, inputRef)}
           name={name}
           form={form}
+          capture={capture}
         />
       </>
     );

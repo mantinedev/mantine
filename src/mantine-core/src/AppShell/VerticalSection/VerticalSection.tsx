@@ -46,7 +46,7 @@ export const VerticalSection = forwardRef<HTMLElement, VerticalSectionProps>(
       fixed = false,
       withBorder = true,
       position,
-      zIndex = getDefaultZIndex('app'),
+      zIndex,
       section,
       unstyled,
       __staticSelector,
@@ -55,7 +55,7 @@ export const VerticalSection = forwardRef<HTMLElement, VerticalSectionProps>(
     ref
   ) => {
     const ctx = useAppShellContext();
-    const _zIndex = ctx.zIndex || zIndex;
+    const _zIndex = zIndex || ctx.zIndex || getDefaultZIndex('app');
 
     const { classes, cx, theme } = useStyles(
       {

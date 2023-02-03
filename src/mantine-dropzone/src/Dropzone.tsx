@@ -188,8 +188,8 @@ export function _Dropzone(props: DropzoneProps) {
     onFileDialogOpen,
     preventDropOnDocument,
     useFsAccessApi,
-    getFilesFromEvent,
     validator,
+    ...(getFilesFromEvent ? { getFilesFromEvent } : null),
   });
 
   assignRef(openRef, open);
