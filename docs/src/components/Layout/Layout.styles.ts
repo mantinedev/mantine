@@ -1,6 +1,6 @@
 import { createStyles } from '@mantine/core';
 import { HEADER_HEIGHT } from './Header/HeaderDesktop.styles';
-import { NAVBAR_WIDTH, NAVBAR_BREAKPOINT } from './Navbar/Navbar.styles';
+import { NAVBAR_BREAKPOINT, NAVBAR_WIDTH } from './Navbar/Navbar.styles';
 
 interface LayoutStyles {
   shouldRenderHeader: boolean;
@@ -36,6 +36,7 @@ export default createStyles((theme, { shouldRenderHeader }: LayoutStyles) => ({
     [`@media (max-width: ${NAVBAR_BREAKPOINT}px)`]: {
       paddingLeft: 0,
       paddingRight: 0,
+      overflowX: 'hidden',
     },
   },
 
