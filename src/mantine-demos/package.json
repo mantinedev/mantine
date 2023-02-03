@@ -2,7 +2,11 @@
   "name": "@mantine/demos",
   "description": "Demos used in documentation",
   "private": true,
+<<<<<<< HEAD
   "version": "6.0.0-alpha.3",
+=======
+  "version": "5.10.3",
+>>>>>>> 8009979807b124f44effbb9268be4b615b2485fa
   "main": "cjs/index.js",
   "module": "esm/index.js",
   "types": "lib/index.d.ts",

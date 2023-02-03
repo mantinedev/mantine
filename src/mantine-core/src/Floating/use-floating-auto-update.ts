@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { autoUpdate } from '@floating-ui/react-dom-interactions';
+import { autoUpdate } from '@floating-ui/react';
 import { useDidUpdate } from '@mantine/hooks';
 
 interface Payload {

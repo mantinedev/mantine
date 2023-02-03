@@ -66,6 +66,7 @@ export function SelectItems({
         data-disabled={item.disabled || undefined}
         data-hovered={(!item.disabled && hovered === index) || undefined}
         data-selected={(!item.disabled && selected) || undefined}
+        selected={selected}
         onMouseEnter={() => onItemHover(index)}
         id={`${uuid}-${index}`}
         role="option"

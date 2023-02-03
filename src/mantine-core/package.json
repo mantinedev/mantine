@@ -37,7 +37,7 @@
     "@radix-ui/react-scroll-area": "1.0.2",
     "react-textarea-autosize": "8.3.4",
     "react-remove-scroll": "^2.5.5",
-    "@floating-ui/react-dom-interactions": "^0.10.1"
+    "@floating-ui/react": "^0.19.1"
   },
   "devDependencies": {}
 }

@@ -20,11 +20,12 @@ export default createStyles(
       width: circle ? rem(height) : rem(width),
       borderRadius: circle ? rem(height) : theme.fn.radius(radius),
       position: 'relative',
-      overflow: 'hidden',
       WebkitTransform: 'translateZ(0)',
     },
 
     visible: {
+      overflow: 'hidden',
+
       '&::before': {
         ...theme.fn.cover(0),
         content: '""',

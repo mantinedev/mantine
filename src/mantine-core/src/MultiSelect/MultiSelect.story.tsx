@@ -1,5 +1,6 @@
 import { MANTINE_SIZES } from '@mantine/styles';
 import React from 'react';
+import { SelectItem } from '../Select/types';
 import { Stack } from '../Stack';
 import { TextInput } from '../TextInput';
 import { MultiSelect } from './MultiSelect';
@@ -70,5 +71,26 @@ export function SizeXSLineHeight() {
         placeholder="Placeholder Multiselect"
       />
     </Stack>
+  );
+}
+
+export function UnFilteredSelected() {
+  return (
+    <MultiSelect
+      label="Your favorite Rick and Morty character"
+      placeholder="Pick all that you like"
+      itemComponent={({ selected, value, ...rest }: SelectItem) => (
+        <div {...rest} style={selected ? { backgroundColor: 'green' } : null}>
+          {value}
+        </div>
+      )}
+      disableSelectedItemFiltering
+      data={[
+        { value: 'rick', label: 'Rick', group: 'Used to be a pickle' },
+        { value: 'morty', label: 'Morty', group: '' },
+        { value: 'beth', label: 'Beth', group: 'Never was a pickle' },
+        { value: 'summer', label: 'Summer', group: 'Never was a pickle' },
+      ]}
+    />
   );
 }

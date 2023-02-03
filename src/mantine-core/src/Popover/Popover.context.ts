@@ -1,4 +1,4 @@
-import { ReferenceType } from '@floating-ui/react-dom-interactions';
+import { ReferenceType } from '@floating-ui/react';
 import { createSafeContext } from '@mantine/utils';
 import { MantineNumberSize, MantineShadow, ClassNames, Styles } from '@mantine/styles';
 import { FloatingPosition, ArrowPosition } from '../Floating';

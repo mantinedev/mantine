@@ -78,9 +78,9 @@ export interface SegmentedControlProps
   readOnly?: boolean;
 }
 
-const defaultProps: Partial<SegmentedControlProps> = {
+const defaultProps = {
   disabled: false,
-  size: 'sm',
+  size: 'sm' as const,
   transitionDuration: 200,
 };
 

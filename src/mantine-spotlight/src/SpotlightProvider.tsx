@@ -40,6 +40,9 @@ export interface SpotlightProviderProps extends InnerSpotlightProps {
 
   /** Tags to ignore shortcut hotkeys on. */
   tagsToIgnore?: string[];
+
+  /** Whether shortcuts should trigger based on contentEditable. */
+  triggerOnContentEditable?: boolean;
 }
 
 export function SpotlightProvider({
@@ -55,6 +58,7 @@ export function SpotlightProvider({
   transitionDuration = 150,
   disabled = false,
   tagsToIgnore = ['INPUT', 'TEXTAREA', 'SELECT'],
+  triggerOnContentEditable = false,
   ...others
 }: SpotlightProviderProps) {
   const timeoutRef = useRef<number>(-1);
@@ -103,7 +107,7 @@ export function SpotlightProvider({
     query: _query,
   };
 
-  useSpotlightShortcuts(shortcut, open, tagsToIgnore);
+  useSpotlightShortcuts(shortcut, open, tagsToIgnore, triggerOnContentEditable);
   useSpotlightEvents({ open, close, toggle, registerActions, removeActions, triggerAction });
 
   return (

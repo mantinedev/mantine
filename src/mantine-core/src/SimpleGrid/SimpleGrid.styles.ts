@@ -33,10 +33,10 @@ export default createStyles(
       acc[`@media (${property}: ${rem(breakpointValue)})`] = {
         gridTemplateColumns: `repeat(${breakpoint.cols}, minmax(0, 1fr))`,
         gap: `${getSize({
-          size: breakpoint.verticalSpacing || (hasVerticalSpacing ? verticalSpacing : spacing),
+          size: breakpoint.verticalSpacing ?? (hasVerticalSpacing ? verticalSpacing : spacing),
           sizes: theme.spacing,
         })} ${getSize({
-          size: breakpoint.spacing || spacing,
+          size: breakpoint.spacing ?? spacing,
           sizes: theme.spacing,
         })}`,
       };
