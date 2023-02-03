@@ -62,7 +62,7 @@ export type OnReset = (event: React.FormEvent<HTMLFormElement>) => void;
 export type GetInputProps<Values> = <Field extends LooseKeys<Values>>(
   path: Field,
   options?: { type?: GetInputPropsType; withError?: boolean; withFocus?: boolean }
-) => { value: any; onChange: any; checked?: any; error?: any; onFocus?: any };
+) => { value: any; onChange: any; checked?: any; error?: any; onFocus?: any; onBlur?: any };
 
 export type SetFieldValue<Values> = <Field extends LooseKeys<Values>>(
   path: Field,
