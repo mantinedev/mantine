@@ -122,16 +122,15 @@ export function ModalsProvider({ children, modalProps, labels, modals }: ModalsP
   };
 
   const closeModal = (id: string, canceled?: boolean) => {
-    if (state.modals.length <= 1) {
-      closeAll(canceled);
+    const modal = state.modals.find((item) => item.id === id);
+    if (!modal) {
       return;
     }
 
-    const modal = state.modals.find((item) => item.id === id);
-    if (modal?.type === 'confirm' && canceled) {
-      modal.props?.onCancel?.();
+    if (modal.type === 'confirm' && canceled) {
+      modal.props.onCancel?.();
     }
-    modal?.props?.onClose?.();
+    modal.props.onClose?.();
     dispatch({ type: 'CLOSE', payload: modal.id });
   };
 
