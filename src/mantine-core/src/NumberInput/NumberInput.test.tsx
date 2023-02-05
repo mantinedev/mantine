@@ -230,11 +230,11 @@ describe('@mantine/core/NumberInput', () => {
     const spy = jest.fn();
     render(<NumberInput min={-3} onChange={spy} />);
     await enterText('-');
-    expect(spy).not.toBeCalled();
+    expect(spy).not.toHaveBeenCalled();
     await enterText('3');
     expect(spy).toHaveBeenLastCalledWith(-3);
     await enterText('{arrowdown}');
-    expect(spy).toBeCalledTimes(1);
+    expect(spy).toHaveBeenCalledTimes(1);
   });
 
   it('uses startValue as first value when no initial value was set', async () => {

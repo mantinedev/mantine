@@ -54,12 +54,12 @@ describe('@mantine/carousel/Carousel', () => {
     );
 
     await userEvent.click(screen.getByLabelText('Next slide'));
-    expect(onNextSlide).toBeCalledTimes(1);
-    expect(onPreviousSlide).toBeCalledTimes(0);
+    expect(onNextSlide).toHaveBeenCalledTimes(1);
+    expect(onPreviousSlide).toHaveBeenCalledTimes(0);
 
     await userEvent.click(screen.getByLabelText('Previous slide'));
-    expect(onNextSlide).toBeCalledTimes(1);
-    expect(onPreviousSlide).toBeCalledTimes(1);
+    expect(onNextSlide).toHaveBeenCalledTimes(1);
+    expect(onPreviousSlide).toHaveBeenCalledTimes(1);
   });
 
   it('renders controls if withControls is true', () => {
