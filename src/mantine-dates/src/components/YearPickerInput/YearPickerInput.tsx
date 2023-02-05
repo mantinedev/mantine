@@ -4,6 +4,7 @@ import { useDatesInput } from '../../hooks';
 import { pickCalendarProps } from '../Calendar';
 import { YearPicker, YearPickerBaseProps } from '../YearPicker';
 import { DatePickerType } from '../../types';
+import { getDefaultClampedDate } from '../../utils';
 import {
   PickerInputBase,
   DateInputSharedProps,
@@ -47,6 +48,8 @@ export const YearPickerInput: YearPickerInputComponent = forwardRef((props, ref)
     variant,
     dropdownType,
     sortDates,
+    minDate,
+    maxDate,
     ...rest
   } = useComponentDefaultProps('YearPickerInput', defaultProps, props);
 
@@ -96,7 +99,11 @@ export const YearPickerInput: YearPickerInputComponent = forwardRef((props, ref)
         variant={variant}
         type={type}
         value={_value}
-        defaultDate={Array.isArray(_value) ? _value[0] || undefined : _value || undefined}
+        defaultDate={
+          Array.isArray(_value)
+            ? _value[0] || getDefaultClampedDate({ maxDate, minDate })
+            : _value || getDefaultClampedDate({ maxDate, minDate })
+        }
         onChange={setValue}
         locale={locale}
         classNames={classNames}
@@ -104,6 +111,8 @@ export const YearPickerInput: YearPickerInputComponent = forwardRef((props, ref)
         unstyled={unstyled}
         __staticSelector="YearPickerInput"
         __stopPropagation={dropdownType === 'popover'}
+        minDate={minDate}
+        maxDate={maxDate}
       />
     </PickerInputBase>
   );

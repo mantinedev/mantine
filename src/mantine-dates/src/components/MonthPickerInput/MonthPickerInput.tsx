@@ -4,6 +4,7 @@ import { useDatesInput } from '../../hooks';
 import { pickCalendarProps } from '../Calendar';
 import { MonthPicker, MonthPickerBaseProps } from '../MonthPicker';
 import { DatePickerType } from '../../types';
+import { getDefaultClampedDate } from '../../utils';
 import {
   PickerInputBase,
   DateInputSharedProps,
@@ -47,6 +48,8 @@ export const MonthPickerInput: MonthPickerInputComponent = forwardRef((props, re
     size,
     dropdownType,
     sortDates,
+    minDate,
+    maxDate,
     ...rest
   } = useComponentDefaultProps('MonthPickerInput', defaultProps, props);
 
@@ -94,7 +97,11 @@ export const MonthPickerInput: MonthPickerInputComponent = forwardRef((props, re
         {...calendarProps}
         type={type}
         value={_value}
-        defaultDate={Array.isArray(_value) ? _value[0] || undefined : _value || undefined}
+        defaultDate={
+          Array.isArray(_value)
+            ? _value[0] || getDefaultClampedDate({ maxDate, minDate })
+            : _value || getDefaultClampedDate({ maxDate, minDate })
+        }
         onChange={setValue}
         locale={locale}
         classNames={classNames}
@@ -104,6 +111,8 @@ export const MonthPickerInput: MonthPickerInputComponent = forwardRef((props, re
         __stopPropagation={dropdownType === 'popover'}
         variant={variant}
         size={size}
+        minDate={minDate}
+        maxDate={maxDate}
       />
     </PickerInputBase>
   );

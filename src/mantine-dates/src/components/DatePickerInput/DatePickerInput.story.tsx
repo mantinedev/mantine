@@ -20,6 +20,30 @@ export function Usage() {
   );
 }
 
+export function MaxDateBeforeToday() {
+  return (
+    <div style={{ padding: 40, maxWidth: 400 }}>
+      <DatePickerInput
+        label="Date picker input"
+        placeholder="Pick date"
+        maxDate={new Date(2020, 0, 11)}
+      />
+    </div>
+  );
+}
+
+export function MinDateBeforeToday() {
+  return (
+    <div style={{ padding: 40, maxWidth: 400 }}>
+      <DatePickerInput
+        label="Date picker input"
+        placeholder="Pick date"
+        minDate={new Date(2028, 0, 11)}
+      />
+    </div>
+  );
+}
+
 export function DisabledCurrentDate() {
   const nextMonth = new Date();
   nextMonth.setMonth(nextMonth.getMonth() + 1);
