@@ -67,11 +67,11 @@ export const _DEFAULT_THEME: MantineThemeBase = {
   },
 
   breakpoints: {
-    xs: '36rem',
-    sm: '48rem',
-    md: '62rem',
-    lg: '75rem',
-    xl: '88rem',
+    xs: '36em',
+    sm: '48em',
+    md: '62em',
+    lg: '75em',
+    xl: '88em',
   },
 
   headings: {
