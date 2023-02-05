@@ -1,4 +1,4 @@
-import { createStyles, rem } from '@mantine/core';
+import { createStyles, rem, em } from '@mantine/core';
 import { BREAKPOINT, TABLE_OF_CONTENTS_WIDTH } from '../settings';
 
 export default createStyles((theme) => ({
@@ -11,7 +11,7 @@ export default createStyles((theme) => ({
     paddingTop: rem(55),
     flex: `0 0 ${rem(TABLE_OF_CONTENTS_WIDTH - 20)}`,
 
-    [`@media (max-width: ${rem(BREAKPOINT)})`]: {
+    [`@media (max-width: ${em(BREAKPOINT)})`]: {
       display: 'none',
     },
   },

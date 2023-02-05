@@ -5,6 +5,7 @@ import {
   rem,
   getBreakpointValue,
   getSize,
+  em,
 } from '@mantine/styles';
 import { iconSizes } from './Step/Step.styles';
 
@@ -50,11 +51,11 @@ export default createStyles(
 
     const responsiveStyles = {
       steps: {
-        [`@media (max-width: ${rem(breakpointValue - 1)})`]: verticalOrientationStyles.steps,
+        [`@media (max-width: ${em(breakpointValue - 1)})`]: verticalOrientationStyles.steps,
       },
 
       separator: {
-        [`@media (max-width: ${rem(breakpointValue - 1)})`]: verticalOrientationStyles.separator,
+        [`@media (max-width: ${em(breakpointValue - 1)})`]: verticalOrientationStyles.separator,
       },
     } as const;
 

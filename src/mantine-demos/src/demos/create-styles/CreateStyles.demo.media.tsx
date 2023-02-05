@@ -1,9 +1,9 @@
 import React from 'react';
 import { MantineDemo } from '@mantine/ds';
-import { createStyles, rem } from '@mantine/core';
+import { createStyles, rem, em } from '@mantine/core';
 
 const code = `
-import { createStyles, rem } from '@mantine/core';
+import { createStyles, rem, em } from '@mantine/core';
 
 const useStyles = createStyles((theme) => ({
   container: {
@@ -16,7 +16,7 @@ const useStyles = createStyles((theme) => ({
     },
 
     // Static media query
-    [\`@media (max-width: \${rem(800)})\`]: {
+    [\`@media (max-width: \${em(800)})\`]: {
       backgroundColor: theme.colors.orange[6],
     },
   },
@@ -39,7 +39,7 @@ const useStyles = createStyles((theme) => ({
     },
 
     // Static media query
-    [`@media (max-width: ${rem(800)})`]: {
+    [`@media (max-width: ${em(800)})`]: {
       backgroundColor: theme.colors.orange[6],
     },
   },

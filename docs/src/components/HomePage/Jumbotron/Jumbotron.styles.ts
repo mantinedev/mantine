@@ -1,7 +1,7 @@
-import { createStyles, rem } from '@mantine/core';
+import { createStyles, rem, em } from '@mantine/core';
 import { getGradient } from '../get-gradient';
 
-const BREAKPOINT = `@media (max-width: ${rem(960)})`;
+const BREAKPOINT = `@media (max-width: ${em(960)})`;
 
 export default createStyles((theme) => ({
   jumbotron: {
@@ -77,7 +77,7 @@ export default createStyles((theme) => ({
     flexDirection: 'column',
     alignItems: 'flex-start',
 
-    [`@media (max-width: ${rem(800)})`]: {
+    [`@media (max-width: ${em(800)})`]: {
       flexDirection: 'row',
     },
   },
@@ -85,7 +85,7 @@ export default createStyles((theme) => ({
   featureBody: {
     marginTop: theme.spacing.xs,
 
-    [`@media (max-width: ${rem(800)})`]: {
+    [`@media (max-width: ${em(800)})`]: {
       marginTop: 0,
       marginLeft: theme.spacing.lg,
     },

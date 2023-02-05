@@ -1,5 +1,5 @@
 /* eslint-disable import/no-cycle */
-import { createStyles, MantineTheme, rem } from '@mantine/core';
+import { createStyles, MantineTheme, rem, em } from '@mantine/core';
 import { HEADER_HEIGHT } from '../Header/HeaderDesktop.styles';
 
 export const NAVBAR_WIDTH = 260;
@@ -20,13 +20,13 @@ export default createStyles((theme: MantineTheme) => ({
     left: 0,
     width: rem(NAVBAR_WIDTH),
 
-    [`@media (max-width: ${rem(NAVBAR_BREAKPOINT)})`]: {
+    [`@media (max-width: ${em(NAVBAR_BREAKPOINT)})`]: {
       display: 'none',
     },
   },
 
   opened: {
-    [`@media (max-width: ${rem(NAVBAR_BREAKPOINT)})`]: {
+    [`@media (max-width: ${em(NAVBAR_BREAKPOINT)})`]: {
       display: 'block',
       width: '100%',
       right: 0,
@@ -39,7 +39,7 @@ export default createStyles((theme: MantineTheme) => ({
     paddingLeft: theme.spacing.md,
     paddingTop: `calc(${rem(HEADER_HEIGHT)} + ${theme.spacing.md})`,
 
-    [`@media (max-width: ${rem(NAVBAR_BREAKPOINT)})`]: {
+    [`@media (max-width: ${em(NAVBAR_BREAKPOINT)})`]: {
       paddingBottom: rem(120),
     },
   },

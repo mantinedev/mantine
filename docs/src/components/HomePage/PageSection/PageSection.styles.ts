@@ -1,4 +1,4 @@
-import { createStyles, rem } from '@mantine/core';
+import { createStyles, rem, em } from '@mantine/core';
 
 export default createStyles((theme, { white }: { white: boolean }) => ({
   wrapper: {
@@ -12,7 +12,7 @@ export default createStyles((theme, { white }: { white: boolean }) => ({
     opacity: 0.85,
     color: white || theme.colorScheme === 'dark' ? theme.white : theme.black,
 
-    [`@media (max-width: ${rem(960)})`]: {
+    [`@media (max-width: ${em(960)})`]: {
       fontSize: theme.fontSizes.md,
     },
   },

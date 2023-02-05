@@ -14,7 +14,10 @@ export function getSortedBreakpoints<T>(
     .filter((breakpoint) => breakpoint !== 'base')
     .map(
       (breakpoint) =>
-        [getSize({ size: breakpoint, sizes: theme.breakpoints }), breakpoints[breakpoint]] as const
+        [
+          getSize({ size: breakpoint, sizes: theme.breakpoints, units: 'em' }),
+          breakpoints[breakpoint],
+        ] as const
     );
 
   values.sort((a, b) => getBreakpointValue(a[0]) - getBreakpointValue(b[0]));

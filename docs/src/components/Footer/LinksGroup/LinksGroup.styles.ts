@@ -1,4 +1,4 @@
-import { createStyles, rem } from '@mantine/core';
+import { createStyles, rem, em } from '@mantine/core';
 
 export default createStyles((theme) => ({
   wrapper: {
@@ -6,7 +6,7 @@ export default createStyles((theme) => ({
       marginLeft: rem(60),
     },
 
-    [`@media (max-width: ${rem(1000)})`]: {
+    [`@media (max-width: ${em(1000)})`]: {
       '& + &': {
         marginLeft: rem(40),
       },

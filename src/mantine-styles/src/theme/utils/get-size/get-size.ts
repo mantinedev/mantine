@@ -1,5 +1,5 @@
 import { MantineNumberSize } from '../../types';
-import { rem } from '../rem/rem';
+import { rem, em } from '../rem/rem';
 
 export function getSize<
   Sizes extends Record<string, any>,
@@ -8,16 +8,18 @@ export function getSize<
 >({
   size,
   sizes,
+  units,
 }: {
   size: Size;
   sizes: Sizes;
+  units?: 'em' | 'rem';
 }): Size extends Key ? Sizes[Size] : Size extends number ? string : Size {
   if (size in sizes) {
     return sizes[size as any];
   }
 
   if (typeof size === 'number') {
-    return rem(size) as any;
+    return units === 'em' ? em(size) : (rem(size) as any);
   }
 
   return (size as any) || sizes.md;

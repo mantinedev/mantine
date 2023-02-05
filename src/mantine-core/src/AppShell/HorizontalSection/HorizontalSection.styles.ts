@@ -1,4 +1,11 @@
-import { createStyles, MantineNumberSize, getSize, rem, getBreakpointValue } from '@mantine/styles';
+import {
+  createStyles,
+  MantineNumberSize,
+  getSize,
+  rem,
+  getBreakpointValue,
+  em,
+} from '@mantine/styles';
 import { getSortedBreakpoints } from './get-sorted-breakpoints/get-sorted-breakpoints';
 
 export type HorizontalSectionWidth = Partial<Record<string, string | number>>;
@@ -40,7 +47,7 @@ export default createStyles(
     const breakpoints =
       typeof width === 'object' && width !== null
         ? getSortedBreakpoints(width, theme).reduce((acc, [breakpoint, breakpointSize]) => {
-            acc[`@media (min-width: ${rem(breakpoint)})`] = {
+            acc[`@media (min-width: ${em(breakpoint)})`] = {
               width: rem(breakpointSize),
               minWidth: rem(breakpointSize),
             };
@@ -79,7 +86,7 @@ export default createStyles(
         ...breakpoints,
 
         '&[data-hidden]': {
-          [`@media (max-width: ${rem(
+          [`@media (max-width: ${em(
             getBreakpointValue(
               getSize({
                 size: hiddenBreakpoint,

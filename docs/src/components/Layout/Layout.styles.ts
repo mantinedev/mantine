@@ -1,4 +1,4 @@
-import { createStyles, rem } from '@mantine/core';
+import { createStyles, rem, em } from '@mantine/core';
 import { HEADER_HEIGHT } from './Header/HeaderDesktop.styles';
 import { NAVBAR_WIDTH, NAVBAR_BREAKPOINT } from './Navbar/Navbar.styles';
 
@@ -16,7 +16,7 @@ export default createStyles((theme, { shouldRenderHeader }: LayoutStyles) => ({
   withNavbar: {
     paddingLeft: rem(NAVBAR_WIDTH),
 
-    [`@media (max-width: ${rem(NAVBAR_BREAKPOINT)})`]: {
+    [`@media (max-width: ${em(NAVBAR_BREAKPOINT)})`]: {
       paddingLeft: 0,
     },
   },
@@ -35,7 +35,7 @@ export default createStyles((theme, { shouldRenderHeader }: LayoutStyles) => ({
       ? `calc(${rem(HEADER_HEIGHT)} - ${theme.spacing.xl} - ${rem(2)})`
       : 0,
 
-    [`@media (max-width: ${rem(NAVBAR_BREAKPOINT)})`]: {
+    [`@media (max-width: ${em(NAVBAR_BREAKPOINT)})`]: {
       paddingLeft: 0,
       paddingRight: 0,
     },

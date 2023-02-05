@@ -1,4 +1,4 @@
-import { createStyles, rem } from '@mantine/core';
+import { createStyles, rem, em } from '@mantine/core';
 import { BREAKPOINT } from '../settings';
 
 export default createStyles((theme) => ({
@@ -9,7 +9,7 @@ export default createStyles((theme) => ({
     paddingLeft: `calc(${theme.spacing.xl} * 2)`,
     paddingRight: `calc(${theme.spacing.xl} * 2)`,
 
-    [`@media (max-width: ${rem(BREAKPOINT)})`]: {
+    [`@media (max-width: ${em(BREAKPOINT)})`]: {
       paddingLeft: theme.spacing.xl,
       paddingRight: theme.spacing.xl,
     },
@@ -22,7 +22,7 @@ export default createStyles((theme) => ({
     marginRight: 'auto',
     paddingBottom: `calc(${theme.spacing.xl} * 1.5)`,
 
-    [`@media (max-width: ${rem(BREAKPOINT)})`]: {
+    [`@media (max-width: ${em(BREAKPOINT)})`]: {
       maxWidth: '100%',
       paddingRight: 0,
       paddingBottom: theme.spacing.xl,
@@ -42,7 +42,7 @@ export default createStyles((theme) => ({
     alignItems: 'center',
     gap: theme.spacing.xl,
 
-    [`@media (max-width: ${rem(BREAKPOINT)})`]: {
+    [`@media (max-width: ${em(BREAKPOINT)})`]: {
       fontSize: rem(32),
       lineHeight: 1.2,
     },
@@ -53,7 +53,7 @@ export default createStyles((theme) => ({
     color: theme.colorScheme === 'dark' ? theme.colors.dark[1] : theme.colors.gray[6],
     marginBottom: theme.spacing.xl,
 
-    [`@media (max-width: ${rem(BREAKPOINT)})`]: {
+    [`@media (max-width: ${em(BREAKPOINT)})`]: {
       fontSize: theme.fontSizes.md,
     },
   },

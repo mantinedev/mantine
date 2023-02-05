@@ -1,4 +1,4 @@
-import { createStyles, rem } from '@mantine/core';
+import { createStyles, rem, em } from '@mantine/core';
 
 export default createStyles((theme) => ({
   item: {
@@ -18,7 +18,7 @@ export default createStyles((theme) => ({
     height: rem(20),
     lineHeight: rem(20),
 
-    [`@media (max-width: ${rem(500)})`]: {
+    [`@media (max-width: ${em(500)})`]: {
       display: 'none',
     },
   },

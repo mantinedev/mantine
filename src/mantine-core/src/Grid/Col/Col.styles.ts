@@ -4,7 +4,7 @@ import {
   MANTINE_SIZES,
   MantineSize,
   MantineTheme,
-  rem,
+  em,
   getSize,
 } from '@mantine/styles';
 
@@ -90,7 +90,7 @@ function getBreakpointsStyles({
   columns: number;
 }) {
   return MANTINE_SIZES.reduce((acc, size) => {
-    acc[`@media (min-width: ${rem(theme.breakpoints[size])})`] = {
+    acc[`@media (min-width: ${em(theme.breakpoints[size])})`] = {
       order: orders[size],
       flexBasis: getColumnFlexBasis(sizes[size], columns),
       padding: getGutterSize(gutters[size], theme),

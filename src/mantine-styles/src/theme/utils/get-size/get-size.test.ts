@@ -16,6 +16,11 @@ describe('@mantine/styles/getSize', () => {
     expect(getSize({ size: 40, sizes: { sm: 10, md: '5rem' } })).toBe('2.5rem');
   });
 
+  it('converts size to em if units are set', () => {
+    expect(getSize({ size: 16, sizes: { sm: 10, md: '5rem' }, units: 'em' })).toBe('1em');
+    expect(getSize({ size: 40, sizes: { sm: 10, md: '5rem' }, units: 'em' })).toBe('2.5em');
+  });
+
   it('does nothing to size defined in other units', () => {
     expect(getSize({ size: '2rem', sizes: { sm: 10, md: '5rem' } })).toBe('2rem');
     expect(getSize({ size: '10%', sizes: { sm: 10, md: '5rem' } })).toBe('10%');

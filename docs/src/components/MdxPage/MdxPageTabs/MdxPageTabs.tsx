@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation } from '@reach/router';
 import { navigate } from 'gatsby';
-import { Tabs, Title, TextInput, rem } from '@mantine/core';
+import { Tabs, Title, TextInput, rem, em } from '@mantine/core';
 import { IconSearch } from '@tabler/icons-react';
 import { useMediaQuery } from '@mantine/hooks';
 import { MDXRenderer } from 'gatsby-plugin-mdx';
@@ -16,7 +16,7 @@ import useStyles from './MdxPageTabs.styles';
 export function MdxPageTabs({ body, frontmatter, headings, siblings }: MdxPageProps) {
   const [query, setQuery] = useState('');
   const { classes } = useStyles();
-  const mobile = useMediaQuery(`(max-width: ${rem(500)})`);
+  const mobile = useMediaQuery(`(max-width: ${em(500)})`);
   const location = useLocation();
   const [activeTab, setActiveTab] = useState('docs');
   const hasProps = Array.isArray(frontmatter.props);

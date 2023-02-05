@@ -1,4 +1,4 @@
-import { createStyles, rem } from '@mantine/core';
+import { createStyles, rem, em } from '@mantine/core';
 
 export default createStyles((theme) => ({
   title: {
@@ -42,7 +42,7 @@ export default createStyles((theme) => ({
       borderBottom: `${rem(5)} solid transparent`,
     },
 
-    [`@media (max-width: ${rem(600)})`]: {
+    [`@media (max-width: ${em(600)})`]: {
       fontSize: rem(28),
       marginLeft: 0,
 

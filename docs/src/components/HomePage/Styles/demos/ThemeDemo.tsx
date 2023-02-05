@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'gatsby';
-import { Text, Box, Anchor, rem } from '@mantine/core';
+import { Text, Box, Anchor, em } from '@mantine/core';
 import { Prism } from '@mantine/prism';
 
 const code = `
@@ -13,7 +13,7 @@ function Demo() {
         backgroundColor: theme.colors.gray[0],
         fontSize: theme.fontSizes.sm,
 
-        '@media (max-width: ${rem(755)})': {
+        '@media (max-width: ${em(755)})': {
           fontSize: theme.fontSizes.xs,
         }
       })}

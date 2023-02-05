@@ -1,4 +1,4 @@
-import { createStyles, MantineTheme, rem } from '@mantine/core';
+import { createStyles, MantineTheme, rem, em } from '@mantine/core';
 
 const BREAKPOINT = 765;
 
@@ -16,7 +16,7 @@ export default createStyles((theme: MantineTheme) => ({
     margin: `calc(${theme.spacing.xs} / 2)`,
     minWidth: rem(50),
 
-    [`@media (max-width: ${rem(BREAKPOINT)})`]: {
+    [`@media (max-width: ${em(BREAKPOINT)})`]: {
       width: `calc(20% - ${theme.spacing.xs})`,
     },
   },

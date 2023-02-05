@@ -5,7 +5,7 @@ import {
   CSSObject,
   getSize,
   getBreakpointValue,
-  rem,
+  em,
 } from '@mantine/styles';
 
 export interface AppShellStylesParams {
@@ -37,11 +37,11 @@ function getPositionStyles(props: AppShellStylesParams, theme: MantineTheme): CS
     paddingLeft: `calc(var(--mantine-navbar-width, 0) + ${padding})`,
     paddingRight: `calc(var(--mantine-aside-width, 0) + ${padding})`,
 
-    [`@media (max-width: ${rem(getBreakpointValue(navbarOffset) - 1)})`]: {
+    [`@media (max-width: ${em(getBreakpointValue(navbarOffset) - 1)})`]: {
       paddingLeft: padding,
     },
 
-    [`@media (max-width: ${rem(getBreakpointValue(asideOffset) - 1)})`]: {
+    [`@media (max-width: ${em(getBreakpointValue(asideOffset) - 1)})`]: {
       paddingRight: padding,
     },
   };

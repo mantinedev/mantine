@@ -1,4 +1,4 @@
-import { createStyles, rem } from '@mantine/core';
+import { createStyles, rem, em } from '@mantine/core';
 import { NAVBAR_WIDTH, NAVBAR_BREAKPOINT } from '../Layout/Navbar/Navbar.styles';
 import { BREAKPOINT as MDX_PAGE_BREAKPOINT } from '../MdxPage/settings';
 
@@ -10,11 +10,11 @@ export default createStyles((theme) => ({
   spacer: {
     height: FOOTER_HEIGHT,
 
-    [`@media (max-width: ${rem(800)})`]: {
+    [`@media (max-width: ${em(800)})`]: {
       height: FOOTER_HEIGHT_TABLET,
     },
 
-    [`@media (max-width: ${rem(640)})`]: {
+    [`@media (max-width: ${em(640)})`]: {
       height: FOOTER_HEIGHT_MOBILE,
     },
   },
@@ -27,11 +27,11 @@ export default createStyles((theme) => ({
     right: 0,
     height: FOOTER_HEIGHT,
 
-    [`@media (max-width: ${rem(800)})`]: {
+    [`@media (max-width: ${em(800)})`]: {
       height: FOOTER_HEIGHT_TABLET,
     },
 
-    [`@media (max-width: ${rem(640)})`]: {
+    [`@media (max-width: ${em(640)})`]: {
       height: FOOTER_HEIGHT_MOBILE,
     },
   },
@@ -40,12 +40,12 @@ export default createStyles((theme) => ({
     paddingLeft: `calc(${rem(NAVBAR_WIDTH)} + ${theme.spacing.md} * 2)`,
     paddingRight: `calc(${theme.spacing.md} * 2)`,
 
-    [`@media (max-width: ${rem(MDX_PAGE_BREAKPOINT)})`]: {
+    [`@media (max-width: ${em(MDX_PAGE_BREAKPOINT)})`]: {
       paddingLeft: `calc(${rem(NAVBAR_WIDTH)} + ${theme.spacing.md})`,
       paddingRight: theme.spacing.md,
     },
 
-    [`@media (max-width: ${rem(NAVBAR_BREAKPOINT)})`]: {
+    [`@media (max-width: ${em(NAVBAR_BREAKPOINT)})`]: {
       paddingLeft: theme.spacing.md,
       paddingRight: theme.spacing.md,
     },
@@ -57,11 +57,11 @@ export default createStyles((theme) => ({
     display: 'flex',
     justifyContent: 'space-between',
 
-    [`@media (max-width: ${rem(1000)})`]: {
+    [`@media (max-width: ${em(1000)})`]: {
       flexDirection: 'column',
     },
 
-    [`@media (max-width: ${rem(640)})`]: {
+    [`@media (max-width: ${em(640)})`]: {
       paddingBottom: theme.spacing.md,
     },
   },
@@ -69,11 +69,11 @@ export default createStyles((theme) => ({
   logoSection: {
     maxWidth: rem(300),
 
-    [`@media (max-width: ${rem(1000)})`]: {
+    [`@media (max-width: ${em(1000)})`]: {
       marginBottom: theme.spacing.xl,
     },
 
-    [`@media (max-width: ${rem(640)})`]: {
+    [`@media (max-width: ${em(640)})`]: {
       marginBottom: 0,
     },
   },
@@ -107,7 +107,7 @@ export default createStyles((theme) => ({
   groups: {
     display: 'flex',
 
-    [`@media (max-width: ${rem(640)})`]: {
+    [`@media (max-width: ${em(640)})`]: {
       display: 'none',
     },
   },
@@ -115,13 +115,13 @@ export default createStyles((theme) => ({
   social: {
     display: 'flex',
 
-    [`@media (max-width: ${rem(640)})`]: {
+    [`@media (max-width: ${em(640)})`]: {
       display: 'block',
     },
   },
 
   socialButton: {
-    [`@media (max-width: ${rem(640)})`]: {
+    [`@media (max-width: ${em(640)})`]: {
       flex: 1,
       width: '100%',
       marginLeft: 0,

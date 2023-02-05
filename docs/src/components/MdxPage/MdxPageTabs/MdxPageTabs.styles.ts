@@ -1,4 +1,4 @@
-import { createStyles, rem } from '@mantine/core';
+import { createStyles, rem, em } from '@mantine/core';
 import {
   BREAKPOINT,
   TABLE_OF_CONTENTS_WIDTH,
@@ -15,11 +15,11 @@ export default createStyles((theme) => ({
     }`,
     paddingLeft: `calc(${theme.spacing.xl} * 2)`,
 
-    [`@media (max-width: ${rem(BREAKPOINT)})`]: {
+    [`@media (max-width: ${em(BREAKPOINT)})`]: {
       paddingLeft: theme.spacing.xl,
     },
 
-    [`@media (min-width: ${rem(1380)})`]: {
+    [`@media (min-width: ${em(1380)})`]: {
       paddingLeft: 0,
     },
   },
@@ -30,7 +30,7 @@ export default createStyles((theme) => ({
     marginRight: 'auto',
     borderBottom: 0,
 
-    [`@media (max-width: ${rem(BREAKPOINT)})`]: {
+    [`@media (max-width: ${em(BREAKPOINT)})`]: {
       maxWidth: '100%',
       paddingRight: 0,
     },
@@ -46,7 +46,7 @@ export default createStyles((theme) => ({
     borderColor: theme.colorScheme === 'dark' ? `${theme.colors.dark[8]} !important` : undefined,
     backgroundColor: 'transparent',
 
-    [`@media (max-width: ${rem(BREAKPOINT)})`]: {
+    [`@media (max-width: ${em(BREAKPOINT)})`]: {
       paddingLeft: theme.spacing.lg,
       paddingRight: theme.spacing.lg,
       fontSize: theme.fontSizes.sm,
@@ -64,7 +64,7 @@ export default createStyles((theme) => ({
     paddingRight: `calc(${theme.spacing.xl} * 2)`,
     paddingTop: theme.spacing.xs,
 
-    [`@media (max-width: ${rem(BREAKPOINT)})`]: {
+    [`@media (max-width: ${em(BREAKPOINT)})`]: {
       paddingLeft: theme.spacing.xl,
       paddingRight: theme.spacing.xl,
     },
@@ -76,7 +76,7 @@ export default createStyles((theme) => ({
     marginLeft: 'auto',
     marginRight: 'auto',
 
-    [`@media (max-width: ${rem(BREAKPOINT)})`]: {
+    [`@media (max-width: ${em(BREAKPOINT)})`]: {
       width: '100%',
       paddingRight: 0,
     },
@@ -86,7 +86,7 @@ export default createStyles((theme) => ({
     flex: `0 0 ${rem(TABLE_OF_CONTENTS_WIDTH)}`,
     marginTop: theme.spacing.xl,
 
-    [`@media (max-width: ${rem(BREAKPOINT)})`]: {
+    [`@media (max-width: ${em(BREAKPOINT)})`]: {
       display: 'none',
     },
   },

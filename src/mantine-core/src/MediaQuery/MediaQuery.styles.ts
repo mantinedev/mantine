@@ -3,7 +3,7 @@ import {
   MantineNumberSize,
   CSSObject,
   MantineTheme,
-  rem,
+  em,
   getBreakpointValue,
   getSize,
 } from '@mantine/styles';
@@ -24,7 +24,7 @@ export default createStyles(
 
     if (largerThan !== undefined && smallerThan !== undefined) {
       media[
-        `@media (min-width: ${rem(minWidth)}) and (max-width: ${rem(
+        `@media (min-width: ${em(minWidth)}) and (max-width: ${em(
           getBreakpointValue(maxWidth) - 1
         )})`
       ] = _styles;
@@ -36,7 +36,7 @@ export default createStyles(
 
       if (smallerThan !== undefined) {
         media[
-          `@media (max-width: ${rem(
+          `@media (max-width: ${em(
             getBreakpointValue(getSize({ size: smallerThan, sizes: theme.breakpoints })) - 1
           )})`
         ] = _styles;
