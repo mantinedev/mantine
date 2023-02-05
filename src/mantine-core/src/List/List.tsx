@@ -15,7 +15,7 @@ export type ListStylesNames = ListItemStylesNames | Selectors<typeof useStyles>;
 
 export interface ListProps
   extends DefaultProps<ListStylesNames>,
-    React.ComponentPropsWithRef<'ul'> {
+    Omit<React.ComponentPropsWithRef<'ol'>, 'type'> {
   variant?: string;
 
   /** <List.Item /> components only */
