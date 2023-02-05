@@ -1,4 +1,4 @@
-import React, { useReducer, useRef } from 'react';
+import React, { useCallback, useReducer, useRef } from 'react';
 import { Modal, getDefaultZIndex } from '@mantine/core';
 import { randomId } from '@mantine/hooks';
 import {
@@ -72,70 +72,85 @@ export function ModalsProvider({ children, modalProps, labels, modals }: ModalsP
   const stateRef = useRef(state);
   stateRef.current = state;
 
-  const closeAll = (canceled?: boolean) => {
-    stateRef.current.modals.forEach((modal) => {
+  const closeAll = useCallback(
+    (canceled?: boolean) => {
+      stateRef.current.modals.forEach((modal) => {
+        if (modal.type === 'confirm' && canceled) {
+          modal.props.onCancel?.();
+        }
+
+        modal.props.onClose?.();
+      });
+      dispatch({ type: 'CLOSE_ALL' });
+    },
+    [stateRef, dispatch]
+  );
+
+  const openModal = useCallback(
+    ({ modalId, ...props }: ModalSettings) => {
+      const id = modalId || randomId();
+
+      dispatch({
+        type: 'OPEN',
+        payload: {
+          id,
+          type: 'content',
+          props,
+        },
+      });
+      return id;
+    },
+    [dispatch]
+  );
+
+  const openConfirmModal = useCallback(
+    ({ modalId, ...props }: OpenConfirmModal) => {
+      const id = modalId || randomId();
+      dispatch({
+        type: 'OPEN',
+        payload: {
+          id,
+          type: 'confirm',
+          props,
+        },
+      });
+      return id;
+    },
+    [dispatch]
+  );
+
+  const openContextModal = useCallback(
+    (modal: string, { modalId, ...props }: OpenContextModal) => {
+      const id = modalId || randomId();
+      dispatch({
+        type: 'OPEN',
+        payload: {
+          id,
+          type: 'context',
+          props,
+          ctx: modal,
+        },
+      });
+      return id;
+    },
+    [dispatch]
+  );
+
+  const closeModal = useCallback(
+    (id: string, canceled?: boolean) => {
+      const modal = stateRef.current.modals.find((item) => item.id === id);
+      if (!modal) {
+        return;
+      }
+
       if (modal.type === 'confirm' && canceled) {
         modal.props.onCancel?.();
       }
-
       modal.props.onClose?.();
-    });
-    dispatch({ type: 'CLOSE_ALL' });
-  };
-
-  const openModal = ({ modalId, ...props }: ModalSettings) => {
-    const id = modalId || randomId();
-
-    dispatch({
-      type: 'OPEN',
-      payload: {
-        id,
-        type: 'content',
-        props,
-      },
-    });
-    return id;
-  };
-
-  const openConfirmModal = ({ modalId, ...props }: OpenConfirmModal) => {
-    const id = modalId || randomId();
-    dispatch({
-      type: 'OPEN',
-      payload: {
-        id,
-        type: 'confirm',
-        props,
-      },
-    });
-    return id;
-  };
-
-  const openContextModal = (modal: string, { modalId, ...props }: OpenContextModal) => {
-    const id = modalId || randomId();
-    dispatch({
-      type: 'OPEN',
-      payload: {
-        id,
-        type: 'context',
-        props,
-        ctx: modal,
-      },
-    });
-    return id;
-  };
-
-  const closeModal = (id: string, canceled?: boolean) => {
-    const modal = stateRef.current.modals.find((item) => item.id === id);
-    if (!modal) {
-      return;
-    }
-
-    if (modal.type === 'confirm' && canceled) {
-      modal.props.onCancel?.();
-    }
-    modal.props.onClose?.();
-    dispatch({ type: 'CLOSE', payload: modal.id });
-  };
+      dispatch({ type: 'CLOSE', payload: modal.id });
+    },
+    [stateRef, dispatch]
+  );
 
   useModalsEvents({
     openModal,
