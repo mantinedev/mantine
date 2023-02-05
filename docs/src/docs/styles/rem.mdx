@@ -1,16 +1,18 @@
 ---
 group: 'styles'
-title: rem units
+title: rem, em and px units
 slug: /styles/rem/
 order: 1
 search: 'Learn how to use rem units with Mantine components'
 ---
 
-# rem units
+# rem, em and px units
+
+## rem and em units
 
 All Mantine components use `rem` units to apply size styles. `1rem` is considered to be `16px`
 with medium text size selected by user, all components will scale based on settings
-specified in browser.
+specified in browser. `em` units are used for `theme.breakpoints` and [responsive styles](/styles/responsive/).
 
 ## px conversions
 
@@ -46,21 +48,39 @@ function Demo() {
 }
 ```
 
-## rem function
+## rem and em function
 
-`@mantine/core` package exports `rem` function that can be used to convert `px` into `rem`:
+`@mantine/core` package exports `rem` and `em` function that can be used to convert `px` into `rem`/`em`:
 
 ```tsx
 import { rem } from '@mantine/core';
 
 // numbers and values in px are converted to rem
 rem(32); // -> 2rem
+em(32); // -> 2em
 rem('16px'); // -> 1rem
+em('16px'); // -> 1em
 
 // other values are returned as is
 rem('2rem'); // -> 2rem
+em('2rem'); // -> 2rem
+
 rem('50%'); // -> 50%
+em('50%'); // -> 50%
+
 rem('5vh'); // -> 5vh
+em('5vh'); // -> 5vh
+```
+
+## Convert rem to px
+
+To convert `rem` to `px` use `px` function exported from `@mantine/core`:
+
+```tsx
+import { px } from '@mantine/core';
+
+px('2rem'); // -> 32
+px('10rem'); // -> 160
 ```
 
 ## rem in emotion styles

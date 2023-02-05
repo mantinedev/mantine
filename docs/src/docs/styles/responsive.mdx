@@ -17,7 +17,7 @@ add styles with [createStyles](/styles/create-styles/) function.
 
 ## Configure breakpoints
 
-`theme.breakpoints` are used in all responsive Mantine components. Breakpoints are expected to be set in `rem`.
+`theme.breakpoints` are used in all responsive Mantine components. Breakpoints are expected to be set in `em` units (`1em == 16px` by default).
 You can configure these values with [MantineProvider](/theming/mantine-provider/):
 
 ```tsx
@@ -30,11 +30,11 @@ function Demo() {
       withNormalizeCSS
       theme={{
         breakpoints: {
-          xs: '30rem',
-          sm: '48rem',
-          md: '64rem',
-          lg: '74rem',
-          xl: '90rem',
+          xs: '30em',
+          sm: '48em',
+          md: '64em',
+          lg: '74em',
+          xl: '90em',
         },
       }}
     >
@@ -94,7 +94,7 @@ import { useMediaQuery } from '@mantine/hooks';
 
 function Demo() {
   // Will always return false during ssr, use only when you do not have ssr
-  const largeScreen = useMediaQuery('(min-width: 60rem)');
+  const largeScreen = useMediaQuery('(min-width: 60em)');
   return <TextInput size={largeScreen ? 'xl' : 'md'} />;
 }
 ```
@@ -113,7 +113,7 @@ function Demo() {
         background: theme.colors.gray[0],
         padding: theme.spacing.md,
 
-        '@media (max-width: 40rem)': {
+        '@media (max-width: 40em)': {
           padding: theme.spacing.sm,
         },
       })}
@@ -136,7 +136,7 @@ function Demo() {
       to="/some-path/"
       sx={(theme) => ({
         fontSize: theme.fontSizes.md,
-        '@media (max-width: 40rem)': {
+        '@media (max-width: 40em)': {
           fontSize: theme.fontSizes.sm,
         },
       })}

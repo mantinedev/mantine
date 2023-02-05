@@ -31,12 +31,12 @@ we've tried to include all breaking changes with migration guides in the list yo
 experience undocumented changes. If you think that these changes worth including in this list,
 let us know by [opening an issue on GitHub](https://github.com/mantinedev/mantine/issues/new/choose).
 
-### Migration to rem units
+### Migration to rem/em units
 
 All Mantine components now use [rem units](https://mantine.dev/styles/rem/). `1rem` is considered to be `16px`
 with medium text size selected by user, all components will scale based on settings specified in browser.
-`theme.spacing`, `theme.radius`, `theme.fontSizes`, `theme.breakpoints` and other theme properties overrides
-are now expected to be defined in rem:
+`theme.spacing`, `theme.radius`, `theme.fontSizes` and other theme properties overrides
+are now expected to be defined in rem. `theme.breakpoints` are expected to be defined in `em` units:
 
 ```tsx
 import { MantineProvider } from '@mantine/core';
@@ -48,7 +48,7 @@ function Demo() {
         spacing: { xs: '1rem', sm: '1.5rem' /* ... */ },
         fontSizes: { xs: '0.8rem', sm: '1.2rem' /* ... */ },
         radius: { xs: '0.1rem', sm: '0.3rem' /* ... */ },
-        breakpoints: { xs: '20rem', sm: '36rem' /* ... */ },
+        breakpoints: { xs: '20em', sm: '36em' /* ... */ },
       }}
     >
       <App />
