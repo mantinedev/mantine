@@ -22,7 +22,7 @@ export function Usage() {
       <Button onClick={open}>Open modal</Button>
       {content}
       <Button onClick={open}>Open modal</Button>
-      <Modal opened={opened} onClose={close} title="Just a Modal" size="md">
+      <Modal opened={opened} onClose={close} title="Just a Modal" size="md" zIndex={73812}>
         <input data-autofocus />
       </Modal>
     </div>

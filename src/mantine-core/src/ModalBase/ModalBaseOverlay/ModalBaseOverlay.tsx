@@ -46,6 +46,7 @@ export const ModalBaseOverlay = forwardRef<HTMLDivElement, ModalBaseOverlayProps
           fixed
           style={{ ...style, ...transitionStyles }}
           className={cx(classes.overlay, className)}
+          zIndex={ctx.zIndex}
           {...others}
         />
       )}
