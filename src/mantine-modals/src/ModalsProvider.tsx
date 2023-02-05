@@ -1,4 +1,4 @@
-import React, { useReducer } from 'react';
+import React, { useReducer, useRef } from 'react';
 import { Modal, getDefaultZIndex } from '@mantine/core';
 import { randomId } from '@mantine/hooks';
 import {
@@ -69,13 +69,16 @@ function separateConfirmModalProps(props: OpenConfirmModal) {
 
 export function ModalsProvider({ children, modalProps, labels, modals }: ModalsProviderProps) {
   const [state, dispatch] = useReducer(modalsReducer, { modals: [], current: null });
+  const stateRef = useRef(state);
+  stateRef.current = state;
+
   const closeAll = (canceled?: boolean) => {
-    state.modals.forEach((modal) => {
+    stateRef.current.modals.forEach((modal) => {
       if (modal.type === 'confirm' && canceled) {
-        modal.props?.onCancel?.();
+        modal.props.onCancel?.();
       }
 
-      modal.props?.onClose?.();
+      modal.props.onClose?.();
     });
     dispatch({ type: 'CLOSE_ALL' });
   };
@@ -122,7 +125,7 @@ export function ModalsProvider({ children, modalProps, labels, modals }: ModalsP
   };
 
   const closeModal = (id: string, canceled?: boolean) => {
-    const modal = state.modals.find((item) => item.id === id);
+    const modal = stateRef.current.modals.find((item) => item.id === id);
     if (!modal) {
       return;
     }
@@ -152,33 +155,34 @@ export function ModalsProvider({ children, modalProps, labels, modals }: ModalsP
   };
 
   const getCurrentModal = () => {
-    switch (state.current?.type) {
+    const currentModal = stateRef.current.current;
+    switch (currentModal?.type) {
       case 'context': {
-        const { innerProps, ...rest } = state.current.props;
-        const ContextModal = modals[state.current.ctx];
+        const { innerProps, ...rest } = currentModal.props;
+        const ContextModal = modals[currentModal.ctx];
 
         return {
           modalProps: rest,
-          content: <ContextModal innerProps={innerProps} context={ctx} id={state.current.id} />,
+          content: <ContextModal innerProps={innerProps} context={ctx} id={currentModal.id} />,
         };
       }
       case 'confirm': {
         const { modalProps: separatedModalProps, confirmProps: separatedConfirmProps } =
-          separateConfirmModalProps(state.current.props);
+          separateConfirmModalProps(currentModal.props);
 
         return {
           modalProps: separatedModalProps,
           content: (
             <ConfirmModal
               {...separatedConfirmProps}
-              id={state.current.id}
-              labels={state.current.props.labels || labels}
+              id={currentModal.id}
+              labels={currentModal.props.labels || labels}
             />
           ),
         };
       }
       case 'content': {
-        const { children: currentModalChildren, ...rest } = state.current.props;
+        const { children: currentModalChildren, ...rest } = currentModal.props;
 
         return {
           modalProps: rest,
