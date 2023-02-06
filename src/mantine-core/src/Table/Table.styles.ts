@@ -56,7 +56,7 @@ export default createStyles(
           borderBottom: border,
         },
 
-        '& tfoot tr th & tbody tr th': {
+        '& tfoot tr th, & tbody tr th': {
           borderTop: border,
         },
 
