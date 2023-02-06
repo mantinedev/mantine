@@ -45,7 +45,7 @@ export const InputLabel = forwardRef<HTMLLabelElement, InputLabelProps>((props, 
   } = useComponentDefaultProps('InputLabel', defaultProps, props);
 
   const { classes, cx } = useStyles(
-    { size },
+    { required, size },
     { name: ['InputWrapper', __staticSelector], classNames, styles, unstyled }
   );
 

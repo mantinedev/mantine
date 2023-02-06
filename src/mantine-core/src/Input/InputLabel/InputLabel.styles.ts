@@ -2,6 +2,7 @@ import { createStyles, MantineSize } from '@mantine/styles';
 
 export interface InputLabelStylesParams {
   size: MantineSize;
+  required?: boolean;
 }
 
 export default createStyles((theme, { size }: InputLabelStylesParams) => ({
