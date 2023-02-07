@@ -1,34 +1,35 @@
 import { useState, useCallback } from 'react';
 
 export function useDisclosure(
-  initialState: boolean,
+  initialState = false,
   callbacks?: { onOpen?(): void; onClose?(): void }
 ) {
+  const { onOpen, onClose } = callbacks || {};
   const [opened, setOpened] = useState(initialState);
 
   const open = useCallback(() => {
     setOpened((isOpened) => {
       if (!isOpened) {
-        callbacks?.onOpen?.();
+        onOpen?.();
         return true;
       }
       return isOpened;
     });
-  }, []);
+  }, [onOpen]);
 
   const close = useCallback(() => {
     setOpened((isOpened) => {
       if (isOpened) {
-        callbacks?.onClose?.();
+        onClose?.();
         return false;
       }
       return isOpened;
     });
-  }, []);
+  }, [onClose]);
 
   const toggle = useCallback(() => {
     opened ? close() : open();
-  }, [opened]);
+  }, [close, open, opened]);
 
   return [opened, { open, close, toggle }] as const;
 }
