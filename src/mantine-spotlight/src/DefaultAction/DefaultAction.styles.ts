@@ -43,4 +43,10 @@ export default createStyles((theme, { radius }: DefaultActionStylesParams) => ({
   },
 
   actionBody: {},
+
+  actionHighlight: {
+    '& [data-highlight]': {
+      color: theme.colorScheme === 'dark' ? theme.colors.dark[9] : theme.black,
+    },
+  },
 }));
