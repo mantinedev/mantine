@@ -54,6 +54,9 @@ export interface DateInputSharedProps
 
   /** Determines whether dates value should be sorted before onChange call, only applicable when type="multiple", true by default */
   sortDates?: boolean;
+
+  /** Separator between range value */
+  labelSeparator?: string;
 }
 
 export interface PickerInputBaseProps extends DateInputSharedProps {
@@ -96,6 +99,7 @@ export const PickerInputBase = forwardRef<HTMLButtonElement, PickerInputBaseProp
     name,
     form,
     type,
+    disabled,
     ...others
   } = useInputProps(props.__staticSelector, defaultProps, props);
 
@@ -110,7 +114,7 @@ export const PickerInputBase = forwardRef<HTMLButtonElement, PickerInputBaseProp
 
   const _rightSection =
     rightSection ||
-    (clearable && shouldClear && !readOnly ? (
+    (clearable && shouldClear && !readOnly && !disabled ? (
       <CloseButton
         variant="transparent"
         onClick={onClear}
@@ -120,12 +124,21 @@ export const PickerInputBase = forwardRef<HTMLButtonElement, PickerInputBaseProp
       />
     ) : null);
 
+  const handleClose = () => {
+    const isInvalidRangeValue = type === 'range' && value[0] && !value[1];
+    if (isInvalidRangeValue) {
+      onClear();
+    }
+
+    dropdownHandlers.close();
+  };
+
   return (
     <>
       {dropdownType === 'modal' && !readOnly && (
         <Modal
           opened={dropdownOpened}
-          onClose={dropdownHandlers.close}
+          onClose={handleClose}
           withCloseButton={false}
           size="auto"
           data-dates-modal
@@ -140,7 +153,7 @@ export const PickerInputBase = forwardRef<HTMLButtonElement, PickerInputBaseProp
         <Popover
           position="bottom-start"
           opened={dropdownOpened}
-          onClose={dropdownHandlers.close}
+          onClose={handleClose}
           disabled={dropdownType === 'modal' || readOnly}
           trapFocus
           returnFocus
@@ -151,6 +164,7 @@ export const PickerInputBase = forwardRef<HTMLButtonElement, PickerInputBaseProp
             <Input
               data-dates-input
               data-read-only={readOnly || undefined}
+              disabled={disabled}
               component="button"
               type="button"
               multiline

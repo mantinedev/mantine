@@ -11,6 +11,7 @@ interface UseDatesInput<Type extends DatePickerType = 'default'> {
   onChange(value: DatePickerValue<Type>): void;
   locale: string;
   format: string;
+  labelSeparator: string;
   closeOnChange: boolean;
   sortDates: boolean;
 }
@@ -22,6 +23,7 @@ export function useDatesInput<Type extends DatePickerType = 'default'>({
   onChange,
   locale,
   format,
+  labelSeparator,
   closeOnChange,
   sortDates,
 }: UseDatesInput<Type>) {
@@ -41,6 +43,7 @@ export function useDatesInput<Type extends DatePickerType = 'default'>({
     date: _value,
     locale: ctx.getLocale(locale),
     format,
+    labelSeparator,
   });
 
   const setValue = (val: any) => {

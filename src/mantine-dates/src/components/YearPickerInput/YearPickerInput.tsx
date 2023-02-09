@@ -27,6 +27,7 @@ type YearPickerInputComponent = (<Type extends DatePickerType = 'default'>(
 const defaultProps: Partial<YearPickerInputProps> = {
   type: 'default',
   valueFormat: 'YYYY',
+  labelSeparator: '-',
   closeOnChange: true,
   sortDates: true,
   dropdownType: 'popover',
@@ -39,6 +40,7 @@ export const YearPickerInput: YearPickerInputComponent = forwardRef((props, ref)
     defaultValue,
     onChange,
     valueFormat,
+    labelSeparator,
     locale,
     classNames,
     styles,
@@ -70,6 +72,7 @@ export const YearPickerInput: YearPickerInputComponent = forwardRef((props, ref)
     onChange,
     locale,
     format: valueFormat,
+    labelSeparator,
     closeOnChange,
     sortDates,
   });
