@@ -87,7 +87,6 @@ export default createStyles(
       alignItems: 'center',
       justifyContent: 'space-between',
       marginBottom: theme.spacing.md,
-      marginRight: -9,
     },
 
     body: {
