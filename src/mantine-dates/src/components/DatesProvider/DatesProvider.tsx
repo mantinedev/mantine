@@ -3,6 +3,7 @@ import { DayOfWeek } from '../../types';
 
 export interface DatesProviderValue {
   locale: string;
+  labelSeparator: string;
   firstDayOfWeek: DayOfWeek;
   weekendDays: DayOfWeek[];
 }
@@ -11,6 +12,7 @@ export type DatesProviderSettings = Partial<DatesProviderValue>;
 
 export const DATES_PROVIDER_DEFAULT_SETTINGS: DatesProviderValue = {
   locale: 'en',
+  labelSeparator: '-',
   firstDayOfWeek: 1,
   weekendDays: [0, 6],
 };

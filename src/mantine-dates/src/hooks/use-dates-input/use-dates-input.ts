@@ -43,7 +43,7 @@ export function useDatesInput<Type extends DatePickerType = 'default'>({
     date: _value,
     locale: ctx.getLocale(locale),
     format,
-    labelSeparator,
+    labelSeparator: ctx.getLabelSeparator(labelSeparator),
   });
 
   const setValue = (val: any) => {

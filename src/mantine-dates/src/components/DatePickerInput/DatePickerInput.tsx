@@ -27,7 +27,6 @@ type DatePickerInputComponent = (<Type extends DatePickerType = 'default'>(
 const defaultProps: Partial<DatePickerInputProps> = {
   type: 'default',
   valueFormat: 'MMMM D, YYYY',
-  labelSeparator: '-',
   closeOnChange: true,
   sortDates: true,
   dropdownType: 'popover',

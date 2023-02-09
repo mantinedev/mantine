@@ -15,10 +15,16 @@ export function useDatesContext() {
     [ctx.weekendDays]
   );
 
+  const getLabelSeparator = useCallback(
+    (input?: string) => input || ctx.labelSeparator,
+    [ctx.labelSeparator]
+  );
+
   return {
     ...ctx,
     getLocale,
     getFirstDayOfWeek,
     getWeekendDays,
+    getLabelSeparator,
   };
 }

@@ -27,7 +27,6 @@ type MonthPickerInputComponent = (<Type extends DatePickerType = 'default'>(
 const defaultProps: Partial<MonthPickerInputProps> = {
   type: 'default',
   valueFormat: 'MMMM YYYY',
-  labelSeparator: '-',
   closeOnChange: true,
   sortDates: true,
   dropdownType: 'popover',
