@@ -216,7 +216,6 @@ export function Spotlight(props: SpotlightProps) {
         classNames={{ input: classes.searchInput }}
         placeholder={searchPlaceholder}
         icon={searchIcon}
-        onMouseEnter={resetHovered}
       />
       <ActionsWrapper>
         <ScrollAreaComponent>
