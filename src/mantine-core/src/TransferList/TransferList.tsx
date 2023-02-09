@@ -72,6 +72,9 @@ export interface TransferListProps
 
   /** Whether to transfer only items matching {@link filter} when clicking the transfer all control */
   transferAllMatchingFilter?: boolean;
+
+  /** Whether transfer all transfers disabled items, default is true */
+  transferAllTransfersDisabled?: boolean;
 }
 
 export function defaultFilter(query: string, item: TransferListItem) {
@@ -88,6 +91,7 @@ const defaultProps: Partial<TransferListProps> = {
   showTransferAll: true,
   limit: Infinity,
   transferAllMatchingFilter: false,
+  transferAllTransfersDisabled: true,
 };
 
 export const TransferList = forwardRef<HTMLDivElement, TransferListProps>((props, ref) => {
@@ -115,6 +119,7 @@ export const TransferList = forwardRef<HTMLDivElement, TransferListProps>((props
     transferIcon,
     transferAllIcon,
     transferAllMatchingFilter,
+    transferAllTransfersDisabled,
     ...others
   } = useComponentDefaultProps('TransferList', defaultProps, props);
 
@@ -132,14 +137,29 @@ export const TransferList = forwardRef<HTMLDivElement, TransferListProps>((props
 
     if (transferAllMatchingFilter) {
       const query = search[listIndex];
-      const shownItems = value[listIndex].filter((item) => filter(query, item)).slice(0, limit);
-      const hiddenItems = value[listIndex].filter((item) => !filter(query, item));
+
+      const shownItems = value[listIndex]
+        .filter((item) =>
+          transferAllTransfersDisabled ? filter(query, item) : filter(query, item) && !item.disabled
+        )
+        .slice(0, limit);
+      const hiddenItems = value[listIndex].filter((item) =>
+        transferAllTransfersDisabled ? !filter(query, item) : !filter(query, item) || item.disabled
+      );
 
       items[listIndex] = hiddenItems;
       items[moveToIndex] = [...value[moveToIndex], ...shownItems];
     } else {
-      items[listIndex] = [];
-      items[moveToIndex] = [...value[moveToIndex], ...value[listIndex]];
+      items[listIndex] = transferAllTransfersDisabled
+        ? []
+        : value[listIndex].filter((item) => item.disabled);
+
+      items[moveToIndex] = [
+        ...value[moveToIndex],
+        ...(transferAllTransfersDisabled
+          ? value[listIndex]
+          : value[listIndex].filter((item) => !item.disabled)),
+      ];
     }
 
     onChange(items);

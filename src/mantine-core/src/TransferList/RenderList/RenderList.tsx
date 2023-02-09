@@ -114,13 +114,15 @@ export function RenderList({
         key={item.value}
         onMouseEnter={() => setHovered(index)}
         className={cx(classes.transferListItem, {
-          [classes.transferListItemHovered]: index === hovered,
+          [classes.transferListItemHovered]: index === hovered && !item.disabled,
+          [classes.transferListItemDisabled]: item.disabled,
         })}
         ref={(node: HTMLButtonElement) => {
           if (itemsRefs && itemsRefs.current) {
             itemsRefs.current[item.value] = node;
           }
         }}
+        disabled={item.disabled}
       >
         <ItemComponent data={item} selected={selection.includes(item.value)} radius={radius} />
       </UnstyledButton>
@@ -162,7 +164,9 @@ export function RenderList({
       case 'ArrowDown': {
         event.preventDefault();
         setHovered((current) => {
-          const nextIndex = current < filteredData.length - 1 ? current + 1 : current;
+          const nextIndex = filteredData.findIndex(
+            (item, index) => index > current && !item.disabled
+          );
 
           targetRef.current = itemsRefs.current[filteredData[nextIndex]?.value];
 
@@ -178,7 +182,9 @@ export function RenderList({
       case 'ArrowUp': {
         event.preventDefault();
         setHovered((current) => {
-          const nextIndex = current > 0 ? current - 1 : current;
+          const nextIndex = filteredData.findIndex(
+            (item, index) => index < current && !item.disabled
+          );
 
           targetRef.current = itemsRefs.current[filteredData[nextIndex]?.value];
 

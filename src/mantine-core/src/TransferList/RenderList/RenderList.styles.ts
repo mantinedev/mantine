@@ -36,6 +36,10 @@ export default createStyles((theme, { reversed, native, radius }: RenderListStyl
     backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[0],
   },
 
+  transferListItemDisabled: {
+    cursor: 'not-allowed',
+  },
+
   transferListItems: {
     overflow: native ? 'auto' : 'hidden',
   },

@@ -10,6 +10,7 @@ export const DefaultItem: TransferListItemComponent = React.memo(
       label={data.label}
       tabIndex={-1}
       radius={radius}
+      disabled={data.disabled}
       sx={{ pointerEvents: 'none' }}
     />
   )

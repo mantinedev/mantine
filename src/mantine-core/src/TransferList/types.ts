@@ -4,6 +4,7 @@ export interface TransferListItem {
   value: string;
   label: string;
   group?: string;
+  disabled?: boolean;
   [key: string]: any;
 }
 
