@@ -58,7 +58,11 @@ export function DefaultAction({
         )}
 
         <div className={classes.actionBody}>
-          <Highlight highlightColor={highlightColor} highlight={highlightQuery ? query : null}>
+          <Highlight
+            highlightColor={highlightColor}
+            className={classes.actionHighlight}
+            highlight={highlightQuery ? query : null}
+          >
             {action.title}
           </Highlight>
 
