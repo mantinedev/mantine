@@ -4,6 +4,8 @@ import { Group } from '../Group';
 import { Pagination } from './Pagination';
 import { PaginationControl } from './PaginationControl/PaginationControl';
 import { PaginationDots } from './PaginationDots/PaginationDots';
+import { PaginationNext } from './PaginationEdges/PaginationNext';
+import { PaginationRoot } from './PaginationRoot/PaginationRoot';
 
 export default { title: 'Pagination' };
 
@@ -47,10 +49,13 @@ export function ComposedPaginationControl() {
 export function ComposedPaginationDots() {
   return (
     <Group p="xl" spacing={5}>
-      <PaginationControl>1</PaginationControl>
-      <PaginationDots icon={IconDotsDiagonal} />
-      <PaginationDots />
-      <PaginationControl>2</PaginationControl>
+      <PaginationRoot total={20}>
+        <PaginationControl>1</PaginationControl>
+        <PaginationDots icon={IconDotsDiagonal} />
+        <PaginationDots />
+        <PaginationControl>2</PaginationControl>
+        <PaginationNext />
+      </PaginationRoot>
     </Group>
   );
 }

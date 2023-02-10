@@ -7,7 +7,7 @@ import {
   getSize,
 } from '@mantine/styles';
 import { Box } from '../../Box';
-import { DotsIcon, DotsIconProps } from './DotsIcon';
+import { PaginationDotsIcon, PaginationIconProps } from '../Pagination.icons';
 import { sizes } from '../PaginationControl/PaginationControl.styles';
 import useStyles from './PaginationDots.styles';
 
@@ -22,12 +22,12 @@ export interface PaginationDotsProps
   size?: MantineNumberSize;
 
   /** Custom dots icon component, must accept svg element props and size prop */
-  icon?: React.FC<DotsIconProps>;
+  icon?: React.FC<PaginationIconProps>;
 }
 
 const defaultProps: Partial<PaginationDotsProps> = {
   size: 'md',
-  icon: DotsIcon,
+  icon: PaginationDotsIcon,
 };
 
 export const PaginationDots = forwardRef<HTMLDivElement, PaginationDotsProps>((props, ref) => {
