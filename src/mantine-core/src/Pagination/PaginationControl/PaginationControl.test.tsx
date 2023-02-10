@@ -1,16 +1,19 @@
 import React from 'react';
-import { itSupportsSystemProps, itIsPolymorphic } from '@mantine/tests';
+import { itSupportsSystemProps, itIsPolymorphic, createContextContainer } from '@mantine/tests';
 import { render, screen } from '@testing-library/react';
 import { PaginationControl, PaginationControlProps } from './PaginationControl';
+import { PaginationRoot } from '../PaginationRoot/PaginationRoot';
+
+const TestComponent = createContextContainer(PaginationControl, PaginationRoot, { total: 10 });
 
 const defaultProps: PaginationControlProps = {
   children: 10,
 };
 
 describe('@mantine/core/PaginationControl', () => {
-  itIsPolymorphic(PaginationControl, defaultProps);
+  itIsPolymorphic(TestComponent, defaultProps);
   itSupportsSystemProps({
-    component: PaginationControl,
+    component: TestComponent,
     props: defaultProps,
     refType: HTMLButtonElement,
     displayName: '@mantine/core/PaginationControl',
@@ -18,18 +21,18 @@ describe('@mantine/core/PaginationControl', () => {
   });
 
   it('has data-active attribute when active prop is set', () => {
-    const { rerender } = render(<PaginationControl {...defaultProps} active={false} />);
+    const { rerender } = render(<TestComponent {...defaultProps} active={false} />);
     expect(screen.getByRole('button')).not.toHaveAttribute('data-active');
 
-    rerender(<PaginationControl {...defaultProps} active />);
+    rerender(<TestComponent {...defaultProps} active />);
     expect(screen.getByRole('button')).toHaveAttribute('data-active');
   });
 
   it('has data-disabled attribute when disabled prop is set', () => {
-    const { rerender } = render(<PaginationControl {...defaultProps} disabled={false} />);
+    const { rerender } = render(<TestComponent {...defaultProps} disabled={false} />);
     expect(screen.getByRole('button')).not.toHaveAttribute('data-disabled');
 
-    rerender(<PaginationControl {...defaultProps} disabled />);
+    rerender(<TestComponent {...defaultProps} disabled />);
     expect(screen.getByRole('button')).toHaveAttribute('data-disabled');
   });
 });
