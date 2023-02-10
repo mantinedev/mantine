@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Pagination } from './Pagination';
+import { PaginationControl } from './PaginationControl/PaginationControl';
 
 export default { title: 'Pagination' };
 
@@ -19,4 +20,17 @@ export function DecimalTotal() {
 
 export function NegativeTotal() {
   return <Pagination total={-10} />;
+}
+
+export function ComposedPaginationControl() {
+  return (
+    <div style={{ padding: 40 }}>
+      <PaginationControl active={false}>10</PaginationControl>
+      <PaginationControl active={false}>100</PaginationControl>
+      <PaginationControl active={false} disabled>
+        100
+      </PaginationControl>
+      <PaginationControl active>10000</PaginationControl>
+    </div>
+  );
 }
