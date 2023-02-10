@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { IconDotsDiagonal } from '@tabler/icons-react';
 import { Group } from '../Group';
 import { Pagination } from './Pagination';
 import { PaginationControl } from './PaginationControl/PaginationControl';
@@ -47,7 +48,7 @@ export function ComposedPaginationDots() {
   return (
     <Group p="xl" spacing={5}>
       <PaginationControl>1</PaginationControl>
-      <PaginationDots />
+      <PaginationDots icon={IconDotsDiagonal} />
       <PaginationControl>2</PaginationControl>
     </Group>
   );
