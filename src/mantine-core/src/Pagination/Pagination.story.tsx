@@ -49,6 +49,7 @@ export function ComposedPaginationDots() {
     <Group p="xl" spacing={5}>
       <PaginationControl>1</PaginationControl>
       <PaginationDots icon={IconDotsDiagonal} />
+      <PaginationDots />
       <PaginationControl>2</PaginationControl>
     </Group>
   );
