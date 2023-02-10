@@ -1,6 +1,6 @@
 import { createStyles, rem, getSize, MantineColor, MantineNumberSize } from '@mantine/styles';
 
-const sizes = {
+export const sizes = {
   xs: rem(22),
   sm: rem(26),
   md: rem(32),

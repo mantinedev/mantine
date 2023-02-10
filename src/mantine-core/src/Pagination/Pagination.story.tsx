@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
+import { Group } from '../Group';
 import { Pagination } from './Pagination';
 import { PaginationControl } from './PaginationControl/PaginationControl';
+import { PaginationDots } from './PaginationDots/PaginationDots';
 
 export default { title: 'Pagination' };
 
@@ -34,6 +36,19 @@ export function ComposedPaginationControl() {
       <PaginationControl active color="orange">
         10
       </PaginationControl>
+      <PaginationControl active color="orange" radius="xl">
+        10
+      </PaginationControl>
     </div>
+  );
+}
+
+export function ComposedPaginationDots() {
+  return (
+    <Group p="xl" spacing={5}>
+      <PaginationControl>1</PaginationControl>
+      <PaginationDots />
+      <PaginationControl>2</PaginationControl>
+    </Group>
   );
 }
