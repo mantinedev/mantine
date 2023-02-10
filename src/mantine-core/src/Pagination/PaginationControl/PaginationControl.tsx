@@ -27,7 +27,7 @@ export interface PaginationControlProps
   color?: MantineColor;
 
   /** Determines whether control should have active styles */
-  active: boolean;
+  active?: boolean;
 }
 
 const defaultProps: Partial<PaginationControlProps> = {
@@ -74,3 +74,5 @@ export const PaginationControl = forwardRef<HTMLButtonElement, PaginationControl
     );
   }
 );
+
+PaginationControl.displayName = '@mantine/core/PaginationControl';

@@ -31,6 +31,9 @@ export function ComposedPaginationControl() {
         100
       </PaginationControl>
       <PaginationControl active>10000</PaginationControl>
+      <PaginationControl active color="orange">
+        10
+      </PaginationControl>
     </div>
   );
 }

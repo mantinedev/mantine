@@ -35,18 +35,25 @@ export default createStyles((theme, { color, radius }: PaginationControlStylesPa
       lineHeight: 1,
       backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.white,
 
+      '&:not([data-disabled])': theme.fn.hover({
+        backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[0],
+      }),
+
       '&:active:not([data-disabled])': theme.activeStyles,
 
       '&[data-disabled]': {
-        opacity: 0.6,
+        opacity: 0.4,
         cursor: 'not-allowed',
-        color: theme.colorScheme === 'dark' ? theme.colors.dark[3] : theme.colors.gray[5],
       },
 
       '&[data-active]': {
         borderColor: 'transparent',
         color: colors.color,
         backgroundColor: colors.background,
+
+        '&:not([data-disabled])': theme.fn.hover({
+          backgroundColor: colors.hover,
+        }),
       },
     },
   };
