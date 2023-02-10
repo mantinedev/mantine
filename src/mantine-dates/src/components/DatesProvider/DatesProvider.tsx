@@ -14,7 +14,7 @@ export const DATES_PROVIDER_DEFAULT_SETTINGS: DatesProviderValue = {
   locale: 'en',
   firstDayOfWeek: 1,
   weekendDays: [0, 6],
-  labelSeparator: '-',
+  labelSeparator: '–',
 };
 
 export const DatesProviderContext = createContext(DATES_PROVIDER_DEFAULT_SETTINGS);
