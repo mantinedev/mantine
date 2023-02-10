@@ -47,3 +47,5 @@ export const PaginationDots = forwardRef<HTMLDivElement, PaginationDotsProps>((p
     </Box>
   );
 });
+
+PaginationDots.displayName = '@mantine/core/PaginationDots';
