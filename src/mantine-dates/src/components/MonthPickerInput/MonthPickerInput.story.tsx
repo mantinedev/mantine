@@ -39,6 +39,7 @@ export function Range() {
   return (
     <div style={{ padding: 40 }}>
       <MonthPickerInput type="range" label="Month picker input" />
+      <MonthPickerInput type="range" label="Custom labelSeparator" labelSeparator="~" />
     </div>
   );
 }

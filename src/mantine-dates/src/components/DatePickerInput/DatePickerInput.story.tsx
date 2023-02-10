@@ -151,6 +151,7 @@ export function Range() {
   return (
     <div style={{ padding: 40 }}>
       <DatePickerInput type="range" label="Date picker input" />
+      <DatePickerInput type="range" label="Custom labelSeparator" labelSeparator="~" />
     </div>
   );
 }
