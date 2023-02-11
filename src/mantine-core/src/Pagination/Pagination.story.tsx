@@ -1,11 +1,10 @@
 import React, { useState } from 'react';
-import { IconDotsDiagonal } from '@tabler/icons-react';
 import { Group } from '../Group';
 import { Pagination } from './Pagination';
 import { PaginationControl } from './PaginationControl/PaginationControl';
-import { PaginationDots } from './PaginationDots/PaginationDots';
 import { PaginationNext } from './PaginationEdges/PaginationEdges';
 import { PaginationRoot } from './PaginationRoot/PaginationRoot';
+import { PaginationItems } from './PaginationItems/PaginationItems';
 
 export default { title: 'Pagination' };
 
@@ -50,12 +49,8 @@ export function ComposedPaginationDots() {
   return (
     <Group p="xl" spacing={5}>
       <PaginationRoot total={20}>
-        <PaginationControl>1</PaginationControl>
-        <PaginationDots icon={IconDotsDiagonal} />
-        <PaginationDots />
-        <PaginationControl>2</PaginationControl>
+        <PaginationItems />
         <PaginationNext />
-        <PaginationNext icon={IconDotsDiagonal} />
       </PaginationRoot>
     </Group>
   );
