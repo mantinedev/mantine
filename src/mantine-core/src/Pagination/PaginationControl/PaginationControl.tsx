@@ -28,10 +28,14 @@ export interface PaginationControlProps
 
   /** Determines whether control should have active styles */
   active?: boolean;
+
+  /** Determines whether control should have padding, true by default */
+  withPadding?: boolean;
 }
 
 const defaultProps: Partial<PaginationControlProps> = {
   size: 'md',
+  withPadding: true,
 };
 
 export const PaginationControl = forwardRef<HTMLButtonElement, PaginationControlProps>(
@@ -47,11 +51,12 @@ export const PaginationControl = forwardRef<HTMLButtonElement, PaginationControl
       className,
       color,
       disabled,
+      withPadding,
       ...others
     } = useComponentDefaultProps('PaginationControl', defaultProps, props);
 
     const { classes, cx } = useStyles(
-      { color, radius },
+      { color, radius, withPadding },
       {
         name: 'Pagination',
         classNames,

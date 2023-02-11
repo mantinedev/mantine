@@ -1,4 +1,10 @@
 import React from 'react';
+import { MantineNumberSize, getSize } from '@mantine/styles';
+import { sizes } from './PaginationControl/PaginationControl.styles';
+
+export function getIconSize(size: MantineNumberSize) {
+  return `calc(${getSize({ size, sizes })} / 2)`;
+}
 
 interface _PaginationIconProps extends React.ComponentPropsWithoutRef<'svg'> {
   size?: string;

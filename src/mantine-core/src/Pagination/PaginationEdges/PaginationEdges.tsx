@@ -1,19 +1,14 @@
 import React, { forwardRef } from 'react';
-import {
-  useComponentDefaultProps,
-  getSize,
-  MantineNumberSize,
-  DefaultProps,
-} from '@mantine/styles';
-import { packSx, createPolymorphicComponent } from '@mantine/utils';
+import { useComponentDefaultProps, MantineNumberSize, DefaultProps } from '@mantine/styles';
+import { createPolymorphicComponent } from '@mantine/utils';
 import { usePaginationContext } from '../Pagination.context';
-import { sizes } from '../PaginationControl/PaginationControl.styles';
 import {
   PaginationNextIcon,
   PaginationPreviousIcon,
   PaginationFirstIcon,
   PaginationLastIcon,
   PaginationIconProps,
+  getIconSize,
 } from '../Pagination.icons';
 import { PaginationControl } from '../PaginationControl/PaginationControl';
 
@@ -35,7 +30,7 @@ export function createEdgeComponent({ icon, name, action }: CreateEdgeComponent)
   };
 
   const Component = forwardRef<HTMLButtonElement, PaginationEdgeProps>((props, ref) => {
-    const { size, sx, icon: Icon, ...others } = useComponentDefaultProps(name, defaultProps, props);
+    const { size, icon: Icon, ...others } = useComponentDefaultProps(name, defaultProps, props);
     const ctx = usePaginationContext();
     return (
       <PaginationControl
@@ -43,9 +38,9 @@ export function createEdgeComponent({ icon, name, action }: CreateEdgeComponent)
         size={size}
         ref={ref}
         onClick={ctx[action]}
-        sx={[{ padding: 0 }, ...packSx(sx)]}
+        withPadding={false}
       >
-        <Icon size={`calc(${getSize({ size, sizes })} / 2)`} />
+        <Icon size={getIconSize(size)} />
       </PaginationControl>
     );
   });

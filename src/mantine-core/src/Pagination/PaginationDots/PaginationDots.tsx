@@ -4,11 +4,9 @@ import {
   Selectors,
   useComponentDefaultProps,
   DefaultProps,
-  getSize,
 } from '@mantine/styles';
 import { Box } from '../../Box';
-import { PaginationDotsIcon, PaginationIconProps } from '../Pagination.icons';
-import { sizes } from '../PaginationControl/PaginationControl.styles';
+import { PaginationDotsIcon, PaginationIconProps, getIconSize } from '../Pagination.icons';
 import useStyles from './PaginationDots.styles';
 
 export type PaginationDotsStylesNames = Selectors<typeof useStyles>;
@@ -43,7 +41,7 @@ export const PaginationDots = forwardRef<HTMLDivElement, PaginationDotsProps>((p
 
   return (
     <Box ref={ref} className={cx(classes.dots, className)} {...others}>
-      <Icon size={`calc(${getSize({ size, sizes })} / 2)`} />
+      <Icon size={getIconSize(size)} />
     </Box>
   );
 });
