@@ -4,7 +4,7 @@ import { Group } from '../Group';
 import { Pagination } from './Pagination';
 import { PaginationControl } from './PaginationControl/PaginationControl';
 import { PaginationDots } from './PaginationDots/PaginationDots';
-import { PaginationNext } from './PaginationEdges/PaginationNext';
+import { PaginationNext } from './PaginationEdges/PaginationEdges';
 import { PaginationRoot } from './PaginationRoot/PaginationRoot';
 
 export default { title: 'Pagination' };
