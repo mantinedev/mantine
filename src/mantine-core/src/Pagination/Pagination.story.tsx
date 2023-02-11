@@ -55,6 +55,7 @@ export function ComposedPaginationDots() {
         <PaginationDots />
         <PaginationControl>2</PaginationControl>
         <PaginationNext />
+        <PaginationNext icon={IconDotsDiagonal} />
       </PaginationRoot>
     </Group>
   );

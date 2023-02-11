@@ -25,12 +25,17 @@ export interface CreateEdgeComponent {
 
 export interface PaginationEdgeProps extends DefaultProps {
   size?: MantineNumberSize;
-  icon?: PaginationIconProps;
+  icon?: React.FC<PaginationIconProps>;
 }
 
-export function createEdgeComponent({ icon: Icon, name, action }: CreateEdgeComponent) {
+export function createEdgeComponent({ icon, name, action }: CreateEdgeComponent) {
+  const defaultProps: Partial<PaginationEdgeProps> = {
+    icon,
+    size: 'md',
+  };
+
   const Component = forwardRef<HTMLButtonElement, PaginationEdgeProps>((props, ref) => {
-    const { size, sx, ...others } = useComponentDefaultProps(name, {}, props);
+    const { size, sx, icon: Icon, ...others } = useComponentDefaultProps(name, defaultProps, props);
     const ctx = usePaginationContext();
     return (
       <PaginationControl
