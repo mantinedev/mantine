@@ -110,7 +110,7 @@ export function defaultShouldCreate(query: string, data: SelectItem[]) {
   return !!query && !data.some((item) => item.value.toLowerCase() === query.toLowerCase());
 }
 
-function filterValue(value: string[], data: ReadonlyArray<(string | SelectItem)>): string[] {
+function filterValue(value: string[], data: ReadonlyArray<string | SelectItem>): string[] {
   if (!Array.isArray(value)) {
     return undefined;
   }
@@ -119,7 +119,7 @@ function filterValue(value: string[], data: ReadonlyArray<(string | SelectItem)>
     return [];
   }
 
-  const flatData: string[] = data.map(item => {
+  const flatData: string[] = data.map((item) => {
     if (typeof item === 'object') {
       return item.value;
     }

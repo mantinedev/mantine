@@ -15,7 +15,7 @@ import useStyles from './Select.styles';
 
 export interface SelectSharedProps<Item, Value> {
   /** Select data used to render items in dropdown */
-  data: ReadonlyArray<(string | Item)>;
+  data: ReadonlyArray<string | Item>;
 
   /** Controlled input value */
   value?: Value;
