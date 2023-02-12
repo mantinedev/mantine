@@ -268,6 +268,15 @@ function Demo() {
 }
 ```
 
+### [Pagination](https://mantine.dev/core/pagination/) breaking changes
+
+- Styles API selectors were changed
+- Renamed/removed props:
+  - `itemComponent` – removed, use `getItemProps` or static components instead
+  - `getItemAriaLabel` – removed, use `getItemProps` prop instead
+  - `initialPage` → `defaultValue`
+  - `page` → `value`
+
 ### @mantine/spotlight breaking changes
 
 [Spotlight](https://mantine.dev/others/spotlight/) component was migrated to use [Modal](https://mantine.dev/core/modal/)
