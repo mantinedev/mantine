@@ -38,6 +38,9 @@ export interface PaginationRootSettings {
 
   /** Called when last page control is clicked */
   onLastPage?(): void;
+
+  /** Add additional props to items */
+  getItemProps?(page: number): Record<string, any>;
 }
 
 export interface PaginationRootProps extends PaginationRootSettings {
@@ -64,6 +67,7 @@ export function PaginationRoot(props: PaginationRootProps) {
     onPreviousPage,
     onFirstPage,
     onLastPage,
+    getItemProps,
   } = useComponentDefaultProps('PaginationRoot', defaultProps, props);
 
   const { range, setPage, next, previous, active, first, last } = usePagination({
@@ -86,6 +90,7 @@ export function PaginationRoot(props: PaginationRootProps) {
         range,
         active,
         disabled,
+        getItemProps,
         onChange: setPage,
         onNext: handleNextPage,
         onPrevious: handlePreviousPage,

@@ -4,6 +4,7 @@ interface PaginationContext {
   range: (number | 'dots')[];
   active: number;
   disabled: boolean;
+  getItemProps?(page: number): Record<string, any>;
   onChange(page: number): void;
   onNext(): void;
   onPrevious(): void;

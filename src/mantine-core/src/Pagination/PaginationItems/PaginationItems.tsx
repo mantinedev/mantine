@@ -9,20 +9,21 @@ export interface PaginationItemsProps extends DefaultProps, React.ComponentProps
 export function PaginationItems() {
   const ctx = usePaginationContext();
 
-  const items = ctx.range.map((pageNumber, index) => {
-    if (pageNumber === 'dots') {
+  const items = ctx.range.map((page, index) => {
+    if (page === 'dots') {
       return <PaginationDots />;
     }
 
     return (
       <PaginationControl
         key={index}
-        active={pageNumber === ctx.active}
-        aria-current={pageNumber === ctx.active ? 'page' : undefined}
-        onClick={() => ctx.onChange(pageNumber)}
+        active={page === ctx.active}
+        aria-current={page === ctx.active ? 'page' : undefined}
+        onClick={() => ctx.onChange(page)}
         disabled={ctx.disabled}
+        {...ctx.getItemProps?.(page)}
       >
-        {pageNumber}
+        {page}
       </PaginationControl>
     );
   });
