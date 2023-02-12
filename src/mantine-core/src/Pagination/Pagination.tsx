@@ -20,6 +20,9 @@ export interface PaginationProps
 
   /** Determines whether next/previous controls should be rendered, true by default */
   withControls?: boolean;
+
+  /** Adds props to next/previous/first/last controls */
+  getControlProps?(control: 'first' | 'previous' | 'last' | 'next'): Record<string, any>;
 }
 
 const defaultProps: Partial<PaginationProps> = {
@@ -51,10 +54,15 @@ export function Pagination(props: PaginationProps) {
     onFirstPage,
     onLastPage,
     getItemProps,
+    getControlProps,
     spacing,
     ...others
   } = useComponentDefaultProps('Pagination', defaultProps, props);
   const theme = useMantineTheme();
+
+  if (total <= 0) {
+    return null;
+  }
 
   return (
     <PaginationRoot
@@ -82,11 +90,11 @@ export function Pagination(props: PaginationProps) {
         spacing={spacing || `calc(${getSize({ size, sizes: theme.spacing })} / 2)`}
         {...others}
       >
-        {withEdges && <PaginationFirst />}
-        {withControls && <PaginationPrevious />}
+        {withEdges && <PaginationFirst {...getControlProps?.('first')} />}
+        {withControls && <PaginationPrevious {...getControlProps?.('previous')} />}
         <PaginationItems />
-        {withControls && <PaginationNext />}
-        {withEdges && <PaginationLast />}
+        {withControls && <PaginationNext {...getControlProps?.('next')} />}
+        {withEdges && <PaginationLast {...getControlProps?.('last')} />}
       </Group>
     </PaginationRoot>
   );

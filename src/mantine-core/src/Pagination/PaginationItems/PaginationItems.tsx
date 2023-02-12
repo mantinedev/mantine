@@ -11,7 +11,7 @@ export function PaginationItems() {
 
   const items = ctx.range.map((page, index) => {
     if (page === 'dots') {
-      return <PaginationDots />;
+      return <PaginationDots key={index} />;
     }
 
     return (

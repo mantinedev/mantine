@@ -3,23 +3,24 @@ import {
   checkAccessibility,
   itSupportsSystemProps,
   itSupportsProviderVariant,
+  itSupportsProviderSize,
 } from '@mantine/tests';
 import { render } from '@testing-library/react';
 import { Pagination, PaginationProps } from './Pagination';
 
 const defaultProps: PaginationProps = {
   total: 10,
-  getItemAriaLabel: () => 'test-label',
+  getControlProps: () => ({ 'aria-label': 'test-label' }),
 };
 
 describe('@mantine/core/Pagination', () => {
   checkAccessibility([<Pagination {...defaultProps} />]);
-  itSupportsProviderVariant(Pagination, defaultProps, 'Pagination');
+  itSupportsProviderVariant(Pagination, defaultProps, 'Pagination', ['control']);
+  itSupportsProviderSize(Pagination, defaultProps, 'Pagination', ['control']);
   itSupportsSystemProps({
     component: Pagination,
     props: defaultProps,
     displayName: '@mantine/core/Pagination',
-    refType: HTMLDivElement,
     providerName: 'Pagination',
   });
 
