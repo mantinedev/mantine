@@ -8,7 +8,12 @@ import { ActionIcon } from '../../ActionIcon';
 import { TextInput } from '../../TextInput';
 import { Text } from '../../Text';
 import { Divider } from '../../Divider';
-import { LastIcon, NextIcon, FirstIcon, PrevIcon } from '../../Pagination/icons';
+import {
+  PaginationLastIcon,
+  PaginationNextIcon,
+  PaginationFirstIcon,
+  PaginationPreviousIcon,
+} from '../../Pagination/Pagination.icons';
 import { TransferListItem, TransferListItemComponent } from '../types';
 import useStyles from './RenderList.styles';
 
@@ -41,17 +46,17 @@ export interface RenderListProps extends DefaultProps<RenderListStylesNames> {
 }
 
 const icons = {
-  Prev: PrevIcon,
-  Next: NextIcon,
-  First: FirstIcon,
-  Last: LastIcon,
+  Prev: PaginationPreviousIcon,
+  Next: PaginationNextIcon,
+  First: PaginationFirstIcon,
+  Last: PaginationLastIcon,
 };
 
 const rtlIons = {
-  Next: PrevIcon,
-  Prev: NextIcon,
-  Last: FirstIcon,
-  First: LastIcon,
+  Next: PaginationPreviousIcon,
+  Prev: PaginationNextIcon,
+  Last: PaginationFirstIcon,
+  First: PaginationLastIcon,
 };
 
 export function RenderList({
@@ -194,8 +199,8 @@ export function RenderList({
     }
   };
 
-  const transferIcon = reversed ? <Icons.Prev /> : <Icons.Next />;
-  const transferAllIcon = reversed ? <Icons.First /> : <Icons.Last />;
+  const transferIcon = reversed ? <Icons.Prev size="1rem" /> : <Icons.Next size="1rem" />;
+  const transferAllIcon = reversed ? <Icons.First size="1rem" /> : <Icons.Last size="1rem" />;
 
   return (
     <div className={cx(classes.transferList, className)}>
