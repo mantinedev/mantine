@@ -1,11 +1,29 @@
 /* eslint-disable react/no-unused-prop-types */
 import React from 'react';
-import { useComponentDefaultProps } from '@mantine/styles';
+import {
+  MantineColor,
+  MantineNumberSize,
+  useComponentDefaultProps,
+  ClassNames,
+  Styles,
+} from '@mantine/styles';
 import { usePagination } from '@mantine/hooks';
 import { createEventHandler } from '@mantine/utils';
 import { PaginationProvider } from '../Pagination.context';
+import type { PaginationControlStylesNames } from '../PaginationControl/PaginationControl';
+import type { PaginationDotsStylesNames } from '../PaginationDots/PaginationDots';
+
+export type PaginationStylesNames = PaginationControlStylesNames | PaginationDotsStylesNames;
 
 export interface PaginationRootSettings {
+  classNames?: ClassNames<PaginationStylesNames>;
+  styles?: Styles<PaginationStylesNames>;
+  unstyled?: boolean;
+  variant?: string;
+
+  /** Controls height and min-width */
+  size?: MantineNumberSize;
+
   /** Total number of pages, must be an integer */
   total: number;
 
@@ -26,6 +44,12 @@ export interface PaginationRootSettings {
 
   /** Number of elements visible on the left/right edges, 1 by default */
   boundaries?: number;
+
+  /** Key of theme.colors, active item color, theme.primaryColor by default */
+  color?: MantineColor;
+
+  /** Key of theme.radius, border-radius of items and controls, theme.defaultRadius by default */
+  radius?: MantineNumberSize;
 
   /** Called when next page control is clicked */
   onNextPage?(): void;
@@ -63,11 +87,18 @@ export function PaginationRoot(props: PaginationRootProps) {
     children,
     siblings,
     boundaries,
+    color,
+    radius,
     onNextPage,
     onPreviousPage,
     onFirstPage,
     onLastPage,
     getItemProps,
+    classNames,
+    styles,
+    unstyled,
+    variant,
+    size,
   } = useComponentDefaultProps('PaginationRoot', defaultProps, props);
 
   const { range, setPage, next, previous, active, first, last } = usePagination({
@@ -90,12 +121,22 @@ export function PaginationRoot(props: PaginationRootProps) {
         range,
         active,
         disabled,
+        color,
+        radius,
         getItemProps,
         onChange: setPage,
         onNext: handleNextPage,
         onPrevious: handlePreviousPage,
         onFirst: handleFirstPage,
         onLast: handleLastPage,
+        stylesApi: {
+          name: 'Pagination',
+          classNames,
+          styles,
+          unstyled,
+          variant,
+          size,
+        },
       }}
     >
       {children}

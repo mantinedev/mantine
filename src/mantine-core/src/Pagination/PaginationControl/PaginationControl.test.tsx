@@ -1,5 +1,10 @@
 import React from 'react';
-import { itSupportsSystemProps, itIsPolymorphic, createContextContainer } from '@mantine/tests';
+import {
+  itSupportsSystemProps,
+  itIsPolymorphic,
+  createContextContainer,
+  itThrowsContextError,
+} from '@mantine/tests';
 import { render, screen } from '@testing-library/react';
 import { PaginationControl, PaginationControlProps } from './PaginationControl';
 import { PaginationRoot } from '../PaginationRoot/PaginationRoot';
@@ -11,6 +16,12 @@ const defaultProps: PaginationControlProps = {
 };
 
 describe('@mantine/core/PaginationControl', () => {
+  itThrowsContextError(
+    PaginationControl,
+    defaultProps,
+    'Pagination.Root component was not found in tree'
+  );
+
   itIsPolymorphic(TestComponent, defaultProps);
   itSupportsSystemProps({
     component: TestComponent,

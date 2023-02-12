@@ -1,5 +1,10 @@
 import React from 'react';
-import { itSupportsSystemProps, createContextContainer, itIsPolymorphic } from '@mantine/tests';
+import {
+  itSupportsSystemProps,
+  createContextContainer,
+  itIsPolymorphic,
+  itThrowsContextError,
+} from '@mantine/tests';
 import { render, screen } from '@testing-library/react';
 import {
   PaginationFirst,
@@ -22,6 +27,12 @@ function isSupportsCustomIcon(Component: React.FC<any>) {
 describe('@mantine/core/PaginationNext', () => {
   const TestComponent = createContextContainer(PaginationNext, PaginationRoot, { total: 10 });
 
+  itThrowsContextError(
+    PaginationNext,
+    defaultProps,
+    'Pagination.Root component was not found in tree'
+  );
+
   itIsPolymorphic(TestComponent, defaultProps);
   isSupportsCustomIcon(TestComponent);
   itSupportsSystemProps({
@@ -35,6 +46,12 @@ describe('@mantine/core/PaginationNext', () => {
 
 describe('@mantine/core/PaginationPrevious', () => {
   const TestComponent = createContextContainer(PaginationPrevious, PaginationRoot, { total: 10 });
+
+  itThrowsContextError(
+    PaginationPrevious,
+    defaultProps,
+    'Pagination.Root component was not found in tree'
+  );
 
   itIsPolymorphic(TestComponent, defaultProps);
   isSupportsCustomIcon(TestComponent);
@@ -50,6 +67,12 @@ describe('@mantine/core/PaginationPrevious', () => {
 describe('@mantine/core/PaginationFirst', () => {
   const TestComponent = createContextContainer(PaginationFirst, PaginationRoot, { total: 10 });
 
+  itThrowsContextError(
+    PaginationFirst,
+    defaultProps,
+    'Pagination.Root component was not found in tree'
+  );
+
   itIsPolymorphic(TestComponent, defaultProps);
   isSupportsCustomIcon(TestComponent);
   itSupportsSystemProps({
@@ -63,6 +86,12 @@ describe('@mantine/core/PaginationFirst', () => {
 
 describe('@mantine/core/PaginationLast', () => {
   const TestComponent = createContextContainer(PaginationLast, PaginationRoot, { total: 10 });
+
+  itThrowsContextError(
+    PaginationLast,
+    defaultProps,
+    'Pagination.Root component was not found in tree'
+  );
 
   itIsPolymorphic(TestComponent, defaultProps);
   isSupportsCustomIcon(TestComponent);
