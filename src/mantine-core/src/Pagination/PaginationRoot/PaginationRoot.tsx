@@ -118,6 +118,7 @@ export function PaginationRoot(props: PaginationRootProps) {
   return (
     <PaginationProvider
       value={{
+        total,
         range,
         active,
         disabled,

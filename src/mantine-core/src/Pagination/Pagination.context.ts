@@ -3,6 +3,7 @@ import { createSafeContext } from '@mantine/utils';
 import type { PaginationStylesNames } from './PaginationRoot/PaginationRoot';
 
 interface PaginationContext {
+  total: number;
   range: (number | 'dots')[];
   active: number;
   disabled: boolean;

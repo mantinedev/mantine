@@ -5,11 +5,11 @@ import { Pagination } from './Pagination';
 export default { title: 'Pagination' };
 
 export function Controlled() {
-  const [value, setValue] = useState(2);
+  const [value, setValue] = useState(1);
   return (
     <>
       Current page: {value}
-      <Pagination total={20} value={value} onChange={setValue} />
+      <Pagination total={20} value={value} onChange={setValue} withEdges />
     </>
   );
 }
