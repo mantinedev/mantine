@@ -5,3 +5,4 @@ export { usage } from './Pagination.demo.usage';
 export { stylesApi } from './Pagination.demo.stylesApi';
 export { composition } from './Pagination.demo.composition';
 export { icons } from './Pagination.demo.icons';
+export { links } from './Pagination.demo.links';
