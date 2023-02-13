@@ -1,17 +1,20 @@
 import React from 'react';
-import { DefaultProps } from '@mantine/styles';
 import { usePaginationContext } from '../Pagination.context';
 import { PaginationControl } from '../PaginationControl/PaginationControl';
 import { PaginationDots } from '../PaginationDots/PaginationDots';
+import { PaginationIcon } from '../Pagination.icons';
 
-export interface PaginationItemsProps extends DefaultProps, React.ComponentPropsWithoutRef<'div'> {}
+export interface PaginationItemsProps {
+  /** Dots icon component */
+  dotsIcon?: PaginationIcon;
+}
 
-export function PaginationItems() {
+export function PaginationItems({ dotsIcon }: PaginationItemsProps) {
   const ctx = usePaginationContext();
 
   const items = ctx.range.map((page, index) => {
     if (page === 'dots') {
-      return <PaginationDots key={index} />;
+      return <PaginationDots icon={dotsIcon} key={index} />;
     }
 
     return (

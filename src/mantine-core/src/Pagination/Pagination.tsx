@@ -5,6 +5,7 @@ import { PaginationRoot, PaginationRootSettings } from './PaginationRoot/Paginat
 import { PaginationItems } from './PaginationItems/PaginationItems';
 import { PaginationControl } from './PaginationControl/PaginationControl';
 import { PaginationDots } from './PaginationDots/PaginationDots';
+import { PaginationIcon } from './Pagination.icons';
 import {
   PaginationNext,
   PaginationFirst,
@@ -23,6 +24,21 @@ export interface PaginationProps
 
   /** Adds props to next/previous/first/last controls */
   getControlProps?(control: 'first' | 'previous' | 'last' | 'next'): Record<string, any>;
+
+  /** Next control icon component */
+  nextIcon?: PaginationIcon;
+
+  /** Previous control icon component */
+  previousIcon?: PaginationIcon;
+
+  /** Last control icon component */
+  lastIcon?: PaginationIcon;
+
+  /** First control icon component */
+  firstIcon?: PaginationIcon;
+
+  /** Dots icon component */
+  dotsIcon?: PaginationIcon;
 }
 
 const defaultProps: Partial<PaginationProps> = {
@@ -56,6 +72,11 @@ export function Pagination(props: PaginationProps) {
     getItemProps,
     getControlProps,
     spacing,
+    nextIcon,
+    previousIcon,
+    lastIcon,
+    firstIcon,
+    dotsIcon,
     ...others
   } = useComponentDefaultProps('Pagination', defaultProps, props);
   const theme = useMantineTheme();
@@ -90,11 +111,13 @@ export function Pagination(props: PaginationProps) {
         spacing={spacing || `calc(${getSize({ size, sizes: theme.spacing })} / 2)`}
         {...others}
       >
-        {withEdges && <PaginationFirst {...getControlProps?.('first')} />}
-        {withControls && <PaginationPrevious {...getControlProps?.('previous')} />}
-        <PaginationItems />
-        {withControls && <PaginationNext {...getControlProps?.('next')} />}
-        {withEdges && <PaginationLast {...getControlProps?.('last')} />}
+        {withEdges && <PaginationFirst icon={firstIcon} {...getControlProps?.('first')} />}
+        {withControls && (
+          <PaginationPrevious icon={previousIcon} {...getControlProps?.('previous')} />
+        )}
+        <PaginationItems dotsIcon={dotsIcon} />
+        {withControls && <PaginationNext icon={nextIcon} {...getControlProps?.('next')} />}
+        {withEdges && <PaginationLast icon={lastIcon} {...getControlProps?.('last')} />}
       </Group>
     </PaginationRoot>
   );
