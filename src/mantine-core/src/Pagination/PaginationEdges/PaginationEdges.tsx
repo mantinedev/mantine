@@ -33,7 +33,7 @@ export function createEdgeComponent({ icon, name, action, type }: CreateEdgeComp
 
     return (
       <PaginationControl
-        disabled={disabled}
+        disabled={ctx.disabled || disabled}
         ref={ref}
         onClick={ctx[action]}
         withPadding={false}
