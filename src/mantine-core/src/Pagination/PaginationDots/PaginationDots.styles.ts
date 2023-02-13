@@ -1,4 +1,4 @@
-import { createStyles, getSize } from '@mantine/core';
+import { createStyles, getSize } from '@mantine/styles';
 import { sizes } from '../PaginationControl/PaginationControl.styles';
 
 export default createStyles((theme, _params, { size }) => ({
