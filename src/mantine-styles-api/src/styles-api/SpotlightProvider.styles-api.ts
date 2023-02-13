@@ -15,4 +15,5 @@ export const SpotlightProvider: Record<SpotlightStylesNames, string> = {
   actionIcon: 'Default action icon wrapper',
   actionBody: 'Default action body',
   actionDescription: 'Default action description',
+  actionHighlight: 'Highlighted query in default action title',
 };
