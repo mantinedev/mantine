@@ -12,8 +12,7 @@ export interface TextStylesParams {
   variant: 'text' | 'link' | 'gradient';
   size: MantineNumberSize;
   lineClamp: number;
-  truncate: boolean;
-  truncateStart: boolean;
+  truncate: 'end' | 'start' | boolean;
   inline: boolean;
   inherit: boolean;
   underline: boolean;
@@ -29,6 +28,10 @@ interface GetTextColor {
   theme: MantineTheme;
   color: 'dimmed' | MantineColor;
   variant: TextStylesParams['variant'];
+}
+interface GetTruncate {
+  truncate: 'end' | 'start' | boolean;
+  theme: MantineTheme;
 }
 
 function getTextDecoration({
@@ -76,17 +79,17 @@ function getLineClamp(lineClamp: number): CSSObject {
   return null;
 }
 
-function getTruncate(truncate: boolean, truncateStart: boolean): CSSObject {
-  if (truncateStart) {
+function getTruncate({ theme, truncate }: GetTruncate): CSSObject {
+  if (truncate === 'start') {
     return {
       overflow: 'hidden',
       textOverflow: 'ellipsis',
       whiteSpace: 'nowrap',
-      direction: 'rtl',
-      textAlign: 'left',
+      direction: theme.dir === 'ltr' ? 'rtl' : 'ltr',
+      textAlign: theme.dir === 'ltr' ? 'right' : 'left',
     };
   }
-  if (truncate) {
+  if (truncate === 'end' || truncate === true) {
     return {
       overflow: 'hidden',
       textOverflow: 'ellipsis',
@@ -106,7 +109,6 @@ export default createStyles(
       size,
       lineClamp,
       truncate,
-      truncateStart,
       inline,
       inherit,
       underline,
@@ -125,7 +127,7 @@ export default createStyles(
         ...theme.fn.fontStyles(),
         ...theme.fn.focusStyles(),
         ...getLineClamp(lineClamp),
-        ...getTruncate(truncate, truncateStart),
+        ...getTruncate({ theme, truncate }),
         color: getTextColor({ color, theme, variant }),
         fontFamily: inherit ? 'inherit' : theme.fontFamily,
         fontSize:
