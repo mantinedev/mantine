@@ -13,6 +13,7 @@ export interface TextStylesParams {
   size: MantineNumberSize;
   lineClamp: number;
   truncate: boolean;
+  truncateStart: boolean;
   inline: boolean;
   inherit: boolean;
   underline: boolean;
@@ -75,7 +76,16 @@ function getLineClamp(lineClamp: number): CSSObject {
   return null;
 }
 
-function getTruncate(truncate: boolean): CSSObject {
+function getTruncate(truncate: boolean, truncateStart: boolean): CSSObject {
+  if (truncateStart) {
+    return {
+      overflow: 'hidden',
+      textOverflow: 'ellipsis',
+      whiteSpace: 'nowrap',
+      direction: 'rtl',
+      textAlign: 'left',
+    };
+  }
   if (truncate) {
     return {
       overflow: 'hidden',
@@ -96,6 +106,7 @@ export default createStyles(
       size,
       lineClamp,
       truncate,
+      truncateStart,
       inline,
       inherit,
       underline,
@@ -114,7 +125,7 @@ export default createStyles(
         ...theme.fn.fontStyles(),
         ...theme.fn.focusStyles(),
         ...getLineClamp(lineClamp),
-        ...getTruncate(truncate),
+        ...getTruncate(truncate, truncateStart),
         color: getTextColor({ color, theme, variant }),
         fontFamily: inherit ? 'inherit' : theme.fontFamily,
         fontSize:
