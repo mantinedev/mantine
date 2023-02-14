@@ -35,10 +35,10 @@ export interface TextProps extends DefaultProps {
   /** CSS -webkit-line-clamp property */
   lineClamp?: number;
 
-  /** CSS truncate overflowing text with an ellipsis on the end of the string */
+  /** CSS truncate overflowing text with an ellipsis on the end of the displayed string */
   truncate?: boolean;
 
-  /** CSS truncate overflowing text with an ellipsis */
+  /** CSS truncate overflowing text with an ellipsis at the beginning of the displayed string */
   truncateStart?: boolean;
 
   /** Sets line-height to 1 for centering */
