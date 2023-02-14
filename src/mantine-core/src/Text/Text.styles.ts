@@ -89,7 +89,7 @@ function getTruncate({ theme, truncate }: GetTruncate): CSSObject {
       textAlign: theme.dir === 'ltr' ? 'right' : 'left',
     };
   }
-  if (truncate === 'end' || truncate === true) {
+  if (truncate) {
     return {
       overflow: 'hidden',
       textOverflow: 'ellipsis',
