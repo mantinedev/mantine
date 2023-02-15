@@ -44,6 +44,7 @@ export default createStyles(
         position: 'relative',
         display: 'flex',
         alignItems: 'center',
+        overflow: 'hidden',
         paddingLeft: 22,
         paddingRight: 5,
         paddingTop: theme.spacing.xs,

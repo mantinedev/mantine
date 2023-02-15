@@ -110,7 +110,7 @@ export function defaultShouldCreate(query: string, data: SelectItem[]) {
   return !!query && !data.some((item) => item.value.toLowerCase() === query.toLowerCase());
 }
 
-function filterValue(value: string[], data: (string | SelectItem)[]): string[] {
+function filterValue(value: string[], data: ReadonlyArray<string | SelectItem>): string[] {
   if (!Array.isArray(value)) {
     return undefined;
   }
@@ -119,8 +119,12 @@ function filterValue(value: string[], data: (string | SelectItem)[]): string[] {
     return [];
   }
 
-  const flatData: string[] =
-    typeof data[0] === 'object' ? data.map((item) => (item as any).value) : data;
+  const flatData: string[] = data.map((item) => {
+    if (typeof item === 'object') {
+      return item.value;
+    }
+    return item;
+  });
   return value.filter((val) => flatData.includes(val));
 }
 
@@ -147,6 +151,7 @@ const defaultProps: Partial<MultiSelectProps> = {
   selectOnBlur: false,
   clearButtonTabIndex: 0,
   positionDependencies: [],
+  dropdownPosition: 'flip',
 };
 
 export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>((props, ref) => {
