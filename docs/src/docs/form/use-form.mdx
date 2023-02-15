@@ -92,7 +92,7 @@ form.reset();
 form.insertListItem('fruits', { name: 'Apple', available: true });
 
 // An optional index may be provided to specify the position in a nested field.
-// If the index is passed where an item already exists, it will be replaced.
+// If the index is provided, item will be inserted at the given position.
 // If the index is larger than the current list, the element is inserted at the last position.
 form.insertListItem('fruits', { name: 'Orange', available: true }, 1);
 
