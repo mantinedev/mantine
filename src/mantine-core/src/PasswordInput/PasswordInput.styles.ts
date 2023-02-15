@@ -34,6 +34,10 @@ export default createStyles((theme, { size, rightSectionWidth }: PasswordInputSt
     left: 0,
     right: 0,
 
+    '&::-ms-reveal, &::-ms-clear': {
+      display: 'none',
+    },
+
     '&:focus': {
       outline: 0,
     },

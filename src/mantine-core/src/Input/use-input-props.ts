@@ -1,4 +1,4 @@
-import { useComponentDefaultProps, DefaultProps } from '@mantine/styles';
+import { useComponentDefaultProps, DefaultProps, MantineStyleSystemProps } from '@mantine/styles';
 import { useId } from '@mantine/hooks';
 import { extractSystemStyles } from '../Box';
 import { InputWrapperBaseProps } from './InputWrapper/InputWrapper';
@@ -9,16 +9,11 @@ interface BaseProps extends InputWrapperBaseProps, InputSharedProps, DefaultProp
   id?: string;
 }
 
-interface UseInputPropsReturnType extends Record<string, any> {
-  wrapperProps: Record<string, any>;
-  inputProps: Record<string, any>;
-}
-
 export function useInputProps<T extends BaseProps, U extends Partial<T>>(
   component: string,
   defaultProps: U,
   props: T
-): UseInputPropsReturnType {
+) {
   const {
     label,
     description,
@@ -33,7 +28,7 @@ export function useInputProps<T extends BaseProps, U extends Partial<T>>(
     errorProps,
     labelProps,
     descriptionProps,
-    wrapperProps,
+    wrapperProps: _wrapperProps,
     id,
     size,
     style,
@@ -47,35 +42,38 @@ export function useInputProps<T extends BaseProps, U extends Partial<T>>(
 
   const { systemStyles, rest } = extractSystemStyles(others);
 
+  const wrapperProps = {
+    label,
+    description,
+    error,
+    required,
+    classNames,
+    className,
+    __staticSelector,
+    sx,
+    errorProps,
+    labelProps,
+    descriptionProps,
+    unstyled,
+    styles,
+    id: uid,
+    size,
+    style,
+    inputContainer,
+    inputWrapperOrder,
+    withAsterisk,
+    ..._wrapperProps,
+  };
+
   return {
     ...rest,
     classNames,
     styles,
     unstyled,
-
     wrapperProps: {
-      label,
-      description,
-      error,
-      required,
-      classNames,
-      className,
-      __staticSelector,
-      sx,
-      errorProps,
-      labelProps,
-      descriptionProps,
-      unstyled,
-      styles,
-      id: uid,
-      size,
-      style,
-      inputContainer,
-      inputWrapperOrder,
-      withAsterisk,
       ...wrapperProps,
       ...systemStyles,
-    },
+    } as typeof wrapperProps & MantineStyleSystemProps,
     inputProps: {
       required,
       classNames,

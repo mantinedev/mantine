@@ -36,7 +36,7 @@ export interface TextProps extends DefaultProps {
   lineClamp?: number;
 
   /** CSS truncate overflowing text with an ellipsis */
-  truncate?: boolean;
+  truncate?: 'end' | 'start' | true;
 
   /** Sets line-height to 1 for centering */
   inline?: boolean;
