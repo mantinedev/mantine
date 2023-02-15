@@ -13,7 +13,7 @@ function Demo() {
       parser={(value) => value.replace(/\\$\\s?|(,*)/g, '')}
       formatter={(value) =>
         !Number.isNaN(parseFloat(value))
-          ? \`$ \${value}\`.replace(/\\B(?=(\\d{3})+(?!\\d))/g, ',')
+          ? \`$ \${value}\`.replace(/\\B(?<!\\.\\d*)(?=(\\d{3})+(?!\\d))/g, ',')
           : '$ '
       }
     />
