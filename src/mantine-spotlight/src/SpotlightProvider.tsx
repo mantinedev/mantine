@@ -86,7 +86,7 @@ export function SpotlightProvider({
       if (cleanQueryOnClose) {
         timeoutRef.current = window.setTimeout(() => {
           handleQueryChange('');
-        }, transitionProps.duration);
+        }, transitionProps.duration || 150);
       }
     },
     onOpen: () => {
@@ -119,6 +119,7 @@ export function SpotlightProvider({
           opened={opened}
           query={_query}
           onQueryChange={handleQueryChange}
+          transitionProps={transitionProps}
           {...others}
         />
       )}
