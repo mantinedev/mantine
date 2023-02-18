@@ -50,7 +50,7 @@
     "@tabler/icons-react": "*",
     "react-beautiful-dnd": "*",
     "embla-carousel-autoplay": "*",
-    "react-input-mask": "*",
+    "react-imask": "*",
     "dayjs": "*",
     "zod": "*",
     "prism-react-renderer": "*"
