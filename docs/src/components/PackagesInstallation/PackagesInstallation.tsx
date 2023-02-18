@@ -46,6 +46,7 @@ export function PackagesInstallation({ extraPackages = [] }: PackagesInstallatio
       <td>
         <Checkbox
           checked={selection.includes(item.package)}
+          onChange={() => {}}
           sx={{ pointerEvents: 'none', display: 'flex' }}
         />
       </td>
