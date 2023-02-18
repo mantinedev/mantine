@@ -15,7 +15,7 @@ import { TOOLTIP_ERRORS } from './Tooltip.errors';
 const defaultProps: TooltipProps = {
   withinPortal: false,
   opened: true,
-  transitionDuration: 0,
+  transitionProps: { duration: 0 },
   label: 'test-tooltip',
   children: <button type="button">test-target</button>,
 };
@@ -68,7 +68,7 @@ describe('@mantine/core/Tooltip', () => {
 
   it('shows tooltip when target element is hovered', async () => {
     render(
-      <Tooltip label="test-tooltip" transitionDuration={0}>
+      <Tooltip label="test-tooltip" transitionProps={{ duration: 0 }}>
         <button type="button">target</button>
       </Tooltip>
     );

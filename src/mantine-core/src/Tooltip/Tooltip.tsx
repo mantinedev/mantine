@@ -6,7 +6,7 @@ import { TooltipGroup } from './TooltipGroup/TooltipGroup';
 import { TooltipFloating } from './TooltipFloating/TooltipFloating';
 import { useTooltip } from './use-tooltip';
 import { FloatingArrow, getFloatingPosition, FloatingPosition, ArrowPosition } from '../Floating';
-import { MantineTransition, Transition } from '../Transition';
+import { Transition, TransitionOverride } from '../Transition';
 import { OptionalPortal } from '../Portal';
 import { Box } from '../Box';
 import { TOOLTIP_ERRORS } from './Tooltip.errors';
@@ -46,11 +46,8 @@ export interface TooltipProps extends TooltipBaseProps {
   /** Arrow position **/
   arrowPosition?: ArrowPosition;
 
-  /** One of premade transitions ot transition object */
-  transition?: MantineTransition;
-
-  /** Transition duration in ms */
-  transitionDuration?: number;
+  /** Props added to Transition component that used to animate tooltip presence, use to configure duration and animation type, { duration: 100, transition: 'fade' } by default */
+  transitionProps?: TransitionOverride;
 
   /** Determines which events will be used to show tooltip */
   events?: { hover: boolean; focus: boolean; touch: boolean };
@@ -75,8 +72,7 @@ const defaultProps: Partial<TooltipProps> = {
   arrowRadius: 0,
   arrowPosition: 'side',
   offset: 5,
-  transition: 'fade',
-  transitionDuration: 100,
+  transitionProps: { duration: 100, transition: 'fade' },
   width: 'auto',
   events: { hover: true, focus: false, touch: false },
   zIndex: getDefaultZIndex('popover'),
@@ -108,8 +104,7 @@ const _Tooltip = forwardRef<HTMLElement, TooltipProps>((props, ref) => {
     arrowRadius,
     arrowPosition,
     offset,
-    transition,
-    transitionDuration,
+    transitionProps,
     multiline,
     width,
     events,
@@ -156,8 +151,9 @@ const _Tooltip = forwardRef<HTMLElement, TooltipProps>((props, ref) => {
         <Transition
           keepMounted={keepMounted}
           mounted={!disabled && tooltip.opened}
-          transition={transition}
-          duration={tooltip.isGroupPhase ? 10 : transitionDuration}
+          {...transitionProps}
+          transition={transitionProps.transition || 'fade'}
+          duration={tooltip.isGroupPhase ? 10 : transitionProps.duration || 100}
         >
           {(transitionStyles) => (
             <Box

@@ -23,7 +23,6 @@ export function HeaderCode({ code, icon, language }: ImportStatementProps) {
       <Tooltip
         label={clipboard.copied ? 'Copied' : 'Copy'}
         position="right"
-        transition="fade"
         withArrow
         arrowSize={6}
         offset={10}
