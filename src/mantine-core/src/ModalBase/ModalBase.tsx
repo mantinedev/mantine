@@ -57,9 +57,6 @@ export interface ModalBaseSettings extends React.ComponentPropsWithoutRef<'div'>
   /** Determines whether the modal/drawer should be closed when user clicks on the overlay, true by default */
   closeOnClickOutside?: boolean;
 
-  /** Transition duration in ms */
-  transitionDuration?: number;
-
   /** Props added to Transition component that used to animate overlay and body, use to configure duration and animation type, { duration: 200, transition: 'pop' } by default */
   transitionProps?: TransitionOverride;
 

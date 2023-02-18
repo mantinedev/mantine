@@ -55,7 +55,7 @@ export function SpotlightProvider({
   onQueryChange,
   onActionsChange,
   cleanQueryOnClose = true,
-  transitionDuration = 150,
+  transitionProps = { duration: 150 },
   disabled = false,
   tagsToIgnore = ['INPUT', 'TEXTAREA', 'SELECT'],
   triggerOnContentEditable = false,
@@ -86,7 +86,7 @@ export function SpotlightProvider({
       if (cleanQueryOnClose) {
         timeoutRef.current = window.setTimeout(() => {
           handleQueryChange('');
-        }, transitionDuration);
+        }, transitionProps.duration);
       }
     },
     onOpen: () => {
@@ -119,7 +119,6 @@ export function SpotlightProvider({
           opened={opened}
           query={_query}
           onQueryChange={handleQueryChange}
-          transitionDuration={transitionDuration}
           {...others}
         />
       )}
