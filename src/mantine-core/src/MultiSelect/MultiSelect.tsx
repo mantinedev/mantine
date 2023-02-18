@@ -129,8 +129,7 @@ const defaultProps: Partial<MultiSelectProps> = {
   size: 'sm',
   valueComponent: DefaultValue,
   itemComponent: DefaultItem,
-  transition: 'pop-top-left',
-  transitionDuration: 0,
+  transitionProps: { transition: 'fade', duration: 0 },
   maxDropdownHeight: 220,
   shadow: 'sm',
   searchable: false,
@@ -169,9 +168,7 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>((props
     valueComponent: Value,
     itemComponent,
     id,
-    transition,
-    transitionDuration,
-    transitionTimingFunction,
+    transitionProps,
     maxDropdownHeight,
     shadow,
     nothingFound,
@@ -615,8 +612,7 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>((props
     >
       <SelectPopover
         opened={shouldRenderDropdown}
-        transition={transition}
-        transitionDuration={transitionDuration}
+        transitionProps={transitionProps}
         shadow="sm"
         withinPortal={withinPortal}
         __staticSelector="MultiSelect"

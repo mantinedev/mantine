@@ -15,7 +15,7 @@ import {
 import { YearPickerInput } from './YearPickerInput';
 
 const defaultProps = {
-  popoverProps: { withinPortal: false, transitionDuration: 0 },
+  popoverProps: { withinPortal: false, transitionProps: { duration: 0 } },
   modalProps: { withinPortal: false, transitionProps: { duration: 0 } },
 };
 
@@ -37,7 +37,7 @@ describe('@mantine/dates/YearPickerInput', () => {
   itSupportsYearsListProps(YearPickerInput, {
     ...defaultProps,
     defaultValue: new Date(),
-    popoverProps: { opened: true, withinPortal: false, transitionDuration: 0 },
+    popoverProps: { opened: true, withinPortal: false, transitionProps: { duration: 0 } },
   });
 
   it('supports valueFormat prop', () => {
@@ -71,7 +71,7 @@ describe('@mantine/dates/YearPickerInput', () => {
     const { container } = render(
       <YearPickerInput
         {...defaultProps}
-        popoverProps={{ opened: true, withinPortal: false, transitionDuration: 0 }}
+        popoverProps={{ opened: true, withinPortal: false, transitionProps: { duration: 0 } }}
       />
     );
     expect(container.firstChild).toHaveClass('mantine-YearPickerInput-root');
@@ -88,7 +88,7 @@ describe('@mantine/dates/YearPickerInput', () => {
     const { container } = render(
       <YearPickerInput
         {...defaultProps}
-        popoverProps={{ opened: true, withinPortal: false, transitionDuration: 0 }}
+        popoverProps={{ opened: true, withinPortal: false, transitionProps: { duration: 0 } }}
         classNames={{
           root: 'test-root',
           input: 'test-input',
@@ -105,7 +105,7 @@ describe('@mantine/dates/YearPickerInput', () => {
     const { container } = render(
       <YearPickerInput
         {...defaultProps}
-        popoverProps={{ opened: true, withinPortal: false, transitionDuration: 0 }}
+        popoverProps={{ opened: true, withinPortal: false, transitionProps: { duration: 0 } }}
         styles={{
           root: { borderColor: '#CCEE45' },
           input: { borderColor: '#EB4522' },

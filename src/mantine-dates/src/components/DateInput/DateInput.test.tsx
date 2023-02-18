@@ -20,7 +20,7 @@ import {
 import { DateInput, DateInputProps } from './DateInput';
 
 const defaultProps: DateInputProps = {
-  popoverProps: { transitionDuration: 0, withinPortal: false },
+  popoverProps: { transitionProps: { duration: 0 }, withinPortal: false },
   ariaLabels: {
     monthLevelControl: 'level-control',
     yearLevelControl: 'level-control',
@@ -50,13 +50,19 @@ describe('@mantine/dates/DateInput', () => {
 
   itSupportsProviderVariant(
     DateInput,
-    { ...defaultProps, popoverProps: { opened: true, withinPortal: false, transitionDuration: 0 } },
+    {
+      ...defaultProps,
+      popoverProps: { opened: true, withinPortal: false, transitionProps: { duration: 0 } },
+    },
     'DateInput',
     ['root', 'input']
   );
   itSupportsProviderSize(
     DateInput,
-    { ...defaultProps, popoverProps: { opened: true, withinPortal: false, transitionDuration: 0 } },
+    {
+      ...defaultProps,
+      popoverProps: { opened: true, withinPortal: false, transitionProps: { duration: 0 } },
+    },
     'DateInput',
     ['root', 'input']
   );
@@ -68,14 +74,14 @@ describe('@mantine/dates/DateInput', () => {
     ...defaultProps,
     defaultLevel: 'decade',
     defaultValue: new Date(2022, 3, 11),
-    popoverProps: { opened: true, withinPortal: false, transitionDuration: 0 },
+    popoverProps: { opened: true, withinPortal: false, transitionProps: { duration: 0 } },
   });
 
   itSupportsMonthsListProps(DateInput, {
     ...defaultProps,
     defaultLevel: 'year',
     defaultValue: new Date(2022, 3, 11),
-    popoverProps: { opened: true, withinPortal: false, transitionDuration: 0 },
+    popoverProps: { opened: true, withinPortal: false, transitionProps: { duration: 0 } },
   });
 
   it('opens/closes dropdown when input is focused/blurred', async () => {
@@ -340,7 +346,7 @@ describe('@mantine/dates/DateInput', () => {
     const { container } = render(
       <DateInput
         {...defaultProps}
-        popoverProps={{ opened: true, withinPortal: false, transitionDuration: 0 }}
+        popoverProps={{ opened: true, withinPortal: false, transitionProps: { duration: 0 } }}
       />
     );
     expect(container.firstChild).toHaveClass('mantine-DateInput-root');
@@ -353,7 +359,7 @@ describe('@mantine/dates/DateInput', () => {
     const { container } = render(
       <DateInput
         {...defaultProps}
-        popoverProps={{ opened: true, withinPortal: false, transitionDuration: 0 }}
+        popoverProps={{ opened: true, withinPortal: false, transitionProps: { duration: 0 } }}
         classNames={{
           root: 'test-root',
           input: 'test-input',
@@ -370,7 +376,7 @@ describe('@mantine/dates/DateInput', () => {
     const { container } = render(
       <DateInput
         {...defaultProps}
-        popoverProps={{ opened: true, withinPortal: false, transitionDuration: 0 }}
+        popoverProps={{ opened: true, withinPortal: false, transitionProps: { duration: 0 } }}
         styles={{
           root: { borderColor: '#CCEE45' },
           input: { borderColor: '#EB4522' },

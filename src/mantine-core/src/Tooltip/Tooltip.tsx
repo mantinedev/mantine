@@ -153,7 +153,7 @@ const _Tooltip = forwardRef<HTMLElement, TooltipProps>((props, ref) => {
           mounted={!disabled && tooltip.opened}
           {...transitionProps}
           transition={transitionProps.transition || 'fade'}
-          duration={tooltip.isGroupPhase ? 10 : transitionProps.duration || 100}
+          duration={tooltip.isGroupPhase ? 10 : transitionProps.duration ?? 100}
         >
           {(transitionStyles) => (
             <Box

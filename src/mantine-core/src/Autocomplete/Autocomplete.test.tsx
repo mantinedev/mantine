@@ -15,7 +15,7 @@ const defaultProps: AutocompleteProps = {
   initiallyOpened: true,
   label: 'Test',
   data: [{ value: 'test-1' }, { value: 'test-2' }],
-  transitionDuration: 0,
+  transitionProps: { duration: 0 },
 };
 
 const largeDataSet: AutocompleteProps['data'] = Array(50)

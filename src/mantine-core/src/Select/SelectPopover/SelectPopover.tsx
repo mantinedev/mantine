@@ -3,7 +3,7 @@ import { ClassNames, MantineShadow, Styles, Selectors, DefaultProps, rem } from 
 import { SelectScrollArea } from '../SelectScrollArea/SelectScrollArea';
 import { Popover } from '../../Popover';
 import { Box } from '../../Box';
-import { MantineTransition } from '../../Transition';
+import { TransitionOverride } from '../../Transition';
 import useStyles from './SelectPopover.styles';
 
 export type SelectPopoverStylesNames = Selectors<typeof useStyles>;
@@ -57,8 +57,7 @@ function SelectPopoverDropdown({
 
 interface SelectPopoverProps {
   opened: boolean;
-  transition?: MantineTransition;
-  transitionDuration?: number;
+  transitionProps: TransitionOverride;
   shadow?: MantineShadow;
   withinPortal?: boolean;
   children: React.ReactNode;
@@ -77,8 +76,7 @@ interface SelectPopoverProps {
 
 export function SelectPopover({
   opened,
-  transition = 'fade',
-  transitionDuration = 0,
+  transitionProps = { transition: 'fade', duration: 0 },
   shadow,
   withinPortal,
   children,
@@ -108,8 +106,7 @@ export function SelectPopover({
       zIndex={zIndex}
       __staticSelector={__staticSelector}
       withinPortal={withinPortal}
-      transition={transition}
-      transitionDuration={transitionDuration}
+      transitionProps={transitionProps}
       shadow={shadow}
       disabled={readOnly}
       onPositionChange={(nextPosition) =>

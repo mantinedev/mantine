@@ -20,7 +20,7 @@ import {
 import { ColorSwatch } from '../ColorSwatch';
 import { ActionIcon } from '../ActionIcon';
 import { Popover, PopoverStylesNames } from '../Popover';
-import { MantineTransition } from '../Transition';
+import { TransitionOverride } from '../Transition';
 import {
   ColorPicker,
   ColorPickerBaseProps,
@@ -53,14 +53,8 @@ export interface ColorInputProps
   /** Display swatch with color preview on the left side of input */
   withPreview?: boolean;
 
-  /** Dropdown transition name or object */
-  transition?: MantineTransition;
-
-  /** Dropdown appear/disappear transition duration in ms */
-  transitionDuration?: number;
-
-  /** Dropdown transition timing function, defaults to theme.transitionTimingFunction */
-  transitionTimingFunction?: string;
+  /** Props added to Transition component that used to animate dropdown presence, use to configure duration and animation type, { duration: 0, transition: 'fade' } by default */
+  transitionProps?: TransitionOverride;
 
   /** Whether to render the dropdown in a Portal */
   withinPortal?: boolean;
@@ -101,9 +95,8 @@ const defaultProps: Partial<ColorInputProps> = {
   withPreview: true,
   swatchesPerRow: 10,
   withPicker: true,
-  transition: 'pop-top-left',
+  transitionProps: { transition: 'fade', duration: 0 },
   dropdownZIndex: getDefaultZIndex('popover'),
-  transitionDuration: 0,
   withinPortal: true,
   shadow: 'md',
   withEyeDropper: true,
@@ -127,10 +120,8 @@ export const ColorInput = forwardRef<HTMLInputElement, ColorInputProps>((props, 
     swatchesPerRow,
     withPicker,
     icon,
-    transition,
+    transitionProps,
     dropdownZIndex,
-    transitionDuration,
-    transitionTimingFunction,
     withinPortal,
     swatches,
     shadow,
@@ -210,8 +201,7 @@ export const ColorInput = forwardRef<HTMLInputElement, ColorInputProps>((props, 
         offset={5}
         zIndex={dropdownZIndex}
         withinPortal={withinPortal}
-        transitionDuration={transitionDuration}
-        transition={transition}
+        transitionProps={transitionProps}
         opened={dropdownOpened}
         shadow={shadow}
         classNames={classNames}

@@ -11,7 +11,7 @@ import { MenuDivider } from './MenuDivider/MenuDivider';
 
 function TestContainer(props: MenuProps) {
   return (
-    <Menu transitionDuration={0} closeDelay={0} openDelay={0} {...props}>
+    <Menu transitionProps={{ duration: 0 }} closeDelay={0} openDelay={0} {...props}>
       <Menu.Target>
         <button type="button">test-target</button>
       </Menu.Target>

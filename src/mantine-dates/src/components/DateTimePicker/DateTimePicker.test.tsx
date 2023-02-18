@@ -23,7 +23,7 @@ import {
 import { DateTimePicker, DateTimePickerProps } from './DateTimePicker';
 
 const defaultProps: DateTimePickerProps = {
-  popoverProps: { withinPortal: false, transitionDuration: 0 },
+  popoverProps: { withinPortal: false, transitionProps: { duration: 0 } },
   modalProps: { withinPortal: false, transitionProps: { duration: 0 } },
   timeInputProps: { 'aria-label': 'test-time-input' },
   submitButtonProps: { 'aria-label': 'test-submit' },
@@ -64,13 +64,13 @@ describe('@mantine/dates/DateTimePicker', () => {
     ...defaultProps,
     defaultLevel: 'decade',
     defaultValue: new Date(2022, 3, 11),
-    popoverProps: { opened: true, withinPortal: false, transitionDuration: 0 },
+    popoverProps: { opened: true, withinPortal: false, transitionProps: { duration: 0 } },
   });
   itSupportsMonthsListProps(DateTimePicker, {
     ...defaultProps,
     defaultLevel: 'year',
     defaultValue: new Date(2022, 3, 11),
-    popoverProps: { opened: true, withinPortal: false, transitionDuration: 0 },
+    popoverProps: { opened: true, withinPortal: false, transitionProps: { duration: 0 } },
   });
 
   it('toggles popover when input is clicked (dropdownType="popover")', async () => {
@@ -274,7 +274,7 @@ describe('@mantine/dates/DateTimePicker', () => {
     const { container } = render(
       <DateTimePicker
         {...defaultProps}
-        popoverProps={{ opened: true, withinPortal: false, transitionDuration: 0 }}
+        popoverProps={{ opened: true, withinPortal: false, transitionProps: { duration: 0 } }}
       />
     );
     expect(container.firstChild).toHaveClass('mantine-DateTimePicker-root');
@@ -289,7 +289,7 @@ describe('@mantine/dates/DateTimePicker', () => {
     const { container } = render(
       <DateTimePicker
         {...defaultProps}
-        popoverProps={{ opened: true, withinPortal: false, transitionDuration: 0 }}
+        popoverProps={{ opened: true, withinPortal: false, transitionProps: { duration: 0 } }}
         classNames={{
           root: 'test-root',
           input: 'test-input',
@@ -306,7 +306,7 @@ describe('@mantine/dates/DateTimePicker', () => {
     const { container } = render(
       <DateTimePicker
         {...defaultProps}
-        popoverProps={{ opened: true, withinPortal: false, transitionDuration: 0 }}
+        popoverProps={{ opened: true, withinPortal: false, transitionProps: { duration: 0 } }}
         styles={{
           root: { borderColor: '#CCEE45' },
           input: { borderColor: '#EB4522' },

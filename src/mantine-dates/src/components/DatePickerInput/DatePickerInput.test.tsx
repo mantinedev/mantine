@@ -16,7 +16,7 @@ import {
 import { DatePickerInput } from './DatePickerInput';
 
 const defaultProps = {
-  popoverProps: { withinPortal: false, transitionDuration: 0 },
+  popoverProps: { withinPortal: false, transitionProps: { duration: 0 } },
   modalProps: { withinPortal: false, transitionProps: { duration: 0 } },
 };
 
@@ -42,13 +42,13 @@ describe('@mantine/dates/DatePickerInput', () => {
     ...defaultProps,
     defaultLevel: 'decade',
     defaultValue: new Date(2022, 3, 11),
-    popoverProps: { opened: true, withinPortal: false, transitionDuration: 0 },
+    popoverProps: { opened: true, withinPortal: false, transitionProps: { duration: 0 } },
   });
   itSupportsMonthsListProps(DatePickerInput, {
     ...defaultProps,
     defaultLevel: 'year',
     defaultValue: new Date(2022, 3, 11),
-    popoverProps: { opened: true, withinPortal: false, transitionDuration: 0 },
+    popoverProps: { opened: true, withinPortal: false, transitionProps: { duration: 0 } },
   });
 
   it('supports valueFormat prop', () => {
@@ -82,7 +82,7 @@ describe('@mantine/dates/DatePickerInput', () => {
     const { container } = render(
       <DatePickerInput
         {...defaultProps}
-        popoverProps={{ opened: true, withinPortal: false, transitionDuration: 0 }}
+        popoverProps={{ opened: true, withinPortal: false, transitionProps: { duration: 0 } }}
       />
     );
     expect(container.firstChild).toHaveClass('mantine-DatePickerInput-root');
@@ -97,7 +97,7 @@ describe('@mantine/dates/DatePickerInput', () => {
     const { container } = render(
       <DatePickerInput
         {...defaultProps}
-        popoverProps={{ opened: true, withinPortal: false, transitionDuration: 0 }}
+        popoverProps={{ opened: true, withinPortal: false, transitionProps: { duration: 0 } }}
         classNames={{
           root: 'test-root',
           input: 'test-input',
@@ -114,7 +114,7 @@ describe('@mantine/dates/DatePickerInput', () => {
     const { container } = render(
       <DatePickerInput
         {...defaultProps}
-        popoverProps={{ opened: true, withinPortal: false, transitionDuration: 0 }}
+        popoverProps={{ opened: true, withinPortal: false, transitionProps: { duration: 0 } }}
         styles={{
           root: { borderColor: '#CCEE45' },
           input: { borderColor: '#EB4522' },

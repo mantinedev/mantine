@@ -57,13 +57,14 @@ export function PopoverDropdown(props: PopoverDropdownProps) {
     <OptionalPortal withinPortal={ctx.withinPortal}>
       <Transition
         mounted={ctx.opened}
-        transition={ctx.transition}
-        duration={ctx.transitionDuration}
+        {...ctx.transitionProps}
+        transition={ctx.transitionProps.transition || 'fade'}
+        duration={ctx.transitionProps.duration ?? 150}
         keepMounted={ctx.keepMounted}
         exitDuration={
-          typeof ctx.exitTransitionDuration === 'number'
-            ? ctx.exitTransitionDuration
-            : ctx.transitionDuration
+          typeof ctx.transitionProps.exitDuration === 'number'
+            ? ctx.transitionProps.exitDuration
+            : ctx.transitionProps.duration
         }
       >
         {(transitionStyles) => (

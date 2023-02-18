@@ -2,7 +2,7 @@ import { ReferenceType } from '@floating-ui/react';
 import { createSafeContext } from '@mantine/utils';
 import { MantineNumberSize, MantineShadow, ClassNames, Styles } from '@mantine/styles';
 import { FloatingPosition, ArrowPosition } from '../Floating';
-import { MantineTransition } from '../Transition';
+import { TransitionOverride } from '../Transition';
 import { POPOVER_ERRORS } from './Popover.errors';
 import { PopoverWidth, PopoverStylesNames, PopoverStylesParams } from './Popover.types';
 
@@ -13,9 +13,7 @@ interface PopoverContext {
   arrowY: number;
   arrowRef: React.RefObject<HTMLDivElement>;
   opened: boolean;
-  transition: MantineTransition;
-  transitionDuration: number;
-  exitTransitionDuration: number;
+  transitionProps?: TransitionOverride;
   reference: (node: ReferenceType) => void;
   floating: (node: HTMLElement) => void;
   width?: PopoverWidth;

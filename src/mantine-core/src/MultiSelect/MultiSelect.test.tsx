@@ -18,7 +18,7 @@ import { MultiSelect, MultiSelectProps } from './MultiSelect';
 
 const defaultProps: MultiSelectProps = {
   withinPortal: false,
-  transitionDuration: 0,
+  transitionProps: { duration: 0 },
   label: 'test-multi-select',
   data: ['React', 'Angular', 'Svelte', 'Vue'],
   defaultValue: ['React', 'Angular'],

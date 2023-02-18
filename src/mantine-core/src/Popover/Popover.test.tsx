@@ -13,7 +13,7 @@ const defaultProps: PopoverProps = {
 
 function TestContainer(props: Partial<PopoverProps>) {
   return (
-    <Popover transitionDuration={0} {...props}>
+    <Popover transitionProps={{ duration: 0 }} {...props}>
       <Popover.Target>
         <button type="button">test-target</button>
       </Popover.Target>
