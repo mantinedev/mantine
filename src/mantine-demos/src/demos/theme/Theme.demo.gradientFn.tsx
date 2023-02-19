@@ -4,13 +4,14 @@ import { MantineProvider, Center, Group, rem } from '@mantine/core';
 
 const code = `
 import { MantineProvider, Center, Group } from '@mantine/core';
+
 function Demo() {
   return (
     <MantineProvider inherit theme={{ defaultGradient: { from: 'blue', to: 'teal', deg: 20 } }}>
       <Group position="center" grow>
         <Center
           sx={(theme) => ({
-            height: ${rem(40)},
+            height: '${rem(40)}',
             backgroundImage: theme.fn.gradient(),
             color: theme.white,
           })}
@@ -20,7 +21,7 @@ function Demo() {
 
         <Center
           sx={(theme) => ({
-            height: ${rem(40)},
+            height: '${rem(40)}',
             backgroundImage: theme.fn.gradient({ from: 'red', to: 'orange', deg: 45 }),
             color: theme.white,
           })}

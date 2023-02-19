@@ -14,16 +14,16 @@ function Demo() {
             sizes: {
               xxxs: () => ({
                 root: {
-                  height: ${rem(20)},
-                  padding: ${rem(5)},
-                  fontSize: ${rem(8)},
+                  height: '${rem(20)}',
+                  padding: '${rem(5)}',
+                  fontSize: '${rem(8)}',
                 },
               }),
 
               xxl: (theme) => ({
                 root: {
-                  fontSize: ${rem(28)},
-                  height: ${rem(80)},
+                  fontSize: '${rem(28)}',
+                  height: '${rem(80)}',
                   padding: theme.spacing.xl,
                 },
               }),

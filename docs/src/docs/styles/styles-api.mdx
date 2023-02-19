@@ -64,19 +64,19 @@ const useStyles = createStyles((theme) => ({
     backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[3] : theme.colors.blue[1],
   },
   mark: {
-    width: 6,
-    height: 6,
-    borderRadius: 6,
+    width: rem(6),
+    height: rem(6),
+    borderRadius: rem(6),
     transform: `translateX(-${rem(3)}) translateY(-${rem(2)})`,
     borderColor: theme.colorScheme === 'dark' ? theme.colors.dark[3] : theme.colors.blue[1],
   },
   markFilled: {
     borderColor: theme.colors.blue[6],
   },
-  markLabel: { fontSize: theme.fontSizes.xs, marginBottom: 5, marginTop: 0 },
+  markLabel: { fontSize: theme.fontSizes.xs, marginBottom: rem(5), marginTop: 0 },
   thumb: {
-    height: 16,
-    width: 16,
+    height: rem(16),
+    width: rem(16),
     backgroundColor: theme.white,
     borderWidth: 1,
     boxShadow: theme.shadows.sm,
@@ -142,7 +142,7 @@ function App() {
         components: {
           Text: {
             styles: {
-              root: { fontSize: 20 },
+              root: { fontSize: '2rem' },
             },
           },
         },
@@ -150,7 +150,7 @@ function App() {
       withGlobalStyles
       withNormalizeCSS
     >
-      <Text>20px text</Text>
+      <Text>2rem text</Text>
     </MantineProvider>
   );
 }

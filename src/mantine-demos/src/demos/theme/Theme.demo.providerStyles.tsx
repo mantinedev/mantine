@@ -3,7 +3,7 @@ import { MantineDemo } from '@mantine/ds';
 import { MantineProvider, Button, Badge, Group, ButtonStylesParams, rem } from '@mantine/core';
 
 const code = `
-import { MantineProvider, Button, Badge, ButtonStylesParams } from '@mantine/core';
+import { MantineProvider, Group, Button, Badge, ButtonStylesParams } from '@mantine/core';
 
 function Demo() {
   return (
@@ -14,7 +14,7 @@ function Demo() {
             // Subscribe to theme and component params
             styles: (theme, params: ButtonStylesParams, { variant }) => ({
               root: {
-                height: ${rem(42)},
+                height: '${rem(42)}',
                 padding: '0 ${rem(30)}',
                 backgroundColor:
                   variant === 'filled'
@@ -27,7 +27,7 @@ function Demo() {
           Badge: {
             // Use raw styles object if you do not need theme dependency
             styles: {
-              root: { borderWidth: ${rem(2)} },
+              root: { borderWidth: '${rem(2)}' },
             },
           },
         },

@@ -3,7 +3,7 @@ import { MantineDemo } from '@mantine/ds';
 import { MediaQuery, Text, rem, em } from '@mantine/core';
 
 const code = `
-import { MediaQuery, Text } from '@mantine/core';
+import { MediaQuery, Text, rem } from '@mantine/core';
 
 function Demo() {
   return (
