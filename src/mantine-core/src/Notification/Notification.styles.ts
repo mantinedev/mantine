@@ -30,6 +30,7 @@ export default createStyles((theme, { color, radius, withTitle }: NotificationSt
     },
 
     root: {
+      overflow: 'hidden',
       boxSizing: 'border-box',
       position: 'relative',
       display: 'flex',

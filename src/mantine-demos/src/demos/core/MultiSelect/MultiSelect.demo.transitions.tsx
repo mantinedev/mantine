@@ -9,10 +9,10 @@ import { MultiSelect } from '@mantine/core';
 function Demo() {
   return (
     <MultiSelect
-      data={[]}
-      transitionDuration={150}
-      transition="pop-top-left"
-      transitionTimingFunction="ease"
+      data={[/* ...data */]}
+      label="Your favorite frameworks/libraries"
+      placeholder="Pick all that you like"
+      transitionProps={{ duration: 150, transition: 'pop-top-left', timingFunction: 'ease' }}
     />
   );
 }
@@ -24,9 +24,7 @@ function Demo() {
       maw={400}
       mx="auto"
       data={data}
-      transitionDuration={150}
-      transition="pop-top-left"
-      transitionTimingFunction="ease"
+      transitionProps={{ duration: 150, transition: 'pop-top-left', timingFunction: 'ease' }}
       label="Your favorite frameworks/libraries"
       placeholder="Pick all that you like"
     />

@@ -11,7 +11,7 @@ import {
   getDefaultZIndex,
   useComponentDefaultProps,
 } from '@mantine/styles';
-import { MantineTransition } from '../Transition';
+import { TransitionOverride } from '../Transition';
 import { getFloatingPosition, FloatingPosition, ArrowPosition } from '../Floating';
 import { usePopover } from './use-popover';
 import { PopoverContextProvider } from './Popover.context';
@@ -46,14 +46,8 @@ export interface PopoverBaseProps {
   /** If set dropdown will not be unmounted from the DOM when it is hidden, display: none styles will be added instead */
   keepMounted?: boolean;
 
-  /** One of premade transitions ot transition object */
-  transition?: MantineTransition;
-
-  /** Transition duration in ms */
-  transitionDuration?: number;
-
-  /** Exit transition duration in ms */
-  exitTransitionDuration?: number;
+  /** Props added to Transition component that used to animate dropdown presence, use to configure duration and animation type, { duration: 150, transition: 'fade' } by default */
+  transitionProps?: TransitionOverride;
 
   /** Dropdown width, or 'target' to make dropdown width the same as target element */
   width?: PopoverWidth;
@@ -137,8 +131,7 @@ const defaultProps: Partial<PopoverProps> = {
   position: 'bottom',
   offset: 8,
   positionDependencies: [],
-  transition: 'fade',
-  transitionDuration: 150,
+  transitionProps: { transition: 'fade', duration: 150 },
   middlewares: { flip: true, shift: true, inline: false },
   arrowSize: 7,
   arrowOffset: 5,
@@ -165,8 +158,7 @@ export function Popover(props: PopoverProps) {
     onPositionChange,
     positionDependencies,
     opened,
-    transition,
-    transitionDuration,
+    transitionProps,
     width,
     middlewares,
     withArrow,
@@ -190,7 +182,6 @@ export function Popover(props: PopoverProps) {
     shadow,
     id,
     defaultOpened,
-    exitTransitionDuration,
     __staticSelector,
     withRoles,
     disabled,
@@ -256,9 +247,7 @@ export function Popover(props: PopoverProps) {
         arrowY: popover.floating?.middlewareData?.arrow?.y,
         opened: popover.opened,
         arrowRef,
-        transition,
-        transitionDuration,
-        exitTransitionDuration,
+        transitionProps,
         width,
         withArrow,
         arrowSize,

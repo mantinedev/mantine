@@ -21,7 +21,7 @@ function Demo() {
         opened={opened}
         size={300}
         padding={0}
-        transitionDuration={TRANSITION_DURATION}
+        transitionProps={{ duration: TRANSITION_DURATION }}
         withCloseButton={false}
         onClose={() => setOpened(false)}
       >
@@ -67,7 +67,7 @@ function Demo() {
         opened={opened}
         size={300}
         padding={0}
-        transitionDuration={TRANSITION_DURATION}
+        transitionProps={{ duration: TRANSITION_DURATION }}
         withCloseButton={false}
         onClose={() => setOpened(false)}
       >

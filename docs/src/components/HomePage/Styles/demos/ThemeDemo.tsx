@@ -15,7 +15,7 @@ function Demo() {
 
         '@media (max-width: ${em(755)})': {
           fontSize: theme.fontSizes.xs,
-        }
+        },
       })}
     >
       My custom text

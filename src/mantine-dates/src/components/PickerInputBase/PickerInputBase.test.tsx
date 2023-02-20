@@ -13,7 +13,7 @@ const defaultProps: PickerInputBaseProps = {
   __staticSelector: 'PickerInputBase',
   children: 'test-children',
   modalProps: { withinPortal: false, transitionProps: { duration: 0 } },
-  popoverProps: { transitionDuration: 0 },
+  popoverProps: { transitionProps: { duration: 0 } },
   onClear: noop,
   shouldClear: true,
   type: 'default',

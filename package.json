@@ -4,7 +4,7 @@
   "workspaces": [
     "src/*"
   ],
-  "version": "6.0.0-alpha.5",
+  "version": "6.0.0-alpha.6",
   "description": "Mantine Components Monorepo",
   "main": "index.js",
   "repository": "https://github.com/mantinedev/mantine.git",
@@ -80,7 +80,6 @@
     "@types/react": "18.0.9",
     "@types/react-beautiful-dnd": "^13.1.2",
     "@types/react-dom": "18.0.4",
-    "@types/react-input-mask": "^3.0.1",
     "@types/react-transition-group": "^4.4.4",
     "@types/resize-observer-browser": "^0.1.5",
     "@types/rimraf": "^3.0.1",
@@ -161,7 +160,7 @@
     "prism-react-renderer": "^1.2.1",
     "react": "18.1.0",
     "react-dropzone": "14.2.3",
-    "react-input-mask": "^2.0.4",
+    "react-imask": "^6.4.3",
     "react-remove-scroll": "^2.5.5",
     "react-textarea-autosize": "8.3.4",
     "react-transition-group": "4.4.2",

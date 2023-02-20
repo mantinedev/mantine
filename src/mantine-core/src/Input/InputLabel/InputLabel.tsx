@@ -44,6 +44,7 @@ export const InputLabel = forwardRef<HTMLLabelElement, InputLabelProps>((props, 
     htmlFor,
     __staticSelector,
     variant,
+    onMouseDown,
     ...others
   } = useComponentDefaultProps('InputLabel', defaultProps, props);
 
@@ -62,6 +63,12 @@ export const InputLabel = forwardRef<HTMLLabelElement, InputLabelProps>((props, 
       ref={ref}
       className={cx(classes.label, className)}
       htmlFor={labelElement === 'label' ? htmlFor : undefined}
+      onMouseDown={(event) => {
+        onMouseDown?.(event);
+        if (!event.defaultPrevented && event.detail > 1) {
+          event.preventDefault();
+        }
+      }}
       {...others}
     >
       {children}

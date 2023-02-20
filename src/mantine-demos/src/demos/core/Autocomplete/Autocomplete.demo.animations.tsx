@@ -8,10 +8,12 @@ import { Autocomplete } from '@mantine/core';
 function Demo() {
   return (
     <Autocomplete
+      maw={320}
+      mx="auto"
+      label="Your favorite framework/library"
+      placeholder="Pick one"
       data={['React', 'Angular', 'Svelte', 'Vue']}
-      transition="pop-top-left"
-      transitionDuration={80}
-      transitionTimingFunction="ease"
+      transitionProps={{ transition: 'pop-top-left', duration: 80, timingFunction: 'ease' }}
     />
   );
 }
@@ -25,9 +27,7 @@ function Demo() {
       label="Your favorite framework/library"
       placeholder="Pick one"
       data={['React', 'Angular', 'Svelte', 'Vue']}
-      transition="pop-top-left"
-      transitionDuration={80}
-      transitionTimingFunction="ease"
+      transitionProps={{ transition: 'pop-top-left', duration: 80, timingFunction: 'ease' }}
     />
   );
 }

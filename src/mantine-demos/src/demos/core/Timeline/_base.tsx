@@ -7,8 +7,8 @@ import {
 } from '@tabler/icons-react';
 import { Text, Timeline, TimelineProps } from '@mantine/core';
 
-export function TimelineBase(props: Partial<TimelineProps> & { noIcon?: boolean }) {
-  const displayIcon = !props?.noIcon;
+export function TimelineBase({ noIcon, ...props }: Partial<TimelineProps> & { noIcon?: boolean }) {
+  const displayIcon = !noIcon;
   return (
     <Timeline active={1} bulletSize={24} lineWidth={2} {...props}>
       <Timeline.Item

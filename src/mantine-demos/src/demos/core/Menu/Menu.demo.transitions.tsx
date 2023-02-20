@@ -8,7 +8,7 @@ import { Menu } from '@mantine/core';
 
 function Demo() {
   return (
-    <Menu transition="rotate-right" transitionDuration={150}>
+    <Menu transitionProps={{ transition: 'rotate-right', duration: 150 }}>
       {/* Menu content */}
     </Menu>
   );
@@ -18,7 +18,7 @@ function Demo() {
 function Demo() {
   return (
     <Group position="center">
-      <Menu transition="rotate-right" transitionDuration={150}>
+      <Menu transitionProps={{ transition: 'rotate-right', duration: 150 }}>
         <DemoMenuItems />
       </Menu>
     </Group>

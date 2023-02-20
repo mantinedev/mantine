@@ -113,6 +113,7 @@ export function LayoutInner({ children, location }: LayoutProps) {
         autoComplete: 'nope',
       }}
       transitionProps={{
+        duration: 150,
         transition: {
           in: { transform: 'translateY(0)', opacity: 1 },
           out: { transform: `translateY(-${rem(20)})`, opacity: 0 },
