@@ -241,7 +241,7 @@ export function Spotlight({
                 onMouseLeave={resetHovered}
               >
                 <TextInput
-                  autoComplete="chrome-please-just-do-not-show-it-thanks"
+                  autoComplete="off"
                   size="lg"
                   {...searchInputProps}
                   value={query}
