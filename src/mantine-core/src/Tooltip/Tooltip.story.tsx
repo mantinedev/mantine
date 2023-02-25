@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Tooltip } from './Tooltip';
 import { Button } from '../Button';
 import { Group } from '../Group';
+import { Box } from '../Box';
 
 export default { title: 'Tooltip' };
 
@@ -58,6 +59,34 @@ export const Floating = () => (
     </Tooltip.Floating>
   </div>
 );
+
+export const FloatingAndDisabled = () => {
+  const [tooltipEnabled, setTooltipEnabled] = useState(true);
+
+  return (
+    <div style={{ padding: 0 }}>
+      <Tooltip.Floating label="test" disabled={!tooltipEnabled}>
+        <Group>
+          <Box bg="red" w={100} h={100}>
+            Enabled
+          </Box>
+          <Box
+            bg="green"
+            w={100}
+            h={100}
+            onMouseEnter={() => setTooltipEnabled(false)}
+            onMouseLeave={() => setTooltipEnabled(true)}
+          >
+            Disabled
+          </Box>
+          <Box bg="blue" w={100} h={100}>
+            Enabled
+          </Box>
+        </Group>
+      </Tooltip.Floating>
+    </div>
+  );
+};
 
 export const Unmount = () => {
   const [mounted, setMounted] = useState(true);
