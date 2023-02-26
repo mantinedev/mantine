@@ -2,6 +2,11 @@ import { ModalState } from './context';
 
 interface ModalsState {
   modals: ModalState[];
+
+  /**
+   * Modal that is currently open or was the last open one.
+   * Keeping the last one is necessary for providing a clean exit transition.
+   */
   current: ModalState | null;
 }
 
@@ -33,13 +38,13 @@ export function modalsReducer(
     case 'CLOSE': {
       const modals = state.modals.filter((m) => m.id !== action.payload);
       return {
-        current: modals[modals.length - 1] || null,
+        current: modals[modals.length - 1] || state.current,
         modals,
       };
     }
     case 'CLOSE_ALL': {
       return {
-        current: null,
+        current: state.current,
         modals: [],
       };
     }
