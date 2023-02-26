@@ -75,7 +75,7 @@ export default createStyles(
           ? rem(height)
           : layout === 'alt'
           ? 'auto'
-          : 'calc(100vh - var(--mantine-header-height, 0) - var(--mantine-footer-height, 0))',
+          : 'calc(100vh - var(--mantine-header-height, 0rem) - var(--mantine-footer-height, 0rem))',
         width: width?.base ? rem(width?.base) : '100%',
         position: fixed ? 'fixed' : 'static',
         boxSizing: 'border-box',
