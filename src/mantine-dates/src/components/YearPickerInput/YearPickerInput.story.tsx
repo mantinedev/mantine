@@ -94,6 +94,20 @@ export function Clearable() {
       <YearPickerInput label="Default" clearable />
       <YearPickerInput label="Multiple" type="multiple" clearable />
       <YearPickerInput label="Range" type="range" clearable />
+      <YearPickerInput
+        label="Readonly"
+        value={[new Date(), new Date()]}
+        type="range"
+        clearable
+        readOnly
+      />
+      <YearPickerInput
+        label="Disabled"
+        value={[new Date(), new Date()]}
+        type="range"
+        clearable
+        disabled
+      />
     </div>
   );
 }

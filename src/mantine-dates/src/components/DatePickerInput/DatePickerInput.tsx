@@ -39,6 +39,7 @@ export const DatePickerInput: DatePickerInputComponent = forwardRef((props, ref)
     defaultValue,
     onChange,
     valueFormat,
+    labelSeparator,
     locale,
     classNames,
     styles,
@@ -70,6 +71,7 @@ export const DatePickerInput: DatePickerInputComponent = forwardRef((props, ref)
     onChange,
     locale,
     format: valueFormat,
+    labelSeparator,
     closeOnChange,
     sortDates,
   });

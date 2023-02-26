@@ -6,6 +6,7 @@ interface GetFormattedDate<Type extends DatePickerType = 'default'> {
   date: DatePickerValue<Type>;
   locale: string;
   format: string;
+  labelSeparator: string;
 }
 
 export function getFormattedDate<Type extends DatePickerType>({
@@ -13,6 +14,7 @@ export function getFormattedDate<Type extends DatePickerType>({
   date,
   locale,
   format,
+  labelSeparator,
 }: GetFormattedDate<Type>) {
   const formatDate = (value: Date) => dayjs(value).locale(locale).format(format);
 
@@ -26,11 +28,11 @@ export function getFormattedDate<Type extends DatePickerType>({
 
   if (type === 'range') {
     if (date[0] && date[1]) {
-      return `${formatDate(date[0])} – ${formatDate(date[1])}`;
+      return `${formatDate(date[0])} ${labelSeparator} ${formatDate(date[1])}`;
     }
 
     if (date[0]) {
-      return `${formatDate(date[0])} – `;
+      return `${formatDate(date[0])} ${labelSeparator} `;
     }
 
     return '';
