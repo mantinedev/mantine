@@ -44,15 +44,15 @@ export function getResponsiveValue({ value, theme, getValue, property }: GetResp
       const breakpointValue = getValue(value[breakpointKey], theme);
 
       if (Array.isArray(property)) {
-        acc[theme.fn.largerThan(breakpointKey as any)] = {};
+        acc[theme.fn.largerThan(breakpointKey)] = {};
         property.forEach((prop) => {
-          acc[theme.fn.largerThan(breakpointKey as any)][prop] = breakpointValue;
+          acc[theme.fn.largerThan(breakpointKey)][prop] = breakpointValue;
         });
 
         return acc;
       }
 
-      acc[theme.fn.largerThan(breakpointKey as any)] = {
+      acc[theme.fn.largerThan(breakpointKey)] = {
         [property]: breakpointValue,
       };
 

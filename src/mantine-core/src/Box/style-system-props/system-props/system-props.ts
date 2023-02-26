@@ -44,10 +44,10 @@ export const SYSTEM_PROPS: Record<string, SystemPropData> = {
   mih: { type: 'spacing', property: 'minHeight' },
   mah: { type: 'spacing', property: 'maxHeight' },
 
-  bgsz: { type: 'size', property: 'background-size' },
-  bgp: { type: 'identity', property: 'background-position' },
-  bgr: { type: 'identity', property: 'background-repeat' },
-  bga: { type: 'identity', property: 'background-attachment' },
+  bgsz: { type: 'size', property: 'backgroundSize' },
+  bgp: { type: 'identity', property: 'backgroundPosition' },
+  bgr: { type: 'identity', property: 'backgroundRepeat' },
+  bga: { type: 'identity', property: 'backgroundAttachment' },
 
   pos: { type: 'identity', property: 'position' },
   top: { type: 'identity', property: 'top' },
