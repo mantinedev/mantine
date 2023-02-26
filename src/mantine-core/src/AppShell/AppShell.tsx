@@ -3,7 +3,6 @@ import {
   MantineNumberSize,
   DefaultProps,
   Selectors,
-  MantineStyleSystemSize,
   useComponentDefaultProps,
 } from '@mantine/styles';
 import { Box } from '../Box';
@@ -12,8 +11,7 @@ import useStyles from './AppShell.styles';
 
 export type AppShellStylesNames = Selectors<typeof useStyles>;
 
-export interface AppShellProps
-  extends Omit<DefaultProps<AppShellStylesNames>, MantineStyleSystemSize> {
+export interface AppShellProps extends DefaultProps<AppShellStylesNames> {
   /** Determines how Navbar and Aside components are positioned relative to Header and Footer components */
   layout?: 'default' | 'alt';
 

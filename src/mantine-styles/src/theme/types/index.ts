@@ -7,12 +7,7 @@ export type {
   MantineThemeColorsOverride,
 } from './MantineColor';
 export type { MantineGradient } from './MantineGradient';
-export type {
-  MantineStyleSystemProps,
-  MantineStyleSystemSize,
-  SystemProp,
-  SpacingValue,
-} from './MantineStyleSystem';
+export type { MantineStyleSystemProps, SystemProp, SpacingValue } from './MantineStyleSystem';
 export type { MantineShadow } from './MantineShadow';
 export type { MantineNumberSize, MantineSize, MantineSizes } from './MantineSize';
 export type {

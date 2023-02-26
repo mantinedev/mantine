@@ -5,7 +5,6 @@ import {
   MantineNumberSize,
   MantineShadow,
   Selectors,
-  MantineStyleSystemSize,
   getDefaultZIndex,
   useComponentDefaultProps,
 } from '@mantine/styles';
@@ -21,7 +20,7 @@ import useStyles, { DrawerPosition } from './Drawer.styles';
 export type DrawerStylesNames = Exclude<Selectors<typeof useStyles>, 'withOverlay'>;
 
 export interface DrawerProps
-  extends Omit<DefaultProps<DrawerStylesNames>, MantineStyleSystemSize>,
+  extends DefaultProps<DrawerStylesNames>,
     Omit<React.ComponentPropsWithoutRef<'div'>, 'title'> {
   /** If true drawer is mounted to the dom */
   opened: boolean;
