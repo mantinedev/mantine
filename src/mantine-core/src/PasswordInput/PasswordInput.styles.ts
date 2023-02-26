@@ -30,7 +30,7 @@ export default createStyles(
       lineHeight: `calc(${getSize({ size, sizes: INPUT_SIZES })} - ${rem(4)})`,
       color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
 
-      '&::-ms-revel, &::-ms-clear': {
+      '&::-ms-reveal, &::-ms-clear': {
         display: 'none',
       },
 

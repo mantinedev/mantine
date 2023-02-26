@@ -3,7 +3,6 @@ import {
   useMantineTheme,
   DefaultProps,
   Selectors,
-  MantineStyleSystemSize,
   getDefaultZIndex,
   useComponentDefaultProps,
 } from '@mantine/styles';
@@ -16,7 +15,7 @@ import useStyles from './Dialog.styles';
 export type DialogStylesNames = Selectors<typeof useStyles>;
 
 export interface DialogProps
-  extends Omit<DefaultProps<DialogStylesNames>, MantineStyleSystemSize>,
+  extends DefaultProps<DialogStylesNames>,
     Omit<PaperProps, 'classNames' | 'styles'> {
   variant?: string;
 

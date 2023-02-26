@@ -27,7 +27,7 @@ export function useFloatingAutoUpdate({ opened, floating, positionDependencies }
     }
 
     return undefined;
-  }, [floating.refs.reference, floating.refs.floating, opened, delayedUpdate]);
+  }, [floating.refs.reference.current, floating.refs.floating.current, opened, delayedUpdate]);
 
   useDidUpdate(() => {
     floating.update();

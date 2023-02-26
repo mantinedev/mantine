@@ -1,14 +1,6 @@
 import React, { useRef } from 'react';
 import { Transition, TransitionGroup } from 'react-transition-group';
-import {
-  DefaultProps,
-  Portal,
-  MantineStyleSystemSize,
-  getDefaultZIndex,
-  Box,
-  PortalProps,
-  rem,
-} from '@mantine/core';
+import { DefaultProps, Portal, getDefaultZIndex, Box, PortalProps, rem } from '@mantine/core';
 import { useReducedMotion, useForceUpdate, useDidUpdate } from '@mantine/hooks';
 import { NotificationsPositioning } from '../types';
 import { useNotificationsEvents } from '../events';
@@ -28,7 +20,7 @@ const POSITIONS = [
 ] as const;
 
 export interface NotificationsProps
-  extends Omit<DefaultProps, MantineStyleSystemSize>,
+  extends Omit<DefaultProps, 'style'>,
     React.ComponentPropsWithoutRef<'div'> {
   /** Notifications position */
   position?:

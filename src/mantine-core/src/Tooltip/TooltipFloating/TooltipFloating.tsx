@@ -74,10 +74,6 @@ export function TooltipFloating(props: TooltipFloatingProps) {
     setOpened(false);
   };
 
-  if (disabled) {
-    return <>{children}</>;
-  }
-
   return (
     <>
       <OptionalPortal withinPortal={withinPortal}>
@@ -88,9 +84,9 @@ export function TooltipFloating(props: TooltipFloatingProps) {
           style={{
             ...style,
             zIndex,
-            display: opened ? 'block' : 'none',
-            top: y ?? 0,
-            left: Math.round(x) ?? 0,
+            display: !disabled && opened ? 'block' : 'none',
+            top: y ?? '',
+            left: Math.round(x) ?? '',
           }}
         >
           {label}
