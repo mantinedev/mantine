@@ -7,7 +7,7 @@ import { Avatar, Indicator } from '@mantine/core';
 
 function Demo() {
   return (
-    <Indicator dot inline size={16} offset={7} position="bottom-end" color="red" withBorder>
+    <Indicator inline size={16} offset={7} position="bottom-end" color="red" withBorder>
       <Avatar size="lg" radius="xl" src="./avatar.png" />
     </Indicator>
   );
@@ -16,7 +16,7 @@ function Demo() {
 
 function Demo() {
   return (
-    <Indicator dot inline size={16} offset={7} position="bottom-end" color="red" withBorder>
+    <Indicator inline size={16} offset={7} position="bottom-end" color="red" withBorder>
       <Avatar
         size="lg"
         radius="xl"
