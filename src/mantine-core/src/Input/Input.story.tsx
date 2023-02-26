@@ -32,3 +32,15 @@ export function Sizes() {
 
   return <div style={{ padding: 40 }}>{sizes}</div>;
 }
+
+export function RightSection() {
+  return (
+    <div style={{ padding: 40, maxWidth: 300 }}>
+      <Input
+        placeholder="Input with right section"
+        rightSection="$"
+        defaultValue="asdasdnjknwebdkjwbjrbfkjberfhjbrefhberjfbjherbfjherbfjhb"
+      />
+    </div>
+  );
+}

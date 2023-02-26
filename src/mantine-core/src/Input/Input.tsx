@@ -106,7 +106,7 @@ export const _Input = forwardRef<HTMLInputElement, InputProps>((props, ref) => {
       radius,
       multiline,
       invalid: !!error,
-      rightSectionWidth: rem(rightSectionWidth),
+      rightSectionWidth: rightSectionWidth ? rem(rightSectionWidth) : undefined,
       iconWidth,
       withRightSection: !!rightSection,
       offsetBottom,

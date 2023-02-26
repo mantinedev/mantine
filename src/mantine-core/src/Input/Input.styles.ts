@@ -97,7 +97,7 @@ export default createStyles(
             minHeight: getSize({ size, sizes }),
             paddingLeft: `calc(${getSize({ size, sizes })}  / 3)`,
             paddingRight: withRightSection
-              ? rem(rightSectionWidth)
+              ? rightSectionWidth || getSize({ size, sizes })
               : `calc(${getSize({ size, sizes })}  / 3)`,
             borderRadius: theme.fn.radius(radius),
           }

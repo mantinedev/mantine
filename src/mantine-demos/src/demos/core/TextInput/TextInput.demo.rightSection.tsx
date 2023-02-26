@@ -17,6 +17,7 @@ function Demo() {
       mx="auto"
       label="Your email"
       placeholder="Your email"
+      defaultValue="asdasdnjknwebdkjwbjrbfkjberfhjbrefhberjfbjherbfjherbfjhb"
       rightSection={<Loader size="xs" />}
     />
   );
