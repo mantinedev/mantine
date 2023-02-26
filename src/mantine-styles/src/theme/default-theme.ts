@@ -13,7 +13,6 @@ export const _DEFAULT_THEME: MantineThemeBase = {
   },
   focusRing: 'auto',
   loader: 'oval',
-  dateFormat: 'MMMM D, YYYY',
   colorScheme: 'light',
   white: '#fff',
   black: '#000',

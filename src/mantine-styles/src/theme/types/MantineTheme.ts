@@ -63,7 +63,6 @@ export interface MantineTheme {
   focusRing: 'auto' | 'always' | 'never';
   defaultRadius: MantineNumberSize | (string & {});
   loader: LoaderType;
-  dateFormat: string;
   colorScheme: ColorScheme;
   white: string;
   black: string;
