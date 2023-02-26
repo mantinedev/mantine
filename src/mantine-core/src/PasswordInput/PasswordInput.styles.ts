@@ -34,7 +34,7 @@ export default createStyles((theme, { size, rightSectionWidth }: PasswordInputSt
     left: 0,
     right: 0,
 
-    '&::-ms-revel, &::-ms-clear': {
+    '&::-ms-reveal, &::-ms-clear': {
       display: 'none',
     },
 

@@ -69,7 +69,7 @@ export default createStyles(
           fontSize: theme.fn.size({ size: fontSize, sizes: theme.fontSizes }),
         },
 
-        '& tbody tr:first-of-type td': {
+        '& tbody tr:first-of-type td, & tbody tr:first-of-type th': {
           borderTop: 'none',
         },
 
