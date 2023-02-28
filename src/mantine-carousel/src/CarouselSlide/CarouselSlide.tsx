@@ -1,11 +1,5 @@
 import React, { forwardRef, useCallback } from 'react';
-import {
-  Box,
-  DefaultProps,
-  Selectors,
-  MantineNumberSize,
-  useContextStylesApi,
-} from '@mantine/core';
+import { Box, DefaultProps, Selectors, MantineNumberSize } from '@mantine/core';
 import { useCarouselContext } from '../Carousel.context';
 import useStyles from './CarouselSlide.styles';
 
@@ -25,7 +19,6 @@ export interface CarouselSlideProps extends DefaultProps, React.ComponentPropsWi
 export const CarouselSlide = forwardRef<HTMLDivElement, CarouselSlideProps>(
   ({ children, className, size, gap, onClick, ...others }, ref) => {
     const ctx = useCarouselContext();
-    const { classNames, styles, unstyled } = useContextStylesApi();
     const { classes, cx } = useStyles(
       {
         gap: typeof gap === 'undefined' ? ctx.slideGap : gap,
@@ -34,7 +27,7 @@ export const CarouselSlide = forwardRef<HTMLDivElement, CarouselSlideProps>(
         includeGapInSize: ctx.includeGapInSize,
         breakpoints: ctx.breakpoints,
       },
-      { name: 'Carousel', classNames, styles, unstyled }
+      { name: 'Carousel', classNames: ctx.classNames, styles: ctx.styles, unstyled: ctx.unstyled }
     );
 
     const handleClick = useCallback(

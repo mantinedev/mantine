@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { autoUpdate } from '@floating-ui/react-dom-interactions';
+import { autoUpdate } from '@floating-ui/react';
 import { useDidUpdate } from '@mantine/hooks';
 
 interface Payload {
@@ -27,7 +27,7 @@ export function useFloatingAutoUpdate({ opened, floating, positionDependencies }
     }
 
     return undefined;
-  }, [floating.refs.reference, floating.refs.floating, opened, delayedUpdate]);
+  }, [floating.refs.reference.current, floating.refs.floating.current, opened, delayedUpdate]);
 
   useDidUpdate(() => {
     floating.update();

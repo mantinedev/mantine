@@ -176,9 +176,11 @@ export const DateRangePicker = forwardRef<HTMLInputElement, DateRangePickerProps
 
     const handleClear = () => {
       setValue([null, null]);
-      setDropdownOpened(true);
-      openDropdownOnClear && onDropdownOpen?.();
-      inputRef.current?.focus();
+      if (openDropdownOnClear) {
+        setDropdownOpened(true);
+        onDropdownOpen?.();
+        inputRef.current?.focus();
+      }
     };
 
     const handleDropdownToggle = (isOpened: boolean) => {

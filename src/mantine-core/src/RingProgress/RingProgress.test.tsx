@@ -55,4 +55,20 @@ describe('@mantine/core/RingProgress', () => {
     await userEvent.click(container.querySelectorAll('.mantine-Progress-bar')[2]);
     expect(spy).toHaveBeenCalledTimes(1);
   });
+
+  it('displays the root in specified color', () => {
+    const { container } = render(
+      <RingProgress
+        sections={[
+          { value: 10, color: 'blue' },
+          { value: 15, color: 'red' },
+          { value: 10, color: 'green' },
+        ]}
+        rootColor="transparent"
+      />
+    );
+
+    // 3 sections + 1 root element
+    expect(container.querySelectorAll('circle[stroke="transparent"]')).toHaveLength(1);
+  });
 });

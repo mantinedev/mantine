@@ -31,6 +31,7 @@ function Demo() {
         label="Select with native scrollbars"
         placeholder="Dropdown with native scrollbars"
         dropdownComponent="div"
+        withinPortal
       />
     </div>
   );

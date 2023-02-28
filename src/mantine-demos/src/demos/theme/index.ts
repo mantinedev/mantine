@@ -17,3 +17,5 @@ export { defaultGradient } from './Theme.demo.defaultGradient';
 export { gradientFn } from './Theme.demo.gradientFn';
 export { colorsIndex } from './Theme.demo.colorsIndex';
 export { focusRingStyles } from './Theme.demo.focusRingStyles';
+export { systemProps } from './Theme.demo.systemProps';
+export { defaultPropsTheme } from './Theme.demo.defaultPropsTheme';

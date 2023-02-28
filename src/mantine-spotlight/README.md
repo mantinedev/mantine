@@ -1,5 +1,7 @@
 # Mantine Spotlight
 
+[![npm](https://img.shields.io/npm/dm/@mantine/spotlight)](https://www.npmjs.com/package/@mantine/spotlight)
+
 Overlay command center for your application
 
 [Documentation](https://mantine.dev/)

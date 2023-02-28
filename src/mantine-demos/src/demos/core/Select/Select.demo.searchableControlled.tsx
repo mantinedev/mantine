@@ -35,6 +35,7 @@ function Demo() {
         searchValue={searchValue}
         nothingFound="No options"
         data={['React', 'Angular', 'Svelte', 'Vue']}
+        withinPortal
       />
     </div>
   );

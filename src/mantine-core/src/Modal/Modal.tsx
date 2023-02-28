@@ -1,11 +1,17 @@
-import React, { useEffect } from 'react';
-import { useScrollLock, useFocusTrap, useFocusReturn, useId } from '@mantine/hooks';
+import React, { useEffect, useRef } from 'react';
+import {
+  useScrollLock,
+  useFocusTrap,
+  useFocusReturn,
+  useId,
+  useWindowEvent,
+  useMergedRef,
+} from '@mantine/hooks';
 import {
   DefaultProps,
   MantineNumberSize,
   MantineShadow,
   Selectors,
-  MantineStyleSystemSize,
   getDefaultZIndex,
   useComponentDefaultProps,
 } from '@mantine/styles';
@@ -21,7 +27,7 @@ import useStyles, { ModalStylesParams } from './Modal.styles';
 export type ModalStylesNames = Selectors<typeof useStyles>;
 
 export interface ModalProps
-  extends Omit<DefaultProps<ModalStylesNames, ModalStylesParams>, MantineStyleSystemSize>,
+  extends DefaultProps<ModalStylesNames, ModalStylesParams>,
     Omit<React.ComponentPropsWithoutRef<'div'>, 'title'> {
   /** Mounts modal if true */
   opened: boolean;
@@ -171,6 +177,9 @@ export function Modal(props: ModalProps) {
     { unstyled, classNames, styles, name: 'Modal' }
   );
   const focusTrapRef = useFocusTrap(trapFocus && opened);
+  const overlayRef = useRef<HTMLDivElement>(null);
+  const mergedRef = useMergedRef(focusTrapRef, overlayRef);
+
   const _overlayOpacity =
     typeof overlayOpacity === 'number'
       ? overlayOpacity
@@ -196,6 +205,18 @@ export function Modal(props: ModalProps) {
   }, [trapFocus]);
 
   useFocusReturn({ opened, shouldReturnFocus: trapFocus && withFocusReturn });
+
+  const clickTarget = useRef<EventTarget>(null);
+
+  useWindowEvent('mousedown', (e) => {
+    clickTarget.current = e.target;
+  });
+
+  const handleOutsideClick = () => {
+    if (clickTarget.current === overlayRef.current) {
+      closeOnClickOutside && onClose();
+    }
+  };
 
   return (
     <OptionalPortal withinPortal={withinPortal} target={target}>
@@ -236,13 +257,13 @@ export function Modal(props: ModalProps) {
               <div
                 role="presentation"
                 className={classes.inner}
-                onClick={() => closeOnClickOutside && onClose()}
+                onClick={handleOutsideClick}
                 onKeyDown={(event) => {
                   const shouldTrigger =
                     (event.target as any)?.getAttribute('data-mantine-stop-propagation') !== 'true';
                   shouldTrigger && event.key === 'Escape' && closeOnEscape && onClose();
                 }}
-                ref={focusTrapRef}
+                ref={mergedRef}
               >
                 <Paper<'div'>
                   className={classes.modal}

@@ -9,6 +9,7 @@ import {
   InputWrapperBaseProps,
   InputWrapperStylesNames,
 } from '../Input';
+import { Text } from '../Text';
 import { CloseButton } from '../CloseButton';
 import { FileButton } from '../FileButton';
 import useStyles from './FileInput.styles';
@@ -64,10 +65,18 @@ export interface FileInputProps<Multiple extends boolean = false>
 
   /** Determines whether the user can change value */
   readOnly?: boolean;
+
+  /** Specifies that, optionally, a new file should be captured, and which device should be used to capture that new media of a type defined by the accept attribute. */
+  capture?: boolean | 'user' | 'environment';
+
+  /** Spreads props to input element used to capture files */
+  fileInputProps?: React.ComponentPropsWithoutRef<'input'>;
 }
 
 const DefaultValue: FileInputProps['valueComponent'] = ({ value }) => (
-  <span>{Array.isArray(value) ? value.map((file) => file.name).join(', ') : value?.name}</span>
+  <Text sx={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+    {Array.isArray(value) ? value.map((file) => file.name).join(', ') : value?.name}
+  </Text>
 );
 
 const defaultProps: Partial<FileInputProps> = {
@@ -106,6 +115,8 @@ export const _FileInput = forwardRef<HTMLButtonElement, FileInputProps>((props, 
     clearButtonLabel,
     clearButtonTabIndex,
     readOnly,
+    capture,
+    fileInputProps,
     ...others
   } = useInputProps('FileInput', defaultProps, props);
   const resetRef = useRef<() => void>();
@@ -154,6 +165,8 @@ export const _FileInput = forwardRef<HTMLButtonElement, FileInputProps>((props, 
         form={form}
         resetRef={resetRef}
         disabled={readOnly}
+        capture={capture}
+        inputProps={fileInputProps}
       >
         {(fileButtonProps) => (
           <Input
@@ -173,7 +186,7 @@ export const _FileInput = forwardRef<HTMLButtonElement, FileInputProps>((props, 
             classNames={{ ...classNames, input: cx(classes.input, (classNames as any)?.input) }}
           >
             {!hasValue ? (
-              <span className={classes.placeholder}>{placeholder}</span>
+              <Input.Placeholder className={classes.placeholder}>{placeholder}</Input.Placeholder>
             ) : (
               <ValueComponent value={_value} />
             )}

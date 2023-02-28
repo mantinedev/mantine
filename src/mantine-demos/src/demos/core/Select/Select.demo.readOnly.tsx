@@ -31,6 +31,7 @@ function Demo() {
         placeholder="Pick one"
         defaultValue="react"
         readOnly
+        withinPortal
         data={[
           { value: 'react', label: 'React' },
           { value: 'ng', label: 'Angular' },

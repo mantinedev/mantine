@@ -57,4 +57,67 @@ describe('@mantine/core/Stepper', () => {
     expect(Stepper.Step).toBe(Step);
     expect(Stepper.Completed).toBe(StepCompleted);
   });
+
+  it('allows bidirectional selection between steps by default', async () => {
+    const spy = jest.fn();
+    render(<Stepper {...defaultProps} onStepClick={spy} />);
+
+    const stepButtons = screen.getAllByRole('button');
+
+    await userEvent.click(stepButtons[3]);
+
+    expect(spy).toHaveBeenCalledTimes(1);
+    expect(spy).toHaveBeenCalledWith(3);
+
+    await userEvent.click(stepButtons[0]);
+
+    expect(spy).toHaveBeenCalledTimes(2);
+    expect(spy).toHaveBeenCalledWith(0);
+  });
+
+  it('only allows selecting previous steps if the allowNextStepsSelect prop is set to false and no truthy allowStepSelectprop is present on any steps', async () => {
+    const spy = jest.fn();
+    render(<Stepper {...defaultProps} onStepClick={spy} allowNextStepsSelect={false} />);
+
+    const stepButtons = screen.getAllByRole('button');
+
+    await userEvent.click(stepButtons[2]);
+
+    expect(spy).not.toHaveBeenCalled();
+
+    await userEvent.click(stepButtons[0]);
+
+    expect(spy).toHaveBeenCalledTimes(1);
+    expect(spy).toHaveBeenCalledWith(0);
+  });
+
+  it('allows any steps to be selected if a Step has the allowStepSelect prop set to true even if a falsy allowNextStepsSelect prop is present on the Stepper', async () => {
+    const spy = jest.fn();
+    render(
+      <Stepper onStepClick={spy} allowNextStepsSelect={false} active={0}>
+        <Stepper.Step label="0" key="0" description="0">
+          test-step-content-0
+        </Stepper.Step>
+
+        <Stepper.Step label="1" key="1" description="1">
+          test-step-content-1
+        </Stepper.Step>
+
+        <Stepper.Step label="2" key="2" description="2" allowStepSelect>
+          test-step-content-2
+        </Stepper.Step>
+      </Stepper>
+    );
+
+    const steps = screen.getAllByRole('button');
+
+    await userEvent.click(steps[1]);
+
+    expect(spy).not.toHaveBeenCalled();
+
+    await userEvent.click(steps[2]);
+
+    expect(spy).toHaveBeenCalledTimes(1);
+    expect(spy).toHaveBeenCalledWith(2);
+  });
 });

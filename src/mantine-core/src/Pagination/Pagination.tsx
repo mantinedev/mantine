@@ -113,6 +113,10 @@ export const Pagination = forwardRef<HTMLDivElement, PaginationProps>((props, re
     boundaries,
   });
 
+  if (total <= 0) {
+    return null;
+  }
+
   const items = range.map((pageNumber, index) => (
     <Item
       key={index}
@@ -132,7 +136,7 @@ export const Pagination = forwardRef<HTMLDivElement, PaginationProps>((props, re
   return (
     <Group
       role="navigation"
-      spacing={spacing || theme.fn.size({ size, sizes: theme.spacing }) / 2}
+      spacing={spacing ?? theme.fn.size({ size, sizes: theme.spacing }) / 2}
       ref={ref}
       sx={sx}
       unstyled={unstyled}

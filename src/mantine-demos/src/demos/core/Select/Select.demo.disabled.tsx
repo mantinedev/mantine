@@ -18,6 +18,7 @@ function Demo() {
         label="Disabled without value"
         placeholder="Pick all that you like"
         disabled
+        withinPortal
       />
 
       <Select
@@ -26,6 +27,7 @@ function Demo() {
         label="Disabled with value"
         placeholder="Pick all that you like"
         disabled
+        withinPortal
         value="React"
       />
     </div>

@@ -34,6 +34,10 @@ export default createStyles((theme, { size, rightSectionWidth }: PasswordInputSt
     left: 0,
     right: 0,
 
+    '&::-ms-reveal, &::-ms-clear': {
+      display: 'none',
+    },
+
     '&:focus': {
       outline: 0,
     },
@@ -43,9 +47,8 @@ export default createStyles((theme, { size, rightSectionWidth }: PasswordInputSt
     },
 
     '&::placeholder': {
+      ...theme.fn.placeholderStyles(),
       opacity: 1,
-      userSelect: 'none',
-      color: theme.colorScheme === 'dark' ? theme.colors.dark[3] : theme.colors.gray[5],
     },
   },
 

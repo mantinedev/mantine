@@ -34,6 +34,7 @@ export * from './Divider';
 export * from './Drawer';
 export * from './FileButton';
 export * from './FileInput';
+export * from './Flex';
 export * from './FocusTrap';
 export * from './Grid';
 export * from './Group';

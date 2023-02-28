@@ -55,4 +55,16 @@ describe('@mantine/core/RadioGroup', () => {
     expect(screen.getAllByRole('radio')[0]).not.toBeChecked();
     expect(spy).toHaveBeenCalledWith('test-value-1');
   });
+
+  it('sets given name to all radio inputs', () => {
+    render(<RadioGroup {...defaultProps} name="test-name" />);
+    screen.getAllByRole('radio').forEach((radio) => {
+      expect(radio).toHaveAttribute('name', 'test-name');
+    });
+  });
+
+  it('generates unique name if name prop was not set', () => {
+    render(<RadioGroup {...defaultProps} />);
+    expect(screen.getAllByRole('radio')[1].getAttribute('name').includes('mantine-')).toBe(true);
+  });
 });

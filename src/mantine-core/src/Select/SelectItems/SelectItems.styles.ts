@@ -17,7 +17,7 @@ export default createStyles((theme, { size }: SelectItemsStyles) => ({
     cursor: 'pointer',
     fontSize: theme.fn.size({ size, sizes: theme.fontSizes }),
     color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
-    borderRadius: theme.radius.sm,
+    borderRadius: theme.fn.radius(),
 
     '&[data-hovered]': {
       backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[1],

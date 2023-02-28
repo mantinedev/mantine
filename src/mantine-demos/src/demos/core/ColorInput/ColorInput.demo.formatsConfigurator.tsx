@@ -35,6 +35,7 @@ export const formatsConfigurator: MantineDemo = {
       defaultValue: 'hex',
       data: [
         { value: 'hex', label: 'HEX' },
+        { value: 'hexa', label: 'HEXA' },
         { value: 'rgb', label: 'RGB' },
         { value: 'rgba', label: 'RGBA' },
         { value: 'hsl', label: 'HSL' },

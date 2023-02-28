@@ -59,7 +59,8 @@ function ColorSchemeToggle() {
 
 ## Remove value
 
-Use `removeValue` callback to clean `localStorage`/`sessionStorage`:
+Use `removeValue` callback to clean `localStorage`/`sessionStorage`.
+When value is removed it is reset to `defaultValue`:
 
 ```tsx
 import { useLocalStorage } from '@mantine/hooks';

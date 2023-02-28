@@ -37,33 +37,3 @@ function Demo() {
   );
 }
 ```
-
-### Usage with react-router
-
-```tsx
-import { Link } from 'react-router-dom';
-import { Anchor } from '@mantine/core';
-
-function Demo() {
-  return (
-    <Anchor component={Link} to="/react-router">
-      React router link
-    </Anchor>
-  );
-}
-```
-
-### Usage with Next.js
-
-```tsx
-import Link from 'next/link';
-import { Anchor } from '@mantine/core';
-
-function Demo() {
-  return (
-    <Link href="/hello" passHref>
-      <Anchor component="a">Next link</Anchor>
-    </Link>
-  );
-}
-```

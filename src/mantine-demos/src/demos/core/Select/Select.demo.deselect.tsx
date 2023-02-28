@@ -17,6 +17,7 @@ function Demo() {
         label="Your favorite framework/library"
         placeholder="Pick one"
         allowDeselect
+        withinPortal
         defaultValue="react"
         data={[
           { value: 'react', label: 'React' },

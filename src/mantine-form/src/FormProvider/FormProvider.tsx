@@ -31,6 +31,6 @@ export function createFormContext<
   return [FormProvider, useFormContext, useForm] as [
     React.FC<FormProviderProps<Form>>,
     () => Form,
-    UseForm<Values>
+    UseForm<Values, TransformValues>
   ];
 }

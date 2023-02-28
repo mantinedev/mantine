@@ -46,6 +46,7 @@ export * as DividerDemos from './demos/core/Divider';
 export * as DrawerDemos from './demos/core/Drawer';
 export * as FileButtonDemos from './demos/core/FileButton';
 export * as FileInputDemos from './demos/core/FileInput';
+export * as FlexDemos from './demos/core/Flex';
 export * as FocusTrapDemos from './demos/core/FocusTrap';
 export * as GridDemos from './demos/core/Grid';
 export * as GroupDemos from './demos/core/Group';
@@ -123,6 +124,7 @@ export * as FormDemos from './demos/form';
 export * as NProgressDemos from './demos/nprogress';
 export * as CarouselDemos from './demos/carousel';
 export * as MantineLogoDemos from './demos/logo';
+export * as TipTapDemos from './demos/tiptap';
 
 // @mantine/labs
 export * as PinInputDemos from './demos/labs/PinInput';

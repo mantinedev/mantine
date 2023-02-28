@@ -14,8 +14,8 @@ import { filterData } from './filter-data/filter-data';
 import useStyles from './Select.styles';
 
 export interface SelectSharedProps<Item, Value> {
-  /** Select data used to renderer items in dropdown */
-  data: (string | Item)[];
+  /** Select data used to render items in dropdown */
+  data: ReadonlyArray<string | Item>;
 
   /** Controlled input value */
   value?: Value;
@@ -99,6 +99,9 @@ export interface SelectProps
 
   /** Controlled search input value */
   searchValue?: string;
+
+  /** Hovers the first result when search query changes */
+  hoverOnSearchChange?: boolean;
 
   /** Allow creatable option  */
   creatable?: boolean;
@@ -213,6 +216,7 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>((props, ref) => 
     form,
     positionDependencies,
     readOnly,
+    hoverOnSearchChange,
     ...others
   } = useInputProps('Select', defaultProps, props);
 
@@ -357,8 +361,12 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>((props, ref) => 
   };
 
   useDidUpdate(() => {
-    setHovered(-1);
-  }, [inputValue]);
+    if (hoverOnSearchChange && inputValue) {
+      setHovered(0);
+    } else {
+      setHovered(-1);
+    }
+  }, [inputValue, hoverOnSearchChange]);
 
   const selectedItemIndex = _value ? filteredData.findIndex((el) => el.value === _value) : 0;
 
@@ -552,7 +560,7 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>((props, ref) => 
         switchDirectionOnFlip={switchDirectionOnFlip}
         zIndex={zIndex}
         dropdownPosition={dropdownPosition}
-        positionDependencies={positionDependencies}
+        positionDependencies={[...positionDependencies, inputValue]}
         classNames={classNames}
         styles={styles}
         unstyled={unstyled}

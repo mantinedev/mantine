@@ -54,12 +54,12 @@ export function createStorage<T>(type: StorageType, hookName: string) {
           window[type] === null ||
           skipStorage
         ) {
-          return (defaultValue ?? '') as T;
+          return defaultValue as T;
         }
 
         const storageValue = window[type].getItem(key);
 
-        return storageValue !== null ? deserialize(storageValue) : ((defaultValue ?? '') as T);
+        return storageValue !== null ? deserialize(storageValue) : (defaultValue as T);
       },
       [key, defaultValue]
     );
@@ -88,6 +88,7 @@ export function createStorage<T>(type: StorageType, hookName: string) {
 
     const removeStorageValue = useCallback(() => {
       window[type].removeItem(key);
+      window.dispatchEvent(new CustomEvent(eventName, { detail: { key, value: defaultValue } }));
     }, []);
 
     useWindowEvent('storage', (event) => {

@@ -78,4 +78,14 @@ describe('@mantine/hooks/use-pagination', () => {
       act(() => result.current.next());
     });
   });
+
+  it('truncates total value', () => {
+    const hook = renderHook(() => usePagination({ total: 45.21 }));
+    expect(hook.result.current.range).toStrictEqual([1, 2, 3, 4, 5, 'dots', 45]);
+  });
+
+  it('handles negative total value correctly', () => {
+    const hook = renderHook(() => usePagination({ total: -5 }));
+    expect(hook.result.current.range).toStrictEqual([]);
+  });
 });

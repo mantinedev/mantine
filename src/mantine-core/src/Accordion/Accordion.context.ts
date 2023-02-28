@@ -1,4 +1,4 @@
-import { MantineNumberSize } from '@mantine/styles';
+import { MantineNumberSize, ClassNames, Styles } from '@mantine/styles';
 import { createSafeContext } from '@mantine/utils';
 import { ACCORDION_ERRORS } from './Accordion.errors';
 import {
@@ -6,6 +6,7 @@ import {
   AccordionHeadingOrder,
   AccordionVariant,
 } from './Accordion.types';
+import type { AccordionStylesNames } from './Accordion';
 
 interface AccordionContext {
   loop: boolean;
@@ -21,6 +22,9 @@ interface AccordionContext {
   isItemActive(value: string): boolean;
   getControlId(value: string): string;
   getRegionId(value: string): string;
+  classNames: ClassNames<AccordionStylesNames>;
+  styles: Styles<AccordionStylesNames>;
+  unstyled: boolean;
 }
 
 export const [AccordionContextProvider, useAccordionContext] = createSafeContext<AccordionContext>(

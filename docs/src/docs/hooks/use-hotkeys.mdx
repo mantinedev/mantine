@@ -15,10 +15,16 @@ import { HooksDemos } from '@mantine/demos';
 
 ## Usage
 
-use-hotkeys accepts an array of hotkeys and handler tuples:
+use-hotkeys accepts as its first argument an array of hotkeys and handler tuples:
 
 - `hotkey` - hotkey string e.g. `ctrl+E`, `shift+alt+L`, `mod+S`
 - `handler` - event handler called when given combination was pressed
+- `options` - object with extra options for hotkey handler
+
+The second argument is a list of HTML tags:
+
+- `tagsToIgnore` - HTML tag names that hotkeys will not trigger on
+- `triggerOnContentEditable` - Whether shortcuts should trigger when based on contentEditable
 
 ```tsx
 import { useHotkeys } from '@mantine/hooks';
@@ -69,6 +75,13 @@ document.body.addEventListener(
 
 ```tsx
 function useHotkeys(
-  hotKeyItem: Array<[hotkey: string, handler: (event: KeyboardEvent) => void]>
+  hotKeyItem: Array<
+    [
+      hotkey: string,
+      handler: (event: KeyboardEvent) => void,
+      options?: { preventDefault?: boolean }
+    ]
+  >,
+  tagsToIgnore?: string[]
 ): void;
 ```

@@ -41,7 +41,7 @@ export default createStyles(
           color: theme.colorScheme === 'dark' ? theme.colors.dark[2] : theme.colors.gray[6],
         },
 
-        '& thead tr th, & tfoot tr th': {
+        '& thead tr th, & tfoot tr th, & tbody tr th': {
           textAlign: 'left',
           fontWeight: 'bold',
           color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.colors.gray[7],
@@ -56,7 +56,7 @@ export default createStyles(
           borderBottom: border,
         },
 
-        '& tfoot tr th': {
+        '& tfoot tr th, & tbody tr th': {
           borderTop: border,
         },
 
@@ -65,16 +65,25 @@ export default createStyles(
             size: verticalSpacing,
             sizes: theme.spacing,
           })}px ${theme.fn.size({ size: horizontalSpacing, sizes: theme.spacing })}px`,
-          borderBottom: border,
+          borderTop: border,
           fontSize: theme.fn.size({ size: fontSize, sizes: theme.fontSizes }),
         },
 
-        '& tbody tr:last-of-type td': {
-          borderBottom: 'none',
+        '& tbody tr:first-of-type td, & tbody tr:first-of-type th': {
+          borderTop: 'none',
         },
 
-        '& th + th, & td + td': {
-          borderLeft: withColumnBorders ? border : '',
+        '& thead th, & tbody td': {
+          borderRight: withColumnBorders ? border : 'none',
+
+          '&:last-of-type': {
+            borderRight: 'none',
+            borderLeft: withColumnBorders ? border : 'none',
+          },
+        },
+
+        '& tbody tr th': {
+          borderRight: withColumnBorders ? border : 'none',
         },
 
         '&[data-striped] tbody tr:nth-of-type(odd)': {

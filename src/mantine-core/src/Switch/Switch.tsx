@@ -6,10 +6,10 @@ import {
   MantineSize,
   MantineColor,
   Selectors,
-  extractSystemStyles,
   useComponentDefaultProps,
 } from '@mantine/styles';
 import { ForwardRefWithStaticComponents } from '@mantine/utils';
+import { extractSystemStyles } from '../Box';
 import { SwitchGroup } from './SwitchGroup/SwitchGroup';
 import { useSwitchGroupContext } from './SwitchGroup.context';
 import { InlineInput, InlineInputStylesNames } from '../InlineInput';

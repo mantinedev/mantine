@@ -69,6 +69,7 @@ export function Track({
         styles={styles}
         disabled={disabled}
         unstyled={unstyled}
+        inverted={inverted}
       />
     </div>
   );

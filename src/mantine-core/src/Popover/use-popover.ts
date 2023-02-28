@@ -9,7 +9,7 @@ import {
   Middleware,
   inline,
   limitShift,
-} from '@floating-ui/react-dom-interactions';
+} from '@floating-ui/react';
 import { FloatingPosition, useFloatingAutoUpdate } from '../Floating';
 import { PopoverWidth, PopoverMiddlewares } from './Popover.types';
 
@@ -26,6 +26,7 @@ interface UsePopoverOptions {
   width: PopoverWidth;
   middlewares: PopoverMiddlewares;
   arrowRef: React.RefObject<HTMLDivElement>;
+  arrowOffset: number;
 }
 
 function getPopoverMiddlewares(options: UsePopoverOptions) {
@@ -43,7 +44,7 @@ function getPopoverMiddlewares(options: UsePopoverOptions) {
     middlewares.push(inline());
   }
 
-  middlewares.push(arrow({ element: options.arrowRef }));
+  middlewares.push(arrow({ element: options.arrowRef, padding: options.arrowOffset }));
 
   return middlewares;
 }

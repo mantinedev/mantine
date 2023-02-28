@@ -5,10 +5,10 @@ import {
   MantineSize,
   MantineColor,
   Selectors,
-  extractSystemStyles,
   useComponentDefaultProps,
 } from '@mantine/styles';
 import { ForwardRefWithStaticComponents } from '@mantine/utils';
+import { extractSystemStyles } from '../Box';
 import { RadioIcon } from './RadioIcon';
 import { useRadioGroupContext } from './RadioGroup.context';
 import { RadioGroup } from './RadioGroup/RadioGroup';
@@ -22,9 +22,6 @@ export interface RadioProps
     Omit<React.ComponentPropsWithRef<'input'>, 'size'> {
   /** Radio label */
   label?: React.ReactNode;
-
-  /** Radio value */
-  value: string;
 
   /** Active radio color from theme.colors */
   color?: MantineColor;
@@ -84,8 +81,11 @@ export const Radio: RadioComponent = forwardRef<HTMLInputElement, RadioProps>((p
   } = useComponentDefaultProps('Radio', defaultProps, props);
   const ctx = useRadioGroupContext();
 
+  const contextSize = ctx?.size ?? size;
+  const componentSize = props.size ? size : contextSize;
+
   const { classes } = useStyles(
-    { color, size: ctx?.size || size, transitionDuration, labelPosition, error: !!error },
+    { color, size: componentSize, transitionDuration, labelPosition, error: !!error },
     { classNames, styles, unstyled, name: 'Radio' }
   );
 
@@ -106,7 +106,7 @@ export const Radio: RadioComponent = forwardRef<HTMLInputElement, RadioProps>((p
       sx={sx}
       style={style}
       id={uuid}
-      size={ctx?.size || size}
+      size={componentSize}
       labelPosition={labelPosition}
       label={label}
       description={description}

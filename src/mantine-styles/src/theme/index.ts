@@ -7,6 +7,5 @@ export { MantineProvider, useMantineTheme, useComponentDefaultProps } from './Ma
 export { ColorSchemeProvider, useMantineColorScheme } from './ColorSchemeProvider';
 export { GlobalStyles } from './GlobalStyles';
 export { NormalizeCSS } from './NormalizeCSS';
-export { StylesApiProvider, useContextStylesApi } from './StylesApiContext';
 
 export type { MantineProviderProps } from './MantineProvider';

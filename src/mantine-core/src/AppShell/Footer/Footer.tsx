@@ -1,5 +1,5 @@
 import React, { forwardRef } from 'react';
-import { getDefaultZIndex, useComponentDefaultProps } from '@mantine/styles';
+import { useComponentDefaultProps } from '@mantine/styles';
 import { VerticalSection, VerticalSectionSharedProps } from '../VerticalSection/VerticalSection';
 
 export interface FooterProps
@@ -12,7 +12,6 @@ export interface FooterProps
 const defaultProps: Partial<FooterProps> = {
   fixed: false,
   position: { bottom: 0, left: 0, right: 0 },
-  zIndex: getDefaultZIndex('app'),
 };
 
 export const Footer = forwardRef<HTMLElement, FooterProps>((props: FooterProps, ref) => {

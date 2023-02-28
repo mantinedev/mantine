@@ -24,4 +24,18 @@ describe('@mantine/core/Slider/is-mark-filled', () => {
     expect(isMarkFilled({ mark: { value: 0 }, offset: -10, value: 90 })).toBe(true);
     expect(isMarkFilled({ mark: { value: -10 }, offset: -20, value: 90 })).toBe(true);
   });
+
+  it('correctly detects filled mark with inverted slider', () => {
+    expect(isMarkFilled({ mark: { value: 10 }, value: 90, inverted: true })).toBe(false);
+    expect(isMarkFilled({ mark: { value: 90 }, value: 80, inverted: true })).toBe(true);
+  });
+  it('correctly detects filled mark with offset and inverted slider', () => {
+    expect(isMarkFilled({ mark: { value: 10 }, offset: 10, value: 90, inverted: true })).toBe(true);
+    expect(isMarkFilled({ mark: { value: 100 }, offset: 30, value: 90, inverted: true })).toBe(
+      true
+    );
+    expect(isMarkFilled({ mark: { value: 40 }, offset: 10, value: 90, inverted: true })).toBe(
+      false
+    );
+  });
 });

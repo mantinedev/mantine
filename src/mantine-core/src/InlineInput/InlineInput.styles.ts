@@ -17,11 +17,13 @@ export default createStyles((theme, { labelPosition, size }: InlineInputStylesPa
   root: {},
 
   body: {
-    display: 'inline-flex',
+    display: 'flex',
   },
 
   labelWrapper: {
     ...theme.fn.fontStyles(),
+    display: 'inline-flex',
+    flexDirection: 'column',
     WebkitTapHighlightColor: 'transparent',
     fontSize: theme.fn.size({ size, sizes: theme.fontSizes }),
     lineHeight: `${theme.fn.size({ size, sizes })}px`,
