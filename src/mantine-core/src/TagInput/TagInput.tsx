@@ -301,6 +301,29 @@ export const TagInput = forwardRef<HTMLInputElement, TagInputProps>(
       handleAddTags(tags);
     };
 
+    const inputElement = (
+      <input
+        ref={useMergedRef(ref, inputRef)}
+        type="text"
+        id={uuid}
+        className={cx(classes.tagInput, {
+          [classes.tagInputEmpty]: _value.length === 0,
+        })}
+        onKeyDown={handleInputKeydown}
+        value={inputValue}
+        onChange={handleInputChange}
+        onFocus={handleInputFocus}
+        onCompositionStart={() => setIMEOpen(true)}
+        onCompositionEnd={() => setIMEOpen(false)}
+        onBlur={handleInputBlur}
+        readOnly={valuesOverflow.current}
+        placeholder={_value.length === 0 ? placeholder : undefined}
+        disabled={disabled}
+        autoComplete="off"
+        {...rest}
+      />
+    );
+
     return (
       <Input.Wrapper
         required={required}
@@ -366,28 +389,14 @@ export const TagInput = forwardRef<HTMLInputElement, TagInputProps>(
           >
             <div className={classes.values} id={`${uuid}-items`}>
               {inputFieldPosition === 'inside' && (
-                <div className={classes.values}>{selectedItems}</div>
+                <div className={classes.values}>
+                  {selectedItems}
+                  {inputElement}
+                </div>
               )}
-              <input
-                ref={useMergedRef(ref, inputRef)}
-                type="text"
-                id={uuid}
-                className={cx(classes.tagInput, {
-                  [classes.tagInputEmpty]: _value.length === 0,
-                })}
-                onKeyDown={handleInputKeydown}
-                value={inputValue}
-                onChange={handleInputChange}
-                onFocus={handleInputFocus}
-                onCompositionStart={() => setIMEOpen(true)}
-                onCompositionEnd={() => setIMEOpen(false)}
-                onBlur={handleInputBlur}
-                readOnly={valuesOverflow.current}
-                placeholder={_value.length === 0 ? placeholder : undefined}
-                disabled={disabled}
-                autoComplete="off"
-                {...rest}
-              />
+              {(inputFieldPosition === 'bottom' || inputFieldPosition === 'top') && (
+                <>{inputElement}</>
+              )}
             </div>
           </Input>
           {inputFieldPosition === 'bottom' && (
