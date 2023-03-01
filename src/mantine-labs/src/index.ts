@@ -1,2 +1,2 @@
 export * from './PinInput';
-export * from './TagInput';
+// export * from './TagInput';

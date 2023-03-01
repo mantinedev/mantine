@@ -1,4 +1,4 @@
-import { TagInputStylesNames } from '@mantine/labs';
+import { TagInputStylesNames } from '@mantine/core';
 import { Input } from './Input.styles-api';
 import { InputWrapper } from './InputWrapper.styles-api';
 

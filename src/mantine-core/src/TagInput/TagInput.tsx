@@ -16,10 +16,7 @@ import { DefaultValue, DefaultValueStylesNames } from './DefaultValue/DefaultVal
 
 export type TagInputStylesNames =
   | DefaultValueStylesNames
-  | Exclude<
-      Selectors<typeof useStyles>,
-      'tagInputEmpty' | 'tagInputInputHidden' | 'tagInputPointer'
-    >
+  | Exclude<Selectors<typeof useStyles>, 'tagInputEmpty' | 'tagInputPointer'>
   | InputStylesNames
   | InputWrapperStylesNames;
 export interface TagInputProps extends DefaultProps<TagInputStylesNames>, BaseSelectProps {
@@ -149,13 +146,12 @@ export const TagInput = forwardRef<HTMLInputElement, TagInputProps>(
       onValidationReject = () => {},
       onlyUnique = false,
       inputFieldPosition = 'inside',
-      maxHeight = 60,
       ...others
     }: TagInputProps,
     ref
   ) => {
     const { classes, cx, theme } = useStyles(
-      { size, invalid: !!error, inputFieldPosition, maxHeight },
+      { size, invalid: !!error, inputFieldPosition },
       { classNames, styles, name: 'TagInput' }
     );
     const { systemStyles, rest } = extractSystemStyles(others);
@@ -331,7 +327,7 @@ export const TagInput = forwardRef<HTMLInputElement, TagInputProps>(
           ref={wrapperRef}
         >
           {inputFieldPosition === 'top' && (
-            <div className={cx(classes.values, classes.valuesNotInline)}>{selectedItems}</div>
+            <div className={cx(classes.values)}>{selectedItems}</div>
           )}
           <Input<'div'>
             __staticSelector="TagInput"
@@ -395,7 +391,7 @@ export const TagInput = forwardRef<HTMLInputElement, TagInputProps>(
             </div>
           </Input>
           {inputFieldPosition === 'bottom' && (
-            <div className={cx(classes.values, classes.valuesNotInline)}>{selectedItems}</div>
+            <div className={cx(classes.values)}>{selectedItems}</div>
           )}
         </div>
 
@@ -405,4 +401,4 @@ export const TagInput = forwardRef<HTMLInputElement, TagInputProps>(
   }
 );
 
-TagInput.displayName = '@mantine/labs/TagInput';
+TagInput.displayName = '@mantine/core/TagInput';

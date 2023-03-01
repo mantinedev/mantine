@@ -17,7 +17,7 @@ const defaultProps: TagInputValueProps = {
   radius: 'sm',
 };
 
-describe('@mantine/labs/TagInput/DefaultValue', () => {
+describe('@mantine/core/TagInput/DefaultValue', () => {
   checkAccessibility([<DefaultValue {...defaultProps} />]);
   itSupportsClassName(DefaultValue, defaultProps);
   itSupportsStyle(DefaultValue, defaultProps);
@@ -43,6 +43,6 @@ describe('@mantine/labs/TagInput/DefaultValue', () => {
   });
 
   it('has correct displayName', () => {
-    expect(DefaultValue.displayName).toEqual('@mantine/labs/TagInput/DefaultValue');
+    expect(DefaultValue.displayName).toEqual('@mantine/core/TagInput/DefaultValue');
   });
 });

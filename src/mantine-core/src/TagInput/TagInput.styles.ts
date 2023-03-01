@@ -4,7 +4,6 @@ interface TagInputStyles {
   size: MantineSize;
   invalid: boolean;
   inputFieldPosition: InputFieldPosition;
-  maxHeight: number;
 }
 
 export type InputFieldPosition = 'inside' | 'top' | 'bottom';
@@ -18,7 +17,7 @@ export const RIGHT_SECTION_WIDTH = {
 };
 
 export default createStyles(
-  (theme, { size, invalid, inputFieldPosition, maxHeight }: TagInputStyles) => ({
+  (theme, { size, invalid, inputFieldPosition }: TagInputStyles) => ({
     wrapper: {
       position: 'relative',
     },
@@ -32,10 +31,6 @@ export default createStyles(
       paddingTop: `calc(${theme.spacing.xs}px / 2 - 2px)`,
       paddingBottom: `calc(${theme.spacing.xs}px / 2 - 2px)`,
       boxSizing: 'border-box',
-    },
-    valuesNotInline: {
-      maxHeight: `calc(${maxHeight}px)`,
-      overflowY: 'auto',
     },
 
     value: {
@@ -69,13 +64,6 @@ export default createStyles(
 
     tagInputEmpty: {
       width: '90%',
-    },
-
-    tagInputInputHidden: {
-      width: 0,
-      height: 0,
-      margin: 0,
-      overflow: 'hidden',
     },
 
     tagInputPointer: {

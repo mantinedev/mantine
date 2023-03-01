@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { MantineDemo } from '@mantine/ds';
-import { TagInput } from '@mantine/labs';
+import { TagInput } from '@mantine/core';
 
 const code = `
 <TagInput
