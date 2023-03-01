@@ -31,6 +31,7 @@ export default createStyles(
       paddingTop: `calc(${theme.spacing.xs}px / 2 - 2px)`,
       paddingBottom: `calc(${theme.spacing.xs}px / 2 - 2px)`,
       boxSizing: 'border-box',
+      width: '100%',
     },
 
     value: {
@@ -38,6 +39,7 @@ export default createStyles(
     },
 
     tagInput: {
+      flex: 1,
       width: 60,
       minWidth: inputFieldPosition !== 'inside' ? '90%' : 'auto',
       backgroundColor: 'transparent',
@@ -63,7 +65,7 @@ export default createStyles(
     },
 
     tagInputEmpty: {
-      width: '90%',
+      width: '100%',
     },
 
     tagInputPointer: {
