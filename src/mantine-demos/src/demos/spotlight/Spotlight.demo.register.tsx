@@ -66,7 +66,7 @@ export function Demo() {
   return (
     <SpotlightProvider
       actions={actions}
-      onActionChange={setActions}
+      onActionsChange={setActions}
       searchIcon={<IconSearch size="1.2rem" />}
       searchPlaceholder="Search..."
       shortcut="mod + shift + C"
