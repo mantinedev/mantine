@@ -14,7 +14,7 @@ function Demo() {
   return (
     <>
       <Modal opened={opened} onClose={close} title="Authentication" yOffset="1vh" xOffset={0}>
-        <AuthenticationForm noShadow noPadding />
+        {/* Modal content */}
       </Modal>
 
       <Group position="center">
