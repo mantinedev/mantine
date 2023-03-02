@@ -169,7 +169,7 @@ export function useForm<
 
   const getInputProps: GetInputProps<Values> = (
     path,
-    { type = 'input', withError = type === 'input', withFocus = true } = {}
+    { type = 'input', withError = true, withFocus = true } = {}
   ) => {
     const onChange = getInputOnChange((value) => setFieldValue(path, value as any));
     const payload: any = { onChange };
