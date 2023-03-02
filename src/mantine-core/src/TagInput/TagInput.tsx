@@ -1,24 +1,29 @@
 import React, { useState, useRef, forwardRef } from 'react';
 import { useUncontrolled, useMergedRef, useId } from '@mantine/hooks';
-import {
-  DefaultProps,
-  MantineSize,
-  Selectors,
-  InputWrapperStylesNames,
-  Input,
-  InputStylesNames,
-  CloseButton,
-  extractSystemStyles,
-  BaseSelectProps,
-} from '@mantine/core';
-import useStyles, { InputFieldPosition, RIGHT_SECTION_WIDTH } from './TagInput.styles';
+import { DefaultProps, MantineSize, Selectors } from '@mantine/styles';
+import { Input } from '../Input';
+import { extractSystemStyles } from '../Box';
+import { CloseButton } from '../CloseButton';
+import { BaseSelectProps, BaseSelectStylesNames } from '../Select/types';
 import { DefaultValue, DefaultValueStylesNames } from './DefaultValue/DefaultValue';
+import useStyles, { InputFieldPosition } from './TagInput.styles';
 
 export type TagInputStylesNames =
   | DefaultValueStylesNames
-  | Exclude<Selectors<typeof useStyles>, 'tagInputEmpty' | 'tagInputPointer'>
-  | InputStylesNames
-  | InputWrapperStylesNames;
+  | Exclude<
+      Selectors<typeof useStyles>,
+      'tagInputEmpty' | 'tagInputInputHidden' | 'tagInputPointer'
+    >
+  | Exclude<
+      BaseSelectStylesNames,
+      | 'selected'
+      | 'item'
+      | 'nothingFound'
+      | 'separator'
+      | 'separatorLabel'
+      | 'itemsWrapper'
+      | 'dropdown'
+    >;
 export interface TagInputProps extends DefaultProps<TagInputStylesNames>, BaseSelectProps {
   /** Input size */
   size?: MantineSize;
@@ -40,9 +45,6 @@ export interface TagInputProps extends DefaultProps<TagInputStylesNames>, BaseSe
 
   /** Allow to clear item */
   clearable?: boolean;
-
-  /** aria-label for clear button */
-  clearButtonLabel?: string;
 
   /** Clear input field value on blur */
   clearInputOnBlur?: boolean;
@@ -76,9 +78,6 @@ export interface TagInputProps extends DefaultProps<TagInputStylesNames>, BaseSe
 
   /** Input Tag position */
   inputFieldPosition?: InputFieldPosition;
-
-  /** Max Height Container while position top | bottom */
-  maxHeight?: number;
 }
 
 const defaultPasteSplit = (data: string): string[] => {
@@ -129,14 +128,12 @@ export const TagInput = forwardRef<HTMLInputElement, TagInputProps>(
       placeholder,
       clearable = false,
       clearInputOnBlur = false,
-      clearButtonLabel,
       variant,
       onChangeInput,
       disabled = false,
       radius = 'sm',
       icon,
       rightSection,
-      rightSectionWidth,
       sx,
       maxTags,
       name,
@@ -150,7 +147,7 @@ export const TagInput = forwardRef<HTMLInputElement, TagInputProps>(
     }: TagInputProps,
     ref
   ) => {
-    const { classes, cx, theme } = useStyles(
+    const { classes, cx } = useStyles(
       { size, invalid: !!error, inputFieldPosition },
       { classNames, styles, name: 'TagInput' }
     );
@@ -360,7 +357,7 @@ export const TagInput = forwardRef<HTMLInputElement, TagInputProps>(
             size={size}
             variant={variant}
             disabled={disabled}
-            invalid={!!error}
+            error={error}
             required={required}
             radius={radius}
             icon={icon}
@@ -372,15 +369,9 @@ export const TagInput = forwardRef<HTMLInputElement, TagInputProps>(
             classNames={{
               ...classNames,
             }}
-            rightSectionWidth={theme.fn.size({ size, sizes: RIGHT_SECTION_WIDTH }) as number}
             rightSection={
               !disabled && clearable && _value.length > 0 ? (
-                <CloseButton
-                  variant="transparent"
-                  aria-label={clearButtonLabel}
-                  onClick={handleClear}
-                  size={size}
-                />
+                <CloseButton variant="transparent" onClick={handleClear} size={size} />
               ) : (
                 rightSection
               )

@@ -20,7 +20,6 @@ function Demo() {
       <TagInput
         label="Technologies that you're interested in"
         placeholder="Add as many as you like"
-        clearButtonLabel="Clear selection"
         value={value}
         onChange={(item) => setValue(item)}
       />

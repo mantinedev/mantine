@@ -1,4 +1,5 @@
-import { createStyles, MantineSize, INPUT_SIZES } from '@mantine/core';
+import { createStyles, getSize, MantineSize } from '@mantine/styles';
+import { INPUT_SIZES } from '../Input';
 
 interface TagInputStyles {
   size: MantineSize;
@@ -23,7 +24,7 @@ export default createStyles(
     },
 
     values: {
-      minHeight: theme.fn.size({ size, sizes: INPUT_SIZES }) - 2,
+      minHeight: getSize({ size, sizes: INPUT_SIZES }),
       display: 'flex',
       alignItems: 'center',
       flexWrap: 'wrap',
@@ -45,7 +46,7 @@ export default createStyles(
       backgroundColor: 'transparent',
       border: 0,
       outline: 0,
-      fontSize: theme.fn.size({ size, sizes: theme.fontSizes }),
+      fontSize: getSize({ size, sizes: theme.fontSizes }),
       padding: 0,
       margin: `calc(${theme.spacing.xs}px / 2)`,
       appearance: 'none',

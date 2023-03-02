@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { storiesOf } from '@storybook/react';
 import { MANTINE_SIZES, Group, Stack, TextInput } from '@mantine/core';
-import { SubmitForm } from '@mantine/storybook';
 import { TagInput } from './TagInput';
 
 function Controlled() {
@@ -80,7 +79,5 @@ storiesOf('TagInput', module)
     </Group>
   ))
   .add('Within form', () => (
-    <SubmitForm>
-      <TagInput label="Submit with enter" defaultValue={['react', 'ng']} placeholder="Input tag" />
-    </SubmitForm>
+    <TagInput label="Submit with enter" defaultValue={['react', 'ng']} placeholder="Input tag" />
   ));
