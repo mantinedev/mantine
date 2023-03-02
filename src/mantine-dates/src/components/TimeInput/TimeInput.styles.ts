@@ -1,21 +1,27 @@
-import { createStyles, INPUT_SIZES, MantineSize } from '@mantine/core';
+import { createStyles, rem } from '@mantine/core';
 
-export interface TimeInputStylesParams {
-  size: MantineSize;
-}
+export default createStyles((theme) => ({
+  input: {
+    paddingTop: 0,
+    paddingBottom: 0,
+    appearance: 'none',
+    '&::-webkit-calendar-picker-indicator': {
+      display: 'none',
+    },
 
-export default createStyles((theme, { size }: TimeInputStylesParams) => ({
-  timeInput: {},
-  amPmInput: {},
+    '&::-webkit-clear-button': {
+      display: 'none',
+    },
 
-  disabled: {
-    cursor: 'not-allowed',
-  },
-
-  controls: {
-    display: 'flex',
-    alignItems: 'center',
-    // -2 for border offset
-    height: theme.fn.size({ size, sizes: INPUT_SIZES }) - 2,
+    '&::-webkit-datetime-edit-hour-field, &::-webkit-datetime-edit-minute-field, &::-webkit-datetime-edit-second-field':
+      {
+        paddingTop: 0,
+        maxHeight: rem(30),
+        display: 'inline',
+        '&:focus': {
+          backgroundColor: theme.fn.variant({ variant: 'filled' }).background,
+          color: theme.white,
+        },
+      },
   },
 }));

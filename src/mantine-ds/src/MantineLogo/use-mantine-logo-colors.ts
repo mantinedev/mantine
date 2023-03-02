@@ -5,7 +5,7 @@ export type MantineLogoVariant = 'mantine.dev' | 'ui.mantine.dev';
 export interface LogoProps extends React.ComponentPropsWithoutRef<'svg'> {
   color?: MantineColor;
   variant?: MantineLogoVariant;
-  size?: number;
+  size?: number | string;
   inverted?: boolean;
 }
 

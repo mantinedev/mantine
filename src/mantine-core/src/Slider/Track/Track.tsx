@@ -1,5 +1,5 @@
 import React from 'react';
-import { DefaultProps, MantineNumberSize, MantineColor, Selectors } from '@mantine/styles';
+import { DefaultProps, MantineNumberSize, MantineColor, Selectors, getSize } from '@mantine/styles';
 import { Box } from '../../Box';
 import { Marks, MarksStylesNames } from '../Marks/Marks';
 import { sizes } from '../SliderRoot/SliderRoot.styles';
@@ -24,6 +24,7 @@ export interface TrackProps extends DefaultProps<TrackStylesNames> {
   onMouseLeave?(event?: React.MouseEvent<HTMLDivElement>): void;
   disabled: boolean;
   inverted?: boolean;
+  variant: string;
 }
 
 export function Track({
@@ -41,21 +42,22 @@ export function Track({
   marksOffset,
   unstyled,
   inverted,
+  variant,
   ...others
 }: TrackProps) {
   const { classes } = useStyles(
-    { color, size, radius, disabled, inverted },
-    { classNames, styles, unstyled, name: 'Slider' }
+    { color, radius, disabled, inverted },
+    { name: 'Slider', classNames, styles, unstyled, variant, size }
   );
 
   return (
     <div className={classes.track} onMouseLeave={onMouseLeave} onMouseEnter={onMouseEnter}>
       <Box
         className={classes.bar}
-        sx={(theme) => ({
-          left: `calc(${offset}% - ${theme.fn.size({ size, sizes })}px)`,
-          width: `calc(${filled}% + ${theme.fn.size({ size, sizes })}px)`,
-        })}
+        sx={{
+          left: `calc(${offset}% - ${getSize({ size, sizes })})`,
+          width: `calc(${filled}% + ${getSize({ size, sizes })})`,
+        }}
       />
 
       {children}
@@ -70,6 +72,7 @@ export function Track({
         disabled={disabled}
         unstyled={unstyled}
         inverted={inverted}
+        variant={variant}
       />
     </div>
   );

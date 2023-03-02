@@ -63,15 +63,6 @@ You can also change completed icon for each step, for example, to indicate error
 
 <Demo data={StepperDemos.stepColor} />
 
-## Step-aware components for customization
-
-All props accepting a React Node for customizing a step (`label`, `icon`, `completedIcon`...) can also take a React _Component_
-instead, which will receive the step's index as props.
-
-This allows easily using a custom component for each steps.
-
-<Demo data={StepperDemos.stepFragmentComponents} />
-
 ## Vertical orientation
 
 <Demo data={StepperDemos.orientation} />
@@ -86,7 +77,7 @@ than `theme.breakpoints.md`:
 <Stepper breakpoint="md">{/* ...steps */}</Stepper>
 ```
 
-You can configure breakpoints with [MantineProvider](/theming/mantine-provider) or use number to set breakpoint in px:
+You can configure breakpoints with [MantineProvider](/theming/mantine-provider) or use number to set breakpoint:
 
 ```tsx
 <Stepper breakpoint={755}>{/* ...steps */}</Stepper>

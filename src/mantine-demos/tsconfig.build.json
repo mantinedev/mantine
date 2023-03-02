@@ -32,9 +32,7 @@
       "@mantine/notifications": ["../mantine-notifications/src"],
       "@mantine/modals": ["../mantine-modals/src"],
       "@mantine/nprogress": ["../mantine-nprogress/src"],
-      "@mantine/labs": ["../mantine-labs/src"],
-      "@mantine/tiptap": ["../mantine-tiptap/src"],
-      "@mantine/rte": ["../mantine-rte/src"]
+      "@mantine/tiptap": ["../mantine-tiptap/src"]
     }
   },
   "references": [
@@ -49,8 +47,6 @@
     { "path": "../mantine-notifications" },
     { "path": "../mantine-modals" },
     { "path": "../mantine-nprogress" },
-    { "path": "../mantine-labs" },
-    { "path": "../mantine-tiptap" },
-    { "path": "../mantine-rte" }
+    { "path": "../mantine-tiptap" }
   ]
 }

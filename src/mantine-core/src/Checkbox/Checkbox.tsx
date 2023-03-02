@@ -1,7 +1,6 @@
 import React, { forwardRef } from 'react';
 import {
   DefaultProps,
-  MantineSize,
   MantineColor,
   Selectors,
   MantineNumberSize,
@@ -21,26 +20,25 @@ export type CheckboxStylesNames = Selectors<typeof useStyles> | InlineInputStyle
 export interface CheckboxProps
   extends DefaultProps<CheckboxStylesNames, CheckboxStylesParams>,
     Omit<React.ComponentPropsWithRef<'input'>, 'type' | 'size'> {
+  variant?: string;
+
   /** Key of theme.colors */
   color?: MantineColor;
 
-  /** Key of theme.radius or number to set border-radius in px */
+  /** Key of theme.radius or any valid CSS value to set border-radius, theme.defaultRadius by default */
   radius?: MantineNumberSize;
 
-  /** Predefined label font-size and checkbox width and height in px */
-  size?: MantineSize;
+  /** Controls label font-size and checkbox width and height */
+  size?: MantineNumberSize;
 
   /** Checkbox label */
   label?: React.ReactNode;
 
-  /** Indeterminate state of checkbox, overwrites checked */
+  /** Indeterminate state of checkbox, if set, `checked` prop is ignored */
   indeterminate?: boolean;
 
-  /** Props spread to wrapper element */
+  /** Props added to the root element */
   wrapperProps?: Record<string, any>;
-
-  /** id to connect label with input */
-  id?: string;
 
   /** Transition duration in ms */
   transitionDuration?: number;
@@ -48,13 +46,13 @@ export interface CheckboxProps
   /** Icon rendered when checkbox has checked or indeterminate state */
   icon?: React.FC<{ indeterminate: boolean; className: string }>;
 
-  /** Position of label */
+  /** Position of the label */
   labelPosition?: 'left' | 'right';
 
-  /** description, displayed after label */
+  /** Description, displayed after the label */
   description?: React.ReactNode;
 
-  /** Displays error message after input */
+  /** Error message displayed after the input */
   error?: React.ReactNode;
 }
 
@@ -94,6 +92,7 @@ export const Checkbox: CheckboxComponent = forwardRef<HTMLInputElement, Checkbox
       labelPosition,
       description,
       error,
+      variant,
       ...others
     } = useComponentDefaultProps('Checkbox', defaultProps, props);
 
@@ -102,7 +101,6 @@ export const Checkbox: CheckboxComponent = forwardRef<HTMLInputElement, Checkbox
     const { systemStyles, rest } = extractSystemStyles(others);
     const { classes } = useStyles(
       {
-        size: ctx?.size || size,
         radius,
         color,
         transitionDuration,
@@ -110,7 +108,7 @@ export const Checkbox: CheckboxComponent = forwardRef<HTMLInputElement, Checkbox
         error: !!error,
         indeterminate,
       },
-      { name: 'Checkbox', classNames, styles, unstyled }
+      { name: 'Checkbox', classNames, styles, unstyled, variant, size: ctx?.size || size }
     );
 
     const contextProps = ctx
@@ -137,6 +135,7 @@ export const Checkbox: CheckboxComponent = forwardRef<HTMLInputElement, Checkbox
         styles={styles}
         unstyled={unstyled}
         data-checked={contextProps.checked || undefined}
+        variant={variant}
         {...systemStyles}
         {...wrapperProps}
       >

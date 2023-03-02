@@ -1,6 +1,6 @@
 import React from 'react';
 import { MantineDemo } from '@mantine/ds';
-import { NumberInput } from '@mantine/core';
+import { NumberInput, Box } from '@mantine/core';
 
 const code = `
 import { NumberInput } from '@mantine/core';
@@ -17,7 +17,6 @@ function Demo() {
       />
 
       <NumberInput
-        mt="md"
         label="Your weight in kg"
         description="From 0 to Infinity, step is 5"
         defaultValue={80}
@@ -31,7 +30,7 @@ function Demo() {
 
 function Demo() {
   return (
-    <div style={{ maxWidth: 420, margin: 'auto' }}>
+    <Box maw={420} mx="auto">
       <NumberInput
         label="Your age"
         description="From 0 to 120, step is 1"
@@ -48,7 +47,7 @@ function Demo() {
         step={5}
         min={0}
       />
-    </div>
+    </Box>
   );
 }
 

@@ -1,13 +1,10 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { useDisclosure } from '@mantine/hooks';
 import { Burger } from '@mantine/core';
 
 export function DemoBase(
   props: Omit<React.ComponentPropsWithoutRef<typeof Burger>, 'opened' | 'onChange'>
 ) {
-  const [opened, onChange] = useState(false);
-  return (
-    <div style={{ padding: 10 }}>
-      <Burger opened={opened} onClick={() => onChange((s) => !s)} {...props} />
-    </div>
-  );
+  const [opened, { toggle }] = useDisclosure(false);
+  return <Burger m="xs" opened={opened} onClick={toggle} {...props} />;
 }

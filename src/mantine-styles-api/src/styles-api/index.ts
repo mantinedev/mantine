@@ -47,7 +47,6 @@ export * from './Spoiler.styles-api';
 export * from './Stepper.styles-api';
 export * from './Switch.styles-api';
 export * from './Tabs.styles-api';
-export * from './TagInput.styles-api';
 export * from './Textarea.styles-api';
 export * from './TextInput.styles-api';
 export * from './Timeline.styles-api';
@@ -55,11 +54,7 @@ export * from './Tooltip.styles-api';
 export * from './TransferList.styles-api';
 
 // @mantine/dates
-export * from './Calendar.styles-api';
-export * from './CalendarBase.styles-api';
-export * from './DatePicker.styles-api';
-export * from './Month.styles-api';
-export * from './TimeInput.styles-api';
+export * from './Dates.styles-api';
 
 // Other packages
 export * from './Dropzone.styles-api';

@@ -13,7 +13,7 @@ interface AccordionContext {
   transitionDuration: number;
   disableChevronRotation: boolean;
   chevronPosition: AccordionChevronPosition;
-  chevronSize: number;
+  chevronSize: number | string;
   order: AccordionHeadingOrder;
   chevron: React.ReactNode;
   variant: AccordionVariant;

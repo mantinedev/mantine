@@ -1,4 +1,4 @@
-import { createStyles, MantineNumberSize } from '@mantine/styles';
+import { createStyles, MantineNumberSize, getSize } from '@mantine/styles';
 
 interface AvatarGroupStylesParams {
   spacing: MantineNumberSize;
@@ -7,6 +7,6 @@ interface AvatarGroupStylesParams {
 export default createStyles((theme, { spacing }: AvatarGroupStylesParams) => ({
   root: {
     display: 'flex',
-    paddingLeft: theme.fn.size({ size: spacing, sizes: theme.spacing }),
+    paddingLeft: getSize({ size: spacing, sizes: theme.spacing }),
   },
 }));

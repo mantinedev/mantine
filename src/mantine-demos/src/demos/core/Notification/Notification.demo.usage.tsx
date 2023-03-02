@@ -1,12 +1,12 @@
 import React from 'react';
-import { IconCheck, IconX } from '@tabler/icons';
+import { IconCheck, IconX } from '@tabler/icons-react';
 import { Notification } from '@mantine/core';
 import { MantineDemo } from '@mantine/ds';
 import { demoBase } from './_demo-base';
 
 const code = `
 import { Notification } from '@mantine/core';
-import { IconCheck, IconX } from '@tabler/icons';
+import { IconCheck, IconX } from '@tabler/icons-react';
 
 function Demo() {
   return (
@@ -15,18 +15,18 @@ function Demo() {
         This is default notification with title and body
       </Notification>
 
-      <Notification icon={<IconCheck size={18} />} color="teal" title="Teal notification">
+      <Notification icon={<IconCheck size="1.1rem" />} color="teal" title="Teal notification">
         This is teal notification with icon
       </Notification>
 
-      <Notification icon={<IconX size={18} />} color="red">
+      <Notification icon={<IconX size="1.1rem" />} color="red">
         Bummer! Notification without title
       </Notification>
 
       <Notification
         loading
         title="Uploading data to the server"
-        disallowClose
+        withCloseButton={false}
       >
         Please wait until data is uploaded, you cannot close this notification yet
       </Notification>
@@ -43,8 +43,8 @@ function Demo() {
       </Notification>
 
       <Notification
-        style={{ marginTop: 15 }}
-        icon={<IconCheck size={18} />}
+        mt="md"
+        icon={<IconCheck size="1.1rem" />}
         color="teal"
         title="Teal notification"
         onClose={() => {}}
@@ -52,20 +52,15 @@ function Demo() {
         This is teal notification with icon
       </Notification>
 
-      <Notification
-        style={{ marginTop: 15 }}
-        icon={<IconX size={18} />}
-        color="red"
-        onClose={() => {}}
-      >
+      <Notification mt="md" icon={<IconX size="1.1rem" />} color="red" onClose={() => {}}>
         Bummer! Notification without title
       </Notification>
 
       <Notification
-        style={{ marginTop: 15 }}
+        mt="md"
         loading
         title="Uploading data to the server"
-        disallowClose
+        withCloseButton={false}
         onClose={() => {}}
       >
         Please wait until data is uploaded, you cannot close this notification yet

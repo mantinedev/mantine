@@ -2,13 +2,15 @@
 import React, { forwardRef } from 'react';
 import { DefaultProps, MantineSize, Selectors, useComponentDefaultProps } from '@mantine/styles';
 import { Box } from '../../Box';
-import useStyles, { InputLabelStylesParams } from './InputLabel.styles';
+import useStyles from './InputLabel.styles';
 
 export type InputLabelStylesNames = Selectors<typeof useStyles>;
 
 export interface InputLabelProps
-  extends DefaultProps<InputLabelStylesNames, InputLabelStylesParams>,
+  extends DefaultProps<InputLabelStylesNames>,
     React.ComponentPropsWithoutRef<'label'> {
+  variant?: string;
+
   /** Label content */
   children?: React.ReactNode;
 
@@ -41,13 +43,19 @@ export const InputLabel = forwardRef<HTMLLabelElement, InputLabelProps>((props, 
     className,
     htmlFor,
     __staticSelector,
+    variant,
+    onMouseDown,
     ...others
   } = useComponentDefaultProps('InputLabel', defaultProps, props);
 
-  const { classes, cx } = useStyles(
-    { size },
-    { name: ['InputWrapper', __staticSelector], classNames, styles, unstyled }
-  );
+  const { classes, cx } = useStyles(null, {
+    name: ['InputWrapper', __staticSelector],
+    classNames,
+    styles,
+    unstyled,
+    variant,
+    size,
+  });
 
   return (
     <Box<'label'>
@@ -55,6 +63,12 @@ export const InputLabel = forwardRef<HTMLLabelElement, InputLabelProps>((props, 
       ref={ref}
       className={cx(classes.label, className)}
       htmlFor={labelElement === 'label' ? htmlFor : undefined}
+      onMouseDown={(event) => {
+        onMouseDown?.(event);
+        if (!event.defaultPrevented && event.detail > 1) {
+          event.preventDefault();
+        }
+      }}
       {...others}
     >
       {children}

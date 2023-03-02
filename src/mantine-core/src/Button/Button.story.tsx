@@ -1,6 +1,6 @@
 import React, { CSSProperties } from 'react';
 import { MANTINE_COLORS, useMantineTheme } from '@mantine/styles';
-import { IconExternalLink } from '@tabler/icons';
+import { IconExternalLink } from '@tabler/icons-react';
 import { Button } from './Button';
 import { Group } from '../Group';
 import { Center } from '../Center';

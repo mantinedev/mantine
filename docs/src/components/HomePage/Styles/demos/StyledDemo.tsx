@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'gatsby';
-import { Text, Box, Anchor } from '@mantine/core';
+import { Text, Box, Anchor, rem } from '@mantine/core';
 import { Prism } from '@mantine/prism';
 
 const code = `
@@ -10,8 +10,8 @@ const StyledComponent = styled.div\`
   text-align: center;
   background-color: \${({ theme }) =>
     theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[0]};
-  padding: 30px;
-  border-radius: 5px;
+  padding: ${rem(30)};
+  border-radius: ${rem(5)};
   cursor: pointer;
 
   &:hover {

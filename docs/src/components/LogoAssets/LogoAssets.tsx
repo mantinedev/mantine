@@ -1,6 +1,6 @@
 /* eslint-disable import/no-webpack-loader-syntax */
 import React from 'react';
-import { SimpleGrid, Button, Group, createStyles, DEFAULT_THEME } from '@mantine/core';
+import { SimpleGrid, Button, Group, createStyles, DEFAULT_THEME, rem } from '@mantine/core';
 import { useClipboard } from '@mantine/hooks';
 
 import fullLogoCode from '!!raw-loader!./assets/mantine-logo-full.svg';
@@ -27,7 +27,7 @@ const useStyles = createStyles((theme) => ({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    border: `1px solid ${
+    border: `${rem(1)} solid ${
       theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.colors.gray[3]
     }`,
   },
@@ -40,7 +40,7 @@ function LogoAsset({ image, code, fileName, imageWidth, background, ...others }:
   return (
     <div {...others}>
       <div className={classes.imageWrapper} style={{ backgroundColor: background }}>
-        <img src={image} alt={fileName} style={{ maxWidth: '100%', width: imageWidth }} />
+        <img src={image} alt={fileName} style={{ maxWidth: '100%', width: rem(imageWidth) }} />
       </div>
 
       <Group noWrap grow mt={10}>

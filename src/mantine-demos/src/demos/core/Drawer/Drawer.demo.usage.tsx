@@ -1,29 +1,24 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Drawer, Button, Group } from '@mantine/core';
 import { MantineDemo } from '@mantine/ds';
+import { useDisclosure } from '@mantine/hooks';
 import { AuthenticationForm } from '../../../shared/AuthenticationForm/AuthenticationForm';
 
 const code = `
-import { useState } from 'react';
+import { useDisclosure } from '@mantine/hooks';
 import { Drawer, Button, Group } from '@mantine/core';
 
 function Demo() {
-  const [opened, setOpened] = useState(false);
+  const [opened, { open, close }] = useDisclosure(false);
 
   return (
     <>
-      <Drawer
-        opened={opened}
-        onClose={() => setOpened(false)}
-        title="Register"
-        padding="xl"
-        size="xl"
-      >
+      <Drawer opened={opened} onClose={close} title="Authentication">
         {/* Drawer content */}
       </Drawer>
 
       <Group position="center">
-        <Button onClick={() => setOpened(true)}>Open Drawer</Button>
+        <Button onClick={open}>Open Drawer</Button>
       </Group>
     </>
   );
@@ -31,22 +26,16 @@ function Demo() {
 `;
 
 function Demo() {
-  const [opened, setOpened] = useState(false);
+  const [opened, { open, close }] = useDisclosure(false);
 
   return (
     <>
-      <Drawer
-        opened={opened}
-        onClose={() => setOpened(false)}
-        padding="xl"
-        title="Register"
-        size="xl"
-      >
+      <Drawer opened={opened} onClose={close} title="Authentication">
         <AuthenticationForm noPadding noShadow />
       </Drawer>
 
       <Group position="center">
-        <Button onClick={() => setOpened(true)}>Open Drawer</Button>
+        <Button onClick={open}>Open Drawer</Button>
       </Group>
     </>
   );

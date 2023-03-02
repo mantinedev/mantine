@@ -23,6 +23,8 @@ export type CarouselStylesNames = CarouselSlideStylesNames | Selectors<typeof us
 export interface CarouselProps
   extends DefaultProps<CarouselStylesNames, CarouselStylesParams>,
     React.ComponentPropsWithRef<'div'> {
+  variant?: string;
+
   /** <Carousel.Slide /> components */
   children?: React.ReactNode;
 
@@ -44,16 +46,16 @@ export interface CarouselProps
   /** Previous control aria-label */
   previousControlLabel?: string;
 
-  /** Previous/next controls size in px */
+  /** Previous/next controls size */
   controlSize?: number;
 
   /** Key of theme.spacing or number to set space between next/previous control and carousel boundary */
   controlsOffset?: MantineNumberSize;
 
-  /** Slide width, defaults to 100%, examples: 200px, 50% */
+  /** Slide width, defaults to 100%, examples: 40rem 50% */
   slideSize?: string | number;
 
-  /** Key of theme.spacing or number to set gap between slides in px */
+  /** Key of theme.spacing or number to set gap between slides */
   slideGap?: MantineNumberSize;
 
   /** Control slideSize and slideGap at different viewport sizes */
@@ -176,12 +178,13 @@ export const _Carousel = forwardRef<HTMLDivElement, CarouselProps>((props, ref) 
     skipSnaps,
     containScroll,
     withKeyboardEvents,
+    variant,
     ...others
   } = useComponentDefaultProps('Carousel', defaultProps, props);
 
   const { classes, cx, theme } = useStyles(
     { controlSize, controlsOffset, orientation, height, includeGapInSize, breakpoints, slideGap },
-    { name: 'Carousel', classNames, styles, unstyled }
+    { name: 'Carousel', classNames, styles, unstyled, variant }
   );
 
   const [emblaRefElement, embla] = useEmblaCarousel(
@@ -295,6 +298,7 @@ export const _Carousel = forwardRef<HTMLDivElement, CarouselProps>((props, ref) 
         classNames,
         styles,
         unstyled,
+        variant,
       }}
     >
       <Box

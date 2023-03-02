@@ -1,4 +1,5 @@
 import React from 'react';
+import { rem } from '@mantine/core';
 import { HeaderControl } from './HeaderControl';
 import { DiscordIcon } from '../Icons';
 import { meta } from '../meta';
@@ -19,7 +20,7 @@ export function DiscordControl() {
         }),
       })}
     >
-      <DiscordIcon size={20} />
+      <DiscordIcon size={rem(20)} />
     </HeaderControl>
   );
 }

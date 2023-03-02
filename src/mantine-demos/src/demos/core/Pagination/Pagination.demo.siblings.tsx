@@ -8,18 +8,14 @@ import { Text, Pagination } from '@mantine/core';
 function Demo() {
   return (
     <>
-      <Text mb={10}>1 sibling (default)</Text>
-      <Pagination total={20} siblings={1} initialPage={10} />
+      <Text mb="xs">1 sibling (default)</Text>
+      <Pagination total={20} siblings={1} defaultValue={10} />
 
-      <Text mb={10} mt={30}>
-        2 siblings
-      </Text>
-      <Pagination total={20} siblings={2} initialPage={10} />
+      <Text mb="xs" mt="xl">2 siblings</Text>
+      <Pagination total={20} siblings={2} defaultValue={10} />
 
-      <Text mb={10} mt={30}>
-        3 siblings
-      </Text>
-      <Pagination total={20} siblings={3} initialPage={10} />
+      <Text mb="xs" mt="xl">3 siblings</Text>
+      <Pagination total={20} siblings={3} defaultValue={10} />
     </>
   );
 }
@@ -28,18 +24,18 @@ function Demo() {
 function Demo() {
   return (
     <>
-      <Text mb={10}>1 sibling (default)</Text>
-      <Pagination total={20} siblings={1} initialPage={10} />
+      <Text mb="xs">1 sibling (default)</Text>
+      <Pagination total={20} siblings={1} defaultValue={10} />
 
-      <Text mb={10} mt={30}>
+      <Text mb="xs" mt="xl">
         2 siblings
       </Text>
-      <Pagination total={20} siblings={2} initialPage={10} />
+      <Pagination total={20} siblings={2} defaultValue={10} />
 
-      <Text mb={10} mt={30}>
+      <Text mb="xs" mt="xl">
         3 siblings
       </Text>
-      <Pagination total={20} siblings={3} initialPage={10} />
+      <Pagination total={20} siblings={3} defaultValue={10} />
     </>
   );
 }

@@ -11,6 +11,7 @@ export type SaturationStylesNames =
   | ThumbStylesNames;
 
 interface SaturationProps extends DefaultProps<SaturationStylesNames> {
+  variant?: string;
   value: HsvaColor;
   onChange(color: Partial<HsvaColor>): void;
   onChangeEnd(color: Partial<HsvaColor>): void;
@@ -33,8 +34,17 @@ export function Saturation({
   classNames,
   styles,
   unstyled,
+  variant,
 }: SaturationProps) {
-  const { classes } = useStyles({ size }, { classNames, styles, name: __staticSelector, unstyled });
+  const { classes } = useStyles(null, {
+    classNames,
+    styles,
+    name: __staticSelector,
+    unstyled,
+    variant,
+    size,
+  });
+
   const [position, setPosition] = useState({ x: value.s / 100, y: 1 - value.v / 100 });
   const positionRef = useRef(position);
 

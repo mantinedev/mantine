@@ -65,8 +65,8 @@ export const Tabs: TabsComponent = forwardRef<HTMLDivElement, TabsProps>((props,
   } = useComponentDefaultProps('Tabs', defaultProps, props);
 
   const { classes, cx } = useStyles(
-    { orientation, color, variant, radius, inverted, placement },
-    { unstyled, name: 'Tabs', classNames, styles }
+    { orientation, color, radius, inverted, placement },
+    { unstyled, name: 'Tabs', classNames, styles, variant }
   );
 
   return (

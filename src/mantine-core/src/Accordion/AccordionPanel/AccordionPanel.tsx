@@ -27,8 +27,8 @@ export function AccordionPanel(props: AccordionPanelProps) {
   const { value } = useAccordionItemContext();
   const { classNames, styles, unstyled } = useAccordionContext();
   const { classes, cx } = useStyles(
-    { variant: ctx.variant, radius: ctx.radius },
-    { name: 'Accordion', classNames, styles, unstyled }
+    { radius: ctx.radius },
+    { name: 'Accordion', classNames, styles, unstyled, variant: ctx.variant }
   );
 
   return (

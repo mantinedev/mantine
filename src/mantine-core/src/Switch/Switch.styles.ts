@@ -1,65 +1,63 @@
-import { createStyles, MantineNumberSize, MantineSize, MantineColor } from '@mantine/styles';
+import { createStyles, MantineNumberSize, MantineColor, rem, getSize } from '@mantine/styles';
 
 export interface SwitchStylesParams {
   color: MantineColor;
-  size: MantineSize;
   radius: MantineNumberSize;
   labelPosition: 'left' | 'right';
   error: boolean;
 }
 
 const switchHeight = {
-  xs: 16,
-  sm: 20,
-  md: 24,
-  lg: 30,
-  xl: 36,
+  xs: rem(16),
+  sm: rem(20),
+  md: rem(24),
+  lg: rem(30),
+  xl: rem(36),
 };
 
 const switchWidth = {
-  xs: 32,
-  sm: 38,
-  md: 46,
-  lg: 56,
-  xl: 72,
+  xs: rem(32),
+  sm: rem(38),
+  md: rem(46),
+  lg: rem(56),
+  xl: rem(72),
 };
 
 const handleSizes = {
-  xs: 12,
-  sm: 14,
-  md: 18,
-  lg: 22,
-  xl: 28,
+  xs: rem(12),
+  sm: rem(14),
+  md: rem(18),
+  lg: rem(22),
+  xl: rem(28),
 };
 
 const labelFontSizes = {
-  xs: 5,
-  sm: 6,
-  md: 7,
-  lg: 9,
-  xl: 11,
+  xs: rem(5),
+  sm: rem(6),
+  md: rem(7),
+  lg: rem(9),
+  xl: rem(11),
 };
 
 const trackLabelPaddings = {
-  xs: 4,
-  sm: 5,
-  md: 6,
-  lg: 8,
-  xl: 10,
+  xs: rem(4),
+  sm: rem(5),
+  md: rem(6),
+  lg: rem(8),
+  xl: rem(10),
 };
 
 export default createStyles(
-  (theme, { size, radius, color, labelPosition, error }: SwitchStylesParams) => {
-    const handleSize = theme.fn.size({ size, sizes: handleSizes });
-    const borderRadius = theme.fn.size({ size: radius, sizes: theme.radius });
+  (theme, { radius, color, labelPosition, error }: SwitchStylesParams, { size }) => {
+    const handleSize = getSize({ size, sizes: handleSizes });
+    const borderRadius = getSize({ size: radius, sizes: theme.radius });
     const colors = theme.fn.variant({ variant: 'filled', color });
-    const trackWidth = theme.fn.size({ size, sizes: switchWidth });
-    const trackPadding = size === 'xs' ? 1 : 2;
+    const trackWidth = getSize({ size, sizes: switchWidth });
+    const trackPadding = rem(size === 'xs' ? 1 : 2);
     const errorColor = theme.fn.variant({ variant: 'filled', color: 'red' }).background;
 
     return {
       input: {
-        clip: 'rect(1px, 1px, 1px, 1px)',
         height: 0,
         width: 0,
         overflow: 'hidden',
@@ -78,14 +76,14 @@ export default createStyles(
         position: 'relative',
         borderRadius,
         backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[2],
-        border: `1px solid ${
+        border: `${rem(1)} solid ${
           error
             ? errorColor
             : theme.colorScheme === 'dark'
             ? theme.colors.dark[4]
             : theme.colors.gray[3]
         }`,
-        height: theme.fn.size({ size, sizes: switchHeight }),
+        height: getSize({ size, sizes: switchHeight }),
         minWidth: trackWidth,
         margin: 0,
         transitionProperty: 'background-color, border-color',
@@ -95,14 +93,10 @@ export default createStyles(
         appearance: 'none',
         display: 'flex',
         alignItems: 'center',
-        fontSize: theme.fn.size({ size, sizes: labelFontSizes }),
+        fontSize: getSize({ size, sizes: labelFontSizes }),
         fontWeight: 600,
         order: labelPosition === 'left' ? 2 : 1,
         userSelect: 'none',
-        MozUserSelect: 'none',
-        WebkitUserSelect: 'none',
-        MsUserSelect: 'none',
-
         zIndex: 0,
         lineHeight: 0,
         color: theme.colorScheme === 'dark' ? theme.colors.dark[1] : theme.colors.gray[6],
@@ -132,8 +126,10 @@ export default createStyles(
         backgroundColor: theme.white,
         height: handleSize,
         width: handleSize,
-        border: `1px solid ${theme.colorScheme === 'dark' ? theme.white : theme.colors.gray[3]}`,
-        left: `${trackPadding}px`,
+        border: `${rem(1)} solid ${
+          theme.colorScheme === 'dark' ? theme.white : theme.colors.gray[3]
+        }`,
+        left: trackPadding,
         transition: `left 150ms ${theme.transitionTimingFunction}`,
 
         '& > *': {
@@ -145,7 +141,7 @@ export default createStyles(
         },
 
         'input:checked + * > &': {
-          left: `calc(100% - ${handleSize}px - ${trackPadding}px)`,
+          left: `calc(100% - ${handleSize} - ${trackPadding})`,
           borderColor: theme.white,
         },
 
@@ -161,13 +157,13 @@ export default createStyles(
         display: 'grid',
         placeContent: 'center',
 
-        minWidth: trackWidth - handleSize,
-        paddingInline: theme.fn.size({ size, sizes: trackLabelPaddings }),
-        margin: `0 0 0 ${handleSize + trackPadding}px`,
+        minWidth: `calc(${trackWidth} - ${handleSize})`,
+        paddingInline: getSize({ size, sizes: trackLabelPaddings }),
+        margin: `0 0 0 calc(${handleSize} + ${trackPadding})`,
         transition: `margin 150ms ${theme.transitionTimingFunction}`,
 
         'input:checked + * > &': {
-          margin: `0 ${handleSize + trackPadding}px 0 0`,
+          margin: `0 calc(${handleSize} + ${trackPadding}) 0 0`,
         },
       },
     };

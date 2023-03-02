@@ -18,6 +18,7 @@ export interface MarksProps extends DefaultProps<MarksStylesNames> {
   offset?: number;
   disabled: boolean;
   inverted?: boolean;
+  variant: string;
 }
 
 export function Marks({
@@ -34,10 +35,11 @@ export function Marks({
   disabled,
   unstyled,
   inverted,
+  variant,
 }: MarksProps) {
   const { classes, cx } = useStyles(
-    { size, color, disabled },
-    { classNames, styles, unstyled, name: 'Slider' }
+    { color, disabled },
+    { name: 'Slider', classNames, styles, unstyled, variant, size }
   );
 
   const items = marks.map((mark, index) => (

@@ -39,26 +39,39 @@ export function DefaultAction({
   radius,
   ...others
 }: DefaultActionProps) {
-  const { classes, cx } = useStyles({ radius }, { styles, classNames, name: 'Spotlight' });
+  const { classes } = useStyles({ radius }, { styles, classNames, name: 'Spotlight' });
 
   return (
     <UnstyledButton
-      className={cx(classes.action, { [classes.actionHovered]: hovered })}
+      className={classes.action}
+      data-hovered={hovered || undefined}
       tabIndex={-1}
       onMouseDown={(event) => event.preventDefault()}
       onClick={onTrigger}
       {...others}
     >
       <Group noWrap>
-        {action.icon && <Center className={classes.actionIcon}>{action.icon}</Center>}
+        {action.icon && (
+          <Center className={classes.actionIcon} data-hovered={hovered || undefined}>
+            {action.icon}
+          </Center>
+        )}
 
         <div className={classes.actionBody}>
-          <Highlight highlightColor={highlightColor} highlight={highlightQuery ? query : null}>
+          <Highlight
+            highlightColor={highlightColor}
+            className={classes.actionHighlight}
+            highlight={highlightQuery ? query : null}
+          >
             {action.title}
           </Highlight>
 
           {action.description && (
-            <Text color="dimmed" size="xs">
+            <Text
+              size="xs"
+              className={classes.actionDescription}
+              data-hovered={hovered || undefined}
+            >
               {action.description}
             </Text>
           )}

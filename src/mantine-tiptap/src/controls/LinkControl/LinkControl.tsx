@@ -1,5 +1,5 @@
 import React, { forwardRef, useState } from 'react';
-import { IconLink, IconExternalLink } from '@tabler/icons';
+import { IconLink, IconExternalLink } from '@tabler/icons-react';
 import {
   Popover,
   TextInput,
@@ -9,6 +9,7 @@ import {
   PopoverProps,
   Selectors,
   useComponentDefaultProps,
+  rem,
 } from '@mantine/core';
 import { useDisclosure, useInputState, useWindowEvent } from '@mantine/hooks';
 import { ControlBase, RichTextEditorControlBaseProps } from '../ControlBase/ControlBase';
@@ -39,8 +40,15 @@ export const LinkControl = forwardRef<HTMLButtonElement, RichTextEditorLinkContr
       props
     );
 
-    const { editor, labels, classNames, styles, unstyled } = useRichTextEditorContext();
-    const { classes } = useStyles(null, { name: 'RichTextEditor', classNames, styles, unstyled });
+    const { editor, labels, classNames, styles, unstyled, variant } = useRichTextEditorContext();
+    const { classes } = useStyles(null, {
+      name: 'RichTextEditor',
+      classNames,
+      styles,
+      unstyled,
+      variant,
+    });
+
     const [url, setUrl] = useInputState('');
     const [external, setExternal] = useState(false);
     const [opened, { open, close }] = useDisclosure(false);
@@ -135,7 +143,7 @@ export const LinkControl = forwardRef<HTMLButtonElement, RichTextEditorLinkContr
                     className={classes.linkEditorExternalControl}
                     unstyled={unstyled}
                   >
-                    <IconExternalLink size={14} stroke={1.5} />
+                    <IconExternalLink size={rem(14)} stroke={1.5} />
                   </UnstyledButton>
                 </Tooltip>
               }

@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { useClickOutside } from '@mantine/hooks';
 import { MantineDemo } from '@mantine/ds';
-import { Transition, Paper, Button, useMantineTheme } from '@mantine/core';
+import { Transition, Paper, Button, useMantineTheme, rem } from '@mantine/core';
 
 const code = `
 import { useState } from 'react';
-import { Transition, Paper, Button } from '@mantine/core';
+import { Transition, Paper, Button, rem } from '@mantine/core';
 import { useClickOutside } from '@mantine/hooks';
 
 const scaleY = {
@@ -22,7 +22,7 @@ function Demo() {
   return (
     <div
       style={{
-        maxWidth: 200,
+        maxWidth: rem(200),
         position: 'relative',
         display: 'flex',
         justifyContent: 'center',
@@ -34,7 +34,7 @@ function Demo() {
         {(styles) => (
           <Paper
             shadow="md"
-            style={{ ...styles, position: 'absolute', top: 0, left: 0, right: 0, height: 120 }}
+            style={{ ...styles, position: 'absolute', top: 0, left: 0, right: 0, height: rem(120) }}
             ref={clickOutsideRef}
           >
             Dropdown
@@ -60,7 +60,7 @@ export function Demo() {
   return (
     <div
       style={{
-        maxWidth: 200,
+        maxWidth: rem(200),
         position: 'relative',
         display: 'flex',
         justifyContent: 'center',
@@ -68,7 +68,13 @@ export function Demo() {
       }}
     >
       <Button onClick={() => setOpened(true)}>Open dropdown</Button>
-      <Transition mounted={opened} transition={scaleY} duration={200} timingFunction="ease">
+      <Transition
+        mounted={opened}
+        transition={scaleY}
+        duration={200}
+        timingFunction="ease"
+        keepMounted
+      >
         {(styles) => (
           <Paper
             shadow="md"
@@ -79,7 +85,7 @@ export function Demo() {
               top: 0,
               left: 0,
               right: 0,
-              height: 120,
+              height: rem(120),
               padding: theme.spacing.xl,
               backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.white,
             }}

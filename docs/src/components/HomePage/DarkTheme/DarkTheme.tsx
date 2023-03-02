@@ -1,7 +1,7 @@
 import React from 'react';
-import { Button, Image, SimpleGrid, Text, useMantineColorScheme, Group } from '@mantine/core';
+import { Button, Image, SimpleGrid, Text, useMantineColorScheme, Group, rem } from '@mantine/core';
 import { Prism } from '@mantine/prism';
-import { IconMoonStars, IconSun } from '@tabler/icons';
+import { IconMoonStars, IconSun } from '@tabler/icons-react';
 import { PageSection } from '../PageSection/PageSection';
 import image from './dark-theme-image.png';
 import useStyles from './DarkTheme.styles';
@@ -65,9 +65,9 @@ function Demo() {
               radius="md"
               leftIcon={
                 colorScheme === 'dark' ? (
-                  <IconSun size={16} color={theme.colors.yellow[4]} />
+                  <IconSun size={rem(16)} color={theme.colors.yellow[4]} />
                 ) : (
-                  <IconMoonStars size={16} color={theme.colors.blue[7]} />
+                  <IconMoonStars size={rem(16)} color={theme.colors.blue[7]} />
                 )
               }
               onClick={() => toggleColorScheme()}

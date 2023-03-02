@@ -1,4 +1,4 @@
-import { createStyles } from '@mantine/styles';
+import { createStyles, rem, em } from '@mantine/styles';
 import { getSortedBreakpoints } from '../HorizontalSection/get-sorted-breakpoints/get-sorted-breakpoints';
 
 export type VerticalSectionHeight = number | string | Partial<Record<string, string | number>>;
@@ -24,9 +24,9 @@ export default createStyles(
     const breakpoints =
       typeof height === 'object' && height !== null
         ? getSortedBreakpoints(height, theme).reduce((acc, [breakpoint, breakpointSize]) => {
-            acc[`@media (min-width: ${breakpoint}px)`] = {
-              height: breakpointSize,
-              minHeight: breakpointSize,
+            acc[`@media (min-width: ${em(breakpoint)})`] = {
+              height: rem(breakpointSize),
+              minHeight: rem(breakpointSize),
             };
 
             return acc;
@@ -39,21 +39,21 @@ export default createStyles(
         zIndex,
         left: layout === 'alt' ? 'var(--mantine-navbar-width, 0)' : 0,
         right: layout === 'alt' ? 'var(--mantine-aside-width, 0)' : 0,
-        height: typeof height === 'object' ? height?.base || '100%' : height,
-        maxHeight: typeof height === 'object' ? height?.base || '100%' : height,
+        height: typeof height === 'object' ? rem(height?.base) || '100%' : rem(height),
+        maxHeight: typeof height === 'object' ? rem(height?.base) || '100%' : rem(height),
         position: fixed ? 'fixed' : 'static',
         boxSizing: 'border-box',
         backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.white,
         ...breakpoints,
         borderBottom:
           borderPosition === 'bottom'
-            ? `1px solid ${
+            ? `${rem(1)} solid ${
                 theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[2]
               }`
             : undefined,
         borderTop:
           borderPosition === 'top'
-            ? `1px solid ${
+            ? `${rem(1)} solid ${
                 theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[2]
               }`
             : undefined,

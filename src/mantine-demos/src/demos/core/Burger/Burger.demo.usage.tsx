@@ -4,20 +4,13 @@ import { MantineDemo } from '@mantine/ds';
 import { DemoBase } from './_base';
 
 const code = `
-import { useState } from 'react';
+import { useDisclosure } from '@mantine/hooks';
 import { Burger } from '@mantine/core';
 
 function Demo() {
-  const [opened, setOpened] = useState(false);
-  const title = opened ? 'Close navigation' : 'Open navigation';
-
-  return (
-    <Burger
-      opened={opened}
-      onClick={() => setOpened((o) => !o)}
-      title={title}
-    />
-  );
+  const [opened, { toggle }] = useDisclosure(false);
+  const label = opened ? 'Close navigation' : 'Open navigation';
+  return <Burger opened={opened} onClick={toggle} aria-label={label} />;
 }
 `;
 

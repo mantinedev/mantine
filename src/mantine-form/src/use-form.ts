@@ -29,6 +29,7 @@ import {
   IsValid,
   _TransformValues,
   ClearFieldDirty,
+  GetTransformedValues,
 } from './types';
 
 export function useForm<
@@ -168,7 +169,7 @@ export function useForm<
 
   const getInputProps: GetInputProps<Values> = (
     path,
-    { type = 'input', withError = type === 'input', withFocus = true } = {}
+    { type = 'input', withError = true, withFocus = true } = {}
   ) => {
     const onChange = getInputOnChange((value) => setFieldValue(path, value as any));
     const payload: any = { onChange };
@@ -207,9 +208,12 @@ export function useForm<
       if (results.hasErrors) {
         handleValidationFailure?.(results.errors, values, event);
       } else {
-        handleSubmit(transformValues(values) as any, event);
+        handleSubmit?.(transformValues(values) as any, event);
       }
     };
+
+  const getTransformedValues: GetTransformedValues<Values, TransformValues> = (input) =>
+    (transformValues as any)(input || values);
 
   const onReset: OnReset = useCallback((event) => {
     event.preventDefault();
@@ -218,9 +222,9 @@ export function useForm<
 
   const isDirty: GetFieldStatus<Values> = (path) => {
     if (path) {
-      const overridenValue = getPath(path, dirty);
-      if (typeof overridenValue === 'boolean') {
-        return overridenValue;
+      const overriddenValue = getPath(path, dirty);
+      if (typeof overriddenValue === 'boolean') {
+        return overriddenValue;
       }
 
       const sliceOfValues = getPath(path, values);
@@ -274,5 +278,6 @@ export function useForm<
     resetTouched,
     resetDirty,
     isValid,
+    getTransformedValues,
   };
 }

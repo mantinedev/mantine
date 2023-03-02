@@ -1,4 +1,4 @@
-import { createStyles, MantineNumberSize } from '@mantine/styles';
+import { createStyles, MantineNumberSize, getSize } from '@mantine/styles';
 
 export interface StackStylesParams {
   spacing: MantineNumberSize;
@@ -12,6 +12,6 @@ export default createStyles((theme, { spacing, align, justify }: StackStylesPara
     flexDirection: 'column',
     alignItems: align,
     justifyContent: justify,
-    gap: theme.fn.size({ size: spacing, sizes: theme.spacing }),
+    gap: getSize({ size: spacing, sizes: theme.spacing }),
   },
 }));

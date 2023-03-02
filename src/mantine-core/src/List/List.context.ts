@@ -12,6 +12,7 @@ interface ListContextValue {
   classNames?: ClassNames<ListStylesNames>;
   styles?: Styles<ListStylesNames>;
   unstyled?: boolean;
+  variant?: string;
 }
 
 export const [ListProvider, useListContext] = createSafeContext<ListContextValue>(

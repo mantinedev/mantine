@@ -35,6 +35,7 @@ export function useInputProps<T extends BaseProps, U extends Partial<T>>(
     inputContainer,
     inputWrapperOrder,
     withAsterisk,
+    variant,
     ...others
   } = useComponentDefaultProps<T>(component, defaultProps, props);
 
@@ -62,6 +63,7 @@ export function useInputProps<T extends BaseProps, U extends Partial<T>>(
     inputContainer,
     inputWrapperOrder,
     withAsterisk,
+    variant,
     ..._wrapperProps,
   };
 
@@ -82,7 +84,8 @@ export function useInputProps<T extends BaseProps, U extends Partial<T>>(
       id: uid,
       size,
       __staticSelector,
-      invalid: !!error,
+      error,
+      variant,
     },
   };
 }

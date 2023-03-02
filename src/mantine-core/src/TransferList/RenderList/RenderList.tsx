@@ -1,5 +1,5 @@
 import React, { useRef, useState } from 'react';
-import { DefaultProps, Selectors, MantineNumberSize } from '@mantine/styles';
+import { DefaultProps, Selectors, MantineNumberSize, rem } from '@mantine/styles';
 import { useScrollIntoView } from '@mantine/hooks';
 import { groupOptions } from '@mantine/utils';
 import { SelectScrollArea } from '../../Select/SelectScrollArea/SelectScrollArea';
@@ -8,13 +8,19 @@ import { ActionIcon } from '../../ActionIcon';
 import { TextInput } from '../../TextInput';
 import { Text } from '../../Text';
 import { Divider } from '../../Divider';
-import { LastIcon, NextIcon, FirstIcon, PrevIcon } from '../../Pagination/icons';
+import {
+  PaginationLastIcon,
+  PaginationNextIcon,
+  PaginationFirstIcon,
+  PaginationPreviousIcon,
+} from '../../Pagination/Pagination.icons';
 import { TransferListItem, TransferListItemComponent } from '../types';
 import useStyles from './RenderList.styles';
 
 export type RenderListStylesNames = Selectors<typeof useStyles>;
 
 export interface RenderListProps extends DefaultProps<RenderListStylesNames> {
+  variant: string;
   data: TransferListItem[];
   onSelect(value: string): void;
   selection: string[];
@@ -40,17 +46,17 @@ export interface RenderListProps extends DefaultProps<RenderListStylesNames> {
 }
 
 const icons = {
-  Prev: PrevIcon,
-  Next: NextIcon,
-  First: FirstIcon,
-  Last: LastIcon,
+  Prev: PaginationPreviousIcon,
+  Next: PaginationNextIcon,
+  First: PaginationFirstIcon,
+  Last: PaginationLastIcon,
 };
 
 const rtlIons = {
-  Next: PrevIcon,
-  Prev: NextIcon,
-  Last: FirstIcon,
-  First: LastIcon,
+  Next: PaginationPreviousIcon,
+  Prev: PaginationNextIcon,
+  Last: PaginationFirstIcon,
+  First: PaginationLastIcon,
 };
 
 export function RenderList({
@@ -80,10 +86,11 @@ export function RenderList({
   styles,
   limit,
   unstyled,
+  variant,
 }: RenderListProps) {
   const { classes, cx, theme } = useStyles(
     { reversed, native: listComponent !== SelectScrollArea, radius },
-    { name: 'TransferList', classNames, styles, unstyled }
+    { name: 'TransferList', classNames, styles, unstyled, variant }
   );
   const unGroupedItems: React.ReactElement<any>[] = [];
   const groupedItems: React.ReactElement<any>[] = [];
@@ -192,8 +199,8 @@ export function RenderList({
     }
   };
 
-  const transferIcon = reversed ? <Icons.Prev /> : <Icons.Next />;
-  const transferAllIcon = reversed ? <Icons.First /> : <Icons.Last />;
+  const transferIcon = reversed ? <Icons.Prev size="1rem" /> : <Icons.Next size="1rem" />;
+  const transferAllIcon = reversed ? <Icons.First size="1rem" /> : <Icons.Last size="1rem" />;
 
   return (
     <div className={cx(classes.transferList, className)}>
@@ -252,7 +259,7 @@ export function RenderList({
           ref={scrollableRef}
           onMouseLeave={() => setHovered(-1)}
           className={classes.transferListItems}
-          style={{ height, position: 'relative', overflowX: 'hidden' }}
+          style={{ height: rem(height), position: 'relative', overflowX: 'hidden' }}
         >
           {groupedItems.length > 0 || unGroupedItems.length > 0 ? (
             <>

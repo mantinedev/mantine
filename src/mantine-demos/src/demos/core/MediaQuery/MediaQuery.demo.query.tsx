@@ -1,17 +1,17 @@
 import React from 'react';
 import { MantineDemo } from '@mantine/ds';
-import { MediaQuery, Text } from '@mantine/core';
+import { MediaQuery, Text, rem, em } from '@mantine/core';
 
 const code = `
-import { MediaQuery, Text } from '@mantine/core';
+import { MediaQuery, Text, rem } from '@mantine/core';
 
 function Demo() {
   return (
     <MediaQuery
-      query="(max-width: 1200px) and (min-width: 800px)"
-      styles={{ fontSize: 20, '&:hover': { backgroundColor: 'silver' } }}
+      query="(max-width: ${em(1200)}) and (min-width: ${em(800)})"
+      styles={{ fontSize: rem(20), '&:hover': { backgroundColor: 'silver' } }}
     >
-      <Text>(max-width: 1200px) and (min-width: 800px) breakpoints</Text>
+      <Text>(max-width: ${em(1200)}) and (min-width: ${em(800)}) breakpoints</Text>
     </MediaQuery>
   );
 }
@@ -20,10 +20,12 @@ function Demo() {
 function Demo() {
   return (
     <MediaQuery
-      query="(max-width: 1200px) and (min-width: 800px)"
-      styles={{ fontSize: 20, '&:hover': { backgroundColor: 'silver' } }}
+      query={`(max-width: ${em(1200)}) and (min-width: ${em(800)})`}
+      styles={{ fontSize: rem(20), '&:hover': { backgroundColor: 'silver' } }}
     >
-      <Text>(max-width: 1200px) and (min-width: 800px) breakpoints</Text>
+      <Text>
+        (max-width: {em(1200)}) and (min-width: {em(800)}) breakpoints
+      </Text>
     </MediaQuery>
   );
 }

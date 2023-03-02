@@ -73,7 +73,7 @@ function Multiple() {
   const [value, setValue] = useState(['react']);
 
   return (
-    <Chip.Group value={value} onChange={setValue} multiple>
+    <Chip.Group multiple value={value} onChange={setValue}>
       <Chip value="react">React</Chip>
       <Chip value="ng">Angular</Chip>
       <Chip value="svelte">Svelte</Chip>
@@ -82,10 +82,6 @@ function Multiple() {
   );
 }
 ```
-
-## Customize styles
-
-<Demo data={ChipDemos.stylesApi} />
 
 ## Accessibility
 

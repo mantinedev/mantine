@@ -8,6 +8,8 @@ export type SwatchesStylesNames = Selectors<typeof useStyles>;
 export interface SwatchesProps
   extends DefaultProps<SwatchesStylesNames>,
     Omit<React.ComponentPropsWithoutRef<'div'>, 'onSelect'> {
+  size?: string | number;
+  variant?: string;
   data: string[];
   swatchesPerRow?: number;
   focusable?: boolean;
@@ -26,11 +28,13 @@ export function Swatches({
   unstyled,
   setValue,
   onChangeEnd,
+  variant,
+  size,
   ...others
 }: SwatchesProps) {
   const { classes } = useStyles(
     { swatchesPerRow },
-    { classNames, styles, name: __staticSelector, unstyled }
+    { classNames, styles, name: __staticSelector, unstyled, variant, size }
   );
 
   const colors = data.map((color, index) => (

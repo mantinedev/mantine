@@ -16,8 +16,8 @@ export interface TooltipStylesParams {
 function getColors(theme: MantineTheme, color?: MantineColor): CSSObject {
   if (!color) {
     return {
-      backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[9],
-      color: theme.white,
+      backgroundColor: theme.colorScheme === 'dark' ? theme.colors.gray[2] : theme.colors.gray[9],
+      color: theme.colorScheme === 'dark' ? theme.black : theme.white,
     };
   }
 
@@ -36,7 +36,7 @@ export default createStyles((theme, { color, radius, width, multiline }: Tooltip
     lineHeight: theme.lineHeight,
     fontSize: theme.fontSizes.sm,
     borderRadius: theme.fn.radius(radius),
-    padding: `calc(${theme.spacing.xs}px / 2) ${theme.spacing.xs}px`,
+    padding: `calc(${theme.spacing.xs} / 2) ${theme.spacing.xs}`,
     position: 'absolute',
     whiteSpace: multiline ? 'unset' : 'nowrap',
     pointerEvents: 'none',

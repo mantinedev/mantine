@@ -50,7 +50,7 @@ export interface TabsProviderProps {
   /** Key of theme.colors */
   color?: MantineColor;
 
-  /** Tabs border-radius from theme.radius or number ti set value from theme, defaults to theme.defaultRadius */
+  /** Key of theme.radius or any valid CSS value to set border-radius, theme.defaultRadius by default */
   radius?: MantineNumberSize;
 
   /** Determines whether tabs should have inverted styles */

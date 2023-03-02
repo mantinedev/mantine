@@ -1,6 +1,13 @@
 import React, { useState, useEffect, forwardRef } from 'react';
 import { useUncontrolled, useDidUpdate, useEyeDropper } from '@mantine/hooks';
-import { DefaultProps, getDefaultZIndex, MantineShadow, useMantineTheme } from '@mantine/styles';
+import {
+  DefaultProps,
+  getDefaultZIndex,
+  MantineShadow,
+  useMantineTheme,
+  rem,
+  getSize,
+} from '@mantine/styles';
 import { noop } from '@mantine/utils';
 import {
   InputWrapperBaseProps,
@@ -13,7 +20,7 @@ import {
 import { ColorSwatch } from '../ColorSwatch';
 import { ActionIcon } from '../ActionIcon';
 import { Popover, PopoverStylesNames } from '../Popover';
-import { MantineTransition } from '../Transition';
+import { TransitionOverride } from '../Transition';
 import {
   ColorPicker,
   ColorPickerBaseProps,
@@ -46,14 +53,8 @@ export interface ColorInputProps
   /** Display swatch with color preview on the left side of input */
   withPreview?: boolean;
 
-  /** Dropdown transition name or object */
-  transition?: MantineTransition;
-
-  /** Dropdown appear/disappear transition duration in ms */
-  transitionDuration?: number;
-
-  /** Dropdown transition timing function, defaults to theme.transitionTimingFunction */
-  transitionTimingFunction?: string;
+  /** Props added to Transition component that used to animate dropdown presence, use to configure duration and animation type, { duration: 0, transition: 'fade' } by default */
+  transitionProps?: TransitionOverride;
 
   /** Whether to render the dropdown in a Portal */
   withinPortal?: boolean;
@@ -72,27 +73,19 @@ export interface ColorInputProps
 }
 
 const SWATCH_SIZES = {
-  xs: 16,
-  sm: 18,
-  md: 22,
-  lg: 28,
-  xl: 36,
+  xs: rem(16),
+  sm: rem(18),
+  md: rem(22),
+  lg: rem(28),
+  xl: rem(36),
 };
 
 const EYE_DROPPER_SIZES = {
-  xs: 14,
-  sm: 16,
-  md: 18,
-  lg: 20,
-  xl: 22,
-};
-
-const RIGHT_SECTION_WIDTH = {
-  xs: 28,
-  sm: 32,
-  md: 38,
-  lg: 44,
-  xl: 58,
+  xs: rem(14),
+  sm: rem(16),
+  md: rem(18),
+  lg: rem(20),
+  xl: rem(22),
 };
 
 const defaultProps: Partial<ColorInputProps> = {
@@ -102,9 +95,8 @@ const defaultProps: Partial<ColorInputProps> = {
   withPreview: true,
   swatchesPerRow: 10,
   withPicker: true,
-  transition: 'pop-top-left',
+  transitionProps: { transition: 'fade', duration: 0 },
   dropdownZIndex: getDefaultZIndex('popover'),
-  transitionDuration: 0,
   withinPortal: true,
   shadow: 'md',
   withEyeDropper: true,
@@ -128,10 +120,8 @@ export const ColorInput = forwardRef<HTMLInputElement, ColorInputProps>((props, 
     swatchesPerRow,
     withPicker,
     icon,
-    transition,
+    transitionProps,
     dropdownZIndex,
-    transitionDuration,
-    transitionTimingFunction,
     withinPortal,
     swatches,
     shadow,
@@ -142,7 +132,6 @@ export const ColorInput = forwardRef<HTMLInputElement, ColorInputProps>((props, 
     withEyeDropper,
     eyeDropperIcon,
     rightSection,
-    rightSectionWidth,
     closeOnColorSwatchClick,
     disabled,
     ...others
@@ -171,7 +160,7 @@ export const ColorInput = forwardRef<HTMLInputElement, ColorInputProps>((props, 
       }
     >
       {eyeDropperIcon || (
-        <EyeDropperIcon size={theme.fn.size({ size: inputProps.size, sizes: EYE_DROPPER_SIZES })} />
+        <EyeDropperIcon size={getSize({ size: inputProps.size, sizes: EYE_DROPPER_SIZES })} />
       )}
     </ActionIcon>
   );
@@ -212,8 +201,7 @@ export const ColorInput = forwardRef<HTMLInputElement, ColorInputProps>((props, 
         offset={5}
         zIndex={dropdownZIndex}
         withinPortal={withinPortal}
-        transitionDuration={transitionDuration}
-        transition={transition}
+        transitionProps={transitionProps}
         opened={dropdownOpened}
         shadow={shadow}
         classNames={classNames}
@@ -249,7 +237,7 @@ export const ColorInput = forwardRef<HTMLInputElement, ColorInputProps>((props, 
                 (withPreview ? (
                   <ColorSwatch
                     color={isColorValid(_value) ? _value : '#fff'}
-                    size={theme.fn.size({ size: inputProps.size, sizes: SWATCH_SIZES })}
+                    size={getSize({ size: inputProps.size, sizes: SWATCH_SIZES })}
                   />
                 ) : null)
               }
@@ -263,10 +251,6 @@ export const ColorInput = forwardRef<HTMLInputElement, ColorInputProps>((props, 
                 (withEyeDropper && !disabled && !readOnly && eyeDropperSupported
                   ? eyeDropper
                   : null)
-              }
-              rightSectionWidth={
-                rightSectionWidth ??
-                theme.fn.size({ size: inputProps.size, sizes: RIGHT_SECTION_WIDTH })
               }
             />
           </div>

@@ -1,4 +1,3 @@
-import { useState, useEffect } from 'react';
 import { randomId } from '@mantine/hooks';
 import type { SpotlightAction } from '../types';
 
@@ -25,28 +24,17 @@ function prepareActions(initialActions: SpotlightAction[]) {
   return filterDuplicateActions(initialActions.map((action) => prepareAction(action)));
 }
 
-export function useActionsState(
-  initialActions: SpotlightAction[] | ((query: string) => SpotlightAction[]),
-  query: string
-) {
-  const [actions, setActions] = useState(
-    prepareActions(typeof initialActions === 'function' ? initialActions(query) : initialActions)
-  );
+interface UseActionsState {
+  actions: SpotlightAction[];
+  onActionsChange: (actions: SpotlightAction[]) => void;
+}
 
-  useEffect(() => {
-    if (typeof initialActions === 'function') {
-      setActions(prepareActions(initialActions(query)));
-    }
-  }, [query]);
-
-  const updateActions = (payload: SpotlightAction[] | ((query: string) => SpotlightAction[])) =>
-    setActions(prepareActions(typeof payload === 'function' ? payload(query) : payload));
-
+export function useActionsState({ actions, onActionsChange }: UseActionsState) {
   const registerActions = (payload: SpotlightAction[]) =>
-    setActions((current) => prepareActions([...current, ...payload]));
+    onActionsChange?.(prepareActions([...actions, ...payload]));
 
   const removeActions = (ids: string[]) =>
-    setActions((current) => current.filter((action) => !ids.includes(action.id)));
+    onActionsChange?.(actions.filter((action) => !ids.includes(action.id)));
 
   const triggerAction = (id: string) => {
     const action = actions.find((item) => item.id === id);
@@ -54,10 +42,9 @@ export function useActionsState(
   };
 
   return [
-    actions,
+    prepareActions(actions),
     {
       registerActions,
-      updateActions,
       removeActions,
       triggerAction,
     },

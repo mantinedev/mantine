@@ -1,6 +1,5 @@
 import React from 'react';
 import { DefaultProps, MantineSize, MantineNumberSize, Selectors } from '@mantine/styles';
-import { InputVariant } from '../../Input';
 import { CloseButton } from '../../CloseButton';
 import useStyles from './DefaultValue.styles';
 
@@ -15,7 +14,7 @@ export interface MultiSelectValueProps
   readOnly: boolean;
   size: MantineSize;
   radius: MantineNumberSize;
-  variant: InputVariant;
+  variant: string;
 }
 
 const buttonSizes = {
@@ -37,11 +36,12 @@ export function DefaultValue({
   size,
   radius = 'sm',
   variant,
+  unstyled,
   ...others
 }: MultiSelectValueProps) {
   const { classes, cx } = useStyles(
-    { size, disabled, readOnly, radius, variant },
-    { classNames, styles, name: 'MultiSelect' }
+    { disabled, readOnly, radius },
+    { name: 'MultiSelect', classNames, styles, unstyled, size, variant }
   );
 
   return (
@@ -56,9 +56,10 @@ export function DefaultValue({
           radius={2}
           color="blue"
           variant="transparent"
-          iconSize={buttonSizes[size] / 2}
+          iconSize="70%"
           className={classes.defaultValueRemove}
           tabIndex={-1}
+          unstyled={unstyled}
         />
       )}
     </div>

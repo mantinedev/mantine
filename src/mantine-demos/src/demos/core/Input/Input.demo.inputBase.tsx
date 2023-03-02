@@ -1,47 +1,36 @@
 import React from 'react';
-import { InputBase } from '@mantine/core';
+import { InputBase, Box } from '@mantine/core';
 import { MantineDemo } from '@mantine/ds';
-import InputMask from 'react-input-mask';
+import { IMaskInput } from 'react-imask';
 
 const code = `
 import { InputBase } from '@mantine/core';
-import InputMask from 'react-input-mask';
+import { IMaskInput } from 'react-imask';
 
 function Demo() {
   return (
-    <>
-      <InputBase
-        label="Input mask"
-        placeholder="Your phone"
-        component={InputMask}
-        mask="+7 (999) 999-99-99"
-      />
+    <Box maw={320} mx="auto">
+    <InputBase label="Your phone" component={IMaskInput} mask="+7 (000) 000-0000" />
       <InputBase label="Custom native select" component="select" mt="md">
         <option value="react">React</option>
         <option value="react">Angular</option>
         <option value="svelte">Svelte</option>
       </InputBase>
-    </>
+    </Box>
   );
 }
-
 `;
 
 function Demo() {
   return (
-    <div style={{ maxWidth: 320, margin: 'auto' }}>
-      <InputBase
-        label="Input mask"
-        placeholder="Your phone"
-        component={InputMask}
-        mask="+7 (999) 999-99-99"
-      />
+    <Box maw={320} mx="auto">
+      <InputBase<any> label="Your phone" component={IMaskInput} mask="+7 (000) 000-0000" />
       <InputBase label="Custom native select" component="select" mt="md">
         <option value="react">React</option>
         <option value="react">Angular</option>
         <option value="svelte">Svelte</option>
       </InputBase>
-    </div>
+    </Box>
   );
 }
 

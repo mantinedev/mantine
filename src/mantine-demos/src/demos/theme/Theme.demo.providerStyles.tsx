@@ -1,9 +1,9 @@
 import React from 'react';
 import { MantineDemo } from '@mantine/ds';
-import { MantineProvider, Button, Badge, Group, ButtonStylesParams } from '@mantine/core';
+import { MantineProvider, Button, Badge, Group, ButtonStylesParams, rem } from '@mantine/core';
 
 const code = `
-import { MantineProvider, Button, Badge, ButtonStylesParams } from '@mantine/core';
+import { MantineProvider, Group, Button, Badge, ButtonStylesParams } from '@mantine/core';
 
 function Demo() {
   return (
@@ -12,12 +12,12 @@ function Demo() {
         components: {
           Button: {
             // Subscribe to theme and component params
-            styles: (theme, params: ButtonStylesParams) => ({
+            styles: (theme, params: ButtonStylesParams, { variant }) => ({
               root: {
-                height: 42,
-                padding: '0 30px',
+                height: '${rem(42)}',
+                padding: '0 ${rem(30)}',
                 backgroundColor:
-                  params.variant === 'filled'
+                  variant === 'filled'
                     ? theme.colors[params.color || theme.primaryColor][9]
                     : undefined,
               },
@@ -27,15 +27,17 @@ function Demo() {
           Badge: {
             // Use raw styles object if you do not need theme dependency
             styles: {
-              root: { borderWidth: 2 },
+              root: { borderWidth: '${rem(2)}' },
             },
           },
         },
       }}
     >
-      <Button variant="outline">Outline button</Button>
-      <Button variant="filled" color="cyan">Filled button</Button>
-      <Badge variant="dot">Dot badge</Badge>
+      <Group position="center">
+        <Button variant="outline">Outline button</Button>
+        <Button variant="filled" color="cyan">Filled button</Button>
+        <Badge variant="dot">Dot badge</Badge>
+      </Group>
     </MantineProvider>
   );
 }
@@ -49,12 +51,12 @@ function Demo() {
         components: {
           Button: {
             // Subscribe to theme and component params
-            styles: (theme, params: ButtonStylesParams) => ({
+            styles: (theme, params: ButtonStylesParams, { variant }) => ({
               root: {
-                height: 42,
-                padding: '0 30px',
+                height: rem(42),
+                padding: `0 ${rem(30)}`,
                 backgroundColor:
-                  params.variant === 'filled'
+                  variant === 'filled'
                     ? theme.colors[params.color || theme.primaryColor][9]
                     : undefined,
               },
@@ -64,7 +66,7 @@ function Demo() {
           Badge: {
             // Use raw styles object if you do not need theme dependency
             styles: {
-              root: { borderWidth: 2 },
+              root: { borderWidth: rem(2) },
             },
           },
         },

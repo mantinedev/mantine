@@ -1,14 +1,10 @@
-import { createStyles, MantineSize } from '@mantine/styles';
+import { createStyles, rem, getSize } from '@mantine/styles';
 
-export interface InputErrorStylesParams {
-  size: MantineSize;
-}
-
-export default createStyles((theme, { size }: InputErrorStylesParams) => ({
+export default createStyles((theme, _params, { size }) => ({
   error: {
     wordBreak: 'break-word',
     color: theme.fn.variant({ variant: 'filled', color: 'red' }).background,
-    fontSize: theme.fn.size({ size, sizes: theme.fontSizes }) - 2,
+    fontSize: `calc(${getSize({ size, sizes: theme.fontSizes })} - ${rem(2)})`,
     lineHeight: 1.2,
     display: 'block',
   },

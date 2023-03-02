@@ -23,3 +23,7 @@ export function SystemProps() {
     </div>
   );
 }
+
+export function FontWeight() {
+  return <Box fw={900}>900 fw</Box>;
+}

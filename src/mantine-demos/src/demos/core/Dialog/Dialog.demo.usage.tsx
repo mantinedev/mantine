@@ -1,34 +1,29 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { MantineDemo } from '@mantine/ds';
 import { Dialog, Group, Button, TextInput, Text } from '@mantine/core';
+import { useDisclosure } from '@mantine/hooks';
 
 const code = `
-import { useState } from 'react';
+import { useDisclosure } from '@mantine/hooks';
 import { Dialog, Group, Button, TextInput, Text } from '@mantine/core';
 
 function Demo() {
-  const [opened, setOpened] = useState(false);
+  const [opened, { toggle, close }] = useDisclosure(false);
 
   return (
     <>
       <Group position="center">
-        <Button onClick={() => setOpened((o) => !o)}>Toggle dialog</Button>
+        <Button onClick={toggle}>Toggle dialog</Button>
       </Group>
 
-      <Dialog
-        opened={opened}
-        withCloseButton
-        onClose={() => setOpened(false)}
-        size="lg"
-        radius="md"
-      >
-        <Text size="sm" style={{ marginBottom: 10 }} weight={500}>
+      <Dialog opened={opened} withCloseButton onClose={close} size="lg" radius="md">
+        <Text size="sm" mb="xs" weight={500}>
           Subscribe to email newsletter
         </Text>
 
         <Group align="flex-end">
-          <TextInput placeholder="hello@gluesticker.com" style={{ flex: 1 }} />
-          <Button onClick={() => setOpened(false)}>Subscribe</Button>
+          <TextInput placeholder="hello@gluesticker.com" sx={{ flex: 1 }} />
+          <Button onClick={close}>Subscribe</Button>
         </Group>
       </Dialog>
     </>
@@ -37,28 +32,22 @@ function Demo() {
 `;
 
 function Demo() {
-  const [opened, setOpened] = useState(false);
+  const [opened, { toggle, close }] = useDisclosure(false);
 
   return (
     <>
       <Group position="center">
-        <Button onClick={() => setOpened((o) => !o)}>Toggle dialog</Button>
+        <Button onClick={toggle}>Toggle dialog</Button>
       </Group>
 
-      <Dialog
-        opened={opened}
-        withCloseButton
-        onClose={() => setOpened(false)}
-        size="lg"
-        radius="md"
-      >
-        <Text size="sm" style={{ marginBottom: 10 }} weight={500}>
+      <Dialog opened={opened} withCloseButton onClose={close} size="lg" radius="md">
+        <Text size="sm" mb="xs" weight={500}>
           Subscribe to email newsletter
         </Text>
 
         <Group align="flex-end">
-          <TextInput placeholder="hello@gluesticker.com" style={{ flex: 1 }} />
-          <Button onClick={() => setOpened(false)}>Subscribe</Button>
+          <TextInput placeholder="hello@gluesticker.com" sx={{ flex: 1 }} />
+          <Button onClick={close}>Subscribe</Button>
         </Group>
       </Dialog>
     </>

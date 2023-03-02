@@ -1,18 +1,18 @@
 import React from 'react';
 import { Accordion, ActionIcon, AccordionControlProps, Box } from '@mantine/core';
 import { MantineDemo } from '@mantine/ds';
-import { IconDots } from '@tabler/icons';
+import { IconDots } from '@tabler/icons-react';
 
 const code = `
 import { Accordion, ActionIcon, AccordionControlProps, Box } from '@mantine/core';
-import { IconDots } from '@tabler/icons';
+import { IconDots } from '@tabler/icons-react';
 
 function AccordionControl(props: AccordionControlProps) {
   return (
     <Box sx={{ display: 'flex', alignItems: 'center' }}>
       <Accordion.Control {...props} />
       <ActionIcon size="lg">
-        <IconDots size={16} />
+        <IconDots size="1rem" />
       </ActionIcon>
     </Box>
   );
@@ -20,7 +20,7 @@ function AccordionControl(props: AccordionControlProps) {
 
 function Demo() {
   return (
-    <Accordion chevronPosition="left" sx={{ maxWidth: 400 }} mx="auto">
+    <Accordion chevronPosition="left" maw={400} mx="auto">
       <Accordion.Item value="item-1">
         <AccordionControl>Control 1</AccordionControl>
         <Accordion.Panel>Panel 1</Accordion.Panel>
@@ -45,7 +45,7 @@ function AccordionControl(props: AccordionControlProps) {
     <Box sx={{ display: 'flex', alignItems: 'center' }}>
       <Accordion.Control {...props} />
       <ActionIcon size="lg">
-        <IconDots size={16} />
+        <IconDots size="1rem" />
       </ActionIcon>
     </Box>
   );
@@ -53,7 +53,7 @@ function AccordionControl(props: AccordionControlProps) {
 
 function Demo() {
   return (
-    <Accordion chevronPosition="left" sx={{ maxWidth: 400 }} mx="auto">
+    <Accordion chevronPosition="left" maw={400} mx="auto">
       <Accordion.Item value="item-1">
         <AccordionControl>Control 1</AccordionControl>
         <Accordion.Panel>Panel 1</Accordion.Panel>

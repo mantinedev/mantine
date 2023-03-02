@@ -38,23 +38,23 @@ export function Demo() {
   ]);
 
   return (
-    <div style={{ maxWidth: 320, marginLeft: 'auto', marginRight: 'auto' }}>
-      <Select
-        label="Creatable Select"
-        data={data}
-        placeholder="Select items"
-        nothingFound="Nothing found"
-        searchable
-        creatable
-        withinPortal
-        getCreateLabel={(query) => `+ Create ${query}`}
-        onCreate={(query) => {
-          const item = { value: query, label: query };
-          setData((current) => [...current, item]);
-          return item;
-        }}
-      />
-    </div>
+    <Select
+      maw={320}
+      mx="auto"
+      label="Creatable Select"
+      data={data}
+      placeholder="Select items"
+      nothingFound="Nothing found"
+      searchable
+      creatable
+      withinPortal
+      getCreateLabel={(query) => `+ Create ${query}`}
+      onCreate={(query) => {
+        const item = { value: query, label: query };
+        setData((current) => [...current, item]);
+        return item;
+      }}
+    />
   );
 }
 

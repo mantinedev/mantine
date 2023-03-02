@@ -24,19 +24,19 @@ function Demo() {
 
 function Demo() {
   return (
-    <div style={{ maxWidth: 320, marginLeft: 'auto', marginRight: 'auto' }}>
-      <ColorInput
-        placeholder="Pick color"
-        label="Your favorite color"
-        disallowInput
-        withPicker={false}
-        swatches={[
-          ...DEFAULT_THEME.colors.red,
-          ...DEFAULT_THEME.colors.green,
-          ...DEFAULT_THEME.colors.blue,
-        ]}
-      />
-    </div>
+    <ColorInput
+      maw={320}
+      mx="auto"
+      placeholder="Pick color"
+      label="Your favorite color"
+      disallowInput
+      withPicker={false}
+      swatches={[
+        ...DEFAULT_THEME.colors.red,
+        ...DEFAULT_THEME.colors.green,
+        ...DEFAULT_THEME.colors.blue,
+      ]}
+    />
   );
 }
 

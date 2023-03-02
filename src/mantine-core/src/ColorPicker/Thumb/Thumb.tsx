@@ -10,6 +10,7 @@ interface Position {
 }
 
 export interface ThumbProps extends DefaultProps<ThumbStylesNames> {
+  variant?: string;
   position: Position;
   size: MantineSize;
   __staticSelector: string;
@@ -24,18 +25,23 @@ export function Thumb({
   size,
   __staticSelector,
   unstyled,
+  variant,
 }: ThumbProps) {
-  const { classes, cx } = useStyles(
-    { size },
-    { classNames, styles, name: __staticSelector, unstyled }
-  );
+  const { classes, cx } = useStyles(null, {
+    classNames,
+    styles,
+    name: __staticSelector,
+    unstyled,
+    size,
+    variant,
+  });
 
   return (
     <div
       className={cx(classes.thumb, className)}
       style={{
-        left: `calc(${position.x * 100}% - ${THUMB_SIZES[size] / 2}px)`,
-        top: `calc(${position.y * 100}% - ${THUMB_SIZES[size] / 2}px)`,
+        left: `calc(${position.x * 100}% - ${THUMB_SIZES[size]} / 2)`,
+        top: `calc(${position.y * 100}% - ${THUMB_SIZES[size]} / 2)`,
         ...style,
       }}
     />

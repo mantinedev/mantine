@@ -1,28 +1,30 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { useDisclosure } from '@mantine/hooks';
 import { Modal, Group, Button, Text } from '@mantine/core';
 import { MantineDemo } from '@mantine/ds';
 import { AuthenticationForm } from '../../../shared/AuthenticationForm/AuthenticationForm';
 
 const code = `
-import { useState } from 'react';
+import { useDisclosure } from '@mantine/hooks';
 import { Modal, Button, Group } from '@mantine/core';
 
 function Demo() {
-  const [opened, setOpened] = useState(false);
+  const [opened, { open, close }] = useDisclosure(false);
 
   return (
     <>
       <Modal
         opened={opened}
-        onClose={() => setOpened(false)}
-        title="This is fullscreen modal!"
+        onClose={close}
+        title="This is a fullscreen modal"
         fullScreen
+        transitionProps={{ transition: 'fade', duration: 200 }}
       >
         {/* Modal content */}
       </Modal>
 
       <Group position="center">
-        <Button onClick={() => setOpened(true)}>Open Modal</Button>
+        <Button onClick={open}>Open Modal</Button>
       </Group>
     </>
   );
@@ -30,15 +32,16 @@ function Demo() {
 `;
 
 function Demo() {
-  const [opened, setOpened] = useState(false);
+  const [opened, { open, close }] = useDisclosure(false);
 
   return (
     <>
       <Modal
         opened={opened}
-        onClose={() => setOpened(false)}
-        title="This is fullscreen modal!"
+        onClose={close}
+        title="This is a fullscreen modal"
         fullScreen
+        transitionProps={{ transition: 'fade', duration: 200 }}
       >
         <Text mb="xl">
           It takes the entire screen and does not not have overlay and border-radius, you can use it
@@ -50,7 +53,7 @@ function Demo() {
       </Modal>
 
       <Group position="center">
-        <Button onClick={() => setOpened(true)}>Open Modal</Button>
+        <Button onClick={open}>Open Modal</Button>
       </Group>
     </>
   );

@@ -1,4 +1,4 @@
-import { createStyles } from '@mantine/core';
+import { createStyles, rem, em } from '@mantine/core';
 import { HEADER_HEIGHT } from './Header/HeaderDesktop.styles';
 import { NAVBAR_WIDTH, NAVBAR_BREAKPOINT } from './Navbar/Navbar.styles';
 
@@ -14,9 +14,9 @@ export default createStyles((theme, { shouldRenderHeader }: LayoutStyles) => ({
   },
 
   withNavbar: {
-    paddingLeft: NAVBAR_WIDTH,
+    paddingLeft: rem(NAVBAR_WIDTH),
 
-    [`@media (max-width: ${NAVBAR_BREAKPOINT}px)`]: {
+    [`@media (max-width: ${em(NAVBAR_BREAKPOINT)})`]: {
       paddingLeft: 0,
     },
   },
@@ -28,18 +28,20 @@ export default createStyles((theme, { shouldRenderHeader }: LayoutStyles) => ({
   },
 
   main: {
-    scrollMarginTop: HEADER_HEIGHT,
+    scrollMarginTop: rem(HEADER_HEIGHT),
     flex: 1,
     // aligns page top most heading with navigation and table of contents
-    paddingTop: shouldRenderHeader ? HEADER_HEIGHT - theme.spacing.xl - 2 : 0,
+    paddingTop: shouldRenderHeader
+      ? `calc(${rem(HEADER_HEIGHT)} - ${theme.spacing.xl} - ${rem(2)})`
+      : 0,
 
-    [`@media (max-width: ${NAVBAR_BREAKPOINT}px)`]: {
+    [`@media (max-width: ${em(NAVBAR_BREAKPOINT)})`]: {
       paddingLeft: 0,
       paddingRight: 0,
     },
   },
 
   content: {
-    minHeight: 'calc(100vh - 280px)',
+    minHeight: `calc(100vh - ${rem(280)})`,
   },
 }));

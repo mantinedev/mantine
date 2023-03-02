@@ -14,6 +14,7 @@ interface CarouselContext {
   classNames: ClassNames<CarouselStylesNames>;
   styles: Styles<CarouselStylesNames>;
   unstyled: boolean;
+  variant: string;
 }
 
 export const [CarouselProvider, useCarouselContext] = createSafeContext<CarouselContext>(

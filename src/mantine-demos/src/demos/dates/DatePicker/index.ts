@@ -1,19 +1,20 @@
-export { usage } from './DatePicker.demo.usage';
-export { modal } from './DatePicker.demo.modal';
-export { configurator } from './DatePicker.demo.configurator';
-export { boundaries } from './DatePicker.demo.boundaries';
-export { exclude } from './DatePicker.demo.exclude';
-export { flip } from './DatePicker.demo.flip';
-export { styles } from './DatePicker.demo.styles';
-export { modifiers } from './DatePicker.demo.modifiers';
-export { localization } from './DatePicker.demo.localization';
-export { firstDaySunday } from './DatePicker.demo.firstDaySunday';
-export { format } from './DatePicker.demo.format';
-export { icon } from './DatePicker.demo.icon';
-export { notClearable } from './DatePicker.demo.notClearable';
-export { validation } from './DatePicker.demo.validation';
-export { disabled } from './DatePicker.demo.disabled';
-export { freeInput } from './DatePicker.demo.freeInput';
-export { multipleMonths } from './DatePicker.demo.multipleMonths';
-export { noLevel } from './DatePicker.demo.noLevel';
+import { DatePicker } from '@mantine/dates';
+import { getSharedPickerDemos } from '../_shared';
+
+export const { usage, multiple, deselect, range, singleRange, numberOfColumns, sizeConfigurator } =
+  getSharedPickerDemos(DatePicker);
+
+export { controlledDate } from './DatePicker.demo.controlledDate';
+export { controlProps } from './DatePicker.demo.controlProps';
+export { defaultDate } from './DatePicker.demo.defaultDate';
+export { labelFormat } from './DatePicker.demo.labelFormat';
+export { listFormat } from './DatePicker.demo.listFormat';
+export { locale } from './DatePicker.demo.locale';
+export { maxLevel } from './DatePicker.demo.maxLevel';
+export { minMax } from './DatePicker.demo.minMax';
+export { defaultLevel } from './DatePicker.demo.defaultLevel';
+export { firstDayOfWeek } from './DatePicker.demo.firstDayOfWeek';
+export { weekendDays } from './DatePicker.demo.weekendDays';
 export { renderDay } from './DatePicker.demo.renderDay';
+export { hideWeekdays } from './DatePicker.demo.hideWeekdays';
+export { hideOutsideDates } from './DatePicker.demo.hideOutsideDates';

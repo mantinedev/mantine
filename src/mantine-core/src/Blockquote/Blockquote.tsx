@@ -9,6 +9,8 @@ export type BlockquoteStylesNames = Selectors<typeof useStyles>;
 export interface BlockquoteProps
   extends DefaultProps<BlockquoteStylesNames, BlockquoteStylesParams>,
     Omit<React.ComponentPropsWithoutRef<'blockquote'>, 'cite'> {
+  variant?: string;
+
   /** Icon color from theme */
   color?: MantineColor;
 
@@ -26,11 +28,21 @@ const defaultProps: Partial<BlockquoteProps> = {
 
 export const Blockquote = forwardRef<HTMLQuoteElement, BlockquoteProps>(
   (props: BlockquoteProps, ref) => {
-    const { className, color, icon, cite, children, classNames, styles, unstyled, ...others } =
-      useComponentDefaultProps('Blockquote', defaultProps, props);
+    const {
+      className,
+      color,
+      icon,
+      cite,
+      children,
+      classNames,
+      styles,
+      unstyled,
+      variant,
+      ...others
+    } = useComponentDefaultProps('Blockquote', defaultProps, props);
     const { classes, cx } = useStyles(
       { color },
-      { classNames, styles, unstyled, name: 'Blockquote' }
+      { classNames, styles, unstyled, name: 'Blockquote', variant }
     );
 
     return (

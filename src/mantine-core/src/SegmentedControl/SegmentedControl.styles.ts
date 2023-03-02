@@ -1,4 +1,4 @@
-import { createStyles, MantineNumberSize, MantineSize, MantineColor } from '@mantine/styles';
+import { createStyles, MantineNumberSize, MantineColor, getStylesRef, rem } from '@mantine/styles';
 
 export const WRAPPER_PADDING = 4;
 
@@ -9,16 +9,15 @@ export interface SegmentedControlStylesParams {
   shouldAnimate: boolean;
   transitionDuration: number;
   transitionTimingFunction: string;
-  size: MantineSize;
   orientation: 'vertical' | 'horizontal';
 }
 
 const sizes = {
-  xs: '3px 6px',
-  sm: '5px 10px',
-  md: '7px 14px',
-  lg: '9px 16px',
-  xl: '12px 20px',
+  xs: `${rem(3)} ${rem(6)}`,
+  sm: `${rem(5)} ${rem(10)}`,
+  md: `${rem(7)} ${rem(14)}`,
+  lg: `${rem(9)} ${rem(16)}`,
+  xl: `${rem(12)} ${rem(20)}`,
 };
 
 export default createStyles(
@@ -31,17 +30,16 @@ export default createStyles(
       shouldAnimate,
       transitionDuration,
       transitionTimingFunction,
-      size,
       orientation,
     }: SegmentedControlStylesParams,
-    getRef
+    { size }
   ) => {
     const vertical = orientation === 'vertical';
     const colors = theme.fn.variant({ variant: 'filled', color });
 
     return {
       label: {
-        ref: getRef('label'),
+        ref: getStylesRef('label'),
         ...theme.fn.focusStyles(),
         ...theme.fn.fontStyles(),
         WebkitTapHighlightColor: 'transparent',
@@ -64,10 +62,23 @@ export default createStyles(
         '&:hover': {
           color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
         },
+
+        '&[data-disabled]': {
+          '&, &:hover': {
+            color: theme.colorScheme === 'dark' ? theme.colors.dark[3] : theme.colors.gray[5],
+            cursor: 'not-allowed',
+          },
+        },
+
+        '&[data-active]': {
+          '&, &:hover': {
+            color: color || theme.colorScheme === 'dark' ? theme.white : theme.black,
+          },
+        },
       },
 
       control: {
-        ref: getRef('control'),
+        ref: getStylesRef('control'),
         position: 'relative',
         boxSizing: 'border-box',
         flex: 1,
@@ -78,7 +89,7 @@ export default createStyles(
 
         '&:not(:first-of-type)': {
           borderStyle: 'solid',
-          borderWidth: vertical ? '1px 0 0 0' : '0 0 0 1px',
+          borderWidth: vertical ? `${rem(1)} 0 0 0` : `0 0 0 ${rem(1)}`,
           borderColor: theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[3],
         },
       },
@@ -95,14 +106,14 @@ export default createStyles(
         '&:focus': {
           outline: 'none',
 
-          [`& + .${getRef('label')}`]: {
+          [`& + .${getStylesRef('label')}`]: {
             ...(theme.focusRing === 'always' || theme.focusRing === 'auto'
               ? theme.focusRingStyles.styles(theme)
               : theme.focusRingStyles.resetStyles(theme)),
           },
 
           '&:focus:not(:focus-visible)': {
-            [`& + .${getRef('label')}`]: {
+            [`& + .${getStylesRef('label')}`]: {
               ...(theme.focusRing === 'auto' || theme.focusRing === 'never'
                 ? theme.focusRingStyles.resetStyles(theme)
                 : null),
@@ -126,7 +137,7 @@ export default createStyles(
         borderLeftColor: 'transparent !important',
         borderTopColor: 'transparent !important',
 
-        [`& + .${getRef('control')}`]: {
+        [`& + .${getStylesRef('control')}`]: {
           borderLeftColor: 'transparent !important',
           borderTopColor: 'transparent !important',
         },
@@ -145,20 +156,7 @@ export default createStyles(
           : undefined,
       },
 
-      labelActive: {
-        '&, &:hover': {
-          color: color || theme.colorScheme === 'dark' ? theme.white : theme.black,
-        },
-      },
-
-      disabled: {
-        '&, &:hover': {
-          color: theme.colorScheme === 'dark' ? theme.colors.dark[3] : theme.colors.gray[5],
-          cursor: 'not-allowed',
-        },
-      },
-
-      active: {
+      indicator: {
         boxSizing: 'border-box',
         borderRadius: theme.fn.radius(radius),
         position: 'absolute',

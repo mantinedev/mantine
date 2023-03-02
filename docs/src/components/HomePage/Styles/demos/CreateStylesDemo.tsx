@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'gatsby';
-import { Text, Box, Anchor } from '@mantine/core';
+import { Text, Box, Anchor, rem } from '@mantine/core';
 import { Prism } from '@mantine/prism';
 
 const code = `
@@ -16,7 +16,7 @@ const useStyles = createStyles({
   },
 
   child: {
-    fontSize: 14,
+    fontSize: '${rem(14)}',
     lineHeight: 1.45,
   },
 

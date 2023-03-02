@@ -1,22 +1,22 @@
 import React, { useState } from 'react';
 import { MantineDemo } from '@mantine/ds';
-import { DEFAULT_THEME, Text, HueSlider, HueSliderProps } from '@mantine/core';
+import { DEFAULT_THEME, Text, HueSlider, HueSliderProps, Box } from '@mantine/core';
 
 function Wrapper(props: HueSliderProps) {
   const [value, onChange] = useState(250);
   return (
-    <div style={{ maxWidth: 300, marginLeft: 'auto', marginRight: 'auto' }}>
+    <Box maw={300} mx="auto">
       <Text mb="xs" ml={-6}>
         Hue value: {value}
       </Text>
       <HueSlider
-        style={{ margin: 'auto' }}
+        mx="auto"
         color={DEFAULT_THEME.colors.blue[7]}
         value={value}
         onChange={onChange}
         {...props}
       />
-    </div>
+    </Box>
   );
 }
 

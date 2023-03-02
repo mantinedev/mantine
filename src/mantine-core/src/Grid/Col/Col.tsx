@@ -5,6 +5,8 @@ import { useGridContext } from '../Grid.context';
 import useStyles, { ColSpan } from './Col.styles';
 
 export interface ColProps extends DefaultProps, React.ComponentPropsWithoutRef<'div'> {
+  variant?: string;
+
   /** Default col span */
   span?: ColSpan;
 
@@ -93,6 +95,7 @@ export const Col = forwardRef<HTMLDivElement, ColProps>((props: ColProps, ref) =
     className,
     id,
     unstyled,
+    variant,
     ...others
   } = useComponentDefaultProps('GridCol', defaultProps, props);
 
@@ -128,7 +131,7 @@ export const Col = forwardRef<HTMLDivElement, ColProps>((props: ColProps, ref) =
       columns: ctx.columns,
       span: colSpan,
     },
-    { unstyled, name: 'Grid' }
+    { unstyled, name: 'Grid', variant }
   );
 
   if (!isValidSpan(colSpan) || colSpan > ctx.columns) {

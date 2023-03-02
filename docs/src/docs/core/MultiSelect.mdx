@@ -136,7 +136,7 @@ Note that you will need to handle data state to manage item creation correctly:
 
 ## Large data set
 
-When dropdown height is exceeded dropdown becomes scrollable, to change max-height set `maxDropdownHeight` prop with value in px:
+When dropdown height is exceeded dropdown becomes scrollable, to change max-height set `maxDropdownHeight` prop with value:
 
 <Demo data={MultiSelectDemos.large} />
 
@@ -254,8 +254,8 @@ Provide `aria-label` in case you use component without label for screen reader s
 <MultiSelect aria-label="My select" /> // -> ok, label is not visible but will be announced by screen reader
 ```
 
-If you use `clearable` option set `clearButtonLabel`:
+If you use `clearable` option set clear button label:
 
 ```tsx
-<MultiSelect clearable clearButtonLabel="Clear select field" />
+<MultiSelect clearable clearButtonProps={{ 'aria-label': 'Clear select field' }} />
 ```

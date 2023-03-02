@@ -7,6 +7,8 @@ import {
   itConnectsLabelAndInput,
   itSupportsFocusEvents,
   itHandlesBooleanState,
+  itSupportsProviderSize,
+  itSupportsProviderVariant,
 } from '@mantine/tests';
 import { Checkbox, CheckboxProps } from './Checkbox';
 
@@ -18,6 +20,8 @@ describe('@mantine/core/Checkbox', () => {
   itSupportsWrapperProps(Checkbox, defaultProps);
   itConnectsLabelAndInput(Checkbox, defaultProps);
   itHandlesBooleanState(Checkbox, defaultProps);
+  itSupportsProviderSize(Checkbox, defaultProps, 'Checkbox');
+  itSupportsProviderVariant(Checkbox, defaultProps, 'Checkbox');
   itSupportsFocusEvents(Checkbox, defaultProps, 'input');
   checkAccessibility([
     <Checkbox aria-label="Checkbox without label" />,

@@ -40,7 +40,8 @@ export function Sizes() {
       label="Color input"
       placeholder="Pick color"
       format="rgba"
-      style={{ marginTop: 20 }}
+      mt="md"
+      styles={{ rightSection: { background: 'pink' } }}
     />
   ));
   return <div style={{ padding: 40 }}>{sizes}</div>;

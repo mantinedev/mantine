@@ -1,8 +1,15 @@
-import { createStyles, getSortedBreakpoints, MantineNumberSize } from '@mantine/core';
+import {
+  createStyles,
+  getSortedBreakpoints,
+  MantineNumberSize,
+  rem,
+  getBreakpointValue,
+  getSize,
+} from '@mantine/core';
 import { CarouselBreakpoint } from './types';
 
 export interface CarouselStylesParams {
-  controlSize: number;
+  controlSize: number | string;
   controlsOffset: MantineNumberSize;
   orientation: 'vertical' | 'horizontal';
   height: React.CSSProperties['height'];
@@ -30,13 +37,12 @@ export default createStyles(
     const getContainerStyles = (gap: MantineNumberSize) => {
       if (!includeGapInSize) return {};
 
-      const slideGapValue = theme.fn.size({
-        size: gap,
-        sizes: theme.spacing,
-      });
+      const slideGapValue = getSize({ size: gap, sizes: theme.spacing });
 
       return {
-        [orientation === 'horizontal' ? 'marginRight' : 'marginBottom']: slideGapValue * -1,
+        [orientation === 'horizontal'
+          ? 'marginRight'
+          : 'marginBottom']: `calc(${slideGapValue} * -1)`,
       };
     };
 
@@ -49,15 +55,18 @@ export default createStyles(
       ? null
       : getSortedBreakpoints(theme, breakpoints).reduce((acc, breakpoint) => {
           const property = 'maxWidth' in breakpoint ? 'max-width' : 'min-width';
-          const breakpointSize = theme.fn.size({
+          const breakpointSize = getSize({
             size: (property === 'max-width' ? breakpoint.maxWidth : breakpoint.minWidth)!,
             sizes: theme.breakpoints,
           });
 
           const breakpointSlideGap =
-            (typeof breakpoint.slideGap === 'undefined' ? slideGap : breakpoint.slideGap) ?? 0;
+            typeof breakpoint.slideGap === 'undefined' ? undefined : rem(breakpoint.slideGap);
 
-          acc[`@media (${property}: ${breakpointSize - (property === 'max-width' ? 1 : 0)}px)`] =
+          const breakpointValue =
+            getBreakpointValue(breakpointSize) - (property === 'max-width' ? 1 : 0);
+
+          acc[`@media (${property}: ${rem(breakpointValue)})`] =
             getContainerStyles(breakpointSlideGap);
 
           return acc;
@@ -67,15 +76,16 @@ export default createStyles(
       root: {
         position: 'relative',
       },
+
       viewport: {
-        height,
+        height: rem(height),
         overflow: 'hidden',
       },
 
       container: {
         display: 'flex',
         flexDirection: horizontal ? 'row' : 'column',
-        height,
+        height: rem(height),
         ...getContainerStyles(slideGap),
         ...containerBreakpoints,
       },
@@ -83,25 +93,25 @@ export default createStyles(
       controls: {
         position: 'absolute',
         zIndex: 1,
-        left: horizontal ? 0 : `calc(50% - ${controlSize / 2}px)`,
+        left: horizontal ? 0 : `calc(50% - ${rem(controlSize)} / 2)`,
         right: horizontal ? 0 : undefined,
-        top: horizontal ? `calc(50% - ${controlSize / 2}px)` : 0,
+        top: horizontal ? `calc(50% - ${rem(controlSize)} / 2)` : 0,
         bottom: horizontal ? undefined : 0,
         display: 'flex',
         flexDirection: horizontal ? 'row' : 'column',
         alignItems: 'center',
         justifyContent: 'space-between',
         paddingLeft: horizontal
-          ? theme.fn.size({ size: controlsOffset, sizes: theme.spacing })
+          ? getSize({ size: controlsOffset, sizes: theme.spacing })
           : undefined,
         paddingRight: horizontal
-          ? theme.fn.size({ size: controlsOffset, sizes: theme.spacing })
+          ? getSize({ size: controlsOffset, sizes: theme.spacing })
           : undefined,
         paddingTop: !horizontal
-          ? theme.fn.size({ size: controlsOffset, sizes: theme.spacing })
+          ? getSize({ size: controlsOffset, sizes: theme.spacing })
           : undefined,
         paddingBottom: !horizontal
-          ? theme.fn.size({ size: controlsOffset, sizes: theme.spacing })
+          ? getSize({ size: controlsOffset, sizes: theme.spacing })
           : undefined,
         pointerEvents: 'none',
       },
@@ -110,15 +120,15 @@ export default createStyles(
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
-        minWidth: controlSize,
-        minHeight: controlSize,
-        borderRadius: controlSize,
+        minWidth: rem(controlSize),
+        minHeight: rem(controlSize),
+        borderRadius: rem(controlSize),
         pointerEvents: 'all',
         backgroundColor: theme.white,
         color: theme.black,
         boxShadow: theme.shadows.md,
         opacity: theme.colorScheme === 'dark' ? 0.65 : 0.85,
-        border: `1px solid ${theme.colors.gray[3]}`,
+        border: `${rem(1)} solid ${theme.colors.gray[3]}`,
         transition: `opacity 150ms ${theme.transitionTimingFunction}`,
         ...theme.fn.hover({ opacity: 1 }),
         '&:active': theme.activeStyles,
@@ -133,15 +143,15 @@ export default createStyles(
         display: 'flex',
         flexDirection: horizontal ? 'row' : 'column',
         justifyContent: 'center',
-        gap: 8,
+        gap: rem(8),
         pointerEvents: 'none',
       },
 
       indicator: {
         pointerEvents: 'all',
-        width: horizontal ? 25 : 5,
-        height: horizontal ? 5 : 25,
-        borderRadius: 10000,
+        width: horizontal ? rem(25) : rem(5),
+        height: horizontal ? rem(5) : rem(25),
+        borderRadius: theme.radius.xl,
         backgroundColor: theme.white,
         boxShadow: theme.shadows.sm,
         opacity: 0.6,

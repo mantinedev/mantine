@@ -1,6 +1,10 @@
 import React from 'react';
 import { render } from '@testing-library/react';
-import { itRendersChildren, itSupportsSystemProps } from '@mantine/tests';
+import {
+  itRendersChildren,
+  itSupportsSystemProps,
+  itSupportsProviderVariant,
+} from '@mantine/tests';
 import { Header } from './Header/Header';
 import { Navbar } from './Navbar/Navbar';
 import { AppShell, AppShellProps } from './AppShell';
@@ -11,6 +15,7 @@ const defaultProps: AppShellProps = {
 
 describe('@mantine/core/AppShell', () => {
   itRendersChildren(AppShell, defaultProps);
+  itSupportsProviderVariant(AppShell, defaultProps, 'AppShell');
   itSupportsSystemProps({
     component: AppShell,
     props: defaultProps,

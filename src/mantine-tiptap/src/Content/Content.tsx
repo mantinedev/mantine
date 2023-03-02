@@ -25,11 +25,19 @@ export const Content = forwardRef<HTMLDivElement, RichTextEditorContentProps>((p
     props
   );
 
-  const { editor, withCodeHighlightStyles, withTypographyStyles, classNames, styles, unstyled } =
-    useRichTextEditorContext();
+  const {
+    editor,
+    withCodeHighlightStyles,
+    withTypographyStyles,
+    classNames,
+    styles,
+    unstyled,
+    variant,
+  } = useRichTextEditorContext();
+
   const { classes, cx } = useStyles(
     { withCodeHighlightStyles, withTypographyStyles },
-    { name: 'RichTextEditor', classNames, styles, unstyled }
+    { name: 'RichTextEditor', classNames, styles, unstyled, variant }
   );
 
   return (

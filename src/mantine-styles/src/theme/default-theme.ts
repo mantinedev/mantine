@@ -13,7 +13,6 @@ export const _DEFAULT_THEME: MantineThemeBase = {
   },
   focusRing: 'auto',
   loader: 'oval',
-  dateFormat: 'MMMM D, YYYY',
   colorScheme: 'light',
   white: '#fff',
   black: '#000',
@@ -35,43 +34,43 @@ export const _DEFAULT_THEME: MantineThemeBase = {
   },
 
   shadows: {
-    xs: '0 1px 3px rgba(0, 0, 0, 0.05), 0 1px 2px rgba(0, 0, 0, 0.1)',
-    sm: '0 1px 3px rgba(0, 0, 0, 0.05), rgba(0, 0, 0, 0.05) 0px 10px 15px -5px, rgba(0, 0, 0, 0.04) 0px 7px 7px -5px',
-    md: '0 1px 3px rgba(0, 0, 0, 0.05), rgba(0, 0, 0, 0.05) 0px 20px 25px -5px, rgba(0, 0, 0, 0.04) 0px 10px 10px -5px',
-    lg: '0 1px 3px rgba(0, 0, 0, 0.05), rgba(0, 0, 0, 0.05) 0px 28px 23px -7px, rgba(0, 0, 0, 0.04) 0px 12px 12px -7px',
-    xl: '0 1px 3px rgba(0, 0, 0, 0.05), rgba(0, 0, 0, 0.05) 0px 36px 28px -7px, rgba(0, 0, 0, 0.04) 0px 17px 17px -7px',
+    xs: '0 0.0625rem 0.1875rem rgba(0, 0, 0, 0.05), 0 0.0625rem 0.125rem rgba(0, 0, 0, 0.1)',
+    sm: '0 0.0625rem 0.1875rem rgba(0, 0, 0, 0.05), rgba(0, 0, 0, 0.05) 0 0.625rem 0.9375rem -0.3125rem, rgba(0, 0, 0, 0.04) 0 0.4375rem 0.4375rem -0.3125rem',
+    md: '0 0.0625rem 0.1875rem rgba(0, 0, 0, 0.05), rgba(0, 0, 0, 0.05) 0 1.25rem 1.5625rem -0.3125rem, rgba(0, 0, 0, 0.04) 0 0.625rem 0.625rem -0.3125rem',
+    lg: '0 0.0625rem 0.1875rem rgba(0, 0, 0, 0.05), rgba(0, 0, 0, 0.05) 0 1.75rem 1.4375rem -0.4375rem, rgba(0, 0, 0, 0.04) 0 0.75rem 0.75rem -0.4375rem',
+    xl: '0 0.0625rem 0.1875rem rgba(0, 0, 0, 0.05), rgba(0, 0, 0, 0.05) 0 2.25rem 1.75rem -0.4375rem, rgba(0, 0, 0, 0.04) 0 1.0625rem 1.0625rem -0.4375rem',
   },
 
   fontSizes: {
-    xs: 12,
-    sm: 14,
-    md: 16,
-    lg: 18,
-    xl: 20,
+    xs: '0.75rem',
+    sm: '0.875rem',
+    md: '1rem',
+    lg: '1.125rem',
+    xl: '1.25rem',
   },
 
   radius: {
-    xs: 2,
-    sm: 4,
-    md: 8,
-    lg: 16,
-    xl: 32,
+    xs: '0.125rem',
+    sm: '0.25rem',
+    md: '0.5rem',
+    lg: '1rem',
+    xl: '2rem',
   },
 
   spacing: {
-    xs: 10,
-    sm: 12,
-    md: 16,
-    lg: 20,
-    xl: 24,
+    xs: '0.625rem',
+    sm: '0.75rem',
+    md: '1rem',
+    lg: '1.25rem',
+    xl: '1.5rem',
   },
 
   breakpoints: {
-    xs: 576,
-    sm: 768,
-    md: 992,
-    lg: 1200,
-    xl: 1400,
+    xs: '36em',
+    sm: '48em',
+    md: '62em',
+    lg: '75em',
+    xl: '88em',
   },
 
   headings: {
@@ -79,24 +78,24 @@ export const _DEFAULT_THEME: MantineThemeBase = {
       '-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji',
     fontWeight: 700,
     sizes: {
-      h1: { fontSize: 34, lineHeight: 1.3, fontWeight: undefined },
-      h2: { fontSize: 26, lineHeight: 1.35, fontWeight: undefined },
-      h3: { fontSize: 22, lineHeight: 1.4, fontWeight: undefined },
-      h4: { fontSize: 18, lineHeight: 1.45, fontWeight: undefined },
-      h5: { fontSize: 16, lineHeight: 1.5, fontWeight: undefined },
-      h6: { fontSize: 14, lineHeight: 1.5, fontWeight: undefined },
+      h1: { fontSize: '2.125rem', lineHeight: 1.3, fontWeight: undefined },
+      h2: { fontSize: '1.625rem', lineHeight: 1.35, fontWeight: undefined },
+      h3: { fontSize: '1.375rem', lineHeight: 1.4, fontWeight: undefined },
+      h4: { fontSize: '1.125rem', lineHeight: 1.45, fontWeight: undefined },
+      h5: { fontSize: '1rem', lineHeight: 1.5, fontWeight: undefined },
+      h6: { fontSize: '0.875rem', lineHeight: 1.5, fontWeight: undefined },
     },
   },
 
   other: {},
   components: {},
-  activeStyles: { transform: 'translateY(1px)' },
+  activeStyles: { transform: 'translateY(0.0625rem)' },
   datesLocale: 'en',
   globalStyles: undefined,
   focusRingStyles: {
     styles: (theme) => ({
-      outlineOffset: 2,
-      outline: `2px solid ${
+      outlineOffset: '0.125rem',
+      outline: `0.125rem solid ${
         theme.colors[theme.primaryColor][theme.colorScheme === 'dark' ? 7 : 5]
       }`,
     }),

@@ -1,6 +1,6 @@
 import React from 'react';
 import { MantineDemo } from '@mantine/ds';
-import { Textarea } from '@mantine/core';
+import { Textarea, Box } from '@mantine/core';
 
 const code = `
 // Error as boolean – red border color
@@ -12,16 +12,16 @@ const code = `
 
 function Demo() {
   return (
-    <div style={{ maxWidth: 320, marginLeft: 'auto', marginRight: 'auto' }}>
+    <Box maw={320} mx="auto">
       <Textarea label="Your comment" placeholder="Your comment" error />
 
       <Textarea
-        style={{ marginTop: 15 }}
+        mt="md"
         label="Your comment"
         placeholder="Your comment"
         error="Comment should not include bad words"
       />
-    </div>
+    </Box>
   );
 }
 

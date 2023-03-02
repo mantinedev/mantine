@@ -1,26 +1,28 @@
 import React from 'react';
 import { Carousel } from '@mantine/carousel';
+import { rem } from '@mantine/core';
 import { MantineDemo } from '@mantine/ds';
 import { Slides } from './_slides';
 
 const code = `
 import { Carousel } from '@mantine/carousel';
+import { rem } from '@mantine/core';
 
 function Demo() {
   return (
     <Carousel
-      sx={{ maxWidth: 320 }}
+      maw={320}
       mx="auto"
       withIndicators
       height={200}
       styles={{
         indicator: {
-          width: 12,
-          height: 4,
+          width: rem(12),
+          height: rem(4),
           transition: 'width 250ms ease',
 
           '&[data-active]': {
-            width: 40,
+            width: rem(40),
           },
         },
       }}
@@ -37,18 +39,18 @@ function Demo() {
 function Demo() {
   return (
     <Carousel
-      sx={{ maxWidth: 320 }}
+      maw={320}
       mx="auto"
       withIndicators
       height={200}
       styles={{
         indicator: {
-          width: 12,
-          height: 4,
+          width: rem(12),
+          height: rem(4),
           transition: 'width 250ms ease',
 
           '&[data-active]': {
-            width: 40,
+            width: rem(40),
           },
         },
       }}

@@ -1,5 +1,5 @@
 import React from 'react';
-import { MantineProvider } from '@mantine/styles';
+import { MantineProvider, MANTINE_SIZES } from '@mantine/styles';
 import { Checkbox } from './Checkbox';
 import { Stack } from '../Stack';
 
@@ -88,4 +88,10 @@ export function WithError() {
       <Checkbox error="Invalid Checkbox without label" value="1" />
     </Stack>
   );
+}
+
+export function Sizes() {
+  return MANTINE_SIZES.map((size) => (
+    <Checkbox size={size} defaultChecked label={`Size ${size}`} mt="md" />
+  ));
 }

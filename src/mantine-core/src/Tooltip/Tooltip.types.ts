@@ -22,7 +22,7 @@ export interface TooltipBaseProps
   /** Determines whether tooltip should be rendered within Portal */
   withinPortal?: boolean;
 
-  /** Radius from theme.radius or number to set border-radius in px */
+  /** Key of theme.radius or any valid CSS value to set border-radius, theme.defaultRadius by default */
   radius?: MantineNumberSize;
 
   /** Key of theme.colors */
@@ -31,7 +31,7 @@ export interface TooltipBaseProps
   /** Defines whether content should be wrapped on to the next line */
   multiline?: boolean;
 
-  /** Tooltip width in px */
+  /** Tooltip width */
   width?: number | 'auto';
 
   /** Tooltip z-index */

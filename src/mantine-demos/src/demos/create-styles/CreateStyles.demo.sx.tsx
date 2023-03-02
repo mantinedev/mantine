@@ -7,7 +7,7 @@ const code = `
   sx={(theme) => ({
     borderColor: theme.colors.blue[9],
 
-    '&:hover': {
+    '&:not([data-disabled]):hover': {
       backgroundColor: theme.colors.blue[9],
     },
   })}
@@ -23,7 +23,7 @@ function Demo() {
         sx={(theme) => ({
           borderColor: theme.colors.blue[9],
 
-          '&:hover': {
+          '&:not([data-disabled]):hover': {
             backgroundColor: theme.colors.blue[9],
           },
         })}

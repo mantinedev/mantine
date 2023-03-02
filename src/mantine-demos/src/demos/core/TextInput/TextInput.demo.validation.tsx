@@ -1,6 +1,6 @@
 import React from 'react';
 import { MantineDemo } from '@mantine/ds';
-import { TextInput } from '@mantine/core';
+import { TextInput, Box } from '@mantine/core';
 
 const code = `
 // Error as boolean – red border color
@@ -12,16 +12,10 @@ const code = `
 
 function Demo() {
   return (
-    <div style={{ maxWidth: 320, marginLeft: 'auto', marginRight: 'auto' }}>
+    <Box maw={320} mx="auto">
       <TextInput label="Your email" placeholder="you@email.com" error />
-
-      <TextInput
-        style={{ marginTop: 15 }}
-        label="Your email"
-        placeholder="you@email.com"
-        error="Invalid email"
-      />
-    </div>
+      <TextInput mt="md" label="Your email" placeholder="you@email.com" error="Invalid email" />
+    </Box>
   );
 }
 

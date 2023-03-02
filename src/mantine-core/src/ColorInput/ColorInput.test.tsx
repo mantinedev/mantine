@@ -5,6 +5,8 @@ import {
   itSupportsWrapperProps,
   itSupportsInputProps,
   itSupportsFocusEvents,
+  itSupportsProviderVariant,
+  itSupportsProviderSize,
 } from '@mantine/tests';
 import { ColorInput, ColorInputProps } from './ColorInput';
 
@@ -15,6 +17,8 @@ const defaultProps: ColorInputProps = {
 describe('@mantine/core/ColorInput', () => {
   checkAccessibility([<ColorInput label="Color input" />, <ColorInput aria-label="Color input" />]);
   itSupportsWrapperProps(ColorInput, defaultProps);
+  itSupportsProviderVariant(ColorInput, defaultProps, 'ColorInput', ['root', 'input', 'label']);
+  itSupportsProviderSize(ColorInput, defaultProps, 'ColorInput', ['root', 'input', 'label']);
   itSupportsInputProps(ColorInput, defaultProps, 'ColorInput');
   itSupportsFocusEvents(ColorInput, defaultProps, 'input');
   itSupportsSystemProps({

@@ -1,7 +1,12 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { checkAccessibility, itSupportsSystemProps } from '@mantine/tests';
+import {
+  checkAccessibility,
+  itSupportsSystemProps,
+  itSupportsProviderVariant,
+  itSupportsProviderSize,
+} from '@mantine/tests';
 import { Step } from './Step/Step';
 import { StepCompleted } from './StepCompleted/StepCompleted';
 import { Stepper, StepperProps } from './Stepper';
@@ -27,6 +32,8 @@ const defaultProps: StepperProps = {
 
 describe('@mantine/core/Stepper', () => {
   checkAccessibility([<Stepper {...defaultProps} />]);
+  itSupportsProviderVariant(Stepper, defaultProps, 'Stepper', ['root', 'step']);
+  itSupportsProviderSize(Stepper, defaultProps, 'Stepper', ['root', 'step']);
   itSupportsSystemProps({
     component: Stepper,
     props: defaultProps,

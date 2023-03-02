@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef, forwardRef } from 'react';
 import { useMergedRef, assignRef, useOs, clamp } from '@mantine/hooks';
-import { DefaultProps, Selectors, useComponentDefaultProps } from '@mantine/styles';
+import { DefaultProps, Selectors, useComponentDefaultProps, rem, getSize } from '@mantine/styles';
 import { TextInput } from '../TextInput';
 import { InputStylesNames, InputWrapperStylesNames } from '../Input';
 import { getInputMode } from './get-input-mode/get-input-mode';
@@ -18,8 +18,8 @@ export interface NumberInputHandlers {
   decrement(): void;
 }
 
-type Formatter = (value: string | undefined) => string;
-type Parser = (value: string | undefined) => string | undefined;
+type Formatter = (value: string | '') => string;
+type Parser = (value: string | '') => string;
 
 export interface NumberInputProps
   extends DefaultProps<NumberInputStylesNames>,
@@ -27,11 +27,14 @@ export interface NumberInputProps
       React.ComponentPropsWithoutRef<typeof TextInput>,
       'onChange' | 'value' | 'classNames' | 'styles' | 'type'
     > {
-  /** onChange input handler for controlled variant, note that input event is not exposed. It will return undefined if the input is empty, otherwise it'll return a number */
-  onChange?(value: number | undefined): void;
+  /** Called when value changes */
+  onChange?(value: number | ''): void;
 
-  /** Input value for controlled variant */
-  value?: number | undefined;
+  /** Input value for controlled component */
+  value?: number | '';
+
+  /** Default value for uncontrolled component */
+  defaultValue?: number | '';
 
   /** The decimal separator */
   decimalSeparator?: string;
@@ -62,9 +65,6 @@ export interface NumberInputProps
 
   /** Only works if a precision is given, removes the trailing zeros, false by default */
   removeTrailingZeros?: boolean;
-
-  /** Default value for uncontrolled variant only */
-  defaultValue?: number | undefined;
 
   /** Prevent value clamp on blur */
   noClampOnBlur?: boolean;
@@ -97,18 +97,18 @@ const defaultParser: Parser = (num) => {
   const parsedNum = parseFloat(tempNum);
 
   if (Number.isNaN(parsedNum)) {
-    return undefined;
+    return '';
   }
 
   return num;
 };
 
 const CHEVRON_SIZES = {
-  xs: 10,
-  sm: 14,
-  md: 16,
-  lg: 18,
-  xl: 20,
+  xs: rem(10),
+  sm: rem(14),
+  md: rem(16),
+  lg: rem(18),
+  xl: rem(20),
 };
 
 const defaultProps: Partial<NumberInputProps> = {
@@ -137,7 +137,6 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>((props
     stepHoldInterval,
     stepHoldDelay,
     onBlur,
-    onFocus,
     onKeyDown,
     onKeyUp,
     hideControls,
@@ -161,13 +160,13 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>((props
     ...others
   } = useComponentDefaultProps('NumberInput', defaultProps, props);
 
-  const { classes, cx, theme } = useStyles(
-    { radius, size },
-    { classNames, styles, unstyled, name: 'NumberInput' }
+  const { classes, cx } = useStyles(
+    { radius },
+    { classNames, styles, unstyled, name: 'NumberInput', variant, size }
   );
 
-  const parsePrecision = (val: number | undefined) => {
-    if (val === undefined) return undefined;
+  const parsePrecision = (val: number | '') => {
+    if (val === '') return '';
 
     let result = val.toFixed(precision);
     if (removeTrailingZeros && precision > 0) {
@@ -180,16 +179,15 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>((props
     return result;
   };
 
-  const [focused, setFocused] = useState(false);
-  const [_value, setValue] = useState(
-    typeof value === 'number' ? value : typeof defaultValue === 'number' ? defaultValue : undefined
+  const [_value, setValue] = useState<number | ''>(
+    typeof value === 'number' ? value : typeof defaultValue === 'number' ? defaultValue : ''
   );
   const finalValue = typeof value === 'number' ? value : _value;
   const [tempValue, setTempValue] = useState(
     typeof finalValue === 'number' ? parsePrecision(finalValue) : ''
   );
   const inputRef = useRef<HTMLInputElement>();
-  const handleValueChange = (val: number | undefined) => {
+  const handleValueChange = (val: number | '') => {
     if (val !== _value && !Number.isNaN(val)) {
       typeof onChange === 'function' && onChange(val);
       setValue(val);
@@ -206,7 +204,7 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>((props
     return formatter(parsedStr);
   };
 
-  const parseNum = (val: string): string | undefined => {
+  const parseNum = (val: string): string | '' => {
     let num = val;
 
     if (decimalSeparator) {
@@ -221,9 +219,9 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>((props
 
   const incrementRef = useRef<() => void>();
   incrementRef.current = () => {
-    if (_value === undefined) {
+    if (_value === '') {
       handleValueChange(startValue ?? min ?? 0);
-      setTempValue(parsePrecision(startValue) ?? parsePrecision(min) ?? '0');
+      setTempValue(startValue ? parsePrecision(startValue) ?? parsePrecision(min) ?? '0' : '0');
     } else {
       const result = parsePrecision(clamp(_value + step, _min, _max));
 
@@ -234,9 +232,9 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>((props
 
   const decrementRef = useRef<() => void>();
   decrementRef.current = () => {
-    if (_value === undefined) {
+    if (_value === '') {
       handleValueChange(startValue ?? min ?? 0);
-      setTempValue(parsePrecision(startValue) ?? parsePrecision(min) ?? '0');
+      setTempValue(startValue ? parsePrecision(startValue) ?? parsePrecision(min) ?? '0' : '0');
     } else {
       const result = parsePrecision(clamp(_value - step, _min, _max));
       handleValueChange(parseFloat(result));
@@ -247,11 +245,11 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>((props
   assignRef(handlersRef, { increment: incrementRef.current, decrement: decrementRef.current });
 
   useEffect(() => {
-    if (typeof value === 'number' && !focused) {
+    if (typeof value === 'number') {
       setValue(value);
       setTempValue(parsePrecision(value));
     }
-    if (defaultValue === undefined && value === undefined && !focused) {
+    if ((defaultValue === '' || defaultValue === undefined) && value === '') {
       setValue(value);
       setTempValue('');
     }
@@ -321,7 +319,7 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>((props
         onPointerUp={onStepDone}
         onPointerLeave={onStepDone}
       >
-        <Chevron size={theme.fn.size({ size, sizes: CHEVRON_SIZES })} direction="up" />
+        <Chevron size={getSize({ size, sizes: CHEVRON_SIZES })} direction="up" />
       </button>
       <button
         type="button"
@@ -335,7 +333,7 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>((props
         onPointerUp={onStepDone}
         onPointerLeave={onStepDone}
       >
-        <Chevron size={theme.fn.size({ size, sizes: CHEVRON_SIZES })} direction="down" />
+        <Chevron size={getSize({ size, sizes: CHEVRON_SIZES })} direction="down" />
       </button>
     </div>
   );
@@ -352,16 +350,21 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>((props
     setTempValue(parsed);
 
     if (val === '' || val === '-') {
-      handleValueChange(undefined);
+      handleValueChange('');
     } else {
       val.trim() !== '' && !Number.isNaN(parsed) && handleValueChange(parseFloat(parsed));
     }
   };
 
   const handleBlur = (event: React.FocusEvent<HTMLInputElement>) => {
+    if (typeof value === 'number' || value === '') {
+      setTempValue(parsePrecision(value));
+      return;
+    }
+
     if (event.target.value === '') {
       setTempValue('');
-      handleValueChange(undefined);
+      handleValueChange('');
     } else {
       let newNumber = event.target.value;
 
@@ -382,13 +385,7 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>((props
       }
     }
 
-    setFocused(false);
     typeof onBlur === 'function' && onBlur(event);
-  };
-
-  const handleFocus = (event: React.FocusEvent<HTMLInputElement>) => {
-    setFocused(true);
-    typeof onFocus === 'function' && onFocus(event);
   };
 
   const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
@@ -428,14 +425,15 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>((props
       ref={useMergedRef(inputRef, ref)}
       onChange={handleChange}
       onBlur={handleBlur}
-      onFocus={handleFocus}
       onKeyDown={handleKeyDown}
       onKeyUp={handleKeyUp}
       rightSection={
         rightSection ||
         (disabled || readOnly || hideControls || variant === 'unstyled' ? null : controls)
       }
-      rightSectionWidth={rightSectionWidth || theme.fn.size({ size, sizes: CONTROL_SIZES }) + 1}
+      rightSectionWidth={
+        rightSectionWidth ?? `calc(${getSize({ size, sizes: CONTROL_SIZES })} + ${rem(1)})`
+      }
       radius={radius}
       max={max}
       min={min}

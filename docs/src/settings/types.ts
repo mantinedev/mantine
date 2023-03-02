@@ -1,5 +1,5 @@
 import React from 'react';
-import { Icon2fa } from '@tabler/icons';
+import { Icon2fa } from '@tabler/icons-react';
 
 export interface Category {
   title: string;

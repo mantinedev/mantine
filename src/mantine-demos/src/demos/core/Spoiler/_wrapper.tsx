@@ -5,14 +5,12 @@ const content = (
   <div>
     <Box
       component="img"
-      sx={{
-        maxWidth: '100%',
-        height: 150,
-        marginLeft: 20,
-        marginBottom: 0,
-        marginTop: 5,
-        float: 'right',
-      }}
+      h={150}
+      ml={20}
+      mb={0}
+      mt={5}
+      maw="100%"
+      sx={{ float: 'right' }}
       src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e2/Rock_in_caputh-WBTBWB-47.jpg/600px-Rock_in_caputh-WBTBWB-47.jpg"
       alt="We Butter the Bread with Butter"
     />
@@ -30,10 +28,10 @@ const content = (
 
 export function Wrapper(props: Partial<SpoilerProps>) {
   return (
-    <div style={{ maxWidth: 520, margin: 'auto' }}>
+    <Box maw={520} mx="auto">
       <Spoiler maxHeight={120} showLabel="Show more" hideLabel="Hide" {...props}>
         {content}
       </Spoiler>
-    </div>
+    </Box>
   );
 }

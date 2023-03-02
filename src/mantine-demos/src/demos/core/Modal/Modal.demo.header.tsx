@@ -1,30 +1,41 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { MantineDemo } from '@mantine/ds';
+import { useDisclosure } from '@mantine/hooks';
 import { Modal, Group, Button } from '@mantine/core';
 
 const code = `
-import { Modal } from '@mantine/core';
+import { useDisclosure } from '@mantine/hooks';
+import { Modal, Group, Button } from '@mantine/core';
 
 function Demo() {
-  return (
-    <Modal withCloseButton={false}>
-      Modal without header, press escape or click on overlay to close
-    </Modal>
-  );
-}
-`;
-
-function Demo() {
-  const [opened, setOpened] = useState(false);
+  const [opened, { open, close }] = useDisclosure(false);
 
   return (
     <>
-      <Modal opened={opened} onClose={() => setOpened(false)} withCloseButton={false}>
+      <Modal opened={opened} onClose={close} withCloseButton={false}>
         Modal without header, press escape or click on overlay to close
       </Modal>
 
       <Group position="center">
-        <Button onClick={() => setOpened(true)}>Open Modal</Button>
+        <Button onClick={open}>Open Modal</Button>
+      </Group>
+    </>
+  );
+}
+
+`;
+
+function Demo() {
+  const [opened, { open, close }] = useDisclosure(false);
+
+  return (
+    <>
+      <Modal opened={opened} onClose={close} withCloseButton={false}>
+        Modal without header, press escape or click on overlay to close
+      </Modal>
+
+      <Group position="center">
+        <Button onClick={open}>Open Modal</Button>
       </Group>
     </>
   );

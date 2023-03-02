@@ -1,11 +1,11 @@
-export { useNotifications } from './use-notifications/use-notifications';
-export { NotificationsProvider } from './NotificationsProvider/NotificationsProvider';
+export { Notifications } from './Notifications/Notifications';
 export {
   showNotification,
   updateNotification,
   hideNotification,
   cleanNotifications,
   cleanNotificationsQueue,
+  notifications,
 } from './events';
 export type { NotificationProps } from './types';
-export type { NotificationProviderProps } from './NotificationsProvider/NotificationsProvider';
+export type { NotificationsProps } from './Notifications/Notifications';

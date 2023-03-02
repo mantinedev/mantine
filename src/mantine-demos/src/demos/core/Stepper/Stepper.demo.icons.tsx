@@ -1,11 +1,16 @@
 import React, { useState } from 'react';
-import { IconUserCheck, IconMailOpened, IconShieldCheck, IconCircleCheck } from '@tabler/icons';
+import {
+  IconUserCheck,
+  IconMailOpened,
+  IconShieldCheck,
+  IconCircleCheck,
+} from '@tabler/icons-react';
 import { MantineDemo } from '@mantine/ds';
 import { Stepper } from '@mantine/core';
 
 const code = `
 import { useState } from 'react';
-import { IconUserCheck, IconMailOpened, IconShieldCheck, IconCircleCheck } from '@tabler/icons';
+import { IconUserCheck, IconMailOpened, IconShieldCheck, IconCircleCheck } from '@tabler/icons-react';
 import { Stepper } from '@mantine/core';
 
 function Demo() {
@@ -13,9 +18,9 @@ function Demo() {
 
   return (
     <Stepper active={active} onStepClick={setActive} completedIcon={<IconCircleCheck />}>
-      <Stepper.Step icon={<IconUserCheck size={18} />} label="Step 1" description="Create an account" />
-      <Stepper.Step icon={<IconMailOpened size={18} />} label="Step 2" description="Verify email" />
-      <Stepper.Step icon={<IconShieldCheck size={18} />} label="Step 3" description="Get full access" />
+      <Stepper.Step icon={<IconUserCheck size="1.1rem" />} label="Step 1" description="Create an account" />
+      <Stepper.Step icon={<IconMailOpened size="1.1rem" />} label="Step 2" description="Verify email" />
+      <Stepper.Step icon={<IconShieldCheck size="1.1rem" />} label="Step 3" description="Get full access" />
     </Stepper>
   );
 }
@@ -31,13 +36,17 @@ function Demo() {
       breakpoint="sm"
     >
       <Stepper.Step
-        icon={<IconUserCheck size={18} />}
+        icon={<IconUserCheck size="1.1rem" />}
         label="Step 1"
         description="Create an account"
       />
-      <Stepper.Step icon={<IconMailOpened size={18} />} label="Step 2" description="Verify email" />
       <Stepper.Step
-        icon={<IconShieldCheck size={18} />}
+        icon={<IconMailOpened size="1.1rem" />}
+        label="Step 2"
+        description="Verify email"
+      />
+      <Stepper.Step
+        icon={<IconShieldCheck size="1.1rem" />}
         label="Step 3"
         description="Get full access"
       />

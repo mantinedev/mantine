@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { IconTable, IconSearch } from '@tabler/icons';
+import { IconTable, IconSearch } from '@tabler/icons-react';
 import { WithinOverlays } from '@mantine/storybook';
 import { Menu } from './Menu';
 import { Button } from '../Button';

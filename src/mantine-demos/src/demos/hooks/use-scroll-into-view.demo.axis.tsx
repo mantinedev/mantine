@@ -1,55 +1,63 @@
 import React from 'react';
 import { useScrollIntoView } from '@mantine/hooks';
 import { MantineDemo } from '@mantine/ds';
-import { Button, Text, Group, useMantineTheme, Paper } from '@mantine/core';
+import { Button, Text, Group, Paper, Box } from '@mantine/core';
 
 const code = `
 import { useScrollIntoView } from '@mantine/hooks';
-import { Button, Paper } from '@mantine/core';
+import { Button, Text, Group, Paper, Box } from '@mantine/core';
 
 function Demo() {
-  const { scrollIntoView, targetRef, scrollableRef } = useScrollIntoView({
-    axis: 'x',
-  });
+  const { scrollIntoView, targetRef, scrollableRef } = useScrollIntoView<
+    HTMLDivElement,
+    HTMLDivElement
+  >({ axis: 'x' });
 
   return (
-    <>
-      <Paper ref={scrollableRef} style={{ overflowX: 'scroll', height: 150, width: 300 }}>
-        <Paper ref={targetRef}>Scroll me into view</Paper>
+    <Group position="center">
+      <Paper ref={scrollableRef} h={150} w={300} sx={{ overflowX: 'scroll' }}>
+        <Box pl={260} pr={450}>
+          <Paper
+            ref={targetRef}
+            p="md"
+            sx={(theme) => ({
+              backgroundColor:
+                theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[2],
+              width: 'max-content',
+            })}
+          >
+            <Text>Scroll me into view</Text>
+          </Paper>
+        </Box>
       </Paper>
-
       <Button onClick={() => scrollIntoView()}>Scroll to target</Button>
-    </>
+    </Group>
   );
 }
 `;
 
 function Demo() {
-  const theme = useMantineTheme();
-
   const { scrollIntoView, targetRef, scrollableRef } = useScrollIntoView<
     HTMLDivElement,
     HTMLDivElement
-  >({
-    axis: 'x',
-  });
+  >({ axis: 'x' });
 
   return (
     <Group position="center">
-      <Paper ref={scrollableRef} style={{ overflowX: 'scroll', height: 150, width: 300 }}>
-        <div style={{ paddingLeft: 260, paddingRight: 450 }}>
+      <Paper ref={scrollableRef} h={150} w={300} sx={{ overflowX: 'scroll' }}>
+        <Box pl={260} pr={450}>
           <Paper
             ref={targetRef}
             p="md"
-            style={{
+            sx={(theme) => ({
               backgroundColor:
                 theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[2],
               width: 'max-content',
-            }}
+            })}
           >
             <Text>Scroll me into view</Text>
           </Paper>
-        </div>
+        </Box>
       </Paper>
       <Button onClick={() => scrollIntoView()}>Scroll to target</Button>
     </Group>

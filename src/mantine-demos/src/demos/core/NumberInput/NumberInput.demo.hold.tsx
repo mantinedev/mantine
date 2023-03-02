@@ -1,6 +1,6 @@
 import React from 'react';
 import { MantineDemo } from '@mantine/ds';
-import { NumberInput } from '@mantine/core';
+import { NumberInput, Box } from '@mantine/core';
 
 const code = `
 import { NumberInput } from '@mantine/core';
@@ -9,7 +9,6 @@ function Demo() {
   return (
     <>
       <NumberInput
-        style={{ marginTop: 15 }}
         label="Step on hold"
         description="Step the value when clicking and holding the arrows"
         stepHoldDelay={500}
@@ -29,7 +28,7 @@ function Demo() {
 
 function Demo() {
   return (
-    <div style={{ maxWidth: 420, margin: 'auto' }}>
+    <Box maw={420} mx="auto">
       <NumberInput
         label="Step on hold"
         description="Step the value when clicking and holding the arrows"
@@ -45,7 +44,7 @@ function Demo() {
         stepHoldDelay={500}
         stepHoldInterval={(t) => Math.max(1000 / t ** 2, 25)}
       />
-    </div>
+    </Box>
   );
 }
 

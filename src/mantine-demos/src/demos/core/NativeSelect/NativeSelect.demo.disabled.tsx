@@ -12,14 +12,14 @@ function Demo() {
 
 function Demo() {
   return (
-    <div style={{ maxWidth: 320, marginLeft: 'auto', marginRight: 'auto' }}>
-      <NativeSelect
-        data={['React', 'Angular', 'Svelte', 'Vue']}
-        label="Disabled select"
-        placeholder="Pick one that you like"
-        disabled
-      />
-    </div>
+    <NativeSelect
+      maw={320}
+      mx="auto"
+      data={['React', 'Angular', 'Svelte', 'Vue']}
+      label="Disabled select"
+      placeholder="Pick one that you like"
+      disabled
+    />
   );
 }
 

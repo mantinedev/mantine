@@ -1,6 +1,6 @@
 import React from 'react';
 import { render } from '@testing-library/react';
-import { itSupportsSystemProps } from '@mantine/tests';
+import { itSupportsSystemProps, itSupportsProviderVariant } from '@mantine/tests';
 import { Timeline } from './Timeline';
 import { TimelineItem } from './TimelineItem/TimelineItem';
 
@@ -15,6 +15,7 @@ const defaultProps = {
 };
 
 describe('@mantine/core/Timeline', () => {
+  itSupportsProviderVariant(Timeline, defaultProps, 'Timeline', ['root', 'item']);
   itSupportsSystemProps({
     component: Timeline,
     props: defaultProps,

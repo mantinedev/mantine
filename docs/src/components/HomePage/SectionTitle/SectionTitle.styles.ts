@@ -1,4 +1,4 @@
-import { createStyles } from '@mantine/core';
+import { createStyles, rem, em } from '@mantine/core';
 
 export default createStyles((theme) => ({
   title: {
@@ -6,14 +6,14 @@ export default createStyles((theme) => ({
     position: 'relative',
     fontFamily: `Greycliff CF, ${theme.fontFamily}`,
     fontWeight: 900,
-    fontSize: 42,
+    fontSize: rem(42),
     lineHeight: 1.1,
     margin: 0,
     padding: 0,
     textAlign: 'left',
-    marginBottom: theme.spacing.xl * 2,
+    marginBottom: `calc(${theme.spacing.xl} * 2)`,
     letterSpacing: 1,
-    marginLeft: 22,
+    marginLeft: rem(22),
     textTransform: 'uppercase',
     color: theme.colorScheme === 'dark' ? theme.white : theme.black,
 
@@ -24,26 +24,26 @@ export default createStyles((theme) => ({
     '&::before, &::after': {
       content: '""',
       position: 'absolute',
-      width: 10,
-      height: 10,
+      width: rem(10),
+      height: rem(10),
     },
 
     '&::before': {
-      top: -14,
-      left: -22,
-      borderLeft: '5px solid transparent',
-      borderTop: '5px solid transparent',
+      top: rem(-14),
+      left: rem(-22),
+      borderLeft: `${rem(5)} solid transparent`,
+      borderTop: `${rem(5)} solid transparent`,
     },
 
     '&::after': {
-      bottom: -14,
-      right: -22,
-      borderRight: '5px solid transparent',
-      borderBottom: '5px solid transparent',
+      bottom: rem(-14),
+      right: rem(-22),
+      borderRight: `${rem(5)} solid transparent`,
+      borderBottom: `${rem(5)} solid transparent`,
     },
 
-    '@media (max-width: 600px)': {
-      fontSize: 28,
+    [`@media (max-width: ${em(600)})`]: {
+      fontSize: rem(28),
       marginLeft: 0,
 
       '&::before, &::after': {
@@ -54,10 +54,10 @@ export default createStyles((theme) => ({
 
   white: {
     color: theme.white,
-    textShadow: '1px 2px 2px rgba(0, 0, 0, .3)',
+    textShadow: `${rem(1)} ${rem(2)} ${rem(2)} rgba(0, 0, 0, .3)`,
 
     '&::before, &::after': {
-      filter: 'drop-shadow(1px 2px 2px rgba(0, 0, 0, .3))',
+      filter: `drop-shadow(${rem(1)} ${rem(2)} ${rem(2)} rgba(0, 0, 0, .3))`,
       borderColor: theme.white,
     },
   },

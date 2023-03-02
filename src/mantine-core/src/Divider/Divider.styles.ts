@@ -1,17 +1,15 @@
-import { createStyles, MantineNumberSize, MantineColor, MantineTheme } from '@mantine/styles';
+import { createStyles, MantineColor, MantineTheme, rem, getSize } from '@mantine/styles';
 
 export interface DividerStylesParams {
-  size: MantineNumberSize;
-  variant: 'solid' | 'dashed' | 'dotted';
   color: MantineColor;
 }
 
 const sizes = {
-  xs: 1,
-  sm: 2,
-  md: 3,
-  lg: 4,
-  xl: 5,
+  xs: rem(1),
+  sm: rem(2),
+  md: rem(3),
+  lg: rem(4),
+  xl: rem(5),
 };
 
 function getColor(theme: MantineTheme, color: MantineColor) {
@@ -26,7 +24,7 @@ function getColor(theme: MantineTheme, color: MantineColor) {
     : color;
 }
 
-export default createStyles((theme, { size, variant, color }: DividerStylesParams) => ({
+export default createStyles((theme, { color }: DividerStylesParams, { size, variant }) => ({
   root: {},
 
   withLabel: {
@@ -52,15 +50,15 @@ export default createStyles((theme, { size, variant, color }: DividerStylesParam
     '&::before': {
       content: '""',
       flex: 1,
-      height: 1,
-      borderTop: `${theme.fn.size({ size, sizes })}px ${variant} ${getColor(theme, color)}`,
+      height: rem(1),
+      borderTop: `${getSize({ size, sizes })} ${variant} ${getColor(theme, color)}`,
       marginRight: theme.spacing.xs,
     },
 
     '&::after': {
       content: '""',
       flex: 1,
-      borderTop: `${theme.fn.size({ size, sizes })}px ${variant} ${getColor(theme, color)}`,
+      borderTop: `${getSize({ size, sizes })} ${variant} ${getColor(theme, color)}`,
       marginLeft: theme.spacing.xs,
     },
   },
@@ -78,9 +76,9 @@ export default createStyles((theme, { size, variant, color }: DividerStylesParam
 
   horizontal: {
     border: 0,
-    borderTopWidth: theme.fn.size({ size, sizes }),
+    borderTopWidth: rem(getSize({ size, sizes })),
     borderTopColor: getColor(theme, color),
-    borderTopStyle: variant,
+    borderTopStyle: variant as any,
     margin: 0,
   },
 
@@ -88,8 +86,8 @@ export default createStyles((theme, { size, variant, color }: DividerStylesParam
     border: 0,
     alignSelf: 'stretch',
     height: 'auto',
-    borderLeftWidth: theme.fn.size({ size, sizes }),
+    borderLeftWidth: rem(getSize({ size, sizes })),
     borderLeftColor: getColor(theme, color),
-    borderLeftStyle: variant,
+    borderLeftStyle: variant as any,
   },
 }));

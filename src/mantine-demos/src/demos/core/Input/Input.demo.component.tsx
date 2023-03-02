@@ -1,11 +1,11 @@
 import React from 'react';
-import { IconChevronDown } from '@tabler/icons';
+import { IconChevronDown } from '@tabler/icons-react';
 import { MantineDemo } from '@mantine/ds';
 import { Input } from '@mantine/core';
 
 const code = `
 import { Input } from '@mantine/core';
-import { IconChevronDown } from '@tabler/icons';
+import { IconChevronDown } from '@tabler/icons-react';
 
 function Demo() {
   return (

@@ -13,7 +13,7 @@ const placements = ['start', 'center', 'end'] as const;
 export const Positions = () => {
   const items = positions.map((position) => {
     const _items = placements.map((placement) => (
-      <Indicator dot position={`${position}-${placement}`}>
+      <Indicator position={`${position}-${placement}`}>
         <Avatar radius={0} />
       </Indicator>
     ));
@@ -26,7 +26,7 @@ export const Positions = () => {
 
 export const Inline = () => (
   <Box sx={{ padding: 40 }}>
-    <Indicator dot inline withBorder>
+    <Indicator inline withBorder>
       <Avatar radius={0} />
     </Indicator>
   </Box>
@@ -34,7 +34,7 @@ export const Inline = () => (
 
 export const WithRadius = () => (
   <Box sx={{ padding: 40 }}>
-    <Indicator inline dot offset={12} size={20} position="bottom-end" withBorder color="red">
+    <Indicator inline offset={12} size={20} position="bottom-end" withBorder color="red">
       <Avatar
         radius={50000}
         size="xl"
@@ -57,7 +57,7 @@ export const Processing = () => (
     <Group position="center">
       <Box>
         <Text>Enabled</Text>
-        <Indicator inline dot processing size={12}>
+        <Indicator inline processing size={12}>
           <Avatar
             size="lg"
             src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=250&q=80"
@@ -67,7 +67,7 @@ export const Processing = () => (
 
       <Box>
         <Text>Disabled</Text>
-        <Indicator inline dot processing disabled size={12}>
+        <Indicator inline processing disabled size={12}>
           <Avatar
             size="lg"
             src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=250&q=80"

@@ -2,8 +2,8 @@ import React, { useRef, useEffect, useState } from 'react';
 import Slugger from 'github-slugger';
 import { navigate } from 'gatsby';
 import { useLocation } from '@reach/router';
-import { Text, ScrollArea, useMantineTheme } from '@mantine/core';
-import { IconList } from '@tabler/icons';
+import { Text, ScrollArea, useMantineTheme, rem } from '@mantine/core';
+import { IconList } from '@tabler/icons-react';
 import useStyles from './TableOfContents.styles';
 
 interface Heading {
@@ -78,7 +78,7 @@ export default function TableOfContents({ headings, withTabs }: TableOfContentsP
         size="sm"
         className={cx(classes.link, { [classes.linkActive]: active === index })}
         href={`#${slug}`}
-        sx={{ paddingLeft: (heading.depth - 1) * theme.spacing.lg }}
+        sx={{ paddingLeft: `calc(${heading.depth - 1} * ${theme.spacing.lg})` }}
         onClick={(event) => {
           event.preventDefault();
           navigate(`${pathname}#${slug}`, { replace: true });
@@ -97,7 +97,7 @@ export default function TableOfContents({ headings, withTabs }: TableOfContentsP
             <IconList size={20} stroke={1.5} />
             <Text className={classes.title}>Table of contents</Text>
           </div>
-          <ScrollArea.Autosize maxHeight="calc(100vh - 140px)" type="scroll" offsetScrollbars>
+          <ScrollArea.Autosize mah={`calc(100vh - ${rem(140)})`} type="scroll" offsetScrollbars>
             <div className={classes.items}>{items}</div>
           </ScrollArea.Autosize>
         </div>

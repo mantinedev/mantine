@@ -1,6 +1,6 @@
 import React from 'react';
 import { MantineDemo } from '@mantine/ds';
-import { Slider, Text } from '@mantine/core';
+import { Slider, Text, Box } from '@mantine/core';
 
 const code = `
 import { Slider } from '@mantine/core';
@@ -30,24 +30,24 @@ function Demo() {
 
 function Demo() {
   return (
-    <div style={{ maxWidth: 400, margin: 'auto' }}>
+    <Box maw={400} mx="auto">
       <Text>No label</Text>
       <Slider defaultValue={40} label={null} />
 
-      <Text style={{ marginTop: 20 }}>Formatted label</Text>
+      <Text mt="xl">Formatted label</Text>
       <Slider defaultValue={40} label={(value) => `${value} °C`} />
 
-      <Text style={{ marginTop: 20 }}>Label always visible</Text>
+      <Text mt="xl">Label always visible</Text>
       <Slider defaultValue={40} labelAlwaysOn />
 
-      <Text style={{ marginTop: 20 }}>Custom label transition</Text>
+      <Text mt="xl">Custom label transition</Text>
       <Slider
         defaultValue={40}
         labelTransition="skew-down"
         labelTransitionDuration={150}
         labelTransitionTimingFunction="ease"
       />
-    </div>
+    </Box>
   );
 }
 

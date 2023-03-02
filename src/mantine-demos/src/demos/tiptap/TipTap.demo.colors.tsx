@@ -1,7 +1,7 @@
 import React from 'react';
 import { MantineDemo } from '@mantine/ds';
 import { useEditor } from '@tiptap/react';
-import { IconColorPicker } from '@tabler/icons';
+import { IconColorPicker } from '@tabler/icons-react';
 import { Color } from '@tiptap/extension-color';
 import TextStyle from '@tiptap/extension-text-style';
 import StarterKit from '@tiptap/starter-kit';
@@ -9,7 +9,7 @@ import { RichTextEditor } from '@mantine/tiptap';
 
 const code = `
 import { useEditor } from '@tiptap/react';
-import { IconColorPicker } from '@tabler/icons';
+import { IconColorPicker } from '@tabler/icons-react';
 import { Color } from '@tiptap/extension-color';
 import TextStyle from '@tiptap/extension-text-style';
 import StarterKit from '@tiptap/starter-kit';
@@ -45,7 +45,7 @@ function Demo() {
 
         <RichTextEditor.ControlsGroup>
           <RichTextEditor.Control interactive={false}>
-            <IconColorPicker size={16} stroke={1.5} />
+            <IconColorPicker size="1rem" stroke={1.5} />
           </RichTextEditor.Control>
           <RichTextEditor.Color color="#F03E3E" />
           <RichTextEditor.Color color="#7048E8" />
@@ -93,7 +93,7 @@ function Demo() {
 
         <RichTextEditor.ControlsGroup>
           <RichTextEditor.Control interactive={false}>
-            <IconColorPicker size={16} stroke={1.5} />
+            <IconColorPicker size="1rem" stroke={1.5} />
           </RichTextEditor.Control>
           <RichTextEditor.Color color="#F03E3E" />
           <RichTextEditor.Color color="#7048E8" />

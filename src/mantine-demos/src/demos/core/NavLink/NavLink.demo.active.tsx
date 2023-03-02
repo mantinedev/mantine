@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
-import { IconGauge, IconFingerprint, IconActivity, IconChevronRight } from '@tabler/icons';
+import { IconGauge, IconFingerprint, IconActivity, IconChevronRight } from '@tabler/icons-react';
 import { MantineDemo } from '@mantine/ds';
 import { Box, NavLink, Group } from '@mantine/core';
 
 const codeTemplate = (props: string) => `
 import { useState } from 'react';
-import { IconGauge, IconFingerprint, IconActivity, IconChevronRight } from '@tabler/icons';
+import { IconGauge, IconFingerprint, IconActivity, IconChevronRight } from '@tabler/icons-react';
 import { Box, NavLink } from '@mantine/core';
 
 const data = [
@@ -13,7 +13,7 @@ const data = [
   {
     icon: IconFingerprint,
     label: 'Security',
-    rightSection: <IconChevronRight size={14} stroke={1.5} />,
+    rightSection: <IconChevronRight size="1rem" stroke={1.5} />,
   },
   { icon: IconActivity, label: 'Activity' },
 ];
@@ -28,12 +28,12 @@ function Demo() {
       label={item.label}
       description={item.description}
       rightSection={item.rightSection}
-      icon={<item.icon size={16} stroke={1.5} />}
+      icon={<item.icon size="1rem" stroke={1.5} />}
       onClick={() => setActive(index)}${props.length === 0 ? '' : `\n     ${props}`}
     />
   ));
 
-  return <Box sx={{ width: 220 }}>{items}</Box>;
+  return <Box w={220}>{items}</Box>;
 }
 `;
 
@@ -42,7 +42,7 @@ const data = [
   {
     icon: IconFingerprint,
     label: 'Security',
-    rightSection: <IconChevronRight size={14} stroke={1.5} />,
+    rightSection: <IconChevronRight size="1rem" stroke={1.5} />,
   },
   { icon: IconActivity, label: 'Activity' },
 ];
@@ -57,7 +57,7 @@ function Demo(props: any) {
       label={item.label}
       description={item.description}
       rightSection={item.rightSection}
-      icon={<item.icon size={16} stroke={1.5} />}
+      icon={<item.icon size="1rem" stroke={1.5} />}
       onClick={() => setActive(index)}
       {...props}
     />
@@ -65,7 +65,7 @@ function Demo(props: any) {
 
   return (
     <Group position="center">
-      <Box sx={{ width: 220 }}>{items}</Box>
+      <Box w={220}>{items}</Box>
     </Group>
   );
 }

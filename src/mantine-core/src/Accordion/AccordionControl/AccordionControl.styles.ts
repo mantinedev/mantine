@@ -1,13 +1,13 @@
-import { createStyles, MantineTheme, CSSObject } from '@mantine/styles';
+import { createStyles, MantineTheme, CSSObject, rem } from '@mantine/styles';
 import { AccordionStylesParams, AccordionChevronPosition } from '../Accordion.types';
 
 export interface AccordionControlStylesParams extends AccordionStylesParams {
   chevronPosition: AccordionChevronPosition;
   transitionDuration: number;
-  chevronSize: number;
+  chevronSize: number | string;
 }
 
-function getVariantStyles(theme: MantineTheme, { variant }: AccordionStylesParams): CSSObject {
+function getVariantStyles(theme: MantineTheme, variant: string): CSSObject {
   if (variant === 'default' || variant === 'contained') {
     return theme.fn.hover({
       backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[0],
@@ -20,7 +20,8 @@ function getVariantStyles(theme: MantineTheme, { variant }: AccordionStylesParam
 export default createStyles(
   (
     theme,
-    { transitionDuration, chevronPosition, chevronSize, ...params }: AccordionControlStylesParams
+    { transitionDuration, chevronPosition, chevronSize }: AccordionControlStylesParams,
+    { variant }
   ) => ({
     icon: {
       display: 'flex',
@@ -61,13 +62,16 @@ export default createStyles(
     control: {
       ...theme.fn.focusStyles(),
       ...theme.fn.fontStyles(),
-      ...getVariantStyles(theme, params),
+      ...getVariantStyles(theme, variant),
       width: '100%',
       display: 'flex',
       alignItems: 'center',
       flexDirection: chevronPosition === 'right' ? 'row-reverse' : 'row',
-      padding: `${theme.spacing.md}px ${theme.spacing.md / 2}px`,
-      paddingLeft: chevronPosition === 'right' ? `calc(${theme.spacing.sm}px + 4px)` : null,
+      paddingTop: theme.spacing.md,
+      paddingBottom: theme.spacing.md,
+      paddingRight: theme.spacing.md,
+      paddingLeft:
+        chevronPosition === 'right' ? `calc(${theme.spacing.md} + ${rem(4)})` : theme.spacing.xs,
       textAlign: 'left',
       color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
 

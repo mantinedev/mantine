@@ -4,14 +4,14 @@ import { ColorInput, ColorInputProps } from '@mantine/core';
 
 function Wrapper(props: ColorInputProps) {
   return (
-    <div style={{ maxWidth: 320, marginLeft: 'auto', marginRight: 'auto' }}>
-      <ColorInput
-        label="Choose color format"
-        placeholder={props.format}
-        defaultValue="#C5D899"
-        {...props}
-      />
-    </div>
+    <ColorInput
+      maw={320}
+      mx="auto"
+      label="Choose color format"
+      placeholder={props.format}
+      defaultValue="#C5D899"
+      {...props}
+    />
   );
 }
 

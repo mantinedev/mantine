@@ -21,5 +21,4 @@ export interface Frontmatter {
   componentPrefix?: string;
   hideToc?: boolean;
   polymorphic?: boolean;
-  hidden?: boolean;
 }

@@ -8,6 +8,8 @@ import {
   itSupportsWrapperProps,
   itHandlesBooleanState,
   itSupportsFocusEvents,
+  itSupportsProviderSize,
+  itSupportsProviderVariant,
 } from '@mantine/tests';
 import { Chip, ChipProps } from './Chip';
 
@@ -19,6 +21,8 @@ const defaultProps: ChipProps = {
 describe('@mantine/core/Chip', () => {
   checkAccessibility([<Chip {...defaultProps} />]);
   itRendersChildren(Chip, defaultProps);
+  itSupportsProviderSize(Chip, defaultProps, 'Chip');
+  itSupportsProviderVariant(Chip, defaultProps, 'Chip');
   itConnectsLabelAndInput(Chip, defaultProps);
   itSupportsWrapperProps(Chip, defaultProps);
   itHandlesBooleanState(Chip, defaultProps);

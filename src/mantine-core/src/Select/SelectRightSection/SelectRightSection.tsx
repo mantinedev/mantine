@@ -5,30 +5,27 @@ import { ChevronIcon } from './ChevronIcon';
 
 export interface SelectRightSectionProps {
   shouldClear: boolean;
-  clearButtonLabel?: string;
+  clearButtonProps?: React.ComponentPropsWithoutRef<'button'>;
   onClear?: () => void;
   size: MantineSize;
   error?: any;
   // eslint-disable-next-line react/no-unused-prop-types
   disabled?: boolean;
-  clearButtonTabIndex?: number;
 }
 
 export function SelectRightSection({
   shouldClear,
-  clearButtonLabel,
+  clearButtonProps,
   onClear,
   size,
   error,
-  clearButtonTabIndex,
 }: SelectRightSectionProps) {
   return shouldClear ? (
     <CloseButton
+      {...clearButtonProps}
       variant="transparent"
-      aria-label={clearButtonLabel}
       onClick={onClear}
       size={size}
-      tabIndex={clearButtonTabIndex}
       onMouseDown={(event) => event.preventDefault()}
     />
   ) : (

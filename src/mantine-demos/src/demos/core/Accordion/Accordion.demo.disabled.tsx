@@ -37,7 +37,7 @@ export const baseDemoItems = baseAccordionMockdata.map((item, index) => (
 
 function Demo() {
   return (
-    <Box sx={{ maxWidth: 380 }} mx="auto">
+    <Box maw={380} mx="auto">
       <Accordion>{baseDemoItems}</Accordion>
     </Box>
   );

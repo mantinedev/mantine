@@ -8,7 +8,7 @@ import { HoverCardTarget } from './HoverCardTarget/HoverCardTarget';
 
 function TestContainer(props: Partial<HoverCardProps>) {
   return (
-    <HoverCard transitionDuration={0} {...props}>
+    <HoverCard transitionProps={{ duration: 0 }} {...props}>
       <HoverCard.Target>
         <button type="button">test-target</button>
       </HoverCard.Target>

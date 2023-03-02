@@ -1,5 +1,5 @@
 import React from 'react';
-import { useMantineTheme } from '@mantine/core';
+import { useMantineTheme, rem } from '@mantine/core';
 import { useMantineLogoColors, LogoProps } from './use-mantine-logo-colors';
 
 export function MantineLogoText({ size, color, variant, inverted, ...others }: LogoProps) {
@@ -7,7 +7,7 @@ export function MantineLogoText({ size, color, variant, inverted, ...others }: L
   const colors = useMantineLogoColors(color, variant, inverted);
 
   return (
-    <svg {...others} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 623 163" height={size}>
+    <svg {...others} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 623 163" height={rem(size)}>
       <g fill="none" fillRule="evenodd">
         <path
           fill={colors.background}
