@@ -9,13 +9,13 @@ describe('@mantine/hooks/use-shallow-effect', () => {
   it('is called on initial render', () => {
     const spy = jest.fn();
     renderHook(() => useShallowEffect(spy, []));
-    expect(spy).toBeCalled();
+    expect(spy).toHaveBeenCalled();
   });
 
   it('is called without dependencies', () => {
     const spy = jest.fn();
     const hook = renderHook(() => useShallowEffect(spy));
-    expect(spy).toBeCalled();
+    expect(spy).toHaveBeenCalled();
 
     hook.rerender();
     hook.rerender();
@@ -25,7 +25,7 @@ describe('@mantine/hooks/use-shallow-effect', () => {
   it('is called with an empty dependency array', () => {
     const spy = jest.fn();
     const hook = renderHook(() => useShallowEffect(spy, []));
-    expect(spy).toBeCalled();
+    expect(spy).toHaveBeenCalled();
     hook.rerender();
     hook.rerender();
     expect(spy.mock.calls.length).toBe(1);
@@ -36,7 +36,7 @@ describe('@mantine/hooks/use-shallow-effect', () => {
     const hook = renderHook(({ cb, deps }) => useShallowEffect(cb, deps), {
       initialProps: { cb: spy, deps: [{ a: 1 }] },
     });
-    expect(spy).toBeCalled();
+    expect(spy).toHaveBeenCalled();
 
     hook.rerender({ cb: spy, deps: [{ a: 1 }] });
     expect(spy.mock.calls.length).toBe(1);
@@ -47,7 +47,7 @@ describe('@mantine/hooks/use-shallow-effect', () => {
     const hook = renderHook(({ cb, deps }) => useShallowEffect(cb, deps), {
       initialProps: { cb: spy, deps: [{ a: 1 }] },
     });
-    expect(spy).toBeCalled();
+    expect(spy).toHaveBeenCalled();
 
     hook.rerender({ cb: spy, deps: [{ a: 1 }] });
     hook.rerender({ cb: spy, deps: [{ a: 1 }] });

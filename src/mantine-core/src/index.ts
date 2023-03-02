@@ -1,3 +1,4 @@
+export { RemoveScroll } from 'react-remove-scroll';
 export { createPolymorphicComponent, packSx } from '@mantine/utils';
 export * from '@mantine/styles';
 
@@ -53,6 +54,7 @@ export * from './Mark';
 export * from './MediaQuery';
 export * from './Menu';
 export * from './Modal';
+export * from './ModalBase';
 export * from './MultiSelect';
 export * from './NativeSelect';
 export * from './NavLink';
@@ -62,6 +64,7 @@ export * from './Overlay';
 export * from './Pagination';
 export * from './Paper';
 export * from './PasswordInput';
+export * from './PinInput';
 export * from './Popover';
 export * from './Portal';
 export * from './Progress';

@@ -1,4 +1,4 @@
-import { createStyles } from '@mantine/core';
+import { createStyles, rem, em } from '@mantine/core';
 import { BREAKPOINT, TABLE_OF_CONTENTS_WIDTH, CONTENT_WIDTH } from '../settings';
 
 export default createStyles((theme) => ({
@@ -8,10 +8,10 @@ export default createStyles((theme) => ({
     display: 'flex',
     position: 'relative',
     justifyContent: 'space-between',
-    paddingLeft: theme.spacing.xl * 2,
-    paddingRight: theme.spacing.xl * 2,
+    paddingLeft: `calc(${theme.spacing.xl} * 2)`,
+    paddingRight: `calc(${theme.spacing.xl} * 2)`,
 
-    [`@media (max-width: ${BREAKPOINT}px)`]: {
+    [`@media (max-width: ${em(BREAKPOINT)})`]: {
       paddingLeft: theme.spacing.xl,
       paddingRight: theme.spacing.xl,
     },
@@ -19,12 +19,12 @@ export default createStyles((theme) => ({
 
   container: {
     marginTop: theme.spacing.xl,
-    width: `calc(100% - ${TABLE_OF_CONTENTS_WIDTH}px)`,
-    maxWidth: CONTENT_WIDTH,
+    width: `calc(100% - ${rem(TABLE_OF_CONTENTS_WIDTH)})`,
+    maxWidth: rem(CONTENT_WIDTH),
     marginLeft: 'auto',
     marginRight: 'auto',
 
-    [`@media (max-width: ${BREAKPOINT}px)`]: {
+    [`@media (max-width: ${em(BREAKPOINT)})`]: {
       width: '100%',
       paddingRight: 0,
     },

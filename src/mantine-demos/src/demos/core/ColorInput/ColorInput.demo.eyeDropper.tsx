@@ -18,13 +18,13 @@ function Demo() {
 
 function Demo() {
   return (
-    <div style={{ maxWidth: 320, marginLeft: 'auto', marginRight: 'auto' }}>
-      <ColorInput
-        withEyeDropper
-        placeholder="With eye dropper"
-        label="Pick any color from the page"
-      />
-    </div>
+    <ColorInput
+      maw={320}
+      mx="auto"
+      withEyeDropper
+      placeholder="With eye dropper"
+      label="Pick any color from the page"
+    />
   );
 }
 

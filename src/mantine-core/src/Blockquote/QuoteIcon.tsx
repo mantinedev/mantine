@@ -1,10 +1,11 @@
 import React from 'react';
+import { rem } from '@mantine/styles';
 
 export function QuoteIcon(props: React.ComponentPropsWithoutRef<'svg'>) {
   return (
     <svg
-      width="20"
-      height="20"
+      width={rem(20)}
+      height={rem(20)}
       viewBox="0 0 409.294 409.294"
       fill="currentColor"
       xmlns="http://www.w3.org/2000/svg"

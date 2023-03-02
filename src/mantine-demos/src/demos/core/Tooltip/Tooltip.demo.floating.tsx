@@ -3,12 +3,12 @@ import { MantineDemo } from '@mantine/ds';
 import { TooltipFloatingProps, Group, Tooltip, Box } from '@mantine/core';
 
 const Wrapper = (props: TooltipFloatingProps) => (
-  <div style={{ padding: 30 }}>
+  <Box p="xl">
     <Group position="center">
       <Tooltip.Floating label="Tooltip" {...props}>
         <Box
           sx={(theme) => ({
-            padding: theme.spacing.xl * 1.5,
+            padding: theme.spacing.xl,
             cursor: 'default',
             backgroundColor:
               theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[0],
@@ -18,7 +18,7 @@ const Wrapper = (props: TooltipFloatingProps) => (
         </Box>
       </Tooltip.Floating>
     </Group>
-  </div>
+  </Box>
 );
 
 const codeTemplate = (props: string) => `
@@ -29,7 +29,7 @@ function Demo() {
     <Tooltip.Floating label="Tooltip"${props}>
       <Box
         sx={(theme) => ({
-          padding: theme.spacing.xl * 1.5,
+          padding: theme.spacing.xl,
           cursor: 'default',
           backgroundColor:
             theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[0],

@@ -23,18 +23,16 @@ function Demo() {
 
 function Demo() {
   return (
-    <div style={{ maxWidth: 420, margin: 'auto' }}>
-      <NumberInput
-        label="Price"
-        defaultValue={1000}
-        formatter={(value) =>
-          !Number.isNaN(parseFloat(value))
-            ? `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
-            : '$ '
-        }
-        parser={(value) => value.replace(/\$\s?|(,*)/g, '')}
-      />
-    </div>
+    <NumberInput
+      maw={320}
+      mx="auto"
+      label="Price"
+      defaultValue={1000}
+      formatter={(value) =>
+        !Number.isNaN(parseFloat(value)) ? `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',') : '$ '
+      }
+      parser={(value) => value.replace(/\$\s?|(,*)/g, '')}
+    />
   );
 }
 

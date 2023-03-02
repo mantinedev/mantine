@@ -1,7 +1,7 @@
 /* eslint-disable import/no-relative-packages */
 import React from 'react';
-import { IconChevronDown, IconExternalLink } from '@tabler/icons';
-import { Code, Menu, UnstyledButton, Text } from '@mantine/core';
+import { IconChevronDown, IconExternalLink } from '@tabler/icons-react';
+import { Code, Menu, UnstyledButton, Text, RemoveScroll, rem } from '@mantine/core';
 import { useSpotlight } from '@mantine/spotlight';
 import { HeaderControls } from '@mantine/ds';
 import corePackageJson from '../../../../../package.json';
@@ -10,6 +10,7 @@ import { useDirectionContext } from '../DirectionContext';
 import useStyles from './HeaderDesktop.styles';
 
 const versions = [
+  { v: 'v5', name: '5.10.5', link: 'https://v5.mantine.dev/' },
   { v: 'v4', name: '4.2.12', link: 'https://v4.mantine.dev/' },
   { v: 'v3', name: '3.6.14', link: 'https://v3.mantine.dev/' },
   { v: 'v2', name: '2.5.1', link: 'https://v2.mantine.dev/' },
@@ -17,7 +18,7 @@ const versions = [
 ];
 
 export function HeaderDesktop() {
-  const { classes } = useStyles();
+  const { classes, cx } = useStyles();
   const { dir, toggleDirection } = useDirectionContext();
   const spotlight = useSpotlight();
 
@@ -27,7 +28,7 @@ export function HeaderDesktop() {
       component="a"
       href={item.link}
       target="_blank"
-      rightSection={<IconExternalLink size={14} stroke={1.5} />}
+      rightSection={<IconExternalLink size={rem(14)} stroke={1.5} />}
     >
       <b>{item.v}</b>{' '}
       <Text span color="dimmed" fz="xs">
@@ -37,7 +38,7 @@ export function HeaderDesktop() {
   ));
 
   return (
-    <div className={classes.header}>
+    <div className={cx(classes.header, RemoveScroll.classNames.fullWidth)}>
       <div className={classes.mainSection}>
         <div className={classes.logoWrapper}>
           <div className={classes.logo}>
@@ -49,7 +50,7 @@ export function HeaderDesktop() {
               <UnstyledButton mt={2}>
                 <Code className={classes.version}>
                   v{corePackageJson.version}{' '}
-                  <IconChevronDown size={12} className={classes.chevron} />
+                  <IconChevronDown size={rem(12)} className={classes.chevron} />
                 </Code>
               </UnstyledButton>
             </Menu.Target>

@@ -1,6 +1,6 @@
 import React from 'react';
 import { MantineDemo } from '@mantine/ds';
-import { TextInput } from '@mantine/core';
+import { TextInput, Box } from '@mantine/core';
 
 const code = `
 import { TextInput } from '@mantine/core';
@@ -29,7 +29,7 @@ function Demo() {
 
 function Demo() {
   return (
-    <div style={{ maxWidth: 320, marginLeft: 'auto', marginRight: 'auto' }}>
+    <Box maw={320} mx="auto">
       <TextInput
         label="Custom layout"
         placeholder="Custom layout"
@@ -44,7 +44,7 @@ function Demo() {
         error="both below the input"
         inputWrapperOrder={['label', 'input', 'description', 'error']}
       />
-    </div>
+    </Box>
   );
 }
 

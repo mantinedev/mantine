@@ -1,4 +1,3 @@
-import React from 'react';
 import { MantineDemo } from '@mantine/ds';
 import { TimeInput } from '@mantine/dates';
 
@@ -8,7 +7,6 @@ import { TimeInput } from '@mantine/dates';
 function Demo() {
   return (
     <TimeInput
-      defaultValue={new Date()}
      ${props}
     />
   );
@@ -17,14 +15,14 @@ function Demo() {
 
 export const configurator: MantineDemo = {
   type: 'configurator',
-  component: (props) => <TimeInput defaultValue={new Date()} {...props} />,
+  component: TimeInput,
   codeTemplate,
   configuratorProps: { multiline: 3 },
   configurator: [
     {
       name: 'label',
       type: 'string',
-      initialValue: 'Pick time',
+      initialValue: 'Current time',
     },
     {
       name: 'description',
@@ -49,43 +47,11 @@ export const configurator: MantineDemo = {
     },
     { name: 'radius', type: 'size', initialValue: 'sm', defaultValue: 'sm' },
     { name: 'size', type: 'size', initialValue: 'sm', defaultValue: 'sm' },
-    {
-      name: 'format',
-      type: 'select',
-      data: [
-        { label: '24', value: '24' },
-        { label: '12', value: '12' },
-      ],
-      initialValue: '24',
-      defaultValue: '24',
-    },
-    {
-      name: 'amLabel',
-      type: 'string',
-      initialValue: 'am',
-    },
-    {
-      name: 'pmLabel',
-      type: 'string',
-      initialValue: 'pm',
-    },
-    {
-      name: 'withSeconds',
-      type: 'boolean',
-      initialValue: false,
-      defaultValue: false,
-    },
     { name: 'disabled', type: 'boolean', initialValue: false, defaultValue: false },
     {
       name: 'withAsterisk',
       type: 'boolean',
       initialValue: true,
-      defaultValue: false,
-    },
-    {
-      name: 'clearable',
-      type: 'boolean',
-      initialValue: false,
       defaultValue: false,
     },
   ],

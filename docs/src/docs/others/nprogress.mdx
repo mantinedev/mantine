@@ -22,13 +22,13 @@ Package depends on `@mantine/core` and `@mantine/hooks`.
 Install with yarn:
 
 ```bash
-yarn add @mantine/nprogress @mantine/core @mantine/hooks
+yarn add @mantine/nprogress
 ```
 
 Install with npm:
 
 ```bash
-npm install @mantine/nprogress @mantine/core @mantine/hooks
+npm install @mantine/nprogress
 ```
 
 ## Setup NavigationProgress
@@ -61,18 +61,14 @@ Create `RouterTransition` component that will handle router events:
 // components/RouterTransition.tsx
 import { useEffect } from 'react';
 import { useRouter } from 'next/router';
-import {
-  startNavigationProgress,
-  completeNavigationProgress,
-  NavigationProgress,
-} from '@mantine/nprogress';
+import { NavigationProgress, nprogress } from '@mantine/nprogress';
 
 export function RouterTransition() {
   const router = useRouter();
 
   useEffect(() => {
-    const handleStart = (url: string) => url !== router.asPath && startNavigationProgress();
-    const handleComplete = () => completeNavigationProgress();
+    const handleStart = (url: string) => url !== router.asPath && nprogress.start();
+    const handleComplete = () => nprogress.complete();
 
     router.events.on('routeChangeStart', handleStart);
     router.events.on('routeChangeComplete', handleComplete);

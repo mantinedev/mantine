@@ -1,5 +1,6 @@
 import React from 'react';
 import { render } from '@testing-library/react';
+import { rem } from '@mantine/styles';
 import { itSupportsSystemProps, itRendersChildren } from '@mantine/tests';
 import { Flex, FlexProps } from './Flex';
 
@@ -42,16 +43,16 @@ describe('@mantine/core/Flex', () => {
 
   it('sets gap based on gap prop', () => {
     const { container } = render(<Flex gap={52} />);
-    expect(container.firstChild).toHaveStyle({ gap: '52px' });
+    expect(container.firstChild).toHaveStyle({ gap: rem(52) });
   });
 
   it('sets row-gap based on rowGap prop', () => {
     const { container } = render(<Flex rowGap={34} />);
-    expect(container.firstChild).toHaveStyle({ rowGap: '34px' });
+    expect(container.firstChild).toHaveStyle({ rowGap: rem(34) });
   });
 
   it('sets column-gap based on columnGap prop', () => {
     const { container } = render(<Flex columnGap={76} />);
-    expect(container.firstChild).toHaveStyle({ columnGap: '76px' });
+    expect(container.firstChild).toHaveStyle({ columnGap: rem(76) });
   });
 });

@@ -1,6 +1,7 @@
-import type { TimelineItemStylesNames } from '@mantine/core';
+import type { TimelineStylesNames } from '@mantine/core';
 
-export const Timeline: Record<TimelineItemStylesNames, string> = {
+export const Timeline: Record<TimelineStylesNames, string> = {
+  root: 'Root element',
   item: 'Item root element',
   itemBody: 'Item body, wraps title and content',
   itemTitle: 'Item title, controlled by title prop',

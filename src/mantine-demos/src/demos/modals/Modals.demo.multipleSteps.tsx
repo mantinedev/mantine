@@ -1,18 +1,18 @@
 import React from 'react';
 import { Group, Button, Text } from '@mantine/core';
 import { MantineDemo } from '@mantine/ds';
-import { openConfirmModal, closeAllModals } from '@mantine/modals';
+import { modals } from '@mantine/modals';
 
 const code = `
 import { Group, Button, Text } from '@mantine/core';
-import { openConfirmModal, closeAllModals } from '@mantine/modals';
+import { modals } from '@mantine/modals';
 
 function Demo() {
   return (
     <Group position="center">
       <Button
         onClick={() =>
-          openConfirmModal({
+          modals.openConfirmModal({
             title: 'Please confirm your action',
             closeOnConfirm: false,
             labels: { confirm: 'Next modal', cancel: 'Close modal' },
@@ -23,7 +23,7 @@ function Demo() {
               </Text>
             ),
             onConfirm: () =>
-              openConfirmModal({
+              modals.openConfirmModal({
                 title: 'This is modal at second layer',
                 labels: { confirm: 'Close modal', cancel: 'Back' },
                 closeOnConfirm: false,
@@ -32,7 +32,7 @@ function Demo() {
                     When this modal is closed modals state will revert to first modal
                   </Text>
                 ),
-                onConfirm: closeAllModals,
+                onConfirm: modals.closeAll,
               }),
           })
         }
@@ -49,7 +49,7 @@ function Demo() {
     <Group position="center">
       <Button
         onClick={() =>
-          openConfirmModal({
+          modals.openConfirmModal({
             title: 'Please confirm your action',
             closeOnConfirm: false,
             labels: { confirm: 'Next modal', cancel: 'Close modal' },
@@ -60,7 +60,7 @@ function Demo() {
               </Text>
             ),
             onConfirm: () =>
-              openConfirmModal({
+              modals.openConfirmModal({
                 title: 'This is modal at second layer',
                 labels: { confirm: 'Close modal', cancel: 'Back' },
                 closeOnConfirm: false,
@@ -69,7 +69,7 @@ function Demo() {
                     When this modal is closed modals state will revert to first modal
                   </Text>
                 ),
-                onConfirm: closeAllModals,
+                onConfirm: modals.closeAll,
               }),
           })
         }

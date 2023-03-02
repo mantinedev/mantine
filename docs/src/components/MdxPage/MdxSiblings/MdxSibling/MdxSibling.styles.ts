@@ -1,6 +1,6 @@
-import { createStyles } from '@mantine/core';
+import { createStyles, getStylesRef, rem } from '@mantine/core';
 
-export default createStyles((theme, _params, getRef) => ({
+export default createStyles((theme) => ({
   control: {
     ...theme.fn.focusStyles(),
     display: 'flex',
@@ -11,7 +11,7 @@ export default createStyles((theme, _params, getRef) => ({
     padding: theme.spacing.md,
     borderRadius: theme.radius.md,
     backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.white,
-    border: `1px solid ${
+    border: `${rem(1)} solid ${
       theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[3]
     }`,
 
@@ -25,11 +25,11 @@ export default createStyles((theme, _params, getRef) => ({
   },
 
   body: {
-    ref: getRef('body'),
+    ref: getStylesRef('body'),
   },
 
   next: {
-    [`& .${getRef('body')}`]: {
+    [`& .${getStylesRef('body')}`]: {
       marginRight: theme.spacing.md,
     },
   },

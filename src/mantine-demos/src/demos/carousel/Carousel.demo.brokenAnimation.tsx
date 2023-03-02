@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
-import { Button, Modal, Group } from '@mantine/core';
+import { Button, Modal, Group, rem } from '@mantine/core';
 import { MantineDemo } from '@mantine/ds';
 import { Carousel } from '@mantine/carousel';
 
 const code = `
 import { useState } from 'react';
-import { Button, Modal, Group } from '@mantine/core';
+import { Button, Modal, Group, rem } from '@mantine/core';
 import { Carousel } from '@mantine/carousel';
 
 function Demo() {
@@ -19,32 +19,32 @@ function Demo() {
       </Group>
       <Modal
         opened={opened}
-        size="300px"
+        size={300}
         padding={0}
-        transitionDuration={TRANSITION_DURATION}
+        transitionProps={{ duration: TRANSITION_DURATION }}
         withCloseButton={false}
         onClose={() => setOpened(false)}
       >
-        <Carousel loop>
+        <Carousel loop maw={300}>
           <Carousel.Slide>
             <img
               src="https://cataas.com/cat"
-              alt=""
-              style={{ width: 300, height: 200, objectFit: 'cover' }}
+              alt="Cat"
+              style={{ width: rem(300), height: rem(200), objectFit: 'cover' }}
             />
           </Carousel.Slide>
           <Carousel.Slide>
             <img
               src="https://cataas.com/cat/cute"
-              alt=""
-              style={{ width: 300, height: 200, objectFit: 'cover' }}
+              alt="Cat"
+              style={{ width: rem(300), height: rem(200), objectFit: 'cover' }}
             />
           </Carousel.Slide>
           <Carousel.Slide>
             <img
               src="https://cataas.com/cat/angry"
-              alt=""
-              style={{ width: 300, height: 200, objectFit: 'cover' }}
+              alt="Cat"
+              style={{ width: rem(300), height: rem(200), objectFit: 'cover' }}
             />
           </Carousel.Slide>
         </Carousel>
@@ -65,32 +65,32 @@ function Demo() {
       </Group>
       <Modal
         opened={opened}
-        size="300px"
+        size={300}
         padding={0}
-        transitionDuration={TRANSITION_DURATION}
+        transitionProps={{ duration: TRANSITION_DURATION }}
         withCloseButton={false}
         onClose={() => setOpened(false)}
       >
-        <Carousel loop>
+        <Carousel loop maw={300}>
           <Carousel.Slide>
             <img
               src="https://cataas.com/cat"
               alt=""
-              style={{ width: 300, height: 200, objectFit: 'cover' }}
+              style={{ width: rem(300), height: rem(200), objectFit: 'cover' }}
             />
           </Carousel.Slide>
           <Carousel.Slide>
             <img
               src="https://cataas.com/cat/cute"
               alt=""
-              style={{ width: 300, height: 200, objectFit: 'cover' }}
+              style={{ width: rem(300), height: rem(200), objectFit: 'cover' }}
             />
           </Carousel.Slide>
           <Carousel.Slide>
             <img
               src="https://cataas.com/cat/angry"
               alt=""
-              style={{ width: 300, height: 200, objectFit: 'cover' }}
+              style={{ width: rem(300), height: rem(200), objectFit: 'cover' }}
             />
           </Carousel.Slide>
         </Carousel>

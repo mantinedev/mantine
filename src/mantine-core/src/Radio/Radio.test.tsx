@@ -4,6 +4,8 @@ import {
   itConnectsLabelAndInput,
   itSupportsSystemProps,
   itSupportsWrapperProps,
+  itSupportsProviderVariant,
+  itSupportsProviderSize,
 } from '@mantine/tests';
 import { Radio, RadioProps } from './Radio';
 import { RadioGroup } from './RadioGroup/RadioGroup';
@@ -16,6 +18,8 @@ const defaultProps: RadioProps = {
 describe('@mantine/core/Radio', () => {
   itConnectsLabelAndInput(Radio, defaultProps);
   itSupportsWrapperProps(Radio, defaultProps);
+  itSupportsProviderVariant(Radio, defaultProps, 'Radio');
+  itSupportsProviderSize(Radio, defaultProps, 'Radio');
   checkAccessibility([<Radio {...defaultProps} />]);
   itSupportsSystemProps({
     component: Radio,

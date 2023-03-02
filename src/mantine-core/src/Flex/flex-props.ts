@@ -5,8 +5,8 @@ export const FLEX_SYSTEM_PROPS: Record<string, SystemPropData> = {
   rowGap: { type: 'spacing', property: 'rowGap' },
   columnGap: { type: 'spacing', property: 'columnGap' },
 
-  align: { type: 'default', property: 'alignItems' },
-  justify: { type: 'default', property: 'justifyContent' },
-  wrap: { type: 'default', property: 'flexWrap' },
-  direction: { type: 'default', property: 'flexDirection' },
+  align: { type: 'identity', property: 'alignItems' },
+  justify: { type: 'identity', property: 'justifyContent' },
+  wrap: { type: 'identity', property: 'flexWrap' },
+  direction: { type: 'identity', property: 'flexDirection' },
 };

@@ -1,15 +1,15 @@
 import React from 'react';
-import { ScrollArea, ScrollAreaProps } from '@mantine/core';
+import { ScrollArea, ScrollAreaProps, Box } from '@mantine/core';
 import { MantineDemo } from '@mantine/ds';
 import { Content } from './_content';
 
 function Wrapper(props: ScrollAreaProps) {
   return (
-    <div style={{ maxWidth: 400, margin: 'auto' }}>
-      <ScrollArea style={{ height: 250 }} {...props}>
+    <Box maw={400} mx="auto">
+      <ScrollArea h={250} {...props}>
         <Content />
       </ScrollArea>
-    </div>
+    </Box>
   );
 }
 
@@ -18,7 +18,7 @@ import { ScrollArea } from '@mantine/core';
 
 function Demo() {
   return (
-    <ScrollArea style={{ height: 250 }}${props}>
+    <ScrollArea h={250}${props}>
       {/* ... content */}
     </ScrollArea>
   );

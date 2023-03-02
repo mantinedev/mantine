@@ -1,12 +1,12 @@
 import React from 'react';
 import { MantineDemo } from '@mantine/ds';
-import { Blockquote, BlockquoteProps } from '@mantine/core';
+import { Blockquote, BlockquoteProps, Box } from '@mantine/core';
 
 function Wrapper(props: BlockquoteProps) {
   return (
-    <div style={{ maxWidth: 400, margin: 'auto' }}>
+    <Box maw={400} mx="auto">
       <Blockquote {...props} />
-    </div>
+    </Box>
   );
 }
 

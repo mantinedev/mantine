@@ -13,7 +13,7 @@ import {
   useComponentDefaultProps,
 } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
-import { IconCircleOff, IconColorPicker, IconX, IconPalette, IconCheck } from '@tabler/icons';
+import { IconCircleOff, IconColorPicker, IconX, IconPalette, IconCheck } from '@tabler/icons-react';
 import { Control } from '../Control/Control';
 import { useRichTextEditorContext } from '../../RichTextEditor.context';
 
@@ -121,7 +121,7 @@ export const ColorPickerControl = forwardRef<HTMLButtonElement, ColorPickerContr
                   title={labels.colorPickerCancel}
                   aria-label={labels.colorPickerCancel}
                 >
-                  <IconX stroke={1.5} size={16} />
+                  <IconX stroke={1.5} size="1rem" />
                 </ActionIcon>
               )}
 
@@ -132,7 +132,7 @@ export const ColorPickerControl = forwardRef<HTMLButtonElement, ColorPickerContr
                 title={labels.colorPickerClear}
                 aria-label={labels.colorPickerClear}
               >
-                <IconCircleOff stroke={1.5} size={16} />
+                <IconCircleOff stroke={1.5} size="1rem" />
               </ActionIcon>
 
               {state === 'palette' ? (
@@ -143,7 +143,7 @@ export const ColorPickerControl = forwardRef<HTMLButtonElement, ColorPickerContr
                   title={labels.colorPickerColorPicker}
                   aria-label={labels.colorPickerColorPicker}
                 >
-                  <IconColorPicker stroke={1.5} size={16} />
+                  <IconColorPicker stroke={1.5} size="1rem" />
                 </ActionIcon>
               ) : (
                 <ActionIcon
@@ -153,7 +153,7 @@ export const ColorPickerControl = forwardRef<HTMLButtonElement, ColorPickerContr
                   aria-label={labels.colorPickerPalette}
                   title={labels.colorPickerPalette}
                 >
-                  <IconPalette stroke={1.5} size={16} />
+                  <IconPalette stroke={1.5} size="1rem" />
                 </ActionIcon>
               )}
 
@@ -165,7 +165,7 @@ export const ColorPickerControl = forwardRef<HTMLButtonElement, ColorPickerContr
                   title={labels.colorPickerSave}
                   aria-label={labels.colorPickerSave}
                 >
-                  <IconCheck stroke={1.5} size={16} />
+                  <IconCheck stroke={1.5} size="1rem" />
                 </ActionIcon>
               )}
             </Group>

@@ -13,8 +13,8 @@ export interface ButtonGroupProps
   /** Switch between vertical and horizontal orientation */
   orientation?: 'vertical' | 'horizontal';
 
-  /** Child <Button /> border width in px */
-  buttonBorderWidth?: number;
+  /** Child <Button /> border width */
+  buttonBorderWidth?: number | string;
 }
 
 const defaultProps: Partial<ButtonGroupProps> = {

@@ -1,6 +1,6 @@
 import React from 'react';
 import { MantineDemo } from '@mantine/ds';
-import { PasswordInput } from '@mantine/core';
+import { PasswordInput, Box } from '@mantine/core';
 
 const code = `
 // Error as boolean – red border color
@@ -12,16 +12,16 @@ const code = `
 
 function Demo() {
   return (
-    <div style={{ maxWidth: 320, marginLeft: 'auto', marginRight: 'auto' }}>
+    <Box maw={320} mx="auto">
       <PasswordInput label="Your password" placeholder="Your password" error />
 
       <PasswordInput
-        style={{ marginTop: 15 }}
+        mt="md"
         label="Your password"
         placeholder="Your password"
         error="Invalid password"
       />
-    </div>
+    </Box>
   );
 }
 

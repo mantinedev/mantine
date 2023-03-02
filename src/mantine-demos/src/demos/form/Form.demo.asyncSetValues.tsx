@@ -1,12 +1,12 @@
 import React, { useEffect } from 'react';
 import { useForm } from '@mantine/form';
 import { MantineDemo } from '@mantine/ds';
-import { TextInput, Checkbox } from '@mantine/core';
+import { TextInput, Checkbox, Box } from '@mantine/core';
 
 const code = `
 import { useEffect } from 'react';
 import { useForm } from '@mantine/form';
-import { TextInput, Checkbox } from '@mantine/core';
+import { TextInput, Checkbox, Box } from '@mantine/core';
 
 interface FormValues {
   email: string;
@@ -30,14 +30,14 @@ function Demo() {
   }, []);
 
   return (
-    <div style={{ maxWidth: 320, margin: 'auto' }}>
+    <Box maw={320} mx="auto">
       <TextInput label="Email" placeholder="Email" {...form.getInputProps('email')} />
       <Checkbox
         mt="sm"
         label="I accept terms and conditions"
         {...form.getInputProps('terms', { type: 'checkbox' })}
       />
-    </div>
+    </Box>
   );
 }
 `;
@@ -64,14 +64,14 @@ function Demo() {
   }, []);
 
   return (
-    <div style={{ maxWidth: 320, margin: 'auto' }}>
+    <Box maw={320} mx="auto">
       <TextInput label="Email" placeholder="Email" {...form.getInputProps('email')} />
       <Checkbox
         mt="sm"
         label="I accept terms and conditions"
         {...form.getInputProps('terms', { type: 'checkbox' })}
       />
-    </div>
+    </Box>
   );
 }
 

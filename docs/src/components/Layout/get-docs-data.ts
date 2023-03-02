@@ -40,7 +40,6 @@ export function groupPages({ query, categories, order, group }: GroupPages): {
 } {
   const pages = query.allMdx.edges
     .map(({ node }) => node.frontmatter)
-    .filter((page) => !page.hidden)
     .filter((page) => page.group === group);
 
   const uncategorized = [];

@@ -1,6 +1,10 @@
 import React from 'react';
 import { render } from '@testing-library/react';
-import { itRendersChildren, itSupportsSystemProps } from '@mantine/tests';
+import {
+  itRendersChildren,
+  itSupportsSystemProps,
+  itSupportsProviderVariant,
+} from '@mantine/tests';
 import { Code, CodeProps } from './Code';
 
 const defaultProps: CodeProps = {
@@ -9,6 +13,7 @@ const defaultProps: CodeProps = {
 
 describe('@mantine/core/Code', () => {
   itRendersChildren(Code, defaultProps);
+  itSupportsProviderVariant(Code, defaultProps, 'Code');
   itSupportsSystemProps({
     component: Code,
     props: defaultProps,

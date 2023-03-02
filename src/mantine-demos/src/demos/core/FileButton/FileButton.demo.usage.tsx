@@ -15,6 +15,7 @@ function Demo() {
           {(props) => <Button {...props}>Upload image</Button>}
         </FileButton>
       </Group>
+
       {file && (
         <Text size="sm" align="center" mt="sm">
           Picked file: {file.name}
@@ -34,6 +35,7 @@ function Demo() {
           {(props) => <Button {...props}>Upload image</Button>}
         </FileButton>
       </Group>
+
       {file && (
         <Text size="sm" align="center" mt="sm">
           Picked file: {file.name}

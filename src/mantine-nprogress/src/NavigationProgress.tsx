@@ -16,7 +16,7 @@ export interface NavigationProgressProps {
   /** Key of theme.colors of any other valid CSS color */
   color?: MantineColor;
 
-  /** The height of the progressbar in px */
+  /** Height of the progressbar */
   size?: number;
 
   /** Called when the progressbar reaches 100% */

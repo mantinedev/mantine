@@ -1,6 +1,6 @@
 import React from 'react';
 import { render } from '@testing-library/react';
-import { itSupportsSystemProps } from '@mantine/tests';
+import { itSupportsSystemProps, itSupportsProviderVariant } from '@mantine/tests';
 import { LoadingOverlay, LoadingOverlayProps } from './LoadingOverlay';
 
 const defaultProps: LoadingOverlayProps = {
@@ -8,6 +8,7 @@ const defaultProps: LoadingOverlayProps = {
 };
 
 describe('@mantine/core/LoadingOverlay', () => {
+  itSupportsProviderVariant(LoadingOverlay, defaultProps, 'LoadingOverlay');
   itSupportsSystemProps({
     component: LoadingOverlay,
     props: defaultProps,

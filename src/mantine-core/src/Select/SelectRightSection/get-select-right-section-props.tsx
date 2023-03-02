@@ -10,14 +10,6 @@ interface GetRightSectionProps extends SelectRightSectionProps {
   readOnly: boolean;
 }
 
-const RIGHT_SECTION_WIDTH = {
-  xs: 24,
-  sm: 30,
-  md: 34,
-  lg: 44,
-  xl: 54,
-};
-
 export function getSelectRightSectionProps({
   styles,
   rightSection,
@@ -32,7 +24,6 @@ export function getSelectRightSectionProps({
   const _styles = typeof styles === 'function' ? styles(theme) : styles;
 
   return {
-    rightSectionWidth: theme.fn.size({ size: props.size, sizes: RIGHT_SECTION_WIDTH }),
     rightSection: !props.readOnly && !(props.disabled && props.shouldClear) && (
       <SelectRightSection {...props} />
     ),

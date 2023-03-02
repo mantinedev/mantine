@@ -16,7 +16,7 @@ import css from 'highlight.js/lib/languages/css';
 import js from 'highlight.js/lib/languages/javascript';
 import ts from 'highlight.js/lib/languages/typescript';
 import html from 'highlight.js/lib/languages/xml';
-import { IconColorPicker } from '@tabler/icons';
+import { IconColorPicker } from '@tabler/icons-react';
 import { Link } from './extensions/Link';
 import { RichTextEditor, RichTextEditorProps } from './RichTextEditor';
 import { RichTextEditorToolbarProps } from './Toolbar/Toolbar';

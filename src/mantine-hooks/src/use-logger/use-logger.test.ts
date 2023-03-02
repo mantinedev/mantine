@@ -6,10 +6,10 @@ describe('@mantine/hooks/use-logger', () => {
     const log = jest.spyOn(console, 'log').mockImplementation(() => {});
     const data = { foo: 'bar' };
     const hook = renderHook(() => useLogger('Test', [data]));
-    expect(log).toBeCalledWith('Test mounted', data);
+    expect(log).toHaveBeenCalledWith('Test mounted', data);
     hook.unmount();
-    expect(log).lastCalledWith('Test unmounted');
-    expect(log).toBeCalledTimes(2);
+    expect(log).toHaveBeenLastCalledWith('Test unmounted');
+    expect(log).toHaveBeenCalledTimes(2);
     log.mockRestore();
   });
 
@@ -17,13 +17,13 @@ describe('@mantine/hooks/use-logger', () => {
     const log = jest.spyOn(console, 'log').mockImplementation(() => {});
     let data = { foo: 'bar' };
     const hook = renderHook(() => useLogger('Test', [data]));
-    expect(log).toBeCalledWith('Test mounted', data);
+    expect(log).toHaveBeenCalledWith('Test mounted', data);
     data = { foo: 'newBar' };
     hook.rerender();
-    expect(log).toBeCalledWith('Test updated', data);
+    expect(log).toHaveBeenCalledWith('Test updated', data);
     hook.unmount();
-    expect(log).lastCalledWith('Test unmounted');
-    expect(log).toBeCalledTimes(3);
+    expect(log).toHaveBeenLastCalledWith('Test unmounted');
+    expect(log).toHaveBeenCalledTimes(3);
     log.mockRestore();
   });
 
@@ -31,11 +31,11 @@ describe('@mantine/hooks/use-logger', () => {
     const log = jest.spyOn(console, 'log').mockImplementation(() => {});
     const data = { foo: 'bar' };
     const hook = renderHook(() => useLogger('Test', [data]));
-    expect(log).toBeCalledWith('Test mounted', data);
+    expect(log).toHaveBeenCalledWith('Test mounted', data);
     hook.rerender();
     hook.unmount();
-    expect(log).lastCalledWith('Test unmounted');
-    expect(log).toBeCalledTimes(2);
+    expect(log).toHaveBeenLastCalledWith('Test unmounted');
+    expect(log).toHaveBeenCalledTimes(2);
     log.mockRestore();
   });
 });

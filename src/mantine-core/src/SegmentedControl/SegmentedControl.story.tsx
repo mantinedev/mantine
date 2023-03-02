@@ -15,6 +15,10 @@ export function Usage() {
   return <SegmentedControl data={data} />;
 }
 
+export function ReadOnly() {
+  return <SegmentedControl readOnly data={data} />;
+}
+
 export function EmptyData() {
   return <SegmentedControl data={[]} />;
 }

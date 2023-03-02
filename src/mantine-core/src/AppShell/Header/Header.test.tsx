@@ -1,4 +1,8 @@
-import { itRendersChildren, itSupportsSystemProps } from '@mantine/tests';
+import {
+  itRendersChildren,
+  itSupportsSystemProps,
+  itSupportsProviderVariant,
+} from '@mantine/tests';
 import { Header, HeaderProps } from './Header';
 
 const defaultProps: HeaderProps = {
@@ -8,6 +12,7 @@ const defaultProps: HeaderProps = {
 
 describe('@mantine/core/Header', () => {
   itRendersChildren(Header, defaultProps);
+  itSupportsProviderVariant(Header, defaultProps, 'Header');
   itSupportsSystemProps({
     component: Header,
     props: defaultProps,

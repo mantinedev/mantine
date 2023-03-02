@@ -1,5 +1,5 @@
-import { useDidUpdate, useDisclosure } from '@mantine/hooks';
-import React, { useRef, useState } from 'react';
+import React, { useRef } from 'react';
+import { useDisclosure, useUncontrolled } from '@mantine/hooks';
 import { useSpotlightEvents } from './events';
 import { SpotlightContext } from './Spotlight.context';
 import { InnerSpotlightProps, Spotlight } from './Spotlight/Spotlight';
@@ -9,7 +9,16 @@ import { useSpotlightShortcuts } from './use-spotlight-shortcuts/use-spotlight-s
 
 export interface SpotlightProviderProps extends InnerSpotlightProps {
   /** Actions list */
-  actions: SpotlightAction[] | ((query: string) => SpotlightAction[]);
+  actions: SpotlightAction[];
+
+  /** Called when actions change (registered or removed) */
+  onActionsChange?(actions: SpotlightAction[]): void;
+
+  /** Controlled search query */
+  query?: string;
+
+  /** Called when user enters text in search input */
+  onQueryChange?(query: string): void;
 
   /** Your application */
   children?: React.ReactNode;
@@ -19,9 +28,6 @@ export interface SpotlightProviderProps extends InnerSpotlightProps {
 
   /** Called when spotlight closes */
   onSpotlightClose?(): void;
-
-  /** Called when user enters text in search input */
-  onQueryChange?(query: string): void;
 
   /** Keyboard shortcut or list of shortcuts to trigger spotlight */
   shortcut?: string | string[] | null;
@@ -40,27 +46,34 @@ export interface SpotlightProviderProps extends InnerSpotlightProps {
 }
 
 export function SpotlightProvider({
-  actions: initialActions,
+  actions,
   children,
   shortcut = 'mod + K',
+  query,
   onSpotlightClose,
   onSpotlightOpen,
   onQueryChange,
+  onActionsChange,
   cleanQueryOnClose = true,
-  transitionDuration = 150,
+  transitionProps = { duration: 150 },
   disabled = false,
   tagsToIgnore = ['INPUT', 'TEXTAREA', 'SELECT'],
   triggerOnContentEditable = false,
   ...others
 }: SpotlightProviderProps) {
   const timeoutRef = useRef<number>(-1);
-  const [query, setQuery] = useState('');
-  const [actions, { registerActions, updateActions, removeActions, triggerAction }] =
-    useActionsState(initialActions, query);
 
-  useDidUpdate(() => {
-    updateActions(initialActions);
-  }, [initialActions]);
+  const [_query, setQuery] = useUncontrolled({
+    value: query,
+    defaultValue: '',
+    finalValue: '',
+    onChange: onQueryChange,
+  });
+
+  const [_actions, { registerActions, removeActions, triggerAction }] = useActionsState({
+    actions,
+    onActionsChange,
+  });
 
   const handleQueryChange = (value: string) => {
     setQuery(value);
@@ -73,7 +86,7 @@ export function SpotlightProvider({
       if (cleanQueryOnClose) {
         timeoutRef.current = window.setTimeout(() => {
           handleQueryChange('');
-        }, transitionDuration);
+        }, transitionProps.duration || 150);
       }
     },
     onOpen: () => {
@@ -90,8 +103,8 @@ export function SpotlightProvider({
     removeActions,
     triggerAction,
     opened,
-    actions,
-    query,
+    actions: _actions,
+    query: _query,
   };
 
   useSpotlightShortcuts(shortcut, open, tagsToIgnore, triggerOnContentEditable);
@@ -101,12 +114,12 @@ export function SpotlightProvider({
     <SpotlightContext.Provider value={ctx}>
       {!disabled && (
         <Spotlight
-          actions={actions}
+          actions={_actions}
           onClose={close}
           opened={opened}
-          query={query}
+          query={_query}
           onQueryChange={handleQueryChange}
-          transitionDuration={transitionDuration}
+          transitionProps={transitionProps}
           {...others}
         />
       )}

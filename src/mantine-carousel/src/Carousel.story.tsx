@@ -109,7 +109,7 @@ export function AnimationOffsetEffect() {
         opened={opened}
         size="300px"
         padding={0}
-        transitionDuration={TRANSITION_DURATION}
+        transitionProps={{ duration: TRANSITION_DURATION }}
         withCloseButton={false}
         onClose={() => setOpened(false)}
       >

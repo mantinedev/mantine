@@ -83,7 +83,7 @@ function Demo() {
             borderRadius: theme.fn.radius(),
             color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.colors.gray[9],
             fontFamily: theme.fontFamilyMonospace,
-            padding: \`\${theme.spacing.md}px \${theme.spacing.xl}px\`,
+            padding: \`\${theme.spacing.md} \${theme.spacing.xl}\`,
 
             '& code': {
               background: 'none',
@@ -209,7 +209,7 @@ function Demo() {
             borderRadius: theme.fn.radius(),
             color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.colors.gray[9],
             fontFamily: theme.fontFamilyMonospace,
-            padding: `${theme.spacing.md}px ${theme.spacing.xl}px`,
+            padding: `${theme.spacing.md} ${theme.spacing.xl}`,
 
             '& code': {
               background: 'none',

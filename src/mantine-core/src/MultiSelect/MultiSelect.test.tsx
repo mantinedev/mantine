@@ -10,13 +10,15 @@ import {
   itSupportsInputWrapperProps,
   itSupportsInputContainer,
   itSupportsInputAsterisk,
+  itSupportsProviderSize,
+  itSupportsProviderVariant,
 } from '@mantine/tests';
 import { render } from '@testing-library/react';
 import { MultiSelect, MultiSelectProps } from './MultiSelect';
 
 const defaultProps: MultiSelectProps = {
   withinPortal: false,
-  transitionDuration: 0,
+  transitionProps: { duration: 0 },
   label: 'test-multi-select',
   data: ['React', 'Angular', 'Svelte', 'Vue'],
   defaultValue: ['React', 'Angular'],
@@ -24,6 +26,8 @@ const defaultProps: MultiSelectProps = {
 };
 
 describe('@mantine/core/MultiSelect', () => {
+  itSupportsProviderVariant(MultiSelect, defaultProps, 'MultiSelect', ['root', 'input', 'label']);
+  itSupportsProviderSize(MultiSelect, defaultProps, 'MultiSelect', ['root', 'input', 'label']);
   checkAccessibility([<MultiSelect {...defaultProps} initiallyOpened />]);
   itSupportsFocusEvents(MultiSelect, defaultProps, '#test-multi-select');
   itSupportsInputIcon(MultiSelect, defaultProps);

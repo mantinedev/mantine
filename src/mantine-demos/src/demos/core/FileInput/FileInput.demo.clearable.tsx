@@ -12,9 +12,7 @@ function Demo() {
 
 function Demo() {
   return (
-    <div style={{ maxWidth: 320, marginLeft: 'auto', marginRight: 'auto' }}>
-      <FileInput label="Upload files" placeholder="Upload files" clearable />
-    </div>
+    <FileInput maw={320} mx="auto" label="Upload files" placeholder="Upload files" clearable />
   );
 }
 

@@ -10,7 +10,7 @@ export interface StarSymbolProps {
 }
 
 export function StarSymbol({ size, type, color }: StarSymbolProps) {
-  const { classes } = useStyles({ size, type, color });
+  const { classes } = useStyles({ type, color }, { name: 'Rating', size });
   return <StarIcon className={classes.icon} />;
 }
 

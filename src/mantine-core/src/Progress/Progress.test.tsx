@@ -1,7 +1,11 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { checkAccessibility, itSupportsSystemProps } from '@mantine/tests';
+import {
+  checkAccessibility,
+  itSupportsSystemProps,
+  itSupportsProviderVariant,
+} from '@mantine/tests';
 import { Progress, ProgressProps } from './Progress';
 
 const defaultProps: ProgressProps = {
@@ -10,6 +14,7 @@ const defaultProps: ProgressProps = {
 
 describe('@mantine/core/Progress', () => {
   checkAccessibility([<Progress value={80} aria-label="test-progress" />]);
+  itSupportsProviderVariant(Progress, defaultProps, 'Progress');
   itSupportsSystemProps({
     component: Progress,
     props: defaultProps,

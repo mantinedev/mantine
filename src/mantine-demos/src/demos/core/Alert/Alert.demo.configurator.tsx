@@ -1,23 +1,23 @@
 import React from 'react';
-import { IconAlertCircle } from '@tabler/icons';
+import { IconAlertCircle } from '@tabler/icons-react';
 import { MantineDemo } from '@mantine/ds';
-import { Alert } from '@mantine/core';
+import { Alert, Box } from '@mantine/core';
 
 function Wrapper(props: React.ComponentPropsWithoutRef<typeof Alert>) {
   return (
-    <div style={{ maxWidth: 400, margin: 'auto' }}>
-      <Alert {...props} icon={<IconAlertCircle size={16} />} />
-    </div>
+    <Box maw={400} mx="auto">
+      <Alert {...props} icon={<IconAlertCircle size="1rem" />} />
+    </Box>
   );
 }
 
 const codeTemplate = (props: string, children: string) => `
 import { Alert } from '@mantine/core';
-import { IconAlertCircle } from '@tabler/icons';
+import { IconAlertCircle } from '@tabler/icons-react';
 
 function Demo() {
   return (
-    <Alert icon={<IconAlertCircle size={16} />}${props}>
+    <Alert icon={<IconAlertCircle size="1rem" />}${props}>
       ${children}
     </Alert>
   );

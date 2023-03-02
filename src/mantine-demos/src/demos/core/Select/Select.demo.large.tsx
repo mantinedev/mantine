@@ -27,17 +27,17 @@ function Demo() {
     .map((_, index) => `Item ${index}`);
 
   return (
-    <div style={{ maxWidth: 320, marginLeft: 'auto', marginRight: 'auto' }}>
-      <Select
-        label="What item is the best?"
-        placeholder="Pick one"
-        searchable
-        nothingFound="No options"
-        maxDropdownHeight={280}
-        withinPortal
-        data={data}
-      />
-    </div>
+    <Select
+      maw={320}
+      mx="auto"
+      label="What item is the best?"
+      placeholder="Pick one"
+      searchable
+      nothingFound="No options"
+      maxDropdownHeight={280}
+      withinPortal
+      data={data}
+    />
   );
 }
 

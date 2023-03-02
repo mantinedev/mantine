@@ -1,11 +1,14 @@
-import type { MantineTheme } from '@mantine/styles';
+import { MantineTheme, getSize } from '@mantine/styles';
 
 const NEGATIVE_VALUES = ['-xs', '-sm', '-md', '-lg', '-xl'];
 
-export function getSpacingValue(size: any, theme: MantineTheme) {
-  if (NEGATIVE_VALUES.includes(size)) {
-    return theme.fn.size({ size: size.replace('-', ''), sizes: theme.spacing }) * -1;
+export function getSpacingValue(size: string | number, theme: MantineTheme) {
+  if (NEGATIVE_VALUES.includes(size as string)) {
+    return `calc(${getSize({
+      size: (size as string).replace('-', ''),
+      sizes: theme.spacing,
+    })} * -1)`;
   }
 
-  return theme.fn.size({ size, sizes: theme.spacing });
+  return getSize({ size, sizes: theme.spacing });
 }

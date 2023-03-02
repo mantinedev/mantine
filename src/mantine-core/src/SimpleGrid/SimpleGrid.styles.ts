@@ -1,4 +1,4 @@
-import { createStyles, MantineNumberSize } from '@mantine/styles';
+import { createStyles, MantineNumberSize, getBreakpointValue, getSize, em } from '@mantine/styles';
 import { getSortedBreakpoints } from './get-sorted-breakpoints/get-sorted-breakpoints';
 
 export interface SimpleGridBreakpoint {
@@ -22,20 +22,24 @@ export default createStyles(
 
     const gridBreakpoints = getSortedBreakpoints(theme, breakpoints).reduce((acc, breakpoint) => {
       const property = 'maxWidth' in breakpoint ? 'max-width' : 'min-width';
-      const breakpointSize = theme.fn.size({
+      const breakpointSize = getSize({
         size: property === 'max-width' ? breakpoint.maxWidth : breakpoint.minWidth,
         sizes: theme.breakpoints,
+        units: 'em',
       });
 
-      acc[`@media (${property}: ${breakpointSize - (property === 'max-width' ? 1 : 0)}px)`] = {
+      const breakpointValue =
+        getBreakpointValue(breakpointSize) - (property === 'max-width' ? 1 : 0);
+
+      acc[`@media (${property}: ${em(breakpointValue)})`] = {
         gridTemplateColumns: `repeat(${breakpoint.cols}, minmax(0, 1fr))`,
-        gap: `${theme.fn.size({
+        gap: `${getSize({
           size: breakpoint.verticalSpacing ?? (hasVerticalSpacing ? verticalSpacing : spacing),
           sizes: theme.spacing,
-        })}px ${theme.fn.size({
+        })} ${getSize({
           size: breakpoint.spacing ?? spacing,
           sizes: theme.spacing,
-        })}px`,
+        })}`,
       };
 
       return acc;
@@ -46,13 +50,10 @@ export default createStyles(
         boxSizing: 'border-box',
         display: 'grid',
         gridTemplateColumns: `repeat(${cols}, minmax(0, 1fr))`,
-        gap: `${theme.fn.size({
+        gap: `${getSize({
           size: hasVerticalSpacing ? verticalSpacing : spacing,
           sizes: theme.spacing,
-        })}px ${theme.fn.size({
-          size: spacing,
-          sizes: theme.spacing,
-        })}px`,
+        })} ${getSize({ size: spacing, sizes: theme.spacing })}`,
         ...gridBreakpoints,
       },
     };

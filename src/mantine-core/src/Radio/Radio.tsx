@@ -20,6 +20,8 @@ export type RadioStylesNames = Selectors<typeof useStyles> | InlineInputStylesNa
 export interface RadioProps
   extends DefaultProps<RadioStylesNames, RadioStylesParams>,
     Omit<React.ComponentPropsWithRef<'input'>, 'size'> {
+  variant?: string;
+
   /** Radio label */
   label?: React.ReactNode;
 
@@ -77,6 +79,7 @@ export const Radio: RadioComponent = forwardRef<HTMLInputElement, RadioProps>((p
     labelPosition,
     description,
     error,
+    variant,
     ...others
   } = useComponentDefaultProps('Radio', defaultProps, props);
   const ctx = useRadioGroupContext();
@@ -85,8 +88,8 @@ export const Radio: RadioComponent = forwardRef<HTMLInputElement, RadioProps>((p
   const componentSize = props.size ? size : contextSize;
 
   const { classes } = useStyles(
-    { color, size: componentSize, transitionDuration, labelPosition, error: !!error },
-    { classNames, styles, unstyled, name: 'Radio' }
+    { color, transitionDuration, labelPosition, error: !!error },
+    { name: 'Radio', classNames, styles, unstyled, variant, size: componentSize }
   );
 
   const { systemStyles, rest } = extractSystemStyles(others);
@@ -117,6 +120,7 @@ export const Radio: RadioComponent = forwardRef<HTMLInputElement, RadioProps>((p
       styles={styles}
       unstyled={unstyled}
       data-checked={contextProps.checked || undefined}
+      variant={variant}
       {...systemStyles}
       {...wrapperProps}
     >

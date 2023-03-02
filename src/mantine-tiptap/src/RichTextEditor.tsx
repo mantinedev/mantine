@@ -24,6 +24,8 @@ export type RichTextEditorStylesNames =
 export interface RichTextEditorProps
   extends DefaultProps<RichTextEditorStylesNames>,
     React.ComponentPropsWithoutRef<'div'> {
+  variant?: string;
+
   /** Tiptap editor instance */
   editor: Editor | null;
 
@@ -98,14 +100,18 @@ export const RichTextEditor: RichTextEditorComponent = forwardRef<
     classNames,
     styles,
     unstyled,
+    variant,
     ...others
   } = useComponentDefaultProps('RichTextEditor', defaultProps, props);
+
   const { classes, cx } = useStyles(null, {
     name: 'RichTextEditor',
     classNames,
     styles,
     unstyled,
+    variant,
   });
+
   const mergedLabels = useMemo(() => ({ ...DEFAULT_LABELS, ...labels }), [labels]);
 
   return (
@@ -118,6 +124,7 @@ export const RichTextEditor: RichTextEditorComponent = forwardRef<
         classNames,
         styles,
         unstyled,
+        variant,
       }}
     >
       <Box className={cx(classes.root, className)} {...others} ref={ref}>

@@ -39,7 +39,7 @@ function Demo() {
       theme={{
         // Override any other properties from default theme
         fontFamily: 'Open Sans, sans serif',
-        spacing: { xs: 15, sm: 20, md: 25, lg: 30, xl: 40 },
+        spacing: { xs: '1rem', sm: '1.2rem', md: '1.8rem', lg: '2.2rem', xl: '2.8rem' },
       }}
     >
       <App />
@@ -135,7 +135,7 @@ In some components where size is associated with only one value, you can set it 
 
 ```tsx
 <Slider size="xs" /> // Predefined xs size
-<Slider size={20} /> // -> 20px track height, other parts are scaled from this value
+<Slider size={32} /> // -> 2rem track height, other parts are scaled from this value
 ```
 
 ### Spacing and padding
@@ -143,7 +143,13 @@ In some components where size is associated with only one value, you can set it 
 Components that have padding get values from `theme.spacing`, default values are:
 
 ```tsx
-{ xs: 10, sm: 12, md: 16, lg: 20, xl: 24 }
+{
+  xs: '0.625rem',
+  sm: '0.75rem',
+  md: '1rem',
+  lg: '1.25rem',
+  xl: '1.5rem',
+}
 ```
 
 To change these values set `spacing` property on [theme](/theming/theme-object/):
@@ -153,7 +159,9 @@ import { MantineProvider } from '@mantine/core';
 
 function Demo() {
   return (
-    <MantineProvider theme={{ spacing: { xs: 15, sm: 20, md: 25, lg: 30, xl: 40 } }}>
+    <MantineProvider
+      theme={{ spacing: { xs: '1rem', sm: '1.2rem', md: '1.8rem', lg: '2.2rem', xl: '2.8rem' } }}
+    >
       <App />
     </MantineProvider>
   );
@@ -164,7 +172,7 @@ Later when you use Mantine components you can reference these values in `spacing
 
 ```tsx
 <Group spacing="md" /> // -> md spacing from theme.spacing
-<Group spacing={40} /> // 40px spacing
+<Group spacing={32} /> // 2rem spacing
 ```
 
 ### Shadows
@@ -173,11 +181,11 @@ Components that use the box-shadow property get values from `theme.shadows`, def
 
 ```tsx
 {
-  xs: '0 1px 3px rgba(0, 0, 0, 0.05), 0 1px 2px rgba(0, 0, 0, 0.1)',
-  sm: '0 1px 3px rgba(0, 0, 0, 0.05), rgba(0, 0, 0, 0.05) 0px 10px 15px -5px, rgba(0, 0, 0, 0.04) 0px 7px 7px -5px',
-  md: '0 1px 3px rgba(0, 0, 0, 0.05), rgba(0, 0, 0, 0.05) 0px 20px 25px -5px, rgba(0, 0, 0, 0.04) 0px 10px 10px -5px',
-  lg: '0 1px 3px rgba(0, 0, 0, 0.05), rgba(0, 0, 0, 0.05) 0px 28px 23px -7px, rgba(0, 0, 0, 0.04) 0px 12px 12px -7px',
-  xl: '0 1px 3px rgba(0, 0, 0, 0.05), rgba(0, 0, 0, 0.05) 0px 36px 28px -7px, rgba(0, 0, 0, 0.04) 0px 17px 17px -7px',
+  xs: '0 0.0625rem 0.1875rem rgba(0, 0, 0, 0.05), 0 0.0625rem 0.125rem rgba(0, 0, 0, 0.1)',
+  sm: '0 0.0625rem 0.1875rem rgba(0, 0, 0, 0.05), rgba(0, 0, 0, 0.05) 0 0.625rem 0.9375rem -0.3125rem, rgba(0, 0, 0, 0.04) 0 0.4375rem 0.4375rem -0.3125rem',
+  md: '0 0.0625rem 0.1875rem rgba(0, 0, 0, 0.05), rgba(0, 0, 0, 0.05) 0 1.25rem 1.5625rem -0.3125rem, rgba(0, 0, 0, 0.04) 0 0.625rem 0.625rem -0.3125rem',
+  lg: '0 0.0625rem 0.1875rem rgba(0, 0, 0, 0.05), rgba(0, 0, 0, 0.05) 0 1.75rem 1.4375rem -0.4375rem, rgba(0, 0, 0, 0.04) 0 0.75rem 0.75rem -0.4375rem',
+  xl: '0 0.0625rem 0.1875rem rgba(0, 0, 0, 0.05), rgba(0, 0, 0, 0.05) 0 2.25rem 1.75rem -0.4375rem, rgba(0, 0, 0, 0.04) 0 1.0625rem 1.0625rem -0.4375rem',
 }
 ```
 
@@ -191,11 +199,11 @@ function Demo() {
     <MantineProvider
       theme={{
         shadows: {
-          xs: '1px 1px 1px rgba(0, 0, 0, 0.3)',
-          sm: '1px 1px 4px rgba(0, 0, 0, 0.4)',
-          md: '3px 3px 4px rgba(0, 0, 0, 0.4)',
-          lg: '3px 3px 4px 5px rgba(0, 0, 0, 0.4)',
-          xl: '3px 3px 4px 15px rgba(0, 0, 0, 0.4)',
+          xs: '0.0625rem 0.0625rem 0.0625rem rgba(0, 0, 0, 0.3)',
+          sm: '0.0625rem 0.0625rem 0.0625rem rgba(0, 0, 0, 0.4)',
+          md: '0.1875rem 0.1875rem 0.0625rem rgba(0, 0, 0, 0.4)',
+          lg: '0.1875rem 0.1875rem 0.0625rem 0.5rem rgba(0, 0, 0, 0.4)',
+          xl: '0.1875rem 0.1875rem 0.0625rem 1rem rgba(0, 0, 0, 0.4)',
         },
       }}
     >
@@ -209,7 +217,7 @@ Later when you use Mantine components you can reference these values in `shadow`
 
 ```tsx
 <Paper shadow="xl" /> // -> xl shadow from theme.shadows
-<Paper shadow="1px 3px 4px rgba(0, 0, 0, 0.4)" /> // -> your own shadow not related to theme.shadows
+<Paper shadow="0.0625rem 0.1875rem 0.5rem rgba(0, 0, 0, 0.4)" /> // -> your own shadow not related to theme.shadows
 ```
 
 ## Getting element ref

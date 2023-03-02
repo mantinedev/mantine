@@ -4,6 +4,7 @@ import {
   MantineNumberSize,
   Selectors,
   useComponentDefaultProps,
+  rem,
 } from '@mantine/styles';
 import { useDidUpdate } from '@mantine/hooks';
 import { Text } from '../Text';
@@ -16,6 +17,8 @@ export type ImageStylesNames = Selectors<typeof useStyles>;
 export interface ImageProps
   extends DefaultProps<ImageStylesNames, ImageStylesParams>,
     Omit<React.ComponentPropsWithoutRef<'div'>, 'placeholder'> {
+  variant?: string;
+
   /** Image src */
   src?: string | null;
 
@@ -31,7 +34,7 @@ export interface ImageProps
   /** Image height, defaults to original image height adjusted to given width */
   height?: number | string;
 
-  /** Predefined border-radius value from theme.radius or number for border-radius in px */
+  /** Key of theme.radius or any valid CSS value to set border-radius, 0 by default */
   radius?: MantineNumberSize;
 
   /** Enable placeholder when image is loading and when image fails to load */
@@ -75,9 +78,15 @@ export const Image = forwardRef<HTMLDivElement, ImageProps>((props: ImageProps, 
     caption,
     unstyled,
     style,
+    variant,
     ...others
   } = useComponentDefaultProps('Image', defaultProps, props);
-  const { classes, cx } = useStyles({ radius }, { classNames, styles, unstyled, name: 'Image' });
+
+  const { classes, cx } = useStyles(
+    { radius },
+    { classNames, styles, unstyled, name: 'Image', variant }
+  );
+
   const [error, setError] = useState(!src);
   const isPlaceholder = withPlaceholder && error;
 
@@ -86,14 +95,19 @@ export const Image = forwardRef<HTMLDivElement, ImageProps>((props: ImageProps, 
   }, [src]);
 
   return (
-    <Box className={cx(classes.root, className)} ref={ref} style={{ width, ...style }} {...others}>
+    <Box
+      className={cx(classes.root, className)}
+      style={{ width: rem(width), ...style }}
+      ref={ref}
+      {...others}
+    >
       <figure className={classes.figure}>
         <div className={classes.imageWrapper}>
           <img
             className={classes.image}
             src={src}
             alt={alt}
-            style={{ objectFit: fit, width, height }}
+            style={{ objectFit: fit, width: rem(width), height: rem(height) }}
             ref={imageRef}
             onError={(event) => {
               setError(true);
@@ -106,7 +120,7 @@ export const Image = forwardRef<HTMLDivElement, ImageProps>((props: ImageProps, 
             <div className={classes.placeholder} title={alt}>
               {placeholder || (
                 <div>
-                  <ImageIcon style={{ width: 40, height: 40 }} />
+                  <ImageIcon width={rem(40)} height={rem(40)} />
                 </div>
               )}
             </div>

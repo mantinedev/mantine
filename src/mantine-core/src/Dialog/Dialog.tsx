@@ -10,13 +10,18 @@ import { Transition, MantineTransition } from '../Transition';
 import { CloseButton } from '../CloseButton';
 import { Affix } from '../Affix';
 import { Paper, PaperProps } from '../Paper';
-import useStyles, { DialogStylesParams } from './Dialog.styles';
+import useStyles from './Dialog.styles';
 
 export type DialogStylesNames = Selectors<typeof useStyles>;
 
 export interface DialogProps
-  extends DefaultProps<DialogStylesNames, DialogStylesParams>,
+  extends DefaultProps<DialogStylesNames>,
     Omit<PaperProps, 'classNames' | 'styles'> {
+  variant?: string;
+
+  /** If set dialog will not be unmounted from the DOM when it is hidden, display: none styles will be added instead */
+  keepMounted?: boolean;
+
   /** Display close button at the top right corner */
   withCloseButton?: boolean;
 
@@ -49,14 +54,14 @@ export interface DialogProps
   /** Transition timing function, defaults to theme.transitionTimingFunction */
   transitionTimingFunction?: string;
 
-  /** Predefined dialog width or number to set width in px */
+  /** Dialog width */
   size?: string | number;
 }
 
 const defaultProps: Partial<DialogProps> = {
   shadow: 'md',
   p: 'md',
-  withBorder: true,
+  withBorder: false,
   size: 'md',
   transition: 'pop-top-right',
   transitionDuration: 200,
@@ -80,13 +85,23 @@ export function DialogBody(props: DialogProps) {
     transitionDuration,
     transitionTimingFunction,
     unstyled,
+    variant,
+    keepMounted,
     ...others
   } = useComponentDefaultProps('Dialog', defaultProps, props);
 
-  const { classes, cx } = useStyles({ size }, { classNames, styles, unstyled, name: 'Dialog' });
+  const { classes, cx } = useStyles(null, {
+    classNames,
+    styles,
+    unstyled,
+    name: 'Dialog',
+    variant,
+    size,
+  });
 
   return (
     <Transition
+      keepMounted={keepMounted}
       mounted={opened}
       transition={transition}
       duration={transitionDuration}

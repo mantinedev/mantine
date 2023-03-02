@@ -1,6 +1,6 @@
-import { Box } from '@mantine/core';
-import { Carousel } from '@mantine/carousel';
 import React from 'react';
+import { Box, rem } from '@mantine/core';
+import { Carousel } from '@mantine/carousel';
 
 function Slide({ children }: { children: React.ReactNode }) {
   return (
@@ -13,7 +13,7 @@ function Slide({ children }: { children: React.ReactNode }) {
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
-        fontSize: 50,
+        fontSize: rem(50),
         fontWeight: 'bold',
       })}
     >

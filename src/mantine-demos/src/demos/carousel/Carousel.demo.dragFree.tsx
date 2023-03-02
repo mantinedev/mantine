@@ -9,7 +9,7 @@ import { Carousel } from '@mantine/carousel';
 function Demo() {
   return (
     <Carousel
-      sx={{ maxWidth: 320 }}
+      maw={320}
       mx="auto"
       withIndicators
       height={200}
@@ -28,15 +28,7 @@ function Demo() {
 
 function Demo() {
   return (
-    <Carousel
-      sx={{ maxWidth: 320 }}
-      mx="auto"
-      withIndicators
-      height={200}
-      dragFree
-      slideGap="md"
-      align="start"
-    >
+    <Carousel maw={320} mx="auto" withIndicators height={200} dragFree slideGap="md" align="start">
       <Slides count={5} />
     </Carousel>
   );

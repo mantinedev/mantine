@@ -1,6 +1,6 @@
-import { createStyles, MantineNumberSize, MantineTheme } from '@mantine/core';
+import { createStyles, MantineNumberSize, MantineTheme, rem } from '@mantine/core';
 
-const BREAKPOINT = 885;
+const BREAKPOINT = rem(885);
 
 interface ConfiguratorStylesParams {
   radius: MantineNumberSize;
@@ -12,7 +12,7 @@ export default createStyles(
     configurator: {
       display: 'flex',
       maxWidth: '100%',
-      border: `1px solid ${
+      border: `${rem(1)} solid ${
         theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[2]
       }`,
       overflow: 'hidden',
@@ -20,14 +20,14 @@ export default createStyles(
       borderTopRightRadius: theme.fn.radius(radius),
       borderBottom: 0,
 
-      [`@media (max-width: ${BREAKPOINT}px)`]: {
+      [`@media (max-width: ${BREAKPOINT})`]: {
         flexDirection: 'column',
       },
     },
 
     noCode: {
       borderRadius: theme.fn.radius(radius),
-      borderBottom: `1px solid ${
+      borderBottom: `${rem(1)} solid ${
         theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[2]
       }`,
     },
@@ -41,18 +41,18 @@ export default createStyles(
 
     controls: {
       boxSizing: 'border-box',
-      width: 250,
+      width: rem(250),
       padding: theme.spacing.md,
       backgroundColor:
         background || (theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.white),
-      borderLeft: `1px solid ${
+      borderLeft: `${rem(1)} solid ${
         theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[2]
       }`,
 
-      [`@media (max-width: ${BREAKPOINT}px)`]: {
+      [`@media (max-width: ${BREAKPOINT})`]: {
         width: '100%',
         borderLeft: 0,
-        borderTop: `1px solid ${
+        borderTop: `${rem(1)} solid ${
           theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[2]
         }`,
       },
@@ -62,7 +62,7 @@ export default createStyles(
       marginTop: 0,
       borderBottomRightRadius: theme.fn.radius(radius),
       borderBottomLeftRadius: theme.fn.radius(radius),
-      border: `1px solid ${
+      border: `${rem(1)} solid ${
         theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[2]
       }`,
     },

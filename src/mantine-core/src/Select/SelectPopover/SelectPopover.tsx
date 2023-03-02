@@ -1,9 +1,9 @@
 import React from 'react';
-import { ClassNames, MantineShadow, Styles, Selectors, DefaultProps } from '@mantine/styles';
+import { ClassNames, MantineShadow, Styles, Selectors, DefaultProps, rem } from '@mantine/styles';
 import { SelectScrollArea } from '../SelectScrollArea/SelectScrollArea';
 import { Popover } from '../../Popover';
 import { Box } from '../../Box';
-import { MantineTransition } from '../../Transition';
+import { TransitionOverride } from '../../Transition';
 import useStyles from './SelectPopover.styles';
 
 export type SelectPopoverStylesNames = Selectors<typeof useStyles>;
@@ -35,7 +35,7 @@ function SelectPopoverDropdown({
 
   return (
     <Popover.Dropdown p={0} onMouseDown={(event) => event.preventDefault()} {...others}>
-      <div style={{ maxHeight, display: 'flex' }}>
+      <div style={{ maxHeight: rem(maxHeight), display: 'flex' }}>
         <Box<'div'>
           component={(component || 'div') as any}
           id={`${id}-items`}
@@ -57,8 +57,7 @@ function SelectPopoverDropdown({
 
 interface SelectPopoverProps {
   opened: boolean;
-  transition?: MantineTransition;
-  transitionDuration?: number;
+  transitionProps: TransitionOverride;
   shadow?: MantineShadow;
   withinPortal?: boolean;
   children: React.ReactNode;
@@ -72,12 +71,12 @@ interface SelectPopoverProps {
   styles?: Styles<SelectPopoverStylesNames>;
   unstyled?: boolean;
   readOnly?: boolean;
+  variant: string;
 }
 
 export function SelectPopover({
   opened,
-  transition = 'fade',
-  transitionDuration = 0,
+  transitionProps = { transition: 'fade', duration: 0 },
   shadow,
   withinPortal,
   children,
@@ -91,6 +90,7 @@ export function SelectPopover({
   styles,
   unstyled,
   readOnly,
+  variant,
 }: SelectPopoverProps) {
   return (
     <Popover
@@ -106,14 +106,14 @@ export function SelectPopover({
       zIndex={zIndex}
       __staticSelector={__staticSelector}
       withinPortal={withinPortal}
-      transition={transition}
-      transitionDuration={transitionDuration}
+      transitionProps={transitionProps}
       shadow={shadow}
       disabled={readOnly}
       onPositionChange={(nextPosition) =>
         switchDirectionOnFlip &&
         onDirectionChange?.(nextPosition === 'top' ? 'column-reverse' : 'column')
       }
+      variant={variant}
     >
       {children}
     </Popover>

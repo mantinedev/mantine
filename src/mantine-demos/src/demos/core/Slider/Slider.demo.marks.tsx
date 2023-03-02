@@ -1,6 +1,6 @@
 import React from 'react';
 import { MantineDemo } from '@mantine/ds';
-import { Slider, RangeSlider } from '@mantine/core';
+import { Slider, RangeSlider, Box } from '@mantine/core';
 
 const code = `
 import { Slider, RangeSlider } from '@mantine/core';
@@ -30,17 +30,11 @@ function Demo() {
   ];
 
   return (
-    <div style={{ maxWidth: 400, margin: 'auto' }}>
-      <div style={{ paddingBottom: 30 }}>
-        <Slider defaultValue={40} marks={[{ value: 10 }, { value: 40 }, { value: 95 }]} />
-      </div>
-      <div style={{ paddingBottom: 30 }}>
-        <Slider defaultValue={40} marks={marks} />
-      </div>
-      <div style={{ paddingBottom: 25 }}>
-        <RangeSlider defaultValue={[20, 80]} marks={marks} />
-      </div>
-    </div>
+    <Box maw={400} mx="auto">
+      <Slider defaultValue={40} marks={[{ value: 10 }, { value: 40 }, { value: 95 }]} pb={50} />
+      <Slider defaultValue={40} marks={marks} pb={50} />
+      <RangeSlider defaultValue={[20, 80]} marks={marks} pb={50} />
+    </Box>
   );
 }
 

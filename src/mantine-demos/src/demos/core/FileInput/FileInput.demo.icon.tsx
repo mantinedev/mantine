@@ -1,22 +1,26 @@
 import React from 'react';
-import { IconUpload } from '@tabler/icons';
+import { IconUpload } from '@tabler/icons-react';
 import { MantineDemo } from '@mantine/ds';
-import { FileInput } from '@mantine/core';
+import { FileInput, rem } from '@mantine/core';
 
 const code = `
-import { FileInput } from '@mantine/core';
-import { IconUpload } from '@tabler/icons';
+import { FileInput, rem } from '@mantine/core';
+import { IconUpload } from '@tabler/icons-react';
 
 function Demo() {
-  return <FileInput label="Your resume" placeholder="Your resume" icon={<IconUpload size={14} />} />;
+  return <FileInput label="Your resume" placeholder="Your resume" icon={<IconUpload size={rem(14)} />} />;
 }
 `;
 
 function Demo() {
   return (
-    <div style={{ maxWidth: 320, marginLeft: 'auto', marginRight: 'auto' }}>
-      <FileInput label="Your resume" placeholder="Your resume" icon={<IconUpload size={14} />} />
-    </div>
+    <FileInput
+      maw={320}
+      mx="auto"
+      label="Your resume"
+      placeholder="Your resume"
+      icon={<IconUpload size={rem(14)} />}
+    />
   );
 }
 

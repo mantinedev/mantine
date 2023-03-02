@@ -1,11 +1,11 @@
 import React from 'react';
-import { IconExternalLink } from '@tabler/icons';
+import { IconExternalLink } from '@tabler/icons-react';
 import { MantineDemo } from '@mantine/ds';
-import { Menu, Group, Button } from '@mantine/core';
+import { Menu, Group, Button, rem } from '@mantine/core';
 
 const code = `
-import { Menu, Button } from '@mantine/core';
-import { IconExternalLink } from '@tabler/icons';
+import { Menu, Button, rem } from '@mantine/core';
+import { IconExternalLink } from '@tabler/icons-react';
 
 function Demo() {
   return (
@@ -20,7 +20,7 @@ function Demo() {
         </Menu.Item>
 
         <Menu.Item
-          icon={<IconExternalLink size={14} />}
+          icon={<IconExternalLink size={rem(14)} />}
           component="a"
           href="https://mantine.dev"
           target="_blank"
@@ -46,7 +46,7 @@ function Demo() {
             Mantine website
           </Menu.Item>
           <Menu.Item
-            icon={<IconExternalLink size={14} />}
+            icon={<IconExternalLink size={rem(14)} />}
             component="a"
             href="https://mantine.dev"
             target="_blank"

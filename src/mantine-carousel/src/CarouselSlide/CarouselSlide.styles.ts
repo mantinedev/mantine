@@ -1,4 +1,11 @@
-import { createStyles, MantineNumberSize, getSortedBreakpoints } from '@mantine/core';
+import {
+  createStyles,
+  MantineNumberSize,
+  getSortedBreakpoints,
+  rem,
+  getBreakpointValue,
+  getSize,
+} from '@mantine/core';
 import { CarouselOrientation, CarouselBreakpoint } from '../types';
 
 export interface CarouselSlideStylesParams {
@@ -16,16 +23,16 @@ export default createStyles(
   ) => {
     // Slide styles by slideGap and slideSize
     const getSlideStyles = (slideGap: MantineNumberSize, slideSize: string | number) => {
-      const slideGapValue = theme.fn.size({
+      const slideGapValue = getSize({
         size: slideGap,
         sizes: theme.spacing,
       });
 
-      const flexBasisValue = typeof slideSize === 'number' ? `${slideSize}px` : slideSize;
+      const flexBasisValue = rem(slideSize);
 
       const marginStyles = includeGapInSize
         ? {
-            [orientation === 'horizontal' ? 'paddingRight' : 'paddinBottom']: slideGapValue,
+            [orientation === 'horizontal' ? 'paddingRight' : 'paddingBottom']: slideGapValue,
           }
         : {
             [orientation === 'horizontal' ? 'marginRight' : 'marginBottom']: slideGapValue,
@@ -46,7 +53,7 @@ export default createStyles(
       ? null
       : getSortedBreakpoints(theme, breakpoints).reduce((acc, breakpoint) => {
           const property = 'maxWidth' in breakpoint ? 'max-width' : 'min-width';
-          const breakpointSize = theme.fn.size({
+          const breakpointSize = getSize({
             size: property === 'max-width' ? breakpoint.maxWidth : breakpoint.minWidth,
             sizes: theme.breakpoints,
           });
@@ -54,8 +61,13 @@ export default createStyles(
           const breakpointGap =
             typeof breakpoint.slideGap === 'undefined' ? gap : breakpoint.slideGap;
 
-          acc[`@media (${property}: ${breakpointSize - (property === 'max-width' ? 1 : 0)}px)`] =
-            getSlideStyles(breakpointGap, breakpoint.slideSize);
+          const breakpointValue =
+            getBreakpointValue(breakpointSize) - (property === 'max-width' ? 1 : 0);
+
+          acc[`@media (${property}: ${rem(breakpointValue)})`] = getSlideStyles(
+            breakpointGap,
+            breakpoint.slideSize
+          );
 
           return acc;
         }, {});

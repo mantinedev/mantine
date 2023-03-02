@@ -1,6 +1,6 @@
 import React from 'react';
 import { render } from '@testing-library/react';
-import { itSupportsSystemProps } from '@mantine/tests';
+import { itSupportsSystemProps, itSupportsProviderVariant } from '@mantine/tests';
 import { Grid, GridProps } from './Grid';
 import { Col } from './Col/Col';
 
@@ -14,6 +14,7 @@ const defaultProps: GridProps = {
 };
 
 describe('@mantine/core/Grid', () => {
+  itSupportsProviderVariant(Grid, defaultProps, 'Grid');
   itSupportsSystemProps({
     component: Grid,
     props: defaultProps,

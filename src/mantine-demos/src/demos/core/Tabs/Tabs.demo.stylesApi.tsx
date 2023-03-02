@@ -1,11 +1,11 @@
 import React from 'react';
-import { IconPhoto, IconMessageCircle, IconSettings } from '@tabler/icons';
+import { IconPhoto, IconMessageCircle, IconSettings } from '@tabler/icons-react';
 import { MantineDemo } from '@mantine/ds';
-import { Tabs, TabsProps } from '@mantine/core';
+import { Tabs, TabsProps, rem } from '@mantine/core';
 
 const code = `
-import { Tabs, TabsProps } from '@mantine/core';
-import { IconPhoto, IconMessageCircle, IconSettings } from '@tabler/icons';
+import { Tabs, TabsProps, rem } from '@mantine/core';
+import { IconPhoto, IconMessageCircle, IconSettings } from '@tabler/icons-react';
 
 function StyledTabs(props: TabsProps) {
   return (
@@ -16,8 +16,8 @@ function StyledTabs(props: TabsProps) {
           ...theme.fn.focusStyles(),
           backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.white,
           color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.colors.gray[9],
-          border: \`1px solid \${theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[4]}\`,
-          padding: \`\${theme.spacing.xs}px \${theme.spacing.md}px\`,
+          border: \`\${rem(1)} solid \${theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[4]}\`,
+          padding: \`\${theme.spacing.xs} \${theme.spacing.md}\`,
           cursor: 'pointer',
           fontSize: theme.fontSizes.sm,
           display: 'flex',
@@ -68,13 +68,13 @@ function Demo() {
   return (
     <StyledTabs>
       <Tabs.List>
-        <Tabs.Tab value="settings" icon={<IconSettings size={16} />}>
+        <Tabs.Tab value="settings" icon={<IconSettings size="1rem" />}>
           Settings
         </Tabs.Tab>
-        <Tabs.Tab value="messages" icon={<IconMessageCircle size={16} />}>
+        <Tabs.Tab value="messages" icon={<IconMessageCircle size="1rem" />}>
           Messages
         </Tabs.Tab>
-        <Tabs.Tab value="gallery" icon={<IconPhoto size={16} />}>
+        <Tabs.Tab value="gallery" icon={<IconPhoto size="1rem" />}>
           Gallery
         </Tabs.Tab>
       </Tabs.List>
@@ -92,10 +92,10 @@ function StyledTabs(props: TabsProps) {
           ...theme.fn.focusStyles(),
           backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.white,
           color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.colors.gray[9],
-          border: `1px solid ${
+          border: `${rem(1)} solid ${
             theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[4]
           }`,
-          padding: `${theme.spacing.xs}px ${theme.spacing.md}px`,
+          padding: `${theme.spacing.xs} ${theme.spacing.md}`,
           cursor: 'pointer',
           fontSize: theme.fontSizes.sm,
           display: 'flex',
@@ -146,13 +146,13 @@ function Demo() {
   return (
     <StyledTabs defaultValue="settings">
       <Tabs.List>
-        <Tabs.Tab value="settings" icon={<IconSettings size={16} />}>
+        <Tabs.Tab value="settings" icon={<IconSettings size="1rem" />}>
           Settings
         </Tabs.Tab>
-        <Tabs.Tab value="messages" icon={<IconMessageCircle size={16} />}>
+        <Tabs.Tab value="messages" icon={<IconMessageCircle size="1rem" />}>
           Messages
         </Tabs.Tab>
-        <Tabs.Tab value="gallery" icon={<IconPhoto size={16} />}>
+        <Tabs.Tab value="gallery" icon={<IconPhoto size="1rem" />}>
           Gallery
         </Tabs.Tab>
       </Tabs.List>

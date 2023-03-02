@@ -9,7 +9,7 @@ export default { title: 'Tooltip' };
 export function Usage() {
   return (
     <div style={{ padding: 40 }}>
-      <Tooltip position="right" label="Tooltip label" withArrow>
+      <Tooltip position="right" label="Tooltip label" withArrow transitionProps={{ duration: 0 }}>
         <Button>target</Button>
       </Tooltip>
     </div>

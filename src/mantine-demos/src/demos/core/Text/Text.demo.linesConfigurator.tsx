@@ -1,10 +1,10 @@
 import React from 'react';
 import { MantineDemo } from '@mantine/ds';
-import { Text, TextProps } from '@mantine/core';
+import { Text, TextProps, Box } from '@mantine/core';
 
 function Wrapper(props: TextProps) {
   return (
-    <div style={{ maxWidth: 400, margin: 'auto' }}>
+    <Box maw={400} mx="auto">
       <Text {...props}>
         From Bulbapedia: Bulbasaur is a small, quadrupedal Pokémon that has blue-green skin with
         darker patches. It has red eyes with white pupils, pointed, ear-like structures on top of
@@ -15,7 +15,7 @@ function Wrapper(props: TextProps) {
         it with energy through photosynthesis as well as from the nutrient-rich seeds contained
         within.
       </Text>
-    </div>
+    </Box>
   );
 }
 

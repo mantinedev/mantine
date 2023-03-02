@@ -1,11 +1,11 @@
 import React from 'react';
-import { IconEye, IconCode, IconExternalLink } from '@tabler/icons';
+import { IconEye, IconCode, IconExternalLink } from '@tabler/icons-react';
 import { MantineDemo } from '@mantine/ds';
 import { Center, SegmentedControl, Box, Group } from '@mantine/core';
 
 const code = `
 import { Center, SegmentedControl, Box } from '@mantine/core';
-import { IconEye, IconCode, IconExternalLink } from '@tabler/icons';
+import { IconEye, IconCode, IconExternalLink } from '@tabler/icons-react';
 
 function Demo() {
   return (
@@ -15,7 +15,7 @@ function Demo() {
           value: 'preview',
           label: (
             <Center>
-              <IconEye size={16} />
+              <IconEye size="1rem" />
               <Box ml={10}>Preview</Box>
             </Center>
           ),
@@ -24,7 +24,7 @@ function Demo() {
           value: 'code',
           label: (
             <Center>
-              <IconCode size={16} />
+              <IconCode size="1rem" />
               <Box ml={10}>Code</Box>
             </Center>
           ),
@@ -33,7 +33,7 @@ function Demo() {
           value: 'export',
           label: (
             <Center>
-              <IconExternalLink size={16} />
+              <IconExternalLink size="1rem" />
               <Box ml={10}>Export</Box>
             </Center>
           ),
@@ -53,7 +53,7 @@ function Demo() {
             value: 'preview',
             label: (
               <Center>
-                <IconEye size={16} />
+                <IconEye size="1rem" />
                 <Box ml={10}>Preview</Box>
               </Center>
             ),
@@ -62,7 +62,7 @@ function Demo() {
             value: 'code',
             label: (
               <Center>
-                <IconCode size={16} />
+                <IconCode size="1rem" />
                 <Box ml={10}>Code</Box>
               </Center>
             ),
@@ -71,7 +71,7 @@ function Demo() {
             value: 'export',
             label: (
               <Center>
-                <IconExternalLink size={16} />
+                <IconExternalLink size="1rem" />
                 <Box ml={10}>Export</Box>
               </Center>
             ),

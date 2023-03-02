@@ -14,7 +14,6 @@ export function attachFunctions(themeBase: MantineThemeBase): MantineTheme {
       linearGradient: fns.linearGradient,
       gradient: fns.gradient(themeBase),
       rgba: fns.rgba,
-      size: fns.size,
       cover: fns.cover,
       lighten: fns.lighten,
       darken: fns.darken,
@@ -24,6 +23,7 @@ export function attachFunctions(themeBase: MantineThemeBase): MantineTheme {
       hover: fns.hover,
       primaryColor: fns.primaryColor(themeBase),
       placeholderStyles: fns.placeholderStyles(themeBase),
+      dimmed: fns.dimmed(themeBase),
     },
   };
 }

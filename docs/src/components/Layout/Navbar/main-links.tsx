@@ -1,6 +1,6 @@
 import React from 'react';
 import { DEFAULT_THEME } from '@mantine/core';
-import { IconCode, IconStar, IconRocket } from '@tabler/icons';
+import { IconCode, IconStar, IconRocket } from '@tabler/icons-react';
 import { MantineLogo } from '@mantine/ds';
 
 export default [

@@ -7,7 +7,7 @@ describe('@mantine/tss/radius', () => {
   });
 
   it('returns given number value', () => {
-    expect(radius(DEFAULT_THEME)(33)).toBe(33);
+    expect(radius(DEFAULT_THEME)(32)).toBe('2rem');
   });
 
   it('returns theme.defaultRadius value is value was not provided', () => {

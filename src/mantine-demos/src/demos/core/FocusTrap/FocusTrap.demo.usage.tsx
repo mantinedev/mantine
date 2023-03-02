@@ -1,18 +1,18 @@
 import React from 'react';
 import { useDisclosure } from '@mantine/hooks';
 import { MantineDemo } from '@mantine/ds';
-import { FocusTrap, TextInput, Button } from '@mantine/core';
+import { FocusTrap, TextInput, Button, Box } from '@mantine/core';
 
 const code = `
 import { useDisclosure } from '@mantine/hooks';
-import { FocusTrap, TextInput, Button } from '@mantine/core';
+import { FocusTrap, TextInput, Button, Box } from '@mantine/core';
 
 function Demo() {
-  const [active, handlers] = useDisclosure(false);
+  const [active, { toggle }] = useDisclosure(false);
 
   return (
-    <div style={{ maxWidth: 400, marginLeft: 'auto', marginRight: 'auto' }}>
-      <Button onClick={handlers.toggle}>{active ? 'Deactivate' : 'Activate'} focus trap</Button>
+    <Box maw={400} mx="auto">
+      <Button onClick={toggle}>{active ? 'Deactivate' : 'Activate'} focus trap</Button>
 
       <FocusTrap active={active}>
         <div>
@@ -21,17 +21,17 @@ function Demo() {
           <TextInput mt="sm" label="Third input" placeholder="Third input" />
         </div>
       </FocusTrap>
-    </div>
+    </Box>
   );
 }
 `;
 
 function Demo() {
-  const [active, handlers] = useDisclosure(false);
+  const [active, { toggle }] = useDisclosure(false);
 
   return (
-    <div style={{ maxWidth: 400, marginLeft: 'auto', marginRight: 'auto' }}>
-      <Button onClick={handlers.toggle}>{active ? 'Deactivate' : 'Activate'} focus trap</Button>
+    <Box maw={400} mx="auto">
+      <Button onClick={toggle}>{active ? 'Deactivate' : 'Activate'} focus trap</Button>
 
       <FocusTrap active={active}>
         <div>
@@ -40,7 +40,7 @@ function Demo() {
           <TextInput mt="sm" label="Third input" placeholder="Third input" />
         </div>
       </FocusTrap>
-    </div>
+    </Box>
   );
 }
 

@@ -74,14 +74,7 @@ export function ModalsProvider({ children, modalProps, labels, modals }: ModalsP
 
   const closeAll = useCallback(
     (canceled?: boolean) => {
-      stateRef.current.modals.forEach((modal) => {
-        if (modal.type === 'confirm' && canceled) {
-          modal.props.onCancel?.();
-        }
-
-        modal.props.onClose?.();
-      });
-      dispatch({ type: 'CLOSE_ALL' });
+      dispatch({ type: 'CLOSE_ALL', canceled });
     },
     [stateRef, dispatch]
   );
@@ -92,7 +85,7 @@ export function ModalsProvider({ children, modalProps, labels, modals }: ModalsP
 
       dispatch({
         type: 'OPEN',
-        payload: {
+        modal: {
           id,
           type: 'content',
           props,
@@ -108,7 +101,7 @@ export function ModalsProvider({ children, modalProps, labels, modals }: ModalsP
       const id = modalId || randomId();
       dispatch({
         type: 'OPEN',
-        payload: {
+        modal: {
           id,
           type: 'confirm',
           props,
@@ -124,7 +117,7 @@ export function ModalsProvider({ children, modalProps, labels, modals }: ModalsP
       const id = modalId || randomId();
       dispatch({
         type: 'OPEN',
-        payload: {
+        modal: {
           id,
           type: 'context',
           props,
@@ -138,16 +131,7 @@ export function ModalsProvider({ children, modalProps, labels, modals }: ModalsP
 
   const closeModal = useCallback(
     (id: string, canceled?: boolean) => {
-      const modal = stateRef.current.modals.find((item) => item.id === id);
-      if (!modal) {
-        return;
-      }
-
-      if (modal.type === 'confirm' && canceled) {
-        modal.props.onCancel?.();
-      }
-      modal.props.onClose?.();
-      dispatch({ type: 'CLOSE', payload: modal.id });
+      dispatch({ type: 'CLOSE', modalId: id, canceled });
     },
     [stateRef, dispatch]
   );
@@ -157,6 +141,7 @@ export function ModalsProvider({ children, modalProps, labels, modals }: ModalsP
     openConfirmModal,
     openContextModal: ({ modal, ...payload }) => openContextModal(modal, payload),
     closeModal,
+    closeContextModal: closeModal,
     closeAllModals: closeAll,
   });
 
@@ -166,6 +151,7 @@ export function ModalsProvider({ children, modalProps, labels, modals }: ModalsP
     openConfirmModal,
     openContextModal,
     closeModal,
+    closeContextModal: closeModal,
     closeAll,
   };
 

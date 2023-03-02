@@ -1,4 +1,4 @@
-import { createStyles, MantineColor } from '@mantine/styles';
+import { createStyles, MantineColor, rem } from '@mantine/styles';
 
 export interface BlockquoteStylesParams {
   color: MantineColor;
@@ -13,7 +13,7 @@ export default createStyles((theme, { color }: BlockquoteStylesParams) => ({
     margin: 0,
     borderTopRightRadius: theme.radius.sm,
     borderBottomRightRadius: theme.radius.sm,
-    padding: `${theme.spacing.md}px ${theme.spacing.lg}px`,
+    padding: `${theme.spacing.md} ${theme.spacing.lg}`,
   },
 
   inner: {
@@ -29,8 +29,8 @@ export default createStyles((theme, { color }: BlockquoteStylesParams) => ({
   icon: {
     color: theme.fn.variant({ variant: 'filled', color }).background,
     marginRight: theme.spacing.lg,
-    marginTop: 2,
-    width: 22,
+    marginTop: rem(2),
+    width: rem(22),
   },
 
   cite: {

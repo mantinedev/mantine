@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-import { useMantineTheme, Group, Text } from '@mantine/core';
+import { useMantineTheme, Group, Text, rem } from '@mantine/core';
 import { MantineDemo } from '@mantine/ds';
 import { useMove } from '@mantine/hooks';
 
 const code = `
-import { useMantineTheme, Text } from '@mantine/core';
+import { useMantineTheme, Text, rem } from '@mantine/core';
 import { useMove } from '@mantine/hooks';
 
 function Demo() {
@@ -14,39 +14,42 @@ function Demo() {
 
   return (
     <>
-      <div
-        ref={ref}
-        style={{
-          width: 16,
-          height: 120,
-          backgroundColor:
-            theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[1],
-          position: 'relative',
-        }}
-      >
-        {/* Filled bar */}
+      <Group position="center">
         <div
+          ref={ref}
           style={{
-            position: 'absolute',
-            bottom: 0,
-            height: \`\${value * 100}%\`,
-            width: 16,
-            backgroundColor: theme.colorScheme === 'dark' ? theme.colors.blue[9] : theme.colors.blue[2],
+            width: rem(16),
+            height: rem(120),
+            backgroundColor:
+              theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[1],
+            position: 'relative',
           }}
-        />
+        >
+          {/* Filled bar */}
+          <div
+            style={{
+              position: 'absolute',
+              bottom: 0,
+              height: \`\${value * 100}%\`,
+              width: rem(16),
+              backgroundColor:
+                theme.colorScheme === 'dark' ? theme.colors.blue[9] : theme.colors.blue[2],
+            }}
+          />
 
-        {/* Thumb */}
-        <div
-          style={{
-            position: 'absolute',
-            bottom: \`calc(\${value * 100}% - 8px)\`,
-            left: 0,
-            width: 16,
-            height: 16,
-            backgroundColor: theme.colors.blue[7],
-          }}
-        />
-      </div>
+          {/* Thumb */}
+          <div
+            style={{
+              position: 'absolute',
+              bottom: \`calc(\${value * 100}% - \${rem(8)})\`,
+              left: 0,
+              width: rem(16),
+              height: rem(16),
+              backgroundColor: theme.colors.blue[7],
+            }}
+          />
+        </div>
+      </Group>
 
       <Text align="center" style={{ marginTop: theme.spacing.sm }}>
         Value: {Math.round(value * 100)}
@@ -66,8 +69,8 @@ function Demo() {
         <div
           ref={ref}
           style={{
-            width: 16,
-            height: 120,
+            width: rem(16),
+            height: rem(120),
             backgroundColor:
               theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[1],
             position: 'relative',
@@ -79,7 +82,7 @@ function Demo() {
               position: 'absolute',
               bottom: 0,
               height: `${value * 100}%`,
-              width: 16,
+              width: rem(16),
               backgroundColor:
                 theme.colorScheme === 'dark' ? theme.colors.blue[9] : theme.colors.blue[2],
             }}
@@ -89,10 +92,10 @@ function Demo() {
           <div
             style={{
               position: 'absolute',
-              bottom: `calc(${value * 100}% - 8px)`,
+              bottom: `calc(${value * 100}% - ${rem(8)})`,
               left: 0,
-              width: 16,
-              height: 16,
+              width: rem(16),
+              height: rem(16),
               backgroundColor: theme.colors.blue[7],
             }}
           />

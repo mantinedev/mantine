@@ -20,6 +20,7 @@ const defaultProps: ThumbProps = {
   thumbLabel: 'test-label',
   disabled: false,
   thumbSize: 16,
+  variant: '',
 };
 
 describe('@mantine/core/Thumb', () => {

@@ -1,23 +1,23 @@
 import React from 'react';
 import { TextInput, Button, Group } from '@mantine/core';
 import { MantineDemo } from '@mantine/ds';
-import { openModal, closeAllModals } from '@mantine/modals';
+import { modals } from '@mantine/modals';
 
 const code = `
 import { TextInput, Button, Group } from '@mantine/core';
-import { openModal, closeAllModals } from '@mantine/modals';
+import { modals } from '@mantine/modals';
 
 function Demo() {
   return (
     <Group position="center">
       <Button
         onClick={() => {
-          openModal({
+          modals.open({
             title: 'Subscribe to newsletter',
             children: (
               <>
                 <TextInput label="Your email" placeholder="Your email" data-autofocus />
-                <Button fullWidth onClick={closeAllModals} mt="md">
+                <Button fullWidth onClick={modals.closeAll} mt="md">
                   Submit
                 </Button>
               </>
@@ -37,12 +37,12 @@ function Demo() {
     <Group position="center">
       <Button
         onClick={() => {
-          openModal({
+          modals.open({
             title: 'Subscribe to newsletter',
             children: (
               <>
                 <TextInput label="Your email" placeholder="Your email" data-autofocus />
-                <Button fullWidth onClick={closeAllModals} mt="md">
+                <Button fullWidth onClick={modals.closeAll} mt="md">
                   Submit
                 </Button>
               </>

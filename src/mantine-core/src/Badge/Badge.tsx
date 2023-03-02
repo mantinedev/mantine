@@ -7,10 +7,11 @@ import {
   MantineColor,
   Selectors,
   useComponentDefaultProps,
+  Variants,
 } from '@mantine/styles';
 import { createPolymorphicComponent } from '@mantine/utils';
 import { Box } from '../Box';
-import useStyles, { BadgeStylesParams, BadgeVariant } from './Badge.styles';
+import useStyles, { BadgeStylesParams } from './Badge.styles';
 
 export type BadgeStylesNames = Selectors<typeof useStyles>;
 
@@ -19,7 +20,7 @@ export interface BadgeProps extends DefaultProps<BadgeStylesNames, BadgeStylesPa
   color?: MantineColor;
 
   /** Controls appearance */
-  variant?: BadgeVariant;
+  variant?: Variants<'light' | 'filled' | 'outline' | 'dot' | 'gradient'>;
 
   /** Controls gradient, applied to gradient variant only */
   gradient?: MantineGradient;
@@ -27,7 +28,7 @@ export interface BadgeProps extends DefaultProps<BadgeStylesNames, BadgeStylesPa
   /** Badge height and font size */
   size?: MantineSize;
 
-  /** Key of theme.radius or number to set border-radius in px */
+  /** Key of theme.radius or any valid CSS value to set border-radius, "xl" by default */
   radius?: MantineNumberSize;
 
   /** Sets badge width to 100% of parent element, hides overflow text with text-overflow: ellipsis */
@@ -68,15 +69,8 @@ export const _Badge = forwardRef<HTMLDivElement, BadgeProps>((props, ref) => {
   } = useComponentDefaultProps('Badge', defaultProps, props);
 
   const { classes, cx } = useStyles(
-    {
-      size,
-      fullWidth,
-      color,
-      radius,
-      variant,
-      gradient,
-    },
-    { classNames, styles, name: 'Badge', unstyled }
+    { fullWidth, color, radius, gradient },
+    { classNames, styles, name: 'Badge', unstyled, variant, size }
   );
 
   return (

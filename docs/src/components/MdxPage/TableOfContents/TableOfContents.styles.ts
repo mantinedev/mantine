@@ -1,4 +1,4 @@
-import { createStyles } from '@mantine/core';
+import { createStyles, rem, em } from '@mantine/core';
 import { BREAKPOINT, TABLE_OF_CONTENTS_WIDTH } from '../settings';
 
 export default createStyles((theme) => ({
@@ -8,17 +8,17 @@ export default createStyles((theme) => ({
     position: 'sticky',
     top: theme.spacing.xl,
     right: 0,
-    paddingTop: 55,
-    flex: `0 0 ${TABLE_OF_CONTENTS_WIDTH - 20}px`,
+    paddingTop: rem(55),
+    flex: `0 0 ${rem(TABLE_OF_CONTENTS_WIDTH - 20)}`,
 
-    [`@media (max-width: ${BREAKPOINT}px)`]: {
+    [`@media (max-width: ${em(BREAKPOINT)})`]: {
       display: 'none',
     },
   },
 
   withTabs: {
     paddingTop: 0,
-    top: 60 + theme.spacing.xl,
+    top: `calc(${rem(60)} + ${theme.spacing.xl})`,
   },
 
   inner: {
@@ -31,7 +31,7 @@ export default createStyles((theme) => ({
   },
 
   items: {
-    borderLeft: `1px solid ${
+    borderLeft: `${rem(1)} solid ${
       theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[3]
     }`,
   },
@@ -39,8 +39,8 @@ export default createStyles((theme) => ({
   link: {
     display: 'block',
     color: theme.colorScheme === 'dark' ? theme.colors.dark[1] : theme.colors.gray[7],
-    borderLeft: '1px solid transparent',
-    padding: `8px ${theme.spacing.md}px`,
+    borderLeft: `${rem(1)} solid transparent`,
+    padding: `${rem(8)} ${theme.spacing.md}`,
     marginLeft: -1,
   },
 

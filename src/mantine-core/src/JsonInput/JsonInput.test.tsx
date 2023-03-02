@@ -4,6 +4,8 @@ import {
   itSupportsInputProps,
   itSupportsFocusEvents,
   checkAccessibility,
+  itSupportsProviderVariant,
+  itSupportsProviderSize,
 } from '@mantine/tests';
 import { JsonInput, JsonInputProps } from './JsonInput';
 
@@ -15,6 +17,8 @@ describe('@mantine/core/JsonInput', () => {
   checkAccessibility([<JsonInput {...defaultProps} />]);
   itSupportsFocusEvents(JsonInput, defaultProps, 'textarea');
   itSupportsInputProps(JsonInput, defaultProps, 'JsonInput');
+  itSupportsProviderVariant(JsonInput, defaultProps, 'JsonInput', ['root', 'input', 'label']);
+  itSupportsProviderSize(JsonInput, defaultProps, 'JsonInput', ['root', 'input', 'label']);
   itSupportsSystemProps({
     component: JsonInput,
     props: defaultProps,

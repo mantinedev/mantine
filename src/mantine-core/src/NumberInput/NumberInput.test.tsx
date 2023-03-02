@@ -7,10 +7,14 @@ import {
   itSupportsSystemProps,
   itSupportsInputProps,
   itSupportsFocusEvents,
+  itSupportsProviderVariant,
+  itSupportsProviderSize,
 } from '@mantine/tests';
 import { NumberInput, NumberInputHandlers, NumberInputProps } from './NumberInput';
 
-const defaultProps: NumberInputProps = {};
+const defaultProps: NumberInputProps = {
+  label: 'test-label',
+};
 
 const getRightSection = (container: HTMLElement) =>
   container.querySelector('.mantine-NumberInput-rightSection');
@@ -40,6 +44,20 @@ describe('@mantine/core/NumberInput', () => {
     othersSelector: 'input',
     providerName: 'NumberInput',
   });
+
+  itSupportsProviderVariant(NumberInput, defaultProps, 'NumberInput', [
+    'root',
+    'input',
+    'label',
+    'control',
+  ]);
+
+  itSupportsProviderSize(NumberInput, defaultProps, 'NumberInput', [
+    'root',
+    'input',
+    'label',
+    'control',
+  ]);
 
   itSupportsInputProps(NumberInput, defaultProps, 'NumberInput');
   itSupportsFocusEvents(NumberInput, defaultProps, 'input');
@@ -92,12 +110,12 @@ describe('@mantine/core/NumberInput', () => {
     expect(spy).toHaveBeenLastCalledWith(10);
   });
 
-  it('returns undefined when input is empty', async () => {
+  it('returns empty string when input is empty', async () => {
     const spy = jest.fn();
     render(<NumberInput value={5} max={10} min={0} step={6} onChange={spy} />);
     expectValue('5');
     await enterText('{backspace}');
-    expect(spy).toHaveBeenLastCalledWith(undefined);
+    expect(spy).toHaveBeenLastCalledWith('');
     expectValue('');
   });
 
@@ -212,11 +230,11 @@ describe('@mantine/core/NumberInput', () => {
     const spy = jest.fn();
     render(<NumberInput min={-3} onChange={spy} />);
     await enterText('-');
-    expect(spy).not.toBeCalled();
+    expect(spy).not.toHaveBeenCalled();
     await enterText('3');
     expect(spy).toHaveBeenLastCalledWith(-3);
     await enterText('{arrowdown}');
-    expect(spy).toBeCalledTimes(1);
+    expect(spy).toHaveBeenCalledTimes(1);
   });
 
   it('uses startValue as first value when no initial value was set', async () => {
@@ -224,5 +242,14 @@ describe('@mantine/core/NumberInput', () => {
     render(<NumberInput startValue={3} onChange={spy} />);
     await enterText('{arrowup}');
     expect(getInput()).toHaveValue('3');
+  });
+
+  it('resets displayed value to value prop when input is controlled', async () => {
+    render(<NumberInput value={3} />);
+    expectValue('3');
+    await enterText('45');
+    expectValue('345');
+    await userEvent.tab();
+    expectValue('3');
   });
 });

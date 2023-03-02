@@ -1,11 +1,11 @@
 import React from 'react';
 import { useForm } from '@mantine/form';
 import { MantineDemo } from '@mantine/ds';
-import { TextInput, Button, Group } from '@mantine/core';
+import { TextInput, Button, Group, Box } from '@mantine/core';
 
 const code = `
 import { useForm } from '@mantine/form';
-import { TextInput, Button, Group } from '@mantine/core';
+import { TextInput, Button, Group, Box } from '@mantine/core';
 
 function Demo() {
   const form = useForm({
@@ -16,7 +16,7 @@ function Demo() {
   });
 
   return (
-    <div style={{ maxWidth: 320, margin: 'auto' }}>
+    <Box maw={320} mx="auto">
       <TextInput label="Name" placeholder="Name" {...form.getInputProps('name')} />
       <TextInput mt="md" label="Email" placeholder="Email" {...form.getInputProps('email')} />
 
@@ -25,7 +25,7 @@ function Demo() {
           Reset to initial values
         </Button>
       </Group>
-    </div>
+    </Box>
   );
 }
 `;
@@ -39,7 +39,7 @@ function Demo() {
   });
 
   return (
-    <div style={{ maxWidth: 320, margin: 'auto' }}>
+    <Box maw={320} mx="auto">
       <TextInput label="Name" placeholder="Name" {...form.getInputProps('name')} />
       <TextInput mt="md" label="Email" placeholder="Email" {...form.getInputProps('email')} />
 
@@ -48,7 +48,7 @@ function Demo() {
           Reset to initial values
         </Button>
       </Group>
-    </div>
+    </Box>
   );
 }
 

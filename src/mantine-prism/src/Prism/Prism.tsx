@@ -23,6 +23,8 @@ export type PrismStylesNames = Selectors<typeof useStyles>;
 export interface PrismProps
   extends DefaultProps<PrismStylesNames>,
     Omit<React.ComponentPropsWithRef<'div'>, 'children'> {
+  variant?: string;
+
   /** Code which will be highlighted */
   children: string;
 
@@ -53,7 +55,7 @@ export interface PrismProps
   /** Defines whether the code should be trimmed, defaults to true */
   trim?: boolean;
 
-  /** Key of theme.radius or number to set border-radius in px */
+  /** Key of theme.radius or any valid CSS value to set border-radius, theme.defaultRadius by default */
   radius?: MantineNumberSize;
 
   /** Provide custom color scheme */
@@ -89,6 +91,7 @@ export const Prism = forwardRef<HTMLDivElement, PrismProps>((props: PrismProps, 
     unstyled,
     radius,
     getPrismTheme,
+    variant,
     ...others
   } = useComponentDefaultProps('Prism', prismDefaultProps, props);
   const code = trim && typeof children === 'string' ? children.trim() : children;
@@ -104,7 +107,7 @@ export const Prism = forwardRef<HTMLDivElement, PrismProps>((props: PrismProps, 
       maxLineSize,
       radius,
     },
-    { classNames, styles, unstyled, name: 'Prism' }
+    { name: 'Prism', classNames, styles, unstyled, variant }
   );
 
   return (

@@ -1,4 +1,4 @@
-import { createStyles, MantineNumberSize, MantineTheme } from '@mantine/core';
+import { createStyles, MantineNumberSize, MantineTheme, rem } from '@mantine/core';
 
 interface CodeDemoStylesParams {
   radius: MantineNumberSize;
@@ -11,7 +11,7 @@ export default createStyles((theme: MantineTheme, { radius }: CodeDemoStylesPara
 
   demo: {
     maxWidth: '100%',
-    border: `1px solid ${
+    border: `${rem(1)} solid ${
       theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[1]
     }`,
     position: 'relative',
@@ -27,7 +27,7 @@ export default createStyles((theme: MantineTheme, { radius }: CodeDemoStylesPara
     borderBottomRightRadius: theme.fn.radius(radius),
     borderBottomLeftRadius: theme.fn.radius(radius),
     marginTop: 0,
-    border: `1px solid ${
+    border: `${rem(1)} solid ${
       theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[1]
     }`,
   },
@@ -38,12 +38,12 @@ export default createStyles((theme: MantineTheme, { radius }: CodeDemoStylesPara
   },
 
   controls: {
-    marginTop: `calc(${theme.spacing.xs}px - 1px)`,
+    marginTop: `calc(${theme.spacing.xs} - ${rem(1)})`,
     alignItems: 'flex-end',
   },
 
   withToggle: {
-    paddingRight: 50,
-    minHeight: 80,
+    paddingRight: rem(50),
+    minHeight: rem(80),
   },
 }));

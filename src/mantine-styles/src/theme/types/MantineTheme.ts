@@ -12,7 +12,7 @@ export type MantineThemeOther = Record<string, any>;
 export type MantineThemeComponents = Record<string, ThemeComponent>;
 
 export interface HeadingStyle {
-  fontSize: CSSProperties['fontSize'];
+  fontSize: string;
   fontWeight: CSSProperties['fontWeight'];
   lineHeight: CSSProperties['lineHeight'];
 }
@@ -41,7 +41,6 @@ interface MantineThemeFunctions {
     useSplittedShade?: boolean
   ): string;
   rgba(color: string, alpha: number): string;
-  size(props: { size: string | number; sizes: Record<string, any> }): any;
   linearGradient(deg: number, ...colors: string[]): string;
   radialGradient(...colors: string[]): string;
   gradient(gradient?: MantineGradient): string;
@@ -55,6 +54,7 @@ interface MantineThemeFunctions {
   hover(hoverStyle: CSSObject): any;
   primaryColor(colorScheme?: ColorScheme): string;
   placeholderStyles(): any;
+  dimmed(): string;
 }
 
 export interface MantineTheme {
@@ -63,7 +63,6 @@ export interface MantineTheme {
   focusRing: 'auto' | 'always' | 'never';
   defaultRadius: MantineNumberSize | (string & {});
   loader: LoaderType;
-  dateFormat: string;
   colorScheme: ColorScheme;
   white: string;
   black: string;
@@ -105,12 +104,29 @@ export interface MantineTheme {
   focusRingStyles: MantineFocusRingStyles;
 }
 
+export interface ContextStylesParams {
+  variant?: string;
+  size?: string | number;
+}
+
 interface ThemeComponent {
   defaultProps?: Record<string, any> | ((theme: MantineTheme) => Record<string, any>);
   classNames?: Record<string, string>;
   styles?:
     | Record<string, CSSObject>
-    | ((theme: MantineTheme, params: any) => Record<string, CSSObject>);
+    | ((
+        theme: MantineTheme,
+        params: any,
+        context: ContextStylesParams
+      ) => Record<string, CSSObject>);
+  variants?: Record<
+    PropertyKey,
+    (theme: MantineTheme, params: any, context: ContextStylesParams) => Record<string, CSSObject>
+  >;
+  sizes?: Record<
+    PropertyKey,
+    (theme: MantineTheme, params: any, context: ContextStylesParams) => Record<string, CSSObject>
+  >;
 }
 
 export type MantineThemeBase = Omit<MantineTheme, 'fn'>;

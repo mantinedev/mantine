@@ -12,6 +12,7 @@ interface RichTextEditorContext {
   classNames: ClassNames<RichTextEditorStylesNames>;
   styles: Styles<RichTextEditorStylesNames>;
   unstyled: boolean;
+  variant: string;
 }
 
 export const [RichTextEditorProvider, useRichTextEditorContext] =

@@ -1,5 +1,5 @@
 import React, { forwardRef } from 'react';
-import { useComponentDefaultProps, useMantineTheme } from '@mantine/styles';
+import { useComponentDefaultProps, rem } from '@mantine/styles';
 import { createPolymorphicComponent } from '@mantine/utils';
 import { ActionIcon, ActionIconProps } from '../ActionIcon/ActionIcon';
 import { CloseIcon } from './CloseIcon';
@@ -7,34 +7,32 @@ import { CloseIcon } from './CloseIcon';
 export interface CloseButtonProps
   extends Omit<ActionIconProps, 'children'>,
     Omit<React.ComponentPropsWithoutRef<'button'>, 'color'> {
-  /** Width and height of cross icon */
-  iconSize?: number;
+  /** Width and height of X icon */
+  iconSize?: number | string;
 }
 
 const iconSizes = {
-  xs: 12,
-  sm: 14,
-  md: 16,
-  lg: 20,
-  xl: 24,
+  xs: rem(12),
+  sm: rem(16),
+  md: rem(20),
+  lg: rem(28),
+  xl: rem(34),
 };
 
 const defaultProps: Partial<CloseButtonProps> = {
-  size: 'md',
+  size: 'sm',
 };
 
 export const _CloseButton = forwardRef<HTMLButtonElement, CloseButtonProps>((props, ref) => {
-  const {
-    iconSize,
-    size = 'md',
-    ...others
-  } = useComponentDefaultProps('CloseButton', defaultProps, props);
-  const theme = useMantineTheme();
-  const _iconSize = iconSize || theme.fn.size({ size, sizes: iconSizes });
-
+  const { iconSize, size, children, ...others } = useComponentDefaultProps(
+    'CloseButton',
+    defaultProps,
+    props
+  );
+  const _iconSize = rem(iconSize || iconSizes[size]);
   return (
-    <ActionIcon size={size} ref={ref} {...others}>
-      <CloseIcon width={_iconSize} height={_iconSize} />
+    <ActionIcon ref={ref} __staticSelector="CloseButton" size={size} {...others}>
+      {children || <CloseIcon width={_iconSize} height={_iconSize} />}
     </ActionIcon>
   );
 });

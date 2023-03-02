@@ -1,7 +1,7 @@
 import React from 'react';
 import { useHover } from '@mantine/hooks';
 import { MantineDemo } from '@mantine/ds';
-import { useMantineTheme, Text } from '@mantine/core';
+import { useMantineTheme, Text, rem } from '@mantine/core';
 
 const code = `
 import { useHover } from '@mantine/hooks';
@@ -23,7 +23,7 @@ function Demo() {
     <div
       ref={ref}
       style={{
-        height: 60,
+        height: rem(60),
         backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.blue[0],
         display: 'flex',
         alignItems: 'center',

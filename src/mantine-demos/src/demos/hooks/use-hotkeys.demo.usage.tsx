@@ -1,19 +1,19 @@
 import React, { useState } from 'react';
 import { getHotkeyHandler, useHotkeys } from '@mantine/hooks';
-import { showNotification } from '@mantine/notifications';
+import { notifications } from '@mantine/notifications';
 import { MantineDemo } from '@mantine/ds';
 import { TextInput } from '@mantine/core';
 
 const code = `
 import { useState } from 'react';
 import { getHotkeyHandler } from '@mantine/hooks';
-import { showNotification } from '@mantine/notifications';
+import { notifications } from '@mantine/notifications';
 import { TextInput } from '@mantine/core';
 
 function Demo() {
   const [value, setValue] = useState("I've just used a hotkey to send a message");
-  const handleSubmit = () => showNotification({ title: 'Your message', message: value });
-  const handleSave = () => showNotification({ title: 'You saved', color: 'teal', message: value });
+  const handleSubmit = () => notifications.show({ title: 'Your message', message: value });
+  const handleSave = () => notifications.show({ title: 'You saved', color: 'teal', message: value });
 
   return (
     <TextInput
@@ -41,8 +41,9 @@ function Demo() {
   ]);
 
   const [value, setValue] = useState("I've just used a hotkey to send a message");
-  const handleSubmit = () => showNotification({ title: 'Your message', message: value });
-  const handleSave = () => showNotification({ title: 'You saved', color: 'teal', message: value });
+  const handleSubmit = () => notifications.show({ title: 'Your message', message: value });
+  const handleSave = () =>
+    notifications.show({ title: 'You saved', color: 'teal', message: value });
 
   return (
     <TextInput

@@ -1,5 +1,5 @@
 import React from 'react';
-import { DEFAULT_THEME } from '@mantine/styles';
+import { DEFAULT_THEME, rem } from '@mantine/styles';
 import { render } from '@testing-library/react';
 
 export function itSupportsMargins<P>(Component: React.ComponentType<P>, requiredProps: P) {
@@ -13,13 +13,13 @@ export function itSupportsMargins<P>(Component: React.ComponentType<P>, required
     const { container: mr } = render(<Component {...requiredProps} mr={98} />);
     const { container: ml } = render(<Component {...requiredProps} ml={11} />);
 
-    expect(m.firstChild).toHaveStyle({ margin: '45px' });
-    expect(theme.firstChild).toHaveStyle({ margin: `${DEFAULT_THEME.spacing.xl}px` });
-    expect(mx.firstChild).toHaveStyle({ marginLeft: '34px', marginRight: '34px' });
-    expect(my.firstChild).toHaveStyle({ marginTop: '22px', marginBottom: '22px' });
-    expect(mt.firstChild).toHaveStyle({ marginTop: '13px' });
-    expect(mb.firstChild).toHaveStyle({ marginBottom: '43px' });
-    expect(mr.firstChild).toHaveStyle({ marginRight: '98px' });
-    expect(ml.firstChild).toHaveStyle({ marginLeft: '11px' });
+    expect(m.firstChild).toHaveStyle({ margin: rem(45) });
+    expect(theme.firstChild).toHaveStyle({ margin: `${DEFAULT_THEME.spacing.xl}` });
+    expect(mx.firstChild).toHaveStyle({ marginLeft: rem(34), marginRight: rem(34) });
+    expect(my.firstChild).toHaveStyle({ marginTop: rem(22), marginBottom: rem(22) });
+    expect(mt.firstChild).toHaveStyle({ marginTop: rem(13) });
+    expect(mb.firstChild).toHaveStyle({ marginBottom: rem(43) });
+    expect(mr.firstChild).toHaveStyle({ marginRight: rem(98) });
+    expect(ml.firstChild).toHaveStyle({ marginLeft: rem(11) });
   });
 }

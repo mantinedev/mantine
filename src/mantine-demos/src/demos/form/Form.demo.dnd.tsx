@@ -3,13 +3,13 @@ import { Group, TextInput, Box, Text, Code, Button, Center } from '@mantine/core
 import { useForm } from '@mantine/form';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import { MantineDemo } from '@mantine/ds';
-import { IconGripVertical } from '@tabler/icons';
+import { IconGripVertical } from '@tabler/icons-react';
 
 const code = `
 import { Group, TextInput, Box, Text, Code, Button, Center } from '@mantine/core';
 import { useForm } from '@mantine/form';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
-import { IconGripVertical } from '@tabler/icons';
+import { IconGripVertical } from '@tabler/icons-react';
 
 function Demo() {
   const form = useForm({
@@ -29,7 +29,7 @@ function Demo() {
       {(provided) => (
         <Group ref={provided.innerRef} mt="xs" {...provided.draggableProps}>
           <Center {...provided.dragHandleProps}>
-            <IconGripVertical size={18} />
+            <IconGripVertical size="1.2rem" />
           </Center>
           <TextInput placeholder="John Doe" {...form.getInputProps(\`employees.\${index}.name\`)} />
           <TextInput
@@ -42,7 +42,7 @@ function Demo() {
   ));
 
   return (
-    <Box sx={{ maxWidth: 500 }} mx="auto">
+    <Box maw={500} mx="auto">
       <DragDropContext
         onDragEnd={({ destination, source }) =>
           form.reorderListItem('employees', { from: source.index, to: destination.index })
@@ -91,7 +91,7 @@ function Demo() {
       {(provided) => (
         <Group ref={provided.innerRef} mt="xs" {...provided.draggableProps}>
           <Center {...provided.dragHandleProps}>
-            <IconGripVertical size={18} />
+            <IconGripVertical size="1.2rem" />
           </Center>
           <TextInput placeholder="John Doe" {...form.getInputProps(`employees.${index}.name`)} />
           <TextInput
@@ -104,7 +104,7 @@ function Demo() {
   ));
 
   return (
-    <Box sx={{ maxWidth: 500 }} mx="auto">
+    <Box maw={500} mx="auto">
       <DragDropContext
         onDragEnd={({ destination, source }) =>
           form.reorderListItem('employees', { from: source.index, to: destination.index })

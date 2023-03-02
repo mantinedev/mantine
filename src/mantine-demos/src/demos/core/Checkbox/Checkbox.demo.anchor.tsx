@@ -10,8 +10,8 @@ function Demo() {
     <Checkbox
       label={
         <>
-          Accepts{' '}
-          <Anchor size="sm" href="https://mantine.dev" target="_blank">
+          I accept{' '}
+          <Anchor href="https://mantine.dev" target="_blank">
             terms and conditions
           </Anchor>
         </>
@@ -26,8 +26,8 @@ function Demo() {
     <Checkbox
       label={
         <>
-          Accepts{' '}
-          <Anchor size="sm" href="https://mantine.dev" target="_blank">
+          I accept{' '}
+          <Anchor href="https://mantine.dev" target="_blank">
             terms and conditions
           </Anchor>
         </>

@@ -33,8 +33,8 @@ export const TabsList = forwardRef<HTMLDivElement, TabsListProps>((props, ref) =
   const { orientation, variant, color, radius, inverted, placement, classNames, styles, unstyled } =
     useTabsContext();
   const { classes, cx } = useStyles(
-    { orientation, grow, variant, color, position, radius, inverted, placement },
-    { name: 'Tabs', unstyled, classNames, styles }
+    { orientation, grow, color, position, radius, inverted, placement },
+    { name: 'Tabs', unstyled, classNames, styles, variant }
   );
 
   return (

@@ -1,39 +1,23 @@
 import React from 'react';
-import { IconClock } from '@tabler/icons';
 import { MantineDemo } from '@mantine/ds';
+import { IconClock } from '@tabler/icons-react';
 import { TimeInput } from '@mantine/dates';
 
 const code = `
+import { IconClock } from '@tabler/icons-react';
 import { TimeInput } from '@mantine/dates';
-import { IconClock } from '@tabler/icons';
 
 function Demo() {
-  return (
-    <TimeInput
-      label="Pick time"
-      placeholder="Pick time"
-      icon={<IconClock size={16} />}
-      defaultValue={new Date()}
-    />
-  );
+  return <TimeInput icon={<IconClock size="1rem" stroke={1.5} />} maw={400} mx="auto" />;
 }
 `;
 
 function Demo() {
-  return (
-    <div style={{ maxWidth: 320, marginLeft: 'auto', marginRight: 'auto' }}>
-      <TimeInput
-        label="Pick time"
-        placeholder="Pick time"
-        icon={<IconClock size={16} />}
-        defaultValue={new Date()}
-      />
-    </div>
-  );
+  return <TimeInput icon={<IconClock size="1rem" stroke={1.5} />} maw={400} mx="auto" />;
 }
 
 export const icon: MantineDemo = {
   type: 'demo',
-  code,
   component: Demo,
+  code,
 };
