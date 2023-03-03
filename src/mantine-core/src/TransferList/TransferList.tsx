@@ -1,6 +1,6 @@
-import React, { forwardRef } from 'react';
+import React, { useRef, forwardRef } from 'react';
 import { DefaultProps, MantineNumberSize, useComponentDefaultProps } from '@mantine/styles';
-import { useUncontrolled } from '@mantine/hooks';
+import { useShallowEffect, useUncontrolled } from '@mantine/hooks';
 import { RenderList, RenderListStylesNames } from './RenderList/RenderList';
 import { SelectScrollArea } from '../Select/SelectScrollArea/SelectScrollArea';
 import { DefaultItem } from './DefaultItem/DefaultItem';
@@ -21,6 +21,9 @@ export interface TransferListProps
 
   /** Initial items selection */
   initialSelection?: Selection;
+
+  /** Called when one of the selected items changes */
+  onSelectionChange?(value: Selection): void;
 
   /** Custom item component */
   itemComponent?: TransferListItemComponent;
@@ -103,6 +106,7 @@ export const TransferList = forwardRef<HTMLDivElement, TransferListProps>((props
     placeholder,
     titles,
     initialSelection,
+    onSelectionChange,
     listHeight,
     listComponent,
     showTransferAll,
@@ -118,6 +122,8 @@ export const TransferList = forwardRef<HTMLDivElement, TransferListProps>((props
     ...others
   } = useComponentDefaultProps('TransferList', defaultProps, props);
 
+  const mounted = useRef(false);
+
   const [selection, handlers] = useSelectionState(initialSelection);
   const [search, handleSearch] = useUncontrolled({
     value: searchValues,
@@ -125,6 +131,11 @@ export const TransferList = forwardRef<HTMLDivElement, TransferListProps>((props
     finalValue: ['', ''],
     onChange: onSearch,
   });
+
+  useShallowEffect(() => {
+    if (mounted.current) onSelectionChange?.(selection);
+    else mounted.current = true;
+  }, selection);
 
   const handleMoveAll = (listIndex: 0 | 1) => {
     const items: TransferListData = Array(2) as any;
