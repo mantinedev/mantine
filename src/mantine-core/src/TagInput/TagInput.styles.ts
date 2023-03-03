@@ -1,5 +1,6 @@
-import { createStyles, getSize, MantineSize } from '@mantine/styles';
+import { createStyles, getSize, MantineSize, rem } from '@mantine/styles';
 import { INPUT_SIZES } from '../Input';
+import { sizes as DEFAULT_VALUE_SIZES } from './DefaultValue/DefaultValue.styles';
 
 interface TagInputStyles {
   size: MantineSize;
@@ -9,14 +10,6 @@ interface TagInputStyles {
 
 export type InputFieldPosition = 'inside' | 'top' | 'bottom';
 
-export const RIGHT_SECTION_WIDTH = {
-  xs: 24,
-  sm: 30,
-  md: 34,
-  lg: 44,
-  xl: 54,
-};
-
 export default createStyles(
   (theme, { size, invalid, inputFieldPosition }: TagInputStyles) => ({
     wrapper: {
@@ -24,24 +17,27 @@ export default createStyles(
     },
 
     values: {
-      minHeight: getSize({ size, sizes: INPUT_SIZES }),
+      minHeight: `calc(${getSize({ size, sizes: INPUT_SIZES })} - ${rem(2)})`,
       display: 'flex',
       alignItems: 'center',
       flexWrap: 'wrap',
-      marginLeft: `calc(${-theme.spacing.xs}px / 2)`,
-      paddingTop: `calc(${theme.spacing.xs}px / 2 - 2px)`,
-      paddingBottom: `calc(${theme.spacing.xs}px / 2 - 2px)`,
+      marginLeft: `calc(-${theme.spacing.xs} / 2)`,
       boxSizing: 'border-box',
       width: '100%',
+
+      '&[data-clearable]': {
+        marginRight: getSize({ size, sizes: INPUT_SIZES }),
+      },
     },
 
     value: {
-      margin: `calc(${theme.spacing.xs}px / 2 - 2px) calc(${theme.spacing.xs}px / 2)`,
+      margin: `calc(${theme.spacing.xs} / 2 - ${rem(2)}) calc(${theme.spacing.xs} / 2)`,
     },
 
     tagInput: {
+      ...theme.fn.fontStyles(),
       flex: 1,
-      width: 60,
+      width: rem(60),
       minWidth: inputFieldPosition !== 'inside' ? '90%' : 'auto',
       backgroundColor: 'transparent',
       border: 0,
@@ -51,6 +47,8 @@ export default createStyles(
       margin: `calc(${theme.spacing.xs}px / 2)`,
       appearance: 'none',
       color: 'inherit',
+      lineHeight: `calc(${getSize({ size, sizes: INPUT_SIZES })} - ${rem(2)})`,
+      maxHeight: getSize({ size, sizes: DEFAULT_VALUE_SIZES }),
 
       '&::placeholder': {
         color: invalid
