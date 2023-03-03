@@ -1,6 +1,6 @@
 import React, { useState, useRef, forwardRef } from 'react';
 import { useUncontrolled, useMergedRef, useId } from '@mantine/hooks';
-import { DefaultProps, MantineSize, Selectors } from '@mantine/styles';
+import { DefaultProps, MantineSize, Selectors, useComponentDefaultProps } from '@mantine/styles';
 import { Input } from '../Input';
 import { extractSystemStyles } from '../Box';
 import { CloseButton } from '../CloseButton';
@@ -105,300 +105,331 @@ const uniq = (arr = []) => {
   return out;
 };
 
-export const TagInput = forwardRef<HTMLInputElement, TagInputProps>(
-  (
-    {
-      className,
-      style,
-      required,
-      label,
-      description,
-      size = 'sm',
-      error,
-      classNames,
-      styles,
-      wrapperProps,
-      value,
-      defaultValue,
-      onChange = () => {},
-      valueComponent: Value = DefaultValue,
-      id,
-      onFocus,
-      onBlur,
-      placeholder,
-      clearable = false,
-      clearInputOnBlur = false,
-      variant,
-      onChangeInput,
-      disabled = false,
-      radius = 'sm',
-      icon,
-      rightSection,
-      sx,
-      maxTags,
-      name,
-      addOnPaste = true,
-      pasteSplit = defaultPasteSplit,
-      validationRegex = /.*/,
-      onValidationReject = () => {},
-      onlyUnique = false,
-      inputFieldPosition = 'inside',
-      ...others
-    }: TagInputProps,
-    ref
-  ) => {
-    const { classes, cx } = useStyles(
-      { size, invalid: !!error, inputFieldPosition },
-      { classNames, styles, name: 'TagInput' }
-    );
-    const { systemStyles, rest } = extractSystemStyles(others);
+const defaultProps: Partial<TagInputProps> = {
+  size: 'sm',
+  valueComponent: DefaultValue,
+  disabled: false,
+  addOnPaste: true,
+  onlyUnique: false,
+  pasteSplit: defaultPasteSplit,
+  validationRegex: /.*/,
+  onValidationReject: () => {},
+  inputFieldPosition: 'inside',
+};
 
-    const inputRef = useRef<HTMLInputElement>();
-    const wrapperRef = useRef<HTMLDivElement>();
-    const uuid = useId(id);
-    const [inputValue, setInputValue] = useState('');
-    const [IMEOpen, setIMEOpen] = useState(false);
+export const TagInput = forwardRef<HTMLInputElement, TagInputProps>((props, ref) => {
+  const {
+    className,
+    style,
+    required,
+    label,
+    description,
+    size,
+    error,
+    classNames,
+    styles,
+    wrapperProps,
+    value,
+    defaultValue,
+    onChange,
+    valueComponent: Value,
+    id,
+    onFocus,
+    onBlur,
+    placeholder,
+    clearable,
+    variant,
+    disabled,
+    radius,
+    icon,
+    rightSection,
+    rightSectionWidth,
+    sx,
+    name,
+    errorProps,
+    labelProps,
+    descriptionProps,
+    form,
+    onKeyDown,
+    unstyled,
+    inputContainer,
+    inputWrapperOrder,
+    readOnly,
+    withAsterisk,
+    clearInputOnBlur = false,
+    onChangeInput,
+    maxTags,
+    addOnPaste,
+    pasteSplit,
+    validationRegex,
+    onValidationReject,
+    onlyUnique,
+    inputFieldPosition,
+    ...others
+  } = useComponentDefaultProps('TagInput', defaultProps, props);
 
-    const [_value, setValue] = useUncontrolled({
-      value,
-      defaultValue,
-      finalValue: [],
-      onChange,
-    });
+  const { classes, cx } = useStyles(
+    { invalid: !!error, inputFieldPosition },
+    { name: 'TagInput', classNames, styles, size, variant, unstyled }
+  );
+  const { systemStyles, rest } = extractSystemStyles(others);
 
-    const valuesOverflow = useRef(!!maxTags && maxTags < _value.length);
+  const inputRef = useRef<HTMLInputElement>();
+  const wrapperRef = useRef<HTMLDivElement>();
+  const uuid = useId(id);
+  const [inputValue, setInputValue] = useState('');
+  const [IMEOpen, setIMEOpen] = useState(false);
 
-    const handleValueRemove = (_val: string) => {
-      const newValue = _value.filter((val) => val !== _val);
-      setValue(newValue);
+  const [_value, setValue] = useUncontrolled({
+    value,
+    defaultValue,
+    finalValue: [],
+    onChange,
+  });
 
-      if (!!maxTags && newValue.length < maxTags) {
-        valuesOverflow.current = false;
-      }
-    };
+  const valuesOverflow = useRef(!!maxTags && maxTags < _value.length);
 
-    const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-      typeof onChangeInput === 'function' && onChangeInput(event.currentTarget.value);
-      setInputValue(event.currentTarget.value);
-    };
+  const handleValueRemove = (_val: string) => {
+    const newValue = _value.filter((val) => val !== _val);
+    setValue(newValue);
 
-    const handleInputFocus = (event: React.FocusEvent<HTMLInputElement>) => {
-      typeof onFocus === 'function' && onFocus(event);
-    };
-
-    const handleInputBlur = (event: React.FocusEvent<HTMLInputElement>) => {
-      typeof onBlur === 'function' && onBlur(event);
-      clearInputOnBlur && setInputValue('');
-    };
-
-    const handleAddTags = (newTags: string[]): boolean => {
-      let tags = newTags;
-      if (onlyUnique) {
-        tags = uniq(tags);
-        tags = tags.filter((tag) => _value.every((currentTag) => currentTag !== tag));
-      }
-
-      const rejectedTags = tags.filter((tag) => !validationRegex.test(tag));
-
-      if (maxTags >= 0) {
-        const remainingLimit = Math.max(maxTags - _value.length, 0);
-        tags = tags.slice(0, remainingLimit);
-      }
-
-      if (onValidationReject && rejectedTags.length > 0) {
-        onValidationReject(rejectedTags);
-      }
-
-      if (rejectedTags.length > 0) {
-        return false;
-      }
-
-      if (tags.length > 0) {
-        const newValue = _value.concat(tags);
-        setValue(newValue);
-        setInputValue('');
-        return true;
-      }
-
-      setInputValue('');
-      return false;
-    };
-
-    const handleInputKeydown = (event: React.KeyboardEvent<HTMLInputElement>) => {
-      if (IMEOpen) {
-        return;
-      }
-      switch (event.key) {
-        case 'Enter': {
-          if (inputValue) {
-            event.preventDefault();
-
-            handleAddTags([inputValue]);
-            if (_value.length === maxTags - 1) {
-              valuesOverflow.current = true;
-              inputRef.current?.blur();
-              return;
-            }
-            inputRef.current?.focus();
-          }
-
-          break;
-        }
-
-        case 'Backspace': {
-          if (_value.length > 0 && inputValue.length === 0) {
-            setValue(_value.slice(0, -1));
-          }
-
-          break;
-        }
-      }
-    };
-
-    const selectedItems = _value
-      .map((val) => {
-        const selectedItem = {
-          value: val,
-          label: val,
-        };
-        return selectedItem;
-      })
-      .filter((val) => !!val)
-      .map((item) => (
-        <Value
-          {...item}
-          disabled={disabled}
-          className={classes.value}
-          onRemove={() => {
-            handleValueRemove(item.value);
-          }}
-          key={item.value}
-          size={size}
-          styles={styles}
-          classNames={classNames}
-          radius={radius}
-        />
-      ));
-
-    const handleClear = (): void => {
-      setInputValue('');
-      setValue([]);
-      inputRef.current?.focus();
+    if (!!maxTags && newValue.length < maxTags) {
       valuesOverflow.current = false;
-    };
+    }
+  };
 
-    const handlePaste = (e: React.ClipboardEvent): void => {
-      if (!addOnPaste) {
-        return;
+  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    typeof onChangeInput === 'function' && onChangeInput(event.currentTarget.value);
+    setInputValue(event.currentTarget.value);
+  };
+
+  const handleInputFocus = (event: React.FocusEvent<HTMLInputElement>) => {
+    typeof onFocus === 'function' && onFocus(event);
+  };
+
+  const handleInputBlur = (event: React.FocusEvent<HTMLInputElement>) => {
+    typeof onBlur === 'function' && onBlur(event);
+    clearInputOnBlur && setInputValue('');
+  };
+
+  const handleAddTags = (newTags: string[]): boolean => {
+    let tags = newTags;
+    if (onlyUnique) {
+      tags = uniq(tags);
+      tags = tags.filter((tag) => _value.every((currentTag) => currentTag !== tag));
+    }
+
+    const rejectedTags = tags.filter((tag) => !validationRegex.test(tag));
+
+    if (maxTags >= 0) {
+      const remainingLimit = Math.max(maxTags - _value.length, 0);
+      tags = tags.slice(0, remainingLimit);
+    }
+
+    if (onValidationReject && rejectedTags.length > 0) {
+      onValidationReject(rejectedTags);
+    }
+
+    if (rejectedTags.length > 0) {
+      return false;
+    }
+
+    if (tags.length > 0) {
+      const newValue = _value.concat(tags);
+      setValue(newValue);
+      setInputValue('');
+      return true;
+    }
+
+    setInputValue('');
+    return false;
+  };
+
+  const handleInputKeydown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (IMEOpen) {
+      return;
+    }
+    switch (event.key) {
+      case 'Enter': {
+        if (inputValue) {
+          event.preventDefault();
+
+          handleAddTags([inputValue]);
+          if (_value.length === maxTags - 1) {
+            valuesOverflow.current = true;
+            inputRef.current?.blur();
+            return;
+          }
+          inputRef.current?.focus();
+        }
+
+        break;
       }
 
-      e.preventDefault();
-      const data = getClipboardData(e);
-      const tags = pasteSplit(data);
-      handleAddTags(tags);
-    };
+      case 'Backspace': {
+        if (_value.length > 0 && inputValue.length === 0) {
+          setValue(_value.slice(0, -1));
+        }
 
-    const inputElement = (
-      <input
-        ref={useMergedRef(ref, inputRef)}
-        type="text"
-        id={uuid}
-        className={cx(classes.tagInput, {
-          [classes.tagInputEmpty]: _value.length === 0,
-        })}
-        onKeyDown={handleInputKeydown}
-        value={inputValue}
-        onChange={handleInputChange}
-        onFocus={handleInputFocus}
-        onCompositionStart={() => setIMEOpen(true)}
-        onCompositionEnd={() => setIMEOpen(false)}
-        onBlur={handleInputBlur}
-        readOnly={valuesOverflow.current}
-        placeholder={_value.length === 0 ? placeholder : undefined}
+        break;
+      }
+    }
+  };
+
+  const selectedItems = _value
+    .map((val) => {
+      const selectedItem = {
+        value: val,
+        label: val,
+      };
+      return selectedItem;
+    })
+    .filter((val) => !!val)
+    .map((item) => (
+      <Value
+        {...item}
+        variant={variant}
         disabled={disabled}
-        autoComplete="off"
-        {...rest}
-      />
-    );
-
-    return (
-      <Input.Wrapper
-        required={required}
-        id={uuid}
-        label={label}
-        error={error}
-        description={description}
+        className={classes.value}
+        onRemove={() => {
+          handleValueRemove(item.value);
+        }}
+        key={item.value}
         size={size}
-        className={className}
-        style={style}
-        classNames={classNames}
         styles={styles}
-        __staticSelector="TagInput"
-        sx={sx}
-        {...systemStyles}
-        {...wrapperProps}
-      >
-        <div
-          className={classes.wrapper}
-          aria-haspopup="listbox"
-          aria-owns={`${uuid}-items`}
-          aria-controls={uuid}
-          tabIndex={-1}
-          ref={wrapperRef}
-        >
-          {inputFieldPosition === 'top' && (
-            <div className={cx(classes.values)}>{selectedItems}</div>
-          )}
-          <Input<'div'>
-            __staticSelector="TagInput"
-            style={{ overflow: 'hidden' }}
-            component="div"
-            multiline
-            size={size}
-            variant={variant}
-            disabled={disabled}
-            error={error}
-            required={required}
-            radius={radius}
-            icon={icon}
-            onMouseDown={(event) => {
-              event.preventDefault();
-              !disabled && !valuesOverflow.current;
-              inputRef.current?.focus();
-            }}
-            classNames={{
-              ...classNames,
-            }}
-            rightSection={
-              !disabled && clearable && _value.length > 0 ? (
-                <CloseButton variant="transparent" onClick={handleClear} size={size} />
-              ) : (
-                rightSection
-              )
-            }
-            onPaste={handlePaste}
-          >
-            <div className={classes.values} id={`${uuid}-items`}>
-              {inputFieldPosition === 'inside' && (
-                <div className={classes.values}>
-                  {selectedItems}
-                  {inputElement}
-                </div>
-              )}
-              {(inputFieldPosition === 'bottom' || inputFieldPosition === 'top') && (
-                <>{inputElement}</>
-              )}
-            </div>
-          </Input>
-          {inputFieldPosition === 'bottom' && (
-            <div className={cx(classes.values)}>{selectedItems}</div>
-          )}
-        </div>
+        classNames={classNames}
+        radius={radius}
+      />
+    ));
 
-        {name && <input type="hidden" name={name} value={_value.join(',')} />}
-      </Input.Wrapper>
-    );
-  }
-);
+  const handleClear = (): void => {
+    setInputValue('');
+    setValue([]);
+    inputRef.current?.focus();
+    valuesOverflow.current = false;
+  };
+
+  const handlePaste = (e: React.ClipboardEvent): void => {
+    if (!addOnPaste) {
+      return;
+    }
+
+    e.preventDefault();
+    const data = getClipboardData(e);
+    const tags = pasteSplit(data);
+    handleAddTags(tags);
+  };
+
+  const inputElement = (
+    <input
+      ref={useMergedRef(ref, inputRef)}
+      type="text"
+      id={uuid}
+      className={cx(classes.tagInput, {
+        [classes.tagInputEmpty]: _value.length === 0,
+      })}
+      onKeyDown={handleInputKeydown}
+      value={inputValue}
+      onChange={handleInputChange}
+      onFocus={handleInputFocus}
+      onCompositionStart={() => setIMEOpen(true)}
+      onCompositionEnd={() => setIMEOpen(false)}
+      onBlur={handleInputBlur}
+      readOnly={valuesOverflow.current}
+      placeholder={_value.length === 0 ? placeholder : undefined}
+      disabled={disabled}
+      autoComplete="off"
+      {...rest}
+    />
+  );
+
+  return (
+    <Input.Wrapper
+      required={required}
+      id={uuid}
+      label={label}
+      error={error}
+      description={description}
+      size={size}
+      className={className}
+      style={style}
+      classNames={classNames}
+      styles={styles}
+      __staticSelector="TagInput"
+      sx={sx}
+      errorProps={errorProps}
+      descriptionProps={descriptionProps}
+      labelProps={labelProps}
+      inputContainer={inputContainer}
+      inputWrapperOrder={inputWrapperOrder}
+      unstyled={unstyled}
+      withAsterisk={withAsterisk}
+      variant={variant}
+      {...systemStyles}
+      {...wrapperProps}
+    >
+      <div
+        className={classes.wrapper}
+        aria-haspopup="listbox"
+        aria-owns={`${uuid}-items`}
+        aria-controls={uuid}
+        tabIndex={-1}
+        ref={wrapperRef}
+      >
+        {inputFieldPosition === 'top' && (
+          <div className={classes.values} id={`${uuid}-items`}>
+            {selectedItems}
+          </div>
+        )}
+        <Input<'div'>
+          __staticSelector="TagInput"
+          style={{ overflow: 'hidden' }}
+          component="div"
+          multiline
+          size={size}
+          variant={variant}
+          disabled={disabled}
+          error={error}
+          required={required}
+          radius={radius}
+          icon={icon}
+          unstyled={unstyled}
+          onMouseDown={(event) => {
+            event.preventDefault();
+            !disabled && !valuesOverflow.current;
+            inputRef.current?.focus();
+          }}
+          classNames={{
+            ...classNames,
+            input: cx(classes.tagInputContainer, classNames?.input),
+          }}
+          rightSection={
+            !disabled && clearable && _value.length > 0 ? (
+              <CloseButton variant="transparent" onClick={handleClear} size={size} />
+            ) : (
+              rightSection
+            )
+          }
+          onPaste={handlePaste}
+        >
+          {inputFieldPosition === 'inside' && (
+            <div className={classes.values} id={`${uuid}-items`}>
+              {selectedItems}
+              {inputElement}
+            </div>
+          )}
+          {(inputFieldPosition === 'bottom' || inputFieldPosition === 'top') && <>{inputElement}</>}
+        </Input>
+        {inputFieldPosition === 'bottom' && (
+          <div className={classes.values} id={`${uuid}-items`}>
+            {selectedItems}
+          </div>
+        )}
+      </div>
+
+      <input type="hidden" name={name} value={_value.join(',')} form={form} disabled={disabled} />
+    </Input.Wrapper>
+  );
+});
 
 TagInput.displayName = '@mantine/core/TagInput';

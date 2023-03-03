@@ -18,6 +18,7 @@ export interface TagInputValueProps
   disabled: boolean;
   size: MantineSize;
   radius: MantineNumberSize;
+  variant: string;
 }
 
 const buttonSizes = {
@@ -36,17 +37,19 @@ export function DefaultValue({
   onRemove,
   disabled,
   size,
-  radius,
+  radius = 'sm',
+  variant,
+  unstyled,
   ...others
 }: TagInputValueProps) {
   const { classes, cx } = useStyles(
-    { size, disabled, radius },
-    { classNames, styles, name: 'TagInput' }
+    { disabled, radius },
+    { classNames, styles, name: 'TagInput', size, variant, unstyled }
   );
 
   return (
     <div className={cx(classes.defaultValue, className)} {...others}>
-      <span className={classes.label}>{label}</span>
+      <span className={classes.defaultValueLabel}>{label}</span>
 
       {!disabled && (
         <CloseButton
@@ -56,9 +59,10 @@ export function DefaultValue({
           radius={2}
           color="blue"
           variant="transparent"
-          iconSize={buttonSizes[size] / 2}
+          iconSize="70%"
           className={classes.defaultValueRemove}
           tabIndex={-1}
+          unstyled={unstyled}
         />
       )}
     </div>

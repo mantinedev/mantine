@@ -12,7 +12,9 @@ export const TagInput: Record<TagInputStylesNames, string> = {
   value: 'Value element',
   tagInput: 'Tag input, rendered after all values',
   defaultValue: 'Default value component wrapper',
+  defaultValueLabel: 'Default value label',
   defaultValueRemove: 'Default value remove control',
+  tagInputContainer: 'Tag Input, Container before Input',
   ...InputStyles,
   ...InputWrapper,
 };
