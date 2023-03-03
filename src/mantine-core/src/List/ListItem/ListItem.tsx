@@ -35,18 +35,20 @@ export const ListItem = forwardRef<HTMLLIElement, ListItemProps>((props, ref) =>
     classNames,
     styles,
     unstyled,
+    variant,
   } = useListContext();
 
   const _icon = icon || ctxIcon;
   const { classes, cx } = useStyles(
-    { withPadding, size, listStyleType, center, spacing },
-    { classNames, styles, unstyled, name: 'List' }
+    { withPadding, listStyleType, center, spacing },
+    { classNames, styles, unstyled, name: 'List', variant, size }
   );
 
   return (
     <Box
       component="li"
-      className={cx(classes.item, { [classes.withIcon]: _icon }, className)}
+      className={cx(classes.item, className)}
+      data-with-icon={!!_icon || undefined}
       ref={ref}
       {...others}
     >

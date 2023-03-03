@@ -66,7 +66,7 @@ describe('@mantine/hooks/use-timeout', () => {
 
     advanceTimerToNextTick();
 
-    expect(callback).toBeCalled();
+    expect(callback).toHaveBeenCalled();
     expect(setTimeout).toHaveBeenCalled();
   });
 
@@ -84,7 +84,7 @@ describe('@mantine/hooks/use-timeout', () => {
 
     advanceTimerToNextTick();
 
-    expect(callback).not.toBeCalled();
+    expect(callback).not.toHaveBeenCalled();
     expect(setTimeout).toHaveBeenCalled();
     expect(clearTimeout).toHaveBeenCalled();
   });
@@ -101,6 +101,6 @@ describe('@mantine/hooks/use-timeout', () => {
     advanceTimerToNextTick();
 
     expect(setTimeout).toHaveBeenCalled();
-    expect(callback).toBeCalledWith([MOCK_CALLBACK_VALUE]);
+    expect(callback).toHaveBeenCalledWith([MOCK_CALLBACK_VALUE]);
   });
 });

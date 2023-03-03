@@ -1,13 +1,13 @@
 import React from 'react';
-import { TimelineProps } from '@mantine/core';
+import { TimelineProps, Box } from '@mantine/core';
 import { MantineDemo } from '@mantine/ds';
 import { TimelineBase } from './_base';
 
 function Wrapper(props: TimelineProps) {
   return (
-    <div style={{ maxWidth: 320, margin: 'auto' }}>
+    <Box maw={320} mx="auto">
       <TimelineBase noIcon {...props} />
-    </div>
+    </Box>
   );
 }
 

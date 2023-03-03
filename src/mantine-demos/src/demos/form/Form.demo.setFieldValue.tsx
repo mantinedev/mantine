@@ -1,12 +1,12 @@
 import React from 'react';
 import { useForm } from '@mantine/form';
-import { TextInput, Button, Group } from '@mantine/core';
+import { TextInput, Button, Group, Box } from '@mantine/core';
 import { MantineDemo } from '@mantine/ds';
 import { randomId } from '@mantine/hooks';
 
 const code = `
 import { useForm } from '@mantine/form';
-import { TextInput, Button, Group } from '@mantine/core';
+import { TextInput, Button, Group, Box } from '@mantine/core';
 import { randomId } from '@mantine/hooks';
 
 function Demo() {
@@ -18,7 +18,7 @@ function Demo() {
   });
 
   return (
-    <div style={{ maxWidth: 320, margin: 'auto' }}>
+    <Box maw={320} mx="auto">
       <TextInput label="Name" placeholder="Name" {...form.getInputProps('name')} />
       <TextInput mt="md" label="Email" placeholder="Email" {...form.getInputProps('email')} />
 
@@ -33,7 +33,7 @@ function Demo() {
           Random email
         </Button>
       </Group>
-    </div>
+    </Box>
   );
 }
 `;
@@ -47,7 +47,7 @@ function Demo() {
   });
 
   return (
-    <div style={{ maxWidth: 320, margin: 'auto' }}>
+    <Box maw={320} mx="auto">
       <TextInput label="Name" placeholder="Name" {...form.getInputProps('name')} />
       <TextInput mt="md" label="Email" placeholder="Email" {...form.getInputProps('email')} />
 
@@ -62,7 +62,7 @@ function Demo() {
           Random email
         </Button>
       </Group>
-    </div>
+    </Box>
   );
 }
 

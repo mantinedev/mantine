@@ -1,5 +1,4 @@
 import React from 'react';
-import { MantineProvider } from '@mantine/styles';
 import { Table } from './Table';
 
 export default { title: 'Table' };
@@ -23,21 +22,19 @@ const rows = elements.map((element) => (
 
 export function Usage() {
   return (
-    <MantineProvider inherit theme={{ spacing: { xs: 0, sm: 2, md: 4, lg: 8, xl: 12 } }}>
-      <div style={{ padding: 40 }}>
-        <Table verticalSpacing="xl" horizontalSpacing="xs" fontSize="xl" striped>
-          <thead>
-            <tr>
-              <th>Element position</th>
-              <th>Element name</th>
-              <th>Symbol</th>
-              <th>Atomic mass</th>
-            </tr>
-          </thead>
-          <tbody>{rows}</tbody>
-        </Table>
-      </div>
-    </MantineProvider>
+    <div style={{ padding: 40 }}>
+      <Table verticalSpacing="xl" horizontalSpacing="xs" fontSize="xl" striped>
+        <thead>
+          <tr>
+            <th>Element position</th>
+            <th>Element name</th>
+            <th>Symbol</th>
+            <th>Atomic mass</th>
+          </tr>
+        </thead>
+        <tbody>{rows}</tbody>
+      </Table>
+    </div>
   );
 }
 

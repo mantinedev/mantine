@@ -9,6 +9,7 @@ export type RatingItemStylesNames = Selectors<typeof useStyles>;
 export interface RatingItemProps
   extends DefaultProps<RatingItemStylesNames>,
     Omit<React.ComponentPropsWithoutRef<'input'>, 'value' | 'size'> {
+  variant: string;
   size: MantineSize;
   getSymbolLabel: (value: number) => string;
   emptyIcon?: React.ReactNode | ((value: number) => React.ReactNode);
@@ -19,6 +20,7 @@ export interface RatingItemProps
   fractionValue: number;
   value: number;
   id: string;
+  onChange(event: React.ChangeEvent<HTMLInputElement> | number): void;
 }
 
 export function RatingItem({
@@ -36,9 +38,18 @@ export function RatingItem({
   unstyled,
   color,
   id,
+  variant,
+  onChange,
   ...others
 }: RatingItemProps) {
-  const { classes } = useStyles(null, { name: 'Rating', classNames, styles, unstyled });
+  const { classes } = useStyles(null, {
+    name: 'Rating',
+    classNames,
+    styles,
+    unstyled,
+    size,
+    variant,
+  });
   const _fullIcon = typeof fullIcon === 'function' ? fullIcon(value) : fullIcon;
   const _emptyIcon = typeof emptyIcon === 'function' ? emptyIcon(value) : emptyIcon;
 
@@ -46,12 +57,14 @@ export function RatingItem({
     <>
       {!readOnly && (
         <input
+          onKeyDown={(event) => event.key === ' ' && onChange(value)}
           className={classes.input}
           id={id}
           type="radio"
           data-active={active}
           aria-label={getSymbolLabel(value)}
           value={value}
+          onChange={onChange}
           {...others}
         />
       )}
@@ -62,6 +75,7 @@ export function RatingItem({
         data-read-only={readOnly || undefined}
         htmlFor={id}
         sx={fractionValue === 1 ? undefined : { zIndex: active ? 2 : 0 }}
+        onClick={() => onChange(value)}
       >
         <Box
           className={classes.symbolBody}

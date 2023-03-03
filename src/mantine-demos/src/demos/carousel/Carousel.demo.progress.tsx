@@ -1,13 +1,13 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { Carousel, Embla } from '@mantine/carousel';
-import { Progress } from '@mantine/core';
+import { Progress, rem } from '@mantine/core';
 import { MantineDemo } from '@mantine/ds';
 import { Slides } from './_slides';
 
 const code = `
 import { useCallback, useEffect, useState } from 'react';
 import { Carousel, Embla } from '@mantine/carousel';
-import { Progress } from '@mantine/core';
+import { Progress, rem } from '@mantine/core';
 
 function Demo() {
   const [scrollProgress, setScrollProgress] = useState(0);
@@ -43,7 +43,7 @@ function Demo() {
       </Carousel>
       <Progress
         value={scrollProgress}
-        styles={{ bar: { transitionDuration: '0ms' }, root: { maxWidth: 320 } }}
+        styles={{ bar: { transitionDuration: '0ms' }, root: { maxWidth: rem(320) } }}
         size="sm"
         mt="xl"
         mx="auto"
@@ -84,7 +84,7 @@ function Demo() {
       </Carousel>
       <Progress
         value={scrollProgress}
-        styles={{ bar: { transitionDuration: '0ms' }, root: { maxWidth: 320 } }}
+        styles={{ bar: { transitionDuration: '0ms' }, root: { maxWidth: rem(320) } }}
         size="sm"
         mt="xl"
         mx="auto"

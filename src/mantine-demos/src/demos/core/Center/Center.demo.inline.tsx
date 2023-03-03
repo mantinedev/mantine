@@ -1,17 +1,17 @@
 import React from 'react';
-import { IconArrowLeft, IconArrowRight } from '@tabler/icons';
+import { IconArrowLeft, IconArrowRight } from '@tabler/icons-react';
 import { MantineDemo } from '@mantine/ds';
-import { Center, useMantineTheme, Anchor, Box } from '@mantine/core';
+import { Center, useMantineTheme, Anchor, Box, rem } from '@mantine/core';
 
 const code = `
-import { Center, Anchor, Box } from '@mantine/core';
-import { IconArrowLeft } from '@tabler/icons';
+import { Center, Anchor, Box, rem } from '@mantine/core';
+import { IconArrowLeft } from '@tabler/icons-react';
 
 function Demo() {
   return (
     <Anchor href="https://mantine.dev" target="_blank">
       <Center inline>
-        <IconArrowLeft size={14} />
+        <IconArrowLeft size={rem(14)} />
         <Box ml={5}>Back to Mantine website</Box>
       </Center>
     </Anchor>
@@ -24,7 +24,7 @@ function Demo() {
   return (
     <Anchor href="https://mantine.dev" target="_blank">
       <Center inline>
-        {theme.dir === 'ltr' ? <IconArrowLeft size={14} /> : <IconArrowRight size={14} />}
+        {theme.dir === 'ltr' ? <IconArrowLeft size={rem(14)} /> : <IconArrowRight size={rem(14)} />}
         <Box ml={5}>Back to Mantine website</Box>
       </Center>
     </Anchor>

@@ -1,5 +1,4 @@
 import React from 'react';
-import { Container } from '@mantine/core';
 import { MantineDemo } from '@mantine/ds';
 import { TimeInput } from '@mantine/dates';
 
@@ -7,20 +6,16 @@ const code = `
 import { TimeInput } from '@mantine/dates';
 
 function Demo() {
-  return <TimeInput label="What time is it now?" withSeconds defaultValue={new Date()} />;
+  return <TimeInput withSeconds maw={400} mx="auto" />;
 }
 `;
 
 function Demo() {
-  return (
-    <Container size={340}>
-      <TimeInput label="What time is it now?" withSeconds defaultValue={new Date()} />
-    </Container>
-  );
+  return <TimeInput withSeconds maw={400} mx="auto" />;
 }
 
 export const withSeconds: MantineDemo = {
   type: 'demo',
-  code,
   component: Demo,
+  code,
 };

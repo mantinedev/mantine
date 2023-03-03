@@ -1,10 +1,10 @@
 import React from 'react';
-import { Text } from '@mantine/core';
+import { Text, rem } from '@mantine/core';
 import { MantineDemo } from '@mantine/ds';
 import { Dropzone, IMAGE_MIME_TYPE } from '@mantine/dropzone';
 
 const code = `
-import { Text } from '@mantine/core';
+import { Text, rem } from '@mantine/core';
 import { Dropzone, IMAGE_MIME_TYPE } from '@mantine/dropzone';
 
 function Demo() {
@@ -13,7 +13,7 @@ function Demo() {
       onDrop={() => {}}
       accept={IMAGE_MIME_TYPE}
       sx={(theme) => ({
-        minHeight: 120,
+        minHeight: rem(120),
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
@@ -43,7 +43,7 @@ function Demo() {
       onDrop={() => {}}
       accept={IMAGE_MIME_TYPE}
       sx={(theme) => ({
-        minHeight: 120,
+        minHeight: rem(120),
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',

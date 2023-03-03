@@ -23,16 +23,18 @@ interface ProgressSection extends React.ComponentPropsWithRef<'div'> {
 export interface ProgressProps
   extends DefaultProps<ProgressStylesNames, ProgressStylesParams>,
     React.ComponentPropsWithoutRef<'div'> {
+  variant?: string;
+
   /** Percent of filled bar (0-100) */
   value?: number;
 
   /** Progress color from theme */
   color?: MantineColor;
 
-  /** Predefined progress height or number for height in px */
+  /** Height of progress bar */
   size?: MantineNumberSize;
 
-  /** Predefined progress radius from theme.radius or number for height in px */
+  /** Key of theme.radius or any valid CSS value to set border-radius, theme.defaultRadius by default */
   radius?: MantineNumberSize;
 
   /** Adds stripes */
@@ -84,12 +86,13 @@ export const Progress = forwardRef<HTMLDivElement, ProgressProps>((props, ref) =
     styles,
     sections,
     unstyled,
+    variant,
     ...others
   } = useComponentDefaultProps('Progress', defaultProps, props);
 
   const { classes, cx, theme } = useStyles(
-    { color, size, radius, striped: striped || animate, animate },
-    { classNames, styles, unstyled, name: 'Progress' }
+    { color, radius },
+    { name: 'Progress', classNames, styles, unstyled, variant, size }
   );
 
   const segments = Array.isArray(sections)
@@ -109,6 +112,8 @@ export const Progress = forwardRef<HTMLDivElement, ProgressProps>((props, ref) =
             <Box
               {...sectionProps}
               className={cx(classes.bar, sectionProps.className)}
+              data-striped={striped || animate || undefined}
+              data-animate={animate || undefined}
               sx={{
                 width: `${sectionValue}%`,
                 left: `${accumulated}%`,
@@ -137,6 +142,8 @@ export const Progress = forwardRef<HTMLDivElement, ProgressProps>((props, ref) =
           aria-label={ariaLabel}
           className={classes.bar}
           style={{ width: `${value}%` }}
+          data-striped={striped || animate || undefined}
+          data-animate={animate || undefined}
         >
           {label ? <Text className={classes.label}>{label}</Text> : ''}
         </div>

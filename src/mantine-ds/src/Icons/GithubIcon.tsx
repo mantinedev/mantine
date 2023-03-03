@@ -1,7 +1,8 @@
 import React from 'react';
+import { rem } from '@mantine/core';
 
 interface GithubIconProps extends React.ComponentPropsWithoutRef<'svg'> {
-  size?: number;
+  size?: number | string;
 }
 
 export function GithubIcon({ size, ...others }: GithubIconProps) {
@@ -9,8 +10,8 @@ export function GithubIcon({ size, ...others }: GithubIconProps) {
     <svg
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 16 16"
-      width={size}
-      height={size}
+      width={rem(size)}
+      height={rem(size)}
       fill="currentColor"
       {...others}
     >

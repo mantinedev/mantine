@@ -18,6 +18,8 @@ export type StepperStylesNames = Selectors<typeof useStyles> | StepStylesNames;
 export interface StepperProps
   extends DefaultProps<StepperStylesNames>,
     React.ComponentPropsWithRef<'div'> {
+  variant?: string;
+
   /** <Stepper.Step /> components only */
   children: React.ReactNode;
 
@@ -39,10 +41,10 @@ export interface StepperProps
   /** Active and progress Step colors from theme.colors */
   color?: MantineColor;
 
-  /** Step icon size in px */
+  /** Step icon size */
   iconSize?: number;
 
-  /** Content padding-top from theme.spacing or number to set value in px */
+  /** Key of theme.spacing or any valid CSS value to set content padding-top */
   contentPadding?: MantineNumberSize;
 
   /** Component orientation */
@@ -54,7 +56,7 @@ export interface StepperProps
   /** Component size */
   size?: MantineSize;
 
-  /** Radius from theme.radius, or number to set border-radius in px */
+  /** Key of theme.radius or any valid CSS value to set border-radius, "xl" by default */
   radius?: MantineNumberSize;
 
   /** Breakpoint at which orientation will change from horizontal to vertical */
@@ -102,12 +104,13 @@ export const Stepper: StepperComponent = forwardRef<HTMLDivElement, StepperProps
     classNames,
     styles,
     unstyled,
+    variant,
     ...others
   } = useComponentDefaultProps('Stepper', defaultProps, props);
 
   const { classes, cx } = useStyles(
-    { contentPadding, color, orientation, iconPosition, size, iconSize, breakpoint },
-    { classNames, styles, unstyled, name: 'Stepper' }
+    { contentPadding, color, orientation, iconPosition, iconSize, breakpoint },
+    { name: 'Stepper', classNames, styles, unstyled, variant, size }
   );
 
   const convertedChildren = Children.toArray(children) as React.ReactElement[];
@@ -138,6 +141,7 @@ export const Stepper: StepperComponent = forwardRef<HTMLDivElement, StepperProps
         icon: item.props.icon || icon || index + 1,
         key: index,
         step: index,
+        variant,
         state,
         onClick: () => isStepSelectionEnabled && onStepClick(index),
         allowStepClick: isStepSelectionEnabled,

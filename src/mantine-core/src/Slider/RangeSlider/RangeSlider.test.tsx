@@ -1,6 +1,11 @@
 import React from 'react';
 import { render } from '@testing-library/react';
-import { checkAccessibility, itSupportsSystemProps } from '@mantine/tests';
+import {
+  checkAccessibility,
+  itSupportsSystemProps,
+  itSupportsProviderVariant,
+  itSupportsProviderSize,
+} from '@mantine/tests';
 import { RangeSlider } from './RangeSlider';
 
 const defaultProps = {
@@ -16,6 +21,8 @@ const expectInputValue = (value: string, container: HTMLElement, index: 0 | 1) =
 
 describe('@mantine/core/RangeSlider', () => {
   checkAccessibility([<RangeSlider {...defaultProps} />]);
+  itSupportsProviderVariant(RangeSlider, defaultProps, 'Slider');
+  itSupportsProviderSize(RangeSlider, defaultProps, 'Slider');
   itSupportsSystemProps({
     component: RangeSlider,
     props: defaultProps,

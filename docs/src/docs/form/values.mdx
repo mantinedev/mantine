@@ -64,6 +64,35 @@ For example, it can be used to merge several fields into one or to convert types
 
 <Demo data={FormDemos.transformValues} />
 
+## Get transformed values
+
+You can get transformed values outside of `form.onSubmit` method by calling `form.getTransformedValues`.
+It accepts `values` that need to be transformed as optional argument, if it is not provided, then
+the result of `form.values` transformation will be returned instead:
+
+```tsx
+import { useForm } from '@mantine/form';
+
+function Demo() {
+  const form = useForm({
+    initialValues: {
+      firstName: 'John',
+      lastName: 'Doe',
+    },
+
+    transformValues: (values) => ({
+      fullName: `${values.firstName} ${values.lastName}`,
+    }),
+  });
+
+  form.getTransformedValues(); // -> { fullName: 'John Doe' }
+  form.getTransformedValues({
+    firstName: 'Jane',
+    lastName: 'Loe',
+  }); // { fullName: 'Jane Loe' }
+}
+```
+
 ## Get values type
 
 ```tsx

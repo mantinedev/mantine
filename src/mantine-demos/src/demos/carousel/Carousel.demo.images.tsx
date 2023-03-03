@@ -18,7 +18,7 @@ function Demo() {
   ));
 
   return (
-    <Carousel sx={{ maxWidth: 320 }} mx="auto" withIndicators>
+    <Carousel maw={320} mx="auto" withIndicators>
       {slides}
     </Carousel>
   );
@@ -33,7 +33,7 @@ function Demo() {
   ));
 
   return (
-    <Carousel sx={{ maxWidth: 320 }} mx="auto" withIndicators>
+    <Carousel maw={320} mx="auto" withIndicators>
       {slides}
     </Carousel>
   );

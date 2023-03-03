@@ -43,6 +43,10 @@ export function mergeTheme(
     return acc;
   }, {} as MantineThemeBase);
 
+  if (themeOverride?.fontFamily && !themeOverride?.headings?.fontFamily) {
+    result.headings.fontFamily = themeOverride.fontFamily as string;
+  }
+
   if (!(result.primaryColor in result.colors)) {
     throw new Error(
       'MantineProvider: Invalid theme.primaryColor, it accepts only key of theme.colors, learn more – https://mantine.dev/theming/colors/#primary-color'

@@ -28,13 +28,18 @@ export const TabsPanel = forwardRef<HTMLDivElement, TabsPanelProps>((props, ref)
   const { classes, cx } = useStyles(
     {
       orientation: ctx.orientation,
-      variant: ctx.variant,
       color: ctx.color,
       radius: ctx.radius,
       inverted: ctx.inverted,
       placement: ctx.placement,
     },
-    { name: 'Tabs', unstyled: ctx.unstyled, classNames: ctx.classNames, styles: ctx.styles }
+    {
+      name: 'Tabs',
+      unstyled: ctx.unstyled,
+      classNames: ctx.classNames,
+      styles: ctx.styles,
+      variant: ctx.variant,
+    }
   );
 
   const active = ctx.value === value;

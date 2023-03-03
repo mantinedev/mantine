@@ -13,7 +13,7 @@ const defaultProps: PopoverProps = {
 
 function TestContainer(props: Partial<PopoverProps>) {
   return (
-    <Popover transitionDuration={0} {...props}>
+    <Popover transitionProps={{ duration: 0 }} {...props}>
       <Popover.Target>
         <button type="button">test-target</button>
       </Popover.Target>
@@ -28,7 +28,7 @@ function TestContainer(props: Partial<PopoverProps>) {
   );
 }
 
-describe('@mantine/core/component', () => {
+describe('@mantine/core/Popover', () => {
   checkAccessibility([<TestContainer opened />, <TestContainer opened={false} />]);
   itRendersChildren(Popover, defaultProps);
 

@@ -1,21 +1,20 @@
-import { createStyles, MantineNumberSize, MantineColor } from '@mantine/styles';
+import { createStyles, MantineColor, rem, getSize } from '@mantine/styles';
 import { sizes } from '../SliderRoot/SliderRoot.styles';
 
 interface ThumbStyles {
   color: MantineColor;
-  size: MantineNumberSize;
   disabled: boolean;
-  thumbSize: number;
+  thumbSize: number | string;
 }
 
-export default createStyles((theme, { color, size, disabled, thumbSize }: ThumbStyles) => ({
+export default createStyles((theme, { color, disabled, thumbSize }: ThumbStyles, { size }) => ({
   label: {
     position: 'absolute',
-    top: -36,
+    top: rem(-36),
     backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[9],
     fontSize: theme.fontSizes.xs,
     color: theme.white,
-    padding: `calc(${theme.spacing.xs}px / 2)`,
+    padding: `calc(${theme.spacing.xs} / 2)`,
     borderRadius: theme.radius.sm,
     whiteSpace: 'nowrap',
     pointerEvents: 'none',
@@ -28,13 +27,13 @@ export default createStyles((theme, { color, size, disabled, thumbSize }: ThumbS
     boxSizing: 'border-box',
     position: 'absolute',
     display: disabled ? 'none' : 'flex',
-    height: thumbSize || theme.fn.size({ sizes, size }) * 2,
-    width: thumbSize || theme.fn.size({ sizes, size }) * 2,
+    height: thumbSize ? rem(thumbSize) : `calc(${getSize({ sizes, size })} * 2)`,
+    width: thumbSize ? rem(thumbSize) : `calc(${getSize({ sizes, size })} * 2)`,
     backgroundColor:
       theme.colorScheme === 'dark'
         ? theme.fn.themeColor(color, theme.fn.primaryShade())
         : theme.white,
-    border: `4px solid ${
+    border: `${rem(4)} solid ${
       theme.colorScheme === 'dark'
         ? theme.white
         : theme.fn.themeColor(color, theme.fn.primaryShade())

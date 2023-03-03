@@ -1,4 +1,8 @@
-import { itRendersChildren, itSupportsSystemProps } from '@mantine/tests';
+import {
+  itRendersChildren,
+  itSupportsSystemProps,
+  itSupportsProviderVariant,
+} from '@mantine/tests';
 import {
   TypographyStylesProvider,
   TypographyStylesProviderProps,
@@ -10,6 +14,7 @@ const defaultProps: TypographyStylesProviderProps = {
 
 describe('@mantine/core/TypographyStylesProvider', () => {
   itRendersChildren(TypographyStylesProvider, defaultProps);
+  itSupportsProviderVariant(TypographyStylesProvider, defaultProps, 'TypographyStylesProvider');
   itSupportsSystemProps({
     component: TypographyStylesProvider,
     props: defaultProps,

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Paper, Button, Group, useMantineTheme } from '@mantine/core';
+import { Paper, Button, Group, useMantineTheme, rem } from '@mantine/core';
 import { MantineDemo } from '@mantine/ds';
 import { useClickOutside } from '@mantine/hooks';
 
@@ -43,11 +43,11 @@ function Demo() {
             ref={ref}
             shadow="sm"
             sx={{
-              width: 300,
-              height: 60,
+              width: rem(300),
+              height: rem(60),
               position: 'absolute',
               top: 0,
-              left: 'calc(50% - 150px)',
+              left: `calc(50% - ${rem(150)})`,
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',

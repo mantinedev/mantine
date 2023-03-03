@@ -26,10 +26,16 @@ import { useState } from 'react';
 import { NumberInput } from '@mantine/core';
 
 function Demo() {
-  const [value, setValue] = useState(0);
-  return <NumberInput value={value} onChange={(val) => setValue(val)} />;
+  const [value, setValue] = useState<number | ''>(0);
+  return <NumberInput value={value} onChange={setValue} />;
 }
 ```
+
+## Input value type
+
+`NumberInput` value type `number | ''` (number or empty string). Empty string indicates
+that the input is empty. `number | ''` type is used in all props that contain value:
+`value`, `defaultValue`, `onChange`.
 
 ## Clamp on blur
 

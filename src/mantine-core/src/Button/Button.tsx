@@ -7,12 +7,14 @@ import {
   MantineColor,
   Selectors,
   useComponentDefaultProps,
+  Variants,
+  getSize,
 } from '@mantine/styles';
 import { createPolymorphicComponent } from '@mantine/utils';
 import { UnstyledButton } from '../UnstyledButton';
 import { Loader, LoaderProps } from '../Loader';
 import { ButtonGroup } from './ButtonGroup/ButtonGroup';
-import useStyles, { sizes, ButtonVariant, ButtonStylesParams } from './Button.styles';
+import useStyles, { sizes, ButtonStylesParams } from './Button.styles';
 
 export type ButtonStylesNames = Selectors<typeof useStyles>;
 
@@ -35,11 +37,11 @@ export interface ButtonProps extends DefaultProps<ButtonStylesNames, ButtonStyle
   /** Sets button width to 100% of parent element */
   fullWidth?: boolean;
 
-  /** Button border-radius from theme or number to set border-radius in px */
+  /** Key of theme.radius or any valid CSS value to set border-radius, theme.defaultRadius by default */
   radius?: MantineNumberSize;
 
   /** Controls button appearance */
-  variant?: ButtonVariant;
+  variant?: Variants<'filled' | 'outline' | 'light' | 'white' | 'default' | 'subtle' | 'gradient'>;
 
   /** Controls gradient settings in gradient variant only */
   gradient?: MantineGradient;
@@ -102,15 +104,13 @@ export const _Button = forwardRef<HTMLButtonElement, ButtonProps>((props, ref) =
     {
       radius,
       color,
-      size,
       fullWidth,
       compact,
       gradient,
-      variant,
       withLeftIcon: !!leftIcon,
       withRightIcon: !!rightIcon,
     },
-    { name: 'Button', unstyled, classNames, styles }
+    { name: 'Button', unstyled, classNames, styles, variant, size }
   );
 
   const colors = theme.fn.variant({ color, variant });
@@ -118,7 +118,7 @@ export const _Button = forwardRef<HTMLButtonElement, ButtonProps>((props, ref) =
   const loader = (
     <Loader
       color={colors.color}
-      size={theme.fn.size({ size, sizes }).height / 2}
+      size={`calc(${(getSize({ size, sizes }) as any).height} / 2)`}
       {...loaderProps}
     />
   );

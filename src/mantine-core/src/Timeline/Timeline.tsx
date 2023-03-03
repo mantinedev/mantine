@@ -5,14 +5,21 @@ import {
   MantineNumberSize,
   CSSObject,
   useComponentDefaultProps,
+  rem,
+  Selectors,
 } from '@mantine/styles';
 import { ForwardRefWithStaticComponents, packSx } from '@mantine/utils';
 import { Box } from '../Box';
 import { TimelineItem, TimelineItemStylesNames } from './TimelineItem/TimelineItem';
+import useStyles from './Timeline.styles';
+
+export type TimelineStylesNames = Selectors<typeof useStyles> | TimelineItemStylesNames;
 
 export interface TimelineProps
-  extends DefaultProps<TimelineItemStylesNames>,
+  extends DefaultProps<TimelineStylesNames>,
     React.ComponentPropsWithRef<'div'> {
+  variant?: string;
+
   /** <Timeline.Item /> components only */
   children: React.ReactNode;
 
@@ -22,17 +29,17 @@ export interface TimelineProps
   /** Active color from theme */
   color?: MantineColor;
 
-  /** Radius from theme.radius, or number to set border-radius in px */
+  /** Key of theme.radius or any valid CSS value to set border-radius, "xl" by default */
   radius?: MantineNumberSize;
 
-  /** Bullet size in px */
-  bulletSize?: number;
+  /** Bullet size */
+  bulletSize?: number | string;
 
   /** Timeline alignment */
   align?: 'right' | 'left';
 
-  /** Line width in px */
-  lineWidth?: number;
+  /** Line width */
+  lineWidth?: number | string;
 
   /** Reverse active direction without reversing items */
   reverseActive?: boolean;
@@ -55,6 +62,7 @@ const defaultProps: Partial<TimelineProps> = {
 export const Timeline: TimelineComponent = forwardRef<HTMLDivElement, TimelineProps>(
   (props, ref) => {
     const {
+      className,
       children,
       active,
       color,
@@ -67,12 +75,22 @@ export const Timeline: TimelineComponent = forwardRef<HTMLDivElement, TimelinePr
       sx,
       reverseActive,
       unstyled,
+      variant,
       ...others
     } = useComponentDefaultProps('Timeline', defaultProps, props);
+
+    const { classes, cx } = useStyles(null, {
+      name: 'Timeline',
+      classNames,
+      styles,
+      unstyled,
+      variant,
+    });
 
     const _children = Children.toArray(children);
     const items = _children.map((item: React.ReactElement, index) =>
       React.cloneElement(item, {
+        variant,
         classNames,
         styles,
         align,
@@ -92,11 +110,16 @@ export const Timeline: TimelineComponent = forwardRef<HTMLDivElement, TimelinePr
 
     const offset: CSSObject =
       align === 'left'
-        ? { paddingLeft: bulletSize / 2 + lineWidth / 2 }
-        : { paddingRight: bulletSize / 2 + lineWidth / 2 };
+        ? { paddingLeft: `calc(${rem(bulletSize)} / 2 + ${rem(lineWidth)} / 2)` }
+        : { paddingRight: `calc(${rem(bulletSize)} / 2 + ${rem(lineWidth)} / 2)` };
 
     return (
-      <Box ref={ref} sx={[offset, ...packSx(sx)]} {...others}>
+      <Box
+        className={cx(classes.root, className)}
+        ref={ref}
+        sx={[offset, ...packSx(sx)]}
+        {...others}
+      >
         {items}
       </Box>
     );

@@ -1,6 +1,6 @@
 import React from 'react';
 import { MantineDemo } from '@mantine/ds';
-import { createStyles, keyframes } from '@mantine/core';
+import { createStyles, keyframes, rem } from '@mantine/core';
 
 const code = `
 import { createStyles, keyframes } from '@mantine/core';
@@ -8,9 +8,9 @@ import { createStyles, keyframes } from '@mantine/core';
 // Export animation to reuse it in other components
 export const bounce = keyframes({
   'from, 20%, 53%, 80%, to': { transform: 'translate3d(0, 0, 0)' },
-  '40%, 43%': { transform: 'translate3d(0, -30px, 0)' },
-  '70%': { transform: 'translate3d(0, -15px, 0)' },
-  '90%': { transform: 'translate3d(0, -4px, 0)' },
+  '40%, 43%': { transform: 'translate3d(0, ${rem(-30)}, 0)' },
+  '70%': { transform: 'translate3d(0, ${rem(-15)}, 0)' },
+  '90%': { transform: 'translate3d(0, ${rem(-4)}, 0)' },
 });
 
 const useStyles = createStyles((theme) => ({
@@ -29,9 +29,9 @@ function Demo() {
 
 const bounce = keyframes({
   'from, 20%, 53%, 80%, to': { transform: 'translate3d(0, 0, 0)' },
-  '40%, 43%': { transform: 'translate3d(0, -30px, 0)' },
-  '70%': { transform: 'translate3d(0, -15px, 0)' },
-  '90%': { transform: 'translate3d(0, -4px, 0)' },
+  '40%, 43%': { transform: `translate3d(0, ${rem(-30)}, 0)` },
+  '70%': { transform: `translate3d(0, ${rem(-15)}, 0)` },
+  '90%': { transform: `translate3d(0, ${rem(-4)}, 0)` },
 });
 
 const useStyles = createStyles((theme) => ({

@@ -1,6 +1,6 @@
 import React from 'react';
 import { MDXProvider } from '@mdx-js/react';
-import { Code, Text } from '@mantine/core';
+import { Code, Anchor, rem } from '@mantine/core';
 import { Prism } from '@mantine/prism';
 import { Demo } from '@mantine/ds';
 import { KeyboardEventsTable } from './KeyboardEventsTable/KeyboardEventsTable';
@@ -24,27 +24,18 @@ export const components = {
   inlineCode: (props: any) => <Code {...props} />,
   a: ({ href, children }: { href: string; children: string }) => {
     const replaced = href.replace('https://mantine.dev', '');
-    const style = { fontSize: 15 };
 
     if (!replaced.startsWith('http') && replaced.trim().length > 0) {
-      return (
-        <GatsbyLink style={style} to={href.replace('https://mantine.dev', '')}>
-          {children}
-        </GatsbyLink>
-      );
+      return <GatsbyLink to={href.replace('https://mantine.dev', '')}>{children}</GatsbyLink>;
     }
 
-    return (
-      <Text style={style} component="a" variant="link" href={href}>
-        {children}
-      </Text>
-    );
+    return <Anchor href={href}>{children}</Anchor>;
   },
   p: (props: any) => <p {...props} style={{ lineHeight: 1.55 }} />,
   ul: (props: any) => (
-    <ul {...props} style={{ lineHeight: 1.65, marginBottom: 20, marginTop: 10 }} />
+    <ul {...props} style={{ lineHeight: 1.65, marginBottom: rem(20), marginTop: rem(10) }} />
   ),
-  li: (props: any) => <li {...props} style={{ marginTop: 4 }} />,
+  li: (props: any) => <li {...props} style={{ marginTop: rem(4) }} />,
   pre: (props: any) => {
     const matches = (props.children.props.className || '').match(/language-(?<lang>.*)/);
 

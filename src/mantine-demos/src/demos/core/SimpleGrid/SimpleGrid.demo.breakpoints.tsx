@@ -12,9 +12,9 @@ function Demo() {
       cols={4}
       spacing="lg"
       breakpoints={[
-        { maxWidth: 980, cols: 3, spacing: 'md' },
-        { maxWidth: 755, cols: 2, spacing: 'sm' },
-        { maxWidth: 600, cols: 1, spacing: 'sm' },
+        { maxWidth: '62rem', cols: 3, spacing: 'md' },
+        { maxWidth: '48rem', cols: 2, spacing: 'sm' },
+        { maxWidth: '36rem', cols: 1, spacing: 'sm' },
       ]}
     >
       <div>1</div>
@@ -34,9 +34,9 @@ function Demo() {
       spacing="lg"
       id="grid-breakpoints"
       breakpoints={[
-        { maxWidth: 980, cols: 3, spacing: 'md' },
-        { maxWidth: 755, cols: 2, spacing: 'sm' },
-        { maxWidth: 600, cols: 1, spacing: 'sm' },
+        { maxWidth: '62rem', cols: 3, spacing: 'md' },
+        { maxWidth: '48rem', cols: 2, spacing: 'sm' },
+        { maxWidth: '36rem', cols: 1, spacing: 'sm' },
       ]}
     >
       {defaultItems}

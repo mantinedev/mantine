@@ -130,22 +130,22 @@ const SelectItem = forwardRef<HTMLDivElement, ItemProps>(
 
 function Demo() {
   return (
-    <div style={{ maxWidth: 400, marginLeft: 'auto', marginRight: 'auto' }}>
-      <MultiSelect
-        label="Choose employees of the month"
-        placeholder="Pick all you like"
-        itemComponent={SelectItem}
-        data={data}
-        searchable
-        nothingFound="Nobody here"
-        maxDropdownHeight={400}
-        filter={(value, selected, item) =>
-          !selected &&
-          (item.label.toLowerCase().includes(value.toLowerCase().trim()) ||
-            item.description.toLowerCase().includes(value.toLowerCase().trim()))
-        }
-      />
-    </div>
+    <MultiSelect
+      maw={400}
+      mx="auto"
+      label="Choose employees of the month"
+      placeholder="Pick all you like"
+      itemComponent={SelectItem}
+      data={data}
+      searchable
+      nothingFound="Nobody here"
+      maxDropdownHeight={400}
+      filter={(value, selected, item) =>
+        !selected &&
+        (item.label.toLowerCase().includes(value.toLowerCase().trim()) ||
+          item.description.toLowerCase().includes(value.toLowerCase().trim()))
+      }
+    />
   );
 }
 

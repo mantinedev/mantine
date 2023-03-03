@@ -1,4 +1,5 @@
 import React from 'react';
+import { rem } from '@mantine/styles';
 
 export interface MantineTransitionStyles {
   common?: React.CSSProperties;
@@ -30,7 +31,7 @@ export type MantineTransition = MantineTransitionName | MantineTransitionStyles;
 
 const popIn = {
   in: { opacity: 1, transform: 'scale(1)' },
-  out: { opacity: 0, transform: 'scale(.9) translateY(10px)' },
+  out: { opacity: 0, transform: `scale(.9) translateY(${rem(10)})` },
   transitionProperty: 'transform, opacity',
 };
 
@@ -64,28 +65,28 @@ export const transitions: Record<MantineTransitionName, MantineTransitionStyles>
 
   'skew-up': {
     in: { opacity: 1, transform: 'translateY(0) skew(0deg, 0deg)' },
-    out: { opacity: 0, transform: 'translateY(-20px) skew(-10deg, -5deg)' },
+    out: { opacity: 0, transform: `translateY(-${rem(20)}) skew(-10deg, -5deg)` },
     common: { transformOrigin: 'top' },
     transitionProperty: 'transform, opacity',
   },
 
   'skew-down': {
     in: { opacity: 1, transform: 'translateY(0) skew(0deg, 0deg)' },
-    out: { opacity: 0, transform: 'translateY(20px) skew(-10deg, -5deg)' },
+    out: { opacity: 0, transform: `translateY(${rem(20)}) skew(-10deg, -5deg)` },
     common: { transformOrigin: 'bottom' },
     transitionProperty: 'transform, opacity',
   },
 
   'rotate-left': {
     in: { opacity: 1, transform: 'translateY(0) rotate(0deg)' },
-    out: { opacity: 0, transform: 'translateY(20px) rotate(-5deg)' },
+    out: { opacity: 0, transform: `translateY(${rem(20)}) rotate(-5deg)` },
     common: { transformOrigin: 'bottom' },
     transitionProperty: 'transform, opacity',
   },
 
   'rotate-right': {
     in: { opacity: 1, transform: 'translateY(0) rotate(0deg)' },
-    out: { opacity: 0, transform: 'translateY(20px) rotate(5deg)' },
+    out: { opacity: 0, transform: `translateY(${rem(20)}) rotate(5deg)` },
     common: { transformOrigin: 'top' },
     transitionProperty: 'transform, opacity',
   },

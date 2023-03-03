@@ -57,6 +57,10 @@ export type OnSubmit<Values, TransformValues extends _TransformValues<Values>> =
   ) => void
 ) => (event?: React.FormEvent<HTMLFormElement>) => void;
 
+export type GetTransformedValues<Values, TransformValues extends _TransformValues<Values>> = (
+  values?: Values
+) => ReturnType<TransformValues>;
+
 export type OnReset = (event: React.FormEvent<HTMLFormElement>) => void;
 
 export type GetInputProps<Values> = <Field extends LooseKeys<Values>>(
@@ -150,6 +154,7 @@ export interface UseFormReturnType<
   resetTouched: ResetStatus;
   resetDirty: ResetDirty<Values>;
   isValid: IsValid<Values>;
+  getTransformedValues: GetTransformedValues<Values, TransformValues>;
 }
 
 export type UseForm<

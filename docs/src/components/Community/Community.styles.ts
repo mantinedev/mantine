@@ -3,7 +3,6 @@ import { createStyles } from '@mantine/core';
 export default createStyles((theme) => ({
   card: {
     transition: 'box-shadow 100ms ease, transform 100ms ease, background-color 100ms ease',
-
     ...theme.fn.hover({
       boxShadow: theme.shadows.md,
       transform: theme.colorScheme === 'dark' ? 'none' : 'scale(1.01)',

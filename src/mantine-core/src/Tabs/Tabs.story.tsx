@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { IconPackage } from '@tabler/icons';
+import { IconPackage } from '@tabler/icons-react';
 import { MantineProvider } from '@mantine/styles';
 import { Tabs, TabsProps } from './Tabs';
 import { Badge } from '../Badge';

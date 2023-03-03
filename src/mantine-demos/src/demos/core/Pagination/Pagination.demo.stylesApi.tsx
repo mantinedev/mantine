@@ -28,7 +28,7 @@ function Demo() {
       total={10}
       position="center"
       styles={(theme) => ({
-        item: {
+        control: {
           '&[data-active]': {
             backgroundImage: theme.fn.gradient({ from: 'red', to: 'yellow' }),
           },

@@ -10,7 +10,9 @@ import { TOOLTIP_ERRORS } from '../Tooltip.errors';
 import { useFloatingTooltip } from './use-floating-tooltip';
 
 export interface TooltipFloatingProps extends TooltipBaseProps {
-  /** Offset from mouse in px */
+  variant?: string;
+
+  /** Offset from mouse */
   offset?: number;
 }
 
@@ -41,6 +43,7 @@ export function TooltipFloating(props: TooltipFloatingProps) {
     width,
     zIndex,
     disabled,
+    variant,
     ...others
   } = useComponentDefaultProps('TooltipFloating', defaultProps, props);
 
@@ -51,7 +54,7 @@ export function TooltipFloating(props: TooltipFloatingProps) {
 
   const { classes, cx } = useStyles(
     { radius, color, multiline, width },
-    { name: 'TooltipFloating', classNames, styles, unstyled }
+    { name: 'TooltipFloating', classNames, styles, unstyled, variant }
   );
 
   if (!isElement(children)) {
@@ -71,10 +74,6 @@ export function TooltipFloating(props: TooltipFloatingProps) {
     setOpened(false);
   };
 
-  if (disabled) {
-    return <>{children}</>;
-  }
-
   return (
     <>
       <OptionalPortal withinPortal={withinPortal}>
@@ -85,7 +84,7 @@ export function TooltipFloating(props: TooltipFloatingProps) {
           style={{
             ...style,
             zIndex,
-            display: opened ? 'block' : 'none',
+            display: !disabled && opened ? 'block' : 'none',
             top: y ?? '',
             left: Math.round(x) ?? '',
           }}

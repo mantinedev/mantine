@@ -19,3 +19,12 @@ export const toggleSpotlight = createEvent('toggle');
 export const triggerSpotlightAction = createEvent('triggerAction');
 export const registerSpotlightActions = createEvent('registerActions');
 export const removeSpotlightActions = createEvent('removeActions');
+
+export const spotlight = {
+  open: openSpotlight,
+  close: closeSpotlight,
+  toggle: toggleSpotlight,
+  triggerAction: triggerSpotlightAction,
+  registerActions: registerSpotlightActions,
+  removeActions: removeSpotlightActions,
+};

@@ -34,6 +34,7 @@ export const Toolbar = forwardRef<HTMLDivElement, RichTextEditorToolbarProps>((p
       classNames: ctx.classNames,
       styles: ctx.styles,
       unstyled: ctx.unstyled,
+      variant: ctx.variant,
     }
   );
 

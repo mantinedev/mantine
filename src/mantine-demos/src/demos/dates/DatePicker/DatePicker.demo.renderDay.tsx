@@ -1,52 +1,49 @@
 import React from 'react';
-import { DatePicker } from '@mantine/dates';
 import { MantineDemo } from '@mantine/ds';
-import { Indicator } from '@mantine/core';
+import { Group, Indicator } from '@mantine/core';
+import { DatePicker } from '@mantine/dates';
 
 const code = `
+import { Group, Indicator } from '@mantine/core';
 import { DatePicker } from '@mantine/dates';
-import { Indicator } from '@mantine/core';
 
 function Demo() {
   return (
-    <DatePicker
-      placeholder="Pick date"
-      label="Event date"
-      renderDay={(date) => {
-        const day = date.getDate();
-        return (
-          <Indicator size={6} color="red" offset={8} disabled={day !== 16}>
-            <div>{day}</div>
-          </Indicator>
-        );
-      }}
-    />
+    <Group position="center">
+      <DatePicker
+        renderDay={(date) => {
+          const day = date.getDate();
+          return (
+            <Indicator size={6} color="red" offset={-5} disabled={day !== 16}>
+              <div>{day}</div>
+            </Indicator>
+          );
+        }}
+      />
+    </Group>
   );
 }
 `;
 
 function Demo() {
   return (
-    <div style={{ maxWidth: 340, marginLeft: 'auto', marginRight: 'auto' }}>
+    <Group position="center">
       <DatePicker
-        placeholder="Pick date"
-        label="Event date"
-        withinPortal
         renderDay={(date) => {
           const day = date.getDate();
           return (
-            <Indicator size={6} color="red" offset={8} disabled={day !== 16}>
+            <Indicator size={6} color="red" offset={-5} disabled={day !== 16}>
               <div>{day}</div>
             </Indicator>
           );
         }}
       />
-    </div>
+    </Group>
   );
 }
 
 export const renderDay: MantineDemo = {
   type: 'demo',
-  code,
   component: Demo,
+  code,
 };

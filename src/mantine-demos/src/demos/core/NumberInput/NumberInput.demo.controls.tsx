@@ -1,6 +1,6 @@
 import React from 'react';
 import { MantineDemo } from '@mantine/ds';
-import { NumberInput } from '@mantine/core';
+import { NumberInput, Box } from '@mantine/core';
 
 const code = `
 import { NumberInput } from '@mantine/core';
@@ -27,22 +27,23 @@ function Demo() {
 
 function Demo() {
   return (
-    <div style={{ maxWidth: 420, margin: 'auto' }}>
+    <Box maw={420} mx="auto">
       <NumberInput label="By default controls are visible" placeholder="Controls are visible" />
 
       <NumberInput
-        style={{ marginTop: 15 }}
+        mt="md"
         hideControls
         label="Disable them with hideControls prop"
         placeholder="Controls are disabled"
       />
+
       <NumberInput
-        style={{ marginTop: 15 }}
+        mt="md"
         disabled
         label="Controls also not rendered when input is disabled"
         placeholder="Input disabled"
       />
-    </div>
+    </Box>
   );
 }
 

@@ -1,4 +1,9 @@
-import { itIsPolymorphic, itSupportsSystemProps } from '@mantine/tests';
+import {
+  itIsPolymorphic,
+  itSupportsSystemProps,
+  itSupportsProviderVariant,
+  itSupportsProviderSize,
+} from '@mantine/tests';
 import { ColorSwatch, ColorSwatchProps } from './ColorSwatch';
 
 const defaultProps: ColorSwatchProps = {
@@ -7,6 +12,8 @@ const defaultProps: ColorSwatchProps = {
 
 describe('@mantine/core/ColorSwatch', () => {
   itIsPolymorphic(ColorSwatch as any, defaultProps);
+  itSupportsProviderVariant(ColorSwatch, defaultProps, 'ColorSwatch');
+  itSupportsProviderSize(ColorSwatch, defaultProps, 'ColorSwatch');
   itSupportsSystemProps({
     component: ColorSwatch,
     props: defaultProps,

@@ -7,7 +7,9 @@ import useStyles, { StackStylesParams } from './Stack.styles';
 export interface StackProps
   extends DefaultProps<never, StackStylesParams>,
     React.ComponentPropsWithoutRef<'div'> {
-  /** Key of theme.spacing or number to set gap in px */
+  variant?: string;
+
+  /** Key of theme.spacing or any valid CSS value to set gap */
   spacing?: MantineNumberSize;
 
   /** align-items CSS property */
@@ -24,13 +26,14 @@ const defaultProps: Partial<StackProps> = {
 };
 
 export const Stack = forwardRef<HTMLDivElement, StackProps>((props, ref) => {
-  const { spacing, className, align, justify, unstyled, ...others } = useComponentDefaultProps(
-    'Stack',
-    defaultProps,
-    props
+  const { spacing, className, align, justify, unstyled, variant, ...others } =
+    useComponentDefaultProps('Stack', defaultProps, props);
+
+  const { classes, cx } = useStyles(
+    { spacing, align, justify },
+    { name: 'Stack', unstyled, variant }
   );
 
-  const { classes, cx } = useStyles({ spacing, align, justify }, { name: 'Stack', unstyled });
   return <Box className={cx(classes.root, className)} ref={ref} {...others} />;
 });
 

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Table, Checkbox, Code, Text, Box } from '@mantine/core';
+import { Table, Checkbox, Code, Text, Box, rem } from '@mantine/core';
 import { Prism } from '@mantine/prism';
 import { NpmIcon, YarnIcon } from '@mantine/ds';
 import { PACKAGES_DATA } from './data';
@@ -46,6 +46,7 @@ export function PackagesInstallation({ extraPackages = [] }: PackagesInstallatio
       <td>
         <Checkbox
           checked={selection.includes(item.package)}
+          onChange={() => {}}
           sx={{ pointerEvents: 'none', display: 'flex' }}
         />
       </td>
@@ -91,7 +92,10 @@ export function PackagesInstallation({ extraPackages = [] }: PackagesInstallatio
         Install dependencies:
       </Box>
 
-      <Prism.Tabs defaultValue="yarn" styles={{ tabIcon: { marginRight: '12px !important' } }}>
+      <Prism.Tabs
+        defaultValue="yarn"
+        styles={{ tabIcon: { marginRight: `${rem(12)} !important` } }}
+      >
         <Prism.TabsList>
           <Prism.Tab value="yarn" icon={<YarnIcon size={16} />}>
             yarn

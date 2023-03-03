@@ -1,6 +1,6 @@
 import React from 'react';
 import { MantineDemo } from '@mantine/ds';
-import { Autocomplete } from '@mantine/core';
+import { Autocomplete, Box } from '@mantine/core';
 
 const code = `
 import { Autocomplete } from '@mantine/core';
@@ -12,7 +12,7 @@ function Demo() {
 
 function Demo() {
   return (
-    <div style={{ maxWidth: 320, marginLeft: 'auto', marginRight: 'auto' }}>
+    <Box maw={320} mx="auto">
       <Autocomplete
         data={['React', 'Angular', 'Svelte', 'Vue']}
         label="Disabled without value"
@@ -21,14 +21,14 @@ function Demo() {
       />
 
       <Autocomplete
-        style={{ marginTop: 15 }}
+        mt="md"
         data={['React', 'Angular', 'Svelte', 'Vue']}
         label="Disabled with value"
         placeholder="Pick all that you like"
         disabled
         value="React"
       />
-    </div>
+    </Box>
   );
 }
 

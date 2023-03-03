@@ -1,5 +1,5 @@
 import React from 'react';
-import { Group, Input, useMantineTheme, ColorSwatch, CheckIcon } from '@mantine/core';
+import { Group, Input, useMantineTheme, ColorSwatch, CheckIcon, rem } from '@mantine/core';
 import { upperFirst } from '@mantine/hooks';
 
 interface ColorControlProps {
@@ -24,10 +24,10 @@ export function ColorControl({ value, label, onChange, ...others }: ColorControl
         alignItems: 'center',
         justifyContent: 'center',
         color: theme.colorScheme === 'dark' ? theme.colors[color][2] : theme.white,
-        flex: '1 0 calc(15% - 4px)',
+        flex: `1 0 calc(15% - ${rem(4)})`,
       }}
     >
-      {value === color && <CheckIcon width={12} height={12} />}
+      {value === color && <CheckIcon width={rem(12)} height={rem(12)} />}
     </ColorSwatch>
   ));
 

@@ -29,10 +29,16 @@ export const _Highlight = forwardRef<HTMLDivElement, HighlightProps>((props, ref
   const highlightChunks = highlighter(children, highlight);
 
   return (
-    <Text unstyled={unstyled} ref={ref} {...others}>
+    <Text unstyled={unstyled} ref={ref} __staticSelector="Highlight" {...others}>
       {highlightChunks.map(({ chunk, highlighted }, i) =>
         highlighted ? (
-          <Mark unstyled={unstyled} key={i} color={highlightColor} sx={highlightStyles}>
+          <Mark
+            unstyled={unstyled}
+            key={i}
+            color={highlightColor}
+            sx={highlightStyles}
+            data-highlight={chunk}
+          >
             {chunk}
           </Mark>
         ) : (

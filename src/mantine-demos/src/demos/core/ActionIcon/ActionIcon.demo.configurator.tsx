@@ -1,14 +1,14 @@
 import React from 'react';
-import { IconAdjustments } from '@tabler/icons';
+import { IconAdjustments } from '@tabler/icons-react';
 import { MantineDemo } from '@mantine/ds';
-import { ActionIcon, ActionIconProps, Group } from '@mantine/core';
+import { ActionIcon, ActionIconProps, Group, rem } from '@mantine/core';
 
 const iconSizes = {
-  xs: 12,
-  sm: 14,
-  md: 18,
-  lg: 26,
-  xl: 34,
+  xs: rem(12),
+  sm: rem(14),
+  md: rem(18),
+  lg: rem(26),
+  xl: rem(34),
 };
 
 function Wrapper(props: ActionIconProps) {
@@ -23,28 +23,28 @@ function Wrapper(props: ActionIconProps) {
 
 function computeChildIconSizeProp(props: string) {
   if (props.includes('size="xs"')) {
-    return 'size={12}';
+    return `size="${rem(12)}"`;
   }
   if (props.includes('size="sm"')) {
-    return 'size={14}';
+    return `size="${rem(14)}"`;
   }
   if (props.includes('size="md"')) {
-    return 'size={18}';
+    return `size="${rem(18)}"`;
   }
   if (props.includes('size="lg"')) {
-    return 'size={26}';
+    return `size="${rem(26)}"`;
   }
   if (props.includes('size="xl"')) {
-    return 'size={34}';
+    return `size="${rem(34)}"`;
   }
-  return 'size={18}';
+  return `size="${rem(18)}"`;
 }
 
 const codeTemplate = (props: string) => {
   const childIconSizeProp = computeChildIconSizeProp(props);
   return `
 import { ActionIcon } from '@mantine/core';
-import { IconAdjustments } from '@tabler/icons';
+import { IconAdjustments } from '@tabler/icons-react';
 
 function Demo() {
   return (

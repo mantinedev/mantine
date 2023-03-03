@@ -73,6 +73,7 @@ export * as OverlayDemos from './demos/core/Overlay';
 export * as PaginationDemos from './demos/core/Pagination';
 export * as PaperDemos from './demos/core/Paper';
 export * as PasswordInputDemos from './demos/core/PasswordInput';
+export * as PinInputDemos from './demos/core/PinInput';
 export * as PopoverDemos from './demos/core/Popover';
 export * as ProgressDemos from './demos/core/Progress';
 export * as RadioDemos from './demos/core/Radio';
@@ -103,20 +104,10 @@ export * as TransitionDemos from './demos/core/Transition';
 export * as TypographyStylesProviderDemos from './demos/core/TypographyStylesProvider';
 export * as UnstyledButtonDemos from './demos/core/UnstyledButton';
 
-// @mantine/dates
-export * as CalendarDemos from './demos/dates/Calendar';
-export * as DatePickerDemos from './demos/dates/DatePicker';
-export * as DateRangePickerDemos from './demos/dates/DateRangePicker';
-export * as MonthDemos from './demos/dates/Month';
-export * as RangeCalendarDemos from './demos/dates/RangeCalendar';
-export * as TimeInputDemos from './demos/dates/TimeInput';
-export * as TimeRangeInputDemos from './demos/dates/TimeRangeInput';
-
 // Other packages
 export * as DropzoneDemos from './demos/dropzone';
 export * as NotificationsDemos from './demos/notifications';
 export * as PrismDemos from './demos/prism';
-export * as RichTextEditorDemos from './demos/rte';
 export * as ModalsDemos from './demos/modals';
 export * as HooksDemos from './demos/hooks';
 export * as SpotlightDemos from './demos/spotlight';
@@ -126,6 +117,15 @@ export * as CarouselDemos from './demos/carousel';
 export * as MantineLogoDemos from './demos/logo';
 export * as TipTapDemos from './demos/tiptap';
 
-// @mantine/labs
-export * as PinInputDemos from './demos/labs/PinInput';
-export * as TagInputDemos from './demos/labs/TagInput';
+// @mantine/dates
+export * as YearPickerDemos from './demos/dates/YearPicker';
+export * as YearPickerInputDemos from './demos/dates/YearPickerInput';
+export * as MonthPickerDemos from './demos/dates/MonthPicker';
+export * as MonthPickerInputDemos from './demos/dates/MonthPickerInput';
+export * as DatePickerDemos from './demos/dates/DatePicker';
+export * as DatePickerInputDemos from './demos/dates/DatePickerInput';
+export * as TimeInputDemos from './demos/dates/TimeInput';
+export * as DatesProviderDemos from './demos/dates/DatesProvider';
+export * as DateTimePickerDemos from './demos/dates/DateTimePicker';
+export * as DateInputDemos from './demos/dates/DateInput';
+export * as CalendarDemos from './demos/dates/Calendar';

@@ -13,6 +13,8 @@ export type TransferListStylesNames = RenderListStylesNames;
 export interface TransferListProps
   extends DefaultProps<TransferListStylesNames>,
     Omit<React.ComponentPropsWithoutRef<'div'>, 'value' | 'onChange' | 'placeholder'> {
+  variant?: string;
+
   /** Current value */
   value: TransferListData;
 
@@ -55,7 +57,7 @@ export interface TransferListProps
   /** Breakpoint at which list will collapse to single column layout */
   breakpoint?: MantineNumberSize;
 
-  /** Predefined border-radius value from theme.radius or number for border-radius in px */
+  /** Key of theme.radius or any valid CSS value to set border-radius, theme.defaultRadius by default */
   radius?: MantineNumberSize;
 
   /** Whether to hide the transfer all button */
@@ -118,6 +120,7 @@ export const TransferList = forwardRef<HTMLDivElement, TransferListProps>((props
     unstyled,
     transferIcon,
     transferAllIcon,
+    variant,
     transferAllMatchingFilter,
     transferAllTransfersDisabled,
     ...others
@@ -226,6 +229,7 @@ export const TransferList = forwardRef<HTMLDivElement, TransferListProps>((props
         query={search[0]}
         onSearch={(query) => handleSearch([query, search[1]])}
         unstyled={unstyled}
+        variant={variant}
         transferAllMatchingFilter={transferAllMatchingFilter}
       />
 
@@ -246,6 +250,7 @@ export const TransferList = forwardRef<HTMLDivElement, TransferListProps>((props
         onSearch={(query) => handleSearch([search[0], query])}
         reversed
         unstyled={unstyled}
+        variant={variant}
         transferAllMatchingFilter={transferAllMatchingFilter}
       />
     </SimpleGrid>

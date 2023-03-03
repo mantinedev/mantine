@@ -57,11 +57,8 @@ export interface FileInputProps<Multiple extends boolean = false>
   /** Allow to clear value */
   clearable?: boolean;
 
-  /** aria-label for clear button */
-  clearButtonLabel?: string;
-
-  /** Set the clear button tab index to disabled or default after input field */
-  clearButtonTabIndex?: -1 | 0;
+  /** Props added to clear button */
+  clearButtonProps?: React.ComponentPropsWithoutRef<'button'>;
 
   /** Determines whether the user can change value */
   readOnly?: boolean;
@@ -82,15 +79,6 @@ const DefaultValue: FileInputProps['valueComponent'] = ({ value }) => (
 const defaultProps: Partial<FileInputProps> = {
   size: 'sm',
   valueComponent: DefaultValue,
-  clearButtonTabIndex: 0,
-};
-
-const RIGHT_SECTION_WIDTH = {
-  xs: 24,
-  sm: 30,
-  md: 34,
-  lg: 40,
-  xl: 44,
 };
 
 export const _FileInput = forwardRef<HTMLButtonElement, FileInputProps>((props, ref) => {
@@ -110,17 +98,15 @@ export const _FileInput = forwardRef<HTMLButtonElement, FileInputProps>((props, 
     unstyled,
     valueComponent: ValueComponent,
     rightSection,
-    rightSectionWidth,
     clearable,
-    clearButtonLabel,
-    clearButtonTabIndex,
+    clearButtonProps,
     readOnly,
     capture,
     fileInputProps,
     ...others
   } = useInputProps('FileInput', defaultProps, props);
   const resetRef = useRef<() => void>();
-  const { classes, theme, cx } = useStyles(null, {
+  const { classes, cx } = useStyles(null, {
     name: 'FileInput',
     classNames,
     styles,
@@ -140,11 +126,10 @@ export const _FileInput = forwardRef<HTMLButtonElement, FileInputProps>((props, 
     rightSection ||
     (clearable && hasValue && !readOnly ? (
       <CloseButton
+        {...clearButtonProps}
         variant="transparent"
-        aria-label={clearButtonLabel}
         onClick={() => setValue(multiple ? [] : null)}
         size={inputProps.size}
-        tabIndex={clearButtonTabIndex}
         unstyled={unstyled}
       />
     ) : null);
@@ -179,10 +164,6 @@ export const _FileInput = forwardRef<HTMLButtonElement, FileInputProps>((props, 
             ref={ref}
             __staticSelector="FileInput"
             rightSection={_rightSection}
-            rightSectionWidth={
-              rightSectionWidth ||
-              theme.fn.size({ size: inputProps.size, sizes: RIGHT_SECTION_WIDTH })
-            }
             classNames={{ ...classNames, input: cx(classes.input, (classNames as any)?.input) }}
           >
             {!hasValue ? (

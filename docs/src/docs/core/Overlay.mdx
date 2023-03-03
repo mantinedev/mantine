@@ -6,7 +6,7 @@ order: 1
 polymorphic: true
 slug: /core/overlay/
 category: 'overlay'
-description: 'Overlays given element with div element with any color and opacity'
+description: 'Overlays parent element with div element with any color and opacity'
 props: ['Overlay']
 import: "import { Overlay } from '@mantine/core';"
 source: 'mantine-core/src/Overlay/Overlay.tsx'
@@ -17,27 +17,30 @@ import { OverlayDemos, CardDemos } from '@mantine/demos';
 
 ## Usage
 
-Overlay has absolute position and will take 100% of width and height of parent container.
-It is used to build components like [Modal](/core/modal/) and [LoadingOverlay](/core/loading-overlay/).
-
-You can change overlay opacity (from 0 to 1), color (CSS color value, not connected to Mantine theme) and z-index (number).
+`Overlay` takes 100% of width and height of parent container or viewport if `fixed` prop is set.
+Set `color` and `opacity` props to change `Overlay` background-color. Note that `opacity` prop
+does not change CSS opacity property, it changes background-color. For example, if you set
+`color="#000"` and `opacity={0.85}` background-color will be `rgba(0, 0, 0, 0.85)`:
 
 <Demo data={OverlayDemos.usage} />
 
-## With gradient
+## Gradient
+
+Set `gradient` prop to use background-image instead of background-color. When `gradient` prop is set,
+`color` and `opacity` props are ignored.
 
 <Demo data={OverlayDemos.gradient} />
 
-## With blur
+## Blur
 
-To blur the overlay backdrop, set the `blur` prop with a number. This will set the backdrop blur in px.
-Note that blur [is not supported in Firefox](https://caniuse.com/css-backdrop-filter).
+Set `blur` prop to add `backdrop-filter: blur({value})` styles
+Note that `backdrop-filter` [is not supported in all browsers](https://caniuse.com/css-backdrop-filter).
 
 <Demo data={OverlayDemos.blur} />
 
 ## Polymorphic component
 
-Overlay is a [polymorphic component](/guides/polymorphic/), you can change root element:
+Overlay is a [polymorphic component](/guides/polymorphic/), set `component` prop to change root element:
 
 ```tsx
 import { Overlay } from '@mantine/core';

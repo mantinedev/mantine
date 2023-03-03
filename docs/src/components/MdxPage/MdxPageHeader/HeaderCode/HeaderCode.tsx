@@ -1,5 +1,5 @@
 import React from 'react';
-import { Tooltip } from '@mantine/core';
+import { em, Tooltip } from '@mantine/core';
 import { useClipboard, useMediaQuery } from '@mantine/hooks';
 import { Prism } from '@mantine/prism';
 import { Language } from 'prism-react-renderer';
@@ -14,7 +14,7 @@ interface ImportStatementProps {
 export function HeaderCode({ code, icon, language }: ImportStatementProps) {
   const clipboard = useClipboard();
   const { classes } = useStyles();
-  const mobile = useMediaQuery('(max-width: 500px)');
+  const mobile = useMediaQuery(`(max-width: ${em(500)})`);
 
   return (
     <div className={classes.wrapper}>
@@ -23,7 +23,6 @@ export function HeaderCode({ code, icon, language }: ImportStatementProps) {
       <Tooltip
         label={clipboard.copied ? 'Copied' : 'Copy'}
         position="right"
-        transition="fade"
         withArrow
         arrowSize={6}
         offset={10}

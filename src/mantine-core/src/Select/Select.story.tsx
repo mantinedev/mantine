@@ -1,3 +1,4 @@
+import { MANTINE_SIZES } from '@mantine/styles';
 import React from 'react';
 import { Select } from './Select';
 
@@ -57,4 +58,21 @@ export function Scroll() {
       {content}
     </div>
   );
+}
+
+export function Sizes() {
+  const sizes = MANTINE_SIZES.map((size) => (
+    <Select
+      data={data}
+      placeholder={`Select ${size}`}
+      size={size}
+      clearable
+      defaultValue={data[0]}
+      key={size}
+      mt="md"
+      styles={{ rightSection: { backgroundColor: 'pink' } }}
+    />
+  ));
+
+  return <div style={{ padding: 40 }}>{sizes}</div>;
 }

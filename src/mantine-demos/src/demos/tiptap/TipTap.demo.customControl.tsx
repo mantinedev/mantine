@@ -3,13 +3,13 @@ import { MantineDemo } from '@mantine/ds';
 import { useEditor } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
 import { RichTextEditor, useRichTextEditorContext } from '@mantine/tiptap';
-import { IconStar } from '@tabler/icons';
+import { IconStar } from '@tabler/icons-react';
 
 const code = `
 import { useEditor } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
 import { RichTextEditor, useRichTextEditorContext } from '@mantine/tiptap';
-import { IconStar } from '@tabler/icons';
+import { IconStar } from '@tabler/icons-react';
 
 function InsertStarControl() {
   const { editor } = useRichTextEditorContext();
@@ -19,7 +19,7 @@ function InsertStarControl() {
       aria-label="Insert star emoji"
       title="Insert star emoji"
     >
-      <IconStar stroke={1.5} size={16} />
+      <IconStar stroke={1.5} size="1rem" />
     </RichTextEditor.Control>
   );
 }
@@ -50,7 +50,7 @@ function InsertStarControl() {
       aria-label="Insert star emoji"
       title="Insert star emoji"
     >
-      <IconStar stroke={1.5} size={16} />
+      <IconStar stroke={1.5} size="1rem" />
     </RichTextEditor.Control>
   );
 }

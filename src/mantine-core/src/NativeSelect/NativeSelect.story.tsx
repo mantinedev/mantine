@@ -8,7 +8,7 @@ const data = ['React', 'Angular', 'Vue', 'Svelte'];
 
 export function CursorPointer() {
   return (
-    <MantineProvider theme={{ cursorType: 'pointer' }}>
+    <MantineProvider inherit theme={{ cursorType: 'pointer' }}>
       <NativeSelect data={data} placeholder="Test placeholder" />
     </MantineProvider>
   );

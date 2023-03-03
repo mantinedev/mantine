@@ -21,13 +21,13 @@ import { TipTapDemos } from '@mantine/demos';
 Install with yarn:
 
 ```bash
-yarn add @mantine/tiptap @mantine/core @mantine/hooks @tabler/icons@1.119.0 @tiptap/react @tiptap/extension-link @tiptap/starter-kit
+yarn add @mantine/tiptap @mantine/core @mantine/hooks @tabler/icons-react @tiptap/react @tiptap/extension-link @tiptap/starter-kit
 ```
 
 Install with npm:
 
 ```bash
-npm install @mantine/tiptap @mantine/core @mantine/hooks @tabler/icons@1.119.0 @tiptap/react @tiptap/extension-link @tiptap/starter-kit
+npm install @mantine/tiptap @mantine/core @mantine/hooks @tabler/icons-react @tiptap/react @tiptap/extension-link @tiptap/starter-kit
 ```
 
 ## TipTap editor
@@ -241,7 +241,7 @@ with any `RichTextEditor` controls. Floating menu will appear in an empty line:
 
 Set `sticky` prop on `RichTextEditor.Toolbar` component to make toolbar sticky,
 control `top` property with `stickyOffset`. For example, on mantine.dev documentation
-website there is a header with `60px` height, in this case we will need to
+website there is a header with `60px` height (converted to rem), in this case we will need to
 set `stickyOffset={60}` to make sticky position correctly with fixed positioned element.
 
 <Demo data={TipTapDemos.usage} demoProps={{ toggle: true }} />

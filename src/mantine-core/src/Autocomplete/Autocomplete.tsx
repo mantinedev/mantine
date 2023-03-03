@@ -48,8 +48,7 @@ const defaultProps: Partial<AutocompleteProps> = {
   shadow: 'sm',
   limit: 5,
   itemComponent: DefaultItem,
-  transition: 'pop',
-  transitionDuration: 0,
+  transitionProps: { transition: 'fade', duration: 0 },
   initiallyOpened: false,
   filter: defaultFilter,
   switchDirectionOnFlip: false,
@@ -76,10 +75,8 @@ export const Autocomplete = forwardRef<HTMLInputElement, AutocompleteProps>((pro
     onFocus,
     onBlur,
     onClick,
-    transition,
-    transitionDuration,
+    transitionProps,
     initiallyOpened,
-    transitionTimingFunction,
     classNames,
     styles,
     filter,
@@ -206,8 +203,7 @@ export const Autocomplete = forwardRef<HTMLInputElement, AutocompleteProps>((pro
     <Input.Wrapper {...wrapperProps} __staticSelector="Autocomplete">
       <SelectPopover
         opened={shouldRenderDropdown}
-        transition={transition}
-        transitionDuration={transitionDuration}
+        transitionProps={transitionProps}
         shadow="sm"
         withinPortal={withinPortal}
         __staticSelector="Autocomplete"
@@ -220,6 +216,7 @@ export const Autocomplete = forwardRef<HTMLInputElement, AutocompleteProps>((pro
         styles={styles}
         unstyled={unstyled}
         readOnly={readOnly}
+        variant={inputProps.variant}
       >
         <SelectPopover.Target>
           <div
@@ -282,6 +279,7 @@ export const Autocomplete = forwardRef<HTMLInputElement, AutocompleteProps>((pro
             itemComponent={itemComponent}
             size={inputProps.size}
             nothingFound={nothingFound}
+            variant={inputProps.variant}
           />
         </SelectPopover.Dropdown>
       </SelectPopover>

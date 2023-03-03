@@ -1,42 +1,47 @@
-import { createStyles, MantineSize } from '@mantine/styles';
+import { createStyles, rem, getSize } from '@mantine/styles';
 import { INPUT_SIZES } from '../Input';
+import { sizes as DEFAULT_VALUE_SIZES } from './DefaultValue/DefaultValue.styles';
 
 export interface MultiSelectStylesParams {
-  size: MantineSize;
   invalid: boolean;
 }
 
-export default createStyles((theme, { size, invalid }: MultiSelectStylesParams) => ({
+export default createStyles((theme, { invalid }: MultiSelectStylesParams, { size }) => ({
   wrapper: {
     position: 'relative',
   },
 
   values: {
-    minHeight: theme.fn.size({ size, sizes: INPUT_SIZES }) - 2,
+    minHeight: `calc(${getSize({ size, sizes: INPUT_SIZES })} - ${rem(2)})`,
     display: 'flex',
     alignItems: 'center',
     flexWrap: 'wrap',
-    marginLeft: `calc(${-theme.spacing.xs}px / 2)`,
+    marginLeft: `calc(-${theme.spacing.xs} / 2)`,
     boxSizing: 'border-box',
+
+    '&[data-clearable]': {
+      marginRight: getSize({ size, sizes: INPUT_SIZES }),
+    },
   },
 
   value: {
-    margin: `calc(${theme.spacing.xs}px / 2 - 2px) calc(${theme.spacing.xs}px / 2)`,
+    margin: `calc(${theme.spacing.xs} / 2 - ${rem(2)}) calc(${theme.spacing.xs} / 2)`,
   },
 
   searchInput: {
     ...theme.fn.fontStyles(),
     flex: 1,
-    minWidth: 60,
+    minWidth: rem(60),
     backgroundColor: 'transparent',
     border: 0,
     outline: 0,
-    fontSize: theme.fn.size({ size, sizes: theme.fontSizes }),
+    fontSize: getSize({ size, sizes: theme.fontSizes }),
     padding: 0,
-    marginLeft: `calc(${theme.spacing.xs}px / 2)`,
+    marginLeft: `calc(${theme.spacing.xs} / 2)`,
     appearance: 'none',
     color: 'inherit',
-    lineHeight: `${theme.fn.size({ size, sizes: INPUT_SIZES }) - 2}px`,
+    lineHeight: `calc(${getSize({ size, sizes: INPUT_SIZES })} - ${rem(2)})`,
+    maxHeight: getSize({ size, sizes: DEFAULT_VALUE_SIZES }),
 
     '&::placeholder': {
       opacity: 1,
@@ -58,6 +63,7 @@ export default createStyles((theme, { size, invalid }: MultiSelectStylesParams) 
 
   searchInputInputHidden: {
     width: 0,
+    minWidth: 0,
     height: 0,
     margin: 0,
     overflow: 'hidden',

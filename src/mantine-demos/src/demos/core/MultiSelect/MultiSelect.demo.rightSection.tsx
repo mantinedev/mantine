@@ -1,12 +1,12 @@
 import React from 'react';
-import { IconChevronDown } from '@tabler/icons';
+import { IconChevronDown } from '@tabler/icons-react';
 import { MultiSelect } from '@mantine/core';
 import { MantineDemo } from '@mantine/ds';
 import { data } from './_data';
 
 const code = `
 import { MultiSelect } from '@mantine/core';
-import { IconChevronDown } from '@tabler/icons';
+import { IconChevronDown } from '@tabler/icons-react';
 
 function Demo() {
   return (
@@ -14,7 +14,7 @@ function Demo() {
       data={['React', 'Angular', 'Svelte', 'Vue', 'Riot', 'Next.js', 'Blitz.js']}
       label="Your favorite frameworks/libraries"
       placeholder="Pick all that you like"
-      rightSection={<IconChevronDown size={14} />}
+      rightSection={<IconChevronDown size="1rem" />}
       styles={{ rightSection: { pointerEvents: 'none' } }}
       rightSectionWidth={40}
     />
@@ -24,16 +24,16 @@ function Demo() {
 
 function Demo() {
   return (
-    <div style={{ maxWidth: 400, marginLeft: 'auto', marginRight: 'auto' }}>
-      <MultiSelect
-        data={data}
-        label="Your favorite frameworks/libraries"
-        placeholder="Pick all that you like"
-        rightSection={<IconChevronDown size={14} />}
-        styles={{ rightSection: { pointerEvents: 'none' } }}
-        rightSectionWidth={40}
-      />
-    </div>
+    <MultiSelect
+      maw={400}
+      mx="auto"
+      data={data}
+      label="Your favorite frameworks/libraries"
+      placeholder="Pick all that you like"
+      rightSection={<IconChevronDown size="1rem" />}
+      styles={{ rightSection: { pointerEvents: 'none' } }}
+      rightSectionWidth={40}
+    />
   );
 }
 

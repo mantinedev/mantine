@@ -11,7 +11,7 @@ const useStyles = createStyles((theme) => ({
     backgroundColor: theme.colors.blue[6],
     border: 0,
     borderRadius: theme.radius.md,
-    padding: \`\${theme.spacing.sm}px \${theme.spacing.lg}px\`,
+    padding: \`\${theme.spacing.sm} \${theme.spacing.lg}\`,
     cursor: 'pointer',
     margin: theme.spacing.md,
 
@@ -55,7 +55,7 @@ const useStyles = createStyles((theme) => ({
     backgroundColor: theme.colors.blue[6],
     border: 0,
     borderRadius: theme.radius.md,
-    padding: `${theme.spacing.sm}px ${theme.spacing.lg}px`,
+    padding: `${theme.spacing.sm} ${theme.spacing.lg}`,
     cursor: 'pointer',
     margin: theme.spacing.md,
 

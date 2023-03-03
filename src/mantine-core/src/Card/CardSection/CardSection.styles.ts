@@ -1,4 +1,4 @@
-import { createStyles } from '@mantine/styles';
+import { createStyles, getSize, rem } from '@mantine/styles';
 
 interface CardSectionStyles {
   padding: string | number;
@@ -7,8 +7,8 @@ interface CardSectionStyles {
 }
 
 export default createStyles((theme, { padding, withBorder, inheritPadding }: CardSectionStyles) => {
-  const spacing = theme.fn.size({ size: padding, sizes: theme.spacing });
-  const offset = -1 * spacing;
+  const spacing = getSize({ size: padding, sizes: theme.spacing });
+  const offset = `calc(-1 * ${spacing})`;
   const borderColor = theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[3];
 
   return {
@@ -18,8 +18,8 @@ export default createStyles((theme, { padding, withBorder, inheritPadding }: Car
       marginRight: offset,
       paddingLeft: inheritPadding ? spacing : undefined,
       paddingRight: inheritPadding ? spacing : undefined,
-      borderTop: withBorder && `1px solid ${borderColor}`,
-      borderBottom: withBorder && `1px solid ${borderColor}`,
+      borderTop: withBorder ? `${rem(1)} solid ${borderColor}` : undefined,
+      borderBottom: withBorder ? `${rem(1)} solid ${borderColor}` : undefined,
 
       '& + &': {
         borderTop: 0,
@@ -28,7 +28,7 @@ export default createStyles((theme, { padding, withBorder, inheritPadding }: Car
       '&[data-first]': {
         marginTop: offset,
         borderTop: 0,
-        borderBottom: withBorder && `1px solid ${borderColor}`,
+        borderBottom: withBorder ? `${rem(1)} solid ${borderColor}` : undefined,
       },
 
       '&[data-last]': {

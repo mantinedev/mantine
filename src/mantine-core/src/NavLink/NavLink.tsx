@@ -4,8 +4,10 @@ import {
   DefaultProps,
   MantineColor,
   MantineNumberSize,
+  rem,
   Selectors,
   useComponentDefaultProps,
+  Variants,
 } from '@mantine/styles';
 import { createPolymorphicComponent } from '@mantine/utils';
 import { useUncontrolled } from '@mantine/hooks';
@@ -37,7 +39,7 @@ export interface NavLinkProps extends DefaultProps<NavLinkStylesNames, NavLinkSt
   color?: MantineColor;
 
   /** Active link variant */
-  variant?: 'filled' | 'light' | 'subtle';
+  variant?: Variants<'filled' | 'light' | 'subtle'>;
 
   /** If prop is set then label and description will not wrap on the next line */
   noWrap?: boolean;
@@ -57,7 +59,7 @@ export interface NavLinkProps extends DefaultProps<NavLinkStylesNames, NavLinkSt
   /** If set to true, right section will not rotate when collapse is opened */
   disableRightSectionRotation?: boolean;
 
-  /** Key of theme.spacing or number to set collapsed links padding-left in px */
+  /** Key of theme.spacing or any valid CSS value to set collapsed links padding-left */
   childrenOffset?: MantineNumberSize;
 
   /** Adds disabled styles to root element */
@@ -96,8 +98,8 @@ export const _NavLink = forwardRef<HTMLButtonElement, NavLinkProps>((props, ref)
   } = useComponentDefaultProps('NavLink', defaultProps, props);
 
   const { classes, cx } = useStyles(
-    { color, variant, noWrap, childrenOffset, alignIcon: description ? 'top' : 'center' },
-    { name: 'NavLink', classNames, styles, unstyled }
+    { color, noWrap, childrenOffset, alignIcon: description ? 'top' : 'center' },
+    { name: 'NavLink', classNames, styles, unstyled, variant }
   );
 
   const [_opened, setOpened] = useUncontrolled({
@@ -154,7 +156,11 @@ export const _NavLink = forwardRef<HTMLButtonElement, NavLinkProps>((props, ref)
           >
             {withChildren
               ? rightSection || (
-                  <ChevronIcon width={14} height={14} style={{ transform: 'rotate(-90deg)' }} />
+                  <ChevronIcon
+                    width={rem(14)}
+                    height={rem(14)}
+                    style={{ transform: 'rotate(-90deg)' }}
+                  />
                 )
               : rightSection}
           </span>

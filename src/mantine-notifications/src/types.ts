@@ -13,4 +13,4 @@ export interface NotificationsContextProps {
   queue: NotificationProps[];
 }
 
-export type NotificationsProviderPositioning = ['top' | 'bottom', 'left' | 'right' | 'center'];
+export type NotificationsPositioning = ['top' | 'bottom', 'left' | 'right' | 'center'];

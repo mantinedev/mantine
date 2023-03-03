@@ -41,8 +41,8 @@ export interface MultiSelectProps
   /** Component used to render values */
   valueComponent?: React.FC<any>;
 
-  /** Maximum dropdown height in px */
-  maxDropdownHeight?: number;
+  /** Maximum dropdown height */
+  maxDropdownHeight?: number | string;
 
   /** Enable items searching */
   searchable?: boolean;
@@ -58,9 +58,6 @@ export interface MultiSelectProps
 
   /** Disable removing selected items from the list */
   disableSelectedItemFiltering?: boolean;
-
-  /** aria-label for clear button */
-  clearButtonLabel?: string;
 
   /** Clear search field value on blur */
   clearSearchOnBlur?: boolean;
@@ -95,8 +92,8 @@ export interface MultiSelectProps
   /** Select highlighted item on blur */
   selectOnBlur?: boolean;
 
-  /** Set the clear button tab index to disabled or default after input field */
-  clearButtonTabIndex?: -1 | 0;
+  /** Props added to clear button */
+  clearButtonProps?: React.ComponentPropsWithoutRef<'button'>;
 }
 
 export function defaultFilter(value: string, selected: boolean, item: SelectItem) {
@@ -132,8 +129,7 @@ const defaultProps: Partial<MultiSelectProps> = {
   size: 'sm',
   valueComponent: DefaultValue,
   itemComponent: DefaultItem,
-  transition: 'pop-top-left',
-  transitionDuration: 0,
+  transitionProps: { transition: 'fade', duration: 0 },
   maxDropdownHeight: 220,
   shadow: 'sm',
   searchable: false,
@@ -149,7 +145,6 @@ const defaultProps: Partial<MultiSelectProps> = {
   switchDirectionOnFlip: false,
   zIndex: getDefaultZIndex('popover'),
   selectOnBlur: false,
-  clearButtonTabIndex: 0,
   positionDependencies: [],
   dropdownPosition: 'flip',
 };
@@ -173,9 +168,7 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>((props
     valueComponent: Value,
     itemComponent,
     id,
-    transition,
-    transitionDuration,
-    transitionTimingFunction,
+    transitionProps,
     maxDropdownHeight,
     shadow,
     nothingFound,
@@ -188,7 +181,6 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>((props
     clearSearchOnChange,
     clearable,
     clearSearchOnBlur,
-    clearButtonLabel,
     variant,
     onSearchChange,
     searchValue,
@@ -216,7 +208,6 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>((props
     errorProps,
     labelProps,
     descriptionProps,
-    clearButtonTabIndex,
     form,
     positionDependencies,
     onKeyDown,
@@ -225,14 +216,15 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>((props
     inputWrapperOrder,
     readOnly,
     withAsterisk,
+    clearButtonProps,
     hoverOnSearchChange,
     disableSelectedItemFiltering,
     ...others
   } = useComponentDefaultProps('MultiSelect', defaultProps, props);
 
   const { classes, cx, theme } = useStyles(
-    { size, invalid: !!error },
-    { classNames, styles, unstyled, name: 'MultiSelect' }
+    { invalid: !!error },
+    { name: 'MultiSelect', classNames, styles, unstyled, size, variant }
   );
   const { systemStyles, rest } = extractSystemStyles(others);
   const inputRef = useRef<HTMLInputElement>();
@@ -614,13 +606,13 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>((props
       inputWrapperOrder={inputWrapperOrder}
       unstyled={unstyled}
       withAsterisk={withAsterisk}
+      variant={variant}
       {...systemStyles}
       {...wrapperProps}
     >
       <SelectPopover
         opened={shouldRenderDropdown}
-        transition={transition}
-        transitionDuration={transitionDuration}
+        transitionProps={transitionProps}
         shadow="sm"
         withinPortal={withinPortal}
         __staticSelector="MultiSelect"
@@ -632,6 +624,7 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>((props
         classNames={classNames}
         styles={styles}
         unstyled={unstyled}
+        variant={variant}
       >
         <SelectPopover.Target>
           <div
@@ -660,7 +653,7 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>((props
               size={size}
               variant={variant}
               disabled={disabled}
-              invalid={!!error}
+              error={error}
               required={required}
               radius={radius}
               icon={icon}
@@ -681,15 +674,14 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>((props
                 styles,
                 size,
                 shouldClear: clearable && _value.length > 0,
-                clearButtonLabel,
                 onClear: handleClear,
                 error,
                 disabled,
-                clearButtonTabIndex,
+                clearButtonProps,
                 readOnly,
               })}
             >
-              <div className={classes.values}>
+              <div className={classes.values} data-clearable={clearable || undefined}>
                 {selectedItems}
 
                 <input
@@ -748,6 +740,7 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>((props
             creatable={creatable && !!createLabel}
             createLabel={createLabel}
             unstyled={unstyled}
+            variant={variant}
           />
         </SelectPopover.Dropdown>
       </SelectPopover>

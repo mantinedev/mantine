@@ -1,4 +1,4 @@
-import { createStyles, CSSObject, MantineTheme } from '@mantine/styles';
+import { createStyles, CSSObject, MantineTheme, rem } from '@mantine/styles';
 import { TabsStylesParams } from '../Tabs.types';
 
 interface TabStylesParams extends TabsStylesParams {
@@ -8,20 +8,21 @@ interface TabStylesParams extends TabsStylesParams {
 
 function getVariantStyles(
   theme: MantineTheme,
-  { variant, orientation, color, radius, inverted, placement }: TabStylesParams
+  { orientation, color, radius, inverted, placement }: TabStylesParams,
+  variant: string
 ): CSSObject {
   const vertical = orientation === 'vertical';
   const filledScheme = theme.fn.variant({ color, variant: 'filled' });
-  const radiusValue = theme.fn.radius(radius);
+  const radiusValue = rem(theme.fn.radius(radius));
 
   const borderRadius =
     orientation === 'vertical'
       ? placement === 'left'
-        ? `${radiusValue}px 0 0 ${radiusValue}px`
-        : ` 0 ${radiusValue}px ${radiusValue}px 0`
+        ? `${radiusValue} 0 0 ${radiusValue}`
+        : ` 0 ${radiusValue} ${radiusValue} 0`
       : inverted
-      ? `0 0 ${radiusValue}px ${radiusValue}px`
-      : `${radiusValue}px ${radiusValue}px 0 0`;
+      ? `0 0 ${radiusValue} ${radiusValue}`
+      : `${radiusValue} ${radiusValue} 0 0`;
 
   if (variant === 'default') {
     return {
@@ -31,14 +32,14 @@ function getVariantStyles(
           : 'borderLeft'
         : inverted
         ? 'borderTop'
-        : 'borderBottom']: '2px solid transparent',
+        : 'borderBottom']: `${rem(2)} solid transparent`,
       [vertical
         ? placement === 'left'
           ? 'marginRight'
           : 'marginLeft'
         : inverted
         ? 'marginTop'
-        : 'marginBottom']: -2,
+        : 'marginBottom']: rem(-2),
       borderRadius,
 
       ...theme.fn.hover({
@@ -57,7 +58,7 @@ function getVariantStyles(
   if (variant === 'outline') {
     return {
       borderRadius,
-      border: '1px solid transparent',
+      border: `${rem(1)} solid transparent`,
       [vertical
         ? placement === 'left'
           ? 'borderRight'
@@ -73,11 +74,11 @@ function getVariantStyles(
           content: '""',
           backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.white,
           position: 'absolute',
-          bottom: vertical ? 0 : inverted ? 'unset' : -1,
-          top: vertical ? 0 : inverted ? -1 : 'unset',
-          [vertical ? 'width' : 'height']: 1,
-          right: vertical ? (placement === 'left' ? -1 : 'unset') : 0,
-          left: vertical ? (placement === 'left' ? 'unset' : -1) : 0,
+          bottom: vertical ? 0 : inverted ? 'unset' : rem(-1),
+          top: vertical ? 0 : inverted ? rem(-1) : 'unset',
+          [vertical ? 'width' : 'height']: rem(1),
+          right: vertical ? (placement === 'left' ? rem(-1) : 'unset') : 0,
+          left: vertical ? (placement === 'left' ? 'unset' : rem(-1)) : 0,
         },
       },
     };
@@ -101,12 +102,12 @@ function getVariantStyles(
   return {};
 }
 
-export default createStyles((theme, params: TabStylesParams) => ({
+export default createStyles((theme, params: TabStylesParams, { variant }) => ({
   tabLabel: {},
 
   tab: {
     position: 'relative',
-    padding: `${theme.spacing.xs}px ${theme.spacing.md}px`,
+    padding: `${theme.spacing.xs} ${theme.spacing.md}`,
     paddingLeft: params.withIcon ? theme.spacing.xs : undefined,
     paddingRight: params.withRightSection ? theme.spacing.xs : undefined,
     fontSize: theme.fontSizes.sm,
@@ -127,7 +128,7 @@ export default createStyles((theme, params: TabStylesParams) => ({
       zIndex: 1,
     },
 
-    ...getVariantStyles(theme, params),
+    ...getVariantStyles(theme, params, variant),
   },
 
   tabRightSection: {
@@ -136,7 +137,7 @@ export default createStyles((theme, params: TabStylesParams) => ({
     alignItems: 'center',
 
     '&:not(:only-child)': {
-      marginLeft: 7,
+      marginLeft: rem(7),
     },
   },
 
@@ -146,7 +147,7 @@ export default createStyles((theme, params: TabStylesParams) => ({
     alignItems: 'center',
 
     '&:not(:only-child)': {
-      marginRight: 7,
+      marginRight: rem(7),
     },
   },
 }));

@@ -22,6 +22,7 @@ export interface SelectItemsProps extends DefaultProps<SelectItemsStylesNames> {
   nothingFound?: React.ReactNode;
   creatable?: boolean;
   createLabel?: React.ReactNode;
+  variant: string;
 }
 
 export function SelectItems({
@@ -41,8 +42,17 @@ export function SelectItems({
   creatable,
   createLabel,
   unstyled,
+  variant,
 }: SelectItemsProps) {
-  const { classes } = useStyles({ size }, { classNames, styles, unstyled, name: __staticSelector });
+  const { classes } = useStyles(null, {
+    classNames,
+    styles,
+    unstyled,
+    name: __staticSelector,
+    variant,
+    size,
+  });
+
   const unGroupedItems: React.ReactElement<any>[] = [];
   const groupedItems: React.ReactElement<any>[] = [];
   let creatableDataIndex = null;
@@ -78,6 +88,7 @@ export function SelectItems({
             : null
         }
         disabled={item.disabled}
+        variant={variant}
         {...item}
       />
     );

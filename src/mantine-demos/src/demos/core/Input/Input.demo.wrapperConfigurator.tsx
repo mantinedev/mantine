@@ -4,11 +4,9 @@ import { InputWrapperProps, Input } from '@mantine/core';
 
 function Wrapper(props: InputWrapperProps) {
   return (
-    <div style={{ maxWidth: 440, marginLeft: 'auto', marginRight: 'auto' }}>
-      <Input.Wrapper id="input-demo" {...props}>
-        <Input id="input-demo" placeholder="Your email" size={props.size} />
-      </Input.Wrapper>
-    </div>
+    <Input.Wrapper id="input-demo" maw={440} mx="auto" {...props}>
+      <Input id="input-demo" placeholder="Your email" size={props.size} />
+    </Input.Wrapper>
   );
 }
 

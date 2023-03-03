@@ -1,39 +1,37 @@
 import React from 'react';
-import { IconX } from '@tabler/icons';
+import { IconX } from '@tabler/icons-react';
 import { MantineDemo } from '@mantine/ds';
-import { Group, Badge, ActionIcon, Avatar } from '@mantine/core';
+import { Group, Badge, ActionIcon, Avatar, rem } from '@mantine/core';
 
 const code = `
-import { ActionIcon, Avatar, Badge, Group } from '@mantine/core';
-import { IconX } from '@tabler/icons';
+import { ActionIcon, Avatar, Badge, Group, rem } from '@mantine/core';
+import { IconX } from '@tabler/icons-react';
+
+const avatar = (
+  <Avatar
+    alt="Avatar for badge"
+    size={24}
+    mr={5}
+    src="./avatar.png"
+  />
+);
+
+const removeButton = (
+  <ActionIcon size="xs" color="blue" radius="xl" variant="transparent">
+    <IconX size={rem(10)} />
+  </ActionIcon>
+);
 
 function Demo() {
-  const avatar = (
-    <Avatar
-      alt="Avatar for badge"
-      size={24}
-      mr={5}
-      src="image-link"
-    />
-  );
-
-  const removeButton = (
-    <ActionIcon size="xs" color="blue" radius="xl" variant="transparent">
-      <IconX size={10} />
-    </ActionIcon>
-  );
-
   return (
     <Group>
-      <Badge sx={{ paddingLeft: 0 }} size="lg" radius="xl" color="teal" leftSection={avatar}>
+      <Badge pl={0} size="lg" color="teal" radius="xl" leftSection={avatar}>
         Badge with Avatar
       </Badge>
-
-      <Badge variant="outline" sx={{ paddingRight: 3 }} rightSection={removeButton}>
+      <Badge variant="outline" pr={3} rightSection={removeButton}>
         Badge with right section
       </Badge>
-
-      <Badge variant="outline" sx={{ paddingLeft: 3 }} leftSection={removeButton}>
+      <Badge variant="outline" pl={3} leftSection={removeButton}>
         Badge with left section
       </Badge>
     </Group>
@@ -52,20 +50,20 @@ const avatar = (
 
 const removeButton = (
   <ActionIcon size="xs" color="blue" radius="xl" variant="transparent">
-    <IconX size={10} />
+    <IconX size={rem(10)} />
   </ActionIcon>
 );
 
 function Demo() {
   return (
     <Group>
-      <Badge sx={{ paddingLeft: 0 }} size="lg" color="teal" radius="xl" leftSection={avatar}>
+      <Badge pl={0} size="lg" color="teal" radius="xl" leftSection={avatar}>
         Badge with Avatar
       </Badge>
-      <Badge variant="outline" sx={{ paddingRight: 3 }} rightSection={removeButton}>
+      <Badge variant="outline" pr={3} rightSection={removeButton}>
         Badge with right section
       </Badge>
-      <Badge variant="outline" sx={{ paddingLeft: 3 }} leftSection={removeButton}>
+      <Badge variant="outline" pl={3} leftSection={removeButton}>
         Badge with left section
       </Badge>
     </Group>

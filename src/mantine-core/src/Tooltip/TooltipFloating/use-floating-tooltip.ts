@@ -75,7 +75,7 @@ export function useFloatingTooltip<T extends HTMLElement = any>({
     }
 
     return undefined;
-  }, [reference, refs.floating, update, handleMouseMove, opened]);
+  }, [reference, refs.floating.current, update, handleMouseMove, opened]);
 
   return { handleMouseMove, x, y, opened, setOpened, boundaryRef, floating };
 }

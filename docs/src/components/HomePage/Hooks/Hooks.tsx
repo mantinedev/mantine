@@ -5,10 +5,9 @@ import {
   IconClock,
   IconForms,
   IconHandOff,
-  IconLock,
   IconMaximize,
   IconResize,
-} from '@tabler/icons';
+} from '@tabler/icons-react';
 import { Demo } from '@mantine/ds';
 import { FormDemos, HooksDemos } from '@mantine/demos';
 import { DemoTabs } from '../DemoTabs/DemoTabs';
@@ -43,12 +42,6 @@ const data = [
     icon: IconArrowsMaximize,
     name: 'use-move',
     description: 'Slide behavior over any element',
-  },
-  {
-    demo: () => <Demo data={HooksDemos.useScrollLockDemo} demoProps={{ radius: 'md' }} />,
-    icon: IconLock,
-    name: 'use-scroll-lock',
-    description: 'Lock scroll at current position',
   },
   {
     demo: () => <Demo data={FormDemos.usage} demoProps={{ radius: 'md' }} />,

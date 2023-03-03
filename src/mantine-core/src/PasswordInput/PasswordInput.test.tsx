@@ -7,18 +7,28 @@ import {
   itSupportsInputIcon,
   itConnectsLabelAndInput,
   itSupportsInputWrapperProps,
+  itSupportsProviderVariant,
+  itSupportsProviderSize,
 } from '@mantine/tests';
 import userEvent from '@testing-library/user-event';
 import { PasswordInput, PasswordInputProps } from './PasswordInput';
 
-const defaultProps: PasswordInputProps = {};
+const defaultProps: PasswordInputProps = {
+  label: 'test-label',
+};
 
 describe('@mantine/core/PasswordInput', () => {
+  checkAccessibility([<PasswordInput label="test" />, <PasswordInput aria-label="test" />]);
   itSupportsFocusEvents(PasswordInput, defaultProps, 'input');
   itSupportsInputWrapperProps(PasswordInput, defaultProps, 'PasswordInput');
   itSupportsInputIcon(PasswordInput, defaultProps);
   itConnectsLabelAndInput(PasswordInput, defaultProps);
-  checkAccessibility([<PasswordInput label="test" />, <PasswordInput aria-label="test" />]);
+  itSupportsProviderSize(PasswordInput, defaultProps, 'PasswordInput', ['root', 'input', 'label']);
+  itSupportsProviderVariant(PasswordInput, defaultProps, 'PasswordInput', [
+    'root',
+    'input',
+    'label',
+  ]);
 
   itSupportsSystemProps({
     component: PasswordInput,

@@ -15,7 +15,9 @@ export type ListStylesNames = ListItemStylesNames | Selectors<typeof useStyles>;
 
 export interface ListProps
   extends DefaultProps<ListStylesNames>,
-    React.ComponentPropsWithRef<'ul'> {
+    Omit<React.ComponentPropsWithRef<'ol'>, 'type'> {
+  variant?: string;
+
   /** <List.Item /> components only */
   children: React.ReactNode;
 
@@ -25,13 +27,13 @@ export interface ListProps
   /** Include padding-left to offset list from main content */
   withPadding?: boolean;
 
-  /** Font size from theme or number to set value in px */
+  /** Font size from theme or number to set value */
   size?: MantineNumberSize;
 
   /** Icon that should replace list item dot */
   icon?: React.ReactNode;
 
-  /** Spacing between items from theme or number to set value in px */
+  /** Spacing between items from theme or number to set value */
   spacing?: MantineNumberSize;
 
   /** Center items with icon */
@@ -64,12 +66,13 @@ export const List: ListComponent = forwardRef<HTMLUListElement, ListProps>(
       styles,
       classNames,
       unstyled,
+      variant,
       ...others
     } = useComponentDefaultProps('List', defaultProps, props);
 
     const { classes, cx } = useStyles(
-      { withPadding, size, listStyleType, center, spacing },
-      { classNames, styles, name: 'List', unstyled }
+      { withPadding, listStyleType, center, spacing },
+      { classNames, styles, name: 'List', unstyled, size, variant }
     );
 
     return (
@@ -84,6 +87,7 @@ export const List: ListComponent = forwardRef<HTMLUListElement, ListProps>(
           classNames,
           styles,
           unstyled,
+          variant,
         }}
       >
         <Box<any>

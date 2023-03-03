@@ -27,13 +27,15 @@ type Value = [number, number];
 export interface RangeSliderProps
   extends DefaultProps<RangeSliderStylesNames>,
     Omit<React.ComponentPropsWithoutRef<'div'>, 'value' | 'onChange' | 'defaultValue'> {
+  variant?: string;
+
   /** Color from theme.colors */
   color?: MantineColor;
 
-  /** Track border-radius from theme or number to set border-radius in px */
+  /** Key of theme.radius or any valid CSS value to set border-radius, theme.defaultRadius by default */
   radius?: MantineNumberSize;
 
-  /** Predefined track and thumb size, number to set sizes in px */
+  /** Predefined track and thumb size, number to set sizes */
   size?: MantineNumberSize;
 
   /** Minimal possible value */
@@ -102,7 +104,7 @@ export interface RangeSliderProps
   /** Disables slider */
   disabled?: boolean;
 
-  /** Thumb width and height in px */
+  /** Thumb width and height */
   thumbSize?: number;
 
   /** A transformation function, to change the scale of the slider */
@@ -164,6 +166,7 @@ export const RangeSlider = forwardRef<HTMLDivElement, RangeSliderProps>((props, 
     thumbSize,
     scale,
     inverted,
+    variant,
     ...others
   } = useComponentDefaultProps('RangeSlider', defaultProps, props);
 
@@ -394,6 +397,7 @@ export const RangeSlider = forwardRef<HTMLDivElement, RangeSliderProps>((props, 
       classNames={classNames}
       disabled={disabled}
       unstyled={unstyled}
+      variant={variant}
     >
       <Track
         offset={positions[0]}
@@ -419,6 +423,7 @@ export const RangeSlider = forwardRef<HTMLDivElement, RangeSliderProps>((props, 
         }}
         disabled={disabled}
         unstyled={unstyled}
+        variant={variant}
       >
         <Thumb
           {...sharedThumbProps}
@@ -436,6 +441,7 @@ export const RangeSlider = forwardRef<HTMLDivElement, RangeSliderProps>((props, 
           disabled={disabled}
           unstyled={unstyled}
           thumbSize={thumbSize}
+          variant={variant}
         >
           {hasArrayThumbChildren ? thumbChildren[0] : thumbChildren}
         </Thumb>
@@ -456,6 +462,7 @@ export const RangeSlider = forwardRef<HTMLDivElement, RangeSliderProps>((props, 
           disabled={disabled}
           unstyled={unstyled}
           thumbSize={thumbSize}
+          variant={variant}
         >
           {hasArrayThumbChildren ? thumbChildren[1] : thumbChildren}
         </Thumb>

@@ -1,5 +1,5 @@
 /* eslint-disable import/no-cycle */
-import { createStyles, MantineTheme } from '@mantine/core';
+import { createStyles, MantineTheme, rem, em } from '@mantine/core';
 import { HEADER_HEIGHT } from '../Header/HeaderDesktop.styles';
 
 export const NAVBAR_WIDTH = 260;
@@ -9,7 +9,7 @@ export default createStyles((theme: MantineTheme) => ({
   navbar: {
     boxSizing: 'border-box',
     height: '100vh',
-    borderRight: `1px solid ${
+    borderRight: `${rem(1)} solid ${
       theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.colors.gray[2]
     }`,
     backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.white,
@@ -18,15 +18,15 @@ export default createStyles((theme: MantineTheme) => ({
     top: 0,
     bottom: 0,
     left: 0,
-    width: NAVBAR_WIDTH,
+    width: rem(NAVBAR_WIDTH),
 
-    [`@media (max-width: ${NAVBAR_BREAKPOINT}px)`]: {
+    [`@media (max-width: ${em(NAVBAR_BREAKPOINT)})`]: {
       display: 'none',
     },
   },
 
   opened: {
-    [`@media (max-width: ${NAVBAR_BREAKPOINT}px)`]: {
+    [`@media (max-width: ${em(NAVBAR_BREAKPOINT)})`]: {
       display: 'block',
       width: '100%',
       right: 0,
@@ -35,12 +35,12 @@ export default createStyles((theme: MantineTheme) => ({
 
   body: {
     paddingRight: theme.spacing.md,
-    paddingBottom: theme.spacing.xl * 2,
+    paddingBottom: `calc(${theme.spacing.xl} * 2)`,
     paddingLeft: theme.spacing.md,
-    paddingTop: HEADER_HEIGHT + theme.spacing.md,
+    paddingTop: `calc(${rem(HEADER_HEIGHT)} + ${theme.spacing.md})`,
 
-    [`@media (max-width: ${NAVBAR_BREAKPOINT}px)`]: {
-      paddingBottom: 120,
+    [`@media (max-width: ${em(NAVBAR_BREAKPOINT)})`]: {
+      paddingBottom: rem(120),
     },
   },
 

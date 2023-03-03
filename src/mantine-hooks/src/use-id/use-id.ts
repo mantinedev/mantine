@@ -1,26 +1,23 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useIsomorphicEffect } from '../use-isomorphic-effect/use-isomorphic-effect';
+import { randomId } from '../utils';
+import { useReactId } from './use-react-id';
 
-const randomId = () => `mantine-${Math.random().toString(36).slice(2, 11)}`;
-
-const useReactId: () => string | undefined =
-  (React as any)['useId'.toString()] || (() => undefined);
-
-function useClientId() {
-  const [uuid, setUuid] = useState('');
+export function useId(staticId?: string) {
+  const reactId = useReactId();
+  const [uuid, setUuid] = useState(reactId);
 
   useIsomorphicEffect(() => {
     setUuid(randomId());
   }, []);
 
+  if (typeof staticId === 'string') {
+    return staticId;
+  }
+
+  if (typeof window === 'undefined') {
+    return reactId;
+  }
+
   return uuid;
-}
-
-function getReactId() {
-  const id = useReactId();
-  return id ? `mantine-${id.replace(/:/g, '')}` : '';
-}
-
-export function useId(staticId?: string) {
-  return typeof staticId === 'string' ? staticId : getReactId() || useClientId();
 }

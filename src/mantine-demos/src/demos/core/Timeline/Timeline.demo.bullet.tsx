@@ -1,24 +1,21 @@
 import React from 'react';
-import { ThemeIcon, Text, Avatar, Timeline } from '@mantine/core';
+import { ThemeIcon, Text, Avatar, Timeline, Box } from '@mantine/core';
 import { MantineDemo } from '@mantine/ds';
-import { IconSun, IconVideo } from '@tabler/icons';
+import { IconSun, IconVideo } from '@tabler/icons-react';
 
 const code = `
-import { ThemeIcon, Text, Avatar, Timeline } from '@mantine/core';
-import { IconSun, IconVideo } from '@tabler/icons';
+import { ThemeIcon, Text, Avatar, Timeline, Box } from '@mantine/core';
+import { IconSun, IconVideo } from '@tabler/icons-react';
 
 function Demo() {
   return (
-    <div style={{ maxWidth: 320, margin: 'auto' }}>
+    <Box maw={320} mx="auto">
       <Timeline>
-        {/* If you do not pass bullet prop, default bullet will be rendered */}
         <Timeline.Item title="Default bullet" bulletSize={24}>
           <Text color="dimmed" size="sm">
             Default bullet without anything
           </Text>
         </Timeline.Item>
-
-        {/* You can use any react node as bullet, e.g. Avatar, ThemeIcon or any svg icon */}
         <Timeline.Item
           title="Avatar"
           bulletSize={24}
@@ -34,17 +31,11 @@ function Demo() {
             Timeline bullet as avatar image
           </Text>
         </Timeline.Item>
-
-        <Timeline.Item
-          title="Icon"
-          bulletSize={24}
-          bullet={<IconSun size={14} />}
-        >
+        <Timeline.Item title="Icon" bulletSize={24} bullet={<IconSun size="0.8rem" />}>
           <Text color="dimmed" size="sm">
             Timeline bullet as icon
           </Text>
         </Timeline.Item>
-
         <Timeline.Item
           title="ThemeIcon"
           bulletSize={24}
@@ -55,7 +46,7 @@ function Demo() {
               gradient={{ from: 'lime', to: 'cyan' }}
               radius="xl"
             >
-              <IconVideo size={14} />
+              <IconVideo size="0.8rem" />
             </ThemeIcon>
           }
         >
@@ -64,15 +55,14 @@ function Demo() {
           </Text>
         </Timeline.Item>
       </Timeline>
-    </div>
+    </Box>
   );
 }
-
 `;
 
 function Demo() {
   return (
-    <div style={{ maxWidth: 320, margin: 'auto' }}>
+    <Box maw={320} mx="auto">
       <Timeline>
         <Timeline.Item title="Default bullet" bulletSize={24}>
           <Text color="dimmed" size="sm">
@@ -94,7 +84,7 @@ function Demo() {
             Timeline bullet as avatar image
           </Text>
         </Timeline.Item>
-        <Timeline.Item title="Icon" bulletSize={24} bullet={<IconSun size={14} />}>
+        <Timeline.Item title="Icon" bulletSize={24} bullet={<IconSun size="0.8rem" />}>
           <Text color="dimmed" size="sm">
             Timeline bullet as icon
           </Text>
@@ -109,7 +99,7 @@ function Demo() {
               gradient={{ from: 'lime', to: 'cyan' }}
               radius="xl"
             >
-              <IconVideo size={14} />
+              <IconVideo size="0.8rem" />
             </ThemeIcon>
           }
         >
@@ -118,7 +108,7 @@ function Demo() {
           </Text>
         </Timeline.Item>
       </Timeline>
-    </div>
+    </Box>
   );
 }
 

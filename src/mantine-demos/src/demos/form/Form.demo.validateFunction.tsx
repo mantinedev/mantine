@@ -23,7 +23,7 @@ function Demo() {
   });
 
   return (
-    <Box sx={{ maxWidth: 340 }} mx="auto">
+    <Box maw={340} mx="auto">
       <form onSubmit={form.onSubmit((values) => console.log(values))}>
         <TextInput label="Name" placeholder="Name" {...form.getInputProps('name')} />
         <NumberInput mt="sm" label="Age" placeholder="You age" {...form.getInputProps('age')} />
@@ -52,7 +52,7 @@ function Demo() {
   });
 
   return (
-    <Box sx={{ maxWidth: 340 }} mx="auto">
+    <Box maw={340} mx="auto">
       <form onSubmit={form.onSubmit((values) => console.log(values))}>
         <TextInput label="Name" placeholder="Name" {...form.getInputProps('name')} />
         <NumberInput mt="sm" label="Age" placeholder="You age" {...form.getInputProps('age')} />

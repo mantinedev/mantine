@@ -65,6 +65,7 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>((props, r
     inputContainer,
     unstyled,
     withAsterisk,
+    variant,
     ...others
   } = useComponentDefaultProps('Textarea', defaultProps, props);
 
@@ -74,7 +75,7 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>((props, r
   const sharedProps = {
     required,
     ref,
-    invalid: !!error,
+    error,
     id: uuid,
     classNames: { ...classNames, input: cx(classes.input, classNames?.input) },
     styles,
@@ -82,6 +83,7 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>((props, r
     size,
     multiline: true,
     unstyled,
+    variant,
     ...rest,
   };
 
@@ -106,6 +108,7 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>((props, r
       inputWrapperOrder={inputWrapperOrder}
       unstyled={unstyled}
       withAsterisk={withAsterisk}
+      variant={variant}
       {...systemStyles}
       {...wrapperProps}
     >

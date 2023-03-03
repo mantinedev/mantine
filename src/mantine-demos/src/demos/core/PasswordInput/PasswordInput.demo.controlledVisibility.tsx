@@ -10,7 +10,7 @@ import { PasswordInput, Stack } from '@mantine/core';
 function Demo() {
   const [visible, { toggle }] = useDisclosure(false);
   return (
-    <Stack sx={{ maxWidth: 380 }} mx="auto">
+    <Stack maw={380} mx="auto">
       <PasswordInput
         label="Password"
         defaultValue="secret"
@@ -32,7 +32,7 @@ function Demo() {
 function Demo() {
   const [visible, { toggle }] = useDisclosure(false);
   return (
-    <Stack sx={{ maxWidth: 380 }} mx="auto">
+    <Stack maw={380} mx="auto">
       <PasswordInput
         label="Password"
         defaultValue="secret"

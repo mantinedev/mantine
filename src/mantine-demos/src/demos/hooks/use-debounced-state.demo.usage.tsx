@@ -1,7 +1,7 @@
 import React from 'react';
 import { useDebouncedState } from '@mantine/hooks';
 import { MantineDemo } from '@mantine/ds';
-import { TextInput, Text } from '@mantine/core';
+import { TextInput, Text, Box } from '@mantine/core';
 
 const code = `
 import { useDebouncedState } from '@mantine/hooks';
@@ -15,7 +15,6 @@ function Demo() {
       <TextInput
         label="Enter value to see debounce effect"
         defaultValue={value}
-        style={{ flex: 1 }}
         onChange={(event) => setValue(event.currentTarget.value)}
       />
 
@@ -29,33 +28,20 @@ function Demo() {
   const [value, setValue] = useDebouncedState('', 200);
 
   return (
-    <>
-      <div
-        style={{
-          display: 'flex',
-          alignItems: 'flex-end',
-          justifyContent: 'center',
-          maxWidth: 400,
-          margin: 'auto',
-        }}
-      >
-        <TextInput
-          label="Enter value to see debounce effect"
-          placeholder="Enter value to see debounce effect"
-          defaultValue={value}
-          style={{ flex: 1 }}
-          onChange={(event) => setValue(event.currentTarget.value)}
-        />
-      </div>
-      <div style={{ maxWidth: 400, margin: 'auto', marginTop: 15, overflowWrap: 'break-word' }}>
-        <Text>
-          <Text component="span" color="dimmed" size="sm">
-            Debounced value:
-          </Text>{' '}
-          {value.trim() || '[empty string]'}
-        </Text>
-      </div>
-    </>
+    <Box maw={400} mx="auto">
+      <TextInput
+        label="Enter value to see debounce effect"
+        placeholder="Enter value to see debounce effect"
+        defaultValue={value}
+        onChange={(event) => setValue(event.currentTarget.value)}
+      />
+      <Text mt="sm">
+        <Text component="span" color="dimmed" size="sm">
+          Debounced value:
+        </Text>{' '}
+        {value.trim() || '[empty string]'}
+      </Text>
+    </Box>
   );
 }
 

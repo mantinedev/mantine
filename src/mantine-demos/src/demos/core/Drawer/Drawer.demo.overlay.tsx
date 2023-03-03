@@ -1,47 +1,51 @@
-import React, { useState } from 'react';
-import { Drawer, Group, Button, useMantineTheme } from '@mantine/core';
+import React from 'react';
+import { Drawer, Group, Button } from '@mantine/core';
 import { MantineDemo } from '@mantine/ds';
+import { useDisclosure } from '@mantine/hooks';
 import { AuthenticationForm } from '../../../shared/AuthenticationForm/AuthenticationForm';
 
 const code = `
-import { Drawer, useMantineTheme } from '@mantine/core';
+import { useDisclosure } from '@mantine/hooks';
+import { Drawer, Group, Button } from '@mantine/core';
 
 function Demo() {
-  const theme = useMantineTheme();
-
-  return (
-    <Drawer
-      overlayColor={theme.colorScheme === 'dark' ? theme.colors.dark[9] : theme.colors.gray[2]}
-      overlayOpacity={0.55}
-      overlayBlur={3}
-    >
-      {/* Drawer content */}
-    </Drawer>
-  );
-}
-`;
-
-function Demo() {
-  const [opened, setOpened] = useState(false);
-  const theme = useMantineTheme();
+  const [opened, { open, close }] = useDisclosure(false);
 
   return (
     <>
       <Drawer
         opened={opened}
-        onClose={() => setOpened(false)}
-        padding="xl"
-        size="xl"
-        title="Introduce yourself!"
-        overlayColor={theme.colorScheme === 'dark' ? theme.colors.dark[9] : theme.colors.gray[2]}
-        overlayOpacity={0.55}
-        overlayBlur={3}
+        onClose={close}
+        title="Authentication"
+        overlayProps={{ opacity: 0.5, blur: 4 }}
+      >
+        {/* Drawer content */}
+      </Drawer>
+
+      <Group position="center">
+        <Button onClick={open}>Open drawer</Button>
+      </Group>
+    </>
+  );
+}
+`;
+
+function Demo() {
+  const [opened, { open, close }] = useDisclosure(false);
+
+  return (
+    <>
+      <Drawer
+        opened={opened}
+        onClose={close}
+        title="Authentication"
+        overlayProps={{ opacity: 0.5, blur: 4 }}
       >
         <AuthenticationForm noPadding noShadow />
       </Drawer>
 
       <Group position="center">
-        <Button onClick={() => setOpened(true)}>Open Drawer</Button>
+        <Button onClick={open}>Open drawer</Button>
       </Group>
     </>
   );

@@ -1,5 +1,5 @@
 import React from 'react';
-import { IconSearch } from '@tabler/icons';
+import { IconSearch } from '@tabler/icons-react';
 import { MantineDemo } from '@mantine/ds';
 import { Wrapper } from './_wrapper';
 
@@ -10,8 +10,7 @@ function Demo() {
   return (
     <SpotlightProvider
       shortcut="mod + shift + 2"
-      transitionDuration={300}
-      transition="slide-down"
+      transitionProps={{ duration: 300, transition: 'slide-down' }}
       {...otherProps}
     >
       <App />
@@ -24,8 +23,7 @@ function Demo() {
   return (
     <Wrapper
       searchIcon={<IconSearch size={18} />}
-      transitionDuration={300}
-      transition="slide-down"
+      transitionProps={{ duration: 300, transition: 'slide-down' }}
       searchPlaceholder="Search..."
       shortcut="mod + shift + L"
       buttonLabel="Open spotlight with custom transition"

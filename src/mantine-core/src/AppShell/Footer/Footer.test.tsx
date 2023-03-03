@@ -1,4 +1,8 @@
-import { itRendersChildren, itSupportsSystemProps } from '@mantine/tests';
+import {
+  itRendersChildren,
+  itSupportsSystemProps,
+  itSupportsProviderVariant,
+} from '@mantine/tests';
 import { Footer, FooterProps } from './Footer';
 
 const defaultProps: FooterProps = {
@@ -8,6 +12,7 @@ const defaultProps: FooterProps = {
 
 describe('@mantine/core/Footer', () => {
   itRendersChildren(Footer, defaultProps);
+  itSupportsProviderVariant(Footer, defaultProps, 'Footer');
   itSupportsSystemProps({
     component: Footer,
     props: defaultProps,

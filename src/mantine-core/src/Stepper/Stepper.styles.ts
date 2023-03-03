@@ -1,10 +1,17 @@
-import { createStyles, MantineNumberSize, MantineColor, MantineSize } from '@mantine/styles';
+import {
+  createStyles,
+  MantineNumberSize,
+  MantineColor,
+  rem,
+  getBreakpointValue,
+  getSize,
+  em,
+} from '@mantine/styles';
 import { iconSizes } from './Step/Step.styles';
 
 export interface StepperStylesParams {
   contentPadding: MantineNumberSize;
   iconSize?: number;
-  size: MantineSize;
   color: MantineColor;
   orientation: 'vertical' | 'horizontal';
   iconPosition: 'right' | 'left';
@@ -14,22 +21,17 @@ export interface StepperStylesParams {
 export default createStyles(
   (
     theme,
-    {
-      contentPadding,
-      color,
-      orientation,
-      iconPosition,
-      iconSize,
-      size,
-      breakpoint,
-    }: StepperStylesParams
+    { contentPadding, color, orientation, iconPosition, iconSize, breakpoint }: StepperStylesParams,
+    { size }
   ) => {
     const shouldBeResponsive = typeof breakpoint !== 'undefined';
-    const breakpointValue = theme.fn.size({ size: breakpoint, sizes: theme.breakpoints });
+    const breakpointValue = getBreakpointValue(
+      getSize({ size: breakpoint, sizes: theme.breakpoints })
+    );
     const separatorOffset =
       typeof iconSize !== 'undefined'
-        ? iconSize / 2 - 1
-        : theme.fn.size({ size, sizes: iconSizes }) / 2 - 1;
+        ? `calc(${rem(iconSize)} / 2 - ${rem(1)})`
+        : `calc(${getSize({ size, sizes: iconSizes })} / 2 - ${rem(1)})`;
 
     const verticalOrientationStyles = {
       steps: {
@@ -38,22 +40,22 @@ export default createStyles(
       },
 
       separator: {
-        width: 2,
+        width: rem(2),
         minHeight: theme.spacing.xl,
         marginLeft: iconPosition === 'left' ? separatorOffset : 0,
         marginRight: iconPosition === 'right' ? separatorOffset : 0,
-        marginTop: `calc(${theme.spacing.xs}px / 2)`,
-        marginBottom: `calc(${theme.spacing.xs}px - 2px)`,
+        marginTop: `calc(${theme.spacing.xs} / 2)`,
+        marginBottom: `calc(${theme.spacing.xs} - ${rem(2)})`,
       },
     } as const;
 
     const responsiveStyles = {
       steps: {
-        [`@media (max-width: ${breakpointValue - 1}px)`]: verticalOrientationStyles.steps,
+        [`@media (max-width: ${em(breakpointValue - 1)})`]: verticalOrientationStyles.steps,
       },
 
       separator: {
-        [`@media (max-width: ${breakpointValue - 1}px)`]: verticalOrientationStyles.separator,
+        [`@media (max-width: ${em(breakpointValue - 1)})`]: verticalOrientationStyles.separator,
       },
     } as const;
 
@@ -72,7 +74,7 @@ export default createStyles(
         boxSizing: 'border-box',
         transition: 'background-color 150ms ease',
         flex: 1,
-        height: 2,
+        height: rem(2),
         backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[2],
         marginLeft: theme.spacing.md,
         marginRight: theme.spacing.md,
@@ -90,7 +92,7 @@ export default createStyles(
 
       content: {
         ...theme.fn.fontStyles(),
-        paddingTop: theme.fn.size({ size: contentPadding, sizes: theme.spacing }),
+        paddingTop: getSize({ size: contentPadding, sizes: theme.spacing }),
       },
     };
   }

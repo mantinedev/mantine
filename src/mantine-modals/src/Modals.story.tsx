@@ -9,6 +9,7 @@ import {
   closeAllModals,
   closeModal,
   ContextModalProps,
+  useModals,
 } from './index';
 
 export default { title: 'Modals manager' };
@@ -19,6 +20,7 @@ export function Usage() {
       modalId: 'context-modal',
       modal: 'hello',
       title: 'Context modal',
+      centered: true,
       onClose: () => console.log('context modal closed'),
       innerProps: {
         contextProp: 'test-modal',
@@ -72,6 +74,7 @@ export function Usage() {
 
   return (
     <ModalsProvider
+      modalProps={{ centered: true }}
       modals={{
         hello: ({ context, id, innerProps }: ContextModalProps<{ contextProp: string }>) => {
           console.log(innerProps, id, context);
@@ -134,6 +137,40 @@ export function NestedInsideModal() {
           Open confirm modal
         </Button>
       </Modal>
+    </ModalsProvider>
+  );
+}
+
+function CloseAllApp() {
+  const modals = useModals();
+
+  const handleClick = () => {
+    const modalId = Date.now();
+    console.log('Open modal', modalId);
+
+    modals.openModal({
+      title: `Created at ${modalId}`,
+      children: (
+        <div>
+          <p>Modal content...</p>
+          <Button onClick={handleClick}>Open other modal</Button>
+        </div>
+      ),
+      centered: true,
+      onClose: () => {
+        console.log('Close modal', modalId);
+        modals.closeAll();
+      },
+    });
+  };
+
+  return <Button onClick={handleClick}>Open modal</Button>;
+}
+
+export function closeAll() {
+  return (
+    <ModalsProvider>
+      <CloseAllApp />
     </ModalsProvider>
   );
 }

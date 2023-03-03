@@ -26,18 +26,18 @@ function Demo() {
   const [searchValue, onSearchChange] = useState('');
 
   return (
-    <div style={{ maxWidth: 320, marginLeft: 'auto', marginRight: 'auto' }}>
-      <Select
-        label="Your favorite framework/library"
-        placeholder="Pick one"
-        searchable
-        onSearchChange={onSearchChange}
-        searchValue={searchValue}
-        nothingFound="No options"
-        data={['React', 'Angular', 'Svelte', 'Vue']}
-        withinPortal
-      />
-    </div>
+    <Select
+      maw={320}
+      mx="auto"
+      label="Your favorite framework/library"
+      placeholder="Pick one"
+      searchable
+      onSearchChange={onSearchChange}
+      searchValue={searchValue}
+      nothingFound="No options"
+      data={['React', 'Angular', 'Svelte', 'Vue']}
+      withinPortal
+    />
   );
 }
 

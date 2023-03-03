@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'gatsby';
-import { IconArrowRight } from '@tabler/icons';
-import { Text, SimpleGrid, Slider, Button } from '@mantine/core';
+import { IconArrowRight } from '@tabler/icons-react';
+import { Text, SimpleGrid, Slider, Button, rem } from '@mantine/core';
 import { Prism } from '@mantine/prism';
 import { Slider as SliderStylesApi } from '@mantine/styles-api';
 import DataTable from '../../MdxPage/MdxProvider/DataTable/DataTable';
@@ -12,10 +12,16 @@ const code = `
 function Demo() {
   const styles = (theme) => ({
     track: { '&::before': { backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[3] : theme.colors.blue[1] } },
-    mark: { width: 6, height: 6, borderRadius: 6, transform: 'translateX(-3px) translateY(-2px)', borderColor: theme.colorScheme === 'dark' ? theme.colors.dark[3] : theme.colors.blue[1] },
+    mark: { width: '${rem(6)}', height: '${rem(6)}', borderRadius: '${rem(
+  6
+)}', transform: 'translateX(-${rem(3)}) translateY(-${rem(
+  2
+)})', borderColor: theme.colorScheme === 'dark' ? theme.colors.dark[3] : theme.colors.blue[1] },
     markFilled: { borderColor: theme.colors.blue[6] },
-    markLabel: { fontSize: theme.fontSizes.xs, marginBottom: 5, marginTop: 0 },
-    thumb: { height: 16, width: 16, backgroundColor: theme.white, borderWidth: 1, boxShadow: theme.shadows.sm },
+    markLabel: { fontSize: theme.fontSizes.xs, marginBottom: '${rem(5)}', marginTop: 0 },
+    thumb: { height: '${rem(16)}', width: '${rem(
+  16
+)}', backgroundColor: theme.white, borderWidth: '${rem(1)}', boxShadow: theme.shadows.sm },
   });
 
   return (
@@ -92,22 +98,26 @@ export function Customize() {
                 },
               },
               mark: {
-                width: 6,
-                height: 6,
-                borderRadius: 6,
-                transform: 'translateX(-3px) translateY(-2px)',
+                width: rem(6),
+                height: rem(6),
+                borderRadius: rem(6),
+                transform: `translateX(-${rem(3)}) translateY(-${rem(2)})`,
                 borderColor:
                   theme.colorScheme === 'dark' ? theme.colors.dark[3] : theme.colors.blue[1],
               },
               markFilled: {
                 borderColor: theme.colors.blue[6],
               },
-              markLabel: { fontSize: theme.fontSizes.xs, marginBottom: 5, marginTop: 0 },
+              markLabel: {
+                fontSize: theme.fontSizes.xs,
+                marginBottom: rem(5),
+                marginTop: 0,
+              },
               thumb: {
-                height: 16,
-                width: 16,
+                height: rem(16),
+                width: rem(16),
                 backgroundColor: theme.white,
-                borderWidth: 1,
+                borderWidth: rem(1),
                 boxShadow: theme.shadows.sm,
               },
             })}

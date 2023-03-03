@@ -5,7 +5,7 @@ import { DEFAULT_THEME, ColorPicker, ColorPickerProps } from '@mantine/core';
 function Wrapper(props: ColorPickerProps) {
   return (
     <ColorPicker
-      style={{ margin: 'auto' }}
+      mx="auto"
       format="hex"
       defaultValue="rgba(50, 151, 194, 1)"
       swatches={Object.keys(DEFAULT_THEME.colors).map((color) => DEFAULT_THEME.colors[color][6])}

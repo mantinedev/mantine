@@ -7,8 +7,10 @@ import {
   itConnectsLabelAndInput,
   itSupportsWrapperProps,
   itSupportsFocusEvents,
+  itSupportsProviderVariant,
+  itSupportsProviderSize,
 } from '@mantine/tests';
-import { IconCrown } from '@tabler/icons';
+import { IconCrown } from '@tabler/icons-react';
 import { Switch, SwitchProps } from './Switch';
 
 const defaultProps: SwitchProps = {
@@ -21,6 +23,8 @@ describe('@mantine/core/Switch', () => {
   itConnectsLabelAndInput(Switch, defaultProps);
   itSupportsWrapperProps(Switch, defaultProps);
   itSupportsFocusEvents(Switch, defaultProps, 'input');
+  itSupportsProviderVariant(Switch, defaultProps, 'Switch', ['root', 'input']);
+  itSupportsProviderSize(Switch, defaultProps, 'Switch', ['root', 'input']);
   itSupportsSystemProps({
     component: Switch,
     props: defaultProps,

@@ -4,6 +4,9 @@ import { useTransition } from './use-transition';
 import { MantineTransition } from './transitions';
 
 export interface TransitionProps {
+  /** If set element will not be unmounted from the DOM when it is hidden, display: none styles will be added instead */
+  keepMounted?: boolean;
+
   /** Predefined transition name or transition styles */
   transition: MantineTransition;
 
@@ -35,7 +38,10 @@ export interface TransitionProps {
   onEntered?: () => void;
 }
 
+export type TransitionOverride = Partial<Omit<TransitionProps, 'mounted'>>;
+
 export function Transition({
+  keepMounted,
   transition,
   duration = 250,
   exitDuration = duration,
@@ -59,10 +65,14 @@ export function Transition({
   });
 
   if (transitionDuration === 0) {
-    return mounted ? <>{children({})}</> : null;
+    return mounted ? <>{children({})}</> : keepMounted ? children({ display: 'none' }) : null;
   }
 
-  return transitionStatus === 'exited' ? null : (
+  return transitionStatus === 'exited' ? (
+    keepMounted ? (
+      children({ display: 'none' })
+    ) : null
+  ) : (
     <>
       {children(
         getTransitionStyles({

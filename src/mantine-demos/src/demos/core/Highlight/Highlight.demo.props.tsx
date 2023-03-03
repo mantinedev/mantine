@@ -12,13 +12,13 @@ function Demo() {
       href="https://mantine.dev"
       target="_blank"
       highlight="mantine"
-      variant="link"
-      weight={500}
+      fw={500}
     >
       Mantine website
     </Highlight>
   );
 }
+
 `;
 
 function Demo() {
@@ -28,8 +28,7 @@ function Demo() {
       href="https://mantine.dev"
       target="_blank"
       highlight="mantine"
-      variant="link"
-      weight={500}
+      fw={500}
     >
       Mantine website
     </Highlight>

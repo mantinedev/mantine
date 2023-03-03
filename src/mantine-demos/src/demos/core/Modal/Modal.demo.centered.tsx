@@ -1,27 +1,41 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { useDisclosure } from '@mantine/hooks';
 import { Modal, Group, Button } from '@mantine/core';
 import { MantineDemo } from '@mantine/ds';
 import { AuthenticationForm } from '../../../shared/AuthenticationForm/AuthenticationForm';
 
 const code = `
-import { Modal } from '@mantine/core';
+import { useDisclosure } from '@mantine/hooks';
+import { Modal, Group, Button } from '@mantine/core';
 
 function Demo() {
-  return <Modal centered /* ...other props */ />;
-};
-`;
-
-function Demo() {
-  const [opened, setOpened] = useState(false);
+  const [opened, { open, close }] = useDisclosure(false);
 
   return (
     <>
-      <Modal opened={opened} onClose={() => setOpened(false)} title="Introduce yourself!" centered>
+      <Modal opened={opened} onClose={close} title="Authentication" centered>
+        {/* Modal content */}
+      </Modal>
+
+      <Group position="center">
+        <Button onClick={open}>Open centered Modal</Button>
+      </Group>
+    </>
+  );
+}
+`;
+
+function Demo() {
+  const [opened, { open, close }] = useDisclosure(false);
+
+  return (
+    <>
+      <Modal opened={opened} onClose={close} title="Authentication" centered>
         <AuthenticationForm noShadow noPadding />
       </Modal>
 
       <Group position="center">
-        <Button onClick={() => setOpened(true)}>Open centered Modal</Button>
+        <Button onClick={open}>Open centered Modal</Button>
       </Group>
     </>
   );

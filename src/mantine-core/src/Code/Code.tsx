@@ -6,6 +6,8 @@ import useStyles, { CodeStylesParams } from './Code.styles';
 export interface CodeProps
   extends DefaultProps<never, CodeStylesParams>,
     React.ComponentPropsWithoutRef<'code'> {
+  variant?: string;
+
   /** Code content */
   children: React.ReactNode;
 
@@ -16,13 +18,13 @@ export interface CodeProps
   block?: boolean;
 }
 
+const defaultProps: Partial<CodeProps> = {};
+
 export const Code = forwardRef<HTMLElement, CodeProps>((props: CodeProps, ref) => {
-  const { className, children, block, color, unstyled, ...others } = useComponentDefaultProps(
-    'Code',
-    {},
-    props
-  );
-  const { classes, cx } = useStyles({ color }, { name: 'Code', unstyled });
+  const { className, children, block, color, unstyled, variant, ...others } =
+    useComponentDefaultProps('Code', defaultProps, props);
+
+  const { classes, cx } = useStyles({ color }, { name: 'Code', unstyled, variant });
 
   if (block) {
     return (

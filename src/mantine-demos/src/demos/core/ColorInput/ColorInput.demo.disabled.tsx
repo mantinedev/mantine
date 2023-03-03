@@ -1,6 +1,6 @@
 import React from 'react';
 import { MantineDemo } from '@mantine/ds';
-import { ColorInput } from '@mantine/core';
+import { ColorInput, Box } from '@mantine/core';
 
 const code = `
 import { ColorInput } from '@mantine/core';
@@ -12,17 +12,17 @@ function Demo() {
 
 function Demo() {
   return (
-    <div style={{ maxWidth: 320, marginLeft: 'auto', marginRight: 'auto' }}>
+    <Box maw={320} mx="auto">
       <ColorInput label="Disabled without value" placeholder="Your favorite color" disabled />
 
       <ColorInput
-        style={{ marginTop: 15 }}
+        mt="md"
         label="Disabled with value"
         placeholder="Your favorite color"
         disabled
         value="#EFD679"
       />
-    </div>
+    </Box>
   );
 }
 

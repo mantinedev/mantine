@@ -1,16 +1,16 @@
-import { createStyles } from '@mantine/core';
+import { createStyles, rem } from '@mantine/core';
 
 export default createStyles((theme) => {
   const colors = theme.fn.variant({ variant: 'light' });
   return {
     control: {
       backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.white,
-      minWidth: 26,
-      height: 26,
+      minWidth: rem(26),
+      height: rem(26),
       display: 'flex',
       justifyContent: 'center',
       alignItems: 'center',
-      border: `1px solid ${
+      border: `${rem(1)} solid ${
         theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[4]
       }`,
       borderRadius: theme.fn.radius(),

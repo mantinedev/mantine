@@ -1,6 +1,6 @@
 import React from 'react';
 import { MantineDemo } from '@mantine/ds';
-import { CheckboxGroupProps, Checkbox } from '@mantine/core';
+import { CheckboxGroupProps, Checkbox, Group } from '@mantine/core';
 
 const codeTemplate = (props: string) => `
 import { Checkbox } from '@mantine/core';
@@ -11,22 +11,26 @@ function Demo() {
       defaultValue={['react']}
      ${props}
     >
-      <Checkbox value="react" label="React" />
-      <Checkbox value="svelte" label="Svelte" />
-      <Checkbox value="ng" label="Angular" />
-      <Checkbox value="vue" label="Vue" />
+      <Group mt="xs">
+        <Checkbox value="react" label="React" />
+        <Checkbox value="svelte" label="Svelte" />
+        <Checkbox value="ng" label="Angular" />
+        <Checkbox value="vue" label="Vue" />
+      </Group>
     </Checkbox.Group>
   );
 }
 `;
 
-function Wrapper(props: CheckboxGroupProps) {
+function Wrapper(props: Partial<CheckboxGroupProps>) {
   return (
     <Checkbox.Group defaultValue={['react']} {...props}>
-      <Checkbox value="react" label="React" />
-      <Checkbox value="svelte" label="Svelte" />
-      <Checkbox value="ng" label="Angular" />
-      <Checkbox value="vue" label="Vue" />
+      <Group mt="xs">
+        <Checkbox value="react" label="React" />
+        <Checkbox value="svelte" label="Svelte" />
+        <Checkbox value="ng" label="Angular" />
+        <Checkbox value="vue" label="Vue" />
+      </Group>
     </Checkbox.Group>
   );
 }
@@ -37,22 +41,9 @@ export const groupConfigurator: MantineDemo = {
   codeTemplate,
   configuratorProps: { multiline: 3 },
   configurator: [
-    {
-      name: 'orientation',
-      type: 'segmented',
-      data: [
-        { label: 'horizontal', value: 'horizontal' },
-        { label: 'vertical', value: 'vertical' },
-      ],
-      initialValue: 'horizontal',
-      defaultValue: 'horizontal',
-    },
-    { name: 'label', type: 'string', initialValue: 'Select your favorite framework/library' },
+    { name: 'label', type: 'string', initialValue: 'Select your favorite frameworks/libraries' },
     { name: 'description', type: 'string', initialValue: 'This is anonymous' },
     { name: 'error', type: 'string', initialValue: '' },
     { name: 'withAsterisk', type: 'boolean', initialValue: true, defaultValue: false },
-    { name: 'spacing', type: 'size', initialValue: 'lg', defaultValue: 'lg' },
-    { name: 'offset', type: 'size', initialValue: 'xs', defaultValue: 'xs' },
-    { name: 'size', type: 'size', initialValue: 'sm', defaultValue: 'sm' },
   ],
 };

@@ -21,6 +21,22 @@ export function Uncontrolled() {
   );
 }
 
+export function withFloatingAutoUpdate() {
+  return (
+    <div style={{ padding: 40, height: 400, overflow: 'scroll' }}>
+      <div style={{ height: 150 }} />
+      <Popover>
+        <Popover.Target>
+          <Button>Toggle popover</Button>
+        </Popover.Target>
+
+        <Popover.Dropdown>Dropdown</Popover.Dropdown>
+      </Popover>
+      <div style={{ height: 300 }} />
+    </div>
+  );
+}
+
 export function Disabled() {
   return (
     <div style={{ padding: 40 }}>

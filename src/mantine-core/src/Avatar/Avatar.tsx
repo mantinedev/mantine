@@ -6,13 +6,14 @@ import {
   Selectors,
   useComponentDefaultProps,
   MantineGradient,
+  Variants,
 } from '@mantine/styles';
 import { createPolymorphicComponent } from '@mantine/utils';
 import { Box } from '../Box';
 import { AvatarPlaceholderIcon } from './AvatarPlaceholderIcon';
 import { AvatarGroup } from './AvatarGroup/AvatarGroup';
 import { useAvatarGroupContext } from './AvatarGroup/AvatarGroup.context';
-import useStyles, { AvatarStylesParams, AvatarVariant } from './Avatar.styles';
+import useStyles, { AvatarStylesParams } from './Avatar.styles';
 
 export type AvatarStylesNames = Selectors<typeof useStyles>;
 
@@ -26,19 +27,19 @@ export interface AvatarProps extends DefaultProps<AvatarStylesNames, AvatarStyle
   /** Avatar width and height */
   size?: MantineNumberSize;
 
-  /** Value from theme.radius or number to set border-radius in px */
+  /** Key of theme.radius or any valid CSS value to set border-radius, "xl" by default */
   radius?: MantineNumberSize;
 
-  /** Color from theme.colors used for letter and icon placeholders */
+  /** Key of theme.colors */
   color?: MantineColor;
 
   /** Controls appearance */
-  variant?: AvatarVariant;
+  variant?: Variants<'filled' | 'light' | 'gradient' | 'outline'>;
 
-  /** Controls gradient settings in gradient variant only */
+  /** Gradient input, only used when variant="gradient", theme.defaultGradient by default */
   gradient?: MantineGradient;
 
-  /** img element attributes */
+  /** <img /> element attributes */
   imageProps?: Record<string, any>;
 
   /** Custom placeholder */
@@ -73,8 +74,8 @@ export const _Avatar = forwardRef<HTMLDivElement, AvatarProps>((props, ref) => {
   const [error, setError] = useState(!src);
 
   const { classes, cx } = useStyles(
-    { color, radius, size, withinGroup: ctx.withinGroup, spacing: ctx.spacing, variant, gradient },
-    { classNames, styles, unstyled, name: 'Avatar' }
+    { color, radius, withinGroup: ctx.withinGroup, spacing: ctx.spacing, gradient },
+    { classNames, styles, unstyled, name: 'Avatar', variant, size }
   );
 
   useEffect(() => {

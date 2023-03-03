@@ -1,3 +1,4 @@
+import { MANTINE_SIZES } from '@mantine/styles';
 import React from 'react';
 import { Group } from '../Group';
 import { Badge } from './Badge';
@@ -54,4 +55,14 @@ export function ColorsIndex() {
       </Badge>
     </div>
   );
+}
+
+export function Sizes() {
+  const sizes = MANTINE_SIZES.map((size) => (
+    <Badge size={size} key={size}>
+      Badge {size}
+    </Badge>
+  ));
+
+  return <div style={{ padding: 40, display: 'flex', gap: 40 }}>{sizes}</div>;
 }

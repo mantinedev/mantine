@@ -4,6 +4,7 @@ import {
   MantineTheme,
   MANTINE_SIZES,
   MantineSize,
+  getSize,
 } from '@mantine/styles';
 
 export interface GridStylesParams {
@@ -20,8 +21,8 @@ export interface GridStylesParams {
 function getGutterStyles(gutters: Record<MantineSize, MantineNumberSize>, theme: MantineTheme) {
   return MANTINE_SIZES.reduce((acc, size) => {
     if (typeof gutters[size] !== 'undefined') {
-      acc[`@media (min-width: ${theme.breakpoints[size]}px)`] = {
-        margin: -theme.fn.size({ size: gutters[size], sizes: theme.spacing }) / 2,
+      acc[`@media (min-width: ${theme.breakpoints[size]})`] = {
+        margin: `calc(-${getSize({ size: gutters[size], sizes: theme.spacing })} / 2)`,
       };
     }
 
@@ -35,7 +36,7 @@ export default createStyles(
     { justify, align, gutter, gutterXs, gutterSm, gutterMd, gutterLg, gutterXl }: GridStylesParams
   ) => ({
     root: {
-      margin: -theme.fn.size({ size: gutter, sizes: theme.spacing }) / 2,
+      margin: `calc(-${getSize({ size: gutter, sizes: theme.spacing })} / 2)`,
       display: 'flex',
       flexWrap: 'wrap',
       justifyContent: justify,
