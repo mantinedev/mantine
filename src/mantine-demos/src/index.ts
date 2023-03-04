@@ -91,6 +91,7 @@ export * as SpoilerDemos from './demos/core/Spoiler';
 export * as StepperDemos from './demos/core/Stepper';
 export * as SwitchDemos from './demos/core/Switch';
 export * as TableDemos from './demos/core/Table';
+export * as TagInputDemos from './demos/core/TagInput';
 export * as TabsDemos from './demos/core/Tabs';
 export * as TextDemos from './demos/core/Text';
 export * as TextareaDemos from './demos/core/Textarea';
@@ -129,5 +130,3 @@ export * as DatesProviderDemos from './demos/dates/DatesProvider';
 export * as DateTimePickerDemos from './demos/dates/DateTimePicker';
 export * as DateInputDemos from './demos/dates/DateInput';
 export * as CalendarDemos from './demos/dates/Calendar';
-
-export * as TagInputDemos from './demos/core/TagInput';

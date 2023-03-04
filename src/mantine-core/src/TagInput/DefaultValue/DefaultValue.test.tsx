@@ -15,7 +15,8 @@ const defaultProps: TagInputValueProps = {
   disabled: false,
   size: 'sm',
   radius: 'sm',
-  variant: '',
+  variant: 'default',
+  readOnly: false,
 };
 
 describe('@mantine/core/TagInput/DefaultValue', () => {

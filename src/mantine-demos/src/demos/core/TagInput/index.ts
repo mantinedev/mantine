@@ -1,7 +1,7 @@
-export * from './TagInput.demo.clearable';
-export * from './TagInput.demo.controlable';
-export * from './TagInput.demo.maxTags';
-export * from './TagInput.demo.onlyUnique';
-export * from './TagInput.demo.pasteSplit';
-export * from './TagInput.demo.usage';
-export * from './TagInput.demo.validationRegex';
+export { clearable } from './TagInput.demo.clearable';
+export { controlable } from './TagInput.demo.controlable';
+export { maxTags } from './TagInput.demo.maxTags';
+export { onlyUnique } from './TagInput.demo.onlyUnique';
+export { pasteSplit } from './TagInput.demo.pasteSplit';
+export { usage } from './TagInput.demo.usage';
+export { validationRegex } from './TagInput.demo.validationRegex';

@@ -3,6 +3,7 @@ import { createStyles, getSize, MantineNumberSize, rem } from '@mantine/core';
 interface DefaultLabelStyles {
   radius: MantineNumberSize;
   disabled: boolean;
+  readOnly: boolean;
 }
 
 export const sizes = {
@@ -22,7 +23,7 @@ const fontSizes = {
 };
 
 export default createStyles(
-  (theme, { disabled, radius }: DefaultLabelStyles, { size, variant }) => ({
+  (theme, { disabled, radius, readOnly }: DefaultLabelStyles, { size, variant }) => ({
     defaultValue: {
       display: 'flex',
       alignItems: 'center',
@@ -44,7 +45,7 @@ export default createStyles(
         : theme.colors.gray[7],
       height: getSize({ size, sizes }),
       paddingLeft: `calc(${getSize({ size, sizes: theme.spacing })} / 1.5)`,
-      paddingRight: disabled ? getSize({ size, sizes: theme.spacing }) : 0,
+      paddingRight: disabled || readOnly ? getSize({ size, sizes: theme.spacing }) : 0,
       fontWeight: 500,
       fontSize: getSize({ size, sizes: fontSizes }),
       borderRadius: getSize({ size: radius, sizes: theme.radius }),

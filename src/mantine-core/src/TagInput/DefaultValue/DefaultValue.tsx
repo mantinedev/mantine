@@ -19,6 +19,7 @@ export interface TagInputValueProps
   size: MantineSize;
   radius: MantineNumberSize;
   variant: string;
+  readOnly: boolean;
 }
 
 const buttonSizes = {
@@ -40,10 +41,11 @@ export function DefaultValue({
   radius = 'sm',
   variant,
   unstyled,
+  readOnly,
   ...others
 }: TagInputValueProps) {
   const { classes, cx } = useStyles(
-    { disabled, radius },
+    { disabled, readOnly, radius },
     { classNames, styles, name: 'TagInput', size, variant, unstyled }
   );
 
@@ -51,7 +53,7 @@ export function DefaultValue({
     <div className={cx(classes.defaultValue, className)} {...others}>
       <span className={classes.defaultValueLabel}>{label}</span>
 
-      {!disabled && (
+      {!disabled && !readOnly && (
         <CloseButton
           aria-hidden
           onMouseDown={onRemove}

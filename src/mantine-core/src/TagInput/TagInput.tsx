@@ -3,17 +3,14 @@ import { useUncontrolled, useMergedRef, useId } from '@mantine/hooks';
 import { DefaultProps, MantineSize, Selectors, useComponentDefaultProps } from '@mantine/styles';
 import { Input } from '../Input';
 import { extractSystemStyles } from '../Box';
-import { CloseButton } from '../CloseButton';
 import { BaseSelectProps, BaseSelectStylesNames } from '../Select/types';
 import { DefaultValue, DefaultValueStylesNames } from './DefaultValue/DefaultValue';
 import useStyles, { InputFieldPosition } from './TagInput.styles';
+import { getTagInputRightSectionProps } from './TagInputRightSection/get-taginput-right-section-props';
 
 export type TagInputStylesNames =
   | DefaultValueStylesNames
-  | Exclude<
-      Selectors<typeof useStyles>,
-      'tagInputEmpty' | 'tagInputInputHidden' | 'tagInputPointer'
-    >
+  | Exclude<Selectors<typeof useStyles>, 'tagInputEmpty'>
   | Exclude<
       BaseSelectStylesNames,
       | 'selected'
@@ -78,6 +75,9 @@ export interface TagInputProps extends DefaultProps<TagInputStylesNames>, BaseSe
 
   /** Input Tag position */
   inputFieldPosition?: InputFieldPosition;
+
+  /** Props added to clear button */
+  clearButtonProps?: React.ComponentPropsWithoutRef<'button'>;
 }
 
 const defaultPasteSplit = (data: string): string[] => {
@@ -165,11 +165,12 @@ export const TagInput = forwardRef<HTMLInputElement, TagInputProps>((props, ref)
     onValidationReject,
     onlyUnique,
     inputFieldPosition,
+    clearButtonProps,
     ...others
   } = useComponentDefaultProps('TagInput', defaultProps, props);
 
-  const { classes, cx } = useStyles(
-    { invalid: !!error, inputFieldPosition },
+  const { classes, cx, theme } = useStyles(
+    { invalid: !!error },
     { name: 'TagInput', classNames, styles, size, variant, unstyled }
   );
   const { systemStyles, rest } = extractSystemStyles(others);
@@ -189,12 +190,14 @@ export const TagInput = forwardRef<HTMLInputElement, TagInputProps>((props, ref)
 
   const valuesOverflow = useRef(!!maxTags && maxTags < _value.length);
 
-  const handleValueRemove = (_val: string) => {
-    const newValue = _value.filter((val) => val !== _val);
-    setValue(newValue);
+  const handleValueRemove = (_index: number) => {
+    if (!readOnly) {
+      const newValue = _value.filter((_, index) => index !== _index);
+      setValue(newValue);
 
-    if (!!maxTags && newValue.length < maxTags) {
-      valuesOverflow.current = false;
+      if (!!maxTags && newValue.length < maxTags) {
+        valuesOverflow.current = false;
+      }
     }
   };
 
@@ -214,6 +217,9 @@ export const TagInput = forwardRef<HTMLInputElement, TagInputProps>((props, ref)
 
   const handleAddTags = (newTags: string[]): boolean => {
     let tags = newTags;
+    if (readOnly) {
+      return false;
+    }
     if (onlyUnique) {
       tags = uniq(tags);
       tags = tags.filter((tag) => _value.every((currentTag) => currentTag !== tag));
@@ -249,6 +255,11 @@ export const TagInput = forwardRef<HTMLInputElement, TagInputProps>((props, ref)
     if (IMEOpen) {
       return;
     }
+
+    if (readOnly) {
+      return;
+    }
+
     switch (event.key) {
       case 'Enter': {
         if (inputValue) {
@@ -285,20 +296,21 @@ export const TagInput = forwardRef<HTMLInputElement, TagInputProps>((props, ref)
       return selectedItem;
     })
     .filter((val) => !!val)
-    .map((item) => (
+    .map((item, index) => (
       <Value
         {...item}
         variant={variant}
         disabled={disabled}
         className={classes.value}
         onRemove={() => {
-          handleValueRemove(item.value);
+          handleValueRemove(index);
         }}
-        key={item.value}
+        key={`${item.value}-${index}`}
         size={size}
         styles={styles}
         classNames={classNames}
         radius={radius}
+        readOnly={readOnly}
       />
     ));
 
@@ -335,7 +347,7 @@ export const TagInput = forwardRef<HTMLInputElement, TagInputProps>((props, ref)
       onCompositionStart={() => setIMEOpen(true)}
       onCompositionEnd={() => setIMEOpen(false)}
       onBlur={handleInputBlur}
-      readOnly={valuesOverflow.current}
+      readOnly={valuesOverflow.current || readOnly}
       placeholder={_value.length === 0 ? placeholder : undefined}
       disabled={disabled}
       autoComplete="off"
@@ -403,14 +415,20 @@ export const TagInput = forwardRef<HTMLInputElement, TagInputProps>((props, ref)
             ...classNames,
             input: cx(classes.tagInputContainer, classNames?.input),
           }}
-          rightSection={
-            !disabled && clearable && _value.length > 0 ? (
-              <CloseButton variant="transparent" onClick={handleClear} size={size} />
-            ) : (
-              rightSection
-            )
-          }
           onPaste={handlePaste}
+          {...getTagInputRightSectionProps({
+            theme,
+            rightSection,
+            rightSectionWidth,
+            styles,
+            size,
+            shouldClear: clearable && _value.length > 0,
+            onClear: handleClear,
+            error,
+            disabled,
+            clearButtonProps,
+            readOnly,
+          })}
         >
           {inputFieldPosition === 'inside' && (
             <div className={classes.values} id={`${uuid}-items`}>

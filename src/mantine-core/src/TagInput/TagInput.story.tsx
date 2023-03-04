@@ -21,6 +21,14 @@ export function Controlled() {
   );
 }
 
+export function ReadOnly() {
+  return (
+    <div style={{ padding: 40, maxWidth: 400 }}>
+      <TagInput label="Tag Input" value={['react', 'ng']} placeholder="Input tag" readOnly />
+    </div>
+  );
+}
+
 export function Sizes() {
   return (
     <div style={{ padding: 40 }}>
@@ -62,38 +70,9 @@ export function Alignment() {
       </Group>
       <Group style={{ padding: 40, paddingTop: 0 }} grow align="flex-start" mt="md">
         <TextInput label="Text input" placeholder="Input tag" />
-        <TagInput
-          label="Tag Input with separator and disabled items"
-          defaultValue={['react', 'ng']}
-          placeholder="Input tag"
-        />
+        <TagInput label="Tag Input" defaultValue={['react', 'ng']} placeholder="Input tag" />
       </Group>
     </div>
-  );
-}
-
-export function Clearable() {
-  return (
-    <Group style={{ padding: 40, paddingBottom: 0, maxWidth: 400 }} grow align="flex-start">
-      <TagInput
-        label=" with Clearable"
-        defaultValue={['react', 'ng']}
-        placeholder="Input tag"
-        clearable
-      />
-    </Group>
-  );
-}
-export function MaxTags() {
-  return (
-    <Group style={{ padding: 40, paddingBottom: 0, maxWidth: 400 }} grow align="flex-start">
-      <TagInput
-        label=" with Max Selectable Values"
-        defaultValue={['react', 'ng']}
-        placeholder="Input tag"
-        maxTags={5}
-      />
-    </Group>
   );
 }
 
