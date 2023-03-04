@@ -120,6 +120,12 @@ export interface SelectProps
 
   /** Props added to clear button */
   clearButtonProps?: React.ComponentPropsWithoutRef<'button'>;
+
+  /** Change dropdown menu to a virtualized list */
+  virtualizedList?: React.ComponentType<{ items: React.ReactElement[] }>;
+
+  /** Function to move through the virtualized list */
+  moveThroughVirtualList?: (index: number) => void;
 }
 
 export function defaultFilter(value: string, item: SelectItem) {
@@ -203,6 +209,8 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>((props, ref) => 
     readOnly,
     clearButtonProps,
     hoverOnSearchChange,
+    virtualizedList,
+    moveThroughVirtualList,
     ...others
   } = useInputProps('Select', defaultProps, props);
 
@@ -367,8 +375,12 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>((props, ref) => 
         (index) => index > 0
       );
 
-      targetRef.current = itemsRefs.current[filteredData[nextIndex]?.value];
-      shouldShowDropdown && scrollIntoView({ alignment: isColumn ? 'start' : 'end' });
+      if (virtualizedList) shouldShowDropdown && moveThroughVirtualList?.(nextIndex);
+      else {
+        targetRef.current = itemsRefs.current[filteredData[nextIndex]?.value];
+        shouldShowDropdown && scrollIntoView({ alignment: isColumn ? 'start' : 'end' });
+      }
+
       return nextIndex;
     });
   };
@@ -381,17 +393,26 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>((props, ref) => 
         (index) => index < filteredData.length - 1
       );
 
-      targetRef.current = itemsRefs.current[filteredData[nextIndex]?.value];
-      shouldShowDropdown && scrollIntoView({ alignment: isColumn ? 'end' : 'start' });
+      if (virtualizedList) shouldShowDropdown && moveThroughVirtualList?.(nextIndex);
+      else {
+        targetRef.current = itemsRefs.current[filteredData[nextIndex]?.value];
+        shouldShowDropdown && scrollIntoView({ alignment: isColumn ? 'end' : 'start' });
+      }
       return nextIndex;
     });
   };
 
   const scrollSelectedItemIntoView = () =>
-    window.setTimeout(() => {
-      targetRef.current = itemsRefs.current[filteredData[selectedItemIndex]?.value];
-      scrollIntoView({ alignment: isColumn ? 'end' : 'start' });
-    }, 0);
+    window.setTimeout(
+      () => {
+        if (virtualizedList) moveThroughVirtualList?.(selectedItemIndex);
+        else {
+          targetRef.current = itemsRefs.current[filteredData[selectedItemIndex]?.value];
+          scrollIntoView({ alignment: isColumn ? 'end' : 'start' });
+        }
+      },
+      virtualizedList ? 25 : 0
+    );
 
   useDidUpdate(() => {
     if (shouldShowDropdown) scrollSelectedItemIntoView();
@@ -438,7 +459,8 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>((props, ref) => 
 
           const firstItemIndex = filteredData.findIndex((item) => !item.disabled);
           setHovered(firstItemIndex);
-          shouldShowDropdown && scrollIntoView({ alignment: isColumn ? 'end' : 'start' });
+          if (virtualizedList) shouldShowDropdown && moveThroughVirtualList?.(firstItemIndex);
+          else shouldShowDropdown && scrollIntoView({ alignment: isColumn ? 'end' : 'start' });
         }
         break;
       }
@@ -453,7 +475,8 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>((props, ref) => 
 
           const lastItemIndex = filteredData.map((item) => !!item.disabled).lastIndexOf(false);
           setHovered(lastItemIndex);
-          shouldShowDropdown && scrollIntoView({ alignment: isColumn ? 'end' : 'start' });
+          if (virtualizedList) shouldShowDropdown && moveThroughVirtualList?.(lastItemIndex);
+          else shouldShowDropdown && scrollIntoView({ alignment: isColumn ? 'end' : 'start' });
         }
         break;
       }
@@ -614,6 +637,7 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>((props, ref) => 
           __staticSelector="Select"
           classNames={classNames}
           styles={styles}
+          isVirtualized={!!virtualizedList}
         >
           <SelectItems
             data={filteredData}
@@ -634,6 +658,7 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>((props, ref) => 
             aria-label={wrapperProps.label}
             unstyled={unstyled}
             variant={inputProps.variant}
+            virtualizedList={virtualizedList}
           />
         </SelectPopover.Dropdown>
       </SelectPopover>

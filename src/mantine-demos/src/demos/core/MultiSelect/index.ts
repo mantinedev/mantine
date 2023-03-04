@@ -12,6 +12,7 @@ export { large } from './MultiSelect.demo.large';
 export { users } from './MultiSelect.demo.users';
 export { transitions } from './MultiSelect.demo.transitions';
 export { validation } from './MultiSelect.demo.validation';
+export { virtualized } from './MultiSelect.demo.virtualized';
 export { disabled } from './MultiSelect.demo.disabled';
 export { icon } from './MultiSelect.demo.icon';
 export { rightSection } from './MultiSelect.demo.rightSection';

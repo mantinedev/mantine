@@ -19,3 +19,4 @@ export { deselect } from './Select.demo.deselect';
 export { stylesApi } from './Select.demo.stylesApi';
 export { readOnly } from './Select.demo.readOnly';
 export { hoverOnSearchChange } from './Select.demo.hoverOnSearchChange';
+export { virtualized } from './Select.demo.virtualized';

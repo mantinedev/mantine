@@ -94,6 +94,12 @@ export interface MultiSelectProps
 
   /** Props added to clear button */
   clearButtonProps?: React.ComponentPropsWithoutRef<'button'>;
+
+  /** Change dropdown menu to a virtualized list */
+  virtualizedList?: React.ComponentType<{ items: React.ReactElement[] }>;
+
+  /** Function to move through the virtualized list */
+  moveThroughVirtualList?: (index: number) => void;
 }
 
 export function defaultFilter(value: string, selected: boolean, item: SelectItem) {
@@ -219,6 +225,8 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>((props
     clearButtonProps,
     hoverOnSearchChange,
     disableSelectedItemFiltering,
+    virtualizedList,
+    moveThroughVirtualList,
     ...others
   } = useComponentDefaultProps('MultiSelect', defaultProps, props);
 
@@ -402,11 +410,14 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>((props
         );
 
         if (dropdownOpened) {
-          targetRef.current = itemsRefs.current[filteredData[nextIndex]?.value];
+          if (virtualizedList) moveThroughVirtualList?.(nextIndex);
+          else {
+            targetRef.current = itemsRefs.current[filteredData[nextIndex]?.value];
 
-          scrollIntoView({
-            alignment: isColumn ? 'end' : 'start',
-          });
+            scrollIntoView({
+              alignment: isColumn ? 'end' : 'start',
+            });
+          }
         }
 
         return nextIndex;
@@ -422,11 +433,14 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>((props
         );
 
         if (dropdownOpened) {
-          targetRef.current = itemsRefs.current[filteredData[nextIndex]?.value];
+          if (virtualizedList) moveThroughVirtualList?.(nextIndex);
+          else {
+            targetRef.current = itemsRefs.current[filteredData[nextIndex]?.value];
 
-          scrollIntoView({
-            alignment: isColumn ? 'start' : 'end',
-          });
+            scrollIntoView({
+              alignment: isColumn ? 'start' : 'end',
+            });
+          }
         }
 
         return nextIndex;
@@ -499,9 +513,13 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>((props
 
           const firstItemIndex = filteredData.findIndex((item) => !item.disabled);
           setHovered(firstItemIndex);
-          scrollIntoView({
-            alignment: isColumn ? 'end' : 'start',
-          });
+
+          if (virtualizedList) moveThroughVirtualList?.(firstItemIndex);
+          else {
+            scrollIntoView({
+              alignment: isColumn ? 'end' : 'start',
+            });
+          }
         }
         break;
       }
@@ -516,9 +534,12 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>((props
 
           const lastItemIndex = filteredData.map((item) => !!item.disabled).lastIndexOf(false);
           setHovered(lastItemIndex);
-          scrollIntoView({
-            alignment: isColumn ? 'end' : 'start',
-          });
+          if (virtualizedList) moveThroughVirtualList?.(lastItemIndex);
+          else {
+            scrollIntoView({
+              alignment: isColumn ? 'end' : 'start',
+            });
+          }
         }
         break;
       }
@@ -722,6 +743,7 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>((props
           __staticSelector="MultiSelect"
           classNames={classNames}
           styles={styles}
+          isVirtualized={!!virtualizedList}
         >
           <SelectItems
             data={filteredData}
@@ -741,6 +763,7 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>((props
             createLabel={createLabel}
             unstyled={unstyled}
             variant={variant}
+            virtualizedList={virtualizedList}
           />
         </SelectPopover.Dropdown>
       </SelectPopover>

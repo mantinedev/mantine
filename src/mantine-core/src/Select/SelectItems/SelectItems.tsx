@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { DefaultProps, MantineSize, Selectors } from '@mantine/styles';
 import { randomId } from '@mantine/hooks';
 import { Text } from '../../Text/Text';
@@ -23,6 +23,7 @@ export interface SelectItemsProps extends DefaultProps<SelectItemsStylesNames> {
   creatable?: boolean;
   createLabel?: React.ReactNode;
   variant: string;
+  virtualizedList?: React.ComponentType<{ items: React.ReactElement[] }>;
 }
 
 export function SelectItems({
@@ -43,6 +44,7 @@ export function SelectItems({
   createLabel,
   unstyled,
   variant,
+  virtualizedList: Menu,
 }: SelectItemsProps) {
   const { classes } = useStyles(null, {
     classNames,
@@ -93,6 +95,11 @@ export function SelectItems({
       />
     );
   };
+
+  const MenuConstructor = useCallback(
+    ({ children }) => (Menu ? <Menu items={children} /> : <>{children}</>),
+    []
+  );
 
   let groupName = null;
   data.forEach((item, index) => {
@@ -147,11 +154,10 @@ export function SelectItems({
     );
   }
 
-  return groupedItems.length > 0 || unGroupedItems.length > 0 ? (
-    <>
-      {groupedItems}
-      {unGroupedItems}
-    </>
+  const items = groupedItems.concat(unGroupedItems);
+
+  return items.length > 0 ? (
+    <MenuConstructor>{items}</MenuConstructor>
   ) : (
     <Text size={size} unstyled={unstyled} className={classes.nothingFound}>
       {nothingFound}

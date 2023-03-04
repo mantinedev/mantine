@@ -16,6 +16,7 @@ interface SelectPopoverDropdownProps extends DefaultProps<SelectPopoverStylesNam
   direction?: React.CSSProperties['flexDirection'];
   innerRef?: React.MutableRefObject<HTMLDivElement>;
   __staticSelector?: string;
+  isVirtualized?: boolean;
 }
 
 function SelectPopoverDropdown({
@@ -29,13 +30,14 @@ function SelectPopoverDropdown({
   styles,
   classNames,
   unstyled,
+  isVirtualized,
   ...others
 }: SelectPopoverDropdownProps) {
   const { classes } = useStyles(null, { name: __staticSelector, styles, classNames, unstyled });
 
   return (
     <Popover.Dropdown p={0} onMouseDown={(event) => event.preventDefault()} {...others}>
-      <div style={{ maxHeight: rem(maxHeight), display: 'flex' }}>
+      <div style={{ maxHeight: isVirtualized ? 'auto' : rem(maxHeight), display: 'flex' }}>
         <Box<'div'>
           component={(component || 'div') as any}
           id={`${id}-items`}

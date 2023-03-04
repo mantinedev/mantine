@@ -53,7 +53,8 @@
     "react-imask": "*",
     "dayjs": "*",
     "zod": "*",
-    "prism-react-renderer": "*"
+    "prism-react-renderer": "*",
+    "react-virtuoso": "*"
   },
   "dependencies": {},
   "devDependencies": {}
