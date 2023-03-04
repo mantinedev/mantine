@@ -155,14 +155,14 @@ Set `inline` prop to use `Tooltip` with inline elements:
 
 ## Change transition
 
-Tooltip is built with [Transition](/core/transition/) component, it supports `transition` and `transitionDuration` props:
+Tooltip is built with [Transition](/core/transition/) component, it supports `transitionProps` props:
 
 ```tsx
 import { Tooltip } from '@mantine/core';
 
 function Demo() {
   return (
-    <Tooltip transition="skew-up" transitionDuration={300}>
+    <Tooltip transitionProps={{ transition: 'skew-up', duration: 300 }}>
       <button>target</button>
     </Tooltip>
   );
