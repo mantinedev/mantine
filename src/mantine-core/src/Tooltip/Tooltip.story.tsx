@@ -132,23 +132,23 @@ export const WithArrow = () => (
 );
 
 export const TooltipAndArrowWithBorder = () => (
-    <div style={{ padding: 40 }}>
-      <Tooltip
-        opened
-        position="right"
-        label="Tooltip and arrow with border"
-        withArrow
-        transitionProps={{ duration: 0 }}
-        arrowSize={10}
-        styles={{
-          tooltip: { border: '4px solid green' },
-          arrow: { border: '4px solid green' },
-        }}
-      >
-        <Button>target</Button>
-      </Tooltip>
-    </div>
-  );
+  <div style={{ padding: 40 }}>
+    <Tooltip
+      opened
+      position="right"
+      label="Tooltip and arrow with border"
+      withArrow
+      transitionProps={{ duration: 0 }}
+      arrowSize={10}
+      styles={{
+        tooltip: { border: '4px solid green' },
+        arrow: { border: '4px solid green' },
+      }}
+    >
+      <Button>target</Button>
+    </Tooltip>
+  </div>
+);
 
 export const WithArrowRadius = () => (
   <Tooltip
