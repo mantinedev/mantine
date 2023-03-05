@@ -37,7 +37,13 @@ export const Title = forwardRef<HTMLHeadingElement, TitleProps>((props, ref) => 
   }
 
   return (
-    <Text component={`h${order}`} ref={ref} className={cx(classes.root, className)} {...others}>
+    <Text
+      variant={variant}
+      component={`h${order}`}
+      ref={ref}
+      className={cx(classes.root, className)}
+      {...others}
+    >
       {children}
     </Text>
   );
