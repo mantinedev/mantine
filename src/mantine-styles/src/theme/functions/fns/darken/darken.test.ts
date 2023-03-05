@@ -22,4 +22,8 @@ describe('@mantine/styles/darken', () => {
     expect(darken(RGB, 1)).toBe('rgba(0, 0, 0, 1)');
     expect(darken(RGBA, 1)).toBe('rgba(0, 0, 0, 0.6)');
   });
+
+  it('returns color as-is if it is a CSS variable', () => {
+    expect(darken('var(--css-custom-property)', 0.5)).toBe('var(--css-custom-property)');
+  });
 });
