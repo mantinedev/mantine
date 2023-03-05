@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { forwardRef } from 'react';
 import { DefaultProps, MantineNumberSize, Selectors } from '@mantine/styles';
 import { Box } from '../Box';
 import { Input } from '../Input';
@@ -20,51 +20,56 @@ export interface InlineInputProps
   labelPosition: 'left' | 'right';
 }
 
-export function InlineInput({
-  __staticSelector,
-  className,
-  classNames,
-  styles,
-  unstyled,
-  children,
-  label,
-  description,
-  id,
-  disabled,
-  error,
-  size,
-  labelPosition,
-  variant,
-  ...others
-}: InlineInputProps) {
-  const { classes, cx } = useStyles(
-    { labelPosition },
-    { name: __staticSelector, styles, classNames, unstyled, variant, size }
-  );
+export const InlineInput = forwardRef<HTMLDivElement, InlineInputProps>(
+  (
+    {
+      __staticSelector,
+      className,
+      classNames,
+      styles,
+      unstyled,
+      children,
+      label,
+      description,
+      id,
+      disabled,
+      error,
+      size,
+      labelPosition,
+      variant,
+      ...others
+    },
+    ref
+  ) => {
+    const { classes, cx } = useStyles(
+      { labelPosition },
+      { name: __staticSelector, styles, classNames, unstyled, variant, size }
+    );
 
-  return (
-    <Box className={cx(classes.root, className)} {...others}>
-      <div className={cx(classes.body)}>
-        {children}
+    return (
+      <Box className={cx(classes.root, className)} ref={ref} {...others}>
+        <div className={cx(classes.body)}>
+          {children}
 
-        <div className={classes.labelWrapper}>
-          {label && (
-            <label className={classes.label} data-disabled={disabled || undefined} htmlFor={id}>
-              {label}
-            </label>
-          )}
+          <div className={classes.labelWrapper}>
+            {label && (
+              <label className={classes.label} data-disabled={disabled || undefined} htmlFor={id}>
+                {label}
+              </label>
+            )}
 
-          {description && (
-            <Input.Description className={classes.description}>{description}</Input.Description>
-          )}
+            {description && (
+              <Input.Description className={classes.description}>{description}</Input.Description>
+            )}
 
-          {error && error !== 'boolean' && (
-            <Input.Error className={classes.error}>{error}</Input.Error>
-          )}
+            {error && error !== 'boolean' && (
+              <Input.Error className={classes.error}>{error}</Input.Error>
+            )}
+          </div>
         </div>
-      </div>
-    </Box>
-  );
-}
+      </Box>
+    );
+  }
+);
 
 InlineInput.displayName = '@mantine/core/InlineInput';
