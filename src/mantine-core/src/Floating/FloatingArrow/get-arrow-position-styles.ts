@@ -90,7 +90,7 @@ export function getArrowPositionStyles({
     [radiusByFloatingSide[side]]: rem(arrowRadius),
   };
 
-  const arrowPlacement = withBorder ? -arrowSize / 2 - 1 : -arrowSize / 2;
+  const arrowPlacement = rem(withBorder ? -arrowSize / 2 - 1 : -arrowSize / 2);
 
   if (side === 'left') {
     return {
