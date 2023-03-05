@@ -97,8 +97,8 @@ export function getArrowPositionStyles({
       ...baseStyles,
       ...horizontalSide(placement, arrowY, arrowOffset, arrowPosition),
       right: arrowPlacement,
-      borderLeft: 0,
-      borderBottom: 0,
+      borderLeftColor: 'transparent',
+      borderBottomColor: 'transparent',
     };
   }
 
@@ -107,8 +107,8 @@ export function getArrowPositionStyles({
       ...baseStyles,
       ...horizontalSide(placement, arrowY, arrowOffset, arrowPosition),
       left: arrowPlacement,
-      borderRight: 0,
-      borderTop: 0,
+      borderRightColor: 'transparent',
+      borderTopColor: 'transparent',
     };
   }
 
@@ -117,8 +117,8 @@ export function getArrowPositionStyles({
       ...baseStyles,
       ...verticalSide(placement, arrowX, arrowOffset, arrowPosition, dir),
       bottom: arrowPlacement,
-      borderTop: 0,
-      borderLeft: 0,
+      borderTopColor: 'transparent',
+      borderLeftColor: 'transparent',
     };
   }
 
@@ -127,8 +127,8 @@ export function getArrowPositionStyles({
       ...baseStyles,
       ...verticalSide(placement, arrowX, arrowOffset, arrowPosition, dir),
       top: arrowPlacement,
-      borderBottom: 0,
-      borderRight: 0,
+      borderBottomColor: 'transparent',
+      borderRightColor: 'transparent',
     };
   }
 
