@@ -310,7 +310,8 @@ export const Slider = forwardRef<HTMLDivElement, SliderProps>((props, ref) => {
           classNames={classNames}
           styles={styles}
           thumbLabel={thumbLabel}
-          showLabelOnHover={showLabelOnHover && hovered}
+          showLabelOnHover={showLabelOnHover}
+          isHovered={hovered}
           disabled={disabled}
           unstyled={unstyled}
           thumbSize={thumbSize}
