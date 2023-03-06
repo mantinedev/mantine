@@ -177,7 +177,6 @@ const _Tooltip = forwardRef<HTMLElement, TooltipProps>((props, ref) => {
                 arrowX={tooltip.arrowX}
                 arrowY={tooltip.arrowY}
                 visible={withArrow}
-                withBorder={false}
                 position={tooltip.placement}
                 arrowSize={arrowSize}
                 arrowOffset={arrowOffset}

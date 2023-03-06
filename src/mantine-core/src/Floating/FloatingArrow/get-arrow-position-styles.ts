@@ -62,7 +62,6 @@ const radiusByFloatingSide: Record<
 
 export function getArrowPositionStyles({
   position,
-  withBorder,
   arrowSize,
   arrowOffset,
   arrowRadius,
@@ -72,7 +71,6 @@ export function getArrowPositionStyles({
   dir,
 }: {
   position: FloatingPosition;
-  withBorder: boolean;
   arrowSize: number;
   arrowOffset: number;
   arrowRadius: number;
@@ -90,7 +88,7 @@ export function getArrowPositionStyles({
     [radiusByFloatingSide[side]]: rem(arrowRadius),
   };
 
-  const arrowPlacement = rem(withBorder ? -arrowSize / 2 - 1 : -arrowSize / 2);
+  const arrowPlacement = rem(-arrowSize / 2);
 
   if (side === 'left') {
     return {
