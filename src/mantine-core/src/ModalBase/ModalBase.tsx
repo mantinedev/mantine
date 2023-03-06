@@ -11,7 +11,7 @@ import {
   MantineShadow,
   Selectors,
 } from '@mantine/styles';
-import { OptionalPortal } from '../Portal';
+import { OptionalPortal, PortalProps } from '../Portal';
 import { TransitionOverride } from '../Transition';
 import { ModalBaseProvider } from './ModalBase.context';
 import {
@@ -62,6 +62,9 @@ export interface ModalBaseSettings extends React.ComponentPropsWithoutRef<'div'>
 
   /** Determines whether component should be rendered inside Portal, true by default */
   withinPortal?: boolean;
+
+  /** Props to pass down to the portal when withinPortal is true */
+  portalProps?: Omit<PortalProps, 'target'>;
 
   /** Target element or selector where Portal should be rendered, by default new element is created and appended to the document.body */
   target?: HTMLElement | string;
@@ -122,6 +125,7 @@ export function ModalBase(props: ModalBaseProps) {
     __staticSelector,
     transitionProps,
     withinPortal,
+    portalProps,
     keepMounted,
     target,
     zIndex,
@@ -168,7 +172,7 @@ export function ModalBase(props: ModalBaseProps) {
   useFocusReturn({ opened, shouldReturnFocus: trapFocus && returnFocus });
 
   return (
-    <OptionalPortal withinPortal={withinPortal} target={target}>
+    <OptionalPortal withinPortal={withinPortal} target={target} {...portalProps}>
       <ModalBaseProvider
         value={{
           __staticSelector,

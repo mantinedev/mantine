@@ -13,6 +13,7 @@ import {
 } from '@mantine/styles';
 import { TransitionOverride } from '../Transition';
 import { getFloatingPosition, FloatingPosition, ArrowPosition } from '../Floating';
+import { PortalProps } from '../Portal';
 import { usePopover } from './use-popover';
 import { PopoverContextProvider } from './Popover.context';
 import {
@@ -72,6 +73,9 @@ export interface PopoverBaseProps {
 
   /** Determines whether dropdown should be rendered within Portal, defaults to false */
   withinPortal?: boolean;
+
+  /** Props to pass down to the portal when withinPortal is true */
+  portalProps?: PortalProps;
 
   /** Dropdown z-index */
   zIndex?: React.CSSProperties['zIndex'];
@@ -171,6 +175,7 @@ export function Popover(props: PopoverProps) {
     styles,
     closeOnClickOutside,
     withinPortal,
+    portalProps,
     closeOnEscape,
     clickOutsideEvents,
     trapFocus,
@@ -257,6 +262,7 @@ export function Popover(props: PopoverProps) {
         placement: popover.floating.placement,
         trapFocus,
         withinPortal,
+        portalProps,
         zIndex,
         radius,
         shadow,

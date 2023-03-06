@@ -3,6 +3,7 @@ import { createSafeContext } from '@mantine/utils';
 import { MantineNumberSize, MantineShadow, ClassNames, Styles } from '@mantine/styles';
 import { FloatingPosition, ArrowPosition } from '../Floating';
 import { TransitionOverride } from '../Transition';
+import { PortalProps } from '../Portal';
 import { POPOVER_ERRORS } from './Popover.errors';
 import { PopoverWidth, PopoverStylesNames, PopoverStylesParams } from './Popover.types';
 
@@ -25,6 +26,7 @@ interface PopoverContext {
   trapFocus: boolean;
   placement: FloatingPosition;
   withinPortal: boolean;
+  portalProps?: PortalProps;
   closeOnEscape: boolean;
   zIndex: React.CSSProperties['zIndex'];
   radius?: MantineNumberSize;
