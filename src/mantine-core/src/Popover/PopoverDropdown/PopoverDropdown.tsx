@@ -54,7 +54,7 @@ export function PopoverDropdown(props: PopoverDropdownProps) {
   }
 
   return (
-    <OptionalPortal withinPortal={ctx.withinPortal}>
+    <OptionalPortal withinPortal={ctx.withinPortal} {...ctx.portalProps}>
       <Transition
         mounted={ctx.opened}
         {...ctx.transitionProps}

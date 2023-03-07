@@ -3,6 +3,7 @@ import { useUncontrolled, useMergedRef, useDidUpdate, useScrollIntoView } from '
 import { DefaultProps, MantineSize, MantineShadow, getDefaultZIndex } from '@mantine/styles';
 import { groupOptions } from '@mantine/utils';
 import { SelectScrollArea } from './SelectScrollArea/SelectScrollArea';
+import { PortalProps } from '../Portal';
 import { Input, useInputProps } from '../Input';
 import { TransitionOverride } from '../Transition';
 import { DefaultItem } from './DefaultItem/DefaultItem';
@@ -52,6 +53,9 @@ export interface SelectSharedProps<Item, Value> {
 
   /** Whether to render the dropdown in a Portal */
   withinPortal?: boolean;
+
+  /** Props to pass down to the portal when withinPortal is true */
+  portalProps?: PortalProps;
 
   /** Limit amount of items displayed at a time for searchable select */
   limit?: number;
@@ -191,6 +195,7 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>((props, ref) => 
     onDropdownClose,
     onDropdownOpen,
     withinPortal,
+    portalProps,
     switchDirectionOnFlip,
     zIndex,
     name,
@@ -540,6 +545,7 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>((props, ref) => 
         transitionProps={transitionProps}
         shadow="sm"
         withinPortal={withinPortal}
+        portalProps={portalProps}
         __staticSelector="Select"
         onDirectionChange={setDirection}
         switchDirectionOnFlip={switchDirectionOnFlip}

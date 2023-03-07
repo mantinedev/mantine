@@ -4,6 +4,7 @@ import {
   useMantineTheme,
   getDefaultZIndex,
   MantineColor,
+  PortalProps,
 } from '@mantine/core';
 import { useDidUpdate, useInterval, useReducedMotion } from '@mantine/hooks';
 import React, { useRef, useState } from 'react';
@@ -40,6 +41,9 @@ export interface NavigationProgressProps {
   /** Determines whether progressbar should be rendered within Portal, defaults to true */
   withinPortal?: boolean;
 
+  /** Props to pass down to the portal when withinPortal is true */
+  portalProps?: PortalProps;
+
   /** Progressbar z-index */
   zIndex?: React.CSSProperties['zIndex'];
 
@@ -58,6 +62,7 @@ export function NavigationProgress({
   onFinish,
   autoReset = false,
   withinPortal = true,
+  portalProps,
   zIndex = getDefaultZIndex('max'),
   progressLabel,
 }: NavigationProgressProps) {
@@ -143,7 +148,7 @@ export function NavigationProgress({
   useNavigationProgressEvents({ start, stop, set, increment, decrement, reset, complete });
 
   return (
-    <OptionalPortal withinPortal={withinPortal}>
+    <OptionalPortal withinPortal={withinPortal} {...portalProps}>
       {!unmountProgress && (
         <Progress
           radius={0}

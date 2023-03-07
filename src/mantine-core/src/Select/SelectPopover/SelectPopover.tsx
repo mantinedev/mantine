@@ -2,6 +2,7 @@ import React from 'react';
 import { ClassNames, MantineShadow, Styles, Selectors, DefaultProps, rem } from '@mantine/styles';
 import { SelectScrollArea } from '../SelectScrollArea/SelectScrollArea';
 import { Popover } from '../../Popover';
+import { PortalProps } from '../../Portal';
 import { Box } from '../../Box';
 import { TransitionOverride } from '../../Transition';
 import useStyles from './SelectPopover.styles';
@@ -60,6 +61,7 @@ interface SelectPopoverProps {
   transitionProps: TransitionOverride;
   shadow?: MantineShadow;
   withinPortal?: boolean;
+  portalProps?: PortalProps;
   children: React.ReactNode;
   __staticSelector?: string;
   onDirectionChange?(direction: React.CSSProperties['flexDirection']): void;
@@ -79,6 +81,7 @@ export function SelectPopover({
   transitionProps = { transition: 'fade', duration: 0 },
   shadow,
   withinPortal,
+  portalProps,
   children,
   __staticSelector,
   onDirectionChange,
@@ -106,6 +109,7 @@ export function SelectPopover({
       zIndex={zIndex}
       __staticSelector={__staticSelector}
       withinPortal={withinPortal}
+      portalProps={portalProps}
       transitionProps={transitionProps}
       shadow={shadow}
       disabled={readOnly}

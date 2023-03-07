@@ -20,6 +20,7 @@ import {
 import { ColorSwatch } from '../ColorSwatch';
 import { ActionIcon } from '../ActionIcon';
 import { Popover, PopoverStylesNames } from '../Popover';
+import { PortalProps } from '../Portal';
 import { TransitionOverride } from '../Transition';
 import {
   ColorPicker,
@@ -58,6 +59,9 @@ export interface ColorInputProps
 
   /** Whether to render the dropdown in a Portal */
   withinPortal?: boolean;
+
+  /** Props to pass down to the portal when withinPortal is true */
+  portalProps?: PortalProps;
 
   /** Dropdown box-shadow, key of theme.shadows */
   shadow?: MantineShadow;
@@ -123,6 +127,7 @@ export const ColorInput = forwardRef<HTMLInputElement, ColorInputProps>((props, 
     transitionProps,
     dropdownZIndex,
     withinPortal,
+    portalProps,
     swatches,
     shadow,
     classNames,
@@ -201,6 +206,7 @@ export const ColorInput = forwardRef<HTMLInputElement, ColorInputProps>((props, 
         offset={5}
         zIndex={dropdownZIndex}
         withinPortal={withinPortal}
+        portalProps={portalProps}
         transitionProps={transitionProps}
         opened={dropdownOpened}
         shadow={shadow}
