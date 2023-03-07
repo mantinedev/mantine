@@ -150,6 +150,12 @@ export const DateTimePicker = forwardRef<HTMLButtonElement, DateTimePickerProps>
     }
   }, [_value, dropdownOpened]);
 
+  useDidUpdate(() => {
+    if (dropdownOpened) {
+      setCurrentLevel('month');
+    }
+  }, [dropdownOpened]);
+
   const __stopPropagation = dropdownType === 'popover';
 
   return (
