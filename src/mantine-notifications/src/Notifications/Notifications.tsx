@@ -3,7 +3,11 @@ import { Transition, TransitionGroup } from 'react-transition-group';
 import { DefaultProps, Portal, getDefaultZIndex, Box, PortalProps, rem } from '@mantine/core';
 import { useReducedMotion, useForceUpdate, useDidUpdate } from '@mantine/hooks';
 import { NotificationsPositioning } from '../types';
-import { useNotificationsEvents } from '../events';
+import {
+  notifications as GlobalNotifications,
+  NotificationsEvents,
+  useNotificationsEvents,
+} from '../events';
 import getPositionStyles from './get-position-styles/get-position-styles';
 import getNotificationStateStyles from './get-notification-state-styles/get-notification-state-styles';
 import NotificationContainer from '../NotificationContainer/NotificationContainer';
@@ -18,6 +22,8 @@ const POSITIONS = [
   'bottom-right',
   'bottom-center',
 ] as const;
+
+type NotificationsStaticMethods = NotificationsEvents;
 
 export interface NotificationsProps
   extends Omit<DefaultProps, 'style'>,
@@ -53,7 +59,7 @@ export interface NotificationsProps
   target?: PortalProps['target'];
 }
 
-export function Notifications({
+export const Notifications: React.FC<NotificationsProps> & NotificationsStaticMethods = ({
   className,
   position = 'bottom-right',
   autoClose = 4000,
@@ -66,7 +72,7 @@ export function Notifications({
   children,
   target,
   ...others
-}: NotificationsProps) {
+}) => {
   const forceUpdate = useForceUpdate();
   const refs = useRef<Record<string, HTMLDivElement>>({});
   const previousLength = useRef<number>(0);
@@ -149,6 +155,11 @@ export function Notifications({
       </Box>
     </Portal>
   );
-}
+};
 
 Notifications.displayName = '@mantine/notifications/Notifications';
+Notifications.show = GlobalNotifications.show;
+Notifications.hide = GlobalNotifications.hide;
+Notifications.update = GlobalNotifications.update;
+Notifications.clean = GlobalNotifications.clean;
+Notifications.cleanQueue = GlobalNotifications.cleanQueue;

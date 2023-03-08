@@ -99,21 +99,21 @@ export const Alert = forwardRef<HTMLDivElement, AlertProps>((props: AlertProps, 
             </div>
           )}
 
-          {withCloseButton && (
-            <CloseButton
-              className={classes.closeButton}
-              onClick={onClose}
-              variant="transparent"
-              size={16}
-              iconSize={16}
-              aria-label={closeButtonLabel}
-            />
-          )}
-
           <div id={bodyId} className={classes.message}>
             {children}
           </div>
         </div>
+
+        {withCloseButton && (
+          <CloseButton
+            className={classes.closeButton}
+            onClick={onClose}
+            variant="transparent"
+            size={16}
+            iconSize={16}
+            aria-label={closeButtonLabel}
+          />
+        )}
       </div>
     </Box>
   );
