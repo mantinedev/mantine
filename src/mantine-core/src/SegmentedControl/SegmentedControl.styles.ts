@@ -138,8 +138,7 @@ export default createStyles(
         borderTopColor: 'transparent !important',
 
         [`& + .${getStylesRef('control')}`]: {
-          borderLeftColor: 'transparent !important',
-          borderTopColor: 'transparent !important',
+          [vertical ? 'borderTopColor' : 'borderLeftColor']: 'transparent !important',
         },
         borderRadius: theme.fn.radius(radius),
         boxShadow: shouldAnimate
