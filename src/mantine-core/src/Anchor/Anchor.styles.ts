@@ -1,7 +1,25 @@
-import { createStyles, MantineColor } from '@mantine/styles';
+import { createStyles, MantineColor, MantineTheme } from '@mantine/styles';
 
 export interface AnchorStylesParams {
   color: MantineColor;
+}
+
+interface GetAnchorColor {
+  theme: MantineTheme;
+  color: 'dimmed' | MantineColor;
+}
+
+function getAnchorColor({ theme, color }: GetAnchorColor) {
+  if (color === 'dimmed') {
+    return theme.fn.dimmed();
+  }
+
+  return theme.fn.themeColor(
+    color || theme.primaryColor,
+    theme.colorScheme === 'dark' ? 4 : 7,
+    false,
+    true
+  );
 }
 
 export default createStyles((theme, { color }: AnchorStylesParams) => ({
@@ -10,12 +28,7 @@ export default createStyles((theme, { color }: AnchorStylesParams) => ({
     cursor: 'pointer',
     padding: 0,
     border: 0,
-    color: theme.fn.themeColor(
-      color || theme.primaryColor,
-      theme.colorScheme === 'dark' ? 4 : 7,
-      false,
-      true
-    ),
+    color: getAnchorColor({ theme, color }),
     ...theme.fn.hover({ textDecoration: 'underline' }),
   },
 }));
