@@ -58,7 +58,7 @@ export default createStyles((theme, { radius, color }: AlertStylesParams, { vari
     paddingTop: theme.spacing.sm,
     paddingBottom: theme.spacing.sm,
     paddingLeft: theme.spacing.md,
-    paddingRight: theme.spacing.md,
+    paddingRight: theme.spacing.sm,
     borderRadius: theme.fn.radius(radius),
     border: `${rem(1)} solid transparent`,
     ...getVariantStyles({ variant, color, theme }),
@@ -122,9 +122,7 @@ export default createStyles((theme, { radius, color }: AlertStylesParams, { vari
   },
 
   closeButton: {
-    position: 'absolute',
-    top: theme.spacing.sm,
-    right: theme.spacing.sm,
-    color: 'inherit',
+    width: rem(10),
+    height: rem(10),
   },
 }));
