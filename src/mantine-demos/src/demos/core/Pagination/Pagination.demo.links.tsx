@@ -50,8 +50,8 @@ function Demo() {
           <Pagination.First component="a" href="#page-0" />
           <Pagination.Previous component="a" href="#page-1" />
           <Pagination.Items />
-          <Pagination.Next component="a" href="/pagination/#page-2" />
-          <Pagination.Last component="a" href="/pagination/#page-10" />
+          <Pagination.Next component="a" href="#page-2" />
+          <Pagination.Last component="a" href="#page-10" />
         </Group>
       </Pagination.Root>
     </>
@@ -70,7 +70,7 @@ function Demo() {
         withEdges
         getItemProps={(page) => ({
           component: 'a',
-          href: `/pagination/#page-${page}`,
+          href: `#page-${page}`,
         })}
         getControlProps={(control) => {
           if (control === 'first') {
