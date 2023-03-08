@@ -98,7 +98,6 @@ export function PopoverDropdown(props: PopoverDropdownProps) {
                 arrowX={ctx.arrowX}
                 arrowY={ctx.arrowY}
                 visible={ctx.withArrow}
-                withBorder
                 position={ctx.placement}
                 arrowSize={ctx.arrowSize}
                 arrowRadius={ctx.arrowRadius}

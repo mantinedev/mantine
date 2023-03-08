@@ -24,6 +24,7 @@ export interface ThumbProps extends DefaultProps<ThumbStylesNames> {
   onFocus?(): void;
   onBlur?(): void;
   showLabelOnHover?: boolean;
+  isHovered?: boolean;
   children?: React.ReactNode;
   disabled: boolean;
   thumbSize: number;
@@ -52,6 +53,7 @@ export const Thumb = forwardRef<HTMLDivElement, ThumbProps>(
       onFocus,
       onBlur,
       showLabelOnHover,
+      isHovered,
       children = null,
       disabled,
       unstyled,
@@ -65,7 +67,10 @@ export const Thumb = forwardRef<HTMLDivElement, ThumbProps>(
       { name: 'Slider', classNames, styles, unstyled, variant, size }
     );
     const [focused, setFocused] = useState(false);
-    const isVisible = labelAlwaysOn || dragging || focused || showLabelOnHover;
+    const [hovered, setHovered] = useState(false);
+
+    const isVisible =
+      labelAlwaysOn || dragging || focused || (showLabelOnHover && (isHovered || hovered));
 
     return (
       <Box<'div'>
@@ -87,6 +92,8 @@ export const Thumb = forwardRef<HTMLDivElement, ThumbProps>(
         }}
         onTouchStart={onMouseDown}
         onMouseDown={onMouseDown}
+        onMouseEnter={showLabelOnHover ? () => setHovered(true) : undefined}
+        onMouseLeave={showLabelOnHover ? () => setHovered(false) : undefined}
         onClick={(event) => event.stopPropagation()}
         style={{ [theme.dir === 'rtl' ? 'right' : 'left']: `${position}%` }}
       >

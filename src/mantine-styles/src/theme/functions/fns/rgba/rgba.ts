@@ -6,6 +6,10 @@ export function rgba(color: string, alpha: number) {
     return 'rgba(0, 0, 0, 1)';
   }
 
+  if (color.startsWith('var(--')) {
+    return color;
+  }
+
   const { r, g, b } = toRgba(color);
   return `rgba(${r}, ${g}, ${b}, ${alpha})`;
 }

@@ -4,7 +4,6 @@ import { getArrowPositionStyles } from './get-arrow-position-styles';
 import { ArrowPosition, FloatingPosition } from '../types';
 
 interface FloatingArrowProps extends React.ComponentPropsWithoutRef<'div'> {
-  withBorder: boolean;
   position: FloatingPosition;
   arrowSize: number;
   arrowOffset: number;
@@ -18,7 +17,6 @@ interface FloatingArrowProps extends React.ComponentPropsWithoutRef<'div'> {
 export const FloatingArrow = forwardRef<HTMLDivElement, FloatingArrowProps>(
   (
     {
-      withBorder,
       position,
       arrowSize,
       arrowOffset,
@@ -41,7 +39,6 @@ export const FloatingArrow = forwardRef<HTMLDivElement, FloatingArrowProps>(
         {...others}
         ref={ref}
         style={getArrowPositionStyles({
-          withBorder,
           position,
           arrowSize,
           arrowOffset,

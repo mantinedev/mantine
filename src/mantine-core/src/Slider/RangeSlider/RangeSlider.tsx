@@ -437,7 +437,8 @@ export const RangeSlider = forwardRef<HTMLDivElement, RangeSliderProps>((props, 
           thumbLabel={thumbFromLabel}
           onMouseDown={(event) => handleThumbMouseDown(event, 0)}
           onFocus={() => setFocused(0)}
-          showLabelOnHover={showLabelOnHover && hovered}
+          showLabelOnHover={showLabelOnHover}
+          isHovered={hovered}
           disabled={disabled}
           unstyled={unstyled}
           thumbSize={thumbSize}
@@ -458,7 +459,8 @@ export const RangeSlider = forwardRef<HTMLDivElement, RangeSliderProps>((props, 
           }}
           onMouseDown={(event) => handleThumbMouseDown(event, 1)}
           onFocus={() => setFocused(1)}
-          showLabelOnHover={showLabelOnHover && hovered}
+          showLabelOnHover={showLabelOnHover}
+          isHovered={hovered}
           disabled={disabled}
           unstyled={unstyled}
           thumbSize={thumbSize}
