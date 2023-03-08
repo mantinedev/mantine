@@ -18,7 +18,7 @@ export const cleanNotifications = createEvent('clean');
 export const cleanNotificationsQueue = createEvent('cleanQueue');
 export const updateNotification = createEvent('update');
 
-export const notifications = {
+export const notifications: NotificationsEvents = {
   show: showNotification,
   hide: hideNotification,
   clean: cleanNotifications,
