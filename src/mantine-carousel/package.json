@@ -9,6 +9,11 @@
   "sideEffects": false,
   "author": "Vitaly Rtishchev <rtivital@gmail.com>",
   "homepage": "https://mantine.dev/others/carousel/",
+  "repository": {
+    "url": "https://github.com/mantinedev/mantine.git",
+    "type": "git",
+    "directory": "src/mantine-carousel"
+  },
   "keywords": [
     "react",
     "next",
