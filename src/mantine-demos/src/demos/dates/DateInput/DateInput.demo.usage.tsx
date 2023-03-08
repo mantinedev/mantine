@@ -31,6 +31,7 @@ function Demo() {
       placeholder="Date input"
       maw={400}
       mx="auto"
+      popoverProps={{ withinPortal: true }}
     />
   );
 }
