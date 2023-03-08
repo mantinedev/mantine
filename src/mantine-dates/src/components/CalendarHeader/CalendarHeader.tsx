@@ -156,7 +156,7 @@ export const CalendarHeader = forwardRef<HTMLDivElement, CalendarHeaderProps>((p
         disabled={!hasNextLevel}
         data-static={!hasNextLevel || undefined}
         aria-label={levelControlAriaLabel}
-        tabIndex={__preventFocus ? -1 : 0}
+        tabIndex={__preventFocus || !hasNextLevel ? -1 : 0}
         data-mantine-stop-propagation={__stopPropagation || undefined}
       >
         {label}
