@@ -20,16 +20,16 @@ export interface JsonInputProps
   /** onChange value for controlled input */
   onChange?(value: string): void;
 
-  /** Format json on blur */
+  /** Format JSON on blur */
   formatOnBlur?: boolean;
 
-  /** Error message shown when json is not valid */
+  /** Error message shown when JSON is not valid */
   validationError?: React.ReactNode;
 
-  /** Function to serialize value into string, used for value formatting, JSON.stringify by default */
+  /** Function to serialize value into a string, used for value formatting, JSON.stringify by default */
   serialize?: typeof JSON.stringify;
 
-  /** Function to deserialize string value, used for value formatting and input json validation, must throw error if string cannot be processed, JSON.parse by default */
+  /** Function to deserialize string value, used for value formatting and input JSON validation, must throw error if string cannot be processed, JSON.parse by default */
   deserialize?: typeof JSON.parse;
 }
 
