@@ -10,10 +10,10 @@ export interface IStorageProperties<T> {
   /** Default value that will be set if value is not found in storage */
   defaultValue?: T;
 
-  /** If set to true, value will be update is useEffect after mount */
+  /** If set to true, value will be updated in useEffect after mount */
   getInitialValueInEffect?: boolean;
 
-  /** Function to serialize value into string to be save in storage */
+  /** Function to serialize value into a string to be saved in storage */
   serialize?(value: T): string;
 
   /** Function to deserialize string value from storage to value */
