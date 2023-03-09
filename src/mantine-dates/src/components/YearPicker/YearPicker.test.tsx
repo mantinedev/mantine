@@ -1,5 +1,5 @@
 import React from 'react';
-import { render } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import {
   itSupportsSystemProps,
@@ -165,5 +165,25 @@ describe('@mantine/dates/YearPicker', () => {
   it('supports custom __staticSelector', () => {
     const { container } = render(<YearPicker {...defaultProps} __staticSelector="Calendar" />);
     expect(container.firstChild).toHaveClass('mantine-Calendar-calendar');
+  });
+
+  const ariaLabels = {
+    previousDecade: 'Previous decade',
+    nextDecade: 'Next decade',
+  };
+
+  it('only adds first year of decade to navigation order', async () => {
+    render(<YearPicker {...defaultProps} date={new Date(2020, 0, 1)} ariaLabels={ariaLabels} />);
+    await userEvent.tab();
+    expect(screen.getByRole('button', { name: ariaLabels.previousDecade })).toHaveFocus();
+
+    await userEvent.tab();
+    expect(screen.getByRole('button', { name: ariaLabels.nextDecade })).toHaveFocus();
+
+    await userEvent.tab();
+    expect(screen.getByRole('button', { name: '2020' })).toHaveFocus();
+
+    await userEvent.tab();
+    expect(document.body).toHaveFocus();
   });
 });

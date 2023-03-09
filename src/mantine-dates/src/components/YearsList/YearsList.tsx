@@ -8,6 +8,7 @@ import { useDatesContext } from '../DatesProvider';
 import { getYearsData } from './get-years-data/get-years-data';
 import { isYearDisabled } from './is-year-disabled/is-year-disabled';
 import useStyles from './YearsList.styles';
+import { getYearTabIndex } from './get-year-tabindex/get-year-tabindex';
 
 export type YearsListStylesNames = PickerControlStylesNames | Selectors<typeof useStyles>;
 
@@ -122,7 +123,7 @@ export const YearsList = forwardRef<HTMLTableElement, YearsListProps>((props, re
               controlProps?.onMouseDown?.(event);
               __preventFocus && event.preventDefault();
             }}
-            tabIndex={__preventFocus ? -1 : 0}
+            tabIndex={__preventFocus ? -1 : getYearTabIndex(year, years)}
           >
             {dayjs(year).locale(ctx.getLocale(locale)).format(yearsListFormat)}
           </PickerControl>

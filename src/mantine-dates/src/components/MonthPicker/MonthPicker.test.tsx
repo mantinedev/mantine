@@ -1,5 +1,5 @@
 import React from 'react';
-import { render } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import {
   itSupportsSystemProps,
@@ -172,5 +172,29 @@ describe('@mantine/dates/MonthPicker', () => {
   it('supports custom __staticSelector', () => {
     const { container } = render(<MonthPicker {...defaultProps} __staticSelector="Calendar" />);
     expect(container.firstChild).toHaveClass('mantine-Calendar-calendar');
+  });
+
+  const ariaLabels = {
+    previousYear: 'Previous year',
+    yearLevelControl: 'Year level control',
+    nextYear: 'Next year',
+  };
+
+  it('only adds first month of year to navigation order', async () => {
+    render(<MonthPicker {...defaultProps} ariaLabels={ariaLabels} />);
+    await userEvent.tab();
+    expect(screen.getByRole('button', { name: ariaLabels.previousYear })).toHaveFocus();
+
+    await userEvent.tab();
+    expect(screen.getByRole('button', { name: ariaLabels.yearLevelControl })).toHaveFocus();
+
+    await userEvent.tab();
+    expect(screen.getByRole('button', { name: ariaLabels.nextYear })).toHaveFocus();
+
+    await userEvent.tab();
+    expect(screen.getByRole('button', { name: 'Jan' })).toHaveFocus();
+
+    await userEvent.tab();
+    expect(document.body).toHaveFocus();
   });
 });

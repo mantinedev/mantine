@@ -11,6 +11,7 @@ import { isSameMonth } from './is-same-month/is-same-month';
 import { isBeforeMaxDate } from './is-before-max-date/is-before-max-date';
 import { isAfterMinDate } from './is-after-min-date/is-after-min-date';
 import useStyles from './Month.styles';
+import { getDayTabIndex } from './get-day-tabindex/get-day-tabindex';
 
 export type MonthStylesNames =
   | Selectors<typeof useStyles>
@@ -154,7 +155,11 @@ export const Month = forwardRef<HTMLTableElement, MonthProps>((props, ref) => {
     size,
   };
 
-  const rows = getMonthDays(month, ctx.getFirstDayOfWeek(firstDayOfWeek)).map((row, rowIndex) => {
+  const dates = getMonthDays(month, ctx.getFirstDayOfWeek(firstDayOfWeek));
+  const hasSelectedDayInMonth = dates.some((row) =>
+    row.some((date) => getDayProps?.(date)?.selected)
+  );
+  const rows = dates.map((row, rowIndex) => {
     const cells = row.map((date, cellIndex) => {
       const outside = !isSameMonth(date, month);
       const ariaLabel =
@@ -163,6 +168,7 @@ export const Month = forwardRef<HTMLTableElement, MonthProps>((props, ref) => {
           .locale(locale || ctx.locale)
           .format('D MMMM YYYY');
       const dayProps = getDayProps?.(date);
+      const isSelected = getDayProps?.(date)?.selected;
 
       return (
         <td
@@ -203,7 +209,16 @@ export const Month = forwardRef<HTMLTableElement, MonthProps>((props, ref) => {
               dayProps?.onMouseDown?.(event);
               __preventFocus && event.preventDefault();
             }}
-            tabIndex={__preventFocus ? -1 : 0}
+            tabIndex={
+              __preventFocus
+                ? -1
+                : getDayTabIndex({
+                    date,
+                    isSelected,
+                    month,
+                    hasSelectedDayInMonth,
+                  })
+            }
           />
         </td>
       );

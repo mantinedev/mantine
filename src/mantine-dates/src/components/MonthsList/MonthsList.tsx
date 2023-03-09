@@ -8,6 +8,7 @@ import { useDatesContext } from '../DatesProvider';
 import { getMonthsData } from './get-months-data/get-months-data';
 import { isMonthDisabled } from './is-month-disabled/is-month-disabled';
 import useStyles from './MonthsList.styles';
+import { getMonthTabIndex } from './get-month-tabindex/get-month-tabindex';
 
 export type MonthsListStylesNames = PickerControlStylesNames | Selectors<typeof useStyles>;
 
@@ -121,7 +122,7 @@ export const MonthsList = forwardRef<HTMLTableElement, MonthsListProps>((props, 
               controlProps?.onMouseDown?.(event);
               __preventFocus && event.preventDefault();
             }}
-            tabIndex={__preventFocus ? -1 : 0}
+            tabIndex={__preventFocus ? -1 : getMonthTabIndex(month, months)}
           >
             {dayjs(month).locale(ctx.getLocale(locale)).format(monthsListFormat)}
           </PickerControl>

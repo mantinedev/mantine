@@ -6,6 +6,7 @@ import {
   itSupportsProviderVariant,
   itSupportsProviderSize,
 } from '@mantine/tests';
+import dayjs from 'dayjs';
 import { Calendar, CalendarProps } from './Calendar';
 import {
   itSupportsMonthProps,
@@ -353,5 +354,78 @@ describe('@mantine/dates/Calendar', () => {
     );
 
     expect(screen.getByText('0/2020 – 0/2029')).toBeInTheDocument();
+  });
+
+  it('only adds first day of month to navigation order', async () => {
+    render(<Calendar {...defaultProps} />);
+    await userEvent.tab();
+    expect(
+      screen.getByRole('button', { name: defaultProps.ariaLabels.previousMonth })
+    ).toHaveFocus();
+
+    await userEvent.tab();
+    expect(
+      screen.getByRole('button', { name: defaultProps.ariaLabels.monthLevelControl })
+    ).toHaveFocus();
+
+    await userEvent.tab();
+    expect(screen.getByRole('button', { name: defaultProps.ariaLabels.nextMonth })).toHaveFocus();
+
+    await userEvent.tab();
+    expect(screen.getByRole('button', { name: '1 April 2022' })).toHaveFocus();
+
+    await userEvent.tab();
+    expect(document.body).toHaveFocus();
+  });
+
+  it('only adds today to navigation order when today is in month', async () => {
+    render(<Calendar {...defaultProps} defaultDate={new Date()} />);
+    await userEvent.tab();
+    expect(
+      screen.getByRole('button', { name: defaultProps.ariaLabels.previousMonth })
+    ).toHaveFocus();
+
+    await userEvent.tab();
+    expect(
+      screen.getByRole('button', { name: defaultProps.ariaLabels.monthLevelControl })
+    ).toHaveFocus();
+
+    await userEvent.tab();
+    expect(screen.getByRole('button', { name: defaultProps.ariaLabels.nextMonth })).toHaveFocus();
+
+    await userEvent.tab();
+    expect(screen.getByRole('button', { name: dayjs().format('D MMMM YYYY') })).toHaveFocus();
+
+    await userEvent.tab();
+    expect(document.body).toHaveFocus();
+  });
+
+  it('only adds selected date to navigation', async () => {
+    render(
+      <Calendar
+        {...defaultProps}
+        getDayProps={(date) => ({ selected: dayjs(date).isSame(defaultProps.defaultDate, 'day') })}
+      />
+    );
+    await userEvent.tab();
+    expect(
+      screen.getByRole('button', { name: defaultProps.ariaLabels.previousMonth })
+    ).toHaveFocus();
+
+    await userEvent.tab();
+    expect(
+      screen.getByRole('button', { name: defaultProps.ariaLabels.monthLevelControl })
+    ).toHaveFocus();
+
+    await userEvent.tab();
+    expect(screen.getByRole('button', { name: defaultProps.ariaLabels.nextMonth })).toHaveFocus();
+
+    await userEvent.tab();
+    expect(
+      screen.getByRole('button', { name: dayjs(defaultProps.defaultDate).format('D MMMM YYYY') })
+    ).toHaveFocus();
+
+    await userEvent.tab();
+    expect(document.body).toHaveFocus();
   });
 });
