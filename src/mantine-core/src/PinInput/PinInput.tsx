@@ -233,8 +233,8 @@ export const PinInput = forwardRef<HTMLDivElement, PinInputProps>((props, ref) =
   };
 
   useEffect(() => {
-    if(_value.length !== length) return;
-    
+    if (_value.length !== length) return;
+
     onComplete?.(_value);
   }, [_value]);
 
