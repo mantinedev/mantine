@@ -38,7 +38,7 @@ export function DrawerRoot(props: DrawerRootProps) {
   const { classNames, variant, size, scrollAreaComponent, position, transitionProps, ...others } =
     useComponentDefaultProps('DrawerRoot', defaultProps, props);
 
-  const { classes, cx, theme } = useStyles({ position }, { name: 'Modal', variant, size });
+  const { classes, cx, theme } = useStyles({ position }, { name: 'Drawer', variant, size });
 
   const drawerTransition = (theme.dir === 'rtl' ? rtlTransitions : transitions)[position];
 
