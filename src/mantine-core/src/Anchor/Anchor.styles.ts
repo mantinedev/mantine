@@ -2,6 +2,7 @@ import { createStyles, MantineColor, MantineTheme } from '@mantine/styles';
 
 export interface AnchorStylesParams {
   color: MantineColor;
+  underline: boolean;
 }
 
 interface GetAnchorColor {
@@ -22,13 +23,13 @@ function getAnchorColor({ theme, color }: GetAnchorColor) {
   );
 }
 
-export default createStyles((theme, { color }: AnchorStylesParams) => ({
+export default createStyles((theme, { color, underline }: AnchorStylesParams) => ({
   root: {
     backgroundColor: 'transparent',
     cursor: 'pointer',
     padding: 0,
     border: 0,
     color: getAnchorColor({ theme, color }),
-    ...theme.fn.hover({ textDecoration: 'underline' }),
+    ...theme.fn.hover({ textDecoration: underline ? 'underline' : 'none' }),
   },
 }));
