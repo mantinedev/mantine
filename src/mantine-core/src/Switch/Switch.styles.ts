@@ -57,6 +57,10 @@ export default createStyles(
     const errorColor = theme.fn.variant({ variant: 'filled', color: 'red' }).background;
 
     return {
+      root: {
+        position: 'relative',
+      },
+
       input: {
         height: 0,
         width: 0,

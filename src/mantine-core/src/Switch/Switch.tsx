@@ -101,7 +101,7 @@ export const Switch: SwitchComponent = forwardRef<HTMLInputElement, SwitchProps>
   const ctx = useSwitchGroupContext();
   const _size = ctx?.size || size;
 
-  const { classes } = useStyles(
+  const { classes, cx } = useStyles(
     { color, radius, labelPosition, error: !!error },
     { name: 'Switch', classNames, styles, unstyled, size: _size, variant }
   );
@@ -124,7 +124,7 @@ export const Switch: SwitchComponent = forwardRef<HTMLInputElement, SwitchProps>
 
   return (
     <InlineInput
-      className={className}
+      className={cx(className, classes.root)}
       sx={sx}
       style={style}
       id={uuid}
