@@ -72,7 +72,6 @@ export function PopoverDropdown(props: PopoverDropdownProps) {
             <Box
               {...accessibleProps}
               tabIndex={-1}
-              key={ctx.placement}
               ref={ctx.floating}
               style={{
                 ...style,
