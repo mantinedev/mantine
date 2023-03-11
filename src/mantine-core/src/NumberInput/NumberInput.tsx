@@ -179,21 +179,6 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>((props
     return result;
   };
 
-  const [_value, setValue] = useState<number | ''>(
-    typeof value === 'number' ? value : typeof defaultValue === 'number' ? defaultValue : ''
-  );
-  const finalValue = typeof value === 'number' ? value : _value;
-  const [tempValue, setTempValue] = useState(
-    typeof finalValue === 'number' ? parsePrecision(finalValue) : ''
-  );
-  const inputRef = useRef<HTMLInputElement>();
-  const handleValueChange = (val: number | '') => {
-    if (val !== _value && !Number.isNaN(val)) {
-      typeof onChange === 'function' && onChange(val);
-      setValue(val);
-    }
-  };
-
   const formatNum = (val: string | number = '') => {
     let parsedStr = typeof val === 'number' ? String(val) : val;
 
@@ -214,46 +199,69 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>((props
     return parser(num);
   };
 
+  const formatInternalValue = (val: number | '') => formatNum(parsePrecision(val));
+
+  // Parsed value that will be used for uncontrolled state and for setting the inputValue
+  const [internalValue, _setInternalValue] = useState<number | ''>(
+    typeof value === 'number' ? value : typeof defaultValue === 'number' ? defaultValue : ''
+  );
+
+  // Value of input field. Gets changed through user input and on internalValue change
+  const [inputValue, setInputValue] = useState(() => formatInternalValue(internalValue));
+
+  const inputRef = useRef<HTMLInputElement>();
+
+  const setInternalValue = (val: number | '') => {
+    const newInputValue = formatInternalValue(val);
+    if (newInputValue !== inputValue) {
+      // Make sure to update/reset the input value even if the internal value stays the same
+      // E. g. this may happen if the internalValue is "10" and the user entered "10abc"
+      setInputValue(newInputValue);
+    }
+
+    if (val !== internalValue) {
+      _setInternalValue(val);
+    }
+  };
+
   const _min = typeof min === 'number' ? min : -Infinity;
   const _max = typeof max === 'number' ? max : Infinity;
 
   const incrementRef = useRef<() => void>();
   incrementRef.current = () => {
-    if (_value === '') {
-      handleValueChange(startValue ?? min ?? 0);
-      setTempValue(startValue ? parsePrecision(startValue) ?? parsePrecision(min) ?? '0' : '0');
+    let newInternalValue: number;
+    if (internalValue === '') {
+      newInternalValue = startValue ?? min ?? 0;
     } else {
-      const result = parsePrecision(clamp(_value + step, _min, _max));
-
-      handleValueChange(parseFloat(result));
-      setTempValue(result);
+      newInternalValue = parseFloat(parsePrecision(clamp(internalValue + step, _min, _max)));
     }
+
+    setInternalValue(newInternalValue);
+    onChange?.(newInternalValue);
   };
 
   const decrementRef = useRef<() => void>();
   decrementRef.current = () => {
-    if (_value === '') {
-      handleValueChange(startValue ?? min ?? 0);
-      setTempValue(startValue ? parsePrecision(startValue) ?? parsePrecision(min) ?? '0' : '0');
+    let newInternalValue: number;
+    if (internalValue === '') {
+      newInternalValue = startValue ?? min ?? 0;
     } else {
-      const result = parsePrecision(clamp(_value - step, _min, _max));
-      handleValueChange(parseFloat(result));
-      setTempValue(result);
+      newInternalValue = parseFloat(parsePrecision(clamp(internalValue - step, _min, _max)));
     }
+
+    setInternalValue(newInternalValue);
+    onChange?.(newInternalValue);
   };
 
   assignRef(handlersRef, { increment: incrementRef.current, decrement: decrementRef.current });
 
   useEffect(() => {
-    if (typeof value === 'number') {
-      setValue(value);
-      setTempValue(parsePrecision(value));
+    if (typeof value === 'number' || value === '') {
+      setInternalValue(value);
+    } else if (value === undefined) {
+      setInternalValue(defaultValue ?? '');
     }
-    if ((defaultValue === '' || defaultValue === undefined) && value === '') {
-      setValue(value);
-      setTempValue('');
-    }
-  }, [value, precision]);
+  }, [value]);
 
   const shouldUseStepInterval = stepHoldDelay !== undefined && stepHoldInterval !== undefined;
   const onStepTimeoutRef = useRef<number>(null);
@@ -311,7 +319,7 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>((props
         type="button"
         tabIndex={-1}
         aria-hidden
-        disabled={finalValue >= max}
+        disabled={internalValue >= max}
         className={cx(classes.control, classes.controlUp)}
         onPointerDown={(event) => {
           onStep(event, true);
@@ -325,7 +333,7 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>((props
         type="button"
         tabIndex={-1}
         aria-hidden
-        disabled={finalValue <= min}
+        disabled={internalValue <= min}
         className={cx(classes.control, classes.controlDown)}
         onPointerDown={(event) => {
           onStep(event, false);
@@ -345,47 +353,22 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>((props
     }
 
     const val = event.target.value;
-    const parsed = parseNum(val);
-
-    setTempValue(parsed);
-
-    if (val === '' || val === '-') {
-      handleValueChange('');
-    } else {
-      val.trim() !== '' && !Number.isNaN(parsed) && handleValueChange(parseFloat(parsed));
-    }
+    setInputValue(val);
   };
 
   const handleBlur = (event: React.FocusEvent<HTMLInputElement>) => {
-    if (typeof value === 'number' || value === '') {
-      setTempValue(parsePrecision(value));
-      return;
+    let normalizedInputValue = inputValue;
+    if (normalizedInputValue[0] === `${decimalSeparator}` || normalizedInputValue[0] === '.') {
+      normalizedInputValue = `0${normalizedInputValue}`;
     }
 
-    if (event.target.value === '') {
-      setTempValue('');
-      handleValueChange('');
-    } else {
-      let newNumber = event.target.value;
+    const parsedValue = parseFloat(parseNum(normalizedInputValue));
+    const clampedValue = !noClampOnBlur ? clamp(parsedValue, _min, _max) : parsedValue;
+    const finalValue = Number.isNaN(clampedValue) ? '' : clampedValue;
 
-      if (newNumber[0] === `${decimalSeparator}` || newNumber[0] === '.') {
-        newNumber = `0${newNumber}`;
-      }
-
-      const parsedVal = parseNum(newNumber);
-      const val = clamp(parseFloat(parsedVal), _min, _max);
-
-      if (!Number.isNaN(val)) {
-        if (!noClampOnBlur) {
-          setTempValue(parsePrecision(val));
-          handleValueChange(parseFloat(parsePrecision(val)));
-        }
-      } else {
-        setTempValue(parsePrecision(finalValue) ?? '');
-      }
-    }
-
-    typeof onBlur === 'function' && onBlur(event);
+    setInternalValue(finalValue);
+    onChange?.(finalValue);
+    onBlur?.(event);
   };
 
   const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
@@ -419,7 +402,7 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>((props
       {...others}
       type={type}
       variant={variant}
-      value={formatNum(tempValue)}
+      value={inputValue}
       disabled={disabled}
       readOnly={readOnly}
       ref={useMergedRef(inputRef, ref)}

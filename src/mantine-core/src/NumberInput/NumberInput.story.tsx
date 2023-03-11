@@ -6,27 +6,23 @@ import { NumberInput } from './NumberInput';
 export default { title: 'NumberInput' };
 
 export function Usage() {
-  const [value, setValue] = useState<number | ''>(0);
+  const [value, setValue] = useState<number | '' | undefined>(0);
   return (
     <div style={{ padding: 40, maxWidth: 400 }}>
-      <NumberInput value={value} onChange={setValue} onBlur={() => setValue(15)} mb="md" min={10} />
+      <NumberInput
+        value={value}
+        onChange={setValue}
+        precision={2}
+        decimalSeparator=","
+        mb="md"
+        min={10}
+        defaultValue={12}
+        max={15}
+      />
       <Group>
-        <Button
-          onMouseDown={(event) => {
-            event.preventDefault();
-            setValue('');
-          }}
-        >
-          Set empty value
-        </Button>
-        <Button
-          onMouseDown={(event) => {
-            event.preventDefault();
-            setValue(10);
-          }}
-        >
-          Set 10
-        </Button>
+        <Button onClick={() => setValue('')}>Set empty value</Button>
+        <Button onClick={() => setValue(10)}>Set 10</Button>
+        <Button onClick={() => setValue(undefined)}>Reset to initialValue</Button>
       </Group>
     </div>
   );
