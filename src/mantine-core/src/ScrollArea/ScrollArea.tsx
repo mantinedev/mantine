@@ -141,6 +141,7 @@ const ScrollAreaAutosize = forwardRef<HTMLDivElement, ScrollAreaAutosizeProps>((
     unstyled,
     sx,
     variant,
+    viewportProps,
     ...others
   } = useComponentDefaultProps<ScrollAreaAutosizeProps>('ScrollAreaAutosize', defaultProps, props);
   return (
@@ -158,6 +159,7 @@ const ScrollAreaAutosize = forwardRef<HTMLDivElement, ScrollAreaAutosizeProps>((
           onScrollPositionChange={onScrollPositionChange}
           unstyled={unstyled}
           variant={variant}
+          viewportProps={viewportProps}
         >
           {children}
         </_ScrollArea>
