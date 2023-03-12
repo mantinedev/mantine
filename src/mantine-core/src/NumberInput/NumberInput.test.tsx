@@ -280,12 +280,49 @@ describe('@mantine/core/NumberInput', () => {
     expect(spy).toHaveBeenLastCalledWith(3);
   });
 
-  it('resets displayed value to value prop when input is controlled', async () => {
+  it('propagates the new value when hitting enter', async () => {
+    const spy = jest.fn();
+    render(<NumberInput onChange={spy} />);
+    await enterText('34');
+    expectValue('34');
+    await enterText('{enter}');
+    expectValue('34');
+    expect(spy).toHaveBeenLastCalledWith(34);
+    await enterText('abc');
+    expectValue('34abc');
+    await enterText('{enter}');
+    expectValue('34');
+    expect(spy).toHaveBeenLastCalledWith(34);
+  });
+
+  it('resets displayed value to value prop when input is controlled and component gets blurred', async () => {
     render(<NumberInput value={3} />);
     expectValue('3');
     await enterText('45');
     expectValue('345');
     await userEvent.tab();
     expectValue('3');
+  });
+
+  it('resets displayed value to value prop when input is controlled and enter gets pressed', async () => {
+    render(<NumberInput value={3} />);
+    expectValue('3');
+    await enterText('45');
+    expectValue('345');
+    await enterText('{enter}');
+    expectValue('3');
+  });
+
+  it('reformats displayed value when input is uncontrolled and enter gets pressed', async () => {
+    render(<NumberInput defaultValue={3} />);
+    expectValue('3');
+    await enterText('45');
+    expectValue('345');
+    await enterText('{enter}');
+    expectValue('345');
+    await enterText('abc');
+    expectValue('345abc');
+    await enterText('{enter}');
+    expectValue('345');
   });
 });

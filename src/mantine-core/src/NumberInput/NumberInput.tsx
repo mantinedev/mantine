@@ -359,17 +359,10 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>((props
     </div>
   );
 
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const evt = event.nativeEvent as InputEvent;
-    if (evt.isComposing) {
-      return;
-    }
-
-    const val = event.target.value;
-    setInputValue(val);
-  };
-
-  const handleBlur = (event: React.FocusEvent<HTMLInputElement>) => {
+  /**
+   * Parse new value and propagate it via `onChange` to parent.
+   */
+  const propagateNewValue = () => {
     let normalizedInputValue = inputValue;
     if (normalizedInputValue[0] === `${decimalSeparator}` || normalizedInputValue[0] === '.') {
       normalizedInputValue = `0${normalizedInputValue}`;
@@ -388,6 +381,20 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>((props
       // Force value effect that resets internal value to reformat the input and remove invalid inputs
       resetStateHandlers.toggle();
     }
+  };
+
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const evt = event.nativeEvent as InputEvent;
+    if (evt.isComposing) {
+      return;
+    }
+
+    const val = event.target.value;
+    setInputValue(val);
+  };
+
+  const handleBlur = (event: React.FocusEvent<HTMLInputElement>) => {
+    propagateNewValue();
 
     onBlur?.(event);
   };
@@ -402,11 +409,14 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>((props
       event.preventDefault();
       return;
     }
+
     if (!readOnly) {
       if (event.key === 'ArrowUp') {
         onStep(event, true);
       } else if (event.key === 'ArrowDown') {
         onStep(event, false);
+      } else if (event.key === 'Enter' && !event.repeat) {
+        propagateNewValue();
       }
     }
   };
