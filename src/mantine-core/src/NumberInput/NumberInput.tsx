@@ -241,7 +241,10 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>((props
       newInternalValue = parseFloat(parsePrecision(clamp(internalValue + step, _min, _max)));
     }
 
-    setInternalValue(newInternalValue);
+    if (value === undefined) {
+      setInternalValue(newInternalValue);
+    }
+
     onChange?.(newInternalValue);
   };
 
@@ -254,7 +257,10 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>((props
       newInternalValue = parseFloat(parsePrecision(clamp(internalValue - step, _min, _max)));
     }
 
-    setInternalValue(newInternalValue);
+    if (value === undefined) {
+      setInternalValue(newInternalValue);
+    }
+
     onChange?.(newInternalValue);
   };
 
@@ -371,10 +377,15 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>((props
     const clampedValue = !noClampOnBlur ? clamp(parsedValue, _min, _max) : parsedValue;
     const finalValue = Number.isNaN(clampedValue) ? '' : clampedValue;
 
-    setInternalValue(finalValue);
-    if (finalValue !== value) {
+    if (value === undefined) {
+      setInternalValue(finalValue);
+      onChange?.(finalValue);
+    } else {
+      // Reset internal value to reset user input
+      setInternalValue(internalValue);
       onChange?.(finalValue);
     }
+
     onBlur?.(event);
   };
 
