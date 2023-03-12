@@ -165,10 +165,14 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>((props
     { classNames, styles, unstyled, name: 'NumberInput', variant, size }
   );
 
-  const parsePrecision = (val: number | '') => {
+  const parsePrecision = (val: number | '', allowHigherPrecision?: boolean) => {
     if (val === '') return '';
 
     let result = val.toFixed(precision);
+    if (allowHigherPrecision && result.length < val.toString().length) {
+      result = val.toString();
+    }
+
     if (removeTrailingZeros && precision > 0) {
       result = result.replace(new RegExp(`[0]{0,${precision}}$`), '');
       if (result.endsWith('.') || result.endsWith(decimalSeparator)) {
@@ -199,7 +203,8 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>((props
     return parser(num);
   };
 
-  const formatInternalValue = (val: number | '') => formatNum(parsePrecision(val));
+  const formatInternalValue = (val: number | '', allowHigherPrecision?: boolean) =>
+    formatNum(parsePrecision(val, allowHigherPrecision));
 
   // Parsed value that will be used for uncontrolled state and for setting the inputValue
   const [internalValue, _setInternalValue] = useState<number | ''>(
@@ -211,8 +216,8 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>((props
 
   const inputRef = useRef<HTMLInputElement>();
 
-  const setInternalValue = (val: number | '') => {
-    const newInputValue = formatInternalValue(val);
+  const setInternalValue = (val: number | '', allowHigherPrecision?: boolean) => {
+    const newInputValue = formatInternalValue(val, allowHigherPrecision);
     if (newInputValue !== inputValue) {
       // Make sure to update/reset the input value even if the internal value stays the same
       // E. g. this may happen if the internalValue is "10" and the user entered "10abc"
@@ -257,9 +262,9 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>((props
 
   useEffect(() => {
     if (typeof value === 'number' || value === '') {
-      setInternalValue(value);
+      setInternalValue(value, true);
     } else if (value === undefined) {
-      setInternalValue(defaultValue ?? '');
+      setInternalValue(defaultValue ?? '', true);
     }
   }, [value]);
 
@@ -362,12 +367,14 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>((props
       normalizedInputValue = `0${normalizedInputValue}`;
     }
 
-    const parsedValue = parseFloat(parseNum(normalizedInputValue));
+    const parsedValue = parseFloat(parsePrecision(parseFloat(parseNum(normalizedInputValue))));
     const clampedValue = !noClampOnBlur ? clamp(parsedValue, _min, _max) : parsedValue;
     const finalValue = Number.isNaN(clampedValue) ? '' : clampedValue;
 
     setInternalValue(finalValue);
-    onChange?.(finalValue);
+    if (finalValue !== value) {
+      onChange?.(finalValue);
+    }
     onBlur?.(event);
   };
 
