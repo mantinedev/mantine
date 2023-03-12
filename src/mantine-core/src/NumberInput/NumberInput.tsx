@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef, forwardRef } from 'react';
-import { useMergedRef, assignRef, useOs, clamp } from '@mantine/hooks';
+import { useMergedRef, assignRef, useOs, clamp, useDisclosure } from '@mantine/hooks';
 import { DefaultProps, Selectors, useComponentDefaultProps, rem, getSize } from '@mantine/styles';
 import { TextInput } from '../TextInput';
 import { InputStylesNames, InputWrapperStylesNames } from '../Input';
@@ -206,6 +206,8 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>((props
   const formatInternalValue = (val: number | '', allowHigherPrecision?: boolean) =>
     formatNum(parsePrecision(val, allowHigherPrecision));
 
+  const [resetStateValue, resetStateHandlers] = useDisclosure(false);
+
   // Parsed value that will be used for uncontrolled state and for setting the inputValue
   const [internalValue, _setInternalValue] = useState<number | ''>(
     typeof value === 'number' ? value : typeof defaultValue === 'number' ? defaultValue : ''
@@ -272,7 +274,7 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>((props
     } else if (value === undefined) {
       setInternalValue(defaultValue ?? '', true);
     }
-  }, [value]);
+  }, [value, resetStateValue]);
 
   const shouldUseStepInterval = stepHoldDelay !== undefined && stepHoldInterval !== undefined;
   const onStepTimeoutRef = useRef<number>(null);
@@ -381,9 +383,10 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>((props
       setInternalValue(finalValue);
       onChange?.(finalValue);
     } else {
-      // Reset internal value to reset user input
-      setInternalValue(internalValue);
       onChange?.(finalValue);
+
+      // Force value effect that resets internal value to reformat the input and remove invalid inputs
+      resetStateHandlers.toggle();
     }
 
     onBlur?.(event);

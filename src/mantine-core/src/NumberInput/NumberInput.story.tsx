@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useForm } from '@mantine/form';
 import { Group } from '../Group';
 import { Button } from '../Button';
 import { NumberInput } from './NumberInput';
@@ -34,4 +35,13 @@ export function FixedValue() {
       <NumberInput value={4} />
     </div>
   );
+}
+
+export function WithUseFormHook() {
+  const mantineForm = useForm({
+    initialValues: {
+      someNumber: 3,
+    },
+  });
+  return <NumberInput min={1} max={5} step={1} {...mantineForm.getInputProps('someNumber')} />;
 }
