@@ -17,7 +17,7 @@ export interface JsonInputProps
   /** Default value for uncontrolled input */
   defaultValue?: string;
 
-  /** onChange value for controlled input */
+  /** Called when value changes */
   onChange?(value: string): void;
 
   /** Format json on blur */
@@ -37,7 +37,7 @@ const defaultProps: Partial<JsonInputProps> = {
   formatOnBlur: false,
   size: 'sm',
   serialize: JSON.stringify,
-  deserialize: JSON.stringify,
+  deserialize: JSON.parse,
 };
 
 export const JsonInput = forwardRef<HTMLTextAreaElement, JsonInputProps>((props, ref) => {
@@ -78,8 +78,9 @@ export const JsonInput = forwardRef<HTMLTextAreaElement, JsonInputProps>((props,
   const handleBlur = (event: React.FocusEvent<HTMLTextAreaElement>) => {
     typeof onBlur === 'function' && onBlur(event);
     const isValid = validateJson(event.currentTarget.value, deserialize);
-    formatOnBlur && !readOnly;
-    isValid &&
+    formatOnBlur &&
+      !readOnly &&
+      isValid &&
       event.currentTarget.value.trim() !== '' &&
       setValue(serialize(deserialize(event.currentTarget.value), null, 2));
     setValid(isValid);
