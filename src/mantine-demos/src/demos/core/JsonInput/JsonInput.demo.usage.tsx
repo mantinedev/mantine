@@ -10,7 +10,7 @@ function Demo() {
     <JsonInput
       label="Your package.json"
       placeholder="Textarea will autosize to fit the content"
-      validationError="Invalid json"
+      validationError="Invalid JSON"
       formatOnBlur
       autosize
       minRows={4}
@@ -26,7 +26,7 @@ function Demo() {
       mx="auto"
       label="Your package.json"
       placeholder="Textarea will autosize to fit the content"
-      validationError="Invalid json"
+      validationError="Invalid JSON"
       formatOnBlur
       autosize
       minRows={4}
