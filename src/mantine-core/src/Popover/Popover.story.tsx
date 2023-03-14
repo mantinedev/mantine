@@ -246,3 +246,17 @@ export function PopoverEvents() {
     </div>
   );
 }
+
+export function AxisOffset() {
+  return (
+    <div style={{ padding: 40 }}>
+      <Popover offset={{ mainAxis: 50, crossAxis: 50 }}>
+        <Popover.Target>
+          <Button>Toggle popover</Button>
+        </Popover.Target>
+
+        <Popover.Dropdown>Dropdown</Popover.Dropdown>
+      </Popover>
+    </div>
+  );
+}
