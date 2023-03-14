@@ -21,10 +21,8 @@ describe('@mantine/core/PinInput', () => {
   });
 
   it('onComplete is called on last input', () => {
-    const log = jest.spyOn(global.console, 'log');
-    const { container } = render(
-      <PinInput {...defaultProps} onComplete={(value) => console.log(value)} />
-    );
+    const spy = jest.fn();
+    const { container } = render(<PinInput {...defaultProps} onComplete={spy} />);
 
     expect(container.querySelectorAll('.mantine-PinInput-input')).toHaveLength(4);
 
@@ -32,6 +30,6 @@ describe('@mantine/core/PinInput', () => {
       fireEvent.change(element, { target: { value: '1' } });
     });
 
-    expect(log).toHaveBeenCalledWith('1111');
+    expect(spy).toHaveBeenCalledWith('1111');
   });
 });
