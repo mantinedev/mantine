@@ -101,6 +101,14 @@ export function usePopover(options: UsePopoverOptions) {
     options.onPositionChange?.(floating.placement);
   }, [floating.placement]);
 
+  useDidUpdate(() => {
+    if (!options.opened) {
+      options.onClose?.();
+    } else {
+      options.onOpen?.();
+    }
+  }, [options.opened]);
+
   return {
     floating,
     controlled: typeof options.opened === 'boolean',

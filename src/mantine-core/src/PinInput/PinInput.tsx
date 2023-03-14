@@ -1,4 +1,4 @@
-import React, { forwardRef, useRef, useState } from 'react';
+import React, { forwardRef, useRef, useState, useEffect } from 'react';
 import { useUncontrolled, useId } from '@mantine/hooks';
 import {
   DefaultProps,
@@ -197,13 +197,7 @@ export const PinInput = forwardRef<HTMLDivElement, PinInputProps>((props, ref) =
 
     if (isValid) {
       setFieldValue(nextChar, index);
-      const isComplete = _value.length === length;
-
-      if (isComplete) {
-        onComplete?.(_value);
-      } else {
-        focusInputField('next', index);
-      }
+      focusInputField('next', index);
     } else {
       setFieldValue('', index);
     }
@@ -237,6 +231,12 @@ export const PinInput = forwardRef<HTMLDivElement, PinInputProps>((props, ref) =
       setValues(copyValue);
     }
   };
+
+  useEffect(() => {
+    if (_value.length !== length) return;
+
+    onComplete?.(_value);
+  }, [_value]);
 
   return (
     <>
