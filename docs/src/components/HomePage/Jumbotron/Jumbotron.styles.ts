@@ -65,11 +65,10 @@ export default createStyles((theme) => ({
     backgroundColor: theme.colors.dark[6],
     color: theme.white,
     fontWeight: 700,
-
-    '&:hover': {
-      backgroundColor: theme.colors.dark[5],
+    ...theme.fn.hover({
+      backgroundColor: `${theme.colors.dark[5]} !important`,
       color: theme.white,
-    },
+    }),
   },
 
   feature: {
