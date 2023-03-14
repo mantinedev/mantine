@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Box } from '../Box';
 import { Popover } from './Popover';
 import { Button } from '../Button';
 import { MultiSelect } from '../MultiSelect';
@@ -194,6 +195,54 @@ export function Inline() {
       </Popover>
       , eum voluptate, perferendis placeat repudiandae nesciunt explicabo quibusdam deserunt, animi
       dicta.
+    </div>
+  );
+}
+
+export function PopoverEvents() {
+  const [opened, setState] = useState(false);
+  const [toggle1, setToggle1] = useState(false);
+  const [toggle2, setToggle2] = useState(false);
+
+  return (
+    <div style={{ padding: 100, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+      <Group>
+        <Popover
+          opened={opened}
+          onChange={setState}
+          onOpen={() => setToggle1(true)}
+          onClose={() => setToggle1(false)}
+          middlewares={{ shift: false, flip: false }}
+          position="bottom"
+          withArrow
+          trapFocus
+          radius="md"
+          returnFocus
+        >
+          <Popover.Target>
+            <Box>
+              <Button onClick={() => setState((c) => !c)}>Toggle controlled popover</Button>
+              <br />
+              <div>Controlled State: {toggle1 ? 'Open' : 'Closed'}</div>
+            </Box>
+          </Popover.Target>
+
+          <Popover.Dropdown>
+            <Button onClick={() => setState(false)}>Close</Button>
+          </Popover.Dropdown>
+        </Popover>
+        <Popover onOpen={() => setToggle2(true)} onClose={() => setToggle2(false)}>
+          <Popover.Target>
+            <Box>
+              <Button>Toggle uncontrolled popover</Button>
+              <br />
+              <div>Uncontrolled State: {toggle2 ? 'Open' : 'Closed'}</div>
+            </Box>
+          </Popover.Target>
+
+          <Popover.Dropdown>Dropdown</Popover.Dropdown>
+        </Popover>
+      </Group>
     </div>
   );
 }
