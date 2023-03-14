@@ -9,14 +9,19 @@ export interface AnchorProps extends Omit<TextProps, 'variant'> {
   children?: React.ReactNode;
 }
 
-const defaultProps: Partial<AnchorProps> = {};
+const defaultProps: Partial<AnchorProps> = {
+  underline: true,
+};
 
 export const _Anchor = forwardRef<HTMLAnchorElement, AnchorProps & { component: any }>(
   (props, ref) => {
-    const { component, className, unstyled, variant, size, color, ...others } =
+    const { component, className, unstyled, variant, size, color, underline, ...others } =
       useComponentDefaultProps('Anchor', defaultProps as AnchorProps & { component: any }, props);
 
-    const { classes, cx } = useStyles({ color }, { name: 'Anchor', unstyled, variant, size });
+    const { classes, cx } = useStyles(
+      { color, underline },
+      { name: 'Anchor', unstyled, variant, size }
+    );
     const buttonProps = component === 'button' ? { type: 'button' } : null;
 
     return (
