@@ -12,6 +12,16 @@ export function Usage() {
   );
 }
 
+export function OnComplete() {
+  const [value, setValue] = useState('');
+  return (
+    <div style={{ padding: 40 }}>
+      <PinInput length={5} onComplete={setValue} />
+      Pin: {value}
+    </div>
+  );
+}
+
 export function ReadOnly() {
   return (
     <div style={{ padding: 40 }}>
