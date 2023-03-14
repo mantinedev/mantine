@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { autoUpdate } from '@floating-ui/react';
 import { useDidUpdate } from '@mantine/hooks';
+import { FloatingPosition } from './types';
 
 interface Payload {
   opened: boolean;
@@ -12,9 +13,15 @@ interface Payload {
     };
   };
   positionDependencies: any[];
+  position: FloatingPosition;
 }
 
-export function useFloatingAutoUpdate({ opened, floating, positionDependencies }: Payload) {
+export function useFloatingAutoUpdate({
+  opened,
+  floating,
+  position,
+  positionDependencies,
+}: Payload) {
   const [delayedUpdate, setDelayedUpdate] = useState(0);
 
   useEffect(() => {
@@ -27,7 +34,13 @@ export function useFloatingAutoUpdate({ opened, floating, positionDependencies }
     }
 
     return undefined;
-  }, [floating.refs.reference.current, floating.refs.floating.current, opened, delayedUpdate]);
+  }, [
+    floating.refs.reference.current,
+    floating.refs.floating.current,
+    opened,
+    delayedUpdate,
+    position,
+  ]);
 
   useDidUpdate(() => {
     floating.update();

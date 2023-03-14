@@ -90,6 +90,7 @@ export function useTooltip(settings: UseTooltip) {
 
   useFloatingAutoUpdate({
     opened,
+    position: settings.position,
     positionDependencies: settings.positionDependencies,
     floating: { refs, update },
   });
