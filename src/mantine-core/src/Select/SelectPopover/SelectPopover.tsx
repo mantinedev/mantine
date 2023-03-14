@@ -45,6 +45,7 @@ function SelectPopoverDropdown({
           onMouseDown={(event) => event.preventDefault()}
           style={{ flex: 1, overflowY: component !== SelectScrollArea ? 'auto' : undefined }}
           data-combobox-popover
+          tabIndex={-1}
           ref={innerRef}
         >
           <div className={classes.itemsWrapper} style={{ flexDirection: direction }}>
