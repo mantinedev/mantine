@@ -24,6 +24,7 @@ function Demo() {
       placeholder="Pick date and time"
       maw={400}
       mx="auto"
+      popoverProps={{ withinPortal: true }}
     />
   );
 }
