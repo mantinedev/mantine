@@ -108,7 +108,7 @@ export function Pagination(props: PaginationProps) {
       getItemProps={getItemProps}
     >
       <Group
-        spacing={spacing || `calc(${getSize({ size, sizes: theme.spacing })} / 2)`}
+        spacing={spacing ?? `calc(${getSize({ size, sizes: theme.spacing })} / 2)`}
         {...others}
       >
         {withEdges && <PaginationFirst icon={firstIcon} {...getControlProps?.('first')} />}

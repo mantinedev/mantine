@@ -35,3 +35,7 @@ export function Composed() {
     </Pagination.Root>
   );
 }
+
+export function SpacingZero() {
+  return <Pagination total={20} spacing={0} withEdges />;
+}
