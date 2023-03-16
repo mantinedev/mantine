@@ -8,7 +8,7 @@ import { useDatesContext } from '../DatesProvider';
 import { getMonthsData } from './get-months-data/get-months-data';
 import { isMonthDisabled } from './is-month-disabled/is-month-disabled';
 import useStyles from './MonthsList.styles';
-import { getMonthTabIndex } from './get-month-tabindex/get-month-tabindex';
+import { getMonthInTabOrder } from './get-month-in-tab-order/get-month-in-tab-order';
 
 export type MonthsListStylesNames = PickerControlStylesNames | Selectors<typeof useStyles>;
 
@@ -86,9 +86,12 @@ export const MonthsList = forwardRef<HTMLTableElement, MonthsListProps>((props, 
 
   const months = getMonthsData(year);
 
+  const monthInTabOrder = getMonthInTabOrder(months, minDate, maxDate, getMonthControlProps);
+
   const rows = months.map((monthsRow, rowIndex) => {
     const cells = monthsRow.map((month, cellIndex) => {
       const controlProps = getMonthControlProps?.(month);
+      const isMonthInTabOrder = dayjs(month).isSame(monthInTabOrder, 'month');
       return (
         <td
           key={cellIndex}
@@ -122,7 +125,7 @@ export const MonthsList = forwardRef<HTMLTableElement, MonthsListProps>((props, 
               controlProps?.onMouseDown?.(event);
               __preventFocus && event.preventDefault();
             }}
-            tabIndex={__preventFocus ? -1 : getMonthTabIndex(month, months)}
+            tabIndex={__preventFocus || !isMonthInTabOrder ? -1 : 0}
           >
             {dayjs(month).locale(ctx.getLocale(locale)).format(monthsListFormat)}
           </PickerControl>

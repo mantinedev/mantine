@@ -6,6 +6,7 @@ import {
   itSupportsProviderVariant,
   itSupportsProviderSize,
 } from '@mantine/tests';
+import dayjs from 'dayjs';
 import {
   itSupportsMonthsListProps,
   itHandlesControlsKeyboardEvents,
@@ -180,8 +181,16 @@ describe('@mantine/dates/MonthPicker', () => {
     nextYear: 'Next year',
   };
 
-  it('only adds first month of year to navigation order', async () => {
-    render(<MonthPicker {...defaultProps} ariaLabels={ariaLabels} />);
+  it('only adds selected month of year to tab order', async () => {
+    render(
+      <MonthPicker
+        {...defaultProps}
+        getMonthControlProps={(date) => ({
+          selected: dayjs(new Date(2022, 5, 2)).isSame(date, 'month'),
+        })}
+        ariaLabels={ariaLabels}
+      />
+    );
     await userEvent.tab();
     expect(screen.getByRole('button', { name: ariaLabels.previousYear })).toHaveFocus();
 
@@ -192,7 +201,59 @@ describe('@mantine/dates/MonthPicker', () => {
     expect(screen.getByRole('button', { name: ariaLabels.nextYear })).toHaveFocus();
 
     await userEvent.tab();
-    expect(screen.getByRole('button', { name: 'Jan' })).toHaveFocus();
+    expect(
+      screen.getByRole('button', {
+        name: new Date(2022, 5).toLocaleString('default', { month: 'short' }),
+      })
+    ).toHaveFocus();
+
+    await userEvent.tab();
+    expect(document.body).toHaveFocus();
+  });
+
+  it('only adds current month of year to tab order', async () => {
+    render(<MonthPicker ariaLabels={ariaLabels} />);
+    await userEvent.tab();
+    expect(screen.getByRole('button', { name: ariaLabels.previousYear })).toHaveFocus();
+
+    await userEvent.tab();
+    expect(screen.getByRole('button', { name: ariaLabels.yearLevelControl })).toHaveFocus();
+
+    await userEvent.tab();
+    expect(screen.getByRole('button', { name: ariaLabels.nextYear })).toHaveFocus();
+
+    await userEvent.tab();
+    expect(
+      screen.getByRole('button', { name: new Date().toLocaleString('default', { month: 'short' }) })
+    ).toHaveFocus();
+
+    await userEvent.tab();
+    expect(document.body).toHaveFocus();
+  });
+
+  it('only adds first non-disabled month of year to tab order', async () => {
+    render(
+      <MonthPicker
+        {...defaultProps}
+        minDate={new Date(2022, 6, 1)}
+        getMonthControlProps={(date) => ({
+          disabled: dayjs(new Date(2022, 6)).isSame(date, 'month'),
+        })}
+        ariaLabels={ariaLabels}
+      />
+    );
+    await userEvent.tab();
+    expect(screen.getByRole('button', { name: ariaLabels.yearLevelControl })).toHaveFocus();
+
+    await userEvent.tab();
+    expect(screen.getByRole('button', { name: ariaLabels.nextYear })).toHaveFocus();
+
+    await userEvent.tab();
+    expect(
+      screen.getByRole('button', {
+        name: new Date(2022, 7).toLocaleString('default', { month: 'short' }),
+      })
+    ).toHaveFocus();
 
     await userEvent.tab();
     expect(document.body).toHaveFocus();

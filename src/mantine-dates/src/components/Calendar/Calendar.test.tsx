@@ -356,8 +356,14 @@ describe('@mantine/dates/Calendar', () => {
     expect(screen.getByText('0/2020 – 0/2029')).toBeInTheDocument();
   });
 
-  it('only adds first day of month to navigation order', async () => {
-    render(<Calendar {...defaultProps} />);
+  it('only adds selected date in month to tab order', async () => {
+    render(
+      <Calendar
+        {...defaultProps}
+        getDayProps={(date) => ({ selected: dayjs(date).isSame(defaultProps.defaultDate, 'date') })}
+      />
+    );
+
     await userEvent.tab();
     expect(
       screen.getByRole('button', { name: defaultProps.ariaLabels.previousMonth })
@@ -372,14 +378,17 @@ describe('@mantine/dates/Calendar', () => {
     expect(screen.getByRole('button', { name: defaultProps.ariaLabels.nextMonth })).toHaveFocus();
 
     await userEvent.tab();
-    expect(screen.getByRole('button', { name: '1 April 2022' })).toHaveFocus();
+    expect(
+      screen.getByRole('button', { name: dayjs(defaultProps.defaultDate).format('D MMMM YYYY') })
+    ).toHaveFocus();
 
     await userEvent.tab();
     expect(document.body).toHaveFocus();
   });
 
-  it('only adds today to navigation order when today is in month', async () => {
+  it('only adds current date in month to tab order', async () => {
     render(<Calendar {...defaultProps} defaultDate={new Date()} />);
+
     await userEvent.tab();
     expect(
       screen.getByRole('button', { name: defaultProps.ariaLabels.previousMonth })
@@ -400,17 +409,14 @@ describe('@mantine/dates/Calendar', () => {
     expect(document.body).toHaveFocus();
   });
 
-  it('only adds selected date to navigation', async () => {
+  it('only adds first non-disabled date in month to tab order', async () => {
     render(
       <Calendar
         {...defaultProps}
-        getDayProps={(date) => ({ selected: dayjs(date).isSame(defaultProps.defaultDate, 'day') })}
+        minDate={new Date(2022, 3, 15)}
+        getDayProps={(date) => ({ disabled: dayjs(new Date(2022, 3, 15)).isSame(date, 'date') })}
       />
     );
-    await userEvent.tab();
-    expect(
-      screen.getByRole('button', { name: defaultProps.ariaLabels.previousMonth })
-    ).toHaveFocus();
 
     await userEvent.tab();
     expect(
@@ -422,7 +428,7 @@ describe('@mantine/dates/Calendar', () => {
 
     await userEvent.tab();
     expect(
-      screen.getByRole('button', { name: dayjs(defaultProps.defaultDate).format('D MMMM YYYY') })
+      screen.getByRole('button', { name: dayjs(new Date(2022, 3, 16)).format('D MMMM YYYY') })
     ).toHaveFocus();
 
     await userEvent.tab();
