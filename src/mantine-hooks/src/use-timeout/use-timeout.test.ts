@@ -103,4 +103,19 @@ describe('@mantine/hooks/use-timeout', () => {
     expect(setTimeout).toHaveBeenCalled();
     expect(callback).toHaveBeenCalledWith([MOCK_CALLBACK_VALUE]);
   });
+
+  it('start and clear functions remain memoized across re-renders', () => {
+    const { timeout, advanceTimerToNextTick } = setupTimer(10);
+    const hook = renderHook(() => useTimeout(callback, timeout));
+
+    const { clear, start } = hook.result.current;
+
+    act(() => {
+      hook.rerender();
+    });
+
+    expect(hook.result.current.clear).toEqual(clear);
+    expect(hook.result.current.start).toEqual(start);
+    advanceTimerToNextTick();
+  });
 });
