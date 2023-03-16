@@ -70,6 +70,31 @@ describe('@mantine/hooks/use-timeout', () => {
     expect(setTimeout).toHaveBeenCalled();
   });
 
+  it('callback should fire without calling start when autoInvoke is true and delay changed', () => {
+    const { timeout, advanceTimerToNextTick } = setupTimer();
+    const hook = renderHook((props) => useTimeout(callback, props.timeout, { autoInvoke: true }), {
+      initialProps: {
+        timeout,
+      },
+    });
+
+    advanceTimerToNextTick();
+
+    expect(callback).toHaveBeenCalled();
+    expect(setTimeout).toHaveBeenCalled();
+
+    jest.clearAllMocks();
+
+    act(() => {
+      hook.rerender({ timeout: 1000 });
+    });
+
+    advanceTimerToNextTick();
+
+    expect(callback).toHaveBeenCalled();
+    expect(setTimeout).toHaveBeenCalled();
+  });
+
   it('timeout is cleared on calling clear', () => {
     const { timeout, advanceTimerToNextTick } = setupTimer(10);
     const hook = renderHook(() => useTimeout(callback, timeout, { autoInvoke: false }));
