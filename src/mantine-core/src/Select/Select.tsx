@@ -543,7 +543,7 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>((props, ref) => 
       <SelectPopover
         opened={shouldShowDropdown}
         transitionProps={transitionProps}
-        shadow="sm"
+        shadow={shadow}
         withinPortal={withinPortal}
         portalProps={portalProps}
         __staticSelector="Select"
