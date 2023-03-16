@@ -1,5 +1,5 @@
 import dayjs from 'dayjs';
-import { DayProps } from 'src/components/Day';
+import { DayProps } from '../../Day';
 import { isAfterMinDate } from '../is-after-min-date/is-after-min-date';
 import { isBeforeMaxDate } from '../is-before-max-date/is-before-max-date';
 
