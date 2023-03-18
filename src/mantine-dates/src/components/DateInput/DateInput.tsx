@@ -182,6 +182,12 @@ export const DateInput = forwardRef<HTMLInputElement, DateInputProps>((props, re
     setDropdownOpened(true);
   };
 
+  const [dropdownJustClosed, setDropdownJustClosed] = useState(false);
+
+  useEffect(() => {
+    dropdownJustClosed && setDropdownJustClosed(false);
+  }, [dropdownJustClosed]);
+
   const _getDayProps = (day: Date) => ({
     ...getDayProps?.(day),
     selected: dayjs(_value).isSame(day, 'day'),
@@ -195,6 +201,7 @@ export const DateInput = forwardRef<HTMLInputElement, DateInputProps>((props, re
       setValue(val);
       !controlled && setInputValue(formatValue(val));
       setDropdownOpened(false);
+      setDropdownJustClosed(true);
     },
   });
 
@@ -215,7 +222,7 @@ export const DateInput = forwardRef<HTMLInputElement, DateInputProps>((props, re
     ) : null);
 
   useDidUpdate(() => {
-    value !== undefined && !dropdownOpened && setInputValue(formatValue(value));
+    value !== undefined && dropdownJustClosed && setInputValue(formatValue(value));
   }, [value]);
 
   return (
