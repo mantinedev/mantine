@@ -1,5 +1,4 @@
 /* eslint-disable react/no-unused-prop-types */
-import dayjs from 'dayjs';
 import React, { forwardRef } from 'react';
 import { DefaultProps, Box, Selectors, useComponentDefaultProps, MantineSize } from '@mantine/core';
 import { PickerControl, PickerControlStylesNames, PickerControlProps } from '../PickerControl';
@@ -81,7 +80,7 @@ export const MonthsList = forwardRef<HTMLTableElement, MonthsListProps>((props, 
     size,
   });
 
-  const ctx = useDatesContext();
+  const ctx = useDatesContext({ locale });
 
   const months = getMonthsData(year);
 
@@ -123,7 +122,7 @@ export const MonthsList = forwardRef<HTMLTableElement, MonthsListProps>((props, 
             }}
             tabIndex={__preventFocus ? -1 : 0}
           >
-            {dayjs(month).locale(ctx.getLocale(locale)).format(monthsListFormat)}
+            {ctx.formatDate(month, monthsListFormat)}
           </PickerControl>
         </td>
       );

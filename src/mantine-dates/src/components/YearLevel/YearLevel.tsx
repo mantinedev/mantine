@@ -1,4 +1,3 @@
-import dayjs from 'dayjs';
 import React, { forwardRef } from 'react';
 import { Box, DefaultProps, useComponentDefaultProps, Selectors } from '@mantine/core';
 import {
@@ -94,7 +93,7 @@ export const YearLevel = forwardRef<HTMLDivElement, YearLevelProps>((props, ref)
     variant,
   });
 
-  const ctx = useDatesContext();
+  const ctx = useDatesContext({ locale });
 
   const stylesApiProps = {
     __staticSelector: __staticSelector || 'YearLevel',
@@ -109,14 +108,14 @@ export const YearLevel = forwardRef<HTMLDivElement, YearLevelProps>((props, ref)
     typeof nextDisabled === 'boolean'
       ? nextDisabled
       : maxDate
-      ? !dayjs(year).endOf('year').isBefore(maxDate)
+      ? !ctx.dayjs(year).endOf('year').isBefore(maxDate)
       : false;
 
   const _previousDisabled =
     typeof previousDisabled === 'boolean'
       ? previousDisabled
       : minDate
-      ? !dayjs(year).startOf('year').isAfter(minDate)
+      ? !ctx.dayjs(year).startOf('year').isAfter(minDate)
       : false;
 
   return (
@@ -125,9 +124,7 @@ export const YearLevel = forwardRef<HTMLDivElement, YearLevelProps>((props, ref)
         label={
           typeof yearLabelFormat === 'function'
             ? yearLabelFormat(year)
-            : dayjs(year)
-                .locale(locale || ctx.locale)
-                .format(yearLabelFormat)
+            : ctx.formatDate(year, yearLabelFormat)
         }
         className={classes.calendarHeader}
         __preventFocus={__preventFocus}

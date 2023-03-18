@@ -1,30 +1,65 @@
+import dayjs, { Dayjs } from 'dayjs';
 import { useContext, useCallback } from 'react';
-import { DayOfWeek } from '../../types';
-import { DatesProviderContext } from './DatesProvider';
+import utcPlugin from 'dayjs/plugin/utc';
+import timezonePlugin from 'dayjs/plugin/timezone';
+import { DatesProviderContext, DatesProviderSettings, DatesProviderValue } from './DatesProvider';
+import { dateStringParser } from '../DateInput/date-string-parser/date-string-parser';
 
-export function useDatesContext() {
+dayjs.extend(utcPlugin);
+dayjs.extend(timezonePlugin);
+
+export function useDatesContext(localSettings: DatesProviderSettings) {
   const ctx = useContext(DatesProviderContext);
-  const getLocale = useCallback((input?: string) => input || ctx.locale, [ctx.locale]);
-  const getFirstDayOfWeek = useCallback(
-    (input?: DayOfWeek) => (typeof input === 'number' ? input : ctx.firstDayOfWeek),
-    [ctx.firstDayOfWeek]
+
+  // Override any settings from local settings if a defined value is given
+  const settings = Object.fromEntries(
+    Object.entries(ctx).map(([k, v]) => {
+      const override = localSettings[k];
+      return [k, override !== undefined ? override : v];
+    })
+  ) as DatesProviderValue;
+
+  const applyLocale = useCallback(
+    (d: Dayjs) => {
+      if (settings.locale) {
+        return d.locale(settings.locale);
+      }
+      return d;
+    },
+    [settings.locale]
   );
 
-  const getWeekendDays = useCallback(
-    (input?: DayOfWeek[]) => (Array.isArray(input) ? input : ctx.weekendDays),
-    [ctx.weekendDays]
+  const dateToDayjs = useCallback(
+    (date: Date) => {
+      let d = dayjs(date);
+      if (settings.timezone) {
+        d = d.tz(settings.timezone);
+      }
+      return applyLocale(d);
+    },
+    [settings.timezone, applyLocale]
   );
 
-  const getLabelSeparator = useCallback(
-    (input?: string) => (typeof input === 'string' ? input : ctx.labelSeparator),
-    [ctx.labelSeparator]
+  const parseDate = useCallback(
+    (rawDate: string, format: string) => {
+      const parsedDate = settings.timezone
+        ? dayjs.tz(rawDate, format, settings.timezone).toDate()
+        : dayjs(rawDate, format, settings.locale).toDate();
+
+      return Number.isNaN(parsedDate.getTime()) ? dateStringParser(rawDate) : parsedDate;
+    },
+    [settings.timezone, settings.locale]
+  );
+
+  const formatDate = useCallback(
+    (date: Date, format: string) => (date ? dateToDayjs(date).format(format) : ''),
+    [dateToDayjs]
   );
 
   return {
-    ...ctx,
-    getLocale,
-    getFirstDayOfWeek,
-    getWeekendDays,
-    getLabelSeparator,
+    ...settings,
+    dayjs: dateToDayjs,
+    parseDate,
+    formatDate,
   };
 }

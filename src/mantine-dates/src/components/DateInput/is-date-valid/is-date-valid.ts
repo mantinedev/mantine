@@ -1,12 +1,13 @@
-import dayjs from 'dayjs';
+import { Dayjs } from 'dayjs';
 
 interface IsDateValid {
   date: Date;
+  dayjs: (d: Date) => Dayjs;
   maxDate: Date;
   minDate: Date;
 }
 
-export function isDateValid({ date, maxDate, minDate }: IsDateValid) {
+export function isDateValid({ date, dayjs, maxDate, minDate }: IsDateValid) {
   if (date == null) {
     return false;
   }

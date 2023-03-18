@@ -1,9 +1,9 @@
 import React, { forwardRef, useRef } from 'react';
 import { DefaultProps, Box, Selectors, useComponentDefaultProps } from '@mantine/core';
-import dayjs from 'dayjs';
 import { YearLevel, YearLevelStylesNames, YearLevelSettings } from '../YearLevel';
 import { handleControlKeyDown } from '../../utils';
 import useStyles from './YearLevelGroup.styles';
+import { useDatesContext } from '../DatesProvider';
 
 export type YearLevelGroupStylesNames = Selectors<typeof useStyles> | YearLevelStylesNames;
 
@@ -79,12 +79,14 @@ export const YearLevelGroup = forwardRef<HTMLDivElement, YearLevelGroupProps>((p
     size,
   });
 
+  const ctx = useDatesContext({ locale });
+
   const controlsRefs = useRef<HTMLButtonElement[][][]>([]);
 
   const years = Array(numberOfColumns)
     .fill(0)
     .map((_, yearIndex) => {
-      const currentYear = dayjs(year).add(yearIndex, 'years').toDate();
+      const currentYear = ctx.dayjs(year).add(yearIndex, 'years').toDate();
 
       return (
         <YearLevel

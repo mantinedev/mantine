@@ -1,5 +1,4 @@
 /* eslint-disable react/no-unused-prop-types */
-import dayjs from 'dayjs';
 import React, { forwardRef } from 'react';
 import { DefaultProps, Box, Selectors, useComponentDefaultProps, MantineSize } from '@mantine/core';
 import { PickerControl, PickerControlStylesNames, PickerControlProps } from '../PickerControl';
@@ -82,7 +81,7 @@ export const YearsList = forwardRef<HTMLTableElement, YearsListProps>((props, re
     size,
   });
 
-  const ctx = useDatesContext();
+  const ctx = useDatesContext({ locale });
 
   const years = getYearsData(decade);
 
@@ -124,7 +123,7 @@ export const YearsList = forwardRef<HTMLTableElement, YearsListProps>((props, re
             }}
             tabIndex={__preventFocus ? -1 : 0}
           >
-            {dayjs(year).locale(ctx.getLocale(locale)).format(yearsListFormat)}
+            {ctx.formatDate(year, yearsListFormat)}
           </PickerControl>
         </td>
       );

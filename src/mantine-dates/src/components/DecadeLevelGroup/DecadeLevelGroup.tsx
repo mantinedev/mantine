@@ -1,9 +1,9 @@
 import React, { forwardRef, useRef } from 'react';
 import { DefaultProps, Box, Selectors, useComponentDefaultProps } from '@mantine/core';
-import dayjs from 'dayjs';
 import { DecadeLevel, DecadeLevelStylesNames, DecadeLevelSettings } from '../DecadeLevel';
 import { handleControlKeyDown } from '../../utils';
 import useStyles from './DecadeLevelGroup.styles';
+import { useDatesContext } from '../DatesProvider';
 
 export type DecadeLevelGroupStylesNames = Selectors<typeof useStyles> | DecadeLevelStylesNames;
 
@@ -79,12 +79,15 @@ export const DecadeLevelGroup = forwardRef<HTMLDivElement, DecadeLevelGroupProps
     size,
   });
 
+  const ctx = useDatesContext({ locale });
+
   const controlsRefs = useRef<HTMLButtonElement[][][]>([]);
 
   const decades = Array(numberOfColumns)
     .fill(0)
     .map((_, decadeIndex) => {
-      const currentDecade = dayjs(decade)
+      const currentDecade = ctx
+        .dayjs(decade)
         .add(decadeIndex * 10, 'years')
         .toDate();
 

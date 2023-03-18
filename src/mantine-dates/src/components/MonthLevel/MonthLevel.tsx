@@ -1,4 +1,3 @@
-import dayjs from 'dayjs';
 import React, { forwardRef } from 'react';
 import { Box, DefaultProps, useComponentDefaultProps, Selectors } from '@mantine/core';
 import {
@@ -104,7 +103,7 @@ export const MonthLevel = forwardRef<HTMLDivElement, MonthLevelProps>((props, re
     size,
   });
 
-  const ctx = useDatesContext();
+  const ctx = useDatesContext({ locale });
 
   const stylesApiProps = {
     __staticSelector: __staticSelector || 'MonthLevel',
@@ -119,14 +118,14 @@ export const MonthLevel = forwardRef<HTMLDivElement, MonthLevelProps>((props, re
     typeof nextDisabled === 'boolean'
       ? nextDisabled
       : maxDate
-      ? !dayjs(month).endOf('month').isBefore(maxDate)
+      ? !ctx.dayjs(month).endOf('month').isBefore(maxDate)
       : false;
 
   const _previousDisabled =
     typeof previousDisabled === 'boolean'
       ? previousDisabled
       : minDate
-      ? !dayjs(month).startOf('month').isAfter(minDate)
+      ? !ctx.dayjs(month).startOf('month').isAfter(minDate)
       : false;
 
   return (
@@ -135,9 +134,7 @@ export const MonthLevel = forwardRef<HTMLDivElement, MonthLevelProps>((props, re
         label={
           typeof monthLabelFormat === 'function'
             ? monthLabelFormat(month)
-            : dayjs(month)
-                .locale(locale || ctx.locale)
-                .format(monthLabelFormat)
+            : ctx.formatDate(month, monthLabelFormat)
         }
         className={classes.calendarHeader}
         __preventFocus={__preventFocus}

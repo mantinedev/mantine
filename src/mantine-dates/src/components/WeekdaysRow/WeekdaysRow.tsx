@@ -51,7 +51,7 @@ export const WeekdaysRow = forwardRef<HTMLTableRowElement, WeekdaysRowProps>((pr
     ...others
   } = useComponentDefaultProps('WeekdaysRow', defaultProps, props);
 
-  const ctx = useDatesContext();
+  const ctx = useDatesContext({ locale, firstDayOfWeek });
 
   const { classes, cx } = useStyles(null, {
     name: ['WeekdaysRow', __staticSelector],
@@ -63,9 +63,9 @@ export const WeekdaysRow = forwardRef<HTMLTableRowElement, WeekdaysRowProps>((pr
   });
 
   const weekdays = getWeekdayNames({
-    locale: ctx.getLocale(locale),
+    locale: ctx.locale,
     format: weekdayFormat,
-    firstDayOfWeek: ctx.getFirstDayOfWeek(firstDayOfWeek),
+    firstDayOfWeek: ctx.firstDayOfWeek,
   }).map((weekday, index) => (
     <CellComponent key={index} className={classes.weekday}>
       {weekday}

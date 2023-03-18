@@ -1,9 +1,9 @@
 import React, { forwardRef, useRef } from 'react';
 import { DefaultProps, Box, Selectors, useComponentDefaultProps } from '@mantine/core';
-import dayjs from 'dayjs';
 import { MonthLevel, MonthLevelStylesNames, MonthLevelSettings } from '../MonthLevel';
 import { handleControlKeyDown } from '../../utils';
 import useStyles from './MonthLevelGroup.styles';
+import { useDatesContext } from '../DatesProvider';
 
 export type MonthLevelGroupStylesNames = Selectors<typeof useStyles> | MonthLevelStylesNames;
 
@@ -89,12 +89,14 @@ export const MonthLevelGroup = forwardRef<HTMLDivElement, MonthLevelGroupProps>(
     size,
   });
 
+  const ctx = useDatesContext({ locale });
+
   const daysRefs = useRef<HTMLButtonElement[][][]>([]);
 
   const months = Array(numberOfColumns)
     .fill(0)
     .map((_, monthIndex) => {
-      const currentMonth = dayjs(month).add(monthIndex, 'months').toDate();
+      const currentMonth = ctx.dayjs(month).add(monthIndex, 'months').toDate();
 
       return (
         <MonthLevel

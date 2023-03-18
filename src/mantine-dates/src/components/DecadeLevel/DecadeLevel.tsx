@@ -1,4 +1,3 @@
-import dayjs from 'dayjs';
 import React, { forwardRef } from 'react';
 import { Box, DefaultProps, useComponentDefaultProps, Selectors } from '@mantine/core';
 import {
@@ -94,7 +93,7 @@ export const DecadeLevel = forwardRef<HTMLDivElement, DecadeLevelProps>((props, 
     size,
   });
 
-  const ctx = useDatesContext();
+  const ctx = useDatesContext({ locale });
   const [startOfDecade, endOfDecade] = getDecadeRange(decade);
 
   const stylesApiProps = {
@@ -110,20 +109,15 @@ export const DecadeLevel = forwardRef<HTMLDivElement, DecadeLevelProps>((props, 
     typeof nextDisabled === 'boolean'
       ? nextDisabled
       : maxDate
-      ? !dayjs(endOfDecade).endOf('year').isBefore(maxDate)
+      ? !ctx.dayjs(endOfDecade).endOf('year').isBefore(maxDate)
       : false;
 
   const _previousDisabled =
     typeof previousDisabled === 'boolean'
       ? previousDisabled
       : minDate
-      ? !dayjs(startOfDecade).startOf('year').isAfter(minDate)
+      ? !ctx.dayjs(startOfDecade).startOf('year').isAfter(minDate)
       : false;
-
-  const formatDecade = (date: Date, format: string) =>
-    dayjs(date)
-      .locale(locale || ctx.locale)
-      .format(format);
 
   return (
     <Box className={cx(classes.decadeLevel, className)} data-decade-level ref={ref} {...others}>
@@ -131,7 +125,7 @@ export const DecadeLevel = forwardRef<HTMLDivElement, DecadeLevelProps>((props, 
         label={
           typeof decadeLabelFormat === 'function'
             ? decadeLabelFormat(startOfDecade, endOfDecade)
-            : `${formatDecade(startOfDecade, decadeLabelFormat)} – ${formatDecade(
+            : `${ctx.formatDate(startOfDecade, decadeLabelFormat)} – ${ctx.formatDate(
                 endOfDecade,
                 decadeLabelFormat
               )}`

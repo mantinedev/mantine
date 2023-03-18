@@ -1,6 +1,7 @@
 import dayjs from 'dayjs';
 
 export function getMonthsData(year: Date) {
+  // TODO: Tz dependent
   const startOfYear = dayjs(year).startOf('year').toDate();
 
   const results: Date[][] = [[], [], [], []];

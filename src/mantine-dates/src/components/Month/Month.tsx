@@ -1,5 +1,4 @@
 /* eslint-disable react/no-unused-prop-types */
-import dayjs from 'dayjs';
 import React, { forwardRef } from 'react';
 import { DefaultProps, Selectors, Box, useComponentDefaultProps, MantineSize } from '@mantine/core';
 import { useDatesContext } from '../DatesProvider';
@@ -134,7 +133,7 @@ export const Month = forwardRef<HTMLTableElement, MonthProps>((props, ref) => {
     ...others
   } = useComponentDefaultProps('Month', defaultProps, props);
 
-  const ctx = useDatesContext();
+  const ctx = useDatesContext({ firstDayOfWeek, weekendDays });
 
   const { classes, cx } = useStyles(null, {
     name: ['Month', __staticSelector],
@@ -154,14 +153,10 @@ export const Month = forwardRef<HTMLTableElement, MonthProps>((props, ref) => {
     size,
   };
 
-  const rows = getMonthDays(month, ctx.getFirstDayOfWeek(firstDayOfWeek)).map((row, rowIndex) => {
+  const rows = getMonthDays(month, ctx.firstDayOfWeek).map((row, rowIndex) => {
     const cells = row.map((date, cellIndex) => {
       const outside = !isSameMonth(date, month);
-      const ariaLabel =
-        getDayAriaLabel?.(date) ||
-        dayjs(date)
-          .locale(locale || ctx.locale)
-          .format('D MMMM YYYY');
+      const ariaLabel = getDayAriaLabel?.(date) || ctx.formatDate(date, 'D MMMM YYYY');
       const dayProps = getDayProps?.(date);
 
       return (
@@ -175,7 +170,7 @@ export const Month = forwardRef<HTMLTableElement, MonthProps>((props, ref) => {
             data-mantine-stop-propagation={__stopPropagation || undefined}
             renderDay={renderDay}
             date={date}
-            weekend={ctx.getWeekendDays(weekendDays).includes(date.getDay() as DayOfWeek)}
+            weekend={ctx.weekendDays.includes(date.getDay() as DayOfWeek)}
             outside={outside}
             hidden={hideOutsideDates ? outside : false}
             aria-label={ariaLabel}

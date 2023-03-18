@@ -7,8 +7,8 @@ import {
   Selectors,
   MantineSize,
 } from '@mantine/core';
-import dayjs from 'dayjs';
 import useStyles, { DayStylesParams } from './Day.styles';
+import { useDatesContext } from '../DatesProvider';
 
 export type DayStylesNames = Selectors<typeof useStyles>;
 
@@ -84,6 +84,8 @@ export const Day = forwardRef<HTMLButtonElement, DayProps>((props, ref) => {
     ...others
   } = useComponentDefaultProps('Day', defaultProps, props);
 
+  const ctx = useDatesContext({});
+
   const { classes, cx } = useStyles(
     { radius, isStatic },
     { name: ['Day', __staticSelector], classNames, styles, unstyled, variant, size }
@@ -95,7 +97,8 @@ export const Day = forwardRef<HTMLButtonElement, DayProps>((props, ref) => {
       ref={ref}
       className={cx(classes.day, className)}
       disabled={disabled}
-      data-today={dayjs(date).isSame(new Date(), 'day') || undefined}
+      // TODO: isSame depends on timezone
+      data-today={ctx.dayjs(date).isSame(new Date(), 'day') || undefined}
       data-hidden={hidden || undefined}
       data-disabled={disabled || undefined}
       data-weekend={(!disabled && !outside && weekend) || undefined}

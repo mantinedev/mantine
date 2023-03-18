@@ -1,5 +1,4 @@
 /* eslint-disable react/no-unused-prop-types */
-import dayjs from 'dayjs';
 import React, { forwardRef } from 'react';
 import { Box, DefaultProps, Selectors, useComponentDefaultProps } from '@mantine/core';
 import { useUncontrolled } from '@mantine/hooks';
@@ -12,6 +11,7 @@ import useStyles from './Calendar.styles';
 import { MonthLevelSettings } from '../MonthLevel';
 import { YearLevelSettings } from '../YearLevel';
 import { DecadeLevelSettings } from '../DecadeLevel';
+import { useDatesContext } from '../DatesProvider';
 
 export type CalendarStylesNames =
   | Selectors<typeof useStyles>
@@ -201,6 +201,8 @@ export const Calendar = forwardRef<HTMLDivElement, CalendarProps>((props, ref) =
     ...others
   } = useComponentDefaultProps('Calendar', defaultProps, props);
 
+  const ctx = useDatesContext({ locale });
+
   const { classes, cx } = useStyles(null, {
     name: ['Calendar', __staticSelector],
     classNames,
@@ -237,31 +239,32 @@ export const Calendar = forwardRef<HTMLDivElement, CalendarProps>((props, ref) =
   const currentDate = _date || new Date();
 
   const handleNextMonth = () => {
-    const nextDate = dayjs(currentDate).add(_columnsToScroll, 'month').toDate();
+    const nextDate = ctx.dayjs(currentDate).add(_columnsToScroll, 'month').toDate();
     onNextMonth?.(nextDate);
     setDate(nextDate);
   };
 
   const handlePreviousMonth = () => {
-    const nextDate = dayjs(currentDate).subtract(_columnsToScroll, 'month').toDate();
+    const nextDate = ctx.dayjs(currentDate).subtract(_columnsToScroll, 'month').toDate();
     onPreviousMonth?.(nextDate);
     setDate(nextDate);
   };
 
   const handleNextYear = () => {
-    const nextDate = dayjs(currentDate).add(_columnsToScroll, 'year').toDate();
+    const nextDate = ctx.dayjs(currentDate).add(_columnsToScroll, 'year').toDate();
     onNextYear?.(nextDate);
     setDate(nextDate);
   };
 
   const handlePreviousYear = () => {
-    const nextDate = dayjs(currentDate).subtract(_columnsToScroll, 'year').toDate();
+    const nextDate = ctx.dayjs(currentDate).subtract(_columnsToScroll, 'year').toDate();
     onPreviousYear?.(nextDate);
     setDate(nextDate);
   };
 
   const handleNextDecade = () => {
-    const nextDate = dayjs(currentDate)
+    const nextDate = ctx
+      .dayjs(currentDate)
       .add(10 * _columnsToScroll, 'year')
       .toDate();
     onNextDecade?.(nextDate);
@@ -269,7 +272,8 @@ export const Calendar = forwardRef<HTMLDivElement, CalendarProps>((props, ref) =
   };
 
   const handlePreviousDecade = () => {
-    const nextDate = dayjs(currentDate)
+    const nextDate = ctx
+      .dayjs(currentDate)
       .subtract(10 * _columnsToScroll, 'year')
       .toDate();
     onPreviousDecade?.(nextDate);

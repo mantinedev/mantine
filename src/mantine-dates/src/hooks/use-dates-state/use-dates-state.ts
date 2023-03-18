@@ -1,5 +1,6 @@
 import dayjs from 'dayjs';
 import { useState } from 'react';
+import { useDatesContext } from '../../components/DatesProvider';
 import { DatePickerType, PickerBaseProps } from '../../types';
 import { useUncontrolledDates } from '../use-uncontrolled-dates/use-uncontrolled-dates';
 
@@ -28,6 +29,7 @@ export function useDatesState<Type extends DatePickerType = 'default'>({
   allowDeselect,
   onMouseLeave,
 }: UseDatesRangeInput<Type>) {
+  const ctx = useDatesContext({});
   const [_value, setValue] = useUncontrolledDates({ type, value, defaultValue, onChange });
 
   const [pickedDate, setPickedDate] = useState<Date>(
@@ -38,7 +40,7 @@ export function useDatesState<Type extends DatePickerType = 'default'>({
   const onDateChange = (date: Date) => {
     if (type === 'range') {
       if (pickedDate instanceof Date && !_value[1]) {
-        if (dayjs(date).isSame(pickedDate, level) && !allowSingleDateInRange) {
+        if (ctx.dayjs(date).isSame(pickedDate, level) && !allowSingleDateInRange) {
           setPickedDate(null);
           setHoveredDate(null);
           setValue([null, null]);
@@ -56,7 +58,7 @@ export function useDatesState<Type extends DatePickerType = 'default'>({
       if (
         _value[0] &&
         !_value[1] &&
-        dayjs(date).isSame(_value[0], level) &&
+        ctx.dayjs(date).isSame(_value[0], level) &&
         !allowSingleDateInRange
       ) {
         setPickedDate(null);
@@ -72,8 +74,8 @@ export function useDatesState<Type extends DatePickerType = 'default'>({
     }
 
     if (type === 'multiple') {
-      if (_value.some((selected: Date) => dayjs(selected).isSame(date, level))) {
-        setValue(_value.filter((selected: Date) => !dayjs(selected).isSame(date, level)));
+      if (_value.some((selected: Date) => ctx.dayjs(selected).isSame(date, level))) {
+        setValue(_value.filter((selected: Date) => !ctx.dayjs(selected).isSame(date, level)));
       } else {
         setValue([..._value, date]);
       }
@@ -81,7 +83,7 @@ export function useDatesState<Type extends DatePickerType = 'default'>({
       return;
     }
 
-    if (_value && allowDeselect && dayjs(date).isSame(_value, level)) {
+    if (_value && allowDeselect && ctx.dayjs(date).isSame(_value, level)) {
       setValue(null);
     } else {
       setValue(date);
@@ -113,8 +115,8 @@ export function useDatesState<Type extends DatePickerType = 'default'>({
       return false;
     }
 
-    if (dayjs(date).isSame(_value[0], level)) {
-      return !(hoveredDate && dayjs(hoveredDate).isBefore(_value[0]));
+    if (ctx.dayjs(date).isSame(_value[0], level)) {
+      return !(hoveredDate && ctx.dayjs(hoveredDate).isBefore(_value[0]));
     }
 
     return false;
@@ -122,39 +124,39 @@ export function useDatesState<Type extends DatePickerType = 'default'>({
 
   const isLastInRange = (date: Date) => {
     if (_value[1] instanceof Date) {
-      return dayjs(date).isSame(_value[1], level);
+      return ctx.dayjs(date).isSame(_value[1], level);
     }
 
     if (!(_value[0] instanceof Date) || !hoveredDate) {
       return false;
     }
 
-    return dayjs(hoveredDate).isBefore(_value[0]) && dayjs(date).isSame(_value[0], level);
+    return ctx.dayjs(hoveredDate).isBefore(_value[0]) && ctx.dayjs(date).isSame(_value[0], level);
   };
 
   const getControlProps = (date: Date) => {
     if (type === 'range') {
       return {
         selected: _value.some(
-          (selection: Date) => selection && dayjs(selection).isSame(date, level)
+          (selection: Date) => selection && ctx.dayjs(selection).isSame(date, level)
         ),
         inRange: isDateInRange(date),
         firstInRange: isFirstInRange(date),
         lastInRange: isLastInRange(date),
-        'data-autofocus': (!!_value[0] && dayjs(_value[0]).isSame(date, level)) || undefined,
+        'data-autofocus': (!!_value[0] && ctx.dayjs(_value[0]).isSame(date, level)) || undefined,
       };
     }
 
     if (type === 'multiple') {
       return {
         selected: _value.some(
-          (selection: Date) => selection && dayjs(selection).isSame(date, level)
+          (selection: Date) => selection && ctx.dayjs(selection).isSame(date, level)
         ),
-        'data-autofocus': (!!_value[0] && dayjs(_value[0]).isSame(date, level)) || undefined,
+        'data-autofocus': (!!_value[0] && ctx.dayjs(_value[0]).isSame(date, level)) || undefined,
       };
     }
 
-    const selected = dayjs(_value).isSame(date, level);
+    const selected = ctx.dayjs(_value).isSame(date, level);
     return { selected, 'data-autofocus': selected || undefined };
   };
 

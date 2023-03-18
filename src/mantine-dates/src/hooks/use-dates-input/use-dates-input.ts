@@ -1,4 +1,5 @@
 import { useDisclosure } from '@mantine/hooks';
+import { useCallback } from 'react';
 import { DatePickerType, DatePickerValue } from '../../types';
 import { useDatesContext } from '../../components/DatesProvider';
 import { useUncontrolledDates } from '../use-uncontrolled-dates/use-uncontrolled-dates';
@@ -27,7 +28,7 @@ export function useDatesInput<Type extends DatePickerType = 'default'>({
   sortDates,
   labelSeparator,
 }: UseDatesInput<Type>) {
-  const ctx = useDatesContext();
+  const ctx = useDatesContext({ locale, labelSeparator });
 
   const [dropdownOpened, dropdownHandlers] = useDisclosure(false);
 
@@ -38,12 +39,13 @@ export function useDatesInput<Type extends DatePickerType = 'default'>({
     onChange,
   });
 
+  const formatter = useCallback((d: Date) => ctx.formatDate(d, format), [ctx.formatDate, format]);
+
   const formattedValue = getFormattedDate({
     type,
     date: _value,
-    locale: ctx.getLocale(locale),
-    format,
-    labelSeparator: ctx.getLabelSeparator(labelSeparator),
+    formatter,
+    labelSeparator: ctx.labelSeparator,
   });
 
   const setValue = (val: any) => {

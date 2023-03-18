@@ -1,5 +1,8 @@
 import dayjs from 'dayjs';
+import localeDataPlugin from 'dayjs/plugin/localeData';
 import type { DayOfWeek } from '../../../types';
+
+dayjs.extend(localeDataPlugin);
 
 interface GetWeekdaysNamesInput {
   locale: string;

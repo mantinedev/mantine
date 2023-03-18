@@ -1,5 +1,6 @@
 import dayjs from 'dayjs';
-import React, { forwardRef, useState, useEffect } from 'react';
+import customParseFormat from 'dayjs/plugin/customParseFormat';
+import React, { forwardRef, useState, useEffect, useCallback } from 'react';
 import {
   DefaultProps,
   InputSharedProps,
@@ -22,7 +23,8 @@ import { assignTime } from '../../utils';
 import { DateValue } from '../../types';
 import { useDatesContext } from '../DatesProvider';
 import { isDateValid } from './is-date-valid/is-date-valid';
-import { dateStringParser } from './date-string-parser/date-string-parser';
+
+dayjs.extend(customParseFormat);
 
 export type DateInputStylesNames = CalendarStylesNames | InputStylesNames | InputWrapperStylesNames;
 
@@ -111,17 +113,19 @@ export const DateInput = forwardRef<HTMLInputElement, DateInputProps>((props, re
     ...rest
   } = useInputProps('DateInput', defaultProps, props);
   const { calendarProps, others } = pickCalendarProps(rest);
-  const ctx = useDatesContext();
-  const defaultDateParser = (val: string) => {
-    const parsedDate = dayjs(val, valueFormat, ctx.getLocale(locale)).toDate();
-    return Number.isNaN(parsedDate.getTime()) ? dateStringParser(val) : parsedDate;
-  };
+  const ctx = useDatesContext({ locale });
 
+  const defaultDateParser = useCallback(
+    (val: string) => ctx.parseDate(val, valueFormat),
+    [ctx.parseDate, valueFormat]
+  );
   const _dateParser = dateParser || defaultDateParser;
   const _allowDeselect = clearable || allowDeselect;
 
-  const formatValue = (val: Date) =>
-    val ? dayjs(val).locale(ctx.getLocale(locale)).format(valueFormat) : '';
+  const formatValue = useCallback(
+    (d: Date) => ctx.formatDate(d, valueFormat),
+    [ctx.formatDate, valueFormat]
+  );
 
   const [_value, setValue, controlled] = useUncontrolled({
     value,
@@ -147,7 +151,7 @@ export const DateInput = forwardRef<HTMLInputElement, DateInputProps>((props, re
 
   useEffect(() => {
     setInputValue(formatValue(_value));
-  }, [ctx.getLocale(locale)]);
+  }, [ctx.locale]);
 
   const [dropdownOpened, setDropdownOpened] = useState(false);
 
@@ -159,7 +163,7 @@ export const DateInput = forwardRef<HTMLInputElement, DateInputProps>((props, re
       setValue(null);
     } else {
       const dateValue = _dateParser(val);
-      if (isDateValid({ date: dateValue, minDate, maxDate })) {
+      if (isDateValid({ date: dateValue, dayjs: ctx.dayjs, minDate, maxDate })) {
         setValue(dateValue);
         setDate(dateValue);
       }
@@ -184,11 +188,11 @@ export const DateInput = forwardRef<HTMLInputElement, DateInputProps>((props, re
 
   const _getDayProps = (day: Date) => ({
     ...getDayProps?.(day),
-    selected: dayjs(_value).isSame(day, 'day'),
+    selected: ctx.dayjs(_value).isSame(day, 'day'),
     onClick: () => {
       const valueWithTime = preserveTime ? assignTime(_value, day) : day;
       const val = _allowDeselect
-        ? dayjs(_value).isSame(day, 'day')
+        ? ctx.dayjs(_value).isSame(day, 'day')
           ? null
           : valueWithTime
         : valueWithTime;

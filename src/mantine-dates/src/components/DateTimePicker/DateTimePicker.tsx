@@ -1,5 +1,4 @@
-import dayjs from 'dayjs';
-import React, { forwardRef, useState, useRef } from 'react';
+import React, { forwardRef, useState, useRef, useCallback } from 'react';
 import {
   useComponentDefaultProps,
   CheckIcon,
@@ -96,7 +95,7 @@ export const DateTimePicker = forwardRef<HTMLButtonElement, DateTimePickerProps>
     others,
   } = pickCalendarProps(rest);
 
-  const ctx = useDatesContext();
+  const ctx = useDatesContext({ locale });
   const [_value, setValue] = useUncontrolled({
     value,
     defaultValue,
@@ -104,16 +103,14 @@ export const DateTimePicker = forwardRef<HTMLButtonElement, DateTimePickerProps>
     onChange,
   });
 
-  const formatTime = (dateValue: Date) =>
-    dateValue ? dayjs(dateValue).format(withSeconds ? 'HH:mm:ss' : 'HH:mm') : '';
+  const format = withSeconds ? 'HH:mm:ss' : 'HH:mm';
+  const formatTime = useCallback((d: Date) => ctx.formatDate(d, format), [ctx.formatDate, format]);
 
   const [timeValue, setTimeValue] = useState(formatTime(_value));
   const [currentLevel, setCurrentLevel] = useState(level || defaultLevel || 'month');
 
   const [dropdownOpened, dropdownHandlers] = useDisclosure(false);
-  const formattedValue = _value
-    ? dayjs(_value).locale(ctx.getLocale(locale)).format(_valueFormat)
-    : '';
+  const formattedValue = ctx.formatDate(_value, _valueFormat);
 
   const handleTimeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     timeInputProps?.onChange?.(event);
