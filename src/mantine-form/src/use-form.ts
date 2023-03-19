@@ -1,35 +1,35 @@
-import { useState, useCallback, useRef } from 'react';
+import { useCallback, useRef, useState } from 'react';
 import isEqual from 'fast-deep-equal';
 import { getInputOnChange } from './get-input-on-change';
-import { setPath, reorderPath, insertPath, getPath, removePath } from './paths';
+import { getPath, insertPath, removePath, reorderPath, setPath } from './paths';
 import { filterErrors } from './filter-errors';
-import { validateValues, validateFieldValue, shouldValidateOnChange } from './validate';
+import { shouldValidateOnChange, validateFieldValue, validateValues } from './validate';
 import { getStatus } from './get-status';
-import { clearListState } from './clear-list-state';
+import { changeErrorIndices, clearListState, reorderErrors } from './lists';
 import {
-  UseFormReturnType,
-  UseFormInput,
-  SetErrors,
+  _TransformValues,
   ClearErrors,
+  ClearFieldDirty,
+  ClearFieldError,
+  GetFieldStatus,
+  GetInputProps,
+  GetTransformedValues,
+  InsertListItem,
+  IsValid,
+  OnReset,
+  OnSubmit,
+  RemoveListItem,
+  ReorderListItem,
   Reset,
+  ResetDirty,
+  SetErrors,
   SetFieldError,
   SetFieldValue,
   SetValues,
-  ReorderListItem,
-  RemoveListItem,
-  InsertListItem,
-  ClearFieldError,
+  UseFormInput,
+  UseFormReturnType,
   Validate,
   ValidateField,
-  GetInputProps,
-  OnSubmit,
-  OnReset,
-  GetFieldStatus,
-  ResetDirty,
-  IsValid,
-  _TransformValues,
-  ClearFieldDirty,
-  GetTransformedValues,
 } from './types';
 
 export function useForm<
@@ -139,17 +139,19 @@ export function useForm<
   const reorderListItem: ReorderListItem<Values> = useCallback((path, payload) => {
     clearFieldDirty(path);
     _setValues((current) => reorderPath(path, payload, current));
+    _setErrors((errs) => reorderErrors(path, payload, errs));
   }, []);
 
   const removeListItem: RemoveListItem<Values> = useCallback((path, index) => {
     clearFieldDirty(path);
     _setValues((current) => removePath(path, index, current));
-    _setErrors((errs) => clearListState(path, errs));
+    _setErrors((errs) => changeErrorIndices(path, index, errs, -1));
   }, []);
 
   const insertListItem: InsertListItem<Values> = useCallback((path, item, index) => {
     clearFieldDirty(path);
     _setValues((current) => insertPath(path, item, index, current));
+    _setErrors((errs) => changeErrorIndices(path, index, errs, 1));
   }, []);
 
   const validate: Validate = useCallback(() => {
