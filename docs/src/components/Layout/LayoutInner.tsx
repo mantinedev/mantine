@@ -101,7 +101,7 @@ function AutoOpenSpotlight() {
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     if (params.has(searchParamName)) {
-      spotlight.openSpotlight('button');
+      spotlight.openSpotlight();
     }
   }, []);
 
