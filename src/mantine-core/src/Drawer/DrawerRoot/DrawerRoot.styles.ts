@@ -13,6 +13,10 @@ interface DrawerRootStylesParams {
 }
 
 export default createStyles((theme, { position }: DrawerRootStylesParams, { size }) => ({
+  header: {
+    zIndex: 1000,
+  },
+
   content: {
     flex:
       position === 'right' || position === 'left' ? `0 0 ${getSize({ size, sizes })}` : '0 0 100%',
