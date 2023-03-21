@@ -101,7 +101,7 @@ export const PickerInputBase = forwardRef<HTMLButtonElement, PickerInputBaseProp
     form,
     type,
     ...others
-  } = useInputProps(props.__staticSelector, defaultProps, props);
+  } = useInputProps('PickerInputBase', defaultProps, props);
 
   const { classes, cx } = useStyles(null, {
     name: inputProps.__staticSelector,
