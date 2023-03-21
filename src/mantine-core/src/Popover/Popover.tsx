@@ -34,7 +34,7 @@ export interface PopoverBaseProps {
   /** Dropdown position relative to target */
   position?: FloatingPosition;
 
-  /** Space between target element and dropdown */
+  /** Default Y axis or either (main, cross, alignment) X and Y axis space between target element and dropdown  */
   offset?: number | FloatingAxesOffsets;
 
   /** Called when dropdown position changes */
