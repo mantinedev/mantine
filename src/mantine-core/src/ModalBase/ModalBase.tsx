@@ -143,7 +143,7 @@ export function ModalBase(props: ModalBaseProps) {
     styles,
     className,
     ...others
-  } = useComponentDefaultProps(props.__staticSelector, ModalBaseDefaultProps, props);
+  } = useComponentDefaultProps('ModalBase', ModalBaseDefaultProps, props);
 
   const { classes, cx } = useStyles(null, {
     name: __staticSelector,
