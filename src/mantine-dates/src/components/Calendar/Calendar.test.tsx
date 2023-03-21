@@ -6,6 +6,7 @@ import {
   itSupportsProviderVariant,
   itSupportsProviderSize,
 } from '@mantine/tests';
+import dayjs from 'dayjs';
 import { Calendar, CalendarProps } from './Calendar';
 import {
   itSupportsMonthProps,
@@ -353,5 +354,84 @@ describe('@mantine/dates/Calendar', () => {
     );
 
     expect(screen.getByText('0/2020 – 0/2029')).toBeInTheDocument();
+  });
+
+  it('only adds selected date in month to tab order', async () => {
+    render(
+      <Calendar
+        {...defaultProps}
+        getDayProps={(date) => ({ selected: dayjs(date).isSame(defaultProps.defaultDate, 'date') })}
+      />
+    );
+
+    await userEvent.tab();
+    expect(
+      screen.getByRole('button', { name: defaultProps.ariaLabels.previousMonth })
+    ).toHaveFocus();
+
+    await userEvent.tab();
+    expect(
+      screen.getByRole('button', { name: defaultProps.ariaLabels.monthLevelControl })
+    ).toHaveFocus();
+
+    await userEvent.tab();
+    expect(screen.getByRole('button', { name: defaultProps.ariaLabels.nextMonth })).toHaveFocus();
+
+    await userEvent.tab();
+    expect(
+      screen.getByRole('button', { name: dayjs(defaultProps.defaultDate).format('D MMMM YYYY') })
+    ).toHaveFocus();
+
+    await userEvent.tab();
+    expect(document.body).toHaveFocus();
+  });
+
+  it('only adds current date in month to tab order', async () => {
+    render(<Calendar {...defaultProps} defaultDate={new Date()} />);
+
+    await userEvent.tab();
+    expect(
+      screen.getByRole('button', { name: defaultProps.ariaLabels.previousMonth })
+    ).toHaveFocus();
+
+    await userEvent.tab();
+    expect(
+      screen.getByRole('button', { name: defaultProps.ariaLabels.monthLevelControl })
+    ).toHaveFocus();
+
+    await userEvent.tab();
+    expect(screen.getByRole('button', { name: defaultProps.ariaLabels.nextMonth })).toHaveFocus();
+
+    await userEvent.tab();
+    expect(screen.getByRole('button', { name: dayjs().format('D MMMM YYYY') })).toHaveFocus();
+
+    await userEvent.tab();
+    expect(document.body).toHaveFocus();
+  });
+
+  it('only adds first non-disabled date in month to tab order', async () => {
+    render(
+      <Calendar
+        {...defaultProps}
+        minDate={new Date(2022, 3, 15)}
+        getDayProps={(date) => ({ disabled: dayjs(new Date(2022, 3, 15)).isSame(date, 'date') })}
+      />
+    );
+
+    await userEvent.tab();
+    expect(
+      screen.getByRole('button', { name: defaultProps.ariaLabels.monthLevelControl })
+    ).toHaveFocus();
+
+    await userEvent.tab();
+    expect(screen.getByRole('button', { name: defaultProps.ariaLabels.nextMonth })).toHaveFocus();
+
+    await userEvent.tab();
+    expect(
+      screen.getByRole('button', { name: dayjs(new Date(2022, 3, 16)).format('D MMMM YYYY') })
+    ).toHaveFocus();
+
+    await userEvent.tab();
+    expect(document.body).toHaveFocus();
   });
 });
