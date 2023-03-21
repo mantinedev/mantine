@@ -38,7 +38,7 @@ function Demo() {
       <Avatar color="cyan" radius="xl">
         MK
       </Avatar>
-      <Avatar color="blue" radius="xl">
+      <Avatar color="blue" radius="sm">
         <IconStar size="1.5rem" />
       </Avatar>
     </Group>
