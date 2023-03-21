@@ -8,6 +8,8 @@ const defaultMaxDate = new Date(2100, 0);
 const defaultSelectedDate = new Date(2010, 5, 5);
 const defaultControlProps = () => ({});
 const defaultExcludeDate = () => false;
+const defaultHideOutsideDates = false;
+const defaultMonth = new Date(2010, 5);
 
 describe('@mantine/dates/get-date-in-tab-order', () => {
   it('returns selected date', () => {
@@ -19,7 +21,9 @@ describe('@mantine/dates/get-date-in-tab-order', () => {
         (date) => ({
           selected: dayjs(date).isSame(defaultSelectedDate, 'date'),
         }),
-        defaultExcludeDate
+        defaultExcludeDate,
+        defaultHideOutsideDates,
+        defaultMonth
       )
     ).toStrictEqual(defaultSelectedDate);
   });
@@ -31,7 +35,9 @@ describe('@mantine/dates/get-date-in-tab-order', () => {
         defaultMinDate,
         defaultMaxDate,
         defaultControlProps,
-        defaultExcludeDate
+        defaultExcludeDate,
+        defaultHideOutsideDates,
+        defaultMonth
       )
     ).toStrictEqual(
       new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate())
@@ -45,7 +51,9 @@ describe('@mantine/dates/get-date-in-tab-order', () => {
         defaultMinDate,
         defaultMaxDate,
         defaultControlProps,
-        defaultExcludeDate
+        defaultExcludeDate,
+        defaultHideOutsideDates,
+        defaultMonth
       )
     ).toStrictEqual(new Date(2010, 1, 1));
     expect(
@@ -54,7 +62,9 @@ describe('@mantine/dates/get-date-in-tab-order', () => {
         new Date(2010, 5, 5),
         defaultMaxDate,
         defaultControlProps,
-        defaultExcludeDate
+        defaultExcludeDate,
+        defaultHideOutsideDates,
+        defaultMonth
       )
     ).toStrictEqual(new Date(2010, 5, 5));
   });
@@ -66,8 +76,36 @@ describe('@mantine/dates/get-date-in-tab-order', () => {
         defaultMinDate,
         defaultMaxDate,
         defaultControlProps,
-        (date) => dayjs(new Date(2010, 1, 1)).isSame(date, 'date')
+        (date) => dayjs(new Date(2010, 1, 1)).isSame(date, 'date'),
+        defaultHideOutsideDates,
+        defaultMonth
       )
     ).toStrictEqual(new Date(2010, 1, 2));
+  });
+
+  it('handles hidden outside dates', () => {
+    expect(
+      getDateInTabOrder(
+        defaultDates,
+        defaultMinDate,
+        defaultMaxDate,
+        defaultControlProps,
+        defaultExcludeDate,
+        defaultHideOutsideDates,
+        defaultMonth
+      )
+    ).toStrictEqual(new Date(2010, 4, 31));
+
+    expect(
+      getDateInTabOrder(
+        defaultDates,
+        defaultMinDate,
+        defaultMaxDate,
+        defaultControlProps,
+        defaultExcludeDate,
+        true,
+        defaultMonth
+      )
+    ).toStrictEqual(new Date(2010, 5, 1));
   });
 });

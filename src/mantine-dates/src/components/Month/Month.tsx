@@ -157,7 +157,15 @@ export const Month = forwardRef<HTMLTableElement, MonthProps>((props, ref) => {
 
   const dates = getMonthDays(month, ctx.getFirstDayOfWeek(firstDayOfWeek));
 
-  const dateInTabOrder = getDateInTabOrder(dates, minDate, maxDate, getDayProps, excludeDate);
+  const dateInTabOrder = getDateInTabOrder(
+    dates,
+    minDate,
+    maxDate,
+    getDayProps,
+    excludeDate,
+    hideOutsideDates,
+    month
+  );
 
   const rows = dates.map((row, rowIndex) => {
     const cells = row.map((date, cellIndex) => {
