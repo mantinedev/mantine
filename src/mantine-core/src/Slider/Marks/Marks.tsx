@@ -59,11 +59,11 @@ export function Marks({
           className={classes.markLabel}
           onMouseDown={(event) => {
             event.stopPropagation();
-            onChange(mark.value);
+            !disabled && onChange(mark.value);
           }}
           onTouchStart={(event) => {
             event.stopPropagation();
-            onChange(mark.value);
+            !disabled && onChange(mark.value);
           }}
         >
           {mark.label}
