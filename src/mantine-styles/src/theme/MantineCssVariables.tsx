@@ -1,16 +1,17 @@
 import React from 'react';
 import { Global } from '@emotion/react';
 import type { MantineTheme, MantineSize } from './types';
-import { rem } from './utils';
+import { rem, em } from './utils';
 
 function assignSizeVariables(
   variables: Record<string, string>,
   sizes: Record<MantineSize, number | string>,
-  name: string
+  name: string,
+  targetUnitConverter: typeof rem = rem
 ) {
   Object.keys(sizes).forEach((size) => {
     // eslint-disable-next-line no-param-reassign
-    variables[`--mantine-${name}-${size}`] = rem(sizes[size]);
+    variables[`--mantine-${name}-${size}`] = targetUnitConverter(sizes[size]);
   });
 }
 
@@ -30,6 +31,7 @@ export function MantineCssVariables({ theme }: { theme: MantineTheme }) {
   assignSizeVariables(variables, theme.fontSizes, 'font-size');
   assignSizeVariables(variables, theme.radius, 'radius');
   assignSizeVariables(variables, theme.spacing, 'spacing');
+  assignSizeVariables(variables, theme.breakpoints, 'breakpoints', em);
 
   Object.keys(theme.colors).forEach((color) => {
     theme.colors[color].forEach((shade, index) => {
