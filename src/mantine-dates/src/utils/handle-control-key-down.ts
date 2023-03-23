@@ -136,7 +136,11 @@ function focusOnNextFocusableControl({
     return;
   }
 
-  if (controlToFocus.disabled || controlToFocus.getAttribute('data-hidden')) {
+  if (
+    controlToFocus.disabled ||
+    controlToFocus.getAttribute('data-hidden') ||
+    controlToFocus.getAttribute('data-outside')
+  ) {
     focusOnNextFocusableControl({
       controlsRefs,
       direction,
