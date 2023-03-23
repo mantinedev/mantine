@@ -41,17 +41,23 @@ export function itHandlesControlsKeyboardEvents(
     await userEvent.click(firstColumnControls[1]);
     expect(firstColumnControls[1]).toHaveFocus();
 
-    await userEvent.type(firstColumnControls[1], '{ArrowRight}', { skipClick: true });
+    await userEvent.type(firstColumnControls[1], '{ArrowRight}');
     expect(firstColumnControls[2]).toHaveFocus();
 
-    await userEvent.type(firstColumnControls[2], '{ArrowRight}', { skipClick: true });
+    await userEvent.type(firstColumnControls[2], '{ArrowRight}');
+    expect(firstColumnControls[3]).toHaveFocus();
+
+    await userEvent.type(firstColumnControls[firstColumnControls.length - 1], '{ArrowRight}');
     expect(secondColumnControls[0]).toHaveFocus();
 
-    await userEvent.type(secondColumnControls[0], '{ArrowDown}', { skipClick: true });
+    await userEvent.type(secondColumnControls[0], '{ArrowDown}');
     expect(secondColumnControls[3]).toHaveFocus();
 
-    await userEvent.type(secondColumnControls[3], '{ArrowLeft}', { skipClick: true });
-    expect(firstColumnControls[5]).toHaveFocus();
+    await userEvent.type(secondColumnControls[3], '{ArrowLeft}');
+    expect(secondColumnControls[2]).toHaveFocus();
+
+    await userEvent.type(secondColumnControls[0], '{ArrowLeft}');
+    expect(firstColumnControls[firstColumnControls.length - 1]).toHaveFocus();
   });
 
   it(`handles ${name} arrow keyboard events correctly at edges`, async () => {
@@ -59,7 +65,7 @@ export function itHandlesControlsKeyboardEvents(
     const controls = container.querySelectorAll('table button');
 
     await userEvent.type(controls[2], '{ArrowRight}');
-    expect(controls[2]).toHaveFocus();
+    expect(controls[3]).toHaveFocus();
 
     await userEvent.type(controls[0], '{ArrowLeft}');
     expect(controls[0]).toHaveFocus();
