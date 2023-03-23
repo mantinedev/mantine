@@ -101,12 +101,11 @@ export const YearLevelGroup = forwardRef<HTMLDivElement, YearLevelGroupProps>((p
           __onControlMouseEnter={__onControlMouseEnter}
           __onControlKeyDown={(event, payload) =>
             handleControlKeyDown({
-              index: yearIndex,
+              levelIndex: yearIndex,
+              rowIndex: payload.rowIndex,
+              cellIndex: payload.cellIndex,
               event,
-              payload,
-              controlsRef: controlsRefs,
-              numberOfColumns,
-              controlsPerRow: 3,
+              controlsRefs,
             })
           }
           __getControlRef={(rowIndex, cellIndex, node) => {

@@ -102,12 +102,11 @@ export const DecadeLevelGroup = forwardRef<HTMLDivElement, DecadeLevelGroupProps
           __onControlMouseEnter={__onControlMouseEnter}
           __onControlKeyDown={(event, payload) =>
             handleControlKeyDown({
-              index: decadeIndex,
+              levelIndex: decadeIndex,
+              rowIndex: payload.rowIndex,
+              cellIndex: payload.cellIndex,
               event,
-              payload,
-              controlsRef: controlsRefs,
-              numberOfColumns,
-              controlsPerRow: [3, 3, 3, 1],
+              controlsRefs,
             })
           }
           __getControlRef={(rowIndex, cellIndex, node) => {

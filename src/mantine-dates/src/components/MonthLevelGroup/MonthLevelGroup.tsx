@@ -108,12 +108,11 @@ export const MonthLevelGroup = forwardRef<HTMLDivElement, MonthLevelGroupProps>(
           __onDayMouseEnter={__onDayMouseEnter}
           __onDayKeyDown={(event, payload) =>
             handleControlKeyDown({
-              index: monthIndex,
+              levelIndex: monthIndex,
+              rowIndex: payload.rowIndex,
+              cellIndex: payload.cellIndex,
               event,
-              payload,
-              controlsRef: daysRefs,
-              numberOfColumns,
-              controlsPerRow: 7,
+              controlsRefs: daysRefs,
             })
           }
           __getDayRef={(rowIndex, cellIndex, node) => {
