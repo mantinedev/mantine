@@ -42,7 +42,8 @@ export function filterData({
     if (
       filter(
         searchValue,
-        value.some((val) => val === data[i].value && !data[i].disabled),
+        !disableSelectedItemFiltering &&
+          value.some((val) => val === data[i].value && !data[i].disabled),
         data[i]
       )
     ) {
