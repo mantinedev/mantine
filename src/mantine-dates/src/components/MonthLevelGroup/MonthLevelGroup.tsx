@@ -112,7 +112,7 @@ export const MonthLevelGroup = forwardRef<HTMLDivElement, MonthLevelGroupProps>(
               rowIndex: payload.rowIndex,
               cellIndex: payload.cellIndex,
               event,
-              controlsRefs: daysRefs,
+              controlsRef: daysRefs,
             })
           }
           __getDayRef={(rowIndex, cellIndex, node) => {

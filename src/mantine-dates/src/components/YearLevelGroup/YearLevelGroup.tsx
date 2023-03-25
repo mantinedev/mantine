@@ -79,7 +79,7 @@ export const YearLevelGroup = forwardRef<HTMLDivElement, YearLevelGroupProps>((p
     size,
   });
 
-  const controlsRefs = useRef<HTMLButtonElement[][][]>([]);
+  const controlsRef = useRef<HTMLButtonElement[][][]>([]);
 
   const years = Array(numberOfColumns)
     .fill(0)
@@ -105,19 +105,19 @@ export const YearLevelGroup = forwardRef<HTMLDivElement, YearLevelGroupProps>((p
               rowIndex: payload.rowIndex,
               cellIndex: payload.cellIndex,
               event,
-              controlsRefs,
+              controlsRef,
             })
           }
           __getControlRef={(rowIndex, cellIndex, node) => {
-            if (!Array.isArray(controlsRefs.current[yearIndex])) {
-              controlsRefs.current[yearIndex] = [];
+            if (!Array.isArray(controlsRef.current[yearIndex])) {
+              controlsRef.current[yearIndex] = [];
             }
 
-            if (!Array.isArray(controlsRefs.current[yearIndex][rowIndex])) {
-              controlsRefs.current[yearIndex][rowIndex] = [];
+            if (!Array.isArray(controlsRef.current[yearIndex][rowIndex])) {
+              controlsRef.current[yearIndex][rowIndex] = [];
             }
 
-            controlsRefs.current[yearIndex][rowIndex][cellIndex] = node;
+            controlsRef.current[yearIndex][rowIndex][cellIndex] = node;
           }}
           levelControlAriaLabel={
             typeof levelControlAriaLabel === 'function'

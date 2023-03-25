@@ -1,13 +1,9 @@
 import { RefObject } from 'react';
 
-type ControlsRefs = RefObject<HTMLButtonElement[][][]>;
+type ControlsRef = RefObject<HTMLButtonElement[][][]>;
 type Direction = 'up' | 'down' | 'left' | 'right';
 
-function getControlsSize(controlsRef: ControlsRefs) {
-  return controlsRef.current.map((column) => column.map((row) => row.length));
-}
-
-type NextIndexInput = Omit<ShiftFocusInput, 'controlsRefs'>;
+type NextIndexInput = Omit<ShiftFocusInput, 'controlsRef'>;
 
 function getNextIndex({ direction, levelIndex, rowIndex, cellIndex, size }: NextIndexInput) {
   switch (direction) {
@@ -78,6 +74,7 @@ function getNextIndex({ direction, levelIndex, rowIndex, cellIndex, size }: Next
         rowIndex,
         cellIndex: cellIndex - 1,
       };
+
     case 'right':
       if (
         rowIndex === size[levelIndex].length - 1 &&
@@ -101,13 +98,14 @@ function getNextIndex({ direction, levelIndex, rowIndex, cellIndex, size }: Next
         rowIndex,
         cellIndex: cellIndex + 1,
       };
+
     default:
       return { levelIndex, rowIndex, cellIndex };
   }
 }
 
 interface ShiftFocusInput {
-  controlsRefs: ControlsRefs;
+  controlsRef: ControlsRef;
   direction: Direction;
   levelIndex: number;
   rowIndex: number;
@@ -116,7 +114,7 @@ interface ShiftFocusInput {
 }
 
 function focusOnNextFocusableControl({
-  controlsRefs,
+  controlsRef,
   direction,
   levelIndex,
   rowIndex,
@@ -130,7 +128,7 @@ function focusOnNextFocusableControl({
   }
 
   const controlToFocus =
-    controlsRefs.current[nextIndex.levelIndex]?.[nextIndex.rowIndex]?.[nextIndex.cellIndex];
+    controlsRef.current[nextIndex.levelIndex]?.[nextIndex.rowIndex]?.[nextIndex.cellIndex];
 
   if (!controlToFocus) {
     return;
@@ -142,7 +140,7 @@ function focusOnNextFocusableControl({
     controlToFocus.getAttribute('data-outside')
   ) {
     focusOnNextFocusableControl({
-      controlsRefs,
+      controlsRef,
       direction,
       levelIndex: nextIndex.levelIndex,
       cellIndex: nextIndex.cellIndex,
@@ -168,8 +166,13 @@ function getDirection(key: KeyboardEvent['key']): Direction {
       return null;
   }
 }
+
+function getControlsSize(controlsRef: ControlsRef) {
+  return controlsRef.current.map((column) => column.map((row) => row.length));
+}
+
 interface HandleControlKeyDownInput {
-  controlsRefs: ControlsRefs;
+  controlsRef: ControlsRef;
   levelIndex: number;
   rowIndex: number;
   cellIndex: number;
@@ -177,7 +180,7 @@ interface HandleControlKeyDownInput {
 }
 
 export function handleControlKeyDown({
-  controlsRefs,
+  controlsRef,
   levelIndex,
   rowIndex,
   cellIndex,
@@ -186,10 +189,10 @@ export function handleControlKeyDown({
   const direction = getDirection(event.key);
 
   if (direction) {
-    const size = getControlsSize(controlsRefs);
+    const size = getControlsSize(controlsRef);
 
     focusOnNextFocusableControl({
-      controlsRefs,
+      controlsRef,
       direction,
       levelIndex,
       rowIndex,
