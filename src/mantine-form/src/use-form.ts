@@ -50,14 +50,16 @@ export function useForm<
   const [dirty, setDirty] = useState(initialDirty);
   const [values, _setValues] = useState(initialValues);
   const [errors, _setErrors] = useState(filterErrors(initialErrors));
-  const _dirtyValues = useRef<Values>(initialValues);
-  const _setDirtyValues = (_values: Values) => {
-    _dirtyValues.current = _values;
+
+  const valuesSnapshot = useRef<Values>(initialValues);
+  const setValuesSnapshot = (_values: Values) => {
+    valuesSnapshot.current = _values;
   };
 
   const resetTouched = useCallback(() => setTouched({}), []);
   const resetDirty: ResetDirty<Values> = (_values) => {
-    _setDirtyValues(_values || values);
+    const newSnapshot = _values ? { ...values, ..._values } : values;
+    setValuesSnapshot(newSnapshot);
     setDirty({});
   };
 
@@ -228,7 +230,7 @@ export function useForm<
       }
 
       const sliceOfValues = getPath(path, values);
-      const sliceOfInitialValues = getPath(path, _dirtyValues.current);
+      const sliceOfInitialValues = getPath(path, valuesSnapshot.current);
       return !isEqual(sliceOfValues, sliceOfInitialValues);
     }
 
@@ -237,7 +239,7 @@ export function useForm<
       return getStatus(dirty);
     }
 
-    return !isEqual(values, _dirtyValues.current);
+    return !isEqual(values, valuesSnapshot.current);
   };
 
   const isTouched: GetFieldStatus<Values> = useCallback(

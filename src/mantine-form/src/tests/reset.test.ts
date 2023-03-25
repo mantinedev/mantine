@@ -31,4 +31,18 @@ describe('@mantine/form/reset', () => {
     expect(hook.result.current.isDirty()).toBe(false);
     expect(hook.result.current.isTouched()).toBe(false);
   });
+
+  it('resets values without keeping added values', () => {
+    const hook = renderHook(() =>
+      useForm<{ a: number; b?: number; c?: number }>({ initialValues: { a: 1, b: 2 } })
+    );
+
+    act(() => hook.result.current.setFieldValue('c', 3));
+    expect(hook.result.current.isDirty()).toBe(true);
+    expect(hook.result.current.values).toStrictEqual({ a: 1, b: 2, c: 3 });
+
+    act(() => hook.result.current.reset());
+    expect(hook.result.current.isDirty()).toBe(false);
+    expect(hook.result.current.values).toStrictEqual({ a: 1, b: 2 });
+  });
 });
