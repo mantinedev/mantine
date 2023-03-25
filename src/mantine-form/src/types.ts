@@ -76,7 +76,7 @@ export type SetFieldValue<Values> = <Field extends LooseKeys<Values>>(
 export type ClearFieldError = (path: unknown) => void;
 export type ClearFieldDirty = (path: unknown) => void;
 export type ClearErrors = () => void;
-export type Reset = () => void;
+export type Reset<Values> = (values?: Values) => void;
 export type Validate = () => FormValidationResult;
 export type ValidateField<Values> = <Field extends LooseKeys<Values>>(
   path: Field
@@ -138,7 +138,7 @@ export interface UseFormReturnType<
   setFieldError: SetFieldError<Values>;
   clearFieldError: ClearFieldError;
   clearErrors: ClearErrors;
-  reset: Reset;
+  reset: Reset<Values>;
   validate: Validate;
   validateField: ValidateField<Values>;
   reorderListItem: ReorderListItem<Values>;
