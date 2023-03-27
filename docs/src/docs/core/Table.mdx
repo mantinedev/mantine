@@ -8,9 +8,8 @@ category: 'typography'
 description: 'Render table with theme styles'
 props: ['Table']
 import: "import { Table } from '@mantine/core';"
-source: 'mantine-core/src/components/Table/Table.tsx'
+source: 'mantine-core/src/Table/Table.tsx'
 docs: 'core/Table.mdx'
-styles: ['Table', 'single-node']
 ---
 
 import { TableDemos } from '@mantine/demos';
@@ -33,7 +32,7 @@ const elements = [
 
 ## Spacing
 
-To control spacing use `horizontalSpacing` and `verticalSpacing` props. Both props support spacing from `theme.spacing` and number values to set cell padding in px:
+To control spacing use `horizontalSpacing` and `verticalSpacing` props. Both props support spacing from `theme.spacing` and any valid CSS value to set cell padding:
 
 <Demo data={TableDemos.spacingConfigurator} />
 

@@ -1,6 +1,7 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { Button, Group, Box, ButtonProps, GroupProps } from '@mantine/core';
-import { modalsContext, ConfirmLabels } from './context';
+import { ConfirmLabels } from './context';
+import { useModals } from './use-modals/use-modals';
 
 export interface ConfirmModalProps {
   id?: string;
@@ -9,8 +10,8 @@ export interface ConfirmModalProps {
   onConfirm?(): void;
   closeOnConfirm?: boolean;
   closeOnCancel?: boolean;
-  cancelProps?: ButtonProps<'button'>;
-  confirmProps?: ButtonProps<'button'>;
+  cancelProps?: ButtonProps & React.ComponentPropsWithoutRef<'button'>;
+  confirmProps?: ButtonProps & React.ComponentPropsWithoutRef<'button'>;
   groupProps?: GroupProps;
   labels?: ConfirmLabels;
 }
@@ -19,7 +20,7 @@ export function ConfirmModal({
   id,
   cancelProps,
   confirmProps,
-  labels,
+  labels = { cancel: '', confirm: '' },
   closeOnConfirm = true,
   closeOnCancel = true,
   groupProps,
@@ -27,18 +28,19 @@ export function ConfirmModal({
   onConfirm,
   children,
 }: ConfirmModalProps) {
-  const ctx = useContext(modalsContext);
+  const { cancel: cancelLabel, confirm: confirmLabel } = labels;
+  const ctx = useModals();
 
   const handleCancel = (event: React.MouseEvent<HTMLButtonElement>) => {
     typeof cancelProps?.onClick === 'function' && cancelProps?.onClick(event);
     typeof onCancel === 'function' && onCancel();
-    closeOnCancel && ctx?.closeModal(id);
+    closeOnCancel && ctx.closeModal(id);
   };
 
   const handleConfirm = (event: React.MouseEvent<HTMLButtonElement>) => {
     typeof confirmProps?.onClick === 'function' && confirmProps?.onClick(event);
     typeof onConfirm === 'function' && onConfirm();
-    closeOnConfirm && ctx?.closeModal(id);
+    closeOnConfirm && ctx.closeModal(id);
   };
 
   return (
@@ -47,11 +49,11 @@ export function ConfirmModal({
 
       <Group position="right" {...groupProps}>
         <Button variant="default" {...cancelProps} onClick={handleCancel}>
-          {cancelProps?.children || labels.cancel}
+          {cancelProps?.children || cancelLabel}
         </Button>
 
         <Button {...confirmProps} onClick={handleConfirm}>
-          {confirmProps?.children || labels.confirm}
+          {confirmProps?.children || confirmLabel}
         </Button>
       </Group>
     </>

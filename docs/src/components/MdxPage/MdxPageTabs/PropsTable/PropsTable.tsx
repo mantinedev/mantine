@@ -1,5 +1,5 @@
 import React from 'react';
-import { Table, Text, Highlight, useMantineTheme } from '@mantine/core';
+import { Table, Text, Highlight, useMantineTheme, rem } from '@mantine/core';
 import DocsSection from '../../../DocsSection/DocsSection';
 import PROPS_DATA from '../../../../../.docgen/docgen.json';
 
@@ -35,17 +35,12 @@ export default function PropsTable({ component, query }: PropsTableProps) {
               </Text>
             )}
           </td>
-          <td>
-            <Text size="sm" color={prop.defaultValue && prop.defaultValue.value ? null : 'gray'}>
-              {(prop.defaultValue && prop.defaultValue.value) || ''}
-            </Text>
-          </td>
           <td style={{ verticalAlign: 'middle' }}>
             <Text
               color={theme.colorScheme === 'dark' ? 'red' : 'indigo'}
               size="xs"
               weight={500}
-              style={{ fontFamily: 'Menlo, Monaco, Lucida Console, monospace' }}
+              sx={{ fontFamily: 'Menlo, Monaco, Lucida Console, monospace' }}
             >
               {prop.type.name}
             </Text>
@@ -61,7 +56,7 @@ export default function PropsTable({ component, query }: PropsTableProps) {
 
   if (rows.length === 0) {
     return (
-      <Text color="gray" style={{ marginBottom: 30 }}>
+      <Text color="dimmed" mb="xl">
         Nothing found
       </Text>
     );
@@ -70,12 +65,11 @@ export default function PropsTable({ component, query }: PropsTableProps) {
   return (
     <DocsSection>
       <div style={{ overflowX: 'auto' }}>
-        <div style={{ minWidth: 500 }}>
+        <div style={{ minWidth: rem(500) }}>
           <Table>
             <thead>
               <tr>
                 <th>Name</th>
-                <th>Default</th>
                 <th>Type</th>
                 <th>Description</th>
               </tr>

@@ -1,12 +1,17 @@
 import React from 'react';
-import { Global } from '../tss';
+import { Global } from '@emotion/react';
+import type { MantineTheme } from './types';
 
-export function GlobalStyles() {
+export function GlobalStyles({ theme }: { theme: MantineTheme }) {
   return (
     <Global
-      styles={(theme) => ({
+      styles={{
         '*, *::before, *::after': {
           boxSizing: 'border-box',
+        },
+
+        html: {
+          colorScheme: theme.colorScheme === 'dark' ? 'dark' : 'light',
         },
 
         body: {
@@ -15,8 +20,10 @@ export function GlobalStyles() {
           color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
           lineHeight: theme.lineHeight,
           fontSize: theme.fontSizes.md,
-        } as any,
-      })}
+          WebkitFontSmoothing: 'antialiased',
+          MozOsxFontSmoothing: 'grayscale',
+        },
+      }}
     />
   );
 }

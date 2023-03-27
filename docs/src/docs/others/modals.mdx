@@ -17,18 +17,18 @@ import { ModalsDemos } from '@mantine/demos';
 
 ## Installation
 
-Package depends on @mantine/core and @mantine/hooks.
-
-Install with npm:
-
-```sh
-npm install @mantine/modals @mantine/core @mantine/hooks
-```
+Package depends on `@mantine/core` and `@mantine/hooks`.
 
 Install with yarn:
 
-```sh
-yarn add @mantine/modals @mantine/core @mantine/hooks
+```bash
+yarn add @mantine/modals
+```
+
+Install with npm:
+
+```bash
+npm install @mantine/modals
 ```
 
 ## Setup ModalsProvider
@@ -39,11 +39,11 @@ Wrap your app with `ModalsProvider` component:
 import { MantineProvider } from '@mantine/core';
 import { ModalsProvider } from '@mantine/modals';
 
-function App() {
+function Demo() {
   return (
     <MantineProvider>
       <ModalsProvider>
-        <YourApp />
+        <App />
       </ModalsProvider>
     </MantineProvider>
   );
@@ -60,7 +60,7 @@ information about action. Use `openConfirmModal` function to open a confirm moda
 
 `openConfirmModal` function accepts one argument with following properties:
 
-- `id` – modal id, defaults to random id, can be used to close modal programmatically
+- `modalId` – modal id, defaults to random id, can be used to close modal programmatically
 - `children` – additional modal content displayed before actions
 - `onCancel` – called when cancel button is clicked
 - `onConfirm` – called when confirm button is clicked
@@ -78,9 +78,15 @@ Using this properties you can customize confirm modal to match current context r
 To setup shared labels for confirm modals set `labels` on `ModalsProvider`:
 
 ```tsx
-<ModalsProvider labels={{ confirm: 'Submit', cancel: 'Cancel' }}>
-  <App />
-</ModalsProvider>
+import { ModalsProvider } from '@mantine/modals';
+
+function Demo() {
+  return (
+    <ModalsProvider labels={{ confirm: 'Submit', cancel: 'Cancel' }}>
+      <App />
+    </ModalsProvider>
+  );
+}
 ```
 
 ## Context modals
@@ -91,32 +97,78 @@ You can define any amount of modals in ModalsProvider context:
 import { ContextModalProps, ModalsProvider } from '@mantine/modals';
 import { Text, Button } from '@mantine/core';
 
-const TestModal = ({ context, id, modalBody }: ContextModalProps & { modalBody: string }) => (
+const TestModal = ({ context, id, innerProps }: ContextModalProps<{ modalBody: string }>) => (
   <>
-    <Text size="sm">{modalBody}</Text>
+    <Text size="sm">{innerProps.modalBody}</Text>
     <Button fullWidth mt="md" onClick={() => context.closeModal(id)}>
       Close modal
     </Button>
   </>
 );
 
-function App() {
+function Demo() {
   return (
     <ModalsProvider modals={{ demonstration: TestModal /* ...other modals */ }}>
-      <YourApp />
+      <App />
     </ModalsProvider>
   );
 }
 ```
 
-And then open one of these modals with `openContextModal` function.
-`openContextModal` function accepts 2 arguments: modal key (should match one defined on ModalsProvider) and modal props:
+And then open one of these modals with `modals.openContextModal` function.
+`modals.openContextModal` function accepts 2 arguments: modal key (should match one defined on ModalsProvider) and modal props:
 
 <Demo data={ModalsDemos.context} />
 
+## Typesafe context modals
+
+By default `innerProps` and `modal` are not typesafe. You can add typesafety with a Typescript module declaration.
+
+```tsx
+const TestModal = ({ context, id, innerProps }: ContextModalProps<{ modalBody: string }>) => (
+  <>
+    <Text size="sm">{innerProps.modalBody}</Text>
+    <Button fullWidth mt="md" onClick={() => context.closeModal(id)}>
+      Close modal
+    </Button>
+  </>
+);
+const modals = {
+  demonstration: TestModal,
+  /* ...other modals */
+};
+declare module '@mantine/modals' {
+  export interface MantineModalsOverride {
+    modals: typeof modals;
+  }
+}
+function Demo() {
+  return (
+    <ModalsProvider modals={modals}>
+      <App />
+    </ModalsProvider>
+  );
+}
+```
+
+Typesafe context modals will force you to use the correct types for the methods `openContextModal` and `closeContextModal`.
+
+```tsx
+import { openContextModal, closeContextModal } from '@mantine/modals';
+openContextModal({
+  modal: 'demonstration',
+  title: 'Test modal from context',
+  innerProps: {
+    modalBody:
+      'This modal was defined in ModalsProvider, you can open it anywhere in you app with useModals hook',
+  },
+});
+closeContextModal('demonstration');
+```
+
 ## Content modals
 
-With `modals.openModal` function you can open a modal with any content:
+With `modals.open` function you can open a modal with any content:
 
 <Demo data={ModalsDemos.content} />
 

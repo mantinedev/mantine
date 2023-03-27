@@ -1,36 +1,65 @@
-import React, { useState } from 'react';
 import { MANTINE_SIZES } from '@mantine/core';
-import { storiesOf } from '@storybook/react';
+import React from 'react';
 import { Calendar } from './Calendar';
 
-function WrappedCalendar(props: React.ComponentPropsWithoutRef<typeof Calendar>) {
-  const [value, onChange] = useState(new Date());
-  return <Calendar value={value} onChange={onChange} {...props} />;
+export default { title: 'Calendar' };
+
+export function Usage() {
+  return (
+    <div style={{ padding: 40 }}>
+      <Calendar />
+    </div>
+  );
 }
 
-const sizes = MANTINE_SIZES.map((size) => (
-  <WrappedCalendar size={size} key={size} style={{ marginTop: 30 }} />
-));
+export function MaxLevel() {
+  return (
+    <div style={{ padding: 40 }}>
+      <Calendar maxLevel="year" />
+    </div>
+  );
+}
 
-storiesOf('@mantine/dates/Calendar/stories', module)
-  .add('No outside events', () => (
-    <div style={{ padding: 40, width: 400 }}>
-      <WrappedCalendar disableOutsideEvents />
+export function MinLevel() {
+  return (
+    <div style={{ padding: 40 }}>
+      <Calendar minLevel="year" />
     </div>
-  ))
-  .add('Sizes', () => <div style={{ padding: 40 }}>{sizes}</div>)
-  .add('First day of the week sunday', () => (
-    <div style={{ padding: 40, width: 400 }}>
-      <WrappedCalendar minDate={new Date()} firstDayOfWeek="sunday" />
+  );
+}
+
+export function NumberOfColumns() {
+  return (
+    <div style={{ padding: 40 }}>
+      <div>1 column</div>
+      <Calendar mb={50} mt="xs" />
+
+      <div>2 columns</div>
+      <Calendar numberOfColumns={2} mb={50} mt="xs" />
+
+      <div>3 columns</div>
+      <Calendar numberOfColumns={3} mb={50} mt="xs" />
     </div>
-  ))
-  .add('2 months', () => (
-    <div style={{ padding: 40, width: 400 }}>
-      <WrappedCalendar amountOfMonths={2} />
+  );
+}
+
+export function InitialLevelYear() {
+  return (
+    <div style={{ padding: 40 }}>
+      <Calendar defaultLevel="year" />
     </div>
-  ))
-  .add('3 months', () => (
-    <div style={{ padding: 40, width: 400 }}>
-      <WrappedCalendar amountOfMonths={3} />
+  );
+}
+
+export function InitialLevelDecade() {
+  return (
+    <div style={{ padding: 40 }}>
+      <Calendar defaultLevel="decade" />
     </div>
-  ));
+  );
+}
+
+export function Sizes() {
+  const sizes = MANTINE_SIZES.map((size) => <Calendar size={size} key={size} mt="xl" />);
+  return <div style={{ padding: 40 }}>{sizes}</div>;
+}

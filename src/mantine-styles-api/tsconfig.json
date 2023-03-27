@@ -16,9 +16,11 @@
       "@mantine/hooks": ["../mantine-hooks/src"],
       "@mantine/prism": ["../mantine-prism/src"],
       "@mantine/dropzone": ["../mantine-dropzone/src"],
+      "@mantine/spotlight": ["../mantine-spotlight/src"],
       "@mantine/notifications": ["../mantine-notifications/src"],
       "@mantine/modals": ["../mantine-modals/src"],
-      "@mantine/rte": ["../mantine-rte/src"],
+      "@mantine/carousel": ["../mantine-carousel/src"],
+      "@mantine/tiptap": ["../mantine-tiptap/src"],
       "@mantine/storybook": ["../mantine-storybook/src"]
     }
   },
@@ -30,7 +32,9 @@
     { "path": "../mantine-dropzone" },
     { "path": "../mantine-notifications" },
     { "path": "../mantine-modals" },
-    { "path": "../mantine-rte" },
+    { "path": "../mantine-carousel" },
+    { "path": "../mantine-spotlight" },
+    { "path": "../mantine-tiptap" },
     { "path": "../mantine-storybook" }
   ]
 }

@@ -9,7 +9,7 @@ description: 'Area with custom scrollbars'
 props: ['ScrollArea']
 styles: ['ScrollArea']
 import: "import { ScrollArea } from '@mantine/core';"
-source: 'mantine-core/src/components/ScrollArea/ScrollArea.tsx'
+source: 'mantine-core/src/ScrollArea/ScrollArea.tsx'
 docs: 'core/ScrollArea.mdx'
 ---
 
@@ -23,11 +23,12 @@ It is adapted to work well with light and dark color schemes and supports the fo
 - `type` defines scrollbars behavior:
   - `hover` – scrollbars are visible on hover
   - `scroll` – scrollbars are visible on scroll
-  - `auto` – similar to `overflow: auto` – scrollbars are always visible whether the content is overflowing
+  - `auto` – similar to `overflow: auto` – scrollbars are always visible when the content is overflowing
   - `always` – same as `auto` but scrollbars are always visible regardless of whether the content is overflowing
+  - `never` – scrollbars are always hidden
 - `offsetScrollbars` – offset scrollbars with padding
-- `scrollbarSize` – scrollbar size in px, controls scrollbar and thumb width/height
-- `scrollHideDelay` – delay in md to hide scrollbars, applicable only when type is `hover` or `scroll`
+- `scrollbarSize` – scrollbar size, controls scrollbar and thumb width/height
+- `scrollHideDelay` – delay in ms to hide scrollbars, applicable only when type is `hover` or `scroll`
 
 <Demo data={ScrollAreaDemos.configurator} />
 
@@ -55,3 +56,13 @@ ScrollArea integrates seamlessly with all Mantine components that can require sc
 For example, it can be used with [Navbar.Section](/core/app-shell/) component:
 
 <Demo data={AppShellDemos.scrollbars} />
+
+## Styles API
+
+<Demo data={ScrollAreaDemos.stylesApi} />
+
+## ScrollArea.Autosize
+
+`ScrollArea.Autosize` component allows to create scrollable containers when given `maxHeight` is reached:
+
+<Demo data={ScrollAreaDemos.maxHeight} />

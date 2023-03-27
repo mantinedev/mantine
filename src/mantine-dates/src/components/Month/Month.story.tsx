@@ -1,53 +1,83 @@
-import React, { useState } from 'react';
-import { storiesOf } from '@storybook/react';
-import 'dayjs/locale/ru';
-import { DEFAULT_THEME, MANTINE_SIZES } from '@mantine/core';
 import dayjs from 'dayjs';
-import { Month } from './Month';
+import React, { useState } from 'react';
+import { Code, Indicator, MANTINE_SIZES } from '@mantine/core';
+import { Month, MonthProps } from './Month';
 
-function WrappedMonth(
-  props: Omit<React.ComponentPropsWithoutRef<typeof Month>, 'selected' | 'onDayClick' | 'month'>
-) {
-  const [value, onChange] = useState(new Date());
-  return <Month month={value} value={value} onChange={onChange} {...props} />;
+export default { title: 'Month' };
+
+function Wrapper(props: Partial<MonthProps>) {
+  return (
+    <div style={{ padding: 40 }}>
+      <Code>{dayjs(props.month || new Date(2022, 3, 1)).format('MMMM YYYY')}</Code>
+      <Month month={new Date(2022, 3, 1)} mt="xl" {...props} />
+    </div>
+  );
 }
 
-const sizes = MANTINE_SIZES.map((size) => (
-  <WrappedMonth size={size} key={size} style={{ marginTop: 30 }} />
-));
+export function Usage() {
+  return <Wrapper />;
+}
 
-storiesOf('@mantine/dates/Month/stories', module)
-  .add('First day of the week - Sunday', () => (
-    <div style={{ maxWidth: 240, padding: 40 }}>
-      <Month
-        month={new Date()}
-        firstDayOfWeek="sunday"
-        range={[
-          dayjs(new Date()).subtract(7, 'days').toDate(),
-          dayjs(new Date()).add(2, 'days').toDate(),
-        ]}
-      />
-    </div>
-  ))
-  .add('With range', () => (
-    <div style={{ maxWidth: 240, padding: 40 }}>
-      <Month
-        month={new Date()}
-        range={[
-          dayjs(new Date()).subtract(7, 'days').toDate(),
-          dayjs(new Date()).add(2, 'days').toDate(),
-        ]}
-      />
-    </div>
-  ))
-  .add('Sizes', () => <div style={{ maxWidth: 440, padding: 40 }}>{sizes}</div>)
-  .add('Day style', () => (
-    <WrappedMonth
-      locale="ru"
-      dayStyle={(date) =>
-        date.getDate() === new Date().getDate()
-          ? { backgroundColor: DEFAULT_THEME.colors.red[0] }
-          : {}
-      }
+export function CustomWeekendDays() {
+  return <Wrapper weekendDays={[3, 4]} />;
+}
+
+export function Selected() {
+  const [selected, setSelected] = useState<Date>(null);
+  return (
+    <Wrapper
+      getDayProps={(date) => ({
+        selected: dayjs(date).isSame(selected, 'date'),
+        onClick: () => setSelected(date),
+      })}
     />
-  ));
+  );
+}
+
+export function CustomDayOfWeek() {
+  return <Wrapper firstDayOfWeek={6} />;
+}
+
+export function ExcludeDate() {
+  return <Wrapper excludeDate={(date) => date.getDay() === 0} />;
+}
+
+export function MinMaxDate() {
+  return <Wrapper minDate={new Date(2022, 3, 10)} maxDate={new Date(2022, 3, 22)} />;
+}
+
+export function RenderDay() {
+  return (
+    <Wrapper
+      renderDay={(date) => {
+        const day = date.getDate();
+        return (
+          <Indicator size={6} color="red" offset={-3} disabled={day !== 16}>
+            <div>{day}</div>
+          </Indicator>
+        );
+      }}
+    />
+  );
+}
+
+export function HideOutsideDates() {
+  return <Wrapper hideOutsideDates />;
+}
+
+export function HideWeekdays() {
+  return <Wrapper hideWeekdays />;
+}
+
+export function Static() {
+  return <Wrapper static />;
+}
+
+export function Unstyled() {
+  return <Wrapper unstyled />;
+}
+
+export function Sizes() {
+  const sizes = MANTINE_SIZES.map((size) => <Wrapper size={size} key={size} />);
+  return <>{sizes}</>;
+}

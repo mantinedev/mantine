@@ -8,7 +8,7 @@ category: 'inputs'
 description: 'Custom searchable multi select'
 props: ['MultiSelect']
 import: "import { MultiSelect } from '@mantine/core';"
-source: 'mantine-core/src/components/MultiSelect/MultiSelect.tsx'
+source: 'mantine-core/src/MultiSelect/MultiSelect.tsx'
 docs: 'core/MultiSelect.mdx'
 styles: ['MultiSelect']
 ---
@@ -33,11 +33,11 @@ import { MultiSelect } from '@mantine/core';
 
 function Demo() {
   const [value, setValue] = useState([]);
-  return <MultiSelect value={value} onChange={setValue} />;
+  return <MultiSelect value={value} onChange={setValue} data={[]} />;
 }
 ```
 
-Note that MultiSelect value should always be an array of either **string** or **null**:
+Note that MultiSelect value should always be an array of either **string** or **undefined**:
 
 ```tsx
 // Incorrect, will have bugs
@@ -106,6 +106,12 @@ Set `searchable` prop to enable search in select and `nothingFound` prop to prov
 
 <Demo data={MultiSelectDemos.searchable} />
 
+## Controlled search
+
+Set `searchValue` and `onSearchChange` prop to enable controlled search in select:
+
+<Demo data={MultiSelectDemos.searchableControlled} />
+
 ## Clearable
 
 Set `clearable` prop to enable clearing all values at once.
@@ -130,7 +136,7 @@ Note that you will need to handle data state to manage item creation correctly:
 
 ## Large data set
 
-When dropdown height is exceeded dropdown becomes scrollable, to change max-height set `maxDropdownHeight` prop with value in px:
+When dropdown height is exceeded dropdown becomes scrollable, to change max-height set `maxDropdownHeight` prop with value:
 
 <Demo data={MultiSelectDemos.large} />
 
@@ -141,51 +147,7 @@ To do so you will need to:
 
 - Add extra props to `data` objects
 - Create `filter` function which determines whether item should be added to the search results
-- Provide `itemComponent` and `valueComponent` which will consume `data` objects
-
-```tsx
-// Minimum data used in previous examples
-[
-  { value: 'react', label: 'React' },
-  { value: 'ng', label: 'Angular' },
-  { value: 'svelte', label: 'Svelte' },
-  { value: 'vue', label: 'Vue' },
-];
-```
-
-You can add any other fields to your data:
-
-```tsx
-[
-  {
-    image: 'https://img.icons8.com/clouds/256/000000/futurama-bender.png',
-    label: 'Bender Bending Rodríguez',
-    value: 'Bender Bending Rodríguez',
-    description: 'Fascinated with cooking',
-  },
-
-  {
-    image: 'https://img.icons8.com/clouds/256/000000/futurama-mom.png',
-    label: 'Carol Miller',
-    value: 'Carol Miller',
-    description: 'One of the richest people on Earth',
-  },
-  {
-    image: 'https://img.icons8.com/clouds/256/000000/homer-simpson.png',
-    label: 'Homer Simpson',
-    value: 'Homer Simpson',
-    description: 'Overweight, lazy, and often ignorant',
-  },
-  {
-    image: 'https://img.icons8.com/clouds/256/000000/spongebob-squarepants.png',
-    label: 'Spongebob Squarepants',
-    value: 'Spongebob Squarepants',
-    description: 'Not just a sponge',
-  },
-];
-```
-
-Based on this data shape you can create custom `filter` function and `itemComponent`:
+- Provide `itemComponent` which will consume `data` objects
 
 <Demo data={MultiSelectDemos.users} />
 
@@ -219,7 +181,7 @@ The best strategy is to use `searchable` option with `limit`:
 
 ## Animations
 
-By default dropdown animations are turned off to increase responsiveness.
+By default, dropdown animations are turned off to increase responsiveness.
 You can enable them by setting optional props:
 
 - `transition` – premade transition name or custom transition styles object, see [Transition](/core/transition/) component for all available options
@@ -255,6 +217,10 @@ In disabled state:
 
 <Demo data={MultiSelectDemos.disabled} />
 
+## Read only
+
+<Demo data={MultiSelectDemos.readOnly} />
+
 ## Right section
 
 You can replace icon in right section with `rightSection` prop.
@@ -264,21 +230,17 @@ Note that in this case `clearable` option will not work and will need to handle 
 
 ## Input props
 
-Component supports all props from [Input](/core/input/) and [InputWrapper](/core/input-wrapper/) components:
-
 <Demo data={MultiSelectDemos.configurator} />
 
 ## Get input ref
-
-You can get input ref by passing `ref` prop to Select component:
 
 ```tsx
 import { useRef } from 'react';
 import { MultiSelect } from '@mantine/core';
 
 function Demo() {
-  const ref = useRef(null);
-  return <MultiSelect ref={ref} />;
+  const ref = useRef<HTMLInputElement>(null);
+  return <MultiSelect ref={ref} data={[]} />;
 }
 ```
 
@@ -292,8 +254,8 @@ Provide `aria-label` in case you use component without label for screen reader s
 <MultiSelect aria-label="My select" /> // -> ok, label is not visible but will be announced by screen reader
 ```
 
-If you use `clearable` option set `clearButtonLabel`:
+If you use `clearable` option set clear button label:
 
 ```tsx
-<MultiSelect clearable clearButtonLabel="Clear select field" />
+<MultiSelect clearable clearButtonProps={{ 'aria-label': 'Clear select field' }} />
 ```

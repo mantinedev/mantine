@@ -8,9 +8,8 @@ category: 'feedback'
 description: 'Indicate content loading state'
 props: ['Skeleton']
 import: "import { Skeleton } from '@mantine/core';"
-source: 'mantine-core/src/components/Skeleton/Skeleton.tsx'
+source: 'mantine-core/src/Skeleton/Skeleton.tsx'
 docs: 'core/Skeleton.mdx'
-styles: ['Skeleton', 'single-node']
 ---
 
 import { SkeletonDemos } from '@mantine/demos';
@@ -19,9 +18,9 @@ import { SkeletonDemos } from '@mantine/demos';
 
 Use Skeleton to create a placeholder for loading content. Component support following props:
 
-- `height` – height in px (number) or string for other CSS values
-- `width` – width in px (number) or string for other CSS values
-- `radius` – value from `theme.radius` or number to set border-radius in px
+- `height` – height – any valid CSS value
+- `width` – width - any valid CSS value
+- `radius` – key of `theme.radius` or any valid CSS value to set border-radius
 - `circle` – if true width, height and border-radius will equal to value specified in `height` prop
 - `animate` – true by default, controls animation
 

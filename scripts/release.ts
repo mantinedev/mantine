@@ -89,26 +89,10 @@ const { argv }: { argv: any } = yargs(hideBin(process.argv))
       packages.map((p) => publishPackage({ path: p.path, name: p.packageJson.name, tag: argv.tag }))
     );
 
-    await publishPackage({
-      path: path.join(__dirname, '../packages/eslint'),
-      name: '@mantine/eslint-config',
-      tag: argv.tag,
-    });
-
-    await publishPackage({
-      path: path.join(__dirname, '../packages/gatsby-plugin-mantine'),
-      name: 'gatsby-plugin-mantine',
-      tag: argv.tag,
-    });
-
     logger.success('All packages were published successfully');
   }
 
-  await git.add([
-    path.join(__dirname, '../src'),
-    path.join(__dirname, '../package.json'),
-    path.join(__dirname, '../packages'),
-  ]);
+  await git.add([path.join(__dirname, '../src'), path.join(__dirname, '../package.json')]);
   await git.commit(`[release] Version: ${incrementedVersion}`);
   await git.push();
 

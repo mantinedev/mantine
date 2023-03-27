@@ -8,7 +8,7 @@ interface ServerStylesProps {
   server: EmotionServer;
 }
 
-export function ServerStyles({ html, server }: ServerStylesProps) {
+export function ServerStyles({ html, server }: ServerStylesProps): any {
   const styles = getSSRStyles(html, server);
   return <>{htmlReactParser(styles)}</>;
 }

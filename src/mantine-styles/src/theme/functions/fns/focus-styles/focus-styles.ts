@@ -2,18 +2,21 @@ import type { MantineThemeBase } from '../../../types';
 import type { CSSObject } from '../../../../tss';
 
 export function focusStyles(theme: MantineThemeBase) {
-  return (): CSSObject => ({
+  return (selector?: string): CSSObject => ({
     WebkitTapHighlightColor: 'transparent',
 
-    '&:focus': {
-      outline: 'none',
-      boxShadow: `0 0 0 2px ${
-        theme.colorScheme === 'dark' ? theme.colors.dark[9] : theme.white
-      }, 0 0 0 4px ${theme.colors[theme.primaryColor][theme.colorScheme === 'dark' ? 7 : 5]}`,
+    [selector || '&:focus']: {
+      ...(theme.focusRing === 'always' || theme.focusRing === 'auto'
+        ? theme.focusRingStyles.styles(theme)
+        : theme.focusRingStyles.resetStyles(theme)),
     },
 
-    '&:focus:not(:focus-visible)': {
-      boxShadow: 'none',
+    [selector
+      ? selector.replace(':focus', ':focus:not(:focus-visible)')
+      : '&:focus:not(:focus-visible)']: {
+      ...(theme.focusRing === 'auto' || theme.focusRing === 'never'
+        ? theme.focusRingStyles.resetStyles(theme)
+        : null),
     },
   });
 }

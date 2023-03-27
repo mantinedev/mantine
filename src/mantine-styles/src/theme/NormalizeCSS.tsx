@@ -1,5 +1,6 @@
 import React from 'react';
 import { Global } from '@emotion/react';
+import { rem } from './utils';
 
 const styles = {
   html: {
@@ -127,7 +128,7 @@ const styles = {
 
   'button:-moz-focusring, [type=button]:-moz-focusring, [type=reset]:-moz-focusring, [type=submit]:-moz-focusring':
     {
-      outline: '1px dotted ButtonText',
+      outline: `${rem(1)} dotted ButtonText`,
     },
 
   legend: {
@@ -158,8 +159,7 @@ const styles = {
   },
 
   '[type=search]': {
-    appearance: 'textfield',
-    outlineOffset: '-2px',
+    appearance: 'none',
   },
 
   '[type=search]::-webkit-search-cancel-button, [type=search]::-webkit-search-decoration': {
@@ -184,10 +184,6 @@ const styles = {
   },
 
   template: {
-    display: 'none',
-  },
-
-  '[hidden]': {
     display: 'none',
   },
 } as const;

@@ -1,13 +1,21 @@
 import React, { useState } from 'react';
-import { AppShell, Navbar, Header, Text, MediaQuery, Burger, useMantineTheme } from '@mantine/core';
-import Head from '../components/Head/Head';
+import {
+  AppShell,
+  Navbar,
+  Header,
+  Footer,
+  Aside,
+  Text,
+  MediaQuery,
+  Burger,
+  useMantineTheme,
+} from '@mantine/core';
 
 export default function AppShellDemo() {
   const theme = useMantineTheme();
   const [opened, setOpened] = useState(false);
   return (
     <>
-      <Head title="AppShell demo" />
       <AppShell
         styles={{
           main: {
@@ -15,14 +23,27 @@ export default function AppShellDemo() {
           },
         }}
         navbarOffsetBreakpoint="sm"
+        asideOffsetBreakpoint="sm"
         fixed
         navbar={
-          <Navbar padding="md" hiddenBreakpoint="sm" hidden={!opened} width={{ sm: 300, lg: 400 }}>
+          <Navbar p="md" hiddenBreakpoint="sm" hidden={!opened} width={{ sm: 200, lg: 300 }}>
             <Text>Application navbar</Text>
           </Navbar>
         }
+        aside={
+          <MediaQuery smallerThan="sm" styles={{ display: 'none' }}>
+            <Aside p="md" hiddenBreakpoint="sm" width={{ sm: 200, lg: 300 }}>
+              <Text>Application sidebar</Text>
+            </Aside>
+          </MediaQuery>
+        }
+        footer={
+          <Footer height={60} p="md">
+            Application footer
+          </Footer>
+        }
         header={
-          <Header height={70} padding="md">
+          <Header height={{ base: 50, md: 70 }} p="md">
             <div style={{ display: 'flex', alignItems: 'center', height: '100%' }}>
               <MediaQuery largerThan="sm" styles={{ display: 'none' }}>
                 <Burger

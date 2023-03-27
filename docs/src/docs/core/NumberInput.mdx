@@ -8,7 +8,7 @@ category: 'inputs'
 description: 'Capture number input from user'
 props: ['NumberInput']
 import: "import { NumberInput } from '@mantine/core';"
-source: 'mantine-core/src/components/NumberInput/NumberInput.tsx'
+source: 'mantine-core/src/NumberInput/NumberInput.tsx'
 docs: 'core/NumberInput.mdx'
 styles: ['NumberInput']
 ---
@@ -18,6 +18,24 @@ import { NumberInputDemos } from '@mantine/demos';
 ## Usage
 
 <Demo data={NumberInputDemos.configurator} />
+
+## Controlled
+
+```tsx
+import { useState } from 'react';
+import { NumberInput } from '@mantine/core';
+
+function Demo() {
+  const [value, setValue] = useState<number | ''>(0);
+  return <NumberInput value={value} onChange={setValue} />;
+}
+```
+
+## Input value type
+
+`NumberInput` value type `number | ''` (number or empty string). Empty string indicates
+that the input is empty. `number | ''` type is used in all props that contain value:
+`value`, `defaultValue`, `onChange`.
 
 ## Clamp on blur
 
@@ -30,6 +48,12 @@ If you want to disable this behavior set `noClampOnBlur` prop:
 ```tsx
 <NumberInput noClampOnBlur />
 ```
+
+## Parser and formatter
+
+With `parser` and `formatter` props you can customize how value is displayed in the input:
+
+<Demo data={NumberInputDemos.formatter} />
 
 ## Min, max and step
 
@@ -77,18 +101,6 @@ You can use it to create custom controls:
 
 <Demo data={NumberInputDemos.handlers} />
 
-## Controlled
-
-```tsx
-import { useState } from 'react';
-import { NumberInput } from '@mantine/core';
-
-function Demo() {
-  const [value, setValue] = useState(0);
-  return <NumberInput value={value} onChange={(val) => setValue(val)} />;
-}
-```
-
 ## Invalid state and error
 
 <Demo data={NumberInputDemos.validation} />
@@ -110,7 +122,7 @@ import { useRef } from 'react';
 import { NumberInput } from '@mantine/core';
 
 function Demo() {
-  const ref = useRef(null);
+  const ref = useRef<HTMLInputElement>(null);
   return <NumberInput ref={ref} />;
 }
 ```

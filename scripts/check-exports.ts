@@ -5,27 +5,6 @@ import { Logger } from './utils/Logger';
 
 const logger = new Logger('exports');
 
-// {
-//   path: '/Users/rtivital/code/mantine/src/mantine-rte',
-//   packageJsonPath: '/Users/rtivital/code/mantine/src/mantine-rte/package.json',
-//   packageJson: {
-//     name: '@mantine/rte',
-//     description: 'Rich text editor built with Mantine components',
-//     version: '2.6.0-alpha.4',
-//     main: 'cjs/index.js',
-//     module: 'esm/index.js',
-//     types: 'lib/index.d.ts',
-//     license: 'MIT',
-//     author: 'Vitaly Rtishchev <rtivital@gmail.com>',
-//     sideEffects: false,
-//     homepage: 'https://mantine.dev/others/rte/',
-//     repository: [Object],
-//     peerDependencies: [Object],
-//     dependencies: [Object],
-//     devDependencies: {}
-//   }
-// }
-
 getPackagesBuildOrder().then((packages) => {
   const errors = [];
   packages.forEach((pkg) => {

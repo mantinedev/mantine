@@ -13,8 +13,8 @@ source: 'mantine-hooks/src/use-merged-ref/use-merged-ref.ts'
 
 ## Usage
 
-Hook accepts any amount of refs and returns function that should be passed to dom node.
-Use hook when you need to use more than one ref on single dom node, for example,
+use-merged-ref accepts any amount of refs and returns a function that should be passed to dom node.
+Use this hook when you need to use more than one ref on single dom node, for example,
 when you want to use [use-click-outside](/hooks/use-click-outside/) and [use-focus-trap](/hooks/use-focus-trap/) hooks and also get a ref for yourself:
 
 ```tsx
@@ -40,7 +40,7 @@ across two renders. To fix that issue use `mergeRefs` function instead:
 
 ```tsx
 import { useRef } from 'react';
-import { useClickOutside, useFocusTrap, mergeRefs } from '@mantine/hooks';
+import { useClickOutside, mergeRefs } from '@mantine/hooks';
 
 function Demo() {
   const myRef = useRef();

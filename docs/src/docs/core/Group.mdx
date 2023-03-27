@@ -5,41 +5,43 @@ title: Group
 order: 1
 slug: /core/group/
 category: 'layout'
-description: 'Compose elements and components in flex container'
+description: 'Compose elements and components in a horizontal flex container'
 props: ['Group']
 import: "import { Group } from '@mantine/core';"
-source: 'mantine-core/src/components/Group/Group.tsx'
+source: 'mantine-core/src/Group/Group.tsx'
 docs: 'core/Group.mdx'
-styles: ['Group', 'single-node']
 ---
 
 import { GroupDemos } from '@mantine/demos';
 
 ## Usage
 
-Group allows you to compose any elements and components in a flex container.
-Use these props to change elements position inside Group:
-
-- **position** controls `justify-content` property
-- **grow** `flex-grow` property, items will never wrap to next line if set to `true`
-- **spacing** controls space between elements – predefined values from `theme.spacing` or number for spacing in px
-- **noWrap** controls `flex-wrap` property and if set to true prevents elements from wrapping on next line once space on current line was exceeded
-- **direction** controls `flex-direction`: row (default) for horizontal orientation, column for vertical
-
 <Demo data={GroupDemos.configurator} />
 
 ## Group children
 
-Group component uses `className` prop to add styles,
-child components must accept it otherwise unexpected negative margins will be applied the element:
+**!important** Group works correctly only with React elements.
+Strings, numbers, fragments may have incorrect styles if `grow` prop is set:
 
 ```tsx
-// Will not work with Group – component does not handle className
-const MyButton = ({ label }) => <button>{label}</button>;
+// Invalid Group usage, do not do this
+import { Group } from '@mantine/core';
 
-// Will work with Group – handle className
-const MyButton = ({ label, className }) => <button className={className}>{label}</button>;
-
-// Will work with Group – handle className
-const MyButton = ({ label, ...others }) => <button {...others}>{label}</button>;
+function InvalidDemo() {
+  return (
+    <Group>
+      First string
+      <>
+        <div>element inside fragment</div>
+        <div>another inside fragment</div>
+      </>
+      {20}
+    </Group>
+  );
+}
 ```
+
+## Browser support
+
+Group uses [flexbox gap](https://caniuse.com/flexbox-gap) to add spacing between children.
+In older browsers Group children will not have spacing.

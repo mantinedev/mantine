@@ -7,16 +7,10 @@ const getThemeBase = () => {
   return themeBase;
 };
 
-const getMergedThemeBase = (themeBase: any, override: any) => {
-  const result = mergeTheme(themeBase, override);
-  delete result.fn;
-  return result;
-};
-
 describe('@mantine/styles/merge-theme', () => {
   it('shallow merges non-object properties', () => {
     const themeBase = getThemeBase();
-    expect(getMergedThemeBase(themeBase, { primaryColor: 'red', white: '#ccc' })).toEqual({
+    expect(mergeTheme(themeBase, { primaryColor: 'red', white: '#ccc' })).toStrictEqual({
       ...themeBase,
       primaryColor: 'red',
       white: '#ccc',
@@ -26,16 +20,16 @@ describe('@mantine/styles/merge-theme', () => {
   it('shallow merges theme object properties', () => {
     const themeBase = getThemeBase();
     expect(
-      getMergedThemeBase(themeBase, {
+      mergeTheme(themeBase, {
         colors: { stone: ['#ccc', '#ddd', '#eee'], red: ['red'] },
-        spacing: { xl: 900 },
+        spacing: { xl: '900rem' },
       })
-    ).toEqual({
+    ).toStrictEqual({
       ...themeBase,
       colors: { ...themeBase.colors, stone: ['#ccc', '#ddd', '#eee'], red: ['red'] },
       spacing: {
         ...themeBase.spacing,
-        xl: 900,
+        xl: '900rem',
       },
     });
   });
@@ -43,10 +37,10 @@ describe('@mantine/styles/merge-theme', () => {
   it('merges headings correctly', () => {
     const themeBase = getThemeBase();
     expect(
-      getMergedThemeBase(themeBase, {
-        headings: { fontFamily: 'sans-serif', sizes: { h3: { fontSize: 500 } } },
+      mergeTheme(themeBase, {
+        headings: { fontFamily: 'sans-serif', sizes: { h3: { fontSize: '500rem' } } },
       })
-    ).toEqual({
+    ).toStrictEqual({
       ...themeBase,
       headings: {
         ...themeBase.headings,
@@ -55,7 +49,7 @@ describe('@mantine/styles/merge-theme', () => {
           ...themeBase.headings.sizes,
           h3: {
             ...themeBase.headings.sizes.h3,
-            fontSize: 500,
+            fontSize: '500rem',
           },
         },
       },
@@ -64,9 +58,22 @@ describe('@mantine/styles/merge-theme', () => {
 
   it('merges other property correctly', () => {
     const themeBase = getThemeBase();
-    expect(getMergedThemeBase(themeBase, { other: { prop: 1, test: { nested: true } } })).toEqual({
+    expect(mergeTheme(themeBase, { other: { prop: 1, test: { nested: true } } })).toStrictEqual({
       ...themeBase,
       other: { prop: 1, test: { nested: true } },
     });
+  });
+
+  it('sets headings font-family based on theme.fontFamily if theme.headings.fontFamily is not defined', () => {
+    const withoutHeading = mergeTheme(getThemeBase(), { fontFamily: 'test' });
+    expect(withoutHeading.fontFamily).toBe('test');
+    expect(withoutHeading.headings.fontFamily).toBe('test');
+
+    const withHeading = mergeTheme(getThemeBase(), {
+      fontFamily: 'test',
+      headings: { fontFamily: 'test-heading' },
+    });
+    expect(withHeading.fontFamily).toBe('test');
+    expect(withHeading.headings.fontFamily).toBe('test-heading');
   });
 });

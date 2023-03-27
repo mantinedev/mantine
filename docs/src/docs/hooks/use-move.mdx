@@ -21,7 +21,7 @@ use-move handles move behavior over any element:
 
 ## API
 
-Hook accepts callback that is called when user moves pressed mouse over given element and returns object with ref and active state:
+Hook accepts callback that is called when user moves pressed mouse over given element and returns object with `ref` and active state:
 
 ```tsx
 const {
@@ -30,7 +30,7 @@ const {
 } = useMove(({ x, y }) => setValue({ x, y }));
 ```
 
-`x` and `y` values are always between 0 and 1, you can use them to calculate value in your boundaries.
+`x` and `y` values are always between `0` and `1`, you can use them to calculate value in your boundaries.
 
 ## Examples
 
@@ -42,7 +42,7 @@ You can ignore changes for one of the axis:
 
 ### Vertical slider
 
-Moving slider down increases value, to reverse that set value to `1 - y` in your setValue function:
+Moving slider down increases value, to reverse that set value to `1 - y` in your `setValue` function:
 
 <Demo data={HooksDemos.useMoveVertical} demoProps={{ toggle: true }} />
 

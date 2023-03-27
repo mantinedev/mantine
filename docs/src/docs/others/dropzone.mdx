@@ -5,13 +5,14 @@ title: 'Dropzone'
 order: 1
 slug: /others/dropzone/
 description: 'Capture files from user with drag and drop'
-props: ['Dropzone', 'FullScreenDropzone']
-import: "import { Dropzone, FullScreenDropzone } from '@mantine/dropzone';"
+componentPrefix: 'Dropzone'
+props: ['Dropzone', 'DropzoneFullScreen']
+import: "import { Dropzone } from '@mantine/dropzone';"
 source: 'mantine-dropzone/src'
 docs: 'others/dropzone.mdx'
 installation: '@mantine/dropzone'
 license: MIT
-styles: ['Dropzone', 'FullScreenDropzone']
+styles: ['Dropzone', 'DropzoneFullScreen']
 ---
 
 import {
@@ -26,42 +27,50 @@ import { DropzoneDemos } from '@mantine/demos';
 
 ## Installation
 
-Package depends on @mantine/core and @mantine/hooks.
-
-Install with npm:
-
-```sh
-npm install @mantine/dropzone @mantine/core @mantine/hooks
-```
+Package depends on `@mantine/core` and `@mantine/hooks`.
 
 Install with yarn:
 
-```sh
-yarn add @mantine/dropzone @mantine/core @mantine/hooks
+```bash
+yarn add @mantine/dropzone
+```
+
+Install with npm:
+
+```bash
+npm install @mantine/dropzone
 ```
 
 ## Usage
 
-Dropzone lets you capture one or more files from user.
-Component is built with [react-dropzone](https://react-dropzone.js.org/) and support all of its core features:
+`Dropzone` lets you capture one or more files from user.
+Component is based on [react-dropzone](https://react-dropzone.js.org/) and support all of its core features:
 
 - Accepts/rejects files based on provided mime types
 - Limits individual file size
-- Renders any content within dropzone with children function
+- Renders given children and provides context based component to display elements based on current status
 
 <Demo data={DropzoneDemos.usage} />
+
+## Dropzone.Accept, Dropzone.Reject and Dropzone.Idle
+
+`Dropzone.Accept`, `Dropzone.Reject` and `Dropzone.Idle` components are visible only when the user performs certain action:
+
+- `Dropzone.Accept` is visible only when the user drags file that can be accepted over the dropzone
+- `Dropzone.Reject` is visible only when the user drags file that cannot be accepted over the dropzone
+- `Dropzone.Idle` is visible when the user does not drag anything over dropzone
 
 ## Loading state
 
 Set `loading` prop to indicate loading state with [LoadingOverlay](/core/loading-overlay/) component.
-When `loading` is set to true user cannot drop or select new files (Dropzone becomes disabled):
+When `loading` props is true user cannot drop or select new files (`Dropzone` becomes disabled):
 
 <Demo data={DropzoneDemos.loading} />
 
 ## Disabled state
 
-If you want to implement your own loading state you can disable Dropzone without LoadingOverlay.
-Same as with `loading`, when Dropzone is disabled user user cannot drop or select new files:
+If you want to implement your own loading state you can disable `Dropzone` without `LoadingOverlay`.
+Same as with `loading`, when `Dropzone` is disabled user cannot drop or select new files:
 
 <Demo data={DropzoneDemos.disabled} />
 
@@ -71,14 +80,48 @@ To open files browser from outside of component use `openRef` prop to get functi
 
 <Demo data={DropzoneDemos.manual} />
 
+## Enable child pointer event
+
+By default, Dropzone disables pointer events on its children for dragging events to work. So when we set `activateOnClick` to `false`,
+clicking on any children inside Dropzone will do nothing. However, You can set style `pointerEvents: 'all'` to make children events to work:
+
+<Demo data={DropzoneDemos.enableChildPointerEvent} />
+
 ## Mime types
 
-To specify specific file types provide an array of mime types to `accept` prop:
+To specify file types provide an object with the keys set to the [mime type](https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/MIME_types/Common_types)
+and the values as an array of file extensions. Find more examples of accepting specific file types
+in the [react-dropzone documentation](https://react-dropzone.js.org/#section-accepting-specific-file-types).
 
 ```tsx
-<Dropzone accept={['image/png', 'image/jpeg', 'image/sgv+xml', 'image/gif']}>
-  {/* children */}
-</Dropzone>
+import { Dropzone } from '@mantine/dropzone';
+
+function Demo() {
+  return (
+    <Dropzone
+      accept={{
+        'image/*': [], // All images
+        'text/html': ['.html', '.htm'],
+      }}
+    >
+      {/* children */}
+    </Dropzone>
+  );
+}
+```
+
+You can also specify file types by providing an array of mime types to `accept` prop:
+
+```tsx
+import { Dropzone } from '@mantine/dropzone';
+
+function Demo() {
+  return (
+    <Dropzone accept={['image/png', 'image/jpeg', 'image/sgv+xml', 'image/gif']}>
+      {/* children */}
+    </Dropzone>
+  );
+}
 ```
 
 To save some research time you can use `MIME_TYPES` variable exported from `@mantine/dropzone`:
@@ -86,10 +129,13 @@ To save some research time you can use `MIME_TYPES` variable exported from `@man
 ```tsx
 import { Dropzone, MIME_TYPES } from '@mantine/dropzone';
 
-// Same as an example above
-<Dropzone accept={[MIME_TYPES.png, MIME_TYPES.jpeg, MIME_TYPES.svg, MIME_TYPES.svg]}>
-  {/* children */}
-</Dropzone>;
+function Demo() {
+  return (
+    <Dropzone accept={[MIME_TYPES.png, MIME_TYPES.jpeg, MIME_TYPES.svg, MIME_TYPES.gif]}>
+      {/* children */}
+    </Dropzone>
+  );
+}
 ```
 
 `MIME_TYPES` includes following data:
@@ -115,9 +161,25 @@ Additionally you can use grouped mime types:
 ```tsx
 import { IMAGE_MIME_TYPE, Dropzone } from '@mantine/dropzone';
 
-// Same as an example above
-<Dropzone accept={IMAGE_MIME_TYPE}>{/* children */}</Dropzone>;
+function Demo() {
+  return <Dropzone accept={IMAGE_MIME_TYPE}>{/* children */}</Dropzone>;
+}
 ```
+
+## Styles API
+
+`Dropzone` root element has the following data attributes to change styles based on current status:
+
+- `data-loading` – when `loading` prop is `true`
+- `data-accept` – when user drags files that can be accepted over the dropzone
+- `data-reject` – when user drags files that cannot be accepted over the dropzone
+- `data-idle` – default state – user does not drag any files over dropzone
+
+<Demo data={DropzoneDemos.stylesApi} />
+
+## Images previews
+
+<Demo data={DropzoneDemos.preview} />
 
 ## Get ref
 
@@ -126,10 +188,9 @@ import { useRef, useEffect } from 'react';
 import { Dropzone } from '@mantine/dropzone';
 
 function Demo() {
-  const dropzoneRef = useRef(); // will contain div element
+  const dropzoneRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    // do anything with ref
     dropzoneRef.current.focus();
   }, []);
 
@@ -137,11 +198,10 @@ function Demo() {
 }
 ```
 
-## FullScreenDropzone component
+## Dropzone.FullScreen component
 
-FullScreenDropzone lets you capture files dropped to browser window instead of specific area.
-Component is built without react-dropzone (due to some bugs in mime types detections) but supports the same props
-and features as Dropzone component shown above (except `maxSize`, `onReject`, and `loading` props).
+`Dropzone.FullScreen` lets you capture files dropped to browser window instead of specific area.
+It supports the same props as `Dropzone` component.
 
 To preview component click button and drop images to browser window:
 

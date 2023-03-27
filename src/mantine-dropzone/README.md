@@ -1,21 +1,21 @@
 # Mantine Dropzone
 
-@mantine/dropzone is a set of components to handle files drag'n'drop at specific area or browser window.
+[![npm](https://img.shields.io/npm/dm/@mantine/dropzone)](https://www.npmjs.com/package/@mantine/dropzone)
 
-[Read documentation on Mantine website](https://mantine.dev/others/dropzone/)
+Capture files from user
+
+[View documentation](https://mantine.dev/)
 
 ## Installation
 
-Package depends on [react](https://www.npmjs.com/package/react), [react-dom](https://www.npmjs.com/package/react-dom), [@mantine/hooks](https://www.npmjs.com/package/@mantine/hooks), [@mantine/core](https://www.npmjs.com/package/@mantine/core).
+```bash
+# With yarn
+yarn add @mantine/dropzone @mantine/core @mantine/hooks
 
-Install with npm:
-
-```sh
+# With npm
 npm install @mantine/dropzone @mantine/core @mantine/hooks
 ```
 
-Install with yarn:
+## License
 
-```sh
-yarn add @mantine/dropzone @mantine/core @mantine/hooks
-```
+MIT

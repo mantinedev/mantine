@@ -3,14 +3,14 @@ group: 'mantine-core'
 package: '@mantine/core'
 title: Anchor
 order: 1
+polymorphic: true
 slug: /core/anchor/
 category: 'navigation'
 description: 'Display links with theme styles'
 props: ['Anchor']
 import: "import { Anchor } from '@mantine/core';"
-source: 'mantine-core/src/components/Anchor/Anchor.tsx'
+source: 'mantine-core/src/Anchor/Anchor.tsx'
 docs: 'core/Anchor.mdx'
-styles: ['Anchor', 'single-node']
 ---
 
 import { AnchorDemos } from '@mantine/demos';
@@ -22,18 +22,17 @@ It supports the same props as Text component.
 
 <Demo data={AnchorDemos.usage} />
 
-## Usage with react-router and other libraries
+## Polymorphic component
 
-To use Anchor with react-router Link component and other similar components set `component` prop:
+Anchor is a [polymorphic component](/guides/polymorphic/), you can change root element:
 
 ```tsx
-import { Link } from 'react-router-dom';
 import { Anchor } from '@mantine/core';
 
 function Demo() {
   return (
-    <Anchor component={Link} to="/react-router">
-      React router link
+    <Anchor component="button" type="button">
+      Anchor as button
     </Anchor>
   );
 }

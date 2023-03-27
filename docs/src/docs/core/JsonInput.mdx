@@ -8,7 +8,7 @@ category: 'inputs'
 description: 'Capture json data from user'
 props: ['JsonInput']
 import: "import { JsonInput } from '@mantine/core';"
-source: 'mantine-core/src/components/JsonInput/JsonInput.tsx'
+source: 'mantine-core/src/JsonInput/JsonInput.tsx'
 docs: 'core/JsonInput.mdx'
 styles: ['JsonInput']
 ---
@@ -36,8 +36,6 @@ function Demo() {
 
 ## Input props
 
-Component supports all props from [Input](/core/input/) and [InputWrapper](/core/input-wrapper/) components:
-
 <Demo data={JsonInputDemos.configurator} />
 
 ## Get input ref
@@ -47,7 +45,7 @@ import { useRef } from 'react';
 import { JsonInput } from '@mantine/core';
 
 function Demo() {
-  const ref = useRef(null);
+  const ref = useRef<HTMLTextAreaElement>(null);
   return <JsonInput ref={ref} />;
 }
 ```

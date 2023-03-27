@@ -1,10 +1,10 @@
-import { createStyles } from '@mantine/core';
+import { createStyles, rem, em } from '@mantine/core';
 
 export default createStyles((theme) => ({
   item: {
     display: 'flex',
     alignItems: 'center',
-    minHeight: 20,
+    minHeight: rem(20),
     overflowX: 'auto',
 
     '& + &': {
@@ -14,11 +14,11 @@ export default createStyles((theme) => ({
 
   label: {
     color: theme.colorScheme === 'dark' ? theme.colors.dark[2] : theme.colors.gray[6],
-    width: 100,
-    height: 20,
-    lineHeight: '20px',
+    width: rem(100),
+    height: rem(20),
+    lineHeight: rem(20),
 
-    '@media (max-width: 500px)': {
+    [`@media (max-width: ${em(500)})`]: {
       display: 'none',
     },
   },

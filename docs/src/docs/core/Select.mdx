@@ -8,7 +8,7 @@ category: 'inputs'
 description: 'Custom searchable select'
 props: ['Select']
 import: "import { Select } from '@mantine/core';"
-source: 'mantine-core/src/components/Select/Select.tsx'
+source: 'mantine-core/src/Select/Select.tsx'
 docs: 'core/Select.mdx'
 styles: ['Select']
 ---
@@ -33,8 +33,8 @@ import { useState } from 'react';
 import { Select } from '@mantine/core';
 
 function Demo() {
-  const [value, setValue] = useState('');
-  return <Select value={value} onChange={setValue} />;
+  const [value, setValue] = useState<string | null>(null);
+  return <Select value={value} onChange={setValue} data={[]} />;
 }
 ```
 
@@ -106,6 +106,12 @@ Set `searchable` prop to enable search in select and `nothingFound` prop to prov
 
 <Demo data={SelectDemos.searchable} />
 
+## Controlled search
+
+Set `searchValue` and `onSearchChange` prop to enable controlled search in select:
+
+<Demo data={SelectDemos.searchableControlled} />
+
 ## Clearable
 
 Set `clearable` prop to enable clearing select value.
@@ -136,7 +142,7 @@ Note that you will need to handle data state to manage item creation correctly:
 
 ## Large data set
 
-When dropdown height is exceeded dropdown becomes scrollable, to change max-height set `maxDropdownHeight` prop with value in px:
+When dropdown height is exceeded dropdown becomes scrollable, to change max-height set `maxDropdownHeight` prop with value:
 
 <Demo data={SelectDemos.large} />
 
@@ -149,50 +155,6 @@ To do so you will need to:
 - Create `filter` function which determines whether item should be added to the search results
 - Provide `itemComponent` which will consume `data` objects
 
-```tsx
-// Minimum data for default select used in previous examples
-[
-  { value: 'react', label: 'React' },
-  { value: 'ng', label: 'Angular' },
-  { value: 'svelte', label: 'Svelte' },
-  { value: 'vue', label: 'Vue' },
-];
-```
-
-You can add any other fields to your data:
-
-```tsx
-const data = [
-  {
-    image: 'https://img.icons8.com/clouds/256/000000/futurama-bender.png',
-    label: 'Bender Bending Rodríguez',
-    value: 'Bender Bending Rodríguez',
-    description: 'Fascinated with cooking',
-  },
-
-  {
-    image: 'https://img.icons8.com/clouds/256/000000/futurama-mom.png',
-    label: 'Carol Miller',
-    value: 'Carol Miller',
-    description: 'One of the richest people on Earth',
-  },
-  {
-    image: 'https://img.icons8.com/clouds/256/000000/homer-simpson.png',
-    label: 'Homer Simpson',
-    value: 'Homer Simpson',
-    description: 'Overweight, lazy, and often ignorant',
-  },
-  {
-    image: 'https://img.icons8.com/clouds/256/000000/spongebob-squarepants.png',
-    label: 'Spongebob Squarepants',
-    value: 'Spongebob Squarepants',
-    description: 'Not just a sponge',
-  },
-];
-```
-
-Based on this data shape you can create custom `filter` function and `itemComponent`:
-
 <Demo data={SelectDemos.itemComponent} />
 
 ## Dropdown position
@@ -204,7 +166,7 @@ To change this behavior, set `dropdownPosition` prop:
 
 ## Animations
 
-By default dropdown animations are turned off to increase responsiveness.
+By default, dropdown animations are turned off to increase responsiveness.
 You can enable them by setting optional props:
 
 - `transition` – premade transition name or custom transition styles object, see [Transition](/core/transition/) component for all available options
@@ -220,9 +182,13 @@ If you want to use native scrollbars instead, set `div` as a dropdown component:
 
 <Demo data={SelectDemos.scrollbars} />
 
-## With icon
+## Styles API
 
-You can use any React node as icon:
+Use `data-selected` and `data-hovered` attributes to add styles to items depending on their state:
+
+<Demo data={SelectDemos.stylesApi} />
+
+## With icon
 
 <Demo data={SelectDemos.icon} demoProps={{ zIndex: 4 }} />
 
@@ -234,6 +200,10 @@ You can use any React node as icon:
 
 <Demo data={SelectDemos.disabled} />
 
+## Read only
+
+<Demo data={SelectDemos.readOnly} />
+
 ## Right section
 
 You can replace icon in right section with `rightSection` prop.
@@ -243,21 +213,17 @@ Note that in this case `clearable` option will not work and will need to handle 
 
 ## Input props
 
-Component supports all props from [Input](/core/input/) and [InputWrapper](/core/input-wrapper/) components:
-
 <Demo data={SelectDemos.configurator} />
 
 ## Get input element ref
-
-You can get input ref by passing `ref` prop to Select component:
 
 ```tsx
 import { useRef } from 'react';
 import { Select } from '@mantine/core';
 
 function Demo() {
-  const ref = useRef(null);
-  return <Select ref={ref} />;
+  const ref = useRef<HTMLInputElement>(null);
+  return <Select ref={ref} data={[]} />;
 }
 ```
 
@@ -271,8 +237,8 @@ Provide `aria-label` in case you use component without label for screen reader s
 <Select aria-label="My select" /> // -> ok, label is not visible but will be announced by screen reader
 ```
 
-If you use `clearable` option set `clearButtonLabel`:
+If you use `clearable` option set clear button label:
 
 ```tsx
-<Select clearable clearButtonLabel="Clear select field" />
+<Select clearable clearButtonProps={{ 'aria-label': 'Clear select field' }} />
 ```

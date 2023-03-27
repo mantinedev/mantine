@@ -10,7 +10,8 @@
     "**/*.test.ts",
     "**/styles.api.ts",
     "src/components/*/demos/*",
-    "src/demos.ts"
+    "src/demos.ts",
+    "src/tests"
   ],
   "compilerOptions": {
     "rootDir": "src",
@@ -23,11 +24,13 @@
     "paths": {
       "@mantine/core": ["../mantine-core/src"],
       "@mantine/hooks": ["../mantine-hooks/src"],
+      "@mantine/utils": ["../mantine-utils/src"],
       "@mantine/tests": ["../mantine-tests/src"]
     }
   },
   "references": [
     { "path": "../mantine-core" },
+    { "path": "../mantine-utils" },
     { "path": "../mantine-hooks" },
     { "path": "../mantine-tests" }
   ]

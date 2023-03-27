@@ -8,20 +8,51 @@ category: 'layout'
 description: 'Center content horizontally with predefined max-width'
 props: ['Container']
 import: "import { Container } from '@mantine/core';"
-source: 'mantine-core/src/components/Container/Container.tsx'
+source: 'mantine-core/src/Container/Container.tsx'
 docs: 'core/Container.mdx'
-styles: ['Container', 'single-node']
 ---
 
 import { ContainerDemos } from '@mantine/demos';
 
 ## Usage
 
-Container is the most basic layout element, it centers content horizontally and add horizontal padding from theme.
+Container is the most basic layout element, it centers content horizontally and adds horizontal padding from theme.
 Component accepts these props:
 
 - **size** – controls default max width
-- **padding** – controls horizontal padding of container, use xs, sm, md, lg, xl for value defined in theme.spacing or number to set horizontal padding in px
+- **sizes** - configures container sizes 
 - **fluid** – overwrites size prop and sets max width to 100%
 
 <Demo data={ContainerDemos.usage} />
+
+## Configure sizes
+
+To configure container sizes use default props on [MantineProvider](/theming/mantine-provider/):
+
+```tsx
+import { MantineProvider, Container } from '@mantine/core';
+
+function App() {
+  return (
+    <MantineProvider
+      theme={{
+        components: {
+          Container: {
+            defaultProps: {
+              sizes: {
+                xs: 540,
+                sm: 720,
+                md: 960,
+                lg: 1140,
+                xl: 1320,
+              },
+            },
+          },
+        },
+      }}
+    >
+      <Container size="sm">Your app</Container>
+    </MantineProvider>
+  );
+}
+```

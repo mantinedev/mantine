@@ -16,12 +16,36 @@ import { HooksDemos } from '@mantine/demos';
 ## Usage
 
 use-media-query hook allows to subscribe to media queries.
-It receives media query as an argument and returns true
-if given media query matches current state.
+It receives media query as an argument and returns `true` if given media query matches current state.
 Hook relies on `window.matchMedia()` [API](https://developer.mozilla.org/en-US/docs/Web/API/Window/matchMedia)
-and will always return false if api is not available (e.g. during server side rendering).
+and will return `false` if api is not available unless initial value is provided in the second argument.
 
-Hook takes media query as first argument and returns true if query is satisfied.
 Resize browser window to trigger `window.matchMedia` event:
 
-<Demo data={HooksDemos.useMediaQueryHook} />
+<Demo data={HooksDemos.useMediaQueryDemo} />
+
+## Server Side Rendering
+
+During server side rendering hook will always return `false` as `window.matchMedia` api is not available,
+if that is not a desired behavior, you can override initial value:
+
+```tsx
+import { useMediaQuery } from '@mantine/hooks';
+
+function Demo() {
+  // Set initial value in second argument and getInitialValueInEffect option to false
+  const matches = useMediaQuery('(max-width: 40em)', true, { getInitialValueInEffect: false });
+}
+```
+
+## Definition
+
+```tsx
+function useMediaQuery(
+  query: string,
+  initialValue?: boolean,
+  options?: {
+    getInitialValueInEffect: boolean;
+  }
+): boolean;
+```

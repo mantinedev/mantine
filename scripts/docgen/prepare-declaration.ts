@@ -4,6 +4,7 @@ const replace = {
   MantineNumberSize: 'number | "xs" | "sm" | "md" | "lg" | "xl"',
   MantineSize: '"xs" | "sm" | "md" | "lg" | "xl"',
   GroupPosition: '"right" | "center" | "left" | "apart"',
+  DefaultMantineColor: 'MantineColor',
   ReactText: 'string | number',
   'ReactElement<any, string | ((props: any) => ReactElement<any, any>) | (new (props: any) => Component<any, any, any>)>':
     'ReactElement',
@@ -23,6 +24,12 @@ export function prepareDeclaration(declaration: ComponentDoc) {
 
     if (data.props[prop].type.name in replace) {
       data.props[prop].type.name = replace[data.props[prop].type.name];
+    }
+
+    if (data.props[prop].type.name === 'enum') {
+      data.props[prop].type.name = data.props[prop].type.value
+        .map((val: { value: string }) => val.value)
+        .join(' | ');
     }
   });
 

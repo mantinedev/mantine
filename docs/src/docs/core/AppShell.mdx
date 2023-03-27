@@ -6,65 +6,74 @@ order: 1
 slug: /core/app-shell/
 category: 'layout'
 description: 'Responsive shell for your application with header and navbar'
-props: ['AppShell', 'Navbar', 'Header']
-import: "import { AppShell, Navbar, Header } from '@mantine/core';"
-source: 'mantine-core/src/components/AppShell/AppShell.tsx'
+props: ['AppShell', 'Navbar', 'Header', 'Aside', 'Footer']
+import: "import { AppShell, Navbar, Header, Aside, Footer } from '@mantine/core';"
+source: 'mantine-core/src/AppShell/AppShell.tsx'
 docs: 'core/AppShell.mdx'
-styles: ['AppShell', 'Navbar']
+styles: ['AppShell']
 ---
 
-import { ExternalLinkIcon } from '@modulz/radix-icons';
-import { Anchor, Center } from '@mantine/core';
+import { Anchor } from '@mantine/core';
 import { AppShellDemos } from '@mantine/demos';
 
 ## Usage
 
-AppShell is a layout component that can be used to create a common Header - Navbar - Content layout pattern.
-AppShell, Header and Navbar components include bare minimum default styles to simplify customization.
+AppShell is a layout component that can be used to create a common Header - Navbar - Footer - Aside - Content layout pattern.
+AppShell, Header, Footer, Aside and Navbar components include bare minimum default styles to simplify customization. [View full source code](https://github.com/mantinedev/mantine/tree/master/src/mantine-demos/src/demos/core/AppShell)
 
 <Demo data={AppShellDemos.usage} />
 
 ## Responsive styles
 
 <Anchor href="/app-shell-demo/" target="_blank" mb="xl" style={{ display: 'block' }}>
-  <Center inline>
-    <span style={{ marginRight: 7 }}>Open responsive example in new tab</span>
-    <ExternalLinkIcon width={18} height={18} />
-  </Center>
+  Open responsive example in new tab
 </Anchor>
 
 ```tsx
 import { useState } from 'react';
-import { AppShell, Burger, Header, MediaQuery, Navbar, Text, useMantineTheme } from '@mantine/core';
+import {
+  AppShell,
+  Navbar,
+  Header,
+  Footer,
+  Aside,
+  Text,
+  MediaQuery,
+  Burger,
+  useMantineTheme,
+} from '@mantine/core';
 
-function Demo() {
-  const [opened, setOpened] = useState(false);
+export default function AppShellDemo() {
   const theme = useMantineTheme();
-
+  const [opened, setOpened] = useState(false);
   return (
     <AppShell
-      // navbarOffsetBreakpoint controls when navbar should no longer be offset with padding-left
+      styles={{
+        main: {
+          background: theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.colors.gray[0],
+        },
+      }}
       navbarOffsetBreakpoint="sm"
-      // fixed prop on AppShell will be automatically added to Header and Navbar
-      fixed
+      asideOffsetBreakpoint="sm"
       navbar={
-        <Navbar
-          padding="md"
-          // Breakpoint at which navbar will be hidden if hidden prop is true
-          hiddenBreakpoint="sm"
-          // Hides navbar when viewport size is less than value specified in hiddenBreakpoint
-          hidden={!opened}
-          // when viewport size is less than theme.breakpoints.sm navbar width is 100%
-          // viewport size > theme.breakpoints.sm – width is 300px
-          // viewport size > theme.breakpoints.lg – width is 400px
-          width={{ sm: 300, lg: 400 }}
-        >
+        <Navbar p="md" hiddenBreakpoint="sm" hidden={!opened} width={{ sm: 200, lg: 300 }}>
           <Text>Application navbar</Text>
         </Navbar>
       }
+      aside={
+        <MediaQuery smallerThan="sm" styles={{ display: 'none' }}>
+          <Aside p="md" hiddenBreakpoint="sm" width={{ sm: 200, lg: 300 }}>
+            <Text>Application sidebar</Text>
+          </Aside>
+        </MediaQuery>
+      }
+      footer={
+        <Footer height={60} p="md">
+          Application footer
+        </Footer>
+      }
       header={
-        <Header height={70} padding="md">
-          {/* Handle other responsive styles with MediaQuery component or createStyles function */}
+        <Header height={{ base: 50, md: 70 }} p="md">
           <div style={{ display: 'flex', alignItems: 'center', height: '100%' }}>
             <MediaQuery largerThan="sm" styles={{ display: 'none' }}>
               <Burger
@@ -87,90 +96,111 @@ function Demo() {
 }
 ```
 
-## Navbar component
+## Alt layout
 
-Navbar can be used outside of AppShell context:
+To place `Navbar` and `Aside` components above `Header` and `Footer`, set `layout="alt"` on AppShell.
 
-<Demo data={AppShellDemos.navbar} />
+<Anchor href="/app-shell-demo-alt/" target="_blank" mb="xl" style={{ display: 'block' }}>
+  Open alt layout example in new tab
+</Anchor>
 
-### Navbar.Section
+## hidden prop
 
-```tsx
-<Navbar>
-  {/* First section with normal height (depends on section content) */}
-  <Navbar.Section>First section</Navbar.Section>
-
-  {/* Grow section will take all available space that is not taken by first and last sections */}
-  <Navbar.Section>Grow section</Navbar.Section>
-
-  {/* Last section with normal height (depends on section content) */}
-  <Navbar.Section>Last section</Navbar.Section>
-</Navbar>
-```
-
-### Responsive width
+To hide all AppShell components and render only children set `hidden` prop:
 
 ```tsx
-<Navbar
-  width={{
-    // Base width – used when viewport is larger than theme.breakpoints.lg
-    base: 400,
+import { AppShell, Navbar, Header } from '@mantine/core';
 
-    breakpoints: {
-      // When viewport is smaller than theme.breakpoints.lg and larger than theme.breakpoints.sm
-      lg: 300,
-
-      // When viewport is smaller than theme.breakpoints.sm
-      sm: '100%',
-    },
-  }}
-/>
-```
-
-### Fixed position
-
-To make Navbar fixed (like in Mantine docs) set `fixed` and `position` props:
-
-```tsx
-<Navbar fixed position={{ top: 0, left: 0 }} />
-```
-
-### Navbar with custom scrollbars
-
-`Navbar.Section` can be used with [ScrollArea](/core/scroll-area/) component:
-
-<Demo data={AppShellDemos.scrollbars} />
-
-## Wrapping Navbar and Header components
-
-AppShell component requires Navbar and Header components to be direct children at `navbar` and `header` props.
-In addition, `width` and `height` need to be explicitly set on the wrapping `Navbar` or `Header` element respectively.
-To use custom components instead of Navbar or Header:
-
-```tsx
-import { AppShell, HeaderProps, Navbar, NavbarProps } from '@mantine/core';
-
-function CustomNavbar(props: Omit<NavbarProps, 'children'>) {
-  return <Navbar {...props}>Custom navbar</Navbar>;
-}
-
-function CustomHeader(props: Omit<HeaderProps, 'children'>) {
-  return <Header {...props}>Custom header</Header>;
-}
-
-function App() {
+function Demo() {
+  // Navbar and Header will not be rendered when hidden prop is set
   return (
-    <AppShell
-      navbar={<CustomNavbar width={{ base: 300 }} height={500} padding="xs" />}
-      header={<CustomHeader height={70} padding="xs" />}
-    >
+    <AppShell navbar={<Navbar />} header={<Header />} hidden>
       App content
     </AppShell>
   );
 }
 ```
 
+## Navbar and Aside components
+
+Navbar and Aside components can be used outside of AppShell context ([View full source code](https://github.com/mantinedev/mantine/tree/master/src/mantine-demos/src/demos/core/AppShell)):
+
+<Demo data={AppShellDemos.navbar} />
+
+### Navbar.Section and Aside.Section
+
+```tsx
+import { Navbar } from '@mantine/core';
+
+function Demo() {
+  // Same can be applied to Aside component with Aside.Section component
+  return (
+    <Navbar>
+      {/* First section with normal height (depends on section content) */}
+      <Navbar.Section>First section</Navbar.Section>
+
+      {/* Grow section will take all available space that is not taken by first and last sections */}
+      <Navbar.Section grow>Grow section</Navbar.Section>
+
+      {/* Last section with normal height (depends on section content) */}
+      <Navbar.Section>Last section</Navbar.Section>
+    </Navbar>
+  );
+}
+```
+
+### Responsive width
+
+```tsx
+import { Navbar } from '@mantine/core';
+
+function Demo() {
+  // Same can be applied to Aside component
+  return (
+    <Navbar
+      width={{
+        // When viewport is larger than theme.breakpoints.sm, Navbar width will be 300
+        sm: 300,
+
+        // When viewport is larger than theme.breakpoints.lg, Navbar width will be 400
+        lg: 400,
+
+        // When other breakpoints do not match base width is used, defaults to 100%
+        base: 100,
+      }}
+    >
+      Application navbar
+    </Navbar>
+  );
+}
+```
+
+### Static position
+
+To make Navbar or Aside static, set `fixed={false}`:
+
+```tsx
+import { Navbar } from '@mantine/core';
+
+function Demo() {
+  return (
+    <Navbar fixed={false} position={{ top: 0, left: 0 }}>
+      Application navbar
+    </Navbar>
+  );
+}
+```
+
+### Custom scrollbars
+
+`Navbar.Section` and `Aside.Section` components can be used with [ScrollArea](/core/scroll-area/) component ([View full source code](https://github.com/mantinedev/mantine/tree/master/src/mantine-demos/src/demos/core/AppShell)):
+
+<Demo data={AppShellDemos.scrollbars} />
+
 ## Semantic elements
 
-- Both Header and Navbar components root element is `nav`
+- Header root element is `header`
+- Navbar root element is `nav`
+- Footer root element is `footer`
+- Aside root element is `aside`
 - AppShell wraps content with `main` tag – **!important** do not use `main` tag inside AppShell

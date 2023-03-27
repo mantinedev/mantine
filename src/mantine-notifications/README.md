@@ -1,24 +1,21 @@
-# Mantine Notifications
+# Mantine notifications system
 
-![Demo](https://github.com/mantinedev/mantine/blob/master/.demo/notifications.gif)
+[![npm](https://img.shields.io/npm/dm/@mantine/notifications)](https://www.npmjs.com/package/@mantine/notifications)
 
-Notifications system built on top of [Mantine](https://mantine.dev/) components library.
+Notifications system
 
-[Documentation](https://mantine.dev/others/notifications/)
+[View documentation](https://mantine.dev/)
 
 ## Installation
 
-```sh
+```bash
 # With yarn
-yarn add @mantine/notifications @mantine/core @mantine/hooks
+yarn add @mantine/hooks @mantine/core @mantine/notifications
 
 # With npm
-npm install @mantine/notifications @mantine/core @mantine/hooks
-
-# With install-peerdeps
-npx install-peerdeps @mantine/notifications
+npm install @mantine/hooks @mantine/core @mantine/notifications
 ```
 
 ## License
 
-All Mantine packages have MIT license. All @mantine/notifications dependencies also have MIT license, except react-transition-group package which has BSD-3-Clause license.
+MIT

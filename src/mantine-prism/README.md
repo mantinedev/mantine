@@ -1,24 +1,21 @@
-# Mantine prism
+# Mantine prism code highlight
 
-Mantine prism is a code highlight based on [Mantine](https://mantine.dev/) theme. Component uses [prism-react-renderer](https://github.com/FormidableLabs/prism-react-renderer)
-under the hood and support light and dark theme.
+[![npm](https://img.shields.io/npm/dm/@mantine/prism)](https://www.npmjs.com/package/@mantine/prism)
 
-[Read documentation on Mantine website](https://mantine.dev/others/prism/)
+Code highlight built with prism and Mantine
 
-![Demo](https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/prism.png)
+[View documentation](https://mantine.dev/)
 
 ## Installation
 
-Package depends on [react](https://www.npmjs.com/package/react), [react-dom](https://www.npmjs.com/package/react-dom), [@mantine/hooks](https://www.npmjs.com/package/@mantine/hooks), [@mantine/core](https://www.npmjs.com/package/@mantine/core) and [prism-react-renderer](https://www.npmjs.com/package/prism-react-renderer).
+```bash
+# With yarn
+yarn add @mantine/hooks @mantine/core @mantine/prism
 
-Install with npm:
-
-```sh
-npm install @mantine/prism @mantine/core @mantine/hooks
+# With npm
+npm install @mantine/hooks @mantine/core @mantine/prism
 ```
 
-Install with yarn:
+## License
 
-```sh
-yarn add @mantine/prism @mantine/core @mantine/hooks
-```
+MIT

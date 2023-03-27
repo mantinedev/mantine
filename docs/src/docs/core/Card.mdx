@@ -3,23 +3,21 @@ group: 'mantine-core'
 package: '@mantine/core'
 title: Card
 order: 1
+polymorphic: true
 slug: /core/card/
 category: 'data-display'
 description: 'Card with context styles for Image and Divider components'
 props: ['Card']
 import: "import { Card } from '@mantine/core';"
-source: 'mantine-core/src/components/Card/Card.tsx'
+source: 'mantine-core/src/Card/Card.tsx'
 docs: 'core/Card.mdx'
-styles: ['Card', 'single-node']
 ---
 
 import { CardDemos } from '@mantine/demos';
 
 ## Usage
 
-Card component is a wrapper around [Paper](/core/paper/) component
-with context styles for Card.Section component.
-Combine Card component with other Mantine components to create cards with your design requirements:
+Card component is a wrapper around [Paper](/core/paper/) component with context styles for `Card.Section` component:
 
 <Demo data={CardDemos.usage} />
 
@@ -28,12 +26,12 @@ Combine Card component with other Mantine components to create cards with your d
 Card.Section is a special component that is used to remove Card padding from its children while other elements still have horizontal spacing.
 Card.Section works the following way:
 
-- It component is a first child in Card then it has negative top, left and right margins
+- If component is a first child in Card then it has negative top, left and right margins
 - If it is a last child in Card then it has negative bottom, left and right margins
 - If it is in the middle then only left and right margins will be negative
 
 ```tsx
-<Card padding="xl">
+<Card p="xl">
   {/* top, right, left margins are negative – -1 * theme.spacing.xl */}
   <Card.Section>First section</Card.Section>
 
@@ -48,10 +46,10 @@ Card.Section works the following way:
 </Card>
 ```
 
-Note that Card relies on mapping direct children and you cannot use fragments or others wrappers for Card.Section:
+Note that Card relies on mapping direct children and you cannot use fragments or others wrappers for `Card.Section`:
 
 ```tsx
-<Card padding="xl">
+<Card p="xl">
   <div>
     <Card.Section>Won't work</Card.Section>
   </div>
@@ -64,62 +62,21 @@ Note that Card relies on mapping direct children and you cannot use fragments or
 </Card>
 ```
 
-## Custom root element
+### Polymorphic Card.Section
 
-You can set `component` prop on Card to use provide custom root element,
-for example, you can make whole card a link:
-
-<Demo data={CardDemos.link} />
-
-You can also use React component instead of an element, for example, Link from react-router-dom:
-
-```tsx
-import { Link } from 'react-router-dom';
-import { Card } from '@mantine/core';
-
-function Demo() {
-  return <Card component={Link} to="/my-route/" />;
-}
-```
-
-To use custom component with TypeScript provide type:
-
-```tsx
-// With element
-<Card<'a'>
-  component="a"
-  onClick={(event) => console.log(event)}
-  ref={(node) => {
-    window.myRef = node;
-  }}
-/>
-
-// With component
-<Card<typeof Link>
-  component={Link}
-  onClick={(event) => console.log(event)}
-  ref={(node) => {
-    window.myRef = node;
-  }}
-/>
-```
-
-## Custom Card.Section root element
-
-Card.Section root element can be changed the same way as with Card:
+`Card.Section` is a [polymorphic component](/guides/polymorphic/) component, you can change root element:
 
 <Demo data={CardDemos.linkSection} />
 
-## Get root element ref
+### withBorder and inheritPadding props
 
-You can get root element ref by setting `ref` prop:
+- `withBorder` prop will add top and bottom border to `Card.Section` depending on its position relative to other content and sections
+- `inheritPadding` prop will add the same left and right padding to `Card.Section` as set in `Card` component
 
-```tsx
-import { useRef } from 'react';
-import { Card } from '@mantine/core';
+<Demo data={CardDemos.section} />
 
-function Demo() {
-  const ref = useRef();
-  return <Card ref={ref} />;
-}
-```
+## Polymorphic component
+
+Card is a [polymorphic component](/guides/polymorphic/) component, you can change root element:
+
+<Demo data={CardDemos.link} />

@@ -4,6 +4,7 @@ describe('@mantine/styles/to-rgba', () => {
   it('returns the correct rgba values when given a hex string', () => {
     expect(toRgba('#F03E3E')).toStrictEqual({ r: 240, g: 62, b: 62, a: 1 });
     expect(toRgba('#D6336C')).toStrictEqual({ r: 214, g: 51, b: 108, a: 1 });
+    expect(toRgba('#f00')).toStrictEqual({ r: 255, g: 0, b: 0, a: 1 });
     expect(toRgba('#7048E8')).toStrictEqual({ r: 112, g: 72, b: 232, a: 1 });
     expect(toRgba('#1098AD')).toStrictEqual({ r: 16, g: 152, b: 173, a: 1 });
   });

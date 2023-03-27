@@ -1,3 +1,1 @@
-const config = require('./packages/eslint/prettier.config');
-
-module.exports = config;
+module.exports = require('eslint-config-mantine/.prettierrc.js');

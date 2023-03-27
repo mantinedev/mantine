@@ -8,9 +8,8 @@ category: 'data-display'
 description: 'Render icon inside element with theme colors'
 props: ['ThemeIcon']
 import: "import { ThemeIcon } from '@mantine/core';"
-source: 'mantine-core/src/components/ThemeIcon/ThemeIcon.tsx'
+source: 'mantine-core/src/ThemeIcon/ThemeIcon.tsx'
 docs: 'core/ThemeIcon.mdx'
-styles: ['ThemeIcon', 'single-node']
 ---
 
 import { ThemeIconDemos } from '@mantine/demos';
@@ -21,8 +20,8 @@ import { ThemeIconDemos } from '@mantine/demos';
 
 ## Color
 
-ThemeIcon supports all colors from [theme.colors](/theming/extend-theme/#default-colors),
-default color is [theme.primaryColor](/theming/extend-theme/#primary-color):
+ThemeIcon supports all colors from `theme.colors`,
+default color is `theme.primaryColor`:
 
 <Demo data={ThemeIconDemos.colors} />
 
@@ -36,33 +35,3 @@ To use gradient as ThemeIcon background:
   - `deg` is linear gradient deg
 
 <Demo data={ThemeIconDemos.gradient} />
-
-## Size
-
-ThemeIcon **does not control icon size**, specify it manually on icon component for better fit.
-ThemeIcon has 5 predefined sizes: xs, sm, md, lg, xl. Size controls width and height.
-Alternatively, a number can be used to set width and height in px:
-
-```tsx
-<ThemeIcon size="lg" /> // -> theme predefined large size
-<ThemeIcon size={10} /> // -> { width: 10, height: 10 }
-```
-
-Sizes from xs to xl:
-
-<Demo data={ThemeIconDemos.sizes} />
-
-## Radius
-
-xs, sm, md, lg, xl radius values are defined in [theme.radius](/theming/extend-theme/#spacing-radius-and-shadows).
-Alternatively, a number can be used to set radius in px:
-
-```tsx
-<ThemeIcon radius="lg" /> // -> theme predefined large radius
-<ThemeIcon radius={10} /> // -> { borderRadius: 10 }
-<ThemeIcon radius={0} /> // -> remove border-radius
-```
-
-Default radius from xs to xl for xl size:
-
-<Demo data={ThemeIconDemos.radius} />

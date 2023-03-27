@@ -15,7 +15,7 @@ import { HooksDemos } from '@mantine/demos';
 
 ## Usage
 
-<HooksDemos.UseClickOutsideDemo />
+<Demo data={HooksDemos.useClickOutsideUsage} />
 
 ## API
 
@@ -25,7 +25,7 @@ Hook accepts 3 arguments:
 - `events` – optional list of events that indicate outside click
 - `nodes` - optional list of nodes that should not trigger outside click event
 
-Hook returns React ref object that should be passed to element on which outside clicks should be captured.
+Hook returns React `ref` object that should be passed to element on which outside clicks should be captured.
 
 ```tsx
 import { useClickOutside } from '@mantine/hooks';
@@ -39,14 +39,14 @@ function Example() {
 
 ## Change events
 
-By default use-click-outside listens to `mousedown` and `touchstart` events,
+By default, use-click-outside listens to `mousedown` and `touchstart` events,
 you can change these events by passing an array of events as second argument:
 
-<HooksDemos.UseClickOutsideDemo events={['mouseup', 'touchend']} />
+<Demo data={HooksDemos.useClickOutsideEvents} />
 
 ## Multiple nodes
 
-In some cases you may want to trigger outside click event for multiple nodes, for example, when dropdown renders in portal.
+In some cases you may want to trigger outside `click` event for multiple nodes, for example, when dropdown renders in portal.
 To do so provide third argument with an array of nodes which should not trigger outside click event:
 
 ```tsx
@@ -56,8 +56,8 @@ import { useClickOutside } from '@mantine/hooks';
 import { Portal } from '@mantine/core';
 
 function Demo() {
-  const [dropdown, setDropdown] = useState(null);
-  const [control, setControl] = useState(null);
+  const [dropdown, setDropdown] = useState<HTMLDivElement | null>(null);
+  const [control, setControl] = useState<HTMLDivElement | null>(null);
 
   useClickOutside(() => console.log('outside'), null, [control, dropdown]);
 
@@ -87,7 +87,7 @@ function useClickOutside<T extends HTMLElement = any>(
 
 ### Ref type
 
-By default use-click-outside returns ref object with `React.MutableRefObject<any>` type
+By default, use-click-outside returns `ref` object with `React.MutableRefObject<any>` type
 as ref type does not matter in almost all cases. You can specify ref type by passing a type:
 
 ```tsx

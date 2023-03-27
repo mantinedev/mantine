@@ -1,128 +1,88 @@
-/* eslint-disable no-console */
+import 'dayjs/locale/ru';
 import React, { useState } from 'react';
-import { storiesOf } from '@storybook/react';
-import { MANTINE_SIZES, MantineProvider, TextInput } from '@mantine/core';
-import { WithinOverlays, SubmitForm } from '@mantine/storybook';
+import { DatesRangeValue } from '../../types';
 import { DatePicker } from './DatePicker';
 
-function Controlled() {
-  const [value, onChange] = useState(new Date(2021, 7, 5));
+export default { title: 'DatePicker' };
 
+export function Usage() {
   return (
-    <DatePicker
-      value={value}
-      onChange={(val) => {
-        console.log(val);
-        onChange(val);
-      }}
-      placeholder="With month and year"
-      label="Date picker"
-    />
+    <div style={{ padding: 40 }}>
+      <DatePicker />
+    </div>
   );
 }
 
-function ControlledFreeInput() {
-  const [value, onChange] = useState(new Date());
-
+export function RuLocale() {
   return (
-    <>
+    <div style={{ padding: 40 }}>
+      <DatePicker locale="ru" />
+    </div>
+  );
+}
+
+export function Multiple() {
+  return (
+    <div style={{ padding: 40 }}>
+      <DatePicker type="multiple" />
+    </div>
+  );
+}
+
+export function Range() {
+  return (
+    <div style={{ padding: 40 }}>
+      <DatePicker type="range" defaultValue={[new Date(2022, 3, 11), null]} />
+    </div>
+  );
+}
+
+export function AllowDeselect() {
+  return (
+    <div style={{ padding: 40 }}>
+      <DatePicker allowDeselect />
+    </div>
+  );
+}
+
+export function Controlled() {
+  const [value, setValue] = useState<Date | null>(null);
+  return (
+    <div style={{ padding: 40 }}>
+      <DatePicker value={value} onChange={setValue} numberOfColumns={3} columnsToScroll={1} />
+      {value?.toISOString()}
+    </div>
+  );
+}
+
+export function ControlledRange() {
+  const [value, setValue] = useState<DatesRangeValue>([null, null]);
+  return (
+    <div style={{ padding: 40 }}>
       <DatePicker
-        mt={20}
-        mb={10}
+        type="range"
         value={value}
-        onChange={(val) => {
-          console.log(val);
-          onChange(val);
-        }}
-        placeholder="Controlled with free input"
-        label="Date picker"
-        allowFreeInput
+        onChange={setValue}
+        numberOfColumns={3}
+        columnsToScroll={1}
       />
-      <button type="button" onClick={() => onChange(new Date())}>
-        Set date
-      </button>
-    </>
+      {value.map((date) => (date ? date.toISOString() : 'ns')).join(' – ')}
+    </div>
   );
 }
 
-const sizes = MANTINE_SIZES.map((size) => (
-  <DatePicker
-    placeholder={`${size} placeholder`}
-    size={size}
-    key={size}
-    style={{ marginTop: 30 }}
-    defaultValue={new Date()}
-    label="This is label"
-    description="This is description"
-  />
-));
-
-storiesOf('@mantine/dates/DatePicker/stories', module)
-  .add('Sizes', () => <div style={{ maxWidth: 400, padding: 40 }}>{sizes}</div>)
-  .add('Dropdown type modal', () => (
-    <div style={{ padding: 40, maxWidth: 400 }}>
-      <DatePicker dropdownType="modal" placeholder="Pick date" label="Date picker" />
-    </div>
-  ))
-  .add('Amount of months', () => (
-    <div style={{ padding: 40, maxWidth: 400 }}>
+export function ControlledMultiple() {
+  const [value, setValue] = useState<Date[]>([]);
+  return (
+    <div style={{ padding: 40 }}>
       <DatePicker
-        amountOfMonths={2}
-        label="Two months"
-        onDropdownClose={() => console.log('Close')}
-        onDropdownOpen={() => console.log('open')}
+        type="multiple"
+        value={value}
+        onChange={setValue}
+        numberOfColumns={3}
+        columnsToScroll={1}
       />
-      <DatePicker amountOfMonths={3} label="Three months" />
+      {value.map((date) => (date ? date.toISOString() : 'ns')).join(', ')}
     </div>
-  ))
-  .add('Controlled', () => (
-    <div style={{ padding: 40, maxWidth: 400 }}>
-      <Controlled />
-    </div>
-  ))
-  .add('Controlled with free input', () => (
-    <div style={{ padding: 40, maxWidth: 400 }}>
-      <ControlledFreeInput />
-    </div>
-  ))
-  .add('Restricted input focus', () => (
-    <div style={{ padding: 40, maxWidth: 400 }}>
-      <TextInput placeholder="Focus me when dropdown is opened" />
-      <DatePicker placeholder="Pick date" label="Date picker" mt="xl" />
-    </div>
-  ))
-  .add('Free input focus', () => (
-    <div style={{ padding: 40, maxWidth: 400 }}>
-      <DatePicker placeholder="Pick date" label="Date picker" allowFreeInput />
-
-      <DatePicker placeholder="Pick date" label="Date picker" allowFreeInput mt={20} mb={40} />
-
-      <button type="button">Focus test</button>
-
-      <ControlledFreeInput />
-    </div>
-  ))
-  .add('Date format on MantineProvider', () => (
-    <MantineProvider theme={{ dateFormat: 'MM YYYY DD' }}>
-      <DatePicker label="One month" />
-    </MantineProvider>
-  ))
-  .add('Within overlays', () => (
-    <WithinOverlays>
-      <DatePicker placeholder="Pick date" label="Event date" withinPortal={false} />
-    </WithinOverlays>
-  ))
-  .add('Within form', () => (
-    <SubmitForm>
-      <DatePicker placeholder="Submit with enter" label="Event date" />
-    </SubmitForm>
-  ))
-  .add('Within form: free input', () => (
-    <SubmitForm>
-      <DatePicker
-        placeholder="Submit with enter with free input"
-        label="Event date"
-        allowFreeInput
-      />
-    </SubmitForm>
-  ));
+  );
+}

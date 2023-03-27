@@ -15,17 +15,21 @@ import { HooksDemos } from '@mantine/demos';
 
 ## Usage
 
-Provide ref to track mouse position over any element:
-
 <Demo data={HooksDemos.useMouseRef} />
 
-If you do not provide ref mouse position will be captured relative to document element:
+If you do not provide `ref` mouse position will be captured relative to document element:
 
 <Demo data={HooksDemos.useMouseUsage} />
 
 ## API
 
-Hook returns object with ref and x, y mouse coordinates:
+Set `resetOnExit` option to reset mouse position to `0, 0` when mouse leaves the element
+
+```tsx
+const { ref, x, y } = useMouse({ resetOnExit: true });
+```
+
+Hook returns object with `ref` and `x`, `y` mouse coordinates:
 
 ```tsx
 const {
@@ -40,7 +44,9 @@ On the first render (as well as during SSR), both `x` and `y` values are equal t
 ## Definition
 
 ```tsx
-function useMouse<T extends HTMLElement = any>(): {
+function useMouse<T extends HTMLElement = any>(options?: {
+  resetOnExit?: boolean;
+}): {
   x: number;
   y: number;
   ref: React.MutableRefObject<T>;

@@ -1,18 +1,28 @@
 {
   "name": "@mantine/hooks",
-  "version": "3.6.9",
+  "version": "6.0.4",
   "main": "cjs/index.js",
   "module": "esm/index.js",
   "types": "lib/index.d.ts",
   "license": "MIT",
   "author": "Vitaly Rtishchev <rtivital@gmail.com>",
   "sideEffects": false,
-  "homepage": "https://mantine.dev/hooks/getting-started/",
+  "homepage": "https://mantine.dev",
   "repository": {
     "url": "https://github.com/mantinedev/mantine.git",
     "type": "git",
     "directory": "src/mantine-hooks"
   },
+  "keywords": [
+    "react",
+    "next",
+    "nextjs",
+    "library",
+    "frontend",
+    "react-hooks",
+    "hooks",
+    "state"
+  ],
   "peerDependencies": {
     "react": ">=16.8.0"
   },

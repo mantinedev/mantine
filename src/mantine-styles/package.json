@@ -1,7 +1,7 @@
 {
   "name": "@mantine/styles",
   "description": "Mantine css-in-js styles engine, based on emotion",
-  "version": "3.6.9",
+  "version": "6.0.4",
   "main": "cjs/index.js",
   "module": "esm/index.js",
   "types": "lib/index.d.ts",
@@ -14,17 +14,25 @@
     "type": "git",
     "directory": "src/mantine-styles"
   },
+  "keywords": [
+    "react",
+    "next",
+    "nextjs",
+    "ui",
+    "library",
+    "frontend",
+    "emotion",
+    "css-in-js",
+    "styling"
+  ],
   "peerDependencies": {
     "react": ">=16.8.0",
-    "react-dom": ">=16.8.0"
+    "react-dom": ">=16.8.0",
+    "@emotion/react": ">=11.9.0"
   },
   "dependencies": {
-    "clsx": "^1.1.1",
-    "@emotion/cache": "^11.7.1",
-    "@emotion/react": "^11.7.1",
-    "@emotion/serialize": "^1.0.2",
-    "@emotion/utils": "^1.0.0",
-    "csstype": "^3.0.9"
+    "clsx": "1.1.1",
+    "csstype": "3.0.9"
   },
   "devDependencies": {}
 }

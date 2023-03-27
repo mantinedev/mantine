@@ -18,7 +18,11 @@
       "@mantine/dropzone": ["../mantine-dropzone/src"],
       "@mantine/notifications": ["../mantine-notifications/src"],
       "@mantine/modals": ["../mantine-modals/src"],
-      "@mantine/rte": ["../mantine-rte/src"]
+      "@mantine/nprogress": ["../mantine-nprogress/src"],
+      "@mantine/form": ["../mantine-form/src"],
+      "@mantine/spotlight": ["../mantine-spotlight/src"],
+      "@mantine/carousel": ["../mantine-carousel/src"],
+      "@mantine/tiptap": ["../mantine-tiptap/src"]
     }
   },
   "references": [
@@ -27,8 +31,12 @@
     { "path": "../mantine-hooks" },
     { "path": "../mantine-prism" },
     { "path": "../mantine-dropzone" },
+    { "path": "../mantine-carousel" },
     { "path": "../mantine-notifications" },
     { "path": "../mantine-modals" },
-    { "path": "../mantine-rte" }
+    { "path": "../mantine-nprogress" },
+    { "path": "../mantine-spotlight" },
+    { "path": "../mantine-form" },
+    { "path": "../mantine-tiptap" }
   ]
 }

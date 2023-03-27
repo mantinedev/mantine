@@ -3,12 +3,14 @@ group: 'mantine-core'
 package: '@mantine/core'
 title: Button
 order: 1
+polymorphic: true
 slug: /core/button/
-category: 'inputs'
+category: 'buttons'
 description: 'Render button or link with button styles from mantine theme'
-props: ['Button']
+componentPrefix: 'Button'
+props: ['Button', 'ButtonGroup']
 import: "import { Button } from '@mantine/core';"
-source: 'mantine-core/src/components/Button/Button.tsx'
+source: 'mantine-core/src/Button/Button.tsx'
 docs: 'core/Button.mdx'
 styles: ['Button']
 ---
@@ -21,16 +23,7 @@ import { ButtonDemos } from '@mantine/demos';
 
 ## Variants
 
-Button supports the following variants: default, subtle, white, gradient, filled, light and outline:
-
 <Demo data={ButtonDemos.variants} />
-
-Default Button color is `theme.primaryColor`, to change color and variant pass `color` and `variant` props:
-
-```tsx
-<Button color="red" /> // filled button with red color
-<Button variant="outline" /> // outline button with theme.primaryColor color
-```
 
 ### Gradient variant
 
@@ -57,28 +50,14 @@ button becomes disabled and white or dark overlay is added.
 You can control loading state and [Loader](/core/loader/) component with following props:
 
 - `loading` – enable loading state
-- `loaderPosition` – Loader position relative to button label, either right or left
+- `loaderPosition` – Loader position relative to button label, left, right or center
 - `loaderProps` – props spread to Loader component, you can choose loader type, size and any other [supported](/core/loader/) prop
 
 <Demo data={ButtonDemos.loadingConfigurator} />
 
-## Customize
-
-You can change styles of any element in button component with [Styles API](/theming/styles-api/) to match your design requirements:
+## Styles API
 
 <Demo data={ButtonDemos.customize} />
-
-## Size and radius
-
-Control button font-size, height and padding with `size` and border-radius with `radius` props.
-Both props have predefined values: xs, sm, md, lg, xl.
-Alternatively, you can use a number to set radius in px:
-
-```tsx
-<Button radius="lg" /> // -> theme predefined large radius
-<Button radius={10} /> // -> { borderRadius: '10px' }
-<Button size="sm" /> // -> predefined small size
-```
 
 ## Compact
 
@@ -87,71 +66,94 @@ Alternatively, you can use a number to set radius in px:
 ## Full width and overflow
 
 Button can take full width of container if you set `fullWidth` prop.
-If button is too large for its container, overflow content will be hidden:
+If button content is too large for its container, overflown content will be hidden:
 
 <Demo data={ButtonDemos.overflow} />
 
-## Change root element
+## Button.Group
 
-You can use Button component both as `button` and `a` elements:
+<Demo data={ButtonDemos.group} />
 
-<Demo data={ButtonDemos.component} />
-
-## Usage with react-router and other libraries
-
-You can use Button component with [react-router-dom](https://reactrouter.com/web/guides/quick-start)
-or other similar libraries by passing `Link` as component to Button:
+Note that you cannot wrap child `Button` components with any additional elements:
 
 ```tsx
-import { Link } from 'react-router-dom';
 import { Button } from '@mantine/core';
 
 function Demo() {
   return (
-    <Button component={Link} to="/react-router">
-      React router link
-    </Button>
+    <Button.Group>
+      <div>
+        <Button>This will not work</Button>
+      </div>
+      <Button>Buttons will have incorrect borders</Button>
+    </Button.Group>
   );
 }
 ```
 
-Provide type to use custom element with TypeScript:
+If you want to use [Tooltip](/core/tooltip/), [Popover](/core/popover/) or other overlay component,
+it is required to set `withinPortal` prop:
 
 ```tsx
-// With element
-<Button<'a'>
-  component="a"
-  onClick={(event) => console.log(event)}
-  ref={(node) => {
-    window.myRef = node;
-  }}
-/>
+import { Button, Tooltip } from '@mantine/core';
 
-// With component
-<Button<typeof Link>
-  component={Link}
-  onClick={(event) => console.log(event)}
-  ref={(node) => {
-    window.myRef = node;
-  }}
-/>
+function Demo() {
+  return (
+    <Button.Group>
+      <Tooltip label="Working as expected" withinPortal>
+        <Button>With Tooltip</Button>
+      </Tooltip>
+      <Button>Regular button</Button>
+    </Button.Group>
+  );
+}
 ```
 
-## Get button ref
+## data- attributes
+
+Button has the following attributes on the root element:
+
+- `data-disabled` when `disabled` prop is `true`
+- `data-loading` when `loading` prop is `true`
+
+You can customize disabled and loading styles with these attributes:
+
+```tsx
+import { Button } from '@mantine/core';
+
+function Demo() {
+  return (
+    <Button
+      sx={{
+        '&[data-disabled]': { opacity: 0.4 },
+        '&[data-loading]': { backgroundColor: 'red' },
+      }}
+    />
+  );
+}
+```
+
+## Disabled button with tooltip
+
+Disabled buttons do not trigger `onMouseLeave` ([react issue](https://github.com/facebook/react/issues/18753)).
+If you need to display tooltip for disabled button, do not use `disabled` prop, instead set `data-disabled` attribute:
+
+<Demo data={ButtonDemos.disabledTooltip} />
+
+## Polymorphic component
+
+Button is a [polymorphic component](/guides/polymorphic/), you can change root element:
+
+<Demo data={ButtonDemos.component} />
+
+## Get ref
 
 ```tsx
 import { useRef } from 'react';
 import { Button } from '@mantine/core';
 
 function Demo() {
-  const ref = useRef();
+  const ref = useRef<HTMLButtonElement>(null);
   return <Button ref={ref} />;
 }
 ```
-
-## Unstyled button
-
-To create custom buttons not related to Button component, use UnstyledButton component,
-it renders regular button without default browser styles and with Mantine focus styles:
-
-<Demo data={ButtonDemos.unstyled} />

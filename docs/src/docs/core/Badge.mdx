@@ -3,12 +3,13 @@ group: 'mantine-core'
 package: '@mantine/core'
 title: Badge
 order: 1
+polymorphic: true
 slug: /core/badge/
 category: 'data-display'
 description: 'Display badge, pill or tag'
 props: ['Badge']
 import: "import { Badge } from '@mantine/core';"
-source: 'mantine-core/src/components/Badge/Badge.tsx'
+source: 'mantine-core/src/Badge/Badge.tsx'
 docs: 'core/Badge.mdx'
 styles: ['Badge']
 ---
@@ -17,14 +18,7 @@ import { BadgeDemos } from '@mantine/demos';
 
 ## Usage
 
-<Demo data={BadgeDemos.usage} />
-
-## Colors
-
-Badge supports all colors from [theme.colors](/theming/extend-theme/#default-colors).
-Note that not all colors in some variants are compatible with dark theme:
-
-<Demo data={BadgeDemos.colors} />
+<Demo data={BadgeDemos.configurator} />
 
 ## Gradient variant
 
@@ -37,20 +31,6 @@ To use gradient as Badge background:
 
 <Demo data={BadgeDemos.gradient} />
 
-## Size and radius
-
-Control badge font-size, height and padding with `size` and border-radius with `radius`.
-Both props have predefined values: xs, sm, md, lg, xl.
-Alternatively, use a number to set radius in px:
-
-```tsx
-<Badge radius="lg" /> // -> theme predefined large radius
-<Badge radius={10} /> // -> { borderRadius: '10px' }
-<Badge size="sm" /> // -> predefined small size
-```
-
-<Demo data={BadgeDemos.sizes} />
-
 ## Full width and overflow
 
 Badge will take full width of container if `fullWidth` prop is `true`.
@@ -62,30 +42,8 @@ If badge cannot fit in its container, overflow content will be hidden with ellip
 
 <Demo data={BadgeDemos.sections} />
 
-## Custom component
+## Polymorphic component
 
-To change badge root element pass React element to `component` prop:
+Badge is a [polymorphic component](/guides/polymorphic/), you can change root element:
 
 <Demo data={BadgeDemos.component} />
-
-To use custom component with TypeScript provide type:
-
-```tsx
-// With element
-<Badge<'a'>
-  component="a"
-  onClick={(event) => console.log(event)}
-  ref={(node) => {
-    window.myRef = node;
-  }}
-/>
-
-// With component
-<Badge<typeof Link>
-  component={Link}
-  onClick={(event) => console.log(event)}
-  ref={(node) => {
-    window.myRef = node;
-  }}
-/>
-```

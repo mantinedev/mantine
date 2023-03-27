@@ -60,6 +60,13 @@ export default async function createPackageConfig(config: PkgConfigInput): Promi
     externals = [
       '@emotion/server/create-instance',
       'dayjs/locale/ru',
+      'klona/full',
+      'highlight.js/lib/languages/typescript',
+      '@emotion/cache',
+      '@emotion/utils',
+      '@emotion/serialize',
+      'prism-react-renderer/themes/duotoneDark',
+      'prism-react-renderer/themes/duotoneLight',
       ...(config?.externals || []),
       ...Object.keys({
         ...packageJson.peerDependencies,
@@ -100,7 +107,7 @@ export default async function createPackageConfig(config: PkgConfigInput): Promi
     };
   }
 
-  if (config.analyze && config.format === 'umd') {
+  if (config.analyze && config.format === 'es') {
     plugins.push(
       visualizer({
         title: packageJson.name,

@@ -29,6 +29,7 @@ async function enterFullScreen(element: HTMLElement) {
   return (
     _element.requestFullscreen?.() ||
     _element.msRequestFullscreen?.() ||
+    _element.webkitEnterFullscreen?.() ||
     _element.webkitRequestFullscreen?.() ||
     _element.mozRequestFullscreen?.()
   );
@@ -98,6 +99,13 @@ export function useFullscreen<T extends HTMLElement = any>() {
   useEffect(() => {
     if (!_ref.current && window.document) {
       _ref.current = window.document.documentElement as T;
+      return addEvents(_ref.current, {
+        onFullScreen: handleFullscreenChange,
+        onError: handleFullscreenError,
+      });
+    }
+
+    if (_ref.current) {
       return addEvents(_ref.current, {
         onFullScreen: handleFullscreenChange,
         onError: handleFullscreenError,

@@ -1,8 +1,7 @@
 import React from 'react';
-import { Container, Text, Group, Button } from '@mantine/core';
-import { ArrowRightIcon } from '@primer/octicons-react';
+import { Container, Text, Group } from '@mantine/core';
+import { TwitterButton, DiscordButton } from '@mantine/ds';
 import { Logo } from '../Logo/Logo';
-import { SocialButton } from '../SocialButton/SocialButton';
 import { LinksGroup } from './LinksGroup/LinksGroup';
 import { FOOTER_LINKS_DATA } from './data';
 import useStyles from './Footer.styles';
@@ -30,27 +29,7 @@ export function Footer({ withNavbar }: FooterProps) {
               </Text>
             </div>
 
-            <div className={classes.groups}>
-              {groups}
-
-              <div className={classes.feedback}>
-                <Text className={classes.feedbackTitle}>Feedback</Text>
-                <Text className={classes.feedbackDescription} size="sm">
-                  Your feedback is most valuable contribution to the project, please share how you
-                  use Mantine, what features are missing and what is done good
-                </Text>
-
-                <Button
-                  component="a"
-                  href="https://github.com/mantinedev/mantine/discussions/new"
-                  variant="default"
-                  rightIcon={<ArrowRightIcon size={14} />}
-                  style={{ paddingRight: 12 }}
-                >
-                  Leave feedback
-                </Button>
-              </div>
-            </div>
+            <div className={classes.groups}>{groups}</div>
           </div>
 
           <div className={classes.afterFooter}>
@@ -62,8 +41,8 @@ export function Footer({ withNavbar }: FooterProps) {
                 </a>
               </Text>
               <div className={classes.social}>
-                <SocialButton service="discord" className={classes.socialButton} />
-                <SocialButton service="twitter" className={classes.socialButton} />
+                <DiscordButton className={classes.socialButton} />
+                <TwitterButton className={classes.socialButton} ml="md" />
               </div>
             </Group>
           </div>

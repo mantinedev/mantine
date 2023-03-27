@@ -6,9 +6,10 @@ order: 1
 slug: /core/pagination/
 category: 'navigation'
 description: 'Display active page and navigate between multiple pages'
-props: ['Pagination']
+componentPrefix: 'Pagination'
+props: ['Pagination', 'PaginationRoot', 'PaginationItems']
 import: "import { Pagination } from '@mantine/core';"
-source: 'mantine-core/src/components/Pagination/Pagination.tsx'
+source: 'mantine-core/src/Pagination/Pagination.tsx'
 docs: 'core/Pagination.mdx'
 styles: ['Pagination']
 ---
@@ -29,49 +30,48 @@ import { Pagination } from '@mantine/core';
 
 function Demo() {
   const [activePage, setPage] = useState(1);
-
-  return <Pagination page={activePage} onChange={setPage} />;
+  return <Pagination page={activePage} onChange={setPage} total={10} />;
 }
 ```
 
 ## Siblings
 
-Control amount of active item siblings with `siblings` prop:
+Control number of active item siblings with `siblings` prop:
 
 <Demo data={PaginationDemos.siblings} />
 
 ## Boundaries
 
-Control amount of items displayed after previous and before next buttons with `boundaries` prop:
+Control number of items displayed after previous and before next buttons with `boundaries` prop:
 
 <Demo data={PaginationDemos.boundaries} />
 
-## Accessibility
+## Styles API
 
-Pagination renders a regular button element. To include aria-label for screen reader support
-provide `getItemAriaLabel` function to generate aria-labels:
+You can use `data-active` attribute on `control` selector to change styles of selected item:
 
-```tsx
-<Pagination
-  total={20}
-  getItemAriaLabel={(page) => {
-    switch (page) {
-      case 'dots':
-        return 'dots element aria-label';
-      case 'prev':
-        return 'previous page button aria-label';
-      case 'next':
-        return 'next page button aria-label';
-      case 'first':
-        return 'first page button aria-label';
-      case 'last':
-        return 'last page button aria-label';
-      default:
-        return `${page} item aria-label`;
-    }
-  }}
-/>
-```
+<Demo data={PaginationDemos.stylesApi} />
+
+## Modular components
+
+You can use the following modular components to have full control over the `Modal` rendering:
+
+- `Pagination.Root` – context provider
+- `Pagination.Items` – items list
+- `Pagination.Next` – next control
+- `Pagination.Previous` – previous control
+- `Pagination.First` – first control
+- `Pagination.Last` – last control
+
+<Demo data={PaginationDemos.composition} />
+
+## Controls as links
+
+<Demo data={PaginationDemos.links} />
+
+## Change icons
+
+<Demo data={PaginationDemos.icons} />
 
 ## use-pagination hook
 

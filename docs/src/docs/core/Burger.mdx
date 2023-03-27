@@ -8,7 +8,7 @@ category: 'navigation'
 description: 'Open/close navigation button'
 props: ['Burger']
 import: "import { Burger } from '@mantine/core';"
-source: 'mantine-core/src/components/Burger/Burger.tsx'
+source: 'mantine-core/src/Burger/Burger.tsx'
 docs: 'core/Burger.mdx'
 styles: ['Burger']
 ---
@@ -35,32 +35,29 @@ You can change it to any color value by setting `color` prop:
 <Demo data={BurgerDemos.sizes} />
 
 Burger has predefined sizes: xs, sm, md, lg, xl.
-Alternatively, you can use a number to set width and height in px:
+Alternatively, you can use a number to set width and height:
 
 ```tsx
 <Burger size="sm" /> // -> predefined small size
-<Burger size={50} /> // -> { width: 50, height: 50 }
+<Burger size={48} /> // -> { width: '3rem', height: '3rem' }
 ```
 
 ## Get button ref
-
-You can get burger button ref by setting `ref` prop:
 
 ```tsx
 import { useRef } from 'react';
 import { Burger } from '@mantine/core';
 
 function Demo() {
-  const ref = useRef();
-  return <Burger ref={ref} />;
+  const ref = useRef<HTMLButtonElement>(null);
+  return <Burger ref={ref} opened={false} />;
 }
 ```
 
 ## Accessibility
 
-Burger renders a regular button element.
-Include `title` or `aria-label` props for screen reader support
-as by design element does not associated label.
+Burger renders a regular button element. Include `title` or `aria-label` props for screen reader support
+as by default element does not associated label.
 
 ```tsx
 // Set title to show message on hover

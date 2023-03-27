@@ -1,12 +1,27 @@
 import type { CSSProperties } from 'react';
-import type { MantineMargins } from './MantineMargins';
-import type { MantineTheme } from './MantineTheme';
+import type { MantineStyleSystemProps } from './MantineStyleSystem';
+import type { MantineTheme, ContextStylesParams } from './MantineTheme';
 import type { CSSObject } from '../../tss';
 
-export interface DefaultProps<T extends string = never> extends MantineMargins {
+export type Sx = CSSObject | ((theme: MantineTheme) => CSSObject);
+
+export type ClassNames<StylesNames extends string> = Partial<Record<StylesNames, string>>;
+export type Styles<StylesNames extends string, StylesParams extends Record<string, any> = never> =
+  | Partial<Record<StylesNames, CSSObject>>
+  | ((
+      theme: MantineTheme,
+      params: StylesParams,
+      context: ContextStylesParams
+    ) => Partial<Record<StylesNames, CSSObject>>);
+
+export interface DefaultProps<
+  StylesNames extends string = never,
+  StylesParams extends Record<string, any> = Record<string, any>
+> extends MantineStyleSystemProps {
   className?: string;
   style?: CSSProperties;
-  sx?: CSSObject | ((theme: MantineTheme) => CSSObject);
-  classNames?: Partial<Record<T, string>>;
-  styles?: Partial<Record<T, CSSObject>> | ((theme: MantineTheme) => Partial<Record<T, CSSObject>>);
+  sx?: Sx | (Sx | undefined)[];
+  classNames?: ClassNames<StylesNames>;
+  styles?: Styles<StylesNames, StylesParams>;
+  unstyled?: boolean;
 }

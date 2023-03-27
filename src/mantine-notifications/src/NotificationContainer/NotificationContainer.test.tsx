@@ -5,6 +5,7 @@ const defaultProps = {
   notification: { id: 'test', message: 'test-message' },
   onHide: () => {},
   autoClose: false,
+  innerRef: undefined,
 } as const;
 
 describe('@mantine/notifications/NotificationContainer', () => {
@@ -12,7 +13,7 @@ describe('@mantine/notifications/NotificationContainer', () => {
   itSupportsClassName(NotificationContainer, defaultProps);
 
   it('has correct displayName', () => {
-    expect(NotificationContainer.displayName).toEqual(
+    expect(NotificationContainer.displayName).toStrictEqual(
       '@mantine/notifications/NotificationContainer'
     );
   });

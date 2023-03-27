@@ -1,8 +1,9 @@
 import React from 'react';
 import { MDXProvider } from '@mdx-js/react';
-import { Code, Text } from '@mantine/core';
+import { Code, Anchor, rem } from '@mantine/core';
 import { Prism } from '@mantine/prism';
-import { Demo } from '@mantine/demos';
+import { Demo } from '@mantine/ds';
+import { KeyboardEventsTable } from './KeyboardEventsTable/KeyboardEventsTable';
 import GatsbyLink from './GatsbyLink/GatsbyLink';
 import DataTable from './DataTable/DataTable';
 import MdxTitle from './MdxTitle/MdxTitle';
@@ -13,6 +14,7 @@ export const components = {
   GatsbyLink,
   DataTable,
   Demo,
+  KeyboardEventsTable,
   h1: h(1),
   h2: h(2),
   h3: h(3),
@@ -27,24 +29,20 @@ export const components = {
       return <GatsbyLink to={href.replace('https://mantine.dev', '')}>{children}</GatsbyLink>;
     }
 
-    return (
-      <Text component="a" variant="link" href={href}>
-        {children}
-      </Text>
-    );
+    return <Anchor href={href}>{children}</Anchor>;
   },
   p: (props: any) => <p {...props} style={{ lineHeight: 1.55 }} />,
   ul: (props: any) => (
-    <ul {...props} style={{ lineHeight: 1.55, marginBottom: 20, marginTop: 10 }} />
+    <ul {...props} style={{ lineHeight: 1.65, marginBottom: rem(20), marginTop: rem(10) }} />
   ),
-  li: (props: any) => <li {...props} style={{ marginTop: 4 }} />,
+  li: (props: any) => <li {...props} style={{ marginTop: rem(4) }} />,
   pre: (props: any) => {
     const matches = (props.children.props.className || '').match(/language-(?<lang>.*)/);
 
     return (
       <Prism
         language={matches && matches.groups && matches.groups.lang ? matches.groups.lang : ''}
-        style={{ marginBottom: 20 }}
+        mb={20}
       >
         {props.children.props.children}
       </Prism>

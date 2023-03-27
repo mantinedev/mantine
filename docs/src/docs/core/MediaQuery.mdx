@@ -8,9 +8,8 @@ category: 'layout'
 description: 'Apply styles to children if media query matches'
 props: ['MediaQuery']
 import: "import { MediaQuery } from '@mantine/core';"
-source: 'mantine-core/src/components/MediaQuery/MediaQuery.tsx'
+source: 'mantine-core/src/MediaQuery/MediaQuery.tsx'
 docs: 'core/MediaQuery.mdx'
-styles: ['MediaQuery', 'single-node']
 ---
 
 import { DEFAULT_THEME } from '@mantine/core';
@@ -22,6 +21,10 @@ MediaQuery component adds styles to child element if given media query matches:
 
 <Demo data={MediaQueryDemos.query} />
 
+## Usage with theme
+
+<Demo data={MediaQueryDemos.theme} />
+
 ## largerThan and smallerThan props
 
 `largerThan` and `smallerThan` props lets you use `theme.breakpoints`:
@@ -30,13 +33,13 @@ MediaQuery component adds styles to child element if given media query matches:
 
 ### Configure breakpoints
 
-Mantine uses Bootstrap's breakpoint values as defaults:
+Default breakpoints:
 
 <DataTable
   head={['Breakpoint', 'Viewport width']}
   data={Object.keys(DEFAULT_THEME.breakpoints).map((size) => [
     size,
-    `${DEFAULT_THEME.breakpoints[size]}px`,
+    `${DEFAULT_THEME.breakpoints[size]}`,
   ])}
 />
 
@@ -45,20 +48,22 @@ To change these values wrap your application with MantineProvider and set `break
 ```tsx
 import { MantineProvider } from '@mantine/core';
 
-function YourApp() {
+function Demo() {
   return (
     <MantineProvider
+      withGlobalStyles
+      withNormalizeCSS
       theme={{
         breakpoints: {
-          xs: 500,
-          sm: 800,
-          md: 1000,
-          lg: 1275,
-          xl: 1800,
+          xs: '30em',
+          sm: '48em',
+          md: '64em',
+          lg: '74em',
+          xl: '90em',
         },
       }}
     >
-      Hello World
+      <App />
     </MantineProvider>
   );
 }
@@ -78,4 +83,16 @@ const MyButton => ({ label, className }) => <button className={className}>{label
 
 // Will work with MediaQuery – handle className
 const MyButton => ({ label, ...others }) => <button {...others}>{label}</button>
+```
+
+**!important** MediaQuery will work only with React elements. Strings, numbers, fragments and other parts will
+not have correct styles:
+
+```tsx
+// Invalid MediaQuery usage, do not do this
+import { MediaQuery } from '@mantine/core';
+
+function InvalidDemo() {
+  return <MediaQuery>No styles applied</MediaQuery>;
+}
 ```

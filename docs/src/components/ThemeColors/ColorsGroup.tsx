@@ -1,39 +1,30 @@
 import React from 'react';
-import { useMantineTheme, ColorSwatch, Text, Title } from '@mantine/core';
+import { ColorSwatch, Text, Box, rem } from '@mantine/core';
 import useStyles from './ColorsGroup.styles';
 
 interface ColorsGroupProps {
   group: string;
-  noTitle?: boolean;
 }
 
-export function ColorsGroup({ group, noTitle }: ColorsGroupProps) {
-  const theme = useMantineTheme();
-  const { classes } = useStyles();
+export function ColorsGroup({ group }: ColorsGroupProps) {
+  const { classes, theme } = useStyles();
 
   const colors = theme.colors[group].map((color, index) => (
     <div key={color} className={classes.color}>
-      <ColorSwatch color={color} radius="sm" size={50} />
-
-      <div style={{ marginTop: theme.spacing.xs }}>
-        <Text transform="capitalize" size="xs">
+      <ColorSwatch color={color} radius="md" size={50} />
+      <Box mt={7}>
+        <Text size="xs" className={classes.colorName}>
           {group} {index}
         </Text>
-        <Text color="gray" size="xs" transform="uppercase" style={{ marginTop: 2 }}>
+        <Text color="dimmed" size="xs" transform="uppercase" mt={2} sx={{ fontSize: rem(10) }}>
           {color}
         </Text>
-      </div>
+      </Box>
     </div>
   ));
 
   return (
     <div className={classes.wrapper}>
-      {!noTitle && (
-        <Title order={4} className={classes.title}>
-          {group}
-        </Title>
-      )}
-
       <div className={classes.group}>{colors}</div>
     </div>
   );

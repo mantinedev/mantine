@@ -5,6 +5,7 @@ export const MIME_TYPES = {
   jpeg: 'image/jpeg',
   svg: 'image/svg+xml',
   webp: 'image/webp',
+  avif: 'image/avif',
 
   // Documents
   mp4: 'video/mp4',
@@ -17,6 +18,7 @@ export const MIME_TYPES = {
   xlsx: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
   ppt: 'application/vnd.ms-powerpoint',
   pptx: 'application/vnd.openxmlformats-officedocument.presentationml.presentation',
+  exe: 'application/vnd.microsoft.portable-executable',
 } as const;
 
 export const IMAGE_MIME_TYPE = [
@@ -25,9 +27,11 @@ export const IMAGE_MIME_TYPE = [
   MIME_TYPES.jpeg,
   MIME_TYPES.svg,
   MIME_TYPES.webp,
+  MIME_TYPES.avif,
 ];
 
 export const PDF_MIME_TYPE = [MIME_TYPES.pdf];
 export const MS_WORD_MIME_TYPE = [MIME_TYPES.doc, MIME_TYPES.docx];
 export const MS_EXCEL_MIME_TYPE = [MIME_TYPES.xls, MIME_TYPES.xlsx];
 export const MS_POWERPOINT_MIME_TYPE = [MIME_TYPES.ppt, MIME_TYPES.pptx];
+export const EXE_MIME_TYPE = [MIME_TYPES.exe];

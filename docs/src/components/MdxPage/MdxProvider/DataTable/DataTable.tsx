@@ -1,5 +1,5 @@
 import React from 'react';
-import { Table } from '@mantine/core';
+import { Table, rem } from '@mantine/core';
 import DocsSection from '../../../DocsSection/DocsSection';
 
 interface DataTableProps {
@@ -17,14 +17,18 @@ export default function DataTable({ data, head }: DataTableProps) {
 
   return (
     <DocsSection>
-      <Table>
-        {ths && (
-          <thead>
-            <tr>{ths}</tr>
-          </thead>
-        )}
-        <tbody>{rows}</tbody>
-      </Table>
+      <div style={{ overflowX: 'auto' }}>
+        <div style={{ minWidth: rem(400) }}>
+          <Table>
+            {ths && (
+              <thead>
+                <tr>{ths}</tr>
+              </thead>
+            )}
+            <tbody>{rows}</tbody>
+          </Table>
+        </div>
+      </div>
     </DocsSection>
   );
 }
