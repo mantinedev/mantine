@@ -55,7 +55,7 @@ export function Modal(props: ModalProps) {
       <ModalContent>
         {hasHeader && (
           <ModalBase.Header>
-            {title && <ModalBase.Title>{title}</ModalBase.Title>}
+            <ModalBase.Title>{title}</ModalBase.Title>
             {withCloseButton && <ModalBase.CloseButton {...closeButtonProps} />}
           </ModalBase.Header>
         )}
