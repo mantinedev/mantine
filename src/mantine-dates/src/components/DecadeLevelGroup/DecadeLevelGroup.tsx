@@ -79,7 +79,7 @@ export const DecadeLevelGroup = forwardRef<HTMLDivElement, DecadeLevelGroupProps
     size,
   });
 
-  const controlsRefs = useRef<HTMLButtonElement[][][]>([]);
+  const controlsRef = useRef<HTMLButtonElement[][][]>([]);
 
   const decades = Array(numberOfColumns)
     .fill(0)
@@ -102,24 +102,23 @@ export const DecadeLevelGroup = forwardRef<HTMLDivElement, DecadeLevelGroupProps
           __onControlMouseEnter={__onControlMouseEnter}
           __onControlKeyDown={(event, payload) =>
             handleControlKeyDown({
-              index: decadeIndex,
+              levelIndex: decadeIndex,
+              rowIndex: payload.rowIndex,
+              cellIndex: payload.cellIndex,
               event,
-              payload,
-              controlsRef: controlsRefs,
-              numberOfColumns,
-              controlsPerRow: [3, 3, 3, 1],
+              controlsRef,
             })
           }
           __getControlRef={(rowIndex, cellIndex, node) => {
-            if (!Array.isArray(controlsRefs.current[decadeIndex])) {
-              controlsRefs.current[decadeIndex] = [];
+            if (!Array.isArray(controlsRef.current[decadeIndex])) {
+              controlsRef.current[decadeIndex] = [];
             }
 
-            if (!Array.isArray(controlsRefs.current[decadeIndex][rowIndex])) {
-              controlsRefs.current[decadeIndex][rowIndex] = [];
+            if (!Array.isArray(controlsRef.current[decadeIndex][rowIndex])) {
+              controlsRef.current[decadeIndex][rowIndex] = [];
             }
 
-            controlsRefs.current[decadeIndex][rowIndex][cellIndex] = node;
+            controlsRef.current[decadeIndex][rowIndex][cellIndex] = node;
           }}
           levelControlAriaLabel={
             typeof levelControlAriaLabel === 'function'
