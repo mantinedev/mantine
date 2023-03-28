@@ -161,6 +161,22 @@ Apart from `itemComponent` you can customize appearance of label by providing `v
 
 <Demo data={MultiSelectDemos.maxSelectedValues} />
 
+## Disable selected item filtering
+
+<Demo data={MultiSelectDemos.disableSelectedItemFiltering} />
+
+When used along `filter`, be aware that the second parameter `selected` will always be `false`.
+
+```tsx
+<MultiSelect
+  disableSelectedItemFiltering
+  filter={(value, selected, item) => {
+    console.log(selected); // false
+  }}
+  searchable
+/>
+```
+
 ## Dropdown position
 
 By default, dropdown is placed below the input and when there is not enough space, it flips to be above the input.

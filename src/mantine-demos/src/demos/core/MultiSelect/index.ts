@@ -17,5 +17,6 @@ export { icon } from './MultiSelect.demo.icon';
 export { rightSection } from './MultiSelect.demo.rightSection';
 export { scrollbars } from './MultiSelect.demo.scrollbars';
 export { maxSelectedValues } from './MultiSelect.demo.maxSelectedValues';
+export { disableSelectedItemFiltering } from './MultiSelect.demo.disableSelectedItemFiltering';
 export { readOnly } from './MultiSelect.demo.readOnly';
 export { hoverOnSearchChange } from './MultiSelect.demo.hoverOnSearchChange';
