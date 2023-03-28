@@ -38,7 +38,7 @@ function Demo() {
         }}
       />
 
-      {/* Modular pagination */}
+      {/* Compound pagination */}
       <Pagination.Root
         total={10}
         getItemProps={(page) => ({
@@ -93,7 +93,7 @@ function Demo() {
         }}
       />
 
-      {/* Modular pagination */}
+      {/* Compound pagination */}
       <Pagination.Root
         total={10}
         getItemProps={(page) => ({

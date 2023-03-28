@@ -34,7 +34,7 @@ function Demo() {
         dotsIcon={IconGripHorizontal}
       />
 
-      {/* Modular pagination */}
+      {/* Compound pagination */}
       <Pagination.Root total={10}>
         <Group spacing={7} position="center" mt="xl">
           <Pagination.First icon={IconArrowBarToLeft} />
@@ -64,7 +64,7 @@ function Demo() {
         dotsIcon={IconGripHorizontal}
       />
 
-      {/* Modular pagination */}
+      {/* Compound pagination */}
       <Pagination.Root total={10}>
         <Group spacing={7} position="center" mt="xl">
           <Pagination.First icon={IconArrowBarToLeft} />
