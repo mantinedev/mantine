@@ -1,6 +1,5 @@
 import React, { forwardRef } from 'react';
 import { useComponentDefaultProps } from '@mantine/styles';
-import { ScrollArea } from '../../ScrollArea';
 import { ModalBase, ModalBaseContentProps } from '../../ModalBase';
 import { useDrawerContext, ScrollAreaComponent } from '../Drawer.context';
 
@@ -22,11 +21,12 @@ export const DrawerContent = forwardRef<HTMLElement, DrawerContentProps>((props,
 
   const ctx = useDrawerContext();
 
-  const Scroll = scrollAreaComponent || ctx.scrollAreaComponent || ScrollArea.Autosize;
+  const Scroll: React.FC<any> =
+    scrollAreaComponent || ctx.scrollAreaComponent || ModalBase.NativeScrollArea;
 
   return (
     <ModalBase.Content ref={ref} radius={0} {...others}>
-      <Scroll mah="100vh">{children}</Scroll>
+      <Scroll style={{ height: '100vh' }}>{children}</Scroll>
     </ModalBase.Content>
   );
 });

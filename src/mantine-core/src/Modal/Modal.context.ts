@@ -1,10 +1,7 @@
 import { MantineNumberSize } from '@mantine/styles';
 import { createSafeContext } from '@mantine/utils';
 
-export type ScrollAreaComponent = React.FC<{
-  mah: React.CSSProperties['maxHeight'];
-  children: React.ReactNode;
-}>;
+export type ScrollAreaComponent = React.FC<any>;
 
 interface ModalContext {
   yOffset: string | number;
