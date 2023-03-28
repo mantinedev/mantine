@@ -45,7 +45,7 @@ export function DrawerRoot(props: DrawerRootProps) {
   return (
     <DrawerProvider value={{ scrollAreaComponent }}>
       <ModalBase
-        __staticSelector="Modal"
+        __staticSelector="Drawer"
         size={size}
         variant={variant}
         transitionProps={{ transition: drawerTransition, duration: 200, ...transitionProps }}

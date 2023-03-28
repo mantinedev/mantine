@@ -1,5 +1,6 @@
 import React from 'react';
 import { useDisclosure } from '@mantine/hooks';
+import { MantineProvider } from '@mantine/styles';
 import { Button } from '../Button';
 import { Drawer } from './Drawer';
 
@@ -40,5 +41,33 @@ export function Scroll() {
         {content}
       </Drawer>
     </div>
+  );
+}
+
+export function StylesApiOnMantineProvider() {
+  const [opened, { open, close }] = useDisclosure(true);
+  return (
+    <MantineProvider
+      inherit
+      theme={{
+        components: {
+          Drawer: {
+            styles: {
+              header: { background: 'red' },
+              content: { background: 'blue' },
+            },
+          },
+        },
+      }}
+    >
+      <div style={{ padding: 40 }}>
+        <Button onClick={open}>Open drawer</Button>
+        {content}
+        <Button onClick={open}>Open drawer</Button>
+        <Drawer opened={opened} onClose={close} title="A drawer" position="right">
+          Content
+        </Drawer>
+      </div>
+    </MantineProvider>
   );
 }
