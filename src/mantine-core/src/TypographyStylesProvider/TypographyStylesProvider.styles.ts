@@ -14,7 +14,7 @@ export default createStyles((theme) => {
       marginBottom: theme.spacing.sm,
       ...values,
 
-      [`@media (max-width: ${theme.breakpoints.sm})`]: {
+      [theme.fn.smallerThan('sm')]: {
         fontSize: `calc(${rem(values.fontSize)} / 1.3)`,
       },
     };
@@ -29,7 +29,7 @@ export default createStyles((theme) => {
       lineHeight: theme.lineHeight,
       fontSize: theme.fontSizes.md,
 
-      [`@media (max-width: ${theme.breakpoints.sm})`]: {
+      [theme.fn.smallerThan('sm')]: {
         fontSize: theme.fontSizes.sm,
       },
 
