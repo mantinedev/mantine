@@ -12,7 +12,12 @@ import {
   useComponentDefaultProps,
 } from '@mantine/styles';
 import { TransitionOverride } from '../Transition';
-import { getFloatingPosition, FloatingPosition, ArrowPosition } from '../Floating';
+import {
+  getFloatingPosition,
+  FloatingAxesOffsets,
+  FloatingPosition,
+  ArrowPosition,
+} from '../Floating';
 import { PortalProps } from '../Portal';
 import { usePopover } from './use-popover';
 import { PopoverContextProvider } from './Popover.context';
@@ -29,8 +34,8 @@ export interface PopoverBaseProps {
   /** Dropdown position relative to target */
   position?: FloatingPosition;
 
-  /** Space between target element and dropdown */
-  offset?: number;
+  /** Default Y axis or either (main, cross, alignment) X and Y axis space between target element and dropdown  */
+  offset?: number | FloatingAxesOffsets;
 
   /** Called when dropdown position changes */
   onPositionChange?(position: FloatingPosition): void;
@@ -205,7 +210,7 @@ export function Popover(props: PopoverProps) {
     middlewares,
     width,
     position: getFloatingPosition(theme.dir, position),
-    offset: offset + (withArrow ? arrowSize / 2 : 0),
+    offset: typeof offset === 'number' ? offset + (withArrow ? arrowSize / 2 : 0) : offset,
     arrowRef,
     arrowOffset,
     onPositionChange,
