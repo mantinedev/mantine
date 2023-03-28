@@ -1,5 +1,8 @@
 import { createStyles } from '@mantine/styles';
 
 export default createStyles(() => ({
-  close: {},
+  close: {
+    marginLeft: 'auto',
+    marginRight: 0,
+  },
 }));
