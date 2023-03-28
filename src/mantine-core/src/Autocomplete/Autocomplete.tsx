@@ -221,11 +221,7 @@ export const Autocomplete = forwardRef<HTMLInputElement, AutocompleteProps>((pro
         <SelectPopover.Target>
           <div
             className={classes.wrapper}
-            role="combobox"
-            aria-haspopup="listbox"
-            aria-owns={shouldRenderDropdown ? `${inputProps.id}-items` : null}
             aria-controls={inputProps.id}
-            aria-expanded={shouldRenderDropdown}
             onMouseLeave={() => setHovered(-1)}
             tabIndex={-1}
           >
@@ -251,6 +247,10 @@ export const Autocomplete = forwardRef<HTMLInputElement, AutocompleteProps>((pro
               onClick={handleInputClick}
               onCompositionStart={() => setIMEOpen(true)}
               onCompositionEnd={() => setIMEOpen(false)}
+              role="combobox"
+              aria-haspopup="listbox"
+              aria-owns={shouldRenderDropdown ? `${inputProps.id}-items` : null}
+              aria-expanded={shouldRenderDropdown}
               aria-autocomplete="list"
               aria-controls={shouldRenderDropdown ? `${inputProps.id}-items` : null}
               aria-activedescendant={hovered >= 0 ? `${inputProps.id}-${hovered}` : null}
