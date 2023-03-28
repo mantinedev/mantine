@@ -100,7 +100,7 @@ form.insertListItem('fruits', { name: 'Orange', available: true }, 1);
 form.removeListItem('fruits', 1);
 
 // Swaps two items of the list at the specified path.
-// If no element exists at the `from` or `to` index, the list doesn't change.
+// You should make sure that there are elements at at the `from` and `to` index.
 form.reorderListItem('fruits', { from: 1, to: 0 });
 ```
 

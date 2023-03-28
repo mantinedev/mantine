@@ -37,7 +37,7 @@ describe('@mantine/form/removeListItem', () => {
     });
   });
 
-  it('clears errors of associated fields when list item is removed', () => {
+  it('updates errors of associated fields when list item is removed', () => {
     const hook = renderHook(() =>
       useForm({
         initialValues: {
@@ -63,6 +63,8 @@ describe('@mantine/form/removeListItem', () => {
     act(() => hook.result.current.removeListItem('a', 1));
     expect(hook.result.current.errors).toStrictEqual({
       name: 'name-error',
+      'a.0.b': 'error-1',
+      'a.1.b': 'error-3',
     });
   });
 });
