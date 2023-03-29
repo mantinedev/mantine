@@ -12,12 +12,12 @@ export function getWeekdayNames({
   format = 'dd',
   firstDayOfWeek = 1,
 }: GetWeekdaysNamesInput) {
-  const baseDate = dayjs().startOf('week');
+  const baseDate = dayjs().day(firstDayOfWeek);
   const labels: string[] = [];
 
   for (let i = 0; i < 7; i += 1) {
     labels.push(dayjs(baseDate).add(i, 'days').locale(locale).format(format));
   }
 
-  return [...labels.slice(firstDayOfWeek), ...labels.slice(0, firstDayOfWeek)];
+  return labels;
 }
