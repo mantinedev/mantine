@@ -132,7 +132,7 @@ export const DateInput = forwardRef<HTMLInputElement, DateInputProps>((props, re
 
   const [_date, setDate] = useUncontrolled({
     value: date,
-    defaultValue,
+    defaultValue: defaultValue || defaultDate,
     finalValue: null,
     onChange: onDateChange,
   });
