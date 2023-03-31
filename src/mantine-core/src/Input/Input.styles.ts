@@ -95,10 +95,6 @@ export default createStyles(
       variant === 'default' || variant === 'filled'
         ? {
             minHeight: getSize({ size, sizes }),
-            paddingLeft: `calc(${getSize({ size, sizes })}  / 3)`,
-            paddingRight: withRightSection
-              ? rightSectionWidth || getSize({ size, sizes })
-              : `calc(${getSize({ size, sizes })}  / 3)`,
             borderRadius: theme.fn.radius(radius),
           }
         : null;
@@ -127,6 +123,10 @@ export default createStyles(
         color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
         display: 'block',
         textAlign: 'left',
+        paddingLeft: `calc(${getSize({ size, sizes })}  / 3)`,
+        paddingRight: withRightSection
+          ? rightSectionWidth || getSize({ size, sizes })
+          : `calc(${getSize({ size, sizes })}  / 3)`,
         cursor: pointer ? 'pointer' : undefined,
         ...getVariantStyles({ theme, variant }),
         ...sizeStyles,
