@@ -7,8 +7,8 @@ const eventListerOptions = {
 
 export function useViewportSize() {
   const [windowSize, setWindowSize] = useState({
-    width: 0,
-    height: 0,
+    width: window.innerWidth || 0,
+    height: window.innerHeight || 0,
   });
 
   const setSize = useCallback(() => {
