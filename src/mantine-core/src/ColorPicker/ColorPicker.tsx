@@ -136,7 +136,7 @@ export const ColorPicker = forwardRef<HTMLDivElement, ColorPickerProps>(
     const updateRef = useRef(true);
     const withAlpha = format === 'hexa' || format === 'rgba' || format === 'hsla';
 
-    const [_value, setValue] = useUncontrolled({
+    const [_value, setValue, controlled] = useUncontrolled({
       value,
       defaultValue,
       finalValue: '#FFFFFF',
@@ -253,6 +253,9 @@ export const ColorPicker = forwardRef<HTMLDivElement, ColorPickerProps>(
               const convertedColor = convertHsvaTo(format, parseColor(color));
               onColorSwatchClick?.(convertedColor);
               onChangeEnd?.(convertedColor);
+              if (!controlled) {
+                setParsed(parseColor(color));
+              }
             }}
           />
         )}
