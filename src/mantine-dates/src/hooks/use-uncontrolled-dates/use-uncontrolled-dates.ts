@@ -34,7 +34,7 @@ export function useUncontrolledDates<Type extends DatePickerType = 'default'>({
     storedType.current = type;
     if (value === undefined) {
       // Reset uncontrolled value as types aren't compatible
-      _finalValue = getEmptyValue(type);
+      _finalValue = defaultValue !== undefined ? defaultValue : getEmptyValue(type);
       _setValue(_finalValue);
     } else if (process.env.NODE_ENV === 'development') {
       // Throw errors in dev mode in case type of value isn't correct
