@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef, forwardRef } from 'react';
-import { useMergedRef, assignRef, useOs, clamp, useDisclosure } from '@mantine/hooks';
+import { useMergedRef, assignRef, useOs, clamp } from '@mantine/hooks';
 import { DefaultProps, Selectors, useComponentDefaultProps, rem, getSize } from '@mantine/styles';
 import { TextInput } from '../TextInput';
 import { InputStylesNames, InputWrapperStylesNames } from '../Input';
@@ -136,6 +136,7 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>((props
     step,
     stepHoldInterval,
     stepHoldDelay,
+    onFocus,
     onBlur,
     onKeyDown,
     onKeyUp,
@@ -206,8 +207,6 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>((props
   const formatInternalValue = (val: number | '', allowHigherPrecision?: boolean) =>
     formatNum(parsePrecision(val, allowHigherPrecision));
 
-  const [resetStateValue, resetStateHandlers] = useDisclosure(false);
-
   // Parsed value that will be used for uncontrolled state and for setting the inputValue
   const [internalValue, _setInternalValue] = useState<number | ''>(
     typeof value === 'number' ? value : typeof defaultValue === 'number' ? defaultValue : ''
@@ -218,12 +217,20 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>((props
 
   const inputRef = useRef<HTMLInputElement>();
 
-  const setInternalValue = (val: number | '', allowHigherPrecision?: boolean) => {
-    const newInputValue = formatInternalValue(val, allowHigherPrecision);
-    if (newInputValue !== inputValue) {
-      // Make sure to update/reset the input value even if the internal value stays the same
-      // E. g. this may happen if the internalValue is "10" and the user entered "10abc"
-      setInputValue(newInputValue);
+  const [isFocussed, setIsFocussed] = useState(false);
+
+  const setInternalValue = (
+    val: number | '',
+    allowHigherPrecision?: boolean,
+    forceInputValueUpdate?: boolean
+  ) => {
+    if (!isFocussed || forceInputValueUpdate) {
+      const newInputValue = formatInternalValue(val, allowHigherPrecision);
+      if (newInputValue !== inputValue) {
+        // Make sure to update/reset the input value even if the internal value stays the same
+        // E. g. this may happen if the internalValue is "10" and the user entered "10abc"
+        setInputValue(newInputValue);
+      }
     }
 
     if (val !== internalValue) {
@@ -243,10 +250,7 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>((props
       newInternalValue = parseFloat(parsePrecision(clamp(internalValue + step, _min, _max)));
     }
 
-    if (value === undefined) {
-      setInternalValue(newInternalValue);
-    }
-
+    setInternalValue(newInternalValue, false, true);
     onChange?.(newInternalValue);
   };
 
@@ -259,22 +263,28 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>((props
       newInternalValue = parseFloat(parsePrecision(clamp(internalValue - step, _min, _max)));
     }
 
-    if (value === undefined) {
-      setInternalValue(newInternalValue);
-    }
-
+    setInternalValue(newInternalValue, false, true);
     onChange?.(newInternalValue);
   };
 
   assignRef(handlersRef, { increment: incrementRef.current, decrement: decrementRef.current });
 
   useEffect(() => {
-    if (typeof value === 'number' || value === '') {
-      setInternalValue(value, true);
-    } else if (value === undefined) {
-      setInternalValue(defaultValue ?? '', true);
+    if (isFocussed || value === undefined) {
+      return;
     }
-  }, [value, resetStateValue]);
+
+    // For controlled inputs overwrite internalValue as soon as component gets blurred
+    setInternalValue(value, true);
+  }, [value, isFocussed]);
+
+  useEffect(() => {
+    if (isFocussed || value !== undefined) {
+      return;
+    }
+
+    setInternalValue(internalValue, false, true);
+  }, [isFocussed]);
 
   const shouldUseStepInterval = stepHoldDelay !== undefined && stepHoldInterval !== undefined;
   const onStepTimeoutRef = useRef<number>(null);
@@ -360,10 +370,10 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>((props
   );
 
   /**
-   * Parse new value and propagate it via `onChange` to parent.
+   * Parse new input value and propagate it via `onChange` to parent.
    */
-  const propagateNewValue = () => {
-    let normalizedInputValue = inputValue;
+  const processInputValue = (newInputValue: string) => {
+    let normalizedInputValue = newInputValue;
     if (normalizedInputValue[0] === `${decimalSeparator}` || normalizedInputValue[0] === '.') {
       normalizedInputValue = `0${normalizedInputValue}`;
     }
@@ -372,14 +382,13 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>((props
     const clampedValue = !noClampOnBlur ? clamp(parsedValue, _min, _max) : parsedValue;
     const finalValue = Number.isNaN(clampedValue) ? '' : clampedValue;
 
-    if (value === undefined) {
-      setInternalValue(finalValue);
-      onChange?.(finalValue);
-    } else {
-      onChange?.(finalValue);
+    const internalValueChanged = internalValue !== finalValue;
 
-      // Force value effect that resets internal value to reformat the input and remove invalid inputs
-      resetStateHandlers.toggle();
+    setInputValue(newInputValue);
+    setInternalValue(finalValue);
+
+    if (internalValueChanged) {
+      onChange?.(finalValue);
     }
   };
 
@@ -389,13 +398,16 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>((props
       return;
     }
 
-    const val = event.target.value;
-    setInputValue(val);
+    processInputValue(event.target.value);
+  };
+
+  const handleFocus = (event: React.FocusEvent<HTMLInputElement>) => {
+    setIsFocussed(true);
+    onFocus?.(event);
   };
 
   const handleBlur = (event: React.FocusEvent<HTMLInputElement>) => {
-    propagateNewValue();
-
+    setIsFocussed(false);
     onBlur?.(event);
   };
 
@@ -415,8 +427,6 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>((props
         onStep(event, true);
       } else if (event.key === 'ArrowDown') {
         onStep(event, false);
-      } else if (event.key === 'Enter' && !event.repeat) {
-        propagateNewValue();
       }
     }
   };
@@ -438,6 +448,7 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>((props
       readOnly={readOnly}
       ref={useMergedRef(inputRef, ref)}
       onChange={handleChange}
+      onFocus={handleFocus}
       onBlur={handleBlur}
       onKeyDown={handleKeyDown}
       onKeyUp={handleKeyUp}

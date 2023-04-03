@@ -40,8 +40,12 @@ export function FixedValue() {
 export function WithUseFormHook() {
   const mantineForm = useForm({
     initialValues: {
-      someNumber: 3,
+      someNumber: 0,
+    },
+    validateInputOnBlur: true,
+    validate: {
+      someNumber: (val) => (!val ? 'please enter a number greater than zero' : null),
     },
   });
-  return <NumberInput min={1} max={5} step={1} {...mantineForm.getInputProps('someNumber')} />;
+  return <NumberInput min={0} max={5} step={1} {...mantineForm.getInputProps('someNumber')} />;
 }

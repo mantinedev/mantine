@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { act } from 'react-dom/test-utils';
@@ -28,7 +28,9 @@ const clickDecrement = (container: HTMLElement) =>
 const getInput = () => screen.getByRole('textbox');
 const enterText = (text: string) => userEvent.type(getInput(), text);
 const expectValue = (value: string) => expect(getInput()).toHaveValue(value);
+const focusInput = () => fireEvent.focus(getInput());
 const blurInput = () => fireEvent.blur(getInput());
+const clearInput = () => userEvent.clear(getInput());
 
 describe('@mantine/core/NumberInput', () => {
   checkAccessibility([
@@ -118,46 +120,141 @@ describe('@mantine/core/NumberInput', () => {
     expect(spy).toHaveBeenLastCalledWith(0);
   });
 
-  it('does not call onChange when entering text until the input gets blurred', async () => {
-    const spy = jest.fn();
-    render(<NumberInput onChange={spy} />);
-    expectValue('');
-    await enterText('12');
-    expect(spy).toHaveBeenCalledTimes(0);
-    blurInput();
-    expect(spy).toHaveBeenCalledTimes(1);
-    expect(spy).toHaveBeenLastCalledWith(12);
-    expectValue('12');
-  });
-
   it('returns empty string when input is empty', async () => {
     const spy = jest.fn();
     render(<NumberInput max={10} min={0} step={6} onChange={spy} />);
     await enterText('5');
-    blurInput();
     expect(spy).toHaveBeenLastCalledWith(5);
     await enterText('{backspace}');
-    blurInput();
     expect(spy).toHaveBeenLastCalledWith('');
     expectValue('');
   });
 
-  it('clears input on blur when input is empty and a string is entered', async () => {
+  it('triggers onChange for uncontrolled values for every meaningful input change', async () => {
     const spy = jest.fn();
-    render(<NumberInput max={10} min={0} step={6} onChange={spy} />);
+    render(<NumberInput onChange={spy} />);
+
+    focusInput();
+    await enterText('3');
+    expect(spy).toHaveBeenLastCalledWith(3);
+    expect(spy).toHaveBeenCalledTimes(1);
+
+    await enterText('2');
+    expect(spy).toHaveBeenLastCalledWith(32);
+    expect(spy).toHaveBeenCalledTimes(2);
+
+    await enterText('a');
+    expect(spy).toHaveBeenLastCalledWith(32);
+    expect(spy).toHaveBeenCalledTimes(2);
+  });
+
+  it('triggers onChange for controlled values for every meaningful input change', async () => {
+    const spy = jest.fn();
+    render(<NumberInput value={6} onChange={spy} />);
+
+    focusInput();
+    await enterText('3');
+    expect(spy).toHaveBeenLastCalledWith(63);
+    expect(spy).toHaveBeenCalledTimes(1);
+
+    await enterText('2');
+    expect(spy).toHaveBeenLastCalledWith(632);
+    expect(spy).toHaveBeenCalledTimes(2);
+
+    await enterText('a');
+    expect(spy).toHaveBeenLastCalledWith(632);
+    expect(spy).toHaveBeenCalledTimes(2);
+  });
+
+  it('onChange respects min/max properties and therefore outputs clamped values', async () => {
+    const spy = jest.fn();
+    render(<NumberInput max={100} min={10} onChange={spy} />);
+
+    focusInput();
+    await enterText('123');
+    expect(spy).toHaveBeenLastCalledWith(100);
+
+    await clearInput();
+    await enterText('3');
+    expect(spy).toHaveBeenLastCalledWith(10);
+  });
+
+  it('does not reformat controlled values while being focussed', async () => {
+    render(<NumberInput max={10} min={0} step={6} value={3} />);
+    await enterText('6');
+    expectValue('36');
+    await enterText('a');
+    expectValue('36a');
+    await enterText('.12');
+    expectValue('36a.12');
+  });
+
+  it('does not reformat uncontrolled values while being focussed', async () => {
+    render(<NumberInput max={10} min={0} step={6} />);
+    await enterText('6');
+    expectValue('6');
+    await enterText('a');
+    expectValue('6a');
+    await enterText('.12');
+    expectValue('6a.12');
+  });
+
+  it('reformats controlled values on blur', async () => {
+    render(<NumberInput max={10} min={0} step={6} value={3} />);
+
+    focusInput();
+    blurInput();
+    expectValue('3');
+
+    focusInput();
+    await enterText('2');
+    blurInput();
+    expectValue('3');
+
+    focusInput();
+    await clearInput();
+    blurInput();
+    expectValue('3');
+
+    focusInput();
+    await clearInput();
+    await enterText('12');
+    blurInput();
+    expectValue('3');
+  });
+
+  it('reformats uncontrolled values on blur', async () => {
+    render(<NumberInput max={10} min={0} step={6} />);
+
+    focusInput();
+    await clearInput();
     await enterText('6');
     blurInput();
-    expect(spy).toHaveBeenLastCalledWith(6);
-    await enterText('te');
-    expectValue('6te');
-    blurInput();
     expectValue('6');
-    expect(spy).toHaveBeenLastCalledWith(6);
-    await enterText('{backspace}{backspace}{backspace}te');
-    expectValue('te');
+
+    focusInput();
+    await clearInput();
+    await enterText('12');
+    blurInput();
+    expectValue('10');
+
+    focusInput();
+    await clearInput();
+    await enterText('2.12');
+    blurInput();
+    expectValue('2');
+
+    focusInput();
+    await clearInput();
+    await enterText('3abc');
+    blurInput();
+    expectValue('3');
+
+    focusInput();
+    await clearInput();
+    await enterText('abc');
     blurInput();
     expectValue('');
-    expect(spy).toHaveBeenLastCalledWith('');
   });
 
   it('supports changing decimal separator', async () => {
@@ -166,7 +263,6 @@ describe('@mantine/core/NumberInput', () => {
       <NumberInput max={10} min={0} step={6} precision={2} onChange={spy} decimalSeparator="," />
     );
     await enterText('6,54');
-    blurInput();
     expect(spy).toHaveBeenLastCalledWith(6.54);
     expect(getInput()).toHaveValue('6,54');
   });
@@ -176,6 +272,7 @@ describe('@mantine/core/NumberInput', () => {
     render(<NumberInput max={10} min={0} step={6} precision={2} onChange={spy} />);
     await enterText('6.123');
     blurInput();
+
     expect(spy).toHaveBeenLastCalledWith(6.12);
     expectValue('6.12');
   });
@@ -185,6 +282,7 @@ describe('@mantine/core/NumberInput', () => {
     render(<NumberInput precision={8} removeTrailingZeros onChange={spy} />);
     await enterText('6.12300000');
     blurInput();
+
     expect(spy).toHaveBeenLastCalledWith(6.123);
     expectValue('6.123');
   });
@@ -218,6 +316,7 @@ describe('@mantine/core/NumberInput', () => {
     render(<NumberInput precision={8} removeTrailingZeros onChange={spy} />);
     await enterText('6.00000000');
     blurInput();
+
     expect(spy).toHaveBeenLastCalledWith(6);
     expectValue('6');
   });
@@ -228,11 +327,11 @@ describe('@mantine/core/NumberInput', () => {
     await clickIncrement(container);
     expectValue('0');
     expect(spy).toHaveBeenLastCalledWith(0);
+
     await enterText('{backspace}4');
-    blurInput();
     expect(spy).toHaveBeenLastCalledWith(4);
+
     await enterText('{backspace}');
-    blurInput();
     await clickDecrement(container);
     expectValue('0');
     expect(spy).toHaveBeenLastCalledWith(0);
@@ -243,6 +342,7 @@ describe('@mantine/core/NumberInput', () => {
     render(<NumberInput step={10} onChange={spy} defaultValue={0} />);
     await enterText('{arrowup}');
     expect(spy).toHaveBeenCalledTimes(1);
+
     await enterText('{arrowdown}');
     expect(spy).toHaveBeenCalledTimes(2);
   });
@@ -252,11 +352,14 @@ describe('@mantine/core/NumberInput', () => {
     render(<NumberInput step={10} onChange={spy} defaultValue={0} />);
     await enterText('{arrowup}');
     expectValue('10');
+
     await enterText('{arrowup}');
     expectValue('20');
     expect(spy).toHaveBeenLastCalledWith(20);
+
     await enterText('{arrowdown}');
     expectValue('10');
+
     await enterText('{arrowdown}');
     expectValue('0');
     expect(spy).toHaveBeenLastCalledWith(0);
@@ -276,53 +379,36 @@ describe('@mantine/core/NumberInput', () => {
     render(<NumberInput startValue={3} onChange={spy} />);
     await enterText('{arrowup}');
     blurInput();
-    expect(getInput()).toHaveValue('3');
+    expectValue('3');
     expect(spy).toHaveBeenLastCalledWith(3);
   });
 
-  it('propagates the new value when hitting enter', async () => {
-    const spy = jest.fn();
-    render(<NumberInput onChange={spy} />);
-    await enterText('34');
-    expectValue('34');
-    await enterText('{enter}');
-    expectValue('34');
-    expect(spy).toHaveBeenLastCalledWith(34);
-    await enterText('abc');
-    expectValue('34abc');
-    await enterText('{enter}');
-    expectValue('34');
-    expect(spy).toHaveBeenLastCalledWith(34);
-  });
+  it('triggers onBlur in a different pass than onChange', async () => {
+    const blurSpy = jest.fn();
 
-  it('resets displayed value to value prop when input is controlled and component gets blurred', async () => {
-    render(<NumberInput value={3} />);
-    expectValue('3');
-    await enterText('45');
-    expectValue('345');
-    await userEvent.tab();
-    expectValue('3');
-  });
+    function TestApp() {
+      const [value, setValue] = useState<number | ''>('');
 
-  it('resets displayed value to value prop when input is controlled and enter gets pressed', async () => {
-    render(<NumberInput value={3} />);
-    expectValue('3');
-    await enterText('45');
-    expectValue('345');
-    await enterText('{enter}');
-    expectValue('3');
-  });
+      return (
+        <NumberInput
+          value={value}
+          onChange={(newValue) => setValue(newValue)}
+          onBlur={() => blurSpy(value)}
+        />
+      );
+    }
 
-  it('reformats displayed value when input is uncontrolled and enter gets pressed', async () => {
-    render(<NumberInput defaultValue={3} />);
-    expectValue('3');
-    await enterText('45');
-    expectValue('345');
-    await enterText('{enter}');
-    expectValue('345');
-    await enterText('abc');
-    expectValue('345abc');
-    await enterText('{enter}');
-    expectValue('345');
+    render(<TestApp />);
+    await enterText('3');
+    blurInput();
+
+    expect(blurSpy).toHaveBeenLastCalledWith(3);
+
+    focusInput();
+    await clearInput();
+    await enterText('12');
+    blurInput();
+
+    expect(blurSpy).toHaveBeenLastCalledWith(12);
   });
 });
