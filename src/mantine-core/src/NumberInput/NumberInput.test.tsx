@@ -162,13 +162,31 @@ describe('@mantine/core/NumberInput', () => {
 
   it('supports changing decimal separator', async () => {
     const spy = jest.fn();
-    render(
-      <NumberInput max={10} min={0} step={6} precision={2} onChange={spy} decimalSeparator="," />
-    );
+    render(<NumberInput precision={2} onChange={spy} decimalSeparator="," />);
     await enterText('6,54');
     blurInput();
     expect(spy).toHaveBeenLastCalledWith(6.54);
     expect(getInput()).toHaveValue('6,54');
+  });
+
+  it('supports changing thousands separator', async () => {
+    const spy = jest.fn();
+    render(<NumberInput precision={2} onChange={spy} thousandsSeparator="." />);
+    await enterText('1.000.000');
+    blurInput();
+    expect(spy).toHaveBeenLastCalledWith(1000000);
+    expect(getInput()).toHaveValue('1000000.00');
+  });
+
+  it('supports changing thousands and decimal separator', async () => {
+    const spy = jest.fn();
+    render(
+      <NumberInput precision={3} onChange={spy} decimalSeparator="," thousandsSeparator="." />
+    );
+    await enterText('1.000.000,355');
+    blurInput();
+    expect(spy).toHaveBeenLastCalledWith(1000000.355);
+    expect(getInput()).toHaveValue('1000000,355');
   });
 
   it('sets input value with a given precision', async () => {

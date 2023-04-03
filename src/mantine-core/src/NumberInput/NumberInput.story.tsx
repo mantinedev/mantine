@@ -15,6 +15,7 @@ export function Usage() {
         onChange={setValue}
         precision={2}
         decimalSeparator=","
+        thousandsSeparator="."
         mb="md"
         min={10}
         defaultValue={12}
