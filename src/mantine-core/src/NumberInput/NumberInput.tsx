@@ -166,13 +166,10 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>((props
     { classNames, styles, unstyled, name: 'NumberInput', variant, size }
   );
 
-  const parsePrecision = (val: number | '', allowHigherPrecision?: boolean) => {
+  const parsePrecision = (val: number | '') => {
     if (val === '') return '';
 
     let result = val.toFixed(precision);
-    if (allowHigherPrecision && result.length < val.toString().length) {
-      result = val.toString();
-    }
 
     if (removeTrailingZeros && precision > 0) {
       result = result.replace(new RegExp(`[0]{0,${precision}}$`), '');
@@ -204,8 +201,7 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>((props
     return parser(num);
   };
 
-  const formatInternalValue = (val: number | '', allowHigherPrecision?: boolean) =>
-    formatNum(parsePrecision(val, allowHigherPrecision));
+  const formatInternalValue = (val: number | '') => formatNum(parsePrecision(val));
 
   // Parsed value that will be used for uncontrolled state and for setting the inputValue
   const [internalValue, _setInternalValue] = useState<number | ''>(
@@ -219,13 +215,9 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>((props
 
   const [isFocussed, setIsFocussed] = useState(false);
 
-  const setInternalValue = (
-    val: number | '',
-    allowHigherPrecision?: boolean,
-    forceInputValueUpdate?: boolean
-  ) => {
+  const setInternalValue = (val: number | '', forceInputValueUpdate?: boolean) => {
     if (!isFocussed || forceInputValueUpdate) {
-      const newInputValue = formatInternalValue(val, allowHigherPrecision);
+      const newInputValue = formatInternalValue(val);
       if (newInputValue !== inputValue) {
         // Make sure to update/reset the input value even if the internal value stays the same
         // E. g. this may happen if the internalValue is "10" and the user entered "10abc"
@@ -250,7 +242,7 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>((props
       newInternalValue = parseFloat(parsePrecision(clamp(internalValue + step, _min, _max)));
     }
 
-    setInternalValue(newInternalValue, false, true);
+    setInternalValue(newInternalValue, true);
     onChange?.(newInternalValue);
   };
 
@@ -263,28 +255,25 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>((props
       newInternalValue = parseFloat(parsePrecision(clamp(internalValue - step, _min, _max)));
     }
 
-    setInternalValue(newInternalValue, false, true);
+    setInternalValue(newInternalValue, true);
     onChange?.(newInternalValue);
   };
 
   assignRef(handlersRef, { increment: incrementRef.current, decrement: decrementRef.current });
 
   useEffect(() => {
-    if (isFocussed || value === undefined) {
+    if (isFocussed) {
       return;
     }
 
-    // For controlled inputs overwrite internalValue as soon as component gets blurred
-    setInternalValue(value, true);
+    if (value === undefined) {
+      // For uncontrolled inputs reapply internalValue
+      setInternalValue(internalValue, true);
+    } else {
+      // For controlled inputs apply value
+      setInternalValue(value, true);
+    }
   }, [value, isFocussed]);
-
-  useEffect(() => {
-    if (isFocussed || value !== undefined) {
-      return;
-    }
-
-    setInternalValue(internalValue, false, true);
-  }, [isFocussed]);
 
   const shouldUseStepInterval = stepHoldDelay !== undefined && stepHoldInterval !== undefined;
   const onStepTimeoutRef = useRef<number>(null);
