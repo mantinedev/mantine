@@ -45,18 +45,4 @@ describe('@mantine/form/reset', () => {
     expect(hook.result.current.isDirty()).toBe(false);
     expect(hook.result.current.values).toStrictEqual({ a: 1, b: 2 });
   });
-
-  it('resets form with passed values', () => {
-    const hook = renderHook(() =>
-      useForm<{ a: number; b?: number; c?: number }>({ initialValues: { a: 1, b: 2 } })
-    );
-
-    act(() => hook.result.current.setFieldValue('c', 3));
-    expect(hook.result.current.isDirty()).toBe(true);
-    expect(hook.result.current.values).toStrictEqual({ a: 1, b: 2, c: 3 });
-
-    act(() => hook.result.current.reset({ a: 4, b: 5, c: 6 }));
-    expect(hook.result.current.isDirty()).toBe(false);
-    expect(hook.result.current.values).toStrictEqual({ a: 4, b: 5, c: 6 });
-  });
 });
