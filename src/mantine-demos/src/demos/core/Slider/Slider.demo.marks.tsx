@@ -31,9 +31,9 @@ function Demo() {
 
   return (
     <Box maw={400} mx="auto">
-      <Slider defaultValue={40} marks={[{ value: 10 }, { value: 40 }, { value: 95 }]} pb={50} />
-      <Slider defaultValue={40} marks={marks} pb={50} />
-      <RangeSlider defaultValue={[20, 80]} marks={marks} pb={50} />
+      <Slider defaultValue={40} marks={[{ value: 10 }, { value: 40 }, { value: 95 }]} mb={32} />
+      <Slider defaultValue={40} marks={marks} mb={32} />
+      <RangeSlider defaultValue={[20, 80]} marks={marks} mb={32} />
     </Box>
   );
 }
