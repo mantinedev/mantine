@@ -126,4 +126,24 @@ describe('@mantine/dates/DatePickerInput', () => {
     expect(container.querySelector('[data-dates-input]')).toHaveStyle({ borderColor: '#EB4522' });
     expect(container.querySelector('table button')).toHaveStyle({ borderColor: '#EE4533' });
   });
+
+  it('supports withCellSpacing prop', () => {
+    const { container, rerender } = render(
+      <DatePickerInput
+        {...defaultProps}
+        popoverProps={{ opened: true, withinPortal: false, transitionProps: { duration: 0 } }}
+        withCellSpacing
+      />
+    );
+    expect(container.querySelector('tbody tr td')).toHaveAttribute('data-with-spacing', 'true');
+
+    rerender(
+      <DatePickerInput
+        {...defaultProps}
+        popoverProps={{ opened: true, withinPortal: false, transitionProps: { duration: 0 } }}
+        withCellSpacing={false}
+      />
+    );
+    expect(container.querySelector('tbody tr td')).not.toHaveAttribute('data-with-spacing');
+  });
 });
