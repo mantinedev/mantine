@@ -19,7 +19,7 @@ import { YearLevelSettings } from '../YearLevel';
 import { MonthLevelSettings } from '../MonthLevel';
 import { HiddenDatesInput } from '../HiddenDatesInput';
 import { assignTime } from '../../utils';
-import { DateValue } from '../../types';
+import { DateValue, CalendarLevel } from '../../types';
 import { useDatesContext } from '../DatesProvider';
 import { isDateValid } from './is-date-valid/is-date-valid';
 import { dateStringParser } from './date-string-parser/date-string-parser';
@@ -67,6 +67,18 @@ export interface DateInputProps
 
   /** Determines whether time (hours, minutes, seconds and milliseconds) should be preserved when new date is picked, true by default */
   preserveTime?: boolean;
+
+  /** Max level that user can go up to (decade, year, month), defaults to decade */
+  maxLevel?: CalendarLevel;
+
+  /** Initial level displayed to the user (decade, year, month), used for uncontrolled component */
+  defaultLevel?: CalendarLevel;
+
+  /** Current level displayed to the user (decade, year, month), used for controlled component */
+  level?: CalendarLevel;
+
+  /** Called when level changes */
+  onLevelChange?(level: CalendarLevel): void;
 }
 
 const defaultProps: Partial<DateInputProps> = {
@@ -132,7 +144,7 @@ export const DateInput = forwardRef<HTMLInputElement, DateInputProps>((props, re
 
   const [_date, setDate] = useUncontrolled({
     value: date,
-    defaultValue,
+    defaultValue: defaultValue || defaultDate,
     finalValue: null,
     onChange: onDateChange,
   });

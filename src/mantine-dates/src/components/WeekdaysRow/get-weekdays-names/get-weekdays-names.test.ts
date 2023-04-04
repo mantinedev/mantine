@@ -1,7 +1,12 @@
+import dayjs from 'dayjs';
 import 'dayjs/locale/ru';
 import { getWeekdayNames } from './get-weekdays-names';
 
 describe('@mantine/dates/get-weekday-names', () => {
+  afterEach(() => {
+    dayjs.locale('en');
+  });
+
   it('returns correct weekday names for given locale', () => {
     expect(getWeekdayNames({ locale: 'en' })).toStrictEqual([
       'Mo',
@@ -53,6 +58,30 @@ describe('@mantine/dates/get-weekday-names', () => {
       'We',
       'Th',
       'Fr',
+    ]);
+  });
+
+  it('respects the locale globally set for dayjs', () => {
+    dayjs.locale('ru');
+
+    expect(getWeekdayNames({ locale: 'en', firstDayOfWeek: 0 })).toStrictEqual([
+      'Su',
+      'Mo',
+      'Tu',
+      'We',
+      'Th',
+      'Fr',
+      'Sa',
+    ]);
+
+    expect(getWeekdayNames({ locale: 'en', firstDayOfWeek: 1 })).toStrictEqual([
+      'Mo',
+      'Tu',
+      'We',
+      'Th',
+      'Fr',
+      'Sa',
+      'Su',
     ]);
   });
 });
