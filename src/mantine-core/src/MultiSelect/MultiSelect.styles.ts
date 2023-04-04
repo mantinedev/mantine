@@ -40,7 +40,6 @@ export default createStyles((theme, { invalid }: MultiSelectStylesParams, { size
     marginLeft: `calc(${theme.spacing.xs} / 2)`,
     appearance: 'none',
     color: 'inherit',
-    lineHeight: `calc(${getSize({ size, sizes: INPUT_SIZES })} - ${rem(2)})`,
     maxHeight: getSize({ size, sizes: DEFAULT_VALUE_SIZES }),
 
     '&::placeholder': {
