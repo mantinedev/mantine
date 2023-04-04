@@ -189,6 +189,8 @@ export function handleControlKeyDown({
   const direction = getDirection(event.key);
 
   if (direction) {
+    event.preventDefault();
+
     const size = getControlsSize(controlsRef);
 
     focusOnNextFocusableControl({
