@@ -9,7 +9,8 @@ function Demo() {
   return (
     <NumberInput
       decimalSeparator=","
-      label="Number input with a custom decimal separator"
+      thousandsSeparator="."
+      label="Number input with custom separators"
       defaultValue={0.5}
       precision={2}
       step={0.5}
@@ -24,7 +25,8 @@ function Demo() {
       maw={320}
       mx="auto"
       decimalSeparator=","
-      label="Number input with a custom decimal separator"
+      thousandsSeparator="."
+      label="Number input with custom separators"
       placeholder="Decimal separator"
       defaultValue={0.5}
       precision={2}

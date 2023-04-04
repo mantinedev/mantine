@@ -39,6 +39,9 @@ export interface NumberInputProps
   /** The decimal separator */
   decimalSeparator?: string;
 
+  /** The thousands separator */
+  thousandsSeparator?: string;
+
   /** Maximum possible value */
   max?: number;
 
@@ -118,6 +121,7 @@ const defaultProps: Partial<NumberInputProps> = {
   precision: 0,
   noClampOnBlur: false,
   removeTrailingZeros: false,
+  decimalSeparator: '.',
   formatter: defaultFormatter,
   parser: defaultParser,
   type: 'text',
@@ -130,6 +134,7 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>((props
     value,
     onChange,
     decimalSeparator,
+    thousandsSeparator,
     min,
     max,
     startValue,
@@ -175,7 +180,7 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>((props
 
     if (removeTrailingZeros && precision > 0) {
       result = result.replace(new RegExp(`[0]{0,${precision}}$`), '');
-      if (result.endsWith('.') || result.endsWith(decimalSeparator)) {
+      if (result.endsWith('.')) {
         result = result.slice(0, -1);
       }
     }
@@ -183,11 +188,10 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>((props
     return result;
   };
 
-  const formatNum = (val: string | number = '') => {
-    let parsedStr = typeof val === 'number' ? String(val) : val;
-
+  const formatNum = (val: string) => {
+    let parsedStr = val;
     if (decimalSeparator) {
-      parsedStr = parsedStr.replace(/\./g, decimalSeparator);
+      parsedStr = parsedStr.replace('.', decimalSeparator);
     }
 
     return formatter(parsedStr);
@@ -197,7 +201,7 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>((props
     let num = val;
 
     if (decimalSeparator) {
-      num = num.replace(new RegExp(`\\${decimalSeparator}`, 'g'), '.');
+      num = num.replaceAll(thousandsSeparator, '').replace(decimalSeparator, '.');
     }
 
     return parser(num);
