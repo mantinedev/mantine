@@ -64,7 +64,7 @@ export interface ModalBaseSettings extends React.ComponentPropsWithoutRef<'div'>
   withinPortal?: boolean;
 
   /** Props to pass down to the portal when withinPortal is true */
-  portalProps?: Omit<PortalProps, 'target'>;
+  portalProps?: Omit<PortalProps, 'children' | 'withinPortal' | 'target'>;
 
   /** Target element or selector where Portal should be rendered, by default new element is created and appended to the document.body */
   target?: HTMLElement | string;
@@ -172,7 +172,7 @@ export function ModalBase(props: ModalBaseProps) {
   useFocusReturn({ opened, shouldReturnFocus: trapFocus && returnFocus });
 
   return (
-    <OptionalPortal withinPortal={withinPortal} target={target} {...portalProps}>
+    <OptionalPortal {...portalProps} withinPortal={withinPortal} target={target}>
       <ModalBaseProvider
         value={{
           __staticSelector,

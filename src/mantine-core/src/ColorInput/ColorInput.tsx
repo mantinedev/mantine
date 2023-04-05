@@ -61,7 +61,7 @@ export interface ColorInputProps
   withinPortal?: boolean;
 
   /** Props to pass down to the portal when withinPortal is true */
-  portalProps?: PortalProps;
+  portalProps?: Omit<PortalProps, 'children' | 'withinPortal'>;
 
   /** Dropdown box-shadow, key of theme.shadows */
   shadow?: MantineShadow;

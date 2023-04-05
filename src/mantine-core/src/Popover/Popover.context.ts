@@ -26,7 +26,7 @@ interface PopoverContext {
   trapFocus: boolean;
   placement: FloatingPosition;
   withinPortal: boolean;
-  portalProps?: PortalProps;
+  portalProps?: Omit<PortalProps, 'children' | 'withinPortal'>;
   closeOnEscape: boolean;
   zIndex: React.CSSProperties['zIndex'];
   radius?: MantineNumberSize;

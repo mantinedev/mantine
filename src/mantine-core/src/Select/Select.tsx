@@ -55,7 +55,7 @@ export interface SelectSharedProps<Item, Value> {
   withinPortal?: boolean;
 
   /** Props to pass down to the portal when withinPortal is true */
-  portalProps?: PortalProps;
+  portalProps?: Omit<PortalProps, 'children' | 'withinPortal'>;
 
   /** Limit amount of items displayed at a time for searchable select */
   limit?: number;

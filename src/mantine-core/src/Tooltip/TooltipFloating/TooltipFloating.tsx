@@ -29,6 +29,7 @@ export function TooltipFloating(props: TooltipFloatingProps) {
     children,
     refProp,
     withinPortal,
+    portalProps,
     style,
     className,
     classNames,
@@ -76,7 +77,7 @@ export function TooltipFloating(props: TooltipFloatingProps) {
 
   return (
     <>
-      <OptionalPortal withinPortal={withinPortal}>
+      <OptionalPortal {...portalProps} withinPortal={withinPortal}>
         <Box
           {...others}
           ref={floating}
