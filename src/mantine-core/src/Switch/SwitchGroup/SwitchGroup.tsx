@@ -10,7 +10,7 @@ export interface SwitchGroupProps
   extends DefaultProps<SwitchGroupStylesNames>,
     InputWrapperBaseProps,
     Omit<React.ComponentPropsWithoutRef<'div'>, 'onChange'> {
-  /** <Checkbox /> components only */
+  /** <Switch /> components only */
   children: React.ReactNode;
 
   /** Value of currently selected checkbox */
