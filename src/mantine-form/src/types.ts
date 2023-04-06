@@ -49,7 +49,7 @@ export type OnSubmit<Values, TransformValues extends _TransformValues<Values>> =
   handleSubmit: (
     values: ReturnType<TransformValues>,
     event: React.FormEvent<HTMLFormElement>
-  ) => void,
+  ) => void | Promise<unknown>,
   handleValidationFailure?: (
     errors: FormErrors,
     values: Values,
@@ -111,6 +111,11 @@ export type IsValid<Values> = <Field extends LooseKeys<Values>>(path?: Field) =>
 
 export type _TransformValues<Values> = (values: Values) => unknown;
 
+export type SubmitError = any | null;
+export type SetSubmitting = (submitting: boolean) => void;
+export type SetSubmitError = (error: SubmitError) => void;
+export type ResetSubmitError = () => void;
+
 export interface UseFormInput<
   Values,
   TransformValues extends _TransformValues<Values> = (values: Values) => Values
@@ -132,6 +137,11 @@ export interface UseFormReturnType<
 > {
   values: Values;
   errors: FormErrors;
+  submitting: boolean;
+  submitError: any;
+  setSubmitting: SetSubmitting;
+  setSubmitError: SetSubmitError;
+  resetSubmitError: ResetSubmitError;
   setValues: SetValues<Values>;
   setErrors: SetErrors;
   setFieldValue: SetFieldValue<Values>;

@@ -225,6 +225,43 @@ As second parameter options can be passed.
 <Checkbox {...form.getInputProps('accepted', { type: 'checkbox' })} />
 ```
 
+### async onSubmit
+
+If `onSubmit` handler returns a promise it will be awaited and `form.submitting` will be set to `true` until the promise is settled.
+Should the promise be rejected, `form.submitError` will be set to the error.
+
+While the promise is pending, any new calls to `form.submit` will be ignored.
+
+```tsx
+const form = useForm();
+
+// example onSubmit handler that returns a promise
+async function onSubmit() {
+  // do something async
+}
+
+// true while promise is pending
+form.submitting;
+
+// error object if promise was rejected (null otherwise)
+form.submitError;
+
+// manually set submitting
+form.setSubmitting(true);
+
+// manually set submitError
+form.setSubmitError(new Error('Something went wrong'));
+
+// reset submitError
+form.resetSubmitError();
+
+// example usages
+<Button loading={form.submitting}>Submit</Button>
+<LoadingOverlay visible={form.submitting} />
+{form.submitError && <Text color="red">Error: {form.submitError.message}</Text>}
+```
+
+
 ## UseFormReturnType
 
 `UseFormReturnType` can be used when you want to pass `form` as a prop to another component:
