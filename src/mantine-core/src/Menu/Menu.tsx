@@ -165,8 +165,6 @@ export function Menu(props: MenuProps) {
         classNames={{ ...classNames, dropdown: cx(classes.dropdown, classNames?.dropdown) }}
         styles={styles}
         unstyled={unstyled}
-        onClose={close}
-        onOpen={open}
         variant={variant}
       >
         {children}
