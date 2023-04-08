@@ -79,7 +79,6 @@ const defaultProps: Partial<MenuProps> = {
   openDelay: 0,
   closeDelay: 100,
 };
-
 export function Menu(props: MenuProps) {
   const {
     children,
@@ -157,7 +156,7 @@ export function Menu(props: MenuProps) {
         {...others}
         radius={radius}
         opened={_opened}
-        onChange={setOpened}
+        onChange={toggleDropdown}
         defaultOpened={defaultOpened}
         trapFocus={trigger === 'click'}
         closeOnEscape={closeOnEscape && trigger === 'click'}
