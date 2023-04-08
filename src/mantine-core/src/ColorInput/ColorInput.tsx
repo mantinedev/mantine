@@ -160,7 +160,11 @@ export const ColorInput = forwardRef<HTMLInputElement, ColorInputProps>((props, 
       size={inputProps.size}
       onClick={() =>
         openEyeDropper()
-          .then(({ sRGBHex }) => setValue(convertHsvaTo(format, parseColor(sRGBHex))))
+          .then(({ sRGBHex }) => {
+            const color = convertHsvaTo(format, parseColor(sRGBHex));
+            setValue(color);
+            onChangeEnd?.(color);
+          })
           .catch(noop)
       }
     >
