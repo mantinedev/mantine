@@ -39,7 +39,8 @@ export function mergeTheme(
       // If overriden theme has extented breakpoints
       if (themeBreakpointsKeys.length !== themeOverrideBreakpointsKeys.length) {
         const missedKeys = themeBreakpointsKeys.filter(
-          (bp) => !themeOverrideBreakpointsKeys.includes(bp));
+          (bp) => !themeOverrideBreakpointsKeys.includes(bp)
+        );
 
         if (missedKeys.length === 0) {
           return themeOverride.breakpoints;
