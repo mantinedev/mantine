@@ -40,6 +40,7 @@ export const configurator: MantineDemo = {
   configurator: [
     { name: 'loading', type: 'boolean', initialValue: false, defaultValue: false },
     { name: 'withCloseButton', type: 'boolean', initialValue: true, defaultValue: true },
+    { name: 'withBorder', type: 'boolean', initialValue: false, defaultValue: false },
     { name: 'color', type: 'color', initialValue: 'blue', defaultValue: 'blue' },
     { name: 'radius', type: 'size', initialValue: 'sm', defaultValue: 'sm' },
     {

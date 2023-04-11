@@ -65,6 +65,12 @@ export default createStyles((theme, { color, radius, withTitle }: NotificationSt
           display: 'none',
         },
       },
+
+      '&[data-with-border]': {
+        border: `${rem(1)} solid ${
+          theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[3]
+        }`,
+      },
     },
 
     body: {
