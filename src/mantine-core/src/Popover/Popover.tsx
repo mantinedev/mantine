@@ -80,7 +80,7 @@ export interface PopoverBaseProps {
   withinPortal?: boolean;
 
   /** Props to pass down to the portal when withinPortal is true */
-  portalProps?: PortalProps;
+  portalProps?: Omit<PortalProps, 'children' | 'withinPortal'>;
 
   /** Dropdown z-index */
   zIndex?: React.CSSProperties['zIndex'];

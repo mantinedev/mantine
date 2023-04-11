@@ -29,7 +29,7 @@ export interface DropzoneFullScreenProps
   withinPortal?: boolean;
 
   /** Props to pass down to the portal when withinPortal is true */
-  portalProps?: PortalProps;
+  portalProps?: Omit<PortalProps, 'children' | 'withinPortal'>;
 }
 
 const fullScreenDefaultProps: Partial<DropzoneFullScreenProps> = {
@@ -101,7 +101,7 @@ export function DropzoneFullScreen(props: DropzoneFullScreenProps) {
   }, [active]);
 
   return (
-    <OptionalPortal withinPortal={withinPortal} {...portalProps}>
+    <OptionalPortal {...portalProps} withinPortal={withinPortal}>
       <Box
         className={cx(classes.wrapper, className)}
         sx={sx}
