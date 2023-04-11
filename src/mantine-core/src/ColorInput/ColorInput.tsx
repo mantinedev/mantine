@@ -180,9 +180,9 @@ export const ColorInput = forwardRef<HTMLInputElement, ColorInputProps>((props, 
   };
 
   const handleInputBlur = (event: React.FocusEvent<HTMLInputElement>) => {
+    fixOnBlur && setValue(lastValidValue);
     onBlur?.(event);
     setDropdownOpened(false);
-    fixOnBlur && setValue(lastValidValue);
   };
 
   const handleInputClick = (event: React.MouseEvent<HTMLInputElement>) => {
