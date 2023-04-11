@@ -2,14 +2,7 @@ import dayjs from 'dayjs';
 import { useState } from 'react';
 import { DatePickerType, PickerBaseProps } from '../../types';
 import { useUncontrolledDates } from '../use-uncontrolled-dates/use-uncontrolled-dates';
-
-function isInRange(date: Date, range: [Date, Date]) {
-  const _range = [...range].sort((a, b) => a.getTime() - b.getTime());
-  return (
-    dayjs(date).subtract(1, 'day').isBefore(_range[1]) &&
-    dayjs(date).add(1, 'day').isAfter(_range[0])
-  );
-}
+import { isInRange } from './is-in-range/is-in-range';
 
 interface UseDatesRangeInput<Type extends DatePickerType = 'default'>
   extends PickerBaseProps<Type> {
