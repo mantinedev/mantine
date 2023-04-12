@@ -1,5 +1,6 @@
 import { MantineThemeOverride, MantineThemeBase, MantineTheme } from '../../types';
 import { attachFunctions } from '../../functions/attach-functions';
+import { getBreakpointValue } from '../../functions/fns/breakpoints/breakpoints';
 
 export function mergeTheme(
   currentTheme: MantineThemeBase,
@@ -33,25 +34,11 @@ export function mergeTheme(
     }
 
     if (key === 'breakpoints' && themeOverride.breakpoints) {
-      const themeBreakpointsKeys = Object.keys(currentTheme.breakpoints);
-      const themeOverrideBreakpointsKeys = Object.keys(themeOverride.breakpoints);
+      const mergedBreakpoints = { ...currentTheme.breakpoints, ...themeOverride.breakpoints };
 
-      // If overriden theme has extented breakpoints
-      if (themeBreakpointsKeys.length !== themeOverrideBreakpointsKeys.length) {
-        const missedKeys = themeBreakpointsKeys.filter(
-          (bp) => !themeOverrideBreakpointsKeys.includes(bp)
-        );
-
-        if (missedKeys.length === 0) {
-          return themeOverride.breakpoints;
-        }
-        // eslint-disable-next-line no-console
-        console.warn(
-          '[@mantine/core] It looks like you overrided the `theme.config` but forgot to specify the required breakpoints keys',
-          missedKeys,
-          'Fix the missing keys or the final configuration will have sorting issues'
-        );
-      }
+      return Object.entries(mergedBreakpoints)
+        .sort((a, b) => getBreakpointValue(a[1]) - getBreakpointValue(b[1]))
+        .reduce((obj, [k, value]) => ({ ...obj, [k]: value }), {});
     }
 
     acc[key] =
