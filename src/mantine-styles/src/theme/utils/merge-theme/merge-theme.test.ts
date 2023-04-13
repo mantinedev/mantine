@@ -34,6 +34,15 @@ describe('@mantine/styles/merge-theme', () => {
     });
   });
 
+  it('merges breakpoints with valid order', () => {
+    const themeBase = getThemeBase();
+
+    expect(mergeTheme(themeBase, { breakpoints: { min: '1em', xxl: '999em' } })).toStrictEqual({
+      ...themeBase,
+      breakpoints: { min: '1em', ...themeBase.breakpoints, xxl: '999em' },
+    });
+  });
+
   it('merges headings correctly', () => {
     const themeBase = getThemeBase();
     expect(
