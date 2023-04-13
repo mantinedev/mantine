@@ -37,9 +37,11 @@ describe('@mantine/styles/merge-theme', () => {
   it('merges breakpoints with valid order', () => {
     const themeBase = getThemeBase();
 
-    expect(mergeTheme(themeBase, { breakpoints: { min: '1em', xxl: '999em' } })).toStrictEqual({
+    expect(
+      mergeTheme(themeBase, { breakpoints: { xxl: '999em', min: '1em', xs: '10em' } })
+    ).toStrictEqual({
       ...themeBase,
-      breakpoints: { min: '1em', ...themeBase.breakpoints, xxl: '999em' },
+      breakpoints: { min: '1em', ...{ ...themeBase.breakpoints, xs: '10em' }, xxl: '999em' },
     });
   });
 

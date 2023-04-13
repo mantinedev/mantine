@@ -36,11 +36,14 @@ export function mergeTheme(
     if (key === 'breakpoints' && themeOverride.breakpoints) {
       const mergedBreakpoints = { ...currentTheme.breakpoints, ...themeOverride.breakpoints };
 
-      return Object.fromEntries(
-        Object.entries(mergedBreakpoints).sort(
-          (a, b) => getBreakpointValue(a[1]) - getBreakpointValue(b[1])
-        )
-      );
+      return {
+        ...acc,
+        breakpoints: Object.fromEntries(
+          Object.entries(mergedBreakpoints).sort(
+            (a, b) => getBreakpointValue(a[1]) - getBreakpointValue(b[1])
+          )
+        ),
+      };
     }
 
     acc[key] =
