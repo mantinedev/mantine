@@ -13,7 +13,7 @@ export default createStyles(
     trackContainer: {
       display: 'flex',
       alignItems: 'center',
-      width: 'calc(100% + 1rem)',
+      width: '100%',
       height: '100%',
       cursor: 'pointer',
     },

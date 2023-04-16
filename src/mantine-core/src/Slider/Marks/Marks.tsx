@@ -72,7 +72,7 @@ export function Marks({
     </Box>
   ));
 
-  return <div>{items}</div>;
+  return <div className={classes.marksContainer}>{items}</div>;
 }
 
 Marks.displayName = '@mantine/core/SliderMarks';
