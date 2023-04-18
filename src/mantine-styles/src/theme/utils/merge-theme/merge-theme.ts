@@ -1,5 +1,6 @@
 import { MantineThemeOverride, MantineThemeBase, MantineTheme } from '../../types';
 import { attachFunctions } from '../../functions/attach-functions';
+import { getBreakpointValue } from '../../functions/fns/breakpoints/breakpoints';
 
 export function mergeTheme(
   currentTheme: MantineThemeBase,
@@ -29,6 +30,19 @@ export function mergeTheme(
           ...themeOverride.headings,
           sizes,
         },
+      };
+    }
+
+    if (key === 'breakpoints' && themeOverride.breakpoints) {
+      const mergedBreakpoints = { ...currentTheme.breakpoints, ...themeOverride.breakpoints };
+
+      return {
+        ...acc,
+        breakpoints: Object.fromEntries(
+          Object.entries(mergedBreakpoints).sort(
+            (a, b) => getBreakpointValue(a[1]) - getBreakpointValue(b[1])
+          )
+        ),
       };
     }
 
