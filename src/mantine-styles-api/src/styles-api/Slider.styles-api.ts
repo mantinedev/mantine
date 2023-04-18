@@ -8,6 +8,7 @@ export const Slider: Record<SliderStylesNames, string> = {
   thumb: 'Main control',
   dragging: 'Styles added to thumb while dragging',
   label: 'Label element, displayed above thumb',
+  marksContainer: 'Wrapper around all marks, helps position the marks above the track',
   markWrapper: 'Wrapper around mark, contains mark and mark label',
   mark: 'Mark displayed on the track',
   markFilled: 'Styles added to mark when it is located in filled area',

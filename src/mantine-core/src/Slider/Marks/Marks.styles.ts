@@ -7,6 +7,12 @@ interface MarksStyles {
 }
 
 export default createStyles((theme, { color, disabled }: MarksStyles, { size }) => ({
+  marksContainer: {
+    position: 'absolute',
+    right: getSize({ sizes, size }),
+    left: getSize({ sizes, size }),
+  },
+
   markWrapper: {
     position: 'absolute',
     top: `calc(${rem(getSize({ sizes, size }))} / 2)`,
