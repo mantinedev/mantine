@@ -21,6 +21,7 @@ export function pickCalendarProps<T extends Record<string, any>>(props: T) {
     onPreviousYear,
     onNextDecade,
     onPreviousDecade,
+    withCellSpacing,
     __updateDateOnYearSelect,
     __updateDateOnMonthSelect,
 
@@ -80,6 +81,7 @@ export function pickCalendarProps<T extends Record<string, any>>(props: T) {
       onPreviousYear,
       onNextDecade,
       onPreviousDecade,
+      withCellSpacing,
       __updateDateOnYearSelect,
       __updateDateOnMonthSelect,
 
