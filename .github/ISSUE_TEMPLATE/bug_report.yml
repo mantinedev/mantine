@@ -1,6 +1,5 @@
 name: Report an issue with @mantine/ scoped package
 description: Tell us if something is not working as expected
-labels: 'review required'
 body:
   - type: markdown
     attributes:
