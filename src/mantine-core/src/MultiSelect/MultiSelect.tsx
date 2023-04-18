@@ -541,7 +541,7 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>((props
       return selectedItem;
     })
     .filter((val) => !!val)
-    .map((item) => (
+    .map((item, index) => (
       <Value
         {...item}
         variant={variant}
@@ -558,6 +558,7 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>((props
         styles={styles}
         classNames={classNames}
         radius={radius}
+        index={index}
       />
     ));
 
