@@ -10,9 +10,11 @@ import {
   Styles,
   MantineShadow,
   Selectors,
+  DefaultProps,
 } from '@mantine/styles';
 import { OptionalPortal, PortalProps } from '../Portal';
 import { TransitionOverride } from '../Transition';
+import { Box } from '../Box';
 import { ModalBaseProvider } from './ModalBase.context';
 import {
   ModalBaseCloseButton,
@@ -36,7 +38,7 @@ export type ModalBaseStylesNames =
   | ModalBaseTitleStylesNames
   | ModalBaseBodyStylesNames;
 
-export interface ModalBaseSettings extends React.ComponentPropsWithoutRef<'div'> {
+export interface ModalBaseSettings extends DefaultProps, React.ComponentPropsWithoutRef<'div'> {
   variant?: string;
   classNames?: ClassNames<ModalBaseStylesNames>;
   styles?: Styles<ModalBaseStylesNames>;
@@ -203,9 +205,9 @@ export function ModalBase(props: ModalBaseProps) {
         }}
       >
         <RemoveScroll enabled={shouldLockScroll && lockScroll}>
-          <div className={cx(classes.root, className)} {...others}>
+          <Box className={cx(classes.root, className)} {...others}>
             {children}
-          </div>
+          </Box>
         </RemoveScroll>
       </ModalBaseProvider>
     </OptionalPortal>
