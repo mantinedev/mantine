@@ -38,8 +38,8 @@ export default createStyles(
       transition: `transform ${transitionDuration}ms ease`,
       marginRight: chevronPosition === 'right' ? 0 : theme.spacing.sm,
       marginLeft: chevronPosition === 'right' ? theme.spacing.lg : 0,
-      width: chevronSize,
-      minWidth: chevronSize,
+      width: rem(chevronSize),
+      minWidth: rem(chevronSize),
 
       '&[data-rotate]': {
         transform: 'rotate(180deg)',
