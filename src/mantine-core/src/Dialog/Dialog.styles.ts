@@ -14,7 +14,7 @@ export default createStyles((theme, _params, { size }) => ({
     color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
     position: 'relative',
     width: getSize({ size, sizes }),
-    maxWidth: '100%',
+    maxWidth: `calc(100vw - ${theme.spacing.xl} * 2)`,
     minHeight: rem(50),
   },
 
