@@ -123,3 +123,20 @@ export function WithUseDisclosure() {
     </div>
   );
 }
+
+export function WithKeepMounted() {
+  return (
+    <div style={{ padding: 40 }}>
+      <Menu id="new-notification-menu" keepMounted position="bottom-end">
+        <Menu.Target>
+          <Button>Open Menu</Button>
+        </Menu.Target>
+        <Menu.Dropdown>
+          <Menu.Item>Menu Item 1</Menu.Item>
+          <Menu.Item>Menu Item 2</Menu.Item>
+          <Menu.Item>Menu Item 3</Menu.Item>
+        </Menu.Dropdown>
+      </Menu>
+    </div>
+  );
+}
