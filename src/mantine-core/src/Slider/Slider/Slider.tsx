@@ -273,6 +273,7 @@ export const Slider = forwardRef<HTMLDivElement, SliderProps>((props, ref) => {
         filled={position}
         marks={marks}
         size={size}
+        thumbSize={thumbSize}
         radius={radius}
         color={color}
         min={min}

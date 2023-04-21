@@ -393,6 +393,7 @@ export const RangeSlider = forwardRef<HTMLDivElement, RangeSliderProps>((props, 
         marks={marks}
         inverted={inverted}
         size={size}
+        thumbSize={thumbSize}
         radius={radius}
         color={color}
         min={min}
