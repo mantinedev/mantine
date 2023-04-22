@@ -1,5 +1,6 @@
-import { fireEvent, render, screen } from '@testing-library/react';
-import React, { useState } from 'react';
+import { fireEvent, render, RenderOptions, RenderResult, screen } from '@testing-library/react';
+import React, { ReactElement, useState } from 'react';
+import { patchConsoleError } from '@mantine/tests';
 import { useFocusTrap } from './use-focus-trap';
 
 describe('@mantine/hooks/use-focus-trap', () => {
@@ -31,8 +32,15 @@ describe('@mantine/hooks/use-focus-trap', () => {
       </>
     );
   }
+  // Suppress errors during render
+  function quietRender(ui: ReactElement, options: RenderOptions): RenderResult {
+    patchConsoleError();
+    const rendered = render(ui, options);
+    patchConsoleError.release();
+    return rendered;
+  }
   it('correctly assigns aria-hidden to non-encompassing root nodes', () => {
-    render(<WrapperComponent />, { container: document.body });
+    quietRender(<WrapperComponent />, { container: document.body });
     // Ensure that aria attributes are added to all applicable root nodes
     expect(screen.getByTestId('root-1')).toHaveAttribute('aria-hidden', 'true');
     expect(screen.getByTestId('root-2')).toHaveAttribute('aria-hidden', 'true');
@@ -40,7 +48,7 @@ describe('@mantine/hooks/use-focus-trap', () => {
     expect(screen.getByTestId('container-1')).not.toHaveAttribute('aria-hidden');
   });
   it('correctly restores aria attributes on unmount', () => {
-    const { rerender } = render(<WrapperComponent />, { container: document.body });
+    const { rerender } = quietRender(<WrapperComponent />, { container: document.body });
     rerender(<WrapperComponent shouldMount={false} />);
     // Ensure that root nodes have their original aria-hidden attribute restored on unmount
     expect(screen.getByTestId('root-1')).not.toHaveAttribute('aria-hidden');
@@ -49,7 +57,7 @@ describe('@mantine/hooks/use-focus-trap', () => {
     expect(screen.queryByTestId('container-1')).toBeFalsy();
   });
   it('correctly abandons restoration of aria-hidden if another handler has instaantiated before cleanup', () => {
-    const { rerender } = render(<WrapperComponent />, { container: document.body });
+    const { rerender } = quietRender(<WrapperComponent />, { container: document.body });
     expect(screen.getByTestId('root-1')).toHaveAttribute('aria-hidden', 'true');
     expect(screen.getByTestId('root-2')).toHaveAttribute('aria-hidden', 'true');
     expect(screen.getByTestId('container-1')).not.toHaveAttribute('aria-hidden');
