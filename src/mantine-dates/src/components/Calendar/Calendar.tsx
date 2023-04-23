@@ -164,6 +164,8 @@ export const Calendar = forwardRef<HTMLDivElement, CalendarProps>((props, ref) =
     hideWeekdays,
     getDayAriaLabel,
     monthLabelFormat,
+    nextIcon,
+    previousIcon,
     __onDayClick,
     __onDayMouseEnter,
     withCellSpacing,
@@ -300,7 +302,9 @@ export const Calendar = forwardRef<HTMLDivElement, CalendarProps>((props, ref) =
           locale={locale}
           levelControlAriaLabel={ariaLabels?.monthLevelControl}
           nextLabel={ariaLabels?.nextMonth}
+          nextIcon={nextIcon}
           previousLabel={ariaLabels?.previousMonth}
+          previousIcon={previousIcon}
           monthLabelFormat={monthLabelFormat}
           __onDayClick={__onDayClick}
           __onDayMouseEnter={__onDayMouseEnter}
