@@ -1,7 +1,7 @@
 {
   "name": "@mantine/spotlight",
   "description": "Command center for your application",
-  "version": "6.0.8",
+  "version": "6.0.9",
   "main": "cjs/index.js",
   "module": "esm/index.js",
   "types": "lib/index.d.ts",
@@ -15,13 +15,13 @@
     "directory": "src/mantine-spotlight"
   },
   "peerDependencies": {
-    "@mantine/core": "6.0.8",
-    "@mantine/hooks": "6.0.8",
+    "@mantine/core": "6.0.9",
+    "@mantine/hooks": "6.0.9",
     "react": ">=16.8.0",
     "react-dom": ">=16.8.0"
   },
   "dependencies": {
-    "@mantine/utils": "6.0.8"
+    "@mantine/utils": "6.0.9"
   },
   "devDependencies": {}
 }
