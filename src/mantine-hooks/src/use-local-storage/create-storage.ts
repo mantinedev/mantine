@@ -113,7 +113,7 @@ export function createStorage<T>(type: StorageType, hookName: string) {
       if (getInitialValueInEffect) {
         setValue(readStorageValue());
       }
-    }, []);
+    }, [key]);
 
     return [
       value === undefined ? defaultValue : value,
