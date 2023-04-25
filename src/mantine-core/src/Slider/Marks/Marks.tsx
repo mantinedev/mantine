@@ -10,6 +10,7 @@ export type MarksStylesNames = Selectors<typeof useStyles>;
 export interface MarksProps extends DefaultProps<MarksStylesNames> {
   marks: { value: number; label?: React.ReactNode }[];
   size: MantineNumberSize;
+  thumbSize?: number;
   color: MantineColor;
   min: number;
   max: number;
@@ -25,6 +26,7 @@ export function Marks({
   marks,
   color,
   size,
+  thumbSize,
   min,
   max,
   value,
@@ -38,7 +40,7 @@ export function Marks({
   variant,
 }: MarksProps) {
   const { classes, cx } = useStyles(
-    { color, disabled },
+    { color, disabled, thumbSize },
     { name: 'Slider', classNames, styles, unstyled, variant, size }
   );
 

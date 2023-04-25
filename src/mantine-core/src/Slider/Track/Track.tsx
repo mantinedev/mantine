@@ -1,5 +1,12 @@
 import React from 'react';
-import { DefaultProps, MantineNumberSize, MantineColor, Selectors, getSize } from '@mantine/styles';
+import {
+  DefaultProps,
+  MantineNumberSize,
+  MantineColor,
+  Selectors,
+  getSize,
+  rem,
+} from '@mantine/styles';
 import { Box } from '../../Box';
 import { Marks, MarksStylesNames } from '../Marks/Marks';
 import { sizes } from '../SliderRoot/SliderRoot.styles';
@@ -13,6 +20,7 @@ export interface TrackProps extends DefaultProps<TrackStylesNames> {
   marksOffset?: number;
   marks: { value: number; label?: React.ReactNode }[];
   size: MantineNumberSize;
+  thumbSize?: number;
   radius: MantineNumberSize;
   color: MantineColor;
   min: number;
@@ -29,6 +37,7 @@ export interface TrackProps extends DefaultProps<TrackStylesNames> {
 export function Track({
   filled,
   size,
+  thumbSize,
   color,
   classNames,
   styles,
@@ -44,7 +53,7 @@ export function Track({
   ...others
 }: TrackProps) {
   const { classes } = useStyles(
-    { color, radius, disabled, inverted },
+    { color, radius, disabled, inverted, thumbSize },
     { name: 'Slider', classNames, styles, unstyled, variant, size }
   );
 
@@ -55,8 +64,12 @@ export function Track({
           <Box
             className={classes.bar}
             sx={{
-              left: `calc(${offset}% - ${getSize({ size, sizes })})`,
-              width: `calc(${filled}% + ${getSize({ size, sizes })})`,
+              left: `calc(${offset}% - ${
+                thumbSize ? rem(thumbSize / 2) : getSize({ size, sizes })
+              })`,
+              width: `calc(${filled}% + 2 * ${
+                thumbSize ? rem(thumbSize / 2) : getSize({ size, sizes })
+              })`,
             }}
           />
 
@@ -67,6 +80,7 @@ export function Track({
       <Marks
         {...others}
         size={size}
+        thumbSize={thumbSize}
         color={color}
         offset={marksOffset}
         classNames={classNames}

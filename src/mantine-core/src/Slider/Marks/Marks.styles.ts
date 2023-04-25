@@ -4,13 +4,14 @@ import { sizes } from '../SliderRoot/SliderRoot.styles';
 interface MarksStyles {
   color: MantineColor;
   disabled: boolean;
+  thumbSize?: number;
 }
 
-export default createStyles((theme, { color, disabled }: MarksStyles, { size }) => ({
+export default createStyles((theme, { color, disabled, thumbSize }: MarksStyles, { size }) => ({
   marksContainer: {
     position: 'absolute',
-    right: getSize({ sizes, size }),
-    left: getSize({ sizes, size }),
+    right: thumbSize ? rem(thumbSize / 2) : getSize({ sizes, size }),
+    left: thumbSize ? rem(thumbSize / 2) : getSize({ sizes, size }),
   },
 
   markWrapper: {
