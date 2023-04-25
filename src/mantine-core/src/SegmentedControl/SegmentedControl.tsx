@@ -35,7 +35,7 @@ export interface SegmentedControlProps
     Omit<React.ComponentPropsWithoutRef<'div'>, 'value' | 'onChange'> {
   variant?: string;
 
-  /** Data based on which controls are rendered */
+  /** Segments to render */
   data: string[] | SegmentedControlItem[];
 
   /** Current selected value */
@@ -71,7 +71,7 @@ export interface SegmentedControlProps
   /** Default value for uncontrolled component */
   defaultValue?: string;
 
-  /** Display Vertically */
+  /** The orientation of the component */
   orientation?: 'vertical' | 'horizontal';
 
   /** Determines whether the user can change value */
