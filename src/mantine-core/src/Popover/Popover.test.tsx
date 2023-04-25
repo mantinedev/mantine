@@ -80,14 +80,14 @@ describe('@mantine/core/Popover', () => {
 
   it('correctly handles closeOnClickOutside={false}', async () => {
     const spy = jest.fn();
-    render(<TestContainer defaultOpened closeOnClickOutside={false} onClose={spy} />);
+    render(<TestContainer opened closeOnClickOutside={false} onClose={spy} />);
     await userEvent.click(document.body);
     expect(spy).not.toHaveBeenCalled();
   });
 
   it('correctly handles closeOnClickOutside={true}', async () => {
     const spy = jest.fn();
-    render(<TestContainer defaultOpened closeOnClickOutside onClose={spy} />);
+    render(<TestContainer opened closeOnClickOutside onClose={spy} />);
     await userEvent.click(document.body);
     expect(spy).toHaveBeenCalled();
   });
