@@ -55,7 +55,7 @@ export const Tab = forwardRef<HTMLButtonElement, TabProps>((props, ref) => {
 
   const isActive = value === ctx.value;
   const panelId = ctx.getPanelId(value);
-  const ariaControlsValue = document.getElementById(panelId) ? panelId : undefined;
+  const ariaControls = ctx.mountedPanelIds.includes(value) ? ctx.getPanelId(value) : undefined;
   const activateTab = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     ctx.onTabChange(ctx.allowTabDeactivation ? (value === ctx.value ? null : value) : value);
     onClick?.(event);
@@ -73,7 +73,7 @@ export const Tab = forwardRef<HTMLButtonElement, TabProps>((props, ref) => {
       id={ctx.getTabId(value)}
       aria-selected={isActive}
       tabIndex={isActive || ctx.value === null ? 0 : -1}
-      aria-controls={ariaControlsValue}
+      aria-controls={ariaControls}
       onClick={activateTab}
       onKeyDown={createScopedKeydownHandler({
         siblingSelector: '[role="tab"]',
