@@ -49,7 +49,7 @@ export const TabsPanel = forwardRef<HTMLDivElement, TabsPanelProps>((props, ref)
   /** Set panel as mounted for id referencing */
   useEffect(() => {
     ctx.setMountedPanelIds((prev) => [...prev, panelId]);
-    return ctx.setMountedPanelIds((prev) => prev.filter((value) => value !== panelId));
+    return ctx.setMountedPanelIds((prev) => prev.filter((id) => id !== panelId));
   }, [panelId]);
 
   return (

@@ -55,7 +55,7 @@ export const Tab = forwardRef<HTMLButtonElement, TabProps>((props, ref) => {
 
   const isActive = value === ctx.value;
   const panelId = ctx.getPanelId(value);
-  const ariaControls = ctx.mountedPanelIds.includes(value) ? ctx.getPanelId(value) : undefined;
+  const ariaControls = ctx.mountedPanelIds.includes(value) ? panelId : undefined;
   const activateTab = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     ctx.onTabChange(ctx.allowTabDeactivation ? (value === ctx.value ? null : value) : value);
     onClick?.(event);
