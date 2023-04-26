@@ -101,11 +101,11 @@ export default createStyles(
               : `calc(${getSize({ size, sizes })}  / 3)`,
             borderRadius: theme.fn.radius(radius),
           }
-        : (variant === 'unstyled' && withRightSection) 
-            ? {
-                paddingRight: rightSectionWidth || getSize({ size, sizes })
-              }
-            : null;
+        : variant === 'unstyled' && withRightSection 
+        ? {
+            paddingRight: rightSectionWidth || getSize({ size, sizes }),
+          }
+        : null;
 
     return {
       wrapper: {
