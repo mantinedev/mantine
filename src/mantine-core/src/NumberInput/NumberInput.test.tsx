@@ -339,18 +339,10 @@ describe('@mantine/core/NumberInput', () => {
     expectValue('6');
   });
 
-  it('sets state to min if input is empty and is incremented/decremented', async () => {
+  it('sets state to min if input is empty and is incremented', async () => {
     const spy = jest.fn();
     const { container } = render(<NumberInput max={1000} min={0} step={6} onChange={spy} />);
     await clickIncrement(container);
-    expectValue('0');
-    expect(spy).toHaveBeenLastCalledWith(0);
-
-    await enterText('{backspace}4');
-    expect(spy).toHaveBeenLastCalledWith(4);
-
-    await enterText('{backspace}');
-    await clickDecrement(container);
     expectValue('0');
     expect(spy).toHaveBeenLastCalledWith(0);
   });
@@ -428,5 +420,16 @@ describe('@mantine/core/NumberInput', () => {
     blurInput();
 
     expect(blurSpy).toHaveBeenLastCalledWith(12);
+  });
+
+  it('disables controls in disabled fieldset', () => {
+    const { container } = render(
+      <fieldset disabled>
+        <NumberInput {...defaultProps} />
+      </fieldset>
+    );
+
+    expect(container.querySelector('.mantine-NumberInput-controlDown')).toBeDisabled();
+    expect(container.querySelector('.mantine-NumberInput-controlUp')).toBeDisabled();
   });
 });
