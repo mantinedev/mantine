@@ -45,6 +45,15 @@ describe('@mantine/core/Input', () => {
     expect(screen.getByRole('textbox')).toBeDisabled();
   });
 
+  it('is disabled when inside fieldset disabled', () => {
+    render(
+      <fieldset disabled>
+        <Input />
+      </fieldset>
+    );
+    expect(screen.getByRole('textbox')).toBeDisabled();
+  });
+
   it('exposes associated components as static properties', () => {
     expect(Input.Wrapper).toBe(InputWrapper);
     expect(Input.Label).toBe(InputLabel);

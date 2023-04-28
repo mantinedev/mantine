@@ -144,6 +144,7 @@ export default createStyles(
           color: theme.colors.dark[2],
           opacity: 0.6,
           cursor: 'not-allowed',
+          pointerEvents: 'none',
 
           '&::placeholder': {
             color: theme.colors.dark[2],
