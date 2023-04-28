@@ -1,6 +1,7 @@
 import 'dayjs/locale/ru';
 import React from 'react';
 import { screen, render } from '@testing-library/react';
+import dayjs from 'dayjs';
 import { DatesProvider } from '../components/DatesProvider';
 
 export function expectWeekdaysNames(names: string[]) {
@@ -9,7 +10,7 @@ export function expectWeekdaysNames(names: string[]) {
 
 export interface WeekdaysTestProps {
   locale?: string;
-  weekdayFormat?: string;
+  weekdayFormat?: string | ((date: Date) => React.ReactNode);
   firstDayOfWeek?: number;
 }
 
@@ -48,6 +49,13 @@ export function itSupportsWeekdaysProps(
       'Saturday',
       'Sunday',
     ]);
+  });
+
+  it('supports changing weekday format function', () => {
+    render(
+      <Component {...requiredProps} weekdayFormat={(date: Date) => dayjs(date).format('dd')[0]} />
+    );
+    expectWeekdaysNames(['M', 'T', 'W', 'T', 'F', 'S', 'S']);
   });
 
   it('changes weekdays order based on firstDayOfWeek prop', () => {

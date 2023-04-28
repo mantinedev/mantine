@@ -47,7 +47,7 @@ export interface MonthSettings {
   firstDayOfWeek?: DayOfWeek;
 
   /** dayjs format for weekdays names, defaults to "dd" */
-  weekdayFormat?: string;
+  weekdayFormat?: string | ((date: Date) => React.ReactNode);
 
   /** Indices of weekend days, 0-6, where 0 is Sunday and 6 is Saturday, defaults to value defined in DatesProvider */
   weekendDays?: DayOfWeek[];

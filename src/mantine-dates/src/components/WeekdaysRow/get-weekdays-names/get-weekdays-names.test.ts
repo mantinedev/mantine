@@ -40,6 +40,19 @@ describe('@mantine/dates/get-weekday-names', () => {
     ]);
   });
 
+  it('supports custom format function', () => {
+    expect(
+      getWeekdayNames({ locale: 'en', format: (date) => dayjs(date).format('dd')[0] })
+    ).toStrictEqual(['M', 'T', 'W', 'T', 'F', 'S', 'S']);
+
+    expect(
+      getWeekdayNames({
+        locale: 'ru',
+        format: (date) => dayjs(date).locale('ru').format('dd')[0].toUpperCase(),
+      })
+    ).toStrictEqual(['П', 'В', 'С', 'Ч', 'П', 'С', 'В']);
+  });
+
   it('supports custom first day of week', () => {
     expect(getWeekdayNames({ locale: 'en', firstDayOfWeek: 0 })).toStrictEqual([
       'Su',
