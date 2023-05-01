@@ -1,17 +1,19 @@
 import React from 'react';
 import { MantineDemo } from '@mantine/ds';
-import { Box, NumberInput } from '@mantine/core';
+import { TimeInput } from '@mantine/dates';
+import { Box } from '@mantine/core';
 
 const code = `
-import { NumberInput } from '@mantine/core';
+import { IconClock } from '@tabler/icons-react';
+import { TimeInput } from '@mantine/dates';
 
 function Demo() {
   return (
     <>
-      <NumberInput disabled />
+      <TimeInput disabled />
 
       <fieldset disabled>
-        <NumberInput />
+        <TimeInput disabled />
       </fieldset>
     </>
   )
@@ -21,12 +23,12 @@ function Demo() {
 function Demo() {
   return (
     <Box maw={320} mx="auto">
-      <NumberInput label="Disabled" placeholder="Your age" disabled value={20} />
+      <TimeInput disabled />
 
       <br />
 
       <fieldset disabled>
-        <NumberInput label="Disabled by fieldset" placeholder="Your age" value={20} />
+        <TimeInput />
       </fieldset>
     </Box>
   );
@@ -34,6 +36,6 @@ function Demo() {
 
 export const disabled: MantineDemo = {
   type: 'demo',
-  code,
   component: Demo,
+  code,
 };

@@ -9,6 +9,7 @@ import {
   itSupportsFocusEvents,
   itSupportsProviderVariant,
   itSupportsProviderSize,
+  itDisablesInputInsideDisabledFieldset,
 } from '@mantine/tests';
 import { NumberInput, NumberInputHandlers, NumberInputProps } from './NumberInput';
 
@@ -63,6 +64,7 @@ describe('@mantine/core/NumberInput', () => {
 
   itSupportsInputProps(NumberInput, defaultProps, 'NumberInput');
   itSupportsFocusEvents(NumberInput, defaultProps, 'input');
+  itDisablesInputInsideDisabledFieldset(NumberInput, defaultProps);
 
   it('does not render rightSection if input is disabled, variant is unstyled or controls are hidden', () => {
     const { container: regular } = render(<NumberInput {...defaultProps} />);
@@ -420,16 +422,5 @@ describe('@mantine/core/NumberInput', () => {
     blurInput();
 
     expect(blurSpy).toHaveBeenLastCalledWith(12);
-  });
-
-  it('disables controls in disabled fieldset', () => {
-    const { container } = render(
-      <fieldset disabled>
-        <NumberInput {...defaultProps} />
-      </fieldset>
-    );
-
-    expect(container.querySelector('.mantine-NumberInput-controlDown')).toBeDisabled();
-    expect(container.querySelector('.mantine-NumberInput-controlUp')).toBeDisabled();
   });
 });

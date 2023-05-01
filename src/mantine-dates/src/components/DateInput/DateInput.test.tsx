@@ -7,6 +7,7 @@ import {
   itSupportsProviderSize,
   itSupportsFocusEvents,
   checkAccessibility,
+  itDisablesInputInsideDisabledFieldset,
 } from '@mantine/tests';
 import {
   expectNoPopover,
@@ -83,6 +84,8 @@ describe('@mantine/dates/DateInput', () => {
     defaultValue: new Date(2022, 3, 11),
     popoverProps: { opened: true, withinPortal: false, transitionProps: { duration: 0 } },
   });
+
+  itDisablesInputInsideDisabledFieldset(DateInput, defaultProps);
 
   it('opens/closes dropdown when input is focused/blurred', async () => {
     const { container } = render(<DateInput {...defaultProps} />);

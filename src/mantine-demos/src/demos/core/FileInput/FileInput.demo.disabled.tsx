@@ -1,32 +1,31 @@
+import { Box, FileInput } from '@mantine/core';
 import React from 'react';
 import { MantineDemo } from '@mantine/ds';
-import { Box, NumberInput } from '@mantine/core';
 
 const code = `
-import { NumberInput } from '@mantine/core';
+import { FileInput } from '@mantine/core';
 
 function Demo() {
   return (
     <>
-      <NumberInput disabled />
+      <FileInput disabled />
 
       <fieldset disabled>
-        <NumberInput />
+        <FileInput />
       </fieldset>
     </>
-  )
-}
+  );
 `;
 
 function Demo() {
   return (
     <Box maw={320} mx="auto">
-      <NumberInput label="Disabled" placeholder="Your age" disabled value={20} />
+      <FileInput disabled label="Disabled" placeholder="Upload files" />
 
       <br />
 
       <fieldset disabled>
-        <NumberInput label="Disabled by fieldset" placeholder="Your age" value={20} />
+        <FileInput label="Disabled by fieldset" placeholder="Upload files" />
       </fieldset>
     </Box>
   );

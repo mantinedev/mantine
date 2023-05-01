@@ -40,6 +40,7 @@ export default createStyles(
 
       '&:disabled': {
         cursor: 'not-allowed',
+        pointerEvents: 'none',
       },
 
       '&::placeholder': {

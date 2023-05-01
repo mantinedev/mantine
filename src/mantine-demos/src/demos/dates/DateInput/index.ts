@@ -6,3 +6,4 @@ export { parser } from './DateInput.demo.parser';
 export { minMax } from './DateInput.demo.minMax';
 export { deselect } from './DateInput.demo.deselect';
 export { time } from './DateInput.demo.time';
+export { disabled } from './DateInput.demo.disabled';

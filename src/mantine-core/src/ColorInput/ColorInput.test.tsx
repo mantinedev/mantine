@@ -1,6 +1,7 @@
 import React from 'react';
 import {
   checkAccessibility,
+  itDisablesInputInsideDisabledFieldset,
   itSupportsSystemProps,
   itSupportsWrapperProps,
   itSupportsInputProps,
@@ -34,6 +35,7 @@ describe('@mantine/core/ColorInput', () => {
     othersSelector: 'input',
     providerName: 'ColorInput',
   });
+  itDisablesInputInsideDisabledFieldset(ColorInput, defaultProps);
 
   it('does not trigger onChange after onBlur', () => {
     const executions: ('change' | 'blur')[] = [];

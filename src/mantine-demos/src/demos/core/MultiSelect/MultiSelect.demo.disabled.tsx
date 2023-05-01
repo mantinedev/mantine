@@ -7,7 +7,15 @@ const code = `
 import { MultiSelect } from '@mantine/core';
 
 function Demo() {
-  return <MultiSelect disabled />;
+  return (
+    <>
+      <MultiSelect disabled />
+
+      <fieldset disabled>
+        <MultiSelect />
+      </fieldset>
+    </>
+  )
 }
 `;
 
@@ -30,6 +38,25 @@ function Demo() {
         disabled
         defaultValue={['react', 'vue']}
       />
+
+      <br />
+
+      <fieldset disabled>
+        <MultiSelect
+          data={data}
+          label="Disabled by fieldset without value"
+          placeholder="Won't pick anything"
+          defaultValue={[]}
+        />
+
+        <MultiSelect
+          mt="md"
+          data={data}
+          label="Disabled by fieldset with values"
+          placeholder="Won't pick anything"
+          defaultValue={['react', 'vue']}
+        />
+      </fieldset>
     </Box>
   );
 }

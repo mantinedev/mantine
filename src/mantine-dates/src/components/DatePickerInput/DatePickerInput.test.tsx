@@ -5,6 +5,7 @@ import {
   itSupportsProviderVariant,
   itSupportsProviderSize,
   itSupportsFocusEvents,
+  itDisablesInputInsideDisabledFieldset,
 } from '@mantine/tests';
 import {
   itSupportsClearableProps,
@@ -50,6 +51,7 @@ describe('@mantine/dates/DatePickerInput', () => {
     defaultValue: new Date(2022, 3, 11),
     popoverProps: { opened: true, withinPortal: false, transitionProps: { duration: 0 } },
   });
+  itDisablesInputInsideDisabledFieldset(DatePickerInput, defaultProps);
 
   it('supports valueFormat prop', () => {
     const { container, rerender } = render(

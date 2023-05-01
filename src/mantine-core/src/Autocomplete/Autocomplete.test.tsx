@@ -1,6 +1,7 @@
 import React from 'react';
 import { render } from '@testing-library/react';
 import {
+  itDisablesInputInsideDisabledFieldset,
   itSupportsSystemProps,
   itSupportsInputProps,
   checkAccessibility,
@@ -42,6 +43,7 @@ describe('@mantine/core/Autocomplete', () => {
     othersSelector: '.mantine-Autocomplete-input',
     providerName: 'Autocomplete',
   });
+  itDisablesInputInsideDisabledFieldset(Autocomplete, defaultProps);
 
   it('renders dropdown when value has both full match and partial match', () => {
     const { container } = render(

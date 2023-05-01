@@ -1,32 +1,32 @@
-import React from 'react';
+import { Box, Textarea } from '@mantine/core';
 import { MantineDemo } from '@mantine/ds';
-import { Box, NumberInput } from '@mantine/core';
+import React from 'react';
 
 const code = `
-import { NumberInput } from '@mantine/core';
+import { Textarea } from '@mantine/core';
 
 function Demo() {
   return (
     <>
-      <NumberInput disabled />
+      <Textarea disabled/>
 
       <fieldset disabled>
-        <NumberInput />
+        <Textarea />
       </fieldset>
     </>
-  )
+  );
 }
 `;
 
 function Demo() {
   return (
     <Box maw={320} mx="auto">
-      <NumberInput label="Disabled" placeholder="Your age" disabled value={20} />
+      <Textarea label="Disabled" placeholder="Your comment" disabled />
 
       <br />
 
       <fieldset disabled>
-        <NumberInput label="Disabled by fieldset" placeholder="Your age" value={20} />
+        <Textarea label="Disabled by fieldset" placeholder="Your comment" />
       </fieldset>
     </Box>
   );

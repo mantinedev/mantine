@@ -81,6 +81,7 @@ export default createStyles((theme, { invalid }: MultiSelectStylesParams, { size
 
     '&:disabled': {
       cursor: 'not-allowed',
+      pointerEvents: 'none',
     },
   },
 }));

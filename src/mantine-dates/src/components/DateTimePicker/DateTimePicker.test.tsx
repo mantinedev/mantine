@@ -7,6 +7,7 @@ import {
   itSupportsProviderVariant,
   itSupportsProviderSize,
   itSupportsFocusEvents,
+  itDisablesInputInsideDisabledFieldset,
 } from '@mantine/tests';
 import { DatesProvider } from '../DatesProvider';
 import {
@@ -72,6 +73,7 @@ describe('@mantine/dates/DateTimePicker', () => {
     defaultValue: new Date(2022, 3, 11),
     popoverProps: { opened: true, withinPortal: false, transitionProps: { duration: 0 } },
   });
+  itDisablesInputInsideDisabledFieldset(DateTimePicker, defaultProps);
 
   it('toggles popover when input is clicked (dropdownType="popover")', async () => {
     const { container } = render(<DateTimePicker {...defaultProps} />);

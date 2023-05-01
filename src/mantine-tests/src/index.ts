@@ -31,3 +31,4 @@ export { itSupportsInputWrapperProps } from './inputs/it-supports-input-wrapper-
 export { itSupportsInputProps } from './inputs/it-supports-input-props';
 export { itSupportsInputStylesApi } from './inputs/it-supports-input-styles-api';
 export { itSupportsInputAsterisk } from './inputs/it-supports-input-asterisk';
+export { itDisablesInputInsideDisabledFieldset } from './inputs/it-disables-input-inside-disabled-fieldset';

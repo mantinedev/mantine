@@ -9,6 +9,7 @@ import {
   itSupportsInputRightSection,
   itSupportsProviderVariant,
   itSupportsProviderSize,
+  itDisablesInputInsideDisabledFieldset,
 } from '@mantine/tests';
 import { InputWrapper } from './InputWrapper/InputWrapper';
 import { InputDescription } from './InputDescription/InputDescription';
@@ -40,17 +41,10 @@ describe('@mantine/core/Input', () => {
     excludeOthers: true,
   });
 
+  itDisablesInputInsideDisabledFieldset(Input, defaultProps);
+
   it('handles disabled state', () => {
     render(<Input disabled />);
-    expect(screen.getByRole('textbox')).toBeDisabled();
-  });
-
-  it('is disabled when inside fieldset disabled', () => {
-    render(
-      <fieldset disabled>
-        <Input />
-      </fieldset>
-    );
     expect(screen.getByRole('textbox')).toBeDisabled();
   });
 

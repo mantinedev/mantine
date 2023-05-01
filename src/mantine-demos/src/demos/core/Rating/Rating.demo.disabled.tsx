@@ -1,23 +1,17 @@
 import React from 'react';
 import { MantineDemo } from '@mantine/ds';
-import { PinInput, Group, Box } from '@mantine/core';
+import { Rating, Group, Box } from '@mantine/core';
 
 const code = `
-import { PinInput, Group } from '@mantine/core';
+import { Rating, Group } from '@mantine/core';
 
 function Demo() {
   return (
-    <>
+    <fieldset disabled>
       <Group position="center">
-        <PinInput disabled />
+        <Rating value={3.5} fractions={2} />
       </Group>
-
-      <fieldset disabled>
-        <Group position="center">
-          <PinInput />
-        </Group>
-      </fieldset>
-    </>
+    </fieldset>
   );
 }
 `;
@@ -25,15 +19,9 @@ function Demo() {
 function Demo() {
   return (
     <Box maw={320} mx="auto">
-      <Group position="center">
-        <PinInput disabled />
-      </Group>
-
-      <br />
-
       <fieldset disabled>
         <Group position="center">
-          <PinInput />
+          <Rating value={3.5} fractions={2} />
         </Group>
       </fieldset>
     </Box>
