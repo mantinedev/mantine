@@ -90,7 +90,10 @@ export default createStyles(
     }: InputStylesParams,
     { variant, size }
   ) => {
-    const invalidColor = theme.fn.variant({ variant: 'filled', color: 'red' }).background;
+    const invalidColor = theme.fn.variant({
+      variant: 'filled',
+      color: 'red',
+    }).background;
     const sizeStyles =
       variant === 'default' || variant === 'filled'
         ? {
@@ -100,6 +103,10 @@ export default createStyles(
               ? rightSectionWidth || getSize({ size, sizes })
               : `calc(${getSize({ size, sizes })}  / 3)`,
             borderRadius: theme.fn.radius(radius),
+          }
+        : variant === 'unstyled' && withRightSection
+        ? {
+            paddingRight: rightSectionWidth || getSize({ size, sizes }),
           }
         : null;
 
