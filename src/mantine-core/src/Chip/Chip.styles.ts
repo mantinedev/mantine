@@ -145,6 +145,7 @@ export default createStyles((theme, { radius, color }: ChipStylesParams, { size,
         borderColor: theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[1],
         color: theme.colorScheme === 'dark' ? theme.colors.dark[3] : theme.colors.gray[5],
         cursor: 'not-allowed',
+        pointerEvents: 'none',
 
         ...theme.fn.hover({
           backgroundColor:
@@ -195,6 +196,34 @@ export default createStyles((theme, { radius, color }: ChipStylesParams, { size,
       padding: 0,
       opacity: 0,
       margin: 0,
+
+      '&:disabled + label': {
+        backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[1],
+        borderColor: theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[1],
+        color: theme.colorScheme === 'dark' ? theme.colors.dark[3] : theme.colors.gray[5],
+        cursor: 'not-allowed',
+        pointerEvents: 'none',
+
+        ...theme.fn.hover({
+          backgroundColor:
+            theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[1],
+        }),
+
+        [`& .${getStylesRef('iconWrapper')}`]: {
+          color: theme.colorScheme === 'dark' ? theme.colors.dark[3] : theme.colors.gray[5],
+        },
+
+        '&[data-checked]': {
+          paddingLeft: getSize({ size, sizes: checkedPadding }),
+          paddingRight: getSize({ size, sizes: checkedPadding }),
+
+          '&:not([data-disabled])': {
+            backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[1],
+            borderColor: theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[1],
+            color: theme.colorScheme === 'dark' ? theme.colors.dark[3] : theme.colors.gray[5],
+          },
+        },
+      },
 
       '&:focus': {
         outline: 'none',

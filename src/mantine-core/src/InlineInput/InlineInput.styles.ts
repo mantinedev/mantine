@@ -17,6 +17,10 @@ export default createStyles((theme, { labelPosition }: InlineInputStylesParams, 
 
   body: {
     display: 'flex',
+
+    '&:has(input:disabled) label': {
+      color: theme.colorScheme === 'dark' ? theme.colors.dark[3] : theme.colors.gray[5],
+    },
   },
 
   labelWrapper: {
@@ -45,7 +49,7 @@ export default createStyles((theme, { labelPosition }: InlineInputStylesParams, 
     cursor: theme.cursorType,
     [labelPosition === 'left' ? 'paddingRight' : 'paddingLeft']: theme.spacing.sm,
 
-    '&[data-disabled]': {
+    '&:disabled, &[data-disabled]': {
       color: theme.colorScheme === 'dark' ? theme.colors.dark[3] : theme.colors.gray[5],
     },
   },

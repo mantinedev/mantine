@@ -77,11 +77,6 @@ function Demo() {
             Outline checked disabled
           </Chip>
         </Group>
-        <fieldset disabled>
-            <Chip type="checkbox" value="checked-disabled" variant="outline">
-              Disabled with fieldset
-            </Chip>
-        </fieldset>
       </Chip.Group>
 
       <Chip.Group multiple value={['checked', 'checked-disabled']}>
@@ -95,11 +90,6 @@ function Demo() {
           <Chip value="checked-disabled" disabled variant="light">
             Light checked disabled
           </Chip>
-          <fieldset disabled>
-            <Chip value="checked-disabled" variant="light">
-              Disabled with fieldset
-            </Chip>
-          </fieldset>
         </Group>
       </Chip.Group>
 
@@ -114,11 +104,6 @@ function Demo() {
           <Chip value="checked-disabled" disabled variant="filled">
             Filled checked disabled
           </Chip>
-          <fieldset disabled>
-            <Chip value="checked-disabled" variant="filled">
-              Disabled with fieldset
-            </Chip>
-          </fieldset>
         </Group>
       </Chip.Group>
 

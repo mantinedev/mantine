@@ -9,6 +9,11 @@ export interface MultiSelectStylesParams {
 export default createStyles((theme, { invalid }: MultiSelectStylesParams, { size }) => ({
   wrapper: {
     position: 'relative',
+
+    '&:has(input:disabled)': {
+      cursor: 'not-allowed',
+      pointerEvents: 'none',
+    },
   },
 
   values: {
@@ -53,6 +58,7 @@ export default createStyles((theme, { invalid }: MultiSelectStylesParams, { size
 
     '&:disabled': {
       cursor: 'not-allowed',
+      pointerEvents: 'none',
     },
   },
 
@@ -73,6 +79,7 @@ export default createStyles((theme, { invalid }: MultiSelectStylesParams, { size
 
     '&:disabled': {
       cursor: 'not-allowed',
+      pointerEvents: 'none',
     },
   },
 
