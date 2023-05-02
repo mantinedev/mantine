@@ -231,7 +231,7 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>((props
   const itemsRefs = useRef<Record<string, HTMLDivElement>>({});
   const uuid = useId(id);
   const [dropdownOpened, setDropdownOpened] = useState(initiallyOpened);
-  const [hovered, setHovered] = useState(-1);
+  const [_hovered, setHovered] = useState(-1);
   const [direction, setDirection] = useState<React.CSSProperties['flexDirection']>('column');
   const [_searchValue, handleSearchChange] = useUncontrolled({
     value: searchValue,
@@ -297,6 +297,8 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>((props
     disableSelectedItemFiltering,
   });
 
+  const hovered = Math.min(_hovered, filteredData.length - 1);
+
   const getNextIndex = (
     index: number,
     nextItem: (index: number) => number,
@@ -356,9 +358,6 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>((props
         if (_value.length === maxSelectedValues - 1) {
           valuesOverflow.current = true;
           setDropdownOpened(false);
-        }
-        if (hovered === filteredData.length - 1) {
-          setHovered(filteredData.length - 2);
         }
         if (filteredData.length === 1) {
           setDropdownOpened(false);

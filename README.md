@@ -19,7 +19,7 @@
 
 ## Packages
 
-- `@mantine/hooks` – collection of 40+ hooks for state and UI management
+- `@mantine/hooks` – collection of 50+ hooks for state and UI management
 - [`@mantine/styles`](https://mantine.dev/styles/create-styles/) – [emotion](https://emotion.sh/) based css-in-js library that is used in all Mantine components
 - `@mantine/core` – core components library – 100+ components, exports everything from `@mantine/styles`
 - [`@mantine/form`](https://mantine.dev/form/use-form/) – forms management library

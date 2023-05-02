@@ -222,10 +222,11 @@ export function Popover(props: PopoverProps) {
     onClose,
   });
 
-  useClickOutside(() => opened && closeOnClickOutside && popover.onClose(), clickOutsideEvents, [
-    targetNode,
-    dropdownNode,
-  ]);
+  useClickOutside(
+    () => popover.opened && closeOnClickOutside && popover.onClose(),
+    clickOutsideEvents,
+    [targetNode, dropdownNode]
+  );
 
   const reference = useCallback(
     (node: HTMLElement) => {
