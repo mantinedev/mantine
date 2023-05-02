@@ -133,7 +133,7 @@ export function LayoutInner({ children, location }: LayoutProps) {
       searchInputProps={{
         id: randomId(),
         name: randomId(),
-        autoComplete: 'nope',
+        autoComplete: 'off',
       }}
       transitionProps={{
         duration: 150,

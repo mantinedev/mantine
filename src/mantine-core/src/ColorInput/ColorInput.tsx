@@ -224,7 +224,7 @@ export const ColorInput = forwardRef<HTMLInputElement, ColorInputProps>((props, 
         <Popover.Target>
           <div>
             <Input<'input'>
-              autoComplete="nope"
+              autoComplete="off"
               {...others}
               {...inputProps}
               disabled={disabled}
