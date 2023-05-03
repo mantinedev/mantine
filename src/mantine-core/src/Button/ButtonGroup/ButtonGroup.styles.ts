@@ -12,7 +12,7 @@ export default createStyles(
       flexDirection: orientation === 'vertical' ? 'column' : 'row',
 
       '& [data-button]': {
-        '&:first-of-type:not(:last-of-type)': {
+        '&:first-child:not(:last-child)': {
           borderBottomRightRadius: 0,
           [orientation === 'vertical' ? 'borderBottomLeftRadius' : 'borderTopRightRadius']: 0,
           [orientation === 'vertical' ? 'borderBottomWidth' : 'borderRightWidth']: `calc(${rem(
@@ -20,7 +20,7 @@ export default createStyles(
           )} / 2)`,
         },
 
-        '&:last-of-type:not(:first-of-type)': {
+        '&:last-child:not(:first-child)': {
           borderTopLeftRadius: 0,
           [orientation === 'vertical' ? 'borderTopRightRadius' : 'borderBottomLeftRadius']: 0,
           [orientation === 'vertical' ? 'borderTopWidth' : 'borderLeftWidth']: `calc(${rem(
@@ -28,7 +28,7 @@ export default createStyles(
           )} / 2)`,
         },
 
-        '&:not(:first-of-type):not(:last-of-type)': {
+        '&:not(:first-child):not(:last-child)': {
           borderRadius: 0,
           [orientation === 'vertical' ? 'borderTopWidth' : 'borderLeftWidth']: `calc(${rem(
             buttonBorderWidth
