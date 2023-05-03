@@ -4,6 +4,11 @@ export default createStyles(() => ({
   root: {
     display: 'flex',
     width: 'max-content',
+
+    '&:has(input:disabled)': {
+      pointerEvents: 'none',
+      cursor: 'not-allowed',
+    },
   },
 
   symbolGroup: {

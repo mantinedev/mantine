@@ -218,7 +218,8 @@ export default createStyles((theme, { radius, color }: ChipStylesParams, { size,
           paddingRight: getSize({ size, sizes: checkedPadding }),
 
           '&:not([data-disabled])': {
-            backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[1],
+            backgroundColor:
+              theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[1],
             borderColor: theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[1],
             color: theme.colorScheme === 'dark' ? theme.colors.dark[3] : theme.colors.gray[5],
           },

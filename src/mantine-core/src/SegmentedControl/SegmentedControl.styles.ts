@@ -67,6 +67,7 @@ export default createStyles(
           '&, &:hover': {
             color: theme.colorScheme === 'dark' ? theme.colors.dark[3] : theme.colors.gray[5],
             cursor: 'not-allowed',
+            pointerEvents: 'none',
           },
         },
 
@@ -118,6 +119,14 @@ export default createStyles(
                 ? theme.focusRingStyles.resetStyles(theme)
                 : null),
             },
+          },
+        },
+
+        '&:disabled + label': {
+          '&, &:hover': {
+            color: theme.colorScheme === 'dark' ? theme.colors.dark[3] : theme.colors.gray[5],
+            cursor: 'not-allowed',
+            pointerEvents: 'none',
           },
         },
       },

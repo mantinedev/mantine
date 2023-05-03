@@ -13,6 +13,21 @@ export default createStyles((theme, { invalid }: MultiSelectStylesParams, { size
     '&:has(input:disabled)': {
       cursor: 'not-allowed',
       pointerEvents: 'none',
+
+      '& .mantine-MultiSelect-input': {
+        backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[1],
+        color: theme.colors.dark[2],
+        opacity: 0.6,
+
+        '&::placeholder': {
+          color: theme.colors.dark[2],
+        },
+      },
+
+      '& .mantine-MultiSelect-defaultValue': {
+        backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[3],
+        color: theme.colorScheme === 'dark' ? theme.colors.dark[1] : theme.colors.gray[7],
+      },
     },
   },
 

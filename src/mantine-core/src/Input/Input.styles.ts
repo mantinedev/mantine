@@ -115,6 +115,12 @@ export default createStyles(
         position: 'relative',
         marginTop: offsetTop ? `calc(${theme.spacing.xs} / 2)` : undefined,
         marginBottom: offsetBottom ? `calc(${theme.spacing.xs} / 2)` : undefined,
+
+        '&:has(input:disabled)': {
+          '& .mantine-Input-rightSection': {
+            display: 'none',
+          },
+        },
       },
 
       input: {
