@@ -20,3 +20,4 @@ export { maxSelectedValues } from './MultiSelect.demo.maxSelectedValues';
 export { disableSelectedItemFiltering } from './MultiSelect.demo.disableSelectedItemFiltering';
 export { readOnly } from './MultiSelect.demo.readOnly';
 export { hoverOnSearchChange } from './MultiSelect.demo.hoverOnSearchChange';
+export { scrollableContent } from './MultiSelect.demo.scrollableContent';

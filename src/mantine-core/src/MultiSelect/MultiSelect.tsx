@@ -94,6 +94,9 @@ export interface MultiSelectProps
 
   /** Props added to clear button */
   clearButtonProps?: React.ComponentPropsWithoutRef<'button'>;
+
+  /** To keep a constant height and width, one can set content as horizontally scrollable */
+  scrollableContent?: boolean;
 }
 
 export function defaultFilter(value: string, selected: boolean, item: SelectItem) {
@@ -147,6 +150,7 @@ const defaultProps: Partial<MultiSelectProps> = {
   selectOnBlur: false,
   positionDependencies: [],
   dropdownPosition: 'flip',
+  scrollableContent: false,
 };
 
 export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>((props, ref) => {
@@ -223,7 +227,7 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>((props
   } = useComponentDefaultProps('MultiSelect', defaultProps, props);
 
   const { classes, cx, theme } = useStyles(
-    { invalid: !!error },
+    { invalid: !!error, scrollableContent: props?.scrollableContent },
     { name: 'MultiSelect', classNames, styles, unstyled, size, variant }
   );
   const { systemStyles, rest } = extractSystemStyles(others);
