@@ -245,6 +245,7 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>((props
     onChange: onSearchChange,
   });
   const [IMEOpen, setIMEOpen] = useState(false);
+  const [scrolling, setScrolling] = useState(false);
 
   const { scrollIntoView, targetRef, scrollableRef } = useScrollIntoView({
     duration: 0,
@@ -666,7 +667,18 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>((props
               onMouseDown={(event) => {
                 event.preventDefault();
                 !disabled && !valuesOverflow.current && setDropdownOpened(!dropdownOpened);
-                inputRef.current?.focus();
+                const target = event.target as HTMLElement;
+                if (
+                  props?.scrollableContent &&
+                  (target.className.includes('mantine-ScrollArea-thumb') ||
+                    target.className.includes('mantine-ScrollArea-scrollbar'))
+                ) {
+                  setScrolling(true);
+                  setDropdownOpened(false);
+                } else {
+                  inputRef.current?.focus();
+                  if (scrolling) setScrolling(false);
+                }
               }}
               classNames={{
                 ...classNames,
@@ -698,7 +710,8 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>((props
                       [classes.searchInputPointer]: !searchable,
                       [classes.searchInputInputHidden]:
                         (!dropdownOpened && _value.length > 0) ||
-                        (!searchable && _value.length > 0),
+                        (!searchable && _value.length > 0) ||
+                        scrolling,
                       [classes.searchInputEmpty]: _value.length === 0,
                     })}
                     onKeyDown={handleInputKeydown}
