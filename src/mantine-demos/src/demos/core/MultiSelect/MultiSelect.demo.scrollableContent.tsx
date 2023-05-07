@@ -12,8 +12,7 @@ function Demo() {
       data={['React', 'Angular', 'Svelte', 'Vue', 'Riot', 'Next.js', 'Blitz.js']}
       label="Your favorite frameworks/libraries"
       placeholder="Try to select multiple elements"
-      searchable
-      w={380}
+      maw={380}
       scrollableContent
     />
   );
@@ -27,7 +26,6 @@ function Demo() {
         data={data}
         label="Your favorite frameworks/libraries"
         placeholder="Try to select multiple elements"
-        searchable
         maw={380}
         scrollableContent
       />

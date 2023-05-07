@@ -25,6 +25,7 @@ import { SelectItem, BaseSelectProps, BaseSelectStylesNames } from '../Select/ty
 import { SelectItems } from '../Select/SelectItems/SelectItems';
 import useStyles from './MultiSelect.styles';
 import { SelectSharedProps } from '../Select/Select';
+import { ScrollArea } from '../ScrollArea';
 
 export type MultiSelectStylesNames =
   | DefaultValueStylesNames
@@ -685,34 +686,37 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>((props
                 readOnly,
               })}
             >
-              <div className={classes.values} data-clearable={clearable || undefined}>
-                {selectedItems}
+              <ScrollArea scrollbarSize={5}>
+                <div className={classes.values} data-clearable={clearable || undefined}>
+                  {selectedItems}
 
-                <input
-                  ref={useMergedRef(ref, inputRef)}
-                  type="search"
-                  id={uuid}
-                  className={cx(classes.searchInput, {
-                    [classes.searchInputPointer]: !searchable,
-                    [classes.searchInputInputHidden]:
-                      (!dropdownOpened && _value.length > 0) || (!searchable && _value.length > 0),
-                    [classes.searchInputEmpty]: _value.length === 0,
-                  })}
-                  onKeyDown={handleInputKeydown}
-                  value={_searchValue}
-                  onChange={handleInputChange}
-                  onFocus={handleInputFocus}
-                  onBlur={handleInputBlur}
-                  readOnly={!searchable || valuesOverflow.current || readOnly}
-                  placeholder={_value.length === 0 ? placeholder : undefined}
-                  disabled={disabled}
-                  data-mantine-stop-propagation={dropdownOpened}
-                  autoComplete="off"
-                  onCompositionStart={() => setIMEOpen(true)}
-                  onCompositionEnd={() => setIMEOpen(false)}
-                  {...rest}
-                />
-              </div>
+                  <input
+                    ref={useMergedRef(ref, inputRef)}
+                    type="search"
+                    id={uuid}
+                    className={cx(classes.searchInput, {
+                      [classes.searchInputPointer]: !searchable,
+                      [classes.searchInputInputHidden]:
+                        (!dropdownOpened && _value.length > 0) ||
+                        (!searchable && _value.length > 0),
+                      [classes.searchInputEmpty]: _value.length === 0,
+                    })}
+                    onKeyDown={handleInputKeydown}
+                    value={_searchValue}
+                    onChange={handleInputChange}
+                    onFocus={handleInputFocus}
+                    onBlur={handleInputBlur}
+                    readOnly={!searchable || valuesOverflow.current || readOnly}
+                    placeholder={_value.length === 0 ? placeholder : undefined}
+                    disabled={disabled}
+                    data-mantine-stop-propagation={dropdownOpened}
+                    autoComplete="off"
+                    onCompositionStart={() => setIMEOpen(true)}
+                    onCompositionEnd={() => setIMEOpen(false)}
+                    {...rest}
+                  />
+                </div>
+              </ScrollArea>
             </Input>
           </div>
         </SelectPopover.Target>
