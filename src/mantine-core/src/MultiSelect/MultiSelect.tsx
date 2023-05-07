@@ -678,7 +678,7 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>((props
                 } else {
                   inputRef.current?.focus();
                   setTimeout(() => {
-                    inputRef.current.scrollIntoView({ inline: 'end' });
+                    inputRef.current.scrollIntoView({ block: 'nearest', inline: 'end' });
                   }, 0);
                   if (scrolling) {
                     setScrolling(false);
