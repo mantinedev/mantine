@@ -677,7 +677,12 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>((props
                   setDropdownOpened(false);
                 } else {
                   inputRef.current?.focus();
-                  if (scrolling) setScrolling(false);
+                  setTimeout(() => {
+                    inputRef.current.scrollIntoView({ inline: 'end' });
+                  }, 0);
+                  if (scrolling) {
+                    setScrolling(false);
+                  }
                 }
               }}
               classNames={{

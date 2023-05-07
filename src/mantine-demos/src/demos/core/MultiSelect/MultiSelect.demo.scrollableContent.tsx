@@ -14,6 +14,7 @@ function Demo() {
       placeholder="Try to select multiple elements"
       maw={380}
       scrollableContent
+      searchable
     />
   );
 }
@@ -28,6 +29,7 @@ function Demo() {
         placeholder="Try to select multiple elements"
         maw={380}
         scrollableContent
+        searchable
       />
     </div>
   );
