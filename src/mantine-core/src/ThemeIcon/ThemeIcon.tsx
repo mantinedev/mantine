@@ -10,6 +10,8 @@ import {
 import { Box } from '../Box';
 import useStyles, { ThemeIconStylesParams } from './ThemeIcon.styles';
 
+export type ThemeIconVariant = Variants<'filled' | 'light' | 'gradient' | 'outline' | 'default'>;
+
 export interface ThemeIconProps
   extends DefaultProps<never, ThemeIconStylesParams>,
     React.ComponentPropsWithoutRef<'div'> {
@@ -26,7 +28,7 @@ export interface ThemeIconProps
   color?: MantineColor;
 
   /** Controls appearance */
-  variant?: Variants<'filled' | 'light' | 'gradient' | 'outline' | 'default'>;
+  variant?: ThemeIconVariant;
 
   /** Controls gradient settings in gradient variant only */
   gradient?: MantineGradient;
