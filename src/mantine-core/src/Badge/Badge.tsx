@@ -14,13 +14,14 @@ import { Box } from '../Box';
 import useStyles, { BadgeStylesParams } from './Badge.styles';
 
 export type BadgeStylesNames = Selectors<typeof useStyles>;
+export type BadgeVariant = Variants<'light' | 'filled' | 'outline' | 'dot' | 'gradient'>;
 
 export interface BadgeProps extends DefaultProps<BadgeStylesNames, BadgeStylesParams> {
   /** Key of theme.colors */
   color?: MantineColor;
 
   /** Controls appearance */
-  variant?: Variants<'light' | 'filled' | 'outline' | 'dot' | 'gradient'>;
+  variant?: BadgeVariant;
 
   /** Controls gradient, applied to gradient variant only */
   gradient?: MantineGradient;
