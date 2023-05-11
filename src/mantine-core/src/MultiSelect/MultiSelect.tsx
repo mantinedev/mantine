@@ -227,8 +227,10 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>((props
     ...others
   } = useComponentDefaultProps('MultiSelect', defaultProps, props);
 
+  const scrollableContent = props?.scrollableContent;
+
   const { classes, cx, theme } = useStyles(
-    { invalid: !!error, scrollableContent: props?.scrollableContent },
+    { invalid: !!error, scrollableContent },
     { name: 'MultiSelect', classNames, styles, unstyled, size, variant }
   );
   const { systemStyles, rest } = extractSystemStyles(others);
@@ -245,7 +247,6 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>((props
     onChange: onSearchChange,
   });
   const [IMEOpen, setIMEOpen] = useState(false);
-  const [scrolling, setScrolling] = useState(false);
 
   const { scrollIntoView, targetRef, scrollableRef } = useScrollIntoView({
     duration: 0,
@@ -666,23 +667,16 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>((props
               unstyled={unstyled}
               onMouseDown={(event) => {
                 event.preventDefault();
-                !disabled && !valuesOverflow.current && setDropdownOpened(!dropdownOpened);
                 const target = event.target as HTMLElement;
-                if (
-                  props?.scrollableContent &&
-                  (target.className.includes('mantine-ScrollArea-thumb') ||
-                    target.className.includes('mantine-ScrollArea-scrollbar'))
-                ) {
-                  setScrolling(true);
-                  setDropdownOpened(false);
-                } else {
+                const scrollingBarTargeted =
+                  target.className.includes('mantine-ScrollArea-thumb') ||
+                  target.className.includes('mantine-ScrollArea-scrollbar');
+                if (!scrollableContent || !scrollingBarTargeted) {
+                  !disabled && !valuesOverflow.current && setDropdownOpened(!dropdownOpened);
                   inputRef.current?.focus();
                   setTimeout(() => {
-                    inputRef.current.scrollIntoView({ block: 'nearest', inline: 'end' });
+                    inputRef.current.scrollIntoView({ block: 'nearest' });
                   }, 0);
-                  if (scrolling) {
-                    setScrolling(false);
-                  }
                 }
               }}
               classNames={{
@@ -715,8 +709,7 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>((props
                       [classes.searchInputPointer]: !searchable,
                       [classes.searchInputInputHidden]:
                         (!dropdownOpened && _value.length > 0) ||
-                        (!searchable && _value.length > 0) ||
-                        scrolling,
+                        (!searchable && _value.length > 0),
                       [classes.searchInputEmpty]: _value.length === 0,
                     })}
                     onKeyDown={handleInputKeydown}
