@@ -158,6 +158,7 @@ export const ColorInput = forwardRef<HTMLInputElement, ColorInputProps>((props, 
     <ActionIcon
       sx={{ color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black }}
       size={inputProps.size}
+      aria-label="Pick color with eye dropper"
       onClick={() =>
         openEyeDropper()
           .then(({ sRGBHex }) => {
