@@ -18,7 +18,7 @@ export function useUncontrolled<T>({
   value,
   defaultValue,
   finalValue,
-  onChange = () => {},
+  onChange,
 }: UseUncontrolledInput<T>): [T, (value: T) => void, boolean] {
   const [uncontrolledValue, setUncontrolledValue] = useState(
     defaultValue !== undefined ? defaultValue : finalValue
@@ -30,7 +30,12 @@ export function useUncontrolled<T>({
   };
 
   if (value !== undefined) {
-    return [value as T, onChange, true];
+   if(!onChange) {
+     console.warn('[mantine:useUncontrolled], miss onChange')
+   }
+   const setValue = onChange || () => void
+  
+    return [value as T, setValue, true];
   }
 
   return [uncontrolledValue as T, handleUncontrolledChange, false];
