@@ -31,9 +31,9 @@ export function useUncontrolled<T>({
 
   if (value !== undefined) {
    if(!onChange) {
-     console.warn('[mantine:useUncontrolled], miss onChange')
+     console.warn('[mantine:useUncontrolled], miss onChange prop, can cause update error ')
    }
-   const setValue = onChange || () => void
+   const setValue = onChange || (() => {})
   
     return [value as T, setValue, true];
   }
