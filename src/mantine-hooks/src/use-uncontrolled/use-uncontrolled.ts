@@ -24,10 +24,10 @@ export function useUncontrolled<T>({
     defaultValue !== undefined ? defaultValue : finalValue
   );
 
-  const handleUncontrolledChange = (val: T) => {
+  const handleUncontrolledChange = useCallback(() => (val: T) => {
     setUncontrolledValue(val);
     onChange?.(val);
-  };
+  },[onChange]);
 
   if (value !== undefined) {
     return [value as T, onChange, true];
