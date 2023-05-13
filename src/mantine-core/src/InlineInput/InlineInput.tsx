@@ -53,7 +53,7 @@ export const InlineInput = forwardRef<HTMLDivElement, InlineInputProps>(
 
           <div className={classes.labelWrapper}>
             {label && (
-              <label className={classes.label} data-error={!!error} data-disabled={disabled || undefined} htmlFor={id}>
+              <label className={classes.label} data-error={!!error || undefined} data-disabled={disabled || undefined} htmlFor={id}>
                 {label}
               </label>
             )}
