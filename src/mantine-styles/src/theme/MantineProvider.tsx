@@ -18,6 +18,8 @@ const MantineProviderContext = createContext<MantineProviderContextType>({
   theme: DEFAULT_THEME,
 });
 
+export { MantineProviderContext as UNSAFE_MantineProviderContext };
+
 export function useMantineTheme() {
   return useContext(MantineProviderContext)?.theme || DEFAULT_THEME;
 }
