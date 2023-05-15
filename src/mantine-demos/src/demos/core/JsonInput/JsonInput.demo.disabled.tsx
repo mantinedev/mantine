@@ -6,15 +6,7 @@ const code = `
 import { JsonInput } from '@mantine/core';
 
 function Demo() {
-  return (
-    <>
-      <JsonInput disabled />
-
-      <fieldset disabled>
-        <JsonInput />
-      </fieldset>
-    </>
-  );
+  return <JsonInput disabled />;
 }
 `;
 
@@ -28,17 +20,6 @@ function Demo() {
         formatOnBlur
         disabled
       />
-
-      <br />
-
-      <fieldset disabled>
-        <JsonInput
-          defaultValue='{ "a": 1, "B": 2 }'
-          label="Disabled by fieldset"
-          placeholder="Disabled by fieldset"
-          formatOnBlur
-        />
-      </fieldset>
     </Box>
   );
 }

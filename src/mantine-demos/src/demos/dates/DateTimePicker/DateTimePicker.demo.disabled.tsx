@@ -8,19 +8,10 @@ import { DateTimePicker } from '@mantine/dates';
 
 function Demo() {
   return (
-    <>
-      <DateTimePicker
-        label="Disabled"
-        placeholder="Pick date and time"
-      />
-
-      <fieldset disabled>
-        <DateTimePicker
-          label="Disabled by fieldset"
-          placeholder="Pick date and time"
-        />
-      </fieldset>
-    </>
+    <DateTimePicker
+      label="Disabled"
+      placeholder="Pick date and time"
+    />
   );
 }
 `;
@@ -34,16 +25,6 @@ function Demo() {
         popoverProps={{ withinPortal: true }}
         disabled
       />
-
-      <br />
-
-      <fieldset disabled>
-        <DateTimePicker
-          label="Disabled by fieldset"
-          placeholder="Pick date and time"
-          popoverProps={{ withinPortal: true }}
-        />
-      </fieldset>
     </Box>
   );
 }

@@ -7,17 +7,9 @@ import { PinInput, Group } from '@mantine/core';
 
 function Demo() {
   return (
-    <>
-      <Group position="center">
-        <PinInput disabled />
-      </Group>
-
-      <fieldset disabled>
-        <Group position="center">
-          <PinInput />
-        </Group>
-      </fieldset>
-    </>
+    <Group position="center">
+      <PinInput disabled />
+    </Group>
   );
 }
 `;
@@ -28,14 +20,6 @@ function Demo() {
       <Group position="center">
         <PinInput disabled />
       </Group>
-
-      <br />
-
-      <fieldset disabled>
-        <Group position="center">
-          <PinInput />
-        </Group>
-      </fieldset>
     </Box>
   );
 }

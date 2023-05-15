@@ -7,21 +7,11 @@ const code = `
 import { DateInput } from '@mantine/dates';
 
 function Demo() {
-  const [value, setValue] = useState<Date | null>(null);
   return (
-    <>
-      <DateInput
+    <DateInput
       label="Disabled"
       placeholder="Date input"
-      {/* ...other props */} />
-
-      <fieldset disabled>
-        <DateInput
-        label="Disabled by fieldset"
-        placeholder="Date input"
-        {/* ...other props */} />
-      </fieldset>
-    </>
+      disabled
     />
   );
 }
@@ -38,17 +28,6 @@ function Demo() {
         placeholder="Date input"
         disabled
       />
-
-      <br />
-
-      <fieldset disabled>
-        <DateInput
-          value={value}
-          onChange={setValue}
-          label="Disabled by fieldset"
-          placeholder="Date input"
-        />
-      </fieldset>
     </Box>
   );
 }

@@ -22,18 +22,6 @@ function Demo() {
         disabled
         value="secret"
       />
-
-      <br />
-
-      <fieldset disabled>
-        <PasswordInput label="Disabled by fieldset without value" placeholder="Your password" />
-        <PasswordInput
-          mt="md"
-          label="Disabled by fieldset with value"
-          placeholder="Your password"
-          value="secret"
-        />
-      </fieldset>
     </Box>
   );
 }

@@ -6,15 +6,7 @@ const code = `
 import { Autocomplete } from '@mantine/core';
 
 function Demo() {
-  return (
-    <>
-      <Autocomplete disabled data={['React', 'Angular', 'Svelte', 'Vue']} />
-
-      <fieldset disabled>
-        <Autocomplete data={['React', 'Angular', 'Svelte', 'Vue']} />
-      </fieldset>
-    /<>
-  );
+  return <Autocomplete disabled data={['React', 'Angular', 'Svelte', 'Vue']} />;
 }
 `;
 
@@ -36,25 +28,6 @@ function Demo() {
         disabled
         value="React"
       />
-
-      <br />
-
-      <fieldset disabled>
-        <Autocomplete
-          data={['React', 'Angular', 'Svelte', 'Vue']}
-          label="Disabled by fieldset without value"
-          placeholder="Pick all that you like"
-        />
-
-        <Autocomplete
-          mt="md"
-          data={['React', 'Angular', 'Svelte', 'Vue']}
-          label="Disabled by fieldset with value"
-          placeholder="Pick all that you like"
-          disabled
-          value="React"
-        />
-      </fieldset>
     </Box>
   );
 }

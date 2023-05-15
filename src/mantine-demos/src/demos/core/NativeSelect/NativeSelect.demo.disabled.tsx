@@ -6,15 +6,7 @@ const code = `
 import { NativeSelect } from '@mantine/core';
 
 function Demo() {
-  return (
-    <>
-      <NativeSelect disabled data={[]} />
-
-      <fieldset disabled>
-        <NativeSelect data={[]} />
-      </fieldset>
-    </>
-  )
+  return <NativeSelect disabled data={[]} />;
 }
 `;
 
@@ -27,17 +19,6 @@ function Demo() {
         placeholder="Pick one that you like"
         disabled
       />
-
-      <br />
-
-      <fieldset disabled>
-        <NativeSelect
-          data={['React', 'Angular', 'Svelte', 'Vue']}
-          label="Disabled select with fieldset"
-          placeholder="Pick one that you like"
-          disabled
-        />
-      </fieldset>
     </Box>
   );
 }

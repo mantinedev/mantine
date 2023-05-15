@@ -6,15 +6,7 @@ const code = `
 import { TextInput } from '@mantine/core';
 
 function Demo() {
-  return (
-    <>
-      <TextInput disabled />
-
-      <fieldset disabled>
-        <TextInput />
-      </fieldset>
-    </>
-  )
+  return <TextInput disabled />;
 }
 `;
 
@@ -30,19 +22,6 @@ function Demo() {
         disabled
         value="myemail@gmail.com"
       />
-
-      <br />
-
-      <fieldset disabled>
-        <TextInput label="Disabled by fieldset without value" placeholder="Your email" />
-
-        <TextInput
-          mt="md"
-          label="Disabled by fieldset with value"
-          placeholder="Your email"
-          value="myemail@gmail.com"
-        />
-      </fieldset>
     </Box>
   );
 }

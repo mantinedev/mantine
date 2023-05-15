@@ -15,12 +15,6 @@ function Demo() {
       <Checkbox disabled />
       <Checkbox disabled checked />
       <Checkbox disabled indeterminate />
-
-      <fieldset disabled>
-          <Checkbox />
-          <Checkbox checked />
-          <Checkbox indeterminate />
-      </fieldset>
     </>
   );
 }
@@ -36,14 +30,6 @@ function Demo() {
       <Checkbox disabled label="Disabled checkbox" />
       <Checkbox disabled checked label="Disabled checked checkbox" />
       <Checkbox disabled indeterminate label="Disabled indeterminate checkbox" />
-
-      <fieldset disabled>
-        <Stack>
-          <Checkbox label="Disabled checkbox by fieldset" />
-          <Checkbox checked label="Disabled checked checkbox by fieldset" />
-          <Checkbox indeterminate label="Disabled indeterminate checkbox by fieldset" />
-        </Stack>
-      </fieldset>
     </Stack>
   );
 }

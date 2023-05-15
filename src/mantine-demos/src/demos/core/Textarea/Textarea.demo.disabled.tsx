@@ -6,15 +6,7 @@ const code = `
 import { Textarea } from '@mantine/core';
 
 function Demo() {
-  return (
-    <>
-      <Textarea disabled/>
-
-      <fieldset disabled>
-        <Textarea />
-      </fieldset>
-    </>
-  );
+  return <Textarea disabled/>;
 }
 `;
 
@@ -22,12 +14,6 @@ function Demo() {
   return (
     <Box maw={320} mx="auto">
       <Textarea label="Disabled" placeholder="Your comment" disabled />
-
-      <br />
-
-      <fieldset disabled>
-        <Textarea label="Disabled by fieldset" placeholder="Your comment" />
-      </fieldset>
     </Box>
   );
 }

@@ -11,12 +11,6 @@ function Demo() {
       <Radio checked disabled label="React" value="react" />
       <Radio disabled label="Angular" value="nu" />
       <Radio disabled label="Svelte" value="sv" />
-
-      <fieldset disabled>
-        <Radio checked label="React" value="react" />
-        <Radio label="Angular" value="nu" />
-        <Radio label="Svelte" value="sv" />
-      </fieldset>
     </>
   );
 }
@@ -28,14 +22,6 @@ function Demo() {
       <Radio checked disabled label="React" value="react" />
       <Radio disabled label="Angular" value="nu" mt="xs" />
       <Radio disabled label="Svelte" value="sv" mt="xs" />
-
-      <br />
-
-      <fieldset disabled>
-        <Radio checked label="React" value="react" />
-        <Radio label="Angular" value="nu" mt="xs" />
-        <Radio label="Svelte" value="sv" mt="xs" />
-      </fieldset>
     </Box>
   );
 }

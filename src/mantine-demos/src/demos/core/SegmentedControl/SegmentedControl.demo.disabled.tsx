@@ -17,10 +17,6 @@ function Demo() {
           { value: 'export', label: 'Export' },
         ]}
       />
-
-      <fieldset disabled>
-        <SegmentedControl />
-      </fieldset>
     </>
   );
 }
@@ -74,30 +70,6 @@ function Demo() {
           ]}
         />
       </div>
-
-      <fieldset disabled>
-        <div>
-          <Text size="sm" weight={500} mb={3}>
-            Disabled by fieldset
-          </Text>
-          <SegmentedControl
-            data={[
-              {
-                value: 'preview',
-                label: 'Preview',
-              },
-              {
-                value: 'code',
-                label: 'Code',
-              },
-              {
-                value: 'export',
-                label: 'Export',
-              },
-            ]}
-          />
-        </div>
-      </fieldset>
     </Stack>
   );
 }

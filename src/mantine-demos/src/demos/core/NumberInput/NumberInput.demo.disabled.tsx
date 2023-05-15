@@ -6,15 +6,7 @@ const code = `
 import { NumberInput } from '@mantine/core';
 
 function Demo() {
-  return (
-    <>
-      <NumberInput disabled />
-
-      <fieldset disabled>
-        <NumberInput />
-      </fieldset>
-    </>
-  )
+  return <NumberInput disabled />;
 }
 `;
 
@@ -22,12 +14,6 @@ function Demo() {
   return (
     <Box maw={320} mx="auto">
       <NumberInput label="Disabled" placeholder="Your age" disabled value={20} />
-
-      <br />
-
-      <fieldset disabled>
-        <NumberInput label="Disabled by fieldset" placeholder="Your age" value={20} />
-      </fieldset>
     </Box>
   );
 }

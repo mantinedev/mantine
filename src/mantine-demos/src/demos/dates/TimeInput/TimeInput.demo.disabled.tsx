@@ -8,15 +8,7 @@ import { IconClock } from '@tabler/icons-react';
 import { TimeInput } from '@mantine/dates';
 
 function Demo() {
-  return (
-    <>
-      <TimeInput disabled />
-
-      <fieldset disabled>
-        <TimeInput disabled />
-      </fieldset>
-    </>
-  )
+  return <TimeInput disabled />;
 }
 `;
 
@@ -24,12 +16,6 @@ function Demo() {
   return (
     <Box maw={320} mx="auto">
       <TimeInput disabled />
-
-      <br />
-
-      <fieldset disabled>
-        <TimeInput />
-      </fieldset>
     </Box>
   );
 }

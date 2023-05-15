@@ -8,23 +8,12 @@ import { DatePickerInput } from '@mantine/dates';
 
 function Demo() {
   return (
-    <>
-      <DatePickerInput
-        valueFormat="YYYY MMM DD"
-        type="multiple"
-        label="Disabled"
-        placeholder="Pick date"
-      />
-
-      <fieldset disabled>
-        <DatePickerInput
-          valueFormat="YYYY MMM DD"
-          type="multiple"
-          label="Disabled by fieldset"
-          placeholder="Pick date"
-        />
-      </fieldset>
-    </>
+    <DatePickerInput
+      valueFormat="YYYY MMM DD"
+      type="multiple"
+      label="Disabled"
+      placeholder="Pick date"
+    />
   );
 }
 `;
@@ -39,17 +28,6 @@ function Demo() {
         placeholder="Pick date"
         disabled
       />
-
-      <br />
-
-      <fieldset disabled>
-        <DatePickerInput
-          valueFormat="YYYY MMM DD"
-          type="multiple"
-          label="Disabled by fieldset"
-          placeholder="Pick date"
-        />
-      </fieldset>
     </Box>
   );
 }

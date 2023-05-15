@@ -6,15 +6,7 @@ const code = `
 import { ColorInput } from '@mantine/core';
 
 function Demo() {
-  return (
-    <>
-      <ColorInput disabled />
-
-      <fieldset disabled>
-        <ColorInput />
-      </fieldset>
-    </>
-  );
+  return <ColorInput disabled />;
 }
 `;
 
@@ -30,23 +22,6 @@ function Demo() {
         disabled
         value="#EFD679"
       />
-
-      <br />
-
-      <fieldset disabled>
-        <ColorInput
-          label="Disabled by fieldset without value"
-          placeholder="Your favorite color"
-          disabled
-        />
-        <ColorInput
-          mt="md"
-          label="Disabled by fieldset with value"
-          placeholder="Your favorite color"
-          disabled
-          value="#EFD679"
-        />
-      </fieldset>
     </Box>
   );
 }

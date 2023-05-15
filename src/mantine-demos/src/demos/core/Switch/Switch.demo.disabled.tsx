@@ -6,15 +6,7 @@ const code = `
 import { Switch } from '@mantine/core';
 
 function Demo() {
-  return (
-    <>
-      <Switch disabled >
-
-      <fieldset disabled>
-        <Switch />
-      </fieldset>
-    </>
-  )
+  return <Switch disabled >;
 }
 `;
 
@@ -24,14 +16,6 @@ function Demo() {
       <Group position="center">
         <Switch disabled />
       </Group>
-
-      <br />
-
-      <fieldset disabled>
-        <Group position="center">
-          <Switch />
-        </Group>
-      </fieldset>
     </Box>
   );
 }

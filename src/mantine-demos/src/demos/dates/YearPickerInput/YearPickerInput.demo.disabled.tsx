@@ -8,21 +8,11 @@ import { YearPickerInput } from '@mantine/dates';
 
 function Demo() {
   return (
-    <>
-      <YearPickerInput
-        valueFormat="YY"
-        label="Disabled"
-        placeholder="Pick year"
-      />
-
-      <fieldset disabled>
-        <YearPickerInput
-          valueFormat="YY"
-          label="Disabled by fieldset"
-          placeholder="Pick year"
-        />
-      </fieldset>
-    </>
+    <YearPickerInput
+      valueFormat="YY"
+      label="Disabled"
+      placeholder="Pick year"
+    />
   );
 }
 `;
@@ -37,17 +27,6 @@ function Demo() {
         placeholder="Pick year"
         disabled
       />
-
-      <br />
-
-      <fieldset disabled>
-        <YearPickerInput
-          valueFormat="YY"
-          type="multiple"
-          label="Disabled by fieldset"
-          placeholder="Pick year"
-        />
-      </fieldset>
     </Box>
   );
 }

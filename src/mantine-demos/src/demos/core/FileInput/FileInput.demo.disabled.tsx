@@ -6,27 +6,13 @@ const code = `
 import { FileInput } from '@mantine/core';
 
 function Demo() {
-  return (
-    <>
-      <FileInput disabled />
-
-      <fieldset disabled>
-        <FileInput />
-      </fieldset>
-    </>
-  );
+  return <FileInput disabled />;
 `;
 
 function Demo() {
   return (
     <Box maw={320} mx="auto">
       <FileInput disabled label="Disabled" placeholder="Upload files" />
-
-      <br />
-
-      <fieldset disabled>
-        <FileInput label="Disabled by fieldset" placeholder="Upload files" />
-      </fieldset>
     </Box>
   );
 }

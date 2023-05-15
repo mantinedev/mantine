@@ -6,15 +6,7 @@ const code = `
 import { Select } from '@mantine/core';
 
 function Demo() {
-  return (
-    <>
-      <Select disabled />
-
-      <fieldset disabled>
-        <Select />
-      </fieldset>
-    </>
-  )
+  return <Select disabled />;
 }
 `;
 
@@ -38,26 +30,6 @@ function Demo() {
         withinPortal
         value="React"
       />
-
-      <br />
-
-      <fieldset disabled>
-        <Select
-          data={['React', 'Angular', 'Svelte', 'Vue']}
-          label="Disabled by fieldset without value"
-          placeholder="Pick all that you like"
-          withinPortal
-        />
-
-        <Select
-          mt="md"
-          data={['React', 'Angular', 'Svelte', 'Vue']}
-          label="Disabled by fieldset with value"
-          placeholder="Pick all that you like"
-          withinPortal
-          value="React"
-        />
-      </fieldset>
     </Box>
   );
 }
