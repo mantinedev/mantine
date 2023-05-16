@@ -1,25 +1,21 @@
 import React from 'react';
 import { MantineDemo } from '@mantine/ds';
-import { PinInput, Group, Box } from '@mantine/core';
+import { TimeInput } from '@mantine/dates';
+import { Box } from '@mantine/core';
 
 const code = `
-import { PinInput, Group } from '@mantine/core';
+import { IconClock } from '@tabler/icons-react';
+import { TimeInput } from '@mantine/dates';
 
 function Demo() {
-  return (
-    <Group position="center">
-      <PinInput disabled />
-    </Group>
-  );
+  return <TimeInput disabled />;
 }
 `;
 
 function Demo() {
   return (
     <Box maw={320} mx="auto">
-      <Group position="center">
-        <PinInput disabled />
-      </Group>
+      <TimeInput disabled />
     </Box>
   );
 }

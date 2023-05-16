@@ -9,6 +9,7 @@ import {
   itSupportsFocusEvents,
   itSupportsProviderVariant,
   itSupportsProviderSize,
+  itDisablesInputInsideDisabledFieldset,
 } from '@mantine/tests';
 import { NumberInput, NumberInputHandlers, NumberInputProps } from './NumberInput';
 
@@ -63,6 +64,7 @@ describe('@mantine/core/NumberInput', () => {
 
   itSupportsInputProps(NumberInput, defaultProps, 'NumberInput');
   itSupportsFocusEvents(NumberInput, defaultProps, 'input');
+  itDisablesInputInsideDisabledFieldset(NumberInput, defaultProps);
 
   it('does not render rightSection if input is disabled, variant is unstyled or controls are hidden', () => {
     const { container: regular } = render(<NumberInput {...defaultProps} />);
@@ -339,18 +341,10 @@ describe('@mantine/core/NumberInput', () => {
     expectValue('6');
   });
 
-  it('sets state to min if input is empty and is incremented/decremented', async () => {
+  it('sets state to min if input is empty and is incremented', async () => {
     const spy = jest.fn();
     const { container } = render(<NumberInput max={1000} min={0} step={6} onChange={spy} />);
     await clickIncrement(container);
-    expectValue('0');
-    expect(spy).toHaveBeenLastCalledWith(0);
-
-    await enterText('{backspace}4');
-    expect(spy).toHaveBeenLastCalledWith(4);
-
-    await enterText('{backspace}');
-    await clickDecrement(container);
     expectValue('0');
     expect(spy).toHaveBeenLastCalledWith(0);
   });

@@ -9,6 +9,7 @@ import {
   itSupportsFocusEvents,
   itSupportsProviderVariant,
   itSupportsProviderSize,
+  itDisablesInputInsideDisabledFieldset,
 } from '@mantine/tests';
 import { IconCrown } from '@tabler/icons-react';
 import { Switch, SwitchProps } from './Switch';
@@ -33,6 +34,7 @@ describe('@mantine/core/Switch', () => {
     othersSelector: 'input',
     providerName: 'Switch',
   });
+  itDisablesInputInsideDisabledFieldset(Switch, defaultProps);
 
   it('render thumb icon', () => {
     const { container } = render(<Switch thumbIcon={<IconCrown className="thumb-crown" />} />);

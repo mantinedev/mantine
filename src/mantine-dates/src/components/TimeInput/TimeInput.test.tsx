@@ -6,6 +6,7 @@ import {
   itSupportsProviderVariant,
   itSupportsProviderSize,
   itSupportsInputProps,
+  itDisablesInputInsideDisabledFieldset,
 } from '@mantine/tests';
 import { TimeInput, TimeInputProps } from './TimeInput';
 
@@ -27,4 +28,5 @@ describe('@mantine/core/TimeInput', () => {
     othersSelector: 'input',
     providerName: 'TimeInput',
   });
+  itDisablesInputInsideDisabledFieldset(TimeInput, defaultProps);
 });

@@ -6,7 +6,7 @@ const code = `
 import { TextInput } from '@mantine/core';
 
 function Demo() {
-  return <TextInput disabled />
+  return <TextInput disabled />;
 }
 `;
 

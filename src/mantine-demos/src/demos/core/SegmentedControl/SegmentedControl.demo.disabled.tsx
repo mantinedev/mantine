@@ -8,10 +8,8 @@ import { SegmentedControl } from '@mantine/core';
 function Demo() {
   return (
     <>
-      {/* Disabled control */}
-      <SegmentedControl disabled={true} />
+      <SegmentedControl disabled />
 
-      {/* Disabled option */}
       <SegmentedControl
         data={[
           { value: 'preview', label: 'Preview', disabled: true },

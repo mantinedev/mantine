@@ -8,6 +8,7 @@ import {
   itSupportsFocusEvents,
   itSupportsProviderVariant,
   itSupportsProviderSize,
+  itDisablesInputInsideDisabledFieldset,
 } from '@mantine/tests';
 import { NativeSelect, NativeSelectProps } from './NativeSelect';
 
@@ -34,6 +35,8 @@ describe('@mantine/core/NativeSelect', () => {
     <NativeSelect {...defaultProps} label="test-label" />,
     <NativeSelect {...defaultProps} aria-label="test-label" />,
   ]);
+
+  itDisablesInputInsideDisabledFieldset(NativeSelect, defaultProps, 'NativeSelect');
 
   it('renders correct amount of options', () => {
     render(<NativeSelect {...defaultProps} />);

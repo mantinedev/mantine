@@ -10,8 +10,6 @@ function Demo() {
     <>
       <Slider defaultValue={60} disabled />
       <RangeSlider
-        mt="xl"
-        mb="xl"
         disabled
         defaultValue={[25, 75]}
         marks={[

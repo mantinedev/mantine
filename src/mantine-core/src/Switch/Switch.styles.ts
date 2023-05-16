@@ -118,6 +118,7 @@ export default createStyles(
             theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[2],
           borderColor: theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[2],
           cursor: 'not-allowed',
+          pointerEvents: 'none',
         },
       },
 
