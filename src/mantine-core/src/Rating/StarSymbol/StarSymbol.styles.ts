@@ -15,7 +15,11 @@ const sizes = {
 
 export default createStyles((theme, { type, color }: StarSymbolStylesParams, { size }) => {
   const emptyColor = theme.colorScheme === 'light' ? theme.colors.gray[3] : theme.colors.gray[8];
-  const fullColor = theme.fn.variant({ variant: 'filled', color }).background;
+  const fullColor = theme.fn.variant({
+    variant: 'filled',
+    color,
+    primaryFallback: false,
+  }).background;
 
   return {
     icon: {
