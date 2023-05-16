@@ -61,9 +61,9 @@ export default createStyles((theme, { invalid }: MultiSelectStylesParams, { size
   },
 
   searchInputInputHidden: {
+    flex: 0,
     width: 0,
     minWidth: 0,
-    height: 0,
     margin: 0,
     overflow: 'hidden',
   },
