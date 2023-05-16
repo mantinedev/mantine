@@ -1,16 +1,12 @@
-import React from 'react';
+import { Box, Group, Switch } from '@mantine/core';
 import { MantineDemo } from '@mantine/ds';
-import { PinInput, Group, Box } from '@mantine/core';
+import React from 'react';
 
 const code = `
-import { PinInput, Group } from '@mantine/core';
+import { Switch } from '@mantine/core';
 
 function Demo() {
-  return (
-    <Group position="center">
-      <PinInput disabled />
-    </Group>
-  );
+  return <Switch disabled >;
 }
 `;
 
@@ -18,7 +14,7 @@ function Demo() {
   return (
     <Box maw={320} mx="auto">
       <Group position="center">
-        <PinInput disabled />
+        <Switch disabled />
       </Group>
     </Box>
   );

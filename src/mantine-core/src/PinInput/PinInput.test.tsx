@@ -1,6 +1,10 @@
 import React from 'react';
 import { render, fireEvent } from '@testing-library/react';
-import { checkAccessibility, itSupportsSystemProps } from '@mantine/tests';
+import {
+  checkAccessibility,
+  itDisablesInputInsideDisabledFieldset,
+  itSupportsSystemProps,
+} from '@mantine/tests';
 import { PinInput, PinInputProps } from './PinInput';
 
 const defaultProps: PinInputProps = {};
@@ -14,6 +18,8 @@ describe('@mantine/core/PinInput', () => {
     refType: HTMLDivElement,
     providerName: 'PinInput',
   });
+
+  itDisablesInputInsideDisabledFieldset(PinInput, defaultProps);
 
   it('renders correct amount of inputs based on length prop', () => {
     const { container } = render(<PinInput {...defaultProps} length={5} />);

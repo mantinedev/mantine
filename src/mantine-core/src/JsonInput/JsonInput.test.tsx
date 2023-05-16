@@ -6,6 +6,7 @@ import {
   checkAccessibility,
   itSupportsProviderVariant,
   itSupportsProviderSize,
+  itDisablesInputInsideDisabledFieldset,
 } from '@mantine/tests';
 import { render, screen, fireEvent } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
@@ -36,6 +37,8 @@ describe('@mantine/core/JsonInput', () => {
     refType: HTMLTextAreaElement,
     excludeOthers: true,
   });
+
+  itDisablesInputInsideDisabledFieldset(JsonInput, defaultProps, 'JsonInput');
 
   it('marks invalid JSON strings as invalid', async () => {
     render(<JsonInput />);

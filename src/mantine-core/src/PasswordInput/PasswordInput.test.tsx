@@ -9,6 +9,7 @@ import {
   itSupportsInputWrapperProps,
   itSupportsProviderVariant,
   itSupportsProviderSize,
+  itDisablesInputInsideDisabledFieldset,
 } from '@mantine/tests';
 import userEvent from '@testing-library/user-event';
 import { PasswordInput, PasswordInputProps } from './PasswordInput';
@@ -38,6 +39,8 @@ describe('@mantine/core/PasswordInput', () => {
     othersSelector: 'input',
     providerName: 'PasswordInput',
   });
+
+  itDisablesInputInsideDisabledFieldset(PasswordInput, defaultProps);
 
   it('sets required on input', () => {
     render(<PasswordInput required />);

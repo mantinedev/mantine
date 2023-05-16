@@ -5,6 +5,7 @@ import {
   itSupportsSystemProps,
   itSupportsProviderVariant,
   itSupportsProviderSize,
+  itDisablesInputInsideDisabledFieldset,
 } from '@mantine/tests';
 import { RangeSlider } from './RangeSlider';
 
@@ -30,6 +31,7 @@ describe('@mantine/core/RangeSlider', () => {
     refType: HTMLDivElement,
     providerName: 'RangeSlider',
   });
+  itDisablesInputInsideDisabledFieldset(RangeSlider, defaultProps);
 
   it('provides name and value to hidden inputs', () => {
     const { container } = render(<RangeSlider name="test-input" value={[10, 20]} />);

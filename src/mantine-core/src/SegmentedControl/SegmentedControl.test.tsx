@@ -6,6 +6,7 @@ import {
   itSupportsSystemProps,
   itSupportsProviderVariant,
   itSupportsProviderSize,
+  itDisablesInputInsideDisabledFieldset,
 } from '@mantine/tests';
 import { SegmentedControl, SegmentedControlProps } from './SegmentedControl';
 
@@ -29,6 +30,8 @@ describe('@mantine/core/SegmentedControl', () => {
     refType: HTMLDivElement,
     providerName: 'SegmentedControl',
   });
+
+  itDisablesInputInsideDisabledFieldset(SegmentedControl, defaultProps);
 
   it('supports uncontrolled state', async () => {
     render(<SegmentedControl {...defaultProps} />);

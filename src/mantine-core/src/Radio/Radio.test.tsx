@@ -6,6 +6,7 @@ import {
   itSupportsWrapperProps,
   itSupportsProviderVariant,
   itSupportsProviderSize,
+  itDisablesInputInsideDisabledFieldset,
 } from '@mantine/tests';
 import { Radio, RadioProps } from './Radio';
 import { RadioGroup } from './RadioGroup/RadioGroup';
@@ -29,6 +30,7 @@ describe('@mantine/core/Radio', () => {
     othersSelector: 'input',
     providerName: 'Radio',
   });
+  itDisablesInputInsideDisabledFieldset(Radio, defaultProps);
 
   it('exposes RadioGroup as a static component', () => {
     expect(Radio.Group).toBe(RadioGroup);

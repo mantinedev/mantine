@@ -17,6 +17,37 @@ export default createStyles(
       width: '100%',
       height: `calc(${getSize({ sizes, size })} * 2)`,
       cursor: 'pointer',
+
+      '&:has(~ input:disabled)': {
+        '&': {
+          pointerEvents: 'none',
+        },
+
+        '& .mantine-Slider-thumb': {
+          display: 'none',
+        },
+
+        '& .mantine-Slider-track::before': {
+          content: '',
+          backgroundColor: inverted
+            ? theme.colorScheme === 'dark'
+              ? theme.colors.dark[3]
+              : theme.colors.gray[4]
+            : theme.colorScheme === 'dark'
+            ? theme.colors.dark[4]
+            : theme.colors.gray[2],
+        },
+
+        '& .mantine-Slider-bar': {
+          backgroundColor: inverted
+            ? theme.colorScheme === 'dark'
+              ? theme.colors.dark[4]
+              : theme.colors.gray[2]
+            : theme.colorScheme === 'dark'
+            ? theme.colors.dark[3]
+            : theme.colors.gray[4],
+        },
+      },
     },
 
     track: {

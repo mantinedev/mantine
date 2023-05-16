@@ -9,6 +9,7 @@ import {
   itSupportsInputRightSection,
   itSupportsProviderVariant,
   itSupportsProviderSize,
+  itDisablesInputInsideDisabledFieldset,
 } from '@mantine/tests';
 import { InputWrapper } from './InputWrapper/InputWrapper';
 import { InputDescription } from './InputDescription/InputDescription';
@@ -39,6 +40,8 @@ describe('@mantine/core/Input', () => {
     refType: HTMLInputElement,
     excludeOthers: true,
   });
+
+  itDisablesInputInsideDisabledFieldset(Input, defaultProps);
 
   it('handles disabled state', () => {
     render(<Input disabled />);

@@ -4,6 +4,7 @@ import {
   itSupportsSystemProps,
   itSupportsProviderVariant,
   itSupportsProviderSize,
+  itDisablesInputInsideDisabledFieldset,
 } from '@mantine/tests';
 import { render } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
@@ -24,6 +25,7 @@ describe('@mantine/core/Rating', () => {
     refType: HTMLDivElement,
     providerName: 'Rating',
   });
+  itDisablesInputInsideDisabledFieldset(Rating, defaultProps);
 
   it('has correct name', () => {
     const { container } = render(<Rating defaultValue={1} />);
