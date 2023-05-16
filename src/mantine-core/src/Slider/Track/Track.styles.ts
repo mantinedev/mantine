@@ -28,7 +28,7 @@ export default createStyles(
         },
 
         '& .mantine-Slider-track::before': {
-          content: '',
+          content: '""',
           backgroundColor: inverted
             ? theme.colorScheme === 'dark'
               ? theme.colors.dark[3]
