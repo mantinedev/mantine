@@ -74,6 +74,9 @@ export interface ColorInputProps
 
   /** Determines whether the dropdown should be closed when color swatch is clicked, false by default */
   closeOnColorSwatchClick?: boolean;
+
+  /** aria-label for eye dropper button */
+  eyeDropperLabel?: string;
 }
 
 const SWATCH_SIZES = {
@@ -139,6 +142,7 @@ export const ColorInput = forwardRef<HTMLInputElement, ColorInputProps>((props, 
     rightSection,
     closeOnColorSwatchClick,
     disabled,
+    eyeDropperLabel,
     ...others
   } = useInputProps('ColorInput', defaultProps, props);
 
@@ -158,6 +162,7 @@ export const ColorInput = forwardRef<HTMLInputElement, ColorInputProps>((props, 
     <ActionIcon
       sx={{ color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black }}
       size={inputProps.size}
+      aria-label={eyeDropperLabel}
       onClick={() =>
         openEyeDropper()
           .then(({ sRGBHex }) => {
