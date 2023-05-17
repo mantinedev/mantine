@@ -1,4 +1,5 @@
 import dayjs from 'dayjs';
+import customParseFormat from 'dayjs/plugin/customParseFormat';
 import React, { forwardRef, useState, useEffect } from 'react';
 import {
   DefaultProps,
@@ -88,6 +89,8 @@ const defaultProps: Partial<DateInputProps> = {
   size: 'sm',
 };
 
+dayjs.extend(customParseFormat);
+
 export const DateInput = forwardRef<HTMLInputElement, DateInputProps>((props, ref) => {
   const {
     inputProps,
@@ -125,7 +128,8 @@ export const DateInput = forwardRef<HTMLInputElement, DateInputProps>((props, re
   const { calendarProps, others } = pickCalendarProps(rest);
   const ctx = useDatesContext();
   const defaultDateParser = (val: string) => {
-    const parsedDate = dayjs(val, valueFormat, ctx.getLocale(locale)).toDate();
+    dayjs.extend(customParseFormat);
+    const parsedDate = dayjs(val, valueFormat).toDate();
     return Number.isNaN(parsedDate.getTime()) ? dateStringParser(val) : parsedDate;
   };
 

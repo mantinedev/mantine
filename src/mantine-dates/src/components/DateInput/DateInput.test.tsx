@@ -300,6 +300,21 @@ describe('@mantine/dates/DateInput', () => {
     expectValue(container, 'April 11, 2022');
   });
 
+  it('Prevents us-iso reformatting on blur when removing 1 character', async () => {
+    const { container } = render(
+      <DateInput
+        {...defaultProps}
+        valueFormat="DD/MM/YYYY HH:mm"
+        defaultValue={new Date(2023, 5, 1, 0, 0, 0)}
+      />
+    );
+    expectValue(container, '01/06/2023 00:00');
+    await userEvent.clear(getInput(container));
+    await userEvent.type(getInput(container), '01/06/2023 00:0');
+    await userEvent.tab();
+    expectValue(container, '01/06/2023 00:00');
+  });
+
   it('supports custom date parser', async () => {
     const { container } = render(
       <DateInput
