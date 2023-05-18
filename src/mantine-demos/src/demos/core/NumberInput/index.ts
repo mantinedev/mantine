@@ -1,6 +1,7 @@
 export { configurator } from './NumberInput.demo.configurator';
 export { step } from './NumberInput.demo.step';
 export { controls } from './NumberInput.demo.controls';
+export { customControls } from './NumberInput.demo.customControls';
 export { handlers } from './NumberInput.demo.handlers';
 export { validation } from './NumberInput.demo.validation';
 export { disabled } from './NumberInput.demo.disabled';

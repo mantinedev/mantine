@@ -25,7 +25,7 @@ export interface NumberInputProps
   extends DefaultProps<NumberInputStylesNames>,
     Omit<
       React.ComponentPropsWithoutRef<typeof TextInput>,
-      'onChange' | 'value' | 'classNames' | 'styles' | 'type'
+      'onChange' | 'value' | 'classNames' | 'rightSection' | 'styles' | 'type'
     > {
   /** Called when value changes */
   onChange?(value: number | ''): void;
@@ -83,6 +83,9 @@ export interface NumberInputProps
 
   /** Input type, defaults to text */
   type?: 'text' | 'number';
+
+  /** Right section of input, similar to icon but on the right **/
+  rightSection?: React.ReactNode | ((defaultControls)=>React.ReactNode);
 }
 
 const defaultFormatter: Formatter = (value) => value || '';
@@ -446,7 +449,7 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>((props
       onKeyDown={handleKeyDown}
       onKeyUp={handleKeyUp}
       rightSection={
-        rightSection ||
+        (rightSection && (typeof rightSection === 'function' ? rightSection(controls) : rightSection)) ||
         (disabled || readOnly || hideControls || variant === 'unstyled' ? null : controls)
       }
       rightSectionWidth={
