@@ -128,7 +128,6 @@ export const DateInput = forwardRef<HTMLInputElement, DateInputProps>((props, re
   const { calendarProps, others } = pickCalendarProps(rest);
   const ctx = useDatesContext();
   const defaultDateParser = (val: string) => {
-    dayjs.extend(customParseFormat);
     const parsedDate = dayjs(val, valueFormat).toDate();
     return Number.isNaN(parsedDate.getTime()) ? dateStringParser(val) : parsedDate;
   };
