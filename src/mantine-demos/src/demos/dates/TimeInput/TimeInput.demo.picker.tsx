@@ -15,7 +15,7 @@ function Demo() {
 
   return (
     <TimeInput
-      label="Click click icon to show browser picker"
+      label="Click icon to show browser picker"
       ref={ref}
       rightSection={
         <ActionIcon onClick={() => ref.current.showPicker()}>
@@ -34,7 +34,7 @@ function Demo() {
 
   return (
     <TimeInput
-      label="Click click icon to show browser picker"
+      label="Click icon to show browser picker"
       ref={ref}
       rightSection={
         <ActionIcon onClick={() => ref.current.showPicker()}>
