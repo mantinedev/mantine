@@ -15,7 +15,7 @@ export interface AffixProps extends DefaultProps, React.ComponentPropsWithoutRef
   withinPortal?: boolean;
 
   /** Props to pass down to the portal when withinPortal is true */
-  portalProps?: Omit<PortalProps, 'target'>;
+  portalProps?: Omit<PortalProps, 'children' | 'withinPortal' | 'target'>;
 
   /** Affix position on screen, defaults to { bottom: 0, right: 0 } */
   position?: {
@@ -37,7 +37,7 @@ export const Affix = forwardRef<HTMLDivElement, AffixProps>((props: AffixProps, 
     useComponentDefaultProps('Affix', defaultProps, props);
 
   return (
-    <OptionalPortal withinPortal={withinPortal} target={target} {...portalProps}>
+    <OptionalPortal {...portalProps} withinPortal={withinPortal} target={target}>
       <Box sx={[{ position: 'fixed', zIndex, ...position }, ...packSx(sx)]} ref={ref} {...others} />
     </OptionalPortal>
   );

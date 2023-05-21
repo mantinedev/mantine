@@ -1,4 +1,4 @@
-import { createStyles, MantineNumberSize, MantineColor, getSize } from '@mantine/styles';
+import { createStyles, MantineNumberSize, MantineColor, getSize, rem } from '@mantine/styles';
 import { sizes } from '../SliderRoot/SliderRoot.styles';
 
 interface TrackStyles {
@@ -6,16 +6,56 @@ interface TrackStyles {
   color: MantineColor;
   disabled: boolean;
   inverted: boolean;
+  thumbSize?: number;
 }
 
 export default createStyles(
-  (theme, { radius, color, disabled, inverted }: TrackStyles, { size }) => ({
+  (theme, { radius, color, disabled, inverted, thumbSize }: TrackStyles, { size }) => ({
+    trackContainer: {
+      display: 'flex',
+      alignItems: 'center',
+      width: '100%',
+      height: `calc(${getSize({ sizes, size })} * 2)`,
+      cursor: 'pointer',
+
+      '&:has(~ input:disabled)': {
+        '&': {
+          pointerEvents: 'none',
+        },
+
+        '& .mantine-Slider-thumb': {
+          display: 'none',
+        },
+
+        '& .mantine-Slider-track::before': {
+          content: '""',
+          backgroundColor: inverted
+            ? theme.colorScheme === 'dark'
+              ? theme.colors.dark[3]
+              : theme.colors.gray[4]
+            : theme.colorScheme === 'dark'
+            ? theme.colors.dark[4]
+            : theme.colors.gray[2],
+        },
+
+        '& .mantine-Slider-bar': {
+          backgroundColor: inverted
+            ? theme.colorScheme === 'dark'
+              ? theme.colors.dark[4]
+              : theme.colors.gray[2]
+            : theme.colorScheme === 'dark'
+            ? theme.colors.dark[3]
+            : theme.colors.gray[4],
+        },
+      },
+    },
+
     track: {
       position: 'relative',
       height: getSize({ sizes, size }),
       width: '100%',
-      marginRight: getSize({ size, sizes }),
-      marginLeft: getSize({ size, sizes }),
+      marginRight: thumbSize ? rem(thumbSize / 2) : getSize({ size, sizes }),
+      marginLeft: thumbSize ? rem(thumbSize / 2) : getSize({ size, sizes }),
 
       '&::before': {
         content: '""',
@@ -23,8 +63,8 @@ export default createStyles(
         top: 0,
         bottom: 0,
         borderRadius: theme.fn.radius(radius),
-        right: `calc(${getSize({ size, sizes })} * -1)`,
-        left: `calc(${getSize({ size, sizes })} * -1)`,
+        right: `calc(${thumbSize ? rem(thumbSize / 2) : getSize({ size, sizes })} * -1)`,
+        left: `calc(${thumbSize ? rem(thumbSize / 2) : getSize({ size, sizes })} * -1)`,
         backgroundColor: inverted
           ? disabled
             ? theme.colorScheme === 'dark'

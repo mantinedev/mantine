@@ -90,7 +90,10 @@ export default createStyles(
     }: InputStylesParams,
     { variant, size }
   ) => {
-    const invalidColor = theme.fn.variant({ variant: 'filled', color: 'red' }).background;
+    const invalidColor = theme.fn.variant({
+      variant: 'filled',
+      color: 'red',
+    }).background;
     const sizeStyles =
       variant === 'default' || variant === 'filled'
         ? {
@@ -101,6 +104,10 @@ export default createStyles(
               : `calc(${getSize({ size, sizes })}  / 3)`,
             borderRadius: theme.fn.radius(radius),
           }
+        : variant === 'unstyled' && withRightSection
+        ? {
+            paddingRight: rightSectionWidth || getSize({ size, sizes }),
+          }
         : null;
 
     return {
@@ -108,6 +115,12 @@ export default createStyles(
         position: 'relative',
         marginTop: offsetTop ? `calc(${theme.spacing.xs} / 2)` : undefined,
         marginBottom: offsetBottom ? `calc(${theme.spacing.xs} / 2)` : undefined,
+
+        '&:has(input:disabled)': {
+          '& .mantine-Input-rightSection': {
+            display: 'none',
+          },
+        },
       },
 
       input: {
@@ -137,6 +150,7 @@ export default createStyles(
           color: theme.colors.dark[2],
           opacity: 0.6,
           cursor: 'not-allowed',
+          pointerEvents: 'none',
 
           '&::placeholder': {
             color: theme.colors.dark[2],

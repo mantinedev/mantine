@@ -1,9 +1,9 @@
 import React from 'react';
 import { MantineDemo } from '@mantine/ds';
-import { createStyles, rem, em } from '@mantine/core';
+import { createStyles, rem, em, getBreakpointValue } from '@mantine/core';
 
 const code = `
-import { createStyles, rem, em } from '@mantine/core';
+import { createStyles, getBreakpointValue, rem, em } from '@mantine/core';
 
 const useStyles = createStyles((theme) => ({
   container: {
@@ -11,8 +11,13 @@ const useStyles = createStyles((theme) => ({
     backgroundColor: theme.colors.blue[6],
 
     // Media query with value from theme
-    [\`@media (max-width: \${theme.breakpoints.xl})\`]: {
+    [\`@media (max-width: \${em(getBreakpointValue(theme.breakpoints.xl) - 1)})\`]: {
       backgroundColor: theme.colors.pink[6],
+    },
+
+    // Simplify media query writing with theme functions
+    [theme.fn.smallerThan('lg')]: {
+      backgroundColor: theme.colors.yellow[6],
     },
 
     // Static media query
@@ -34,8 +39,13 @@ const useStyles = createStyles((theme) => ({
     backgroundColor: theme.colors.blue[6],
 
     // Media query with value from theme
-    [`@media (max-width: ${theme.breakpoints.xl})`]: {
+    [`@media (max-width: ${em(getBreakpointValue(theme.breakpoints.xl) - 1)})`]: {
       backgroundColor: theme.colors.pink[6],
+    },
+
+    // Simplify media query writing with theme functions
+    [theme.fn.smallerThan('lg')]: {
+      backgroundColor: theme.colors.yellow[6],
     },
 
     // Static media query

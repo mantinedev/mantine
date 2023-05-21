@@ -203,3 +203,19 @@ export function ColorsIndex() {
     </Group>
   );
 }
+
+export function HoverStyles() {
+  return (
+    <div style={{ padding: 40 }}>
+      <Button
+        sx={{
+          '&:hover': { background: 'red' },
+        }}
+      >
+        Button
+      </Button>
+      <Button loading>Button</Button>
+      <Button disabled>Button</Button>
+    </div>
+  );
+}

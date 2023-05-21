@@ -11,6 +11,7 @@ import {
   getIconSize,
 } from '../Pagination.icons';
 import { PaginationControl } from '../PaginationControl/PaginationControl';
+import useStyles from './PaginationEdges.styles';
 
 export interface CreateEdgeComponent {
   icon: React.FC<PaginationIconProps>;
@@ -28,6 +29,7 @@ export function createEdgeComponent({ icon, name, action, type }: CreateEdgeComp
 
   const Component = forwardRef<HTMLButtonElement, PaginationEdgeProps>((props, ref) => {
     const { icon: Icon, ...others } = useComponentDefaultProps(name, defaultProps, props);
+    const { classes } = useStyles();
     const ctx = usePaginationContext();
     const disabled = type === 'next' ? ctx.active === ctx.total : ctx.active === 1;
 
@@ -39,7 +41,7 @@ export function createEdgeComponent({ icon, name, action, type }: CreateEdgeComp
         withPadding={false}
         {...others}
       >
-        <Icon size={getIconSize(ctx.stylesApi.size)} />
+        <Icon className={classes.icon} size={getIconSize(ctx.stylesApi.size)} />
       </PaginationControl>
     );
   });

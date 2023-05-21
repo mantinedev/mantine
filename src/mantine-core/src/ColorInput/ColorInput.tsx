@@ -61,7 +61,7 @@ export interface ColorInputProps
   withinPortal?: boolean;
 
   /** Props to pass down to the portal when withinPortal is true */
-  portalProps?: PortalProps;
+  portalProps?: Omit<PortalProps, 'children' | 'withinPortal'>;
 
   /** Dropdown box-shadow, key of theme.shadows */
   shadow?: MantineShadow;
@@ -74,6 +74,9 @@ export interface ColorInputProps
 
   /** Determines whether the dropdown should be closed when color swatch is clicked, false by default */
   closeOnColorSwatchClick?: boolean;
+
+  /** aria-label for eye dropper button */
+  eyeDropperLabel?: string;
 }
 
 const SWATCH_SIZES = {
@@ -139,6 +142,7 @@ export const ColorInput = forwardRef<HTMLInputElement, ColorInputProps>((props, 
     rightSection,
     closeOnColorSwatchClick,
     disabled,
+    eyeDropperLabel,
     ...others
   } = useInputProps('ColorInput', defaultProps, props);
 
@@ -158,9 +162,14 @@ export const ColorInput = forwardRef<HTMLInputElement, ColorInputProps>((props, 
     <ActionIcon
       sx={{ color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black }}
       size={inputProps.size}
+      aria-label={eyeDropperLabel}
       onClick={() =>
         openEyeDropper()
-          .then(({ sRGBHex }) => setValue(convertHsvaTo(format, parseColor(sRGBHex))))
+          .then(({ sRGBHex }) => {
+            const color = convertHsvaTo(format, parseColor(sRGBHex));
+            setValue(color);
+            onChangeEnd?.(color);
+          })
           .catch(noop)
       }
     >
@@ -176,9 +185,9 @@ export const ColorInput = forwardRef<HTMLInputElement, ColorInputProps>((props, 
   };
 
   const handleInputBlur = (event: React.FocusEvent<HTMLInputElement>) => {
+    fixOnBlur && setValue(lastValidValue);
     onBlur?.(event);
     setDropdownOpened(false);
-    fixOnBlur && setValue(lastValidValue);
   };
 
   const handleInputClick = (event: React.MouseEvent<HTMLInputElement>) => {
@@ -220,7 +229,7 @@ export const ColorInput = forwardRef<HTMLInputElement, ColorInputProps>((props, 
         <Popover.Target>
           <div>
             <Input<'input'>
-              autoComplete="nope"
+              autoComplete="off"
               {...others}
               {...inputProps}
               disabled={disabled}

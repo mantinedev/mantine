@@ -6,6 +6,7 @@ import {
   itSupportsInputProps,
   itSupportsProviderVariant,
   itSupportsProviderSize,
+  itDisablesInputInsideDisabledFieldset,
 } from '@mantine/tests';
 import { FileInput, FileInputProps } from './FileInput';
 
@@ -30,4 +31,5 @@ describe('@mantine/core/FileInput', () => {
     othersSelector: 'button',
     providerName: 'FileInput',
   });
+  itDisablesInputInsideDisabledFieldset(FileInput, defaultProps);
 });

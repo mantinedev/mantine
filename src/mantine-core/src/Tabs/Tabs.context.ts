@@ -20,6 +20,8 @@ interface TabsContext {
   onTabChange(value: TabsValue): void;
   getTabId(value: string): string;
   getPanelId(value: string): string;
+  setMountedPanelIds(values: string[] | ((oldValue: string[]) => string[])): void;
+  mountedPanelIds: string[];
   variant: TabsVariant;
   color: MantineColor;
   radius: MantineNumberSize;

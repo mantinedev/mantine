@@ -40,6 +40,14 @@ export default createStyles(
 
       '&:disabled': {
         cursor: 'not-allowed',
+        pointerEvents: 'none',
+        backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[1],
+        color: theme.colors.dark[2],
+        opacity: 0.6,
+
+        '&::placeholder': {
+          color: theme.colors.dark[2],
+        },
       },
 
       '&::placeholder': {

@@ -5,6 +5,7 @@ import {
   itSupportsProviderVariant,
   itSupportsProviderSize,
   itSupportsFocusEvents,
+  itDisablesInputInsideDisabledFieldset,
 } from '@mantine/tests';
 import {
   itSupportsClearableProps,
@@ -50,6 +51,7 @@ describe('@mantine/dates/DatePickerInput', () => {
     defaultValue: new Date(2022, 3, 11),
     popoverProps: { opened: true, withinPortal: false, transitionProps: { duration: 0 } },
   });
+  itDisablesInputInsideDisabledFieldset(DatePickerInput, defaultProps);
 
   it('supports valueFormat prop', () => {
     const { container, rerender } = render(
@@ -125,5 +127,25 @@ describe('@mantine/dates/DatePickerInput', () => {
     expect(container.firstChild).toHaveStyle({ borderColor: '#CCEE45' });
     expect(container.querySelector('[data-dates-input]')).toHaveStyle({ borderColor: '#EB4522' });
     expect(container.querySelector('table button')).toHaveStyle({ borderColor: '#EE4533' });
+  });
+
+  it('supports withCellSpacing prop', () => {
+    const { container, rerender } = render(
+      <DatePickerInput
+        {...defaultProps}
+        popoverProps={{ opened: true, withinPortal: false, transitionProps: { duration: 0 } }}
+        withCellSpacing
+      />
+    );
+    expect(container.querySelector('tbody tr td')).toHaveAttribute('data-with-spacing', 'true');
+
+    rerender(
+      <DatePickerInput
+        {...defaultProps}
+        popoverProps={{ opened: true, withinPortal: false, transitionProps: { duration: 0 } }}
+        withCellSpacing={false}
+      />
+    );
+    expect(container.querySelector('tbody tr td')).not.toHaveAttribute('data-with-spacing');
   });
 });

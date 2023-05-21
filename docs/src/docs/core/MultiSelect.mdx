@@ -130,6 +130,10 @@ Note that you will need to handle data state to manage item creation correctly:
 
 <Demo data={MultiSelectDemos.groups} />
 
+## Disabled state
+
+<Demo data={MultiSelectDemos.disabled} />
+
 ## Disable items
 
 <Demo data={MultiSelectDemos.disabledItems} />
@@ -160,6 +164,22 @@ Apart from `itemComponent` you can customize appearance of label by providing `v
 ## Max selected values
 
 <Demo data={MultiSelectDemos.maxSelectedValues} />
+
+## Disable selected item filtering
+
+<Demo data={MultiSelectDemos.disableSelectedItemFiltering} />
+
+When used along `filter`, be aware that the second parameter `selected` will always be `false`.
+
+```tsx
+<MultiSelect
+  disableSelectedItemFiltering
+  filter={(value, selected, item) => {
+    console.log(selected); // false
+  }}
+  searchable
+/>
+```
 
 ## Dropdown position
 

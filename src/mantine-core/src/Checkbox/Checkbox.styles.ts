@@ -104,6 +104,7 @@ export default createStyles(
             theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[2],
           borderColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[3],
           cursor: 'not-allowed',
+          pointerEvents: 'none',
 
           [`& + .${getStylesRef('icon')}`]: {
             color: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[5],

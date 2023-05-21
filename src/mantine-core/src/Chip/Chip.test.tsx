@@ -10,6 +10,7 @@ import {
   itSupportsFocusEvents,
   itSupportsProviderSize,
   itSupportsProviderVariant,
+  itDisablesInputInsideDisabledFieldset,
 } from '@mantine/tests';
 import { Chip, ChipProps } from './Chip';
 
@@ -35,6 +36,7 @@ describe('@mantine/core/Chip', () => {
     othersSelector: 'input',
     providerName: 'Chip',
   });
+  itDisablesInputInsideDisabledFieldset(Chip, defaultProps);
 
   it('displays checked icon when input is checked', () => {
     const { container: checked } = render(<Chip {...defaultProps} checked />);

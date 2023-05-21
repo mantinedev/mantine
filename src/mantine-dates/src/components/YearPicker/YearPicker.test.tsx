@@ -1,11 +1,12 @@
 import React from 'react';
-import { render } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import {
   itSupportsSystemProps,
   itSupportsProviderVariant,
   itSupportsProviderSize,
 } from '@mantine/tests';
+import dayjs from 'dayjs';
 import { itSupportsYearsListProps, itHandlesControlsKeyboardEvents } from '../../tests';
 import { YearPicker } from './YearPicker';
 
@@ -165,5 +166,75 @@ describe('@mantine/dates/YearPicker', () => {
   it('supports custom __staticSelector', () => {
     const { container } = render(<YearPicker {...defaultProps} __staticSelector="Calendar" />);
     expect(container.firstChild).toHaveClass('mantine-Calendar-calendar');
+  });
+
+  const ariaLabels = {
+    previousDecade: 'Previous decade',
+    nextDecade: 'Next decade',
+  };
+
+  it('only adds selected year of decade to tab order', async () => {
+    render(
+      <YearPicker
+        {...defaultProps}
+        date={new Date(2010, 0)}
+        getYearControlProps={(date) => ({
+          selected: dayjs(new Date(2013, 0)).isSame(date, 'year'),
+        })}
+        ariaLabels={ariaLabels}
+      />
+    );
+    await userEvent.tab();
+    expect(screen.getByRole('button', { name: ariaLabels.previousDecade })).toHaveFocus();
+
+    await userEvent.tab();
+    expect(screen.getByRole('button', { name: ariaLabels.nextDecade })).toHaveFocus();
+
+    await userEvent.tab();
+    expect(
+      screen.getByRole('button', { name: new Date(2013, 0).getFullYear().toString() })
+    ).toHaveFocus();
+
+    await userEvent.tab();
+    expect(document.body).toHaveFocus();
+  });
+
+  it('only adds current year of decade to tab order', async () => {
+    render(<YearPicker {...defaultProps} date={new Date()} ariaLabels={ariaLabels} />);
+    await userEvent.tab();
+    expect(screen.getByRole('button', { name: ariaLabels.previousDecade })).toHaveFocus();
+
+    await userEvent.tab();
+    expect(screen.getByRole('button', { name: ariaLabels.nextDecade })).toHaveFocus();
+
+    await userEvent.tab();
+    expect(screen.getByRole('button', { name: new Date().getFullYear().toString() })).toHaveFocus();
+
+    await userEvent.tab();
+    expect(document.body).toHaveFocus();
+  });
+
+  it('only adds first non-disabled year of decade to tab order', async () => {
+    render(
+      <YearPicker
+        {...defaultProps}
+        date={new Date(2010, 0)}
+        minDate={new Date(2014, 0)}
+        getYearControlProps={(date) => ({
+          disabled: dayjs(new Date(2014, 0)).isSame(date, 'year'),
+        })}
+        ariaLabels={ariaLabels}
+      />
+    );
+    await userEvent.tab();
+    expect(screen.getByRole('button', { name: ariaLabels.nextDecade })).toHaveFocus();
+
+    await userEvent.tab();
+    expect(
+      screen.getByRole('button', { name: new Date(2015, 0).getFullYear().toString() })
+    ).toHaveFocus();
+
+    await userEvent.tab();
+    expect(document.body).toHaveFocus();
   });
 });

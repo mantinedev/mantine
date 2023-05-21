@@ -149,7 +149,7 @@ Use `decadeLabelFormat`, `yearLabelFormat` and `monthLabelFormat` props to chang
 
 ## Localization
 
-Usually it is better to specify `@mantine/dates` package locale in [DatesProvider](/dates/date-provider/),
+Usually it is better to specify `@mantine/dates` package locale in [DatesProvider](/dates/dates-provider/),
 but you can also override locale per component:
 
 <Demo data={DatePickerDemos.locale} />
@@ -213,19 +213,19 @@ Note that the following events will only trigger if focus is on date control.
   data={[
     {
       key: 'ArrowRight',
-      description: 'Focuses next date in a row that is not disabled',
+      description: 'Focuses next non-disabled date',
     },
     {
       key: 'ArrowLeft',
-      description: 'Focuses previous date in a row that is not disabled',
+      description: 'Focuses previous non-disabled date',
     },
     {
       key: 'ArrowDown',
-      description: 'Focuses next date in a column that is not disabled',
+      description: 'Focuses next non-disabled date in the same column',
     },
     {
       key: 'ArrowUp',
-      description: 'Focuses previous date in a column that is not disabled',
+      description: 'Focuses previous non-disabled date in the same column',
     },
   ]}
 />

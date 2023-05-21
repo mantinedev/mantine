@@ -1,9 +1,10 @@
+import React from 'react';
 import dayjs from 'dayjs';
 import type { DayOfWeek } from '../../../types';
 
 interface GetWeekdaysNamesInput {
   locale: string;
-  format?: string;
+  format?: string | ((date: Date) => React.ReactNode);
   firstDayOfWeek?: DayOfWeek;
 }
 
@@ -12,12 +13,16 @@ export function getWeekdayNames({
   format = 'dd',
   firstDayOfWeek = 1,
 }: GetWeekdaysNamesInput) {
-  const baseDate = dayjs().startOf('week');
-  const labels: string[] = [];
+  const baseDate = dayjs().day(firstDayOfWeek);
+  const labels: Array<string | React.ReactNode> = [];
 
   for (let i = 0; i < 7; i += 1) {
-    labels.push(dayjs(baseDate).add(i, 'days').locale(locale).format(format));
+    if (typeof format === 'string') {
+      labels.push(dayjs(baseDate).add(i, 'days').locale(locale).format(format));
+    } else {
+      labels.push(format(dayjs(baseDate).add(i, 'days').toDate()));
+    }
   }
 
-  return [...labels.slice(firstDayOfWeek), ...labels.slice(0, firstDayOfWeek)];
+  return labels;
 }

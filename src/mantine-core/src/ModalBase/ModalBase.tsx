@@ -10,9 +10,11 @@ import {
   Styles,
   MantineShadow,
   Selectors,
+  DefaultProps,
 } from '@mantine/styles';
 import { OptionalPortal, PortalProps } from '../Portal';
 import { TransitionOverride } from '../Transition';
+import { Box } from '../Box';
 import { ModalBaseProvider } from './ModalBase.context';
 import {
   ModalBaseCloseButton,
@@ -36,7 +38,7 @@ export type ModalBaseStylesNames =
   | ModalBaseTitleStylesNames
   | ModalBaseBodyStylesNames;
 
-export interface ModalBaseSettings extends React.ComponentPropsWithoutRef<'div'> {
+export interface ModalBaseSettings extends DefaultProps, React.ComponentPropsWithoutRef<'div'> {
   variant?: string;
   classNames?: ClassNames<ModalBaseStylesNames>;
   styles?: Styles<ModalBaseStylesNames>;
@@ -64,7 +66,7 @@ export interface ModalBaseSettings extends React.ComponentPropsWithoutRef<'div'>
   withinPortal?: boolean;
 
   /** Props to pass down to the portal when withinPortal is true */
-  portalProps?: Omit<PortalProps, 'target'>;
+  portalProps?: Omit<PortalProps, 'children' | 'withinPortal' | 'target'>;
 
   /** Target element or selector where Portal should be rendered, by default new element is created and appended to the document.body */
   target?: HTMLElement | string;
@@ -143,7 +145,7 @@ export function ModalBase(props: ModalBaseProps) {
     styles,
     className,
     ...others
-  } = useComponentDefaultProps(props.__staticSelector, ModalBaseDefaultProps, props);
+  } = useComponentDefaultProps('ModalBase', ModalBaseDefaultProps, props);
 
   const { classes, cx } = useStyles(null, {
     name: __staticSelector,
@@ -172,7 +174,7 @@ export function ModalBase(props: ModalBaseProps) {
   useFocusReturn({ opened, shouldReturnFocus: trapFocus && returnFocus });
 
   return (
-    <OptionalPortal withinPortal={withinPortal} target={target} {...portalProps}>
+    <OptionalPortal {...portalProps} withinPortal={withinPortal} target={target}>
       <ModalBaseProvider
         value={{
           __staticSelector,
@@ -203,9 +205,9 @@ export function ModalBase(props: ModalBaseProps) {
         }}
       >
         <RemoveScroll enabled={shouldLockScroll && lockScroll}>
-          <div className={cx(classes.root, className)} {...others}>
+          <Box className={cx(classes.root, className)} {...others}>
             {children}
-          </div>
+          </Box>
         </RemoveScroll>
       </ModalBaseProvider>
     </OptionalPortal>

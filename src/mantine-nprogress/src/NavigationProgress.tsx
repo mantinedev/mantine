@@ -42,7 +42,7 @@ export interface NavigationProgressProps {
   withinPortal?: boolean;
 
   /** Props to pass down to the portal when withinPortal is true */
-  portalProps?: PortalProps;
+  portalProps?: Omit<PortalProps, 'children' | 'withinPortal'>;
 
   /** Progressbar z-index */
   zIndex?: React.CSSProperties['zIndex'];
@@ -148,7 +148,7 @@ export function NavigationProgress({
   useNavigationProgressEvents({ start, stop, set, increment, decrement, reset, complete });
 
   return (
-    <OptionalPortal withinPortal={withinPortal} {...portalProps}>
+    <OptionalPortal {...portalProps} withinPortal={withinPortal}>
       {!unmountProgress && (
         <Progress
           radius={0}

@@ -70,6 +70,31 @@ describe('@mantine/hooks/use-timeout', () => {
     expect(setTimeout).toHaveBeenCalled();
   });
 
+  it('callback should fire without calling start when autoInvoke is true and delay changed', () => {
+    const { timeout, advanceTimerToNextTick } = setupTimer();
+    const hook = renderHook((props) => useTimeout(callback, props.timeout, { autoInvoke: true }), {
+      initialProps: {
+        timeout,
+      },
+    });
+
+    advanceTimerToNextTick();
+
+    expect(callback).toHaveBeenCalled();
+    expect(setTimeout).toHaveBeenCalled();
+
+    jest.clearAllMocks();
+
+    act(() => {
+      hook.rerender({ timeout: 1000 });
+    });
+
+    advanceTimerToNextTick();
+
+    expect(callback).toHaveBeenCalled();
+    expect(setTimeout).toHaveBeenCalled();
+  });
+
   it('timeout is cleared on calling clear', () => {
     const { timeout, advanceTimerToNextTick } = setupTimer(10);
     const hook = renderHook(() => useTimeout(callback, timeout, { autoInvoke: false }));
@@ -102,5 +127,20 @@ describe('@mantine/hooks/use-timeout', () => {
 
     expect(setTimeout).toHaveBeenCalled();
     expect(callback).toHaveBeenCalledWith([MOCK_CALLBACK_VALUE]);
+  });
+
+  it('start and clear functions remain memoized across re-renders', () => {
+    const { timeout, advanceTimerToNextTick } = setupTimer(10);
+    const hook = renderHook(() => useTimeout(callback, timeout));
+
+    const { clear, start } = hook.result.current;
+
+    act(() => {
+      hook.rerender();
+    });
+
+    expect(hook.result.current.clear).toEqual(clear);
+    expect(hook.result.current.start).toEqual(start);
+    advanceTimerToNextTick();
   });
 });

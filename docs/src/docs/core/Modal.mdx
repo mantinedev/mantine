@@ -70,19 +70,11 @@ supports with `overlayProps`:
 
 ## Modal with scroll
 
-By default, [ScrollArea.Autosize](/core/scroll-area/) component is used as scrollable container.
-`Modal` max height is determined by `yOffset` prop. For example, for default value is `5vh`,
-maximum content height will be `calc(100vh - (5vh * 2))`. `Modal` header has sticky position –
-it will not scroll with the rest of the content.
-
 <Demo data={ModalDemos.overflow} />
 
-## Native scrollbars
+## Usage with ScrollArea
 
-To use native scrollbars instead of [ScrollArea](/core/scroll-area/) component,
-set `scrollAreaComponent={Modal.NativeScrollArea}`:
-
-<Demo data={ModalDemos.nativeScroll} />
+<Demo data={ModalDemos.scrollarea} />
 
 ## Change offsets
 
@@ -115,9 +107,9 @@ it will make the component less accessible.
 - `closeOnClickOutside` – determines whether the modal should be closed when user clicks on the overlay
 - `returnFocus` – determines whether focus should be returned to the element that was focused before the modal was opened
 
-## Modular components
+## Compound components
 
-You can use the following modular components to have full control over the `Modal` rendering:
+You can use the following compound components to have full control over the `Modal` rendering:
 
 - `Modal.Root` – context provider
 - `Modal.Overlay` – render [Overlay](/core/overlay/)
@@ -146,7 +138,7 @@ import { RemoveScroll } from '@mantine/core';
 
 ## Accessibility
 
-`Modal` component follows [WAI-ARIA recommendations](https://www.w3.org/WAI/ARIA/apg/example-index/dialog-modal/dialog) on accessibility.
+`Modal` component follows [WAI-ARIA recommendations](https://www.w3.org/WAI/ARIA/apg/patterns/dialog-modal/examples/dialog) on accessibility.
 
 ### Labels
 

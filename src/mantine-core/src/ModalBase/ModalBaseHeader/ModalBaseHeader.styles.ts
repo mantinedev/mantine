@@ -16,6 +16,7 @@ export default createStyles((theme, { padding }: ModalBaseHeaderStylesParams) =>
       position: 'sticky',
       top: 0,
       backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.white,
+      zIndex: 1000,
     },
   };
 });

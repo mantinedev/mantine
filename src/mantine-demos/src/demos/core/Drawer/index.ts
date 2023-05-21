@@ -6,5 +6,5 @@ export { overlay } from './Drawer.demo.overlay';
 export { composition } from './Drawer.demo.composition';
 export { header } from './Drawer.demo.header';
 export { initialFocus } from './Drawer.demo.initialFocus';
-export { nativeScroll } from './Drawer.demo.nativeScroll';
+export { scrollarea } from './Drawer.demo.scrollarea';
 export { overflow } from './Drawer.demo.overflow';

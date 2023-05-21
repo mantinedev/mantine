@@ -1,6 +1,7 @@
 import React from 'react';
 import {
   checkAccessibility,
+  itDisablesInputInsideDisabledFieldset,
   itSupportsSystemProps,
   itSupportsWrapperProps,
   itSupportsInputProps,
@@ -8,11 +9,16 @@ import {
   itSupportsProviderVariant,
   itSupportsProviderSize,
 } from '@mantine/tests';
+import { fireEvent, screen, render } from '@testing-library/react';
 import { ColorInput, ColorInputProps } from './ColorInput';
 
 const defaultProps: ColorInputProps = {
   label: 'test-label',
 };
+
+const getInput = () => screen.getByRole('textbox');
+const blurInput = () => fireEvent.blur(getInput());
+const focusInput = () => fireEvent.focus(getInput());
 
 describe('@mantine/core/ColorInput', () => {
   checkAccessibility([<ColorInput label="Color input" />, <ColorInput aria-label="Color input" />]);
@@ -28,5 +34,20 @@ describe('@mantine/core/ColorInput', () => {
     refType: HTMLInputElement,
     othersSelector: 'input',
     providerName: 'ColorInput',
+  });
+  itDisablesInputInsideDisabledFieldset(ColorInput, defaultProps);
+
+  it('does not trigger onChange after onBlur', () => {
+    const executions: ('change' | 'blur')[] = [];
+    render(
+      <ColorInput
+        onChange={() => executions.push('change')}
+        onBlur={() => executions.push('blur')}
+      />
+    );
+    focusInput();
+    blurInput();
+
+    expect(executions).toStrictEqual(['change', 'blur']);
   });
 });

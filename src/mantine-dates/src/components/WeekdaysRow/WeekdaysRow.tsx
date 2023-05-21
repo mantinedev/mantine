@@ -23,7 +23,7 @@ export interface WeekdaysRowProps
   firstDayOfWeek?: DayOfWeek;
 
   /** dayjs format to get weekday name, defaults to "dd" */
-  weekdayFormat?: string;
+  weekdayFormat?: string | ((date: Date) => React.ReactNode);
 
   /** Choose cell type that will be used to render weekdays, defaults to th */
   cellComponent?: 'td' | 'th';

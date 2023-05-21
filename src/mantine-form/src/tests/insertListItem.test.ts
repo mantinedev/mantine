@@ -37,4 +37,36 @@ describe('@mantine/form/insertListItem', () => {
       a: [{ b: 1 }, { b: 2 }, { b: 3 }, { b: 4 }, { b: 5 }],
     });
   });
+
+  it('updates errors of associated fields when list item is inserted', () => {
+    const hook = renderHook(() =>
+      useForm({
+        initialValues: {
+          name: '',
+          a: [{ b: 1 }, { b: 2 }, { b: 3 }],
+        },
+        initialErrors: {
+          name: 'name-error',
+          'a.0.b': 'error-1',
+          'a.1.b': 'error-2',
+          'a.2.b': 'error-3',
+        },
+      })
+    );
+
+    expect(hook.result.current.errors).toStrictEqual({
+      name: 'name-error',
+      'a.0.b': 'error-1',
+      'a.1.b': 'error-2',
+      'a.2.b': 'error-3',
+    });
+
+    act(() => hook.result.current.insertListItem('a', { b: 3 }, 1));
+    expect(hook.result.current.errors).toStrictEqual({
+      name: 'name-error',
+      'a.0.b': 'error-1',
+      'a.2.b': 'error-2',
+      'a.3.b': 'error-3',
+    });
+  });
 });

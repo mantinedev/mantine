@@ -8,6 +8,7 @@ import {
   itSupportsInputProps,
   itSupportsProviderVariant,
   itSupportsProviderSize,
+  itDisablesInputInsideDisabledFieldset,
 } from '@mantine/tests';
 import { Select, SelectProps } from './Select';
 
@@ -35,6 +36,7 @@ describe('@mantine/core/Select', () => {
     othersSelector: '.mantine-Select-input',
     providerName: 'Select',
   });
+  itDisablesInputInsideDisabledFieldset(Select, defaultProps);
 
   it('renders hidden input with current input value', () => {
     const { container } = render(

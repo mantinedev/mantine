@@ -1,6 +1,7 @@
 import React from 'react';
 import { render } from '@testing-library/react';
 import {
+  itDisablesInputInsideDisabledFieldset,
   itSupportsFocusEvents,
   itSupportsProviderSize,
   itSupportsProviderVariant,
@@ -39,6 +40,7 @@ describe('@mantine/dates/YearPickerInput', () => {
     defaultValue: new Date(),
     popoverProps: { opened: true, withinPortal: false, transitionProps: { duration: 0 } },
   });
+  itDisablesInputInsideDisabledFieldset(YearPickerInput, defaultProps);
 
   it('supports valueFormat prop', () => {
     const { container, rerender } = render(

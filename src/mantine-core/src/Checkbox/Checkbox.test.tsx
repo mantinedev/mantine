@@ -2,6 +2,7 @@ import React from 'react';
 import { render, screen } from '@testing-library/react';
 import {
   checkAccessibility,
+  itDisablesInputInsideDisabledFieldset,
   itSupportsSystemProps,
   itSupportsWrapperProps,
   itConnectsLabelAndInput,
@@ -37,6 +38,8 @@ describe('@mantine/core/Checkbox', () => {
     othersSelector: 'input',
     providerName: 'Checkbox',
   });
+
+  itDisablesInputInsideDisabledFieldset(Checkbox, defaultProps);
 
   it('sets disabled attribute on input based on disabled prop', () => {
     render(<Checkbox disabled />);

@@ -38,8 +38,8 @@ export default createStyles(
       transition: `transform ${transitionDuration}ms ease`,
       marginRight: chevronPosition === 'right' ? 0 : theme.spacing.sm,
       marginLeft: chevronPosition === 'right' ? theme.spacing.lg : 0,
-      width: chevronSize,
-      minWidth: chevronSize,
+      width: rem(chevronSize),
+      minWidth: rem(chevronSize),
 
       '&[data-rotate]': {
         transform: 'rotate(180deg)',
@@ -52,6 +52,8 @@ export default createStyles(
       flex: 1,
       overflow: 'hidden',
       textOverflow: 'ellipsis',
+      paddingTop: theme.spacing.md,
+      paddingBottom: theme.spacing.md,
     },
 
     itemTitle: {
@@ -67,8 +69,6 @@ export default createStyles(
       display: 'flex',
       alignItems: 'center',
       flexDirection: chevronPosition === 'right' ? 'row-reverse' : 'row',
-      paddingTop: theme.spacing.md,
-      paddingBottom: theme.spacing.md,
       paddingRight: theme.spacing.md,
       paddingLeft:
         chevronPosition === 'right' ? `calc(${theme.spacing.md} + ${rem(4)})` : theme.spacing.xs,

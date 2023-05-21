@@ -8,6 +8,7 @@ import {
   itSupportsInputProps,
   itSupportsProviderVariant,
   itSupportsProviderSize,
+  itDisablesInputInsideDisabledFieldset,
 } from '@mantine/tests';
 import { Textarea, TextareaProps } from './Textarea';
 
@@ -29,6 +30,7 @@ describe('@mantine/core/Textarea', () => {
     othersSelector: 'textarea',
     providerName: 'Textarea',
   });
+  itDisablesInputInsideDisabledFieldset(Textarea, defaultProps, 'Textarea');
 
   it('supports uncontrolled state', async () => {
     render(<Textarea {...defaultProps} />);

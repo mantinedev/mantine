@@ -51,7 +51,7 @@ export default createStyles(
       borderRadius: getSize({ size: radius, sizes: theme.radius }),
       cursor: disabled ? 'not-allowed' : 'default',
       userSelect: 'none',
-      maxWidth: `calc(100% - ${rem(20)})`,
+      maxWidth: `calc(100% - ${rem(10)})`,
     },
 
     defaultValueRemove: {

@@ -9,6 +9,26 @@ export interface MultiSelectStylesParams {
 export default createStyles((theme, { invalid }: MultiSelectStylesParams, { size }) => ({
   wrapper: {
     position: 'relative',
+
+    '&:has(input:disabled)': {
+      cursor: 'not-allowed',
+      pointerEvents: 'none',
+
+      '& .mantine-MultiSelect-input': {
+        backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[1],
+        color: theme.colors.dark[2],
+        opacity: 0.6,
+
+        '&::placeholder': {
+          color: theme.colors.dark[2],
+        },
+      },
+
+      '& .mantine-MultiSelect-defaultValue': {
+        backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[3],
+        color: theme.colorScheme === 'dark' ? theme.colors.dark[1] : theme.colors.gray[7],
+      },
+    },
   },
 
   values: {
@@ -40,13 +60,12 @@ export default createStyles((theme, { invalid }: MultiSelectStylesParams, { size
     marginLeft: `calc(${theme.spacing.xs} / 2)`,
     appearance: 'none',
     color: 'inherit',
-    lineHeight: `calc(${getSize({ size, sizes: INPUT_SIZES })} - ${rem(2)})`,
     maxHeight: getSize({ size, sizes: DEFAULT_VALUE_SIZES }),
 
     '&::placeholder': {
       opacity: 1,
       color: invalid
-        ? theme.colors.red[theme.colorScheme === 'dark' ? 6 : 7]
+        ? theme.colors.red[theme.fn.primaryShade()]
         : theme.colorScheme === 'dark'
         ? theme.colors.dark[3]
         : theme.colors.gray[5],
@@ -54,6 +73,7 @@ export default createStyles((theme, { invalid }: MultiSelectStylesParams, { size
 
     '&:disabled': {
       cursor: 'not-allowed',
+      pointerEvents: 'none',
     },
   },
 
@@ -62,9 +82,9 @@ export default createStyles((theme, { invalid }: MultiSelectStylesParams, { size
   },
 
   searchInputInputHidden: {
+    flex: 0,
     width: 0,
     minWidth: 0,
-    height: 0,
     margin: 0,
     overflow: 'hidden',
   },
@@ -74,6 +94,7 @@ export default createStyles((theme, { invalid }: MultiSelectStylesParams, { size
 
     '&:disabled': {
       cursor: 'not-allowed',
+      pointerEvents: 'none',
     },
   },
 
@@ -82,6 +103,7 @@ export default createStyles((theme, { invalid }: MultiSelectStylesParams, { size
 
     '&:disabled': {
       cursor: 'not-allowed',
+      pointerEvents: 'none',
     },
   },
 }));

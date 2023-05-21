@@ -40,6 +40,9 @@ export interface NotificationProps
   /** Replaces colored line or icon with Loader component */
   loading?: boolean;
 
+  /** Adds border styles */
+  withBorder?: boolean;
+
   /** Determines whether close button should be visible, true by default */
   withCloseButton?: boolean;
 
@@ -58,6 +61,7 @@ export const Notification = forwardRef<HTMLDivElement, NotificationProps>((props
     radius,
     loading,
     withCloseButton,
+    withBorder,
     title,
     icon,
     children,
@@ -79,6 +83,7 @@ export const Notification = forwardRef<HTMLDivElement, NotificationProps>((props
     <Box
       className={cx(classes.root, className)}
       data-with-icon={!!icon || loading || undefined}
+      data-with-border={withBorder || undefined}
       role="alert"
       ref={ref}
       {...others}

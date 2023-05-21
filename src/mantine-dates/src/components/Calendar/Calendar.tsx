@@ -164,6 +164,8 @@ export const Calendar = forwardRef<HTMLDivElement, CalendarProps>((props, ref) =
     hideWeekdays,
     getDayAriaLabel,
     monthLabelFormat,
+    nextIcon,
+    previousIcon,
     __onDayClick,
     __onDayMouseEnter,
     withCellSpacing,
@@ -300,7 +302,9 @@ export const Calendar = forwardRef<HTMLDivElement, CalendarProps>((props, ref) =
           locale={locale}
           levelControlAriaLabel={ariaLabels?.monthLevelControl}
           nextLabel={ariaLabels?.nextMonth}
+          nextIcon={nextIcon}
           previousLabel={ariaLabels?.previousMonth}
+          previousIcon={previousIcon}
           monthLabelFormat={monthLabelFormat}
           __onDayClick={__onDayClick}
           __onDayMouseEnter={__onDayMouseEnter}
@@ -327,7 +331,9 @@ export const Calendar = forwardRef<HTMLDivElement, CalendarProps>((props, ref) =
           onLevelClick={() => setLevel('decade')}
           levelControlAriaLabel={ariaLabels?.yearLevelControl}
           nextLabel={ariaLabels?.nextYear}
+          nextIcon={nextIcon}
           previousLabel={ariaLabels?.previousYear}
+          previousIcon={previousIcon}
           yearLabelFormat={yearLabelFormat}
           __onControlMouseEnter={onMonthMouseEnter}
           __onControlClick={(_event, payload) => {
@@ -354,7 +360,9 @@ export const Calendar = forwardRef<HTMLDivElement, CalendarProps>((props, ref) =
           onPrevious={handlePreviousDecade}
           numberOfColumns={numberOfColumns}
           nextLabel={ariaLabels?.nextDecade}
+          nextIcon={nextIcon}
           previousLabel={ariaLabels?.previousDecade}
+          previousIcon={previousIcon}
           decadeLabelFormat={decadeLabelFormat}
           __onControlMouseEnter={onYearMouseEnter}
           __onControlClick={(_event, payload) => {

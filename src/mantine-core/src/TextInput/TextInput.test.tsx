@@ -8,6 +8,7 @@ import {
   itSupportsInputProps,
   itSupportsProviderVariant,
   itSupportsProviderSize,
+  itDisablesInputInsideDisabledFieldset,
 } from '@mantine/tests';
 import { TextInput, TextInputProps } from './TextInput';
 
@@ -29,6 +30,7 @@ describe('@mantine/core/TextInput', () => {
     othersSelector: 'input',
     providerName: 'TextInput',
   });
+  itDisablesInputInsideDisabledFieldset(TextInput, defaultProps);
 
   it('supports uncontrolled state', async () => {
     render(<TextInput {...defaultProps} />);

@@ -16,7 +16,7 @@ function Demo() {
           // default browser behavior for native <button /> and <a /> elements
           resetStyles: () => ({ outline: 'none' }),
 
-          // styles applied to all elements expect inputs based on Input component
+          // styles applied to all elements except inputs based on Input component
           // styled are added with &:focus selector
           styles: (theme) => ({ outline: \`\${rem(2)} solid \${theme.colors.orange[5]}\` }),
 
@@ -46,7 +46,7 @@ function Demo() {
           // default browser behavior for native <button /> and <a /> elements
           resetStyles: () => ({ outline: 'none' }),
 
-          // styles applied to all elements expect inputs based on Input component
+          // styles applied to all elements except inputs based on Input component
           // styled are added with &:focus selector
           styles: (theme) => ({ outline: `${rem(2)} solid ${theme.colors.orange[5]}` }),
 

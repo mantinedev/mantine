@@ -56,9 +56,9 @@ function rgbaToHsva({ r, g, b, a }: RgbaColor): HsvaColor {
     : 0;
 
   return {
-    h: round(60 * (hh < 0 ? hh + 6 : hh)),
-    s: round(max ? (delta / max) * 100 : 0),
-    v: round((max / 255) * 100),
+    h: round(60 * (hh < 0 ? hh + 6 : hh), 3),
+    s: round(max ? (delta / max) * 100 : 0, 3),
+    v: round((max / 255) * 100, 3),
     a,
   };
 }
@@ -86,7 +86,7 @@ export function parseHex(color: string): HsvaColor {
 export function parseHexa(color: string): HsvaColor {
   const hex = color[0] === '#' ? color.slice(1) : color;
 
-  const roundA = (a: string) => Math.round((parseInt(a, 16) / 255) * 100) / 100;
+  const roundA = (a: string) => round(parseInt(a, 16) / 255, 3);
   if (hex.length === 4) {
     const withoutOpacity = hex.slice(0, 3);
     const a = roundA(hex[3] + hex[3]);

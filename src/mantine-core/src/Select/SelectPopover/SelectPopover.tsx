@@ -62,7 +62,7 @@ interface SelectPopoverProps {
   transitionProps: TransitionOverride;
   shadow?: MantineShadow;
   withinPortal?: boolean;
-  portalProps?: PortalProps;
+  portalProps?: Omit<PortalProps, 'children' | 'withinPortal'>;
   children: React.ReactNode;
   __staticSelector?: string;
   onDirectionChange?(direction: React.CSSProperties['flexDirection']): void;

@@ -104,16 +104,16 @@ export const Image = forwardRef<HTMLDivElement, ImageProps>((props: ImageProps, 
       <figure className={classes.figure}>
         <div className={classes.imageWrapper}>
           <img
-            className={classes.image}
             src={src}
             alt={alt}
-            style={{ objectFit: fit, width: rem(width), height: rem(height) }}
             ref={imageRef}
+            {...imageProps}
+            className={cx(classes.image, imageProps?.className)}
             onError={(event) => {
               setError(true);
               typeof imageProps?.onError === 'function' && imageProps.onError(event);
             }}
-            {...imageProps}
+            style={{ objectFit: fit, width: rem(width), height: rem(height), ...imageProps?.style }}
           />
 
           {isPlaceholder && (

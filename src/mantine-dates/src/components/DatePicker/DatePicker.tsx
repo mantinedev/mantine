@@ -2,7 +2,7 @@ import React, { forwardRef } from 'react';
 import { useComponentDefaultProps } from '@mantine/core';
 import { useDatesState } from '../../hooks';
 import { PickerBaseProps, DatePickerType, CalendarLevel } from '../../types';
-import { Calendar, CalendarBaseProps, CalendarSystemProps } from '../Calendar';
+import { Calendar, CalendarBaseProps, CalendarSettings, CalendarSystemProps } from '../Calendar';
 import { DecadeLevelBaseSettings } from '../DecadeLevel';
 import { YearLevelBaseSettings } from '../YearLevel';
 import { MonthLevelBaseSettings } from '../MonthLevel';
@@ -12,7 +12,8 @@ export interface DatePickerBaseProps<Type extends DatePickerType = 'default'>
     DecadeLevelBaseSettings,
     YearLevelBaseSettings,
     MonthLevelBaseSettings,
-    CalendarBaseProps {
+    CalendarBaseProps,
+    CalendarSettings {
   /** Max level that user can go up to (decade, year, month), defaults to decade */
   maxLevel?: CalendarLevel;
 

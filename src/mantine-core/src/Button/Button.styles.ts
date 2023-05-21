@@ -100,7 +100,7 @@ function getVariantStyles({ variant, theme, color, gradient }: GetVariantStyles)
     border: `${rem(1)} solid ${colors.border}`,
     backgroundColor: colors.background,
     color: colors.color,
-    '&:not([data-disabled])': theme.fn.hover({ backgroundColor: colors.hover }),
+    ...theme.fn.hover({ backgroundColor: colors.hover }),
   };
 }
 

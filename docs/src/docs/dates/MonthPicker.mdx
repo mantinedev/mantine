@@ -110,7 +110,7 @@ Use `decadeLabelFormat` and `yearLabelFormat` to change [dayjs format](https://d
 
 ## Localization
 
-Usually it is better to specify `@mantine/dates` package locale in [DatesProvider](/dates/date-provider/),
+Usually it is better to specify `@mantine/dates` package locale in [DatesProvider](/dates/dates-provider/),
 but you can also override locale per component:
 
 <Demo data={MonthPickerDemos.locale} />
@@ -168,19 +168,19 @@ Note that the following events will only trigger if focus is on month control.
   data={[
     {
       key: 'ArrowRight',
-      description: 'Focuses next month in a row that is not disabled',
+      description: 'Focuses next non-disabled month',
     },
     {
       key: 'ArrowLeft',
-      description: 'Focuses previous month in a row that is not disabled',
+      description: 'Focuses previous non-disabled month',
     },
     {
       key: 'ArrowDown',
-      description: 'Focuses next month in a column that is not disabled',
+      description: 'Focuses next non-disabled month in the same column',
     },
     {
       key: 'ArrowUp',
-      description: 'Focuses previous month in a column that is not disabled',
+      description: 'Focuses previous non-disabled month in the same column',
     },
   ]}
 />

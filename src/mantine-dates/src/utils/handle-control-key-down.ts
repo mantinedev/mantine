@@ -1,112 +1,205 @@
 import { RefObject } from 'react';
-import type { ControlKeydownPayload } from '../types';
 
 type ControlsRef = RefObject<HTMLButtonElement[][][]>;
+type Direction = 'up' | 'down' | 'left' | 'right';
+
+type NextIndexInput = Omit<ShiftFocusInput, 'controlsRef'>;
+
+function getNextIndex({ direction, levelIndex, rowIndex, cellIndex, size }: NextIndexInput) {
+  switch (direction) {
+    case 'up':
+      if (levelIndex === 0 && rowIndex === 0) {
+        return null;
+      }
+      if (rowIndex === 0) {
+        return {
+          levelIndex: levelIndex - 1,
+          rowIndex:
+            cellIndex <= size[levelIndex - 1][size[levelIndex - 1].length - 1] - 1
+              ? size[levelIndex - 1].length - 1
+              : size[levelIndex - 1].length - 2,
+          cellIndex,
+        };
+      }
+      return {
+        levelIndex,
+        rowIndex: rowIndex - 1,
+        cellIndex,
+      };
+
+    case 'down':
+      if (rowIndex === size[levelIndex].length - 1) {
+        return {
+          levelIndex: levelIndex + 1,
+          rowIndex: 0,
+          cellIndex,
+        };
+      }
+      if (
+        rowIndex === size[levelIndex].length - 2 &&
+        cellIndex >= size[levelIndex][size[levelIndex].length - 1]
+      ) {
+        return {
+          levelIndex: levelIndex + 1,
+          rowIndex: 0,
+          cellIndex,
+        };
+      }
+      return {
+        levelIndex,
+        rowIndex: rowIndex + 1,
+        cellIndex,
+      };
+
+    case 'left':
+      if (levelIndex === 0 && rowIndex === 0 && cellIndex === 0) {
+        return null;
+      }
+      if (rowIndex === 0 && cellIndex === 0) {
+        return {
+          levelIndex: levelIndex - 1,
+          rowIndex: size[levelIndex - 1].length - 1,
+          cellIndex: size[levelIndex - 1][size[levelIndex - 1].length - 1] - 1,
+        };
+      }
+      if (cellIndex === 0) {
+        return {
+          levelIndex,
+          rowIndex: rowIndex - 1,
+          cellIndex: size[levelIndex][rowIndex - 1] - 1,
+        };
+      }
+      return {
+        levelIndex,
+        rowIndex,
+        cellIndex: cellIndex - 1,
+      };
+
+    case 'right':
+      if (
+        rowIndex === size[levelIndex].length - 1 &&
+        cellIndex === size[levelIndex][rowIndex] - 1
+      ) {
+        return {
+          levelIndex: levelIndex + 1,
+          rowIndex: 0,
+          cellIndex: 0,
+        };
+      }
+      if (cellIndex === size[levelIndex][rowIndex] - 1) {
+        return {
+          levelIndex,
+          rowIndex: rowIndex + 1,
+          cellIndex: 0,
+        };
+      }
+      return {
+        levelIndex,
+        rowIndex,
+        cellIndex: cellIndex + 1,
+      };
+
+    default:
+      return { levelIndex, rowIndex, cellIndex };
+  }
+}
 
 interface ShiftFocusInput {
   controlsRef: ControlsRef;
-  direction: 'down' | 'up' | 'left' | 'right';
-  index: number;
-  payload: ControlKeydownPayload;
-  count?: number;
+  direction: Direction;
+  levelIndex: number;
+  rowIndex: number;
+  cellIndex: number;
+  size: number[][];
 }
 
 function focusOnNextFocusableControl({
-  direction,
-  index,
-  payload,
-  count = 1,
   controlsRef,
+  direction,
+  levelIndex,
+  rowIndex,
+  cellIndex,
+  size,
 }: ShiftFocusInput) {
-  const changeRow = ['down', 'up'].includes(direction);
+  const nextIndex = getNextIndex({ direction, size, rowIndex, cellIndex, levelIndex });
 
-  const rowIndex = changeRow
-    ? payload.rowIndex + (direction === 'down' ? count : -count)
-    : payload.rowIndex;
+  if (!nextIndex) {
+    return;
+  }
 
-  const cellIndex = changeRow
-    ? payload.cellIndex
-    : payload.cellIndex + (direction === 'right' ? count : -count);
-
-  const controlToFocus = controlsRef.current[index][rowIndex]?.[cellIndex];
+  const controlToFocus =
+    controlsRef.current[nextIndex.levelIndex]?.[nextIndex.rowIndex]?.[nextIndex.cellIndex];
 
   if (!controlToFocus) {
     return;
   }
 
-  if (controlToFocus.disabled) {
-    focusOnNextFocusableControl({ direction, index, payload, controlsRef, count: count + 1 });
+  if (
+    controlToFocus.disabled ||
+    controlToFocus.getAttribute('data-hidden') ||
+    controlToFocus.getAttribute('data-outside')
+  ) {
+    focusOnNextFocusableControl({
+      controlsRef,
+      direction,
+      levelIndex: nextIndex.levelIndex,
+      cellIndex: nextIndex.cellIndex,
+      rowIndex: nextIndex.rowIndex,
+      size,
+    });
   } else {
     controlToFocus.focus();
   }
 }
 
-interface HandleControlKeydownInput {
+function getDirection(key: KeyboardEvent['key']): Direction {
+  switch (key) {
+    case 'ArrowDown':
+      return 'down';
+    case 'ArrowUp':
+      return 'up';
+    case 'ArrowRight':
+      return 'right';
+    case 'ArrowLeft':
+      return 'left';
+    default:
+      return null;
+  }
+}
+
+function getControlsSize(controlsRef: ControlsRef) {
+  return controlsRef.current.map((column) => column.map((row) => row.length));
+}
+
+interface HandleControlKeyDownInput {
   controlsRef: ControlsRef;
-  numberOfColumns: number;
-  index: number;
-  payload: ControlKeydownPayload;
+  levelIndex: number;
+  rowIndex: number;
+  cellIndex: number;
   event: React.KeyboardEvent<HTMLButtonElement>;
-  controlsPerRow: number | number[];
 }
 
 export function handleControlKeyDown({
   controlsRef,
-  index,
-  payload,
+  levelIndex,
+  rowIndex,
+  cellIndex,
   event,
-  numberOfColumns,
-  controlsPerRow,
-}: HandleControlKeydownInput) {
-  const _controlsPerRow = Array.isArray(controlsPerRow)
-    ? controlsPerRow[payload.rowIndex]
-    : controlsPerRow;
+}: HandleControlKeyDownInput) {
+  const direction = getDirection(event.key);
 
-  switch (event.key) {
-    case 'ArrowDown': {
-      event.preventDefault();
+  if (direction) {
+    event.preventDefault();
 
-      const hasRowBelow = payload.rowIndex + 1 < controlsRef.current[index].length;
-      if (hasRowBelow) {
-        focusOnNextFocusableControl({ direction: 'down', index, payload, controlsRef });
-      }
-      break;
-    }
+    const size = getControlsSize(controlsRef);
 
-    case 'ArrowUp': {
-      event.preventDefault();
-
-      const hasRowAbove = payload.rowIndex > 0;
-      if (hasRowAbove) {
-        focusOnNextFocusableControl({ direction: 'up', index, payload, controlsRef });
-      }
-      break;
-    }
-
-    case 'ArrowRight': {
-      event.preventDefault();
-
-      if (payload.cellIndex !== _controlsPerRow - 1) {
-        focusOnNextFocusableControl({ direction: 'right', index, payload, controlsRef });
-      } else if (index + 1 < numberOfColumns) {
-        if (controlsRef.current[index + 1][payload.rowIndex]) {
-          controlsRef.current[index + 1][payload.rowIndex][0]?.focus();
-        }
-      }
-
-      break;
-    }
-
-    case 'ArrowLeft': {
-      event.preventDefault();
-
-      if (payload.cellIndex !== 0) {
-        focusOnNextFocusableControl({ direction: 'left', index, payload, controlsRef });
-      } else if (index > 0) {
-        if (controlsRef.current[index - 1][payload.rowIndex]) {
-          controlsRef.current[index - 1][payload.rowIndex][_controlsPerRow - 1].focus();
-        }
-      }
-    }
+    focusOnNextFocusableControl({
+      controlsRef,
+      direction,
+      levelIndex,
+      rowIndex,
+      cellIndex,
+      size,
+    });
   }
 }

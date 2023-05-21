@@ -54,17 +54,11 @@ To remove header set `withCloseButton={false}`
 
 ## Drawer with scroll
 
-By default, [ScrollArea.Autosize](/core/scroll-area/) component is used as scrollable container.
-`Drawer`. `Drawer` header has sticky position – it will not scroll with the rest of the content.
-
 <Demo data={DrawerDemos.overflow} />
 
-## Native scrollbars
+## Usage with ScrollArea
 
-To use native scrollbars instead of [ScrollArea](/core/scroll-area/) component,
-set `scrollAreaComponent={Drawer.NativeScrollArea}`:
-
-<Demo data={DrawerDemos.nativeScroll} />
+<Demo data={DrawerDemos.scrollarea} />
 
 ## Change transition
 
@@ -91,9 +85,9 @@ it will make the component less accessible.
 - `closeOnClickOutside` – determines whether the drawer should be closed when user clicks on the overlay
 - `returnFocus` – determines whether focus should be returned to the element that was focused before the drawer was opened
 
-## Modular components
+## Compound components
 
-You can use the following modular components to have full control over the `Drawer` rendering:
+You can use the following compound components to have full control over the `Drawer` rendering:
 
 - `Drawer.Root` – context provider
 - `Drawer.Overlay` – render [Overlay](/core/overlay/)
@@ -122,7 +116,7 @@ import { RemoveScroll } from '@mantine/core';
 
 ## Accessibility
 
-`Drawer` component follows [WAI-ARIA recommendations](https://www.w3.org/WAI/ARIA/apg/example-index/dialog-modal/dialog) on accessibility.
+`Drawer` component follows [WAI-ARIA recommendations](https://www.w3.org/WAI/ARIA/apg/patterns/dialog-modal/examples/dialog) on accessibility.
 
 ### Labels
 

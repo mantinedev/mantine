@@ -55,7 +55,7 @@ export interface SelectSharedProps<Item, Value> {
   withinPortal?: boolean;
 
   /** Props to pass down to the portal when withinPortal is true */
-  portalProps?: PortalProps;
+  portalProps?: Omit<PortalProps, 'children' | 'withinPortal'>;
 
   /** Limit amount of items displayed at a time for searchable select */
   limit?: number;
@@ -543,7 +543,7 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>((props, ref) => 
       <SelectPopover
         opened={shouldShowDropdown}
         transitionProps={transitionProps}
-        shadow="sm"
+        shadow={shadow}
         withinPortal={withinPortal}
         portalProps={portalProps}
         __staticSelector="Select"

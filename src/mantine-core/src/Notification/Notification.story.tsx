@@ -185,6 +185,10 @@ export function Usage() {
         <Notification color="pink" onClose={() => {}} mt="xl" icon={<IconCheck size={18} />}>
           Notification without title but with icon
         </Notification>
+
+        <Notification withBorder color="gray" onClose={() => {}} mt="xl">
+          Notification with border
+        </Notification>
       </div>
     </div>
   );
