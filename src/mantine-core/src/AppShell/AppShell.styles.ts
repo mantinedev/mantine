@@ -34,13 +34,12 @@ function getPositionStyles(props: AppShellStylesParams, theme: MantineTheme): CS
   const asideBreakpointValue = getBreakpointValue(asideOffset);
 
   return {
-    ...{
-      minHeight: '100vh',
-      paddingTop: `calc(var(--mantine-header-height, 0px) + ${padding})`,
-      paddingBottom: `calc(var(--mantine-footer-height, 0px) + ${padding})`,
-      paddingLeft: `calc(var(--mantine-navbar-width, 0px) + ${padding})`,
-      paddingRight: `calc(var(--mantine-aside-width, 0px) + ${padding})`,
-    },
+    minHeight: '100vh',
+    paddingTop: `calc(var(--mantine-header-height, 0px) + ${padding})`,
+    paddingBottom: `calc(var(--mantine-footer-height, 0px) + ${padding})`,
+    paddingLeft: `calc(var(--mantine-navbar-width, 0px) + ${padding})`,
+    paddingRight: `calc(var(--mantine-aside-width, 0px) + ${padding})`,
+
     ...(navbarBreakpointValue === asideBreakpointValue
       ? {
           [`@media (max-width: ${em(navbarBreakpointValue - 1)})`]: {
