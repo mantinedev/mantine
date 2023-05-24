@@ -4,6 +4,7 @@ export default createStyles((theme, _params, { size }) => ({
   item: {
     ...theme.fn.fontStyles(),
     boxSizing: 'border-box',
+    wordBreak: 'break-all',
     textAlign: 'left',
     width: '100%',
     padding: `calc(${getSize({ size, sizes: theme.spacing })} / 1.5) ${getSize({
