@@ -3,25 +3,14 @@ import { MantineDemo } from '@mantine/ds';
 import { Image, Group, Text } from '@mantine/core';
 
 const code = `
-import { Image, Text } from '@mantine/core';
+import { Image, Text, Group } from '@mantine/core';
 
 function Demo() {
   return (
-    <>
-      <Image
-        width={200}
-        height={120}
-        src={null}
-        alt="Without placeholder"
-      />
+    <Group position="center">
+      <Image width={200} height={120} src={null} alt="Without placeholder" />
 
-      <Image
-        width={200}
-        height={120}
-        src={null}
-        alt="With default placeholder"
-        withPlaceholder
-      />
+      <Image width={200} height={120} src={null} alt="With default placeholder" withPlaceholder />
 
       <Image
         height={120}
@@ -31,7 +20,7 @@ function Demo() {
         withPlaceholder
         placeholder={<Text align="center">This image contained the meaning of life</Text>}
       />
-    </>
+    </Group>
   );
 }
 `;

@@ -21,6 +21,7 @@ export function PrismPanel({
   trim,
   getPrismTheme,
   colorScheme,
+  variant,
   ...others
 }: PrismProps & TabsPanelProps) {
   const { classes } = useStyles({ radius });
@@ -40,6 +41,7 @@ export function PrismPanel({
         trim={trim}
         getPrismTheme={getPrismTheme}
         colorScheme={colorScheme}
+        variant={variant}
       >
         {children}
       </Prism>

@@ -1,12 +1,12 @@
 import React from 'react';
-import { IconSearch } from '@tabler/icons';
-import { Group, Text, Anchor } from '@mantine/core';
+import { IconSearch } from '@tabler/icons-react';
+import { Group, Text, Anchor, rem } from '@mantine/core';
 import { MantineDemo } from '@mantine/ds';
 import { Wrapper } from './_wrapper';
 
 const code = `
 import { SpotlightProvider } from '@mantine/spotlight';
-import { Group, Text, Anchor } from '@mantine/core';
+import { Group, Text, Anchor, rem } from '@mantine/core';
 
 function ActionsWrapper({ children }: { children: React.ReactNode }) {
   return (
@@ -17,7 +17,7 @@ function ActionsWrapper({ children }: { children: React.ReactNode }) {
         px={15}
         py="xs"
         sx={(theme) => ({
-          borderTop: \`1px solid \${
+          borderTop: \`\${rem(1)} solid \${
             theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[2]
           }\`,
         })}
@@ -56,7 +56,7 @@ function ActionsWrapper({ children }: { children: React.ReactNode }) {
         px={15}
         py="xs"
         sx={(theme) => ({
-          borderTop: `1px solid ${
+          borderTop: `${rem(1)} solid ${
             theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[2]
           }`,
         })}
@@ -76,7 +76,7 @@ function Demo() {
   return (
     <Wrapper
       actionsWrapperComponent={ActionsWrapper}
-      searchIcon={<IconSearch size={18} />}
+      searchIcon={<IconSearch size="1.2rem" />}
       searchPlaceholder="Search..."
       shortcut="mod + alt + T"
       buttonLabel="Open spotlight"

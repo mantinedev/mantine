@@ -1,12 +1,12 @@
-import { MantineTheme, CSSObject } from '@mantine/styles';
+import { MantineTheme, CSSObject, getSize, getBreakpointValue } from '@mantine/styles';
 
 function getSortedKeys(value: Record<string, any>, theme: MantineTheme) {
   const sorted = Object.keys(value)
     .filter((breakpoint) => breakpoint !== 'base')
     .sort(
       (a, b) =>
-        theme.fn.size({ size: a, sizes: theme.breakpoints }) -
-        theme.fn.size({ size: b, sizes: theme.breakpoints })
+        getBreakpointValue(getSize({ size: a, sizes: theme.breakpoints })) -
+        getBreakpointValue(getSize({ size: b, sizes: theme.breakpoints }))
     );
   return 'base' in value ? ['base', ...sorted] : sorted;
 }
@@ -44,15 +44,15 @@ export function getResponsiveValue({ value, theme, getValue, property }: GetResp
       const breakpointValue = getValue(value[breakpointKey], theme);
 
       if (Array.isArray(property)) {
-        acc[theme.fn.largerThan(breakpointKey as any)] = {};
+        acc[theme.fn.largerThan(breakpointKey)] = {};
         property.forEach((prop) => {
-          acc[theme.fn.largerThan(breakpointKey as any)][prop] = breakpointValue;
+          acc[theme.fn.largerThan(breakpointKey)][prop] = breakpointValue;
         });
 
         return acc;
       }
 
-      acc[theme.fn.largerThan(breakpointKey as any)] = {
+      acc[theme.fn.largerThan(breakpointKey)] = {
         [property]: breakpointValue,
       };
 

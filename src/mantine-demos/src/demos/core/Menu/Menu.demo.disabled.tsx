@@ -1,6 +1,6 @@
 import React from 'react';
 import { MantineDemo } from '@mantine/ds';
-import { Menu, Group, Button } from '@mantine/core';
+import { Menu, Group, Button, rem } from '@mantine/core';
 import {
   IconSettings,
   IconSearch,
@@ -8,11 +8,11 @@ import {
   IconMessageCircle,
   IconTrash,
   IconArrowsLeftRight,
-} from '@tabler/icons';
+} from '@tabler/icons-react';
 
 const code = `
-import { Menu, Button } from '@mantine/core';
-import { IconSearch } from '@tabler/icons';
+import { Menu, Button, rem } from '@mantine/core';
+import { IconSearch } from '@tabler/icons-react';
 
 function Demo() {
   return (
@@ -22,7 +22,7 @@ function Demo() {
       </Menu.Target>
 
       <Menu.Dropdown>
-        <Menu.Item icon={<IconSearch size={14} />} disabled>
+        <Menu.Item icon={<IconSearch size={rem(14)} />} disabled>
           Search
         </Menu.Item>
 
@@ -43,16 +43,16 @@ function Demo() {
 
         <Menu.Dropdown>
           <Menu.Label>Application</Menu.Label>
-          <Menu.Item icon={<IconSettings size={14} />}>Settings</Menu.Item>
-          <Menu.Item icon={<IconMessageCircle size={14} />}>Messages</Menu.Item>
-          <Menu.Item icon={<IconPhoto size={14} />}>Gallery</Menu.Item>
-          <Menu.Item icon={<IconSearch size={14} />} disabled>
+          <Menu.Item icon={<IconSettings size={rem(14)} />}>Settings</Menu.Item>
+          <Menu.Item icon={<IconMessageCircle size={rem(14)} />}>Messages</Menu.Item>
+          <Menu.Item icon={<IconPhoto size={rem(14)} />}>Gallery</Menu.Item>
+          <Menu.Item icon={<IconSearch size={rem(14)} />} disabled>
             Search
           </Menu.Item>
           <Menu.Divider />
           <Menu.Label>Danger zone</Menu.Label>
-          <Menu.Item icon={<IconArrowsLeftRight size={14} />}>Transfer my data</Menu.Item>
-          <Menu.Item color="red" icon={<IconTrash size={14} />}>
+          <Menu.Item icon={<IconArrowsLeftRight size={rem(14)} />}>Transfer my data</Menu.Item>
+          <Menu.Item color="red" icon={<IconTrash size={rem(14)} />}>
             Delete my account
           </Menu.Item>
         </Menu.Dropdown>

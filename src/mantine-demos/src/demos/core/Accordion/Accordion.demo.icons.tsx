@@ -1,11 +1,11 @@
 import React from 'react';
-import { IconPhoto, IconPrinter, IconCameraSelfie } from '@tabler/icons';
+import { IconPhoto, IconPrinter, IconCameraSelfie } from '@tabler/icons-react';
 import { MantineDemo } from '@mantine/ds';
-import { Accordion, AccordionProps, useMantineTheme } from '@mantine/core';
+import { Accordion, AccordionProps, useMantineTheme, Box, rem } from '@mantine/core';
 
 const code = `
-import { IconPhoto, IconPrinter, IconCameraSelfie } from '@tabler/icons';
-import { Accordion, useMantineTheme } from '@mantine/core';
+import { IconPhoto, IconPrinter, IconCameraSelfie } from '@tabler/icons-react';
+import { Accordion, useMantineTheme, rem } from '@mantine/core';
 
 function Demo() {
   const theme = useMantineTheme();
@@ -14,21 +14,21 @@ function Demo() {
   return (
     <Accordion variant="contained">
       <Accordion.Item value="photos">
-        <Accordion.Control icon={<IconPhoto size={20} color={getColor('red')} />}>
+        <Accordion.Control icon={<IconPhoto size={rem(20)} color={getColor('red')} />}>
           Recent photos
         </Accordion.Control>
         <Accordion.Panel>Content</Accordion.Panel>
       </Accordion.Item>
 
       <Accordion.Item value="print">
-        <Accordion.Control icon={<IconPrinter size={20} color={getColor('blue')} />}>
+        <Accordion.Control icon={<IconPrinter size={rem(20)} color={getColor('blue')} />}>
           Print photos
         </Accordion.Control>
         <Accordion.Panel>Content</Accordion.Panel>
       </Accordion.Item>
 
       <Accordion.Item value="camera">
-        <Accordion.Control icon={<IconCameraSelfie size={20} color={getColor('teal')} />}>
+        <Accordion.Control icon={<IconCameraSelfie size={rem(20)} color={getColor('teal')} />}>
           Camera settings
         </Accordion.Control>
         <Accordion.Panel>Content</Accordion.Panel>
@@ -45,21 +45,21 @@ export function IconsReplacementDemo(props: Partial<AccordionProps>) {
   return (
     <Accordion variant="contained" {...props}>
       <Accordion.Item value="photos">
-        <Accordion.Control icon={<IconPhoto size={20} color={getColor('red')} />}>
+        <Accordion.Control icon={<IconPhoto size={rem(20)} color={getColor('red')} />}>
           Recent photos
         </Accordion.Control>
         <Accordion.Panel>Content</Accordion.Panel>
       </Accordion.Item>
 
       <Accordion.Item value="print">
-        <Accordion.Control icon={<IconPrinter size={20} color={getColor('blue')} />}>
+        <Accordion.Control icon={<IconPrinter size={rem(20)} color={getColor('blue')} />}>
           Print photos
         </Accordion.Control>
         <Accordion.Panel>Content</Accordion.Panel>
       </Accordion.Item>
 
       <Accordion.Item value="camera">
-        <Accordion.Control icon={<IconCameraSelfie size={20} color={getColor('teal')} />}>
+        <Accordion.Control icon={<IconCameraSelfie size={rem(20)} color={getColor('teal')} />}>
           Camera settings
         </Accordion.Control>
         <Accordion.Panel>Content</Accordion.Panel>
@@ -70,9 +70,9 @@ export function IconsReplacementDemo(props: Partial<AccordionProps>) {
 
 function Demo() {
   return (
-    <div style={{ maxWidth: 340, marginLeft: 'auto', marginRight: 'auto' }}>
+    <Box maw={400} mx="auto">
       <IconsReplacementDemo />
-    </div>
+    </Box>
   );
 }
 

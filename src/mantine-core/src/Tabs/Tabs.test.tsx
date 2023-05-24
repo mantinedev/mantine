@@ -2,7 +2,12 @@ import React from 'react';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { MantineProvider } from '@mantine/styles';
-import { itSupportsSystemProps, itRendersChildren, checkAccessibility } from '@mantine/tests';
+import {
+  itSupportsSystemProps,
+  itRendersChildren,
+  checkAccessibility,
+  itSupportsProviderVariant,
+} from '@mantine/tests';
 import { Tab } from './Tab/Tab';
 import { TabsList } from './TabsList/TabsList';
 import { TabsPanel } from './TabsPanel/TabsPanel';
@@ -49,6 +54,7 @@ const clickTab = (value: TabValue) => userEvent.click(getTab(value));
 describe('@mantine/core/Tabs', () => {
   checkAccessibility([<Tabs {...defaultProps} defaultValue="tab-1" />]);
   itRendersChildren(Tabs, defaultProps);
+  itSupportsProviderVariant(Tabs, defaultProps, 'Tabs', ['root', 'panel', 'tabsList', 'tab']);
   itSupportsSystemProps({
     component: Tabs,
     props: defaultProps,

@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 import { MantineDemo } from '@mantine/ds';
 import { ActionIcon, Group, ColorSwatch, Text } from '@mantine/core';
-import { IconColorPicker } from '@tabler/icons';
+import { IconColorPicker } from '@tabler/icons-react';
 import { useEyeDropper } from '@mantine/hooks';
 
 const code = `
 import { useState } from 'react';
 import { ActionIcon, Group, ColorSwatch, Text } from '@mantine/core';
-import { IconColorPicker } from '@tabler/icons';
+import { IconColorPicker } from '@tabler/icons-react';
 import { useEyeDropper } from '@mantine/hooks';
 
 function Demo() {
@@ -31,7 +31,7 @@ function Demo() {
   return (
     <Group>
       <ActionIcon variant="default" onClick={pickColor}>
-        <IconColorPicker size={16} stroke={1.5} />
+        <IconColorPicker size="1rem" stroke={1.5} />
       </ActionIcon>
       {color ? (
         <Group spacing="xs">
@@ -68,7 +68,7 @@ function Demo() {
   return (
     <Group>
       <ActionIcon variant="default" onClick={pickColor}>
-        <IconColorPicker size={16} stroke={1.5} />
+        <IconColorPicker size="1rem" stroke={1.5} />
       </ActionIcon>
       {color ? (
         <Group spacing="xs">

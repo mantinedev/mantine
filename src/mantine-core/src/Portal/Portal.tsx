@@ -4,7 +4,7 @@ import { createPortal } from 'react-dom';
 import { useIsomorphicEffect } from '@mantine/hooks';
 import { useMantineTheme, useComponentDefaultProps } from '@mantine/styles';
 
-export interface PortalProps {
+export interface PortalProps extends React.ComponentPropsWithoutRef<'div'> {
   /** Portal children, for example, modal or popover */
   children: React.ReactNode;
 
@@ -13,10 +13,17 @@ export interface PortalProps {
 
   /** Root element className */
   className?: string;
+
+  /** Root element ref */
+  innerRef?: React.MutableRefObject<HTMLDivElement>;
 }
 
 export function Portal(props: PortalProps): ReactPortal {
-  const { children, target, className } = useComponentDefaultProps('Portal', {}, props);
+  const { children, target, className, innerRef, ...others } = useComponentDefaultProps(
+    'Portal',
+    {},
+    props
+  );
 
   const theme = useMantineTheme();
   const [mounted, setMounted] = useState(false);
@@ -44,7 +51,7 @@ export function Portal(props: PortalProps): ReactPortal {
   }
 
   return createPortal(
-    <div className={className} dir={theme.dir}>
+    <div className={className} dir={theme.dir} {...others} ref={innerRef}>
       {children}
     </div>,
     ref.current

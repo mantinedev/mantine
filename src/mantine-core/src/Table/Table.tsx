@@ -6,6 +6,8 @@ import useStyles, { TableStylesParams } from './Table.styles';
 export interface TableProps
   extends DefaultProps<never, TableStylesParams>,
     React.ComponentPropsWithoutRef<'table'> {
+  variant?: string;
+
   /** If true every odd row of table will have gray background color */
   striped?: boolean;
 
@@ -15,10 +17,10 @@ export interface TableProps
   /** Table caption position */
   captionSide?: 'top' | 'bottom';
 
-  /** Horizontal cells spacing from theme.spacing or number to set value in px */
+  /** Horizontal cells spacing from theme.spacing or any valid CSS value */
   horizontalSpacing?: MantineNumberSize;
 
-  /** Vertical cells spacing from theme.spacing or number to set value in px */
+  /** Vertical cells spacing from theme.spacing or any valid CSS value */
   verticalSpacing?: MantineNumberSize;
 
   /** Sets font size of all text inside table */
@@ -55,12 +57,13 @@ export const Table = forwardRef<HTMLTableElement, TableProps>((props, ref) => {
     unstyled,
     withBorder,
     withColumnBorders,
+    variant,
     ...others
   } = useComponentDefaultProps('Table', defaultProps, props);
 
   const { classes, cx } = useStyles(
     { captionSide, verticalSpacing, horizontalSpacing, fontSize, withBorder, withColumnBorders },
-    { unstyled, name: 'Table' }
+    { unstyled, name: 'Table', variant }
   );
 
   return (

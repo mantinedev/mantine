@@ -1,5 +1,10 @@
 import React from 'react';
-import { itSupportsSystemProps, checkAccessibility, patchConsoleError } from '@mantine/tests';
+import {
+  itSupportsSystemProps,
+  checkAccessibility,
+  patchConsoleError,
+  itSupportsProviderVariant,
+} from '@mantine/tests';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { Tooltip, TooltipProps } from './Tooltip';
@@ -10,13 +15,14 @@ import { TOOLTIP_ERRORS } from './Tooltip.errors';
 const defaultProps: TooltipProps = {
   withinPortal: false,
   opened: true,
-  transitionDuration: 0,
+  transitionProps: { duration: 0 },
   label: 'test-tooltip',
   children: <button type="button">test-target</button>,
 };
 
 describe('@mantine/core/Tooltip', () => {
   checkAccessibility([<Tooltip {...defaultProps} />]);
+  itSupportsProviderVariant(Tooltip, defaultProps, 'Tooltip', ['tooltip']);
   itSupportsSystemProps({
     component: Tooltip,
     props: defaultProps,
@@ -62,7 +68,7 @@ describe('@mantine/core/Tooltip', () => {
 
   it('shows tooltip when target element is hovered', async () => {
     render(
-      <Tooltip label="test-tooltip" transitionDuration={0}>
+      <Tooltip label="test-tooltip" transitionProps={{ duration: 0 }}>
         <button type="button">target</button>
       </Tooltip>
     );

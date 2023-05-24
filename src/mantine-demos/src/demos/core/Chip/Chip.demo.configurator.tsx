@@ -31,6 +31,7 @@ export const configurator: MantineDemo = {
       type: 'segmented',
       data: [
         { value: 'outline', label: 'Outline' },
+        { value: 'light', label: 'Light' },
         { value: 'filled', label: 'Filled' },
       ],
       initialValue: 'outline',

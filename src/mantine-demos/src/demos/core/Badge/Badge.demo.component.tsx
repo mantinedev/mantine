@@ -3,7 +3,7 @@ import { MantineDemo } from '@mantine/ds';
 import { Group, Badge } from '@mantine/core';
 
 const code = `
-import { Badge } from '@mantine/core';
+import { Badge, Group } from '@mantine/core';
 
 const CustomComponent = ({ pads, children, ...others }: { pads: string; children: React.ReactNode; }) => (
   <div {...others}>
@@ -13,7 +13,7 @@ const CustomComponent = ({ pads, children, ...others }: { pads: string; children
 
 function Demo() {
   return (
-    <>
+    <Group position="center">
       <Badge component="a" href="https://mantine.dev" variant="outline">
         Link badge
       </Badge>
@@ -21,7 +21,7 @@ function Demo() {
       <Badge component={CustomComponent} pads="$$$" variant="filled">
         Get lots of money
       </Badge>
-    </>
+    </Group>
   );
 }
 `;

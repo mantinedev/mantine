@@ -1,40 +1,65 @@
-import { Grid, Text } from '@mantine/core';
-import React, { useState } from 'react';
+import { MANTINE_SIZES } from '@mantine/core';
+import React from 'react';
 import { Calendar } from './Calendar';
 
 export default { title: 'Calendar' };
 
-export const Multiple = () => {
-  const [value, setValue] = useState<Date[]>([]);
-  return <Calendar multiple value={value} onChange={setValue} />;
-};
+export function Usage() {
+  return (
+    <div style={{ padding: 40 }}>
+      <Calendar />
+    </div>
+  );
+}
 
-export const Single = () => {
-  const [value, setValue] = useState<Date>(new Date());
-  return <Calendar value={value} onChange={setValue} />;
-};
+export function MaxLevel() {
+  return (
+    <div style={{ padding: 40 }}>
+      <Calendar maxLevel="year" />
+    </div>
+  );
+}
 
-export const WeekendDays = () => {
-  const [value, setValue] = useState<Date>(new Date());
-  return <Calendar value={value} onChange={setValue} weekendDays={[1, 4]} />;
-};
+export function MinLevel() {
+  return (
+    <div style={{ padding: 40 }}>
+      <Calendar minLevel="year" />
+    </div>
+  );
+}
 
-export const DisabledDaysKeyBoardNavigation = () => (
-  <Grid sx={{ padding: '20px' }}>
-    <Grid.Col>
-      <Text>When the first date is excluded (ex. in June on calendar it is 30th of May).</Text>
-      <Calendar excludeDate={(date) => date.getDay() === 1} />
-    </Grid.Col>
-    <Grid.Col>
-      <Text>
-        When trying to reach dates that are on the other side of a row of excluded dates (ex. when
-        excluding date.getDay() === 3)
-      </Text>
-      <Calendar excludeDate={(date) => date.getDay() === 3} />
-    </Grid.Col>
-    <Grid.Col>
-      <Text>When using minDate on todays date</Text>
-      <Calendar minDate={new Date()} />
-    </Grid.Col>
-  </Grid>
-);
+export function NumberOfColumns() {
+  return (
+    <div style={{ padding: 40 }}>
+      <div>1 column</div>
+      <Calendar mb={50} mt="xs" />
+
+      <div>2 columns</div>
+      <Calendar numberOfColumns={2} mb={50} mt="xs" />
+
+      <div>3 columns</div>
+      <Calendar numberOfColumns={3} mb={50} mt="xs" />
+    </div>
+  );
+}
+
+export function InitialLevelYear() {
+  return (
+    <div style={{ padding: 40 }}>
+      <Calendar defaultLevel="year" />
+    </div>
+  );
+}
+
+export function InitialLevelDecade() {
+  return (
+    <div style={{ padding: 40 }}>
+      <Calendar defaultLevel="decade" />
+    </div>
+  );
+}
+
+export function Sizes() {
+  const sizes = MANTINE_SIZES.map((size) => <Calendar size={size} key={size} mt="xl" />);
+  return <div style={{ padding: 40 }}>{sizes}</div>;
+}

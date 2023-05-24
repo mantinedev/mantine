@@ -1,13 +1,13 @@
 import React from 'react';
-import { MANTINE_SIZES } from '@mantine/core';
+import { MANTINE_SIZES, Box } from '@mantine/core';
 import { MantineDemo } from '@mantine/ds';
 import { SegmentedControlWrapper } from './Wrapper';
 
 function Demo() {
   const items = MANTINE_SIZES.map((size, index) => (
-    <div style={{ marginTop: index === 0 ? 0 : 15 }} key={size}>
+    <Box mt={index === 0 ? undefined : 'md'} key={size}>
       <SegmentedControlWrapper size="lg" radius={size} />
-    </div>
+    </Box>
   ));
 
   return <>{items}</>;

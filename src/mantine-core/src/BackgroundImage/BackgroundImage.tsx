@@ -1,13 +1,18 @@
 import React, { forwardRef } from 'react';
 import { DefaultProps, MantineNumberSize, useComponentDefaultProps } from '@mantine/styles';
-import { createPolymorphicComponent, packSx } from '@mantine/utils';
+import { createPolymorphicComponent } from '@mantine/utils';
 import { Box } from '../Box';
+import useStyles, { BackgroundImageStylesParams } from './BackgroundImage.styles';
 
-export interface BackgroundImageProps extends DefaultProps, React.ComponentPropsWithoutRef<'div'> {
+export interface BackgroundImageProps
+  extends DefaultProps<never, BackgroundImageStylesParams>,
+    React.ComponentPropsWithoutRef<'div'> {
+  variant?: string;
+
   /** Image url */
   src: string;
 
-  /** Key of theme.radius or number to set border-radius in px */
+  /** Key of theme.radius or any valid CSS value to set border-radius, 0 by default */
   radius?: MantineNumberSize;
 }
 
@@ -16,33 +21,18 @@ const defaultProps: Partial<BackgroundImageProps> = {
 };
 
 export const _BackgroundImage = forwardRef<HTMLDivElement, BackgroundImageProps>((props, ref) => {
-  const { src, radius, sx, ...others } = useComponentDefaultProps(
+  const { src, radius, variant, unstyled, className, ...others } = useComponentDefaultProps(
     'BackgroundImage',
     defaultProps,
     props
   );
 
-  return (
-    <Box
-      {...others}
-      ref={ref}
-      sx={[
-        (theme) => ({
-          ...theme.fn.focusStyles(),
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-          display: 'block',
-          width: '100%',
-          border: 0,
-          textDecoration: 'none',
-          color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
-          backgroundImage: `url(${src})`,
-          borderRadius: theme.fn.radius(radius),
-        }),
-        ...packSx(sx),
-      ]}
-    />
+  const { classes, cx } = useStyles(
+    { radius, src },
+    { name: 'BackgroundImage', variant, unstyled }
   );
+
+  return <Box {...others} ref={ref} className={cx(classes.root, className)} />;
 });
 
 _BackgroundImage.displayName = '@mantine/core/BackgroundImage';

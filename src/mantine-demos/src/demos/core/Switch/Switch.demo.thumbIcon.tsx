@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import { Switch, Group, useMantineTheme } from '@mantine/core';
 import { MantineDemo } from '@mantine/ds';
-import { IconCheck, IconX } from '@tabler/icons';
+import { IconCheck, IconX } from '@tabler/icons-react';
 
 const code = `
 import { useState } from 'react';
 import { Switch, Group, useMantineTheme } from '@mantine/core';
-import { IconCheck, IconX } from '@tabler/icons';
+import { IconCheck, IconX } from '@tabler/icons-react';
 
 function Demo() {
   const theme = useMantineTheme();
@@ -21,9 +21,9 @@ function Demo() {
         label="Switch with thumb icon"
         thumbIcon={
           checked ? (
-            <IconCheck size={12} color={theme.colors.teal[theme.fn.primaryShade()]} stroke={3} />
+            <IconCheck size="0.8rem" color={theme.colors.teal[theme.fn.primaryShade()]} stroke={3} />
           ) : (
-            <IconX size={12} color={theme.colors.red[theme.fn.primaryShade()]} stroke={3} />
+            <IconX size="0.8rem" color={theme.colors.red[theme.fn.primaryShade()]} stroke={3} />
           )
         }
       />
@@ -45,9 +45,13 @@ function Demo() {
         label="Switch with thumb icon"
         thumbIcon={
           checked ? (
-            <IconCheck size={12} color={theme.colors.teal[theme.fn.primaryShade()]} stroke={3} />
+            <IconCheck
+              size="0.8rem"
+              color={theme.colors.teal[theme.fn.primaryShade()]}
+              stroke={3}
+            />
           ) : (
-            <IconX size={12} color={theme.colors.red[theme.fn.primaryShade()]} stroke={3} />
+            <IconX size="0.8rem" color={theme.colors.red[theme.fn.primaryShade()]} stroke={3} />
           )
         }
       />

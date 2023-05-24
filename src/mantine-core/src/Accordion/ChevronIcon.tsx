@@ -6,8 +6,8 @@ export function ChevronIcon(props: React.ComponentPropsWithoutRef<'svg'>) {
       viewBox="0 0 15 15"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
-      width={16}
-      height={16}
+      width="1rem"
+      height="1rem"
       {...props}
     >
       <path

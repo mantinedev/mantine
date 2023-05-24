@@ -23,6 +23,7 @@ const defaultProps: SelectItemsProps = {
   size: 'sm' as const,
   itemComponent: DefaultItem,
   nothingFound: 'test-nothing',
+  variant: 'filled',
 };
 
 describe('@mantine/core/Select/SelectItems', () => {

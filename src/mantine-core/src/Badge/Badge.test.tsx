@@ -1,6 +1,12 @@
 import React from 'react';
 import { render } from '@testing-library/react';
-import { itRendersChildren, itIsPolymorphic, itSupportsSystemProps } from '@mantine/tests';
+import {
+  itRendersChildren,
+  itIsPolymorphic,
+  itSupportsSystemProps,
+  itSupportsProviderVariant,
+  itSupportsProviderSize,
+} from '@mantine/tests';
 import { Badge, BadgeProps } from './Badge';
 
 const defaultProps: BadgeProps = {};
@@ -8,6 +14,8 @@ const defaultProps: BadgeProps = {};
 describe('@mantine/core/Badge', () => {
   itRendersChildren(Badge, defaultProps);
   itIsPolymorphic(Badge, defaultProps);
+  itSupportsProviderVariant(Badge, defaultProps, 'Badge');
+  itSupportsProviderSize(Badge, defaultProps, 'Badge');
   itSupportsSystemProps({
     component: Badge,
     props: defaultProps,

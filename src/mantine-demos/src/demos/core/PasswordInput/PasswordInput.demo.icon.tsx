@@ -1,18 +1,18 @@
 import React from 'react';
-import { IconLock } from '@tabler/icons';
+import { IconLock } from '@tabler/icons-react';
 import { MantineDemo } from '@mantine/ds';
 import { PasswordInput } from '@mantine/core';
 
 const code = `
 import { PasswordInput } from '@mantine/core';
-import { IconLock } from '@tabler/icons';
+import { IconLock } from '@tabler/icons-react';
 
 function Demo() {
   return (
     <PasswordInput
       label="Your password"
       placeholder="Your password"
-      icon={<IconLock size={16} />}
+      icon={<IconLock size="1rem" />}
     />
   );
 }
@@ -20,13 +20,13 @@ function Demo() {
 
 function Demo() {
   return (
-    <div style={{ maxWidth: 320, marginLeft: 'auto', marginRight: 'auto' }}>
-      <PasswordInput
-        label="Your password"
-        placeholder="Your password"
-        icon={<IconLock size={16} />}
-      />
-    </div>
+    <PasswordInput
+      maw={320}
+      mx="auto"
+      label="Your password"
+      placeholder="Your password"
+      icon={<IconLock size="1rem" />}
+    />
   );
 }
 

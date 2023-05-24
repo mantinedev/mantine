@@ -4,7 +4,7 @@ import { BackgroundImage, BackgroundImageProps, Center, Text, Box } from '@manti
 
 function Wrapper(props: BackgroundImageProps) {
   return (
-    <Box sx={{ maxWidth: 300 }} mx="auto">
+    <Box maw={300} mx="auto">
       <BackgroundImage
         src="https://images.unsplash.com/photo-1419242902214-272b3f66ee7a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=720&q=80"
         {...props}
@@ -25,7 +25,7 @@ import { BackgroundImage, Center, Text, Box } from '@mantine/core';
 
 function Demo() {
   return (
-    <Box sx={{ maxWidth: 300 }} mx="auto">
+    <Box maw={300} mx="auto">
       <BackgroundImage
         src="https://images.unsplash.com/photo-1419242902214-272b3f66ee7a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=720&q=80"
        ${props}

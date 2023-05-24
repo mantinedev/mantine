@@ -1,5 +1,6 @@
 import React from 'react';
 import { MantineDemo } from '@mantine/ds';
+import { Group } from '@mantine/core';
 import { SegmentedControlWrapper } from './Wrapper';
 
 const code = `
@@ -21,9 +22,9 @@ function Demo() {
 
 function Demo() {
   return (
-    <div style={{ display: 'flex', justifyContent: 'center' }}>
+    <Group position="center">
       <SegmentedControlWrapper />
-    </div>
+    </Group>
   );
 }
 

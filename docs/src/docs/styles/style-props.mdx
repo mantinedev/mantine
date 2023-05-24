@@ -49,8 +49,8 @@ import { Box } from '@mantine/core';
 // margin-top: auto
 <Box mt="auto" />
 
-// margin-top: 10px
-<Box mt={10} />
+// margin-top: 1rem
+<Box mt={16} />
 
 // margin-top: 5rem
 <Box mt="5rem" />
@@ -91,7 +91,7 @@ Responsive values are calculated the following way:
 ```tsx
 import { Box } from '@mantine/core';
 
-<Box w={{ base: 200, sm: 400, lg: 500 }}} />
+<Box w={{ base: 320, sm: 480, lg: 640 }} />
 ```
 
 In this case the element will have the following styles:
@@ -99,40 +99,20 @@ In this case the element will have the following styles:
 ```css
 /* Base styles added to element and then get overwritten with responsive values */
 .element {
-  width: 200px;
+  width: 20rem;
 }
 
-/* 768px is theme.breakpoints.sm by default */
-@media (min-width: 768px) {
+/* 48em is theme.breakpoints.sm by default */
+@media (min-width: 48em) {
   .element {
-    width: 400px;
+    width: 30rem;
   }
 }
 
-/* 1200px is theme.breakpoints.lg by default */
-@media (min-width: 1200px) {
+/* 75em is theme.breakpoints.lg by default */
+@media (min-width: 75em) {
   .element {
-    width: 500px;
-  }
-}
-```
-
-You can also use any other px breakpoints as key of style prop:
-
-```tsx
-import { Box } from '@mantine/core';
-
-<Box w={{ base: 200, 700: 300 }} />;
-```
-
-```css
-.element {
-  width: 200px;
-}
-
-@media (min-width: 700px) {
-  .element {
-    width: 400px;
+    width: 40rem;
   }
 }
 ```

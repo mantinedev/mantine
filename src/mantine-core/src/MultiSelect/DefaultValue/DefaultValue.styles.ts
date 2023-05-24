@@ -1,31 +1,29 @@
-import { createStyles, MantineNumberSize, MantineSize } from '@mantine/styles';
+import { createStyles, MantineNumberSize, rem, getSize } from '@mantine/styles';
 
 interface DefaultLabelStyles {
-  size: MantineSize;
   radius: MantineNumberSize;
-  variant: 'filled' | 'default' | 'unstyled';
   disabled: boolean;
   readOnly: boolean;
 }
 
-const sizes = {
-  xs: 16,
-  sm: 22,
-  md: 26,
-  lg: 30,
-  xl: 36,
+export const sizes = {
+  xs: rem(16),
+  sm: rem(22),
+  md: rem(26),
+  lg: rem(30),
+  xl: rem(36),
 };
 
 const fontSizes = {
-  xs: 10,
-  sm: 12,
-  md: 14,
-  lg: 16,
-  xl: 18,
+  xs: rem(10),
+  sm: rem(12),
+  md: rem(14),
+  lg: rem(16),
+  xl: rem(18),
 };
 
 export default createStyles(
-  (theme, { size, disabled, radius, readOnly, variant }: DefaultLabelStyles) => ({
+  (theme, { disabled, radius, readOnly }: DefaultLabelStyles, { size, variant }) => ({
     defaultValue: {
       display: 'flex',
       alignItems: 'center',
@@ -45,20 +43,20 @@ export default createStyles(
         : theme.colorScheme === 'dark'
         ? theme.colors.dark[0]
         : theme.colors.gray[7],
-      height: theme.fn.size({ size, sizes }),
-      paddingLeft: theme.fn.size({ size, sizes: theme.spacing }),
-      paddingRight: disabled || readOnly ? theme.fn.size({ size, sizes: theme.spacing }) : 0,
+      height: getSize({ size, sizes }),
+      paddingLeft: `calc(${getSize({ size, sizes: theme.spacing })} / 1.5)`,
+      paddingRight: disabled || readOnly ? getSize({ size, sizes: theme.spacing }) : 0,
       fontWeight: 500,
-      fontSize: theme.fn.size({ size, sizes: fontSizes }),
-      borderRadius: theme.fn.size({ size: radius, sizes: theme.radius }),
+      fontSize: getSize({ size, sizes: fontSizes }),
+      borderRadius: getSize({ size: radius, sizes: theme.radius }),
       cursor: disabled ? 'not-allowed' : 'default',
       userSelect: 'none',
-      maxWidth: 'calc(100% - 20px)',
+      maxWidth: `calc(100% - ${rem(10)})`,
     },
 
     defaultValueRemove: {
       color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.colors.gray[7],
-      marginLeft: theme.fn.size({ size, sizes: theme.spacing }) / 6,
+      marginLeft: `calc(${getSize({ size, sizes: theme.spacing })} / 6)`,
     },
 
     defaultValueLabel: {

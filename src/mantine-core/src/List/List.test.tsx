@@ -1,6 +1,10 @@
 import React from 'react';
 import { render } from '@testing-library/react';
-import { itSupportsSystemProps } from '@mantine/tests';
+import {
+  itSupportsSystemProps,
+  itSupportsProviderVariant,
+  itSupportsProviderSize,
+} from '@mantine/tests';
 import { ListItem } from './ListItem/ListItem';
 import { List, ListProps } from './List';
 
@@ -13,6 +17,8 @@ const defaultProps: ListProps = {
 };
 
 describe('@mantine/core/List', () => {
+  itSupportsProviderVariant(List, defaultProps, 'List', ['root', 'item']);
+  itSupportsProviderSize(List, defaultProps, 'List', ['root', 'item']);
   itSupportsSystemProps({
     component: List,
     props: defaultProps,

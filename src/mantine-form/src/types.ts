@@ -57,12 +57,16 @@ export type OnSubmit<Values, TransformValues extends _TransformValues<Values>> =
   ) => void
 ) => (event?: React.FormEvent<HTMLFormElement>) => void;
 
+export type GetTransformedValues<Values, TransformValues extends _TransformValues<Values>> = (
+  values?: Values
+) => ReturnType<TransformValues>;
+
 export type OnReset = (event: React.FormEvent<HTMLFormElement>) => void;
 
 export type GetInputProps<Values> = <Field extends LooseKeys<Values>>(
   path: Field,
   options?: { type?: GetInputPropsType; withError?: boolean; withFocus?: boolean }
-) => { value: any; onChange: any; checked?: any; error?: any; onFocus?: any };
+) => { value: any; onChange: any; checked?: any; error?: any; onFocus?: any; onBlur?: any };
 
 export type SetFieldValue<Values> = <Field extends LooseKeys<Values>>(
   path: Field,
@@ -150,6 +154,7 @@ export interface UseFormReturnType<
   resetTouched: ResetStatus;
   resetDirty: ResetDirty<Values>;
   isValid: IsValid<Values>;
+  getTransformedValues: GetTransformedValues<Values, TransformValues>;
 }
 
 export type UseForm<

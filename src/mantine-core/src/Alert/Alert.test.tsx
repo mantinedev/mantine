@@ -1,7 +1,12 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { checkAccessibility, itRendersChildren, itSupportsSystemProps } from '@mantine/tests';
+import {
+  checkAccessibility,
+  itRendersChildren,
+  itSupportsSystemProps,
+  itSupportsProviderVariant,
+} from '@mantine/tests';
 import { Alert, AlertProps } from './Alert';
 
 const defaultProps: AlertProps = {
@@ -14,6 +19,7 @@ const defaultProps: AlertProps = {
 describe('@mantine/core/Alert', () => {
   itRendersChildren(Alert, defaultProps);
   checkAccessibility([<Alert {...defaultProps} />]);
+  itSupportsProviderVariant(Alert, defaultProps, 'Alert');
   itSupportsSystemProps({
     component: Alert,
     props: defaultProps,

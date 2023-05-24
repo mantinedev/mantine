@@ -7,9 +7,18 @@ interface FilterData {
   searchValue: string;
   filter(value: string, selected: boolean, item: SelectItem): boolean;
   value: string[];
+  disableSelectedItemFiltering?: boolean;
 }
 
-export function filterData({ data, searchable, limit, searchValue, filter, value }: FilterData) {
+export function filterData({
+  data,
+  searchable,
+  limit,
+  searchValue,
+  filter,
+  value,
+  disableSelectedItemFiltering,
+}: FilterData) {
   if (!searchable && value.length === 0) {
     return data;
   }
@@ -17,7 +26,10 @@ export function filterData({ data, searchable, limit, searchValue, filter, value
   if (!searchable) {
     const result = [];
     for (let i = 0; i < data.length; i += 1) {
-      if (!value.some((val) => val === data[i].value && !data[i].disabled)) {
+      if (
+        !!disableSelectedItemFiltering ||
+        !value.some((val) => val === data[i].value && !data[i].disabled)
+      ) {
         result.push(data[i]);
       }
     }
@@ -30,7 +42,8 @@ export function filterData({ data, searchable, limit, searchValue, filter, value
     if (
       filter(
         searchValue,
-        value.some((val) => val === data[i].value && !data[i].disabled),
+        !disableSelectedItemFiltering &&
+          value.some((val) => val === data[i].value && !data[i].disabled),
         data[i]
       )
     ) {

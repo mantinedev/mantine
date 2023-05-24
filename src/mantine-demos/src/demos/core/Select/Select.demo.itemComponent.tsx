@@ -148,11 +148,7 @@ export function CustomSelectDemo(props: any) {
 }
 
 function Demo() {
-  return (
-    <div style={{ maxWidth: 320, marginLeft: 'auto', marginRight: 'auto' }}>
-      <CustomSelectDemo />
-    </div>
-  );
+  return <CustomSelectDemo maw={320} mx="auto" />;
 }
 
 export const itemComponent: MantineDemo = {

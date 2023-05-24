@@ -1,5 +1,5 @@
 import React from 'react';
-import { DefaultProps, useComponentDefaultProps } from '@mantine/styles';
+import { DefaultProps, useComponentDefaultProps, rem } from '@mantine/styles';
 import { closeOnEscape } from '@mantine/utils';
 import { useFocusReturn } from '@mantine/hooks';
 import { FloatingArrow } from '../../Floating';
@@ -32,6 +32,7 @@ export function PopoverDropdown(props: PopoverDropdownProps) {
       classNames: ctx.classNames,
       styles: ctx.styles,
       unstyled: ctx.unstyled,
+      variant: ctx.variant,
     }
   );
 
@@ -53,15 +54,17 @@ export function PopoverDropdown(props: PopoverDropdownProps) {
   }
 
   return (
-    <OptionalPortal withinPortal={ctx.withinPortal}>
+    <OptionalPortal {...ctx.portalProps} withinPortal={ctx.withinPortal}>
       <Transition
         mounted={ctx.opened}
-        transition={ctx.transition}
-        duration={ctx.transitionDuration}
+        {...ctx.transitionProps}
+        transition={ctx.transitionProps.transition || 'fade'}
+        duration={ctx.transitionProps.duration ?? 150}
+        keepMounted={ctx.keepMounted}
         exitDuration={
-          typeof ctx.exitTransitionDuration === 'number'
-            ? ctx.exitTransitionDuration
-            : ctx.transitionDuration
+          typeof ctx.transitionProps.exitDuration === 'number'
+            ? ctx.transitionProps.exitDuration
+            : ctx.transitionProps.duration
         }
       >
         {(transitionStyles) => (
@@ -69,7 +72,6 @@ export function PopoverDropdown(props: PopoverDropdownProps) {
             <Box
               {...accessibleProps}
               tabIndex={-1}
-              key={ctx.placement}
               ref={ctx.floating}
               style={{
                 ...style,
@@ -77,7 +79,7 @@ export function PopoverDropdown(props: PopoverDropdownProps) {
                 zIndex: ctx.zIndex,
                 top: ctx.y ?? 0,
                 left: ctx.x ?? 0,
-                width: ctx.width === 'target' ? undefined : ctx.width,
+                width: ctx.width === 'target' ? undefined : rem(ctx.width),
               }}
               className={cx(classes.dropdown, className)}
               onKeyDownCapture={closeOnEscape(ctx.onClose, {
@@ -95,7 +97,6 @@ export function PopoverDropdown(props: PopoverDropdownProps) {
                 arrowX={ctx.arrowX}
                 arrowY={ctx.arrowY}
                 visible={ctx.withArrow}
-                withBorder
                 position={ctx.placement}
                 arrowSize={ctx.arrowSize}
                 arrowRadius={ctx.arrowRadius}

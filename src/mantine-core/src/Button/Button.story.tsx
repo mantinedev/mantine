@@ -1,6 +1,6 @@
 import React, { CSSProperties } from 'react';
 import { MANTINE_COLORS, useMantineTheme } from '@mantine/styles';
-import { IconExternalLink } from '@tabler/icons';
+import { IconExternalLink } from '@tabler/icons-react';
 import { Button } from './Button';
 import { Group } from '../Group';
 import { Center } from '../Center';
@@ -201,5 +201,21 @@ export function ColorsIndex() {
         Gradient
       </Button>
     </Group>
+  );
+}
+
+export function HoverStyles() {
+  return (
+    <div style={{ padding: 40 }}>
+      <Button
+        sx={{
+          '&:hover': { background: 'red' },
+        }}
+      >
+        Button
+      </Button>
+      <Button loading>Button</Button>
+      <Button disabled>Button</Button>
+    </div>
   );
 }

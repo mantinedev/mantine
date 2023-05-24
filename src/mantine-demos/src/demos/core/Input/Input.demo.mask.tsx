@@ -2,18 +2,23 @@ import React from 'react';
 import { Input } from '@mantine/core';
 import { useId } from '@mantine/hooks';
 import { MantineDemo } from '@mantine/ds';
-import InputMask from 'react-input-mask';
+import { IMaskInput } from 'react-imask';
 
 const code = `
 import { Input } from '@mantine/core';
 import { useId } from '@mantine/hooks';
-import InputMask from 'react-input-mask';
+import { IMaskInput } from 'react-imask';
 
 function Demo() {
   const id = useId();
   return (
-    <Input.Wrapper id={id} label="Your phone" required>
-      <Input component={InputMask} mask="+7 (999) 999-99-99" id={id} placeholder="Your phone" />
+    <Input.Wrapper id={id} label="Your phone" required maw={320} mx="auto">
+      <Input<any>
+        component={IMaskInput}
+        mask="+7 (000) 000-00-00"
+        id={id}
+        placeholder="Your phone"
+      />
     </Input.Wrapper>
   );
 }
@@ -22,11 +27,14 @@ function Demo() {
 function Demo() {
   const id = useId();
   return (
-    <div style={{ maxWidth: 320, marginLeft: 'auto', marginRight: 'auto' }}>
-      <Input.Wrapper id={id} label="Your phone" required>
-        <Input component={InputMask} mask="+7 (999) 999-99-99" id={id} placeholder="Your phone" />
-      </Input.Wrapper>
-    </div>
+    <Input.Wrapper id={id} label="Your phone" required maw={320} mx="auto">
+      <Input<any>
+        component={IMaskInput}
+        mask="+7 (000) 000-00-00"
+        id={id}
+        placeholder="Your phone"
+      />
+    </Input.Wrapper>
   );
 }
 

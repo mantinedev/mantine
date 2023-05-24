@@ -6,7 +6,7 @@ import {
   IconBold,
   IconNotebook,
   IconSlideshow,
-} from '@tabler/icons';
+} from '@tabler/icons-react';
 import { Inputs } from './demos/Inputs';
 import { Dates } from './demos/Dates';
 import { Overlays } from './demos/Overlays';

@@ -2,11 +2,14 @@ import React from 'react';
 import { render, screen } from '@testing-library/react';
 import {
   checkAccessibility,
+  itDisablesInputInsideDisabledFieldset,
   itSupportsSystemProps,
   itSupportsWrapperProps,
   itConnectsLabelAndInput,
   itSupportsFocusEvents,
   itHandlesBooleanState,
+  itSupportsProviderSize,
+  itSupportsProviderVariant,
 } from '@mantine/tests';
 import { Checkbox, CheckboxProps } from './Checkbox';
 
@@ -18,6 +21,8 @@ describe('@mantine/core/Checkbox', () => {
   itSupportsWrapperProps(Checkbox, defaultProps);
   itConnectsLabelAndInput(Checkbox, defaultProps);
   itHandlesBooleanState(Checkbox, defaultProps);
+  itSupportsProviderSize(Checkbox, defaultProps, 'Checkbox');
+  itSupportsProviderVariant(Checkbox, defaultProps, 'Checkbox');
   itSupportsFocusEvents(Checkbox, defaultProps, 'input');
   checkAccessibility([
     <Checkbox aria-label="Checkbox without label" />,
@@ -33,6 +38,8 @@ describe('@mantine/core/Checkbox', () => {
     othersSelector: 'input',
     providerName: 'Checkbox',
   });
+
+  itDisablesInputInsideDisabledFieldset(Checkbox, defaultProps);
 
   it('sets disabled attribute on input based on disabled prop', () => {
     render(<Checkbox disabled />);

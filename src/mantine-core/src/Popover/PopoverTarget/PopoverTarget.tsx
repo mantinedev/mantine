@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unused-prop-types */
 import React, { cloneElement, forwardRef } from 'react';
 import { useMergedRef } from '@mantine/hooks';
 import { isElement } from '@mantine/utils';

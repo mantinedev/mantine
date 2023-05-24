@@ -2,6 +2,7 @@ import {
   itSupportsSystemProps,
   createContextContainer,
   itThrowsContextError,
+  itSupportsProviderVariant,
 } from '@mantine/tests';
 import { GridProvider } from '../Grid.context';
 import { Col, ColProps } from './Col';
@@ -20,6 +21,7 @@ const TestContainer = createContextContainer(Col, GridProvider, {
 
 describe('@mantine/core/Col', () => {
   itThrowsContextError(Col, defaultProps, 'Grid component was not found in tree');
+  itSupportsProviderVariant(TestContainer, defaultProps, 'Grid', 'col');
   itSupportsSystemProps({
     component: TestContainer,
     props: defaultProps,

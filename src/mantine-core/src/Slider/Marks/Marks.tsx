@@ -10,6 +10,7 @@ export type MarksStylesNames = Selectors<typeof useStyles>;
 export interface MarksProps extends DefaultProps<MarksStylesNames> {
   marks: { value: number; label?: React.ReactNode }[];
   size: MantineNumberSize;
+  thumbSize?: number;
   color: MantineColor;
   min: number;
   max: number;
@@ -18,12 +19,14 @@ export interface MarksProps extends DefaultProps<MarksStylesNames> {
   offset?: number;
   disabled: boolean;
   inverted?: boolean;
+  variant: string;
 }
 
 export function Marks({
   marks,
   color,
   size,
+  thumbSize,
   min,
   max,
   value,
@@ -34,10 +37,11 @@ export function Marks({
   disabled,
   unstyled,
   inverted,
+  variant,
 }: MarksProps) {
   const { classes, cx } = useStyles(
-    { size, color, disabled },
-    { classNames, styles, unstyled, name: 'Slider' }
+    { color, disabled, thumbSize },
+    { name: 'Slider', classNames, styles, unstyled, variant, size }
   );
 
   const items = marks.map((mark, index) => (
@@ -57,11 +61,11 @@ export function Marks({
           className={classes.markLabel}
           onMouseDown={(event) => {
             event.stopPropagation();
-            onChange(mark.value);
+            !disabled && onChange(mark.value);
           }}
           onTouchStart={(event) => {
             event.stopPropagation();
-            onChange(mark.value);
+            !disabled && onChange(mark.value);
           }}
         >
           {mark.label}
@@ -70,7 +74,7 @@ export function Marks({
     </Box>
   ));
 
-  return <div>{items}</div>;
+  return <div className={classes.marksContainer}>{items}</div>;
 }
 
 Marks.displayName = '@mantine/core/SliderMarks';

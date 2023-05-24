@@ -1,5 +1,11 @@
 import React from 'react';
-import { checkAccessibility, itSupportsSystemProps } from '@mantine/tests';
+import {
+  checkAccessibility,
+  itSupportsSystemProps,
+  itSupportsProviderVariant,
+  itSupportsProviderSize,
+  itDisablesInputInsideDisabledFieldset,
+} from '@mantine/tests';
 import { render } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { Rating, RatingProps } from './Rating';
@@ -9,6 +15,8 @@ const defaultProps: RatingProps = {
 };
 
 describe('@mantine/core/Rating', () => {
+  itSupportsProviderVariant(Rating, defaultProps, 'Rating');
+  itSupportsProviderSize(Rating, defaultProps, 'Rating');
   checkAccessibility([<Rating defaultValue={3.5} fractions={2} aria-label="test-rating" />]);
   itSupportsSystemProps({
     component: Rating,
@@ -17,6 +25,7 @@ describe('@mantine/core/Rating', () => {
     refType: HTMLDivElement,
     providerName: 'Rating',
   });
+  itDisablesInputInsideDisabledFieldset(Rating, defaultProps);
 
   it('has correct name', () => {
     const { container } = render(<Rating defaultValue={1} />);

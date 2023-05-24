@@ -1,12 +1,11 @@
-import { createStyles, MantineNumberSize, MantineShadow } from '@mantine/styles';
+import { createStyles, MantineNumberSize, MantineShadow, rem } from '@mantine/styles';
 
 export interface PaperStylesParams {
   radius: MantineNumberSize;
   shadow: MantineShadow;
-  withBorder: boolean;
 }
 
-export default createStyles((theme, { radius, shadow, withBorder }: PaperStylesParams) => ({
+export default createStyles((theme, { radius, shadow }: PaperStylesParams) => ({
   root: {
     outline: 0,
     WebkitTapHighlightColor: 'transparent',
@@ -17,8 +16,11 @@ export default createStyles((theme, { radius, shadow, withBorder }: PaperStylesP
     boxSizing: 'border-box',
     borderRadius: theme.fn.radius(radius),
     boxShadow: theme.shadows[shadow] || shadow || 'none',
-    border: withBorder
-      ? `1px solid ${theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[3]}`
-      : undefined,
+
+    '&[data-with-border]': {
+      border: `${rem(1)} solid ${
+        theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[3]
+      }`,
+    },
   },
 }));

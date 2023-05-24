@@ -1,29 +1,32 @@
-import { createStyles, MantineColor, MantineSize } from '@mantine/styles';
+import { createStyles, MantineColor, rem, getSize } from '@mantine/styles';
 
 export interface StarSymbolStylesParams {
-  size: MantineSize;
   type: 'empty' | 'full';
   color: MantineColor;
 }
 
-const sizes: Record<MantineSize, number> = {
-  xs: 14,
-  sm: 18,
-  md: 20,
-  lg: 28,
-  xl: 32,
+const sizes = {
+  xs: rem(14),
+  sm: rem(18),
+  md: rem(20),
+  lg: rem(28),
+  xl: rem(32),
 };
 
-export default createStyles((theme, { size, type, color }: StarSymbolStylesParams) => {
+export default createStyles((theme, { type, color }: StarSymbolStylesParams, { size }) => {
   const emptyColor = theme.colorScheme === 'light' ? theme.colors.gray[3] : theme.colors.gray[8];
-  const fullColor = theme.fn.variant({ variant: 'filled', color }).background;
+  const fullColor = theme.fn.variant({
+    variant: 'filled',
+    color,
+    primaryFallback: false,
+  }).background;
 
   return {
     icon: {
       stroke: type === 'empty' ? emptyColor : fullColor,
       fill: type === 'empty' ? emptyColor : fullColor,
-      width: theme.fn.size({ size, sizes }),
-      height: theme.fn.size({ size, sizes }),
+      width: getSize({ size, sizes }),
+      height: getSize({ size, sizes }),
     },
   };
 });

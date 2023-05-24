@@ -38,7 +38,7 @@ Mantine docs website uses this hook to store color scheme information:
 ```tsx
 import { useLocalStorage } from '@mantine/hooks';
 import { ActionIcon, ColorScheme } from '@mantine/core';
-import { IconSun, IconMoonStars } from '@tabler/icons';
+import { IconSun, IconMoonStars } from '@tabler/icons-react';
 
 function ColorSchemeToggle() {
   const [colorScheme, setColorScheme] = useLocalStorage<ColorScheme>({
@@ -78,7 +78,7 @@ When state changes in one tab, it automatically updates value in all other opene
 You can test this feature by opening 2 tabs with Mantine docs side by side and changing color scheme
 (button on the top right or `⌘ + J` on MacOS and `Ctrl + J` on Windows and Linux).
 
-## Serialize/deserialize json
+## Serialize/deserialize JSON
 
 By default, hook will serialize/deserialize data with `JSON.stringify`/`JSON.parse`.
 If you need to store data in local storage that cannot be serialized with `JSON.stringify`
@@ -133,10 +133,10 @@ interface UseLocalStorage<T> {
   /** Default value that will be set if value is not found in local storage */
   defaultValue?: T;
 
-  /** If set to true, value will be update in useEffect after mount */
+  /** If set to true, value will be updated in useEffect after mount */
   getInitialValueInEffect: boolean;
 
-  /** Function to serialize value into string to be saved in local storage */
+  /** Function to serialize value into a string to be saved in local storage */
   serialize?(value: T): string;
 
   /** Function to deserialize string value from local storage to value */

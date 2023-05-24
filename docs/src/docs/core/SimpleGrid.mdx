@@ -16,7 +16,7 @@ import { SimpleGridDemos } from '@mantine/demos';
 
 ## Usage
 
-SimpleGrid is a simple flexbox container where each child is treated as a column.
+SimpleGrid is a simple css grid container where each child is treated as a column.
 Each column takes equal amount of space and unlike [Grid](/core/grid/) component you do not control column span,
 instead you specify number of columns per row:
 
@@ -37,9 +37,9 @@ Resize browser to see breakpoints behavior:
 In this example:
 
 - If screen width is more than 980px then component `cols` and `spacing` is used – 4 columns, lg spacing
-- screen width < 980px and > 755px – cols = 3, spacing = sm
-- screen width < 755px and > 600px – cols = 2, spacing = sm
-- screen width < 600px – cols = 1, spacing = sm
+- screen width < 62em and > 48em – cols = 3, spacing = sm
+- screen width < 48em and > 36em – cols = 2, spacing = sm
+- screen width < 36em – cols = 1, spacing = sm
 
 You can also use breakpoints from theme to set `maxWidth`:
 
@@ -77,18 +77,18 @@ You can use either `theme.spacing` value or number value for spacing in px:
 // xl spacing from theme.spacing
 <SimpleGrid spacing="xl" />;
 
-// 12px spacing
-<SimpleGrid spacing={12} />;
+// 1rem spacing
+<SimpleGrid spacing={16} />;
 ```
 
 Spacing also works in `breakpoints`:
 
 ```tsx
 // theme.spacing.xl
-<SimpleGrid breakpoints={[{ maxWidth: 755, cols: 2, spacing: 'xl' }]} />;
+<SimpleGrid breakpoints={[{ maxWidth: 'md', cols: 2, spacing: 'xl' }]} />;
 
-// 12px spacing
-<SimpleGrid breakpoints={[{ maxWidth: 755, cols: 2, spacing: 12 }]} />;
+// 1rem spacing
+<SimpleGrid breakpoints={[{ maxWidth: 'md', cols: 2, spacing: 16 }]} />;
 ```
 
 ## Browser support

@@ -2,6 +2,7 @@ import React from 'react';
 import { render, screen } from '@testing-library/react';
 import { DEFAULT_THEME, MantineProvider } from '../theme';
 import { createStyles } from './create-styles';
+import { getStylesRef } from './get-styles-ref';
 import { CSSObject } from './types';
 
 function expectStyles(Component: React.FC<any>, styles: CSSObject) {
@@ -22,15 +23,15 @@ const themeStyles = createStyles((theme) => ({
 }));
 
 const paramsStyles = createStyles((_theme, params: { radius: number }) => ({
-  testParams: { borderRadius: params.radius },
+  testParams: { borderRadius: `${params.radius / 16}rem` },
 }));
 
-const getRefStyles = createStyles((_theme, _params, getRef) => ({
-  overrideRef: { ref: getRef('override') },
+const getRefStyles = createStyles(() => ({
+  overrideRef: { ref: getStylesRef('override') },
   testRef: {
     backgroundColor: 'red',
 
-    [`&.${getRef('override')}`]: {
+    [`&.${getStylesRef('override')}`]: {
       backgroundColor: 'blue',
     },
   },
@@ -65,14 +66,14 @@ describe('@mantine/styles/create-styles', () => {
 
   it('supports getting theme as first argument', () => {
     expectStyles(() => <div className={themeStyles().classes.testTheme}>test-element</div>, {
-      fontSize: `${DEFAULT_THEME.fontSizes.xl}px`,
+      fontSize: `${DEFAULT_THEME.fontSizes.xl}`,
     });
   });
 
   it('supports getting params as second argument', () => {
     expectStyles(
-      () => <div className={paramsStyles({ radius: 432 }).classes.testParams}>test-element</div>,
-      { borderRadius: '432px' }
+      () => <div className={paramsStyles({ radius: 32 }).classes.testParams}>test-element</div>,
+      { borderRadius: '2rem' }
     );
   });
 
@@ -111,8 +112,8 @@ describe('@mantine/styles/create-styles', () => {
   });
 
   it('adds given styles with object syntax', () => {
-    render(<NamedContainer styles={{ testObject: { outline: '2px solid red' } }} />);
-    expect(screen.getByText('test-element')).toHaveStyle({ outline: '2px solid red' });
+    render(<NamedContainer styles={{ testObject: { outline: '2rem solid red' } }} />);
+    expect(screen.getByText('test-element')).toHaveStyle({ outline: '2rem solid red' });
   });
 
   it('adds given styles with function syntax', () => {
@@ -120,7 +121,7 @@ describe('@mantine/styles/create-styles', () => {
       <NamedContainer styles={(theme: any) => ({ testObject: { fontSize: theme.fontSizes.xs } })} />
     );
     expect(screen.getByText('test-element')).toHaveStyle({
-      fontSize: `${DEFAULT_THEME.fontSizes.xs}px`,
+      fontSize: `${DEFAULT_THEME.fontSizes.xs}`,
     });
   });
 
@@ -177,7 +178,7 @@ describe('@mantine/styles/create-styles', () => {
     );
 
     expect(screen.getByText('test-element')).toHaveStyle({
-      fontSize: `${DEFAULT_THEME.fontSizes.sm}px`,
+      fontSize: `${DEFAULT_THEME.fontSizes.sm}`,
       color: 'cyan',
     });
   });

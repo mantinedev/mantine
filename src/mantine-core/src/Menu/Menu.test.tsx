@@ -11,7 +11,7 @@ import { MenuDivider } from './MenuDivider/MenuDivider';
 
 function TestContainer(props: MenuProps) {
   return (
-    <Menu transitionDuration={0} closeDelay={0} openDelay={0} {...props}>
+    <Menu transitionProps={{ duration: 0 }} closeDelay={0} openDelay={0} {...props}>
       <Menu.Target>
         <button type="button">test-target</button>
       </Menu.Target>
@@ -145,5 +145,92 @@ describe('@mantine/core/Menu', () => {
 
   it('has correct displayName', () => {
     expect(Menu.displayName).toEqual('@mantine/core/Menu');
+  });
+  it('correctly calls callbacks when opening and closing the uncontrolled menu via target click', async () => {
+    const onOpen = jest.fn();
+    const onClose = jest.fn();
+    const onChange = jest.fn();
+
+    render(<TestContainer onChange={onChange} onOpen={onOpen} onClose={onClose} />);
+    expectClosed();
+
+    await userEvent.click(getControl());
+    expectOpened();
+
+    expect(onOpen).toHaveBeenCalledTimes(1);
+    expect(onClose).not.toHaveBeenCalled();
+    expect(onChange).toHaveBeenCalledTimes(1);
+    expect(onChange).toHaveBeenLastCalledWith(true);
+
+    onOpen.mockReset();
+    onClose.mockReset();
+    onChange.mockReset();
+    await userEvent.click(getControl());
+    expectClosed();
+
+    expect(onOpen).not.toHaveBeenCalled();
+    expect(onClose).toHaveBeenCalledTimes(1);
+    expect(onChange).toHaveBeenCalledTimes(1);
+    expect(onChange).toHaveBeenLastCalledWith(false);
+  });
+
+  it('correctly calls callbacks when opening and closing the controlled menu only via prop', async () => {
+    const onOpen = jest.fn();
+    const onClose = jest.fn();
+    const onChange = jest.fn();
+
+    render(<TestContainer onChange={onChange} onOpen={onOpen} onClose={onClose} opened={false} />);
+    expectClosed();
+
+    expect(onOpen).not.toHaveBeenCalled();
+    expect(onClose).not.toHaveBeenCalled();
+    expect(onChange).not.toHaveBeenCalled();
+
+    render(<TestContainer onChange={onChange} onOpen={onOpen} onClose={onClose} opened />);
+    expectOpened();
+
+    expect(onOpen).not.toHaveBeenCalled();
+    expect(onClose).not.toHaveBeenCalled();
+    expect(onChange).not.toHaveBeenCalled();
+
+    render(<TestContainer onChange={onChange} onOpen={onOpen} onClose={onClose} opened={false} />);
+
+    () => expect(screen.queryAllByRole('menu')).toHaveLength(1);
+    expect(onOpen).not.toHaveBeenCalled();
+    expect(onClose).not.toHaveBeenCalled();
+    expect(onChange).not.toHaveBeenCalled();
+  });
+
+  it('correctly calls callbacks when opening and closing the controlled menu via target click', async () => {
+    const onOpen = jest.fn();
+    const onClose = jest.fn();
+    const onChange = jest.fn();
+
+    render(<TestContainer onChange={onChange} onOpen={onOpen} onClose={onClose} opened={false} />);
+
+    await userEvent.click(getControl());
+
+    expectClosed();
+    expect(onOpen).toHaveBeenCalledTimes(1);
+    expect(onClose).not.toHaveBeenCalled();
+    expect(onChange).toHaveBeenCalledTimes(1);
+    expect(onChange).toHaveBeenLastCalledWith(true);
+
+    onOpen.mockReset();
+    onClose.mockReset();
+    onChange.mockReset();
+    render(<TestContainer onChange={onChange} onOpen={onOpen} onClose={onClose} opened />);
+
+    expectOpened();
+    await userEvent.click(getControl());
+
+    expectOpened();
+    expect(onOpen).not.toHaveBeenCalled();
+    expect(onClose).toHaveBeenCalledTimes(1);
+    expect(onChange).toHaveBeenCalledTimes(1);
+    expect(onChange).toHaveBeenLastCalledWith(false);
+
+    render(<TestContainer onChange={onChange} onOpen={onOpen} onClose={onClose} opened={false} />);
+    () => expect(screen.queryAllByRole('menu')).toHaveLength(1);
   });
 });

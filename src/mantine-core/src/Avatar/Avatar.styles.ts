@@ -5,28 +5,26 @@ import {
   CSSObject,
   MantineTheme,
   MantineGradient,
+  rem,
+  getSize,
 } from '@mantine/styles';
 
-export const AVATAR_VARIANTS = ['filled', 'light', 'gradient', 'outline'] as const;
-
-export type AvatarVariant = typeof AVATAR_VARIANTS[number];
+export const AVATAR_VARIANTS = ['filled', 'light', 'gradient', 'outline'];
 
 export interface AvatarStylesParams {
-  size: MantineNumberSize;
   radius: MantineNumberSize;
   color: MantineColor;
   withinGroup: boolean;
   spacing: MantineNumberSize;
-  variant: AvatarVariant;
   gradient: MantineGradient;
 }
 
 export const sizes = {
-  xs: 16,
-  sm: 26,
-  md: 38,
-  lg: 56,
-  xl: 84,
+  xs: rem(16),
+  sm: rem(26),
+  md: rem(38),
+  lg: rem(56),
+  xl: rem(84),
 };
 
 interface GetGroupStylesInput {
@@ -41,15 +39,47 @@ function getGroupStyles({ withinGroup, spacing, theme }: GetGroupStylesInput): C
   }
 
   return {
-    marginLeft: -theme.fn.size({ size: spacing, sizes: theme.spacing }),
+    marginLeft: `calc(${getSize({ size: spacing, sizes: theme.spacing })} * -1)`,
     backgroundColor: `${theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.white}`,
-    border: `2px solid ${theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.white}`,
+    border: `${rem(2)} solid ${theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.white}`,
   };
 }
 
+interface GetVariantStylesInput {
+  theme: MantineTheme;
+  variant: string;
+  color: MantineColor;
+  gradient: MantineGradient;
+}
+
+function getVariantStyles({ theme, variant, color, gradient }: GetVariantStylesInput) {
+  const colors = theme.fn.variant({ variant, color, gradient });
+
+  if (AVATAR_VARIANTS.includes(variant)) {
+    return {
+      placeholder: {
+        color: colors.color,
+        backgroundColor: colors.background,
+        backgroundImage: variant === 'gradient' ? colors.background : undefined,
+        border: `${rem(variant === 'gradient' ? 0 : 1)} solid ${colors.border}`,
+      },
+
+      placeholderIcon: {
+        color: colors.color,
+      },
+    };
+  }
+
+  return {};
+}
+
 export default createStyles(
-  (theme, { size, radius, color, withinGroup, spacing, variant, gradient }: AvatarStylesParams) => {
-    const colors = theme.fn.variant({ variant, color, gradient });
+  (
+    theme,
+    { radius, withinGroup, spacing, color, gradient }: AvatarStylesParams,
+    { variant, size }
+  ) => {
+    const variantStyles = getVariantStyles({ theme, color, gradient, variant });
     return {
       root: {
         ...theme.fn.focusStyles(),
@@ -59,14 +89,14 @@ export default createStyles(
         display: 'block',
         userSelect: 'none',
         overflow: 'hidden',
-        width: theme.fn.size({ size, sizes }),
-        minWidth: theme.fn.size({ size, sizes }),
-        height: theme.fn.size({ size, sizes }),
         borderRadius: theme.fn.radius(radius),
         textDecoration: 'none',
         border: 0,
         backgroundColor: 'transparent',
         padding: 0,
+        width: getSize({ size, sizes }),
+        minWidth: getSize({ size, sizes }),
+        height: getSize({ size, sizes }),
         ...getGroupStyles({ withinGroup, spacing, theme }),
       },
 
@@ -79,25 +109,22 @@ export default createStyles(
 
       placeholder: {
         ...theme.fn.fontStyles(),
-        fontSize: theme.fn.size({ size, sizes }) / 2.5,
-        color: colors.color,
         fontWeight: 700,
-        backgroundColor: colors.background,
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
         width: '100%',
         height: '100%',
         userSelect: 'none',
-        backgroundImage: variant === 'gradient' ? colors.background : undefined,
-        border: `${variant === 'gradient' ? 0 : 1}px solid ${colors.border}`,
         borderRadius: theme.fn.radius(radius),
+        fontSize: `calc(${getSize({ size, sizes })} / 2.5)`,
+        ...variantStyles.placeholder,
       },
 
       placeholderIcon: {
         width: '70%',
         height: '70%',
-        color: colors.color,
+        ...variantStyles.placeholderIcon,
       },
     };
   }

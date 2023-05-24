@@ -10,7 +10,7 @@ function Demo() {
     <JsonInput
       label="Your package.json"
       placeholder="Textarea will autosize to fit the content"
-      validationError="Invalid json"
+      validationError="Invalid JSON"
       formatOnBlur
       autosize
       minRows={4}
@@ -21,16 +21,16 @@ function Demo() {
 
 function Demo() {
   return (
-    <div style={{ maxWidth: 400, marginLeft: 'auto', marginRight: 'auto' }}>
-      <JsonInput
-        label="Your package.json"
-        placeholder="Textarea will autosize to fit the content"
-        validationError="Invalid json"
-        formatOnBlur
-        autosize
-        minRows={4}
-      />
-    </div>
+    <JsonInput
+      maw={400}
+      mx="auto"
+      label="Your package.json"
+      placeholder="Textarea will autosize to fit the content"
+      validationError="Invalid JSON"
+      formatOnBlur
+      autosize
+      minRows={4}
+    />
   );
 }
 

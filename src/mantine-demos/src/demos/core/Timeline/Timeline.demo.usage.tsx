@@ -1,10 +1,11 @@
 import React from 'react';
 import { MantineDemo } from '@mantine/ds';
+import { Box } from '@mantine/core';
 import { TimelineBase } from './_base';
 
 const code = `
 import { Timeline, Text } from '@mantine/core';
-import { IconGitBranch, IconGitPullRequest, IconGitCommit, IconMessageDots } from '@tabler/icons';
+import { IconGitBranch, IconGitPullRequest, IconGitCommit, IconMessageDots } from '@tabler/icons-react';
 
 function Demo() {
   return (
@@ -35,9 +36,9 @@ function Demo() {
 
 function Demo() {
   return (
-    <div style={{ maxWidth: 320, marginLeft: 'auto', marginRight: 'auto' }}>
+    <Box maw={320} mx="auto">
       <TimelineBase />
-    </div>
+    </Box>
   );
 }
 

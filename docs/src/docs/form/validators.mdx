@@ -140,3 +140,23 @@ const form = useForm({
   },
 });
 ```
+
+## matchesField
+
+`matchesField` checks whether form value is the same as value in other form field.
+Note that `matchesField` can only work with primitive values (arrays and objects cannot be compared).
+
+```tsx
+import { useForm, matchesField } from '@mantine/form';
+
+const form = useForm({
+  initialValues: {
+    password: '',
+    confirmPassword: '',
+  },
+
+  validate: {
+    confirmPassword: matchesField('password', 'Passwords are not the same'),
+  },
+});
+```

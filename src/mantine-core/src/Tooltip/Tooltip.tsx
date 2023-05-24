@@ -6,7 +6,7 @@ import { TooltipGroup } from './TooltipGroup/TooltipGroup';
 import { TooltipFloating } from './TooltipFloating/TooltipFloating';
 import { useTooltip } from './use-tooltip';
 import { FloatingArrow, getFloatingPosition, FloatingPosition, ArrowPosition } from '../Floating';
-import { MantineTransition, Transition } from '../Transition';
+import { Transition, TransitionOverride } from '../Transition';
 import { OptionalPortal } from '../Portal';
 import { Box } from '../Box';
 import { TOOLTIP_ERRORS } from './Tooltip.errors';
@@ -14,6 +14,8 @@ import { TooltipBaseProps } from './Tooltip.types';
 import useStyles from './Tooltip.styles';
 
 export interface TooltipProps extends TooltipBaseProps {
+  variant?: string;
+
   /** Called when tooltip position changes */
   onPositionChange?(position: FloatingPosition): void;
 
@@ -26,29 +28,26 @@ export interface TooltipProps extends TooltipBaseProps {
   /** Controls opened state */
   opened?: boolean;
 
-  /** Space between target element and tooltip in px */
+  /** Space between target element and tooltip */
   offset?: number;
 
   /** Determines whether component should have an arrow */
   withArrow?: boolean;
 
-  /** Arrow size in px */
+  /** Arrow size */
   arrowSize?: number;
 
-  /** Arrow offset in px */
+  /** Arrow offset */
   arrowOffset?: number;
 
-  /** Arrow radius in px */
+  /** Arrow radius */
   arrowRadius?: number;
 
   /** Arrow position **/
   arrowPosition?: ArrowPosition;
 
-  /** One of premade transitions ot transition object */
-  transition?: MantineTransition;
-
-  /** Transition duration in ms */
-  transitionDuration?: number;
+  /** Props added to Transition component that used to animate tooltip presence, use to configure duration and animation type, { duration: 100, transition: 'fade' } by default */
+  transitionProps?: TransitionOverride;
 
   /** Determines which events will be used to show tooltip */
   events?: { hover: boolean; focus: boolean; touch: boolean };
@@ -58,6 +57,9 @@ export interface TooltipProps extends TooltipBaseProps {
 
   /** Set if tooltip is attached to an inline element */
   inline?: boolean;
+
+  /** If set tooltip will not be unmounted from the DOM when it is hidden, display: none styles will be added instead */
+  keepMounted?: boolean;
 }
 
 const defaultProps: Partial<TooltipProps> = {
@@ -70,8 +72,7 @@ const defaultProps: Partial<TooltipProps> = {
   arrowRadius: 0,
   arrowPosition: 'side',
   offset: 5,
-  transition: 'fade',
-  transitionDuration: 100,
+  transitionProps: { duration: 100, transition: 'fade' },
   width: 'auto',
   events: { hover: true, focus: false, touch: false },
   zIndex: getDefaultZIndex('popover'),
@@ -90,6 +91,7 @@ const _Tooltip = forwardRef<HTMLElement, TooltipProps>((props, ref) => {
     onPositionChange,
     opened,
     withinPortal,
+    portalProps,
     radius,
     color,
     classNames,
@@ -103,8 +105,7 @@ const _Tooltip = forwardRef<HTMLElement, TooltipProps>((props, ref) => {
     arrowRadius,
     arrowPosition,
     offset,
-    transition,
-    transitionDuration,
+    transitionProps,
     multiline,
     width,
     events,
@@ -115,12 +116,14 @@ const _Tooltip = forwardRef<HTMLElement, TooltipProps>((props, ref) => {
     onMouseEnter,
     onMouseLeave,
     inline,
+    variant,
+    keepMounted,
     ...others
   } = useComponentDefaultProps('Tooltip', defaultProps, props);
 
   const { classes, cx, theme } = useStyles(
     { radius, color, width, multiline },
-    { name: 'Tooltip', classNames, styles, unstyled }
+    { name: 'Tooltip', classNames, styles, unstyled, variant }
   );
 
   const tooltip = useTooltip({
@@ -145,11 +148,13 @@ const _Tooltip = forwardRef<HTMLElement, TooltipProps>((props, ref) => {
 
   return (
     <>
-      <OptionalPortal withinPortal={withinPortal}>
+      <OptionalPortal {...portalProps} withinPortal={withinPortal}>
         <Transition
+          keepMounted={keepMounted}
           mounted={!disabled && tooltip.opened}
-          transition={transition}
-          duration={tooltip.isGroupPhase ? 10 : transitionDuration}
+          {...transitionProps}
+          transition={transitionProps.transition || 'fade'}
+          duration={tooltip.isGroupPhase ? 10 : transitionProps.duration ?? 100}
         >
           {(transitionStyles) => (
             <Box
@@ -173,7 +178,6 @@ const _Tooltip = forwardRef<HTMLElement, TooltipProps>((props, ref) => {
                 arrowX={tooltip.arrowX}
                 arrowY={tooltip.arrowY}
                 visible={withArrow}
-                withBorder={false}
                 position={tooltip.placement}
                 arrowSize={arrowSize}
                 arrowOffset={arrowOffset}

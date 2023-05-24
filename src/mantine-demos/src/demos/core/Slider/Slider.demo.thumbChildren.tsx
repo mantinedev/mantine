@@ -1,32 +1,32 @@
 import React from 'react';
-import { Slider, RangeSlider } from '@mantine/core';
+import { Slider, RangeSlider, rem } from '@mantine/core';
 import { MantineDemo } from '@mantine/ds';
-import { IconHeart, IconHeartBroken } from '@tabler/icons';
+import { IconHeart, IconHeartBroken } from '@tabler/icons-react';
 
 const code = `
-import { Slider, RangeSlider } from '@mantine/core';
-import { IconHeart, IconHeartBroken } from '@tabler/icons';
+import { Slider, RangeSlider, rem } from '@mantine/core';
+import { IconHeart, IconHeartBroken } from '@tabler/icons-react';
 
 function Demo() {
   return (
     <>
       <Slider
-        thumbChildren={<IconHeart size={16} />}
+        thumbChildren={<IconHeart size="1rem" />}
         color="red"
         label={null}
         defaultValue={40}
         thumbSize={26}
-        styles={{ thumb: { borderWidth: 2, padding: 3 } }}
+        styles={{ thumb: { borderWidth: rem(2), padding: rem(3) } }}
       />
 
       <RangeSlider
         mt="xl"
-        styles={{ thumb: { borderWidth: 2, padding: 3 } }}
+        styles={{ thumb: { borderWidth: rem(2), padding: rem(3) } }}
         color="red"
         label={null}
         defaultValue={[20, 60]}
         thumbSize={26}
-        thumbChildren={[<IconHeart size={16} key="1" />, <IconHeartBroken size={16} key="2" />]}
+        thumbChildren={[<IconHeart size="1rem" key="1" />, <IconHeartBroken size="1rem" key="2" />]}
       />
     </>
   );
@@ -37,24 +37,24 @@ function Demo() {
   return (
     <>
       <Slider
-        thumbChildren={<IconHeart size={16} stroke={1.5} />}
+        thumbChildren={<IconHeart size="1rem" stroke={1.5} />}
         color="red"
         label={null}
         defaultValue={40}
         thumbSize={26}
-        styles={{ thumb: { borderWidth: 2, padding: 3 } }}
+        styles={{ thumb: { borderWidth: rem(2), padding: rem(3) } }}
       />
 
       <RangeSlider
         mt="xl"
-        styles={{ thumb: { borderWidth: 2, padding: 3 } }}
+        styles={{ thumb: { borderWidth: rem(2), padding: rem(3) } }}
         color="red"
         label={null}
         defaultValue={[20, 60]}
         thumbSize={26}
         thumbChildren={[
-          <IconHeart size={16} stroke={1.5} key="1" />,
-          <IconHeartBroken size={16} stroke={1.5} key="2" />,
+          <IconHeart size="1rem" stroke={1.5} key="1" />,
+          <IconHeartBroken size="1rem" stroke={1.5} key="2" />,
         ]}
       />
     </>

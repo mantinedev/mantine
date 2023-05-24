@@ -1,7 +1,8 @@
 import React from 'react';
+import { rem } from '@mantine/core';
 
 interface TwitterIconProps extends React.ComponentPropsWithoutRef<'svg'> {
-  size?: number;
+  size?: number | string;
 }
 
 export function TwitterIcon({ size, ...others }: TwitterIconProps) {
@@ -10,8 +11,8 @@ export function TwitterIcon({ size, ...others }: TwitterIconProps) {
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 256 209"
       fill="currentColor"
-      width={size}
-      height={size}
+      width={rem(size)}
+      height={rem(size)}
       {...others}
     >
       <path

@@ -41,8 +41,8 @@ export interface MultiSelectProps
   /** Component used to render values */
   valueComponent?: React.FC<any>;
 
-  /** Maximum dropdown height in px */
-  maxDropdownHeight?: number;
+  /** Maximum dropdown height */
+  maxDropdownHeight?: number | string;
 
   /** Enable items searching */
   searchable?: boolean;
@@ -56,8 +56,8 @@ export interface MultiSelectProps
   /** Allow to clear item */
   clearable?: boolean;
 
-  /** aria-label for clear button */
-  clearButtonLabel?: string;
+  /** Disable removing selected items from the list */
+  disableSelectedItemFiltering?: boolean;
 
   /** Clear search field value on blur */
   clearSearchOnBlur?: boolean;
@@ -67,6 +67,9 @@ export interface MultiSelectProps
 
   /** Controlled search input value */
   searchValue?: string;
+
+  /** Hovers the first result when search query changes */
+  hoverOnSearchChange?: boolean;
 
   /** Allow creatable option  */
   creatable?: boolean;
@@ -89,8 +92,8 @@ export interface MultiSelectProps
   /** Select highlighted item on blur */
   selectOnBlur?: boolean;
 
-  /** Set the clear button tab index to disabled or default after input field */
-  clearButtonTabIndex?: -1 | 0;
+  /** Props added to clear button */
+  clearButtonProps?: React.ComponentPropsWithoutRef<'button'>;
 }
 
 export function defaultFilter(value: string, selected: boolean, item: SelectItem) {
@@ -104,7 +107,7 @@ export function defaultShouldCreate(query: string, data: SelectItem[]) {
   return !!query && !data.some((item) => item.value.toLowerCase() === query.toLowerCase());
 }
 
-function filterValue(value: string[], data: (string | SelectItem)[]): string[] {
+function filterValue(value: string[], data: ReadonlyArray<string | SelectItem>): string[] {
   if (!Array.isArray(value)) {
     return undefined;
   }
@@ -113,8 +116,12 @@ function filterValue(value: string[], data: (string | SelectItem)[]): string[] {
     return [];
   }
 
-  const flatData: string[] =
-    typeof data[0] === 'object' ? data.map((item) => (item as any).value) : data;
+  const flatData: string[] = data.map((item) => {
+    if (typeof item === 'object') {
+      return item.value;
+    }
+    return item;
+  });
   return value.filter((val) => flatData.includes(val));
 }
 
@@ -122,8 +129,7 @@ const defaultProps: Partial<MultiSelectProps> = {
   size: 'sm',
   valueComponent: DefaultValue,
   itemComponent: DefaultItem,
-  transition: 'pop-top-left',
-  transitionDuration: 0,
+  transitionProps: { transition: 'fade', duration: 0 },
   maxDropdownHeight: 220,
   shadow: 'sm',
   searchable: false,
@@ -139,8 +145,8 @@ const defaultProps: Partial<MultiSelectProps> = {
   switchDirectionOnFlip: false,
   zIndex: getDefaultZIndex('popover'),
   selectOnBlur: false,
-  clearButtonTabIndex: 0,
   positionDependencies: [],
+  dropdownPosition: 'flip',
 };
 
 export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>((props, ref) => {
@@ -162,9 +168,7 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>((props
     valueComponent: Value,
     itemComponent,
     id,
-    transition,
-    transitionDuration,
-    transitionTimingFunction,
+    transitionProps,
     maxDropdownHeight,
     shadow,
     nothingFound,
@@ -177,7 +181,6 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>((props
     clearSearchOnChange,
     clearable,
     clearSearchOnBlur,
-    clearButtonLabel,
     variant,
     onSearchChange,
     searchValue,
@@ -205,7 +208,6 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>((props
     errorProps,
     labelProps,
     descriptionProps,
-    clearButtonTabIndex,
     form,
     positionDependencies,
     onKeyDown,
@@ -214,19 +216,22 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>((props
     inputWrapperOrder,
     readOnly,
     withAsterisk,
+    clearButtonProps,
+    hoverOnSearchChange,
+    disableSelectedItemFiltering,
     ...others
   } = useComponentDefaultProps('MultiSelect', defaultProps, props);
 
   const { classes, cx, theme } = useStyles(
-    { size, invalid: !!error },
-    { classNames, styles, unstyled, name: 'MultiSelect' }
+    { invalid: !!error },
+    { name: 'MultiSelect', classNames, styles, unstyled, size, variant }
   );
   const { systemStyles, rest } = extractSystemStyles(others);
   const inputRef = useRef<HTMLInputElement>();
   const itemsRefs = useRef<Record<string, HTMLDivElement>>({});
   const uuid = useId(id);
   const [dropdownOpened, setDropdownOpened] = useState(initiallyOpened);
-  const [hovered, setHovered] = useState(-1);
+  const [_hovered, setHovered] = useState(-1);
   const [direction, setDirection] = useState<React.CSSProperties['flexDirection']>('column');
   const [_searchValue, handleSearchChange] = useUncontrolled({
     value: searchValue,
@@ -289,7 +294,10 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>((props
     limit,
     filter,
     value: _value,
+    disableSelectedItemFiltering,
   });
+
+  const hovered = Math.min(_hovered, filteredData.length - 1);
 
   const getNextIndex = (
     index: number,
@@ -305,8 +313,12 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>((props
   };
 
   useDidUpdate(() => {
-    setHovered(-1);
-  }, [_searchValue]);
+    if (hoverOnSearchChange && _searchValue) {
+      setHovered(0);
+    } else {
+      setHovered(-1);
+    }
+  }, [_searchValue, hoverOnSearchChange]);
 
   useDidUpdate(() => {
     if (!disabled && _value.length > data.length) {
@@ -346,9 +358,6 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>((props
         if (_value.length === maxSelectedValues - 1) {
           valuesOverflow.current = true;
           setDropdownOpened(false);
-        }
-        if (hovered === filteredData.length - 1) {
-          setHovered(filteredData.length - 2);
         }
         if (filteredData.length === 1) {
           setDropdownOpened(false);
@@ -531,7 +540,7 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>((props
       return selectedItem;
     })
     .filter((val) => !!val)
-    .map((item) => (
+    .map((item, index) => (
       <Value
         {...item}
         variant={variant}
@@ -548,8 +557,11 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>((props
         styles={styles}
         classNames={classNames}
         radius={radius}
+        index={index}
       />
     ));
+
+  const isItemSelected = (itemValue: string) => _value.includes(itemValue);
 
   const handleClear = () => {
     handleSearchChange('');
@@ -594,13 +606,13 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>((props
       inputWrapperOrder={inputWrapperOrder}
       unstyled={unstyled}
       withAsterisk={withAsterisk}
+      variant={variant}
       {...systemStyles}
       {...wrapperProps}
     >
       <SelectPopover
         opened={shouldRenderDropdown}
-        transition={transition}
-        transitionDuration={transitionDuration}
+        transitionProps={transitionProps}
         shadow="sm"
         withinPortal={withinPortal}
         __staticSelector="MultiSelect"
@@ -608,10 +620,11 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>((props
         switchDirectionOnFlip={switchDirectionOnFlip}
         zIndex={zIndex}
         dropdownPosition={dropdownPosition}
-        positionDependencies={positionDependencies}
+        positionDependencies={[...positionDependencies, _searchValue]}
         classNames={classNames}
         styles={styles}
         unstyled={unstyled}
+        variant={variant}
       >
         <SelectPopover.Target>
           <div
@@ -640,7 +653,7 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>((props
               size={size}
               variant={variant}
               disabled={disabled}
-              invalid={!!error}
+              error={error}
               required={required}
               radius={radius}
               icon={icon}
@@ -661,15 +674,14 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>((props
                 styles,
                 size,
                 shouldClear: clearable && _value.length > 0,
-                clearButtonLabel,
                 onClear: handleClear,
                 error,
                 disabled,
-                clearButtonTabIndex,
+                clearButtonProps,
                 readOnly,
               })}
             >
-              <div className={classes.values}>
+              <div className={classes.values} data-clearable={clearable || undefined}>
                 {selectedItems}
 
                 <input
@@ -724,9 +736,11 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>((props
             itemComponent={itemComponent}
             size={size}
             nothingFound={nothingFound}
+            isItemSelected={isItemSelected}
             creatable={creatable && !!createLabel}
             createLabel={createLabel}
             unstyled={unstyled}
+            variant={variant}
           />
         </SelectPopover.Dropdown>
       </SelectPopover>

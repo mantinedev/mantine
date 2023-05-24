@@ -1,4 +1,4 @@
-import { klona } from 'klona';
+import { klona } from 'klona/full';
 import { getSplittedPath } from './get-splitted-path';
 
 export function setPath<T>(path: unknown, value: unknown, values: T) {

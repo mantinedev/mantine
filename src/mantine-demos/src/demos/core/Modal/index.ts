@@ -7,3 +7,8 @@ export { transitions } from './Modal.demo.transitions';
 export { centered } from './Modal.demo.centered';
 export { fullScreen } from './Modal.demo.fullScreen';
 export { sizeAuto } from './Modal.demo.sizeAuto';
+export { scrollarea } from './Modal.demo.scrollarea';
+export { composition } from './Modal.demo.composition';
+export { offset } from './Modal.demo.offset';
+export { initialFocus } from './Modal.demo.initialFocus';
+export { fullScreenMobile } from './Modal.demo.fullScreenMobile';

@@ -126,11 +126,12 @@ function MyCustomText() {
 `theme.fn.smallerThan` and `theme.fn.largerThan` function can help you write responsive styles with `theme.breakpoints`:
 
 ```tsx
-theme.fn.smallerThan(700); // -> `@media (max-width: 700px)`
-theme.fn.smallerThan('lg'); // -> `@media (max-width: ${theme.breakpoints.lg}px)`
+// 0.0625rem (1px) is substracted from smallerThan breakpoints to avoid collisions with largerThan breakpoints
+theme.fn.smallerThan(768); // -> `@media (max-width: 47.9375em)`
+theme.fn.smallerThan('lg'); // -> `@media (max-width: ${em(getBreakpointValue(theme.breakpoints.sm) - 1)}`
 
-theme.fn.largerThan('sm'); // -> `@media (min-width: ${theme.breakpoints.sm + 1}px)`
-theme.fn.largerThan(700); // -> `@media (min-width: 701px)`
+theme.fn.largerThan('sm'); // -> `@media (min-width: ${theme.breakpoints.sm'})`
+theme.fn.largerThan(768); // -> `@media (min-width: 48em)`
 ```
 
 You can use both functions as a replacement for regular media query syntax in `createStyles` function, `styles` and `sx` props:

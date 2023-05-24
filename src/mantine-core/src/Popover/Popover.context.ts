@@ -1,8 +1,9 @@
-import { ReferenceType } from '@floating-ui/react-dom-interactions';
+import { ReferenceType } from '@floating-ui/react';
 import { createSafeContext } from '@mantine/utils';
 import { MantineNumberSize, MantineShadow, ClassNames, Styles } from '@mantine/styles';
 import { FloatingPosition, ArrowPosition } from '../Floating';
-import { MantineTransition } from '../Transition';
+import { TransitionOverride } from '../Transition';
+import { PortalProps } from '../Portal';
 import { POPOVER_ERRORS } from './Popover.errors';
 import { PopoverWidth, PopoverStylesNames, PopoverStylesParams } from './Popover.types';
 
@@ -13,9 +14,7 @@ interface PopoverContext {
   arrowY: number;
   arrowRef: React.RefObject<HTMLDivElement>;
   opened: boolean;
-  transition: MantineTransition;
-  transitionDuration: number;
-  exitTransitionDuration: number;
+  transitionProps?: TransitionOverride;
   reference: (node: ReferenceType) => void;
   floating: (node: HTMLElement) => void;
   width?: PopoverWidth;
@@ -27,6 +26,7 @@ interface PopoverContext {
   trapFocus: boolean;
   placement: FloatingPosition;
   withinPortal: boolean;
+  portalProps?: Omit<PortalProps, 'children' | 'withinPortal'>;
   closeOnEscape: boolean;
   zIndex: React.CSSProperties['zIndex'];
   radius?: MantineNumberSize;
@@ -44,6 +44,8 @@ interface PopoverContext {
   styles: Styles<PopoverStylesNames, PopoverStylesParams>;
   unstyled: boolean;
   __staticSelector: string;
+  variant: string;
+  keepMounted: boolean;
 }
 
 export const [PopoverContextProvider, usePopoverContext] = createSafeContext<PopoverContext>(

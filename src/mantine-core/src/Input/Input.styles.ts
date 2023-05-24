@@ -1,11 +1,7 @@
-import { createStyles, MantineNumberSize, MantineSize, MantineTheme } from '@mantine/styles';
-
-export type InputVariant = 'default' | 'filled' | 'unstyled';
+import { createStyles, MantineNumberSize, MantineTheme, rem, getSize } from '@mantine/styles';
 
 export interface InputStylesParams {
   radius: MantineNumberSize;
-  size: MantineSize;
-  variant: InputVariant;
   multiline: boolean;
   invalid: boolean;
   rightSectionWidth: string | number;
@@ -17,22 +13,28 @@ export interface InputStylesParams {
 }
 
 export const sizes = {
-  xs: 30,
-  sm: 36,
-  md: 42,
-  lg: 50,
-  xl: 60,
+  xs: rem(30),
+  sm: rem(36),
+  md: rem(42),
+  lg: rem(50),
+  xl: rem(60),
 };
+
+const INPUT_VARIANTS = ['default', 'filled', 'unstyled'];
 
 interface GetVariantStylesInput {
   theme: MantineTheme;
-  variant: InputVariant;
+  variant: string;
 }
 
 function getVariantStyles({ theme, variant }: GetVariantStylesInput) {
+  if (!INPUT_VARIANTS.includes(variant)) {
+    return null;
+  }
+
   if (variant === 'default') {
     return {
-      border: `1px solid ${
+      border: `${rem(1)} solid ${
         theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[4]
       }`,
       backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.white,
@@ -43,7 +45,7 @@ function getVariantStyles({ theme, variant }: GetVariantStylesInput) {
 
   if (variant === 'filled') {
     return {
-      border: '1px solid transparent',
+      border: `${rem(1)} solid transparent`,
       backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[1],
       '&:focus, &:focus-within': theme.focusRingStyles.inputStyles(theme),
     };
@@ -53,7 +55,7 @@ function getVariantStyles({ theme, variant }: GetVariantStylesInput) {
     borderWidth: 0,
     color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
     backgroundColor: 'transparent',
-    minHeight: 28,
+    minHeight: rem(28),
     outline: 0,
 
     '&:focus, &:focus-within': {
@@ -76,10 +78,8 @@ export default createStyles(
   (
     theme,
     {
-      size,
       multiline,
       radius,
-      variant,
       invalid,
       rightSectionWidth,
       withRightSection,
@@ -87,24 +87,40 @@ export default createStyles(
       offsetBottom,
       offsetTop,
       pointer,
-    }: InputStylesParams
+    }: InputStylesParams,
+    { variant, size }
   ) => {
-    const invalidColor = theme.fn.variant({ variant: 'filled', color: 'red' }).background;
+    const invalidColor = theme.fn.variant({
+      variant: 'filled',
+      color: 'red',
+    }).background;
     const sizeStyles =
       variant === 'default' || variant === 'filled'
         ? {
-            minHeight: theme.fn.size({ size, sizes }),
-            paddingLeft: theme.fn.size({ size, sizes }) / 3,
-            paddingRight: withRightSection ? rightSectionWidth : theme.fn.size({ size, sizes }) / 3,
+            minHeight: getSize({ size, sizes }),
+            paddingLeft: `calc(${getSize({ size, sizes })}  / 3)`,
+            paddingRight: withRightSection
+              ? rightSectionWidth || getSize({ size, sizes })
+              : `calc(${getSize({ size, sizes })}  / 3)`,
             borderRadius: theme.fn.radius(radius),
+          }
+        : variant === 'unstyled' && withRightSection
+        ? {
+            paddingRight: rightSectionWidth || getSize({ size, sizes }),
           }
         : null;
 
     return {
       wrapper: {
         position: 'relative',
-        marginTop: offsetTop ? `calc(${theme.spacing.xs}px / 2)` : undefined,
-        marginBottom: offsetBottom ? `calc(${theme.spacing.xs}px / 2)` : undefined,
+        marginTop: offsetTop ? `calc(${theme.spacing.xs} / 2)` : undefined,
+        marginBottom: offsetBottom ? `calc(${theme.spacing.xs} / 2)` : undefined,
+
+        '&:has(input:disabled)': {
+          '& .mantine-Input-rightSection': {
+            display: 'none',
+          },
+        },
       },
 
       input: {
@@ -113,30 +129,46 @@ export default createStyles(
           ? variant === 'unstyled'
             ? undefined
             : 'auto'
-          : theme.fn.size({ size, sizes }),
+          : getSize({ size, sizes }),
         WebkitTapHighlightColor: 'transparent',
-        lineHeight: multiline ? theme.lineHeight : `${theme.fn.size({ size, sizes }) - 2}px`,
+        lineHeight: multiline ? theme.lineHeight : `calc(${getSize({ size, sizes })} - ${rem(2)})`,
         appearance: 'none',
         resize: 'none',
         boxSizing: 'border-box',
-        fontSize: theme.fn.size({ size, sizes: theme.fontSizes }),
+        fontSize: getSize({ size, sizes: theme.fontSizes }),
         width: '100%',
         color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
         display: 'block',
         textAlign: 'left',
         cursor: pointer ? 'pointer' : undefined,
+        ...getVariantStyles({ theme, variant }),
         ...sizeStyles,
 
-        '&:disabled': {
+        '&:disabled, &[data-disabled]': {
           backgroundColor:
             theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[1],
           color: theme.colors.dark[2],
           opacity: 0.6,
           cursor: 'not-allowed',
+          pointerEvents: 'none',
 
           '&::placeholder': {
             color: theme.colors.dark[2],
           },
+        },
+
+        '&[data-invalid]': {
+          color: invalidColor,
+          borderColor: invalidColor,
+
+          '&::placeholder': {
+            opacity: 1,
+            color: invalidColor,
+          },
+        },
+
+        '&[data-with-icon]': {
+          paddingLeft: typeof iconWidth === 'number' ? rem(iconWidth) : getSize({ size, sizes }),
         },
 
         '&::placeholder': {
@@ -152,33 +184,6 @@ export default createStyles(
         '&[type=number]': {
           MozAppearance: 'textfield',
         },
-
-        ...getVariantStyles({ theme, variant }),
-      },
-
-      withIcon: {
-        paddingLeft: typeof iconWidth === 'number' ? iconWidth : theme.fn.size({ size, sizes }),
-      },
-
-      invalid: {
-        color: invalidColor,
-        borderColor: invalidColor,
-
-        '&::placeholder': {
-          opacity: 1,
-          color: invalidColor,
-        },
-      },
-
-      disabled: {
-        backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[1],
-        color: theme.colors.dark[2],
-        opacity: 0.6,
-        cursor: 'not-allowed',
-
-        '&::placeholder': {
-          color: theme.colors.dark[2],
-        },
       },
 
       icon: {
@@ -191,7 +196,7 @@ export default createStyles(
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        width: typeof iconWidth === 'number' ? iconWidth : theme.fn.size({ size, sizes }),
+        width: iconWidth ? rem(iconWidth) : getSize({ size, sizes }),
         color: invalid
           ? theme.colors.red[theme.colorScheme === 'dark' ? 6 : 7]
           : theme.colorScheme === 'dark'
@@ -207,7 +212,7 @@ export default createStyles(
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        width: rightSectionWidth,
+        width: rightSectionWidth || getSize({ size, sizes }),
       },
     };
   }

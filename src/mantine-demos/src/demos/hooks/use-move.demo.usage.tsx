@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
-import { useMantineTheme, Group, Text, Code } from '@mantine/core';
+import { useMantineTheme, Group, Text, Code, rem } from '@mantine/core';
 import { MantineDemo } from '@mantine/ds';
 import { useMove } from '@mantine/hooks';
 
 const code = `
 import { useState } from 'react';
-import { useMantineTheme, Text, Code } from '@mantine/core';
+import { useMantineTheme, Text, Code, rem } from '@mantine/core';
 import { useMove } from '@mantine/hooks';
 
 function Demo() {
@@ -15,28 +15,30 @@ function Demo() {
 
   return (
     <>
-      <div
-        ref={ref}
-        style={{
-          width: 400,
-          height: 120,
-          backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[1],
-          position: 'relative',
-        }}
-      >
+      <Group position="center">
         <div
+          ref={ref}
           style={{
-            position: 'absolute',
-            left: \`calc(\${value.x * 100}% - 8px)\`,
-            top: \`calc(\${value.y * 100}% - 8px)\`,
-            width: 16,
-            height: 16,
-            backgroundColor: active ? theme.colors.teal[7] : theme.colors.blue[7],
+            width: rem(400),
+            height: rem(120),
+            backgroundColor:
+              theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[1],
+            position: 'relative',
           }}
-        />
-      </div>
-
-      <Text>
+        >
+          <div
+            style={{
+              position: 'absolute',
+              left: \`calc(\${value.x * 100}% - \${rem(8)})\`,
+              top: \`calc(\${value.y * 100}% - \${rem(8)})\`,
+              width: rem(16),
+              height: rem(16),
+              backgroundColor: active ? theme.colors.teal[7] : theme.colors.blue[7],
+            }}
+          />
+        </div>
+      </Group>
+      <Text align="center" mt="sm">
         Values <Code>{\`{ x: \${Math.round(value.x * 100)}, y: \${Math.round(value.y * 100)} }\`}</Code>
       </Text>
     </>
@@ -54,8 +56,8 @@ function Demo() {
         <div
           ref={ref}
           style={{
-            width: 400,
-            height: 120,
+            width: rem(400),
+            height: rem(120),
             backgroundColor:
               theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[1],
             position: 'relative',
@@ -64,16 +66,16 @@ function Demo() {
           <div
             style={{
               position: 'absolute',
-              left: `calc(${value.x * 100}% - 8px)`,
-              top: `calc(${value.y * 100}% - 8px)`,
-              width: 16,
-              height: 16,
+              left: `calc(${value.x * 100}% - ${rem(8)})`,
+              top: `calc(${value.y * 100}% - ${rem(8)})`,
+              width: rem(16),
+              height: rem(16),
               backgroundColor: active ? theme.colors.teal[7] : theme.colors.blue[7],
             }}
           />
         </div>
       </Group>
-      <Text align="center" style={{ marginTop: theme.spacing.sm }}>
+      <Text align="center" mt="sm">
         Values <Code>{`{ x: ${Math.round(value.x * 100)}, y: ${Math.round(value.y * 100)} }`}</Code>
       </Text>
     </>

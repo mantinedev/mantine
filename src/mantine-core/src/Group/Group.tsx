@@ -5,6 +5,8 @@ import { filterFalsyChildren } from './filter-falsy-children/filter-falsy-childr
 import useStyles, { GroupPosition } from './Group.styles';
 
 export interface GroupProps extends DefaultProps, React.ComponentPropsWithoutRef<'div'> {
+  variant?: string;
+
   /** Defines justify-content property */
   position?: GroupPosition;
 
@@ -27,8 +29,18 @@ const defaultProps: Partial<GroupProps> = {
 };
 
 export const Group = forwardRef<HTMLDivElement, GroupProps>((props: GroupProps, ref) => {
-  const { className, position, align, children, noWrap, grow, spacing, unstyled, ...others } =
-    useComponentDefaultProps('Group', defaultProps, props);
+  const {
+    className,
+    position,
+    align,
+    children,
+    noWrap,
+    grow,
+    spacing,
+    unstyled,
+    variant,
+    ...others
+  } = useComponentDefaultProps('Group', defaultProps, props);
 
   const filteredChildren = filterFalsyChildren(children);
   const { classes, cx } = useStyles(
@@ -40,7 +52,7 @@ export const Group = forwardRef<HTMLDivElement, GroupProps>((props: GroupProps, 
       position,
       count: filteredChildren.length,
     },
-    { unstyled, name: 'Group' }
+    { unstyled, name: 'Group', variant }
   );
 
   return (

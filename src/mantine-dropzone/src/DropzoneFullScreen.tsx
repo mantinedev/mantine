@@ -6,6 +6,7 @@ import {
   DefaultProps,
   Selectors,
   getDefaultZIndex,
+  PortalProps,
 } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import { DropzoneStylesNames, DropzoneProps, _Dropzone } from './Dropzone';
@@ -26,6 +27,9 @@ export interface DropzoneFullScreenProps
 
   /** Determines whether component should be rendered within Portal, true by default */
   withinPortal?: boolean;
+
+  /** Props to pass down to the portal when withinPortal is true */
+  portalProps?: Omit<PortalProps, 'children' | 'withinPortal'>;
 }
 
 const fullScreenDefaultProps: Partial<DropzoneFullScreenProps> = {
@@ -56,6 +60,7 @@ export function DropzoneFullScreen(props: DropzoneFullScreenProps) {
     onReject,
     zIndex,
     withinPortal,
+    portalProps,
     ...others
   } = useComponentDefaultProps('DropzoneFullScreen', fullScreenDefaultProps, props);
 
@@ -96,7 +101,7 @@ export function DropzoneFullScreen(props: DropzoneFullScreenProps) {
   }, [active]);
 
   return (
-    <OptionalPortal withinPortal={withinPortal}>
+    <OptionalPortal {...portalProps} withinPortal={withinPortal}>
       <Box
         className={cx(classes.wrapper, className)}
         sx={sx}

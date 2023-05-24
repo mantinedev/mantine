@@ -1,5 +1,5 @@
 import React from 'react';
-import { IconSearch } from '@tabler/icons';
+import { IconSearch } from '@tabler/icons-react';
 import { MantineDemo } from '@mantine/ds';
 import { Wrapper } from './_wrapper';
 
@@ -22,7 +22,7 @@ function Demo() {
 function Demo() {
   return (
     <Wrapper
-      searchIcon={<IconSearch size={18} />}
+      searchIcon={<IconSearch size="1.2rem" />}
       searchPlaceholder="Search..."
       shortcut="mod + alt + L"
       highlightQuery

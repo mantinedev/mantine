@@ -1,5 +1,5 @@
 import React from 'react';
-import { useMantineTheme } from '@mantine/core';
+import { useMantineTheme, rem } from '@mantine/core';
 
 export function NextIcon() {
   const theme = useMantineTheme();
@@ -8,7 +8,7 @@ export function NextIcon() {
       xmlns="http://www.w3.org/2000/svg"
       preserveAspectRatio="xMidYMid"
       viewBox="0 0 512 309"
-      style={{ height: 70 }}
+      height={rem(70)}
     >
       <path
         fill={theme.colorScheme === 'dark' ? theme.white : theme.black}

@@ -1,13 +1,13 @@
 import React from 'react';
-import { IconCheck } from '@tabler/icons';
+import { IconCheck } from '@tabler/icons-react';
 import { Group, Button } from '@mantine/core';
 import { MantineDemo } from '@mantine/ds';
-import { showNotification, updateNotification } from '@mantine/notifications';
+import { notifications } from '@mantine/notifications';
 
 const code = `
 import { Group, Button } from '@mantine/core';
-import { showNotification, updateNotification } from '@mantine/notifications';
-import { IconCheck } from '@tabler/icons';
+import { notifications } from '@mantine/notifications';
+import { IconCheck } from '@tabler/icons-react';
 
 function Demo() {
   return (
@@ -15,22 +15,22 @@ function Demo() {
       <Button
         variant="outline"
         onClick={() => {
-          showNotification({
+          notifications.show({
             id: 'load-data',
             loading: true,
             title: 'Loading your data',
             message: 'Data will be loaded in 3 seconds, you cannot close this yet',
             autoClose: false,
-            disallowClose: true,
+            withCloseButton: false,
           });
 
           setTimeout(() => {
-            updateNotification({
+            notifications.update({
               id: 'load-data',
               color: 'teal',
               title: 'Data was loaded',
               message: 'Notification will close in 2 seconds, you can close this notification now',
-              icon: <IconCheck size={16} />,
+              icon: <IconCheck size="1rem" />,
               autoClose: 2000,
             });
           }, 3000);
@@ -49,22 +49,22 @@ function Demo() {
       <Button
         variant="outline"
         onClick={() => {
-          showNotification({
+          notifications.show({
             id: 'load-data',
             loading: true,
             title: 'Loading your data',
             message: 'Data will be loaded in 3 seconds, you cannot close this yet',
             autoClose: false,
-            disallowClose: true,
+            withCloseButton: false,
           });
 
           setTimeout(() => {
-            updateNotification({
+            notifications.update({
               id: 'load-data',
               color: 'teal',
               title: 'Data was loaded',
               message: 'Notification will close in 2 seconds, you can close this notification now',
-              icon: <IconCheck size={16} />,
+              icon: <IconCheck size="1rem" />,
               autoClose: 2000,
             });
           }, 3000);

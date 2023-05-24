@@ -32,5 +32,7 @@ import type { OS } from '@mantine/hooks';
 ## Definition
 
 ```tsx
-function getOS(): 'undetermined' | 'macos' | 'ios' | 'windows' | 'android' | 'linux';
+function getOS(options?: {
+  getValueInEffect: boolean;
+}): 'undetermined' | 'macos' | 'ios' | 'windows' | 'android' | 'linux';
 ```

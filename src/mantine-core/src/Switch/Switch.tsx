@@ -20,6 +20,8 @@ export type SwitchStylesNames = Selectors<typeof useStyles> | InlineInputStylesN
 export interface SwitchProps
   extends DefaultProps<SwitchStylesNames, SwitchStylesParams>,
     Omit<React.ComponentPropsWithRef<'input'>, 'type' | 'size'> {
+  variant?: string;
+
   /** Id is used to bind input and label, if not passed unique id will be generated for each input */
   id?: string;
 
@@ -38,7 +40,7 @@ export interface SwitchProps
   /** Predefined size value */
   size?: MantineSize;
 
-  /** Radius from theme.radius or number to set border-radius in px */
+  /** Key of theme.radius or any valid CSS value to set border-radius, "xl" by default */
   radius?: MantineNumberSize;
 
   /** Props spread to wrapper element */
@@ -92,14 +94,16 @@ export const Switch: SwitchComponent = forwardRef<HTMLInputElement, SwitchProps>
     description,
     error,
     disabled,
+    variant,
     ...others
   } = useComponentDefaultProps('Switch', defaultProps, props);
 
   const ctx = useSwitchGroupContext();
+  const _size = ctx?.size || size;
 
-  const { classes } = useStyles(
-    { size: ctx?.size || size, color, radius, labelPosition, error: !!error },
-    { unstyled, styles, classNames, name: 'Switch' }
+  const { classes, cx } = useStyles(
+    { color, radius, labelPosition, error: !!error },
+    { name: 'Switch', classNames, styles, unstyled, size: _size, variant }
   );
 
   const { systemStyles, rest } = extractSystemStyles(others);
@@ -120,7 +124,7 @@ export const Switch: SwitchComponent = forwardRef<HTMLInputElement, SwitchProps>
 
   return (
     <InlineInput
-      className={className}
+      className={cx(className, classes.root)}
       sx={sx}
       style={style}
       id={uuid}
@@ -135,6 +139,7 @@ export const Switch: SwitchComponent = forwardRef<HTMLInputElement, SwitchProps>
       styles={styles}
       unstyled={unstyled}
       data-checked={contextProps.checked || undefined}
+      variant={variant}
       {...systemStyles}
       {...wrapperProps}
     >

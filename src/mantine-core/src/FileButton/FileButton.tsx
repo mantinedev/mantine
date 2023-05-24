@@ -30,6 +30,9 @@ export interface FileButtonProps<Multiple extends boolean = false> {
 
   /** Specifies that, optionally, a new file should be captured, and which device should be used to capture that new media of a type defined by the accept attribute. */
   capture?: boolean | 'user' | 'environment';
+
+  /** Spreads props to input element used to capture files */
+  inputProps?: React.ComponentPropsWithoutRef<'input'>;
 }
 
 const defaultProps: Partial<FileButtonProps> = {
@@ -52,6 +55,7 @@ export const FileButton: FileButtonComponent = forwardRef<HTMLInputElement, File
       resetRef,
       disabled,
       capture,
+      inputProps,
       ...others
     } = useComponentDefaultProps('FileButton', defaultProps, props);
 
@@ -89,6 +93,7 @@ export const FileButton: FileButtonComponent = forwardRef<HTMLInputElement, File
           name={name}
           form={form}
           capture={capture}
+          {...inputProps}
         />
       </>
     );

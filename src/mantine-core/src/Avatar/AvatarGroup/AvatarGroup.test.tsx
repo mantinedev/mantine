@@ -1,4 +1,8 @@
-import { itSupportsSystemProps, itRendersChildren } from '@mantine/tests';
+import {
+  itSupportsSystemProps,
+  itRendersChildren,
+  itSupportsProviderVariant,
+} from '@mantine/tests';
 import { AvatarGroup, AvatarGroupProps } from './AvatarGroup';
 
 const defaultProps: AvatarGroupProps = {
@@ -7,6 +11,7 @@ const defaultProps: AvatarGroupProps = {
 
 describe('@mantine/core/AvatarGroup', () => {
   itRendersChildren(AvatarGroup, defaultProps);
+  itSupportsProviderVariant(AvatarGroup, defaultProps, 'AvatarGroup');
   itSupportsSystemProps({
     component: AvatarGroup,
     props: defaultProps,

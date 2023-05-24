@@ -10,3 +10,4 @@ export { actionComponent } from './Spotlight.demo.actionComponent';
 export { actionsWrapperComponent } from './Spotlight.demo.actionsWrapperComponent';
 export { filter } from './Spotlight.demo.filter';
 export { highlightQuery } from './Spotlight.demo.highlightQuery';
+export { controlledQuery } from './Spotlight.demo.controlledQuery';

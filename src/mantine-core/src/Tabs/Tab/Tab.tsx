@@ -40,15 +40,22 @@ export const Tab = forwardRef<HTMLButtonElement, TabProps>((props, ref) => {
       withRightSection: hasRightSection || (hasIcon && !children),
       orientation: ctx.orientation,
       color: color || ctx.color,
-      variant: ctx.variant,
       radius: ctx.radius,
       inverted: ctx.inverted,
       placement: ctx.placement,
     },
-    { name: 'Tabs', unstyled: ctx.unstyled, classNames: ctx.classNames, styles: ctx.styles }
+    {
+      name: 'Tabs',
+      unstyled: ctx.unstyled,
+      classNames: ctx.classNames,
+      styles: ctx.styles,
+      variant: ctx.variant,
+    }
   );
 
   const isActive = value === ctx.value;
+  const panelId = ctx.getPanelId(value);
+  const ariaControls = ctx.mountedPanelIds.includes(value) ? panelId : undefined;
   const activateTab = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     ctx.onTabChange(ctx.allowTabDeactivation ? (value === ctx.value ? null : value) : value);
     onClick?.(event);
@@ -66,7 +73,7 @@ export const Tab = forwardRef<HTMLButtonElement, TabProps>((props, ref) => {
       id={ctx.getTabId(value)}
       aria-selected={isActive}
       tabIndex={isActive || ctx.value === null ? 0 : -1}
-      aria-controls={ctx.getPanelId(value)}
+      aria-controls={ariaControls}
       onClick={activateTab}
       onKeyDown={createScopedKeydownHandler({
         siblingSelector: '[role="tab"]',
@@ -78,9 +85,9 @@ export const Tab = forwardRef<HTMLButtonElement, TabProps>((props, ref) => {
         onKeyDown,
       })}
     >
-      {icon && <div className={classes.tabIcon}>{icon}</div>}
-      {children && <div className={classes.tabLabel}>{children}</div>}
-      {rightSection && <div className={classes.tabRightSection}>{rightSection}</div>}
+      {icon && <span className={classes.tabIcon}>{icon}</span>}
+      {children && <span className={classes.tabLabel}>{children}</span>}
+      {rightSection && <span className={classes.tabRightSection}>{rightSection}</span>}
     </UnstyledButton>
   );
 });

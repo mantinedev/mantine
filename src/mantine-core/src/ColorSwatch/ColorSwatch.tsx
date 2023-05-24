@@ -4,6 +4,7 @@ import {
   MantineNumberSize,
   useComponentDefaultProps,
   Selectors,
+  rem,
 } from '@mantine/styles';
 import { createPolymorphicComponent } from '@mantine/utils';
 import { Box } from '../Box';
@@ -13,25 +14,27 @@ export type ColorSwatchStylesNames = Selectors<typeof useStyles>;
 
 export interface ColorSwatchProps
   extends DefaultProps<ColorSwatchStylesNames, ColorSwatchStylesParams> {
-  /** Swatch color value in any css valid format (hex, rgb, etc.) */
+  variant?: string;
+
+  /** Swatch background-color in any css valid format (hex, rgb, etc.) */
   color: string;
 
-  /** Width, height and border-radius in px */
-  size?: number;
+  /** Width and height */
+  size?: number | string;
 
-  /** Swatch border-radius predefined from theme or number for px value */
+  /** Key of theme.radius or any valid CSS value to set border-radius, theme.defaultRadius by default */
   radius?: MantineNumberSize;
 
   /** ColorSwatch children */
   children?: React.ReactNode;
 
-  /**  Determines whether swatch should have inner shadow */
+  /** Determines whether swatch should have inner shadow */
   withShadow?: boolean;
 }
 
 const defaultProps: Partial<ColorSwatchProps> = {
-  size: 25,
-  radius: 25,
+  size: rem(25),
+  radius: rem(25),
   withShadow: true,
 };
 
@@ -46,11 +49,13 @@ export const _ColorSwatch = forwardRef<HTMLDivElement, ColorSwatchProps>((props,
     styles,
     unstyled,
     withShadow,
+    variant,
     ...others
   } = useComponentDefaultProps('ColorSwatch', defaultProps, props);
+
   const { classes, cx } = useStyles(
-    { radius, size },
-    { classNames, styles, unstyled, name: 'ColorSwatch' }
+    { radius },
+    { classNames, styles, unstyled, name: 'ColorSwatch', size, variant }
   );
 
   return (

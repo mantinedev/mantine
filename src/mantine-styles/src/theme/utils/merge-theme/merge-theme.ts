@@ -1,5 +1,6 @@
 import { MantineThemeOverride, MantineThemeBase, MantineTheme } from '../../types';
 import { attachFunctions } from '../../functions/attach-functions';
+import { getBreakpointValue } from '../../functions/fns/breakpoints/breakpoints';
 
 export function mergeTheme(
   currentTheme: MantineThemeBase,
@@ -32,6 +33,19 @@ export function mergeTheme(
       };
     }
 
+    if (key === 'breakpoints' && themeOverride.breakpoints) {
+      const mergedBreakpoints = { ...currentTheme.breakpoints, ...themeOverride.breakpoints };
+
+      return {
+        ...acc,
+        breakpoints: Object.fromEntries(
+          Object.entries(mergedBreakpoints).sort(
+            (a, b) => getBreakpointValue(a[1]) - getBreakpointValue(b[1])
+          )
+        ),
+      };
+    }
+
     acc[key] =
       typeof themeOverride[key] === 'object'
         ? { ...currentTheme[key], ...themeOverride[key] }
@@ -42,6 +56,10 @@ export function mergeTheme(
         : themeOverride[key] || currentTheme[key];
     return acc;
   }, {} as MantineThemeBase);
+
+  if (themeOverride?.fontFamily && !themeOverride?.headings?.fontFamily) {
+    result.headings.fontFamily = themeOverride.fontFamily as string;
+  }
 
   if (!(result.primaryColor in result.colors)) {
     throw new Error(

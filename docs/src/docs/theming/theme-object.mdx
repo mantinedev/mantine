@@ -39,7 +39,7 @@ interface MantineTheme {
   cursorType: 'default' | 'pointer';
 
   // Default border-radius used for most elements
-  defaultRadius: 'xs' | 'sm' | 'md' | 'lg' | 'xl' | number;
+  defaultRadius: 'xs' | 'sm' | 'md' | 'lg' | 'xl' | string | number;
 
   // White and black colors, defaults to '#fff' and '#000'
   white: string;
@@ -68,15 +68,15 @@ interface MantineTheme {
   fontFamilyMonospace: string;
 
   // Sizes for corresponding properties
-  fontSizes: Record<'xs' | 'sm' | 'md' | 'lg' | 'xl', number>;
-  radius: Record<'xs' | 'sm' | 'md' | 'lg' | 'xl', number>;
-  spacing: Record<'xs' | 'sm' | 'md' | 'lg' | 'xl', number>;
+  fontSizes: Record<'xs' | 'sm' | 'md' | 'lg' | 'xl', string>;
+  radius: Record<'xs' | 'sm' | 'md' | 'lg' | 'xl', string>;
+  spacing: Record<'xs' | 'sm' | 'md' | 'lg' | 'xl', string>;
 
   // Values used for box-shadow
   shadows: Record<'xs' | 'sm' | 'md' | 'lg' | 'xl', string>;
 
   // Breakpoints used in some components to add responsive styles
-  breakpoints: Record<'xs' | 'sm' | 'md' | 'lg' | 'xl', number>;
+  breakpoints: Record<'xs' | 'sm' | 'md' | 'lg' | 'xl', string>;
 
   // Styles added to buttons with `:active` pseudo-class
   activeStyles: CSSObject;
@@ -104,12 +104,6 @@ interface MantineTheme {
 
   // Default loader used in Loader and LoadingOverlay components
   loader: 'oval' | 'bars' | 'dots';
-
-  // Default date format used in DatePicker and DateRangePicker components
-  dateFormat: string;
-
-  // Default dates formatting locale used in every @mantine/dates component
-  datesLocale: string;
 
   // defaultProps, styles and classNames for components
   components: ComponentsOverride;
@@ -158,7 +152,7 @@ function Demo() {
         headings: {
           fontFamily: 'Roboto, sans-serif',
           sizes: {
-            h1: { fontSize: 30 },
+            h1: { fontSize: '2rem' },
           },
         },
       }}
@@ -253,20 +247,6 @@ If it is set to `pointer` then [Checkbox](/core/checkbox/), [Radio](/core/radio/
 and other native elements will have `cursor: pointer` style:
 
 <Demo data={ThemeDemos.cursorType} demoProps={{ toggle: true }} />
-
-### dateFormat
-
-With `theme.dateFormat` you can configure default date format for [DatePicker and DateRangePicker](/dates/date-picker/)
-components:
-
-<Demo data={ThemeDemos.dateFormat} />
-
-### datesLocale
-
-`theme.datesLocale` determines which locale will be used for all `@mantine/dates` packages by default.
-Note that you should also import `dayjs/locale/[locale]` to load localization files:
-
-<Demo data={ThemeDemos.datesLocale} />
 
 ### dir
 

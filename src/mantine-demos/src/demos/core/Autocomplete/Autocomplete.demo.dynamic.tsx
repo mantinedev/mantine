@@ -33,15 +33,15 @@ function Demo() {
       : [];
 
   return (
-    <div style={{ maxWidth: 320, marginLeft: 'auto', marginRight: 'auto' }}>
-      <Autocomplete
-        value={value}
-        onChange={setValue}
-        label="Email"
-        placeholder="Start typing to see options"
-        data={data}
-      />
-    </div>
+    <Autocomplete
+      maw={320}
+      mx="auto"
+      value={value}
+      onChange={setValue}
+      label="Email"
+      placeholder="Start typing to see options"
+      data={data}
+    />
   );
 }
 

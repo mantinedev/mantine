@@ -1,12 +1,12 @@
-import { createStyles } from '@mantine/core';
+import { createStyles, rem } from '@mantine/core';
 
 export default createStyles((theme) => ({
   control: {
     ...theme.fn.focusStyles(),
-    width: 34,
-    height: 34,
+    width: rem(34),
+    height: rem(34),
     borderRadius: theme.radius.md,
-    border: `1px solid ${
+    border: `${rem(1)} solid ${
       theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[3]
     }`,
     display: 'flex',

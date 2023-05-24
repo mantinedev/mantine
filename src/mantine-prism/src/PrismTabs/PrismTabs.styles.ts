@@ -1,4 +1,4 @@
-import { createStyles, MantineNumberSize } from '@mantine/core';
+import { createStyles, MantineNumberSize, rem } from '@mantine/core';
 
 interface PrismTabsStylesParams {
   radius: MantineNumberSize;
@@ -8,8 +8,8 @@ export default createStyles((theme, { radius }: PrismTabsStylesParams) => ({
   tab: {
     paddingLeft: theme.spacing.sm,
     paddingRight: theme.spacing.sm,
-    height: 34,
-    border: `1px solid ${
+    height: rem(34),
+    border: `${rem(1)} solid ${
       theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[3]
     }`,
     borderBottom: 0,
@@ -51,7 +51,7 @@ export default createStyles((theme, { radius }: PrismTabsStylesParams) => ({
     borderRadius: theme.fn.radius(radius),
     borderTopRightRadius: 0,
     borderTopLeftRadius: 0,
-    border: `1px solid ${
+    border: `${rem(1)} solid ${
       theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[3]
     }`,
     borderTop: 0,

@@ -1,20 +1,20 @@
 import React, { useState } from 'react';
 import { MantineDemo } from '@mantine/ds';
-import { Stepper, createStyles } from '@mantine/core';
+import { Stepper, createStyles, rem } from '@mantine/core';
 
 const code = `
 import { useState } from 'react';
-import { Stepper, createStyles } from '@mantine/core';
+import { Stepper, createStyles, rem } from '@mantine/core';
 
-const useStyles = createStyles((theme, _params, getRef) => ({
+const useStyles = createStyles((theme) => ({
   root: {
     padding: theme.spacing.md,
     backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[0],
   },
 
   separator: {
-    height: 2,
-    borderTop: \`2px dashed \${theme.colorScheme === 'dark' ? theme.colors.dark[3] : theme.colors.gray[4]}\`,
+    height: rem(2),
+    borderTop: \`\${rem(2)} dashed \${theme.colorScheme === 'dark' ? theme.colors.dark[3] : theme.colors.gray[4]}\`,
     borderRadius: theme.radius.xl,
     backgroundColor: 'transparent',
   },
@@ -25,7 +25,6 @@ const useStyles = createStyles((theme, _params, getRef) => ({
   },
 
   stepIcon: {
-    ref: getRef('stepIcon'),
     borderColor: 'transparent',
     backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.white,
     borderWidth: 0,
@@ -59,15 +58,15 @@ function Demo() {
 }
 `;
 
-const useStyles = createStyles((theme, _params, getRef) => ({
+const useStyles = createStyles((theme) => ({
   root: {
     padding: theme.spacing.md,
     backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[0],
   },
 
   separator: {
-    height: 2,
-    borderTop: `2px dashed ${
+    height: rem(2),
+    borderTop: `${rem(2)} dashed ${
       theme.colorScheme === 'dark' ? theme.colors.dark[3] : theme.colors.gray[4]
     }`,
     borderRadius: theme.radius.xl,
@@ -80,7 +79,6 @@ const useStyles = createStyles((theme, _params, getRef) => ({
   },
 
   stepIcon: {
-    ref: getRef('stepIcon'),
     borderColor: 'transparent',
     backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.white,
     borderWidth: 0,

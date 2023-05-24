@@ -1,11 +1,17 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
-import { itSupportsSystemProps } from '@mantine/tests';
+import {
+  itSupportsSystemProps,
+  itSupportsProviderVariant,
+  itSupportsProviderSize,
+} from '@mantine/tests';
 import { Divider, DividerProps } from './Divider';
 
 const defaultProps: DividerProps = {};
 
 describe('@mantine/core/Divider', () => {
+  itSupportsProviderVariant(Divider, defaultProps, 'Divider');
+  itSupportsProviderSize(Divider, defaultProps, 'Divider');
   itSupportsSystemProps({
     component: Divider,
     props: defaultProps,

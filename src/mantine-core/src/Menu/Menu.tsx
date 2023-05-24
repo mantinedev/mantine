@@ -20,6 +20,8 @@ export type MenuStylesNames =
   | PopoverStylesNames;
 
 export interface MenuProps extends PopoverBaseProps {
+  variant?: string;
+
   /** Menu content */
   children?: React.ReactNode;
 
@@ -77,7 +79,6 @@ const defaultProps: Partial<MenuProps> = {
   openDelay: 0,
   closeDelay: 100,
 };
-
 export function Menu(props: MenuProps) {
   const {
     children,
@@ -96,6 +97,7 @@ export function Menu(props: MenuProps) {
     styles,
     unstyled,
     radius,
+    variant,
     ...others
   } = useComponentDefaultProps('Menu', defaultProps, props);
   const { classes, cx } = useStyles();
@@ -147,13 +149,14 @@ export function Menu(props: MenuProps) {
         classNames,
         styles,
         unstyled,
+        variant,
       }}
     >
       <Popover
         {...others}
         radius={radius}
         opened={_opened}
-        onChange={setOpened}
+        onChange={toggleDropdown}
         defaultOpened={defaultOpened}
         trapFocus={trigger === 'click'}
         closeOnEscape={closeOnEscape && trigger === 'click'}
@@ -161,8 +164,7 @@ export function Menu(props: MenuProps) {
         classNames={{ ...classNames, dropdown: cx(classes.dropdown, classNames?.dropdown) }}
         styles={styles}
         unstyled={unstyled}
-        onClose={close}
-        onOpen={open}
+        variant={variant}
       >
         {children}
       </Popover>

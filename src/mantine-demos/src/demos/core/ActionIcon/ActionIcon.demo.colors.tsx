@@ -1,12 +1,12 @@
 import React from 'react';
-import { IconSun } from '@tabler/icons';
+import { IconSun } from '@tabler/icons-react';
 import { MantineDemo } from '@mantine/ds';
-import { Group, MANTINE_COLORS, ActionIcon, ActionIconProps } from '@mantine/core';
+import { Group, MANTINE_COLORS, ActionIcon, ActionIconProps, rem } from '@mantine/core';
 
 const getColors = (props: Omit<ActionIconProps, 'children'>) =>
   MANTINE_COLORS.slice(1).map((color) => (
     <ActionIcon key={color} color={color} {...props}>
-      <IconSun size={18} />
+      <IconSun size={rem(18)} />
     </ActionIcon>
   ));
 

@@ -1,7 +1,7 @@
 import { renderHook } from '@testing-library/react';
 import { useDocumentTitle } from './use-document-title';
 
-describe('@mantine/hooks/use-scroll-lock', () => {
+describe('@mantine/hooks/use-document-title', () => {
   it('sets given value as document.title', () => {
     renderHook(() => useDocumentTitle('test-title'));
     expect(document.title).toBe('test-title');

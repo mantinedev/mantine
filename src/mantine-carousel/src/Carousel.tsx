@@ -1,28 +1,30 @@
 /* eslint-disable react/no-unused-prop-types */
-import React, { forwardRef, useEffect, useCallback, useState, Children } from 'react';
 import {
-  useComponentDefaultProps,
   Box,
-  DefaultProps,
-  UnstyledButton,
   ChevronIcon,
+  DefaultProps,
   MantineNumberSize,
   Selectors,
+  UnstyledButton,
+  useComponentDefaultProps,
 } from '@mantine/core';
 import { clamp } from '@mantine/hooks';
-import useEmblaCarousel, { EmblaPluginType } from 'embla-carousel-react';
 import { ForwardRefWithStaticComponents } from '@mantine/utils';
-import { CarouselSlide, CarouselSlideStylesNames } from './CarouselSlide/CarouselSlide';
+import useEmblaCarousel, { EmblaPluginType } from 'embla-carousel-react';
+import React, { Children, forwardRef, useCallback, useEffect, useState } from 'react';
 import { CarouselProvider } from './Carousel.context';
-import { CarouselOrientation, Embla, CarouselBreakpoint } from './types';
-import { getChevronRotation } from './get-chevron-rotation';
 import useStyles, { CarouselStylesParams } from './Carousel.styles';
+import { CarouselSlide, CarouselSlideStylesNames } from './CarouselSlide/CarouselSlide';
+import { getChevronRotation } from './get-chevron-rotation';
+import { CarouselBreakpoint, CarouselOrientation, Embla } from './types';
 
 export type CarouselStylesNames = CarouselSlideStylesNames | Selectors<typeof useStyles>;
 
 export interface CarouselProps
   extends DefaultProps<CarouselStylesNames, CarouselStylesParams>,
     React.ComponentPropsWithRef<'div'> {
+  variant?: string;
+
   /** <Carousel.Slide /> components */
   children?: React.ReactNode;
 
@@ -44,16 +46,16 @@ export interface CarouselProps
   /** Previous control aria-label */
   previousControlLabel?: string;
 
-  /** Previous/next controls size in px */
+  /** Previous/next controls size */
   controlSize?: number;
 
   /** Key of theme.spacing or number to set space between next/previous control and carousel boundary */
   controlsOffset?: MantineNumberSize;
 
-  /** Slide width, defaults to 100%, examples: 200px, 50% */
+  /** Slide width, defaults to 100%, examples: 40rem 50% */
   slideSize?: string | number;
 
-  /** Key of theme.spacing or number to set gap between slides in px */
+  /** Key of theme.spacing or number to set gap between slides */
   slideGap?: MantineNumberSize;
 
   /** Control slideSize and slideGap at different viewport sizes */
@@ -176,18 +178,20 @@ export const _Carousel = forwardRef<HTMLDivElement, CarouselProps>((props, ref) 
     skipSnaps,
     containScroll,
     withKeyboardEvents,
+    variant,
     ...others
   } = useComponentDefaultProps('Carousel', defaultProps, props);
 
   const { classes, cx, theme } = useStyles(
     { controlSize, controlsOffset, orientation, height, includeGapInSize, breakpoints, slideGap },
-    { name: 'Carousel', classNames, styles, unstyled }
+    { name: 'Carousel', classNames, styles, unstyled, variant }
   );
 
   const [emblaRefElement, embla] = useEmblaCarousel(
     {
       axis: orientation === 'horizontal' ? 'x' : 'y',
-      direction: theme.dir,
+      // keep direction undefined for vertical orientation if the current theme is RTL
+      direction: orientation === 'horizontal' ? theme.dir : undefined,
       startIndex: initialSlide,
       loop,
       align,
@@ -294,6 +298,7 @@ export const _Carousel = forwardRef<HTMLDivElement, CarouselProps>((props, ref) 
         classNames,
         styles,
         unstyled,
+        variant,
       }}
     >
       <Box

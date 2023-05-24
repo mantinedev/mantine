@@ -1,4 +1,11 @@
-import { createStyles, MantineNumberSize } from '@mantine/styles';
+import {
+  createStyles,
+  MantineNumberSize,
+  getSize,
+  rem,
+  getBreakpointValue,
+  em,
+} from '@mantine/styles';
 import { getSortedBreakpoints } from './get-sorted-breakpoints/get-sorted-breakpoints';
 
 export type HorizontalSectionWidth = Partial<Record<string, string | number>>;
@@ -40,9 +47,9 @@ export default createStyles(
     const breakpoints =
       typeof width === 'object' && width !== null
         ? getSortedBreakpoints(width, theme).reduce((acc, [breakpoint, breakpointSize]) => {
-            acc[`@media (min-width: ${breakpoint}px)`] = {
-              width: breakpointSize,
-              minWidth: breakpointSize,
+            acc[`@media (min-width: ${em(breakpoint)})`] = {
+              width: rem(breakpointSize),
+              minWidth: rem(breakpointSize),
             };
 
             return acc;
@@ -51,7 +58,7 @@ export default createStyles(
 
     const borderStyles = withBorder
       ? {
-          [section === 'navbar' ? 'borderRight' : 'borderLeft']: `1px solid ${
+          [section === 'navbar' ? 'borderRight' : 'borderLeft']: `${rem(1)} solid ${
             theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[2]
           }`,
         }
@@ -64,12 +71,12 @@ export default createStyles(
         top: layout === 'alt' ? 0 : position?.top || 'var(--mantine-header-height)',
         bottom: 0,
         zIndex,
-        height:
-          height ||
-          (layout === 'alt'
-            ? 'auto'
-            : 'calc(100vh - var(--mantine-header-height, 0px) - var(--mantine-footer-height, 0px))'),
-        width: width?.base || '100%',
+        height: height
+          ? rem(height)
+          : layout === 'alt'
+          ? 'auto'
+          : 'calc(100vh - var(--mantine-header-height, 0rem) - var(--mantine-footer-height, 0rem))',
+        width: width?.base ? rem(width?.base) : '100%',
         position: fixed ? 'fixed' : 'static',
         boxSizing: 'border-box',
         display: 'flex',
@@ -79,12 +86,14 @@ export default createStyles(
         ...breakpoints,
 
         '&[data-hidden]': {
-          [`@media (max-width: ${
-            theme.fn.size({
-              size: hiddenBreakpoint,
-              sizes: theme.breakpoints,
-            }) - 1
-          }px)`]: {
+          [`@media (max-width: ${em(
+            getBreakpointValue(
+              getSize({
+                size: hiddenBreakpoint,
+                sizes: theme.breakpoints,
+              })
+            ) - 1
+          )})`]: {
             display: 'none',
           },
         },

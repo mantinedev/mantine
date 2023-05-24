@@ -1,5 +1,10 @@
 import React from 'react';
-import { checkAccessibility, itRendersChildren, itSupportsSystemProps } from '@mantine/tests';
+import {
+  checkAccessibility,
+  itRendersChildren,
+  itSupportsSystemProps,
+  itSupportsProviderVariant,
+} from '@mantine/tests';
 import { Spoiler, SpoilerProps } from './Spoiler';
 
 const defaultProps: SpoilerProps = {
@@ -12,6 +17,7 @@ const defaultProps: SpoilerProps = {
 describe('@mantine/core/Spoiler', () => {
   checkAccessibility([<Spoiler {...defaultProps} />]);
   itRendersChildren(Spoiler, defaultProps);
+  itSupportsProviderVariant(Spoiler, defaultProps, 'Spoiler');
   itSupportsSystemProps({
     component: Spoiler,
     props: defaultProps,

@@ -21,7 +21,7 @@ function Demo() {
 
   return (
     <>
-      <ScrollArea.Autosize maxHeight={300} sx={{ maxWidth: 400 }} mx="auto">
+      <ScrollArea.Autosize mah={300} maw={400} mx="auto">
         {content}
       </ScrollArea.Autosize>
 
@@ -46,7 +46,7 @@ function Demo() {
 
   return (
     <>
-      <ScrollArea.Autosize maxHeight={300} sx={{ maxWidth: 400 }} mx="auto">
+      <ScrollArea.Autosize mah={300} maw={400} mx="auto">
         {content}
       </ScrollArea.Autosize>
 

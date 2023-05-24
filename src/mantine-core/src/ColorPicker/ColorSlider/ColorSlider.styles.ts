@@ -1,31 +1,26 @@
-import { createStyles, MantineSize } from '@mantine/styles';
-
+import { createStyles, getStylesRef, rem, getSize } from '@mantine/styles';
 import { THUMB_SIZES } from '../Thumb/Thumb.styles';
 
-interface ColorSliderStyles {
-  size: MantineSize;
-}
-
-export default createStyles((theme, { size }: ColorSliderStyles, getRef) => ({
+export default createStyles((theme, _params, { size }) => ({
   sliderThumb: {
-    ref: getRef('sliderThumb'),
+    ref: getStylesRef('sliderThumb'),
   },
 
   slider: {
     position: 'relative',
-    height: theme.fn.size({ size, sizes: THUMB_SIZES }) + 2,
+    height: `calc(${getSize({ size, sizes: THUMB_SIZES })} + ${rem(2)})`,
     boxSizing: 'border-box',
-    marginLeft: theme.fn.size({ size, sizes: THUMB_SIZES }) / 2,
-    marginRight: theme.fn.size({ size, sizes: THUMB_SIZES }) / 2,
+    marginLeft: `calc(${getSize({ size, sizes: THUMB_SIZES })} / 2)`,
+    marginRight: `calc(${getSize({ size, sizes: THUMB_SIZES })} / 2)`,
     outline: 0,
 
-    [`&:focus .${getRef('sliderThumb')}`]: {
+    [`&:focus .${getStylesRef('sliderThumb')}`]: {
       ...(theme.focusRing === 'always' || theme.focusRing === 'auto'
         ? theme.focusRingStyles.styles(theme)
         : theme.focusRingStyles.resetStyles(theme)),
     },
 
-    [`&:focus:not(:focus-visible) .${getRef('sliderThumb')}`]: {
+    [`&:focus:not(:focus-visible) .${getStylesRef('sliderThumb')}`]: {
       ...(theme.focusRing === 'auto' || theme.focusRing === 'never'
         ? theme.focusRingStyles.resetStyles(theme)
         : null),
@@ -37,8 +32,8 @@ export default createStyles((theme, { size }: ColorSliderStyles, getRef) => ({
     boxSizing: 'border-box',
     top: 0,
     bottom: 0,
-    left: -theme.fn.size({ size, sizes: THUMB_SIZES }) / 2 - 1,
-    right: -theme.fn.size({ size, sizes: THUMB_SIZES }) / 2 - 1,
+    left: `calc(${getSize({ size, sizes: THUMB_SIZES })} * -1 / 2 - ${rem(1)})`,
+    right: `calc(${getSize({ size, sizes: THUMB_SIZES })} * -1 / 2 - ${rem(1)})`,
     borderRadius: 1000,
   },
 }));

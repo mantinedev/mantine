@@ -1,4 +1,4 @@
-import { createStyles, MantineShadow, MantineNumberSize } from '@mantine/styles';
+import { createStyles, MantineShadow, MantineNumberSize, rem } from '@mantine/styles';
 
 export interface PopoverStylesParams {
   radius?: MantineNumberSize;
@@ -10,10 +10,10 @@ export default createStyles((theme, { radius, shadow }: PopoverStylesParams) => 
     position: 'absolute',
     backgroundColor: theme.white,
     background: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.white,
-    border: `1px solid ${
+    border: `${rem(1)} solid ${
       theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[2]
     }`,
-    padding: `${theme.spacing.sm}px ${theme.spacing.md}px`,
+    padding: `${theme.spacing.sm} ${theme.spacing.md}`,
     boxShadow: theme.shadows[shadow] || shadow || 'none',
     borderRadius: theme.fn.radius(radius),
 
@@ -24,7 +24,7 @@ export default createStyles((theme, { radius, shadow }: PopoverStylesParams) => 
 
   arrow: {
     backgroundColor: 'inherit',
-    border: `1px solid ${
+    border: `${rem(1)} solid ${
       theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[2]
     }`,
     zIndex: 1,

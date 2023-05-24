@@ -5,7 +5,7 @@ title: Modal
 order: 1
 slug: /core/modal/
 category: 'overlay'
-description: 'Modal with optional header'
+description: 'An accessible overlay dialog'
 props: ['Modal']
 import: "import { Modal } from '@mantine/core';"
 source: 'mantine-core/src/Modal/Modal.tsx'
@@ -19,28 +19,26 @@ import { ModalDemos } from '@mantine/demos';
 
 <Demo data={ModalDemos.usage} />
 
-## Remove title and close button
-
-You can remove modal title and close button.
-It will still be possible to close modal by clicking on overlay or pressing escape.
-
-<Demo data={ModalDemos.header} />
-
 ## Center modal vertically
 
 <Demo data={ModalDemos.centered} />
 
+## Remove header
+
+To remove header set `withCloseButton={false}`
+
+<Demo data={ModalDemos.header} />
+
 ## Change size
 
-You can change modal width by setting `size` prop to predefined size or any valid width, for example, 55% or 200px.
-Size controls modal width, max-width is set to 100% with spacing on left and right, no matter what `size` is passed 100% will not be exceeded:
+You can change modal width by setting `size` prop to predefined size or any valid width, for example, `55%` or `50rem`.
+`Modal` width cannot exceed `100vw`.
 
 ```tsx
 <Modal size="sm" /> // -> predefined small size
-<Modal size={378} /> // -> size in px
+<Modal size={320} /> // -> size in rem –> 320 -> 20rem
 <Modal size="55%" /> // -> size in %
-<Modal size="calc(100vw - 87px)" /> // -> size with calc
-<Modal size="255%" /> // -> max-width is set to 100%, won't work
+<Modal size="calc(100vw - 3rem)" /> // -> size with calc
 ```
 
 <Demo data={ModalDemos.sizes} />
@@ -53,82 +51,117 @@ Size controls modal width, max-width is set to 100% with spacing on left and rig
 
 ## Fullscreen
 
-Fullscreen modal will take the entire screen:
+Fullscreen modal will take the entire screen, it is usually to change transition to `fade`
+when `fullScreen` prop is set:
 
 <Demo data={ModalDemos.fullScreen} />
 
 To switch Modal to fullscreen on devices with small screens only use [use-media-query](/hooks/use-media-query/) hook.
 `size` prop is ignored if `fullScreen` prop is set:
 
-```tsx
-import { Modal } from '@mantine/core';
-import { useMediaQuery } from '@mantine/hooks';
-
-function Demo() {
-  const isMobile = useMediaQuery('(max-width: 600px)');
-  return <Modal size="md" fullScreen={isMobile} />;
-}
-```
+<Demo data={ModalDemos.fullScreenMobile} />
 
 ## Customize overlay
 
-Modal uses [Overlay](/core/overlay/) component, you can change overlay opacity, blur and color:
+`Modal` uses [Overlay](/core/overlay/) component, you can set any props that [Overlay](/core/overlay/)
+supports with `overlayProps`:
 
 <Demo data={ModalDemos.overlay} />
 
-## Modal with overflow
-
-You can control modal vertical overflow behavior by setting `overflow` prop:
+## Modal with scroll
 
 <Demo data={ModalDemos.overflow} />
 
+## Usage with ScrollArea
+
+<Demo data={ModalDemos.scrollarea} />
+
+## Change offsets
+
+Use `xOffset`/`yOffset` to configure horizontal/vertical content offsets:
+
+<Demo data={ModalDemos.offset} />
+
 ## Change transitions
 
-Modal is built with [Transition](/core/transition/) component.
-
-You can change transitions with props:
-
-- **transition** – predefined transition name or transition object
-- **transitionDuration** – enter transition duration in ms, defaults to 300ms. Note that, modal has two elements which are animated: overlay and modal body. Overlay changes opacity during transition and its animation is twice as fast as modal body.
-- **exitTransitionDuration** – exit transition duration in ms, defaults to 0ms
-- **transitionTimingFunction** – timing function, defaults to `theme.transitionTimingFunction`
+`Modal` is built with [Transition](/core/transition/) component. Use `transitionProps`
+prop to customize any [Transition](/core/transition/) properties:
 
 <Demo data={ModalDemos.transitions} />
 
 ## Initial focus
 
-Modal uses [use-focus-trap](/hooks/use-focus-trap/) to manage focus.
-To specify initial focus element add `data-autofocus` attribute:
+Modal uses [FocusTrap](/core/focus-trap/) to trap focus. Add `data-autofocus`
+attribute to the element that should receive initial focus.
 
-```tsx
-<Modal>
-  <input />
-  {/* Second input in modal will have initial focus */}
-  <input data-autofocus />
-  <input />
-</Modal>
-```
+<Demo data={ModalDemos.initialFocus} />
 
 ## Control behavior
 
-The following props can be used to control Modal behavior.
-In most cases you should not turn these features off as it will make your modal less accessible.
+The following props can be used to control `Modal` behavior.
+In most cases it is not recommended to turn these features off –
+it will make the component less accessible.
 
-- `trapFocus` – defines whether focus should be trapped inside modal
-- `closeOnEscape` – defines whether modal should be closed when user presses `Escape` key
-- `closeOnClickOutside` – defines whether modal should be closed when user clicks outside of modal body
+- `trapFocus` – determines whether focus should be trapped inside modal
+- `closeOnEscape` – determines whether the modal should be closed when `Escape` key is pressed
+- `closeOnClickOutside` – determines whether the modal should be closed when user clicks on the overlay
+- `returnFocus` – determines whether focus should be returned to the element that was focused before the modal was opened
 
-## Accessibility and usability
+## Compound components
 
-- When modal is opened, focus is trapped inside and vertical scroll is locked at current position
-- When user clicks on overlay or presses escape modal closes
-- Modal transitions are disabled if user prefers to reduce motion
-- Modal wrapper has `aria-modal="true"` and `role="dialog"` attributes
-- Modal wrapper has `aria-labelledby` and `aria-describedby` pointing to modal title and body
+You can use the following compound components to have full control over the `Modal` rendering:
 
-For better screen reader support set `closeButtonLabel` prop:
+- `Modal.Root` – context provider
+- `Modal.Overlay` – render [Overlay](/core/overlay/)
+- `Modal.Content` – main modal element, should include all modal content
+- `Modal.Header` – sticky header, usually contains `Modal.Title` and `Modal.CloseButton`
+- `Modal.Title` – `h2` element, `aria-labelledby` of `Modal.Content` is pointing to this element, usually is rendered inside `Modal.Header`
+- `Modal.CloseButton` – close button, usually rendered inside `Modal.Header`
+- `Modal.Body` – a place for main content, `aria-describedby` of `Modal.Content` is pointing to this element
+
+<Demo data={ModalDemos.composition} />
+
+## Fixed elements offset
+
+`Modal` component uses [react-remove-scroll](https://github.com/theKashey/react-remove-scroll)
+package to lock scroll. To properly size these `elements` add a `className` to them ([documentation](https://github.com/theKashey/react-remove-scroll#positionfixed-elements)):
 
 ```tsx
-// sets title attribute on close button
-<Modal closeButtonLabel="Close authentication modal" />
+import { RemoveScroll } from '@mantine/core';
+
+// to make "width: 100%"
+<div className={RemoveScroll.classNames.fullWidth} />
+
+// to make "right: 0"
+<div className={RemoveScroll.classNames.zeroRight} />
 ```
+
+## Accessibility
+
+`Modal` component follows [WAI-ARIA recommendations](https://www.w3.org/WAI/ARIA/apg/patterns/dialog-modal/examples/dialog) on accessibility.
+
+### Labels
+
+Set `title` props to make component accessible, will add `aria-labelledby` to the content element:
+
+```tsx
+import { Modal } from '@mantine/core';
+
+function Demo() {
+  return <Modal title="Modal label" opened onClose={() => {}} />;
+}
+```
+
+To set close button `aria-label` use `closeButtonProps`:
+
+```tsx
+import { Modal } from '@mantine/core';
+
+function Demo() {
+  return <Modal closeButtonProps={{ 'aria-label': 'Close modal' }} opened onClose={() => {}} />;
+}
+```
+
+### Keyboard interactions
+
+<KeyboardEventsTable data={[{ key: 'Escape', description: 'Close modal' }]} />

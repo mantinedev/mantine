@@ -1,6 +1,11 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
-import { itSupportsSystemProps, itRendersChildren } from '@mantine/tests';
+import {
+  itSupportsSystemProps,
+  itRendersChildren,
+  itSupportsProviderVariant,
+  itSupportsProviderSize,
+} from '@mantine/tests';
 import { Indicator, IndicatorProps } from './Indicator';
 
 const defaultProps: IndicatorProps = {
@@ -9,6 +14,8 @@ const defaultProps: IndicatorProps = {
 
 describe('@mantine/core/Indicator', () => {
   itRendersChildren(Indicator, defaultProps);
+  itSupportsProviderVariant(Indicator, defaultProps, 'Indicator');
+  itSupportsProviderSize(Indicator, defaultProps, 'Indicator');
   itSupportsSystemProps({
     component: Indicator,
     props: defaultProps,

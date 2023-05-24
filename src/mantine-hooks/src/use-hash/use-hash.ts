@@ -13,7 +13,7 @@ export function useHash() {
   useWindowEvent('hashchange', () => {
     const newHash = window.location.hash;
     if (hash !== newHash) {
-      setHashValue(hash);
+      setHashValue(newHash);
     }
   });
 

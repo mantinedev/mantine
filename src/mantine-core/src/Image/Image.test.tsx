@@ -1,6 +1,11 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
-import { checkAccessibility, itSupportsSystemProps } from '@mantine/tests';
+import { rem } from '@mantine/core';
+import {
+  checkAccessibility,
+  itSupportsSystemProps,
+  itSupportsProviderVariant,
+} from '@mantine/tests';
 import { Image, ImageProps } from './Image';
 
 const defaultProps: ImageProps = {
@@ -15,6 +20,7 @@ describe('@mantine/core/Image', () => {
     <Image {...defaultProps} src={null} withPlaceholder />,
   ]);
 
+  itSupportsProviderVariant(Image, defaultProps, 'Image');
   itSupportsSystemProps({
     component: Image,
     props: defaultProps,
@@ -32,8 +38,8 @@ describe('@mantine/core/Image', () => {
   it('sets given width, height and object-fit on img element', () => {
     render(<Image {...defaultProps} width={478} height={207} fit="contain" />);
     expect(screen.getByRole('img')).toHaveStyle({
-      width: '478px',
-      height: '207px',
+      width: rem(478),
+      height: rem(207),
       objectFit: 'contain',
     });
   });

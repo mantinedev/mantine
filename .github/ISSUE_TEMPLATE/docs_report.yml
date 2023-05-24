@@ -1,6 +1,5 @@
 name: Report an issue with mantine.dev website
 description: Nothing is perfect, especially our docs, help us find and fix mistakes, bad wording, etc.
-labels: 'review required'
 body:
   - type: markdown
     attributes:

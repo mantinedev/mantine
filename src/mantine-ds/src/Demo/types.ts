@@ -30,6 +30,7 @@ interface MantineDemoBase {
 interface MantineCodeDemo extends MantineDemoBase {
   type: 'demo';
   demoProps?: {
+    zIndex?: React.CSSProperties['zIndex'];
     spacing?: boolean;
     demoBackground?: string;
     toggle?: boolean;

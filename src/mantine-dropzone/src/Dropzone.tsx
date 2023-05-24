@@ -27,10 +27,12 @@ export type DropzoneStylesNames = Selectors<typeof useStyles>;
 export interface DropzoneProps
   extends DefaultProps<DropzoneStylesNames>,
     Omit<React.ComponentPropsWithRef<'div'>, 'onDrop'> {
-  /** Padding from theme.spacing, or number to set padding in px */
+  variant?: string;
+
+  /** Padding from theme.spacing, or any valid CSS value to set padding */
   padding?: MantineNumberSize;
 
-  /** Border radius from theme.radius or number to set border-radius in px */
+  /** Key of theme.radius or any valid CSS value to set border-radius, theme.defaultRadius by default */
   radius?: MantineNumberSize;
 
   /** Dropzone statues */
@@ -159,12 +161,13 @@ export function _Dropzone(props: DropzoneProps) {
     useFsAccessApi,
     getFilesFromEvent,
     validator,
+    variant,
     ...others
   } = useComponentDefaultProps('Dropzone', defaultProps, props);
 
   const { classes, cx } = useStyles(
     { radius, padding },
-    { classNames, styles, unstyled, name: 'Dropzone' }
+    { name: 'Dropzone', classNames, styles, unstyled, variant }
   );
 
   const { getRootProps, getInputProps, isDragAccept, isDragReject, open } = useDropzone({

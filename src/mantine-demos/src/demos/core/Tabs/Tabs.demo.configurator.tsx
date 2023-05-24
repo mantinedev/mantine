@@ -1,5 +1,5 @@
 import React from 'react';
-import { IconPhoto, IconMessageCircle, IconSettings } from '@tabler/icons';
+import { IconPhoto, IconMessageCircle, IconSettings } from '@tabler/icons-react';
 import { MantineDemo } from '@mantine/ds';
 import { Tabs, TabsProps } from '@mantine/core';
 
@@ -8,13 +8,13 @@ function Wrapper(props: TabsProps) {
   return (
     <Tabs defaultValue="gallery" {...props}>
       <Tabs.List>
-        <Tabs.Tab value="gallery" icon={<IconPhoto size={14} />}>
+        <Tabs.Tab value="gallery" icon={<IconPhoto size="0.8rem" />}>
           Gallery
         </Tabs.Tab>
-        <Tabs.Tab value="messages" icon={<IconMessageCircle size={14} />}>
+        <Tabs.Tab value="messages" icon={<IconMessageCircle size="0.8rem" />}>
           Messages
         </Tabs.Tab>
-        <Tabs.Tab value="settings" icon={<IconSettings size={14} />}>
+        <Tabs.Tab value="settings" icon={<IconSettings size="0.8rem" />}>
           Settings
         </Tabs.Tab>
       </Tabs.List>
@@ -38,15 +38,15 @@ const codeTemplate = (props: string) => {
   const panelProps = props.includes('vertical') ? 'pl="xs"' : 'pt="xs"';
   return `
 import { Tabs } from '@mantine/core';
-import { IconPhoto, IconMessageCircle, IconSettings } from '@tabler/icons';
+import { IconPhoto, IconMessageCircle, IconSettings } from '@tabler/icons-react';
 
 function Demo() {
   return (
     <Tabs${props} defaultValue="gallery">
       <Tabs.List>
-        <Tabs.Tab value="gallery" icon={<IconPhoto size={14} />}>Gallery</Tabs.Tab>
-        <Tabs.Tab value="messages" icon={<IconMessageCircle size={14} />}>Messages</Tabs.Tab>
-        <Tabs.Tab value="settings" icon={<IconSettings size={14} />}>Settings</Tabs.Tab>
+        <Tabs.Tab value="gallery" icon={<IconPhoto size="0.8rem" />}>Gallery</Tabs.Tab>
+        <Tabs.Tab value="messages" icon={<IconMessageCircle size="0.8rem" />}>Messages</Tabs.Tab>
+        <Tabs.Tab value="settings" icon={<IconSettings size="0.8rem" />}>Settings</Tabs.Tab>
       </Tabs.List>
 
       <Tabs.Panel value="gallery" ${panelProps}>

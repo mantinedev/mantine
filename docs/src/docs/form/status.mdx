@@ -76,3 +76,22 @@ form.isTouched('a'); // -> false
 form.resetDirty();
 form.isDirty('a'); // -> false
 ```
+
+To reset values that are used for dirty check call `form.resetDirty` with new values:
+
+```tsx
+import { useForm } from '@mantine/form';
+
+const form = useForm({
+  initialValues: { a: 1 },
+});
+
+form.setValues({ a: 2 });
+form.isDirty(); // -> true
+
+form.resetDirty({ a: 2 });
+form.isDirty(); // -> false
+
+form.setValues({ a: 3 });
+form.isDirty(); // -> true
+```

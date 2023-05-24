@@ -1,4 +1,4 @@
-import { createStyles } from '@mantine/core';
+import { createStyles, rem } from '@mantine/core';
 
 export default createStyles((theme) => {
   const colors = theme.fn.variant({ variant: 'light' });
@@ -16,11 +16,11 @@ export default createStyles((theme) => {
     linkEditorExternalControl: {
       backgroundColor:
         theme.colorScheme === 'dark' ? theme.fn.rgba(theme.colors.dark[7], 0.5) : theme.white,
-      border: `1px solid ${
+      border: `${rem(1)} solid ${
         theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[4]
       }`,
-      height: 24,
-      width: 24,
+      height: rem(24),
+      width: rem(24),
       display: 'flex',
       justifyContent: 'center',
       alignItems: 'center',

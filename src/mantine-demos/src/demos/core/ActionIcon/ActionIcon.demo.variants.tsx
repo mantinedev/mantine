@@ -1,27 +1,27 @@
 import React from 'react';
-import { IconSettings } from '@tabler/icons';
+import { IconSettings } from '@tabler/icons-react';
 import { MantineDemo } from '@mantine/ds';
 import { ActionIcon, Group } from '@mantine/core';
 
 const code = `
 import { ActionIcon } from '@mantine/core';
-import { IconSettings } from '@tabler/icons';
+import { IconSettings } from '@tabler/icons-react';
 
 function Demo() {
   return (
     <>
-      <ActionIcon variant="transparent"><IconSettings size={16} /></ActionIcon>
-      <ActionIcon variant="subtle"><IconSettings size={16} /></ActionIcon>
-      <ActionIcon variant="default"><IconSettings size={16} /></ActionIcon>
-      <ActionIcon variant="outline"><IconSettings size={16} /></ActionIcon>
-      <ActionIcon variant="filled"><IconSettings size={16} /></ActionIcon>
-      <ActionIcon variant="light"><IconSettings size={16} /></ActionIcon>
+      <ActionIcon variant="transparent"><IconSettings size="1rem" /></ActionIcon>
+      <ActionIcon variant="subtle"><IconSettings size="1rem" /></ActionIcon>
+      <ActionIcon variant="default"><IconSettings size="1rem" /></ActionIcon>
+      <ActionIcon variant="outline"><IconSettings size="1rem" /></ActionIcon>
+      <ActionIcon variant="filled"><IconSettings size="1rem" /></ActionIcon>
+      <ActionIcon variant="light"><IconSettings size="1rem" /></ActionIcon>
     </>
   );
 }
 `;
 
-const icon = <IconSettings size={16} />;
+const icon = <IconSettings size="1rem" />;
 
 export function Demo() {
   return (

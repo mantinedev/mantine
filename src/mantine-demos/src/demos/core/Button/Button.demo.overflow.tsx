@@ -1,44 +1,44 @@
 import React from 'react';
 import { MantineDemo } from '@mantine/ds';
-import { Button, Group } from '@mantine/core';
+import { Button, Flex, Box } from '@mantine/core';
 
 const code = `
-import { Button } from '@mantine/core';
+import { Button, Flex, Box } from '@mantine/core';
 
 function Demo() {
   return (
-    <>
-      <div style={{ width: 200 }}>
+    <Flex gap="md">
+      <Box w={200}>
         <Button fullWidth variant="outline">
           Full width button
         </Button>
-      </div>
+      </Box>
 
-      <div style={{ width: 140 }}>
+      <Box w={140}>
         <Button fullWidth variant="outline">
           Button with overflow
         </Button>
-      </div>
-    </>
+      </Box>
+    </Flex>
   );
 }
 `;
 
 function Demo() {
   return (
-    <Group>
-      <div style={{ width: 200 }}>
+    <Flex gap="md">
+      <Box w={200}>
         <Button fullWidth variant="outline">
           Full width button
         </Button>
-      </div>
+      </Box>
 
-      <div style={{ width: 140 }}>
+      <Box w={140}>
         <Button fullWidth variant="outline">
           Button with overflow
         </Button>
-      </div>
-    </Group>
+      </Box>
+    </Flex>
   );
 }
 

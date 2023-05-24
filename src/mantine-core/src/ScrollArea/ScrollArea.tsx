@@ -15,8 +15,10 @@ export type ScrollAreaStylesNames = Selectors<typeof useStyles>;
 export interface ScrollAreaProps
   extends DefaultProps<ScrollAreaStylesNames, ScrollAreaStylesParams>,
     React.ComponentPropsWithRef<'div'> {
-  /** Scrollbar size in px */
-  scrollbarSize?: number;
+  variant?: string;
+
+  /** Scrollbar size */
+  scrollbarSize?: number | string;
 
   /** Scrollbars type */
   type?: 'auto' | 'always' | 'scroll' | 'hover' | 'never';
@@ -61,6 +63,7 @@ export const _ScrollArea = forwardRef<HTMLDivElement, ScrollAreaProps>((props, r
     viewportRef,
     onScrollPositionChange,
     unstyled,
+    variant,
     viewportProps,
     ...others
   } = useComponentDefaultProps('ScrollArea', defaultProps, props);
@@ -69,7 +72,7 @@ export const _ScrollArea = forwardRef<HTMLDivElement, ScrollAreaProps>((props, r
   const theme = useMantineTheme();
   const { classes, cx } = useStyles(
     { scrollbarSize, offsetScrollbars, scrollbarHovered, hidden: type === 'never' },
-    { name: 'ScrollArea', classNames, styles, unstyled }
+    { name: 'ScrollArea', classNames, styles, unstyled, variant }
   );
 
   return (
@@ -121,13 +124,10 @@ export const _ScrollArea = forwardRef<HTMLDivElement, ScrollAreaProps>((props, r
   );
 }) as any;
 
-export interface ScrollAreaAutosizeProps extends ScrollAreaProps {
-  maxHeight: React.CSSProperties['maxHeight'];
-}
+export interface ScrollAreaAutosizeProps extends ScrollAreaProps {}
 
 const ScrollAreaAutosize = forwardRef<HTMLDivElement, ScrollAreaAutosizeProps>((props, ref) => {
   const {
-    maxHeight,
     children,
     classNames,
     styles,
@@ -140,10 +140,12 @@ const ScrollAreaAutosize = forwardRef<HTMLDivElement, ScrollAreaAutosizeProps>((
     onScrollPositionChange,
     unstyled,
     sx,
+    variant,
+    viewportProps,
     ...others
   } = useComponentDefaultProps<ScrollAreaAutosizeProps>('ScrollAreaAutosize', defaultProps, props);
   return (
-    <Box {...others} ref={ref} sx={[{ display: 'flex', maxHeight }, ...packSx(sx)]}>
+    <Box {...others} ref={ref} sx={[{ display: 'flex' }, ...packSx(sx)]}>
       <Box sx={{ display: 'flex', flexDirection: 'column', flex: 1 }}>
         <_ScrollArea
           classNames={classNames}
@@ -156,6 +158,8 @@ const ScrollAreaAutosize = forwardRef<HTMLDivElement, ScrollAreaAutosizeProps>((
           viewportRef={viewportRef}
           onScrollPositionChange={onScrollPositionChange}
           unstyled={unstyled}
+          variant={variant}
+          viewportProps={viewportProps}
         >
           {children}
         </_ScrollArea>

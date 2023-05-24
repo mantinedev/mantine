@@ -6,15 +6,22 @@ import {
   itSupportsSystemProps,
   itSupportsFocusEvents,
   itSupportsInputProps,
+  itSupportsProviderVariant,
+  itSupportsProviderSize,
+  itDisablesInputInsideDisabledFieldset,
 } from '@mantine/tests';
 import { TextInput, TextInputProps } from './TextInput';
 
-const defaultProps: TextInputProps = {};
+const defaultProps: TextInputProps = {
+  label: 'test-label',
+};
 
 describe('@mantine/core/TextInput', () => {
   checkAccessibility([<TextInput label="test-input" />, <TextInput aria-label="test-input" />]);
   itSupportsInputProps(TextInput, defaultProps, 'TextInput');
   itSupportsFocusEvents(TextInput, defaultProps, 'input');
+  itSupportsProviderVariant(TextInput, defaultProps, 'TextInput', ['root', 'input', 'label']);
+  itSupportsProviderSize(TextInput, defaultProps, 'TextInput', ['root', 'input', 'label']);
   itSupportsSystemProps({
     component: TextInput,
     props: defaultProps,
@@ -23,6 +30,7 @@ describe('@mantine/core/TextInput', () => {
     othersSelector: 'input',
     providerName: 'TextInput',
   });
+  itDisablesInputInsideDisabledFieldset(TextInput, defaultProps);
 
   it('supports uncontrolled state', async () => {
     render(<TextInput {...defaultProps} />);

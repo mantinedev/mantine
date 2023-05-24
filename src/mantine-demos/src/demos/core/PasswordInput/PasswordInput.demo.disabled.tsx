@@ -1,6 +1,6 @@
 import React from 'react';
 import { MantineDemo } from '@mantine/ds';
-import { PasswordInput } from '@mantine/core';
+import { PasswordInput, Box } from '@mantine/core';
 
 const code = `
 import { PasswordInput } from '@mantine/core';
@@ -12,7 +12,7 @@ function Demo() {
 
 function Demo() {
   return (
-    <div style={{ maxWidth: 320, marginLeft: 'auto', marginRight: 'auto' }}>
+    <Box maw={320} mx="auto">
       <PasswordInput label="Disabled without value" placeholder="Your password" disabled />
 
       <PasswordInput
@@ -22,7 +22,7 @@ function Demo() {
         disabled
         value="secret"
       />
-    </div>
+    </Box>
   );
 }
 

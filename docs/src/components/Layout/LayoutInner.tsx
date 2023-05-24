@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { graphql, useStaticQuery, navigate } from 'gatsby';
 import { randomId, useMediaQuery } from '@mantine/hooks';
-import { NotificationsProvider } from '@mantine/notifications';
+import { Notifications } from '@mantine/notifications';
 import { ModalsProvider, ContextModalProps } from '@mantine/modals';
-import { SpotlightProvider, SpotlightAction } from '@mantine/spotlight';
-import { Text, Button } from '@mantine/core';
-import { IconSearch } from '@tabler/icons';
+import { SpotlightProvider, SpotlightAction, useSpotlight } from '@mantine/spotlight';
+import { Text, Button, rem, em } from '@mantine/core';
+import { IconSearch } from '@tabler/icons-react';
 import MdxProvider from '../MdxPage/MdxProvider/MdxProvider';
 import Navbar from './Navbar/Navbar';
 import Header from './Header/Header';
@@ -36,7 +36,6 @@ const query = graphql`
             description
             package
             search
-            hidden
           }
         }
       }
@@ -93,32 +92,60 @@ function getActions(data: ReturnType<typeof getDocsData>): SpotlightAction[] {
   }, []);
 }
 
+const searchParamName = 'search';
+
+// Separate component to allow calling useSpotlight hook.
+function AutoOpenSpotlight() {
+  const spotlight = useSpotlight();
+
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    if (params.has(searchParamName)) {
+      spotlight.openSpotlight();
+    }
+  }, []);
+
+  return null;
+}
+
 export function LayoutInner({ children, location }: LayoutProps) {
-  const navbarCollapsed = useMediaQuery(`(max-width: ${NAVBAR_BREAKPOINT}px)`);
+  const navbarCollapsed = useMediaQuery(`(max-width: ${em(NAVBAR_BREAKPOINT)})`);
   const shouldRenderHeader = !shouldExcludeHeader(location.pathname);
   const shouldRenderNavbar = !shouldExcludeNavbar(location.pathname) || navbarCollapsed;
   const { classes, cx } = useStyles({ shouldRenderHeader });
   const [navbarOpened, setNavbarState] = useState(false);
   const data = getDocsData(useStaticQuery(query));
+  const [spotlightQuery, setSpotlightQuery] = useState('');
+
+  useEffect(() => {
+    setSpotlightQuery(new URLSearchParams(window.location.search).get(searchParamName) || '');
+  }, []);
 
   return (
     <SpotlightProvider
       actions={getActions(data)}
-      searchIcon={<IconSearch size={18} />}
+      searchIcon={<IconSearch size="1.2rem" />}
       searchPlaceholder="Search documentation"
       shortcut={['mod + K', 'mod + P', '/']}
       highlightQuery
+      query={spotlightQuery}
+      onQueryChange={setSpotlightQuery}
       searchInputProps={{
         id: randomId(),
         name: randomId(),
-        autoComplete: 'nope',
+        autoComplete: 'off',
       }}
-      transition={{
-        in: { transform: 'translateY(0)', opacity: 1 },
-        out: { transform: 'translateY(-20px)', opacity: 0 },
-        transitionProperty: 'transform, opacity',
+      transitionProps={{
+        duration: 150,
+        transition: {
+          in: { transform: 'translateY(0)', opacity: 1 },
+          out: { transform: `translateY(-${rem(20)})`, opacity: 0 },
+          transitionProperty: 'transform, opacity',
+        },
       }}
     >
+      <Notifications />
+      <AutoOpenSpotlight />
       <div
         className={cx({
           [classes.withNavbar]: shouldRenderNavbar,
@@ -139,9 +166,7 @@ export function LayoutInner({ children, location }: LayoutProps) {
               labels={{ confirm: 'Confirm', cancel: 'Cancel' }}
               modals={{ demonstration: demonstrationModal }}
             >
-              <NotificationsProvider>
-                <MdxProvider>{children}</MdxProvider>
-              </NotificationsProvider>
+              <MdxProvider>{children}</MdxProvider>
             </ModalsProvider>
           </div>
         </main>

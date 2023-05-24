@@ -1,14 +1,14 @@
 /* eslint-disable no-console */
 import React from 'react';
 import { useForm } from '@mantine/form';
-import { TextInput, Button } from '@mantine/core';
+import { TextInput, Button, Box } from '@mantine/core';
 import { MantineDemo } from '@mantine/ds';
-import { showNotification } from '@mantine/notifications';
+import { notifications } from '@mantine/notifications';
 
 const code = `
 import { useForm } from '@mantine/form';
-import { TextInput, Button } from '@mantine/core';
-import { showNotification } from '@mantine/notifications';
+import { TextInput, Button, Box } from '@mantine/core';
+import { notifications } from '@mantine/notifications';
 
 function Demo() {
   const form = useForm({
@@ -21,22 +21,24 @@ function Demo() {
 
   const handleError = (errors: typeof form.errors) => {
     if (errors.name) {
-      showNotification({ message: 'Please fill name field', color: 'red' });
+      notifications.show({ message: 'Please fill name field', color: 'red' });
     } else if (errors.email) {
-      showNotification({ message: 'Please provide a valid email', color: 'red' });
+      notifications.show({ message: 'Please provide a valid email', color: 'red' });
     }
   };
 
   const handleSubmit = (values: typeof form.values) => {};
 
   return (
-    <form onSubmit={form.onSubmit(handleSubmit, handleError)}>
-      <TextInput label="Name" placeholder="Name" {...form.getInputProps('name')} />
-      <TextInput mt="sm" label="Email" placeholder="Email" {...form.getInputProps('email')} />
-      <Button type="submit" mt="sm">
-        Submit
-      </Button>
-    </form>
+    <Box maw={320} mx="auto">
+      <form onSubmit={form.onSubmit(console.log, handleError)}>
+        <TextInput label="Name" placeholder="Name" {...form.getInputProps('name')} />
+        <TextInput mt="sm" label="Email" placeholder="Email" {...form.getInputProps('email')} />
+        <Button type="submit" mt="sm">
+          Submit
+        </Button>
+      </form>
+    </Box>
   );
 }
 `;
@@ -52,23 +54,22 @@ function Demo() {
 
   const handleError = (errors: typeof form.errors) => {
     if (errors.name) {
-      showNotification({ message: 'Please fill name field', color: 'red' });
+      notifications.show({ message: 'Please fill name field', color: 'red' });
     } else if (errors.email) {
-      showNotification({ message: 'Please provide a valid email', color: 'red' });
+      notifications.show({ message: 'Please provide a valid email', color: 'red' });
     }
   };
 
   return (
-    <form
-      style={{ maxWidth: 320, margin: 'auto' }}
-      onSubmit={form.onSubmit(console.log, handleError)}
-    >
-      <TextInput label="Name" placeholder="Name" {...form.getInputProps('name')} />
-      <TextInput mt="sm" label="Email" placeholder="Email" {...form.getInputProps('email')} />
-      <Button type="submit" mt="sm">
-        Submit
-      </Button>
-    </form>
+    <Box maw={320} mx="auto">
+      <form onSubmit={form.onSubmit(console.log, handleError)}>
+        <TextInput label="Name" placeholder="Name" {...form.getInputProps('name')} />
+        <TextInput mt="sm" label="Email" placeholder="Email" {...form.getInputProps('email')} />
+        <Button type="submit" mt="sm">
+          Submit
+        </Button>
+      </form>
+    </Box>
   );
 }
 

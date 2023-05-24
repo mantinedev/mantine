@@ -1,23 +1,21 @@
-import { createStyles, MantineSize, MantineColor, MantineNumberSize } from '@mantine/styles';
+import {
+  createStyles,
+  MantineColor,
+  MantineNumberSize,
+  getStylesRef,
+  rem,
+  getSize,
+} from '@mantine/styles';
 
 const sizes = {
-  xs: 16,
-  sm: 20,
-  md: 24,
-  lg: 30,
-  xl: 36,
-};
-
-const iconSizes = {
-  xs: 8,
-  sm: 10,
-  md: 14,
-  lg: 16,
-  xl: 20,
+  xs: rem(16),
+  sm: rem(20),
+  md: rem(24),
+  lg: rem(30),
+  xl: rem(36),
 };
 
 export interface CheckboxStylesParams {
-  size: MantineSize;
   radius: MantineNumberSize;
   color: MantineColor;
   transitionDuration: number;
@@ -30,7 +28,6 @@ export default createStyles(
   (
     theme,
     {
-      size,
       radius,
       color,
       transitionDuration,
@@ -38,29 +35,25 @@ export default createStyles(
       error,
       indeterminate,
     }: CheckboxStylesParams,
-    getRef
+    { size }
   ) => {
-    const _size = theme.fn.size({ size, sizes });
+    const _size = getSize({ size, sizes });
     const colors = theme.fn.variant({ variant: 'filled', color });
-    const errorColor = theme.fn.variant({ variant: 'filled', color: 'red' }).background;
 
     return {
       icon: {
-        ref: getRef('icon'),
+        ...theme.fn.cover(),
+        ref: getStylesRef('icon'),
         color: indeterminate ? 'inherit' : theme.white,
-        transform: indeterminate ? 'none' : 'translateY(5px) scale(0.5)',
+        transform: indeterminate ? 'none' : `translateY(${rem(5)}) scale(0.5)`,
         opacity: indeterminate ? 1 : 0,
         transitionProperty: 'opacity, transform',
         transitionTimingFunction: 'ease',
         transitionDuration: `${transitionDuration}ms`,
         pointerEvents: 'none',
-        width: theme.fn.size({ size, sizes: iconSizes }),
+        width: '60%',
         position: 'absolute',
         zIndex: 1,
-        top: 0,
-        bottom: 0,
-        left: 0,
-        right: 0,
         margin: 'auto',
 
         '@media (prefers-reduced-motion)': {
@@ -79,9 +72,9 @@ export default createStyles(
         ...theme.fn.focusStyles(),
         appearance: 'none',
         backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.white,
-        border: `1px solid ${
+        border: `${rem(1)} solid ${
           error
-            ? errorColor
+            ? theme.fn.variant({ variant: 'filled', color: 'red' }).background
             : theme.colorScheme === 'dark'
             ? theme.colors.dark[4]
             : theme.colors.gray[4]
@@ -99,7 +92,7 @@ export default createStyles(
           backgroundColor: colors.background,
           borderColor: colors.background,
 
-          [`& + .${getRef('icon')}`]: {
+          [`& + .${getStylesRef('icon')}`]: {
             opacity: 1,
             color: theme.white,
             transform: 'translateY(0) scale(1)',
@@ -111,8 +104,9 @@ export default createStyles(
             theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[2],
           borderColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[3],
           cursor: 'not-allowed',
+          pointerEvents: 'none',
 
-          [`& + .${getRef('icon')}`]: {
+          [`& + .${getStylesRef('icon')}`]: {
             color: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[5],
           },
         },

@@ -1,26 +1,22 @@
-import { createStyles, MantineSize } from '@mantine/styles';
-
-interface ThumbStyles {
-  size: MantineSize;
-}
+import { createStyles, rem, getSize } from '@mantine/styles';
 
 export const THUMB_SIZES = {
-  xs: 8,
-  sm: 12,
-  md: 16,
-  lg: 20,
-  xl: 22,
+  xs: rem(8),
+  sm: rem(12),
+  md: rem(16),
+  lg: rem(20),
+  xl: rem(22),
 };
 
-export default createStyles((theme, { size }: ThumbStyles) => {
-  const _size = theme.fn.size({ size, sizes: THUMB_SIZES });
+export default createStyles((theme, _params, { size }) => {
+  const _size = getSize({ size, sizes: THUMB_SIZES });
   return {
     thumb: {
       overflow: 'hidden',
       boxSizing: 'border-box',
       position: 'absolute',
-      boxShadow: '0 0 1px rgba(0, 0, 0, .6)',
-      border: `2px solid ${theme.white}`,
+      boxShadow: `0 0 ${rem(1)} rgba(0, 0, 0, .6)`,
+      border: `${rem(2)} solid ${theme.white}`,
       backgroundColor: 'transparent',
       width: _size,
       height: _size,

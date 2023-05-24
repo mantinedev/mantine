@@ -39,7 +39,7 @@ Default breakpoints:
   head={['Breakpoint', 'Viewport width']}
   data={Object.keys(DEFAULT_THEME.breakpoints).map((size) => [
     size,
-    `${DEFAULT_THEME.breakpoints[size]}px`,
+    `${DEFAULT_THEME.breakpoints[size]}`,
   ])}
 />
 
@@ -48,20 +48,22 @@ To change these values wrap your application with MantineProvider and set `break
 ```tsx
 import { MantineProvider } from '@mantine/core';
 
-function YourApp() {
+function Demo() {
   return (
     <MantineProvider
+      withGlobalStyles
+      withNormalizeCSS
       theme={{
         breakpoints: {
-          xs: 500,
-          sm: 800,
-          md: 1000,
-          lg: 1275,
-          xl: 1800,
+          xs: '30em',
+          sm: '48em',
+          md: '64em',
+          lg: '74em',
+          xl: '90em',
         },
       }}
     >
-      Hello World
+      <App />
     </MantineProvider>
   );
 }

@@ -22,6 +22,8 @@ export type RatingStylesNames = Selectors<typeof useStyles> | RatingItemStylesNa
 export interface RatingProps
   extends DefaultProps<RatingStylesNames>,
     Omit<React.ComponentPropsWithoutRef<'div'>, 'onChange'> {
+  variant?: string;
+
   /** Default value for uncontrolled component */
   defaultValue?: number;
 
@@ -97,10 +99,18 @@ export const Rating = forwardRef<HTMLInputElement, RatingProps>((props, ref) => 
     highlightSelectedOnly,
     color,
     id,
+    variant,
     ...others
   } = useComponentDefaultProps('Rating', defaultProps, props);
 
-  const { classes, cx, theme } = useStyles(null, { name: 'Rating', classNames, styles, unstyled });
+  const { classes, cx, theme } = useStyles(null, {
+    name: 'Rating',
+    classNames,
+    styles,
+    unstyled,
+    variant,
+    size,
+  });
 
   const _name = useId(name);
   const _id = useId(id);
@@ -165,9 +175,12 @@ export const Rating = forwardRef<HTMLInputElement, RatingProps>((props, ref) => 
 
   const handleItemBlur = () => isOutside && setHovered(-1);
 
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const resultedValue = parseFloat(event.target.value);
-    setValue(resultedValue);
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement> | number) => {
+    if (typeof event === 'number') {
+      setValue(event);
+    } else {
+      setValue(parseFloat(event.target.value));
+    }
   };
 
   const items = Array(_count)
@@ -187,6 +200,7 @@ export const Rating = forwardRef<HTMLInputElement, RatingProps>((props, ref) => 
               <RatingItem
                 key={`${integerValue}-${symbolValue}`}
                 size={size}
+                variant={variant}
                 getSymbolLabel={getSymbolLabel}
                 emptyIcon={emptySymbol}
                 fullIcon={fullSymbol}

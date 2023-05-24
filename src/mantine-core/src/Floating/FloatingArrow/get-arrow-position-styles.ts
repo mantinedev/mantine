@@ -1,4 +1,4 @@
-import { CSSObject } from '@mantine/styles';
+import { CSSObject, rem } from '@mantine/styles';
 import type { FloatingPosition, FloatingSide, FloatingPlacement, ArrowPosition } from '../types';
 
 function horizontalSide(
@@ -62,7 +62,6 @@ const radiusByFloatingSide: Record<
 
 export function getArrowPositionStyles({
   position,
-  withBorder,
   arrowSize,
   arrowOffset,
   arrowRadius,
@@ -72,7 +71,6 @@ export function getArrowPositionStyles({
   dir,
 }: {
   position: FloatingPosition;
-  withBorder: boolean;
   arrowSize: number;
   arrowOffset: number;
   arrowRadius: number;
@@ -83,22 +81,22 @@ export function getArrowPositionStyles({
 }) {
   const [side, placement = 'center'] = position.split('-') as [FloatingSide, FloatingPlacement];
   const baseStyles = {
-    width: arrowSize,
-    height: arrowSize,
+    width: rem(arrowSize),
+    height: rem(arrowSize),
     transform: 'rotate(45deg)',
     position: 'absolute',
-    [radiusByFloatingSide[side]]: arrowRadius,
+    [radiusByFloatingSide[side]]: rem(arrowRadius),
   };
 
-  const arrowPlacement = withBorder ? -arrowSize / 2 - 1 : -arrowSize / 2;
+  const arrowPlacement = rem(-arrowSize / 2);
 
   if (side === 'left') {
     return {
       ...baseStyles,
       ...horizontalSide(placement, arrowY, arrowOffset, arrowPosition),
       right: arrowPlacement,
-      borderLeft: 0,
-      borderBottom: 0,
+      borderLeftColor: 'transparent',
+      borderBottomColor: 'transparent',
     };
   }
 
@@ -107,8 +105,8 @@ export function getArrowPositionStyles({
       ...baseStyles,
       ...horizontalSide(placement, arrowY, arrowOffset, arrowPosition),
       left: arrowPlacement,
-      borderRight: 0,
-      borderTop: 0,
+      borderRightColor: 'transparent',
+      borderTopColor: 'transparent',
     };
   }
 
@@ -117,8 +115,8 @@ export function getArrowPositionStyles({
       ...baseStyles,
       ...verticalSide(placement, arrowX, arrowOffset, arrowPosition, dir),
       bottom: arrowPlacement,
-      borderTop: 0,
-      borderLeft: 0,
+      borderTopColor: 'transparent',
+      borderLeftColor: 'transparent',
     };
   }
 
@@ -127,8 +125,8 @@ export function getArrowPositionStyles({
       ...baseStyles,
       ...verticalSide(placement, arrowX, arrowOffset, arrowPosition, dir),
       top: arrowPlacement,
-      borderBottom: 0,
-      borderRight: 0,
+      borderBottomColor: 'transparent',
+      borderRightColor: 'transparent',
     };
   }
 

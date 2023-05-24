@@ -18,7 +18,8 @@ export function getHotkeysPayload(
 export function useSpotlightShortcuts(
   shortcuts: string | string[],
   onToggle: () => void,
-  tagsToIgnore?: string[]
+  tagsToIgnore?: string[],
+  triggerOnContentEditable?: boolean
 ) {
-  useHotkeys(getHotkeysPayload(shortcuts, onToggle), tagsToIgnore);
+  useHotkeys(getHotkeysPayload(shortcuts, onToggle), tagsToIgnore, triggerOnContentEditable);
 }

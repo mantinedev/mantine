@@ -130,13 +130,17 @@ Note that you will need to handle data state to manage item creation correctly:
 
 <Demo data={MultiSelectDemos.groups} />
 
+## Disabled state
+
+<Demo data={MultiSelectDemos.disabled} />
+
 ## Disable items
 
 <Demo data={MultiSelectDemos.disabledItems} />
 
 ## Large data set
 
-When dropdown height is exceeded dropdown becomes scrollable, to change max-height set `maxDropdownHeight` prop with value in px:
+When dropdown height is exceeded dropdown becomes scrollable, to change max-height set `maxDropdownHeight` prop with value:
 
 <Demo data={MultiSelectDemos.large} />
 
@@ -160,6 +164,22 @@ Apart from `itemComponent` you can customize appearance of label by providing `v
 ## Max selected values
 
 <Demo data={MultiSelectDemos.maxSelectedValues} />
+
+## Disable selected item filtering
+
+<Demo data={MultiSelectDemos.disableSelectedItemFiltering} />
+
+When used along `filter`, be aware that the second parameter `selected` will always be `false`.
+
+```tsx
+<MultiSelect
+  disableSelectedItemFiltering
+  filter={(value, selected, item) => {
+    console.log(selected); // false
+  }}
+  searchable
+/>
+```
 
 ## Dropdown position
 
@@ -254,8 +274,8 @@ Provide `aria-label` in case you use component without label for screen reader s
 <MultiSelect aria-label="My select" /> // -> ok, label is not visible but will be announced by screen reader
 ```
 
-If you use `clearable` option set `clearButtonLabel`:
+If you use `clearable` option set clear button label:
 
 ```tsx
-<MultiSelect clearable clearButtonLabel="Clear select field" />
+<MultiSelect clearable clearButtonProps={{ 'aria-label': 'Clear select field' }} />
 ```

@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
-import { Stack, Code, Text, ScrollArea } from '@mantine/core';
+import { Stack, Code, Text, ScrollArea, Box } from '@mantine/core';
 import { MantineDemo } from '@mantine/ds';
 import { Content } from './_content';
 
 const code = `
 import { useState } from 'react';
-import { Text, ScrollArea, Code } from '@mantine/core';
+import { Text, ScrollArea, Code, Box } from '@mantine/core';
 
 function Demo() {
   const [scrollPosition, onScrollPositionChange] = useState({ x: 0, y: 0 });
@@ -13,12 +13,13 @@ function Demo() {
   return (
     <>
       <ScrollArea
-        style={{ width: 300, height: 200 }}
+        w={300}
+        h={200}
         onScrollPositionChange={onScrollPositionChange}
       >
-        <div style={{ width: 600 }}>
+        <Box w={600}>
           {/* ... content */}
-        </div>
+        </Box>
       </ScrollArea>
 
       <Text>
@@ -34,13 +35,10 @@ function Demo() {
 
   return (
     <Stack align="center">
-      <ScrollArea
-        style={{ width: 300, height: 200 }}
-        onScrollPositionChange={onScrollPositionChange}
-      >
-        <div style={{ width: 600 }}>
+      <ScrollArea w={300} h={200} onScrollPositionChange={onScrollPositionChange}>
+        <Box w={600}>
           <Content />
-        </div>
+        </Box>
       </ScrollArea>
       <Text>
         Scroll position: <Code>{`{ x: ${scrollPosition.x}, y: ${scrollPosition.y} }`}</Code>

@@ -10,12 +10,16 @@ import {
   itSupportsInputWrapperProps,
   itSupportsInputContainer,
   itSupportsInputAsterisk,
+  itSupportsProviderSize,
+  itSupportsProviderVariant,
+  itDisablesInputInsideDisabledFieldset,
 } from '@mantine/tests';
+import { render } from '@testing-library/react';
 import { MultiSelect, MultiSelectProps } from './MultiSelect';
 
 const defaultProps: MultiSelectProps = {
   withinPortal: false,
-  transitionDuration: 0,
+  transitionProps: { duration: 0 },
   label: 'test-multi-select',
   data: ['React', 'Angular', 'Svelte', 'Vue'],
   defaultValue: ['React', 'Angular'],
@@ -23,6 +27,8 @@ const defaultProps: MultiSelectProps = {
 };
 
 describe('@mantine/core/MultiSelect', () => {
+  itSupportsProviderVariant(MultiSelect, defaultProps, 'MultiSelect', ['root', 'input', 'label']);
+  itSupportsProviderSize(MultiSelect, defaultProps, 'MultiSelect', ['root', 'input', 'label']);
   checkAccessibility([<MultiSelect {...defaultProps} initiallyOpened />]);
   itSupportsFocusEvents(MultiSelect, defaultProps, '#test-multi-select');
   itSupportsInputIcon(MultiSelect, defaultProps);
@@ -39,5 +45,20 @@ describe('@mantine/core/MultiSelect', () => {
     refType: HTMLInputElement,
     othersSelector: '#test-multi-select',
     providerName: 'MultiSelect',
+  });
+  itDisablesInputInsideDisabledFieldset(MultiSelect, defaultProps);
+
+  it('Has un-filtered list when disableSelectedItemFiltering is enabled', () => {
+    const { container } = render(
+      <MultiSelect {...defaultProps} initiallyOpened disableSelectedItemFiltering />
+    );
+
+    expect(container.querySelectorAll('.mantine-MultiSelect-item')).toHaveLength(4);
+  });
+
+  it('Has un-filtered list when disableSelectedItemFiltering is disabled', () => {
+    const { container } = render(<MultiSelect {...defaultProps} initiallyOpened />);
+
+    expect(container.querySelectorAll('.mantine-MultiSelect-item')).toHaveLength(2);
   });
 });

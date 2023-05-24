@@ -25,7 +25,7 @@ import {
   IconHighlight,
   IconLineDashed,
   IconCircleOff,
-} from '@tabler/icons';
+} from '@tabler/icons-react';
 import { createControl } from './ControlBase/create-control';
 
 export const BoldControl = createControl({

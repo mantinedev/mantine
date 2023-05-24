@@ -15,6 +15,8 @@ export { itHandlesBooleanState } from './it-handles-boolean-state';
 export { createContextContainer } from './create-context-container';
 export { itThrowsContextError } from './it-throws-context-error';
 export { itSupportsProviderDefaultProps } from './it-supports-provider-default-props';
+export { itSupportsProviderVariant } from './it-supports-provider-variant';
+export { itSupportsProviderSize } from './it-supports-provider-size';
 export { patchConsoleError } from './patch-console-error';
 export { wait } from './wait';
 export { renderWithAct } from './render-with-act';
@@ -29,3 +31,4 @@ export { itSupportsInputWrapperProps } from './inputs/it-supports-input-wrapper-
 export { itSupportsInputProps } from './inputs/it-supports-input-props';
 export { itSupportsInputStylesApi } from './inputs/it-supports-input-styles-api';
 export { itSupportsInputAsterisk } from './inputs/it-supports-input-asterisk';
+export { itDisablesInputInsideDisabledFieldset } from './inputs/it-disables-input-inside-disabled-fieldset';

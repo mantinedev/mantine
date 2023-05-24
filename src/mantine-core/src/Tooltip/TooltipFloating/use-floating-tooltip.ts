@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
-import { useFloating, shift, getOverflowAncestors } from '@floating-ui/react-dom-interactions';
+import { useFloating, shift, getOverflowAncestors } from '@floating-ui/react';
 import { FloatingPosition } from '../../Floating';
 
 interface UseFloatingTooltip {
@@ -75,7 +75,7 @@ export function useFloatingTooltip<T extends HTMLElement = any>({
     }
 
     return undefined;
-  }, [reference, refs.floating, update, handleMouseMove, opened]);
+  }, [reference, refs.floating.current, update, handleMouseMove, opened]);
 
   return { handleMouseMove, x, y, opened, setOpened, boundaryRef, floating };
 }

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text } from '@mantine/core';
+import { Text, Flex } from '@mantine/core';
 import { MantineDemo } from '@mantine/ds';
 import { SegmentedControlWrapper } from './Wrapper';
 
@@ -25,21 +25,21 @@ function Demo() {
 
 function Demo() {
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+    <Flex direction="column" align="center">
       <div>
-        <Text size="sm" weight={500} style={{ marginBottom: 3 }}>
+        <Text size="sm" weight={500} mt={3}>
           No transitions
         </Text>
         <SegmentedControlWrapper transitionDuration={0} />
       </div>
 
-      <div style={{ marginTop: 15 }}>
-        <Text size="sm" weight={500} style={{ marginBottom: 3 }}>
+      <div>
+        <Text size="sm" weight={500} mt="md">
           500ms linear transition
         </Text>
         <SegmentedControlWrapper transitionDuration={500} transitionTimingFunction="linear" />
       </div>
-    </div>
+    </Flex>
   );
 }
 

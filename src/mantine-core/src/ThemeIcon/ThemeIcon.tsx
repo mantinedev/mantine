@@ -5,9 +5,12 @@ import {
   MantineGradient,
   MantineColor,
   useComponentDefaultProps,
+  Variants,
 } from '@mantine/styles';
 import { Box } from '../Box';
-import useStyles, { ThemeIconVariant, ThemeIconStylesParams } from './ThemeIcon.styles';
+import useStyles, { ThemeIconStylesParams } from './ThemeIcon.styles';
+
+export type ThemeIconVariant = Variants<'filled' | 'light' | 'gradient' | 'outline' | 'default'>;
 
 export interface ThemeIconProps
   extends DefaultProps<never, ThemeIconStylesParams>,
@@ -15,10 +18,10 @@ export interface ThemeIconProps
   /** Icon */
   children: React.ReactNode;
 
-  /** Predefined width and height or number for width and height in px */
+  /** Width and height of theme icon */
   size?: MantineNumberSize;
 
-  /** Predefined border-radius from theme.radius or number for border-radius in px */
+  /** Key of theme.radius or any valid CSS value to set border-radius, theme.defaultRadius by default */
   radius?: MantineNumberSize;
 
   /** Icon color from theme */
@@ -41,8 +44,8 @@ export const ThemeIcon = forwardRef<HTMLDivElement, ThemeIconProps>((props, ref)
     useComponentDefaultProps('ThemeIcon', defaultProps, props);
 
   const { classes, cx } = useStyles(
-    { variant, radius, color, size, gradient },
-    { name: 'ThemeIcon', unstyled }
+    { variant, radius, color, gradient },
+    { name: 'ThemeIcon', unstyled, variant, size }
   );
 
   return (

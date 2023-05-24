@@ -22,7 +22,9 @@ import { Text } from '@mantine/core';
 
 function Demo() {
   return (
-    <Text sx={{ color: '#00ECE5', fontSize: 18, lineHeight: 1.4 }}>Text with custom styles</Text>
+    <Text sx={{ color: '#00ECE5', fontSize: '1.1rem', lineHeight: 1.4 }}>
+      Text with custom styles
+    </Text>
   );
 }
 ```
@@ -40,8 +42,8 @@ function Demo() {
           backgroundColor: '#eee',
         },
 
-        '@media (max-width: 755px)': {
-          fontSize: 14,
+        '@media (max-width: 48em)': {
+          fontSize: '0.9rem',
         },
       }}
     >
@@ -179,11 +181,11 @@ function BoxWithComponent() {
 To create sharable styles you can store them in a variable:
 
 ```tsx
-import { Text, Box, CSSObject } from '@mantine/core';
+import { Text, Box, CSSObject, rem } from '@mantine/core';
 
 // styles object is compatible with every Mantine component
 const styles: CSSObject = {
-  border: '1px solid #eee',
+  border: `${rem(1)} solid #eee`,
   color: '#999',
 
   '&:hover': {
@@ -204,10 +206,10 @@ function Demo() {
 To store function styles in a variable you will need to use `MantineTheme` type in case you are using TypeScript:
 
 ```tsx
-import { Text, Box, CSSObject, MantineTheme } from '@mantine/core';
+import { Text, Box, CSSObject, MantineTheme, rem } from '@mantine/core';
 
 const styles = (theme: MantineTheme): CSSObject => ({
-  border: `1px solid ${theme.colors.gray[3]}`,
+  border: `${rem(1)} solid ${theme.colors.gray[3]}`,
   color: theme.colors.gray[7],
 
   '&:hover': {

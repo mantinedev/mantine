@@ -7,6 +7,9 @@ import {
   itSupportsWrapperProps,
   itSupportsInputIcon,
   itSupportsInputRightSection,
+  itSupportsProviderVariant,
+  itSupportsProviderSize,
+  itDisablesInputInsideDisabledFieldset,
 } from '@mantine/tests';
 import { InputWrapper } from './InputWrapper/InputWrapper';
 import { InputDescription } from './InputDescription/InputDescription';
@@ -22,10 +25,12 @@ describe('@mantine/core/Input', () => {
   itSupportsWrapperProps(Input, defaultProps);
   itSupportsInputIcon(Input, defaultProps);
   itSupportsInputRightSection(Input, defaultProps);
+  itSupportsProviderVariant(Input, defaultProps, 'Input', 'input');
+  itSupportsProviderSize(Input, defaultProps, 'Input', 'input');
   checkAccessibility([
     <Input aria-label="test-input" />,
     <Input placeholder="test-input" />,
-    <Input placeholder="test-input" invalid />,
+    <Input placeholder="test-input" error />,
   ]);
 
   itSupportsSystemProps({
@@ -35,6 +40,8 @@ describe('@mantine/core/Input', () => {
     refType: HTMLInputElement,
     excludeOthers: true,
   });
+
+  itDisablesInputInsideDisabledFieldset(Input, defaultProps);
 
   it('handles disabled state', () => {
     render(<Input disabled />);

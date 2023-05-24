@@ -1,5 +1,6 @@
 import React from 'react';
 import { MantineDemo } from '@mantine/ds';
+import { rem } from '@mantine/core';
 import styled from '@emotion/styled';
 
 const code = `
@@ -9,8 +10,8 @@ const StyledComponent = styled.div\`
   text-align: center;
   background-color: \${({ theme }) =>
     theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[0]};
-  padding: 30px;
-  border-radius: 5px;
+  padding: ${rem(30)};
+  border-radius: ${rem(5)};
   cursor: pointer;
 
   &:hover {
@@ -28,8 +29,8 @@ const StyledComponent = styled.div`
   text-align: center;
   background-color: ${({ theme }) =>
     theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[0]};
-  padding: 30px;
-  border-radius: 5px;
+  padding: ${rem(30)};
+  border-radius: ${rem(5)};
   cursor: pointer;
 
   &:hover {

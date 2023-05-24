@@ -1,11 +1,11 @@
-import { createStyles } from '@mantine/core';
+import { createStyles, rem } from '@mantine/core';
 import { getGradient } from '../get-gradient';
 import banner from './banner.webp';
 
 export default createStyles((theme) => ({
   wrapper: {
     position: 'relative',
-    minHeight: 580,
+    minHeight: rem(580),
     backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.colors.gray[1],
 
     [theme.fn.smallerThan('sm')]: {
@@ -30,12 +30,12 @@ export default createStyles((theme) => ({
   title: {
     color: theme.colorScheme === 'dark' ? theme.white : theme.black,
     fontFamily: `Greycliff CF, ${theme.fontFamily}`,
-    fontSize: 44,
+    fontSize: rem(44),
     lineHeight: 1.2,
     fontWeight: 900,
 
     [theme.fn.smallerThan('sm')]: {
-      fontSize: 26,
+      fontSize: rem(26),
     },
   },
 
@@ -49,24 +49,24 @@ export default createStyles((theme) => ({
   description: {
     color: theme.colorScheme === 'dark' ? theme.colors.dark[2] : theme.colors.gray[7],
     lineHeight: 1.5,
-    maxWidth: 580,
+    maxWidth: rem(580),
     marginTop: theme.spacing.md,
   },
 
   body: {
-    flex: '0 0 500px',
-    paddingTop: 140,
+    flex: `0 0 ${rem(500)}`,
+    paddingTop: rem(140),
     position: 'relative',
     zIndex: 1,
 
     [theme.fn.smallerThan('sm')]: {
-      paddingTop: theme.spacing.xl * 2,
+      paddingTop: `calc(${theme.spacing.xl} * 2)`,
     },
   },
 
   image: {
-    minHeight: 500,
-    width: 800,
+    minHeight: rem(500),
+    width: rem(800),
     flex: 1,
     backgroundImage: `url(${banner})`,
     backgroundSize: 'auto 100%',

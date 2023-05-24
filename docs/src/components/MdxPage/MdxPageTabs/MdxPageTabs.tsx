@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation } from '@reach/router';
 import { navigate } from 'gatsby';
-import { Tabs, Title, TextInput } from '@mantine/core';
-import { IconSearch } from '@tabler/icons';
+import { Tabs, Title, TextInput, rem, em } from '@mantine/core';
+import { IconSearch } from '@tabler/icons-react';
 import { useMediaQuery } from '@mantine/hooks';
 import { MDXRenderer } from 'gatsby-plugin-mdx';
 import { MdxSiblings } from '../MdxSiblings/MdxSiblings';
@@ -16,7 +16,7 @@ import useStyles from './MdxPageTabs.styles';
 export function MdxPageTabs({ body, frontmatter, headings, siblings }: MdxPageProps) {
   const [query, setQuery] = useState('');
   const { classes } = useStyles();
-  const mobile = useMediaQuery('(max-width: 500px)');
+  const mobile = useMediaQuery(`(max-width: ${em(500)})`);
   const location = useLocation();
   const [activeTab, setActiveTab] = useState('docs');
   const hasProps = Array.isArray(frontmatter.props);
@@ -93,12 +93,17 @@ export function MdxPageTabs({ body, frontmatter, headings, siblings }: MdxPagePr
 
         <Tabs.Panel value="props">
           <div
-            style={{ maxWidth: 1178, marginLeft: 'auto', marginRight: 'auto', marginTop: 24 }}
+            style={{
+              maxWidth: rem(1178),
+              marginLeft: 'auto',
+              marginRight: 'auto',
+              marginTop: rem(24),
+            }}
             className={classes.tabContent}
           >
             <TextInput
               autoFocus
-              icon={<IconSearch size={16} stroke={1.5} />}
+              icon={<IconSearch size={rem(16)} stroke={1.5} />}
               placeholder="Search props"
               mb={20}
               value={query}
@@ -110,7 +115,12 @@ export function MdxPageTabs({ body, frontmatter, headings, siblings }: MdxPagePr
 
         <Tabs.Panel value="styles-api">
           <div
-            style={{ maxWidth: 1178, marginLeft: 'auto', marginRight: 'auto', marginTop: 24 }}
+            style={{
+              maxWidth: rem(1178),
+              marginLeft: 'auto',
+              marginRight: 'auto',
+              marginTop: rem(24),
+            }}
             className={classes.tabContent}
           >
             <StylesApi components={frontmatter.styles} />

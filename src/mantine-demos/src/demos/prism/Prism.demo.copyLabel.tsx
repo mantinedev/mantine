@@ -41,7 +41,7 @@ function Demo() {
         language="tsx"
         copyLabel="Copy code to clipboard"
         copiedLabel="Code copied to clipboard"
-        style={{ marginTop: 20 }}
+        mt="lg"
       >
         {demoCode}
       </Prism>

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Tabs } from '@mantine/core';
+import { Tabs, rem } from '@mantine/core';
 import { PageSection } from '../PageSection/PageSection';
 import { SxDemo } from './demos/SxDemo';
 import { CreateStylesDemo } from './demos/CreateStylesDemo';
@@ -27,10 +27,10 @@ export function Styles() {
         styles={(theme) => ({
           tab: {
             fontWeight: 600,
-            fontSize: 16,
+            fontSize: rem(16),
 
             [theme.fn.smallerThan('sm')]: {
-              fontSize: 14,
+              fontSize: rem(14),
             },
 
             '&[data-active]': {

@@ -17,8 +17,8 @@ export const MenuDivider = forwardRef<HTMLDivElement, MenuDividerProps>((props, 
     props
   );
 
-  const { classNames, styles, unstyled } = useMenuContext();
-  const { classes, cx } = useStyles(null, { name: 'Menu', classNames, styles, unstyled });
+  const { classNames, styles, unstyled, variant } = useMenuContext();
+  const { classes, cx } = useStyles(null, { name: 'Menu', classNames, styles, unstyled, variant });
   return <Box className={cx(classes.divider, className)} ref={ref} {...others} />;
 });
 

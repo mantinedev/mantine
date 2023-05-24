@@ -10,7 +10,8 @@
     "**/*.test.ts",
     "**/styles.api.ts",
     "src/components/*/demos/*",
-    "src/demos.ts"
+    "src/demos.ts",
+    "src/tests"
   ],
   "compilerOptions": {
     "rootDir": "src",

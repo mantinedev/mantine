@@ -6,14 +6,21 @@ import {
   itSupportsFocusEvents,
   itSupportsSystemProps,
   itSupportsInputProps,
+  itSupportsProviderVariant,
+  itSupportsProviderSize,
+  itDisablesInputInsideDisabledFieldset,
 } from '@mantine/tests';
 import { Textarea, TextareaProps } from './Textarea';
 
-const defaultProps: TextareaProps = {};
+const defaultProps: TextareaProps = {
+  label: 'test-label',
+};
 
 describe('@mantine/core/Textarea', () => {
   itSupportsFocusEvents(Textarea, defaultProps, 'textarea');
   itSupportsInputProps(Textarea, defaultProps, 'Textarea');
+  itSupportsProviderVariant(Textarea, defaultProps, 'Textarea', ['root', 'input', 'label']);
+  itSupportsProviderSize(Textarea, defaultProps, 'Textarea', ['root', 'input', 'label']);
   checkAccessibility([<Textarea label="test-label" />, <Textarea aria-label="test-label" />]);
   itSupportsSystemProps({
     component: Textarea,
@@ -23,6 +30,7 @@ describe('@mantine/core/Textarea', () => {
     othersSelector: 'textarea',
     providerName: 'Textarea',
   });
+  itDisablesInputInsideDisabledFieldset(Textarea, defaultProps, 'Textarea');
 
   it('supports uncontrolled state', async () => {
     render(<Textarea {...defaultProps} />);

@@ -1,10 +1,13 @@
 import React from 'react';
 import { render } from '@testing-library/react';
 import {
+  itDisablesInputInsideDisabledFieldset,
   itSupportsSystemProps,
   itSupportsInputProps,
   checkAccessibility,
   itSupportsFocusEvents,
+  itSupportsProviderVariant,
+  itSupportsProviderSize,
 } from '@mantine/tests';
 import { Autocomplete, AutocompleteProps } from './Autocomplete';
 
@@ -13,7 +16,7 @@ const defaultProps: AutocompleteProps = {
   initiallyOpened: true,
   label: 'Test',
   data: [{ value: 'test-1' }, { value: 'test-2' }],
-  transitionDuration: 0,
+  transitionProps: { duration: 0 },
 };
 
 const largeDataSet: AutocompleteProps['data'] = Array(50)
@@ -29,6 +32,8 @@ const queries = {
 describe('@mantine/core/Autocomplete', () => {
   checkAccessibility([<Autocomplete {...defaultProps} />]);
   itSupportsInputProps(Autocomplete, defaultProps, 'Autocomplete');
+  itSupportsProviderVariant(Autocomplete, defaultProps, 'Autocomplete', ['root', 'input', 'label']);
+  itSupportsProviderSize(Autocomplete, defaultProps, 'Autocomplete', ['root', 'input', 'label']);
   itSupportsFocusEvents(Autocomplete, defaultProps, '.mantine-Autocomplete-input');
   itSupportsSystemProps({
     component: Autocomplete,
@@ -38,6 +43,7 @@ describe('@mantine/core/Autocomplete', () => {
     othersSelector: '.mantine-Autocomplete-input',
     providerName: 'Autocomplete',
   });
+  itDisablesInputInsideDisabledFieldset(Autocomplete, defaultProps);
 
   it('renders dropdown when value has both full match and partial match', () => {
     const { container } = render(

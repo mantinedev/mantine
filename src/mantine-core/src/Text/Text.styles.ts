@@ -4,15 +4,13 @@ import {
   CSSObject,
   MantineColor,
   MantineGradient,
-  MantineNumberSize,
+  getSize,
 } from '@mantine/styles';
 
 export interface TextStylesParams {
   color: 'dimmed' | MantineColor;
-  variant: 'text' | 'link' | 'gradient';
-  size: MantineNumberSize;
   lineClamp: number;
-  truncate: boolean;
+  truncate: 'end' | 'start' | boolean;
   inline: boolean;
   inherit: boolean;
   underline: boolean;
@@ -27,7 +25,10 @@ export interface TextStylesParams {
 interface GetTextColor {
   theme: MantineTheme;
   color: 'dimmed' | MantineColor;
-  variant: TextStylesParams['variant'];
+}
+interface GetTruncate {
+  truncate: 'end' | 'start' | boolean;
+  theme: MantineTheme;
 }
 
 function getTextDecoration({
@@ -49,15 +50,13 @@ function getTextDecoration({
   return styles.length > 0 ? styles.join(' ') : 'none';
 }
 
-function getTextColor({ theme, color, variant }: GetTextColor) {
+function getTextColor({ theme, color }: GetTextColor) {
   if (color === 'dimmed') {
-    return theme.colorScheme === 'dark' ? theme.colors.dark[2] : theme.colors.gray[6];
+    return theme.fn.dimmed();
   }
 
   return typeof color === 'string' && (color in theme.colors || color.split('.')[0] in theme.colors)
     ? theme.fn.variant({ variant: 'filled', color }).background
-    : variant === 'link'
-    ? theme.colors[theme.primaryColor][theme.colorScheme === 'dark' ? 4 : 7]
     : color || 'inherit';
 }
 
@@ -75,7 +74,16 @@ function getLineClamp(lineClamp: number): CSSObject {
   return null;
 }
 
-function getTruncate(truncate: boolean): CSSObject {
+function getTruncate({ theme, truncate }: GetTruncate): CSSObject {
+  if (truncate === 'start') {
+    return {
+      overflow: 'hidden',
+      textOverflow: 'ellipsis',
+      whiteSpace: 'nowrap',
+      direction: theme.dir === 'ltr' ? 'rtl' : 'ltr',
+      textAlign: theme.dir === 'ltr' ? 'right' : 'left',
+    };
+  }
   if (truncate) {
     return {
       overflow: 'hidden',
@@ -92,8 +100,6 @@ export default createStyles(
     theme,
     {
       color,
-      variant,
-      size,
       lineClamp,
       truncate,
       inline,
@@ -105,7 +111,8 @@ export default createStyles(
       align,
       strikethrough,
       italic,
-    }: TextStylesParams
+    }: TextStylesParams,
+    { size }
   ) => {
     const colors = theme.fn.variant({ variant: 'gradient', gradient });
 
@@ -114,13 +121,11 @@ export default createStyles(
         ...theme.fn.fontStyles(),
         ...theme.fn.focusStyles(),
         ...getLineClamp(lineClamp),
-        ...getTruncate(truncate),
-        color: getTextColor({ color, theme, variant }),
+        ...getTruncate({ theme, truncate }),
+        color: getTextColor({ color, theme }),
         fontFamily: inherit ? 'inherit' : theme.fontFamily,
         fontSize:
-          inherit || size === undefined
-            ? 'inherit'
-            : theme.fn.size({ size, sizes: theme.fontSizes }),
+          inherit || size === undefined ? 'inherit' : getSize({ size, sizes: theme.fontSizes }),
         lineHeight: inherit ? 'inherit' : inline ? 1 : theme.lineHeight,
         textDecoration: getTextDecoration({ underline, strikethrough }),
         WebkitTapHighlightColor: 'transparent',
@@ -128,14 +133,6 @@ export default createStyles(
         textTransform: transform,
         textAlign: align,
         fontStyle: italic ? 'italic' : undefined,
-
-        ...theme.fn.hover(
-          variant === 'link' && underline === undefined
-            ? {
-                textDecoration: 'underline',
-              }
-            : undefined
-        ),
       },
 
       gradient: {

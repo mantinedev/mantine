@@ -10,6 +10,8 @@ export interface TitleProps
   extends Omit<TextProps, 'size' | 'styles' | 'classNames' | 'span'>,
     DefaultProps<never, TitleStylesParams>,
     Omit<React.ComponentPropsWithoutRef<'h1'>, 'color'> {
+  variant?: string;
+
   /** Defines component and styles which will be used */
   order?: TitleOrder;
 
@@ -22,12 +24,12 @@ const defaultProps: Partial<TitleProps> = {
 };
 
 export const Title = forwardRef<HTMLHeadingElement, TitleProps>((props, ref) => {
-  const { className, order, children, unstyled, size, weight, inline, ...others } =
+  const { className, order, children, unstyled, size, weight, inline, variant, ...others } =
     useComponentDefaultProps('Title', defaultProps, props);
 
   const { classes, cx } = useStyles(
-    { element: `h${order}`, weight, size, inline },
-    { name: 'Title', unstyled }
+    { element: `h${order}`, weight, inline },
+    { name: 'Title', unstyled, variant, size }
   );
 
   if (![1, 2, 3, 4, 5, 6].includes(order)) {
@@ -35,7 +37,13 @@ export const Title = forwardRef<HTMLHeadingElement, TitleProps>((props, ref) => 
   }
 
   return (
-    <Text component={`h${order}`} ref={ref} className={cx(classes.root, className)} {...others}>
+    <Text
+      variant={variant}
+      component={`h${order}`}
+      ref={ref}
+      className={cx(classes.root, className)}
+      {...others}
+    >
       {children}
     </Text>
   );

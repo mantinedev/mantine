@@ -1,21 +1,21 @@
 import React from 'react';
-import { IconCheck } from '@tabler/icons';
-import { Notification, NotificationProps } from '@mantine/core';
+import { IconCheck } from '@tabler/icons-react';
+import { Notification, NotificationProps, Box } from '@mantine/core';
 import { MantineDemo } from '@mantine/ds';
 import { demoBase } from './_demo-base';
 
 function Wrapper(props: NotificationProps) {
   return (
-    <div style={{ maxWidth: 400, margin: 'auto' }}>
+    <Box maw={400} mx="auto">
       <Notification onClose={() => {}} {...props} />
-      <Notification mt="md" icon={<IconCheck size={20} />} onClose={() => {}} {...props} />
-    </div>
+      <Notification mt="md" icon={<IconCheck size="1.2rem" />} onClose={() => {}} {...props} />
+    </Box>
   );
 }
 
 const codeTemplate = (props: string, children: string) => `
 import { Notification } from '@mantine/core';
-import { IconCheck } from '@tabler/icons';
+import { IconCheck } from '@tabler/icons-react';
 
 function Demo() {
   return (
@@ -24,7 +24,7 @@ function Demo() {
         ${children}
       </Notification>
 
-      <Notification icon={<IconCheck size={20} />}${props}>
+      <Notification icon={<IconCheck size="1.2rem" />}${props}>
         ${children}
       </Notification>
     </>
@@ -39,7 +39,8 @@ export const configurator: MantineDemo = {
   codeTemplate,
   configurator: [
     { name: 'loading', type: 'boolean', initialValue: false, defaultValue: false },
-    { name: 'disallowClose', type: 'boolean', initialValue: false, defaultValue: false },
+    { name: 'withCloseButton', type: 'boolean', initialValue: true, defaultValue: true },
+    { name: 'withBorder', type: 'boolean', initialValue: false, defaultValue: false },
     { name: 'color', type: 'color', initialValue: 'blue', defaultValue: 'blue' },
     { name: 'radius', type: 'size', initialValue: 'sm', defaultValue: 'sm' },
     {

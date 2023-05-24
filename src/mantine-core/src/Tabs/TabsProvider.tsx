@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { getSafeId } from '@mantine/utils';
 import { useUncontrolled, useId } from '@mantine/hooks';
 import { ClassNames, MantineColor, MantineNumberSize, Styles } from '@mantine/styles';
@@ -50,7 +50,7 @@ export interface TabsProviderProps {
   /** Key of theme.colors */
   color?: MantineColor;
 
-  /** Tabs border-radius from theme.radius or number ti set value from theme, defaults to theme.defaultRadius */
+  /** Key of theme.radius or any valid CSS value to set border-radius, theme.defaultRadius by default */
   radius?: MantineNumberSize;
 
   /** Determines whether tabs should have inverted styles */
@@ -88,6 +88,8 @@ export function TabsProvider({
 }: _TabsProviderProps) {
   const uid = useId(id);
 
+  const [mountedPanelIds, setMountedPanelIds] = useState([]);
+
   const [_value, onChange] = useUncontrolled<TabsValue>({
     value,
     defaultValue,
@@ -107,6 +109,8 @@ export function TabsProvider({
         getTabId: getSafeId(`${uid}-tab`, TABS_ERRORS.value),
         getPanelId: getSafeId(`${uid}-panel`, TABS_ERRORS.value),
         onTabChange: onChange,
+        setMountedPanelIds,
+        mountedPanelIds,
         allowTabDeactivation,
         variant,
         color,

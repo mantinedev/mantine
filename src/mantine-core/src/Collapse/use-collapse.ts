@@ -40,10 +40,10 @@ export function useCollapse({
   opened,
 }: UseCollapse): (props: GetCollapseProps) => Record<string, any> {
   const el = useRef<HTMLElement | null>(null);
-  const collapsedHeight = '0px';
+  const collapsedHeight = 0;
   const collapsedStyles = {
     display: 'none',
-    height: '0px',
+    height: 0,
     overflow: 'hidden',
   };
   const [styles, setStylesRaw] = useState<React.CSSProperties>(opened ? {} : collapsedStyles);

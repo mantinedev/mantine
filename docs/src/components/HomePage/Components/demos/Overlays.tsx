@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { IconPhoto, IconMessageCircle, IconSettings } from '@tabler/icons';
+import { IconPhoto, IconMessageCircle, IconSettings } from '@tabler/icons-react';
 import {
   Text,
   Group,

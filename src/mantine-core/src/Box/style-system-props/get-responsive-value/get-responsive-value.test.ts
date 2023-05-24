@@ -1,4 +1,4 @@
-import { DEFAULT_THEME } from '@mantine/styles';
+import { DEFAULT_THEME, rem } from '@mantine/styles';
 import { getResponsiveValue } from './get-responsive-value';
 import { valueGetters } from '../value-getters/value-getters';
 
@@ -34,14 +34,14 @@ describe('@mantine/core/Box/get-responsive-value', () => {
         property: 'margin',
       })
     ).toStrictEqual({
-      margin: 12,
+      margin: rem(12),
 
       [DEFAULT_THEME.fn.largerThan('xs')]: {
-        margin: 34,
+        margin: rem(34),
       },
 
       [DEFAULT_THEME.fn.largerThan('lg')]: {
-        margin: 45,
+        margin: rem(45),
       },
     });
 
@@ -52,17 +52,17 @@ describe('@mantine/core/Box/get-responsive-value', () => {
         property: ['marginLeft', 'marginRight'],
       })
     ).toStrictEqual({
-      marginLeft: 12,
-      marginRight: 12,
+      marginLeft: rem(12),
+      marginRight: rem(12),
 
       [DEFAULT_THEME.fn.largerThan('xs')]: {
-        marginLeft: 34,
-        marginRight: 34,
+        marginLeft: rem(34),
+        marginRight: rem(34),
       },
 
       [DEFAULT_THEME.fn.largerThan('lg')]: {
-        marginLeft: 45,
-        marginRight: 45,
+        marginLeft: rem(45),
+        marginRight: rem(45),
       },
     });
   });

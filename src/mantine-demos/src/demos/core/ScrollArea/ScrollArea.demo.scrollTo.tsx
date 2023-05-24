@@ -20,7 +20,7 @@ function Demo() {
 
   return (
     <Stack align="center">
-      <ScrollArea style={{ width: 300, height: 200 }} viewportRef={viewport}>
+      <ScrollArea w={300} h={200} viewportRef={viewport}>
         {/* ... content */}
       </ScrollArea>
 
@@ -50,7 +50,7 @@ function Demo() {
 
   return (
     <Stack align="center">
-      <ScrollArea style={{ width: 300, height: 200 }} viewportRef={viewport}>
+      <ScrollArea w={300} h={200} viewportRef={viewport}>
         <Content />
       </ScrollArea>
       <Group position="center">

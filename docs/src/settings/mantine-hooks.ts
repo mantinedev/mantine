@@ -1,4 +1,4 @@
-import { IconRefresh, IconBulb, IconForms, IconBox } from '@tabler/icons';
+import { IconRefresh, IconBulb, IconForms, IconBox } from '@tabler/icons-react';
 import { Category } from './types';
 
 export const MANTINE_HOOKS_ORDER = ['state', 'dom', 'utils', 'lifecycle'] as const;

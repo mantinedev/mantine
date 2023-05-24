@@ -22,7 +22,7 @@ function Demo() {
   });
 
   return (
-    <Box sx={{ maxWidth: 300 }} mx="auto">
+    <Box maw={300} mx="auto">
       <form onSubmit={form.onSubmit((values) => console.log(values))}>
         <TextInput
           withAsterisk
@@ -60,7 +60,7 @@ function Demo() {
   });
 
   return (
-    <Box sx={{ maxWidth: 300 }} mx="auto">
+    <Box maw={300} mx="auto">
       <form onSubmit={form.onSubmit((values) => console.log(values))}>
         <TextInput
           withAsterisk

@@ -1,4 +1,8 @@
-import { itSupportsSystemProps } from '@mantine/tests';
+import {
+  itSupportsSystemProps,
+  itSupportsProviderVariant,
+  itDisablesInputInsideDisabledFieldset,
+} from '@mantine/tests';
 import { TransferList, TransferListProps } from './TransferList';
 
 const defaultProps: TransferListProps = {
@@ -18,6 +22,7 @@ const defaultProps: TransferListProps = {
 };
 
 describe('@mantine/core/TransferList', () => {
+  itSupportsProviderVariant(TransferList, defaultProps, 'TransferList', ['transferList']);
   itSupportsSystemProps({
     component: TransferList,
     props: defaultProps,
@@ -25,4 +30,5 @@ describe('@mantine/core/TransferList', () => {
     refType: HTMLDivElement,
     providerName: 'TransferList',
   });
+  itDisablesInputInsideDisabledFieldset(TransferList, defaultProps);
 });

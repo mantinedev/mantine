@@ -1,51 +1,49 @@
 import React, { useState } from 'react';
 import { MantineDemo } from '@mantine/ds';
-import { Button, Group, Box, Overlay } from '@mantine/core';
+import { Button, Overlay, Image, AspectRatio } from '@mantine/core';
 
 const code = `
 import { useState } from 'react';
-import { Button, Group, Box, Overlay } from '@mantine/core';
+import { Button, Overlay, Image, AspectRatio } from '@mantine/core';
 
 function Demo() {
   const [visible, setVisible] = useState(false);
 
   return (
-    <>
-      <Box sx={{ height: 100, position: 'relative' }}>
-        {visible && <Overlay opacity={0.6} color="#000" blur={2} />}
-        Overlay with a blur
-      </Box>
-
-      <Group position="center">
-        <Button onClick={() => setVisible((v) => !v)}>Toggle overlay</Button>
-      </Group>
-    </>
+    <AspectRatio ratio={16 / 9} maw={400} mx="auto">
+      <Image
+        src="https://images.unsplash.com/photo-1546527868-ccb7ee7dfa6a?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=720&q=80"
+        onClick={() => setVisible(false)}
+      />
+      {!visible && (
+        <Overlay blur={15} center>
+          <Button color="red" radius="xl" onClick={() => setVisible(true)}>
+            NSFW, click to reveal
+          </Button>
+        </Overlay>
+      )}
+    </AspectRatio>
   );
 }
 `;
 
 function Demo() {
   const [visible, setVisible] = useState(false);
-  return (
-    <>
-      <Box
-        sx={{
-          margin: 'auto',
-          position: 'relative',
-          height: 100,
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-        }}
-      >
-        {visible && <Overlay opacity={0.6} color="#000" blur={2} />}
-        Overlay with a blur.
-      </Box>
 
-      <Group position="center" mt={20}>
-        <Button onClick={() => setVisible((v) => !v)}>Toggle overlay</Button>
-      </Group>
-    </>
+  return (
+    <AspectRatio ratio={16 / 9} maw={400} mx="auto">
+      <Image
+        src="https://images.unsplash.com/photo-1546527868-ccb7ee7dfa6a?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=720&q=80"
+        onClick={() => setVisible(false)}
+      />
+      {!visible && (
+        <Overlay blur={15} center>
+          <Button color="red" radius="xl" onClick={() => setVisible(true)}>
+            NSFW, click to reveal
+          </Button>
+        </Overlay>
+      )}
+    </AspectRatio>
   );
 }
 

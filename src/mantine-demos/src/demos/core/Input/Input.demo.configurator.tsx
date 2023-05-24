@@ -1,14 +1,14 @@
 import React from 'react';
-import { IconAt } from '@tabler/icons';
+import { IconAt } from '@tabler/icons-react';
 import { MantineDemo } from '@mantine/ds';
-import { Input, InputProps } from '@mantine/core';
+import { Input, InputProps, rem } from '@mantine/core';
 
 const iconSizes = {
-  xs: 14,
-  sm: 16,
-  md: 18,
-  lg: 22,
-  xl: 24,
+  xs: rem(14),
+  sm: rem(16),
+  md: rem(18),
+  lg: rem(22),
+  xl: rem(24),
 };
 
 function Wrapper(props: InputProps) {
@@ -17,7 +17,7 @@ function Wrapper(props: InputProps) {
 
 const codeTemplate = (props: string) => `
 import { Input } from '@mantine/core';
-import { IconAt } from '@tabler/icons';
+import { IconAt } from '@tabler/icons-react';
 
 function Demo() {
   return (
@@ -50,6 +50,6 @@ export const configurator: MantineDemo = {
     { name: 'radius', type: 'size', initialValue: 'sm', defaultValue: 'sm' },
     { name: 'size', type: 'size', initialValue: 'sm', defaultValue: 'sm' },
     { name: 'disabled', type: 'boolean', initialValue: false, defaultValue: false },
-    { name: 'invalid', type: 'boolean', initialValue: false, defaultValue: false },
+    { name: 'error', type: 'boolean', initialValue: false, defaultValue: false },
   ],
 };

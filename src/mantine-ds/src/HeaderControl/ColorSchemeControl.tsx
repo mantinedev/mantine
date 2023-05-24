@@ -1,6 +1,6 @@
 import React from 'react';
-import { useMantineColorScheme } from '@mantine/core';
-import { IconSun, IconMoon } from '@tabler/icons';
+import { useMantineColorScheme, rem } from '@mantine/core';
+import { IconSun, IconMoon } from '@tabler/icons-react';
 import { HeaderControl } from './HeaderControl';
 
 export function ColorSchemeControl() {
@@ -12,9 +12,9 @@ export function ColorSchemeControl() {
       tooltip={`${colorScheme === 'dark' ? 'Light' : 'Dark'} mode`}
     >
       {colorScheme === 'dark' ? (
-        <IconSun size={22} stroke={1.5} />
+        <IconSun size={rem(22)} stroke={1.5} />
       ) : (
-        <IconMoon size={22} stroke={1.5} />
+        <IconMoon size={rem(22)} stroke={1.5} />
       )}
     </HeaderControl>
   );

@@ -4,6 +4,8 @@ import { Box } from '../Box';
 import useStyles from './Mark.styles';
 
 export interface MarkProps extends DefaultProps, React.ComponentPropsWithoutRef<'mark'> {
+  variant?: string;
+
   /** Background color from theme.colors */
   color?: MantineColor;
 }
@@ -13,13 +15,13 @@ const defaultProps: Partial<MarkProps> = {
 };
 
 export const Mark = forwardRef<HTMLElement, MarkProps>((props, ref) => {
-  const { color, className, unstyled, ...others } = useComponentDefaultProps(
+  const { color, className, unstyled, variant, ...others } = useComponentDefaultProps(
     'Mark',
     defaultProps,
     props
   );
 
-  const { classes, cx } = useStyles({ color }, { unstyled, name: 'Mark' });
+  const { classes, cx } = useStyles({ color }, { unstyled, name: 'Mark', variant });
   return <Box component="mark" ref={ref} className={cx(classes.root, className)} {...others} />;
 });
 

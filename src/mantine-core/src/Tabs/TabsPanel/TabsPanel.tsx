@@ -1,4 +1,4 @@
-import React, { forwardRef } from 'react';
+import React, { forwardRef, useEffect } from 'react';
 import { Selectors, DefaultProps, useComponentDefaultProps } from '@mantine/styles';
 import { packSx } from '@mantine/utils';
 import { Box } from '../../Box';
@@ -28,17 +28,29 @@ export const TabsPanel = forwardRef<HTMLDivElement, TabsPanelProps>((props, ref)
   const { classes, cx } = useStyles(
     {
       orientation: ctx.orientation,
-      variant: ctx.variant,
       color: ctx.color,
       radius: ctx.radius,
       inverted: ctx.inverted,
       placement: ctx.placement,
     },
-    { name: 'Tabs', unstyled: ctx.unstyled, classNames: ctx.classNames, styles: ctx.styles }
+    {
+      name: 'Tabs',
+      unstyled: ctx.unstyled,
+      classNames: ctx.classNames,
+      styles: ctx.styles,
+      variant: ctx.variant,
+    }
   );
 
+  const panelId = ctx.getPanelId(value);
   const active = ctx.value === value;
   const content = ctx.keepMounted ? children : active ? children : null;
+
+  /** Set panel as mounted for id referencing */
+  useEffect(() => {
+    ctx.setMountedPanelIds((prev) => [...prev, panelId]);
+    return ctx.setMountedPanelIds((prev) => prev.filter((id) => id !== panelId));
+  }, [panelId]);
 
   return (
     <Box
@@ -47,7 +59,7 @@ export const TabsPanel = forwardRef<HTMLDivElement, TabsPanelProps>((props, ref)
       sx={[{ display: !active ? 'none' : undefined }, ...packSx(sx)]}
       className={cx(classes.panel, className)}
       role="tabpanel"
-      id={ctx.getPanelId(value)}
+      id={panelId}
       aria-labelledby={ctx.getTabId(value)}
     >
       {content}

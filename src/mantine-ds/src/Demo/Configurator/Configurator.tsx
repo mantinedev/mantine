@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { MantineNumberSize, useMantineTheme } from '@mantine/core';
+import { MantineNumberSize, useMantineTheme, rem } from '@mantine/core';
 import { Prism } from '@mantine/prism';
 import controls, { ControlProps } from './controls';
 import { propsToString } from './props-to-string';
@@ -53,7 +53,7 @@ export default function Configurator({
         onChange={(value: any) => setStateField(name, value)}
         data={data}
         capitalize={capitalize}
-        style={{ marginTop: index !== 0 ? 15 : 0 }}
+        style={{ marginTop: rem(index !== 0 ? 15 : 0) }}
       />
     );
   });

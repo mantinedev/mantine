@@ -11,8 +11,14 @@ import {
   getDefaultZIndex,
   useComponentDefaultProps,
 } from '@mantine/styles';
-import { MantineTransition } from '../Transition';
-import { getFloatingPosition, FloatingPosition, ArrowPosition } from '../Floating';
+import { TransitionOverride } from '../Transition';
+import {
+  getFloatingPosition,
+  FloatingAxesOffsets,
+  FloatingPosition,
+  ArrowPosition,
+} from '../Floating';
+import { PortalProps } from '../Portal';
 import { usePopover } from './use-popover';
 import { PopoverContextProvider } from './Popover.context';
 import {
@@ -28,8 +34,8 @@ export interface PopoverBaseProps {
   /** Dropdown position relative to target */
   position?: FloatingPosition;
 
-  /** Space between target element and dropdown in px */
-  offset?: number;
+  /** Default Y axis or either (main, cross, alignment) X and Y axis space between target element and dropdown  */
+  offset?: number | FloatingAxesOffsets;
 
   /** Called when dropdown position changes */
   onPositionChange?(position: FloatingPosition): void;
@@ -43,14 +49,11 @@ export interface PopoverBaseProps {
   /** Called when dropdown opens */
   onOpen?(): void;
 
-  /** One of premade transitions ot transition object */
-  transition?: MantineTransition;
+  /** If set dropdown will not be unmounted from the DOM when it is hidden, display: none styles will be added instead */
+  keepMounted?: boolean;
 
-  /** Transition duration in ms */
-  transitionDuration?: number;
-
-  /** Exit transition duration in ms */
-  exitTransitionDuration?: number;
+  /** Props added to Transition component that used to animate dropdown presence, use to configure duration and animation type, { duration: 150, transition: 'fade' } by default */
+  transitionProps?: TransitionOverride;
 
   /** Dropdown width, or 'target' to make dropdown width the same as target element */
   width?: PopoverWidth;
@@ -61,13 +64,13 @@ export interface PopoverBaseProps {
   /** Determines whether component should have an arrow */
   withArrow?: boolean;
 
-  /** Arrow size in px */
+  /** Arrow size */
   arrowSize?: number;
 
-  /** Arrow offset in px */
+  /** Arrow offset */
   arrowOffset?: number;
 
-  /** Arrow radius in px */
+  /** Arrow border-radius */
   arrowRadius?: number;
 
   /** Arrow position **/
@@ -76,10 +79,13 @@ export interface PopoverBaseProps {
   /** Determines whether dropdown should be rendered within Portal, defaults to false */
   withinPortal?: boolean;
 
+  /** Props to pass down to the portal when withinPortal is true */
+  portalProps?: Omit<PortalProps, 'children' | 'withinPortal'>;
+
   /** Dropdown z-index */
   zIndex?: React.CSSProperties['zIndex'];
 
-  /** Radius from theme.radius or number to set border-radius in px */
+  /** Key of theme.radius or any valid CSS value to set border-radius, theme.defaultRadius by default */
   radius?: MantineNumberSize;
 
   /** Key of theme.shadow or any other valid css box-shadow value */
@@ -123,6 +129,7 @@ export interface PopoverProps extends PopoverBaseProps {
   /** Determines whether dropdown and target element should have accessible roles, defaults to true */
   withRoles?: boolean;
 
+  variant?: string;
   unstyled?: boolean;
   classNames?: ClassNames<PopoverStylesNames>;
   styles?: Styles<PopoverStylesNames, PopoverStylesParams>;
@@ -133,8 +140,7 @@ const defaultProps: Partial<PopoverProps> = {
   position: 'bottom',
   offset: 8,
   positionDependencies: [],
-  transition: 'fade',
-  transitionDuration: 150,
+  transitionProps: { transition: 'fade', duration: 150 },
   middlewares: { flip: true, shift: true, inline: false },
   arrowSize: 7,
   arrowOffset: 5,
@@ -161,8 +167,7 @@ export function Popover(props: PopoverProps) {
     onPositionChange,
     positionDependencies,
     opened,
-    transition,
-    transitionDuration,
+    transitionProps,
     width,
     middlewares,
     withArrow,
@@ -175,6 +180,7 @@ export function Popover(props: PopoverProps) {
     styles,
     closeOnClickOutside,
     withinPortal,
+    portalProps,
     closeOnEscape,
     clickOutsideEvents,
     trapFocus,
@@ -186,11 +192,12 @@ export function Popover(props: PopoverProps) {
     shadow,
     id,
     defaultOpened,
-    exitTransitionDuration,
     __staticSelector,
     withRoles,
     disabled,
     returnFocus,
+    variant,
+    keepMounted,
     ...others
   } = useComponentDefaultProps('Popover', defaultProps, props);
 
@@ -203,7 +210,7 @@ export function Popover(props: PopoverProps) {
     middlewares,
     width,
     position: getFloatingPosition(theme.dir, position),
-    offset: offset + (withArrow ? arrowSize / 2 : 0),
+    offset: typeof offset === 'number' ? offset + (withArrow ? arrowSize / 2 : 0) : offset,
     arrowRef,
     arrowOffset,
     onPositionChange,
@@ -215,10 +222,11 @@ export function Popover(props: PopoverProps) {
     onClose,
   });
 
-  useClickOutside(() => closeOnClickOutside && popover.onClose(), clickOutsideEvents, [
-    targetNode,
-    dropdownNode,
-  ]);
+  useClickOutside(
+    () => popover.opened && closeOnClickOutside && popover.onClose(),
+    clickOutsideEvents,
+    [targetNode, dropdownNode]
+  );
 
   const reference = useCallback(
     (node: HTMLElement) => {
@@ -250,9 +258,7 @@ export function Popover(props: PopoverProps) {
         arrowY: popover.floating?.middlewareData?.arrow?.y,
         opened: popover.opened,
         arrowRef,
-        transition,
-        transitionDuration,
-        exitTransitionDuration,
+        transitionProps,
         width,
         withArrow,
         arrowSize,
@@ -262,6 +268,7 @@ export function Popover(props: PopoverProps) {
         placement: popover.floating.placement,
         trapFocus,
         withinPortal,
+        portalProps,
         zIndex,
         radius,
         shadow,
@@ -276,6 +283,8 @@ export function Popover(props: PopoverProps) {
         classNames,
         styles,
         unstyled,
+        variant,
+        keepMounted,
       }}
     >
       {children}

@@ -1,29 +1,31 @@
-import React, { useState } from 'react';
-import { Group } from '@mantine/core';
+import React from 'react';
 import { MantineDemo } from '@mantine/ds';
+import { Group } from '@mantine/core';
 import { Calendar } from '@mantine/dates';
 
 const code = `
-import { useState } from 'react';
+import { Group } from '@mantine/core';
 import { Calendar } from '@mantine/dates';
 
 function Demo() {
-  const [value, setValue] = useState(null);
-  return <Calendar value={value} onChange={setValue} />;
+  return (
+    <Group position="center">
+      <Calendar />
+    </Group>
+  );
 }
 `;
 
 function Demo() {
-  const [value, setValue] = useState(null);
   return (
     <Group position="center">
-      <Calendar value={value} onChange={setValue} />
+      <Calendar />
     </Group>
   );
 }
 
 export const usage: MantineDemo = {
   type: 'demo',
-  code,
   component: Demo,
+  code,
 };

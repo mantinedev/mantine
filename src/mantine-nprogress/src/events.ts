@@ -20,3 +20,13 @@ export const setNavigationProgress = createEvent('set');
 export const incrementNavigationProgress = createEvent('increment');
 export const decrementNavigationProgress = createEvent('decrement');
 export const completeNavigationProgress = createEvent('complete');
+
+export const nprogress = {
+  start: startNavigationProgress,
+  stop: stopNavigationProgress,
+  reset: resetNavigationProgress,
+  set: setNavigationProgress,
+  increment: incrementNavigationProgress,
+  decrement: decrementNavigationProgress,
+  complete: completeNavigationProgress,
+};

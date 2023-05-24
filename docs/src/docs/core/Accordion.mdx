@@ -74,7 +74,7 @@ import { Accordion } from '@mantine/core';
 function Demo() {
   // Both items will be opened by default
   return (
-    <Accordion defaultValue={['item-1', 'item-2']}>
+    <Accordion multiple defaultValue={['item-1', 'item-2']}>
       <Accordion.Item value="item-1">
         <Accordion.Control>control-1</Accordion.Control>
         <Accordion.Panel>panel-1</Accordion.Panel>
@@ -176,7 +176,7 @@ Accordion elements have `data-` attributes that can be used with [Styles API](/s
 - `data-rotate` attribute is added to chevron icon when icon should rotate (controlled by `disableChevronRotation` and expanded state of associated panel)
 
 ```tsx
-import { Accordion } from '@mantine/core';
+import { Accordion, rem } from '@mantine/core';
 
 function Demo() {
   return (
@@ -185,7 +185,7 @@ function Demo() {
         item: {
           // styles added to all items
           backgroundColor: '#fff',
-          border: '1px solid #ededed',
+          border: `${rem(1)} solid #ededed`,
 
           // styles added to expanded item
           '&[data-active]': {

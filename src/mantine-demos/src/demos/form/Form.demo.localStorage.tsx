@@ -1,12 +1,12 @@
 import React, { useEffect } from 'react';
 import { useForm } from '@mantine/form';
 import { MantineDemo } from '@mantine/ds';
-import { TextInput } from '@mantine/core';
+import { TextInput, Box } from '@mantine/core';
 
 const code = `
 import { useEffect } from 'react';
 import { useForm } from '@mantine/form';
-import { TextInput } from '@mantine/core';
+import { TextInput, Box } from '@mantine/core';
 
 function Demo() {
   const form = useForm({ initialValues: { name: '', occupation: '' } });
@@ -27,7 +27,7 @@ function Demo() {
   }, [form.values]);
 
   return (
-    <div style={{ maxWidth: 320, margin: 'auto' }}>
+    <Box maw={320} mx="auto">
       <TextInput label="Name" placeholder="Name" {...form.getInputProps('name')} />
       <TextInput
         mt="md"
@@ -35,7 +35,7 @@ function Demo() {
         placeholder="Occupation"
         {...form.getInputProps('occupation')}
       />
-    </div>
+    </Box>
   );
 }
 `;
@@ -60,7 +60,7 @@ function Demo() {
   }, [form.values]);
 
   return (
-    <div style={{ maxWidth: 320, margin: 'auto' }}>
+    <Box maw={320} mx="auto">
       <TextInput label="Name" placeholder="Name" {...form.getInputProps('name')} />
       <TextInput
         mt="md"
@@ -68,7 +68,7 @@ function Demo() {
         placeholder="Occupation"
         {...form.getInputProps('occupation')}
       />
-    </div>
+    </Box>
   );
 }
 

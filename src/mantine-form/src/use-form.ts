@@ -1,34 +1,35 @@
-import { useState, useCallback, useRef } from 'react';
+import { useCallback, useRef, useState } from 'react';
 import isEqual from 'fast-deep-equal';
 import { getInputOnChange } from './get-input-on-change';
-import { setPath, reorderPath, insertPath, getPath, removePath } from './paths';
+import { getPath, insertPath, removePath, reorderPath, setPath } from './paths';
 import { filterErrors } from './filter-errors';
-import { validateValues, validateFieldValue, shouldValidateOnChange } from './validate';
+import { shouldValidateOnChange, validateFieldValue, validateValues } from './validate';
 import { getStatus } from './get-status';
-import { clearListState } from './clear-list-state';
+import { changeErrorIndices, clearListState, reorderErrors } from './lists';
 import {
-  UseFormReturnType,
-  UseFormInput,
-  SetErrors,
+  _TransformValues,
   ClearErrors,
+  ClearFieldDirty,
+  ClearFieldError,
+  GetFieldStatus,
+  GetInputProps,
+  GetTransformedValues,
+  InsertListItem,
+  IsValid,
+  OnReset,
+  OnSubmit,
+  RemoveListItem,
+  ReorderListItem,
   Reset,
+  ResetDirty,
+  SetErrors,
   SetFieldError,
   SetFieldValue,
   SetValues,
-  ReorderListItem,
-  RemoveListItem,
-  InsertListItem,
-  ClearFieldError,
+  UseFormInput,
+  UseFormReturnType,
   Validate,
   ValidateField,
-  GetInputProps,
-  OnSubmit,
-  OnReset,
-  GetFieldStatus,
-  ResetDirty,
-  IsValid,
-  _TransformValues,
-  ClearFieldDirty,
 } from './types';
 
 export function useForm<
@@ -49,14 +50,16 @@ export function useForm<
   const [dirty, setDirty] = useState(initialDirty);
   const [values, _setValues] = useState(initialValues);
   const [errors, _setErrors] = useState(filterErrors(initialErrors));
-  const _dirtyValues = useRef<Values>(initialValues);
-  const _setDirtyValues = (_values: Values) => {
-    _dirtyValues.current = _values;
+
+  const valuesSnapshot = useRef<Values>(initialValues);
+  const setValuesSnapshot = (_values: Values) => {
+    valuesSnapshot.current = _values;
   };
 
   const resetTouched = useCallback(() => setTouched({}), []);
   const resetDirty: ResetDirty<Values> = (_values) => {
-    _setDirtyValues(_values || values);
+    const newSnapshot = _values ? { ...values, ..._values } : values;
+    setValuesSnapshot(newSnapshot);
     setDirty({});
   };
 
@@ -70,7 +73,8 @@ export function useForm<
   const reset: Reset = useCallback(() => {
     _setValues(initialValues);
     clearErrors();
-    resetDirty(initialValues);
+    setValuesSnapshot(initialValues);
+    setDirty({});
     resetTouched();
   }, []);
 
@@ -138,17 +142,19 @@ export function useForm<
   const reorderListItem: ReorderListItem<Values> = useCallback((path, payload) => {
     clearFieldDirty(path);
     _setValues((current) => reorderPath(path, payload, current));
+    _setErrors((errs) => reorderErrors(path, payload, errs));
   }, []);
 
   const removeListItem: RemoveListItem<Values> = useCallback((path, index) => {
     clearFieldDirty(path);
     _setValues((current) => removePath(path, index, current));
-    _setErrors((errs) => clearListState(path, errs));
+    _setErrors((errs) => changeErrorIndices(path, index, errs, -1));
   }, []);
 
   const insertListItem: InsertListItem<Values> = useCallback((path, item, index) => {
     clearFieldDirty(path);
     _setValues((current) => insertPath(path, item, index, current));
+    _setErrors((errs) => changeErrorIndices(path, index, errs, 1));
   }, []);
 
   const validate: Validate = useCallback(() => {
@@ -168,7 +174,7 @@ export function useForm<
 
   const getInputProps: GetInputProps<Values> = (
     path,
-    { type = 'input', withError = type === 'input', withFocus = true } = {}
+    { type = 'input', withError = true, withFocus = true } = {}
   ) => {
     const onChange = getInputOnChange((value) => setFieldValue(path, value as any));
     const payload: any = { onChange };
@@ -207,9 +213,12 @@ export function useForm<
       if (results.hasErrors) {
         handleValidationFailure?.(results.errors, values, event);
       } else {
-        handleSubmit(transformValues(values) as any, event);
+        handleSubmit?.(transformValues(values) as any, event);
       }
     };
+
+  const getTransformedValues: GetTransformedValues<Values, TransformValues> = (input) =>
+    (transformValues as any)(input || values);
 
   const onReset: OnReset = useCallback((event) => {
     event.preventDefault();
@@ -218,13 +227,13 @@ export function useForm<
 
   const isDirty: GetFieldStatus<Values> = (path) => {
     if (path) {
-      const overridenValue = getPath(path, dirty);
-      if (typeof overridenValue === 'boolean') {
-        return overridenValue;
+      const overriddenValue = getPath(path, dirty);
+      if (typeof overriddenValue === 'boolean') {
+        return overriddenValue;
       }
 
       const sliceOfValues = getPath(path, values);
-      const sliceOfInitialValues = getPath(path, _dirtyValues.current);
+      const sliceOfInitialValues = getPath(path, valuesSnapshot.current);
       return !isEqual(sliceOfValues, sliceOfInitialValues);
     }
 
@@ -233,7 +242,7 @@ export function useForm<
       return getStatus(dirty);
     }
 
-    return !isEqual(values, _dirtyValues.current);
+    return !isEqual(values, valuesSnapshot.current);
   };
 
   const isTouched: GetFieldStatus<Values> = useCallback(
@@ -274,5 +283,6 @@ export function useForm<
     resetTouched,
     resetDirty,
     isValid,
+    getTransformedValues,
   };
 }

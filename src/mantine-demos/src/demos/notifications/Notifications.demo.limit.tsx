@@ -1,11 +1,11 @@
 import React from 'react';
 import { Group, Button } from '@mantine/core';
 import { MantineDemo } from '@mantine/ds';
-import { showNotification } from '@mantine/notifications';
+import { notifications } from '@mantine/notifications';
 
 const code = `
 import { Group, Button } from '@mantine/core';
-import { showNotification } from '@mantine/notifications';
+import { notifications } from '@mantine/notifications';
 
 function Demo() {
   return (
@@ -15,7 +15,7 @@ function Demo() {
         onClick={() => {
           Array(10).fill(0).forEach((_, index) => {
             setTimeout(() => {
-              showNotification({
+              notifications.show({
                 title: \`Notification \${index + 1}\`,
                 message: 'Most notifications are added to queue',
               });
@@ -39,7 +39,7 @@ function Demo() {
             .fill(0)
             .forEach((_, index) => {
               setTimeout(() => {
-                showNotification({
+                notifications.show({
                   title: `Notification ${index + 1}`,
                   message: 'Most notifications are added to queue',
                 });

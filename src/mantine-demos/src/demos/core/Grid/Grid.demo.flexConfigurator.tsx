@@ -1,15 +1,15 @@
 import React from 'react';
-import { Grid, GridProps } from '@mantine/core';
+import { Grid, GridProps, rem } from '@mantine/core';
 import { MantineDemo } from '@mantine/ds';
 import { ColWrapper as Col } from './_col-wrapper';
 
 function Wrapper(props: GridProps) {
   return (
     <Grid {...props} id="grid-configurator">
-      <Col span={3} style={{ minHeight: 80 }}>
+      <Col span={3} style={{ minHeight: rem(80) }}>
         1
       </Col>
-      <Col span={3} style={{ minHeight: 120 }}>
+      <Col span={3} style={{ minHeight: rem(120) }}>
         2
       </Col>
       <Col span={3}>3</Col>
@@ -18,13 +18,13 @@ function Wrapper(props: GridProps) {
 }
 
 const codeTemplate = (props: string) => `
-import { Grid } from '@mantine/core';
+import { Grid, rem } from '@mantine/core';
 
 function Demo() {
   return (
     <Grid${props}>
-      <Grid.Col span={3} style={{ minHeight: 80 }}>1</Grid.Col>
-      <Grid.Col span={3} style={{ minHeight: 120 }}>2</Grid.Col>
+      <Grid.Col span={3} style={{ minHeight: rem(80) }}>1</Grid.Col>
+      <Grid.Col span={3} style={{ minHeight: rem(120) }}>2</Grid.Col>
       <Grid.Col span={3}>3</Grid.Col>
     </Grid>
   );

@@ -5,7 +5,7 @@ title: SegmentedControl
 order: 1
 slug: /core/segmented-control/
 category: 'inputs'
-description: 'Horizontal control with multiple segments'
+description: 'A linear set of two or more segments'
 props: ['SegmentedControl']
 import: "import { SegmentedControl } from '@mantine/core';"
 source: 'mantine-core/src/SegmentedControl/SegmentedControl.tsx'
@@ -68,7 +68,7 @@ SegmentedControl support two different data formats:
 ]} />
 ```
 
-## Disabled
+## Disabled state
 
 <Demo data={SegmentedControlDemos.disabled} />
 
@@ -98,11 +98,11 @@ SegmentedControl sizes from xs to xl:
 
 ## Radius
 
-xs, sm, md, lg, xl radius values are defined in `theme.radius`. Alternatively, you can use a number to set radius in px:
+xs, sm, md, lg, xl radius values are defined in `theme.radius`. Alternatively, you can use any CSS value to set border-radius:
 
 ```tsx
 <SegmentedControl radius="lg" /> // -> theme predefined large radius
-<SegmentedControl radius={20} /> // -> { borderRadius: '20px' }
+<SegmentedControl radius={16} /> // -> { borderRadius: '1rem' }
 <SegmentedControl radius={0} /> // -> { borderRadius: 0 }
 ```
 

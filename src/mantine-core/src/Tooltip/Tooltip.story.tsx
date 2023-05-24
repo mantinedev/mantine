@@ -2,13 +2,14 @@ import React, { useState } from 'react';
 import { Tooltip } from './Tooltip';
 import { Button } from '../Button';
 import { Group } from '../Group';
+import { Box } from '../Box';
 
 export default { title: 'Tooltip' };
 
 export function Usage() {
   return (
     <div style={{ padding: 40 }}>
-      <Tooltip position="right" label="Tooltip label" withArrow>
+      <Tooltip position="right" label="Tooltip label" withArrow transitionProps={{ duration: 0 }}>
         <Button>target</Button>
       </Tooltip>
     </div>
@@ -59,6 +60,34 @@ export const Floating = () => (
   </div>
 );
 
+export const FloatingAndDisabled = () => {
+  const [tooltipEnabled, setTooltipEnabled] = useState(true);
+
+  return (
+    <div style={{ padding: 0 }}>
+      <Tooltip.Floating label="test" disabled={!tooltipEnabled}>
+        <Group>
+          <Box bg="red" w={100} h={100}>
+            Enabled
+          </Box>
+          <Box
+            bg="green"
+            w={100}
+            h={100}
+            onMouseEnter={() => setTooltipEnabled(false)}
+            onMouseLeave={() => setTooltipEnabled(true)}
+          >
+            Disabled
+          </Box>
+          <Box bg="blue" w={100} h={100}>
+            Enabled
+          </Box>
+        </Group>
+      </Tooltip.Floating>
+    </div>
+  );
+};
+
 export const Unmount = () => {
   const [mounted, setMounted] = useState(true);
   return (
@@ -100,6 +129,25 @@ export const WithArrow = () => (
   >
     <Button type="button">Tooltip button with arrow</Button>
   </Tooltip>
+);
+
+export const TooltipAndArrowWithBorder = () => (
+  <div style={{ padding: 40 }}>
+    <Tooltip
+      opened
+      position="right"
+      label="Tooltip and arrow with border"
+      withArrow
+      transitionProps={{ duration: 0 }}
+      arrowSize={10}
+      styles={{
+        tooltip: { border: '4px solid green' },
+        arrow: { border: '4px solid green' },
+      }}
+    >
+      <Button>target</Button>
+    </Tooltip>
+  </div>
 );
 
 export const WithArrowRadius = () => (
