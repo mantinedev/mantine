@@ -49,6 +49,10 @@ export default createStyles((theme, { radius }: NumberInputStylesParams, { size 
     '&:not(:disabled):hover': {
       backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[0],
     },
+
+    '&:disabled': {
+      color: theme.colorScheme === 'dark' ? theme.colors.dark[3] : theme.colors.gray[4],
+    },
   },
 
   controlUp: {},
