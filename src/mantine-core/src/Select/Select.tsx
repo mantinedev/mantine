@@ -396,7 +396,7 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>((props, ref) => 
     window.setTimeout(() => {
       targetRef.current = itemsRefs.current[filteredData[selectedItemIndex]?.value];
       scrollIntoView({ alignment: isColumn ? 'end' : 'start' });
-    }, 0);
+    }, 50);
 
   useDidUpdate(() => {
     if (shouldShowDropdown) scrollSelectedItemIntoView();
