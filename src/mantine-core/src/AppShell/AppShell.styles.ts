@@ -30,6 +30,9 @@ function getPositionStyles(props: AppShellStylesParams, theme: MantineTheme): CS
     return { padding };
   }
 
+  const navbarBreakpointValue = getBreakpointValue(navbarOffset);
+  const asideBreakpointValue = getBreakpointValue(asideOffset);
+
   return {
     minHeight: '100vh',
     paddingTop: `calc(var(--mantine-header-height, 0px) + ${padding})`,
@@ -37,13 +40,22 @@ function getPositionStyles(props: AppShellStylesParams, theme: MantineTheme): CS
     paddingLeft: `calc(var(--mantine-navbar-width, 0px) + ${padding})`,
     paddingRight: `calc(var(--mantine-aside-width, 0px) + ${padding})`,
 
-    [`@media (max-width: ${em(getBreakpointValue(navbarOffset) - 1)})`]: {
-      paddingLeft: padding,
-    },
+    ...(navbarBreakpointValue === asideBreakpointValue
+      ? {
+          [`@media (max-width: ${em(navbarBreakpointValue - 1)})`]: {
+            paddingLeft: padding,
+            paddingRight: padding,
+          },
+        }
+      : {
+          [`@media (max-width: ${em(navbarBreakpointValue - 1)})`]: {
+            paddingLeft: padding,
+          },
 
-    [`@media (max-width: ${em(getBreakpointValue(asideOffset) - 1)})`]: {
-      paddingRight: padding,
-    },
+          [`@media (max-width: ${em(asideBreakpointValue - 1)})`]: {
+            paddingRight: padding,
+          },
+        }),
   };
 }
 
