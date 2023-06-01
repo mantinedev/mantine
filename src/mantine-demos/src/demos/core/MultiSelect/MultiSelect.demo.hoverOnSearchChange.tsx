@@ -8,24 +8,13 @@ import { MultiSelect } from '@mantine/core';
 
 function Demo() {
   return (
-    <>
-      <MultiSelect
-        data={['React', 'Angular', 'Svelte', 'Vue', 'Riot', 'Next.js', 'Blitz.js']}
-        label="Your favorite frameworks/libraries"
-        placeholder="Pick all that you like"
-        searchable
-        hoverOnSearchChange
-      />
-      <MultiSelect
-        data={[]}
-        creatable
-        searchable
-        hoverOnSearchChange
-        label="[creatable]Your favorite frameworks/libraries"
-        placeholder="Pick all that you like"
-        getCreateLabel={(query) => \`+ Create \${query}\`}
-      />
-    </>
+    <MultiSelect
+      data={['React', 'Angular', 'Svelte', 'Vue', 'Riot', 'Next.js', 'Blitz.js']}
+      label="Your favorite frameworks/libraries"
+      placeholder="Pick all that you like"
+      searchable
+      hoverOnSearchChange
+    />
   );
 }
 `;
@@ -39,15 +28,6 @@ function Demo() {
         placeholder="Pick all that you like"
         searchable
         hoverOnSearchChange
-      />
-      <MultiSelect
-        data={[]}
-        creatable
-        searchable
-        hoverOnSearchChange
-        label="[creatable]Your favorite frameworks/libraries"
-        placeholder="Pick all that you like"
-        getCreateLabel={(query) => `Add: ${query}`}
       />
     </div>
   );
