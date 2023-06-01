@@ -38,9 +38,11 @@ export interface ModalsContextProps {
 
 export type MantineModalsOverride = {};
 
-export type MantineModalsOverwritten = MantineModalsOverride extends {
+type DefaultModalsType = {
   modals: Record<string, React.FC<ContextModalProps<any>>>;
 }
+
+export type MantineModalsOverwritten = MantineModalsOverride extends DefaultModalsType
   ? MantineModalsOverride
   : {
       modals: Record<string, React.FC<ContextModalProps<any>>>;
@@ -48,7 +50,11 @@ export type MantineModalsOverwritten = MantineModalsOverride extends {
 
 export type MantineModals = MantineModalsOverwritten['modals'];
 
-export type MantineModal = keyof MantineModals;
+type RemoveIndex<T> = {
+  [K in keyof T as string extends K ? never : number extends K ? never : symbol extends K ? never : K]: T[K];
+};
+
+export type MantineModal = MantineModalsOverride extends DefaultModalsType ? keyof RemoveIndex<MantineModals> : string;
 
 export const ModalsContext = createContext<ModalsContextProps>(null);
 ModalsContext.displayName = '@mantine/modals/ModalsContext';
