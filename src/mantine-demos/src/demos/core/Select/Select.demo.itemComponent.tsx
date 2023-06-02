@@ -56,6 +56,7 @@ const SelectItem = forwardRef<HTMLDivElement, ItemProps>(
     </div>
   )
 );
+SelectItem.displayName = "";
 
 function Demo() {
   return (
