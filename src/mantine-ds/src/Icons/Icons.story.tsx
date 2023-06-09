@@ -4,6 +4,7 @@ import { GithubIcon } from './GithubIcon';
 import { TwitterIcon } from './TwitterIcon';
 import { NpmIcon } from './NpmIcon';
 import { YarnIcon } from './YarnIcon';
+import { PnpmIcon } from './PnpmIcon';
 
 export default { title: 'DS/Icons' };
 
@@ -15,6 +16,7 @@ export function Usage() {
       <TwitterIcon size={40} />
       <NpmIcon size={40} />
       <YarnIcon size={40} />
+      <PnpmIcon size={40} />
     </div>
   );
 }
