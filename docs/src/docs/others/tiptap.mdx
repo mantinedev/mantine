@@ -14,21 +14,23 @@ license: MIT
 styles: ['RichTextEditor']
 ---
 
+import { PackageInstallation } from '../../components/PackageInstallation/PackageInstallation';
 import { TipTapDemos } from '@mantine/demos';
 
 ## Installation
 
-Install with yarn:
-
-```bash
-yarn add @mantine/tiptap @mantine/core @mantine/hooks @tabler/icons-react @tiptap/react @tiptap/pm @tiptap/extension-link @tiptap/starter-kit
-```
-
-Install with npm:
-
-```bash
-npm install @mantine/tiptap @mantine/core @mantine/hooks @tabler/icons-react @tiptap/react @tiptap/pm @tiptap/extension-link @tiptap/starter-kit
-```
+<PackageInstallation
+  packages={[
+    '@mantine/tiptap',
+    '@mantine/core',
+    '@mantine/hooks',
+    '@tabler/icons-react',
+    '@tiptap/react',
+    '@tiptap/pm',
+    '@tiptap/extension-link',
+    '@tiptap/starter-kit',
+  ]}
+/>
 
 ## TipTap editor
 
@@ -51,13 +53,7 @@ you should look for documentation on [tiptap.dev](https://tiptap.dev/) website.
 Some controls require installation of additional [Tiptap extensions](https://tiptap.dev/extensions).
 For example, if you want to use `RichTextEditor.Underline` control, you will need to install `@tiptap/extension-underline` package:
 
-```bash
-yarn add @tiptap/extension-underline
-```
-
-```bash
-npm install @tiptap/extension-underline
-```
+<PackageInstallation packages={['@tiptap/extension-underline']} />
 
 Included with `@tiptap/starter-kit` (should be installed by default):
 
@@ -107,13 +103,7 @@ Other controls with required extensions:
 
 To use placeholder you will need to install [@tiptap/extension-placeholder](https://www.npmjs.com/package/@tiptap/extension-placeholder) package:
 
-```bash
-yarn add @tiptap/extension-placeholder
-```
-
-```bash
-npm install @tiptap/extension-placeholder
-```
+<PackageInstallation packages={['@tiptap/extension-placeholder']} />
 
 <Demo data={TipTapDemos.placeholder} />
 
@@ -143,13 +133,7 @@ function Demo() {
 
 To use text color you will need to install additional packages:
 
-```bash
-yarn add @tiptap/extension-color @tiptap/extension-text-style
-```
-
-```bash
-npm install @tiptap/extension-color @tiptap/extension-text-style
-```
+<PackageInstallation packages={['@tiptap/extension-color', '@tiptap/extension-text-style']} />
 
 You can use the following controls to change text color:
 
@@ -163,13 +147,7 @@ You can use the following controls to change text color:
 
 To use code highlight you will need to install additional packages:
 
-```bash
-yarn add lowlight @tiptap/extension-code-block-lowlight
-```
-
-```bash
-npm install lowlight @tiptap/extension-code-block-lowlight
-```
+<PackageInstallation packages={['lowlight', '@tiptip/extension-code-block-lowlight']} />
 
 <Demo data={TipTapDemos.codeHighlight} />
 

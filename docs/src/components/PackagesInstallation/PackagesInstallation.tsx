@@ -1,31 +1,7 @@
 import React, { useState } from 'react';
-import { Table, Checkbox, Code, Text, Box, rem } from '@mantine/core';
-import { Prism } from '@mantine/prism';
-import { NpmIcon, PnpmIcon, YarnIcon } from '@mantine/ds';
+import { Table, Checkbox, Code, Text, Box } from '@mantine/core';
 import { PACKAGES_DATA } from './data';
-
-const packageManagerPrefixes = new Map([
-  ['yarn', 'yarn add'],
-  ['npm', 'npm install'],
-  ['pnpm', 'pnpm i'],
-]);
-
-function getInstallationCommand(
-  selection: string[],
-  extraPackages: string[],
-  type: 'yarn' | 'npm' | 'pnpm'
-) {
-  const packages = selection.reduce<string[]>((acc, item) => {
-    acc.push(...PACKAGES_DATA.find((i) => i.package === item).dependencies);
-    return acc;
-  }, []);
-
-  const unique = Array.from(
-    new Set(['@mantine/core', '@mantine/hooks', ...packages, ...extraPackages, '@emotion/react'])
-  );
-  const prefix = packageManagerPrefixes.get(type);
-  return `${prefix} ${unique.join(' ')}`;
-}
+import { PackageInstallation } from '../PackageInstallation/PackageInstallation';
 
 interface PackagesInstallationProps {
   extraPackages?: string[];
@@ -98,32 +74,7 @@ export function PackagesInstallation({ extraPackages = [] }: PackagesInstallatio
         Install dependencies:
       </Box>
 
-      <Prism.Tabs
-        defaultValue="yarn"
-        styles={{ tabIcon: { marginRight: `${rem(12)} !important` } }}
-      >
-        <Prism.TabsList>
-          <Prism.Tab value="yarn" icon={<YarnIcon size={16} />}>
-            yarn
-          </Prism.Tab>
-          <Prism.Tab value="npm" icon={<NpmIcon size={16} />}>
-            npm
-          </Prism.Tab>
-          <Prism.Tab value="pnpm" icon={<PnpmIcon size={16} />}>
-            pnpm
-          </Prism.Tab>
-        </Prism.TabsList>
-
-        <Prism.Panel value="yarn" language="bash">
-          {getInstallationCommand(selection, extraPackages, 'yarn')}
-        </Prism.Panel>
-        <Prism.Panel value="npm" language="bash">
-          {getInstallationCommand(selection, extraPackages, 'npm')}
-        </Prism.Panel>
-        <Prism.Panel value="pnpm" language="bash">
-          {getInstallationCommand(selection, extraPackages, 'pnpm')}
-        </Prism.Panel>
-      </Prism.Tabs>
+      <PackageInstallation packages={[...selection, ...extraPackages]} />
     </>
   );
 }

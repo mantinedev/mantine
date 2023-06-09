@@ -3,6 +3,7 @@ title: About Mantine
 ---
 
 import { MantineLogoDemos } from '@mantine/demos';
+import { PackageInstallation } from '../../components/PackageInstallation/PackageInstallation';
 import { LogoAssets } from '../../components/LogoAssets/LogoAssets.tsx';
 
 # About Mantine
@@ -69,10 +70,6 @@ Download Mantine logos in `.svg` format:
 
 You can also install `@mantine/ds` package and import `MantineLogo` component:
 
-```bash
-yarn add @mantine/ds
-
-npm install @mantine/ds
-```
+<PackageInstallation packages={['@mantine/ds']} />
 
 <Demo data={MantineLogoDemos.configurator} />

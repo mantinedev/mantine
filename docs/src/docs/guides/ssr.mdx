@@ -5,6 +5,8 @@ slug: /guides/ssr/
 search: 'General approach to SSR'
 ---
 
+import { PackageInstallation } from '../../components/PackageInstallation/PackageInstallation';
+
 # Server side rendering
 
 This guide covers server side rendering with custom server, [Next.js](/guides/next/) and [Gatsby](/guides/gatsby/)
@@ -12,11 +14,7 @@ usage guides are available separately.
 
 1. Install `@mantine/ssr` package
 
-```bash
-yarn add @mantine/ssr
-
-npm install @mantine/ssr
-```
+<PackageInstallation packages={['@mantine/ssr']} />
 
 2. Create `App` component with `MantineProvider`
 

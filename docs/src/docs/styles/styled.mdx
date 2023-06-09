@@ -6,21 +6,16 @@ order: 5
 search: 'Add styles to components with styled components syntax'
 ---
 
+import { PackageInstallation } from '../../components/PackageInstallation/PackageInstallation';
 import { StyledDemos } from '@mantine/demos';
 
 ## Installation
 
 To use styled components syntax, install [@emotion/styled package](https://emotion.sh/docs/styled):
 
-```bash
-yarn add @emotion/styled
-```
+<PackageInstallation packages={['@emotion/styled']} />
 
-```bash
-npm install @emotion/styled
-```
-
-**!important** You will need to wrap your application with [MantineProvider](/theming/mantine-provider/)
+**Important:** You will need to wrap your application with [MantineProvider](/theming/mantine-provider/)
 to access [theme](/theming/theme-object/) in styles.
 
 ```tsx
