@@ -297,7 +297,10 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>((props
     disableSelectedItemFiltering,
   });
 
-  const hovered = Math.min(_hovered, filteredData.length - 1);
+  const hovered = Math.min(
+    _hovered,
+    creatable && getCreateLabel ? filteredData.length : filteredData.length - 1
+  );
 
   const getNextIndex = (
     index: number,

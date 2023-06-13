@@ -94,3 +94,18 @@ export function UnFilteredSelected() {
     />
   );
 }
+
+export function HoverOnChange() {
+  return (
+    <div style={{ padding: 40 }}>
+      <MultiSelect
+        creatable
+        searchable
+        hoverOnSearchChange
+        label="Choose your framework"
+        getCreateLabel={(v) => `Create ${v}`}
+        data={data}
+      />
+    </div>
+  );
+}
