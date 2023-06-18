@@ -35,14 +35,14 @@ export default createStyles(
         lineHeight: theme.lineHeight,
         border: withBorder ? border : undefined,
 
-        '& caption': {
+        '& > caption': {
           marginTop: captionSide === 'top' ? 0 : theme.spacing.xs,
           marginBottom: captionSide === 'bottom' ? 0 : theme.spacing.xs,
           fontSize: theme.fontSizes.sm,
           color: theme.colorScheme === 'dark' ? theme.colors.dark[2] : theme.colors.gray[6],
         },
 
-        '& thead tr th, & tfoot tr th, & tbody tr th': {
+        '& > thead > tr > th, & > tfoot > tr > th, & > tbody > tr > th': {
           textAlign: 'left',
           fontWeight: 'bold',
           color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.colors.gray[7],
@@ -53,15 +53,15 @@ export default createStyles(
           })}`,
         },
 
-        '& thead tr th': {
+        '& > thead > tr > th': {
           borderBottom: border,
         },
 
-        '& tfoot tr th, & tbody tr th': {
+        '& > tfoot > tr > th, & > tbody > tr > th': {
           borderTop: border,
         },
 
-        '& tbody tr td': {
+        '& > tbody > tr > td': {
           padding: `${getSize({
             size: verticalSpacing,
             sizes: theme.spacing,
@@ -70,11 +70,11 @@ export default createStyles(
           fontSize: getSize({ size: fontSize, sizes: theme.fontSizes }),
         },
 
-        '& tbody tr:first-of-type td, & tbody tr:first-of-type th': {
+        '& > tbody > tr:first-of-type > td, & > tbody > tr:first-of-type > th': {
           borderTop: 'none',
         },
 
-        '& thead th, & tbody td': {
+        '& > thead > th, & > tbody > td': {
           borderRight: withColumnBorders ? border : 'none',
 
           '&:last-of-type': {
@@ -83,16 +83,16 @@ export default createStyles(
           },
         },
 
-        '& tbody tr th': {
+        '& > tbody > tr > th': {
           borderRight: withColumnBorders ? border : 'none',
         },
 
-        '&[data-striped] tbody tr:nth-of-type(odd)': {
+        '&[data-striped] > tbody > tr:nth-of-type(odd)': {
           backgroundColor:
             theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[0],
         },
 
-        '&[data-hover] tbody tr': theme.fn.hover({
+        '&[data-hover] > tbody > tr': theme.fn.hover({
           backgroundColor:
             theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[1],
         }),
