@@ -58,6 +58,25 @@ describe('@mantine/core/Image', () => {
     expect(container.querySelectorAll('.mantine-Image-placeholder')).toHaveLength(1);
   });
 
+  it('sets overflow to hidden if withPlaceholder is true on img element', () => {
+    render(<Image src={null} alt="test-alt" withPlaceholder />);
+    const image = screen.getByRole('img');
+    expect(image).toHaveStyle({ overflow: 'hidden' });
+  });
+
+  it('uses a user-defined overflow if an imageProps style is set on img element', () => {
+    render(
+      <Image
+        src={null}
+        alt="test-alt"
+        withPlaceholder
+        imageProps={{ style: { overflow: 'unset' } }}
+      />
+    );
+    const image = screen.getByRole('img');
+    expect(image).toHaveStyle({ overflow: 'unset' });
+  });
+
   it('renders given caption', () => {
     const { container: withoutCaption } = render(<Image src="test" />);
     const { container: withCaption } = render(<Image src="test" caption="test-caption" />);

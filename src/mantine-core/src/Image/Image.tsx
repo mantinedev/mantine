@@ -113,7 +113,13 @@ export const Image = forwardRef<HTMLDivElement, ImageProps>((props: ImageProps, 
               setError(true);
               typeof imageProps?.onError === 'function' && imageProps.onError(event);
             }}
-            style={{ objectFit: fit, width: rem(width), height: rem(height), ...imageProps?.style }}
+            style={{
+              objectFit: fit,
+              width: rem(width),
+              height: rem(height),
+              ...(isPlaceholder && { overflow: 'hidden' }),
+              ...imageProps?.style,
+            }}
           />
 
           {isPlaceholder && (
