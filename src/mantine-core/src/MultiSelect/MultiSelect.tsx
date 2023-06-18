@@ -297,6 +297,11 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>((props
     disableSelectedItemFiltering,
   });
 
+  if (isCreatable && shouldCreate(_searchValue, sortedData)) {
+    createLabel = getCreateLabel(_searchValue);
+    filteredData.push({ label: _searchValue, value: _searchValue, creatable: true });
+  }
+
   const hovered = Math.min(_hovered, filteredData.length - 1);
 
   const getNextIndex = (
@@ -571,11 +576,6 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>((props
       valuesOverflow.current = false;
     }
   };
-
-  if (isCreatable && shouldCreate(_searchValue, sortedData)) {
-    createLabel = getCreateLabel(_searchValue);
-    filteredData.push({ label: _searchValue, value: _searchValue, creatable: true });
-  }
 
   const shouldRenderDropdown =
     !readOnly && (filteredData.length > 0 ? dropdownOpened : dropdownOpened && !!nothingFound);
