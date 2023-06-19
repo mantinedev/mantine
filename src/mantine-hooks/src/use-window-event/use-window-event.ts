@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 
-export function useWindowEvent<K extends keyof WindowEventMap>(
+export function useWindowEvent<K extends string = keyof WindowEventMap>(
   type: K,
   listener: K extends keyof WindowEventMap
     ? (this: Window, ev: WindowEventMap[K]) => void
