@@ -74,7 +74,7 @@ export default createStyles(
           borderTop: 'none',
         },
 
-        '& > thead > th, & > tbody > td': {
+        '& > thead > tr > th, & > tbody > tr > td': {
           borderRight: withColumnBorders ? border : 'none',
 
           '&:last-of-type': {
