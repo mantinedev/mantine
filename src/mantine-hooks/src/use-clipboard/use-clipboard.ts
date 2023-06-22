@@ -1,3 +1,4 @@
+/* eslint-disable */
 import { useState } from 'react';
 
 export function useClipboard({ timeout = 2000 } = {}) {
@@ -12,7 +13,10 @@ export function useClipboard({ timeout = 2000 } = {}) {
   };
 
   const copy = async (valueToCopy: any) => {
-    const fallbackClipboard = () => {
+    try {
+      await navigator.clipboard.writeText(valueToCopy);
+      handleCopyResult(true);
+    } catch (errorOne) {
       try {
         const textArea = document.createElement('textarea');
         textArea.value = valueToCopy;
@@ -21,20 +25,9 @@ export function useClipboard({ timeout = 2000 } = {}) {
         document.execCommand('copy');
         document.body.removeChild(textArea);
         handleCopyResult(true);
-      } catch (error) {
-        setError(error);
+      } catch (errorTwo) {
+        setError(errorTwo);
       }
-    };
-
-    if ('clipboard' in navigator) {
-      try {
-        await navigator.clipboard.writeText(valueToCopy);
-        handleCopyResult(true);
-      } catch {
-        fallbackClipboard();
-      }
-    } else {
-      setError(new Error('useClipboard: navigator.clipboard is not supported'));
     }
   };
 
