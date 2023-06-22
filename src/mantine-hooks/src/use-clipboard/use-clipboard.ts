@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import { useState } from 'react';
 
 export function useClipboard({ timeout = 2000 } = {}) {
