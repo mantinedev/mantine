@@ -11,12 +11,24 @@ export function useClipboard({ timeout = 2000 } = {}) {
     setCopied(value);
   };
 
-  const copy = (valueToCopy: any) => {
+  const copy = async (valueToCopy: any) => {
     if ('clipboard' in navigator) {
-      navigator.clipboard
-        .writeText(valueToCopy)
-        .then(() => handleCopyResult(true))
-        .catch((err) => setError(err));
+      try {
+        await navigator.clipboard.writeText(valueToCopy);
+        handleCopyResult(true);
+      } catch (error) {
+        try {
+          const textArea = document.createElement('textarea');
+          textArea.value = valueToCopy;
+          document.body.appendChild(textArea);
+          textArea.select();
+          document.execCommand('copy');
+          document.body.removeChild(textArea);
+          handleCopyResult(true);
+        } catch {
+          setError(error);
+        }
+      }
     } else {
       setError(new Error('useClipboard: navigator.clipboard is not supported'));
     }
