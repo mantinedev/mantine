@@ -24,8 +24,11 @@ export default createStyles(
       overflowX: native ? 'auto' : undefined,
       borderRadius: theme.fn.radius(radius),
       padding: `${theme.spacing.sm} 0`,
-      marginTop: 0,
-      marginBottom: 0,
+
+      '&.mantine-Prism-code': {
+        marginTop: 0,
+        marginBottom: 0,
+      },
     },
 
     copy: {
