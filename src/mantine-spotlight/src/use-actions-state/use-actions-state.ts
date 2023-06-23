@@ -1,4 +1,5 @@
 import { randomId } from '@mantine/hooks';
+import { useMemo } from 'react';
 import type { SpotlightAction } from '../types';
 
 function prepareAction(action: SpotlightAction) {
@@ -6,12 +7,12 @@ function prepareAction(action: SpotlightAction) {
 }
 
 function filterDuplicateActions(actions: SpotlightAction[]) {
-  const ids = [];
+  const ids: Set<string> = new Set();
 
   return actions
     .reduceRight<SpotlightAction[]>((acc, action) => {
-      if (!ids.includes(action.id)) {
-        ids.push(action.id);
+      if (!ids.has(action.id)) {
+        ids.add(action.id);
         acc.push(action);
       }
 
@@ -30,6 +31,7 @@ interface UseActionsState {
 }
 
 export function useActionsState({ actions, onActionsChange }: UseActionsState) {
+  const preparedActions = useMemo(() => prepareActions(actions), [actions]);
   const registerActions = (payload: SpotlightAction[]) =>
     onActionsChange?.(prepareActions([...actions, ...payload]));
 
@@ -42,7 +44,7 @@ export function useActionsState({ actions, onActionsChange }: UseActionsState) {
   };
 
   return [
-    prepareActions(actions),
+    preparedActions,
     {
       registerActions,
       removeActions,
