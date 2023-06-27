@@ -15,6 +15,7 @@ import { Thumb, ThumbStylesNames } from '../Thumb/Thumb';
 import { Track, TrackStylesNames } from '../Track/Track';
 import { MarksStylesNames } from '../Marks/Marks';
 import { SliderRoot, SliderRootStylesNames } from '../SliderRoot/SliderRoot';
+import { getFloatingValue } from '../get-floating-value';
 
 export type RangeSliderStylesNames =
   | SliderRootStylesNames
@@ -121,6 +122,7 @@ const defaultProps: Partial<RangeSliderProps> = {
   max: 100,
   minRange: 10,
   step: 1,
+  precision: 0,
   marks: [],
   label: (f) => f,
   labelTransition: 'skew-down',
@@ -295,7 +297,10 @@ export const RangeSlider = forwardRef<HTMLDivElement, RangeSliderProps>((props, 
           const focusedIndex = getFocusedThumbIndex();
           thumbs.current[focusedIndex].focus();
           setRangedValue(
-            Math.min(Math.max(valueRef.current[focusedIndex] + step, min), max),
+            getFloatingValue(
+              Math.min(Math.max(valueRef.current[focusedIndex] + step, min), max),
+              precision
+            ),
             focusedIndex,
             true
           );
@@ -306,14 +311,17 @@ export const RangeSlider = forwardRef<HTMLDivElement, RangeSliderProps>((props, 
           const focusedIndex = getFocusedThumbIndex();
           thumbs.current[focusedIndex].focus();
           setRangedValue(
-            Math.min(
-              Math.max(
-                theme.dir === 'rtl'
-                  ? valueRef.current[focusedIndex] - step
-                  : valueRef.current[focusedIndex] + step,
-                min
+            getFloatingValue(
+              Math.min(
+                Math.max(
+                  theme.dir === 'rtl'
+                    ? valueRef.current[focusedIndex] - step
+                    : valueRef.current[focusedIndex] + step,
+                  min
+                ),
+                max
               ),
-              max
+              precision
             ),
             focusedIndex,
             true
@@ -326,7 +334,10 @@ export const RangeSlider = forwardRef<HTMLDivElement, RangeSliderProps>((props, 
           const focusedIndex = getFocusedThumbIndex();
           thumbs.current[focusedIndex].focus();
           setRangedValue(
-            Math.min(Math.max(valueRef.current[focusedIndex] - step, min), max),
+            getFloatingValue(
+              Math.min(Math.max(valueRef.current[focusedIndex] - step, min), max),
+              precision
+            ),
             focusedIndex,
             true
           );
@@ -337,14 +348,17 @@ export const RangeSlider = forwardRef<HTMLDivElement, RangeSliderProps>((props, 
           const focusedIndex = getFocusedThumbIndex();
           thumbs.current[focusedIndex].focus();
           setRangedValue(
-            Math.min(
-              Math.max(
-                theme.dir === 'rtl'
-                  ? valueRef.current[focusedIndex] + step
-                  : valueRef.current[focusedIndex] - step,
-                min
+            getFloatingValue(
+              Math.min(
+                Math.max(
+                  theme.dir === 'rtl'
+                    ? valueRef.current[focusedIndex] + step
+                    : valueRef.current[focusedIndex] - step,
+                  min
+                ),
+                max
               ),
-              max
+              precision
             ),
             focusedIndex,
             true

@@ -88,3 +88,30 @@ export function MinMaxSliderDistance() {
     </div>
   );
 }
+
+export function KeyboardPrecision() {
+  const [value, setValue] = useState<[number, number]>([0.5, 1.5]);
+  return (
+    <>
+      <p>{value}</p>
+      <RangeSlider
+        mt={100}
+        labelAlwaysOn
+        minRange={0.01}
+        // marks={[
+        //   { value: 0, label: '0' },
+        //   { value: 1, label: '1' },
+        //   { value: 2, label: '2' },
+        // ]}
+        name="test"
+        id="test"
+        step={0.01}
+        precision={2}
+        min={0}
+        max={2}
+        value={value}
+        onChange={setValue}
+      />
+    </>
+  );
+}
