@@ -124,5 +124,13 @@ export default createStyles((theme, { radius, color }: AlertStylesParams, { vari
   closeButton: {
     width: rem(10),
     height: rem(10),
+    color:
+      variant === 'filled'
+        ? theme.white
+        : theme.colorScheme === 'dark'
+        ? variant === 'light'
+          ? theme.white
+          : theme.colors.dark[0]
+        : theme.black,
   },
 }));
