@@ -179,7 +179,12 @@ export const PickerInputBase = forwardRef<HTMLButtonElement, PickerInputBaseProp
               {...others}
             >
               {formattedValue || (
-                <Input.Placeholder className={classes.placeholder}>{placeholder}</Input.Placeholder>
+                <Input.Placeholder
+                  className={classes.placeholder}
+                  sx={{ color: inputProps.error ? 'inherit' : undefined }}
+                >
+                  {placeholder}
+                </Input.Placeholder>
               )}
             </Input>
           </Popover.Target>
