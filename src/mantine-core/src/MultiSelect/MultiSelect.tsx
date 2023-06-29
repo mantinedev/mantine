@@ -200,6 +200,7 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>((props
     onDropdownOpen,
     maxSelectedValues,
     withinPortal,
+    portalProps,
     switchDirectionOnFlip,
     zIndex,
     selectOnBlur,
@@ -615,6 +616,7 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>((props
         transitionProps={transitionProps}
         shadow="sm"
         withinPortal={withinPortal}
+        portalProps={portalProps}
         __staticSelector="MultiSelect"
         onDirectionChange={setDirection}
         switchDirectionOnFlip={switchDirectionOnFlip}
