@@ -1,4 +1,5 @@
 import React from 'react';
+import { rem } from '@mantine/styles';
 
 export function ChevronIcon(props: React.ComponentPropsWithoutRef<'svg'>) {
   return (
@@ -6,8 +7,7 @@ export function ChevronIcon(props: React.ComponentPropsWithoutRef<'svg'>) {
       viewBox="0 0 15 15"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
-      width="1rem"
-      height="1rem"
+      style={{ width: rem(16), height: rem(16) }}
       {...props}
     >
       <path

@@ -4,10 +4,10 @@ import { LoaderProps } from './loader-props';
 export function Dots({ size, color, ...others }: LoaderProps) {
   return (
     <svg
-      width={size}
       viewBox="0 0 120 30"
       xmlns="http://www.w3.org/2000/svg"
       fill={color}
+      style={{ width: size }}
       {...others}
     >
       <circle cx="15" cy="15" r="15">

@@ -17,10 +17,9 @@ export type PaginationIcon = React.FC<PaginationIconProps>;
 function PaginationIcon({ size, children, path, ...others }: _PaginationIconProps) {
   return (
     <svg
-      width={size}
-      height={size}
       viewBox="0 0 16 16"
       xmlns="http://www.w3.org/2000/svg"
+      style={{ width: size, height: size }}
       {...others}
     >
       <path d={path} fill="currentColor" />

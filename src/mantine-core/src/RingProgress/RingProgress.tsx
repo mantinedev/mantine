@@ -94,7 +94,7 @@ export const RingProgress = forwardRef<HTMLDivElement, RingProgressProps>((props
       ref={ref}
       {...others}
     >
-      <svg width={size} height={size} style={{ transform: 'rotate(-90deg)' }}>
+      <svg style={{ width: size, height: size, transform: 'rotate(-90deg)' }}>
         {curves}
       </svg>
 

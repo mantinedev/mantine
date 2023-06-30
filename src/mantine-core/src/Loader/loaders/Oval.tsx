@@ -4,11 +4,10 @@ import { LoaderProps } from './loader-props';
 export function Oval({ size, color, ...others }: LoaderProps) {
   return (
     <svg
-      width={size}
-      height={size}
       viewBox="0 0 38 38"
       xmlns="http://www.w3.org/2000/svg"
       stroke={color}
+      style={{ width: size, height: size }}
       {...others}
     >
       <g fill="none" fillRule="evenodd">
