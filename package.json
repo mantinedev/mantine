@@ -1,5 +1,5 @@
 {
-  "name": "mantine",
+  "name": "@mantine/hooks",
   "private": true,
   "workspaces": [
     "src/*"
