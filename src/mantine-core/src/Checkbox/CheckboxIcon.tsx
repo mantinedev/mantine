@@ -5,13 +5,13 @@ export interface CheckboxIconProps extends React.ComponentPropsWithoutRef<'svg'>
 }
 
 export function CheckIcon(props: React.ComponentPropsWithoutRef<'svg'>) {
-  const { width, height, ...others } = props;
+  const { width, height, style, ...others } = props;
   return (
     <svg
       viewBox="0 0 10 7"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
-      style={{ width, height }}
+      style={{ width, height, ...style }}
       {...others}
     >
       <path

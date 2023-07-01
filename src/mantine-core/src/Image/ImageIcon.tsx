@@ -1,13 +1,13 @@
 import React from 'react';
 
 export function ImageIcon(props: React.ComponentPropsWithoutRef<'svg'>) {
-  const { width, height, ...others } = props;
+  const { width, height, style, ...others } = props;
   return (
     <svg
       viewBox="0 0 15 15"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
-      style={{ width, height }}
+      style={{ width, height, ...style }}
       {...others}
     >
       <path

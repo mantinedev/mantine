@@ -16,7 +16,7 @@ describe('@mantine/core/Loader', () => {
 
   it('sets svg width based on size prop', () => {
     const { container } = render(<Loader size="5rem" variant="bars" />);
-    expect(container.querySelector('svg')).toHaveAttribute('width', '5rem');
+    expect(container.querySelector('svg').style.getPropertyValue('width')).toBe('5rem');
   });
 
   it('sets svg fill based on color prop', () => {
