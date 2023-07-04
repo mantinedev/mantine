@@ -12,11 +12,10 @@ export const PasswordToggleIcon: PasswordInputVisibilityToggleIcon = ({
   size,
 }: PasswordToggleIconProps) => (
   <svg
-    width={size}
-    height={size}
     viewBox="0 0 15 15"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
+    style={{ width: size, height: size }}
   >
     <path
       d={

@@ -9,9 +9,11 @@ interface ChevronProps {
 export function Chevron({ direction, size }: ChevronProps) {
   return (
     <svg
-      style={{ transform: direction === 'up' ? 'rotate(180deg)' : undefined }}
-      width={rem(size)}
-      height={rem(size)}
+      style={{
+        width: rem(size),
+        height: rem(size),
+        transform: direction === 'up' ? 'rotate(180deg)' : undefined,
+      }}
       viewBox="0 0 15 15"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"

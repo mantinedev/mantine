@@ -2,14 +2,14 @@ import React from 'react';
 
 export function EyeDropperIcon({
   size,
+  style,
   ...others
 }: React.ComponentPropsWithoutRef<'svg'> & { size: string }) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
       className="icon icon-tabler icon-tabler-color-picker"
-      width={size}
-      height={size}
+      style={{ width: size, height: size, ...style }}
       viewBox="0 0 24 24"
       strokeWidth="1.5"
       stroke="currentColor"

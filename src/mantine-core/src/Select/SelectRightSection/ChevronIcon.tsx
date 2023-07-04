@@ -20,12 +20,15 @@ export function ChevronIcon({ size, error, style, ...others }: ChevronIconProps)
 
   return (
     <svg
-      width={_size}
-      height={_size}
       viewBox="0 0 15 15"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
-      style={{ color: error ? theme.colors.red[6] : theme.colors.gray[6], ...style }}
+      style={{
+        color: error ? theme.colors.red[6] : theme.colors.gray[6],
+        width: _size,
+        height: _size,
+        ...style,
+      }}
       data-chevron
       {...others}
     >

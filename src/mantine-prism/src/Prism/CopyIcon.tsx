@@ -7,11 +7,10 @@ interface CopyIconProps {
 export function CopyIcon({ copied }: CopyIconProps) {
   return (
     <svg
-      width="1rem"
-      height="1rem"
       viewBox="0 0 15 15"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
+      style={{ width: '1rem', height: '1rem' }}
     >
       {copied ? (
         <path
