@@ -119,6 +119,26 @@ describe('@mantine/dates/DateTimePicker', () => {
     expectNoPopover(container);
   });
 
+  it('closes when a submit button onClick handler is provided', async () => {
+    const spy = jest.fn();
+    const { container } = render(
+      <DateTimePicker
+        {...defaultProps}
+        submitButtonProps={{
+          onClick: spy,
+          'aria-label': defaultProps.submitButtonProps['aria-label'],
+        }}
+      />
+    );
+    await clickInput(container);
+    expectOpenedPopover(container);
+
+    await userEvent.click(getSubmitButton());
+
+    expect(spy).toHaveBeenCalled();
+    expectNoPopover(container);
+  });
+
   it('supports uncontrolled state', async () => {
     const { container } = render(
       <DateTimePicker {...defaultProps} defaultValue={new Date(2022, 3, 11)} />

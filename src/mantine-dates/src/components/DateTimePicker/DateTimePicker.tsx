@@ -217,16 +217,16 @@ export const DateTimePicker = forwardRef<HTMLButtonElement, DateTimePickerProps>
           <ActionIcon<'button'>
             variant="default"
             size={INPUT_SIZES[size]}
-            onClick={(event) => {
-              submitButtonProps?.onClick?.(event);
-              dropdownHandlers.close();
-            }}
             unstyled={unstyled}
             data-mantine-stop-propagation={__stopPropagation || undefined}
             // children prop is required to allow overriding icon with submitButtonProps
             // eslint-disable-next-line react/no-children-prop
             children={<CheckIcon width={`calc(${INPUT_SIZES[size]} / 3)`} />}
             {...submitButtonProps}
+            onClick={(event) => {
+              submitButtonProps?.onClick?.(event);
+              dropdownHandlers.close();
+            }}
           />
         </div>
       )}
