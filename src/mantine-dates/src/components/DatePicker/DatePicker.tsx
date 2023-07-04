@@ -55,7 +55,6 @@ export const DatePicker: DatePickerComponent = forwardRef(
       allowSingleDateInRange,
       allowDeselect,
       onMouseLeave,
-      onMonthSelect,
       numberOfColumns,
       ...others
     } = useComponentDefaultProps('DatePicker', defaultProps, props as any);
