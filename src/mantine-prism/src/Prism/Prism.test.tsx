@@ -36,4 +36,12 @@ describe('@mantine/prism/Prism', () => {
     );
     expect(withoutLineNumbers.querySelectorAll('.mantine-Prism-lineNumber')).toHaveLength(0);
   });
+
+  it('renders pre element without top and bottom margin', () => {
+    const { container: prism } = render(<Prism {...defaultProps} />);
+    expect(prism.querySelector('.mantine-Prism-code')).toHaveStyle({
+      marginTop: 0,
+      marginBottom: 0,
+    });
+  });
 });
