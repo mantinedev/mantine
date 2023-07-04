@@ -220,6 +220,7 @@ export const DateInput = forwardRef<HTMLInputElement, DateInputProps>((props, re
         onClick={() => {
           setValue(null);
           !controlled && setInputValue('');
+          setDropdownOpened(false);
         }}
         unstyled={unstyled}
         {...clearButtonProps}
