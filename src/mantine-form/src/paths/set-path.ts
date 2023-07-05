@@ -8,7 +8,7 @@ export function setPath<T>(path: unknown, value: unknown, values: T) {
     return values;
   }
 
-  const cloned = klona(values);
+  let cloned = klona(values);
 
   if (splittedPath.length === 1) {
     cloned[splittedPath[0]] = value;
