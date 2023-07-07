@@ -20,7 +20,7 @@ export default createStyles(
     content: {
       flex: fullScreen ? '0 0 100%' : `0 0 ${getSize({ size, sizes })}`,
       maxWidth: '100%',
-      maxHeight: fullScreen ? undefined : `calc(100vh - (${rem(yOffset)} * 2))`,
+      maxHeight: fullScreen ? undefined : `calc(100dvh - (${rem(yOffset)} * 2))`,
       height: fullScreen ? '100vh' : undefined,
       borderRadius: fullScreen ? 0 : undefined,
       overflowY: 'auto',

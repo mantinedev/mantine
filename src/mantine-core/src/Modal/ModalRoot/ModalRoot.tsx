@@ -26,7 +26,7 @@ export interface ModalRootProps extends ModalBaseSettings {
 
 const defaultProps: Partial<ModalRootProps> = {
   ...ModalBaseDefaultProps,
-  yOffset: '5vh',
+  yOffset: '5dvh',
   xOffset: '5vw',
 };
 
