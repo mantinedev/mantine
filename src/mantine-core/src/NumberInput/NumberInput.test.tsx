@@ -341,6 +341,11 @@ describe('@mantine/core/NumberInput', () => {
     expectValue('6');
   });
 
+  it('returns empty string when value is nullable and precision greater 0', async () => {
+    render(<NumberInput precision={2} value={null} />);
+    expect(getInput()).toHaveValue('');
+  });
+
   it('sets state to min if input is empty and is incremented', async () => {
     const spy = jest.fn();
     const { container } = render(<NumberInput max={1000} min={0} step={6} onChange={spy} />);

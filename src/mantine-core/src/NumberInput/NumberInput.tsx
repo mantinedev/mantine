@@ -172,7 +172,7 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>((props
   );
 
   const parsePrecision = (val: number | '') => {
-    if (val === '') return '';
+    if (val === '' || value === null) return '';
 
     let result = val.toFixed(precision);
 
