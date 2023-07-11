@@ -62,7 +62,7 @@ export interface DateInputProps
   /** Determines whether input value should be reverted to last known valid value on blur, true by default */
   fixOnBlur?: boolean;
 
-  /** Determines whether value can be deselected when the user clicks on the selected date in the calendar or erases content of the input, true if clearable prop is set, false by default */
+  /** Determines whether value can be deselected when the user clicks on the selected date in the calendar (only when clearable prop is set), defaults to true if clearable prop is set, false otherwise */
   allowDeselect?: boolean;
 
   /** Determines whether time (hours, minutes, seconds and milliseconds) should be preserved when new date is picked, true by default */
@@ -130,7 +130,7 @@ export const DateInput = forwardRef<HTMLInputElement, DateInputProps>((props, re
   };
 
   const _dateParser = dateParser || defaultDateParser;
-  const _allowDeselect = clearable || allowDeselect;
+  const _allowDeselect = allowDeselect !== undefined ? allowDeselect : clearable;
 
   const formatValue = (val: Date) =>
     val ? dayjs(val).locale(ctx.getLocale(locale)).format(valueFormat) : '';
@@ -167,7 +167,7 @@ export const DateInput = forwardRef<HTMLInputElement, DateInputProps>((props, re
     const val = event.currentTarget.value;
     setInputValue(val);
 
-    if (val.trim() === '' && _allowDeselect) {
+    if (val.trim() === '' && clearable) {
       setValue(null);
     } else {
       const dateValue = _dateParser(val);
@@ -199,11 +199,12 @@ export const DateInput = forwardRef<HTMLInputElement, DateInputProps>((props, re
     selected: dayjs(_value).isSame(day, 'day'),
     onClick: () => {
       const valueWithTime = preserveTime ? assignTime(_value, day) : day;
-      const val = _allowDeselect
-        ? dayjs(_value).isSame(day, 'day')
-          ? null
-          : valueWithTime
-        : valueWithTime;
+      const val =
+        clearable && _allowDeselect
+          ? dayjs(_value).isSame(day, 'day')
+            ? null
+            : valueWithTime
+          : valueWithTime;
       setValue(val);
       !controlled && setInputValue(formatValue(val));
       setDropdownOpened(false);

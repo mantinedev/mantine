@@ -212,9 +212,9 @@ describe('@mantine/dates/DateInput', () => {
     expect(spy).toHaveBeenLastCalledWith(null);
   });
 
-  it('allows to clear input value when allowDeselect is set (uncontrolled)', async () => {
+  it('allows to clear input value when clearable is set (uncontrolled)', async () => {
     const { container } = render(
-      <DateInput {...defaultProps} allowDeselect defaultValue={new Date(2022, 3, 11)} />
+      <DateInput {...defaultProps} clearable defaultValue={new Date(2022, 3, 11)} />
     );
 
     expectValue(container, 'April 11, 2022');
@@ -223,9 +223,22 @@ describe('@mantine/dates/DateInput', () => {
     expectValue(container, '');
   });
 
-  it('does not allow to clear input value when allowDeselect is not set (uncontrolled)', async () => {
+  it('allows to clear input value when clearable is set (controlled)', async () => {
+    const spy = jest.fn();
     const { container } = render(
-      <DateInput {...defaultProps} allowDeselect={false} defaultValue={new Date(2022, 3, 11)} />
+      <DateInput {...defaultProps} clearable value={new Date(2022, 3, 11)} onChange={spy} />
+    );
+
+    expectValue(container, 'April 11, 2022');
+    await userEvent.clear(getInput(container));
+    await userEvent.tab();
+    expectValue(container, 'April 11, 2022');
+    expect(spy).toHaveBeenLastCalledWith(null);
+  });
+
+  it('does not allow to clear input value when clearable is not set (uncontrolled)', async () => {
+    const { container } = render(
+      <DateInput {...defaultProps} clearable={false} defaultValue={new Date(2022, 3, 11)} />
     );
 
     expectValue(container, 'April 11, 2022');
@@ -234,17 +247,82 @@ describe('@mantine/dates/DateInput', () => {
     expectValue(container, 'April 11, 2022');
   });
 
-  it('allows to clear input value when allowDeselect is set (controlled)', async () => {
+  it('does not allow to clear input value when clearable is not set (controlled)', async () => {
     const spy = jest.fn();
     const { container } = render(
-      <DateInput {...defaultProps} allowDeselect value={new Date(2022, 3, 11)} onChange={spy} />
+      <DateInput {...defaultProps} clearable={false} value={new Date(2022, 3, 11)} onChange={spy} />
     );
 
     expectValue(container, 'April 11, 2022');
     await userEvent.clear(getInput(container));
     await userEvent.tab();
     expectValue(container, 'April 11, 2022');
+    expect(spy).not.toHaveBeenCalled();
+  });
+
+  it('allows to clear input value by clicking the selected date when clearable and allowDeselect are set (uncontrolled)', async () => {
+    const { container } = render(
+      <DateInput {...defaultProps} clearable allowDeselect defaultValue={new Date(2022, 3, 1)} />
+    );
+
+    expectValue(container, 'April 1, 2022');
+    await userEvent.tab();
+    await clickControl(container, 4);
+    expectValue(container, '');
+  });
+
+  it('allows to clear input value by clicking the selected date when clearable and allowDeselect are set (controlled)', async () => {
+    const spy = jest.fn();
+    const { container } = render(
+      <DateInput
+        {...defaultProps}
+        clearable
+        allowDeselect
+        value={new Date(2022, 3, 1)}
+        onChange={spy}
+      />
+    );
+
+    expectValue(container, 'April 1, 2022');
+    await userEvent.tab();
+    await clickControl(container, 4);
+    expectValue(container, 'April 1, 2022');
     expect(spy).toHaveBeenLastCalledWith(null);
+  });
+
+  it('does not allow to clear input value by clicking the selected date when allowDeselect is not set (uncontrolled)', async () => {
+    const { container } = render(
+      <DateInput
+        {...defaultProps}
+        clearable
+        allowDeselect={false}
+        defaultValue={new Date(2022, 3, 1)}
+      />
+    );
+
+    expectValue(container, 'April 1, 2022');
+    await userEvent.tab();
+    await clickControl(container, 4);
+    expectValue(container, 'April 1, 2022');
+  });
+
+  it('does not allow to clear input value by clicking the selected date when allowDeselect is not set (controlled)', async () => {
+    const spy = jest.fn();
+    const { container } = render(
+      <DateInput
+        {...defaultProps}
+        clearable
+        allowDeselect={false}
+        value={new Date(2022, 3, 1)}
+        onChange={spy}
+      />
+    );
+
+    expectValue(container, 'April 1, 2022');
+    await userEvent.tab();
+    await clickControl(container, 4);
+    expectValue(container, 'April 1, 2022');
+    expect(spy).toHaveBeenLastCalledWith(new Date(2022, 3, 1));
   });
 
   it('calls onClick when input is clicked', async () => {

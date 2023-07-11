@@ -6,7 +6,7 @@ const code = `
 import { DateInput } from '@mantine/dates';
 
 function Demo() {
-  return <DateInput label="Date input" placeholder="Date input" maw={400} mx="auto" />;
+  return <DateInput clearable label="Date input" placeholder="Date input" maw={400} mx="auto" />;
 }
 `;
 
