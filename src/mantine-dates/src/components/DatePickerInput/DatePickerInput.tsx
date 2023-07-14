@@ -15,7 +15,7 @@ export type DatePickerInputStylesNames = PickerInputBaseStylesNames;
 
 export interface DatePickerInputProps<Type extends DatePickerType = 'default'>
   extends DateInputSharedProps,
-  DatePickerBaseProps<Type> {
+    DatePickerBaseProps<Type> {
   /** Dayjs format to display input value, "MMMM D, YYYY" by default  */
   valueFormat?: string;
 }
@@ -77,9 +77,11 @@ export const DatePickerInput: DatePickerInputComponent = forwardRef((props, ref)
     sortDates,
   });
 
-  const defaultDate = _defaultDate || (Array.isArray(_value)
-    ? _value[0] || getDefaultClampedDate({ maxDate, minDate })
-    : _value || getDefaultClampedDate({ maxDate, minDate }));
+  const defaultDate =
+    _defaultDate ||
+    (Array.isArray(_value)
+      ? _value[0] || getDefaultClampedDate({ maxDate, minDate })
+      : _value || getDefaultClampedDate({ maxDate, minDate }));
 
   return (
     <PickerInputBase
