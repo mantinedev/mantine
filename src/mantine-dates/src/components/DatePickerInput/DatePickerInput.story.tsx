@@ -215,3 +215,12 @@ export function InOverlays() {
     </WithinOverlays>
   );
 }
+
+export function DefaultDate() {
+  return (
+    <div style={{ padding: 40 }}>
+      <DatePickerInput defaultDate={new Date('1990/01/01')} />
+      <DatePickerInput defaultDate={new Date()} />
+    </div>
+  );
+}

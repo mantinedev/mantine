@@ -51,6 +51,7 @@ export const DatePickerInput: DatePickerInputComponent = forwardRef((props, ref)
     sortDates,
     maxDate,
     minDate,
+    defaultDate: _defaultDate,
     ...rest
   } = useComponentDefaultProps('DatePickerInput', defaultProps, props);
 
@@ -75,6 +76,12 @@ export const DatePickerInput: DatePickerInputComponent = forwardRef((props, ref)
     closeOnChange,
     sortDates,
   });
+
+  const defaultDate =
+    _defaultDate ||
+    (Array.isArray(_value)
+      ? _value[0] || getDefaultClampedDate({ maxDate, minDate })
+      : _value || getDefaultClampedDate({ maxDate, minDate }));
 
   return (
     <PickerInputBase
@@ -101,11 +108,7 @@ export const DatePickerInput: DatePickerInputComponent = forwardRef((props, ref)
         variant={variant}
         type={type}
         value={_value}
-        defaultDate={
-          Array.isArray(_value)
-            ? _value[0] || getDefaultClampedDate({ maxDate, minDate })
-            : _value || getDefaultClampedDate({ maxDate, minDate })
-        }
+        defaultDate={defaultDate}
         onChange={setValue}
         locale={locale}
         classNames={classNames}
