@@ -242,6 +242,11 @@ export const PinInput = forwardRef<HTMLDivElement, PinInputProps>((props, ref) =
 
     if (isValid) {
       setValues(copyValue);
+      const indexToFocus =
+          copyValue.length - 1 < length
+            ? copyValue.length - 1
+            : length - 1;
+      inputsRef.current[indexToFocus].focus();
     }
   };
 
