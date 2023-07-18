@@ -15,6 +15,7 @@ import { Track, TrackStylesNames } from '../Track/Track';
 import { MarksStylesNames } from '../Marks/Marks';
 import { SliderRoot, SliderRootStylesNames } from '../SliderRoot/SliderRoot';
 import { getFloatingValue } from '../get-floating-value';
+import { getPrecision } from '../get-precision';
 
 export type SliderStylesNames =
   | SliderRootStylesNames
@@ -109,7 +110,6 @@ const defaultProps: Partial<SliderProps> = {
   min: 0,
   max: 100,
   step: 1,
-  precision: 0,
   marks: [],
   label: (f) => f,
   labelTransition: 'skew-down',
@@ -134,7 +134,7 @@ export const Slider = forwardRef<HTMLDivElement, SliderProps>((props, ref) => {
     min,
     max,
     step,
-    precision,
+    precision: _precision,
     defaultValue,
     name,
     marks,
@@ -155,6 +155,7 @@ export const Slider = forwardRef<HTMLDivElement, SliderProps>((props, ref) => {
     ...others
   } = useComponentDefaultProps('Slider', defaultProps, props);
 
+  const precision = _precision ?? getPrecision(step);
   const theme = useMantineTheme();
   const [hovered, setHovered] = useState(false);
   const [_value, setValue] = useUncontrolled({

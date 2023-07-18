@@ -24,6 +24,7 @@ function Demo() {
         max={10}
         label={(value) => value.toFixed(1)}
         step={0.1}
+        precision={1}
         styles={{ markLabel: { display: 'none' } }}
       />
 
