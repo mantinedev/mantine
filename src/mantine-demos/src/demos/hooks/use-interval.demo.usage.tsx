@@ -6,7 +6,7 @@ import { useInterval } from '@mantine/hooks';
 const code = `
 import { useState, useEffect } from 'react';
 import { useInterval } from '@mantine/hooks';
-import { Group, Button, Text } from '@mantine/core';
+import { Stack, Button, Text } from '@mantine/core';
 
 function Demo() {
   const [seconds, setSeconds] = useState(0);
