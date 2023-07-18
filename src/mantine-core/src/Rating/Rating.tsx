@@ -176,10 +176,12 @@ export const Rating = forwardRef<HTMLInputElement, RatingProps>((props, ref) => 
   const handleItemBlur = () => isOutside && setHovered(-1);
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement> | number) => {
-    if (typeof event === 'number') {
-      setValue(event);
-    } else {
-      setValue(parseFloat(event.target.value));
+    if (!readOnly) {
+      if (typeof event === 'number') {
+        setValue(event);
+      } else {
+        setValue(parseFloat(event.target.value));
+      }
     }
   };
 

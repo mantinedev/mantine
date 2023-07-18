@@ -6,6 +6,10 @@ import { Box } from '../Box';
 
 export default { title: 'Rating' };
 
+export function ReadOnlyWithDefaultValue() {
+  return <Rating defaultValue={2} readOnly />;
+}
+
 export function Sizes() {
   return (
     <Stack p="md">
