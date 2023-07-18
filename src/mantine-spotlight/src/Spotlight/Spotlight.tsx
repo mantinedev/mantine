@@ -121,7 +121,6 @@ export function Spotlight(props: SpotlightProps) {
     scrollAreaComponent: ScrollAreaComponent,
     searchInputProps,
     variant,
-    target,
     radius,
     ...others
   } = useComponentDefaultProps('Spotlight', defaultProps, props);
