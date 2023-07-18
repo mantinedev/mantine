@@ -164,11 +164,12 @@ export default createStyles(
 
         minWidth: `calc(${trackWidth} - ${handleSize})`,
         paddingInline: getSize({ size, sizes: trackLabelPaddings }),
-        margin: `0 0 0 calc(${handleSize} + ${trackPadding})`,
+        marginLeft: `calc(${handleSize} + ${trackPadding})`,
         transition: `margin 150ms ${theme.transitionTimingFunction}`,
 
         'input:checked + * > &': {
-          margin: `0 calc(${handleSize} + ${trackPadding}) 0 0`,
+          marginLeft: 0,
+          marginRight: `calc(${handleSize} + ${trackPadding})`,
         },
       },
     };
