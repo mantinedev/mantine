@@ -12,7 +12,10 @@ export type PasswordInputStylesNames = Selectors<typeof useStyles> | TextInputSt
 
 export interface PasswordInputProps
   extends DefaultProps<PasswordInputStylesNames>,
-    Omit<TextInputProps, 'classNames' | 'styles'> {
+    Omit<
+      TextInputProps,
+      'classNames' | 'styles' | 'rightSection' | 'rightSectionWidth' | 'rightSectionProps'
+    > {
   /** Toggle button tabIndex, set to 0 to make button focusable with tab key */
   toggleTabIndex?: -1 | 0;
 
@@ -83,9 +86,6 @@ export const PasswordInput = forwardRef<HTMLInputElement, PasswordInputProps>((p
     variant,
     visibilityToggleIcon: VisibilityToggleIcon,
     __staticSelector,
-    rightSection: _rightSection,
-    rightSectionWidth: _rightSectionWidth,
-    rightSectionProps: _rightSectionProps,
     sx,
     labelProps,
     descriptionProps,
