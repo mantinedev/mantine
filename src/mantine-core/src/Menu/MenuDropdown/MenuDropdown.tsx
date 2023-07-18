@@ -25,7 +25,9 @@ export function MenuDropdown(props: MenuDropdownProps) {
   const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
     if (event.key === 'ArrowUp' || event.key === 'ArrowDown') {
       event.preventDefault();
-      wrapperRef.current.querySelectorAll<HTMLButtonElement>('[data-menu-item]')[0].focus();
+      wrapperRef.current
+        .querySelectorAll<HTMLButtonElement>('[data-menu-item]:not(:disabled)')[0]
+        ?.focus();
     }
   };
 

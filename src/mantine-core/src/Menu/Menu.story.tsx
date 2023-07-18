@@ -9,6 +9,22 @@ import { Text } from '../Text';
 
 export default { title: 'Menu' };
 
+export function DisabledFirstItem() {
+  return (
+    <Menu>
+      <Menu.Target>
+        <Button>Toggle menu</Button>
+      </Menu.Target>
+
+      <Menu.Dropdown>
+        <Menu.Item disabled>Disabled</Menu.Item>
+        <Menu.Item>Item 2</Menu.Item>
+        <Menu.Item>Item 3</Menu.Item>
+      </Menu.Dropdown>
+    </Menu>
+  );
+}
+
 export function Usage() {
   return (
     <div style={{ padding: 40, display: 'flex', justifyContent: 'center' }}>
