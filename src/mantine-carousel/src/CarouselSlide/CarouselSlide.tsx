@@ -1,4 +1,4 @@
-import React, { forwardRef, useCallback } from 'react';
+import React, { forwardRef } from 'react';
 import { Box, DefaultProps, Selectors, MantineNumberSize } from '@mantine/core';
 import { useCarouselContext } from '../Carousel.context';
 import useStyles from './CarouselSlide.styles';
@@ -17,7 +17,7 @@ export interface CarouselSlideProps extends DefaultProps, React.ComponentPropsWi
 }
 
 export const CarouselSlide = forwardRef<HTMLDivElement, CarouselSlideProps>(
-  ({ children, className, size, gap, onClick, ...others }, ref) => {
+  ({ children, className, size, gap, ...others }, ref) => {
     const ctx = useCarouselContext();
     const { classes, cx } = useStyles(
       {
@@ -36,17 +36,8 @@ export const CarouselSlide = forwardRef<HTMLDivElement, CarouselSlideProps>(
       }
     );
 
-    const handleClick = useCallback(
-      (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
-        if (ctx.embla?.clickAllowed()) {
-          onClick?.(event);
-        }
-      },
-      [ctx.embla, onClick]
-    );
-
     return (
-      <Box className={cx(classes.slide, className)} ref={ref} onClick={handleClick} {...others}>
+      <Box className={cx(classes.slide, className)} ref={ref} {...others}>
         {children}
       </Box>
     );
