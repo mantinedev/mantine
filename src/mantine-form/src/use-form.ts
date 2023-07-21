@@ -49,6 +49,7 @@ export function useForm<
   const [touched, setTouched] = useState(initialTouched);
   const [dirty, setDirty] = useState(initialDirty);
   const [values, _setValues] = useState(initialValues);
+  const [innerInitialValues, _setInnerInitialValues] = useState(initialValues);
   const [errors, _setErrors] = useState(filterErrors(initialErrors));
 
   const valuesSnapshot = useRef<Values>(initialValues);
@@ -71,12 +72,12 @@ export function useForm<
 
   const clearErrors: ClearErrors = useCallback(() => _setErrors({}), []);
   const reset: Reset = useCallback(() => {
-    _setValues(initialValues);
+    _setValues(innerInitialValues);
     clearErrors();
-    setValuesSnapshot(initialValues);
+    setValuesSnapshot(innerInitialValues);
     setDirty({});
     resetTouched();
-  }, []);
+  }, [innerInitialValues]);
 
   const setFieldError: SetFieldError<Values> = useCallback(
     (path, error) => setErrors((current) => ({ ...current, [path]: error })),
@@ -110,6 +111,14 @@ export function useForm<
       }),
     []
   );
+
+  // eslint-disable-next-line @typescript-eslint/no-shadow
+  const setInitialValues = (newInitialValues: Partial<Values>) => {
+    _setInnerInitialValues({
+      ...initialValues,
+      ...newInitialValues,
+    });
+  };
 
   const setFieldValue: SetFieldValue<Values> = useCallback((path, value) => {
     const shouldValidate = shouldValidateOnChange(path, validateInputOnChange);
@@ -263,6 +272,7 @@ export function useForm<
     errors,
     setValues,
     setErrors,
+    setInitialValues,
     setFieldValue,
     setFieldError,
     clearFieldError,

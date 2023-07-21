@@ -134,6 +134,7 @@ export interface UseFormReturnType<
   errors: FormErrors;
   setValues: SetValues<Values>;
   setErrors: SetErrors;
+  setInitialValues: SetValues<Values>;
   setFieldValue: SetFieldValue<Values>;
   setFieldError: SetFieldError<Values>;
   clearFieldError: ClearFieldError;
