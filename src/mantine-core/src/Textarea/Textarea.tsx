@@ -1,5 +1,5 @@
 import React, { forwardRef } from 'react';
-import TextareaAutosize from 'react-textarea-autosize';
+import TextareaAutosize from '@mui/base/TextareaAutosize';
 import { useId } from '@mantine/hooks';
 import { DefaultProps, MantineSize, useComponentDefaultProps } from '@mantine/styles';
 import { extractSystemStyles } from '../Box';

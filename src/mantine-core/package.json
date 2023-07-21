@@ -35,9 +35,9 @@
     "@mantine/utils": "6.0.17",
     "@mantine/styles": "6.0.17",
     "@radix-ui/react-scroll-area": "1.0.2",
-    "react-textarea-autosize": "8.3.4",
     "react-remove-scroll": "^2.5.5",
-    "@floating-ui/react": "^0.19.1"
+    "@floating-ui/react": "^0.19.1",
+    "@mui/base": "^5.0.0-beta.8"
   },
   "devDependencies": {}
 }
