@@ -11,6 +11,7 @@ import {
   Tooltip,
   ColorPickerProps,
   useComponentDefaultProps,
+  useMantineTheme,
 } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import { IconCircleOff, IconColorPicker, IconX, IconPalette, IconCheck } from '@tabler/icons-react';
@@ -43,7 +44,8 @@ export const ColorPickerControl = forwardRef<HTMLButtonElement, ColorPickerContr
     const { editor, labels, unstyled } = useRichTextEditorContext();
     const [opened, { toggle, close }] = useDisclosure(false);
     const [state, setState] = useState<'palette' | 'colorPicker'>('palette');
-    const currentColor = editor?.getAttributes('textStyle').color || '#000';
+    const theme = useMantineTheme();
+    const currentColor = editor?.getAttributes('textStyle').color || theme.colorScheme === 'dark' ? theme.colors.dark[1] : theme.colors.blue[1];
 
     const handleChange = (value: string, shouldClose = true) => {
       (editor.chain() as any).focus().setColor(value).run();
