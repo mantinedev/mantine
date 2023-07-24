@@ -51,6 +51,32 @@ form.values; // -> { name: 'John', email: '', age: 21 }
 
 <Demo data={FormDemos.setFieldValue} />
 
+## setInitialValues handler
+
+`form.setInitialValues` handler allows to set initialValues after `form.useForm` was called.
+
+It is mainly used when a form needs to deal with two operations, such as create and update, After changing the operation between update and create, the form's initialValue needs to be updated to the new value for `form.reset()` to work.
+
+```tsx
+
+<Demo data={FormDemos.setInitialValues} />
+
+## setInitialValues partial
+
+`form.setInitialValues` can also be used to set multiple values at once, payload will be shallow merged with current initialValues state:
+
+```tsx
+import { useForm } from '@mantine/form';
+
+const form = useForm({ initialValues: { name: '', email: '', age: 0 } });
+
+form.setInitialValues({ name: 'John', age: 21 });
+
+form.reset();
+
+form.values; // -> { name: 'John', email: '', age: 21 }
+```
+
 ## reset handler
 
 `form.reset` handler sets values to `initialValues` and clear all errors:
