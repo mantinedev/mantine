@@ -510,7 +510,7 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>((props, ref) => 
 
   const handleInputFocus = (event: React.FocusEvent<HTMLInputElement>) => {
     typeof onFocus === 'function' && onFocus(event);
-    if (searchable) {
+    if (searchable && !clearable) {
       setDropdownOpened(true);
     }
   };
