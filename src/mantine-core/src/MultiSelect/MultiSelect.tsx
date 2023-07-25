@@ -285,7 +285,7 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>((props
 
   const handleInputFocus = (event: React.FocusEvent<HTMLInputElement>) => {
     typeof onFocus === 'function' && onFocus(event);
-    !disabled && !valuesOverflow.current && searchable && setDropdownOpened(true);
+    !disabled && !valuesOverflow.current && searchable && !clearable && setDropdownOpened(true);
   };
 
   const filteredData = filterData({
