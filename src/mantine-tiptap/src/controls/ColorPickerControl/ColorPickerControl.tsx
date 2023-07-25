@@ -44,8 +44,8 @@ export const ColorPickerControl = forwardRef<HTMLButtonElement, ColorPickerContr
     const { editor, labels, unstyled } = useRichTextEditorContext();
     const [opened, { toggle, close }] = useDisclosure(false);
     const [state, setState] = useState<'palette' | 'colorPicker'>('palette');
-    const colorTheme = useMantineTheme();
-    const currentColor = editor?.getAttributes('textStyle').color || colorTheme.colorScheme === 'dark' ? colorTheme.colors.dark[1] : colorTheme.colors.blue[1];
+    const theme = useMantineTheme();
+    const currentColor = editor?.getAttributes('textStyle').color || theme.colorScheme === 'dark' ? theme.colors.dark[1] : theme.colors.blue[1];
 
     const handleChange = (value: string, shouldClose = true) => {
       (editor.chain() as any).focus().setColor(value).run();
@@ -94,7 +94,7 @@ export const ColorPickerControl = forwardRef<HTMLButtonElement, ColorPickerContr
         </Popover.Target>
 
         <Popover.Dropdown
-          sx={(theme) => ({
+          sx={() => ({
             backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.white,
           })}
         >
