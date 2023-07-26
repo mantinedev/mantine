@@ -47,6 +47,7 @@ export default createStyles(
         '&[data-disabled]': {
           opacity: 0.4,
           cursor: 'not-allowed',
+          pointerEvents: 'none',
         },
 
         '&[data-active]': {
