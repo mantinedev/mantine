@@ -117,7 +117,7 @@ export const HorizontalSection = forwardRef<HTMLElement, HorizontalSectionProps>
         <Global
           styles={() => ({
             ':root': {
-              [`--mantine-${section}-width`]: width?.base ? rem(width.base) : '0rem',
+              [`--mantine-${section}-width`]: hidden || !width?.base ? '0rem' : rem(width.base),
               ...breakpoints,
             },
           })}
