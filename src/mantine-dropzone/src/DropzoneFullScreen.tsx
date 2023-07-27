@@ -8,7 +8,7 @@ import {
   getDefaultZIndex,
   PortalProps,
 } from '@mantine/core';
-import { useDisclosure } from '@mantine/hooks';
+import { useDisclosure, useCounter } from '@mantine/hooks';
 import { DropzoneStylesNames, DropzoneProps, _Dropzone } from './Dropzone';
 import useFullScreenStyles from './DropzoneFullScreen.styles';
 
@@ -64,7 +64,7 @@ export function DropzoneFullScreen(props: DropzoneFullScreenProps) {
     ...others
   } = useComponentDefaultProps('DropzoneFullScreen', fullScreenDefaultProps, props);
 
-  const [counter, setCounter] = React.useState(0);
+  const [counter, counterHandlers] = useCounter(0);
   const [visible, { open, close }] = useDisclosure(false);
   const { classes, cx } = useFullScreenStyles(null, {
     name: 'DropzoneFullScreen',
@@ -75,13 +75,9 @@ export function DropzoneFullScreen(props: DropzoneFullScreenProps) {
 
   const handleDragEnter = (event: DragEvent) => {
     if (event.dataTransfer.types.includes('Files')) {
-      setCounter((prev) => prev + 1);
+      counterHandlers.increment();
       open();
     }
-  };
-
-  const handleDragLeave = () => {
-    setCounter((prev) => prev - 1);
   };
 
   useEffect(() => {
@@ -92,11 +88,11 @@ export function DropzoneFullScreen(props: DropzoneFullScreenProps) {
     if (!active) return undefined;
 
     document.addEventListener('dragenter', handleDragEnter, false);
-    document.addEventListener('dragleave', handleDragLeave, false);
+    document.addEventListener('dragleave', counterHandlers.decrement, false);
 
     return () => {
       document.removeEventListener('dragenter', handleDragEnter, false);
-      document.removeEventListener('dragleave', handleDragLeave, false);
+      document.removeEventListener('dragleave', counterHandlers.decrement, false);
     };
   }, [active]);
 
@@ -121,10 +117,12 @@ export function DropzoneFullScreen(props: DropzoneFullScreenProps) {
           onDrop={(files: any) => {
             onDrop?.(files);
             close();
+            counterHandlers.reset();
           }}
           onReject={(files: any) => {
             onReject?.(files);
             close();
+            counterHandlers.reset();
           }}
         />
       </Box>
