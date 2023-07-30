@@ -25,7 +25,7 @@ export const ModalBaseContent = forwardRef<HTMLElement, ModalBaseContentProps>((
     props
   );
 
-  const { classes, cx } = useStyles({ zIndex: ctx.zIndex + 1 }, ctx.stylesApi);
+  const { classes, cx } = useStyles({ zIndex: ctx.zIndex }, ctx.stylesApi);
 
   const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
     const shouldTrigger =

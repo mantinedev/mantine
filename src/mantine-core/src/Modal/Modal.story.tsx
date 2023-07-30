@@ -95,3 +95,24 @@ export function NativeScrollArea() {
     </div>
   );
 }
+
+export function NestedModals() {
+  const [parentOpened, { open: parentOpen, close: parentClose }] = useDisclosure(false);
+  const [nestedOpened, { open: nestedOpen, close: nestedClose }] = useDisclosure(false);
+
+  return (
+    <div style={{ padding: 40 }}>
+      <Modal opened={parentOpened} onClose={parentClose} title="Parent Modal" size={1400} centered>
+        <div>{content}</div>
+
+        <Button onClick={nestedOpen}>Open Nested</Button>
+
+        <Modal opened={nestedOpened} onClose={nestedClose} title="Nested Modal" centered>
+          <div>Nested Content</div>
+        </Modal>
+      </Modal>
+
+      <Button onClick={parentOpen}>Open Parent</Button>
+    </div>
+  );
+}
