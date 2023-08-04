@@ -148,7 +148,7 @@
     "@tiptap/extension-underline": "^2.0.0-beta.202",
     "@tiptap/react": "^2.0.0-beta.202",
     "@tiptap/starter-kit": "^2.0.0-beta.202",
-    "clsx": "1.1.1",
+    "clsx": "2.0.0",
     "csstype": "3.0.9",
     "dayjs": "^1.10.5",
     "embla-carousel-autoplay": "^7.0.0",

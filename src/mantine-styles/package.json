@@ -31,7 +31,7 @@
     "@emotion/react": ">=11.9.0"
   },
   "dependencies": {
-    "clsx": "1.1.1",
+    "clsx": "2.0.0",
     "csstype": "3.0.9"
   },
   "devDependencies": {}
