@@ -109,7 +109,7 @@ export interface ContextStylesParams {
   size?: string | number;
 }
 
-interface ThemeComponent {
+export interface ThemeComponent {
   defaultProps?: Record<string, any> | ((theme: MantineTheme) => Record<string, any>);
   classNames?: Record<string, string>;
   styles?:
