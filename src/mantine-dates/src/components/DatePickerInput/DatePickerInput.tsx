@@ -104,11 +104,7 @@ export const DatePickerInput: DatePickerInputComponent = forwardRef((props, ref)
         variant={variant}
         type={type}
         value={_value}
-        defaultDate={
-          Array.isArray(_value)
-            ? _value[0] || defaultDate
-            : _value || defaultDate
-        }
+        defaultDate={Array.isArray(_value) ? _value[0] || defaultDate : _value || defaultDate}
         onChange={setValue}
         locale={locale}
         classNames={classNames}
