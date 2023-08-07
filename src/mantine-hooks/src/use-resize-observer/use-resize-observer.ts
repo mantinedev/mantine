@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useMemo, useRef, useState, useCallback } from 'react';
 
 type ObserverRect = Omit<DOMRectReadOnly, 'toJSON'>;
 
@@ -15,8 +15,6 @@ const defaultState: ObserverRect = {
 
 export function useResizeObserver<T extends HTMLElement = any>() {
   const frameID = useRef(0);
-  const ref = useRef<T>(null);
-
   const [rect, setRect] = useState<ObserverRect>(defaultState);
 
   const observer = useMemo(
@@ -29,9 +27,7 @@ export function useResizeObserver<T extends HTMLElement = any>() {
               cancelAnimationFrame(frameID.current);
 
               frameID.current = requestAnimationFrame(() => {
-                if (ref.current) {
-                  setRect(entry.contentRect);
-                }
+                setRect(entry.contentRect);
               });
             }
           })
@@ -39,19 +35,32 @@ export function useResizeObserver<T extends HTMLElement = any>() {
     []
   );
 
-  useEffect(() => {
-    if (ref.current) {
-      observer.observe(ref.current);
-    }
+  const cleanup = useRef<() => void>();
 
-    return () => {
-      observer.disconnect();
-
-      if (frameID.current) {
-        cancelAnimationFrame(frameID.current);
+  const ref = useCallback(
+    (node: T) => {
+      if (cleanup.current) {
+        cleanup.current();
+        cleanup.current = undefined;
       }
-    };
-  }, [ref.current]);
+
+      if (node) {
+        setRect(node.getBoundingClientRect());
+
+        if (observer) {
+          observer.observe(node);
+
+          cleanup.current = () => {
+            observer.disconnect();
+            if (frameID.current) {
+              cancelAnimationFrame(frameID.current);
+            }
+          };
+        }
+      }
+    },
+    [observer]
+  );
 
   return [ref, rect] as const;
 }

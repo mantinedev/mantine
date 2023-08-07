@@ -1,4 +1,4 @@
-import React, { useState, useEffect, forwardRef } from 'react';
+import React, { useState, forwardRef } from 'react';
 import { DefaultProps, Selectors, useComponentDefaultProps, rem } from '@mantine/styles';
 import { useElementSize } from '@mantine/hooks';
 import { Anchor } from '../Anchor';
@@ -60,14 +60,10 @@ export const Spoiler = forwardRef<HTMLDivElement, SpoilerProps>((props, ref) => 
   );
 
   const [show, setShowState] = useState(initialState);
-  const [spoiler, setSpoilerState] = useState(initialState);
   const { ref: contentRef, height } = useElementSize();
+  const spoiler = maxHeight < height;
 
   const spoilerMoreContent = show ? hideLabel : showLabel;
-
-  useEffect(() => {
-    setSpoilerState(maxHeight < height);
-  }, [height, maxHeight, children]);
 
   return (
     <Box className={cx(classes.root, className)} ref={ref} {...others}>
