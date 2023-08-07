@@ -1,5 +1,4 @@
 import React from 'react';
-import { rem } from '@mantine/styles';
 
 export function AvatarPlaceholderIcon(props: React.ComponentPropsWithoutRef<'svg'>) {
   const { style, ...others } = props;
@@ -8,7 +7,7 @@ export function AvatarPlaceholderIcon(props: React.ComponentPropsWithoutRef<'svg
       viewBox="0 0 15 15"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
-      style={{ width: rem(15), height: rem(15), ...style }}
+      style={style}
       {...others}
     >
       <path
