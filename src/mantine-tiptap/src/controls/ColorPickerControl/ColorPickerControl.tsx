@@ -48,7 +48,7 @@ export const ColorPickerControl = forwardRef<HTMLButtonElement, ColorPickerContr
     const currentColor =
       editor?.getAttributes('textStyle').color || theme.colorScheme === 'dark'
         ? theme.colors.dark[1]
-        : theme.colors.blue[1];
+        : theme.black;
 
     const handleChange = (value: string, shouldClose = true) => {
       (editor.chain() as any).focus().setColor(value).run();
