@@ -1,4 +1,5 @@
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useMemo, useRef, useState } from 'react';
+import { useIsomorphicEffect } from '../use-isomorphic-effect/use-isomorphic-effect';
 
 type ObserverRect = Omit<DOMRectReadOnly, 'toJSON'>;
 
@@ -38,7 +39,7 @@ export function useResizeObserver<T extends HTMLElement = any>() {
     []
   );
 
-  useEffect(() => {
+  useIsomorphicEffect(() => {
     if (ref.current) {
       observer.observe(ref.current);
     }
