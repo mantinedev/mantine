@@ -42,6 +42,7 @@ export function useResizeObserver<T extends HTMLElement = any>() {
   useIsomorphicEffect(() => {
     if (ref.current) {
       observer.observe(ref.current);
+      setRect(ref.current.getBoundingClientRect());
     }
 
     return () => {
