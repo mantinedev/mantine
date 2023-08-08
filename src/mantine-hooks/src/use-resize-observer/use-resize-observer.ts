@@ -1,4 +1,4 @@
-import { useMemo, useRef, useState, useCallback } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 
 type ObserverRect = Omit<DOMRectReadOnly, 'toJSON'>;
 
@@ -15,6 +15,8 @@ const defaultState: ObserverRect = {
 
 export function useResizeObserver<T extends HTMLElement = any>() {
   const frameID = useRef(0);
+  const ref = useRef<T>(null);
+
   const [rect, setRect] = useState<ObserverRect>(defaultState);
 
   const observer = useMemo(
@@ -22,12 +24,13 @@ export function useResizeObserver<T extends HTMLElement = any>() {
       typeof window !== 'undefined'
         ? new ResizeObserver((entries: any) => {
             const entry = entries[0];
-
             if (entry) {
               cancelAnimationFrame(frameID.current);
 
               frameID.current = requestAnimationFrame(() => {
-                setRect(entry.contentRect);
+                if (ref.current) {
+                  setRect(entry.contentRect);
+                }
               });
             }
           })
@@ -35,36 +38,22 @@ export function useResizeObserver<T extends HTMLElement = any>() {
     []
   );
 
-  const cleanup = useRef<() => void>();
+  useEffect(() => {
+    if (ref.current) {
+      observer.observe(ref.current);
+    }
 
-  const ref = useCallback(
-    (node: T) => {
-      if (cleanup.current) {
-        cleanup.current();
-        cleanup.current = undefined;
+    return () => {
+      observer.disconnect();
+
+      if (frameID.current) {
+        cancelAnimationFrame(frameID.current);
       }
-
-      if (node) {
-        setRect(node.getBoundingClientRect());
-
-        if (observer) {
-          observer.observe(node);
-
-          cleanup.current = () => {
-            observer.disconnect();
-            if (frameID.current) {
-              cancelAnimationFrame(frameID.current);
-            }
-          };
-        }
-      }
-    },
-    [observer]
-  );
+    };
+  }, [ref.current]);
 
   return [ref, rect] as const;
 }
-
 export function useElementSize<T extends HTMLElement = any>() {
   const [ref, { width, height }] = useResizeObserver<T>();
   return { ref, width, height };
