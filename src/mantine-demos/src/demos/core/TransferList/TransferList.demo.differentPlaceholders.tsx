@@ -8,7 +8,7 @@ function Demo() {
     <TransferList
       searchPlaceholder={['Search item to add...', 'Search item to remove...']}
       nothingFound={['Cannot find item to add', 'Cannot find item to remove']}
-      placeholder={['No item left to add', 'No item left ro remove']}
+      placeholder={['No item left to add', 'No item left to remove']}
       {/* ...other props */}
     />
   );
@@ -20,7 +20,7 @@ function Demo() {
     <Wrapper
       searchPlaceholder={['Search item to add...', 'Search item to remove...']}
       nothingFound={['Cannot find item to add', 'Cannot find item to remove']}
-      placeholder={['No item left to add', 'No item left ro remove']}
+      placeholder={['No item left to add', 'No item left to remove']}
       titles={['Frameworks', 'Libraries']}
       breakpoint="sm"
     />
