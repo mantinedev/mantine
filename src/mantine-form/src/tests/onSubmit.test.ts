@@ -1,4 +1,4 @@
-import { act, renderHook } from '@testing-library/react';
+import { act, renderHook, waitFor } from '@testing-library/react';
 import { useForm } from '../use-form';
 
 const getFormEvent = () => ({ preventDefault: jest.fn() } as any);
@@ -74,5 +74,37 @@ describe('@mantine/form/onSubmit', () => {
     const handleSubmit = jest.fn();
     act(() => hook.result.current.onSubmit(handleSubmit)());
     expect(handleSubmit).toHaveBeenCalledWith({ a: 1 }, undefined);
+  });
+
+  it('sets submitting, if onSubmit is async, until promise is settled', () => {
+    const hook = renderHook(() => useForm({ initialValues: {} }));
+    const handleSubmit = jest.fn(() => Promise.resolve());
+
+    expect(hook.result.current.submitting).toBe(false);
+    act(() => hook.result.current.onSubmit(handleSubmit)());
+    expect(hook.result.current.submitting).toBe(true);
+    expect(handleSubmit).toHaveBeenCalled();
+    waitFor(() => expect(hook.result.current.submitting).toBe(false));
+  });
+
+  it("sets submitError if onSubmit's promise is rejected", async () => {
+    const hook = renderHook(() => useForm({ initialValues: {} }));
+    const handleSubmit = jest.fn(() => Promise.reject(new Error('test')));
+
+    expect(hook.result.current.submitError).toBe(null);
+    await act(async () => hook.result.current.onSubmit(handleSubmit)());
+    expect(handleSubmit).toHaveBeenCalled();
+    waitFor(() => expect(hook.result.current.submitting).toBe(false));
+    expect(hook.result.current.submitError).toBeInstanceOf(Error);
+    expect(hook.result.current.submitError?.message).toBe('test');
+  });
+
+  it("doesn't submit if form is already submitting", () => {
+    const hook = renderHook(() => useForm({ initialValues: {} }));
+    const handleSubmit = jest.fn(() => Promise.resolve());
+
+    act(() => hook.result.current.onSubmit(handleSubmit)());
+    act(() => hook.result.current.onSubmit(handleSubmit)());
+    expect(handleSubmit).toHaveBeenCalledTimes(1);
   });
 });

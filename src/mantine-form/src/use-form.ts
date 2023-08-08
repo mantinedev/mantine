@@ -22,10 +22,14 @@ import {
   ReorderListItem,
   Reset,
   ResetDirty,
+  ResetSubmitError,
   SetErrors,
   SetFieldError,
   SetFieldValue,
+  SetSubmitError,
+  SetSubmitting,
   SetValues,
+  SubmitError,
   UseFormInput,
   UseFormReturnType,
   Validate,
@@ -50,6 +54,8 @@ export function useForm<
   const [dirty, setDirty] = useState(initialDirty);
   const [values, _setValues] = useState(initialValues);
   const [errors, _setErrors] = useState(filterErrors(initialErrors));
+  const [submitting, _setSubmitting] = useState(false);
+  const [submitError, _setSubmitError] = useState<SubmitError>(null);
 
   const valuesSnapshot = useRef<Values>(initialValues);
   const setValuesSnapshot = (_values: Values) => {
@@ -208,12 +214,28 @@ export function useForm<
   const onSubmit: OnSubmit<Values, TransformValues> =
     (handleSubmit, handleValidationFailure) => (event) => {
       event?.preventDefault();
+      if (submitting) {
+        return;
+      }
+
       const results = validate();
 
       if (results.hasErrors) {
         handleValidationFailure?.(results.errors, values, event);
       } else {
-        handleSubmit?.(transformValues(values) as any, event);
+        const submitResult = handleSubmit?.(transformValues(values) as any, event);
+        if (submitResult instanceof Promise) {
+          _setSubmitError(null);
+          _setSubmitting(true);
+
+          submitResult
+            .catch((e) => {
+              _setSubmitError(e);
+            })
+            .finally(() => {
+              _setSubmitting(false);
+            });
+        }
       }
     };
 
@@ -258,9 +280,26 @@ export function useForm<
     [values, rules]
   );
 
+  const setSubmitting: SetSubmitting = useCallback((value) => {
+    _setSubmitting(value);
+  }, []);
+
+  const setSubmitError: SetSubmitError = useCallback((error) => {
+    _setSubmitError(error);
+  }, []);
+
+  const resetSubmitError: ResetSubmitError = useCallback(() => {
+    _setSubmitError(null);
+  }, []);
+
   return {
     values,
     errors,
+    submitting,
+    submitError,
+    setSubmitting,
+    setSubmitError,
+    resetSubmitError,
     setValues,
     setErrors,
     setFieldValue,
