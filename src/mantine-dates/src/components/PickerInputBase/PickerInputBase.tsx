@@ -133,6 +133,8 @@ export const PickerInputBase = forwardRef<HTMLButtonElement, PickerInputBaseProp
     dropdownHandlers.close();
   };
 
+  const hasLabel = wrapperProps.label;
+
   return (
     <>
       {dropdownType === 'modal' && !readOnly && (
@@ -155,12 +157,12 @@ export const PickerInputBase = forwardRef<HTMLButtonElement, PickerInputBaseProp
           opened={dropdownOpened}
           onClose={handleClose}
           disabled={dropdownType === 'modal' || readOnly}
-          trapFocus
+          trapFocus={!hasLabel}
           returnFocus
           unstyled={unstyled}
           {...popoverProps}
         >
-          <Popover.Target>
+          <Popover.Target shouldOverrideDefaultTargetId={!hasLabel}>
             <Input
               data-dates-input
               data-read-only={readOnly || undefined}
