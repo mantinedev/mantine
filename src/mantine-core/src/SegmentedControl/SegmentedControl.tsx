@@ -148,7 +148,6 @@ export const SegmentedControl = forwardRef<HTMLDivElement, SegmentedControlProps
   const uuid = useId(name);
   const refs = useRef<Record<string, HTMLLabelElement>>({});
   const [observerRef, containerRect] = useResizeObserver();
-  const rootRef = useRef<HTMLDivElement>(null);
 
   useIsomorphicEffect(() => {
     if (!mounted.current) {
@@ -160,7 +159,7 @@ export const SegmentedControl = forwardRef<HTMLDivElement, SegmentedControlProps
   });
 
   useEffect(() => {
-    if (_value in refs.current && rootRef.current) {
+    if (_value in refs.current && observerRef.current) {
       const element = refs.current[_value];
       const elementRect = element.getBoundingClientRect();
       const scaledValue = element.offsetWidth / elementRect.width;
@@ -212,7 +211,7 @@ export const SegmentedControl = forwardRef<HTMLDivElement, SegmentedControlProps
     </div>
   ));
 
-  const mergedRef = useMergedRef(observerRef, ref, rootRef);
+  const mergedRef = useMergedRef(observerRef, ref);
 
   if (data.length === 0) {
     return null;
