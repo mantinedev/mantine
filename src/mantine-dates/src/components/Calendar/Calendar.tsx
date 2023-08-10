@@ -33,10 +33,19 @@ export interface CalendarAriaLabels {
   previousDecade?: string;
 }
 
+type OmittedSettings =
+  | 'onNext'
+  | 'onPrevious'
+  | 'onLevelClick'
+  | 'withNext'
+  | 'withPrevious'
+  | 'nextDisabled'
+  | 'previousDisabled';
+
 export interface CalendarSettings
-  extends Omit<DecadeLevelSettings, 'onNext' | 'onPrevious'>,
-    Omit<YearLevelSettings, 'onNext' | 'onPrevious'>,
-    Omit<MonthLevelSettings, 'onNext' | 'onPrevious'> {
+  extends Omit<DecadeLevelSettings, OmittedSettings>,
+    Omit<YearLevelSettings, OmittedSettings>,
+    Omit<MonthLevelSettings, OmittedSettings> {
   /** Initial level displayed to the user (decade, year, month), used for uncontrolled component */
   defaultLevel?: CalendarLevel;
 
