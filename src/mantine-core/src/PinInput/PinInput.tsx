@@ -190,16 +190,20 @@ export const PinInput = forwardRef<HTMLDivElement, PinInputProps>((props, ref) =
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>, index: number) => {
     const inputValue = event.target.value;
-    const nextChar =
-      inputValue.length > 1 ? inputValue.split('')[inputValue.length - 1] : inputValue;
+    const nextCharOrValue =
+      inputValue.length === 2 ? inputValue.split('')[inputValue.length - 1] : inputValue;
 
-    const isValid = validate(nextChar);
+    const isValid = validate(nextCharOrValue);
 
-    if (isValid) {
-      setFieldValue(nextChar, index);
-      focusInputField('next', index);
-    } else {
-      setFieldValue('', index);
+    if (nextCharOrValue.length < 2) {
+      if (isValid) {
+        setFieldValue(nextCharOrValue, index);
+        focusInputField('next', index);
+      } else {
+        setFieldValue('', index);
+      }
+    } else if (isValid) {
+      setValues(inputValue);
     }
   };
 
