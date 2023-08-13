@@ -2,6 +2,7 @@ import React from 'react';
 import { MANTINE_SIZES, MantineProvider } from '@mantine/styles';
 import { Checkbox } from '../Checkbox';
 import { Radio } from './Radio';
+import { Stack } from '../Stack';
 
 export default { title: 'Radio' };
 
@@ -19,9 +20,14 @@ export function RadioGroup() {
   return (
     <div style={{ padding: 20 }}>
       <Radio.Group defaultValue="ng">
-        <Radio label="React" value="react" name="hello" />
-        <Radio label="Angular" value="ng" name="hello" />
-        <Radio label="Svelte" value="sv" disabled name="hello" />
+        <Radio label="React" value="react" />
+        <Radio label="Angular" value="ng" />
+        <Radio label="Svelte" value="sv" />
+      </Radio.Group>
+      <Radio.Group>
+        <Radio label="React" value="react" />
+        <Radio label="Angular" value="ng" />
+        <Radio label="Svelte" value="sv" />
       </Radio.Group>
     </div>
   );
@@ -29,13 +35,43 @@ export function RadioGroup() {
 
 export function Sizes() {
   const items = MANTINE_SIZES.map((size) => (
-    <Radio.Group defaultValue="ng" key={size} size={size} mt="xl">
+    <Radio.Group defaultValue="ng" key={size} size={size}>
       <Radio label="React" value="react" />
       <Radio label="Angular" value="ng" />
       <Radio label="Svelte" value="sv" disabled />
     </Radio.Group>
   ));
-  return <div style={{ padding: 20 }}>{items}</div>;
+
+  return (
+    <div style={{ padding: 20 }}>
+      <Stack>
+        <div>
+          Independent Radio buttons:
+          <Radio label="React" value="react" size="xs" />
+          <Radio label="React" value="react" size="sm" />
+          <Radio label="React" value="react" size="md" />
+          <Radio label="React" value="react" size="lg" />
+          <Radio label="React" value="react" size="xl" />
+        </div>
+        <div>
+          Radio Group:
+          {items}
+        </div>
+        <div>
+          Override size of specific radio button in group:
+          <Radio.Group size="sm">
+            <Radio label="default" value="def1" />
+            <Radio label="xs" value="xs" size="xs" />
+            <Radio label="sm" value="sm" size="sm" />
+            <Radio label="md" value="md" size="md" />
+            <Radio label="lg" value="lg" size="lg" />
+            <Radio label="xl" value="xl" size="xl" />
+            <Radio label="default" value="def2" />
+          </Radio.Group>
+        </div>
+      </Stack>
+    </div>
+  );
 }
 
 export function ComparedToCheckbox() {
@@ -97,5 +133,43 @@ export function WithNameAttribute() {
         <Radio value="c" label="c" />
       </Radio.Group>
     </div>
+  );
+}
+
+export function labelPosition() {
+  return (
+    <Stack sx={{ width: 300, padding: 20 }}>
+      <Radio labelPosition="left" label="Hello from left" value="1" />
+      <Radio labelPosition="right" label="Hello from right" value="1" />
+    </Stack>
+  );
+}
+
+export function WithDesciprtion() {
+  return (
+    <Stack sx={{ width: 300, padding: 20 }}>
+      <Radio
+        description="This is left Checkbox"
+        labelPosition="left"
+        label="Hello from left"
+        value="1"
+      />
+      <Radio
+        description="This is right Checkbox"
+        labelPosition="right"
+        label="Hello from right"
+        value="1"
+      />
+    </Stack>
+  );
+}
+
+export function WithError() {
+  return (
+    <Stack sx={{ width: 300, padding: 20 }}>
+      <Radio label="Invalid Radio without message" value="1" error />
+      <Radio error="This is error message" labelPosition="right" label="Invalid Radio" value="1" />
+      <Radio error="Radio with error without label" value="1" />
+    </Stack>
   );
 }

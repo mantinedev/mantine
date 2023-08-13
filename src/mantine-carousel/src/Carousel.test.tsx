@@ -1,10 +1,24 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { itSupportsSystemProps, itRendersChildren, checkAccessibility } from '@mantine/tests';
+import {
+  itSupportsSystemProps,
+  itRendersChildren,
+  checkAccessibility,
+  itSupportsProviderVariant,
+} from '@mantine/tests';
 import { Carousel, CarouselProps } from './Carousel';
 
-const defaultProps: CarouselProps = {};
+const defaultProps: CarouselProps = {
+  children: (
+    <>
+      <Carousel.Slide>1</Carousel.Slide>
+      <Carousel.Slide>2</Carousel.Slide>
+      <Carousel.Slide>3</Carousel.Slide>
+      <Carousel.Slide>4</Carousel.Slide>
+    </>
+  ),
+};
 
 describe('@mantine/carousel/Carousel', () => {
   checkAccessibility([
@@ -17,6 +31,7 @@ describe('@mantine/carousel/Carousel', () => {
   ]);
 
   itRendersChildren(Carousel, defaultProps);
+  itSupportsProviderVariant(Carousel, defaultProps, 'Carousel', ['root', 'slide']);
   itSupportsSystemProps({
     component: Carousel,
     props: defaultProps,
@@ -39,12 +54,12 @@ describe('@mantine/carousel/Carousel', () => {
     );
 
     await userEvent.click(screen.getByLabelText('Next slide'));
-    expect(onNextSlide).toBeCalledTimes(1);
-    expect(onPreviousSlide).toBeCalledTimes(0);
+    expect(onNextSlide).toHaveBeenCalledTimes(1);
+    expect(onPreviousSlide).toHaveBeenCalledTimes(0);
 
     await userEvent.click(screen.getByLabelText('Previous slide'));
-    expect(onNextSlide).toBeCalledTimes(1);
-    expect(onPreviousSlide).toBeCalledTimes(1);
+    expect(onNextSlide).toHaveBeenCalledTimes(1);
+    expect(onPreviousSlide).toHaveBeenCalledTimes(1);
   });
 
   it('renders controls if withControls is true', () => {

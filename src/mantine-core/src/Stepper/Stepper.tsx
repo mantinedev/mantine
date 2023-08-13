@@ -9,7 +9,7 @@ import {
 } from '@mantine/styles';
 import { ForwardRefWithStaticComponents } from '@mantine/utils';
 import { Box } from '../Box';
-import { Step, StepStylesNames } from './Step/Step';
+import { Step, StepStylesNames, StepFragmentComponent } from './Step/Step';
 import { StepCompleted } from './StepCompleted/StepCompleted';
 import useStyles from './Stepper.styles';
 
@@ -18,6 +18,8 @@ export type StepperStylesNames = Selectors<typeof useStyles> | StepStylesNames;
 export interface StepperProps
   extends DefaultProps<StepperStylesNames>,
     React.ComponentPropsWithRef<'div'> {
+  variant?: string;
+
   /** <Stepper.Step /> components only */
   children: React.ReactNode;
 
@@ -27,19 +29,22 @@ export interface StepperProps
   /** Active step index */
   active: number;
 
+  /** Step icon, defaults to step index + 1 when rendered within Stepper */
+  icon?: React.ReactNode | StepFragmentComponent;
+
   /** Step icon displayed when step is completed */
-  completedIcon?: React.ReactNode;
+  completedIcon?: React.ReactNode | StepFragmentComponent;
 
   /** Step icon displayed when step is in progress */
-  progressIcon?: React.ReactNode;
+  progressIcon?: React.ReactNode | StepFragmentComponent;
 
   /** Active and progress Step colors from theme.colors */
   color?: MantineColor;
 
-  /** Step icon size in px */
+  /** Step icon size */
   iconSize?: number;
 
-  /** Content padding-top from theme.spacing or number to set value in px */
+  /** Key of theme.spacing or any valid CSS value to set content padding-top */
   contentPadding?: MantineNumberSize;
 
   /** Component orientation */
@@ -51,11 +56,14 @@ export interface StepperProps
   /** Component size */
   size?: MantineSize;
 
-  /** Radius from theme.radius, or number to set border-radius in px */
+  /** Key of theme.radius or any valid CSS value to set border-radius, "xl" by default */
   radius?: MantineNumberSize;
 
   /** Breakpoint at which orientation will change from horizontal to vertical */
   breakpoint?: MantineNumberSize;
+
+  /** Whether to enable click on upcoming steps by default. Defaults to true **/
+  allowNextStepsSelect?: boolean;
 }
 
 type StepperComponent = ForwardRefWithStaticComponents<
@@ -72,6 +80,7 @@ const defaultProps: Partial<StepperProps> = {
   radius: 'xl',
   orientation: 'horizontal',
   iconPosition: 'left',
+  allowNextStepsSelect: true,
 };
 
 export const Stepper: StepperComponent = forwardRef<HTMLDivElement, StepperProps>((props, ref) => {
@@ -80,6 +89,7 @@ export const Stepper: StepperComponent = forwardRef<HTMLDivElement, StepperProps
     children,
     onStepClick,
     active,
+    icon,
     completedIcon,
     progressIcon,
     color,
@@ -90,15 +100,17 @@ export const Stepper: StepperComponent = forwardRef<HTMLDivElement, StepperProps
     orientation,
     breakpoint,
     iconPosition,
+    allowNextStepsSelect,
     classNames,
     styles,
     unstyled,
+    variant,
     ...others
   } = useComponentDefaultProps('Stepper', defaultProps, props);
 
   const { classes, cx } = useStyles(
-    { contentPadding, color, orientation, iconPosition, size, iconSize, breakpoint },
-    { classNames, styles, unstyled, name: 'Stepper' }
+    { contentPadding, color, orientation, iconPosition, iconSize, breakpoint },
+    { name: 'Stepper', classNames, styles, unstyled, variant, size }
   );
 
   const convertedChildren = Children.toArray(children) as React.ReactElement[];
@@ -106,20 +118,33 @@ export const Stepper: StepperComponent = forwardRef<HTMLDivElement, StepperProps
   const completedStep = convertedChildren.find((item) => item.type === StepCompleted);
 
   const items = _children.reduce<React.ReactElement[]>((acc, item, index) => {
-    const shouldAllowSelect =
-      typeof item.props.allowStepSelect === 'boolean'
-        ? item.props.allowStepSelect
-        : typeof onStepClick === 'function';
+    const state =
+      active === index ? 'stepProgress' : active > index ? 'stepCompleted' : 'stepInactive';
+
+    const shouldAllowSelect = () => {
+      if (typeof onStepClick !== 'function') {
+        return false;
+      }
+
+      if (typeof item.props.allowStepSelect === 'boolean') {
+        return item.props.allowStepSelect;
+      }
+
+      return state === 'stepCompleted' || allowNextStepsSelect;
+    };
+
+    const isStepSelectionEnabled = shouldAllowSelect();
 
     acc.push(
       cloneElement(item, {
         __staticSelector: 'Stepper',
-        icon: item.props.icon || index + 1,
+        icon: item.props.icon || icon || index + 1,
         key: index,
-        state:
-          active === index ? 'stepProgress' : active > index ? 'stepCompleted' : 'stepInactive',
-        onClick: () => shouldAllowSelect && typeof onStepClick === 'function' && onStepClick(index),
-        allowStepClick: shouldAllowSelect && typeof onStepClick === 'function',
+        step: index,
+        variant,
+        state,
+        onClick: () => isStepSelectionEnabled && onStepClick(index),
+        allowStepClick: isStepSelectionEnabled,
         completedIcon: item.props.completedIcon || completedIcon,
         progressIcon: item.props.progressIcon || progressIcon,
         color: item.props.color || color,

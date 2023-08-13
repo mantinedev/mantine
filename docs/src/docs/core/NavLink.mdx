@@ -3,6 +3,7 @@ group: 'mantine-core'
 package: '@mantine/core'
 title: NavLink
 order: 1
+polymorphic: true
 slug: /core/nav-link/
 category: 'navigation'
 description: 'Navigation link'
@@ -41,44 +42,5 @@ import { NavLink } from '@mantine/core';
 
 function Demo() {
   return <NavLink component="a" href="/home" target="_blank" />;
-}
-```
-
-### Usage with Next.js Link
-
-```tsx
-import Link from 'next/link';
-import { useRouter } from 'next/router';
-
-function Demo() {
-  const router = useRouter();
-  return (
-    <>
-      <Link href="/home" passHref>
-        <NavLink component="a" label="Home" active={router.pathname === '/home'} />
-      </Link>
-      <Link href="/about" passHref>
-        <NavLink component="a" label="About" active={router.pathname === '/about'} />
-      </Link>
-    </>
-  );
-}
-```
-
-### Usage with react-router
-
-This guide can also be applied to all libraries that work the same way as `react-router-dom`:
-
-```tsx
-import { Link, useLocation } from 'react-router-dom';
-
-function Demo() {
-  const location = useLocation();
-  return (
-    <>
-      <NavLink label="Home" component={Link} to="/home" active={location.pathname === '/home'} />
-      <NavLink label="About" component={Link} to="/about" active={location.pathname === '/about'} />
-    </>
-  );
 }
 ```

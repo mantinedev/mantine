@@ -10,6 +10,8 @@ export type BreadcrumbsStylesNames = Selectors<typeof useStyles>;
 export interface BreadcrumbsProps
   extends DefaultProps<BreadcrumbsStylesNames>,
     React.ComponentPropsWithoutRef<'div'> {
+  variant?: string;
+
   /** Separator between breadcrumbs */
   separator?: React.ReactNode;
 
@@ -23,10 +25,16 @@ const defaultProps: Partial<BreadcrumbsProps> = {
 
 export const Breadcrumbs = forwardRef<HTMLDivElement, BreadcrumbsProps>(
   (props: BreadcrumbsProps, ref) => {
-    const { className, children, separator, classNames, styles, unstyled, ...others } =
+    const { className, children, separator, classNames, styles, unstyled, variant, ...others } =
       useComponentDefaultProps('Breadcrumbs', defaultProps, props);
 
-    const { classes, cx } = useStyles(null, { classNames, styles, unstyled, name: 'Breadcrumbs' });
+    const { classes, cx } = useStyles(null, {
+      classNames,
+      styles,
+      unstyled,
+      name: 'Breadcrumbs',
+      variant,
+    });
 
     const items = React.Children.toArray(children).reduce<React.ReactNode[]>(
       (acc, child, index, array) => {

@@ -1,5 +1,5 @@
-import React, { useState, useEffect, forwardRef } from 'react';
-import { DefaultProps, Selectors, useComponentDefaultProps } from '@mantine/styles';
+import React, { useState, forwardRef } from 'react';
+import { DefaultProps, Selectors, useComponentDefaultProps, rem } from '@mantine/styles';
 import { useElementSize } from '@mantine/hooks';
 import { Anchor } from '../Anchor';
 import { Box } from '../Box';
@@ -10,6 +10,8 @@ export type SpoilerStylesNames = Selectors<typeof useStyles>;
 export interface SpoilerProps
   extends DefaultProps<SpoilerStylesNames, SpoilerStylesParams>,
     React.ComponentPropsWithoutRef<'div'> {
+  variant?: string;
+
   /** Max height of visible content, when this point is reached spoiler appears */
   maxHeight: number;
 
@@ -48,30 +50,27 @@ export const Spoiler = forwardRef<HTMLDivElement, SpoilerProps>((props, ref) => 
     classNames,
     styles,
     unstyled,
+    variant,
     ...others
   } = useComponentDefaultProps('Spoiler', defaultProps, props);
 
   const { classes, cx } = useStyles(
     { transitionDuration },
-    { classNames, styles, unstyled, name: 'Spoiler' }
+    { name: 'Spoiler', classNames, styles, unstyled, variant }
   );
 
   const [show, setShowState] = useState(initialState);
-  const [spoiler, setSpoilerState] = useState(initialState);
   const { ref: contentRef, height } = useElementSize();
+  const spoiler = maxHeight < height;
 
   const spoilerMoreContent = show ? hideLabel : showLabel;
-
-  useEffect(() => {
-    setSpoilerState(maxHeight < height);
-  }, [height, maxHeight, children]);
 
   return (
     <Box className={cx(classes.root, className)} ref={ref} {...others}>
       <div
         className={classes.content}
         style={{
-          maxHeight: !show ? maxHeight : height || undefined,
+          maxHeight: !show ? rem(maxHeight) : height ? rem(height) : undefined,
         }}
       >
         <div ref={contentRef}>{children}</div>

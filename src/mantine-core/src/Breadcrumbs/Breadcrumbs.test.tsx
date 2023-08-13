@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
-import { itSupportsSystemProps } from '@mantine/tests';
+import { itSupportsSystemProps, itSupportsProviderVariant } from '@mantine/tests';
 import { Text } from '../Text/Text';
 import { Breadcrumbs, BreadcrumbsProps } from './Breadcrumbs';
 
@@ -17,6 +17,7 @@ const defaultProps: BreadcrumbsProps = {
 };
 
 describe('@mantine/core/Breadcrumbs', () => {
+  itSupportsProviderVariant(Breadcrumbs, defaultProps, 'Breadcrumbs');
   itSupportsSystemProps({
     component: Breadcrumbs,
     props: defaultProps,

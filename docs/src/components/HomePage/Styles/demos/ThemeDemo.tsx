@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'gatsby';
-import { Text, Box, Anchor } from '@mantine/core';
+import { Text, Box, Anchor, em } from '@mantine/core';
 import { Prism } from '@mantine/prism';
 
 const code = `
@@ -13,9 +13,9 @@ function Demo() {
         backgroundColor: theme.colors.gray[0],
         fontSize: theme.fontSizes.sm,
 
-        '@media (max-width: 755px)': {
+        '@media (max-width: ${em(755)})': {
           fontSize: theme.fontSizes.xs,
-        }
+        },
       })}
     >
       My custom text

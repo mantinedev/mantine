@@ -1,9 +1,10 @@
 import React from 'react';
-import { TextInput, Text } from '@mantine/core';
+import { TextInput, Text, Box } from '@mantine/core';
+import { MantineDemo } from '@mantine/ds';
 import { useValidatedState } from '@mantine/hooks';
 
 const code = `
-import { TextInput, Text } from '@mantine/core';
+import { TextInput, Text, Box } from '@mantine/core';
 import { useValidatedState } from '@mantine/hooks';
 
 function Demo() {
@@ -14,7 +15,7 @@ function Demo() {
   );
 
   return (
-    <div style={{ maxWidth: 320, margin: 'auto' }}>
+    <Box maw={320} mx="auto" sx={{ overflowWrap: 'break-word' }}>
       <TextInput
         value={value}
         onChange={(event) => setEmail(event.currentTarget.value)}
@@ -30,13 +31,14 @@ function Demo() {
         </Text>{' '}
         {value || '[empty string]'}
       </Text>
+
       <Text size="sm">
         <Text inherit color="dimmed" component="span">
           Last valid value:
         </Text>{' '}
         {lastValidValue || '[empty string]'}
       </Text>
-    </div>
+    </Box>
   );
 }
 `;
@@ -49,7 +51,7 @@ function Demo() {
   );
 
   return (
-    <div style={{ maxWidth: 320, margin: 'auto', overflowWrap: 'break-word' }}>
+    <Box maw={320} mx="auto" sx={{ overflowWrap: 'break-word' }}>
       <TextInput
         value={value}
         onChange={(event) => setEmail(event.currentTarget.value)}
@@ -65,13 +67,14 @@ function Demo() {
         </Text>{' '}
         {value || '[empty string]'}
       </Text>
+
       <Text size="sm">
         <Text inherit color="dimmed" component="span">
           Last valid value:
         </Text>{' '}
         {lastValidValue || '[empty string]'}
       </Text>
-    </div>
+    </Box>
   );
 }
 

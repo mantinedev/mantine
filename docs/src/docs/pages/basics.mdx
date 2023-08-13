@@ -14,7 +14,7 @@ to learn about all available theming and styling features.
 
 Mantine has a very friendly community, we are always happy to help you get started:
 
-- [Join the Discord community](https://discord.gg/eUZpPbpxb4) – it is the easiest way to get help, all questions are usually answered in about 30 minutes.
+- [Join the Discord community](https://discord.gg/wbH82zuWMN) – it is the easiest way to get help, all questions are usually answered in about 30 minutes.
 - [GitHub Discussions](https://github.com/mantinedev/mantine/discussions) – ask anything about the project or give feedback.
 
 ## Using documentation
@@ -39,7 +39,7 @@ function Demo() {
       theme={{
         // Override any other properties from default theme
         fontFamily: 'Open Sans, sans serif',
-        spacing: { xs: 15, sm: 20, md: 25, lg: 30, xl: 40 },
+        spacing: { xs: '1rem', sm: '1.2rem', md: '1.8rem', lg: '2.2rem', xl: '2.8rem' },
       }}
     >
       <App />
@@ -84,56 +84,6 @@ Core `createStyles` features overview:
 <Demo data={SliderDemos.customize} />
 
 ## Components props
-
-### Shared props
-
-All Mantine components support these props:
-
-- `className` – adds class to root element.
-- `sx` – adds style to root element.
-- Margin props:
-  - `m` – sets `margin` property on root element.
-  - `my` – sets `margin-top` and `margin-bottom` properties on root element.
-  - `mx` – sets `margin-right` and `margin-left` properties on root element.
-  - `mt` – sets `margin-top` property on root element.
-  - `mb` – sets `margin-bottom` property on root element.
-  - `ml` – sets `margin-left` property on root element.
-  - `mr` – sets `margin-right` property on root element.
-- Padding props:
-  - `p` – sets `padding` property on root element
-  - `py` – sets `padding-top` and `padding-bottom` properties on root element
-  - `px` – sets `padding-right` and `padding-left` properties on root element
-  - `pt` – sets `padding-top` property on root element
-  - `pb` – sets `padding-bottom` property on root element
-  - `pl` – sets `padding-left` property on root element
-  - `pr` – sets `padding-right` property on root element
-
-```tsx
-import { Button } from '@mantine/core';
-
-function Demo() {
-  return (
-    <Button className="my-button" sx={{ backgroundColor: '#fff' }} mx={20} pt="xl">
-      My button
-    </Button>
-  );
-}
-```
-
-Margin props can get value from `theme.spacing`:
-
-```tsx
-<Button mt="xl" /> // -> margin-top: theme.spacing.xl
-<Button ml="-md" /> // -> margin-left: theme.spacing.md * -1
-<Button m={20} /> // -> margin: 20px
-```
-
-Same is applied to padding props:
-
-```tsx
-<Paper p="xl" /> // -> padding: theme.spacing.xl
-<Container px={30} /> // -> padding-left: 30px, padding-right: 30px
-```
 
 ### Color prop
 
@@ -185,7 +135,7 @@ In some components where size is associated with only one value, you can set it 
 
 ```tsx
 <Slider size="xs" /> // Predefined xs size
-<Slider size={20} /> // -> 20px track height, other parts are scaled from this value
+<Slider size={32} /> // -> 2rem track height, other parts are scaled from this value
 ```
 
 ### Spacing and padding
@@ -193,7 +143,13 @@ In some components where size is associated with only one value, you can set it 
 Components that have padding get values from `theme.spacing`, default values are:
 
 ```tsx
-{ xs: 10, sm: 12, md: 16, lg: 20, xl: 24 }
+{
+  xs: '0.625rem',
+  sm: '0.75rem',
+  md: '1rem',
+  lg: '1.25rem',
+  xl: '1.5rem',
+}
 ```
 
 To change these values set `spacing` property on [theme](/theming/theme-object/):
@@ -203,7 +159,9 @@ import { MantineProvider } from '@mantine/core';
 
 function Demo() {
   return (
-    <MantineProvider theme={{ spacing: { xs: 15, sm: 20, md: 25, lg: 30, xl: 40 } }}>
+    <MantineProvider
+      theme={{ spacing: { xs: '1rem', sm: '1.2rem', md: '1.8rem', lg: '2.2rem', xl: '2.8rem' } }}
+    >
       <App />
     </MantineProvider>
   );
@@ -214,7 +172,7 @@ Later when you use Mantine components you can reference these values in `spacing
 
 ```tsx
 <Group spacing="md" /> // -> md spacing from theme.spacing
-<Group spacing={40} /> // 40px spacing
+<Group spacing={32} /> // 2rem spacing
 ```
 
 ### Shadows
@@ -223,11 +181,11 @@ Components that use the box-shadow property get values from `theme.shadows`, def
 
 ```tsx
 {
-  xs: '0 1px 3px rgba(0, 0, 0, 0.05), 0 1px 2px rgba(0, 0, 0, 0.1)',
-  sm: '0 1px 3px rgba(0, 0, 0, 0.05), rgba(0, 0, 0, 0.05) 0px 10px 15px -5px, rgba(0, 0, 0, 0.04) 0px 7px 7px -5px',
-  md: '0 1px 3px rgba(0, 0, 0, 0.05), rgba(0, 0, 0, 0.05) 0px 20px 25px -5px, rgba(0, 0, 0, 0.04) 0px 10px 10px -5px',
-  lg: '0 1px 3px rgba(0, 0, 0, 0.05), rgba(0, 0, 0, 0.05) 0px 28px 23px -7px, rgba(0, 0, 0, 0.04) 0px 12px 12px -7px',
-  xl: '0 1px 3px rgba(0, 0, 0, 0.05), rgba(0, 0, 0, 0.05) 0px 36px 28px -7px, rgba(0, 0, 0, 0.04) 0px 17px 17px -7px',
+  xs: '0 0.0625rem 0.1875rem rgba(0, 0, 0, 0.05), 0 0.0625rem 0.125rem rgba(0, 0, 0, 0.1)',
+  sm: '0 0.0625rem 0.1875rem rgba(0, 0, 0, 0.05), rgba(0, 0, 0, 0.05) 0 0.625rem 0.9375rem -0.3125rem, rgba(0, 0, 0, 0.04) 0 0.4375rem 0.4375rem -0.3125rem',
+  md: '0 0.0625rem 0.1875rem rgba(0, 0, 0, 0.05), rgba(0, 0, 0, 0.05) 0 1.25rem 1.5625rem -0.3125rem, rgba(0, 0, 0, 0.04) 0 0.625rem 0.625rem -0.3125rem',
+  lg: '0 0.0625rem 0.1875rem rgba(0, 0, 0, 0.05), rgba(0, 0, 0, 0.05) 0 1.75rem 1.4375rem -0.4375rem, rgba(0, 0, 0, 0.04) 0 0.75rem 0.75rem -0.4375rem',
+  xl: '0 0.0625rem 0.1875rem rgba(0, 0, 0, 0.05), rgba(0, 0, 0, 0.05) 0 2.25rem 1.75rem -0.4375rem, rgba(0, 0, 0, 0.04) 0 1.0625rem 1.0625rem -0.4375rem',
 }
 ```
 
@@ -241,11 +199,11 @@ function Demo() {
     <MantineProvider
       theme={{
         shadows: {
-          xs: '1px 1px 1px rgba(0, 0, 0, 0.3)',
-          sm: '1px 1px 4px rgba(0, 0, 0, 0.4)',
-          md: '3px 3px 4px rgba(0, 0, 0, 0.4)',
-          lg: '3px 3px 4px 5px rgba(0, 0, 0, 0.4)',
-          xl: '3px 3px 4px 15px rgba(0, 0, 0, 0.4)',
+          xs: '0.0625rem 0.0625rem 0.0625rem rgba(0, 0, 0, 0.3)',
+          sm: '0.0625rem 0.0625rem 0.0625rem rgba(0, 0, 0, 0.4)',
+          md: '0.1875rem 0.1875rem 0.0625rem rgba(0, 0, 0, 0.4)',
+          lg: '0.1875rem 0.1875rem 0.0625rem 0.5rem rgba(0, 0, 0, 0.4)',
+          xl: '0.1875rem 0.1875rem 0.0625rem 1rem rgba(0, 0, 0, 0.4)',
         },
       }}
     >
@@ -259,7 +217,7 @@ Later when you use Mantine components you can reference these values in `shadow`
 
 ```tsx
 <Paper shadow="xl" /> // -> xl shadow from theme.shadows
-<Paper shadow="1px 3px 4px rgba(0, 0, 0, 0.4)" /> // -> your own shadow not related to theme.shadows
+<Paper shadow="0.0625rem 0.1875rem 0.5rem rgba(0, 0, 0, 0.4)" /> // -> your own shadow not related to theme.shadows
 ```
 
 ## Getting element ref

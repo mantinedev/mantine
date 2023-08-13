@@ -32,6 +32,10 @@ function Demo() {
 }
 ```
 
+## Disabled state
+
+<Demo data={SwitchDemos.disabled} />
+
 ## Inner Labels
 
 <Demo data={SwitchDemos.labels} />
@@ -52,7 +56,7 @@ function Demo() {
 
 ```tsx
 import { useState } from 'react';
-import { Checkbox } from '@mantine/core';
+import { Switch } from '@mantine/core';
 
 function Demo() {
   const [value, setValue] = useState<string[]>([]);

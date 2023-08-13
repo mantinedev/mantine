@@ -1,12 +1,29 @@
-import React from 'react';
-import { IconTable, IconSearch } from '@tabler/icons';
+import React, { useState } from 'react';
+import { IconTable, IconSearch } from '@tabler/icons-react';
 import { WithinOverlays } from '@mantine/storybook';
+import { useDisclosure } from '@mantine/hooks';
 import { Menu } from './Menu';
 import { Button } from '../Button';
 import { Tooltip } from '../Tooltip';
 import { Text } from '../Text';
 
 export default { title: 'Menu' };
+
+export function DisabledFirstItem() {
+  return (
+    <Menu>
+      <Menu.Target>
+        <Button>Toggle menu</Button>
+      </Menu.Target>
+
+      <Menu.Dropdown>
+        <Menu.Item disabled>Disabled</Menu.Item>
+        <Menu.Item>Item 2</Menu.Item>
+        <Menu.Item>Item 3</Menu.Item>
+      </Menu.Dropdown>
+    </Menu>
+  );
+}
 
 export function Usage() {
   return (
@@ -82,6 +99,58 @@ export function MenuTargetWithTooltip() {
         <Menu.Dropdown>
           <Menu.Item>Item 1</Menu.Item>
           <Menu.Item>Item 2</Menu.Item>
+        </Menu.Dropdown>
+      </Menu>
+    </div>
+  );
+}
+
+export function Controlled() {
+  const [opened, setOpened] = useState(false);
+  return (
+    <div style={{ padding: 100 }}>
+      <Menu opened={opened} onChange={setOpened}>
+        <Menu.Target>
+          <Button>Toggle controlled menu</Button>
+        </Menu.Target>
+        <Menu.Dropdown>
+          <Menu.Item>Item 1</Menu.Item>
+          <Menu.Item>Item 2</Menu.Item>
+        </Menu.Dropdown>
+      </Menu>
+    </div>
+  );
+}
+
+export function WithUseDisclosure() {
+  const [opened, handle] = useDisclosure(false);
+
+  return (
+    <div style={{ padding: 40 }}>
+      <Menu opened={opened} onChange={() => handle.toggle()}>
+        <Menu.Target>
+          <Button>UseDisclosureToggle controlled menu</Button>
+        </Menu.Target>
+        <Menu.Dropdown>
+          <Menu.Item>Item 1</Menu.Item>
+          <Menu.Item>Item 2</Menu.Item>
+        </Menu.Dropdown>
+      </Menu>
+    </div>
+  );
+}
+
+export function WithKeepMounted() {
+  return (
+    <div style={{ padding: 40 }}>
+      <Menu id="new-notification-menu" keepMounted position="bottom-end">
+        <Menu.Target>
+          <Button>Open Menu</Button>
+        </Menu.Target>
+        <Menu.Dropdown>
+          <Menu.Item>Menu Item 1</Menu.Item>
+          <Menu.Item>Menu Item 2</Menu.Item>
+          <Menu.Item>Menu Item 3</Menu.Item>
         </Menu.Dropdown>
       </Menu>
     </div>

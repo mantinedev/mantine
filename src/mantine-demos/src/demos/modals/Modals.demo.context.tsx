@@ -1,17 +1,18 @@
 import React from 'react';
 import { Group, Button } from '@mantine/core';
-import { openContextModal } from '@mantine/modals';
+import { MantineDemo } from '@mantine/ds';
+import { modals } from '@mantine/modals';
 
 const code = `
 import { Button, Group } from '@mantine/core';
-import { openContextModal } from '@mantine/modals';
+import { modals } from '@mantine/modals';
 
 function Demo() {
   return (
     <Group position="center">
       <Button
         onClick={() =>
-          openContextModal({
+          modals.openContextModal({
             modal: 'demonstration',
             title: 'Test modal from context',
             innerProps: {
@@ -33,7 +34,7 @@ function Demo() {
     <Group position="center">
       <Button
         onClick={() =>
-          openContextModal({
+          modals.openContextModal({
             modal: 'demonstration',
             title: 'Test modal from context',
             innerProps: {

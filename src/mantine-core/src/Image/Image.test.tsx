@@ -1,6 +1,11 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
-import { checkAccessibility, itSupportsSystemProps } from '@mantine/tests';
+import { rem } from '@mantine/core';
+import {
+  checkAccessibility,
+  itSupportsSystemProps,
+  itSupportsProviderVariant,
+} from '@mantine/tests';
 import { Image, ImageProps } from './Image';
 
 const defaultProps: ImageProps = {
@@ -15,6 +20,7 @@ describe('@mantine/core/Image', () => {
     <Image {...defaultProps} src={null} withPlaceholder />,
   ]);
 
+  itSupportsProviderVariant(Image, defaultProps, 'Image');
   itSupportsSystemProps({
     component: Image,
     props: defaultProps,
@@ -32,8 +38,8 @@ describe('@mantine/core/Image', () => {
   it('sets given width, height and object-fit on img element', () => {
     render(<Image {...defaultProps} width={478} height={207} fit="contain" />);
     expect(screen.getByRole('img')).toHaveStyle({
-      width: '478px',
-      height: '207px',
+      width: rem(478),
+      height: rem(207),
       objectFit: 'contain',
     });
   });
@@ -45,15 +51,36 @@ describe('@mantine/core/Image', () => {
     expect(withoutPlaceholder.querySelectorAll('.mantine-Image-placeholder')).toHaveLength(0);
   });
 
+  it('renders a placeholder after having src updated to null', () => {
+    const { rerender, container } = render(<Image src="test-src" withPlaceholder />);
+    expect(container.querySelectorAll('.mantine-Image-placeholder')).toHaveLength(0);
+    rerender(<Image src={null} withPlaceholder />);
+    expect(container.querySelectorAll('.mantine-Image-placeholder')).toHaveLength(1);
+  });
+
+  it('sets overflow to hidden if withPlaceholder is true on img element', () => {
+    render(<Image src={null} alt="test-alt" withPlaceholder />);
+    const image = screen.getByRole('img');
+    expect(image).toHaveStyle({ overflow: 'hidden' });
+  });
+
+  it('uses a user-defined overflow if an imageProps style is set on img element', () => {
+    render(
+      <Image
+        src={null}
+        alt="test-alt"
+        withPlaceholder
+        imageProps={{ style: { overflow: 'unset' } }}
+      />
+    );
+    const image = screen.getByRole('img');
+    expect(image).toHaveStyle({ overflow: 'unset' });
+  });
+
   it('renders given caption', () => {
     const { container: withoutCaption } = render(<Image src="test" />);
     const { container: withCaption } = render(<Image src="test" caption="test-caption" />);
     expect(withoutCaption.querySelectorAll('figcaption')).toHaveLength(0);
     expect(withCaption.querySelector('figcaption').textContent).toBe('test-caption');
-  });
-
-  it('renders given placeholder if image was not loaded', () => {
-    render(<Image {...defaultProps} withPlaceholder placeholder="test-placeholder" />);
-    expect(screen.getByText('test-placeholder')).toBeInTheDocument();
   });
 });

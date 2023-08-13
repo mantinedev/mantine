@@ -34,7 +34,7 @@ npm install @mantine/spotlight
 
 ## Usage
 
-`Spotlight` component let you build a popup search interface which can be triggered with keyboard
+`Spotlight` component lets you build a popup search interface which can be triggered with keyboard
 shortcut or programmatically from anywhere inside your application. To get started, wrap your application
 with `SpotlightProvider` component:
 
@@ -90,7 +90,8 @@ with desired default browser behavior.
 Keyboard shortcuts will not work if:
 
 - focus is not on current page
-- `input`, `textarea` or `select` elements are focused
+- `input`, `textarea` or `select` elements are focused (these can be overriden with the `tagsToIgnore` arg)
+- elements have `contentEditable=true` (can be overriden with the `triggerOnContentEditable` arg)
 
 To disabled keyboard shortcuts set `shortcut={null}`:
 
@@ -104,6 +105,45 @@ function Demo() {
     </SpotlightProvider>
   );
 }
+```
+
+## Event based functions
+
+`@mantine/spotlight` exports `spotlight` object with functions which can be used to perform certain actions
+from any part of your application:
+
+```tsx
+// All functions can be called from anywhere (not only from components)
+import { spotlight } from '@mantine/spotlight';
+
+// Opens spotlight
+spotlight.open();
+
+// Closes spotlight
+spotlight.close();
+
+// Toggles spotlight opened state
+spotlight.toggle();
+
+// triggers action with given id
+spotlight.triggerAction('action-id');
+
+// registers additional actions
+spotlight.registerActions([
+  {
+    id: 'secret-action-1',
+    title: 'Secret action',
+    onTrigger: () => console.log('Secret'),
+  },
+  {
+    id: 'secret-action-2',
+    title: 'Another secret action',
+    onTrigger: () => console.log('Secret'),
+  },
+]);
+
+// removes actions
+spotlight.removeActions(['secret-action-1', 'secret-action-2']);
 ```
 
 ## use-spotlight hook
@@ -158,52 +198,6 @@ interface UseSpotlight {
 }
 ```
 
-## Event based functions
-
-`@mantine/spotlight` exports several functions which can be used to perform certain actions
-from any part of your application:
-
-```tsx
-// All functions can be called from anywhere (not only from components)
-import {
-  openSpotlight,
-  closeSpotlight,
-  toggleSpotlight,
-  triggerSpotlightAction,
-  registerSpotlightActions,
-  removeSpotlightActions,
-} from '@mantine/spotlight';
-
-// Opens spotlight
-openSpotlight();
-
-// Closes spotlight
-closeSpotlight();
-
-// Toggles spotlight opened state
-toggleSpotlight();
-
-// triggers action with given id
-triggerSpotlightAction('action-id');
-
-// registers additional actions
-registerSpotlightActions([
-  {
-    id: 'secret-action-1',
-    title: 'Secret action',
-    onTrigger: () => console.log('Secret'),
-  },
-  {
-    id: 'secret-action-2',
-    title: 'Another secret action',
-    onTrigger: () => console.log('Secret'),
-  },
-]);
-
-// removes actions
-removeSpotlightActions(['secret-action-1', 'secret-action-2']);
-```
-
 ## Spotlight actions
 
 `actions` is the only required prop of `SpotlightProvider`. Action shape:
@@ -244,6 +238,12 @@ You can import `SpotlightAction` type from `@mantine/spotlight` package:
 import type { SpotlightAction } from '@mantine/spotlight';
 ```
 
+## Controlled query
+
+Use `query` and `onQueryChange` props to control search query:
+
+<Demo data={SpotlightDemos.controlledQuery} />
+
 ## Actions filtering
 
 When user searches, spotlight actions are filtered based on the following action properties:
@@ -267,7 +267,8 @@ You can control how many actions are displayed at a time with the `limit` prop:
 ## Register additional actions
 
 You can register any amount of additional actions with `registerActions` function on `useSpotlight` hook.
-To remove actions from the list use `removeActions` function:
+To remove actions from the list use `removeActions` function. Note that to register/remove actions features
+to work you need to store actions array in state:
 
 <Demo data={SpotlightDemos.register} />
 
@@ -313,13 +314,25 @@ To enable this option set `highlightQuery` on `SpotlightProvider`:
 ## Change transitions
 
 Component presence is animated with [Transition](/core/transition/) component,
-it supports all premade and custom transitions. To change transition set the following properties:
-
-- `transition` – premade transition name or custom transition object
-- `transitionDuration` – transition duration in ms
+it supports all premade and custom transitions. To change transition set `Transition` component props with `transitionProps`:
 
 <Demo data={SpotlightDemos.customTransition} />
 
-To disable transitions set `transitionDuration={0}`:
+To disable transitions set `transitionProps={{ duration: 0 }}`:
 
 <Demo data={SpotlightDemos.transitionNone} />
+
+## Fixed elements offset
+
+`SpotlightProvider` component uses [react-remove-scroll](https://github.com/theKashey/react-remove-scroll)
+package to lock scroll. To properly size these `elements` add a `className` to them ([documentation](https://github.com/theKashey/react-remove-scroll#positionfixed-elements)):
+
+```tsx
+import { RemoveScroll } from '@mantine/core';
+
+// to make "width: 100%"
+<div className={RemoveScroll.classNames.fullWidth} />
+
+// to make "right: 0"
+<div className={RemoveScroll.classNames.zeroRight} />
+```

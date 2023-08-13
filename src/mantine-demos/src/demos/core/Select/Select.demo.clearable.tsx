@@ -1,5 +1,6 @@
 import React from 'react';
-import { Select } from '@mantine/core';
+import { MantineDemo } from '@mantine/ds';
+import { Select, Box } from '@mantine/core';
 
 const code = `
 import { Select } from '@mantine/core';
@@ -16,11 +17,12 @@ function Demo() {
 
 function Demo() {
   return (
-    <div style={{ maxWidth: 320, marginLeft: 'auto', marginRight: 'auto' }}>
+    <Box maw={320} mx="auto">
       <Select
         label="Your favorite framework/library"
         placeholder="Pick one"
         clearable
+        withinPortal
         data={[
           { value: 'react', label: 'React' },
           { value: 'ng', label: 'Angular' },
@@ -34,7 +36,8 @@ function Demo() {
         placeholder="Pick one"
         clearable
         searchable
-        style={{ marginTop: 15 }}
+        withinPortal
+        mt="md"
         data={[
           { value: 'react', label: 'React' },
           { value: 'ng', label: 'Angular' },
@@ -42,7 +45,7 @@ function Demo() {
           { value: 'vue', label: 'Vue' },
         ]}
       />
-    </div>
+    </Box>
   );
 }
 

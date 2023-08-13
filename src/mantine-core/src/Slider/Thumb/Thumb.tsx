@@ -15,7 +15,8 @@ export interface ThumbProps extends DefaultProps<ThumbStylesNames> {
   color: MantineColor;
   size: MantineNumberSize;
   label: React.ReactNode;
-  onMouseDown(event: React.MouseEvent<HTMLDivElement> | React.TouchEvent<HTMLDivElement>): void;
+  onKeyDownCapture?(event: React.KeyboardEvent<HTMLDivElement>): void;
+  onMouseDown?(event: React.MouseEvent<HTMLDivElement> | React.TouchEvent<HTMLDivElement>): void;
   labelTransition?: MantineTransition;
   labelTransitionDuration?: number;
   labelTransitionTimingFunction?: string;
@@ -24,9 +25,11 @@ export interface ThumbProps extends DefaultProps<ThumbStylesNames> {
   onFocus?(): void;
   onBlur?(): void;
   showLabelOnHover?: boolean;
+  isHovered?: boolean;
   children?: React.ReactNode;
   disabled: boolean;
   thumbSize: number;
+  variant: string;
 }
 
 export const Thumb = forwardRef<HTMLDivElement, ThumbProps>(
@@ -39,6 +42,7 @@ export const Thumb = forwardRef<HTMLDivElement, ThumbProps>(
       label,
       dragging,
       onMouseDown,
+      onKeyDownCapture,
       color,
       classNames,
       styles,
@@ -51,19 +55,22 @@ export const Thumb = forwardRef<HTMLDivElement, ThumbProps>(
       onFocus,
       onBlur,
       showLabelOnHover,
+      isHovered,
       children = null,
       disabled,
       unstyled,
       thumbSize,
+      variant,
     }: ThumbProps,
     ref
   ) => {
     const { classes, cx, theme } = useStyles(
-      { color, size, disabled, thumbSize },
-      { classNames, styles, unstyled, name: 'Slider' }
+      { color, disabled, thumbSize },
+      { name: 'Slider', classNames, styles, unstyled, variant, size }
     );
     const [focused, setFocused] = useState(false);
-    const isVisible = labelAlwaysOn || dragging || focused || showLabelOnHover;
+
+    const isVisible = labelAlwaysOn || dragging || focused || (showLabelOnHover && isHovered);
 
     return (
       <Box<'div'>
@@ -85,6 +92,7 @@ export const Thumb = forwardRef<HTMLDivElement, ThumbProps>(
         }}
         onTouchStart={onMouseDown}
         onMouseDown={onMouseDown}
+        onKeyDownCapture={onKeyDownCapture}
         onClick={(event) => event.stopPropagation()}
         style={{ [theme.dir === 'rtl' ? 'right' : 'left']: `${position}%` }}
       >

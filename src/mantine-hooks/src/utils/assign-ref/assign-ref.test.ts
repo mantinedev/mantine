@@ -5,7 +5,7 @@ describe('@mantine/hooks/assignRef', () => {
   it('assigns function ref', () => {
     const spy = jest.fn();
     assignRef(spy, 'test-ref');
-    expect(spy).toBeCalledWith('test-ref');
+    expect(spy).toHaveBeenCalledWith('test-ref');
   });
 
   it('assigns ref to react ref object', () => {

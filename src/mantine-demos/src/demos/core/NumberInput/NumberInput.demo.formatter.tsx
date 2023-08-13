@@ -1,4 +1,5 @@
 import React from 'react';
+import { MantineDemo } from '@mantine/ds';
 import { NumberInput } from '@mantine/core';
 
 const code = `
@@ -12,7 +13,7 @@ function Demo() {
       parser={(value) => value.replace(/\\$\\s?|(,*)/g, '')}
       formatter={(value) =>
         !Number.isNaN(parseFloat(value))
-          ? \`$ \${value}\`.replace(/\\B(?=(\\d{3})+(?!\\d))/g, ',')
+          ? \`$ \${value}\`.replace(/\\B(?<!\\.\\d*)(?=(\\d{3})+(?!\\d))/g, ',')
           : '$ '
       }
     />
@@ -22,18 +23,16 @@ function Demo() {
 
 function Demo() {
   return (
-    <div style={{ maxWidth: 420, margin: 'auto' }}>
-      <NumberInput
-        label="Price"
-        defaultValue={1000}
-        formatter={(value) =>
-          !Number.isNaN(parseFloat(value))
-            ? `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
-            : '$ '
-        }
-        parser={(value) => value.replace(/\$\s?|(,*)/g, '')}
-      />
-    </div>
+    <NumberInput
+      maw={320}
+      mx="auto"
+      label="Price"
+      defaultValue={1000}
+      formatter={(value) =>
+        !Number.isNaN(parseFloat(value)) ? `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',') : '$ '
+      }
+      parser={(value) => value.replace(/\$\s?|(,*)/g, '')}
+    />
   );
 }
 

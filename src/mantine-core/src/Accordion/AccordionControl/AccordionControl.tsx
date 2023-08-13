@@ -1,5 +1,5 @@
 import React, { forwardRef } from 'react';
-import { useContextStylesApi, DefaultProps, Selectors } from '@mantine/styles';
+import { DefaultProps, Selectors, useComponentDefaultProps } from '@mantine/styles';
 import { createScopedKeydownHandler } from '@mantine/utils';
 import { UnstyledButton } from '../../UnstyledButton';
 import { useAccordionContext } from '../Accordion.context';
@@ -24,32 +24,28 @@ export interface AccordionControlProps
   icon?: React.ReactNode;
 }
 
+const defaultProps: Partial<AccordionControlProps> = {};
+
 export const AccordionControl = forwardRef<HTMLButtonElement, AccordionControlProps>(
-  (
-    {
-      disabled,
-      onKeyDown,
-      onClick,
-      chevron,
-      children,
-      className,
-      icon,
-      ...others
-    }: AccordionControlProps,
-    ref
-  ) => {
+  (props: AccordionControlProps, ref) => {
+    const { disabled, onKeyDown, onClick, chevron, children, className, icon, ...others } =
+      useComponentDefaultProps('AccordionControl', defaultProps, props);
     const ctx = useAccordionContext();
     const { value } = useAccordionItemContext();
-    const { classNames, styles, unstyled } = useContextStylesApi();
     const { classes, cx } = useStyles(
       {
         transitionDuration: ctx.transitionDuration,
         chevronPosition: ctx.chevronPosition,
         chevronSize: ctx.chevronSize,
-        variant: ctx.variant,
         radius: ctx.radius,
       },
-      { name: 'Accordion', classNames, styles, unstyled }
+      {
+        name: 'Accordion',
+        classNames: ctx.classNames,
+        styles: ctx.styles,
+        unstyled: ctx.unstyled,
+        variant: ctx.variant,
+      }
     );
 
     const isActive = ctx.isItemActive(value);
@@ -72,7 +68,7 @@ export const AccordionControl = forwardRef<HTMLButtonElement, AccordionControlPr
         aria-expanded={isActive}
         aria-controls={ctx.getRegionId(value)}
         id={ctx.getControlId(value)}
-        unstyled={unstyled}
+        unstyled={ctx.unstyled}
         onKeyDown={createScopedKeydownHandler({
           siblingSelector: '[data-accordion-control]',
           parentSelector: '[data-accordion]',
@@ -82,14 +78,14 @@ export const AccordionControl = forwardRef<HTMLButtonElement, AccordionControlPr
           onKeyDown,
         })}
       >
-        <div
+        <span
           className={classes.chevron}
           data-rotate={(!ctx.disableChevronRotation && isActive) || undefined}
         >
           {chevron || ctx.chevron}
-        </div>
-        <div className={classes.label}>{children}</div>
-        {icon && <div className={classes.icon}>{icon}</div>}
+        </span>
+        <span className={classes.label}>{children}</span>
+        {icon && <span className={classes.icon}>{icon}</span>}
       </UnstyledButton>
     );
 

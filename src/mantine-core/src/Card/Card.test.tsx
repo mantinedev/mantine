@@ -1,4 +1,9 @@
-import { itRendersChildren, itIsPolymorphic, itSupportsSystemProps } from '@mantine/tests';
+import {
+  itRendersChildren,
+  itIsPolymorphic,
+  itSupportsSystemProps,
+  itSupportsProviderVariant,
+} from '@mantine/tests';
 import { Card, CardProps } from './Card';
 import { CardSection } from './CardSection/CardSection';
 
@@ -9,6 +14,7 @@ const defaultProps: CardProps = {
 describe('@mantine/core/Card', () => {
   itRendersChildren(Card, defaultProps);
   itIsPolymorphic(Card, defaultProps);
+  itSupportsProviderVariant(Card, defaultProps, 'Card');
   itSupportsSystemProps({
     component: Card,
     props: defaultProps,

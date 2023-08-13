@@ -1,25 +1,23 @@
-import { createStyles, MantineNumberSize, MantineSize } from '@mantine/styles';
+import { createStyles, MantineNumberSize, rem, getSize } from '@mantine/styles';
 
 export interface NumberInputStylesParams {
   radius: MantineNumberSize;
-  size: MantineSize;
 }
 
 export const CONTROL_SIZES = {
-  xs: 20,
-  sm: 24,
-  md: 30,
-  lg: 34,
-  xl: 36,
+  xs: rem(20),
+  sm: rem(24),
+  md: rem(30),
+  lg: rem(34),
+  xl: rem(36),
 };
 
-export default createStyles((theme, { radius, size }: NumberInputStylesParams) => ({
+export default createStyles((theme, { radius }: NumberInputStylesParams, { size }) => ({
   rightSection: {
     display: 'flex',
     flexDirection: 'column',
-    height: 'calc(100% - 2px)',
-    margin: 1,
-    marginRight: 1,
+    height: `calc(100% - ${rem(2)})`,
+    margin: rem(1),
     overflow: 'hidden',
     borderTopRightRadius: theme.fn.radius(radius),
     borderBottomRightRadius: theme.fn.radius(radius),
@@ -33,19 +31,19 @@ export default createStyles((theme, { radius, size }: NumberInputStylesParams) =
     alignItems: 'center',
     justifyContent: 'center',
     boxSizing: 'border-box',
-    width: theme.fn.size({ size, sizes: CONTROL_SIZES }),
+    width: getSize({ size, sizes: CONTROL_SIZES }),
     padding: 0,
     WebkitTapHighlightColor: 'transparent',
-    borderBottom: `1px solid ${
+    borderBottom: `${rem(1)} solid ${
       theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[4]
     }`,
-    borderLeft: `1px solid ${
+    borderLeft: `${rem(1)} solid ${
       theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[4]
     }`,
     borderTop: 0,
     borderRight: 0,
     backgroundColor: 'transparent',
-    marginRight: 1,
+    marginRight: rem(1),
     color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
 
     '&:not(:disabled):hover': {

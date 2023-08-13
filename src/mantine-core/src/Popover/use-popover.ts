@@ -3,15 +3,18 @@ import {
   useFloating,
   shift,
   flip,
+  arrow,
   offset,
   size,
   Middleware,
-} from '@floating-ui/react-dom-interactions';
-import { FloatingPosition, useFloatingAutoUpdate } from '../Floating';
+  inline,
+  limitShift,
+} from '@floating-ui/react';
+import { FloatingAxesOffsets, FloatingPosition, useFloatingAutoUpdate } from '../Floating';
 import { PopoverWidth, PopoverMiddlewares } from './Popover.types';
 
 interface UsePopoverOptions {
-  offset: number;
+  offset: number | FloatingAxesOffsets;
   position: FloatingPosition;
   positionDependencies: any[];
   onPositionChange?(position: FloatingPosition): void;
@@ -22,18 +25,26 @@ interface UsePopoverOptions {
   onOpen?(): void;
   width: PopoverWidth;
   middlewares: PopoverMiddlewares;
+  arrowRef: React.RefObject<HTMLDivElement>;
+  arrowOffset: number;
 }
 
 function getPopoverMiddlewares(options: UsePopoverOptions) {
   const middlewares: Middleware[] = [offset(options.offset)];
 
   if (options.middlewares.shift) {
-    middlewares.push(shift());
+    middlewares.push(shift({ limiter: limitShift() }));
   }
 
   if (options.middlewares.flip) {
     middlewares.push(flip());
   }
+
+  if (options.middlewares.inline) {
+    middlewares.push(inline());
+  }
+
+  middlewares.push(arrow({ element: options.arrowRef, padding: options.arrowOffset }));
 
   return middlewares;
 }
@@ -81,6 +92,7 @@ export function usePopover(options: UsePopoverOptions) {
 
   useFloatingAutoUpdate({
     opened: options.opened,
+    position: options.position,
     positionDependencies: options.positionDependencies,
     floating,
   });
@@ -88,6 +100,14 @@ export function usePopover(options: UsePopoverOptions) {
   useDidUpdate(() => {
     options.onPositionChange?.(floating.placement);
   }, [floating.placement]);
+
+  useDidUpdate(() => {
+    if (!options.opened) {
+      options.onClose?.();
+    } else {
+      options.onOpen?.();
+    }
+  }, [options.opened]);
 
   return {
     floating,

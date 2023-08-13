@@ -7,11 +7,28 @@ import { GridProvider } from './Grid.context';
 import useStyles from './Grid.styles';
 
 export interface GridProps extends DefaultProps, React.ComponentPropsWithRef<'div'> {
+  variant?: string;
+
   /** <Col /> components only */
   children: React.ReactNode;
 
-  /** Spacing between columns predefined value from theme.spacing or number for gutter in px  */
+  /** Spacing between columns, key of theme.spacing or number for value */
   gutter?: MantineNumberSize;
+
+  /** Gutter when screen size is larger than theme.breakpoints.xs */
+  gutterXs?: MantineNumberSize;
+
+  /** Gutter when screen size is larger than theme.breakpoints.sm */
+  gutterSm?: MantineNumberSize;
+
+  /** Gutter when screen size is larger than theme.breakpoints.md */
+  gutterMd?: MantineNumberSize;
+
+  /** Gutter when screen size is larger than theme.breakpoints.lg */
+  gutterLg?: MantineNumberSize;
+
+  /** Gutter when screen size is larger than theme.breakpoints.xl */
+  gutterXl?: MantineNumberSize;
 
   /** Should columns in the last row take 100% of grid width */
   grow?: boolean;
@@ -36,12 +53,33 @@ const defaultProps: Partial<GridProps> = {
 };
 
 export const Grid: GridComponent = forwardRef<HTMLDivElement, GridProps>((props, ref) => {
-  const { gutter, children, grow, justify, align, columns, className, id, unstyled, ...others } =
-    useComponentDefaultProps('Grid', defaultProps, props);
-  const { classes, cx } = useStyles({ gutter, justify, align }, { unstyled, name: 'Grid' });
+  const {
+    gutter,
+    gutterXs,
+    gutterSm,
+    gutterMd,
+    gutterLg,
+    gutterXl,
+    children,
+    grow,
+    justify,
+    align,
+    columns,
+    className,
+    id,
+    unstyled,
+    variant,
+    ...others
+  } = useComponentDefaultProps('Grid', defaultProps, props);
+  const { classes, cx } = useStyles(
+    { gutter, justify, align, gutterXs, gutterSm, gutterMd, gutterLg, gutterXl },
+    { unstyled, name: 'Grid', variant }
+  );
 
   return (
-    <GridProvider value={{ gutter, grow, columns }}>
+    <GridProvider
+      value={{ gutter, gutterXs, gutterSm, gutterMd, gutterLg, gutterXl, grow, columns }}
+    >
       <Box className={cx(classes.root, className)} ref={ref} {...others}>
         {children}
       </Box>

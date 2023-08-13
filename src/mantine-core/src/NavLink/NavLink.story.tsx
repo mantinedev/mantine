@@ -1,5 +1,7 @@
 import React from 'react';
-import { IconHome2, IconChevronRight } from '@tabler/icons';
+import { IconHome2, IconChevronRight } from '@tabler/icons-react';
+import { useCounter } from '@mantine/hooks';
+import { Button } from '../Button';
 import { NavLink } from './NavLink';
 
 export default { title: 'NavLink' };
@@ -87,6 +89,24 @@ export function WithNestedItems() {
         <NavLink label="Child link 2" icon={<IconHome2 size={16} stroke={1.5} />} />
         <NavLink label="Child link 3" icon={<IconHome2 size={16} stroke={1.5} />} />
       </NavLink>
+    </div>
+  );
+}
+
+export function DynamicNestedItems() {
+  const [count, { increment, decrement }] = useCounter(2);
+  const nested = Array(count)
+    .fill(0)
+    .map((_, index) => (
+      <NavLink label="Child link 1" icon={<IconHome2 size={16} stroke={1.5} key={index} />} />
+    ));
+  return (
+    <div style={{ padding: 40, maxWidth: 320 }}>
+      <NavLink label="With nested links" icon={<IconHome2 size={16} stroke={1.5} />}>
+        {nested}
+      </NavLink>
+      <Button onClick={increment}>Add item</Button>
+      <Button onClick={decrement}>Remove item item</Button>
     </div>
   );
 }

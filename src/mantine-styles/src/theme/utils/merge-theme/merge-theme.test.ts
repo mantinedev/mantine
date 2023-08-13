@@ -22,15 +22,26 @@ describe('@mantine/styles/merge-theme', () => {
     expect(
       mergeTheme(themeBase, {
         colors: { stone: ['#ccc', '#ddd', '#eee'], red: ['red'] },
-        spacing: { xl: 900 },
+        spacing: { xl: '900rem' },
       })
     ).toStrictEqual({
       ...themeBase,
       colors: { ...themeBase.colors, stone: ['#ccc', '#ddd', '#eee'], red: ['red'] },
       spacing: {
         ...themeBase.spacing,
-        xl: 900,
+        xl: '900rem',
       },
+    });
+  });
+
+  it('merges breakpoints with valid order', () => {
+    const themeBase = getThemeBase();
+
+    expect(
+      mergeTheme(themeBase, { breakpoints: { xxl: '999em', min: '1em', xs: '10em' } })
+    ).toStrictEqual({
+      ...themeBase,
+      breakpoints: { min: '1em', ...{ ...themeBase.breakpoints, xs: '10em' }, xxl: '999em' },
     });
   });
 
@@ -38,7 +49,7 @@ describe('@mantine/styles/merge-theme', () => {
     const themeBase = getThemeBase();
     expect(
       mergeTheme(themeBase, {
-        headings: { fontFamily: 'sans-serif', sizes: { h3: { fontSize: 500 } } },
+        headings: { fontFamily: 'sans-serif', sizes: { h3: { fontSize: '500rem' } } },
       })
     ).toStrictEqual({
       ...themeBase,
@@ -49,7 +60,7 @@ describe('@mantine/styles/merge-theme', () => {
           ...themeBase.headings.sizes,
           h3: {
             ...themeBase.headings.sizes.h3,
-            fontSize: 500,
+            fontSize: '500rem',
           },
         },
       },
@@ -62,5 +73,18 @@ describe('@mantine/styles/merge-theme', () => {
       ...themeBase,
       other: { prop: 1, test: { nested: true } },
     });
+  });
+
+  it('sets headings font-family based on theme.fontFamily if theme.headings.fontFamily is not defined', () => {
+    const withoutHeading = mergeTheme(getThemeBase(), { fontFamily: 'test' });
+    expect(withoutHeading.fontFamily).toBe('test');
+    expect(withoutHeading.headings.fontFamily).toBe('test');
+
+    const withHeading = mergeTheme(getThemeBase(), {
+      fontFamily: 'test',
+      headings: { fontFamily: 'test-heading' },
+    });
+    expect(withHeading.fontFamily).toBe('test');
+    expect(withHeading.headings.fontFamily).toBe('test-heading');
   });
 });

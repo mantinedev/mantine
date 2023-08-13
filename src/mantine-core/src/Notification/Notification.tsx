@@ -12,18 +12,20 @@ import { CloseButton } from '../CloseButton';
 import { Box } from '../Box';
 import useStyles, { NotificationStylesParams } from './Notification.styles';
 
-export type NotificationStylesNames = Exclude<Selectors<typeof useStyles>, 'withIcon'>;
+export type NotificationStylesNames = Selectors<typeof useStyles>;
 
 export interface NotificationProps
   extends DefaultProps<NotificationStylesNames, NotificationStylesParams>,
     Omit<React.ComponentPropsWithoutRef<'div'>, 'title'> {
+  variant?: string;
+
   /** Called when close button is clicked */
   onClose?(): void;
 
   /** Notification line or icon color */
   color?: MantineColor;
 
-  /** Radius from theme.radius, or number to set border-radius in px */
+  /** Key of theme.radius or any valid CSS value to set border-radius, theme.defaultRadius by default */
   radius?: MantineNumberSize;
 
   /** Notification icon, replaces color line */
@@ -38,12 +40,19 @@ export interface NotificationProps
   /** Replaces colored line or icon with Loader component */
   loading?: boolean;
 
-  /** Removes close button */
-  disallowClose?: boolean;
+  /** Adds border styles */
+  withBorder?: boolean;
+
+  /** Determines whether close button should be visible, true by default */
+  withCloseButton?: boolean;
 
   /** Props spread to close button */
   closeButtonProps?: Record<string, any>;
 }
+
+const defaultProps: Partial<NotificationProps> = {
+  withCloseButton: true,
+};
 
 export const Notification = forwardRef<HTMLDivElement, NotificationProps>((props, ref) => {
   const {
@@ -51,7 +60,8 @@ export const Notification = forwardRef<HTMLDivElement, NotificationProps>((props
     color,
     radius,
     loading,
-    disallowClose,
+    withCloseButton,
+    withBorder,
     title,
     icon,
     children,
@@ -60,18 +70,20 @@ export const Notification = forwardRef<HTMLDivElement, NotificationProps>((props
     classNames,
     styles,
     unstyled,
+    variant,
     ...others
-  } = useComponentDefaultProps('Notification', {}, props);
+  } = useComponentDefaultProps('Notification', defaultProps, props);
 
   const { classes, cx } = useStyles(
     { color, radius, withTitle: !!title },
-    { classNames, styles, unstyled, name: 'Notification' }
+    { name: 'Notification', classNames, styles, unstyled, variant }
   );
-  const withIcon = icon || loading;
 
   return (
     <Box
-      className={cx(classes.root, { [classes.withIcon]: withIcon }, className)}
+      className={cx(classes.root, className)}
+      data-with-icon={!!icon || loading || undefined}
+      data-with-border={withBorder || undefined}
       role="alert"
       ref={ref}
       {...others}
@@ -91,7 +103,7 @@ export const Notification = forwardRef<HTMLDivElement, NotificationProps>((props
         </Text>
       </div>
 
-      {!disallowClose && (
+      {withCloseButton && (
         <CloseButton
           iconSize={16}
           color="gray"

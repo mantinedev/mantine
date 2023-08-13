@@ -1,7 +1,7 @@
 {
   "name": "@mantine/core",
   "description": "React components library focused on usability, accessibility and developer experience",
-  "version": "5.4.0",
+  "version": "6.0.19",
   "main": "cjs/index.js",
   "module": "esm/index.js",
   "types": "lib/index.d.ts",
@@ -27,16 +27,17 @@
     "emotion"
   ],
   "peerDependencies": {
-    "@mantine/hooks": "5.4.0",
+    "@mantine/hooks": "6.0.19",
     "react": ">=16.8.0",
     "react-dom": ">=16.8.0"
   },
   "dependencies": {
-    "@mantine/utils": "5.4.0",
-    "@mantine/styles": "5.4.0",
-    "@radix-ui/react-scroll-area": "1.0.0",
+    "@mantine/utils": "6.0.19",
+    "@mantine/styles": "6.0.19",
+    "@radix-ui/react-scroll-area": "1.0.2",
     "react-textarea-autosize": "8.3.4",
-    "@floating-ui/react-dom-interactions": "0.6.6"
+    "react-remove-scroll": "^2.5.5",
+    "@floating-ui/react": "^0.19.1"
   },
   "devDependencies": {}
 }

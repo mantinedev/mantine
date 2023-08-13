@@ -8,3 +8,5 @@ export { floating } from './Tooltip.demo.floating';
 export { usage } from './Tooltip.demo.usage';
 export { group } from './Tooltip.demo.group';
 export { offset } from './Tooltip.demo.offset';
+export { inline } from './Tooltip.demo.inline';
+export { nested } from './Tooltip.demo.nested';

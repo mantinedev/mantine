@@ -1,12 +1,13 @@
 import React from 'react';
+import { MantineDemo } from '@mantine/ds';
 import { Stack, StackProps, Button } from '@mantine/core';
 
 function Wrapper(props: StackProps) {
   return (
     <Stack
+      h={300}
       sx={(theme) => ({
         backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.colors.gray[0],
-        height: 300,
       })}
       {...props}
     >
@@ -22,7 +23,7 @@ import { Stack, Button } from '@mantine/core';
 
 function Demo() {
   return (
-    <Stack${props} sx={(theme) => ({ backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.colors.gray[0], height: 300 })}>
+    <Stack${props} h={300} sx={(theme) => ({ backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.colors.gray[0] })}>
       <Button variant="outline">1</Button>
       <Button variant="outline">2</Button>
       <Button variant="outline">3</Button>

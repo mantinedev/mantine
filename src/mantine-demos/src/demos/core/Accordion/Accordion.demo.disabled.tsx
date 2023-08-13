@@ -1,5 +1,6 @@
 import { Accordion, Box } from '@mantine/core';
 import React from 'react';
+import { MantineDemo } from '@mantine/ds';
 import { baseAccordionMockdata } from './_mockdata';
 
 const code = `
@@ -36,7 +37,7 @@ export const baseDemoItems = baseAccordionMockdata.map((item, index) => (
 
 function Demo() {
   return (
-    <Box sx={{ maxWidth: 380 }} mx="auto">
+    <Box maw={380} mx="auto">
       <Accordion>{baseDemoItems}</Accordion>
     </Box>
   );

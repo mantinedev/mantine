@@ -23,9 +23,16 @@ import { StepperDemos } from '@mantine/demos';
 ## Allow step select
 
 To disable step selection set `allowStepSelect` prop on `Stepper.Step` component.
-It can be used to prevent user from reaching next steps:
+It can be used to prevent user from reaching next steps while letting them go back and forth between steps they've already reached before:
 
 <Demo data={StepperDemos.allowStepSelect} />
+
+## Disable next steps selection
+
+Another way to disable selection of upcoming steps is to use the `allowNextStepsSelect` directly on the `Stepper` component.
+This is useful when you don't need to control the behavior specifically for each step.
+
+<Demo data={StepperDemos.allowNextStepsSelect} />
 
 ## Color, radius and size
 
@@ -70,7 +77,7 @@ than `theme.breakpoints.md`:
 <Stepper breakpoint="md">{/* ...steps */}</Stepper>
 ```
 
-You can configure breakpoints with [MantineProvider](/theming/mantine-provider) or use number to set breakpoint in px:
+You can configure breakpoints with [MantineProvider](/theming/mantine-provider) or use number to set breakpoint:
 
 ```tsx
 <Stepper breakpoint={755}>{/* ...steps */}</Stepper>
@@ -144,7 +151,7 @@ function WillWork() {
 function Demo() {
   return (
     <Stepper active={1}>
-      <Stepper.Step label="Regular step">Fist step</Stepper.Step>
+      <Stepper.Step label="Regular step">First step</Stepper.Step>
       {/* Wrapped Stepper.Step will not render children, do not do that */}
       <WillNotWork />
       <Stepper.Step label="Step with custom content">

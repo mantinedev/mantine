@@ -1,9 +1,10 @@
 import React from 'react';
-import { Accordion, createStyles } from '@mantine/core';
+import { Accordion, createStyles, rem } from '@mantine/core';
+import { MantineDemo } from '@mantine/ds';
 import { baseDemoItems } from './_base';
 
 const code = `
-import { Accordion, createStyles } from '@mantine/core';
+import { Accordion, createStyles, rem } from '@mantine/core';
 
 const useStyles = createStyles((theme) => ({
   root: {
@@ -13,7 +14,7 @@ const useStyles = createStyles((theme) => ({
 
   item: {
     backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[0],
-    border: '1px solid transparent',
+    border: \`\${rem(1)} solid transparent\`,
     position: 'relative',
     zIndex: 0,
     transition: 'transform 150ms ease',
@@ -39,7 +40,7 @@ function Demo() {
   const { classes } = useStyles();
   return (
     <Accordion
-      sx={{ maxWidth: 420 }}
+      maw={420}
       mx="auto"
       variant="filled"
       defaultValue="customization"
@@ -60,7 +61,7 @@ const useStyles = createStyles((theme) => ({
 
   item: {
     backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[0],
-    border: '1px solid transparent',
+    border: `${rem(1)} solid transparent`,
     position: 'relative',
     zIndex: 0,
     transition: 'transform 150ms ease',
@@ -86,7 +87,7 @@ function Demo() {
   const { classes } = useStyles();
   return (
     <Accordion
-      sx={{ maxWidth: 420 }}
+      maw={420}
       mx="auto"
       variant="filled"
       defaultValue="customization"

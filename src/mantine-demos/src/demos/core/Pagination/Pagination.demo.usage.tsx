@@ -1,4 +1,5 @@
 import React from 'react';
+import { MantineDemo } from '@mantine/ds';
 import { Pagination } from '@mantine/core';
 
 function Demo() {

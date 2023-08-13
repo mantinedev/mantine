@@ -73,7 +73,7 @@ export default function AppShellDemo() {
         </Footer>
       }
       header={
-        <Header height={70} p="md">
+        <Header height={{ base: 50, md: 70 }} p="md">
           <div style={{ display: 'flex', alignItems: 'center', height: '100%' }}>
             <MediaQuery largerThan="sm" styles={{ display: 'none' }}>
               <Burger
@@ -95,6 +95,14 @@ export default function AppShellDemo() {
   );
 }
 ```
+
+## Alt layout
+
+To place `Navbar` and `Aside` components above `Header` and `Footer`, set `layout="alt"` on AppShell.
+
+<Anchor href="/app-shell-demo-alt/" target="_blank" mb="xl" style={{ display: 'block' }}>
+  Open alt layout example in new tab
+</Anchor>
 
 ## hidden prop
 

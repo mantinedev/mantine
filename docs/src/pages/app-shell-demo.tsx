@@ -10,14 +10,12 @@ import {
   Burger,
   useMantineTheme,
 } from '@mantine/core';
-import Head from '../components/Head/Head';
 
 export default function AppShellDemo() {
   const theme = useMantineTheme();
   const [opened, setOpened] = useState(false);
   return (
     <>
-      <Head title="AppShell demo" />
       <AppShell
         styles={{
           main: {
@@ -45,7 +43,7 @@ export default function AppShellDemo() {
           </Footer>
         }
         header={
-          <Header height={70} p="md">
+          <Header height={{ base: 50, md: 70 }} p="md">
             <div style={{ display: 'flex', alignItems: 'center', height: '100%' }}>
               <MediaQuery largerThan="sm" styles={{ display: 'none' }}>
                 <Burger

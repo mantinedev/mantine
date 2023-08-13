@@ -9,3 +9,4 @@ export { icon } from './Autocomplete.demo.icon';
 export { validation } from './Autocomplete.demo.validation';
 export { disabled } from './Autocomplete.demo.disabled';
 export { group } from './Autocomplete.demo.group';
+export { hoverOnChange } from './Autocomplete.demo.hoverOnChange';

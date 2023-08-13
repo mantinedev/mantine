@@ -1,12 +1,9 @@
 import React from 'react';
+import { MantineDemo } from '@mantine/ds';
 import { Highlight, HighlightProps } from '@mantine/core';
 
 function Wrapper(props: HighlightProps) {
-  return (
-    <div style={{ maxWidth: 400, margin: 'auto' }}>
-      <Highlight {...props} />
-    </div>
-  );
+  return <Highlight maw={400} mx="auto" {...props} />;
 }
 
 const codeTemplate = (props: string, children: string) => `

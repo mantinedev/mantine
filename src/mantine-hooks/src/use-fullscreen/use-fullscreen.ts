@@ -29,6 +29,7 @@ async function enterFullScreen(element: HTMLElement) {
   return (
     _element.requestFullscreen?.() ||
     _element.msRequestFullscreen?.() ||
+    _element.webkitEnterFullscreen?.() ||
     _element.webkitRequestFullscreen?.() ||
     _element.mozRequestFullscreen?.()
   );

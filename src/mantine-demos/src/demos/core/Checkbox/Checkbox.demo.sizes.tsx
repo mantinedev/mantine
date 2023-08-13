@@ -1,4 +1,5 @@
 import React from 'react';
+import { MantineDemo } from '@mantine/ds';
 import { Checkbox, MANTINE_SIZES, Stack } from '@mantine/core';
 
 function Demo() {

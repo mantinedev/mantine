@@ -1,5 +1,6 @@
 import React from 'react';
 import { Prism } from '@mantine/prism';
+import { MantineDemo } from '@mantine/ds';
 import duotoneDark from 'prism-react-renderer/themes/duotoneDark';
 import duotoneLight from 'prism-react-renderer/themes/duotoneLight';
 

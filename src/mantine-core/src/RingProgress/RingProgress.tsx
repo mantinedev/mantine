@@ -7,23 +7,34 @@ import useStyles from './RingProgress.styles';
 
 export type RingProgressStylesNames = Selectors<typeof useStyles>;
 
+interface RingProgressSection extends React.ComponentPropsWithRef<'circle'> {
+  value: number;
+  color: MantineColor;
+  tooltip?: React.ReactNode;
+}
+
 export interface RingProgressProps
   extends DefaultProps<RingProgressStylesNames>,
     React.ComponentPropsWithoutRef<'div'> {
+  variant?: string;
+
   /** Label displayed in the center of the ring */
   label?: React.ReactNode;
 
   /** Ring thickness */
   thickness?: number;
 
-  /** Width and height of the progress ring in px */
+  /** Width and height of the progress ring */
   size?: number;
 
   /** Sets whether the edges of the progress circle are rounded */
   roundCaps?: boolean;
 
   /** Ring sections */
-  sections: { value: number; color: MantineColor; tooltip?: React.ReactNode }[];
+  sections: RingProgressSection[];
+
+  /** Color of the root section, key of theme.colors or CSS color value */
+  rootColor?: MantineColor;
 }
 
 const defaultProps: Partial<RingProgressProps> = {
@@ -42,29 +53,37 @@ export const RingProgress = forwardRef<HTMLDivElement, RingProgressProps>((props
     classNames,
     styles,
     roundCaps,
+    rootColor,
     unstyled,
+    variant,
     ...others
   } = useComponentDefaultProps('RingProgress', defaultProps, props);
 
-  const { classes, cx } = useStyles(null, { classNames, styles, unstyled, name: 'RingProgress' });
+  const { classes, cx } = useStyles(null, {
+    name: 'RingProgress',
+    classNames,
+    styles,
+    unstyled,
+    variant,
+  });
 
   const curves = getCurves({
     size,
     thickness,
     sections,
     renderRoundedLineCaps: roundCaps,
-  }).map((curve, index) => (
+    rootColor,
+  }).map(({ data, sum, root, lineRoundCaps, offset }, index) => (
     <Curve
+      {...data}
       key={index}
-      value={curve.data?.value}
       size={size}
       thickness={thickness}
-      sum={curve.sum}
-      offset={curve.offset}
-      color={curve.data?.color}
-      root={curve.root}
-      lineRoundCaps={curve.lineRoundCaps}
-      tooltip={curve.data?.tooltip}
+      sum={sum}
+      offset={offset}
+      color={data?.color}
+      root={root}
+      lineRoundCaps={lineRoundCaps}
     />
   ));
 
@@ -75,9 +94,7 @@ export const RingProgress = forwardRef<HTMLDivElement, RingProgressProps>((props
       ref={ref}
       {...others}
     >
-      <svg width={size} height={size} style={{ transform: 'rotate(-90deg)' }}>
-        {curves}
-      </svg>
+      <svg style={{ width: size, height: size, transform: 'rotate(-90deg)' }}>{curves}</svg>
 
       {label && (
         <div className={classes.label} style={{ right: thickness * 2, left: thickness * 2 }}>

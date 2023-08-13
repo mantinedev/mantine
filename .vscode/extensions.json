@@ -5,7 +5,6 @@
     "dbaeumer.vscode-eslint",
     "esbenp.prettier-vscode",
     "firsttris.vscode-jest-runner",
-    "davidanson.vscode-markdownlint",
     "meganrogge.template-string-converter",
     "silvenon.mdx"
   ]

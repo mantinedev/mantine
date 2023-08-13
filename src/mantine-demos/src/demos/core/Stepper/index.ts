@@ -10,3 +10,4 @@ export { stepColor } from './Stepper.demo.stepColor';
 export { stylesApi } from './Stepper.demo.stylesApi';
 export { stylesApi2 } from './Stepper.demo.stylesApi2';
 export { allowStepSelect } from './Stepper.demo.allowStepSelect';
+export { allowNextStepsSelect } from './Stepper.demo.allowNextStepsSelect';

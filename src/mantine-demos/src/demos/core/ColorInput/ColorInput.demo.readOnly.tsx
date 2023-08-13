@@ -1,4 +1,5 @@
 import React from 'react';
+import { MantineDemo } from '@mantine/ds';
 import { ColorInput } from '@mantine/core';
 
 const code = `
@@ -11,9 +12,13 @@ function Demo() {
 
 function Demo() {
   return (
-    <div style={{ maxWidth: 320, marginLeft: 'auto', marginRight: 'auto' }}>
-      <ColorInput disallowInput placeholder="Pick color" label="Your favorite color" />
-    </div>
+    <ColorInput
+      maw={320}
+      mx="auto"
+      disallowInput
+      placeholder="Pick color"
+      label="Your favorite color"
+    />
   );
 }
 

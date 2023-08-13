@@ -1,7 +1,8 @@
+/* eslint-disable react/no-unused-prop-types */
 import React, { cloneElement, forwardRef } from 'react';
 import { useMergedRef } from '@mantine/hooks';
 import { isElement } from '@mantine/utils';
-import { clsx } from '@mantine/styles';
+import { clsx, useComponentDefaultProps } from '@mantine/styles';
 import { usePopoverContext } from '../Popover.context';
 import { POPOVER_ERRORS } from '../Popover.errors';
 
@@ -16,38 +17,43 @@ export interface PopoverTargetProps {
   popupType?: string;
 }
 
-export const PopoverTarget = forwardRef<HTMLElement, PopoverTargetProps>(
-  ({ children, refProp = 'ref', popupType = 'dialog', ...others }, ref) => {
-    if (!isElement(children)) {
-      throw new Error(POPOVER_ERRORS.children);
-    }
+const defaultProps: Partial<PopoverTargetProps> = {
+  refProp: 'ref',
+  popupType: 'dialog',
+};
 
-    const forwardedProps = others as any;
-    const ctx = usePopoverContext();
-    const targetRef = useMergedRef(ctx.reference, (children as any).ref, ref);
+export const PopoverTarget = forwardRef<HTMLElement, PopoverTargetProps>((props, ref) => {
+  const { children, refProp, popupType, ...others } = useComponentDefaultProps(
+    'PopoverTarget',
+    defaultProps,
+    props
+  );
 
-    const accessibleProps = ctx.withRoles
-      ? {
-          'aria-haspopup': popupType,
-          'aria-expanded': ctx.opened,
-          'aria-controls': ctx.getDropdownId(),
-          id: ctx.getTargetId(),
-        }
-      : {};
-
-    return cloneElement(children, {
-      ...forwardedProps,
-      ...accessibleProps,
-      ...ctx.targetProps,
-      className: clsx(
-        ctx.targetProps.className,
-        forwardedProps.className,
-        children.props.className
-      ),
-      [refProp]: targetRef,
-      ...(!ctx.controlled ? { onClick: ctx.onToggle } : null),
-    });
+  if (!isElement(children)) {
+    throw new Error(POPOVER_ERRORS.children);
   }
-);
+
+  const forwardedProps = others as any;
+  const ctx = usePopoverContext();
+  const targetRef = useMergedRef(ctx.reference, (children as any).ref, ref);
+
+  const accessibleProps = ctx.withRoles
+    ? {
+        'aria-haspopup': popupType,
+        'aria-expanded': ctx.opened,
+        'aria-controls': ctx.getDropdownId(),
+        id: ctx.getTargetId(),
+      }
+    : {};
+
+  return cloneElement(children, {
+    ...forwardedProps,
+    ...accessibleProps,
+    ...ctx.targetProps,
+    className: clsx(ctx.targetProps.className, forwardedProps.className, children.props.className),
+    [refProp]: targetRef,
+    ...(!ctx.controlled ? { onClick: ctx.onToggle } : null),
+  });
+});
 
 PopoverTarget.displayName = '@mantine/core/PopoverTarget';

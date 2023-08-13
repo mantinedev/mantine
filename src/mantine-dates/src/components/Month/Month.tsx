@@ -1,30 +1,62 @@
-import React, { useMemo, forwardRef } from 'react';
-import {
-  DefaultProps,
-  Text,
-  Box,
-  MantineSize,
-  Selectors,
-  useComponentDefaultProps,
-} from '@mantine/core';
-import { upperFirst } from '@mantine/hooks';
+/* eslint-disable react/no-unused-prop-types */
 import dayjs from 'dayjs';
-import { FirstDayOfWeek } from '../../types';
-import { getMonthDays, getWeekdaysNames, isSameDate } from '../../utils';
-import { Day, DayStylesNames } from './Day/Day';
-import { getDayProps } from './get-day-props/get-day-props';
-import { DayKeydownPayload, DayModifiers } from './types';
+import React, { forwardRef } from 'react';
+import { DefaultProps, Selectors, Box, useComponentDefaultProps, MantineSize } from '@mantine/core';
+import { useDatesContext } from '../DatesProvider';
+import { WeekdaysRow, WeekdaysRowStylesNames } from '../WeekdaysRow';
+import { Day, DayStylesNames, DayProps } from '../Day';
+import { ControlKeydownPayload, DayOfWeek } from '../../types';
+import { getMonthDays } from './get-month-days/get-month-days';
+import { isSameMonth } from './is-same-month/is-same-month';
+import { isBeforeMaxDate } from './is-before-max-date/is-before-max-date';
+import { isAfterMinDate } from './is-after-min-date/is-after-min-date';
 import useStyles from './Month.styles';
+import { getDateInTabOrder } from './get-date-in-tab-order/get-date-in-tab-order';
+
+export type MonthStylesNames =
+  | Selectors<typeof useStyles>
+  | WeekdaysRowStylesNames
+  | DayStylesNames;
 
 export interface MonthSettings {
-  /** Adds className to day button based on date and modifiers */
-  dayClassName?(date: Date, modifiers: DayModifiers): string;
+  /** Determines whether propagation for Escape key should be stopped */
+  __stopPropagation?: boolean;
 
-  /** Adds style to day button based on date and modifiers */
-  dayStyle?(date: Date, modifiers: DayModifiers): React.CSSProperties;
+  /** Prevents focus shift when buttons are clicked */
+  __preventFocus?: boolean;
 
-  /** When true dates that are outside of given month cannot be clicked or focused */
-  disableOutsideEvents?: boolean;
+  /** Called when day is clicked with click event and date */
+  __onDayClick?(event: React.MouseEvent<HTMLButtonElement>, date: Date): void;
+
+  /** Called when mouse enters day */
+  __onDayMouseEnter?(event: React.MouseEvent<HTMLButtonElement>, date: Date): void;
+
+  /** Called when any keydown event is registered on day, used for arrows navigation */
+  __onDayKeyDown?(
+    event: React.KeyboardEvent<HTMLButtonElement>,
+    payload: ControlKeydownPayload
+  ): void;
+
+  /** Assigns ref of every day based on its position in the table, used for arrows navigation */
+  __getDayRef?(rowIndex: number, cellIndex: number, node: HTMLButtonElement): void;
+
+  /** dayjs locale, defaults to value defined in DatesProvider */
+  locale?: string;
+
+  /** number 0-6, 0 – Sunday, 6 – Saturday, defaults to 1 – Monday */
+  firstDayOfWeek?: DayOfWeek;
+
+  /** dayjs format for weekdays names, defaults to "dd" */
+  weekdayFormat?: string | ((date: Date) => React.ReactNode);
+
+  /** Indices of weekend days, 0-6, where 0 is Sunday and 6 is Saturday, defaults to value defined in DatesProvider */
+  weekendDays?: DayOfWeek[];
+
+  /** Adds props to Day component based on date */
+  getDayProps?(date: Date): Partial<DayProps>;
+
+  /** Callback function to determine whether the day should be disabled */
+  excludeDate?(date: Date): boolean;
 
   /** Minimum possible date */
   minDate?: Date;
@@ -32,264 +64,185 @@ export interface MonthSettings {
   /** Maximum possible date */
   maxDate?: Date;
 
-  /** Callback function to determine if day should be disabled */
-  excludeDate?(date: Date): boolean;
+  /** Controls day value rendering */
+  renderDay?(date: Date): React.ReactNode;
 
-  /** Set to false to remove weekdays row */
-  hideWeekdays?: boolean;
-
-  /** Controls month days font-size and height */
-  size?: MantineSize;
-
-  /** Set to true to make calendar take 100% of container width */
-  fullWidth?: boolean;
-
-  /** Prevent focusing upon clicking */
-  preventFocus?: boolean;
-
-  /** Should focusable days have tabIndex={0}? */
-  focusable?: boolean;
-
-  /** Set first day of the week */
-  firstDayOfWeek?: FirstDayOfWeek;
-
-  /** Remove outside dates */
+  /** Determines whether outside dates should be hidden, defaults to false */
   hideOutsideDates?: boolean;
 
-  /** Indices of weekend days */
-  weekendDays?: number[];
+  /** Determines whether weekdays row should be hidden, defaults to false */
+  hideWeekdays?: boolean;
 
-  /** Should date be displayed as in range */
-  isDateInRange?(date: Date, modifiers: DayModifiers): boolean;
+  /** Assigns aria-label to days based on date */
+  getDayAriaLabel?(date: Date): string;
 
-  /** Should date be displayed as first in range */
-  isDateFirstInRange?(date: Date, modifiers: DayModifiers): boolean;
+  /** Controls size */
+  size?: MantineSize;
 
-  /** Should date be displayed as last in range */
-  isDateLastInRange?(date: Date, modifiers: DayModifiers): boolean;
-
-  /** Internal: determines whether propagation in Modal and Drawer should be stopped, defaults to true */
-  __stopPropagation?: boolean;
+  /** Determines whether controls should be separated by spacing, true by default */
+  withCellSpacing?: boolean;
 }
-
-export type MonthStylesNames = Selectors<typeof useStyles> | DayStylesNames;
 
 export interface MonthProps
   extends DefaultProps<MonthStylesNames>,
     MonthSettings,
-    Omit<React.ComponentPropsWithoutRef<'table'>, 'onChange' | 'value'> {
-  /** Date at which month should be shown */
-  month: Date;
-
-  /** Locale is used to get weekdays names with dayjs format */
-  locale?: string;
-
-  /** Selected date or an array of selected dates */
-  value?: Date | Date[];
-
-  /** Selected range */
-  range?: [Date, Date];
-
-  /** Called when day is selected */
-  onChange?(value: Date): void;
-
-  /** Static css selector base */
+    React.ComponentPropsWithoutRef<'table'> {
+  variant?: string;
   __staticSelector?: string;
 
-  /** Called when onMouseEnter event fired on day button */
-  onDayMouseEnter?(date: Date, event: React.MouseEvent): void;
+  /** Month to display */
+  month: Date;
 
-  /** Get days buttons refs */
-  daysRefs?: HTMLButtonElement[][];
-
-  /** Called when keydown event is registered on day */
-  onDayKeyDown?(payload: DayKeydownPayload, event: React.KeyboardEvent<HTMLButtonElement>): void;
-
-  /** Render day based on the date */
-  renderDay?(date: Date): React.ReactNode;
-
-  /** dayjs label format for weekday heading */
-  weekdayLabelFormat?: string;
+  /** Determines whether days should be static, static days can be used to display month if it is not expected that user will interact with the component in any way  */
+  static?: boolean;
 }
 
-const noop = () => false;
-
 const defaultProps: Partial<MonthProps> = {
-  disableOutsideEvents: false,
-  hideWeekdays: false,
-  __staticSelector: 'Month',
   size: 'sm',
-  fullWidth: false,
-  preventFocus: false,
-  focusable: true,
-  firstDayOfWeek: 'monday',
-  hideOutsideDates: false,
-  weekendDays: [0, 6],
-  __stopPropagation: true,
+  withCellSpacing: true,
 };
 
 export const Month = forwardRef<HTMLTableElement, MonthProps>((props, ref) => {
   const {
     className,
-    month,
-    value,
-    onChange,
-    disableOutsideEvents,
-    locale,
-    dayClassName,
-    dayStyle,
     classNames,
     styles,
+    unstyled,
+    __staticSelector,
+    locale,
+    firstDayOfWeek,
+    weekdayFormat,
+    month,
+    weekendDays,
+    getDayProps,
+    excludeDate,
     minDate,
     maxDate,
-    excludeDate,
-    onDayMouseEnter,
-    range,
-    hideWeekdays,
-    __staticSelector,
-    size,
-    fullWidth,
-    preventFocus,
-    focusable,
-    firstDayOfWeek,
-    onDayKeyDown,
-    daysRefs,
-    hideOutsideDates,
-    isDateInRange = noop,
-    isDateFirstInRange = noop,
-    isDateLastInRange = noop,
     renderDay,
-    weekdayLabelFormat,
-    unstyled,
-    weekendDays,
+    hideOutsideDates,
+    hideWeekdays,
+    getDayAriaLabel,
+    static: isStatic,
+    __getDayRef,
+    __onDayKeyDown,
+    __onDayClick,
+    __onDayMouseEnter,
+    __preventFocus,
     __stopPropagation,
+    withCellSpacing,
+    size,
+    variant,
     ...others
   } = useComponentDefaultProps('Month', defaultProps, props);
 
-  const { classes, cx, theme } = useStyles(
-    { fullWidth },
-    { classNames, styles, unstyled, name: __staticSelector }
-  );
-  const finalLocale = locale || theme.datesLocale;
-  const days = getMonthDays(month, firstDayOfWeek);
+  const ctx = useDatesContext();
 
-  const weekdays = getWeekdaysNames(finalLocale, firstDayOfWeek, weekdayLabelFormat).map(
-    (weekday) => (
-      <th className={classes.weekdayCell} key={weekday}>
-        <Text size={size} className={classes.weekday}>
-          {weekday.length >= 2 ? upperFirst(weekday) : weekday}
-        </Text>
-      </th>
-    )
-  );
+  const { classes, cx } = useStyles(null, {
+    name: ['Month', __staticSelector],
+    classNames,
+    styles,
+    unstyled,
+    variant,
+    size,
+  });
 
-  const hasValue = Array.isArray(value)
-    ? value.every((item) => item instanceof Date)
-    : value instanceof Date;
+  const stylesApiProps = {
+    __staticSelector: __staticSelector || 'Month',
+    classNames,
+    styles,
+    unstyled,
+    variant,
+    size,
+  };
 
-  const hasValueInMonthRange =
-    value instanceof Date &&
-    dayjs(value).isAfter(dayjs(month).startOf('month')) &&
-    dayjs(value).isBefore(dayjs(month).endOf('month'));
+  const dates = getMonthDays(month, ctx.getFirstDayOfWeek(firstDayOfWeek));
 
-  const firstIncludedDay = useMemo(
-    () =>
-      days
-        .flatMap((_) => _)
-        .find((date) => {
-          const dayProps = getDayProps({
-            date,
-            month,
-            hasValue,
-            minDate,
-            maxDate,
-            value,
-            excludeDate,
-            disableOutsideEvents,
-            range,
-            weekendDays,
-          });
-
-          return !dayProps.disabled && !dayProps.outside;
-        }) || dayjs(month).startOf('month').toDate(),
-    []
+  const dateInTabOrder = getDateInTabOrder(
+    dates,
+    minDate,
+    maxDate,
+    getDayProps,
+    excludeDate,
+    hideOutsideDates,
+    month
   );
 
-  const rows = days.map((row, rowIndex) => {
+  const rows = dates.map((row, rowIndex) => {
     const cells = row.map((date, cellIndex) => {
-      const dayProps = getDayProps({
-        date,
-        month,
-        hasValue,
-        minDate,
-        maxDate,
-        value,
-        excludeDate,
-        disableOutsideEvents,
-        range,
-        weekendDays,
-      });
-
-      const onKeyDownPayload = { rowIndex, cellIndex, date };
+      const outside = !isSameMonth(date, month);
+      const ariaLabel =
+        getDayAriaLabel?.(date) ||
+        dayjs(date)
+          .locale(locale || ctx.locale)
+          .format('D MMMM YYYY');
+      const dayProps = getDayProps?.(date);
+      const isDateInTabOrder = dayjs(date).isSame(dateInTabOrder, 'date');
 
       return (
-        <td className={classes.cell} key={cellIndex}>
+        <td
+          key={date.toString()}
+          className={classes.monthCell}
+          data-with-spacing={withCellSpacing || undefined}
+        >
           <Day
-            unstyled={unstyled}
-            ref={(button) => {
-              if (daysRefs) {
-                if (!Array.isArray(daysRefs[rowIndex])) {
-                  // eslint-disable-next-line no-param-reassign
-                  daysRefs[rowIndex] = [];
-                }
-
-                // eslint-disable-next-line no-param-reassign
-                daysRefs[rowIndex][cellIndex] = button;
-              }
-            }}
-            onClick={() => typeof onChange === 'function' && onChange(date)}
-            onMouseDown={(event) => preventFocus && event.preventDefault()}
-            value={date}
-            outside={dayProps.outside}
-            weekend={dayProps.weekend}
-            inRange={dayProps.inRange || isDateInRange(date, dayProps)}
-            firstInRange={dayProps.firstInRange || isDateFirstInRange(date, dayProps)}
-            lastInRange={dayProps.lastInRange || isDateLastInRange(date, dayProps)}
-            firstInMonth={isSameDate(date, firstIncludedDay)}
-            selected={dayProps.selected || dayProps.selectedInRange}
-            hasValue={hasValueInMonthRange}
-            onKeyDown={(event) =>
-              typeof onDayKeyDown === 'function' && onDayKeyDown(onKeyDownPayload, event)
-            }
-            className={typeof dayClassName === 'function' ? dayClassName(date, dayProps) : null}
-            style={typeof dayStyle === 'function' ? dayStyle(date, dayProps) : null}
-            disabled={dayProps.disabled}
-            onMouseEnter={typeof onDayMouseEnter === 'function' ? onDayMouseEnter : noop}
-            size={size}
-            fullWidth={fullWidth}
-            focusable={focusable}
-            hideOutsideDates={hideOutsideDates}
-            __staticSelector={__staticSelector}
-            styles={styles}
-            classNames={classNames}
+            {...stylesApiProps}
+            data-mantine-stop-propagation={__stopPropagation || undefined}
             renderDay={renderDay}
-            stopPropagation={__stopPropagation}
+            date={date}
+            weekend={ctx.getWeekendDays(weekendDays).includes(date.getDay() as DayOfWeek)}
+            outside={outside}
+            hidden={hideOutsideDates ? outside : false}
+            aria-label={ariaLabel}
+            static={isStatic}
+            disabled={
+              excludeDate?.(date) ||
+              !isBeforeMaxDate(date, maxDate) ||
+              !isAfterMinDate(date, minDate)
+            }
+            ref={(node) => __getDayRef?.(rowIndex, cellIndex, node)}
+            {...dayProps}
+            onKeyDown={(event) => {
+              dayProps?.onKeyDown?.(event);
+              __onDayKeyDown?.(event, { rowIndex, cellIndex, date });
+            }}
+            onMouseEnter={(event) => {
+              dayProps?.onMouseEnter?.(event);
+              __onDayMouseEnter?.(event, date);
+            }}
+            onClick={(event) => {
+              dayProps?.onClick?.(event);
+              __onDayClick?.(event, date);
+            }}
+            onMouseDown={(event) => {
+              dayProps?.onMouseDown?.(event);
+              __preventFocus && event.preventDefault();
+            }}
+            tabIndex={__preventFocus || !isDateInTabOrder ? -1 : 0}
           />
         </td>
       );
     });
 
-    return <tr key={rowIndex}>{cells}</tr>;
+    return (
+      <tr key={rowIndex} className={classes.monthRow}>
+        {cells}
+      </tr>
+    );
   });
 
   return (
     <Box component="table" className={cx(classes.month, className)} ref={ref} {...others}>
       {!hideWeekdays && (
-        <thead>
-          <tr>{weekdays}</tr>
+        <thead className={classes.monthThead}>
+          <WeekdaysRow
+            {...stylesApiProps}
+            locale={locale}
+            firstDayOfWeek={firstDayOfWeek}
+            weekdayFormat={weekdayFormat}
+          />
         </thead>
       )}
-      <tbody>{rows}</tbody>
+      <tbody className={classes.monthTbody}>{rows}</tbody>
     </Box>
   );
 });

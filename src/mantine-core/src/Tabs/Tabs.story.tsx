@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { IconPackage } from '@tabler/icons';
+import { IconPackage } from '@tabler/icons-react';
 import { MantineProvider } from '@mantine/styles';
 import { Tabs, TabsProps } from './Tabs';
 import { Badge } from '../Badge';
@@ -145,6 +145,45 @@ export const VerticalVariants = () => (
     </Wrapper>
 
     <Wrapper defaultValue="react" orientation="vertical" variant="pills" mt={10} radius="md">
+      {verticalBase}
+    </Wrapper>
+  </Box>
+);
+
+export const VerticalPlacement = () => (
+  <Box sx={{ maxWidth: 400 }} mx="auto" mt={40}>
+    <Wrapper
+      defaultValue="react"
+      orientation="vertical"
+      variant="default"
+      mt={10}
+      mb={50}
+      radius="md"
+      placement="right"
+    >
+      {verticalBase}
+    </Wrapper>
+
+    <Wrapper
+      defaultValue="react"
+      orientation="vertical"
+      variant="outline"
+      mt={10}
+      mb={50}
+      radius="md"
+      placement="right"
+    >
+      {verticalBase}
+    </Wrapper>
+
+    <Wrapper
+      defaultValue="react"
+      orientation="vertical"
+      variant="pills"
+      mt={10}
+      radius="md"
+      placement="right"
+    >
       {verticalBase}
     </Wrapper>
   </Box>

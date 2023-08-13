@@ -4,6 +4,7 @@ import {
   MantineColor,
   MantineNumberSize,
   MantineTheme,
+  rem,
 } from '@mantine/styles';
 
 export type AlertVariant = 'filled' | 'outline' | 'light';
@@ -11,11 +12,10 @@ export type AlertVariant = 'filled' | 'outline' | 'light';
 export interface AlertStylesParams {
   color: MantineColor;
   radius: MantineNumberSize;
-  variant: AlertVariant;
 }
 
 interface GetVariantStylesInput {
-  variant: AlertVariant;
+  variant: string;
   color: MantineColor;
   theme: MantineTheme;
 }
@@ -38,22 +38,29 @@ function getVariantStyles({ variant, color, theme }: GetVariantStylesInput): CSS
     };
   }
 
-  const colors = theme.fn.variant({ variant: 'light', color });
+  if (variant === 'light') {
+    const colors = theme.fn.variant({ variant: 'light', color });
 
-  return {
-    backgroundColor: colors.background,
-    color: colors.color,
-  };
+    return {
+      backgroundColor: colors.background,
+      color: colors.color,
+    };
+  }
+
+  return null;
 }
 
-export default createStyles((theme, { color, radius, variant }: AlertStylesParams) => ({
+export default createStyles((theme, { radius, color }: AlertStylesParams, { variant }) => ({
   root: {
     ...theme.fn.fontStyles(),
     position: 'relative',
     overflow: 'hidden',
-    padding: `${theme.spacing.sm}px ${theme.spacing.md}px`,
+    paddingTop: theme.spacing.sm,
+    paddingBottom: theme.spacing.sm,
+    paddingLeft: theme.spacing.md,
+    paddingRight: theme.spacing.sm,
     borderRadius: theme.fn.radius(radius),
-    border: '1px solid transparent',
+    border: `${rem(1)} solid transparent`,
     ...getVariantStyles({ variant, color, theme }),
   },
 
@@ -68,7 +75,7 @@ export default createStyles((theme, { color, radius, variant }: AlertStylesParam
   title: {
     boxSizing: 'border-box',
     margin: 0,
-    marginBottom: 7,
+    marginBottom: theme.spacing.xs,
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'space-between',
@@ -89,8 +96,8 @@ export default createStyles((theme, { color, radius, variant }: AlertStylesParam
 
   icon: {
     lineHeight: 1,
-    width: 20,
-    height: 20,
+    width: rem(20),
+    height: rem(20),
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'flex-start',
@@ -115,9 +122,15 @@ export default createStyles((theme, { color, radius, variant }: AlertStylesParam
   },
 
   closeButton: {
-    position: 'absolute',
-    top: theme.spacing.sm,
-    right: theme.spacing.sm,
-    color: 'inherit',
+    width: rem(10),
+    height: rem(10),
+    color:
+      variant === 'filled'
+        ? theme.white
+        : theme.colorScheme === 'dark'
+        ? variant === 'light'
+          ? theme.white
+          : theme.colors.dark[0]
+        : theme.black,
   },
 }));

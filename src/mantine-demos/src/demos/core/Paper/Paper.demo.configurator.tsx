@@ -1,17 +1,18 @@
 import React from 'react';
-import { Text, Paper, DEFAULT_THEME } from '@mantine/core';
+import { MantineDemo } from '@mantine/ds';
+import { Text, Paper, DEFAULT_THEME, Box } from '@mantine/core';
 
 function Wrapper(props: any) {
   return (
-    <div style={{ padding: 20 }}>
-      <Paper style={{ maxWidth: 400, margin: 'auto' }} {...props}>
+    <Box p="md">
+      <Paper maw={400} mx="auto" {...props}>
         <Text>Paper is the most basic ui component</Text>
         <Text>
           Use it to create cards, dropdowns, modals and other components that require background
           with shadow
         </Text>
       </Paper>
-    </div>
+    </Box>
   );
 }
 

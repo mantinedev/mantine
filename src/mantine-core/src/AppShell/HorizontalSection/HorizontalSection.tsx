@@ -1,5 +1,12 @@
 import React, { forwardRef } from 'react';
-import { DefaultProps, MantineNumberSize, getDefaultZIndex, Global } from '@mantine/styles';
+import {
+  DefaultProps,
+  MantineNumberSize,
+  getDefaultZIndex,
+  Global,
+  rem,
+  em,
+} from '@mantine/styles';
 import { Box } from '../../Box';
 import { useAppShellContext } from '../AppShell.context';
 import { getSortedBreakpoints } from './get-sorted-breakpoints/get-sorted-breakpoints';
@@ -9,6 +16,8 @@ import useStyles, {
 } from './HorizontalSection.styles';
 
 export interface HorizontalSectionSharedProps extends DefaultProps {
+  variant?: string;
+
   /** Component width with breakpoints */
   width?: HorizontalSectionWidth;
 
@@ -18,7 +27,7 @@ export interface HorizontalSectionSharedProps extends DefaultProps {
   /** HorizontalSection content */
   children: React.ReactNode;
 
-  /** Border */
+  /** Determines whether the element should have border */
   withBorder?: boolean;
 
   /** Set position to fixed */
@@ -51,7 +60,7 @@ export const HorizontalSection = forwardRef<HTMLElement, HorizontalSectionProps>
       height,
       fixed = false,
       position,
-      zIndex = getDefaultZIndex('app'),
+      zIndex,
       hiddenBreakpoint = 'md',
       hidden = false,
       withBorder = true,
@@ -62,6 +71,7 @@ export const HorizontalSection = forwardRef<HTMLElement, HorizontalSectionProps>
       section,
       __staticSelector,
       unstyled,
+      variant,
       ...others
     }: HorizontalSectionProps,
     ref
@@ -75,17 +85,18 @@ export const HorizontalSection = forwardRef<HTMLElement, HorizontalSectionProps>
         fixed: ctx.fixed || fixed,
         position,
         hiddenBreakpoint,
-        zIndex: ctx.zIndex || zIndex,
+        zIndex: zIndex || ctx.zIndex || getDefaultZIndex('app'),
         section,
         withBorder,
+        layout: ctx.layout,
       },
-      { classNames, styles, name: __staticSelector, unstyled }
+      { classNames, styles, name: __staticSelector, unstyled, variant }
     );
 
     const breakpoints = getSortedBreakpoints(width, theme).reduce(
       (acc, [breakpoint, breakpointSize]) => {
-        acc[`@media (min-width: ${breakpoint + 1}px)`] = {
-          [`--mantine-${section}-width`]: `${breakpointSize}px`,
+        acc[`@media (min-width: ${em(breakpoint)})`] = {
+          [`--mantine-${section}-width`]: rem(breakpointSize),
         };
 
         return acc;
@@ -106,7 +117,7 @@ export const HorizontalSection = forwardRef<HTMLElement, HorizontalSectionProps>
         <Global
           styles={() => ({
             ':root': {
-              [`--mantine-${section}-width`]: width?.base ? `${width.base}px` : '0px',
+              [`--mantine-${section}-width`]: width?.base ? rem(width.base) : '0rem',
               ...breakpoints,
             },
           })}

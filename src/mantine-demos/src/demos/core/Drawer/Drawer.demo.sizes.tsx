@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { MantineDemo } from '@mantine/ds';
 import { Drawer, Button, Group } from '@mantine/core';
 
 function Demo() {
@@ -9,9 +10,9 @@ function Demo() {
     setOpened(true);
   };
 
-  const controls = (['xs', 'sm', 'md', 'lg', 'xl', 'full', 800, '25%'] as const).map((s) => (
+  const controls = (['xs', 'sm', 'md', 'lg', 'xl', '100%', '40rem', '25%'] as const).map((s) => (
     <Button variant="outline" onClick={() => open(s)} key={s}>
-      {typeof s === 'string' ? s : `${s}px`}
+      {s}
     </Button>
   ));
 

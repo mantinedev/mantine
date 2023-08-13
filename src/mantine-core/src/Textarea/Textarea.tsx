@@ -1,12 +1,8 @@
 import React, { forwardRef } from 'react';
 import TextareaAutosize from 'react-textarea-autosize';
 import { useId } from '@mantine/hooks';
-import {
-  DefaultProps,
-  MantineSize,
-  extractSystemStyles,
-  useComponentDefaultProps,
-} from '@mantine/styles';
+import { DefaultProps, MantineSize, useComponentDefaultProps } from '@mantine/styles';
+import { extractSystemStyles } from '../Box';
 import { InputWrapperBaseProps, Input, InputSharedProps } from '../Input';
 import { TextInputStylesNames } from '../TextInput/TextInput';
 import useStyles from './Textarea.styles';
@@ -69,6 +65,7 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>((props, r
     inputContainer,
     unstyled,
     withAsterisk,
+    variant,
     ...others
   } = useComponentDefaultProps('Textarea', defaultProps, props);
 
@@ -78,7 +75,7 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>((props, r
   const sharedProps = {
     required,
     ref,
-    invalid: !!error,
+    error,
     id: uuid,
     classNames: { ...classNames, input: cx(classes.input, classNames?.input) },
     styles,
@@ -86,6 +83,7 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>((props, r
     size,
     multiline: true,
     unstyled,
+    variant,
     ...rest,
   };
 
@@ -110,6 +108,7 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>((props, r
       inputWrapperOrder={inputWrapperOrder}
       unstyled={unstyled}
       withAsterisk={withAsterisk}
+      variant={variant}
       {...systemStyles}
       {...wrapperProps}
     >

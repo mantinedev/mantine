@@ -1,6 +1,11 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
-import { checkAccessibility, itSupportsSystemProps } from '@mantine/tests';
+import userEvent from '@testing-library/user-event';
+import {
+  checkAccessibility,
+  itSupportsSystemProps,
+  itSupportsProviderVariant,
+} from '@mantine/tests';
 import { Progress, ProgressProps } from './Progress';
 
 const defaultProps: ProgressProps = {
@@ -9,6 +14,7 @@ const defaultProps: ProgressProps = {
 
 describe('@mantine/core/Progress', () => {
   checkAccessibility([<Progress value={80} aria-label="test-progress" />]);
+  itSupportsProviderVariant(Progress, defaultProps, 'Progress');
   itSupportsSystemProps({
     component: Progress,
     props: defaultProps,
@@ -43,5 +49,22 @@ describe('@mantine/core/Progress', () => {
     expect(element).toHaveAttribute('aria-valuenow', '84');
     expect(element).toHaveAttribute('aria-valuemin', '0');
     expect(element).toHaveAttribute('aria-valuemax', '100');
+  });
+
+  it('supports props on sections', async () => {
+    const spy = jest.fn();
+    const { container } = render(
+      <Progress
+        sections={[
+          { value: 20, color: 'cyan', onClick: spy },
+          { value: 30, color: 'orange' },
+        ]}
+      />
+    );
+
+    await userEvent.click(container.querySelectorAll('.mantine-Progress-bar')[0]);
+    expect(spy).toHaveBeenCalledTimes(1);
+    await userEvent.click(container.querySelectorAll('.mantine-Progress-bar')[1]);
+    expect(spy).toHaveBeenCalledTimes(1);
   });
 });

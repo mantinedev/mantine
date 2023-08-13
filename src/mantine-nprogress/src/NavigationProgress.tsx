@@ -4,6 +4,7 @@ import {
   useMantineTheme,
   getDefaultZIndex,
   MantineColor,
+  PortalProps,
 } from '@mantine/core';
 import { useDidUpdate, useInterval, useReducedMotion } from '@mantine/hooks';
 import React, { useRef, useState } from 'react';
@@ -16,7 +17,7 @@ export interface NavigationProgressProps {
   /** Key of theme.colors of any other valid CSS color */
   color?: MantineColor;
 
-  /** The height of the progressbar in px */
+  /** Height of the progressbar */
   size?: number;
 
   /** Called when the progressbar reaches 100% */
@@ -40,8 +41,14 @@ export interface NavigationProgressProps {
   /** Determines whether progressbar should be rendered within Portal, defaults to true */
   withinPortal?: boolean;
 
+  /** Props to pass down to the portal when withinPortal is true */
+  portalProps?: Omit<PortalProps, 'children' | 'withinPortal'>;
+
   /** Progressbar z-index */
   zIndex?: React.CSSProperties['zIndex'];
+
+  /** aria-label for `Progress`*/
+  progressLabel?: string;
 }
 
 export function NavigationProgress({
@@ -55,7 +62,9 @@ export function NavigationProgress({
   onFinish,
   autoReset = false,
   withinPortal = true,
+  portalProps,
   zIndex = getDefaultZIndex('max'),
+  progressLabel,
 }: NavigationProgressProps) {
   const theme = useMantineTheme();
   const shouldReduceMotion = useReducedMotion();
@@ -97,6 +106,7 @@ export function NavigationProgress({
     setProgress(0);
     window.setTimeout(() => setUnmountProgress(false), 0);
   };
+  const complete = () => setProgress(100);
 
   const cancelUnmount = () => {
     if (unmountRef.current) {
@@ -135,10 +145,10 @@ export function NavigationProgress({
     }
   }, [_progress]);
 
-  useNavigationProgressEvents({ start, stop, set, increment, decrement, reset });
+  useNavigationProgressEvents({ start, stop, set, increment, decrement, reset, complete });
 
   return (
-    <OptionalPortal withinPortal={withinPortal}>
+    <OptionalPortal {...portalProps} withinPortal={withinPortal}>
       {!unmountProgress && (
         <Progress
           radius={0}
@@ -167,6 +177,7 @@ export function NavigationProgress({
               transitionDuration: `${reducedMotion || !mounted ? 0 : transitionDuration}ms`,
             },
           }}
+          aria-label={progressLabel}
         />
       )}
     </OptionalPortal>

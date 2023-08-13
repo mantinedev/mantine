@@ -1,5 +1,6 @@
-import { useComponentDefaultProps, DefaultProps, extractSystemStyles } from '@mantine/styles';
+import { useComponentDefaultProps, DefaultProps, MantineStyleSystemProps } from '@mantine/styles';
 import { useId } from '@mantine/hooks';
+import { extractSystemStyles } from '../Box';
 import { InputWrapperBaseProps } from './InputWrapper/InputWrapper';
 import { InputSharedProps } from './Input';
 
@@ -8,9 +9,9 @@ interface BaseProps extends InputWrapperBaseProps, InputSharedProps, DefaultProp
   id?: string;
 }
 
-export function useInputProps<T extends BaseProps>(
+export function useInputProps<T extends BaseProps, U extends Partial<T>>(
   component: string,
-  defaultProps: Partial<T>,
+  defaultProps: U,
   props: T
 ) {
   const {
@@ -27,49 +28,54 @@ export function useInputProps<T extends BaseProps>(
     errorProps,
     labelProps,
     descriptionProps,
-    wrapperProps,
+    wrapperProps: _wrapperProps,
     id,
     size,
     style,
     inputContainer,
     inputWrapperOrder,
     withAsterisk,
+    variant,
     ...others
-  } = useComponentDefaultProps(component, defaultProps, props);
+  } = useComponentDefaultProps<T>(component, defaultProps, props);
 
   const uid = useId(id);
 
   const { systemStyles, rest } = extractSystemStyles(others);
+
+  const wrapperProps = {
+    label,
+    description,
+    error,
+    required,
+    classNames,
+    className,
+    __staticSelector,
+    sx,
+    errorProps,
+    labelProps,
+    descriptionProps,
+    unstyled,
+    styles,
+    id: uid,
+    size,
+    style,
+    inputContainer,
+    inputWrapperOrder,
+    withAsterisk,
+    variant,
+    ..._wrapperProps,
+  };
 
   return {
     ...rest,
     classNames,
     styles,
     unstyled,
-
     wrapperProps: {
-      label,
-      description,
-      error,
-      required,
-      classNames,
-      className,
-      __staticSelector,
-      sx,
-      errorProps,
-      labelProps,
-      descriptionProps,
-      unstyled,
-      styles,
-      id: uid,
-      size,
-      style,
-      inputContainer,
-      inputWrapperOrder,
-      withAsterisk,
       ...wrapperProps,
       ...systemStyles,
-    },
+    } as typeof wrapperProps & MantineStyleSystemProps,
     inputProps: {
       required,
       classNames,
@@ -78,7 +84,8 @@ export function useInputProps<T extends BaseProps>(
       id: uid,
       size,
       __staticSelector,
-      invalid: !!error,
+      error,
+      variant,
     },
   };
 }

@@ -1,4 +1,5 @@
 import React from 'react';
+import { MantineDemo } from '@mantine/ds';
 import { MultiSelect } from '@mantine/core';
 
 const code = `
@@ -24,14 +25,14 @@ const data = Array(50)
 
 function Demo() {
   return (
-    <div style={{ maxWidth: 400, marginLeft: 'auto', marginRight: 'auto' }}>
-      <MultiSelect
-        data={data}
-        label="Large data set"
-        placeholder="Scroll to see all options"
-        maxDropdownHeight={160}
-      />
-    </div>
+    <MultiSelect
+      maw={400}
+      mx="auto"
+      data={data}
+      label="Large data set"
+      placeholder="Scroll to see all options"
+      maxDropdownHeight={160}
+    />
   );
 }
 

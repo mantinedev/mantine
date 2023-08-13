@@ -30,9 +30,17 @@ export const PACKAGES_DATA = [
     dependencies: ['@mantine/hooks', '@mantine/core', '@mantine/prism'],
   },
   {
-    package: '@mantine/rte',
-    description: 'Rich text editor based on Quill.js',
-    dependencies: ['@mantine/hooks', '@mantine/core', '@mantine/rte'],
+    package: '@mantine/tiptap',
+    description: 'Rich text editor based on Tiptap',
+    dependencies: [
+      '@mantine/hooks',
+      '@mantine/core',
+      '@mantine/tiptap',
+      '@tabler/icons-react',
+      '@tiptap/react',
+      '@tiptap/extension-link',
+      '@tiptap/starter-kit',
+    ],
   },
   {
     package: '@mantine/dropzone',

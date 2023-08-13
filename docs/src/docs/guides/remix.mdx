@@ -12,9 +12,9 @@ import { PackagesInstallation } from '../../components/PackagesInstallation/Pack
 
 ## Get started with template
 
-The easiest way to get started is to use [the template on GitHub](https://github.com/mantinedev/mantine-remix-template):
+The easiest way to get started is to use [the template on GitHub](https://github.com/mantinedev/remix-template):
 
-1. Open [template page on GitHub](https://github.com/mantinedev/mantine-remix-template)
+1. Open [template page on GitHub](https://github.com/mantinedev/remix-template)
 2. Click `Use this template` button
 3. Clone or download the repository
 4. Install dependencies: `yarn`
@@ -117,7 +117,7 @@ npm run dev
 
 ## Server streaming support
 
-Mantine is based on [emotion](https://emotion.sh/) which currently does not support [renderToPipeableStream](https://reactjs.org/docs/react-dom-server.html#rendertopipeablestream),
+Mantine is based on [emotion](https://emotion.sh/) which currently does not support [renderToPipeableStream](https://react.dev/reference/react-dom/server/renderToPipeableStream),
 default Remix boilerplate will not support Mantine (and other component libraries based on css-in-js). It is important to replace your `entry.server.tsx`
 with code provided in this guide in order for server side rendering to work.
 

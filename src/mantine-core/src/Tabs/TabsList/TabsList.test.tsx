@@ -22,5 +22,6 @@ describe('@mantine/core/TabsList', () => {
     props: defaultProps,
     refType: HTMLDivElement,
     displayName: '@mantine/core/TabsList',
+    providerName: 'TabsList',
   });
 });

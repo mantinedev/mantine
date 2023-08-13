@@ -10,10 +10,10 @@ export interface IStorageProperties<T> {
   /** Default value that will be set if value is not found in storage */
   defaultValue?: T;
 
-  /** If set to true, value will be update is useEffect after mount */
+  /** If set to true, value will be updated in useEffect after mount */
   getInitialValueInEffect?: boolean;
 
-  /** Function to serialize value into string to be save in storage */
+  /** Function to serialize value into a string to be saved in storage */
   serialize?(value: T): string;
 
   /** Function to deserialize string value from storage to value */
@@ -48,13 +48,18 @@ export function createStorage<T>(type: StorageType, hookName: string) {
   }: IStorageProperties<T>) {
     const readStorageValue = useCallback(
       (skipStorage?: boolean): T => {
-        if (typeof window === 'undefined' || !(type in window) || skipStorage) {
-          return (defaultValue ?? '') as T;
+        if (
+          typeof window === 'undefined' ||
+          !(type in window) ||
+          window[type] === null ||
+          skipStorage
+        ) {
+          return defaultValue as T;
         }
 
         const storageValue = window[type].getItem(key);
 
-        return storageValue !== null ? deserialize(storageValue) : ((defaultValue ?? '') as T);
+        return storageValue !== null ? deserialize(storageValue) : (defaultValue as T);
       },
       [key, defaultValue]
     );
@@ -83,6 +88,7 @@ export function createStorage<T>(type: StorageType, hookName: string) {
 
     const removeStorageValue = useCallback(() => {
       window[type].removeItem(key);
+      window.dispatchEvent(new CustomEvent(eventName, { detail: { key, value: defaultValue } }));
     }, []);
 
     useWindowEvent('storage', (event) => {
@@ -107,7 +113,7 @@ export function createStorage<T>(type: StorageType, hookName: string) {
       if (getInitialValueInEffect) {
         setValue(readStorageValue());
       }
-    }, []);
+    }, [key]);
 
     return [
       value === undefined ? defaultValue : value,

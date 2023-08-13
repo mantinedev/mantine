@@ -33,8 +33,8 @@ function Demo() {
 
 ## Formats
 
-Component supports hex, rgb, rgba, hsl and hsla color formats.
-Slider to change opacity is displayed only for rgba and hsla formats:
+Component supports hex, hexa, rgb, rgba, hsl and hsla color formats.
+Slider to change opacity is displayed only for hexa, rgba and hsla formats:
 
 <Demo data={ColorInputDemos.formatsConfigurator} />
 
@@ -65,6 +65,14 @@ By default, color preview will be rendered on the left side of the input,
 you can remove it (`withPreview={false}` prop) or replace with any React node (`icon` prop):
 
 <Demo data={ColorInputDemos.icon} />
+
+## Eye dropper
+
+Set `withEyeDropper` prop to display eye dropper icon in the right section.
+This feature depends on [EyeDropper API](https://developer.mozilla.org/en-US/docs/Web/API/EyeDropper_API),
+the eye dropper will not be rendered if the API is not supported.
+
+<Demo data={ColorInputDemos.eyeDropper} />
 
 ## Input props
 

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useForm } from '@mantine/form';
-import { IconLock, IconAt } from '@tabler/icons';
+import { IconLock, IconAt } from '@tabler/icons-react';
 import {
   TextInput,
   PasswordInput,
@@ -65,10 +65,10 @@ export function AuthenticationForm({
     <Paper
       p={noPadding ? 0 : 'lg'}
       shadow={noShadow ? null : 'sm'}
-      style={{
+      style={style}
+      sx={{
         position: 'relative',
         backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.white,
-        ...style,
       }}
     >
       <form onSubmit={form.onSubmit(handleSubmit)}>

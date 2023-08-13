@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Stepper, Button, Group } from '@mantine/core';
+import { MantineDemo } from '@mantine/ds';
 import { Content } from './_content';
 
 const code = `
@@ -8,39 +9,21 @@ import { Stepper, Button, Group } from '@mantine/core';
 
 function Demo() {
   const [active, setActive] = useState(1);
-  const nextStep = () => setActive((current) => (current < 3 ? current + 1 : current));
-  const prevStep = () => setActive((current) => (current > 0 ? current - 1 : current));
+  const [highestStepVisited, setHighestStepVisited] = useState(active);
 
-  return (
-    <>
-      <Stepper active={active} onStepClick={setActive} breakpoint="sm">
-        <Stepper.Step label="First step" description="Create an account" allowStepSelect={active > 0}>
-          Step 1 content: Create an account
-        </Stepper.Step>
-        <Stepper.Step label="Second step" description="Verify email" allowStepSelect={active > 1}>
-          Step 2 content: Verify email
-        </Stepper.Step>
-        <Stepper.Step label="Final step" description="Get full access" allowStepSelect={active > 2}>
-          Step 3 content: Get full access
-        </Stepper.Step>
-        <Stepper.Completed>
-          Completed, click back button to get to previous step
-        </Stepper.Completed>
-      </Stepper>
+  const handleStepChange = (nextStep: number) => {
+    const isOutOfBounds = nextStep > 3 || nextStep < 0;
 
-      <Group position="center" mt="xl">
-        <Button variant="default" onClick={prevStep}>Back</Button>
-        <Button onClick={nextStep}>Next step</Button>
-      </Group>
-    </>
-  );
-}
-`;
+    if (isOutOfBounds) {
+      return;
+    }
 
-function Demo() {
-  const [active, setActive] = useState(1);
-  const nextStep = () => setActive((current) => (current < 3 ? current + 1 : current));
-  const prevStep = () => setActive((current) => (current > 0 ? current - 1 : current));
+    setActive(nextStep);
+    setHighestStepVisited((hSC) => Math.max(hSC, nextStep));
+  };
+
+  // Allow the user to freely go back and forth between visited steps.
+  const shouldAllowSelectStep = (step: number) => highestStepVisited >= step && active !== step;
 
   return (
     <>
@@ -48,14 +31,22 @@ function Demo() {
         <Stepper.Step
           label="First step"
           description="Create an account"
-          allowStepSelect={active > 0}
+          allowStepSelect={shouldAllowSelectStep(0)}
         >
           <Content>Step 1 content: Create an account</Content>
         </Stepper.Step>
-        <Stepper.Step label="Second step" description="Verify email" allowStepSelect={active > 1}>
+        <Stepper.Step
+          label="Second step"
+          description="Verify email"
+          allowStepSelect={shouldAllowSelectStep(1)}
+        >
           <Content>Step 2 content: Verify email</Content>
         </Stepper.Step>
-        <Stepper.Step label="Final step" description="Get full access" allowStepSelect={active > 2}>
+        <Stepper.Step
+          label="Final step"
+          description="Get full access"
+          allowStepSelect={shouldAllowSelectStep(2)}
+        >
           <Content>Step 3 content: Get full access</Content>
         </Stepper.Step>
 
@@ -65,10 +56,69 @@ function Demo() {
       </Stepper>
 
       <Group position="center" mt="xl">
-        <Button variant="default" onClick={prevStep}>
+        <Button variant="default" onClick={() => handleStepChange(active - 1)}>
           Back
         </Button>
-        <Button onClick={nextStep}>Next step</Button>
+        <Button onClick={() => handleStepChange(active + 1)}>Next step</Button>
+      </Group>
+    </>
+  );
+}
+`;
+
+function Demo() {
+  const [active, setActive] = useState(1);
+  const [highestStepVisited, setHighestStepVisited] = useState(active);
+
+  const handleStepChange = (nextStep: number) => {
+    const isOutOfBounds = nextStep > 3 || nextStep < 0;
+
+    if (isOutOfBounds) {
+      return;
+    }
+
+    setActive(nextStep);
+    setHighestStepVisited((hSC) => Math.max(hSC, nextStep));
+  };
+
+  // Allow the user to freely go back and forth between visited steps.
+  const shouldAllowSelectStep = (step: number) => highestStepVisited >= step && active !== step;
+
+  return (
+    <>
+      <Stepper active={active} onStepClick={setActive} breakpoint="sm">
+        <Stepper.Step
+          label="First step"
+          description="Create an account"
+          allowStepSelect={shouldAllowSelectStep(0)}
+        >
+          <Content>Step 1 content: Create an account</Content>
+        </Stepper.Step>
+        <Stepper.Step
+          label="Second step"
+          description="Verify email"
+          allowStepSelect={shouldAllowSelectStep(1)}
+        >
+          <Content>Step 2 content: Verify email</Content>
+        </Stepper.Step>
+        <Stepper.Step
+          label="Final step"
+          description="Get full access"
+          allowStepSelect={shouldAllowSelectStep(2)}
+        >
+          <Content>Step 3 content: Get full access</Content>
+        </Stepper.Step>
+
+        <Stepper.Completed>
+          <Content>Completed, click back button to get to previous step</Content>
+        </Stepper.Completed>
+      </Stepper>
+
+      <Group position="center" mt="xl">
+        <Button variant="default" onClick={() => handleStepChange(active - 1)}>
+          Back
+        </Button>
+        <Button onClick={() => handleStepChange(active + 1)}>Next step</Button>
       </Group>
     </>
   );

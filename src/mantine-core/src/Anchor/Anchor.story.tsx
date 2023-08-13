@@ -6,7 +6,7 @@ export default { title: 'Anchor' };
 export function CustomComponent() {
   return (
     <div style={{ padding: 40 }}>
-      <Anchor component="button" type="button">
+      <Anchor component="button" type="button" color="red.9">
         Anchor as button
       </Anchor>
 
@@ -31,6 +31,18 @@ export function InheritFontSize() {
   return (
     <div style={{ padding: 40, fontSize: 50 }}>
       <Anchor href="https://mantine.dev/">Should be 50px</Anchor>
+    </div>
+  );
+}
+
+export function WithUnderlineProp() {
+  return (
+    <div style={{ padding: 40 }}>
+      <Anchor href="/">Underline should be ENABLED</Anchor>
+      <br />
+      <Anchor href="/" underline={false}>
+        Underline should be DISABLED
+      </Anchor>
     </div>
   );
 }

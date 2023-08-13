@@ -1,6 +1,7 @@
 /* eslint-disable no-console */
 import React from 'react';
 import { PasswordInput, Group, Button, Box } from '@mantine/core';
+import { MantineDemo } from '@mantine/ds';
 import { useForm } from '@mantine/form';
 
 const code = `
@@ -21,7 +22,7 @@ function Demo() {
   });
 
   return (
-    <Box sx={{ maxWidth: 340 }} mx="auto">
+    <Box maw={340} mx="auto">
       <form onSubmit={form.onSubmit((values) => console.log(values))}>
         <PasswordInput
           label="Password"
@@ -59,7 +60,7 @@ function Demo() {
   });
 
   return (
-    <Box sx={{ maxWidth: 340 }} mx="auto">
+    <Box maw={340} mx="auto">
       <form onSubmit={form.onSubmit((values) => console.log(values))}>
         <PasswordInput
           label="Password"

@@ -1,4 +1,5 @@
 import React from 'react';
+import { MantineDemo } from '@mantine/ds';
 import { Select } from '@mantine/core';
 
 const code = `
@@ -24,14 +25,15 @@ const data = Array(50)
 
 function Demo() {
   return (
-    <div style={{ maxWidth: 320, marginLeft: 'auto', marginRight: 'auto' }}>
-      <Select
-        data={data}
-        label="Select with native scrollbars"
-        placeholder="Dropdown with native scrollbars"
-        dropdownComponent="div"
-      />
-    </div>
+    <Select
+      maw={320}
+      mx="auto"
+      data={data}
+      label="Select with native scrollbars"
+      placeholder="Dropdown with native scrollbars"
+      dropdownComponent="div"
+      withinPortal
+    />
   );
 }
 

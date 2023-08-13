@@ -1,58 +1,66 @@
 import React, { forwardRef } from 'react';
 import {
   DefaultProps,
-  MantineSize,
   MantineColor,
   Selectors,
-  extractSystemStyles,
   MantineNumberSize,
   useComponentDefaultProps,
 } from '@mantine/styles';
 import { ForwardRefWithStaticComponents } from '@mantine/utils';
 import { useId } from '@mantine/hooks';
-import { Box } from '../Box';
-import { CheckboxIcon } from './CheckboxIcon';
-import { CheckboxGroup } from './CheckboxGroup/CheckboxGroup';
+import { extractSystemStyles } from '../Box';
+import { InlineInput, InlineInputStylesNames } from '../InlineInput';
 import { useCheckboxGroupContext } from './CheckboxGroup.context';
+import { CheckboxGroup } from './CheckboxGroup/CheckboxGroup';
+import { CheckboxIcon } from './CheckboxIcon';
 import useStyles, { CheckboxStylesParams } from './Checkbox.styles';
 
-export type CheckboxStylesNames = Selectors<typeof useStyles>;
+export type CheckboxStylesNames = Selectors<typeof useStyles> | InlineInputStylesNames;
 
 export interface CheckboxProps
   extends DefaultProps<CheckboxStylesNames, CheckboxStylesParams>,
     Omit<React.ComponentPropsWithRef<'input'>, 'type' | 'size'> {
+  variant?: string;
+
   /** Key of theme.colors */
   color?: MantineColor;
 
-  /** Key of theme.radius or number to set border-radius in px */
+  /** Key of theme.radius or any valid CSS value to set border-radius, theme.defaultRadius by default */
   radius?: MantineNumberSize;
 
-  /** Predefined label font-size and checkbox width and height in px */
-  size?: MantineSize;
+  /** Controls label font-size and checkbox width and height */
+  size?: MantineNumberSize;
 
   /** Checkbox label */
   label?: React.ReactNode;
 
-  /** Indeterminate state of checkbox, overwrites checked */
+  /** Indeterminate state of checkbox, if set, `checked` prop is ignored */
   indeterminate?: boolean;
 
-  /** Props spread to wrapper element */
+  /** Props added to the root element */
   wrapperProps?: Record<string, any>;
-
-  /** id to connect label with input */
-  id?: string;
 
   /** Transition duration in ms */
   transitionDuration?: number;
 
   /** Icon rendered when checkbox has checked or indeterminate state */
   icon?: React.FC<{ indeterminate: boolean; className: string }>;
+
+  /** Position of the label */
+  labelPosition?: 'left' | 'right';
+
+  /** Description, displayed after the label */
+  description?: React.ReactNode;
+
+  /** Error message displayed after the input */
+  error?: React.ReactNode;
 }
 
 const defaultProps: Partial<CheckboxProps> = {
   size: 'sm',
   transitionDuration: 100,
   icon: CheckboxIcon,
+  labelPosition: 'right',
 };
 
 type CheckboxComponent = ForwardRefWithStaticComponents<
@@ -67,6 +75,7 @@ export const Checkbox: CheckboxComponent = forwardRef<HTMLInputElement, Checkbox
       style,
       sx,
       checked,
+      disabled,
       color,
       label,
       indeterminate,
@@ -80,15 +89,26 @@ export const Checkbox: CheckboxComponent = forwardRef<HTMLInputElement, Checkbox
       transitionDuration,
       icon: Icon,
       unstyled,
+      labelPosition,
+      description,
+      error,
+      variant,
       ...others
     } = useComponentDefaultProps('Checkbox', defaultProps, props);
 
     const ctx = useCheckboxGroupContext();
     const uuid = useId(id);
     const { systemStyles, rest } = extractSystemStyles(others);
-    const { classes, cx } = useStyles(
-      { size: ctx?.size || size, radius, color, transitionDuration },
-      { name: 'Checkbox', classNames, styles, unstyled }
+    const { classes } = useStyles(
+      {
+        radius,
+        color,
+        transitionDuration,
+        labelPosition,
+        error: !!error,
+        indeterminate,
+      },
+      { name: 'Checkbox', classNames, styles, unstyled, variant, size: ctx?.size || size }
     );
 
     const contextProps = ctx
@@ -99,10 +119,23 @@ export const Checkbox: CheckboxComponent = forwardRef<HTMLInputElement, Checkbox
       : {};
 
     return (
-      <Box
-        className={cx(classes.root, className)}
-        style={style}
+      <InlineInput
+        className={className}
         sx={sx}
+        style={style}
+        id={uuid}
+        size={ctx?.size || size}
+        labelPosition={labelPosition}
+        label={label}
+        description={description}
+        error={error}
+        disabled={disabled}
+        __staticSelector="Checkbox"
+        classNames={classNames}
+        styles={styles}
+        unstyled={unstyled}
+        data-checked={contextProps.checked || undefined}
+        variant={variant}
         {...systemStyles}
         {...wrapperProps}
       >
@@ -112,20 +145,15 @@ export const Checkbox: CheckboxComponent = forwardRef<HTMLInputElement, Checkbox
             ref={ref}
             type="checkbox"
             className={classes.input}
-            checked={indeterminate || checked}
+            checked={checked}
+            disabled={disabled}
             {...rest}
             {...contextProps}
           />
 
           <Icon indeterminate={indeterminate} className={classes.icon} />
         </div>
-
-        {label && (
-          <label className={classes.label} htmlFor={uuid}>
-            {label}
-          </label>
-        )}
-      </Box>
+      </InlineInput>
     );
   }
 ) as any;

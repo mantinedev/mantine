@@ -1,6 +1,12 @@
 import React from 'react';
 import { render } from '@testing-library/react';
-import { checkAccessibility, itSupportsFocusEvents, itSupportsSystemProps } from '@mantine/tests';
+import {
+  checkAccessibility,
+  itSupportsFocusEvents,
+  itSupportsSystemProps,
+  itSupportsProviderVariant,
+  itSupportsProviderSize,
+} from '@mantine/tests';
 import { Burger, BurgerProps } from './Burger';
 
 const defaultProps: BurgerProps = {
@@ -11,6 +17,8 @@ const defaultProps: BurgerProps = {
 describe('@mantine/core/Burger', () => {
   checkAccessibility([<Burger {...defaultProps} />]);
   itSupportsFocusEvents(Burger, defaultProps, 'button');
+  itSupportsProviderVariant(Burger, defaultProps, 'Burger');
+  itSupportsProviderSize(Burger, defaultProps, 'Burger');
   itSupportsSystemProps({
     component: Burger,
     props: defaultProps,

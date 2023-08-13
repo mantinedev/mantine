@@ -3,6 +3,7 @@ group: 'mantine-core'
 package: '@mantine/core'
 title: Text
 order: 1
+polymorphic: true
 slug: /core/text/
 category: 'typography'
 description: 'Display text and links with theme styles'
@@ -18,21 +19,7 @@ import { TextDemos } from '@mantine/demos';
 
 Use Text component to display text and links with theme styles. Control Text styles with props:
 
-- **size** – font-size from `theme.fontSizes` – xs, sm, md, lg, xl
-- **color** – color from `theme.colors` – red, green, blue, etc.
-- **weight** – font-weight property – 500, 700, bold, semibold, etc.
-- **underline** - underline text
-- **transform** – text-transform property – uppercase, lowercase, capitalize
-- **align** – text-align property
-- **variant** – text or link predefined styles
-
 <Demo data={TextDemos.usage} />
-
-## Dimmed
-
-Text supports special `dimmed` value in `color` prop. It sets color to `theme.colors.dark[2]` in dark theme and to `theme.colors.gray[6]` in light:
-
-<Demo data={TextDemos.dimmed} />
 
 ## Gradient variant
 
@@ -45,9 +32,15 @@ To use gradient as Text color:
 
 <Demo data={TextDemos.gradient} />
 
+## Truncate
+
+Set `truncate` prop to add `text-overflow: ellipsis` styles:
+
+<Demo data={TextDemos.truncate} />
+
 ## Line clamp
 
-Specify maximum amount of lines with `lineClamp` prop. This option uses [-webkit-line-clamp](https://developer.mozilla.org/en-US/docs/Web/CSS/-webkit-line-clamp)
+Specify maximum number of lines with `lineClamp` prop. This option uses [-webkit-line-clamp](https://developer.mozilla.org/en-US/docs/Web/CSS/-webkit-line-clamp)
 CSS property ([caniuse](https://caniuse.com/css-line-clamp)). Note that `padding-bottom` cannot be set on text element:
 
 <Demo data={TextDemos.linesConfigurator} />
@@ -80,7 +73,7 @@ function Demo() {
 }
 ```
 
-### span prop
+## span prop
 
 Use `span` prop as a shorthand for `component="span"`:
 
@@ -93,36 +86,6 @@ function Demo() {
       <Text span>Same as below</Text>
       <Text component="span">Same as above</Text>
     </>
-  );
-}
-```
-
-### Usage with react-router
-
-```tsx
-import { Link } from 'react-router-dom';
-import { Text } from '@mantine/core';
-
-function Demo() {
-  return (
-    <Text component={Link} to="/react-router">
-      React router link
-    </Text>
-  );
-}
-```
-
-### Usage with Next.js
-
-```tsx
-import Link from 'next/link';
-import { Text } from '@mantine/core';
-
-function Demo() {
-  return (
-    <Link href="/hello" passHref>
-      <Text component="a">Next link</Text>
-    </Link>
   );
 }
 ```

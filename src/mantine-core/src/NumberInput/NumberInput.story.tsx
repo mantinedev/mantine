@@ -1,74 +1,52 @@
 import React, { useState } from 'react';
-import { storiesOf } from '@storybook/react';
-import { MANTINE_SIZES } from '@mantine/styles';
+import { useForm } from '@mantine/form';
+import { Group } from '../Group';
+import { Button } from '../Button';
 import { NumberInput } from './NumberInput';
 
-const sizes = MANTINE_SIZES.map((size) => (
-  <NumberInput defaultValue={0} label={size} size={size} key={size} mt="xl" />
-));
+export default { title: 'NumberInput' };
 
-function Controlled(
-  props: Omit<React.ComponentPropsWithoutRef<typeof NumberInput>, 'value' | 'onChange'>
-) {
-  const [value, setValue] = useState(0);
-  return <NumberInput value={value} onChange={(val) => setValue(val)} {...props} />;
+export function Usage() {
+  const [value, setValue] = useState<number | '' | undefined>(0);
+  return (
+    <div style={{ padding: 40, maxWidth: 400 }}>
+      <NumberInput
+        value={value}
+        onChange={setValue}
+        precision={2}
+        decimalSeparator=","
+        thousandsSeparator="."
+        mb="md"
+        min={10}
+        defaultValue={12}
+        max={15}
+      />
+      <Group>
+        <Button onClick={() => setValue('')}>Set empty value</Button>
+        <Button onClick={() => setValue(10)}>Set 10</Button>
+        <Button onClick={() => setValue(undefined)}>Reset to initialValue</Button>
+      </Group>
+    </div>
+  );
 }
 
-storiesOf('NumberInput', module)
-  .add('Sizes', () => <div style={{ padding: 40, maxWidth: 400 }}>{sizes}</div>)
-  .add('Controlled', () => (
+export function FixedValue() {
+  return (
     <div style={{ padding: 40, maxWidth: 400 }}>
-      <Controlled />
+      <NumberInput value={4} />
     </div>
-  ))
-  .add('Formatter/Parser', () => (
-    <div style={{ padding: 40, maxWidth: 400 }}>
-      <NumberInput
-        label="Price"
-        defaultValue={1000}
-        formatter={(value) => `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
-        parser={(value) => value.replace(/\$\s?|(,*)/g, '')}
-      />
-      <NumberInput
-        label="Price with cents"
-        defaultValue={1000.5}
-        precision={2}
-        formatter={(value) => `$ ${value}`}
-        parser={(value) => value.replace(/\$\s?|(,*)/g, '')}
-      />
-      <NumberInput
-        label="Percentage"
-        defaultValue={0.1}
-        step={0.01}
-        precision={2}
-        formatter={(value) => `${(parseFloat(value) * 100).toFixed(0)}%`}
-        parser={(value) => String(parseFloat(value.replace('%', '')) / 100)}
-      />
-    </div>
-  ))
-  .add('Step On Hold', () => (
-    <>
-      <div style={{ padding: 40, maxWidth: 400 }}>
-        <NumberInput label="Step on hold" stepHoldDelay={750} stepHoldInterval={100} />
-      </div>
-      <div style={{ padding: 40, maxWidth: 400 }}>
-        <NumberInput
-          label="With max value"
-          min={0}
-          max={10}
-          stepHoldDelay={500}
-          stepHoldInterval={100}
-        />
-      </div>
-      <div style={{ padding: 40, maxWidth: 400 }}>
-        <NumberInput
-          label="Step on hold with interval function"
-          stepHoldDelay={750}
-          stepHoldInterval={(count) => Math.max(1000 - count * count, 0)}
-        />
-      </div>
-      <div style={{ padding: 40, maxWidth: 400 }}>
-        <NumberInput label="Don't step on hold" />
-      </div>
-    </>
-  ));
+  );
+}
+
+export function WithUseFormHook() {
+  const mantineForm = useForm({
+    initialValues: {
+      someNumber: 0,
+    },
+    validateInputOnBlur: true,
+    validate: {
+      someNumber: (val) => (!val ? 'please enter a number greater than zero' : null),
+    },
+  });
+  return <NumberInput min={0} max={5} step={1} {...mantineForm.getInputProps('someNumber')} />;
+}

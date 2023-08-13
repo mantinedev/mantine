@@ -1,8 +1,9 @@
 import React from 'react';
+import { MantineDemo } from '@mantine/ds';
 import { Avatar, Group } from '@mantine/core';
 
 const code = `
-import { IconPhoto } from '@tabler/icons';
+import { IconPhoto } from '@tabler/icons-react';
 import { Avatar, Group } from '@mantine/core';
 
 function Demo() {

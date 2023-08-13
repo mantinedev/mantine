@@ -1,19 +1,19 @@
-import { createStyles } from '@mantine/core';
+import { createStyles, rem, em } from '@mantine/core';
 
 const BREAKPOINT = 765;
 
 export default createStyles((theme) => ({
   title: {
     fontWeight: 600,
-    marginBottom: 15,
+    marginBottom: rem(15),
     color: theme.colorScheme === 'dark' ? theme.white : theme.black,
   },
 
   codeSections: {
     display: 'flex',
-    marginTop: theme.spacing.xl * 1.5,
+    marginTop: `calc(${theme.spacing.xl} * 1.5)`,
 
-    [`@media (max-width: ${BREAKPOINT}px)`]: {
+    [`@media (max-width: ${em(BREAKPOINT)})`]: {
       flexDirection: 'column',
     },
   },
@@ -24,7 +24,7 @@ export default createStyles((theme) => ({
     '& + &': {
       marginLeft: theme.spacing.md,
 
-      [`@media (max-width: ${BREAKPOINT}px)`]: {
+      [`@media (max-width: ${em(BREAKPOINT)})`]: {
         marginLeft: 0,
       },
     },
@@ -32,7 +32,7 @@ export default createStyles((theme) => ({
 
   root: {
     '& + &': {
-      marginTop: theme.spacing.xl * 2,
+      marginTop: `calc(${theme.spacing.xl} * 2)`,
     },
   },
 }));

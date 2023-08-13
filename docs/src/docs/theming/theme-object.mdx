@@ -23,6 +23,13 @@ interface MantineTheme {
   // never – focus ring is always hidden (not recommended)
   focusRing: 'auto' | 'always' | 'never';
 
+  // Change focus ring styles
+  focusRingStyles: {
+    styles(theme: MantineThemeBase): CSSObject;
+    resetStyles(theme: MantineThemeBase): CSSObject;
+    inputStyles(theme: MantineThemeBase): CSSObject;
+  };
+
   // Determines whether motion based animations should be disabled for
   // users who prefer to reduce motion in their OS settings
   respectReducedMotion: boolean;
@@ -32,7 +39,7 @@ interface MantineTheme {
   cursorType: 'default' | 'pointer';
 
   // Default border-radius used for most elements
-  defaultRadius: 'xs' | 'sm' | 'md' | 'lg' | 'xl' | number;
+  defaultRadius: 'xs' | 'sm' | 'md' | 'lg' | 'xl' | string | number;
 
   // White and black colors, defaults to '#fff' and '#000'
   white: string;
@@ -61,15 +68,15 @@ interface MantineTheme {
   fontFamilyMonospace: string;
 
   // Sizes for corresponding properties
-  fontSizes: Record<'xs' | 'sm' | 'md' | 'lg' | 'xl', number>;
-  radius: Record<'xs' | 'sm' | 'md' | 'lg' | 'xl', number>;
-  spacing: Record<'xs' | 'sm' | 'md' | 'lg' | 'xl', number>;
+  fontSizes: Record<'xs' | 'sm' | 'md' | 'lg' | 'xl', string>;
+  radius: Record<'xs' | 'sm' | 'md' | 'lg' | 'xl', string>;
+  spacing: Record<'xs' | 'sm' | 'md' | 'lg' | 'xl', string>;
 
   // Values used for box-shadow
   shadows: Record<'xs' | 'sm' | 'md' | 'lg' | 'xl', string>;
 
   // Breakpoints used in some components to add responsive styles
-  breakpoints: Record<'xs' | 'sm' | 'md' | 'lg' | 'xl', number>;
+  breakpoints: Record<'xs' | 'sm' | 'md' | 'lg' | 'xl', string>;
 
   // Styles added to buttons with `:active` pseudo-class
   activeStyles: CSSObject;
@@ -98,14 +105,11 @@ interface MantineTheme {
   // Default loader used in Loader and LoadingOverlay components
   loader: 'oval' | 'bars' | 'dots';
 
-  // Default date format used in DatePicker and DateRangePicker components
-  dateFormat: string;
-
-  // Default dates formatting locale used in every @mantine/dates component
-  datesLocale: string;
-
   // defaultProps, styles and classNames for components
   components: ComponentsOverride;
+
+  // Global styles
+  globalStyles: (theme: MantineTheme) => CSSObject;
 
   // Add your own custom properties on Mantine theme
   other: Record<string, any>;
@@ -148,7 +152,7 @@ function Demo() {
         headings: {
           fontFamily: 'Roboto, sans-serif',
           sizes: {
-            h1: { fontSize: 30 },
+            h1: { fontSize: '2rem' },
           },
         },
       }}
@@ -176,6 +180,14 @@ learn how to setup dark theme in your application.
 - `never` – focus ring is always hidden, it is not recommended – users who navigate with keyboard will not have visual indication of current focused element
 
 <Demo data={ThemeDemos.focusRing} />
+
+### focusRingStyles
+
+`theme.focusRingStyles` allows you to customize focus ring styles that are applied to all `<button />`,
+`<a />` and `<input />` elements that are the part of the component. Note that `theme` object that is
+passed as an argument to `resetStyles`, `styles` and `inputStyles` functions does not have [theme.fn](/theming/functions/).
+
+<Demo data={ThemeDemos.focusRingStyles} />
 
 ### defaultRadius
 
@@ -236,23 +248,13 @@ and other native elements will have `cursor: pointer` style:
 
 <Demo data={ThemeDemos.cursorType} demoProps={{ toggle: true }} />
 
-### dateFormat
-
-With `theme.dateFormat` you can configure default date format for [DatePicker and DateRangePicker](/dates/date-picker/)
-components:
-
-<Demo data={ThemeDemos.dateFormat} />
-
-### datesLocale
-
-`theme.datesLocale` determines which locale will be used for all `@mantine/dates` packages by default.
-Note that you should also import `dayjs/locale/[locale]` to load localization files:
-
-<Demo data={ThemeDemos.datesLocale} />
-
 ### dir
 
 `theme.dir` controls text direction, you will need to set it if you need RTL support, follow [RTL guide](/guides/rtl/) to get started.
+
+### globalStyles
+
+`theme.globalStyles` adds global styles, see [global styles guide](/styles/global-styles/) to learn more.
 
 ### other
 

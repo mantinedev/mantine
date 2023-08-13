@@ -1,5 +1,5 @@
 import React, { useRef, useState } from 'react';
-import { DefaultProps, Selectors, MantineNumberSize } from '@mantine/styles';
+import { DefaultProps, Selectors, MantineNumberSize, rem } from '@mantine/styles';
 import { useScrollIntoView } from '@mantine/hooks';
 import { groupOptions } from '@mantine/utils';
 import { SelectScrollArea } from '../../Select/SelectScrollArea/SelectScrollArea';
@@ -7,21 +7,30 @@ import { UnstyledButton } from '../../UnstyledButton';
 import { ActionIcon } from '../../ActionIcon';
 import { TextInput } from '../../TextInput';
 import { Text } from '../../Text';
-import { Divider } from '../../Divider/Divider';
-import { LastIcon, NextIcon, FirstIcon, PrevIcon } from '../../Pagination/icons';
+import { Divider } from '../../Divider';
+import {
+  PaginationLastIcon,
+  PaginationNextIcon,
+  PaginationFirstIcon,
+  PaginationPreviousIcon,
+} from '../../Pagination/Pagination.icons';
 import { TransferListItem, TransferListItemComponent } from '../types';
 import useStyles from './RenderList.styles';
 
 export type RenderListStylesNames = Selectors<typeof useStyles>;
 
 export interface RenderListProps extends DefaultProps<RenderListStylesNames> {
+  variant: string;
   data: TransferListItem[];
   onSelect(value: string): void;
   selection: string[];
   itemComponent: TransferListItemComponent;
   searchPlaceholder: string;
+  query?: string;
+  onSearch(value: string): void;
   filter(query: string, item: TransferListItem): boolean;
   nothingFound?: React.ReactNode;
+  placeholder?: React.ReactNode;
   title?: React.ReactNode;
   reversed?: boolean;
   showTransferAll?: boolean;
@@ -31,20 +40,23 @@ export interface RenderListProps extends DefaultProps<RenderListStylesNames> {
   radius: MantineNumberSize;
   listComponent?: React.FC<any>;
   limit?: number;
+  transferIcon?: React.FunctionComponent<{ reversed }>;
+  transferAllIcon?: React.FunctionComponent<{ reversed }>;
+  transferAllMatchingFilter: boolean;
 }
 
 const icons = {
-  Prev: PrevIcon,
-  Next: NextIcon,
-  First: FirstIcon,
-  Last: LastIcon,
+  Prev: PaginationPreviousIcon,
+  Next: PaginationNextIcon,
+  First: PaginationFirstIcon,
+  Last: PaginationLastIcon,
 };
 
 const rtlIons = {
-  Next: PrevIcon,
-  Prev: NextIcon,
-  Last: FirstIcon,
-  First: LastIcon,
+  Next: PaginationPreviousIcon,
+  Prev: PaginationNextIcon,
+  Last: PaginationFirstIcon,
+  First: PaginationLastIcon,
 };
 
 export function RenderList({
@@ -54,9 +66,15 @@ export function RenderList({
   selection,
   itemComponent: ItemComponent,
   listComponent,
+  transferIcon: TransferIcon,
+  transferAllIcon: TransferAllIcon,
+  transferAllMatchingFilter,
   searchPlaceholder,
+  query,
+  onSearch,
   filter,
   nothingFound,
+  placeholder,
   title,
   showTransferAll,
   reversed,
@@ -68,14 +86,14 @@ export function RenderList({
   styles,
   limit,
   unstyled,
+  variant,
 }: RenderListProps) {
   const { classes, cx, theme } = useStyles(
     { reversed, native: listComponent !== SelectScrollArea, radius },
-    { name: 'TransferList', classNames, styles, unstyled }
+    { name: 'TransferList', classNames, styles, unstyled, variant }
   );
   const unGroupedItems: React.ReactElement<any>[] = [];
   const groupedItems: React.ReactElement<any>[] = [];
-  const [query, setQuery] = useState('');
   const [hovered, setHovered] = useState(-1);
   const filteredData = data.filter((item) => filter(query, item)).slice(0, limit);
   const ListComponent = listComponent || 'div';
@@ -181,6 +199,9 @@ export function RenderList({
     }
   };
 
+  const transferIcon = reversed ? <Icons.Prev size="1rem" /> : <Icons.Next size="1rem" />;
+  const transferAllIcon = reversed ? <Icons.First size="1rem" /> : <Icons.Last size="1rem" />;
+
   return (
     <div className={cx(classes.transferList, className)}>
       {title && (
@@ -195,7 +216,7 @@ export function RenderList({
             unstyled={unstyled}
             value={query}
             onChange={(event) => {
-              setQuery(event.currentTarget.value);
+              onSearch(event.currentTarget.value);
               setHovered(0);
             }}
             onFocus={() => setHovered(0)}
@@ -216,7 +237,7 @@ export function RenderList({
             onClick={onMove}
             unstyled={unstyled}
           >
-            {reversed ? <Icons.Prev /> : <Icons.Next />}
+            {TransferIcon ? <TransferIcon reversed={reversed} /> : transferIcon}
           </ActionIcon>
 
           {showTransferAll && (
@@ -225,11 +246,11 @@ export function RenderList({
               size={36}
               radius={0}
               className={classes.transferListControl}
-              disabled={data.length === 0}
+              disabled={transferAllMatchingFilter ? filteredData.length === 0 : data.length === 0}
               onClick={onMoveAll}
               unstyled={unstyled}
             >
-              {reversed ? <Icons.First /> : <Icons.Last />}
+              {TransferAllIcon ? <TransferAllIcon reversed={reversed} /> : transferAllIcon}
             </ActionIcon>
           )}
         </div>
@@ -238,7 +259,7 @@ export function RenderList({
           ref={scrollableRef}
           onMouseLeave={() => setHovered(-1)}
           className={classes.transferListItems}
-          style={{ height, position: 'relative', overflowX: 'hidden' }}
+          style={{ height: rem(height), position: 'relative', overflowX: 'hidden' }}
         >
           {groupedItems.length > 0 || unGroupedItems.length > 0 ? (
             <>
@@ -247,7 +268,7 @@ export function RenderList({
             </>
           ) : (
             <Text color="dimmed" unstyled={unstyled} size="sm" align="center" mt="sm">
-              {nothingFound}
+              {!query && placeholder ? placeholder : nothingFound}
             </Text>
           )}
         </ListComponent>

@@ -1,17 +1,10 @@
 import React, { forwardRef } from 'react';
-import {
-  DefaultProps,
-  MantineStyleSystemSize,
-  getDefaultZIndex,
-  useComponentDefaultProps,
-} from '@mantine/styles';
+import { DefaultProps, getDefaultZIndex, useComponentDefaultProps } from '@mantine/styles';
 import { packSx } from '@mantine/utils';
 import { Box } from '../Box';
-import { OptionalPortal } from '../Portal';
+import { OptionalPortal, PortalProps } from '../Portal';
 
-export interface AffixProps
-  extends Omit<DefaultProps, MantineStyleSystemSize>,
-    React.ComponentPropsWithoutRef<'div'> {
+export interface AffixProps extends DefaultProps, React.ComponentPropsWithoutRef<'div'> {
   /** Element where portal should be rendered, by default new div element is created and appended to document.body */
   target?: HTMLDivElement;
 
@@ -21,7 +14,10 @@ export interface AffixProps
   /** Determines whether component should be rendered within portal, defaults to true */
   withinPortal?: boolean;
 
-  /** Fixed position in px, defaults to { bottom: 0, right: 0 } */
+  /** Props to pass down to the portal when withinPortal is true */
+  portalProps?: Omit<PortalProps, 'children' | 'withinPortal' | 'target'>;
+
+  /** Affix position on screen, defaults to { bottom: 0, right: 0 } */
   position?: {
     top?: string | number;
     left?: string | number;
@@ -37,14 +33,11 @@ const defaultProps: Partial<AffixProps> = {
 };
 
 export const Affix = forwardRef<HTMLDivElement, AffixProps>((props: AffixProps, ref) => {
-  const { target, position, zIndex, sx, withinPortal, ...others } = useComponentDefaultProps(
-    'Affix',
-    defaultProps,
-    props
-  );
+  const { target, position, zIndex, sx, withinPortal, portalProps, ...others } =
+    useComponentDefaultProps('Affix', defaultProps, props);
 
   return (
-    <OptionalPortal withinPortal={withinPortal} target={target}>
+    <OptionalPortal {...portalProps} withinPortal={withinPortal} target={target}>
       <Box sx={[{ position: 'fixed', zIndex, ...position }, ...packSx(sx)]} ref={ref} {...others} />
     </OptionalPortal>
   );

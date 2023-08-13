@@ -14,6 +14,7 @@ export interface MultiSelectValueProps
   readOnly: boolean;
   size: MantineSize;
   radius: MantineNumberSize;
+  variant: string;
 }
 
 const buttonSizes = {
@@ -34,11 +35,13 @@ export function DefaultValue({
   readOnly,
   size,
   radius = 'sm',
+  variant,
+  unstyled,
   ...others
 }: MultiSelectValueProps) {
   const { classes, cx } = useStyles(
-    { size, disabled, readOnly, radius },
-    { classNames, styles, name: 'MultiSelect' }
+    { disabled, readOnly, radius },
+    { name: 'MultiSelect', classNames, styles, unstyled, size, variant }
   );
 
   return (
@@ -53,9 +56,10 @@ export function DefaultValue({
           radius={2}
           color="blue"
           variant="transparent"
-          iconSize={buttonSizes[size] / 2}
+          iconSize="70%"
           className={classes.defaultValueRemove}
           tabIndex={-1}
+          unstyled={unstyled}
         />
       )}
     </div>

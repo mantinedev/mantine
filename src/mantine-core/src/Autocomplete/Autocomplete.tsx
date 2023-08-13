@@ -33,6 +33,9 @@ export interface AutocompleteProps
 
   /** Called when item from dropdown was selected */
   onItemSubmit?(item: AutocompleteItem): void;
+
+  /** Hovers the first result when input changes */
+  hoverOnSearchChange?: boolean;
 }
 
 export function defaultFilter(value: string, item: AutocompleteItem) {
@@ -45,8 +48,7 @@ const defaultProps: Partial<AutocompleteProps> = {
   shadow: 'sm',
   limit: 5,
   itemComponent: DefaultItem,
-  transition: 'pop',
-  transitionDuration: 0,
+  transitionProps: { transition: 'fade', duration: 0 },
   initiallyOpened: false,
   filter: defaultFilter,
   switchDirectionOnFlip: false,
@@ -73,10 +75,8 @@ export const Autocomplete = forwardRef<HTMLInputElement, AutocompleteProps>((pro
     onFocus,
     onBlur,
     onClick,
-    transition,
-    transitionDuration,
+    transitionProps,
     initiallyOpened,
-    transitionTimingFunction,
     classNames,
     styles,
     filter,
@@ -90,6 +90,8 @@ export const Autocomplete = forwardRef<HTMLInputElement, AutocompleteProps>((pro
     maxDropdownHeight,
     dropdownComponent,
     positionDependencies,
+    readOnly,
+    hoverOnSearchChange,
     ...others
   } = useInputProps('Autocomplete', defaultProps, props);
   const { classes } = useStyles(null, { classNames, styles, name: 'Autocomplete', unstyled });
@@ -112,8 +114,12 @@ export const Autocomplete = forwardRef<HTMLInputElement, AutocompleteProps>((pro
   };
 
   useDidUpdate(() => {
-    setHovered(-1);
-  }, [_value]);
+    if (hoverOnSearchChange && _value) {
+      setHovered(0);
+    } else {
+      setHovered(-1);
+    }
+  }, [_value, hoverOnSearchChange]);
 
   const handleItemClick = (item: AutocompleteItem) => {
     handleChange(item.value);
@@ -197,8 +203,7 @@ export const Autocomplete = forwardRef<HTMLInputElement, AutocompleteProps>((pro
     <Input.Wrapper {...wrapperProps} __staticSelector="Autocomplete">
       <SelectPopover
         opened={shouldRenderDropdown}
-        transition={transition}
-        transitionDuration={transitionDuration}
+        transitionProps={transitionProps}
         shadow="sm"
         withinPortal={withinPortal}
         __staticSelector="Autocomplete"
@@ -210,15 +215,13 @@ export const Autocomplete = forwardRef<HTMLInputElement, AutocompleteProps>((pro
         classNames={classNames}
         styles={styles}
         unstyled={unstyled}
+        readOnly={readOnly}
+        variant={inputProps.variant}
       >
         <SelectPopover.Target>
           <div
             className={classes.wrapper}
-            role="combobox"
-            aria-haspopup="listbox"
-            aria-owns={shouldRenderDropdown ? `${inputProps.id}-items` : null}
             aria-controls={inputProps.id}
-            aria-expanded={shouldRenderDropdown}
             onMouseLeave={() => setHovered(-1)}
             tabIndex={-1}
           >
@@ -227,6 +230,7 @@ export const Autocomplete = forwardRef<HTMLInputElement, AutocompleteProps>((pro
               autoComplete="off"
               {...inputProps}
               {...others}
+              readOnly={readOnly}
               data-mantine-stop-propagation={dropdownOpened}
               ref={useMergedRef(ref, inputRef)}
               onKeyDown={handleInputKeydown}
@@ -243,6 +247,10 @@ export const Autocomplete = forwardRef<HTMLInputElement, AutocompleteProps>((pro
               onClick={handleInputClick}
               onCompositionStart={() => setIMEOpen(true)}
               onCompositionEnd={() => setIMEOpen(false)}
+              role="combobox"
+              aria-haspopup="listbox"
+              aria-owns={shouldRenderDropdown ? `${inputProps.id}-items` : null}
+              aria-expanded={shouldRenderDropdown}
               aria-autocomplete="list"
               aria-controls={shouldRenderDropdown ? `${inputProps.id}-items` : null}
               aria-activedescendant={hovered >= 0 ? `${inputProps.id}-${hovered}` : null}
@@ -271,6 +279,7 @@ export const Autocomplete = forwardRef<HTMLInputElement, AutocompleteProps>((pro
             itemComponent={itemComponent}
             size={inputProps.size}
             nothingFound={nothingFound}
+            variant={inputProps.variant}
           />
         </SelectPopover.Dropdown>
       </SelectPopover>

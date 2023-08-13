@@ -1,6 +1,7 @@
 import React from 'react';
 import { Carousel } from '@mantine/carousel';
 import { Image } from '@mantine/core';
+import { MantineDemo } from '@mantine/ds';
 import { images as _images } from './_images';
 
 const code = `
@@ -17,7 +18,7 @@ function Demo() {
   ));
 
   return (
-    <Carousel sx={{ maxWidth: 320 }} mx="auto" withIndicators>
+    <Carousel maw={320} mx="auto" withIndicators>
       {slides}
     </Carousel>
   );
@@ -32,7 +33,7 @@ function Demo() {
   ));
 
   return (
-    <Carousel sx={{ maxWidth: 320 }} mx="auto" withIndicators>
+    <Carousel maw={320} mx="auto" withIndicators>
       {slides}
     </Carousel>
   );

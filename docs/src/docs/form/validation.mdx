@@ -60,7 +60,12 @@ from the validation results.
 
 ## Schema based validation
 
-`@mantine/form` supports schema validation with [zod](https://www.npmjs.com/package/zod), [joi](https://www.npmjs.com/package/joi) and [yup](https://www.npmjs.com/package/yup) out of the box.
+Out of the box `@mantine/form` supports schema validation with:
+- [zod](https://www.npmjs.com/package/zod)
+- [joi](https://www.npmjs.com/package/joi)
+- [yup](https://www.npmjs.com/package/yup)
+- [superstruct](https://www.npmjs.com/package/superstruct)
+
 You will need to install one of the libraries yourself, as `@mantine/form` package does not depend on any of them.
 If you do not know what validation library to choose, we recommend choosing [zod](https://www.npmjs.com/package/zod)
 as the most modern and developer-friendly library.
@@ -77,6 +82,10 @@ as the most modern and developer-friendly library.
 
 <Demo data={FormDemos.yup} demoProps={{ toggle: true }} />
 
+### superstruct
+
+<Demo data={FormDemos.superstruct} demoProps={{ toggle: true }} />
+
 ## Validate fields on change
 
 To validate all fields on change set `validateInputOnChange` option to `true`:
@@ -90,7 +99,9 @@ const form = useForm({ validateInputOnChange: true });
 You can also provide an array of fields paths to validate only those values:
 
 ```tsx
-const form = useForm({ validateInputOnChange: ['name', 'email'] });
+import { FORM_INDEX, useForm } from '@mantine/form';
+
+const form = useForm({ validateInputOnChange: ['name', 'email', `jobs.${FORM_INDEX}.title`] });
 ```
 
 <Demo data={FormDemos.liveFieldValidation} demoProps={{ toggle: true }} />
@@ -108,7 +119,9 @@ const form = useForm({ validateInputOnBlur: true });
 You can also provide an array of fields paths to validate only those values:
 
 ```tsx
-const form = useForm({ validateInputOnBlur: ['name', 'email'] });
+import { FORM_INDEX, useForm } from '@mantine/form';
+
+const form = useForm({ validateInputOnBlur: ['name', 'email', `jobs.${FORM_INDEX}.title`] });
 ```
 
 <Demo data={FormDemos.blurFieldValidation} demoProps={{ toggle: true }} />

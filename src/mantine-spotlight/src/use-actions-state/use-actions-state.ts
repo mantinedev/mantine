@@ -1,5 +1,5 @@
-import { useState, useEffect } from 'react';
 import { randomId } from '@mantine/hooks';
+import { useMemo } from 'react';
 import type { SpotlightAction } from '../types';
 
 function prepareAction(action: SpotlightAction) {
@@ -7,12 +7,12 @@ function prepareAction(action: SpotlightAction) {
 }
 
 function filterDuplicateActions(actions: SpotlightAction[]) {
-  const ids = [];
+  const ids: Set<string> = new Set();
 
   return actions
     .reduceRight<SpotlightAction[]>((acc, action) => {
-      if (!ids.includes(action.id)) {
-        ids.push(action.id);
+      if (!ids.has(action.id)) {
+        ids.add(action.id);
         acc.push(action);
       }
 
@@ -25,28 +25,18 @@ function prepareActions(initialActions: SpotlightAction[]) {
   return filterDuplicateActions(initialActions.map((action) => prepareAction(action)));
 }
 
-export function useActionsState(
-  initialActions: SpotlightAction[] | ((query: string) => SpotlightAction[]),
-  query: string
-) {
-  const [actions, setActions] = useState(
-    prepareActions(typeof initialActions === 'function' ? initialActions(query) : initialActions)
-  );
+interface UseActionsState {
+  actions: SpotlightAction[];
+  onActionsChange: (actions: SpotlightAction[]) => void;
+}
 
-  useEffect(() => {
-    if (typeof initialActions === 'function') {
-      setActions(prepareActions(initialActions(query)));
-    }
-  }, [query]);
-
-  const updateActions = (payload: SpotlightAction[] | ((query: string) => SpotlightAction[])) =>
-    setActions(prepareActions(typeof payload === 'function' ? payload(query) : payload));
-
+export function useActionsState({ actions, onActionsChange }: UseActionsState) {
+  const preparedActions = useMemo(() => prepareActions(actions), [actions]);
   const registerActions = (payload: SpotlightAction[]) =>
-    setActions((current) => prepareActions([...current, ...payload]));
+    onActionsChange?.(prepareActions([...actions, ...payload]));
 
   const removeActions = (ids: string[]) =>
-    setActions((current) => current.filter((action) => !ids.includes(action.id)));
+    onActionsChange?.(actions.filter((action) => !ids.includes(action.id)));
 
   const triggerAction = (id: string) => {
     const action = actions.find((item) => item.id === id);
@@ -54,10 +44,9 @@ export function useActionsState(
   };
 
   return [
-    actions,
+    preparedActions,
     {
       registerActions,
-      updateActions,
       removeActions,
       triggerAction,
     },

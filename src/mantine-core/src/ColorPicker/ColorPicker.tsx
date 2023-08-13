@@ -1,6 +1,13 @@
 import React, { useState, useRef, forwardRef } from 'react';
 import { useDidUpdate, useUncontrolled } from '@mantine/hooks';
-import { DefaultProps, MantineSize, Selectors, useComponentDefaultProps } from '@mantine/styles';
+import {
+  DefaultProps,
+  MantineSize,
+  Selectors,
+  useComponentDefaultProps,
+  getSize,
+  rem,
+} from '@mantine/styles';
 import { Box } from '../Box';
 import { ColorSwatch } from '../ColorSwatch/ColorSwatch';
 import { convertHsvaTo, isColorValid, parseColor } from './converters';
@@ -10,7 +17,7 @@ import { AlphaSlider } from './AlphaSlider/AlphaSlider';
 import { Saturation, SaturationStylesNames } from './Saturation/Saturation';
 import { Swatches, SwatchesStylesNames } from './Swatches/Swatches';
 import { ThumbStylesNames } from './Thumb/Thumb';
-import { HsvaColor } from './types';
+import { ColorFormat, HsvaColor } from './types';
 import useStyles from './ColorPicker.styles';
 
 export type ColorPickerStylesNames =
@@ -34,7 +41,7 @@ export interface ColorPickerBaseProps {
   onChangeEnd?(color: string): void;
 
   /** Color format */
-  format?: 'hex' | 'rgba' | 'rgb' | 'hsl' | 'hsla';
+  format?: ColorFormat;
 
   /** Set to false to display swatches only */
   withPicker?: boolean;
@@ -53,6 +60,8 @@ export interface ColorPickerProps
   extends DefaultProps<ColorPickerStylesNames>,
     ColorPickerBaseProps,
     Omit<React.ComponentPropsWithoutRef<'div'>, 'onChange' | 'value' | 'defaultValue'> {
+  variant?: string;
+
   /** Force picker to take 100% width of its container */
   fullWidth?: boolean;
 
@@ -70,6 +79,9 @@ export interface ColorPickerProps
 
   /** Alpha slider aria-label */
   alphaLabel?: string;
+
+  /** Called when color swatch is clicked */
+  onColorSwatchClick?(color: string): void;
 }
 
 const SWATCH_SIZES = {
@@ -110,19 +122,21 @@ export const ColorPicker = forwardRef<HTMLDivElement, ColorPickerProps>(
       styles,
       classNames,
       unstyled,
+      onColorSwatchClick,
+      variant,
       ...others
     } = useComponentDefaultProps('ColorPicker', defaultProps, props);
 
-    const { classes, cx, theme } = useStyles(
-      { size, fullWidth },
-      { classNames, styles, name: __staticSelector, unstyled }
+    const { classes, cx } = useStyles(
+      { fullWidth },
+      { classNames, styles, name: __staticSelector, unstyled, variant, size }
     );
     const formatRef = useRef(format);
     const valueRef = useRef<string>(null);
     const updateRef = useRef(true);
-    const withAlpha = format === 'rgba' || format === 'hsla';
+    const withAlpha = format === 'hexa' || format === 'rgba' || format === 'hsla';
 
-    const [_value, setValue] = useUncontrolled({
+    const [_value, setValue, controlled] = useUncontrolled({
       value,
       defaultValue,
       finalValue: '#FFFFFF',
@@ -203,7 +217,7 @@ export const ColorPicker = forwardRef<HTMLDivElement, ColorPickerProps>(
                     }}
                     size={size}
                     color={convertHsvaTo('hex', parsed)}
-                    style={{ marginTop: 6 }}
+                    style={{ marginTop: rem(6) }}
                     styles={styles}
                     classNames={classNames}
                     focusable={focusable}
@@ -217,7 +231,7 @@ export const ColorPicker = forwardRef<HTMLDivElement, ColorPickerProps>(
                 <ColorSwatch
                   color={_value}
                   radius="sm"
-                  size={theme.fn.size({ size, sizes: SWATCH_SIZES })}
+                  size={getSize({ size, sizes: SWATCH_SIZES })}
                   className={classes.preview}
                 />
               )}
@@ -228,7 +242,7 @@ export const ColorPicker = forwardRef<HTMLDivElement, ColorPickerProps>(
         {Array.isArray(swatches) && (
           <Swatches
             data={swatches}
-            style={{ marginTop: 5 }}
+            style={{ marginTop: rem(5) }}
             swatchesPerRow={swatchesPerRow}
             focusable={focusable}
             classNames={classNames}
@@ -236,7 +250,12 @@ export const ColorPicker = forwardRef<HTMLDivElement, ColorPickerProps>(
             __staticSelector={__staticSelector}
             setValue={setValue}
             onChangeEnd={(color) => {
-              onChangeEnd?.(convertHsvaTo(format, parseColor(color)));
+              const convertedColor = convertHsvaTo(format, parseColor(color));
+              onColorSwatchClick?.(convertedColor);
+              onChangeEnd?.(convertedColor);
+              if (!controlled) {
+                setParsed(parseColor(color));
+              }
             }}
           />
         )}

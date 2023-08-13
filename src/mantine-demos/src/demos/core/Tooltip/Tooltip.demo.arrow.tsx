@@ -1,4 +1,5 @@
 import React from 'react';
+import { MantineDemo } from '@mantine/ds';
 import { Tooltip, Group, Button } from '@mantine/core';
 
 const code = `
@@ -14,6 +15,10 @@ function Demo() {
       <Tooltip label="Arrow with size" withArrow arrowSize={6}>
         <Button variant="outline">With size</Button>
       </Tooltip>
+
+      <Tooltip label="Arrow with radius" withArrow arrowSize={6} arrowRadius={4}>
+        <Button variant="outline">With radius</Button>
+      </Tooltip>
     </>
   );
 }
@@ -28,6 +33,9 @@ export function Demo() {
       </Tooltip>
       <Tooltip label="Arrow with size" withArrow arrowSize={6}>
         <Button variant="outline">With size</Button>
+      </Tooltip>
+      <Tooltip label="Arrow with radius" withArrow arrowSize={6} arrowRadius={4}>
+        <Button variant="outline">With radius</Button>
       </Tooltip>
     </Group>
   );

@@ -1,30 +1,20 @@
-import dayjs from 'dayjs';
-import React, { useState } from 'react';
-import { storiesOf } from '@storybook/react';
-import { MANTINE_SIZES } from '@mantine/core';
+import React from 'react';
 import { TimeInput } from './TimeInput';
 
-const sizes = MANTINE_SIZES.map((size) => (
-  <TimeInput label={size} size={size} key={size} style={{ marginTop: 30 }} />
-));
+export default { title: 'TimeInput' };
 
-function Controlled() {
-  const [value, onChange] = useState(new Date());
+export function Usage() {
   return (
-    <>
-      <p>Time value: {value?.toISOString()}</p>
-      <TimeInput value={value} onChange={onChange} label="Controlled" />
-      <button type="button" onClick={() => onChange(dayjs(new Date()).add(30, 'minutes').toDate())}>
-        set date
-      </button>
-    </>
+    <div style={{ padding: 40, maxWidth: 400 }}>
+      <TimeInput />
+    </div>
   );
 }
 
-storiesOf('TimeInput', module)
-  .add('Controlled', () => (
-    <div style={{ width: 400, padding: 40 }}>
-      <Controlled />
+export function WithSeconds() {
+  return (
+    <div style={{ padding: 40, maxWidth: 400 }}>
+      <TimeInput withSeconds />
     </div>
-  ))
-  .add('Sizes', () => <div style={{ width: 400, padding: 40 }}>{sizes}</div>);
+  );
+}

@@ -1,14 +1,10 @@
+/* eslint-disable react/no-unused-prop-types */
 import React from 'react';
 import { useUncontrolled } from '@mantine/hooks';
-import { MantineNumberSize, useComponentDefaultProps } from '@mantine/styles';
-import { Group, GroupProps } from '../../Group';
+import { useComponentDefaultProps } from '@mantine/styles';
 import { ChipGroupProvider } from '../ChipGroup.context';
 
-export interface ChipGroupProps<T extends boolean = false>
-  extends Omit<GroupProps, 'value' | 'defaultValue' | 'onChange' | 'classNames' | 'styles'> {
-  /** Key of theme.spacing or number to set gap in px */
-  spacing?: MantineNumberSize;
-
+export interface ChipGroupProps<T extends boolean = false> {
   /** Allow multiple values to be selected at a time */
   multiple?: T;
 
@@ -25,13 +21,14 @@ export interface ChipGroupProps<T extends boolean = false>
   children?: React.ReactNode;
 }
 
-const defaultProps: Partial<ChipGroupProps<false>> = {
-  spacing: 'xs',
-};
+const defaultProps: Partial<ChipGroupProps<false>> = {};
 
 export function ChipGroup<T extends boolean>(props: ChipGroupProps<T>) {
-  const { value, defaultValue, onChange, spacing, multiple, children, unstyled, ...others } =
-    useComponentDefaultProps('ChipGroup', defaultProps as any, props);
+  const { value, defaultValue, onChange, multiple, children } = useComponentDefaultProps(
+    'ChipGroup',
+    defaultProps as any,
+    props
+  );
 
   const [_value, setValue] = useUncontrolled<string | string[]>({
     value,
@@ -54,9 +51,7 @@ export function ChipGroup<T extends boolean>(props: ChipGroupProps<T>) {
 
   return (
     <ChipGroupProvider value={{ isChipSelected, onChange: handleChange, multiple }}>
-      <Group spacing={spacing} unstyled={unstyled} {...others}>
-        {children}
-      </Group>
+      {children}
     </ChipGroupProvider>
   );
 }

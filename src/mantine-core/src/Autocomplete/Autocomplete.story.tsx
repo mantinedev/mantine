@@ -1,79 +1,22 @@
-import React, { useState } from 'react';
-import { storiesOf } from '@storybook/react';
-import { WithinOverlays, SubmitForm } from '@mantine/storybook';
+import React from 'react';
 import { Autocomplete } from './Autocomplete';
 
-function DynamicData() {
-  const [value, setValue] = useState('');
-  const data =
-    value.trim().length > 0 && !value.includes('@')
-      ? ['gmail.com', 'outlook.com', 'yahoo.com'].map((provider) => ({
-          value: `${value}@${provider}`,
-        }))
-      : [];
+export default { title: 'Autocomplete' };
 
+const data = ['React', 'Angular', 'Svelte', 'Vue'];
+
+export function Usage() {
   return (
-    <Autocomplete value={value} onChange={setValue} label="Email" placeholder="Email" data={data} />
+    <div style={{ padding: 40, maxWidth: 400 }}>
+      <Autocomplete label="Autocomplete" placeholder="Autocomplete" data={data} />
+    </div>
   );
 }
 
-function Controlled() {
-  const [value, setValue] = useState('');
-  return <Autocomplete data={['React', 'Angular']} value={value} onChange={setValue} />;
+export function ReadOnly() {
+  return (
+    <div style={{ padding: 40, maxWidth: 400 }}>
+      <Autocomplete label="Autocomplete" placeholder="Autocomplete" data={data} readOnly />
+    </div>
+  );
 }
-
-storiesOf('Autocomplete', module)
-  .add('Controlled', () => <Controlled />)
-  .add('Repetitive data', () => (
-    <div style={{ padding: 40, maxWidth: 400 }}>
-      <Autocomplete
-        label="Choose your favorite library/framework"
-        placeholder="Choose value"
-        data={[{ value: 'AA' }, { value: 'AAA' }, { value: 'AAAA' }]}
-      />
-    </div>
-  ))
-  .add('Fixed value', () => (
-    <div style={{ padding: 40, maxWidth: 400 }}>
-      <Autocomplete
-        label="Choose your favorite library/framework"
-        placeholder="Choose value"
-        value="React"
-        onChange={() => {}}
-        data={[{ value: 'React' }, { value: 'Angular' }, { value: 'Svelte' }, { value: 'Vue' }]}
-      />
-    </div>
-  ))
-  .add('Dynamic data', () => (
-    <div style={{ padding: 40, maxWidth: 400 }}>
-      <DynamicData />
-    </div>
-  ))
-  .add('Strings as data', () => (
-    <div style={{ padding: 40, maxWidth: 400 }}>
-      <Autocomplete
-        label="Choose your favorite library/framework"
-        placeholder="Choose value"
-        data={['React', 'Angular', 'Svelte', 'Vue']}
-      />
-    </div>
-  ))
-  .add('Within overlays', () => (
-    <WithinOverlays>
-      <Autocomplete
-        label="Choose your favorite library/framework"
-        placeholder="Choose value"
-        data={['React', 'Angular', 'Svelte', 'Vue']}
-        withinPortal={false}
-      />
-    </WithinOverlays>
-  ))
-  .add('Within form', () => (
-    <SubmitForm>
-      <Autocomplete
-        label="Press enter"
-        placeholder="Choose value"
-        data={['React', 'Angular', 'Svelte', 'Vue']}
-      />
-    </SubmitForm>
-  ));

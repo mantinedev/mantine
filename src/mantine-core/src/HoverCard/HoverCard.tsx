@@ -1,13 +1,15 @@
 import React from 'react';
-import { useComponentDefaultProps } from '@mantine/styles';
+import { useComponentDefaultProps, ClassNames, Styles } from '@mantine/styles';
 import { useDisclosure } from '@mantine/hooks';
 import { useDelayedHover } from '../Floating';
-import { Popover, PopoverBaseProps } from '../Popover';
+import { Popover, PopoverBaseProps, PopoverStylesNames, PopoverStylesParams } from '../Popover';
 import { HoverCardContextProvider } from './HoverCard.context';
 import { HoverCardDropdown } from './HoverCardDropdown/HoverCardDropdown';
 import { HoverCardTarget } from './HoverCardTarget/HoverCardTarget';
 
 export interface HoverCardProps extends PopoverBaseProps {
+  variant?: string;
+
   /** HoverCard.Target and HoverCard.Dropdown components */
   children?: React.ReactNode;
 
@@ -25,6 +27,10 @@ export interface HoverCardProps extends PopoverBaseProps {
 
   /** Close delay in ms */
   closeDelay?: number;
+
+  unstyled?: boolean;
+  classNames?: ClassNames<PopoverStylesNames>;
+  styles?: Styles<PopoverStylesNames, PopoverStylesParams>;
 }
 
 const defaultProps: Partial<HoverCardProps> = {

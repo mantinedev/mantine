@@ -1,4 +1,5 @@
 import React from 'react';
+import { MantineDemo } from '@mantine/ds';
 import { SegmentedControl, Stack, Text } from '@mantine/core';
 
 const code = `
@@ -7,10 +8,8 @@ import { SegmentedControl } from '@mantine/core';
 function Demo() {
   return (
     <>
-      {/* Disabled control */}
-      <SegmentedControl disabled={true} />
+      <SegmentedControl disabled />
 
-      {/* Disabled option */}
       <SegmentedControl
         data={[
           { value: 'preview', label: 'Preview', disabled: true },

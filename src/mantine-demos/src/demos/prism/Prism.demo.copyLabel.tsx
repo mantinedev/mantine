@@ -1,5 +1,6 @@
 import React from 'react';
 import { Prism } from '@mantine/prism';
+import { MantineDemo } from '@mantine/ds';
 
 const demoCode = `
 import { Button } from '@mantine/core';
@@ -40,7 +41,7 @@ function Demo() {
         language="tsx"
         copyLabel="Copy code to clipboard"
         copiedLabel="Code copied to clipboard"
-        style={{ marginTop: 20 }}
+        mt="lg"
       >
         {demoCode}
       </Prism>

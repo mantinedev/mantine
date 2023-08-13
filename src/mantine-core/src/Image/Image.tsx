@@ -4,6 +4,7 @@ import {
   MantineNumberSize,
   Selectors,
   useComponentDefaultProps,
+  rem,
 } from '@mantine/styles';
 import { useDidUpdate } from '@mantine/hooks';
 import { Text } from '../Text';
@@ -16,8 +17,10 @@ export type ImageStylesNames = Selectors<typeof useStyles>;
 export interface ImageProps
   extends DefaultProps<ImageStylesNames, ImageStylesParams>,
     Omit<React.ComponentPropsWithoutRef<'div'>, 'placeholder'> {
+  variant?: string;
+
   /** Image src */
-  src?: string;
+  src?: string | null;
 
   /** Image alt text, used as title for placeholder if image was not loaded */
   alt?: string;
@@ -31,7 +34,7 @@ export interface ImageProps
   /** Image height, defaults to original image height adjusted to given width */
   height?: number | string;
 
-  /** Predefined border-radius value from theme.radius or number for border-radius in px */
+  /** Key of theme.radius or any valid CSS value to set border-radius, 0 by default */
   radius?: MantineNumberSize;
 
   /** Enable placeholder when image is loading and when image fails to load */
@@ -75,47 +78,57 @@ export const Image = forwardRef<HTMLDivElement, ImageProps>((props: ImageProps, 
     caption,
     unstyled,
     style,
+    variant,
     ...others
   } = useComponentDefaultProps('Image', defaultProps, props);
-  const { classes, cx } = useStyles({ radius }, { classNames, styles, unstyled, name: 'Image' });
-  const [loaded, setLoaded] = useState(false);
+
+  const { classes, cx } = useStyles(
+    { radius },
+    { classNames, styles, unstyled, name: 'Image', variant }
+  );
+
   const [error, setError] = useState(!src);
-  const isPlaceholder = withPlaceholder && (!loaded || error);
+  const isPlaceholder = withPlaceholder && error;
 
   useDidUpdate(() => {
-    setLoaded(false);
-    setError(false);
+    setError(!src);
   }, [src]);
 
   return (
     <Box
       className={cx(classes.root, className)}
+      style={{ width: rem(width), ...style }}
       ref={ref}
-      style={{ width, height, ...style }}
       {...others}
     >
       <figure className={classes.figure}>
         <div className={classes.imageWrapper}>
           <img
-            className={classes.image}
             src={src}
             alt={alt}
-            style={{ objectFit: fit, width, height }}
             ref={imageRef}
-            onLoad={(event) => {
-              setLoaded(true);
-              typeof imageProps?.onLoad === 'function' && imageProps.onLoad(event);
-            }}
+            {...imageProps}
+            className={cx(classes.image, imageProps?.className)}
             onError={(event) => {
               setError(true);
               typeof imageProps?.onError === 'function' && imageProps.onError(event);
             }}
-            {...imageProps}
+            style={{
+              objectFit: fit,
+              width: rem(width),
+              height: rem(height),
+              ...(isPlaceholder && { overflow: 'hidden' }),
+              ...imageProps?.style,
+            }}
           />
 
           {isPlaceholder && (
             <div className={classes.placeholder} title={alt}>
-              {placeholder || <ImageIcon style={{ width: 40, height: 40 }} />}
+              {placeholder || (
+                <div>
+                  <ImageIcon width={rem(40)} height={rem(40)} />
+                </div>
+              )}
             </div>
           )}
         </div>

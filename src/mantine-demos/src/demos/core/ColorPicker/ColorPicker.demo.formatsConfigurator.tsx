@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { MantineDemo } from '@mantine/ds';
 import { Stack, Text, ColorPicker, ColorPickerProps } from '@mantine/core';
 
 function Wrapper(props: ColorPickerProps) {
@@ -32,6 +33,7 @@ export const formatsConfigurator: MantineDemo = {
       defaultValue: 'hex',
       data: [
         { value: 'hex', label: 'HEX' },
+        { value: 'hexa', label: 'HEXA' },
         { value: 'rgb', label: 'RGB' },
         { value: 'rgba', label: 'RGBA' },
         { value: 'hsl', label: 'HSL' },

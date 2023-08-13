@@ -1,4 +1,5 @@
 import React from 'react';
+import { MantineDemo } from '@mantine/ds';
 import { Select } from '@mantine/core';
 
 const code = `
@@ -24,20 +25,21 @@ function Demo() {
 
 function Demo() {
   return (
-    <div style={{ maxWidth: 320, marginLeft: 'auto', marginRight: 'auto' }}>
-      <Select
-        label="Read only select"
-        placeholder="Pick one"
-        defaultValue="react"
-        readOnly
-        data={[
-          { value: 'react', label: 'React' },
-          { value: 'ng', label: 'Angular' },
-          { value: 'svelte', label: 'Svelte' },
-          { value: 'vue', label: 'Vue' },
-        ]}
-      />
-    </div>
+    <Select
+      maw={320}
+      mx="auto"
+      label="Read only select"
+      placeholder="Pick one"
+      defaultValue="react"
+      readOnly
+      withinPortal
+      data={[
+        { value: 'react', label: 'React' },
+        { value: 'ng', label: 'Angular' },
+        { value: 'svelte', label: 'Svelte' },
+        { value: 'vue', label: 'Vue' },
+      ]}
+    />
   );
 }
 

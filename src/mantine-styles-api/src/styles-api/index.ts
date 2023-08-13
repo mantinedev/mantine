@@ -17,6 +17,7 @@ export * from './Dialog.styles-api';
 export * from './Divider.styles-api';
 export * from './Drawer.styles-api';
 export * from './FileInput.styles-api';
+export * from './HoverCard.styles-api';
 export * from './Image.styles-api';
 export * from './Indicator.styles-api';
 export * from './Input.styles-api';
@@ -36,6 +37,7 @@ export * from './PinInput.styles-api';
 export * from './Popover.styles-api';
 export * from './Progress.styles-api';
 export * from './Radio.styles-api';
+export * from './Rating.styles-api';
 export * from './RingProgress.styles-api';
 export * from './ScrollArea.styles-api';
 export * from './SegmentedControl.styles-api';
@@ -45,7 +47,6 @@ export * from './Spoiler.styles-api';
 export * from './Stepper.styles-api';
 export * from './Switch.styles-api';
 export * from './Tabs.styles-api';
-export * from './TagInput.styles-api';
 export * from './Textarea.styles-api';
 export * from './TextInput.styles-api';
 export * from './Timeline.styles-api';
@@ -53,11 +54,7 @@ export * from './Tooltip.styles-api';
 export * from './TransferList.styles-api';
 
 // @mantine/dates
-export * from './Calendar.styles-api';
-export * from './CalendarBase.styles-api';
-export * from './DatePicker.styles-api';
-export * from './Month.styles-api';
-export * from './TimeInput.styles-api';
+export * from './Dates.styles-api';
 
 // Other packages
 export * from './Dropzone.styles-api';

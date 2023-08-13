@@ -3,6 +3,7 @@ group: 'mantine-core'
 package: '@mantine/core'
 title: Highlight
 order: 1
+polymorphic: true
 slug: /core/highlight/
 category: 'typography'
 description: 'Highlight given part of a string with mark tag'
@@ -29,6 +30,10 @@ Component ignores trailing whitespace and highlights all matched characters sequ
 To highlight multiple substrings, provide an array of values:
 
 <Demo data={HighlightDemos.multiple} />
+
+## Change highlight styles per substring
+
+<Demo data={HighlightDemos.data} />
 
 ## Change highlight styles
 

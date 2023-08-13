@@ -6,6 +6,9 @@ import {
   checkAccessibility,
   itSupportsSystemProps,
   itSupportsInputProps,
+  itSupportsProviderVariant,
+  itSupportsProviderSize,
+  itDisablesInputInsideDisabledFieldset,
 } from '@mantine/tests';
 import { Select, SelectProps } from './Select';
 
@@ -21,6 +24,8 @@ const defaultProps: SelectProps = {
 
 describe('@mantine/core/Select', () => {
   checkAccessibility([<Select {...defaultProps} />]);
+  itSupportsProviderVariant(Select, defaultProps, 'Select', ['root', 'input', 'label']);
+  itSupportsProviderSize(Select, defaultProps, 'Select', ['root', 'input', 'label']);
   itSupportsFocusEvents(Select, defaultProps, 'input[type="search"]');
   itSupportsInputProps(Select, defaultProps, 'Select');
   itSupportsSystemProps({
@@ -31,6 +36,7 @@ describe('@mantine/core/Select', () => {
     othersSelector: '.mantine-Select-input',
     providerName: 'Select',
   });
+  itDisablesInputInsideDisabledFieldset(Select, defaultProps);
 
   it('renders hidden input with current input value', () => {
     const { container } = render(

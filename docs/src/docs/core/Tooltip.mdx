@@ -143,20 +143,26 @@ function Demo() {
 
 ## Multiline
 
-To enable multiline mode set `multiline` prop to enable line breaks and `width` prop to set tooltip width in px:
+To enable multiline mode set `multiline` prop to enable line breaks and `width` prop to set tooltip width:
 
 <Demo data={TooltipDemos.multiline} />
 
+## Inline
+
+Set `inline` prop to use `Tooltip` with inline elements:
+
+<Demo data={TooltipDemos.inline} />
+
 ## Change transition
 
-Tooltip is built with [Transition](/core/transition/) component, it supports `transition` and `transitionDuration` props:
+Tooltip is built with [Transition](/core/transition/) component, it supports `transitionProps` props:
 
 ```tsx
 import { Tooltip } from '@mantine/core';
 
 function Demo() {
   return (
-    <Tooltip transition="skew-up" transitionDuration={300}>
+    <Tooltip transitionProps={{ transition: 'skew-up', duration: 300 }}>
       <button>target</button>
     </Tooltip>
   );
@@ -226,31 +232,6 @@ function Demo() {
 
       <Tooltip label="refProp is required" refProp="innerRef">
         <MyOtherBadge color="orange" />
-      </Tooltip>
-    </>
-  );
-}
-```
-
-## Usage with Next.js Link
-
-Tooltip will not work with native Next.js `Link`, instead you should use [NextLink](/guides/next/) component:
-
-```tsx
-import { Tooltip, Button } from '@mantine/core';
-import { NextLink } from '@mantine/next';
-
-function Demo() {
-  return (
-    <>
-      <Tooltip label="Plain NextLink">
-        <NextLink href="/">Next.js link</NextLink>
-      </Tooltip>
-
-      <Tooltip label="NextLink as another component">
-        <Button component={NextLink} href="/">
-          Next.js link
-        </Button>
       </Tooltip>
     </>
   );

@@ -1,6 +1,6 @@
 import React from 'react';
 import { render } from '@testing-library/react';
-import { itSupportsSystemProps } from '@mantine/tests';
+import { itSupportsSystemProps, itSupportsProviderVariant } from '@mantine/tests';
 import { Prism, PrismProps } from './Prism';
 
 const defaultProps: PrismProps = {
@@ -10,6 +10,7 @@ const defaultProps: PrismProps = {
 };
 
 describe('@mantine/prism/Prism', () => {
+  itSupportsProviderVariant(Prism, defaultProps, 'Prism');
   itSupportsSystemProps({
     component: Prism,
     props: defaultProps,
@@ -34,5 +35,13 @@ describe('@mantine/prism/Prism', () => {
       defaultProps.children.split('\n').length
     );
     expect(withoutLineNumbers.querySelectorAll('.mantine-Prism-lineNumber')).toHaveLength(0);
+  });
+
+  it('renders pre element without top and bottom margin', () => {
+    const { container: prism } = render(<Prism {...defaultProps} />);
+    expect(prism.querySelector('.mantine-Prism-code')).toHaveStyle({
+      marginTop: 0,
+      marginBottom: 0,
+    });
   });
 });

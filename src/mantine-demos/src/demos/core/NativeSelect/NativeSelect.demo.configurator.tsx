@@ -1,4 +1,5 @@
 import React from 'react';
+import { MantineDemo } from '@mantine/ds';
 import { NativeSelect } from '@mantine/core';
 
 const codeTemplate = (props: string) => `
@@ -22,7 +23,6 @@ export const configurator: MantineDemo = {
   codeTemplate,
   configuratorProps: { multiline: 3 },
   configurator: [
-    { name: 'placeholder', type: 'string', initialValue: 'Pick one' },
     {
       name: 'label',
       type: 'string',

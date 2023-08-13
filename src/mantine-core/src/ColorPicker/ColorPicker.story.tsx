@@ -18,3 +18,11 @@ export function ColorSwatchesEvents() {
     </>
   );
 }
+
+export function UncontrolledSwatches() {
+  return (
+    <>
+      <ColorPicker swatches={['#eeeeee', '#d4d4d4', '#d4d5d6', '#5f3e4e']} />
+    </>
+  );
+}

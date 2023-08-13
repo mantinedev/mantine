@@ -7,6 +7,7 @@ export {
   triggerSpotlightAction,
   registerSpotlightActions,
   removeSpotlightActions,
+  spotlight,
 } from './events';
 
 export type { SpotlightAction } from './types';

@@ -2,11 +2,14 @@ import React from 'react';
 import { render, screen } from '@testing-library/react';
 import {
   checkAccessibility,
+  itDisablesInputInsideDisabledFieldset,
   itSupportsSystemProps,
   itSupportsWrapperProps,
   itConnectsLabelAndInput,
   itSupportsFocusEvents,
   itHandlesBooleanState,
+  itSupportsProviderSize,
+  itSupportsProviderVariant,
 } from '@mantine/tests';
 import { Checkbox, CheckboxProps } from './Checkbox';
 
@@ -18,6 +21,8 @@ describe('@mantine/core/Checkbox', () => {
   itSupportsWrapperProps(Checkbox, defaultProps);
   itConnectsLabelAndInput(Checkbox, defaultProps);
   itHandlesBooleanState(Checkbox, defaultProps);
+  itSupportsProviderSize(Checkbox, defaultProps, 'Checkbox');
+  itSupportsProviderVariant(Checkbox, defaultProps, 'Checkbox');
   itSupportsFocusEvents(Checkbox, defaultProps, 'input');
   checkAccessibility([
     <Checkbox aria-label="Checkbox without label" />,
@@ -34,21 +39,10 @@ describe('@mantine/core/Checkbox', () => {
     providerName: 'Checkbox',
   });
 
-  it('renders label based on label prop', () => {
-    const { container: withLabel, getByText } = render(<Checkbox label="test-label" />);
-    const { container: withoutLabel } = render(<Checkbox />);
-    expect(withLabel.querySelectorAll('label')).toHaveLength(1);
-    expect(withoutLabel.querySelectorAll('label')).toHaveLength(0);
-    expect(getByText('test-label')).toBeInTheDocument();
-  });
+  itDisablesInputInsideDisabledFieldset(Checkbox, defaultProps);
 
   it('sets disabled attribute on input based on disabled prop', () => {
     render(<Checkbox disabled />);
     expect(screen.getByRole('checkbox')).toBeDisabled();
-  });
-
-  it('sets checked state based on indeterminate prop', () => {
-    render(<Checkbox indeterminate checked={false} onChange={() => {}} />);
-    expect(screen.getByRole('checkbox')).toBeChecked();
   });
 });

@@ -1,4 +1,5 @@
 import React from 'react';
+import { rem } from '@mantine/core';
 
 export function ViteIcon() {
   return (
@@ -6,7 +7,8 @@ export function ViteIcon() {
       xmlns="http://www.w3.org/2000/svg"
       preserveAspectRatio="xMidYMid"
       viewBox="0 0 256 257"
-      style={{ display: 'block', width: 70, height: 70 }}
+      width={rem(70)}
+      height={rem(70)}
     >
       <defs>
         <linearGradient id="vite-a" x1="-.828%" x2="57.636%" y1="7.652%" y2="78.411%">

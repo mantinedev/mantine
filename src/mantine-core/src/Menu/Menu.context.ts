@@ -1,7 +1,8 @@
-import { MantineNumberSize } from '@mantine/styles';
+import { MantineNumberSize, ClassNames, Styles } from '@mantine/styles';
 import { createSafeContext } from '@mantine/utils';
 import { MENU_ERRORS } from './Menu.errors';
 import { MenuTriggerEvent } from './Menu.types';
+import type { MenuStylesNames } from './Menu';
 
 interface MenuContext {
   toggleDropdown(): void;
@@ -16,6 +17,10 @@ interface MenuContext {
   trigger: MenuTriggerEvent;
   radius: MantineNumberSize;
   opened: boolean;
+  classNames: ClassNames<MenuStylesNames>;
+  styles: Styles<MenuStylesNames>;
+  unstyled: boolean;
+  variant?: string;
 }
 
 export const [MenuContextProvider, useMenuContext] = createSafeContext<MenuContext>(

@@ -1,7 +1,7 @@
 import React from 'react';
 import { getSafeId } from '@mantine/utils';
 import { useUncontrolled, useId } from '@mantine/hooks';
-import { MantineNumberSize } from '@mantine/styles';
+import { MantineNumberSize, ClassNames, Styles } from '@mantine/styles';
 import { AccordionContextProvider } from './Accordion.context';
 import {
   AccordionValue,
@@ -10,6 +10,7 @@ import {
   AccordionVariant,
 } from './Accordion.types';
 import { ACCORDION_ERRORS } from './Accordion.errors';
+import type { AccordionStylesNames } from './Accordion';
 
 export interface AccordionProviderProps<Multiple extends boolean = false> {
   /** Base id, used to generate ids that connect labels with controls, by default generated randomly */
@@ -42,8 +43,8 @@ export interface AccordionProviderProps<Multiple extends boolean = false> {
   /** Determines position of the chevron */
   chevronPosition?: AccordionChevronPosition;
 
-  /** Chevron size in px */
-  chevronSize?: number;
+  /** Chevron size */
+  chevronSize?: number | string;
 
   /** Heading order, has no effect on visuals */
   order?: AccordionHeadingOrder;
@@ -54,8 +55,15 @@ export interface AccordionProviderProps<Multiple extends boolean = false> {
   /** Controls visuals */
   variant?: AccordionVariant;
 
-  /** border-radius from theme.radius or number to set value in px, will not be applied to default variant  */
+  /** Key of theme.radius or any valid CSS value to set border-radius, ignored when variant="default" */
   radius?: MantineNumberSize;
+}
+
+interface _AccordionProviderProps<Multiple extends boolean = false>
+  extends AccordionProviderProps<Multiple> {
+  classNames?: ClassNames<AccordionStylesNames>;
+  styles?: Styles<AccordionStylesNames>;
+  unstyled?: boolean;
 }
 
 export function AccordionProvider<Multiple extends boolean = false>({
@@ -74,7 +82,10 @@ export function AccordionProvider<Multiple extends boolean = false>({
   chevron,
   variant,
   radius,
-}: AccordionProviderProps<Multiple>) {
+  classNames,
+  styles,
+  unstyled,
+}: _AccordionProviderProps<Multiple>) {
   const uid = useId(id);
   const [_value, handleChange] = useUncontrolled({
     value,
@@ -114,6 +125,9 @@ export function AccordionProvider<Multiple extends boolean = false>({
         loop,
         variant,
         radius,
+        classNames,
+        styles,
+        unstyled,
       }}
     >
       {children}

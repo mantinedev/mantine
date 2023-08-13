@@ -1,17 +1,25 @@
 import React from 'react';
 import { render } from '@testing-library/react';
-import { itSupportsSystemProps, itRendersChildren } from '@mantine/tests';
+import {
+  itSupportsSystemProps,
+  itRendersChildren,
+  itSupportsProviderVariant,
+  itSupportsProviderSize,
+} from '@mantine/tests';
 import { InputLabel, InputLabelProps } from './InputLabel';
 
 const defaultProps: InputLabelProps = {};
 
 describe('@mantine/core/InputLabel', () => {
   itRendersChildren(InputLabel, defaultProps);
+  itSupportsProviderVariant(InputLabel, defaultProps, 'InputWrapper', 'label');
+  itSupportsProviderSize(InputLabel, defaultProps, 'InputWrapper', 'label');
   itSupportsSystemProps({
     component: InputLabel,
     props: defaultProps,
     displayName: '@mantine/core/InputLabel',
     refType: HTMLLabelElement,
+    providerName: 'InputLabel',
   });
 
   it('renders required asterisk if required prop is true', () => {

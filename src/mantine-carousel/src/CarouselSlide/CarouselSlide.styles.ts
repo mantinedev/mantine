@@ -1,4 +1,11 @@
-import { createStyles, MantineNumberSize, getSortedBreakpoints } from '@mantine/core';
+import {
+  createStyles,
+  MantineNumberSize,
+  getSortedBreakpoints,
+  rem,
+  getBreakpointValue,
+  getSize,
+} from '@mantine/core';
 import { CarouselOrientation, CarouselBreakpoint } from '../types';
 
 export interface CarouselSlideStylesParams {
@@ -14,54 +21,61 @@ export default createStyles(
     theme,
     { size, gap, orientation, includeGapInSize, breakpoints = [] }: CarouselSlideStylesParams
   ) => {
-    const slideBreakpoints = getSortedBreakpoints(theme, breakpoints).reduce((acc, breakpoint) => {
-      const property = 'maxWidth' in breakpoint ? 'max-width' : 'min-width';
-      const breakpointSize = theme.fn.size({
-        size: property === 'max-width' ? breakpoint.maxWidth : breakpoint.minWidth,
-        sizes: theme.breakpoints,
+    // Slide styles by slideGap and slideSize
+    const getSlideStyles = (slideGap: MantineNumberSize, slideSize: string | number) => {
+      const slideGapValue = getSize({
+        size: slideGap,
+        sizes: theme.spacing,
       });
 
-      const breakpointGap = typeof breakpoint.slideGap === 'undefined' ? gap : breakpoint.slideGap;
+      const flexBasisValue = rem(slideSize);
 
-      acc[`@media (${property}: ${breakpointSize + (property === 'max-width' ? 0 : 1)}px)`] = {
-        flex: `0 0 calc(${
-          typeof breakpoint.slideSize === 'number'
-            ? `${breakpoint.slideSize}px`
-            : breakpoint.slideSize
-        } - ${
-          includeGapInSize
-            ? theme.fn.size({
-                size: breakpointGap,
-                sizes: theme.spacing,
-              }) / 2
-            : 0
-        }px)`,
+      const marginStyles = includeGapInSize
+        ? {
+            [orientation === 'horizontal' ? 'paddingRight' : 'paddingBottom']: slideGapValue,
+          }
+        : {
+            [orientation === 'horizontal' ? 'marginRight' : 'marginBottom']: slideGapValue,
+          };
 
-        [orientation === 'horizontal' ? 'marginRight' : 'marginBottom']: theme.fn.size({
-          size: breakpointGap,
-          sizes: theme.spacing,
-        }),
+      return {
+        flex: `0 0 ${flexBasisValue}`,
+        ...marginStyles,
       };
+    };
 
-      return acc;
-    }, {});
+    const hasDiff = breakpoints.some(
+      (v) => typeof v.slideGap !== 'undefined' || typeof v.slideSize !== 'undefined'
+    );
+
+    // Apply styles for breakpoints only if has different gap or size
+    const slideBreakpoints = !hasDiff
+      ? null
+      : getSortedBreakpoints(theme, breakpoints).reduce((acc, breakpoint) => {
+          const property = 'maxWidth' in breakpoint ? 'max-width' : 'min-width';
+          const breakpointSize = getSize({
+            size: property === 'max-width' ? breakpoint.maxWidth : breakpoint.minWidth,
+            sizes: theme.breakpoints,
+          });
+
+          const breakpointGap =
+            typeof breakpoint.slideGap === 'undefined' ? gap : breakpoint.slideGap;
+
+          const breakpointValue =
+            getBreakpointValue(breakpointSize) - (property === 'max-width' ? 1 : 0);
+
+          acc[`@media (${property}: ${rem(breakpointValue)})`] = getSlideStyles(
+            breakpointGap,
+            breakpoint.slideSize
+          );
+
+          return acc;
+        }, {});
 
     return {
       slide: {
         position: 'relative',
-        flex: `0 0 calc(${typeof size === 'number' ? `${size}px` : size} - ${
-          includeGapInSize
-            ? theme.fn.size({
-                size: gap,
-                sizes: theme.spacing,
-              }) / 2
-            : 0
-        }px)`,
-        [orientation === 'horizontal' ? 'marginRight' : 'marginBottom']: theme.fn.size({
-          size: gap,
-          sizes: theme.spacing,
-        }),
-
+        ...getSlideStyles(gap, size),
         ...slideBreakpoints,
       },
     };

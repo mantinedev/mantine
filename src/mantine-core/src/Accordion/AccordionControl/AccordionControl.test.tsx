@@ -35,7 +35,9 @@ describe('@mantine/core/AccordionControl', () => {
     component: TestContainer,
     props: defaultProps,
     displayName: '@mantine/core/AccordionControl',
+    excludePadding: true,
     refType: HTMLButtonElement,
+    providerName: 'AccordionControl',
   });
 
   it('calls onClick function from props', async () => {

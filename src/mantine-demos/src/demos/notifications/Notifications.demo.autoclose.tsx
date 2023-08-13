@@ -1,17 +1,18 @@
 import React from 'react';
 import { Group, Button } from '@mantine/core';
-import { showNotification } from '@mantine/notifications';
+import { MantineDemo } from '@mantine/ds';
+import { notifications } from '@mantine/notifications';
 
 const code = `
 import { Group, Button } from '@mantine/core';
-import { showNotification } from '@mantine/notifications';
+import { notifications } from '@mantine/notifications';
 
 function Demo() {
   return (
     <Group position="center">
       <Button
         variant="outline"
-        onClick={() => showNotification({ message: 'I will close in 4 seconds' })}
+        onClick={() => notifications.show({ message: 'I will close in 4 seconds' })}
       >
         Notifications Provider timeout
       </Button>
@@ -19,7 +20,7 @@ function Demo() {
       <Button
         variant="outline"
         onClick={() =>
-          showNotification({
+          notifications.show({
             message: 'I will close in 500ms',
             autoClose: 500,
           })
@@ -31,7 +32,7 @@ function Demo() {
       <Button
         variant="outline"
         onClick={() =>
-          showNotification({
+          notifications.show({
             color: 'blue',
             title: 'I will never close',
             message: 'unless you click X',
@@ -51,7 +52,7 @@ function Demo() {
     <Group position="center">
       <Button
         variant="outline"
-        onClick={() => showNotification({ message: 'I will close in 4 seconds' })}
+        onClick={() => notifications.show({ message: 'I will close in 4 seconds' })}
       >
         Notifications Provider timeout
       </Button>
@@ -59,7 +60,7 @@ function Demo() {
       <Button
         variant="outline"
         onClick={() =>
-          showNotification({
+          notifications.show({
             message: 'I will close in 500ms',
             autoClose: 500,
           })
@@ -71,7 +72,7 @@ function Demo() {
       <Button
         variant="outline"
         onClick={() =>
-          showNotification({
+          notifications.show({
             color: 'blue',
             title: 'I will never close',
             message: 'unless you click X',

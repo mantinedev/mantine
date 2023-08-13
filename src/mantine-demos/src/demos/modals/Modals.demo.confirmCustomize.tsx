@@ -1,15 +1,16 @@
 import React from 'react';
 import { Group, Button, Text } from '@mantine/core';
-import { openConfirmModal } from '@mantine/modals';
-import { showNotification } from '@mantine/notifications';
+import { modals } from '@mantine/modals';
+import { MantineDemo } from '@mantine/ds';
+import { notifications } from '@mantine/notifications';
 
 const code = `
 import { Button, Text } from '@mantine/core';
-import { openConfirmModal } from '@mantine/modals';
+import { modals } from '@mantine/modals';
 
 function Demo() {
   const openDeleteModal = () =>
-    openConfirmModal({
+    modals.openConfirmModal({
       title: 'Delete your profile',
       centered: true,
       children: (
@@ -30,7 +31,7 @@ function Demo() {
 
 function Demo() {
   const openDeleteModal = () =>
-    openConfirmModal({
+    modals.openConfirmModal({
       title: 'Delete your profile',
       centered: true,
       children: (
@@ -42,13 +43,13 @@ function Demo() {
       labels: { confirm: 'Delete account', cancel: "No don't delete it" },
       confirmProps: { color: 'red' },
       onCancel: () =>
-        showNotification({
+        notifications.show({
           title: 'Canceled',
           message: 'Delete modal was canceled',
           color: 'gray',
         }),
       onConfirm: () =>
-        showNotification({
+        notifications.show({
           title: 'Deleted',
           message: 'Delete modal was confirmed',
           color: 'red',

@@ -9,6 +9,7 @@ import {
   InputWrapperBaseProps,
   InputWrapperStylesNames,
 } from '../Input';
+import { Text } from '../Text';
 import { CloseButton } from '../CloseButton';
 import { FileButton } from '../FileButton';
 import useStyles from './FileInput.styles';
@@ -56,29 +57,28 @@ export interface FileInputProps<Multiple extends boolean = false>
   /** Allow to clear value */
   clearable?: boolean;
 
-  /** aria-label for clear button */
-  clearButtonLabel?: string;
+  /** Props added to clear button */
+  clearButtonProps?: React.ComponentPropsWithoutRef<'button'>;
 
-  /** Set the clear button tab index to disabled or default after input field */
-  clearButtonTabIndex?: -1 | 0;
+  /** Determines whether the user can change value */
+  readOnly?: boolean;
+
+  /** Specifies that, optionally, a new file should be captured, and which device should be used to capture that new media of a type defined by the accept attribute. */
+  capture?: boolean | 'user' | 'environment';
+
+  /** Spreads props to input element used to capture files */
+  fileInputProps?: React.ComponentPropsWithoutRef<'input'>;
 }
 
 const DefaultValue: FileInputProps['valueComponent'] = ({ value }) => (
-  <span>{Array.isArray(value) ? value.map((file) => file.name).join(', ') : value?.name}</span>
+  <Text sx={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+    {Array.isArray(value) ? value.map((file) => file.name).join(', ') : value?.name}
+  </Text>
 );
 
 const defaultProps: Partial<FileInputProps> = {
   size: 'sm',
   valueComponent: DefaultValue,
-  clearButtonTabIndex: 0,
-};
-
-const RIGHT_SECTION_WIDTH = {
-  xs: 24,
-  sm: 30,
-  md: 34,
-  lg: 40,
-  xl: 44,
 };
 
 export const _FileInput = forwardRef<HTMLButtonElement, FileInputProps>((props, ref) => {
@@ -98,14 +98,15 @@ export const _FileInput = forwardRef<HTMLButtonElement, FileInputProps>((props, 
     unstyled,
     valueComponent: ValueComponent,
     rightSection,
-    rightSectionWidth,
     clearable,
-    clearButtonLabel,
-    clearButtonTabIndex,
+    clearButtonProps,
+    readOnly,
+    capture,
+    fileInputProps,
     ...others
   } = useInputProps('FileInput', defaultProps, props);
   const resetRef = useRef<() => void>();
-  const { classes, theme, cx } = useStyles(null, {
+  const { classes, cx } = useStyles(null, {
     name: 'FileInput',
     classNames,
     styles,
@@ -123,13 +124,12 @@ export const _FileInput = forwardRef<HTMLButtonElement, FileInputProps>((props, 
 
   const _rightSection =
     rightSection ||
-    (clearable && hasValue ? (
+    (clearable && hasValue && !readOnly ? (
       <CloseButton
+        {...clearButtonProps}
         variant="transparent"
-        aria-label={clearButtonLabel}
         onClick={() => setValue(multiple ? [] : null)}
         size={inputProps.size}
-        tabIndex={clearButtonTabIndex}
         unstyled={unstyled}
       />
     ) : null);
@@ -149,6 +149,9 @@ export const _FileInput = forwardRef<HTMLButtonElement, FileInputProps>((props, 
         name={name}
         form={form}
         resetRef={resetRef}
+        disabled={readOnly}
+        capture={capture}
+        inputProps={fileInputProps}
       >
         {(fileButtonProps) => (
           <Input
@@ -161,14 +164,10 @@ export const _FileInput = forwardRef<HTMLButtonElement, FileInputProps>((props, 
             ref={ref}
             __staticSelector="FileInput"
             rightSection={_rightSection}
-            rightSectionWidth={
-              rightSectionWidth ||
-              theme.fn.size({ size: inputProps.size, sizes: RIGHT_SECTION_WIDTH })
-            }
             classNames={{ ...classNames, input: cx(classes.input, (classNames as any)?.input) }}
           >
             {!hasValue ? (
-              <span className={classes.placeholder}>{placeholder}</span>
+              <Input.Placeholder className={classes.placeholder}>{placeholder}</Input.Placeholder>
             ) : (
               <ValueComponent value={_value} />
             )}

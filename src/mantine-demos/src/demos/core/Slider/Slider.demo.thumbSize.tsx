@@ -1,12 +1,13 @@
 import React from 'react';
-import { Slider, RangeSlider } from '@mantine/core';
+import { MantineDemo } from '@mantine/ds';
+import { Slider, RangeSlider, Box } from '@mantine/core';
 
 function Wrapper(props: any) {
   return (
-    <div style={{ maxWidth: 400, margin: 'auto' }}>
+    <Box maw={400} mx="auto">
       <Slider {...props} defaultValue={20} />
       <RangeSlider {...props} mt="xl" defaultValue={[20, 80]} />
-    </div>
+    </Box>
   );
 }
 

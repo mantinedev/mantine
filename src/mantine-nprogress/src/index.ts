@@ -6,6 +6,8 @@ export {
   setNavigationProgress,
   incrementNavigationProgress,
   decrementNavigationProgress,
+  completeNavigationProgress,
+  nprogress,
 } from './events';
 
 export type { NavigationProgressProps } from './NavigationProgress';

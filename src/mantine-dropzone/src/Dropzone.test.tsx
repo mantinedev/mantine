@@ -1,6 +1,6 @@
 import React from 'react';
 import { render } from '@testing-library/react';
-import { itSupportsSystemProps } from '@mantine/tests';
+import { itSupportsSystemProps, itSupportsProviderVariant } from '@mantine/tests';
 import { Dropzone, DropzoneProps } from './index';
 import { DropzoneAccept, DropzoneReject, DropzoneIdle } from './DropzoneStatus';
 import { DropzoneFullScreen } from './DropzoneFullScreen';
@@ -11,11 +11,11 @@ const defaultProps: DropzoneProps = {
 };
 
 describe('@mantine/dropzone/Dropzone', () => {
+  itSupportsProviderVariant(Dropzone, defaultProps, 'Dropzone');
   itSupportsSystemProps({
     component: Dropzone,
     props: defaultProps,
     displayName: '@mantine/dropzone/Dropzone',
-    refType: HTMLDivElement,
   });
 
   it('displays LoadingOverlay based on loading prop', () => {

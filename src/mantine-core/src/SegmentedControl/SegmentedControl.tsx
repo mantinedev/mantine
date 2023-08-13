@@ -33,7 +33,9 @@ export type SegmentedControlStylesNames = Selectors<typeof useStyles>;
 export interface SegmentedControlProps
   extends DefaultProps<SegmentedControlStylesNames, SegmentedControlStylesParams>,
     Omit<React.ComponentPropsWithoutRef<'div'>, 'value' | 'onChange'> {
-  /** Data based on which controls are rendered */
+  variant?: string;
+
+  /** Segments to render */
   data: string[] | SegmentedControlItem[];
 
   /** Current selected value */
@@ -57,7 +59,7 @@ export interface SegmentedControlProps
   /** Controls font-size, paddings and height */
   size?: MantineSize;
 
-  /** Border-radius from theme or number to set border-radius in px */
+  /** Key of theme.radius or any valid CSS value to set border-radius, theme.defaultRadius by default */
   radius?: MantineNumberSize;
 
   /** Transition duration in ms, set to 0 to turn off transitions */
@@ -69,13 +71,16 @@ export interface SegmentedControlProps
   /** Default value for uncontrolled component */
   defaultValue?: string;
 
-  /** Display Vertically */
+  /** The orientation of the component */
   orientation?: 'vertical' | 'horizontal';
+
+  /** Determines whether the user can change value */
+  readOnly?: boolean;
 }
 
-const defaultProps: Partial<SegmentedControlProps> = {
+const defaultProps = {
   disabled: false,
-  size: 'sm',
+  size: 'sm' as const,
   transitionDuration: 200,
 };
 
@@ -98,6 +103,8 @@ export const SegmentedControl = forwardRef<HTMLDivElement, SegmentedControlProps
     defaultValue,
     orientation,
     unstyled,
+    variant,
+    readOnly,
     ...others
   } = useComponentDefaultProps('SegmentedControl', defaultProps, props);
   const theme = useMantineTheme();
@@ -122,7 +129,6 @@ export const SegmentedControl = forwardRef<HTMLDivElement, SegmentedControlProps
 
   const { classes, cx } = useStyles(
     {
-      size,
       fullWidth,
       color,
       radius,
@@ -131,7 +137,7 @@ export const SegmentedControl = forwardRef<HTMLDivElement, SegmentedControlProps
       transitionTimingFunction,
       orientation,
     },
-    { classNames, styles, unstyled, name: 'SegmentedControl' }
+    { name: 'SegmentedControl', classNames, styles, unstyled, variant, size }
   );
 
   const [activePosition, setActivePosition] = useState({
@@ -188,14 +194,13 @@ export const SegmentedControl = forwardRef<HTMLDivElement, SegmentedControlProps
         value={item.value}
         id={`${uuid}-${item.value}`}
         checked={_value === item.value}
-        onChange={() => handleValueChange(item.value)}
+        onChange={() => !readOnly && handleValueChange(item.value)}
       />
 
       <label
-        className={cx(classes.label, {
-          [classes.labelActive]: _value === item.value,
-          [classes.disabled]: disabled || item.disabled,
-        })}
+        className={classes.label}
+        data-active={(_value === item.value && !(disabled || item.disabled)) || undefined}
+        data-disabled={disabled || item.disabled || undefined}
         htmlFor={`${uuid}-${item.value}`}
         ref={(node) => {
           refs.current[item.value] = node;
@@ -206,20 +211,22 @@ export const SegmentedControl = forwardRef<HTMLDivElement, SegmentedControlProps
     </div>
   ));
 
+  const mergedRef = useMergedRef(observerRef, ref);
+
   if (data.length === 0) {
     return null;
   }
 
   return (
-    <Box className={cx(classes.root, className)} ref={useMergedRef(observerRef, ref)} {...others}>
+    <Box className={cx(classes.root, className)} ref={mergedRef} {...others}>
       {typeof _value === 'string' && shouldAnimate && (
         <Box
           component="span"
-          className={classes.active}
+          className={classes.indicator}
           sx={{
             width: activePosition.width,
             height: activePosition.height,
-            transform: `translate(${activePosition.translate[0]}px, ${activePosition.translate[1]}px )`,
+            transform: `translate(${activePosition.translate[0]}px, ${activePosition.translate[1]}px)`,
           }}
         />
       )}

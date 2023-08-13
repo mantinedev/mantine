@@ -1,18 +1,20 @@
 import React, { useState, useRef } from 'react';
+import { MantineDemo } from '@mantine/ds';
 import {
   NumberInput,
   Group,
   ActionIcon,
   NumberInputHandlers,
   useMantineTheme,
+  rem,
 } from '@mantine/core';
 
 const code = `
 import { useState, useRef } from 'react';
-import { NumberInput, Group, ActionIcon, NumberInputHandlers } from '@mantine/core';
+import { NumberInput, Group, ActionIcon, NumberInputHandlers, rem } from '@mantine/core';
 
 function Demo() {
-  const [value, setValue] = useState(0);
+  const [value, setValue] = useState<number | ''>(0);
   const handlers = useRef<NumberInputHandlers>();
 
   return (
@@ -29,7 +31,7 @@ function Demo() {
         max={10}
         min={0}
         step={2}
-        styles={{ input: { width: 54, textAlign: 'center' } }}
+        styles={{ input: { width: rem(54), textAlign: 'center' } }}
       />
 
       <ActionIcon size={42} variant="default" onClick={() => handlers.current.increment()}>
@@ -42,7 +44,7 @@ function Demo() {
 
 function Demo() {
   const theme = useMantineTheme();
-  const [value, setValue] = useState(0);
+  const [value, setValue] = useState<number | ''>(0);
   const handlers = useRef<NumberInputHandlers>();
 
   const controlStyles = {
@@ -71,7 +73,7 @@ function Demo() {
         max={10}
         min={0}
         step={2}
-        styles={{ input: { width: 54, textAlign: 'center' } }}
+        styles={{ input: { width: rem(54), textAlign: 'center' } }}
       />
       <ActionIcon
         size={36}

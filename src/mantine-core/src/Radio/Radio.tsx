@@ -5,26 +5,25 @@ import {
   MantineSize,
   MantineColor,
   Selectors,
-  extractSystemStyles,
   useComponentDefaultProps,
 } from '@mantine/styles';
 import { ForwardRefWithStaticComponents } from '@mantine/utils';
-import { Box } from '../Box';
+import { extractSystemStyles } from '../Box';
 import { RadioIcon } from './RadioIcon';
 import { useRadioGroupContext } from './RadioGroup.context';
 import { RadioGroup } from './RadioGroup/RadioGroup';
+import { InlineInput, InlineInputStylesNames } from '../InlineInput';
 import useStyles, { RadioStylesParams } from './Radio.styles';
 
-export type RadioStylesNames = Selectors<typeof useStyles>;
+export type RadioStylesNames = Selectors<typeof useStyles> | InlineInputStylesNames;
 
 export interface RadioProps
   extends DefaultProps<RadioStylesNames, RadioStylesParams>,
     Omit<React.ComponentPropsWithRef<'input'>, 'size'> {
+  variant?: string;
+
   /** Radio label */
   label?: React.ReactNode;
-
-  /** Radio value */
-  value: string;
 
   /** Active radio color from theme.colors */
   color?: MantineColor;
@@ -40,12 +39,22 @@ export interface RadioProps
 
   /** Props spread to root element */
   wrapperProps?: Record<string, any>;
+
+  /** Position of label */
+  labelPosition?: 'left' | 'right';
+
+  /** description, displayed after label */
+  description?: React.ReactNode;
+
+  /** Displays error message after input */
+  error?: React.ReactNode;
 }
 
 const defaultProps: Partial<RadioProps> = {
   icon: RadioIcon,
   transitionDuration: 100,
   size: 'sm',
+  labelPosition: 'right',
 };
 
 type RadioComponent = ForwardRefWithStaticComponents<RadioProps, { Group: typeof RadioGroup }>;
@@ -67,13 +76,20 @@ export const Radio: RadioComponent = forwardRef<HTMLInputElement, RadioProps>((p
     transitionDuration,
     wrapperProps,
     unstyled,
+    labelPosition,
+    description,
+    error,
+    variant,
     ...others
   } = useComponentDefaultProps('Radio', defaultProps, props);
   const ctx = useRadioGroupContext();
 
-  const { classes, cx } = useStyles(
-    { color, size: ctx?.size || size, transitionDuration },
-    { classNames, styles, unstyled, name: 'Radio' }
+  const contextSize = ctx?.size ?? size;
+  const componentSize = props.size ? size : contextSize;
+
+  const { classes } = useStyles(
+    { color, transitionDuration, labelPosition, error: !!error },
+    { name: 'Radio', classNames, styles, unstyled, variant, size: componentSize }
   );
 
   const { systemStyles, rest } = extractSystemStyles(others);
@@ -88,11 +104,23 @@ export const Radio: RadioComponent = forwardRef<HTMLInputElement, RadioProps>((p
     : {};
 
   return (
-    <Box
-      className={cx(classes.radioWrapper, className)}
-      style={style}
-      title={title}
+    <InlineInput
+      className={className}
       sx={sx}
+      style={style}
+      id={uuid}
+      size={componentSize}
+      labelPosition={labelPosition}
+      label={label}
+      description={description}
+      error={error}
+      disabled={disabled}
+      __staticSelector="Radio"
+      classNames={classNames}
+      styles={styles}
+      unstyled={unstyled}
+      data-checked={contextProps.checked || undefined}
+      variant={variant}
       {...systemStyles}
       {...wrapperProps}
     >
@@ -108,13 +136,7 @@ export const Radio: RadioComponent = forwardRef<HTMLInputElement, RadioProps>((p
         />
         <Icon className={classes.icon} aria-hidden />
       </div>
-
-      {label && (
-        <label data-disabled={disabled || undefined} className={classes.label} htmlFor={uuid}>
-          {label}
-        </label>
-      )}
-    </Box>
+    </InlineInput>
   );
 }) as any;
 

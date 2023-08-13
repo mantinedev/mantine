@@ -2,14 +2,14 @@ import React from 'react';
 import { LoaderProps } from './loader-props';
 
 export function Dots({ size, color, ...others }: LoaderProps) {
+  const { style, ...rest } = others;
   return (
     <svg
-      width={`${size}px`}
-      height={`${size / 4}px`}
       viewBox="0 0 120 30"
       xmlns="http://www.w3.org/2000/svg"
       fill={color}
-      {...others}
+      style={{ width: size, ...style }}
+      {...rest}
     >
       <circle cx="15" cy="15" r="15">
         <animate

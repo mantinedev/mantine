@@ -1,4 +1,5 @@
 import React from 'react';
+import { MantineDemo } from '@mantine/ds';
 import { Select } from '@mantine/core';
 
 const codeTemplate = (props: string) => `
@@ -15,6 +16,7 @@ export const flip: MantineDemo = {
     <Select
       placeholder="Pick one"
       label="Your favorite framework/library"
+      withinPortal
       data={[
         { value: 'react', label: 'React' },
         { value: 'ng', label: 'Angular' },

@@ -1,5 +1,6 @@
 import React, { useRef } from 'react';
 import { ScrollArea, Button, Stack, Group } from '@mantine/core';
+import { MantineDemo } from '@mantine/ds';
 import { Content } from './_content';
 
 const code = `
@@ -7,7 +8,7 @@ import { useRef } from 'react';
 import { ScrollArea, Button, Stack, Group } from '@mantine/core';
 
 function Demo() {
-  const viewport = useRef<HTMLDivElement>();
+  const viewport = useRef<HTMLDivElement>(null);
 
   const scrollToBottom = () =>
     viewport.current.scrollTo({ top: viewport.current.scrollHeight, behavior: 'smooth' });
@@ -19,7 +20,7 @@ function Demo() {
 
   return (
     <Stack align="center">
-      <ScrollArea style={{ width: 300, height: 200 }} viewportRef={viewport}>
+      <ScrollArea w={300} h={200} viewportRef={viewport}>
         {/* ... content */}
       </ScrollArea>
 
@@ -40,7 +41,7 @@ function Demo() {
 `;
 
 function Demo() {
-  const viewport = useRef<HTMLDivElement>();
+  const viewport = useRef<HTMLDivElement>(null);
   const scrollToBottom = () =>
     viewport.current.scrollTo({ top: viewport.current.scrollHeight, behavior: 'smooth' });
   const scrollToCenter = () =>
@@ -49,7 +50,7 @@ function Demo() {
 
   return (
     <Stack align="center">
-      <ScrollArea style={{ width: 300, height: 200 }} viewportRef={viewport}>
+      <ScrollArea w={300} h={200} viewportRef={viewport}>
         <Content />
       </ScrollArea>
       <Group position="center">

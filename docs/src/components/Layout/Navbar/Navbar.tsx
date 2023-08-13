@@ -1,5 +1,5 @@
 import React from 'react';
-import { ScrollArea } from '@mantine/core';
+import { ScrollArea, rem } from '@mantine/core';
 import NavbarMainLink from './NavbarMainLink/NavbarMainLink';
 import NavbarDocsCategory from './NavbarDocsCategory/NavbarDocsCategory';
 import { getDocsData } from '../get-docs-data';
@@ -20,7 +20,7 @@ export default function Navbar({ data, opened, onClose }: NavbarProps) {
       key={item.to}
       to={item.to}
       color={item.color}
-      icon={<item.icon size={item.rawIcon ? 30 : 18} stroke={2.2} />}
+      icon={<item.icon size={rem(item.rawIcon ? 30 : 18)} stroke={2.2} />}
       onClick={onClose}
       rawIcon={item.rawIcon}
     >
@@ -34,7 +34,7 @@ export default function Navbar({ data, opened, onClose }: NavbarProps) {
 
   return (
     <nav className={cx(classes.navbar, { [classes.opened]: opened })}>
-      <ScrollArea style={{ height: '100vh' }} type="scroll">
+      <ScrollArea h="100vh" type="scroll">
         <div className={classes.body}>
           {main}
           <div className={classes.docs}>{docs}</div>

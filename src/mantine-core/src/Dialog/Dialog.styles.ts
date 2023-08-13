@@ -1,30 +1,26 @@
-import { createStyles } from '@mantine/styles';
-
-export interface DialogStylesParams {
-  size: string | number;
-}
+import { createStyles, rem, getSize } from '@mantine/styles';
 
 const sizes = {
-  xs: 160,
-  sm: 200,
-  md: 340,
-  lg: 400,
-  xl: 500,
+  xs: rem(160),
+  sm: rem(200),
+  md: rem(340),
+  lg: rem(400),
+  xl: rem(500),
 };
 
-export default createStyles((theme, { size }: DialogStylesParams) => ({
+export default createStyles((theme, _params, { size }) => ({
   root: {
     ...theme.fn.fontStyles(),
     color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
     position: 'relative',
-    width: theme.fn.size({ size, sizes }),
-    maxWidth: '100%',
-    minHeight: 50,
+    width: getSize({ size, sizes }),
+    maxWidth: `calc(100vw - ${theme.spacing.xl} * 2)`,
+    minHeight: rem(50),
   },
 
   closeButton: {
     position: 'absolute',
-    top: `calc(${theme.spacing.md}px / 2)`,
-    right: `calc(${theme.spacing.md}px / 2)`,
+    top: `calc(${theme.spacing.md} / 2)`,
+    right: `calc(${theme.spacing.md} / 2)`,
   },
 }));

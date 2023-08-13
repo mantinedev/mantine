@@ -1,4 +1,5 @@
 import React from 'react';
+import { MantineDemo } from '@mantine/ds';
 import { Tabs, Badge } from '@mantine/core';
 
 const code = `
@@ -11,7 +12,9 @@ function Demo() {
         <Tabs.Tab
           rightSection={
             <Badge
-              sx={{ width: 16, height: 16, pointerEvents: 'none' }}
+              w={16}
+              h={16}
+              sx={{ pointerEvents: 'none' }}
               variant="filled"
               size="xs"
               p={0}
@@ -37,12 +40,7 @@ function Demo() {
       <Tabs.List>
         <Tabs.Tab
           rightSection={
-            <Badge
-              sx={{ width: 16, height: 16, pointerEvents: 'none' }}
-              variant="filled"
-              size="xs"
-              p={0}
-            >
+            <Badge w={16} h={16} sx={{ pointerEvents: 'none' }} variant="filled" size="xs" p={0}>
               6
             </Badge>
           }

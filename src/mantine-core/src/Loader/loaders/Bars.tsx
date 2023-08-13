@@ -2,13 +2,14 @@ import React from 'react';
 import { LoaderProps } from './loader-props';
 
 export function Bars({ size, color, ...others }: LoaderProps) {
+  const { style, ...rest } = others;
   return (
     <svg
       viewBox="0 0 135 140"
       xmlns="http://www.w3.org/2000/svg"
       fill={color}
-      width={`${size}px`}
-      {...others}
+      style={{ width: size, ...style }}
+      {...rest}
     >
       <rect y="10" width="15" height="120" rx="6">
         <animate

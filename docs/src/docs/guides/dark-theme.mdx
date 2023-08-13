@@ -187,10 +187,8 @@ The following example shows how to store color scheme in cookie with Next.js:
 
 ```tsx
 // _app.tsx file
-import { GetServerSidePropsContext } from 'next';
 import { useState } from 'react';
-import { AppProps } from 'next/app';
-// install cookies-next package to manage cookies
+import NextApp, { AppProps, AppContext } from 'next/app';
 import { getCookie, setCookie } from 'cookies-next';
 import { MantineProvider, ColorScheme, ColorSchemeProvider } from '@mantine/core';
 
@@ -214,10 +212,13 @@ export default function App(props: AppProps & { colorScheme: ColorScheme }) {
   );
 }
 
-App.getInitialProps = ({ ctx }: { ctx: GetServerSidePropsContext }) => ({
-  // get color scheme from cookie
-  colorScheme: getCookie('mantine-color-scheme', ctx) || 'light',
-});
+App.getInitialProps = async (appContext: AppContext) => {
+  const appProps = await NextApp.getInitialProps(appContext);
+  return {
+    ...appProps,
+    colorScheme: getCookie('mantine-color-scheme', appContext.ctx) || 'light',
+  };
+};
 ```
 
-Full code is available in [Mantine Next.js template](https://github.com/mantinedev/mantine-next-template).
+Full code is available in [Mantine Next.js template](https://github.com/mantinedev/next-pages-template).

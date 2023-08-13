@@ -1,30 +1,30 @@
-import { createStyles, MantineNumberSize } from '@mantine/styles';
+import { createStyles, getStylesRef, getSize } from '@mantine/styles';
+import type { ListStylesParams } from '../List.styles';
 
-interface ListItemStyles {
-  spacing: MantineNumberSize;
-  center: boolean;
-}
-
-export default createStyles((theme, { spacing, center }: ListItemStyles, getRef) => ({
+export default createStyles((theme, { spacing, center }: ListStylesParams) => ({
   itemWrapper: {
-    ref: getRef('itemWrapper'),
-    display: 'inline',
+    ref: getStylesRef('itemWrapper'),
+    display: 'inline-flex',
+    flexDirection: 'column',
+    whiteSpace: 'normal',
   },
 
   item: {
+    whiteSpace: 'nowrap',
     lineHeight: center ? 1 : theme.lineHeight,
 
     '&:not(:first-of-type)': {
-      marginTop: theme.fn.size({ size: spacing, sizes: theme.spacing }),
+      marginTop: getSize({ size: spacing, sizes: theme.spacing }),
     },
-  },
 
-  withIcon: {
-    listStyle: 'none',
+    '&[data-with-icon]': {
+      listStyle: 'none',
 
-    [`& .${getRef('itemWrapper')}`]: {
-      display: 'inline-flex',
-      alignItems: center ? 'center' : 'flex-start',
+      [`& .${getStylesRef('itemWrapper')}`]: {
+        display: 'inline-flex',
+        alignItems: center ? 'center' : 'flex-start',
+        flexDirection: 'row',
+      },
     },
   },
 

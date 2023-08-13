@@ -1,5 +1,6 @@
 import React from 'react';
-import { TextInput, NumberInput, MantineProvider } from '@mantine/core';
+import { MantineDemo } from '@mantine/ds';
+import { TextInput, NumberInput, MantineProvider, Box } from '@mantine/core';
 
 const code = `
 import { TextInput, NumberInput, MantineProvider } from '@mantine/core';
@@ -45,7 +46,7 @@ function Demo() {
 
 function Demo() {
   return (
-    <div style={{ maxWidth: 320, marginLeft: 'auto', marginRight: 'auto' }}>
+    <Box maw={320} mx="auto">
       <MantineProvider
         inherit
         theme={{
@@ -79,7 +80,7 @@ function Demo() {
           description="Description below the input"
         />
       </MantineProvider>
-    </div>
+    </Box>
   );
 }
 

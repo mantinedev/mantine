@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { MantineDemo } from '@mantine/ds';
 import { FileButton, Button, Group, Text, List } from '@mantine/core';
 
 const code = `
@@ -41,11 +42,13 @@ function Demo() {
           {(props) => <Button {...props}>Upload image</Button>}
         </FileButton>
       </Group>
+
       {files.length > 0 && (
         <Text size="sm" mt="sm">
           Picked files:
         </Text>
       )}
+
       <List size="sm" mt={5} withPadding>
         {files.map((file, index) => (
           <List.Item key={index}>{file.name}</List.Item>

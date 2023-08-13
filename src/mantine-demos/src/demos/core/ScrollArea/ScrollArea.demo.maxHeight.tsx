@@ -1,5 +1,6 @@
 import React from 'react';
 import { useCounter } from '@mantine/hooks';
+import { MantineDemo } from '@mantine/ds';
 import { ScrollArea, Button, Group } from '@mantine/core';
 
 const lorem =
@@ -20,7 +21,7 @@ function Demo() {
 
   return (
     <>
-      <ScrollArea.Autosize maxHeight={300} sx={{ maxWidth: 400 }} mx="auto">
+      <ScrollArea.Autosize mah={300} maw={400} mx="auto">
         {content}
       </ScrollArea.Autosize>
 
@@ -45,7 +46,7 @@ function Demo() {
 
   return (
     <>
-      <ScrollArea.Autosize maxHeight={300} sx={{ maxWidth: 400 }} mx="auto">
+      <ScrollArea.Autosize mah={300} maw={400} mx="auto">
         {content}
       </ScrollArea.Autosize>
 

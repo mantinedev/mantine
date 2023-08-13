@@ -1,4 +1,4 @@
-import { createStyles } from '@mantine/core';
+import { createStyles, rem } from '@mantine/core';
 
 export default createStyles((theme) => ({
   prism: {
@@ -7,9 +7,9 @@ export default createStyles((theme) => ({
         theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.white
       } !important`,
       borderRadius: theme.radius.md,
-      padding: 14,
-      paddingTop: 30,
-      paddingBottom: 30,
+      padding: rem(14),
+      paddingTop: rem(30),
+      paddingBottom: rem(30),
     },
 
     '& .mantine-ScrollArea-viewport': {

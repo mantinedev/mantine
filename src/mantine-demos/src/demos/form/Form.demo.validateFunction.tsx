@@ -1,6 +1,7 @@
 /* eslint-disable no-console */
 import React from 'react';
 import { useForm } from '@mantine/form';
+import { MantineDemo } from '@mantine/ds';
 import { Box, TextInput, NumberInput, Button, Group } from '@mantine/core';
 
 const code = `
@@ -22,7 +23,7 @@ function Demo() {
   });
 
   return (
-    <Box sx={{ maxWidth: 340 }} mx="auto">
+    <Box maw={340} mx="auto">
       <form onSubmit={form.onSubmit((values) => console.log(values))}>
         <TextInput label="Name" placeholder="Name" {...form.getInputProps('name')} />
         <NumberInput mt="sm" label="Age" placeholder="You age" {...form.getInputProps('age')} />
@@ -51,7 +52,7 @@ function Demo() {
   });
 
   return (
-    <Box sx={{ maxWidth: 340 }} mx="auto">
+    <Box maw={340} mx="auto">
       <form onSubmit={form.onSubmit((values) => console.log(values))}>
         <TextInput label="Name" placeholder="Name" {...form.getInputProps('name')} />
         <NumberInput mt="sm" label="Age" placeholder="You age" {...form.getInputProps('age')} />

@@ -13,7 +13,7 @@ import useStyles, { ProgressStylesParams } from './Progress.styles';
 
 export type ProgressStylesNames = Selectors<typeof useStyles>;
 
-interface ProgressSection {
+interface ProgressSection extends React.ComponentPropsWithRef<'div'> {
   value: number;
   color: MantineColor;
   label?: string;
@@ -23,16 +23,18 @@ interface ProgressSection {
 export interface ProgressProps
   extends DefaultProps<ProgressStylesNames, ProgressStylesParams>,
     React.ComponentPropsWithoutRef<'div'> {
+  variant?: string;
+
   /** Percent of filled bar (0-100) */
   value?: number;
 
   /** Progress color from theme */
   color?: MantineColor;
 
-  /** Predefined progress height or number for height in px */
+  /** Height of progress bar */
   size?: MantineNumberSize;
 
-  /** Predefined progress radius from theme.radius or number for height in px */
+  /** Key of theme.radius or any valid CSS value to set border-radius, theme.defaultRadius by default */
   radius?: MantineNumberSize;
 
   /** Adds stripes */
@@ -84,33 +86,49 @@ export const Progress = forwardRef<HTMLDivElement, ProgressProps>((props, ref) =
     styles,
     sections,
     unstyled,
+    variant,
     ...others
   } = useComponentDefaultProps('Progress', defaultProps, props);
 
   const { classes, cx, theme } = useStyles(
-    { color, size, radius, striped: striped || animate, animate },
-    { classNames, styles, unstyled, name: 'Progress' }
+    { color, radius },
+    { name: 'Progress', classNames, styles, unstyled, variant, size }
   );
 
   const segments = Array.isArray(sections)
-    ? getCumulativeSections(sections).map((section, index) => (
-        <Tooltip.Floating label={section.tooltip} disabled={!section.tooltip} key={index}>
-          <Box
-            className={classes.bar}
-            sx={{
-              width: `${section.value}%`,
-              left: `${section.accumulated}%`,
-              backgroundColor: theme.fn.variant({
-                variant: 'filled',
-                primaryFallback: false,
-                color: section.color || theme.primaryColor,
-              }).background,
-            }}
-          >
-            {section.label && <Text className={classes.label}>{section.label}</Text>}
-          </Box>
-        </Tooltip.Floating>
-      ))
+    ? getCumulativeSections(sections).map(
+        (
+          {
+            tooltip,
+            accumulated,
+            value: sectionValue,
+            label: sectionLabel,
+            color: sectionColor,
+            ...sectionProps
+          },
+          index
+        ) => (
+          <Tooltip.Floating label={tooltip} disabled={!tooltip} key={index}>
+            <Box
+              {...sectionProps}
+              className={cx(classes.bar, sectionProps.className)}
+              data-striped={striped || animate || undefined}
+              data-animate={animate || undefined}
+              sx={{
+                width: `${sectionValue}%`,
+                left: `${accumulated}%`,
+                backgroundColor: theme.fn.variant({
+                  variant: 'filled',
+                  primaryFallback: false,
+                  color: sectionColor || theme.primaryColor,
+                }).background,
+              }}
+            >
+              {sectionLabel && <Text className={classes.label}>{sectionLabel}</Text>}
+            </Box>
+          </Tooltip.Floating>
+        )
+      )
     : null;
 
   return (
@@ -124,6 +142,8 @@ export const Progress = forwardRef<HTMLDivElement, ProgressProps>((props, ref) =
           aria-label={ariaLabel}
           className={classes.bar}
           style={{ width: `${value}%` }}
+          data-striped={striped || animate || undefined}
+          data-animate={animate || undefined}
         >
           {label ? <Text className={classes.label}>{label}</Text> : ''}
         </div>

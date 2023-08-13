@@ -1,17 +1,9 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Paper, SimpleGrid, Input } from '@mantine/core';
-import {
-  DatePicker,
-  DateRangePicker,
-  TimeInput,
-  TimeRangeInput,
-  Calendar,
-  RangeCalendar,
-} from '@mantine/dates';
+import { DatePickerInput, TimeInput, DatePicker, DateTimePicker } from '@mantine/dates';
 import dayjs from 'dayjs';
 
 function CalendarWrapper() {
-  const [value, setValue] = useState(new Date());
   return (
     <Input.Wrapper labelElement="div" label="Calendar">
       <Paper
@@ -23,16 +15,13 @@ function CalendarWrapper() {
           backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.white,
         })}
       >
-        <Calendar value={value} onChange={setValue} />
+        <DatePicker />
       </Paper>
     </Input.Wrapper>
   );
 }
+
 function RangeCalendarWrapper() {
-  const [value, setValue] = useState<[Date, Date]>([
-    dayjs(new Date()).startOf('month').add(3, 'days').toDate(),
-    dayjs(new Date()).startOf('month').add(8, 'days').toDate(),
-  ]);
   return (
     <Input.Wrapper labelElement="div" label="Range calendar">
       <Paper
@@ -44,7 +33,13 @@ function RangeCalendarWrapper() {
           backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.white,
         })}
       >
-        <RangeCalendar value={value} onChange={setValue} />
+        <DatePicker
+          type="range"
+          defaultValue={[
+            dayjs(new Date()).startOf('month').add(3, 'days').toDate(),
+            dayjs(new Date()).startOf('month').add(8, 'days').toDate(),
+          ]}
+        />
       </Paper>
     </Input.Wrapper>
   );
@@ -58,10 +53,10 @@ export function Dates() {
       sx={(theme) => ({ rowGap: theme.spacing.md })}
       spacing="xl"
     >
-      <DatePicker label="Date picker" placeholder="Pick one date" />
-      <DateRangePicker label="Date range picker" placeholder="Pick dates range" />
+      <DatePickerInput label="Date picker input" placeholder="Pick one date" />
+      <DatePickerInput type="range" label="Date range picker" placeholder="Pick dates range" />
       <TimeInput label="Time input" />
-      <TimeRangeInput label="Time range input" />
+      <DateTimePicker label="Date time picker" placeholder="Date time picker" />
       <CalendarWrapper />
       <RangeCalendarWrapper />
     </SimpleGrid>

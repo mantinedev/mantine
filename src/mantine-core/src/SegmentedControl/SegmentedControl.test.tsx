@@ -1,7 +1,13 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { checkAccessibility, itSupportsSystemProps } from '@mantine/tests';
+import {
+  checkAccessibility,
+  itSupportsSystemProps,
+  itSupportsProviderVariant,
+  itSupportsProviderSize,
+  itDisablesInputInsideDisabledFieldset,
+} from '@mantine/tests';
 import { SegmentedControl, SegmentedControlProps } from './SegmentedControl';
 
 const defaultProps: SegmentedControlProps = {
@@ -15,6 +21,8 @@ const defaultProps: SegmentedControlProps = {
 
 describe('@mantine/core/SegmentedControl', () => {
   checkAccessibility([<SegmentedControl {...defaultProps} />]);
+  itSupportsProviderVariant(SegmentedControl, defaultProps, 'SegmentedControl');
+  itSupportsProviderSize(SegmentedControl, defaultProps, 'SegmentedControl');
   itSupportsSystemProps({
     component: SegmentedControl,
     props: defaultProps,
@@ -22,6 +30,8 @@ describe('@mantine/core/SegmentedControl', () => {
     refType: HTMLDivElement,
     providerName: 'SegmentedControl',
   });
+
+  itDisablesInputInsideDisabledFieldset(SegmentedControl, defaultProps);
 
   it('supports uncontrolled state', async () => {
     render(<SegmentedControl {...defaultProps} />);

@@ -1,4 +1,4 @@
-import { createStyles, CSSObject, MantineTheme } from '@mantine/styles';
+import { createStyles, CSSObject, MantineTheme, rem } from '@mantine/styles';
 import { GROUP_POSITIONS } from '../../Group/Group.styles';
 import { TabsStylesParams, TabsPosition } from '../Tabs.types';
 
@@ -8,14 +8,21 @@ interface TabsListStylesParams extends TabsStylesParams {
 }
 
 function getVariantStyles(
-  { variant, orientation, inverted }: TabsListStylesParams,
-  theme: MantineTheme
+  { orientation, inverted, placement }: TabsListStylesParams,
+  theme: MantineTheme,
+  variant: string
 ): CSSObject {
   const vertical = orientation === 'vertical';
 
   if (variant === 'default') {
     return {
-      [vertical ? 'borderRight' : inverted ? 'borderTop' : 'borderBottom']: `2px solid ${
+      [vertical
+        ? placement === 'left'
+          ? 'borderRight'
+          : 'borderLeft'
+        : inverted
+        ? 'borderTop'
+        : 'borderBottom']: `${rem(2)} solid ${
         theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[3]
       }`,
     };
@@ -23,7 +30,13 @@ function getVariantStyles(
 
   if (variant === 'outline') {
     return {
-      [vertical ? 'borderRight' : inverted ? 'borderTop' : 'borderBottom']: `1px solid ${
+      [vertical
+        ? placement === 'left'
+          ? 'borderRight'
+          : 'borderLeft'
+        : inverted
+        ? 'borderTop'
+        : 'borderBottom']: `${rem(1)} solid ${
         theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[3]
       }`,
     };
@@ -31,14 +44,14 @@ function getVariantStyles(
 
   if (variant === 'pills') {
     return {
-      gap: `calc(${theme.spacing.sm}px / 2)`,
+      gap: `calc(${theme.spacing.sm} / 2)`,
     };
   }
 
   return {};
 }
 
-export default createStyles((theme, params: TabsListStylesParams) => {
+export default createStyles((theme, params: TabsListStylesParams, { variant }) => {
   const vertical = params.orientation === 'vertical';
 
   return {
@@ -52,7 +65,7 @@ export default createStyles((theme, params: TabsListStylesParams) => {
         flex: params.grow ? 1 : undefined,
       },
 
-      ...getVariantStyles(params, theme),
+      ...getVariantStyles(params, theme, variant),
     },
   };
 });

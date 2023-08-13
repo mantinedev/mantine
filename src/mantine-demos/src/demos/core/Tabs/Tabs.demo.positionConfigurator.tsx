@@ -1,4 +1,5 @@
 import React from 'react';
+import { MantineDemo } from '@mantine/ds';
 import { Tabs, TabsProps } from '@mantine/core';
 
 function Wrapper(props: TabsProps) {

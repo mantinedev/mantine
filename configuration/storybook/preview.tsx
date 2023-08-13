@@ -6,9 +6,9 @@ import {
   Affix,
   ActionIcon,
   createEmotionCache,
+  rem,
 } from '@mantine/core';
 import { useHotkeys } from '@mantine/hooks';
-import { NotificationsProvider } from '@mantine/notifications';
 import rtlPlugin from 'stylis-plugin-rtl';
 
 export const parameters = { layout: 'fullscreen' };
@@ -36,26 +36,24 @@ function ThemeWrapper(props: any) {
         withGlobalStyles
         withNormalizeCSS
       >
-        <NotificationsProvider>
-          <Affix position={{ right: rtl ? 'unset' : 0, left: rtl ? 0 : 'unset', bottom: 0 }}>
-            <ActionIcon
-              onClick={toggleRtl}
-              variant="default"
-              style={{
-                borderBottom: 0,
-                borderRight: 0,
-                borderTopLeftRadius: 4,
-                width: 60,
-                fontWeight: 700,
-              }}
-              radius={0}
-              size={30}
-            >
-              {rtl ? 'RTL' : 'LTR'}
-            </ActionIcon>
-          </Affix>
-          <div dir={rtl ? 'rtl' : 'ltr'}>{props.children}</div>
-        </NotificationsProvider>
+        <Affix position={{ right: rtl ? 'unset' : 0, left: rtl ? 0 : 'unset', bottom: 0 }}>
+          <ActionIcon
+            onClick={toggleRtl}
+            variant="default"
+            sx={{
+              borderBottom: 0,
+              borderRight: 0,
+              borderTopLeftRadius: rem(4),
+              width: rem(60),
+              fontWeight: 700,
+            }}
+            radius={0}
+            size={30}
+          >
+            {rtl ? 'RTL' : 'LTR'}
+          </ActionIcon>
+        </Affix>
+        <div dir={rtl ? 'rtl' : 'ltr'}>{props.children}</div>
       </MantineProvider>
     </ColorSchemeProvider>
   );

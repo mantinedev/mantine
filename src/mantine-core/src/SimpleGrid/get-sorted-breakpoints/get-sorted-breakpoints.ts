@@ -1,4 +1,4 @@
-import { MantineTheme } from '@mantine/styles';
+import { MantineTheme, getBreakpointValue, getSize } from '@mantine/styles';
 
 export function getSortedBreakpoints<T extends Record<string, any>>(
   theme: MantineTheme,
@@ -11,8 +11,8 @@ export function getSortedBreakpoints<T extends Record<string, any>>(
   const property = 'maxWidth' in breakpoints[0] ? 'maxWidth' : 'minWidth';
   const sorted = [...breakpoints].sort(
     (a, b) =>
-      theme.fn.size({ size: b[property], sizes: theme.breakpoints }) -
-      theme.fn.size({ size: a[property], sizes: theme.breakpoints })
+      getBreakpointValue(getSize({ size: b[property], sizes: theme.breakpoints })) -
+      getBreakpointValue(getSize({ size: a[property], sizes: theme.breakpoints }))
   );
 
   return property === 'minWidth' ? sorted.reverse() : sorted;

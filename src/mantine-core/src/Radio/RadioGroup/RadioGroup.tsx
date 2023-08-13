@@ -1,13 +1,7 @@
 import React, { forwardRef } from 'react';
-import { useUncontrolled } from '@mantine/hooks';
-import {
-  DefaultProps,
-  MantineNumberSize,
-  MantineSize,
-  useComponentDefaultProps,
-} from '@mantine/styles';
+import { useUncontrolled, useId } from '@mantine/hooks';
+import { DefaultProps, MantineSize, useComponentDefaultProps } from '@mantine/styles';
 import { Input, InputWrapperBaseProps, InputWrapperStylesNames } from '../../Input';
-import { InputsGroup } from '../../Checkbox/CheckboxGroup/InputsGroup';
 import { RadioGroupProvider } from '../RadioGroup.context';
 
 export type RadioGroupStylesNames = InputWrapperStylesNames;
@@ -28,15 +22,6 @@ export interface RadioGroupProps
   /** Called when value changes */
   onChange?(value: string): void;
 
-  /** Horizontal or vertical orientation */
-  orientation?: 'horizontal' | 'vertical';
-
-  /** Spacing between radios in horizontal orientation */
-  spacing?: MantineNumberSize;
-
-  /** Space between label and inputs */
-  offset?: MantineNumberSize;
-
   /** Predefined label fontSize, radio width, height and border-radius */
   size?: MantineSize;
 
@@ -48,9 +33,6 @@ export interface RadioGroupProps
 }
 
 const defaultProps: Partial<RadioGroupProps> = {
-  orientation: 'horizontal',
-  spacing: 'lg',
-  offset: 'xs',
   size: 'sm',
 };
 
@@ -61,15 +43,13 @@ export const RadioGroup = forwardRef<HTMLDivElement, RadioGroupProps>(
       value,
       defaultValue,
       onChange,
-      orientation,
-      spacing,
       size,
       wrapperProps,
       unstyled,
-      offset,
       name,
       ...others
     } = useComponentDefaultProps('RadioGroup', defaultProps, props);
+    const _name = useId(name);
 
     const [_value, setValue] = useUncontrolled({
       value,
@@ -82,7 +62,7 @@ export const RadioGroup = forwardRef<HTMLDivElement, RadioGroupProps>(
       setValue(event.currentTarget.value);
 
     return (
-      <RadioGroupProvider value={{ value: _value, onChange: handleChange, size, name }}>
+      <RadioGroupProvider value={{ value: _value, onChange: handleChange, size, name: _name }}>
         <Input.Wrapper
           labelElement="div"
           size={size}
@@ -92,15 +72,7 @@ export const RadioGroup = forwardRef<HTMLDivElement, RadioGroupProps>(
           {...wrapperProps}
           {...others}
         >
-          <InputsGroup
-            spacing={spacing}
-            orientation={orientation}
-            unstyled={unstyled}
-            role="radiogroup"
-            offset={offset}
-          >
-            {children}
-          </InputsGroup>
+          {children}
         </Input.Wrapper>
       </RadioGroupProvider>
     );

@@ -20,6 +20,10 @@ const TestContainer = createContextContainer(CarouselSlide, ({ children }) => (
       orientation: 'horizontal',
       includeGapInSize: true,
       breakpoints: undefined,
+      classNames: undefined,
+      styles: undefined,
+      unstyled: false,
+      variant: undefined,
     }}
   >
     {children}

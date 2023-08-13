@@ -7,6 +7,7 @@ export type NavigationProgressEvents = {
   increment(progress: number): void;
   decrement(progress: number): void;
   reset(): void;
+  complete(): void;
 };
 
 export const [useNavigationProgressEvents, createEvent] =
@@ -18,3 +19,14 @@ export const resetNavigationProgress = createEvent('reset');
 export const setNavigationProgress = createEvent('set');
 export const incrementNavigationProgress = createEvent('increment');
 export const decrementNavigationProgress = createEvent('decrement');
+export const completeNavigationProgress = createEvent('complete');
+
+export const nprogress = {
+  start: startNavigationProgress,
+  stop: stopNavigationProgress,
+  reset: resetNavigationProgress,
+  set: setNavigationProgress,
+  increment: incrementNavigationProgress,
+  decrement: decrementNavigationProgress,
+  complete: completeNavigationProgress,
+};

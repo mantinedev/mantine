@@ -4,19 +4,11 @@ import { SelectRightSection, SelectRightSectionProps } from './SelectRightSectio
 
 interface GetRightSectionProps extends SelectRightSectionProps {
   rightSection?: React.ReactNode;
-  rightSectionWidth?: number;
+  rightSectionWidth?: string | number;
   styles: Record<string, any>;
   theme: MantineTheme;
   readOnly: boolean;
 }
-
-const RIGHT_SECTION_WIDTH = {
-  xs: 24,
-  sm: 30,
-  md: 34,
-  lg: 44,
-  xl: 54,
-};
 
 export function getSelectRightSectionProps({
   styles,
@@ -32,7 +24,6 @@ export function getSelectRightSectionProps({
   const _styles = typeof styles === 'function' ? styles(theme) : styles;
 
   return {
-    rightSectionWidth: theme.fn.size({ size: props.size, sizes: RIGHT_SECTION_WIDTH }) as number,
     rightSection: !props.readOnly && !(props.disabled && props.shouldClear) && (
       <SelectRightSection {...props} />
     ),

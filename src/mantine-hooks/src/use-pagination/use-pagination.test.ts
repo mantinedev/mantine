@@ -58,8 +58,8 @@ describe('@mantine/hooks/use-pagination', () => {
 
     act(() => result.current.next());
 
-    expect(spy).toBeCalledTimes(1);
-    expect(spy).toBeCalledWith(8);
+    expect(spy).toHaveBeenCalledTimes(1);
+    expect(spy).toHaveBeenCalledWith(8);
   });
 
   it('does not change range length between page changes with custom parameters', () => {
@@ -77,5 +77,15 @@ describe('@mantine/hooks/use-pagination', () => {
 
       act(() => result.current.next());
     });
+  });
+
+  it('truncates total value', () => {
+    const hook = renderHook(() => usePagination({ total: 45.21 }));
+    expect(hook.result.current.range).toStrictEqual([1, 2, 3, 4, 5, 'dots', 45]);
+  });
+
+  it('handles negative total value correctly', () => {
+    const hook = renderHook(() => usePagination({ total: -5 }));
+    expect(hook.result.current.range).toStrictEqual([]);
   });
 });

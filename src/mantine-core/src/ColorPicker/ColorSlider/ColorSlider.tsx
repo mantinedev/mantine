@@ -6,7 +6,7 @@ import {
   UseMovePosition,
   useMergedRef,
 } from '@mantine/hooks';
-import { DefaultProps, MantineSize, Selectors } from '@mantine/styles';
+import { DefaultProps, MantineSize, Selectors, rem } from '@mantine/styles';
 import { Box } from '../../Box';
 import { Thumb, ThumbStylesNames } from '../Thumb/Thumb';
 import useStyles from './ColorSlider.styles';
@@ -18,6 +18,7 @@ export type ColorSliderStylesNames =
 export interface BaseColorSliderProps
   extends DefaultProps<ColorSliderStylesNames>,
     Omit<React.ComponentPropsWithoutRef<'div'>, 'value' | 'onChange'> {
+  variant?: string;
   value: number;
   onChange(value: number): void;
   onChangeEnd(value: number): void;
@@ -50,14 +51,20 @@ export const ColorSlider = forwardRef<HTMLDivElement, ColorSliderProps>(
       styles,
       className,
       unstyled,
+      variant,
       ...others
     }: ColorSliderProps,
     ref
   ) => {
-    const { classes, cx } = useStyles(
-      { size },
-      { classNames, styles, name: __staticSelector, unstyled }
-    );
+    const { classes, cx } = useStyles(null, {
+      classNames,
+      styles,
+      name: __staticSelector,
+      unstyled,
+      variant,
+      size,
+    });
+
     const [position, setPosition] = useState({ y: 0, x: value / maxValue });
     const positionRef = useRef(position);
     const getChangeValue = (val: number) => (round ? Math.round(val * maxValue) : val * maxValue);
@@ -122,7 +129,7 @@ export const ColorSlider = forwardRef<HTMLDivElement, ColorSliderProps>(
           classNames={classNames}
           styles={styles}
           position={position}
-          style={{ top: 1, backgroundColor: thumbColor }}
+          style={{ top: rem(1), backgroundColor: thumbColor }}
           className={classes.sliderThumb}
           size={size}
         />

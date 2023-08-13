@@ -1,17 +1,23 @@
 import React, { forwardRef } from 'react';
-import { DefaultProps, getDefaultZIndex, Global } from '@mantine/styles';
+import { DefaultProps, getDefaultZIndex, Global, rem, em } from '@mantine/styles';
 import { Box } from '../../Box';
 import { useAppShellContext } from '../AppShell.context';
-import useStyles, { VerticalSectionPosition } from './VerticalSection.styles';
+import useStyles, {
+  VerticalSectionHeight,
+  VerticalSectionPosition,
+} from './VerticalSection.styles';
+import { getSortedBreakpoints } from '../HorizontalSection/get-sorted-breakpoints/get-sorted-breakpoints';
 
 export interface VerticalSectionSharedProps extends DefaultProps {
+  variant?: string;
+
   /** Section content */
   children: React.ReactNode;
 
-  /** Section height */
-  height: number | string;
+  /** Component height with breakpoints */
+  height: VerticalSectionHeight;
 
-  /** Border */
+  /** Determines whether the element should have border */
   withBorder?: boolean;
 
   /** Changes position to fixed, controlled by AppShell component if rendered inside */
@@ -42,26 +48,39 @@ export const VerticalSection = forwardRef<HTMLElement, VerticalSectionProps>(
       fixed = false,
       withBorder = true,
       position,
-      zIndex = getDefaultZIndex('app'),
+      zIndex,
       section,
       unstyled,
       __staticSelector,
+      variant,
       ...others
     }: VerticalSectionProps,
     ref
   ) => {
     const ctx = useAppShellContext();
+    const _zIndex = zIndex || ctx.zIndex || getDefaultZIndex('app');
 
-    const { classes, cx } = useStyles(
+    const { classes, cx, theme } = useStyles(
       {
         height,
         fixed: ctx.fixed || fixed,
         position,
-        zIndex: ctx.zIndex || zIndex,
+        zIndex: typeof _zIndex === 'number' && ctx.layout === 'default' ? _zIndex + 1 : _zIndex,
+        layout: ctx.layout,
         borderPosition: withBorder ? (section === 'header' ? 'bottom' : 'top') : 'none',
       },
-      { name: __staticSelector, classNames, styles, unstyled }
+      { name: __staticSelector, classNames, styles, unstyled, variant }
     );
+    const breakpoints =
+      typeof height === 'object' && height !== null
+        ? getSortedBreakpoints(height, theme).reduce((acc, [breakpoint, breakpointSize]) => {
+            acc[`@media (min-width: ${em(breakpoint)})`] = {
+              [`--mantine-${section}-height`]: rem(breakpointSize),
+            };
+
+            return acc;
+          }, {})
+        : null;
 
     return (
       <Box
@@ -74,7 +93,9 @@ export const VerticalSection = forwardRef<HTMLElement, VerticalSectionProps>(
         <Global
           styles={() => ({
             ':root': {
-              [`--mantine-${section}-height`]: `${height}px`,
+              [`--mantine-${section}-height`]:
+                typeof height === 'object' ? rem(height?.base) || '100%' : rem(height),
+              ...breakpoints,
             },
           })}
         />

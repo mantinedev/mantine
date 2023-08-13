@@ -1,5 +1,5 @@
 import React from 'react';
-import { DefaultProps, Button } from '@mantine/core';
+import { DefaultProps, Button, rem } from '@mantine/core';
 import { packSx } from '@mantine/utils';
 import { meta } from '../meta';
 import { DiscordIcon, TwitterIcon } from '../Icons';
@@ -20,9 +20,9 @@ export function SocialButton({ icon, ...others }: SocialButtonProps) {
       styles={(theme) => ({
         root: {
           border: 0,
-          height: 42,
-          paddingLeft: 20,
-          paddingRight: 20,
+          height: rem(42),
+          paddingLeft: rem(20),
+          paddingRight: rem(20),
         },
         leftIcon: {
           marginRight: theme.spacing.md,

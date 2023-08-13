@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import { Modal, Group, Button } from '@mantine/core';
+import { MantineDemo } from '@mantine/ds';
 import { AuthenticationForm } from '../../../shared/AuthenticationForm/AuthenticationForm';
 
-const SIZES = ['xs', 'sm', 'md', 'lg', 'xl', 322, '70%', '100%'];
+const SIZES = ['xs', 'sm', 'md', 'lg', 'xl', '55rem', '70%', '100%'];
 
 function Demo() {
   const [opened, setOpened] = useState(false);
@@ -17,7 +18,7 @@ function Demo() {
         setOpened(true);
       }}
     >
-      {typeof s === 'number' ? `${s}px` : s}
+      {s}
     </Button>
   ));
 

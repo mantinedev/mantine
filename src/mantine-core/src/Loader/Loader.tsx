@@ -6,6 +6,8 @@ import {
   MantineTheme,
   useMantineTheme,
   useComponentDefaultProps,
+  rem,
+  getSize,
 } from '@mantine/styles';
 import { Box } from '../Box';
 import { Bars } from './loaders/Bars';
@@ -19,14 +21,16 @@ const LOADERS = {
 };
 
 const sizes = {
-  xs: 18,
-  sm: 22,
-  md: 36,
-  lg: 44,
-  xl: 58,
+  xs: rem(18),
+  sm: rem(22),
+  md: rem(36),
+  lg: rem(44),
+  xl: rem(58),
 };
 
-export interface LoaderProps extends DefaultProps, React.ComponentPropsWithoutRef<'svg'> {
+export interface LoaderProps
+  extends DefaultProps,
+    Omit<React.ComponentPropsWithoutRef<'svg'>, 'display' | 'opacity'> {
   /** Defines width of loader */
   size?: MantineNumberSize;
 
@@ -54,7 +58,7 @@ export function Loader(props: LoaderProps) {
     <Box
       role="presentation"
       component={LOADERS[defaultLoader] || LOADERS.bars}
-      size={theme.fn.size({ size, sizes })}
+      size={getSize({ size, sizes })}
       color={
         theme.fn.variant({
           variant: 'filled',

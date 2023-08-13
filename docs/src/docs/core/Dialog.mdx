@@ -17,21 +17,21 @@ import { DialogDemos } from '@mantine/demos';
 
 ## Usage
 
-Dialog is a simplified version of [Modal](/core/modal/) component.
+`Dialog` is a simplified version of [Modal](/core/modal/) component.
 It does not include most of accessibility and usability [Modal](/core/modal/) features:
 
 - Focus trap is not available
 - Does not close on click outside
 - Does not have overlay
 
-Use Dialog to attract attention with not important information or action,
+Use `Dialog` to attract attention with not important information or action,
 for example, you can create an email subscription form:
 
 <Demo data={DialogDemos.usage} />
 
 ## Change position
 
-Dialog is rendered in [Portal](/core/portal/) and has fixed position, set `position` prop to control Dialog position:
+`Dialog` is rendered in [Portal](/core/portal/) and has fixed position, set `position` prop to control dialog's position:
 
 ```tsx
 // Dialog in top left corner
@@ -43,7 +43,7 @@ Dialog is rendered in [Portal](/core/portal/) and has fixed position, set `posit
 
 ## Paper props
 
-Component supports all props from [Paper](/core/paper/) component,
+`Dialog` supports all props from [Paper](/core/paper/) component,
 you can customize `shadow`, `padding` and `radius` same way.
 
 ```tsx
@@ -52,7 +52,7 @@ you can customize `shadow`, `padding` and `radius` same way.
 
 ## Change transition
 
-Dialog supports all transitions from [Transition](/core/transition/) component.
+`Dialog` supports all transitions from [Transition](/core/transition/) component.
 To change transition provide following props:
 
 - **transition** – predefined transition name or transition object
@@ -65,6 +65,6 @@ To change transition provide following props:
 
 ## Accessibility
 
-Component is not accessible and most likely will not be announced by screen reader,
+`Dialog` is not accessible and most likely will not be announced by screen reader,
 make sure you do not put any important information. In most cases it would be much better
 to select [Modal](/core/modal/), [Drawer](/core/drawer/) or [Notifications](/others/notifications/).

@@ -1,4 +1,5 @@
 import React from 'react';
+import { MantineDemo } from '@mantine/ds';
 import { UnstyledButton, Group, Avatar, Text } from '@mantine/core';
 
 const code = `
@@ -22,7 +23,7 @@ function Demo() {
 function Demo() {
   return (
     <Group position="center">
-      <UnstyledButton aria-label="Open user menu" onClick={() => {}}>
+      <UnstyledButton aria-label="Open user menu">
         <Group>
           <Avatar size={40} color="blue">
             BH

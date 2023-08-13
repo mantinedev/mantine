@@ -47,7 +47,7 @@ function Demo() {
 
 ## Uncontrolled Tabs
 
-If you do need to subscribe to Tabs state changes use `defaultValue`:
+If you do not need to subscribe to Tabs state changes use `defaultValue`:
 
 ```tsx
 import { Tabs } from '@mantine/core';
@@ -95,6 +95,12 @@ To display tab on the opposite side, set margin-left to auto with `ml="auto"` pr
 To make tabs inverted, place `Tabs.Panel` components before `Tabs.List` and add `inverted` prop to `Tabs` component:
 
 <Demo data={TabsDemos.inverted} />
+
+## Vertical tabs placement
+
+To change placement of `Tabs.List` in vertical orientation set `placement` prop:
+
+<Demo data={TabsDemos.placementConfigurator} />
 
 ## Disabled tabs
 
@@ -182,7 +188,7 @@ function Demo() {
 ```
 
 ```tsx
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { Tabs } from '@mantine/core';
 
 function Demo() {

@@ -9,6 +9,12 @@
     "declaration": true,
     "declarationMap": true,
     "declarationDir": "lib",
-    "composite": true
-  }
+    "composite": true,
+    "paths": {
+      "@mantine/tests": ["../mantine-tests/src"] 
+    }
+  },
+  "references": [
+    { "path": "../mantine-tests" }
+  ]
 }

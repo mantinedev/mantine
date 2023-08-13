@@ -6,6 +6,8 @@ import {
   itIsPolymorphic,
   itSupportsSystemProps,
   itSupportsFocusEvents,
+  itSupportsProviderSize,
+  itSupportsProviderVariant,
 } from '@mantine/tests';
 import { Button, ButtonProps } from './Button';
 import { ButtonGroup } from './ButtonGroup/ButtonGroup';
@@ -17,6 +19,8 @@ describe('@mantine/core/Button', () => {
   itRendersChildren(Button, defaultProps);
   itIsPolymorphic(Button, defaultProps);
   itSupportsFocusEvents(Button, defaultProps, 'button');
+  itSupportsProviderSize(Button, defaultProps, 'Button');
+  itSupportsProviderVariant(Button, defaultProps, 'Button');
   itSupportsSystemProps({
     component: Button,
     props: defaultProps,
@@ -45,7 +49,6 @@ describe('@mantine/core/Button', () => {
 
   it('sets data-loading attribute based on loading prop', () => {
     render(<Button loading />);
-    expect(screen.getByRole('button')).toBeDisabled();
     expect(screen.getByRole('button')).toHaveAttribute('data-loading');
   });
 

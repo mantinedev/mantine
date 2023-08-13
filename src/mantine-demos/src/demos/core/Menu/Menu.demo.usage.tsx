@@ -1,10 +1,11 @@
 import React from 'react';
 import { Group, Menu } from '@mantine/core';
+import { MantineDemo } from '@mantine/ds';
 import { DemoMenuItems } from './_menu-items';
 
 const code = `
 import { Menu, Button, Text } from '@mantine/core';
-import { IconSettings, IconSearch, IconPhoto, IconMessageCircle, IconTrash, IconArrowsLeftRight } from '@tabler/icons';
+import { IconSettings, IconSearch, IconPhoto, IconMessageCircle, IconTrash, IconArrowsLeftRight } from '@tabler/icons-react';
 
 function Demo() {
   return (
@@ -28,7 +29,7 @@ function Demo() {
         <Menu.Divider />
 
         <Menu.Label>Danger zone</Menu.Label>
-        <Menu.Item icon={<IconArrowsLeftRight size={14} />}>Transfer my data</Menu.Item>,
+        <Menu.Item icon={<IconArrowsLeftRight size={14} />}>Transfer my data</Menu.Item>
         <Menu.Item color="red" icon={<IconTrash size={14} />}>Delete my account</Menu.Item>
       </Menu.Dropdown>
     </Menu>

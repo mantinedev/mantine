@@ -1,4 +1,5 @@
 import React from 'react';
+import { MantineDemo } from '@mantine/ds';
 import { Autocomplete } from '@mantine/core';
 
 const code = `
@@ -17,13 +18,13 @@ function Demo() {
 
 function Demo() {
   return (
-    <div style={{ maxWidth: 320, marginLeft: 'auto', marginRight: 'auto' }}>
-      <Autocomplete
-        label="Your favorite framework/library"
-        placeholder="Pick one"
-        data={['React', 'Angular', 'Svelte', 'Vue']}
-      />
-    </div>
+    <Autocomplete
+      maw={320}
+      mx="auto"
+      label="Your favorite framework/library"
+      placeholder="Pick one"
+      data={['React', 'Angular', 'Svelte', 'Vue']}
+    />
   );
 }
 

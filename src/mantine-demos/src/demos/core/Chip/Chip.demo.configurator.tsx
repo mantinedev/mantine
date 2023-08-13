@@ -1,10 +1,13 @@
 import React from 'react';
+import { MantineDemo } from '@mantine/ds';
 import { Chip, ChipProps, Group } from '@mantine/core';
 
 function Wrapper(props: ChipProps) {
   return (
     <Group position="center">
-      <Chip {...props}>Awesome chip</Chip>
+      <Chip defaultChecked {...props}>
+        Awesome chip
+      </Chip>
     </Group>
   );
 }
@@ -13,7 +16,7 @@ const codeTemplate = (props: string) => `
 import { Chip } from '@mantine/core';
 
 function Demo() {
-  return <Chip${props}>Awesome chip</Chip>
+  return <Chip defaultChecked${props}>Awesome chip</Chip>
 }
 `;
 
@@ -28,6 +31,7 @@ export const configurator: MantineDemo = {
       type: 'segmented',
       data: [
         { value: 'outline', label: 'Outline' },
+        { value: 'light', label: 'Light' },
         { value: 'filled', label: 'Filled' },
       ],
       initialValue: 'outline',

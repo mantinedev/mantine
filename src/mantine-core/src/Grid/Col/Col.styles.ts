@@ -4,12 +4,19 @@ import {
   MANTINE_SIZES,
   MantineSize,
   MantineTheme,
+  em,
+  getSize,
 } from '@mantine/styles';
 
 export type ColSpan = number | 'auto' | 'content';
 
 interface ColStyles {
   gutter: MantineNumberSize;
+  gutterXs: MantineNumberSize;
+  gutterSm: MantineNumberSize;
+  gutterMd: MantineNumberSize;
+  gutterLg: MantineNumberSize;
+  gutterXl: MantineNumberSize;
   columns: number;
   grow: boolean;
   offset: number;
@@ -37,7 +44,7 @@ const getColumnFlexBasis = (colSpan: ColSpan, columns: number) => {
     return 'auto';
   }
   if (colSpan === 'auto') {
-    return '0px';
+    return '0rem';
   }
   return colSpan ? `${100 / (columns / colSpan)}%` : undefined;
 };
@@ -46,6 +53,7 @@ const getColumnMaxWidth = (colSpan: ColSpan, columns: number, grow: boolean) => 
   if (grow || colSpan === 'auto' || colSpan === 'content') {
     return 'unset';
   }
+
   return getColumnFlexBasis(colSpan, columns);
 };
 
@@ -57,7 +65,12 @@ const getColumnFlexGrow = (colSpan: ColSpan, grow: boolean) => {
 };
 
 const getColumnOffset = (offset: number, columns: number) =>
-  offset ? `${100 / (columns / offset)}%` : undefined;
+  offset === 0 ? 0 : offset ? `${100 / (columns / offset)}%` : undefined;
+
+const getGutterSize = (gutter: MantineNumberSize, theme: MantineTheme) =>
+  typeof gutter !== 'undefined'
+    ? `calc(${getSize({ size: gutter, sizes: theme.spacing })} / 2)`
+    : undefined;
 
 function getBreakpointsStyles({
   sizes,
@@ -65,19 +78,22 @@ function getBreakpointsStyles({
   orders,
   theme,
   columns,
+  gutters,
   grow,
 }: {
   sizes: Record<MantineSize, ColSpan>;
   offsets: Record<MantineSize, number>;
   orders: Record<MantineSize, React.CSSProperties['order']>;
+  gutters: Record<MantineSize, MantineNumberSize>;
   grow: boolean;
   theme: MantineTheme;
   columns: number;
 }) {
   return MANTINE_SIZES.reduce((acc, size) => {
-    acc[`@media (min-width: ${theme.breakpoints[size] + 1}px)`] = {
+    acc[`@media (min-width: ${em(theme.breakpoints[size])})`] = {
       order: orders[size],
       flexBasis: getColumnFlexBasis(sizes[size], columns),
+      padding: getGutterSize(gutters[size], theme),
       flexShrink: 0,
       width: sizes[size] === 'content' ? 'auto' : undefined,
       maxWidth: getColumnMaxWidth(sizes[size], columns, grow),
@@ -93,6 +109,11 @@ export default createStyles(
     theme,
     {
       gutter,
+      gutterXs,
+      gutterSm,
+      gutterMd,
+      gutterLg,
+      gutterXl,
       grow,
       offset,
       offsetXs,
@@ -115,11 +136,11 @@ export default createStyles(
       orderXl,
     }: ColStyles
   ) => ({
-    root: {
+    col: {
       boxSizing: 'border-box',
       flexGrow: getColumnFlexGrow(span, grow),
       order,
-      padding: theme.fn.size({ size: gutter, sizes: theme.spacing }) / 2,
+      padding: getGutterSize(gutter, theme),
       marginLeft: getColumnOffset(offset, columns),
       flexBasis: getColumnFlexBasis(span, columns),
       flexShrink: 0,
@@ -129,6 +150,7 @@ export default createStyles(
         sizes: { xs, sm, md, lg, xl },
         offsets: { xs: offsetXs, sm: offsetSm, md: offsetMd, lg: offsetLg, xl: offsetXl },
         orders: { xs: orderXs, sm: orderSm, md: orderMd, lg: orderLg, xl: orderXl },
+        gutters: { xs: gutterXs, sm: gutterSm, md: gutterMd, lg: gutterLg, xl: gutterXl },
         theme,
         columns,
         grow,

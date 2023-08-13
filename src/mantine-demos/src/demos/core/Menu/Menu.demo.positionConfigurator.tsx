@@ -1,6 +1,8 @@
 import React from 'react';
 import { Menu, MenuProps, Group } from '@mantine/core';
+import { MantineDemo } from '@mantine/ds';
 import { DemoMenuItems } from './_menu-items';
+import { FLOATING_ARROW_POSITION_DATA } from '../../../shared/floating-position-data';
 
 function Wrapper(props: MenuProps) {
   return (
@@ -62,6 +64,13 @@ export const positionConfigurator: MantineDemo = {
       type: 'boolean',
       initialValue: false,
       defaultValue: false,
+    },
+    {
+      name: 'arrowPosition',
+      type: 'select',
+      data: FLOATING_ARROW_POSITION_DATA,
+      initialValue: 'side',
+      defaultValue: 'side',
     },
   ],
 };

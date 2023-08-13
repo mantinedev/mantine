@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 import React, { useRef } from 'react';
-import { DefaultProps } from '@mantine/styles';
+import { DefaultProps, useComponentDefaultProps } from '@mantine/styles';
 import { createEventHandler } from '@mantine/utils';
 import { Popover } from '../../Popover';
 import { useMenuContext } from '../Menu.context';
@@ -10,19 +10,24 @@ export interface MenuDropdownProps extends DefaultProps, React.ComponentPropsWit
   children?: React.ReactNode;
 }
 
-export function MenuDropdown({
-  children,
-  onMouseEnter,
-  onMouseLeave,
-  ...others
-}: MenuDropdownProps) {
+const defaultProps: Partial<MenuDropdownProps> = {};
+
+export function MenuDropdown(props: MenuDropdownProps) {
+  const { children, onMouseEnter, onMouseLeave, ...others } = useComponentDefaultProps(
+    'MenuDropdown',
+    defaultProps,
+    props
+  );
+
   const wrapperRef = useRef<HTMLDivElement>();
   const ctx = useMenuContext();
 
   const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
     if (event.key === 'ArrowUp' || event.key === 'ArrowDown') {
       event.preventDefault();
-      wrapperRef.current.querySelectorAll<HTMLButtonElement>('[data-menu-item]')[0].focus();
+      wrapperRef.current
+        .querySelectorAll<HTMLButtonElement>('[data-menu-item]:not(:disabled)')[0]
+        ?.focus();
     }
   };
 

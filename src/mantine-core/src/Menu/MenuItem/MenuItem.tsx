@@ -1,5 +1,5 @@
 import React, { useRef, forwardRef } from 'react';
-import { DefaultProps, MantineColor, Selectors, useContextStylesApi } from '@mantine/styles';
+import { DefaultProps, MantineColor, Selectors, useComponentDefaultProps } from '@mantine/styles';
 import {
   createEventHandler,
   createPolymorphicComponent,
@@ -29,71 +29,76 @@ export interface MenuItemProps extends DefaultProps {
   rightSection?: React.ReactNode;
 }
 
-export const _MenuItem = forwardRef<HTMLButtonElement, MenuItemProps>(
-  (
-    { children, className, color, closeMenuOnClick, icon, rightSection, ...others }: MenuItemProps,
-    ref
-  ) => {
-    const ctx = useMenuContext();
-    const { classNames, styles, unstyled } = useContextStylesApi();
-    const { classes, cx, theme } = useStyles(
-      { radius: ctx.radius, color },
-      { name: 'Menu', classNames, styles, unstyled }
-    );
-    const itemRef = useRef<HTMLButtonElement>();
+const defaultProps: Partial<DefaultProps> = {};
 
-    const itemIndex = ctx.getItemIndex(itemRef.current);
-    const _others: any = others;
+export const _MenuItem = forwardRef<HTMLButtonElement, MenuItemProps>((props, ref) => {
+  const { children, className, color, closeMenuOnClick, icon, rightSection, ...others } =
+    useComponentDefaultProps('MenuItem', defaultProps, props);
 
-    const handleMouseLeave = createEventHandler(_others.onMouseLeave, () => ctx.setHovered(-1));
-    const handleMouseEnter = createEventHandler(_others.onMouseEnter, () =>
-      ctx.setHovered(ctx.getItemIndex(itemRef.current))
-    );
+  const ctx = useMenuContext();
+  const { classes, cx, theme } = useStyles(
+    { radius: ctx.radius, color },
+    {
+      name: 'Menu',
+      classNames: ctx.classNames,
+      styles: ctx.styles,
+      unstyled: ctx.unstyled,
+      variant: ctx.variant,
+    }
+  );
 
-    const handleClick = createEventHandler(_others.onClick, () => {
-      if (typeof closeMenuOnClick === 'boolean') {
-        closeMenuOnClick && ctx.closeDropdownImmediately();
-      } else {
-        ctx.closeOnItemClick && ctx.closeDropdownImmediately();
-      }
-    });
+  const itemRef = useRef<HTMLButtonElement>();
+  const itemIndex = ctx.getItemIndex(itemRef.current);
+  const _others: any = others;
 
-    const handleFocus = createEventHandler(_others.onFocus, () =>
-      ctx.setHovered(ctx.getItemIndex(itemRef.current))
-    );
+  const handleMouseLeave = createEventHandler(_others.onMouseLeave, () => ctx.setHovered(-1));
+  const handleMouseEnter = createEventHandler(_others.onMouseEnter, () =>
+    ctx.setHovered(ctx.getItemIndex(itemRef.current))
+  );
 
-    return (
-      <Box
-        component="button"
-        {...others}
-        type="button"
-        tabIndex={-1}
-        onFocus={handleFocus}
-        className={cx(classes.item, className)}
-        ref={useMergedRef(itemRef, ref)}
-        role="menuitem"
-        data-menu-item
-        data-hovered={ctx.hovered === itemIndex ? true : undefined}
-        onMouseEnter={handleMouseEnter}
-        onMouseLeave={handleMouseLeave}
-        onClick={handleClick}
-        onKeyDown={createScopedKeydownHandler({
-          siblingSelector: '[data-menu-item]',
-          parentSelector: '[data-menu-dropdown]',
-          activateOnFocus: false,
-          loop: ctx.loop,
-          dir: theme.dir,
-          orientation: 'vertical',
-          onKeyDown: _others.onKeydown,
-        })}
-      >
-        {icon && <div className={classes.itemIcon}>{icon}</div>}
-        {children && <div className={classes.itemLabel}>{children}</div>}
-        {rightSection && <div className={classes.itemRightSection}>{rightSection}</div>}
-      </Box>
-    );
-  }
-);
+  const handleClick = createEventHandler(_others.onClick, () => {
+    if (typeof closeMenuOnClick === 'boolean') {
+      closeMenuOnClick && ctx.closeDropdownImmediately();
+    } else {
+      ctx.closeOnItemClick && ctx.closeDropdownImmediately();
+    }
+  });
+
+  const handleFocus = createEventHandler(_others.onFocus, () =>
+    ctx.setHovered(ctx.getItemIndex(itemRef.current))
+  );
+
+  return (
+    <Box
+      component="button"
+      type="button"
+      {...others}
+      tabIndex={-1}
+      onFocus={handleFocus}
+      className={cx(classes.item, className)}
+      ref={useMergedRef(itemRef, ref)}
+      role="menuitem"
+      data-menu-item
+      data-hovered={ctx.hovered === itemIndex ? true : undefined}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+      onClick={handleClick}
+      onKeyDown={createScopedKeydownHandler({
+        siblingSelector: '[data-menu-item]',
+        parentSelector: '[data-menu-dropdown]',
+        activateOnFocus: false,
+        loop: ctx.loop,
+        dir: theme.dir,
+        orientation: 'vertical',
+        onKeyDown: _others.onKeydown,
+      })}
+    >
+      {icon && <div className={classes.itemIcon}>{icon}</div>}
+      {children && <div className={classes.itemLabel}>{children}</div>}
+      {rightSection && <div className={classes.itemRightSection}>{rightSection}</div>}
+    </Box>
+  );
+});
 
 _MenuItem.displayName = '@mantine/core/MenuItem';
 

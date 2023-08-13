@@ -9,6 +9,5 @@ export type AccordionChevronPosition = 'left' | 'right';
 export type AccordionVariant = 'default' | 'contained' | 'filled' | 'separated';
 
 export interface AccordionStylesParams {
-  variant: AccordionVariant;
   radius?: MantineNumberSize;
 }

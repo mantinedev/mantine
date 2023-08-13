@@ -1,10 +1,20 @@
 import React from 'react';
 import { SpotlightAction, SpotlightActionProps } from '@mantine/spotlight';
-import { createStyles, UnstyledButton, Group, Text, Image, Center, Badge } from '@mantine/core';
+import {
+  createStyles,
+  UnstyledButton,
+  Group,
+  Text,
+  Image,
+  Center,
+  Badge,
+  rem,
+} from '@mantine/core';
+import { MantineDemo } from '@mantine/ds';
 import { Wrapper } from './_wrapper';
 
 const code = `
-import { createStyles, UnstyledButton, Group, Text, Image, Center, Badge } from '@mantine/core';
+import { createStyles, UnstyledButton, Group, Text, Image, Center, Badge, rem } from '@mantine/core';
 import { SpotlightProvider, SpotlightAction, SpotlightActionProps } from '@mantine/spotlight';
 
 const actions: SpotlightAction[] = [
@@ -44,16 +54,15 @@ const useStyles = createStyles((theme) => ({
     position: 'relative',
     display: 'block',
     width: '100%',
-    padding: '10px 12px',
+    padding: \`\${rem(10)} \${rem(12)}\`,
     borderRadius: theme.radius.sm,
-  },
+    ...theme.fn.hover({
+      backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[1],
+    }),
 
-  actionHovered: {
-    backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[1],
-  },
-
-  actionBody: {
-    flex: 1,
+    '&[data-hovered]': {
+      backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[1],
+    },
   },
 }));
 
@@ -65,11 +74,12 @@ function CustomAction({
   onTrigger,
   ...others
 }: SpotlightActionProps) {
-  const { classes, cx } = useStyles(null, { styles, classNames, name: 'Spotlight' });
+  const { classes } = useStyles(null, { styles, classNames, name: 'Spotlight' });
 
   return (
     <UnstyledButton
-      className={cx(classes.action, { [classes.actionHovered]: hovered })}
+      className={classes.action}
+      data-hovered={hovered || undefined}
       tabIndex={-1}
       onMouseDown={(event) => event.preventDefault()}
       onClick={onTrigger}
@@ -82,7 +92,7 @@ function CustomAction({
           </Center>
         )}
 
-        <div className={classes.actionBody}>
+        <div style={{ flex: 1 }}>
           <Text>{action.title}</Text>
 
           {action.description && (
@@ -149,16 +159,15 @@ const useStyles = createStyles((theme) => ({
     position: 'relative',
     display: 'block',
     width: '100%',
-    padding: '10px 12px',
+    padding: `${rem(10)} ${rem(12)}`,
     borderRadius: theme.radius.sm,
-  },
+    ...theme.fn.hover({
+      backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[1],
+    }),
 
-  actionHovered: {
-    backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[1],
-  },
-
-  actionBody: {
-    flex: 1,
+    '&[data-hovered]': {
+      backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[1],
+    },
   },
 }));
 
@@ -170,11 +179,12 @@ function CustomAction({
   onTrigger,
   ...others
 }: SpotlightActionProps) {
-  const { classes, cx } = useStyles(null, { styles, classNames, name: 'Spotlight' });
+  const { classes } = useStyles(null, { styles, classNames, name: 'Spotlight' });
 
   return (
     <UnstyledButton
-      className={cx(classes.action, { [classes.actionHovered]: hovered })}
+      className={classes.action}
+      data-hovered={hovered || undefined}
       tabIndex={-1}
       onMouseDown={(event) => event.preventDefault()}
       onClick={onTrigger}
@@ -187,7 +197,7 @@ function CustomAction({
           </Center>
         )}
 
-        <div className={classes.actionBody}>
+        <div style={{ flex: 1 }}>
           <Text>{action.title}</Text>
 
           {action.description && (

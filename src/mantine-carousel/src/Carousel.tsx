@@ -1,29 +1,30 @@
 /* eslint-disable react/no-unused-prop-types */
-import React, { forwardRef, useEffect, useCallback, useState, Children } from 'react';
 import {
-  useComponentDefaultProps,
   Box,
-  DefaultProps,
-  UnstyledButton,
   ChevronIcon,
+  DefaultProps,
   MantineNumberSize,
-  StylesApiProvider,
   Selectors,
+  UnstyledButton,
+  useComponentDefaultProps,
 } from '@mantine/core';
 import { clamp } from '@mantine/hooks';
-import useEmblaCarousel, { EmblaPluginType } from 'embla-carousel-react';
 import { ForwardRefWithStaticComponents } from '@mantine/utils';
-import { CarouselSlide, CarouselSlideStylesNames } from './CarouselSlide/CarouselSlide';
+import useEmblaCarousel, { EmblaPluginType } from 'embla-carousel-react';
+import React, { Children, forwardRef, useCallback, useEffect, useState } from 'react';
 import { CarouselProvider } from './Carousel.context';
-import { CarouselOrientation, Embla, CarouselBreakpoint } from './types';
-import { getChevronRotation } from './get-chevron-rotation';
 import useStyles, { CarouselStylesParams } from './Carousel.styles';
+import { CarouselSlide, CarouselSlideStylesNames } from './CarouselSlide/CarouselSlide';
+import { getChevronRotation } from './get-chevron-rotation';
+import { CarouselBreakpoint, CarouselOrientation, Embla } from './types';
 
 export type CarouselStylesNames = CarouselSlideStylesNames | Selectors<typeof useStyles>;
 
 export interface CarouselProps
   extends DefaultProps<CarouselStylesNames, CarouselStylesParams>,
-    React.ComponentPropsWithoutRef<'div'> {
+    React.ComponentPropsWithRef<'div'> {
+  variant?: string;
+
   /** <Carousel.Slide /> components */
   children?: React.ReactNode;
 
@@ -32,6 +33,9 @@ export interface CarouselProps
 
   /** Called when user clicks previous button */
   onPreviousSlide?(): void;
+
+  /** Called with slide index when slide changes */
+  onSlideChange?(index: number): void;
 
   /** Get embla API as ref */
   getEmblaApi?(embla: Embla): void;
@@ -42,16 +46,16 @@ export interface CarouselProps
   /** Previous control aria-label */
   previousControlLabel?: string;
 
-  /** Previous/next controls size in px */
+  /** Previous/next controls size */
   controlSize?: number;
 
   /** Key of theme.spacing or number to set space between next/previous control and carousel boundary */
   controlsOffset?: MantineNumberSize;
 
-  /** Slide width, defaults to 100%, examples: 200px, 50% */
+  /** Slide width, defaults to 100%, examples: 40rem 50% */
   slideSize?: string | number;
 
-  /** Key of theme.spacing or number to set gap between slides in px */
+  /** Key of theme.spacing or number to set gap between slides */
   slideGap?: MantineNumberSize;
 
   /** Control slideSize and slideGap at different viewport sizes */
@@ -67,7 +71,7 @@ export interface CarouselProps
   align?: 'start' | 'center' | 'end' | number;
 
   /** Number of slides that should be scrolled with next/previous buttons */
-  slidesToScroll?: number;
+  slidesToScroll?: number | 'auto';
 
   /** Determines whether gap should be treated as part of the slide size, true by default */
   includeGapInSize?: boolean;
@@ -110,6 +114,9 @@ export interface CarouselProps
 
   /** Clear leading and trailing empty space that causes excessive scrolling. Use trimSnaps to only use snap points that trigger scrolling or keepSnaps to keep them. */
   containScroll?: 'trimSnaps' | 'keepSnaps' | '';
+
+  /** Determines whether arrow key should switch slides, true by default */
+  withKeyboardEvents?: boolean;
 }
 
 const defaultProps: Partial<CarouselProps> = {
@@ -131,6 +138,7 @@ const defaultProps: Partial<CarouselProps> = {
   withIndicators: false,
   skipSnaps: false,
   containScroll: '',
+  withKeyboardEvents: true,
 };
 
 export const _Carousel = forwardRef<HTMLDivElement, CarouselProps>((props, ref) => {
@@ -140,6 +148,7 @@ export const _Carousel = forwardRef<HTMLDivElement, CarouselProps>((props, ref) 
     getEmblaApi,
     onNextSlide,
     onPreviousSlide,
+    onSlideChange,
     nextControlLabel,
     previousControlLabel,
     controlSize,
@@ -168,18 +177,21 @@ export const _Carousel = forwardRef<HTMLDivElement, CarouselProps>((props, ref) 
     breakpoints,
     skipSnaps,
     containScroll,
+    withKeyboardEvents,
+    variant,
     ...others
   } = useComponentDefaultProps('Carousel', defaultProps, props);
 
   const { classes, cx, theme } = useStyles(
-    { controlSize, controlsOffset, orientation, height },
-    { name: 'Carousel', classNames, styles, unstyled }
+    { controlSize, controlsOffset, orientation, height, includeGapInSize, breakpoints, slideGap },
+    { name: 'Carousel', classNames, styles, unstyled, variant }
   );
 
   const [emblaRefElement, embla] = useEmblaCarousel(
     {
       axis: orientation === 'horizontal' ? 'x' : 'y',
-      direction: theme.dir,
+      // keep direction undefined for vertical orientation if the current theme is RTL
+      direction: orientation === 'horizontal' ? theme.dir : undefined,
       startIndex: initialSlide,
       loop,
       align,
@@ -201,7 +213,9 @@ export const _Carousel = forwardRef<HTMLDivElement, CarouselProps>((props, ref) 
 
   const handleSelect = useCallback(() => {
     if (!embla) return;
-    setSelected(embla.selectedScrollSnap());
+    const slide = embla.selectedScrollSnap();
+    setSelected(slide);
+    onSlideChange?.(slide);
   }, [embla, setSelected]);
 
   const handlePrevious = useCallback(() => {
@@ -216,14 +230,16 @@ export const _Carousel = forwardRef<HTMLDivElement, CarouselProps>((props, ref) 
 
   const handleKeydown = useCallback(
     (event: React.KeyboardEvent<HTMLDivElement>) => {
-      if (event.key === 'ArrowRight') {
-        event.preventDefault();
-        handleNext();
-      }
+      if (withKeyboardEvents) {
+        if (event.key === 'ArrowRight') {
+          event.preventDefault();
+          handleNext();
+        }
 
-      if (event.key === 'ArrowLeft') {
-        event.preventDefault();
-        handlePrevious();
+        if (event.key === 'ArrowLeft') {
+          event.preventDefault();
+          handlePrevious();
+        }
       }
     },
     [embla]
@@ -242,7 +258,7 @@ export const _Carousel = forwardRef<HTMLDivElement, CarouselProps>((props, ref) 
     }
 
     return undefined;
-  }, [embla]);
+  }, [embla, slidesToScroll]);
 
   useEffect(() => {
     if (embla) {
@@ -252,7 +268,7 @@ export const _Carousel = forwardRef<HTMLDivElement, CarouselProps>((props, ref) 
         clamp(currentSelected, 0, Children.toArray(children).length - 1)
       );
     }
-  }, [Children.toArray(children).length]);
+  }, [Children.toArray(children).length, slidesToScroll]);
 
   const canScrollPrev = embla?.canScrollPrev() || false;
   const canScrollNext = embla?.canScrollNext() || false;
@@ -271,72 +287,81 @@ export const _Carousel = forwardRef<HTMLDivElement, CarouselProps>((props, ref) 
     ));
 
   return (
-    <StylesApiProvider classNames={classNames} styles={styles} unstyled={unstyled}>
-      <CarouselProvider
-        value={{ slideGap, slideSize, embla, orientation, includeGapInSize, breakpoints }}
+    <CarouselProvider
+      value={{
+        slideGap,
+        slideSize,
+        embla,
+        orientation,
+        includeGapInSize,
+        breakpoints,
+        classNames,
+        styles,
+        unstyled,
+        variant,
+      }}
+    >
+      <Box
+        className={cx(classes.root, className)}
+        ref={ref}
+        onKeyDownCapture={handleKeydown}
+        {...others}
       >
-        <Box
-          className={cx(classes.root, className)}
-          ref={ref}
-          onKeyDownCapture={handleKeydown}
-          {...others}
-        >
-          <div className={classes.viewport} ref={emblaRefElement}>
-            <div className={classes.container}>{children}</div>
+        <div className={classes.viewport} ref={emblaRefElement}>
+          <div className={classes.container}>{children}</div>
+        </div>
+
+        {withIndicators && <div className={classes.indicators}>{indicators}</div>}
+
+        {withControls && (
+          <div className={classes.controls}>
+            <UnstyledButton
+              onClick={handlePrevious}
+              className={classes.control}
+              aria-label={previousControlLabel}
+              data-inactive={!canScrollPrev || undefined}
+              tabIndex={canScrollPrev ? 0 : -1}
+            >
+              {typeof previousControlIcon !== 'undefined' ? (
+                previousControlIcon
+              ) : (
+                <ChevronIcon
+                  style={{
+                    transform: `rotate(${getChevronRotation({
+                      dir: theme.dir,
+                      orientation,
+                      direction: 'previous',
+                    })}deg)`,
+                  }}
+                />
+              )}
+            </UnstyledButton>
+
+            <UnstyledButton
+              onClick={handleNext}
+              className={classes.control}
+              aria-label={nextControlLabel}
+              data-inactive={!canScrollNext || undefined}
+              tabIndex={canScrollNext ? 0 : -1}
+            >
+              {typeof nextControlIcon !== 'undefined' ? (
+                nextControlIcon
+              ) : (
+                <ChevronIcon
+                  style={{
+                    transform: `rotate(${getChevronRotation({
+                      dir: theme.dir,
+                      orientation,
+                      direction: 'next',
+                    })}deg)`,
+                  }}
+                />
+              )}
+            </UnstyledButton>
           </div>
-
-          {withIndicators && <div className={classes.indicators}>{indicators}</div>}
-
-          {withControls && (
-            <div className={classes.controls}>
-              <UnstyledButton
-                onClick={handlePrevious}
-                className={classes.control}
-                aria-label={previousControlLabel}
-                data-inactive={!canScrollPrev || undefined}
-                tabIndex={canScrollPrev ? 0 : -1}
-              >
-                {typeof previousControlIcon !== 'undefined' ? (
-                  previousControlIcon
-                ) : (
-                  <ChevronIcon
-                    style={{
-                      transform: `rotate(${getChevronRotation({
-                        dir: theme.dir,
-                        orientation,
-                        direction: 'previous',
-                      })}deg)`,
-                    }}
-                  />
-                )}
-              </UnstyledButton>
-
-              <UnstyledButton
-                onClick={handleNext}
-                className={classes.control}
-                aria-label={nextControlLabel}
-                data-inactive={!canScrollNext || undefined}
-                tabIndex={canScrollNext ? 0 : -1}
-              >
-                {typeof nextControlIcon !== 'undefined' ? (
-                  nextControlIcon
-                ) : (
-                  <ChevronIcon
-                    style={{
-                      transform: `rotate(${getChevronRotation({
-                        dir: theme.dir,
-                        orientation,
-                        direction: 'next',
-                      })}deg)`,
-                    }}
-                  />
-                )}
-              </UnstyledButton>
-            </div>
-          )}
-        </Box>
-      </CarouselProvider>
-    </StylesApiProvider>
+        )}
+      </Box>
+    </CarouselProvider>
   );
 }) as any;
 

@@ -32,6 +32,7 @@ export function usePagination({
   initialPage = 1,
   onChange,
 }: PaginationParams) {
+  const _total = Math.max(Math.trunc(total), 0);
   const [activePage, setActivePage] = useUncontrolled({
     value: page,
     onChange,
@@ -42,8 +43,8 @@ export function usePagination({
   const setPage = (pageNumber: number) => {
     if (pageNumber <= 0) {
       setActivePage(1);
-    } else if (pageNumber > total) {
-      setActivePage(total);
+    } else if (pageNumber > _total) {
+      setActivePage(_total);
     } else {
       setActivePage(pageNumber);
     }
@@ -52,28 +53,28 @@ export function usePagination({
   const next = () => setPage(activePage + 1);
   const previous = () => setPage(activePage - 1);
   const first = () => setPage(1);
-  const last = () => setPage(total);
+  const last = () => setPage(_total);
 
   const paginationRange = useMemo((): (number | 'dots')[] => {
     const totalPageNumbers = siblings * 2 + 3 + boundaries * 2;
-    if (totalPageNumbers >= total) {
-      return range(1, total);
+    if (totalPageNumbers >= _total) {
+      return range(1, _total);
     }
 
     const leftSiblingIndex = Math.max(activePage - siblings, boundaries);
-    const rightSiblingIndex = Math.min(activePage + siblings, total - boundaries);
+    const rightSiblingIndex = Math.min(activePage + siblings, _total - boundaries);
 
     const shouldShowLeftDots = leftSiblingIndex > boundaries + 2;
-    const shouldShowRightDots = rightSiblingIndex < total - (boundaries + 1);
+    const shouldShowRightDots = rightSiblingIndex < _total - (boundaries + 1);
 
     if (!shouldShowLeftDots && shouldShowRightDots) {
       const leftItemCount = siblings * 2 + boundaries + 2;
-      return [...range(1, leftItemCount), DOTS, ...range(total - (boundaries - 1), total)];
+      return [...range(1, leftItemCount), DOTS, ...range(_total - (boundaries - 1), _total)];
     }
 
     if (shouldShowLeftDots && !shouldShowRightDots) {
       const rightItemCount = boundaries + 1 + 2 * siblings;
-      return [...range(1, boundaries), DOTS, ...range(total - rightItemCount, total)];
+      return [...range(1, boundaries), DOTS, ...range(_total - rightItemCount, _total)];
     }
 
     return [
@@ -81,9 +82,9 @@ export function usePagination({
       DOTS,
       ...range(leftSiblingIndex, rightSiblingIndex),
       DOTS,
-      ...range(total - boundaries + 1, total),
+      ...range(_total - boundaries + 1, _total),
     ];
-  }, [total, siblings, activePage]);
+  }, [_total, siblings, activePage]);
 
   return {
     range: paginationRange,

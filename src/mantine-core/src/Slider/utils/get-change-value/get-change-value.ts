@@ -21,9 +21,11 @@ export function getChangeValue({
   const dx = left * (max - min);
   const nextValue = (dx !== 0 ? Math.round(dx / step) * step : 0) + min;
 
+  const nextValueWithinStep = Math.max(nextValue, min);
+
   if (precision !== undefined) {
-    return Number(nextValue.toFixed(precision));
+    return Number(nextValueWithinStep.toFixed(precision));
   }
 
-  return nextValue;
+  return nextValueWithinStep;
 }

@@ -2,21 +2,20 @@ import React from 'react';
 
 export interface PasswordToggleIconProps {
   reveal: boolean;
-  size: number;
+  size: number | string;
 }
 
 export type PasswordInputVisibilityToggleIcon = React.FC<PasswordToggleIconProps>;
 
 export const PasswordToggleIcon: PasswordInputVisibilityToggleIcon = ({
   reveal,
-  size = 15,
+  size,
 }: PasswordToggleIconProps) => (
   <svg
-    width={size}
-    height={size}
     viewBox="0 0 15 15"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
+    style={{ width: size, height: size }}
   >
     <path
       d={

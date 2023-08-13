@@ -5,6 +5,8 @@ import { useGridContext } from '../Grid.context';
 import useStyles, { ColSpan } from './Col.styles';
 
 export interface ColProps extends DefaultProps, React.ComponentPropsWithoutRef<'div'> {
+  variant?: string;
+
   /** Default col span */
   span?: ColSpan;
 
@@ -60,14 +62,7 @@ export interface ColProps extends DefaultProps, React.ComponentPropsWithoutRef<'
   xl?: ColSpan;
 }
 
-const defaultProps: Partial<ColProps> = {
-  offset: 0,
-  offsetXs: 0,
-  offsetSm: 0,
-  offsetMd: 0,
-  offsetLg: 0,
-  offsetXl: 0,
-};
+const defaultProps: Partial<ColProps> = {};
 
 function isValidSpan(span: ColSpan) {
   if (span === 'auto' || span === 'content') {
@@ -100,19 +95,21 @@ export const Col = forwardRef<HTMLDivElement, ColProps>((props: ColProps, ref) =
     className,
     id,
     unstyled,
+    variant,
     ...others
-  } = useComponentDefaultProps('Grid.Col', defaultProps, props);
+  } = useComponentDefaultProps('GridCol', defaultProps, props);
 
   const ctx = useGridContext();
-
-  if (!ctx) {
-    throw new Error('[@mantine/core] Grid.Col was used outside of Grid context');
-  }
 
   const colSpan = span || ctx.columns;
   const { classes, cx } = useStyles(
     {
       gutter: ctx.gutter,
+      gutterXs: ctx.gutterXs,
+      gutterSm: ctx.gutterSm,
+      gutterMd: ctx.gutterMd,
+      gutterLg: ctx.gutterLg,
+      gutterXl: ctx.gutterXl,
       offset,
       offsetXs,
       offsetSm,
@@ -134,7 +131,7 @@ export const Col = forwardRef<HTMLDivElement, ColProps>((props: ColProps, ref) =
       columns: ctx.columns,
       span: colSpan,
     },
-    { unstyled, name: 'Col' }
+    { unstyled, name: 'Grid', variant }
   );
 
   if (!isValidSpan(colSpan) || colSpan > ctx.columns) {
@@ -142,7 +139,7 @@ export const Col = forwardRef<HTMLDivElement, ColProps>((props: ColProps, ref) =
   }
 
   return (
-    <Box className={cx(classes.root, className)} ref={ref} {...others}>
+    <Box className={cx(classes.col, className)} ref={ref} {...others}>
       {children}
     </Box>
   );

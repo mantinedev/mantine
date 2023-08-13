@@ -34,8 +34,8 @@ export function useTransition({
   const theme = useMantineTheme();
   const shouldReduceMotion = useReducedMotion();
   const reduceMotion = theme.respectReducedMotion ? shouldReduceMotion : false;
+  const [transitionDuration, setTransitionDuration] = useState(reduceMotion ? 0 : duration);
   const [transitionStatus, setStatus] = useState<TransitionStatus>(mounted ? 'entered' : 'exited');
-  let transitionDuration = reduceMotion ? 0 : duration;
   const timeoutRef = useRef<number>(-1);
 
   const handleStateChange = (shouldMount: boolean) => {
@@ -44,9 +44,11 @@ export function useTransition({
 
     setStatus(shouldMount ? 'pre-entering' : 'pre-exiting');
     window.clearTimeout(timeoutRef.current);
-    transitionDuration = reduceMotion ? 0 : shouldMount ? duration : exitDuration;
 
-    if (transitionDuration === 0) {
+    const newTransitionDuration = reduceMotion ? 0 : shouldMount ? duration : exitDuration;
+    setTransitionDuration(newTransitionDuration);
+
+    if (newTransitionDuration === 0) {
       typeof preHandler === 'function' && preHandler();
       typeof handler === 'function' && handler();
       setStatus(shouldMount ? 'entered' : 'exited');
@@ -60,7 +62,7 @@ export function useTransition({
         window.clearTimeout(preStateTimeout);
         typeof handler === 'function' && handler();
         setStatus(shouldMount ? 'entered' : 'exited');
-      }, transitionDuration);
+      }, newTransitionDuration);
     }
   };
 

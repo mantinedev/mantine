@@ -39,8 +39,8 @@ export function itSupportsInputProps<P>(
   });
 
   it('sets border-radius on input', () => {
-    const { container } = render(<Component {...requiredProps} radius={43} id="secret-test-id" />);
-    expect(container.querySelector('#secret-test-id')).toHaveStyle({ borderRadius: '43px' });
+    const { container } = render(<Component {...requiredProps} radius={32} id="secret-test-id" />);
+    expect(container.querySelector('#secret-test-id')).toHaveStyle({ borderRadius: '2rem' });
   });
 
   it('sets required attribute on input based on required prop', () => {

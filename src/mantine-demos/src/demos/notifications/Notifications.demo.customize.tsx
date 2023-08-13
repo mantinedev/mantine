@@ -1,10 +1,11 @@
 import React from 'react';
 import { Group, Button } from '@mantine/core';
-import { showNotification } from '@mantine/notifications';
+import { MantineDemo } from '@mantine/ds';
+import { notifications } from '@mantine/notifications';
 
 const code = `
 import { Group, Button } from '@mantine/core';
-import { showNotification } from '@mantine/notifications';
+import { notifications } from '@mantine/notifications';
 
 function Demo() {
   return (
@@ -12,7 +13,7 @@ function Demo() {
       <Button
         variant="outline"
         onClick={() =>
-          showNotification({
+          notifications.show({
             title: 'Default notification',
             message: 'Hey there, your code is awesome! 🤥',
             styles: (theme) => ({
@@ -45,7 +46,7 @@ function Demo() {
       <Button
         variant="outline"
         onClick={() =>
-          showNotification({
+          notifications.show({
             title: 'Default notification',
             message: 'Hey there, your code is awesome! 🤥',
             styles: (theme) => ({

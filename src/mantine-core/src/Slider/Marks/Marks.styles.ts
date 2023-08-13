@@ -1,29 +1,46 @@
-import { createStyles, MantineNumberSize, MantineColor } from '@mantine/styles';
+import { createStyles, MantineColor, rem, getSize } from '@mantine/styles';
 import { sizes } from '../SliderRoot/SliderRoot.styles';
 
 interface MarksStyles {
   color: MantineColor;
-  size: MantineNumberSize;
   disabled: boolean;
+  thumbSize?: number;
 }
 
-export default createStyles((theme, { size, color, disabled }: MarksStyles) => ({
+export default createStyles((theme, { color, disabled, thumbSize }: MarksStyles, { size }) => ({
+  marksContainer: {
+    position: 'absolute',
+    right: thumbSize ? rem(thumbSize / 2) : getSize({ sizes, size }),
+    left: thumbSize ? rem(thumbSize / 2) : getSize({ sizes, size }),
+
+    '&:has(~ input:disabled)': {
+      '& .mantine-Slider-markFilled': {
+        border: `${rem(2)} solid ${
+          theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[2]
+        }`,
+        borderColor: theme.colorScheme === 'dark' ? theme.colors.dark[3] : theme.colors.gray[4],
+      },
+    },
+  },
+
   markWrapper: {
     position: 'absolute',
-    top: 0,
+    top: `calc(${rem(getSize({ sizes, size }))} / 2)`,
     zIndex: 2,
+    height: 0,
   },
 
   mark: {
     boxSizing: 'border-box',
-    border: `${theme.fn.size({ size, sizes }) >= 8 ? '2px' : '1px'} solid ${
+    border: `${rem(2)} solid ${
       theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[2]
     }`,
-    height: theme.fn.size({ sizes, size }),
-    width: theme.fn.size({ sizes, size }),
+    height: getSize({ sizes, size }),
+    width: getSize({ sizes, size }),
     borderRadius: 1000,
-    transform: `translateX(-${theme.fn.size({ sizes, size }) / 2}px)`,
+    transform: `translateX(calc(-${getSize({ sizes, size })} / 2))`,
     backgroundColor: theme.white,
+    pointerEvents: 'none',
   },
 
   markFilled: {
@@ -35,10 +52,11 @@ export default createStyles((theme, { size, color, disabled }: MarksStyles) => (
   },
 
   markLabel: {
-    transform: 'translate(-50%, 0)',
+    transform: `translate(-50%, calc(${theme.spacing.xs} / 2))`,
     fontSize: theme.fontSizes.sm,
     color: theme.colorScheme === 'dark' ? theme.colors.dark[2] : theme.colors.gray[6],
-    marginTop: `calc(${theme.spacing.xs}px / 2)`,
     whiteSpace: 'nowrap',
+    cursor: 'pointer',
+    userSelect: 'none',
   },
 }));

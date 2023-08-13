@@ -53,8 +53,12 @@ export { useNetwork } from './use-network/use-network';
 export { useTimeout } from './use-timeout/use-timeout';
 export { useTextSelection } from './use-text-selection/use-text-selection';
 export { usePrevious } from './use-previous/use-previous';
+export { useFavicon } from './use-favicon/use-favicon';
+export { useHeadroom } from './use-headroom/use-headroom';
+export { useEyeDropper } from './use-eye-dropper/use-eye-dropper';
 
 export type { UseMovePosition } from './use-move/use-move';
 export type { OS } from './use-os/use-os';
 export type { HotkeyItem } from './use-hotkeys/use-hotkeys';
 export type { UseListStateHandlers } from './use-list-state/use-list-state';
+export type { EyeDropperOpenReturnType } from './use-eye-dropper/use-eye-dropper';

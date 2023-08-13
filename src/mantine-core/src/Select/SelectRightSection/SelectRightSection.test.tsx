@@ -17,7 +17,9 @@ describe('@mantine/core/SelectRightSection', () => {
   });
 
   it('sets aria-label and size on CloseButton', () => {
-    render(<SelectRightSection shouldClear size="sm" clearButtonLabel="test-label" />);
+    render(
+      <SelectRightSection shouldClear size="sm" clearButtonProps={{ 'aria-label': 'test-label' }} />
+    );
     expect(screen.getByLabelText('test-label')).toBeInTheDocument();
   });
 

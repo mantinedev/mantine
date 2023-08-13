@@ -25,6 +25,35 @@ const EXCLUDE_PROPS = [
   'pl',
   'pr',
   'pb',
+  'bg',
+  'bga',
+  'bgp',
+  'bgr',
+  'bgsz',
+  'bottom',
+  'c',
+  'display',
+  'ff',
+  'fs',
+  'fw',
+  'fz',
+  'h',
+  'inset',
+  'left',
+  'lh',
+  'lts',
+  'mah',
+  'maw',
+  'mih',
+  'miw',
+  'opacity',
+  'pos',
+  'right',
+  'ta',
+  'td',
+  'top',
+  'tt',
+  'w',
 ];
 
 export const docgenParser = withCustomConfig(path.join(__dirname, '../../tsconfig.json'), {
@@ -32,6 +61,10 @@ export const docgenParser = withCustomConfig(path.join(__dirname, '../../tsconfi
   shouldExtractLiteralValuesFromEnum: true,
   propFilter: (prop: PropItem) => {
     if (EXCLUDE_PROPS.includes(prop.name) || prop.name.startsWith('__')) {
+      return false;
+    }
+
+    if (prop.name === 'variant' && prop.type.name === 'string') {
       return false;
     }
 

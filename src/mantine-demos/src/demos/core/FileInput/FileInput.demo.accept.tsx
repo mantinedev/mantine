@@ -1,4 +1,5 @@
 import React from 'react';
+import { MantineDemo } from '@mantine/ds';
 import { FileInput } from '@mantine/core';
 
 const code = `
@@ -11,9 +12,13 @@ function Demo() {
 
 function Demo() {
   return (
-    <div style={{ maxWidth: 320, marginLeft: 'auto', marginRight: 'auto' }}>
-      <FileInput label="Upload files" placeholder="Upload files" accept="image/png,image/jpeg" />
-    </div>
+    <FileInput
+      maw={320}
+      mx="auto"
+      label="Upload files"
+      placeholder="Upload files"
+      accept="image/png,image/jpeg"
+    />
   );
 }
 

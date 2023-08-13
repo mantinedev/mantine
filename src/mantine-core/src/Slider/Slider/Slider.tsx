@@ -1,5 +1,5 @@
 import React, { forwardRef, useRef, useState, useCallback } from 'react';
-import { useMergedRef, useMove, useUncontrolled, clamp } from '@mantine/hooks';
+import { useMove, useUncontrolled, clamp, useMergedRef } from '@mantine/hooks';
 import {
   DefaultProps,
   MantineColor,
@@ -14,6 +14,8 @@ import { Thumb, ThumbStylesNames } from '../Thumb/Thumb';
 import { Track, TrackStylesNames } from '../Track/Track';
 import { MarksStylesNames } from '../Marks/Marks';
 import { SliderRoot, SliderRootStylesNames } from '../SliderRoot/SliderRoot';
+import { getFloatingValue } from '../get-floating-value';
+import { getPrecision } from '../get-precision';
 
 export type SliderStylesNames =
   | SliderRootStylesNames
@@ -24,13 +26,15 @@ export type SliderStylesNames =
 export interface SliderProps
   extends DefaultProps<SliderStylesNames>,
     Omit<React.ComponentPropsWithoutRef<'div'>, 'value' | 'onChange'> {
+  variant?: string;
+
   /** Color from theme.colors */
   color?: MantineColor;
 
-  /** Track border-radius from theme or number to set border-radius in px */
+  /** Key of theme.radius or any valid CSS value to set border-radius, "xl" by default */
   radius?: MantineNumberSize;
 
-  /** Predefined track and thumb size, number to set sizes in px */
+  /** Controls size of track and thumb */
   size?: MantineNumberSize;
 
   /** Minimal possible value */
@@ -90,11 +94,14 @@ export interface SliderProps
   /** Disables slider */
   disabled?: boolean;
 
-  /** Thumb width and height in px */
+  /** Thumb width and height */
   thumbSize?: number;
 
   /** A transformation function, to change the scale of the slider */
   scale?: (value: number) => number;
+
+  /** Allows the track to be inverted */
+  inverted?: boolean;
 }
 
 const defaultProps: Partial<SliderProps> = {
@@ -127,7 +134,7 @@ export const Slider = forwardRef<HTMLDivElement, SliderProps>((props, ref) => {
     min,
     max,
     step,
-    precision,
+    precision: _precision,
     defaultValue,
     name,
     marks,
@@ -143,9 +150,12 @@ export const Slider = forwardRef<HTMLDivElement, SliderProps>((props, ref) => {
     unstyled,
     thumbSize,
     scale,
+    inverted,
+    variant,
     ...others
   } = useComponentDefaultProps('Slider', defaultProps, props);
 
+  const precision = _precision ?? getPrecision(step);
   const theme = useMantineTheme();
   const [hovered, setHovered] = useState(false);
   const [_value, setValue] = useUncontrolled({
@@ -156,6 +166,7 @@ export const Slider = forwardRef<HTMLDivElement, SliderProps>((props, ref) => {
   });
 
   const valueRef = useRef(_value);
+  const root = useRef<HTMLDivElement>();
   const thumb = useRef<HTMLDivElement>();
   const position = getPosition({ value: _value, min, max });
   const scaledValue = scale(_value);
@@ -169,7 +180,7 @@ export const Slider = forwardRef<HTMLDivElement, SliderProps>((props, ref) => {
         valueRef.current = nextValue;
       }
     },
-    [disabled, min, max, step, precision]
+    [disabled, min, max, step, precision, setValue]
   );
 
   const { ref: container, active } = useMove(
@@ -178,19 +189,16 @@ export const Slider = forwardRef<HTMLDivElement, SliderProps>((props, ref) => {
     theme.dir
   );
 
-  const handleThumbMouseDown = (
-    event: React.MouseEvent<HTMLDivElement> | React.TouchEvent<HTMLDivElement>
-  ) => {
-    event.stopPropagation();
-  };
-
   const handleTrackKeydownCapture = (event: React.KeyboardEvent<HTMLDivElement>) => {
     if (!disabled) {
       switch (event.key) {
         case 'ArrowUp': {
           event.preventDefault();
           thumb.current.focus();
-          const nextValue = Math.min(Math.max(_value + step, min), max);
+          const nextValue = getFloatingValue(
+            Math.min(Math.max(_value + step, min), max),
+            precision
+          );
           onChangeEnd?.(nextValue);
           setValue(nextValue);
           break;
@@ -199,9 +207,9 @@ export const Slider = forwardRef<HTMLDivElement, SliderProps>((props, ref) => {
         case 'ArrowRight': {
           event.preventDefault();
           thumb.current.focus();
-          const nextValue = Math.min(
-            Math.max(theme.dir === 'rtl' ? _value - step : _value + step, min),
-            max
+          const nextValue = getFloatingValue(
+            Math.min(Math.max(theme.dir === 'rtl' ? _value - step : _value + step, min), max),
+            precision
           );
           onChangeEnd?.(nextValue);
           setValue(nextValue);
@@ -211,7 +219,10 @@ export const Slider = forwardRef<HTMLDivElement, SliderProps>((props, ref) => {
         case 'ArrowDown': {
           event.preventDefault();
           thumb.current.focus();
-          const nextValue = Math.min(Math.max(_value - step, min), max);
+          const nextValue = getFloatingValue(
+            Math.min(Math.max(_value - step, min), max),
+            precision
+          );
           onChangeEnd?.(nextValue);
           setValue(nextValue);
           break;
@@ -220,9 +231,9 @@ export const Slider = forwardRef<HTMLDivElement, SliderProps>((props, ref) => {
         case 'ArrowLeft': {
           event.preventDefault();
           thumb.current.focus();
-          const nextValue = Math.min(
-            Math.max(theme.dir === 'rtl' ? _value + step : _value - step, min),
-            max
+          const nextValue = getFloatingValue(
+            Math.min(Math.max(theme.dir === 'rtl' ? _value + step : _value - step, min), max),
+            precision
           );
           onChangeEnd?.(nextValue);
           setValue(nextValue);
@@ -255,32 +266,39 @@ export const Slider = forwardRef<HTMLDivElement, SliderProps>((props, ref) => {
   return (
     <SliderRoot
       {...others}
-      size={size}
-      ref={useMergedRef(container, ref)}
+      ref={useMergedRef(ref, root)}
       onKeyDownCapture={handleTrackKeydownCapture}
-      onMouseDownCapture={() => container.current?.focus()}
+      onMouseDownCapture={() => root.current?.focus()}
+      size={size}
       classNames={classNames}
       styles={styles}
       disabled={disabled}
       unstyled={unstyled}
+      variant={variant}
     >
       <Track
+        inverted={inverted}
         offset={0}
         filled={position}
         marks={marks}
         size={size}
+        thumbSize={thumbSize}
         radius={radius}
         color={color}
         min={min}
         max={max}
         value={scaledValue}
         onChange={setValue}
-        onMouseEnter={showLabelOnHover ? () => setHovered(true) : undefined}
-        onMouseLeave={showLabelOnHover ? () => setHovered(false) : undefined}
         classNames={classNames}
         styles={styles}
         disabled={disabled}
         unstyled={unstyled}
+        variant={variant}
+        containerProps={{
+          ref: container,
+          onMouseEnter: showLabelOnHover ? () => setHovered(true) : undefined,
+          onMouseLeave: showLabelOnHover ? () => setHovered(false) : undefined,
+        }}
       >
         <Thumb
           max={max}
@@ -292,7 +310,6 @@ export const Slider = forwardRef<HTMLDivElement, SliderProps>((props, ref) => {
           size={size}
           label={_label}
           ref={thumb}
-          onMouseDown={handleThumbMouseDown}
           labelTransition={labelTransition}
           labelTransitionDuration={labelTransitionDuration}
           labelTransitionTimingFunction={labelTransitionTimingFunction}
@@ -300,10 +317,12 @@ export const Slider = forwardRef<HTMLDivElement, SliderProps>((props, ref) => {
           classNames={classNames}
           styles={styles}
           thumbLabel={thumbLabel}
-          showLabelOnHover={showLabelOnHover && hovered}
+          showLabelOnHover={showLabelOnHover}
+          isHovered={hovered}
           disabled={disabled}
           unstyled={unstyled}
           thumbSize={thumbSize}
+          variant={variant}
         >
           {thumbChildren}
         </Thumb>

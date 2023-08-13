@@ -11,6 +11,7 @@ props: ['HoverCard', 'HoverCardTarget', 'HoverCardDropdown']
 import: "import { HoverCard } from '@mantine/core';"
 source: 'mantine-core/src/HoverCard/HoverCard.tsx'
 docs: 'core/HoverCard.mdx'
+styles: ['HoverCard']
 ---
 
 import { HoverCardDemos } from '@mantine/demos';
@@ -27,7 +28,7 @@ Set open and close delays in ms with `openDelay` and `closeDelay` props:
 
 ## With interactive elements
 
-HoverCard is displayed only when mouse is over target element or dropdown,
+`HoverCard` is displayed only when mouse is over target element or dropdown,
 you can use anchors and buttons within dropdowns, using inputs is not recommended:
 
 <Demo data={HoverCardDemos.profile} />
@@ -125,5 +126,5 @@ function Demo() {
 
 ## Accessibility
 
-HoverCard is ignored by screen readers and cannot be activated with keyboard, use it to display only additional information
+`HoverCard` is ignored by screen readers and cannot be activated with keyboard, use it to display only additional information
 that is not required to understand the context.

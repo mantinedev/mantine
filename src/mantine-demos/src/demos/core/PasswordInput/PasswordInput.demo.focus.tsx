@@ -1,5 +1,6 @@
 import React from 'react';
-import { PasswordInput } from '@mantine/core';
+import { MantineDemo } from '@mantine/ds';
+import { PasswordInput, Box } from '@mantine/core';
 
 const code = `
 import { PasswordInput } from '@mantine/core';
@@ -24,7 +25,7 @@ function Demo() {
 
 function Demo() {
   return (
-    <div style={{ maxWidth: 360, margin: 'auto' }}>
+    <Box maw={360} mx="auto">
       <PasswordInput
         label="Toggle button is not focusable"
         placeholder="Toggle button is not focusable"
@@ -32,12 +33,12 @@ function Demo() {
       />
 
       <PasswordInput
+        mt="md"
         label="Toggle button is focusable"
         placeholder="Toggle button is focusable"
         toggleTabIndex={0}
-        style={{ marginTop: 15 }}
       />
-    </div>
+    </Box>
   );
 }
 

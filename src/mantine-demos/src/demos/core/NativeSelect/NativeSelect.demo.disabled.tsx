@@ -1,5 +1,6 @@
 import React from 'react';
-import { NativeSelect } from '@mantine/core';
+import { MantineDemo } from '@mantine/ds';
+import { Box, NativeSelect } from '@mantine/core';
 
 const code = `
 import { NativeSelect } from '@mantine/core';
@@ -11,14 +12,14 @@ function Demo() {
 
 function Demo() {
   return (
-    <div style={{ maxWidth: 320, marginLeft: 'auto', marginRight: 'auto' }}>
+    <Box maw={320} mx="auto">
       <NativeSelect
         data={['React', 'Angular', 'Svelte', 'Vue']}
         label="Disabled select"
         placeholder="Pick one that you like"
         disabled
       />
-    </div>
+    </Box>
   );
 }
 

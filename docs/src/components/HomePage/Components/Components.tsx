@@ -6,7 +6,7 @@ import {
   IconBold,
   IconNotebook,
   IconSlideshow,
-} from '@tabler/icons';
+} from '@tabler/icons-react';
 import { Inputs } from './demos/Inputs';
 import { Dates } from './demos/Dates';
 import { Overlays } from './demos/Overlays';
@@ -34,7 +34,7 @@ const data = [
     demo: RichText,
     icon: IconBold,
     name: 'Rich text editor',
-    description: 'Quill based rich text editor',
+    description: 'Tiptap based rich text editor',
   },
   { demo: Carousel, icon: IconSlideshow, name: 'Carousel', description: 'Embla based carousel' },
 ];

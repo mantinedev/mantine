@@ -1,5 +1,5 @@
 import React from 'react';
-import { DefaultProps, useContextStylesApi } from '@mantine/styles';
+import { DefaultProps, useComponentDefaultProps, rem } from '@mantine/styles';
 import { closeOnEscape } from '@mantine/utils';
 import { useFocusReturn } from '@mantine/hooks';
 import { FloatingArrow } from '../../Floating';
@@ -15,17 +15,30 @@ export interface PopoverDropdownProps extends DefaultProps, React.ComponentProps
   children?: React.ReactNode;
 }
 
-export function PopoverDropdown({ style, className, children, ...others }: PopoverDropdownProps) {
-  const { classNames, styles, unstyled, staticSelector } = useContextStylesApi();
+const defaultProps: Partial<PopoverDropdownProps> = {};
+
+export function PopoverDropdown(props: PopoverDropdownProps) {
+  const { style, className, children, onKeyDownCapture, ...others } = useComponentDefaultProps(
+    'PopoverDropdown',
+    defaultProps,
+    props
+  );
+
   const ctx = usePopoverContext();
   const { classes, cx } = useStyles(
     { radius: ctx.radius, shadow: ctx.shadow },
-    { name: staticSelector, classNames, styles, unstyled }
+    {
+      name: ctx.__staticSelector,
+      classNames: ctx.classNames,
+      styles: ctx.styles,
+      unstyled: ctx.unstyled,
+      variant: ctx.variant,
+    }
   );
 
   const returnFocus = useFocusReturn({
     opened: ctx.opened,
-    shouldReturnFocus: false,
+    shouldReturnFocus: ctx.returnFocus,
   });
 
   const accessibleProps = ctx.withRoles
@@ -36,16 +49,22 @@ export function PopoverDropdown({ style, className, children, ...others }: Popov
       }
     : {};
 
+  if (ctx.disabled) {
+    return null;
+  }
+
   return (
-    <OptionalPortal withinPortal={ctx.withinPortal}>
+    <OptionalPortal {...ctx.portalProps} withinPortal={ctx.withinPortal}>
       <Transition
         mounted={ctx.opened}
-        transition={ctx.transition}
-        duration={ctx.transitionDuration}
+        {...ctx.transitionProps}
+        transition={ctx.transitionProps.transition || 'fade'}
+        duration={ctx.transitionProps.duration ?? 150}
+        keepMounted={ctx.keepMounted}
         exitDuration={
-          typeof ctx.exitTransitionDuration === 'number'
-            ? ctx.exitTransitionDuration
-            : ctx.transitionDuration
+          typeof ctx.transitionProps.exitDuration === 'number'
+            ? ctx.transitionProps.exitDuration
+            : ctx.transitionProps.duration
         }
       >
         {(transitionStyles) => (
@@ -58,14 +77,15 @@ export function PopoverDropdown({ style, className, children, ...others }: Popov
                 ...style,
                 ...transitionStyles,
                 zIndex: ctx.zIndex,
-                top: ctx.y ?? '',
-                left: ctx.x ?? '',
-                width: ctx.width === 'target' ? undefined : ctx.width,
+                top: ctx.y ?? 0,
+                left: ctx.x ?? 0,
+                width: ctx.width === 'target' ? undefined : rem(ctx.width),
               }}
               className={cx(classes.dropdown, className)}
               onKeyDownCapture={closeOnEscape(ctx.onClose, {
                 active: ctx.closeOnEscape,
                 onTrigger: returnFocus,
+                onKeyDown: onKeyDownCapture,
               })}
               data-position={ctx.placement}
               {...others}
@@ -73,11 +93,15 @@ export function PopoverDropdown({ style, className, children, ...others }: Popov
               {children}
 
               <FloatingArrow
+                ref={ctx.arrowRef}
+                arrowX={ctx.arrowX}
+                arrowY={ctx.arrowY}
                 visible={ctx.withArrow}
-                withBorder
                 position={ctx.placement}
                 arrowSize={ctx.arrowSize}
+                arrowRadius={ctx.arrowRadius}
                 arrowOffset={ctx.arrowOffset}
+                arrowPosition={ctx.arrowPosition}
                 className={classes.arrow}
               />
             </Box>

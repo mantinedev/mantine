@@ -1,5 +1,6 @@
 import React from 'react';
 import { TypographyStylesProvider } from '@mantine/core';
+import { MantineDemo } from '@mantine/ds';
 
 const html = `<h1>Heading 1</h1>
 <h2>Heading 2</h2>
@@ -30,7 +31,7 @@ const html = `<h1>Heading 1</h1>
   <cite>– Forrest Gump</cite>
 </blockquote>
 
-<p>This is <code>Code</code> inside paragraph</p>
+<p>This is <code>code</code> and <mark>mark</mark> inside paragraph</p>
 
 <pre>import React from 'react';
 import { Avatar } from '@mantine/core';

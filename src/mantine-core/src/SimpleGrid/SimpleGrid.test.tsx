@@ -1,5 +1,9 @@
 import React from 'react';
-import { itRendersChildren, itSupportsSystemProps } from '@mantine/tests';
+import {
+  itRendersChildren,
+  itSupportsSystemProps,
+  itSupportsProviderVariant,
+} from '@mantine/tests';
 import { SimpleGrid, SimpleGridProps } from './SimpleGrid';
 
 const defaultProps: SimpleGridProps = {
@@ -9,6 +13,7 @@ const defaultProps: SimpleGridProps = {
 
 describe('@mantine/core/SimpleGrid', () => {
   itRendersChildren(SimpleGrid, defaultProps);
+  itSupportsProviderVariant(SimpleGrid, defaultProps, 'SimpleGrid');
   itSupportsSystemProps({
     component: SimpleGrid,
     props: defaultProps,

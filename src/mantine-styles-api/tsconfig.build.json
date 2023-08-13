@@ -29,8 +29,7 @@
       "@mantine/notifications": ["../mantine-notifications/src"],
       "@mantine/modals": ["../mantine-modals/src"],
       "@mantine/carousel": ["../mantine-carousel/src"],
-      "@mantine/rte": ["../mantine-rte/src"],
-      "@mantine/labs": ["../mantine-labs/src"]
+      "@mantine/tiptap": ["../mantine-tiptap/src"]
     }
   },
   "references": [
@@ -42,7 +41,6 @@
     { "path": "../mantine-carousel" },
     { "path": "../mantine-notifications" },
     { "path": "../mantine-modals" },
-    { "path": "../mantine-rte" },
-    { "path": "../mantine-labs" }
+    { "path": "../mantine-tiptap" }
   ]
 }

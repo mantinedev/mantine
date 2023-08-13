@@ -1,4 +1,5 @@
 import React from 'react';
+import { MantineDemo } from '@mantine/ds';
 import { Indicator, IndicatorProps, Avatar, Group } from '@mantine/core';
 
 function Wrapper(props: IndicatorProps) {
@@ -20,7 +21,7 @@ import { Indicator, Avatar, Group } from '@mantine/core';
 function Demo() {
   return (
     <Group position="center">
-      <Indicator ${props}>
+      <Indicator${props}>
         <Avatar
           size="lg"
           src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=250&q=80"
@@ -56,7 +57,6 @@ export const configurator: MantineDemo = {
     },
     { name: 'radius', type: 'size', initialValue: 'xl', defaultValue: 'xl' },
     { name: 'size', type: 'number', initialValue: 10, defaultValue: 10, step: 1, min: 6, max: 30 },
-    { name: 'dot', type: 'boolean', initialValue: true, defaultValue: true },
     { name: 'disabled', type: 'boolean', initialValue: false, defaultValue: false },
     { name: 'withBorder', type: 'boolean', initialValue: false, defaultValue: false },
     { name: 'processing', type: 'boolean', initialValue: false, defaultValue: false },

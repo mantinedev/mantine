@@ -1,4 +1,9 @@
-import { itRendersChildren, itIsPolymorphic, itSupportsSystemProps } from '@mantine/tests';
+import {
+  itRendersChildren,
+  itIsPolymorphic,
+  itSupportsSystemProps,
+  itSupportsProviderVariant,
+} from '@mantine/tests';
 import { Center, CenterProps } from './Center';
 
 const defaultProps: CenterProps = {
@@ -8,6 +13,7 @@ const defaultProps: CenterProps = {
 describe('@mantine/core/Center', () => {
   itRendersChildren(Center, defaultProps);
   itIsPolymorphic(Center, defaultProps);
+  itSupportsProviderVariant(Center, defaultProps, 'Center');
   itSupportsSystemProps({
     component: Center,
     props: defaultProps,

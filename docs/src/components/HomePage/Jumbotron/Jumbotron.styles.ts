@@ -1,7 +1,7 @@
-import { createStyles } from '@mantine/core';
+import { createStyles, rem, em } from '@mantine/core';
 import { getGradient } from '../get-gradient';
 
-const BREAKPOINT = '@media (max-width: 960px)';
+const BREAKPOINT = `@media (max-width: ${em(960)})`;
 
 export default createStyles((theme) => ({
   jumbotron: {
@@ -12,28 +12,28 @@ export default createStyles((theme) => ({
 
   inner: {
     position: 'relative',
-    paddingTop: 220,
-    paddingBottom: 180,
+    paddingTop: rem(220),
+    paddingBottom: rem(180),
 
     [BREAKPOINT]: {
-      paddingBottom: 100,
-      paddingTop: 90,
+      paddingBottom: rem(100),
+      paddingTop: rem(90),
     },
   },
 
   description: {
-    marginTop: theme.spacing.xl * 1.5,
-    fontSize: 24,
-    maxWidth: 800,
+    marginTop: `calc(${theme.spacing.xl} * 1.5)`,
+    fontSize: rem(24),
+    maxWidth: rem(800),
     color: theme.colorScheme === 'dark' ? theme.colors.dark[1] : theme.colors.gray[7],
 
     [BREAKPOINT]: {
-      fontSize: 18,
+      fontSize: rem(18),
     },
   },
 
   controls: {
-    marginTop: theme.spacing.xl * 1.5,
+    marginTop: `calc(${theme.spacing.xl} * 1.5)`,
 
     [BREAKPOINT]: {
       marginTop: theme.spacing.xl,
@@ -41,15 +41,15 @@ export default createStyles((theme) => ({
   },
 
   control: {
-    height: 64,
-    paddingLeft: 46,
-    paddingRight: 46,
-    fontSize: 20,
+    height: rem(64),
+    paddingLeft: rem(46),
+    paddingRight: rem(46),
+    fontSize: rem(20),
 
     [BREAKPOINT]: {
-      height: 54,
-      paddingLeft: 18,
-      paddingRight: 18,
+      height: rem(54),
+      paddingLeft: rem(18),
+      paddingRight: rem(18),
       flex: 1,
     },
   },
@@ -65,11 +65,10 @@ export default createStyles((theme) => ({
     backgroundColor: theme.colors.dark[6],
     color: theme.white,
     fontWeight: 700,
-
-    '&:hover': {
-      backgroundColor: theme.colors.dark[5],
+    ...theme.fn.hover({
+      backgroundColor: `${theme.colors.dark[5]} !important`,
       color: theme.white,
-    },
+    }),
   },
 
   feature: {
@@ -77,7 +76,7 @@ export default createStyles((theme) => ({
     flexDirection: 'column',
     alignItems: 'flex-start',
 
-    '@media (max-width: 800px)': {
+    [`@media (max-width: ${em(800)})`]: {
       flexDirection: 'row',
     },
   },
@@ -85,7 +84,7 @@ export default createStyles((theme) => ({
   featureBody: {
     marginTop: theme.spacing.xs,
 
-    '@media (max-width: 800px)': {
+    [`@media (max-width: ${em(800)})`]: {
       marginTop: 0,
       marginLeft: theme.spacing.lg,
     },
@@ -101,8 +100,8 @@ export default createStyles((theme) => ({
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
-    minWidth: 50,
-    height: 50,
+    minWidth: rem(50),
+    height: rem(50),
     backgroundImage: getGradient(theme, 'bg'),
 
     '& svg': {

@@ -8,6 +8,9 @@ import {
   itSupportsWrapperProps,
   itHandlesBooleanState,
   itSupportsFocusEvents,
+  itSupportsProviderSize,
+  itSupportsProviderVariant,
+  itDisablesInputInsideDisabledFieldset,
 } from '@mantine/tests';
 import { Chip, ChipProps } from './Chip';
 
@@ -19,6 +22,8 @@ const defaultProps: ChipProps = {
 describe('@mantine/core/Chip', () => {
   checkAccessibility([<Chip {...defaultProps} />]);
   itRendersChildren(Chip, defaultProps);
+  itSupportsProviderSize(Chip, defaultProps, 'Chip');
+  itSupportsProviderVariant(Chip, defaultProps, 'Chip');
   itConnectsLabelAndInput(Chip, defaultProps);
   itSupportsWrapperProps(Chip, defaultProps);
   itHandlesBooleanState(Chip, defaultProps);
@@ -31,6 +36,7 @@ describe('@mantine/core/Chip', () => {
     othersSelector: 'input',
     providerName: 'Chip',
   });
+  itDisablesInputInsideDisabledFieldset(Chip, defaultProps);
 
   it('displays checked icon when input is checked', () => {
     const { container: checked } = render(<Chip {...defaultProps} checked />);

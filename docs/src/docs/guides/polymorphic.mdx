@@ -10,17 +10,17 @@ import { ButtonDemos } from '@mantine/demos';
 # Polymorphic components
 
 Some of the Mantine components ([Button](/core/button/), [Text](/core/text/), etc.) accept special `component` prop that lets you
-change to root element. This guide will explain
+change the root element. This guide will explain how to correctly use them with HTML elements, custom components, Next.js Link and TypeScript.
 
 ## With HTML elements
 
-You can use any HTML element in `component` prop, for example, `a` tag will render an anchor:
+You can use any HTML element in `component` prop. For example, `a` tag will render an anchor:
 
 <Demo data={ButtonDemos.component} />
 
 ## With other components
 
-You can also use polymorphic components with any other component, for example,
+You can also use polymorphic components with any other component. For example,
 with `react-router-dom` Link:
 
 ```tsx
@@ -38,10 +38,10 @@ function Demo() {
 
 ## With Next.js Link
 
-Next.js link does not work the say way as other similar components, you will need to either
-wrap your component with it or use `NextLink` component exported from `@mantine/next` package:
+Next.js link does not work in the same way as other similar components in all Next.js version:
 
 ```tsx
+// For Next.js 12 and below
 import Link from 'next/link';
 import { Button } from '@mantine/core';
 
@@ -55,13 +55,13 @@ function Demo() {
 ```
 
 ```tsx
-// Same as above
-import { NextLink } from '@mantine/next';
+// For Next.js 13 and above
+import Link from 'next/link';
 import { Button } from '@mantine/core';
 
 function Demo() {
   return (
-    <Button component={NextLink} href="/hello">
+    <Button component={Link} href="/hello">
       Next link button
     </Button>
   );
@@ -70,8 +70,7 @@ function Demo() {
 
 ## With TypeScript
 
-Polymorphic components cannot infer ref and events correctly in some cases,
-when this happens – provide generic component type:
+Polymorphic components cannot infer ref and events correctly in some cases. When this happens – provide generic component type:
 
 ```tsx
 import { Button } from '@mantine/core';

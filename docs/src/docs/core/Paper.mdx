@@ -3,6 +3,7 @@ group: 'mantine-core'
 package: '@mantine/core'
 title: Paper
 order: 1
+polymorphic: true
 slug: /core/paper/
 category: 'misc'
 description: 'Renders white or dark background depending on color scheme'
@@ -33,36 +34,6 @@ function Demo() {
     <Paper component="a" href="https://mantine.dev/core/">
       Anchor element
     </Paper>
-  );
-}
-```
-
-### Usage with react-router
-
-```tsx
-import { Link } from 'react-router-dom';
-import { Paper } from '@mantine/core';
-
-function Demo() {
-  return (
-    <Paper component={Link} to="/react-router">
-      React router link
-    </Paper>
-  );
-}
-```
-
-### Usage with Next.js
-
-```tsx
-import Link from 'next/link';
-import { Paper } from '@mantine/core';
-
-function Demo() {
-  return (
-    <Link href="/hello" passHref>
-      <Paper component="a">Next link</Paper>
-    </Link>
   );
 }
 ```

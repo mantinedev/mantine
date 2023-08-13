@@ -1,5 +1,6 @@
 import React from 'react';
 import { Text, Table } from '@mantine/core';
+import { MantineDemo } from '@mantine/ds';
 import { useNetwork } from '@mantine/hooks';
 
 const code = `
@@ -10,7 +11,7 @@ function Demo() {
   const networkStatus = useNetwork();
 
   return (
-    <Table sx={{ maxWidth: 300, tableLayout: 'fixed' }} mx="auto">
+    <Table maw={300} sx={{ tableLayout: 'fixed' }} mx="auto">
       <thead>
         <tr>
           <th>Property</th>
@@ -61,7 +62,7 @@ function Demo() {
   const networkStatus = useNetwork();
 
   return (
-    <Table sx={{ maxWidth: 300, tableLayout: 'fixed' }} mx="auto">
+    <Table maw={300} sx={{ tableLayout: 'fixed' }} mx="auto">
       <thead>
         <tr>
           <th>Property</th>

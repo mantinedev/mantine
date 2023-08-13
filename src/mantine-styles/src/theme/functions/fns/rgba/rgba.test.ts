@@ -18,12 +18,16 @@ describe('@mantine/styles/rgba', () => {
     expect(rgba('rgba(1, 23, 124, 0.5)', 0.3)).toBe('rgba(1, 23, 124, 0.3)');
   });
 
-  it('returns empty string for incorrect values', () => {
+  it('returns black color for incorrect values', () => {
     expect(rgba(null, 0.74)).toBe('rgba(0, 0, 0, 1)');
     expect(rgba('#000000', -12)).toBe('rgba(0, 0, 0, 1)');
     expect(rgba('#00000', 1)).toBe('rgba(0, 0, 0, 1)');
     expect(rgba('#000', 1)).toBe('rgba(0, 0, 0, 1)');
     expect(rgba('#000000', 24)).toBe('rgba(0, 0, 0, 1)');
     expect(rgba('#000000', 1.01)).toBe('rgba(0, 0, 0, 1)');
+  });
+
+  it('returns color as-is if it is a CSS variable', () => {
+    expect(rgba('var(--css-custom-property)', 0.5)).toBe('var(--css-custom-property)');
   });
 });

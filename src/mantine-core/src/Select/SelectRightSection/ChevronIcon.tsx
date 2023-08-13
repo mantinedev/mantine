@@ -1,31 +1,34 @@
 import React from 'react';
-import { useMantineTheme, DefaultProps, MantineSize } from '@mantine/styles';
+import { useMantineTheme, MantineSize, getSize, rem } from '@mantine/styles';
 
-interface ChevronIconProps extends DefaultProps, React.ComponentPropsWithoutRef<'svg'> {
+interface ChevronIconProps extends React.ComponentPropsWithoutRef<'svg'> {
   size: MantineSize;
   error: any;
 }
 
 const iconSizes = {
-  xs: 14,
-  sm: 18,
-  md: 20,
-  lg: 24,
-  xl: 28,
+  xs: rem(14),
+  sm: rem(18),
+  md: rem(20),
+  lg: rem(24),
+  xl: rem(28),
 };
 
 export function ChevronIcon({ size, error, style, ...others }: ChevronIconProps) {
   const theme = useMantineTheme();
-  const _size = theme.fn.size({ size, sizes: iconSizes });
+  const _size = getSize({ size, sizes: iconSizes });
 
   return (
     <svg
-      width={_size}
-      height={_size}
       viewBox="0 0 15 15"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
-      style={{ color: error ? theme.colors.red[6] : theme.colors.gray[6], ...style }}
+      style={{
+        color: error ? theme.colors.red[6] : theme.colors.gray[6],
+        width: _size,
+        height: _size,
+        ...style,
+      }}
       data-chevron
       {...others}
     >

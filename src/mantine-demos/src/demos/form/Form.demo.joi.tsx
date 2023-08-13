@@ -1,4 +1,5 @@
 /* eslint-disable no-console */
+import { MantineDemo } from '@mantine/ds';
 import { SchemaBase } from './_schema-base';
 
 const code = `
@@ -25,7 +26,7 @@ function Demo() {
   });
 
   return (
-    <Box sx={{ maxWidth: 340 }} mx="auto">
+    <Box maw={340} mx="auto">
       <form onSubmit={form.onSubmit((values) => console.log(values))}>
         <TextInput
           withAsterisk

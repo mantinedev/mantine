@@ -1,5 +1,6 @@
 import React from 'react';
 import { Card, Image, Text } from '@mantine/core';
+import { MantineDemo } from '@mantine/ds';
 import { demoBase } from './_demo-base';
 
 const code = `
@@ -9,7 +10,7 @@ function Demo() {
   return (
     <Card
       shadow="sm"
-      p="xl"
+      padding="xl"
       component="a"
       href="https://www.youtube.com/watch?v=dQw4w9WgXcQ"
       target="_blank"
@@ -38,7 +39,7 @@ function Demo() {
   return (
     <Card
       shadow="sm"
-      p="xl"
+      padding="xl"
       component="a"
       href="https://www.youtube.com/watch?v=dQw4w9WgXcQ"
       target="_blank"

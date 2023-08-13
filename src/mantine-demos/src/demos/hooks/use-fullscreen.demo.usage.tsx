@@ -1,5 +1,6 @@
 import React from 'react';
 import { useFullscreen } from '@mantine/hooks';
+import { MantineDemo } from '@mantine/ds';
 import { Button, Group } from '@mantine/core';
 
 const code = `

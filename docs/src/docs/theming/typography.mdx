@@ -16,7 +16,7 @@ You can change fonts and other text styles for headings, code and all other comp
 
 - `theme.fontFamily` – controls font-family in all components except [Title](/core/title/), [Code](/core/code/) and [Kbd](/core/kbd/)
 - `theme.fontFamilyMonospace` – controls font-family of components that require monospace font: [Code](/core/code/), [Kbd](/core/kbd/) and [Prism](/others/prism/)
-- `theme.headings.fontFamily` – controls font-family of h1-h6 tags in [Title](/core/title/) and [TypographyStylesProvider](/core/typography-styles-provider/) components
+- `theme.headings.fontFamily` – controls font-family of h1-h6 tags in [Title](/core/title/) and [TypographyStylesProvider](/core/typography-styles-provider/) components, fallbacks to `theme.fontFamily` if not defined
 
 <Demo data={ThemeDemos.themeFontsExtend} />
 
@@ -33,13 +33,12 @@ function Demo() {
       withGlobalStyles
       withNormalizeCSS
       theme={{
-        // Font sizes in px, other units are not supported
         fontSizes: {
-          xs: 10,
-          sm: 12,
-          md: 14,
-          lg: 16,
-          xl: 20,
+          xs: '0.6rem',
+          sm: '0.75rem',
+          md: '0.9rem',
+          lg: '1rem',
+          xl: '1.2rem',
         },
       }}
     >
@@ -83,8 +82,8 @@ function Demo() {
 
           // properties for individual headings, all of them are optional
           sizes: {
-            h1: { fontWeight: 100, fontSize: 32, lineHeight: 1.4 },
-            h2: { fontSize: 28, lineHeight: 1.5 },
+            h1: { fontWeight: 100, fontSize: '3rem', lineHeight: 1.4 },
+            h2: { fontSize: '2.2rem', lineHeight: 1.5 },
             // ...up to h6
             h6: { fontWeight: 900 },
           },

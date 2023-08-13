@@ -1,9 +1,12 @@
 import React, { forwardRef } from 'react';
 import { DefaultProps, useComponentDefaultProps } from '@mantine/styles';
-import { packSx, createPolymorphicComponent } from '@mantine/utils';
+import { createPolymorphicComponent } from '@mantine/utils';
 import { Box } from '../Box';
+import useStyles from './Center.styles';
 
 export interface CenterProps extends DefaultProps {
+  variant?: string;
+
   /** Content that should be centered vertically and horizontally */
   children: React.ReactNode;
 
@@ -12,21 +15,13 @@ export interface CenterProps extends DefaultProps {
 }
 
 export const _Center = forwardRef<HTMLDivElement, CenterProps>((props, ref) => {
-  const { inline, sx, ...others } = useComponentDefaultProps('Center', {}, props);
-  return (
-    <Box
-      ref={ref}
-      sx={[
-        {
-          display: inline ? 'inline-flex' : 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-        },
-        ...packSx(sx),
-      ]}
-      {...others}
-    />
+  const { inline, className, unstyled, variant, ...others } = useComponentDefaultProps(
+    'Center',
+    {},
+    props
   );
+  const { classes, cx } = useStyles({ inline }, { name: 'Center', unstyled, variant });
+  return <Box ref={ref} className={cx(classes.root, className)} {...others} />;
 });
 
 _Center.displayName = '@mantine/core/Center';

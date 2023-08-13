@@ -17,7 +17,7 @@ add styles with [createStyles](/styles/create-styles/) function.
 
 ## Configure breakpoints
 
-`theme.breakpoints` are used in all responsive Mantine components. Breakpoints are set in `px` (`rem`, `em` and other units are not supported).
+`theme.breakpoints` are used in all responsive Mantine components. Breakpoints are expected to be set in `em` units (`1em == 16px` by default).
 You can configure these values with [MantineProvider](/theming/mantine-provider/):
 
 ```tsx
@@ -30,11 +30,11 @@ function Demo() {
       withNormalizeCSS
       theme={{
         breakpoints: {
-          xs: 500,
-          sm: 800,
-          md: 1000,
-          lg: 1200,
-          xl: 1400,
+          xs: '30em',
+          sm: '48em',
+          md: '64em',
+          lg: '74em',
+          xl: '90em',
         },
       }}
     >
@@ -50,7 +50,7 @@ Default `theme.breakpoints` values:
   head={['Breakpoint', 'Viewport width']}
   data={Object.keys(DEFAULT_THEME.breakpoints).map((size) => [
     size,
-    `${DEFAULT_THEME.breakpoints[size]}px`,
+    `${DEFAULT_THEME.breakpoints[size]}`,
   ])}
 />
 
@@ -94,7 +94,7 @@ import { useMediaQuery } from '@mantine/hooks';
 
 function Demo() {
   // Will always return false during ssr, use only when you do not have ssr
-  const largeScreen = useMediaQuery('(min-width: 900px)');
+  const largeScreen = useMediaQuery('(min-width: 60em)');
   return <TextInput size={largeScreen ? 'xl' : 'md'} />;
 }
 ```
@@ -113,7 +113,7 @@ function Demo() {
         background: theme.colors.gray[0],
         padding: theme.spacing.md,
 
-        '@media (max-width: 755px)': {
+        '@media (max-width: 40em)': {
           padding: theme.spacing.sm,
         },
       })}
@@ -136,7 +136,7 @@ function Demo() {
       to="/some-path/"
       sx={(theme) => ({
         fontSize: theme.fontSizes.md,
-        '@media (max-width: 755px)': {
+        '@media (max-width: 40em)': {
           fontSize: theme.fontSizes.sm,
         },
       })}

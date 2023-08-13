@@ -3,8 +3,6 @@ import {
   MantineNumberSize,
   DefaultProps,
   Selectors,
-  MantineStyleSystemSize,
-  getDefaultZIndex,
   useComponentDefaultProps,
 } from '@mantine/styles';
 import { Box } from '../Box';
@@ -13,8 +11,12 @@ import useStyles from './AppShell.styles';
 
 export type AppShellStylesNames = Selectors<typeof useStyles>;
 
-export interface AppShellProps
-  extends Omit<DefaultProps<AppShellStylesNames>, MantineStyleSystemSize> {
+export interface AppShellProps extends DefaultProps<AppShellStylesNames> {
+  variant?: string;
+
+  /** Determines how Navbar and Aside components are positioned relative to Header and Footer components */
+  layout?: 'default' | 'alt';
+
   /** <Navbar /> component */
   navbar?: React.ReactElement;
 
@@ -51,7 +53,6 @@ export interface AppShellProps
 
 const defaultProps: Partial<AppShellProps> = {
   fixed: true,
-  zIndex: getDefaultZIndex('app'),
   padding: 'md',
 };
 
@@ -72,11 +73,14 @@ export const AppShell = forwardRef<HTMLDivElement, AppShellProps>((props: AppShe
     classNames,
     unstyled,
     hidden,
+    layout,
+    variant,
     ...others
   } = useComponentDefaultProps('AppShell', defaultProps, props);
+
   const { classes, cx } = useStyles(
     { padding, fixed, navbarOffsetBreakpoint, asideOffsetBreakpoint },
-    { styles, classNames, unstyled, name: 'AppShell' }
+    { styles, classNames, unstyled, name: 'AppShell', variant }
   );
 
   if (hidden) {
@@ -84,7 +88,7 @@ export const AppShell = forwardRef<HTMLDivElement, AppShellProps>((props: AppShe
   }
 
   return (
-    <AppShellProvider value={{ fixed, zIndex }}>
+    <AppShellProvider value={{ fixed, zIndex, layout }}>
       <Box className={cx(classes.root, className)} ref={ref} {...others}>
         {header}
 

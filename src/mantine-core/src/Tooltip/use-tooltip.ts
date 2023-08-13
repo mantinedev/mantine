@@ -2,6 +2,7 @@ import { useState, useCallback } from 'react';
 import {
   useFloating,
   flip,
+  arrow,
   offset,
   shift,
   useInteractions,
@@ -11,7 +12,8 @@ import {
   useDismiss,
   useDelayGroupContext,
   useDelayGroup,
-} from '@floating-ui/react-dom-interactions';
+  inline,
+} from '@floating-ui/react';
 import { useId, useDidUpdate } from '@mantine/hooks';
 import { useTooltipGroupContext } from './TooltipGroup/TooltipGroup.context';
 import { FloatingPosition, useFloatingAutoUpdate } from '../Floating';
@@ -23,8 +25,11 @@ interface UseTooltip {
   onPositionChange?(position: FloatingPosition): void;
   opened?: boolean;
   offset: number;
+  arrowRef?: React.RefObject<HTMLDivElement>;
+  arrowOffset: number;
   events: { hover: boolean; focus: boolean; touch: boolean };
   positionDependencies: any[];
+  inline: boolean;
 }
 
 export function useTooltip(settings: UseTooltip) {
@@ -47,11 +52,27 @@ export function useTooltip(settings: UseTooltip) {
     [setCurrentId, uid]
   );
 
-  const { x, y, reference, floating, context, refs, update, placement } = useFloating({
+  const {
+    x,
+    y,
+    reference,
+    floating,
+    context,
+    refs,
+    update,
+    placement,
+    middlewareData: { arrow: { x: arrowX, y: arrowY } = {} },
+  } = useFloating({
     placement: settings.position,
     open: opened,
     onOpenChange: onChange,
-    middleware: [offset(settings.offset), shift({ padding: 8 }), flip()],
+    middleware: [
+      offset(settings.offset),
+      shift({ padding: 8 }),
+      flip(),
+      arrow({ element: settings.arrowRef, padding: settings.arrowOffset }),
+      ...(settings.inline ? [inline()] : []),
+    ],
   });
 
   const { getReferenceProps, getFloatingProps } = useInteractions([
@@ -69,6 +90,7 @@ export function useTooltip(settings: UseTooltip) {
 
   useFloatingAutoUpdate({
     opened,
+    position: settings.position,
     positionDependencies: settings.positionDependencies,
     floating: { refs, update },
   });
@@ -82,6 +104,8 @@ export function useTooltip(settings: UseTooltip) {
   return {
     x,
     y,
+    arrowX,
+    arrowY,
     reference,
     floating,
     getFloatingProps,

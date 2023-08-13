@@ -1,4 +1,5 @@
 import React from 'react';
+import { MantineDemo } from '@mantine/ds';
 import { Text, Group } from '@mantine/core';
 
 const code = `
@@ -7,13 +8,12 @@ import { Text } from '@mantine/core';
 function Demo() {
   return (
     <Text
-      component="span"
-      align="center"
       variant="gradient"
       gradient={{ from: 'indigo', to: 'cyan', deg: 45 }}
-      size="xl"
-      weight={700}
-      style={{ fontFamily: 'Greycliff CF, sans-serif' }}
+      sx={{ fontFamily: 'Greycliff CF, sans-serif' }}
+      ta="center"
+      fz="xl"
+      fw={700}
     >
       Indigo cyan gradient
     </Text>
@@ -25,13 +25,12 @@ function Demo() {
   return (
     <Group position="center">
       <Text
-        component="span"
-        align="center"
         variant="gradient"
         gradient={{ from: 'indigo', to: 'cyan', deg: 45 }}
-        size="xl"
-        weight={700}
-        style={{ fontFamily: 'Greycliff CF, sans-serif' }}
+        sx={{ fontFamily: 'Greycliff CF, sans-serif' }}
+        ta="center"
+        fz="xl"
+        fw={700}
       >
         Indigo cyan gradient
       </Text>

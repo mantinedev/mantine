@@ -17,7 +17,7 @@ export default createStyles((theme, { color, radius }: MenuItemStylesParams) => 
     textAlign: 'left',
     textDecoration: 'none',
     boxSizing: 'border-box',
-    padding: `${theme.spacing.xs}px ${theme.spacing.sm}px`,
+    padding: `${theme.spacing.xs} ${theme.spacing.sm}`,
     cursor: 'pointer',
     borderRadius: theme.fn.radius(radius),
     color: color
@@ -39,7 +39,7 @@ export default createStyles((theme, { color, radius }: MenuItemStylesParams) => 
         ? theme.fn.variant({ variant: 'light', color }).background
         : theme.colorScheme === 'dark'
         ? theme.fn.rgba(theme.colors.dark[3], 0.35)
-        : theme.colors.gray[0],
+        : theme.colors.gray[1],
     },
   },
 

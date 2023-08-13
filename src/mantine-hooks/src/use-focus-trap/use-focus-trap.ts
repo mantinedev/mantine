@@ -7,43 +7,50 @@ export function useFocusTrap(active = true): (instance: HTMLElement | null) => v
   const ref = useRef<HTMLElement | null>();
   const restoreAria = useRef<Function | null>(null);
 
+  const focusNode = (node: HTMLElement) => {
+    let focusElement: HTMLElement = node.querySelector('[data-autofocus]');
+
+    if (!focusElement) {
+      const children = Array.from<HTMLElement>(node.querySelectorAll(FOCUS_SELECTOR));
+      focusElement = children.find(tabbable) || children.find(focusable) || null;
+      if (!focusElement && focusable(node)) focusElement = node;
+    }
+
+    if (focusElement) {
+      focusElement.focus({ preventScroll: true });
+    } else if (process.env.NODE_ENV === 'development') {
+      // eslint-disable-next-line no-console
+      console.warn(
+        '[@mantine/hooks/use-focus-trap] Failed to find focusable element within provided node',
+        node
+      );
+    }
+  };
+
   const setRef = useCallback(
     (node: HTMLElement | null) => {
       if (!active) {
         return;
       }
 
-      if (restoreAria.current) {
-        restoreAria.current();
+      if (node === null) {
+        if (restoreAria.current) {
+          restoreAria.current();
+          restoreAria.current = null;
+        }
+        return;
+      }
+
+      restoreAria.current = createAriaHider(node);
+      if (ref.current === node) {
+        return;
       }
 
       if (node) {
-        const processNode = (_node: HTMLElement) => {
-          restoreAria.current = createAriaHider(_node);
-
-          let focusElement: HTMLElement = node.querySelector('[data-autofocus]');
-
-          if (!focusElement) {
-            const children = Array.from<HTMLElement>(node.querySelectorAll(FOCUS_SELECTOR));
-            focusElement = children.find(tabbable) || children.find(focusable) || null;
-            if (!focusElement && focusable(node)) focusElement = node;
-          }
-
-          if (focusElement) {
-            focusElement.focus({ preventScroll: true });
-          } else if (process.env.NODE_ENV === 'development') {
-            // eslint-disable-next-line no-console
-            console.warn(
-              '[@mantine/hooks/use-focus-trap] Failed to find focusable element within provided node',
-              node
-            );
-          }
-        };
-
         // Delay processing the HTML node by a frame. This ensures focus is assigned correctly.
         setTimeout(() => {
-          if (node.ownerDocument) {
-            processNode(node);
+          if (node.getRootNode()) {
+            focusNode(node);
           } else if (process.env.NODE_ENV === 'development') {
             // eslint-disable-next-line no-console
             console.warn('[@mantine/hooks/use-focus-trap] Ref node is not part of the dom', node);
@@ -63,6 +70,8 @@ export function useFocusTrap(active = true): (instance: HTMLElement | null) => v
       return undefined;
     }
 
+    ref.current && setTimeout(() => focusNode(ref.current));
+
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key === 'Tab' && ref.current) {
         scopeTab(ref.current, event);
@@ -72,6 +81,10 @@ export function useFocusTrap(active = true): (instance: HTMLElement | null) => v
     document.addEventListener('keydown', handleKeyDown);
     return () => {
       document.removeEventListener('keydown', handleKeyDown);
+
+      if (restoreAria.current) {
+        restoreAria.current();
+      }
     };
   }, [active]);
 

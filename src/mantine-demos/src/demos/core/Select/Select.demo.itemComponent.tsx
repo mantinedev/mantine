@@ -1,4 +1,5 @@
 import React, { forwardRef } from 'react';
+import { MantineDemo } from '@mantine/ds';
 import { Group, Avatar, Text, Select } from '@mantine/core';
 
 const code = `
@@ -47,7 +48,7 @@ const SelectItem = forwardRef<HTMLDivElement, ItemProps>(
 
         <div>
           <Text size="sm">{label}</Text>
-          <Text size="xs" color="dimmed">
+          <Text size="xs" opacity={0.65}>
             {description}
           </Text>
         </div>
@@ -117,7 +118,7 @@ const SelectItem = forwardRef<HTMLDivElement, ItemProps>(
 
         <div>
           <Text size="sm">{label}</Text>
-          <Text size="xs" color="dimmed">
+          <Text size="xs" opacity={0.65}>
             {description}
           </Text>
         </div>
@@ -136,6 +137,7 @@ export function CustomSelectDemo(props: any) {
       searchable
       maxDropdownHeight={400}
       nothingFound="Nobody here"
+      withinPortal
       filter={(value, item) =>
         item.label.toLowerCase().includes(value.toLowerCase().trim()) ||
         item.description.toLowerCase().includes(value.toLowerCase().trim())
@@ -146,11 +148,7 @@ export function CustomSelectDemo(props: any) {
 }
 
 function Demo() {
-  return (
-    <div style={{ maxWidth: 320, marginLeft: 'auto', marginRight: 'auto' }}>
-      <CustomSelectDemo />
-    </div>
-  );
+  return <CustomSelectDemo maw={320} mx="auto" />;
 }
 
 export const itemComponent: MantineDemo = {

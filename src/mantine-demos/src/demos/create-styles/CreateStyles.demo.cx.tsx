@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { MantineDemo } from '@mantine/ds';
 import { createStyles } from '@mantine/core';
 
 const code = `
@@ -11,7 +12,7 @@ const useStyles = createStyles((theme) => ({
     border: 0,
     color: theme.colorScheme === 'dark' ? theme.white : theme.black,
     borderRadius: theme.radius.md,
-    padding: \`\${theme.spacing.sm}px \${theme.spacing.lg}px\`,
+    padding: \`\${theme.spacing.sm} \${theme.spacing.lg}\`,
     cursor: 'pointer',
     margin: theme.spacing.md,
   },
@@ -53,7 +54,7 @@ const useStyles = createStyles((theme) => ({
     border: 0,
     color: theme.colorScheme === 'dark' ? theme.white : theme.black,
     borderRadius: theme.radius.md,
-    padding: `${theme.spacing.sm}px ${theme.spacing.lg}px`,
+    padding: `${theme.spacing.sm} ${theme.spacing.lg}`,
     cursor: 'pointer',
     margin: theme.spacing.md,
   },

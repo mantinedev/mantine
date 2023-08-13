@@ -13,22 +13,14 @@ jobs:
   test_pull_request:
     runs-on: ubuntu-latest
     steps:
-      - name: Get Yarn cache path
-        id: yarn-cache
-        run: echo "::set-output name=dir::$(yarn cache dir)"
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v1
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
         with:
-          node-version: '16.8.0'
-      - name: Load Yarn cache
-        uses: actions/cache@v2
-        with:
-          path: ${{ steps.yarn-cache.outputs.dir }}
-          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-yarn-
+          node-version: '16.10.0'
+          cache: 'yarn'
+          cache-dependency-path: '**/yarn.lock'
       - name: Install dependencies
-        run: yarn install --frozen-lockfile
+        run: yarn install --frozen-lockfile --prefer-offline
       - name: Build public packages
         run: npm run build:all
       - name: Run syncpack, eslint, tsc and jest

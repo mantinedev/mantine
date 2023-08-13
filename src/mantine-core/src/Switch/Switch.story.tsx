@@ -1,8 +1,9 @@
 import React from 'react';
 import { MantineProvider } from '@mantine/styles';
-import { IconBadge } from '@tabler/icons';
+import { IconBadge } from '@tabler/icons-react';
 import { Group } from '../Group';
 import { Switch } from './Switch';
+import { Stack } from '../Stack';
 
 export default { title: 'Switch' };
 
@@ -59,4 +60,51 @@ export function Asterisk() {
       </Switch.Group>
     </div>
   );
+}
+
+export function labelPosition() {
+  return (
+    <Stack sx={{ width: 300, padding: 20 }}>
+      <Switch labelPosition="left" label="Hello from left" value="1" />
+      <Switch labelPosition="right" label="Hello from right" value="1" />
+    </Stack>
+  );
+}
+
+export function WithDesciprtion() {
+  return (
+    <Stack sx={{ width: 300, padding: 20 }}>
+      <Switch
+        description="This is left Checkbox, pretty big descriptions, make it more big"
+        labelPosition="left"
+        label="Hello from left"
+        value="1"
+      />
+      <Switch
+        description="This is right Checkbox, pretty big description"
+        labelPosition="right"
+        label="Hello from right"
+        value="1"
+      />
+    </Stack>
+  );
+}
+
+export function WithError() {
+  return (
+    <Stack sx={{ width: 300, padding: 20 }}>
+      <Switch label="Error without message" value="1" error />
+      <Switch
+        error="This is another error"
+        labelPosition="right"
+        label="This is invalid Switch"
+        value="1"
+      />
+      <Switch error="Error on Switch without label" value="1" />
+    </Stack>
+  );
+}
+
+export function Alignment() {
+  return <Switch />;
 }

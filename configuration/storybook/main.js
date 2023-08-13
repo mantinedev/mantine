@@ -3,17 +3,20 @@ const path = require('path');
 const { argv } = require('yargs');
 const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin').default;
 
+const getPath = (storyPath) => path.resolve(__dirname, storyPath).replace(/\\/g, '/');
+
 const storiesPath = !argv._[0]
-  ? path.resolve(__dirname, '../../src/**/*.story.@(ts|tsx)').replace(/\\/g, '/')
-  : path
-      .resolve(
-        __dirname,
-        `../../src/mantine-${argv._[0].replace('@mantine/', '')}/**/*.story.@(ts|tsx)`
-      )
-      .replace(/\\/g, '/');
+  ? [getPath('../../src/**/*.story.@(ts|tsx)')]
+  : [
+      getPath(`../../src/mantine-*/**/${argv._[0]}.story.@(ts|tsx)`),
+      getPath(`../../src/mantine-*/**/${argv._[0]}.demos.story.@(ts|tsx)`),
+    ];
 
 module.exports = {
-  stories: [storiesPath],
+  core: {
+    builder: 'webpack5',
+  },
+  stories: [...storiesPath],
   addons: ['storybook-addon-turbo-build', 'storybook-dark-mode'],
   webpackFinal: async (config) => {
     config.resolve = {

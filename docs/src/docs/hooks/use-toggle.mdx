@@ -5,7 +5,7 @@ title: 'use-toggle'
 category: 'state'
 order: 1
 slug: /hooks/use-toggle/
-description: 'Switch between two states'
+description: 'Switch between given values'
 import: "import { useToggle } from '@mantine/hooks';"
 docs: 'hooks/use-toggle.mdx'
 source: 'mantine-hooks/src/use-toggle/use-toggle.ts'
@@ -15,13 +15,13 @@ import { HooksDemos } from '@mantine/demos';
 
 ## Usage
 
-`use-toggle` hook implements a common state pattern – it switches state between two given values:
+`use-toggle` hook implements a common state pattern – it switches state between given values:
 
 <Demo data={HooksDemos.useToggleDemo} />
 
 ## API
 
-Hook accepts an array with 2 elements as single argument, the first option will be used as the default value.
+Hook accepts an array as single argument, the first option will be used as the default value.
 
 Hook returns an array with state value and toggle function:
 
@@ -58,7 +58,7 @@ const [value, toggle] = useToggle<'dark' | 'light'>(['light', 'dark']); // same 
 ### Definition
 
 ```tsx
-function useToggle<T>(
-  options: readonly [T, T]
+function useToggle<T = boolean>(
+  options?: readonly T[]
 ): readonly [T, (value?: React.SetStateAction<T>) => void];
 ```

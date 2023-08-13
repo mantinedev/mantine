@@ -6,20 +6,22 @@ import {
   MantineSize,
   MantineColor,
   Selectors,
-  extractSystemStyles,
   useComponentDefaultProps,
 } from '@mantine/styles';
 import { ForwardRefWithStaticComponents } from '@mantine/utils';
-import { Box } from '../Box';
-import useStyles, { SwitchStylesParams } from './Switch.styles';
+import { extractSystemStyles } from '../Box';
 import { SwitchGroup } from './SwitchGroup/SwitchGroup';
 import { useSwitchGroupContext } from './SwitchGroup.context';
+import { InlineInput, InlineInputStylesNames } from '../InlineInput';
+import useStyles, { SwitchStylesParams } from './Switch.styles';
 
-export type SwitchStylesNames = Selectors<typeof useStyles>;
+export type SwitchStylesNames = Selectors<typeof useStyles> | InlineInputStylesNames;
 
 export interface SwitchProps
   extends DefaultProps<SwitchStylesNames, SwitchStylesParams>,
-    Omit<React.ComponentPropsWithoutRef<'input'>, 'type' | 'size'> {
+    Omit<React.ComponentPropsWithRef<'input'>, 'type' | 'size'> {
+  variant?: string;
+
   /** Id is used to bind input and label, if not passed unique id will be generated for each input */
   id?: string;
 
@@ -38,7 +40,7 @@ export interface SwitchProps
   /** Predefined size value */
   size?: MantineSize;
 
-  /** Radius from theme.radius or number to set border-radius in px */
+  /** Key of theme.radius or any valid CSS value to set border-radius, "xl" by default */
   radius?: MantineNumberSize;
 
   /** Props spread to wrapper element */
@@ -46,6 +48,15 @@ export interface SwitchProps
 
   /** Icon inside the thumb of switch */
   thumbIcon?: React.ReactNode;
+
+  /** Position of label */
+  labelPosition?: 'left' | 'right';
+
+  /** description, displayed after label */
+  description?: React.ReactNode;
+
+  /** Displays error message after input */
+  error?: React.ReactNode;
 }
 
 const defaultProps: Partial<SwitchProps> = {
@@ -53,6 +64,7 @@ const defaultProps: Partial<SwitchProps> = {
   onLabel: '',
   size: 'sm',
   radius: 'xl',
+  error: false,
 };
 
 type SwitchComponent = ForwardRefWithStaticComponents<SwitchProps, { Group: typeof SwitchGroup }>;
@@ -78,14 +90,20 @@ export const Switch: SwitchComponent = forwardRef<HTMLInputElement, SwitchProps>
     checked,
     defaultChecked,
     onChange,
+    labelPosition,
+    description,
+    error,
+    disabled,
+    variant,
     ...others
   } = useComponentDefaultProps('Switch', defaultProps, props);
 
   const ctx = useSwitchGroupContext();
+  const _size = ctx?.size || size;
 
   const { classes, cx } = useStyles(
-    { size: ctx?.size || size, color, radius },
-    { unstyled, styles, classNames, name: 'Switch' }
+    { color, radius, labelPosition, error: !!error },
+    { name: 'Switch', classNames, styles, unstyled, size: _size, variant }
   );
 
   const { systemStyles, rest } = extractSystemStyles(others);
@@ -105,39 +123,45 @@ export const Switch: SwitchComponent = forwardRef<HTMLInputElement, SwitchProps>
   });
 
   return (
-    <Box
-      className={cx(classes.root, className)}
-      style={style}
+    <InlineInput
+      className={cx(className, classes.root)}
       sx={sx}
+      style={style}
+      id={uuid}
+      size={ctx?.size || size}
+      labelPosition={labelPosition}
+      label={label}
+      description={description}
+      error={error}
+      disabled={disabled}
+      __staticSelector="Switch"
+      classNames={classNames}
+      styles={styles}
+      unstyled={unstyled}
+      data-checked={contextProps.checked || undefined}
+      variant={variant}
       {...systemStyles}
       {...wrapperProps}
     >
-      <label className={classes.body} htmlFor={uuid}>
-        <input
-          {...rest}
-          checked={_checked}
-          onChange={(event) => {
-            ctx ? contextProps.onChange(event) : onChange?.(event);
-            handleChange(event.currentTarget.checked);
-          }}
-          id={uuid}
-          ref={ref}
-          type="checkbox"
-          className={classes.input}
-        />
+      <input
+        {...rest}
+        disabled={disabled}
+        checked={_checked}
+        onChange={(event) => {
+          ctx ? contextProps.onChange(event) : onChange?.(event);
+          handleChange(event.currentTarget.checked);
+        }}
+        id={uuid}
+        ref={ref}
+        type="checkbox"
+        className={classes.input}
+      />
 
-        <div className={classes.track}>
-          <div className={classes.thumb}>{thumbIcon}</div>
-          <div className={classes.trackLabel}>{_checked ? onLabel : offLabel}</div>
-        </div>
-
-        {label && (
-          <div data-testid="label" className={classes.label}>
-            {label}
-          </div>
-        )}
+      <label htmlFor={uuid} className={classes.track}>
+        <div className={classes.thumb}>{thumbIcon}</div>
+        <div className={classes.trackLabel}>{_checked ? onLabel : offLabel}</div>
       </label>
-    </Box>
+    </InlineInput>
   );
 }) as any;
 

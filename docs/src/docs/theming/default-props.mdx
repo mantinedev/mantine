@@ -41,6 +41,49 @@ function Demo() {
 }
 ```
 
+## Default props based on theme
+
+<Demo data={ThemeDemos.defaultPropsTheme} />
+
+## Default props for static components
+
+Some components like [Menu](/core/menu/), [Tabs](/core/tabs/) and [RichTextEditor](/others/tiptap/)
+have associated static components: `Menu.Item`, `Tabs.List`, `RichTextEditor.Toolbar`. You can add
+default props to these components by omitting the dot from component name:
+
+```tsx
+import { MantineProvider } from '@mantine/core';
+
+function Demo() {
+  return (
+    <MantineProvider
+      theme={{
+        components: {
+          MenuItem: {
+            defaultProps: { color: 'red' },
+          },
+
+          TabsList: {
+            defaultProps: {
+              position: 'right',
+            },
+          },
+
+          RichTextEditorToolbar: {
+            defaultProps: {
+              sticky: true,
+              stickyOffset: 60,
+            },
+          },
+        },
+      }}
+    >
+      <App />
+    </MantineProvider>
+  );
+}
+```
+
 ## Usage with TypeScript
 
 MantineProvider uses `Record<string, any>` type for default props types to improve TypeScript performance.

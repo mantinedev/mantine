@@ -1,10 +1,17 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { getSafeId } from '@mantine/utils';
 import { useUncontrolled, useId } from '@mantine/hooks';
-import { MantineColor, MantineNumberSize } from '@mantine/styles';
+import { ClassNames, MantineColor, MantineNumberSize, Styles } from '@mantine/styles';
 import { TabsContextProvider } from './Tabs.context';
 import { TABS_ERRORS } from './Tabs.errors';
-import { TabsValue, TabsOrientation, TabsVariant } from './Tabs.types';
+import {
+  TabsValue,
+  TabsOrientation,
+  TabsVariant,
+  TabsPlacement,
+  TabsStylesParams,
+} from './Tabs.types';
+import type { TabsStylesNames } from './Tabs';
 
 export interface TabsProviderProps {
   /** Default value for uncontrolled component */
@@ -18,6 +25,9 @@ export interface TabsProviderProps {
 
   /** Tabs orientation, vertical or horizontal */
   orientation?: TabsOrientation;
+
+  /** Tabs.List placement relative to Tabs.Panel, applicable only for orientation="vertical", left by default */
+  placement?: TabsPlacement;
 
   /** Base id, used to generate ids that connect labels with controls, by default generated randomly */
   id?: string;
@@ -40,7 +50,7 @@ export interface TabsProviderProps {
   /** Key of theme.colors */
   color?: MantineColor;
 
-  /** Tabs border-radius from theme.radius or number ti set value from theme, defaults to theme.defaultRadius */
+  /** Key of theme.radius or any valid CSS value to set border-radius, theme.defaultRadius by default */
   radius?: MantineNumberSize;
 
   /** Determines whether tabs should have inverted styles */
@@ -48,6 +58,12 @@ export interface TabsProviderProps {
 
   /** If set to false, Tabs.Panel content will not stay mounted when tab is not active */
   keepMounted?: boolean;
+}
+
+interface _TabsProviderProps extends TabsProviderProps {
+  classNames?: ClassNames<TabsStylesNames>;
+  styles?: Styles<TabsStylesNames, TabsStylesParams>;
+  unstyled?: boolean;
 }
 
 export function TabsProvider({
@@ -64,9 +80,15 @@ export function TabsProvider({
   color,
   radius,
   inverted,
+  placement,
   keepMounted = true,
-}: TabsProviderProps) {
+  classNames,
+  styles,
+  unstyled,
+}: _TabsProviderProps) {
   const uid = useId(id);
+
+  const [mountedPanelIds, setMountedPanelIds] = useState([]);
 
   const [_value, onChange] = useUncontrolled<TabsValue>({
     value,
@@ -78,6 +100,7 @@ export function TabsProvider({
   return (
     <TabsContextProvider
       value={{
+        placement,
         value: _value,
         orientation,
         id: uid,
@@ -86,12 +109,17 @@ export function TabsProvider({
         getTabId: getSafeId(`${uid}-tab`, TABS_ERRORS.value),
         getPanelId: getSafeId(`${uid}-panel`, TABS_ERRORS.value),
         onTabChange: onChange,
+        setMountedPanelIds,
+        mountedPanelIds,
         allowTabDeactivation,
         variant,
         color,
         radius,
         inverted,
         keepMounted,
+        classNames,
+        styles,
+        unstyled,
       }}
     >
       {children}

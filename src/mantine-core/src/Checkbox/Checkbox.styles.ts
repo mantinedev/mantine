@@ -1,50 +1,59 @@
-import { createStyles, MantineSize, MantineColor, MantineNumberSize } from '@mantine/styles';
+import {
+  createStyles,
+  MantineColor,
+  MantineNumberSize,
+  getStylesRef,
+  rem,
+  getSize,
+} from '@mantine/styles';
 
 const sizes = {
-  xs: 16,
-  sm: 20,
-  md: 24,
-  lg: 30,
-  xl: 36,
-};
-
-const iconSizes = {
-  xs: 8,
-  sm: 10,
-  md: 14,
-  lg: 16,
-  xl: 20,
+  xs: rem(16),
+  sm: rem(20),
+  md: rem(24),
+  lg: rem(30),
+  xl: rem(36),
 };
 
 export interface CheckboxStylesParams {
-  size: MantineSize;
   radius: MantineNumberSize;
   color: MantineColor;
   transitionDuration: number;
+  labelPosition: 'left' | 'right';
+  error: boolean;
+  indeterminate: boolean;
 }
 
 export default createStyles(
-  (theme, { size, radius, color, transitionDuration }: CheckboxStylesParams, getRef) => {
-    const _size = theme.fn.size({ size, sizes });
+  (
+    theme,
+    {
+      radius,
+      color,
+      transitionDuration,
+      labelPosition,
+      error,
+      indeterminate,
+    }: CheckboxStylesParams,
+    { size }
+  ) => {
+    const _size = getSize({ size, sizes });
     const colors = theme.fn.variant({ variant: 'filled', color });
 
     return {
       icon: {
-        ref: getRef('icon'),
-        color: theme.white,
-        transform: 'translateY(5px) scale(0.5)',
-        opacity: 0,
+        ...theme.fn.cover(),
+        ref: getStylesRef('icon'),
+        color: indeterminate ? 'inherit' : theme.white,
+        transform: indeterminate ? 'none' : `translateY(${rem(5)}) scale(0.5)`,
+        opacity: indeterminate ? 1 : 0,
         transitionProperty: 'opacity, transform',
         transitionTimingFunction: 'ease',
         transitionDuration: `${transitionDuration}ms`,
         pointerEvents: 'none',
-        width: theme.fn.size({ size, sizes: iconSizes }),
+        width: '60%',
         position: 'absolute',
         zIndex: 1,
-        top: 0,
-        bottom: 0,
-        left: 0,
-        right: 0,
         margin: 'auto',
 
         '@media (prefers-reduced-motion)': {
@@ -52,33 +61,23 @@ export default createStyles(
         },
       },
 
-      root: {
-        display: 'flex',
-        alignItems: 'center',
-      },
-
       inner: {
         position: 'relative',
         width: _size,
         height: _size,
-      },
-
-      label: {
-        ...theme.fn.fontStyles(),
-        WebkitTapHighlightColor: 'transparent',
-        paddingLeft: theme.spacing.sm,
-        fontSize: theme.fn.size({ size, sizes: theme.fontSizes }),
-        lineHeight: `${_size}px`,
-        color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
-        cursor: theme.cursorType,
+        order: labelPosition === 'left' ? 2 : 1,
       },
 
       input: {
         ...theme.fn.focusStyles(),
         appearance: 'none',
         backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.white,
-        border: `1px solid ${
-          theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[4]
+        border: `${rem(1)} solid ${
+          error
+            ? theme.fn.variant({ variant: 'filled', color: 'red' }).background
+            : theme.colorScheme === 'dark'
+            ? theme.colors.dark[4]
+            : theme.colors.gray[4]
         }`,
         width: _size,
         height: _size,
@@ -93,8 +92,9 @@ export default createStyles(
           backgroundColor: colors.background,
           borderColor: colors.background,
 
-          [`& + .${getRef('icon')}`]: {
+          [`& + .${getStylesRef('icon')}`]: {
             opacity: 1,
+            color: theme.white,
             transform: 'translateY(0) scale(1)',
           },
         },
@@ -104,8 +104,9 @@ export default createStyles(
             theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[2],
           borderColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[3],
           cursor: 'not-allowed',
+          pointerEvents: 'none',
 
-          [`& + .${getRef('icon')}`]: {
+          [`& + .${getStylesRef('icon')}`]: {
             color: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[5],
           },
         },

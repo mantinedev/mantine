@@ -1,4 +1,5 @@
 import React, { forwardRef } from 'react';
+import { MantineDemo } from '@mantine/ds';
 import { Group, Avatar, Text, MantineColor, SelectItemProps, Autocomplete } from '@mantine/core';
 
 const code = `
@@ -121,18 +122,18 @@ const AutoCompleteItem = forwardRef<HTMLDivElement, ItemProps>(
 
 function Demo() {
   return (
-    <div style={{ maxWidth: 320, marginLeft: 'auto', marginRight: 'auto' }}>
-      <Autocomplete
-        label="Choose employee of the month"
-        placeholder="Pick one"
-        itemComponent={AutoCompleteItem}
-        data={data}
-        filter={(value, item) =>
-          item.value.toLowerCase().includes(value.toLowerCase().trim()) ||
-          item.description.toLowerCase().includes(value.toLowerCase().trim())
-        }
-      />
-    </div>
+    <Autocomplete
+      maw={320}
+      mx="auto"
+      label="Choose employee of the month"
+      placeholder="Pick one"
+      itemComponent={AutoCompleteItem}
+      data={data}
+      filter={(value, item) =>
+        item.value.toLowerCase().includes(value.toLowerCase().trim()) ||
+        item.description.toLowerCase().includes(value.toLowerCase().trim())
+      }
+    />
   );
 }
 

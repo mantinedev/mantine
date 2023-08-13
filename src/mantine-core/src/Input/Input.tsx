@@ -3,18 +3,20 @@ import {
   DefaultProps,
   MantineNumberSize,
   MantineSize,
+  rem,
   Selectors,
-  extractSystemStyles,
   useComponentDefaultProps,
+  Variants,
 } from '@mantine/styles';
 import { createPolymorphicComponent } from '@mantine/utils';
-import { Box } from '../Box';
+import { Box, extractSystemStyles } from '../Box';
 import { InputWrapper } from './InputWrapper/InputWrapper';
 import { InputDescription } from './InputDescription/InputDescription';
 import { InputLabel } from './InputLabel/InputLabel';
 import { InputError } from './InputError/InputError';
+import { InputPlaceholder } from './InputPlaceholder/InputPlaceholder';
 import { useInputWrapperContext } from './InputWrapper.context';
-import useStyles, { InputVariant } from './Input.styles';
+import useStyles from './Input.styles';
 
 export type InputStylesNames = Selectors<typeof useStyles>;
 
@@ -22,14 +24,14 @@ export interface InputSharedProps {
   /** Adds icon on the left side of input */
   icon?: React.ReactNode;
 
-  /** Width of icon section in px */
-  iconWidth?: number;
+  /** Width of icon section */
+  iconWidth?: React.CSSProperties['width'];
 
   /** Right section of input, similar to icon but on the right */
   rightSection?: React.ReactNode;
 
   /** Width of right section, is used to calculate input padding-right */
-  rightSectionWidth?: number;
+  rightSectionWidth?: React.CSSProperties['width'];
 
   /** Props spread to rightSection div element */
   rightSectionProps?: Record<string, any>;
@@ -40,11 +42,11 @@ export interface InputSharedProps {
   /** Sets required on input element */
   required?: boolean;
 
-  /** Input border-radius from theme or number to set border-radius in px */
+  /** Key of theme.radius or any valid CSS value to set border-radius, theme.defaultRadius by default */
   radius?: MantineNumberSize;
 
   /** Defines input appearance, defaults to default in light color scheme and filled in dark */
-  variant?: InputVariant;
+  variant?: Variants<'default' | 'filled' | 'unstyled'>;
 
   /** Disabled input state */
   disabled?: boolean;
@@ -57,8 +59,8 @@ export interface InputProps extends InputSharedProps, DefaultProps<InputStylesNa
   /** Static css selector base */
   __staticSelector?: string;
 
-  /** Sets border color to red and aria-invalid=true on input element */
-  invalid?: boolean;
+  /** Determines whether input has error styles */
+  error?: React.ReactNode;
 
   /** Will input have multiple lines? */
   multiline?: boolean;
@@ -68,7 +70,6 @@ export interface InputProps extends InputSharedProps, DefaultProps<InputStylesNa
 }
 
 const defaultProps: Partial<InputProps> = {
-  rightSectionWidth: 36,
   size: 'sm',
   variant: 'default',
 };
@@ -76,7 +77,7 @@ const defaultProps: Partial<InputProps> = {
 export const _Input = forwardRef<HTMLInputElement, InputProps>((props, ref) => {
   const {
     className,
-    invalid,
+    error,
     required,
     disabled,
     variant,
@@ -98,23 +99,21 @@ export const _Input = forwardRef<HTMLInputElement, InputProps>((props, ref) => {
     pointer,
     ...others
   } = useComponentDefaultProps('Input', defaultProps, props);
-  const { offsetBottom, offsetTop } = useInputWrapperContext();
+  const { offsetBottom, offsetTop, describedBy } = useInputWrapperContext();
 
   const { classes, cx } = useStyles(
     {
       radius,
-      size,
       multiline,
-      variant,
-      invalid,
-      rightSectionWidth,
+      invalid: !!error,
+      rightSectionWidth: rightSectionWidth ? rem(rightSectionWidth) : undefined,
       iconWidth,
       withRightSection: !!rightSection,
       offsetBottom,
       offsetTop,
       pointer,
     },
-    { classNames, styles, name: ['Input', __staticSelector], unstyled }
+    { classNames, styles, name: ['Input', __staticSelector], unstyled, variant, size }
   );
 
   const { systemStyles, rest } = extractSystemStyles(others);
@@ -134,13 +133,13 @@ export const _Input = forwardRef<HTMLInputElement, InputProps>((props, ref) => {
         {...rest}
         ref={ref}
         required={required}
-        aria-invalid={invalid}
+        aria-invalid={!!error}
+        aria-describedby={describedBy}
         disabled={disabled}
-        className={cx(classes[`${variant}Variant`], classes.input, {
-          [classes.withIcon]: icon,
-          [classes.invalid]: invalid,
-          [classes.disabled]: disabled,
-        })}
+        data-disabled={disabled || undefined}
+        data-with-icon={!!icon || undefined}
+        data-invalid={!!error || undefined}
+        className={classes.input}
       />
 
       {rightSection && (
@@ -157,6 +156,7 @@ _Input.Wrapper = InputWrapper;
 _Input.Label = InputLabel;
 _Input.Description = InputDescription;
 _Input.Error = InputError;
+_Input.Placeholder = InputPlaceholder;
 
 export const Input = createPolymorphicComponent<
   'input',
@@ -166,5 +166,6 @@ export const Input = createPolymorphicComponent<
     Label: typeof InputLabel;
     Description: typeof InputDescription;
     Error: typeof InputError;
+    Placeholder: typeof InputPlaceholder;
   }
 >(_Input);

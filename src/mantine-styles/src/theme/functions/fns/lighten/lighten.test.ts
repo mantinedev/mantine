@@ -22,4 +22,8 @@ describe('@mantine/styles/lighten', () => {
     expect(lighten(RGB, 1)).toBe('rgba(255, 255, 255, 1)');
     expect(lighten(RGBA, 1)).toBe('rgba(255, 255, 255, 0.6)');
   });
+
+  it('returns color as-is if it is a CSS variable', () => {
+    expect(lighten('var(--css-custom-property)', 0.5)).toBe('var(--css-custom-property)');
+  });
 });

@@ -5,6 +5,7 @@ import { Box } from '../Box';
 import useStyles from './UnstyledButton.styles';
 
 export interface UnstyledButtonProps extends DefaultProps {
+  variant?: string;
   children?: React.ReactNode;
 }
 
@@ -16,9 +17,12 @@ export const _UnstyledButton = forwardRef<
     className,
     component = 'button',
     unstyled,
+    variant,
     ...others
   } = useComponentDefaultProps('UnstyledButton', {}, props);
-  const { classes, cx } = useStyles(null, { name: 'UnstyledButton', unstyled });
+
+  const { classes, cx } = useStyles(null, { name: 'UnstyledButton', unstyled, variant });
+
   return (
     <Box
       component={component}

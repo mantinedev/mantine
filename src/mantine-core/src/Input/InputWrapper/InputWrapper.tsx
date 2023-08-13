@@ -53,6 +53,8 @@ export interface InputWrapperProps
   extends DefaultProps<InputWrapperStylesNames>,
     InputWrapperBaseProps,
     React.ComponentPropsWithoutRef<'div'> {
+  variant?: string;
+
   /** Input that should be wrapped */
   children: React.ReactNode;
 
@@ -97,6 +99,7 @@ export const InputWrapper = forwardRef<HTMLDivElement, InputWrapperProps>((props
     unstyled,
     inputWrapperOrder,
     withAsterisk,
+    variant,
     ...others
   } = useComponentDefaultProps('InputWrapper', defaultProps, props);
 
@@ -105,6 +108,8 @@ export const InputWrapper = forwardRef<HTMLDivElement, InputWrapperProps>((props
     styles,
     name: ['InputWrapper', __staticSelector],
     unstyled,
+    variant,
+    size,
   });
 
   const sharedProps = {
@@ -112,10 +117,16 @@ export const InputWrapper = forwardRef<HTMLDivElement, InputWrapperProps>((props
     styles,
     unstyled,
     size,
+    variant,
     __staticSelector,
   };
 
   const isRequired = typeof withAsterisk === 'boolean' ? withAsterisk : required;
+  const errorId = id ? `${id}-error` : errorProps?.id;
+  const descriptionId = id ? `${id}-description` : descriptionProps?.id;
+  const hasError = !!error && typeof error !== 'boolean';
+  const _describedBy = `${hasError ? errorId : ''} ${description ? descriptionId : ''}`;
+  const describedBy = _describedBy.trim().length > 0 ? _describedBy.trim() : undefined;
 
   const _label = label && (
     <InputLabel
@@ -132,7 +143,13 @@ export const InputWrapper = forwardRef<HTMLDivElement, InputWrapperProps>((props
   );
 
   const _description = description && (
-    <InputDescription key="description" {...sharedProps} {...descriptionProps}>
+    <InputDescription
+      key="description"
+      {...descriptionProps}
+      {...sharedProps}
+      size={descriptionProps?.size || sharedProps.size}
+      id={descriptionProps?.id || descriptionId}
+    >
       {description}
     </InputDescription>
   );
@@ -140,7 +157,13 @@ export const InputWrapper = forwardRef<HTMLDivElement, InputWrapperProps>((props
   const _input = <Fragment key="input">{inputContainer(children)}</Fragment>;
 
   const _error = typeof error !== 'boolean' && error && (
-    <InputError {...errorProps} key="error" {...sharedProps}>
+    <InputError
+      {...errorProps}
+      {...sharedProps}
+      size={errorProps?.size || sharedProps.size}
+      key="error"
+      id={errorProps?.id || errorId}
+    >
       {error}
     </InputError>
   );
@@ -162,10 +185,13 @@ export const InputWrapper = forwardRef<HTMLDivElement, InputWrapperProps>((props
 
   return (
     <InputWrapperProvider
-      value={getInputOffsets(inputWrapperOrder, {
-        hasDescription: !!_description,
-        hasError: !!_error,
-      })}
+      value={{
+        describedBy,
+        ...getInputOffsets(inputWrapperOrder, {
+          hasDescription: !!_description,
+          hasError: !!_error,
+        }),
+      }}
     >
       <Box className={cx(classes.root, className)} ref={ref} {...others}>
         {content}

@@ -1,6 +1,6 @@
 import React from 'react';
 import { graphql } from 'gatsby';
-import Head from '../components/Head/Head';
+import { PageHead } from '../components/PageHead/PageHead';
 import { MdxPage } from '../components/MdxPage/MdxPage';
 import { getDocsData, DocsQuery } from '../components/Layout/get-docs-data';
 import { MdxPageProps, Frontmatter } from '../types';
@@ -32,11 +32,15 @@ export default function DocPage({ data, location }: DocPageProps) {
 
   return (
     <article>
-      <Head title={mdx.frontmatter.title} description={mdx.frontmatter.description} />
       <MdxPage {...mdx} siblings={siblings} />
     </article>
   );
 }
+
+export const Head = ({ data }) => {
+  const { mdx } = data;
+  return <PageHead title={mdx.frontmatter.title} description={mdx.frontmatter.description} />;
+};
 
 export const query = graphql`
   query DocById($id: String) {
@@ -62,6 +66,7 @@ export const query = graphql`
         date
         componentPrefix
         hideToc
+        polymorphic
       }
       body
     }

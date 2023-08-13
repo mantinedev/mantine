@@ -1,4 +1,5 @@
 import React from 'react';
+import { MantineDemo } from '@mantine/ds';
 import { Highlight } from '@mantine/core';
 
 const code = `
@@ -11,13 +12,13 @@ function Demo() {
       href="https://mantine.dev"
       target="_blank"
       highlight="mantine"
-      variant="link"
-      weight={500}
+      fw={500}
     >
       Mantine website
     </Highlight>
   );
 }
+
 `;
 
 function Demo() {
@@ -27,8 +28,7 @@ function Demo() {
       href="https://mantine.dev"
       target="_blank"
       highlight="mantine"
-      variant="link"
-      weight={500}
+      fw={500}
     >
       Mantine website
     </Highlight>

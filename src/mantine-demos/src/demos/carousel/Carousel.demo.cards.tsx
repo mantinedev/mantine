@@ -2,16 +2,17 @@ import React from 'react';
 import { Carousel, CarouselProps } from '@mantine/carousel';
 import { useMediaQuery } from '@mantine/hooks';
 import { useMantineTheme } from '@mantine/core';
+import { MantineDemo } from '@mantine/ds';
 import { Card } from './_card';
 
 const code = `
 import { Carousel } from '@mantine/carousel';
 import { useMediaQuery } from '@mantine/hooks';
-import { createStyles, Paper, Text, Title, Button, useMantineTheme } from '@mantine/core';
+import { createStyles, Paper, Text, Title, Button, useMantineTheme, rem } from '@mantine/core';
 
 const useStyles = createStyles((theme) => ({
   card: {
-    height: 440,
+    height: rem(440),
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'space-between',
@@ -25,7 +26,7 @@ const useStyles = createStyles((theme) => ({
     fontWeight: 900,
     color: theme.white,
     lineHeight: 1.2,
-    fontSize: 32,
+    fontSize: rem(32),
     marginTop: theme.spacing.xs,
   },
 
@@ -110,7 +111,7 @@ const data = [
 
 function Demo() {
   const theme = useMantineTheme();
-  const mobile = useMediaQuery(\`(max-width: \${theme.breakpoints.sm}px)\`);
+  const mobile = useMediaQuery(\`(max-width: \${theme.breakpoints.sm})\`);
   const slides = data.map((item) => (
     <Carousel.Slide key={item.title}>
       <Card {...item} />
@@ -172,7 +173,7 @@ const data = [
 
 export function CarouselCardsDemos(props: CarouselProps) {
   const theme = useMantineTheme();
-  const mobile = useMediaQuery(`(max-width: ${theme.breakpoints.sm}px)`);
+  const mobile = useMediaQuery(`(max-width: ${theme.breakpoints.sm})`);
   const slides = data.map((item) => (
     <Carousel.Slide key={item.title}>
       <Card {...item} />

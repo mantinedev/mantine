@@ -1,5 +1,12 @@
-import React, { forwardRef } from 'react';
-import { useDropzone, FileRejection, Accept, FileWithPath } from 'react-dropzone';
+import React from 'react';
+import {
+  useDropzone,
+  FileRejection,
+  Accept,
+  FileWithPath,
+  DropEvent,
+  FileError,
+} from 'react-dropzone';
 import {
   DefaultProps,
   Selectors,
@@ -20,10 +27,12 @@ export type DropzoneStylesNames = Selectors<typeof useStyles>;
 export interface DropzoneProps
   extends DefaultProps<DropzoneStylesNames>,
     Omit<React.ComponentPropsWithRef<'div'>, 'onDrop'> {
-  /** Padding from theme.spacing, or number to set padding in px */
+  variant?: string;
+
+  /** Padding from theme.spacing, or any valid CSS value to set padding */
   padding?: MantineNumberSize;
 
-  /** Border radius from theme.radius or number to set border-radius in px */
+  /** Key of theme.radius or any valid CSS value to set border-radius, theme.defaultRadius by default */
   radius?: MantineNumberSize;
 
   /** Dropzone statues */
@@ -32,7 +41,10 @@ export interface DropzoneProps
   /** Disable files capturing */
   disabled?: boolean;
 
-  /** Called when files are dropped into dropzone */
+  /** Called when any files are dropped into dropzone */
+  onDropAny?(files: FileWithPath[], fileRejections: FileRejection[]): void;
+
+  /** Called when valid files are dropped into dropzone */
   onDrop(files: FileWithPath[]): void;
 
   /** Called when selected files don't meet file restrictions */
@@ -94,6 +106,12 @@ export interface DropzoneProps
 
   /** Set to true to use the File System Access API to open the file picker instead of using an <input type="file"> click event, defaults to true */
   useFsAccessApi?: boolean;
+
+  /** Use this to provide a custom file aggregator */
+  getFilesFromEvent?: (event: DropEvent) => Promise<Array<File | DataTransferItem>>;
+
+  /** Custom validation function. It must return null if there's no errors. */
+  validator?: <T extends File>(file: T) => FileError | FileError[] | null;
 }
 
 export const defaultProps: Partial<DropzoneProps> = {
@@ -109,91 +127,96 @@ export const defaultProps: Partial<DropzoneProps> = {
   useFsAccessApi: true,
 };
 
-export const _Dropzone: any = forwardRef<HTMLDivElement, DropzoneProps>(
-  (props: DropzoneProps, ref) => {
-    const {
-      className,
-      padding,
-      radius,
-      disabled,
-      classNames,
-      styles,
-      loading,
-      multiple,
-      maxSize,
-      accept,
-      children,
-      onDrop,
-      onReject,
-      openRef,
-      name,
-      unstyled,
-      maxFiles,
-      autoFocus,
-      activateOnClick,
-      activateOnDrag,
-      dragEventsBubbling,
-      activateOnKeyboard,
-      onDragEnter,
-      onDragLeave,
-      onDragOver,
-      onFileDialogCancel,
-      onFileDialogOpen,
-      preventDropOnDocument,
-      useFsAccessApi,
-      ...others
-    } = useComponentDefaultProps('Dropzone', defaultProps, props);
+export function _Dropzone(props: DropzoneProps) {
+  const {
+    className,
+    padding,
+    radius,
+    disabled,
+    classNames,
+    styles,
+    loading,
+    multiple,
+    maxSize,
+    accept,
+    children,
+    onDropAny,
+    onDrop,
+    onReject,
+    openRef,
+    name,
+    unstyled,
+    maxFiles,
+    autoFocus,
+    activateOnClick,
+    activateOnDrag,
+    dragEventsBubbling,
+    activateOnKeyboard,
+    onDragEnter,
+    onDragLeave,
+    onDragOver,
+    onFileDialogCancel,
+    onFileDialogOpen,
+    preventDropOnDocument,
+    useFsAccessApi,
+    getFilesFromEvent,
+    validator,
+    variant,
+    ...others
+  } = useComponentDefaultProps('Dropzone', defaultProps, props);
 
-    const { classes, cx } = useStyles(
-      { radius, padding },
-      { classNames, styles, unstyled, name: 'Dropzone' }
-    );
+  const { classes, cx } = useStyles(
+    { radius, padding },
+    { name: 'Dropzone', classNames, styles, unstyled, variant }
+  );
 
-    const { getRootProps, getInputProps, isDragAccept, isDragReject, open } = useDropzone({
-      onDropAccepted: onDrop,
-      onDropRejected: onReject,
-      disabled: disabled || loading,
-      accept: Array.isArray(accept) ? accept.reduce((r, key) => ({ ...r, [key]: [] }), {}) : accept,
-      multiple,
-      maxSize,
-      maxFiles,
-      autoFocus,
-      noClick: !activateOnClick,
-      noDrag: !activateOnDrag,
-      noDragEventsBubbling: !dragEventsBubbling,
-      noKeyboard: !activateOnKeyboard,
-      onDragEnter,
-      onDragLeave,
-      onDragOver,
-      onFileDialogCancel,
-      onFileDialogOpen,
-      preventDropOnDocument,
-      useFsAccessApi,
-    });
+  const { getRootProps, getInputProps, isDragAccept, isDragReject, open } = useDropzone({
+    onDrop: onDropAny,
+    onDropAccepted: onDrop,
+    onDropRejected: onReject,
+    disabled: disabled || loading,
+    accept: Array.isArray(accept) ? accept.reduce((r, key) => ({ ...r, [key]: [] }), {}) : accept,
+    multiple,
+    maxSize,
+    maxFiles,
+    autoFocus,
+    noClick: !activateOnClick,
+    noDrag: !activateOnDrag,
+    noDragEventsBubbling: !dragEventsBubbling,
+    noKeyboard: !activateOnKeyboard,
+    onDragEnter,
+    onDragLeave,
+    onDragOver,
+    onFileDialogCancel,
+    onFileDialogOpen,
+    preventDropOnDocument,
+    useFsAccessApi,
+    validator,
+    ...(getFilesFromEvent ? { getFilesFromEvent } : null),
+  });
 
-    assignRef(openRef, open);
+  assignRef(openRef, open);
 
-    const isIdle = !isDragAccept && !isDragReject;
+  const isIdle = !isDragAccept && !isDragReject;
 
-    return (
-      <DropzoneProvider value={{ accept: isDragAccept, reject: isDragReject, idle: isIdle }}>
-        <Box
-          {...others}
-          {...getRootProps({ ref })}
-          data-accept={isDragAccept || undefined}
-          data-reject={isDragReject || undefined}
-          data-idle={isIdle || undefined}
-          data-loading={loading || undefined}
-          className={cx(classes.root, className)}
-        >
-          <LoadingOverlay visible={loading} radius={radius} unstyled={unstyled} />
-          <input {...getInputProps()} name={name} />
-          <div className={classes.inner}>{children}</div>
-        </Box>
-      </DropzoneProvider>
-    );
-  }
-);
+  return (
+    <DropzoneProvider value={{ accept: isDragAccept, reject: isDragReject, idle: isIdle }}>
+      <Box
+        {...others}
+        {...getRootProps()}
+        data-accept={isDragAccept || undefined}
+        data-reject={isDragReject || undefined}
+        data-idle={isIdle || undefined}
+        data-loading={loading || undefined}
+        className={cx(classes.root, className)}
+      >
+        <LoadingOverlay visible={loading} radius={radius} unstyled={unstyled} />
+        <input {...getInputProps()} name={name} />
+        <div className={classes.inner}>{children}</div>
+      </Box>
+    </DropzoneProvider>
+  );
+}
 
 _Dropzone.displayName = '@mantine/dropzone/Dropzone';
 _Dropzone.Accept = DropzoneAccept;
@@ -208,4 +231,4 @@ export const Dropzone: ForwardRefWithStaticComponents<
     Idle: typeof DropzoneIdle;
     FullScreen: DropzoneFullScreenType;
   }
-> = _Dropzone;
+> = _Dropzone as any;

@@ -1,4 +1,5 @@
 import React from 'react';
+import { MantineDemo } from '@mantine/ds';
 import { TextInput, Loader } from '@mantine/core';
 
 const code = `
@@ -11,9 +12,14 @@ function Demo() {
 
 function Demo() {
   return (
-    <div style={{ maxWidth: 320, marginLeft: 'auto', marginRight: 'auto' }}>
-      <TextInput label="Your email" placeholder="Your email" rightSection={<Loader size="xs" />} />
-    </div>
+    <TextInput
+      maw={320}
+      mx="auto"
+      label="Your email"
+      placeholder="Your email"
+      defaultValue="asdasdnjknwebdkjwbjrbfkjberfhjbrefhberjfbjherbfjherbfjhb"
+      rightSection={<Loader size="xs" />}
+    />
   );
 }
 

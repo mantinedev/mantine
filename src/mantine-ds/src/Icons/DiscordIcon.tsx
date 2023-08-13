@@ -1,7 +1,8 @@
 import React from 'react';
+import { rem } from '@mantine/core';
 
 interface DiscordIconProps extends React.ComponentPropsWithoutRef<'svg'> {
-  size?: number;
+  size?: number | string;
 }
 
 export function DiscordIcon({ size, ...others }: DiscordIconProps) {
@@ -10,8 +11,8 @@ export function DiscordIcon({ size, ...others }: DiscordIconProps) {
       xmlns="http://www.w3.org/2000/svg"
       fill="none"
       viewBox="0 0 256 199"
-      width={size}
-      height={size}
+      width={rem(size)}
+      height={rem(size)}
       {...others}
     >
       <path

@@ -1,190 +1,134 @@
-import React, { forwardRef } from 'react';
-import { usePagination } from '@mantine/hooks';
+import React from 'react';
+import { getSize, useComponentDefaultProps, useMantineTheme } from '@mantine/styles';
+import { Group, GroupProps } from '../Group';
+import { PaginationRoot, PaginationRootSettings } from './PaginationRoot/PaginationRoot';
+import { PaginationItems } from './PaginationItems/PaginationItems';
+import { PaginationControl } from './PaginationControl/PaginationControl';
+import { PaginationDots } from './PaginationDots/PaginationDots';
+import { PaginationIcon } from './Pagination.icons';
 import {
-  DefaultProps,
-  MantineNumberSize,
-  MantineColor,
-  Selectors,
-  useComponentDefaultProps,
-} from '@mantine/styles';
-import { Group, GroupProps } from '../Group/Group';
-import { DefaultItem, PaginationItemProps } from './DefaultItem/DefaultItem';
-import useStyles, { PaginationStylesParams } from './Pagination.styles';
-
-export type PaginationStylesNames = Selectors<typeof useStyles>;
+  PaginationNext,
+  PaginationFirst,
+  PaginationLast,
+  PaginationPrevious,
+} from './PaginationEdges/PaginationEdges';
 
 export interface PaginationProps
-  extends DefaultProps<PaginationStylesNames, PaginationStylesParams>,
-    Omit<GroupProps, 'classNames' | 'styles' | 'onChange'> {
-  /** Change item component */
-  itemComponent?: React.FC<PaginationItemProps>;
-
-  /** Active item color from theme, defaults to theme.primaryColor */
-  color?: MantineColor;
-
-  /** Active initial page for uncontrolled component */
-  initialPage?: number;
-
-  /** Controlled active page number */
-  page?: number;
-
-  /** Total amount of pages */
-  total: number;
-
-  /** Siblings amount on left/right side of selected page */
-  siblings?: number;
-
-  /** Amount of elements visible on left/right edges */
-  boundaries?: number;
-
-  /** Callback fired after change of each page */
-  onChange?: (page: number) => void;
-
-  /** Callback to control aria-labels */
-  getItemAriaLabel?: (
-    page: number | 'dots' | 'prev' | 'next' | 'first' | 'last'
-  ) => string | undefined;
-
-  /** Spacing between items from theme or number to set value in px, defaults to theme.spacing.xs / 2 */
-  spacing?: MantineNumberSize;
-
-  /** Predefined item size or number to set width and height in px */
-  size?: MantineNumberSize;
-
-  /** Predefined item radius or number to set border-radius in px */
-  radius?: MantineNumberSize;
-
-  /** Show/hide jump to start/end controls */
+  extends PaginationRootSettings,
+    Omit<GroupProps, keyof PaginationRootSettings> {
+  /** Determines whether first/last controls should be rendered, false by default */
   withEdges?: boolean;
 
-  /** Show/hide prev/next controls */
+  /** Determines whether next/previous controls should be rendered, true by default */
   withControls?: boolean;
 
-  /** Determines whether all controls should be disabled */
-  disabled?: boolean;
+  /** Adds props to next/previous/first/last controls */
+  getControlProps?(control: 'first' | 'previous' | 'last' | 'next'): Record<string, any>;
+
+  /** Next control icon component */
+  nextIcon?: PaginationIcon;
+
+  /** Previous control icon component */
+  previousIcon?: PaginationIcon;
+
+  /** Last control icon component */
+  lastIcon?: PaginationIcon;
+
+  /** First control icon component */
+  firstIcon?: PaginationIcon;
+
+  /** Dots icon component */
+  dotsIcon?: PaginationIcon;
 }
 
 const defaultProps: Partial<PaginationProps> = {
-  itemComponent: DefaultItem,
-  initialPage: 1,
+  withControls: true,
   siblings: 1,
   boundaries: 1,
-  size: 'md',
-  radius: 'sm',
-  withEdges: false,
-  withControls: true,
 };
 
-export const Pagination = forwardRef<HTMLDivElement, PaginationProps>((props, ref) => {
+export function Pagination(props: PaginationProps) {
   const {
-    itemComponent: Item,
-    classNames,
-    styles,
-    page,
-    initialPage,
-    color,
-    total,
-    siblings,
-    boundaries,
-    size,
-    radius,
-    onChange,
-    getItemAriaLabel,
-    spacing,
     withEdges,
     withControls,
-    sx,
+    classNames,
+    styles,
     unstyled,
+    variant,
+    size,
+    total,
+    value,
+    defaultValue,
+    onChange,
     disabled,
+    siblings,
+    boundaries,
+    color,
+    radius,
+    onNextPage,
+    onPreviousPage,
+    onFirstPage,
+    onLastPage,
+    getItemProps,
+    getControlProps,
+    spacing,
+    nextIcon,
+    previousIcon,
+    lastIcon,
+    firstIcon,
+    dotsIcon,
     ...others
   } = useComponentDefaultProps('Pagination', defaultProps, props);
+  const theme = useMantineTheme();
 
-  const { classes, theme } = useStyles(
-    { color, size, radius },
-    { classNames, styles, unstyled, name: 'Pagination' }
-  );
-
-  const { range, setPage, next, previous, active, first, last } = usePagination({
-    page,
-    siblings,
-    total,
-    onChange,
-    initialPage,
-    boundaries,
-  });
-
-  const items = range.map((pageNumber, index) => (
-    <Item
-      key={index}
-      page={pageNumber}
-      active={pageNumber === active}
-      aria-current={pageNumber === active ? 'page' : undefined}
-      aria-label={typeof getItemAriaLabel === 'function' ? getItemAriaLabel(pageNumber) : null}
-      tabIndex={pageNumber === 'dots' ? -1 : 0}
-      data-dots={pageNumber === 'dots' || undefined}
-      data-active={pageNumber === active || undefined}
-      className={classes.item}
-      onClick={pageNumber !== 'dots' ? () => setPage(pageNumber) : undefined}
-      disabled={disabled}
-    />
-  ));
+  if (total <= 0) {
+    return null;
+  }
 
   return (
-    <Group
-      role="navigation"
-      spacing={spacing || theme.fn.size({ size, sizes: theme.spacing }) / 2}
-      ref={ref}
-      sx={sx}
+    <PaginationRoot
+      classNames={classNames}
+      styles={styles}
       unstyled={unstyled}
-      {...others}
+      variant={variant}
+      size={size}
+      total={total}
+      value={value}
+      defaultValue={defaultValue}
+      onChange={onChange}
+      disabled={disabled}
+      siblings={siblings}
+      boundaries={boundaries}
+      color={color}
+      radius={radius}
+      onNextPage={onNextPage}
+      onPreviousPage={onPreviousPage}
+      onFirstPage={onFirstPage}
+      onLastPage={onLastPage}
+      getItemProps={getItemProps}
     >
-      {withEdges && (
-        <Item
-          page="first"
-          onClick={first}
-          aria-label={getItemAriaLabel ? getItemAriaLabel('first') : undefined}
-          aria-disabled={active === 1 || disabled}
-          className={classes.item}
-          disabled={active === 1 || disabled}
-        />
-      )}
-
-      {withControls && (
-        <Item
-          page="prev"
-          onClick={previous}
-          aria-label={getItemAriaLabel ? getItemAriaLabel('prev') : undefined}
-          aria-disabled={active === 1 || disabled}
-          className={classes.item}
-          disabled={active === 1 || disabled}
-        />
-      )}
-
-      {items}
-
-      {withControls && (
-        <Item
-          page="next"
-          onClick={next}
-          aria-label={getItemAriaLabel ? getItemAriaLabel('next') : undefined}
-          aria-disabled={active === total || disabled}
-          className={classes.item}
-          disabled={active === total || disabled}
-        />
-      )}
-
-      {withEdges && (
-        <Item
-          page="last"
-          onClick={last}
-          aria-label={getItemAriaLabel ? getItemAriaLabel('last') : undefined}
-          aria-disabled={active === total || disabled}
-          className={classes.item}
-          disabled={active === total || disabled}
-        />
-      )}
-    </Group>
+      <Group
+        spacing={spacing ?? `calc(${getSize({ size, sizes: theme.spacing })} / 2)`}
+        {...others}
+      >
+        {withEdges && <PaginationFirst icon={firstIcon} {...getControlProps?.('first')} />}
+        {withControls && (
+          <PaginationPrevious icon={previousIcon} {...getControlProps?.('previous')} />
+        )}
+        <PaginationItems dotsIcon={dotsIcon} />
+        {withControls && <PaginationNext icon={nextIcon} {...getControlProps?.('next')} />}
+        {withEdges && <PaginationLast icon={lastIcon} {...getControlProps?.('last')} />}
+      </Group>
+    </PaginationRoot>
   );
-});
+}
 
 Pagination.displayName = '@mantine/core/Pagination';
+Pagination.Root = PaginationRoot;
+Pagination.Items = PaginationItems;
+Pagination.Control = PaginationControl;
+Pagination.Dots = PaginationDots;
+Pagination.Next = PaginationNext;
+Pagination.Previous = PaginationPrevious;
+Pagination.Last = PaginationLast;
+Pagination.First = PaginationFirst;

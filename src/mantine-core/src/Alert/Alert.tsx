@@ -5,11 +5,12 @@ import {
   Selectors,
   MantineNumberSize,
   useComponentDefaultProps,
+  Variants,
 } from '@mantine/styles';
 import { useId } from '@mantine/hooks';
 import { CloseButton } from '../CloseButton';
 import { Box } from '../Box';
-import useStyles, { AlertStylesParams, AlertVariant } from './Alert.styles';
+import useStyles, { AlertStylesParams } from './Alert.styles';
 
 export type AlertStylesNames = Selectors<typeof useStyles>;
 
@@ -19,19 +20,19 @@ export interface AlertProps
   /** Alert title */
   title?: React.ReactNode;
 
-  /** Controls Alert background, color and border styles, defaults to light */
-  variant?: AlertVariant;
+  /** Controls Alert background, color and border styles, "light" by default */
+  variant?: Variants<'filled' | 'outline' | 'light'>;
 
   /** Alert message */
   children: React.ReactNode;
 
-  /** Color from theme.colors */
+  /** Key of theme.colors */
   color?: MantineColor;
 
-  /** Icon displayed next to title */
+  /** Icon displayed next to the title */
   icon?: React.ReactNode;
 
-  /** True to display close button */
+  /** Determines whether close button should be displayed, false by default */
   withCloseButton?: boolean;
 
   /** Called when close button is clicked */
@@ -40,7 +41,7 @@ export interface AlertProps
   /** Close button aria-label */
   closeButtonLabel?: string;
 
-  /** Radius from theme.radius, or number to set border-radius in px, defaults to theme.defaultRadius */
+  /** Key of theme.radius or any valid CSS value to set border-radius, theme.defaultRadius by default */
   radius?: MantineNumberSize;
 }
 
@@ -68,8 +69,8 @@ export const Alert = forwardRef<HTMLDivElement, AlertProps>((props: AlertProps, 
   } = useComponentDefaultProps('Alert', defaultProps, props);
 
   const { classes, cx } = useStyles(
-    { color, radius, variant },
-    { classNames, styles, unstyled, name: 'Alert' }
+    { color, radius },
+    { classNames, styles, unstyled, variant, name: 'Alert' }
   );
 
   const rootId = useId(id);
@@ -98,21 +99,21 @@ export const Alert = forwardRef<HTMLDivElement, AlertProps>((props: AlertProps, 
             </div>
           )}
 
-          {withCloseButton && (
-            <CloseButton
-              className={classes.closeButton}
-              onClick={onClose}
-              variant="transparent"
-              size={16}
-              iconSize={16}
-              aria-label={closeButtonLabel}
-            />
-          )}
-
           <div id={bodyId} className={classes.message}>
             {children}
           </div>
         </div>
+
+        {withCloseButton && (
+          <CloseButton
+            className={classes.closeButton}
+            onClick={onClose}
+            variant="transparent"
+            size={16}
+            iconSize={16}
+            aria-label={closeButtonLabel}
+          />
+        )}
       </div>
     </Box>
   );

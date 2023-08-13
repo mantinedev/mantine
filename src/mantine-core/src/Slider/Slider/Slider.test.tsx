@@ -1,7 +1,13 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { checkAccessibility, itSupportsSystemProps } from '@mantine/tests';
+import {
+  checkAccessibility,
+  itSupportsSystemProps,
+  itSupportsProviderVariant,
+  itSupportsProviderSize,
+  itDisablesInputInsideDisabledFieldset,
+} from '@mantine/tests';
 import { Slider, SliderProps } from './Slider';
 
 const defaultProps: SliderProps = {
@@ -19,6 +25,8 @@ const pressArrow = (kind: 'right' | 'left') =>
 
 describe('@mantine/core/Slider', () => {
   checkAccessibility([<Slider {...defaultProps} />]);
+  itSupportsProviderVariant(Slider, defaultProps, 'Slider');
+  itSupportsProviderSize(Slider, defaultProps, 'Slider');
   itSupportsSystemProps({
     component: Slider,
     props: defaultProps,
@@ -26,6 +34,7 @@ describe('@mantine/core/Slider', () => {
     refType: HTMLDivElement,
     providerName: 'Slider',
   });
+  itDisablesInputInsideDisabledFieldset(Slider, defaultProps);
 
   it('provides name and value to hidden input', () => {
     const { container } = render(<Slider name="test-input" value={50} />);

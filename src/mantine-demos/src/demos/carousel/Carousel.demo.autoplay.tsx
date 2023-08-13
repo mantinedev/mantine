@@ -1,6 +1,7 @@
 import React, { useRef } from 'react';
 import { Carousel } from '@mantine/carousel';
 import Autoplay from 'embla-carousel-autoplay';
+import { MantineDemo } from '@mantine/ds';
 import { Slides } from './_slides';
 
 const code = `
@@ -12,7 +13,7 @@ function Demo() {
   const autoplay = useRef(Autoplay({ delay: 2000 }));
   return (
     <Carousel
-      sx={{ maxWidth: 320 }}
+      maw={320}
       mx="auto"
       withIndicators
       height={200}
@@ -34,7 +35,7 @@ function Demo() {
 
   return (
     <Carousel
-      sx={{ maxWidth: 320 }}
+      maw={320}
       mx="auto"
       withIndicators
       height={200}

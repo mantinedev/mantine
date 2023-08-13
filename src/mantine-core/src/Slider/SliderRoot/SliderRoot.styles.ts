@@ -1,27 +1,22 @@
-import { createStyles, MantineNumberSize } from '@mantine/styles';
-
-interface SliderRootStyles {
-  size: MantineNumberSize;
-  disabled: boolean;
-}
+import { createStyles, rem } from '@mantine/styles';
 
 export const sizes = {
-  xs: 4,
-  sm: 6,
-  md: 8,
-  lg: 10,
-  xl: 12,
+  xs: rem(4),
+  sm: rem(6),
+  md: rem(8),
+  lg: rem(10),
+  xl: rem(12),
 };
 
-export default createStyles((theme, { size, disabled }: SliderRootStyles) => ({
+export default createStyles((theme) => ({
   root: {
     ...theme.fn.fontStyles(),
     WebkitTapHighlightColor: 'transparent',
     outline: 0,
-    height: theme.fn.size({ sizes, size }) * 2,
     display: 'flex',
+    flexDirection: 'column',
     alignItems: 'center',
-    cursor: disabled ? 'not-allowed' : 'pointer',
     touchAction: 'none',
+    position: 'relative',
   },
 }));
