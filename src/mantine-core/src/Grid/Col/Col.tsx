@@ -93,7 +93,6 @@ export const Col = forwardRef<HTMLDivElement, ColProps>((props: ColProps, ref) =
     orderLg,
     orderXl,
     className,
-    id,
     unstyled,
     variant,
     ...others
