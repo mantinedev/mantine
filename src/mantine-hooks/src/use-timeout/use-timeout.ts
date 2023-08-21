@@ -5,14 +5,14 @@ export function useTimeout(
   delay: number,
   options: { autoInvoke: boolean } = { autoInvoke: false }
 ) {
-  const callbackRef = useRef<Function>(null);
-  const timeoutRef = useRef<number>(null);
+  const callbackRef = useRef<Function | null>(null);
+  const timeoutRef = useRef<number | null>(null);
 
   const start = useCallback(
     (...callbackParams: any[]) => {
       if (!timeoutRef.current) {
         timeoutRef.current = window.setTimeout(() => {
-          callbackRef.current(callbackParams);
+          callbackRef.current?.(callbackParams);
           timeoutRef.current = null;
         }, delay);
       }
