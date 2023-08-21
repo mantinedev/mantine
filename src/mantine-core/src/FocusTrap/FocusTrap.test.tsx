@@ -51,6 +51,67 @@ describe('@mantine/core/FocusTrap', () => {
     expect(document.body).toHaveFocus();
   });
 
+  it('traps focus on shift + tab', async () => {
+    render(
+      <FocusTrap>
+        <div>
+          <input />
+          <button type="button">Button</button>
+          <input type="radio" />
+        </div>
+      </FocusTrap>
+    );
+
+    await wait(10);
+    expect(screen.getByRole('textbox')).toHaveFocus();
+
+    userEvent.tab();
+    expect(screen.getByRole('button')).toHaveFocus();
+
+    userEvent.tab({ shift: true });
+    expect(screen.getByRole('textbox')).toHaveFocus();
+
+    userEvent.tab({ shift: true });
+    expect(screen.getByRole('button')).toHaveFocus();
+  });
+
+  it('traps focus on shift + tab and handles Radio Groups', async () => {
+    render(
+      <FocusTrap>
+        <div>
+          <label htmlFor="1">
+            Option One
+            <input type="radio" name="group" id="1" />
+          </label>
+
+          <label htmlFor="2">
+            Option Two
+            <input type="radio" name="group" id="2" />
+          </label>
+
+          <label htmlFor="3">
+            Option Three
+            <input type="radio" name="group" id="3" />
+          </label>
+
+          <button type="button">Button</button>
+        </div>
+      </FocusTrap>
+    );
+
+    await wait(10);
+    expect(screen.getByLabelText('Option One')).toHaveFocus();
+
+    userEvent.tab();
+    expect(screen.getByRole('button')).toHaveFocus();
+
+    userEvent.tab({ shift: true });
+    expect(screen.getByLabelText('Option Three')).toHaveFocus();
+
+    userEvent.tab({ shift: true });
+    expect(screen.getByRole('button')).toHaveFocus();
+  });
+
   it('manages aria-hidden attributes', () => {
     const adjacentDiv = document.createElement('div');
     adjacentDiv.setAttribute('data-testid', 'adjacent');

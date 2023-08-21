@@ -8,7 +8,19 @@ export function scopeTab(node: HTMLElement, event: KeyboardEvent) {
   }
   const finalTabbable = tabbable[event.shiftKey ? 0 : tabbable.length - 1];
   const root = node.getRootNode() as unknown as DocumentOrShadowRoot;
-  const leavingFinalTabbable = finalTabbable === root.activeElement || node === root.activeElement;
+  let leavingFinalTabbable = finalTabbable === root.activeElement || node === root.activeElement;
+
+  // Handle the case of the active element being in a RadioGroup with the finalTabbable element
+  if (root.activeElement instanceof HTMLInputElement && root.activeElement.type === 'radio') {
+    const activeRadioGroup = tabbable.filter(
+      (element) =>
+        element instanceof HTMLInputElement &&
+        root.activeElement instanceof HTMLInputElement &&
+        element.type === 'radio' &&
+        element.name === root.activeElement.name
+    );
+    leavingFinalTabbable = activeRadioGroup.includes(finalTabbable);
+  }
 
   if (!leavingFinalTabbable) {
     return;
