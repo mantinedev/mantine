@@ -157,7 +157,7 @@ export const PickerInputBase = forwardRef<HTMLButtonElement, PickerInputBaseProp
           opened={dropdownOpened}
           onClose={handleClose}
           disabled={dropdownType === 'modal' || readOnly}
-          trapFocus={!hasLabel}
+          trapFocus
           returnFocus
           unstyled={unstyled}
           {...popoverProps}
