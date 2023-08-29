@@ -15,7 +15,7 @@ const defaultProps: Partial<AnchorProps> = {
 
 export const _Anchor = forwardRef<HTMLAnchorElement, AnchorProps & { component: any }>(
   (props, ref) => {
-    const { component, className, unstyled, variant, size, color, underline, ...others } =
+    const { component, className, unstyled, variant, size, color, underline, span, ...others } =
       useComponentDefaultProps('Anchor', defaultProps as AnchorProps & { component: any }, props);
 
     const { classes, cx } = useStyles(
@@ -26,7 +26,7 @@ export const _Anchor = forwardRef<HTMLAnchorElement, AnchorProps & { component: 
 
     return (
       <Text
-        component={component || 'a'}
+        component={span ? 'span' : component || 'a'}
         ref={ref}
         className={cx(classes.root, className)}
         size={size}
