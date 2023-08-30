@@ -13,7 +13,6 @@ const data = [
     value: 'Bender Bending Rodríguez',
     description: 'Fascinated with cooking',
   },
-
   {
     image: 'https://img.icons8.com/clouds/256/000000/futurama-mom.png',
     label: 'Carol Miller',
