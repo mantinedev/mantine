@@ -68,7 +68,7 @@ export default createStyles((theme) => ({
     minHeight: rem(500),
     width: rem(800),
     flex: 1,
-    backgroundImage: `url(${banner})`,
+    backgroundImage: `url('${banner}')`,
     backgroundSize: 'auto 100%',
     backgroundRepeat: 'no-repeat',
     backgroundPosition: 'right',
