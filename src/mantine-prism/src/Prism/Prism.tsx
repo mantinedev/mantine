@@ -95,7 +95,7 @@ export const Prism = forwardRef<HTMLDivElement, PrismProps>((props: PrismProps, 
     ...others
   } = useComponentDefaultProps('Prism', prismDefaultProps, props);
   const code = trim && typeof children === 'string' ? children.trim() : children;
-  const maxLineSize = code.split('\n').length.toString().length;
+  const maxLineSize = code?.split('\n').length.toString().length || 0;
 
   const theme = useMantineTheme();
   const clipboard = useClipboard();
