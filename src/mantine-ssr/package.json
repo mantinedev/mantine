@@ -1,7 +1,7 @@
 {
   "name": "@mantine/ssr",
   "description": "Mantine server side rendering utils",
-  "version": "6.0.19",
+  "version": "6.0.20",
   "main": "cjs/index.js",
   "module": "esm/index.js",
   "types": "lib/index.d.ts",
@@ -33,7 +33,7 @@
     "@emotion/server": ">=11.4.0"
   },
   "dependencies": {
-    "@mantine/styles": "6.0.19",
+    "@mantine/styles": "6.0.20",
     "html-react-parser": "1.4.12"
   },
   "devDependencies": {}
