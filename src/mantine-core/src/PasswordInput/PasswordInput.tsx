@@ -192,6 +192,7 @@ export const PasswordInput = forwardRef<HTMLInputElement, PasswordInputProps>((p
           disabled={disabled}
           id={uuid}
           ref={ref}
+          autoComplete="off"
           {...rest}
         />
       </Input>
