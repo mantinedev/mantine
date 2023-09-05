@@ -4,7 +4,7 @@ import { createPolymorphicComponent } from '@mantine/utils';
 import { Text, TextProps } from '../Text/Text';
 import useStyles from './Anchor.styles';
 
-export interface AnchorProps extends Omit<TextProps, 'variant'> {
+export interface AnchorProps extends Omit<TextProps, 'variant' | 'span'> {
   variant?: string;
   children?: React.ReactNode;
 }
