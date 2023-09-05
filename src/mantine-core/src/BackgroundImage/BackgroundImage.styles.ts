@@ -15,7 +15,7 @@ export default createStyles((theme, { radius, src }: BackgroundImageStylesParams
     border: 0,
     textDecoration: 'none',
     color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
-    backgroundImage: `url(${src})`,
+    backgroundImage: `url('${src}')`,
     borderRadius: theme.fn.radius(radius),
   },
 }));
