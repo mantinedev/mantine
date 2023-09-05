@@ -34,6 +34,7 @@ export interface CalendarAriaLabels {
 }
 
 type OmittedSettings =
+  | 'hasNextLevel'
   | 'onNext'
   | 'onPrevious'
   | 'onLevelClick'
