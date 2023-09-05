@@ -15,19 +15,20 @@ export interface PopoverTargetProps {
 
   /** Popup accessible type, 'dialog' by default */
   popupType?: string;
+
+  /** Determines whether component should override default id of target element, defaults to true */
+  shouldOverrideDefaultTargetId?: boolean;
 }
 
 const defaultProps: Partial<PopoverTargetProps> = {
   refProp: 'ref',
   popupType: 'dialog',
+  shouldOverrideDefaultTargetId: true,
 };
 
 export const PopoverTarget = forwardRef<HTMLElement, PopoverTargetProps>((props, ref) => {
-  const { children, refProp, popupType, ...others } = useComponentDefaultProps(
-    'PopoverTarget',
-    defaultProps,
-    props
-  );
+  const { children, refProp, popupType, shouldOverrideDefaultTargetId, ...others } =
+    useComponentDefaultProps('PopoverTarget', defaultProps, props);
 
   if (!isElement(children)) {
     throw new Error(POPOVER_ERRORS.children);
@@ -42,7 +43,7 @@ export const PopoverTarget = forwardRef<HTMLElement, PopoverTargetProps>((props,
         'aria-haspopup': popupType,
         'aria-expanded': ctx.opened,
         'aria-controls': ctx.getDropdownId(),
-        id: ctx.getTargetId(),
+        id: shouldOverrideDefaultTargetId ? ctx.getTargetId() : children.props.id,
       }
     : {};
 
