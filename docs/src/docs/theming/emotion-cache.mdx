@@ -26,7 +26,7 @@ a configuration object with the following properties:
 ```tsx
 import { MantineProvider, createEmotionCache } from '@mantine/core';
 
-const myCache = createEmotionCache({ key: 'mantine' });
+const myCache = createEmotionCache({ key: 'mantine', prepend: true });
 
 function Demo() {
   return (
