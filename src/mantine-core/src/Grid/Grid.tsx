@@ -66,7 +66,6 @@ export const Grid: GridComponent = forwardRef<HTMLDivElement, GridProps>((props,
     align,
     columns,
     className,
-    id,
     unstyled,
     variant,
     ...others
