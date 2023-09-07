@@ -1,6 +1,6 @@
 import { useEffect, useLayoutEffect } from 'react';
 
-function dispatchEvent<T>(type: string, detail?: T) {
+function _dispatchEvent<T>(type: string, detail?: T) {
   window.dispatchEvent(new CustomEvent(type, { detail }));
 }
 
@@ -32,7 +32,7 @@ export function createUseExternalEvents<Handlers extends Record<string, (detail:
     type Parameter = Parameters<Handlers[EventKey]>[0];
 
     return (...payload: Parameter extends undefined ? [undefined?] : [Parameter]) =>
-      dispatchEvent(`${prefix}:${String(event)}`, payload[0]);
+      _dispatchEvent(`${prefix}:${String(event)}`, payload[0]);
   }
 
   return [_useExternalEvents, createEvent] as const;
