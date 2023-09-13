@@ -25,7 +25,7 @@ export function yupResolver(schema: any) {
       const results = {};
 
       yupError.inner.forEach((error) => {
-        results[error.path.replaceAll('[', '.').replaceAll(']', '')] = error.message;
+        results[error.path.replace(/\[/g, '.').replace(/\]/g, '')] = error.message;
       });
 
       return results;
