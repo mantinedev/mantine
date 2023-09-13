@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef, forwardRef } from 'react';
 import { useMergedRef, assignRef, useOs, clamp } from '@mantine/hooks';
 import { DefaultProps, Selectors, useComponentDefaultProps, rem, getSize } from '@mantine/styles';
+import { escapeRegex } from '@mantine/utils';
 import { TextInput } from '../TextInput';
 import { InputStylesNames, InputWrapperStylesNames } from '../Input';
 import { getInputMode } from './get-input-mode/get-input-mode';
@@ -199,7 +200,9 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>((props
     let num = val;
 
     if (decimalSeparator) {
-      num = num.replaceAll(thousandsSeparator, '').replace(decimalSeparator, '.');
+      num = num
+        .replace(new RegExp(escapeRegex(thousandsSeparator), 'g'), '')
+        .replace(decimalSeparator, '.');
     }
 
     return parser(num);
