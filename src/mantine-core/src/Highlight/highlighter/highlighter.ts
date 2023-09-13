@@ -1,6 +1,4 @@
-function escapeRegex(value: string) {
-  return value.replace(/[-[\]{}()*+?.,\\^$|#]/g, '\\$&');
-}
+import { escapeRegex } from '@mantine/utils';
 
 export function highlighter(value: string, _highlight: string | string[]) {
   if (_highlight == null) {
