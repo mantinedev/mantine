@@ -6,10 +6,10 @@ const testHoverStyle = {
 
 const testReturnStyle = {
   backgroundColor: 'blue',
-  '@media (hover: hover)': {
+  '@media (pointer: fine)': {
     '&:hover': testHoverStyle,
   },
-  '@media (hover: none)': {
+  '@media (pointer: coarse)': {
     '&:active': testHoverStyle,
   },
 };

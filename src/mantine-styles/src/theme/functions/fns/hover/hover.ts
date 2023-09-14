@@ -2,10 +2,10 @@ import type { CSSObject } from '../../../../tss';
 
 export function hover(hoverStyle: CSSObject) {
   return {
-    '@media (hover: hover)': {
+    '@media (pointer: fine)': {
       '&:hover': hoverStyle,
     },
-    '@media (hover: none)': {
+    '@media (pointer: coarse)': {
       '&:active': hoverStyle,
     },
   };
