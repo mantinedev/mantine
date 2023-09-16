@@ -164,6 +164,7 @@ export const PickerInputBase = forwardRef<HTMLButtonElement, PickerInputBaseProp
         >
           <Popover.Target shouldOverrideDefaultTargetId={!hasLabel}>
             <Input
+              aria-label={formattedValue}
               data-dates-input
               data-read-only={readOnly || undefined}
               disabled={disabled}
