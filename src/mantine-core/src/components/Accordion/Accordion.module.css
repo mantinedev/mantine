@@ -64,7 +64,7 @@
       }
 
       @mixin dark {
-        --_control-background-color: var(--mantine-color-dark-6);
+        --_control-background-color: var(--mantine-color-dark-5);
       }
     }
   }
