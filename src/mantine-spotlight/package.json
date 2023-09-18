@@ -1,6 +1,6 @@
 {
   "name": "@mantine/spotlight",
-  "version": "7.0.0-beta.7",
+  "version": "6.1.0",
   "types": "./lib/index.d.ts",
   "module": "./esm/index.js",
   "exports": {
@@ -33,13 +33,13 @@
     "command-center"
   ],
   "peerDependencies": {
-    "@mantine/core": "7.0.0-beta.7",
-    "@mantine/hooks": "7.0.0-beta.7",
+    "@mantine/core": "6.1.0",
+    "@mantine/hooks": "6.1.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },
   "dependencies": {
-    "@mantine/store": "7.0.0-beta.7"
+    "@mantine/store": "6.1.0"
   },
   "devDependencies": {}
 }
