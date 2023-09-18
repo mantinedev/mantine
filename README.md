@@ -11,9 +11,9 @@
 ## Links
 
 - [Documentation](https://mantine.dev/)
-- [Contributing](https://mantine.dev/pages/contributing/)
+- [Contribute](https://mantine.dev/contribute)
 - [Ask question or give feedback](https://github.com/mantinedev/mantine/discussions)
-- [Changelog](https://mantine.dev/pages/changelog/)
+- [Changelog](https://mantine.dev/changelog/7-0-0)
 - [Follow on Twitter](https://twitter.com/mantinedev)
 - [Join Discord community](https://discord.gg/wbH82zuWMN)
 
@@ -50,7 +50,7 @@ Mantine has a very friendly community, we are always happy to help you get start
   <img src="https://contrib.rocks/image?repo=mantinedev/mantine" />
 </a>
 
-[Become a contributor](https://mantine.dev/pages/contributing/)
+[Become a contributor](https://mantine.dev/contribute)
 
 ## License
 
