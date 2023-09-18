@@ -1,6 +1,6 @@
 {
   "name": "@mantine/colors-generator",
-  "version": "6.1.0",
+  "version": "7.0.0-beta.7",
   "types": "./lib/index.d.ts",
   "module": "./esm/index.js",
   "exports": {

@@ -1,6 +1,6 @@
 {
   "name": "@mantine/vanilla-extract",
-  "version": "6.1.0",
+  "version": "7.0.0-beta.7",
   "types": "./lib/index.d.ts",
   "module": "./esm/index.js",
   "exports": {
@@ -28,7 +28,7 @@
     "vanilla-extract"
   ],
   "peerDependencies": {
-    "@mantine/core": "6.1.0"
+    "@mantine/core": "7.0.0-beta.7"
   },
   "dependencies": {},
   "devDependencies": {}

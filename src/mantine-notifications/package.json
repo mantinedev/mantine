@@ -1,6 +1,6 @@
 {
   "name": "@mantine/notifications",
-  "version": "6.1.0",
+  "version": "7.0.0-beta.7",
   "types": "./lib/index.d.ts",
   "module": "./esm/index.js",
   "exports": {
@@ -36,13 +36,13 @@
     "notification-system"
   ],
   "peerDependencies": {
-    "@mantine/core": "6.1.0",
-    "@mantine/hooks": "6.1.0",
+    "@mantine/core": "7.0.0-beta.7",
+    "@mantine/hooks": "7.0.0-beta.7",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },
   "dependencies": {
-    "@mantine/store": "6.1.0",
+    "@mantine/store": "7.0.0-beta.7",
     "react-transition-group": "4.4.5"
   },
   "devDependencies": {}
