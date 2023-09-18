@@ -7,7 +7,7 @@ export const FOOTER_LINKS_DATA: LinksGroupProps[] = [
     data: [
       { type: 'next', label: 'Contribute', link: '/pages/contributing/' },
       { type: 'next', label: 'About Mantine', link: '/pages/about/' },
-      { type: 'next', label: 'Changelog', link: '/pages/changelog/' },
+      { type: 'next', label: 'Changelog', link: '/changelog/previous-versions/' },
       { type: 'link', label: 'Releases', link: meta.gitHubLinks.releases },
     ],
   },
