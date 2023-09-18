@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Button, Group, MANTINE_SIZES } from '@mantine/core';
+import { Button, Group } from '@mantine/core';
 import { DateTimePicker } from './DateTimePicker';
 
 export default { title: 'DateTimePicker' };
@@ -49,7 +49,7 @@ export function MinDate() {
 }
 
 export function Controlled() {
-  const [value, setValue] = useState(new Date(2022, 3, 11));
+  const [value, setValue] = useState<Date | null>(new Date(2022, 3, 11));
   return (
     <div style={{ padding: 40, maxWidth: 400 }}>
       <DateTimePicker
@@ -67,7 +67,7 @@ export function Controlled() {
 }
 
 export function Sizes() {
-  const sizes = MANTINE_SIZES.map((size) => (
+  const sizes = (['xs', 'sm', 'md', 'lg', 'xl'] as const).map((size) => (
     <DateTimePicker
       placeholder="Date time picker"
       defaultValue={new Date(2022, 3, 11)}

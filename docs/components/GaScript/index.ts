@@ -1,0 +1,1 @@
+export { GaScript } from './GaScript';

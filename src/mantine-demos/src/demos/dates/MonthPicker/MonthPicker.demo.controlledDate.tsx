@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
 import { MantineDemo } from '@mantine/ds';
-import { Group } from '@mantine/core';
 import { MonthPicker } from '@mantine/dates';
 
 const code = `
-import { Group } from '@mantine/core';
+import { useState } from 'react';
 import { MonthPicker } from '@mantine/dates';
 
 function Demo() {
@@ -20,15 +19,13 @@ function Demo() {
   };
 
   return (
-    <Group position="center">
-      <MonthPicker
-        date={date}
-        onDateChange={setDate}
-        type="range"
-        value={value}
-        onChange={handleChange}
-      />
-    </Group>
+    <MonthPicker
+      date={date}
+      onDateChange={setDate}
+      type="range"
+      value={value}
+      onChange={handleChange}
+    />
   );
 }
 
@@ -47,20 +44,19 @@ function Demo() {
   };
 
   return (
-    <Group position="center">
-      <MonthPicker
-        date={date}
-        onDateChange={setDate}
-        type="range"
-        value={value}
-        onChange={handleChange}
-      />
-    </Group>
+    <MonthPicker
+      date={date}
+      onDateChange={setDate}
+      type="range"
+      value={value}
+      onChange={handleChange}
+    />
   );
 }
 
 export const controlledDate: MantineDemo = {
-  type: 'demo',
+  type: 'code',
+  centered: true,
   component: Demo,
   code,
 };

@@ -1,29 +1,31 @@
 import React from 'react';
 import { MantineDemo } from '@mantine/ds';
 import { ColorInput } from '@mantine/core';
+import { inputControls } from '../../../shared';
 
 const code = `
 import { ColorInput } from '@mantine/core';
 
-function Demo() {
-  return <ColorInput placeholder="Pick color" label="Your favorite color" />;
-}
-`;
 
 function Demo() {
   return (
     <ColorInput
-      maw={320}
-      mx="auto"
-      placeholder="Pick color"
-      label="Your favorite color"
-      defaultValue="#ffffff"
+      {{props}}
+      placeholder="Input placeholder"
     />
   );
 }
+`;
+
+function Wrapper(props: any) {
+  return <ColorInput {...props} placeholder="Input placeholder" />;
+}
 
 export const usage: MantineDemo = {
-  type: 'demo',
-  component: Demo,
+  type: 'configurator',
+  component: Wrapper,
   code,
+  centered: true,
+  maxWidth: 340,
+  controls: inputControls,
 };

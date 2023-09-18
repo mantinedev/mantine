@@ -1,7 +1,7 @@
 import { getPath } from './get-path';
 import { setPath } from './set-path';
 
-export function insertPath<T>(path: unknown, value: unknown, index: number, values: T) {
+export function insertPath<T>(path: unknown, value: unknown, index: number | undefined, values: T) {
   const currentValue = getPath(path, values);
 
   if (!Array.isArray(currentValue)) {

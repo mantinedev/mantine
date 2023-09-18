@@ -1,5 +1,5 @@
 import React from 'react';
-import { Group, Badge } from '@mantine/core';
+import { Badge } from '@mantine/core';
 import { MantineDemo } from '@mantine/ds';
 import { useColorScheme } from '@mantine/hooks';
 
@@ -21,16 +21,15 @@ function Demo() {
   const colorScheme = useColorScheme();
 
   return (
-    <Group position="center">
-      <Badge color={colorScheme === 'dark' ? 'blue' : 'teal'} variant="filled">
-        Your system color scheme is {colorScheme}
-      </Badge>
-    </Group>
+    <Badge color={colorScheme === 'dark' ? 'blue' : 'teal'} variant="filled">
+      Your system color scheme is {colorScheme}
+    </Badge>
   );
 }
 
 export const useColorSchemeDemo: MantineDemo = {
-  type: 'demo',
+  type: 'code',
   code,
   component: Demo,
+  centered: true,
 };

@@ -1,68 +1,51 @@
 import React from 'react';
 import { MantineDemo } from '@mantine/ds';
-import { Select } from '@mantine/core';
+import { IconAt } from '@tabler/icons-react';
+import { Select, rem } from '@mantine/core';
+import { SelectStylesApi } from '@mantine/styles-api';
 
 const code = `
-import { Select } from '@mantine/core';
+import { IconAt } from '@tabler/icons-react';
+import { Select, rem } from '@mantine/core';
 
 function Demo() {
   return (
     <Select
-      placeholder="Custom active styles"
-      label="Custom active styles"
-      defaultValue="Vue"
-      data={['React', 'Angular', 'Vue', 'Svelte']}
-      styles={(theme) => ({
-        item: {
-          // applies styles to selected item
-          '&[data-selected]': {
-            '&, &:hover': {
-              backgroundColor:
-                theme.colorScheme === 'dark' ? theme.colors.teal[9] : theme.colors.teal[1],
-              color: theme.colorScheme === 'dark' ? theme.white : theme.colors.teal[9],
-            },
-          },
-
-          // applies styles to hovered item (with mouse or keyboard)
-          '&[data-hovered]': {},
-        },
-      })}
+     {{props}}
+      leftSection={<IconAt style={{ width: rem(18), height: rem(18) }} stroke={1.5} />}
+      label="Select"
+      description="Description"
+      error="Error"
+      placeholder="Select"
+      data={['React', 'Angular']}
     />
   );
 }
 `;
 
-function Demo() {
+function Demo(props: any) {
   return (
     <Select
-      maw={360}
-      mx="auto"
-      placeholder="Custom active styles"
-      label="Custom active styles"
-      defaultValue="Vue"
-      data={['React', 'Angular', 'Vue', 'Svelte']}
-      withinPortal
-      styles={(theme) => ({
-        item: {
-          // applies styles to selected item
-          '&[data-selected]': {
-            '&, &:hover': {
-              backgroundColor:
-                theme.colorScheme === 'dark' ? theme.colors.teal[9] : theme.colors.teal[1],
-              color: theme.colorScheme === 'dark' ? theme.white : theme.colors.teal[9],
-            },
-          },
-
-          // applies styles to hovered item (with mouse or keyboard)
-          '&[data-hovered]': {},
-        },
-      })}
+      {...props}
+      dropdownOpened
+      leftSection={<IconAt style={{ width: rem(18), height: rem(18) }} stroke={1.5} />}
+      withAsterisk
+      label="Select"
+      description="Description"
+      placeholder="Select"
+      data={[
+        { group: 'Frontend', items: ['React', 'Angular'] },
+        { group: 'Backend', items: ['Node', 'Django'] },
+      ]}
     />
   );
 }
 
 export const stylesApi: MantineDemo = {
-  type: 'demo',
+  type: 'styles-api',
+  data: SelectStylesApi,
   component: Demo,
   code,
+  centered: true,
+  maxWidth: 340,
 };

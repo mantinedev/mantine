@@ -7,30 +7,30 @@ const code = `
 import { Table } from '@mantine/core';
 
 function Demo() {
-  const ths = (
-    <tr>
-      <th>Element position</th>
-      <th>Element name</th>
-      <th>Symbol</th>
-      <th>Atomic mass</th>
-    </tr>
-  );
-
   const rows = elements.map((element) => (
-    <tr key={element.name}>
-      <td>{element.position}</td>
-      <td>{element.name}</td>
-      <td>{element.symbol}</td>
-      <td>{element.mass}</td>
-    </tr>
+    <Table.Tr key={element.name}>
+      <Table.Td>{element.position}</Table.Td>
+      <Table.Td>{element.name}</Table.Td>
+      <Table.Td>{element.symbol}</Table.Td>
+      <Table.Td>{element.mass}</Table.Td>
+    </Table.Tr>
   ));
+
+  const ths = (
+    <Table.Tr>
+      <Table.Th>Element position</Table.Th>
+      <Table.Th>Element name</Table.Th>
+      <Table.Th>Symbol</Table.Th>
+      <Table.Th>Atomic mass</Table.Th>
+    </Table.Tr>
+  );
 
   return (
     <Table captionSide="bottom">
-      <caption>Some elements from periodic table</caption>
-      <thead>{ths}</thead>
-      <tbody>{rows}</tbody>
-      <tfoot>{ths}</tfoot>
+      <Table.Caption>Some elements from periodic table</Table.Caption>
+      <Table.Thead>{ths}</Table.Thead>
+      <Table.Tbody>{rows}</Table.Tbody>
+      <Table.Tfoot>{ths}</Table.Tfoot>
     </Table>
   );
 }
@@ -38,35 +38,35 @@ function Demo() {
 
 export function Demo() {
   const rows = elements.map((element) => (
-    <tr key={element.name}>
-      <td>{element.position}</td>
-      <td>{element.name}</td>
-      <td>{element.symbol}</td>
-      <td>{element.mass}</td>
-    </tr>
+    <Table.Tr key={element.name}>
+      <Table.Td>{element.position}</Table.Td>
+      <Table.Td>{element.name}</Table.Td>
+      <Table.Td>{element.symbol}</Table.Td>
+      <Table.Td>{element.mass}</Table.Td>
+    </Table.Tr>
   ));
 
   const ths = (
-    <tr>
-      <th>Element position</th>
-      <th>Element name</th>
-      <th>Symbol</th>
-      <th>Atomic mass</th>
-    </tr>
+    <Table.Tr>
+      <Table.Th>Element position</Table.Th>
+      <Table.Th>Element name</Table.Th>
+      <Table.Th>Symbol</Table.Th>
+      <Table.Th>Atomic mass</Table.Th>
+    </Table.Tr>
   );
 
   return (
     <Table captionSide="bottom">
-      <caption>Some elements from periodic table</caption>
-      <thead>{ths}</thead>
-      <tbody>{rows}</tbody>
-      <tfoot>{ths}</tfoot>
+      <Table.Caption>Some elements from periodic table</Table.Caption>
+      <Table.Thead>{ths}</Table.Thead>
+      <Table.Tbody>{rows}</Table.Tbody>
+      <Table.Tfoot>{ths}</Table.Tfoot>
     </Table>
   );
 }
 
 export const captions: MantineDemo = {
-  type: 'demo',
+  type: 'code',
   code,
   component: Demo,
 };

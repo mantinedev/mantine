@@ -1,7 +1,6 @@
 import React from 'react';
-import { Text, Flex } from '@mantine/core';
 import { MantineDemo } from '@mantine/ds';
-import { SegmentedControlWrapper } from './Wrapper';
+import { SegmentedControl, Text } from '@mantine/core';
 
 const code = `
 import { SegmentedControl } from '@mantine/core';
@@ -9,11 +8,37 @@ import { SegmentedControl } from '@mantine/core';
 function Demo() {
   return (
     <>
-      {/* No transitions */}
-      <SegmentedControl transitionDuration={0} />
+      <Text size="sm" fw={500} mt={3}>
+        No transitions
+      </Text>
+      <SegmentedControl data={['React', 'Angular', 'Vue', 'Svelte']} transitionDuration={0} />
 
-      {/* 500ms linear transition */}
+      <Text size="sm" fw={500} mt="md">
+        500ms linear transition
+      </Text>
       <SegmentedControl
+        data={['React', 'Angular', 'Vue', 'Svelte']}
+        transitionDuration={500}
+        transitionTimingFunction="linear"
+      />
+    </>
+  );
+}
+`;
+
+function Demo() {
+  return (
+    <>
+      <Text size="sm" fw={500} mt={3}>
+        No transitions
+      </Text>
+      <SegmentedControl data={['React', 'Angular', 'Vue', 'Svelte']} transitionDuration={0} />
+
+      <Text size="sm" fw={500} mt="md">
+        500ms linear transition
+      </Text>
+      <SegmentedControl
+        data={['React', 'Angular', 'Vue', 'Svelte']}
         transitionDuration={500}
         transitionTimingFunction="linear"
       />
@@ -21,30 +46,9 @@ function Demo() {
   );
 }
 
-`;
-
-function Demo() {
-  return (
-    <Flex direction="column" align="center">
-      <div>
-        <Text size="sm" weight={500} mt={3}>
-          No transitions
-        </Text>
-        <SegmentedControlWrapper transitionDuration={0} />
-      </div>
-
-      <div>
-        <Text size="sm" weight={500} mt="md">
-          500ms linear transition
-        </Text>
-        <SegmentedControlWrapper transitionDuration={500} transitionTimingFunction="linear" />
-      </div>
-    </Flex>
-  );
-}
-
 export const transitions: MantineDemo = {
-  type: 'demo',
+  type: 'code',
   code,
+  centered: true,
   component: Demo,
 };

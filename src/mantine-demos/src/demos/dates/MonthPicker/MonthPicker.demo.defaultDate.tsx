@@ -1,34 +1,25 @@
 import React, { useState } from 'react';
 import { MantineDemo } from '@mantine/ds';
-import { Group } from '@mantine/core';
 import { MonthPicker } from '@mantine/dates';
 
 const code = `
 import { useState } from 'react';
-import { Group } from '@mantine/core';
 import { MonthPicker } from '@mantine/dates';
 
 function Demo() {
   const [value, setValue] = useState<Date | null>(null);
-  return (
-    <Group position="center">
-      <MonthPicker defaultDate={new Date(2015, 1)} value={value} onChange={setValue} />
-    </Group>
-  );
+  return <MonthPicker defaultDate={new Date(2015, 1)} value={value} onChange={setValue} />;
 }
 `;
 
 function Demo() {
   const [value, setValue] = useState<Date | null>(null);
-  return (
-    <Group position="center">
-      <MonthPicker defaultDate={new Date(2015, 1)} value={value} onChange={setValue} />
-    </Group>
-  );
+  return <MonthPicker defaultDate={new Date(2015, 1)} value={value} onChange={setValue} />;
 }
 
 export const defaultDate: MantineDemo = {
-  type: 'demo',
+  type: 'code',
+  centered: true,
   component: Demo,
   code,
 };

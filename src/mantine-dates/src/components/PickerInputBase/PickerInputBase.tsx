@@ -1,52 +1,49 @@
-import React, { forwardRef } from 'react';
+import React from 'react';
+import cx from 'clsx';
 import {
-  Input,
-  useInputProps,
-  InputSharedProps,
-  InputWrapperBaseProps,
-  DefaultProps,
-  Selectors,
-  Popover,
-  Modal,
-  InputStylesNames,
-  InputWrapperStylesNames,
+  BoxProps,
+  StylesApiProps,
+  factory,
+  ElementProps,
+  Factory,
+  __BaseInputProps,
   PopoverProps,
   ModalProps,
+  useInputProps,
+  Modal,
+  Input,
+  Popover,
   CloseButton,
+  InputVariant,
+  __InputStylesNames,
+  MantineSize,
 } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import { HiddenDatesInput, HiddenDatesInputValue } from '../HiddenDatesInput';
-import { CalendarStylesNames } from '../Calendar';
-import useStyles from './PickerInputBase.styles';
 import { DatePickerType } from '../../types';
+import classes from './PickerInputBase.module.css';
 
-export type PickerInputBaseStylesNames =
-  | CalendarStylesNames
-  | InputStylesNames
-  | InputWrapperStylesNames
-  | Selectors<typeof useStyles>;
+export type PickerInputBaseStylesNames = __InputStylesNames;
 
 export interface DateInputSharedProps
-  extends DefaultProps<PickerInputBaseStylesNames>,
-    InputSharedProps,
-    InputWrapperBaseProps,
-    Omit<React.ComponentPropsWithRef<'button'>, 'defaultValue' | 'value' | 'onChange' | 'type'> {
+  extends Omit<__BaseInputProps, 'size'>,
+    ElementProps<'button', 'defaultValue' | 'value' | 'onChange' | 'type'> {
   /** Determines whether dropdown should be closed when date is selected, not applicable when type="multiple", true by default */
   closeOnChange?: boolean;
 
   /** Type of dropdown, defaults to popover */
   dropdownType?: 'popover' | 'modal';
 
-  /** Props added to Popover component */
+  /** Props passed down to Popover component */
   popoverProps?: Partial<Omit<PopoverProps, 'children'>>;
 
-  /** Props added to Modal component */
+  /** Props passed down to Modal component */
   modalProps?: Partial<Omit<ModalProps, 'children'>>;
 
   /** Determines whether input value can be cleared, adds clear button to right section, false by default */
   clearable?: boolean;
 
-  /** Props added to clear button */
+  /** Props passed down to clear button */
   clearButtonProps?: React.ComponentPropsWithoutRef<'button'>;
 
   /** Determines whether the user can modify the value */
@@ -59,21 +56,34 @@ export interface DateInputSharedProps
   labelSeparator?: string;
 }
 
-export interface PickerInputBaseProps extends DateInputSharedProps {
-  __staticSelector: string;
+export interface PickerInputBaseProps
+  extends BoxProps,
+    DateInputSharedProps,
+    Omit<StylesApiProps<PickerInputBaseFactory>, 'classNames' | 'styles'> {
+  classNames?: Partial<Record<string, string>>;
+  styles?: Partial<Record<string, React.CSSProperties>>;
+  __staticSelector?: string;
   children: React.ReactNode;
-  formattedValue: string;
+  formattedValue: string | null | undefined;
   dropdownHandlers: ReturnType<typeof useDisclosure>[1];
   dropdownOpened: boolean;
   onClear(): void;
   shouldClear: boolean;
   value: HiddenDatesInputValue;
   type: DatePickerType;
+  size?: MantineSize;
 }
+
+export type PickerInputBaseFactory = Factory<{
+  props: PickerInputBaseProps;
+  ref: HTMLButtonElement;
+  stylesNames: PickerInputBaseStylesNames;
+  variant: InputVariant;
+}>;
 
 const defaultProps: Partial<PickerInputBaseProps> = {};
 
-export const PickerInputBase = forwardRef<HTMLButtonElement, PickerInputBaseProps>((props, ref) => {
+export const PickerInputBase = factory<PickerInputBaseFactory>((_props, ref) => {
   const {
     inputProps,
     wrapperProps,
@@ -101,16 +111,7 @@ export const PickerInputBase = forwardRef<HTMLButtonElement, PickerInputBaseProp
     form,
     type,
     ...others
-  } = useInputProps('PickerInputBase', defaultProps, props);
-
-  const { classes, cx } = useStyles(null, {
-    name: inputProps.__staticSelector,
-    classNames,
-    styles,
-    unstyled,
-    variant: inputProps.variant,
-    size: inputProps.size,
-  });
+  } = useInputProps('PickerInputBase', defaultProps, _props);
 
   const _rightSection =
     rightSection ||
@@ -119,21 +120,19 @@ export const PickerInputBase = forwardRef<HTMLButtonElement, PickerInputBaseProp
         variant="transparent"
         onClick={onClear}
         unstyled={unstyled}
-        size={inputProps.size}
+        size={inputProps.size || 'sm'}
         {...clearButtonProps}
       />
     ) : null);
 
   const handleClose = () => {
-    const isInvalidRangeValue = type === 'range' && value[0] && !value[1];
+    const isInvalidRangeValue = type === 'range' && Array.isArray(value) && value[0] && !value[1];
     if (isInvalidRangeValue) {
       onClear();
     }
 
     dropdownHandlers.close();
   };
-
-  const hasLabel = wrapperProps.label;
 
   return (
     <>
@@ -162,9 +161,9 @@ export const PickerInputBase = forwardRef<HTMLButtonElement, PickerInputBaseProp
           unstyled={unstyled}
           {...popoverProps}
         >
-          <Popover.Target shouldOverrideDefaultTargetId={!hasLabel}>
+          <Popover.Target>
             <Input
-              aria-label={formattedValue}
+              aria-label={formattedValue || placeholder}
               data-dates-input
               data-read-only={readOnly || undefined}
               disabled={disabled}
@@ -182,10 +181,7 @@ export const PickerInputBase = forwardRef<HTMLButtonElement, PickerInputBaseProp
               {...others}
             >
               {formattedValue || (
-                <Input.Placeholder
-                  className={classes.placeholder}
-                  sx={{ color: inputProps.error ? 'inherit' : undefined }}
-                >
+                <Input.Placeholder error={inputProps.error} unstyled={unstyled}>
                   {placeholder}
                 </Input.Placeholder>
               )}
@@ -200,4 +196,5 @@ export const PickerInputBase = forwardRef<HTMLButtonElement, PickerInputBaseProp
   );
 });
 
+PickerInputBase.classes = classes;
 PickerInputBase.displayName = '@mantine/dates/PickerInputBase';

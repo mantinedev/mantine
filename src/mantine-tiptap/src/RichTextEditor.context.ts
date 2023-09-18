@@ -1,19 +1,16 @@
-import { Styles, ClassNames } from '@mantine/core';
-import { createSafeContext } from '@mantine/utils';
+import { createSafeContext, GetStylesApi } from '@mantine/core';
 import { Editor } from '@tiptap/react';
 import { RichTextEditorLabels } from './labels';
-import type { RichTextEditorStylesNames } from './RichTextEditor';
+import type { RichTextEditorFactory } from './RichTextEditor';
 
 interface RichTextEditorContext {
-  editor: Editor;
+  getStyles: GetStylesApi<RichTextEditorFactory>;
+  editor: Editor | null;
   labels: RichTextEditorLabels;
-  withCodeHighlightStyles: boolean;
-  withTypographyStyles: boolean;
-  classNames: ClassNames<RichTextEditorStylesNames>;
-  styles: Styles<RichTextEditorStylesNames>;
-  unstyled: boolean;
-  variant: string;
+  withCodeHighlightStyles: boolean | undefined;
+  withTypographyStyles: boolean | undefined;
+  unstyled: boolean | undefined;
 }
 
 export const [RichTextEditorProvider, useRichTextEditorContext] =
-  createSafeContext<RichTextEditorContext>('RichTextEditor was not found in tree');
+  createSafeContext<RichTextEditorContext>('RichTextEditor component was not found in tree');

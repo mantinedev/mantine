@@ -1,0 +1,28 @@
+.root {
+  --drawer-size-xs: rem(320px);
+  --drawer-size-sm: rem(380px);
+  --drawer-size-md: rem(440px);
+  --drawer-size-lg: rem(620px);
+  --drawer-size-xl: rem(780px);
+  --drawer-size: var(--drawer-size-md);
+}
+
+.header {
+  z-index: 1000;
+}
+
+.content {
+  --paper-radius: 0 !important;
+  flex: var(--drawer-flex, 0 0 var(--drawer-size));
+  height: var(--drawer-height, 100%);
+  max-width: 100%;
+  max-height: 100%;
+  border-radius: 0;
+  overflow-y: auto;
+}
+
+.inner {
+  display: flex;
+  justify-content: var(--drawer-justify, flex-start);
+  align-items: var(--drawer-align, flex-start);
+}

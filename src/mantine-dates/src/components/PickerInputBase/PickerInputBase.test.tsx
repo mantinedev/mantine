@@ -1,7 +1,6 @@
 import React from 'react';
-import { render, screen } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
-import { itSupportsClearableProps } from '../../tests';
+import { userEvent, render, screen } from '@mantine/tests';
+import { datesTests } from '@mantine/dates-tests';
 import { PickerInputBase, PickerInputBaseProps } from './PickerInputBase';
 
 const noop = () => {};
@@ -13,7 +12,7 @@ const defaultProps: PickerInputBaseProps = {
   __staticSelector: 'PickerInputBase',
   children: 'test-children',
   modalProps: { withinPortal: false, transitionProps: { duration: 0 } },
-  popoverProps: { transitionProps: { duration: 0 } },
+  popoverProps: { transitionProps: { duration: 0 }, withinPortal: false },
   onClear: noop,
   shouldClear: true,
   type: 'default',
@@ -21,7 +20,7 @@ const defaultProps: PickerInputBaseProps = {
 };
 
 describe('@mantine/dates/PickerInputBase', () => {
-  itSupportsClearableProps(PickerInputBase, defaultProps);
+  datesTests.itSupportsClearableProps({ component: PickerInputBase, props: defaultProps });
 
   it('opens/toggles dropdown with click events', async () => {
     const toggle = jest.fn();
@@ -50,7 +49,7 @@ describe('@mantine/dates/PickerInputBase', () => {
     const { container } = render(
       <PickerInputBase {...defaultProps} __staticSelector="TestStaticSelector" />
     );
-    expect(container.firstChild).toHaveClass('mantine-TestStaticSelector-root');
+    expect(container.querySelector('*:not(style)')).toHaveClass('mantine-TestStaticSelector-root');
     expect(screen.getByText('test-value')).toHaveClass('mantine-TestStaticSelector-input');
   });
 

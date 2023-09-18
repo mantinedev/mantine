@@ -1,20 +1,24 @@
+import React from 'react';
+import {
+  Box,
+  BoxProps,
+  StylesApiProps,
+  factory,
+  ElementProps,
+  useProps,
+  Factory,
+} from '@mantine/core';
 import dayjs from 'dayjs';
-import React, { forwardRef } from 'react';
-import { Box, DefaultProps, useComponentDefaultProps, Selectors } from '@mantine/core';
+import { YearsList, YearsListSettings, YearsListStylesNames } from '../YearsList';
 import {
   CalendarHeader,
-  CalendarHeaderStylesNames,
   CalendarHeaderSettings,
+  CalendarHeaderStylesNames,
 } from '../CalendarHeader';
 import { useDatesContext } from '../DatesProvider';
-import { YearsListSettings, YearsListStylesNames, YearsList } from '../YearsList';
 import { getDecadeRange } from './get-decade-range/get-decade-range';
-import useStyles from './DecadeLevel.styles';
 
-export type DecadeLevelStylesNames =
-  | Selectors<typeof useStyles>
-  | YearsListStylesNames
-  | CalendarHeaderStylesNames;
+export type DecadeLevelStylesNames = YearsListStylesNames | CalendarHeaderStylesNames;
 
 export interface DecadeLevelBaseSettings extends YearsListSettings {
   /** dayjs label format to display decade label or a function that returns decade label based on date value, defaults to "YYYY" */
@@ -26,10 +30,12 @@ export interface DecadeLevelSettings
     Omit<CalendarHeaderSettings, 'onLevelClick' | 'hasNextLevel'> {}
 
 export interface DecadeLevelProps
-  extends DefaultProps<DecadeLevelStylesNames>,
+  extends BoxProps,
     DecadeLevelSettings,
-    React.ComponentPropsWithoutRef<'div'> {
-  variant?: string;
+    Omit<StylesApiProps<DecadeLevelFactory>, 'classNames' | 'styles'>,
+    ElementProps<'div'> {
+  classNames?: Partial<Record<string, string>>;
+  styles?: Partial<Record<string, React.CSSProperties>>;
   __staticSelector?: string;
 
   /** Decade that is currently displayed */
@@ -39,11 +45,18 @@ export interface DecadeLevelProps
   levelControlAriaLabel?: string;
 }
 
+export type DecadeLevelFactory = Factory<{
+  props: DecadeLevelProps;
+  ref: HTMLDivElement;
+  stylesNames: DecadeLevelStylesNames;
+}>;
+
 const defaultProps: Partial<DecadeLevelProps> = {
   decadeLabelFormat: 'YYYY',
 };
 
-export const DecadeLevel = forwardRef<HTMLDivElement, DecadeLevelProps>((props, ref) => {
+export const DecadeLevel = factory<DecadeLevelFactory>((_props, ref) => {
+  const props = useProps('DecadeLevel', defaultProps, _props);
   const {
     // YearsList settings
     decade,
@@ -73,26 +86,15 @@ export const DecadeLevel = forwardRef<HTMLDivElement, DecadeLevelProps>((props, 
     withPrevious,
 
     // Other props
-    className,
     decadeLabelFormat,
     classNames,
     styles,
     unstyled,
     __staticSelector,
     __stopPropagation,
-    variant,
     size,
     ...others
-  } = useComponentDefaultProps('DecadeLevel', defaultProps, props);
-
-  const { classes, cx } = useStyles(null, {
-    name: ['DecadeLevel', __staticSelector],
-    classNames,
-    styles,
-    unstyled,
-    variant,
-    size,
-  });
+  } = props;
 
   const ctx = useDatesContext();
   const [startOfDecade, endOfDecade] = getDecadeRange(decade);
@@ -102,7 +104,6 @@ export const DecadeLevel = forwardRef<HTMLDivElement, DecadeLevelProps>((props, 
     classNames,
     styles,
     unstyled,
-    variant,
     size,
   };
 
@@ -126,17 +127,16 @@ export const DecadeLevel = forwardRef<HTMLDivElement, DecadeLevelProps>((props, 
       .format(format);
 
   return (
-    <Box className={cx(classes.decadeLevel, className)} data-decade-level ref={ref} {...others}>
+    <Box data-decade-level size={size} ref={ref} {...others}>
       <CalendarHeader
         label={
           typeof decadeLabelFormat === 'function'
             ? decadeLabelFormat(startOfDecade, endOfDecade)
-            : `${formatDecade(startOfDecade, decadeLabelFormat)} – ${formatDecade(
+            : `${formatDecade(startOfDecade, decadeLabelFormat!)} – ${formatDecade(
                 endOfDecade,
-                decadeLabelFormat
+                decadeLabelFormat!
               )}`
         }
-        className={classes.calendarHeader}
         __preventFocus={__preventFocus}
         __stopPropagation={__stopPropagation}
         nextIcon={nextIcon}
@@ -174,4 +174,5 @@ export const DecadeLevel = forwardRef<HTMLDivElement, DecadeLevelProps>((props, 
   );
 });
 
+DecadeLevel.classes = { ...YearsList.classes, ...CalendarHeader.classes };
 DecadeLevel.displayName = '@mantine/dates/DecadeLevel';

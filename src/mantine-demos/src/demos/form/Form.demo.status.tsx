@@ -20,14 +20,14 @@ function Demo() {
 
       <Text size="sm" mt="sm">
         Touched:{' '}
-        <Text span color={form.isTouched('text') ? 'blue' : 'red'}>
+        <Text span c={form.isTouched('text') ? 'blue' : 'red'}>
           {form.isTouched('text') ? 'touched' : 'not touched'}
         </Text>
       </Text>
 
       <Text size="sm">
         Dirty:{' '}
-        <Text span color={form.isDirty('text') ? 'blue' : 'red'}>
+        <Text span c={form.isDirty('text') ? 'blue' : 'red'}>
           {form.isDirty('text') ? 'dirty' : 'not dirty'}
         </Text>
       </Text>
@@ -49,14 +49,14 @@ function Demo() {
 
       <Text size="sm" mt="sm">
         Touched:{' '}
-        <Text span color={form.isTouched('text') ? 'blue' : 'red'}>
+        <Text span c={form.isTouched('text') ? 'blue' : 'red'}>
           {form.isTouched('text') ? 'touched' : 'not touched'}
         </Text>
       </Text>
 
       <Text size="sm">
         Dirty:{' '}
-        <Text span color={form.isDirty('text') ? 'blue' : 'red'}>
+        <Text span c={form.isDirty('text') ? 'blue' : 'red'}>
           {form.isDirty('text') ? 'dirty' : 'not dirty'}
         </Text>
       </Text>
@@ -65,7 +65,7 @@ function Demo() {
 }
 
 export const status: MantineDemo = {
-  type: 'demo',
+  type: 'code',
   component: Demo,
   code,
 };

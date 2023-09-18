@@ -1,40 +1,28 @@
-import React from 'react';
 import { MantineDemo } from '@mantine/ds';
-import { Loader, LoaderProps, Group } from '@mantine/core';
+import { Loader } from '@mantine/core';
 
-function Wrapper(props: LoaderProps) {
-  return (
-    <Group position="center">
-      <Loader {...props} />
-    </Group>
-  );
-}
-
-const codeTemplate = (props: string) => `
+const code = `
 import { Loader } from '@mantine/core';
 
 function Demo() {
-  return <Loader${props} />;
+  return <Loader{{props}} />;
 }
 `;
 
 export const configurator: MantineDemo = {
   type: 'configurator',
-  component: Wrapper,
-  codeTemplate,
-  configurator: [
-    { name: 'color', type: 'color', initialValue: 'blue', defaultValue: 'blue' },
-    { name: 'size', type: 'size', initialValue: 'md', defaultValue: 'md' },
+  component: Loader,
+  code,
+  centered: true,
+  controls: [
+    { type: 'color', prop: 'color', initialValue: 'blue', libraryValue: null },
+    { type: 'size', prop: 'size', initialValue: 'md', libraryValue: 'md' },
     {
-      name: 'variant',
       type: 'segmented',
+      prop: 'type',
+      data: ['oval', 'bars', 'dots'],
       initialValue: 'oval',
-      defaultValue: 'oval',
-      data: [
-        { value: 'oval', label: 'Oval' },
-        { value: 'bars', label: 'Bars' },
-        { value: 'dots', label: 'Dots' },
-      ],
+      libraryValue: 'oval',
     },
   ],
 };

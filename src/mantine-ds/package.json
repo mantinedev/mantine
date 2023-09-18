@@ -1,13 +1,22 @@
 {
   "name": "@mantine/ds",
   "description": "Internal Mantine components used on *.mantine.dev websites",
-  "version": "6.0.21",
-  "main": "cjs/index.js",
-  "module": "esm/index.js",
-  "types": "lib/index.d.ts",
+  "version": "7.0.0-beta.7",
+  "types": "./lib/index.d.ts",
+  "module": "./esm/index.js",
+  "exports": {
+    ".": {
+      "import": "./esm/index.js",
+      "require": "./cjs/index.js",
+      "types": "./lib/index.d.ts"
+    },
+    "./styles.css": "./esm/index.css"
+  },
   "license": "MIT",
   "author": "Vitaly Rtishchev <rtivital@gmail.com>",
-  "sideEffects": false,
+  "sideEffects": [
+    "*.css"
+  ],
   "homepage": "https://mantine.dev/",
   "repository": {
     "url": "https://github.com/mantinedev/mantine.git",
@@ -18,14 +27,14 @@
     "react"
   ],
   "peerDependencies": {
-    "@mantine/core": "6.0.21",
-    "@mantine/hooks": "6.0.21",
-    "@mantine/prism": "6.0.21",
-    "@tabler/icons-react": "*",
-    "react": ">=16.8.0",
-    "react-dom": ">=16.8.0"
+    "@mantine/core": "7.0.0-beta.7",
+    "@mantine/hooks": "7.0.0-beta.7",
+    "@mantine/code-highlight": "7.0.0-beta.7",
+    "@tabler/icons-react": "^2.29.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
   },
   "dependencies": {
-    "@mantine/utils": "6.0.21"
+    "clsx": "2.0.0"
   }
 }

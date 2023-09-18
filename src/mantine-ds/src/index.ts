@@ -1,7 +1,11 @@
 export * from './meta';
-export * from './HeaderControl';
 export * from './Icons';
-export * from './MantineLogo';
+export { Demo } from './Demo/Demo';
+export { getCodeFileIcon } from './DemoCode';
+export type { MantineDemo } from './Demo/Demo';
 export * from './SearchControl';
-export * from './SocialButton';
-export * from './Demo';
+export * from './HeaderControl';
+export { MantineLogo } from './MantineLogo';
+export type { MantineLogoProps } from './MantineLogo';
+export { TwitterButton, DiscordButton } from './SocialButton/SocialButton';
+export type { ConfiguratorControlOptions } from './ConfiguratorDemo/ConfiguratorDemo';

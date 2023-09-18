@@ -15,6 +15,15 @@ export function Rounded() {
     </div>
   );
 }
+
+export function MantineUIVariant() {
+  return (
+    <div style={{ padding: 40 }}>
+      <MantineLogoText size={30} variant="ui.mantine.dev" />
+    </div>
+  );
+}
+
 export function TextLogo() {
   return (
     <div style={{ padding: 40, backgroundColor: 'silver' }}>

@@ -1,0 +1,32 @@
+.root {
+  position: relative;
+  max-width: 100%;
+
+  &::before {
+    content: '';
+    height: 0;
+    display: block;
+    padding-bottom: calc((1 / var(--ar-ratio, 1)) * 100%);
+  }
+
+  &::after {
+    content: '';
+    display: table;
+    clear: both;
+  }
+
+  & > *:not(style) {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  & > img,
+  & > video {
+    object-fit: cover;
+  }
+}

@@ -6,7 +6,7 @@ import { useClickOutside } from './use-click-outside';
 interface UseClickOutsideProps {
   handler: () => void;
   events?: string[] | null;
-  nodes?: HTMLElement[];
+  nodes?: (HTMLElement | null)[];
 }
 
 const Target: React.FunctionComponent<UseClickOutsideProps> = ({ handler, events, nodes }) => {
@@ -74,7 +74,7 @@ describe('@mantine/hooks/use-click-outside', () => {
     const handler = jest.fn();
 
     const Wrapper: React.FunctionComponent = () => {
-      const [ignore, setIgnore] = useState(null);
+      const [ignore, setIgnore] = useState<HTMLDivElement | null>(null);
       return (
         <>
           <Target handler={handler} nodes={[ignore]} />

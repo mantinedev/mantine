@@ -14,7 +14,7 @@ function Demo() {
 
   return (
     <>
-      <Stepper active={active} onStepClick={setActive} breakpoint="sm">
+      <Stepper active={active} onStepClick={setActive}>
         <Stepper.Step label="First step" description="Create an account">
           Step 1 content: Create an account
         </Stepper.Step>
@@ -29,7 +29,7 @@ function Demo() {
         </Stepper.Completed>
       </Stepper>
 
-      <Group position="center" mt="xl">
+      <Group justify="center" mt="xl">
         <Button variant="default" onClick={prevStep}>Back</Button>
         <Button onClick={nextStep}>Next step</Button>
       </Group>
@@ -45,7 +45,7 @@ function Demo() {
 
   return (
     <>
-      <Stepper active={active} onStepClick={setActive} breakpoint="sm">
+      <Stepper active={active} onStepClick={setActive}>
         <Stepper.Step label="First step" description="Create an account">
           <Content>Step 1 content: Create an account</Content>
         </Stepper.Step>
@@ -61,7 +61,7 @@ function Demo() {
         </Stepper.Completed>
       </Stepper>
 
-      <Group position="center" mt="xl">
+      <Group justify="center" mt="xl">
         <Button variant="default" onClick={prevStep}>
           Back
         </Button>
@@ -72,7 +72,7 @@ function Demo() {
 }
 
 export const usage: MantineDemo = {
-  type: 'demo',
+  type: 'code',
   component: Demo,
   code,
 };

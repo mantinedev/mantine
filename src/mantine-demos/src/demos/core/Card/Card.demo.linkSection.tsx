@@ -1,7 +1,6 @@
 import React from 'react';
 import { Card, Image, Text, Badge, Button, Group } from '@mantine/core';
 import { MantineDemo } from '@mantine/ds';
-import { demoBase } from './_demo-base';
 
 const code = `
 import { Card, Image, Text, Badge, Button, Group } from '@mantine/core';
@@ -17,14 +16,14 @@ function Demo() {
         />
       </Card.Section>
 
-      <Group position="apart" mt="md" mb="xs">
-        <Text weight={500}>Norway Fjord Adventures</Text>
+      <Group justify="space-between" mt="md" mb="xs">
+        <Text fw={500}>Norway Fjord Adventures</Text>
         <Badge color="pink" variant="light">
           On Sale
         </Badge>
       </Group>
 
-      <Text size="sm" color="dimmed">
+      <Text size="sm" c="dimmed">
         With Fjord Tours you can explore more of the magical fjord landscapes with tours and
         activities on and around the fjords of Norway
       </Text>
@@ -35,7 +34,6 @@ function Demo() {
     </Card>
   );
 }
-
 `;
 
 function Demo() {
@@ -49,14 +47,14 @@ function Demo() {
         />
       </Card.Section>
 
-      <Group position="apart" mt="md" mb="xs">
-        <Text weight={500}>Norway Fjord Adventures</Text>
+      <Group justify="space-between" mt="md" mb="xs">
+        <Text fw={500}>Norway Fjord Adventures</Text>
         <Badge color="pink" variant="light">
           On Sale
         </Badge>
       </Group>
 
-      <Text size="sm" color="dimmed">
+      <Text size="sm" c="dimmed">
         With Fjord Tours you can explore more of the magical fjord landscapes with tours and
         activities on and around the fjords of Norway
       </Text>
@@ -69,8 +67,10 @@ function Demo() {
 }
 
 export const linkSection: MantineDemo = {
-  ...demoBase,
-  type: 'demo',
+  type: 'code',
   code,
   component: Demo,
+  centered: true,
+  maxWidth: 340,
+  dimmed: true,
 };

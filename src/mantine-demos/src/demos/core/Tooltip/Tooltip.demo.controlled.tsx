@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { MantineDemo } from '@mantine/ds';
-import { Tooltip, Group, Button } from '@mantine/core';
+import { Tooltip, Button } from '@mantine/core';
 
 const code = `
 import { useState } from 'react';
@@ -22,18 +22,17 @@ export function Demo() {
   const [opened, setOpened] = useState(false);
 
   return (
-    <Group position="center">
-      <Tooltip label="Ctrl + J" opened={opened}>
-        <Button variant="outline" onClick={() => setOpened((o) => !o)}>
-          Toggle color scheme
-        </Button>
-      </Tooltip>
-    </Group>
+    <Tooltip label="Ctrl + J" opened={opened}>
+      <Button variant="outline" onClick={() => setOpened((o) => !o)}>
+        Toggle color scheme
+      </Button>
+    </Tooltip>
   );
 }
 
 export const controlled: MantineDemo = {
-  type: 'demo',
+  type: 'code',
+  centered: true,
   code,
   component: Demo,
 };

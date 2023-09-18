@@ -1,3 +1,2 @@
 export { Day } from './Day';
-export type { DayProps, DayStylesNames } from './Day';
-export type { DayStylesParams } from './Day.styles';
+export type { DayCssVariables, DayFactory, DayProps, DayStylesNames } from './Day';

@@ -1,48 +1,53 @@
-import React, { forwardRef } from 'react';
+import React from 'react';
+import cx from 'clsx';
 import {
-  useComponentDefaultProps,
-  TextInput,
-  TextInputProps,
-  TextInputStylesNames,
+  factory,
+  useProps,
+  useResolvedStylesApi,
+  Factory,
+  InputBase,
+  InputBaseProps,
+  __InputStylesNames,
+  ElementProps,
 } from '@mantine/core';
-import useStyles from './TimeInput.styles';
+import classes from './TimeInput.module.css';
 
-export type TimeInputStylesNames = TextInputStylesNames;
-
-export interface TimeInputProps extends TextInputProps {
+export interface TimeInputProps extends InputBaseProps, ElementProps<'input', 'size'> {
   /** Determines whether seconds input should be rendered */
   withSeconds?: boolean;
 }
 
+export type TimeInputFactory = Factory<{
+  props: TimeInputProps;
+  ref: HTMLInputElement;
+  stylesNames: __InputStylesNames;
+}>;
+
 const defaultProps: Partial<TimeInputProps> = {};
 
-export const TimeInput = forwardRef<HTMLInputElement, TimeInputProps>((props, ref) => {
-  const { classNames, withSeconds, variant, size, styles, unstyled, ...others } =
-    useComponentDefaultProps('TimeInput', defaultProps, props);
+export const TimeInput = factory<TimeInputFactory>((_props, ref) => {
+  const props = useProps('TimeInput', defaultProps, _props);
+  const { classNames, styles, unstyled, vars, withSeconds, ...others } = props;
 
-  const { classes, cx } = useStyles(null, {
-    name: 'TimeInput',
+  const { resolvedClassNames, resolvedStyles } = useResolvedStylesApi<TimeInputFactory>({
     classNames,
     styles,
-    unstyled,
-    variant,
-    size,
+    props,
   });
 
   return (
-    <TextInput
-      type="time"
-      step={withSeconds ? 1 : 60}
-      classNames={{ ...classNames, input: cx(classes.input, classNames?.input) }}
-      styles={styles}
+    <InputBase
+      classNames={{ ...resolvedClassNames, input: cx(classes.input, resolvedClassNames?.input) }}
+      styles={resolvedStyles}
       unstyled={unstyled}
-      variant={variant}
-      size={size}
       ref={ref}
-      __staticSelector="TimeInput"
       {...others}
+      step={withSeconds ? 1 : 60}
+      type="time"
+      __staticSelector="TimeInput"
     />
   );
 });
 
+TimeInput.classes = InputBase.classes;
 TimeInput.displayName = '@mantine/dates/TimeInput';

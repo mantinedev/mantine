@@ -17,12 +17,12 @@ function Wrapper(props: GridProps) {
   );
 }
 
-const codeTemplate = (props: string) => `
+const code = `
 import { Grid, rem } from '@mantine/core';
 
 function Demo() {
   return (
-    <Grid${props}>
+    <Grid{{props}}>
       <Grid.Col span={3} style={{ minHeight: rem(80) }}>1</Grid.Col>
       <Grid.Col span={3} style={{ minHeight: rem(120) }}>2</Grid.Col>
       <Grid.Col span={3}>3</Grid.Col>
@@ -34,13 +34,13 @@ function Demo() {
 export const flexConfigurator: MantineDemo = {
   type: 'configurator',
   component: Wrapper,
-  codeTemplate,
-  configurator: [
+  code,
+  controls: [
     {
-      name: 'justify',
+      prop: 'justify',
       type: 'select',
       initialValue: 'flex-start',
-      defaultValue: 'flex-start',
+      libraryValue: '__',
       data: [
         { label: 'flex-start', value: 'flex-start' },
         { label: 'flex-end', value: 'flex-end' },
@@ -50,10 +50,10 @@ export const flexConfigurator: MantineDemo = {
       ],
     },
     {
-      name: 'align',
+      prop: 'align',
       type: 'select',
       initialValue: 'stretch',
-      defaultValue: 'stretch',
+      libraryValue: '__',
       data: [
         { label: 'flex-start', value: 'flex-start' },
         { label: 'flex-end', value: 'flex-end' },

@@ -9,7 +9,7 @@ import { notifications } from '@mantine/notifications';
 
 function Demo() {
   return (
-    <Group position="center">
+    <Group justify="center">
       <Button
         variant="outline"
         onClick={() => notifications.show({ message: 'I will close in 4 seconds' })}
@@ -49,7 +49,7 @@ function Demo() {
 
 function Demo() {
   return (
-    <Group position="center">
+    <Group justify="center">
       <Button
         variant="outline"
         onClick={() => notifications.show({ message: 'I will close in 4 seconds' })}
@@ -87,7 +87,7 @@ function Demo() {
 }
 
 export const autoclose: MantineDemo = {
-  type: 'demo',
+  type: 'code',
   code,
   component: Demo,
 };

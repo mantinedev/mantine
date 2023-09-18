@@ -1,0 +1,1 @@
+export { DocsSection } from './DocsSection';

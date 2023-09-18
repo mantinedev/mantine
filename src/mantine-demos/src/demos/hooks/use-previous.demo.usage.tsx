@@ -47,7 +47,7 @@ function Demo() {
 }
 
 export const usePreviousUsage: MantineDemo = {
-  type: 'demo',
+  type: 'code',
   component: Demo,
   code,
 };

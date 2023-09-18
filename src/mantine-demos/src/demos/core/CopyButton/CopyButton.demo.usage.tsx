@@ -1,6 +1,6 @@
 import React from 'react';
 import { MantineDemo } from '@mantine/ds';
-import { Group, CopyButton, Button } from '@mantine/core';
+import { CopyButton, Button } from '@mantine/core';
 
 const code = `
 import { CopyButton, Button } from '@mantine/core';
@@ -20,20 +20,19 @@ function Demo() {
 
 function Demo() {
   return (
-    <Group position="center">
-      <CopyButton value="https://mantine.dev">
-        {({ copied, copy }) => (
-          <Button color={copied ? 'teal' : 'blue'} onClick={copy}>
-            {copied ? 'Copied url' : 'Copy url'}
-          </Button>
-        )}
-      </CopyButton>
-    </Group>
+    <CopyButton value="https://mantine.dev">
+      {({ copied, copy }) => (
+        <Button color={copied ? 'teal' : 'blue'} onClick={copy}>
+          {copied ? 'Copied url' : 'Copy url'}
+        </Button>
+      )}
+    </CopyButton>
   );
 }
 
 export const usage: MantineDemo = {
-  type: 'demo',
+  type: 'code',
   component: Demo,
+  centered: true,
   code,
 };

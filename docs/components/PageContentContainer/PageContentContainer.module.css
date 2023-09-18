@@ -1,0 +1,17 @@
+.wrapper {
+  padding-left: calc(var(--mantine-spacing-xl) * 2);
+  padding-right: calc(var(--mantine-spacing-xl) * 2);
+  padding-top: var(--mantine-spacing-xl);
+
+  @media (max-width: $docs-mdx-breakpoint) {
+    padding-left: var(--mantine-spacing-xl);
+    padding-right: var(--mantine-spacing-xl);
+  }
+}
+
+.container {
+  width: 100%;
+  max-width: calc(var(--docs-mdx-content-width) + var(--docs-table-of-contents-width));
+  margin-left: auto;
+  margin-right: auto;
+}

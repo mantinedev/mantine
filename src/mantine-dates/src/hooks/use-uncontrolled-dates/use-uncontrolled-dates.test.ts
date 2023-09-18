@@ -4,8 +4,8 @@ import { useUncontrolledDates } from './use-uncontrolled-dates';
 type HookConfig = Parameters<typeof useUncontrolledDates>[0];
 
 const hookDefaults: Omit<HookConfig, 'type'> = {
-  defaultValue: undefined,
-  value: undefined,
+  defaultValue: undefined!,
+  value: undefined!,
   onChange: () => {},
 };
 

@@ -4,9 +4,9 @@ import { isMonthDisabled } from '../is-month-disabled/is-month-disabled';
 
 export function getMonthInTabOrder(
   months: Date[][],
-  minDate: Date,
-  maxDate: Date,
-  getMonthControlProps: (month: Date) => Partial<PickerControlProps>
+  minDate: Date | undefined,
+  maxDate: Date | undefined,
+  getMonthControlProps: ((month: Date) => Partial<PickerControlProps>) | undefined
 ) {
   const enabledMonths = months
     .flat()

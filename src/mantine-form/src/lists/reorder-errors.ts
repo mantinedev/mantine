@@ -4,8 +4,8 @@ export function reorderErrors<T>(path: unknown, { from, to }: ReorderPayload, er
   const oldKeyStart = `${path}.${from}`;
   const newKeyStart = `${path}.${to}`;
 
-  const clone = { ...errors };
-  Object.keys(errors).every((key) => {
+  const clone: any = { ...errors };
+  Object.keys(errors as any).every((key) => {
     let oldKey;
     let newKey;
     if (key.startsWith(oldKeyStart)) {

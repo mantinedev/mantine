@@ -1,0 +1,4 @@
+.section {
+  margin-bottom: calc(var(--mantine-spacing-xl) * 1.5);
+  margin-top: var(--mantine-spacing-sm);
+}

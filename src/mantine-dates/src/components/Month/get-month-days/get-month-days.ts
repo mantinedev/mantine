@@ -1,11 +1,24 @@
 import { DayOfWeek } from '../../../types';
 import { getStartOfWeek } from '../get-start-of-week/get-start-of-week';
 import { getEndOfWeek } from '../get-end-of-week/get-end-of-week';
+import { shiftTimezone } from '../../../utils';
 
-export function getMonthDays(month: Date, firstDayOfWeek: DayOfWeek = 1): Date[][] {
+export function getMonthDays(
+  month: Date,
+  firstDayOfWeek: DayOfWeek = 1,
+  timezone: string | undefined = undefined
+): Date[][] {
   const currentMonth = month.getMonth();
-  const startOfMonth = new Date(month.getFullYear(), currentMonth, 1);
-  const endOfMonth = new Date(month.getFullYear(), month.getMonth() + 1, 0);
+  const startOfMonth = shiftTimezone(
+    'add',
+    new Date(month.getFullYear(), currentMonth, 1),
+    timezone
+  );
+  const endOfMonth = shiftTimezone(
+    'add',
+    new Date(month.getFullYear(), month.getMonth() + 1, 0),
+    timezone
+  );
   const endDate = getEndOfWeek(endOfMonth, firstDayOfWeek);
   const date = getStartOfWeek(startOfMonth, firstDayOfWeek);
   const weeks: Date[][] = [];

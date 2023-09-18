@@ -1,14 +1,14 @@
 import React from 'react';
 import { Group, TextInput, Box, Text, Code, Button, Center } from '@mantine/core';
 import { useForm } from '@mantine/form';
-import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
+import { DragDropContext, Droppable, Draggable } from '@hello-pangea/dnd';
 import { MantineDemo } from '@mantine/ds';
 import { IconGripVertical } from '@tabler/icons-react';
 
 const code = `
 import { Group, TextInput, Box, Text, Code, Button, Center } from '@mantine/core';
 import { useForm } from '@mantine/form';
-import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
+import { DragDropContext, Droppable, Draggable } from '@hello-pangea/dnd';
 import { IconGripVertical } from '@tabler/icons-react';
 
 function Demo() {
@@ -45,7 +45,7 @@ function Demo() {
     <Box maw={500} mx="auto">
       <DragDropContext
         onDragEnd={({ destination, source }) =>
-          form.reorderListItem('employees', { from: source.index, to: destination.index })
+          form.reorderListItem('employees', { from: source.index, to: destination?.index! })
         }
       >
         <Droppable droppableId="dnd-list" direction="vertical">
@@ -58,13 +58,13 @@ function Demo() {
         </Droppable>
       </DragDropContext>
 
-      <Group position="center" mt="md">
+      <Group justify="center" mt="md">
         <Button onClick={() => form.insertListItem('employees', { name: '', email: '' })}>
           Add employee
         </Button>
       </Group>
 
-      <Text size="sm" weight={500} mt="md">
+      <Text size="sm" fw={500} mt="md">
         Form values:
       </Text>
       <Code block>{JSON.stringify(form.values, null, 2)}</Code>
@@ -107,7 +107,7 @@ function Demo() {
     <Box maw={500} mx="auto">
       <DragDropContext
         onDragEnd={({ destination, source }) =>
-          form.reorderListItem('employees', { from: source.index, to: destination.index })
+          form.reorderListItem('employees', { from: source.index, to: destination?.index! })
         }
       >
         <Droppable droppableId="dnd-list" direction="vertical">
@@ -120,13 +120,13 @@ function Demo() {
         </Droppable>
       </DragDropContext>
 
-      <Group position="center" mt="md">
+      <Group justify="center" mt="md">
         <Button onClick={() => form.insertListItem('employees', { name: '', email: '' })}>
           Add employee
         </Button>
       </Group>
 
-      <Text size="sm" weight={500} mt="md">
+      <Text size="sm" fw={500} mt="md">
         Form values:
       </Text>
       <Code block>{JSON.stringify(form.values, null, 2)}</Code>
@@ -135,7 +135,7 @@ function Demo() {
 }
 
 export const dnd: MantineDemo = {
-  type: 'demo',
+  type: 'code',
   component: Demo,
   code,
 };

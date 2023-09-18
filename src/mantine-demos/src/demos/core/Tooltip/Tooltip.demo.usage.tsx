@@ -1,6 +1,6 @@
 import React from 'react';
 import { MantineDemo } from '@mantine/ds';
-import { Tooltip, Button, Group } from '@mantine/core';
+import { Tooltip, Button } from '@mantine/core';
 
 const code = `
 import { Tooltip, Button } from '@mantine/core';
@@ -16,16 +16,15 @@ function Demo() {
 
 function Demo() {
   return (
-    <Group position="center">
-      <Tooltip label="Tooltip">
-        <Button variant="outline">Button with tooltip</Button>
-      </Tooltip>
-    </Group>
+    <Tooltip label="Tooltip">
+      <Button variant="outline">Button with tooltip</Button>
+    </Tooltip>
   );
 }
 
 export const usage: MantineDemo = {
-  type: 'demo',
+  type: 'code',
   component: Demo,
+  centered: true,
   code,
 };

@@ -1,0 +1,30 @@
+.root {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  z-index: var(--lo-z-index);
+}
+
+.loader {
+  position: relative;
+  z-index: calc(var(--lo-z-index) + 1);
+}
+
+.overlay {
+  z-index: var(--lo-z-index);
+
+  &[data-dark] {
+    @mixin light {
+      display: none;
+    }
+  }
+
+  &[data-light] {
+    @mixin dark {
+      display: none;
+    }
+  }
+}

@@ -17,13 +17,13 @@ export function useEyeDropper() {
   }, []);
 
   const open = useCallback(
-    (options: EyeDropperOpenOptions = {}): Promise<EyeDropperOpenReturnType> => {
+    (options: EyeDropperOpenOptions = {}): Promise<EyeDropperOpenReturnType | undefined> => {
       if (supported) {
         const eyeDropper = new (window as any).EyeDropper();
         return eyeDropper.open(options);
       }
 
-      return undefined;
+      return Promise.resolve(undefined);
     },
     [supported]
   );

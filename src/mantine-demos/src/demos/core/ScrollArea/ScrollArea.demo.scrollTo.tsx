@@ -11,12 +11,12 @@ function Demo() {
   const viewport = useRef<HTMLDivElement>(null);
 
   const scrollToBottom = () =>
-    viewport.current.scrollTo({ top: viewport.current.scrollHeight, behavior: 'smooth' });
+    viewport.current!.scrollTo({ top: viewport.current!.scrollHeight, behavior: 'smooth' });
 
   const scrollToCenter = () =>
-    viewport.current.scrollTo({ top: viewport.current.scrollHeight / 2, behavior: 'smooth' });
+    viewport.current!.scrollTo({ top: viewport.current!.scrollHeight / 2, behavior: 'smooth' });
 
-  const scrollToTop = () => viewport.current.scrollTo({ top: 0, behavior: 'smooth' });
+  const scrollToTop = () => viewport.current!.scrollTo({ top: 0, behavior: 'smooth' });
 
   return (
     <Stack align="center">
@@ -24,7 +24,7 @@ function Demo() {
         {/* ... content */}
       </ScrollArea>
 
-      <Group position="center">
+      <Group justify="center">
         <Button onClick={scrollToBottom} variant="outline">
           Scroll to bottom
         </Button>
@@ -43,17 +43,17 @@ function Demo() {
 function Demo() {
   const viewport = useRef<HTMLDivElement>(null);
   const scrollToBottom = () =>
-    viewport.current.scrollTo({ top: viewport.current.scrollHeight, behavior: 'smooth' });
+    viewport.current!.scrollTo({ top: viewport.current!.scrollHeight, behavior: 'smooth' });
   const scrollToCenter = () =>
-    viewport.current.scrollTo({ top: viewport.current.scrollHeight / 2, behavior: 'smooth' });
-  const scrollToTop = () => viewport.current.scrollTo({ top: 0, behavior: 'smooth' });
+    viewport.current!.scrollTo({ top: viewport.current!.scrollHeight / 2, behavior: 'smooth' });
+  const scrollToTop = () => viewport.current!.scrollTo({ top: 0, behavior: 'smooth' });
 
   return (
     <Stack align="center">
       <ScrollArea w={300} h={200} viewportRef={viewport}>
         <Content />
       </ScrollArea>
-      <Group position="center">
+      <Group justify="center">
         <Button onClick={scrollToBottom} variant="outline">
           Scroll to bottom
         </Button>
@@ -69,7 +69,7 @@ function Demo() {
 }
 
 export const scrollTo: MantineDemo = {
-  type: 'demo',
+  type: 'code',
   component: Demo,
   code,
 };

@@ -1,32 +1,37 @@
 import React from 'react';
-import {
-  itSupportsSystemProps,
-  checkAccessibility,
-  itSupportsFocusEvents,
-  itSupportsProviderVariant,
-  itSupportsProviderSize,
-  itSupportsInputProps,
-  itDisablesInputInsideDisabledFieldset,
-} from '@mantine/tests';
+import { tests, inputDefaultProps, inputStylesApiSelectors } from '@mantine/tests';
+import { __InputStylesNames } from '@mantine/core';
 import { TimeInput, TimeInputProps } from './TimeInput';
 
 const defaultProps: TimeInputProps = {
-  label: 'test-label',
+  ...inputDefaultProps,
 };
 
-describe('@mantine/core/TimeInput', () => {
-  checkAccessibility([<TimeInput label="test-input" />, <TimeInput aria-label="test-input" />]);
-  itSupportsInputProps(TimeInput, defaultProps, 'TimeInput');
-  itSupportsFocusEvents(TimeInput, defaultProps, 'input');
-  itSupportsProviderVariant(TimeInput, defaultProps, 'TimeInput', ['root', 'input', 'label']);
-  itSupportsProviderSize(TimeInput, defaultProps, 'TimeInput', ['root', 'input', 'label']);
-  itSupportsSystemProps({
+describe('@mantine/dates/TimeInput', () => {
+  tests.axe([
+    <TimeInput aria-label="test-label" />,
+    <TimeInput label="test-label" />,
+    <TimeInput label="test-label" error />,
+    <TimeInput label="test-label" error="test-error" id="test" />,
+    <TimeInput label="test-label" description="test-description" />,
+  ]);
+
+  tests.itSupportsSystemProps<TimeInputProps, __InputStylesNames>({
     component: TimeInput,
     props: defaultProps,
+    styleProps: true,
+    extend: true,
+    size: true,
+    variant: true,
+    classes: true,
     refType: HTMLInputElement,
     displayName: '@mantine/dates/TimeInput',
-    othersSelector: 'input',
-    providerName: 'TimeInput',
+    stylesApiSelectors: [...inputStylesApiSelectors],
   });
-  itDisablesInputInsideDisabledFieldset(TimeInput, defaultProps);
+
+  tests.itSupportsInputProps<TimeInputProps>({
+    component: TimeInput,
+    props: defaultProps,
+    selector: 'input',
+  });
 });

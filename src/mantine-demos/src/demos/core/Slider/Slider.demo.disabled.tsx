@@ -10,6 +10,8 @@ function Demo() {
     <>
       <Slider defaultValue={60} disabled />
       <RangeSlider
+        mt="xl"
+        mb="xl"
         disabled
         defaultValue={[25, 75]}
         marks={[
@@ -47,7 +49,7 @@ function Demo() {
 }
 
 export const disabled: MantineDemo = {
-  type: 'demo',
+  type: 'code',
   component: Demo,
   code,
 };

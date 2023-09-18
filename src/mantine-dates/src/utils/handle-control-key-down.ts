@@ -128,7 +128,7 @@ function focusOnNextFocusableControl({
   }
 
   const controlToFocus =
-    controlsRef.current[nextIndex.levelIndex]?.[nextIndex.rowIndex]?.[nextIndex.cellIndex];
+    controlsRef.current?.[nextIndex.levelIndex]?.[nextIndex.rowIndex]?.[nextIndex.cellIndex];
 
   if (!controlToFocus) {
     return;
@@ -163,12 +163,12 @@ function getDirection(key: KeyboardEvent['key']): Direction {
     case 'ArrowLeft':
       return 'left';
     default:
-      return null;
+      return null!;
   }
 }
 
 function getControlsSize(controlsRef: ControlsRef) {
-  return controlsRef.current.map((column) => column.map((row) => row.length));
+  return controlsRef.current?.map((column) => column.map((row) => row.length));
 }
 
 interface HandleControlKeyDownInput {
@@ -191,7 +191,7 @@ export function handleControlKeyDown({
   if (direction) {
     event.preventDefault();
 
-    const size = getControlsSize(controlsRef);
+    const size = getControlsSize(controlsRef)!;
 
     focusOnNextFocusableControl({
       controlsRef,

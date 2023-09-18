@@ -1,10 +1,8 @@
 import React from 'react';
 import { MantineDemo } from '@mantine/ds';
 import { TimeInput } from '@mantine/dates';
-import { Box } from '@mantine/core';
 
 const code = `
-import { IconClock } from '@tabler/icons-react';
 import { TimeInput } from '@mantine/dates';
 
 function Demo() {
@@ -13,15 +11,13 @@ function Demo() {
 `;
 
 function Demo() {
-  return (
-    <Box maw={320} mx="auto">
-      <TimeInput disabled />
-    </Box>
-  );
+  return <TimeInput disabled />;
 }
 
 export const disabled: MantineDemo = {
-  type: 'demo',
+  type: 'code',
+  centered: true,
+  maxWidth: 340,
   component: Demo,
   code,
 };

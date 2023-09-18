@@ -12,15 +12,15 @@ import { useEyeDropper } from '@mantine/hooks';
 
 function Demo() {
   const [color, setColor] = useState('');
-  const [error, setError] = useState(null);
+  const [error, setError] = useState<Error | null>(null);
   const { supported, open } = useEyeDropper();
 
   const pickColor = async () => {
     try {
-      const { sRGBHex } = await open();
+      const { sRGBHex } = (await open())!;
       setColor(sRGBHex);
     } catch (e) {
-      setError(e);
+      setError(e as Error);
     }
   };
 
@@ -34,14 +34,14 @@ function Demo() {
         <IconColorPicker size="1rem" stroke={1.5} />
       </ActionIcon>
       {color ? (
-        <Group spacing="xs">
+        <Group gap="xs">
           <ColorSwatch color={color} />
           <Text>Picked color: {color}</Text>
         </Group>
       ) : (
         <Text>Click the button to pick color</Text>
       )}
-      {error && <Text color="red">Error: {error?.message}</Text>}
+      {error && <Text c="red">Error: {error?.message}</Text>}
     </Group>
   );
 }
@@ -49,15 +49,15 @@ function Demo() {
 
 function Demo() {
   const [color, setColor] = useState('');
-  const [error, setError] = useState(null);
+  const [error, setError] = useState<Error | null>(null);
   const { supported, open } = useEyeDropper();
 
   const pickColor = async () => {
     try {
-      const { sRGBHex } = await open();
+      const { sRGBHex } = (await open())!;
       setColor(sRGBHex);
     } catch (e) {
-      setError(e);
+      setError(e as Error);
     }
   };
 
@@ -71,20 +71,20 @@ function Demo() {
         <IconColorPicker size="1rem" stroke={1.5} />
       </ActionIcon>
       {color ? (
-        <Group spacing="xs">
+        <Group gap="xs">
           <ColorSwatch color={color} />
           <Text>Picked color: {color}</Text>
         </Group>
       ) : (
         <Text>Click the button to pick color</Text>
       )}
-      {error && <Text color="red">Error: {error?.message}</Text>}
+      {error && <Text c="red">Error: {error?.message}</Text>}
     </Group>
   );
 }
 
 export const useEyeDropperUsage: MantineDemo = {
-  type: 'demo',
+  type: 'code',
   component: Demo,
   code,
 };

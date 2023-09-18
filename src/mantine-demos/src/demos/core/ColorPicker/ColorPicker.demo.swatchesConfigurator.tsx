@@ -14,14 +14,14 @@ function Wrapper(props: ColorPickerProps) {
   );
 }
 
-const codeTemplate = (props: string) => `
+const code = `
 import { ColorPicker } from '@mantine/core';
 
 function Demo() {
   return (
-    <ColorPicker${props} format="hex" swatches={[${Object.keys(DEFAULT_THEME.colors)
-  .map((color) => `'${DEFAULT_THEME.colors[color][6]}'`)
-  .join(', ')}]} />
+    <ColorPicker{{props}} format="hex" swatches={[${Object.keys(DEFAULT_THEME.colors)
+      .map((color) => `'${DEFAULT_THEME.colors[color][6]}'`)
+      .join(', ')}]} />
   );
 }
 `;
@@ -29,8 +29,8 @@ function Demo() {
 export const swatchesConfigurator: MantineDemo = {
   type: 'configurator',
   component: Wrapper,
-  codeTemplate,
-  configurator: [
-    { name: 'swatchesPerRow', type: 'number', initialValue: 10, defaultValue: 10, min: 5, max: 20 },
+  code,
+  controls: [
+    { prop: 'swatchesPerRow', type: 'number', initialValue: 7, libraryValue: 7, min: 5, max: 12 },
   ],
 };

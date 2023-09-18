@@ -1,24 +1,7 @@
-import 'dayjs/locale/ru';
 import React from 'react';
-import { render, screen } from '@testing-library/react';
-import {
-  itSupportsSystemProps,
-  itSupportsProviderVariant,
-  itSupportsProviderSize,
-} from '@mantine/tests';
-import { MonthLevel, MonthLevelProps } from './MonthLevel';
-import {
-  itSupportsMonthProps,
-  itSupportsHeaderProps,
-  itSupportsGetDayRef,
-  itSupportsWithNextPrevious,
-  itSupportsOnDayKeydown,
-  itSupportsOnDayClick,
-} from '../../tests';
-
-function expectLabel(label: string) {
-  expect(screen.getByLabelText('level-control')).toHaveTextContent(label);
-}
+import { render, tests, screen } from '@mantine/tests';
+import { datesTests } from '@mantine/dates-tests';
+import { MonthLevel, MonthLevelProps, MonthLevelStylesNames } from './MonthLevel';
 
 const defaultProps: MonthLevelProps = {
   month: new Date(2022, 3, 11),
@@ -27,23 +10,46 @@ const defaultProps: MonthLevelProps = {
   previousLabel: 'prev',
 };
 
+function expectLabel(label: string) {
+  expect(screen.getByLabelText('level-control')).toHaveTextContent(label);
+}
+
 describe('@mantine/dates/MonthLevel', () => {
-  itSupportsSystemProps({
+  tests.itSupportsSystemProps<MonthLevelProps, MonthLevelStylesNames>({
     component: MonthLevel,
     props: defaultProps,
+    styleProps: true,
+    extend: true,
+    variant: true,
+    size: true,
+    classes: true,
     refType: HTMLDivElement,
-    providerName: 'MonthLevel',
     displayName: '@mantine/dates/MonthLevel',
+    stylesApiSelectors: [
+      'calendarHeader',
+      'calendarHeaderControl',
+      'calendarHeaderControlIcon',
+      'calendarHeaderLevel',
+      'day',
+      'month',
+      'monthCell',
+      'monthRow',
+      'monthTbody',
+      'monthThead',
+      'weekday',
+      'weekdaysRow',
+    ],
+
+    compound: true,
+    providerStylesApi: false,
   });
 
-  itSupportsProviderVariant(MonthLevel, defaultProps, 'MonthLevel', ['monthLevel', 'month']);
-  itSupportsProviderSize(MonthLevel, defaultProps, 'MonthLevel', ['monthLevel', 'month']);
-  itSupportsHeaderProps(MonthLevel, defaultProps);
-  itSupportsMonthProps(MonthLevel, defaultProps);
-  itSupportsGetDayRef(MonthLevel, defaultProps);
-  itSupportsWithNextPrevious(MonthLevel, defaultProps);
-  itSupportsOnDayKeydown(MonthLevel, defaultProps);
-  itSupportsOnDayClick(MonthLevel, defaultProps);
+  datesTests.itSupportsHeaderProps({ component: MonthLevel, props: defaultProps });
+  datesTests.itSupportsMonthProps({ component: MonthLevel, props: defaultProps });
+  datesTests.itSupportsGetDayRef({ component: MonthLevel, props: defaultProps });
+  datesTests.itSupportsWithNextPrevious({ component: MonthLevel, props: defaultProps });
+  datesTests.itSupportsOnDayKeydown({ component: MonthLevel, props: defaultProps });
+  datesTests.itSupportsOnDayClick({ component: MonthLevel, props: defaultProps });
 
   it('renders correct CalendarHeader label', () => {
     render(<MonthLevel {...defaultProps} />);
@@ -68,7 +74,6 @@ describe('@mantine/dates/MonthLevel', () => {
 
   it('has correct default __staticSelector', () => {
     const { container } = render(<MonthLevel {...defaultProps} />);
-    expect(container.firstChild).toHaveClass('mantine-MonthLevel-monthLevel');
     expect(container.querySelector('table td button')).toHaveClass('mantine-MonthLevel-day');
     expect(screen.getByLabelText('level-control')).toHaveClass(
       'mantine-MonthLevel-calendarHeaderLevel'
@@ -77,45 +82,10 @@ describe('@mantine/dates/MonthLevel', () => {
 
   it('supports custom __staticSelector', () => {
     const { container } = render(<MonthLevel {...defaultProps} __staticSelector="Calendar" />);
-    expect(container.firstChild).toHaveClass('mantine-Calendar-monthLevel');
     expect(container.querySelector('table td button')).toHaveClass('mantine-Calendar-day');
     expect(screen.getByLabelText('level-control')).toHaveClass(
       'mantine-Calendar-calendarHeaderLevel'
     );
-  });
-
-  it('supports styles api (styles)', () => {
-    const { container } = render(
-      <MonthLevel
-        {...defaultProps}
-        styles={{
-          monthLevel: { borderColor: '#343436' },
-          day: { borderColor: '#232324' },
-          calendarHeaderLevel: { borderColor: '#121214' },
-        }}
-      />
-    );
-
-    expect(container.firstChild).toHaveStyle({ borderColor: '#343436' });
-    expect(container.querySelector('table td button')).toHaveStyle({ borderColor: '#232324' });
-    expect(screen.getByLabelText('level-control')).toHaveStyle({ borderColor: '#121214' });
-  });
-
-  it('supports styles api (classNames)', () => {
-    const { container } = render(
-      <MonthLevel
-        {...defaultProps}
-        classNames={{
-          monthLevel: 'test-month-level',
-          day: 'test-day',
-          calendarHeaderLevel: 'test-level',
-        }}
-      />
-    );
-
-    expect(container.firstChild).toHaveClass('test-month-level');
-    expect(container.querySelector('table td button')).toHaveClass('test-day');
-    expect(screen.getByLabelText('level-control')).toHaveClass('test-level');
   });
 
   it('disables next control if maxDate is before end of month', () => {

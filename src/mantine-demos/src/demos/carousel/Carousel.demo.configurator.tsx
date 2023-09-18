@@ -11,12 +11,12 @@ function Wrapper(props: CarouselProps) {
   );
 }
 
-const codeTemplate = (props: string) => `
+const code = `
 import { Carousel } from '@mantine/carousel';
 
 function Demo() {
   return (
-    <Carousel slideSize="70%" height={200}${props}>
+    <Carousel slideSize="70%" height={200}{{props}}>
       {/* ...slides */}
     </Carousel>
   );
@@ -26,13 +26,15 @@ function Demo() {
 export const configurator: MantineDemo = {
   type: 'configurator',
   component: Wrapper,
-  codeTemplate,
-  configurator: [
+  code,
+  centered: true,
+  maxWidth: '100%',
+  controls: [
     {
-      name: 'align',
+      prop: 'align',
       type: 'segmented',
       initialValue: 'center',
-      defaultValue: 'center',
+      libraryValue: 'center',
       data: [
         { label: 'Start', value: 'start' },
         { label: 'Center', value: 'center' },
@@ -40,22 +42,22 @@ export const configurator: MantineDemo = {
       ],
     },
     {
-      name: 'orientation',
+      prop: 'orientation',
       type: 'segmented',
       initialValue: 'horizontal',
-      defaultValue: 'horizontal',
+      libraryValue: 'horizontal',
       data: [
         { label: 'Horizontal', value: 'horizontal' },
         { label: 'Vertical', value: 'vertical' },
       ],
     },
-    { name: 'slideGap', type: 'size', initialValue: 'md' },
-    { name: 'controlsOffset', type: 'size', initialValue: 'sm', defaultValue: 'sm' },
-    { name: 'controlSize', type: 'number', min: 14, max: 40, initialValue: 26, defaultValue: 26 },
-    { name: 'loop', type: 'boolean', initialValue: false, defaultValue: false },
-    { name: 'dragFree', type: 'boolean', initialValue: false, defaultValue: false },
-    { name: 'draggable', type: 'boolean', initialValue: true, defaultValue: true },
-    { name: 'withControls', type: 'boolean', initialValue: true, defaultValue: true },
-    { name: 'withIndicators', type: 'boolean', initialValue: false, defaultValue: false },
+    { prop: 'slideGap', type: 'size', initialValue: 'md', libraryValue: '__' },
+    { prop: 'controlsOffset', type: 'size', initialValue: 'sm', libraryValue: 'sm' },
+    { prop: 'controlSize', type: 'number', min: 14, max: 40, initialValue: 26, libraryValue: 26 },
+    { prop: 'loop', type: 'boolean', initialValue: false, libraryValue: false },
+    { prop: 'dragFree', type: 'boolean', initialValue: false, libraryValue: false },
+    { prop: 'draggable', type: 'boolean', initialValue: true, libraryValue: true },
+    { prop: 'withControls', type: 'boolean', initialValue: true, libraryValue: true },
+    { prop: 'withIndicators', type: 'boolean', initialValue: false, libraryValue: false },
   ],
 };

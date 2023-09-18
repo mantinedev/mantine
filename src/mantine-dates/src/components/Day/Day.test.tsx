@@ -1,12 +1,7 @@
 import React from 'react';
 import lodash from 'lodash';
-import { render, screen } from '@testing-library/react';
-import {
-  itSupportsSystemProps,
-  itSupportsProviderVariant,
-  itSupportsProviderSize,
-} from '@mantine/tests';
-import { Day, DayProps } from './Day';
+import { render, tests, screen } from '@mantine/tests';
+import { Day, DayProps, DayStylesNames } from './Day';
 
 const defaultProps: DayProps = {
   date: new Date(2022, 1, 3),
@@ -27,14 +22,17 @@ function validateDataAttribute(prop: string) {
 }
 
 describe('@mantine/dates/Day', () => {
-  itSupportsProviderVariant(Day, defaultProps, 'Day', 'day');
-  itSupportsProviderSize(Day, defaultProps, 'Day', 'day');
-  itSupportsSystemProps({
+  tests.itSupportsSystemProps<DayProps, DayStylesNames>({
     component: Day,
     props: defaultProps,
+    styleProps: true,
+    extend: true,
+    variant: true,
+    size: true,
+    classes: true,
     refType: HTMLButtonElement,
-    providerName: 'Day',
     displayName: '@mantine/dates/Day',
+    stylesApiSelectors: ['day'],
   });
 
   validateDataAttribute('weekend');
@@ -47,11 +45,6 @@ describe('@mantine/dates/Day', () => {
   it('renders given date value', () => {
     render(<Day {...defaultProps} />);
     expect(screen.getByRole('button')).toHaveTextContent(defaultProps.date.getDate().toString());
-  });
-
-  it('supports radius prop', () => {
-    render(<Day {...defaultProps} radius={32} />);
-    expect(screen.getByRole('button')).toHaveStyle({ borderRadius: '2rem' });
   });
 
   it('adds correct disabled attributes when disabled prop is set', () => {
@@ -67,17 +60,7 @@ describe('@mantine/dates/Day', () => {
 
   it('supports __staticSelector', () => {
     render(<Day {...defaultProps} __staticSelector="Month" />);
-    expect(screen.getByRole('button')).toHaveClass('mantine-Day-day', 'mantine-Month-day');
-  });
-
-  it('supports styles api (styles)', () => {
-    render(<Day {...defaultProps} styles={{ day: { borderColor: '#CECECE' } }} />);
-    expect(screen.getByRole('button')).toHaveStyle({ borderColor: '#CECECE' });
-  });
-
-  it('supports styles api (classNames)', () => {
-    render(<Day {...defaultProps} classNames={{ day: 'test-day-class' }} />);
-    expect(screen.getByRole('button')).toHaveClass('test-day-class');
+    expect(screen.getByRole('button')).toHaveClass('mantine-Month-day');
   });
 
   it('allows to customize day rendering with renderDay function', () => {
@@ -97,15 +80,14 @@ describe('@mantine/dates/Day', () => {
 
     rerender(<Day {...defaultProps} hidden />);
     expect(container.querySelector('button')).toHaveAttribute('data-hidden');
-    expect(container.querySelector('button')).toHaveStyle({ display: 'none' });
   });
 
   it('supports static prop', () => {
-    const { container, rerender } = render(<Day {...defaultProps} />);
-    expect((container.firstChild as HTMLElement).tagName).toBe('BUTTON');
+    const { container, rerender } = render(<Day {...defaultProps} weekend />);
+    expect((container.querySelector('[data-weekend]') as HTMLElement).tagName).toBe('BUTTON');
 
-    rerender(<Day {...defaultProps} static />);
-    expect((container.firstChild as HTMLElement).tagName).toBe('DIV');
+    rerender(<Day {...defaultProps} static weekend />);
+    expect((container.querySelector('[data-weekend]') as HTMLElement).tagName).toBe('DIV');
   });
 
   it('adds data-today attribute if date is the same as today', () => {

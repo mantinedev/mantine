@@ -1,22 +1,27 @@
 import React, { useState } from 'react';
 import { IconX, IconCheck } from '@tabler/icons-react';
 import { MantineDemo } from '@mantine/ds';
-import { PasswordInput, Progress, Text, Popover, Box } from '@mantine/core';
+import { PasswordInput, Progress, Text, Popover, Box, rem } from '@mantine/core';
 
 const code = `
 import { useState } from 'react';
 import { IconX, IconCheck } from '@tabler/icons-react';
-import { PasswordInput, Progress, Text, Popover, Box } from '@mantine/core';
+import { PasswordInput, Progress, Text, Popover, Box, rem } from '@mantine/core';
 
 function PasswordRequirement({ meets, label }: { meets: boolean; label: string }) {
   return (
     <Text
-      color={meets ? 'teal' : 'red'}
-      sx={{ display: 'flex', alignItems: 'center' }}
+      c={meets ? 'teal' : 'red'}
+      style={{ display: 'flex', alignItems: 'center' }}
       mt={7}
       size="sm"
     >
-      {meets ? <IconCheck size="0.9rem" /> : <IconX size="0.9rem" />} <Box ml={10}>{label}</Box>
+      {meets ? (
+        <IconCheck style={{ width: rem(14), height: rem(14) }} />
+      ) : (
+        <IconX style={{ width: rem(14), height: rem(14) }} />
+      )}{' '}
+      <Box ml={10}>{label}</Box>
     </Text>
   );
 }
@@ -51,29 +56,27 @@ function Demo() {
   const color = strength === 100 ? 'teal' : strength > 50 ? 'yellow' : 'red';
 
   return (
-    <Box maw={340} mx="auto">
-      <Popover opened={popoverOpened} position="bottom" width="target" transitionProps={{ transition: 'pop' }}>
-        <Popover.Target>
-          <div
-            onFocusCapture={() => setPopoverOpened(true)}
-            onBlurCapture={() => setPopoverOpened(false)}
-          >
-            <PasswordInput
-              withAsterisk
-              label="Your password"
-              placeholder="Your password"
-              value={value}
-              onChange={(event) => setValue(event.currentTarget.value)}
-            />
-          </div>
-        </Popover.Target>
-        <Popover.Dropdown>
-          <Progress color={color} value={strength} size={5} mb="xs" />
-          <PasswordRequirement label="Includes at least 6 characters" meets={value.length > 5} />
-          {checks}
-        </Popover.Dropdown>
-      </Popover>
-    </Box>
+    <Popover opened={popoverOpened} position="bottom" width="target" transitionProps={{ transition: 'pop' }}>
+      <Popover.Target>
+        <div
+          onFocusCapture={() => setPopoverOpened(true)}
+          onBlurCapture={() => setPopoverOpened(false)}
+        >
+          <PasswordInput
+            withAsterisk
+            label="Your password"
+            placeholder="Your password"
+            value={value}
+            onChange={(event) => setValue(event.currentTarget.value)}
+          />
+        </div>
+      </Popover.Target>
+      <Popover.Dropdown>
+        <Progress color={color} value={strength} size={5} mb="xs" />
+        <PasswordRequirement label="Includes at least 6 characters" meets={value.length > 5} />
+        {checks}
+      </Popover.Dropdown>
+    </Popover>
   );
 }
 `;
@@ -81,12 +84,17 @@ function Demo() {
 function PasswordRequirement({ meets, label }: { meets: boolean; label: string }) {
   return (
     <Text
-      color={meets ? 'teal' : 'red'}
-      sx={{ display: 'flex', alignItems: 'center' }}
+      c={meets ? 'teal' : 'red'}
+      style={{ display: 'flex', alignItems: 'center' }}
       mt={7}
       size="sm"
     >
-      {meets ? <IconCheck size="0.9rem" /> : <IconX size="0.9rem" />} <Box ml={10}>{label}</Box>
+      {meets ? (
+        <IconCheck style={{ width: rem(14), height: rem(14) }} />
+      ) : (
+        <IconX style={{ width: rem(14), height: rem(14) }} />
+      )}{' '}
+      <Box ml={10}>{label}</Box>
     </Text>
   );
 }
@@ -121,40 +129,39 @@ function Demo() {
   const color = strength === 100 ? 'teal' : strength > 50 ? 'yellow' : 'red';
 
   return (
-    <Box maw={340} mx="auto">
-      <Popover
-        opened={popoverOpened}
-        position="bottom"
-        width="target"
-        transitionProps={{ transition: 'pop' }}
-      >
-        <Popover.Target>
-          <div
-            onFocusCapture={() => setPopoverOpened(true)}
-            onBlurCapture={() => setPopoverOpened(false)}
-          >
-            <PasswordInput
-              withAsterisk
-              label="Your password"
-              placeholder="Your password"
-              value={value}
-              onChange={(event) => setValue(event.currentTarget.value)}
-            />
-          </div>
-        </Popover.Target>
-        <Popover.Dropdown>
-          <Progress color={color} value={strength} size={5} mb="xs" />
-          <PasswordRequirement label="Includes at least 6 characters" meets={value.length > 5} />
-          {checks}
-        </Popover.Dropdown>
-      </Popover>
-    </Box>
+    <Popover
+      opened={popoverOpened}
+      position="bottom"
+      width="target"
+      transitionProps={{ transition: 'pop' }}
+    >
+      <Popover.Target>
+        <div
+          onFocusCapture={() => setPopoverOpened(true)}
+          onBlurCapture={() => setPopoverOpened(false)}
+        >
+          <PasswordInput
+            withAsterisk
+            label="Your password"
+            placeholder="Your password"
+            value={value}
+            onChange={(event) => setValue(event.currentTarget.value)}
+          />
+        </div>
+      </Popover.Target>
+      <Popover.Dropdown>
+        <Progress color={color} value={strength} size={5} mb="xs" />
+        <PasswordRequirement label="Includes at least 6 characters" meets={value.length > 5} />
+        {checks}
+      </Popover.Dropdown>
+    </Popover>
   );
 }
 
 export const strengthMeter: MantineDemo = {
-  type: 'demo',
+  type: 'code',
   code,
-  demoProps: { toggle: true },
   component: Demo,
+  centered: true,
+  maxWidth: 340,
 };

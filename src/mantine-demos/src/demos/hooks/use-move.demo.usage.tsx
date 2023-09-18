@@ -1,28 +1,26 @@
 import React, { useState } from 'react';
-import { useMantineTheme, Group, Text, Code, rem } from '@mantine/core';
 import { MantineDemo } from '@mantine/ds';
+import { Group, Text, Code, rem } from '@mantine/core';
 import { useMove } from '@mantine/hooks';
 
 const code = `
 import { useState } from 'react';
-import { useMantineTheme, Text, Code, rem } from '@mantine/core';
+import { Group, Text, Code, rem } from '@mantine/core';
 import { useMove } from '@mantine/hooks';
 
 function Demo() {
-  const theme = useMantineTheme();
   const [value, setValue] = useState({ x: 0.2, y: 0.6 });
   const { ref, active } = useMove(setValue);
 
   return (
     <>
-      <Group position="center">
+      <Group justify="center">
         <div
           ref={ref}
           style={{
             width: rem(400),
             height: rem(120),
-            backgroundColor:
-              theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[1],
+            backgroundColor: 'var(--mantine-color-blue-light)',
             position: 'relative',
           }}
         >
@@ -33,12 +31,12 @@ function Demo() {
               top: \`calc(\${value.y * 100}% - \${rem(8)})\`,
               width: rem(16),
               height: rem(16),
-              backgroundColor: active ? theme.colors.teal[7] : theme.colors.blue[7],
+              backgroundColor: active ? 'var(--mantine-color-teal-7)' : 'var(--mantine-color-blue-7)',
             }}
           />
         </div>
       </Group>
-      <Text align="center" mt="sm">
+      <Text ta="center" mt="sm">
         Values <Code>{\`{ x: \${Math.round(value.x * 100)}, y: \${Math.round(value.y * 100)} }\`}</Code>
       </Text>
     </>
@@ -46,20 +44,18 @@ function Demo() {
 }`;
 
 function Demo() {
-  const theme = useMantineTheme();
   const [value, setValue] = useState({ x: 0.2, y: 0.6 });
   const { ref, active } = useMove(setValue);
 
   return (
     <>
-      <Group position="center">
+      <Group justify="center">
         <div
           ref={ref}
           style={{
             width: rem(400),
             height: rem(120),
-            backgroundColor:
-              theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[1],
+            backgroundColor: 'var(--mantine-color-blue-light)',
             position: 'relative',
           }}
         >
@@ -70,12 +66,14 @@ function Demo() {
               top: `calc(${value.y * 100}% - ${rem(8)})`,
               width: rem(16),
               height: rem(16),
-              backgroundColor: active ? theme.colors.teal[7] : theme.colors.blue[7],
+              backgroundColor: active
+                ? 'var(--mantine-color-teal-7)'
+                : 'var(--mantine-color-blue-7)',
             }}
           />
         </div>
       </Group>
-      <Text align="center" mt="sm">
+      <Text ta="center" mt="sm">
         Values <Code>{`{ x: ${Math.round(value.x * 100)}, y: ${Math.round(value.y * 100)} }`}</Code>
       </Text>
     </>
@@ -83,7 +81,7 @@ function Demo() {
 }
 
 export const useMoveUsage: MantineDemo = {
-  type: 'demo',
+  type: 'code',
   code,
   component: Demo,
 };

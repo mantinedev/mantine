@@ -32,7 +32,7 @@ export function Usage() {
       modalId: 'content-modal',
       title: 'Hello there',
       children: (
-        <Text color="blue" onClick={() => closeModal('content-modal')}>
+        <Text c="blue" onClick={() => closeModal('content-modal')}>
           My content modal
         </Text>
       ),
@@ -88,7 +88,7 @@ export function Usage() {
       }}
       labels={{ confirm: 'Confirm', cancel: 'Cancel' }}
     >
-      <Group sx={{ padding: 40 }}>
+      <Group p={40}>
         <Button onClick={showContextModal}>Open context modal</Button>
         <Button onClick={showConfirmModal} color="red">
           Open nested confirm modal

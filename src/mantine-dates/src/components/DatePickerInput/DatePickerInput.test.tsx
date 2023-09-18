@@ -1,57 +1,71 @@
 import React from 'react';
-import { render } from '@testing-library/react';
-import {
-  itSupportsSystemProps,
-  itSupportsProviderVariant,
-  itSupportsProviderSize,
-  itSupportsFocusEvents,
-  itDisablesInputInsideDisabledFieldset,
-} from '@mantine/tests';
-import {
-  itSupportsClearableProps,
-  itSupportsYearsListProps,
-  itSupportsMonthsListProps,
-  itSupportsDateInputProps,
-  expectValue,
-} from '../../tests';
-import { DatePickerInput } from './DatePickerInput';
+import { tests, inputDefaultProps, inputStylesApiSelectors, render } from '@mantine/tests';
+import { __InputStylesNames } from '@mantine/core';
+import { clickControl, clickInput, datesTests, expectValue } from '@mantine/dates-tests';
+import { DatePickerInput, DatePickerInputProps } from './DatePickerInput';
+import { DatesProvider } from '../DatesProvider';
 
 const defaultProps = {
   popoverProps: { withinPortal: false, transitionProps: { duration: 0 } },
   modalProps: { withinPortal: false, transitionProps: { duration: 0 } },
 };
 
+const defaultPropsWithInputProps = {
+  ...defaultProps,
+  ...(inputDefaultProps as any),
+};
+
 describe('@mantine/dates/DatePickerInput', () => {
-  itSupportsSystemProps({
+  tests.axe([
+    <DatePickerInput aria-label="test-label" />,
+    <DatePickerInput aria-label="test-label" error />,
+    <DatePickerInput aria-label="test-label" error="test-error" id="test" />,
+    <DatePickerInput aria-label="test-label" description="test-description" />,
+  ]);
+
+  tests.itSupportsSystemProps<DatePickerInputProps, __InputStylesNames>({
     component: DatePickerInput,
-    props: defaultProps,
+    props: defaultPropsWithInputProps,
+    styleProps: true,
+    extend: true,
+    size: true,
+    variant: true,
+    classes: true,
     refType: HTMLButtonElement,
-    providerName: 'DatePickerInput',
-    othersSelector: '.mantine-DatePickerInput-input',
     displayName: '@mantine/dates/DatePickerInput',
+    stylesApiSelectors: [...inputStylesApiSelectors],
   });
 
-  itSupportsFocusEvents(DatePickerInput, defaultProps, '.mantine-DatePickerInput-input');
-  itSupportsProviderVariant(DatePickerInput, defaultProps, 'DatePickerInput', ['root', 'input']);
-  itSupportsProviderSize(DatePickerInput, defaultProps, 'DatePickerInput', ['root', 'input']);
-  itSupportsDateInputProps(DatePickerInput, defaultProps);
-  itSupportsClearableProps(DatePickerInput, {
-    ...defaultProps,
-    defaultValue: new Date(2022, 3, 11),
+  tests.itSupportsInputProps<DatePickerInputProps>({
+    component: DatePickerInput,
+    props: defaultPropsWithInputProps,
+    selector: 'button',
   });
-  itSupportsYearsListProps(DatePickerInput, {
-    ...defaultProps,
-    defaultLevel: 'decade',
-    defaultValue: new Date(2022, 3, 11),
-    popoverProps: { opened: true, withinPortal: false, transitionProps: { duration: 0 } },
+
+  datesTests.itSupportsDateInputProps({ component: DatePickerInput, props: defaultProps });
+  datesTests.itSupportsClearableProps({
+    component: DatePickerInput,
+    props: { ...defaultProps, defaultValue: new Date() },
   });
-  itSupportsMonthsListProps(DatePickerInput, {
-    ...defaultProps,
-    defaultLevel: 'year',
-    defaultValue: new Date(2022, 3, 11),
-    popoverProps: { opened: true, withinPortal: false, transitionProps: { duration: 0 } },
+  datesTests.itSupportsYearsListProps({
+    component: DatePickerInput,
+    props: {
+      ...defaultProps,
+      defaultLevel: 'decade',
+      defaultValue: new Date(2022, 3, 11),
+      popoverProps: { opened: true, withinPortal: false, transitionProps: { duration: 0 } },
+    },
   });
-  itDisablesInputInsideDisabledFieldset(DatePickerInput, defaultProps);
+
+  datesTests.itSupportsMonthsListProps({
+    component: DatePickerInput,
+    props: {
+      ...defaultProps,
+      defaultLevel: 'year',
+      defaultValue: new Date(2022, 3, 11),
+      popoverProps: { opened: true, withinPortal: false, transitionProps: { duration: 0 } },
+    },
+  });
 
   it('supports valueFormat prop', () => {
     const { container, rerender } = render(
@@ -87,7 +101,6 @@ describe('@mantine/dates/DatePickerInput', () => {
         popoverProps={{ opened: true, withinPortal: false, transitionProps: { duration: 0 } }}
       />
     );
-    expect(container.firstChild).toHaveClass('mantine-DatePickerInput-root');
     expect(container.querySelector('[data-dates-input]')).toHaveClass(
       'mantine-DatePickerInput-input'
     );
@@ -95,57 +108,32 @@ describe('@mantine/dates/DatePickerInput', () => {
     expect(container.querySelector('table button')).toHaveClass('mantine-DatePickerInput-day');
   });
 
-  it('supports styles api (classNames)', () => {
+  it('supports controlled state (dropdown click)', async () => {
+    const spy = jest.fn();
     const { container } = render(
-      <DatePickerInput
-        {...defaultProps}
-        popoverProps={{ opened: true, withinPortal: false, transitionProps: { duration: 0 } }}
-        classNames={{
-          root: 'test-root',
-          input: 'test-input',
-          day: 'test-control',
-        }}
-      />
+      <DatePickerInput {...defaultProps} value={new Date(2022, 3, 11)} onChange={spy} />
     );
-    expect(container.firstChild).toHaveClass('test-root');
-    expect(container.querySelector('[data-dates-input]')).toHaveClass('test-input');
-    expect(container.querySelector('table button')).toHaveClass('test-control');
+    await clickInput(container);
+    await clickControl(container, 4);
+    expectValue(container, 'April 11, 2022');
+    expect(spy).toHaveBeenCalledWith(new Date(2022, 3, 1));
   });
 
-  it('supports styles api (styles)', () => {
+  it('supports controlled state (dropdown click) with timezone', async () => {
+    const spy = jest.fn();
     const { container } = render(
-      <DatePickerInput
-        {...defaultProps}
-        popoverProps={{ opened: true, withinPortal: false, transitionProps: { duration: 0 } }}
-        styles={{
-          root: { borderColor: '#CCEE45' },
-          input: { borderColor: '#EB4522' },
-          day: { borderColor: '#EE4533' },
-        }}
-      />
+      <DatesProvider settings={{ timezone: 'UTC' }}>
+        <DatePickerInput
+          {...defaultProps}
+          date={new Date(2022, 0, 31, 23)}
+          value={new Date(2022, 0, 31, 23)}
+          onChange={spy}
+        />
+      </DatesProvider>
     );
-    expect(container.firstChild).toHaveStyle({ borderColor: '#CCEE45' });
-    expect(container.querySelector('[data-dates-input]')).toHaveStyle({ borderColor: '#EB4522' });
-    expect(container.querySelector('table button')).toHaveStyle({ borderColor: '#EE4533' });
-  });
-
-  it('supports withCellSpacing prop', () => {
-    const { container, rerender } = render(
-      <DatePickerInput
-        {...defaultProps}
-        popoverProps={{ opened: true, withinPortal: false, transitionProps: { duration: 0 } }}
-        withCellSpacing
-      />
-    );
-    expect(container.querySelector('tbody tr td')).toHaveAttribute('data-with-spacing', 'true');
-
-    rerender(
-      <DatePickerInput
-        {...defaultProps}
-        popoverProps={{ opened: true, withinPortal: false, transitionProps: { duration: 0 } }}
-        withCellSpacing={false}
-      />
-    );
-    expect(container.querySelector('tbody tr td')).not.toHaveAttribute('data-with-spacing');
+    await clickInput(container);
+    await clickControl(container, 4);
+    expectValue(container, 'February 1, 2022');
+    expect(spy).toHaveBeenCalledWith(new Date(2022, 1, 3, 19));
   });
 });

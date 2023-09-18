@@ -1,0 +1,82 @@
+.pickerControl {
+  --dpc-size-xs: rem(30px);
+  --dpc-size-sm: rem(36px);
+  --dpc-size-md: rem(42px);
+  --dpc-size-lg: rem(48px);
+  --dpc-size-xl: rem(54px);
+  --dpc-size: var(--dpc-size-sm);
+
+  font-size: var(--dpc-fz, var(--mantine-font-size-sm));
+  height: var(--dpc-size);
+  width: calc((var(--dpc-size) * 7) / 3 + rem(1.5px));
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  user-select: none;
+  cursor: var(--_control-cursor, pointer);
+  background-color: var(--_control-bg, transparent);
+  color: var(--_control-color, var(--mantine-color-text));
+  opacity: var(--_control-opacity, 1);
+  border-radius: var(--_control-radius, var(--mantine-radius-default));
+
+  @mixin hover {
+    &:not([data-disabled]) {
+      @mixin light {
+        --_control-bg: var(--mantine-color-gray-0);
+      }
+
+      @mixin dark {
+        --_control-bg: var(--mantine-color-dark-5);
+      }
+    }
+  }
+
+  &:disabled,
+  &[data-disabled] {
+    --_control-color: var(--mantine-color-dimmed);
+    --_control-cursor: not-allowed;
+    --_control-opacity: 0.5;
+  }
+
+  &[data-selected] {
+    --_control-bg: var(--mantine-primary-color-filled);
+    --_control-color: var(--mantine-color-white);
+
+    @mixin hover {
+      [data-mantine-color-scheme] & {
+        --_control-bg: var(--mantine-primary-color-filled-hover);
+      }
+    }
+  }
+
+  &[data-in-range] {
+    --_control-bg: var(--mantine-primary-color-light-hover);
+    --_control-radius: 0;
+
+    @mixin hover {
+      [data-mantine-color-scheme] & {
+        --_control-bg: var(--mantine-primary-color-light);
+      }
+    }
+  }
+
+  &[data-first-in-range] {
+    --_control-radius: var(--mantine-radius-default) 0 0 var(--mantine-radius-default);
+
+    @mixin rtl {
+      --_control-radius: 0 var(--mantine-radius-default) var(--mantine-radius-default) 0;
+    }
+  }
+
+  &[data-last-in-range] {
+    --_control-radius: 0 var(--mantine-radius-default) var(--mantine-radius-default) 0;
+
+    @mixin rtl {
+      --_control-radius: var(--mantine-radius-default) 0 0 var(--mantine-radius-default);
+    }
+  }
+
+  &[data-first-in-range][data-last-in-range] {
+    --_control-radius: var(--mantine-radius-default);
+  }
+}

@@ -1,0 +1,240 @@
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.NextJs);
+
+# Usage with Next.js
+
+<GetTemplates type="next" />
+
+## Generate new application
+
+Follow [create-next-app](https://nextjs.org/docs/pages/api-reference/create-next-app) guide to
+create new Next.js application:
+
+<NpmScript
+  yarnScript="yarn create next-app --typescript"
+  npmScript="npx create-next-app@latest --typescript"
+/>
+
+## Installation
+
+<PackagesInstallation />
+
+## PostCSS setup
+
+Install PostCSS plugins and [postcss-preset-mantine](/styles/postcss-preset):
+
+<InstallScript packages="postcss postcss-preset-mantine postcss-simple-vars" dev />
+
+Create `postcss.config.js` file at the root of your application with the following content:
+
+```js
+module.exports = {
+  plugins: {
+    'postcss-preset-mantine': {},
+    'postcss-simple-vars': {
+      variables: {
+        'mantine-breakpoint-xs': '36em',
+        'mantine-breakpoint-sm': '48em',
+        'mantine-breakpoint-md': '62em',
+        'mantine-breakpoint-lg': '75em',
+        'mantine-breakpoint-xl': '88em',
+      },
+    },
+  },
+};
+```
+
+## Setup with pages router
+
+Add styles imports and [MantineProvider](/theming/mantine-provider) to the `pages/_app.tsx` file:
+
+```tsx
+// Import styles of packages that you've installed.
+// All packages except `@mantine/hooks` require styles imports
+import '@mantine/core/styles.css';
+
+import type { AppProps } from 'next/app';
+import { MantineProvider, createTheme } from '@mantine/core';
+
+const theme = createTheme({
+  /** Put your mantine theme override here */
+});
+
+export default function App({ Component, pageProps }: AppProps) {
+  return (
+    <MantineProvider theme={theme}>
+      <Component {...pageProps} />
+    </MantineProvider>
+  );
+}
+```
+
+Create `pages/_document.tsx` file with [ColorSchemeScript](/theming/color-schemes) component.
+Note that it is required even if you use only one color scheme in your application.
+
+```tsx
+import { Html, Head, Main, NextScript } from 'next/document';
+import { ColorSchemeScript } from '@mantine/core';
+
+export default function Document() {
+  return (
+    <Html lang="en">
+      <Head>
+        <ColorSchemeScript defaultColorScheme="auto" />
+      </Head>
+      <body>
+        <Main />
+        <NextScript />
+      </body>
+    </Html>
+  );
+}
+```
+
+All set! Start development server:
+
+```bash
+npm run dev
+```
+
+## Setup with app router
+
+Add [MantineProvider](/theming/mantine-provider), [ColorSchemeScript](/theming/color-schemes)
+and styles imports to the `app/layout.tsx` file:
+
+```tsx
+// Import styles of packages that you've installed.
+// All packages except `@mantine/hooks` require styles imports
+import '@mantine/core/styles.css';
+
+import { MantineProvider, ColorSchemeScript } from '@mantine/core';
+
+export const metadata = {
+  title: 'My Mantine app',
+  description: 'I have followed setup instructions carefully',
+};
+
+export default function RootLayout({ children }: { children: React.ReactNode }) {
+  return (
+    <html lang="en">
+      <head>
+        <ColorSchemeScript />
+      </head>
+      <body>
+        <MantineProvider>{children}</MantineProvider>
+      </body>
+    </html>
+  );
+}
+```
+
+All set! Start development server:
+
+```bash
+npm run dev
+```
+
+## app + pages router together
+
+If you use both app and pages router in one application, you need to setup both `pages/_app.tsx`
+and `app/layout.tsx` files as described above.
+
+## Next.js Link with polymorphic components
+
+Next.js `Link` does not work in the same way as other similar components in all Next.js versions.
+
+With Next.js 12 and below:
+
+```tsx
+import Link from 'next/link';
+import { Button } from '@mantine/core';
+
+function Demo() {
+  return (
+    <Link href="/hello" passHref>
+      <Button component="a">Next link button</Button>
+    </Link>
+  );
+}
+```
+
+With Next.js 13 and above:
+
+```tsx
+import Link from 'next/link';
+import { Button } from '@mantine/core';
+
+function Demo() {
+  return (
+    <Button component={Link} href="/hello">
+      Next link button
+    </Button>
+  );
+}
+```
+
+## Server components
+
+All Mantine components use `useContext` hook to support [default props](/theming/default-props)
+and [Styles API](/styles/styles-api). Mantine components cannot be used as server components.
+It means that components will render both on the server and client.
+
+Entry points of all `@mantine/*` packages (`index.js` files) have `'use client';` directive at the
+top of the file – you do not need to add `'use client';` to your pages/layouts/components.
+
+## Compound components in server components
+
+Some components like [Popover](/core/popover) have associated compound components (`Component.XXX`),
+where `XXX` is a compound component name. Compound components cannot be used in server components.
+Instead, use `ComponentXXX` syntax or add `'use client';` directive to the top of the file.
+
+Example that will not work in server components:
+
+```tsx
+import { Popover } from '@mantine/core';
+
+// This will throw an error
+export default function Page() {
+  return (
+    <Popover>
+      <Popover.Trigger>Trigger</Popover.Trigger>
+      <Popover.Dropdown>Dropdown</Popover.Dropdown>
+    </Popover>
+  );
+}
+```
+
+Example with `'use client';` directive:
+
+```tsx
+'use client';
+import { Popover } from '@mantine/core';
+
+// No error
+export default function Page() {
+  return (
+    <Popover>
+      <Popover.Trigger>Trigger</Popover.Trigger>
+      <Popover.Dropdown>Dropdown</Popover.Dropdown>
+    </Popover>
+  );
+}
+```
+
+Example with `ComponentXXX` syntax:
+
+```tsx
+import { Popover, PopoverTarget, PopoverDropdown } from '@mantine/core';
+
+// No error
+export default function Page() {
+  return (
+    <Popover>
+      <PopoverTarget>Trigger</PopoverTarget>
+      <PopoverDropdown>Dropdown</PopoverDropdown>
+    </Popover>
+  );
+}
+```

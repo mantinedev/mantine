@@ -1,0 +1,18 @@
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+import { HooksDemos } from '@mantine/demos';
+
+export default Layout(MDX_DATA.useHover);
+
+## Usage
+
+<Demo data={HooksDemos.useHoverDemo} />
+
+## Definition
+
+```tsx
+function useHover<T extends HTMLElement = HTMLDivElement>(): {
+  ref: React.MutableRefObject<T>;
+  hovered: boolean;
+};
+```

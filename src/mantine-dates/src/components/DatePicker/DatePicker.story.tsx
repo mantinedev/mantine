@@ -13,6 +13,14 @@ export function Usage() {
   );
 }
 
+export function Unstyled() {
+  return (
+    <div style={{ padding: 40 }}>
+      <DatePicker unstyled />
+    </div>
+  );
+}
+
 export function RuLocale() {
   return (
     <div style={{ padding: 40 }}>

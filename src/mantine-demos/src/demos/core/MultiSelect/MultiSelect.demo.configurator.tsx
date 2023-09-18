@@ -1,63 +1,38 @@
 import React from 'react';
 import { MantineDemo } from '@mantine/ds';
 import { MultiSelect } from '@mantine/core';
+import { inputControls } from '../../../shared';
 
-const codeTemplate = (props: string) => `
+const code = `
 import { MultiSelect } from '@mantine/core';
+
 
 function Demo() {
   return (
     <MultiSelect
-      data={['React', 'Angular', 'Svelte', 'Vue']}
-     ${props}
+      {{props}}
+      placeholder="MultiSelect placeholder"
+      data={['React', 'Angular', 'Vue', 'Svelte']}
     />
   );
 }
 `;
 
+function Wrapper(props: any) {
+  return (
+    <MultiSelect
+      {...props}
+      placeholder="MultiSelect placeholder"
+      data={['React', 'Angular', 'Vue', 'Svelte']}
+    />
+  );
+}
+
 export const configurator: MantineDemo = {
   type: 'configurator',
-  component: (props: any) => (
-    <MultiSelect data={['React', 'Angular', 'Svelte', 'Vue']} {...props} />
-  ),
-  codeTemplate,
-  configuratorProps: { multiline: 3 },
-  configurator: [
-    { name: 'placeholder', type: 'string', initialValue: 'Pick all you like' },
-    {
-      name: 'label',
-      type: 'string',
-      initialValue: 'Your favorite frameworks/libraries',
-    },
-    {
-      name: 'description',
-      type: 'string',
-      initialValue: '',
-    },
-    {
-      name: 'error',
-      type: 'string',
-      initialValue: '',
-    },
-    {
-      name: 'variant',
-      type: 'select',
-      data: [
-        { label: 'default', value: 'default' },
-        { label: 'filled', value: 'filled' },
-        { label: 'unstyled', value: 'unstyled' },
-      ],
-      initialValue: 'default',
-      defaultValue: 'default',
-    },
-    { name: 'radius', type: 'size', initialValue: 'sm', defaultValue: 'sm' },
-    { name: 'size', type: 'size', initialValue: 'sm', defaultValue: 'sm' },
-    { name: 'disabled', type: 'boolean', initialValue: false, defaultValue: false },
-    {
-      name: 'withAsterisk',
-      type: 'boolean',
-      initialValue: true,
-      defaultValue: false,
-    },
-  ],
+  component: Wrapper,
+  code,
+  centered: true,
+  maxWidth: 340,
+  controls: inputControls,
 };

@@ -15,7 +15,7 @@ function Demo() {
 }
 
 export const multiple: MantineDemo = {
-  type: 'demo',
+  type: 'code',
   code,
   component: Demo,
 };

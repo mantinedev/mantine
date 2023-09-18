@@ -1,5 +1,7 @@
-export { configurator } from './NativeSelect.demo.configurator';
-export { validation } from './NativeSelect.demo.validation';
+export { usage } from './NativeSelect.demo.usage';
+export { options } from './NativeSelect.demo.options';
+export { data } from './NativeSelect.demo.data';
 export { disabled } from './NativeSelect.demo.disabled';
-export { icon } from './NativeSelect.demo.icon';
-export { rightSection } from './NativeSelect.demo.rightSection';
+export { error } from './NativeSelect.demo.error';
+export { sections } from './NativeSelect.demo.sections';
+export { stylesApi } from './NativeSelect.demo.stylesApi';

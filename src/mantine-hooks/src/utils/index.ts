@@ -1,4 +1,3 @@
-export { assignRef } from './assign-ref/assign-ref';
 export { clamp } from './clamp/clamp';
 export { lowerFirst } from './lower-first/lower-first';
 export { randomId } from './random-id/random-id';

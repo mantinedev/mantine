@@ -1,6 +1,10 @@
 import dayjs from 'dayjs';
 
-export function isMonthDisabled(month: Date, minDate: Date, maxDate: Date) {
+export function isMonthDisabled(
+  month: Date,
+  minDate: Date | null | undefined,
+  maxDate: Date | null | undefined
+) {
   if (!minDate && !maxDate) {
     return false;
   }

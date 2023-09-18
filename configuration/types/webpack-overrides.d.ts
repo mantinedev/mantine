@@ -10,3 +10,5 @@ declare module '*.woff';
 declare module '*.woff2';
 declare module '*.mdx';
 declare module '*.webp';
+declare module '*.css';
+declare module 'is-directory';

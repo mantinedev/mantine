@@ -1,18 +1,22 @@
-import dayjs from 'dayjs';
-import React, { forwardRef, useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
-  DefaultProps,
-  InputSharedProps,
-  InputWrapperBaseProps,
-  InputStylesNames,
-  InputWrapperStylesNames,
+  BoxProps,
+  StylesApiProps,
+  factory,
+  ElementProps,
+  Factory,
+  InputVariant,
+  __BaseInputProps,
+  __InputStylesNames,
+  PopoverProps,
   useInputProps,
   Input,
-  PopoverProps,
   Popover,
   CloseButton,
+  MantineSize,
 } from '@mantine/core';
-import { useUncontrolled, useDidUpdate } from '@mantine/hooks';
+import { useDidUpdate } from '@mantine/hooks';
+import dayjs from 'dayjs';
 import { Calendar, CalendarBaseProps, CalendarStylesNames, pickCalendarProps } from '../Calendar';
 import { DecadeLevelSettings } from '../DecadeLevel';
 import { YearLevelSettings } from '../YearLevel';
@@ -23,18 +27,19 @@ import { DateValue, CalendarLevel } from '../../types';
 import { useDatesContext } from '../DatesProvider';
 import { isDateValid } from './is-date-valid/is-date-valid';
 import { dateStringParser } from './date-string-parser/date-string-parser';
+import { useUncontrolledDates } from '../../hooks';
 
-export type DateInputStylesNames = CalendarStylesNames | InputStylesNames | InputWrapperStylesNames;
+export type DateInputStylesNames = __InputStylesNames | CalendarStylesNames;
 
 export interface DateInputProps
-  extends DefaultProps<DateInputStylesNames>,
-    InputSharedProps,
-    InputWrapperBaseProps,
+  extends BoxProps,
+    Omit<__BaseInputProps, 'size'>,
     CalendarBaseProps,
     DecadeLevelSettings,
     YearLevelSettings,
     MonthLevelSettings,
-    Omit<React.ComponentPropsWithoutRef<'input'>, 'size' | 'value' | 'defaultValue' | 'onChange'> {
+    StylesApiProps<DateInputFactory>,
+    ElementProps<'input', 'size' | 'value' | 'defaultValue' | 'onChange'> {
   /** Parses user input to convert it to Date object */
   dateParser?: (value: string) => Date | null;
 
@@ -81,14 +86,21 @@ export interface DateInputProps
   onLevelChange?(level: CalendarLevel): void;
 }
 
+export type DateInputFactory = Factory<{
+  props: DateInputProps;
+  ref: HTMLInputElement;
+  stylesNames: DateInputStylesNames;
+  variant: InputVariant;
+}>;
+
 const defaultProps: Partial<DateInputProps> = {
   valueFormat: 'MMMM D, YYYY',
   fixOnBlur: true,
   preserveTime: true,
-  size: 'sm',
 };
 
-export const DateInput = forwardRef<HTMLInputElement, DateInputProps>((props, ref) => {
+export const DateInput = factory<DateInputFactory>((_props, ref) => {
+  const props = useInputProps('DateInput', defaultProps, _props);
   const {
     inputProps,
     wrapperProps,
@@ -121,12 +133,15 @@ export const DateInput = forwardRef<HTMLInputElement, DateInputProps>((props, re
     defaultDate,
     onDateChange,
     ...rest
-  } = useInputProps('DateInput', defaultProps, props);
+  } = props;
+
   const { calendarProps, others } = pickCalendarProps(rest);
   const ctx = useDatesContext();
   const defaultDateParser = (val: string) => {
     const parsedDate = dayjs(val, valueFormat, ctx.getLocale(locale)).toDate();
-    return Number.isNaN(parsedDate.getTime()) ? dateStringParser(val) : parsedDate;
+    return Number.isNaN(parsedDate.getTime())
+      ? dateStringParser(val, ctx.getTimezone())
+      : parsedDate;
   };
 
   const _dateParser = dateParser || defaultDateParser;
@@ -135,30 +150,30 @@ export const DateInput = forwardRef<HTMLInputElement, DateInputProps>((props, re
   const formatValue = (val: Date) =>
     val ? dayjs(val).locale(ctx.getLocale(locale)).format(valueFormat) : '';
 
-  const [_value, setValue, controlled] = useUncontrolled({
+  const [_value, setValue, controlled] = useUncontrolledDates({
+    type: 'default',
     value,
     defaultValue,
-    finalValue: null,
     onChange,
   });
 
-  const [_date, setDate] = useUncontrolled({
+  const [_date, setDate] = useUncontrolledDates({
+    type: 'default',
     value: date,
     defaultValue: defaultValue || defaultDate,
-    finalValue: null,
-    onChange: onDateChange,
+    onChange: onDateChange as any,
   });
 
   useEffect(() => {
     if (controlled) {
-      setDate(value);
+      setDate(value!);
     }
   }, [controlled, value]);
 
-  const [inputValue, setInputValue] = useState(formatValue(_value));
+  const [inputValue, setInputValue] = useState(formatValue(_value!));
 
   useEffect(() => {
-    setInputValue(formatValue(_value));
+    setInputValue(formatValue(_value!));
   }, [ctx.getLocale(locale)]);
 
   const [dropdownOpened, setDropdownOpened] = useState(false);
@@ -171,7 +186,7 @@ export const DateInput = forwardRef<HTMLInputElement, DateInputProps>((props, re
       setValue(null);
     } else {
       const dateValue = _dateParser(val);
-      if (isDateValid({ date: dateValue, minDate, maxDate })) {
+      if (isDateValid({ date: dateValue!, minDate, maxDate })) {
         setValue(dateValue);
         setDate(dateValue);
       }
@@ -181,7 +196,7 @@ export const DateInput = forwardRef<HTMLInputElement, DateInputProps>((props, re
   const handleInputBlur = (event: React.FocusEvent<HTMLInputElement>) => {
     onBlur?.(event);
     setDropdownOpened(false);
-    fixOnBlur && setInputValue(formatValue(_value));
+    fixOnBlur && setInputValue(formatValue(_value!));
   };
 
   const handleInputFocus = (event: React.FocusEvent<HTMLInputElement>) => {
@@ -196,17 +211,17 @@ export const DateInput = forwardRef<HTMLInputElement, DateInputProps>((props, re
 
   const _getDayProps = (day: Date) => ({
     ...getDayProps?.(day),
-    selected: dayjs(_value).isSame(day, 'day'),
+    selected: dayjs(_value!).isSame(day, 'day'),
     onClick: () => {
-      const valueWithTime = preserveTime ? assignTime(_value, day) : day;
+      const valueWithTime = preserveTime ? assignTime(_value!, day) : day;
       const val =
         clearable && _allowDeselect
-          ? dayjs(_value).isSame(day, 'day')
+          ? dayjs(_value!).isSame(day, 'day')
             ? null
             : valueWithTime
           : valueWithTime;
       setValue(val);
-      !controlled && setInputValue(formatValue(val));
+      !controlled && setInputValue(formatValue(val!));
       setDropdownOpened(false);
     },
   });
@@ -229,7 +244,7 @@ export const DateInput = forwardRef<HTMLInputElement, DateInputProps>((props, re
     ) : null);
 
   useDidUpdate(() => {
-    value !== undefined && !dropdownOpened && setInputValue(formatValue(value));
+    value !== undefined && !dropdownOpened && setInputValue(formatValue(value!));
   }, [value]);
 
   return (
@@ -241,6 +256,7 @@ export const DateInput = forwardRef<HTMLInputElement, DateInputProps>((props, re
           position="bottom-start"
           disabled={readOnly}
           withRoles={false}
+          unstyled={unstyled}
           {...popoverProps}
         >
           <Popover.Target>
@@ -264,6 +280,7 @@ export const DateInput = forwardRef<HTMLInputElement, DateInputProps>((props, re
           <Popover.Dropdown onMouseDown={(event) => event.preventDefault()} data-dates-dropdown>
             <Calendar
               __staticSelector="DateInput"
+              __timezoneApplied
               {...calendarProps}
               classNames={classNames}
               styles={styles}
@@ -273,8 +290,8 @@ export const DateInput = forwardRef<HTMLInputElement, DateInputProps>((props, re
               maxDate={maxDate}
               locale={locale}
               getDayProps={_getDayProps}
-              size={inputProps.size}
-              date={_date}
+              size={inputProps.size as MantineSize}
+              date={_date!}
               onDateChange={setDate}
             />
           </Popover.Dropdown>
@@ -285,4 +302,5 @@ export const DateInput = forwardRef<HTMLInputElement, DateInputProps>((props, re
   );
 });
 
+DateInput.classes = { ...Input.classes, ...Calendar.classes };
 DateInput.displayName = '@mantine/dates/DateInput';

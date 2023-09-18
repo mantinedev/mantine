@@ -1,16 +1,42 @@
-export { useSpotlight } from './Spotlight.context';
-export { SpotlightProvider } from './SpotlightProvider';
 export {
+  spotlight,
+  createSpotlight,
+  createSpotlightStore,
+  useSpotlight,
   openSpotlight,
   closeSpotlight,
   toggleSpotlight,
-  triggerSpotlightAction,
-  registerSpotlightActions,
-  removeSpotlightActions,
-  spotlight,
-} from './events';
+} from './spotlight.store';
+export type { SpotlightState, SpotlightStore } from './spotlight.store';
 
-export type { SpotlightAction } from './types';
-export type { SpotlightProviderProps } from './SpotlightProvider';
-export type { DefaultActionProps as SpotlightActionProps } from './DefaultAction/DefaultAction';
-export type { SpotlightStylesNames } from './Spotlight/Spotlight';
+export { isActionsGroup } from './is-actions-group';
+
+export { Spotlight } from './Spotlight';
+export { SpotlightAction } from './SpotlightAction';
+export { SpotlightActionsGroup } from './SpotlightActionsGroup';
+export { SpotlightActionsList } from './SpotlightActionsList';
+export { SpotlightEmpty } from './SpotlightEmpty';
+export { SpotlightFooter } from './SpotlightFooter';
+export { SpotlightSearch } from './SpotlightSearch';
+
+export type {
+  SpotlightFactory,
+  SpotlightFilterFunction,
+  SpotlightActionData,
+  SpotlightActionGroupData,
+  SpotlightProps,
+  SpotlightStylesNames,
+} from './Spotlight';
+export type { SpotlightActionProps, SpotlightActionStylesNames } from './SpotlightAction';
+export type {
+  SpotlightActionsGroupProps,
+  SpotlightActionsGroupStylesNames,
+} from './SpotlightActionsGroup';
+export type {
+  SpotlightActionsListProps,
+  SpotlightActionsListStylesNames,
+} from './SpotlightActionsList';
+export type { SpotlightEmptyProps, SpotlightEmptyStylesNames } from './SpotlightEmpty';
+export type { SpotlightFooterProps, SpotlightFooterStylesNames } from './SpotlightFooter';
+export type { SpotlightSearchProps, SpotlightSearchStylesNames } from './SpotlightSearch';
+export type { SpotlightRootProps, SpotlightRootStylesNames } from './SpotlightRoot';

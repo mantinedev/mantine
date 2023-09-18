@@ -54,13 +54,22 @@ const EXCLUDE_PROPS = [
   'top',
   'tt',
   'w',
+  'vars',
+  'variant',
+  'mod',
+  'hiddenFrom',
+  'visibleFrom',
 ];
 
 export const docgenParser = withCustomConfig(path.join(__dirname, '../../tsconfig.json'), {
   savePropValueAsString: true,
   shouldExtractLiteralValuesFromEnum: true,
   propFilter: (prop: PropItem) => {
-    if (EXCLUDE_PROPS.includes(prop.name) || prop.name.startsWith('__')) {
+    if (
+      EXCLUDE_PROPS.includes(prop.name) ||
+      prop.name.startsWith('__') ||
+      prop.name.startsWith('data-')
+    ) {
       return false;
     }
 

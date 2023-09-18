@@ -24,24 +24,24 @@ function Demo() {
 
   return (
     <>
-      <Text align="center" size="sm" style={{ marginBottom: theme.spacing.xs }}>
+      <Text ta="center" size="sm" style={{ marginBottom: theme.spacing.xs }}>
         Resize textarea by dragging its right bottom corner
       </Text>
 
-      <Group position="center">
+      <Group justify="center">
         <textarea
           ref={ref}
+          aria-label="Resize me"
           style={{
             width: rem(400),
             height: rem(120),
             border: 'none',
-            backgroundColor:
-              theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[2],
+            backgroundColor: 'var(--mantine-color-body)',
             position: 'relative',
           }}
         />
       </Group>
-      <Text align="center" mt="sm">
+      <Text ta="center" mt="sm">
         Width: {width}, height: {height}
       </Text>
     </>
@@ -49,7 +49,8 @@ function Demo() {
 }
 
 export const useElementSizeDemo: MantineDemo = {
-  type: 'demo',
+  type: 'code',
   code,
   component: Demo,
+  dimmed: true,
 };

@@ -1,12 +1,15 @@
 import { useUncontrolled } from '@mantine/hooks';
 import { useRef } from 'react';
 import { DatePickerType, DatePickerValue } from '../../types';
+import { shiftTimezone } from '../../utils';
+import { useDatesContext } from '../../components/DatesProvider';
 
 interface UseUncontrolledDates<Type extends DatePickerType = 'default'> {
   type: Type;
-  value: DatePickerValue<Type>;
-  defaultValue: DatePickerValue<Type>;
-  onChange(value: DatePickerValue<Type>): void;
+  value: DatePickerValue<Type> | undefined;
+  defaultValue: DatePickerValue<Type> | undefined;
+  onChange: ((value: DatePickerValue<Type>) => void) | undefined;
+  applyTimezone?: boolean;
 }
 
 const getEmptyValue = <Type extends DatePickerType = 'default'>(type: Type) =>
@@ -17,13 +20,17 @@ export function useUncontrolledDates<Type extends DatePickerType = 'default'>({
   value,
   defaultValue,
   onChange,
+  applyTimezone = true,
 }: UseUncontrolledDates<Type>) {
   const storedType = useRef<Type>(type);
-  const [_value, _setValue] = useUncontrolled<any>({
-    value,
-    defaultValue,
-    onChange,
+  const ctx = useDatesContext();
+  const [_value, _setValue, controlled] = useUncontrolled<any>({
+    value: shiftTimezone('add', value, ctx.getTimezone(), !applyTimezone),
+    defaultValue: shiftTimezone('add', defaultValue, ctx.getTimezone(), !applyTimezone),
     finalValue: getEmptyValue(type),
+    onChange: (newDate) => {
+      onChange?.(shiftTimezone('remove', newDate, ctx.getTimezone(), !applyTimezone));
+    },
   });
 
   let _finalValue = _value;
@@ -67,5 +74,5 @@ export function useUncontrolledDates<Type extends DatePickerType = 'default'>({
     }
   }
 
-  return [_finalValue, _setValue];
+  return [_finalValue, _setValue, controlled];
 }

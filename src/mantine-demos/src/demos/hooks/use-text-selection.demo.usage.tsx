@@ -4,6 +4,7 @@ import { useTextSelection } from '@mantine/hooks';
 
 const code = `
 import { useTextSelection } from '@mantine/hooks';
+
 function Demo() {
   const selection = useTextSelection();
   return (
@@ -28,7 +29,7 @@ function Demo() {
 }
 
 export const useTextSelectionUsage: MantineDemo = {
-  type: 'demo',
+  type: 'code',
   component: Demo,
   code,
 };

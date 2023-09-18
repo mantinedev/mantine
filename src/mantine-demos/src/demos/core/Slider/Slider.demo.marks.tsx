@@ -1,6 +1,6 @@
 import React from 'react';
 import { MantineDemo } from '@mantine/ds';
-import { Slider, RangeSlider, Box } from '@mantine/core';
+import { Slider, RangeSlider } from '@mantine/core';
 
 const code = `
 import { Slider, RangeSlider } from '@mantine/core';
@@ -30,16 +30,18 @@ function Demo() {
   ];
 
   return (
-    <Box maw={400} mx="auto">
+    <>
       <Slider defaultValue={40} marks={[{ value: 10 }, { value: 40 }, { value: 95 }]} mb={32} />
       <Slider defaultValue={40} marks={marks} mb={32} />
       <RangeSlider defaultValue={[20, 80]} marks={marks} mb={32} />
-    </Box>
+    </>
   );
 }
 
 export const marks: MantineDemo = {
-  type: 'demo',
+  type: 'code',
   component: Demo,
   code,
+  centered: true,
+  maxWidth: 400,
 };

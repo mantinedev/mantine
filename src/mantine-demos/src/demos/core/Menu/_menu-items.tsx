@@ -10,6 +10,8 @@ import {
 import { Menu, Text, Button, rem } from '@mantine/core';
 
 export function DemoMenuItems({ widthRightSection = true, withTarget = true }) {
+  const iconProps = { style: { width: rem(14), height: rem(14) } };
+
   return (
     <>
       {withTarget && (
@@ -20,14 +22,14 @@ export function DemoMenuItems({ widthRightSection = true, withTarget = true }) {
 
       <Menu.Dropdown>
         <Menu.Label>Application</Menu.Label>
-        <Menu.Item icon={<IconSettings size={rem(14)} />}>Settings</Menu.Item>
-        <Menu.Item icon={<IconMessageCircle size={rem(14)} />}>Messages</Menu.Item>
-        <Menu.Item icon={<IconPhoto size={rem(14)} />}>Gallery</Menu.Item>
+        <Menu.Item leftSection={<IconSettings {...iconProps} />}>Settings</Menu.Item>
+        <Menu.Item leftSection={<IconMessageCircle {...iconProps} />}>Messages</Menu.Item>
+        <Menu.Item leftSection={<IconPhoto {...iconProps} />}>Gallery</Menu.Item>
         {widthRightSection && (
           <Menu.Item
-            icon={<IconSearch size={rem(14)} />}
+            leftSection={<IconSearch {...iconProps} />}
             rightSection={
-              <Text size="xs" color="dimmed">
+              <Text size="xs" c="dimmed">
                 ⌘K
               </Text>
             }
@@ -37,8 +39,8 @@ export function DemoMenuItems({ widthRightSection = true, withTarget = true }) {
         )}
         <Menu.Divider />
         <Menu.Label>Danger zone</Menu.Label>
-        <Menu.Item icon={<IconArrowsLeftRight size={rem(14)} />}>Transfer my data</Menu.Item>
-        <Menu.Item color="red" icon={<IconTrash size={rem(14)} />}>
+        <Menu.Item leftSection={<IconArrowsLeftRight {...iconProps} />}>Transfer my data</Menu.Item>
+        <Menu.Item color="red" leftSection={<IconTrash {...iconProps} />}>
           Delete my account
         </Menu.Item>
       </Menu.Dropdown>

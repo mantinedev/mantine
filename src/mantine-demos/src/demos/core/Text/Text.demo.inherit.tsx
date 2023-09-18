@@ -23,7 +23,7 @@ function Demo() {
 }
 
 export const inherit: MantineDemo = {
-  type: 'demo',
+  type: 'code',
   component: Demo,
   code,
 };

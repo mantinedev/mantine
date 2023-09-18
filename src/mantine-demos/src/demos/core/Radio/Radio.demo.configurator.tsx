@@ -2,13 +2,13 @@ import React from 'react';
 import { MantineDemo } from '@mantine/ds';
 import { RadioProps, Radio } from '@mantine/core';
 
-const codeTemplate = (props: string) => `
+const code = `
 import { Radio } from '@mantine/core';
 
 function Demo() {
   return (
     <Radio
-     ${props}
+      {{props}}
     />
   );
 }
@@ -25,26 +25,23 @@ function Wrapper(props: RadioProps) {
 export const configurator: MantineDemo = {
   type: 'configurator',
   component: Wrapper,
-  codeTemplate,
-  configuratorProps: {
-    multiline: 3,
-  },
-  configurator: [
+  code,
+  centered: true,
+  controls: [
     {
-      name: 'labelPosition',
+      prop: 'labelPosition',
       type: 'segmented',
       data: [
         { value: 'right', label: 'Right' },
         { value: 'left', label: 'Left' },
       ],
       initialValue: 'right',
-      defaultValue: 'right',
+      libraryValue: 'right',
     },
-    { name: 'label', type: 'string', initialValue: 'I cannot be unchecked' },
-    { name: 'description', type: 'string', initialValue: '' },
-    { name: 'error', type: 'string', initialValue: '' },
-    { name: 'size', type: 'size', initialValue: 'sm', defaultValue: 'sm' },
-    { name: 'color', type: 'color', initialValue: 'blue', defaultValue: 'blue' },
-    { name: 'checked', type: 'boolean', initialValue: false, defaultValue: false },
+    { prop: 'label', type: 'string', initialValue: 'I cannot be unchecked', libraryValue: '' },
+    { prop: 'description', type: 'string', initialValue: '', libraryValue: '' },
+    { prop: 'error', type: 'string', initialValue: '', libraryValue: '' },
+    { prop: 'size', type: 'size', initialValue: 'sm', libraryValue: 'sm' },
+    { prop: 'color', type: 'color', initialValue: 'blue', libraryValue: 'blue' },
   ],
 };

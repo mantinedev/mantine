@@ -1,23 +1,32 @@
-/* eslint-disable react/no-unused-prop-types */
 import dayjs from 'dayjs';
-import React, { forwardRef } from 'react';
-import { Box, DefaultProps, Selectors, useComponentDefaultProps } from '@mantine/core';
+import React from 'react';
+import {
+  Box,
+  BoxProps,
+  StylesApiProps,
+  factory,
+  ElementProps,
+  useProps,
+  Factory,
+  useResolvedStylesApi,
+} from '@mantine/core';
 import { useUncontrolled } from '@mantine/hooks';
 import { MonthLevelGroup, MonthLevelGroupStylesNames } from '../MonthLevelGroup';
 import { YearLevelGroup, YearLevelGroupStylesNames } from '../YearLevelGroup';
 import { DecadeLevelGroup, DecadeLevelGroupStylesNames } from '../DecadeLevelGroup';
 import { CalendarLevel } from '../../types';
 import { clampLevel } from './clamp-level/clamp-level';
-import useStyles from './Calendar.styles';
 import { MonthLevelSettings } from '../MonthLevel';
 import { YearLevelSettings } from '../YearLevel';
 import { DecadeLevelSettings } from '../DecadeLevel';
+import { useDatesContext } from '../DatesProvider';
+import { shiftTimezone } from '../../utils';
+import { useUncontrolledDates } from '../../hooks';
 
 export type CalendarStylesNames =
-  | Selectors<typeof useStyles>
-  | DecadeLevelGroupStylesNames
+  | MonthLevelGroupStylesNames
   | YearLevelGroupStylesNames
-  | MonthLevelGroupStylesNames;
+  | DecadeLevelGroupStylesNames;
 
 export interface CalendarAriaLabels {
   monthLevelControl?: string;
@@ -34,7 +43,6 @@ export interface CalendarAriaLabels {
 }
 
 type OmittedSettings =
-  | 'hasNextLevel'
   | 'onNext'
   | 'onPrevious'
   | 'onLevelClick'
@@ -69,14 +77,11 @@ export interface CalendarSettings
   onMonthMouseEnter?(event: React.MouseEvent<HTMLButtonElement>, date: Date): void;
 }
 
-export interface CalendarSystemProps
-  extends DefaultProps<CalendarStylesNames>,
-    Omit<React.ComponentPropsWithRef<'div'>, 'value' | 'defaultValue' | 'onChange'> {
-  variant?: string;
-}
-
 export interface CalendarBaseProps {
   __staticSelector?: string;
+
+  /** Internal Variable to check if timezones were applied by parent component */
+  __timezoneApplied?: boolean;
 
   /** Prevents focus shift when buttons are clicked */
   __preventFocus?: boolean;
@@ -124,7 +129,12 @@ export interface CalendarBaseProps {
   onPreviousMonth?(date: Date): void;
 }
 
-export interface CalendarProps extends CalendarSettings, CalendarBaseProps, CalendarSystemProps {
+export interface CalendarProps
+  extends BoxProps,
+    CalendarSettings,
+    CalendarBaseProps,
+    StylesApiProps<CalendarFactory>,
+    ElementProps<'div'> {
   /** Max level that user can go up to (decade, year, month), defaults to decade */
   maxLevel?: CalendarLevel;
 
@@ -135,6 +145,12 @@ export interface CalendarProps extends CalendarSettings, CalendarBaseProps, Cale
   static?: boolean;
 }
 
+export type CalendarFactory = Factory<{
+  props: CalendarProps;
+  ref: HTMLDivElement;
+  stylesNames: CalendarStylesNames;
+}>;
+
 const defaultProps: Partial<CalendarProps> = {
   maxLevel: 'decade',
   minLevel: 'month',
@@ -142,9 +158,10 @@ const defaultProps: Partial<CalendarProps> = {
   __updateDateOnMonthSelect: true,
 };
 
-export const Calendar = forwardRef<HTMLDivElement, CalendarProps>((props, ref) => {
+export const Calendar = factory<CalendarFactory>((_props, ref) => {
+  const props = useProps('Calendar', defaultProps, _props);
   const {
-    // CalendarLevel props
+    vars, // CalendarLevel props
     maxLevel,
     minLevel,
     defaultLevel,
@@ -191,15 +208,13 @@ export const Calendar = forwardRef<HTMLDivElement, CalendarProps>((props, ref) =
     decadeLabelFormat,
 
     // Other props
+    classNames,
+    styles,
+    unstyled,
     minDate,
     maxDate,
     locale,
-    className,
-    classNames,
-    styles,
     __staticSelector,
-    unstyled,
-    variant,
     size,
     __preventFocus,
     __stopPropagation,
@@ -210,16 +225,14 @@ export const Calendar = forwardRef<HTMLDivElement, CalendarProps>((props, ref) =
     onNextMonth,
     onPreviousMonth,
     static: isStatic,
+    __timezoneApplied,
     ...others
-  } = useComponentDefaultProps('Calendar', defaultProps, props);
+  } = props;
 
-  const { classes, cx } = useStyles(null, {
-    name: ['Calendar', __staticSelector],
+  const { resolvedClassNames, resolvedStyles } = useResolvedStylesApi<CalendarFactory>({
     classNames,
     styles,
-    unstyled,
-    variant,
-    size,
+    props,
   });
 
   const [_level, setLevel] = useUncontrolled({
@@ -229,24 +242,26 @@ export const Calendar = forwardRef<HTMLDivElement, CalendarProps>((props, ref) =
     onChange: onLevelChange,
   });
 
-  const [_date, setDate] = useUncontrolled({
+  const [_date, setDate] = useUncontrolledDates({
+    type: 'default',
     value: date,
     defaultValue: defaultDate,
-    finalValue: null,
-    onChange: onDateChange,
+    onChange: onDateChange as any,
+    applyTimezone: !__timezoneApplied,
   });
 
   const stylesApiProps = {
     __staticSelector: __staticSelector || 'Calendar',
-    styles,
-    classNames,
+    styles: resolvedStyles,
+    classNames: resolvedClassNames,
     unstyled,
-    variant,
     size,
   };
 
+  const ctx = useDatesContext();
+
   const _columnsToScroll = columnsToScroll || numberOfColumns || 1;
-  const currentDate = _date || new Date();
+  const currentDate = _date || shiftTimezone('add', new Date(), ctx.getTimezone());
 
   const handleNextMonth = () => {
     const nextDate = dayjs(currentDate).add(_columnsToScroll, 'month').toDate();
@@ -289,7 +304,7 @@ export const Calendar = forwardRef<HTMLDivElement, CalendarProps>((props, ref) =
   };
 
   return (
-    <Box className={cx(classes.calendar, className)} ref={ref} {...others}>
+    <Box ref={ref} size={size} data-calendar {...others}>
       {_level === 'month' && (
         <MonthLevelGroup
           month={currentDate}
@@ -390,4 +405,9 @@ export const Calendar = forwardRef<HTMLDivElement, CalendarProps>((props, ref) =
   );
 });
 
+Calendar.classes = {
+  ...DecadeLevelGroup.classes,
+  ...YearLevelGroup.classes,
+  ...MonthLevelGroup.classes,
+};
 Calendar.displayName = '@mantine/dates/Calendar';

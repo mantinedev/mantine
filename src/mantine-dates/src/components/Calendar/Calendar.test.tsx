@@ -1,18 +1,9 @@
-import React from 'react';
-import { render, screen } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
-import {
-  itSupportsSystemProps,
-  itSupportsProviderVariant,
-  itSupportsProviderSize,
-} from '@mantine/tests';
 import dayjs from 'dayjs';
-import { Calendar, CalendarProps } from './Calendar';
-import {
-  itSupportsMonthProps,
-  itHandlesMonthKeyboardEvents,
-  itHandlesControlsKeyboardEvents,
-} from '../../tests';
+import React from 'react';
+import { render, tests, screen, userEvent } from '@mantine/tests';
+import { datesTests } from '@mantine/dates-tests';
+import { Calendar, CalendarProps, CalendarStylesNames } from './Calendar';
+import { DatesProvider } from '../DatesProvider';
 
 const defaultProps: CalendarProps = {
   defaultDate: new Date(2022, 3, 11),
@@ -37,12 +28,6 @@ function expectHeaderLevel(level: 'month' | 'year' | 'decade', label: string) {
   expect(screen.getByLabelText(`${level}-level`).textContent).toBe(label);
 }
 
-function expectHeaderLevels(level: 'month' | 'year' | 'decade', labels: string[]) {
-  expect(screen.getAllByLabelText(`${level}-level`).map((node) => node.textContent)).toStrictEqual(
-    labels
-  );
-}
-
 async function clickNext(level: 'month' | 'year' | 'decade') {
   await userEvent.click(screen.getByLabelText(`next-${level}`));
 }
@@ -52,26 +37,58 @@ async function clickPrevious(level: 'month' | 'year' | 'decade') {
 }
 
 describe('@mantine/dates/Calendar', () => {
-  itSupportsSystemProps({
+  tests.itSupportsSystemProps<CalendarProps, CalendarStylesNames>({
     component: Calendar,
     props: defaultProps,
+    styleProps: true,
+    extend: true,
+    variant: true,
+    size: true,
+    classes: true,
     refType: HTMLDivElement,
-    providerName: 'Calendar',
     displayName: '@mantine/dates/Calendar',
+    stylesApiSelectors: [
+      'levelsGroup',
+      'calendarHeader',
+      'calendarHeaderControl',
+      'calendarHeaderControlIcon',
+      'calendarHeaderLevel',
+      'day',
+      'month',
+      'monthCell',
+      'monthRow',
+      'monthTbody',
+      'monthThead',
+      'weekday',
+      'weekdaysRow',
+    ],
+    providerStylesApi: false,
   });
 
-  itSupportsProviderVariant(Calendar, defaultProps, 'Calendar', 'calendar');
-  itSupportsProviderSize(Calendar, defaultProps, 'Calendar', 'calendar');
-  itSupportsMonthProps(Calendar, defaultProps);
-  itHandlesMonthKeyboardEvents(Calendar, defaultProps);
-  itHandlesControlsKeyboardEvents(Calendar, 'year', '.mantine-MonthsList-monthsList', {
-    ...defaultProps,
-    level: 'year',
+  datesTests.itSupportsMonthProps({ component: Calendar, props: defaultProps });
+  datesTests.itHandlesMonthKeyboardEvents({
+    component: Calendar,
+    props: defaultProps,
+    name: 'Calendar',
   });
-  itHandlesControlsKeyboardEvents(Calendar, 'decade', '.mantine-YearsList-yearsList', {
-    ...defaultProps,
-    level: 'decade',
-  });
+
+  datesTests.itHandlesControlsKeyboardEvents(
+    {
+      component: Calendar,
+      props: { ...defaultProps, level: 'year' },
+      listSelector: '.mantine-Calendar-monthsList',
+    },
+    'handle months list keyboard events'
+  );
+
+  datesTests.itHandlesControlsKeyboardEvents(
+    {
+      component: Calendar,
+      props: { ...defaultProps, level: 'decade' },
+      listSelector: '.mantine-Calendar-yearsList',
+    },
+    'handle years list keyboard events'
+  );
 
   it('sets correct aria-labels based on ariaLabels prop', () => {
     const testLabels = {
@@ -124,7 +141,7 @@ describe('@mantine/dates/Calendar', () => {
     await userEvent.click(screen.getByLabelText('month-level'));
     expectLevelsCount([0, 1]);
 
-    await userEvent.click(container.querySelector('table button'));
+    await userEvent.click(container.querySelector('table button')!);
     expectLevelsCount([1, 0]);
   });
 
@@ -150,10 +167,10 @@ describe('@mantine/dates/Calendar', () => {
     await userEvent.click(screen.getByLabelText('year-level'));
     expect(spy).toHaveBeenCalledWith('decade');
 
-    await userEvent.click(container.querySelector('table button'));
+    await userEvent.click(container.querySelector('table button')!);
     expect(spy).toHaveBeenCalledWith('year');
 
-    await userEvent.click(container.querySelector('table button'));
+    await userEvent.click(container.querySelector('table button')!);
     expect(spy).toHaveBeenCalledWith('month');
   });
 
@@ -168,9 +185,54 @@ describe('@mantine/dates/Calendar', () => {
     expect(screen.getByText('2020 – 2029')).toBeInTheDocument();
   });
 
+  it('renders correct header labels with defaultDate (uncontrolled) with timezone (UTC)', async () => {
+    render(
+      <DatesProvider settings={{ timezone: 'UTC' }}>
+        <Calendar {...defaultProps} defaultDate={new Date(2021, 0, 31, 23)} />
+      </DatesProvider>
+    );
+    expectHeaderLevel('month', 'February 2021');
+
+    await userEvent.click(screen.getByLabelText('month-level'));
+    expectHeaderLevel('year', '2021');
+
+    await userEvent.click(screen.getByLabelText('year-level'));
+    expect(screen.getByText('2020 – 2029')).toBeInTheDocument();
+  });
+
+  it('renders correct header labels with defaultDate (uncontrolled) with timezone (America/Los_Angeles)', async () => {
+    render(
+      <DatesProvider settings={{ timezone: 'America/Los_Angeles' }}>
+        <Calendar {...defaultProps} defaultDate={new Date(2021, 0, 31, 23)} />
+      </DatesProvider>
+    );
+    expectHeaderLevel('month', 'January 2021');
+
+    await userEvent.click(screen.getByLabelText('month-level'));
+    expectHeaderLevel('year', '2021');
+
+    await userEvent.click(screen.getByLabelText('year-level'));
+    expect(screen.getByText('2020 – 2029')).toBeInTheDocument();
+  });
+
   it('renders correct header labels with date (controlled)', async () => {
     render(<Calendar {...defaultProps} date={new Date(2021, 3, 11)} />);
     expectHeaderLevel('month', 'April 2021');
+
+    await userEvent.click(screen.getByLabelText('month-level'));
+    expectHeaderLevel('year', '2021');
+
+    await userEvent.click(screen.getByLabelText('year-level'));
+    expect(screen.getByText('2020 – 2029')).toBeInTheDocument();
+  });
+
+  it('renders correct header labels with date (controlled) with timezone', async () => {
+    render(
+      <DatesProvider settings={{ timezone: 'UTC' }}>
+        <Calendar {...defaultProps} date={new Date(2021, 0, 31, 23)} />
+      </DatesProvider>
+    );
+    expectHeaderLevel('month', 'February 2021');
 
     await userEvent.click(screen.getByLabelText('month-level'));
     expectHeaderLevel('year', '2021');
@@ -202,6 +264,30 @@ describe('@mantine/dates/Calendar', () => {
     expect(screen.getByText('2020 – 2029')).toBeInTheDocument();
   });
 
+  it('changes displayed date when next/previous controls are clicked with defaultDate prop (uncontrolled) with timezone', async () => {
+    const { rerender } = render(
+      <DatesProvider settings={{ timezone: 'UTC' }}>
+        <Calendar {...defaultProps} defaultDate={new Date(2021, 0, 31, 23)} level="month" />
+      </DatesProvider>
+    );
+    expectHeaderLevel('month', 'February 2021');
+    await clickNext('month');
+    expectHeaderLevel('month', 'March 2021');
+    await clickPrevious('month');
+    expectHeaderLevel('month', 'February 2021');
+
+    rerender(
+      <DatesProvider settings={{ timezone: 'UTC' }}>
+        <Calendar {...defaultProps} defaultDate={new Date(2020, 11, 31, 23)} level="year" />
+      </DatesProvider>
+    );
+    expectHeaderLevel('year', '2021');
+    await clickNext('year');
+    expectHeaderLevel('year', '2022');
+    await clickPrevious('year');
+    expectHeaderLevel('year', '2021');
+  });
+
   it('does not change date when next/previous controls are clicked with date prop (controlled)', async () => {
     const { rerender } = render(
       <Calendar {...defaultProps} date={new Date(2022, 3, 11)} level="month" />
@@ -219,6 +305,26 @@ describe('@mantine/dates/Calendar', () => {
     expect(screen.getByText('2020 – 2029')).toBeInTheDocument();
     await clickNext('decade');
     expect(screen.getByText('2020 – 2029')).toBeInTheDocument();
+  });
+
+  it('changes displayed date when next/previous controls are clicked with date prop (controlled) with timezone', async () => {
+    const { rerender } = render(
+      <DatesProvider settings={{ timezone: 'UTC' }}>
+        <Calendar {...defaultProps} date={new Date(2021, 0, 31, 23)} level="month" />
+      </DatesProvider>
+    );
+    expectHeaderLevel('month', 'February 2021');
+    await clickNext('month');
+    expectHeaderLevel('month', 'February 2021');
+
+    rerender(
+      <DatesProvider settings={{ timezone: 'UTC' }}>
+        <Calendar {...defaultProps} date={new Date(2020, 11, 31, 23)} level="year" />
+      </DatesProvider>
+    );
+    expectHeaderLevel('year', '2021');
+    await clickNext('year');
+    expectHeaderLevel('year', '2021');
   });
 
   it('calls onDateChange when date changes', async () => {
@@ -254,6 +360,50 @@ describe('@mantine/dates/Calendar', () => {
     expect(spy).toHaveBeenLastCalledWith(new Date(2012, 3, 11));
   });
 
+  it('calls onDateChange when date changes with timezone', async () => {
+    const spy = jest.fn();
+    const { rerender } = render(
+      <DatesProvider settings={{ timezone: 'UTC' }}>
+        <Calendar {...defaultProps} level="month" date={new Date(2022, 7, 11)} onDateChange={spy} />
+      </DatesProvider>
+    );
+
+    await clickNext('month');
+    expect(spy).toHaveBeenLastCalledWith(new Date(2022, 8, 11));
+
+    await clickPrevious('month');
+    expect(spy).toHaveBeenLastCalledWith(new Date(2022, 6, 11));
+
+    rerender(
+      <DatesProvider settings={{ timezone: 'UTC' }}>
+        <Calendar {...defaultProps} level="year" date={new Date(2022, 7, 11)} onDateChange={spy} />
+      </DatesProvider>
+    );
+
+    await clickNext('year');
+    expect(spy).toHaveBeenLastCalledWith(new Date(2023, 7, 11));
+
+    await clickPrevious('year');
+    expect(spy).toHaveBeenLastCalledWith(new Date(2021, 7, 11));
+
+    rerender(
+      <DatesProvider settings={{ timezone: 'UTC' }}>
+        <Calendar
+          {...defaultProps}
+          level="decade"
+          date={new Date(2022, 7, 11)}
+          onDateChange={spy}
+        />
+      </DatesProvider>
+    );
+
+    await clickNext('decade');
+    expect(spy).toHaveBeenLastCalledWith(new Date(2032, 7, 11));
+
+    await clickPrevious('decade');
+    expect(spy).toHaveBeenLastCalledWith(new Date(2012, 7, 11));
+  });
+
   it('supports maxLevel', async () => {
     render(<Calendar {...defaultProps} defaultLevel="month" maxLevel="year" />);
     expectLevelsCount([1, 0]);
@@ -269,39 +419,25 @@ describe('@mantine/dates/Calendar', () => {
     );
     expectLevelsCount([0, 0]);
 
-    await userEvent.click(container.querySelector('table button'));
+    await userEvent.click(container.querySelector('table button')!);
     expectLevelsCount([0, 1]);
 
-    await userEvent.click(container.querySelector('table button'));
+    await userEvent.click(container.querySelector('table button')!);
     expectLevelsCount([0, 1]);
   });
 
   it('calls onYearSelect when year control is clicked', async () => {
     const spy = jest.fn();
     const { container } = render(<Calendar {...defaultProps} level="decade" onYearSelect={spy} />);
-    await userEvent.click(container.querySelector('table button'));
+    await userEvent.click(container.querySelector('table button')!);
     expect(spy).toHaveBeenCalledWith(new Date(2020, 0, 1));
   });
 
   it('calls onMonthSelect when month control is clicked', async () => {
     const spy = jest.fn();
     const { container } = render(<Calendar {...defaultProps} level="year" onMonthSelect={spy} />);
-    await userEvent.click(container.querySelector('table button'));
+    await userEvent.click(container.querySelector('table button')!);
     expect(spy).toHaveBeenCalledWith(new Date(2022, 0, 1));
-  });
-
-  it('supports columnsToScroll', async () => {
-    const { rerender } = render(
-      <Calendar {...defaultProps} numberOfColumns={2} columnsToScroll={1} />
-    );
-    expectHeaderLevels('month', ['April 2022', 'May 2022']);
-    await clickNext('month');
-    expectHeaderLevels('month', ['May 2022', 'June 2022']);
-
-    rerender(<Calendar {...defaultProps} numberOfColumns={2} columnsToScroll={2} />);
-    expectHeaderLevels('month', ['May 2022', 'June 2022']);
-    await clickNext('month');
-    expectHeaderLevels('month', ['July 2022', 'August 2022']);
   });
 
   it('supports changing month label format', () => {
@@ -360,22 +496,24 @@ describe('@mantine/dates/Calendar', () => {
     render(
       <Calendar
         {...defaultProps}
-        getDayProps={(date) => ({ selected: dayjs(date).isSame(defaultProps.defaultDate, 'date') })}
+        getDayProps={(date) => ({
+          selected: dayjs(date).isSame(defaultProps.defaultDate!, 'date'),
+        })}
       />
     );
 
     await userEvent.tab();
     expect(
-      screen.getByRole('button', { name: defaultProps.ariaLabels.previousMonth })
+      screen.getByRole('button', { name: defaultProps.ariaLabels!.previousMonth })
     ).toHaveFocus();
 
     await userEvent.tab();
     expect(
-      screen.getByRole('button', { name: defaultProps.ariaLabels.monthLevelControl })
+      screen.getByRole('button', { name: defaultProps.ariaLabels!.monthLevelControl })
     ).toHaveFocus();
 
     await userEvent.tab();
-    expect(screen.getByRole('button', { name: defaultProps.ariaLabels.nextMonth })).toHaveFocus();
+    expect(screen.getByRole('button', { name: defaultProps.ariaLabels!.nextMonth })).toHaveFocus();
 
     await userEvent.tab();
     expect(
@@ -391,16 +529,16 @@ describe('@mantine/dates/Calendar', () => {
 
     await userEvent.tab();
     expect(
-      screen.getByRole('button', { name: defaultProps.ariaLabels.previousMonth })
+      screen.getByRole('button', { name: defaultProps.ariaLabels!.previousMonth })
     ).toHaveFocus();
 
     await userEvent.tab();
     expect(
-      screen.getByRole('button', { name: defaultProps.ariaLabels.monthLevelControl })
+      screen.getByRole('button', { name: defaultProps.ariaLabels!.monthLevelControl })
     ).toHaveFocus();
 
     await userEvent.tab();
-    expect(screen.getByRole('button', { name: defaultProps.ariaLabels.nextMonth })).toHaveFocus();
+    expect(screen.getByRole('button', { name: defaultProps.ariaLabels!.nextMonth })).toHaveFocus();
 
     await userEvent.tab();
     expect(screen.getByRole('button', { name: dayjs().format('D MMMM YYYY') })).toHaveFocus();
@@ -420,11 +558,11 @@ describe('@mantine/dates/Calendar', () => {
 
     await userEvent.tab();
     expect(
-      screen.getByRole('button', { name: defaultProps.ariaLabels.monthLevelControl })
+      screen.getByRole('button', { name: defaultProps.ariaLabels!.monthLevelControl })
     ).toHaveFocus();
 
     await userEvent.tab();
-    expect(screen.getByRole('button', { name: defaultProps.ariaLabels.nextMonth })).toHaveFocus();
+    expect(screen.getByRole('button', { name: defaultProps.ariaLabels!.nextMonth })).toHaveFocus();
 
     await userEvent.tab();
     expect(

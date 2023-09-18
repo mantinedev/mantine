@@ -1,0 +1,19 @@
+.row {
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+
+  @mixin hover {
+    background-color: light-dark(var(--mantine-color-gray-0), var(--mantine-color-dark-6));
+  }
+}
+
+.checkbox {
+  pointer-events: none;
+  display: flex;
+}
+
+.hiddenMobile {
+  @media (max-width: em(750px)) {
+    display: none;
+  }
+}

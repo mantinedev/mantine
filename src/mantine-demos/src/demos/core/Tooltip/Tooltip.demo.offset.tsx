@@ -1,40 +1,41 @@
 import React from 'react';
 import { MantineDemo } from '@mantine/ds';
-import { Tooltip, Group, Button } from '@mantine/core';
+import { Tooltip, Button } from '@mantine/core';
+import { FLOATING_POSITION_DATA } from '../../../shared';
 
 const code = `
 import { Tooltip, Button } from '@mantine/core';
 
 function Demo() {
   return (
-    <>
-      <Tooltip label="Default arrow" offset={20}>
-        <Button variant="outline">20 offset</Button>
-      </Tooltip>
-      <Tooltip label="Arrow with size" offset={-10}>
-        <Button variant="outline">-10 offset</Button>
-      </Tooltip>
-    </>
+    <Tooltip label="Tooltip" opened{{props}}>
+      <Button variant="outline">Button with tooltip</Button>
+    </Tooltip>
   );
 }
-
 `;
 
-export function Demo() {
+function Wrapper(props: any) {
   return (
-    <Group position="center">
-      <Tooltip label="Default arrow" offset={20}>
-        <Button variant="outline">20 offset</Button>
-      </Tooltip>
-      <Tooltip label="Arrow with size" offset={-10}>
-        <Button variant="outline">-10 offset</Button>
-      </Tooltip>
-    </Group>
+    <Tooltip label="Tooltip" opened {...props}>
+      <Button variant="outline">Button with tooltip</Button>
+    </Tooltip>
   );
 }
 
 export const offset: MantineDemo = {
-  type: 'demo',
+  type: 'configurator',
+  component: Wrapper,
   code,
-  component: Demo,
+  centered: true,
+  controls: [
+    {
+      type: 'select',
+      prop: 'position',
+      initialValue: 'top',
+      data: FLOATING_POSITION_DATA,
+      libraryValue: null,
+    },
+    { type: 'number', prop: 'offset', initialValue: 5, libraryValue: null, min: -50, max: 50 },
+  ],
 };

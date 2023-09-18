@@ -1,56 +1,76 @@
 import React from 'react';
-import { render } from '@testing-library/react';
 import {
-  itSupportsSystemProps,
-  itSupportsProviderVariant,
-  itSupportsProviderSize,
-  itSupportsFocusEvents,
-  itDisablesInputInsideDisabledFieldset,
+  tests,
+  inputDefaultProps,
+  inputStylesApiSelectors,
+  render,
+  userEvent,
 } from '@mantine/tests';
-import {
-  itSupportsClearableProps,
-  itSupportsYearsListProps,
-  itSupportsMonthsListProps,
-  itSupportsDateInputProps,
-  expectValue,
-} from '../../tests';
-import { MonthPickerInput } from './MonthPickerInput';
+import { __InputStylesNames } from '@mantine/core';
+import { clickInput, datesTests, expectValue } from '@mantine/dates-tests';
+import { MonthPickerInput, MonthPickerInputProps } from './MonthPickerInput';
+import { DatesProvider } from '../DatesProvider';
 
 const defaultProps = {
   popoverProps: { withinPortal: false, transitionProps: { duration: 0 } },
   modalProps: { withinPortal: false, transitionProps: { duration: 0 } },
 };
 
+const defaultPropsWithInputProps = {
+  ...defaultProps,
+  ...(inputDefaultProps as any),
+};
+
 describe('@mantine/dates/MonthPickerInput', () => {
-  itSupportsSystemProps({
+  tests.axe([
+    <MonthPickerInput aria-label="test-label" />,
+    <MonthPickerInput aria-label="test-label" error />,
+    <MonthPickerInput aria-label="test-label" error="test-error" id="test" />,
+    <MonthPickerInput aria-label="test-label" description="test-description" />,
+  ]);
+
+  tests.itSupportsSystemProps<MonthPickerInputProps, __InputStylesNames>({
     component: MonthPickerInput,
-    props: defaultProps,
+    props: defaultPropsWithInputProps,
+    styleProps: true,
+    extend: true,
+    size: true,
+    variant: true,
+    classes: true,
     refType: HTMLButtonElement,
-    providerName: 'MonthPickerInput',
-    othersSelector: '.mantine-MonthPickerInput-input',
     displayName: '@mantine/dates/MonthPickerInput',
+    stylesApiSelectors: [...inputStylesApiSelectors],
   });
 
-  itSupportsFocusEvents(MonthPickerInput, defaultProps, '.mantine-MonthPickerInput-input');
-  itSupportsProviderVariant(MonthPickerInput, defaultProps, 'MonthPickerInput', ['root', 'input']);
-  itSupportsProviderSize(MonthPickerInput, defaultProps, 'MonthPickerInput', ['root', 'input']);
-  itSupportsDateInputProps(MonthPickerInput, defaultProps);
-  itSupportsClearableProps(MonthPickerInput, {
-    ...defaultProps,
-    defaultValue: new Date(2022, 3, 11),
+  tests.itSupportsInputProps<MonthPickerInputProps>({
+    component: MonthPickerInput,
+    props: defaultPropsWithInputProps,
+    selector: 'button',
   });
-  itSupportsYearsListProps(MonthPickerInput, {
-    ...defaultProps,
-    defaultLevel: 'decade',
-    defaultValue: new Date(2022, 3, 11),
-    popoverProps: { opened: true, withinPortal: false, transitionProps: { duration: 0 } },
+
+  datesTests.itSupportsDateInputProps({ component: MonthPickerInput, props: defaultProps });
+  datesTests.itSupportsClearableProps({
+    component: MonthPickerInput,
+    props: { ...defaultProps, defaultValue: new Date() },
   });
-  itSupportsMonthsListProps(MonthPickerInput, {
-    ...defaultProps,
-    defaultValue: new Date(2022, 3, 11),
-    popoverProps: { opened: true, withinPortal: false, transitionProps: { duration: 0 } },
+  datesTests.itSupportsYearsListProps({
+    component: MonthPickerInput,
+    props: {
+      ...defaultProps,
+      defaultLevel: 'decade',
+      defaultValue: new Date(2022, 3, 11),
+      popoverProps: { opened: true, withinPortal: false, transitionProps: { duration: 0 } },
+    },
   });
-  itDisablesInputInsideDisabledFieldset(MonthPickerInput, defaultProps);
+
+  datesTests.itSupportsMonthsListProps({
+    component: MonthPickerInput,
+    props: {
+      ...defaultProps,
+      defaultValue: new Date(2022, 3, 11),
+      popoverProps: { opened: true, withinPortal: false, transitionProps: { duration: 0 } },
+    },
+  });
 
   it('supports valueFormat prop', () => {
     const { container, rerender } = render(
@@ -86,47 +106,32 @@ describe('@mantine/dates/MonthPickerInput', () => {
         popoverProps={{ opened: true, withinPortal: false, transitionProps: { duration: 0 } }}
       />
     );
-    expect(container.firstChild).toHaveClass('mantine-MonthPickerInput-root');
     expect(container.querySelector('[data-dates-input]')).toHaveClass(
       'mantine-MonthPickerInput-input'
     );
 
     expect(container.querySelector('table button')).toHaveClass(
-      'mantine-MonthPickerInput-pickerControl'
+      'mantine-MonthPickerInput-monthsListControl'
     );
   });
 
-  it('supports styles api (classNames)', () => {
+  it('can be controlled (type="default") with timezone', async () => {
+    const spy = jest.fn();
     const { container } = render(
-      <MonthPickerInput
-        {...defaultProps}
-        popoverProps={{ opened: true, withinPortal: false, transitionProps: { duration: 0 } }}
-        classNames={{
-          root: 'test-root',
-          input: 'test-input',
-          pickerControl: 'test-control',
-        }}
-      />
+      <DatesProvider settings={{ timezone: 'UTC' }}>
+        <MonthPickerInput
+          {...defaultProps}
+          date={new Date(2022, 0, 31, 23)}
+          value={new Date(2022, 0, 31, 23)}
+          onChange={spy}
+        />
+      </DatesProvider>
     );
-    expect(container.firstChild).toHaveClass('test-root');
-    expect(container.querySelector('[data-dates-input]')).toHaveClass('test-input');
-    expect(container.querySelector('table button')).toHaveClass('test-control');
-  });
 
-  it('supports styles api (styles)', () => {
-    const { container } = render(
-      <MonthPickerInput
-        {...defaultProps}
-        popoverProps={{ opened: true, withinPortal: false, transitionProps: { duration: 0 } }}
-        styles={{
-          root: { borderColor: '#CCEE45' },
-          input: { borderColor: '#EB4522' },
-          pickerControl: { borderColor: '#EE4533' },
-        }}
-      />
-    );
-    expect(container.firstChild).toHaveStyle({ borderColor: '#CCEE45' });
-    expect(container.querySelector('[data-dates-input]')).toHaveStyle({ borderColor: '#EB4522' });
-    expect(container.querySelector('table button')).toHaveStyle({ borderColor: '#EE4533' });
+    await clickInput(container);
+    expect(container.querySelector('[data-selected]')!.textContent).toBe('Feb');
+
+    await userEvent.click(container.querySelector('table button')!);
+    expect(spy).toHaveBeenCalledWith(new Date(2021, 11, 31, 19));
   });
 });

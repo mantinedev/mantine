@@ -1,0 +1,13 @@
+.dropdown {
+  border-top: 0;
+  border-top-right-radius: 0;
+  border-top-left-radius: 0;
+  border-color: light-dark(var(--mantine-color-gray-4), var(--mantine-color-dark-4));
+}
+
+.input {
+  &[data-expanded] {
+    border-bottom-right-radius: 0;
+    border-bottom-left-radius: 0;
+  }
+}

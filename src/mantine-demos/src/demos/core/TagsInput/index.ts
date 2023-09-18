@@ -1,0 +1,16 @@
+export { usage } from './TagsInput.demo.usage';
+export { maxTags } from './TagsInput.demo.maxTags';
+export { allowDuplicates } from './TagsInput.demo.allowDuplicates';
+export { splitChars } from './TagsInput.demo.splitChars';
+export { data } from './TagsInput.demo.data';
+export { configurator } from './TagsInput.demo.configurator';
+export { disabled } from './TagsInput.demo.disabled';
+export { readOnly } from './TagsInput.demo.readOnly';
+export { disabledOptions } from './TagsInput.demo.disabledOptions';
+export { error } from './TagsInput.demo.error';
+export { groups } from './TagsInput.demo.groups';
+export { limit } from './TagsInput.demo.limit';
+export { search } from './TagsInput.demo.search';
+export { scrollArea } from './TagsInput.demo.scrollArea';
+export { sort } from './TagsInput.demo.sort';
+export { stylesApi } from './TagsInput.demo.stylesApi';

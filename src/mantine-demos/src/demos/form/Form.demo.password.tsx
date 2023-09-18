@@ -37,7 +37,7 @@ function Demo() {
           {...form.getInputProps('confirmPassword')}
         />
 
-        <Group position="right" mt="md">
+        <Group justify="flex-end" mt="md">
           <Button type="submit">Submit</Button>
         </Group>
       </form>
@@ -75,7 +75,7 @@ function Demo() {
           {...form.getInputProps('confirmPassword')}
         />
 
-        <Group position="right" mt="md">
+        <Group justify="flex-end" mt="md">
           <Button type="submit">Submit</Button>
         </Group>
       </form>
@@ -84,7 +84,7 @@ function Demo() {
 }
 
 export const password: MantineDemo = {
-  type: 'demo',
+  type: 'code',
   component: Demo,
   code,
 };

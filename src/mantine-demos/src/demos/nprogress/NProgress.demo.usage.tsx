@@ -11,16 +11,14 @@ function Demo() {
   return (
     <>
       <NavigationProgress />
-      <Group position="center">
-        <Button onClick={() => nprogress.increment(10)}>Add 10%</Button>
-        <Button color="red" onClick={() => nprogress.decrement(10)}>
-          Decrease 10%
-        </Button>
-        <Button onClick={() => nprogress.set(50)}>Set 50%</Button>
+      <Group justify="center">
         <Button onClick={() => nprogress.start()}>Start</Button>
         <Button onClick={() => nprogress.stop()}>Stop</Button>
+        <Button onClick={() => nprogress.increment()}>Increment</Button>
+        <Button onClick={() => nprogress.decrement()}>Decrement</Button>
+        <Button onClick={() => nprogress.set(50)}>Set 50%</Button>
         <Button onClick={() => nprogress.reset()}>Reset</Button>
-        <Button onClick={() => nprogress.complete()}>Finish</Button>
+        <Button onClick={() => nprogress.complete()}>Complete</Button>
       </Group>
     </>
   );
@@ -31,27 +29,27 @@ function Demo() {
   return (
     <>
       <NavigationProgress />
-      <Group position="center">
-        <Button onClick={() => nprogress.increment(10)} variant="outline">
-          Add 10%
-        </Button>
-        <Button onClick={() => nprogress.decrement(10)} variant="outline">
-          Decrease 10%
-        </Button>
-        <Button onClick={() => nprogress.set(50)} variant="outline">
-          Set 50%
-        </Button>
-        <Button onClick={() => nprogress.start()} variant="outline">
+      <Group justify="center">
+        <Button onClick={() => nprogress.start()} variant="default">
           Start
         </Button>
-        <Button onClick={() => nprogress.stop()} variant="outline">
+        <Button onClick={() => nprogress.stop()} variant="default">
           Stop
         </Button>
-        <Button onClick={() => nprogress.reset()} variant="outline">
+        <Button onClick={() => nprogress.increment()} variant="default">
+          Increment
+        </Button>
+        <Button onClick={() => nprogress.decrement()} variant="default">
+          Decrement
+        </Button>
+        <Button onClick={() => nprogress.set(50)} variant="default">
+          Set 50%
+        </Button>
+        <Button onClick={() => nprogress.reset()} variant="default">
           Reset
         </Button>
-        <Button onClick={() => nprogress.complete()} variant="outline">
-          Finish
+        <Button onClick={() => nprogress.complete()} variant="default">
+          Complete
         </Button>
       </Group>
     </>
@@ -59,7 +57,7 @@ function Demo() {
 }
 
 export const usage: MantineDemo = {
-  type: 'demo',
+  type: 'code',
   component: Demo,
   code,
 };

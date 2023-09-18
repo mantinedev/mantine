@@ -1,5 +1,6 @@
 import React, { useState, useRef } from 'react';
 import { MantineDemo } from '@mantine/ds';
+
 import { FileButton, Button, Group, Text } from '@mantine/core';
 
 const code = `
@@ -17,7 +18,7 @@ function Demo() {
 
   return (
     <>
-      <Group position="center">
+      <Group justify="center">
         <FileButton resetRef={resetRef} onChange={setFile} accept="image/png,image/jpeg">
           {(props) => <Button {...props}>Upload image</Button>}
         </FileButton>
@@ -27,7 +28,7 @@ function Demo() {
       </Group>
 
       {file && (
-        <Text size="sm" align="center" mt="sm">
+        <Text size="sm" ta="center" mt="sm">
           Picked file: {file.name}
         </Text>
       )}
@@ -47,7 +48,7 @@ function Demo() {
 
   return (
     <>
-      <Group position="center">
+      <Group justify="center">
         <FileButton resetRef={resetRef} onChange={setFile} accept="image/png,image/jpeg">
           {(props) => <Button {...props}>Upload image</Button>}
         </FileButton>
@@ -57,7 +58,7 @@ function Demo() {
       </Group>
 
       {file && (
-        <Text size="sm" align="center" mt="sm">
+        <Text size="sm" ta="center" mt="sm">
           Picked file: {file.name}
         </Text>
       )}
@@ -66,7 +67,7 @@ function Demo() {
 }
 
 export const reset: MantineDemo = {
-  type: 'demo',
+  type: 'code',
   component: Demo,
   code,
 };

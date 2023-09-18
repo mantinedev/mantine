@@ -1,34 +1,25 @@
 import React, { useState } from 'react';
 import { MantineDemo } from '@mantine/ds';
-import { Group } from '@mantine/core';
 import { YearPicker } from '@mantine/dates';
 
 const code = `
 import { useState } from 'react';
-import { Group } from '@mantine/core';
 import { YearPicker } from '@mantine/dates';
 
 function Demo() {
   const [value, setValue] = useState<Date | null>(null);
-  return (
-    <Group position="center">
-      <YearPicker decadeLabelFormat="YY" value={value} onChange={setValue} />
-    </Group>
-  );
+  return <YearPicker decadeLabelFormat="YY" value={value} onChange={setValue} />;
 }
 `;
 
 function Demo() {
   const [value, setValue] = useState<Date | null>(null);
-  return (
-    <Group position="center">
-      <YearPicker decadeLabelFormat="YY" value={value} onChange={setValue} />
-    </Group>
-  );
+  return <YearPicker decadeLabelFormat="YY" value={value} onChange={setValue} />;
 }
 
 export const decadeLabelFormat: MantineDemo = {
-  type: 'demo',
+  type: 'code',
+  centered: true,
   component: Demo,
   code,
 };

@@ -6,14 +6,14 @@ import { getFormattedDate } from '../../utils';
 
 interface UseDatesInput<Type extends DatePickerType = 'default'> {
   type: Type;
-  value: DatePickerValue<Type>;
-  defaultValue: DatePickerValue<Type>;
-  onChange(value: DatePickerValue<Type>): void;
-  locale: string;
-  format: string;
-  closeOnChange: boolean;
-  sortDates: boolean;
-  labelSeparator: string;
+  value: DatePickerValue<Type> | undefined;
+  defaultValue: DatePickerValue<Type> | undefined;
+  onChange: ((value: DatePickerValue<Type>) => void) | undefined;
+  locale: string | undefined;
+  format: string | undefined;
+  closeOnChange: boolean | undefined;
+  sortDates: boolean | undefined;
+  labelSeparator: string | undefined;
 }
 
 export function useDatesInput<Type extends DatePickerType = 'default'>({
@@ -42,7 +42,7 @@ export function useDatesInput<Type extends DatePickerType = 'default'>({
     type,
     date: _value,
     locale: ctx.getLocale(locale),
-    format,
+    format: format!,
     labelSeparator: ctx.getLabelSeparator(labelSeparator),
   });
 

@@ -1,54 +1,46 @@
 import React from 'react';
-import { IconAlertCircle } from '@tabler/icons-react';
 import { MantineDemo } from '@mantine/ds';
-import { Alert, Box } from '@mantine/core';
-
-function Wrapper(props: React.ComponentPropsWithoutRef<typeof Alert>) {
-  return (
-    <Box maw={400} mx="auto">
-      <Alert {...props} icon={<IconAlertCircle size="1rem" />} />
-    </Box>
-  );
-}
-
-const codeTemplate = (props: string, children: string) => `
 import { Alert } from '@mantine/core';
-import { IconAlertCircle } from '@tabler/icons-react';
+import { IconInfoCircle } from '@tabler/icons-react';
+import { staticVariantsControl } from '../../../shared';
+
+const code = `
+import { Alert } from '@mantine/core';
+import { IconInfoCircle } from '@tabler/icons-react';
 
 function Demo() {
+  const icon = <IconInfoCircle />;
   return (
-    <Alert icon={<IconAlertCircle size="1rem" />}${props}>
-      ${children}
+    <Alert{{props}} icon={icon}>
+      {{children}}
     </Alert>
   );
 }
 `;
 
+function Wrapper(props: any) {
+  return <Alert icon={<IconInfoCircle />} {...props} />;
+}
+
 export const configurator: MantineDemo = {
   type: 'configurator',
   component: Wrapper,
-  codeTemplate,
-  configurator: [
-    { name: 'title', type: 'string', initialValue: 'Bummer!' },
+  code,
+  centered: true,
+  striped: true,
+  maxWidth: 400,
+  controls: [
+    { ...(staticVariantsControl as any), initialValue: 'light' },
+    { type: 'color', prop: 'color', initialValue: 'blue', libraryValue: null },
+    { type: 'size', prop: 'radius', initialValue: 'sm', libraryValue: 'sm' },
+    { type: 'boolean', prop: 'withCloseButton', initialValue: false, libraryValue: false },
+    { type: 'string', prop: 'title', initialValue: 'Alert title', libraryValue: null },
     {
-      name: 'children',
       type: 'string',
+      prop: 'children',
       initialValue:
-        'Something terrible happened! You made a mistake and there is no going back, your data was lost forever!',
-    },
-    { name: 'color', type: 'color', initialValue: 'red', defaultValue: 'blue' },
-    { name: 'radius', type: 'size', initialValue: 'sm', defaultValue: 'sm' },
-    { name: 'withCloseButton', type: 'boolean', initialValue: false, defaultValue: false },
-    {
-      name: 'variant',
-      type: 'segmented',
-      data: [
-        { label: 'light', value: 'light' },
-        { label: 'filled', value: 'filled' },
-        { label: 'outline', value: 'outline' },
-      ],
-      initialValue: 'light',
-      defaultValue: 'light',
+        'Lorem ipsum dolor sit, amet consectetur adipisicing elit. At officiis, quae tempore necessitatibus placeat saepe.',
+      libraryValue: null,
     },
   ],
 };

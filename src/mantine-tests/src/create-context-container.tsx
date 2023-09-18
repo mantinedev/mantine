@@ -12,5 +12,7 @@ export function createContextContainer<T>(
   ));
 
   Container.displayName = Component.displayName;
+  (Container as any).extend = (Component as any).extend;
+  (Container as any).classes = (Component as any).classes;
   return Container;
 }

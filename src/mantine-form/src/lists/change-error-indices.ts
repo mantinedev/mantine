@@ -14,7 +14,7 @@ function getIndexFromKeyAfterPath(key: string, path: string): number {
  */
 export function changeErrorIndices<T extends Record<PropertyKey, any>>(
   path: PropertyKey,
-  index: number,
+  index: number | undefined,
   errors: T,
   change: 1 | -1
 ): T {

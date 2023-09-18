@@ -9,6 +9,6 @@ describe('@mantine/hooks/upper-first', () => {
 
   it('returns empty string if value cannot be capitalized', () => {
     expect(upperFirst('')).toBe('');
-    expect(upperFirst(null)).toBe('');
+    expect(upperFirst(null as any)).toBe('');
   });
 });

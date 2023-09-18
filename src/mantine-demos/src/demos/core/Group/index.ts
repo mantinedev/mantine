@@ -1,1 +1,2 @@
-export { configurator } from './Group.demo.configurator';
+export { usage } from './Group.demo.usage';
+export { preventGrowOverflow } from './Group.demo.preventGrowOverflow';

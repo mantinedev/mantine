@@ -1,8 +1,6 @@
-export { configurator } from './PasswordInput.demo.configurator';
+export { usage } from './PasswordInput.demo.usage';
 export { strengthMeter } from './PasswordInput.demo.strengthMeter';
-export { focus } from './PasswordInput.demo.focus';
-export { validation } from './PasswordInput.demo.validation';
-export { disabled } from './PasswordInput.demo.disabled';
-export { icon } from './PasswordInput.demo.icon';
+export { error } from './PasswordInput.demo.error';
 export { visibilityIcon } from './PasswordInput.demo.visibilityIcon';
 export { controlledVisibility } from './PasswordInput.demo.controlledVisibility';
+export { stylesApi } from './PasswordInput.demo.stylesApi';

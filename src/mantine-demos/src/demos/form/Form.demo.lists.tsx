@@ -23,7 +23,7 @@ function Demo() {
       <TextInput
         placeholder="John Doe"
         withAsterisk
-        sx={{ flex: 1 }}
+        style={{ flex: 1 }}
         {...form.getInputProps(\`employees.\${index}.name\`)}
       />
       <Switch
@@ -40,22 +40,22 @@ function Demo() {
     <Box maw={500} mx="auto">
       {fields.length > 0 ? (
         <Group mb="xs">
-          <Text weight={500} size="sm" sx={{ flex: 1 }}>
+          <Text fw={500} size="sm" style={{ flex: 1 }}>
             Name
           </Text>
-          <Text weight={500} size="sm" pr={90}>
+          <Text fw={500} size="sm" pr={90}>
             Status
           </Text>
         </Group>
       ) : (
-        <Text color="dimmed" align="center">
+        <Text c="dimmed" ta="center">
           No one here...
         </Text>
       )}
 
       {fields}
 
-      <Group position="center" mt="md">
+      <Group justify="center" mt="md">
         <Button
           onClick={() =>
             form.insertListItem('employees', { name: '', active: false, key: randomId() })
@@ -65,7 +65,7 @@ function Demo() {
         </Button>
       </Group>
 
-      <Text size="sm" weight={500} mt="md">
+      <Text size="sm" fw={500} mt="md">
         Form values:
       </Text>
       <Code block>{JSON.stringify(form.values, null, 2)}</Code>
@@ -86,7 +86,7 @@ function Demo() {
       <TextInput
         placeholder="John Doe"
         withAsterisk
-        sx={{ flex: 1 }}
+        style={{ flex: 1 }}
         {...form.getInputProps(`employees.${index}.name`)}
       />
       <Switch
@@ -103,22 +103,22 @@ function Demo() {
     <Box maw={500} mx="auto">
       {fields.length > 0 ? (
         <Group mb="xs">
-          <Text weight={500} size="sm" sx={{ flex: 1 }}>
+          <Text fw={500} size="sm" style={{ flex: 1 }}>
             Name
           </Text>
-          <Text weight={500} size="sm" pr={90}>
+          <Text fw={500} size="sm" pr={90}>
             Status
           </Text>
         </Group>
       ) : (
-        <Text color="dimmed" align="center">
+        <Text c="dimmed" ta="center">
           No one here...
         </Text>
       )}
 
       {fields}
 
-      <Group position="center" mt="md">
+      <Group justify="center" mt="md">
         <Button
           onClick={() =>
             form.insertListItem('employees', { name: '', active: false, key: randomId() })
@@ -128,7 +128,7 @@ function Demo() {
         </Button>
       </Group>
 
-      <Text size="sm" weight={500} mt="md">
+      <Text size="sm" fw={500} mt="md">
         Form values:
       </Text>
       <Code block>{JSON.stringify(form.values, null, 2)}</Code>
@@ -137,7 +137,7 @@ function Demo() {
 }
 
 export const lists: MantineDemo = {
-  type: 'demo',
+  type: 'code',
   component: Demo,
   code,
 };

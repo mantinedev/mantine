@@ -8,8 +8,8 @@ import { RangeSlider, Slider } from '@mantine/core';
 function Demo() {
   return (
     <>
-      <Slider inverted defaultValue={80} py="xl" />
-      <RangeSlider inverted defaultValue={[40, 80]} py="xl" />
+      <Slider inverted defaultValue={80} />
+      <RangeSlider inverted defaultValue={[40, 80]} mt="xl" />
     </>
   );
 }
@@ -18,14 +18,16 @@ function Demo() {
 function Demo() {
   return (
     <>
-      <Slider inverted defaultValue={80} py="xl" />
-      <RangeSlider inverted defaultValue={[40, 80]} py="xl" />
+      <Slider inverted defaultValue={80} />
+      <RangeSlider inverted defaultValue={[40, 80]} mt="xl" />
     </>
   );
 }
 
 export const inverted: MantineDemo = {
-  type: 'demo',
+  type: 'code',
   component: Demo,
   code,
+  centered: true,
+  maxWidth: 400,
 };

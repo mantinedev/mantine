@@ -1,0 +1,8 @@
+.root {
+  position: fixed;
+  z-index: var(--affix-z-index);
+  top: var(--affix-top);
+  left: var(--affix-left);
+  right: var(--affix-right);
+  bottom: var(--affix-bottom);
+}

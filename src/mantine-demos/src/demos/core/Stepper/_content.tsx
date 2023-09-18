@@ -1,17 +1,17 @@
 import React from 'react';
-import { Box, BoxProps } from '@mantine/core';
+import { Box, BoxProps, ElementProps } from '@mantine/core';
 
-export function Content(props: BoxProps) {
+export function Content(props: BoxProps & ElementProps<'div'>) {
   return (
     <Box
-      sx={(theme) => ({
+      style={{
         height: 60,
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
         fontWeight: 500,
-        fontSize: theme.fontSizes.lg,
-      })}
+        fontSize: 'var(--mantine-font-size-lg)',
+      }}
       {...props}
     />
   );

@@ -1,11 +1,11 @@
 import React from 'react';
-import { Drawer, Group, Button } from '@mantine/core';
+import { Drawer, Button } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import { MantineDemo } from '@mantine/ds';
 
 const code = `
 import { useDisclosure } from '@mantine/hooks';
-import { Drawer, Button, Group } from '@mantine/core';
+import { Drawer, Button } from '@mantine/core';
 
 function Demo() {
   const [opened, { open, close }] = useDisclosure(false);
@@ -23,9 +23,7 @@ function Demo() {
         </Drawer.Content>
       </Drawer.Root>
 
-      <Group position="center">
-        <Button onClick={open}>Open drawer</Button>
-      </Group>
+      <Button onClick={open}>Open drawer</Button>
     </>
   );
 }
@@ -47,15 +45,14 @@ function Demo() {
         </Drawer.Content>
       </Drawer.Root>
 
-      <Group position="center">
-        <Button onClick={open}>Open drawer</Button>
-      </Group>
+      <Button onClick={open}>Open drawer</Button>
     </>
   );
 }
 
 export const composition: MantineDemo = {
-  type: 'demo',
+  type: 'code',
   code,
+  centered: true,
   component: Demo,
 };

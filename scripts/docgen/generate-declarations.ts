@@ -22,7 +22,7 @@ export function generateDeclarations(paths: DeclarationPath[]) {
     }
   });
 
-  return docgenParser.parse(componentsPaths).reduce((acc, declaration) => {
+  return docgenParser.parse(componentsPaths).reduce<Record<string, any>>((acc, declaration) => {
     const componentName = replaceName(declaration.displayName.replace(/@mantine\/([^\s]+)\//, ''));
     acc[componentName] = prepareDeclaration(declaration);
     return acc;

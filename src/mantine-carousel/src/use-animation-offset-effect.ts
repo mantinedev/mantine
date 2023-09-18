@@ -1,8 +1,8 @@
 import { useEffect } from 'react';
-import { Embla } from './types';
+import type { EmblaCarouselType } from 'embla-carousel-react';
 
 export function useAnimationOffsetEffect(
-  embla: Embla | null | undefined,
+  embla: EmblaCarouselType | null | undefined,
   transitionDuration: number
 ) {
   useEffect(() => {

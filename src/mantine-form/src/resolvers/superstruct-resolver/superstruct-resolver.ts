@@ -11,7 +11,7 @@ type StructFailure = {
   path: Array<any>;
 };
 
-type StructValidaationError = {
+type StructValidationError = {
   failures: () => Array<StructFailure>;
 };
 
@@ -19,7 +19,7 @@ export function superstructResolver(schema: any) {
   function structValidation(values: Record<string, any>): FormErrors {
     const formErrors: FormErrors = {};
 
-    const [err]: [StructValidaationError | null, unknown] = schema.validate(values);
+    const [err]: [StructValidationError | null, unknown] = schema.validate(values);
     if (!err) {
       return formErrors;
     }

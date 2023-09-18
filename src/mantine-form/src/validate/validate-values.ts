@@ -1,6 +1,6 @@
 import { filterErrors } from '../filter-errors';
 import { getPath } from '../paths';
-import { FormValidateInput, FormErrors, FormRulesRecord } from '../types';
+import { FormValidateInput, FormErrors, FormRulesRecord, FormRule } from '../types';
 
 function getValidationResults(errors: FormErrors) {
   const filteredErrors = filterErrors(errors);
@@ -8,7 +8,7 @@ function getValidationResults(errors: FormErrors) {
 }
 
 function validateRulesRecord<T>(
-  rules: FormRulesRecord<T>,
+  rules: FormRulesRecord<T> | undefined,
   values: T,
   path = '',
   errors: FormErrors = {}
@@ -18,7 +18,7 @@ function validateRulesRecord<T>(
   }
 
   return Object.keys(rules).reduce((acc, ruleKey) => {
-    const rule = rules[ruleKey];
+    const rule: FormRule<any, any> = (rules as any)[ruleKey];
     const rulePath = `${path === '' ? '' : `${path}.`}${ruleKey}`;
     const value = getPath(rulePath, values);
     let arrayValidation = false;
@@ -44,7 +44,7 @@ function validateRulesRecord<T>(
   }, errors);
 }
 
-export function validateValues<T>(validate: FormValidateInput<T>, values: T) {
+export function validateValues<T>(validate: FormValidateInput<T> | undefined, values: T) {
   if (typeof validate === 'function') {
     return getValidationResults(validate(values));
   }

@@ -1,7 +1,8 @@
 export { MonthLevel } from './MonthLevel';
 export type {
-  MonthLevelProps,
-  MonthLevelStylesNames,
-  MonthLevelSettings,
   MonthLevelBaseSettings,
+  MonthLevelFactory,
+  MonthLevelProps,
+  MonthLevelSettings,
+  MonthLevelStylesNames,
 } from './MonthLevel';

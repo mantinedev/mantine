@@ -1,47 +1,24 @@
 import React from 'react';
 import { MantineDemo } from '@mantine/ds';
 import { Pagination } from '@mantine/core';
+import { PaginationStylesApi } from '@mantine/styles-api';
 
 const code = `
 import { Pagination } from '@mantine/core';
 
 function Demo() {
-  return (
-    <Pagination
-      total={10}
-      position="center"
-      styles={(theme) => ({
-        control: {
-          '&[data-active]': {
-            backgroundImage: theme.fn.gradient({ from: 'red', to: 'yellow' }),
-            border: 0,
-          },
-        },
-      })}
-    />
-  );
+  return <Pagination total={10}{{props}} />;
 }
 `;
 
-function Demo() {
-  return (
-    <Pagination
-      total={10}
-      position="center"
-      styles={(theme) => ({
-        control: {
-          '&[data-active]': {
-            backgroundImage: theme.fn.gradient({ from: 'red', to: 'yellow' }),
-            border: 0,
-          },
-        },
-      })}
-    />
-  );
+function Demo(props: any) {
+  return <Pagination total={10} {...props} />;
 }
 
 export const stylesApi: MantineDemo = {
-  type: 'demo',
-  code,
+  type: 'styles-api',
+  data: PaginationStylesApi,
   component: Demo,
+  code,
+  centered: true,
 };

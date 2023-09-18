@@ -1,0 +1,40 @@
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+import { DatePickerInputDemos } from '@mantine/demos';
+
+export default Layout(MDX_DATA.GettingStartedDates);
+
+## Installation
+
+<InstallScript packages="@mantine/dates dayjs" />
+
+After installation import package styles at the root of your application:
+
+```tsx
+import '@mantine/dates/styles.css';
+```
+
+## Usage
+
+After installing `@mantine/dates` package and importing styles, you can use all components from it:
+
+<Demo data={DatePickerInputDemos.usage} />
+
+## dayjs
+
+`@mantine/dates` components use [dayjs](https://day.js.org/) under the hood for date manipulations and formatting.
+dayjs is a required dependency – you cannot change it to another date library. If you want to use a different
+date library in your application, you will need to install it separately.
+
+## Custom parse format
+
+Some components like [DateInput](/dates/date-input) require [custom parse format](https://day.js.org/docs/en/plugin/custom-parse-format)
+dayjs plugin. You need to extend dayjs with this plugin before using components that require it. Note that
+it is usually done once in your application root file, so you don't need to do it every time you use component.
+
+```tsx
+import dayjs from 'dayjs';
+import customParseFormat from 'dayjs/plugin/customParseFormat';
+
+dayjs.extend(customParseFormat);
+```

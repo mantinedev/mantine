@@ -4,6 +4,7 @@ import { MantineDemo } from '@mantine/ds';
 import { DateInput } from '@mantine/dates';
 
 const code = `
+import dayjs from 'dayjs';
 import { DateInput } from '@mantine/dates';
 
 function Demo() {
@@ -13,8 +14,6 @@ function Demo() {
       maxDate={dayjs(new Date()).add(1, 'month').toDate()}
       label="Date input"
       placeholder="Date input"
-      maw={400}
-      mx="auto"
     />
   );
 }
@@ -27,14 +26,14 @@ function Demo() {
       maxDate={dayjs(new Date()).add(1, 'month').toDate()}
       label="Date input"
       placeholder="Date input"
-      maw={400}
-      mx="auto"
     />
   );
 }
 
 export const minMax: MantineDemo = {
-  type: 'demo',
+  type: 'code',
+  centered: true,
+  maxWidth: 400,
   component: Demo,
   code,
 };

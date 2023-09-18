@@ -1,34 +1,49 @@
 import React from 'react';
 import { IconPhoto, IconPrinter, IconCameraSelfie } from '@tabler/icons-react';
 import { MantineDemo } from '@mantine/ds';
-import { Accordion, AccordionProps, useMantineTheme, Box, rem } from '@mantine/core';
+import { Accordion, rem } from '@mantine/core';
 
 const code = `
 import { IconPhoto, IconPrinter, IconCameraSelfie } from '@tabler/icons-react';
-import { Accordion, useMantineTheme, rem } from '@mantine/core';
+import { Accordion, rem } from '@mantine/core';
 
 function Demo() {
-  const theme = useMantineTheme();
-  const getColor = (color: string) => theme.colors[color][theme.colorScheme === 'dark' ? 5 : 7];
-
   return (
     <Accordion variant="contained">
       <Accordion.Item value="photos">
-        <Accordion.Control icon={<IconPhoto size={rem(20)} color={getColor('red')} />}>
+        <Accordion.Control
+          icon={
+            <IconPhoto
+              style={{ color: 'var(--mantine-color-red-filled', width: rem(20), height: rem(20) }}
+            />
+          }
+        >
           Recent photos
         </Accordion.Control>
         <Accordion.Panel>Content</Accordion.Panel>
       </Accordion.Item>
 
       <Accordion.Item value="print">
-        <Accordion.Control icon={<IconPrinter size={rem(20)} color={getColor('blue')} />}>
+        <Accordion.Control
+          icon={
+            <IconPrinter
+              style={{ color: 'var(--mantine-color-blue-filled', width: rem(20), height: rem(20) }}
+            />
+          }
+        >
           Print photos
         </Accordion.Control>
         <Accordion.Panel>Content</Accordion.Panel>
       </Accordion.Item>
 
       <Accordion.Item value="camera">
-        <Accordion.Control icon={<IconCameraSelfie size={rem(20)} color={getColor('teal')} />}>
+        <Accordion.Control
+          icon={
+            <IconCameraSelfie
+              style={{ color: 'var(--mantine-color-teal-filled)', width: rem(20), height: rem(20) }}
+            />
+          }
+        >
           Camera settings
         </Accordion.Control>
         <Accordion.Panel>Content</Accordion.Panel>
@@ -38,28 +53,43 @@ function Demo() {
 }
 `;
 
-export function IconsReplacementDemo(props: Partial<AccordionProps>) {
-  const theme = useMantineTheme();
-  const getColor = (color: string) => theme.colors[color][theme.colorScheme === 'dark' ? 5 : 7];
-
+function Demo() {
   return (
-    <Accordion variant="contained" {...props}>
+    <Accordion variant="contained">
       <Accordion.Item value="photos">
-        <Accordion.Control icon={<IconPhoto size={rem(20)} color={getColor('red')} />}>
+        <Accordion.Control
+          icon={
+            <IconPhoto
+              style={{ color: 'var(--mantine-color-red-filled', width: rem(20), height: rem(20) }}
+            />
+          }
+        >
           Recent photos
         </Accordion.Control>
         <Accordion.Panel>Content</Accordion.Panel>
       </Accordion.Item>
 
       <Accordion.Item value="print">
-        <Accordion.Control icon={<IconPrinter size={rem(20)} color={getColor('blue')} />}>
+        <Accordion.Control
+          icon={
+            <IconPrinter
+              style={{ color: 'var(--mantine-color-blue-filled', width: rem(20), height: rem(20) }}
+            />
+          }
+        >
           Print photos
         </Accordion.Control>
         <Accordion.Panel>Content</Accordion.Panel>
       </Accordion.Item>
 
       <Accordion.Item value="camera">
-        <Accordion.Control icon={<IconCameraSelfie size={rem(20)} color={getColor('teal')} />}>
+        <Accordion.Control
+          icon={
+            <IconCameraSelfie
+              style={{ color: 'var(--mantine-color-teal-filled)', width: rem(20), height: rem(20) }}
+            />
+          }
+        >
           Camera settings
         </Accordion.Control>
         <Accordion.Panel>Content</Accordion.Panel>
@@ -68,16 +98,10 @@ export function IconsReplacementDemo(props: Partial<AccordionProps>) {
   );
 }
 
-function Demo() {
-  return (
-    <Box maw={400} mx="auto">
-      <IconsReplacementDemo />
-    </Box>
-  );
-}
-
 export const icons: MantineDemo = {
-  type: 'demo',
+  type: 'code',
   component: Demo,
   code,
+  maxWidth: 400,
+  centered: true,
 };

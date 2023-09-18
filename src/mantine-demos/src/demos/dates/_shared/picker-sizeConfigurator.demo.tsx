@@ -1,28 +1,24 @@
 import React from 'react';
 import { MantineDemo } from '@mantine/ds';
-import { Group } from '@mantine/core';
 
-const getCodeTemplate = (component: string) => (props: string) =>
+const getCodeTemplate = (component: string) =>
   `import { ${component} } from '@mantine/dates';
 
 function Demo() {
-  return <${component} defaultValue={new Date()}${props} />
+  return <${component} defaultValue={new Date()}{{props}} />;
 }
 `;
 
 function getDemo(Component: React.FC<any>) {
-  return (props: any) => (
-    <Group position="center">
-      <Component defaultValue={new Date()} {...props} />
-    </Group>
-  );
+  return (props: any) => <Component defaultValue={new Date()} {...props} />;
 }
 
 export function getPickerSizeConfiguratorDemo(Component: React.FC<any>): MantineDemo {
   return {
     type: 'configurator',
-    codeTemplate: getCodeTemplate(Component.displayName.replace('@mantine/dates/', '')),
-    configurator: [{ name: 'size', type: 'size', initialValue: 'sm', defaultValue: 'sm' }],
+    centered: true,
+    code: getCodeTemplate(Component.displayName!.replace('@mantine/dates/', '')),
+    controls: [{ prop: 'size', type: 'size', initialValue: 'sm', libraryValue: 'sm' }],
     component: getDemo(Component),
   };
 }

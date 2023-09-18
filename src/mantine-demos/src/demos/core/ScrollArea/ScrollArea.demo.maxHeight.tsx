@@ -25,7 +25,7 @@ function Demo() {
         {content}
       </ScrollArea.Autosize>
 
-      <Group position="center" mt="md">
+      <Group justify="center" mt="md">
         <Button variant="outline" color="red" onClick={handlers.decrement}>
           Remove paragraph
         </Button>
@@ -50,7 +50,7 @@ function Demo() {
         {content}
       </ScrollArea.Autosize>
 
-      <Group position="center" mt="md">
+      <Group justify="center" mt="md">
         <Button variant="outline" color="red" onClick={handlers.decrement}>
           Remove paragraph
         </Button>
@@ -63,7 +63,7 @@ function Demo() {
 }
 
 export const maxHeight: MantineDemo = {
-  type: 'demo',
+  type: 'code',
   component: Demo,
   code,
 };

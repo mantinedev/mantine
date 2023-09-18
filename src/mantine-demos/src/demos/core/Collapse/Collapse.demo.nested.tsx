@@ -25,12 +25,12 @@ const lorem =
 function Demo() {
   return (
     <CollapsedDemo buttonProps={{ children: 'Root collapse' }}>
-      <Text mt="md" size="lg" weight={700}>
+      <Text mt="md" size="lg" fw={700}>
         This collapse contains another collapse
       </Text>
       <Text mt="xs">{lorem}</Text>
       <CollapsedDemo buttonProps={{ variant: 'outline', children: 'Inner collapse' }}>
-        <Text mt="md" size="lg" weight={700}>
+        <Text mt="md" size="lg" fw={700}>
           This collapse is inside another collapse
         </Text>
         <Text mt="xs">{lorem}</Text>
@@ -40,6 +40,6 @@ function Demo() {
 }
 
 export const nested: MantineDemo = {
-  type: 'demo',
+  type: 'code',
   component: Demo,
 };

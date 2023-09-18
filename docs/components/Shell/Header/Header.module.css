@@ -1,0 +1,74 @@
+.header {
+  background-color: var(--mantine-color-body);
+  height: var(--docs-header-height);
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  padding-left: var(--mantine-spacing-md);
+  padding-right: var(--mantine-spacing-md);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  z-index: 100;
+
+  @mixin light {
+    border-bottom: rem(1px) solid var(--mantine-color-gray-2);
+  }
+
+  @mixin dark {
+    border-bottom: rem(1px) solid var(--mantine-color-dark-8);
+  }
+
+  &[data-desktop] {
+    @media (max-width: 47.5em) {
+      display: none;
+    }
+  }
+
+  &[data-mobile] {
+    @media (min-width: 47.5625em) {
+      display: none;
+    }
+  }
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+}
+
+.version {
+  margin-top: rem(4px);
+  margin-left: var(--mantine-spacing-md);
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+  padding: rem(4px) rem(10px);
+  padding-right: rem(8px);
+  border-radius: var(--mantine-radius-xl);
+
+  @mixin rtl {
+    margin-left: 0;
+    margin-right: var(--mantine-spacing-md);
+  }
+
+  @media (max-width: 50em) {
+    display: none;
+  }
+}
+
+.versionChevron {
+  display: block;
+  width: rem(14px);
+  height: rem(14px);
+  margin-left: rem(5px);
+}
+
+.versionExternalIcon {
+  width: rem(14px);
+  height: rem(14px);
+  color: var(--mantine-color-dimmed);
+}

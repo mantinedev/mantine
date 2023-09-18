@@ -1,15 +1,15 @@
 import React from 'react';
 import { useDisclosure, useMediaQuery } from '@mantine/hooks';
-import { Modal, Group, Button, em } from '@mantine/core';
+import { Modal, Button, em } from '@mantine/core';
 import { MantineDemo } from '@mantine/ds';
 
 const code = `
 import { useDisclosure, useMediaQuery } from '@mantine/hooks';
-import { Modal, Button, Group } from '@mantine/core';
+import { Modal, Button } from '@mantine/core';
 
 function Demo() {
   const [opened, { open, close }] = useDisclosure(false);
-  const isMobile = useMediaQuery("(max-width: ${em(800)})");
+  const isMobile = useMediaQuery('(max-width: ${em(800)})');
 
   return (
     <>
@@ -23,9 +23,7 @@ function Demo() {
         The Modal will be full screen only on mobile
       </Modal>
 
-      <Group position="center">
-        <Button onClick={open}>Open Modal</Button>
-      </Group>
+      <Button onClick={open}>Open Modal</Button>
     </>
   );
 }
@@ -47,15 +45,14 @@ function Demo() {
         The Modal will be full screen only on mobile
       </Modal>
 
-      <Group position="center">
-        <Button onClick={open}>Open Modal</Button>
-      </Group>
+      <Button onClick={open}>Open Modal</Button>
     </>
   );
 }
 
 export const fullScreenMobile: MantineDemo = {
-  type: 'demo',
+  type: 'code',
   code,
+  centered: true,
   component: Demo,
 };

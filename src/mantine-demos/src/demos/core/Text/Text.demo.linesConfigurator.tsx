@@ -19,12 +19,12 @@ function Wrapper(props: TextProps) {
   );
 }
 
-const codeTemplate = (props: string) => `
+const code = `
 import { Text } from '@mantine/core';
 
 function Demo() {
   return (
-    <Text${props}>
+    <Text{{props}}>
       {/* Text content */}
     </Text>
   );
@@ -34,14 +34,14 @@ function Demo() {
 export const linesConfigurator: MantineDemo = {
   type: 'configurator',
   component: Wrapper,
-  codeTemplate,
-  configurator: [
-    { name: 'size', type: 'size', defaultValue: 'md', initialValue: 'md' },
+  code,
+  controls: [
+    { prop: 'size', type: 'size', libraryValue: 'md', initialValue: 'md' },
     {
-      name: 'lineClamp',
+      prop: 'lineClamp',
       type: 'number',
       initialValue: 4,
-      defaultValue: null,
+      libraryValue: null,
       min: 1,
       max: 10,
       step: 1,

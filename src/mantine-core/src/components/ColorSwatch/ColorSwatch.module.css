@@ -1,0 +1,70 @@
+.root {
+  --cs-size: rem(28px);
+  --cs-radius: rem(1000px);
+
+  -webkit-tap-highlight-color: transparent;
+  border: none;
+  appearance: none;
+  display: block;
+  line-height: 1;
+  position: relative;
+  width: var(--cs-size);
+  height: var(--cs-size);
+  min-width: var(--cs-size);
+  min-height: var(--cs-size);
+  border-radius: var(--cs-radius);
+  color: inherit;
+  text-decoration: none;
+
+  @mixin light {
+    --_alpha-overlay-color: var(--mantine-color-gray-3);
+    --_alpha-overlay-bg: var(--mantine-color-white);
+  }
+
+  @mixin dark {
+    --_alpha-overlay-color: var(--mantine-color-dark-4);
+    --_alpha-overlay-bg: var(--mantine-color-dark-7);
+  }
+}
+
+.colorOverlay {
+  position: absolute;
+  inset: 0;
+  border-radius: var(--cs-radius);
+}
+
+.shadowOverlay {
+  position: absolute;
+  inset: 0;
+  border-radius: var(--cs-radius);
+  z-index: 1;
+  box-shadow:
+    rgba(0, 0, 0, 0.1) 0 0 0 rem(1px) inset,
+    rgb(0, 0, 0, 0.15) 0 0 rem(4px) inset;
+}
+
+.alphaOverlay {
+  position: absolute;
+  inset: 0;
+  border-radius: var(--cs-radius);
+  background-size: rem(8px) rem(8px);
+  background-position:
+    0 0,
+    0 rem(4px),
+    rem(4px) rem(-4px),
+    rem(-4px) 0;
+  background-image: linear-gradient(45deg, var(--_alpha-overlay-color) 25%, transparent 25%),
+    linear-gradient(-45deg, var(--_alpha-overlay-color) 25%, transparent 25%),
+    linear-gradient(45deg, transparent 75%, var(--_alpha-overlay-color) 75%),
+    linear-gradient(-45deg, var(--_alpha-overlay-bg) 75%, var(--_alpha-overlay-color) 75%);
+}
+
+.childrenOverlay {
+  position: absolute;
+  inset: 0;
+  border-radius: var(--cs-radius);
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

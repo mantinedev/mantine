@@ -1,0 +1,18 @@
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+import { HooksDemos } from '@mantine/demos';
+
+export default Layout(MDX_DATA.useHash);
+
+## Usage
+
+`use-hash` returns hash from URL, subscribes to its changes with [hashchange event](https://developer.mozilla.org/en-US/docs/Web/API/Window/hashchange_event)
+and allows changing it with `setHash` function:
+
+<Demo data={HooksDemos.useHashDemo} />
+
+## Definition
+
+```tsx
+function useHash(): readonly [string, (value: string) => void];
+```

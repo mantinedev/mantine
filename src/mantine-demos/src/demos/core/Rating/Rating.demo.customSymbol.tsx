@@ -1,120 +1,120 @@
 import React from 'react';
 import { MantineDemo } from '@mantine/ds';
-import { Rating, useMantineTheme, Group, rem } from '@mantine/core';
+import { Rating, rem } from '@mantine/core';
 import {
   IconMoodCry,
   IconMoodSad,
   IconMoodSmile,
   IconMoodHappy,
   IconMoodCrazyHappy,
-  IconMoodEmpty,
+} from '@tabler/icons-react';
+
+const code = `
+import { Rating, rem } from '@mantine/core';
+import {
+  IconMoodCry,
+  IconMoodSad,
+  IconMoodSmile,
+  IconMoodHappy,
+  IconMoodCrazyHappy,
 } from '@tabler/icons-react';
 
-const code = `
-import { Rating, useMantineTheme, rem } from '@mantine/core';
-import {
-  IconMoodEmpty,
-  IconMoodCry,
-  IconMoodSad,
-  IconMoodSmile,
-  IconMoodHappy,
-  IconMoodCrazyHappy,
-} from '@tabler/icons-react';
+const getIconStyle = (color?: string) => ({
+  width: rem(24),
+  height: rem(24),
+  color: color ? \`var(--mantine-color-\${color}-7)\` : undefined,
+});
+
+const getEmptyIcon = (value: number) => {
+  const iconStyle = getIconStyle();
+
+  switch (value) {
+    case 1:
+      return <IconMoodCry style={iconStyle} />;
+    case 2:
+      return <IconMoodSad style={iconStyle} />;
+    case 3:
+      return <IconMoodSmile style={iconStyle} />;
+    case 4:
+      return <IconMoodHappy style={iconStyle} />;
+    case 5:
+      return <IconMoodCrazyHappy style={iconStyle} />;
+    default:
+      return null;
+  }
+};
+
+const getFullIcon = (value: number) => {
+  switch (value) {
+    case 1:
+      return <IconMoodCry style={getIconStyle('red')} />;
+    case 2:
+      return <IconMoodSad style={getIconStyle('orange')} />;
+    case 3:
+      return <IconMoodSmile style={getIconStyle('yellow')} />;
+    case 4:
+      return <IconMoodHappy style={getIconStyle('lime')} />;
+    case 5:
+      return <IconMoodCrazyHappy style={getIconStyle('green')} />;
+    default:
+      return null;
+  }
+};
 
 function Demo() {
-
-  const getEmptyIcon = (value: number) => {
-    const defaultProps = { size: rem(24), color: 'gray' };
-    switch (value) {
-      case 1:
-        return <IconMoodCry {...defaultProps} />;
-      case 2:
-        return <IconMoodSad {...defaultProps} />;
-      case 3:
-        return <IconMoodSmile {...defaultProps} />;
-      case 4:
-        return <IconMoodHappy {...defaultProps} />;
-      case 5:
-        return <IconMoodCrazyHappy {...defaultProps} />;
-      default:
-        return <IconMoodEmpty {...defaultProps} />;
-    }
-  };
-
-  const getFullIcon = (value: number) => {
-    const defaultProps = { size: rem(24) };
-    const theme = useMantineTheme();
-
-    switch (value) {
-      case 1:
-        return <IconMoodCry {...defaultProps} color={theme.colors.red[7]} />;
-      case 2:
-        return <IconMoodSad {...defaultProps} color={theme.colors.orange[7]} />;
-      case 3:
-        return <IconMoodSmile {...defaultProps} color={theme.colors.yellow[7]} />;
-      case 4:
-        return <IconMoodHappy {...defaultProps} color={theme.colors.lime[7]} />;
-      case 5:
-        return <IconMoodCrazyHappy {...defaultProps} color={theme.colors.green[7]} />;
-      default:
-        return <IconMoodEmpty {...defaultProps} />;
-    }
-  };
-
-  return (
-    <Rating emptySymbol={getEmptyIcon} fullSymbol={getFullIcon} highlightSelectedOnly />
-  );
+  return <Rating emptySymbol={getEmptyIcon} fullSymbol={getFullIcon} highlightSelectedOnly />;
 }
 `;
 
+const getIconStyle = (color?: string) => ({
+  width: rem(24),
+  height: rem(24),
+  color: color ? `var(--mantine-color-${color}-7)` : undefined,
+});
+
+const getEmptyIcon = (value: number) => {
+  const iconStyle = getIconStyle();
+
+  switch (value) {
+    case 1:
+      return <IconMoodCry style={iconStyle} />;
+    case 2:
+      return <IconMoodSad style={iconStyle} />;
+    case 3:
+      return <IconMoodSmile style={iconStyle} />;
+    case 4:
+      return <IconMoodHappy style={iconStyle} />;
+    case 5:
+      return <IconMoodCrazyHappy style={iconStyle} />;
+    default:
+      return null;
+  }
+};
+
+const getFullIcon = (value: number) => {
+  switch (value) {
+    case 1:
+      return <IconMoodCry style={getIconStyle('red')} />;
+    case 2:
+      return <IconMoodSad style={getIconStyle('orange')} />;
+    case 3:
+      return <IconMoodSmile style={getIconStyle('yellow')} />;
+    case 4:
+      return <IconMoodHappy style={getIconStyle('lime')} />;
+    case 5:
+      return <IconMoodCrazyHappy style={getIconStyle('green')} />;
+    default:
+      return null;
+  }
+};
+
 function Demo() {
-  const getEmptyIcon = (value: number) => {
-    const defaultProps = { size: rem(24), color: 'gray' };
-
-    switch (value) {
-      case 1:
-        return <IconMoodCry {...defaultProps} />;
-      case 2:
-        return <IconMoodSad {...defaultProps} />;
-      case 3:
-        return <IconMoodSmile {...defaultProps} />;
-      case 4:
-        return <IconMoodHappy {...defaultProps} />;
-      case 5:
-        return <IconMoodCrazyHappy {...defaultProps} />;
-      default:
-        return <IconMoodEmpty {...defaultProps} />;
-    }
-  };
-
-  const getFullIcon = (value: number) => {
-    const defaultProps = { size: rem(24) };
-    const theme = useMantineTheme();
-
-    switch (value) {
-      case 1:
-        return <IconMoodCry {...defaultProps} color={theme.colors.red[7]} />;
-      case 2:
-        return <IconMoodSad {...defaultProps} color={theme.colors.orange[7]} />;
-      case 3:
-        return <IconMoodSmile {...defaultProps} color={theme.colors.yellow[7]} />;
-      case 4:
-        return <IconMoodHappy {...defaultProps} color={theme.colors.lime[7]} />;
-      case 5:
-        return <IconMoodCrazyHappy {...defaultProps} color={theme.colors.green[7]} />;
-      default:
-        return <IconMoodEmpty {...defaultProps} />;
-    }
-  };
-  return (
-    <Group position="center">
-      <Rating emptySymbol={getEmptyIcon} fullSymbol={getFullIcon} highlightSelectedOnly />
-    </Group>
-  );
+  return <Rating emptySymbol={getEmptyIcon} fullSymbol={getFullIcon} highlightSelectedOnly />;
 }
 
 export const customSymbol: MantineDemo = {
-  type: 'demo',
+  type: 'code',
   code,
   component: Demo,
+  centered: true,
 };

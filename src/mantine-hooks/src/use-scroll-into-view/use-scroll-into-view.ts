@@ -36,7 +36,7 @@ interface ScrollIntoViewParams {
 
 export function useScrollIntoView<
   Target extends HTMLElement,
-  Parent extends HTMLElement | null = null
+  Parent extends HTMLElement | null = null,
 >({
   duration = 1250,
   axis = 'y',

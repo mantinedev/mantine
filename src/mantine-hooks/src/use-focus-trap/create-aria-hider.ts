@@ -1,9 +1,9 @@
 import { randomId } from '../utils';
 
-type Value = {
+interface Value {
   node: HTMLElement;
-  ariaHidden: string;
-};
+  ariaHidden: string | null;
+}
 
 export function createAriaHider(
   containerNode: HTMLElement,
@@ -11,34 +11,33 @@ export function createAriaHider(
 ) {
   const id = randomId();
 
-  const rootNodes: Value[] = Array.from<HTMLElement>(document.querySelectorAll(selector)).map(
-    (node) => {
-      if (node?.shadowRoot?.contains(containerNode) || node.contains(containerNode)) {
-        return undefined;
-      }
-
-      const ariaHidden = node.getAttribute('aria-hidden');
-      const prevAriaHidden = node.getAttribute('data-hidden');
-      const prevFocusId = node.getAttribute('data-focus-id');
-
-      node.setAttribute('data-focus-id', id);
-
-      if (ariaHidden === null || ariaHidden === 'false') {
-        node.setAttribute('aria-hidden', 'true');
-      } else if (!prevAriaHidden && !prevFocusId) {
-        node.setAttribute('data-hidden', ariaHidden);
-      }
-
-      return {
-        node,
-        ariaHidden: prevAriaHidden || null,
-      };
+  const rootNodes: (Value | undefined)[] = Array.from<HTMLElement>(
+    document.querySelectorAll(selector)
+  ).map((node) => {
+    if (node?.shadowRoot?.contains(containerNode) || node.contains(containerNode)) {
+      return undefined;
     }
-  );
+
+    const ariaHidden = node.getAttribute('aria-hidden');
+    const prevAriaHidden = node.getAttribute('data-hidden');
+    const prevFocusId = node.getAttribute('data-focus-id');
+
+    node.setAttribute('data-focus-id', id);
+
+    if (ariaHidden === null || ariaHidden === 'false') {
+      node.setAttribute('aria-hidden', 'true');
+    } else if (!prevAriaHidden && !prevFocusId) {
+      node.setAttribute('data-hidden', ariaHidden);
+    }
+
+    return {
+      node,
+      ariaHidden: prevAriaHidden || null,
+    };
+  });
 
   return () => {
     rootNodes.forEach((item) => {
-      // If node contains the target container OR the focus trap ID has changed, don't perform cleanup
       if (!item || id !== item.node.getAttribute('data-focus-id')) {
         return;
       }

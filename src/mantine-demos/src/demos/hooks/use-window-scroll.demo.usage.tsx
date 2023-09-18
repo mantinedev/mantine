@@ -11,7 +11,7 @@ function Demo() {
   const [scroll, scrollTo] = useWindowScroll();
 
   return (
-    <Group position="center">
+    <Group justify="center">
       <Text>
         Scroll position x: {scroll.x}, y: {scroll.y}
       </Text>
@@ -25,7 +25,7 @@ function Demo() {
   const [scroll, scrollTo] = useWindowScroll();
 
   return (
-    <Group position="center">
+    <Group justify="center">
       <Text>
         Scroll position x: {scroll.x}, y: {scroll.y}
       </Text>
@@ -35,7 +35,7 @@ function Demo() {
 }
 
 export const useWindowScrollDemo: MantineDemo = {
-  type: 'demo',
+  type: 'code',
   code,
   component: Demo,
 };

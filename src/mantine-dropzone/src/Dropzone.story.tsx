@@ -14,17 +14,21 @@ export function Usage() {
   );
 }
 
-export function Statues() {
+export function Loading() {
   return (
     <div style={{ padding: 40 }}>
-      <Dropzone onDrop={console.log} accept={['image/jpeg', 'image/png']}>
-        <Dropzone.Accept>
-          <div>Accept file</div>
-        </Dropzone.Accept>
-        <Dropzone.Reject>
-          <div>Rejected files</div>
-        </Dropzone.Reject>
-        <Dropzone.Idle>Idling</Dropzone.Idle>
+      <Dropzone onDrop={console.log} accept={['image/jpeg', 'image/png']} loading>
+        <div>Drag and drop files</div>
+      </Dropzone>
+    </div>
+  );
+}
+
+export function NoClick() {
+  return (
+    <div style={{ padding: 40 }}>
+      <Dropzone onDrop={console.log} accept={['image/jpeg', 'image/png']} activateOnClick={false}>
+        <div>Drag and drop files</div>
       </Dropzone>
     </div>
   );

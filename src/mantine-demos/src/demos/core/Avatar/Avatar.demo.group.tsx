@@ -1,5 +1,5 @@
 import React from 'react';
-import { Avatar, Group } from '@mantine/core';
+import { Avatar } from '@mantine/core';
 import { MantineDemo } from '@mantine/ds';
 import { avatars } from './_mockdata';
 
@@ -8,11 +8,11 @@ import { Avatar } from '@mantine/core';
 
 function Demo() {
   return (
-    <Avatar.Group spacing="sm">
-      <Avatar src="image.png" radius="xl" />
-      <Avatar src="image.png" radius="xl" />
-      <Avatar src="image.png" radius="xl" />
-      <Avatar radius="xl">+5</Avatar>
+    <Avatar.Group>
+      <Avatar src="image.png" />
+      <Avatar src="image.png" />
+      <Avatar src="image.png" />
+      <Avatar>+5</Avatar>
     </Avatar.Group>
   );
 }
@@ -20,19 +20,18 @@ function Demo() {
 
 function Demo() {
   return (
-    <Group position="center">
-      <Avatar.Group spacing="sm">
-        <Avatar src={avatars[0]} radius="xl" />
-        <Avatar src={avatars[1]} radius="xl" />
-        <Avatar src={avatars[2]} radius="xl" />
-        <Avatar radius="xl">+5</Avatar>
-      </Avatar.Group>
-    </Group>
+    <Avatar.Group>
+      <Avatar src={avatars[0]} />
+      <Avatar src={avatars[1]} />
+      <Avatar src={avatars[2]} />
+      <Avatar>+5</Avatar>
+    </Avatar.Group>
   );
 }
 
 export const group: MantineDemo = {
-  type: 'demo',
+  type: 'code',
+  centered: true,
   code,
   component: Demo,
 };

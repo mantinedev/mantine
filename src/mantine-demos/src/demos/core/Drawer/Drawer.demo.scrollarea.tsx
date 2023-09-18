@@ -1,11 +1,11 @@
 import React from 'react';
 import { useDisclosure } from '@mantine/hooks';
-import { Drawer, Group, Button, ScrollArea } from '@mantine/core';
+import { Drawer, Button, ScrollArea } from '@mantine/core';
 import { MantineDemo } from '@mantine/ds';
 
 const code = `
 import { useDisclosure } from '@mantine/hooks';
-import { Drawer, Group, Button } from '@mantine/core';
+import { Drawer, Button, ScrollArea } from '@mantine/core';
 
 function Demo() {
   const [opened, { open, close }] = useDisclosure(false);
@@ -25,9 +25,7 @@ function Demo() {
         {content}
       </Drawer>
 
-      <Group position="center">
-        <Button onClick={open}>Open drawer</Button>
-      </Group>
+      <Button onClick={open}>Open drawer</Button>
     </>
   );
 }
@@ -51,15 +49,14 @@ function Demo() {
         {content}
       </Drawer>
 
-      <Group position="center">
-        <Button onClick={open}>Open drawer</Button>
-      </Group>
+      <Button onClick={open}>Open drawer</Button>
     </>
   );
 }
 
 export const scrollarea: MantineDemo = {
-  type: 'demo',
+  type: 'code',
   code,
+  centered: true,
   component: Demo,
 };

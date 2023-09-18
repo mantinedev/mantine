@@ -11,11 +11,13 @@ function Demo() {
 `;
 
 function Demo() {
-  return <FileInput maw={320} mx="auto" label="Upload files" placeholder="Upload files" multiple />;
+  return <FileInput multiple label="Upload files" placeholder="Upload files" />;
 }
 
 export const multiple: MantineDemo = {
-  type: 'demo',
+  type: 'code',
   code,
   component: Demo,
+  centered: true,
+  maxWidth: 340,
 };

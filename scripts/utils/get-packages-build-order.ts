@@ -29,11 +29,11 @@ export async function getPackageBuildOrder(
   }
 
   await Promise.all(
-    dependencies.map((dependency) => getPackageBuildOrder(packages, dependency, order))
+    dependencies.map((dependency) => getPackageBuildOrder(packages, dependency!, order))
   );
 
   order[name] =
-    1 + Math.max(...dependencies.map((dependency) => order[dependency.packageJson.name]));
+    1 + Math.max(...dependencies.map((dependency) => order[dependency!.packageJson.name]));
 }
 
 export async function getPackagesBuildOrder(
@@ -49,5 +49,5 @@ export async function getPackagesBuildOrder(
   return Object.keys(order)
     .filter((p) => order[p] !== -1)
     .sort((a, b) => order[a] - order[b])
-    .map((p) => packages.find((dataItem) => dataItem.packageJson.name === p));
+    .map((p) => packages!.find((dataItem) => dataItem.packageJson.name === p));
 }

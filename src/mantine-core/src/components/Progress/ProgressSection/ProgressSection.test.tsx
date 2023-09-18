@@ -1,0 +1,61 @@
+import React from 'react';
+import { render, screen, tests, createContextContainer } from '@mantine/tests';
+import {
+  ProgressSection,
+  ProgressSectionProps,
+  ProgressSectionStylesNames,
+} from './ProgressSection';
+import { ProgressRoot } from '../ProgressRoot/ProgressRoot';
+
+const TestContainer = createContextContainer(ProgressSection, ProgressRoot, {});
+
+const defaultProps: ProgressSectionProps = {
+  value: 20,
+};
+
+describe('@mantine/core/ProgressSection', () => {
+  tests.axe([<TestContainer {...defaultProps} aria-label="test" />]);
+
+  tests.itSupportsSystemProps<ProgressSectionProps, ProgressSectionStylesNames>({
+    component: TestContainer,
+    props: defaultProps,
+    styleProps: true,
+    children: true,
+    extend: true,
+    variant: true,
+    size: true,
+    classes: true,
+    refType: HTMLDivElement,
+    displayName: '@mantine/core/ProgressSection',
+    stylesApiSelectors: ['section'],
+    stylesApiName: 'Progress',
+    selector: '[role="progressbar"]',
+    compound: true,
+    providerStylesApi: false,
+  });
+
+  it('sets aria attributes based on props', () => {
+    render(<TestContainer value={20} />);
+    const element = screen.getByRole('progressbar');
+
+    expect(element).toHaveAttribute('aria-valuemax', '100');
+    expect(element).toHaveAttribute('aria-valuemin', '0');
+    expect(element).toHaveAttribute('aria-valuenow', '20');
+    expect(element).toHaveAttribute('aria-valuetext', '20%');
+  });
+
+  it('sets data-striped attribute based on striped prop', () => {
+    const { rerender } = render(<TestContainer value={20} striped />);
+    expect(screen.getByRole('progressbar')).toHaveAttribute('data-striped');
+    rerender(<TestContainer value={20} striped={false} />);
+    expect(screen.getByRole('progressbar')).not.toHaveAttribute('data-striped');
+  });
+
+  it('sets data-animated attribute based on animated prop', () => {
+    const { rerender } = render(<TestContainer value={20} animated />);
+    expect(screen.getByRole('progressbar')).toHaveAttribute('data-animated');
+    expect(screen.getByRole('progressbar')).toHaveAttribute('data-striped');
+    rerender(<TestContainer value={20} animated={false} />);
+    expect(screen.getByRole('progressbar')).not.toHaveAttribute('data-animated');
+  });
+});

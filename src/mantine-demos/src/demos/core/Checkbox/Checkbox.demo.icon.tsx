@@ -7,8 +7,8 @@ const code = `
 import { Checkbox, CheckboxProps } from '@mantine/core';
 import { IconBiohazard, IconRadioactive } from '@tabler/icons-react';
 
-const CheckboxIcon: CheckboxProps['icon'] = ({ indeterminate, className }) =>
-  indeterminate ? <IconRadioactive className={className} /> : <IconBiohazard className={className} />;
+const CheckboxIcon: CheckboxProps['icon'] = ({ indeterminate, ...others }) =>
+  indeterminate ? <IconRadioactive {...others} /> : <IconBiohazard {...others} />;
 
 function Demo() {
   return (
@@ -20,15 +20,8 @@ function Demo() {
 }
 `;
 
-const CheckboxIcon: CheckboxProps['icon'] = ({
-  indeterminate,
-  className,
-}: React.ComponentProps<CheckboxProps['icon']>) =>
-  indeterminate ? (
-    <IconRadioactive className={className} />
-  ) : (
-    <IconBiohazard className={className} />
-  );
+const CheckboxIcon: CheckboxProps['icon'] = ({ indeterminate, ...others }) =>
+  indeterminate ? <IconRadioactive {...others} /> : <IconBiohazard {...others} />;
 
 function Demo() {
   return (
@@ -40,7 +33,7 @@ function Demo() {
 }
 
 export const icon: MantineDemo = {
-  type: 'demo',
+  type: 'code',
   component: Demo,
   code,
 };

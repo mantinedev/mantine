@@ -7,7 +7,7 @@ import { HoverCard, Button, Text, Group } from '@mantine/core';
 
 function Demo() {
   return (
-    <Group position="center">
+    <Group justify="center">
       <HoverCard width={280} shadow="md">
         <HoverCard.Target>
           <Button>Hover to reveal the card</Button>
@@ -27,7 +27,7 @@ function Demo() {
 
 function Demo() {
   return (
-    <Group position="center">
+    <Group justify="center">
       <HoverCard width={280} shadow="md">
         <HoverCard.Target>
           <Button>Hover to reveal the card</Button>
@@ -44,7 +44,7 @@ function Demo() {
 }
 
 export const usage: MantineDemo = {
-  type: 'demo',
+  type: 'code',
   component: Demo,
   code,
 };

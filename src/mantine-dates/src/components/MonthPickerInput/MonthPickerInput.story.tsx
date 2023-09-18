@@ -1,5 +1,3 @@
-import { MANTINE_SIZES } from '@mantine/core';
-import { WithinOverlays } from '@mantine/storybook';
 import dayjs from 'dayjs';
 import React from 'react';
 import { MonthPickerInput } from './MonthPickerInput';
@@ -95,16 +93,8 @@ export function Clearable() {
 }
 
 export function Sizes() {
-  const sizes = MANTINE_SIZES.map((size) => (
+  const sizes = (['xs', 'sm', 'md', 'lg', 'xl'] as const).map((size) => (
     <MonthPickerInput size={size} key={size} placeholder={size} label={size} mt="xl" />
   ));
   return <div style={{ padding: 40 }}>{sizes}</div>;
-}
-
-export function InOverlays() {
-  return (
-    <WithinOverlays>
-      <MonthPickerInput />
-    </WithinOverlays>
-  );
 }

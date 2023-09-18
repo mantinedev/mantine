@@ -1,7 +1,6 @@
 import React from 'react';
 import { MantineDemo } from '@mantine/ds';
 import { YearPickerInput } from '@mantine/dates';
-import { Box } from '@mantine/core';
 
 const code = `
 import { YearPickerInput } from '@mantine/dates';
@@ -10,8 +9,10 @@ function Demo() {
   return (
     <YearPickerInput
       valueFormat="YY"
+      type="multiple"
       label="Disabled"
       placeholder="Pick year"
+      disabled
     />
   );
 }
@@ -19,20 +20,20 @@ function Demo() {
 
 function Demo() {
   return (
-    <Box maw={320} mx="auto">
-      <YearPickerInput
-        valueFormat="YY"
-        type="multiple"
-        label="Disabled"
-        placeholder="Pick year"
-        disabled
-      />
-    </Box>
+    <YearPickerInput
+      valueFormat="YY"
+      type="multiple"
+      label="Disabled"
+      placeholder="Pick year"
+      disabled
+    />
   );
 }
 
 export const disabled: MantineDemo = {
-  type: 'demo',
+  type: 'code',
+  centered: true,
+  maxWidth: 400,
   component: Demo,
   code,
 };

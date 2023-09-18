@@ -8,7 +8,7 @@ import { Group, Pagination } from '@mantine/core';
 function Demo() {
   return (
     <Pagination.Root total={10}>
-      <Group spacing={5} position="center">
+      <Group gap={5} justify="center">
         <Pagination.First />
         <Pagination.Previous />
         <Pagination.Items />
@@ -23,7 +23,7 @@ function Demo() {
 function Demo() {
   return (
     <Pagination.Root total={10}>
-      <Group spacing={5} position="center">
+      <Group gap={5} justify="center">
         <Pagination.First />
         <Pagination.Previous />
         <Pagination.Items />
@@ -35,7 +35,7 @@ function Demo() {
 }
 
 export const composition: MantineDemo = {
-  type: 'demo',
+  type: 'code',
   component: Demo,
   code,
 };

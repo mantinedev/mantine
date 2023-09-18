@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Paper, Button, Group, useMantineTheme, rem } from '@mantine/core';
+import { Paper, Button, Group, rem } from '@mantine/core';
 import { MantineDemo } from '@mantine/ds';
 import { useClickOutside } from '@mantine/hooks';
 
@@ -27,14 +27,13 @@ function Demo() {
 `;
 
 function Demo() {
-  const theme = useMantineTheme();
   const [opened, setOpened] = useState(false);
   const ref = useClickOutside(() => setOpened(false));
 
   return (
     <>
       <div style={{ position: 'relative' }}>
-        <Group position="center">
+        <Group justify="center">
           <Button onClick={() => setOpened(true)}>Open dropdown</Button>
         </Group>
 
@@ -42,7 +41,7 @@ function Demo() {
           <Paper
             ref={ref}
             shadow="sm"
-            sx={{
+            style={{
               width: rem(300),
               height: rem(60),
               position: 'absolute',
@@ -51,7 +50,7 @@ function Demo() {
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
-              backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.white,
+              zIndex: 1,
             }}
           >
             <span>Click outside to close</span>
@@ -63,7 +62,8 @@ function Demo() {
 }
 
 export const useClickOutsideUsage: MantineDemo = {
-  type: 'demo',
+  type: 'code',
   component: Demo,
   code,
+  dimmed: true,
 };

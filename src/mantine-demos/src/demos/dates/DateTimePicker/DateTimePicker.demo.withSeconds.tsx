@@ -6,32 +6,18 @@ const code = `
 import { DateTimePicker } from '@mantine/dates';
 
 function Demo() {
-  return (
-    <DateTimePicker
-      withSeconds
-      label="Pick date and time"
-      placeholder="Pick date and time"
-      maw={400}
-      mx="auto"
-    />
-  );
+  return <DateTimePicker withSeconds label="Pick date and time" placeholder="Pick date and time" />;
 }
 `;
 
 function Demo() {
-  return (
-    <DateTimePicker
-      withSeconds
-      label="Pick date and time"
-      placeholder="Pick date and time"
-      maw={400}
-      mx="auto"
-    />
-  );
+  return <DateTimePicker withSeconds label="Pick date and time" placeholder="Pick date and time" />;
 }
 
 export const withSeconds: MantineDemo = {
-  type: 'demo',
+  type: 'code',
+  centered: true,
+  maxWidth: 400,
   component: Demo,
   code,
 };

@@ -1,31 +1,22 @@
 import React from 'react';
 import { MantineDemo } from '@mantine/ds';
-import { Group } from '@mantine/core';
 import { MonthPicker } from '@mantine/dates';
 
 const code = `
-import { Group } from '@mantine/core';
 import { MonthPicker } from '@mantine/dates';
 
 function Demo() {
-  return (
-    <Group position="center">
-      <MonthPicker maxLevel="year" />
-    </Group>
-  );
+  return <MonthPicker maxLevel="year" />;
 }
 `;
 
 function Demo() {
-  return (
-    <Group position="center">
-      <MonthPicker maxLevel="year" />
-    </Group>
-  );
+  return <MonthPicker maxLevel="year" />;
 }
 
 export const maxLevel: MantineDemo = {
-  type: 'demo',
+  type: 'code',
+  centered: true,
   component: Demo,
   code,
 };

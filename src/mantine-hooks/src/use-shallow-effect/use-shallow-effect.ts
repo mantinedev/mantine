@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react';
 import { shallowEqual } from '../utils/shallow-equal/shallow-equal';
 
-function shallowCompare(prevValue: React.DependencyList, currValue: React.DependencyList) {
+function shallowCompare(prevValue?: React.DependencyList | null, currValue?: React.DependencyList) {
   if (!prevValue || !currValue) {
     return false;
   }
@@ -23,8 +23,8 @@ function shallowCompare(prevValue: React.DependencyList, currValue: React.Depend
   return true;
 }
 
-function useShallowCompare(dependencies: React.DependencyList) {
-  const ref = useRef<React.DependencyList>([]);
+function useShallowCompare(dependencies?: React.DependencyList) {
+  const ref = useRef<React.DependencyList | null | undefined>([]);
   const updateRef = useRef<number>(0);
 
   if (!shallowCompare(ref.current, dependencies)) {

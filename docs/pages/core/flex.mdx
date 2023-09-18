@@ -1,0 +1,21 @@
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+import { FlexDemos } from '@mantine/demos';
+import { FLEX_STYLE_PROPS_DATA } from '@mantine/core';
+import { StylePropsTable } from '@/components/StylePropsTable';
+
+export default Layout(MDX_DATA.Flex);
+
+## Usage
+
+<Demo data={FlexDemos.configurator} />
+
+## Supported props
+
+<StylePropsTable source={FLEX_STYLE_PROPS_DATA} />
+
+## Responsive props
+
+`Flex` component props can have responsive values the same way as other [style props](/styles/style-props/):
+
+<Demo data={FlexDemos.responsive} />

@@ -1,0 +1,16 @@
+.timeWrapper {
+  display: flex;
+  align-items: stretch;
+  margin-top: var(--mantine-spacing-md);
+}
+
+.timeInput {
+  flex: 1;
+  margin-right: var(--_mr, var(--mantine-spacing-md));
+  margin-left: var(--_ml, 0);
+
+  @mixin rtl {
+    --_mr: 0;
+    --_ml: var(--mantine-spacing-md);
+  }
+}

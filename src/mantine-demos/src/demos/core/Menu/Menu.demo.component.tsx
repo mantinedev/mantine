@@ -1,7 +1,7 @@
 import React from 'react';
 import { IconExternalLink } from '@tabler/icons-react';
 import { MantineDemo } from '@mantine/ds';
-import { Menu, Group, Button, rem } from '@mantine/core';
+import { Menu, Button, rem } from '@mantine/core';
 
 const code = `
 import { Menu, Button, rem } from '@mantine/core';
@@ -18,9 +18,8 @@ function Demo() {
         <Menu.Item component="a" href="https://mantine.dev">
           Mantine website
         </Menu.Item>
-
         <Menu.Item
-          icon={<IconExternalLink size={rem(14)} />}
+          leftSection={<IconExternalLink style={{ width: rem(14), height: rem(14) }} />}
           component="a"
           href="https://mantine.dev"
           target="_blank"
@@ -35,32 +34,31 @@ function Demo() {
 
 function Demo() {
   return (
-    <Group position="center">
-      <Menu width={200} shadow="md">
-        <Menu.Target>
-          <Button>Toggle menu</Button>
-        </Menu.Target>
+    <Menu width={200} shadow="md">
+      <Menu.Target>
+        <Button>Toggle menu</Button>
+      </Menu.Target>
 
-        <Menu.Dropdown>
-          <Menu.Item component="a" href="https://mantine.dev">
-            Mantine website
-          </Menu.Item>
-          <Menu.Item
-            icon={<IconExternalLink size={rem(14)} />}
-            component="a"
-            href="https://mantine.dev"
-            target="_blank"
-          >
-            External link
-          </Menu.Item>
-        </Menu.Dropdown>
-      </Menu>
-    </Group>
+      <Menu.Dropdown>
+        <Menu.Item component="a" href="https://mantine.dev">
+          Mantine website
+        </Menu.Item>
+        <Menu.Item
+          leftSection={<IconExternalLink style={{ width: rem(14), height: rem(14) }} />}
+          component="a"
+          href="https://mantine.dev"
+          target="_blank"
+        >
+          External link
+        </Menu.Item>
+      </Menu.Dropdown>
+    </Menu>
   );
 }
 
 export const component: MantineDemo = {
-  type: 'demo',
+  type: 'code',
   code,
   component: Demo,
+  centered: true,
 };

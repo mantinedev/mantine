@@ -60,7 +60,7 @@ function Demo() {
 }
 
 export const useHotkeysDemo: MantineDemo = {
-  type: 'demo',
+  type: 'code',
   code,
   component: Demo,
 };

@@ -3,10 +3,10 @@ import { useEffect, useState, useRef } from 'react';
 export function useDebouncedValue<T = any>(value: T, wait: number, options = { leading: false }) {
   const [_value, setValue] = useState(value);
   const mountedRef = useRef(false);
-  const timeoutRef = useRef<number>(null);
+  const timeoutRef = useRef<number | null>(null);
   const cooldownRef = useRef(false);
 
-  const cancel = () => window.clearTimeout(timeoutRef.current);
+  const cancel = () => window.clearTimeout(timeoutRef.current!);
 
   useEffect(() => {
     if (mountedRef.current) {

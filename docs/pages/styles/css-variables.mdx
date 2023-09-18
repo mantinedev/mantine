@@ -1,0 +1,246 @@
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+import { CssVariablesTable } from '@/components/CssVariablesTable';
+
+export default Layout(MDX_DATA.CssVariables);
+
+# Mantine CSS variables
+
+[MantineProvider](/theming/mantine-provider) exposes all Mantine CSS variables based on the given [theme](/theming/theme-object).
+You can use these variables in [CSS](/styles/css-modules) files, [style prop](/styles/style) or any other styles.
+Note that not all values are documented on this page, you can find full list of variables on [this page](/styles/css-variables-list).
+
+## Typography CSS variables
+
+The following CSS variables are used to control all typography styles (`font-family`, `font-size`, `line-height`)
+in all Mantine components:
+
+<CssVariablesTable
+  variables={[
+    '--mantine-font-family',
+    '--mantine-font-family-monospace',
+    '--mantine-font-family-headings',
+    '--mantine-font-size-xs',
+    '--mantine-font-size-sm',
+    '--mantine-font-size-md',
+    '--mantine-font-size-lg',
+    '--mantine-font-size-xl',
+    '--mantine-line-height-xs',
+    '--mantine-line-height-sm',
+    '--mantine-line-height-md',
+    '--mantine-line-height-lg',
+    '--mantine-line-height-xl',
+  ]}
+/>
+
+Usage:
+
+```css
+.demo {
+  font-family: var(--mantine-font-family);
+  font-size: var(--mantine-font-size-md);
+  line-height: var(--mantine-line-height-md);
+}
+```
+
+## Spacing
+
+Spacing CSS variables are used to control margins and paddings in most of Mantine components.
+They are also used in `p` and `m` [style props](/styles/style-props):
+
+<CssVariablesTable
+  variables={[
+    '--mantine-spacing-xs',
+    '--mantine-spacing-sm',
+    '--mantine-spacing-md',
+    '--mantine-spacing-lg',
+    '--mantine-spacing-xl',
+  ]}
+/>
+
+Usage:
+
+```css
+.demo {
+  margin: var(--mantine-spacing-md);
+
+  /* With calc */
+  padding: calc(var(--mantine-spacing-xl) * 1.5);
+
+  /* Negative value */
+  margin-left: calc(var(--mantine-spacing-md) * -1);
+}
+```
+
+## Shadows
+
+Shadows CSS variables are used to control shadows in all Mantine components that support `shadow` prop:
+
+<CssVariablesTable
+  variables={[
+    '--mantine-shadow-xs',
+    '--mantine-shadow-sm',
+    '--mantine-shadow-md',
+    '--mantine-shadow-lg',
+    '--mantine-shadow-xl',
+  ]}
+/>
+
+Usage:
+
+```css
+.demo {
+  box-shadow: var(--mantine-shadow-md);
+}
+```
+
+## Radius
+
+Radius CSS variables are used to control border-radius in all Mantine components that support `radius` prop:
+
+<CssVariablesTable
+  variables={[
+    '--mantine-radius-default',
+    '--mantine-radius-xs',
+    '--mantine-radius-sm',
+    '--mantine-radius-md',
+    '--mantine-radius-lg',
+    '--mantine-radius-xl',
+  ]}
+/>
+
+Usage:
+
+```css
+.demo {
+  border-radius: var(--mantine-radius-md);
+}
+```
+
+## Colors
+
+All `theme.colors` values are exposed as CSS variables in `--mantine-color-{x}-{y}` format,
+where `x` is the color name and `y` is the color shade. For example, `--mantine-color-red-6` is `theme.colors.red[6]`.
+You can find the full default colors list in the [colors guide](/theming/colors/#default-colors).
+
+Usage:
+
+```css
+.demo {
+  color: var(--mantine-color-red-6);
+  background-color: var(--mantine-color-red-0);
+}
+```
+
+## Variant specific colors
+
+Variant specific variables for each color are exposed in the following format
+(`x` is the color name):
+
+- `--mantine-color-{x}-filled` – filled variant background-color
+- `--mantine-color-{x}-filled-hover` – filled variant background-color on hover
+- `--mantine-color-{x}-light` – light variant background-color
+- `--mantine-color-{x}-light-hover` – light variant background-color on hover
+- `--mantine-color-{x}-light-color` – light variant text color
+- `--mantine-color-{x}-outline` – outline variant border-color and text color
+- `--mantine-color-{x}-outline-hover` – outline variant background-color on hover
+
+Usage:
+
+```css
+.demo {
+  background-color: var(--mantine-color-blue-filled);
+  color: var(--mantine-color-white);
+
+  @mixin hover {
+    background-color: var(--mantine-color-blue-filled-hover);
+  }
+}
+```
+
+## Other colors variables
+
+- `--mantine-color-white` – value of `theme.white`
+- `--mantine-color-black` – value of `theme.black`
+- `--mantine-color-text` – text color set on `body` element
+- `--mantine-color-body` – `body` element background-color
+- `--mantine-color-error` – error color, used in [Input](/core/input) and other similar components
+- `--mantine-color-placeholder` – placeholder color, used in [Input](/core/input) and other similar components to set text color of placeholder
+- `--mantine-color-anchor` – anchor color, used in [Anchor](/core/anchor) component
+- `--mantine-color-default` – default variant background-color
+- `--mantine-color-default-hover` – default variant background-color on hover
+- `--mantine-color-default-color` – default variant text color
+- `--mantine-color-default-border` – default variant border-color
+
+Usage:
+
+```css
+.demo {
+  background-color: var(--mantine-color-body);
+
+  &[data-error] {
+    color: var(--mantine-color-error);
+  }
+
+  &::placeholder {
+    color: var(--mantine-color-placeholder);
+  }
+}
+```
+
+## CSS variables resolver
+
+`cssVariablesResolver` prop on [MantineProvider](/theming/mantine-provider) allows you to
+modify values of Mantine CSS variables or even add your own variables.
+`cssVariablesResolver` is a function that accepts [theme](/theming/theme-object) as a single
+argument and returns an object with CSS variables divided into three groups:
+
+- `variables` – variables that do not depend on color scheme
+- `light` – variables for light color scheme only
+- `dark` – variables for dark color scheme only
+
+Example of adding new CSS variables based on `theme.other`:
+
+```tsx
+import { MantineProvider, CSSVariablesResolver, createTheme, rem } from '@mantine/core';
+
+const themeOverride = createTheme({
+  other: {
+    deepOrangeLight: '#E17900',
+    deepOrangeDark: '#FC8C0C',
+    heroHeight: rem(400),
+  },
+});
+
+const resolver: CSSVariablesResolver = (theme) => ({
+  variables: {
+    '--mantine-hero-height': theme.other.heroHeight,
+  },
+  light: {
+    '--mantine-color-deep-orange': theme.other.deepOrangeLight,
+  },
+  dark: {
+    '--mantine-color-deep-orange': theme.other.deepOrangeDark,
+  },
+});
+
+function Demo() {
+  return (
+    <MantineProvider theme={themeOverride} cssVariablesResolver={resolver}>
+      <App />
+    </MantineProvider>
+  );
+}
+```
+
+Then you will be able to use `--mantine-hero-height` and `--mantine-color-deep-orange` variables
+in any part of your application:
+
+```css
+.hero {
+  height: var(--mantine-hero-height);
+
+  /* background color will automatically change based on color scheme */
+  background-color: var(--mantine-color-deep-orange);
+}
+```

@@ -1,6 +1,8 @@
 export { CalendarHeader } from './CalendarHeader';
 export type {
   CalendarHeaderProps,
-  CalendarHeaderStylesNames,
+  CalendarHeaderCssVariables,
   CalendarHeaderSettings,
+  CalendarHeaderFactory,
+  CalendarHeaderStylesNames,
 } from './CalendarHeader';

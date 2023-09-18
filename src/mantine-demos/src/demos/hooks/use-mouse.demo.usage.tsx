@@ -11,7 +11,7 @@ function Demo() {
   const { x, y } = useMouse();
 
   return (
-    <Text align="center">
+    <Text ta="center">
       Mouse coordinates <Code>{\`{ x: \${x}, y: \${y} }\`}</Code>
     </Text>
   );
@@ -21,14 +21,14 @@ function Demo() {
   const { x, y } = useMouse();
 
   return (
-    <Text align="center">
+    <Text ta="center">
       Mouse coordinates <Code>{`{ x: ${x}, y: ${y} }`}</Code>
     </Text>
   );
 }
 
 export const useMouseUsage: MantineDemo = {
-  type: 'demo',
+  type: 'code',
   code,
   component: Demo,
 };

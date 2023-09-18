@@ -1,17 +1,23 @@
+import React from 'react';
 import { MantineDemo } from '@mantine/ds';
-import { SegmentedControlWrapper } from './Wrapper';
+import { SegmentedControl } from '@mantine/core';
 
-const codeTemplate = (props: string) => `
+const code = `
 import { SegmentedControl } from '@mantine/core';
 
 function Demo() {
-  return <SegmentedControl${props} />;
+  return <SegmentedControl{{props}} data={['React', 'Angular', 'Vue', 'Svelte']} />;
 }
 `;
 
+function Wrapper(props: any) {
+  return <SegmentedControl data={['React', 'Angular', 'Vue', 'Svelte']} {...props} />;
+}
+
 export const configurator: MantineDemo = {
   type: 'configurator',
-  component: SegmentedControlWrapper,
-  codeTemplate,
-  configurator: [{ name: 'color', type: 'color', initialValue: 'blue', defaultValue: null }],
+  component: Wrapper,
+  code,
+  centered: true,
+  controls: [{ prop: 'color', type: 'color', initialValue: 'blue', libraryValue: null }],
 };

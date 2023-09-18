@@ -1,50 +1,47 @@
-import { Accordion, Box } from '@mantine/core';
 import React from 'react';
 import { MantineDemo } from '@mantine/ds';
-import { baseAccordionMockdata } from './_mockdata';
+import { Accordion } from '@mantine/core';
+import { groceries } from './_base';
 
 const code = `
 import { Accordion } from '@mantine/core';
 
 function Demo() {
+  // See groceries data above
+  const items = groceries.map((item) => (
+    <Accordion.Item key={item.value} value={item.value}>
+      <Accordion.Control icon={item.emoji} disabled={item.value === 'Bananas'}>
+        {item.value}
+      </Accordion.Control>
+      <Accordion.Panel>{item.description}</Accordion.Panel>
+    </Accordion.Item>
+  ));
+
   return (
-    <Accordion>
-      <Accordion.Item value="customization">
-        <Accordion.Control>Customization</Accordion.Control>
-        <Accordion.Panel>Colors, fonts, shadows and many other parts are customizable to fit your design needs</Accordion.Panel>
-      </Accordion.Item>
-
-      <Accordion.Item value="flexibility">
-        <Accordion.Control disabled>Flexibility</Accordion.Control>
-        <Accordion.Panel>Configure components appearance and behavior with vast amount of settings or overwrite any part of component styles</Accordion.Panel>
-      </Accordion.Item>
-
-      <Accordion.Item value="focus-ring">
-        <Accordion.Control>No annoying focus ring</Accordion.Control>
-        <Accordion.Panel>With new :focus-visible pseudo-class focus ring appears only when user navigates with keyboard</Accordion.Panel>
-      </Accordion.Item>
+    <Accordion maw={400} defaultValue="Apples">
+      {items}
     </Accordion>
   );
 }
 `;
 
-export const baseDemoItems = baseAccordionMockdata.map((item, index) => (
-  <Accordion.Item key={item.label} value={item.id}>
-    <Accordion.Control disabled={index === 1}>{item.label}</Accordion.Control>
-    <Accordion.Panel>{item.content}</Accordion.Panel>
-  </Accordion.Item>
-));
-
 function Demo() {
-  return (
-    <Box maw={380} mx="auto">
-      <Accordion>{baseDemoItems}</Accordion>
-    </Box>
-  );
+  const items = groceries.map((item) => (
+    <Accordion.Item key={item.value} value={item.value}>
+      <Accordion.Control icon={item.emoji} disabled={item.value === 'Bananas'}>
+        {item.value}
+      </Accordion.Control>
+      <Accordion.Panel>{item.description}</Accordion.Panel>
+    </Accordion.Item>
+  ));
+
+  return <Accordion defaultValue="Apples">{items}</Accordion>;
 }
 
 export const disabled: MantineDemo = {
-  type: 'demo',
+  type: 'code',
   component: Demo,
   code,
+  centered: true,
+  maxWidth: 600,
 };

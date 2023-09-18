@@ -42,7 +42,7 @@ function Demo() {
         </Text>
       </Skeleton>
 
-      <Group position="center" mt="xs">
+      <Group justify="center" mt="xs">
         <Button onClick={() => setLoading((l) => !l)}>Toggle Skeleton</Button>
       </Group>
     </>
@@ -50,7 +50,7 @@ function Demo() {
 }
 
 export const content: MantineDemo = {
-  type: 'demo',
+  type: 'code',
   component: Demo,
   code,
 };

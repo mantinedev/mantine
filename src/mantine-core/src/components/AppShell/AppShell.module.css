@@ -1,0 +1,170 @@
+.root {
+  &[data-resizing] {
+    --app-shell-transition-duration: 0ms !important;
+  }
+
+  &[data-disabled] {
+    --app-shell-header-offset: 0px !important;
+    --app-shell-navbar-offset: 0px !important;
+  }
+
+  @mixin light {
+    --_app-shell-border-color: var(--mantine-color-gray-3);
+  }
+
+  @mixin dark {
+    --_app-shell-border-color: var(--mantine-color-dark-4);
+  }
+}
+
+.navbar,
+.aside,
+.header,
+.main,
+.footer {
+  transition-duration: var(--app-shell-transition-duration);
+  transition-timing-function: var(--app-shell-transition-timing-function);
+}
+
+.navbar,
+.aside {
+  position: fixed;
+  display: flex;
+  flex-direction: column;
+  top: var(--_section-top, var(--app-shell-header-offset, 0px));
+  height: var(
+    --_section-height,
+    calc(100dvh - var(--app-shell-header-offset, 0px) - var(--app-shell-footer-offset, 0px))
+  );
+  background-color: var(--mantine-color-body);
+  transition-property: transform, top, height;
+
+  [data-layout='alt'] & {
+    --_section-top: 0px;
+    --_section-height: 100dvh;
+  }
+}
+
+.navbar {
+  left: var(--_navbar-left, 0px);
+  right: var(--_navbar-right);
+  width: var(--app-shell-navbar-width);
+  border-right: var(--_navbar-border-right);
+  border-left: var(--_navbar-border-left);
+  transition-property: transform, top, height;
+  transform: var(--_navbar-transform, var(--app-shell-navbar-transform));
+  z-index: var(--app-shell-navbar-z-index);
+
+  &[data-with-border] {
+    --_navbar-border-right: rem(1px) solid var(--_app-shell-border-color);
+
+    @mixin rtl {
+      --_navbar-border-right: none;
+      --_navbar-border-left: rem(1px) solid var(--_app-shell-border-color);
+    }
+  }
+
+  @mixin rtl {
+    --_navbar-left: auto;
+    --_navbar-right: 0px;
+    --_navbar-transform: var(--app-shell-navbar-transform-rtl);
+  }
+}
+
+.aside {
+  left: var(--_aside-left);
+  right: var(--_aside-right, 0px);
+  width: var(--app-shell-aside-width);
+  border-right: var(--_aside-border-right);
+  border-left: var(--_aside-border-left);
+  transform: var(--_aside-transform, var(--app-shell-aside-transform));
+  z-index: var(--app-shell-aside-z-index);
+
+  &[data-with-border] {
+    --_aside-border-left: rem(1px) solid var(--_app-shell-border-color);
+
+    @mixin rtl {
+      --_aside-border-left: none;
+      --_aside-border-right: rem(1px) solid var(--_app-shell-border-color);
+    }
+  }
+
+  @mixin rtl {
+    --_aside-left: 0px;
+    --_aside-right: auto;
+    --_aside-transform: var(--app-shell-aside-transform-rtl);
+  }
+}
+
+.main {
+  padding-left: var(
+    --_main-padding-left,
+    calc(var(--app-shell-navbar-offset, 0px) + var(--app-shell-padding))
+  );
+  padding-right: var(
+    --_main-padding-right,
+    calc(var(--app-shell-aside-offset, 0px) + var(--app-shell-padding))
+  );
+  padding-top: calc(var(--app-shell-header-offset, 0px) + var(--app-shell-padding));
+  padding-bottom: calc(var(--app-shell-footer-offset, 0px) + var(--app-shell-padding));
+  min-height: calc(
+    100dvh - var(--app-shell-header-offset, 0px) - var(--app-shell-footer-offset, 0px)
+  );
+  transition-property: padding;
+
+  @mixin rtl {
+    --_main-padding-left: calc(var(--app-shell-aside-offset, 0px) + var(--app-shell-padding));
+    --_main-padding-right: calc(var(--app-shell-navbar-offset, 0px) + var(--app-shell-padding));
+  }
+}
+
+.header,
+.footer {
+  position: fixed;
+  left: var(--_section-left, 0px);
+  right: var(--_section-right, 0px);
+  transition-property: transform, left, right;
+  background-color: var(--mantine-color-body);
+
+  [data-layout='alt'] & {
+    --_section-left: var(--app-shell-navbar-offset, 0px);
+
+    @mixin rtl {
+      --_section-right: var(--app-shell-navbar-offset, 0px);
+      --_section-left: 0px;
+    }
+  }
+}
+
+.header {
+  top: 0;
+  height: var(--app-shell-header-height);
+  background-color: var(--mantine-color-body);
+  border-bottom: var(--_header-border-bottom);
+  transform: var(--app-shell-header-transform);
+  z-index: var(--app-shell-header-z-index);
+
+  &[data-with-border] {
+    --_header-border-bottom: rem(1px) solid var(--_app-shell-border-color);
+  }
+}
+
+.footer {
+  bottom: 0;
+  height: var(--app-shell-footer-height);
+  border-top: var(--_footer-border-top);
+  transform: var(--app-shell-footer-transform);
+  z-index: var(--app-shell-footer-z-index);
+
+  &[data-with-border] {
+    --_footer-border-top: rem(1px) solid var(--_app-shell-border-color);
+  }
+}
+
+.section {
+  flex-grow: var(--_section-grow, 0);
+
+  &[data-grow] {
+    --_section-grow: 1;
+  }
+}

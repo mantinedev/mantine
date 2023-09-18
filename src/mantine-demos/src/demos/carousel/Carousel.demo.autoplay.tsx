@@ -13,8 +13,6 @@ function Demo() {
   const autoplay = useRef(Autoplay({ delay: 2000 }));
   return (
     <Carousel
-      maw={320}
-      mx="auto"
       withIndicators
       height={200}
       plugins={[autoplay.current]}
@@ -35,8 +33,6 @@ function Demo() {
 
   return (
     <Carousel
-      maw={320}
-      mx="auto"
       withIndicators
       height={200}
       plugins={[autoplay.current]}
@@ -49,7 +45,9 @@ function Demo() {
 }
 
 export const autoplay: MantineDemo = {
-  type: 'demo',
+  type: 'code',
   component: Demo,
   code,
+  centered: true,
+  maxWidth: 320,
 };

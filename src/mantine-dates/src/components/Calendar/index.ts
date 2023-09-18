@@ -6,5 +6,5 @@ export type {
   CalendarProps,
   CalendarStylesNames,
   CalendarBaseProps,
-  CalendarSystemProps,
+  CalendarFactory,
 } from './Calendar';

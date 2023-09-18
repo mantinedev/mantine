@@ -1,0 +1,100 @@
+.day {
+  --day-size-xs: rem(30px);
+  --day-size-sm: rem(36px);
+  --day-size-md: rem(42px);
+  --day-size-lg: rem(48px);
+  --day-size-xl: rem(54px);
+  --day-size: var(--day-size-sm);
+
+  width: var(--day-size, rem(36px));
+  height: var(--day-size, rem(36px));
+  font-size: calc(var(--day-size) / 2.8);
+  display: var(--_day-display, inline-flex);
+  justify-content: center;
+  align-items: center;
+  user-select: var(--_day-user-select, none);
+  cursor: var(--_day-cursor, pointer);
+  background-color: var(--_day-bg, transparent);
+  border-radius: var(--_day-radius, var(--mantine-radius-default));
+  color: var(--_day-color, var(--mantine-color-text));
+  opacity: var(--_day-opacity, 1);
+
+  @mixin hover {
+    &:not([data-static], [data-disabled]) {
+      @mixin light {
+        --_day-bg: var(--mantine-color-gray-0);
+      }
+
+      @mixin dark {
+        --_day-bg: var(--mantine-color-dark-5);
+      }
+    }
+  }
+
+  &[data-static] {
+    --_day-user-select: auto;
+    --_day-cursor: default;
+  }
+
+  &[data-weekend] {
+    --_day-color: var(--mantine-color-red-6);
+  }
+
+  &[data-outside] {
+    --_day-color: var(--mantine-color-dimmed);
+    --_day-opacity: 0.5;
+  }
+
+  &:disabled,
+  &[data-disabled] {
+    --_day-color: var(--mantine-color-dimmed);
+    --_day-cursor: not-allowed;
+    --_day-opacity: 0.5;
+  }
+
+  &[data-hidden] {
+    --_day-display: none;
+  }
+
+  &[data-in-range] {
+    --_day-bg: var(--mantine-primary-color-light-hover);
+    --_day-radius: 0;
+
+    @mixin hover {
+      [data-mantine-color-scheme] &:not([data-disabled], [data-static]) {
+        --_day-bg: var(--mantine-primary-color-light);
+      }
+    }
+  }
+
+  &[data-first-in-range] {
+    --_day-radius: var(--mantine-radius-default) 0 0 var(--mantine-radius-default);
+
+    @mixin rtl {
+      --_day-radius: 0 var(--mantine-radius-default) var(--mantine-radius-default) 0;
+    }
+  }
+
+  &[data-last-in-range] {
+    --_day-radius: 0 var(--mantine-radius-default) var(--mantine-radius-default) 0;
+
+    @mixin rtl {
+      --_day-radius: var(--mantine-radius-default) 0 0 var(--mantine-radius-default);
+    }
+  }
+
+  &[data-last-in-range][data-first-in-range] {
+    --_day-radius: var(--mantine-radius-default);
+  }
+
+  &[data-selected] {
+    --_day-bg: var(--mantine-primary-color-filled);
+    --_day-color: var(--mantine-color-white);
+
+    @mixin hover {
+      [data-mantine-color-scheme] &:not([data-disabled], [data-static]) {
+        --_day-bg: var(--mantine-primary-color-filled-hover);
+      }
+    }
+  }
+}

@@ -37,7 +37,7 @@ function Demo() {
 }
 
 export const pull: MantineDemo = {
-  type: 'demo',
+  type: 'code',
   component: Demo,
   code,
 };

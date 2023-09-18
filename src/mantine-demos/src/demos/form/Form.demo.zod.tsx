@@ -47,7 +47,7 @@ function Demo() {
           {...form.getInputProps('age')}
         />
 
-        <Group position="right" mt="xl">
+        <Group justify="flex-end" mt="xl">
           <Button type="submit">Submit</Button>
         </Group>
       </form>
@@ -57,7 +57,7 @@ function Demo() {
 `;
 
 export const zod: MantineDemo = {
-  type: 'demo',
+  type: 'code',
   component: SchemaBase,
   code,
 };

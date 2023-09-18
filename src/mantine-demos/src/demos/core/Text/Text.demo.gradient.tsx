@@ -1,45 +1,42 @@
 import React from 'react';
 import { MantineDemo } from '@mantine/ds';
-import { Text, Group } from '@mantine/core';
+import { Text } from '@mantine/core';
+import { gradientControls } from '../../../shared';
 
-const code = `
+const code = (props: any) => `
 import { Text } from '@mantine/core';
 
 function Demo() {
   return (
     <Text
+      size="xl"
+      fw={900}
       variant="gradient"
-      gradient={{ from: 'indigo', to: 'cyan', deg: 45 }}
-      sx={{ fontFamily: 'Greycliff CF, sans-serif' }}
-      ta="center"
-      fz="xl"
-      fw={700}
+      gradient={{ from: '${props.gradientFrom}', to: '${props.gradientTo}', deg: ${props.gradientDegree} }}
     >
-      Indigo cyan gradient
+      Gradient Text
     </Text>
   );
 }
 `;
 
-function Demo() {
+function Wrapper(props: any) {
   return (
-    <Group position="center">
-      <Text
-        variant="gradient"
-        gradient={{ from: 'indigo', to: 'cyan', deg: 45 }}
-        sx={{ fontFamily: 'Greycliff CF, sans-serif' }}
-        ta="center"
-        fz="xl"
-        fw={700}
-      >
-        Indigo cyan gradient
-      </Text>
-    </Group>
+    <Text
+      size="xl"
+      fw={900}
+      variant="gradient"
+      gradient={{ from: props.gradientFrom, to: props.gradientTo, deg: props.gradientDegree }}
+    >
+      Gradient Text
+    </Text>
   );
 }
 
 export const gradient: MantineDemo = {
-  type: 'demo',
-  component: Demo,
+  type: 'configurator',
+  component: Wrapper,
   code,
+  centered: true,
+  controls: gradientControls,
 };

@@ -1,0 +1,30 @@
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+import { SimpleGridDemos } from '@mantine/demos';
+
+export default Layout(MDX_DATA.SimpleGrid);
+
+## Usage
+
+`SimpleGrid` is a responsive grid system with equal width columns.
+It use CSS grid layout. If you need to set different widths for columns, use
+[Grid](/core/grid) component instead.
+
+<Demo data={SimpleGridDemos.usage} />
+
+## Responsive props
+
+`cols`, `spacing` and `verticalSpacing` props support object notation for responsive values,
+it works the same way as [style props](/styles/style-props): the object may have `base`, `xs`,
+`sm`, `md`, `lg` and `xl` key, and values from those keys will be applied according to current
+viewport width.
+
+In the following example, `cols={{ base: 1, sm: 2, lg: 5 }}` means:
+
+- 1 column if viewport width is less than `sm` breakpoint
+- 2 columns if viewport width is between `sm` and `lg` breakpoints
+- 5 columns if viewport width is greater than `lg` breakpoint
+
+Same logic applies to `spacing` and `verticalSpacing` props.
+
+<Demo data={SimpleGridDemos.responsive} />

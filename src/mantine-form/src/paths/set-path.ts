@@ -1,14 +1,14 @@
 import { klona } from 'klona/full';
 import { getSplittedPath } from './get-splitted-path';
 
-export function setPath<T>(path: unknown, value: unknown, values: T) {
+export function setPath<T>(path: unknown, value: unknown, values: T): T {
   const splittedPath = getSplittedPath(path);
 
   if (splittedPath.length === 0) {
     return values;
   }
 
-  const cloned = klona(values);
+  const cloned: any = klona(values);
 
   if (splittedPath.length === 1) {
     cloned[splittedPath[0]] = value;

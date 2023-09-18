@@ -1,0 +1,270 @@
+.root {
+  --stepper-icon-size-xs: rem(34px);
+  --stepper-icon-size-sm: rem(36px);
+  --stepper-icon-size-md: rem(42px);
+  --stepper-icon-size-lg: rem(48px);
+  --stepper-icon-size-xl: rem(52px);
+
+  --stepper-icon-size: var(--stepper-icon-size-md);
+  --stepper-color: var(--mantine-primary-color-filled);
+  --stepper-content-padding: var(--mantine-spacing-md);
+  --stepper-spacing: var(--mantine-spacing-md);
+  --stepper-radius: rem(1000px);
+  --stepper-fz: var(--mantine-font-size-md);
+}
+
+.steps {
+  display: flex;
+  flex-wrap: var(--_steps-wrap, nowrap);
+  gap: var(--_steps-gap);
+  align-items: var(--_steps-align-items, center);
+  flex-direction: var(--_steps-direction);
+
+  &[data-wrap] {
+    --_steps-wrap: wrap;
+    --_steps-gap: var(--mantine-spacing-md) 0;
+  }
+
+  &[data-orientation='vertical'] {
+    --_steps-direction: column;
+
+    &[data-icon-position='left'] {
+      --_steps-align-items: flex-start;
+    }
+
+    &[data-icon-position='right'] {
+      --_steps-align-items: flex-end;
+    }
+  }
+
+  &[data-orientation='horizontal'] {
+    --_steps-direction: row;
+  }
+}
+
+.separator {
+  --_separator-offset: calc(var(--stepper-icon-size) / 2 - rem(1px));
+
+  transition: background-color 150ms ease;
+  flex: 1;
+  height: var(--_separator-height);
+  width: var(--_separator-width);
+  margin-left: var(--_separator-ml);
+  margin-right: var(--_separator-mr);
+  margin-top: var(--_separator-mt);
+  margin-bottom: var(--_separator-mb);
+  background-color: var(--_separator-bg);
+
+  @mixin light {
+    --_separator-bg: var(--mantine-color-gray-2);
+  }
+
+  @mixin dark {
+    --_separator-bg: var(--mantine-color-dark-2);
+  }
+
+  &[data-active] {
+    --_separator-bg: var(--stepper-color);
+  }
+
+  &[data-orientation='horizontal'] {
+    --_separator-height: rem(2px);
+    --_separator-ml: var(--mantine-spacing-md);
+    --_separator-mr: var(--mantine-spacing-md);
+    --_separator-mt: 0;
+    --_separator-mb: 0;
+  }
+
+  &[data-orientation='vertical'] {
+    --_separator-width: rem(2px);
+    --_separator-mt: calc(var(--mantine-spacing-xs) / 2);
+    --_separator-mb: calc(var(--mantine-spacing-xs) - rem(2px));
+
+    &[data-icon-position='left'] {
+      --_separator-ml: var(--_separator-offset);
+      --_separator-mr: 0;
+
+      @mixin rtl {
+        --_separator-ml: 0;
+        --_separator-mr: var(--_separator-offset);
+      }
+    }
+
+    &[data-icon-position='right'] {
+      --_separator-ml: 0;
+      --_separator-mr: var(--_separator-offset);
+
+      @mixin rtl {
+        --_separator-ml: var(--_separator-offset);
+        --_separator-mr: 0;
+      }
+    }
+  }
+}
+
+.content {
+  padding-top: var(--stepper-content-padding);
+}
+
+.step {
+  --_step-color: var(--step-color, var(--stepper-color));
+  display: flex;
+  flex-direction: var(--_step-direction);
+  cursor: var(--_step-cursor, default);
+
+  &[data-allow-click] {
+    --_step-cursor: pointer;
+  }
+
+  &[data-icon-position='left'] {
+    --_step-direction: row;
+  }
+
+  &[data-icon-position='right'] {
+    --_step-direction: row-reverse;
+  }
+}
+
+.step--horizontal {
+  flex-direction: var(--_step-direction);
+  align-items: center;
+}
+
+.step--vertical {
+  --_separator-spacing: calc(var(--mantine-spacing-xs) / 2);
+
+  justify-content: flex-start;
+  min-height: calc(
+    var(--stepper-icon-size) + var(--mantine-spacing-xl) + var(--_separator-spacing)
+  );
+  margin-top: var(--_step-mt, var(--_separator-spacing));
+  overflow: hidden;
+
+  &:first-of-type {
+    --_step-mt: 0;
+  }
+
+  &:last-of-type .verticalSeparator {
+    display: none;
+  }
+}
+
+.stepWrapper {
+  position: relative;
+}
+
+.verticalSeparator {
+  top: calc(var(--stepper-icon-size) + var(--_separator-spacing));
+  left: calc(var(--stepper-icon-size) / 2);
+  height: 100vh;
+  position: absolute;
+  border-left: rem(2px) solid var(--_separator-border-color);
+
+  @mixin light {
+    --_separator-border-color: var(--mantine-color-gray-1);
+  }
+
+  @mixin dark {
+    --_separator-border-color: var(--mantine-color-dark-5);
+  }
+
+  [data-mantine-color-scheme] &[data-active] {
+    --_separator-border-color: var(--stepper-color);
+  }
+}
+
+.stepIcon {
+  height: var(--stepper-icon-size);
+  width: var(--stepper-icon-size);
+  min-height: var(--stepper-icon-size);
+  min-width: var(--stepper-icon-size);
+  border-radius: var(--stepper-radius);
+  font-size: var(--stepper-fz);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  font-weight: bold;
+  transition:
+    background-color 150ms ease,
+    border-color 150ms ease;
+  background-color: var(--_step-icon-bg);
+  border: rem(2px) solid var(--_step-icon-border-color);
+  color: var(--_step-icon-color);
+
+  @mixin light {
+    --_step-icon-bg: var(--mantine-color-gray-1);
+    --_step-icon-border-color: var(--mantine-color-gray-1);
+    --_step-icon-color: var(--mantine-color-gray-7);
+  }
+
+  @mixin dark {
+    --_step-icon-bg: var(--mantine-color-dark-5);
+    --_step-icon-border-color: var(--mantine-color-dark-5);
+    --_step-icon-color: var(--mantine-color-dark-1);
+  }
+
+  [data-mantine-color-scheme] &[data-progress] {
+    --_step-icon-border-color: var(--_step-color);
+  }
+
+  [data-mantine-color-scheme] &[data-completed] {
+    --_step-icon-color: var(--mantine-color-white);
+    --_step-icon-bg: var(--_step-color);
+    --_step-icon-border-color: var(--_step-color);
+  }
+}
+
+.stepCompletedIcon {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--mantine-color-white);
+}
+
+.stepBody {
+  display: flex;
+  flex-direction: column;
+  margin-left: var(--_step-body-ml);
+  margin-right: var(--_step-body-mr);
+  margin-top: var(--_step-body-mt);
+  text-align: var(--_step-body-ta);
+
+  &[data-icon-position='left'] {
+    --_step-body-ta: left;
+    --_step-body-ml: var(--mantine-spacing-sm);
+
+    @mixin rtl {
+      --_step-body-ta: right;
+      --_step-body-ml: 0;
+      --_step-body-mr: var(--mantine-spacing-sm);
+    }
+  }
+
+  &[data-icon-position='right'] {
+    --_step-body-ta: right;
+    --_step-body-mr: var(--mantine-spacing-sm);
+
+    @mixin rtl {
+      --_step-body-ta: left;
+      --_step-body-ml: var(--mantine-spacing-sm);
+      --_step-body-mr: 0;
+    }
+  }
+}
+
+.stepLabel {
+  font-weight: 500;
+  font-size: var(--stepper-fz);
+  line-height: 1;
+}
+
+.stepDescription {
+  margin-top: calc(var(--stepper-spacing) / 3);
+  margin-bottom: calc(var(--stepper-spacing) / 3);
+  font-size: calc(var(--stepper-fz) - rem(2px));
+  line-height: 1;
+  color: var(--mantine-color-dimmed);
+}

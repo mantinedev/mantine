@@ -1,31 +1,32 @@
 import React from 'react';
 import { MantineDemo } from '@mantine/ds';
-import { CloseButton, Group } from '@mantine/core';
+import { CloseButton } from '@mantine/core';
 
 const code = `
-import { CloseButton, Group } from '@mantine/core';
+import { CloseButton } from '@mantine/core';
 
 function Demo() {
-  return (
-    <Group position="center">
-      <CloseButton aria-label="Close modal" />
-      <CloseButton title="Close popover" size="xl" iconSize={20} />
-    </Group>
-  );
+  return <CloseButton{{props}} />;
 }
 `;
 
-function Demo() {
-  return (
-    <Group position="center">
-      <CloseButton aria-label="Close modal" />
-      <CloseButton title="Close popover" size="xl" iconSize={20} />
-    </Group>
-  );
+function Wrapper(props: any) {
+  return <CloseButton {...props} />;
 }
 
 export const usage: MantineDemo = {
-  type: 'demo',
-  component: Demo,
+  type: 'configurator',
+  component: Wrapper,
   code,
+  centered: true,
+  controls: [
+    { prop: 'size', type: 'size', initialValue: 'md', libraryValue: 'md' },
+    {
+      prop: 'variant',
+      type: 'segmented',
+      data: ['transparent', 'subtle'],
+      libraryValue: 'subtle',
+      initialValue: 'subtle',
+    },
+  ],
 };

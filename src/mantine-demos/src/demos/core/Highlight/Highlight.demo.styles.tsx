@@ -8,14 +8,15 @@ import { Highlight } from '@mantine/core';
 function Demo() {
   return (
     <Highlight
-      align="center"
+      ta="center"
       highlight={['highlighted', 'default']}
-      highlightStyles={(theme) => ({
-        backgroundImage: theme.fn.linearGradient(45, theme.colors.cyan[5], theme.colors.indigo[5]),
+      highlightStyles={{
+        backgroundImage:
+          'linear-gradient(45deg, var(--mantine-color-cyan-5), var(--mantine-color-indigo-5))',
         fontWeight: 700,
         WebkitBackgroundClip: 'text',
         WebkitTextFillColor: 'transparent',
-      })}
+      }}
     >
       You can change styles of highlighted part if you do not like default styles
     </Highlight>
@@ -26,14 +27,15 @@ function Demo() {
 function Demo() {
   return (
     <Highlight
-      align="center"
+      ta="center"
       highlight={['highlighted', 'default']}
-      highlightStyles={(theme) => ({
-        backgroundImage: theme.fn.linearGradient(45, theme.colors.cyan[5], theme.colors.indigo[5]),
+      highlightStyles={{
+        backgroundImage:
+          'linear-gradient(45deg, var(--mantine-color-cyan-5), var(--mantine-color-indigo-5))',
         fontWeight: 700,
         WebkitBackgroundClip: 'text',
         WebkitTextFillColor: 'transparent',
-      })}
+      }}
     >
       You can change styles of highlighted part if you do not like default styles
     </Highlight>
@@ -41,7 +43,7 @@ function Demo() {
 }
 
 export const styles: MantineDemo = {
-  type: 'demo',
+  type: 'code',
   code,
   component: Demo,
 };

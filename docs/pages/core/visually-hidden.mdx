@@ -1,0 +1,24 @@
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.VisuallyHidden);
+
+## Usage
+
+`VisuallyHidden` is a utility component that hides content visually but leaves it available to screen readers.
+
+For example, it can be used with [ActionIcon](/core/action-icon) component:
+
+```tsx
+import { ActionIcon, VisuallyHidden } from '@mantine/core';
+import { IconHeart } from '@tabler/icons';
+
+function Demo() {
+  return (
+    <ActionIcon>
+      <IconHeart />
+      <VisuallyHidden>Like post</VisuallyHidden>
+    </ActionIcon>
+  );
+}
+```

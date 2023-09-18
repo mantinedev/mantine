@@ -1,4 +1,3 @@
-import { MANTINE_SIZES } from '@mantine/core';
 import React from 'react';
 import { DecadeLevelGroup } from './DecadeLevelGroup';
 
@@ -20,7 +19,7 @@ export function Usage() {
 }
 
 export function Sizes() {
-  const sizes = MANTINE_SIZES.map((size) => (
+  const sizes = (['xs', 'sm', 'md', 'lg', 'xl'] as const).map((size) => (
     <DecadeLevelGroup
       numberOfColumns={3}
       size={size}

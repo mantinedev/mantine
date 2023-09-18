@@ -1,24 +1,29 @@
 import React, { useEffect } from 'react';
 import {
   Box,
-  useComponentDefaultProps,
-  OptionalPortal,
-  DefaultProps,
-  Selectors,
-  getDefaultZIndex,
+  BoxProps,
+  StylesApiProps,
+  factory,
+  ElementProps,
+  useProps,
+  useStyles,
+  Factory,
   PortalProps,
+  OptionalPortal,
+  useResolvedStylesApi,
+  getDefaultZIndex,
 } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
-import { DropzoneStylesNames, DropzoneProps, _Dropzone } from './Dropzone';
-import useFullScreenStyles from './DropzoneFullScreen.styles';
+import { Dropzone, DropzoneProps, DropzoneVariant, DropzoneStylesNames } from './Dropzone';
+import classes from './Dropzone.module.css';
 
-export type DropzoneFullScreenStylesName =
-  | DropzoneStylesNames
-  | Exclude<Selectors<typeof useFullScreenStyles>, 'dropzone'>;
+export type DropzoneFullScreenStylesNames = DropzoneStylesNames | 'fullScreen';
 
 export interface DropzoneFullScreenProps
-  extends Omit<DropzoneProps, 'styles' | 'classNames'>,
-    DefaultProps<DropzoneFullScreenStylesName> {
+  extends BoxProps,
+    Omit<DropzoneProps, 'styles' | 'classNames' | 'vars' | 'variant'>,
+    StylesApiProps<DropzoneFullScreenFactory>,
+    ElementProps<'div', 'onDragLeave' | 'onDragOver' | 'onDrop' | 'onDragEnter'> {
   /** Determines whether user can drop files to browser window, true by default */
   active?: boolean;
 
@@ -32,13 +37,17 @@ export interface DropzoneFullScreenProps
   portalProps?: Omit<PortalProps, 'children' | 'withinPortal'>;
 }
 
-const fullScreenDefaultProps: Partial<DropzoneFullScreenProps> = {
-  padding: 'md',
+export type DropzoneFullScreenFactory = Factory<{
+  props: DropzoneFullScreenProps;
+  ref: HTMLDivElement;
+  stylesNames: DropzoneFullScreenStylesNames;
+  variant: DropzoneVariant;
+}>;
+
+const defaultProps: Partial<DropzoneFullScreenProps> = {
   loading: false,
-  multiple: true,
   maxSize: Infinity,
-  autoFocus: false,
-  activateOnClick: true,
+  activateOnClick: false,
   activateOnDrag: true,
   dragEventsBubbling: true,
   activateOnKeyboard: true,
@@ -47,14 +56,15 @@ const fullScreenDefaultProps: Partial<DropzoneFullScreenProps> = {
   withinPortal: true,
 };
 
-export function DropzoneFullScreen(props: DropzoneFullScreenProps) {
+export const DropzoneFullScreen = factory<DropzoneFullScreenFactory>((_props, ref) => {
+  const props = useProps('DropzoneFullScreen', defaultProps, _props);
   const {
     classNames,
-    styles,
-    sx,
     className,
     style,
+    styles,
     unstyled,
+    vars,
     active,
     onDrop,
     onReject,
@@ -62,19 +72,31 @@ export function DropzoneFullScreen(props: DropzoneFullScreenProps) {
     withinPortal,
     portalProps,
     ...others
-  } = useComponentDefaultProps('DropzoneFullScreen', fullScreenDefaultProps, props);
+  } = props;
 
-  const [counter, setCounter] = React.useState(0);
-  const [visible, { open, close }] = useDisclosure(false);
-  const { classes, cx } = useFullScreenStyles(null, {
+  const getStyles = useStyles<DropzoneFullScreenFactory>({
     name: 'DropzoneFullScreen',
+    classes,
+    props,
+    className,
+    style,
     classNames,
     styles,
     unstyled,
+    rootSelector: 'fullScreen',
   });
 
+  const { resolvedClassNames, resolvedStyles } = useResolvedStylesApi<DropzoneFullScreenFactory>({
+    classNames,
+    styles,
+    props,
+  });
+
+  const [counter, setCounter] = React.useState(0);
+  const [visible, { open, close }] = useDisclosure(false);
+
   const handleDragEnter = (event: DragEvent) => {
-    if (event.dataTransfer.types.includes('Files')) {
+    if (event.dataTransfer?.types.includes('Files')) {
       setCounter((prev) => prev + 1);
       open();
     }
@@ -103,19 +125,15 @@ export function DropzoneFullScreen(props: DropzoneFullScreenProps) {
   return (
     <OptionalPortal {...portalProps} withinPortal={withinPortal}>
       <Box
-        className={cx(classes.wrapper, className)}
-        sx={sx}
-        style={{
-          ...style,
-          opacity: visible ? 1 : 0,
-          pointerEvents: visible ? 'all' : 'none',
-          zIndex,
-        }}
+        {...getStyles('fullScreen', {
+          style: { opacity: visible ? 1 : 0, pointerEvents: visible ? 'all' : 'none', zIndex },
+        })}
+        ref={ref}
       >
-        <_Dropzone
+        <Dropzone
           {...others}
-          classNames={classNames}
-          styles={styles}
+          classNames={resolvedClassNames}
+          styles={resolvedStyles}
           unstyled={unstyled}
           className={classes.dropzone}
           onDrop={(files: any) => {
@@ -130,8 +148,9 @@ export function DropzoneFullScreen(props: DropzoneFullScreenProps) {
       </Box>
     </OptionalPortal>
   );
-}
+});
 
+DropzoneFullScreen.classes = classes;
 DropzoneFullScreen.displayName = '@mantine/dropzone/DropzoneFullScreen';
 
 export type DropzoneFullScreenType = typeof DropzoneFullScreen;

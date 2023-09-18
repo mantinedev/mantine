@@ -8,16 +8,10 @@ import { Select } from '@mantine/core';
 function Demo() {
   return (
     <Select
-      label="Read only select"
-      placeholder="Pick one"
-      defaultValue="react"
+      label="Your favorite library"
+      placeholder="Pick value"
+      data={['React', 'Angular', 'Vue', 'Svelte']}
       readOnly
-      data={[
-        { value: 'react', label: 'React' },
-        { value: 'ng', label: 'Angular' },
-        { value: 'svelte', label: 'Svelte' },
-        { value: 'vue', label: 'Vue' },
-      ]}
     />
   );
 }
@@ -26,25 +20,18 @@ function Demo() {
 function Demo() {
   return (
     <Select
-      maw={320}
-      mx="auto"
-      label="Read only select"
-      placeholder="Pick one"
-      defaultValue="react"
+      label="Your favorite library"
+      placeholder="Pick value"
+      data={['React', 'Angular', 'Vue', 'Svelte']}
       readOnly
-      withinPortal
-      data={[
-        { value: 'react', label: 'React' },
-        { value: 'ng', label: 'Angular' },
-        { value: 'svelte', label: 'Svelte' },
-        { value: 'vue', label: 'Vue' },
-      ]}
     />
   );
 }
 
 export const readOnly: MantineDemo = {
-  type: 'demo',
-  code,
+  type: 'code',
   component: Demo,
+  code,
+  maxWidth: 340,
+  centered: true,
 };

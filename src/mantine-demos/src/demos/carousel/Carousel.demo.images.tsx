@@ -17,11 +17,7 @@ function Demo() {
     </Carousel.Slide>
   ));
 
-  return (
-    <Carousel maw={320} mx="auto" withIndicators>
-      {slides}
-    </Carousel>
-  );
+  return <Carousel withIndicators>{slides}</Carousel>;
 }
 `;
 
@@ -32,15 +28,13 @@ function Demo() {
     </Carousel.Slide>
   ));
 
-  return (
-    <Carousel maw={320} mx="auto" withIndicators>
-      {slides}
-    </Carousel>
-  );
+  return <Carousel withIndicators>{slides}</Carousel>;
 }
 
 export const images: MantineDemo = {
-  type: 'demo',
+  type: 'code',
   component: Demo,
   code,
+  maxWidth: 320,
+  centered: true,
 };

@@ -1,4 +1,3 @@
-import { MANTINE_SIZES } from '@mantine/core';
 import 'dayjs/locale/ru';
 import React from 'react';
 import { WeekdaysRow, WeekdaysRowProps } from './WeekdaysRow';
@@ -42,6 +41,8 @@ export function DayOfWeek() {
 }
 
 export function Sizes() {
-  const sizes = MANTINE_SIZES.map((size) => <Wrapper size={size} key={size} />);
+  const sizes = (['xs', 'sm', 'md', 'lg', 'xl'] as const).map((size) => (
+    <Wrapper size={size} key={size} />
+  ));
   return <div style={{ padding: 40 }}>{sizes}</div>;
 }

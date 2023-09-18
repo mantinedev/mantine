@@ -40,13 +40,13 @@ function Demo() {
         onChange={(event) => setValue(event.currentTarget.value)}
       />
       <Text mt="sm">
-        <Text component="span" color="dimmed" size="sm">
+        <Text component="span" c="dimmed" size="sm">
           Value:
         </Text>{' '}
         {value.trim() || '[empty string]'}
       </Text>
       <Text>
-        <Text component="span" color="dimmed" size="sm">
+        <Text component="span" c="dimmed" size="sm">
           Debounced value:
         </Text>{' '}
         {debounced.trim() || '[empty string]'}
@@ -56,7 +56,7 @@ function Demo() {
 }
 
 export const useDebouncedValueLeading: MantineDemo = {
-  type: 'demo',
+  type: 'code',
   component: Demo,
   code,
 };

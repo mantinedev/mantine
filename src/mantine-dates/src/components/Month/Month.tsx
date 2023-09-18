@@ -1,21 +1,37 @@
-/* eslint-disable react/no-unused-prop-types */
 import dayjs from 'dayjs';
-import React, { forwardRef } from 'react';
-import { DefaultProps, Selectors, Box, useComponentDefaultProps, MantineSize } from '@mantine/core';
-import { useDatesContext } from '../DatesProvider';
-import { WeekdaysRow, WeekdaysRowStylesNames } from '../WeekdaysRow';
-import { Day, DayStylesNames, DayProps } from '../Day';
+import React from 'react';
+import {
+  Box,
+  BoxProps,
+  StylesApiProps,
+  factory,
+  ElementProps,
+  useProps,
+  useStyles,
+  Factory,
+  MantineSize,
+  useResolvedStylesApi,
+} from '@mantine/core';
 import { ControlKeydownPayload, DayOfWeek } from '../../types';
+import { Day, DayProps, DayStylesNames } from '../Day';
 import { getMonthDays } from './get-month-days/get-month-days';
+import { useDatesContext } from '../DatesProvider';
+import { getDateInTabOrder } from './get-date-in-tab-order/get-date-in-tab-order';
 import { isSameMonth } from './is-same-month/is-same-month';
 import { isBeforeMaxDate } from './is-before-max-date/is-before-max-date';
 import { isAfterMinDate } from './is-after-min-date/is-after-min-date';
-import useStyles from './Month.styles';
-import { getDateInTabOrder } from './get-date-in-tab-order/get-date-in-tab-order';
+import { WeekdaysRow } from '../WeekdaysRow';
+import classes from './Month.module.css';
 
 export type MonthStylesNames =
-  | Selectors<typeof useStyles>
-  | WeekdaysRowStylesNames
+  | 'month'
+  | 'weekday'
+  | 'weekdaysRow'
+  | 'monthRow'
+  | 'month'
+  | 'monthThead'
+  | 'monthTbody'
+  | 'monthCell'
   | DayStylesNames;
 
 export interface MonthSettings {
@@ -53,7 +69,7 @@ export interface MonthSettings {
   weekendDays?: DayOfWeek[];
 
   /** Adds props to Day component based on date */
-  getDayProps?(date: Date): Partial<DayProps>;
+  getDayProps?(date: Date): Omit<Partial<DayProps>, 'classNames' | 'styles' | 'vars'>;
 
   /** Callback function to determine whether the day should be disabled */
   excludeDate?(date: Date): boolean;
@@ -84,10 +100,10 @@ export interface MonthSettings {
 }
 
 export interface MonthProps
-  extends DefaultProps<MonthStylesNames>,
+  extends BoxProps,
     MonthSettings,
-    React.ComponentPropsWithoutRef<'table'> {
-  variant?: string;
+    StylesApiProps<MonthFactory>,
+    ElementProps<'div'> {
   __staticSelector?: string;
 
   /** Month to display */
@@ -97,17 +113,25 @@ export interface MonthProps
   static?: boolean;
 }
 
+export type MonthFactory = Factory<{
+  props: MonthProps;
+  ref: HTMLTableElement;
+  stylesNames: MonthStylesNames;
+}>;
+
 const defaultProps: Partial<MonthProps> = {
-  size: 'sm',
   withCellSpacing: true,
 };
 
-export const Month = forwardRef<HTMLTableElement, MonthProps>((props, ref) => {
+export const Month = factory<MonthFactory>((_props, ref) => {
+  const props = useProps('Month', defaultProps, _props);
   const {
-    className,
     classNames,
+    className,
+    style,
     styles,
     unstyled,
+    vars,
     __staticSelector,
     locale,
     firstDayOfWeek,
@@ -131,30 +155,23 @@ export const Month = forwardRef<HTMLTableElement, MonthProps>((props, ref) => {
     __stopPropagation,
     withCellSpacing,
     size,
-    variant,
     ...others
-  } = useComponentDefaultProps('Month', defaultProps, props);
+  } = props;
 
-  const ctx = useDatesContext();
-
-  const { classes, cx } = useStyles(null, {
-    name: ['Month', __staticSelector],
+  const getStyles = useStyles<MonthFactory>({
+    name: __staticSelector || 'Month',
+    classes,
+    props,
+    className,
+    style,
     classNames,
     styles,
     unstyled,
-    variant,
-    size,
+    vars,
+    rootSelector: 'month',
   });
 
-  const stylesApiProps = {
-    __staticSelector: __staticSelector || 'Month',
-    classNames,
-    styles,
-    unstyled,
-    variant,
-    size,
-  };
-
+  const ctx = useDatesContext();
   const dates = getMonthDays(month, ctx.getFirstDayOfWeek(firstDayOfWeek));
 
   const dateInTabOrder = getDateInTabOrder(
@@ -166,6 +183,12 @@ export const Month = forwardRef<HTMLTableElement, MonthProps>((props, ref) => {
     hideOutsideDates,
     month
   );
+
+  const { resolvedClassNames, resolvedStyles } = useResolvedStylesApi<MonthFactory>({
+    classNames,
+    styles,
+    props,
+  });
 
   const rows = dates.map((row, rowIndex) => {
     const cells = row.map((date, cellIndex) => {
@@ -181,14 +204,18 @@ export const Month = forwardRef<HTMLTableElement, MonthProps>((props, ref) => {
       return (
         <td
           key={date.toString()}
-          className={classes.monthCell}
+          {...getStyles('monthCell')}
           data-with-spacing={withCellSpacing || undefined}
         >
           <Day
-            {...stylesApiProps}
+            __staticSelector={__staticSelector || 'Month'}
+            classNames={resolvedClassNames}
+            styles={resolvedStyles}
+            unstyled={unstyled}
             data-mantine-stop-propagation={__stopPropagation || undefined}
             renderDay={renderDay}
             date={date}
+            size={size}
             weekend={ctx.getWeekendDays(weekendDays).includes(date.getDay() as DayOfWeek)}
             outside={outside}
             hidden={hideOutsideDates ? outside : false}
@@ -199,7 +226,7 @@ export const Month = forwardRef<HTMLTableElement, MonthProps>((props, ref) => {
               !isBeforeMaxDate(date, maxDate) ||
               !isAfterMinDate(date, minDate)
             }
-            ref={(node) => __getDayRef?.(rowIndex, cellIndex, node)}
+            ref={(node) => __getDayRef?.(rowIndex, cellIndex, node!)}
             {...dayProps}
             onKeyDown={(event) => {
               dayProps?.onKeyDown?.(event);
@@ -224,27 +251,32 @@ export const Month = forwardRef<HTMLTableElement, MonthProps>((props, ref) => {
     });
 
     return (
-      <tr key={rowIndex} className={classes.monthRow}>
+      <tr key={rowIndex} {...getStyles('monthRow')}>
         {cells}
       </tr>
     );
   });
 
   return (
-    <Box component="table" className={cx(classes.month, className)} ref={ref} {...others}>
+    <Box component="table" {...getStyles('month')} size={size} ref={ref} {...others}>
       {!hideWeekdays && (
-        <thead className={classes.monthThead}>
+        <thead {...getStyles('monthThead')}>
           <WeekdaysRow
-            {...stylesApiProps}
+            __staticSelector={__staticSelector || 'Month'}
             locale={locale}
             firstDayOfWeek={firstDayOfWeek}
             weekdayFormat={weekdayFormat}
+            size={size}
+            classNames={resolvedClassNames}
+            styles={resolvedStyles}
+            unstyled={unstyled}
           />
         </thead>
       )}
-      <tbody className={classes.monthTbody}>{rows}</tbody>
+      <tbody {...getStyles('monthTbody')}>{rows}</tbody>
     </Box>
   );
 });
 
+Month.classes = classes;
 Month.displayName = '@mantine/dates/Month';

@@ -1,0 +1,46 @@
+.root {
+  --cb-size-xs: rem(18px);
+  --cb-size-sm: rem(22px);
+  --cb-size-md: rem(28px);
+  --cb-size-lg: rem(34px);
+  --cb-size-xl: rem(44px);
+
+  --cb-size: var(--cb-size-md);
+  --cb-icon-size: 70%;
+
+  line-height: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  user-select: none;
+
+  width: var(--cb-size);
+  height: var(--cb-size);
+  min-width: var(--cb-size);
+  min-height: var(--cb-size);
+  border-radius: var(--cb-radius, var(--mantine-radius-default));
+  color: var(--_cb-color);
+
+  @mixin light {
+    --_cb-color: var(--mantine-color-gray-7);
+  }
+
+  @mixin dark {
+    --_cb-color: var(--mantine-color-dark-1);
+  }
+}
+
+.root--subtle {
+  background-color: var(--_cb-bg);
+
+  @mixin hover {
+    @mixin light {
+      --_cb-bg: var(--mantine-color-gray-0);
+    }
+
+    @mixin dark {
+      --_cb-bg: var(--mantine-color-dark-6);
+    }
+  }
+}

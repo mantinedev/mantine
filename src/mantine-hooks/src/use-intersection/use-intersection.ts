@@ -3,9 +3,9 @@ import { useCallback, useRef, useState } from 'react';
 export function useIntersection<T extends HTMLElement = any>(
   options?: ConstructorParameters<typeof IntersectionObserver>[1]
 ) {
-  const [entry, setEntry] = useState<IntersectionObserverEntry>(null);
+  const [entry, setEntry] = useState<IntersectionObserverEntry | null>(null);
 
-  const observer = useRef<IntersectionObserver>();
+  const observer = useRef<IntersectionObserver | null>(null);
 
   const ref = useCallback(
     (element: T | null) => {

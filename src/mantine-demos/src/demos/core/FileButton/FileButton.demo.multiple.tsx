@@ -1,16 +1,16 @@
 import React, { useState } from 'react';
 import { MantineDemo } from '@mantine/ds';
-import { FileButton, Button, Group, Text, List } from '@mantine/core';
+import { FileButton, Button, Group, Text } from '@mantine/core';
 
 const code = `
 import { useState } from 'react';
-import { FileButton, Button, Group, Text, List } from '@mantine/core';
+import { FileButton, Button, Group, Text } from '@mantine/core';
 
 function Demo() {
   const [files, setFiles] = useState<File[]>([]);
   return (
     <>
-      <Group position="center">
+      <Group justify="center">
         <FileButton onChange={setFiles} accept="image/png,image/jpeg" multiple>
           {(props) => <Button {...props}>Upload image</Button>}
         </FileButton>
@@ -22,22 +22,21 @@ function Demo() {
         </Text>
       )}
 
-      <List size="sm" mt={5} withPadding>
+      <ul>
         {files.map((file, index) => (
-          <List.Item key={index}>{file.name}</List.Item>
+          <li key={index}>{file.name}</li>
         ))}
-      </List>
+      </ul>
     </>
   );
 }
-
 `;
 
 function Demo() {
   const [files, setFiles] = useState<File[]>([]);
   return (
     <>
-      <Group position="center">
+      <Group justify="center">
         <FileButton onChange={setFiles} accept="image/png,image/jpeg" multiple>
           {(props) => <Button {...props}>Upload image</Button>}
         </FileButton>
@@ -49,17 +48,17 @@ function Demo() {
         </Text>
       )}
 
-      <List size="sm" mt={5} withPadding>
+      <ul>
         {files.map((file, index) => (
-          <List.Item key={index}>{file.name}</List.Item>
+          <li key={index}>{file.name}</li>
         ))}
-      </List>
+      </ul>
     </>
   );
 }
 
 export const multiple: MantineDemo = {
-  type: 'demo',
+  type: 'code',
   component: Demo,
   code,
 };

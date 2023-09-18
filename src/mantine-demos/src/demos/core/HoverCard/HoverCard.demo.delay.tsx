@@ -7,7 +7,7 @@ import { HoverCard, Button, Text, Group } from '@mantine/core';
 
 function Demo() {
   return (
-    <Group position="center">
+    <Group justify="center">
       <HoverCard shadow="md" openDelay={1000}>
         <HoverCard.Target>
           <Button>1000ms open delay</Button>
@@ -32,7 +32,7 @@ function Demo() {
 
 function Demo() {
   return (
-    <Group position="center">
+    <Group justify="center">
       <HoverCard shadow="md" openDelay={1000}>
         <HoverCard.Target>
           <Button>1000ms open delay</Button>
@@ -55,7 +55,7 @@ function Demo() {
 }
 
 export const delay: MantineDemo = {
-  type: 'demo',
+  type: 'code',
   component: Demo,
   code,
 };

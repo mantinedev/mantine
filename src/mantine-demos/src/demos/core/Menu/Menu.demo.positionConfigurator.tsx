@@ -1,25 +1,23 @@
 import React from 'react';
-import { Menu, MenuProps, Group } from '@mantine/core';
+import { Menu, MenuProps } from '@mantine/core';
 import { MantineDemo } from '@mantine/ds';
 import { DemoMenuItems } from './_menu-items';
 import { FLOATING_ARROW_POSITION_DATA } from '../../../shared/floating-position-data';
 
 function Wrapper(props: MenuProps) {
   return (
-    <Group position="center">
-      <Menu opened trigger="hover" {...props}>
-        <DemoMenuItems />
-      </Menu>
-    </Group>
+    <Menu opened trigger="hover" {...props}>
+      <DemoMenuItems />
+    </Menu>
   );
 }
 
-const codeTemplate = (props: string) => `
+const code = `
 import { Menu } from '@mantine/core';
 
 function Demo() {
   return (
-    <Menu${props}>
+    <Menu{{props}}>
       {/* Menu items */}
     </Menu>
   );
@@ -29,13 +27,14 @@ function Demo() {
 export const positionConfigurator: MantineDemo = {
   type: 'configurator',
   component: Wrapper,
-  codeTemplate,
-  configurator: [
+  code,
+  centered: true,
+  controls: [
     {
-      name: 'position',
+      prop: 'position',
       type: 'select',
       initialValue: 'bottom',
-      defaultValue: 'bottom',
+      libraryValue: 'bottom',
       data: [
         { label: 'bottom', value: 'bottom' },
         { label: 'bottom-start', value: 'bottom-start' },
@@ -52,25 +51,25 @@ export const positionConfigurator: MantineDemo = {
       ],
     },
     {
-      name: 'offset',
+      prop: 'offset',
       type: 'number',
       initialValue: 5,
-      defaultValue: 5,
+      libraryValue: 5,
       max: 20,
       min: -20,
     },
     {
-      name: 'withArrow',
+      prop: 'withArrow',
       type: 'boolean',
       initialValue: false,
-      defaultValue: false,
+      libraryValue: false,
     },
     {
-      name: 'arrowPosition',
+      prop: 'arrowPosition',
       type: 'select',
       data: FLOATING_ARROW_POSITION_DATA,
       initialValue: 'side',
-      defaultValue: 'side',
+      libraryValue: 'side',
     },
   ],
 };

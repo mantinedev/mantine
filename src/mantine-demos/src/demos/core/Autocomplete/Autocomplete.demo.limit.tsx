@@ -5,33 +5,41 @@ import { Autocomplete } from '@mantine/core';
 const code = `
 import { Autocomplete } from '@mantine/core';
 
+const largeData = Array(100_000)
+  .fill(0)
+  .map((_, index) => \`Option \${index}\`);
+
 function Demo() {
   return (
     <Autocomplete
-      label="Only 2 options at a time"
-      placeholder="Your favorite framework"
-      limit={2}
-      data={['React', 'Angular', 'Svelte', 'Vue']}
+      label="100 000 options autocomplete"
+      placeholder="Use limit to optimize performance"
+      limit={5}
+      data={largeData}
     />
   );
 }
 `;
 
+const largeData = Array(100_000)
+  .fill(0)
+  .map((_, index) => `Option ${index}`);
+
 function Demo() {
   return (
     <Autocomplete
-      maw={320}
-      mx="auto"
-      label="Only 2 options at a time"
-      placeholder="Your favorite framework"
-      limit={2}
-      data={['React', 'Angular', 'Svelte', 'Vue']}
+      label="100 000 options autocomplete"
+      placeholder="Use limit to optimize performance"
+      limit={5}
+      data={largeData}
     />
   );
 }
 
 export const limit: MantineDemo = {
-  type: 'demo',
-  code,
+  type: 'code',
   component: Demo,
+  code,
+  maxWidth: 340,
+  centered: true,
 };

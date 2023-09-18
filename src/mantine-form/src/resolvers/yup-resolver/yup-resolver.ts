@@ -21,8 +21,8 @@ export function yupResolver(schema: any) {
       _schema.validateSync(values, { abortEarly: false });
       return {};
     } catch (_yupError) {
-      const yupError: YupValidationResult = _yupError;
-      const results = {};
+      const yupError = _yupError as YupValidationResult;
+      const results: Record<string, any> = {};
 
       yupError.inner.forEach((error) => {
         results[error.path.replaceAll('[', '.').replaceAll(']', '')] = error.message;

@@ -1,0 +1,61 @@
+.navbar {
+  border-right: rem(1px) solid var(--navbar-border-color);
+  position: fixed;
+  top: var(--docs-header-height);
+  bottom: 0;
+  left: 0;
+  z-index: 100;
+  width: var(--docs-navbar-width);
+  display: flex;
+  flex-direction: column;
+
+  @mixin light {
+    --navbar-border-color: var(--mantine-color-gray-2);
+    background-color: var(--mantine-color-white);
+  }
+
+  @mixin dark {
+    --navbar-border-color: var(--mantine-color-dark-7);
+    background-color: var(--mantine-color-dark-8);
+  }
+
+  @mixin rtl {
+    border-left: rem(1px) solid var(--navbar-border-color);
+    border-right: 0;
+    left: unset;
+    right: 0;
+  }
+
+  &[data-hidden] {
+    @media (max-width: $docs-navbar-breakpoint) {
+      display: none !important;
+    }
+  }
+
+  &[data-mobile-only] {
+    display: none;
+
+    @media (max-width: $docs-navbar-breakpoint) {
+      display: flex;
+    }
+  }
+
+  @media (max-width: $docs-navbar-breakpoint) {
+    width: unset;
+    left: 0;
+    right: 0;
+  }
+}
+
+.scrollarea {
+  flex: 1;
+}
+
+.body {
+  padding-top: var(--mantine-spacing-md);
+  padding-bottom: rem(100px);
+}
+
+.groups {
+  padding-top: var(--mantine-spacing-xl);
+}

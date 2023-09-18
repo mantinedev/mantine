@@ -1,0 +1,15 @@
+.root {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--mantine-spacing-xl);
+  margin-bottom: var(--mantine-spacing-xl);
+}
+
+.asset {
+  flex: 1;
+  max-width: calc(50% - var(--mantine-spacing-xl) / 2);
+
+  @media (max-width: em(500px)) {
+    max-width: 100%;
+  }
+}

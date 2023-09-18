@@ -1,30 +1,23 @@
 import React from 'react';
 import { MantineDemo } from '@mantine/ds';
-import { Box, NativeSelect } from '@mantine/core';
+import { NativeSelect } from '@mantine/core';
 
 const code = `
 import { NativeSelect } from '@mantine/core';
 
 function Demo() {
-  return <NativeSelect disabled data={[]} />;
+  return <NativeSelect disabled data={['React', 'Angular']} label="Disabled NativeSelect" />;
 }
 `;
 
 function Demo() {
-  return (
-    <Box maw={320} mx="auto">
-      <NativeSelect
-        data={['React', 'Angular', 'Svelte', 'Vue']}
-        label="Disabled select"
-        placeholder="Pick one that you like"
-        disabled
-      />
-    </Box>
-  );
+  return <NativeSelect disabled data={['React', 'Angular']} label="Disabled NativeSelect" />;
 }
 
 export const disabled: MantineDemo = {
-  type: 'demo',
-  code,
+  type: 'code',
   component: Demo,
+  maxWidth: 340,
+  centered: true,
+  code,
 };

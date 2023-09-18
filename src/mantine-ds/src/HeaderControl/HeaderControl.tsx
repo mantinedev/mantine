@@ -1,18 +1,17 @@
 import React from 'react';
-import { UnstyledButton, Tooltip, DefaultProps } from '@mantine/core';
-import { createPolymorphicComponent } from '@mantine/utils';
-import useStyles from './HeaderControl.styles';
+import cx from 'clsx';
+import { UnstyledButton, Tooltip, BoxProps, createPolymorphicComponent } from '@mantine/core';
+import classes from './HeaderControl.module.css';
 
-export interface HeaderControlProps extends DefaultProps {
+export interface HeaderControlProps extends BoxProps {
   tooltip: string;
   children: React.ReactNode;
 }
 
 function _HeaderControl({ tooltip, className, ...others }: HeaderControlProps) {
-  const { classes, cx } = useStyles();
   return (
     <Tooltip label={tooltip}>
-      <UnstyledButton className={cx(classes.control, className)} {...others} />
+      <UnstyledButton className={cx(classes.control, className)} aria-label={tooltip} {...others} />
     </Tooltip>
   );
 }

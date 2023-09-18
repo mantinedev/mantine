@@ -1,0 +1,17 @@
+.externalLinkIcon {
+  width: rem(14px);
+  height: rem(14px);
+}
+
+.icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: rem(44px);
+}
+
+.iconCell {
+  @media (max-width: em(500px)) {
+    display: none;
+  }
+}

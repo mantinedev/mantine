@@ -1,22 +1,11 @@
-import { MantineNumberSize, Styles, ClassNames } from '@mantine/core';
-import { createSafeContext } from '@mantine/utils';
-import { CAROUSEL_ERRORS } from './Carousel.errors';
-import { CarouselOrientation, Embla, CarouselBreakpoint } from './types';
-import type { CarouselStylesNames } from './Carousel';
+import { createSafeContext, GetStylesApi } from '@mantine/core';
+import type { CarouselFactory } from './Carousel';
 
-interface CarouselContext {
-  embla: Embla;
-  slideSize: string | number;
-  slideGap: MantineNumberSize;
-  orientation: CarouselOrientation;
-  includeGapInSize: boolean;
-  breakpoints: CarouselBreakpoint[];
-  classNames: ClassNames<CarouselStylesNames>;
-  styles: Styles<CarouselStylesNames>;
-  unstyled: boolean;
-  variant: string;
+interface CarouselContextValue {
+  getStyles: GetStylesApi<CarouselFactory>;
+  orientation: 'horizontal' | 'vertical' | undefined;
 }
 
-export const [CarouselProvider, useCarouselContext] = createSafeContext<CarouselContext>(
-  CAROUSEL_ERRORS.context
+export const [CarouselProvider, useCarouselContext] = createSafeContext<CarouselContextValue>(
+  'Carousel component was not found in tree'
 );

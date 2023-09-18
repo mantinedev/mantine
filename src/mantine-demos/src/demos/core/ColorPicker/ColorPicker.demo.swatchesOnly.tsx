@@ -7,7 +7,7 @@ import { useState } from 'react';
 import { DEFAULT_THEME, ColorPicker, Text, Box } from '@mantine/core';
 
 function Demo() {
-  const [value, onChange] = useState(null);
+  const [value, onChange] = useState('#fff');
 
   return (
     <Box maw={200} mx="auto">
@@ -18,12 +18,12 @@ function Demo() {
         withPicker={false}
         fullWidth
         swatches={[
-          ...DEFAULT_THEME.colors.red,
-          ...DEFAULT_THEME.colors.green,
-          ...DEFAULT_THEME.colors.blue,
+          ...DEFAULT_THEME.colors.red.slice(0, 7),
+          ...DEFAULT_THEME.colors.green.slice(0, 7),
+          ...DEFAULT_THEME.colors.blue.slice(0, 7),
         ]}
       />
-      <Text align="center" mt={5}>
+      <Text ta="center" mt={5}>
         {value}
       </Text>
     </Box>
@@ -32,7 +32,7 @@ function Demo() {
 `;
 
 function Demo() {
-  const [value, onChange] = useState(null);
+  const [value, onChange] = useState('#fff');
 
   return (
     <Box maw={200} mx="auto">
@@ -43,12 +43,12 @@ function Demo() {
         withPicker={false}
         fullWidth
         swatches={[
-          ...DEFAULT_THEME.colors.red,
-          ...DEFAULT_THEME.colors.green,
-          ...DEFAULT_THEME.colors.blue,
+          ...DEFAULT_THEME.colors.red.slice(0, 7),
+          ...DEFAULT_THEME.colors.green.slice(0, 7),
+          ...DEFAULT_THEME.colors.blue.slice(0, 7),
         ]}
       />
-      <Text align="center" mt={5}>
+      <Text ta="center" mt={5}>
         {value}
       </Text>
     </Box>
@@ -56,7 +56,7 @@ function Demo() {
 }
 
 export const swatchesOnly: MantineDemo = {
-  type: 'demo',
+  type: 'code',
   component: Demo,
   code,
 };

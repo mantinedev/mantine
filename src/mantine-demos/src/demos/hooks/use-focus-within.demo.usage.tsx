@@ -9,15 +9,14 @@ import { TextInput, Button, Box, Text } from '@mantine/core';
 
 function Demo() {
   const { ref, focused } = useFocusWithin();
+
   return (
     <div ref={ref}>
       <Box
-        sx={(theme) => ({
-          backgroundColor: focused
-            ? theme.fn.variant({ variant: 'light' }).background
-            : 'transparent',
-          padding: theme.spacing.xl,
-        })}
+        p="xl"
+        style={{
+          backgroundColor: focused ? 'var(--mantine-color-blue-light)' : 'transparent',
+        }}
       >
         <Text size="sm">One of elements has focus: {focused.toString()}</Text>
         <TextInput label="Focus this input" placeholder="Styles will be added to parent" />
@@ -30,15 +29,14 @@ function Demo() {
 
 function Demo() {
   const { ref, focused } = useFocusWithin();
+
   return (
     <div ref={ref}>
       <Box
-        sx={(theme) => ({
-          backgroundColor: focused
-            ? theme.fn.variant({ variant: 'light' }).background
-            : 'transparent',
-          padding: theme.spacing.xl,
-        })}
+        p="xl"
+        style={{
+          backgroundColor: focused ? 'var(--mantine-color-blue-light)' : 'transparent',
+        }}
       >
         <Text size="sm">One of elements has focus: {focused.toString()}</Text>
         <TextInput label="Focus this input" placeholder="Styles will be added to parent" />
@@ -49,7 +47,7 @@ function Demo() {
 }
 
 export const useFocusWithinDemo: MantineDemo = {
-  type: 'demo',
+  type: 'code',
   component: Demo,
   code,
 };

@@ -5,14 +5,13 @@ interface TwitterIconProps extends React.ComponentPropsWithoutRef<'svg'> {
   size?: number | string;
 }
 
-export function TwitterIcon({ size, ...others }: TwitterIconProps) {
+export function TwitterIcon({ size, style, ...others }: TwitterIconProps) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 256 209"
       fill="currentColor"
-      width={rem(size)}
-      height={rem(size)}
+      style={{ width: rem(size), height: rem(size), ...style }}
       {...others}
     >
       <path

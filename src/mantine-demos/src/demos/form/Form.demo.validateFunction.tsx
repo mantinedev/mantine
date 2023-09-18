@@ -28,7 +28,7 @@ function Demo() {
         <TextInput label="Name" placeholder="Name" {...form.getInputProps('name')} />
         <NumberInput mt="sm" label="Age" placeholder="You age" {...form.getInputProps('age')} />
 
-        <Group position="right" mt="md">
+        <Group justify="flex-end" mt="md">
           <Button type="submit">Submit</Button>
         </Group>
       </form>
@@ -57,7 +57,7 @@ function Demo() {
         <TextInput label="Name" placeholder="Name" {...form.getInputProps('name')} />
         <NumberInput mt="sm" label="Age" placeholder="You age" {...form.getInputProps('age')} />
 
-        <Group position="right" mt="md">
+        <Group justify="flex-end" mt="md">
           <Button type="submit">Submit</Button>
         </Group>
       </form>
@@ -66,7 +66,7 @@ function Demo() {
 }
 
 export const validateFunction: MantineDemo = {
-  type: 'demo',
+  type: 'code',
   component: Demo,
   code,
 };

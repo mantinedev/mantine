@@ -1,54 +1,40 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { MantineDemo } from '@mantine/ds';
-import { Button, Overlay, Image, AspectRatio } from '@mantine/core';
+import { Overlay, AspectRatio } from '@mantine/core';
 
 const code = `
-import { useState } from 'react';
-import { Button, Overlay, Image, AspectRatio } from '@mantine/core';
+import { Overlay, AspectRatio } from '@mantine/core';
 
 function Demo() {
-  const [visible, setVisible] = useState(false);
-
   return (
     <AspectRatio ratio={16 / 9} maw={400} mx="auto">
-      <Image
-        src="https://images.unsplash.com/photo-1546527868-ccb7ee7dfa6a?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=720&q=80"
-        onClick={() => setVisible(false)}
+      <img
+        src="https://images.unsplash.com/photo-1618359057154-e21ae64350b6?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=720&q=80"
+        alt="Demo"
       />
-      {!visible && (
-        <Overlay blur={15} center>
-          <Button color="red" radius="xl" onClick={() => setVisible(true)}>
-            NSFW, click to reveal
-          </Button>
-        </Overlay>
-      )}
+      <Overlay color="#000" backgroundOpacity={0.35}{{props}} />
     </AspectRatio>
   );
 }
 `;
 
-function Demo() {
-  const [visible, setVisible] = useState(false);
-
+function Wrapper(props: any) {
   return (
     <AspectRatio ratio={16 / 9} maw={400} mx="auto">
-      <Image
-        src="https://images.unsplash.com/photo-1546527868-ccb7ee7dfa6a?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=720&q=80"
-        onClick={() => setVisible(false)}
+      <img
+        src="https://images.unsplash.com/photo-1618359057154-e21ae64350b6?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=720&q=80"
+        alt="Demo"
       />
-      {!visible && (
-        <Overlay blur={15} center>
-          <Button color="red" radius="xl" onClick={() => setVisible(true)}>
-            NSFW, click to reveal
-          </Button>
-        </Overlay>
-      )}
+      <Overlay color="#000" backgroundOpacity={0.35} {...props} />
     </AspectRatio>
   );
 }
 
 export const blur: MantineDemo = {
-  type: 'demo',
+  type: 'configurator',
+  component: Wrapper,
   code,
-  component: Demo,
+  controls: [
+    { type: 'number', prop: 'blur', initialValue: 15, libraryValue: null, min: 0, max: 30 },
+  ],
 };

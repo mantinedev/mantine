@@ -45,7 +45,7 @@ describe('@mantine/hooks/use-queue', () => {
   });
 
   it('puts extra items to the queue if state has extra items after update', () => {
-    const hook = renderHook(() => useQueue({ initialValues: [], limit: 3 }));
+    const hook = renderHook(() => useQueue<number>({ initialValues: [], limit: 3 }));
     act(() => hook.result.current.update(() => [1, 2, 3, 4, 5, 6, 7, 8]));
     expect(hook.result.current.state).toStrictEqual([1, 2, 3]);
     expect(hook.result.current.queue).toStrictEqual([4, 5, 6, 7, 8]);

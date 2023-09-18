@@ -6,3 +6,7 @@ public
 .cache
 .eslintrc.js
 *.d.ts
+*.js
+v7-app-dir
+v7-pages-dir
+v7-vite

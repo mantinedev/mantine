@@ -27,7 +27,7 @@ export function Lists() {
     <Group key={item.key} mt="xs">
       <TextInput
         placeholder="John Doe"
-        sx={{ flex: 1 }}
+        style={{ flex: 1 }}
         {...form.getInputProps(`employees.${index}.name`)}
       />
       <Switch
@@ -44,22 +44,22 @@ export function Lists() {
     <FormBase form={form}>
       {fields.length > 0 ? (
         <Group mb="xs">
-          <Text weight={500} size="sm" sx={{ flex: 1 }}>
+          <Text fw={500} size="sm" style={{ flex: 1 }}>
             Name
           </Text>
-          <Text weight={500} size="sm" pr={90}>
+          <Text fw={500} size="sm" pr={90}>
             Status
           </Text>
         </Group>
       ) : (
-        <Text color="dimmed" align="center">
+        <Text c="dimmed" ta="center">
           No one here...
         </Text>
       )}
 
       {fields}
 
-      <Group position="center" mt="md">
+      <Group justify="center" mt="md">
         <Button
           onClick={() =>
             form.insertListItem('employees', { name: '', active: false, key: randomId() })

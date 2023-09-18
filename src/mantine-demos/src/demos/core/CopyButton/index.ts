@@ -1,2 +1,2 @@
 export { usage } from './CopyButton.demo.usage';
-export { tooltip } from './CopyButton.demo.tooltip';
+export { timeout } from './CopyButton.demo.timeout';

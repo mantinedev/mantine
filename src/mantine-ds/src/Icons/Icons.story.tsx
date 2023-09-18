@@ -9,7 +9,7 @@ export default { title: 'DS/Icons' };
 
 export function Usage() {
   return (
-    <div style={{ color: 'red' }}>
+    <div>
       <DiscordIcon size={40} />
       <GithubIcon size={40} />
       <TwitterIcon size={40} />

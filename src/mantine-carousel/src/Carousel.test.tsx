@@ -1,13 +1,6 @@
 import React from 'react';
-import { render, screen } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
-import {
-  itSupportsSystemProps,
-  itRendersChildren,
-  checkAccessibility,
-  itSupportsProviderVariant,
-} from '@mantine/tests';
-import { Carousel, CarouselProps } from './Carousel';
+import { render, tests, screen, userEvent } from '@mantine/tests';
+import { Carousel, CarouselProps, CarouselStylesNames } from './Carousel';
 
 const defaultProps: CarouselProps = {
   children: (
@@ -18,26 +11,31 @@ const defaultProps: CarouselProps = {
       <Carousel.Slide>4</Carousel.Slide>
     </>
   ),
+  withIndicators: true,
 };
 
-describe('@mantine/carousel/Carousel', () => {
-  checkAccessibility([
-    <Carousel nextControlLabel="Next slide" previousControlLabel="Previous slide" withIndicators>
-      <Carousel.Slide>1</Carousel.Slide>
-      <Carousel.Slide>2</Carousel.Slide>
-      <Carousel.Slide>3</Carousel.Slide>
-      <Carousel.Slide>4</Carousel.Slide>
-    </Carousel>,
-  ]);
-
-  itRendersChildren(Carousel, defaultProps);
-  itSupportsProviderVariant(Carousel, defaultProps, 'Carousel', ['root', 'slide']);
-  itSupportsSystemProps({
+describe('@mantine/core/Carousel', () => {
+  tests.itSupportsSystemProps<CarouselProps, CarouselStylesNames>({
     component: Carousel,
     props: defaultProps,
+    styleProps: true,
+    children: true,
+    extend: true,
+    variant: true,
+    size: true,
+    classes: true,
     refType: HTMLDivElement,
-    displayName: '@mantine/carousel/Carousel',
-    providerName: 'Carousel',
+    displayName: '@mantine/core/Carousel',
+    stylesApiSelectors: [
+      'root',
+      'container',
+      'control',
+      'controls',
+      'indicator',
+      'indicators',
+      'slide',
+      'viewport',
+    ],
   });
 
   it('calls onNextSlide and onPreviousSlide when next/previous buttons are clicked', async () => {
@@ -46,8 +44,8 @@ describe('@mantine/carousel/Carousel', () => {
 
     render(
       <Carousel
-        nextControlLabel="Next slide"
-        previousControlLabel="Previous slide"
+        nextControlProps={{ 'aria-label': 'Next slide' }}
+        previousControlProps={{ 'aria-label': 'Previous slide' }}
         onNextSlide={onNextSlide}
         onPreviousSlide={onPreviousSlide}
       />

@@ -5,7 +5,7 @@ export const getRelativePosition = ({
   alignment,
   offset,
   isList,
-}): number => {
+}: any): number => {
   if (!target || (!parent && typeof document === 'undefined')) {
     return 0;
   }

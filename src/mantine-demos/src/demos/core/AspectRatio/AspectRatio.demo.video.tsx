@@ -9,9 +9,9 @@ function Demo() {
   return (
     <AspectRatio ratio={16 / 9}>
       <iframe
-        src="https://www.youtube.com/embed/Dorf8i6lCuk"
+        src="https://www.youtube.com/embed/mzJ4vCjSt28"
         title="YouTube video player"
-        frameBorder="0"
+        style={{ border: 0 }}
         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
         allowFullScreen
       />
@@ -24,9 +24,9 @@ function Demo() {
   return (
     <AspectRatio ratio={16 / 9}>
       <iframe
-        src="https://www.youtube.com/embed/Dorf8i6lCuk"
+        src="https://www.youtube.com/embed/mzJ4vCjSt28"
         title="YouTube video player"
-        frameBorder="0"
+        style={{ border: 0 }}
         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
         allowFullScreen
       />
@@ -35,7 +35,7 @@ function Demo() {
 }
 
 export const video: MantineDemo = {
-  type: 'demo',
+  type: 'code',
   component: Demo,
   code,
 };

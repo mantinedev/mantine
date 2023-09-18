@@ -1,20 +1,22 @@
-import React, { forwardRef, useRef } from 'react';
-import { DefaultProps, Box, Selectors, useComponentDefaultProps } from '@mantine/core';
 import dayjs from 'dayjs';
-import { DecadeLevel, DecadeLevelStylesNames, DecadeLevelSettings } from '../DecadeLevel';
+import React, { useRef } from 'react';
+import { BoxProps, StylesApiProps, factory, ElementProps, useProps, Factory } from '@mantine/core';
+import { DecadeLevel, DecadeLevelSettings, DecadeLevelStylesNames } from '../DecadeLevel';
+import { LevelsGroup, LevelsGroupStylesNames } from '../LevelsGroup';
 import { handleControlKeyDown } from '../../utils';
-import useStyles from './DecadeLevelGroup.styles';
 
-export type DecadeLevelGroupStylesNames = Selectors<typeof useStyles> | DecadeLevelStylesNames;
+export type DecadeLevelGroupStylesNames = LevelsGroupStylesNames | DecadeLevelStylesNames;
 
 export interface DecadeLevelGroupProps
-  extends DefaultProps<DecadeLevelGroupStylesNames>,
+  extends BoxProps,
+    Omit<StylesApiProps<DecadeLevelGroupFactory>, 'classNames' | 'styles'>,
     Omit<
       DecadeLevelSettings,
       'withPrevious' | 'withNext' | '__onControlKeyDown' | '__getControlRef'
     >,
-    React.ComponentPropsWithoutRef<'div'> {
-  variant?: string;
+    ElementProps<'div'> {
+  classNames?: Partial<Record<string, string>>;
+  styles?: Partial<Record<string, React.CSSProperties>>;
   __staticSelector?: string;
 
   /** Number of columns to render next to each other */
@@ -27,11 +29,18 @@ export interface DecadeLevelGroupProps
   levelControlAriaLabel?: ((decade: Date) => string) | string;
 }
 
+export type DecadeLevelGroupFactory = Factory<{
+  props: DecadeLevelGroupProps;
+  ref: HTMLDivElement;
+  stylesNames: DecadeLevelGroupStylesNames;
+}>;
+
 const defaultProps: Partial<DecadeLevelGroupProps> = {
   numberOfColumns: 1,
 };
 
-export const DecadeLevelGroup = forwardRef<HTMLDivElement, DecadeLevelGroupProps>((props, ref) => {
+export const DecadeLevelGroup = factory<DecadeLevelGroupFactory>((_props, ref) => {
+  const props = useProps('DecadeLevelGroup', defaultProps, _props);
   const {
     // DecadeLevel settings
     decade,
@@ -56,7 +65,6 @@ export const DecadeLevelGroup = forwardRef<HTMLDivElement, DecadeLevelGroupProps
     previousDisabled,
 
     // Other settings
-    className,
     classNames,
     styles,
     unstyled,
@@ -65,19 +73,10 @@ export const DecadeLevelGroup = forwardRef<HTMLDivElement, DecadeLevelGroupProps
     numberOfColumns,
     levelControlAriaLabel,
     decadeLabelFormat,
-    variant,
     size,
+    vars,
     ...others
-  } = useComponentDefaultProps('DecadeLevelGroup', defaultProps, props);
-
-  const { classes, cx } = useStyles(null, {
-    name: ['DecadeLevelGroup', __staticSelector],
-    styles,
-    classNames,
-    unstyled,
-    variant,
-    size,
-  });
+  } = props;
 
   const controlsRef = useRef<HTMLButtonElement[][][]>([]);
 
@@ -91,11 +90,10 @@ export const DecadeLevelGroup = forwardRef<HTMLDivElement, DecadeLevelGroupProps
       return (
         <DecadeLevel
           key={decadeIndex}
-          variant={variant}
           size={size}
           yearsListFormat={yearsListFormat}
           decade={currentDecade}
-          withNext={decadeIndex === numberOfColumns - 1}
+          withNext={decadeIndex === numberOfColumns! - 1}
           withPrevious={decadeIndex === 0}
           decadeLabelFormat={decadeLabelFormat}
           __onControlClick={__onControlClick}
@@ -149,10 +147,19 @@ export const DecadeLevelGroup = forwardRef<HTMLDivElement, DecadeLevelGroupProps
     });
 
   return (
-    <Box className={cx(classes.decadeLevelGroup, className)} ref={ref} {...others}>
+    <LevelsGroup
+      classNames={classNames}
+      styles={styles}
+      __staticSelector={__staticSelector || 'DecadeLevelGroup'}
+      ref={ref}
+      size={size}
+      unstyled={unstyled}
+      {...others}
+    >
       {decades}
-    </Box>
+    </LevelsGroup>
   );
 });
 
+DecadeLevelGroup.classes = { ...LevelsGroup.classes, ...DecadeLevel.classes };
 DecadeLevelGroup.displayName = '@mantine/dates/DecadeLevelGroup';

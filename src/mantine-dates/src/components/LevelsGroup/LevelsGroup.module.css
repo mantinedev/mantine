@@ -1,0 +1,4 @@
+.levelsGroup {
+  display: flex;
+  gap: var(--mantine-spacing-md);
+}

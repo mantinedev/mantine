@@ -1,0 +1,69 @@
+@keyframes processing {
+  0% {
+    opacity: 0.6;
+    box-shadow: 0 0 rem(0.5px) 0 var(--indicator-color);
+  }
+
+  100% {
+    opacity: 0;
+    box-shadow: 0 0 rem(0.5px) rem(4.4px) var(--indicator-color);
+  }
+}
+
+.root {
+  --indicator-size: rem(10px);
+  --indicator-color: var(--mantine-primary-color-filled);
+
+  position: relative;
+  display: var(--_indicator-display, block);
+
+  &[data-inline] {
+    --_indicator-display: inline-block;
+  }
+}
+
+.indicator {
+  position: absolute;
+  top: var(--indicator-top);
+  left: var(--indicator-left);
+  right: var(--indicator-right);
+  bottom: var(--indicator-bottom);
+  transform: translate(var(--indicator-translate-x), var(--indicator-translate-y));
+  min-width: var(--indicator-size);
+  height: var(--indicator-size);
+  border-radius: var(--indicator-radius, rem(1000px));
+  z-index: var(--indicator-z-index, 200);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--mantine-font-size-xs);
+  padding-left: var(--_indicator-padding, 0);
+  padding-right: var(--_indicator-padding, 0);
+  background-color: var(--indicator-color);
+  border: var(--_indicator-border);
+  color: var(--mantine-color-white);
+  white-space: nowrap;
+
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-color: var(--indicator-color);
+    border-radius: var(--indicator-radius, rem(1000px));
+    z-index: -1;
+  }
+
+  &[data-with-label] {
+    --_indicator-padding: calc(var(--mantine-spacing-xs) / 2);
+  }
+
+  &[data-with-border] {
+    --_indicator-border: rem(2px) solid var(--mantine-color-body);
+  }
+
+  &[data-processing] {
+    &::before {
+      animation: processing 1000ms linear infinite;
+    }
+  }
+}

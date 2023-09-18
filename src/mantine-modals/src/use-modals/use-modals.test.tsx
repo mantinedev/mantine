@@ -30,7 +30,7 @@ describe('@mantine/modals/use-modals', () => {
       <div>{innerProps.text}</div>
     );
 
-    const wrapper = ({ children }) => (
+    const wrapper = ({ children }: any) => (
       <MantineProvider>
         <ModalsProvider modals={{ contextTest: ContextModal }}>{children}</ModalsProvider>
       </MantineProvider>
@@ -52,7 +52,7 @@ describe('@mantine/modals/use-modals', () => {
   });
 
   it('correctly renders a confirm modal with labels from the provider', () => {
-    const wrapper = ({ children }) => (
+    const wrapper = ({ children }: any) => (
       <MantineProvider>
         <ModalsProvider labels={{ cancel: 'ProviderCancel', confirm: 'ProviderConfirm' }}>
           {children}
@@ -76,7 +76,7 @@ describe('@mantine/modals/use-modals', () => {
   });
 
   it('correctly renders a confirm modal with overwritten provider labels', () => {
-    const wrapper = ({ children }) => (
+    const wrapper = ({ children }: any) => (
       <MantineProvider>
         <ModalsProvider labels={{ cancel: 'ProviderCancel', confirm: 'ProviderConfirm' }}>
           {children}
@@ -102,7 +102,7 @@ describe('@mantine/modals/use-modals', () => {
   });
 
   it('correctly renders a confirm modal with labels as HTMLElement', async () => {
-    const wrapper = ({ children }) => (
+    const wrapper = ({ children }: any) => (
       <MantineProvider>
         <ModalsProvider>{children}</ModalsProvider>
       </MantineProvider>
@@ -130,7 +130,7 @@ describe('@mantine/modals/use-modals', () => {
   });
 
   it('correctly renders a regular modal with children and a title', () => {
-    const wrapper = ({ children }) => (
+    const wrapper = ({ children }: any) => (
       <MantineProvider>
         <ModalsProvider>{children}</ModalsProvider>
       </MantineProvider>

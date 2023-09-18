@@ -33,7 +33,7 @@ function Demo() {
 }
 
 export const sizes: MantineDemo = {
-  type: 'demo',
+  type: 'code',
   code,
   component: Demo,
 };

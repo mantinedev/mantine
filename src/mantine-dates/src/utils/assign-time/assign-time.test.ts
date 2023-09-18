@@ -17,10 +17,10 @@ describe('@mantine/dates/assign-time', () => {
   });
 
   it('returns null if next date is null', () => {
-    expect(assignTime(new Date(2022, 3, 11), null)).toBe(null);
+    expect(assignTime(new Date(2022, 3, 11), null!)).toBe(null);
   });
 
   it('returns next date if original date is null', () => {
-    expect(assignTime(null, new Date(2022, 3, 11))).toStrictEqual(new Date(2022, 3, 11));
+    expect(assignTime(null!, new Date(2022, 3, 11))).toStrictEqual(new Date(2022, 3, 11));
   });
 });

@@ -5,9 +5,9 @@ import { Carousel } from '@mantine/carousel';
 function Slide({ children }: { children: React.ReactNode }) {
   return (
     <Box
-      sx={(theme) => ({
-        backgroundColor: theme.colors.blue[theme.colorScheme === 'dark' ? 8 : 6],
-        color: theme.white,
+      style={{
+        backgroundColor: 'var(--mantine-color-blue-filled)',
+        color: 'var(--mantine-color-white)',
         height: '100%',
         width: '100%',
         display: 'flex',
@@ -15,7 +15,7 @@ function Slide({ children }: { children: React.ReactNode }) {
         alignItems: 'center',
         fontSize: rem(50),
         fontWeight: 'bold',
-      })}
+      }}
     >
       {children}
     </Box>

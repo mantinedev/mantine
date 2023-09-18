@@ -1,23 +1,27 @@
 import React from 'react';
 import { MantineDemo } from '@mantine/ds';
-import { useMantineTheme, Container } from '@mantine/core';
+import { Container } from '@mantine/core';
 
 const code = `
 import { Container } from '@mantine/core';
 
 function Demo() {
+  const demoProps = {
+    bg: 'var(--mantine-color-blue-light)',
+    h: 50,
+    mt: 'md',
+  };
+
   return (
     <>
-      <Container>
-        Default container
+      <Container {...demoProps}>Default Container</Container>
+
+      <Container size="xs" {...demoProps}>
+        xs Container
       </Container>
 
-      <Container size="xs" px="xs">
-        xs container with xs horizontal padding
-      </Container>
-
-      <Container size="30rem" px={0}>
-        30rem container with 0 horizontal padding
+      <Container px={0} size="30rem" {...demoProps}>
+        30rem Container without padding
       </Container>
     </>
   );
@@ -25,28 +29,29 @@ function Demo() {
 `;
 
 function Demo() {
-  const theme = useMantineTheme();
-  const color = theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.blue[0];
+  const demoProps = {
+    bg: 'var(--mantine-color-blue-light)',
+    h: 50,
+    mt: 'md',
+  };
 
   return (
     <>
-      <Container bg={color} h={50}>
-        Default container
+      <Container {...demoProps} mt={0}>
+        Default Container
       </Container>
-
-      <Container size="xs" px="xs" bg={color} h={50} mt={20}>
-        xs container with xs horizontal padding
+      <Container size="xs" {...demoProps}>
+        xs Container
       </Container>
-
-      <Container size="30rem" px={0} bg={color} h={50} mt={20}>
-        30rem container with 0 horizontal padding
+      <Container px={0} size="30rem" {...demoProps}>
+        30rem Container without padding
       </Container>
     </>
   );
 }
 
 export const usage: MantineDemo = {
-  type: 'demo',
-  code,
+  type: 'code',
   component: Demo,
+  code,
 };

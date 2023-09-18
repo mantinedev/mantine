@@ -13,7 +13,7 @@ function Demo() {
   return (
     <>
       <Text>Count: {count}</Text>
-      <Group position="center">
+      <Group justify="center">
         <Button onClick={handlers.increment}>Increment</Button>
         <Button onClick={handlers.decrement}>Decrement</Button>
         <Button onClick={handlers.reset}>Reset</Button>
@@ -29,10 +29,10 @@ function Demo() {
 
   return (
     <>
-      <Text size="md" align="center" py="xs">
+      <Text size="md" ta="center" py="xs">
         Count: {count}
       </Text>
-      <Group position="center">
+      <Group justify="center">
         <Button variant="outline" size="xs" onClick={handlers.increment}>
           Increment
         </Button>
@@ -51,7 +51,7 @@ function Demo() {
 }
 
 export const useCounterDemo: MantineDemo = {
-  type: 'demo',
+  type: 'code',
   code,
   component: Demo,
 };

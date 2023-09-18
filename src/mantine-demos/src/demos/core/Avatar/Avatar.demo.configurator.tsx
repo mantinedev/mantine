@@ -1,47 +1,31 @@
-import React from 'react';
-import { Avatar, AvatarProps, Group } from '@mantine/core';
+import { Avatar } from '@mantine/core';
 import { MantineDemo } from '@mantine/ds';
-import { avatars } from './_mockdata';
+import { staticVariantsControl } from '../../../shared';
 
-function Wrapper(props: AvatarProps) {
-  return (
-    <Group position="center">
-      <Avatar {...props} />
-    </Group>
-  );
-}
-
-const codeTemplate = (props: string) => `
+const code = `
 import { Avatar } from '@mantine/core';
 
 function Demo() {
-  return <Avatar${props} />;
+  return <Avatar{{props}} />;
 }
 `;
 
 export const configurator: MantineDemo = {
   type: 'configurator',
-  component: Wrapper,
-  codeTemplate,
-  configurator: [
+  component: Avatar,
+  centered: true,
+  striped: true,
+  code,
+  controls: [
+    staticVariantsControl,
+    { prop: 'radius', type: 'size', initialValue: 'sm', libraryValue: '100%' },
+    { prop: 'size', type: 'size', initialValue: 'md', libraryValue: 'md' },
+    { prop: 'color', type: 'color', initialValue: 'gray', libraryValue: 'gray' },
     {
-      name: 'variant',
-      type: 'segmented',
-      initialValue: 'light',
-      defaultValue: 'light',
-      data: [
-        { label: 'light', value: 'light' },
-        { label: 'filled', value: 'filled' },
-        { label: 'outline', value: 'outline' },
-      ],
-    },
-    { name: 'radius', type: 'size', initialValue: 'sm', defaultValue: 'sm' },
-    { name: 'size', type: 'size', initialValue: 'md', defaultValue: 'md' },
-    { name: 'color', type: 'color', initialValue: 'gray', defaultValue: 'gray' },
-    {
-      name: 'src',
+      prop: 'src',
       type: 'string',
-      initialValue: avatars[1],
+      initialValue: '',
+      libraryValue: null,
     },
   ],
 };

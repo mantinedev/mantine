@@ -1,0 +1,1 @@
+export { MdxTabs } from './MdxTabs';

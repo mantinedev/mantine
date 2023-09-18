@@ -1,41 +1,37 @@
 import React from 'react';
-import { MultiSelect, Box } from '@mantine/core';
 import { MantineDemo } from '@mantine/ds';
-import { data } from './_data';
+import { MultiSelect } from '@mantine/core';
 
 const code = `
 import { MultiSelect } from '@mantine/core';
 
 function Demo() {
-  return <MultiSelect disabled />;
+  return (
+    <MultiSelect
+      label="Your favorite libraries"
+      placeholder="Pick value"
+      data={['React', 'Angular', 'Vue', 'Svelte']}
+      disabled
+    />
+  );
 }
 `;
 
 function Demo() {
   return (
-    <Box maw={400} mx="auto">
-      <MultiSelect
-        data={data}
-        label="Disabled without value"
-        placeholder="Won't pick anything"
-        disabled
-        defaultValue={[]}
-      />
-
-      <MultiSelect
-        mt="md"
-        data={data}
-        label="Disabled with values"
-        placeholder="Won't pick anything"
-        disabled
-        defaultValue={['react', 'vue']}
-      />
-    </Box>
+    <MultiSelect
+      label="Your favorite libraries"
+      placeholder="Pick value"
+      data={['React', 'Angular', 'Vue', 'Svelte']}
+      disabled
+    />
   );
 }
 
 export const disabled: MantineDemo = {
-  type: 'demo',
-  code,
+  type: 'code',
   component: Demo,
+  code,
+  maxWidth: 340,
+  centered: true,
 };

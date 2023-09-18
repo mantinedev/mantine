@@ -1,0 +1,9 @@
+.option {
+  transition: transform 100ms ease, box-shadow 100ms ease;
+
+  &[data-combobox-selected] {
+    font-weight: 500;
+    transform: scale(1.1);
+    box-shadow: var(--mantine-shadow-lg);
+  }
+}

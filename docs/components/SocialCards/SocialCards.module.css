@@ -1,0 +1,49 @@
+.cards {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--mantine-spacing-lg);
+}
+
+.card {
+  flex: 1;
+  min-width: rem(300px);
+  display: flex;
+  color: var(--mantine-color-white);
+  border-radius: var(--mantine-radius-md);
+  padding: var(--mantine-spacing-md);
+  text-decoration: none;
+  transition: transform 200ms ease, box-shadow 200ms ease;
+
+  @mixin hover {
+    transform: scale(1.03);
+    box-shadow: var(--mantine-shadow-xl);
+  }
+}
+
+.discord {
+  background-color: light-dark(#5865f2, #4450da);
+}
+
+.twitter {
+  background-color: light-dark(#239de9, #228acb);
+}
+
+.github {
+  background-color: var(--mantine-color-dark-9);
+}
+
+.icon {
+  margin-right: var(--mantine-spacing-lg);
+  height: rem(30px);
+  width: rem(30px);
+  min-width: rem(30px);
+}
+
+.title {
+  font-weight: 500;
+}
+
+.description {
+  font-size: var(--mantine-font-size-xs);
+  margin-top: rem(5px);
+}

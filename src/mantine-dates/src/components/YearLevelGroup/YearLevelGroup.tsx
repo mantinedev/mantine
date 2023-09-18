@@ -1,17 +1,19 @@
-import React, { forwardRef, useRef } from 'react';
-import { DefaultProps, Box, Selectors, useComponentDefaultProps } from '@mantine/core';
 import dayjs from 'dayjs';
-import { YearLevel, YearLevelStylesNames, YearLevelSettings } from '../YearLevel';
+import React, { useRef } from 'react';
+import { BoxProps, StylesApiProps, factory, ElementProps, useProps, Factory } from '@mantine/core';
+import { YearLevel, YearLevelSettings, YearLevelStylesNames } from '../YearLevel';
+import { LevelsGroup, LevelsGroupStylesNames } from '../LevelsGroup';
 import { handleControlKeyDown } from '../../utils';
-import useStyles from './YearLevelGroup.styles';
 
-export type YearLevelGroupStylesNames = Selectors<typeof useStyles> | YearLevelStylesNames;
+export type YearLevelGroupStylesNames = YearLevelStylesNames | LevelsGroupStylesNames;
 
 export interface YearLevelGroupProps
-  extends DefaultProps<YearLevelGroupStylesNames>,
+  extends BoxProps,
     Omit<YearLevelSettings, 'withPrevious' | 'withNext' | '__onControlKeyDown' | '__getControlRef'>,
-    React.ComponentPropsWithoutRef<'div'> {
-  variant?: string;
+    Omit<StylesApiProps<YearLevelGroupFactory>, 'classNames' | 'styles'>,
+    ElementProps<'div'> {
+  classNames?: Partial<Record<string, string>>;
+  styles?: Partial<Record<string, React.CSSProperties>>;
   __staticSelector?: string;
 
   /** Number of columns to render next to each other */
@@ -24,12 +26,18 @@ export interface YearLevelGroupProps
   levelControlAriaLabel?: ((year: Date) => string) | string;
 }
 
+export type YearLevelGroupFactory = Factory<{
+  props: YearLevelGroupProps;
+  ref: HTMLDivElement;
+  stylesNames: YearLevelGroupStylesNames;
+}>;
+
 const defaultProps: Partial<YearLevelGroupProps> = {
   numberOfColumns: 1,
-  size: 'sm',
 };
 
-export const YearLevelGroup = forwardRef<HTMLDivElement, YearLevelGroupProps>((props, ref) => {
+export const YearLevelGroup = factory<YearLevelGroupFactory>((_props, ref) => {
+  const props = useProps('YearLevelGroup', defaultProps, _props);
   const {
     // YearLevel settings
     year,
@@ -56,7 +64,6 @@ export const YearLevelGroup = forwardRef<HTMLDivElement, YearLevelGroupProps>((p
     hasNextLevel,
 
     // Other settings
-    className,
     classNames,
     styles,
     unstyled,
@@ -65,19 +72,10 @@ export const YearLevelGroup = forwardRef<HTMLDivElement, YearLevelGroupProps>((p
     numberOfColumns,
     levelControlAriaLabel,
     yearLabelFormat,
-    variant,
     size,
+    vars,
     ...others
-  } = useComponentDefaultProps('YearLevelGroup', defaultProps, props);
-
-  const { classes, cx } = useStyles(null, {
-    name: ['YearLevelGroup', __staticSelector],
-    styles,
-    classNames,
-    unstyled,
-    variant,
-    size,
-  });
+  } = props;
 
   const controlsRef = useRef<HTMLButtonElement[][][]>([]);
 
@@ -89,11 +87,10 @@ export const YearLevelGroup = forwardRef<HTMLDivElement, YearLevelGroupProps>((p
       return (
         <YearLevel
           key={yearIndex}
-          variant={variant}
           size={size}
           monthsListFormat={monthsListFormat}
           year={currentYear}
-          withNext={yearIndex === numberOfColumns - 1}
+          withNext={yearIndex === numberOfColumns! - 1}
           withPrevious={yearIndex === 0}
           yearLabelFormat={yearLabelFormat}
           __stopPropagation={__stopPropagation}
@@ -149,10 +146,19 @@ export const YearLevelGroup = forwardRef<HTMLDivElement, YearLevelGroupProps>((p
     });
 
   return (
-    <Box className={cx(classes.yearLevelGroup, className)} ref={ref} {...others}>
+    <LevelsGroup
+      classNames={classNames}
+      styles={styles}
+      __staticSelector={__staticSelector || 'YearLevelGroup'}
+      ref={ref}
+      size={size}
+      unstyled={unstyled}
+      {...others}
+    >
       {years}
-    </Box>
+    </LevelsGroup>
   );
 });
 
+YearLevelGroup.classes = { ...YearLevel.classes, ...LevelsGroup.classes };
 YearLevelGroup.displayName = '@mantine/dates/YearLevelGroup';

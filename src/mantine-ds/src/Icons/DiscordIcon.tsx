@@ -5,14 +5,13 @@ interface DiscordIconProps extends React.ComponentPropsWithoutRef<'svg'> {
   size?: number | string;
 }
 
-export function DiscordIcon({ size, ...others }: DiscordIconProps) {
+export function DiscordIcon({ size, style, ...others }: DiscordIconProps) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
       fill="none"
       viewBox="0 0 256 199"
-      width={rem(size)}
-      height={rem(size)}
+      style={{ width: rem(size), height: rem(size), ...style }}
       {...others}
     >
       <path

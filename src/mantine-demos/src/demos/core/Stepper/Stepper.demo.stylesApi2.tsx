@@ -84,7 +84,7 @@ function Demo() {
 }
 
 export const stylesApi2: MantineDemo = {
-  type: 'demo',
+  type: 'code',
   component: Demo,
   code,
 };

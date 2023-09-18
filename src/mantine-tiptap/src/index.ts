@@ -3,11 +3,20 @@ export { RichTextEditor } from './RichTextEditor';
 export { useRichTextEditorContext } from './RichTextEditor.context';
 export { DEFAULT_LABELS } from './labels';
 
-export type { RichTextEditorProps, RichTextEditorStylesNames } from './RichTextEditor';
-export type { RichTextEditorToolbarProps } from './Toolbar/Toolbar';
-export type { RichTextEditorControlProps } from './controls/Control/Control';
-export type { RichTextEditorColorControlProps } from './controls/ColorControl/ColorControl';
-export type { RichTextEditorLinkControlProps } from './controls/LinkControl/LinkControl';
-export type { RichTextEditorContentProps } from './Content/Content';
-export type { RichTextEditorControlsGroupProps } from './controls/ControlsGroup/ControlsGroup';
+export * from './RichTextEditorControl';
+export { RichTextEditorControlsGroup } from './RichTextEditorControlsGroup/RichTextEditorControlsGroup';
+export { RichTextEditorControl } from './RichTextEditorControl/RichTextEditorControl';
+export { RichTextEditorContent } from './RichTextEditorContent/RichTextEditorContent';
+
+export type {
+  RichTextEditorProps,
+  RichTextEditorStylesNames,
+  RichTextEditorFactory,
+} from './RichTextEditor';
+export type { RichTextEditorToolbarProps } from './RichTextEditorToolbar/RichTextEditorToolbar';
+export type { RichTextEditorControlProps } from './RichTextEditorControl/RichTextEditorControl';
+export type { RichTextEditorColorControlProps } from './RichTextEditorControl/RichTextEditorColorControl';
+export type { RichTextEditorLinkControlProps } from './RichTextEditorControl/RichTextEditorLinkControl';
+export type { RichTextEditorContentProps } from './RichTextEditorContent/RichTextEditorContent';
+export type { RichTextEditorControlsGroupProps } from './RichTextEditorControlsGroup/RichTextEditorControlsGroup';
 export type { RichTextEditorLabels } from './labels';

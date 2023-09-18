@@ -2,14 +2,15 @@ import React from 'react';
 import { MantineDemo } from '@mantine/ds';
 import { CheckboxGroupProps, Checkbox, Group } from '@mantine/core';
 
-const codeTemplate = (props: string) => `
-import { Checkbox } from '@mantine/core';
+const code = `
+import { Checkbox, Group } from '@mantine/core';
+
 
 function Demo() {
   return (
     <Checkbox.Group
       defaultValue={['react']}
-     ${props}
+      {{props}}
     >
       <Group mt="xs">
         <Checkbox value="react" label="React" />
@@ -38,12 +39,18 @@ function Wrapper(props: Partial<CheckboxGroupProps>) {
 export const groupConfigurator: MantineDemo = {
   type: 'configurator',
   component: Wrapper,
-  codeTemplate,
-  configuratorProps: { multiline: 3 },
-  configurator: [
-    { name: 'label', type: 'string', initialValue: 'Select your favorite frameworks/libraries' },
-    { name: 'description', type: 'string', initialValue: 'This is anonymous' },
-    { name: 'error', type: 'string', initialValue: '' },
-    { name: 'withAsterisk', type: 'boolean', initialValue: true, defaultValue: false },
+  code,
+  centered: true,
+  maxWidth: '100%',
+  controls: [
+    {
+      prop: 'label',
+      type: 'string',
+      initialValue: 'Select your favorite frameworks/libraries',
+      libraryValue: '',
+    },
+    { prop: 'description', type: 'string', initialValue: 'This is anonymous', libraryValue: '' },
+    { prop: 'error', type: 'string', initialValue: '', libraryValue: '' },
+    { prop: 'withAsterisk', type: 'boolean', initialValue: true, libraryValue: false },
   ],
 };

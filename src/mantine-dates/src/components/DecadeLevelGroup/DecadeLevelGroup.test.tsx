@@ -1,17 +1,11 @@
 import React from 'react';
-import { render, screen } from '@testing-library/react';
+import { render, tests, screen } from '@mantine/tests';
+import { datesTests } from '@mantine/dates-tests';
 import {
-  itSupportsSystemProps,
-  itSupportsProviderVariant,
-  itSupportsProviderSize,
-} from '@mantine/tests';
-import { DecadeLevelGroup, DecadeLevelGroupProps } from './DecadeLevelGroup';
-import {
-  itSupportsYearsListProps,
-  itSupportsOnControlClick,
-  itHandlesControlsKeyboardEvents,
-  itSupportsOnControlMouseEnter,
-} from '../../tests';
+  DecadeLevelGroup,
+  DecadeLevelGroupProps,
+  DecadeLevelGroupStylesNames,
+} from './DecadeLevelGroup';
 
 const defaultProps: DecadeLevelGroupProps = {
   decade: new Date(2022, 3, 11),
@@ -21,32 +15,39 @@ const defaultProps: DecadeLevelGroupProps = {
 };
 
 describe('@mantine/dates/DecadeLevelGroup', () => {
-  itSupportsSystemProps({
+  tests.itSupportsSystemProps<DecadeLevelGroupProps, DecadeLevelGroupStylesNames>({
     component: DecadeLevelGroup,
     props: defaultProps,
+    styleProps: true,
+    extend: true,
+    variant: true,
+    size: true,
+    classes: true,
     refType: HTMLDivElement,
-    providerName: 'DecadeLevelGroup',
     displayName: '@mantine/dates/DecadeLevelGroup',
+    stylesApiSelectors: [
+      'levelsGroup',
+      'calendarHeader',
+      'calendarHeaderControl',
+      'calendarHeaderControlIcon',
+      'calendarHeaderLevel',
+      'yearsList',
+      'yearsListCell',
+      'yearsListControl',
+      'yearsListRow',
+    ],
+    compound: true,
+    providerStylesApi: false,
   });
 
-  itSupportsProviderVariant(DecadeLevelGroup, defaultProps, 'DecadeLevelGroup', [
-    'decadeLevelGroup',
-    'decadeLevel',
-  ]);
-  itSupportsProviderSize(DecadeLevelGroup, defaultProps, 'DecadeLevelGroup', [
-    'decadeLevelGroup',
-    'decadeLevel',
-  ]);
-
-  itSupportsYearsListProps(DecadeLevelGroup, defaultProps);
-  itSupportsOnControlClick(DecadeLevelGroup, defaultProps);
-  itSupportsOnControlMouseEnter(DecadeLevelGroup, defaultProps);
-  itHandlesControlsKeyboardEvents(
-    DecadeLevelGroup,
-    'decade',
-    '.mantine-YearsList-yearsList',
-    defaultProps
-  );
+  datesTests.itSupportsYearsListProps({ component: DecadeLevelGroup, props: defaultProps });
+  datesTests.itSupportsOnControlClick({ component: DecadeLevelGroup, props: defaultProps });
+  datesTests.itSupportsOnControlMouseEnter({ component: DecadeLevelGroup, props: defaultProps });
+  datesTests.itHandlesControlsKeyboardEvents({
+    component: DecadeLevelGroup,
+    props: defaultProps,
+    listSelector: '.mantine-DecadeLevelGroup-yearsList',
+  });
 
   it('renders correct number of columns based on numberOfColumns prop', () => {
     const { rerender } = render(<DecadeLevelGroup {...defaultProps} numberOfColumns={1} />);
@@ -83,9 +84,8 @@ describe('@mantine/dates/DecadeLevelGroup', () => {
 
   it('has correct default __staticSelector', () => {
     const { container } = render(<DecadeLevelGroup {...defaultProps} />);
-    expect(container.firstChild).toHaveClass('mantine-DecadeLevelGroup-decadeLevelGroup');
     expect(container.querySelector('table button')).toHaveClass(
-      'mantine-DecadeLevelGroup-pickerControl'
+      'mantine-DecadeLevelGroup-yearsListControl'
     );
   });
 
@@ -93,34 +93,8 @@ describe('@mantine/dates/DecadeLevelGroup', () => {
     const { container } = render(
       <DecadeLevelGroup {...defaultProps} __staticSelector="Calendar" />
     );
-    expect(container.firstChild).toHaveClass('mantine-Calendar-decadeLevelGroup');
-    expect(container.querySelector('table button')).toHaveClass('mantine-Calendar-pickerControl');
-  });
-
-  it('supports styles api (styles)', () => {
-    const { container } = render(
-      <DecadeLevelGroup
-        {...defaultProps}
-        styles={{
-          decadeLevelGroup: { borderColor: '#CCEE45' },
-          pickerControl: { borderColor: '#443443' },
-        }}
-      />
+    expect(container.querySelector('table button')).toHaveClass(
+      'mantine-Calendar-yearsListControl'
     );
-
-    expect(container.firstChild).toHaveStyle({ borderColor: '#CCEE45' });
-    expect(container.querySelector('table button')).toHaveStyle({ borderColor: '#443443' });
-  });
-
-  it('supports styles api (classNames)', () => {
-    const { container } = render(
-      <DecadeLevelGroup
-        {...defaultProps}
-        classNames={{ decadeLevelGroup: 'test-group', pickerControl: 'test-control' }}
-      />
-    );
-
-    expect(container.firstChild).toHaveClass('test-group');
-    expect(container.querySelector('table button')).toHaveClass('test-control');
   });
 });

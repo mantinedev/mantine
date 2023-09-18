@@ -111,7 +111,7 @@ function Demo() {
 }
 
 export const colors: MantineDemo = {
-  type: 'demo',
+  type: 'code',
   component: Demo,
   code,
 };

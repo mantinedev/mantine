@@ -1,47 +1,53 @@
 import React from 'react';
-import { AccordionProps } from '@mantine/core';
+import { AccordionProps, Accordion } from '@mantine/core';
 import { MantineDemo } from '@mantine/ds';
-import { BaseDemo } from './_base';
+import { groceries } from './_base';
 
-function Wrapper(props: Partial<AccordionProps>) {
-  return <BaseDemo {...props} defaultValue="customization" />;
-}
-
-const codeTemplate = (props: string) => `
+const code = `
 import { Accordion } from '@mantine/core';
 
 function Demo() {
+  // See groceries data above
+  const items = groceries.map((item) => (
+    <Accordion.Item key={item.value} value={item.value}>
+      <Accordion.Control icon={item.emoji}>{item.value}</Accordion.Control>
+      <Accordion.Panel>{item.description}</Accordion.Panel>
+    </Accordion.Item>
+  ));
+
   return (
-    <Accordion${props} defaultValue="customization">
-      <Accordion.Item value="customization">
-        <Accordion.Control>Customization</Accordion.Control>
-        <Accordion.Panel>Colors, fonts, shadows and many other parts are customizable to fit your design needs</Accordion.Panel>
-      </Accordion.Item>
-
-      <Accordion.Item value="flexibility">
-        <Accordion.Control>Flexibility</Accordion.Control>
-        <Accordion.Panel>Configure components appearance and behavior with vast amount of settings or overwrite any part of component styles</Accordion.Panel>
-      </Accordion.Item>
-
-      <Accordion.Item value="focus-ring">
-        <Accordion.Control>No annoying focus ring</Accordion.Control>
-        <Accordion.Panel>With new :focus-visible pseudo-class focus ring appears only when user navigates with keyboard</Accordion.Panel>
-      </Accordion.Item>
+    <Accordion{{props}} defaultValue="Apples">
+      {items}
     </Accordion>
   );
 }
 `;
 
+function Demo(props: AccordionProps) {
+  const items = groceries.map((item) => (
+    <Accordion.Item key={item.value} value={item.value}>
+      <Accordion.Control icon={item.emoji}>{item.value}</Accordion.Control>
+      <Accordion.Panel>{item.description}</Accordion.Panel>
+    </Accordion.Item>
+  ));
+
+  return (
+    <Accordion {...props} defaultValue="Apples">
+      {items}
+    </Accordion>
+  );
+}
+
 export const configurator: MantineDemo = {
   type: 'configurator',
-  component: Wrapper,
-  codeTemplate,
-  configurator: [
+  component: Demo,
+  code,
+  controls: [
     {
-      name: 'variant',
+      prop: 'variant',
       type: 'select',
       initialValue: 'default',
-      defaultValue: 'default',
+      libraryValue: 'default',
       data: [
         { label: 'Default', value: 'default' },
         { label: 'Contained', value: 'contained' },
@@ -49,17 +55,17 @@ export const configurator: MantineDemo = {
         { label: 'Separated', value: 'separated' },
       ],
     },
-    { name: 'radius', type: 'size', defaultValue: 'sm', initialValue: 'sm' },
+    { prop: 'radius', type: 'size', libraryValue: 'sm', initialValue: 'sm' },
     {
-      name: 'chevronPosition',
+      prop: 'chevronPosition',
       type: 'segmented',
       data: [
         { label: 'Left', value: 'left' },
         { label: 'Right', value: 'right' },
       ],
       initialValue: 'right',
-      defaultValue: 'right',
+      libraryValue: 'right',
     },
-    { name: 'disableChevronRotation', type: 'boolean', initialValue: false, defaultValue: false },
+    { prop: 'disableChevronRotation', type: 'boolean', initialValue: false, libraryValue: false },
   ],
 };

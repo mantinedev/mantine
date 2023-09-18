@@ -50,3 +50,11 @@ export function WithoutNextAndPrevious() {
     </div>
   );
 }
+
+export function Sizes() {
+  const sizes = (['xs', 'sm', 'md', 'lg', 'xl'] as const).map((size) => (
+    <CalendarHeader label="January" size={size} key={size} mt="xl" />
+  ));
+
+  return <div style={{ padding: 40 }}>{sizes}</div>;
+}

@@ -55,7 +55,7 @@ function Demo() {
 }
 
 export const floatingMenu: MantineDemo = {
-  type: 'demo',
+  type: 'code',
   component: Demo,
   code,
 };

@@ -26,7 +26,7 @@ function Demo() {
 }
 
 export const content: MantineDemo = {
-  type: 'demo',
+  type: 'code',
   code,
   component: Demo,
 };

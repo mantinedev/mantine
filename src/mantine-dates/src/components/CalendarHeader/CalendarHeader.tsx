@@ -1,16 +1,30 @@
-import React, { forwardRef } from 'react';
+import React from 'react';
 import {
-  DefaultProps,
-  Selectors,
   Box,
-  useComponentDefaultProps,
-  UnstyledButton,
+  BoxProps,
+  StylesApiProps,
+  factory,
+  ElementProps,
+  useProps,
+  useStyles,
+  createVarsResolver,
+  Factory,
   MantineSize,
+  UnstyledButton,
+  AccordionChevron,
+  getSize,
+  getFontSize,
 } from '@mantine/core';
-import { Chevron } from './Chevron';
-import useStyles from './CalendarHeader.styles';
+import classes from './CalendarHeader.module.css';
 
-export type CalendarHeaderStylesNames = Selectors<typeof useStyles>;
+export type CalendarHeaderStylesNames =
+  | 'calendarHeader'
+  | 'calendarHeaderControl'
+  | 'calendarHeaderLevel'
+  | 'calendarHeaderControlIcon';
+export type CalendarHeaderCssVariables = {
+  calendarHeader: '--dch-control-size' | '--dch-fz';
+};
 
 export interface CalendarHeaderSettings {
   __preventFocus?: boolean;
@@ -59,10 +73,10 @@ export interface CalendarHeaderSettings {
 }
 
 export interface CalendarHeaderProps
-  extends DefaultProps<CalendarHeaderStylesNames>,
+  extends BoxProps,
     CalendarHeaderSettings,
-    React.ComponentPropsWithoutRef<'div'> {
-  variant?: string;
+    StylesApiProps<CalendarHeaderFactory>,
+    ElementProps<'div'> {
   __staticSelector?: string;
 
   /** Label displayed between next and previous buttons */
@@ -72,18 +86,37 @@ export interface CalendarHeaderProps
   levelControlAriaLabel?: string;
 }
 
+export type CalendarHeaderFactory = Factory<{
+  props: CalendarHeaderProps;
+  ref: HTMLDivElement;
+  stylesNames: CalendarHeaderStylesNames;
+  vars: CalendarHeaderCssVariables;
+}>;
+
 const defaultProps: Partial<CalendarHeaderProps> = {
   nextDisabled: false,
   previousDisabled: false,
   hasNextLevel: true,
   withNext: true,
   withPrevious: true,
-  size: 'sm',
 };
 
-export const CalendarHeader = forwardRef<HTMLDivElement, CalendarHeaderProps>((props, ref) => {
+const varsResolver = createVarsResolver<CalendarHeaderFactory>((_, { size }) => ({
+  calendarHeader: {
+    '--dch-control-size': getSize(size, 'dch-control-size'),
+    '--dch-fz': getFontSize(size),
+  },
+}));
+
+export const CalendarHeader = factory<CalendarHeaderFactory>((_props, ref) => {
+  const props = useProps('CalendarHeader', defaultProps, _props);
   const {
+    classNames,
     className,
+    style,
+    styles,
+    unstyled,
+    vars,
     nextIcon,
     previousIcon,
     nextLabel,
@@ -92,9 +125,6 @@ export const CalendarHeader = forwardRef<HTMLDivElement, CalendarHeaderProps>((p
     onPrevious,
     onLevelClick,
     label,
-    classNames,
-    styles,
-    unstyled,
     nextDisabled,
     previousDisabled,
     hasNextLevel,
@@ -104,18 +134,21 @@ export const CalendarHeader = forwardRef<HTMLDivElement, CalendarHeaderProps>((p
     __staticSelector,
     __preventFocus,
     __stopPropagation,
-    size,
-    variant,
     ...others
-  } = useComponentDefaultProps('CalendarHeader', defaultProps, props);
+  } = props;
 
-  const { classes, cx } = useStyles(null, {
-    name: ['CalendarHeader', __staticSelector],
+  const getStyles = useStyles<CalendarHeaderFactory>({
+    name: __staticSelector || 'CalendarHeader',
+    classes,
+    props,
+    className,
+    style,
     classNames,
     styles,
     unstyled,
-    size,
-    variant,
+    vars,
+    varsResolver,
+    rootSelector: 'calendarHeader',
   });
 
   const preventFocus = __preventFocus
@@ -123,11 +156,11 @@ export const CalendarHeader = forwardRef<HTMLDivElement, CalendarHeaderProps>((p
     : undefined;
 
   return (
-    <Box className={cx(classes.calendarHeader, className)} ref={ref} {...others}>
+    <Box {...getStyles('calendarHeader')} ref={ref} {...others}>
       {withPrevious && (
         <UnstyledButton
-          className={classes.calendarHeaderControl}
-          data-previous
+          {...getStyles('calendarHeaderControl')}
+          data-direction="previous"
           aria-label={previousLabel}
           onClick={onPrevious}
           unstyled={unstyled}
@@ -138,10 +171,10 @@ export const CalendarHeader = forwardRef<HTMLDivElement, CalendarHeaderProps>((p
           data-mantine-stop-propagation={__stopPropagation || undefined}
         >
           {previousIcon || (
-            <Chevron
-              className={classes.calendarHeaderControlIcon}
-              direction="previous"
-              data-previous
+            <AccordionChevron
+              {...getStyles('calendarHeaderControlIcon')}
+              data-direction="previous"
+              size="45%"
             />
           )}
         </UnstyledButton>
@@ -149,7 +182,7 @@ export const CalendarHeader = forwardRef<HTMLDivElement, CalendarHeaderProps>((p
 
       <UnstyledButton
         component={hasNextLevel ? 'button' : 'div'}
-        className={classes.calendarHeaderLevel}
+        {...getStyles('calendarHeaderLevel')}
         onClick={hasNextLevel ? onLevelClick : undefined}
         unstyled={unstyled}
         onMouseDown={hasNextLevel ? preventFocus : undefined}
@@ -164,8 +197,8 @@ export const CalendarHeader = forwardRef<HTMLDivElement, CalendarHeaderProps>((p
 
       {withNext && (
         <UnstyledButton
-          className={classes.calendarHeaderControl}
-          data-next
+          {...getStyles('calendarHeaderControl')}
+          data-direction="next"
           aria-label={nextLabel}
           onClick={onNext}
           unstyled={unstyled}
@@ -176,7 +209,11 @@ export const CalendarHeader = forwardRef<HTMLDivElement, CalendarHeaderProps>((p
           data-mantine-stop-propagation={__stopPropagation || undefined}
         >
           {nextIcon || (
-            <Chevron className={classes.calendarHeaderControlIcon} direction="next" data-next />
+            <AccordionChevron
+              {...getStyles('calendarHeaderControlIcon')}
+              data-direction="next"
+              size="45%"
+            />
           )}
         </UnstyledButton>
       )}
@@ -184,4 +221,5 @@ export const CalendarHeader = forwardRef<HTMLDivElement, CalendarHeaderProps>((p
   );
 });
 
+CalendarHeader.classes = classes;
 CalendarHeader.displayName = '@mantine/dates/CalendarHeader';

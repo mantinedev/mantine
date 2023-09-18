@@ -11,7 +11,6 @@ function Demo() {
       {/* Regular pagination */}
       <Pagination
         total={10}
-        position="center"
         withEdges
         getItemProps={(page) => ({
           component: 'a',
@@ -46,7 +45,7 @@ function Demo() {
           href: \`#page-\${page}\`,
         })}
       >
-        <Group spacing={7} position="center" mt="xl">
+        <Group gap={7} mt="xl">
           <Pagination.First component="a" href="#page-0" />
           <Pagination.Previous component="a" href="#page-1" />
           <Pagination.Items />
@@ -66,7 +65,6 @@ function Demo() {
       {/* Regular pagination */}
       <Pagination
         total={10}
-        position="center"
         withEdges
         getItemProps={(page) => ({
           component: 'a',
@@ -101,7 +99,7 @@ function Demo() {
           href: `#page-${page}`,
         })}
       >
-        <Group spacing={7} position="center" mt="xl">
+        <Group gap={7} mt="xl">
           <Pagination.First component="a" href="#page-0" />
           <Pagination.Previous component="a" href="#page-1" />
           <Pagination.Items />
@@ -114,7 +112,7 @@ function Demo() {
 }
 
 export const links: MantineDemo = {
-  type: 'demo',
+  type: 'code',
   component: Demo,
   code,
 };

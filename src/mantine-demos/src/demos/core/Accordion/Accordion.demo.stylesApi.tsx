@@ -1,106 +1,49 @@
 import React from 'react';
-import { Accordion, createStyles, rem } from '@mantine/core';
 import { MantineDemo } from '@mantine/ds';
-import { baseDemoItems } from './_base';
+import { Accordion, AccordionProps } from '@mantine/core';
+import { AccordionStylesApi } from '@mantine/styles-api';
+import { groceries } from './_base';
 
 const code = `
-import { Accordion, createStyles, rem } from '@mantine/core';
-
-const useStyles = createStyles((theme) => ({
-  root: {
-    backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[0],
-    borderRadius: theme.radius.sm,
-  },
-
-  item: {
-    backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[0],
-    border: \`\${rem(1)} solid transparent\`,
-    position: 'relative',
-    zIndex: 0,
-    transition: 'transform 150ms ease',
-
-    '&[data-active]': {
-      transform: 'scale(1.03)',
-      backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.white,
-      boxShadow: theme.shadows.md,
-      borderColor: theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[2],
-      borderRadius: theme.radius.md,
-      zIndex: 1,
-    },
-  },
-
-  chevron: {
-    '&[data-rotate]': {
-      transform: 'rotate(-90deg)',
-    },
-  },
-}));
+import { Accordion } from '@mantine/core';
 
 function Demo() {
-  const { classes } = useStyles();
+  // See groceries data above
+  const items = groceries.map((item) => (
+    <Accordion.Item key={item.value} value={item.value}>
+      <Accordion.Control icon={item.emoji}>{item.value}</Accordion.Control>
+      <Accordion.Panel>{item.description}</Accordion.Panel>
+    </Accordion.Item>
+  ));
+
   return (
-    <Accordion
-      maw={420}
-      mx="auto"
-      variant="filled"
-      defaultValue="customization"
-      classNames={classes}
-      className={classes.root}
-    >
-      {/* ... Accordion items */}
+    <Accordion defaultValue="Apples" order={2}{{props}}>
+      {items}
     </Accordion>
   );
 }
 `;
 
-const useStyles = createStyles((theme) => ({
-  root: {
-    backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[0],
-    borderRadius: theme.radius.sm,
-  },
+function Demo(props: AccordionProps) {
+  const items = groceries.map((item) => (
+    <Accordion.Item key={item.value} value={item.value}>
+      <Accordion.Control icon={item.emoji}>{item.value}</Accordion.Control>
+      <Accordion.Panel>{item.description}</Accordion.Panel>
+    </Accordion.Item>
+  ));
 
-  item: {
-    backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[0],
-    border: `${rem(1)} solid transparent`,
-    position: 'relative',
-    zIndex: 0,
-    transition: 'transform 150ms ease',
-
-    '&[data-active]': {
-      transform: 'scale(1.03)',
-      backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.white,
-      boxShadow: theme.shadows.md,
-      borderColor: theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[2],
-      borderRadius: theme.radius.md,
-      zIndex: 1,
-    },
-  },
-
-  chevron: {
-    '&[data-rotate]': {
-      transform: 'rotate(-90deg)',
-    },
-  },
-}));
-
-function Demo() {
-  const { classes } = useStyles();
   return (
-    <Accordion
-      maw={420}
-      mx="auto"
-      variant="filled"
-      defaultValue="customization"
-      classNames={classes}
-      className={classes.root}
-    >
-      {baseDemoItems}
+    <Accordion defaultValue="Apples" order={2} {...props}>
+      {items}
     </Accordion>
   );
 }
 
 export const stylesApi: MantineDemo = {
-  type: 'demo',
-  code,
+  type: 'styles-api',
+  data: AccordionStylesApi,
   component: Demo,
+  centered: true,
+  maxWidth: '100%',
+  code,
 };

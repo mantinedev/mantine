@@ -3,7 +3,7 @@ import { validateValues } from './validate-values';
 
 export function validateFieldValue<T>(
   path: unknown,
-  rules: FormValidateInput<T>,
+  rules: FormValidateInput<T> | undefined,
   values: T
 ): FormFieldValidationResult {
   if (typeof path !== 'string') {

@@ -39,7 +39,7 @@ function Demo() {
 }
 
 export const placeholder: MantineDemo = {
-  type: 'demo',
+  type: 'code',
   component: Demo,
   code,
 };

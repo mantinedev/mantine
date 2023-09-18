@@ -11,48 +11,48 @@ function Demo() {
   const networkStatus = useNetwork();
 
   return (
-    <Table maw={300} sx={{ tableLayout: 'fixed' }} mx="auto">
-      <thead>
-        <tr>
-          <th>Property</th>
-          <th>Value</th>
-        </tr>
-      </thead>
+    <Table maw={300} layout="fixed" mx="auto">
+      <Table.Thead>
+        <Table.Tr>
+          <Table.Th>Property</Table.Th>
+          <Table.Th>Value</Table.Th>
+        </Table.Tr>
+      </Table.Thead>
 
-      <tbody>
-        <tr>
-          <td>Online</td>
-          <td>
-            <Text size="sm" color={networkStatus.online ? 'teal' : 'red'}>
+      <Table.Tbody>
+        <Table.Tr>
+          <Table.Td>Online</Table.Td>
+          <Table.Td>
+            <Text size="sm" c={networkStatus.online ? 'teal' : 'red'}>
               {networkStatus.online ? 'Online' : 'Offline'}
             </Text>
-          </td>
-        </tr>
+          </Table.Td>
+        </Table.Tr>
 
-        <tr>
-          <td>rtt</td>
-          <td>{networkStatus.rtt}</td>
-        </tr>
+        <Table.Tr>
+          <Table.Td>rtt</Table.Td>
+          <Table.Td>{networkStatus.rtt}</Table.Td>
+        </Table.Tr>
 
-        <tr>
-          <td>downlink</td>
-          <td>{networkStatus.downlink}</td>
-        </tr>
+        <Table.Tr>
+          <Table.Td>downlink</Table.Td>
+          <Table.Td>{networkStatus.downlink}</Table.Td>
+        </Table.Tr>
 
-        <tr>
-          <td>effectiveType</td>
-          <td>{networkStatus.effectiveType}</td>
-        </tr>
+        <Table.Tr>
+          <Table.Td>effectiveType</Table.Td>
+          <Table.Td>{networkStatus.effectiveType}</Table.Td>
+        </Table.Tr>
 
-        <tr>
-          <td>saveData</td>
-          <td>
-            <Text size="sm" color={networkStatus.saveData ? 'teal' : 'red'}>
+        <Table.Tr>
+          <Table.Td>saveData</Table.Td>
+          <Table.Td>
+            <Text size="sm" c={networkStatus.saveData ? 'teal' : 'red'}>
               {networkStatus.saveData ? 'true' : 'false'}
             </Text>
-          </td>
-        </tr>
-      </tbody>
+          </Table.Td>
+        </Table.Tr>
+      </Table.Tbody>
     </Table>
   );
 }
@@ -62,54 +62,54 @@ function Demo() {
   const networkStatus = useNetwork();
 
   return (
-    <Table maw={300} sx={{ tableLayout: 'fixed' }} mx="auto">
-      <thead>
-        <tr>
-          <th>Property</th>
-          <th>Value</th>
-        </tr>
-      </thead>
+    <Table maw={300} layout="fixed" mx="auto">
+      <Table.Thead>
+        <Table.Tr>
+          <Table.Th>Property</Table.Th>
+          <Table.Th>Value</Table.Th>
+        </Table.Tr>
+      </Table.Thead>
 
-      <tbody>
-        <tr>
-          <td>Online</td>
-          <td>
-            <Text size="sm" color={networkStatus.online ? 'teal' : 'red'}>
+      <Table.Tbody>
+        <Table.Tr>
+          <Table.Td>Online</Table.Td>
+          <Table.Td>
+            <Text size="sm" c={networkStatus.online ? 'teal' : 'red'}>
               {networkStatus.online ? 'Online' : 'Offline'}
             </Text>
-          </td>
-        </tr>
+          </Table.Td>
+        </Table.Tr>
 
-        <tr>
-          <td>rtt</td>
-          <td>{networkStatus.rtt}</td>
-        </tr>
+        <Table.Tr>
+          <Table.Td>rtt</Table.Td>
+          <Table.Td>{networkStatus.rtt}</Table.Td>
+        </Table.Tr>
 
-        <tr>
-          <td>downlink</td>
-          <td>{networkStatus.downlink}</td>
-        </tr>
+        <Table.Tr>
+          <Table.Td>downlink</Table.Td>
+          <Table.Td>{networkStatus.downlink}</Table.Td>
+        </Table.Tr>
 
-        <tr>
-          <td>effectiveType</td>
-          <td>{networkStatus.effectiveType}</td>
-        </tr>
+        <Table.Tr>
+          <Table.Td>effectiveType</Table.Td>
+          <Table.Td>{networkStatus.effectiveType}</Table.Td>
+        </Table.Tr>
 
-        <tr>
-          <td>saveData</td>
-          <td>
-            <Text size="sm" color={networkStatus.saveData ? 'teal' : 'red'}>
+        <Table.Tr>
+          <Table.Td>saveData</Table.Td>
+          <Table.Td>
+            <Text size="sm" c={networkStatus.saveData ? 'teal' : 'red'}>
               {networkStatus.saveData ? 'true' : 'false'}
             </Text>
-          </td>
-        </tr>
-      </tbody>
+          </Table.Td>
+        </Table.Tr>
+      </Table.Tbody>
     </Table>
   );
 }
 
 export const useNetworkDemo: MantineDemo = {
-  type: 'demo',
+  type: 'code',
   component: Demo,
   code,
 };

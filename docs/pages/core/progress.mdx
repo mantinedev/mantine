@@ -1,0 +1,45 @@
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+import { ProgressDemos } from '@mantine/demos';
+
+export default Layout(MDX_DATA.Progress);
+
+## Usage
+
+<Demo data={ProgressDemos.usage} />
+
+## Compound components
+
+<Demo data={ProgressDemos.compound} />
+
+## With tooltips
+
+<Demo data={ProgressDemos.tooltips} />
+
+<StylesApiSelectors component="Progress" />
+
+<Demo data={ProgressDemos.stylesApi} />
+
+## Accessibility
+
+- Progress section has `role="progressbar"` attribute
+- Progress section has `aria-valuenow` attribute with current value
+- `aria-valuemin` and `aria-valuemax` attributes are always set to `0` and `100` as component does not support other values
+
+Set `aria-label` attribute to label progress:
+
+```tsx
+import { Progress } from '@mantine/core';
+
+function Demo() {
+  return <Progress aria-label="Uploading progress" value={10} />;
+}
+
+function DemoCompound() {
+  return (
+    <Progress.Root>
+      <Progress.Section aria-label="Uploading progress" value={10} />
+    </Progress.Root>
+  );
+}
+```

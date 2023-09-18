@@ -1,6 +1,6 @@
 import React from 'react';
 import { MantineDemo } from '@mantine/ds';
-import { useMantineTheme, Breadcrumbs, Anchor } from '@mantine/core';
+import { Breadcrumbs, Anchor } from '@mantine/core';
 
 const code = `
 import { Breadcrumbs, Anchor } from '@mantine/core';
@@ -36,12 +36,10 @@ const items = [
 ));
 
 function Demo() {
-  const theme = useMantineTheme();
-
   return (
     <>
       <Breadcrumbs>{items}</Breadcrumbs>
-      <Breadcrumbs separator={theme.dir === 'ltr' ? '→' : '←'} mt="xs">
+      <Breadcrumbs separator="→" mt="xs" classNames={{ separator: 'mantine-rotate-rtl' }}>
         {items}
       </Breadcrumbs>
     </>
@@ -49,7 +47,7 @@ function Demo() {
 }
 
 export const usage: MantineDemo = {
-  type: 'demo',
+  type: 'code',
   code,
   component: Demo,
 };

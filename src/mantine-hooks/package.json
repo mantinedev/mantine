@@ -1,9 +1,15 @@
 {
   "name": "@mantine/hooks",
-  "version": "6.0.21",
-  "main": "cjs/index.js",
-  "module": "esm/index.js",
-  "types": "lib/index.d.ts",
+  "version": "7.0.0-beta.7",
+  "types": "./lib/index.d.ts",
+  "module": "./esm/index.js",
+  "exports": {
+    ".": {
+      "import": "./esm/index.js",
+      "require": "./cjs/index.js",
+      "types": "./lib/index.d.ts"
+    }
+  },
   "license": "MIT",
   "author": "Vitaly Rtishchev <rtivital@gmail.com>",
   "sideEffects": false,
@@ -24,7 +30,7 @@
     "state"
   ],
   "peerDependencies": {
-    "react": ">=16.8.0"
+    "react": "^18.2.0"
   },
   "dependencies": {},
   "devDependencies": {}

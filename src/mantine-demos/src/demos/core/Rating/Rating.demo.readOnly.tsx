@@ -1,29 +1,22 @@
 import React from 'react';
 import { MantineDemo } from '@mantine/ds';
-import { Rating, Group } from '@mantine/core';
+import { Rating } from '@mantine/core';
 
 const code = `
-import { Rating, Group } from '@mantine/core';
+import { Rating } from '@mantine/core';
 
 function Demo() {
-  return (
-    <Group position="center">
-      <Rating value={3.5} fractions={2} readOnly />
-    </Group>
-  );
+  return <Rating value={3.5} fractions={2} readOnly />;
 }
 `;
 
 function Demo() {
-  return (
-    <Group position="center">
-      <Rating value={3.5} fractions={2} readOnly />
-    </Group>
-  );
+  return <Rating value={3.5} fractions={2} readOnly />;
 }
 
 export const readOnly: MantineDemo = {
-  type: 'demo',
+  type: 'code',
   component: Demo,
   code,
+  centered: true,
 };

@@ -1,5 +1,4 @@
-import { useMemo, useRef, useState } from 'react';
-import { useIsomorphicEffect } from '../use-isomorphic-effect/use-isomorphic-effect';
+import { useEffect, useMemo, useRef, useState } from 'react';
 
 type ObserverRect = Omit<DOMRectReadOnly, 'toJSON'>;
 
@@ -25,6 +24,7 @@ export function useResizeObserver<T extends HTMLElement = any>() {
       typeof window !== 'undefined'
         ? new ResizeObserver((entries: any) => {
             const entry = entries[0];
+
             if (entry) {
               cancelAnimationFrame(frameID.current);
 
@@ -39,14 +39,13 @@ export function useResizeObserver<T extends HTMLElement = any>() {
     []
   );
 
-  useIsomorphicEffect(() => {
+  useEffect(() => {
     if (ref.current) {
-      observer.observe(ref.current);
-      setRect(ref.current.getBoundingClientRect());
+      observer?.observe(ref.current);
     }
 
     return () => {
-      observer.disconnect();
+      observer?.disconnect();
 
       if (frameID.current) {
         cancelAnimationFrame(frameID.current);
@@ -56,6 +55,7 @@ export function useResizeObserver<T extends HTMLElement = any>() {
 
   return [ref, rect] as const;
 }
+
 export function useElementSize<T extends HTMLElement = any>() {
   const [ref, { width, height }] = useResizeObserver<T>();
   return { ref, width, height };

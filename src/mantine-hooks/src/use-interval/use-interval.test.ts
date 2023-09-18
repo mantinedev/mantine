@@ -10,7 +10,7 @@ const setupTimer = (timeout: number = defaultTimeout) => ({
   advanceTimerToNextTick: () => jest.advanceTimersByTime(timeout),
 });
 
-const setupHook = (cb: (...args) => void = callback, timeout: number = defaultTimeout) =>
+const setupHook = (cb: (...args: any[]) => void = callback, timeout: number = defaultTimeout) =>
   renderHook(() => useInterval(cb, timeout));
 
 describe('@mantine/hooks/use-interval', () => {

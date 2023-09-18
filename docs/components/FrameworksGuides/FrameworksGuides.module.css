@@ -1,0 +1,5 @@
+.root {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--mantine-spacing-md);
+}

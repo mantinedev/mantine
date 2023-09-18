@@ -14,12 +14,12 @@ function Wrapper(props: ListProps) {
   );
 }
 
-const codeTemplate = (props: string) => `
+const code = `
 import { List } from '@mantine/core';
 
 function Demo() {
   return (
-    <List${props}>
+    <List{{props}}>
       <List.Item>Clone or download repository from GitHub</List.Item>
       <List.Item>Install dependencies with yarn</List.Item>
       <List.Item>To start development server run npm start command</List.Item>
@@ -33,19 +33,19 @@ function Demo() {
 export const configurator: MantineDemo = {
   type: 'configurator',
   component: Wrapper,
-  codeTemplate,
-  configurator: [
+  code,
+  controls: [
     {
-      name: 'type',
+      prop: 'type',
       type: 'segmented',
       data: [
         { value: 'unordered', label: 'Unordered' },
         { value: 'ordered', label: 'Ordered' },
       ],
       initialValue: 'unordered',
-      defaultValue: 'unordered',
+      libraryValue: 'unordered',
     },
-    { name: 'size', type: 'size', defaultValue: 'md', initialValue: 'md' },
-    { name: 'withPadding', type: 'boolean', defaultValue: false, initialValue: false },
+    { prop: 'size', type: 'size', libraryValue: 'md', initialValue: 'md' },
+    { prop: 'withPadding', type: 'boolean', libraryValue: false, initialValue: false },
   ],
 };

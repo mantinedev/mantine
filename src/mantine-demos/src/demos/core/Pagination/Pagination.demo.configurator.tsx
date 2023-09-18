@@ -1,33 +1,30 @@
 import React from 'react';
 import { MantineDemo } from '@mantine/ds';
-import { Pagination, Group } from '@mantine/core';
+import { Pagination } from '@mantine/core';
 
 function Wrapper(props: any) {
-  return (
-    <Group position="center">
-      <Pagination total={10} {...props} />
-    </Group>
-  );
+  return <Pagination total={10} {...props} />;
 }
 
-const codeTemplate = (props: string) => `
+const code = `
 import { Pagination } from '@mantine/core';
 
 function Demo() {
-  return <Pagination total={10}${props} />;
+  return <Pagination total={10}{{props}} />;
 }
 `;
 
 export const configurator: MantineDemo = {
   type: 'configurator',
   component: Wrapper,
-  codeTemplate,
-  configurator: [
-    { name: 'color', type: 'color', initialValue: 'blue', defaultValue: 'blue' },
-    { name: 'size', type: 'size', initialValue: 'md', defaultValue: 'md' },
-    { name: 'radius', type: 'size', initialValue: 'sm', defaultValue: 'sm' },
-    { name: 'withControls', type: 'boolean', initialValue: true, defaultValue: true },
-    { name: 'withEdges', type: 'boolean', initialValue: false, defaultValue: false },
-    { name: 'disabled', type: 'boolean', initialValue: false, defaultValue: false },
+  code,
+  centered: true,
+  controls: [
+    { prop: 'color', type: 'color', initialValue: 'blue', libraryValue: 'blue' },
+    { prop: 'size', type: 'size', initialValue: 'md', libraryValue: 'md' },
+    { prop: 'radius', type: 'size', initialValue: 'sm', libraryValue: 'sm' },
+    { prop: 'withControls', type: 'boolean', initialValue: true, libraryValue: true },
+    { prop: 'withEdges', type: 'boolean', initialValue: false, libraryValue: false },
+    { prop: 'disabled', type: 'boolean', initialValue: false, libraryValue: false },
   ],
 };

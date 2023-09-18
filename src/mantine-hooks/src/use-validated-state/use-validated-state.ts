@@ -6,7 +6,7 @@ export function useValidatedState<T>(
   initialValidationState?: boolean
 ) {
   const [value, setValue] = useState<T>(initialValue);
-  const [lastValidValue, setLastValidValue] = useState<T>(
+  const [lastValidValue, setLastValidValue] = useState<T | undefined>(
     validation(initialValue) ? initialValue : undefined
   );
   const [valid, setValid] = useState<boolean>(

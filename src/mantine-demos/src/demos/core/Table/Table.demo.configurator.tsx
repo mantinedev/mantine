@@ -6,34 +6,34 @@ import { elements } from './_data';
 function Wrapper(props: TableProps) {
   return (
     <Table {...props}>
-      <thead>
-        <tr>
-          <th>Element position</th>
-          <th>Element name</th>
-          <th>Symbol</th>
-          <th>Atomic mass</th>
-        </tr>
-      </thead>
-      <tbody>
+      <Table.Thead>
+        <Table.Tr>
+          <Table.Th>Element position</Table.Th>
+          <Table.Th>Element name</Table.Th>
+          <Table.Th>Symbol</Table.Th>
+          <Table.Th>Atomic mass</Table.Th>
+        </Table.Tr>
+      </Table.Thead>
+      <Table.Tbody>
         {elements.map((element) => (
-          <tr key={element.name}>
-            <td>{element.position}</td>
-            <td>{element.name}</td>
-            <td>{element.symbol}</td>
-            <td>{element.mass}</td>
-          </tr>
+          <Table.Tr key={element.name}>
+            <Table.Td>{element.position}</Table.Td>
+            <Table.Td>{element.name}</Table.Td>
+            <Table.Td>{element.symbol}</Table.Td>
+            <Table.Td>{element.mass}</Table.Td>
+          </Table.Tr>
         ))}
-      </tbody>
+      </Table.Tbody>
     </Table>
   );
 }
 
-const codeTemplate = (props: string) => `
+const code = `
 import { Table } from '@mantine/core';
 
 function Demo() {
   return (
-    <Table${props}>
+    <Table{{props}}>
       {/* {...rows} */}
     </Table>
   );
@@ -43,11 +43,12 @@ function Demo() {
 export const configurator: MantineDemo = {
   type: 'configurator',
   component: Wrapper,
-  codeTemplate,
-  configurator: [
-    { name: 'striped', type: 'boolean', defaultValue: false },
-    { name: 'highlightOnHover', type: 'boolean', defaultValue: false },
-    { name: 'withBorder', type: 'boolean', defaultValue: false },
-    { name: 'withColumnBorders', type: 'boolean', defaultValue: false },
+  code,
+  controls: [
+    { prop: 'striped', type: 'boolean', initialValue: false, libraryValue: false },
+    { prop: 'highlightOnHover', type: 'boolean', initialValue: false, libraryValue: false },
+    { prop: 'withTableBorder', type: 'boolean', initialValue: false, libraryValue: false },
+    { prop: 'withColumnBorders', type: 'boolean', initialValue: false, libraryValue: false },
+    { prop: 'withRowBorders', type: 'boolean', initialValue: true, libraryValue: true },
   ],
 };

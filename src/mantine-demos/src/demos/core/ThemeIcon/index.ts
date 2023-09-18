@@ -1,3 +1,2 @@
-export { configurator } from './ThemeIcon.demo.configurator';
-export { colors } from './ThemeIcon.demo.colors';
+export { usage } from './ThemeIcon.demo.usage';
 export { gradient } from './ThemeIcon.demo.gradient';

@@ -8,9 +8,9 @@ import { Autocomplete } from '@mantine/core';
 function Demo() {
   return (
     <Autocomplete
-      label="Your favorite framework/library"
-      placeholder="Pick one"
-      data={['React', 'Angular', 'Svelte', 'Vue']}
+      label="Your favorite library"
+      placeholder="Pick value or enter anything"
+      data={['React', 'Angular', 'Vue', 'Svelte']}
     />
   );
 }
@@ -19,17 +19,17 @@ function Demo() {
 function Demo() {
   return (
     <Autocomplete
-      maw={320}
-      mx="auto"
-      label="Your favorite framework/library"
-      placeholder="Pick one"
-      data={['React', 'Angular', 'Svelte', 'Vue']}
+      label="Your favorite library"
+      placeholder="Pick value or enter anything"
+      data={['React', 'Angular', 'Vue', 'Svelte']}
     />
   );
 }
 
 export const usage: MantineDemo = {
-  type: 'demo',
-  code,
+  type: 'code',
   component: Demo,
+  code,
+  maxWidth: 340,
+  centered: true,
 };

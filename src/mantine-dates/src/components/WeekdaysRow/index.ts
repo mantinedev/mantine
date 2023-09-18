@@ -1,4 +1,7 @@
 export { WeekdaysRow } from './WeekdaysRow';
-export { getWeekdayNames } from './get-weekdays-names/get-weekdays-names';
-
-export type { WeekdaysRowProps, WeekdaysRowStylesNames } from './WeekdaysRow';
+export type {
+  WeekdaysRowCssVariables,
+  WeekdaysRowFactory,
+  WeekdaysRowProps,
+  WeekdaysRowStylesNames,
+} from './WeekdaysRow';

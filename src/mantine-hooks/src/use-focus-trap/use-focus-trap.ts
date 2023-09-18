@@ -8,7 +8,7 @@ export function useFocusTrap(active = true): (instance: HTMLElement | null) => v
   const restoreAria = useRef<Function | null>(null);
 
   const focusNode = (node: HTMLElement) => {
-    let focusElement: HTMLElement = node.querySelector('[data-autofocus]');
+    let focusElement: HTMLElement | null = node.querySelector('[data-autofocus]');
 
     if (!focusElement) {
       const children = Array.from<HTMLElement>(node.querySelectorAll(FOCUS_SELECTOR));
@@ -70,7 +70,7 @@ export function useFocusTrap(active = true): (instance: HTMLElement | null) => v
       return undefined;
     }
 
-    ref.current && setTimeout(() => focusNode(ref.current));
+    ref.current && setTimeout(() => focusNode(ref.current!));
 
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key === 'Tab' && ref.current) {

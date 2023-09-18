@@ -9,6 +9,6 @@ describe('@mantine/hooks/lower-first', () => {
 
   it('returns empty string if value cannot be capitalized', () => {
     expect(lowerFirst('')).toBe('');
-    expect(lowerFirst(null)).toBe('');
+    expect(lowerFirst(null as any)).toBe('');
   });
 });

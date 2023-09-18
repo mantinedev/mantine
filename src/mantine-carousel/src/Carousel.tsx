@@ -1,88 +1,104 @@
-/* eslint-disable react/no-unused-prop-types */
+import React, { Children, useCallback, useEffect, useState } from 'react';
 import {
   Box,
-  ChevronIcon,
-  DefaultProps,
-  MantineNumberSize,
-  Selectors,
+  BoxProps,
+  StylesApiProps,
+  factory,
+  ElementProps,
+  useProps,
+  useStyles,
+  createVarsResolver,
+  Factory,
+  MantineSpacing,
+  StyleProp,
+  useDirection,
   UnstyledButton,
-  useComponentDefaultProps,
+  AccordionChevron,
+  useRandomClassName,
+  rem,
+  getSpacing,
 } from '@mantine/core';
 import { clamp } from '@mantine/hooks';
-import { ForwardRefWithStaticComponents } from '@mantine/utils';
-import useEmblaCarousel, { EmblaPluginType } from 'embla-carousel-react';
-import React, { Children, forwardRef, useCallback, useEffect, useState } from 'react';
-import { CarouselProvider } from './Carousel.context';
-import useStyles, { CarouselStylesParams } from './Carousel.styles';
-import { CarouselSlide, CarouselSlideStylesNames } from './CarouselSlide/CarouselSlide';
+import useEmblaCarousel, { EmblaPluginType, EmblaCarouselType } from 'embla-carousel-react';
 import { getChevronRotation } from './get-chevron-rotation';
-import { CarouselBreakpoint, CarouselOrientation, Embla } from './types';
+import { CarouselProvider } from './Carousel.context';
+import { CarouselSlide } from './CarouselSlide/CarouselSlide';
+import { CarouselVariables } from './CarouselVariables/CarouselVariables';
+import classes from './Carousel.module.css';
 
-export type CarouselStylesNames = CarouselSlideStylesNames | Selectors<typeof useStyles>;
+export type CarouselStylesNames =
+  | 'slide'
+  | 'root'
+  | 'viewport'
+  | 'container'
+  | 'controls'
+  | 'control'
+  | 'indicators'
+  | 'indicator';
+
+export type CarouselCssVariables = {
+  root: '--carousel-height' | '--carousel-control-size' | '--carousel-controls-offset';
+};
 
 export interface CarouselProps
-  extends DefaultProps<CarouselStylesNames, CarouselStylesParams>,
-    React.ComponentPropsWithRef<'div'> {
-  variant?: string;
-
+  extends BoxProps,
+    StylesApiProps<CarouselFactory>,
+    ElementProps<'div'> {
   /** <Carousel.Slide /> components */
   children?: React.ReactNode;
 
-  /** Called when user clicks next button */
+  /** Called when next slide is shown */
   onNextSlide?(): void;
 
-  /** Called when user clicks previous button */
+  /** Called when previous slider is shown */
   onPreviousSlide?(): void;
 
   /** Called with slide index when slide changes */
   onSlideChange?(index: number): void;
 
   /** Get embla API as ref */
-  getEmblaApi?(embla: Embla): void;
+  getEmblaApi?(embla: EmblaCarouselType): void;
 
-  /** Next control aria-label */
-  nextControlLabel?: string;
+  /** Props passed down to next control */
+  nextControlProps?: React.ComponentPropsWithoutRef<'button'>;
 
-  /** Previous control aria-label */
-  previousControlLabel?: string;
+  /** Props passed down to previous control */
+  previousControlProps?: React.ComponentPropsWithoutRef<'button'>;
 
-  /** Previous/next controls size */
-  controlSize?: number;
+  /** Controls size of the next and previous controls, `26` by default */
+  controlSize?: React.CSSProperties['width'];
 
-  /** Key of theme.spacing or number to set space between next/previous control and carousel boundary */
-  controlsOffset?: MantineNumberSize;
+  /** Controls position of the next and previous controls, key of `theme.spacing` or any valid CSS value, `'sm'` by default */
+  controlsOffset?: MantineSpacing;
 
-  /** Slide width, defaults to 100%, examples: 40rem 50% */
-  slideSize?: string | number;
+  /** Controls slide width based on viewport width, `'100%'` by default */
+  slideSize?: StyleProp<string | number>;
 
   /** Key of theme.spacing or number to set gap between slides */
-  slideGap?: MantineNumberSize;
+  slideGap?: StyleProp<MantineSpacing>;
 
-  /** Control slideSize and slideGap at different viewport sizes */
-  breakpoints?: CarouselBreakpoint[];
+  /** Carousel orientation, `'horizontal'` by default */
+  orientation?: 'horizontal' | 'vertical';
 
-  /** Carousel orientation, horizontal by default */
-  orientation?: CarouselOrientation;
-
-  /** Slides container height, required for vertical orientation */
+  /** Slides container `height`, required for vertical orientation */
   height?: React.CSSProperties['height'];
 
-  /** Determines how slides will be aligned relative to the container. Use number between 0-1 to align slides based on percentage, where 0.5 equals 50% */
+  /** Determines how slides will be aligned relative to the container. Use number between 0-1 to align slides based on percentage, where 0.5 is 50%, `'center'` by default */
   align?: 'start' | 'center' | 'end' | number;
 
-  /** Number of slides that should be scrolled with next/previous buttons */
+  /** Number of slides that will be scrolled with next/previous buttons, `1` by default */
   slidesToScroll?: number | 'auto';
 
-  /** Determines whether gap should be treated as part of the slide size, true by default */
+  /** Determines whether gap between slides should be treated as part of the slide size, `true` by default */
   includeGapInSize?: boolean;
 
-  /** Determines whether carousel can be scrolled with mouse and touch interactions, true by default */
+  /** Determines whether the carousel can be scrolled with mouse and touch interactions, `true` by default */
   draggable?: boolean;
 
-  /** Determines whether momentum scrolling should be enabled, false by default */
+  /** Determines whether momentum scrolling should be enabled, `false` by default */
   dragFree?: boolean;
 
-  /** Enables infinite looping. Automatically falls back to false if slide content isn't enough to loop. */
+  /** Enables infinite looping. `true` by default, automatically falls back to `false` if slide content isn't enough to loop. */
   loop?: boolean;
 
   /** Adjusts scroll speed when triggered by any of the methods. Higher numbers enables faster scrolling. */
@@ -97,27 +113,37 @@ export interface CarouselProps
   /** Determines whether next/previous controls should be displayed, true by default */
   withControls?: boolean;
 
-  /** Determines whether indicators should be displayed, false by default */
+  /** Determines whether indicators should be displayed, `false` by default */
   withIndicators?: boolean;
 
   /** An array of embla plugins */
   plugins?: EmblaPluginType[];
 
-  /** Icon of next control */
+  /** Icon of the next control */
   nextControlIcon?: React.ReactNode;
 
-  /** Previous control icon */
+  /** Icon of the previous control */
   previousControlIcon?: React.ReactNode;
 
-  /** Allow the carousel to skip scroll snaps if it's dragged vigorously. Note that this option will be ignored if the dragFree option is set to true, false by default */
+  /** Allow the carousel to skip scroll snaps if it is dragged vigorously. Note that this option will be ignored if the dragFree option is set to `true`, `false` by default */
   skipSnaps?: boolean;
 
-  /** Clear leading and trailing empty space that causes excessive scrolling. Use trimSnaps to only use snap points that trigger scrolling or keepSnaps to keep them. */
+  /** Clear leading and trailing empty space that causes excessive scrolling. Use `trimSnaps` to only use snap points that trigger scrolling or keepSnaps to keep them. */
   containScroll?: 'trimSnaps' | 'keepSnaps' | '';
 
-  /** Determines whether arrow key should switch slides, true by default */
+  /** Determines whether arrow key should switch slides, `true` by default */
   withKeyboardEvents?: boolean;
 }
+
+export type CarouselFactory = Factory<{
+  props: CarouselProps;
+  ref: HTMLDivElement;
+  stylesNames: CarouselStylesNames;
+  vars: CarouselCssVariables;
+  staticComponents: {
+    Slide: typeof CarouselSlide;
+  };
+}>;
 
 const defaultProps: Partial<CarouselProps> = {
   controlSize: 26,
@@ -141,21 +167,34 @@ const defaultProps: Partial<CarouselProps> = {
   withKeyboardEvents: true,
 };
 
-export const _Carousel = forwardRef<HTMLDivElement, CarouselProps>((props, ref) => {
+const varsResolver = createVarsResolver<CarouselFactory>(
+  (_, { height, controlSize, controlsOffset }) => ({
+    root: {
+      '--carousel-height': rem(height),
+      '--carousel-control-size': rem(controlSize),
+      '--carousel-controls-offset': getSpacing(controlsOffset),
+    },
+  })
+);
+
+export const Carousel = factory<CarouselFactory>((_props, ref) => {
+  const props = useProps('Carousel', defaultProps, _props);
   const {
-    children,
+    classNames,
     className,
+    style,
+    styles,
+    unstyled,
+    vars,
+    children,
     getEmblaApi,
     onNextSlide,
     onPreviousSlide,
     onSlideChange,
-    nextControlLabel,
-    previousControlLabel,
+    nextControlProps,
+    previousControlProps,
     controlSize,
     controlsOffset,
-    classNames,
-    styles,
-    unstyled,
     slideSize,
     slideGap,
     orientation,
@@ -174,24 +213,32 @@ export const _Carousel = forwardRef<HTMLDivElement, CarouselProps>((props, ref) 
     plugins,
     nextControlIcon,
     previousControlIcon,
-    breakpoints,
     skipSnaps,
     containScroll,
     withKeyboardEvents,
-    variant,
     ...others
-  } = useComponentDefaultProps('Carousel', defaultProps, props);
+  } = props;
 
-  const { classes, cx, theme } = useStyles(
-    { controlSize, controlsOffset, orientation, height, includeGapInSize, breakpoints, slideGap },
-    { name: 'Carousel', classNames, styles, unstyled, variant }
-  );
+  const getStyles = useStyles<CarouselFactory>({
+    name: 'Carousel',
+    classes,
+    props,
+    className,
+    style,
+    classNames,
+    styles,
+    unstyled,
+    vars,
+    varsResolver,
+  });
+
+  const responsiveClassName = useRandomClassName();
+  const { dir } = useDirection();
 
   const [emblaRefElement, embla] = useEmblaCarousel(
     {
       axis: orientation === 'horizontal' ? 'x' : 'y',
-      // keep direction undefined for vertical orientation if the current theme is RTL
-      direction: orientation === 'horizontal' ? theme.dir : undefined,
+      direction: orientation === 'horizontal' ? dir : undefined,
       startIndex: initialSlide,
       loop,
       align,
@@ -277,9 +324,9 @@ export const _Carousel = forwardRef<HTMLDivElement, CarouselProps>((props, ref) 
     .fill(0)
     .map((_, index) => (
       <UnstyledButton
+        {...getStyles('indicator')}
         key={index}
         data-active={index === selected || undefined}
-        className={classes.indicator}
         aria-hidden
         tabIndex={-1}
         onClick={() => handleScroll(index)}
@@ -287,48 +334,39 @@ export const _Carousel = forwardRef<HTMLDivElement, CarouselProps>((props, ref) 
     ));
 
   return (
-    <CarouselProvider
-      value={{
-        slideGap,
-        slideSize,
-        embla,
-        orientation,
-        includeGapInSize,
-        breakpoints,
-        classNames,
-        styles,
-        unstyled,
-        variant,
-      }}
-    >
+    <CarouselProvider value={{ getStyles, orientation }}>
+      <CarouselVariables {...props} selector={`.${responsiveClassName}`} />
       <Box
-        className={cx(classes.root, className)}
         ref={ref}
-        onKeyDownCapture={handleKeydown}
+        {...getStyles('root', { className: responsiveClassName })}
         {...others}
+        mod={{ orientation, 'include-gap-in-size': includeGapInSize }}
+        onKeyDownCapture={handleKeydown}
       >
-        <div className={classes.viewport} ref={emblaRefElement}>
-          <div className={classes.container}>{children}</div>
+        <div {...getStyles('viewport')} ref={emblaRefElement}>
+          <div {...getStyles('container')} data-orientation={orientation}>
+            {children}
+          </div>
         </div>
 
-        {withIndicators && <div className={classes.indicators}>{indicators}</div>}
+        {withIndicators && <div {...getStyles('indicators')}>{indicators}</div>}
 
         {withControls && (
-          <div className={classes.controls}>
+          <div {...getStyles('controls')}>
             <UnstyledButton
+              {...previousControlProps}
+              {...getStyles('control')}
               onClick={handlePrevious}
-              className={classes.control}
-              aria-label={previousControlLabel}
               data-inactive={!canScrollPrev || undefined}
               tabIndex={canScrollPrev ? 0 : -1}
             >
               {typeof previousControlIcon !== 'undefined' ? (
                 previousControlIcon
               ) : (
-                <ChevronIcon
+                <AccordionChevron
                   style={{
                     transform: `rotate(${getChevronRotation({
-                      dir: theme.dir,
+                      dir,
                       orientation,
                       direction: 'previous',
                     })}deg)`,
@@ -339,18 +377,18 @@ export const _Carousel = forwardRef<HTMLDivElement, CarouselProps>((props, ref) 
 
             <UnstyledButton
               onClick={handleNext}
-              className={classes.control}
-              aria-label={nextControlLabel}
+              {...getStyles('control')}
+              {...nextControlProps}
               data-inactive={!canScrollNext || undefined}
               tabIndex={canScrollNext ? 0 : -1}
             >
               {typeof nextControlIcon !== 'undefined' ? (
                 nextControlIcon
               ) : (
-                <ChevronIcon
+                <AccordionChevron
                   style={{
                     transform: `rotate(${getChevronRotation({
-                      dir: theme.dir,
+                      dir,
                       orientation,
                       direction: 'next',
                     })}deg)`,
@@ -363,12 +401,8 @@ export const _Carousel = forwardRef<HTMLDivElement, CarouselProps>((props, ref) 
       </Box>
     </CarouselProvider>
   );
-}) as any;
+});
 
-_Carousel.Slide = CarouselSlide;
-_Carousel.displayName = '@mantine/carousel/Carousel';
-
-export const Carousel: ForwardRefWithStaticComponents<
-  CarouselProps,
-  { Slide: typeof CarouselSlide }
-> = _Carousel;
+Carousel.classes = classes;
+Carousel.displayName = '@mantine/core/Carousel';
+Carousel.Slide = CarouselSlide;

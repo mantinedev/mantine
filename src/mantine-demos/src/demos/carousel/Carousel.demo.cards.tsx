@@ -1,74 +1,43 @@
 import React from 'react';
 import { Carousel, CarouselProps } from '@mantine/carousel';
 import { useMediaQuery } from '@mantine/hooks';
-import { useMantineTheme } from '@mantine/core';
+import { Button, Paper, Title, useMantineTheme, Text } from '@mantine/core';
 import { MantineDemo } from '@mantine/ds';
-import { Card } from './_card';
+import classes from './Carousel.demo.cards.module.css';
+
+const cssCode = `.card {
+  height: rem(440px);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-start;
+  background-size: cover;
+  background-position: center;
+}
+
+.title {
+  font-weight: 900;
+  color: var(--mantine-color-white);
+  line-height: 1.2;
+  font-size: rem(32px);
+  margin-top: var(--mantine-spacing-xs);
+  cursor: default;
+}
+
+.category {
+  color: var(--mantine-color-white);
+  opacity: 0.7;
+  font-weight: 700;
+  text-transform: uppercase;
+  cursor: default;
+}
+`;
 
 const code = `
 import { Carousel } from '@mantine/carousel';
 import { useMediaQuery } from '@mantine/hooks';
-import { createStyles, Paper, Text, Title, Button, useMantineTheme, rem } from '@mantine/core';
-
-const useStyles = createStyles((theme) => ({
-  card: {
-    height: rem(440),
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'space-between',
-    alignItems: 'flex-start',
-    backgroundSize: 'cover',
-    backgroundPosition: 'center',
-  },
-
-  title: {
-    fontFamily: \`Greycliff CF, \${theme.fontFamily}\`,
-    fontWeight: 900,
-    color: theme.white,
-    lineHeight: 1.2,
-    fontSize: rem(32),
-    marginTop: theme.spacing.xs,
-  },
-
-  category: {
-    color: theme.white,
-    opacity: 0.7,
-    fontWeight: 700,
-    textTransform: 'uppercase',
-  },
-}));
-
-interface CardProps {
-  image: string;
-  title: string;
-  category: string;
-}
-
-function Card({ image, title, category }: CardProps) {
-  const { classes } = useStyles();
-
-  return (
-    <Paper
-      shadow="md"
-      p="xl"
-      radius="md"
-      sx={{ backgroundImage: \`url('\${image}')\` }}
-      className={classes.card}
-    >
-      <div>
-        <Text className={classes.category} size="xs">
-          {category}
-        </Text>
-        <Title order={3} className={classes.title}>
-          {title}
-        </Title>
-      </div>
-      <Button variant="white" color="dark">
-        Read article
-      </Button>
-    </Paper>
-  );
-}
+import { Button, Paper, Title, useMantineTheme, Text } from '@mantine/core';
+import classes from './Demo.module.css';
 
 const data = [
   {
@@ -109,6 +78,36 @@ const data = [
   },
 ];
 
+interface CardProps {
+  image: string;
+  title: string;
+  category: string;
+}
+
+function Card({ image, title, category }: CardProps) {
+  return (
+    <Paper
+      shadow="md"
+      p="xl"
+      radius="md"
+      style={{ backgroundImage: \`url(\${image})\` }}
+      className={classes.card}
+    >
+      <div>
+        <Text className={classes.category} size="xs">
+          {category}
+        </Text>
+        <Title order={3} className={classes.title}>
+          {title}
+        </Title>
+      </div>
+      <Button variant="white" color="dark">
+        Read article
+      </Button>
+    </Paper>
+  );
+}
+
 function Demo() {
   const theme = useMantineTheme();
   const mobile = useMediaQuery(\`(max-width: \${theme.breakpoints.sm})\`);
@@ -120,9 +119,8 @@ function Demo() {
 
   return (
     <Carousel
-      slideSize="50%"
-      breakpoints={[{ maxWidth: 'sm', slideSize: '100%', slideGap: 2 }]}
-      slideGap="xl"
+      slideSize={{ base: '100%', sm: '50%' }}
+      slideGap={{ base: 'xl', sm: 2 }}
       align="start"
       slidesToScroll={mobile ? 1 : 2}
     >
@@ -171,6 +169,36 @@ const data = [
   },
 ];
 
+interface CardProps {
+  image: string;
+  title: string;
+  category: string;
+}
+
+export function Card({ image, title, category }: CardProps) {
+  return (
+    <Paper
+      shadow="md"
+      p="xl"
+      radius="md"
+      style={{ backgroundImage: `url(${image})` }}
+      className={classes.card}
+    >
+      <div>
+        <Text className={classes.category} size="xs">
+          {category}
+        </Text>
+        <Title order={3} className={classes.title}>
+          {title}
+        </Title>
+      </div>
+      <Button variant="white" color="dark">
+        Read article
+      </Button>
+    </Paper>
+  );
+}
+
 export function CarouselCardsDemos(props: CarouselProps) {
   const theme = useMantineTheme();
   const mobile = useMediaQuery(`(max-width: ${theme.breakpoints.sm})`);
@@ -182,9 +210,8 @@ export function CarouselCardsDemos(props: CarouselProps) {
 
   return (
     <Carousel
-      slideSize="50%"
-      breakpoints={[{ maxWidth: 'sm', slideSize: '100%', slideGap: 2 }]}
-      slideGap="xl"
+      slideSize={{ base: '100%', sm: '50%' }}
+      slideGap={{ base: 'xl', sm: 2 }}
       align="start"
       slidesToScroll={mobile ? 1 : 2}
       {...props}
@@ -195,7 +222,10 @@ export function CarouselCardsDemos(props: CarouselProps) {
 }
 
 export const cards: MantineDemo = {
-  type: 'demo',
+  type: 'code',
   component: CarouselCardsDemos,
-  code,
+  code: [
+    { fileName: 'Demo.tsx', code, language: 'tsx' },
+    { fileName: 'Demo.module.css', code: cssCode, language: 'scss' },
+  ],
 };

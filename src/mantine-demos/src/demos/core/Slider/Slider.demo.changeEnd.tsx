@@ -42,7 +42,7 @@ function Demo() {
 }
 
 export const changeEnd: MantineDemo = {
-  type: 'demo',
+  type: 'code',
   component: Demo,
   code,
 };

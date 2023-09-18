@@ -9,6 +9,7 @@ interface UseDatesRangeInput<Type extends DatePickerType = 'default'>
   level: 'year' | 'month' | 'day';
   type: Type;
   onMouseLeave?(event: React.MouseEvent<HTMLDivElement>): void;
+  applyTimezone?: boolean;
 }
 
 export function useDatesState<Type extends DatePickerType = 'default'>({
@@ -20,13 +21,20 @@ export function useDatesState<Type extends DatePickerType = 'default'>({
   allowSingleDateInRange,
   allowDeselect,
   onMouseLeave,
+  applyTimezone = true,
 }: UseDatesRangeInput<Type>) {
-  const [_value, setValue] = useUncontrolledDates({ type, value, defaultValue, onChange });
+  const [_value, setValue] = useUncontrolledDates({
+    type,
+    value,
+    defaultValue,
+    onChange,
+    applyTimezone,
+  });
 
-  const [pickedDate, setPickedDate] = useState<Date>(
+  const [pickedDate, setPickedDate] = useState<Date | null>(
     type === 'range' ? (_value[0] && !_value[1] ? _value[0] : null) : null
   );
-  const [hoveredDate, setHoveredDate] = useState<Date>(null);
+  const [hoveredDate, setHoveredDate] = useState<Date | null>(null);
 
   const onDateChange = (date: Date) => {
     if (type === 'range') {

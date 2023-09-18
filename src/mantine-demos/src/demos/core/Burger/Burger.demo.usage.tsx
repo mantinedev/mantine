@@ -1,29 +1,27 @@
 import React from 'react';
-import { Group } from '@mantine/core';
 import { MantineDemo } from '@mantine/ds';
-import { DemoBase } from './_base';
+import { useDisclosure } from '@mantine/hooks';
+import { Burger } from '@mantine/core';
 
 const code = `
 import { useDisclosure } from '@mantine/hooks';
 import { Burger } from '@mantine/core';
 
 function Demo() {
-  const [opened, { toggle }] = useDisclosure(false);
-  const label = opened ? 'Close navigation' : 'Open navigation';
-  return <Burger opened={opened} onClick={toggle} aria-label={label} />;
+  const [opened, { toggle }] = useDisclosure();
+  return <Burger{{props}} opened={opened} onClick={toggle} aria-label="Toggle navigation" />;
 }
 `;
 
-export function Demo() {
-  return (
-    <Group position="center">
-      <DemoBase />
-    </Group>
-  );
+function Wrapper(props: any) {
+  const [opened, { toggle }] = useDisclosure();
+  return <Burger {...props} opened={opened} onClick={toggle} aria-label="Toggle navigation" />;
 }
 
 export const usage: MantineDemo = {
-  type: 'demo',
+  type: 'configurator',
+  component: Wrapper,
   code,
-  component: Demo,
+  centered: true,
+  controls: [{ type: 'size', prop: 'size', initialValue: 'md', libraryValue: 'md' }],
 };

@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
 import { MantineDemo } from '@mantine/ds';
-import { Group } from '@mantine/core';
 import { YearPicker } from '@mantine/dates';
 
 const code = `
-import { Group } from '@mantine/core';
+import { useState } from 'react';
 import { YearPicker } from '@mantine/dates';
 
 function Demo() {
@@ -20,15 +19,13 @@ function Demo() {
   };
 
   return (
-    <Group position="center">
-      <YearPicker
-        date={date}
-        onDateChange={setDate}
-        type="range"
-        value={value}
-        onChange={handleChange}
-      />
-    </Group>
+    <YearPicker
+      date={date}
+      onDateChange={setDate}
+      type="range"
+      value={value}
+      onChange={handleChange}
+    />
   );
 }
 `;
@@ -46,20 +43,19 @@ function Demo() {
   };
 
   return (
-    <Group position="center">
-      <YearPicker
-        date={date}
-        onDateChange={setDate}
-        type="range"
-        value={value}
-        onChange={handleChange}
-      />
-    </Group>
+    <YearPicker
+      date={date}
+      onDateChange={setDate}
+      type="range"
+      value={value}
+      onChange={handleChange}
+    />
   );
 }
 
 export const controlledDate: MantineDemo = {
-  type: 'demo',
+  type: 'code',
+  centered: true,
   component: Demo,
   code,
 };

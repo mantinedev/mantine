@@ -13,24 +13,24 @@ function Wrapper(props: ColorPickerProps) {
   );
 }
 
-const codeTemplate = (props: string) => `
+const code = `
 import { ColorPicker } from '@mantine/core';
 
 function Demo() {
-  return <ColorPicker${props} />;
+  return <ColorPicker{{props}} />;
 }
 `;
 
 export const formatsConfigurator: MantineDemo = {
   type: 'configurator',
   component: Wrapper,
-  codeTemplate,
-  configurator: [
+  code,
+  controls: [
     {
-      name: 'format',
+      prop: 'format',
       type: 'select',
       initialValue: 'hex',
-      defaultValue: 'hex',
+      libraryValue: 'hex',
       data: [
         { value: 'hex', label: 'HEX' },
         { value: 'hexa', label: 'HEXA' },

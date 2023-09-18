@@ -11,8 +11,6 @@ function Demo() {
       defaultValue={new Date()}
       label="Pick date"
       placeholder="Pick date"
-      mx="auto"
-      maw={400}
     />
   );
 }
@@ -20,21 +18,16 @@ function Demo() {
 
 function getDemo(Component: React.FC<any>) {
   return () => (
-    <Component
-      clearable
-      defaultValue={new Date()}
-      label="Pick date"
-      placeholder="Pick date"
-      mx="auto"
-      maw={400}
-    />
+    <Component clearable defaultValue={new Date()} label="Pick date" placeholder="Pick date" />
   );
 }
 
 export function getPickerInputClearableDemo(Component: React.FC<any>): MantineDemo {
   return {
-    type: 'demo',
-    code: getCode(Component.displayName.replace('@mantine/dates/', '')),
+    type: 'code',
+    centered: true,
+    maxWidth: 400,
+    code: getCode(Component.displayName!.replace('@mantine/dates/', '')),
     component: getDemo(Component),
   };
 }

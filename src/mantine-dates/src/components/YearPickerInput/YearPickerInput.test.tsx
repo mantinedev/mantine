@@ -1,46 +1,66 @@
 import React from 'react';
-import { render } from '@testing-library/react';
 import {
-  itDisablesInputInsideDisabledFieldset,
-  itSupportsFocusEvents,
-  itSupportsProviderSize,
-  itSupportsProviderVariant,
-  itSupportsSystemProps,
+  tests,
+  inputDefaultProps,
+  inputStylesApiSelectors,
+  render,
+  userEvent,
 } from '@mantine/tests';
-import {
-  itSupportsClearableProps,
-  itSupportsYearsListProps,
-  itSupportsDateInputProps,
-  expectValue,
-} from '../../tests';
-import { YearPickerInput } from './YearPickerInput';
+import { __InputStylesNames } from '@mantine/core';
+import { clickInput, datesTests, expectValue } from '@mantine/dates-tests';
+import { YearPickerInput, YearPickerInputProps } from './YearPickerInput';
+import { DatesProvider } from '../DatesProvider';
 
 const defaultProps = {
   popoverProps: { withinPortal: false, transitionProps: { duration: 0 } },
   modalProps: { withinPortal: false, transitionProps: { duration: 0 } },
 };
 
+const defaultPropsWithInputProps = {
+  ...defaultProps,
+  ...(inputDefaultProps as any),
+};
+
 describe('@mantine/dates/YearPickerInput', () => {
-  itSupportsSystemProps({
+  tests.axe([
+    <YearPickerInput aria-label="test-label" />,
+    <YearPickerInput aria-label="test-label" error />,
+    <YearPickerInput aria-label="test-label" error="test-error" id="test" />,
+    <YearPickerInput aria-label="test-label" description="test-description" />,
+  ]);
+
+  tests.itSupportsSystemProps<YearPickerInputProps, __InputStylesNames>({
     component: YearPickerInput,
-    props: defaultProps,
+    props: defaultPropsWithInputProps,
+    styleProps: true,
+    extend: true,
+    size: true,
+    variant: true,
+    classes: true,
     refType: HTMLButtonElement,
-    providerName: 'YearPickerInput',
-    othersSelector: '.mantine-YearPickerInput-input',
     displayName: '@mantine/dates/YearPickerInput',
+    stylesApiSelectors: [...inputStylesApiSelectors],
   });
 
-  itSupportsFocusEvents(YearPickerInput, defaultProps, '.mantine-YearPickerInput-input');
-  itSupportsProviderVariant(YearPickerInput, defaultProps, 'YearPickerInput', ['root', 'input']);
-  itSupportsProviderSize(YearPickerInput, defaultProps, 'YearPickerInput', ['root', 'input']);
-  itSupportsDateInputProps(YearPickerInput, defaultProps);
-  itSupportsClearableProps(YearPickerInput, { ...defaultProps, defaultValue: new Date() });
-  itSupportsYearsListProps(YearPickerInput, {
-    ...defaultProps,
-    defaultValue: new Date(),
-    popoverProps: { opened: true, withinPortal: false, transitionProps: { duration: 0 } },
+  tests.itSupportsInputProps<YearPickerInputProps>({
+    component: YearPickerInput,
+    props: defaultPropsWithInputProps,
+    selector: 'button',
   });
-  itDisablesInputInsideDisabledFieldset(YearPickerInput, defaultProps);
+
+  datesTests.itSupportsDateInputProps({ component: YearPickerInput, props: defaultProps });
+  datesTests.itSupportsClearableProps({
+    component: YearPickerInput,
+    props: { ...defaultProps, defaultValue: new Date() },
+  });
+  datesTests.itSupportsYearsListProps({
+    component: YearPickerInput,
+    props: {
+      ...defaultProps,
+      defaultValue: new Date(),
+      popoverProps: { opened: true, withinPortal: false, transitionProps: { duration: 0 } },
+    },
+  });
 
   it('supports valueFormat prop', () => {
     const { container, rerender } = render(
@@ -76,47 +96,52 @@ describe('@mantine/dates/YearPickerInput', () => {
         popoverProps={{ opened: true, withinPortal: false, transitionProps: { duration: 0 } }}
       />
     );
-    expect(container.firstChild).toHaveClass('mantine-YearPickerInput-root');
     expect(container.querySelector('[data-dates-input]')).toHaveClass(
       'mantine-YearPickerInput-input'
     );
 
     expect(container.querySelector('table button')).toHaveClass(
-      'mantine-YearPickerInput-pickerControl'
+      'mantine-YearPickerInput-yearsListControl'
     );
   });
 
-  it('supports styles api (classNames)', () => {
+  it('can be controlled (type="default") with timezone (UTC)', async () => {
+    const spy = jest.fn();
     const { container } = render(
-      <YearPickerInput
-        {...defaultProps}
-        popoverProps={{ opened: true, withinPortal: false, transitionProps: { duration: 0 } }}
-        classNames={{
-          root: 'test-root',
-          input: 'test-input',
-          pickerControl: 'test-control',
-        }}
-      />
+      <DatesProvider settings={{ timezone: 'UTC' }}>
+        <YearPickerInput
+          {...defaultProps}
+          date={new Date(2022, 3, 11)}
+          value={new Date(2023, 3, 11)}
+          onChange={spy}
+        />
+      </DatesProvider>
     );
-    expect(container.firstChild).toHaveClass('test-root');
-    expect(container.querySelector('[data-dates-input]')).toHaveClass('test-input');
-    expect(container.querySelector('table button')).toHaveClass('test-control');
+
+    await clickInput(container);
+    expect(container.querySelector('[data-selected]')!.textContent).toBe('2023');
+
+    await userEvent.click(container.querySelector('table button')!);
+    expect(spy).toHaveBeenCalledWith(new Date(2019, 11, 31, 19));
   });
 
-  it('supports styles api (styles)', () => {
+  it('can be controlled (type="default") with timezone (America/Los_Angeles)', async () => {
+    const spy = jest.fn();
     const { container } = render(
-      <YearPickerInput
-        {...defaultProps}
-        popoverProps={{ opened: true, withinPortal: false, transitionProps: { duration: 0 } }}
-        styles={{
-          root: { borderColor: '#CCEE45' },
-          input: { borderColor: '#EB4522' },
-          pickerControl: { borderColor: '#EE4533' },
-        }}
-      />
+      <DatesProvider settings={{ timezone: 'America/Los_Angeles' }}>
+        <YearPickerInput
+          {...defaultProps}
+          date={new Date(2022, 3, 11)}
+          value={new Date(2023, 3, 11)}
+          onChange={spy}
+        />
+      </DatesProvider>
     );
-    expect(container.firstChild).toHaveStyle({ borderColor: '#CCEE45' });
-    expect(container.querySelector('[data-dates-input]')).toHaveStyle({ borderColor: '#EB4522' });
-    expect(container.querySelector('table button')).toHaveStyle({ borderColor: '#EE4533' });
+
+    await clickInput(container);
+    expect(container.querySelector('[data-selected]')!.textContent).toBe('2023');
+
+    await userEvent.click(container.querySelector('table button')!);
+    expect(spy).toHaveBeenCalledWith(new Date(2020, 0, 1, 3));
   });
 });

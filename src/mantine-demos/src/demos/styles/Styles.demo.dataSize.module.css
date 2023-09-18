@@ -1,0 +1,19 @@
+.wrapper {
+  &[data-size='xxl'] {
+    & .input {
+      padding-left: rem(28px);
+      padding-right: rem(28px);
+      height: rem(68px);
+      font-size: rem(28px);
+    }
+  }
+
+  &[data-size='xxs'] {
+    & .input {
+      padding-left: rem(10px);
+      padding-right: rem(10px);
+      height: rem(28px);
+      font-size: rem(10px);
+    }
+  }
+}

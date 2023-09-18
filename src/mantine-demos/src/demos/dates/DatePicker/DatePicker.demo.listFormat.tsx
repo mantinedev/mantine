@@ -1,31 +1,22 @@
 import React from 'react';
 import { MantineDemo } from '@mantine/ds';
-import { Group } from '@mantine/core';
 import { DatePicker } from '@mantine/dates';
 
 const code = `
-import { Group } from '@mantine/core';
 import { DatePicker } from '@mantine/dates';
 
 function Demo() {
-  return (
-    <Group position="center">
-      <DatePicker monthsListFormat="MM" yearsListFormat="YY" />
-    </Group>
-  );
+  return <DatePicker monthsListFormat="MM" yearsListFormat="YY" />;
 }
 `;
 
 function Demo() {
-  return (
-    <Group position="center">
-      <DatePicker monthsListFormat="MM" yearsListFormat="YY" />
-    </Group>
-  );
+  return <DatePicker monthsListFormat="MM" yearsListFormat="YY" />;
 }
 
 export const listFormat: MantineDemo = {
-  type: 'demo',
+  type: 'code',
+  centered: true,
   component: Demo,
   code,
 };

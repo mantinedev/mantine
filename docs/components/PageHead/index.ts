@@ -1,0 +1,1 @@
+export { PageHead } from './PageHead';

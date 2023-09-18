@@ -15,14 +15,14 @@ function Demo() {
 function Demo() {
   const os = useOs();
   return (
-    <Text align="center">
+    <Text ta="center">
       Your os is <b>{os}</b>
     </Text>
   );
 }
 
 export const useOsDemo: MantineDemo = {
-  type: 'demo',
+  type: 'code',
   component: Demo,
   code,
 };

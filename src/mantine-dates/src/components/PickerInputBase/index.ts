@@ -1,6 +1,7 @@
 export { PickerInputBase } from './PickerInputBase';
 export type {
-  DateInputSharedProps,
+  PickerInputBaseFactory,
   PickerInputBaseProps,
   PickerInputBaseStylesNames,
+  DateInputSharedProps,
 } from './PickerInputBase';

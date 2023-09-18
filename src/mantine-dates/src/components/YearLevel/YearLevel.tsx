@@ -1,6 +1,14 @@
+import React from 'react';
+import {
+  Box,
+  BoxProps,
+  StylesApiProps,
+  factory,
+  ElementProps,
+  useProps,
+  Factory,
+} from '@mantine/core';
 import dayjs from 'dayjs';
-import React, { forwardRef } from 'react';
-import { Box, DefaultProps, useComponentDefaultProps, Selectors } from '@mantine/core';
 import {
   CalendarHeader,
   CalendarHeaderStylesNames,
@@ -8,12 +16,8 @@ import {
 } from '../CalendarHeader';
 import { useDatesContext } from '../DatesProvider';
 import { MonthsListSettings, MonthsListStylesNames, MonthsList } from '../MonthsList';
-import useStyles from './YearLevel.styles';
 
-export type YearLevelStylesNames =
-  | Selectors<typeof useStyles>
-  | MonthsListStylesNames
-  | CalendarHeaderStylesNames;
+export type YearLevelStylesNames = MonthsListStylesNames | CalendarHeaderStylesNames;
 
 export interface YearLevelBaseSettings extends MonthsListSettings {
   /** dayjs label format to display year label or a function that returns year label based on year value, defaults to "YYYY" */
@@ -23,10 +27,12 @@ export interface YearLevelBaseSettings extends MonthsListSettings {
 export interface YearLevelSettings extends YearLevelBaseSettings, CalendarHeaderSettings {}
 
 export interface YearLevelProps
-  extends DefaultProps<YearLevelStylesNames>,
+  extends BoxProps,
     YearLevelSettings,
-    React.ComponentPropsWithoutRef<'div'> {
-  variant?: string;
+    Omit<StylesApiProps<YearLevelFactory>, 'classNames' | 'styles'>,
+    ElementProps<'div'> {
+  classNames?: Partial<Record<string, string>>;
+  styles?: Partial<Record<string, React.CSSProperties>>;
   __staticSelector?: string;
 
   /** Year that is currently displayed */
@@ -36,12 +42,18 @@ export interface YearLevelProps
   levelControlAriaLabel?: string;
 }
 
+export type YearLevelFactory = Factory<{
+  props: YearLevelProps;
+  ref: HTMLDivElement;
+  stylesNames: YearLevelStylesNames;
+}>;
+
 const defaultProps: Partial<YearLevelProps> = {
   yearLabelFormat: 'YYYY',
-  size: 'sm',
 };
 
-export const YearLevel = forwardRef<HTMLDivElement, YearLevelProps>((props, ref) => {
+export const YearLevel = factory<YearLevelFactory>((_props, ref) => {
+  const props = useProps('YearLevel', defaultProps, _props);
   const {
     // MonthsList settings
     year,
@@ -73,26 +85,15 @@ export const YearLevel = forwardRef<HTMLDivElement, YearLevelProps>((props, ref)
     withPrevious,
 
     // Other props
-    className,
     yearLabelFormat,
-    classNames,
-    styles,
-    unstyled,
     __staticSelector,
     __stopPropagation,
     size,
-    variant,
-    ...others
-  } = useComponentDefaultProps('YearLevel', defaultProps, props);
-
-  const { classes, cx } = useStyles(null, {
-    name: ['YearLevel', __staticSelector],
     classNames,
     styles,
     unstyled,
-    size,
-    variant,
-  });
+    ...others
+  } = props;
 
   const ctx = useDatesContext();
 
@@ -102,7 +103,6 @@ export const YearLevel = forwardRef<HTMLDivElement, YearLevelProps>((props, ref)
     styles,
     unstyled,
     size,
-    variant,
   };
 
   const _nextDisabled =
@@ -120,7 +120,7 @@ export const YearLevel = forwardRef<HTMLDivElement, YearLevelProps>((props, ref)
       : false;
 
   return (
-    <Box className={cx(classes.yearLevel, className)} data-year-level ref={ref} {...others}>
+    <Box data-year-level size={size} ref={ref} {...others}>
       <CalendarHeader
         label={
           typeof yearLabelFormat === 'function'
@@ -129,7 +129,6 @@ export const YearLevel = forwardRef<HTMLDivElement, YearLevelProps>((props, ref)
                 .locale(locale || ctx.locale)
                 .format(yearLabelFormat)
         }
-        className={classes.calendarHeader}
         __preventFocus={__preventFocus}
         __stopPropagation={__stopPropagation}
         nextIcon={nextIcon}
@@ -168,4 +167,5 @@ export const YearLevel = forwardRef<HTMLDivElement, YearLevelProps>((props, ref)
   );
 });
 
+YearLevel.classes = { ...CalendarHeader.classes, ...MonthsList.classes };
 YearLevel.displayName = '@mantine/dates/YearLevel';

@@ -1,7 +1,7 @@
 import { act, renderHook } from '@testing-library/react';
 import { useForm } from '../use-form';
 
-const getFormEvent = () => ({ preventDefault: jest.fn() } as any);
+const getFormEvent = () => ({ preventDefault: jest.fn() }) as any;
 
 describe('@mantine/form/onReset', () => {
   it('resets form with onReset handler', () => {

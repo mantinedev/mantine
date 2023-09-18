@@ -9,7 +9,7 @@ import { DatePicker } from '@mantine/dates';
 
 function Demo() {
   return (
-    <Group position="center">
+    <Group justify="center">
       <DatePicker defaultLevel="decade" />
       <DatePicker defaultLevel="year" />
     </Group>
@@ -19,7 +19,7 @@ function Demo() {
 
 function Demo() {
   return (
-    <Group position="center">
+    <Group justify="center">
       <DatePicker defaultLevel="decade" />
       <DatePicker defaultLevel="year" />
     </Group>
@@ -27,7 +27,7 @@ function Demo() {
 }
 
 export const defaultLevel: MantineDemo = {
-  type: 'demo',
+  type: 'code',
   component: Demo,
   code,
 };

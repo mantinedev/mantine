@@ -11,7 +11,6 @@ import {
   Text,
   LoadingOverlay,
   Anchor,
-  useMantineTheme,
 } from '@mantine/core';
 
 export interface AuthenticationFormProps {
@@ -29,8 +28,7 @@ export function AuthenticationForm({
 }: AuthenticationFormProps) {
   const [formType, setFormType] = useState<'register' | 'login'>('register');
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string>(null);
-  const theme = useMantineTheme();
+  const [error, setError] = useState<string | null>(null);
 
   const toggleFormType = () => {
     setFormType((current) => (current === 'register' ? 'login' : 'register'));
@@ -64,11 +62,11 @@ export function AuthenticationForm({
   return (
     <Paper
       p={noPadding ? 0 : 'lg'}
-      shadow={noShadow ? null : 'sm'}
-      style={style}
-      sx={{
+      shadow={noShadow ? 'none' : 'sm'}
+      style={{
+        ...style,
         position: 'relative',
-        backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.white,
+        backgroundColor: 'var(--mantine-color-body)',
       }}
     >
       <form onSubmit={form.onSubmit(handleSubmit)}>
@@ -97,7 +95,7 @@ export function AuthenticationForm({
           required
           placeholder="Your email"
           label="Email"
-          icon={<IconAt size={16} stroke={1.5} />}
+          leftSection={<IconAt size={16} stroke={1.5} />}
           {...form.getInputProps('email')}
         />
 
@@ -106,7 +104,7 @@ export function AuthenticationForm({
           required
           placeholder="Password"
           label="Password"
-          icon={<IconLock size={16} stroke={1.5} />}
+          leftSection={<IconLock size={16} stroke={1.5} />}
           {...form.getInputProps('password')}
         />
 
@@ -116,7 +114,7 @@ export function AuthenticationForm({
             required
             label="Confirm Password"
             placeholder="Confirm password"
-            icon={<IconLock size={16} stroke={1.5} />}
+            leftSection={<IconLock size={16} stroke={1.5} />}
             {...form.getInputProps('confirmPassword')}
           />
         )}
@@ -130,20 +128,14 @@ export function AuthenticationForm({
         )}
 
         {error && (
-          <Text color="red" size="sm" mt="sm">
+          <Text c="red" size="sm" mt="sm">
             {error}
           </Text>
         )}
 
         {!noSubmit && (
-          <Group position="apart" mt="xl">
-            <Anchor
-              component="button"
-              type="button"
-              color="dimmed"
-              onClick={toggleFormType}
-              size="sm"
-            >
+          <Group justify="space-between" mt="xl">
+            <Anchor component="button" type="button" c="dimmed" onClick={toggleFormType} size="sm">
               {formType === 'register'
                 ? 'Have an account? Login'
                 : "Don't have an account? Register"}

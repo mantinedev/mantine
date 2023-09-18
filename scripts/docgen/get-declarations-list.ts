@@ -6,7 +6,7 @@ export interface DeclarationPath {
 }
 
 export function getDeclarationsList(paths: DeclarationPath[]): string[] {
-  return paths.reduce((acc, info) => {
+  return paths.reduce<string[]>((acc, info) => {
     if (info.type === 'package') {
       const items = getPackagePaths(info.path);
       return [...acc, ...items];

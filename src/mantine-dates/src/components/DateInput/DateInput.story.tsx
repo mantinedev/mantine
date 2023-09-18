@@ -17,6 +17,13 @@ export function Usage() {
     </div>
   );
 }
+export function Unstyled() {
+  return (
+    <div style={{ padding: 40, maxWidth: 400 }}>
+      <DateInput placeholder="Enter date" defaultDate={new Date(2022, 3, 11)} unstyled />
+    </div>
+  );
+}
 
 export function LocaleChanges() {
   const [locale, setLocale] = useState('en');
@@ -47,8 +54,8 @@ export function LocaleChangesDatesProvider() {
 }
 
 export function ControlledValues() {
-  const [value, setValue] = useState(new Date());
-  const incrementDate = () => setValue((current) => dayjs(current).add(1, 'month').toDate());
+  const [value, setValue] = useState<Date | null>(new Date());
+  const incrementDate = () => setValue((current) => dayjs(current!).subtract(-1, 'month').toDate());
 
   return (
     <div style={{ padding: 40, maxWidth: 400 }}>
@@ -67,7 +74,7 @@ export function ControlledValues() {
 }
 
 export function WithTime() {
-  const [value, setValue] = useState(null);
+  const [value, setValue] = useState<Date | null>(null);
   return (
     <div style={{ padding: 40, maxWidth: 400 }}>
       <DateInput
@@ -93,7 +100,7 @@ export function WithTime() {
 }
 
 export function WithTimeMeridian() {
-  const [value, setValue] = useState(null);
+  const [value, setValue] = useState<Date | null>(null);
   return (
     <div style={{ padding: 40, maxWidth: 400 }}>
       <DateInput
@@ -168,7 +175,7 @@ export function Clearable() {
 }
 
 export function Controlled() {
-  const [value, setValue] = useState(new Date(2022, 3, 11));
+  const [value, setValue] = useState<Date | null>(new Date(2022, 3, 11));
   return (
     <div style={{ padding: 40, maxWidth: 400 }}>
       <DateInput placeholder="Enter date" value={value} onChange={setValue} clearable />
@@ -179,7 +186,7 @@ export function Controlled() {
 }
 
 export function ControlledFixedValue() {
-  const [value, setValue] = useState(new Date(2022, 3, 11));
+  const [value, setValue] = useState<Date | null>(new Date(2022, 3, 11));
   return (
     <div style={{ padding: 40, maxWidth: 400 }}>
       <DateInput placeholder="Enter date" value={value} clearable />

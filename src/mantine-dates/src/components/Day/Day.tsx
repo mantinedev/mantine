@@ -1,74 +1,90 @@
-import React, { forwardRef } from 'react';
-import {
-  UnstyledButton,
-  DefaultProps,
-  useComponentDefaultProps,
-  MantineNumberSize,
-  Selectors,
-  MantineSize,
-} from '@mantine/core';
 import dayjs from 'dayjs';
-import useStyles, { DayStylesParams } from './Day.styles';
+import React from 'react';
+import {
+  BoxProps,
+  StylesApiProps,
+  factory,
+  ElementProps,
+  useProps,
+  useStyles,
+  createVarsResolver,
+  Factory,
+  MantineSize,
+  UnstyledButton,
+  getSize,
+} from '@mantine/core';
+import classes from './Day.module.css';
+import { shiftTimezone } from '../../utils';
+import { useDatesContext } from '../DatesProvider';
 
-export type DayStylesNames = Selectors<typeof useStyles>;
+export type DayStylesNames = 'day';
+export type DayCssVariables = {
+  day: '--day-size';
+};
 
-export interface DayProps
-  extends DefaultProps<DayStylesNames, DayStylesParams>,
-    Omit<React.ComponentPropsWithoutRef<'button'>, 'type'> {
-  variant?: string;
+export interface DayProps extends BoxProps, StylesApiProps<DayFactory>, ElementProps<'button'> {
   __staticSelector?: string;
 
-  /** Determines which element should be used as root, button by default, div if static prop is set */
+  /** Determines which element should be used as root, `'button'` by default, `'div'` if static prop is set */
   static?: boolean;
 
   /** Date that should be displayed */
   date: Date;
 
-  /** Key of theme.radius or any valid CSS value to set border-radius, theme.defaultRadius by default */
-  radius?: MantineNumberSize;
-
-  /** Day size */
+  /** Control width and height of the day, `'sm'` by default */
   size?: MantineSize;
 
-  /** Determines whether the day should be considered to be a weekend */
+  /** Determines whether the day should be considered to be a weekend, `false` by default */
   weekend?: boolean;
 
-  /** Determines whether the day is outside of current month */
+  /** Determines whether the day is outside of the current month, `false` by default */
   outside?: boolean;
 
-  /** Determines whether the day is selected */
+  /** Determines whether the day is selected, `false` by default */
   selected?: boolean;
 
-  /** Determines whether the day should not de displayed */
+  /** Determines whether the day should not de displayed, `false` by default */
   hidden?: boolean;
 
-  /** Determines whether day is selected in range */
+  /** Determines whether the day is selected in range, `false` by default */
   inRange?: boolean;
 
-  /** Determines whether day is first in range selection */
+  /** Determines whether the day is first in range selection, `false` by default */
   firstInRange?: boolean;
 
-  /** Determines whether day is last in range selection */
+  /** Determines whether the day is last in range selection, `false` by default */
   lastInRange?: boolean;
 
   /** Controls day value rendering */
   renderDay?(date: Date): React.ReactNode;
 }
 
-const defaultProps: Partial<DayProps> = {
-  tabIndex: 0,
-  size: 'sm',
-};
+export type DayFactory = Factory<{
+  props: DayProps;
+  ref: HTMLButtonElement;
+  stylesNames: DayStylesNames;
+  vars: DayCssVariables;
+}>;
 
-export const Day = forwardRef<HTMLButtonElement, DayProps>((props, ref) => {
+const defaultProps: Partial<DayProps> = {};
+
+const varsResolver = createVarsResolver<DayFactory>((_, { size }) => ({
+  day: {
+    '--day-size': getSize(size, 'day-size'),
+  },
+}));
+
+export const Day = factory<DayFactory>((_props, ref) => {
+  const props = useProps('Day', defaultProps, _props);
   const {
-    className,
-    date,
-    radius,
-    disabled,
-    styles,
     classNames,
+    className,
+    style,
+    styles,
     unstyled,
+    vars,
+    date,
+    disabled,
     __staticSelector,
     weekend,
     outside,
@@ -79,23 +95,34 @@ export const Day = forwardRef<HTMLButtonElement, DayProps>((props, ref) => {
     lastInRange,
     hidden,
     static: isStatic,
-    variant,
-    size,
     ...others
-  } = useComponentDefaultProps('Day', defaultProps, props);
+  } = props;
 
-  const { classes, cx } = useStyles(
-    { radius, isStatic },
-    { name: ['Day', __staticSelector], classNames, styles, unstyled, variant, size }
-  );
+  const getStyles = useStyles<DayFactory>({
+    name: __staticSelector || 'Day',
+    classes,
+    props,
+    className,
+    style,
+    classNames,
+    styles,
+    unstyled,
+    vars,
+    varsResolver,
+    rootSelector: 'day',
+  });
+
+  const ctx = useDatesContext();
 
   return (
     <UnstyledButton<any>
+      {...getStyles('day')}
       component={isStatic ? 'div' : 'button'}
       ref={ref}
-      className={cx(classes.day, className)}
       disabled={disabled}
-      data-today={dayjs(date).isSame(new Date(), 'day') || undefined}
+      data-today={
+        dayjs(date).isSame(shiftTimezone('add', new Date(), ctx.getTimezone()), 'day') || undefined
+      }
       data-hidden={hidden || undefined}
       data-disabled={disabled || undefined}
       data-weekend={(!disabled && !outside && weekend) || undefined}
@@ -104,6 +131,7 @@ export const Day = forwardRef<HTMLButtonElement, DayProps>((props, ref) => {
       data-in-range={(inRange && !disabled) || undefined}
       data-first-in-range={(firstInRange && !disabled) || undefined}
       data-last-in-range={(lastInRange && !disabled) || undefined}
+      data-static={isStatic || undefined}
       unstyled={unstyled}
       {...others}
     >
@@ -112,4 +140,5 @@ export const Day = forwardRef<HTMLButtonElement, DayProps>((props, ref) => {
   );
 });
 
+Day.classes = classes;
 Day.displayName = '@mantine/dates/Day';

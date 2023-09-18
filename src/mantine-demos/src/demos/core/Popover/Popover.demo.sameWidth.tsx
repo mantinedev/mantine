@@ -38,7 +38,8 @@ function Demo() {
 }
 
 export const sameWidth: MantineDemo = {
-  type: 'demo',
+  type: 'code',
   code,
+  centered: true,
   component: Demo,
 };

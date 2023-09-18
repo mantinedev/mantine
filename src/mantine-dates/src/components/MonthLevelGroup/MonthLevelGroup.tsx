@@ -1,17 +1,19 @@
-import React, { forwardRef, useRef } from 'react';
-import { DefaultProps, Box, Selectors, useComponentDefaultProps } from '@mantine/core';
 import dayjs from 'dayjs';
-import { MonthLevel, MonthLevelStylesNames, MonthLevelSettings } from '../MonthLevel';
+import React, { useRef } from 'react';
+import { BoxProps, StylesApiProps, factory, ElementProps, useProps, Factory } from '@mantine/core';
+import { MonthLevel, MonthLevelSettings, MonthLevelStylesNames } from '../MonthLevel';
+import { LevelsGroup, LevelsGroupStylesNames } from '../LevelsGroup';
 import { handleControlKeyDown } from '../../utils';
-import useStyles from './MonthLevelGroup.styles';
 
-export type MonthLevelGroupStylesNames = Selectors<typeof useStyles> | MonthLevelStylesNames;
+export type MonthLevelGroupStylesNames = MonthLevelStylesNames | LevelsGroupStylesNames;
 
 export interface MonthLevelGroupProps
-  extends DefaultProps<MonthLevelGroupStylesNames>,
+  extends BoxProps,
     Omit<MonthLevelSettings, 'withPrevious' | 'withNext' | '__onDayKeyDown' | '__getDayRef'>,
-    React.ComponentPropsWithoutRef<'div'> {
-  variant?: string;
+    Omit<StylesApiProps<MonthLevelGroupFactory>, 'classNames' | 'styles'>,
+    ElementProps<'div'> {
+  classNames?: Partial<Record<string, string>>;
+  styles?: Partial<Record<string, React.CSSProperties>>;
   __staticSelector?: string;
 
   /** Number of columns to render next to each other */
@@ -27,11 +29,18 @@ export interface MonthLevelGroupProps
   static?: boolean;
 }
 
+export type MonthLevelGroupFactory = Factory<{
+  props: MonthLevelGroupProps;
+  ref: HTMLDivElement;
+  stylesNames: MonthLevelGroupStylesNames;
+}>;
+
 const defaultProps: Partial<MonthLevelGroupProps> = {
   numberOfColumns: 1,
 };
 
-export const MonthLevelGroup = forwardRef<HTMLDivElement, MonthLevelGroupProps>((props, ref) => {
+export const MonthLevelGroup = factory<MonthLevelGroupFactory>((_props, ref) => {
+  const props = useProps('MonthLevelGroup', defaultProps, _props);
   const {
     // Month settings
     month,
@@ -65,7 +74,6 @@ export const MonthLevelGroup = forwardRef<HTMLDivElement, MonthLevelGroupProps>(
     hasNextLevel,
 
     // Other settings
-    className,
     classNames,
     styles,
     unstyled,
@@ -75,19 +83,10 @@ export const MonthLevelGroup = forwardRef<HTMLDivElement, MonthLevelGroupProps>(
     __staticSelector,
     __stopPropagation,
     size,
-    variant,
     static: isStatic,
+    vars,
     ...others
-  } = useComponentDefaultProps('MonthLevelGroup', defaultProps, props);
-
-  const { classes, cx } = useStyles(null, {
-    name: ['MonthLevelGroup', __staticSelector],
-    classNames,
-    styles,
-    unstyled,
-    variant,
-    size,
-  });
+  } = props;
 
   const daysRefs = useRef<HTMLButtonElement[][][]>([]);
 
@@ -100,7 +99,7 @@ export const MonthLevelGroup = forwardRef<HTMLDivElement, MonthLevelGroupProps>(
         <MonthLevel
           key={monthIndex}
           month={currentMonth}
-          withNext={monthIndex === numberOfColumns - 1}
+          withNext={monthIndex === numberOfColumns! - 1}
           withPrevious={monthIndex === 0}
           monthLabelFormat={monthLabelFormat}
           __stopPropagation={__stopPropagation}
@@ -159,7 +158,6 @@ export const MonthLevelGroup = forwardRef<HTMLDivElement, MonthLevelGroupProps>(
           unstyled={unstyled}
           __staticSelector={__staticSelector || 'MonthLevelGroup'}
           size={size}
-          variant={variant}
           static={isStatic}
           withCellSpacing={withCellSpacing}
         />
@@ -167,10 +165,18 @@ export const MonthLevelGroup = forwardRef<HTMLDivElement, MonthLevelGroupProps>(
     });
 
   return (
-    <Box className={cx(classes.monthLevelGroup, className)} ref={ref} {...others}>
+    <LevelsGroup
+      classNames={classNames}
+      styles={styles}
+      __staticSelector={__staticSelector || 'MonthLevelGroup'}
+      ref={ref}
+      size={size}
+      {...others}
+    >
       {months}
-    </Box>
+    </LevelsGroup>
   );
 });
 
+MonthLevelGroup.classes = { ...LevelsGroup.classes, ...MonthLevel.classes };
 MonthLevelGroup.displayName = '@mantine/dates/MonthLevelGroup';

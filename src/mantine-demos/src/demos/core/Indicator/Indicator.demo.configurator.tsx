@@ -1,45 +1,40 @@
 import React from 'react';
 import { MantineDemo } from '@mantine/ds';
-import { Indicator, IndicatorProps, Avatar, Group } from '@mantine/core';
+import { Indicator, IndicatorProps, Avatar } from '@mantine/core';
 
-function Wrapper(props: IndicatorProps) {
+function Demo(props: IndicatorProps) {
   return (
-    <Group position="center">
-      <Indicator {...props}>
-        <Avatar
-          size="lg"
-          src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=250&q=80"
-        />
-      </Indicator>
-    </Group>
+    <Indicator {...props}>
+      <Avatar
+        size="lg"
+        radius="sm"
+        src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=250&q=80"
+      />
+    </Indicator>
   );
 }
 
-const codeTemplate = (props: string) => `
-import { Indicator, Avatar, Group } from '@mantine/core';
+const code = `
+import { Indicator, Avatar } from '@mantine/core';
 
 function Demo() {
   return (
-    <Group position="center">
-      <Indicator${props}>
-        <Avatar
-          size="lg"
-          src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=250&q=80"
-        />
-      </Indicator>
-    </Group>
+    <Indicator{{props}}>
+      <Avatar size="lg" radius="sm" src="./avatar.png" />
+    </Indicator>
   );
 }
 `;
 
 export const configurator: MantineDemo = {
   type: 'configurator',
-  component: Wrapper,
-  codeTemplate,
-  configurator: [
-    { name: 'color', type: 'color', initialValue: 'blue', defaultValue: 'blue' },
+  component: Demo,
+  code,
+  centered: true,
+  controls: [
+    { prop: 'color', type: 'color', initialValue: 'blue', libraryValue: 'blue' },
     {
-      name: 'position',
+      prop: 'position',
       type: 'select',
       data: [
         { value: 'top-start', label: 'top-start' },
@@ -53,12 +48,12 @@ export const configurator: MantineDemo = {
         { value: 'bottom-end', label: 'bottom-end' },
       ],
       initialValue: 'top-end',
-      defaultValue: 'top-end',
+      libraryValue: 'top-end',
     },
-    { name: 'radius', type: 'size', initialValue: 'xl', defaultValue: 'xl' },
-    { name: 'size', type: 'number', initialValue: 10, defaultValue: 10, step: 1, min: 6, max: 30 },
-    { name: 'disabled', type: 'boolean', initialValue: false, defaultValue: false },
-    { name: 'withBorder', type: 'boolean', initialValue: false, defaultValue: false },
-    { name: 'processing', type: 'boolean', initialValue: false, defaultValue: false },
+    { prop: 'radius', type: 'size', initialValue: 'xl', libraryValue: 'xl' },
+    { prop: 'size', type: 'number', initialValue: 10, libraryValue: 10, step: 1, min: 6, max: 30 },
+    { prop: 'disabled', type: 'boolean', initialValue: false, libraryValue: false },
+    { prop: 'withBorder', type: 'boolean', initialValue: false, libraryValue: false },
+    { prop: 'processing', type: 'boolean', initialValue: false, libraryValue: false },
   ],
 };

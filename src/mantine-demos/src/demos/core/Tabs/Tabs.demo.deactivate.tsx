@@ -37,7 +37,7 @@ function Demo() {
 }
 
 export const deactivate: MantineDemo = {
-  type: 'demo',
+  type: 'code',
   component: Demo,
   code,
 };

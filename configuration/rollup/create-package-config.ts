@@ -4,12 +4,15 @@ import { RollupOptions, OutputOptions, ModuleFormat } from 'rollup';
 import commonjs from '@rollup/plugin-commonjs';
 import nodeExternals from 'rollup-plugin-node-externals';
 import { nodeResolve } from '@rollup/plugin-node-resolve';
-import esbuild from 'rollup-plugin-esbuild';
 import json from '@rollup/plugin-json';
 import alias, { Alias } from '@rollup/plugin-alias';
 import replace from '@rollup/plugin-replace';
 import visualizer from 'rollup-plugin-visualizer';
+import postcss from 'rollup-plugin-postcss';
+import banner from 'rollup-plugin-banner2';
+import esbuild from 'rollup-plugin-esbuild';
 import { getPackagesList } from '../../scripts/utils/get-packages-list';
+import { generateScopedName } from './hash-css-name';
 
 interface PkgConfigInput {
   basePath: string;
@@ -38,13 +41,23 @@ export default async function createPackageConfig(config: PkgConfigInput): Promi
     nodeExternals(),
     nodeResolve({ extensions: ['.ts', '.tsx', '.js', '.jsx'] }),
     esbuild({
-      minify: config.format === 'umd',
       sourceMap: false,
       tsconfig: path.resolve(process.cwd(), 'tsconfig.json'),
     }),
     json(),
     alias({ entries: aliasEntries }),
     replace({ preventAssignment: true }),
+    postcss({
+      extract: true,
+      modules: { generateScopedName },
+    }),
+    banner((chunk) => {
+      if (chunk.fileName === 'index.js') {
+        return "'use client';\n";
+      }
+
+      return undefined;
+    }),
   ];
 
   let externals;
@@ -58,13 +71,12 @@ export default async function createPackageConfig(config: PkgConfigInput): Promi
     ];
   } else {
     externals = [
-      '@emotion/server/create-instance',
       'dayjs/locale/ru',
+      'dayjs/plugin/customParseFormat',
+      'dayjs/plugin/utc',
+      'dayjs/plugin/timezone',
       'klona/full',
       'highlight.js/lib/languages/typescript',
-      '@emotion/cache',
-      '@emotion/utils',
-      '@emotion/serialize',
       'prism-react-renderer/themes/duotoneDark',
       'prism-react-renderer/themes/duotoneLight',
       ...(config?.externals || []),

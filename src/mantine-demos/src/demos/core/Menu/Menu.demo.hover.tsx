@@ -1,5 +1,5 @@
 import React from 'react';
-import { Menu, Group } from '@mantine/core';
+import { Menu } from '@mantine/core';
 import { MantineDemo } from '@mantine/ds';
 import { DemoMenuItems } from './_menu-items';
 
@@ -17,16 +17,15 @@ function Demo() {
 
 function Demo() {
   return (
-    <Group position="center">
-      <Menu trigger="hover" openDelay={100} closeDelay={400}>
-        <DemoMenuItems />
-      </Menu>
-    </Group>
+    <Menu trigger="hover" openDelay={100} closeDelay={400}>
+      <DemoMenuItems />
+    </Menu>
   );
 }
 
 export const hover: MantineDemo = {
-  type: 'demo',
+  type: 'code',
   code,
   component: Demo,
+  centered: true,
 };

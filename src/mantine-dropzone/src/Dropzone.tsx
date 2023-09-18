@@ -8,82 +8,96 @@ import {
   FileError,
 } from 'react-dropzone';
 import {
-  DefaultProps,
-  Selectors,
-  MantineNumberSize,
-  LoadingOverlay,
   Box,
-  useComponentDefaultProps,
+  BoxProps,
+  StylesApiProps,
+  factory,
+  ElementProps,
+  useProps,
+  useStyles,
+  createVarsResolver,
+  Factory,
+  MantineRadius,
+  LoadingOverlay,
+  getRadius,
+  MantineColor,
 } from '@mantine/core';
 import { assignRef } from '@mantine/hooks';
-import { ForwardRefWithStaticComponents } from '@mantine/utils';
 import { DropzoneProvider } from './Dropzone.context';
 import { DropzoneAccept, DropzoneIdle, DropzoneReject } from './DropzoneStatus';
 import type { DropzoneFullScreenType } from './DropzoneFullScreen';
-import useStyles from './Dropzone.styles';
+import classes from './Dropzone.module.css';
 
-export type DropzoneStylesNames = Selectors<typeof useStyles>;
+export type DropzoneStylesNames = 'root' | 'inner';
+export type DropzoneVariant = 'filled' | 'light';
+export type DropzoneCssVariables = {
+  root:
+    | '--dropzone-radius'
+    | '--dropzone-accept-color'
+    | '--dropzone-accept-bg'
+    | '--dropzone-reject-color'
+    | '--dropzone-reject-bg';
+};
 
 export interface DropzoneProps
-  extends DefaultProps<DropzoneStylesNames>,
-    Omit<React.ComponentPropsWithRef<'div'>, 'onDrop'> {
-  variant?: string;
+  extends BoxProps,
+    StylesApiProps<DropzoneFactory>,
+    ElementProps<'div', 'onDrop'> {
+  /** Key of `theme.colors` or any valid CSS color to set colors of `Dropzone.Accept`, `theme.primaryColor` by default */
+  acceptColor?: MantineColor;
 
-  /** Padding from theme.spacing, or any valid CSS value to set padding */
-  padding?: MantineNumberSize;
+  /** Key of `theme.colors` or any valid CSS color to set colors of `Dropzone.Reject`, `'red'` by default */
+  rejectColor?: MantineColor;
 
-  /** Key of theme.radius or any valid CSS value to set border-radius, theme.defaultRadius by default */
-  radius?: MantineNumberSize;
+  /** Key of `theme.radius` or any valid CSS value to set `border-radius`, numbers are converted to rem, `theme.defaultRadius` by default */
+  radius?: MantineRadius;
 
-  /** Dropzone statues */
-  children: React.ReactNode;
-
-  /** Disable files capturing */
+  /** Determines whether files capturing should be disabled, `false` by default */
   disabled?: boolean;
 
-  /** Called when any files are dropped into dropzone */
+  /** Called when any files are dropped to the dropzone */
   onDropAny?(files: FileWithPath[], fileRejections: FileRejection[]): void;
 
-  /** Called when valid files are dropped into dropzone */
+  /** Called when valid files are dropped to the dropzone */
   onDrop(files: FileWithPath[]): void;
 
-  /** Called when selected files don't meet file restrictions */
+  /** Called when dropped files do not meet file restrictions */
   onReject?(fileRejections: FileRejection[]): void;
 
-  /** Display loading overlay over dropzone */
+  /** Determines whether a loading overlay should be displayed over the dropzone, `false` by default */
   loading?: boolean;
 
-  /** File types to accept  */
+  /** Mime types of the files that dropzone can accepts. By default, dropzone accepts all file types. */
   accept?: Accept | string[];
 
-  /** Get open function as ref */
+  /** A ref function which when called opens the file system file picker */
   openRef?: React.ForwardedRef<() => void | undefined>;
 
-  /** Allow selection of multiple files */
+  /** Determines whether multiple files can be dropped to the dropzone or selected from file system picker, `true` by default */
   multiple?: boolean;
 
-  /** Set maximum file size in bytes */
+  /** Maximum file size in bytes */
   maxSize?: number;
 
   /** Name of the form control. Submitted with the form as part of a name/value pair. */
   name?: string;
 
-  /** Number of files that user can pick */
+  /** Maximum number of files that can be picked at once */
   maxFiles?: number;
 
-  /** Set to true to autofocus the root element */
+  /** Set to autofocus the root element */
   autoFocus?: boolean;
 
-  /** If false, disables click to open the native file selection dialog */
+  /** If `false`, disables click to open the native file selection dialog */
   activateOnClick?: boolean;
 
-  /** If false, disables drag 'n' drop */
+  /** If `false`, disables drag 'n' drop */
   activateOnDrag?: boolean;
 
-  /** If false, disables Space/Enter to open the native file selection dialog. Note that it also stops tracking the focus state. */
+  /** If `false`, disables Space/Enter to open the native file selection dialog. Note that it also stops tracking the focus state. */
   activateOnKeyboard?: boolean;
 
-  /** If false, stops drag event propagation to parents */
+  /** If `false`, stops drag event propagation to parents */
   dragEventsBubbling?: boolean;
 
   /** Called when the `dragenter` event occurs */
@@ -101,7 +115,7 @@ export interface DropzoneProps
   /** Called when user opens the file selection dialog */
   onFileDialogOpen?(): void;
 
-  /** If false, allow dropped items to take over the current browser window */
+  /** If `false`, allow dropped items to take over the current browser window */
   preventDropOnDocument?: boolean;
 
   /** Set to true to use the File System Access API to open the file picker instead of using an <input type="file"> click event, defaults to true */
@@ -114,8 +128,20 @@ export interface DropzoneProps
   validator?: <T extends File>(file: T) => FileError | FileError[] | null;
 }
 
-export const defaultProps: Partial<DropzoneProps> = {
-  padding: 'md',
+export type DropzoneFactory = Factory<{
+  props: DropzoneProps;
+  ref: HTMLDivElement;
+  stylesNames: DropzoneStylesNames;
+  vars: DropzoneCssVariables;
+  staticComponents: {
+    Accept: typeof DropzoneAccept;
+    Idle: typeof DropzoneIdle;
+    Reject: typeof DropzoneReject;
+    FullScreen: DropzoneFullScreenType;
+  };
+}>;
+
+const defaultProps: Partial<DropzoneProps> = {
   loading: false,
   multiple: true,
   maxSize: Infinity,
@@ -125,16 +151,47 @@ export const defaultProps: Partial<DropzoneProps> = {
   dragEventsBubbling: true,
   activateOnKeyboard: true,
   useFsAccessApi: true,
+  variant: 'light',
+  rejectColor: 'red',
 };
 
-export function _Dropzone(props: DropzoneProps) {
+const varsResolver = createVarsResolver<DropzoneFactory>(
+  (theme, { radius, variant, acceptColor, rejectColor }) => {
+    const acceptColors = theme.variantColorResolver({
+      color: acceptColor || theme.primaryColor,
+      theme,
+      variant: variant!,
+    });
+
+    const rejectColors = theme.variantColorResolver({
+      color: rejectColor || 'red',
+      theme,
+      variant: variant!,
+    });
+
+    return {
+      root: {
+        '--dropzone-radius': getRadius(radius),
+        '--dropzone-accept-color': acceptColors.color,
+        '--dropzone-accept-bg': acceptColors.background,
+        '--dropzone-reject-color': rejectColors.color,
+        '--dropzone-reject-bg': rejectColors.background,
+      },
+    };
+  }
+);
+
+export const Dropzone = factory<DropzoneFactory>((_props, ref) => {
+  const props = useProps('Dropzone', defaultProps, _props);
   const {
+    classNames,
     className,
-    padding,
+    style,
+    styles,
+    unstyled,
+    vars,
     radius,
     disabled,
-    classNames,
-    styles,
     loading,
     multiple,
     maxSize,
@@ -145,7 +202,6 @@ export function _Dropzone(props: DropzoneProps) {
     onReject,
     openRef,
     name,
-    unstyled,
     maxFiles,
     autoFocus,
     activateOnClick,
@@ -161,14 +217,23 @@ export function _Dropzone(props: DropzoneProps) {
     useFsAccessApi,
     getFilesFromEvent,
     validator,
-    variant,
+    rejectColor,
+    acceptColor,
     ...others
-  } = useComponentDefaultProps('Dropzone', defaultProps, props);
+  } = props;
 
-  const { classes, cx } = useStyles(
-    { radius, padding },
-    { name: 'Dropzone', classNames, styles, unstyled, variant }
-  );
+  const getStyles = useStyles<DropzoneFactory>({
+    name: 'Dropzone',
+    classes,
+    props,
+    className,
+    style,
+    classNames,
+    styles,
+    unstyled,
+    vars,
+    varsResolver,
+  });
 
   const { getRootProps, getInputProps, isDragAccept, isDragReject, open } = useDropzone({
     onDrop: onDropAny,
@@ -203,32 +268,28 @@ export function _Dropzone(props: DropzoneProps) {
     <DropzoneProvider value={{ accept: isDragAccept, reject: isDragReject, idle: isIdle }}>
       <Box
         {...others}
-        {...getRootProps()}
-        data-accept={isDragAccept || undefined}
-        data-reject={isDragReject || undefined}
-        data-idle={isIdle || undefined}
-        data-loading={loading || undefined}
-        className={cx(classes.root, className)}
+        {...getRootProps({ ref })}
+        {...getStyles('root', { focusable: true })}
+        mod={{
+          accept: isDragAccept,
+          reject: isDragReject,
+          idle: isIdle,
+          loading,
+          'activate-on-click': activateOnClick,
+        }}
       >
-        <LoadingOverlay visible={loading} radius={radius} unstyled={unstyled} />
+        <LoadingOverlay visible={loading} overlayProps={{ radius }} unstyled={unstyled} />
         <input {...getInputProps()} name={name} />
-        <div className={classes.inner}>{children}</div>
+        <div {...getStyles('inner')} data-disable-pointer-events={!activateOnClick || undefined}>
+          {children}
+        </div>
       </Box>
     </DropzoneProvider>
   );
-}
+});
 
-_Dropzone.displayName = '@mantine/dropzone/Dropzone';
-_Dropzone.Accept = DropzoneAccept;
-_Dropzone.Reject = DropzoneReject;
-_Dropzone.Idle = DropzoneIdle;
-
-export const Dropzone: ForwardRefWithStaticComponents<
-  DropzoneProps,
-  {
-    Accept: typeof DropzoneAccept;
-    Reject: typeof DropzoneReject;
-    Idle: typeof DropzoneIdle;
-    FullScreen: DropzoneFullScreenType;
-  }
-> = _Dropzone as any;
+Dropzone.classes = classes;
+Dropzone.displayName = '@mantine/dropzone/Dropzone';
+Dropzone.Accept = DropzoneAccept;
+Dropzone.Idle = DropzoneIdle;
+Dropzone.Reject = DropzoneReject;

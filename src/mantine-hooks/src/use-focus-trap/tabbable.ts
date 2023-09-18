@@ -36,11 +36,11 @@ function visible(element: HTMLElement) {
 }
 
 function getElementTabIndex(element: HTMLElement) {
-  let tabIndex = element.getAttribute('tabindex');
+  let tabIndex: string | null | undefined = element.getAttribute('tabindex');
   if (tabIndex === null) {
     tabIndex = undefined;
   }
-  return parseInt(tabIndex, 10);
+  return parseInt(tabIndex as string, 10);
 }
 
 export function focusable(element: HTMLElement) {

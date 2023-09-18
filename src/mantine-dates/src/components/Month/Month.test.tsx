@@ -1,37 +1,30 @@
 import React from 'react';
-import { render } from '@testing-library/react';
-import {
-  itSupportsSystemProps,
-  itSupportsProviderVariant,
-  itSupportsProviderSize,
-} from '@mantine/tests';
-import {
-  itSupportsMonthProps,
-  itSupportsGetDayRef,
-  itSupportsOnDayKeydown,
-  itSupportsOnDayClick,
-} from '../../tests';
-import { Month, MonthProps } from './Month';
+import { tests, render } from '@mantine/tests';
+import { datesTests } from '@mantine/dates-tests';
+import { Month, MonthProps, MonthStylesNames } from './Month';
 
 const defaultProps: MonthProps = {
   month: new Date(2022, 3, 2),
 };
 
-describe('@mantine/core/Month', () => {
-  itSupportsSystemProps({
+describe('@mantine/dates/Month', () => {
+  tests.itSupportsSystemProps<MonthProps, MonthStylesNames>({
     component: Month,
     props: defaultProps,
+    styleProps: true,
+    extend: true,
+    variant: true,
+    size: true,
+    classes: true,
     refType: HTMLTableElement,
-    providerName: 'Month',
     displayName: '@mantine/dates/Month',
+    stylesApiSelectors: ['month'],
   });
 
-  itSupportsProviderVariant(Month, defaultProps, 'Month', ['month', 'day', 'weekdaysRow']);
-  itSupportsProviderSize(Month, defaultProps, 'Month', ['month', 'day', 'weekdaysRow']);
-  itSupportsMonthProps(Month, defaultProps);
-  itSupportsGetDayRef(Month, defaultProps);
-  itSupportsOnDayKeydown(Month, defaultProps);
-  itSupportsOnDayClick(Month, defaultProps);
+  datesTests.itSupportsOnDayClick({ component: Month, props: defaultProps });
+  datesTests.itSupportsOnDayKeydown({ component: Month, props: defaultProps });
+  datesTests.itSupportsGetDayRef({ component: Month, props: defaultProps });
+  datesTests.itSupportsMonthProps({ component: Month, props: defaultProps });
 
   it('has correct default __staticSelector', () => {
     const { container } = render(<Month {...defaultProps} />);
@@ -47,43 +40,11 @@ describe('@mantine/core/Month', () => {
     expect(container.querySelector('tbody tr td button')).toHaveClass('mantine-Calendar-day');
   });
 
-  it('supports styles api (styles)', () => {
-    const { container } = render(
-      <Month
-        {...defaultProps}
-        styles={{
-          day: { borderColor: '#CECECE' },
-          month: { borderColor: '#EFC65E' },
-          weekdaysRow: { borderColor: '#FF4534' },
-        }}
-      />
-    );
-    expect(container.querySelector('table')).toHaveStyle({ borderColor: '#EFC65E' });
-    expect(container.querySelector('thead tr')).toHaveStyle({ borderColor: '#FF4534' });
-    expect(container.querySelector('tbody tr td button')).toHaveStyle({ borderColor: '#CECECE' });
-  });
-
-  it('supports styles api (classNames)', () => {
-    const { container } = render(
-      <Month
-        {...defaultProps}
-        classNames={{
-          day: 'test-day',
-          month: 'test-month',
-          weekdaysRow: 'test-weekdays',
-        }}
-      />
-    );
-    expect(container.querySelector('table')).toHaveClass('test-month');
-    expect(container.querySelector('thead tr')).toHaveClass('test-weekdays');
-    expect(container.querySelector('tbody tr td button')).toHaveClass('test-day');
-  });
-
   it('supports static prop', () => {
     const { container, rerender } = render(<Month {...defaultProps} />);
-    expect((container.querySelector('td').firstChild as HTMLElement).tagName).toBe('BUTTON');
+    expect((container.querySelector('td')!.firstChild as HTMLElement).tagName).toBe('BUTTON');
 
     rerender(<Month {...defaultProps} static />);
-    expect((container.querySelector('td').firstChild as HTMLElement).tagName).toBe('DIV');
+    expect((container.querySelector('td')!.firstChild as HTMLElement).tagName).toBe('DIV');
   });
 });

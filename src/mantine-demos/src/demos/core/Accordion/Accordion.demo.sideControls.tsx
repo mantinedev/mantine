@@ -1,20 +1,20 @@
 import React from 'react';
-import { Accordion, ActionIcon, AccordionControlProps, Box } from '@mantine/core';
+import { Accordion, ActionIcon, AccordionControlProps, Center } from '@mantine/core';
 import { MantineDemo } from '@mantine/ds';
 import { IconDots } from '@tabler/icons-react';
 
 const code = `
-import { Accordion, ActionIcon, AccordionControlProps, Box } from '@mantine/core';
+import { Accordion, ActionIcon, AccordionControlProps, Center } from '@mantine/core';
 import { IconDots } from '@tabler/icons-react';
 
 function AccordionControl(props: AccordionControlProps) {
   return (
-    <Box sx={{ display: 'flex', alignItems: 'center' }}>
+    <Center>
       <Accordion.Control {...props} />
-      <ActionIcon size="lg">
+      <ActionIcon size="lg" variant="subtle" color="gray">
         <IconDots size="1rem" />
       </ActionIcon>
-    </Box>
+    </Center>
   );
 }
 
@@ -42,12 +42,12 @@ function Demo() {
 
 function AccordionControl(props: AccordionControlProps) {
   return (
-    <Box sx={{ display: 'flex', alignItems: 'center' }}>
+    <Center>
       <Accordion.Control {...props} />
-      <ActionIcon size="lg">
+      <ActionIcon size="lg" variant="subtle" color="gray">
         <IconDots size="1rem" />
       </ActionIcon>
-    </Box>
+    </Center>
   );
 }
 
@@ -73,7 +73,7 @@ function Demo() {
 }
 
 export const sideControls: MantineDemo = {
-  type: 'demo',
+  type: 'code',
   component: Demo,
   code,
 };

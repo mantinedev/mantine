@@ -6,7 +6,7 @@ import { NumberInput, TextInput, Button, Box } from '@mantine/core';
 
 const code = `
 import { useForm } from '@mantine/form';
-import { NumberInput, TextInput, Button } from '@mantine/core';
+import { NumberInput, TextInput, Button, Box } from '@mantine/core';
 
 function Demo() {
   const form = useForm({
@@ -22,7 +22,7 @@ function Demo() {
   });
 
   return (
-    <Box maw={320} mx="auto">
+    <Box maw={340} mx="auto">
       <form onSubmit={form.onSubmit(console.log)}>
         <TextInput label="Name" placeholder="Name" {...form.getInputProps('name')} />
         <TextInput mt="sm" label="Email" placeholder="Email" {...form.getInputProps('email')} />
@@ -57,7 +57,7 @@ function Demo() {
   });
 
   return (
-    <Box maw={320} mx="auto">
+    <Box maw={340} mx="auto">
       <form onSubmit={form.onSubmit(console.log)}>
         <TextInput label="Name" placeholder="Name" {...form.getInputProps('name')} />
         <TextInput mt="sm" label="Email" placeholder="Email" {...form.getInputProps('email')} />
@@ -78,7 +78,7 @@ function Demo() {
 }
 
 export const liveValidation: MantineDemo = {
-  type: 'demo',
+  type: 'code',
   component: Demo,
   code,
 };

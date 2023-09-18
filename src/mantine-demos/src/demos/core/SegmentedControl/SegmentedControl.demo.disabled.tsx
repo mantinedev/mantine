@@ -8,8 +8,10 @@ import { SegmentedControl } from '@mantine/core';
 function Demo() {
   return (
     <>
-      <SegmentedControl disabled />
+      {/* Disabled control */}
+      <SegmentedControl disabled={true} />
 
+      {/* Disabled option */}
       <SegmentedControl
         data={[
           { value: 'preview', label: 'Preview', disabled: true },
@@ -26,7 +28,7 @@ function Demo() {
   return (
     <Stack align="center">
       <div>
-        <Text size="sm" weight={500} mb={3}>
+        <Text size="sm" fw={500} mb={3}>
           Disabled control
         </Text>
         <SegmentedControl
@@ -49,7 +51,7 @@ function Demo() {
       </div>
 
       <div>
-        <Text size="sm" weight={500} mb={3}>
+        <Text size="sm" fw={500} mb={3}>
           Disabled option
         </Text>
         <SegmentedControl
@@ -75,7 +77,7 @@ function Demo() {
 }
 
 export const disabled: MantineDemo = {
-  type: 'demo',
+  type: 'code',
   component: Demo,
   code,
 };

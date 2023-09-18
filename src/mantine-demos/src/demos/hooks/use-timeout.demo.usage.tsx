@@ -14,10 +14,8 @@ function Demo() {
 
   return (
     <Group>
-      <Button onClick={start} variant="outline">
-        Start
-      </Button>
-      <Button onClick={clear} variant="outline" color="red">
+      <Button onClick={start}>Start</Button>
+      <Button onClick={clear} color="red">
         Clear
       </Button>
       <Text>Random value: {value}</Text>
@@ -32,10 +30,8 @@ function Demo() {
 
   return (
     <Group>
-      <Button onClick={start} variant="outline">
-        Start
-      </Button>
-      <Button onClick={clear} variant="outline" color="red">
+      <Button onClick={start}>Start</Button>
+      <Button onClick={clear} color="red">
         Clear
       </Button>
       <Text>Random value: {value}</Text>
@@ -44,7 +40,7 @@ function Demo() {
 }
 
 export const useTimeoutDemo: MantineDemo = {
-  type: 'demo',
+  type: 'code',
   code,
   component: Demo,
 };

@@ -1,16 +1,29 @@
-/* eslint-disable react/no-unused-prop-types */
+import React from 'react';
+import {
+  Box,
+  BoxProps,
+  StylesApiProps,
+  factory,
+  ElementProps,
+  useProps,
+  useStyles,
+  Factory,
+  MantineSize,
+} from '@mantine/core';
 import dayjs from 'dayjs';
-import React, { forwardRef } from 'react';
-import { DefaultProps, Box, Selectors, useComponentDefaultProps, MantineSize } from '@mantine/core';
-import { PickerControl, PickerControlStylesNames, PickerControlProps } from '../PickerControl';
 import { ControlsGroupSettings } from '../../types';
+import { PickerControl, PickerControlProps } from '../PickerControl';
 import { useDatesContext } from '../DatesProvider';
+import classes from './MonthsList.module.css';
 import { getMonthsData } from './get-months-data/get-months-data';
-import { isMonthDisabled } from './is-month-disabled/is-month-disabled';
-import useStyles from './MonthsList.styles';
 import { getMonthInTabOrder } from './get-month-in-tab-order/get-month-in-tab-order';
+import { isMonthDisabled } from './is-month-disabled/is-month-disabled';
 
-export type MonthsListStylesNames = PickerControlStylesNames | Selectors<typeof useStyles>;
+export type MonthsListStylesNames =
+  | 'monthsList'
+  | 'monthsListCell'
+  | 'monthsListRow'
+  | 'monthsListControl';
 
 export interface MonthsListSettings extends ControlsGroupSettings {
   /** dayjs format for months list  */
@@ -27,10 +40,10 @@ export interface MonthsListSettings extends ControlsGroupSettings {
 }
 
 export interface MonthsListProps
-  extends DefaultProps<MonthsListStylesNames>,
+  extends BoxProps,
     MonthsListSettings,
-    React.ComponentPropsWithoutRef<'table'> {
-  variant?: string;
+    StylesApiProps<MonthsListFactory>,
+    ElementProps<'table'> {
   __staticSelector?: string;
 
   /** Prevents focus shift when buttons are clicked */
@@ -43,43 +56,55 @@ export interface MonthsListProps
   size?: MantineSize;
 }
 
+export type MonthsListFactory = Factory<{
+  props: MonthsListProps;
+  ref: HTMLTableElement;
+  stylesNames: MonthsListStylesNames;
+}>;
+
 const defaultProps: Partial<MonthsListProps> = {
   monthsListFormat: 'MMM',
-  size: 'sm',
   withCellSpacing: true,
 };
 
-export const MonthsList = forwardRef<HTMLTableElement, MonthsListProps>((props, ref) => {
+export const MonthsList = factory<MonthsListFactory>((_props, ref) => {
+  const props = useProps('MonthsList', defaultProps, _props);
   const {
-    year,
+    classNames,
     className,
+    style,
+    styles,
+    unstyled,
+    vars,
+    __staticSelector,
+    year,
     monthsListFormat,
     locale,
     minDate,
     maxDate,
     getMonthControlProps,
-    classNames,
-    styles,
-    unstyled,
-    __staticSelector,
     __getControlRef,
     __onControlKeyDown,
     __onControlClick,
     __onControlMouseEnter,
     __preventFocus,
-    size,
-    variant,
     __stopPropagation,
     withCellSpacing,
+    size,
     ...others
-  } = useComponentDefaultProps('MonthsList', defaultProps, props);
-  const { classes, cx } = useStyles(null, {
-    name: ['MonthsList', __staticSelector],
+  } = props;
+
+  const getStyles = useStyles<MonthsListFactory>({
+    name: __staticSelector || 'MonthsList',
+    classes,
+    props,
+    className,
+    style,
     classNames,
     styles,
     unstyled,
-    variant,
-    size,
+    vars,
+    rootSelector: 'monthsList',
   });
 
   const ctx = useDatesContext();
@@ -95,19 +120,17 @@ export const MonthsList = forwardRef<HTMLTableElement, MonthsListProps>((props, 
       return (
         <td
           key={cellIndex}
-          className={classes.monthsListCell}
+          {...getStyles('monthsListCell')}
           data-with-spacing={withCellSpacing || undefined}
         >
           <PickerControl
-            variant={variant}
+            {...getStyles('monthsListControl')}
             size={size}
-            classNames={classNames}
-            styles={styles}
             unstyled={unstyled}
             __staticSelector={__staticSelector || 'MonthsList'}
             data-mantine-stop-propagation={__stopPropagation || undefined}
             disabled={isMonthDisabled(month, minDate, maxDate)}
-            ref={(node) => __getControlRef?.(rowIndex, cellIndex, node)}
+            ref={(node) => __getControlRef?.(rowIndex, cellIndex, node!)}
             {...controlProps}
             onKeyDown={(event) => {
               controlProps?.onKeyDown?.(event);
@@ -134,17 +157,18 @@ export const MonthsList = forwardRef<HTMLTableElement, MonthsListProps>((props, 
     });
 
     return (
-      <tr key={rowIndex} className={classes.monthsListRow}>
+      <tr key={rowIndex} {...getStyles('monthsListRow')}>
         {cells}
       </tr>
     );
   });
 
   return (
-    <Box component="table" ref={ref} className={cx(classes.monthsList, className)} {...others}>
+    <Box component="table" ref={ref} size={size} {...getStyles('monthsList')} {...others}>
       <tbody>{rows}</tbody>
     </Box>
   );
 });
 
+MonthsList.classes = classes;
 MonthsList.displayName = '@mantine/dates/MonthsList';

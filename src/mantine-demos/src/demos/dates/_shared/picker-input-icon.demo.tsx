@@ -1,22 +1,25 @@
 import React, { useState } from 'react';
 import { MantineDemo } from '@mantine/ds';
 import { IconCalendar } from '@tabler/icons-react';
+import { rem } from '@mantine/core';
 
 const getCode = (name: string) => `
 import { useState } from 'react';
+import { rem } from '@mantine/core';
+import { IconCalendar } from '@tabler/icons-react';
 import { ${name} } from '@mantine/dates';
 
 function Demo() {
   const [value, setValue] = useState<Date | null>(null);
+  const icon = <IconCalendar style={{ width: rem(18), height: rem(18) }} stroke={1.5} />;
   return (
     <${name}
-      icon={<IconCalendar size="1.1rem" stroke={1.5} />}
+      leftSection={icon}
+      leftSectionPointerEvents="none"
       label="Pick date"
       placeholder="Pick date"
       value={value}
       onChange={setValue}
-      mx="auto"
-      maw={400}
     />
   );
 }
@@ -27,13 +30,12 @@ function getDemo(Component: React.FC<any>) {
     const [value, setValue] = useState<Date | null>(null);
     return (
       <Component
-        icon={<IconCalendar size="1.1rem" stroke={1.5} />}
+        leftSection={<IconCalendar style={{ width: rem(18), height: rem(18) }} stroke={1.5} />}
+        leftSectionPointerEvents="none"
         label="Pick date"
         placeholder="Pick date"
         value={value}
         onChange={setValue}
-        mx="auto"
-        maw={400}
       />
     );
   };
@@ -41,8 +43,10 @@ function getDemo(Component: React.FC<any>) {
 
 export function getPickerInputIconDemo(Component: React.FC<any>): MantineDemo {
   return {
-    type: 'demo',
-    code: getCode(Component.displayName.replace('@mantine/dates/', '')),
+    type: 'code',
+    centered: true,
+    maxWidth: 400,
+    code: getCode(Component.displayName!.replace('@mantine/dates/', '')),
     component: getDemo(Component),
   };
 }

@@ -1,0 +1,50 @@
+@keyframes skeleton-fade {
+  0%,
+  100% {
+    opacity: 0.4;
+  }
+
+  50% {
+    opacity: 1;
+  }
+}
+
+.root {
+  height: var(--skeleton-height, auto);
+  width: var(--skeleton-width, 100%);
+  border-radius: var(--skeleton-radius, var(--mantine-radius-default));
+  position: relative;
+  transform: translateZ(0);
+  -webkit-transform: translateZ(0);
+
+  &[data-animate]::after {
+    animation: skeleton-fade 1500ms linear infinite;
+  }
+
+  &[data-visible] {
+    overflow: hidden;
+
+    &::before {
+      position: absolute;
+      content: '';
+      inset: 0;
+      z-index: 10;
+      background-color: var(--mantine-color-body);
+    }
+
+    &::after {
+      position: absolute;
+      content: '';
+      inset: 0;
+      z-index: 11;
+
+      @mixin light {
+        background-color: var(--mantine-color-gray-3);
+      }
+
+      @mixin dark {
+        background-color: var(--mantine-color-dark-4);
+      }
+    }
+  }
+}

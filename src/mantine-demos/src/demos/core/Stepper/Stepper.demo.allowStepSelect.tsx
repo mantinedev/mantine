@@ -27,35 +27,35 @@ function Demo() {
 
   return (
     <>
-      <Stepper active={active} onStepClick={setActive} breakpoint="sm">
+      <Stepper active={active} onStepClick={setActive}>
         <Stepper.Step
           label="First step"
           description="Create an account"
           allowStepSelect={shouldAllowSelectStep(0)}
         >
-          <Content>Step 1 content: Create an account</Content>
+          Step 1 content: Create an account
         </Stepper.Step>
         <Stepper.Step
           label="Second step"
           description="Verify email"
           allowStepSelect={shouldAllowSelectStep(1)}
         >
-          <Content>Step 2 content: Verify email</Content>
+          Step 2 content: Verify email
         </Stepper.Step>
         <Stepper.Step
           label="Final step"
           description="Get full access"
           allowStepSelect={shouldAllowSelectStep(2)}
         >
-          <Content>Step 3 content: Get full access</Content>
+          Step 3 content: Get full access
         </Stepper.Step>
 
         <Stepper.Completed>
-          <Content>Completed, click back button to get to previous step</Content>
+          Completed, click back button to get to previous step
         </Stepper.Completed>
       </Stepper>
 
-      <Group position="center" mt="xl">
+      <Group justify="center" mt="xl">
         <Button variant="default" onClick={() => handleStepChange(active - 1)}>
           Back
         </Button>
@@ -86,7 +86,7 @@ function Demo() {
 
   return (
     <>
-      <Stepper active={active} onStepClick={setActive} breakpoint="sm">
+      <Stepper active={active} onStepClick={setActive}>
         <Stepper.Step
           label="First step"
           description="Create an account"
@@ -114,7 +114,7 @@ function Demo() {
         </Stepper.Completed>
       </Stepper>
 
-      <Group position="center" mt="xl">
+      <Group justify="center" mt="xl">
         <Button variant="default" onClick={() => handleStepChange(active - 1)}>
           Back
         </Button>
@@ -125,7 +125,7 @@ function Demo() {
 }
 
 export const allowStepSelect: MantineDemo = {
-  type: 'demo',
+  type: 'code',
   component: Demo,
   code,
 };

@@ -1,0 +1,51 @@
+{
+  "name": "@mantine/code-highlight",
+  "description": "Code highlight with Mantine theme",
+  "version": "7.0.0-beta.7",
+  "types": "./lib/index.d.ts",
+  "module": "./esm/index.js",
+  "exports": {
+    ".": {
+      "import": "./esm/index.js",
+      "require": "./cjs/index.js",
+      "types": "./lib/index.d.ts"
+    },
+    "./styles.css": "./esm/index.css"
+  },
+  "license": "MIT",
+  "author": "Vitaly Rtishchev <rtivital@gmail.com>",
+  "sideEffects": [
+    "*.css"
+  ],
+  "homepage": "https://mantine.dev/others/prism/",
+  "repository": {
+    "url": "https://github.com/mantinedev/mantine.git",
+    "type": "git",
+    "directory": "src/mantine-prism"
+  },
+  "keywords": [
+    "react",
+    "next",
+    "nextjs",
+    "ui",
+    "components",
+    "ui-kit",
+    "library",
+    "frontend",
+    "code",
+    "highlight",
+    "syntax",
+    "syntax-highlight"
+  ],
+  "peerDependencies": {
+    "@mantine/core": "7.0.0-beta.7",
+    "@mantine/hooks": "7.0.0-beta.7",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  },
+  "dependencies": {
+    "highlight.js": "^11.7.0",
+    "clsx": "2.0.0"
+  },
+  "devDependencies": {}
+}

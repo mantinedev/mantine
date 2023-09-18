@@ -6,8 +6,13 @@
     "baseUrl": ".",
     "outDir": "lib",
     "declaration": true,
-    "declarationMap": true,
     "declarationDir": "lib",
     "composite": true
-  }
+  },
+
+  "references": [
+    { "path": "../mantine-core" },
+    { "path": "../mantine-hooks" },
+    { "path": "../mantine-store" }
+  ]
 }

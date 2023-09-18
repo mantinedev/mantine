@@ -1,90 +1,62 @@
 import React from 'react';
-import { Group, ScrollArea, Box } from '@mantine/core';
+import { ScrollArea, Box } from '@mantine/core';
 import { MantineDemo } from '@mantine/ds';
 import { Content } from './_content';
+import classes from './ScrollArea.demo.stylesApi.module.css';
 
 const code = `
 import { ScrollArea, Box } from '@mantine/core';
+import classes from './Demo.module.css';
 
 function Demo() {
   return (
-    <Group position="center">
-      <ScrollArea
-        w={300}
-        h={200}
-        type="always"
-        offsetScrollbars
-        styles={(theme) => ({
-          scrollbar: {
-            '&, &:hover': {
-              background:
-                theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[0],
-            },
-
-            '&[data-orientation="vertical"] .mantine-ScrollArea-thumb': {
-              backgroundColor: theme.colors.red[6],
-            },
-
-            '&[data-orientation="horizontal"] .mantine-ScrollArea-thumb': {
-              backgroundColor: theme.colors.blue[6],
-            },
-          },
-
-          corner: {
-            opacity: 1,
-            background: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[0],
-          },
-        })}
-      >
-        <Box w={600}>
-          {/* ...content */}
-        </Box>
-      </ScrollArea>
-    </Group>
+    <ScrollArea w={300} h={200} type="always" offsetScrollbars classNames={classes}>
+      <Box w={600}>
+        {/* ... content */}
+      </Box>
+    </ScrollArea>
   );
+}
+`;
+
+const cssCode = `
+.scrollbar {
+  &,
+  &:hover {
+    background-color: light-dark(var(--mantine-color-gray-0), var(--mantine-color-dark-6));
+  }
+
+  &[data-orientation='vertical'] .thumb {
+    background-color: var(--mantine-color-red-6);
+  }
+
+  &[data-orientation='horizontal'] .thumb {
+    background-color: var(--mantine-color-blue-6);
+  }
+}
+
+.corner {
+  background-color: light-dark(var(--mantine-color-gray-0), var(--mantine-color-dark-6));
+  opacity: 1;
 }
 `;
 
 function Demo() {
   return (
-    <Group position="center">
-      <ScrollArea
-        w={300}
-        h={200}
-        type="always"
-        offsetScrollbars
-        styles={(theme) => ({
-          scrollbar: {
-            '&, &:hover': {
-              background:
-                theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[0],
-            },
-
-            '&[data-orientation="vertical"] .mantine-ScrollArea-thumb': {
-              backgroundColor: theme.colors.red[6],
-            },
-
-            '&[data-orientation="horizontal"] .mantine-ScrollArea-thumb': {
-              backgroundColor: theme.colors.blue[6],
-            },
-          },
-
-          corner: {
-            opacity: 1,
-            background: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[0],
-          },
-        })}
-      >
-        <Box w={600}>
-          <Content />
-        </Box>
-      </ScrollArea>
-    </Group>
+    <ScrollArea w={300} h={200} type="always" offsetScrollbars classNames={classes}>
+      <Box w={600}>
+        <Content />
+      </Box>
+    </ScrollArea>
   );
 }
 
 export const stylesApi: MantineDemo = {
-  type: 'demo',
+  type: 'code',
   component: Demo,
-  code,
+  centered: true,
+  code: [
+    { fileName: 'Demo.tsx', code, language: 'tsx' },
+    { fileName: 'Demo.module.css', code: cssCode, language: 'css' },
+  ],
 };

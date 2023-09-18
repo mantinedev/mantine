@@ -12,7 +12,7 @@ function Demo() {
 
   return (
     <Box maw={400} mx="auto">
-      <Group position="center" mb={5}>
+      <Group justify="center" mb={5}>
         <Button onClick={toggle}>Toggle content</Button>
       </Group>
 
@@ -29,7 +29,7 @@ function Demo() {
 
   return (
     <Box maw={400} mx="auto">
-      <Group position="center" mb={5}>
+      <Group justify="center" mb={5}>
         <Button onClick={toggle}>Toggle content</Button>
       </Group>
 
@@ -50,7 +50,7 @@ function Demo() {
 }
 
 export const usage: MantineDemo = {
-  type: 'demo',
+  type: 'code',
   code,
   component: Demo,
 };

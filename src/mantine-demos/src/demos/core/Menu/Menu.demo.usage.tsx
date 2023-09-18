@@ -1,11 +1,18 @@
 import React from 'react';
-import { Group, Menu } from '@mantine/core';
+import { Menu } from '@mantine/core';
 import { MantineDemo } from '@mantine/ds';
 import { DemoMenuItems } from './_menu-items';
 
 const code = `
-import { Menu, Button, Text } from '@mantine/core';
-import { IconSettings, IconSearch, IconPhoto, IconMessageCircle, IconTrash, IconArrowsLeftRight } from '@tabler/icons-react';
+import { Menu, Button, Text, rem } from '@mantine/core';
+import {
+  IconSettings,
+  IconSearch,
+  IconPhoto,
+  IconMessageCircle,
+  IconTrash,
+  IconArrowsLeftRight,
+} from '@tabler/icons-react';
 
 function Demo() {
   return (
@@ -16,12 +23,22 @@ function Demo() {
 
       <Menu.Dropdown>
         <Menu.Label>Application</Menu.Label>
-        <Menu.Item icon={<IconSettings size={14} />}>Settings</Menu.Item>
-        <Menu.Item icon={<IconMessageCircle size={14} />}>Messages</Menu.Item>
-        <Menu.Item icon={<IconPhoto size={14} />}>Gallery</Menu.Item>
+        <Menu.Item leftSection={<IconSettings style={{ width: rem(14), height: rem(14) }} />}>
+          Settings
+        </Menu.Item>
+        <Menu.Item leftSection={<IconMessageCircle style={{ width: rem(14), height: rem(14) }} />}>
+          Messages
+        </Menu.Item>
+        <Menu.Item leftSection={<IconPhoto style={{ width: rem(14), height: rem(14) }} />}>
+          Gallery
+        </Menu.Item>
         <Menu.Item
-          icon={<IconSearch size={14} />}
-          rightSection={<Text size="xs" color="dimmed">⌘K</Text>}
+          leftSection={<IconSearch style={{ width: rem(14), height: rem(14) }} />}
+          rightSection={
+            <Text size="xs" c="dimmed">
+              ⌘K
+            </Text>
+          }
         >
           Search
         </Menu.Item>
@@ -29,8 +46,17 @@ function Demo() {
         <Menu.Divider />
 
         <Menu.Label>Danger zone</Menu.Label>
-        <Menu.Item icon={<IconArrowsLeftRight size={14} />}>Transfer my data</Menu.Item>
-        <Menu.Item color="red" icon={<IconTrash size={14} />}>Delete my account</Menu.Item>
+        <Menu.Item
+          leftSection={<IconArrowsLeftRight style={{ width: rem(14), height: rem(14) }} />}
+        >
+          Transfer my data
+        </Menu.Item>
+        <Menu.Item
+          color="red"
+          leftSection={<IconTrash style={{ width: rem(14), height: rem(14) }} />}
+        >
+          Delete my account
+        </Menu.Item>
       </Menu.Dropdown>
     </Menu>
   );
@@ -39,16 +65,15 @@ function Demo() {
 
 function Demo() {
   return (
-    <Group position="center">
-      <Menu shadow="md" width={200} withinPortal>
-        <DemoMenuItems />
-      </Menu>
-    </Group>
+    <Menu shadow="md" width={200} withinPortal>
+      <DemoMenuItems />
+    </Menu>
   );
 }
 
 export const usage: MantineDemo = {
-  type: 'demo',
+  type: 'code',
   code,
   component: Demo,
+  centered: true,
 };

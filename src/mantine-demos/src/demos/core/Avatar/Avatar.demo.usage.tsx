@@ -32,7 +32,7 @@ function Demo() {
 
 function Demo() {
   return (
-    <Group position="center">
+    <Group justify="center">
       <Avatar src={avatars[0]} alt="it's me" />
       <Avatar radius="xl" />
       <Avatar color="cyan" radius="xl">
@@ -46,7 +46,7 @@ function Demo() {
 }
 
 export const usage: MantineDemo = {
-  type: 'demo',
+  type: 'code',
   code,
   component: Demo,
 };

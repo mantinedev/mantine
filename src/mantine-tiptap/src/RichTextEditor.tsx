@@ -1,38 +1,48 @@
-/* eslint-disable react/no-unused-prop-types */
-import React, { useMemo, forwardRef } from 'react';
-import { Box, useComponentDefaultProps, DefaultProps, Selectors } from '@mantine/core';
+import React, { useMemo } from 'react';
+import {
+  Box,
+  BoxProps,
+  StylesApiProps,
+  factory,
+  ElementProps,
+  useProps,
+  useStyles,
+  Factory,
+} from '@mantine/core';
 import { Editor } from '@tiptap/react';
-import { ForwardRefWithStaticComponents } from '@mantine/utils';
-import { RichTextEditorProvider } from './RichTextEditor.context';
-import * as controls from './controls';
-import { Content, ContentStylesNames } from './Content/Content';
-import { Control, ControlStylesNames } from './controls/Control/Control';
-import { ControlsGroup, ControlsGroupStylesNames } from './controls/ControlsGroup/ControlsGroup';
-import { Toolbar, ToolbarStylesNames } from './Toolbar/Toolbar';
-import { LinkControlStylesNames } from './controls/LinkControl/LinkControl';
 import { DEFAULT_LABELS, RichTextEditorLabels } from './labels';
-import useStyles from './RichTextEditor.styles';
+import { RichTextEditorProvider } from './RichTextEditor.context';
+import { RichTextEditorToolbar } from './RichTextEditorToolbar/RichTextEditorToolbar';
+import { RichTextEditorControlsGroup } from './RichTextEditorControlsGroup/RichTextEditorControlsGroup';
+import { RichTextEditorContent } from './RichTextEditorContent/RichTextEditorContent';
+import { RichTextEditorControl } from './RichTextEditorControl/RichTextEditorControl';
+import * as controls from './RichTextEditorControl';
+import classes from './RichTextEditor.module.css';
 
 export type RichTextEditorStylesNames =
-  | Selectors<typeof useStyles>
-  | ContentStylesNames
-  | ControlStylesNames
-  | ControlsGroupStylesNames
-  | ToolbarStylesNames
-  | LinkControlStylesNames;
+  | 'linkEditorSave'
+  | 'linkEditorDropdown'
+  | 'root'
+  | 'content'
+  | 'typographyStylesProvider'
+  | 'control'
+  | 'controlsGroup'
+  | 'toolbar'
+  | 'linkEditor'
+  | 'linkEditorInput'
+  | 'linkEditorExternalControl';
 
 export interface RichTextEditorProps
-  extends DefaultProps<RichTextEditorStylesNames>,
-    React.ComponentPropsWithoutRef<'div'> {
-  variant?: string;
-
+  extends BoxProps,
+    StylesApiProps<RichTextEditorFactory>,
+    ElementProps<'div'> {
   /** Tiptap editor instance */
   editor: Editor | null;
 
-  /** Determines whether code highlight styles should be added, true by default */
+  /** Determines whether code highlight styles should be added, `true` by default */
   withCodeHighlightStyles?: boolean;
 
-  /** Determines whether typography styles should be added, true by default */
+  /** Determines whether typography styles should be added, `true` by default */
   withTypographyStyles?: boolean;
 
   /** Labels that are used in controls */
@@ -42,18 +52,15 @@ export interface RichTextEditorProps
   children: React.ReactNode;
 }
 
-const defaultProps: Partial<RichTextEditorProps> = {
-  withCodeHighlightStyles: true,
-  withTypographyStyles: true,
-};
-
-type RichTextEditorComponent = ForwardRefWithStaticComponents<
-  RichTextEditorProps,
-  {
-    Content: typeof Content;
-    Control: typeof Control;
-    ControlsGroup: typeof ControlsGroup;
-    Toolbar: typeof Toolbar;
+export type RichTextEditorFactory = Factory<{
+  props: RichTextEditorProps;
+  ref: HTMLDivElement;
+  stylesNames: RichTextEditorStylesNames;
+  staticComponents: {
+    Content: typeof RichTextEditorContent;
+    Control: typeof RichTextEditorControl;
+    Toolbar: typeof RichTextEditorToolbar;
+    ControlsGroup: typeof RichTextEditorControlsGroup;
     Bold: typeof controls.BoldControl;
     Italic: typeof controls.ItalicControl;
     Strikethrough: typeof controls.StrikeThroughControl;
@@ -67,7 +74,7 @@ type RichTextEditorComponent = ForwardRefWithStaticComponents<
     H6: typeof controls.H6Control;
     BulletList: typeof controls.BulletListControl;
     OrderedList: typeof controls.OrderedListControl;
-    Link: typeof controls.LinkControl;
+    Link: typeof controls.RichTextEditorLinkControl;
     Unlink: typeof controls.UnlinkControl;
     Blockquote: typeof controls.BlockquoteControl;
     AlignLeft: typeof controls.AlignLeftControl;
@@ -78,38 +85,46 @@ type RichTextEditorComponent = ForwardRefWithStaticComponents<
     Subscript: typeof controls.SubscriptControl;
     Code: typeof controls.CodeControl;
     CodeBlock: typeof controls.CodeBlockControl;
-    ColorPicker: typeof controls.ColorPickerControl;
-    Color: typeof controls.ColorControl;
+    ColorPicker: typeof controls.RichTextEditorColorPickerControl;
+    Color: typeof controls.RichTextEditorColorControl;
     Highlight: typeof controls.HighlightControl;
     Hr: typeof controls.HrControl;
     UnsetColor: typeof controls.UnsetColorControl;
-  }
->;
+  };
+}>;
 
-export const RichTextEditor: RichTextEditorComponent = forwardRef<
-  HTMLDivElement,
-  RichTextEditorProps
->((props, ref) => {
+const defaultProps: Partial<RichTextEditorProps> = {
+  withCodeHighlightStyles: true,
+  withTypographyStyles: true,
+};
+
+export const RichTextEditor = factory<RichTextEditorFactory>((_props, ref) => {
+  const props = useProps('RichTextEditor', defaultProps, _props);
   const {
-    editor,
-    children,
+    classNames,
     className,
-    labels,
+    style,
+    styles,
+    unstyled,
+    vars,
+    editor,
     withCodeHighlightStyles,
     withTypographyStyles,
-    classNames,
-    styles,
-    unstyled,
-    variant,
+    labels,
+    children,
     ...others
-  } = useComponentDefaultProps('RichTextEditor', defaultProps, props);
+  } = props;
 
-  const { classes, cx } = useStyles(null, {
+  const getStyles = useStyles<RichTextEditorFactory>({
     name: 'RichTextEditor',
+    classes,
+    props,
+    className,
+    style,
     classNames,
     styles,
     unstyled,
-    variant,
+    vars,
   });
 
   const mergedLabels = useMemo(() => ({ ...DEFAULT_LABELS, ...labels }), [labels]);
@@ -118,27 +133,28 @@ export const RichTextEditor: RichTextEditorComponent = forwardRef<
     <RichTextEditorProvider
       value={{
         editor,
+        getStyles,
         labels: mergedLabels,
         withCodeHighlightStyles,
         withTypographyStyles,
-        classNames,
-        styles,
         unstyled,
-        variant,
       }}
     >
-      <Box className={cx(classes.root, className)} {...others} ref={ref}>
+      <Box {...getStyles('root')} {...others} ref={ref}>
         {children}
       </Box>
     </RichTextEditorProvider>
   );
-}) as any;
+});
+
+RichTextEditor.classes = classes;
+RichTextEditor.displayName = '@mantine/tiptap/RichTextEditor';
 
 // Generic components
-RichTextEditor.Content = Content;
-RichTextEditor.Control = Control;
-RichTextEditor.ControlsGroup = ControlsGroup;
-RichTextEditor.Toolbar = Toolbar;
+RichTextEditor.Content = RichTextEditorContent;
+RichTextEditor.Control = RichTextEditorControl;
+RichTextEditor.Toolbar = RichTextEditorToolbar;
+RichTextEditor.ControlsGroup = RichTextEditorControlsGroup;
 
 // Controls components
 RichTextEditor.Bold = controls.BoldControl;
@@ -154,7 +170,7 @@ RichTextEditor.H5 = controls.H5Control;
 RichTextEditor.H6 = controls.H6Control;
 RichTextEditor.BulletList = controls.BulletListControl;
 RichTextEditor.OrderedList = controls.OrderedListControl;
-RichTextEditor.Link = controls.LinkControl;
+RichTextEditor.Link = controls.RichTextEditorLinkControl;
 RichTextEditor.Unlink = controls.UnlinkControl;
 RichTextEditor.Blockquote = controls.BlockquoteControl;
 RichTextEditor.AlignLeft = controls.AlignLeftControl;
@@ -165,10 +181,8 @@ RichTextEditor.Superscript = controls.SuperscriptControl;
 RichTextEditor.Subscript = controls.SubscriptControl;
 RichTextEditor.Code = controls.CodeControl;
 RichTextEditor.CodeBlock = controls.CodeBlockControl;
-RichTextEditor.ColorPicker = controls.ColorPickerControl;
-RichTextEditor.Color = controls.ColorControl;
+RichTextEditor.ColorPicker = controls.RichTextEditorColorPickerControl;
+RichTextEditor.Color = controls.RichTextEditorColorControl;
 RichTextEditor.Highlight = controls.HighlightControl;
 RichTextEditor.Hr = controls.HrControl;
 RichTextEditor.UnsetColor = controls.UnsetColorControl;
-
-RichTextEditor.displayName = '@mantine/tiptap/RichTextEditor';

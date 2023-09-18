@@ -82,6 +82,6 @@ export function getIncrementedVersion(
   } catch (e) {
     logger.error('Failed to parse core package.json');
     process.exit(1);
-    return null;
+    return '';
   }
 }

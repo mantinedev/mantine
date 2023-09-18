@@ -8,25 +8,25 @@ import { Table } from '@mantine/core';
 
 function Demo() {
   const rows = elements.map((element) => (
-    <tr key={element.name}>
-      <td>{element.position}</td>
-      <td>{element.name}</td>
-      <td>{element.symbol}</td>
-      <td>{element.mass}</td>
-    </tr>
+    <Table.Tr key={element.name}>
+      <Table.Td>{element.position}</Table.Td>
+      <Table.Td>{element.name}</Table.Td>
+      <Table.Td>{element.symbol}</Table.Td>
+      <Table.Td>{element.mass}</Table.Td>
+    </Table.Tr>
   ));
 
   return (
     <Table>
-      <thead>
-        <tr>
-          <th>Element position</th>
-          <th>Element name</th>
-          <th>Symbol</th>
-          <th>Atomic mass</th>
-        </tr>
-      </thead>
-      <tbody>{rows}</tbody>
+      <Table.Thead>
+        <Table.Tr>
+          <Table.Th>Element position</Table.Th>
+          <Table.Th>Element name</Table.Th>
+          <Table.Th>Symbol</Table.Th>
+          <Table.Th>Atomic mass</Table.Th>
+        </Table.Tr>
+      </Table.Thead>
+      <Table.Tbody>{rows}</Table.Tbody>
     </Table>
   );
 }
@@ -34,31 +34,31 @@ function Demo() {
 
 export function Demo() {
   const rows = elements.map((element) => (
-    <tr key={element.name}>
-      <td>{element.position}</td>
-      <td>{element.name}</td>
-      <td>{element.symbol}</td>
-      <td>{element.mass}</td>
-    </tr>
+    <Table.Tr key={element.name}>
+      <Table.Td>{element.position}</Table.Td>
+      <Table.Td>{element.name}</Table.Td>
+      <Table.Td>{element.symbol}</Table.Td>
+      <Table.Td>{element.mass}</Table.Td>
+    </Table.Tr>
   ));
 
   return (
     <Table>
-      <thead>
-        <tr>
-          <th>Element position</th>
-          <th>Element name</th>
-          <th>Symbol</th>
-          <th>Atomic mass</th>
-        </tr>
-      </thead>
-      <tbody>{rows}</tbody>
+      <Table.Thead>
+        <Table.Tr>
+          <Table.Th>Element position</Table.Th>
+          <Table.Th>Element name</Table.Th>
+          <Table.Th>Symbol</Table.Th>
+          <Table.Th>Atomic mass</Table.Th>
+        </Table.Tr>
+      </Table.Thead>
+      <Table.Tbody>{rows}</Table.Tbody>
     </Table>
   );
 }
 
 export const usage: MantineDemo = {
-  type: 'demo',
+  type: 'code',
   code,
   component: Demo,
 };

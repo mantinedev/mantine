@@ -13,7 +13,7 @@ function Demo() {
   });
 
   return (
-    <Group position="center">
+    <Group justify="center">
       <Button
         onClick={() =>
           scrollIntoView({
@@ -24,12 +24,11 @@ function Demo() {
         Scroll to target
       </Button>
       <Box
-        sx={(theme) => ({
+        style={{
           width: '100%',
           height: '50vh',
-          backgroundColor:
-            theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[2],
-        })}
+          backgroundColor: 'var(--mantine-color-blue-light)',
+        }}
       />
       <Text ref={targetRef}>Hello there</Text>
     </Group>
@@ -43,7 +42,7 @@ function Demo() {
   });
 
   return (
-    <Group position="center">
+    <Group justify="center">
       <Button
         onClick={() =>
           scrollIntoView({
@@ -54,12 +53,11 @@ function Demo() {
         Scroll to target
       </Button>
       <Box
-        sx={(theme) => ({
+        style={{
           width: '100%',
           height: '50vh',
-          backgroundColor:
-            theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[2],
-        })}
+          backgroundColor: 'var(--mantine-color-blue-light)',
+        }}
       />
       <Text ref={targetRef}>Hello there</Text>
     </Group>
@@ -67,7 +65,7 @@ function Demo() {
 }
 
 export const useScrollIntoViewUsage: MantineDemo = {
-  type: 'demo',
+  type: 'code',
   code,
   component: Demo,
 };

@@ -12,18 +12,10 @@ function Demo() {
 
   return (
     <>
-      <Group position="center">
-        <Box
-          ref={ref}
-          w={300}
-          h={180}
-          sx={(theme) => ({
-            backgroundColor:
-              theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[1],
-          })}
-        />
+      <Group justify="center">
+        <Box ref={ref} w={300} h={180} bg="var(--mantine-color-blue-light)" />
       </Group>
-      <Text align="center">
+      <Text ta="center">
         Mouse coordinates <Code>{\`{ x: \${x}, y: \${y} }\`}</Code>
       </Text>
     </>
@@ -36,18 +28,10 @@ function Demo() {
 
   return (
     <>
-      <Group position="center">
-        <Box
-          ref={ref}
-          w={300}
-          h={180}
-          sx={(theme) => ({
-            backgroundColor:
-              theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[1],
-          })}
-        />
+      <Group justify="center">
+        <Box ref={ref} w={300} h={180} bg="var(--mantine-color-blue-light)" />
       </Group>
-      <Text align="center" mt="sm">
+      <Text ta="center" mt="sm">
         Mouse coordinates <Code>{`{ x: ${x}, y: ${y} }`}</Code>
       </Text>
     </>
@@ -55,7 +39,7 @@ function Demo() {
 }
 
 export const useMouseRef: MantineDemo = {
-  type: 'demo',
+  type: 'code',
   code,
   component: Demo,
 };

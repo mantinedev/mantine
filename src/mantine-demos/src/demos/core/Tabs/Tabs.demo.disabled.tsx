@@ -35,9 +35,8 @@ function Demo() {
     </Tabs>
   );
 }
-
 export const disabled: MantineDemo = {
-  type: 'demo',
+  type: 'code',
   component: Demo,
   code,
 };

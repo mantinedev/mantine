@@ -86,7 +86,9 @@ const { argv }: { argv: any } = yargs(hideBin(process.argv))
     }
 
     await Promise.all(
-      packages.map((p) => publishPackage({ path: p.path, name: p.packageJson.name, tag: argv.tag }))
+      packages.map((p) =>
+        publishPackage({ path: p!.path, name: p!.packageJson.name, tag: argv.tag })
+      )
     );
 
     logger.success('All packages were published successfully');

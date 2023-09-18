@@ -1,13 +1,13 @@
 import React from 'react';
 import { MantineDemo } from '@mantine/ds';
-import { Button, ButtonGroupProps, Group } from '@mantine/core';
+import { Button } from '@mantine/core';
 
-const codeTemplate = (props: string) => `
+const code = `
 import { Button } from '@mantine/core';
 
 function Demo() {
   return (
-    <Button.Group${props}>
+    <Button.Group{{props}}>
       <Button variant="default">First</Button>
       <Button variant="default">Second</Button>
       <Button variant="default">Third</Button>
@@ -16,32 +16,28 @@ function Demo() {
 }
 `;
 
-function Wrapper(props: ButtonGroupProps) {
+function Wrapper(props: any) {
   return (
-    <Group position="center">
-      <Button.Group {...props}>
-        <Button variant="default">First</Button>
-        <Button variant="default">Second</Button>
-        <Button variant="default">Third</Button>
-      </Button.Group>
-    </Group>
+    <Button.Group {...props}>
+      <Button variant="default">First</Button>
+      <Button variant="default">Second</Button>
+      <Button variant="default">Third</Button>
+    </Button.Group>
   );
 }
 
 export const group: MantineDemo = {
   type: 'configurator',
   component: Wrapper,
-  codeTemplate,
-  configurator: [
+  code,
+  centered: true,
+  controls: [
     {
-      name: 'orientation',
       type: 'segmented',
-      data: [
-        { value: 'horizontal', label: 'Horizontal' },
-        { value: 'vertical', label: 'Vertical' },
-      ],
+      prop: 'orientation',
+      data: ['horizontal', 'vertical'],
       initialValue: 'horizontal',
-      defaultValue: 'horizontal',
+      libraryValue: 'horizontal',
     },
   ],
 };

@@ -53,5 +53,5 @@ export function useFocusWithin<T extends HTMLElement = any>({
     return undefined;
   }, [handleFocusIn, handleFocusOut]);
 
-  return { ref, focused };
+  return { ref: ref as React.MutableRefObject<T>, focused };
 }

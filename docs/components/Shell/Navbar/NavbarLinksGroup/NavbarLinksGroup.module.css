@@ -1,0 +1,196 @@
+.group {
+  margin-bottom: 0;
+  padding-left: var(--mantine-spacing-md);
+  padding-right: var(--mantine-spacing-md);
+
+  &[data-opened] {
+    margin-bottom: calc(var(--mantine-spacing-xl) * 1.2);
+  }
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  width: calc(100% + var(--mantine-spacing-md));
+  height: rem(32px);
+  cursor: pointer;
+
+  @mixin light {
+    color: var(--mantine-color-gray-7);
+  }
+
+  @mixin dark {
+    color: var(--mantine-color-white);
+  }
+}
+
+.chevron {
+  width: rem(15px);
+  height: rem(15px);
+  margin-right: var(--mantine-spacing-md);
+  transition: transform 150ms ease;
+
+  @mixin rtl {
+    margin-right: 0;
+    margin-left: var(--mantine-spacing-md);
+  }
+
+  &[data-collapsed] {
+    transform: rotate(-90deg);
+  }
+}
+
+.title {
+  user-select: none;
+  font-weight: 700;
+  font-family: var(--docs-font-primary);
+  line-height: 1;
+  padding-top: rem(4px);
+  letter-spacing: rem(0.5px);
+  word-spacing: rem(1px);
+  text-transform: uppercase;
+  font-size: var(--mantine-font-size-xs);
+}
+
+.category {
+  padding-top: rem(12px);
+}
+
+.categoryTitle {
+  position: relative;
+  padding-left: rem(23px);
+  margin-left: rem(7px);
+  margin-bottom: rem(5px);
+  border-left: rem(1px) solid;
+  height: rem(34px);
+  display: flex;
+  align-items: center;
+  font-size: var(--mantine-font-size-xs);
+  border-top-right-radius: var(--mantine-radius-sm);
+  border-bottom-right-radius: var(--mantine-radius-sm);
+  text-transform: capitalize;
+
+  @mixin light {
+    background-color: var(--mantine-color-gray-0);
+    border-color: var(--mantine-color-gray-3);
+    color: var(--mantine-color-gray-6);
+  }
+
+  @mixin dark {
+    background-color: var(--mantine-color-dark-7);
+    border-color: var(--mantine-color-dark-6);
+    color: var(--mantine-color-dark-2);
+  }
+
+  @mixin rtl {
+    padding-left: 0;
+    padding-right: rem(23px);
+    border-left: 0;
+    border-right: rem(1px) solid;
+    margin-left: 0;
+    margin-right: rem(7px);
+    border-radius: 0;
+    border-top-left-radius: var(--mantine-radius-sm);
+    border-bottom-left-radius: var(--mantine-radius-sm);
+
+    @mixin light {
+      border-color: var(--mantine-color-gray-3);
+    }
+
+    @mixin dark {
+      border-color: var(--mantine-color-dark-6);
+    }
+  }
+
+  &::before {
+    content: '';
+    position: absolute;
+    bottom: rem(-5px);
+    left: rem(-1px);
+    height: rem(5px);
+    width: rem(1px);
+
+    @mixin light {
+      background-color: var(--mantine-color-gray-3);
+    }
+
+    @mixin dark {
+      background-color: var(--mantine-color-dark-6);
+    }
+
+    @mixin rtl {
+      left: unset;
+      right: rem(-1px);
+    }
+  }
+}
+
+.categoryIcon {
+  margin-right: var(--mantine-spacing-xs);
+  width: rem(14px);
+  height: rem(14px);
+
+  @mixin rtl {
+    margin-right: 0;
+    margin-left: var(--mantine-spacing-xs);
+  }
+}
+
+.link {
+  display: block;
+  border-left: rem(1px) solid;
+  padding-left: rem(23px);
+  padding-right: var(--mantine-spacing-md);
+  margin-left: rem(7px);
+  height: rem(34px);
+  line-height: rem(34px);
+  border-top-right-radius: var(--mantine-radius-sm);
+  border-bottom-right-radius: var(--mantine-radius-sm);
+  font-size: var(--mantine-font-size-sm);
+  user-select: none;
+
+  @mixin light {
+    border-color: var(--mantine-color-gray-3);
+    color: var(--mantine-color-gray-7);
+  }
+
+  @mixin dark {
+    border-color: var(--mantine-color-dark-6);
+    color: var(--mantine-color-dark-1);
+  }
+
+  @mixin rtl {
+    padding-left: var(--mantine-spacing-md);
+    padding-right: rem(23px);
+    border-left: 0;
+    border-right: rem(1px) solid;
+    margin-left: 0;
+    margin-right: rem(7px);
+    border-radius: 0;
+    border-top-left-radius: var(--mantine-radius-sm);
+    border-bottom-left-radius: var(--mantine-radius-sm);
+
+    @mixin light {
+      border-color: var(--mantine-color-gray-3);
+    }
+
+    @mixin dark {
+      border-color: var(--mantine-color-dark-6);
+    }
+  }
+
+  &[data-active] {
+    border-color: var(--mantine-color-blue-5) !important;
+    font-weight: 500;
+
+    @mixin light {
+      color: var(--mantine-color-blue-8);
+      background-color: var(--mantine-color-blue-0);
+    }
+
+    @mixin dark {
+      color: var(--mantine-color-blue-1);
+      background-color: rgba(24, 100, 171, 0.45);
+    }
+  }
+}

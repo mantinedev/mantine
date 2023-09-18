@@ -28,7 +28,7 @@ function Demo() {
 }
 
 export const columns: MantineDemo = {
-  type: 'demo',
+  type: 'code',
   code,
   component: Demo,
 };

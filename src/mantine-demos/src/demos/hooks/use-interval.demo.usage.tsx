@@ -54,7 +54,7 @@ function Demo() {
 }
 
 export const useIntervalDemo: MantineDemo = {
-  type: 'demo',
+  type: 'code',
   code,
   component: Demo,
 };

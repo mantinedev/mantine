@@ -12,8 +12,6 @@ function Demo() {
       defaultValue={new Date()}
       label="Pick date and time"
       placeholder="Pick date and time"
-      maw={400}
-      mx="auto"
     />
   );
 }
@@ -26,14 +24,14 @@ function Demo() {
       defaultValue={new Date()}
       label="Pick date and time"
       placeholder="Pick date and time"
-      maw={400}
-      mx="auto"
     />
   );
 }
 
 export const clearable: MantineDemo = {
-  type: 'demo',
+  type: 'code',
+  centered: true,
+  maxWidth: 400,
   component: Demo,
   code,
 };

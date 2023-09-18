@@ -50,5 +50,5 @@ export type MantineModals = MantineModalsOverwritten['modals'];
 
 export type MantineModal = keyof MantineModals;
 
-export const ModalsContext = createContext<ModalsContextProps>(null);
+export const ModalsContext = createContext<ModalsContextProps>(null as any);
 ModalsContext.displayName = '@mantine/modals/ModalsContext';

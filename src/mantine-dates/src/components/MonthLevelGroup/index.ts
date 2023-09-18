@@ -1,2 +1,6 @@
 export { MonthLevelGroup } from './MonthLevelGroup';
-export type { MonthLevelGroupProps, MonthLevelGroupStylesNames } from './MonthLevelGroup';
+export type {
+  MonthLevelGroupFactory,
+  MonthLevelGroupProps,
+  MonthLevelGroupStylesNames,
+} from './MonthLevelGroup';

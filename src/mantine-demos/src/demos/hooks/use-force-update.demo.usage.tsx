@@ -11,7 +11,7 @@ function Demo() {
   const forceUpdate = useForceUpdate();
 
   return (
-    <Group position="center">
+    <Group justify="center">
       <Text>{randomId()}</Text>
       <Button onClick={forceUpdate}>Force update</Button>
     </Group>
@@ -23,7 +23,7 @@ function Demo() {
   const forceUpdate = useForceUpdate();
 
   return (
-    <Group position="center">
+    <Group justify="center">
       <Text>{randomId()}</Text>
       <Button onClick={forceUpdate}>Force update</Button>
     </Group>
@@ -31,7 +31,7 @@ function Demo() {
 }
 
 export const useForceUpdateDemo: MantineDemo = {
-  type: 'demo',
+  type: 'code',
   code,
   component: Demo,
 };

@@ -1,13 +1,23 @@
 {
   "name": "@mantine/core",
   "description": "React components library focused on usability, accessibility and developer experience",
-  "version": "6.0.21",
-  "main": "cjs/index.js",
-  "module": "esm/index.js",
-  "types": "lib/index.d.ts",
+  "version": "7.0.0-beta.7",
+  "types": "./lib/index.d.ts",
+  "module": "./esm/index.js",
+  "exports": {
+    ".": {
+      "import": "./esm/index.js",
+      "require": "./cjs/index.js",
+      "types": "./lib/index.d.ts"
+    },
+    "./styles.css": "./esm/index.css",
+    "./styles/*": "./esm/styles/*"
+  },
   "license": "MIT",
   "author": "Vitaly Rtishchev <rtivital@gmail.com>",
-  "sideEffects": false,
+  "sideEffects": [
+    "*.css"
+  ],
   "homepage": "https://mantine.dev/",
   "repository": {
     "url": "https://github.com/mantinedev/mantine.git",
@@ -23,21 +33,20 @@
     "ui-kit",
     "library",
     "frontend",
-    "design",
-    "emotion"
+    "design"
   ],
   "peerDependencies": {
-    "@mantine/hooks": "6.0.21",
-    "react": ">=16.8.0",
-    "react-dom": ">=16.8.0"
+    "@mantine/hooks": "7.0.0-beta.7",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
   },
   "dependencies": {
-    "@mantine/utils": "6.0.21",
-    "@mantine/styles": "6.0.21",
-    "@radix-ui/react-scroll-area": "1.0.2",
-    "react-textarea-autosize": "8.3.4",
-    "react-remove-scroll": "^2.5.5",
-    "@floating-ui/react": "^0.19.1"
+    "@floating-ui/react": "^0.24.8",
+    "clsx": "2.0.0",
+    "react-textarea-autosize": "8.5.2",
+    "react-remove-scroll": "^2.5.6",
+    "type-fest": "^3.13.1",
+    "react-number-format": "^5.2.2"
   },
   "devDependencies": {}
 }

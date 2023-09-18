@@ -4,9 +4,9 @@ import { isYearDisabled } from '../is-year-disabled/is-year-disabled';
 
 export function getYearInTabOrder(
   years: Date[][],
-  minDate: Date,
-  maxDate: Date,
-  getYearControlProps: (year: Date) => Partial<PickerControlProps>
+  minDate: Date | undefined,
+  maxDate: Date | undefined,
+  getYearControlProps: ((year: Date) => Partial<PickerControlProps>) | undefined
 ) {
   const enabledYears = years
     .flat()

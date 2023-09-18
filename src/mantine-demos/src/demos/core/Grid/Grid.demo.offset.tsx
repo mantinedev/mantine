@@ -30,7 +30,7 @@ function Demo() {
 }
 
 export const offset: MantineDemo = {
-  type: 'demo',
+  type: 'code',
   code,
   component: Demo,
 };

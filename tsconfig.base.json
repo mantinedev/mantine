@@ -21,6 +21,7 @@
     "skipLibCheck": true,
     "noEmitOnError": true,
     "allowJs": true,
+    "strict": true,
     "baseUrl": "."
   }
 }

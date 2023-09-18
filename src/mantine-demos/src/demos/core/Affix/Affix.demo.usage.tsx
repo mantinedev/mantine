@@ -14,12 +14,12 @@ function Demo() {
 
   return (
     <>
-      <Text align="center">Affix is located at the bottom of the screen, scroll to see it</Text>
-      <Affix position={{ bottom: rem(20), right: rem(20) }}>
+      <Text ta="center">Affix is located at the bottom of the screen, scroll to see it</Text>
+      <Affix position={{ bottom: 20, right: 20 }}>
         <Transition transition="slide-up" mounted={scroll.y > 0}>
           {(transitionStyles) => (
             <Button
-              leftIcon={<IconArrowUp size="1rem" />}
+              leftSection={<IconArrowUp style={{ width: rem(16), height: rem(16) }} />}
               style={transitionStyles}
               onClick={() => scrollTo({ y: 0 })}
             >
@@ -38,12 +38,12 @@ function Demo() {
 
   return (
     <>
-      <Text align="center">Affix is located at the bottom of the screen, scroll to see it</Text>
-      <Affix position={{ bottom: rem(20), right: rem(20) }}>
+      <Text ta="center">Affix is located at the bottom of the screen, scroll to see it</Text>
+      <Affix position={{ bottom: 20, right: 20 }}>
         <Transition transition="slide-up" mounted={scroll.y > 0}>
           {(transitionStyles) => (
             <Button
-              leftIcon={<IconArrowUp size="1rem" />}
+              leftSection={<IconArrowUp style={{ width: rem(16), height: rem(16) }} />}
               style={transitionStyles}
               onClick={() => scrollTo({ y: 0 })}
             >
@@ -57,7 +57,7 @@ function Demo() {
 }
 
 export const usage: MantineDemo = {
-  type: 'demo',
+  type: 'code',
   code,
   component: Demo,
 };

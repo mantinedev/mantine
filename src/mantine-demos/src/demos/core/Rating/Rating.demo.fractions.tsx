@@ -45,7 +45,7 @@ function Demo() {
 }
 
 export const fractions: MantineDemo = {
-  type: 'demo',
+  type: 'code',
   component: Demo,
   code,
 };

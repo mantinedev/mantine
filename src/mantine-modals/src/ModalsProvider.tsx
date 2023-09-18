@@ -139,7 +139,7 @@ export function ModalsProvider({ children, modalProps, labels, modals }: ModalsP
   useModalsEvents({
     openModal,
     openConfirmModal,
-    openContextModal: ({ modal, ...payload }) => openContextModal(modal, payload),
+    openContextModal: ({ modal, ...payload }: any) => openContextModal(modal, payload),
     closeModal,
     closeContextModal: closeModal,
     closeAllModals: closeAll,
@@ -160,7 +160,7 @@ export function ModalsProvider({ children, modalProps, labels, modals }: ModalsP
     switch (currentModal?.type) {
       case 'context': {
         const { innerProps, ...rest } = currentModal.props;
-        const ContextModal = modals[currentModal.ctx];
+        const ContextModal = modals![currentModal.ctx];
 
         return {
           modalProps: rest,
@@ -208,7 +208,7 @@ export function ModalsProvider({ children, modalProps, labels, modals }: ModalsP
         {...modalProps}
         {...currentModalProps}
         opened={state.modals.length > 0}
-        onClose={() => closeModal(state.current.id)}
+        onClose={() => closeModal(state.current!.id)}
       >
         {content}
       </Modal>

@@ -9,3 +9,4 @@ export { thumbSize } from './Slider.demo.thumbSize';
 export { thumbChildren } from './Slider.demo.thumbChildren';
 export { scale } from './Slider.demo.scale';
 export { inverted } from './Slider.demo.inverted';
+export { stylesApi } from './Slider.demo.stylesApi';

@@ -21,7 +21,7 @@ export interface ReorderPayload {
 
 type Rule<Value, Values> = (value: Value, values: Values, path: string) => React.ReactNode;
 
-type FormRule<Value, Values> = NonNullable<Value> extends Array<infer ListValue>
+export type FormRule<Value, Values> = NonNullable<Value> extends Array<infer ListValue>
   ?
       | Partial<{
           [Key in keyof ListValue]: ListValue[Key] extends Array<infer NestedListItem>
@@ -48,12 +48,12 @@ export type SetFormStatus = React.Dispatch<React.SetStateAction<FormStatus>>;
 export type OnSubmit<Values, TransformValues extends _TransformValues<Values>> = (
   handleSubmit: (
     values: ReturnType<TransformValues>,
-    event: React.FormEvent<HTMLFormElement>
+    event: React.FormEvent<HTMLFormElement> | undefined
   ) => void,
   handleValidationFailure?: (
     errors: FormErrors,
     values: Values,
-    event: React.FormEvent<HTMLFormElement>
+    event: React.FormEvent<HTMLFormElement> | undefined
   ) => void
 ) => (event?: React.FormEvent<HTMLFormElement>) => void;
 
@@ -113,7 +113,7 @@ export type _TransformValues<Values> = (values: Values) => unknown;
 
 export interface UseFormInput<
   Values,
-  TransformValues extends _TransformValues<Values> = (values: Values) => Values
+  TransformValues extends _TransformValues<Values> = (values: Values) => Values,
 > {
   initialValues?: Values;
   initialErrors?: FormErrors;
@@ -128,7 +128,7 @@ export interface UseFormInput<
 
 export interface UseFormReturnType<
   Values,
-  TransformValues extends _TransformValues<Values> = (values: Values) => Values
+  TransformValues extends _TransformValues<Values> = (values: Values) => Values,
 > {
   values: Values;
   errors: FormErrors;
@@ -159,7 +159,7 @@ export interface UseFormReturnType<
 
 export type UseForm<
   Values = Record<string, unknown>,
-  TransformValues extends _TransformValues<Values> = (values: Values) => Values
+  TransformValues extends _TransformValues<Values> = (values: Values) => Values,
 > = (input?: UseFormInput<Values, TransformValues>) => UseFormReturnType<Values, TransformValues>;
 
 export type TransformedValues<Form extends UseFormReturnType<any>> = Parameters<

@@ -4,4 +4,4 @@ export { getMonthDays } from './get-month-days/get-month-days';
 export { isSameMonth } from './is-same-month/is-same-month';
 
 export { Month } from './Month';
-export type { MonthProps, MonthSettings, MonthStylesNames } from './Month';
+export type { MonthProps, MonthSettings, MonthStylesNames, MonthFactory } from './Month';

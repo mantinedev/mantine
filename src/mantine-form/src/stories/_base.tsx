@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Button, Group, Code, rem } from '@mantine/core';
 
-export function FormBase({ children, form }) {
+export function FormBase({ children, form }: any) {
   const [values, setValues] = useState({});
   return (
     <form
@@ -11,7 +11,7 @@ export function FormBase({ children, form }) {
     >
       {children}
 
-      <Group mt="xl" mb="xl" position="right">
+      <Group mt="xl" mb="xl" justify="right">
         <Button type="reset" variant="default">
           Reset
         </Button>

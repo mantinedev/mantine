@@ -11,8 +11,6 @@ function Demo() {
       dropdownType="modal"
       label="Pick date and time"
       placeholder="Pick date and time"
-      maw={400}
-      mx="auto"
     />
   );
 }
@@ -24,14 +22,14 @@ function Demo() {
       dropdownType="modal"
       label="Pick date and time"
       placeholder="Pick date and time"
-      maw={400}
-      mx="auto"
     />
   );
 }
 
 export const modal: MantineDemo = {
-  type: 'demo',
+  type: 'code',
+  centered: true,
+  maxWidth: 400,
   component: Demo,
   code,
 };

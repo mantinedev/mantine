@@ -15,7 +15,7 @@ export function TimelineBase({ noIcon, ...props }: Partial<TimelineProps> & { no
         bullet={displayIcon ? <IconGitBranch size="0.8rem" /> : null}
         title="New branch"
       >
-        <Text color="dimmed" size="sm">
+        <Text c="dimmed" size="sm">
           You&apos;ve created new branch{' '}
           <Text variant="link" component="span" inherit>
             fix-notifications
@@ -28,7 +28,7 @@ export function TimelineBase({ noIcon, ...props }: Partial<TimelineProps> & { no
       </Timeline.Item>
 
       <Timeline.Item bullet={displayIcon ? <IconGitCommit size="0.8rem" /> : null} title="Commits">
-        <Text color="dimmed" size="sm">
+        <Text c="dimmed" size="sm">
           You&apos;ve pushed 23 commits to{' '}
           <Text variant="link" component="span" inherit>
             fix-notifications
@@ -45,7 +45,7 @@ export function TimelineBase({ noIcon, ...props }: Partial<TimelineProps> & { no
         bullet={displayIcon ? <IconGitPullRequest size="0.8rem" /> : null}
         lineVariant="dashed"
       >
-        <Text color="dimmed" size="sm">
+        <Text c="dimmed" size="sm">
           You&apos;ve submitted a pull request{' '}
           <Text variant="link" component="span" inherit>
             Fix incorrect notification message (#187)
@@ -60,7 +60,7 @@ export function TimelineBase({ noIcon, ...props }: Partial<TimelineProps> & { no
         title="Code review"
         bullet={displayIcon ? <IconMessageDots size="0.8rem" /> : null}
       >
-        <Text color="dimmed" size="sm">
+        <Text c="dimmed" size="sm">
           <Text variant="link" component="span" inherit>
             Robert Gluesticker
           </Text>{' '}

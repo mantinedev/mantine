@@ -14,17 +14,16 @@ function Demo() {
   >();
 
   return (
-    <Group position="center">
-      <Paper ref={scrollableRef} h={300} sx={{ overflowY: 'scroll', flex: 1 }}>
+    <Group justify="center">
+      <Paper ref={scrollableRef} h={300} style={{ overflowY: 'scroll', flex: 1 }}>
         <Box pt={260} pb={450}>
           <Paper
             ref={targetRef}
             p="xl"
-            sx={(theme) => ({
-              backgroundColor:
-                theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[2],
+            style={{
+              backgroundColor: 'var(--mantine-color-blue-light)',
               width: '100%',
-            })}
+            }}
           >
             <Text>Scroll me into view</Text>
           </Paper>
@@ -43,17 +42,16 @@ function Demo() {
   >();
 
   return (
-    <Group position="center">
-      <Paper ref={scrollableRef} h={300} sx={{ overflowY: 'scroll', flex: 1 }}>
+    <Group justify="center">
+      <Paper ref={scrollableRef} h={300} style={{ overflowY: 'scroll', flex: 1 }}>
         <Box pt={260} pb={450}>
           <Paper
             ref={targetRef}
             p="xl"
-            sx={(theme) => ({
-              backgroundColor:
-                theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[2],
+            style={{
+              backgroundColor: 'var(--mantine-color-blue-light)',
               width: '100%',
-            })}
+            }}
           >
             <Text>Scroll me into view</Text>
           </Paper>
@@ -65,7 +63,7 @@ function Demo() {
 }
 
 export const useScrollIntoViewParent: MantineDemo = {
-  type: 'demo',
+  type: 'code',
   code,
   component: Demo,
 };

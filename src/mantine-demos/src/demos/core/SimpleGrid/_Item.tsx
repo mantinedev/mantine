@@ -1,27 +1,15 @@
 import React from 'react';
-import { Text, useMantineTheme } from '@mantine/core';
+import cx from 'clsx';
+import { Box, Text, BoxProps, ElementProps } from '@mantine/core';
+import classes from './_item.module.css';
 
-export function GridItem(props: React.ComponentPropsWithoutRef<'div'>) {
-  const theme = useMantineTheme();
+interface GridItemProps extends BoxProps, ElementProps<'div'> {}
 
+export function GridItem({ className, children, ...others }: GridItemProps) {
   return (
-    <div
-      {...props}
-      style={{
-        backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.blue[0],
-        padding: theme.spacing.md,
-        ...props.style,
-      }}
-    >
-      <Text
-        color={theme.colorScheme === 'dark' ? 'dimmed' : 'blue'}
-        size="xl"
-        weight={700}
-        align="center"
-      >
-        {props.children}
-      </Text>
-    </div>
+    <Box className={cx(classes.item, className)} {...others}>
+      <Text className={classes.label}>{children}</Text>
+    </Box>
   );
 }
 

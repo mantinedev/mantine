@@ -1,8 +1,6 @@
-import { CarouselOrientation } from './types';
-
 interface Options {
   dir: 'rtl' | 'ltr';
-  orientation: CarouselOrientation;
+  orientation: 'horizontal' | 'vertical' | undefined;
   direction: 'next' | 'previous';
 }
 

@@ -1,4 +1,4 @@
-export const setScrollParam = ({ axis, parent, distance }) => {
+export const setScrollParam = ({ axis, parent, distance }: any) => {
   if (!parent && typeof document === 'undefined') {
     return;
   }

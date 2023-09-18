@@ -1,5 +1,5 @@
 import React from 'react';
-import { Group, Badge, em } from '@mantine/core';
+import { Badge, em } from '@mantine/core';
 import { MantineDemo } from '@mantine/ds';
 import { useMediaQuery } from '@mantine/hooks';
 
@@ -21,16 +21,15 @@ function Demo() {
   const matches = useMediaQuery(`(min-width: ${em(900)})`);
 
   return (
-    <Group position="center">
-      <Badge color={matches ? 'teal' : 'red'} variant="filled">
-        Breakpoint {matches ? 'matches' : 'does not match'}
-      </Badge>
-    </Group>
+    <Badge color={matches ? 'teal' : 'red'} variant="filled">
+      Breakpoint {matches ? 'matches' : 'does not match'}
+    </Badge>
   );
 }
 
 export const useMediaQueryDemo: MantineDemo = {
-  type: 'demo',
+  type: 'code',
   code,
   component: Demo,
+  centered: true,
 };

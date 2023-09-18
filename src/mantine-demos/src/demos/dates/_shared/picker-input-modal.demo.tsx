@@ -14,8 +14,6 @@ function Demo() {
       placeholder="Pick date"
       value={value}
       onChange={setValue}
-      mx="auto"
-      maw={400}
     />
   );
 }
@@ -31,8 +29,6 @@ function getDemo(Component: React.FC<any>) {
         placeholder="Pick date"
         value={value}
         onChange={setValue}
-        mx="auto"
-        maw={400}
       />
     );
   };
@@ -40,8 +36,10 @@ function getDemo(Component: React.FC<any>) {
 
 export function getPickerInputModalDemo(Component: React.FC<any>): MantineDemo {
   return {
-    type: 'demo',
-    code: getCode(Component.displayName.replace('@mantine/dates/', '')),
+    type: 'code',
+    centered: true,
+    maxWidth: 400,
+    code: getCode(Component.displayName!.replace('@mantine/dates/', '')),
     component: getDemo(Component),
   };
 }

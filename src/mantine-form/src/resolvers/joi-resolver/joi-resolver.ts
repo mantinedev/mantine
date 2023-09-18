@@ -25,7 +25,7 @@ export function joiResolver(schema: any, options?: any) {
       return {};
     }
 
-    const results = {};
+    const results: Record<string, any> = {};
     parsed.error.details.forEach((error) => {
       results[error.path.join('.')] = error.message;
     });

@@ -1,0 +1,25 @@
+.root {
+  --dialog-size-xs: rem(160px);
+  --dialog-size-sm: rem(200px);
+  --dialog-size-md: rem(340px);
+  --dialog-size-lg: rem(400px);
+  --dialog-size-xl: rem(500px);
+  --dialog-size: var(--dialog-size-md);
+
+  position: relative;
+  width: var(--dialog-size);
+  max-width: calc(100vw - var(--mantine-spacing-xl) * 2);
+  min-height: rem(50px);
+}
+
+.closeButton {
+  position: absolute;
+  top: calc(var(--mantine-spacing-md) / 2);
+  right: var(--_close-button-right, calc(var(--mantine-spacing-md) / 2));
+  left: var(--_close-button-left, auto);
+
+  @mixin rtl {
+    --_close-button-right: auto;
+    --_close-button-left: calc(var(--mantine-spacing-md) / 2);
+  }
+}

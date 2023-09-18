@@ -22,11 +22,11 @@ function Demo() {
 
   return (
     <>
-      <Group position="center">
+      <Group justify="center">
         <Button onClick={() => setHash(randomId())}>Set hash to random string</Button>
       </Group>
 
-      <Text align="center" mt="md">
+      <Text ta="center" mt="md">
         Current hash: <Code>{hash}</Code>
       </Text>
     </>
@@ -34,7 +34,7 @@ function Demo() {
 }
 
 export const useHashDemo: MantineDemo = {
-  type: 'demo',
+  type: 'code',
   code,
   component: Demo,
 };

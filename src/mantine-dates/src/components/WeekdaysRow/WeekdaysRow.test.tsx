@@ -1,14 +1,7 @@
-import 'dayjs/locale/ru';
 import React from 'react';
-import { render, screen } from '@testing-library/react';
-import {
-  itSupportsSystemProps,
-  patchConsoleError,
-  itSupportsProviderVariant,
-  itSupportsProviderSize,
-} from '@mantine/tests';
-import { WeekdaysRow, WeekdaysRowProps } from './WeekdaysRow';
-import { itSupportsWeekdaysProps } from '../../tests';
+import { render, tests, patchConsoleError, screen } from '@mantine/tests';
+import { datesTests } from '@mantine/dates-tests';
+import { WeekdaysRow, WeekdaysRowProps, WeekdaysRowStylesNames } from './WeekdaysRow';
 
 const defaultProps: WeekdaysRowProps = {};
 
@@ -26,17 +19,20 @@ describe('@mantine/dates/WeekdaysRow', () => {
   beforeAll(patchConsoleError);
   afterAll(patchConsoleError.release);
 
-  itSupportsProviderVariant(WeekdaysRow, defaultProps, 'WeekdaysRow', 'weekdaysRow');
-  itSupportsProviderSize(WeekdaysRow, defaultProps, 'WeekdaysRow', 'weekdaysRow');
-  itSupportsSystemProps({
+  tests.itSupportsSystemProps<WeekdaysRowProps, WeekdaysRowStylesNames>({
     component: WeekdaysRow,
     props: defaultProps,
+    styleProps: true,
+    extend: true,
+    variant: true,
+    size: true,
+    classes: true,
     refType: HTMLTableRowElement,
     displayName: '@mantine/dates/WeekdaysRow',
-    providerName: 'WeekdaysRow',
+    stylesApiSelectors: ['weekdaysRow', 'weekday'],
   });
 
-  itSupportsWeekdaysProps(Wrapper, defaultProps);
+  datesTests.itSupportsWeekdaysProps({ component: WeekdaysRow, props: defaultProps });
 
   it('supports changing cell component', () => {
     render(<Wrapper cellComponent="td" />);
@@ -51,29 +47,6 @@ describe('@mantine/dates/WeekdaysRow', () => {
 
   it('supports __staticSelector', () => {
     render(<Wrapper __staticSelector="Month" />);
-    expect(screen.getByRole('row')).toHaveClass(
-      'mantine-WeekdaysRow-weekdaysRow',
-      'mantine-Month-weekdaysRow '
-    );
-  });
-
-  it('supports styles api (styles)', () => {
-    render(
-      <Wrapper
-        styles={{ weekday: { borderColor: '#CECECE' }, weekdaysRow: { borderColor: '#FFEECD' } }}
-      />
-    );
-    expect(screen.getAllByRole('columnheader')[0]).toHaveStyle({ borderColor: '#CECECE' });
-    expect(screen.getByRole('row')).toHaveStyle({ borderColor: '#FFEECD' });
-  });
-
-  it('supports styles api (classNames)', () => {
-    render(
-      <Wrapper
-        classNames={{ weekday: 'test-weekday-class', weekdaysRow: 'test-weekdays-row-class' }}
-      />
-    );
-    expect(screen.getAllByRole('columnheader')[0]).toHaveClass('test-weekday-class');
-    expect(screen.getByRole('row')).toHaveClass('test-weekdays-row-class');
+    expect(screen.getByRole('row')).toHaveClass('mantine-Month-weekdaysRow ');
   });
 });

@@ -1,7 +1,6 @@
 import React from 'react';
-import { MultiSelect } from '@mantine/core';
 import { MantineDemo } from '@mantine/ds';
-import { data } from './_data';
+import { MultiSelect } from '@mantine/core';
 
 const code = `
 import { MultiSelect } from '@mantine/core';
@@ -9,11 +8,10 @@ import { MultiSelect } from '@mantine/core';
 function Demo() {
   return (
     <MultiSelect
-      data={['React', 'Angular', 'Svelte', 'Vue', 'Riot', 'Next.js', 'Blitz.js']}
-      label="Your favorite frameworks/libraries"
-      placeholder="Pick all that you like"
+      label="Your favorite libraries"
+      placeholder="Pick value"
+      data={['React', 'Angular', 'Vue', 'Svelte']}
       searchable
-      nothingFound="Nothing found"
     />
   );
 }
@@ -22,19 +20,18 @@ function Demo() {
 function Demo() {
   return (
     <MultiSelect
-      maw={400}
-      mx="auto"
-      data={data}
-      label="Your favorite frameworks/libraries"
-      placeholder="Pick all that you like"
+      label="Your favorite libraries"
+      placeholder="Pick value"
+      data={['React', 'Angular', 'Vue', 'Svelte']}
       searchable
-      nothingFound="Nothing found"
     />
   );
 }
 
 export const searchable: MantineDemo = {
-  type: 'demo',
-  code,
+  type: 'code',
   component: Demo,
+  code,
+  maxWidth: 340,
+  centered: true,
 };

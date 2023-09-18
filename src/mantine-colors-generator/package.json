@@ -1,0 +1,37 @@
+{
+  "name": "@mantine/colors-generator",
+  "version": "7.0.0-beta.7",
+  "types": "./lib/index.d.ts",
+  "module": "./esm/index.js",
+  "exports": {
+    ".": {
+      "import": "./esm/index.js",
+      "require": "./cjs/index.js",
+      "types": "./lib/index.d.ts"
+    }
+  },
+  "license": "MIT",
+  "author": "Vitaly Rtishchev <rtivital@gmail.com>",
+  "sideEffects": false,
+  "homepage": "https://mantine.dev",
+  "repository": {
+    "url": "https://github.com/mantinedev/mantine.git",
+    "type": "git",
+    "directory": "src/mantine-colors-generator"
+  },
+  "keywords": [
+    "react",
+    "next",
+    "nextjs",
+    "library",
+    "frontend",
+    "react-hooks",
+    "hooks",
+    "state"
+  ],
+  "peerDependencies": {
+    "chroma-js": "^2.4.2"
+  },
+  "dependencies": {},
+  "devDependencies": {}
+}

@@ -1,0 +1,31 @@
+.title {
+  margin-top: calc(var(--mantine-spacing-xl) * 1.2);
+  margin-bottom: var(--mantine-spacing-md);
+  word-break: break-word;
+  font-family: var(--docs-font-primary);
+  font-weight: 700;
+
+  @mixin light {
+    color: var(--mantine-color-black);
+  }
+
+  @mixin dark {
+    color: var(--mantine-color-white);
+  }
+
+  &[data-h1] {
+    font-weight: 900;
+    font-size: rem(40px);
+    margin-top: 0;
+  }
+}
+
+.link {
+  text-decoration: none;
+  color: inherit;
+}
+
+.offset {
+  position: relative;
+  top: rem(-62px);
+}

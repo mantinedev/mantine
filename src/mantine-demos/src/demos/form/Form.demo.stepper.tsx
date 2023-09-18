@@ -56,7 +56,7 @@ function Demo() {
 
   return (
     <>
-      <Stepper active={active} breakpoint="sm">
+      <Stepper active={active}>
         <Stepper.Step label="First step" description="Profile settings">
           <TextInput label="Username" placeholder="Username" {...form.getInputProps('username')} />
           <PasswordInput
@@ -89,7 +89,7 @@ function Demo() {
         </Stepper.Completed>
       </Stepper>
 
-      <Group position="right" mt="xl">
+      <Group justify="flex-end" mt="xl">
         {active !== 0 && (
           <Button variant="default" onClick={prevStep}>
             Back
@@ -150,7 +150,7 @@ function Demo() {
 
   return (
     <>
-      <Stepper active={active} breakpoint="sm">
+      <Stepper active={active}>
         <Stepper.Step label="First step" description="Profile settings">
           <TextInput label="Username" placeholder="Username" {...form.getInputProps('username')} />
           <PasswordInput
@@ -183,7 +183,7 @@ function Demo() {
         </Stepper.Completed>
       </Stepper>
 
-      <Group position="right" mt="xl">
+      <Group justify="flex-end" mt="xl">
         {active !== 0 && (
           <Button variant="default" onClick={prevStep}>
             Back
@@ -196,7 +196,7 @@ function Demo() {
 }
 
 export const stepper: MantineDemo = {
-  type: 'demo',
+  type: 'code',
   component: Demo,
   code,
 };

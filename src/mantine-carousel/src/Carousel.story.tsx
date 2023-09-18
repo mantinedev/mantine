@@ -1,6 +1,7 @@
 import React, { useRef, useState } from 'react';
 import { Button, Modal } from '@mantine/core';
 import Autoplay from 'embla-carousel-autoplay';
+import type { EmblaCarouselType } from 'embla-carousel-react';
 import { Carousel } from './Carousel';
 import { useAnimationOffsetEffect } from './use-animation-offset-effect';
 
@@ -19,6 +20,16 @@ export function Usage() {
   return (
     <div style={{ padding: 40, maxWidth: 500 }}>
       <Carousel slideSize="70%" slideGap="md" height={200}>
+        {slides}
+      </Carousel>
+    </div>
+  );
+}
+
+export function Unstyled() {
+  return (
+    <div style={{ padding: 40, maxWidth: 500 }}>
+      <Carousel slideSize="70%" slideGap="md" height={200} unstyled>
         {slides}
       </Carousel>
     </div>
@@ -98,7 +109,7 @@ export function DynamicSlides() {
 export function AnimationOffsetEffect() {
   const TRANSITION_DURATION = 200;
   const [opened, setOpened] = useState(false);
-  const [embla, setEmbla] = useState(null);
+  const [embla, setEmbla] = useState<EmblaCarouselType | null>(null);
 
   useAnimationOffsetEffect(embla, TRANSITION_DURATION);
 
@@ -144,10 +155,10 @@ export function AnimationOffsetEffect() {
 export function PercentageHeight() {
   return (
     <div style={{ height: 400, display: 'flex' }}>
-      <Carousel withIndicators height="100%" sx={{ flex: 1 }}>
-        <Carousel.Slide sx={{ background: 'blue' }}>1</Carousel.Slide>
-        <Carousel.Slide sx={{ background: 'red' }}>2</Carousel.Slide>
-        <Carousel.Slide sx={{ background: 'orange' }}>3</Carousel.Slide>
+      <Carousel withIndicators height="100%" style={{ flex: 1 }}>
+        <Carousel.Slide style={{ background: 'blue' }}>1</Carousel.Slide>
+        <Carousel.Slide style={{ background: 'red' }}>2</Carousel.Slide>
+        <Carousel.Slide style={{ background: 'orange' }}>3</Carousel.Slide>
       </Carousel>
     </div>
   );

@@ -1,12 +1,7 @@
 import React from 'react';
 import lodash from 'lodash';
-import { render, screen } from '@testing-library/react';
-import {
-  itSupportsSystemProps,
-  itSupportsProviderVariant,
-  itSupportsProviderSize,
-} from '@mantine/tests';
-import { PickerControl, PickerControlProps } from './PickerControl';
+import { render, tests, screen } from '@mantine/tests';
+import { PickerControl, PickerControlProps, PickerControlStylesNames } from './PickerControl';
 
 const defaultProps: PickerControlProps = {};
 
@@ -25,16 +20,20 @@ function validateDataAttribute(prop: string) {
 }
 
 describe('@mantine/dates/PickerControl', () => {
-  itSupportsSystemProps({
+  tests.itSupportsSystemProps<PickerControlProps, PickerControlStylesNames>({
     component: PickerControl,
     props: defaultProps,
+    styleProps: true,
+    children: true,
+    extend: true,
+    variant: true,
+    size: true,
+    classes: true,
     refType: HTMLButtonElement,
-    providerName: 'PickerControl',
     displayName: '@mantine/dates/PickerControl',
+    stylesApiSelectors: ['pickerControl'],
   });
 
-  itSupportsProviderVariant(PickerControl, defaultProps, 'PickerControl', 'pickerControl');
-  itSupportsProviderSize(PickerControl, defaultProps, 'PickerControl', 'pickerControl');
   validateDataAttribute('inRange');
   validateDataAttribute('firstInRange');
   validateDataAttribute('lastInRange');
@@ -68,19 +67,5 @@ describe('@mantine/dates/PickerControl', () => {
   it('supports custom __staticSelector', () => {
     render(<PickerControl {...defaultProps} __staticSelector="Calendar" />);
     expect(screen.getByRole('button')).toHaveClass('mantine-Calendar-pickerControl');
-  });
-
-  it('supports styles api (styles)', () => {
-    render(
-      <PickerControl {...defaultProps} styles={{ pickerControl: { borderColor: '#999124' } }} />
-    );
-
-    expect(screen.getByRole('button')).toHaveStyle({ borderColor: '#999124' });
-  });
-
-  it('supports styles api (classNames)', () => {
-    render(<PickerControl {...defaultProps} classNames={{ pickerControl: 'test-control' }} />);
-
-    expect(screen.getByRole('button')).toHaveClass('test-control');
   });
 });

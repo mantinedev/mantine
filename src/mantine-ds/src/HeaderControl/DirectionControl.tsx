@@ -1,23 +1,19 @@
 import React from 'react';
-import { rem } from '@mantine/core';
+import { rem, useDirection } from '@mantine/core';
 import { IconTextDirectionLtr, IconTextDirectionRtl } from '@tabler/icons-react';
 import { HeaderControl } from './HeaderControl';
 
-interface DirectionControlProps {
-  direction: 'rtl' | 'ltr';
-  toggleDirection(): void;
-}
-
-export function DirectionControl({ direction, toggleDirection }: DirectionControlProps) {
+export function DirectionControl() {
+  const { toggleDirection, dir } = useDirection();
   return (
     <HeaderControl
       onClick={() => toggleDirection()}
-      tooltip={`${direction === 'ltr' ? 'RTL' : 'LTR'} direction`}
+      tooltip={`${dir === 'ltr' ? 'RTL' : 'LTR'} direction`}
     >
-      {direction === 'rtl' ? (
-        <IconTextDirectionLtr size={rem(22)} stroke={1.5} />
+      {dir === 'rtl' ? (
+        <IconTextDirectionLtr style={{ width: rem(22), height: rem(22) }} stroke={1.5} />
       ) : (
-        <IconTextDirectionRtl size={rem(22)} stroke={1.5} />
+        <IconTextDirectionRtl style={{ width: rem(22), height: rem(22) }} stroke={1.5} />
       )}
     </HeaderControl>
   );

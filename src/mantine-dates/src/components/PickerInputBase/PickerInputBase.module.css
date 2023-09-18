@@ -1,0 +1,8 @@
+.input {
+  cursor: var(--_cursor, pointer);
+  line-height: unset;
+
+  &[data-read-only] {
+    --_cursor: default;
+  }
+}

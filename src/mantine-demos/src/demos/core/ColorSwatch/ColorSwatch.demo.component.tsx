@@ -1,50 +1,46 @@
 import React, { useState } from 'react';
 import { MantineDemo } from '@mantine/ds';
-import { useMantineTheme, ColorSwatch, Group, CheckIcon, rem } from '@mantine/core';
+import { ColorSwatch, CheckIcon, rem } from '@mantine/core';
 
 const code = `
 import { useState } from 'react';
-import { ColorSwatch, Group, useMantineTheme, CheckIcon, rem } from '@mantine/core';
+import { ColorSwatch, CheckIcon, rem } from '@mantine/core';
 
 function Demo() {
-  const theme = useMantineTheme();
   const [checked, setChecked] = useState(true);
 
   return (
-    <Group position="center" spacing="xs">
-      <ColorSwatch
-        component="button"
-        color={theme.colors.grape[6]}
-        onClick={() => setChecked((c) => !c)}
-        sx={{ color: '#fff', cursor: 'pointer' }}
-      >
-        {checked && <CheckIcon width={rem(10)} />}
-      </ColorSwatch>
-    </Group>
+    <ColorSwatch
+      component="button"
+      color="var(--mantine-color-grape-6)"
+      onClick={() => setChecked((c) => !c)}
+      style={{ color: '#fff', cursor: 'pointer' }}
+    >
+      {checked && <CheckIcon style={{ width: rem(12), height: rem(12) }} />}
+    </ColorSwatch>
   );
 }
 `;
 
 function Demo() {
-  const theme = useMantineTheme();
   const [checked, setChecked] = useState(true);
 
   return (
-    <Group position="center" spacing="xs">
-      <ColorSwatch
-        component="button"
-        color={theme.colors.grape[6]}
-        onClick={() => setChecked((c) => !c)}
-        sx={{ color: '#fff', cursor: 'pointer' }}
-      >
-        {checked && <CheckIcon width={rem(10)} />}
-      </ColorSwatch>
-    </Group>
+    <ColorSwatch
+      component="button"
+      color="var(--mantine-color-grape-6)"
+      onClick={() => setChecked((c) => !c)}
+      c="white"
+      style={{ cursor: 'pointer' }}
+    >
+      {checked && <CheckIcon style={{ width: rem(12), height: rem(12) }} />}
+    </ColorSwatch>
   );
 }
 
 export const component: MantineDemo = {
-  type: 'demo',
+  type: 'code',
   code,
+  centered: true,
   component: Demo,
 };

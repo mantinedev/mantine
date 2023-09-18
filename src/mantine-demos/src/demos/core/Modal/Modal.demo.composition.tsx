@@ -1,11 +1,11 @@
 import React from 'react';
-import { Modal, Group, Button } from '@mantine/core';
+import { Modal, Button } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import { MantineDemo } from '@mantine/ds';
 
 const code = `
 import { useDisclosure } from '@mantine/hooks';
-import { Modal, Button, Group } from '@mantine/core';
+import { Modal, Button } from '@mantine/core';
 
 function Demo() {
   const [opened, { open, close }] = useDisclosure(false);
@@ -23,9 +23,7 @@ function Demo() {
         </Modal.Content>
       </Modal.Root>
 
-      <Group position="center">
-        <Button onClick={open}>Open modal</Button>
-      </Group>
+      <Button onClick={open}>Open modal</Button>
     </>
   );
 }
@@ -47,15 +45,14 @@ function Demo() {
         </Modal.Content>
       </Modal.Root>
 
-      <Group position="center">
-        <Button onClick={open}>Open modal</Button>
-      </Group>
+      <Button onClick={open}>Open modal</Button>
     </>
   );
 }
 
 export const composition: MantineDemo = {
-  type: 'demo',
+  type: 'code',
   code,
+  centered: true,
   component: Demo,
 };

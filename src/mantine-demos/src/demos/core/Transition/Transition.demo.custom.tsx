@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
-import { useClickOutside } from '@mantine/hooks';
 import { MantineDemo } from '@mantine/ds';
-import { Transition, Paper, Button, useMantineTheme, rem } from '@mantine/core';
+import { useClickOutside } from '@mantine/hooks';
+import { Transition, Paper, Button, Box } from '@mantine/core';
 
 const code = `
 import { useState } from 'react';
-import { Transition, Paper, Button, rem } from '@mantine/core';
 import { useClickOutside } from '@mantine/hooks';
+import { Transition, Paper, Button, Box } from '@mantine/core';
 
 const scaleY = {
   in: { opacity: 1, transform: 'scaleY(1)' },
@@ -20,28 +20,36 @@ function Demo() {
   const clickOutsideRef = useClickOutside(() => setOpened(false));
 
   return (
-    <div
-      style={{
-        maxWidth: rem(200),
-        position: 'relative',
-        display: 'flex',
-        justifyContent: 'center',
-        margin: 'auto',
-      }}
+    <Box
+      maw={200}
+      pos="relative"
+      style={{ display: 'flex', justifyContent: 'center', margin: 'auto' }}
     >
       <Button onClick={() => setOpened(true)}>Open dropdown</Button>
-      <Transition mounted={opened} transition={scaleY} duration={200} timingFunction="ease">
-        {(styles) => (
+      <Transition
+        mounted={opened}
+        transition={scaleY}
+        duration={200}
+        timingFunction="ease"
+        keepMounted
+      >
+        {(transitionStyle) => (
           <Paper
             shadow="md"
-            style={{ ...styles, position: 'absolute', top: 0, left: 0, right: 0, height: rem(120) }}
+            p="xl"
+            h={120}
+            pos="absolute"
+            top={0}
+            left={0}
+            right={0}
             ref={clickOutsideRef}
+            style={{ ...transitionStyle, zIndex: 1 }}
           >
             Dropdown
           </Paper>
         )}
       </Transition>
-    </div>
+    </Box>
   );
 }`;
 
@@ -55,17 +63,12 @@ const scaleY = {
 export function Demo() {
   const [opened, setOpened] = useState(false);
   const clickOutsideRef = useClickOutside(() => setOpened(false));
-  const theme = useMantineTheme();
 
   return (
-    <div
-      style={{
-        maxWidth: rem(200),
-        position: 'relative',
-        display: 'flex',
-        justifyContent: 'center',
-        margin: 'auto',
-      }}
+    <Box
+      maw={200}
+      pos="relative"
+      style={{ display: 'flex', justifyContent: 'center', margin: 'auto' }}
     >
       <Button onClick={() => setOpened(true)}>Open dropdown</Button>
       <Transition
@@ -75,31 +78,28 @@ export function Demo() {
         timingFunction="ease"
         keepMounted
       >
-        {(styles) => (
+        {(transitionStyle) => (
           <Paper
             shadow="md"
+            p="xl"
+            h={120}
+            pos="absolute"
+            top={0}
+            left={0}
+            right={0}
             ref={clickOutsideRef}
-            style={{
-              ...styles,
-              position: 'absolute',
-              top: 0,
-              left: 0,
-              right: 0,
-              height: rem(120),
-              padding: theme.spacing.xl,
-              backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.white,
-            }}
+            style={{ ...transitionStyle, zIndex: 1 }}
           >
             Dropdown
           </Paper>
         )}
       </Transition>
-    </div>
+    </Box>
   );
 }
 
 export const custom: MantineDemo = {
-  type: 'demo',
+  type: 'code',
   code,
   component: Demo,
 };

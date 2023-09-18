@@ -19,7 +19,7 @@ function Demo() {
 }
 
 export const unstyled: MantineDemo = {
-  type: 'demo',
+  type: 'code',
   component: Demo,
   code,
 };

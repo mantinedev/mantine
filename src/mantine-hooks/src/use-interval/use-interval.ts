@@ -12,7 +12,7 @@ export function useInterval(fn: () => void, interval: number) {
   const start = () => {
     setActive((old) => {
       if (!old && !intervalRef.current) {
-        intervalRef.current = window.setInterval(fnRef.current, interval);
+        intervalRef.current = window.setInterval(fnRef.current!, interval);
       }
       return true;
     });

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Group, Button, Text } from '@mantine/core';
+import { Button, Text } from '@mantine/core';
 import { modals } from '@mantine/modals';
 import { MantineDemo } from '@mantine/ds';
 import { notifications } from '@mantine/notifications';
@@ -57,16 +57,15 @@ function Demo() {
     });
 
   return (
-    <Group position="center">
-      <Button onClick={openDeleteModal} color="red">
-        Delete account
-      </Button>
-    </Group>
+    <Button onClick={openDeleteModal} color="red">
+      Delete account
+    </Button>
   );
 }
 
 export const confirmCustomize: MantineDemo = {
-  type: 'demo',
+  type: 'code',
+  centered: true,
   component: Demo,
   code,
 };

@@ -8,11 +8,11 @@ import { Text } from '@mantine/core';
 function Demo() {
   return (
     <>
-      <Text fz="xs">Extra small text</Text>
-      <Text fz="sm">Small text</Text>
-      <Text fz="md">Default text</Text>
-      <Text fz="lg">Large text</Text>
-      <Text fz="xl">Extra large text</Text>
+      <Text size="xs">Extra small text</Text>
+      <Text size="sm">Small text</Text>
+      <Text size="md">Default text</Text>
+      <Text size="lg">Large text</Text>
+      <Text size="xl">Extra large text</Text>
       <Text fw={500}>Semibold</Text>
       <Text fw={700}>Bold</Text>
       <Text fs="italic">Italic</Text>
@@ -33,11 +33,11 @@ function Demo() {
 function Demo() {
   return (
     <>
-      <Text fz="xs">Extra small text</Text>
-      <Text fz="sm">Small text</Text>
-      <Text fz="md">Default text</Text>
-      <Text fz="lg">Large text</Text>
-      <Text fz="xl">Extra large text</Text>
+      <Text size="xs">Extra small text</Text>
+      <Text size="sm">Small text</Text>
+      <Text size="md">Default text</Text>
+      <Text size="lg">Large text</Text>
+      <Text size="xl">Extra large text</Text>
       <Text fw={500}>Semibold</Text>
       <Text fw={700}>Bold</Text>
       <Text fs="italic">Italic</Text>
@@ -55,7 +55,7 @@ function Demo() {
 }
 
 export const usage: MantineDemo = {
-  type: 'demo',
+  type: 'code',
   code,
   component: Demo,
 };

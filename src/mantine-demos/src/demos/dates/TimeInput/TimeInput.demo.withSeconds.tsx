@@ -6,16 +6,18 @@ const code = `
 import { TimeInput } from '@mantine/dates';
 
 function Demo() {
-  return <TimeInput withSeconds maw={400} mx="auto" />;
+  return <TimeInput withSeconds />;
 }
 `;
 
 function Demo() {
-  return <TimeInput withSeconds maw={400} mx="auto" />;
+  return <TimeInput withSeconds />;
 }
 
 export const withSeconds: MantineDemo = {
-  type: 'demo',
+  type: 'code',
+  centered: true,
+  maxWidth: 340,
   component: Demo,
   code,
 };

@@ -57,7 +57,7 @@ function Demo() {
   });
 
   return (
-    <Box maw={320} mx="auto">
+    <Box maw={340} mx="auto">
       <form onSubmit={form.onSubmit(console.log)}>
         <TextInput label="Name" placeholder="Name" {...form.getInputProps('name')} />
         <TextInput mt="sm" label="Email" placeholder="Email" {...form.getInputProps('email')} />
@@ -78,7 +78,7 @@ function Demo() {
 }
 
 export const blurValidation: MantineDemo = {
-  type: 'demo',
+  type: 'code',
   component: Demo,
   code,
 };

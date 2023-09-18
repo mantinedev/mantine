@@ -13,6 +13,7 @@ function Demo() {
       target="_blank"
       highlight="mantine"
       fw={500}
+      c="var(--mantine-color-anchor)"
     >
       Mantine website
     </Highlight>
@@ -29,6 +30,7 @@ function Demo() {
       target="_blank"
       highlight="mantine"
       fw={500}
+      c="var(--mantine-color-anchor)"
     >
       Mantine website
     </Highlight>
@@ -36,7 +38,8 @@ function Demo() {
 }
 
 export const props: MantineDemo = {
-  type: 'demo',
+  type: 'code',
   code,
+  centered: true,
   component: Demo,
 };

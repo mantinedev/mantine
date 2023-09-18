@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
-import { Button, Modal, Group, rem } from '@mantine/core';
+import { Button, Modal, rem } from '@mantine/core';
 import { MantineDemo } from '@mantine/ds';
 import { Carousel, Embla, useAnimationOffsetEffect } from '@mantine/carousel';
 
 const code = `
 import { useState } from 'react';
-import { Button, Modal, Group, rem } from '@mantine/core';
+import { Button, Modal, rem } from '@mantine/core';
 import { Carousel, useAnimationOffsetEffect } from '@mantine/carousel';
 
 function Demo() {
@@ -17,9 +17,7 @@ function Demo() {
 
   return (
     <>
-      <Group position="center">
-        <Button onClick={() => setOpened(true)}>Open modal with carousel</Button>
-      </Group>
+      <Button onClick={() => setOpened(true)}>Open modal with carousel</Button>
       <Modal
         opened={opened}
         size={300}
@@ -66,9 +64,7 @@ function Demo() {
 
   return (
     <>
-      <Group position="center">
-        <Button onClick={() => setOpened(true)}>Open modal with carousel</Button>
-      </Group>
+      <Button onClick={() => setOpened(true)}>Open modal with carousel</Button>
       <Modal
         opened={opened}
         size={300}
@@ -106,7 +102,8 @@ function Demo() {
 }
 
 export const animationOffset: MantineDemo = {
-  type: 'demo',
+  type: 'code',
   component: Demo,
   code,
+  centered: true,
 };

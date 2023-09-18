@@ -7,7 +7,7 @@ import { Stepper } from '@mantine/core';
 
 function Demo() {
   return (
-    <Stepper active={1} breakpoint="sm">
+    <Stepper active={1}>
       <Stepper.Step label="Step 1" description="Create an account" />
       <Stepper.Step label="Step 2" description="Verify email" loading />
       <Stepper.Step label="Step 3" description="Get full access" />
@@ -18,7 +18,7 @@ function Demo() {
 
 function Demo() {
   return (
-    <Stepper active={1} breakpoint="sm">
+    <Stepper active={1}>
       <Stepper.Step label="Step 1" description="Create an account" />
       <Stepper.Step label="Step 2" description="Verify email" loading />
       <Stepper.Step label="Step 3" description="Get full access" />
@@ -27,7 +27,7 @@ function Demo() {
 }
 
 export const loading: MantineDemo = {
-  type: 'demo',
+  type: 'code',
   component: Demo,
   code,
 };

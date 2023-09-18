@@ -1,59 +1,31 @@
+import React from 'react';
 import { MantineDemo } from '@mantine/ds';
 import { Textarea } from '@mantine/core';
+import { inputControls } from '../../../shared';
 
-const codeTemplate = (props: string) => `
+const code = `
 import { Textarea } from '@mantine/core';
+
 
 function Demo() {
   return (
     <Textarea
-     ${props}
+      {{props}}
+      placeholder="Input placeholder"
     />
   );
 }
 `;
 
+function Wrapper(props: any) {
+  return <Textarea {...props} placeholder="Input placeholder" />;
+}
+
 export const configurator: MantineDemo = {
   type: 'configurator',
-  component: Textarea,
-  codeTemplate,
-  configuratorProps: { multiline: 3 },
-  configurator: [
-    { name: 'placeholder', type: 'string', initialValue: 'Your comment' },
-    {
-      name: 'label',
-      type: 'string',
-      initialValue: 'Your comment',
-    },
-    {
-      name: 'description',
-      type: 'string',
-      initialValue: '',
-    },
-    {
-      name: 'error',
-      type: 'string',
-      initialValue: '',
-    },
-    {
-      name: 'variant',
-      type: 'select',
-      data: [
-        { label: 'default', value: 'default' },
-        { label: 'filled', value: 'filled' },
-        { label: 'unstyled', value: 'unstyled' },
-      ],
-      initialValue: 'default',
-      defaultValue: 'default',
-    },
-    { name: 'radius', type: 'size', initialValue: 'sm', defaultValue: 'sm' },
-    { name: 'size', type: 'size', initialValue: 'sm', defaultValue: 'sm' },
-    { name: 'disabled', type: 'boolean', initialValue: false, defaultValue: false },
-    {
-      name: 'withAsterisk',
-      type: 'boolean',
-      initialValue: true,
-      defaultValue: false,
-    },
-  ],
+  component: Wrapper,
+  code,
+  centered: true,
+  maxWidth: 340,
+  controls: inputControls,
 };

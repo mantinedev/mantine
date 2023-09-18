@@ -9,7 +9,7 @@ function Demo() {
   return (
     <>
       <Chip.Group>
-        <Group position="center">
+        <Group justify="center">
           <Chip value="1">Single chip</Chip>
           <Chip value="2">Can be selected</Chip>
           <Chip value="3">At a time</Chip>
@@ -17,7 +17,7 @@ function Demo() {
       </Chip.Group>
 
       <Chip.Group multiple>
-        <Group position="center" mt="md">
+        <Group justify="center" mt="md">
           <Chip value="1">Multiple chips</Chip>
           <Chip value="2">Can be selected</Chip>
           <Chip value="3">At a time</Chip>
@@ -32,7 +32,7 @@ function Demo() {
   return (
     <>
       <Chip.Group>
-        <Group position="center">
+        <Group justify="center">
           <Chip value="1">Single chip</Chip>
           <Chip value="2">Can be selected</Chip>
           <Chip value="3">At a time</Chip>
@@ -40,7 +40,7 @@ function Demo() {
       </Chip.Group>
 
       <Chip.Group multiple>
-        <Group position="center" mt="md">
+        <Group justify="center" mt="md">
           <Chip value="1">Multiple chips</Chip>
           <Chip value="2">Can be selected</Chip>
           <Chip value="3">At a time</Chip>
@@ -51,7 +51,7 @@ function Demo() {
 }
 
 export const group: MantineDemo = {
-  type: 'demo',
+  type: 'code',
   component: Demo,
   code,
 };

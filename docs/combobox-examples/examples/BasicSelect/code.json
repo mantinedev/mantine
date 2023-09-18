@@ -1,0 +1,7 @@
+[
+  {
+    "fileName": "BasicSelect.tsx",
+    "language": "tsx",
+    "code": "\nimport { Combobox, InputBase, Input, useCombobox } from '@mantine/core';\n\nconst groceries = [\n  '🍎 Apples',\n  '🍌 Bananas',\n  '🥦 Broccoli',\n  '🥕 Carrots',\n  '🍫 Chocolate',\n  '🍇 Grapes',\n];\n\nexport function BasicSelect() {\n  const combobox = useCombobox({\n    onDropdownClose: () => combobox.resetSelectedOption(),\n  });\n\n  const [value, setValue] = useState<string | null>(null);\n\n  const options = groceries.map((item) => (\n    <Combobox.Option value={item} key={item}>\n      {item}\n    </Combobox.Option>\n  ));\n\n  return (\n    <Combobox\n      store={combobox}\n      withinPortal={false}\n      onOptionSubmit={(val) => {\n        setValue(val);\n        combobox.closeDropdown();\n      }}\n    >\n      <Combobox.Target>\n        <InputBase\n          component=\"button\"\n          pointer\n          rightSection={<Combobox.Chevron />}\n          onClick={() => combobox.toggleDropdown()}\n          rightSectionPointerEvents=\"none\"\n        >\n          {value || <Input.Placeholder>Pick value</Input.Placeholder>}\n        </InputBase>\n      </Combobox.Target>\n\n      <Combobox.Dropdown>\n        <Combobox.Options>{options}</Combobox.Options>\n      </Combobox.Dropdown>\n    </Combobox>\n  );\n}\n"
+  }
+]

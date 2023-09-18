@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useDocumentTitle, randomId } from '@mantine/hooks';
 import { MantineDemo } from '@mantine/ds';
-import { Group, Button } from '@mantine/core';
+import { Button } from '@mantine/core';
 
 const code = `
 import { useState } from 'react';
@@ -23,15 +23,12 @@ function Demo() {
   const [title, setTitle] = useState('');
   useDocumentTitle(title);
 
-  return (
-    <Group position="center">
-      <Button onClick={() => setTitle(randomId())}>Set document title to random id</Button>
-    </Group>
-  );
+  return <Button onClick={() => setTitle(randomId())}>Set document title to random id</Button>;
 }
 
 export const useDocumentTitleDemo: MantineDemo = {
-  type: 'demo',
+  type: 'code',
   code,
   component: Demo,
+  centered: true,
 };

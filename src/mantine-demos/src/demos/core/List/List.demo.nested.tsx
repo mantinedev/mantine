@@ -60,7 +60,7 @@ function Demo() {
 }
 
 export const nested: MantineDemo = {
-  type: 'demo',
+  type: 'code',
   component: Demo,
   code,
 };

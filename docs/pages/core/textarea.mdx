@@ -1,0 +1,39 @@
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+import { TextareaDemos } from '@mantine/demos';
+
+export default Layout(MDX_DATA.Textarea);
+
+## Usage
+
+<InputFeatures component="Textarea" element="textarea" />
+
+<Demo data={TextareaDemos.configurator} />
+
+## Controlled
+
+```tsx
+import { useState } from 'react';
+import { Textarea } from '@mantine/core';
+
+function Demo() {
+  const [value, setValue] = useState('');
+  return <Textarea value={value} onChange={(event) => setValue(event.currentTarget.value)} />;
+}
+```
+
+## Error state
+
+<Demo data={TextareaDemos.error} />
+
+## Disabled state
+
+<Demo data={TextareaDemos.disabled} />
+
+<StylesApiSelectors component="Textarea" />
+
+<Demo data={TextareaDemos.stylesApi} />
+
+<GetElementRef component="Textarea" refType="textarea" />
+
+<InputAccessibility component="Textarea" />

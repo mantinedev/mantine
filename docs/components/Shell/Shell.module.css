@@ -1,0 +1,25 @@
+.main {
+  padding-top: var(--docs-header-height);
+  padding-left: var(--docs-navbar-width);
+
+  @media (max-width: $docs-navbar-breakpoint) {
+    padding-left: 0;
+  }
+
+  @mixin rtl {
+    padding-left: 0;
+    padding-right: var(--docs-navbar-width);
+
+    @media (max-width: $docs-navbar-breakpoint) {
+      padding-right: 0;
+    }
+  }
+
+  @mixin light {
+    background-color: var(--mantine-color-white);
+  }
+
+  @mixin dark {
+    background-color: var(--mantine-color-dark-7);
+  }
+}

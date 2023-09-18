@@ -7,14 +7,10 @@
     "baseUrl": ".",
     "outDir": "lib",
     "declaration": true,
-    "declarationMap": true,
     "declarationDir": "lib",
     "composite": true,
     "paths": {
-      "@mantine/tests": ["../mantine-tests/src"] 
+      "@mantine/tests": ["../mantine-tests/src"]
     }
-  },
-  "references": [
-    { "path": "../mantine-tests" }
-  ]
+  }
 }

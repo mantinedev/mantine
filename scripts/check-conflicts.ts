@@ -8,10 +8,10 @@ const logger = new Logger('check-conflicts');
 
 const src = path.join(__dirname, '../src');
 
-const errors = fs
+const errors: string[] = fs
   .readdirSync(src)
   .filter((folder) => isDir.sync(path.join(src, folder)))
-  .reduce((acc, folder) => {
+  .reduce<string[]>((acc, folder) => {
     try {
       fs.readJsonSync(path.join(src, folder, 'package.json'));
       return acc;

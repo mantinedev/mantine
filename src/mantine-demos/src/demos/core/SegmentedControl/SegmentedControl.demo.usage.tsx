@@ -1,35 +1,36 @@
 import React from 'react';
 import { MantineDemo } from '@mantine/ds';
-import { Group } from '@mantine/core';
-import { SegmentedControlWrapper } from './Wrapper';
+import { SegmentedControl } from '@mantine/core';
 
 const code = `
 import { SegmentedControl } from '@mantine/core';
 
 function Demo() {
-  return (
-    <SegmentedControl
-      data={[
-        { label: 'React', value: 'react' },
-        { label: 'Angular', value: 'ng' },
-        { label: 'Vue', value: 'vue' },
-        { label: 'Svelte', value: 'svelte' },
-      ]}
-    />
-  );
+  return <SegmentedControl{{props}} data={['React', 'Angular', 'Vue']} />;
 }
 `;
 
-function Demo() {
-  return (
-    <Group position="center">
-      <SegmentedControlWrapper />
-    </Group>
-  );
+function Wrapper(props: any) {
+  return <SegmentedControl data={['React', 'Angular', 'Vue']} {...props} />;
 }
 
 export const usage: MantineDemo = {
-  type: 'demo',
+  type: 'configurator',
+  component: Wrapper,
   code,
-  component: Demo,
+  controls: [
+    {
+      prop: 'orientation',
+      type: 'segmented',
+      initialValue: 'horizontal',
+      libraryValue: 'horizontal',
+      data: [
+        { label: 'horizontal', value: 'horizontal' },
+        { label: 'vertical', value: 'vertical' },
+      ],
+    },
+    { prop: 'fullWidth', type: 'boolean', initialValue: false, libraryValue: false },
+    { type: 'size', prop: 'size', initialValue: 'sm', libraryValue: 'sm' },
+    { type: 'size', prop: 'radius', initialValue: 'sm', libraryValue: 'sm' },
+  ],
 };

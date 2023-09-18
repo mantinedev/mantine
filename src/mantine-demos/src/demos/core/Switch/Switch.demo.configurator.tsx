@@ -1,14 +1,16 @@
 import React from 'react';
 import { MantineDemo } from '@mantine/ds';
-import { Switch, SwitchProps } from '@mantine/core';
-
-const codeTemplate = (props: string) => `
 import { Switch } from '@mantine/core';
+
+const code = `
+import { Switch } from '@mantine/core';
+
 
 function Demo() {
   return (
     <Switch
-     ${props}
+      defaultChecked
+      {{props}}
     />
   );
 }
@@ -16,26 +18,26 @@ function Demo() {
 
 export const configurator: MantineDemo = {
   type: 'configurator',
-  component: (props: SwitchProps) => <Switch {...props} />,
-  codeTemplate,
-  configuratorProps: { multiline: 3 },
-  configurator: [
+  component: (props: any) => <Switch defaultChecked {...props} />,
+  code,
+  centered: true,
+  controls: [
+    { prop: 'color', type: 'color', initialValue: 'blue', libraryValue: 'blue' },
     {
-      name: 'labelPosition',
+      prop: 'labelPosition',
       type: 'segmented',
       data: [
         { value: 'right', label: 'Right' },
         { value: 'left', label: 'Left' },
       ],
       initialValue: 'right',
-      defaultValue: 'right',
+      libraryValue: 'right',
     },
-    { name: 'label', type: 'string', initialValue: 'I agree to sell my privacy' },
-    { name: 'description', type: 'string', initialValue: '' },
-    { name: 'error', type: 'string', initialValue: '' },
-    { name: 'size', type: 'size', initialValue: 'sm', defaultValue: 'sm' },
-    { name: 'radius', type: 'size', initialValue: 'xl', defaultValue: 'xl' },
-    { name: 'color', type: 'color', initialValue: 'blue', defaultValue: 'blue' },
-    { name: 'disabled', type: 'boolean', initialValue: false, defaultValue: false },
+    { prop: 'label', type: 'string', initialValue: 'I agree to sell my privacy', libraryValue: '' },
+    { prop: 'description', type: 'string', initialValue: '', libraryValue: '' },
+    { prop: 'error', type: 'string', initialValue: '', libraryValue: '' },
+    { prop: 'size', type: 'size', initialValue: 'sm', libraryValue: 'sm' },
+    { prop: 'radius', type: 'size', initialValue: 'xl', libraryValue: 'xl' },
+    { prop: 'disabled', type: 'boolean', initialValue: false, libraryValue: false },
   ],
 };

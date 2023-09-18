@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
-import { Button, Group, MANTINE_SIZES } from '@mantine/core';
-import { WithinOverlays } from '@mantine/storybook';
+import { Button, Group } from '@mantine/core';
 import dayjs from 'dayjs';
 import { DatePickerInput } from './DatePickerInput';
 import { DatesProvider } from '../DatesProvider';
@@ -15,6 +14,20 @@ export function Usage() {
         placeholder="Pick date"
         numberOfColumns={3}
         allowDeselect
+      />
+    </div>
+  );
+}
+
+export function Unstyled() {
+  return (
+    <div style={{ padding: 40, maxWidth: 400 }}>
+      <DatePickerInput
+        label="Date picker input"
+        placeholder="Pick date"
+        numberOfColumns={3}
+        allowDeselect
+        unstyled
       />
     </div>
   );
@@ -89,8 +102,8 @@ export function LocaleChangesDatesProvider() {
 }
 
 export function ControlledValues() {
-  const [value, setValue] = useState(new Date());
-  const incrementDate = () => setValue((current) => dayjs(current).add(1, 'month').toDate());
+  const [value, setValue] = useState<Date | null>(new Date());
+  const incrementDate = () => setValue((current) => dayjs(current!).subtract(-1, 'month').toDate());
 
   return (
     <div style={{ padding: 40, maxWidth: 400 }}>
@@ -195,7 +208,7 @@ export function Clearable() {
 }
 
 export function Sizes() {
-  const sizes = MANTINE_SIZES.map((size) => (
+  const sizes = (['xs', 'sm', 'md', 'lg', 'xl'] as const).map((size) => (
     <DatePickerInput
       size={size}
       key={size}
@@ -206,14 +219,6 @@ export function Sizes() {
     />
   ));
   return <div style={{ padding: 40 }}>{sizes}</div>;
-}
-
-export function InOverlays() {
-  return (
-    <WithinOverlays>
-      <DatePickerInput popoverProps={{ withinPortal: true }} />
-    </WithinOverlays>
-  );
 }
 
 export function DefaultDate() {

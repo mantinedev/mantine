@@ -41,7 +41,7 @@ function Demo() {
 }
 
 export const swatchesOnly: MantineDemo = {
-  type: 'demo',
+  type: 'code',
   component: Demo,
   code,
 };

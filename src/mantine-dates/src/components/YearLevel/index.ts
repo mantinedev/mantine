@@ -1,7 +1,8 @@
 export { YearLevel } from './YearLevel';
 export type {
+  YearLevelBaseSettings,
+  YearLevelFactory,
   YearLevelProps,
   YearLevelSettings,
   YearLevelStylesNames,
-  YearLevelBaseSettings,
 } from './YearLevel';

@@ -1,0 +1,62 @@
+.root {
+  margin-top: calc(var(--mantine-spacing-xl) * 1.5);
+  margin-bottom: var(--mantine-spacing-lg);
+
+  & > p {
+    line-height: 1.65;
+    font-size: rem(15px);
+  }
+
+  /* Considered to be a heading of the info */
+  & > p > strong:only-child {
+    font-family: var(--docs-font-primary);
+    font-size: var(--mantine-font-size-lg);
+
+    @mixin light {
+      color: var(--mantine-color-black);
+    }
+
+    @mixin dark {
+      color: var(--mantine-color-white);
+    }
+
+    & > code {
+      font-size: 80%;
+    }
+  }
+
+  & > p:first-of-type {
+    margin-top: 0;
+  }
+
+  & > p:last-of-type {
+    margin-bottom: 0;
+  }
+
+  & :global(.mantine-Code-root) {
+    @mixin light {
+      background-color: var(--docs-bq-code-bg-light);
+    }
+
+    @mixin dark {
+      background-color: var(--docs-bq-code-bg-dark);
+    }
+  }
+
+  & :global(.mantine-CodeHighlight-root) {
+    margin-top: var(--mantine-spacing-md);
+
+    @mixin light {
+      background-color: var(--mantine-color-white);
+    }
+
+    @mixin dark {
+      background-color: var(--mantine-color-dark-7);
+    }
+  }
+}
+
+.icon {
+  width: rem(28px);
+  height: rem(28px);
+}

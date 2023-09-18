@@ -1,13 +1,11 @@
 import dayjs from 'dayjs';
 import React, { useState } from 'react';
 import { MantineDemo } from '@mantine/ds';
-import { Group } from '@mantine/core';
 import { Calendar } from '@mantine/dates';
 
 const code = `
 import dayjs from 'dayjs';
 import { useState } from 'react';
-import { Group } from '@mantine/core';
 import { Calendar } from '@mantine/dates';
 
 function Demo() {
@@ -22,14 +20,12 @@ function Demo() {
   };
 
   return (
-    <Group position="center">
-      <Calendar
-        getDayProps={(date) => ({
-          selected: selected.some((s) => dayjs(date).isSame(s, 'date')),
-          onClick: () => handleSelect(date),
-        })}
-      />
-    </Group>
+    <Calendar
+      getDayProps={(date) => ({
+        selected: selected.some((s) => dayjs(date).isSame(s, 'date')),
+        onClick: () => handleSelect(date),
+      })}
+    />
   );
 }
 `;
@@ -46,19 +42,18 @@ function Demo() {
   };
 
   return (
-    <Group position="center">
-      <Calendar
-        getDayProps={(date) => ({
-          selected: selected.some((s) => dayjs(date).isSame(s, 'date')),
-          onClick: () => handleSelect(date),
-        })}
-      />
-    </Group>
+    <Calendar
+      getDayProps={(date) => ({
+        selected: selected.some((s) => dayjs(date).isSame(s, 'date')),
+        onClick: () => handleSelect(date),
+      })}
+    />
   );
 }
 
 export const picker: MantineDemo = {
-  type: 'demo',
+  type: 'code',
+  centered: true,
   component: Demo,
   code,
 };

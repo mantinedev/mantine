@@ -1,40 +1,14 @@
 import React from 'react';
 import { MantineDemo } from '@mantine/ds';
-import { TooltipFloatingProps, Group, Tooltip, Box } from '@mantine/core';
+import { Box, Tooltip } from '@mantine/core';
 
-const Wrapper = (props: TooltipFloatingProps) => (
-  <Box p="xl">
-    <Group position="center">
-      <Tooltip.Floating label="Tooltip" {...props}>
-        <Box
-          sx={(theme) => ({
-            padding: theme.spacing.xl,
-            cursor: 'default',
-            backgroundColor:
-              theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[0],
-          })}
-        >
-          Hover over the box to see tooltip
-        </Box>
-      </Tooltip.Floating>
-    </Group>
-  </Box>
-);
-
-const codeTemplate = (props: string) => `
-import { Tooltip, Box } from '@mantine/core';
+const code = `
+import { Box, Tooltip } from '@mantine/core';
 
 function Demo() {
   return (
-    <Tooltip.Floating label="Tooltip"${props}>
-      <Box
-        sx={(theme) => ({
-          padding: theme.spacing.xl,
-          cursor: 'default',
-          backgroundColor:
-            theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[0],
-        })}
-      >
+    <Tooltip.Floating label="Floating tooltip">
+      <Box p="xl" bg="var(--mantine-color-blue-light)" style={{ cursor: 'default' }}>
         Hover over the box to see tooltip
       </Box>
     </Tooltip.Floating>
@@ -42,16 +16,19 @@ function Demo() {
 }
 `;
 
+function Demo() {
+  return (
+    <Tooltip.Floating label="Floating tooltip">
+      <Box p="xl" bg="var(--mantine-color-blue-light)" style={{ cursor: 'default' }}>
+        Hover over the box to see tooltip
+      </Box>
+    </Tooltip.Floating>
+  );
+}
+
 export const floating: MantineDemo = {
-  type: 'configurator',
-  component: Wrapper,
-  codeTemplate,
-  configurator: [
-    {
-      name: 'color',
-      type: 'color',
-      initialValue: 'blue',
-    },
-    { name: 'radius', type: 'size', initialValue: 'sm', defaultValue: 'sm' },
-  ],
+  type: 'code',
+  component: Demo,
+  code,
+  centered: true,
 };

@@ -1,20 +1,29 @@
-/* eslint-disable react/no-unused-prop-types */
-import React, { forwardRef } from 'react';
+import React from 'react';
 import {
-  DefaultProps,
-  UnstyledButton,
-  Selectors,
-  useComponentDefaultProps,
+  BoxProps,
+  StylesApiProps,
+  factory,
+  ElementProps,
+  useProps,
+  useStyles,
+  createVarsResolver,
+  Factory,
+  getFontSize,
+  getSize,
   MantineSize,
+  UnstyledButton,
 } from '@mantine/core';
-import useStyles from './PickerControl.styles';
+import classes from './PickerControl.module.css';
 
-export type PickerControlStylesNames = Selectors<typeof useStyles>;
+export type PickerControlStylesNames = 'pickerControl';
+export type PickerControlCssVariables = {
+  pickerControl: '--dpc-size' | '--dpc-fz';
+};
 
 export interface PickerControlProps
-  extends DefaultProps<PickerControlStylesNames>,
-    React.ComponentPropsWithoutRef<'button'> {
-  variant?: string;
+  extends BoxProps,
+    StylesApiProps<PickerControlFactory>,
+    ElementProps<'button'> {
   __staticSelector?: string;
 
   /** Control children */
@@ -39,40 +48,57 @@ export interface PickerControlProps
   size?: MantineSize;
 }
 
-const defaultProps: Partial<PickerControlProps> = {
-  size: 'sm',
-};
+export type PickerControlFactory = Factory<{
+  props: PickerControlProps;
+  ref: HTMLButtonElement;
+  stylesNames: PickerControlStylesNames;
+  vars: PickerControlCssVariables;
+}>;
 
-export const PickerControl = forwardRef<HTMLButtonElement, PickerControlProps>((props, ref) => {
+const defaultProps: Partial<PickerControlProps> = {};
+
+const varsResolver = createVarsResolver<PickerControlFactory>((_, { size }) => ({
+  pickerControl: {
+    '--dpc-fz': getFontSize(size),
+    '--dpc-size': getSize(size, 'dpc-size'),
+  },
+}));
+
+export const PickerControl = factory<PickerControlFactory>((_props, ref) => {
+  const props = useProps('PickerControl', defaultProps, _props);
   const {
-    className,
-    children,
-    disabled,
-    selected,
     classNames,
+    className,
+    style,
     styles,
     unstyled,
+    vars,
     firstInRange,
     lastInRange,
     inRange,
     __staticSelector,
-    size,
-    variant,
+    selected,
+    disabled,
     ...others
-  } = useComponentDefaultProps('PickerControl', defaultProps, props);
+  } = props;
 
-  const { classes, cx } = useStyles(null, {
-    name: ['PickerControl', __staticSelector],
+  const getStyles = useStyles<PickerControlFactory>({
+    name: __staticSelector || 'PickerControl',
+    classes,
+    props,
+    className,
+    style,
     classNames,
     styles,
     unstyled,
-    variant,
-    size,
+    vars,
+    varsResolver,
+    rootSelector: 'pickerControl',
   });
 
   return (
     <UnstyledButton
-      className={cx(classes.pickerControl, className)}
+      {...getStyles('pickerControl')}
       ref={ref}
       unstyled={unstyled}
       data-picker-control
@@ -83,10 +109,9 @@ export const PickerControl = forwardRef<HTMLButtonElement, PickerControlProps>((
       data-last-in-range={(lastInRange && !disabled) || undefined}
       disabled={disabled}
       {...others}
-    >
-      {children}
-    </UnstyledButton>
+    />
   );
 });
 
+PickerControl.classes = classes;
 PickerControl.displayName = '@mantine/dates/PickerControl';

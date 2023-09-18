@@ -1,33 +1,32 @@
 import React from 'react';
 import { MantineDemo } from '@mantine/ds';
-import { Chip, ChipProps, Group } from '@mantine/core';
+import { Chip, ChipProps } from '@mantine/core';
 
 function Wrapper(props: ChipProps) {
   return (
-    <Group position="center">
-      <Chip defaultChecked {...props}>
-        Awesome chip
-      </Chip>
-    </Group>
+    <Chip defaultChecked {...props}>
+      Awesome chip
+    </Chip>
   );
 }
 
-const codeTemplate = (props: string) => `
+const code = `
 import { Chip } from '@mantine/core';
 
 function Demo() {
-  return <Chip defaultChecked${props}>Awesome chip</Chip>
+  return <Chip defaultChecked{{props}}>Awesome chip</Chip>
 }
 `;
 
 export const configurator: MantineDemo = {
   type: 'configurator',
   component: Wrapper,
-  codeTemplate,
-  configurator: [
-    { name: 'color', type: 'color', initialValue: 'blue', defaultValue: 'blue' },
+  code,
+  centered: true,
+  controls: [
+    { prop: 'color', type: 'color', initialValue: 'blue', libraryValue: 'blue' },
     {
-      name: 'variant',
+      prop: 'variant',
       type: 'segmented',
       data: [
         { value: 'outline', label: 'Outline' },
@@ -35,9 +34,9 @@ export const configurator: MantineDemo = {
         { value: 'filled', label: 'Filled' },
       ],
       initialValue: 'outline',
-      defaultValue: 'outline',
+      libraryValue: 'outline',
     },
-    { name: 'size', type: 'size', initialValue: 'sm', defaultValue: 'sm' },
-    { name: 'radius', type: 'size', initialValue: 'xl', defaultValue: 'xl' },
+    { prop: 'size', type: 'size', initialValue: 'sm', libraryValue: 'sm' },
+    { prop: 'radius', type: 'size', initialValue: 'xl', libraryValue: 'xl' },
   ],
 };

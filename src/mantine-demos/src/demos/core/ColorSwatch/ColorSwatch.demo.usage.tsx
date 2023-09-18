@@ -1,39 +1,34 @@
 import React from 'react';
 import { MantineDemo } from '@mantine/ds';
-import { useMantineTheme, ColorSwatch, Group } from '@mantine/core';
+import { ColorSwatch, Group } from '@mantine/core';
 
 const code = `
-import { ColorSwatch, Group, useMantineTheme } from '@mantine/core';
+import { ColorSwatch, Group } from '@mantine/core';
 
 function Demo() {
-  const theme = useMantineTheme();
-  const swatches = Object.keys(theme.colors).map((color) => (
-    <ColorSwatch key={color} color={theme.colors[color][6]} />
-  ));
-
   return (
-    <Group position="center" spacing="xs">
-      {swatches}
+    <Group>
+      <ColorSwatch color="#009790" />
+      <ColorSwatch color="rgba(234, 22, 174, 0.5)" />
+      <ColorSwatch color="var(--mantine-color-orange-5)" />
     </Group>
   );
 }
 `;
 
 function Demo() {
-  const theme = useMantineTheme();
-  const swatches = Object.keys(theme.colors).map((color) => (
-    <ColorSwatch key={color} color={theme.colors[color][6]} />
-  ));
-
   return (
-    <Group position="center" spacing="xs">
-      {swatches}
+    <Group>
+      <ColorSwatch color="#009790" />
+      <ColorSwatch color="rgba(234, 22, 174, 0.5)" />
+      <ColorSwatch color="var(--mantine-color-orange-5)" />
     </Group>
   );
 }
 
 export const usage: MantineDemo = {
-  type: 'demo',
-  code,
+  type: 'code',
   component: Demo,
+  centered: true,
+  code,
 };

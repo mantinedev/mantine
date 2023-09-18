@@ -1,0 +1,1 @@
+export { MantineClasses } from './MantineClasses';

@@ -8,7 +8,7 @@ import { Tooltip, Button, Group } from '@mantine/core';
 function Demo() {
   return (
     <Tooltip.Group openDelay={500} closeDelay={100}>
-      <Group position="center">
+      <Group justify="center">
         <Tooltip label="Tooltip 1">
           <Button variant="outline">Button 1</Button>
         </Tooltip>
@@ -27,7 +27,7 @@ function Demo() {
 function Demo() {
   return (
     <Tooltip.Group openDelay={500} closeDelay={100}>
-      <Group position="center">
+      <Group justify="center">
         <Tooltip label="Tooltip 1">
           <Button variant="outline">Button 1</Button>
         </Tooltip>
@@ -43,7 +43,7 @@ function Demo() {
 }
 
 export const group: MantineDemo = {
-  type: 'demo',
+  type: 'code',
   component: Demo,
   code,
 };

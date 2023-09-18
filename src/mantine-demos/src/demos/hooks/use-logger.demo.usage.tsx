@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useLogger } from '@mantine/hooks';
 import { MantineDemo } from '@mantine/ds';
-import { Button, Group } from '@mantine/core';
+import { Button } from '@mantine/core';
 
 const code = `
 import { useState } from 'react';
@@ -18,16 +18,12 @@ function Demo() {
 function Demo() {
   const [count, setCount] = useState(0);
   useLogger('Demo', [{ count, hello: 'world' }]);
-
-  return (
-    <Group position="center">
-      <Button onClick={() => setCount((c) => c + 1)}>Update state ({count})</Button>
-    </Group>
-  );
+  return <Button onClick={() => setCount((c) => c + 1)}>Update state ({count})</Button>;
 }
 
 export const useLoggerDemo: MantineDemo = {
-  type: 'demo',
+  type: 'code',
   code,
   component: Demo,
+  centered: true,
 };

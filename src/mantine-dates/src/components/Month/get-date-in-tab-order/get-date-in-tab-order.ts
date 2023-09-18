@@ -1,16 +1,16 @@
 import dayjs from 'dayjs';
-import { DayProps } from '../../Day';
+import { DayProps } from '../../Day/Day';
 import { isAfterMinDate } from '../is-after-min-date/is-after-min-date';
 import { isBeforeMaxDate } from '../is-before-max-date/is-before-max-date';
 import { isSameMonth } from '../is-same-month/is-same-month';
 
 export function getDateInTabOrder(
   dates: Date[][],
-  minDate: Date,
-  maxDate: Date,
-  getDateControlProps: (date: Date) => Partial<DayProps>,
-  excludeDate: (date: Date) => boolean,
-  hideOutsideDates: boolean,
+  minDate: Date | undefined,
+  maxDate: Date | undefined,
+  getDateControlProps: ((date: Date) => Partial<DayProps>) | undefined,
+  excludeDate: ((date: Date) => boolean) | undefined,
+  hideOutsideDates: boolean | undefined,
   month: Date
 ) {
   const enabledDates = dates

@@ -1,0 +1,7 @@
+.root {
+  margin: 0;
+  font-weight: var(--title-fw);
+  font-size: var(--title-fz);
+  line-height: var(--title-lh);
+  font-family: var(--mantine-font-family-headings);
+}

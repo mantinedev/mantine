@@ -1,4 +1,3 @@
-import { MANTINE_SIZES } from '@mantine/core';
 import React, { useState } from 'react';
 import { DatesRangeValue } from '../../types';
 import { YearPicker } from './YearPicker';
@@ -80,6 +79,8 @@ export function ControlledMultiple() {
 }
 
 export function Sizes() {
-  const sizes = MANTINE_SIZES.map((size) => <YearPicker size={size} key={size} />);
+  const sizes = (['xs', 'sm', 'md', 'lg', 'xl'] as const).map((size) => (
+    <YearPicker size={size} key={size} />
+  ));
   return <div style={{ padding: 40 }}>{sizes}</div>;
 }

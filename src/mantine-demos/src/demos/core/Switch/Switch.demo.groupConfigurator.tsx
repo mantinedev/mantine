@@ -2,14 +2,14 @@ import React from 'react';
 import { MantineDemo } from '@mantine/ds';
 import { SwitchGroupProps, Switch, Group } from '@mantine/core';
 
-const codeTemplate = (props: string) => `
-import { Switch } from '@mantine/core';
+const code = `
+import { Switch, Group } from '@mantine/core';
 
 function Demo() {
   return (
     <Switch.Group
       defaultValue={['react']}
-     ${props}
+      {{props}}
     >
       <Group mt="xs">
         <Switch value="react" label="React" />
@@ -38,12 +38,17 @@ function Wrapper(props: SwitchGroupProps) {
 export const groupConfigurator: MantineDemo = {
   type: 'configurator',
   component: Wrapper,
-  codeTemplate,
-  configuratorProps: { multiline: 3 },
-  configurator: [
-    { name: 'label', type: 'string', initialValue: 'Select your favorite framework/library' },
-    { name: 'description', type: 'string', initialValue: 'This is anonymous' },
-    { name: 'error', type: 'string', initialValue: '' },
-    { name: 'withAsterisk', type: 'boolean', initialValue: true, defaultValue: false },
+  code,
+  centered: true,
+  controls: [
+    {
+      prop: 'label',
+      type: 'string',
+      initialValue: 'Select your favorite framework/library',
+      libraryValue: '',
+    },
+    { prop: 'description', type: 'string', initialValue: 'This is anonymous', libraryValue: '' },
+    { prop: 'error', type: 'string', initialValue: '', libraryValue: '' },
+    { prop: 'withAsterisk', type: 'boolean', initialValue: true, libraryValue: false },
   ],
 };

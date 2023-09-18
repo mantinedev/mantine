@@ -20,7 +20,7 @@ function Demo() {
       <Modal opened={opened} onClose={close} size="auto" title="Modal size auto">
         <Text>Modal with size auto will fits its content</Text>
 
-        <Group noWrap mt="md">
+        <Group wrap="nowrap" mt="md">
           {badges}
         </Group>
 
@@ -33,9 +33,8 @@ function Demo() {
           </Button>
         </Group>
       </Modal>
-      <Group position="center">
-        <Button onClick={open}>Open modal</Button>
-      </Group>
+
+      <Button onClick={open}>Open modal</Button>
     </>
   );
 }
@@ -54,7 +53,7 @@ function Demo() {
       <Modal opened={opened} onClose={close} size="auto" title="Modal size auto">
         <Text>Modal with size auto will fits its content</Text>
 
-        <Group noWrap mt="md">
+        <Group wrap="nowrap" mt="md">
           {badges}
         </Group>
 
@@ -67,15 +66,15 @@ function Demo() {
           </Button>
         </Group>
       </Modal>
-      <Group position="center">
-        <Button onClick={open}>Open modal</Button>
-      </Group>
+
+      <Button onClick={open}>Open modal</Button>
     </>
   );
 }
 
 export const sizeAuto: MantineDemo = {
-  type: 'demo',
+  type: 'code',
   component: Demo,
+  centered: true,
   code,
 };

@@ -1,24 +1,21 @@
 import React from 'react';
+import cx from 'clsx';
 import { IconSearch } from '@tabler/icons-react';
-import { UnstyledButton, Text, Group, DefaultProps, rem } from '@mantine/core';
-import useStyles from './SearchControl.styles';
+import { UnstyledButton, Text, Group, BoxProps, ElementProps, rem } from '@mantine/core';
+import classes from './SearchControl.module.css';
 
-interface SearchControlProps extends DefaultProps, React.ComponentPropsWithoutRef<'button'> {
-  onClick(): void;
-}
+interface SearchControlProps extends BoxProps, ElementProps<'button'> {}
 
 export function SearchControl({ className, ...others }: SearchControlProps) {
-  const { classes, cx } = useStyles();
-
   return (
     <UnstyledButton {...others} className={cx(classes.root, className)}>
-      <Group spacing="xs">
-        <IconSearch size={rem(14)} stroke={1.5} />
-        <Text size="sm" color="dimmed" pr={80}>
+      <Group gap="xs">
+        <IconSearch style={{ width: rem(15), height: rem(15) }} stroke={1.5} />
+        <Text fz="sm" c="dimmed" pr={80}>
           Search
         </Text>
-        <Text weight={700} className={classes.shortcut}>
-          /
+        <Text fw={700} className={classes.shortcut}>
+          Ctrl + K
         </Text>
       </Group>
     </UnstyledButton>

@@ -1,24 +1,22 @@
 import React from 'react';
-import { render, screen } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
 import {
-  itSupportsSystemProps,
-  itSupportsProviderVariant,
-  itSupportsProviderSize,
-  itSupportsFocusEvents,
-  checkAccessibility,
-  itDisablesInputInsideDisabledFieldset,
+  tests,
+  inputDefaultProps,
+  inputStylesApiSelectors,
+  render,
+  screen,
+  userEvent,
 } from '@mantine/tests';
 import {
+  datesTests,
   expectNoPopover,
   expectOpenedPopover,
   expectValue,
   clickControl,
-  itSupportsClearableProps,
-  itSupportsYearsListProps,
-  itSupportsMonthsListProps,
-} from '../../tests';
+} from '@mantine/dates-tests';
+import { __InputStylesNames } from '@mantine/core';
 import { DateInput, DateInputProps } from './DateInput';
+import { DatesProvider } from '../DatesProvider';
 
 const defaultProps: DateInputProps = {
   popoverProps: { transitionProps: { duration: 0 }, withinPortal: false },
@@ -34,58 +32,67 @@ const defaultProps: DateInputProps = {
   },
 };
 
-function getInput(container: HTMLElement) {
-  return container.querySelector('[data-dates-input]');
+const defaultPropsWithInputProps: DateInputProps = {
+  ...defaultProps,
+  ...(inputDefaultProps as any),
+};
+
+function getInput(container: HTMLElement | null) {
+  return container!.querySelector('[data-dates-input]')!;
 }
 
 describe('@mantine/dates/DateInput', () => {
-  checkAccessibility([<DateInput {...defaultProps} label="test-label" />]);
-  itSupportsSystemProps({
+  tests.axe([
+    <DateInput aria-label="test-label" />,
+    <DateInput label="test-label" />,
+    <DateInput label="test-label" error />,
+    <DateInput label="test-label" error="test-error" id="test" />,
+    <DateInput label="test-label" description="test-description" />,
+  ]);
+
+  tests.itSupportsSystemProps<DateInputProps, __InputStylesNames>({
     component: DateInput,
-    props: defaultProps,
+    props: defaultPropsWithInputProps,
+    styleProps: true,
+    extend: true,
+    size: true,
+    variant: true,
+    classes: true,
     refType: HTMLInputElement,
-    providerName: 'DateInput',
-    othersSelector: 'input',
     displayName: '@mantine/dates/DateInput',
+    stylesApiSelectors: [...inputStylesApiSelectors],
   });
 
-  itSupportsProviderVariant(
-    DateInput,
-    {
+  tests.itSupportsInputProps<DateInputProps>({
+    component: DateInput,
+    props: defaultPropsWithInputProps,
+    selector: 'input',
+  });
+
+  datesTests.itSupportsClearableProps({
+    component: DateInput,
+    props: { defaultValue: new Date(2022, 3, 11) },
+  });
+
+  datesTests.itSupportsYearsListProps({
+    component: DateInput,
+    props: {
       ...defaultProps,
+      defaultLevel: 'decade',
+      defaultValue: new Date(2022, 3, 11),
       popoverProps: { opened: true, withinPortal: false, transitionProps: { duration: 0 } },
     },
-    'DateInput',
-    ['root', 'input']
-  );
-  itSupportsProviderSize(
-    DateInput,
-    {
+  });
+
+  datesTests.itSupportsMonthsListProps({
+    component: DateInput,
+    props: {
       ...defaultProps,
+      defaultLevel: 'year',
+      defaultValue: new Date(2022, 3, 11),
       popoverProps: { opened: true, withinPortal: false, transitionProps: { duration: 0 } },
     },
-    'DateInput',
-    ['root', 'input']
-  );
-
-  itSupportsFocusEvents(DateInput, defaultProps, 'input');
-  itSupportsClearableProps(DateInput, { ...defaultProps, defaultValue: new Date(2022, 3, 11) });
-
-  itSupportsYearsListProps(DateInput, {
-    ...defaultProps,
-    defaultLevel: 'decade',
-    defaultValue: new Date(2022, 3, 11),
-    popoverProps: { opened: true, withinPortal: false, transitionProps: { duration: 0 } },
   });
-
-  itSupportsMonthsListProps(DateInput, {
-    ...defaultProps,
-    defaultLevel: 'year',
-    defaultValue: new Date(2022, 3, 11),
-    popoverProps: { opened: true, withinPortal: false, transitionProps: { duration: 0 } },
-  });
-
-  itDisablesInputInsideDisabledFieldset(DateInput, defaultProps);
 
   it('opens/closes dropdown when input is focused/blurred', async () => {
     const { container } = render(<DateInput {...defaultProps} />);
@@ -128,8 +135,8 @@ describe('@mantine/dates/DateInput', () => {
     await userEvent.click(screen.getByLabelText('level-control'));
     await userEvent.click(screen.getByLabelText('level-control'));
     await userEvent.click(screen.getByLabelText('previous'));
-    await userEvent.click(container.querySelector('table button'));
-    await userEvent.click(container.querySelector('table button'));
+    await userEvent.click(container.querySelector('table button')!);
+    await userEvent.click(container.querySelector('table button')!);
     await userEvent.click(container.querySelectorAll('table button')[4]);
     expect(getInput(container)).toHaveFocus();
     expectValue(container, 'January 1, 2010');
@@ -140,6 +147,17 @@ describe('@mantine/dates/DateInput', () => {
     await userEvent.tab();
     await clickControl(container, 4);
     expectValue(container, 'April 1, 2022');
+  });
+
+  it('supports uncontrolled state (dropdown click) with timezone', async () => {
+    const { container } = render(
+      <DatesProvider settings={{ timezone: 'UTC' }}>
+        <DateInput date={new Date(2022, 0, 31, 23)} {...defaultProps} />
+      </DatesProvider>
+    );
+    await userEvent.tab();
+    await clickControl(container, 4);
+    expectValue(container, 'February 4, 2022');
   });
 
   it('supports controlled state (dropdown click)', async () => {
@@ -156,6 +174,24 @@ describe('@mantine/dates/DateInput', () => {
     await clickControl(container, 4);
     expectValue(container, 'April 11, 2022');
     expect(spy).toHaveBeenCalledWith(new Date(2022, 3, 1));
+  });
+
+  it('supports controlled state (dropdown click) with timezone', async () => {
+    const spy = jest.fn();
+    const { container } = render(
+      <DatesProvider settings={{ timezone: 'UTC' }}>
+        <DateInput
+          {...defaultProps}
+          date={new Date(2022, 0, 31, 23)}
+          value={new Date(2022, 0, 31, 23)}
+          onChange={spy}
+        />
+      </DatesProvider>
+    );
+    await userEvent.tab();
+    await clickControl(container, 4);
+    expectValue(container, 'February 1, 2022');
+    expect(spy).toHaveBeenCalledWith(new Date(2022, 1, 3, 23));
   });
 
   it('supports uncontrolled state (free input)', async () => {
@@ -177,6 +213,21 @@ describe('@mantine/dates/DateInput', () => {
     await userEvent.tab();
     expectValue(container, 'April 11, 2022');
     expect(spy).toHaveBeenLastCalledWith(new Date(2022, 3, 1));
+  });
+
+  it('supports controlled state (free input) with timezone', async () => {
+    const spy = jest.fn();
+    const { container } = render(
+      <DatesProvider settings={{ timezone: 'UTC' }}>
+        <DateInput {...defaultProps} value={new Date(2022, 3, 11)} onChange={spy} />
+      </DatesProvider>
+    );
+    await userEvent.tab();
+    await userEvent.clear(getInput(container));
+    await userEvent.type(getInput(container), 'April 1, 2022');
+    await userEvent.tab();
+    expectValue(container, 'April 11, 2022');
+    expect(spy).toHaveBeenLastCalledWith(new Date(2022, 2, 31, 20));
   });
 
   it('clears input when clear button is clicked (uncontrolled)', async () => {
@@ -430,43 +481,8 @@ describe('@mantine/dates/DateInput', () => {
         popoverProps={{ opened: true, withinPortal: false, transitionProps: { duration: 0 } }}
       />
     );
-    expect(container.firstChild).toHaveClass('mantine-DateInput-root');
     expect(container.querySelector('[data-dates-input]')).toHaveClass('mantine-DateInput-input');
 
-    expect(container.querySelector('table button')).toHaveClass('mantine-DateInput-day');
-  });
-
-  it('supports styles api (classNames)', () => {
-    const { container } = render(
-      <DateInput
-        {...defaultProps}
-        popoverProps={{ opened: true, withinPortal: false, transitionProps: { duration: 0 } }}
-        classNames={{
-          root: 'test-root',
-          input: 'test-input',
-          day: 'test-control',
-        }}
-      />
-    );
-    expect(container.firstChild).toHaveClass('test-root');
-    expect(container.querySelector('[data-dates-input]')).toHaveClass('test-input');
-    expect(container.querySelector('table button')).toHaveClass('test-control');
-  });
-
-  it('supports styles api (styles)', () => {
-    const { container } = render(
-      <DateInput
-        {...defaultProps}
-        popoverProps={{ opened: true, withinPortal: false, transitionProps: { duration: 0 } }}
-        styles={{
-          root: { borderColor: '#CCEE45' },
-          input: { borderColor: '#EB4522' },
-          day: { borderColor: '#EE4533' },
-        }}
-      />
-    );
-    expect(container.firstChild).toHaveStyle({ borderColor: '#CCEE45' });
-    expect(container.querySelector('[data-dates-input]')).toHaveStyle({ borderColor: '#EB4522' });
-    expect(container.querySelector('table button')).toHaveStyle({ borderColor: '#EE4533' });
+    expect(container.querySelector('table button')!).toHaveClass('mantine-DateInput-day');
   });
 });

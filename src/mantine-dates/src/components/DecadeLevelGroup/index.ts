@@ -1,2 +1,6 @@
 export { DecadeLevelGroup } from './DecadeLevelGroup';
-export type { DecadeLevelGroupProps, DecadeLevelGroupStylesNames } from './DecadeLevelGroup';
+export type {
+  DecadeLevelGroupFactory,
+  DecadeLevelGroupProps,
+  DecadeLevelGroupStylesNames,
+} from './DecadeLevelGroup';

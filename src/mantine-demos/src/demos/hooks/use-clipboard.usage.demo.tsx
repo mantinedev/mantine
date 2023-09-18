@@ -1,5 +1,5 @@
 import React from 'react';
-import { Group, Button } from '@mantine/core';
+import { Button } from '@mantine/core';
 import { MantineDemo } from '@mantine/ds';
 import { useClipboard } from '@mantine/hooks';
 
@@ -24,19 +24,18 @@ function Demo() {
   const clipboard = useClipboard({ timeout: 500 });
 
   return (
-    <Group position="center">
-      <Button
-        color={clipboard.copied ? 'teal' : 'blue'}
-        onClick={() => clipboard.copy('Hello, world!')}
-      >
-        {clipboard.copied ? 'Copied' : 'Copy'}
-      </Button>
-    </Group>
+    <Button
+      color={clipboard.copied ? 'teal' : 'blue'}
+      onClick={() => clipboard.copy('Hello, world!')}
+    >
+      {clipboard.copied ? 'Copied' : 'Copy'}
+    </Button>
   );
 }
 
 export const useClipboardDemo: MantineDemo = {
-  type: 'demo',
+  type: 'code',
   code,
   component: Demo,
+  centered: true,
 };

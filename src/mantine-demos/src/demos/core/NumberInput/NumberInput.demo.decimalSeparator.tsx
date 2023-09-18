@@ -8,12 +8,10 @@ import { NumberInput } from '@mantine/core';
 function Demo() {
   return (
     <NumberInput
+      label="Custom decimal separator"
+      placeholder="You can change it"
       decimalSeparator=","
-      thousandsSeparator="."
-      label="Number input with custom separators"
-      defaultValue={0.5}
-      precision={2}
-      step={0.5}
+      defaultValue={20.573}
     />
   );
 }
@@ -22,21 +20,18 @@ function Demo() {
 function Demo() {
   return (
     <NumberInput
-      maw={320}
-      mx="auto"
+      label="Custom decimal separator"
+      placeholder="You can change it"
       decimalSeparator=","
-      thousandsSeparator="."
-      label="Number input with custom separators"
-      placeholder="Decimal separator"
-      defaultValue={0.5}
-      precision={2}
-      step={0.5}
+      defaultValue={20.573}
     />
   );
 }
 
 export const decimalSeparator: MantineDemo = {
-  type: 'demo',
-  code,
+  type: 'code',
   component: Demo,
+  code,
+  centered: true,
+  maxWidth: 340,
 };

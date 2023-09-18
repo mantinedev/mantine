@@ -2,8 +2,8 @@ import dayjs from 'dayjs';
 
 interface IsDateValid {
   date: Date;
-  maxDate: Date;
-  minDate: Date;
+  maxDate: Date | null | undefined;
+  minDate: Date | null | undefined;
 }
 
 export function isDateValid({ date, maxDate, minDate }: IsDateValid) {

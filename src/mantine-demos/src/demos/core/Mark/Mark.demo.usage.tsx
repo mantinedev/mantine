@@ -1,29 +1,32 @@
 import React from 'react';
 import { MantineDemo } from '@mantine/ds';
-import { Mark, Text } from '@mantine/core';
+import { Mark, MarkProps, Text } from '@mantine/core';
+
+function Wrapper(props: MarkProps) {
+  return (
+    <Text>
+      Highlight <Mark {...props}>this chunk</Mark> of the text
+    </Text>
+  );
+}
 
 const code = `
-import { Mark, Text } from '@mantine/core';
+import { Text, Mark } from '@mantine/core';
 
 function Demo() {
   return (
     <Text>
-      Thanks for stopping by and checking out <Mark>Mantine</Mark>, you are awesome!
+      Highlight <Mark{{props}}>this chunk</Mark> of the text
     </Text>
   );
 }
 `;
 
-function Demo() {
-  return (
-    <Text>
-      Thanks for stopping by and checking out <Mark>Mantine</Mark>, you are awesome!
-    </Text>
-  );
-}
-
 export const usage: MantineDemo = {
-  type: 'demo',
+  type: 'configurator',
+  component: Wrapper,
   code,
-  component: Demo,
+  centered: true,
+  maxWidth: '100%',
+  controls: [{ prop: 'color', type: 'color', initialValue: 'yellow', libraryValue: 'yellow' }],
 };

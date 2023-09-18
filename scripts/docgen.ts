@@ -4,104 +4,131 @@ import { DeclarationPath } from './docgen/get-declarations-list';
 import { generateDeclarations } from './docgen/generate-declarations';
 
 const EXTRA_FILES_PATHS = [
-  // Tabs
-  '../src/mantine-core/src/Tabs/TabsList/TabsList.tsx',
-  '../src/mantine-core/src/Tabs/Tab/Tab.tsx',
-  '../src/mantine-core/src/Tabs/TabsPanel/TabsPanel.tsx',
-  '../src/mantine-core/src/Tabs/Tabs.tsx',
-
-  // Accordion
-  '../src/mantine-core/src/Accordion/AccordionControl/AccordionControl.tsx',
-  '../src/mantine-core/src/Accordion/AccordionItem/AccordionItem.tsx',
-  '../src/mantine-core/src/Accordion/AccordionPanel/AccordionPanel.tsx',
-
-  // Tooltip
-  '../src/mantine-core/src/Tooltip/TooltipFloating/TooltipFloating.tsx',
-  '../src/mantine-core/src/Tooltip/TooltipGroup/TooltipGroup.tsx',
-
-  // Popover
-  '../src/mantine-core/src/Popover/PopoverTarget/PopoverTarget.tsx',
-  '../src/mantine-core/src/Popover/PopoverDropdown/PopoverDropdown.tsx',
-
-  // HoverCard
-  '../src/mantine-core/src/HoverCard/HoverCardTarget/HoverCardTarget.tsx',
-  '../src/mantine-core/src/HoverCard/HoverCardDropdown/HoverCardDropdown.tsx',
-
-  // Menu
-  '../src/mantine-core/src/Menu/MenuTarget/MenuTarget.tsx',
-  '../src/mantine-core/src/Menu/MenuDropdown/MenuDropdown.tsx',
-  '../src/mantine-core/src/Menu/MenuItem/MenuItem.tsx',
-  '../src/mantine-core/src/Menu/MenuLabel/MenuLabel.tsx',
-
   // Input
-  '../src/mantine-core/src/Input/InputLabel/InputLabel.tsx',
-  '../src/mantine-core/src/Input/InputWrapper/InputWrapper.tsx',
-  '../src/mantine-core/src/Input/InputDescription/InputDescription.tsx',
-  '../src/mantine-core/src/Input/InputError/InputError.tsx',
-
-  // List
-  '../src/mantine-core/src/List/ListItem/ListItem.tsx',
-
-  // Avatar
-  '../src/mantine-core/src/Avatar/AvatarGroup/AvatarGroup.tsx',
-
-  // Checkbox
-  '../src/mantine-core/src/Checkbox/CheckboxGroup/CheckboxGroup.tsx',
-
-  // Switch
-  '../src/mantine-core/src/Switch/SwitchGroup/SwitchGroup.tsx',
-
-  // Radio
-  '../src/mantine-core/src/Radio/RadioGroup/RadioGroup.tsx',
-
-  // Chip
-  '../src/mantine-core/src/Chip/ChipGroup/ChipGroup.tsx',
-
-  // Grid
-  '../src/mantine-core/src/Grid/Col/Col.tsx',
+  '../src/mantine-core/src/components/Input/InputLabel/InputLabel.tsx',
+  '../src/mantine-core/src/components/Input/InputWrapper/InputWrapper.tsx',
+  '../src/mantine-core/src/components/Input/InputDescription/InputDescription.tsx',
+  '../src/mantine-core/src/components/Input/InputError/InputError.tsx',
 
   // Button
-  '../src/mantine-core/src/Button/ButtonGroup/ButtonGroup.tsx',
+  '../src/mantine-core/src/components/Button/ButtonGroup/ButtonGroup.tsx',
 
-  // Timeline
-  '../src/mantine-core/src/Timeline/TimelineItem/TimelineItem.tsx',
+  // ActionIcon
+  '../src/mantine-core/src/components/ActionIcon/ActionIconGroup/ActionIconGroup.tsx',
+
+  // Popover
+  '../src/mantine-core/src/components/Popover/PopoverTarget/PopoverTarget.tsx',
+  '../src/mantine-core/src/components/Popover/PopoverDropdown/PopoverDropdown.tsx',
 
   // Slider
-  '../src/mantine-core/src/Slider/Slider/Slider.tsx',
-  '../src/mantine-core/src/Slider/RangeSlider/RangeSlider.tsx',
+  '../src/mantine-core/src/components/Slider/Slider/Slider.tsx',
+  '../src/mantine-core/src/components/Slider/RangeSlider/RangeSlider.tsx',
+
+  // Switch
+  '../src/mantine-core/src/components/Switch/SwitchGroup/SwitchGroup.tsx',
+
+  // Checkbox
+  '../src/mantine-core/src/components/Checkbox/CheckboxGroup/CheckboxGroup.tsx',
+
+  // Radio
+  '../src/mantine-core/src/components/Radio/RadioGroup/RadioGroup.tsx',
+
+  // Tabs
+  '../src/mantine-core/src/components/Tabs/TabsTab/TabsTab.tsx',
+  '../src/mantine-core/src/components/Tabs/TabsList/TabsList.tsx',
+  '../src/mantine-core/src/components/Tabs/TabsPanel/TabsPanel.tsx',
+
+  // Accordion
+  '../src/mantine-core/src/components/Accordion/AccordionItem/AccordionItem.tsx',
+  '../src/mantine-core/src/components/Accordion/AccordionControl/AccordionControl.tsx',
+
+  // Pill
+  '../src/mantine-core/src/components/Pill/PillGroup/PillGroup.tsx',
+
+  // PillsInput
+  '../src/mantine-core/src/components/PillsInput/PillsInputField/PillsInputField.tsx',
+
+  // Combobox
+  '../src/mantine-core/src/components/Combobox/ComboboxOption/ComboboxOption.tsx',
+  '../src/mantine-core/src/components/Combobox/ComboboxDropdown/ComboboxDropdown.tsx',
+  '../src/mantine-core/src/components/Combobox/ComboboxTarget/ComboboxTarget.tsx',
+  '../src/mantine-core/src/components/Combobox/ComboboxDropdownTarget/ComboboxDropdownTarget.tsx',
+  '../src/mantine-core/src/components/Combobox/ComboboxEventsTarget/ComboboxEventsTarget.tsx',
+  '../src/mantine-core/src/components/Combobox/ComboboxDropdown/ComboboxDropdown.tsx',
+  '../src/mantine-core/src/components/Combobox/ComboboxGroup/ComboboxGroup.tsx',
 
   // AppShell
-  '../src/mantine-core/src/AppShell/Navbar/Navbar.tsx',
-  '../src/mantine-core/src/AppShell/Header/Header.tsx',
-  '../src/mantine-core/src/AppShell/Footer/Footer.tsx',
-  '../src/mantine-core/src/AppShell/Aside/Aside.tsx',
+  '../src/mantine-core/src/components/AppShell/AppShellAside/AppShellAside.tsx',
+  '../src/mantine-core/src/components/AppShell/AppShellNavbar/AppShellNavbar.tsx',
+  '../src/mantine-core/src/components/AppShell/AppShellHeader/AppShellHeader.tsx',
+  '../src/mantine-core/src/components/AppShell/AppShellFooter/AppShellFooter.tsx',
+  '../src/mantine-core/src/components/AppShell/AppShellSection/AppShellSection.tsx',
+
+  // Grid
+  '../src/mantine-core/src/components/Grid/GridCol/GridCol.tsx',
+
+  // HoverCard
+  '../src/mantine-core/src/components/HoverCard/HoverCardTarget/HoverCardTarget.tsx',
+
+  // Menu
+  '../src/mantine-core/src/components/Menu/MenuItem/MenuItem.tsx',
+  '../src/mantine-core/src/components/Menu/MenuTarget/MenuTarget.tsx',
+
+  // Progress
+  '../src/mantine-core/src/components/Progress/ProgressSection/ProgressSection.tsx',
+  '../src/mantine-core/src/components/Progress/ProgressRoot/ProgressRoot.tsx',
+
+  // Chip
+  '../src/mantine-core/src/components/Chip/ChipGroup/ChipGroup.tsx',
+
+  // Card
+  '../src/mantine-core/src/components/Card/CardSection/CardSection.tsx',
 
   // Stepper
-  '../src/mantine-core/src/Stepper/Step/Step.tsx',
+  '../src/mantine-core/src/components/Stepper/StepperStep/StepperStep.tsx',
 
-  // Pagination
-  '../src/mantine-core/src/Pagination/PaginationRoot/PaginationRoot.tsx',
-  '../src/mantine-core/src/Pagination/PaginationItems/PaginationItems.tsx',
+  // Timeline
+  '../src/mantine-core/src/components/Timeline/TimelineItem/TimelineItem.tsx',
+
+  // List
+  '../src/mantine-core/src/components/List/ListItem/ListItem.tsx',
+
+  // Spotlight
+  '../src/mantine-spotlight/src/Spotlight.tsx',
+  '../src/mantine-spotlight/src/SpotlightAction.tsx',
+  '../src/mantine-spotlight/src/SpotlightActionsGroup.tsx',
+  '../src/mantine-spotlight/src/SpotlightRoot.tsx',
+  '../src/mantine-spotlight/src/SpotlightSearch.tsx',
 
   // Carousel
   '../src/mantine-carousel/src/Carousel.tsx',
-  '../src/mantine-carousel/src/CarouselSlide/CarouselSlide.tsx',
 
-  // Other
-  '../src/mantine-notifications/src/Notifications/Notifications.tsx',
-  '../src/mantine-prism/src/Prism/Prism.tsx',
-  '../src/mantine-spotlight/src/SpotlightProvider.tsx',
-  '../src/mantine-modals/src/ModalsProvider.tsx',
-  '../src/mantine-tiptap/src/RichTextEditor.tsx',
-  '../src/mantine-nprogress/src/NavigationProgress.tsx',
+  // Dropzone
   '../src/mantine-dropzone/src/Dropzone.tsx',
   '../src/mantine-dropzone/src/DropzoneFullScreen.tsx',
+
+  // CodeHighlight
+  '../src/mantine-code-highlight/src/CodeHighlight.tsx',
+  '../src/mantine-code-highlight/src/CodeHighlightTabs.tsx',
+  '../src/mantine-code-highlight/src/InlineCodeHighlight.tsx',
+
+  // Nprogress
+  '../src/mantine-nprogress/src/NavigationProgress.tsx',
+
+  // Modals
+  '../src/mantine-modals/src/ModalsProvider.tsx',
+
+  // Tiptap
+  '../src/mantine-tiptap/src/RichTextEditor.tsx',
+
+  // Notifications
+  '../src/mantine-notifications/src/Notifications.tsx',
 ];
 
 const PATHS: DeclarationPath[] = [
-  { type: 'package', path: path.join(__dirname, '../src/mantine-core/src') },
+  { type: 'package', path: path.join(__dirname, '../src/mantine-core/src/components') },
   { type: 'package', path: path.join(__dirname, '../src/mantine-dates/src/components') },
-  { type: 'package', path: path.join(__dirname, '../src/mantine-dropzone/src') },
+  // { type: 'package', path: path.join(__dirname, '../src/mantine-dropzone/src') },
   ...EXTRA_FILES_PATHS.map((filePath) => ({
     type: 'file' as const,
     path: path.join(__dirname, filePath),

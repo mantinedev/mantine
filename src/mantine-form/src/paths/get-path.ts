@@ -7,7 +7,7 @@ export function getPath(path: unknown, values: unknown): unknown {
     return undefined;
   }
 
-  let value = values[splittedPath[0]];
+  let value = values[splittedPath[0] as keyof typeof values];
   for (let i = 1; i < splittedPath.length; i += 1) {
     if (value === undefined) {
       break;

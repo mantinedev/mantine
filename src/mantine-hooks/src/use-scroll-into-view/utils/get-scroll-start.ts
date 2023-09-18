@@ -1,4 +1,4 @@
-export const getScrollStart = ({ axis, parent }) => {
+export const getScrollStart = ({ axis, parent }: any) => {
   if (!parent && typeof document === 'undefined') {
     return 0;
   }

@@ -12,7 +12,7 @@ function Demo() {
         <Button>Toggle popover</Button>
       </Popover.Target>
       <Popover.Dropdown>
-        <Text size="sm">This is uncontrolled popover, it is opened when button is clicked</Text>
+        <Text size="xs">This is uncontrolled popover, it is opened when button is clicked</Text>
       </Popover.Dropdown>
     </Popover>
   );
@@ -26,14 +26,15 @@ function Demo() {
         <Button>Toggle popover</Button>
       </Popover.Target>
       <Popover.Dropdown>
-        <Text size="sm">This is uncontrolled popover, it is opened when button is clicked</Text>
+        <Text size="xs">This is uncontrolled popover, it is opened when button is clicked</Text>
       </Popover.Dropdown>
     </Popover>
   );
 }
 
 export const usage: MantineDemo = {
-  type: 'demo',
+  type: 'code',
   code,
+  centered: true,
   component: Demo,
 };

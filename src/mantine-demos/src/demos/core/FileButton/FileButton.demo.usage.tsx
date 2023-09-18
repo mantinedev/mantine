@@ -10,14 +10,14 @@ function Demo() {
   const [file, setFile] = useState<File | null>(null);
   return (
     <>
-      <Group position="center">
+      <Group justify="center">
         <FileButton onChange={setFile} accept="image/png,image/jpeg">
           {(props) => <Button {...props}>Upload image</Button>}
         </FileButton>
       </Group>
 
       {file && (
-        <Text size="sm" align="center" mt="sm">
+        <Text size="sm" ta="center" mt="sm">
           Picked file: {file.name}
         </Text>
       )}
@@ -30,14 +30,14 @@ function Demo() {
   const [file, setFile] = useState<File | null>(null);
   return (
     <>
-      <Group position="center">
+      <Group justify="center">
         <FileButton onChange={setFile} accept="image/png,image/jpeg">
           {(props) => <Button {...props}>Upload image</Button>}
         </FileButton>
       </Group>
 
       {file && (
-        <Text size="sm" align="center" mt="sm">
+        <Text size="sm" ta="center" mt="sm">
           Picked file: {file.name}
         </Text>
       )}
@@ -46,7 +46,7 @@ function Demo() {
 }
 
 export const usage: MantineDemo = {
-  type: 'demo',
+  type: 'code',
   component: Demo,
   code,
 };

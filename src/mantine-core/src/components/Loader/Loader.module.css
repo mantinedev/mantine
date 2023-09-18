@@ -1,0 +1,129 @@
+.root {
+  --loader-size-xs: rem(18px);
+  --loader-size-sm: rem(22px);
+  --loader-size-md: rem(36px);
+  --loader-size-lg: rem(44px);
+  --loader-size-xl: rem(58px);
+  --loader-size: var(--loader-size-md);
+  --loader-color: var(--mantine-primary-color-filled);
+}
+
+/* ----- Bars loader ----- */
+@keyframes bars-loader-animation {
+  0% {
+    transform: scale(0.6);
+    opacity: 0;
+  }
+
+  50%,
+  100% {
+    transform: scale(1);
+  }
+}
+
+.barsLoader {
+  position: relative;
+  width: var(--loader-size);
+  height: var(--loader-size);
+  display: flex;
+  gap: calc(var(--loader-size) / 5);
+}
+
+.bar {
+  flex: 1;
+  background: var(--loader-color);
+  animation: bars-loader-animation 1.2s cubic-bezier(0, 0.5, 0.5, 1) infinite;
+  border-radius: rem(2px);
+
+  &:nth-of-type(1) {
+    animation-delay: -240ms;
+  }
+
+  &:nth-of-type(2) {
+    animation-delay: -120ms;
+  }
+
+  &:nth-of-type(3) {
+    animation-delay: 0;
+  }
+}
+
+/* ----- Dots loader ----- */
+@keyframes loader-dots-animation {
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0.5;
+  }
+}
+
+.dotsLoader {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: calc(var(--loader-size) / 10);
+  flex-wrap: wrap;
+  position: relative;
+  width: var(--loader-size);
+  height: var(--loader-size);
+}
+
+.dot {
+  width: calc(var(--loader-size) / 3 - var(--loader-size) / 15);
+  height: calc(var(--loader-size) / 3 - var(--loader-size) / 15);
+  border-radius: 50%;
+  background: var(--loader-color);
+  animation: loader-dots-animation 1200ms linear infinite;
+
+  &:nth-child(2),
+  &:nth-child(4) {
+    animation-delay: -400ms;
+  }
+
+  &:nth-child(3),
+  &:nth-child(5),
+  &:nth-child(7) {
+    animation-delay: -800ms;
+  }
+
+  &:nth-child(6),
+  &:nth-child(8) {
+    animation-delay: -1200ms;
+  }
+
+  &:nth-child(9) {
+    animation-delay: -1600ms;
+  }
+}
+
+/* ----- Oval loader ----- */
+@keyframes oval-loader-animation {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.ovalLoader {
+  display: inline-block;
+  width: var(--loader-size);
+  height: var(--loader-size);
+
+  &::after {
+    content: '';
+    display: block;
+    width: var(--loader-size);
+    height: var(--loader-size);
+    border-radius: rem(10000px);
+    border-width: calc(var(--loader-size) / 8);
+    border-style: solid;
+    border-color: var(--loader-color) var(--loader-color) var(--loader-color) transparent;
+    animation: oval-loader-animation 1.2s linear infinite;
+  }
+}

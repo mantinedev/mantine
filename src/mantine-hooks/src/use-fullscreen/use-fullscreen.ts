@@ -82,7 +82,7 @@ export function useFullscreen<T extends HTMLElement = any>() {
 
   const toggle = useCallback(async () => {
     if (!getFullscreenElement()) {
-      await enterFullScreen(_ref.current);
+      await enterFullScreen(_ref.current!);
     } else {
       await exitFullscreen();
     }

@@ -22,7 +22,7 @@ function Demo() {
   });
 
   return (
-    <Box maw={300} mx="auto">
+    <Box maw={340} mx="auto">
       <form onSubmit={form.onSubmit((values) => console.log(values))}>
         <TextInput
           withAsterisk
@@ -37,7 +37,7 @@ function Demo() {
           {...form.getInputProps('termsOfService', { type: 'checkbox' })}
         />
 
-        <Group position="right" mt="md">
+        <Group justify="flex-end" mt="md">
           <Button type="submit">Submit</Button>
         </Group>
       </form>
@@ -60,7 +60,7 @@ function Demo() {
   });
 
   return (
-    <Box maw={300} mx="auto">
+    <Box maw={340} mx="auto">
       <form onSubmit={form.onSubmit((values) => console.log(values))}>
         <TextInput
           withAsterisk
@@ -75,7 +75,7 @@ function Demo() {
           {...form.getInputProps('termsOfService', { type: 'checkbox' })}
         />
 
-        <Group position="right" mt="md">
+        <Group justify="flex-end" mt="md">
           <Button type="submit">Submit</Button>
         </Group>
       </form>
@@ -84,7 +84,7 @@ function Demo() {
 }
 
 export const clearErrorOnChange: MantineDemo = {
-  type: 'demo',
+  type: 'code',
   component: Demo,
   code,
 };

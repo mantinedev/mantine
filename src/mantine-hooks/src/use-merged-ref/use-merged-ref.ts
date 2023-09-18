@@ -1,14 +1,22 @@
-import React, { useCallback } from 'react';
-import { assignRef } from '../utils';
+/* eslint-disable no-param-reassign */
+import { useCallback, Ref } from 'react';
 
-type Ref<T> = React.Dispatch<React.SetStateAction<T>> | React.ForwardedRef<T>;
+type PossibleRef<T> = Ref<T> | undefined;
 
-export function mergeRefs<T = any>(...refs: Ref<T>[]) {
+export function assignRef<T>(ref: PossibleRef<T>, value: T) {
+  if (typeof ref === 'function') {
+    ref(value);
+  } else if (typeof ref === 'object' && ref !== null && 'current' in ref) {
+    (ref as React.MutableRefObject<T>).current = value;
+  }
+}
+
+export function mergeRefs<T>(...refs: PossibleRef<T>[]) {
   return (node: T | null) => {
     refs.forEach((ref) => assignRef(ref, node));
   };
 }
 
-export function useMergedRef<T = any>(...refs: Ref<T>[]) {
+export function useMergedRef<T>(...refs: PossibleRef<T>[]) {
   return useCallback(mergeRefs(...refs), refs);
 }

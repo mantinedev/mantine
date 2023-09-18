@@ -15,7 +15,7 @@ function Demo() {
     const storedValue = window.localStorage.getItem('user-form');
     if (storedValue) {
       try {
-        form.setValues(JSON.parse(window.localStorage.getItem('user-form')));
+        form.setValues(JSON.parse(window.localStorage.getItem('user-form')!));
       } catch (e) {
         console.log('Failed to parse stored value');
       }
@@ -27,7 +27,7 @@ function Demo() {
   }, [form.values]);
 
   return (
-    <Box maw={320} mx="auto">
+    <Box maw={340} mx="auto">
       <TextInput label="Name" placeholder="Name" {...form.getInputProps('name')} />
       <TextInput
         mt="md"
@@ -47,7 +47,7 @@ function Demo() {
     const storedValue = window.localStorage.getItem('user-form');
     if (storedValue) {
       try {
-        form.setValues(JSON.parse(window.localStorage.getItem('user-form')));
+        form.setValues(JSON.parse(window.localStorage.getItem('user-form')!));
       } catch (e) {
         // eslint-disable-next-line no-console
         console.log('Failed to parse stored value');
@@ -60,7 +60,7 @@ function Demo() {
   }, [form.values]);
 
   return (
-    <Box maw={320} mx="auto">
+    <Box maw={340} mx="auto">
       <TextInput label="Name" placeholder="Name" {...form.getInputProps('name')} />
       <TextInput
         mt="md"
@@ -73,7 +73,7 @@ function Demo() {
 }
 
 export const localStorage: MantineDemo = {
-  type: 'demo',
+  type: 'code',
   component: Demo,
   code,
 };

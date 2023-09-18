@@ -12,8 +12,6 @@ function Demo() {
       type="multiple"
       label="Pick month"
       placeholder="Pick month"
-      mx="auto"
-      maw={400}
     />
   );
 }
@@ -26,14 +24,14 @@ function Demo() {
       type="multiple"
       label="Pick month"
       placeholder="Pick month"
-      mx="auto"
-      maw={400}
     />
   );
 }
 
 export const valueFormat: MantineDemo = {
-  type: 'demo',
+  type: 'code',
+  centered: true,
+  maxWidth: 400,
   component: Demo,
   code,
 };

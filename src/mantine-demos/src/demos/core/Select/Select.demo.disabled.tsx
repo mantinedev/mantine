@@ -1,41 +1,37 @@
 import React from 'react';
 import { MantineDemo } from '@mantine/ds';
-import { Select, Box } from '@mantine/core';
+import { Select } from '@mantine/core';
 
 const code = `
 import { Select } from '@mantine/core';
 
 function Demo() {
-  return <Select disabled />;
+  return (
+    <Select
+      label="Your favorite library"
+      placeholder="Pick value"
+      data={['React', 'Angular', 'Vue', 'Svelte']}
+      disabled
+    />
+  );
 }
 `;
 
 function Demo() {
   return (
-    <Box maw={320} mx="auto">
-      <Select
-        data={['React', 'Angular', 'Svelte', 'Vue']}
-        label="Disabled without value"
-        placeholder="Pick all that you like"
-        disabled
-        withinPortal
-      />
-
-      <Select
-        mt="md"
-        data={['React', 'Angular', 'Svelte', 'Vue']}
-        label="Disabled with value"
-        placeholder="Pick all that you like"
-        disabled
-        withinPortal
-        value="React"
-      />
-    </Box>
+    <Select
+      label="Your favorite library"
+      placeholder="Pick value"
+      data={['React', 'Angular', 'Vue', 'Svelte']}
+      disabled
+    />
   );
 }
 
 export const disabled: MantineDemo = {
-  type: 'demo',
-  code,
+  type: 'code',
   component: Demo,
+  code,
+  maxWidth: 340,
+  centered: true,
 };

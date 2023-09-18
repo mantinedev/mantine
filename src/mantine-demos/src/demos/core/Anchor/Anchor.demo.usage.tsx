@@ -8,7 +8,7 @@ import { Anchor } from '@mantine/core';
 function Demo() {
   return (
     <Anchor href="https://mantine.dev/" target="_blank">
-      Mantine docs
+      Anchor component
     </Anchor>
   );
 }
@@ -17,13 +17,13 @@ function Demo() {
 function Demo() {
   return (
     <Anchor href="https://mantine.dev/" target="_blank">
-      Mantine docs
+      Anchor component
     </Anchor>
   );
 }
 
 export const usage: MantineDemo = {
-  type: 'demo',
-  code,
+  type: 'code',
   component: Demo,
+  code,
 };

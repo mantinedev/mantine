@@ -1,4 +1,4 @@
 export { usage } from './Image.demo.usage';
-export { sizes } from './Image.demo.sizes';
-export { placeholders } from './Image.demo.placeholders';
-export { caption } from './Image.demo.caption';
+export { height } from './Image.demo.height';
+export { contain } from './Image.demo.contain';
+export { fallback } from './Image.demo.fallback';

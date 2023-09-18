@@ -1,0 +1,25 @@
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+import { NavLinkDemos } from '@mantine/demos';
+
+export default Layout(MDX_DATA.NavLink);
+
+## Usage
+
+<Demo data={NavLinkDemos.usage} />
+
+## Active
+
+Set `active` prop to add active styles to `NavLink`. You can customize active styles with `color` and `variant` props:
+
+<Demo data={NavLinkDemos.active} />
+
+## Nested NavLinks
+
+To create nested links put `NavLink` as children of another `NavLink`:
+
+<Demo data={NavLinkDemos.nested} />
+
+<Polymorphic defaultElement="a" changeToElement="button" component="NavLink" withNext />
+
+<GetElementRef component="NavLink" refType="a" />

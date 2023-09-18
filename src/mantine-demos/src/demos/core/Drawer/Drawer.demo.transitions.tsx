@@ -1,12 +1,12 @@
 import React from 'react';
-import { Drawer, Button, Group } from '@mantine/core';
+import { Drawer, Button } from '@mantine/core';
 import { MantineDemo } from '@mantine/ds';
 import { useDisclosure } from '@mantine/hooks';
 import { AuthenticationForm } from '../../../shared/AuthenticationForm/AuthenticationForm';
 
 const code = `
 import { useDisclosure } from '@mantine/hooks';
-import { Drawer, Button, Group } from '@mantine/core';
+import { Drawer, Button } from '@mantine/core';
 
 function Demo() {
   const [opened, { open, close }] = useDisclosure(false);
@@ -22,9 +22,7 @@ function Demo() {
         {/* Drawer content */}
       </Drawer>
 
-      <Group position="center">
-        <Button onClick={open}>Open Drawer</Button>
-      </Group>
+      <Button onClick={open}>Open Drawer</Button>
     </>
   );
 }
@@ -42,18 +40,17 @@ function Demo() {
         title="Authentication"
         transitionProps={{ transition: 'rotate-left', duration: 150, timingFunction: 'linear' }}
       >
-        <AuthenticationForm noPadding noShadow />
+        <AuthenticationForm noShadow noPadding />
       </Drawer>
 
-      <Group position="center">
-        <Button onClick={open}>Open Drawer</Button>
-      </Group>
+      <Button onClick={open}>Open Drawer</Button>
     </>
   );
 }
 
 export const transitions: MantineDemo = {
-  type: 'demo',
+  type: 'code',
   code,
+  centered: true,
   component: Demo,
 };

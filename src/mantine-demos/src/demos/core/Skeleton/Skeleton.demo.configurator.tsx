@@ -13,24 +13,26 @@ function Wrapper(props: Partial<SkeletonProps>) {
   );
 }
 
-const codeTemplate = (props: string) => `
-import { Skeleton } from '@mantine/core';
+const code = (props: any) => `
+  import { Skeleton } from '@mantine/core';
 
-function Demo() {
-  return (
-    <>
-      <Skeleton${props} height={50} circle mb="xl" />
-      <Skeleton${props} height={8} radius="xl" />
-      <Skeleton${props} height={8} mt={6} radius="xl" />
-      <Skeleton${props} height={8} mt={6} width="70%" radius="xl" />
-    </>
-  );
-}
-`;
+  function Demo() {
+    return (
+      <>
+        <Skeleton${props.animate ? '' : ' animate={false}'} height={50} circle mb="xl" />
+        <Skeleton${props.animate ? '' : ' animate={false}'} height={8} radius="xl" />
+        <Skeleton${props.animate ? '' : ' animate={false}'} height={8} mt={6} radius="xl" />
+        <Skeleton${
+          props.animate ? '' : ' animate={false}'
+        } height={8} mt={6} width="70%" radius="xl" />
+      </>
+    );
+  }
+  `;
 
 export const configurator: MantineDemo = {
   type: 'configurator',
   component: Wrapper,
-  codeTemplate,
-  configurator: [{ name: 'animate', type: 'boolean', initialValue: true, defaultValue: true }],
+  code,
+  controls: [{ prop: 'animate', type: 'boolean', initialValue: true, libraryValue: '__' }],
 };

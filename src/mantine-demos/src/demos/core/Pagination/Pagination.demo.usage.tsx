@@ -3,10 +3,11 @@ import { MantineDemo } from '@mantine/ds';
 import { Pagination } from '@mantine/core';
 
 function Demo() {
-  return <Pagination total={10} position="center" />;
+  return <Pagination total={10} />;
 }
 
 export const usage: MantineDemo = {
-  type: 'demo',
+  type: 'code',
   component: Demo,
+  centered: true,
 };

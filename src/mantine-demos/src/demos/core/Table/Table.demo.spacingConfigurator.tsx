@@ -6,34 +6,34 @@ import { elements } from './_data';
 function Wrapper(props: TableProps) {
   return (
     <Table {...props}>
-      <thead>
-        <tr>
-          <th>Position</th>
-          <th>Name</th>
-          <th>Symbol</th>
-          <th>Mass</th>
-        </tr>
-      </thead>
-      <tbody>
+      <Table.Thead>
+        <Table.Tr>
+          <Table.Th>Position</Table.Th>
+          <Table.Th>Name</Table.Th>
+          <Table.Th>Symbol</Table.Th>
+          <Table.Th>Mass</Table.Th>
+        </Table.Tr>
+      </Table.Thead>
+      <Table.Tbody>
         {elements.map((element) => (
-          <tr key={element.name}>
-            <td>{element.position}</td>
-            <td>{element.name}</td>
-            <td>{element.symbol}</td>
-            <td>{element.mass}</td>
-          </tr>
+          <Table.Tr key={element.name}>
+            <Table.Td>{element.position}</Table.Td>
+            <Table.Td>{element.name}</Table.Td>
+            <Table.Td>{element.symbol}</Table.Td>
+            <Table.Td>{element.mass}</Table.Td>
+          </Table.Tr>
         ))}
-      </tbody>
+      </Table.Tbody>
     </Table>
   );
 }
 
-const codeTemplate = (props: string) => `
+const code = `
 import { Table } from '@mantine/core';
 
 function Demo() {
   return (
-    <Table${props}>
+    <Table{{props}}>
       {/* {...rows} */}
     </Table>
   );
@@ -43,10 +43,9 @@ function Demo() {
 export const spacingConfigurator: MantineDemo = {
   type: 'configurator',
   component: Wrapper,
-  codeTemplate,
-  configurator: [
-    { name: 'horizontalSpacing', type: 'size', defaultValue: 'xs', initialValue: 'xs' },
-    { name: 'verticalSpacing', type: 'size', initialValue: 'xs' },
-    { name: 'fontSize', type: 'size', initialValue: 'sm', defaultValue: 'sm' },
+  code,
+  controls: [
+    { prop: 'horizontalSpacing', type: 'size', libraryValue: 'xs', initialValue: 'xs' },
+    { prop: 'verticalSpacing', type: 'size', initialValue: 'xs', libraryValue: 'xs' },
   ],
 };

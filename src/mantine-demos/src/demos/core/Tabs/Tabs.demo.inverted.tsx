@@ -1,5 +1,6 @@
 import React from 'react';
 import { MantineDemo } from '@mantine/ds';
+
 import { Tabs } from '@mantine/core';
 
 const code = `
@@ -45,7 +46,7 @@ function Demo() {
 }
 
 export const inverted: MantineDemo = {
-  type: 'demo',
+  type: 'code',
   component: Demo,
   code,
 };

@@ -18,11 +18,11 @@ function Demo() {
   });
 
   return (
-    <Box maw={320} mx="auto">
+    <Box maw={340} mx="auto">
       <TextInput label="Name" placeholder="Name" {...form.getInputProps('name')} />
       <TextInput mt="md" label="Email" placeholder="Email" {...form.getInputProps('email')} />
 
-      <Group position="center" mt="xl">
+      <Group justify="center" mt="xl">
         <Button variant="outline" onClick={() => form.setFieldValue('name', randomId())}>
           Random name
         </Button>
@@ -47,11 +47,11 @@ function Demo() {
   });
 
   return (
-    <Box maw={320} mx="auto">
+    <Box maw={340} mx="auto">
       <TextInput label="Name" placeholder="Name" {...form.getInputProps('name')} />
       <TextInput mt="md" label="Email" placeholder="Email" {...form.getInputProps('email')} />
 
-      <Group position="center" mt="xl">
+      <Group justify="center" mt="xl">
         <Button variant="outline" onClick={() => form.setFieldValue('name', randomId())}>
           Random name
         </Button>
@@ -67,7 +67,7 @@ function Demo() {
 }
 
 export const setFieldValue: MantineDemo = {
-  type: 'demo',
+  type: 'code',
   component: Demo,
   code,
 };

@@ -3,7 +3,7 @@ import { IconGauge, IconFingerprint, IconActivity, IconChevronRight } from '@tab
 import { MantineDemo } from '@mantine/ds';
 import { Box, NavLink, Group } from '@mantine/core';
 
-const codeTemplate = (props: string) => `
+const code = `
 import { useState } from 'react';
 import { IconGauge, IconFingerprint, IconActivity, IconChevronRight } from '@tabler/icons-react';
 import { Box, NavLink } from '@mantine/core';
@@ -29,7 +29,8 @@ function Demo() {
       description={item.description}
       rightSection={item.rightSection}
       icon={<item.icon size="1rem" stroke={1.5} />}
-      onClick={() => setActive(index)}${props.length === 0 ? '' : `\n     ${props}`}
+      onClick={() => setActive(index)}
+      {{props}}
     />
   ));
 
@@ -64,7 +65,7 @@ function Demo(props: any) {
   ));
 
   return (
-    <Group position="center">
+    <Group justify="center">
       <Box w={220}>{items}</Box>
     </Group>
   );
@@ -73,12 +74,11 @@ function Demo(props: any) {
 export const active: MantineDemo = {
   type: 'configurator',
   component: Demo,
-  codeTemplate,
-  configuratorProps: { multiline: 3 },
-  configurator: [
-    { name: 'color', type: 'color', initialValue: 'blue', defaultValue: 'blue' },
+  code,
+  controls: [
+    { prop: 'color', type: 'color', initialValue: 'blue', libraryValue: 'blue' },
     {
-      name: 'variant',
+      prop: 'variant',
       type: 'segmented',
       data: [
         { value: 'subtle', label: 'Subtle' },
@@ -86,7 +86,7 @@ export const active: MantineDemo = {
         { value: 'filled', label: 'Filled' },
       ],
 
-      defaultValue: 'light',
+      libraryValue: 'light',
       initialValue: 'light',
     },
   ],

@@ -1,6 +1,5 @@
-import { MANTINE_SIZES } from '@mantine/core';
-import dayjs from 'dayjs';
 import React, { useState } from 'react';
+import dayjs from 'dayjs';
 import { YearsList } from './YearsList';
 
 export default { title: 'YearsList' };
@@ -37,6 +36,22 @@ export function MaxDate() {
   );
 }
 
+export function WithRange() {
+  return (
+    <div style={{ padding: 40, width: 320 }}>
+      <YearsList decade={new Date(2022, 1, 1)} getYearControlProps={() => ({ inRange: true })} />
+      <YearsList
+        decade={new Date(2022, 1, 1)}
+        getYearControlProps={() => ({ firstInRange: true, selected: true })}
+      />
+      <YearsList
+        decade={new Date(2022, 1, 1)}
+        getYearControlProps={() => ({ lastInRange: true, selected: true })}
+      />
+    </div>
+  );
+}
+
 export function WithSelection() {
   const [selected, setSelected] = useState(new Date());
 
@@ -54,7 +69,7 @@ export function WithSelection() {
 }
 
 export function Sizes() {
-  const sizes = MANTINE_SIZES.map((size) => (
+  const sizes = (['xs', 'sm', 'md', 'lg', 'xl'] as const).map((size) => (
     <YearsList
       decade={new Date()}
       size={size}

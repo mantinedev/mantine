@@ -34,7 +34,7 @@ import {
 
 export function useForm<
   Values = Record<string, unknown>,
-  TransformValues extends _TransformValues<Values> = (values: Values) => Values
+  TransformValues extends _TransformValues<Values> = (values: Values) => Values,
 >({
   initialValues = {} as Values,
   initialErrors = {},

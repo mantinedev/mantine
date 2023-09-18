@@ -15,7 +15,7 @@ function Demo() {
   );
 
   return (
-    <Box maw={320} mx="auto" sx={{ overflowWrap: 'break-word' }}>
+    <Box maw={320} mx="auto" style={{ overflowWrap: 'break-word' }}>
       <TextInput
         value={value}
         onChange={(event) => setEmail(event.currentTarget.value)}
@@ -26,14 +26,14 @@ function Demo() {
       />
 
       <Text size="sm" mt="md">
-        <Text inherit color="dimmed" component="span">
+        <Text inherit c="dimmed" component="span">
           Current value:
         </Text>{' '}
         {value || '[empty string]'}
       </Text>
 
       <Text size="sm">
-        <Text inherit color="dimmed" component="span">
+        <Text inherit c="dimmed" component="span">
           Last valid value:
         </Text>{' '}
         {lastValidValue || '[empty string]'}
@@ -51,7 +51,7 @@ function Demo() {
   );
 
   return (
-    <Box maw={320} mx="auto" sx={{ overflowWrap: 'break-word' }}>
+    <Box maw={320} mx="auto" style={{ overflowWrap: 'break-word' }}>
       <TextInput
         value={value}
         onChange={(event) => setEmail(event.currentTarget.value)}
@@ -62,14 +62,14 @@ function Demo() {
       />
 
       <Text size="sm" mt="md">
-        <Text inherit color="dimmed" component="span">
+        <Text inherit c="dimmed" component="span">
           Current value:
         </Text>{' '}
         {value || '[empty string]'}
       </Text>
 
       <Text size="sm">
-        <Text inherit color="dimmed" component="span">
+        <Text inherit c="dimmed" component="span">
           Last valid value:
         </Text>{' '}
         {lastValidValue || '[empty string]'}
@@ -79,7 +79,7 @@ function Demo() {
 }
 
 export const useValidatedStateDemo: MantineDemo = {
-  type: 'demo',
+  type: 'code',
   code,
   component: Demo,
 };

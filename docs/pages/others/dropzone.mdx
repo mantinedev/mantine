@@ -1,0 +1,189 @@
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+import * as DropzoneDemos from '@/dropzone-demos';
+import {
+  MIME_TYPES,
+  IMAGE_MIME_TYPE,
+  PDF_MIME_TYPE,
+  MS_WORD_MIME_TYPE,
+  MS_EXCEL_MIME_TYPE,
+  MS_POWERPOINT_MIME_TYPE,
+} from '@mantine/dropzone';
+
+export default Layout(MDX_DATA.Dropzone);
+
+## Installation
+
+<InstallScript packages="@mantine/dropzone" />
+
+After installation import package styles at the root of your application:
+
+```tsx
+import '@mantine/dropzone/styles.css';
+```
+
+## Usage
+
+`Dropzone` lets you capture one or more files from user.
+Component is based on [react-dropzone](https://react-dropzone.js.org/) and support all of its core features:
+
+- Accepts/rejects files based on provided mime types
+- Limits individual file size
+- Renders given children and provides context based component to display elements based on current status
+
+<Demo data={DropzoneDemos.usage} />
+
+## Dropzone.Accept, Dropzone.Reject and Dropzone.Idle
+
+`Dropzone.Accept`, `Dropzone.Reject` and `Dropzone.Idle` components are visible only when the user performs certain action:
+
+- `Dropzone.Accept` is visible only when the user drags file that can be accepted over the dropzone
+- `Dropzone.Reject` is visible only when the user drags file that cannot be accepted over the dropzone
+- `Dropzone.Idle` is visible when the user does not drag anything over dropzone
+
+## Loading state
+
+Set `loading` prop to indicate loading state with [LoadingOverlay](/core/loading-overlay/) component.
+When `loading` props is true user cannot drop or select new files (`Dropzone` becomes disabled):
+
+<Demo data={DropzoneDemos.loading} />
+
+## Disabled state
+
+If you want to implement your own loading state you can disable `Dropzone` without `LoadingOverlay`.
+Same as with `loading`, when `Dropzone` is disabled user cannot drop or select new files:
+
+<Demo data={DropzoneDemos.disabled} />
+
+## Open file browser manually
+
+To open files browser from outside of component use `openRef` prop to get function that will trigger file browser:
+
+<Demo data={DropzoneDemos.manual} />
+
+## Enable child pointer event
+
+By default, Dropzone disables pointer events on its children for dragging events to work. So when we set `activateOnClick` to `false`,
+clicking on any children inside Dropzone will do nothing. However, You can set style `pointerEvents: 'all'` to make children events to work:
+
+<Demo data={DropzoneDemos.enableChildPointerEvent} />
+
+## Mime types
+
+To specify file types provide an object with the keys set to the [mime type](https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/MIME_types/Common_types)
+and the values as an array of file extensions. Find more examples of accepting specific file types
+in the [react-dropzone documentation](https://react-dropzone.js.org/#section-accepting-specific-file-types).
+
+```tsx
+import { Dropzone } from '@mantine/dropzone';
+
+function Demo() {
+  return (
+    <Dropzone
+      accept={{
+        'image/*': [], // All images
+        'text/html': ['.html', '.htm'],
+      }}
+    >
+      {/* children */}
+    </Dropzone>
+  );
+}
+```
+
+You can also specify file types by providing an array of mime types to `accept` prop:
+
+```tsx
+import { Dropzone } from '@mantine/dropzone';
+
+function Demo() {
+  return (
+    <Dropzone accept={['image/png', 'image/jpeg', 'image/sgv+xml', 'image/gif']}>
+      {/* children */}
+    </Dropzone>
+  );
+}
+```
+
+To save some research time you can use `MIME_TYPES` variable exported from `@mantine/dropzone`:
+
+```tsx
+import { Dropzone, MIME_TYPES } from '@mantine/dropzone';
+
+function Demo() {
+  return (
+    <Dropzone accept={[MIME_TYPES.png, MIME_TYPES.jpeg, MIME_TYPES.svg, MIME_TYPES.gif]}>
+      {/* children */}
+    </Dropzone>
+  );
+}
+```
+
+`MIME_TYPES` includes following data:
+
+<DataTable
+  head={['Key', 'Mime type']}
+  data={Object.keys(MIME_TYPES).map((key) => [key, MIME_TYPES[key]])}
+/>
+
+Additionally you can use grouped mime types:
+
+<DataTable
+  head={['Variable', 'Mime types']}
+  data={[
+    ['IMAGE_MIME_TYPE', IMAGE_MIME_TYPE.join(', ')],
+    ['PDF_MIME_TYPE', PDF_MIME_TYPE.join(', ')],
+    ['MS_WORD_MIME_TYPE', MS_WORD_MIME_TYPE.join(', ')],
+    ['MS_EXCEL_MIME_TYPE', MS_EXCEL_MIME_TYPE.join(', ')],
+    ['MS_POWERPOINT_MIME_TYPE', MS_POWERPOINT_MIME_TYPE.join(', ')],
+  ]}
+/>
+
+```tsx
+import { IMAGE_MIME_TYPE, Dropzone } from '@mantine/dropzone';
+
+function Demo() {
+  return <Dropzone accept={IMAGE_MIME_TYPE}>{/* children */}</Dropzone>;
+}
+```
+
+## Styles API
+
+`Dropzone` root element has the following data attributes to change styles based on current status:
+
+- `data-loading` – when `loading` prop is `true`
+- `data-accept` – when user drags files that can be accepted over the dropzone
+- `data-reject` – when user drags files that cannot be accepted over the dropzone
+- `data-idle` – default state – user does not drag any files over dropzone
+
+<Demo data={DropzoneDemos.stylesApi} />
+
+## Images previews
+
+<Demo data={DropzoneDemos.preview} />
+
+## Get ref
+
+```tsx
+import { useRef, useEffect } from 'react';
+import { Dropzone } from '@mantine/dropzone';
+
+function Demo() {
+  const dropzoneRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    dropzoneRef.current.focus();
+  }, []);
+
+  return <Dropzone ref={dropzoneRef}>{/* children */}</Dropzone>;
+}
+```
+
+## Dropzone.FullScreen component
+
+`Dropzone.FullScreen` lets you capture files dropped to browser window instead of specific area.
+It supports the same props as `Dropzone` component.
+
+To preview component click button and drop images to browser window:
+
+<Demo data={DropzoneDemos.fullScreen} />

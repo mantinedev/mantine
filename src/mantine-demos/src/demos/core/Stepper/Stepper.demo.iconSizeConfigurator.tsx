@@ -4,19 +4,19 @@ import { Stepper, StepperProps } from '@mantine/core';
 
 function Wrapper(props: Partial<StepperProps>) {
   return (
-    <Stepper {...props} active={1} breakpoint="sm">
+    <Stepper {...props} active={1}>
       <Stepper.Step label="Step 1" description="Create an account" />
       <Stepper.Step label="Step 2" description="Verify email" />
     </Stepper>
   );
 }
 
-const codeTemplate = (props: string) => `
+const code = `
 import { Stepper } from '@mantine/core';
 
 function Demo() {
   return (
-    <Stepper${props} active={1}>
+    <Stepper{{props}} active={1}>
       <Stepper.Step label="Step 1" description="Create an account" />
       <Stepper.Step label="Step 2" description="Verify email" />
     </Stepper>
@@ -27,13 +27,13 @@ function Demo() {
 export const iconSizeConfigurator: MantineDemo = {
   type: 'configurator',
   component: Wrapper,
-  codeTemplate,
-  configurator: [
+  code,
+  controls: [
     {
-      name: 'iconSize',
+      prop: 'iconSize',
       type: 'number',
       initialValue: 42,
-      defaultValue: 0,
+      libraryValue: '__',
       min: 32,
       max: 62,
       step: 5,

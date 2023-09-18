@@ -1,0 +1,65 @@
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+import { PaginationDemos } from '@mantine/demos';
+
+export default Layout(MDX_DATA.Pagination);
+
+## Usage
+
+<Demo data={PaginationDemos.configurator} />
+
+## Controlled
+
+To control component state provide `value` and `onChange` props:
+
+```tsx
+import { useState } from 'react';
+import { Pagination } from '@mantine/core';
+
+function Demo() {
+  const [activePage, setPage] = useState(1);
+  return <Pagination value={activePage} onChange={setPage} total={10} />;
+}
+```
+
+## Siblings
+
+Control number of active item siblings with `siblings` prop:
+
+<Demo data={PaginationDemos.siblings} />
+
+## Boundaries
+
+Control number of items displayed after previous and before next buttons with `boundaries` prop:
+
+<Demo data={PaginationDemos.boundaries} />
+
+<StylesApiSelectors component="Pagination" />
+
+<Demo data={PaginationDemos.stylesApi} />
+
+## Compound components
+
+You can use the following compound components to have full control over the `Modal` rendering:
+
+- `Pagination.Root` – context provider
+- `Pagination.Items` – items list
+- `Pagination.Next` – next control
+- `Pagination.Previous` – previous control
+- `Pagination.First` – first control
+- `Pagination.Last` – last control
+
+<Demo data={PaginationDemos.composition} />
+
+## Controls as links
+
+<Demo data={PaginationDemos.links} />
+
+## Change icons
+
+<Demo data={PaginationDemos.icons} />
+
+## use-pagination hook
+
+If you need more flexibility `@mantine/hooks` package exports [use-pagination](/hooks/use-pagination/) hook,
+you can use it to create custom pagination components.

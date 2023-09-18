@@ -1,4 +1,3 @@
-import { MANTINE_SIZES } from '@mantine/core';
 import dayjs from 'dayjs';
 import React, { useState } from 'react';
 import { YearLevel } from './YearLevel';
@@ -45,22 +44,8 @@ export function WithSelection() {
   );
 }
 
-export function WithControls() {
-  const [year, setYear] = useState(new Date());
-
-  return (
-    <div style={{ padding: 40, width: 320 }}>
-      <YearLevel
-        year={year}
-        onNext={() => setYear(dayjs(year).add(1, 'year').toDate())}
-        onPrevious={() => setYear(dayjs(year).subtract(1, 'year').toDate())}
-      />
-    </div>
-  );
-}
-
 export function Sizes() {
-  const sizes = MANTINE_SIZES.map((size) => (
+  const sizes = (['xs', 'sm', 'md', 'lg', 'xl'] as const).map((size) => (
     <YearLevel year={new Date()} size={size} key={size} mt="xl" />
   ));
   return <div style={{ padding: 40 }}>{sizes}</div>;

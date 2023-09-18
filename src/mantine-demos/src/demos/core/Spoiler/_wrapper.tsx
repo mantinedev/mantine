@@ -10,7 +10,7 @@ const content = (
       mb={0}
       mt={5}
       maw="100%"
-      sx={{ float: 'right' }}
+      style={{ float: 'right' }}
       src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e2/Rock_in_caputh-WBTBWB-47.jpg/600px-Rock_in_caputh-WBTBWB-47.jpg"
       alt="We Butter the Bread with Butter"
     />

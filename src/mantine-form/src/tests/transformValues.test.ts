@@ -1,7 +1,7 @@
 import { renderHook, act } from '@testing-library/react';
 import { useForm } from '../use-form';
 
-const getFormEvent = () => ({ preventDefault: jest.fn() } as any);
+const getFormEvent = () => ({ preventDefault: jest.fn() }) as any;
 
 describe('@mantine/form/transformValues', () => {
   it('does not transform values if transformValues function is not provided', () => {

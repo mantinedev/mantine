@@ -1,12 +1,22 @@
 {
   "name": "@mantine/carousel",
   "description": "Embla based carousel",
-  "version": "6.0.21",
-  "main": "cjs/index.js",
-  "module": "esm/index.js",
-  "types": "lib/index.d.ts",
+  "version": "7.0.0-beta.7",
+  "types": "./lib/index.d.ts",
+  "module": "./esm/index.js",
+  "exports": {
+    ".": {
+      "import": "./esm/index.js",
+      "require": "./cjs/index.js",
+      "types": "./lib/index.d.ts"
+    },
+    "./styles.css": "./esm/index.css",
+    "./styles/*": "./esm/styles/*"
+  },
   "license": "MIT",
-  "sideEffects": false,
+  "sideEffects": [
+    "*.css"
+  ],
   "author": "Vitaly Rtishchev <rtivital@gmail.com>",
   "homepage": "https://mantine.dev/others/carousel/",
   "repository": {
@@ -28,13 +38,11 @@
     "slick"
   ],
   "peerDependencies": {
-    "@mantine/core": "6.0.21",
-    "@mantine/hooks": "6.0.21",
+    "@mantine/core": "7.0.0-beta.7",
+    "@mantine/hooks": "7.0.0-beta.7",
     "embla-carousel-react": "^7.0.0",
-    "react": ">=16.8.0"
+    "react": "^18.2.0"
   },
-  "dependencies": {
-    "@mantine/utils": "6.0.21"
-  },
+  "dependencies": {},
   "devDependencies": {}
 }

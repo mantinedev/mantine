@@ -27,7 +27,7 @@ function Demo() {
 }
 
 export const offset: MantineDemo = {
-  type: 'demo',
+  type: 'code',
   component: Demo,
   code,
 };

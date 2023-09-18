@@ -1,167 +1,82 @@
 import React from 'react';
-import { IconPhoto, IconMessageCircle, IconSettings } from '@tabler/icons-react';
 import { MantineDemo } from '@mantine/ds';
 import { Tabs, TabsProps, rem } from '@mantine/core';
+import { IconPhoto, IconMessageCircle, IconSettings } from '@tabler/icons-react';
+import { TabsStylesApi } from '@mantine/styles-api';
 
 const code = `
-import { Tabs, TabsProps, rem } from '@mantine/core';
-import { IconPhoto, IconMessageCircle, IconSettings } from '@tabler/icons-react';
-
-function StyledTabs(props: TabsProps) {
-  return (
-    <Tabs
-      unstyled
-      styles={(theme) => ({
-        tab: {
-          ...theme.fn.focusStyles(),
-          backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.white,
-          color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.colors.gray[9],
-          border: \`\${rem(1)} solid \${theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[4]}\`,
-          padding: \`\${theme.spacing.xs} \${theme.spacing.md}\`,
-          cursor: 'pointer',
-          fontSize: theme.fontSizes.sm,
-          display: 'flex',
-          alignItems: 'center',
-
-          '&:disabled': {
-            opacity: 0.5,
-            cursor: 'not-allowed',
-          },
-
-          '&:not(:first-of-type)': {
-            borderLeft: 0,
-          },
-
-          '&:first-of-type': {
-            borderTopLeftRadius: theme.radius.md,
-            borderBottomLeftRadius: theme.radius.md,
-          },
-
-          '&:last-of-type': {
-            borderTopRightRadius: theme.radius.md,
-            borderBottomRightRadius: theme.radius.md,
-          },
-
-          '&[data-active]': {
-            backgroundColor: theme.colors.blue[7],
-            borderColor: theme.colors.blue[7],
-            color: theme.white,
-          },
-        },
-
-        tabIcon: {
-          marginRight: theme.spacing.xs,
-          display: 'flex',
-          alignItems: 'center',
-        },
-
-        tabsList: {
-          display: 'flex',
-        },
-      })}
-      {...props}
-    />
-  );
-}
+import { Tabs, rem } from '@mantine/core';
 
 function Demo() {
+  const iconStyle = { width: rem(12), height: rem(12) };
+
   return (
-    <StyledTabs>
+    <Tabs defaultValue="gallery"{{props}}>
       <Tabs.List>
-        <Tabs.Tab value="settings" icon={<IconSettings size="1rem" />}>
-          Settings
-        </Tabs.Tab>
-        <Tabs.Tab value="messages" icon={<IconMessageCircle size="1rem" />}>
-          Messages
-        </Tabs.Tab>
-        <Tabs.Tab value="gallery" icon={<IconPhoto size="1rem" />}>
+        <Tabs.Tab value="gallery" leftSection={<IconPhoto style={iconStyle} />}>
           Gallery
         </Tabs.Tab>
+        <Tabs.Tab value="messages" leftSection={<IconMessageCircle style={iconStyle} />}>
+          Messages
+        </Tabs.Tab>
+        <Tabs.Tab value="settings" rightSection={<IconSettings style={iconStyle} />}>
+          Settings
+        </Tabs.Tab>
       </Tabs.List>
-    </StyledTabs>
+
+      <Tabs.Panel value="gallery" pt="xs">
+        Gallery tab content
+      </Tabs.Panel>
+
+      <Tabs.Panel value="messages" pt="xs">
+        Messages tab content
+      </Tabs.Panel>
+
+      <Tabs.Panel value="settings" pt="xs">
+        Settings tab content
+      </Tabs.Panel>
+    </Tabs>
   );
 }
 `;
 
-function StyledTabs(props: TabsProps) {
+function Demo(props: TabsProps) {
+  const iconStyle = { width: rem(12), height: rem(12) };
+
   return (
-    <Tabs
-      unstyled
-      styles={(theme) => ({
-        tab: {
-          ...theme.fn.focusStyles(),
-          backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.white,
-          color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.colors.gray[9],
-          border: `${rem(1)} solid ${
-            theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[4]
-          }`,
-          padding: `${theme.spacing.xs} ${theme.spacing.md}`,
-          cursor: 'pointer',
-          fontSize: theme.fontSizes.sm,
-          display: 'flex',
-          alignItems: 'center',
-
-          '&:disabled': {
-            opacity: 0.5,
-            cursor: 'not-allowed',
-          },
-
-          '&:not(:first-of-type)': {
-            borderLeft: 0,
-          },
-
-          '&:first-of-type': {
-            borderTopLeftRadius: theme.radius.md,
-            borderBottomLeftRadius: theme.radius.md,
-          },
-
-          '&:last-of-type': {
-            borderTopRightRadius: theme.radius.md,
-            borderBottomRightRadius: theme.radius.md,
-          },
-
-          '&[data-active]': {
-            backgroundColor: theme.colors.blue[7],
-            borderColor: theme.colors.blue[7],
-            color: theme.white,
-          },
-        },
-
-        tabIcon: {
-          marginRight: theme.spacing.xs,
-          display: 'flex',
-          alignItems: 'center',
-        },
-
-        tabsList: {
-          display: 'flex',
-        },
-      })}
-      {...props}
-    />
-  );
-}
-
-function Demo() {
-  return (
-    <StyledTabs defaultValue="settings">
+    <Tabs defaultValue="gallery" {...props}>
       <Tabs.List>
-        <Tabs.Tab value="settings" icon={<IconSettings size="1rem" />}>
-          Settings
-        </Tabs.Tab>
-        <Tabs.Tab value="messages" icon={<IconMessageCircle size="1rem" />}>
-          Messages
-        </Tabs.Tab>
-        <Tabs.Tab value="gallery" icon={<IconPhoto size="1rem" />}>
+        <Tabs.Tab value="gallery" leftSection={<IconPhoto style={iconStyle} />}>
           Gallery
         </Tabs.Tab>
+        <Tabs.Tab value="messages" leftSection={<IconMessageCircle style={iconStyle} />}>
+          Messages
+        </Tabs.Tab>
+        <Tabs.Tab value="settings" rightSection={<IconSettings style={iconStyle} />}>
+          Settings
+        </Tabs.Tab>
       </Tabs.List>
-    </StyledTabs>
+
+      <Tabs.Panel value="gallery" pt="xs">
+        Gallery tab content
+      </Tabs.Panel>
+
+      <Tabs.Panel value="messages" pt="xs">
+        Messages tab content
+      </Tabs.Panel>
+
+      <Tabs.Panel value="settings" pt="xs">
+        Settings tab content
+      </Tabs.Panel>
+    </Tabs>
   );
 }
 
 export const stylesApi: MantineDemo = {
-  type: 'demo',
-  code,
+  type: 'styles-api',
+  data: TabsStylesApi,
   component: Demo,
+  centered: true,
+  maxWidth: '100%',
+  code,
 };

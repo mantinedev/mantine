@@ -30,7 +30,7 @@ function Demo() {
 }
 
 export const rows: MantineDemo = {
-  type: 'demo',
+  type: 'code',
   code,
   component: Demo,
 };

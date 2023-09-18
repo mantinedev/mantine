@@ -1,4 +1,4 @@
-import { createUseExternalEvents } from '@mantine/utils';
+import { createUseExternalEvents } from '@mantine/core';
 import {
   MantineModal,
   MantineModals,

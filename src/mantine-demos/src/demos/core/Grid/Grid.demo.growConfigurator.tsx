@@ -15,12 +15,12 @@ function Wrapper(props: GridProps) {
   );
 }
 
-const codeTemplate = (props: string) => `
+const code = `
 import { Grid } from '@mantine/core';
 
 function Demo() {
   return (
-    <Grid${props}>
+    <Grid{{props}}>
       <Grid.Col span={4}>1</Grid.Col>
       <Grid.Col span={4}>2</Grid.Col>
       <Grid.Col span={4}>3</Grid.Col>
@@ -34,19 +34,19 @@ function Demo() {
 export const growConfigurator: MantineDemo = {
   type: 'configurator',
   component: Wrapper,
-  codeTemplate,
-  configurator: [
+  code,
+  controls: [
     {
-      name: 'grow',
+      prop: 'grow',
       type: 'boolean',
       initialValue: true,
-      defaultValue: false,
+      libraryValue: false,
     },
     {
-      name: 'gutter',
+      prop: 'gutter',
       type: 'size',
       initialValue: 'md',
-      defaultValue: 'md',
+      libraryValue: 'md',
     },
   ],
 };

@@ -1,25 +1,23 @@
 import React from 'react';
 import { MantineDemo } from '@mantine/ds';
-import { Box, NumberInput } from '@mantine/core';
+import { NumberInput } from '@mantine/core';
 
 const code = `
 import { NumberInput } from '@mantine/core';
 
 function Demo() {
-  return <NumberInput disabled />;
+  return <NumberInput disabled label="Disabled input" placeholder="Disabled input" />;
 }
 `;
 
 function Demo() {
-  return (
-    <Box maw={320} mx="auto">
-      <NumberInput label="Disabled" placeholder="Your age" disabled value={20} />
-    </Box>
-  );
+  return <NumberInput disabled label="Disabled input" placeholder="Disabled input" />;
 }
 
 export const disabled: MantineDemo = {
-  type: 'demo',
-  code,
+  type: 'code',
   component: Demo,
+  maxWidth: 340,
+  centered: true,
+  code,
 };

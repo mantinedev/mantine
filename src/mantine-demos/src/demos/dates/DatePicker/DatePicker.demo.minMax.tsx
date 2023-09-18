@@ -1,25 +1,21 @@
 import React, { useState } from 'react';
 import { MantineDemo } from '@mantine/ds';
-import { Group } from '@mantine/core';
 import { DatePicker } from '@mantine/dates';
 
 const code = `
 import { useState } from 'react';
-import { Group } from '@mantine/core';
 import { DatePicker } from '@mantine/dates';
 
 function Demo() {
   const [value, setValue] = useState<Date | null>(null);
   return (
-    <Group position="center">
-      <DatePicker
-        value={value}
-        onChange={setValue}
-        defaultDate={new Date(2022, 1)}
-        minDate={new Date(2022, 1, 1)}
-        maxDate={new Date(2022, 8, 1)}
-      />
-    </Group>
+    <DatePicker
+      value={value}
+      onChange={setValue}
+      defaultDate={new Date(2022, 1)}
+      minDate={new Date(2022, 1, 10)}
+      maxDate={new Date(2022, 1, 25)}
+    />
   );
 }
 `;
@@ -27,20 +23,19 @@ function Demo() {
 function Demo() {
   const [value, setValue] = useState<Date | null>(null);
   return (
-    <Group position="center">
-      <DatePicker
-        value={value}
-        onChange={setValue}
-        defaultDate={new Date(2022, 1)}
-        minDate={new Date(2022, 1, 10)}
-        maxDate={new Date(2022, 1, 25)}
-      />
-    </Group>
+    <DatePicker
+      value={value}
+      onChange={setValue}
+      defaultDate={new Date(2022, 1)}
+      minDate={new Date(2022, 1, 10)}
+      maxDate={new Date(2022, 1, 25)}
+    />
   );
 }
 
 export const minMax: MantineDemo = {
-  type: 'demo',
+  type: 'code',
+  centered: true,
   component: Demo,
   code,
 };

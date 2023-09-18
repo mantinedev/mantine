@@ -1,39 +1,37 @@
 import React from 'react';
 import { MantineDemo } from '@mantine/ds';
-import { Autocomplete, Box } from '@mantine/core';
+import { Autocomplete } from '@mantine/core';
 
 const code = `
 import { Autocomplete } from '@mantine/core';
 
 function Demo() {
-  return <Autocomplete disabled data={['React', 'Angular', 'Svelte', 'Vue']} />;
+  return (
+    <Autocomplete
+      label="Your favorite library"
+      placeholder="Pick value or enter anything"
+      data={['React', 'Angular', 'Vue', 'Svelte']}
+      disabled
+    />
+  );
 }
 `;
 
 function Demo() {
   return (
-    <Box maw={320} mx="auto">
-      <Autocomplete
-        data={['React', 'Angular', 'Svelte', 'Vue']}
-        label="Disabled without value"
-        placeholder="Pick all that you like"
-        disabled
-      />
-
-      <Autocomplete
-        mt="md"
-        data={['React', 'Angular', 'Svelte', 'Vue']}
-        label="Disabled with value"
-        placeholder="Pick all that you like"
-        disabled
-        value="React"
-      />
-    </Box>
+    <Autocomplete
+      label="Your favorite library"
+      placeholder="Pick value or enter anything"
+      data={['React', 'Angular', 'Vue', 'Svelte']}
+      disabled
+    />
   );
 }
 
 export const disabled: MantineDemo = {
-  type: 'demo',
-  code,
+  type: 'code',
   component: Demo,
+  code,
+  maxWidth: 340,
+  centered: true,
 };

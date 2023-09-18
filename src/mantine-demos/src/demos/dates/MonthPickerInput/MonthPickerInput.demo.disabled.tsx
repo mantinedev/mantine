@@ -1,7 +1,6 @@
 import React from 'react';
 import { MantineDemo } from '@mantine/ds';
 import { MonthPickerInput } from '@mantine/dates';
-import { Box } from '@mantine/core';
 
 const code = `
 import { MonthPickerInput } from '@mantine/dates';
@@ -21,20 +20,20 @@ function Demo() {
 
 function Demo() {
   return (
-    <Box maw={320} mx="auto">
-      <MonthPickerInput
-        valueFormat="YYYY MMM"
-        type="multiple"
-        label="Disabled"
-        placeholder="Pick month"
-        disabled
-      />
-    </Box>
+    <MonthPickerInput
+      valueFormat="YYYY MMM"
+      type="multiple"
+      label="Disabled"
+      placeholder="Pick month"
+      disabled
+    />
   );
 }
 
 export const disabled: MantineDemo = {
-  type: 'demo',
+  type: 'code',
+  centered: true,
+  maxWidth: 400,
   component: Demo,
   code,
 };

@@ -1,10 +1,10 @@
 import React from 'react';
 import { IconCheck } from '@tabler/icons-react';
 import { MantineDemo } from '@mantine/ds';
-import { ThemeIcon, RingProgress, Group, Text, Center } from '@mantine/core';
+import { ActionIcon, RingProgress, Group, Text, Center, rem } from '@mantine/core';
 
 const code = `
-import { ThemeIcon, RingProgress, Text, Center } from '@mantine/core';
+import { ActionIcon, RingProgress, Text, Center } from '@mantine/core';
 import { IconCheck } from '@tabler/icons-react';
 
 function Demo() {
@@ -13,7 +13,7 @@ function Demo() {
       <RingProgress
         sections={[{ value: 40, color: 'blue' }]}
         label={
-          <Text color="blue" weight={700} align="center" size="xl">
+          <Text c="blue" fw={700} ta="center" size="xl">
             40%
           </Text>
         }
@@ -23,9 +23,9 @@ function Demo() {
         sections={[{ value: 100, color: 'teal' }]}
         label={
           <Center>
-            <ThemeIcon color="teal" variant="light" radius="xl" size="xl">
-              <IconCheck size={22} />
-            </ThemeIcon>
+            <ActionIcon color="teal" variant="light" radius="xl" size="xl">
+              <IconCheck style={{ width: rem(22), height: rem(22) }} />
+            </ActionIcon>
           </Center>
         }
       />
@@ -36,11 +36,11 @@ function Demo() {
 
 function Demo() {
   return (
-    <Group position="center">
+    <Group justify="center">
       <RingProgress
         sections={[{ value: 40, color: 'blue' }]}
         label={
-          <Text color="blue" weight={700} align="center" size="xl">
+          <Text c="blue" fw={700} ta="center" size="xl">
             40%
           </Text>
         }
@@ -50,9 +50,9 @@ function Demo() {
         sections={[{ value: 100, color: 'teal' }]}
         label={
           <Center>
-            <ThemeIcon color="teal" variant="light" radius="xl" size="xl">
-              <IconCheck size={22} />
-            </ThemeIcon>
+            <ActionIcon color="teal" variant="light" radius="xl" size="xl">
+              <IconCheck style={{ width: rem(22), height: rem(22) }} />
+            </ActionIcon>
           </Center>
         }
       />
@@ -61,7 +61,7 @@ function Demo() {
 }
 
 export const label: MantineDemo = {
-  type: 'demo',
+  type: 'code',
   code,
   component: Demo,
 };

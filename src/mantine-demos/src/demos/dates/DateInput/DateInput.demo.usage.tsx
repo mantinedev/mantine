@@ -14,8 +14,6 @@ function Demo() {
       onChange={setValue}
       label="Date input"
       placeholder="Date input"
-      maw={400}
-      mx="auto"
     />
   );
 }
@@ -24,20 +22,14 @@ function Demo() {
 function Demo() {
   const [value, setValue] = useState<Date | null>(null);
   return (
-    <DateInput
-      value={value}
-      onChange={setValue}
-      label="Date input"
-      placeholder="Date input"
-      maw={400}
-      mx="auto"
-      popoverProps={{ withinPortal: true }}
-    />
+    <DateInput value={value} onChange={setValue} label="Date input" placeholder="Date input" />
   );
 }
 
 export const usage: MantineDemo = {
-  type: 'demo',
+  type: 'code',
+  centered: true,
+  maxWidth: 400,
   component: Demo,
   code,
 };

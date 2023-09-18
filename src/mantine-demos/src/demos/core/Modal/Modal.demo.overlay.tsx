@@ -1,16 +1,15 @@
 import React from 'react';
-import { Modal, Group, Button, useMantineTheme } from '@mantine/core';
+import { Modal, Button } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import { MantineDemo } from '@mantine/ds';
 import { AuthenticationForm } from '../../../shared/AuthenticationForm/AuthenticationForm';
 
 const code = `
 import { useDisclosure } from '@mantine/hooks';
-import { Modal, useMantineTheme } from '@mantine/core';
+import { Modal, Button } from '@mantine/core';
 
 function Demo() {
   const [opened, { open, close }] = useDisclosure(false);
-  const theme = useMantineTheme();
 
   return (
     <>
@@ -19,17 +18,14 @@ function Demo() {
         onClose={close}
         title="Authentication"
         overlayProps={{
-          color: theme.colorScheme === 'dark' ? theme.colors.dark[9] : theme.colors.gray[2],
-          opacity: 0.55,
+          backgroundOpacity: 0.55,
           blur: 3,
         }}
       >
         {/* Modal content */}
       </Modal>
 
-      <Group position="center">
-        <Button onClick={open}>Open modal</Button>
-      </Group>
+      <Button onClick={open}>Open modal</Button>
     </>
   );
 }
@@ -37,7 +33,6 @@ function Demo() {
 
 function Demo() {
   const [opened, { open, close }] = useDisclosure(false);
-  const theme = useMantineTheme();
 
   return (
     <>
@@ -46,23 +41,21 @@ function Demo() {
         onClose={close}
         title="Authentication"
         overlayProps={{
-          color: theme.colorScheme === 'dark' ? theme.colors.dark[9] : theme.colors.gray[2],
-          opacity: 0.55,
+          backgroundOpacity: 0.55,
           blur: 3,
         }}
       >
-        <AuthenticationForm noPadding noShadow />
+        <AuthenticationForm noShadow noPadding />
       </Modal>
 
-      <Group position="center">
-        <Button onClick={open}>Open modal</Button>
-      </Group>
+      <Button onClick={open}>Open modal</Button>
     </>
   );
 }
 
 export const overlay: MantineDemo = {
-  type: 'demo',
+  type: 'code',
   code,
+  centered: true,
   component: Demo,
 };

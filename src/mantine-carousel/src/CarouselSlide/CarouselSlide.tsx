@@ -1,47 +1,50 @@
-import React, { forwardRef } from 'react';
-import { Box, DefaultProps, Selectors, MantineNumberSize } from '@mantine/core';
+import React from 'react';
+import {
+  Box,
+  BoxProps,
+  CompoundStylesApiProps,
+  factory,
+  ElementProps,
+  useProps,
+  Factory,
+} from '@mantine/core';
 import { useCarouselContext } from '../Carousel.context';
-import useStyles from './CarouselSlide.styles';
+import classes from '../Carousel.module.css';
 
-export type CarouselSlideStylesNames = Selectors<typeof useStyles>;
+export type CarouselSlideStylesNames = 'slide';
 
-export interface CarouselSlideProps extends DefaultProps, React.ComponentPropsWithoutRef<'div'> {
-  /** Slide content */
-  children?: React.ReactNode;
+export interface CarouselSlideProps
+  extends BoxProps,
+    CompoundStylesApiProps<CarouselSlideFactory>,
+    ElementProps<'div'> {}
 
-  /** Slide width, defaults to 100%, examples: 40rem, 50% */
-  size?: string | number;
+export type CarouselSlideFactory = Factory<{
+  props: CarouselSlideProps;
+  ref: HTMLDivElement;
+  stylesNames: CarouselSlideStylesNames;
+  compound: true;
+}>;
 
-  /** Key of theme.spacing or number to set gap between slides */
-  gap?: MantineNumberSize;
-}
+const defaultProps: Partial<CarouselSlideProps> = {};
 
-export const CarouselSlide = forwardRef<HTMLDivElement, CarouselSlideProps>(
-  ({ children, className, size, gap, ...others }, ref) => {
-    const ctx = useCarouselContext();
-    const { classes, cx } = useStyles(
-      {
-        gap: typeof gap === 'undefined' ? ctx.slideGap : gap,
-        size: typeof size === 'undefined' ? ctx.slideSize : size,
-        orientation: ctx.orientation,
-        includeGapInSize: ctx.includeGapInSize,
-        breakpoints: ctx.breakpoints,
-      },
-      {
-        name: 'Carousel',
-        classNames: ctx.classNames,
-        styles: ctx.styles,
-        unstyled: ctx.unstyled,
-        variant: ctx.variant,
-      }
-    );
+export const CarouselSlide = factory<CarouselSlideFactory>((props, ref) => {
+  const { classNames, className, style, styles, vars, ...others } = useProps(
+    'CarouselSlide',
+    defaultProps,
+    props
+  );
 
-    return (
-      <Box className={cx(classes.slide, className)} ref={ref} {...others}>
-        {children}
-      </Box>
-    );
-  }
-);
+  const ctx = useCarouselContext();
 
-CarouselSlide.displayName = '@mantine/carousel/CarouselSlide';
+  return (
+    <Box
+      ref={ref}
+      mod={{ orientation: ctx.orientation }}
+      {...ctx.getStyles('slide', { className, style, classNames, styles })}
+      {...others}
+    />
+  );
+});
+
+CarouselSlide.classes = classes;
+CarouselSlide.displayName = '@mantine/core/CarouselSlide';

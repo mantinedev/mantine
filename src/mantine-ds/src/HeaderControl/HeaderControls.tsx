@@ -1,32 +1,30 @@
 import React from 'react';
-import { DefaultProps, Group, Tooltip } from '@mantine/core';
+import { BoxProps, Group, Tooltip } from '@mantine/core';
 import { ColorSchemeControl } from './ColorSchemeControl';
 import { DirectionControl } from './DirectionControl';
 import { GithubControl } from './GithubControl';
 import { DiscordControl } from './DiscordControl';
 import { SearchControl } from '../SearchControl';
 
-interface HeaderControlsProps extends DefaultProps {
+interface HeaderControlsProps extends BoxProps {
   onSearch(): void;
   githubLink: string;
-  direction: 'rtl' | 'ltr';
-  toggleDirection(): void;
+  withDirectionToggle?: boolean;
 }
 
 export function HeaderControls({
   onSearch,
   githubLink,
-  direction,
-  toggleDirection,
+  withDirectionToggle = true,
   ...others
 }: HeaderControlsProps) {
   return (
     <Tooltip.Group openDelay={600} closeDelay={100}>
-      <Group spacing="xs" {...others}>
+      <Group gap="xs" {...others}>
         <SearchControl onClick={onSearch} />
         <DiscordControl />
         <GithubControl link={githubLink} />
-        <DirectionControl direction={direction} toggleDirection={toggleDirection} />
+        {withDirectionToggle && <DirectionControl />}
         <ColorSchemeControl />
       </Group>
     </Tooltip.Group>

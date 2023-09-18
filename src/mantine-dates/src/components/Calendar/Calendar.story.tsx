@@ -1,4 +1,3 @@
-import { MANTINE_SIZES } from '@mantine/core';
 import React from 'react';
 import { Calendar } from './Calendar';
 
@@ -8,6 +7,14 @@ export function Usage() {
   return (
     <div style={{ padding: 40 }}>
       <Calendar />
+    </div>
+  );
+}
+
+export function Unstyled() {
+  return (
+    <div style={{ padding: 40 }}>
+      <Calendar unstyled />
     </div>
   );
 }
@@ -35,7 +42,7 @@ export function NumberOfColumns() {
       <Calendar mb={50} mt="xs" />
 
       <div>2 columns</div>
-      <Calendar numberOfColumns={2} mb={50} mt="xs" />
+      <Calendar numberOfColumns={2} columnsToScroll={2} mb={50} mt="xs" />
 
       <div>3 columns</div>
       <Calendar numberOfColumns={3} mb={50} mt="xs" />
@@ -60,6 +67,8 @@ export function InitialLevelDecade() {
 }
 
 export function Sizes() {
-  const sizes = MANTINE_SIZES.map((size) => <Calendar size={size} key={size} mt="xl" />);
+  const sizes = (['xs', 'sm', 'md', 'lg', 'xl'] as const).map((size) => (
+    <Calendar size={size} key={size} mt="xl" />
+  ));
   return <div style={{ padding: 40 }}>{sizes}</div>;
 }

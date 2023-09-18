@@ -1,56 +1,77 @@
 import React from 'react';
-import { IconPlus } from '@tabler/icons-react';
 import { MantineDemo } from '@mantine/ds';
-import { Box } from '@mantine/core';
-import { BaseDemo } from './_base';
-
-const code = `
 import { Accordion } from '@mantine/core';
 import { IconPlus } from '@tabler/icons-react';
+import { groceries } from './_base';
+import classes from './Accordion.demo.chevron.module.css';
+
+const code = `
+import { IconPlus } from '@tabler/icons-react';
+import { Accordion } from '@mantine/core';
+import classes from './Demo.module.css';
 
 function Demo() {
+  // See groceries data above
+  const items = groceries.map((item) => (
+    <Accordion.Item key={item.value} value={item.value}>
+      <Accordion.Control icon={item.emoji} disabled={item.value === 'Bananas'}>
+        {item.value}
+      </Accordion.Control>
+      <Accordion.Panel>{item.description}</Accordion.Panel>
+    </Accordion.Item>
+  ));
+
   return (
     <Accordion
-      chevron={<IconPlus size="1rem" />}
-      styles={{
-        chevron: {
-          '&[data-rotate]': {
-            transform: 'rotate(45deg)',
-          },
-        },
-      }}
+      defaultValue="Apples"
+      classNames={{ chevron: classes.chevron }}
+      chevron={<IconPlus className={classes.icon} />}
     >
-      {/* ... content */}
+      {items}
     </Accordion>
   );
 }
 `;
 
-export function IconReplaceDemo() {
-  return (
-    <BaseDemo
-      chevron={<IconPlus size="1rem" />}
-      styles={{
-        chevron: {
-          '&[data-rotate]': {
-            transform: 'rotate(45deg)',
-          },
-        },
-      }}
-    />
-  );
+const cssCode = `
+.chevron {
+  &[data-rotate] {
+    transform: rotate(45deg);
+  }
 }
 
+.icon {
+  width: rem(16px);
+  height: rem(16px);
+}
+`;
+
 function Demo() {
+  const items = groceries.map((item) => (
+    <Accordion.Item key={item.value} value={item.value}>
+      <Accordion.Control icon={item.emoji}>{item.value}</Accordion.Control>
+      <Accordion.Panel>{item.description}</Accordion.Panel>
+    </Accordion.Item>
+  ));
+
   return (
-    <Box maw={380} mx="auto">
-      <IconReplaceDemo />
-    </Box>
+    <Accordion
+      defaultValue="Apples"
+      classNames={{ chevron: classes.chevron }}
+      chevron={<IconPlus className={classes.icon} />}
+    >
+      {items}
+    </Accordion>
   );
 }
 
 export const chevron: MantineDemo = {
-  type: 'demo',
+  type: 'code',
   component: Demo,
-  code,
+  code: [
+    { fileName: 'Demo.tsx', language: 'tsx', code },
+    { fileName: 'Demo.module.css', code: cssCode, language: 'scss' },
+  ],
+  centered: true,
+  maxWidth: 600,
 };

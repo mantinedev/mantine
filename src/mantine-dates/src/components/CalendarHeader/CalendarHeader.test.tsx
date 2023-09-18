@@ -1,12 +1,7 @@
 import React from 'react';
-import { render, screen } from '@testing-library/react';
-import {
-  itSupportsSystemProps,
-  itSupportsProviderVariant,
-  itSupportsProviderSize,
-} from '@mantine/tests';
-import { itSupportsHeaderProps, itSupportsWithNextPrevious } from '../../tests';
-import { CalendarHeader, CalendarHeaderProps } from './CalendarHeader';
+import { render, tests, screen } from '@mantine/tests';
+import { datesTests } from '@mantine/dates-tests';
+import { CalendarHeader, CalendarHeaderProps, CalendarHeaderStylesNames } from './CalendarHeader';
 
 const defaultProps: CalendarHeaderProps = {
   nextLabel: 'next',
@@ -15,18 +10,26 @@ const defaultProps: CalendarHeaderProps = {
 };
 
 describe('@mantine/dates/CalendarHeader', () => {
-  itSupportsSystemProps({
+  tests.itSupportsSystemProps<CalendarHeaderProps, CalendarHeaderStylesNames>({
     component: CalendarHeader,
     props: defaultProps,
+    styleProps: true,
+    extend: true,
+    variant: true,
+    size: true,
+    classes: true,
     refType: HTMLDivElement,
-    providerName: 'CalendarHeader',
     displayName: '@mantine/dates/CalendarHeader',
+    stylesApiSelectors: [
+      'calendarHeader',
+      'calendarHeaderControl',
+      'calendarHeaderControlIcon',
+      'calendarHeaderLevel',
+    ],
   });
 
-  itSupportsProviderVariant(CalendarHeader, defaultProps, 'CalendarHeader', 'calendarHeader');
-  itSupportsProviderSize(CalendarHeader, defaultProps, 'CalendarHeader', 'calendarHeader');
-  itSupportsHeaderProps(CalendarHeader, defaultProps);
-  itSupportsWithNextPrevious(CalendarHeader, defaultProps);
+  datesTests.itSupportsHeaderProps({ component: CalendarHeader, props: defaultProps });
+  datesTests.itSupportsWithNextPrevious({ component: CalendarHeader, props: defaultProps });
 
   it('renders given label', () => {
     render(<CalendarHeader {...defaultProps} label="test-label" />);
@@ -51,23 +54,5 @@ describe('@mantine/dates/CalendarHeader', () => {
   it('supports custom __staticSelector', () => {
     render(<CalendarHeader {...defaultProps} __staticSelector="Calendar" />);
     expect(screen.getByLabelText('next')).toHaveClass('mantine-Calendar-calendarHeaderControl');
-  });
-
-  it('supports styles api (styles)', () => {
-    render(
-      <CalendarHeader
-        {...defaultProps}
-        styles={{ calendarHeaderControl: { borderColor: '#CECECE' } }}
-      />
-    );
-
-    expect(screen.getByLabelText('next')).toHaveStyle({ borderColor: '#CECECE' });
-  });
-
-  it('supports styles api (classNames)', () => {
-    render(
-      <CalendarHeader {...defaultProps} classNames={{ calendarHeaderControl: 'test-control' }} />
-    );
-    expect(screen.getByLabelText('next')).toHaveClass('test-control');
   });
 });

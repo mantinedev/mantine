@@ -1,22 +1,16 @@
 import React from 'react';
-import { MultiSelect } from '@mantine/core';
 import { MantineDemo } from '@mantine/ds';
-import { data } from './_data';
+import { MultiSelect } from '@mantine/core';
 
 const code = `
 import { MultiSelect } from '@mantine/core';
 
-const data = [
-  //...
-];
-
 function Demo() {
   return (
     <MultiSelect
-      data={data}
-      label="Read only multiselect"
-      placeholder="Pick all that you like"
-      defaultValue={['react', 'ng']}
+      label="Your favorite libraries"
+      placeholder="Pick value"
+      data={['React', 'Angular', 'Vue', 'Svelte']}
       readOnly
     />
   );
@@ -26,19 +20,18 @@ function Demo() {
 function Demo() {
   return (
     <MultiSelect
-      maw={400}
-      mx="auto"
-      data={data}
-      label="Read only multiselect"
-      placeholder="Pick all that you like"
-      defaultValue={['react', 'ng']}
+      label="Your favorite libraries"
+      placeholder="Pick value"
+      data={['React', 'Angular', 'Vue', 'Svelte']}
       readOnly
     />
   );
 }
 
 export const readOnly: MantineDemo = {
-  type: 'demo',
-  code,
+  type: 'code',
   component: Demo,
+  code,
+  maxWidth: 340,
+  centered: true,
 };

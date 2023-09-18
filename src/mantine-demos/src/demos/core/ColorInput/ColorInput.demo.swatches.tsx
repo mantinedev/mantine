@@ -30,7 +30,7 @@ function Demo() {
 }
 
 export const swatches: MantineDemo = {
-  type: 'demo',
+  type: 'code',
   component: Demo,
   code,
 };

@@ -16,14 +16,14 @@ function Demo() {
   const { height, width } = useViewportSize();
 
   return (
-    <Text align="center">
+    <Text ta="center">
       Width: {width}, height: {height}
     </Text>
   );
 }
 
 export const useViewportSizeDemo: MantineDemo = {
-  type: 'demo',
+  type: 'code',
   code,
   component: Demo,
 };

@@ -1,47 +1,40 @@
 import React from 'react';
 import { MantineDemo } from '@mantine/ds';
-import { Group, Badge } from '@mantine/core';
+import { Badge } from '@mantine/core';
+import { gradientControls } from '../../../shared';
 
-const code = `
+const code = (props: any) => `
 import { Badge } from '@mantine/core';
 
 function Demo() {
   return (
-    <>
-      <Badge variant="gradient" gradient={{ from: 'indigo', to: 'cyan' }}>Indigo cyan</Badge>
-      <Badge variant="gradient" gradient={{ from: 'teal', to: 'lime', deg: 105 }}>Lime green</Badge>
-      <Badge variant="gradient" gradient={{ from: 'teal', to: 'blue', deg: 60 }}>Teal blue</Badge>
-      <Badge variant="gradient" gradient={{ from: 'orange', to: 'red' }}>Orange red</Badge>
-      <Badge variant="gradient" gradient={{ from: '#ed6ea0', to: '#ec8c69', deg: 35 }}>Peach</Badge>
-    </>
+    <Badge
+      size="xl"
+      variant="gradient"
+      gradient={{ from: '${props.gradientFrom}', to: '${props.gradientTo}', deg: ${props.gradientDegree} }}
+    >
+      Gradient badge
+    </Badge>
   );
 }
 `;
 
-function Demo() {
+function Wrapper(props: any) {
   return (
-    <Group position="center">
-      <Badge variant="gradient" gradient={{ from: 'indigo', to: 'cyan' }}>
-        Indigo cyan
-      </Badge>
-      <Badge variant="gradient" gradient={{ from: 'teal', to: 'lime', deg: 105 }}>
-        Lime green
-      </Badge>
-      <Badge variant="gradient" gradient={{ from: 'teal', to: 'blue', deg: 60 }}>
-        Teal blue
-      </Badge>
-      <Badge variant="gradient" gradient={{ from: 'orange', to: 'red' }}>
-        Orange red
-      </Badge>
-      <Badge variant="gradient" gradient={{ from: '#ed6ea0', to: '#ec8c69', deg: 35 }}>
-        Peach
-      </Badge>
-    </Group>
+    <Badge
+      size="xl"
+      variant="gradient"
+      gradient={{ from: props.gradientFrom, to: props.gradientTo, deg: props.gradientDegree }}
+    >
+      Gradient badge
+    </Badge>
   );
 }
 
 export const gradient: MantineDemo = {
-  type: 'demo',
-  component: Demo,
+  type: 'configurator',
+  component: Wrapper,
   code,
+  centered: true,
+  controls: gradientControls,
 };

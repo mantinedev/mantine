@@ -1,8 +1,8 @@
 import React from 'react';
 import { MantineDemo } from '@mantine/ds';
-import { IndicatorProps, Button, Flex } from '@mantine/core';
+import { FlexProps, Button, Flex } from '@mantine/core';
 
-function Wrapper(props: IndicatorProps) {
+function Wrapper(props: FlexProps) {
   return (
     <Flex mih={50} bg="rgba(0, 0, 0, .3)" {...props}>
       <Button>Button 1</Button>
@@ -12,7 +12,7 @@ function Wrapper(props: IndicatorProps) {
   );
 }
 
-const codeTemplate = (props: string) => `
+const code = `
 import { Flex, Button } from '@mantine/core';
 
 function Demo() {
@@ -20,7 +20,7 @@ function Demo() {
     <Flex
       mih={50}
       bg="rgba(0, 0, 0, .3)"
-     ${props}
+      {{props}}
     >
       <Button>Button 1</Button>
       <Button>Button 2</Button>
@@ -33,14 +33,11 @@ function Demo() {
 export const configurator: MantineDemo = {
   type: 'configurator',
   component: Wrapper,
-  codeTemplate,
-  configuratorProps: {
-    multiline: 3,
-  },
-  configurator: [
-    { name: 'gap', type: 'size', initialValue: 'md', defaultValue: null },
+  code,
+  controls: [
+    { prop: 'gap', type: 'size', initialValue: 'md', libraryValue: null },
     {
-      name: 'justify',
+      prop: 'justify',
       type: 'select',
       data: [
         { value: 'flex-start', label: 'flex-start' },
@@ -48,10 +45,10 @@ export const configurator: MantineDemo = {
         { value: 'flex-end', label: 'flex-end' },
       ],
       initialValue: 'flex-start',
-      defaultValue: null,
+      libraryValue: null,
     },
     {
-      name: 'align',
+      prop: 'align',
       type: 'select',
       data: [
         { value: 'flex-start', label: 'flex-start' },
@@ -59,10 +56,10 @@ export const configurator: MantineDemo = {
         { value: 'flex-end', label: 'flex-end' },
       ],
       initialValue: 'flex-start',
-      defaultValue: null,
+      libraryValue: null,
     },
     {
-      name: 'direction',
+      prop: 'direction',
       type: 'select',
       data: [
         { value: 'row', label: 'row' },
@@ -71,10 +68,10 @@ export const configurator: MantineDemo = {
         { value: 'column-reverse', label: 'column-reverse' },
       ],
       initialValue: 'row',
-      defaultValue: null,
+      libraryValue: null,
     },
     {
-      name: 'wrap',
+      prop: 'wrap',
       type: 'select',
       data: [
         { value: 'wrap', label: 'wrap' },
@@ -82,7 +79,7 @@ export const configurator: MantineDemo = {
         { value: 'wrap-reverse', label: 'wrap-reverse' },
       ],
       initialValue: 'wrap',
-      defaultValue: null,
+      libraryValue: null,
     },
   ],
 };

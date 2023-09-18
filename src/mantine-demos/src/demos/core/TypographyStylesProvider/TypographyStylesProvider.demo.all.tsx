@@ -52,6 +52,6 @@ function Demo() {
 }
 
 export const all: MantineDemo = {
-  type: 'demo',
+  type: 'code',
   component: Demo,
 };

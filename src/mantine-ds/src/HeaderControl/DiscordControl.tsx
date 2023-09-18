@@ -1,8 +1,8 @@
 import React from 'react';
-import { rem } from '@mantine/core';
 import { HeaderControl } from './HeaderControl';
 import { DiscordIcon } from '../Icons';
 import { meta } from '../meta';
+import classes from './DiscordControl.module.css';
 
 export function DiscordControl() {
   return (
@@ -10,17 +10,9 @@ export function DiscordControl() {
       tooltip="Discord"
       component="a"
       href={meta.discordLink}
-      sx={(theme) => ({
-        color: theme.white,
-        backgroundColor: meta.discordColor,
-        borderColor: meta.discordColor,
-
-        ...theme.fn.hover({
-          backgroundColor: theme.fn.lighten(meta.discordColor, 0.1),
-        }),
-      })}
+      className={classes.discord}
     >
-      <DiscordIcon size={rem(20)} />
+      <DiscordIcon size={20} />
     </HeaderControl>
   );
 }

@@ -19,7 +19,7 @@ function Demo() {
 }
 
 export const transitions: MantineDemo = {
-  type: 'demo',
+  type: 'code',
   code,
   component: Demo,
 };

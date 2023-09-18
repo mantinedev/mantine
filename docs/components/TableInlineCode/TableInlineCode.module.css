@@ -1,0 +1,12 @@
+.code {
+  font-family: var(--mantine-font-family-monospace);
+  font-size: var(--mantine-font-size-xs);
+
+  @mixin light {
+    color: var(--mantine-color-indigo-filled);
+  }
+
+  @mixin dark {
+    color: var(--mantine-color-red-filled);
+  }
+}

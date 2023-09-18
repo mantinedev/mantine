@@ -1,18 +1,7 @@
 import React from 'react';
-import { render, screen } from '@testing-library/react';
-import {
-  itSupportsSystemProps,
-  itSupportsProviderVariant,
-  itSupportsProviderSize,
-} from '@mantine/tests';
-import { YearLevelGroup, YearLevelGroupProps } from './YearLevelGroup';
-import {
-  itSupportsMonthsListProps,
-  itSupportsHeaderProps,
-  itSupportsOnControlClick,
-  itHandlesControlsKeyboardEvents,
-  itSupportsOnControlMouseEnter,
-} from '../../tests';
+import { render, tests, screen } from '@mantine/tests';
+import { datesTests } from '@mantine/dates-tests';
+import { YearLevelGroup, YearLevelGroupProps, YearLevelGroupStylesNames } from './YearLevelGroup';
 
 const defaultProps: YearLevelGroupProps = {
   year: new Date(2022, 3, 11),
@@ -22,33 +11,40 @@ const defaultProps: YearLevelGroupProps = {
 };
 
 describe('@mantine/dates/YearLevelGroup', () => {
-  itSupportsSystemProps({
+  tests.itSupportsSystemProps<YearLevelGroupProps, YearLevelGroupStylesNames>({
     component: YearLevelGroup,
     props: defaultProps,
+    styleProps: true,
+    extend: true,
+    variant: true,
+    size: true,
+    classes: true,
     refType: HTMLDivElement,
-    providerName: 'YearLevelGroup',
     displayName: '@mantine/dates/YearLevelGroup',
+    stylesApiSelectors: [
+      'levelsGroup',
+      'calendarHeader',
+      'calendarHeaderControl',
+      'calendarHeaderControlIcon',
+      'calendarHeaderLevel',
+      'monthsList',
+      'monthsListCell',
+      'monthsListControl',
+      'monthsListRow',
+    ],
+    compound: true,
+    providerStylesApi: false,
   });
 
-  itSupportsProviderVariant(YearLevelGroup, defaultProps, 'YearLevelGroup', [
-    'yearLevelGroup',
-    'yearLevel',
-  ]);
-  itSupportsProviderSize(YearLevelGroup, defaultProps, 'YearLevelGroup', [
-    'yearLevelGroup',
-    'yearLevel',
-  ]);
-
-  itSupportsMonthsListProps(YearLevelGroup, defaultProps);
-  itSupportsHeaderProps(YearLevelGroup, defaultProps);
-  itSupportsOnControlClick(YearLevelGroup, defaultProps);
-  itSupportsOnControlMouseEnter(YearLevelGroup, defaultProps);
-  itHandlesControlsKeyboardEvents(
-    YearLevelGroup,
-    'year',
-    '.mantine-MonthsList-monthsList',
-    defaultProps
-  );
+  datesTests.itSupportsMonthsListProps({ component: YearLevelGroup, props: defaultProps });
+  datesTests.itSupportsHeaderProps({ component: YearLevelGroup, props: defaultProps });
+  datesTests.itSupportsOnControlClick({ component: YearLevelGroup, props: defaultProps });
+  datesTests.itSupportsOnControlMouseEnter({ component: YearLevelGroup, props: defaultProps });
+  datesTests.itHandlesControlsKeyboardEvents({
+    component: YearLevelGroup,
+    props: defaultProps,
+    listSelector: '.mantine-YearLevelGroup-monthsList',
+  });
 
   it('renders correct number of columns based on numberOfColumns prop', () => {
     const { rerender } = render(<YearLevelGroup {...defaultProps} numberOfColumns={1} />);
@@ -85,42 +81,15 @@ describe('@mantine/dates/YearLevelGroup', () => {
 
   it('has correct default __staticSelector', () => {
     const { container } = render(<YearLevelGroup {...defaultProps} />);
-    expect(container.firstChild).toHaveClass('mantine-YearLevelGroup-yearLevelGroup');
     expect(container.querySelector('table button')).toHaveClass(
-      'mantine-YearLevelGroup-pickerControl'
+      'mantine-YearLevelGroup-monthsListControl'
     );
   });
 
   it('supports custom __staticSelector', () => {
     const { container } = render(<YearLevelGroup {...defaultProps} __staticSelector="Calendar" />);
-    expect(container.firstChild).toHaveClass('mantine-Calendar-yearLevelGroup');
-    expect(container.querySelector('table button')).toHaveClass('mantine-Calendar-pickerControl');
-  });
-
-  it('supports styles api (styles)', () => {
-    const { container } = render(
-      <YearLevelGroup
-        {...defaultProps}
-        styles={{
-          yearLevelGroup: { borderColor: '#CCEE45' },
-          pickerControl: { borderColor: '#443443' },
-        }}
-      />
+    expect(container.querySelector('table button')).toHaveClass(
+      'mantine-Calendar-monthsListControl'
     );
-
-    expect(container.firstChild).toHaveStyle({ borderColor: '#CCEE45' });
-    expect(container.querySelector('table button')).toHaveStyle({ borderColor: '#443443' });
-  });
-
-  it('supports styles api (classNames)', () => {
-    const { container } = render(
-      <YearLevelGroup
-        {...defaultProps}
-        classNames={{ yearLevelGroup: 'test-group', pickerControl: 'test-control' }}
-      />
-    );
-
-    expect(container.firstChild).toHaveClass('test-group');
-    expect(container.querySelector('table button')).toHaveClass('test-control');
   });
 });

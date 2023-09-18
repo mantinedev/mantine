@@ -1,24 +1,23 @@
-import { Box, FileInput } from '@mantine/core';
 import React from 'react';
 import { MantineDemo } from '@mantine/ds';
+import { FileInput } from '@mantine/core';
 
 const code = `
 import { FileInput } from '@mantine/core';
 
 function Demo() {
-  return <FileInput disabled />;
+  return <FileInput disabled label="Disabled input" placeholder="Disabled input" />;
+}
 `;
 
 function Demo() {
-  return (
-    <Box maw={320} mx="auto">
-      <FileInput disabled label="Disabled" placeholder="Upload files" />
-    </Box>
-  );
+  return <FileInput disabled label="Disabled input" placeholder="Disabled input" />;
 }
 
 export const disabled: MantineDemo = {
-  type: 'demo',
-  code,
+  type: 'code',
   component: Demo,
+  maxWidth: 340,
+  centered: true,
+  code,
 };

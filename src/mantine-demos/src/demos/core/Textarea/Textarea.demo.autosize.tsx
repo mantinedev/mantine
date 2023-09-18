@@ -1,6 +1,6 @@
 import React from 'react';
 import { MantineDemo } from '@mantine/ds';
-import { Textarea, Box } from '@mantine/core';
+import { Textarea } from '@mantine/core';
 
 const code = `
 import { Textarea } from '@mantine/core';
@@ -30,7 +30,7 @@ function Demo() {
 
 function Demo() {
   return (
-    <Box maw={400} mx="auto">
+    <>
       <Textarea
         placeholder="Autosize with no rows limit"
         label="Autosize with no rows limit"
@@ -46,12 +46,14 @@ function Demo() {
         maxRows={4}
         mt="md"
       />
-    </Box>
+    </>
   );
 }
 
 export const autosize: MantineDemo = {
-  type: 'demo',
+  type: 'code',
   code,
   component: Demo,
+  maxWidth: 340,
+  centered: true,
 };

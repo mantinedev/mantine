@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
-import { Group, rem } from '@mantine/core';
+import { rem } from '@mantine/core';
 import { MantineDemo } from '@mantine/ds';
 import { useMove } from '@mantine/hooks';
 
 const code = `
 import { useState } from 'react';
-import { Group, rem } from '@mantine/core';
+import { rem } from '@mantine/core';
 import { useMove } from '@mantine/hooks';
 
 function Demo() {
@@ -13,7 +13,7 @@ function Demo() {
   const { ref } = useMove(setValue);
 
   return (
-    <Group position="center">
+    <div>
       <div
         ref={ref}
         style={{
@@ -58,7 +58,7 @@ function Demo() {
           }}
         />
       </div>
-    </Group>
+    </div>
   );
 }`;
 
@@ -67,7 +67,7 @@ function Demo() {
   const { ref } = useMove(setValue);
 
   return (
-    <Group position="center">
+    <div>
       <div
         ref={ref}
         style={{
@@ -112,12 +112,13 @@ function Demo() {
           }}
         />
       </div>
-    </Group>
+    </div>
   );
 }
 
 export const useMoveColor: MantineDemo = {
-  type: 'demo',
+  type: 'code',
   code,
   component: Demo,
+  centered: true,
 };

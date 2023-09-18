@@ -22,7 +22,7 @@ export function useMove<T extends HTMLElement = HTMLDivElement>(
   handlers?: useMoveHandlers,
   dir: 'ltr' | 'rtl' = 'ltr'
 ) {
-  const ref = useRef<T>();
+  const ref = useRef<T>(null);
   const mounted = useRef<boolean>(false);
   const isSliding = useRef(false);
   const frame = useRef(0);
@@ -111,8 +111,8 @@ export function useMove<T extends HTMLElement = HTMLDivElement>(
       onScrub({ x: event.changedTouches[0].clientX, y: event.changedTouches[0].clientY });
     };
 
-    ref.current.addEventListener('mousedown', onMouseDown);
-    ref.current.addEventListener('touchstart', onTouchStart, { passive: false });
+    ref.current?.addEventListener('mousedown', onMouseDown);
+    ref.current?.addEventListener('touchstart', onTouchStart, { passive: false });
 
     return () => {
       if (ref.current) {

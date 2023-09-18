@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
-import { Button, Modal, Group, rem } from '@mantine/core';
+import { Button, Modal, rem } from '@mantine/core';
 import { MantineDemo } from '@mantine/ds';
 import { Carousel } from '@mantine/carousel';
 
 const code = `
 import { useState } from 'react';
-import { Button, Modal, Group, rem } from '@mantine/core';
+import { Button, Modal, rem } from '@mantine/core';
 import { Carousel } from '@mantine/carousel';
 
 function Demo() {
@@ -14,9 +14,7 @@ function Demo() {
 
   return (
     <>
-      <Group position="center">
-        <Button onClick={() => setOpened(true)}>Open carousel with broken offset</Button>
-      </Group>
+      <Button onClick={() => setOpened(true)}>Open carousel with broken offset</Button>
       <Modal
         opened={opened}
         size={300}
@@ -60,9 +58,7 @@ function Demo() {
 
   return (
     <>
-      <Group position="center">
-        <Button onClick={() => setOpened(true)}>Open carousel with broken offset</Button>
-      </Group>
+      <Button onClick={() => setOpened(true)}>Open carousel with broken offset</Button>
       <Modal
         opened={opened}
         size={300}
@@ -100,7 +96,8 @@ function Demo() {
 }
 
 export const brokenAnimation: MantineDemo = {
-  type: 'demo',
+  type: 'code',
   component: Demo,
   code,
+  centered: true,
 };

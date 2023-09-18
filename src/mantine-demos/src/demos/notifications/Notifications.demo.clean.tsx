@@ -9,7 +9,7 @@ import { notifications } from '@mantine/notifications';
 
 function Demo() {
   return (
-    <Group position="center">
+    <Group justify="center">
       <Button
         variant="outline"
         onClick={() => {
@@ -27,11 +27,11 @@ function Demo() {
         Show 10 notifications
       </Button>
 
-      <Button variant="outline" color="gray" onClick={notifications.cleanQueue}>
+      <Button variant="outline" color="gray" onClick={() => notifications.cleanQueue()}>
         Clean queue
       </Button>
 
-      <Button variant="outline" color="red" onClick={notifications.clean}>
+      <Button variant="outline" color="red" onClick={() => notifications.clean()}>
         Clean all
       </Button>
     </Group>
@@ -40,7 +40,7 @@ function Demo() {
 
 function Demo() {
   return (
-    <Group position="center">
+    <Group justify="center">
       <Button
         variant="outline"
         onClick={() => {
@@ -58,11 +58,11 @@ function Demo() {
         Show 10 notifications
       </Button>
 
-      <Button variant="outline" color="gray" onClick={notifications.cleanQueue}>
+      <Button variant="outline" color="gray" onClick={() => notifications.cleanQueue()}>
         Clean queue
       </Button>
 
-      <Button variant="outline" color="red" onClick={notifications.clean}>
+      <Button variant="outline" color="red" onClick={() => notifications.clean()}>
         Clean all
       </Button>
     </Group>
@@ -70,7 +70,7 @@ function Demo() {
 }
 
 export const clean: MantineDemo = {
-  type: 'demo',
+  type: 'code',
   code,
   component: Demo,
 };

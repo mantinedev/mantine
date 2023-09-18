@@ -30,11 +30,11 @@ function Demo() {
         fade transition 600ms linear transition
       </Modal>
 
-      <Group position="center">
-        <Button onClick={() => setSlowTransitionOpened(true)} color="pink">
+      <Group justify="center">
+        <Button onClick={() => setSlowTransitionOpened(true)} variant="default">
           Rotate left transition
         </Button>
-        <Button onClick={() => setNoTransitionOpened(true)} color="cyan">
+        <Button onClick={() => setNoTransitionOpened(true)} variant="default">
           Fade transition
         </Button>
       </Group>
@@ -67,11 +67,11 @@ function Demo() {
         fade transition 600ms linear transition
       </Modal>
 
-      <Group position="center">
-        <Button onClick={() => setSlowTransitionOpened(true)} color="pink">
+      <Group justify="center">
+        <Button onClick={() => setSlowTransitionOpened(true)} variant="default">
           Rotate left transition
         </Button>
-        <Button onClick={() => setNoTransitionOpened(true)} color="cyan">
+        <Button onClick={() => setNoTransitionOpened(true)} variant="default">
           Fade transition
         </Button>
       </Group>
@@ -80,7 +80,7 @@ function Demo() {
 }
 
 export const transitions: MantineDemo = {
-  type: 'demo',
+  type: 'code',
   code,
   component: Demo,
 };

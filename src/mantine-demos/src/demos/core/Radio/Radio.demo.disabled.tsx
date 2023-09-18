@@ -1,33 +1,34 @@
-import { Box, Radio } from '@mantine/core';
+import { Radio, Group } from '@mantine/core';
 import { MantineDemo } from '@mantine/ds';
 import React from 'react';
 
 const code = `
-import { Radio } from '@mantine/core';
+import { Radio, Group } from '@mantine/core';
 
 function Demo() {
   return (
-    <>
+    <Group>
       <Radio checked disabled label="React" value="react" />
       <Radio disabled label="Angular" value="nu" />
       <Radio disabled label="Svelte" value="sv" />
-    </>
+    </Group>
   );
 }
 `;
 
 function Demo() {
   return (
-    <Box maw={320} mx="auto">
+    <Group>
       <Radio checked disabled label="React" value="react" />
-      <Radio disabled label="Angular" value="nu" mt="xs" />
-      <Radio disabled label="Svelte" value="sv" mt="xs" />
-    </Box>
+      <Radio disabled label="Angular" value="nu" />
+      <Radio disabled label="Svelte" value="sv" />
+    </Group>
   );
 }
 
 export const disabled: MantineDemo = {
-  type: 'demo',
+  type: 'code',
+  centered: true,
   component: Demo,
   code,
 };

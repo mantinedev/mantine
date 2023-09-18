@@ -1,0 +1,119 @@
+.group {
+  margin-bottom: 0;
+  padding-left: var(--mantine-spacing-xs);
+  padding-right: var(--mantine-spacing-xs);
+
+  &[data-opened] {
+    margin-bottom: calc(var(--mantine-spacing-xl) * 1.2);
+  }
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: rem(32px);
+  cursor: pointer;
+
+  @mixin light {
+    color: var(--mantine-color-gray-7);
+  }
+
+  @mixin dark {
+    color: var(--mantine-color-white);
+  }
+}
+
+.chevron {
+  width: rem(15px);
+  height: rem(15px);
+  margin-right: var(--mantine-spacing-md);
+  transition: transform 150ms ease;
+
+  @mixin rtl {
+    margin-right: 0;
+    margin-left: var(--mantine-spacing-md);
+  }
+
+  &[data-collapsed] {
+    transform: rotate(-90deg);
+  }
+}
+
+.title {
+  user-select: none;
+  font-weight: 700;
+  font-family: var(--docs-font-primary);
+  line-height: 1;
+  padding-top: rem(4px);
+  letter-spacing: rem(0.5px);
+  word-spacing: rem(1px);
+  text-transform: uppercase;
+  font-size: var(--mantine-font-size-xs);
+}
+
+.link {
+  --border-color: light-dark(var(--mantine-color-gray-3), var(--mantine-color-dark-6));
+
+  display: block;
+  border-left: rem(1px) solid var(--border-color);
+  padding-left: rem(23px);
+  padding-right: var(--mantine-spacing-md);
+  padding-top: rem(8px);
+  padding-bottom: rem(8px);
+  margin-left: rem(7px);
+  border-top-right-radius: var(--mantine-radius-sm);
+  border-bottom-right-radius: var(--mantine-radius-sm);
+  font-size: var(--mantine-font-size-sm);
+  user-select: none;
+  text-decoration: none;
+
+  @mixin light {
+    color: var(--mantine-color-gray-7);
+  }
+
+  @mixin dark {
+    color: var(--mantine-color-dark-1);
+  }
+
+  @mixin rtl {
+    padding-left: var(--mantine-spacing-md);
+    padding-right: rem(23px);
+    border-left: 0;
+    border-right: rem(1px) solid var(--border-color);
+    margin-left: 0;
+    margin-right: rem(7px);
+    border-radius: 0;
+    border-top-left-radius: var(--mantine-radius-sm);
+    border-bottom-left-radius: var(--mantine-radius-sm);
+  }
+
+  &[data-navbar-link-active] {
+    border-color: var(--mantine-color-blue-5) !important;
+
+    @mixin light {
+      color: var(--mantine-color-blue-8);
+      background-color: var(--mantine-color-blue-0);
+    }
+
+    @mixin dark {
+      color: var(--mantine-color-blue-1);
+      background-color: rgba(24, 100, 171, 0.45);
+    }
+
+    & .linkTitle {
+      font-weight: 500;
+    }
+  }
+}
+
+.linkTitle {
+  font-size: var(--mantine-font-size-sm);
+}
+
+.linkDescription {
+  font-size: var(--mantine-font-size-xs);
+  opacity: 0.6;
+  margin-top: rem(4px);
+  line-height: 1.4;
+}

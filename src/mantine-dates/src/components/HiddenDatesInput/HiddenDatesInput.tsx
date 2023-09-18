@@ -6,8 +6,8 @@ export type HiddenDatesInputValue = DatesRangeValue | DateValue | DateValue[];
 export interface HiddenDatesInputProps {
   value: HiddenDatesInputValue;
   type: DatePickerType;
-  name: string;
-  form: string;
+  name: string | undefined;
+  form: string | undefined;
 }
 
 function formatValue(value: HiddenDatesInputValue, type: DatePickerType) {
@@ -25,7 +25,10 @@ function formatValue(value: HiddenDatesInputValue, type: DatePickerType) {
   }
 
   if (type === 'multiple' && Array.isArray(value)) {
-    return value.map((date) => date.toISOString()).join(', ');
+    return value
+      .map((date) => date?.toISOString())
+      .filter(Boolean)
+      .join(', ');
   }
 
   if (!Array.isArray(value) && value) {

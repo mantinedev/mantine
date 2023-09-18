@@ -1,2 +1,6 @@
 export { YearLevelGroup } from './YearLevelGroup';
-export type { YearLevelGroupStylesNames, YearLevelGroupProps } from './YearLevelGroup';
+export type {
+  YearLevelGroupFactory,
+  YearLevelGroupProps,
+  YearLevelGroupStylesNames,
+} from './YearLevelGroup';

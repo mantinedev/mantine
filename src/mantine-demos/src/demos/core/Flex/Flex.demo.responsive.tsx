@@ -35,7 +35,7 @@ function Demo() {
 }
 
 export const responsive: MantineDemo = {
-  type: 'demo',
+  type: 'code',
   component: Demo,
   code,
 };

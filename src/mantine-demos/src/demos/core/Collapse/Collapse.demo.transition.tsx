@@ -12,7 +12,7 @@ function Demo() {
 
   return (
     <Box maw={400} mx="auto">
-      <Group position="center" mb={5}>
+      <Group justify="center" mb={5}>
         <Button onClick={toggle}>Toggle with linear transition</Button>
       </Group>
 
@@ -29,7 +29,7 @@ function Demo() {
 
   return (
     <Box maw={400} mx="auto">
-      <Group position="center" mb={5}>
+      <Group justify="center" mb={5}>
         <Button onClick={toggle}>Toggle with linear transition</Button>
       </Group>
 
@@ -50,7 +50,7 @@ function Demo() {
 }
 
 export const transition: MantineDemo = {
-  type: 'demo',
+  type: 'code',
   code,
   component: Demo,
 };

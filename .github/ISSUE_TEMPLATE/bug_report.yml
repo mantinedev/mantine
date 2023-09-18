@@ -1,5 +1,6 @@
 name: Report an issue with @mantine/ scoped package
 description: Tell us if something is not working as expected
+labels: 'review required'
 body:
   - type: markdown
     attributes:
@@ -17,12 +18,15 @@ body:
         - '@mantine/form'
         - '@mantine/notifications'
         - '@mantine/tiptap'
-        - '@mantine/prism'
+        - '@mantine/code-highlight'
         - '@mantine/modals'
         - '@mantine/dropzone'
         - '@mantine/spotlight'
         - '@mantine/nprogress'
         - '@mantine/carousel'
+        - '@mantine/colors-generator'
+        - '@mantine/store'
+        - '@mantine/vanilla-extract'
     validations:
       required: true
   - type: textarea
@@ -34,7 +38,7 @@ body:
   - type: input
     id: version
     attributes:
-      label: What version of @mantine/hooks page do you have in package.json?
+      label: What version of @mantine/* page do you have in package.json? (Note that all @mantine/* packages must have the same version in order to work correctly)
     validations:
       required: true
   - type: input

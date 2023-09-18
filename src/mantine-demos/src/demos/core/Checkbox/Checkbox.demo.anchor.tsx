@@ -11,7 +11,7 @@ function Demo() {
       label={
         <>
           I accept{' '}
-          <Anchor href="https://mantine.dev" target="_blank">
+          <Anchor href="https://mantine.dev" target="_blank" inherit>
             terms and conditions
           </Anchor>
         </>
@@ -27,7 +27,7 @@ function Demo() {
       label={
         <>
           I accept{' '}
-          <Anchor href="https://mantine.dev" target="_blank">
+          <Anchor href="https://mantine.dev" target="_blank" inherit>
             terms and conditions
           </Anchor>
         </>
@@ -37,7 +37,7 @@ function Demo() {
 }
 
 export const anchor: MantineDemo = {
-  type: 'demo',
+  type: 'code',
   component: Demo,
   code,
 };

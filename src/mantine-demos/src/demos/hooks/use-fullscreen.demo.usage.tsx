@@ -1,7 +1,7 @@
 import React from 'react';
 import { useFullscreen } from '@mantine/hooks';
 import { MantineDemo } from '@mantine/ds';
-import { Button, Group } from '@mantine/core';
+import { Button } from '@mantine/core';
 
 const code = `
 import { useFullscreen } from '@mantine/hooks';
@@ -22,16 +22,15 @@ function Demo() {
   const { toggle, fullscreen } = useFullscreen();
 
   return (
-    <Group position="center">
-      <Button onClick={toggle} color={fullscreen ? 'red' : 'blue'}>
-        {fullscreen ? 'Exit Fullscreen' : 'Enter Fullscreen'}
-      </Button>
-    </Group>
+    <Button onClick={toggle} color={fullscreen ? 'red' : 'blue'}>
+      {fullscreen ? 'Exit Fullscreen' : 'Enter Fullscreen'}
+    </Button>
   );
 }
 
 export const useFullscreenDemo: MantineDemo = {
-  type: 'demo',
+  type: 'code',
   code,
   component: Demo,
+  centered: true,
 };

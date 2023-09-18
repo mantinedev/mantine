@@ -73,7 +73,7 @@ function Demo() {
 }
 
 export const customControl: MantineDemo = {
-  type: 'demo',
+  type: 'code',
   component: Demo,
   code,
 };

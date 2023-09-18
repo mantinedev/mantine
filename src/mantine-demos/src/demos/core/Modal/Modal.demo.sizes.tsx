@@ -30,15 +30,15 @@ function Demo() {
         title="Introduce yourself!"
         size={size}
       >
-        <AuthenticationForm noShadow noPadding />
+        <AuthenticationForm noPadding noShadow />
       </Modal>
 
-      <Group position="center">{buttons}</Group>
+      <Group justify="center">{buttons}</Group>
     </>
   );
 }
 
 export const sizes: MantineDemo = {
-  type: 'demo',
+  type: 'code',
   component: Demo,
 };

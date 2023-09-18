@@ -1,7 +1,6 @@
 import 'dayjs/locale/ru';
 import dayjs from 'dayjs';
 import React, { useState } from 'react';
-import { MANTINE_SIZES } from '@mantine/core';
 import { MonthLevel, MonthLevelProps } from './MonthLevel';
 
 export default { title: 'MonthLevel' };
@@ -9,8 +8,10 @@ export default { title: 'MonthLevel' };
 function Wrapper(props: Partial<MonthLevelProps>) {
   const [month, setMonth] = useState(new Date(2022, 3, 11));
 
-  const onNextMonth = () => setMonth((current) => dayjs(current).add(1, 'month').toDate());
-  const onPrevMonth = () => setMonth((current) => dayjs(current).subtract(1, 'month').toDate());
+  const onNextMonth = () =>
+    setMonth((current) => dayjs(current.toISOString()).subtract(-1, 'month').toDate());
+  const onPrevMonth = () =>
+    setMonth((current) => dayjs(current.toISOString()).subtract(1, 'month').toDate());
 
   return (
     <div style={{ padding: 40 }}>
@@ -20,7 +21,7 @@ function Wrapper(props: Partial<MonthLevelProps>) {
 }
 
 export function Usage() {
-  return <Wrapper />;
+  return <Wrapper classNames={{ weekday: 'test-tetstasfaf' }} />;
 }
 
 export function Locale() {
@@ -44,6 +45,8 @@ export function MaxDate() {
 }
 
 export function Sizes() {
-  const sizes = MANTINE_SIZES.map((size) => <Wrapper size={size} key={size} />);
+  const sizes = (['xs', 'sm', 'md', 'lg', 'xl'] as const).map((size) => (
+    <Wrapper size={size} key={size} />
+  ));
   return <>{sizes}</>;
 }

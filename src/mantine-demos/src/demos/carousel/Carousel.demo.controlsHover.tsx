@@ -1,33 +1,29 @@
 import React from 'react';
-import { createStyles, getStylesRef } from '@mantine/core';
 import { Carousel } from '@mantine/carousel';
 import { MantineDemo } from '@mantine/ds';
 import { Slides } from './_slides';
+import classes from './Carousel.demo.controlsHover.module.css';
+
+const cssCode = `.controls {
+  transition: opacity 150ms ease;
+  opacity: 0;
+}
+
+.root {
+  &:hover {
+    .controls {
+      opacity: 1;
+    }
+  }
+}`;
 
 const code = `
-import { createStyles, getStylesRef } from '@mantine/core';
 import { Carousel } from '@mantine/carousel';
-
-const useStyles = createStyles(() => ({
-  controls: {
-    ref: getStylesRef('controls'),
-    transition: 'opacity 150ms ease',
-    opacity: 0,
-  },
-
-  root: {
-    '&:hover': {
-      [\`& .\${getStylesRef('controls')}\`]: {
-        opacity: 1,
-      },
-    },
-  },
-}));
+import classes from './Demo.module.css';
 
 function Demo() {
-  const { classes } = useStyles();
   return (
-    <Carousel maw={320} mx="auto" height={200} classNames={classes}>
+    <Carousel height={200} classNames={classes}>
       <Carousel.Slide>1</Carousel.Slide>
       <Carousel.Slide>2</Carousel.Slide>
       <Carousel.Slide>3</Carousel.Slide>
@@ -37,33 +33,21 @@ function Demo() {
 }
 `;
 
-const useStyles = createStyles(() => ({
-  controls: {
-    ref: getStylesRef('controls'),
-    transition: 'opacity 150ms ease',
-    opacity: 0,
-  },
-
-  root: {
-    '&:hover': {
-      [`& .${getStylesRef('controls')}`]: {
-        opacity: 1,
-      },
-    },
-  },
-}));
-
 function Demo() {
-  const { classes } = useStyles();
   return (
-    <Carousel maw={320} mx="auto" height={200} classNames={classes}>
+    <Carousel height={200} classNames={classes}>
       <Slides count={5} />
     </Carousel>
   );
 }
 
 export const controlsHover: MantineDemo = {
-  type: 'demo',
+  type: 'code',
   component: Demo,
-  code,
+  code: [
+    { fileName: 'Demo.tsx', code, language: 'tsx' },
+    { fileName: 'Demo.module.css', code: cssCode, language: 'scss' },
+  ],
+  centered: true,
+  maxWidth: 320,
 };

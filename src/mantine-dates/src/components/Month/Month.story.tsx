@@ -1,6 +1,6 @@
 import dayjs from 'dayjs';
 import React, { useState } from 'react';
-import { Code, Indicator, MANTINE_SIZES } from '@mantine/core';
+import { Code, Indicator } from '@mantine/core';
 import { Month, MonthProps } from './Month';
 
 export default { title: 'Month' };
@@ -23,12 +23,29 @@ export function CustomWeekendDays() {
 }
 
 export function Selected() {
-  const [selected, setSelected] = useState<Date>(null);
+  const [selected, setSelected] = useState<Date | null>(null);
   return (
     <Wrapper
       getDayProps={(date) => ({
-        selected: dayjs(date).isSame(selected, 'date'),
+        selected: dayjs(date).isSame(selected!, 'date'),
         onClick: () => setSelected(date),
+      })}
+    />
+  );
+}
+
+export function Range() {
+  return (
+    <Wrapper
+      getDayProps={(date) => ({
+        selected:
+          dayjs(date).isSame(new Date(2022, 3, 9), 'date') ||
+          dayjs(date).isSame(new Date(2022, 3, 15), 'date'),
+        firstInRange: dayjs(date).isSame(new Date(2022, 3, 9), 'date'),
+        inRange:
+          dayjs(date).isAfter(new Date(2022, 3, 9), 'date') &&
+          dayjs(date).isBefore(new Date(2022, 3, 15), 'date'),
+        lastInRange: dayjs(date).isSame(new Date(2022, 3, 15), 'date'),
       })}
     />
   );
@@ -78,6 +95,8 @@ export function Unstyled() {
 }
 
 export function Sizes() {
-  const sizes = MANTINE_SIZES.map((size) => <Wrapper size={size} key={size} />);
+  const sizes = (['xs', 'sm', 'md', 'lg', 'xl'] as const).map((size) => (
+    <Wrapper size={size} key={size} />
+  ));
   return <>{sizes}</>;
 }

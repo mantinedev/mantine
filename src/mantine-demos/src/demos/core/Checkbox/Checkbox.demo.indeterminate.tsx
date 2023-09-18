@@ -36,7 +36,6 @@ export function IndeterminateCheckbox() {
         checked={allChecked}
         indeterminate={indeterminate}
         label="Receive all notifications"
-        transitionDuration={0}
         onChange={() =>
           handlers.setState((current) =>
             current.map((value) => ({ ...value, checked: !allChecked }))
@@ -76,7 +75,6 @@ export function Demo() {
       <Checkbox
         checked={allChecked}
         indeterminate={indeterminate}
-        transitionDuration={0}
         label="Receive all notifications"
         onChange={() =>
           handlers.setState((current) =>
@@ -90,7 +88,7 @@ export function Demo() {
 }
 
 export const indeterminate: MantineDemo = {
-  type: 'demo',
+  type: 'code',
   code,
   component: Demo,
 };

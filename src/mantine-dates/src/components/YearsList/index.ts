@@ -1,2 +1,7 @@
 export { YearsList } from './YearsList';
-export type { YearsListProps, YearsListSettings, YearsListStylesNames } from './YearsList';
+export type {
+  YearsListFactory,
+  YearsListProps,
+  YearsListSettings,
+  YearsListStylesNames,
+} from './YearsList';

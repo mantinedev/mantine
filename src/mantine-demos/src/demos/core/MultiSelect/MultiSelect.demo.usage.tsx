@@ -1,27 +1,16 @@
 import React from 'react';
-import { MultiSelect } from '@mantine/core';
 import { MantineDemo } from '@mantine/ds';
-import { data } from './_data';
+import { MultiSelect } from '@mantine/core';
 
 const code = `
 import { MultiSelect } from '@mantine/core';
 
-const data = [
-  { value: 'react', label: 'React' },
-  { value: 'ng', label: 'Angular' },
-  { value: 'svelte', label: 'Svelte' },
-  { value: 'vue', label: 'Vue' },
-  { value: 'riot', label: 'Riot' },
-  { value: 'next', label: 'Next.js' },
-  { value: 'blitz', label: 'Blitz.js' },
-];
-
 function Demo() {
   return (
     <MultiSelect
-      data={data}
-      label="Your favorite frameworks/libraries"
-      placeholder="Pick all that you like"
+      label="Your favorite libraries"
+      placeholder="Pick value"
+      data={['React', 'Angular', 'Vue', 'Svelte']}
     />
   );
 }
@@ -30,17 +19,17 @@ function Demo() {
 function Demo() {
   return (
     <MultiSelect
-      maw={400}
-      mx="auto"
-      data={data}
-      label="Your favorite frameworks/libraries"
-      placeholder="Pick all that you like"
+      label="Your favorite libraries"
+      placeholder="Pick value"
+      data={['React', 'Angular', 'Vue', 'Svelte']}
     />
   );
 }
 
 export const usage: MantineDemo = {
-  type: 'demo',
-  code,
+  type: 'code',
   component: Demo,
+  code,
+  maxWidth: 340,
+  centered: true,
 };

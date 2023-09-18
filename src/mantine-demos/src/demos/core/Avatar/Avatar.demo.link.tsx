@@ -1,5 +1,5 @@
 import React from 'react';
-import { Avatar, Group } from '@mantine/core';
+import { Avatar } from '@mantine/core';
 import { MantineDemo } from '@mantine/ds';
 import { avatars } from './_mockdata';
 
@@ -21,20 +21,19 @@ function Demo() {
 
 function Demo() {
   return (
-    <Group position="center">
-      <Avatar
-        component="a"
-        href="https://github.com/rtivital"
-        target="_blank"
-        src={avatars[0]}
-        alt="it's me"
-      />
-    </Group>
+    <Avatar
+      component="a"
+      href="https://github.com/rtivital"
+      target="_blank"
+      src={avatars[0]}
+      alt="it's me"
+    />
   );
 }
 
 export const link: MantineDemo = {
-  type: 'demo',
+  type: 'code',
+  centered: true,
   code,
   component: Demo,
 };

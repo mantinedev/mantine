@@ -19,7 +19,7 @@ function Demo() {
   });
 
   return (
-    <Box maw={320} mx="auto">
+    <Box maw={340} mx="auto">
       <TextInput
         label="First name"
         placeholder="First name"
@@ -37,7 +37,7 @@ function Demo() {
         {...form.getInputProps('terms', { type: 'checkbox' })}
       />
 
-      <Text size="sm" weight={500} mt="xl">
+      <Text size="sm" fw={500} mt="xl">
         Form values:
       </Text>
       <Code block mt={5}>
@@ -60,7 +60,7 @@ function Demo() {
   });
 
   return (
-    <Box maw={320} mx="auto">
+    <Box maw={340} mx="auto">
       <TextInput
         label="First name"
         placeholder="First name"
@@ -78,7 +78,7 @@ function Demo() {
         {...form.getInputProps('terms', { type: 'checkbox' })}
       />
 
-      <Text size="sm" weight={500} mt="xl">
+      <Text size="sm" fw={500} mt="xl">
         Form values:
       </Text>
       <Code block mt={5}>
@@ -89,7 +89,7 @@ function Demo() {
 }
 
 export const nested: MantineDemo = {
-  type: 'demo',
+  type: 'code',
   component: Demo,
   code,
 };

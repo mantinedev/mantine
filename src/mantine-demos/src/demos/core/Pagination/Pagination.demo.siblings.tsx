@@ -41,7 +41,7 @@ function Demo() {
 }
 
 export const siblings: MantineDemo = {
-  type: 'demo',
+  type: 'code',
   code,
   component: Demo,
 };

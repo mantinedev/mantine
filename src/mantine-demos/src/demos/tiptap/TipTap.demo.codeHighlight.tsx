@@ -62,10 +62,8 @@ export function validBraces(braces: string) {
 function Demo() {
   const editor = useEditor({
     extensions: [
-      StarterKit,
-      CodeBlockLowlight.configure({
-        lowlight,
-      }),
+      StarterKit.configure({ codeBlock: false }),
+      CodeBlockLowlight.configure({ lowlight }),
     ],
     content: \`<p>Regular paragraph</p><pre><code>\${codeExample}</code></pre>\`,
   });
@@ -131,10 +129,8 @@ export function validBraces(braces: string) {
 function Demo() {
   const editor = useEditor({
     extensions: [
-      StarterKit,
-      CodeBlockLowlight.configure({
-        lowlight,
-      }),
+      StarterKit.configure({ codeBlock: false }),
+      CodeBlockLowlight.configure({ lowlight }),
     ],
     content: `<p>Regular paragraph</p><pre><code>${codeExample}</code></pre>`,
   });
@@ -153,7 +149,7 @@ function Demo() {
 }
 
 export const codeHighlight: MantineDemo = {
-  type: 'demo',
+  type: 'code',
   component: Demo,
   code,
 };

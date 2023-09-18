@@ -14,19 +14,18 @@ function Demo() {
     <>
       <Portal>
         <Box
-          sx={(theme) => ({
+          style={{
             position: 'fixed',
             top: 0,
             left: 0,
             right: 0,
-            padding: theme.spacing.xs,
+            padding: 'var(--mantine-spacing-xs)',
             height: rem(60),
             zIndex: 1000000,
             transform: \`translate3d(0, \${pinned ? 0 : rem(-110)}, 0)\`,
             transition: 'transform 400ms ease',
-            backgroundColor:
-              theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[0],
-          })}
+            backgroundColor: 'var(--mantine-color-body)',
+          }}
         >
           Pinned header
         </Box>
@@ -35,6 +34,7 @@ function Demo() {
     </>
   );
 }
+
 `;
 
 function Demo() {
@@ -44,19 +44,18 @@ function Demo() {
     <>
       <Portal>
         <Box
-          sx={(theme) => ({
+          style={{
             position: 'fixed',
             top: 0,
             left: 0,
             right: 0,
-            padding: theme.spacing.xs,
+            padding: 'var(--mantine-spacing-xs)',
             height: rem(60),
             zIndex: 1000000,
             transform: `translate3d(0, ${pinned ? 0 : rem(-110)}, 0)`,
             transition: 'transform 400ms ease',
-            backgroundColor:
-              theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[0],
-          })}
+            backgroundColor: 'var(--mantine-color-body)',
+          }}
         >
           Pinned header
         </Box>
@@ -67,7 +66,7 @@ function Demo() {
 }
 
 export const useHeadroomDemo: MantineDemo = {
-  type: 'demo',
+  type: 'code',
   code,
   component: Demo,
 };

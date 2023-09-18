@@ -3,12 +3,9 @@
   "include": [
     "src/mantine-*/src",
     "src/mantine-*/demos",
-    "./types",
-    "./docs/src",
     "./scripts",
     "./configuration",
-    "./configuration/types",
-    "./tests"
+    "./configuration/types"
   ],
   "exclude": [
     "public",

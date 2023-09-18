@@ -1,31 +1,22 @@
 import React from 'react';
 import { MantineDemo } from '@mantine/ds';
-import { Group } from '@mantine/core';
 import { Calendar } from '@mantine/dates';
 
 const code = `
-import { Group } from '@mantine/core';
 import { Calendar } from '@mantine/dates';
 
 function Demo() {
-  return (
-    <Group position="center">
-      <Calendar />
-    </Group>
-  );
+  return <Calendar />;
 }
 `;
 
 function Demo() {
-  return (
-    <Group position="center">
-      <Calendar />
-    </Group>
-  );
+  return <Calendar />;
 }
 
 export const usage: MantineDemo = {
-  type: 'demo',
+  type: 'code',
+  centered: true,
   component: Demo,
   code,
 };

@@ -15,24 +15,24 @@ function Wrapper(props: ColorInputProps) {
   );
 }
 
-const codeTemplate = (props: string) => `
+const code = `
 import { ColorInput } from '@mantine/core';
 
 function Demo() {
-  return <ColorInput defaultValue="#C5D899"${props} />;
+  return <ColorInput defaultValue="#C5D899"{{props}} />;
 }
 `;
 
 export const formatsConfigurator: MantineDemo = {
   type: 'configurator',
   component: Wrapper,
-  codeTemplate,
-  configurator: [
+  code,
+  controls: [
     {
-      name: 'format',
+      prop: 'format',
       type: 'select',
       initialValue: 'hex',
-      defaultValue: 'hex',
+      libraryValue: 'hex',
       data: [
         { value: 'hex', label: 'HEX' },
         { value: 'hexa', label: 'HEXA' },

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useDebouncedValue } from '@mantine/hooks';
 import { MantineDemo } from '@mantine/ds';
-import { TextInput, Text, Button, Flex, Box } from '@mantine/core';
+import { TextInput, Text, Button, Group, Box } from '@mantine/core';
 
 const code = `
 import { useState } from 'react';
@@ -37,27 +37,25 @@ function Demo() {
 
   return (
     <Box maw={400} mx="auto">
-      <Flex align="flex-end">
+      <Group align="flex-end">
         <TextInput
           label="Enter value to see debounce effect"
           placeholder="Enter value to see debounce effect"
           value={value}
-          sx={{ flex: 1 }}
+          style={{ flex: 1 }}
           onChange={(event) => setValue(event.currentTarget.value)}
         />
-        <Button onClick={cancel} ml={15}>
-          Cancel
-        </Button>
-      </Flex>
+        <Button onClick={cancel}>Cancel</Button>
+      </Group>
 
       <Text mt="sm">
-        <Text component="span" color="dimmed" size="sm">
+        <Text component="span" c="dimmed" size="sm">
           Value:
         </Text>{' '}
         {value.trim() || '[empty string]'}
       </Text>
       <Text>
-        <Text component="span" color="dimmed" size="sm">
+        <Text component="span" c="dimmed" size="sm">
           Debounced value:
         </Text>{' '}
         {debounced.trim() || '[empty string]'}
@@ -67,7 +65,7 @@ function Demo() {
 }
 
 export const useDebouncedValueCancel: MantineDemo = {
-  type: 'demo',
+  type: 'code',
   component: Demo,
   code,
 };

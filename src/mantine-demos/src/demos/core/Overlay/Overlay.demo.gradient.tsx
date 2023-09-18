@@ -1,17 +1,20 @@
 import React, { useState } from 'react';
 import { MantineDemo } from '@mantine/ds';
-import { Button, Overlay, Image, AspectRatio } from '@mantine/core';
+import { Button, Overlay, AspectRatio } from '@mantine/core';
 
 const code = `
 import { useState } from 'react';
-import { Button, Overlay, Image, AspectRatio } from '@mantine/core';
+import { Button, Overlay, AspectRatio } from '@mantine/core';
 
 function Demo() {
   const [visible, setVisible] = useState(true);
   return (
     <>
       <AspectRatio ratio={16 / 9} maw={400} mx="auto">
-        <Image src="https://images.unsplash.com/photo-1618359057154-e21ae64350b6?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=720&q=80" />
+        <img
+          src="https://images.unsplash.com/photo-1618359057154-e21ae64350b6?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=720&q=80"
+          alt="Demo"
+        />
         {visible && (
           <Overlay
             gradient="linear-gradient(145deg, rgba(0, 0, 0, 0.95) 0%, rgba(0, 0, 0, 0) 100%)"
@@ -32,7 +35,10 @@ function Demo() {
   return (
     <>
       <AspectRatio ratio={16 / 9} maw={400} mx="auto">
-        <Image src="https://images.unsplash.com/photo-1618359057154-e21ae64350b6?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=720&q=80" />
+        <img
+          src="https://images.unsplash.com/photo-1618359057154-e21ae64350b6?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=720&q=80"
+          alt="Demo"
+        />
         {visible && (
           <Overlay
             gradient="linear-gradient(145deg, rgba(0, 0, 0, 0.95) 0%, rgba(0, 0, 0, 0) 100%)"
@@ -48,7 +54,7 @@ function Demo() {
 }
 
 export const gradient: MantineDemo = {
-  type: 'demo',
+  type: 'code',
   code,
   component: Demo,
 };

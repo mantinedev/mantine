@@ -23,12 +23,13 @@ export function useFavicon(url: string) {
       const element = document.createElement('link');
       element.rel = 'shortcut icon';
       link.current = element;
-      document.querySelector('head').appendChild(element);
+      document.querySelector('head')!.appendChild(element);
     }
 
     const splittedUrl = url.split('.');
     link.current.setAttribute(
       'type',
+      // @ts-ignore
       MIME_TYPES[splittedUrl[splittedUrl.length - 1].toLowerCase()]
     );
     link.current.setAttribute('href', url);

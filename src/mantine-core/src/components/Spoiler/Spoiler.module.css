@@ -1,0 +1,10 @@
+.root {
+  position: relative;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  transition: max-height var(--spoiler-transition-duration, 200ms) ease;
+}

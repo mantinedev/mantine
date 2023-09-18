@@ -1,10 +1,25 @@
-import React, { forwardRef } from 'react';
-import { useComponentDefaultProps } from '@mantine/core';
+import React from 'react';
+import {
+  BoxProps,
+  StylesApiProps,
+  factory,
+  ElementProps,
+  useProps,
+  Factory,
+  useResolvedStylesApi,
+  MantineComponentStaticProperties,
+} from '@mantine/core';
 import { useDatesState } from '../../hooks';
 import { DecadeLevelBaseSettings } from '../DecadeLevel';
 import { YearLevelBaseSettings } from '../YearLevel';
 import { PickerBaseProps, DatePickerType, CalendarLevel } from '../../types';
-import { Calendar, CalendarBaseProps, CalendarSystemProps } from '../Calendar';
+import { Calendar, CalendarBaseProps } from '../Calendar';
+import { DecadeLevelGroupStylesNames } from '../DecadeLevelGroup';
+import { YearLevelGroupStylesNames } from '../YearLevelGroup';
+import { shiftTimezone } from '../../utils';
+import { useDatesContext } from '../DatesProvider';
+
+export type MonthPickerStylesNames = DecadeLevelGroupStylesNames | YearLevelGroupStylesNames;
 
 type MonthPickerLevel = Exclude<CalendarLevel, 'month'>;
 
@@ -27,68 +42,91 @@ export interface MonthPickerBaseProps<Type extends DatePickerType = 'default'>
 }
 
 export interface MonthPickerProps<Type extends DatePickerType = 'default'>
-  extends MonthPickerBaseProps<Type>,
-    CalendarSystemProps {}
+  extends BoxProps,
+    MonthPickerBaseProps<Type>,
+    StylesApiProps<MonthPickerFactory>,
+    ElementProps<'div', 'onChange' | 'value' | 'defaultValue'> {
+  /** Called when month is selected */
+  onMonthSelect?(date: Date): void;
+}
+
+export type MonthPickerFactory = Factory<{
+  props: MonthPickerProps;
+  ref: HTMLDivElement;
+  stylesNames: MonthPickerStylesNames;
+}>;
 
 const defaultProps: Partial<MonthPickerProps> = {
   type: 'default',
 };
 
 type MonthPickerComponent = (<Type extends DatePickerType = 'default'>(
-  props: MonthPickerProps<Type>
-) => JSX.Element) & { displayName?: string };
+  props: MonthPickerProps<Type> & { ref?: React.ForwardedRef<HTMLDivElement> }
+) => JSX.Element) & { displayName?: string } & MantineComponentStaticProperties<MonthPickerFactory>;
 
-export const MonthPicker: MonthPickerComponent = forwardRef(
-  <Type extends DatePickerType = 'default'>(
-    props: MonthPickerProps<Type>,
-    ref: React.ForwardedRef<HTMLDivElement>
-  ) => {
-    const {
-      type,
-      defaultValue,
-      value,
-      onChange,
-      __staticSelector,
-      getMonthControlProps,
-      allowSingleDateInRange,
-      allowDeselect,
-      onMouseLeave,
-      onMonthSelect,
-      ...others
-    } = useComponentDefaultProps('MonthPicker', defaultProps, props as any);
+export const MonthPicker: MonthPickerComponent = factory<MonthPickerFactory>((_props, ref) => {
+  const props = useProps('MonthPicker', defaultProps, _props);
+  const {
+    classNames,
+    styles,
+    vars,
+    type,
+    defaultValue,
+    value,
+    onChange,
+    __staticSelector,
+    getMonthControlProps,
+    allowSingleDateInRange,
+    allowDeselect,
+    onMouseLeave,
+    onMonthSelect,
+    __updateDateOnMonthSelect,
+    __timezoneApplied,
+    ...others
+  } = props;
 
-    const { onDateChange, onRootMouseLeave, onHoveredDateChange, getControlProps } =
-      useDatesState<Type>({
-        type,
-        level: 'month',
-        allowDeselect,
-        allowSingleDateInRange,
-        value,
-        defaultValue,
-        onChange,
-        onMouseLeave,
-      });
+  const { onDateChange, onRootMouseLeave, onHoveredDateChange, getControlProps } = useDatesState({
+    type: type as any,
+    level: 'month',
+    allowDeselect,
+    allowSingleDateInRange,
+    value,
+    defaultValue,
+    onChange,
+    onMouseLeave,
+    applyTimezone: !__timezoneApplied,
+  });
 
-    return (
-      <Calendar
-        ref={ref}
-        minLevel="year"
-        __updateDateOnMonthSelect={false}
-        __staticSelector={__staticSelector || 'MonthPicker'}
-        onMouseLeave={onRootMouseLeave}
-        onMonthMouseEnter={(_event, date) => onHoveredDateChange(date)}
-        onMonthSelect={(date) => {
-          onDateChange(date);
-          onMonthSelect?.(date);
-        }}
-        getMonthControlProps={(date) => ({
-          ...getControlProps(date),
-          ...getMonthControlProps?.(date),
-        })}
-        {...others}
-      />
-    );
-  }
-);
+  const { resolvedClassNames, resolvedStyles } = useResolvedStylesApi<MonthPickerFactory>({
+    classNames,
+    styles,
+    props,
+  });
+  const ctx = useDatesContext();
 
+  return (
+    <Calendar
+      ref={ref}
+      minLevel="year"
+      __updateDateOnMonthSelect={__updateDateOnMonthSelect ?? false}
+      __staticSelector={__staticSelector || 'MonthPicker'}
+      onMouseLeave={onRootMouseLeave}
+      onMonthMouseEnter={(_event, date) => onHoveredDateChange(date)}
+      onMonthSelect={(date) => {
+        onDateChange(date);
+        onMonthSelect?.(date);
+      }}
+      getMonthControlProps={(date) => ({
+        ...getControlProps(date),
+        ...getMonthControlProps?.(date),
+      })}
+      classNames={resolvedClassNames}
+      styles={resolvedStyles}
+      {...others}
+      date={shiftTimezone('add', others.date, ctx.getTimezone(), __timezoneApplied)}
+    />
+  );
+}) as any;
+
+MonthPicker.classes = Calendar.classes;
 MonthPicker.displayName = '@mantine/dates/MonthPicker';

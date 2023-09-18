@@ -11,14 +11,10 @@ function Demo() {
     <Carousel
       withIndicators
       height={200}
-      slideSize="33.333333%"
-      slideGap="md"
+      slideSize={{ base: '100%', sm: '50%', md: '33.333333%' }}
+      slideGap={{ base: 0, sm: 'md' }}
       loop
       align="start"
-      breakpoints={[
-        { maxWidth: 'md', slideSize: '50%' },
-        { maxWidth: 'sm', slideSize: '100%', slideGap: 0 },
-      ]}
     >
       <Carousel.Slide>1</Carousel.Slide>
       <Carousel.Slide>2</Carousel.Slide>
@@ -34,14 +30,10 @@ function Demo() {
     <Carousel
       withIndicators
       height={200}
-      slideSize="33.333333%"
-      slideGap="md"
+      slideSize={{ base: '100%', sm: '50%', md: '33.333333%' }}
+      slideGap={{ base: 0, sm: 'md' }}
       loop
       align="start"
-      breakpoints={[
-        { maxWidth: 'md', slideSize: '50%' },
-        { maxWidth: 'sm', slideSize: '100%', slideGap: 0 },
-      ]}
     >
       <Slides count={6} />
     </Carousel>
@@ -49,7 +41,7 @@ function Demo() {
 }
 
 export const breakpoints: MantineDemo = {
-  type: 'demo',
+  type: 'code',
   component: Demo,
   code,
 };

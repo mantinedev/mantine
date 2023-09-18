@@ -1,5 +1,5 @@
 import React from 'react';
-import { Group, Menu } from '@mantine/core';
+import { Menu } from '@mantine/core';
 import { MantineDemo } from '@mantine/ds';
 import { DemoMenuItems } from './_menu-items';
 
@@ -17,16 +17,15 @@ function Demo() {
 
 function Demo() {
   return (
-    <Group position="center">
-      <Menu transitionProps={{ transition: 'rotate-right', duration: 150 }}>
-        <DemoMenuItems />
-      </Menu>
-    </Group>
+    <Menu transitionProps={{ transition: 'rotate-right', duration: 150 }}>
+      <DemoMenuItems />
+    </Menu>
   );
 }
 
 export const transitions: MantineDemo = {
-  type: 'demo',
+  type: 'code',
   code,
   component: Demo,
+  centered: true,
 };

@@ -26,7 +26,7 @@ export function getFormattedDate<Type extends DatePickerType>({
     return (date as Date[]).map(formatDate).join(', ');
   }
 
-  if (type === 'range') {
+  if (type === 'range' && Array.isArray(date)) {
     if (date[0] && date[1]) {
       return `${formatDate(date[0])} ${labelSeparator} ${formatDate(date[1])}`;
     }

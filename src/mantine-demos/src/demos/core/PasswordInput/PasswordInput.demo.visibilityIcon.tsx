@@ -13,8 +13,12 @@ function Demo() {
       label="Change visibility toggle icon"
       placeholder="Change visibility toggle icon"
       defaultValue="secret"
-      visibilityToggleIcon={({ reveal, size }) =>
-        reveal ? <IconEyeOff size={size} /> : <IconEyeCheck size={size} />
+      visibilityToggleIcon={({ reveal }) =>
+        reveal ? (
+          <IconEyeOff style={{ width: 'var(--psi-icon-size)', height: 'var(--psi-icon-size)' }} />
+        ) : (
+          <IconEyeCheck style={{ width: 'var(--psi-icon-size)', height: 'var(--psi-icon-size)' }} />
+        )
       }
     />
   );
@@ -29,15 +33,19 @@ function Demo() {
       label="Change visibility toggle icon"
       placeholder="Change visibility toggle icon"
       defaultValue="secret"
-      visibilityToggleIcon={({ reveal, size }) =>
-        reveal ? <IconEyeOff size={size} /> : <IconEyeCheck size={size} />
+      visibilityToggleIcon={({ reveal }) =>
+        reveal ? (
+          <IconEyeOff style={{ width: 'var(--psi-icon-size)', height: 'var(--psi-icon-size)' }} />
+        ) : (
+          <IconEyeCheck style={{ width: 'var(--psi-icon-size)', height: 'var(--psi-icon-size)' }} />
+        )
       }
     />
   );
 }
 
 export const visibilityIcon: MantineDemo = {
-  type: 'demo',
+  type: 'code',
   component: Demo,
   code,
 };

@@ -28,7 +28,7 @@ function Demo() {
 }
 
 export const auto: MantineDemo = {
-  type: 'demo',
+  type: 'code',
   code,
   component: Demo,
 };

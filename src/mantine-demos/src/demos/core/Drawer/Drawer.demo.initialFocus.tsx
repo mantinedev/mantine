@@ -1,11 +1,11 @@
 import React from 'react';
-import { Drawer, Group, Button, TextInput } from '@mantine/core';
+import { Drawer, Button, TextInput } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import { MantineDemo } from '@mantine/ds';
 
 const code = `
 import { useDisclosure } from '@mantine/hooks';
-import { Drawer, Group, Button, TextInput } from '@mantine/core';
+import { Drawer, Button, TextInput } from '@mantine/core';
 
 function Demo() {
   const [opened, { open, close }] = useDisclosure(false);
@@ -22,9 +22,7 @@ function Demo() {
         />
       </Drawer>
 
-      <Group position="center">
-        <Button onClick={open}>Open drawer</Button>
-      </Group>
+      <Button onClick={open}>Open drawer</Button>
     </>
   );
 }
@@ -45,15 +43,14 @@ function Demo() {
         />
       </Drawer>
 
-      <Group position="center">
-        <Button onClick={open}>Open drawer</Button>
-      </Group>
+      <Button onClick={open}>Open drawer</Button>
     </>
   );
 }
 
 export const initialFocus: MantineDemo = {
-  type: 'demo',
+  type: 'code',
   code,
+  centered: true,
   component: Demo,
 };

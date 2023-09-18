@@ -1,27 +1,27 @@
 import React from 'react';
-import { render } from '@testing-library/react';
+import { render } from '../render';
 
-export function itSupportsInputContainer<P>(
-  Component: React.ComponentType<P>,
-  requiredProps: P,
-  name: string
+interface Options<Props = any> {
+  component: React.ComponentType<Props>;
+  props: Props;
+}
+
+export function itSupportsInputContainer<Props>(
+  options: Options<Props>,
+  name = 'supports inputContainer props'
 ) {
-  it('supports inputContainer prop', () => {
+  it(name, () => {
     const { container } = render(
-      <Component
-        {...requiredProps}
-        required
-        id="invalid-test-id"
-        error
+      <options.component
+        {...options.props}
         inputContainer={(children: React.ReactNode) => (
           <div className="test-input-container">{children}</div>
         )}
       />
     );
-
     expect(container.querySelector('.test-input-container')).toBeInTheDocument();
     expect(
-      container.querySelector(`.test-input-container .mantine-${name}-input`)
+      container.querySelector('.test-input-container .mantine-Input-input')
     ).toBeInTheDocument();
   });
 }

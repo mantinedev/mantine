@@ -1,11 +1,11 @@
 import React from 'react';
 import { MantineDemo } from '@mantine/ds';
 import { useDisclosure } from '@mantine/hooks';
-import { Drawer, Group, Button } from '@mantine/core';
+import { Drawer, Button } from '@mantine/core';
 
 const code = `
 import { useDisclosure } from '@mantine/hooks';
-import { Drawer, Group, Button } from '@mantine/core';
+import { Drawer, Button } from '@mantine/core';
 
 function Demo() {
   const [opened, { open, close }] = useDisclosure(false);
@@ -16,9 +16,7 @@ function Demo() {
         Drawer without header, press escape or click on overlay to close
       </Drawer>
 
-      <Group position="center">
-        <Button onClick={open}>Open Drawer</Button>
-      </Group>
+      <Button onClick={open}>Open drawer</Button>
     </>
   );
 }
@@ -34,15 +32,14 @@ function Demo() {
         Drawer without header, press escape or click on overlay to close
       </Drawer>
 
-      <Group position="center">
-        <Button onClick={open}>Open drawer</Button>
-      </Group>
+      <Button onClick={open}>Open drawer</Button>
     </>
   );
 }
 
 export const header: MantineDemo = {
-  type: 'demo',
+  type: 'code',
   code,
+  centered: true,
   component: Demo,
 };

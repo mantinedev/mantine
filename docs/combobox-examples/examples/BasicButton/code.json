@@ -1,0 +1,7 @@
+[
+  {
+    "fileName": "BasicButton.tsx",
+    "language": "tsx",
+    "code": "\nimport { useCombobox, Combobox, Text, Button, Box } from '@mantine/core';\n\nconst groceries = [\n  '🍎 Apples',\n  '🍌 Bananas',\n  '🥦 Broccoli',\n  '🥕 Carrots',\n  '🍫 Chocolate',\n  '🍇 Grapes',\n];\n\nexport function BasicButton() {\n  const [selectedItem, setSelectedItem] = useState<string | null>(null);\n  const combobox = useCombobox({\n    onDropdownClose: () => combobox.resetSelectedOption(),\n  });\n\n  const options = groceries.map((item) => (\n    <Combobox.Option value={item} key={item}>\n      {item}\n    </Combobox.Option>\n  ));\n\n  return (\n    <>\n      <Combobox\n        store={combobox}\n        width={250}\n        position=\"bottom-start\"\n        withArrow\n        withinPortal={false}\n        onOptionSubmit={(val) => {\n          setSelectedItem(val);\n          combobox.closeDropdown();\n        }}\n      >\n        <Combobox.Target>\n          <Button onClick={() => combobox.toggleDropdown()}>Pick item</Button>\n        </Combobox.Target>\n\n        <Combobox.Dropdown>\n          <Combobox.Options>{options}</Combobox.Options>\n        </Combobox.Dropdown>\n      </Combobox>\n\n      <Box mt=\"xs\">\n        <Text span size=\"sm\" c=\"dimmed\">\n          Selected item:{' '}\n        </Text>\n\n        <Text span size=\"sm\">\n          {selectedItem || 'Nothing selected'}\n        </Text>\n      </Box>\n    </>\n  );\n}\n"
+  }
+]

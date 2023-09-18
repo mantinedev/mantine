@@ -1,17 +1,11 @@
 import React from 'react';
-import { render, screen } from '@testing-library/react';
+import { render, tests, screen } from '@mantine/tests';
+import { datesTests } from '@mantine/dates-tests';
 import {
-  itSupportsSystemProps,
-  itSupportsProviderVariant,
-  itSupportsProviderSize,
-} from '@mantine/tests';
-import { MonthLevelGroup, MonthLevelGroupProps } from './MonthLevelGroup';
-import {
-  itSupportsMonthProps,
-  itSupportsHeaderProps,
-  itSupportsOnDayClick,
-  itHandlesMonthKeyboardEvents,
-} from '../../tests';
+  MonthLevelGroup,
+  MonthLevelGroupProps,
+  MonthLevelGroupStylesNames,
+} from './MonthLevelGroup';
 
 const defaultProps: MonthLevelGroupProps = {
   month: new Date(2022, 3, 11),
@@ -21,28 +15,43 @@ const defaultProps: MonthLevelGroupProps = {
 };
 
 describe('@mantine/dates/MonthLevelGroup', () => {
-  itSupportsSystemProps({
+  tests.itSupportsSystemProps<MonthLevelGroupProps, MonthLevelGroupStylesNames>({
     component: MonthLevelGroup,
     props: defaultProps,
+    styleProps: true,
+    extend: true,
+    variant: true,
+    size: true,
+    classes: true,
     refType: HTMLDivElement,
-    providerName: 'MonthLevelGroup',
     displayName: '@mantine/dates/MonthLevelGroup',
+    stylesApiSelectors: [
+      'calendarHeader',
+      'calendarHeaderControl',
+      'calendarHeaderControlIcon',
+      'calendarHeaderLevel',
+      'day',
+      'levelsGroup',
+      'month',
+      'monthCell',
+      'monthRow',
+      'monthTbody',
+      'monthThead',
+      'weekday',
+      'weekdaysRow',
+    ],
+    compound: true,
+    providerStylesApi: false,
   });
 
-  itSupportsProviderVariant(MonthLevelGroup, defaultProps, 'MonthLevelGroup', [
-    'monthLevelGroup',
-    'monthLevel',
-  ]);
-
-  itSupportsProviderSize(MonthLevelGroup, defaultProps, 'MonthLevelGroup', [
-    'monthLevelGroup',
-    'monthLevel',
-  ]);
-
-  itSupportsMonthProps(MonthLevelGroup, defaultProps);
-  itSupportsHeaderProps(MonthLevelGroup, defaultProps);
-  itSupportsOnDayClick(MonthLevelGroup, defaultProps);
-  itHandlesMonthKeyboardEvents(MonthLevelGroup, defaultProps);
+  datesTests.itSupportsMonthProps({ component: MonthLevelGroup, props: defaultProps });
+  datesTests.itSupportsHeaderProps({ component: MonthLevelGroup, props: defaultProps });
+  datesTests.itSupportsOnDayClick({ component: MonthLevelGroup, props: defaultProps });
+  datesTests.itHandlesMonthKeyboardEvents({
+    component: MonthLevelGroup,
+    props: defaultProps,
+    name: 'MonthLevelGroup',
+  });
 
   it('renders correct number of months based on numberOfColumns prop', () => {
     const { rerender } = render(<MonthLevelGroup {...defaultProps} numberOfColumns={1} />);
@@ -79,40 +88,11 @@ describe('@mantine/dates/MonthLevelGroup', () => {
 
   it('has correct default __staticSelector', () => {
     const { container } = render(<MonthLevelGroup {...defaultProps} />);
-    expect(container.firstChild).toHaveClass('mantine-MonthLevelGroup-monthLevelGroup');
     expect(container.querySelector('table button')).toHaveClass('mantine-MonthLevelGroup-day');
   });
 
   it('supports custom __staticSelector', () => {
     const { container } = render(<MonthLevelGroup {...defaultProps} __staticSelector="Calendar" />);
-    expect(container.firstChild).toHaveClass('mantine-Calendar-monthLevelGroup');
     expect(container.querySelector('table button')).toHaveClass('mantine-Calendar-day');
-  });
-
-  it('supports styles api (styles)', () => {
-    const { container } = render(
-      <MonthLevelGroup
-        {...defaultProps}
-        styles={{
-          monthLevelGroup: { borderColor: '#CCEE45' },
-          day: { borderColor: '#443443' },
-        }}
-      />
-    );
-
-    expect(container.firstChild).toHaveStyle({ borderColor: '#CCEE45' });
-    expect(container.querySelector('table button')).toHaveStyle({ borderColor: '#443443' });
-  });
-
-  it('supports styles api (classNames)', () => {
-    const { container } = render(
-      <MonthLevelGroup
-        {...defaultProps}
-        classNames={{ monthLevelGroup: 'test-group', day: 'test-day' }}
-      />
-    );
-
-    expect(container.firstChild).toHaveClass('test-group');
-    expect(container.querySelector('table button')).toHaveClass('test-day');
   });
 });

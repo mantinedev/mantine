@@ -1,0 +1,106 @@
+.tabsWrapper {
+  padding-left: calc(var(--mantine-spacing-xl) * 2);
+
+  @mixin light {
+    background-color: var(--mantine-color-gray-0);
+    border-bottom: rem(1px) solid var(--mantine-color-gray-2);
+  }
+
+  @mixin dark {
+    background-color: var(--mantine-color-dark-8);
+    border-bottom: rem(1px) solid var(--mantine-color-dark-6);
+  }
+
+  @media (max-width: $docs-mdx-breakpoint) {
+    padding-left: var(--mantine-spacing-xl);
+  }
+
+  @media (min-width: 86.25em) {
+    padding-left: 0;
+  }
+}
+
+.tabsList {
+  max-width: rem(1082px);
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: rem(-1px);
+
+  @media (max-width: $docs-mdx-breakpoint) {
+    max-width: 100%;
+    padding-right: 0;
+  }
+
+  &::before {
+    @mixin light {
+      border-color: var(--mantine-color-gray-2);
+    }
+
+    @mixin dark {
+      border-color: var(--mantine-color-dark-6);
+    }
+  }
+}
+
+.tab {
+  font-size: var(--mantine-font-size-md);
+  font-weight: 500;
+  height: rem(46px);
+  padding-left: var(--mantine-spacing-lg);
+  padding-right: var(--mantine-spacing-lg);
+  background-color: transparent;
+
+  @media (max-width: $docs-mdx-breakpoint) {
+    font-size: var(--mantine-font-size-sm);
+    padding-left: var(--mantine-spacing-md);
+    padding-right: var(--mantine-spacing-md);
+  }
+
+  &[data-active] {
+    background-color: var(--mantine-color-body);
+
+    @mixin light {
+      color: var(--mantine-color-black);
+      border-color: var(--mantine-color-gray-2);
+      border-bottom-color: transparent;
+    }
+
+    @mixin dark {
+      color: var(--mantine-color-white);
+      border-color: var(--mantine-color-dark-6);
+      border-bottom-color: transparent;
+    }
+  }
+}
+
+.tabContent {
+  padding-left: calc(var(--mantine-spacing-xl) * 2);
+  padding-right: calc(var(--mantine-spacing-xl) * 2);
+  padding-top: var(--mantine-spacing-xs);
+
+  @media (max-width: $docs-mdx-breakpoint) {
+    padding-left: var(--mantine-spacing-xl);
+    padding-right: var(--mantine-spacing-xl);
+  }
+}
+
+.main {
+  width: calc(100% - var(--docs-table-of-contents-width));
+  max-width: var(--docs-mdx-content-width);
+  margin-left: auto;
+  margin-right: auto;
+
+  @media (max-width: $docs-mdx-breakpoint) {
+    width: 100%;
+    padding-right: 0;
+  }
+}
+
+.tableOfContents {
+  flex: 0 0 var(--docs-table-of-contents-width);
+  margin-top: var(--mantine-spacing-xl);
+
+  @media (max-width: $docs-mdx-breakpoint) {
+    display: none;
+  }
+}

@@ -28,12 +28,12 @@ function Demo() {
         Press escape to close the drawer
       </Drawer>
 
-      <Group position="center">{controls}</Group>
+      <Group justify="center">{controls}</Group>
     </>
   );
 }
 
 export const sizes: MantineDemo = {
-  type: 'demo',
+  type: 'code',
   component: Demo,
 };

@@ -1,5 +1,6 @@
-export { configurator } from './TextInput.demo.configurator';
-export { validation } from './TextInput.demo.validation';
+export { usage } from './TextInput.demo.usage';
+export { type } from './TextInput.demo.type';
+export { sections } from './TextInput.demo.sections';
+export { error } from './TextInput.demo.error';
 export { disabled } from './TextInput.demo.disabled';
-export { icon } from './TextInput.demo.icon';
-export { rightSection } from './TextInput.demo.rightSection';
+export { stylesApi } from './TextInput.demo.stylesApi';

@@ -1,6 +1,6 @@
 import React from 'react';
 import { useEditor, FloatingMenu, BubbleMenu } from '@tiptap/react';
-import { AppShell, Header } from '@mantine/core';
+import { AppShell } from '@mantine/core';
 import Highlight from '@tiptap/extension-highlight';
 import { Color } from '@tiptap/extension-color';
 import TextStyle from '@tiptap/extension-text-style';
@@ -19,7 +19,7 @@ import html from 'highlight.js/lib/languages/xml';
 import { IconColorPicker } from '@tabler/icons-react';
 import { Link } from './extensions/Link';
 import { RichTextEditor, RichTextEditorProps } from './RichTextEditor';
-import { RichTextEditorToolbarProps } from './Toolbar/Toolbar';
+import { RichTextEditorToolbarProps } from './RichTextEditorToolbar/RichTextEditorToolbar';
 
 lowlight.registerLanguage('html', html);
 lowlight.registerLanguage('css', css);
@@ -60,7 +60,7 @@ function BasicEditor({
 
   return (
     <div style={{ padding: 40 }}>
-      <RichTextEditor editor={editor} {...editorProps}>
+      <RichTextEditor editor={editor} unstyled {...editorProps}>
         <RichTextEditor.Toolbar {...toolbarProps}>
           <RichTextEditor.ControlsGroup>
             <RichTextEditor.Blockquote />
@@ -233,7 +233,8 @@ const scrollContent = Array(10)
 
 export function StickyToolbar() {
   return (
-    <AppShell header={<Header height={60}>Header</Header>}>
+    <AppShell header={{ height: 60 }}>
+      <AppShell.Header>Header</AppShell.Header>
       {scrollContent}
       <BasicEditor content={largeContent} toolbarProps={{ sticky: true, stickyOffset: 60 }} />
       {scrollContent}

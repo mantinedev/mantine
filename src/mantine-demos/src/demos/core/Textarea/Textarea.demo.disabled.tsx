@@ -19,7 +19,7 @@ function Demo() {
 }
 
 export const disabled: MantineDemo = {
-  type: 'demo',
+  type: 'code',
   code,
   component: Demo,
 };

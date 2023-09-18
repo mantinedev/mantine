@@ -16,7 +16,7 @@ function Demo() {
           Hover to see popover
         </Button>
       </Popover.Target>
-      <Popover.Dropdown sx={{ pointerEvents: 'none' }}>
+      <Popover.Dropdown style={{ pointerEvents: 'none' }}>
         <Text size="sm">This popover is shown when user hovers the target element</Text>
       </Popover.Dropdown>
     </Popover>
@@ -33,7 +33,7 @@ function Demo() {
           Hover to see popover
         </Button>
       </Popover.Target>
-      <Popover.Dropdown sx={{ pointerEvents: 'none' }}>
+      <Popover.Dropdown style={{ pointerEvents: 'none' }}>
         <Text size="sm">This popover is shown when user hovers the target element</Text>
       </Popover.Dropdown>
     </Popover>
@@ -41,7 +41,8 @@ function Demo() {
 }
 
 export const hover: MantineDemo = {
-  type: 'demo',
+  type: 'code',
   code,
+  centered: true,
   component: Demo,
 };

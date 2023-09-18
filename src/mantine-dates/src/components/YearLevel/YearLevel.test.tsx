@@ -1,25 +1,7 @@
-import 'dayjs/locale/ru';
 import React from 'react';
-import { render, screen } from '@testing-library/react';
-import {
-  itSupportsSystemProps,
-  itSupportsProviderVariant,
-  itSupportsProviderSize,
-} from '@mantine/tests';
-import { YearLevel, YearLevelProps } from './YearLevel';
-import {
-  itSupportsHeaderProps,
-  itSupportsWithNextPrevious,
-  itSupportsMonthsListProps,
-  itSupportsOnControlKeydown,
-  itSupportsGetControlRef,
-  itSupportsOnControlClick,
-  itSupportsOnControlMouseEnter,
-} from '../../tests';
-
-function expectLabel(label: string) {
-  expect(screen.getByLabelText('level-control')).toHaveTextContent(label);
-}
+import { render, tests, screen } from '@mantine/tests';
+import { datesTests } from '@mantine/dates-tests';
+import { YearLevel, YearLevelProps, YearLevelStylesNames } from './YearLevel';
 
 const defaultProps: YearLevelProps = {
   year: new Date(2022, 3, 11),
@@ -28,34 +10,47 @@ const defaultProps: YearLevelProps = {
   previousLabel: 'prev',
 };
 
+function expectLabel(label: string) {
+  expect(screen.getByLabelText('level-control')).toHaveTextContent(label);
+}
+
 describe('@mantine/dates/YearLevel', () => {
-  itSupportsSystemProps({
+  tests.itSupportsSystemProps<YearLevelProps, YearLevelStylesNames>({
     component: YearLevel,
     props: defaultProps,
+    styleProps: true,
+    extend: true,
+    variant: true,
+    size: true,
+    classes: true,
     refType: HTMLDivElement,
-    providerName: 'YearLevel',
     displayName: '@mantine/dates/YearLevel',
+    stylesApiSelectors: [
+      'calendarHeader',
+      'calendarHeaderControl',
+      'calendarHeaderControlIcon',
+      'calendarHeaderLevel',
+      'calendarHeaderLevel',
+      'monthsList',
+      'monthsListCell',
+      'monthsListControl',
+      'monthsListRow',
+    ],
+    compound: true,
+    providerStylesApi: false,
   });
 
-  itSupportsProviderVariant(YearLevel, defaultProps, 'YearLevel', [
-    'yearLevel',
-    'calendarHeader',
-    'monthsList',
-  ]);
-
-  itSupportsProviderSize(YearLevel, defaultProps, 'YearLevel', [
-    'yearLevel',
-    'calendarHeader',
-    'monthsList',
-  ]);
-
-  itSupportsHeaderProps(YearLevel, defaultProps);
-  itSupportsWithNextPrevious(YearLevel, defaultProps);
-  itSupportsMonthsListProps(YearLevel, defaultProps);
-  itSupportsOnControlKeydown(YearLevel, defaultProps);
-  itSupportsGetControlRef(YearLevel, 12, defaultProps);
-  itSupportsOnControlClick(YearLevel, defaultProps);
-  itSupportsOnControlMouseEnter(YearLevel, defaultProps);
+  datesTests.itSupportsGetControlRef({
+    component: YearLevel,
+    props: defaultProps,
+    numberOfControls: 12,
+  });
+  datesTests.itSupportsHeaderProps({ component: YearLevel, props: defaultProps });
+  datesTests.itSupportsWithNextPrevious({ component: YearLevel, props: defaultProps });
+  datesTests.itSupportsMonthsListProps({ component: YearLevel, props: defaultProps });
+  datesTests.itSupportsOnControlKeydown({ component: YearLevel, props: defaultProps });
+  datesTests.itSupportsOnControlClick({ component: YearLevel, props: defaultProps });
+  datesTests.itSupportsOnControlMouseEnter({ component: YearLevel, props: defaultProps });
 
   it('renders correct CalendarHeader label', () => {
     render(<YearLevel {...defaultProps} />);
@@ -80,9 +75,8 @@ describe('@mantine/dates/YearLevel', () => {
 
   it('has correct default __staticSelector', () => {
     const { container } = render(<YearLevel {...defaultProps} />);
-    expect(container.firstChild).toHaveClass('mantine-YearLevel-yearLevel');
     expect(container.querySelector('table td button')).toHaveClass(
-      'mantine-YearLevel-pickerControl'
+      'mantine-YearLevel-monthsListControl'
     );
     expect(screen.getByLabelText('level-control')).toHaveClass(
       'mantine-YearLevel-calendarHeaderLevel'
@@ -91,47 +85,12 @@ describe('@mantine/dates/YearLevel', () => {
 
   it('supports custom __staticSelector', () => {
     const { container } = render(<YearLevel {...defaultProps} __staticSelector="Calendar" />);
-    expect(container.firstChild).toHaveClass('mantine-Calendar-yearLevel');
     expect(container.querySelector('table td button')).toHaveClass(
-      'mantine-Calendar-pickerControl'
+      'mantine-Calendar-monthsListControl'
     );
     expect(screen.getByLabelText('level-control')).toHaveClass(
       'mantine-Calendar-calendarHeaderLevel'
     );
-  });
-
-  it('supports styles api (styles)', () => {
-    const { container } = render(
-      <YearLevel
-        {...defaultProps}
-        styles={{
-          yearLevel: { borderColor: '#343436' },
-          pickerControl: { borderColor: '#232324' },
-          calendarHeaderLevel: { borderColor: '#121214' },
-        }}
-      />
-    );
-
-    expect(container.firstChild).toHaveStyle({ borderColor: '#343436' });
-    expect(container.querySelector('table td button')).toHaveStyle({ borderColor: '#232324' });
-    expect(screen.getByLabelText('level-control')).toHaveStyle({ borderColor: '#121214' });
-  });
-
-  it('supports styles api (classNames)', () => {
-    const { container } = render(
-      <YearLevel
-        {...defaultProps}
-        classNames={{
-          yearLevel: 'test-year-level',
-          pickerControl: 'test-picker-control',
-          calendarHeaderLevel: 'test-level',
-        }}
-      />
-    );
-
-    expect(container.firstChild).toHaveClass('test-year-level');
-    expect(container.querySelector('table td button')).toHaveClass('test-picker-control');
-    expect(screen.getByLabelText('level-control')).toHaveClass('test-level');
   });
 
   it('disables next control if maxDate is before end of month', () => {

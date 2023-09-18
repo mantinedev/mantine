@@ -59,7 +59,7 @@ function Demo() {
 }
 
 export const icons: MantineDemo = {
-  type: 'demo',
+  type: 'code',
   component: Demo,
   code,
 };

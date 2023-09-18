@@ -1,25 +1,27 @@
 import React from 'react';
-import { render } from '@testing-library/react';
+import { inputWrapperQueries } from '../queries';
+import { render } from '../render';
 
-export function itSupportsInputWrapperOrder<P>(
-  Component: React.ComponentType<P>,
-  requiredProps: P,
-  name: string
+interface Options<Props = any> {
+  component: React.ComponentType<Props>;
+  props: Props;
+}
+
+export function itSupportsInputWrapperOrder<Props>(
+  options: Options<Props>,
+  name = 'supports inputWrapperOrder prop'
 ) {
-  it('supports inputWrapperOrder prop', () => {
-    const { container } = render(
-      <Component
-        {...requiredProps}
-        id="invalid-test-id"
-        error="test-error"
-        description="test-description"
-        label="test-label"
-        inputWrapperOrder={['description', 'error', 'input', 'label']}
-      />
+  it(name, () => {
+    const { container, rerender } = render(
+      <options.component {...options.props} inputWrapperOrder={['error', 'label']} />
     );
-    const children = container.firstChild.childNodes;
-    expect(children[0]).toBe(container.querySelector(`.mantine-${name}-description`));
-    expect(children[1]).toBe(container.querySelector(`.mantine-${name}-error`));
-    expect(children[children.length - 1]).toBe(container.querySelector(`.mantine-${name}-label`));
+    expect(inputWrapperQueries.getError(container).nextElementSibling).toBe(
+      inputWrapperQueries.getLabel(container)
+    );
+
+    rerender(<options.component {...options.props} inputWrapperOrder={['label', 'error']} />);
+    expect(inputWrapperQueries.getLabel(container).nextElementSibling).toBe(
+      inputWrapperQueries.getError(container)
+    );
   });
 }

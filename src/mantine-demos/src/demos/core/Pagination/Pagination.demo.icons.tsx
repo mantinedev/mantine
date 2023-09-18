@@ -36,7 +36,7 @@ function Demo() {
 
       {/* Compound pagination */}
       <Pagination.Root total={10}>
-        <Group spacing={7} position="center" mt="xl">
+        <Group gap={7} mt="xl">
           <Pagination.First icon={IconArrowBarToLeft} />
           <Pagination.Previous icon={IconArrowLeft} />
           <Pagination.Items dotsIcon={IconGripHorizontal} />
@@ -55,7 +55,6 @@ function Demo() {
       {/* Regular pagination */}
       <Pagination
         total={10}
-        position="center"
         withEdges
         nextIcon={IconArrowRight}
         previousIcon={IconArrowLeft}
@@ -66,7 +65,7 @@ function Demo() {
 
       {/* Compound pagination */}
       <Pagination.Root total={10}>
-        <Group spacing={7} position="center" mt="xl">
+        <Group gap={7} mt="xl">
           <Pagination.First icon={IconArrowBarToLeft} />
           <Pagination.Previous icon={IconArrowLeft} />
           <Pagination.Items dotsIcon={IconGripHorizontal} />
@@ -79,7 +78,7 @@ function Demo() {
 }
 
 export const icons: MantineDemo = {
-  type: 'demo',
+  type: 'code',
   component: Demo,
   code,
 };

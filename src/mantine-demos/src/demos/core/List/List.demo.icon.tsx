@@ -40,8 +40,6 @@ function Demo() {
 function Demo() {
   return (
     <List
-      maw={500}
-      mx="auto"
       spacing="xs"
       size="sm"
       center
@@ -69,7 +67,9 @@ function Demo() {
 }
 
 export const icon: MantineDemo = {
-  type: 'demo',
+  type: 'code',
+  centered: true,
+  maxWidth: 500,
   component: Demo,
   code,
 };

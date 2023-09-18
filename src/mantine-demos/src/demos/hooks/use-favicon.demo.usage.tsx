@@ -16,7 +16,7 @@ function Demo() {
   useFavicon(favicon);
 
   return (
-    <Group position="center">
+    <Group justify="center">
       <Button onClick={setTwitterFavicon}>Twitter favicon</Button>
       <Button onClick={setMantineFavicon}>Mantine favicon</Button>
     </Group>
@@ -32,7 +32,7 @@ function Demo() {
   useFavicon(favicon);
 
   return (
-    <Group position="center">
+    <Group justify="center">
       <Button onClick={setTwitterFavicon}>Twitter favicon</Button>
       <Button onClick={setMantineFavicon}>Mantine favicon</Button>
     </Group>
@@ -40,7 +40,7 @@ function Demo() {
 }
 
 export const useFaviconUsage: MantineDemo = {
-  type: 'demo',
+  type: 'code',
   component: Demo,
   code,
 };

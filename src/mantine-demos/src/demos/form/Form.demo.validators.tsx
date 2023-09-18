@@ -58,7 +58,7 @@ function Demo() {
         {...form.getInputProps('age')}
       />
 
-      <Group position="right" mt="md">
+      <Group justify="flex-end" mt="md">
         <Button type="submit">Submit</Button>
       </Group>
     </Box>
@@ -117,7 +117,7 @@ function Demo() {
         {...form.getInputProps('age')}
       />
 
-      <Group position="right" mt="md">
+      <Group justify="flex-end" mt="md">
         <Button type="submit">Submit</Button>
       </Group>
     </Box>
@@ -125,7 +125,7 @@ function Demo() {
 }
 
 export const validators: MantineDemo = {
-  type: 'demo',
+  type: 'code',
   component: Demo,
   code,
 };

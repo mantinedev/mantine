@@ -1,19 +1,23 @@
 import dayjs from 'dayjs';
-import React, { forwardRef } from 'react';
-import { Box, DefaultProps, useComponentDefaultProps, Selectors } from '@mantine/core';
+import React from 'react';
+import {
+  Box,
+  BoxProps,
+  StylesApiProps,
+  factory,
+  ElementProps,
+  useProps,
+  Factory,
+} from '@mantine/core';
+import { Month, MonthSettings, MonthStylesNames } from '../Month';
 import {
   CalendarHeader,
-  CalendarHeaderStylesNames,
   CalendarHeaderSettings,
+  CalendarHeaderStylesNames,
 } from '../CalendarHeader';
 import { useDatesContext } from '../DatesProvider';
-import { Month, MonthSettings, MonthStylesNames } from '../Month';
-import useStyles from './MonthLevel.styles';
 
-export type MonthLevelStylesNames =
-  | Selectors<typeof useStyles>
-  | MonthStylesNames
-  | CalendarHeaderStylesNames;
+export type MonthLevelStylesNames = MonthStylesNames | CalendarHeaderStylesNames;
 
 export interface MonthLevelBaseSettings extends MonthSettings {
   /** dayjs label format to display month label or a function that returns month label based on month value, defaults to "MMMM YYYY" */
@@ -23,10 +27,12 @@ export interface MonthLevelBaseSettings extends MonthSettings {
 export interface MonthLevelSettings extends MonthLevelBaseSettings, CalendarHeaderSettings {}
 
 export interface MonthLevelProps
-  extends DefaultProps<MonthLevelStylesNames>,
+  extends BoxProps,
     MonthLevelSettings,
-    React.ComponentPropsWithoutRef<'div'> {
-  variant?: string;
+    Omit<StylesApiProps<MonthLevelFactory>, 'classNames' | 'styles'>,
+    ElementProps<'div'> {
+  classNames?: Partial<Record<string, string>>;
+  styles?: Partial<Record<string, React.CSSProperties>>;
   __staticSelector?: string;
 
   /** Month that is currently displayed */
@@ -39,11 +45,18 @@ export interface MonthLevelProps
   static?: boolean;
 }
 
+export type MonthLevelFactory = Factory<{
+  props: MonthLevelProps;
+  ref: HTMLDivElement;
+  stylesNames: MonthLevelStylesNames;
+}>;
+
 const defaultProps: Partial<MonthLevelProps> = {
   monthLabelFormat: 'MMMM YYYY',
 };
 
-export const MonthLevel = forwardRef<HTMLDivElement, MonthLevelProps>((props, ref) => {
+export const MonthLevel = factory<MonthLevelFactory>((_props, ref) => {
+  const props = useProps('MonthLevel', defaultProps, _props);
   const {
     // Month settings
     month,
@@ -83,26 +96,15 @@ export const MonthLevel = forwardRef<HTMLDivElement, MonthLevelProps>((props, re
     withPrevious,
 
     // Other props
-    className,
     monthLabelFormat,
     classNames,
     styles,
     unstyled,
     __staticSelector,
     size,
-    variant,
     static: isStatic,
     ...others
-  } = useComponentDefaultProps('MonthLevel', defaultProps, props);
-
-  const { classes, cx } = useStyles(null, {
-    name: ['MonthLevel', __staticSelector],
-    classNames,
-    styles,
-    unstyled,
-    variant,
-    size,
-  });
+  } = props;
 
   const ctx = useDatesContext();
 
@@ -111,7 +113,6 @@ export const MonthLevel = forwardRef<HTMLDivElement, MonthLevelProps>((props, re
     classNames,
     styles,
     unstyled,
-    variant,
     size,
   };
 
@@ -130,7 +131,7 @@ export const MonthLevel = forwardRef<HTMLDivElement, MonthLevelProps>((props, re
       : false;
 
   return (
-    <Box className={cx(classes.monthLevel, className)} data-month-level ref={ref} {...others}>
+    <Box data-month-level size={size} ref={ref} {...others}>
       <CalendarHeader
         label={
           typeof monthLabelFormat === 'function'
@@ -139,7 +140,6 @@ export const MonthLevel = forwardRef<HTMLDivElement, MonthLevelProps>((props, re
                 .locale(locale || ctx.locale)
                 .format(monthLabelFormat)
         }
-        className={classes.calendarHeader}
         __preventFocus={__preventFocus}
         __stopPropagation={__stopPropagation}
         nextIcon={nextIcon}
@@ -186,4 +186,5 @@ export const MonthLevel = forwardRef<HTMLDivElement, MonthLevelProps>((props, re
   );
 });
 
+MonthLevel.classes = { ...Month.classes, ...CalendarHeader.classes };
 MonthLevel.displayName = '@mantine/dates/MonthLevel';

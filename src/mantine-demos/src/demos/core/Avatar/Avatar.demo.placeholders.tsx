@@ -31,23 +31,21 @@ function Demo() {
 
 function Demo() {
   return (
-    <Group position="center">
-      <Group position="center">
-        <Avatar src={null} alt="no image here" />
-        <Avatar src={null} alt="no image here" color="indigo" />
-        <Avatar src={null} alt="no image here" color="red">
-          VR
-        </Avatar>
-        <Avatar color="blue" radius="xl">
-          <IconStar size="1.5rem" />
-        </Avatar>
-      </Group>
+    <Group justify="center">
+      <Avatar src={null} alt="no image here" />
+      <Avatar src={null} alt="no image here" color="indigo" />
+      <Avatar src={null} alt="no image here" color="red">
+        VR
+      </Avatar>
+      <Avatar color="blue" radius="xl">
+        <IconStar size="1.5rem" />
+      </Avatar>
     </Group>
   );
 }
 
 export const placeholders: MantineDemo = {
-  type: 'demo',
+  type: 'code',
   code,
   component: Demo,
 };

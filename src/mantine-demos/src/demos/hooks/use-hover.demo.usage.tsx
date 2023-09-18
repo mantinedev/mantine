@@ -1,7 +1,7 @@
 import React from 'react';
 import { useHover } from '@mantine/hooks';
 import { MantineDemo } from '@mantine/ds';
-import { useMantineTheme, Text, rem } from '@mantine/core';
+import { Text, rem } from '@mantine/core';
 
 const code = `
 import { useHover } from '@mantine/hooks';
@@ -17,14 +17,13 @@ function Demo() {
 `;
 
 function Demo() {
-  const theme = useMantineTheme();
   const { hovered, ref } = useHover();
   return (
     <div
       ref={ref}
       style={{
         height: rem(60),
-        backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.blue[0],
+        backgroundColor: 'var(--mantine-color-blue-light)',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
@@ -36,7 +35,7 @@ function Demo() {
 }
 
 export const useHoverDemo: MantineDemo = {
-  type: 'demo',
+  type: 'code',
   component: Demo,
   code,
 };

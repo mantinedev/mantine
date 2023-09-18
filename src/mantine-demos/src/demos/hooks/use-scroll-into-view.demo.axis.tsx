@@ -14,17 +14,16 @@ function Demo() {
   >({ axis: 'x' });
 
   return (
-    <Group position="center">
-      <Paper ref={scrollableRef} h={150} w={300} sx={{ overflowX: 'scroll' }}>
+    <Group justify="center">
+      <Paper ref={scrollableRef} h={150} w={300} style={{ overflowX: 'scroll' }}>
         <Box pl={260} pr={450}>
           <Paper
             ref={targetRef}
             p="md"
-            sx={(theme) => ({
-              backgroundColor:
-                theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[2],
+            style={{
+              backgroundColor: 'var(--mantine-color-blue-light)',
               width: 'max-content',
-            })}
+            }}
           >
             <Text>Scroll me into view</Text>
           </Paper>
@@ -43,17 +42,16 @@ function Demo() {
   >({ axis: 'x' });
 
   return (
-    <Group position="center">
-      <Paper ref={scrollableRef} h={150} w={300} sx={{ overflowX: 'scroll' }}>
+    <Group justify="center">
+      <Paper ref={scrollableRef} h={150} w={300} style={{ overflowX: 'scroll' }}>
         <Box pl={260} pr={450}>
           <Paper
             ref={targetRef}
             p="md"
-            sx={(theme) => ({
-              backgroundColor:
-                theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[2],
+            style={{
+              backgroundColor: 'var(--mantine-color-blue-light)',
               width: 'max-content',
-            })}
+            }}
           >
             <Text>Scroll me into view</Text>
           </Paper>
@@ -65,7 +63,7 @@ function Demo() {
 }
 
 export const useScrollIntoViewAxis: MantineDemo = {
-  type: 'demo',
+  type: 'code',
   code,
   component: Demo,
 };

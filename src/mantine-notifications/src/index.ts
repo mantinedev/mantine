@@ -1,11 +1,25 @@
-export { Notifications } from './Notifications/Notifications';
 export {
+  notifications,
   showNotification,
-  updateNotification,
   hideNotification,
   cleanNotifications,
   cleanNotificationsQueue,
-  notifications,
-} from './events';
-export type { NotificationProps } from './types';
-export type { NotificationsProps } from './Notifications/Notifications';
+  updateNotification,
+  updateNotificationsState,
+  createNotificationsStore,
+  notificationsStore,
+  useNotifications,
+} from './notifications.store';
+export { Notifications } from './Notifications';
+
+export type {
+  NotificationData,
+  NotificationsState,
+  NotificationsStore,
+} from './notifications.store';
+export type {
+  NotificationsCssVariables,
+  NotificationsFactory,
+  NotificationsProps,
+  NotificationsStylesNames,
+} from './Notifications';

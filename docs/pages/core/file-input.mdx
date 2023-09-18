@@ -1,0 +1,69 @@
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+import { FileInputDemos } from '@mantine/demos';
+
+export default Layout(MDX_DATA.FileInput);
+
+## Usage
+
+<InputFeatures component="FileInput" element="input" />
+
+<Demo data={FileInputDemos.usage} />
+
+## Controlled
+
+When `multiple` is `false`:
+
+```tsx
+import { useState } from 'react';
+import { FileInput } from '@mantine/core';
+
+function Demo() {
+  const [value, setValue] = useState<File | null>(null);
+  return <FileInput value={value} onChange={setValue} />;
+}
+```
+
+When `multiple` is `true`:
+
+```tsx
+import { useState } from 'react';
+import { FileInput } from '@mantine/core';
+
+function Demo() {
+  const [value, setValue] = useState<File[]>([]);
+  return <FileInput multiple value={value} onChange={setValue} />;
+}
+```
+
+## Multiple
+
+Set `multiple` to allow user to pick more than one file:
+
+<Demo data={FileInputDemos.multiple} />
+
+## Accept
+
+Set `accept` prop to restrict files selection to specific mime types:
+
+<Demo data={FileInputDemos.accept} />
+
+## Custom value component
+
+<Demo data={FileInputDemos.valueComponent} />
+
+## Error state
+
+<Demo data={FileInputDemos.error} />
+
+## Disabled state
+
+<Demo data={FileInputDemos.disabled} />
+
+<StylesApiSelectors component="FileInput" />
+
+<Demo data={FileInputDemos.stylesApi} />
+
+<GetElementRef component="FileInput" refType="button" />
+
+<InputAccessibility component="FileInput" />

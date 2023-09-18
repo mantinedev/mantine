@@ -21,7 +21,7 @@ export function SchemaBase() {
   });
 
   return (
-    <Box sx={{ maxWidth: 340 }} mx="auto">
+    <Box maw={340} mx="auto">
       <form onSubmit={form.onSubmit((values) => console.log(values))}>
         <TextInput
           withAsterisk
@@ -44,7 +44,7 @@ export function SchemaBase() {
           {...form.getInputProps('age')}
         />
 
-        <Group position="right" mt="xl">
+        <Group justify="flex-end" mt="xl">
           <Button type="submit">Submit</Button>
         </Group>
       </form>

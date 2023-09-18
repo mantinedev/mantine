@@ -1,0 +1,196 @@
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.TypeScript);
+
+# Usage with TypeScript
+
+All `@mantine/*` packages are fully compatible with TypeScript. All examples in the documentation
+are written in TypeScript – you can copy-paste them to your project without any changes.
+
+This guide will help you get familiar with types that `@mantine/core` package exports.
+
+## Components props types
+
+Each `@mantine/` package that exports components, exports props types for these components as well.
+You can import component props types by adding `Props` to the component name,
+for example, you can import Button and DatePicker components props like so:
+
+```tsx
+import type { ButtonProps } from '@mantine/core';
+import type { DatePickerProps } from '@mantine/dates';
+```
+
+Note that there are two variations of props types: for polymorphic components and for regular components.
+Regular components props types include `React.ComponentPropsWithoutRef<'X'>`, where `X` is the root element
+type, for example `'div'`.
+
+Example of extending regular component props:
+
+```tsx
+import { GroupProps, Group } from '@mantine/core';
+
+// Interface includes `React.ComponentPropsWithoutRef<'div'>`
+interface MyGroupProps extends GroupProps {
+  spacing: number;
+}
+
+function MyGroup({ spacing, ...others }: MyGroupProps) {
+  return <Group my={spacing} {...others} />;
+}
+```
+
+[Polymorphic components](/guides/polymorphic) props types do not include `React.ComponentPropsWithoutRef<'X'>`
+because their root element depends on the `component` prop value.
+
+Example of extending [polymorphic components](/guides/polymorphic) props:
+
+```tsx
+import { ButtonProps, Button, ElementProps } from '@mantine/core';
+
+interface MyButtonProps extends ButtonProps, ElementProps<'button', keyof ButtonProps> {
+  height: number;
+}
+
+function MyButton({ height, ...others }: MyButtonProps) {
+  return <Button style={{ height }} {...others} />;
+}
+```
+
+## ElementProps type
+
+`ElementProps` is a utility type similar to `React.ComponentPropsWithoutRef`, but with additional
+features. It replaces native elements `style` prop with Mantine [style prop](/styles/style) and
+allows omitting properties that are passed as a second type.
+
+```tsx
+import { ElementProps, ButtonProps } from '@mantine/core';
+
+// Equivalent of `React.ComponentPropsWithoutRef<'button'>`
+type ButtonElementProps = ElementProps<'button'>;
+
+// Equivalent of `Omit<React.ComponentPropsWithoutRef<'button'>, 'color' | 'onClick'>`
+type OmitColor = ElementProps<'button', 'color' | 'onClick'>;
+
+// Removes all Mantine component props from React component props
+// to avoid props types conflicts
+// Equivalent of `Omit<React.ComponentPropsWithoutRef<'button'>, keyof ButtonProps>`
+type OmitButtonProps = ElementProps<'button', keyof ButtonProps>;
+```
+
+## MantineTheme type
+
+`MantineTheme` is a type of [theme object](/theming/theme-object). You can use it to add types
+to functions that accept theme object as an argument:
+
+```tsx
+import { MantineTheme, useMantineTheme } from '@mantine/core';
+
+function getPrimaryColor(theme: MantineTheme) {
+  return theme.colors.blue[5];
+}
+
+function Demo() {
+  const theme = useMantineTheme();
+  return <div style={{ color: getPrimaryColor(theme) }} />;
+}
+```
+
+## MantineThemeOverride type
+
+`MantineThemeOverride` type is a deep partial of `MantineTheme`. It can be used in functions
+that accept theme override as an argument:
+
+```tsx
+import { MantineThemeOverride, createTheme, mergeThemeOverrides } from '@mantine/core';
+
+const baseTheme = createTheme({
+  fontFamily: 'Helvetica, sans-serif',
+});
+
+function mergeThemes(themes: MantineThemeOverride[]) {
+  return mergeThemeOverrides(baseTheme, ...themes);
+}
+
+const overrideTheme = createTheme({
+  primaryColor: 'blue',
+});
+
+const overrideTheme2 = createTheme({
+  cursorType: 'pointer',
+});
+
+const mergedTheme = mergeThemes([overrideTheme, overrideTheme2]);
+```
+
+## MantineColorScheme type
+
+`MantineColorScheme` is a union of `'light' | 'dark' | 'auto'` values. You can use to add types
+to function that accept color scheme as an argument:
+
+```tsx
+import { MantineColorScheme, useMantineColorScheme } from '@mantine/core';
+
+function getComputedColorScheme(colorScheme: MantineColorScheme) {
+  return colorScheme === 'auto' ? 'light' : colorScheme;
+}
+
+function Demo() {
+  const { colorScheme } = useMantineColorScheme();
+  const computed = getComputedColorScheme(colorScheme);
+}
+```
+
+## MantineSize type
+
+`MantineSize` type is a union of `'xs' | 'sm' | 'md' | 'lg' | 'xl'` values. You can use to add types
+to various props that accept size as an argument, for example, `radius`, `shadow`, `p`.
+
+```tsx
+import { MantineSize, Paper } from '@mantine/core';
+
+interface DemoProps {
+  size: MantineSize;
+  radius: MantineSize | (string & {}) | number;
+  shadow: MantineSize | string;
+}
+
+function Demo({ size, radius, shadow }: DemoProps) {
+  return <Paper radius={radius} shadow={shadow} p={size} m={size} />;
+}
+```
+
+## Theme object declarations
+
+You can change `theme.other` and `theme.colors` types by extending `MantineTheme` interface
+in `.d.ts` file. Create `mantine.d.ts` anywhere in your project (must be included in `tsconfig.json`)
+to extend theme object types.
+
+To override `theme.other`:
+
+```tsx
+// mantine.d.ts
+declare module '@mantine/core' {
+  export interface MantineThemeOther {
+    myCustomProperty: string;
+    myCustomFunction: () => void;
+  }
+}
+```
+
+To override `theme.colors`:
+
+```tsx
+import { MantineColorsTuple, DefaultMantineColor } from '@mantine/core';
+
+type ExtendedCustomColors = 'primaryColorName' | 'secondaryColorName' | DefaultMantineColor;
+
+declare module '@mantine/core' {
+  export interface MantineThemeColorsOverride {
+    colors: Record<ExtendedCustomColors, MantineColorsTuple>;
+  }
+}
+```
+
+Note that extending theme type is not required, it is only needed if you want to
+make your theme object types more strict and add autocomplete in your editor.

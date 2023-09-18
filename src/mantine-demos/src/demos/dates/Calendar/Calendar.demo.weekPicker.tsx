@@ -1,12 +1,10 @@
 import React, { useState } from 'react';
 import { MantineDemo } from '@mantine/ds';
-import { Group } from '@mantine/core';
 import { Calendar } from '@mantine/dates';
 import dayjs from 'dayjs';
 
 const code = `
 import { useState } from 'react';
-import { Group } from '@mantine/core';
 import { Calendar } from '@mantine/dates';
 import dayjs from 'dayjs';
 
@@ -26,7 +24,9 @@ function endOfWeek(date: Date) {
 }
 
 function isInWeekRange(date: Date, value: Date | null) {
-  return value && dayjs(date).isBefore(endOfWeek(value)) && dayjs(date).isAfter(startOfWeek(value));
+  return value
+    ? dayjs(date).isBefore(endOfWeek(value)) && dayjs(date).isAfter(startOfWeek(value))
+    : false;
 }
 
 function Demo() {
@@ -34,25 +34,23 @@ function Demo() {
   const [value, setValue] = useState<Date | null>(null);
 
   return (
-    <Group position="center">
-      <Calendar
-        withCellSpacing={false}
-        getDayProps={(date) => {
-          const isHovered = isInWeekRange(date, hovered);
-          const isSelected = isInWeekRange(date, value);
-          const isInRange = isHovered || isSelected;
-          return {
-            onMouseEnter: () => setHovered(date),
-            onMouseLeave: () => setHovered(null),
-            inRange: isInRange,
-            firstInRange: isInRange && date.getDay() === 1,
-            lastInRange: isInRange && date.getDay() === 0,
-            selected: isSelected,
-            onClick: () => setValue(date),
-          };
-        }}
-      />
-    </Group>
+    <Calendar
+      withCellSpacing={false}
+      getDayProps={(date) => {
+        const isHovered = isInWeekRange(date, hovered);
+        const isSelected = isInWeekRange(date, value);
+        const isInRange = isHovered || isSelected;
+        return {
+          onMouseEnter: () => setHovered(date),
+          onMouseLeave: () => setHovered(null),
+          inRange: isInRange,
+          firstInRange: isInRange && date.getDay() === 1,
+          lastInRange: isInRange && date.getDay() === 0,
+          selected: isSelected,
+          onClick: () => setValue(date),
+        };
+      }}
+    />
   );
 }
 `;
@@ -73,7 +71,9 @@ function endOfWeek(date: Date) {
 }
 
 function isInWeekRange(date: Date, value: Date | null) {
-  return value && dayjs(date).isBefore(endOfWeek(value)) && dayjs(date).isAfter(startOfWeek(value));
+  return value
+    ? dayjs(date).isBefore(endOfWeek(value)) && dayjs(date).isAfter(startOfWeek(value))
+    : false;
 }
 
 function Demo() {
@@ -81,30 +81,29 @@ function Demo() {
   const [value, setValue] = useState<Date | null>(null);
 
   return (
-    <Group position="center">
-      <Calendar
-        withCellSpacing={false}
-        getDayProps={(date) => {
-          const isHovered = isInWeekRange(date, hovered);
-          const isSelected = isInWeekRange(date, value);
-          const isInRange = isHovered || isSelected;
-          return {
-            onMouseEnter: () => setHovered(date),
-            onMouseLeave: () => setHovered(null),
-            inRange: isInRange,
-            firstInRange: isInRange && date.getDay() === 1,
-            lastInRange: isInRange && date.getDay() === 0,
-            selected: isSelected,
-            onClick: () => setValue(date),
-          };
-        }}
-      />
-    </Group>
+    <Calendar
+      withCellSpacing={false}
+      getDayProps={(date) => {
+        const isHovered = isInWeekRange(date, hovered);
+        const isSelected = isInWeekRange(date, value);
+        const isInRange = isHovered || isSelected;
+        return {
+          onMouseEnter: () => setHovered(date),
+          onMouseLeave: () => setHovered(null),
+          inRange: isInRange,
+          firstInRange: isInRange && date.getDay() === 1,
+          lastInRange: isInRange && date.getDay() === 0,
+          selected: isSelected,
+          onClick: () => setValue(date),
+        };
+      }}
+    />
   );
 }
 
 export const weekPicker: MantineDemo = {
-  type: 'demo',
+  type: 'code',
+  centered: true,
   component: Demo,
   code,
 };

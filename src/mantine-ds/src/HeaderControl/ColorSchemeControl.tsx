@@ -1,21 +1,21 @@
 import React from 'react';
-import { useMantineColorScheme, rem } from '@mantine/core';
+import cx from 'clsx';
+import { useMantineColorScheme, useComputedColorScheme } from '@mantine/core';
 import { IconSun, IconMoon } from '@tabler/icons-react';
 import { HeaderControl } from './HeaderControl';
+import classes from './ColorSchemeControl.module.css';
 
 export function ColorSchemeControl() {
-  const { colorScheme, toggleColorScheme } = useMantineColorScheme();
+  const { setColorScheme } = useMantineColorScheme();
+  const computedColorScheme = useComputedColorScheme('light', { getInitialValueInEffect: true });
 
   return (
     <HeaderControl
-      onClick={() => toggleColorScheme()}
-      tooltip={`${colorScheme === 'dark' ? 'Light' : 'Dark'} mode`}
+      onClick={() => setColorScheme(computedColorScheme === 'light' ? 'dark' : 'light')}
+      tooltip={`${computedColorScheme === 'dark' ? 'Light' : 'Dark'} mode`}
     >
-      {colorScheme === 'dark' ? (
-        <IconSun size={rem(22)} stroke={1.5} />
-      ) : (
-        <IconMoon size={rem(22)} stroke={1.5} />
-      )}
+      <IconSun className={cx(classes.icon, classes.light)} stroke={1.5} />
+      <IconMoon className={cx(classes.icon, classes.dark)} stroke={1.5} />
     </HeaderControl>
   );
 }

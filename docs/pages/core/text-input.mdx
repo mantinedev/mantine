@@ -1,0 +1,43 @@
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+import { TextInputDemos } from '@mantine/demos';
+
+export default Layout(MDX_DATA.TextInput);
+
+## Usage
+
+<InputFeatures component="TextInput" element="input" />
+
+<Demo data={TextInputDemos.usage} />
+
+## Controlled
+
+```tsx
+import { useState } from 'react';
+import { TextInput } from '@mantine/core';
+
+function Demo() {
+  const [value, setValue] = useState('');
+  return <TextInput value={value} onChange={(event) => setValue(event.currentTarget.value)} />;
+}
+```
+
+## Sections
+
+<Demo data={TextInputDemos.sections} />
+
+## Error state
+
+<Demo data={TextInputDemos.error} />
+
+## Disabled state
+
+<Demo data={TextInputDemos.disabled} />
+
+<StylesApiSelectors component="TextInput" />
+
+<Demo data={TextInputDemos.stylesApi} />
+
+<GetElementRef component="TextInput" refType="input" />
+
+<InputAccessibility component="TextInput" />

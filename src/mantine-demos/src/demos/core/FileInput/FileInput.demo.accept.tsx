@@ -6,24 +6,22 @@ const code = `
 import { FileInput } from '@mantine/core';
 
 function Demo() {
-  return <FileInput label="Upload files" placeholder="Upload files" accept="image/png,image/jpeg" />;
+  return (
+    <FileInput accept="image/png,image/jpeg" label="Upload files" placeholder="Upload files" />
+  );
 }
 `;
 
 function Demo() {
   return (
-    <FileInput
-      maw={320}
-      mx="auto"
-      label="Upload files"
-      placeholder="Upload files"
-      accept="image/png,image/jpeg"
-    />
+    <FileInput accept="image/png,image/jpeg" label="Upload files" placeholder="Upload files" />
   );
 }
 
 export const accept: MantineDemo = {
-  type: 'demo',
+  type: 'code',
   code,
   component: Demo,
+  centered: true,
+  maxWidth: 340,
 };

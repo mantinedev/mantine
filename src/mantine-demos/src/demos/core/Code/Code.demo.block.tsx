@@ -29,7 +29,7 @@ function Demo() {
 }
 
 export const block: MantineDemo = {
-  type: 'demo',
+  type: 'code',
   code,
   component: Demo,
 };

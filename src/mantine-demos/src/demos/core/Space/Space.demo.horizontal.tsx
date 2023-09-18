@@ -12,14 +12,14 @@ function Wrapper(props: any) {
   );
 }
 
-const codeTemplate = (props: string) => `
+const code = `
 import { Text, Space } from '@mantine/core';
 
 function Demo() {
   return (
     <>
       <Text>First line</Text>
-      <Space${props} />
+      <Space{{props}} />
       <Text>Second line</Text>
     </>
   );
@@ -29,6 +29,6 @@ function Demo() {
 export const horizontal: MantineDemo = {
   type: 'configurator',
   component: Wrapper,
-  codeTemplate,
-  configurator: [{ name: 'h', type: 'size', initialValue: 'md', defaultValue: 0 }],
+  code,
+  controls: [{ prop: 'h', type: 'size', initialValue: 'md', libraryValue: '__' }],
 };

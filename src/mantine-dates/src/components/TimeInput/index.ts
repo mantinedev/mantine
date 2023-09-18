@@ -1,2 +1,2 @@
 export { TimeInput } from './TimeInput';
-export type { TimeInputProps, TimeInputStylesNames } from './TimeInput';
+export type { TimeInputFactory, TimeInputProps } from './TimeInput';

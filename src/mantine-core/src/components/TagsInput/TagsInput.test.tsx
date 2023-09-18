@@ -1,0 +1,37 @@
+import React from 'react';
+import { tests, inputDefaultProps, inputStylesApiSelectors } from '@mantine/tests';
+import { TagsInput, TagsInputProps, TagsInputStylesNames } from './TagsInput';
+
+const defaultProps: TagsInputProps = {
+  ...inputDefaultProps,
+  data: ['test-1', 'test-2'],
+};
+
+describe('@mantine/core/TagsInput', () => {
+  tests.axe([
+    <TagsInput aria-label="test-label" data={['test-1', 'test-2']} />,
+    <TagsInput label="test-label" data={['test-1', 'test-2']} />,
+    <TagsInput label="test-label" error data={['test-1', 'test-2']} />,
+    <TagsInput label="test-label" error="test-error" id="test" data={['test-1', 'test-2']} />,
+    <TagsInput label="test-label" description="test-description" data={['test-1', 'test-2']} />,
+  ]);
+
+  tests.itSupportsSystemProps<TagsInputProps, TagsInputStylesNames>({
+    component: TagsInput,
+    props: defaultProps,
+    styleProps: true,
+    extend: true,
+    size: true,
+    variant: true,
+    classes: true,
+    refType: HTMLInputElement,
+    displayName: '@mantine/core/TagsInput',
+    stylesApiSelectors: [...inputStylesApiSelectors],
+  });
+
+  tests.itSupportsInputProps<TagsInputProps>({
+    component: TagsInput,
+    props: defaultProps,
+    selector: 'input',
+  });
+});

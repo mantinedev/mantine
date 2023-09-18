@@ -1,33 +1,23 @@
 import React from 'react';
 import { MantineDemo } from '@mantine/ds';
-import { ColorInput, Box } from '@mantine/core';
+import { ColorInput } from '@mantine/core';
 
 const code = `
 import { ColorInput } from '@mantine/core';
 
 function Demo() {
-  return <ColorInput disabled />;
+  return <ColorInput disabled label="Disabled input" placeholder="Disabled input" />;
 }
 `;
 
 function Demo() {
-  return (
-    <Box maw={320} mx="auto">
-      <ColorInput label="Disabled without value" placeholder="Your favorite color" disabled />
-
-      <ColorInput
-        mt="md"
-        label="Disabled with value"
-        placeholder="Your favorite color"
-        disabled
-        value="#EFD679"
-      />
-    </Box>
-  );
+  return <ColorInput disabled label="Disabled input" placeholder="Disabled input" />;
 }
 
 export const disabled: MantineDemo = {
-  type: 'demo',
-  code,
+  type: 'code',
   component: Demo,
+  maxWidth: 340,
+  centered: true,
+  code,
 };

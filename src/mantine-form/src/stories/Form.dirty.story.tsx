@@ -1,5 +1,5 @@
 import React from 'react';
-import { ActionIcon, Code, Group, MantineProvider, TextInput, Text, Button } from '@mantine/core';
+import { ActionIcon, Code, Group, TextInput, Text, Button } from '@mantine/core';
 import { IconTrash } from '@tabler/icons-react';
 import { useForm } from '../use-form';
 
@@ -22,7 +22,7 @@ export function Dirty() {
   });
 
   return (
-    <MantineProvider withGlobalStyles withNormalizeCSS>
+    <>
       {form.values.formArray.map((item, index) => (
         <Group key={index}>
           <ActionIcon onClick={() => form.removeListItem('formArray', index)}>
@@ -37,6 +37,6 @@ export function Dirty() {
       </Button>
       <Text>{form.isDirty() ? 'Dirty' : 'Not Dirty'}</Text>
       <Code block>{JSON.stringify(form.values, null, 2)}</Code>
-    </MantineProvider>
+    </>
   );
 }

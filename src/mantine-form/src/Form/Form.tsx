@@ -9,7 +9,7 @@ export interface FormProps<Form extends UseFormReturnType<any>>
 
 export type FormComponent = <Form extends UseFormReturnType<any>>(
   props: FormProps<Form>
-) => JSX.Element;
+) => JSX.Element | React.ReactNode;
 
 export const Form: FormComponent = forwardRef(
   <Form extends UseFormReturnType<any>>(
@@ -18,7 +18,7 @@ export const Form: FormComponent = forwardRef(
   ) => (
     <form
       {...others}
-      onSubmit={form.onSubmit(onSubmit)}
+      onSubmit={form.onSubmit(typeof onSubmit === 'function' ? onSubmit : () => {})}
       onReset={(event) => {
         onReset?.(event);
         form.onReset(event);

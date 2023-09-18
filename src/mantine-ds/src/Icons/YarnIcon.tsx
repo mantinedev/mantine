@@ -5,14 +5,13 @@ interface YarnIconProps extends React.ComponentPropsWithoutRef<'svg'> {
   size?: number | string;
 }
 
-export function YarnIcon({ size, ...others }: YarnIconProps) {
+export function YarnIcon({ size, style, ...others }: YarnIconProps) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
       preserveAspectRatio="xMidYMid"
       viewBox="0 0 256 256"
-      height={rem(size)}
-      width={rem(size)}
+      style={{ width: rem(size), height: rem(size), ...style }}
       {...others}
     >
       <path

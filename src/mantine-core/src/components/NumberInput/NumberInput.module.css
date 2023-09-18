@@ -1,0 +1,78 @@
+.controls {
+  --ni-chevron-size-xs: rem(10px);
+  --ni-chevron-size-sm: rem(14px);
+  --ni-chevron-size-md: rem(16px);
+  --ni-chevron-size-lg: rem(18px);
+  --ni-chevron-size-xl: rem(20px);
+  --ni-chevron-size: var(--ni-chevron-size-sm);
+
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: calc(var(--_input-height) - rem(2px));
+  max-width: calc(var(--ni-chevron-size) * 1.7);
+  margin-left: var(--_controls-ml, auto);
+  margin-right: var(--_controls-mr, 0);
+
+  @mixin rtl {
+    --_controls-ml: 0;
+    --_controls-mr: auto;
+  }
+}
+
+.control {
+  --_control-bd: rem(1px) solid var(--_input-bd);
+  --_control-radius: calc(var(--_input-radius) - rem(1px));
+
+  flex: 0 0 50%;
+  width: 100%;
+  padding: 0;
+  height: calc(var(--_input-height) / 2 - rem(1px));
+  border-left: var(--_control-bdl, var(--_control-bd));
+  border-right: var(--_control-bdr, none);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--mantine-color-text);
+  background-color: var(--_control-bg, transparent);
+  pointer-events: var(--_control-pointer-events, auto);
+  opacity: var(--_control-opacity, 1);
+
+  &:disabled {
+    --_control-pointer-events: none;
+    --_control-opacity: 0.4;
+  }
+
+  @mixin rtl {
+    --_control-bdl: none;
+    --_control-bdr: var(--_control-bd);
+  }
+
+  @mixin hover {
+    @mixin light {
+      --_control-bg: var(--mantine-color-gray-0);
+    }
+
+    @mixin dark {
+      --_control-bg: var(--mantine-color-dark-4);
+    }
+  }
+
+  &:first-of-type {
+    border-bottom: rem(0.5px) solid var(--_input-bd);
+    border-radius: 0 var(--_control-radius) 0 0;
+
+    @mixin rtl {
+      border-radius: var(--_control-radius) 0 0 0;
+    }
+  }
+
+  &:last-of-type {
+    border-top: rem(0.5px) solid var(--_input-bd);
+    border-radius: 0 0 var(--_control-radius) 0;
+
+    @mixin rtl {
+      border-radius: 0 0 0 var(--_control-radius);
+    }
+  }
+}

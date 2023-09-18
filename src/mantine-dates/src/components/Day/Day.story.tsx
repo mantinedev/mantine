@@ -1,4 +1,3 @@
-import { MANTINE_SIZES } from '@mantine/core';
 import React from 'react';
 import { Day } from './Day';
 
@@ -49,7 +48,7 @@ export function Range() {
 }
 
 export function Sizes() {
-  const sizes = MANTINE_SIZES.map((size) => (
+  const sizes = (['xs', 'sm', 'md', 'lg', 'xl'] as const).map((size) => (
     <Day date={new Date()} selected size={size} key={size} />
   ));
   return <div style={{ padding: 40 }}>{sizes}</div>;

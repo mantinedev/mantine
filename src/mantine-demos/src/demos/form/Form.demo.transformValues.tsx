@@ -25,7 +25,7 @@ function Demo() {
   });
 
   return (
-    <Box maw={400} mx="auto">
+    <Box maw={340} mx="auto">
       <form
         onSubmit={form.onSubmit((values) => setSubmittedValues(JSON.stringify(values, null, 2)))}
       >
@@ -75,7 +75,7 @@ function Demo() {
   });
 
   return (
-    <Box maw={400} mx="auto">
+    <Box maw={340} mx="auto">
       <form
         onSubmit={form.onSubmit((values) => setSubmittedValues(JSON.stringify(values, null, 2)))}
       >
@@ -108,7 +108,7 @@ function Demo() {
 }
 
 export const transformValues: MantineDemo = {
-  type: 'demo',
+  type: 'code',
   component: Demo,
   code,
 };

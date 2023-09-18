@@ -1,11 +1,11 @@
 import React from 'react';
 import { MantineDemo } from '@mantine/ds';
 import { useDisclosure } from '@mantine/hooks';
-import { Modal, Group, Button } from '@mantine/core';
+import { Modal, Button } from '@mantine/core';
 
 const code = `
 import { useDisclosure } from '@mantine/hooks';
-import { Modal, Group, Button } from '@mantine/core';
+import { Modal, Button } from '@mantine/core';
 
 function Demo() {
   const [opened, { open, close }] = useDisclosure(false);
@@ -16,9 +16,7 @@ function Demo() {
         Modal without header, press escape or click on overlay to close
       </Modal>
 
-      <Group position="center">
-        <Button onClick={open}>Open Modal</Button>
-      </Group>
+      <Button onClick={open}>Open Modal</Button>
     </>
   );
 }
@@ -34,15 +32,14 @@ function Demo() {
         Modal without header, press escape or click on overlay to close
       </Modal>
 
-      <Group position="center">
-        <Button onClick={open}>Open Modal</Button>
-      </Group>
+      <Button onClick={open}>Open Modal</Button>
     </>
   );
 }
 
 export const header: MantineDemo = {
-  type: 'demo',
+  type: 'code',
   code,
+  centered: true,
   component: Demo,
 };

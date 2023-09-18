@@ -1,4 +1,3 @@
-import { MANTINE_SIZES } from '@mantine/core';
 import React, { useState } from 'react';
 import { DatesRangeValue } from '../../types';
 import { MonthPicker } from './MonthPicker';
@@ -80,6 +79,8 @@ export function ControlledMultiple() {
 }
 
 export function Sizes() {
-  const sizes = MANTINE_SIZES.map((size) => <MonthPicker size={size} key={size} />);
+  const sizes = (['xs', 'sm', 'md', 'lg', 'xl'] as const).map((size) => (
+    <MonthPicker size={size} key={size} />
+  ));
   return <div style={{ padding: 40 }}>{sizes}</div>;
 }

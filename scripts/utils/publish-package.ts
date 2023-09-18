@@ -16,7 +16,7 @@ export async function publishPackage({
   try {
     await execa('yarn', ['publish', path, '--tag', tag]);
     logger.success(`Package ${chalk.cyan(name)} was published`);
-  } catch (error) {
+  } catch (error: any) {
     logger.error(`Failed to publish package ${chalk.red(name)}`);
     process.stdout.write(chalk.red`${error.message}\n`);
     process.exit(1);

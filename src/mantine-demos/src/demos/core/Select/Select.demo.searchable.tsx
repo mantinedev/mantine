@@ -8,11 +8,10 @@ import { Select } from '@mantine/core';
 function Demo() {
   return (
     <Select
-      label="Your favorite framework/library"
-      placeholder="Pick one"
+      label="Your favorite library"
+      placeholder="Pick value"
+      data={['React', 'Angular', 'Vue', 'Svelte']}
       searchable
-      nothingFound="No options"
-      data={['React', 'Angular', 'Svelte', 'Vue']}
     />
   );
 }
@@ -21,20 +20,18 @@ function Demo() {
 function Demo() {
   return (
     <Select
-      maw={320}
-      mx="auto"
-      label="Your favorite framework/library"
-      placeholder="Pick one"
+      label="Your favorite library"
+      placeholder="Pick value"
+      data={['React', 'Angular', 'Vue', 'Svelte']}
       searchable
-      nothingFound="No options"
-      data={['React', 'Angular', 'Svelte', 'Vue']}
-      withinPortal
     />
   );
 }
 
 export const searchable: MantineDemo = {
-  type: 'demo',
-  code,
+  type: 'code',
   component: Demo,
+  code,
+  maxWidth: 340,
+  centered: true,
 };

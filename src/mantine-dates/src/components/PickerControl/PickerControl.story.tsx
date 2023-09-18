@@ -1,4 +1,3 @@
-import { MANTINE_SIZES } from '@mantine/core';
 import React from 'react';
 import { PickerControl } from './PickerControl';
 
@@ -38,7 +37,7 @@ export function Range() {
 }
 
 export function Sizes() {
-  const sizes = MANTINE_SIZES.map((size) => (
+  const sizes = (['xs', 'sm', 'md', 'lg', 'xl'] as const).map((size) => (
     <PickerControl selected size={size} key={size} mt="md">
       {size}
     </PickerControl>

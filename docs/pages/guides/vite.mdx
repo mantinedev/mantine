@@ -1,0 +1,67 @@
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.Vite);
+
+# Usage with Vite
+
+<GetTemplates type="vite" />
+
+## Generate new application
+
+Follow [Vite getting started](https://vitejs.dev/guide/) guide to create new Vite application:
+
+<NpmScript yarnScript="yarn create vite" npmScript="npm create vite@latest" />
+
+## Installation
+
+<PackagesInstallation />
+
+## PostCSS setup
+
+Install PostCSS plugins and [postcss-preset-mantine](/styles/postcss-preset):
+
+<InstallScript packages="postcss postcss-preset-mantine postcss-simple-vars" dev />
+
+Create `postcss.config.js` file at the root of your application with the following content:
+
+```js
+module.exports = {
+  plugins: {
+    'postcss-preset-mantine': {},
+    'postcss-simple-vars': {
+      variables: {
+        'mantine-breakpoint-xs': '36em',
+        'mantine-breakpoint-sm': '48em',
+        'mantine-breakpoint-md': '62em',
+        'mantine-breakpoint-lg': '75em',
+        'mantine-breakpoint-xl': '88em',
+      },
+    },
+  },
+};
+```
+
+Note that if you use Node.js 18+, you will need to replace `module.exports = ` with `export default`.
+
+## Setup
+
+Add styles imports and [MantineProvider](/theming/mantine-provider/) to your application root component (usually `App.tsx`):
+
+```tsx
+// Import styles of packages that you've installed.
+// All packages except `@mantine/hooks` require styles imports
+import '@mantine/core/styles.css';
+
+import { MantineProvider } from '@mantine/core';
+
+export default function App() {
+  return <MantineProvider>{/* Your app here */}</MantineProvider>;
+}
+```
+
+All set! Start development server:
+
+```bash
+npm run dev
+```

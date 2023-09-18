@@ -1,1 +1,1 @@
-export { configurator } from './Paper.demo.configurator';
+export { usage } from './Paper.demo.usage';

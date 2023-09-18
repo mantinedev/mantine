@@ -6,15 +6,15 @@ import { Logger } from './utils/Logger';
 const logger = new Logger('exports');
 
 getPackagesBuildOrder().then((packages) => {
-  const errors = [];
+  const errors: string[] = [];
   packages.forEach((pkg) => {
-    const main = fs.existsSync(path.join(pkg.path, pkg.packageJson.main));
-    const types = fs.existsSync(path.join(pkg.path, pkg.packageJson.types));
-    const module = fs.existsSync(path.join(pkg.path, pkg.packageJson.types));
+    const main = fs.existsSync(path.join(pkg!.path, pkg!.packageJson.main));
+    const types = fs.existsSync(path.join(pkg!.path, pkg!.packageJson.types!));
+    const module = fs.existsSync(path.join(pkg!.path, pkg!.packageJson.types!));
 
-    !main && errors.push(`Missing main for package ${pkg.packageJson.name}`);
-    !types && errors.push(`Missing types for package ${pkg.packageJson.name}`);
-    !module && errors.push(`Missing module for package ${pkg.packageJson.name}`);
+    !main && errors.push(`Missing main for package ${pkg!.packageJson.name}`);
+    !types && errors.push(`Missing types for package ${pkg!.packageJson.name}`);
+    !module && errors.push(`Missing module for package ${pkg!.packageJson.name}`);
   });
 
   if (errors.length > 0) {

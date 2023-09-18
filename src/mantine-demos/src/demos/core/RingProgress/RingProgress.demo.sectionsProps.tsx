@@ -46,7 +46,7 @@ function Demo() {
 }
 
 export const sectionsProps: MantineDemo = {
-  type: 'demo',
+  type: 'code',
   component: Demo,
   code,
 };

@@ -31,15 +31,17 @@ export async function buildPackage(_packageName: string, options?: BuildOptions)
     const startTime = Date.now();
     await generateDts(packagePath);
 
-    for (const format of options?.formats) {
-      const config = await createPackageConfig({
-        ...options,
-        basePath: packagePath,
-        format,
-      });
+    if (options?.formats) {
+      for (const format of options.formats) {
+        const config = await createPackageConfig({
+          ...options,
+          basePath: packagePath,
+          format,
+        });
 
-      logger.info(`Building to ${chalk.cyan(format)} format...`);
-      await compile(config);
+        logger.info(`Building to ${chalk.cyan(format)} format...`);
+        await compile(config);
+      }
     }
 
     logger.info(
@@ -47,7 +49,7 @@ export async function buildPackage(_packageName: string, options?: BuildOptions)
         `${((Date.now() - startTime) / 1000).toFixed(2)}s`
       )}`
     );
-  } catch (err) {
+  } catch (err: any) {
     logger.error(`Failed to compile package: ${chalk.cyan(packageName)}`);
     process.stdout.write(`${err.toString('minimal')}\n`);
     process.exit(1);

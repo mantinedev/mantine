@@ -21,7 +21,7 @@ function Demo() {
 }
 
 export const useDocumentVisibilityDemo: MantineDemo = {
-  type: 'demo',
+  type: 'code',
   code,
   component: Demo,
 };

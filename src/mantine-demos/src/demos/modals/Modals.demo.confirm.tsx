@@ -1,5 +1,5 @@
 import React from 'react';
-import { Group, Button, Text } from '@mantine/core';
+import { Button, Text } from '@mantine/core';
 import { modals } from '@mantine/modals';
 import { MantineDemo } from '@mantine/ds';
 import { notifications } from '@mantine/notifications';
@@ -51,15 +51,12 @@ function Demo() {
         }),
     });
 
-  return (
-    <Group position="center">
-      <Button onClick={openModal}>Open confirm modal</Button>
-    </Group>
-  );
+  return <Button onClick={openModal}>Open confirm modal</Button>;
 }
 
 export const confirm: MantineDemo = {
-  type: 'demo',
+  type: 'code',
+  centered: true,
   component: Demo,
   code,
 };

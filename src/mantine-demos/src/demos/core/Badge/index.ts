@@ -1,6 +1,5 @@
-export { dots } from './Badge.demo.dots';
-export { overflow } from './Badge.demo.overflow';
+export { usage } from './Badge.demo.usage';
+export { fullWidth } from './Badge.demo.fullWidth';
 export { sections } from './Badge.demo.sections';
-export { component } from './Badge.demo.component';
 export { gradient } from './Badge.demo.gradient';
-export { configurator } from './Badge.demo.configurator';
+export { stylesApi } from './Badge.demo.stylesApi';

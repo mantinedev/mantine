@@ -17,11 +17,11 @@ function Demo() {
 function Demo() {
   const [leftsCount, setLeftsCount] = useState(0);
   usePageLeave(() => setLeftsCount((p) => p + 1));
-  return <Text align="center">Mouse left the page {leftsCount} times</Text>;
+  return <Text ta="center">Mouse left the page {leftsCount} times</Text>;
 }
 
 export const usePageLeaveDemo: MantineDemo = {
-  type: 'demo',
+  type: 'code',
   component: Demo,
   code,
 };

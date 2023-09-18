@@ -1,17 +1,23 @@
 import React from 'react';
 import { rem } from '@mantine/core';
-import { useMantineLogoColors, LogoProps } from './use-mantine-logo-colors';
+import { LogoProps, useMantineLogoColors } from './use-mantine-logo-colors';
 
-export function MantineLogoRounded({ size, color, variant, inverted, ...others }: LogoProps) {
-  const colors = useMantineLogoColors(color, variant, inverted);
+export function MantineLogoRounded({
+  size,
+  color,
+  variant,
+  inverted,
+  style,
+  ...others
+}: LogoProps) {
+  const colors = useMantineLogoColors({ color, inverted });
 
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
       fill="none"
       viewBox="0 0 163 163"
-      width={rem(size)}
-      height={rem(size)}
+      style={{ width: rem(size), height: rem(size), ...style }}
       {...others}
     >
       <path

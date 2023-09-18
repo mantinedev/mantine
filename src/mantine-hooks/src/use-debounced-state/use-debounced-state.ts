@@ -6,10 +6,10 @@ export function useDebouncedState<T = any>(
   options = { leading: false }
 ) {
   const [value, setValue] = useState(defaultValue);
-  const timeoutRef = useRef<number>(null);
+  const timeoutRef = useRef<number | null>(null);
   const leadingRef = useRef(true);
 
-  const clearTimeout = () => window.clearTimeout(timeoutRef.current);
+  const clearTimeout = () => window.clearTimeout(timeoutRef.current!);
   useEffect(() => clearTimeout, []);
 
   const debouncedSetValue = (newValue: T) => {

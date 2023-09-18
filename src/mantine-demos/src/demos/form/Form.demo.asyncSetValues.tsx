@@ -64,7 +64,7 @@ function Demo() {
   }, []);
 
   return (
-    <Box maw={320} mx="auto">
+    <Box maw={340} mx="auto">
       <TextInput label="Email" placeholder="Email" {...form.getInputProps('email')} />
       <Checkbox
         mt="sm"
@@ -76,7 +76,7 @@ function Demo() {
 }
 
 export const asyncSetValues: MantineDemo = {
-  type: 'demo',
+  type: 'code',
   component: Demo,
   code,
 };

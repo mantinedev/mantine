@@ -1,22 +1,38 @@
-/* eslint-disable react/no-unused-prop-types */
 import dayjs from 'dayjs';
-import React, { forwardRef } from 'react';
-import { DefaultProps, Box, Selectors, useComponentDefaultProps, MantineSize } from '@mantine/core';
-import { PickerControl, PickerControlStylesNames, PickerControlProps } from '../PickerControl';
+import React from 'react';
+import {
+  Box,
+  BoxProps,
+  StylesApiProps,
+  factory,
+  ElementProps,
+  useProps,
+  useStyles,
+  Factory,
+  MantineSize,
+} from '@mantine/core';
 import { ControlsGroupSettings } from '../../types';
-import { useDatesContext } from '../DatesProvider';
+import { PickerControl, PickerControlProps } from '../PickerControl';
 import { getYearsData } from './get-years-data/get-years-data';
-import { isYearDisabled } from './is-year-disabled/is-year-disabled';
-import useStyles from './YearsList.styles';
 import { getYearInTabOrder } from './get-year-in-tab-order/get-year-in-tab-order';
+import { useDatesContext } from '../DatesProvider';
+import { isYearDisabled } from './is-year-disabled/is-year-disabled';
+import classes from './YearsList.module.css';
 
-export type YearsListStylesNames = PickerControlStylesNames | Selectors<typeof useStyles>;
+export type YearsListStylesNames =
+  | 'yearsListControl'
+  | 'yearsList'
+  | 'yearsListCell'
+  | 'yearsListRow';
 
 export interface YearsListSettings extends ControlsGroupSettings {
   /** Prevents focus shift when buttons are clicked */
   __preventFocus?: boolean;
 
-  /** dayjs format for years list  */
+  /** Determines whether propagation for Escape key should be stopped */
+  __stopPropagation?: boolean;
+
+  /** dayjs format for years list, `'YYYY'` by default  */
   yearsListFormat?: string;
 
   /** Adds props to year picker control based on date */
@@ -25,42 +41,47 @@ export interface YearsListSettings extends ControlsGroupSettings {
   /** Component size */
   size?: MantineSize;
 
-  /** Determines whether propagation for Escape key should be stopped */
-  __stopPropagation?: boolean;
-
   /** Determines whether controls should be separated by spacing, true by default */
   withCellSpacing?: boolean;
 }
 
 export interface YearsListProps
-  extends DefaultProps<YearsListStylesNames>,
+  extends BoxProps,
     YearsListSettings,
-    React.ComponentPropsWithoutRef<'table'> {
-  variant?: string;
+    StylesApiProps<YearsListFactory>,
+    ElementProps<'table'> {
   __staticSelector?: string;
 
   /** Decade for which years list should be displayed */
   decade: Date;
 }
 
+export type YearsListFactory = Factory<{
+  props: YearsListProps;
+  ref: HTMLTableElement;
+  stylesNames: YearsListStylesNames;
+}>;
+
 const defaultProps: Partial<YearsListProps> = {
   yearsListFormat: 'YYYY',
-  size: 'sm',
   withCellSpacing: true,
 };
 
-export const YearsList = forwardRef<HTMLTableElement, YearsListProps>((props, ref) => {
+export const YearsList = factory<YearsListFactory>((_props, ref) => {
+  const props = useProps('YearsList', defaultProps, _props);
   const {
-    decade,
+    classNames,
     className,
+    style,
+    styles,
+    unstyled,
+    vars,
+    decade,
     yearsListFormat,
     locale,
     minDate,
     maxDate,
     getYearControlProps,
-    classNames,
-    styles,
-    unstyled,
     __staticSelector,
     __getControlRef,
     __onControlKeyDown,
@@ -68,19 +89,22 @@ export const YearsList = forwardRef<HTMLTableElement, YearsListProps>((props, re
     __onControlMouseEnter,
     __preventFocus,
     __stopPropagation,
-    size,
-    variant,
     withCellSpacing,
+    size,
     ...others
-  } = useComponentDefaultProps('YearsList', defaultProps, props);
+  } = props;
 
-  const { classes, cx } = useStyles(null, {
-    name: ['YearsList', __staticSelector],
+  const getStyles = useStyles<YearsListFactory>({
+    name: __staticSelector || 'YearsList',
+    classes,
+    props,
+    className,
+    style,
     classNames,
     styles,
     unstyled,
-    variant,
-    size,
+    vars,
+    rootSelector: 'yearsList',
   });
 
   const ctx = useDatesContext();
@@ -96,19 +120,16 @@ export const YearsList = forwardRef<HTMLTableElement, YearsListProps>((props, re
       return (
         <td
           key={cellIndex}
-          className={classes.yearsListCell}
+          {...getStyles('yearsListCell')}
           data-with-spacing={withCellSpacing || undefined}
         >
           <PickerControl
+            {...getStyles('yearsListControl')}
             size={size}
-            variant={variant}
-            classNames={classNames}
-            styles={styles}
             unstyled={unstyled}
-            __staticSelector={__staticSelector || 'YearsList'}
             data-mantine-stop-propagation={__stopPropagation || undefined}
             disabled={isYearDisabled(year, minDate, maxDate)}
-            ref={(node) => __getControlRef?.(rowIndex, cellIndex, node)}
+            ref={(node) => __getControlRef?.(rowIndex, cellIndex, node!)}
             {...controlProps}
             onKeyDown={(event) => {
               controlProps?.onKeyDown?.(event);
@@ -135,17 +156,18 @@ export const YearsList = forwardRef<HTMLTableElement, YearsListProps>((props, re
     });
 
     return (
-      <tr key={rowIndex} className={classes.yearsListRow}>
+      <tr key={rowIndex} {...getStyles('yearsListRow')}>
         {cells}
       </tr>
     );
   });
 
   return (
-    <Box component="table" ref={ref} className={cx(classes.yearsList, className)} {...others}>
+    <Box component="table" ref={ref} size={size} {...getStyles('yearsList')} {...others}>
       <tbody>{rows}</tbody>
     </Box>
   );
 });
 
+YearsList.classes = classes;
 YearsList.displayName = '@mantine/dates/YearsList';

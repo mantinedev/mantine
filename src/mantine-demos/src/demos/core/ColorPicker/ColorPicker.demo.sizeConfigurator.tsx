@@ -14,17 +14,17 @@ function Wrapper(props: ColorPickerProps) {
   );
 }
 
-const codeTemplate = (props: string) => `
+const code = `
 import { ColorPicker } from '@mantine/core';
 
 function Demo() {
-  return <ColorPicker${props} />;
+  return <ColorPicker{{props}} />;
 }
 `;
 
 export const sizeConfigurator: MantineDemo = {
   type: 'configurator',
   component: Wrapper,
-  codeTemplate,
-  configurator: [{ name: 'size', type: 'size', initialValue: 'sm', defaultValue: 'sm' }],
+  code,
+  controls: [{ prop: 'size', type: 'size', initialValue: 'sm', libraryValue: 'sm' }],
 };

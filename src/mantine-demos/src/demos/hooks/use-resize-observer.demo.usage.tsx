@@ -13,7 +13,7 @@ function Demo() {
   return (
     <>
       <textarea ref={ref} style={{ width: rem(400), height: rem(120) }} />
-      <Text align="center">Rect: <Code>{JSON.stringify(rect)}</Code></Text>
+      <Text ta="center">Rect: <Code>{JSON.stringify(rect)}</Code></Text>
     </>
   );
 }`;
@@ -24,24 +24,23 @@ function Demo() {
 
   return (
     <>
-      <Text align="center" size="sm" style={{ marginBottom: theme.spacing.xs }}>
+      <Text ta="center" size="sm" mb="xs">
         Resize textarea by dragging its right bottom corner
       </Text>
 
-      <Group position="center">
+      <Group justify="center">
         <textarea
           ref={ref}
           style={{
             width: rem(400),
             height: rem(120),
             border: 'none',
-            backgroundColor:
-              theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[2],
+            backgroundColor: 'var(--mantine-color-blue-light)',
             position: 'relative',
           }}
         />
       </Group>
-      <Text align="center" style={{ marginTop: theme.spacing.sm }}>
+      <Text ta="center" style={{ marginTop: theme.spacing.sm }}>
         Rect: <Code>{JSON.stringify(rect, null, 2)}</Code>
       </Text>
     </>
@@ -49,7 +48,7 @@ function Demo() {
 }
 
 export const useResizeObserverDemo: MantineDemo = {
-  type: 'demo',
+  type: 'code',
   code,
   component: Demo,
 };

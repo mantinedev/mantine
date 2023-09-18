@@ -1,48 +1,65 @@
 import React from 'react';
 import { MantineDemo } from '@mantine/ds';
-import { Tooltip, Group, Button } from '@mantine/core';
+import { Tooltip, Button } from '@mantine/core';
 
 const code = `
 import { Tooltip, Button } from '@mantine/core';
 
 function Demo() {
   return (
-    <>
-      <Tooltip label="Default arrow" withArrow>
-        <Button variant="outline">Default arrow</Button>
-      </Tooltip>
-
-      <Tooltip label="Arrow with size" withArrow arrowSize={6}>
-        <Button variant="outline">With size</Button>
-      </Tooltip>
-
-      <Tooltip label="Arrow with radius" withArrow arrowSize={6} arrowRadius={4}>
-        <Button variant="outline">With radius</Button>
-      </Tooltip>
-    </>
+    <Tooltip{{props}} label="Tooltip" withArrow opened position="top-start">
+      <Button variant="outline">Button with tooltip</Button>
+    </Tooltip>
   );
 }
-
 `;
 
-export function Demo() {
+function Wrapper(props: any) {
   return (
-    <Group position="center">
-      <Tooltip label="Default arrow" withArrow>
-        <Button variant="outline">Default arrow</Button>
-      </Tooltip>
-      <Tooltip label="Arrow with size" withArrow arrowSize={6}>
-        <Button variant="outline">With size</Button>
-      </Tooltip>
-      <Tooltip label="Arrow with radius" withArrow arrowSize={6} arrowRadius={4}>
-        <Button variant="outline">With radius</Button>
-      </Tooltip>
-    </Group>
+    <Tooltip label="Tooltip" withArrow opened position="top-start" {...props}>
+      <Button variant="outline">Button with tooltip</Button>
+    </Tooltip>
   );
 }
 
 export const arrow: MantineDemo = {
-  type: 'demo',
+  type: 'configurator',
+  component: Wrapper,
   code,
-  component: Demo,
+  centered: true,
+  controls: [
+    {
+      type: 'segmented',
+      prop: 'arrowPosition',
+      initialValue: 'center',
+      libraryValue: 'center',
+      data: ['center', 'side'],
+    },
+    {
+      type: 'number',
+      prop: 'arrowOffset',
+      initialValue: 10,
+      libraryValue: null,
+      min: 5,
+      max: 50,
+    },
+
+    {
+      type: 'number',
+      prop: 'arrowSize',
+      initialValue: 4,
+      libraryValue: null,
+      min: 2,
+      max: 8,
+    },
+
+    {
+      type: 'number',
+      prop: 'arrowRadius',
+      initialValue: 0,
+      libraryValue: 0,
+      min: 0,
+      max: 10,
+    },
+  ],
 };

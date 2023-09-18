@@ -1,41 +1,70 @@
-import React from 'react';
-import { render, screen } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
-import {
-  itSupportsSystemProps,
-  itSupportsProviderVariant,
-  itSupportsProviderSize,
-} from '@mantine/tests';
 import dayjs from 'dayjs';
-import { itSupportsYearsListProps, itHandlesControlsKeyboardEvents } from '../../tests';
-import { YearPicker } from './YearPicker';
+import React from 'react';
+import { render, tests, userEvent, screen } from '@mantine/tests';
+import { datesTests } from '@mantine/dates-tests';
+import { YearPicker, YearPickerProps, YearPickerStylesNames } from './YearPicker';
+import { DatesProvider } from '../DatesProvider';
 
 const defaultProps = {};
 
 describe('@mantine/dates/YearPicker', () => {
-  itSupportsSystemProps({
+  tests.itSupportsSystemProps<YearPickerProps, YearPickerStylesNames>({
     component: YearPicker,
     props: defaultProps,
+    styleProps: true,
+    extend: true,
+    variant: true,
+    size: true,
+    classes: true,
     refType: HTMLDivElement,
-    providerName: 'YearPicker',
     displayName: '@mantine/dates/YearPicker',
+    stylesApiSelectors: [
+      'calendarHeader',
+      'calendarHeaderControl',
+      'calendarHeaderControlIcon',
+      'calendarHeaderLevel',
+      'yearsList',
+      'yearsListCell',
+      'yearsListControl',
+      'yearsListRow',
+    ],
+    providerStylesApi: false,
   });
 
-  itSupportsProviderVariant(YearPicker, defaultProps, 'YearPicker', 'calendar');
-  itSupportsProviderSize(YearPicker, defaultProps, 'YearPicker', 'calendar');
-  itSupportsYearsListProps(YearPicker, defaultProps);
-  itHandlesControlsKeyboardEvents(
-    YearPicker,
-    'decade',
-    '.mantine-YearPicker-yearsList',
-    defaultProps
-  );
+  datesTests.itSupportsYearsListProps({ component: YearPicker, props: defaultProps });
+  datesTests.itHandlesControlsKeyboardEvents({
+    component: YearPicker,
+    props: defaultProps,
+    listSelector: '.mantine-YearPicker-yearsList',
+  });
 
   it('can be uncontrolled (type="default")', async () => {
     const { container } = render(<YearPicker {...defaultProps} date={new Date(2022, 3, 11)} />);
     expect(container.querySelector('[data-selected]')).toBe(null);
-    await userEvent.click(container.querySelector('table button'));
-    expect(container.querySelector('[data-selected]').textContent).toBe('2020');
+    await userEvent.click(container.querySelector('table button')!);
+    expect(container.querySelector('[data-selected]')!.textContent).toBe('2020');
+  });
+
+  it('can be uncontrolled (type="default") with timezone (UTC)', async () => {
+    const { container } = render(
+      <DatesProvider settings={{ timezone: 'UTC' }}>
+        <YearPicker {...defaultProps} date={new Date(2019, 11, 31, 23)} />
+      </DatesProvider>
+    );
+    expect(container.querySelector('[data-selected]')).toBe(null);
+    await userEvent.click(container.querySelector('table button')!);
+    expect(container.querySelector('[data-selected]')!.textContent).toBe('2020');
+  });
+
+  it('can be uncontrolled (type="default") with timezone (America/Los_Angeles)', async () => {
+    const { container } = render(
+      <DatesProvider settings={{ timezone: 'America/Los_Angeles' }}>
+        <YearPicker {...defaultProps} date={new Date(2020, 11, 31, 23)} />
+      </DatesProvider>
+    );
+    expect(container.querySelector('[data-selected]')).toBe(null);
+    await userEvent.click(container.querySelector('table button')!);
+    expect(container.querySelector('[data-selected]')!.textContent).toBe('2020');
   });
 
   it('can be controlled (type="default")', async () => {
@@ -49,10 +78,48 @@ describe('@mantine/dates/YearPicker', () => {
       />
     );
 
-    expect(container.querySelector('[data-selected]').textContent).toBe('2023');
+    expect(container.querySelector('[data-selected]')!.textContent).toBe('2023');
 
-    await userEvent.click(container.querySelector('table button'));
+    await userEvent.click(container.querySelector('table button')!);
     expect(spy).toHaveBeenCalledWith(new Date(2020, 0, 1));
+  });
+
+  it('can be controlled (type="default") with timezone (UTC)', async () => {
+    const spy = jest.fn();
+    const { container } = render(
+      <DatesProvider settings={{ timezone: 'UTC' }}>
+        <YearPicker
+          {...defaultProps}
+          date={new Date(2019, 11, 31, 23)}
+          value={new Date(2022, 11, 31, 23)}
+          onChange={spy}
+        />
+      </DatesProvider>
+    );
+
+    expect(container.querySelector('[data-selected]')!.textContent).toBe('2023');
+
+    await userEvent.click(container.querySelector('table button')!);
+    expect(spy).toHaveBeenCalledWith(new Date(2019, 11, 31, 19));
+  });
+
+  it('can be controlled (type="default") with timezone (America/Los_Angeles)', async () => {
+    const spy = jest.fn();
+    const { container } = render(
+      <DatesProvider settings={{ timezone: 'America/Los_Angeles' }}>
+        <YearPicker
+          {...defaultProps}
+          date={new Date(2020, 10, 31, 23)}
+          value={new Date(2022, 11, 31, 23)}
+          onChange={spy}
+        />
+      </DatesProvider>
+    );
+
+    expect(container.querySelector('[data-selected]')!.textContent).toBe('2022');
+
+    await userEvent.click(container.querySelector('table button')!);
+    expect(spy).toHaveBeenCalledWith(new Date(2020, 0, 1, 3));
   });
 
   it('can be uncontrolled (type="multiple")', async () => {
@@ -62,7 +129,43 @@ describe('@mantine/dates/YearPicker', () => {
     expect(container.querySelectorAll('[data-selected]')).toHaveLength(0);
     await userEvent.click(container.querySelectorAll('table button')[0]);
     expect(container.querySelectorAll('[data-selected]')).toHaveLength(1);
-    expect(container.querySelector('[data-selected]').textContent).toBe('2020');
+    expect(container.querySelector('[data-selected]')!.textContent).toBe('2020');
+
+    await userEvent.click(container.querySelectorAll('table button')[1]);
+    expect(container.querySelectorAll('[data-selected]')).toHaveLength(2);
+    expect(
+      Array.from(container.querySelectorAll('[data-selected]')).map((node) => node.textContent)
+    ).toStrictEqual(['2020', '2021']);
+  });
+
+  it('can be uncontrolled (type="multiple") with timezone (UTC)', async () => {
+    const { container } = render(
+      <DatesProvider settings={{ timezone: 'UTC' }}>
+        <YearPicker {...defaultProps} type="multiple" date={new Date(2022, 3, 11)} />
+      </DatesProvider>
+    );
+    expect(container.querySelectorAll('[data-selected]')).toHaveLength(0);
+    await userEvent.click(container.querySelectorAll('table button')[0]);
+    expect(container.querySelectorAll('[data-selected]')).toHaveLength(1);
+    expect(container.querySelector('[data-selected]')!.textContent).toBe('2020');
+
+    await userEvent.click(container.querySelectorAll('table button')[1]);
+    expect(container.querySelectorAll('[data-selected]')).toHaveLength(2);
+    expect(
+      Array.from(container.querySelectorAll('[data-selected]')).map((node) => node.textContent)
+    ).toStrictEqual(['2020', '2021']);
+  });
+
+  it('can be uncontrolled (type="multiple") with timezone (America/Los_Angeles)', async () => {
+    const { container } = render(
+      <DatesProvider settings={{ timezone: 'America/Los_Angeles' }}>
+        <YearPicker {...defaultProps} type="multiple" date={new Date(2022, 3, 11)} />
+      </DatesProvider>
+    );
+    expect(container.querySelectorAll('[data-selected]')).toHaveLength(0);
+    await userEvent.click(container.querySelectorAll('table button')[0]);
+    expect(container.querySelectorAll('[data-selected]')).toHaveLength(1);
+    expect(container.querySelector('[data-selected]')!.textContent).toBe('2020');
 
     await userEvent.click(container.querySelectorAll('table button')[1]);
     expect(container.querySelectorAll('[data-selected]')).toHaveLength(2);
@@ -83,8 +186,44 @@ describe('@mantine/dates/YearPicker', () => {
       />
     );
 
-    await userEvent.click(container.querySelector('table button'));
+    await userEvent.click(container.querySelector('table button')!);
     expect(spy).toHaveBeenCalledWith([new Date(2023, 3, 11), new Date(2020, 0, 1)]);
+  });
+
+  it('can be controlled (type="multiple") with timezone (UTC)', async () => {
+    const spy = jest.fn();
+    const { container } = render(
+      <DatesProvider settings={{ timezone: 'UTC' }}>
+        <YearPicker
+          {...defaultProps}
+          type="multiple"
+          date={new Date(2022, 3, 11)}
+          value={[new Date(2023, 3, 11)]}
+          onChange={spy}
+        />
+      </DatesProvider>
+    );
+
+    await userEvent.click(container.querySelector('table button')!);
+    expect(spy).toHaveBeenCalledWith([new Date(2023, 3, 11), new Date(2019, 11, 31, 19)]);
+  });
+
+  it('can be controlled (type="multiple") with timezone (America/Los_Angeles)', async () => {
+    const spy = jest.fn();
+    const { container } = render(
+      <DatesProvider settings={{ timezone: 'America/Los_Angeles' }}>
+        <YearPicker
+          {...defaultProps}
+          type="multiple"
+          date={new Date(2022, 3, 11)}
+          value={[new Date(2023, 3, 11)]}
+          onChange={spy}
+        />
+      </DatesProvider>
+    );
+
+    await userEvent.click(container.querySelector('table button')!);
+    expect(spy).toHaveBeenCalledWith([new Date(2023, 3, 11), new Date(2020, 0, 1, 3)]);
   });
 
   it('can be uncontrolled (type="range")', async () => {
@@ -107,7 +246,7 @@ describe('@mantine/dates/YearPicker', () => {
     const { container } = render(
       <YearPicker {...defaultProps} type="range" value={[null, null]} onChange={spy} />
     );
-    await userEvent.click(container.querySelector('table button'));
+    await userEvent.click(container.querySelector('table button')!);
     expect(spy).toHaveBeenLastCalledWith([new Date(2020, 0, 1), null]);
   });
 
@@ -116,24 +255,8 @@ describe('@mantine/dates/YearPicker', () => {
     const { container } = render(
       <YearPicker {...defaultProps} getYearControlProps={() => ({ onClick: spy })} />
     );
-    await userEvent.click(container.querySelector('table button'));
+    await userEvent.click(container.querySelector('table button')!);
     expect(spy).toHaveBeenCalled();
-  });
-
-  it('supports allowDeselect', async () => {
-    const spy = jest.fn();
-    const { container, rerender } = render(<YearPicker {...defaultProps} onChange={spy} />);
-
-    await userEvent.click(container.querySelector('table button'));
-    expect(spy).toHaveBeenCalledWith(new Date(2020, 0, 1));
-    await userEvent.click(container.querySelector('table button'));
-    expect(spy).toHaveBeenCalledWith(new Date(2020, 0, 1));
-
-    rerender(<YearPicker {...defaultProps} onChange={spy} allowDeselect />);
-    await userEvent.click(container.querySelector('table button'));
-    expect(spy).toHaveBeenCalledWith(null);
-    await userEvent.click(container.querySelector('table button'));
-    expect(spy).toHaveBeenCalledWith(new Date(2020, 0, 1));
   });
 
   it('handles allowSingleDateInRange={true} correctly', async () => {
@@ -160,12 +283,12 @@ describe('@mantine/dates/YearPicker', () => {
 
   it('has correct default __staticSelector', () => {
     const { container } = render(<YearPicker {...defaultProps} />);
-    expect(container.firstChild).toHaveClass('mantine-YearPicker-calendar');
+    expect(container.querySelector('.mantine-YearPicker-yearsList')).toBeInTheDocument();
   });
 
   it('supports custom __staticSelector', () => {
     const { container } = render(<YearPicker {...defaultProps} __staticSelector="Calendar" />);
-    expect(container.firstChild).toHaveClass('mantine-Calendar-calendar');
+    expect(container.querySelector('.mantine-Calendar-yearsList')).toBeInTheDocument();
   });
 
   const ariaLabels = {

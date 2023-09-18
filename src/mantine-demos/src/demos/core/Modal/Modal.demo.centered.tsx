@@ -1,12 +1,12 @@
 import React from 'react';
 import { useDisclosure } from '@mantine/hooks';
-import { Modal, Group, Button } from '@mantine/core';
+import { Modal, Button } from '@mantine/core';
 import { MantineDemo } from '@mantine/ds';
 import { AuthenticationForm } from '../../../shared/AuthenticationForm/AuthenticationForm';
 
 const code = `
 import { useDisclosure } from '@mantine/hooks';
-import { Modal, Group, Button } from '@mantine/core';
+import { Modal, Button } from '@mantine/core';
 
 function Demo() {
   const [opened, { open, close }] = useDisclosure(false);
@@ -17,9 +17,7 @@ function Demo() {
         {/* Modal content */}
       </Modal>
 
-      <Group position="center">
-        <Button onClick={open}>Open centered Modal</Button>
-      </Group>
+      <Button onClick={open}>Open centered Modal</Button>
     </>
   );
 }
@@ -31,18 +29,17 @@ function Demo() {
   return (
     <>
       <Modal opened={opened} onClose={close} title="Authentication" centered>
-        <AuthenticationForm noShadow noPadding />
+        <AuthenticationForm noPadding noShadow />
       </Modal>
 
-      <Group position="center">
-        <Button onClick={open}>Open centered Modal</Button>
-      </Group>
+      <Button onClick={open}>Open centered Modal</Button>
     </>
   );
 }
 
 export const centered: MantineDemo = {
-  type: 'demo',
+  type: 'code',
   code,
+  centered: true,
   component: Demo,
 };

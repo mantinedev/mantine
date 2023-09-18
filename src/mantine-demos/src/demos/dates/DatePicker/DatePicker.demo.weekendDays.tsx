@@ -1,31 +1,22 @@
 import React from 'react';
 import { MantineDemo } from '@mantine/ds';
-import { Group } from '@mantine/core';
 import { DatePicker } from '@mantine/dates';
 
 const code = `
-import { Group } from '@mantine/core';
 import { DatePicker } from '@mantine/dates';
 
 function Demo() {
-  return (
-    <Group position="center">
-      <DatePicker weekendDays={[1, 2]} />
-    </Group>
-  );
+  return <DatePicker weekendDays={[1, 2]} />;
 }
 `;
 
 function Demo() {
-  return (
-    <Group position="center">
-      <DatePicker weekendDays={[1, 2]} />
-    </Group>
-  );
+  return <DatePicker weekendDays={[1, 2]} />;
 }
 
 export const weekendDays: MantineDemo = {
-  type: 'demo',
+  type: 'code',
+  centered: true,
   component: Demo,
   code,
 };

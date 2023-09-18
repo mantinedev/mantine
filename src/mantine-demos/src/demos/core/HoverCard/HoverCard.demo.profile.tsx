@@ -7,7 +7,7 @@ import { HoverCard, Avatar, Text, Group, Anchor, Stack } from '@mantine/core';
 
 function Demo() {
   return (
-    <Group position="center">
+    <Group justify="center">
       <HoverCard width={320} shadow="md" withArrow openDelay={200} closeDelay={400}>
         <HoverCard.Target>
           <Avatar src="https://avatars.githubusercontent.com/u/79146003?s=200&v=4" radius="xl" />
@@ -15,15 +15,15 @@ function Demo() {
         <HoverCard.Dropdown>
           <Group>
             <Avatar src="https://avatars.githubusercontent.com/u/79146003?s=200&v=4" radius="xl" />
-            <Stack spacing={5}>
-              <Text size="sm" weight={700} sx={{ lineHeight: 1 }}>
+            <Stack gap={5}>
+              <Text size="sm" fw={700} style={{ lineHeight: 1 }}>
                 Mantine
               </Text>
               <Anchor
                 href="https://twitter.com/mantinedev"
-                color="dimmed"
+                c="dimmed"
                 size="xs"
-                sx={{ lineHeight: 1 }}
+                style={{ lineHeight: 1 }}
               >
                 @mantinedev
               </Anchor>
@@ -35,7 +35,7 @@ function Demo() {
             and developer experience
           </Text>
 
-          <Group mt="md" spacing="xl">
+          <Group mt="md" gap="xl">
             <Text size="sm">
               <b>0</b> Following
             </Text>
@@ -57,15 +57,15 @@ export function HoverCardHomePageDemo({ children }: { children: React.ReactNode 
       <HoverCard.Dropdown>
         <Group>
           <Avatar src="https://avatars.githubusercontent.com/u/79146003?s=200&v=4" radius="xl" />
-          <Stack spacing={5}>
-            <Text size="sm" weight={700} sx={{ lineHeight: 1 }}>
+          <Stack gap={5}>
+            <Text size="sm" fw={700} style={{ lineHeight: 1 }}>
               Mantine
             </Text>
             <Anchor
               href="https://twitter.com/mantinedev"
-              color="dimmed"
+              c="dimmed"
               size="xs"
-              sx={{ lineHeight: 1 }}
+              style={{ lineHeight: 1 }}
             >
               @mantinedev
             </Anchor>
@@ -77,7 +77,7 @@ export function HoverCardHomePageDemo({ children }: { children: React.ReactNode 
           developer experience
         </Text>
 
-        <Group mt="md" spacing="xl">
+        <Group mt="md" gap="xl">
           <Text size="sm">
             <b>0</b> Following
           </Text>
@@ -92,7 +92,7 @@ export function HoverCardHomePageDemo({ children }: { children: React.ReactNode 
 
 function Demo() {
   return (
-    <Group position="center">
+    <Group justify="center">
       <HoverCardHomePageDemo>
         <Avatar src="https://avatars.githubusercontent.com/u/79146003?s=200&v=4" radius="xl" />
       </HoverCardHomePageDemo>
@@ -101,7 +101,7 @@ function Demo() {
 }
 
 export const profile: MantineDemo = {
-  type: 'demo',
+  type: 'code',
   component: Demo,
   code,
 };

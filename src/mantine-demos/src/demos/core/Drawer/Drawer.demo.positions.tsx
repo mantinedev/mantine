@@ -22,7 +22,7 @@ function Demo() {
         Press escape to close the drawer
       </Drawer>
 
-      <Group position="center">
+      <Group justify="center">
         <Button variant="outline" onClick={() => open('left')}>
           Left
         </Button>
@@ -41,6 +41,6 @@ function Demo() {
 }
 
 export const positions: MantineDemo = {
-  type: 'demo',
+  type: 'code',
   component: Demo,
 };

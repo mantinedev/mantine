@@ -1,66 +1,43 @@
 import React from 'react';
-import { useMantineTheme } from '@mantine/core';
-import { MantineDemo } from './types';
-import CodeDemo from './CodeDemo/CodeDemo';
-import Configurator from './Configurator/Configurator';
+import { CodeDemo, CodeDemoProps } from '../CodeDemo/CodeDemo';
+import { ConfiguratorDemo, ConfiguratorDemoProps } from '../ConfiguratorDemo/ConfiguratorDemo';
+import { StylesApiDemo, StylesApiDemoProps } from '../StylesApiDemo/StylesApiDemo';
 
-export { CodeDemo, Configurator };
+interface DemoComponent {
+  component: React.FC<any>;
+}
 
-type ConfiguratorProps = React.ComponentProps<typeof Configurator>;
-type CodeDemoProps = React.ComponentProps<typeof CodeDemo>;
+export type MantineDemo =
+  | ({ type: 'code' } & DemoComponent & CodeDemoProps)
+  | ({ type: 'configurator' } & DemoComponent & ConfiguratorDemoProps)
+  | ({ type: 'styles-api' } & DemoComponent & StylesApiDemoProps);
 
 interface DemoProps {
-  toggle?: boolean;
-  demoProps?: CodeDemoProps;
-  configuratorProps?: Omit<ConfiguratorProps, 'props' | 'codeTemplate' | 'component'>;
   data: MantineDemo;
 }
 
-export function Demo({ data, demoProps, configuratorProps }: DemoProps) {
-  const theme = useMantineTheme();
-  const background =
-    typeof data.background === 'function' ? data.background(theme.colorScheme) : undefined;
-
-  if (data.type === 'demo') {
-    return (
-      <CodeDemo
-        language="tsx"
-        code={data.code || null}
-        demoBackground={background}
-        {...data.demoProps}
-        {...demoProps}
-      >
-        {data.wrapper ? (
-          <data.wrapper>
-            <data.component />
-          </data.wrapper>
-        ) : (
-          <data.component />
-        )}
-      </CodeDemo>
-    );
+export function Demo({ data }: DemoProps) {
+  const { component: Component } = data;
+  switch (data.type) {
+    case 'code':
+      return (
+        <CodeDemo {...data}>
+          <Component />
+        </CodeDemo>
+      );
+    case 'configurator':
+      return (
+        <ConfiguratorDemo {...data}>
+          <Component />
+        </ConfiguratorDemo>
+      );
+    case 'styles-api':
+      return (
+        <StylesApiDemo {...data}>
+          <Component />
+        </StylesApiDemo>
+      );
+    default:
+      return null;
   }
-
-  if (data.type === 'configurator') {
-    return (
-      <Configurator
-        component={(props: any) =>
-          data.wrapper ? (
-            <data.wrapper>
-              <data.component {...props} />
-            </data.wrapper>
-          ) : (
-            <data.component {...props} />
-          )
-        }
-        codeTemplate={data.codeTemplate}
-        props={data.configurator}
-        previewBackground={background}
-        {...data.configuratorProps}
-        {...configuratorProps}
-      />
-    );
-  }
-
-  return null;
 }

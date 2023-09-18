@@ -31,8 +31,6 @@ function Demo() {
 
   return (
     <TextInput
-      maw={320}
-      mx="auto"
       label="TextInput with tooltip"
       description="Tooltip will be relative to the input"
       placeholder="Focus me to see tooltip"
@@ -48,7 +46,9 @@ function Demo() {
 }
 
 export const inputContainer: MantineDemo = {
-  type: 'demo',
+  type: 'code',
+  centered: true,
+  maxWidth: 400,
   component: Demo,
   code,
 };

@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import { IconRefresh } from '@tabler/icons-react';
 import { MantineDemo } from '@mantine/ds';
-import { ActionIcon, ColorInput } from '@mantine/core';
+import { ActionIcon, ColorInput, rem } from '@mantine/core';
 
 const code = `
 import { useState } from 'react';
 import { IconRefresh } from '@tabler/icons-react';
-import { ActionIcon, ColorInput } from '@mantine/core';
+import { ActionIcon, ColorInput, rem } from '@mantine/core';
 
 const randomColor = () => \`#\${Math.floor(Math.random() * 16777215).toString(16)}\`;
 
@@ -20,7 +20,7 @@ function Demo() {
       onChange={onChange}
       rightSection={
         <ActionIcon onClick={() => onChange(randomColor())}>
-          <IconRefresh size="1rem" />
+          <IconRefresh style={{ width: rem(16), height: rem(16) }} />
         </ActionIcon>
       }
     />
@@ -42,7 +42,7 @@ function Demo() {
       onChange={onChange}
       rightSection={
         <ActionIcon onClick={() => onChange(randomColor())}>
-          <IconRefresh size="1rem" />
+          <IconRefresh style={{ width: rem(16), height: rem(16) }} />
         </ActionIcon>
       }
     />
@@ -50,7 +50,7 @@ function Demo() {
 }
 
 export const rightSection: MantineDemo = {
-  type: 'demo',
+  type: 'code',
   component: Demo,
   code,
 };

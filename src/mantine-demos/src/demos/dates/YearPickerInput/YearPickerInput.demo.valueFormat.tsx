@@ -7,33 +7,21 @@ import { YearPickerInput } from '@mantine/dates';
 
 function Demo() {
   return (
-    <YearPickerInput
-      valueFormat="YY"
-      type="multiple"
-      label="Pick year"
-      placeholder="Pick year"
-      mx="auto"
-      maw={400}
-    />
+    <YearPickerInput valueFormat="YY" type="multiple" label="Pick year" placeholder="Pick year" />
   );
 }
 `;
 
 function Demo() {
   return (
-    <YearPickerInput
-      valueFormat="YY"
-      type="multiple"
-      label="Pick year"
-      placeholder="Pick year"
-      mx="auto"
-      maw={400}
-    />
+    <YearPickerInput valueFormat="YY" type="multiple" label="Pick year" placeholder="Pick year" />
   );
 }
 
 export const valueFormat: MantineDemo = {
-  type: 'demo',
+  type: 'code',
+  centered: true,
+  maxWidth: 400,
   component: Demo,
   code,
 };

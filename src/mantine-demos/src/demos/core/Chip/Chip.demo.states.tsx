@@ -6,7 +6,7 @@ function Demo() {
   return (
     <>
       <Chip.Group multiple value={['checked', 'checked-disabled']}>
-        <Group position="center">
+        <Group justify="center">
           <Chip value="default" variant="outline">
             Outline default
           </Chip>
@@ -20,7 +20,7 @@ function Demo() {
       </Chip.Group>
 
       <Chip.Group multiple value={['checked', 'checked-disabled']}>
-        <Group position="center" mt="md">
+        <Group justify="center" mt="md">
           <Chip value="default" variant="light">
             Light default
           </Chip>
@@ -34,7 +34,7 @@ function Demo() {
       </Chip.Group>
 
       <Chip.Group multiple value={['checked', 'checked-disabled']}>
-        <Group position="center" mt="md">
+        <Group justify="center" mt="md">
           <Chip value="default" variant="filled">
             Filled default
           </Chip>
@@ -51,6 +51,6 @@ function Demo() {
 }
 
 export const states: MantineDemo = {
-  type: 'demo',
+  type: 'code',
   component: Demo,
 };

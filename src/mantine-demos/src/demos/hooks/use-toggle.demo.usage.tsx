@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Group } from '@mantine/core';
+import { Button } from '@mantine/core';
 import { MantineDemo } from '@mantine/ds';
 import { useToggle, upperFirst } from '@mantine/hooks';
 
@@ -22,16 +22,15 @@ function Demo() {
   const [value, toggle] = useToggle(['blue', 'orange', 'cyan', 'teal']);
 
   return (
-    <Group position="center">
-      <Button color={value} onClick={() => toggle()}>
-        {upperFirst(value)}
-      </Button>
-    </Group>
+    <Button color={value} onClick={() => toggle()}>
+      {upperFirst(value)}
+    </Button>
   );
 }
 
 export const useToggleDemo: MantineDemo = {
-  type: 'demo',
+  type: 'code',
   code,
   component: Demo,
+  centered: true,
 };

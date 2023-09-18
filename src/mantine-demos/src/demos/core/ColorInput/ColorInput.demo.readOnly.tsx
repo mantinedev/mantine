@@ -23,7 +23,7 @@ function Demo() {
 }
 
 export const readOnly: MantineDemo = {
-  type: 'demo',
+  type: 'code',
   component: Demo,
   code,
 };

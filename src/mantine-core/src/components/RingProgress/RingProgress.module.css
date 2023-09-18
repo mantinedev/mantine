@@ -1,0 +1,35 @@
+.root {
+  position: relative;
+  width: var(--rp-size);
+  height: var(--rp-size);
+  min-width: var(--rp-size);
+  min-height: var(--rp-size);
+}
+
+.svg {
+  width: var(--rp-size);
+  height: var(--rp-size);
+  min-width: var(--rp-size);
+  min-height: var(--rp-size);
+  transform: rotate(-90deg);
+}
+
+.curve {
+  stroke: var(--curve-color, var(--_curve-root-color));
+
+  @mixin light {
+    --_curve-root-color: var(--mantine-color-gray-2);
+  }
+
+  @mixin dark {
+    --_curve-root-color: var(--mantine-color-dark-4);
+  }
+}
+
+.label {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  right: var(--rp-label-offset);
+  left: var(--rp-label-offset);
+}

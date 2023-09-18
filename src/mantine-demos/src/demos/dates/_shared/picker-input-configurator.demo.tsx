@@ -1,13 +1,14 @@
 import React from 'react';
 import { MantineDemo } from '@mantine/ds';
 
-const getCodeTemplate = (component: string) => (props: string) =>
+const getCodeTemplate = (component: string) =>
   `import { ${component} } from '@mantine/dates';
+
 
 function Demo() {
   return (
     <${component}
-     ${props}
+      {{props}}
     />
   );
 }
@@ -17,27 +18,31 @@ export function getPickerInputConfiguratorDemo(Component: React.FC<any>): Mantin
   return {
     type: 'configurator',
     component: Component,
-    codeTemplate: getCodeTemplate(Component.displayName.replace('@mantine/dates/', '')),
-    configuratorProps: { multiline: 3 },
-    configurator: [
-      { name: 'placeholder', type: 'string', initialValue: 'Pick date' },
+    centered: true,
+    maxWidth: 400,
+    code: getCodeTemplate(Component.displayName!.replace('@mantine/dates/', '')),
+    controls: [
+      { prop: 'placeholder', type: 'string', initialValue: 'Pick date', libraryValue: '__' },
       {
-        name: 'label',
+        prop: 'label',
         type: 'string',
         initialValue: 'Pick date',
+        libraryValue: '',
       },
       {
-        name: 'description',
+        prop: 'description',
         type: 'string',
         initialValue: '',
+        libraryValue: '',
       },
       {
-        name: 'error',
+        prop: 'error',
         type: 'string',
         initialValue: '',
+        libraryValue: '',
       },
       {
-        name: 'variant',
+        prop: 'variant',
         type: 'select',
         data: [
           { label: 'default', value: 'default' },
@@ -45,16 +50,16 @@ export function getPickerInputConfiguratorDemo(Component: React.FC<any>): Mantin
           { label: 'unstyled', value: 'unstyled' },
         ],
         initialValue: 'default',
-        defaultValue: 'default',
+        libraryValue: 'default',
       },
-      { name: 'radius', type: 'size', initialValue: 'sm', defaultValue: 'sm' },
-      { name: 'size', type: 'size', initialValue: 'sm', defaultValue: 'sm' },
-      { name: 'disabled', type: 'boolean', initialValue: false, defaultValue: false },
+      { prop: 'radius', type: 'size', initialValue: 'sm', libraryValue: 'sm' },
+      { prop: 'size', type: 'size', initialValue: 'sm', libraryValue: 'sm' },
+      { prop: 'disabled', type: 'boolean', initialValue: false, libraryValue: false },
       {
-        name: 'withAsterisk',
+        prop: 'withAsterisk',
         type: 'boolean',
         initialValue: true,
-        defaultValue: false,
+        libraryValue: false,
       },
     ],
   };

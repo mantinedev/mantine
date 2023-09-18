@@ -133,7 +133,7 @@ describe('@mantine/hooks/use-list-state', () => {
 
     act(() => {
       const [, handlers] = hook.result.current;
-      handlers.apply((item, index) => ({ ...item, age: index + item.age }));
+      handlers.apply((item, index) => ({ ...item, age: index! + item.age }));
     });
 
     const [state] = hook.result.current;
