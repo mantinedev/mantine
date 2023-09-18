@@ -13,7 +13,7 @@
 - [Documentation](https://mantine.dev/)
 - [Contribute](https://mantine.dev/contribute)
 - [Ask question or give feedback](https://github.com/mantinedev/mantine/discussions)
-- [Changelog](https://mantine.dev/changelog/7-0-0)
+- [Changelog](https://mantine.dev/changelog/previous-versions)
 - [Follow on Twitter](https://twitter.com/mantinedev)
 - [Join Discord community](https://discord.gg/wbH82zuWMN)
 
