@@ -39,6 +39,3 @@ storybook-static
 docs/components/___test.internal.tsx
 src/*/styles.css
 .stylelintcache
-v7-app-dir
-v7-vite
-v7-pages-dir

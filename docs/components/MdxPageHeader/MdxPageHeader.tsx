@@ -7,7 +7,7 @@ import { LinkItem } from './LinkItem/LinkItem';
 import classes from './MdxPageHeader.module.css';
 import { ImportStatement } from './ImportStatement/ImportStatement';
 
-const REPO_BASE = 'https://github.com/rtivital/mantine-v7/blob/master';
+const REPO_BASE = 'https://github.com/rtivital/mantine/blob/master';
 const DOCS_BASE = `${REPO_BASE}/docs/pages`;
 const SOURCE_BASE = `${REPO_BASE}/src`;
 
