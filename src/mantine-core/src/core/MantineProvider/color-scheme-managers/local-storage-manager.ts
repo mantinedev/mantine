@@ -8,7 +8,7 @@ export interface LocalStorageColorSchemeManagerOptions {
 }
 
 export function localStorageColorSchemeManager({
-  key = 'mantine-color-scheme',
+  key = 'mantine-color-scheme-value',
 }: LocalStorageColorSchemeManagerOptions = {}): MantineColorSchemeManager {
   let handleStorageEvent: (event: StorageEvent) => void;
 
