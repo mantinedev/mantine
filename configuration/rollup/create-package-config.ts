@@ -97,6 +97,8 @@ export default async function createPackageConfig(config: PkgConfigInput): Promi
   if (config.format === 'es') {
     output.dir = path.resolve(config.basePath, 'esm');
     output.preserveModules = true;
+    // Output ESM as .mjs files
+    output.entryFileNames = '[name].mjs';
   }
 
   if (config.format === 'cjs') {

@@ -3,13 +3,19 @@
   "description": "Mantine components styles api descriptions",
   "private": true,
   "version": "7.0.0",
+  "main": "./cjs/index.js",
   "types": "./lib/index.d.ts",
-  "module": "./esm/index.js",
+  "module": "./esm/index.mjs",
   "exports": {
     ".": {
-      "import": "./esm/index.js",
-      "require": "./cjs/index.js",
-      "types": "./lib/index.d.ts"
+      "import": {
+        "types": "./lib/index.d.mts",
+        "default": "./esm/index.mjs"
+      },
+      "require": {
+        "types": "./lib/index.d.ts",
+        "default": "./cjs/index.js"
+      }
     }
   },
   "license": "MIT",
