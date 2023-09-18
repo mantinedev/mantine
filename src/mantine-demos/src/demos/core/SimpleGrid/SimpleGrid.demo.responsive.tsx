@@ -1,7 +1,7 @@
 import React from 'react';
 import { MantineDemo } from '@mantine/ds';
 import { SimpleGrid } from '@mantine/core';
-import { defaultItems } from './_item';
+import { defaultItems } from './_demo-item';
 
 const code = `
 import { SimpleGrid } from '@mantine/core';
