@@ -201,7 +201,7 @@ export type DefaultMantineColor =
   | 'teal'
   | (string & {});
 
-export type MantineThemeColorsOverride = {};
+export interface MantineThemeColorsOverride {}
 
 export type MantineThemeColors = MantineThemeColorsOverride extends {
   colors: Record<infer CustomColors, MantineColorsTuple>;
