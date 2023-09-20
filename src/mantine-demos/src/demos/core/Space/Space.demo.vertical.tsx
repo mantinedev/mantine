@@ -19,7 +19,7 @@ function Demo() {
   return (
     <div style={{ display: 'flex' }}>
       <Text>First line</Text>
-      <Space{{props}}
+      <Space{{props}} />
       <Text>Second line</Text>
     </div>
   );
