@@ -12,6 +12,7 @@ export const SegmentedControlStylesApi: StylesApiData<SegmentedControlFactory> =
 
   vars: {
     root: {
+      '--sc-hover': 'Controls `background-color` of `indicator` when hovered',
       '--sc-color': 'Control `background-color` of `indicator`',
       '--sc-font-size': 'Controls `font-size` of labels',
       '--sc-padding': 'Controls `padding` of control',

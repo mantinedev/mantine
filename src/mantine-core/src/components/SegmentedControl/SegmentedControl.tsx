@@ -28,6 +28,7 @@ export type SegmentedControlStylesNames = 'root' | 'input' | 'label' | 'control'
 export type SegmentedControlCssVariables = {
   root:
     | '--sc-radius'
+    | '--sc-hover'
     | '--sc-color'
     | '--sc-font-size'
     | '--sc-padding'
@@ -102,6 +103,7 @@ const varsResolver = createVarsResolver<SegmentedControlFactory>(
   (theme, { radius, color, transitionDuration, size, transitionTimingFunction }) => ({
     root: {
       '--sc-radius': radius === undefined ? undefined : getRadius(radius),
+      '--sc-hover': color ? `var(--mantine-color-${color}-outline-hover)` : undefined,
       '--sc-color': color ? getThemeColor(color, theme) : undefined,
       '--sc-shadow': color ? undefined : 'var(--mantine-shadow-xs)',
       '--sc-transition-duration':

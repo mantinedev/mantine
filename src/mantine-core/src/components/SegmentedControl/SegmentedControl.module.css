@@ -225,3 +225,17 @@
     }
   }
 }
+
+.control:not([data-disabled]):not([data-active]) {
+  background-color: var(--_bg);
+
+  @mixin hover {
+    @mixin light {
+      --_bg: var(--sc-hover);
+    }
+
+    @mixin dark {
+      --_bg: var(--sc-hover);
+    }
+  }
+}
