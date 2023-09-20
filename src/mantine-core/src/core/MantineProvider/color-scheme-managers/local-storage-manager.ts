@@ -1,4 +1,3 @@
-import type { MantineColorScheme } from '../theme.types';
 import type { MantineColorSchemeManager } from './types';
 import { isMantineColorScheme } from './is-mantine-color-scheme';
 
@@ -19,7 +18,8 @@ export function localStorageColorSchemeManager({
       }
 
       try {
-        return (window.localStorage.getItem(key) as MantineColorScheme) || defaultValue;
+        const storedColorScheme = window.localStorage.getItem(key);
+        return isMantineColorScheme(storedColorScheme) ? storedColorScheme : defaultValue;
       } catch {
         return defaultValue;
       }
