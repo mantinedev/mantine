@@ -63,8 +63,10 @@ To open files browser from outside of component use `openRef` prop to get functi
 
 ## Enable child pointer event
 
-By default, Dropzone disables pointer events on its children for dragging events to work. So when we set `activateOnClick` to `false`,
-clicking on any children inside Dropzone will do nothing. However, You can set style `pointerEvents: 'all'` to make children events to work:
+By default, Dropzone disables pointer events on its children for dragging events to work. When `activateOnClick={false}`,
+clicking on any children inside Dropzone will not do anything.
+However, you can set style `pointerEvents: 'all'` to make children clickable.
+Note that you need to set these styles only on interactive elements, such as buttons or links.
 
 <Demo data={DropzoneDemos.enableChildPointerEvent} />
 

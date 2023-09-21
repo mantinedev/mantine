@@ -12,14 +12,11 @@ function Demo() {
   const openRef = useRef<() => void>(null);
 
   return (
-    <Dropzone
-      openRef={openRef}
-      onDrop={() => {}}
-      activateOnClick={false}
-      styles={{ inner: { pointerEvents: 'all' } }}
-    >
+    <Dropzone openRef={openRef} onDrop={() => {}} activateOnClick={false}>
       <Group justify="center">
-        <Button onClick={() => openRef.current?.()}>Select files</Button>
+        <Button onClick={() => openRef.current?.()} style={{ pointerEvents: 'all' }}>
+          Select files
+        </Button>
       </Group>
     </Dropzone>
   );
@@ -30,14 +27,11 @@ function Demo() {
   const openRef = useRef<() => void>(null);
 
   return (
-    <Dropzone
-      openRef={openRef}
-      onDrop={() => {}}
-      activateOnClick={false}
-      styles={{ inner: { pointerEvents: 'all' } }}
-    >
+    <Dropzone openRef={openRef} onDrop={() => {}} activateOnClick={false}>
       <Group justify="center">
-        <Button onClick={() => openRef.current?.()}>Select files</Button>
+        <Button onClick={() => openRef.current?.()} style={{ pointerEvents: 'all' }}>
+          Select files
+        </Button>
       </Group>
     </Dropzone>
   );
