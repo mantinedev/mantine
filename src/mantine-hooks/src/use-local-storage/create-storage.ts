@@ -116,7 +116,7 @@ export function createStorage<T>(type: StorageType, hookName: string) {
     }, []);
 
     return [
-      value === undefined ? defaultValue : value,
+      value === undefined ? (defaultValue as T) : value,
       setStorageValue,
       removeStorageValue,
     ] as const;
