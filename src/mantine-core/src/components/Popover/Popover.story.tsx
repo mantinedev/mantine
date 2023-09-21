@@ -121,6 +121,28 @@ export function Controlled() {
   );
 }
 
+export function KeepMounted() {
+  const [opened, setState] = useState(false);
+
+  return (
+    <div style={{ padding: 100, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+      <Popover opened={opened} onChange={setState} keepMounted>
+        <Popover.Target>
+          <button type="button" onClick={() => setState((c) => !c)}>
+            Toggle popover
+          </button>
+        </Popover.Target>
+
+        <Popover.Dropdown>
+          <button type="button" onClick={() => setState(false)}>
+            Close
+          </button>
+        </Popover.Dropdown>
+      </Popover>
+    </div>
+  );
+}
+
 export function SameWidth() {
   const [opened, setState] = useState(false);
 

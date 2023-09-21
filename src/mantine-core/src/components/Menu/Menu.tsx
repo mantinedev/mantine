@@ -141,7 +141,9 @@ export function Menu(_props: MenuProps) {
     !_opened && onOpen?.();
   };
 
-  const toggleDropdown = () => (_opened ? close() : open());
+  const toggleDropdown = () => {
+    _opened ? close() : open();
+  };
 
   const { openDropdown, closeDropdown } = useDelayedHover({ open, close, closeDelay, openDelay });
 

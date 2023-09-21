@@ -58,8 +58,10 @@ export function usePopover(options: UsePopoverOptions) {
   });
 
   const onClose = () => {
-    options.onClose?.();
-    setOpened(false);
+    if (_opened) {
+      options.onClose?.();
+      setOpened(false);
+    }
   };
 
   const onToggle = () => {
