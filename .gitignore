@@ -39,3 +39,4 @@ storybook-static
 docs/components/___test.internal.tsx
 src/*/styles.css
 .stylelintcache
+____test.*

@@ -57,6 +57,34 @@ By default, `Menu.Item` renders as button element, to change that set `component
 
 <Demo data={MenuDemos.component} />
 
+Note that the component you pass to `component` prop should allow spreading props to its root element:
+
+```tsx
+import { Menu } from '@mantine/core';
+
+// ❌ Will not work with Menu.Item
+function IncorrectItem() {
+  return <button type="button">My custom Menu item</button>;
+}
+
+// ✅ Will work correctly with Menu.Item
+function CorrectItem(props: React.ComponentPropsWithoutRef<'button'>) {
+  return (
+    <button type="button" {...props}>
+      My custom Menu item
+    </button>
+  );
+}
+
+function Demo() {
+  // ❌ Will not work
+  const incorrect = <Menu.Item component={IncorrectItem} />;
+
+  // ✅ Will work
+  const correct = <Menu.Item component={CorrectItem} />;
+}
+```
+
 ## Custom component as target
 
 <Demo data={MenuDemos.customControl} />
