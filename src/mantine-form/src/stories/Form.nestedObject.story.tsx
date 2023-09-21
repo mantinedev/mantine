@@ -10,10 +10,23 @@ export function NestedObject() {
     initialValues: {
       user: { name: '' },
       terms: false,
+      users: [
+        {
+          name: 'Dan Abramov',
+          key: 'randomId()',
+          tags: [{ tag: 'React', key: 'randomId()' }],
+        },
+      ],
     },
     validate: {
       user: {
         name: (value) => (value.length === 0 ? 'Required' : null),
+      },
+
+      users: {
+        tags: {
+          tag: (value, _values) => (_values ? 'Required' : null),
+        },
       },
     },
   });

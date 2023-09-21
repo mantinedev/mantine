@@ -25,8 +25,8 @@ export type FormRule<Value, Values> = NonNullable<Value> extends Array<infer Lis
   ?
       | Partial<{
           [Key in keyof ListValue]: ListValue[Key] extends Array<infer NestedListItem>
-            ? FormRulesRecord<NestedListItem> | Rule<ListValue[Key], Values>
-            : FormRulesRecord<ListValue[Key]> | Rule<ListValue[Key], Values>;
+            ? FormRulesRecord<NestedListItem, Values> | Rule<ListValue[Key], Values>
+            : FormRulesRecord<ListValue[Key], Values> | Rule<ListValue[Key], Values>;
         }>
       | Rule<Value, Values>
   : NonNullable<Value> extends Record<string, any>
