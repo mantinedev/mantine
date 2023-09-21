@@ -2,6 +2,7 @@ import React from 'react';
 import { useUncontrolled } from '@mantine/hooks';
 import { factory, useProps, MantineSize, Factory } from '../../../core';
 import { InputWrapperStylesNames, Input, InputWrapperProps } from '../../Input';
+import { InputsGroupFieldset } from '../../InputsGroupFieldset';
 import { SwitchGroupProvider } from '../SwitchGroup.context';
 
 export type SwitchGroupStylesNames = InputWrapperStylesNames;
@@ -67,7 +68,7 @@ export const SwitchGroup = factory<SwitchGroupFactory>((props, ref) => {
         labelElement="div"
         __staticSelector="SwitchGroup"
       >
-        {children}
+        <InputsGroupFieldset role="group">{children}</InputsGroupFieldset>
       </Input.Wrapper>
     </SwitchGroupProvider>
   );

@@ -2,6 +2,7 @@ import React from 'react';
 import { useId, useUncontrolled } from '@mantine/hooks';
 import { factory, useProps, MantineSize, Factory } from '../../../core';
 import { InputWrapperStylesNames, Input, InputWrapperProps } from '../../Input';
+import { InputsGroupFieldset } from '../../InputsGroupFieldset';
 import { RadioGroupProvider } from '../RadioGroup.context';
 
 export type RadioGroupStylesNames = InputWrapperStylesNames;
@@ -66,7 +67,7 @@ export const RadioGroup = factory<RadioGroupFactory>((props, ref) => {
         labelElement="div"
         __staticSelector="RadioGroup"
       >
-        {children}
+        <InputsGroupFieldset role="radiogroup">{children}</InputsGroupFieldset>
       </Input.Wrapper>
     </RadioGroupProvider>
   );

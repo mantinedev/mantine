@@ -2,6 +2,7 @@ import React from 'react';
 import { useUncontrolled } from '@mantine/hooks';
 import { factory, useProps, MantineSize, Factory } from '../../../core';
 import { InputWrapperStylesNames, Input, InputWrapperProps } from '../../Input';
+import { InputsGroupFieldset } from '../../InputsGroupFieldset';
 import { CheckboxGroupProvider } from '../CheckboxGroup.context';
 
 export type CheckboxGroupStylesNames = InputWrapperStylesNames;
@@ -67,7 +68,7 @@ export const CheckboxGroup = factory<CheckboxGroupFactory>((props, ref) => {
         labelElement="div"
         __staticSelector="CheckboxGroup"
       >
-        {children}
+        <InputsGroupFieldset role="group">{children}</InputsGroupFieldset>
       </Input.Wrapper>
     </CheckboxGroupProvider>
   );

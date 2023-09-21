@@ -66,6 +66,7 @@ export function SwitchGroup() {
         defaultValue={['one', 'three']}
         m={4}
         label="Switch Group"
+        description="Some description"
         classNames={{ label: 'test-label' }}
       >
         <Switch value="one" label="one" />

@@ -31,11 +31,6 @@ export function RadioGroup() {
         <Radio label="Angular" value="ng" />
         <Radio label="Svelte" value="sv" />
       </Radio.Group>
-      <Radio.Group>
-        <Radio label="React" value="react" />
-        <Radio label="Angular" value="ng" />
-        <Radio label="Svelte" value="sv" />
-      </Radio.Group>
     </div>
   );
 }

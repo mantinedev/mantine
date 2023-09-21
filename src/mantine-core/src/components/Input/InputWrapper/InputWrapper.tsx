@@ -181,12 +181,13 @@ export const InputWrapper = factory<InputWrapperFactory>((_props, ref) => {
   const hasDescription = !!description;
   const _describedBy = `${hasError ? errorId : ''} ${hasDescription ? descriptionId : ''}`;
   const describedBy = _describedBy.trim().length > 0 ? _describedBy.trim() : undefined;
+  const labelId = labelProps?.id || `${idBase}-label`;
 
   const _label = label && (
     <InputLabel
       key="label"
       labelElement={labelElement}
-      id={`${idBase}-label`}
+      id={labelId}
       htmlFor={inputId}
       required={isRequired}
       {...sharedProps}
@@ -243,6 +244,7 @@ export const InputWrapper = factory<InputWrapperFactory>((_props, ref) => {
         getStyles,
         describedBy,
         inputId,
+        labelId,
         ...getInputOffsets(inputWrapperOrder!, { hasDescription, hasError }),
       }}
     >
