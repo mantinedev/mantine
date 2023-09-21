@@ -1,12 +1,12 @@
 import React, { forwardRef } from 'react';
 import cx from 'clsx';
 import { BoxProps, ElementProps } from '../../core';
-import { CloseButton, CloseButtonProps } from '../CloseButton';
+import { CloseButton, __CloseButtonProps } from '../CloseButton';
 import { useModalBaseContext } from './ModalBase.context';
 import classes from './ModalBase.module.css';
 
 export interface ModalBaseCloseButtonProps
-  extends CloseButtonProps,
+  extends __CloseButtonProps,
     BoxProps,
     ElementProps<'button'> {}
 

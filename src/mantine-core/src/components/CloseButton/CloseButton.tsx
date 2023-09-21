@@ -23,7 +23,7 @@ export type CloseButtonCssVariables = {
   root: '--cb-icon-size' | '--cb-size' | '--cb-radius';
 };
 
-export interface CloseButtonProps extends BoxProps, StylesApiProps<CloseButtonFactory> {
+export interface __CloseButtonProps {
   'data-disabled'?: boolean;
 
   /** Controls width and height of the button. Numbers are converted to rem. `'md'` by default. */
@@ -41,6 +41,11 @@ export interface CloseButtonProps extends BoxProps, StylesApiProps<CloseButtonFa
   /** Content rendered inside the button, for example `VisuallyHidden` with label for screen readers */
   children?: React.ReactNode;
 }
+
+export interface CloseButtonProps
+  extends __CloseButtonProps,
+    BoxProps,
+    StylesApiProps<CloseButtonFactory> {}
 
 export type CloseButtonFactory = PolymorphicFactory<{
   props: CloseButtonProps;
