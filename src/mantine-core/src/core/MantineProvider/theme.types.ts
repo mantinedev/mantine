@@ -156,7 +156,7 @@ export type MantineShadow = keyof MantineShadowsValues | (string & {});
 export type MantineLineHeight = keyof MantineLineHeightValues;
 
 export interface MantineThemeOther {
-  [key: string]: any
+  [key: string]: any;
 }
 
 export interface MantineGradient {
