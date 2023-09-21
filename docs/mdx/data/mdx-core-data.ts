@@ -1111,6 +1111,7 @@ export const MDX_CORE_DATA: Record<string, Frontmatter> = {
     props: ['NavLink'],
     styles: ['NavLink'],
     description: 'Navigation link',
+    polymorphic: true,
     import: "import { NavLink } from '@mantine/core';",
     source: 'mantine-core/src/components/NavLink/NavLink.tsx',
     docs: 'core/nav-link.mdx',
