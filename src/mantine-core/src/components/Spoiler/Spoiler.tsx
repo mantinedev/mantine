@@ -100,12 +100,7 @@ export const Spoiler = factory<SpoilerFactory>((_props, ref) => {
   const [show, setShowState] = useState(initialState);
   const { ref: contentRef, height } = useElementSize();
   const spoiler = maxHeight! < height;
-
   const spoilerMoreContent = show ? hideLabel : showLabel;
-
-  const s = {
-    maxHeight: !show ? rem(maxHeight) : height ? rem(height) : undefined,
-  };
 
   return (
     <Box {...getStyles('root')} id={_id} ref={ref} {...others}>
@@ -122,7 +117,14 @@ export const Spoiler = factory<SpoilerFactory>((_props, ref) => {
           {spoilerMoreContent}
         </Anchor>
       )}
-      <div {...getStyles('content', { style: s })} data-reduce-motion role="region" id={regionId}>
+      <div
+        {...getStyles('content', {
+          style: { maxHeight: !show ? rem(maxHeight) : height ? rem(height) : undefined },
+        })}
+        data-reduce-motion
+        role="region"
+        id={regionId}
+      >
         <div ref={contentRef}>{children}</div>
       </div>
     </Box>
