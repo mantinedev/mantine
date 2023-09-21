@@ -3,7 +3,7 @@ import { useWindowEvent } from '../use-window-event/use-window-event';
 
 export type StorageType = 'localStorage' | 'sessionStorage';
 
-export interface IStorageProperties<T> {
+export interface StorageProperties<T> {
   /** Storage key */
   key: string;
 
@@ -45,7 +45,7 @@ export function createStorage<T>(type: StorageType, hookName: string) {
     getInitialValueInEffect = true,
     deserialize = deserializeJSON,
     serialize = (value: T) => serializeJSON(value, hookName),
-  }: IStorageProperties<T>) {
+  }: StorageProperties<T>) {
     const readStorageValue = useCallback(
       (skipStorage?: boolean): T => {
         if (
