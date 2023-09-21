@@ -60,7 +60,7 @@ function BasicEditor({
 
   return (
     <div style={{ padding: 40 }}>
-      <RichTextEditor editor={editor} unstyled {...editorProps}>
+      <RichTextEditor editor={editor} {...editorProps}>
         <RichTextEditor.Toolbar {...toolbarProps}>
           <RichTextEditor.ControlsGroup>
             <RichTextEditor.Blockquote />

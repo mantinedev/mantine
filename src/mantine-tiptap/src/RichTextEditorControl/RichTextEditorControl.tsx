@@ -39,7 +39,17 @@ const defaultProps: Partial<RichTextEditorControlProps> = {
 
 export const RichTextEditorControl = factory<RichTextEditorControlFactory>((_props, ref) => {
   const props = useProps('RichTextEditorControl', defaultProps, _props);
-  const { classNames, className, style, styles, vars, interactive, active, ...others } = props;
+  const {
+    classNames,
+    className,
+    style,
+    styles,
+    vars,
+    interactive,
+    active,
+    onMouseDown,
+    ...others
+  } = props;
   const ctx = useRichTextEditorContext();
 
   return (
@@ -54,6 +64,10 @@ export const RichTextEditorControl = factory<RichTextEditorControlFactory>((_pro
       aria-hidden={!interactive || undefined}
       ref={ref}
       unstyled={ctx.unstyled}
+      onMouseDown={(event) => {
+        event.preventDefault();
+        onMouseDown?.(event);
+      }}
     />
   );
 });

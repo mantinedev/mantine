@@ -86,7 +86,7 @@ export function labelPosition() {
   );
 }
 
-export function WithDesciprtion() {
+export function WithDescription() {
   return (
     <Stack style={{ width: 300, padding: 20 }}>
       <Switch
