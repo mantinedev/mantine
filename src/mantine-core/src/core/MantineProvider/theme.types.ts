@@ -141,12 +141,12 @@ export interface HeadingStyle {
 }
 
 export type MantineSize = 'xs' | 'sm' | 'md' | 'lg' | 'xl';
-export type MantineBreakpointsValues = Record<MantineSize, string>;
-export type MantineFontSizesValues = Record<MantineSize, string>;
-export type MantineRadiusValues = Record<MantineSize, string>;
-export type MantineSpacingValues = Record<MantineSize, string>;
-export type MantineShadowsValues = Record<MantineSize, string>;
-export type MantineLineHeightValues = Record<MantineSize, string>;
+export type MantineBreakpointsValues = Record<MantineSize | (string & {}), string>;
+export type MantineFontSizesValues = Record<MantineSize | (string & {}), string>;
+export type MantineRadiusValues = Record<MantineSize | (string & {}), string>;
+export type MantineSpacingValues = Record<MantineSize | (string & {}), string>;
+export type MantineShadowsValues = Record<MantineSize | (string & {}), string>;
+export type MantineLineHeightValues = Record<MantineSize | (string & {}), string>;
 
 export type MantineBreakpoint = keyof MantineBreakpointsValues;
 export type MantineFontSize = keyof MantineFontSizesValues;
