@@ -157,7 +157,7 @@ export const DateTimePicker = factory<DateTimePickerFactory>((_props, ref) => {
       const timeDate = shiftTimezone('add', new Date(), ctx.getTimezone());
       timeDate.setHours(hours);
       timeDate.setMinutes(minutes);
-      seconds !== undefined && timeDate.setSeconds(seconds);
+      timeDate.setSeconds(seconds || 0);
       setValue(assignTime(timeDate, _value || shiftTimezone('add', new Date(), ctx.getTimezone())));
     }
   };
