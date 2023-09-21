@@ -86,7 +86,7 @@ interface MdxTargetComponentProps {
 export function MdxTargetComponent({ component }: MdxTargetComponentProps) {
   return (
     <>
-      <MdxTitle>{component}.Target children</MdxTitle>
+      <MdxTitle id="target-children">{`${component}.Target children`}</MdxTitle>
       <MdxParagraph>
         <MdxCode>{component}.Target</MdxCode> requires an element or a component as a single child –
         strings, fragments, numbers and multiple elements/components are not supported and{' '}
@@ -96,7 +96,7 @@ export function MdxTargetComponent({ component }: MdxTargetComponentProps) {
 
       <MdxCodeHighlight code={getTargetCode(component)} language="tsx" />
 
-      <MdxTitle>Required ref prop</MdxTitle>
+      <MdxTitle id="required-ref-prop">Required ref prop</MdxTitle>
       <MdxParagraph>
         Custom components that are rendered inside {component}.Target are required to support{' '}
         <MdxCode>ref</MdxCode> prop:
