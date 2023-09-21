@@ -1,12 +1,13 @@
-import React, { useId } from 'react';
+import { useId } from '@mantine/hooks';
+import React from 'react';
 import {
   Box,
   BoxProps,
   CompoundStylesApiProps,
-  factory,
   ElementProps,
-  useProps,
   Factory,
+  factory,
+  useProps,
 } from '../../../core';
 import { useComboboxContext } from '../Combobox.context';
 import classes from '../Combobox.module.css';
@@ -58,8 +59,7 @@ export const ComboboxOption = factory<ComboboxOptionFactory>((_props, ref) => {
   } = props;
 
   const ctx = useComboboxContext();
-  const uuid = useId();
-  const _id = id || uuid;
+  const _id = useId(id);
 
   return (
     <Box

@@ -1,25 +1,25 @@
-import React, { useEffect } from 'react';
 import { useId, useUncontrolled } from '@mantine/hooks';
+import React, { useEffect } from 'react';
 import {
   BoxProps,
+  ElementProps,
+  Factory,
   StylesApiProps,
   factory,
-  ElementProps,
   useProps,
-  Factory,
   useResolvedStylesApi,
 } from '../../core';
-import { InputBase } from '../InputBase';
-import { __InputStylesNames, __BaseInputProps, InputVariant } from '../Input';
 import {
   Combobox,
-  OptionsDropdown,
-  useCombobox,
-  getParsedComboboxData,
-  getOptionsLockup,
   ComboboxLikeProps,
   ComboboxLikeStylesNames,
+  OptionsDropdown,
+  getOptionsLockup,
+  getParsedComboboxData,
+  useCombobox,
 } from '../Combobox';
+import { InputVariant, __BaseInputProps, __InputStylesNames } from '../Input';
+import { InputBase } from '../InputBase';
 
 export type SelectStylesNames = __InputStylesNames | ComboboxLikeStylesNames;
 
@@ -124,7 +124,7 @@ export const Select = factory<SelectFactory>((_props, ref) => {
 
   const parsedData = getParsedComboboxData(data);
   const optionsLockup = getOptionsLockup(parsedData);
-  const _id = useId();
+  const _id = useId(id);
 
   const [_value, setValue] = useUncontrolled({
     value,
