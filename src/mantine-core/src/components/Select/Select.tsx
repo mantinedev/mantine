@@ -124,7 +124,7 @@ export const Select = factory<SelectFactory>((_props, ref) => {
 
   const parsedData = getParsedComboboxData(data);
   const optionsLockup = getOptionsLockup(parsedData);
-  const _id = useId();
+  const _id = useId(id);
 
   const [_value, setValue] = useUncontrolled({
     value,
