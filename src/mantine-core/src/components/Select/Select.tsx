@@ -171,7 +171,7 @@ export const Select = factory<SelectFactory>((_props, ref) => {
     if (typeof value === 'string' && optionsLockup[value]) {
       setSearch(optionsLockup[value].label);
     }
-  }, [value]);
+  }, [value, optionsLockup]);
 
   return (
     <>
