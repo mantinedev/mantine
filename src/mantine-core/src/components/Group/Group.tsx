@@ -61,6 +61,10 @@ export type GroupFactory = Factory<{
 
 const defaultProps: Partial<GroupProps> = {
   preventGrowOverflow: true,
+  gap: 'md',
+  align: 'center',
+  justify: 'flex-start',
+  wrap: 'wrap',
 };
 
 const varsResolver = createVarsResolver<GroupFactory>(
