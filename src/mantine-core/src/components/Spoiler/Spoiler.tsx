@@ -106,10 +106,6 @@ export const Spoiler = factory<SpoilerFactory>((_props, ref) => {
 
   return (
     <Box {...getStyles('root')} ref={ref} {...others}>
-      <div {...getStyles('content', { style: s })} data-reduce-motion>
-        <div ref={contentRef}>{children}</div>
-      </div>
-
       {spoiler && (
         <Anchor
           component="button"
@@ -120,6 +116,9 @@ export const Spoiler = factory<SpoilerFactory>((_props, ref) => {
           {spoilerMoreContent}
         </Anchor>
       )}
+      <div {...getStyles('content', { style: s })} data-reduce-motion>
+        <div ref={contentRef}>{children}</div>
+      </div>
     </Box>
   );
 });
