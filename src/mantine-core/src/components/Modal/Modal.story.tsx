@@ -1,6 +1,7 @@
 import React from 'react';
 import { useDisclosure } from '@mantine/hooks';
 import { Button } from '../Button';
+import { Tabs } from '../Tabs';
 import { ScrollArea } from '../ScrollArea';
 import { Modal } from './Modal';
 
@@ -30,6 +31,31 @@ export function Usage() {
       <Button onClick={open}>Open modal</Button>
       <Modal opened={opened} onClose={close} title="Just a Modal" zIndex={73812}>
         <input data-autofocus />
+      </Modal>
+    </div>
+  );
+}
+
+export function WithTabs() {
+  const [opened, { open, close }] = useDisclosure(true);
+  return (
+    <div style={{ padding: 40 }}>
+      <Button onClick={open}>Open modal</Button>
+      <Modal opened={opened} onClose={close} title="Just a Modal" zIndex={73812}>
+        <Tabs defaultValue="comment">
+          <Tabs.List>
+            <Tabs.Tab value="comment">Comment</Tabs.Tab>
+            <Tabs.Tab value="task">Task</Tabs.Tab>
+          </Tabs.List>
+
+          <Tabs.Panel value="comment">
+            <input />
+          </Tabs.Panel>
+
+          <Tabs.Panel value="task">
+            <input />
+          </Tabs.Panel>
+        </Tabs>
       </Modal>
     </div>
   );
