@@ -16,6 +16,24 @@ export function Usage() {
   );
 }
 
+export function DataChangesOverTime() {
+  const [data, setData] = useState<any[]>([]);
+  return (
+    <div style={{ padding: 40 }}>
+      <Select
+        value="1"
+        data={data}
+        placeholder="Select something"
+        defaultValue="First"
+        searchable
+      />
+      <Button onClick={() => setData([{ value: '1', label: Math.random().toString() }])}>
+        Set Data
+      </Button>
+    </div>
+  );
+}
+
 export function Unstyled() {
   return (
     <div style={{ padding: 40 }}>
