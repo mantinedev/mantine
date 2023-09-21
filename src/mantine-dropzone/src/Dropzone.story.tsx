@@ -1,5 +1,6 @@
 /* eslint-disable no-console */
-import React from 'react';
+import React, { useRef } from 'react';
+import { Button, Group } from '@mantine/core';
 import { Dropzone } from './index';
 
 export default { title: 'Dropzone' };
@@ -49,5 +50,17 @@ export function FullScreen() {
         <div>Drag and drop files</div>
       </Dropzone.FullScreen>
     </div>
+  );
+}
+
+export function EnableChildPointerEvent() {
+  const openRef = useRef<() => void>(null);
+
+  return (
+    <Dropzone openRef={openRef} onDrop={() => {}} activateOnClick={false}>
+      <Group justify="center" bg="red">
+        <Button onClick={() => openRef.current?.()}>Select files</Button>
+      </Group>
+    </Dropzone>
   );
 }
