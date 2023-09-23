@@ -28,7 +28,7 @@ function Demo() {
 
 const cssCode = `
 .root {
-  background-color: var(--notification-color);
+  background-color: var(--notification-color, var(--mantine-primary-color-filled));
 
   &::before {
     background-color: var(--mantine-color-white);
