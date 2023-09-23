@@ -261,3 +261,4 @@ export const CodeHighlightTabs = factory<CodeHighlightTabsFactory>((_props, ref)
 });
 
 CodeHighlightTabs.displayName = '@mantine/core/CodeHighlightTabs';
+CodeHighlightTabs.classes = classes;

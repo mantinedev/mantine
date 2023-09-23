@@ -119,3 +119,4 @@ export const CodeHighlight = factory<CodeHighlightFactory>((_props, ref) => {
 });
 
 CodeHighlight.displayName = '@mantine/core/CodeHighlight';
+CodeHighlight.classes = classes;
