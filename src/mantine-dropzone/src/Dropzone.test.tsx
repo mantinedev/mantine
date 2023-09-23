@@ -18,6 +18,7 @@ describe('@mantine/dropzone/Dropzone', () => {
     variant: true,
     size: true,
     classes: true,
+    id: true,
     refType: HTMLDivElement,
     displayName: '@mantine/dropzone/Dropzone',
     stylesApiSelectors: ['root', 'inner'],

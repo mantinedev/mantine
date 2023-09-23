@@ -37,6 +37,7 @@ describe('@mantine/dates/YearPickerInput', () => {
     size: true,
     variant: true,
     classes: true,
+    id: true,
     refType: HTMLButtonElement,
     displayName: '@mantine/dates/YearPickerInput',
     stylesApiSelectors: [...inputStylesApiSelectors],

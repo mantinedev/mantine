@@ -16,6 +16,7 @@ describe('@mantine/core/CarouselSlide', () => {
     variant: true,
     size: true,
     classes: true,
+    id: true,
     refType: HTMLDivElement,
     displayName: '@mantine/core/CarouselSlide',
     stylesApiSelectors: ['slide'],

@@ -45,6 +45,7 @@ describe('@mantine/dates/Calendar', () => {
     variant: true,
     size: true,
     classes: true,
+    id: true,
     refType: HTMLDivElement,
     displayName: '@mantine/dates/Calendar',
     stylesApiSelectors: [

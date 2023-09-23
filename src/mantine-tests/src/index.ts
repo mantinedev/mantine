@@ -16,6 +16,7 @@ import { itSupportsSize } from './shared/it-supports-size';
 import { itHasExtend } from './shared/it-has-extend';
 import { itHasClasses } from './shared/it-has-classes';
 import { itSupportsHiddenVisible } from './shared/it-supports-hidden-visible';
+import { itSupportsId } from './shared/it-supports-id';
 
 // Style props tests
 import { itSupportsMarginsProps } from './style-props/it-supports-margins-props';
@@ -57,6 +58,7 @@ export const tests = {
   itHasExtend,
   itHasClasses,
   itSupportsHiddenVisible,
+  itSupportsId,
 
   itSupportsMarginsProps,
   itSupportsPaddingsProps,

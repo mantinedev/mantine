@@ -11,6 +11,7 @@ import { itSupportsSize } from './shared/it-supports-size';
 import { itHasExtend } from './shared/it-has-extend';
 import { itHasClasses } from './shared/it-has-classes';
 import { itSupportsHiddenVisible } from './shared/it-supports-hidden-visible';
+import { itSupportsId } from './shared/it-supports-id';
 
 import { itSupportsMarginsProps } from './style-props/it-supports-margins-props';
 import { itSupportsPaddingsProps } from './style-props/it-supports-paddings-props';
@@ -29,6 +30,7 @@ interface Options<Props extends Record<string, any>, StylesApiSelectors extends 
   children?: boolean;
   extend?: boolean;
   variant?: boolean;
+  id?: boolean;
   size?: boolean;
   displayName?: string;
   selector?: string;
@@ -100,6 +102,10 @@ export function itSupportsSystemProps<
 
     if (options.classes) {
       itHasClasses(options);
+    }
+
+    if (options.id) {
+      itSupportsId(options);
     }
 
     if (options.displayName) {

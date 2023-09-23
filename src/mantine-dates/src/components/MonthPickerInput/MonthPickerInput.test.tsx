@@ -37,6 +37,7 @@ describe('@mantine/dates/MonthPickerInput', () => {
     size: true,
     variant: true,
     classes: true,
+    id: true,
     refType: HTMLButtonElement,
     displayName: '@mantine/dates/MonthPickerInput',
     stylesApiSelectors: [...inputStylesApiSelectors],

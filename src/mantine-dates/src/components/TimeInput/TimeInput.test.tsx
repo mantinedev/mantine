@@ -24,6 +24,7 @@ describe('@mantine/dates/TimeInput', () => {
     size: true,
     variant: true,
     classes: true,
+    id: true,
     refType: HTMLInputElement,
     displayName: '@mantine/dates/TimeInput',
     stylesApiSelectors: [...inputStylesApiSelectors],

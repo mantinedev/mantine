@@ -64,6 +64,7 @@ describe('@mantine/dates/DateTimePicker', () => {
     size: true,
     variant: true,
     classes: true,
+    id: true,
     refType: HTMLButtonElement,
     displayName: '@mantine/dates/DateTimePicker',
     stylesApiSelectors: [...inputStylesApiSelectors],

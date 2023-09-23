@@ -30,6 +30,7 @@ describe('@mantine/dates/Day', () => {
     variant: true,
     size: true,
     classes: true,
+    id: true,
     refType: HTMLButtonElement,
     displayName: '@mantine/dates/Day',
     stylesApiSelectors: ['day'],
