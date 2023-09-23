@@ -14,3 +14,4 @@ export { search } from './TagsInput.demo.search';
 export { scrollArea } from './TagsInput.demo.scrollArea';
 export { sort } from './TagsInput.demo.sort';
 export { stylesApi } from './TagsInput.demo.stylesApi';
+export { clearable } from './TagsInput.demo.clearable';

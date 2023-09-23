@@ -13,6 +13,7 @@ export { ComboboxHeader } from './ComboboxHeader/ComboboxHeader';
 export { ComboboxEventsTarget } from './ComboboxEventsTarget/ComboboxEventsTarget';
 export { ComboboxDropdownTarget } from './ComboboxDropdownTarget/ComboboxDropdownTarget';
 export { ComboboxGroup } from './ComboboxGroup/ComboboxGroup';
+export { ComboboxClearButton } from './ComboboxClearButton/ComboboxClearButton';
 export { OptionsDropdown } from './OptionsDropdown/OptionsDropdown';
 export { useCombobox } from './use-combobox/use-combobox';
 export { useVirtualizedCombobox } from './use-combobox/use-virtualized-combobox';

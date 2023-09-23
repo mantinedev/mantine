@@ -10,6 +10,7 @@ import {
   useResolvedStylesApi,
 } from '../../core';
 import { InputBase } from '../InputBase';
+import { __CloseButtonProps } from '../CloseButton';
 import { __InputStylesNames, __BaseInputProps, InputVariant } from '../Input';
 import {
   Combobox,
@@ -61,6 +62,12 @@ export interface SelectProps
 
   /** Determines whether it should be possible to deselect value by clicking on the selected option, `true` by default */
   allowDeselect?: boolean;
+
+  /** Determines whether the clear button should be displayed in the right section when the component has value, `false` by default */
+  clearable?: boolean;
+
+  /** Props passed down to the clear button */
+  clearButtonProps?: __CloseButtonProps & ElementProps<'button'>;
 }
 
 export type SelectFactory = Factory<{
@@ -119,6 +126,8 @@ export const Select = factory<SelectFactory>((_props, ref) => {
     error,
     rightSectionPointerEvents,
     id,
+    clearable,
+    clearButtonProps,
     ...others
   } = props;
 
@@ -173,6 +182,17 @@ export const Select = factory<SelectFactory>((_props, ref) => {
     }
   }, [value, optionsLockup]);
 
+  const clearButton = clearable && !!_value && !disabled && !readOnly && (
+    <Combobox.ClearButton
+      size={size as string}
+      {...clearButtonProps}
+      onClear={() => {
+        setValue(null);
+        setSearch('');
+      }}
+    />
+  );
+
   return (
     <>
       <Combobox
@@ -201,9 +221,10 @@ export const Select = factory<SelectFactory>((_props, ref) => {
             id={_id}
             ref={ref}
             rightSection={
-              rightSection || <Combobox.Chevron size={size} error={error} unstyled={unstyled} />
+              rightSection ||
+              clearButton || <Combobox.Chevron size={size} error={error} unstyled={unstyled} />
             }
-            rightSectionPointerEvents={rightSectionPointerEvents || 'none'}
+            rightSectionPointerEvents={rightSectionPointerEvents || clearButton ? 'all' : 'none'}
             {...others}
             size={size}
             __staticSelector="Select"

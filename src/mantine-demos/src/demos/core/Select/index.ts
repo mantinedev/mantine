@@ -14,3 +14,4 @@ export { search } from './Select.demo.search';
 export { sort } from './Select.demo.sort';
 export { stylesApi } from './Select.demo.stylesApi';
 export { allowDeselect } from './Select.demo.allowDeselect';
+export { clearable } from './Select.demo.clearable';

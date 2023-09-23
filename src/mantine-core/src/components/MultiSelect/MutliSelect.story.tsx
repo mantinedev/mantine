@@ -19,6 +19,37 @@ export function Usage() {
   );
 }
 
+export function Clearable() {
+  return (
+    <div style={{ padding: 40 }}>
+      <MultiSelect
+        placeholder="Clearable"
+        data={['React', 'Angular', 'Svelte']}
+        defaultValue={['React']}
+        clearable
+      />
+
+      <MultiSelect
+        placeholder="Disabled"
+        data={['React', 'Angular', 'Svelte']}
+        defaultValue={['React']}
+        clearable
+        disabled
+        mt="md"
+      />
+
+      <MultiSelect
+        placeholder="Read only"
+        data={['React', 'Angular', 'Svelte']}
+        defaultValue={['React']}
+        clearable
+        readOnly
+        mt="md"
+      />
+    </div>
+  );
+}
+
 export function Unstyled() {
   return (
     <div style={{ padding: 40 }}>

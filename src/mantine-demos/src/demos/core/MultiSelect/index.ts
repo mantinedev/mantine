@@ -15,3 +15,4 @@ export { scrollArea } from './MultiSelect.demo.scrollArea';
 export { search } from './MultiSelect.demo.search';
 export { sort } from './MultiSelect.demo.sort';
 export { stylesApi } from './MultiSelect.demo.stylesApi';
+export { clearable } from './MultiSelect.demo.clearable';

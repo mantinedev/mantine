@@ -16,6 +16,37 @@ export function Usage() {
   );
 }
 
+export function Clearable() {
+  return (
+    <div style={{ padding: 40, maxWidth: 400 }}>
+      <Select
+        data={['React', 'Angular', 'Svelte']}
+        placeholder="Clearable default"
+        defaultValue="React"
+        clearable
+      />
+
+      <Select
+        data={['React', 'Angular', 'Svelte']}
+        placeholder="Clearable disabled"
+        defaultValue="React"
+        clearable
+        disabled
+        mt="md"
+      />
+
+      <Select
+        data={['React', 'Angular', 'Svelte']}
+        placeholder="Clearable read only"
+        defaultValue="React"
+        clearable
+        readOnly
+        mt="md"
+      />
+    </div>
+  );
+}
+
 export function DataChangesOverTime() {
   const [data, setData] = useState<any[]>([]);
   return (

@@ -27,6 +27,7 @@ import { ComboboxHeader } from './ComboboxHeader/ComboboxHeader';
 import { ComboboxEventsTarget } from './ComboboxEventsTarget/ComboboxEventsTarget';
 import { ComboboxDropdownTarget } from './ComboboxDropdownTarget/ComboboxDropdownTarget';
 import { ComboboxGroup } from './ComboboxGroup/ComboboxGroup';
+import { ComboboxClearButton } from './ComboboxClearButton/ComboboxClearButton';
 import classes from './Combobox.module.css';
 
 export type ComboboxStylesNames =
@@ -185,3 +186,4 @@ Combobox.Header = ComboboxHeader;
 Combobox.EventsTarget = ComboboxEventsTarget;
 Combobox.DropdownTarget = ComboboxDropdownTarget;
 Combobox.Group = ComboboxGroup;
+Combobox.ClearButton = ComboboxClearButton;
