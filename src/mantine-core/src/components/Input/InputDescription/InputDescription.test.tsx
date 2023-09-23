@@ -17,6 +17,7 @@ describe('@mantine/core/InputDescription', () => {
     size: true,
     variant: true,
     classes: true,
+    id: true,
     refType: HTMLParagraphElement,
     displayName: '@mantine/core/InputDescription',
     stylesApiName: 'InputWrapper',

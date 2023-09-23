@@ -18,6 +18,7 @@ describe('@mantine/core/ComboboxGroup', () => {
     variant: true,
     size: true,
     classes: true,
+    id: true,
     refType: HTMLDivElement,
     displayName: '@mantine/core/ComboboxGroup',
     stylesApiSelectors: ['group', 'groupLabel'],

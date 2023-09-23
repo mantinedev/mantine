@@ -16,6 +16,7 @@ describe('@mantine/core/RingProgress', () => {
     variant: true,
     size: true,
     classes: true,
+    id: true,
     refType: HTMLDivElement,
     displayName: '@mantine/core/RingProgress',
     stylesApiSelectors: ['root', 'svg', 'curve', 'label'],

@@ -18,6 +18,7 @@ describe('@mantine/core/ListItem', () => {
     variant: true,
     size: true,
     classes: true,
+    id: true,
     refType: HTMLLIElement,
     displayName: '@mantine/core/ListItem',
     stylesApiSelectors: ['item', 'itemIcon', 'itemLabel', 'itemWrapper'],

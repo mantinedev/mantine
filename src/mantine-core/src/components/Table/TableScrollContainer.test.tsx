@@ -19,6 +19,7 @@ describe('@mantine/core/TableScrollContainer', () => {
     variant: true,
     size: true,
     classes: true,
+    id: true,
     refType: HTMLDivElement,
     displayName: '@mantine/core/TableScrollContainer',
     stylesApiSelectors: ['scrollContainer', 'scrollContainerInner'],

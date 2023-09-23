@@ -16,6 +16,7 @@ describe('@mantine/core/GridCol', () => {
     variant: true,
     size: true,
     classes: true,
+    id: true,
     refType: HTMLDivElement,
     displayName: '@mantine/core/GridCol',
     stylesApiSelectors: ['col'],

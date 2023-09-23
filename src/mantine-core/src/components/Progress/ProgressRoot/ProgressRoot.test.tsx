@@ -13,6 +13,7 @@ describe('@mantine/core/ProgressRoot', () => {
     variant: true,
     size: true,
     classes: true,
+    id: true,
     refType: HTMLDivElement,
     displayName: '@mantine/core/ProgressRoot',
     stylesApiSelectors: ['root'],

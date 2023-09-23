@@ -19,6 +19,7 @@ describe('@mantine/core/MenuDropdown', () => {
     variant: true,
     size: true,
     classes: true,
+    id: true,
     refType: HTMLDivElement,
     displayName: '@mantine/core/MenuDropdown',
     stylesApiSelectors: ['dropdown'],

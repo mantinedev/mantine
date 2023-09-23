@@ -18,6 +18,7 @@ describe('@mantine/core/FileInput', () => {
     size: true,
     variant: true,
     classes: true,
+    id: true,
     refType: HTMLButtonElement,
     displayName: '@mantine/core/FileInput',
     stylesApiSelectors: [...inputStylesApiSelectors],

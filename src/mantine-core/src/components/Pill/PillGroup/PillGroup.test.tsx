@@ -13,6 +13,7 @@ describe('@mantine/core/PillGroup', () => {
     variant: true,
     size: true,
     classes: true,
+    id: true,
     refType: HTMLDivElement,
     displayName: '@mantine/core/PillGroup',
     stylesApiSelectors: ['group'],

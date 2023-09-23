@@ -14,6 +14,7 @@ describe('@mantine/core/Flex', () => {
     variant: true,
     size: true,
     classes: true,
+    id: true,
     refType: HTMLDivElement,
     displayName: '@mantine/core/Flex',
     stylesApiSelectors: ['root'],

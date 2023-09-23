@@ -27,6 +27,7 @@ describe('@mantine/core/RangeSlider', () => {
     variant: true,
     size: true,
     classes: true,
+    id: true,
     refType: HTMLDivElement,
     displayName: '@mantine/core/RangeSlider',
     stylesApiName: 'Slider',

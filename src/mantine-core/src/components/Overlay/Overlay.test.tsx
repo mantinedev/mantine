@@ -15,6 +15,7 @@ describe('@mantine/core/Overlay', () => {
     variant: true,
     size: true,
     classes: true,
+    id: true,
     refType: HTMLDivElement,
     displayName: '@mantine/core/Overlay',
     stylesApiSelectors: ['root'],

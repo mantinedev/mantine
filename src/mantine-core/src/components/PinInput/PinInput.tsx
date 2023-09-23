@@ -169,10 +169,11 @@ export const PinInput = factory<PinInputFactory>((props, ref) => {
     inputMode,
     ariaLabel,
     vars,
+    id,
     ...others
   } = useProps('PinInput', defaultProps, props);
 
-  const uuid = useId(name);
+  const uuid = useId(id);
 
   const getStyles = useStyles<PinInputFactory>({
     name: 'PinInput',

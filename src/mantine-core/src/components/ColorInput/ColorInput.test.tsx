@@ -24,6 +24,7 @@ describe('@mantine/core/ColorInput', () => {
     size: true,
     variant: true,
     classes: true,
+    id: true,
     refType: HTMLInputElement,
     displayName: '@mantine/core/ColorInput',
     stylesApiSelectors: [...inputStylesApiSelectors],

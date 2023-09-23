@@ -23,6 +23,7 @@ describe('@mantine/core/CloseButton', () => {
     size: true,
     variant: true,
     classes: true,
+    id: true,
     refType: HTMLButtonElement,
     displayName: '@mantine/core/CloseButton',
     stylesApiSelectors: ['root'],

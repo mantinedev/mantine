@@ -24,6 +24,7 @@ describe('@mantine/core/MultiSelect', () => {
     size: true,
     variant: true,
     classes: true,
+    id: true,
     refType: HTMLInputElement,
     displayName: '@mantine/core/MultiSelect',
     stylesApiSelectors: [...inputStylesApiSelectors],

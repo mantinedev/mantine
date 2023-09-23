@@ -38,6 +38,7 @@ describe('@mantine/core/Input', () => {
     size: true,
     variant: true,
     classes: true,
+    id: true,
     refType: HTMLInputElement,
     polymorphicSelector: '.mantine-Input-input',
     displayName: '@mantine/core/Input',

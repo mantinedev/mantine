@@ -15,6 +15,7 @@ describe('@mantine/core/Blockquote', () => {
     variant: true,
     size: true,
     classes: true,
+    id: true,
     refType: HTMLQuoteElement,
     displayName: '@mantine/core/Blockquote',
     stylesApiSelectors: ['root', 'icon'],

@@ -19,6 +19,7 @@ describe('@mantine/core/Radio', () => {
     variant: true,
     size: true,
     classes: true,
+    id: true,
     refType: HTMLInputElement,
     displayName: '@mantine/core/Radio',
     stylesApiSelectors: [

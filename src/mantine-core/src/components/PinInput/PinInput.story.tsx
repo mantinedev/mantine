@@ -7,7 +7,7 @@ export default { title: 'PinInput' };
 export function Usage() {
   return (
     <div style={{ padding: 40 }}>
-      <PinInput />
+      <PinInput id="test-id" />
     </div>
   );
 }

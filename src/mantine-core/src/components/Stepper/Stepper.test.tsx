@@ -34,6 +34,7 @@ describe('@mantine/core/Stepper', () => {
     variant: true,
     size: true,
     classes: true,
+    id: true,
     refType: HTMLDivElement,
     displayName: '@mantine/core/Stepper',
     stylesApiSelectors: [

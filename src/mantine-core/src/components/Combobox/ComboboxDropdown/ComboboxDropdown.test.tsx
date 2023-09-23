@@ -21,6 +21,7 @@ describe('@mantine/core/ComboboxDropdown', () => {
     variant: true,
     size: true,
     classes: true,
+    id: true,
     refType: HTMLDivElement,
     displayName: '@mantine/core/ComboboxDropdown',
     stylesApiSelectors: ['dropdown'],

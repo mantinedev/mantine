@@ -16,6 +16,7 @@ describe('@mantine/core/ComboboxHeader', () => {
     variant: true,
     size: true,
     classes: true,
+    id: true,
     refType: HTMLDivElement,
     displayName: '@mantine/core/ComboboxHeader',
     stylesApiSelectors: ['header'],

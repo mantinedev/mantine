@@ -14,6 +14,7 @@ describe('@mantine/core/Code', () => {
     size: true,
     variant: true,
     classes: true,
+    id: true,
     refType: HTMLElement,
     displayName: '@mantine/core/Code',
     stylesApiSelectors: ['root'],

@@ -13,6 +13,7 @@ describe('@mantine/core/Container', () => {
     variant: true,
     size: true,
     classes: true,
+    id: true,
     refType: HTMLDivElement,
     displayName: '@mantine/core/Container',
     stylesApiSelectors: ['root'],

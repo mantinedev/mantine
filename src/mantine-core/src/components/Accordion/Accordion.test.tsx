@@ -38,6 +38,7 @@ describe('@mantine/core/Accordion', () => {
     variant: true,
     size: true,
     classes: true,
+    id: true,
     displayName: '@mantine/core/Accordion',
     stylesApiSelectors: ['root', 'chevron', 'content', 'control', 'icon', 'item', 'label'],
   });

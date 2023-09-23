@@ -17,6 +17,7 @@ describe('@mantine/core/AppShellFooter', () => {
     variant: true,
     size: true,
     classes: true,
+    id: true,
     refType: HTMLElement,
     displayName: '@mantine/core/AppShellFooter',
     stylesApiSelectors: ['footer'],

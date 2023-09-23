@@ -24,6 +24,7 @@ describe('@mantine/core/Textarea', () => {
     size: true,
     variant: true,
     classes: true,
+    id: true,
     refType: HTMLTextAreaElement,
     displayName: '@mantine/core/Textarea',
     stylesApiSelectors: [...inputStylesApiSelectors],

@@ -13,6 +13,7 @@ describe('@mantine/core/Image', () => {
     variant: true,
     size: true,
     classes: true,
+    id: true,
     refType: HTMLImageElement,
     displayName: '@mantine/core/Image',
     stylesApiSelectors: ['root'],

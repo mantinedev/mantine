@@ -14,6 +14,7 @@ describe('@mantine/core/LoadingOverlay', () => {
     variant: true,
     size: true,
     classes: true,
+    id: true,
     refType: HTMLDivElement,
     displayName: '@mantine/core/LoadingOverlay',
     stylesApiSelectors: ['root', 'loader', 'overlay'],

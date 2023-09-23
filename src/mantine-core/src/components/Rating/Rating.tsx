@@ -279,6 +279,7 @@ export const Rating = factory<RatingFactory>((_props, ref) => {
         onMouseLeave={handleMouseLeave}
         variant={variant}
         size={size}
+        id={_id}
         {...others}
       >
         {items}

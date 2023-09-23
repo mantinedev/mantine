@@ -16,6 +16,7 @@ describe('@mantine/core/ProgressLabel', () => {
     variant: true,
     size: true,
     classes: true,
+    id: true,
     refType: HTMLDivElement,
     displayName: '@mantine/core/ProgressLabel',
     stylesApiSelectors: ['label'],

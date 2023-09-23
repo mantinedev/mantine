@@ -25,6 +25,7 @@ describe('@mantine/core/SegmentedControl', () => {
     size: true,
     variant: true,
     classes: true,
+    id: true,
     refType: HTMLDivElement,
     displayName: '@mantine/core/SegmentedControl',
     stylesApiSelectors: ['root', 'label', 'input', 'control', 'indicator'],

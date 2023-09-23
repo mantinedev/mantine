@@ -13,6 +13,7 @@ describe('@mantine/core/ThemeIcon', () => {
     variant: true,
     size: true,
     classes: true,
+    id: true,
     refType: HTMLDivElement,
     displayName: '@mantine/core/ThemeIcon',
     stylesApiSelectors: ['root'],

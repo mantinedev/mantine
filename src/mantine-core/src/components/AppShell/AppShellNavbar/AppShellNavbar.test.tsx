@@ -17,6 +17,7 @@ describe('@mantine/core/AppShellNavbar', () => {
     variant: true,
     size: true,
     classes: true,
+    id: true,
     refType: HTMLElement,
     displayName: '@mantine/core/AppShellNavbar',
     stylesApiSelectors: ['navbar'],

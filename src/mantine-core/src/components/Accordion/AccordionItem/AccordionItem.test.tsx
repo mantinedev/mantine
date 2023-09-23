@@ -18,6 +18,7 @@ describe('@mantine/core/AccordionItem', () => {
     variant: true,
     size: true,
     classes: true,
+    id: true,
     refType: HTMLDivElement,
     displayName: '@mantine/core/AccordionItem',
     stylesApiSelectors: ['item'],

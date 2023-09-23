@@ -19,6 +19,7 @@ describe('@mantine/core/Pill', () => {
     variant: true,
     size: true,
     classes: true,
+    id: true,
     refType: HTMLSpanElement,
     displayName: '@mantine/core/Pill',
     stylesApiSelectors: ['root', 'label', 'remove'],

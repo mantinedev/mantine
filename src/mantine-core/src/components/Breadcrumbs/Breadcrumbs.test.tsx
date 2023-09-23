@@ -16,6 +16,7 @@ describe('@mantine/core/Breadcrumbs', () => {
     variant: true,
     size: true,
     classes: true,
+    id: true,
     refType: HTMLDivElement,
     displayName: '@mantine/core/Breadcrumbs',
     stylesApiSelectors: ['root', 'breadcrumb', 'separator'],

@@ -14,6 +14,7 @@ describe('@mantine/core/ButtonGroup', () => {
     size: true,
     variant: true,
     classes: true,
+    id: true,
     refType: HTMLDivElement,
     displayName: '@mantine/core/ButtonGroup',
     stylesApiSelectors: ['group'],

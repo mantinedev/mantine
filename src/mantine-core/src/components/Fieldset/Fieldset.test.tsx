@@ -16,6 +16,7 @@ describe('@mantine/core/Fieldset', () => {
     variant: true,
     size: true,
     classes: true,
+    id: true,
     refType: HTMLFieldSetElement,
     displayName: '@mantine/core/Fieldset',
     stylesApiSelectors: ['root', 'legend'],

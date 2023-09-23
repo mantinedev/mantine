@@ -12,6 +12,7 @@ describe('@mantine/core/Space', () => {
     extend: true,
     variant: true,
     size: true,
+    id: true,
     refType: HTMLDivElement,
     displayName: '@mantine/core/Space',
   });

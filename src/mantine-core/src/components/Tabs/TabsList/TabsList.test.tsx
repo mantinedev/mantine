@@ -19,6 +19,7 @@ describe('@mantine/core/TabsList', () => {
     styleProps: true,
     children: true,
     classes: true,
+    id: true,
     selector: '[role="tablist"]',
     stylesApiName: 'Tabs',
     stylesApiSelectors: ['list'],

@@ -195,7 +195,7 @@ export function Accordion<Multiple extends boolean = false>(_props: AccordionPro
         unstyled,
       }}
     >
-      <Box {...getStyles('root')} {...others} variant={variant} data-accordion>
+      <Box {...getStyles('root')} id={uid} {...others} variant={variant} data-accordion>
         {children}
       </Box>
     </AccordionProvider>

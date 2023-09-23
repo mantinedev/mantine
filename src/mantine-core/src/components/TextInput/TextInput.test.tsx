@@ -24,6 +24,7 @@ describe('@mantine/core/TextInput', () => {
     size: true,
     variant: true,
     classes: true,
+    id: true,
     refType: HTMLInputElement,
     displayName: '@mantine/core/TextInput',
     stylesApiSelectors: [...inputStylesApiSelectors],

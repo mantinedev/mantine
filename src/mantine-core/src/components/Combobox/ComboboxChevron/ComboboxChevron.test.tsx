@@ -16,6 +16,7 @@ describe('@mantine/core/ComboboxChevron', () => {
     variant: true,
     size: true,
     classes: true,
+    id: true,
     refType: SVGSVGElement,
     displayName: '@mantine/core/ComboboxChevron',
     stylesApiSelectors: ['chevron'],

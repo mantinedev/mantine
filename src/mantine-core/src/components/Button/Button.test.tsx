@@ -33,6 +33,7 @@ describe('@mantine/core/Button', () => {
     variant: true,
     size: true,
     classes: true,
+    id: true,
     refType: HTMLButtonElement,
     displayName: '@mantine/core/Button',
     stylesApiSelectors: ['root', 'inner', 'label', 'loader', 'section'],

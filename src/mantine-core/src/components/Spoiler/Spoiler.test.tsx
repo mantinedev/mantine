@@ -18,6 +18,7 @@ describe('@mantine/core/Spoiler', () => {
     variant: true,
     size: true,
     classes: true,
+    id: true,
     refType: HTMLDivElement,
     displayName: '@mantine/core/Spoiler',
     stylesApiSelectors: ['root', 'content'],
