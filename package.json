@@ -13,7 +13,7 @@
   "scripts": {
     "prepare": "npm run docs:docgen && npm run generate-css && cd docs && yarn",
     "codegen": "esno scripts/codegen",
-    "dev": "cd dev && npm run dev",
+    "dev": "cd docs && npm run dev",
     "demos": "esno scripts/demo-import",
     "sync-branches": "sh scripts/sync-branches.sh",
     "changelog": "esno scripts/changelog",
