@@ -2,3 +2,54 @@ import { Layout } from '@/layout';
 import { MDX_DATA } from '@/mdx';
 
 export default Layout(MDX_DATA.Changelog710);
+
+## renderRoot prop
+
+All [polymorphic](/guides/polymorphic) components now support `renderRoot` prop, which
+is an alternative to `component` prop. `renderRoot` prop allows changing the root element
+to any other component or HTML tag with a callback function. It can be used in cases when
+`component` prop is not flexible enough:
+
+- Target component props are incompatible with Mantine component. For example, [Button](/core/button) component expects `className`
+  to be a string, but [react-router-dom NavLink](https://reactrouter.com/en/6.16.0/components/nav-link) expects
+  `className` to be a function.
+- Target component is a generic – it either accepts type as a parameter or its type changes depending
+  on its props. Examples: [typed Next.js Link](https://nextjs.org/docs/app/building-your-application/configuring/typescript#statically-typed-links), [TanStack router Link](https://tanstack.com/router/v1)
+
+`renderRoot` example with [react-router-dom NavLink](https://reactrouter.com/en/6.16.0/components/nav-link):
+
+```tsx
+import cx from 'clsx';
+import { Button } from '@mantine/core';
+import { NavLink } from 'react-router-dom';
+
+function Demo() {
+  return (
+    <Button
+      renderRoot={({ className, ...others }) => (
+        <NavLink
+          className={({ isActive }) => cx(className, { 'active-class': isActive })}
+          {...others}
+        />
+      )}
+    >
+      React router NavLink
+    </Button>
+  );
+}
+```
+
+`renderRoot` example with [typed Next.js Link](https://nextjs.org/docs/app/building-your-application/configuring/typescript#statically-typed-links):
+
+```tsx
+import Link from 'next/link';
+import { Button } from '@mantine/core';
+
+function Demo() {
+  return (
+    <Button renderRoot={(props) => <Link href="/hello" {...props} />}>
+      Typed Next link button
+    </Button>
+  );
+}
+```
