@@ -4,7 +4,7 @@
   "workspaces": [
     "src/*"
   ],
-  "version": "7.0.0",
+  "version": "7.0.1-alpha.0",
   "description": "Mantine Components Monorepo",
   "main": "index.js",
   "repository": "https://github.com/mantinedev/mantine.git",
