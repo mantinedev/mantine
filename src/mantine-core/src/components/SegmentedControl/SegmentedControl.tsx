@@ -181,23 +181,27 @@ export const SegmentedControl = factory<SegmentedControlFactory>((_props, ref) =
   useEffect(() => {
     if (_value in refs.current && observerRef.current) {
       const element = refs.current[_value];
-      const elementRect = element.getBoundingClientRect();
-      const scaledValue = element.offsetWidth / elementRect.width;
-      const width = element.clientWidth * scaledValue || 0;
-      const height = element.clientHeight * scaledValue || 0;
+      if (element) {
+        const elementRect = element.getBoundingClientRect();
+        const scaledValue = element.offsetWidth / elementRect.width;
+        const width = element.clientWidth * scaledValue || 0;
+        const height = element.clientHeight * scaledValue || 0;
 
-      const offsetRight =
-        containerRect.width - element.parentElement!.offsetLeft + WRAPPER_PADDING - width;
-      const offsetLeft = element.parentElement!.offsetLeft - WRAPPER_PADDING;
+        const offsetRight =
+          containerRect.width - element.parentElement!.offsetLeft + WRAPPER_PADDING - width;
+        const offsetLeft = element.parentElement!.offsetLeft - WRAPPER_PADDING;
 
-      setActivePosition({
-        width,
-        height,
-        translate: [
-          dir === 'rtl' ? offsetRight * -1 : offsetLeft,
-          element.parentElement!.offsetTop - WRAPPER_PADDING,
-        ],
-      });
+        setActivePosition({
+          width,
+          height,
+          translate: [
+            dir === 'rtl' ? offsetRight * -1 : offsetLeft,
+            element.parentElement!.offsetTop - WRAPPER_PADDING,
+          ],
+        });
+      } else {
+        setActivePosition({ width: 0, height: 0, translate: [0, 0] });
+      }
     }
   }, [_value, containerRect, dir]);
 
