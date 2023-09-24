@@ -52,7 +52,7 @@ export function Usage() {
       Subtle variant index:
       <Colors variant="subtle" index={5} />
       Outline variant:
-      <Colors variant="outline" />
+      <Colors variant="outline" disabled />
       Outline variant index:
       <Colors variant="outline" index={4} />
       Transparent variant:
