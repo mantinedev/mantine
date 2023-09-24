@@ -25,7 +25,7 @@ Install PostCSS plugins and [postcss-preset-mantine](/styles/postcss-preset):
 
 <InstallScript packages="postcss postcss-preset-mantine postcss-simple-vars" dev />
 
-Create `postcss.config.js` file at the root of your application with the following content:
+Create `postcss.config.cjs` file at the root of your application with the following content:
 
 ```js
 module.exports = {
@@ -99,23 +99,3 @@ All set! Start development server:
 ```bash
 npm run dev
 ```
-
-## Hydration mismatch
-
-Remix is known to have hydration mismatches when using some browser extensions that inject
-extra markup into the generated page, for example Google Translate, apollo dev tools,
-LanguageTool, etc. If you are experiencing hydration mismatches, try disabling browser extensions.
-
-Related issues in Remix repository: [Issue](https://github.com/remix-run/remix/issues/6394), [Issue](https://github.com/remix-run/remix/issues/6418), [Issue](https://github.com/remix-run/remix/issues/6026).
-
-Because of this issue, you may see the following errors in the console depending on your setup:
-
-- _Warning: Prop "data-mantine-script" did not match. Server: "null" Client: "true"_
-- _Warning: Expected server HTML to contain a matching `<link>` in `<head>`._
-- _Uncaught Error: Hydration failed because the initial UI does not match what was rendered on the server._
-- _Error: Hydration failed because the initial UI does not match what was rendered on the server._
-- _Uncaught Error: There was an error while hydrating. Because the error happened outside of a Suspense boundary, the entire root will switch to client rendering._
-
-Currently, Remix team [is not planning](https://github.com/remix-run/remix/issues/6026#issuecomment-1507256309)
-to fix this issue. If you are experiencing hydration mismatches, try opening the same page in
-incognito mode (usually extensions are disabled in incognito mode) or disabling browser extensions.
