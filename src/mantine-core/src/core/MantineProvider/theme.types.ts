@@ -155,7 +155,9 @@ export type MantineSpacing = keyof MantineSpacingValues | (string & {}) | number
 export type MantineShadow = keyof MantineShadowsValues | (string & {});
 export type MantineLineHeight = keyof MantineLineHeightValues;
 
-export type MantineThemeOther = Record<string, any>;
+export interface MantineThemeOther {
+  [key: string]: any;
+}
 
 export interface MantineGradient {
   from: string;
