@@ -74,6 +74,7 @@
     --_button-bg: var(--_disabled-bg);
     --_button-color: var(--_disabled-color);
     transform: none;
+    border-color: transparent;
   }
 
   &[data-loading] {
