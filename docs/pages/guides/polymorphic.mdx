@@ -15,6 +15,30 @@ it can be changed to `a` or any other element or component:
 
 <Demo data={GuidesDemos.polymorphic} />
 
+## renderRoot prop
+
+`renderRoot` is an alternative to the `component` prop, which accepts a function that should return
+a React element. It is useful in cases when `component` prop cannot be used, for example,
+when the component that you want to pass to the `component` is generic
+(accepts type or infers it from props, for example `<Link<'/'> />`).
+
+Example of using `renderRoot` prop, the result is the same as in the previous demo:
+
+```tsx
+import { Button } from '@mantine/core';
+
+function Demo() {
+  return (
+    <Button renderRoot={(props) => <a href="https://mantine.dev/" target="_blank" {...props} />}>
+      Mantine website
+    </Button>
+  );
+}
+```
+
+**!important** It is required to spread `props` argument into the root element. Otherwise
+there will be no styles and the component might not be accessible.
+
 ## Polymorphic components as other React components
 
 You can pass any other React component to `component` prop.
@@ -62,6 +86,55 @@ function Demo() {
   return (
     <Button component={Link} href="/hello">
       Next link button
+    </Button>
+  );
+}
+```
+
+## Polymorphic components with generic components
+
+You cannot pass generic components to `component` prop because it is not possible to infer generic types
+from the component prop. For example, you cannot pass [typed Next.js Link](https://nextjs.org/docs/app/building-your-application/configuring/typescript#statically-typed-links)
+to `component` prop because it is not possible to infer `href` type from the component prop. The component itself
+will work correctly, but you will have a TypeScript error.
+
+To make generic components work with polymorphic components, use `renderRoot` prop instead of `component`:
+
+```tsx
+import Link from 'next/link';
+import { Button } from '@mantine/core';
+
+function Demo() {
+  return (
+    <Button renderRoot={(props) => <Link href="/hello" {...props} />}>
+      Typed Next link button
+    </Button>
+  );
+}
+```
+
+## Polymorphic components with react-router NavLink
+
+[react-router-dom](https://reactrouter.com/en/main) [NavLink](https://reactrouter.com/en/main/components/nav-link) component
+`className` prop accepts a function based on which you can add an active class to the link. This feature is
+incompatible with Mantine `component` prop, but you can use `renderRoot` prop instead:
+
+```tsx
+import cx from 'clsx';
+import { Button } from '@mantine/core';
+import { NavLink } from 'react-router-dom';
+
+function Demo() {
+  return (
+    <Button
+      renderRoot={({ className, ...others }) => (
+        <NavLink
+          className={({ isActive }) => cx(className, { 'active-class': isActive })}
+          {...others}
+        />
+      )}
+    >
+      React router NavLink
     </Button>
   );
 }

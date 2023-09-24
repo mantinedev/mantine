@@ -25,7 +25,7 @@ export type PolymorphicComponentProps<C, Props = {}> = C extends React.ElementTy
       ref?: PolymorphicRef<C>;
       renderRoot?(props: any): any;
     }
-  : Props & { component: React.ElementType; renderRoot?(props: any): any };
+  : Props & { component: React.ElementType; renderRoot?(props: Record<string, any>): any };
 
 export function createPolymorphicComponent<
   ComponentDefaultType,
