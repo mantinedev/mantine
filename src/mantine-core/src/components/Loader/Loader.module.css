@@ -52,10 +52,12 @@
 @keyframes loader-dots-animation {
   0%,
   100% {
+    transform: scale(1);
     opacity: 1;
   }
 
   50% {
+    transform: scale(0.6);
     opacity: 0.5;
   }
 }
@@ -65,7 +67,6 @@
   justify-content: center;
   align-items: center;
   gap: calc(var(--loader-size) / 10);
-  flex-wrap: wrap;
   position: relative;
   width: var(--loader-size);
   height: var(--loader-size);
@@ -76,26 +77,10 @@
   height: calc(var(--loader-size) / 3 - var(--loader-size) / 15);
   border-radius: 50%;
   background: var(--loader-color);
-  animation: loader-dots-animation 1200ms linear infinite;
+  animation: loader-dots-animation 0.8s infinite linear;
 
-  &:nth-child(2),
-  &:nth-child(4) {
-    animation-delay: -400ms;
-  }
-
-  &:nth-child(3),
-  &:nth-child(5),
-  &:nth-child(7) {
-    animation-delay: -800ms;
-  }
-
-  &:nth-child(6),
-  &:nth-child(8) {
-    animation-delay: -1200ms;
-  }
-
-  &:nth-child(9) {
-    animation-delay: -1600ms;
+  &:nth-child(2) {
+    animation-delay: 0.4s;
   }
 }
 

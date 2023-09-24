@@ -9,11 +9,5 @@ export const Dots: MantineLoaderComponent = forwardRef(({ className, ...others }
     <span className={classes.dot} />
     <span className={classes.dot} />
     <span className={classes.dot} />
-    <span className={classes.dot} />
-    <span className={classes.dot} />
-    <span className={classes.dot} />
-    <span className={classes.dot} />
-    <span className={classes.dot} />
-    <span className={classes.dot} />
   </Box>
 ));
