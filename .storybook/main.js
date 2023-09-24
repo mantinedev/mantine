@@ -1,8 +1,18 @@
 const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin').default;
 const path = require('path');
+const argv = require('yargs').argv;
+
+const getPath = (storyPath) => path.resolve(__dirname, storyPath).replace(/\\/g, '/');
+
+const storiesPath = !argv._[0]
+  ? [getPath('../src/**/*.story.@(ts|tsx)')]
+  : [
+      getPath(`../src/mantine-*/**/${argv._[0]}.story.@(ts|tsx)`),
+      getPath(`../src/mantine-*/**/${argv._[0]}.demos.story.@(ts|tsx)`),
+    ];
 
 module.exports = {
-  stories: ['../src/**/*.story.@(js|jsx|ts|tsx)'],
+  stories: storiesPath,
   addons: [
     'storybook-dark-mode',
     '@storybook/addon-links',
