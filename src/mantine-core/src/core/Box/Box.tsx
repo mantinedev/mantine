@@ -51,9 +51,24 @@ export interface BoxComponentProps extends BoxProps {
   mod?: BoxMod;
 }
 
-const _Box = forwardRef<HTMLDivElement, BoxComponentProps & { component: any; className: string }>(
+const _Box = forwardRef<
+  HTMLDivElement,
+  BoxComponentProps & { component: any; className: string; renderRoot: any }
+>(
   (
-    { component, style, __vars, className, variant, mod, size, hiddenFrom, visibleFrom, ...others },
+    {
+      component,
+      style,
+      __vars,
+      className,
+      variant,
+      mod,
+      size,
+      hiddenFrom,
+      visibleFrom,
+      renderRoot,
+      ...others
+    },
     ref
   ) => {
     const theme = useMantineTheme();
@@ -66,6 +81,25 @@ const _Box = forwardRef<HTMLDivElement, BoxComponentProps & { component: any; cl
       data: STYlE_PROPS_DATA,
     });
 
+    const props = {
+      ref,
+      style: getBoxStyle({
+        theme,
+        style,
+        vars: __vars,
+        styleProps: parsedStyleProps.inlineStyles,
+      }),
+      className: cx(className, {
+        [responsiveClassName]: parsedStyleProps.hasResponsiveStyles,
+        [`mantine-hidden-from-${hiddenFrom}`]: hiddenFrom,
+        [`mantine-visible-from-${visibleFrom}`]: visibleFrom,
+      }),
+      'data-variant': variant,
+      'data-size': isNumberLike(size) ? undefined : size || undefined,
+      ...getBoxMod(mod),
+      ...rest,
+    };
+
     return (
       <>
         {parsedStyleProps.hasResponsiveStyles && (
@@ -75,24 +109,8 @@ const _Box = forwardRef<HTMLDivElement, BoxComponentProps & { component: any; cl
             media={parsedStyleProps.media}
           />
         )}
-        <Element
-          ref={ref}
-          style={getBoxStyle({
-            theme,
-            style,
-            vars: __vars,
-            styleProps: parsedStyleProps.inlineStyles,
-          })}
-          className={cx(className, {
-            [responsiveClassName]: parsedStyleProps.hasResponsiveStyles,
-            [`mantine-hidden-from-${hiddenFrom}`]: hiddenFrom,
-            [`mantine-visible-from-${visibleFrom}`]: visibleFrom,
-          })}
-          data-variant={variant}
-          data-size={isNumberLike(size) ? undefined : size || undefined}
-          {...getBoxMod(mod)}
-          {...rest}
-        />
+
+        {typeof renderRoot === 'function' ? renderRoot(props) : <Element {...props} />}
       </>
     );
   }
