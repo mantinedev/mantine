@@ -13,6 +13,14 @@ export function WithinDisabledFieldset() {
   );
 }
 
+export function Error() {
+  return (
+    <div style={{ padding: 40, maxWidth: 400 }}>
+      <Input placeholder="With error" error />
+    </div>
+  );
+}
+
 export function Variants() {
   return (
     <div style={{ padding: 40 }}>

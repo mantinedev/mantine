@@ -195,7 +195,11 @@
   &:focus,
   &:focus-within {
     outline: none;
-    border-color: var(--_input-bd-focus);
+    --_input-bd: var(--_input-bd-focus);
+
+    [data-error] & {
+      --_input-bd: var(--mantine-color-error);
+    }
   }
 
   &::placeholder {
