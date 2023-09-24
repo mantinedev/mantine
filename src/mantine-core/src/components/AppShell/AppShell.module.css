@@ -107,9 +107,7 @@
   );
   padding-top: calc(var(--app-shell-header-offset, 0px) + var(--app-shell-padding));
   padding-bottom: calc(var(--app-shell-footer-offset, 0px) + var(--app-shell-padding));
-  min-height: calc(
-    100dvh - var(--app-shell-header-offset, 0px) - var(--app-shell-footer-offset, 0px)
-  );
+  min-height: 100dvh;
   transition-property: padding;
 
   @mixin rtl {
