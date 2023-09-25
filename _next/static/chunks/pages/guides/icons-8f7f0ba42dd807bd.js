@@ -1,0 +1,47 @@
+(self.webpackChunk_N_E=self.webpackChunk_N_E||[]).push([[7423],{33507:function(e,n,t){"use strict";t.d(n,{Z:function(){return o}});var o=(0,t(30853).Z)("arrow-left","IconArrowLeft",[["path",{d:"M5 12l14 0",key:"svg-0"}],["path",{d:"M5 12l6 6",key:"svg-1"}],["path",{d:"M5 12l6 -6",key:"svg-2"}]])},12162:function(e,n,t){"use strict";t.d(n,{Z:function(){return o}});var o=(0,t(30853).Z)("arrow-right","IconArrowRight",[["path",{d:"M5 12l14 0",key:"svg-0"}],["path",{d:"M13 18l6 -6",key:"svg-1"}],["path",{d:"M13 6l6 6",key:"svg-2"}]])},8427:function(e,n,t){"use strict";t.d(n,{Z:function(){return o}});var o=(0,t(30853).Z)("calendar","IconCalendar",[["path",{d:"M4 7a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12z",key:"svg-0"}],["path",{d:"M16 3v4",key:"svg-1"}],["path",{d:"M8 3v4",key:"svg-2"}],["path",{d:"M4 11h16",key:"svg-3"}],["path",{d:"M11 15h1",key:"svg-4"}],["path",{d:"M12 15v3",key:"svg-5"}]])},38767:function(e,n,t){"use strict";t.d(n,{Z:function(){return o}});var o=(0,t(30853).Z)("license","IconLicense",[["path",{d:"M15 21h-9a3 3 0 0 1 -3 -3v-1h10v2a2 2 0 0 0 4 0v-14a2 2 0 1 1 2 2h-2m2 -4h-11a3 3 0 0 0 -3 3v11",key:"svg-0"}],["path",{d:"M9 7l4 0",key:"svg-1"}],["path",{d:"M9 11l4 0",key:"svg-2"}]])},94342:function(e,n,t){"use strict";t.d(n,{Z:function(){return o}});var o=(0,t(30853).Z)("list","IconList",[["path",{d:"M9 6l11 0",key:"svg-0"}],["path",{d:"M9 12l11 0",key:"svg-1"}],["path",{d:"M9 18l11 0",key:"svg-2"}],["path",{d:"M5 6l0 .01",key:"svg-3"}],["path",{d:"M5 12l0 .01",key:"svg-4"}],["path",{d:"M5 18l0 .01",key:"svg-5"}]])},30471:function(e,n,t){"use strict";t.d(n,{Z:function(){return o}});var o=(0,t(30853).Z)("pencil","IconPencil",[["path",{d:"M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4",key:"svg-0"}],["path",{d:"M13.5 6.5l4 4",key:"svg-1"}]])},62640:function(e,n,t){"use strict";t.d(n,{Z:function(){return o}});var o=(0,t(30853).Z)("switch-2","IconSwitch2",[["path",{d:"M3 17h5l1.67 -2.386m3.66 -5.227l1.67 -2.387h6",key:"svg-0"}],["path",{d:"M18 4l3 3l-3 3",key:"svg-1"}],["path",{d:"M3 7h5l7 10h6",key:"svg-2"}],["path",{d:"M18 20l3 -3l-3 -3",key:"svg-3"}]])},88018:function(e,n,t){(window.__NEXT_P=window.__NEXT_P||[]).push(["/guides/icons",function(){return t(46321)}])},46321:function(e,n,t){"use strict";t.r(n),t.d(n,{default:function(){return z}});var o=t(85893),r=t(11151),s=t(19905),i=t(9904),c=t(67294),a=(0,t(54764).Z)("brand-mantine","IconBrandMantine",[["path",{d:"M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0",key:"svg-0"}],["path",{d:"M11 16c1.22 -.912 2 -2.36 2 -4a5.01 5.01 0 0 0 -2 -4",key:"svg-1"}],["path",{d:"M14 9h-2",key:"svg-2"}],["path",{d:"M14 15h-2",key:"svg-3"}],["path",{d:"M10 12h.01",key:"svg-4"}]]),h=t(72622);let d=`
+import { rem } from '@mantine/core';
+import { IconBrandMantine } from '@tabler/icons-react';
+
+function Demo() {
+  return (
+    <IconBrandMantine
+      style={{ width: rem(80), height: rem(80) }}
+      stroke={1.5}
+      color="var(--mantine-color-blue-filled)"
+    />
+  );
+}
+`,l={type:"code",component:function(){return c.createElement(a,{style:{width:(0,h.h)(80),height:(0,h.h)(80)},stroke:1.5,color:"var(--mantine-color-blue-filled)"})},centered:!0,code:d};var u=t(14469),p=Object.defineProperty,m=Object.getOwnPropertySymbols,f=Object.prototype.hasOwnProperty,v=Object.prototype.propertyIsEnumerable,g=(e,n,t)=>n in e?p(e,n,{enumerable:!0,configurable:!0,writable:!0,value:t}):e[n]=t,x=(e,n)=>{for(var t in n||(n={}))f.call(n,t)&&g(e,t,n[t]);if(m)for(var t of m(n))v.call(n,t)&&g(e,t,n[t]);return e},y=(e,n)=>{var t={};for(var o in e)f.call(e,o)&&0>n.indexOf(o)&&(t[o]=e[o]);if(null!=e&&m)for(var o of m(e))0>n.indexOf(o)&&v.call(e,o)&&(t[o]=e[o]);return t};function k(e){var{size:n,style:t}=e,o=y(e,["size","style"]);return c.createElement("svg",x({xmlns:"http://www.w3.org/2000/svg",fill:"none",stroke:"currentColor",strokeLinecap:"round",strokeLinejoin:"round",strokeWidth:"1.5",viewBox:"0 0 24 24",style:x({width:(0,h.h)(n),height:(0,h.h)(n)},t)},o),c.createElement("path",{stroke:"none",d:"M0 0h24v24H0z"}),c.createElement("path",{d:"M20 6v12a2 2 0 01-2 2H8a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2zM10 16h6"}),c.createElement("path",{d:"M11 11a2 2 0 104 0 2 2 0 10-4 0M4 8h3M4 12h3M4 16h3"}))}let j=`
+import { Button } from '@mantine/core';
+import { AddressBookIcon } from './AddressBookIcon';
+
+function Demo() {
+  return <Button leftSection={<AddressBookIcon size={18} />}>Demo</Button>;
+}
+`,w=`
+import { rem } from '@mantine/core';
+
+interface AddressBookIconProps extends React.ComponentPropsWithoutRef<'svg'> {
+  size?: number | string;
+}
+
+export function AddressBookIcon({ size, style, ...others }: AddressBookIconProps) {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      fill="none"
+      stroke="currentColor"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      strokeWidth="1.5"
+      viewBox="0 0 24 24"
+      style={{ width: rem(size), height: rem(size), ...style }}
+      {...others}
+    >
+      <path stroke="none" d="M0 0h24v24H0z" />
+      <path d="M20 6v12a2 2 0 01-2 2H8a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2zM10 16h6" />
+      <path d="M11 11a2 2 0 104 0 2 2 0 10-4 0M4 8h3M4 12h3M4 16h3" />
+    </svg>
+  );
+}
+`,M={type:"code",component:function(){return c.createElement(u.z,{leftSection:c.createElement(k,{size:18})},"Demo")},centered:!0,code:[{fileName:"AddressBookIcon.tsx",code:w,language:"tsx"},{fileName:"Demo.tsx",code:j,language:"tsx"}]},b=(0,s.A)(i.us.Icons);function I(e){let n=Object.assign({h1:"h1",p:"p",ul:"ul",li:"li",a:"a",h2:"h2",code:"code",blockquote:"blockquote",strong:"strong"},(0,r.ah)(),e.components),{Demo:t}=n;return t||function(e,n){throw Error("Expected "+(n?"component":"object")+" `"+e+"` to be defined: you likely forgot to import, pass, or provide it.")}("Demo",!0),(0,o.jsxs)(o.Fragment,{children:[(0,o.jsx)(n.h1,{id:"icons-libraries-with-mantine",children:"Icons libraries with Mantine"}),"\n",(0,o.jsx)(n.p,{children:"You can use any icons library with Mantine components, most popular options are:"}),"\n",(0,o.jsxs)(n.ul,{children:["\n",(0,o.jsx)(n.li,{children:(0,o.jsx)(n.a,{href:"https://tabler-icons.io/",children:"Tabler icons"})}),"\n",(0,o.jsx)(n.li,{children:(0,o.jsx)(n.a,{href:"https://feathericons.com/",children:"Feather icons"})}),"\n",(0,o.jsx)(n.li,{children:(0,o.jsx)(n.a,{href:"https://icons.radix-ui.com/",children:"Radix icons"})}),"\n",(0,o.jsx)(n.li,{children:(0,o.jsx)(n.a,{href:"https://react-icons.github.io/react-icons/",children:"react-icons"})}),"\n",(0,o.jsx)(n.li,{children:(0,o.jsx)(n.a,{href:"https://fontawesome.com/v5/docs/web/use-with/react",children:"Font Awesome"})}),"\n"]}),"\n",(0,o.jsx)(n.h2,{id:"tabler-icons",children:"Tabler icons"}),"\n",(0,o.jsxs)(n.p,{children:[(0,o.jsx)(n.a,{href:"https://tabler-icons.io/",children:"Tabler icons"})," are used in Mantine demos, documentation\nand some ",(0,o.jsx)(n.code,{children:"@mantine/"})," packages depend on them. If you do not know which icons library\nto use, we recommend ",(0,o.jsx)(n.a,{href:"https://tabler-icons.io/",children:"Tabler icons"}),"."]}),"\n",(0,o.jsx)(n.h2,{id:"icons-size",children:"Icons size"}),"\n",(0,o.jsxs)(n.p,{children:["Most of the icons libraries support ",(0,o.jsx)(n.code,{children:"size"})," prop (or similar ",(0,o.jsx)(n.code,{children:"width"})," and ",(0,o.jsx)(n.code,{children:"height"})," props) which allows changing\nicon width and height. Usually, it is a number in pixels. All Mantine components use ",(0,o.jsx)(n.a,{href:"/styles/rem",children:"rem"}),"\nunits – components are scaled based on user preferences and ",(0,o.jsx)(n.code,{children:"font-size"})," of the root element. If you want to\nsupport this feature in your application, set icon width and height in ",(0,o.jsx)(n.a,{href:"/styles/rem",children:"rem"})," units with ",(0,o.jsx)(n.code,{children:"style"})," prop."]}),"\n",(0,o.jsx)(t,{data:l}),"\n",(0,o.jsxs)(n.blockquote,{children:["\n",(0,o.jsx)(n.p,{children:(0,o.jsx)(n.strong,{children:"rem units in size prop"})}),"\n",(0,o.jsxs)(n.p,{children:["Icons ",(0,o.jsx)(n.code,{children:"size"})," prop is usually converted to ",(0,o.jsx)(n.code,{children:"width"})," and ",(0,o.jsx)(n.code,{children:"height"})," props under the hood.\nIf you set ",(0,o.jsx)(n.code,{children:"size={16}"})," it will be converted to ",(0,o.jsx)(n.code,{children:'width="16"'})," and ",(0,o.jsx)(n.code,{children:'height="16"'})," attributes\non svg element."]}),"\n",(0,o.jsxs)(n.p,{children:["You can use rem units in ",(0,o.jsx)(n.code,{children:"size"})," prop: ",(0,o.jsx)(n.code,{children:'size="1rem"'})," will be converted to ",(0,o.jsx)(n.code,{children:'width="1rem"'})," and ",(0,o.jsx)(n.code,{children:'height="1rem"'}),",\nbut it is not recommended as it is prohibited by SVG standard – some browsers (Firefox) will show a warning in the console."]}),"\n"]}),"\n",(0,o.jsx)(n.h2,{id:"custom-icons",children:"Custom icons"}),"\n",(0,o.jsxs)(n.p,{children:["It is recommended to use icons as React components. In this case, you will be able to use\n",(0,o.jsx)(n.code,{children:"currentColor"})," in the ",(0,o.jsx)(n.code,{children:"fill"})," and ",(0,o.jsx)(n.code,{children:"stroke"})," prop. This will change icon color based on the context\nit is used in."]}),"\n",(0,o.jsx)(t,{data:M})]})}var z=function(){let e=arguments.length>0&&void 0!==arguments[0]?arguments[0]:{};return(0,o.jsx)(b,Object.assign({},e,{children:(0,o.jsx)(I,e)}))}}},function(e){e.O(0,[8992,178,9774,2888,179],function(){return e(e.s=88018)}),_N_E=e.O()}]);
