@@ -52,7 +52,7 @@ export default async function createPackageConfig(config: PkgConfigInput): Promi
       modules: { generateScopedName },
     }),
     banner((chunk) => {
-      if (chunk.fileName === 'index.js') {
+      if (chunk.fileName === 'index.js' || chunk.fileName === 'index.mjs') {
         return "'use client';\n";
       }
 
