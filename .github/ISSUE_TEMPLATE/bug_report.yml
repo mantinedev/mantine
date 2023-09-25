@@ -38,7 +38,7 @@ body:
   - type: input
     id: version
     attributes:
-      label: What version of @mantine/* page do you have in package.json? (Note that all @mantine/* packages must have the same version in order to work correctly)
+      label: What version of @mantine/* packages do you have in package.json? (Note that all @mantine/* packages must have the same version in order to work correctly)
     validations:
       required: true
   - type: input
