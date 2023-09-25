@@ -52,7 +52,7 @@ export default async function createPackageConfig(config: PkgConfigInput): Promi
       modules: { generateScopedName },
     }),
     banner((chunk) => {
-      if (chunk.fileName === 'index.js') {
+      if (chunk.fileName === 'index.js' || chunk.fileName === 'index.mjs') {
         return "'use client';\n";
       }
 
@@ -97,6 +97,8 @@ export default async function createPackageConfig(config: PkgConfigInput): Promi
   if (config.format === 'es') {
     output.dir = path.resolve(config.basePath, 'esm');
     output.preserveModules = true;
+    // Output ESM as .mjs files
+    output.entryFileNames = '[name].mjs';
   }
 
   if (config.format === 'cjs') {

@@ -21,7 +21,7 @@ export function MdxTemplatesList({ type, name }: MdxTemplatesListProps) {
     const Icon = frameworkIcons[template.type];
     return (
       <Table.Tr key={template.name}>
-        <Table.Td className={classes.iconCell}>
+        <Table.Td className={classes.iconCell} w={70}>
           <div className={classes.icon} data-type={template.type}>
             <Icon />
           </div>
@@ -32,7 +32,7 @@ export function MdxTemplatesList({ type, name }: MdxTemplatesListProps) {
           </Text>
           <Text fz="xs">{template.description}</Text>
         </Table.Td>
-        <Table.Td>
+        <Table.Td w={146}>
           <Button
             component="a"
             href={template.link}
@@ -49,7 +49,7 @@ export function MdxTemplatesList({ type, name }: MdxTemplatesListProps) {
   });
 
   return (
-    <Table highlightOnHover verticalSpacing="sm">
+    <Table highlightOnHover verticalSpacing="sm" layout="fixed">
       <Table.Tbody>{rows}</Table.Tbody>
     </Table>
   );

@@ -10,5 +10,11 @@ export default async function generateDts(packagePath: string) {
 
   const files = await fg(['lib/**/*.js'], { cwd: packagePath });
 
+  // Duplicate the type definitions for ESM
+  await fs.copy(
+    path.join(packagePath, 'lib/index.d.ts'),
+    path.join(packagePath, 'lib/index.d.mts')
+  );
+
   return Promise.all(files.map((file) => fs.remove(path.join(packagePath, file))));
 }

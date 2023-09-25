@@ -61,14 +61,7 @@ export const TEMPLATES_DATA: Template[] = [
     type: 'remix',
     name: 'remix-template',
     link: 'https://github.com/mantinedev/remix-template',
-    description: 'Remix template with full setup: Jest, Storybook, ESLint',
-  },
-  {
-    type: 'remix',
-    name: 'remix-min-template',
-    link: 'https://github.com/mantinedev/remix-min-template',
-    description:
-      'Remix template with minimal setup – no additional tools included, only default Remix configuration',
+    description: 'Remix template with basic setup',
   },
   {
     type: 'gatsby',
