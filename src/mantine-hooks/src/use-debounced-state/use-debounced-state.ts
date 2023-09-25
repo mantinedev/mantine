@@ -12,18 +12,21 @@ export function useDebouncedState<T = any>(
   const clearTimeout = () => window.clearTimeout(timeoutRef.current!);
   useEffect(() => clearTimeout, []);
 
-  const debouncedSetValue = useCallback((newValue: T) => {
-    clearTimeout();
-    if (leadingRef.current && options.leading) {
-      setValue(newValue);
-    } else {
-      timeoutRef.current = window.setTimeout(() => {
-        leadingRef.current = true;
+  const debouncedSetValue = useCallback(
+    (newValue: T) => {
+      clearTimeout();
+      if (leadingRef.current && options.leading) {
         setValue(newValue);
-      }, wait);
-    }
-    leadingRef.current = false;
-  }, [options.leading]);
+      } else {
+        timeoutRef.current = window.setTimeout(() => {
+          leadingRef.current = true;
+          setValue(newValue);
+        }, wait);
+      }
+      leadingRef.current = false;
+    },
+    [options.leading]
+  );
 
   return [value, debouncedSetValue] as const;
 }
