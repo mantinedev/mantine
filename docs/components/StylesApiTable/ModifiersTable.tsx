@@ -36,11 +36,11 @@ export function ModifiersTable({ data, ...others }: ModifiersTableProps) {
 
   return (
     <Table.ScrollContainer minWidth={600}>
-      <Table {...others}>
+      <Table layout="fixed" {...others}>
         <Table.Thead>
           <Table.Tr>
-            <Table.Th>Selector</Table.Th>
-            <Table.Th>Attribute</Table.Th>
+            <Table.Th w={210}>Selector</Table.Th>
+            <Table.Th w={310}>Attribute</Table.Th>
             {hasConditions && <Table.Th>Condition</Table.Th>}
             {hasValues && <Table.Th>Value</Table.Th>}
           </Table.Tr>

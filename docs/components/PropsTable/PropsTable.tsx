@@ -1,5 +1,5 @@
 import React from 'react';
-import { Table, Text, Highlight, rem } from '@mantine/core';
+import { Table, Text, Highlight } from '@mantine/core';
 import { DocsSection } from '@/components/DocsSection';
 import { HtmlText } from '@/components/HtmlText';
 import { TableInlineCode } from '@/components/TableInlineCode';
@@ -78,20 +78,18 @@ export function PropsTable({ component, query }: PropsTableProps) {
 
   return (
     <DocsSection>
-      <div style={{ overflowX: 'auto' }}>
-        <div style={{ minWidth: rem(500) }}>
-          <Table>
-            <Table.Thead>
-              <Table.Tr>
-                <Table.Th>Name</Table.Th>
-                <Table.Th>Type</Table.Th>
-                <Table.Th>Description</Table.Th>
-              </Table.Tr>
-            </Table.Thead>
-            <Table.Tbody>{rows}</Table.Tbody>
-          </Table>
-        </div>
-      </div>
+      <Table.ScrollContainer minWidth={800}>
+        <Table layout="fixed">
+          <Table.Thead>
+            <Table.Tr>
+              <Table.Th w={210}>Name</Table.Th>
+              <Table.Th w={310}>Type</Table.Th>
+              <Table.Th>Description</Table.Th>
+            </Table.Tr>
+          </Table.Thead>
+          <Table.Tbody>{rows}</Table.Tbody>
+        </Table>
+      </Table.ScrollContainer>
     </DocsSection>
   );
 }

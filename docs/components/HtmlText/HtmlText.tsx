@@ -6,7 +6,7 @@ interface HtmlTextProps extends TextProps, ElementProps<'span', 'color'> {
 }
 
 function replaceBackticks(str: string): string {
-  return str.replace(/`([^`]+)`/g, '<code>$1</code>');
+  return str.replace(/`([^`]+)`/g, '<code>$1</code>').replace(/!important!/g, '<b>Important</b>');
 }
 
 export function HtmlText({ children, ...others }: HtmlTextProps) {

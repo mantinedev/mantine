@@ -1,5 +1,5 @@
 import React from 'react';
-import { rem, Title } from '@mantine/core';
+import { Title } from '@mantine/core';
 import * as stylesData from '@mantine/styles-api';
 import type { Modifier } from '@mantine/styles-api';
 import { TableError } from '@/components/TableError';
@@ -32,34 +32,30 @@ export function StylesApiTable({ component, componentPrefix }: StylesApiTablePro
 
   return (
     <>
-      <div style={{ overflowX: 'auto' }}>
-        <div style={{ minWidth: rem(500) }}>
-          <div className={classes.section}>
-            <Title order={2} className={classes.title}>
-              {componentName} selectors
-            </Title>
-            <SelectorsTable component={component} data={data} />
-          </div>
-
-          {Object.keys(data.vars).length > 0 && (
-            <div className={classes.section}>
-              <Title order={2} className={classes.title}>
-                {componentName} CSS variables
-              </Title>
-              <VariablesTable data={data} />
-            </div>
-          )}
-
-          {Array.isArray(data.modifiers) && data.modifiers.length > 0 && (
-            <div className={classes.section}>
-              <Title order={2} className={classes.title}>
-                {componentName} data attributes
-              </Title>
-              <ModifiersTable data={data} />
-            </div>
-          )}
-        </div>
+      <div className={classes.section}>
+        <Title order={2} className={classes.title}>
+          {componentName} selectors
+        </Title>
+        <SelectorsTable component={component} data={data} />
       </div>
+
+      {Object.keys(data.vars).length > 0 && (
+        <div className={classes.section}>
+          <Title order={2} className={classes.title}>
+            {componentName} CSS variables
+          </Title>
+          <VariablesTable data={data} />
+        </div>
+      )}
+
+      {Array.isArray(data.modifiers) && data.modifiers.length > 0 && (
+        <div className={classes.section}>
+          <Title order={2} className={classes.title}>
+            {componentName} data attributes
+          </Title>
+          <ModifiersTable data={data} />
+        </div>
+      )}
     </>
   );
 }
