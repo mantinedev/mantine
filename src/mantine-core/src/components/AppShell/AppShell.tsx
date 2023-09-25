@@ -9,7 +9,6 @@ import {
   useStyles,
   createVarsResolver,
   Factory,
-  MantineBreakpoint,
   MantineSpacing,
   getDefaultZIndex,
 } from '../../core';
@@ -22,6 +21,13 @@ import { AppShellSection } from './AppShellSection/AppShellSection';
 import { AppShellMediaStyles } from './AppShellMediaStyles/AppShellMediaStyles';
 import { AppShellProvider } from './AppShell.context';
 import { useResizing } from './use-resizing/use-resizing';
+import {
+  AppShellAsideConfiguration,
+  AppShellHeaderConfiguration,
+  AppShellNavbarConfiguration,
+  AppShellFooterConfiguration,
+  AppShellResponsiveSize,
+} from './AppShell.types';
 import classes from './AppShell.module.css';
 
 export type AppShellStylesNames =
@@ -32,21 +38,10 @@ export type AppShellStylesNames =
   | 'footer'
   | 'aside'
   | 'section';
+
 export type AppShellCssVariables = {
   root: '--app-shell-transition-duration' | '--app-shell-transition-timing-function';
 };
-
-export type AppShellSize = number | (string & {});
-
-export interface AppShellResponsiveSize {
-  base?: AppShellSize;
-  xs?: AppShellSize;
-  sm?: AppShellSize;
-  md?: AppShellSize;
-  lg?: AppShellSize;
-  xl?: AppShellSize;
-  [key: string]: AppShellSize | undefined;
-}
 
 export interface AppShellProps
   extends BoxProps,
@@ -55,36 +50,20 @@ export interface AppShellProps
   /** Determines whether associated components should have a border, `true` by default */
   withBorder?: boolean;
 
-  /** Main content section padding, `0` by default */
+  /** Controls padding of the main section, `0` by default. !important!: use `padding` prop instead of `p`. */
   padding?: MantineSpacing | AppShellResponsiveSize;
 
-  /** Navbar configuration */
-  navbar?: {
-    width: AppShellSize | AppShellResponsiveSize;
-    breakpoint: MantineBreakpoint | (string & {}) | number;
-    collapsed?: { desktop?: boolean; mobile?: boolean };
-  };
+  /** AppShell.Navbar configuration, controls width, breakpoints and collapsed state. Required if you use AppShell.Navbar component. */
+  navbar?: AppShellNavbarConfiguration;
 
-  /** Aside configuration */
-  aside?: {
-    width: AppShellSize | AppShellResponsiveSize;
-    breakpoint: MantineBreakpoint | (string & {}) | number;
-    collapsed?: { desktop?: boolean; mobile?: boolean };
-  };
+  /** AppShell.Aside configuration, controls width, breakpoints and collapsed state. Required if you use AppShell.Aside component. */
+  aside?: AppShellAsideConfiguration;
 
-  /** Header configuration */
-  header?: {
-    height: AppShellSize | AppShellResponsiveSize;
-    collapsed?: boolean;
-    offset?: boolean;
-  };
+  /** AppShell.Header configuration, controls height, offset and collapsed state. Required if you use AppShell.Header component. */
+  header?: AppShellHeaderConfiguration;
 
-  /** Footer configuration */
-  footer?: {
-    height: AppShellSize | AppShellResponsiveSize;
-    collapsed?: boolean;
-    offset?: boolean;
-  };
+  /** AppShell.Footer configuration, controls height, offset and collapsed state. Required if you use AppShell.Footer component. */
+  footer?: AppShellFooterConfiguration;
 
   /** Duration of all transitions in ms, `200` by default */
   transitionDuration?: number;
@@ -98,7 +77,7 @@ export interface AppShellProps
   /** Determines how Navbar/Aside are arranged relative to Header/Footer, `default` by default */
   layout?: 'default' | 'alt';
 
-  /** If set, Navbar, Aside, Header and Footer components will not be rendered */
+  /** If set, Navbar, Aside, Header and Footer components be hidden */
   disabled?: boolean;
 }
 
