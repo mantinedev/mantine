@@ -1,3 +1,5 @@
+import { Button } from '@mantine/core';
+import { IconExternalLink } from '@tabler/icons-react';
 import { Layout } from '@/layout';
 import { MDX_DATA } from '@/mdx';
 
@@ -6,8 +8,21 @@ export default Layout(MDX_DATA.AppShell);
 ## Examples
 
 This page includes only documentation. Since all associated `AppShell` components have fixed
-position, it is not possible to include demos on this page. You can find 10+ examples on
-[this page](/app-shell?e=BasicAppShell)
+position, it is not possible to include demos on this page.
+
+<Button
+  component="a"
+  href="/app-shell?e=BasicAppShell"
+  target="_blank"
+  rightSection={<IconExternalLink size={18} stroke={1.5} />}
+  fullWidth
+  justify="space-between"
+  h={50}
+  px={20}
+  radius="md"
+>
+  {'Open AppShell examples page'}
+</Button>
 
 ## Usage
 
