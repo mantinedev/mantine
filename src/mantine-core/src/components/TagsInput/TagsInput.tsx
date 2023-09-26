@@ -234,6 +234,7 @@ export const TagsInput = factory<TagsInputFactory>((_props, ref) => {
       }
 
       if ((!isDuplicate || (isDuplicate && allowDuplicates)) && _value.length < maxTags!) {
+        onOptionSubmit?.(inputValue);
         setSearchValue('');
 
         if (inputValue.length > 0) {
