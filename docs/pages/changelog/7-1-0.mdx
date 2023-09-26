@@ -62,3 +62,16 @@ All `@mantine/*` packages now have improved ESM support:
 - You can use `@mantine/*` packages with `type: module` in `package.json` without any additional configuration
 - All packages are now fully compatible with [Remix v2](https://remix.run/blog/remix-v2)
 - Tree shaking was improved for some bundlers
+
+## CSS variables in style prop
+
+It is now possible to define CSS variables in `style` prop in all Mantine components –
+[style](/styles/style) prop is no longer restricted by `React.CSSProperties` type:
+
+```tsx
+import { Box } from '@mantine/core';
+
+function Demo() {
+  return <Box style={{ '--radius': '0.5rem', borderRadius: 'var(--radius)' }} />;
+}
+```
