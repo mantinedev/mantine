@@ -72,13 +72,12 @@ export default async function createPackageConfig(config: PkgConfigInput): Promi
   } else {
     externals = [
       'dayjs/locale/ru',
+      'dayjs/plugin/customParseFormat.js',
       'dayjs/plugin/customParseFormat',
-      'dayjs/plugin/utc',
-      'dayjs/plugin/timezone',
+      'dayjs/plugin/utc.js',
+      'dayjs/plugin/timezone.js',
       'klona/full',
       'highlight.js/lib/languages/typescript',
-      'prism-react-renderer/themes/duotoneDark',
-      'prism-react-renderer/themes/duotoneLight',
       ...(config?.externals || []),
       ...Object.keys({
         ...packageJson.peerDependencies,
