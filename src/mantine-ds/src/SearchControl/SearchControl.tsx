@@ -7,6 +7,11 @@ import classes from './SearchControl.module.css';
 interface SearchControlProps extends BoxProps, ElementProps<'button'> {}
 
 export function SearchControl({ className, ...others }: SearchControlProps) {
+  function isMacOs() {
+    if (typeof window === "undefined") return false
+  
+    return window.navigator.userAgent.includes("Mac")
+  }
   return (
     <UnstyledButton {...others} className={cx(classes.root, className)}>
       <Group gap="xs">
@@ -15,7 +20,7 @@ export function SearchControl({ className, ...others }: SearchControlProps) {
           Search
         </Text>
         <Text fw={700} className={classes.shortcut}>
-          Ctrl + K
+        {isMacOs() ? '⌘' : 'Ctrl'} + K
         </Text>
       </Group>
     </UnstyledButton>
