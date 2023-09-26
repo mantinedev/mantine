@@ -1,6 +1,6 @@
 {
   "name": "@mantine/store",
-  "version": "7.0.1",
+  "version": "7.0.2",
   "main": "./cjs/index.js",
   "types": "./lib/index.d.ts",
   "module": "./esm/index.mjs",

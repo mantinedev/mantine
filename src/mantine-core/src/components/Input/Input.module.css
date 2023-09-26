@@ -170,7 +170,7 @@
   background-color: var(--_input-bg);
   font-family: var(--_input-font-family, var(--mantine-font-family));
   height: var(--_input-size);
-  min-height: var(--input-height);
+  min-height: var(--_input-height);
   line-height: var(--_input-line-height);
   font-size: var(--_input-fz, var(--input-fz, var(--mantine-font-size-sm)));
   border-radius: var(--_input-radius);
