@@ -10,11 +10,16 @@ import {
   __InputStylesNames,
   ElementProps,
 } from '@mantine/core';
+import dayjs from 'dayjs';
 import classes from './TimeInput.module.css';
 
 export interface TimeInputProps extends InputBaseProps, ElementProps<'input', 'size'> {
   /** Determines whether seconds input should be rendered */
   withSeconds?: boolean;
+  /** Minimum possible time */
+  minTime?: string;
+  /** Maximum possible time */
+  maxTime?: string;
 }
 
 export type TimeInputFactory = Factory<{
@@ -35,17 +40,38 @@ export const TimeInput = factory<TimeInputFactory>((_props, ref) => {
     props,
   });
 
+  const validTime = () => {
+    const minTime = dayjs(`2000-01-01 ${props.minTime}`);
+    const maxTime = dayjs(`2000-01-01 ${props.maxTime}`);
+    const value = dayjs(`2000-01-01 ${props.value}`);
+    let _value;
+    if (props.maxTime && value > maxTime) {
+      _value = props.maxTime;
+    } else if (props.minTime && value < minTime) {
+      _value = props.minTime;
+    } else {
+      _value = props.value;
+    }
+    return _value;
+  };
+
   return (
-    <InputBase
-      classNames={{ ...resolvedClassNames, input: cx(classes.input, resolvedClassNames?.input) }}
-      styles={resolvedStyles}
-      unstyled={unstyled}
-      ref={ref}
-      {...others}
-      step={withSeconds ? 1 : 60}
-      type="time"
-      __staticSelector="TimeInput"
-    />
+    <>
+      <InputBase
+        classNames={{
+          ...resolvedClassNames,
+          input: cx(classes.input, resolvedClassNames?.input),
+        }}
+        styles={resolvedStyles}
+        unstyled={unstyled}
+        ref={ref}
+        {...others}
+        step={withSeconds ? 1 : 60}
+        type="time"
+        __staticSelector="TimeInput"
+        value={validTime()}
+      />
+    </>
   );
 });
 
