@@ -53,7 +53,14 @@ function Option({ data, withCheckIcon, value, checkIconPosition, unstyled }: Opt
   }
 
   const options = data.items.map((item) => (
-    <Option data={item} key={item.value} unstyled={unstyled} />
+    <Option
+      data={item}
+      value={value}
+      key={item.value}
+      unstyled={unstyled}
+      withCheckIcon={withCheckIcon}
+      checkIconPosition={checkIconPosition}
+    />
   ));
 
   return <Combobox.Group label={data.group}>{options}</Combobox.Group>;
