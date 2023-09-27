@@ -147,9 +147,15 @@ export const DateTimePicker = factory<DateTimePickerFactory>((_props, ref) => {
     ? dayjs(_value).locale(ctx.getLocale(locale)).format(_valueFormat)
     : '';
 
-  const handleTimeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    timeInputProps?.onChange?.(event);
-    const val = event.currentTarget.value;
+  const updateDateTime = ({ time, date = _value }: { time: string; date?: Date }) => {
+    let val = time;
+    if (timeInputRef.current && !timeInputRef.current.validity.valid) {
+      if (props.minDate && props.minDate?.getDate() === date?.getDate()) {
+        val = formatTime(props.minDate);
+      } else if (props.maxDate && props.maxDate?.getDate() === date?.getDate()) {
+        val = formatTime(props.maxDate);
+      }
+    }
     setTimeValue(val);
 
     if (val) {
@@ -158,12 +164,23 @@ export const DateTimePicker = factory<DateTimePickerFactory>((_props, ref) => {
       timeDate.setHours(hours);
       timeDate.setMinutes(minutes);
       timeDate.setSeconds(seconds || 0);
-      setValue(assignTime(timeDate, _value || shiftTimezone('add', new Date(), ctx.getTimezone())));
+      timeDate.setMilliseconds(0);
+      setValue(assignTime(timeDate, date || shiftTimezone('add', new Date(), ctx.getTimezone())));
     }
   };
 
+  const handleTimeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    timeInputProps?.onChange?.(event);
+    const val = event.currentTarget.value;
+    updateDateTime({ time: val });
+  };
+
   const handleDateChange = (date: Date) => {
-    setValue(assignTime(_value!, date));
+    if (timeValue) {
+      updateDateTime({ time: timeValue, date });
+    } else {
+      setValue(assignTime(_value!, date));
+    }
     timeInputRef.current?.focus();
   };
 
@@ -248,6 +265,8 @@ export const DateTimePicker = factory<DateTimePickerFactory>((_props, ref) => {
             onKeyDown={handleTimeInputKeyDown}
             size={size}
             data-mantine-stop-propagation={__stopPropagation || undefined}
+            maxTime={props.maxDate ? formatTime(props.maxDate) : undefined}
+            minTime={props.minDate ? formatTime(props.minDate) : undefined}
           />
 
           <ActionIcon<'button'>
