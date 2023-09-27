@@ -50,6 +50,36 @@ form.values; // -> { name: 'John', email: '', age: 21 }
 
 <Demo data={FormDemos.reset} />
 
+## setInitialValues handler
+
+`font.setInitialValues` handler allows to update `initialValues` after form was initialized:
+
+```tsx
+import { useEffect } from 'react';
+import { useForm } from '@mantine/form';
+
+function Demo() {
+  const form = useForm({
+    initialValues: {
+      name: '',
+      email: '',
+    },
+  });
+
+  useEffect(() => {
+    fetch('/api/user')
+      .then((res) => res.json())
+      .then((data) => {
+        // Update initial values after form was initialized
+        // These values will be used in form.reset
+        // and to compare values to get dirty state
+        form.setInitialValues(data);
+        form.setValues(data);
+      });
+  }, []);
+}
+```
+
 ## transformValues
 
 Use `transformValues` to transform values before they get submitted in `onSubmit` handler.
