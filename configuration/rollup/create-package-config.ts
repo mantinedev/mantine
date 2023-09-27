@@ -50,6 +50,7 @@ export default async function createPackageConfig(config: PkgConfigInput): Promi
     postcss({
       extract: true,
       modules: { generateScopedName },
+      minimize: true,
     }),
     banner((chunk) => {
       if (chunk.fileName === 'index.js' || chunk.fileName === 'index.mjs') {

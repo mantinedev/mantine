@@ -59,6 +59,7 @@
   },
   "devDependencies": {
     "@babel/core": "^7.21.0",
+    "@hello-pangea/dnd": "^16.3.0",
     "@rollup/plugin-alias": "^3.1.2",
     "@rollup/plugin-commonjs": "^19.0.0",
     "@rollup/plugin-json": "^4.1.0",
@@ -122,7 +123,6 @@
     "postcss-preset-mantine": "1.7.0",
     "postcss-simple-vars": "^7.0.1",
     "prettier": "^3.0.0",
-    "@hello-pangea/dnd": "^16.3.0",
     "react-docgen-typescript": "2.1.0",
     "react-dom": "^18.2.0",
     "react-virtuoso": "^4.3.10",
