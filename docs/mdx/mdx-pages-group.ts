@@ -16,6 +16,8 @@ export const MDX_PAGES_GROUPS: MdxPagesGroup[] = [
   {
     group: 'styles',
     pages: [
+      MDX_DATA.MantineStyles,
+      MDX_DATA.CSSFilesList,
       MDX_DATA.CSSModules,
       MDX_DATA.PostCSSPreset,
       MDX_DATA.VanillaExtract,

@@ -1,0 +1,30 @@
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.MantineStyles);
+
+# Mantine styles
+
+## Mantine components styles
+
+All Mantine components are built with CSS modules, but all styles are bundled before publishing to npm.
+To include these styles, you need to import `@mantine/{package}/styles.css` file in your application.
+Example with `@mantine/core` package:
+
+```tsx
+import '@mantine/core/styles.css';
+```
+
+By adding this import, you will have all styles of `@mantine/core` components in your application.
+
+## Import styles per component
+
+If you want to reduce CSS bundle size, you can import styles per component. Note that some components
+have dependencies, for example, [Button](/core/button) component uses [UnstyledButton](/core/unstyled-button)
+component internally, so you need to import styles for both components. You can find a full list of
+exported styles from `@mantine/core` package and additional instructions on [this page](/styles/css-files-list).
+
+```tsx
+import '@mantine/core/styles/UnstyledButton.css';
+import '@mantine/core/styles/Button.css';
+```

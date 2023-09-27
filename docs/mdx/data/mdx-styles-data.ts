@@ -1,6 +1,13 @@
 import { Frontmatter } from '@/types';
 
 export const MDX_STYLES_DATA: Record<string, Frontmatter> = {
+  MantineStyles: {
+    title: 'Mantine styles',
+    slug: '/styles/mantine-styles',
+    search: 'Mantine .css files',
+    hideHeader: true,
+  },
+
   CSSModules: {
     title: 'CSS modules',
     slug: '/styles/css-modules',
