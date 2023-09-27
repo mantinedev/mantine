@@ -265,8 +265,8 @@ export const DateTimePicker = factory<DateTimePickerFactory>((_props, ref) => {
             onKeyDown={handleTimeInputKeyDown}
             size={size}
             data-mantine-stop-propagation={__stopPropagation || undefined}
-            maxTime={props.maxDate ? formatTime(props.maxDate) : undefined}
-            minTime={props.minDate ? formatTime(props.minDate) : undefined}
+            min={props.minDate ? formatTime(props.minDate) : undefined}
+            max={props.maxDate ? formatTime(props.maxDate) : undefined}
           />
 
           <ActionIcon<'button'>

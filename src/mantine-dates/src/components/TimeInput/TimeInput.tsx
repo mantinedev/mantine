@@ -15,10 +15,6 @@ import classes from './TimeInput.module.css';
 export interface TimeInputProps extends InputBaseProps, ElementProps<'input', 'size'> {
   /** Determines whether seconds input should be rendered */
   withSeconds?: boolean;
-  /** Minimum possible time */
-  minTime?: string;
-  /** Maximum possible time */
-  maxTime?: string;
 }
 
 export type TimeInputFactory = Factory<{
@@ -49,8 +45,6 @@ export const TimeInput = factory<TimeInputFactory>((_props, ref) => {
       step={withSeconds ? 1 : 60}
       type="time"
       __staticSelector="TimeInput"
-      min={props.minTime}
-      max={props.maxTime}
     />
   );
 });
