@@ -76,6 +76,9 @@ export interface TagsInputProps
 
   /** Props passed down to the clear button */
   clearButtonProps?: __CloseButtonProps & ElementProps<'button'>;
+
+  /** Props passed down to the hidden input */
+  hiddenInputProps?: React.ComponentPropsWithoutRef<'input'>;
 }
 
 export type TagsInputFactory = Factory<{
@@ -154,6 +157,7 @@ export const TagsInput = factory<TagsInputFactory>((_props, ref) => {
     id,
     clearable,
     clearButtonProps,
+    hiddenInputProps,
     ...others
   } = props;
 
@@ -384,7 +388,14 @@ export const TagsInput = factory<TagsInputFactory>((_props, ref) => {
           labelId={`${_id}-label`}
         />
       </Combobox>
-      <input type="hidden" name={name} form={form} value={_value.join(',')} disabled={disabled} />
+      <input
+        type="hidden"
+        name={name}
+        form={form}
+        value={_value.join(',')}
+        disabled={disabled}
+        {...hiddenInputProps}
+      />
     </>
   );
 });

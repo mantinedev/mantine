@@ -113,6 +113,9 @@ export interface RangeSliderProps
 
   /** Second thumb `aria-label` */
   thumbToLabel?: string;
+
+  /** Props passed down to the hidden input */
+  hiddenInputProps?: React.ComponentPropsWithoutRef<'input'>;
 }
 
 export type RangeSliderFactory = Factory<{
@@ -180,6 +183,7 @@ export const RangeSlider = factory<RangeSliderFactory>((_props, ref) => {
     className,
     style,
     vars,
+    hiddenInputProps,
     ...others
   } = props;
 
@@ -494,8 +498,8 @@ export const RangeSlider = factory<RangeSliderFactory>((_props, ref) => {
           </Thumb>
         </Track>
 
-        <input type="hidden" name={`${name}_from`} value={_value[0]} />
-        <input type="hidden" name={`${name}_to`} value={_value[1]} />
+        <input type="hidden" name={`${name}_from`} value={_value[0]} {...hiddenInputProps} />
+        <input type="hidden" name={`${name}_to`} value={_value[1]} {...hiddenInputProps} />
       </SliderRoot>
     </SliderProvider>
   );
