@@ -16,7 +16,8 @@
         "default": "./cjs/index.js"
       }
     },
-    "./styles.css": "./esm/index.css"
+    "./styles.css": "./esm/index.css",
+    "./styles.layer.css": "./esm/index.layer.css"
   },
   "sideEffects": false,
   "license": "MIT",
