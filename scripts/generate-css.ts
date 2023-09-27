@@ -1,3 +1,4 @@
+// Generates separate css files for each @mantine/core component
 // @ts-ignore
 import postcssPresetMantine from 'postcss-preset-mantine';
 import postcss from 'postcss';
@@ -33,7 +34,11 @@ async function processFile(filePath: string, scopeBehaviour: 'local' | 'global')
   ]).process(fs.readFileSync(filePath, 'utf-8'), { from: path.basename(filePath) });
 
   const fileName = prepareFileName(filePath);
-  return fs.writeFile(path.join(outputFolder, fileName), result.css);
+  await fs.writeFile(path.join(outputFolder, fileName), result.css);
+  await fs.writeFile(
+    path.join(outputFolder, fileName.replace('.css', '.layer.css')),
+    `@layer mantine {${result.css}}`
+  );
 }
 
 modules.forEach((file) => processFile(file, 'local'));

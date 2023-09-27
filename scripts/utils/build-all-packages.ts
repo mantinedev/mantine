@@ -20,6 +20,7 @@ export async function buildAllPackages(options?: BuildOptions) {
   }
 
   await execa('npm', ['run', 'generate-css']);
+  await execa('npm', ['run', 'generate-css-layers']);
 
   return packages;
 }

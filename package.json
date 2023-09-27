@@ -52,7 +52,8 @@
     "release:minor": "npm run _release minor && npm run docs:deploy",
     "release:major": "npm run _release major && npm run docs:deploy",
     "storybook": "start-storybook -p 6006",
-    "generate-css": "esno scripts/generate-css"
+    "generate-css": "esno scripts/generate-css",
+    "generate-css-layers": "esno scripts/generate-css-layers"
   },
   "resolutions": {
     "@types/react": "18.2.17"
