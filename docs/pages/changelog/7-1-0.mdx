@@ -3,6 +3,44 @@ import { MDX_DATA } from '@/mdx';
 
 export default Layout(MDX_DATA.Changelog710);
 
+## CSS layers
+
+Starting from 7.1.0 it is possible to import all `@mantine/*` packages styles with rules
+defined in `mantine` [CSS layer](https://developer.mozilla.org/en-US/docs/Web/CSS/@layer).
+CSS rules within a layer are grouped together and applied before rules without a layer. This means that
+even if you do not have control over styles import order, you can still override Mantine styles with
+regular styles.
+
+```tsx
+// If your styles are not wrapped in @layer directive,
+// they will be applied after Mantine styles.
+// Import order does not affect styles in this case
+import classes from './Demo.module.css';
+import '@mantine/core/styles.layer.css';
+```
+
+You can import styles within a layer by importing `@mantine/*/styles.layer.css` files.
+Note that these files are a full replacement for `@mantine/*/styles.css` files –
+you should not import both of them.
+
+```tsx
+import '@mantine/core/styles.layer.css';
+import '@mantine/dates/styles.layer.css';
+// ... other styles
+```
+
+CSS layers are also useful if you want to combine Mantine components with other libraries which also
+provide styles. You can use `@layer` directive to control the order of styles:
+
+```scss
+@layer base, mantine, components;
+```
+
+In this example, Mantine styles will take precedence over other library `base` styles, but other library
+`components` styles will take precedence over Mantine component styles.
+
+As of September 2023, CSS layers are supported in all modern browsers and have [90% browser support](https://caniuse.com/css-cascade-layers).
+
 ## renderRoot prop
 
 All [polymorphic](/guides/polymorphic) components now support `renderRoot` prop, which
