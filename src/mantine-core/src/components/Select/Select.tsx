@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import { useId, useUncontrolled } from '@mantine/hooks';
 import {
   BoxProps,
@@ -135,8 +135,8 @@ export const Select = factory<SelectFactory>((_props, ref) => {
     ...others
   } = props;
 
-  const parsedData = getParsedComboboxData(data);
-  const optionsLockup = getOptionsLockup(parsedData);
+  const parsedData = useMemo(() => getParsedComboboxData(data), [data]);
+  const optionsLockup = useMemo(() => getOptionsLockup(parsedData), [parsedData]);
   const _id = useId(id);
 
   const [_value, setValue] = useUncontrolled({
