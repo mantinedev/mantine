@@ -1,5 +1,5 @@
 import React from 'react';
-import {MantineSize, BoxProps, ElementProps, Box, useDirection} from '../../../core';
+import { MantineSize, BoxProps, ElementProps, Box, useDirection } from '../../../core';
 import { StarSymbol } from '../StarSymbol/StarSymbol';
 import { useRatingContext } from '../Rating.context';
 
@@ -69,7 +69,9 @@ export function RatingItem({
             '--rating-symbol-clip-path':
               fractionValue === 1
                 ? undefined
-                : (dir === 'ltr' ? `inset(0 ${active ? 100 - fractionValue * 100 : 100}% 0 0)` : `inset(0 0 0 ${active ? 100 - fractionValue * 100 : 100}% )`),
+                : dir === 'ltr'
+                ? `inset(0 ${active ? 100 - fractionValue * 100 : 100}% 0 0)`
+                : `inset(0 0 0 ${active ? 100 - fractionValue * 100 : 100}% )`,
           }}
         >
           {full
