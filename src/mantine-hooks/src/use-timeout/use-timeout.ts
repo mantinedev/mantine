@@ -16,7 +16,7 @@ export function useTimeout(
         }, delay);
       }
     },
-    [callback, delay],
+    [callback, delay]
   );
 
   const clear = useCallback(() => {
@@ -32,7 +32,7 @@ export function useTimeout(
     }
 
     return clear;
-  }, [clear, options.autoInvoke, start]);
+  }, [clear, start]);
 
   return { start, clear };
 }
