@@ -32,7 +32,7 @@ export function useTimeout(
     }
 
     return clear;
-  }, [clear, delay, options.autoInvoke, start]);
+  }, [clear, options.autoInvoke, start]);
 
   return { start, clear };
 }
