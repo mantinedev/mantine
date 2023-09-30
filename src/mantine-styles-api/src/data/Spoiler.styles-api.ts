@@ -13,4 +13,8 @@ export const SpoilerStylesApi: StylesApiData<SpoilerFactory> = {
       '--spoiler-transition-duration': 'Controls transition duration',
     },
   },
+
+  modifiers: [
+    { modifier: 'data-has-spoiler', selector: 'root', value: 'Whether the control button is shown or not' },
+  ],
 };
