@@ -137,10 +137,10 @@ export const DateInput = factory<DateInputFactory>((_props, ref) => {
 
   const { calendarProps, others } = pickCalendarProps(rest);
   const ctx = useDatesContext();
-  const defaultDateParser = (dateVal: string) => {
-    const parsedDate = dayjs(dateVal, valueFormat, ctx.getLocale(locale)).toDate();
+  const defaultDateParser = (val: string) => {
+    const parsedDate = dayjs(val, valueFormat, ctx.getLocale(locale)).toDate();
     return Number.isNaN(parsedDate.getTime())
-      ? dateStringParser(dateVal, ctx.getTimezone())
+      ? dateStringParser(val, ctx.getTimezone())
       : parsedDate;
   };
 
