@@ -10,7 +10,6 @@ export function scopeTab(node: HTMLElement, event: KeyboardEvent) {
   const root = node.getRootNode() as unknown as DocumentOrShadowRoot;
   let leavingFinalTabbable = finalTabbable === root.activeElement || node === root.activeElement;
 
-  // Handle the case of the active element being in a RadioGroup with the finalTabbable element
   const activeElement = root.activeElement as Element;
   const activeElementIsRadio =
     activeElement.tagName === 'INPUT' && activeElement.getAttribute('type') === 'radio';
