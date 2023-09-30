@@ -15,6 +15,10 @@ export const SpoilerStylesApi: StylesApiData<SpoilerFactory> = {
   },
 
   modifiers: [
-    { modifier: 'data-has-spoiler', selector: 'root', value: 'Whether the control button is shown or not' },
+    {
+      modifier: 'data-has-spoiler',
+      selector: 'root',
+      value: 'Whether the control button is shown or not',
+    },
   ],
 };
