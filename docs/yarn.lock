@@ -133,10 +133,10 @@
   version "0.0.0"
   uid ""
 
-"@mantine/store@7.0.2":
-  version "7.0.2"
-  resolved "https://registry.yarnpkg.com/@mantine/store/-/store-7.0.2.tgz#cb3288829c75c5d6b96555cab33c58c72cc32c3d"
-  integrity sha512-0OAca3r/IQ6c7Pb6YvmL+5hyCo31vA3SfZKTwb1KquX4SjFfjpdhPuTR/tzjmxqwIw4zkzXH/7ckNZ/AHHwm8A==
+"@mantine/store@7.1.0":
+  version "7.1.0"
+  resolved "https://registry.yarnpkg.com/@mantine/store/-/store-7.1.0.tgz#81e64631e71dfb5098a5d3d9831c70f15cb23bc5"
+  integrity sha512-WmU1jxsHWex5gcoAoB6C/vyVbDiWp6k6iroXHRWIqzd7vQ9SiLzXNygLTlilwW4HwkkJZGUsskSbwzFo+oqiSw==
 
 "@mantine/store@link:../src/mantine-store":
   version "0.0.0"
