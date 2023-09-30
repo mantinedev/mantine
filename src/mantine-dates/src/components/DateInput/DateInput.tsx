@@ -137,18 +137,18 @@ export const DateInput = factory<DateInputFactory>((_props, ref) => {
 
   const { calendarProps, others } = pickCalendarProps(rest);
   const ctx = useDatesContext();
-  const defaultDateParser = (val: string) => {
-    const parsedDate = dayjs(val, valueFormat, ctx.getLocale(locale)).toDate();
+  const defaultDateParser = (DateVal: string) => {
+    const parsedDate = dayjs(DateVal, valueFormat, ctx.getLocale(locale)).toDate();
     return Number.isNaN(parsedDate.getTime())
-      ? dateStringParser(val, ctx.getTimezone())
+      ? dateStringParser(DateVal, ctx.getTimezone())
       : parsedDate;
   };
 
   const _dateParser = dateParser || defaultDateParser;
   const _allowDeselect = allowDeselect !== undefined ? allowDeselect : clearable;
 
-  const formatValue = (val: Date) =>
-    val ? dayjs(val).locale(ctx.getLocale(locale)).format(valueFormat) : '';
+  const formatValue = (dateVal: Date) =>
+    dateVal ? dayjs(dateVal).locale(ctx.getLocale(locale)).format(valueFormat) : '';
 
   const [_value, setValue, controlled] = useUncontrolledDates({
     type: 'default',
