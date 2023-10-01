@@ -103,6 +103,24 @@
         border-right-width: calc(var(--ai-border-width) / 2);
         border-left-width: calc(var(--ai-border-width) / 2);
       }
+
+      @mixin rtl {
+        &:not(:only-child):first-child {
+          border: var(--ai-bd, rem(1px) solid transparent);
+          border-radius: var(--ai-radius, var(--mantine-radius-default));
+          border-bottom-left-radius: 0;
+          border-top-left-radius: 0;
+          border-left-width: calc(var(--ai-border-width) / 2);
+        }
+
+        &:not(:only-child):last-child {
+          border: var(--ai-bd, rem(1px) solid transparent);
+          border-radius: var(--ai-radius, var(--mantine-radius-default));
+          border-bottom-right-radius: 0;
+          border-top-right-radius: 0;
+          border-right-width: calc(var(--ai-border-width) / 2);
+        }
+      }
     }
   }
 
