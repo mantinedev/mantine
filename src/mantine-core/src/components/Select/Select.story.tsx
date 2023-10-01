@@ -86,6 +86,19 @@ export function ControlledSearch() {
   );
 }
 
+export function SearchControlledValue() {
+  return (
+    <div style={{ padding: 40 }}>
+      <Select
+        value="React"
+        data={['React', 'Angular', 'Svelte']}
+        placeholder="Select something"
+        searchable
+      />
+    </div>
+  );
+}
+
 export function AllowDeselectFalse() {
   return (
     <div style={{ padding: 40 }}>
