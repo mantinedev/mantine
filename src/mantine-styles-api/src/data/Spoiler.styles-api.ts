@@ -11,8 +11,6 @@ export const SpoilerStylesApi: StylesApiData<SpoilerFactory> = {
   vars: {
     root: {
       '--spoiler-transition-duration': 'Controls transition duration',
-      '--spoiler-margin-bottom':
-        'Controls the margin bottom applied when the control button is shown',
     },
   },
 

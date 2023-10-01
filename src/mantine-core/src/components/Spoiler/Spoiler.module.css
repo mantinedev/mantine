@@ -1,8 +1,9 @@
 .root {
   position: relative;
+  margin-bottom: var(--_spoiler-margin-bottom);
 
   &[data-has-spoiler] {
-    margin-bottom: var(--spoiler-margin-bottom, rem(24px));
+    --_spoiler-margin-bottom: rem(24px);
   }
 }
 
