@@ -7,7 +7,7 @@ import { useProps } from '../../core';
 function createPortalNode(props: React.ComponentPropsWithoutRef<'div'>) {
   const node = document.createElement('div');
   node.setAttribute('data-portal', 'true');
-  typeof props.className === 'string' && node.classList.add(props.className);
+  typeof props.className === 'string' && node.classList.add(...props.className.split(' '));
   typeof props.style === 'object' && Object.assign(node.style, props.style);
   typeof props.id === 'string' && node.setAttribute('id', props.id);
   return node;
