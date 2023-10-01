@@ -179,7 +179,7 @@
     "react-imask": "^6.4.3",
     "react-number-format": "^5.2.2",
     "react-remove-scroll": "^2.5.6",
-    "react-textarea-autosize": "8.5.2",
+    "react-textarea-autosize": "8.5.3",
     "react-transition-group": "4.4.5",
     "type-fest": "^3.13.1",
     "zod": "^3.21.4"
