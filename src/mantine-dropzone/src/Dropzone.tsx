@@ -6,7 +6,7 @@ import {
   FileWithPath,
   DropEvent,
   FileError,
-} from 'react-dropzone';
+} from 'react-dropzone-esm';
 import {
   Box,
   BoxProps,
