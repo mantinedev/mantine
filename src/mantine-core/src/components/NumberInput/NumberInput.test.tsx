@@ -73,7 +73,7 @@ describe('@mantine/core/NumberInput', () => {
     const spy = jest.fn();
     render(<NumberInput max={10} min={0} step={6} onChange={spy} />);
     await enterText('5');
-    expect(spy).toHaveBeenLastCalledWith(5);
+    expect(spy).toHaveBeenLastCalledWith('5');
     await enterText('{backspace}');
     expect(spy).toHaveBeenLastCalledWith('');
     expectValue('');
@@ -85,15 +85,15 @@ describe('@mantine/core/NumberInput', () => {
 
     focusInput();
     await enterText('3');
-    expect(spy).toHaveBeenLastCalledWith(3);
+    expect(spy).toHaveBeenLastCalledWith('3');
     expect(spy).toHaveBeenCalledTimes(1);
 
     await enterText('2');
-    expect(spy).toHaveBeenLastCalledWith(32);
+    expect(spy).toHaveBeenLastCalledWith('32');
     expect(spy).toHaveBeenCalledTimes(2);
 
     await enterText('a');
-    expect(spy).toHaveBeenLastCalledWith(32);
+    expect(spy).toHaveBeenLastCalledWith('32');
     expect(spy).toHaveBeenCalledTimes(2);
   });
 
