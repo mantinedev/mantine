@@ -85,7 +85,7 @@
       content: '';
       position: absolute;
       inset: rem(-1px);
-      border-radius: var(--button-radius);
+      border-radius: var(--button-radius, var(--mantine-radius-default));
       background-color: var(--_button-loading-overlay-bg);
     }
   }
