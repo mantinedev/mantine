@@ -11,13 +11,15 @@ import {
   createVarsResolver,
   Factory,
   rem,
+  getSpacing,
+  MantineSpacing,
 } from '../../core';
 import { Anchor } from '../Anchor';
 import classes from './Spoiler.module.css';
 
 export type SpoilerStylesNames = 'root' | 'control' | 'content';
 export type SpoilerCssVariables = {
-  root: '--spoiler-transition-duration';
+  root: '--spoiler-transition-duration' | '--spoiler-margin-bottom';
 };
 
 export interface SpoilerProps
@@ -41,6 +43,9 @@ export interface SpoilerProps
 
   /** Spoiler reveal transition duration in ms, set 0 or null to turn off animation, `200` by default */
   transitionDuration?: number;
+
+  /** Margin bottom applied when the control button is shown, `rem(24px)` by default */
+  activeSpoilerMarginBottom?: MantineSpacing;
 }
 
 export type SpoilerFactory = Factory<{
@@ -55,12 +60,16 @@ const defaultProps: Partial<SpoilerProps> = {
   initialState: false,
 };
 
-const varsResolver = createVarsResolver<SpoilerFactory>((_, { transitionDuration }) => ({
-  root: {
-    '--spoiler-transition-duration':
-      transitionDuration !== undefined ? `${transitionDuration}ms` : undefined,
-  },
-}));
+const varsResolver = createVarsResolver<SpoilerFactory>(
+  (_, { transitionDuration, activeSpoilerMarginBottom }) => ({
+    root: {
+      '--spoiler-transition-duration':
+        transitionDuration !== undefined ? `${transitionDuration}ms` : undefined,
+      '--spoiler-margin-bottom':
+        activeSpoilerMarginBottom !== undefined ? getSpacing(activeSpoilerMarginBottom) : undefined,
+    },
+  })
+);
 
 export const Spoiler = factory<SpoilerFactory>((_props, ref) => {
   const props = useProps('Spoiler', defaultProps, _props);

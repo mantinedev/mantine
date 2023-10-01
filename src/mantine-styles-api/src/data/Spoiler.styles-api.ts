@@ -11,6 +11,8 @@ export const SpoilerStylesApi: StylesApiData<SpoilerFactory> = {
   vars: {
     root: {
       '--spoiler-transition-duration': 'Controls transition duration',
+      '--spoiler-margin-bottom':
+        'Controls the margin bottom applied when the control button is shown',
     },
   },
 
@@ -18,7 +20,7 @@ export const SpoilerStylesApi: StylesApiData<SpoilerFactory> = {
     {
       modifier: 'data-has-spoiler',
       selector: 'root',
-      value: 'Whether the control button is shown or not',
+      condition: 'Whether the control button is shown or not',
     },
   ],
 };
