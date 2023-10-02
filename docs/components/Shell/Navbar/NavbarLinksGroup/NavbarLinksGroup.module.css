@@ -72,13 +72,13 @@
 
   @mixin light {
     background-color: var(--mantine-color-gray-0);
-    border-color: var(--mantine-color-gray-3);
+    border-color: var(--mantine-color-gray-3) !important;
     color: var(--mantine-color-gray-6);
   }
 
   @mixin dark {
     background-color: var(--mantine-color-dark-7);
-    border-color: var(--mantine-color-dark-6);
+    border-color: var(--mantine-color-dark-6) !important;
     color: var(--mantine-color-dark-2);
   }
 
@@ -94,11 +94,11 @@
     border-bottom-left-radius: var(--mantine-radius-sm);
 
     @mixin light {
-      border-color: var(--mantine-color-gray-3);
+      border-color: var(--mantine-color-gray-3) !important;
     }
 
     @mixin dark {
-      border-color: var(--mantine-color-dark-6);
+      border-color: var(--mantine-color-dark-6) !important;
     }
   }
 
@@ -150,16 +150,17 @@
   user-select: none;
 
   @mixin light {
-    border-color: var(--mantine-color-gray-3);
+    border-color: var(--mantine-color-gray-3) !important;
     color: var(--mantine-color-gray-7);
   }
 
   @mixin dark {
-    border-color: var(--mantine-color-dark-6);
+    border-color: var(--mantine-color-dark-6) !important;
     color: var(--mantine-color-dark-1);
   }
 
   @mixin rtl {
+    text-align: right;
     padding-left: var(--mantine-spacing-md);
     padding-right: rem(23px);
     border-left: 0;
@@ -171,11 +172,11 @@
     border-bottom-left-radius: var(--mantine-radius-sm);
 
     @mixin light {
-      border-color: var(--mantine-color-gray-3);
+      border-color: var(--mantine-color-gray-3) !important;
     }
 
     @mixin dark {
-      border-color: var(--mantine-color-dark-6);
+      border-color: var(--mantine-color-dark-6) !important;
     }
   }
 

@@ -98,11 +98,11 @@
   border-left: rem(1px) solid;
 
   @mixin light {
-    border-color: var(--mantine-color-gray-3);
+    border-color: var(--mantine-color-gray-3) !important;
   }
 
   @mixin dark {
-    border-color: var(--mantine-color-dark-4);
+    border-color: var(--mantine-color-dark-4) !important;
   }
 
   @mixin rtl {
@@ -110,11 +110,11 @@
     border-right: rem(1px) solid;
 
     @mixin light {
-      border-color: var(--mantine-color-gray-3);
+      border-color: var(--mantine-color-gray-3) !important;
     }
 
     @mixin dark {
-      border-color: var(--mantine-color-dark-4);
+      border-color: var(--mantine-color-dark-4) !important;
     }
   }
 }
