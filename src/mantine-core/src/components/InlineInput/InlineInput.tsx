@@ -102,13 +102,13 @@ export const InlineInput = forwardRef<HTMLDivElement, InlineInputProps>(
             )}
 
             {description && (
-              <Input.Description size={size} {...getStyles('description')}>
+              <Input.Description size={size} __inheritStyles={false} {...getStyles('description')}>
                 {description}
               </Input.Description>
             )}
 
             {error && error !== 'boolean' && (
-              <Input.Error size={size} {...getStyles('error')}>
+              <Input.Error size={size} __inheritStyles={false} {...getStyles('error')}>
                 {error}
               </Input.Error>
             )}
