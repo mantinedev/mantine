@@ -33,6 +33,9 @@ import '@mantine/core/styles/UnstyledButton.css';
 import '@mantine/core/styles/Button.css';
 ```
 
+Note that individual component styles are available only for `@mantine/core` package.
+Other packages have minimal styles that can be imported with `@mantine/{package}/styles.css` import.
+
 ## Styles import order
 
 It is important to keep the correct styles import order. `@mantine/core` package
@@ -85,6 +88,14 @@ Make sure that you do not import both `styles.css` and `styles.layer.css` files 
 // ❌ Do not import both styles.css and styles.layer.css
 import '@mantine/core/styles.css';
 import '@mantine/core/styles.layer.css';
+```
+
+Similar to package styles, you can import individual component styles with `@layer mantine` directive:
+
+```tsx
+import '@mantine/core/styles/UnstyledButton.layer.css';
+import '@mantine/core/styles/Button.layer.css';
+// ... other styles
 ```
 
 ## How CSS layers work
