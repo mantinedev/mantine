@@ -1,5 +1,5 @@
 {
-  "name": "mantine",
+  "name": "mantine-a91763c0e2",
   "private": true,
   "workspaces": [
     "src/*"
