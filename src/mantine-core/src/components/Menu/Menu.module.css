@@ -59,6 +59,10 @@
 
 .itemLabel {
   flex: 1;
+
+  @mixin rtl {
+    text-align: right;
+  }
 }
 
 .itemSection {
