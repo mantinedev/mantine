@@ -53,7 +53,7 @@ export default async function createPackageConfig(config: PkgConfigInput): Promi
       minimize: true,
     }),
     banner((chunk) => {
-      if (chunk.fileName === 'index.js' || chunk.fileName === 'index.mjs') {
+      if (chunk.fileName !== 'index.js' && chunk.fileName !== 'index.mjs') {
         return "'use client';\n";
       }
 
