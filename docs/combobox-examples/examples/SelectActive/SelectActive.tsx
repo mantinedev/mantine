@@ -46,6 +46,7 @@ export function SelectActive() {
       <Combobox.Target targetType="button">
         <InputBase
           component="button"
+          type="button"
           pointer
           rightSection={<Combobox.Chevron />}
           onClick={() => combobox.toggleDropdown()}

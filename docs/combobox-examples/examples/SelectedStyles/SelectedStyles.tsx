@@ -41,6 +41,7 @@ export function SelectedStyles() {
       <Combobox.Target>
         <InputBase
           component="button"
+          type="button"
           pointer
           rightSection={<Combobox.Chevron />}
           onClick={() => combobox.toggleDropdown()}
