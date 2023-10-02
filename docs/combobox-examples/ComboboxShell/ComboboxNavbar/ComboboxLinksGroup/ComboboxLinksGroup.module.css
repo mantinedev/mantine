@@ -68,6 +68,10 @@
   user-select: none;
   text-decoration: none;
 
+  @mixin hover {
+    background-color: light-dark(var(--mantine-color-gray-0), var(--mantine-color-dark-7));
+  }
+
   @mixin light {
     color: var(--mantine-color-gray-7);
   }
