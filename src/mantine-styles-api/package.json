@@ -2,7 +2,7 @@
   "name": "@mantine/styles-api",
   "description": "Mantine components styles api descriptions",
   "private": true,
-  "version": "7.1.1-alpha.0",
+  "version": "7.1.1",
   "main": "./cjs/index.js",
   "types": "./lib/index.d.ts",
   "module": "./esm/index.mjs",
@@ -28,14 +28,14 @@
     "directory": "src/mantine-styles-api"
   },
   "peerDependencies": {
-    "@mantine/core": "7.1.1-alpha.0",
-    "@mantine/hooks": "7.1.1-alpha.0",
-    "@mantine/dates": "7.1.1-alpha.0",
-    "@mantine/notifications": "7.1.1-alpha.0",
-    "@mantine/spotlight": "7.1.1-alpha.0",
-    "@mantine/dropzone": "7.1.1-alpha.0",
-    "@mantine/tiptap": "7.1.1-alpha.0",
-    "@mantine/carousel": "7.1.1-alpha.0"
+    "@mantine/core": "7.1.1",
+    "@mantine/hooks": "7.1.1",
+    "@mantine/dates": "7.1.1",
+    "@mantine/notifications": "7.1.1",
+    "@mantine/spotlight": "7.1.1",
+    "@mantine/dropzone": "7.1.1",
+    "@mantine/tiptap": "7.1.1",
+    "@mantine/carousel": "7.1.1"
   },
   "dependencies": {},
   "devDependencies": {}
