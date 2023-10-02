@@ -24,6 +24,24 @@ Some components like [Select](/core/select/) do not have any styles on their own
 on top of other components. To find out which components are used in a particular component, check
 the component source code.
 
+If you are not sure which components are used in a particular component, you can import
+all styles for components that are reused in other components:
+
+```tsx
+import '@mantine/core/ScrollArea.css';
+import '@mantine/core/UnstyledButton.css';
+import '@mantine/core/VisuallyHidden.css';
+import '@mantine/core/Paper.css';
+import '@mantine/core/Popover.css';
+import '@mantine/core/CloseButton.css';
+import '@mantine/core/Group.css';
+import '@mantine/core/Loader.css';
+import '@mantine/core/Overlay.css';
+import '@mantine/core/ModalBase.css';
+import '@mantine/core/Input.css';
+import '@mantine/core/Flex.css';
+```
+
 ## Global styles
 
 All Mantine components depend on global styles, you need to import them before
