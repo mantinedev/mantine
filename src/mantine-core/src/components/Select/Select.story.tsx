@@ -16,6 +16,26 @@ export function Usage() {
   );
 }
 
+export function WithinForm() {
+  return (
+    <form
+      onSubmit={(event) => {
+        event.preventDefault();
+        // eslint-disable-next-line no-console
+        console.log('Form submitted');
+      }}
+      style={{ padding: 40 }}
+    >
+      <Select
+        data={['React', 'Angular', 'Svelte']}
+        placeholder="Select something"
+        defaultValue="First"
+        searchable
+      />
+    </form>
+  );
+}
+
 export function Clearable() {
   return (
     <div style={{ padding: 40, maxWidth: 400 }}>
