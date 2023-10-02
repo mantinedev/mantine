@@ -50,7 +50,7 @@
     "react-dom": "^18.2.0"
   },
   "dependencies": {
-    "react-dropzone-esm": "15.0.0"
+    "react-dropzone-esm": "15.0.1"
   },
   "devDependencies": {}
 }
