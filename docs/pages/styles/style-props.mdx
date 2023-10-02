@@ -64,8 +64,14 @@ import { Box } from '@mantine/core';
 // background: theme.colors.orange[1]
 <Box bg="orange.1" />
 
-// color: theme.colorScheme === 'dark' ? theme.colors.dark[2] : theme.colors.gray[6]
+// color: if colorScheme is dark `var(--mantine-color-dark-2)`,
+// if color scheme is light `var(--mantine-color-gray-6)`
 <Box c="dimmed" />
+
+// color: if colorScheme is dark `var(--mantine-color-white)`,
+// if color scheme is light `var(--mantine-color-black)`
+<Box c="bright" />
+
 
 // background: #EDFEFF
 <Box bg="#EDFEFF" />
