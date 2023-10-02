@@ -107,20 +107,6 @@ export default async function createPackageConfig(config: PkgConfigInput): Promi
     output.exports = 'named';
   }
 
-  if (config.format === 'umd') {
-    output.file = path.resolve(config.basePath, 'lib/index.umd.js');
-    output.globals = {
-      ...pkgList
-        .map((pkg) => ({
-          [pkg.packageJson.name]: pkg.packageJson.name,
-        }))
-        .reduce((globals, pkgGlobal) => ({ ...globals, ...pkgGlobal }), {}),
-      react: 'React',
-      dayjs: 'dayjs',
-      'react-dom': 'ReactDOM',
-    };
-  }
-
   if (config.analyze && config.format === 'es') {
     plugins.push(
       visualizer({
