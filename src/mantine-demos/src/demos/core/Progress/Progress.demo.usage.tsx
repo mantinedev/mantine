@@ -34,6 +34,6 @@ export const usage: MantineDemo = {
       libraryValue: '__',
     },
     { prop: 'striped', type: 'boolean', initialValue: false, libraryValue: false },
-    { prop: 'animate', type: 'boolean', initialValue: false, libraryValue: false },
+    { prop: 'animated', type: 'boolean', initialValue: false, libraryValue: false },
   ],
 };
