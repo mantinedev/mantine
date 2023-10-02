@@ -1,5 +1,6 @@
 import { Frontmatter, MdxPagesCategory, MdxPagesGroup } from '@/types';
 import { MDX_DATA } from './mdx-data';
+import { MDX_META_DATA } from './data/mdx-meta-data';
 
 export const MDX_PAGES_GROUPS: MdxPagesGroup[] = [
   {
@@ -336,16 +337,19 @@ export const MDX_PAGES_GROUPS: MdxPagesGroup[] = [
   },
 ];
 
-export const ALL_MDX_PAGES: Frontmatter[] = MDX_PAGES_GROUPS.reduce<Frontmatter[]>((acc, group) => {
-  group.pages.forEach((item) => {
-    if (item.category) {
-      const categoryPages = [...(item as MdxPagesCategory).pages];
-      categoryPages.sort((a, b) => a.title.localeCompare(b.title));
-      acc.push(...categoryPages);
-    } else {
-      acc.push(item as Frontmatter);
-    }
-  });
+export const ALL_MDX_PAGES: Frontmatter[] = [
+  ...MDX_PAGES_GROUPS.reduce<Frontmatter[]>((acc, group) => {
+    group.pages.forEach((item) => {
+      if (item.category) {
+        const categoryPages = [...(item as MdxPagesCategory).pages];
+        categoryPages.sort((a, b) => a.title.localeCompare(b.title));
+        acc.push(...categoryPages);
+      } else {
+        acc.push(item as Frontmatter);
+      }
+    });
 
-  return acc;
-}, []);
+    return acc;
+  }, []),
+  ...Object.keys(MDX_META_DATA).map((key) => MDX_META_DATA[key]),
+];

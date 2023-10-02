@@ -53,7 +53,7 @@ export const MDX_STYLES_DATA: Record<string, Frontmatter> = {
   CSSFilesList: {
     title: 'CSS files list',
     slug: '/styles/css-files-list',
-    hideSiblings: true,
+    search: 'List of all Mantine .css files',
     hideHeader: true,
   },
 

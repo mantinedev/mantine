@@ -19,8 +19,8 @@ export const MDX_META_DATA: Record<string, Frontmatter> = {
 
   GettingStarted: {
     title: 'Getting started',
+    search: 'Getting started with Mantine',
     slug: '/getting-started',
-    hideInSearch: true,
     hideSiblings: true,
     hideHeader: true,
   },
