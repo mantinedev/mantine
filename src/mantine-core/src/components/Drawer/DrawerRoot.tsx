@@ -8,6 +8,7 @@ import {
   Factory,
   getDefaultZIndex,
   getSize,
+  useDirection,
 } from '../../core';
 import { MantineTransition } from '../Transition';
 import { ModalBaseProps, ModalBase, ModalBaseStylesNames } from '../ModalBase';
@@ -49,6 +50,13 @@ const transitions: Record<DrawerPosition, MantineTransition> = {
   right: 'slide-left',
 };
 
+const rtlTransitions: Record<DrawerPosition, MantineTransition> = {
+  top: 'slide-down',
+  bottom: 'slide-up',
+  right: 'slide-right',
+  left: 'slide-left',
+};
+
 const defaultProps: Partial<DrawerRootProps> = {
   closeOnClickOutside: true,
   withinPortal: true,
@@ -87,6 +95,8 @@ export const DrawerRoot = factory<DrawerRootFactory>((_props, ref) => {
     ...others
   } = props;
 
+  const { dir } = useDirection();
+
   const getStyles = useStyles<DrawerRootFactory>({
     name: 'Drawer',
     classes,
@@ -100,12 +110,14 @@ export const DrawerRoot = factory<DrawerRootFactory>((_props, ref) => {
     varsResolver,
   });
 
+  const drawerTransition = (dir === 'rtl' ? rtlTransitions : transitions)[position!];
+
   return (
     <DrawerProvider value={{ scrollAreaComponent, getStyles }}>
       <ModalBase
         ref={ref}
         {...getStyles('root')}
-        transitionProps={{ transition: transitions[position!], ...transitionProps }}
+        transitionProps={{ transition: drawerTransition, ...transitionProps }}
         unstyled={unstyled}
         {...others}
       />
