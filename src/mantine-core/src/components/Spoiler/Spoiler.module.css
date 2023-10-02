@@ -1,6 +1,10 @@
 .root {
   position: relative;
-  margin-bottom: rem(24px);
+  margin-bottom: var(--_spoiler-margin-bottom);
+
+  &[data-has-spoiler] {
+    --_spoiler-margin-bottom: rem(24px);
+  }
 }
 
 .content {

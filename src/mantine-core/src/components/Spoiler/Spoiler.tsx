@@ -103,7 +103,13 @@ export const Spoiler = factory<SpoilerFactory>((_props, ref) => {
   const spoilerMoreContent = show ? hideLabel : showLabel;
 
   return (
-    <Box {...getStyles('root')} id={_id} ref={ref} {...others}>
+    <Box
+      {...getStyles('root')}
+      id={_id}
+      ref={ref}
+      data-has-spoiler={spoiler || undefined}
+      {...others}
+    >
       {spoiler && (
         <Anchor
           component="button"
