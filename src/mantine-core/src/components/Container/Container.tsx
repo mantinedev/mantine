@@ -16,7 +16,7 @@ import classes from './Container.module.css';
 
 export type ContainerStylesNames = 'root';
 export type ContainerCssVariables = {
-  root: '--container-size';
+  root: '--container-size' | '--container-size-xs' | '--container-size-sm'| '--container-size-md' | '--container-size-lg' | '--container-size-xl';
 };
 
 export interface ContainerProps
@@ -42,6 +42,11 @@ const defaultProps: Partial<ContainerProps> = {};
 const varsResolver = createVarsResolver<ContainerFactory>((_, { size, fluid }) => ({
   root: {
     '--container-size': fluid ? undefined : getSize(size, 'container-size'),
+    '--container-size-xs': getSize('xs', 'container-size'),
+    '--container-size-sm': getSize('sm', 'container-size'),
+    '--container-size-md': getSize('md', 'container-size'),
+    '--container-size-lg': getSize('lg', 'container-size'),
+    '--container-size-xl': getSize('xl', 'container-size'),
   },
 }));
 
