@@ -16,7 +16,7 @@ export function useTimeout(
         }, delay);
       }
     },
-    [callback, delay]
+    [delay]
   );
 
   const clear = useCallback(() => {
