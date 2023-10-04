@@ -4,44 +4,42 @@ const argv = require('yargs').argv;
 
 const getPath = (storyPath) => path.resolve(__dirname, storyPath).replace(/\\/g, '/');
 
-const storiesPath = !argv._[0]
+const storiesPath = !argv._[1]
   ? [getPath('../src/**/*.story.@(ts|tsx)')]
   : [
-      getPath(`../src/mantine-*/**/${argv._[0]}.story.@(ts|tsx)`),
-      getPath(`../src/mantine-*/**/${argv._[0]}.demos.story.@(ts|tsx)`),
+      getPath(`../src/mantine-*/**/${argv._[1]}.story.@(ts|tsx)`),
+      getPath(`../src/mantine-*/**/${argv._[1]}.demos.story.@(ts|tsx)`),
     ];
 
 module.exports = {
   stories: storiesPath,
+
   addons: [
     'storybook-dark-mode',
     '@storybook/addon-links',
     '@storybook/addon-essentials',
     '@storybook/addon-interactions',
     {
-      name: 'storybook-css-modules',
+      name: '@storybook/addon-styling-webpack',
       options: {
-        cssModulesLoaderOptions: {
-          importLoaders: 1,
-          modules: {
-            localIdentName: 'mantine-[hash:base64:7]',
-          },
-        },
-      },
-    },
-    {
-      name: '@storybook/addon-postcss',
-      options: {
-        postcssLoaderOptions: {
-          implementation: require('postcss'),
-        },
+        rules: [{
+          test: /\.css$/,
+          sideEffects: true,
+          use: [
+            'style-loader',
+            'css-loader',
+            'postcss-loader',
+          ],
+        }],
       },
     },
   ],
-  framework: '@storybook/react',
-  core: {
-    builder: '@storybook/builder-webpack5',
+
+  framework: {
+    name: '@storybook/react-webpack5',
+    options: {},
   },
+
   webpackFinal: async (config) => {
     config.resolve = {
       ...config.resolve,
@@ -58,5 +56,9 @@ module.exports = {
     config.plugins.pop();
 
     return config;
+  },
+
+  docs: {
+    autodocs: true,
   },
 };
