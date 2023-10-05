@@ -128,6 +128,8 @@ export const Rating = factory<RatingFactory>((_props, ref) => {
     onMouseMove,
     onHover,
     onMouseLeave,
+    onTouchStart,
+    onTouchEnd,
     size,
     variant,
     getSymbolLabel,
@@ -174,6 +176,16 @@ export const Rating = factory<RatingFactory>((_props, ref) => {
   const stableValueRounded = roundValueTo(_value, decimalUnit);
   const finalValue = hovered !== -1 ? hovered : stableValueRounded;
 
+  const getRatingFromCoordinates = (x: number) => {
+    const { left, right, width } = rootRef.current!.getBoundingClientRect();
+    const symbolWidth = width / _count;
+
+    const hoverPosition = dir === 'rtl' ? right - x : x - left;
+    const hoverValue = hoverPosition / symbolWidth;
+
+    return clamp(roundValueTo(hoverValue + decimalUnit / 2, decimalUnit), decimalUnit, _count);
+  };
+
   const handleMouseEnter = (event: React.MouseEvent<HTMLDivElement>) => {
     onMouseEnter?.(event);
     !readOnly && setOutside(false);
@@ -186,17 +198,7 @@ export const Rating = factory<RatingFactory>((_props, ref) => {
       return;
     }
 
-    const { left, right, width } = rootRef.current!.getBoundingClientRect();
-    const symbolWidth = width / _count;
-
-    const hoverPosition = dir === 'rtl' ? right - event.clientX : event.clientX - left;
-    const hoverValue = hoverPosition / symbolWidth;
-
-    const rounded = clamp(
-      roundValueTo(hoverValue + decimalUnit / 2, decimalUnit),
-      decimalUnit,
-      _count
-    );
+    const rounded = getRatingFromCoordinates(event.clientX);
 
     setHovered(rounded);
     rounded !== hovered && onHover?.(rounded);
@@ -214,7 +216,37 @@ export const Rating = factory<RatingFactory>((_props, ref) => {
     hovered !== -1 && onHover?.(-1);
   };
 
+  const handleTouchStart = (event: React.TouchEvent<HTMLDivElement>) => {
+    event.preventDefault();
+
+    const { touches } = event;
+    if (touches.length !== 1) {
+      return;
+    }
+
+    const touch = touches[0];
+    setValue(getRatingFromCoordinates(touch.clientX));
+
+    onTouchStart?.(event);
+  };
+
+  const handleTouchEnd = (event: React.TouchEvent<HTMLDivElement>) => {
+    event.preventDefault();
+
+    onTouchEnd?.(event);
+  };
+
   const handleItemBlur = () => isOutside && setHovered(-1);
+
+  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement> | number) => {
+    if (!readOnly) {
+      if (typeof event === 'number') {
+        setHovered(event);
+      } else {
+        setHovered(parseFloat(event.target.value));
+      }
+    }
+  };
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement> | number) => {
     if (!readOnly) {
@@ -261,6 +293,7 @@ export const Rating = factory<RatingFactory>((_props, ref) => {
                 name={_name}
                 onChange={handleChange}
                 onBlur={handleItemBlur}
+                onInputChange={handleInputChange}
                 id={`${_id}-${index}-${fractionIndex}`}
               />
             );
@@ -277,6 +310,8 @@ export const Rating = factory<RatingFactory>((_props, ref) => {
         onMouseMove={handleMouseMove}
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
+        onTouchStart={handleTouchStart}
+        onTouchEnd={handleTouchEnd}
         variant={variant}
         size={size}
         id={_id}
