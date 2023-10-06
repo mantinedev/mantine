@@ -20,16 +20,19 @@ import {
   getOptionsLockup,
   ComboboxLikeProps,
   ComboboxLikeStylesNames,
+  ComboboxItem,
+  ComboboxParsedItem,
 } from '../Combobox';
+import { addNewOptionToData, createLabel, getOptionExists } from './createable';
 
 export type SelectStylesNames = __InputStylesNames | ComboboxLikeStylesNames;
 
 export interface SelectProps
   extends BoxProps,
-    __BaseInputProps,
-    ComboboxLikeProps,
-    StylesApiProps<SelectFactory>,
-    ElementProps<'input', 'onChange' | 'size' | 'value' | 'defaultValue'> {
+  __BaseInputProps,
+  ComboboxLikeProps,
+  StylesApiProps<SelectFactory>,
+  ElementProps<'input', 'onChange' | 'size' | 'value' | 'defaultValue'> {
   /** Controlled component value */
   value?: string | null;
 
@@ -71,6 +74,12 @@ export interface SelectProps
 
   /** Props passed down to the hidden input */
   hiddenInputProps?: React.ComponentPropsWithoutRef<'input'>;
+
+  /** Determines if new values can be created by the user, `false` by default */
+  createable?: boolean;
+
+  /** Callback when a new value is created */
+  onCreate?(value: string): ComboboxItem;
 }
 
 export type SelectFactory = Factory<{
@@ -90,53 +99,55 @@ const defaultProps: Partial<SelectProps> = {
 export const Select = factory<SelectFactory>((_props, ref) => {
   const props = useProps('Select', defaultProps, _props);
   const {
+    allowDeselect,
+    checkIconPosition,
     classNames,
-    styles,
-    unstyled,
-    vars,
-    dropdownOpened,
+    clearable,
+    clearButtonProps,
+    comboboxProps,
+    createable,
+    data,
     defaultDropdownOpened,
+    defaultSearchValue,
+    defaultValue,
+    disabled,
+    dropdownOpened,
+    error,
+    filter,
+    form,
+    hiddenInputProps,
+    id,
+    limit,
+    maxDropdownHeight,
+    name,
+    nothingFoundMessage,
+    onBlur,
+    onChange,
+    onClick,
+    onCreate,
     onDropdownClose,
     onDropdownOpen,
     onFocus,
-    onBlur,
-    onClick,
-    onChange,
-    data,
-    value,
-    defaultValue,
-    selectFirstOptionOnChange,
     onOptionSubmit,
-    comboboxProps,
-    readOnly,
-    disabled,
-    filter,
-    limit,
-    withScrollArea,
-    maxDropdownHeight,
-    size,
-    searchable,
-    rightSection,
-    checkIconPosition,
-    withCheckIcon,
-    nothingFoundMessage,
-    name,
-    form,
-    searchValue,
-    defaultSearchValue,
     onSearchChange,
-    allowDeselect,
-    error,
+    readOnly,
+    rightSection,
     rightSectionPointerEvents,
-    id,
-    clearable,
-    clearButtonProps,
-    hiddenInputProps,
+    searchable,
+    searchValue,
+    selectFirstOptionOnChange,
+    size,
+    styles,
+    unstyled,
+    value,
+    vars,
+    withCheckIcon,
+    withScrollArea,
     ...others
   } = props;
 
   const parsedData = useMemo(() => getParsedComboboxData(data), [data]);
-  const optionsLockup = useMemo(() => getOptionsLockup(parsedData), [parsedData]);
+
   const _id = useId(id);
 
   const [_value, setValue] = useUncontrolled({
@@ -145,6 +156,8 @@ export const Select = factory<SelectFactory>((_props, ref) => {
     finalValue: null,
     onChange,
   });
+
+  const optionsLockup = useMemo(() => getOptionsLockup(parsedData), [parsedData, _value]);
 
   const selectedOption = _value ? optionsLockup[_value] : undefined;
   const [search, setSearch] = useUncontrolled({
@@ -197,6 +210,68 @@ export const Select = factory<SelectFactory>((_props, ref) => {
     />
   );
 
+  const handleCreate = (val: string) => {
+    if (onCreate) {
+      const newItem = onCreate(val);
+      if (newItem && newItem.value) {
+        setValue(newItem.value);
+        setSearch(newItem.label);
+      }
+    } else {
+      setValue(val);
+      setSearch(val);
+    }
+  };
+
+  const dataWithPotentialNewItem = useMemo(() => addNewOptionToData({
+    search,
+    createable,
+    parsedData,
+    optionsLockup,
+    _value,
+  }), [search, createable, data, optionsLockup, _value]);
+
+  const optionExists = useMemo(() => getOptionExists(parsedData, search), [parsedData, search]);
+
+  const isOptionSelected =
+    _value && optionsLockup[_value] && optionsLockup[_value].label === search;
+
+  const displayCreateOption = createable && search && !optionExists && !isOptionSelected;
+
+  let optionsData: ComboboxParsedItem[];
+
+  if (displayCreateOption) {
+    optionsData = [{ label: createLabel(search), value: search }];
+  } else {
+    optionsData = dataWithPotentialNewItem;
+  }
+
+  const handleOptionSubmit = (val: string): void => {
+    const isCreateOptionSelected = val === search && createable;
+
+    if (isCreateOptionSelected) {
+      handleCreate(val);
+    }
+
+    onOptionSubmit?.(val);
+
+    if (!optionsLockup[val]) {
+      optionsLockup[val] = { value: val, label: val };
+    }
+
+    const selectedOptionValue = optionsLockup[val]?.value;
+    const isDeselectingCurrentOption = allowDeselect && selectedOptionValue === _value;
+
+    if (isDeselectingCurrentOption) {
+      setValue(null);
+      setSearch('');
+    } else {
+      setValue(selectedOptionValue);
+      setSearch(optionsLockup[val]?.label);
+    }
+    combobox.closeDropdown();
+  };
+
   return (
     <>
       <Combobox
@@ -206,17 +281,7 @@ export const Select = factory<SelectFactory>((_props, ref) => {
         styles={resolvedStyles}
         unstyled={unstyled}
         readOnly={readOnly}
-        onOptionSubmit={(val) => {
-          onOptionSubmit?.(val);
-          const nextValue = allowDeselect
-            ? optionsLockup[val].value === _value
-              ? null
-              : optionsLockup[val].value
-            : optionsLockup[val].value;
-          setValue(nextValue);
-          setSearch(nextValue ? optionsLockup[val].label : '');
-          combobox.closeDropdown();
-        }}
+        onOptionSubmit={handleOptionSubmit}
         size={size}
         {...comboboxProps}
       >
@@ -261,7 +326,7 @@ export const Select = factory<SelectFactory>((_props, ref) => {
           />
         </Combobox.Target>
         <OptionsDropdown
-          data={parsedData}
+          data={optionsData}
           hidden={readOnly || disabled}
           filter={filter}
           search={search}

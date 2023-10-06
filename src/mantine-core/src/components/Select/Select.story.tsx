@@ -182,3 +182,34 @@ export function HiddenDropdown() {
     </div>
   );
 }
+
+export function Createable() {
+  const [options, setOptions] = useState([
+    { value: '1', label: 'React' },
+    { value: '2', label: 'Angular' },
+    { value: '3', label: 'Svelte' },
+  ]);
+
+  const [selectedValue, setSelectedValue] = useState<string | null>(null);
+
+  const handleCreate = (value: string) => {
+    const newOption = { value, label: value };
+    setOptions(prevOptions => [...prevOptions, newOption]);
+    setSelectedValue(value);
+    return newOption;
+  };
+
+  return (
+    <div style={{ padding: 40 }}>
+      <Select
+        createable
+        data={options}
+        onChange={setSelectedValue}
+        onCreate={handleCreate}
+        placeholder="Type to create new options"
+        searchable
+        value={selectedValue}
+      />
+    </div>
+  );
+}
