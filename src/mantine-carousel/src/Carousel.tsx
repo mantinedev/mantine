@@ -354,9 +354,9 @@ export const Carousel = factory<CarouselFactory>((_props, ref) => {
         {withControls && (
           <div {...getStyles('controls')}>
             <UnstyledButton
-              {...previousControlProps}
               {...getStyles('control')}
               onClick={handlePrevious}
+              {...previousControlProps}
               data-inactive={!canScrollPrev || undefined}
               tabIndex={canScrollPrev ? 0 : -1}
             >
