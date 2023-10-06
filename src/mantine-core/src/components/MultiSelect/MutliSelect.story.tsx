@@ -155,3 +155,33 @@ export function SearchableHidePicked() {
     </div>
   );
 }
+
+export function Createable() {
+  const [options, setOptions] = useState([
+    { value: '1', label: 'React' },
+    { value: '2', label: 'Angular' },
+    { value: '3', label: 'Svelte' },
+  ]);
+
+  const [selectedValues, setSelectedValues] = useState<string[]>([]);
+
+  const handleCreate = (value: string) => {
+    const newOption = { value, label: value };
+    setOptions(prevOptions => [...prevOptions, newOption]);
+    return newOption;
+  };
+
+  return (
+    <div style={{ padding: 40 }}>
+      <MultiSelect
+        createable
+        data={options}
+        onChange={setSelectedValues}
+        onCreate={handleCreate}
+        placeholder="Type to create new options"
+        searchable
+        value={selectedValues}
+      />
+    </div>
+  );
+}

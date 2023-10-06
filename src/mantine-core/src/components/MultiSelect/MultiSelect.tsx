@@ -1,30 +1,33 @@
-import React from 'react';
 import { useId, useUncontrolled } from '@mantine/hooks';
+import React from 'react';
 import {
   BoxProps,
-  StylesApiProps,
-  factory,
   ElementProps,
-  useProps,
   Factory,
+  StylesApiProps,
   extractStyleProps,
-  useStyles,
+  factory,
+  useProps,
   useResolvedStylesApi,
+  useStyles,
 } from '../../core';
+import { __CloseButtonProps } from '../CloseButton';
 import {
   Combobox,
-  OptionsDropdown,
-  useCombobox,
-  getParsedComboboxData,
-  getOptionsLockup,
+  ComboboxItem,
   ComboboxLikeProps,
   ComboboxLikeStylesNames,
+  ComboboxParsedItem,
+  OptionsDropdown,
+  getOptionsLockup,
+  getParsedComboboxData,
+  useCombobox,
 } from '../Combobox';
 import { __BaseInputProps, __InputStylesNames } from '../Input';
-import { PillsInput } from '../PillsInput';
-import { Pill } from '../Pill';
 import { InputBase } from '../InputBase';
-import { __CloseButtonProps } from '../CloseButton';
+import { Pill } from '../Pill';
+import { PillsInput } from '../PillsInput';
+import { addNewOptionToData, createLabel } from './createable';
 import { filterPickedValues } from './filter-picked-values';
 
 export type MultiSelectStylesNames =
@@ -36,10 +39,10 @@ export type MultiSelectStylesNames =
 
 export interface MultiSelectProps
   extends BoxProps,
-    __BaseInputProps,
-    ComboboxLikeProps,
-    StylesApiProps<MultiSelectFactory>,
-    ElementProps<'input', 'size' | 'value' | 'defaultValue' | 'onChange'> {
+  __BaseInputProps,
+  ComboboxLikeProps,
+  StylesApiProps<MultiSelectFactory>,
+  ElementProps<'input', 'size' | 'value' | 'defaultValue' | 'onChange'> {
   /** Controlled component value */
   value?: string[];
 
@@ -84,6 +87,12 @@ export interface MultiSelectProps
 
   /** Props passed down to the hidden input */
   hiddenInputProps?: React.ComponentPropsWithoutRef<'input'>;
+
+  /** Determines if new values can be created by the user, `false` by default */
+  createable?: boolean;
+
+  /** Callback when a new value is created */
+  onCreate?(value: string): ComboboxItem;
 }
 
 export type MultiSelectFactory = Factory<{
@@ -101,70 +110,72 @@ const defaultProps: Partial<MultiSelectProps> = {
 export const MultiSelect = factory<MultiSelectFactory>((_props, ref) => {
   const props = useProps('MultiSelect', defaultProps, _props);
   const {
-    classNames,
+    checkIconPosition,
     className,
+    classNames,
+    clearable,
+    clearButtonProps,
+    comboboxProps,
+    createable,
+    data,
+    defaultDropdownOpened,
+    defaultSearchValue,
+    defaultValue,
+    description,
+    descriptionProps,
+    disabled,
+    dropdownOpened,
+    error,
+    errorProps,
+    filter,
+    form,
+    hiddenInputProps,
+    hidePickedOptions,
+    id,
+    inputContainer,
+    inputWrapperOrder,
+    label,
+    labelProps,
+    leftSection,
+    leftSectionPointerEvents,
+    leftSectionProps,
+    leftSectionWidth,
+    limit,
+    maxDropdownHeight,
+    maxValues,
+    name,
+    nothingFoundMessage,
+    onBlur,
+    onChange,
+    onCreate,
+    onDropdownClose,
+    onDropdownOpen,
+    onFocus,
+    onKeyDown,
+    onOptionSubmit,
+    onPaste,
+    onSearchChange,
+    radius,
+    readOnly,
+    rightSection,
+    rightSectionPointerEvents,
+    rightSectionProps,
+    rightSectionWidth,
+    searchable,
+    searchValue,
+    selectFirstOptionOnChange,
+    size,
     style,
     styles,
     unstyled,
-    vars,
-    size,
     value,
-    defaultValue,
-    onChange,
-    onKeyDown,
     variant,
-    data,
-    dropdownOpened,
-    defaultDropdownOpened,
-    onDropdownOpen,
-    onDropdownClose,
-    selectFirstOptionOnChange,
-    onOptionSubmit,
-    comboboxProps,
-    filter,
-    limit,
-    withScrollArea,
-    maxDropdownHeight,
-    searchValue,
-    defaultSearchValue,
-    onSearchChange,
-    readOnly,
-    disabled,
-    onFocus,
-    onBlur,
-    onPaste,
-    radius,
-    rightSection,
-    rightSectionWidth,
-    rightSectionPointerEvents,
-    rightSectionProps,
-    leftSection,
-    leftSectionWidth,
-    leftSectionPointerEvents,
-    leftSectionProps,
-    inputContainer,
-    inputWrapperOrder,
+    vars,
     withAsterisk,
-    labelProps,
-    descriptionProps,
-    errorProps,
-    wrapperProps,
-    description,
-    label,
-    error,
-    maxValues,
-    searchable,
-    nothingFoundMessage,
     withCheckIcon,
-    checkIconPosition,
-    hidePickedOptions,
     withErrorStyles,
-    name,
-    form,
-    id,
-    clearable,
-    clearButtonProps,
-    hiddenInputProps,
+    withScrollArea,
+    wrapperProps,
     ...others
   } = props;
 
@@ -247,6 +258,63 @@ export const MultiSelect = factory<MultiSelectFactory>((_props, ref) => {
     />
   );
 
+  const handleCreate = (val: string) => {
+    if (onCreate) {
+      const newItem = onCreate(val);
+
+      if (newItem && newItem.value) {
+        setValue([..._value, newItem.value]);
+        setSearchValue('');
+      }
+    } else {
+      setValue([..._value, val]);
+      setSearchValue('');
+    }
+  };
+
+  const handleOptionsSubmit = (val: string): void => {
+    const isCreateOptionSelected = val === _searchValue && createable;
+
+    if (isCreateOptionSelected) {
+      handleCreate(val);
+      setSearchValue('');
+      return;
+    }
+
+    onOptionSubmit?.(val);
+    setSearchValue('');
+    combobox.updateSelectedOptionIndex('selected');
+
+    if (_value.includes(optionsLockup[val].value)) {
+      setValue(_value.filter((v) => v !== optionsLockup[val].value));
+    } else if (_value.length < maxValues!) {
+      setValue([..._value, optionsLockup[val].value]);
+    }
+  };
+
+  const dataWithPotentialNewItem: ComboboxParsedItem[] = addNewOptionToData({
+    _searchValue,
+    createable,
+    data,
+  });
+
+  const noOptionsFound =
+    hidePickedOptions ?
+      filterPickedValues({ data: parsedData, value: _value }).length === 0
+      : parsedData.length === 0;
+
+  const displayCreateOption = createable && _searchValue && noOptionsFound;
+
+  let optionsData: ComboboxParsedItem[];
+
+  if (displayCreateOption) {
+    optionsData = [{ label: createLabel(_searchValue), value: _searchValue }];
+  } else if (hidePickedOptions) {
+    optionsData = filterPickedValues({ data: dataWithPotentialNewItem, value: _value }) || [];
+  } else {
+    optionsData = dataWithPotentialNewItem;
+  }
+
   return (
     <>
       <Combobox
@@ -257,17 +325,7 @@ export const MultiSelect = factory<MultiSelectFactory>((_props, ref) => {
         size={size}
         readOnly={readOnly}
         __staticSelector="MultiSelect"
-        onOptionSubmit={(val) => {
-          onOptionSubmit?.(val);
-          setSearchValue('');
-          combobox.updateSelectedOptionIndex('selected');
-
-          if (_value.includes(optionsLockup[val].value)) {
-            setValue(_value.filter((v) => v !== optionsLockup[val].value));
-          } else if (_value.length < maxValues!) {
-            setValue([..._value, optionsLockup[val].value]);
-          }
-        }}
+        onOptionSubmit={handleOptionsSubmit}
         {...comboboxProps}
       >
         <Combobox.DropdownTarget>
@@ -346,9 +404,7 @@ export const MultiSelect = factory<MultiSelectFactory>((_props, ref) => {
         </Combobox.DropdownTarget>
 
         <OptionsDropdown
-          data={
-            hidePickedOptions ? filterPickedValues({ data: parsedData, value: _value }) : parsedData
-          }
+          data={optionsData}
           hidden={readOnly || disabled}
           filter={filter}
           search={_searchValue}
