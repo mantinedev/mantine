@@ -253,6 +253,8 @@ export const MultiSelect = factory<MultiSelectFactory>((_props, ref) => {
     />
   );
 
+  const filteredData = filterPickedValues({ data: parsedData, value: _value });
+
   return (
     <>
       <Combobox
@@ -354,16 +356,16 @@ export const MultiSelect = factory<MultiSelectFactory>((_props, ref) => {
 
         <OptionsDropdown
           data={
-            hidePickedOptions ? filterPickedValues({ data: parsedData, value: _value }) : parsedData
+            hidePickedOptions ? filteredData : parsedData
           }
           hidden={readOnly || disabled}
           filter={filter}
           search={_searchValue}
           limit={limit}
           hiddenWhenEmpty={
-            hidePickedOptions ||
+            !searchable ||
             !nothingFoundMessage ||
-            (!searchable && _searchValue.trim().length !== 0)
+            (hidePickedOptions && filteredData.length === 0 && _searchValue.trim().length === 0)
           }
           withScrollArea={withScrollArea}
           maxDropdownHeight={maxDropdownHeight}
