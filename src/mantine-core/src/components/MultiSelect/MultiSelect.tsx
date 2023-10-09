@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useId, useUncontrolled } from '@mantine/hooks';
 import {
   BoxProps,
@@ -236,6 +236,12 @@ export const MultiSelect = factory<MultiSelectFactory>((_props, ref) => {
     </Pill>
   ));
 
+  useEffect(() => {
+    if (selectFirstOptionOnChange) {
+      combobox.selectFirstOption();
+    }
+  }, [selectFirstOptionOnChange, _value]);
+
   const clearButton = clearable && _value.length > 0 && !disabled && !readOnly && (
     <Combobox.ClearButton
       size={size as string}
@@ -335,6 +341,7 @@ export const MultiSelect = factory<MultiSelectFactory>((_props, ref) => {
                   onChange={(event) => {
                     setSearchValue(event.currentTarget.value);
                     searchable && combobox.openDropdown();
+                    selectFirstOptionOnChange && combobox.selectFirstOption();
                   }}
                   disabled={disabled}
                   readOnly={readOnly || !searchable}
