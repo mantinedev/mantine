@@ -355,9 +355,7 @@ export const MultiSelect = factory<MultiSelectFactory>((_props, ref) => {
         </Combobox.DropdownTarget>
 
         <OptionsDropdown
-          data={
-            hidePickedOptions ? filteredData : parsedData
-          }
+          data={hidePickedOptions ? filteredData : parsedData}
           hidden={readOnly || disabled}
           filter={filter}
           search={_searchValue}
