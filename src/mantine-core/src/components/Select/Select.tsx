@@ -181,10 +181,10 @@ export const Select = factory<SelectFactory>((_props, ref) => {
       setSearch('');
     }
 
-    if (typeof value === 'string' && optionsLockup[value]) {
-      setSearch(optionsLockup[value].label);
+    if (typeof value === 'string' && selectedOption) {
+      setSearch(selectedOption.label);
     }
-  }, [value, optionsLockup]);
+  }, [value, selectedOption]);
 
   const clearButton = clearable && !!_value && !disabled && !readOnly && (
     <Combobox.ClearButton
