@@ -2,7 +2,7 @@ export interface Template {
   name: string;
   link: string;
   description: string;
-  type: 'next' | 'gatsby' | 'vite' | 'remix' | 'redwood';
+  type: 'next' | 't3' | 'gatsby' | 'vite' | 'remix' | 'redwood';
 }
 
 export const TEMPLATES_DATA: Template[] = [
@@ -11,6 +11,12 @@ export const TEMPLATES_DATA: Template[] = [
     name: 'next-app-template',
     link: 'https://github.com/mantinedev/next-app-template',
     description: 'Next.js template with app router and full setup: Jest, Storybook, ESLint',
+  },
+  {
+    type: 't3',
+    name: 't3-template',
+    link: "https://github.com/WillKirkmanM/mantine-t3-template",
+    description: "T3 Stack Template with NextAuth, TRPC & Prisma"
   },
   {
     type: 'next',
