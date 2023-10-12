@@ -1,5 +1,6 @@
 import { Layout } from '@/layout';
 import { MDX_DATA } from '@/mdx';
+import { LoadingOverlayDemos } from '@mantine/demos';
 
 export default Layout(MDX_DATA.Changelog720);
 
@@ -14,6 +15,14 @@ You can find example of Mantine + Sass usage in separate branches of templates:
 
 - [Next.js app router + Sass example](https://github.com/mantinedev/next-app-template/tree/sass)
 - [Vite + Sass example](https://github.com/mantinedev/vite-template/tree/sass)
+
+## Inline loaders
+
+[Loader](/core/loader/) component now supports `children` prop. The prop allows overriding the default
+loader with any React node. It is useful in components that support `loaderProps` ([Button](/core/button/), [LoadingOverlay](/core/loading-overlay/), [Dropzone](/others/dropzone/), etc.)
+– with `loaderProps.children` you can now display any React node instead of the loader.
+
+<Demo data={LoadingOverlayDemos.customLoader} />
 
 ## Other changes
 

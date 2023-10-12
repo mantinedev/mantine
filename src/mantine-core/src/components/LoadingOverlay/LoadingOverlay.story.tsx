@@ -11,6 +11,19 @@ export function Usage() {
   );
 }
 
+export function CustomLoader() {
+  return (
+    <div style={{ padding: 40 }}>
+      <LoadingOverlay
+        visible
+        loaderProps={{
+          children: 'Loading...',
+        }}
+      />
+    </div>
+  );
+}
+
 export function Unstyled() {
   return (
     <div style={{ padding: 40 }}>
