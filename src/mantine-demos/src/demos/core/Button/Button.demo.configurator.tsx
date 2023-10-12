@@ -20,6 +20,7 @@ export const configurator: MantineDemo = {
   component: Wrapper,
   code,
   centered: true,
+  striped: true,
   controls: [
     interactiveVariantsControl,
     { type: 'color', prop: 'color', initialValue: 'blue', libraryValue: 'blue' },

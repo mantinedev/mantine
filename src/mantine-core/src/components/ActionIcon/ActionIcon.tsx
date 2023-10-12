@@ -31,7 +31,14 @@ export type ActionIconVariant =
 
 export type ActionIconStylesNames = 'root' | 'loader';
 export type ActionIconCssVariables = {
-  root: '--ai-radius' | '--ai-size' | '--ai-bg' | '--ai-hover' | '--ai-color' | '--ai-bd';
+  root:
+    | '--ai-radius'
+    | '--ai-size'
+    | '--ai-bg'
+    | '--ai-hover'
+    | '--ai-hover-color'
+    | '--ai-color'
+    | '--ai-bd';
 };
 
 export interface ActionIconProps extends BoxProps, StylesApiProps<ActionIconFactory> {
@@ -92,6 +99,7 @@ const varsResolver = createVarsResolver<ActionIconFactory>(
         '--ai-radius': radius === undefined ? undefined : getRadius(radius),
         '--ai-bg': color || variant ? colors.background : undefined,
         '--ai-hover': color || variant ? colors.hover : undefined,
+        '--ai-hover-color': color || variant ? colors.hoverColor : undefined,
         '--ai-color': color || variant ? colors.color : undefined,
         '--ai-bd': color || variant ? colors.border : undefined,
       },

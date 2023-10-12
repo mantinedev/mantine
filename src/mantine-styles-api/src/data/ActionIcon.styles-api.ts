@@ -13,6 +13,7 @@ export const ActionIconStylesApi: StylesApiData<ActionIconFactory> = {
       '--ai-hover': 'Controls `background` when hovered',
       '--ai-bd': 'Controls `border`',
       '--ai-color': 'Controls icon `color`',
+      '--ai-hover-color': 'Controls icon `color` when hovered',
       '--ai-radius': 'Controls `border-radius`',
       '--ai-size': 'Controls `width`, `height`, `min-width` and `min-height` styles',
     },
