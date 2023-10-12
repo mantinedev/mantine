@@ -281,6 +281,7 @@ export const NumberInput = factory<NumberInputFactory>((_props, ref) => {
         aria-hidden
         disabled={disabled || (typeof _value === 'number' && max !== undefined && _value >= max)}
         mod={{ direction: 'up' }}
+        onMouseDown={(event) => event.preventDefault()}
         onPointerDown={increment}
       >
         <NumberInputChevron direction="up" />
@@ -291,6 +292,7 @@ export const NumberInput = factory<NumberInputFactory>((_props, ref) => {
         aria-hidden
         disabled={disabled || (typeof _value === 'number' && min !== undefined && _value <= min)}
         mod={{ direction: 'down' }}
+        onMouseDown={(event) => event.preventDefault()}
         onPointerDown={decrement}
       >
         <NumberInputChevron direction="down" />
