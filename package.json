@@ -117,6 +117,7 @@
     "execa": "^5.0.1",
     "fast-glob": "^3.2.5",
     "fs-extra": "^10.0.0",
+    "glob": "^10.3.10",
     "gh-pages": "^3.2.0",
     "identity-obj-proxy": "^3.0.0",
     "is-directory": "^0.3.1",
