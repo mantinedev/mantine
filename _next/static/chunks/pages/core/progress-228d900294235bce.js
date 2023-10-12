@@ -4,7 +4,7 @@ import { Progress } from '@mantine/core';
 function Demo() {
   return <Progress{{props}} />;
 }
-`,v={type:"configurator",component:function(e){return l.createElement(i.E,b({},e))},code:g,centered:!0,maxWidth:400,controls:[{prop:"color",type:"color",initialValue:"blue",libraryValue:"blue"},{prop:"radius",type:"size",initialValue:"sm",libraryValue:"sm"},{prop:"size",type:"size",initialValue:"md",libraryValue:"md"},{prop:"value",type:"number",initialValue:50,max:100,min:0,step:10,libraryValue:"__"},{prop:"striped",type:"boolean",initialValue:!1,libraryValue:!1},{prop:"animate",type:"boolean",initialValue:!1,libraryValue:!1}]};var y=t(22547),f=t(46842);let h=`
+`,v={type:"configurator",component:function(e){return l.createElement(i.E,b({},e))},code:g,centered:!0,maxWidth:400,controls:[{prop:"color",type:"color",initialValue:"blue",libraryValue:"blue"},{prop:"radius",type:"size",initialValue:"sm",libraryValue:"sm"},{prop:"size",type:"size",initialValue:"md",libraryValue:"md"},{prop:"value",type:"number",initialValue:50,max:100,min:0,step:10,libraryValue:"__"},{prop:"striped",type:"boolean",initialValue:!1,libraryValue:!1},{prop:"animated",type:"boolean",initialValue:!1,libraryValue:!1}]};var y=t(22547),f=t(46842);let h=`
 import { Progress, Tooltip } from '@mantine/core';
 
 function Demo() {
