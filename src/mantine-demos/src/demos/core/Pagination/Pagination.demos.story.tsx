@@ -1,50 +1,44 @@
-import { Meta, StoryObj } from '@storybook/react';
 import * as demos from './index';
 import { renderDemo } from '../../../render-demo';
 
-const meta: Meta = {
-  title: 'Pagination',
-};
-export default meta;
+export default { title: 'Pagination' };
 
-type Story = StoryObj;
-
-export const DemoConfigurator: Story = {
+export const DemoConfigurator = {
   name: '⭐ Demo: configurator',
   render: renderDemo(demos.configurator),
 };
 
-export const DemoSiblings: Story = {
+export const DemoSiblings = {
   name: '⭐ Demo: siblings',
   render: renderDemo(demos.siblings),
 };
 
-export const DemoBoundaries: Story = {
+export const DemoBoundaries = {
   name: '⭐ Demo: boundaries',
   render: renderDemo(demos.boundaries),
 };
 
-export const DemoUsage: Story = {
+export const DemoUsage = {
   name: '⭐ Demo: usage',
   render: renderDemo(demos.usage),
 };
 
-export const DemoStylesApi: Story = {
+export const DemoStylesApi = {
   name: '⭐ Demo: stylesApi',
   render: renderDemo(demos.stylesApi),
 };
 
-export const DemoComposition: Story = {
+export const DemoComposition = {
   name: '⭐ Demo: composition',
   render: renderDemo(demos.composition),
 };
 
-export const DemoIcons: Story = {
+export const DemoIcons = {
   name: '⭐ Demo: icons',
   render: renderDemo(demos.icons),
 };
 
-export const DemoLinks: Story = {
+export const DemoLinks = {
   name: '⭐ Demo: links',
   render: renderDemo(demos.links),
 };

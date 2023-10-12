@@ -1,40 +1,34 @@
-import { Meta, StoryObj } from '@storybook/react';
 import * as demos from './index';
 import { renderDemo } from '../../../render-demo';
 
-const meta: Meta = {
-  title: 'TextInput',
-};
-export default meta;
+export default { title: 'TextInput' };
 
-type Story = StoryObj;
-
-export const DemoUsage: Story = {
+export const DemoUsage = {
   name: '⭐ Demo: usage',
   render: renderDemo(demos.usage),
 };
 
-export const DemoType: Story = {
+export const DemoType = {
   name: '⭐ Demo: type',
   render: renderDemo(demos.type),
 };
 
-export const DemoSections: Story = {
+export const DemoSections = {
   name: '⭐ Demo: sections',
   render: renderDemo(demos.sections),
 };
 
-export const DemoError: Story = {
+export const DemoError = {
   name: '⭐ Demo: error',
   render: renderDemo(demos.error),
 };
 
-export const DemoDisabled: Story = {
+export const DemoDisabled = {
   name: '⭐ Demo: disabled',
   render: renderDemo(demos.disabled),
 };
 
-export const DemoStylesApi: Story = {
+export const DemoStylesApi = {
   name: '⭐ Demo: stylesApi',
   render: renderDemo(demos.stylesApi),
 };

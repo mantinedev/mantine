@@ -1,85 +1,79 @@
-import { Meta, StoryObj } from '@storybook/react';
 import * as demos from './index';
 import { renderDemo } from '../../../render-demo';
 
-const meta: Meta = {
-  title: 'Button',
-};
-export default meta;
+export default { title: 'Button' };
 
-type Story = StoryObj;
-
-export const DemoConfigurator: Story = {
+export const DemoConfigurator = {
   name: '⭐ Demo: configurator',
   render: renderDemo(demos.configurator),
 };
 
-export const DemoDisabled: Story = {
+export const DemoDisabled = {
   name: '⭐ Demo: disabled',
   render: renderDemo(demos.disabled),
 };
 
-export const DemoDisabledStyles: Story = {
+export const DemoDisabledStyles = {
   name: '⭐ Demo: disabledStyles',
   render: renderDemo(demos.disabledStyles),
 };
 
-export const DemoCompact: Story = {
+export const DemoCompact = {
   name: '⭐ Demo: compact',
   render: renderDemo(demos.compact),
 };
 
-export const DemoLoading: Story = {
+export const DemoLoading = {
   name: '⭐ Demo: loading',
   render: renderDemo(demos.loading),
 };
 
-export const DemoLoaderProps: Story = {
+export const DemoLoaderProps = {
   name: '⭐ Demo: loaderProps',
   render: renderDemo(demos.loaderProps),
 };
 
-export const DemoGradient: Story = {
+export const DemoGradient = {
   name: '⭐ Demo: gradient',
   render: renderDemo(demos.gradient),
 };
 
-export const DemoFullWidth: Story = {
+export const DemoFullWidth = {
   name: '⭐ Demo: fullWidth',
   render: renderDemo(demos.fullWidth),
 };
 
-export const DemoGroup: Story = {
+export const DemoGroup = {
   name: '⭐ Demo: group',
   render: renderDemo(demos.group),
 };
 
-export const DemoDisabledTooltip: Story = {
+export const DemoDisabledTooltip = {
   name: '⭐ Demo: disabledTooltip',
   render: renderDemo(demos.disabledTooltip),
 };
 
-export const DemoCustomVariant: Story = {
+export const DemoCustomVariant = {
   name: '⭐ Demo: customVariant',
   render: renderDemo(demos.customVariant),
 };
 
-export const DemoSections: Story = {
+export const DemoSections = {
   name: '⭐ Demo: sections',
   render: renderDemo(demos.sections),
 };
 
-export const DemoSectionsJustify: Story = {
+export const DemoSectionsJustify = {
   name: '⭐ Demo: sectionsJustify',
   render: renderDemo(demos.sectionsJustify),
 };
 
-export const DemoDisabledLink: Story = {
+export const DemoDisabledLink = {
   name: '⭐ Demo: disabledLink',
   render: renderDemo(demos.disabledLink),
 };
 
-export const DemoStylesApi: Story = {
+export const DemoStylesApi = {
   name: '⭐ Demo: stylesApi',
   render: renderDemo(demos.stylesApi),
 };

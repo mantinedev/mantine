@@ -1,80 +1,74 @@
-import { Meta, StoryObj } from '@storybook/react';
 import * as demos from './index';
 import { renderDemo } from '../../../render-demo';
 
-const meta: Meta = {
-  title: 'Stepper',
-};
-export default meta;
+export default { title: 'Stepper' };
 
-type Story = StoryObj;
-
-export const DemoUsage: Story = {
+export const DemoUsage = {
   name: '⭐ Demo: usage',
   render: renderDemo(demos.usage),
 };
 
-export const DemoConfigurator: Story = {
+export const DemoConfigurator = {
   name: '⭐ Demo: configurator',
   render: renderDemo(demos.configurator),
 };
 
-export const DemoIcons: Story = {
+export const DemoIcons = {
   name: '⭐ Demo: icons',
   render: renderDemo(demos.icons),
 };
 
-export const DemoIconSizeConfigurator: Story = {
+export const DemoIconSizeConfigurator = {
   name: '⭐ Demo: iconSizeConfigurator',
   render: renderDemo(demos.iconSizeConfigurator),
 };
 
-export const DemoIconsOnly: Story = {
+export const DemoIconsOnly = {
   name: '⭐ Demo: iconsOnly',
   render: renderDemo(demos.iconsOnly),
 };
 
-export const DemoOrientation: Story = {
+export const DemoOrientation = {
   name: '⭐ Demo: orientation',
   render: renderDemo(demos.orientation),
 };
 
-export const DemoIconPosition: Story = {
+export const DemoIconPosition = {
   name: '⭐ Demo: iconPosition',
   render: renderDemo(demos.iconPosition),
 };
 
-export const DemoLoading: Story = {
+export const DemoLoading = {
   name: '⭐ Demo: loading',
   render: renderDemo(demos.loading),
 };
 
-export const DemoStepColor: Story = {
+export const DemoStepColor = {
   name: '⭐ Demo: stepColor',
   render: renderDemo(demos.stepColor),
 };
 
-export const DemoStylesApi3: Story = {
+export const DemoStylesApi3 = {
   name: '⭐ Demo: stylesApi3',
   render: renderDemo(demos.stylesApi3),
 };
 
-export const DemoStylesApi2: Story = {
+export const DemoStylesApi2 = {
   name: '⭐ Demo: stylesApi2',
   render: renderDemo(demos.stylesApi2),
 };
 
-export const DemoAllowStepSelect: Story = {
+export const DemoAllowStepSelect = {
   name: '⭐ Demo: allowStepSelect',
   render: renderDemo(demos.allowStepSelect),
 };
 
-export const DemoAllowNextStepsSelect: Story = {
+export const DemoAllowNextStepsSelect = {
   name: '⭐ Demo: allowNextStepsSelect',
   render: renderDemo(demos.allowNextStepsSelect),
 };
 
-export const DemoStylesApi: Story = {
+export const DemoStylesApi = {
   name: '⭐ Demo: stylesApi',
   render: renderDemo(demos.stylesApi),
 };

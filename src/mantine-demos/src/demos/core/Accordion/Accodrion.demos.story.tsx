@@ -1,65 +1,59 @@
-import { Meta, StoryObj } from '@storybook/react';
 import * as demos from './index';
 import { renderDemo } from '../../../render-demo';
 
-const meta: Meta = {
-  title: 'Accodrion',
-};
-export default meta;
+export default { title: 'Accodrion' };
 
-type Story = StoryObj;
-
-export const DemoConfigurator: Story = {
+export const DemoConfigurator = {
   name: '⭐ Demo: configurator',
   render: renderDemo(demos.configurator),
 };
 
-export const DemoDisabled: Story = {
+export const DemoDisabled = {
   name: '⭐ Demo: disabled',
   render: renderDemo(demos.disabled),
 };
 
-export const DemoChevron: Story = {
+export const DemoChevron = {
   name: '⭐ Demo: chevron',
   render: renderDemo(demos.chevron),
 };
 
-export const DemoIcons: Story = {
+export const DemoIcons = {
   name: '⭐ Demo: icons',
   render: renderDemo(demos.icons),
 };
 
-export const DemoLabel: Story = {
+export const DemoLabel = {
   name: '⭐ Demo: label',
   render: renderDemo(demos.label),
 };
 
-export const DemoSideControls: Story = {
+export const DemoSideControls = {
   name: '⭐ Demo: sideControls',
   render: renderDemo(demos.sideControls),
 };
 
-export const DemoCustomize: Story = {
+export const DemoCustomize = {
   name: '⭐ Demo: customize',
   render: renderDemo(demos.customize),
 };
 
-export const DemoDisableTransitions: Story = {
+export const DemoDisableTransitions = {
   name: '⭐ Demo: disableTransitions',
   render: renderDemo(demos.disableTransitions),
 };
 
-export const DemoCustomTransitions: Story = {
+export const DemoCustomTransitions = {
   name: '⭐ Demo: customTransitions',
   render: renderDemo(demos.customTransitions),
 };
 
-export const DemoUnstyled: Story = {
+export const DemoUnstyled = {
   name: '⭐ Demo: unstyled',
   render: renderDemo(demos.unstyled),
 };
 
-export const DemoStylesApi: Story = {
+export const DemoStylesApi = {
   name: '⭐ Demo: stylesApi',
   render: renderDemo(demos.stylesApi),
 };

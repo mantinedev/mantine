@@ -1,75 +1,69 @@
-import { Meta, StoryObj } from '@storybook/react';
 import * as demos from './index';
 import { renderDemo } from '../../../render-demo';
 
-const meta: Meta = {
-  title: 'YearPicker',
-};
-export default meta;
+export default { title: 'YearPicker' };
 
-type Story = StoryObj;
-
-export const DemoUsage: Story = {
+export const DemoUsage = {
   name: '⭐ Demo: usage',
   render: renderDemo(demos.usage),
 };
 
-export const DemoMultiple: Story = {
+export const DemoMultiple = {
   name: '⭐ Demo: multiple',
   render: renderDemo(demos.multiple),
 };
 
-export const DemoDeselect: Story = {
+export const DemoDeselect = {
   name: '⭐ Demo: deselect',
   render: renderDemo(demos.deselect),
 };
 
-export const DemoRange: Story = {
+export const DemoRange = {
   name: '⭐ Demo: range',
   render: renderDemo(demos.range),
 };
 
-export const DemoSingleRange: Story = {
+export const DemoSingleRange = {
   name: '⭐ Demo: singleRange',
   render: renderDemo(demos.singleRange),
 };
 
-export const DemoNumberOfColumns: Story = {
+export const DemoNumberOfColumns = {
   name: '⭐ Demo: numberOfColumns',
   render: renderDemo(demos.numberOfColumns),
 };
 
-export const DemoSizeConfigurator: Story = {
+export const DemoSizeConfigurator = {
   name: '⭐ Demo: sizeConfigurator',
   render: renderDemo(demos.sizeConfigurator),
 };
 
-export const DemoMinMax: Story = {
+export const DemoMinMax = {
   name: '⭐ Demo: minMax',
   render: renderDemo(demos.minMax),
 };
 
-export const DemoControlProps: Story = {
+export const DemoControlProps = {
   name: '⭐ Demo: controlProps',
   render: renderDemo(demos.controlProps),
 };
 
-export const DemoYearsListFormat: Story = {
+export const DemoYearsListFormat = {
   name: '⭐ Demo: yearsListFormat',
   render: renderDemo(demos.yearsListFormat),
 };
 
-export const DemoDecadeLabelFormat: Story = {
+export const DemoDecadeLabelFormat = {
   name: '⭐ Demo: decadeLabelFormat',
   render: renderDemo(demos.decadeLabelFormat),
 };
 
-export const DemoDefaultDate: Story = {
+export const DemoDefaultDate = {
   name: '⭐ Demo: defaultDate',
   render: renderDemo(demos.defaultDate),
 };
 
-export const DemoControlledDate: Story = {
+export const DemoControlledDate = {
   name: '⭐ Demo: controlledDate',
   render: renderDemo(demos.controlledDate),
 };

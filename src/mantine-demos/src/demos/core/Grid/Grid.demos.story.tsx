@@ -1,65 +1,59 @@
-import { Meta, StoryObj } from '@storybook/react';
 import * as demos from './index';
 import { renderDemo } from '../../../render-demo';
 
-const meta: Meta = {
-  title: 'Grid',
-};
-export default meta;
+export default { title: 'Grid' };
 
-type Story = StoryObj;
-
-export const DemoUsage: Story = {
+export const DemoUsage = {
   name: '⭐ Demo: usage',
   render: renderDemo(demos.usage),
 };
 
-export const DemoGrowConfigurator: Story = {
+export const DemoGrowConfigurator = {
   name: '⭐ Demo: growConfigurator',
   render: renderDemo(demos.growConfigurator),
 };
 
-export const DemoOffset: Story = {
+export const DemoOffset = {
   name: '⭐ Demo: offset',
   render: renderDemo(demos.offset),
 };
 
-export const DemoOrder: Story = {
+export const DemoOrder = {
   name: '⭐ Demo: order',
   render: renderDemo(demos.order),
 };
 
-export const DemoRows: Story = {
+export const DemoRows = {
   name: '⭐ Demo: rows',
   render: renderDemo(demos.rows),
 };
 
-export const DemoFlexConfigurator: Story = {
+export const DemoFlexConfigurator = {
   name: '⭐ Demo: flexConfigurator',
   render: renderDemo(demos.flexConfigurator),
 };
 
-export const DemoResponsive: Story = {
+export const DemoResponsive = {
   name: '⭐ Demo: responsive',
   render: renderDemo(demos.responsive),
 };
 
-export const DemoColumns: Story = {
+export const DemoColumns = {
   name: '⭐ Demo: columns',
   render: renderDemo(demos.columns),
 };
 
-export const DemoAuto: Story = {
+export const DemoAuto = {
   name: '⭐ Demo: auto',
   render: renderDemo(demos.auto),
 };
 
-export const DemoContent: Story = {
+export const DemoContent = {
   name: '⭐ Demo: content',
   render: renderDemo(demos.content),
 };
 
-export const DemoGutter: Story = {
+export const DemoGutter = {
   name: '⭐ Demo: gutter',
   render: renderDemo(demos.gutter),
 };

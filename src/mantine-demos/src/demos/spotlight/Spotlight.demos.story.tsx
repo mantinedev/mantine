@@ -1,40 +1,34 @@
-import { Meta, StoryObj } from '@storybook/react';
 import * as demos from './index';
 import { renderDemo } from '../../render-demo';
 
-const meta: Meta = {
-  title: 'Spotlight',
-};
-export default meta;
+export default { title: 'Spotlight' };
 
-type Story = StoryObj;
-
-export const DemoUsage: Story = {
+export const DemoUsage = {
   name: '⭐ Demo: usage',
   render: renderDemo(demos.usage),
 };
 
-export const DemoCompound: Story = {
+export const DemoCompound = {
   name: '⭐ Demo: compound',
   render: renderDemo(demos.compound),
 };
 
-export const DemoScrollable: Story = {
+export const DemoScrollable = {
   name: '⭐ Demo: scrollable',
   render: renderDemo(demos.scrollable),
 };
 
-export const DemoLimit: Story = {
+export const DemoLimit = {
   name: '⭐ Demo: limit',
   render: renderDemo(demos.limit),
 };
 
-export const DemoCustomAction: Story = {
+export const DemoCustomAction = {
   name: '⭐ Demo: customAction',
   render: renderDemo(demos.customAction),
 };
 
-export const DemoGroups: Story = {
+export const DemoGroups = {
   name: '⭐ Demo: groups',
   render: renderDemo(demos.groups),
 };

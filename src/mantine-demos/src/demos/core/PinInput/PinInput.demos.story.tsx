@@ -1,25 +1,19 @@
-import { Meta, StoryObj } from '@storybook/react';
 import * as demos from './index';
 import { renderDemo } from '../../../render-demo';
 
-const meta: Meta = {
-  title: 'PinInput',
-};
-export default meta;
+export default { title: 'PinInput' };
 
-type Story = StoryObj;
-
-export const DemoConfigurator: Story = {
+export const DemoConfigurator = {
   name: '⭐ Demo: configurator',
   render: renderDemo(demos.configurator),
 };
 
-export const DemoStylesApi: Story = {
+export const DemoStylesApi = {
   name: '⭐ Demo: stylesApi',
   render: renderDemo(demos.stylesApi),
 };
 
-export const DemoRegexp: Story = {
+export const DemoRegexp = {
   name: '⭐ Demo: regexp',
   render: renderDemo(demos.regexp),
 };

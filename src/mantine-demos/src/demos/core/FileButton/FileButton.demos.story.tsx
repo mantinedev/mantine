@@ -1,25 +1,19 @@
-import { Meta, StoryObj } from '@storybook/react';
 import * as demos from './index';
 import { renderDemo } from '../../../render-demo';
 
-const meta: Meta = {
-  title: 'FileButton',
-};
-export default meta;
+export default { title: 'FileButton' };
 
-type Story = StoryObj;
-
-export const DemoUsage: Story = {
+export const DemoUsage = {
   name: '⭐ Demo: usage',
   render: renderDemo(demos.usage),
 };
 
-export const DemoMultiple: Story = {
+export const DemoMultiple = {
   name: '⭐ Demo: multiple',
   render: renderDemo(demos.multiple),
 };
 
-export const DemoReset: Story = {
+export const DemoReset = {
   name: '⭐ Demo: reset',
   render: renderDemo(demos.reset),
 };

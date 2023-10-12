@@ -1,40 +1,34 @@
-import { Meta, StoryObj } from '@storybook/react';
 import * as demos from './index';
 import { renderDemo } from '../../../render-demo';
 
-const meta: Meta = {
-  title: 'Table',
-};
-export default meta;
+export default { title: 'Table' };
 
-type Story = StoryObj;
-
-export const DemoUsage: Story = {
+export const DemoUsage = {
   name: '⭐ Demo: usage',
   render: renderDemo(demos.usage),
 };
 
-export const DemoCaptions: Story = {
+export const DemoCaptions = {
   name: '⭐ Demo: captions',
   render: renderDemo(demos.captions),
 };
 
-export const DemoConfigurator: Story = {
+export const DemoConfigurator = {
   name: '⭐ Demo: configurator',
   render: renderDemo(demos.configurator),
 };
 
-export const DemoSpacingConfigurator: Story = {
+export const DemoSpacingConfigurator = {
   name: '⭐ Demo: spacingConfigurator',
   render: renderDemo(demos.spacingConfigurator),
 };
 
-export const DemoScrollContainer: Story = {
+export const DemoScrollContainer = {
   name: '⭐ Demo: scrollContainer',
   render: renderDemo(demos.scrollContainer),
 };
 
-export const DemoScrollContainerNative: Story = {
+export const DemoScrollContainerNative = {
   name: '⭐ Demo: scrollContainerNative',
   render: renderDemo(demos.scrollContainerNative),
 };

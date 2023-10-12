@@ -1,35 +1,29 @@
-import { Meta, StoryObj } from '@storybook/react';
 import * as demos from './index';
 import { renderDemo } from '../../../render-demo';
 
-const meta: Meta = {
-  title: 'Rating',
-};
-export default meta;
+export default { title: 'Rating' };
 
-type Story = StoryObj;
-
-export const DemoConfigurator: Story = {
+export const DemoConfigurator = {
   name: '⭐ Demo: configurator',
   render: renderDemo(demos.configurator),
 };
 
-export const DemoCustomSymbol: Story = {
+export const DemoCustomSymbol = {
   name: '⭐ Demo: customSymbol',
   render: renderDemo(demos.customSymbol),
 };
 
-export const DemoReadOnly: Story = {
+export const DemoReadOnly = {
   name: '⭐ Demo: readOnly',
   render: renderDemo(demos.readOnly),
 };
 
-export const DemoFractions: Story = {
+export const DemoFractions = {
   name: '⭐ Demo: fractions',
   render: renderDemo(demos.fractions),
 };
 
-export const DemoSymbol: Story = {
+export const DemoSymbol = {
   name: '⭐ Demo: symbol',
   render: renderDemo(demos.symbol),
 };

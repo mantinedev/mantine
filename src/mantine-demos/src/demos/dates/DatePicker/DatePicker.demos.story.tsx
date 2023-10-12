@@ -1,115 +1,109 @@
-import { Meta, StoryObj } from '@storybook/react';
 import * as demos from './index';
 import { renderDemo } from '../../../render-demo';
 
-const meta: Meta = {
-  title: 'DatePicker',
-};
-export default meta;
+export default { title: 'DatePicker' };
 
-type Story = StoryObj;
-
-export const DemoUsage: Story = {
+export const DemoUsage = {
   name: '⭐ Demo: usage',
   render: renderDemo(demos.usage),
 };
 
-export const DemoMultiple: Story = {
+export const DemoMultiple = {
   name: '⭐ Demo: multiple',
   render: renderDemo(demos.multiple),
 };
 
-export const DemoDeselect: Story = {
+export const DemoDeselect = {
   name: '⭐ Demo: deselect',
   render: renderDemo(demos.deselect),
 };
 
-export const DemoRange: Story = {
+export const DemoRange = {
   name: '⭐ Demo: range',
   render: renderDemo(demos.range),
 };
 
-export const DemoSingleRange: Story = {
+export const DemoSingleRange = {
   name: '⭐ Demo: singleRange',
   render: renderDemo(demos.singleRange),
 };
 
-export const DemoNumberOfColumns: Story = {
+export const DemoNumberOfColumns = {
   name: '⭐ Demo: numberOfColumns',
   render: renderDemo(demos.numberOfColumns),
 };
 
-export const DemoSizeConfigurator: Story = {
+export const DemoSizeConfigurator = {
   name: '⭐ Demo: sizeConfigurator',
   render: renderDemo(demos.sizeConfigurator),
 };
 
-export const DemoControlledDate: Story = {
+export const DemoControlledDate = {
   name: '⭐ Demo: controlledDate',
   render: renderDemo(demos.controlledDate),
 };
 
-export const DemoControlProps: Story = {
+export const DemoControlProps = {
   name: '⭐ Demo: controlProps',
   render: renderDemo(demos.controlProps),
 };
 
-export const DemoDefaultDate: Story = {
+export const DemoDefaultDate = {
   name: '⭐ Demo: defaultDate',
   render: renderDemo(demos.defaultDate),
 };
 
-export const DemoLabelFormat: Story = {
+export const DemoLabelFormat = {
   name: '⭐ Demo: labelFormat',
   render: renderDemo(demos.labelFormat),
 };
 
-export const DemoListFormat: Story = {
+export const DemoListFormat = {
   name: '⭐ Demo: listFormat',
   render: renderDemo(demos.listFormat),
 };
 
-export const DemoLocale: Story = {
+export const DemoLocale = {
   name: '⭐ Demo: locale',
   render: renderDemo(demos.locale),
 };
 
-export const DemoMaxLevel: Story = {
+export const DemoMaxLevel = {
   name: '⭐ Demo: maxLevel',
   render: renderDemo(demos.maxLevel),
 };
 
-export const DemoMinMax: Story = {
+export const DemoMinMax = {
   name: '⭐ Demo: minMax',
   render: renderDemo(demos.minMax),
 };
 
-export const DemoDefaultLevel: Story = {
+export const DemoDefaultLevel = {
   name: '⭐ Demo: defaultLevel',
   render: renderDemo(demos.defaultLevel),
 };
 
-export const DemoFirstDayOfWeek: Story = {
+export const DemoFirstDayOfWeek = {
   name: '⭐ Demo: firstDayOfWeek',
   render: renderDemo(demos.firstDayOfWeek),
 };
 
-export const DemoWeekendDays: Story = {
+export const DemoWeekendDays = {
   name: '⭐ Demo: weekendDays',
   render: renderDemo(demos.weekendDays),
 };
 
-export const DemoRenderDay: Story = {
+export const DemoRenderDay = {
   name: '⭐ Demo: renderDay',
   render: renderDemo(demos.renderDay),
 };
 
-export const DemoHideWeekdays: Story = {
+export const DemoHideWeekdays = {
   name: '⭐ Demo: hideWeekdays',
   render: renderDemo(demos.hideWeekdays),
 };
 
-export const DemoHideOutsideDates: Story = {
+export const DemoHideOutsideDates = {
   name: '⭐ Demo: hideOutsideDates',
   render: renderDemo(demos.hideOutsideDates),
 };

@@ -1,90 +1,84 @@
-import { Meta, StoryObj } from '@storybook/react';
 import * as demos from './index';
 import { renderDemo } from '../../../render-demo';
 
-const meta: Meta = {
-  title: 'Input',
-};
-export default meta;
+export default { title: 'Input' };
 
-type Story = StoryObj;
-
-export const DemoUsage: Story = {
+export const DemoUsage = {
   name: '⭐ Demo: usage',
   render: renderDemo(demos.usage),
 };
 
-export const DemoComponent: Story = {
+export const DemoComponent = {
   name: '⭐ Demo: component',
   render: renderDemo(demos.component),
 };
 
-export const DemoMask: Story = {
+export const DemoMask = {
   name: '⭐ Demo: mask',
   render: renderDemo(demos.mask),
 };
 
-export const DemoSections: Story = {
+export const DemoSections = {
   name: '⭐ Demo: sections',
   render: renderDemo(demos.sections),
 };
 
-export const DemoWrapper: Story = {
+export const DemoWrapper = {
   name: '⭐ Demo: wrapper',
   render: renderDemo(demos.wrapper),
 };
 
-export const DemoInputContainer: Story = {
+export const DemoInputContainer = {
   name: '⭐ Demo: inputContainer',
   render: renderDemo(demos.inputContainer),
 };
 
-export const DemoInputWrapperOrder: Story = {
+export const DemoInputWrapperOrder = {
   name: '⭐ Demo: inputWrapperOrder',
   render: renderDemo(demos.inputWrapperOrder),
 };
 
-export const DemoInputBase: Story = {
+export const DemoInputBase = {
   name: '⭐ Demo: inputBase',
   render: renderDemo(demos.inputBase),
 };
 
-export const DemoCompound: Story = {
+export const DemoCompound = {
   name: '⭐ Demo: compound',
   render: renderDemo(demos.compound),
 };
 
-export const DemoPlaceholder: Story = {
+export const DemoPlaceholder = {
   name: '⭐ Demo: placeholder',
   render: renderDemo(demos.placeholder),
 };
 
-export const DemoDefaultProps: Story = {
+export const DemoDefaultProps = {
   name: '⭐ Demo: defaultProps',
   render: renderDemo(demos.defaultProps),
 };
 
-export const DemoSharedStyles: Story = {
+export const DemoSharedStyles = {
   name: '⭐ Demo: sharedStyles',
   render: renderDemo(demos.sharedStyles),
 };
 
-export const DemoFocusStyles: Story = {
+export const DemoFocusStyles = {
   name: '⭐ Demo: focusStyles',
   render: renderDemo(demos.focusStyles),
 };
 
-export const DemoStylesApi: Story = {
+export const DemoStylesApi = {
   name: '⭐ Demo: stylesApi',
   render: renderDemo(demos.stylesApi),
 };
 
-export const DemoWrapperStylesApi: Story = {
+export const DemoWrapperStylesApi = {
   name: '⭐ Demo: wrapperStylesApi',
   render: renderDemo(demos.wrapperStylesApi),
 };
 
-export const DemoError: Story = {
+export const DemoError = {
   name: '⭐ Demo: error',
   render: renderDemo(demos.error),
 };

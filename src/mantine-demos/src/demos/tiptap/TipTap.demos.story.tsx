@@ -1,50 +1,44 @@
-import { Meta, StoryObj } from '@storybook/react';
 import * as demos from './index';
 import { renderDemo } from '../../render-demo';
 
-const meta: Meta = {
-  title: 'TipTap',
-};
-export default meta;
+export default { title: 'TipTap' };
 
-type Story = StoryObj;
-
-export const DemoUsage: Story = {
+export const DemoUsage = {
   name: '⭐ Demo: usage',
   render: renderDemo(demos.usage),
 };
 
-export const DemoColors: Story = {
+export const DemoColors = {
   name: '⭐ Demo: colors',
   render: renderDemo(demos.colors),
 };
 
-export const DemoCodeHighlight: Story = {
+export const DemoCodeHighlight = {
   name: '⭐ Demo: codeHighlight',
   render: renderDemo(demos.codeHighlight),
 };
 
-export const DemoBubbleMenu: Story = {
+export const DemoBubbleMenu = {
   name: '⭐ Demo: bubbleMenu',
   render: renderDemo(demos.bubbleMenu),
 };
 
-export const DemoFloatingMenu: Story = {
+export const DemoFloatingMenu = {
   name: '⭐ Demo: floatingMenu',
   render: renderDemo(demos.floatingMenu),
 };
 
-export const DemoCustomControl: Story = {
+export const DemoCustomControl = {
   name: '⭐ Demo: customControl',
   render: renderDemo(demos.customControl),
 };
 
-export const DemoIcons: Story = {
+export const DemoIcons = {
   name: '⭐ Demo: icons',
   render: renderDemo(demos.icons),
 };
 
-export const DemoPlaceholder: Story = {
+export const DemoPlaceholder = {
   name: '⭐ Demo: placeholder',
   render: renderDemo(demos.placeholder),
 };

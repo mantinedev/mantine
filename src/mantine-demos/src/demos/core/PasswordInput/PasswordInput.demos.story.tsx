@@ -1,40 +1,34 @@
-import { Meta, StoryObj } from '@storybook/react';
 import * as demos from './index';
 import { renderDemo } from '../../../render-demo';
 
-const meta: Meta = {
-  title: 'PasswordInput',
-};
-export default meta;
+export default { title: 'PasswordInput' };
 
-type Story = StoryObj;
-
-export const DemoUsage: Story = {
+export const DemoUsage = {
   name: '⭐ Demo: usage',
   render: renderDemo(demos.usage),
 };
 
-export const DemoStrengthMeter: Story = {
+export const DemoStrengthMeter = {
   name: '⭐ Demo: strengthMeter',
   render: renderDemo(demos.strengthMeter),
 };
 
-export const DemoError: Story = {
+export const DemoError = {
   name: '⭐ Demo: error',
   render: renderDemo(demos.error),
 };
 
-export const DemoVisibilityIcon: Story = {
+export const DemoVisibilityIcon = {
   name: '⭐ Demo: visibilityIcon',
   render: renderDemo(demos.visibilityIcon),
 };
 
-export const DemoControlledVisibility: Story = {
+export const DemoControlledVisibility = {
   name: '⭐ Demo: controlledVisibility',
   render: renderDemo(demos.controlledVisibility),
 };
 
-export const DemoStylesApi: Story = {
+export const DemoStylesApi = {
   name: '⭐ Demo: stylesApi',
   render: renderDemo(demos.stylesApi),
 };

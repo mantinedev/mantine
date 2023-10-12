@@ -1,40 +1,34 @@
-import { Meta, StoryObj } from '@storybook/react';
 import * as demos from './index';
 import { renderDemo } from '../../../render-demo';
 
-const meta: Meta = {
-  title: 'Text',
-};
-export default meta;
+export default { title: 'Text' };
 
-type Story = StoryObj;
-
-export const DemoUsage: Story = {
+export const DemoUsage = {
   name: '⭐ Demo: usage',
   render: renderDemo(demos.usage),
 };
 
-export const DemoLinesConfigurator: Story = {
+export const DemoLinesConfigurator = {
   name: '⭐ Demo: linesConfigurator',
   render: renderDemo(demos.linesConfigurator),
 };
 
-export const DemoLineClamp: Story = {
+export const DemoLineClamp = {
   name: '⭐ Demo: lineClamp',
   render: renderDemo(demos.lineClamp),
 };
 
-export const DemoGradient: Story = {
+export const DemoGradient = {
   name: '⭐ Demo: gradient',
   render: renderDemo(demos.gradient),
 };
 
-export const DemoInherit: Story = {
+export const DemoInherit = {
   name: '⭐ Demo: inherit',
   render: renderDemo(demos.inherit),
 };
 
-export const DemoTruncate: Story = {
+export const DemoTruncate = {
   name: '⭐ Demo: truncate',
   render: renderDemo(demos.truncate),
 };

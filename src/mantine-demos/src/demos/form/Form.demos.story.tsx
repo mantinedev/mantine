@@ -1,145 +1,139 @@
-import { Meta, StoryObj } from '@storybook/react';
 import * as demos from './index';
 import { renderDemo } from '../../render-demo';
 
-const meta: Meta = {
-  title: 'Form',
-};
-export default meta;
+export default { title: 'Form' };
 
-type Story = StoryObj;
-
-export const DemoUsage: Story = {
+export const DemoUsage = {
   name: '⭐ Demo: usage',
   render: renderDemo(demos.usage),
 };
 
-export const DemoLists: Story = {
+export const DemoLists = {
   name: '⭐ Demo: lists',
   render: renderDemo(demos.lists),
 };
 
-export const DemoDnd: Story = {
+export const DemoDnd = {
   name: '⭐ Demo: dnd',
   render: renderDemo(demos.dnd),
 };
 
-export const DemoZod: Story = {
+export const DemoZod = {
   name: '⭐ Demo: zod',
   render: renderDemo(demos.zod),
 };
 
-export const DemoPassword: Story = {
+export const DemoPassword = {
   name: '⭐ Demo: password',
   render: renderDemo(demos.password),
 };
 
-export const DemoValidateFunction: Story = {
+export const DemoValidateFunction = {
   name: '⭐ Demo: validateFunction',
   render: renderDemo(demos.validateFunction),
 };
 
-export const DemoJoi: Story = {
+export const DemoJoi = {
   name: '⭐ Demo: joi',
   render: renderDemo(demos.joi),
 };
 
-export const DemoYup: Story = {
+export const DemoYup = {
   name: '⭐ Demo: yup',
   render: renderDemo(demos.yup),
 };
 
-export const DemoLocalStorage: Story = {
+export const DemoLocalStorage = {
   name: '⭐ Demo: localStorage',
   render: renderDemo(demos.localStorage),
 };
 
-export const DemoNested: Story = {
+export const DemoNested = {
   name: '⭐ Demo: nested',
   render: renderDemo(demos.nested),
 };
 
-export const DemoRulesValidation: Story = {
+export const DemoRulesValidation = {
   name: '⭐ Demo: rulesValidation',
   render: renderDemo(demos.rulesValidation),
 };
 
-export const DemoLiveValidation: Story = {
+export const DemoLiveValidation = {
   name: '⭐ Demo: liveValidation',
   render: renderDemo(demos.liveValidation),
 };
 
-export const DemoLiveFieldValidation: Story = {
+export const DemoLiveFieldValidation = {
   name: '⭐ Demo: liveFieldValidation',
   render: renderDemo(demos.liveFieldValidation),
 };
 
-export const DemoClearErrorOnChange: Story = {
+export const DemoClearErrorOnChange = {
   name: '⭐ Demo: clearErrorOnChange',
   render: renderDemo(demos.clearErrorOnChange),
 };
 
-export const DemoOnSubmitErrors: Story = {
+export const DemoOnSubmitErrors = {
   name: '⭐ Demo: onSubmitErrors',
   render: renderDemo(demos.onSubmitErrors),
 };
 
-export const DemoAsyncSetValues: Story = {
+export const DemoAsyncSetValues = {
   name: '⭐ Demo: asyncSetValues',
   render: renderDemo(demos.asyncSetValues),
 };
 
-export const DemoStepper: Story = {
+export const DemoStepper = {
   name: '⭐ Demo: stepper',
   render: renderDemo(demos.stepper),
 };
 
-export const DemoSetFieldValue: Story = {
+export const DemoSetFieldValue = {
   name: '⭐ Demo: setFieldValue',
   render: renderDemo(demos.setFieldValue),
 };
 
-export const DemoSetValues: Story = {
+export const DemoSetValues = {
   name: '⭐ Demo: setValues',
   render: renderDemo(demos.setValues),
 };
 
-export const DemoReset: Story = {
+export const DemoReset = {
   name: '⭐ Demo: reset',
   render: renderDemo(demos.reset),
 };
 
-export const DemoStatus: Story = {
+export const DemoStatus = {
   name: '⭐ Demo: status',
   render: renderDemo(demos.status),
 };
 
-export const DemoBlurValidation: Story = {
+export const DemoBlurValidation = {
   name: '⭐ Demo: blurValidation',
   render: renderDemo(demos.blurValidation),
 };
 
-export const DemoBlurFieldValidation: Story = {
+export const DemoBlurFieldValidation = {
   name: '⭐ Demo: blurFieldValidation',
   render: renderDemo(demos.blurFieldValidation),
 };
 
-export const DemoTransformValues: Story = {
+export const DemoTransformValues = {
   name: '⭐ Demo: transformValues',
   render: renderDemo(demos.transformValues),
 };
 
-export const DemoValidators: Story = {
+export const DemoValidators = {
   name: '⭐ Demo: validators',
   render: renderDemo(demos.validators),
 };
 
-export const DemoValidatorsEmpty: Story = {
+export const DemoValidatorsEmpty = {
   name: '⭐ Demo: validatorsEmpty',
   render: renderDemo(demos.validatorsEmpty),
 };
 
-export const DemoSuperstruct: Story = {
+export const DemoSuperstruct = {
   name: '⭐ Demo: superstruct',
   render: renderDemo(demos.superstruct),
 };

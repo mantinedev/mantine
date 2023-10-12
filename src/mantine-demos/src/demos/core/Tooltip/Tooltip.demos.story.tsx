@@ -1,75 +1,69 @@
-import { Meta, StoryObj } from '@storybook/react';
 import * as demos from './index';
 import { renderDemo } from '../../../render-demo';
 
-const meta: Meta = {
-  title: 'Tooltip',
-};
-export default meta;
+export default { title: 'Tooltip' };
 
-type Story = StoryObj;
-
-export const DemoConfigurator: Story = {
+export const DemoConfigurator = {
   name: '⭐ Demo: configurator',
   render: renderDemo(demos.configurator),
 };
 
-export const DemoControlled: Story = {
+export const DemoControlled = {
   name: '⭐ Demo: controlled',
   render: renderDemo(demos.controlled),
 };
 
-export const DemoArrow: Story = {
+export const DemoArrow = {
   name: '⭐ Demo: arrow',
   render: renderDemo(demos.arrow),
 };
 
-export const DemoMultiline: Story = {
+export const DemoMultiline = {
   name: '⭐ Demo: multiline',
   render: renderDemo(demos.multiline),
 };
 
-export const DemoTransitions: Story = {
+export const DemoTransitions = {
   name: '⭐ Demo: transitions',
   render: renderDemo(demos.transitions),
 };
 
-export const DemoDelay: Story = {
+export const DemoDelay = {
   name: '⭐ Demo: delay',
   render: renderDemo(demos.delay),
 };
 
-export const DemoFloating: Story = {
+export const DemoFloating = {
   name: '⭐ Demo: floating',
   render: renderDemo(demos.floating),
 };
 
-export const DemoUsage: Story = {
+export const DemoUsage = {
   name: '⭐ Demo: usage',
   render: renderDemo(demos.usage),
 };
 
-export const DemoGroup: Story = {
+export const DemoGroup = {
   name: '⭐ Demo: group',
   render: renderDemo(demos.group),
 };
 
-export const DemoOffset: Story = {
+export const DemoOffset = {
   name: '⭐ Demo: offset',
   render: renderDemo(demos.offset),
 };
 
-export const DemoInline: Story = {
+export const DemoInline = {
   name: '⭐ Demo: inline',
   render: renderDemo(demos.inline),
 };
 
-export const DemoNested: Story = {
+export const DemoNested = {
   name: '⭐ Demo: nested',
   render: renderDemo(demos.nested),
 };
 
-export const DemoOffsetAxis: Story = {
+export const DemoOffsetAxis = {
   name: '⭐ Demo: offsetAxis',
   render: renderDemo(demos.offsetAxis),
 };

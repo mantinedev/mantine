@@ -1,55 +1,49 @@
-import { Meta, StoryObj } from '@storybook/react';
 import * as demos from './index';
 import { renderDemo } from '../../../render-demo';
 
-const meta: Meta = {
-  title: 'DatePickerInput',
-};
-export default meta;
+export default { title: 'DatePickerInput' };
 
-type Story = StoryObj;
-
-export const DemoUsage: Story = {
+export const DemoUsage = {
   name: '⭐ Demo: usage',
   render: renderDemo(demos.usage),
 };
 
-export const DemoMultiple: Story = {
+export const DemoMultiple = {
   name: '⭐ Demo: multiple',
   render: renderDemo(demos.multiple),
 };
 
-export const DemoRange: Story = {
+export const DemoRange = {
   name: '⭐ Demo: range',
   render: renderDemo(demos.range),
 };
 
-export const DemoConfigurator: Story = {
+export const DemoConfigurator = {
   name: '⭐ Demo: configurator',
   render: renderDemo(demos.configurator),
 };
 
-export const DemoModal: Story = {
+export const DemoModal = {
   name: '⭐ Demo: modal',
   render: renderDemo(demos.modal),
 };
 
-export const DemoIcon: Story = {
+export const DemoIcon = {
   name: '⭐ Demo: icon',
   render: renderDemo(demos.icon),
 };
 
-export const DemoClearable: Story = {
+export const DemoClearable = {
   name: '⭐ Demo: clearable',
   render: renderDemo(demos.clearable),
 };
 
-export const DemoValueFormat: Story = {
+export const DemoValueFormat = {
   name: '⭐ Demo: valueFormat',
   render: renderDemo(demos.valueFormat),
 };
 
-export const DemoDisabled: Story = {
+export const DemoDisabled = {
   name: '⭐ Demo: disabled',
   render: renderDemo(demos.disabled),
 };

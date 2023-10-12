@@ -1,80 +1,74 @@
-import { Meta, StoryObj } from '@storybook/react';
 import * as demos from './index';
 import { renderDemo } from '../../../render-demo';
 
-const meta: Meta = {
-  title: 'Modal',
-};
-export default meta;
+export default { title: 'Modal' };
 
-type Story = StoryObj;
-
-export const DemoUsage: Story = {
+export const DemoUsage = {
   name: '⭐ Demo: usage',
   render: renderDemo(demos.usage),
 };
 
-export const DemoHeader: Story = {
+export const DemoHeader = {
   name: '⭐ Demo: header',
   render: renderDemo(demos.header),
 };
 
-export const DemoSizes: Story = {
+export const DemoSizes = {
   name: '⭐ Demo: sizes',
   render: renderDemo(demos.sizes),
 };
 
-export const DemoOverlay: Story = {
+export const DemoOverlay = {
   name: '⭐ Demo: overlay',
   render: renderDemo(demos.overlay),
 };
 
-export const DemoOverflow: Story = {
+export const DemoOverflow = {
   name: '⭐ Demo: overflow',
   render: renderDemo(demos.overflow),
 };
 
-export const DemoTransitions: Story = {
+export const DemoTransitions = {
   name: '⭐ Demo: transitions',
   render: renderDemo(demos.transitions),
 };
 
-export const DemoCentered: Story = {
+export const DemoCentered = {
   name: '⭐ Demo: centered',
   render: renderDemo(demos.centered),
 };
 
-export const DemoFullScreen: Story = {
+export const DemoFullScreen = {
   name: '⭐ Demo: fullScreen',
   render: renderDemo(demos.fullScreen),
 };
 
-export const DemoSizeAuto: Story = {
+export const DemoSizeAuto = {
   name: '⭐ Demo: sizeAuto',
   render: renderDemo(demos.sizeAuto),
 };
 
-export const DemoScrollarea: Story = {
+export const DemoScrollarea = {
   name: '⭐ Demo: scrollarea',
   render: renderDemo(demos.scrollarea),
 };
 
-export const DemoComposition: Story = {
+export const DemoComposition = {
   name: '⭐ Demo: composition',
   render: renderDemo(demos.composition),
 };
 
-export const DemoOffset: Story = {
+export const DemoOffset = {
   name: '⭐ Demo: offset',
   render: renderDemo(demos.offset),
 };
 
-export const DemoInitialFocus: Story = {
+export const DemoInitialFocus = {
   name: '⭐ Demo: initialFocus',
   render: renderDemo(demos.initialFocus),
 };
 
-export const DemoFullScreenMobile: Story = {
+export const DemoFullScreenMobile = {
   name: '⭐ Demo: fullScreenMobile',
   render: renderDemo(demos.fullScreenMobile),
 };

@@ -1,60 +1,54 @@
-import { Meta, StoryObj } from '@storybook/react';
 import * as demos from './index';
 import { renderDemo } from '../../../render-demo';
 
-const meta: Meta = {
-  title: 'Popover',
-};
-export default meta;
+export default { title: 'Popover' };
 
-type Story = StoryObj;
-
-export const DemoUsage: Story = {
+export const DemoUsage = {
   name: '⭐ Demo: usage',
   render: renderDemo(demos.usage),
 };
 
-export const DemoForm: Story = {
+export const DemoForm = {
   name: '⭐ Demo: form',
   render: renderDemo(demos.form),
 };
 
-export const DemoHover: Story = {
+export const DemoHover = {
   name: '⭐ Demo: hover',
   render: renderDemo(demos.hover),
 };
 
-export const DemoSameWidth: Story = {
+export const DemoSameWidth = {
   name: '⭐ Demo: sameWidth',
   render: renderDemo(demos.sameWidth),
 };
 
-export const DemoInline: Story = {
+export const DemoInline = {
   name: '⭐ Demo: inline',
   render: renderDemo(demos.inline),
 };
 
-export const DemoOffsetAxis: Story = {
+export const DemoOffsetAxis = {
   name: '⭐ Demo: offsetAxis',
   render: renderDemo(demos.offsetAxis),
 };
 
-export const DemoOffset: Story = {
+export const DemoOffset = {
   name: '⭐ Demo: offset',
   render: renderDemo(demos.offset),
 };
 
-export const DemoArrow: Story = {
+export const DemoArrow = {
   name: '⭐ Demo: arrow',
   render: renderDemo(demos.arrow),
 };
 
-export const DemoClickOutsideEvents: Story = {
+export const DemoClickOutsideEvents = {
   name: '⭐ Demo: clickOutsideEvents',
   render: renderDemo(demos.clickOutsideEvents),
 };
 
-export const DemoDisabled: Story = {
+export const DemoDisabled = {
   name: '⭐ Demo: disabled',
   render: renderDemo(demos.disabled),
 };

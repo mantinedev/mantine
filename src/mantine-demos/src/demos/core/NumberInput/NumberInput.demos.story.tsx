@@ -1,85 +1,79 @@
-import { Meta, StoryObj } from '@storybook/react';
 import * as demos from './index';
 import { renderDemo } from '../../../render-demo';
 
-const meta: Meta = {
-  title: 'NumberInput',
-};
-export default meta;
+export default { title: 'NumberInput' };
 
-type Story = StoryObj;
-
-export const DemoRightSection: Story = {
+export const DemoRightSection = {
   name: '⭐ Demo: rightSection',
   render: renderDemo(demos.rightSection),
 };
 
-export const DemoHandlers: Story = {
+export const DemoHandlers = {
   name: '⭐ Demo: handlers',
   render: renderDemo(demos.handlers),
 };
 
-export const DemoAllowNegative: Story = {
+export const DemoAllowNegative = {
   name: '⭐ Demo: allowNegative',
   render: renderDemo(demos.allowNegative),
 };
 
-export const DemoDecimalScale: Story = {
+export const DemoDecimalScale = {
   name: '⭐ Demo: decimalScale',
   render: renderDemo(demos.decimalScale),
 };
 
-export const DemoAllowDecimal: Story = {
+export const DemoAllowDecimal = {
   name: '⭐ Demo: allowDecimal',
   render: renderDemo(demos.allowDecimal),
 };
 
-export const DemoThousandsSeparator: Story = {
+export const DemoThousandsSeparator = {
   name: '⭐ Demo: thousandsSeparator',
   render: renderDemo(demos.thousandsSeparator),
 };
 
-export const DemoDecimalSeparator: Story = {
+export const DemoDecimalSeparator = {
   name: '⭐ Demo: decimalSeparator',
   render: renderDemo(demos.decimalSeparator),
 };
 
-export const DemoFixedDecimalScale: Story = {
+export const DemoFixedDecimalScale = {
   name: '⭐ Demo: fixedDecimalScale',
   render: renderDemo(demos.fixedDecimalScale),
 };
 
-export const DemoPrefixSuffix: Story = {
+export const DemoPrefixSuffix = {
   name: '⭐ Demo: prefixSuffix',
   render: renderDemo(demos.prefixSuffix),
 };
 
-export const DemoMinMax: Story = {
+export const DemoMinMax = {
   name: '⭐ Demo: minMax',
   render: renderDemo(demos.minMax),
 };
 
-export const DemoStrictClamp: Story = {
+export const DemoStrictClamp = {
   name: '⭐ Demo: strictClamp',
   render: renderDemo(demos.strictClamp),
 };
 
-export const DemoUsage: Story = {
+export const DemoUsage = {
   name: '⭐ Demo: usage',
   render: renderDemo(demos.usage),
 };
 
-export const DemoError: Story = {
+export const DemoError = {
   name: '⭐ Demo: error',
   render: renderDemo(demos.error),
 };
 
-export const DemoDisabled: Story = {
+export const DemoDisabled = {
   name: '⭐ Demo: disabled',
   render: renderDemo(demos.disabled),
 };
 
-export const DemoStylesApi: Story = {
+export const DemoStylesApi = {
   name: '⭐ Demo: stylesApi',
   render: renderDemo(demos.stylesApi),
 };

@@ -1,60 +1,54 @@
-import { Meta, StoryObj } from '@storybook/react';
 import * as demos from './index';
 import { renderDemo } from '../../../render-demo';
 
-const meta: Meta = {
-  title: 'Drawer',
-};
-export default meta;
+export default { title: 'Drawer' };
 
-type Story = StoryObj;
-
-export const DemoUsage: Story = {
+export const DemoUsage = {
   name: '⭐ Demo: usage',
   render: renderDemo(demos.usage),
 };
 
-export const DemoPositions: Story = {
+export const DemoPositions = {
   name: '⭐ Demo: positions',
   render: renderDemo(demos.positions),
 };
 
-export const DemoSizes: Story = {
+export const DemoSizes = {
   name: '⭐ Demo: sizes',
   render: renderDemo(demos.sizes),
 };
 
-export const DemoTransitions: Story = {
+export const DemoTransitions = {
   name: '⭐ Demo: transitions',
   render: renderDemo(demos.transitions),
 };
 
-export const DemoOverlay: Story = {
+export const DemoOverlay = {
   name: '⭐ Demo: overlay',
   render: renderDemo(demos.overlay),
 };
 
-export const DemoComposition: Story = {
+export const DemoComposition = {
   name: '⭐ Demo: composition',
   render: renderDemo(demos.composition),
 };
 
-export const DemoHeader: Story = {
+export const DemoHeader = {
   name: '⭐ Demo: header',
   render: renderDemo(demos.header),
 };
 
-export const DemoInitialFocus: Story = {
+export const DemoInitialFocus = {
   name: '⭐ Demo: initialFocus',
   render: renderDemo(demos.initialFocus),
 };
 
-export const DemoScrollarea: Story = {
+export const DemoScrollarea = {
   name: '⭐ Demo: scrollarea',
   render: renderDemo(demos.scrollarea),
 };
 
-export const DemoOverflow: Story = {
+export const DemoOverflow = {
   name: '⭐ Demo: overflow',
   render: renderDemo(demos.overflow),
 };

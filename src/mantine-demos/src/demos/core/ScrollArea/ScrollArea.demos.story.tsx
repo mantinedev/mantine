@@ -1,50 +1,44 @@
-import { Meta, StoryObj } from '@storybook/react';
 import * as demos from './index';
 import { renderDemo } from '../../../render-demo';
 
-const meta: Meta = {
-  title: 'ScrollArea',
-};
-export default meta;
+export default { title: 'ScrollArea' };
 
-type Story = StoryObj;
-
-export const DemoUsage: Story = {
+export const DemoUsage = {
   name: '⭐ Demo: usage',
   render: renderDemo(demos.usage),
 };
 
-export const DemoHorizontal: Story = {
+export const DemoHorizontal = {
   name: '⭐ Demo: horizontal',
   render: renderDemo(demos.horizontal),
 };
 
-export const DemoScrollTo: Story = {
+export const DemoScrollTo = {
   name: '⭐ Demo: scrollTo',
   render: renderDemo(demos.scrollTo),
 };
 
-export const DemoScrollPosition: Story = {
+export const DemoScrollPosition = {
   name: '⭐ Demo: scrollPosition',
   render: renderDemo(demos.scrollPosition),
 };
 
-export const DemoMaxHeight: Story = {
+export const DemoMaxHeight = {
   name: '⭐ Demo: maxHeight',
   render: renderDemo(demos.maxHeight),
 };
 
-export const DemoStylesApi: Story = {
+export const DemoStylesApi = {
   name: '⭐ Demo: stylesApi',
   render: renderDemo(demos.stylesApi),
 };
 
-export const DemoScrollIntoView: Story = {
+export const DemoScrollIntoView = {
   name: '⭐ Demo: scrollIntoView',
   render: renderDemo(demos.scrollIntoView),
 };
 
-export const DemoAutosizePopover: Story = {
+export const DemoAutosizePopover = {
   name: '⭐ Demo: autosizePopover',
   render: renderDemo(demos.autosizePopover),
 };

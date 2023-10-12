@@ -1,55 +1,49 @@
-import { Meta, StoryObj } from '@storybook/react';
 import * as demos from './index';
 import { renderDemo } from '../../../render-demo';
 
-const meta: Meta = {
-  title: 'ColorInput',
-};
-export default meta;
+export default { title: 'ColorInput' };
 
-type Story = StoryObj;
-
-export const DemoUsage: Story = {
+export const DemoUsage = {
   name: '⭐ Demo: usage',
   render: renderDemo(demos.usage),
 };
 
-export const DemoError: Story = {
+export const DemoError = {
   name: '⭐ Demo: error',
   render: renderDemo(demos.error),
 };
 
-export const DemoDisabled: Story = {
+export const DemoDisabled = {
   name: '⭐ Demo: disabled',
   render: renderDemo(demos.disabled),
 };
 
-export const DemoStylesApi: Story = {
+export const DemoStylesApi = {
   name: '⭐ Demo: stylesApi',
   render: renderDemo(demos.stylesApi),
 };
 
-export const DemoFormatsConfigurator: Story = {
+export const DemoFormatsConfigurator = {
   name: '⭐ Demo: formatsConfigurator',
   render: renderDemo(demos.formatsConfigurator),
 };
 
-export const DemoReadOnly: Story = {
+export const DemoReadOnly = {
   name: '⭐ Demo: readOnly',
   render: renderDemo(demos.readOnly),
 };
 
-export const DemoRightSection: Story = {
+export const DemoRightSection = {
   name: '⭐ Demo: rightSection',
   render: renderDemo(demos.rightSection),
 };
 
-export const DemoSwatches: Story = {
+export const DemoSwatches = {
   name: '⭐ Demo: swatches',
   render: renderDemo(demos.swatches),
 };
 
-export const DemoSwatchesOnly: Story = {
+export const DemoSwatchesOnly = {
   name: '⭐ Demo: swatchesOnly',
   render: renderDemo(demos.swatchesOnly),
 };

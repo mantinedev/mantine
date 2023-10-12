@@ -1,70 +1,64 @@
-import { Meta, StoryObj } from '@storybook/react';
 import * as demos from './index';
 import { renderDemo } from '../../../render-demo';
 
-const meta: Meta = {
-  title: 'ActionIcon',
-};
-export default meta;
+export default { title: 'ActionIcon' };
 
-type Story = StoryObj;
-
-export const DemoUsage: Story = {
+export const DemoUsage = {
   name: '⭐ Demo: usage',
   render: renderDemo(demos.usage),
 };
 
-export const DemoGroup: Story = {
+export const DemoGroup = {
   name: '⭐ Demo: group',
   render: renderDemo(demos.group),
 };
 
-export const DemoSize: Story = {
+export const DemoSize = {
   name: '⭐ Demo: size',
   render: renderDemo(demos.size),
 };
 
-export const DemoGradient: Story = {
+export const DemoGradient = {
   name: '⭐ Demo: gradient',
   render: renderDemo(demos.gradient),
 };
 
-export const DemoDisabled: Story = {
+export const DemoDisabled = {
   name: '⭐ Demo: disabled',
   render: renderDemo(demos.disabled),
 };
 
-export const DemoDisabledLink: Story = {
+export const DemoDisabledLink = {
   name: '⭐ Demo: disabledLink',
   render: renderDemo(demos.disabledLink),
 };
 
-export const DemoDisabledTooltip: Story = {
+export const DemoDisabledTooltip = {
   name: '⭐ Demo: disabledTooltip',
   render: renderDemo(demos.disabledTooltip),
 };
 
-export const DemoDisabledStyles: Story = {
+export const DemoDisabledStyles = {
   name: '⭐ Demo: disabledStyles',
   render: renderDemo(demos.disabledStyles),
 };
 
-export const DemoLoading: Story = {
+export const DemoLoading = {
   name: '⭐ Demo: loading',
   render: renderDemo(demos.loading),
 };
 
-export const DemoLoaderProps: Story = {
+export const DemoLoaderProps = {
   name: '⭐ Demo: loaderProps',
   render: renderDemo(demos.loaderProps),
 };
 
-export const DemoCustomVariant: Story = {
+export const DemoCustomVariant = {
   name: '⭐ Demo: customVariant',
   render: renderDemo(demos.customVariant),
 };
 
-export const DemoCustomSize: Story = {
+export const DemoCustomSize = {
   name: '⭐ Demo: customSize',
   render: renderDemo(demos.customSize),
 };

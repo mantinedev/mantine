@@ -1,50 +1,44 @@
-import { Meta, StoryObj } from '@storybook/react';
 import * as demos from './index';
 import { renderDemo } from '../../../render-demo';
 
-const meta: Meta = {
-  title: 'SegmentedControl',
-};
-export default meta;
+export default { title: 'SegmentedControl' };
 
-type Story = StoryObj;
-
-export const DemoUsage: Story = {
+export const DemoUsage = {
   name: '⭐ Demo: usage',
   render: renderDemo(demos.usage),
 };
 
-export const DemoConfigurator: Story = {
+export const DemoConfigurator = {
   name: '⭐ Demo: configurator',
   render: renderDemo(demos.configurator),
 };
 
-export const DemoTransitions: Story = {
+export const DemoTransitions = {
   name: '⭐ Demo: transitions',
   render: renderDemo(demos.transitions),
 };
 
-export const DemoLabels: Story = {
+export const DemoLabels = {
   name: '⭐ Demo: labels',
   render: renderDemo(demos.labels),
 };
 
-export const DemoDisabled: Story = {
+export const DemoDisabled = {
   name: '⭐ Demo: disabled',
   render: renderDemo(demos.disabled),
 };
 
-export const DemoStylesApi: Story = {
+export const DemoStylesApi = {
   name: '⭐ Demo: stylesApi',
   render: renderDemo(demos.stylesApi),
 };
 
-export const DemoIconsOnly: Story = {
+export const DemoIconsOnly = {
   name: '⭐ Demo: iconsOnly',
   render: renderDemo(demos.iconsOnly),
 };
 
-export const DemoReadOnly: Story = {
+export const DemoReadOnly = {
   name: '⭐ Demo: readOnly',
   render: renderDemo(demos.readOnly),
 };

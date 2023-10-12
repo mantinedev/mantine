@@ -1,115 +1,109 @@
-import { Meta, StoryObj } from '@storybook/react';
 import * as demos from './index';
 import { renderDemo } from '../../render-demo';
 
-const meta: Meta = {
-  title: 'Theming',
-};
-export default meta;
+export default { title: 'Theming' };
 
-type Story = StoryObj;
-
-export const DemoFocusRing: Story = {
+export const DemoFocusRing = {
   name: '⭐ Demo: focusRing',
   render: renderDemo(demos.focusRing),
 };
 
-export const DemoFocusClassName: Story = {
+export const DemoFocusClassName = {
   name: '⭐ Demo: focusClassName',
   render: renderDemo(demos.focusClassName),
 };
 
-export const DemoActiveClassName: Story = {
+export const DemoActiveClassName = {
   name: '⭐ Demo: activeClassName',
   render: renderDemo(demos.activeClassName),
 };
 
-export const DemoActiveClassNameEmpty: Story = {
+export const DemoActiveClassNameEmpty = {
   name: '⭐ Demo: activeClassNameEmpty',
   render: renderDemo(demos.activeClassNameEmpty),
 };
 
-export const DemoDefaultRadiusConfigurator: Story = {
+export const DemoDefaultRadiusConfigurator = {
   name: '⭐ Demo: defaultRadiusConfigurator',
   render: renderDemo(demos.defaultRadiusConfigurator),
 };
 
-export const DemoPrimaryShadeConfigurator: Story = {
+export const DemoPrimaryShadeConfigurator = {
   name: '⭐ Demo: primaryShadeConfigurator',
   render: renderDemo(demos.primaryShadeConfigurator),
 };
 
-export const DemoPrimaryColor: Story = {
+export const DemoPrimaryColor = {
   name: '⭐ Demo: primaryColor',
   render: renderDemo(demos.primaryColor),
 };
 
-export const DemoColorsOverride: Story = {
+export const DemoColorsOverride = {
   name: '⭐ Demo: colorsOverride',
   render: renderDemo(demos.colorsOverride),
 };
 
-export const DemoColorsIndexConfigurator: Story = {
+export const DemoColorsIndexConfigurator = {
   name: '⭐ Demo: colorsIndexConfigurator',
   render: renderDemo(demos.colorsIndexConfigurator),
 };
 
-export const DemoColorProp: Story = {
+export const DemoColorProp = {
   name: '⭐ Demo: colorProp',
   render: renderDemo(demos.colorProp),
 };
 
-export const DemoColorAndCProps: Story = {
+export const DemoColorAndCProps = {
   name: '⭐ Demo: colorAndCProps',
   render: renderDemo(demos.colorAndCProps),
 };
 
-export const DemoVariantColorsResolver: Story = {
+export const DemoVariantColorsResolver = {
   name: '⭐ Demo: variantColorsResolver',
   render: renderDemo(demos.variantColorsResolver),
 };
 
-export const DemoDefaultProps: Story = {
+export const DemoDefaultProps = {
   name: '⭐ Demo: defaultProps',
   render: renderDemo(demos.defaultProps),
 };
 
-export const DemoUsePropsHook: Story = {
+export const DemoUsePropsHook = {
   name: '⭐ Demo: usePropsHook',
   render: renderDemo(demos.usePropsHook),
 };
 
-export const DemoFonts: Story = {
+export const DemoFonts = {
   name: '⭐ Demo: fonts',
   render: renderDemo(demos.fonts),
 };
 
-export const DemoHeadingsStyles: Story = {
+export const DemoHeadingsStyles = {
   name: '⭐ Demo: headingsStyles',
   render: renderDemo(demos.headingsStyles),
 };
 
-export const DemoFontSizeConfigurator: Story = {
+export const DemoFontSizeConfigurator = {
   name: '⭐ Demo: fontSizeConfigurator',
   render: renderDemo(demos.fontSizeConfigurator),
 };
 
-export const DemoColorScheme: Story = {
+export const DemoColorScheme = {
   name: '⭐ Demo: colorScheme',
   render: renderDemo(demos.colorScheme),
 };
 
-export const DemoColorSchemeControl: Story = {
+export const DemoColorSchemeControl = {
   name: '⭐ Demo: colorSchemeControl',
   render: renderDemo(demos.colorSchemeControl),
 };
 
-export const DemoDefaultGradient: Story = {
+export const DemoDefaultGradient = {
   name: '⭐ Demo: defaultGradient',
   render: renderDemo(demos.defaultGradient),
 };
 
-export const DemoCursorType: Story = {
+export const DemoCursorType = {
   name: '⭐ Demo: cursorType',
   render: renderDemo(demos.cursorType),
 };

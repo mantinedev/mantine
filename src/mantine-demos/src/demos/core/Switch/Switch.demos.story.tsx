@@ -1,40 +1,34 @@
-import { Meta, StoryObj } from '@storybook/react';
 import * as demos from './index';
 import { renderDemo } from '../../../render-demo';
 
-const meta: Meta = {
-  title: 'Switch',
-};
-export default meta;
+export default { title: 'Switch' };
 
-type Story = StoryObj;
-
-export const DemoConfigurator: Story = {
+export const DemoConfigurator = {
   name: '⭐ Demo: configurator',
   render: renderDemo(demos.configurator),
 };
 
-export const DemoLabels: Story = {
+export const DemoLabels = {
   name: '⭐ Demo: labels',
   render: renderDemo(demos.labels),
 };
 
-export const DemoThumbIcon: Story = {
+export const DemoThumbIcon = {
   name: '⭐ Demo: thumbIcon',
   render: renderDemo(demos.thumbIcon),
 };
 
-export const DemoIconLabels: Story = {
+export const DemoIconLabels = {
   name: '⭐ Demo: iconLabels',
   render: renderDemo(demos.iconLabels),
 };
 
-export const DemoGroupConfigurator: Story = {
+export const DemoGroupConfigurator = {
   name: '⭐ Demo: groupConfigurator',
   render: renderDemo(demos.groupConfigurator),
 };
 
-export const DemoStylesApi: Story = {
+export const DemoStylesApi = {
   name: '⭐ Demo: stylesApi',
   render: renderDemo(demos.stylesApi),
 };

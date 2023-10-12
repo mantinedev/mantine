@@ -1,50 +1,44 @@
-import { Meta, StoryObj } from '@storybook/react';
 import * as demos from './index';
 import { renderDemo } from '../../../render-demo';
 
-const meta: Meta = {
-  title: 'ColorPicker',
-};
-export default meta;
+export default { title: 'ColorPicker' };
 
-type Story = StoryObj;
-
-export const DemoFormatsConfigurator: Story = {
+export const DemoFormatsConfigurator = {
   name: '⭐ Demo: formatsConfigurator',
   render: renderDemo(demos.formatsConfigurator),
 };
 
-export const DemoSizeConfigurator: Story = {
+export const DemoSizeConfigurator = {
   name: '⭐ Demo: sizeConfigurator',
   render: renderDemo(demos.sizeConfigurator),
 };
 
-export const DemoSwatchesConfigurator: Story = {
+export const DemoSwatchesConfigurator = {
   name: '⭐ Demo: swatchesConfigurator',
   render: renderDemo(demos.swatchesConfigurator),
 };
 
-export const DemoSwatches: Story = {
+export const DemoSwatches = {
   name: '⭐ Demo: swatches',
   render: renderDemo(demos.swatches),
 };
 
-export const DemoSwatchesOnly: Story = {
+export const DemoSwatchesOnly = {
   name: '⭐ Demo: swatchesOnly',
   render: renderDemo(demos.swatchesOnly),
 };
 
-export const DemoUsage: Story = {
+export const DemoUsage = {
   name: '⭐ Demo: usage',
   render: renderDemo(demos.usage),
 };
 
-export const DemoFullWidth: Story = {
+export const DemoFullWidth = {
   name: '⭐ Demo: fullWidth',
   render: renderDemo(demos.fullWidth),
 };
 
-export const DemoStylesApi: Story = {
+export const DemoStylesApi = {
   name: '⭐ Demo: stylesApi',
   render: renderDemo(demos.stylesApi),
 };

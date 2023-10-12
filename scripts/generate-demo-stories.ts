@@ -35,20 +35,14 @@ for (const file of files) {
   const depth = relativePath.split('/').length - 1;
   const depthArray = new Array(depth).fill('..');
 
-  const content = `import { Meta, StoryObj } from '@storybook/react';
-import * as demos from './index';
+  const content = `import * as demos from './index';
 import { renderDemo } from '${depthArray.join('/')}/render-demo';
 
-const meta: Meta = {
-  title: '${componentName}',
-};
-export default meta;
-
-type Story = StoryObj;
+export default { title: '${componentName}' };
 
 ${storyData
   .map(
-    (data) => `export const ${data.exportName}: Story = {
+    (data) => `export const ${data.exportName} = {
   name: '${data.name}',
   render: renderDemo(demos.${data.key}),
 };`

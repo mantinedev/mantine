@@ -1,40 +1,34 @@
-import { Meta, StoryObj } from '@storybook/react';
 import * as demos from './index';
 import { renderDemo } from '../../render-demo';
 
-const meta: Meta = {
-  title: 'Notifications',
-};
-export default meta;
+export default { title: 'Notifications' };
 
-type Story = StoryObj;
-
-export const DemoAutoclose: Story = {
+export const DemoAutoclose = {
   name: '⭐ Demo: autoclose',
   render: renderDemo(demos.autoclose),
 };
 
-export const DemoBase: Story = {
+export const DemoBase = {
   name: '⭐ Demo: base',
   render: renderDemo(demos.base),
 };
 
-export const DemoClean: Story = {
+export const DemoClean = {
   name: '⭐ Demo: clean',
   render: renderDemo(demos.clean),
 };
 
-export const DemoLimit: Story = {
+export const DemoLimit = {
   name: '⭐ Demo: limit',
   render: renderDemo(demos.limit),
 };
 
-export const DemoUpdate: Story = {
+export const DemoUpdate = {
   name: '⭐ Demo: update',
   render: renderDemo(demos.update),
 };
 
-export const DemoCustomize: Story = {
+export const DemoCustomize = {
   name: '⭐ Demo: customize',
   render: renderDemo(demos.customize),
 };

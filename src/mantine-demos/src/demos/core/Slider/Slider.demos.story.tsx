@@ -1,70 +1,64 @@
-import { Meta, StoryObj } from '@storybook/react';
 import * as demos from './index';
 import { renderDemo } from '../../../render-demo';
 
-const meta: Meta = {
-  title: 'Slider',
-};
-export default meta;
+export default { title: 'Slider' };
 
-type Story = StoryObj;
-
-export const DemoConfigurator: Story = {
+export const DemoConfigurator = {
   name: '⭐ Demo: configurator',
   render: renderDemo(demos.configurator),
 };
 
-export const DemoCustomize: Story = {
+export const DemoCustomize = {
   name: '⭐ Demo: customize',
   render: renderDemo(demos.customize),
 };
 
-export const DemoMarks: Story = {
+export const DemoMarks = {
   name: '⭐ Demo: marks',
   render: renderDemo(demos.marks),
 };
 
-export const DemoLabel: Story = {
+export const DemoLabel = {
   name: '⭐ Demo: label',
   render: renderDemo(demos.label),
 };
 
-export const DemoStep: Story = {
+export const DemoStep = {
   name: '⭐ Demo: step',
   render: renderDemo(demos.step),
 };
 
-export const DemoChangeEnd: Story = {
+export const DemoChangeEnd = {
   name: '⭐ Demo: changeEnd',
   render: renderDemo(demos.changeEnd),
 };
 
-export const DemoDisabled: Story = {
+export const DemoDisabled = {
   name: '⭐ Demo: disabled',
   render: renderDemo(demos.disabled),
 };
 
-export const DemoThumbSize: Story = {
+export const DemoThumbSize = {
   name: '⭐ Demo: thumbSize',
   render: renderDemo(demos.thumbSize),
 };
 
-export const DemoThumbChildren: Story = {
+export const DemoThumbChildren = {
   name: '⭐ Demo: thumbChildren',
   render: renderDemo(demos.thumbChildren),
 };
 
-export const DemoScale: Story = {
+export const DemoScale = {
   name: '⭐ Demo: scale',
   render: renderDemo(demos.scale),
 };
 
-export const DemoInverted: Story = {
+export const DemoInverted = {
   name: '⭐ Demo: inverted',
   render: renderDemo(demos.inverted),
 };
 
-export const DemoStylesApi: Story = {
+export const DemoStylesApi = {
   name: '⭐ Demo: stylesApi',
   render: renderDemo(demos.stylesApi),
 };

@@ -1,30 +1,24 @@
-import { Meta, StoryObj } from '@storybook/react';
 import * as demos from './index';
 import { renderDemo } from '../../../render-demo';
 
-const meta: Meta = {
-  title: 'Calendar',
-};
-export default meta;
+export default { title: 'Calendar' };
 
-type Story = StoryObj;
-
-export const DemoUsage: Story = {
+export const DemoUsage = {
   name: '⭐ Demo: usage',
   render: renderDemo(demos.usage),
 };
 
-export const DemoIsStatic: Story = {
+export const DemoIsStatic = {
   name: '⭐ Demo: isStatic',
   render: renderDemo(demos.isStatic),
 };
 
-export const DemoPicker: Story = {
+export const DemoPicker = {
   name: '⭐ Demo: picker',
   render: renderDemo(demos.picker),
 };
 
-export const DemoWeekPicker: Story = {
+export const DemoWeekPicker = {
   name: '⭐ Demo: weekPicker',
   render: renderDemo(demos.weekPicker),
 };

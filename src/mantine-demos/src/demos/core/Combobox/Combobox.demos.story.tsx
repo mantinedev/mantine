@@ -1,90 +1,84 @@
-import { Meta, StoryObj } from '@storybook/react';
 import * as demos from './index';
 import { renderDemo } from '../../../render-demo';
 
-const meta: Meta = {
-  title: 'Combobox',
-};
-export default meta;
+export default { title: 'Combobox' };
 
-type Story = StoryObj;
-
-export const DemoAutocomplete: Story = {
+export const DemoAutocomplete = {
   name: '⭐ Demo: autocomplete',
   render: renderDemo(demos.autocomplete),
 };
 
-export const DemoHiddenDropdown: Story = {
+export const DemoHiddenDropdown = {
   name: '⭐ Demo: hiddenDropdown',
   render: renderDemo(demos.hiddenDropdown),
 };
 
-export const DemoSelect: Story = {
+export const DemoSelect = {
   name: '⭐ Demo: select',
   render: renderDemo(demos.select),
 };
 
-export const DemoSearchableSelect: Story = {
+export const DemoSearchableSelect = {
   name: '⭐ Demo: searchableSelect',
   render: renderDemo(demos.searchableSelect),
 };
 
-export const DemoButton: Story = {
+export const DemoButton = {
   name: '⭐ Demo: button',
   render: renderDemo(demos.button),
 };
 
-export const DemoButtonSearch: Story = {
+export const DemoButtonSearch = {
   name: '⭐ Demo: buttonSearch',
   render: renderDemo(demos.buttonSearch),
 };
 
-export const DemoSelectFirstOption: Story = {
+export const DemoSelectFirstOption = {
   name: '⭐ Demo: selectFirstOption',
   render: renderDemo(demos.selectFirstOption),
 };
 
-export const DemoControlledDropdown: Story = {
+export const DemoControlledDropdown = {
   name: '⭐ Demo: controlledDropdown',
   render: renderDemo(demos.controlledDropdown),
 };
 
-export const DemoActiveOption: Story = {
+export const DemoActiveOption = {
   name: '⭐ Demo: activeOption',
   render: renderDemo(demos.activeOption),
 };
 
-export const DemoNativeScroll: Story = {
+export const DemoNativeScroll = {
   name: '⭐ Demo: nativeScroll',
   render: renderDemo(demos.nativeScroll),
 };
 
-export const DemoScrollArea: Story = {
+export const DemoScrollArea = {
   name: '⭐ Demo: scrollArea',
   render: renderDemo(demos.scrollArea),
 };
 
-export const DemoMultiselect: Story = {
+export const DemoMultiselect = {
   name: '⭐ Demo: multiselect',
   render: renderDemo(demos.multiselect),
 };
 
-export const DemoSearchableMultiselect: Story = {
+export const DemoSearchableMultiselect = {
   name: '⭐ Demo: searchableMultiselect',
   render: renderDemo(demos.searchableMultiselect),
 };
 
-export const DemoNoDropdown: Story = {
+export const DemoNoDropdown = {
   name: '⭐ Demo: noDropdown',
   render: renderDemo(demos.noDropdown),
 };
 
-export const DemoGroups: Story = {
+export const DemoGroups = {
   name: '⭐ Demo: groups',
   render: renderDemo(demos.groups),
 };
 
-export const DemoStylesApi: Story = {
+export const DemoStylesApi = {
   name: '⭐ Demo: stylesApi',
   render: renderDemo(demos.stylesApi),
 };

@@ -1,15 +1,9 @@
-import { Meta, StoryObj } from '@storybook/react';
 import * as demos from './index';
 import { renderDemo } from '../../../render-demo';
 
-const meta: Meta = {
-  title: 'Transition',
-};
-export default meta;
+export default { title: 'Transition' };
 
-type Story = StoryObj;
-
-export const DemoCustom: Story = {
+export const DemoCustom = {
   name: '⭐ Demo: custom',
   render: renderDemo(demos.custom),
 };

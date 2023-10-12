@@ -1,25 +1,19 @@
-import { Meta, StoryObj } from '@storybook/react';
 import * as demos from './index';
 import { renderDemo } from '../../../render-demo';
 
-const meta: Meta = {
-  title: 'NavLink',
-};
-export default meta;
+export default { title: 'NavLink' };
 
-type Story = StoryObj;
-
-export const DemoUsage: Story = {
+export const DemoUsage = {
   name: '⭐ Demo: usage',
   render: renderDemo(demos.usage),
 };
 
-export const DemoActive: Story = {
+export const DemoActive = {
   name: '⭐ Demo: active',
   render: renderDemo(demos.active),
 };
 
-export const DemoNested: Story = {
+export const DemoNested = {
   name: '⭐ Demo: nested',
   render: renderDemo(demos.nested),
 };

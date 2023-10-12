@@ -1,100 +1,94 @@
-import { Meta, StoryObj } from '@storybook/react';
 import * as demos from './index';
 import { renderDemo } from '../../../render-demo';
 
-const meta: Meta = {
-  title: 'MultiSelect',
-};
-export default meta;
+export default { title: 'MultiSelect' };
 
-type Story = StoryObj;
-
-export const DemoUsage: Story = {
+export const DemoUsage = {
   name: '⭐ Demo: usage',
   render: renderDemo(demos.usage),
 };
 
-export const DemoSearchable: Story = {
+export const DemoSearchable = {
   name: '⭐ Demo: searchable',
   render: renderDemo(demos.searchable),
 };
 
-export const DemoMaxValues: Story = {
+export const DemoMaxValues = {
   name: '⭐ Demo: maxValues',
   render: renderDemo(demos.maxValues),
 };
 
-export const DemoHidePickedOptions: Story = {
+export const DemoHidePickedOptions = {
   name: '⭐ Demo: hidePickedOptions',
   render: renderDemo(demos.hidePickedOptions),
 };
 
-export const DemoNothingFound: Story = {
+export const DemoNothingFound = {
   name: '⭐ Demo: nothingFound',
   render: renderDemo(demos.nothingFound),
 };
 
-export const DemoCheckIcon: Story = {
+export const DemoCheckIcon = {
   name: '⭐ Demo: checkIcon',
   render: renderDemo(demos.checkIcon),
 };
 
-export const DemoConfigurator: Story = {
+export const DemoConfigurator = {
   name: '⭐ Demo: configurator',
   render: renderDemo(demos.configurator),
 };
 
-export const DemoDisabled: Story = {
+export const DemoDisabled = {
   name: '⭐ Demo: disabled',
   render: renderDemo(demos.disabled),
 };
 
-export const DemoDisabledOptions: Story = {
+export const DemoDisabledOptions = {
   name: '⭐ Demo: disabledOptions',
   render: renderDemo(demos.disabledOptions),
 };
 
-export const DemoError: Story = {
+export const DemoError = {
   name: '⭐ Demo: error',
   render: renderDemo(demos.error),
 };
 
-export const DemoGroups: Story = {
+export const DemoGroups = {
   name: '⭐ Demo: groups',
   render: renderDemo(demos.groups),
 };
 
-export const DemoLimit: Story = {
+export const DemoLimit = {
   name: '⭐ Demo: limit',
   render: renderDemo(demos.limit),
 };
 
-export const DemoReadOnly: Story = {
+export const DemoReadOnly = {
   name: '⭐ Demo: readOnly',
   render: renderDemo(demos.readOnly),
 };
 
-export const DemoScrollArea: Story = {
+export const DemoScrollArea = {
   name: '⭐ Demo: scrollArea',
   render: renderDemo(demos.scrollArea),
 };
 
-export const DemoSearch: Story = {
+export const DemoSearch = {
   name: '⭐ Demo: search',
   render: renderDemo(demos.search),
 };
 
-export const DemoSort: Story = {
+export const DemoSort = {
   name: '⭐ Demo: sort',
   render: renderDemo(demos.sort),
 };
 
-export const DemoStylesApi: Story = {
+export const DemoStylesApi = {
   name: '⭐ Demo: stylesApi',
   render: renderDemo(demos.stylesApi),
 };
 
-export const DemoClearable: Story = {
+export const DemoClearable = {
   name: '⭐ Demo: clearable',
   render: renderDemo(demos.clearable),
 };
