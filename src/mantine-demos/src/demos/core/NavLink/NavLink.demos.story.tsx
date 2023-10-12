@@ -1,5 +1,25 @@
-import { storiesOf } from '@storybook/react';
-import { attachDemos } from '../../../attach-demos';
+import { Meta, StoryObj } from '@storybook/react';
 import * as demos from './index';
+import { renderDemo } from '../../../render-demo';
 
-attachDemos(storiesOf('NavLink', module), demos);
+const meta: Meta = {
+  title: 'NavLink',
+};
+export default meta;
+
+type Story = StoryObj;
+
+export const DemoUsage: Story = {
+  name: '⭐ Demo: usage',
+  render: renderDemo(demos.usage),
+};
+
+export const DemoActive: Story = {
+  name: '⭐ Demo: active',
+  render: renderDemo(demos.active),
+};
+
+export const DemoNested: Story = {
+  name: '⭐ Demo: nested',
+  render: renderDemo(demos.nested),
+};

@@ -1,5 +1,20 @@
-import { storiesOf } from '@storybook/react';
-import { attachDemos } from '../../../attach-demos';
+import { Meta, StoryObj } from '@storybook/react';
 import * as demos from './index';
+import { renderDemo } from '../../../render-demo';
 
-attachDemos(storiesOf('Skeleton', module), demos);
+const meta: Meta = {
+  title: 'Skeleton',
+};
+export default meta;
+
+type Story = StoryObj;
+
+export const DemoConfigurator: Story = {
+  name: '⭐ Demo: configurator',
+  render: renderDemo(demos.configurator),
+};
+
+export const DemoContent: Story = {
+  name: '⭐ Demo: content',
+  render: renderDemo(demos.content),
+};
