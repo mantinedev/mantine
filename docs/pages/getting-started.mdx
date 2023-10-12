@@ -123,6 +123,27 @@ function Demo() {
 
 All set! Now you can use Mantine components in your application.
 
+## Set up VS Code
+
+By default, VS Code does not recognize postcss syntax, you need to install
+[PostCSS Language Support extension](https://marketplace.visualstudio.com/items?itemName=csstools.postcss)
+to enable syntax highlighting and suppress variables (`$variable`) errors.
+
+To get CSS variables autocomplete, install [CSS Variable Autocomplete extension](https://marketplace.visualstudio.com/items?itemName=vunguyentuan.vscode-css-variables).
+Then create `.vscode/settings.json` file in the root folder of your project with the following content:
+
+```json
+{
+  "cssVariables.lookupFiles": [
+    "**/*.css",
+    "**/*.scss",
+    "**/*.sass",
+    "**/*.less",
+    "node_modules/@mantine/core/esm/index.css"
+  ]
+}
+```
+
 ## Learn
 
 Before you jump into the code, it is recommended to learn more about Mantine theming and styling options.
