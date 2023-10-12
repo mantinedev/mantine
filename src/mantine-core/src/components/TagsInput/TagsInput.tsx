@@ -144,6 +144,7 @@ export const TagsInput = factory<TagsInputFactory>((_props, ref) => {
     inputContainer,
     inputWrapperOrder,
     withAsterisk,
+    required,
     labelProps,
     descriptionProps,
     errorProps,
@@ -335,6 +336,7 @@ export const TagsInput = factory<TagsInputFactory>((_props, ref) => {
             inputContainer={inputContainer}
             inputWrapperOrder={inputWrapperOrder}
             withAsterisk={withAsterisk}
+            required={required}
             labelProps={labelProps}
             descriptionProps={descriptionProps}
             errorProps={errorProps}
@@ -367,6 +369,7 @@ export const TagsInput = factory<TagsInputFactory>((_props, ref) => {
                   onPaste={handlePaste}
                   value={_searchValue}
                   onChange={(event) => setSearchValue(event.currentTarget.value)}
+                  required={required && _value.length === 0}
                   disabled={disabled}
                   readOnly={readOnly}
                   id={_id}
