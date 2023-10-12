@@ -9,24 +9,21 @@ const getStoryPaths = (fileName = '*') => {
   const basePath = globSync(getPath('../src'))[0];
   const files = globSync(getPath('../src/mantine-*/src/**/*.story.@(ts|tsx)'));
   const packagesWithStories = {};
-  for(const file of files) {
+  for (const file of files) {
     const packageName = file.replace(basePath, '').split(path.sep)[1];
-    packagesWithStories[packageName] = true
+    packagesWithStories[packageName] = true;
   }
   return Object.keys(packagesWithStories).map((packageName) => {
-    return getPath(`../src/${packageName}/src/**/${fileName}.story.@(ts|tsx)`)
-  })
-}
+    return getPath(`../src/${packageName}/src/**/${fileName}.story.@(ts|tsx)`);
+  });
+};
 
 const storiesPath = !argv._[1]
   ? [
-    // can't use glob pattern (see https://github.com/storybookjs/storybook/issues/19812)
-    ...getStoryPaths()
-  ]
-  : [
-    ...getStoryPaths(argv._[1]),
-    ...getStoryPaths(`${argv._[1]}.demos`),
-  ];
+      // can't use glob pattern (see https://github.com/storybookjs/storybook/issues/19812)
+      ...getStoryPaths(),
+    ]
+  : [...getStoryPaths(argv._[1]), ...getStoryPaths(`${argv._[1]}.demos`)];
 
 module.exports = {
   stories: storiesPath,
@@ -39,15 +36,13 @@ module.exports = {
     {
       name: '@storybook/addon-styling-webpack',
       options: {
-        rules: [{
-          test: /\.css$/,
-          sideEffects: true,
-          use: [
-            'style-loader',
-            'css-loader',
-            'postcss-loader',
-          ],
-        }],
+        rules: [
+          {
+            test: /\.css$/,
+            sideEffects: true,
+            use: ['style-loader', 'css-loader', 'postcss-loader'],
+          },
+        ],
       },
     },
   ],
@@ -76,7 +71,7 @@ module.exports = {
   },
 
   docs: {
-    autodocs: true,
+    autodocs: false,
   },
 
   typescript: {
