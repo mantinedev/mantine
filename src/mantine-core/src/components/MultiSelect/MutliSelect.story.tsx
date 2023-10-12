@@ -21,6 +21,32 @@ export function Usage() {
   );
 }
 
+export function Placeholder() {
+  return (
+    <>
+      <MultiSelect
+        label="Without Placeholder"
+        w={200}
+        placeholder="Placeholder"
+        data={[
+          { value: '1', label: 'React' },
+          { value: '2', label: 'Angular' },
+          { value: '3', label: 'Svelte' },
+        ]}
+      />
+      <MultiSelect
+        label="Without Placeholder"
+        w={200}
+        data={[
+          { value: '1', label: 'React' },
+          { value: '2', label: 'Angular' },
+          { value: '3', label: 'Svelte' },
+        ]}
+      />
+    </>
+  );
+}
+
 function InputsGroup({ size }: { size: string }) {
   return (
     <Group style={{ padding: 40 }} grow align="flex-start">

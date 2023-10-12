@@ -165,6 +165,7 @@ export const MultiSelect = factory<MultiSelectFactory>((_props, ref) => {
     clearable,
     clearButtonProps,
     hiddenInputProps,
+    placeholder,
     ...others
   } = props;
 
@@ -326,6 +327,8 @@ export const MultiSelect = factory<MultiSelectFactory>((_props, ref) => {
                   {...rest}
                   ref={ref}
                   id={_id}
+                  placeholder={placeholder}
+                  type={!searchable && !placeholder ? 'hidden' : 'visible'}
                   {...getStyles('inputField')}
                   unstyled={unstyled}
                   onFocus={(event) => {
