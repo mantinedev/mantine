@@ -12,6 +12,7 @@ describe('@mantine/core/Loader', () => {
     component: Loader,
     props: defaultProps,
     styleProps: true,
+    children: true,
     size: true,
     variant: true,
     extend: true,
