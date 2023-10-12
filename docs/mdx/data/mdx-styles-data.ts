@@ -22,6 +22,13 @@ export const MDX_STYLES_DATA: Record<string, Frontmatter> = {
     hideHeader: true,
   },
 
+  UsageWithSass: {
+    title: 'Usage with Sass',
+    slug: '/styles/sass',
+    search: 'Mantine Sass mixins, functions and variables',
+    hideHeader: true,
+  },
+
   PostCSSPreset: {
     title: 'PostCSS preset',
     slug: '/styles/postcss-preset',
