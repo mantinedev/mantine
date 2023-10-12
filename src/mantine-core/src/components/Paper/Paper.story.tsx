@@ -14,3 +14,14 @@ export function Usage() {
     </div>
   );
 }
+
+export function NestedPapers() {
+  return (
+    <Paper p="md" withBorder shadow="md">
+      Parent
+      <Paper p="md" shadow="none">
+        Child
+      </Paper>
+    </Paper>
+  );
+}
