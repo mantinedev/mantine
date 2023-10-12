@@ -21,6 +21,7 @@ import {
   LoadingOverlay,
   getRadius,
   MantineColor,
+  LoaderProps,
 } from '@mantine/core';
 import { assignRef } from '@mantine/hooks';
 import { DropzoneProvider } from './Dropzone.context';
@@ -129,6 +130,9 @@ export interface DropzoneProps
 
   /** Determines whether pointer events should be enabled on the inner element, `false` by default */
   enablePointerEvents?: boolean;
+
+  /** Props passed down to the Loader component */
+  loaderProps?: LoaderProps;
 }
 
 export type DropzoneFactory = Factory<{
@@ -223,6 +227,7 @@ export const Dropzone = factory<DropzoneFactory>((_props, ref) => {
     rejectColor,
     acceptColor,
     enablePointerEvents,
+    loaderProps,
     ...others
   } = props;
 
@@ -282,7 +287,12 @@ export const Dropzone = factory<DropzoneFactory>((_props, ref) => {
           'activate-on-click': activateOnClick,
         }}
       >
-        <LoadingOverlay visible={loading} overlayProps={{ radius }} unstyled={unstyled} />
+        <LoadingOverlay
+          visible={loading}
+          overlayProps={{ radius }}
+          unstyled={unstyled}
+          loaderProps={loaderProps}
+        />
         <input {...getInputProps()} name={name} />
         <div {...getStyles('inner')} data-enable-pointer-events={enablePointerEvents || undefined}>
           {children}
