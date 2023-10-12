@@ -1,5 +1,14 @@
-import { storiesOf } from '@storybook/react';
-import { attachDemos } from '../../../attach-demos';
 import * as demos from './index';
+import { renderDemo } from '../../../render-demo';
 
-attachDemos(storiesOf('Group', module), demos);
+export default { title: 'Group' };
+
+export const DemoUsage = {
+  name: '⭐ Demo: usage',
+  render: renderDemo(demos.usage),
+};
+
+export const DemoPreventGrowOverflow = {
+  name: '⭐ Demo: preventGrowOverflow',
+  render: renderDemo(demos.preventGrowOverflow),
+};

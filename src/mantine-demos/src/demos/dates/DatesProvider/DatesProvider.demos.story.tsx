@@ -1,5 +1,14 @@
-import { storiesOf } from '@storybook/react';
-import { attachDemos } from '../../../attach-demos';
 import * as demos from './index';
+import { renderDemo } from '../../../render-demo';
 
-attachDemos(storiesOf('DatesProvider', module), demos);
+export default { title: 'DatesProvider' };
+
+export const DemoUsage = {
+  name: '⭐ Demo: usage',
+  render: renderDemo(demos.usage),
+};
+
+export const DemoTimezone = {
+  name: '⭐ Demo: timezone',
+  render: renderDemo(demos.timezone),
+};

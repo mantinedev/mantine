@@ -1,5 +1,14 @@
-import { storiesOf } from '@storybook/react';
-import { attachDemos } from '../../../attach-demos';
 import * as demos from './index';
+import { renderDemo } from '../../../render-demo';
 
-attachDemos(storiesOf('Space', module), demos);
+export default { title: 'Space' };
+
+export const DemoHorizontal = {
+  name: '⭐ Demo: horizontal',
+  render: renderDemo(demos.horizontal),
+};
+
+export const DemoVertical = {
+  name: '⭐ Demo: vertical',
+  render: renderDemo(demos.vertical),
+};

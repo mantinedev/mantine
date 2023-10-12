@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import addons from '@storybook/addons';
+import { addons } from '@storybook/preview-api';
 import { IconTextDirectionLtr, IconTextDirectionRtl } from '@tabler/icons-react';
 import { DARK_MODE_EVENT_NAME } from 'storybook-dark-mode';
 import {

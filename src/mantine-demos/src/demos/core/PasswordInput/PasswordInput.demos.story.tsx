@@ -1,5 +1,34 @@
-import { storiesOf } from '@storybook/react';
-import { attachDemos } from '../../../attach-demos';
 import * as demos from './index';
+import { renderDemo } from '../../../render-demo';
 
-attachDemos(storiesOf('PasswordInput', module), demos);
+export default { title: 'PasswordInput' };
+
+export const DemoUsage = {
+  name: '⭐ Demo: usage',
+  render: renderDemo(demos.usage),
+};
+
+export const DemoStrengthMeter = {
+  name: '⭐ Demo: strengthMeter',
+  render: renderDemo(demos.strengthMeter),
+};
+
+export const DemoError = {
+  name: '⭐ Demo: error',
+  render: renderDemo(demos.error),
+};
+
+export const DemoVisibilityIcon = {
+  name: '⭐ Demo: visibilityIcon',
+  render: renderDemo(demos.visibilityIcon),
+};
+
+export const DemoControlledVisibility = {
+  name: '⭐ Demo: controlledVisibility',
+  render: renderDemo(demos.controlledVisibility),
+};
+
+export const DemoStylesApi = {
+  name: '⭐ Demo: stylesApi',
+  render: renderDemo(demos.stylesApi),
+};

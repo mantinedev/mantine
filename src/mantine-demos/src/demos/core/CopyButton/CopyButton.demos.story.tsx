@@ -1,5 +1,14 @@
-import { storiesOf } from '@storybook/react';
-import { attachDemos } from '../../../attach-demos';
 import * as demos from './index';
+import { renderDemo } from '../../../render-demo';
 
-attachDemos(storiesOf('CopyButton', module), demos);
+export default { title: 'CopyButton' };
+
+export const DemoUsage = {
+  name: '⭐ Demo: usage',
+  render: renderDemo(demos.usage),
+};
+
+export const DemoTimeout = {
+  name: '⭐ Demo: timeout',
+  render: renderDemo(demos.timeout),
+};

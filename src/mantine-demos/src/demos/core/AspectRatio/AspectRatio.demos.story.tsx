@@ -1,5 +1,19 @@
-import { storiesOf } from '@storybook/react';
-import { attachDemos } from '../../../attach-demos';
 import * as demos from './index';
+import { renderDemo } from '../../../render-demo';
 
-attachDemos(storiesOf('AspectRatio', module), demos);
+export default { title: 'AspectRatio' };
+
+export const DemoImage = {
+  name: '⭐ Demo: image',
+  render: renderDemo(demos.image),
+};
+
+export const DemoMap = {
+  name: '⭐ Demo: map',
+  render: renderDemo(demos.map),
+};
+
+export const DemoVideo = {
+  name: '⭐ Demo: video',
+  render: renderDemo(demos.video),
+};

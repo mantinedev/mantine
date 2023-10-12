@@ -1,5 +1,14 @@
-import { storiesOf } from '@storybook/react';
-import { attachDemos } from '../../../attach-demos';
 import * as demos from './index';
+import { renderDemo } from '../../../render-demo';
 
-attachDemos(storiesOf('PillsInput', module), demos);
+export default { title: 'PillsInput' };
+
+export const DemoUsage = {
+  name: '⭐ Demo: usage',
+  render: renderDemo(demos.usage),
+};
+
+export const DemoConfigurator = {
+  name: '⭐ Demo: configurator',
+  render: renderDemo(demos.configurator),
+};

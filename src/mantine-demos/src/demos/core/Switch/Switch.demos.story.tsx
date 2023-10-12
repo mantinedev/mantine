@@ -1,5 +1,34 @@
-import { storiesOf } from '@storybook/react';
-import { attachDemos } from '../../../attach-demos';
 import * as demos from './index';
+import { renderDemo } from '../../../render-demo';
 
-attachDemos(storiesOf('Switch', module), demos);
+export default { title: 'Switch' };
+
+export const DemoConfigurator = {
+  name: '⭐ Demo: configurator',
+  render: renderDemo(demos.configurator),
+};
+
+export const DemoLabels = {
+  name: '⭐ Demo: labels',
+  render: renderDemo(demos.labels),
+};
+
+export const DemoThumbIcon = {
+  name: '⭐ Demo: thumbIcon',
+  render: renderDemo(demos.thumbIcon),
+};
+
+export const DemoIconLabels = {
+  name: '⭐ Demo: iconLabels',
+  render: renderDemo(demos.iconLabels),
+};
+
+export const DemoGroupConfigurator = {
+  name: '⭐ Demo: groupConfigurator',
+  render: renderDemo(demos.groupConfigurator),
+};
+
+export const DemoStylesApi = {
+  name: '⭐ Demo: stylesApi',
+  render: renderDemo(demos.stylesApi),
+};

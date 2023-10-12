@@ -1,5 +1,24 @@
-import { storiesOf } from '@storybook/react';
-import { attachDemos } from '../../../attach-demos';
 import * as demos from './index';
+import { renderDemo } from '../../../render-demo';
 
-attachDemos(storiesOf('Container', module), demos);
+export default { title: 'Container' };
+
+export const DemoUsage = {
+  name: '⭐ Demo: usage',
+  render: renderDemo(demos.usage),
+};
+
+export const DemoSizes = {
+  name: '⭐ Demo: sizes',
+  render: renderDemo(demos.sizes),
+};
+
+export const DemoFluid = {
+  name: '⭐ Demo: fluid',
+  render: renderDemo(demos.fluid),
+};
+
+export const DemoResponsive = {
+  name: '⭐ Demo: responsive',
+  render: renderDemo(demos.responsive),
+};

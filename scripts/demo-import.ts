@@ -1,9 +1,12 @@
 import fs from 'fs-extra';
 import path from 'path';
-import glob from 'glob';
+import { globSync } from 'glob';
 
 function updateDemo(demoPath: string) {
   const contents = fs.readFileSync(demoPath).toString();
+  if (contents.includes("from '@mantine/ds';")) {
+    return;
+  }
 
   const lines = contents.split('\n');
   const imports: string[] = [];
@@ -29,10 +32,10 @@ function updateDemo(demoPath: string) {
   fs.writeFileSync(demoPath, contentsWithImport);
 }
 
-glob(path.join(__dirname, '../src/mantine-demos/src/demos/**/*'), (error, matches) => {
-  const demos = matches.filter((file) => file.includes('.demo.'));
-  demos.forEach(updateDemo);
-});
+const demos = globSync(
+  path.join(__dirname, '../src/mantine-demos/src/demos/**/*.demo.*.@(ts|tsx)')
+);
+demos.forEach(updateDemo);
 
 // updateDemo(
 //   path.join(__dirname, '../src/mantine-demos/src/demos/carousel/Carousel.demo.animationOffset.tsx')
