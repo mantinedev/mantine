@@ -3,11 +3,9 @@ import {
   Box,
   BoxProps,
   StylesApiProps,
-  factory,
   ElementProps,
   useProps,
   useStyles,
-  Factory,
   InlineStyles,
   useRandomClassName,
   parseStyleProps,
@@ -15,6 +13,8 @@ import {
   MantineSize,
   useMantineTheme,
   filterProps,
+  polymorphicFactory,
+  PolymorphicFactory,
 } from '../../core';
 import { FLEX_STYLE_PROPS_DATA } from './flex-props';
 import classes from './Flex.module.css';
@@ -34,25 +34,26 @@ export interface FlexProps extends BoxProps, StylesApiProps<FlexFactory>, Elemen
   /** `align-items` CSS property */
   align?: StyleProp<React.CSSProperties['alignItems']>;
 
-  /** justify-content CSS property */
+  /** `justify-content` CSS property */
   justify?: StyleProp<React.CSSProperties['justifyContent']>;
 
-  /** flex-wrap CSS property */
+  /** `flex-wrap` CSS property */
   wrap?: StyleProp<React.CSSProperties['flexWrap']>;
 
-  /** flex-direction CSS property */
+  /** `flex-direction` CSS property */
   direction?: StyleProp<React.CSSProperties['flexDirection']>;
 }
 
-export type FlexFactory = Factory<{
+export type FlexFactory = PolymorphicFactory<{
   props: FlexProps;
-  ref: HTMLDivElement;
+  defaultRef: HTMLDivElement;
+  defaultComponent: 'div';
   stylesNames: FlexStylesNames;
 }>;
 
 const defaultProps: Partial<FlexProps> = {};
 
-export const Flex = factory<FlexFactory>((_props, ref) => {
+export const Flex = polymorphicFactory<FlexFactory>((_props, ref) => {
   const props = useProps('Flex', defaultProps, _props);
   const {
     classNames,

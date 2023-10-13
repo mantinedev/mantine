@@ -1073,6 +1073,7 @@ export const MDX_CORE_DATA: Record<string, Frontmatter> = {
     slug: '/core/flex',
     props: ['Flex'],
     styles: ['Flex'],
+    polymorphic: true,
     description: 'Compose elements in a flex container',
     import: "import { Flex } from '@mantine/core';",
     source: 'mantine-core/src/components/Flex/Flex.tsx',
