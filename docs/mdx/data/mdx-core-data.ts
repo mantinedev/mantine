@@ -86,7 +86,7 @@ export const MDX_CORE_DATA: Record<string, Frontmatter> = {
     title: 'CloseButton',
     package: '@mantine/core',
     slug: '/core/close-button',
-    description: 'ActionIcon with close icon',
+    description: 'Button with close icon',
     props: ['CloseButton'],
     styles: ['CloseButton'],
     polymorphic: true,
