@@ -7,15 +7,26 @@ interface DataTableProps {
   head?: string[];
 }
 
+function removeScale(input: string): string {
+  const regex = /calc\((.*?)\)/g;
+  const matches = input.match(regex);
+  if (!matches) {
+    return input;
+  }
+  let output = input;
+  matches.forEach((match) => {
+    const transformed = match.replace('calc(', '').replace(')', '').split('*')[0].trim();
+    output = output.replace(match, transformed);
+  });
+  return output.replaceAll('rem)', 'rem');
+}
+
 function getTransformedScaledValue(value: unknown) {
   if (typeof value !== 'string' || !value.includes('var(--mantine-scale)')) {
     return value as string;
   }
 
-  return value
-    .match(/^calc\((.*?)\)$/)?.[1]
-    .split('*')[0]
-    .trim();
+  return removeScale(value);
 }
 
 export function MdxDataTable({ data, head }: DataTableProps) {
