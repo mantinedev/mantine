@@ -343,8 +343,8 @@ export const MDX_PAGES_GROUPS: MdxPagesGroup[] = [
   },
 ];
 
-export const ALL_MDX_PAGES: Frontmatter[] = [
-  ...MDX_PAGES_GROUPS.reduce<Frontmatter[]>((acc, group) => {
+export const NAVIGATION_MDX_PAGES: Frontmatter[] = MDX_PAGES_GROUPS.reduce<Frontmatter[]>(
+  (acc, group) => {
     group.pages.forEach((item) => {
       if (item.category) {
         const categoryPages = [...(item as MdxPagesCategory).pages];
@@ -356,7 +356,12 @@ export const ALL_MDX_PAGES: Frontmatter[] = [
     });
 
     return acc;
-  }, []),
+  },
+  []
+);
+
+export const SEARCH_MDX_PAGES: Frontmatter[] = [
+  ...NAVIGATION_MDX_PAGES,
   ...Object.keys(MDX_META_DATA).map((key) => MDX_META_DATA[key]),
   {
     title: 'Combobox examples',
