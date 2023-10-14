@@ -118,6 +118,19 @@ function Demo() {
 
 <TargetComponent component="Popover" />
 
+## Nested popovers
+
+Nested popovers require children rendering without [Portal](/core/portal/). Usually, you
+should disable portal with props of the component that renders popover content, for example,
+[Select](/core/select/) has `comboboxProps={{ withinPortal: false }}` prop. Check documentation
+of the component that you are using to render popover content to find out how to disable the portal.
+If the portal is not disabled, outside click will close all popovers.
+
+Example of disabling portal in [Select](/core/select/) and [DatePickerInput](/dates/date-picker-input/)
+components:
+
+<Demo data={PopoverDemos.portalChildren} />
+
 ## Accessibility
 
 Popover follows [WAI-ARIA recommendations](https://www.w3.org/TR/wai-aria-practices-1.2/#dialog_modal):
