@@ -51,10 +51,6 @@
 .item {
   padding: var(--mantine-spacing-xs) var(--mantine-spacing-md);
 
-  @mixin hover {
-    background-color: light-dark(var(--mantine-color-gray-0), var(--mantine-color-dark-7));
-  }
-
   & + & {
     border-top: rem(1px) solid light-dark(var(--mantine-color-gray-2), var(--mantine-color-dark-8));
   }

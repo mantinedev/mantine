@@ -1,5 +1,5 @@
 import React from 'react';
-import { MantineSize, BoxProps, ElementProps, Box } from '../../../core';
+import { MantineSize, BoxProps, ElementProps, Box, useDirection } from '../../../core';
 import { StarSymbol } from '../StarSymbol/StarSymbol';
 import { useRatingContext } from '../Rating.context';
 
@@ -14,6 +14,7 @@ export interface RatingItemProps extends BoxProps, ElementProps<'input', 'value'
   value: number;
   id: string;
   onChange(event: React.ChangeEvent<HTMLInputElement> | number): void;
+  onInputChange(event: React.ChangeEvent<HTMLInputElement> | number): void;
 }
 
 export function RatingItem({
@@ -28,13 +29,16 @@ export function RatingItem({
   fractionValue,
   color,
   id,
+  onBlur,
   onChange,
+  onInputChange,
   style,
   ...others
 }: RatingItemProps) {
   const ctx = useRatingContext();
   const _fullIcon = typeof fullIcon === 'function' ? fullIcon(value) : fullIcon;
   const _emptyIcon = typeof emptyIcon === 'function' ? emptyIcon(value) : emptyIcon;
+  const { dir } = useDirection();
 
   return (
     <>
@@ -47,7 +51,8 @@ export function RatingItem({
           data-active={active || undefined}
           aria-label={getSymbolLabel?.(value)}
           value={value}
-          onChange={onChange}
+          onBlur={onBlur}
+          onChange={onInputChange}
           {...others}
         />
       )}
@@ -68,7 +73,9 @@ export function RatingItem({
             '--rating-symbol-clip-path':
               fractionValue === 1
                 ? undefined
-                : `inset(0 ${active ? 100 - fractionValue * 100 : 100}% 0 0)`,
+                : dir === 'ltr'
+                ? `inset(0 ${active ? 100 - fractionValue * 100 : 100}% 0 0)`
+                : `inset(0 0 0 ${active ? 100 - fractionValue * 100 : 100}% )`,
           }}
         >
           {full

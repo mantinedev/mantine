@@ -61,7 +61,7 @@
     "next-sitemap": "^4.2.3",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-dropzone": "14.2.3",
+    "react-dropzone-esm": "15.0.1",
     "react-number-format": "^5.2.2",
     "remark-slug": "^6.0.0",
     "typescript": "5.1.6"

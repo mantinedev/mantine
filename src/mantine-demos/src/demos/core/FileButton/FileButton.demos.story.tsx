@@ -1,5 +1,19 @@
-import { storiesOf } from '@storybook/react';
-import { attachDemos } from '../../../attach-demos';
 import * as demos from './index';
+import { renderDemo } from '../../../render-demo';
 
-attachDemos(storiesOf('FileButton', module), demos);
+export default { title: 'FileButton' };
+
+export const DemoUsage = {
+  name: '⭐ Demo: usage',
+  render: renderDemo(demos.usage),
+};
+
+export const DemoMultiple = {
+  name: '⭐ Demo: multiple',
+  render: renderDemo(demos.multiple),
+};
+
+export const DemoReset = {
+  name: '⭐ Demo: reset',
+  render: renderDemo(demos.reset),
+};

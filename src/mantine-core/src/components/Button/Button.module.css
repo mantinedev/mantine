@@ -85,7 +85,7 @@
       content: '';
       position: absolute;
       inset: rem(-1px);
-      border-radius: var(--button-radius);
+      border-radius: var(--button-radius, var(--mantine-radius-default));
       background-color: var(--_button-loading-overlay-bg);
     }
   }
@@ -186,6 +186,26 @@
         border-radius: 0;
         border-right-width: calc(var(--button-border-width) / 2);
         border-left-width: calc(var(--button-border-width) / 2);
+      }
+
+      @mixin rtl {
+        &:not(:only-child):first-child {
+          border: var(--_button-bd, var(--button-bd, rem(1px) solid transparent));
+          border-radius: var(--button-radius, var(--mantine-radius-default));
+          border-bottom-left-radius: 0;
+          border-top-left-radius: 0;
+          border-left-width: calc(var(--button-border-width) / 2);
+
+        }
+
+        &:not(:only-child):last-child {
+          border: var(--_button-bd, var(--button-bd, rem(1px) solid transparent));
+          border-radius: var(--button-radius, var(--mantine-radius-default));
+          border-bottom-right-radius: 0;
+          border-top-right-radius: 0;
+          border-right-width: calc(var(--button-border-width) / 2);
+
+        }
       }
     }
   }

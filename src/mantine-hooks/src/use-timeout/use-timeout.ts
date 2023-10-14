@@ -1,4 +1,4 @@
-import { useRef, useEffect } from 'react';
+import { useRef, useEffect, useCallback } from 'react';
 
 export function useTimeout(
   callback: (...callbackParams: any[]) => void,
@@ -7,21 +7,24 @@ export function useTimeout(
 ) {
   const timeoutRef = useRef<number | null>(null);
 
-  const start = (...callbackParams: any[]) => {
-    if (!timeoutRef.current) {
-      timeoutRef.current = window.setTimeout(() => {
-        callback(callbackParams);
-        timeoutRef.current = null;
-      }, delay);
-    }
-  };
+  const start = useCallback(
+    (...callbackParams: any[]) => {
+      if (!timeoutRef.current) {
+        timeoutRef.current = window.setTimeout(() => {
+          callback(callbackParams);
+          timeoutRef.current = null;
+        }, delay);
+      }
+    },
+    [delay]
+  );
 
-  const clear = () => {
+  const clear = useCallback(() => {
     if (timeoutRef.current) {
       window.clearTimeout(timeoutRef.current);
       timeoutRef.current = null;
     }
-  };
+  }, []);
 
   useEffect(() => {
     if (options.autoInvoke) {
@@ -29,7 +32,7 @@ export function useTimeout(
     }
 
     return clear;
-  }, [delay]);
+  }, [clear, start]);
 
   return { start, clear };
 }

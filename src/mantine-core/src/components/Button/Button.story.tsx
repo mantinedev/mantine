@@ -1,8 +1,17 @@
+/* eslint-disable jsx-a11y/anchor-has-content */
 import React from 'react';
 import { Button, ButtonProps } from './Button';
 import { DEFAULT_THEME, rem } from '../../core';
 
 export default { title: 'Button' };
+
+export function RenderRoot() {
+  return (
+    <Button renderRoot={(props) => <a {...props} href="#" />} className="test">
+      Some content
+    </Button>
+  );
+}
 
 export function SingleButton() {
   return (

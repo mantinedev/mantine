@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import { useId, useUncontrolled } from '@mantine/hooks';
 import {
   BoxProps,
@@ -68,6 +68,9 @@ export interface SelectProps
 
   /** Props passed down to the clear button */
   clearButtonProps?: __CloseButtonProps & ElementProps<'button'>;
+
+  /** Props passed down to the hidden input */
+  hiddenInputProps?: React.ComponentPropsWithoutRef<'input'>;
 }
 
 export type SelectFactory = Factory<{
@@ -128,11 +131,12 @@ export const Select = factory<SelectFactory>((_props, ref) => {
     id,
     clearable,
     clearButtonProps,
+    hiddenInputProps,
     ...others
   } = props;
 
-  const parsedData = getParsedComboboxData(data);
-  const optionsLockup = getOptionsLockup(parsedData);
+  const parsedData = useMemo(() => getParsedComboboxData(data), [data]);
+  const optionsLockup = useMemo(() => getOptionsLockup(parsedData), [parsedData]);
   const _id = useId(id);
 
   const [_value, setValue] = useUncontrolled({
@@ -177,10 +181,10 @@ export const Select = factory<SelectFactory>((_props, ref) => {
       setSearch('');
     }
 
-    if (typeof value === 'string' && optionsLockup[value]) {
-      setSearch(optionsLockup[value].label);
+    if (typeof value === 'string' && selectedOption) {
+      setSearch(selectedOption.label);
     }
-  }, [value, optionsLockup]);
+  }, [value, selectedOption]);
 
   const clearButton = clearable && !!_value && !disabled && !readOnly && (
     <Combobox.ClearButton
@@ -274,7 +278,14 @@ export const Select = factory<SelectFactory>((_props, ref) => {
           labelId={`${_id}-label`}
         />
       </Combobox>
-      <input type="hidden" name={name} value={_value || ''} form={form} disabled={disabled} />
+      <input
+        type="hidden"
+        name={name}
+        value={_value || ''}
+        form={form}
+        disabled={disabled}
+        {...hiddenInputProps}
+      />
     </>
   );
 });

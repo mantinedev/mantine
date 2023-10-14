@@ -39,9 +39,9 @@ export type ContainerFactory = Factory<{
 
 const defaultProps: Partial<ContainerProps> = {};
 
-const varsResolver = createVarsResolver<ContainerFactory>((_, { size }) => ({
+const varsResolver = createVarsResolver<ContainerFactory>((_, { size, fluid }) => ({
   root: {
-    '--container-size': getSize(size, 'container-size'),
+    '--container-size': fluid ? undefined : getSize(size, 'container-size'),
   },
 }));
 

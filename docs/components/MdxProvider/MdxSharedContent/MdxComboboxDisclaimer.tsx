@@ -17,7 +17,7 @@ export function MdxComboboxDisclaimer({ component }: MdxComboboxDisclaimerProps)
         features to cover only the basic use cases. If you need more advanced features, you can
         build your own component with <MdxLink href="/core/combobox">Combobox</MdxLink>. You can
         find examples of custom {component.replace(/([a-z])([A-Z])/g, '$1 $2').toLowerCase()}{' '}
-        components on <MdxLink href="/core/combobox">the examples page</MdxLink>.
+        components on <MdxLink href="/combobox/?e=BasicSelect">the examples page</MdxLink>.
       </MdxParagraph>
     </>
   );

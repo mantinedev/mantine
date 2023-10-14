@@ -19,8 +19,8 @@ export const MDX_META_DATA: Record<string, Frontmatter> = {
 
   GettingStarted: {
     title: 'Getting started',
+    search: 'Getting started with Mantine',
     slug: '/getting-started',
-    hideInSearch: true,
     hideSiblings: true,
     hideHeader: true,
   },
@@ -54,6 +54,13 @@ export const MDX_META_DATA: Record<string, Frontmatter> = {
     slug: '/changelog/7-0-0',
     release: 'https://github.com/mantinedev/mantine/releases/tag/7.0.0',
     date: 'September 18th, 2023',
+  },
+
+  Changelog710: {
+    title: 'Version v7.1.0',
+    slug: '/changelog/7-1-0',
+    release: 'https://github.com/mantinedev/mantine/releases/tag/7.1.0',
+    date: 'September 28th, 2023',
   },
 
   PreviousChangelogs: {

@@ -26,11 +26,11 @@ export function SelectorsTable({ data, component, ...others }: SelectorsTablePro
 
   return (
     <Table.ScrollContainer minWidth={600}>
-      <Table {...others}>
+      <Table layout="fixed" {...others}>
         <Table.Thead>
           <Table.Tr>
-            <Table.Th>Selector</Table.Th>
-            <Table.Th>Static selector</Table.Th>
+            <Table.Th w={210}>Selector</Table.Th>
+            <Table.Th w={310}>Static selector</Table.Th>
             <Table.Th>Description</Table.Th>
           </Table.Tr>
         </Table.Thead>

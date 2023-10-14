@@ -8,11 +8,11 @@
 
   padding-left: var(--mantine-spacing-md);
   padding-right: var(--mantine-spacing-md);
-  max-width: var(--_container-size, var(--container-size));
+  max-width: var(--container-size);
   margin-left: auto;
   margin-right: auto;
 
   &[data-fluid] {
-    --_container-size: 100%;
+    --container-size: 100%;
   }
 }

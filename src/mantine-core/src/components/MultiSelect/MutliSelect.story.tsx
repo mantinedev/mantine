@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { MultiSelect } from './MultiSelect';
 import { Button } from '../Button';
+import { Group } from '../Group';
+import { TextInput } from '../TextInput';
 
 export default { title: 'MultiSelect' };
 
@@ -17,6 +19,60 @@ export function Usage() {
       />
     </div>
   );
+}
+
+export function Placeholder() {
+  return (
+    <>
+      <MultiSelect
+        label="Without Placeholder"
+        w={200}
+        placeholder="Placeholder"
+        data={[
+          { value: '1', label: 'React' },
+          { value: '2', label: 'Angular' },
+          { value: '3', label: 'Svelte' },
+        ]}
+      />
+      <MultiSelect
+        label="Without Placeholder"
+        w={200}
+        data={[
+          { value: '1', label: 'React' },
+          { value: '2', label: 'Angular' },
+          { value: '3', label: 'Svelte' },
+        ]}
+      />
+    </>
+  );
+}
+
+function InputsGroup({ size }: { size: string }) {
+  return (
+    <Group style={{ padding: 40 }} grow align="flex-start">
+      <MultiSelect
+        data={['React', 'Angular']}
+        defaultValue={['React']}
+        placeholder={`MultiSelect with value (${size})"`}
+        size={size}
+      />
+      <MultiSelect
+        data={['React', 'Angular']}
+        placeholder={`MultiSelect without value (${size})"`}
+        size={size}
+      />
+      <TextInput placeholder={`TextInput (${size})`} size={size} />
+    </Group>
+  );
+}
+
+export function InputsAlignment() {
+  const sizes = ['xs', 'sm', 'md', 'lg', 'xl'].map((size) => (
+    <div key={size}>
+      <InputsGroup size={size} />
+    </div>
+  ));
+  return <>{sizes}</>;
 }
 
 export function Clearable() {

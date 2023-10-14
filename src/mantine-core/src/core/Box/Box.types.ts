@@ -1,6 +1,10 @@
 import type { MantineTheme } from '../MantineProvider';
 
-type MantineStyle = React.CSSProperties | ((theme: MantineTheme) => React.CSSProperties);
+export interface CSSProperties extends React.CSSProperties {
+  [key: string]: any;
+}
+
+type MantineStyle = CSSProperties | ((theme: MantineTheme) => CSSProperties);
 export type MantineStyleProp = MantineStyle | MantineStyle[] | MantineStyleProp[] | undefined;
 
 export type CssVariable = `--${string}`;

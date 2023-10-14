@@ -76,6 +76,9 @@ export interface TagsInputProps
 
   /** Props passed down to the clear button */
   clearButtonProps?: __CloseButtonProps & ElementProps<'button'>;
+
+  /** Props passed down to the hidden input */
+  hiddenInputProps?: React.ComponentPropsWithoutRef<'input'>;
 }
 
 export type TagsInputFactory = Factory<{
@@ -141,6 +144,7 @@ export const TagsInput = factory<TagsInputFactory>((_props, ref) => {
     inputContainer,
     inputWrapperOrder,
     withAsterisk,
+    required,
     labelProps,
     descriptionProps,
     errorProps,
@@ -154,6 +158,7 @@ export const TagsInput = factory<TagsInputFactory>((_props, ref) => {
     id,
     clearable,
     clearButtonProps,
+    hiddenInputProps,
     ...others
   } = props;
 
@@ -225,7 +230,7 @@ export const TagsInput = factory<TagsInputFactory>((_props, ref) => {
       event.preventDefault();
     }
 
-    if (event.key === 'Enter' && length > 0) {
+    if (event.key === 'Enter' && length > 0 && !event.nativeEvent.isComposing) {
       event.preventDefault();
       const isDuplicate = _value.some((tag) => tag.toLowerCase() === inputValue.toLowerCase());
 
@@ -234,6 +239,7 @@ export const TagsInput = factory<TagsInputFactory>((_props, ref) => {
       }
 
       if ((!isDuplicate || (isDuplicate && allowDuplicates)) && _value.length < maxTags!) {
+        onOptionSubmit?.(inputValue);
         setSearchValue('');
 
         if (inputValue.length > 0) {
@@ -330,6 +336,7 @@ export const TagsInput = factory<TagsInputFactory>((_props, ref) => {
             inputContainer={inputContainer}
             inputWrapperOrder={inputWrapperOrder}
             withAsterisk={withAsterisk}
+            required={required}
             labelProps={labelProps}
             descriptionProps={descriptionProps}
             errorProps={errorProps}
@@ -362,6 +369,7 @@ export const TagsInput = factory<TagsInputFactory>((_props, ref) => {
                   onPaste={handlePaste}
                   value={_searchValue}
                   onChange={(event) => setSearchValue(event.currentTarget.value)}
+                  required={required && _value.length === 0}
                   disabled={disabled}
                   readOnly={readOnly}
                   id={_id}
@@ -384,7 +392,14 @@ export const TagsInput = factory<TagsInputFactory>((_props, ref) => {
           labelId={`${_id}-label`}
         />
       </Combobox>
-      <input type="hidden" name={name} form={form} value={_value.join(',')} disabled={disabled} />
+      <input
+        type="hidden"
+        name={name}
+        form={form}
+        value={_value.join(',')}
+        disabled={disabled}
+        {...hiddenInputProps}
+      />
     </>
   );
 });

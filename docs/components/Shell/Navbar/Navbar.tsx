@@ -1,3 +1,4 @@
+import cx from 'clsx';
 import React from 'react';
 import {
   IconBrandMantine,
@@ -6,7 +7,7 @@ import {
   IconHeartHandshake,
   IconPalette,
 } from '@tabler/icons-react';
-import { Box, ScrollArea, rem } from '@mantine/core';
+import { Box, ScrollArea, rem, RemoveScroll, useDirection } from '@mantine/core';
 import { MDX_PAGES_GROUPS } from '@/mdx';
 import { NavbarMainLink } from './NavbarMainLink/NavbarMainLink';
 import { NavbarLinksGroup } from './NavbarLinksGroup/NavbarLinksGroup';
@@ -19,6 +20,7 @@ interface NavbarProps {
 }
 
 export function Navbar({ navbarOpened, onNavbarClose, mobileNavbarOnly }: NavbarProps) {
+  const { dir } = useDirection();
   const groups = MDX_PAGES_GROUPS.map((group) => (
     <NavbarLinksGroup data={group} onNavbarClose={onNavbarClose} key={group.group} />
   ));
@@ -26,7 +28,7 @@ export function Navbar({ navbarOpened, onNavbarClose, mobileNavbarOnly }: Navbar
   return (
     <Box
       component="nav"
-      className={classes.navbar}
+      className={cx(classes.navbar, { [RemoveScroll.classNames.zeroRight]: dir === 'rtl' })}
       mod={{ hidden: !navbarOpened, 'mobile-only': mobileNavbarOnly }}
     >
       <ScrollArea className={classes.scrollarea} type="never" offsetScrollbars={false}>

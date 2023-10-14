@@ -53,6 +53,7 @@ export function SelectAsync() {
       <Combobox.Target>
         <InputBase
           component="button"
+          type="button"
           pointer
           rightSection={loading ? <Loader size={18} /> : <Combobox.Chevron />}
           onClick={() => combobox.toggleDropdown()}

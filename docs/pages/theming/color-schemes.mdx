@@ -119,6 +119,26 @@ function Demo() {
 }
 ```
 
+## Auto color scheme
+
+Set `defaultColorScheme="auto"` on `MantineProvider` and `ColorSchemeScript` to use system color scheme.
+In this case color scheme value will be controlled by the user OS:
+
+```tsx
+import { MantineProvider, ColorSchemeScript } from '@mantine/core';
+
+function Demo() {
+  return (
+    <>
+      <ColorSchemeScript defaultColorScheme="auto" />
+      <MantineProvider defaultColorScheme="auto">
+        <App />
+      </MantineProvider>
+    </>
+  );
+}
+```
+
 ## Color scheme manager
 
 By default, color scheme value is stored in local storage, but you can implement your own

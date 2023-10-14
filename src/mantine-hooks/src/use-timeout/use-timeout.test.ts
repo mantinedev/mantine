@@ -70,6 +70,20 @@ describe('@mantine/hooks/use-timeout', () => {
     expect(setTimeout).toHaveBeenCalled();
   });
 
+  it('callback should be called when rerender is triggered before timeout', () => {
+    const { timeout, advanceTimerToNextTick } = setupTimer();
+    const { rerender, result } = renderHook(() => useTimeout(callback, timeout));
+
+    result.current.start();
+
+    rerender();
+
+    advanceTimerToNextTick();
+
+    expect(callback).toHaveBeenCalled();
+    expect(setTimeout).toHaveBeenCalled();
+  });
+
   it('timeout is cleared on calling clear', () => {
     const { timeout, advanceTimerToNextTick } = setupTimer(10);
     const hook = renderHook(() => useTimeout(callback, timeout, { autoInvoke: false }));

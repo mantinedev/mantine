@@ -26,6 +26,7 @@ export interface InputDescriptionProps
     StylesApiProps<InputDescriptionFactory>,
     ElementProps<'div'> {
   __staticSelector?: string;
+  __inheritStyles?: boolean;
 
   /** Controls description `font-size`, `'sm'` by default */
   size?: MantineSize | (string & {});
@@ -58,6 +59,7 @@ export const InputDescription = factory<InputDescriptionFactory>((_props, ref) =
     vars,
     size,
     __staticSelector,
+    __inheritStyles = true,
     variant,
     ...others
   } = useProps('InputDescription', defaultProps, props);
@@ -77,7 +79,7 @@ export const InputDescription = factory<InputDescriptionFactory>((_props, ref) =
     varsResolver,
   });
 
-  const getStyles = ctx?.getStyles || _getStyles;
+  const getStyles = (__inheritStyles && ctx?.getStyles) || _getStyles;
 
   return (
     <Box

@@ -262,6 +262,7 @@ export function useForm<
     values,
     errors,
     setValues,
+    setInitialValues: setValuesSnapshot,
     setErrors,
     setFieldValue,
     setFieldError,

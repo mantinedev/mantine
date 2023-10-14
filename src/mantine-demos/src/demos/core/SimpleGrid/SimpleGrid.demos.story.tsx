@@ -1,5 +1,14 @@
-import { storiesOf } from '@storybook/react';
-import { attachDemos } from '../../../attach-demos';
 import * as demos from './index';
+import { renderDemo } from '../../../render-demo';
 
-attachDemos(storiesOf('SimpleGrid', module), demos);
+export default { title: 'SimpleGrid' };
+
+export const DemoUsage = {
+  name: '⭐ Demo: usage',
+  render: renderDemo(demos.usage),
+};
+
+export const DemoResponsive = {
+  name: '⭐ Demo: responsive',
+  render: renderDemo(demos.responsive),
+};

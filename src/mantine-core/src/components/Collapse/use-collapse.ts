@@ -1,6 +1,7 @@
 import React, { useState, useRef } from 'react';
 import { flushSync } from 'react-dom';
 import { useDidUpdate, mergeRefs } from '@mantine/hooks';
+import { CSSProperties } from '../../core';
 
 function getAutoHeightDuration(height: number | string) {
   if (!height || typeof height === 'string') {
@@ -27,7 +28,7 @@ interface UseCollapse {
 
 interface GetCollapseProps {
   [key: string]: unknown;
-  style?: React.CSSProperties;
+  style?: CSSProperties;
   onTransitionEnd?: (e: TransitionEvent) => void;
   refKey?: string;
   ref?: React.ForwardedRef<HTMLDivElement>;
@@ -46,7 +47,7 @@ export function useCollapse({
     height: 0,
     overflow: 'hidden',
   };
-  const [styles, setStylesRaw] = useState<React.CSSProperties>(opened ? {} : collapsedStyles);
+  const [styles, setStylesRaw] = useState<CSSProperties>(opened ? {} : collapsedStyles);
   const setStyles = (newStyles: {} | ((oldStyles: {}) => {})): void => {
     flushSync(() => setStylesRaw(newStyles));
   };

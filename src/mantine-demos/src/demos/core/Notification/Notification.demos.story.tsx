@@ -1,5 +1,19 @@
-import { storiesOf } from '@storybook/react';
-import { attachDemos } from '../../../attach-demos';
 import * as demos from './index';
+import { renderDemo } from '../../../render-demo';
 
-attachDemos(storiesOf('Notification', module), demos);
+export default { title: 'Notification' };
+
+export const DemoIcon = {
+  name: '⭐ Demo: icon',
+  render: renderDemo(demos.icon),
+};
+
+export const DemoConfigurator = {
+  name: '⭐ Demo: configurator',
+  render: renderDemo(demos.configurator),
+};
+
+export const DemoStylesApi = {
+  name: '⭐ Demo: stylesApi',
+  render: renderDemo(demos.stylesApi),
+};

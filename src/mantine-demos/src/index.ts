@@ -124,5 +124,6 @@ export * as HooksDemos from './demos/hooks';
 export * as FormDemos from './demos/form';
 export * as NprogressDemos from './demos/nprogress';
 export * as CodeHighlightDemos from './demos/code-highlight';
+export * as DropzoneDemos from './demos/dropzone';
 export * as ModalsDemos from './demos/modals';
 export * as TipTapDemos from './demos/tiptap';

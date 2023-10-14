@@ -36,3 +36,13 @@ export function Usage() {
     </MantineThemeProvider>
   );
 }
+
+export function NonFluidWithinFluid() {
+  return (
+    <Container fluid h={50} bg="blue">
+      <Container h={50} bg="red">
+        Child container
+      </Container>
+    </Container>
+  );
+}

@@ -10,10 +10,11 @@ export const [searchStore, searchHandlers] = createSpotlight();
 export function Search() {
   const router = useRouter();
 
-  const actions = ALL_MDX_PAGES.map((page) => ({
+  const actions = ALL_MDX_PAGES.filter((page) => !page.hideInSearch).map((page) => ({
     id: page.slug,
     label: page.title,
-    description: page.search || page.description || page.date,
+    description:
+      page.search || page.description || (page.date ? `Released ${page.date}` : undefined),
     onClick: () => router.push(page.slug),
   }));
 

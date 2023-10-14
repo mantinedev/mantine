@@ -227,7 +227,11 @@ export const NumberInput = factory<NumberInputFactory>((_props, ref) => {
   });
 
   const handleValueChange: OnValueChange = (payload, event) => {
-    setValue(isValidNumber(payload.floatValue) ? payload.floatValue : payload.value);
+    setValue(
+      typeof _value === 'number' && isValidNumber(payload.floatValue)
+        ? payload.floatValue
+        : payload.value
+    );
     onValueChange?.(payload, event);
   };
 
@@ -277,6 +281,7 @@ export const NumberInput = factory<NumberInputFactory>((_props, ref) => {
         aria-hidden
         disabled={disabled || (typeof _value === 'number' && max !== undefined && _value >= max)}
         mod={{ direction: 'up' }}
+        onMouseDown={(event) => event.preventDefault()}
         onPointerDown={increment}
       >
         <NumberInputChevron direction="up" />
@@ -287,6 +292,7 @@ export const NumberInput = factory<NumberInputFactory>((_props, ref) => {
         aria-hidden
         disabled={disabled || (typeof _value === 'number' && min !== undefined && _value <= min)}
         mod={{ direction: 'down' }}
+        onMouseDown={(event) => event.preventDefault()}
         onPointerDown={decrement}
       >
         <NumberInputChevron direction="down" />

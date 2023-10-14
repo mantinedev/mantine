@@ -140,7 +140,7 @@ import classes from './Demo.module.css';
 
 const theme = createTheme({
   components: {
-    TextInput: TextInput.extends({
+    TextInput: TextInput.extend({
       styles: (theme, props) => ({
         input: {
           fontSize: props.size === 'compact' ? theme.fontSizes.sm : undefined,

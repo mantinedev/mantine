@@ -1,5 +1,9 @@
-import { storiesOf } from '@storybook/react';
-import { attachDemos } from '../../../attach-demos';
 import * as demos from './index';
+import { renderDemo } from '../../../render-demo';
 
-attachDemos(storiesOf('Burger', module), demos);
+export default { title: 'Burger' };
+
+export const DemoUsage = {
+  name: '⭐ Demo: usage',
+  render: renderDemo(demos.usage),
+};

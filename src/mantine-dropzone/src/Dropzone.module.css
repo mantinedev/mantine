@@ -52,11 +52,11 @@
 }
 
 .inner {
-  pointer-events: var(--_dropzone-inner-pointer-events, all);
+  pointer-events: var(--_dropzone-inner-pointer-events, none);
   user-select: none;
 
-  &[data-disable-pointer-events] {
-    --_dropzone-inner-pointer-events: none;
+  &[data-enable-pointer-events] {
+    --_dropzone-inner-pointer-events: all;
   }
 }
 

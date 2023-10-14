@@ -1,5 +1,14 @@
-import { storiesOf } from '@storybook/react';
-import { attachDemos } from '../../../attach-demos';
 import * as demos from './index';
+import { renderDemo } from '../../../render-demo';
 
-attachDemos(storiesOf('Skeleton', module), demos);
+export default { title: 'Skeleton' };
+
+export const DemoConfigurator = {
+  name: '⭐ Demo: configurator',
+  render: renderDemo(demos.configurator),
+};
+
+export const DemoContent = {
+  name: '⭐ Demo: content',
+  render: renderDemo(demos.content),
+};

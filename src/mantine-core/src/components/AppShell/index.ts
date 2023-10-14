@@ -7,11 +7,17 @@ export { AppShellSection } from './AppShellSection/AppShellSection';
 export { AppShellMain } from './AppShellMain/AppShellMain';
 
 export type {
+  AppShellAsideConfiguration,
+  AppShellHeaderConfiguration,
+  AppShellNavbarConfiguration,
+  AppShellFooterConfiguration,
+  AppShellResponsiveSize,
+} from './AppShell.types';
+
+export type {
   AppShellProps,
   AppShellCssVariables,
   AppShellFactory,
-  AppShellResponsiveSize,
-  AppShellSize,
   AppShellStylesNames,
 } from './AppShell';
 

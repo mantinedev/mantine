@@ -1,6 +1,6 @@
 {
   "name": "@mantine/notifications",
-  "version": "7.0.1",
+  "version": "7.1.3",
   "main": "./cjs/index.js",
   "types": "./lib/index.d.ts",
   "module": "./esm/index.mjs",
@@ -15,7 +15,8 @@
         "default": "./cjs/index.js"
       }
     },
-    "./styles.css": "./esm/index.css"
+    "./styles.css": "./esm/index.css",
+    "./styles.layer.css": "./esm/index.layer.css"
   },
   "license": "MIT",
   "author": "Vitaly Rtishchev <rtivital@gmail.com>",
@@ -42,13 +43,13 @@
     "notification-system"
   ],
   "peerDependencies": {
-    "@mantine/core": "7.0.1",
-    "@mantine/hooks": "7.0.1",
+    "@mantine/core": "7.1.3",
+    "@mantine/hooks": "7.1.3",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },
   "dependencies": {
-    "@mantine/store": "7.0.1",
+    "@mantine/store": "7.1.3",
     "react-transition-group": "4.4.5"
   },
   "devDependencies": {}

@@ -29,6 +29,18 @@ function Demo() {
 }
 ```
 
+## Define CSS variables in style prop
+
+You can define CSS variables in the style prop. Note that it only works with Mantine components:
+
+```tsx
+import { Box } from '@mantine/core';
+
+function Demo() {
+  return <Box style={{ '--radius': '0.5rem', borderRadius: 'var(--radius)' }} />;
+}
+```
+
 ## Style function
 
 You can pass a style function to the `style` prop – in this case it will be called with [theme](/theming/theme-object/).

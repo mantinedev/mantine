@@ -1,5 +1,14 @@
-import { storiesOf } from '@storybook/react';
-import { attachDemos } from '../../../attach-demos';
 import * as demos from './index';
+import { renderDemo } from '../../../render-demo';
 
-attachDemos(storiesOf('TypographyStylesProvider', module), demos);
+export default { title: 'TypographyStylesProvider' };
+
+export const DemoUsage = {
+  name: '⭐ Demo: usage',
+  render: renderDemo(demos.usage),
+};
+
+export const DemoAll = {
+  name: '⭐ Demo: all',
+  render: renderDemo(demos.all),
+};

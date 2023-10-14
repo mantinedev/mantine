@@ -27,6 +27,7 @@ import {
   MdxComboboxLargeData,
   MdxComboboxFiltering,
   MdxComboboxProps,
+  MdxServerComponentsIncompatible,
 } from './MdxSharedContent';
 
 export function MdxProvider({ children }: { children: React.ReactNode }) {
@@ -54,6 +55,7 @@ export function MdxProvider({ children }: { children: React.ReactNode }) {
         ComboboxLargeData: MdxComboboxLargeData,
         ComboboxFiltering: MdxComboboxFiltering,
         ComboboxProps: MdxComboboxProps,
+        ServerComponentsIncompatible: MdxServerComponentsIncompatible,
         pre: MdxPre,
         h1: h(1),
         h2: h(2),

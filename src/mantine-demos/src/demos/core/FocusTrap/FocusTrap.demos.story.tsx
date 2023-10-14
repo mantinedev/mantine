@@ -1,5 +1,14 @@
-import { storiesOf } from '@storybook/react';
-import { attachDemos } from '../../../attach-demos';
 import * as demos from './index';
+import { renderDemo } from '../../../render-demo';
 
-attachDemos(storiesOf('FocusTrap', module), demos);
+export default { title: 'FocusTrap' };
+
+export const DemoUsage = {
+  name: '⭐ Demo: usage',
+  render: renderDemo(demos.usage),
+};
+
+export const DemoInitial = {
+  name: '⭐ Demo: initial',
+  render: renderDemo(demos.initial),
+};

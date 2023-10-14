@@ -1,5 +1,29 @@
-import { storiesOf } from '@storybook/react';
-import { attachDemos } from '../../../attach-demos';
 import * as demos from './index';
+import { renderDemo } from '../../../render-demo';
 
-attachDemos(storiesOf('TimeInput', module), demos);
+export default { title: 'TimeInput' };
+
+export const DemoConfigurator = {
+  name: '⭐ Demo: configurator',
+  render: renderDemo(demos.configurator),
+};
+
+export const DemoWithSeconds = {
+  name: '⭐ Demo: withSeconds',
+  render: renderDemo(demos.withSeconds),
+};
+
+export const DemoIcon = {
+  name: '⭐ Demo: icon',
+  render: renderDemo(demos.icon),
+};
+
+export const DemoPicker = {
+  name: '⭐ Demo: picker',
+  render: renderDemo(demos.picker),
+};
+
+export const DemoDisabled = {
+  name: '⭐ Demo: disabled',
+  render: renderDemo(demos.disabled),
+};

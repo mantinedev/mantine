@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/anchor-has-content */
 import React, { forwardRef } from 'react';
 import { render } from '../render';
 
@@ -34,5 +35,18 @@ export function itIsPolymorphic<Props>(options: Options<Props>, name = 'is polym
     expect(target.tagName).toBe('MARK');
     expect(target).toHaveAttribute('data-child-prop');
     expect(target).toHaveAttribute('data-parent-prop');
+  });
+
+  it(`${name}: renderRoot`, () => {
+    const { container } = render(
+      <options.component
+        renderRoot={(props: any) => <a href="#test-link" {...props} />}
+        {...options.props}
+      />
+    );
+
+    const target = getTarget(container);
+    expect(target.tagName).toBe('A');
+    expect(target.getAttribute('href')).toBe('#test-link');
   });
 }

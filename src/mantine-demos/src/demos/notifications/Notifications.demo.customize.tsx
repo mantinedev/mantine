@@ -5,24 +5,39 @@ import { notifications } from '@mantine/notifications';
 import classes from './Notifications.demo.customize.module.css';
 
 const code = `
-import { Button } from '@mantine/core';
+import { Button, Group } from '@mantine/core';
 import { notifications } from '@mantine/notifications';
 import classes from './Demo.module.css';
 
 function Demo() {
   return (
-    <Button
-      variant="outline"
-      onClick={() =>
-        notifications.show({
-          title: 'Notification with custom styles',
-          message: 'It is default blue',
-          classNames: classes,
-        })
-      }
-    >
-      Show customized notification
-    </Button>
+    <Group justify="center">
+      <Button
+        onClick={() =>
+          notifications.show({
+            title: 'Notification with custom styles',
+            message: 'It is default blue',
+            classNames: classes,
+          })
+        }
+      >
+        Default notification
+      </Button>
+
+      <Button
+        color="red"
+        onClick={() =>
+          notifications.show({
+            color: 'red',
+            title: 'Notification with custom styles',
+            message: 'It is red',
+            classNames: classes,
+          })
+        }
+      >
+        Error notification
+      </Button>
+    </Group>
   );
 }`;
 

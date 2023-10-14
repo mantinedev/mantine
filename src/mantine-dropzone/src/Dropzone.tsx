@@ -6,7 +6,7 @@ import {
   FileWithPath,
   DropEvent,
   FileError,
-} from 'react-dropzone';
+} from 'react-dropzone-esm';
 import {
   Box,
   BoxProps,
@@ -126,6 +126,9 @@ export interface DropzoneProps
 
   /** Custom validation function. It must return null if there's no errors. */
   validator?: <T extends File>(file: T) => FileError | FileError[] | null;
+
+  /** Determines whether pointer events should be enabled on the inner element, `false` by default */
+  enablePointerEvents?: boolean;
 }
 
 export type DropzoneFactory = Factory<{
@@ -219,6 +222,7 @@ export const Dropzone = factory<DropzoneFactory>((_props, ref) => {
     validator,
     rejectColor,
     acceptColor,
+    enablePointerEvents,
     ...others
   } = props;
 
@@ -280,7 +284,7 @@ export const Dropzone = factory<DropzoneFactory>((_props, ref) => {
       >
         <LoadingOverlay visible={loading} overlayProps={{ radius }} unstyled={unstyled} />
         <input {...getInputProps()} name={name} />
-        <div {...getStyles('inner')} data-disable-pointer-events={!activateOnClick || undefined}>
+        <div {...getStyles('inner')} data-enable-pointer-events={enablePointerEvents || undefined}>
           {children}
         </div>
       </Box>

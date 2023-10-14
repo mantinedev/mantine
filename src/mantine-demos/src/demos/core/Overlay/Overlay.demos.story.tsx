@@ -1,5 +1,19 @@
-import { storiesOf } from '@storybook/react';
-import { attachDemos } from '../../../attach-demos';
 import * as demos from './index';
+import { renderDemo } from '../../../render-demo';
 
-attachDemos(storiesOf('Overlay', module), demos);
+export default { title: 'Overlay' };
+
+export const DemoUsage = {
+  name: '⭐ Demo: usage',
+  render: renderDemo(demos.usage),
+};
+
+export const DemoGradient = {
+  name: '⭐ Demo: gradient',
+  render: renderDemo(demos.gradient),
+};
+
+export const DemoBlur = {
+  name: '⭐ Demo: blur',
+  render: renderDemo(demos.blur),
+};

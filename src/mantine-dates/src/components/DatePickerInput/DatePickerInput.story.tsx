@@ -9,12 +9,7 @@ export default { title: 'DatePickerInput' };
 export function Usage() {
   return (
     <div style={{ padding: 40, maxWidth: 400 }}>
-      <DatePickerInput
-        label="Date picker input"
-        placeholder="Pick date"
-        numberOfColumns={3}
-        allowDeselect
-      />
+      <DatePickerInput label="Date picker input" />
     </div>
   );
 }

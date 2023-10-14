@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useId, useUncontrolled } from '@mantine/hooks';
 import {
   BoxProps,
@@ -81,6 +81,9 @@ export interface MultiSelectProps
 
   /** Props passed down to the clear button */
   clearButtonProps?: __CloseButtonProps & ElementProps<'button'>;
+
+  /** Props passed down to the hidden input */
+  hiddenInputProps?: React.ComponentPropsWithoutRef<'input'>;
 }
 
 export type MultiSelectFactory = Factory<{
@@ -161,6 +164,8 @@ export const MultiSelect = factory<MultiSelectFactory>((_props, ref) => {
     id,
     clearable,
     clearButtonProps,
+    hiddenInputProps,
+    placeholder,
     ...others
   } = props;
 
@@ -232,6 +237,12 @@ export const MultiSelect = factory<MultiSelectFactory>((_props, ref) => {
     </Pill>
   ));
 
+  useEffect(() => {
+    if (selectFirstOptionOnChange) {
+      combobox.selectFirstOption();
+    }
+  }, [selectFirstOptionOnChange, _value]);
+
   const clearButton = clearable && _value.length > 0 && !disabled && !readOnly && (
     <Combobox.ClearButton
       size={size as string}
@@ -242,6 +253,8 @@ export const MultiSelect = factory<MultiSelectFactory>((_props, ref) => {
       }}
     />
   );
+
+  const filteredData = filterPickedValues({ data: parsedData, value: _value });
 
   return (
     <>
@@ -314,6 +327,8 @@ export const MultiSelect = factory<MultiSelectFactory>((_props, ref) => {
                   {...rest}
                   ref={ref}
                   id={_id}
+                  placeholder={placeholder}
+                  type={!searchable && !placeholder ? 'hidden' : 'visible'}
                   {...getStyles('inputField')}
                   unstyled={unstyled}
                   onFocus={(event) => {
@@ -331,6 +346,7 @@ export const MultiSelect = factory<MultiSelectFactory>((_props, ref) => {
                   onChange={(event) => {
                     setSearchValue(event.currentTarget.value);
                     searchable && combobox.openDropdown();
+                    selectFirstOptionOnChange && combobox.selectFirstOption();
                   }}
                   disabled={disabled}
                   readOnly={readOnly || !searchable}
@@ -342,17 +358,15 @@ export const MultiSelect = factory<MultiSelectFactory>((_props, ref) => {
         </Combobox.DropdownTarget>
 
         <OptionsDropdown
-          data={
-            hidePickedOptions ? filterPickedValues({ data: parsedData, value: _value }) : parsedData
-          }
+          data={hidePickedOptions ? filteredData : parsedData}
           hidden={readOnly || disabled}
           filter={filter}
           search={_searchValue}
           limit={limit}
           hiddenWhenEmpty={
-            hidePickedOptions ||
+            !searchable ||
             !nothingFoundMessage ||
-            (!searchable && _searchValue.trim().length !== 0)
+            (hidePickedOptions && filteredData.length === 0 && _searchValue.trim().length === 0)
           }
           withScrollArea={withScrollArea}
           maxDropdownHeight={maxDropdownHeight}
@@ -365,7 +379,14 @@ export const MultiSelect = factory<MultiSelectFactory>((_props, ref) => {
           labelId={`${_id}-label`}
         />
       </Combobox>
-      <input type="hidden" name={name} value={_value.join(',')} form={form} disabled={disabled} />
+      <input
+        type="hidden"
+        name={name}
+        value={_value.join(',')}
+        form={form}
+        disabled={disabled}
+        {...hiddenInputProps}
+      />
     </>
   );
 });

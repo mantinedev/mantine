@@ -11,7 +11,11 @@ export function Usage() {
       <Notifications autoClose={false} position="top-center" />
 
       <Group>
-        <Button onClick={() => showNotification({ message: 'Test', title: 'Test' })}>
+        <Button
+          onClick={() =>
+            showNotification({ message: 'Test', title: 'Test', style: { background: 'red' } })
+          }
+        >
           Show notification
         </Button>
       </Group>
