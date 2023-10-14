@@ -779,7 +779,7 @@ export const MDX_CORE_DATA: Record<string, Frontmatter> = {
     props: ['Grid', 'GridCol'],
     styles: ['Grid'],
     componentPrefix: 'Grid',
-    description: 'Responsive grid system',
+    description: 'Responsive 12 columns grid system',
     import: "import { Grid } from '@mantine/core';",
     source: 'mantine-core/src/components/Grid/Grid.tsx',
     docs: 'core/grid.mdx',
