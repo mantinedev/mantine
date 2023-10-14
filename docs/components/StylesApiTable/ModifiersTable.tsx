@@ -6,9 +6,10 @@ import type { StylesApiData } from './StylesApiTable';
 
 interface ModifiersTableProps extends TableProps {
   data: StylesApiData;
+  fixedLayout?: boolean;
 }
 
-export function ModifiersTable({ data, ...others }: ModifiersTableProps) {
+export function ModifiersTable({ data, fixedLayout = true, ...others }: ModifiersTableProps) {
   const hasConditions = data.modifiers?.some((modifier) => !!modifier.condition);
   const hasValues = data.modifiers?.some((modifier) => !!modifier.value);
 
@@ -36,11 +37,11 @@ export function ModifiersTable({ data, ...others }: ModifiersTableProps) {
 
   return (
     <Table.ScrollContainer minWidth={600}>
-      <Table layout="fixed" {...others}>
+      <Table layout={fixedLayout ? 'fixed' : undefined} {...others}>
         <Table.Thead>
           <Table.Tr>
-            <Table.Th w={210}>Selector</Table.Th>
-            <Table.Th w={310}>Attribute</Table.Th>
+            <Table.Th w={fixedLayout ? 210 : undefined}>Selector</Table.Th>
+            <Table.Th w={fixedLayout ? 310 : undefined}>Attribute</Table.Th>
             {hasConditions && <Table.Th>Condition</Table.Th>}
             {hasValues && <Table.Th>Value</Table.Th>}
           </Table.Tr>

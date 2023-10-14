@@ -24,7 +24,12 @@ in component documentation.
 
 Example of [Button](/core/button) component selectors:
 
-<SelectorsTable data={ButtonStylesApi} component="Button" withTableBorder={false} />
+<SelectorsTable
+  data={ButtonStylesApi}
+  component="Button"
+  withTableBorder={false}
+  fixedLayout={false}
+/>
 
 You can use these selectors in `classNames` and `styles` both in component props and in `theme.components`:
 
@@ -133,7 +138,7 @@ in [theme.components](/theming/theme-object) or by passing it to `vars` prop.
 You can find CSS variables information under `Styles API` tab in component documentation.
 Example of [Button](/core/button) component CSS variables:
 
-<VariablesTable data={ButtonStylesApi} withTableBorder={false} />
+<VariablesTable data={ButtonStylesApi} withTableBorder={false} fixedLayout={false} />
 
 Example of custom CSS variables resolver function used to add more sizes to [Button](/core/button) component:
 

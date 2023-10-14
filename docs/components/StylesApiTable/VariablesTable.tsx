@@ -6,9 +6,10 @@ import type { StylesApiData } from './StylesApiTable';
 
 interface VariablesTableProps extends TableProps {
   data: StylesApiData;
+  fixedLayout?: boolean;
 }
 
-export function VariablesTable({ data, ...others }: VariablesTableProps) {
+export function VariablesTable({ data, fixedLayout = true, ...others }: VariablesTableProps) {
   const rows = Object.keys(data.vars).reduce<React.ReactNode[]>((acc, selector) => {
     Object.keys(data.vars[selector]).forEach((variable, index) => {
       acc.push(
@@ -31,11 +32,11 @@ export function VariablesTable({ data, ...others }: VariablesTableProps) {
 
   return (
     <Table.ScrollContainer minWidth={600}>
-      <Table layout="fixed" {...others}>
+      <Table layout={fixedLayout ? 'fixed' : undefined} {...others}>
         <Table.Thead>
           <Table.Tr>
-            <Table.Th w={210}>Selector</Table.Th>
-            <Table.Th w={310}>Variable</Table.Th>
+            <Table.Th w={fixedLayout ? 210 : undefined}>Selector</Table.Th>
+            <Table.Th w={fixedLayout ? 310 : undefined}>Variable</Table.Th>
             <Table.Th>Description</Table.Th>
           </Table.Tr>
         </Table.Thead>
