@@ -358,4 +358,14 @@ export const ALL_MDX_PAGES: Frontmatter[] = [
     return acc;
   }, []),
   ...Object.keys(MDX_META_DATA).map((key) => MDX_META_DATA[key]),
+  {
+    title: 'Combobox examples',
+    slug: '/combobox/?e=BasicSelect',
+    search: '50+ examples of Combobox usage',
+  },
+  {
+    title: 'AppShell examples',
+    slug: '/app-shell/?e=BasicAppShell',
+    search: '10+ examples of AppShell usage',
+  },
 ];
