@@ -1,6 +1,13 @@
 import { Frontmatter } from '@/types';
 
 export const MDX_STYLES_DATA: Record<string, Frontmatter> = {
+  StylesOverview: {
+    title: 'Styles overview',
+    slug: '/styles/styles-overview',
+    search: 'Overview of the ways to apply styles',
+    hideHeader: true,
+  },
+
   MantineStyles: {
     title: 'Mantine styles',
     slug: '/styles/mantine-styles',
