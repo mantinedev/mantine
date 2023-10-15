@@ -25,6 +25,7 @@ export function highlighter(value: string, _highlight: string | string[]) {
       : highlight
           .filter((part) => part.trim().length !== 0)
           .map((part) => part.trim())
+          .sort((a, b) => b.length - a.length)  // sorts by longest string first
           .join('|');
 
   const re = new RegExp(`(${matcher})`, 'gi');
