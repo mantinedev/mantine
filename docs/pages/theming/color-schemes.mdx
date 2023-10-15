@@ -1,6 +1,6 @@
 import { Layout } from '@/layout';
 import { MDX_DATA } from '@/mdx';
-import { ThemingDemos } from '@mantine/demos';
+import { ThemingDemos, StylesDemos } from '@mantine/demos';
 
 export default Layout(MDX_DATA.ColorSchemes);
 
@@ -287,3 +287,10 @@ function Demo() {
   );
 }
 ```
+
+## lightHidden and darkHidden props
+
+All Mantine components support `lightHidden` and `darkHidden` props that can be used to hide
+component in specific color scheme:
+
+<Demo data={StylesDemos.lightDarkHidden} />

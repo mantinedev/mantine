@@ -50,8 +50,11 @@ export function extractStyleProps<T extends Record<string, any>>(
     display,
     hiddenFrom,
     visibleFrom,
+    lightHidden,
+    darkHidden,
     ...rest
   } = others;
+
   const styleProps = filterProps({
     m,
     mx,
@@ -98,6 +101,8 @@ export function extractStyleProps<T extends Record<string, any>>(
     display,
     hiddenFrom,
     visibleFrom,
+    lightHidden,
+    darkHidden,
   });
 
   return { styleProps, rest: rest as unknown as T };

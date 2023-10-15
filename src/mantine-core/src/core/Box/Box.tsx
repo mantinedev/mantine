@@ -33,6 +33,12 @@ export interface BoxProps extends MantineStyleProps {
 
   /** Breakpoint below which the component is hidden with `display: none` */
   visibleFrom?: MantineBreakpoint;
+
+  /** Determines whether component should be hidden in light color scheme with `display: none` */
+  lightHidden?: boolean;
+
+  /** Determines whether component should be hidden in dark color scheme with `display: none` */
+  darkHidden?: boolean;
 }
 
 export type ElementProps<
@@ -66,6 +72,8 @@ const _Box = forwardRef<
       size,
       hiddenFrom,
       visibleFrom,
+      lightHidden,
+      darkHidden,
       renderRoot,
       ...others
     },
@@ -91,6 +99,8 @@ const _Box = forwardRef<
       }),
       className: cx(className, {
         [responsiveClassName]: parsedStyleProps.hasResponsiveStyles,
+        'mantine-light-hidden': lightHidden,
+        'mantine-dark-hidden': darkHidden,
         [`mantine-hidden-from-${hiddenFrom}`]: hiddenFrom,
         [`mantine-visible-from-${visibleFrom}`]: visibleFrom,
       }),

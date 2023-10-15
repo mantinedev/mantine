@@ -1,6 +1,6 @@
 import { Layout } from '@/layout';
 import { MDX_DATA } from '@/mdx';
-import { LoadingOverlayDemos } from '@mantine/demos';
+import { LoadingOverlayDemos, StylesDemos } from '@mantine/demos';
 
 export default Layout(MDX_DATA.Changelog720);
 
@@ -23,6 +23,13 @@ loader with any React node. It is useful in components that support `loaderProps
 – with `loaderProps.children` you can now display any React node instead of the loader.
 
 <Demo data={LoadingOverlayDemos.customLoader} />
+
+## lightHidden and darkHidden props
+
+All Mantine components now support `lightHidden` and `darkHidden` props that can be used to hide
+component in specific color scheme:
+
+<Demo data={StylesDemos.lightDarkHidden} />
 
 ## light-root and dark-root mixins
 

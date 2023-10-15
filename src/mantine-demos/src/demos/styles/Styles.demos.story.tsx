@@ -92,3 +92,8 @@ export const DemoHiddenVisible = {
   name: '⭐ Demo: hiddenVisible',
   render: renderDemo(demos.hiddenVisible),
 };
+
+export const DemoLightDarkHidden = {
+  name: '⭐ Demo: lightDarkHidden',
+  render: renderDemo(demos.lightDarkHidden),
+};
