@@ -4,3 +4,6 @@ export { states } from './Checkbox.demo.states';
 export { icon } from './Checkbox.demo.icon';
 export { groupConfigurator } from './Checkbox.demo.groupConfigurator';
 export { anchor } from './Checkbox.demo.anchor';
+export { card } from './Checkbox.demo.card';
+export { stylesApi } from './Checkbox.demo.stylesApi';
+export { customize } from './Checkbox.demo.customize';

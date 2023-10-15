@@ -24,6 +24,7 @@ export const CheckboxStylesApi: StylesApiData<CheckboxFactory> = {
   },
 
   modifiers: [
+    { modifier: 'data-checked', selector: 'root', condition: '`checked` prop is set' },
     { modifier: 'data-error', selector: 'input', condition: '`error` prop is set' },
     { modifier: 'data-indeterminate', selector: 'input', condition: '`indeterminate` prop is set' },
     { modifier: 'data-label-position', selector: 'inner', value: 'Value of `labelPosition` prop' },

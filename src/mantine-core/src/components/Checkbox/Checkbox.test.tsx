@@ -49,6 +49,50 @@ describe('@mantine/core/Checkbox', () => {
     expect(screen.getByText('test-error')).toBeInTheDocument();
   });
 
+  it('sets data-checked attribute on the root element if checked prop is true', () => {
+    const { container, rerender } = render(<Checkbox checked />);
+    expect(container.querySelector('.mantine-Checkbox-root')).toHaveAttribute('data-checked');
+
+    rerender(<Checkbox checked={false} />);
+    expect(container.querySelector('.mantine-Checkbox-root')).not.toHaveAttribute('data-checked');
+  });
+
+  it('sets data-checked attribute on the root element if checkbox is checked within Checkbox.Group', () => {
+    const { container, rerender } = render(
+      <Checkbox.Group value={[]}>
+        <Checkbox value="test-value" />
+      </Checkbox.Group>
+    );
+
+    expect(container.querySelector('.mantine-Checkbox-root')).not.toHaveAttribute('data-checked');
+
+    rerender(
+      <Checkbox.Group value={['test-value']}>
+        <Checkbox value="test-value" />
+      </Checkbox.Group>
+    );
+
+    expect(container.querySelector('.mantine-Checkbox-root')).toHaveAttribute('data-checked');
+  });
+
+  it('sets checked attribute on input if checkbox is checked within Checkbox.Group', () => {
+    const { rerender } = render(
+      <Checkbox.Group value={[]}>
+        <Checkbox value="test-value" />
+      </Checkbox.Group>
+    );
+
+    expect(screen.getByRole('checkbox')).not.toBeChecked();
+
+    rerender(
+      <Checkbox.Group value={['test-value']}>
+        <Checkbox value="test-value" />
+      </Checkbox.Group>
+    );
+
+    expect(screen.getByRole('checkbox')).toBeChecked();
+  });
+
   it('sets data-indeterminate attribute based on indeterminate prop', () => {
     const { rerender } = render(<Checkbox indeterminate />);
     expect(screen.getByRole('checkbox')).toHaveAttribute('data-indeterminate');

@@ -163,7 +163,7 @@ export const Checkbox = factory<CheckboxFactory>((_props, ref) => {
       classNames={classNames}
       styles={styles}
       unstyled={unstyled}
-      data-checked={contextProps.checked || undefined}
+      data-checked={contextProps.checked || checked || undefined}
       variant={variant}
       ref={rootRef}
       {...styleProps}

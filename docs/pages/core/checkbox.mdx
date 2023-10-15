@@ -1,6 +1,6 @@
 import { Layout } from '@/layout';
 import { MDX_DATA } from '@/mdx';
-import { CheckboxDemos } from '@mantine/demos';
+import { CheckboxDemos, TableDemos } from '@mantine/demos';
 
 export default Layout(MDX_DATA.Checkbox);
 
@@ -18,8 +18,8 @@ export default Layout(MDX_DATA.Checkbox);
 
 ## Indeterminate state
 
-`Checkbox` supports indeterminate state. When `indeterminate` prop is true,
-`checked` prop is ignored:
+`Checkbox` supports indeterminate state. When `indeterminate` prop is set,
+`checked` prop is ignored (checkbox always has checked styles):
 
 <Demo data={CheckboxDemos.indeterminate} demoProps={{ toggle: true }} />
 
@@ -65,9 +65,25 @@ function Demo() {
 
 <GetElementRef component="Checkbox" refType="input" />
 
+<StylesApiSelectors component="Checkbox" />
+
+<Demo data={CheckboxDemos.stylesApi} />
+
+## Example: Table with row selection
+
+<Demo data={TableDemos.rowSelection} />
+
+## Example: Checkbox card
+
+<Demo data={CheckboxDemos.card} />
+
+## Example: Customize with Styles API
+
+<Demo data={CheckboxDemos.customize} />
+
 ## Accessibility
 
-Set `aria-label` or `label` prop to make checkbox accessible:
+Set `aria-label` or `label` prop to make the checkbox accessible:
 
 ```tsx
 import { Checkbox } from '@mantine/core';
