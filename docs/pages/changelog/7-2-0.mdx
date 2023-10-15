@@ -24,6 +24,24 @@ loader with any React node. It is useful in components that support `loaderProps
 
 <Demo data={LoadingOverlayDemos.customLoader} />
 
+## light-root and dark-root mixins
+
+New `light-root` and `dark-root` mixins were added to [postcss-preset-mantine](/styles/postcss-preset/).
+These mixins can be used to add color scheme specific styles to the `:root`/`html` element.
+Note that to use these mixins you need to update `postcss-preset-mantine` to `1.9.0` or higher.
+
+```scss
+:root {
+  @mixin light-root {
+    --color: red;
+  }
+
+  @mixin dark-root {
+    --color: blue;
+  }
+}
+```
+
 ## Documentation updates
 
 - New [Styles overview](/styles/styles-overview/) guide
