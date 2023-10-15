@@ -60,6 +60,8 @@ const EXCLUDE_PROPS = [
   'hiddenFrom',
   'visibleFrom',
   'renderRoot',
+  'lightHidden',
+  'darkHidden',
 ];
 
 export const docgenParser = withCustomConfig(path.join(__dirname, '../../tsconfig.json'), {
