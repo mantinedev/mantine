@@ -18,6 +18,9 @@ export interface CardSectionProps extends BoxProps, CompoundStylesApiProps<CardS
 
   /** Determines whether the section should inherit padding from the parent `Card`, `false` by default */
   inheritPadding?: boolean;
+
+  /** Section content */
+  children?: React.ReactNode;
 }
 
 export type CardSectionFactory = PolymorphicFactory<{
