@@ -26,6 +26,14 @@ export function Usage() {
   );
 }
 
+export function IconColor() {
+  return (
+    <div style={{ padding: 40 }}>
+      <Checkbox label="Default" color="lime.4" iconColor="dark.8" />
+    </div>
+  );
+}
+
 export function WithTooltip() {
   return (
     <div style={{ padding: 40 }}>

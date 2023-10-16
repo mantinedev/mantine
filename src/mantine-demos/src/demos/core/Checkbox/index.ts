@@ -7,3 +7,4 @@ export { anchor } from './Checkbox.demo.anchor';
 export { card } from './Checkbox.demo.card';
 export { stylesApi } from './Checkbox.demo.stylesApi';
 export { customize } from './Checkbox.demo.customize';
+export { iconColor } from './Checkbox.demo.iconColor';

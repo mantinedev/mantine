@@ -47,3 +47,8 @@ export const DemoCustomize = {
   name: '⭐ Demo: customize',
   render: renderDemo(demos.customize),
 };
+
+export const DemoIconColor = {
+  name: '⭐ Demo: iconColor',
+  render: renderDemo(demos.iconColor),
+};
