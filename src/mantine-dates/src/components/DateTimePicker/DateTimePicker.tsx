@@ -56,7 +56,7 @@ export interface DateTimePickerProps
   defaultValue?: DateValue;
 
   /** Called when value changes */
-  onChange?(value: DateValue): void;
+  onChange?: (value: DateValue) => void;
 
   /** TimeInput component props */
   timeInputProps?: TimeInputProps & { ref?: React.ComponentPropsWithRef<'input'>['ref'] };

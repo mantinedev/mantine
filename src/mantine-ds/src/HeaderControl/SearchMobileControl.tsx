@@ -4,7 +4,7 @@ import { IconSearch } from '@tabler/icons-react';
 import { HeaderControl } from './HeaderControl';
 
 interface SearchMobileControlProps {
-  onSearch(): void;
+  onSearch: () => void;
 }
 
 export function SearchMobileControl({ onSearch }: SearchMobileControlProps) {

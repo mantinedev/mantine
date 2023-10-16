@@ -38,7 +38,7 @@ export interface MonthPickerBaseProps<Type extends DatePickerType = 'default'>
   level?: MonthPickerLevel;
 
   /** Called when level changes */
-  onLevelChange?(level: MonthPickerLevel): void;
+  onLevelChange?: (level: MonthPickerLevel) => void;
 }
 
 export interface MonthPickerProps<Type extends DatePickerType = 'default'>
@@ -47,7 +47,7 @@ export interface MonthPickerProps<Type extends DatePickerType = 'default'>
     StylesApiProps<MonthPickerFactory>,
     ElementProps<'div', 'onChange' | 'value' | 'defaultValue'> {
   /** Called when month is selected */
-  onMonthSelect?(date: Date): void;
+  onMonthSelect?: (date: Date) => void;
 }
 
 export type MonthPickerFactory = Factory<{

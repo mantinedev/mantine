@@ -7,7 +7,7 @@ import { DiscordControl } from './DiscordControl';
 import { SearchControl } from '../SearchControl';
 
 interface HeaderControlsProps extends BoxProps {
-  onSearch(): void;
+  onSearch: () => void;
   githubLink: string;
   withDirectionToggle?: boolean;
 }

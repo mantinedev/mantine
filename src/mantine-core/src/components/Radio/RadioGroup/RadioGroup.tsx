@@ -18,7 +18,7 @@ export interface RadioGroupProps extends Omit<InputWrapperProps, 'onChange'> {
   defaultValue?: string;
 
   /** Called when value changes */
-  onChange?(value: string): void;
+  onChange?: (value: string) => void;
 
   /** Props passed down to the `Input.Wrapper` */
   wrapperProps?: Record<string, any>;

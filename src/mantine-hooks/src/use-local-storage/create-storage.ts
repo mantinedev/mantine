@@ -15,10 +15,10 @@ export interface StorageProperties<T> {
   getInitialValueInEffect?: boolean;
 
   /** Function to serialize value into string to be save in storage */
-  serialize?(value: T): string;
+  serialize?: (value: T) => string;
 
   /** Function to deserialize string value from storage to value */
-  deserialize?(value: string | undefined): T;
+  deserialize?: (value: string | undefined) => T;
 }
 
 function serializeJSON<T>(value: T, hookName: string) {

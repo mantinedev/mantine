@@ -48,16 +48,16 @@ export interface CarouselProps
   children?: React.ReactNode;
 
   /** Called when next slide is shown */
-  onNextSlide?(): void;
+  onNextSlide?: () => void;
 
   /** Called when previous slider is shown */
-  onPreviousSlide?(): void;
+  onPreviousSlide?: () => void;
 
   /** Called with slide index when slide changes */
-  onSlideChange?(index: number): void;
+  onSlideChange?: (index: number) => void;
 
   /** Get embla API as ref */
-  getEmblaApi?(embla: EmblaCarouselType): void;
+  getEmblaApi?: (embla: EmblaCarouselType) => void;
 
   /** Props passed down to next control */
   nextControlProps?: React.ComponentPropsWithoutRef<'button'>;

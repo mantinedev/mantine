@@ -2,7 +2,7 @@ import React from 'react';
 import { render } from '@mantine/tests';
 
 export interface ComponentTestProps {
-  __getControlRef?(rowIndex: number, cellIndex: number, node: HTMLButtonElement): void;
+  __getControlRef?: (rowIndex: number, cellIndex: number, node: HTMLButtonElement) => void;
 }
 
 interface Options {

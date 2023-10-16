@@ -8,12 +8,12 @@ interface PaginationContext {
   disabled: boolean | undefined;
   // color: MantineColor;
   // radius: MantineNumberSize;
-  getItemProps?(page: number): Record<string, any>;
-  onChange(page: number): void;
-  onNext(): void;
-  onPrevious(): void;
-  onFirst(): void;
-  onLast(): void;
+  getItemProps?: (page: number) => Record<string, any>;
+  onChange: (page: number) => void;
+  onNext: () => void;
+  onPrevious: () => void;
+  onFirst: () => void;
+  onLast: () => void;
   getStyles: GetStylesApi<PaginationRootFactory>;
 }
 

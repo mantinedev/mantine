@@ -4,7 +4,7 @@ import { SpotlightStore } from './spotlight.store';
 
 interface SpotlightContextValue {
   query: string;
-  setQuery(query: string): void;
+  setQuery: (query: string) => void;
   getStyles: GetStylesApi<SpotlightRootFactory>;
   store: SpotlightStore;
   closeOnActionTrigger: boolean | undefined;

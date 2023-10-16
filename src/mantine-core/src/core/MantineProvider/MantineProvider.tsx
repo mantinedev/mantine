@@ -32,13 +32,13 @@ export interface MantineProviderProps {
   withCssVariables?: boolean;
 
   /** Function to resolve root element to set `data-mantine-color-scheme` attribute, must return undefined on server, `() => document.documentElement` by default */
-  getRootElement?(): HTMLElement | undefined;
+  getRootElement?: () => HTMLElement | undefined;
 
   /** A prefix for components static classes (for example {selector}-Text-root), `mantine` by default */
   classNamesPrefix?: string;
 
   /** Function to generate nonce attribute added to all generated `<style />` tags */
-  getStyleNonce?(): string;
+  getStyleNonce?: () => string;
 
   /** Function to generate CSS variables based on theme object */
   cssVariablesResolver?: CSSVariablesResolver;

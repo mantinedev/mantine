@@ -1,8 +1,8 @@
 import { useRef, useState, useEffect } from 'react';
 
 export interface UseFocusWithinOptions {
-  onFocus?(event: FocusEvent): void;
-  onBlur?(event: FocusEvent): void;
+  onFocus?: (event: FocusEvent) => void;
+  onBlur?: (event: FocusEvent) => void;
 }
 
 function containsRelatedTarget(event: FocusEvent) {

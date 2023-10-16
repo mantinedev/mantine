@@ -6,7 +6,7 @@ import type { ComboboxStore } from './use-combobox/use-combobox';
 export interface ComboboxContextValue {
   getStyles: GetStylesApi<ComboboxFactory>;
   store: ComboboxStore;
-  onOptionSubmit?(value: string, optionProps: ComboboxOptionProps): void;
+  onOptionSubmit?: (value: string, optionProps: ComboboxOptionProps) => void;
   size: MantineSize | (string & {});
   resetSelectionOnOptionHover: boolean | undefined;
   readOnly: boolean | undefined;

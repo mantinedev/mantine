@@ -56,7 +56,7 @@ export interface SegmentedControlProps
   defaultValue?: string;
 
   /** Called when value changes */
-  onChange?(value: string): void;
+  onChange?: (value: string) => void;
 
   /** Determines whether the component is disabled */
   disabled?: boolean;

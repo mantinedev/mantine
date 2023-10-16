@@ -32,7 +32,7 @@ export interface ImageProps extends BoxProps, StylesApiProps<ImageFactory> {
   src?: any;
 
   /** Called when image fails to load */
-  onError?(event: React.SyntheticEvent<HTMLImageElement, Event>): void;
+  onError?: (event: React.SyntheticEvent<HTMLImageElement, Event>) => void;
 }
 
 export type ImageFactory = PolymorphicFactory<{

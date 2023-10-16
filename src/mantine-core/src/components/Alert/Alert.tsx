@@ -51,7 +51,7 @@ export interface AlertProps
   withCloseButton?: boolean;
 
   /** Called when the close button is clicked */
-  onClose?(): void;
+  onClose?: () => void;
 
   /** Close button `aria-label` */
   closeButtonLabel?: string;

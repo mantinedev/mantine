@@ -15,7 +15,7 @@ export type ConfiguratorSizeControlOptions = ConfiguratorControl<'size', { initi
 
 export interface ConfiguratorSizeControlProps extends BoxProps, ElementProps<'div', 'onChange'> {
   value: string;
-  onChange(value: string): void;
+  onChange: (value: string) => void;
   prop: string;
 }
 

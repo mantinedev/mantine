@@ -56,13 +56,13 @@ export interface DropzoneProps
   disabled?: boolean;
 
   /** Called when any files are dropped to the dropzone */
-  onDropAny?(files: FileWithPath[], fileRejections: FileRejection[]): void;
+  onDropAny?: (files: FileWithPath[], fileRejections: FileRejection[]) => void;
 
   /** Called when valid files are dropped to the dropzone */
-  onDrop(files: FileWithPath[]): void;
+  onDrop: (files: FileWithPath[]) => void;
 
   /** Called when dropped files do not meet file restrictions */
-  onReject?(fileRejections: FileRejection[]): void;
+  onReject?: (fileRejections: FileRejection[]) => void;
 
   /** Determines whether a loading overlay should be displayed over the dropzone, `false` by default */
   loading?: boolean;
@@ -101,19 +101,19 @@ export interface DropzoneProps
   dragEventsBubbling?: boolean;
 
   /** Called when the `dragenter` event occurs */
-  onDragEnter?(event: React.DragEvent<HTMLElement>): void;
+  onDragEnter?: (event: React.DragEvent<HTMLElement>) => void;
 
   /** Called when the `dragleave` event occurs */
-  onDragLeave?(event: React.DragEvent<HTMLElement>): void;
+  onDragLeave?: (event: React.DragEvent<HTMLElement>) => void;
 
   /** Called when the `dragover` event occurs */
-  onDragOver?(event: React.DragEvent<HTMLElement>): void;
+  onDragOver?: (event: React.DragEvent<HTMLElement>) => void;
 
   /** Called when user closes the file selection dialog with no selection */
-  onFileDialogCancel?(): void;
+  onFileDialogCancel?: () => void;
 
   /** Called when user opens the file selection dialog */
-  onFileDialogOpen?(): void;
+  onFileDialogOpen?: () => void;
 
   /** If `false`, allow dropped items to take over the current browser window */
   preventDropOnDocument?: boolean;

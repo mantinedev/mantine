@@ -22,7 +22,7 @@ interface UseTooltip {
   position: FloatingPosition;
   closeDelay?: number;
   openDelay?: number;
-  onPositionChange?(position: FloatingPosition): void;
+  onPositionChange?: (position: FloatingPosition) => void;
   opened?: boolean;
   offset: number | FloatingAxesOffsets;
   arrowRef?: React.RefObject<HTMLDivElement>;

@@ -3,7 +3,7 @@ import { MantineSize } from '../../core';
 
 interface SwitchGroupContextValue {
   value: string[];
-  onChange(event: React.ChangeEvent<HTMLInputElement>): void;
+  onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
   size: MantineSize | (string & {}) | undefined;
 }
 

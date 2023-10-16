@@ -5,13 +5,13 @@ import { ConvertCSSVariablesInput } from './convert-css-variables';
 
 interface MantineContextValue {
   colorScheme: MantineColorScheme;
-  setColorScheme(colorScheme: MantineColorScheme): void;
-  clearColorScheme(): void;
+  setColorScheme: (colorScheme: MantineColorScheme) => void;
+  clearColorScheme: () => void;
   colorSchemeManager: MantineColorSchemeManager;
-  getRootElement(): HTMLElement | undefined;
+  getRootElement: () => HTMLElement | undefined;
   classNamesPrefix: string;
-  getStyleNonce?(): string | undefined;
-  cssVariablesResolver?(theme: MantineTheme): ConvertCSSVariablesInput;
+  getStyleNonce?: () => string | undefined;
+  cssVariablesResolver?: (theme: MantineTheme) => ConvertCSSVariablesInput;
   cssVariablesSelector: string;
 }
 

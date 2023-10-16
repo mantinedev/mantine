@@ -45,13 +45,13 @@ export interface CalendarHeaderSettings {
   previousLabel?: string;
 
   /** Called when next button is clicked */
-  onNext?(): void;
+  onNext?: () => void;
 
   /** Called when previous button is clicked */
-  onPrevious?(): void;
+  onPrevious?: () => void;
 
   /** Called when level button is clicked */
-  onLevelClick?(): void;
+  onLevelClick?: () => void;
 
   /** Determines whether next control should be disabled, defaults to true */
   nextDisabled?: boolean;

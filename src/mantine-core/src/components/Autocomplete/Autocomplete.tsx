@@ -36,7 +36,7 @@ export interface AutocompleteProps
   defaultValue?: string;
 
   /** Called when value changes */
-  onChange?(value: string): void;
+  onChange?: (value: string) => void;
 }
 
 export type AutocompleteFactory = Factory<{

@@ -11,7 +11,7 @@ interface UseUncontrolledInput<T> {
   finalValue?: T;
 
   /** Controlled state onChange handler */
-  onChange?(value: T): void;
+  onChange?: (value: T) => void;
 }
 
 export function useUncontrolled<T>({

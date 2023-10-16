@@ -11,13 +11,13 @@ export type Sizes = {
 export interface ScrollAreaScrollbarAxisPrivateProps {
   hasThumb: boolean;
   sizes: Sizes;
-  onSizesChange(sizes: Sizes): void;
-  onThumbChange(thumb: HTMLDivElement | null): void;
-  onThumbPointerDown(pointerPos: number): void;
-  onThumbPointerUp(): void;
-  onThumbPositionChange(): void;
-  onWheelScroll(scrollPos: number): void;
-  onDragScroll(pointerPos: number): void;
+  onSizesChange: (sizes: Sizes) => void;
+  onThumbChange: (thumb: HTMLDivElement | null) => void;
+  onThumbPointerDown: (pointerPos: number) => void;
+  onThumbPointerUp: () => void;
+  onThumbPositionChange: () => void;
+  onWheelScroll: (scrollPos: number) => void;
+  onDragScroll: (pointerPos: number) => void;
 }
 
 export interface ScrollAreaScrollbarAxisProps

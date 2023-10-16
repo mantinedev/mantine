@@ -22,7 +22,7 @@ interface UseProviderColorSchemeOptions {
   manager: MantineColorSchemeManager;
   defaultColorScheme: MantineColorScheme;
   forceColorScheme: 'light' | 'dark' | undefined;
-  getRootElement(): HTMLElement | undefined;
+  getRootElement: () => HTMLElement | undefined;
 }
 
 export function useProviderColorScheme({

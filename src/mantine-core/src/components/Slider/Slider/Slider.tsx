@@ -61,10 +61,10 @@ export interface SliderProps
   defaultValue?: number;
 
   /** Called when value changes */
-  onChange?(value: number): void;
+  onChange?: (value: number) => void;
 
   /** Called when user stops dragging slider or changes value with arrows */
-  onChangeEnd?(value: number): void;
+  onChangeEnd?: (value: number) => void;
 
   /** Hidden input name, use with uncontrolled component */
   name?: string;
@@ -97,7 +97,7 @@ export interface SliderProps
   thumbSize?: number | string;
 
   /** A transformation function to change the scale of the slider */
-  scale?(value: number): number;
+  scale?: (value: number) => number;
 
   /** Determines whether track value representation should be inverted, `false` by default */
   inverted?: boolean;

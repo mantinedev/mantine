@@ -50,7 +50,7 @@ export interface DateInputProps
   defaultValue?: DateValue;
 
   /** Called when value changes */
-  onChange?(value: DateValue): void;
+  onChange?: (value: DateValue) => void;
 
   /** Props added to Popover component */
   popoverProps?: Partial<Omit<PopoverProps, 'children'>>;
@@ -83,7 +83,7 @@ export interface DateInputProps
   level?: CalendarLevel;
 
   /** Called when level changes */
-  onLevelChange?(level: CalendarLevel): void;
+  onLevelChange?: (level: CalendarLevel) => void;
 }
 
 export type DateInputFactory = Factory<{

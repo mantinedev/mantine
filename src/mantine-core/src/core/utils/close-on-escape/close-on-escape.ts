@@ -3,8 +3,8 @@ import { noop } from '../noop/noop';
 
 interface Options {
   active: boolean | undefined;
-  onTrigger?(): void;
-  onKeyDown?(event: React.KeyboardEvent<any>): void;
+  onTrigger?: () => void;
+  onKeyDown?: (event: React.KeyboardEvent<any>) => void;
 }
 
 export function closeOnEscape(
