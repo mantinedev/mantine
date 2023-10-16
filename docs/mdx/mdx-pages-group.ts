@@ -321,14 +321,14 @@ export const MDX_PAGES_GROUPS: MdxPagesGroup[] = [
   {
     group: 'other packages',
     pages: [
-      MDX_DATA.CodeHighlight,
-      MDX_DATA.Notifications,
-      MDX_DATA.Spotlight,
       MDX_DATA.Carousel,
+      MDX_DATA.CodeHighlight,
       MDX_DATA.Dropzone,
-      MDX_DATA.Nprogress,
       MDX_DATA.Modals,
+      MDX_DATA.Nprogress,
+      MDX_DATA.Notifications,
       MDX_DATA.TipTap,
+      MDX_DATA.Spotlight,
     ],
   },
   {
