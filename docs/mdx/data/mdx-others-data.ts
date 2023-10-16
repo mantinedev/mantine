@@ -56,7 +56,7 @@ export const MDX_OTHERS_DATA: Record<string, Frontmatter> = {
   },
 
   Nprogress: {
-    title: 'NavigationProgress',
+    title: 'Navigation progress',
     package: '@mantine/nprogress',
     slug: '/others/nprogress',
     props: ['NavigationProgress'],
