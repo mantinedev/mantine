@@ -8,3 +8,5 @@ export { card } from './Checkbox.demo.card';
 export { stylesApi } from './Checkbox.demo.stylesApi';
 export { customize } from './Checkbox.demo.customize';
 export { iconColor } from './Checkbox.demo.iconColor';
+export { tooltip } from './Checkbox.demo.tooltip';
+export { customSize } from './Checkbox.demo.customSize';

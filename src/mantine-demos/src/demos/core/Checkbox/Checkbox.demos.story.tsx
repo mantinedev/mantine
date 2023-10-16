@@ -52,3 +52,13 @@ export const DemoIconColor = {
   name: '⭐ Demo: iconColor',
   render: renderDemo(demos.iconColor),
 };
+
+export const DemoTooltip = {
+  name: '⭐ Demo: tooltip',
+  render: renderDemo(demos.tooltip),
+};
+
+export const DemoCustomSize = {
+  name: '⭐ Demo: customSize',
+  render: renderDemo(demos.customSize),
+};
