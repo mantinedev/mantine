@@ -75,7 +75,7 @@
   padding-bottom: calc(var(--cp-swatch-size) - rem(4px));
   min-width: 0;
   min-height: 0;
-  flex: 1 0 calc(var(--cp-swatch-size) - rem(4px));
+  flex: 0 0 calc(var(--cp-swatch-size) - rem(4px));
 }
 
 .swatches {
