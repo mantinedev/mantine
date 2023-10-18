@@ -219,7 +219,7 @@ export const MDX_CORE_DATA: Record<string, Frontmatter> = {
     slug: '/core/color-picker',
     props: ['ColorPicker'],
     styles: ['ColorPicker'],
-    description: 'Pick colors',
+    description: 'Pick colors in hex(a), rgb(a), hsl(a) and hsv(a) formats',
     import: "import { ColorPicker } from '@mantine/core';",
     source: 'mantine-core/src/components/ColorPicker/ColorPicker.tsx',
     docs: 'core/color-picker.mdx',
