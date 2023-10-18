@@ -29,6 +29,7 @@ import {
   MdxComboboxFiltering,
   MdxComboboxProps,
   MdxServerComponentsIncompatible,
+  MdxWrapperProps,
 } from './MdxSharedContent';
 
 export function MdxProvider({ children }: { children: React.ReactNode }) {
@@ -58,6 +59,7 @@ export function MdxProvider({ children }: { children: React.ReactNode }) {
         ComboboxProps: MdxComboboxProps,
         ServerComponentsIncompatible: MdxServerComponentsIncompatible,
         ExamplesButton: MdxExamplesButton,
+        WrapperProps: MdxWrapperProps,
         pre: MdxPre,
         h1: h(1),
         h2: h(2),

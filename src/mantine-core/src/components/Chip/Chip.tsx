@@ -47,10 +47,10 @@ export interface ChipProps
   /** Key of `theme.radius` or any valid CSS value to set `border-radius`, `'xl'` by default */
   radius?: MantineRadius;
 
-  /** Controls various properties, `'sm'` by default */
+  /** Controls various properties related to component size, `'sm'` by default */
   size?: MantineSize;
 
-  /** Chip input type */
+  /** Chip input type, `'checkbox'` by default */
   type?: 'radio' | 'checkbox';
 
   /** Chip label */
@@ -65,10 +65,10 @@ export interface ChipProps
   /** Calls when checked state changes */
   onChange?(checked: boolean): void;
 
-  /** Key of `theme.colors` or any valid CSS color, `theme.primaryColor` */
+  /** Key of `theme.colors` or any valid CSS color, `theme.primaryColor` by default */
   color?: MantineColor;
 
-  /** Static id to bind input with label */
+  /** Static id to bind input with label, by default id is randomly generated */
   id?: string;
 
   /** Props passed down to the wrapper element */

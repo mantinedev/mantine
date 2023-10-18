@@ -33,6 +33,15 @@ function Demo() {
 
 <Demo data={ChipDemos.states} />
 
+## Chip with tooltip
+
+To use `Chip` with [Tooltip](/core/tooltip/) and other similar components, set `refProp="rootRef"`
+on the Tooltip component:
+
+<Demo data={ChipDemos.tooltip} />
+
+<WrapperProps component="Chip" />
+
 ## Chip.Group
 
 `Chip.Group` component manages state of child Chip components,

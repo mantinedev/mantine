@@ -69,22 +69,7 @@ You can add any number of custom sizes with [data-size](/styles/data-attributes/
 
 <Demo data={CheckboxDemos.customSize} />
 
-## Add props to the root element
-
-All props passed to the component are forwarded to the input element.
-If you need to add props to the root element, use `wrapperProps`.
-In the following example:
-
-- `data-testid="wrapper"` is added to the root element
-- `data-testid="input"` is added to the input element
-
-```tsx
-import { Checkbox } from '@mantine/core';
-
-function Demo() {
-  return <Checkbox wrapperProps={{ 'data-testid': 'wrapper' }} data-testid="input" />;
-}
-```
+<WrapperProps component="Checkbox" />
 
 ## Checkbox.Group
 

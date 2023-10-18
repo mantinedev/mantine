@@ -5,7 +5,7 @@ import { useProps } from '../../../core';
 import { ChipGroupProvider } from '../ChipGroup.context';
 
 export interface ChipGroupProps<T extends boolean = false> {
-  /** Allow multiple values to be selected at a time */
+  /** Determines whether it is allowed to select multiple values, `false` by default */
   multiple?: T;
 
   /** Controlled component value */
@@ -17,7 +17,7 @@ export interface ChipGroupProps<T extends boolean = false> {
   /** Called when value changes */
   onChange?(value: T extends true ? string[] : string): void;
 
-  /** <Chip /> components */
+  /** `Chip` components */
   children?: React.ReactNode;
 }
 
