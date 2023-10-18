@@ -92,7 +92,7 @@ export const DatePicker: DatePickerComponent = factory<DatePickerFactory>((_prop
     allowSingleDateInRange,
     value,
     defaultValue,
-    onChange,
+    onChange: onChange as any,
     onMouseLeave,
     applyTimezone: !__timezoneApplied,
   });

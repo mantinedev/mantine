@@ -75,7 +75,7 @@ export const YearPicker: YearPickerComponent = factory<YearPickerFactory>((_prop
     allowSingleDateInRange,
     value,
     defaultValue,
-    onChange,
+    onChange: onChange as any,
     onMouseLeave,
     applyTimezone: !__timezoneApplied,
   });

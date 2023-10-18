@@ -82,6 +82,7 @@ export const MonthPicker: MonthPickerComponent = factory<MonthPickerFactory>((_p
     onMonthSelect,
     __updateDateOnMonthSelect,
     __timezoneApplied,
+    onLevelChange,
     ...others
   } = props;
 
@@ -92,7 +93,7 @@ export const MonthPicker: MonthPickerComponent = factory<MonthPickerFactory>((_p
     allowSingleDateInRange,
     value,
     defaultValue,
-    onChange,
+    onChange: onChange as any,
     onMouseLeave,
     applyTimezone: !__timezoneApplied,
   });
@@ -122,6 +123,7 @@ export const MonthPicker: MonthPickerComponent = factory<MonthPickerFactory>((_p
       })}
       classNames={resolvedClassNames}
       styles={resolvedStyles}
+      onLevelChange={onLevelChange as any}
       {...others}
       date={shiftTimezone('add', others.date, ctx.getTimezone(), __timezoneApplied)}
     />

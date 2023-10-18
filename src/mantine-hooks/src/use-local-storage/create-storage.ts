@@ -29,9 +29,9 @@ function serializeJSON<T>(value: T, hookName: string) {
   }
 }
 
-function deserializeJSON(value: string) {
+function deserializeJSON(value: string | undefined) {
   try {
-    return JSON.parse(value);
+    return value && JSON.parse(value);
   } catch {
     return value;
   }

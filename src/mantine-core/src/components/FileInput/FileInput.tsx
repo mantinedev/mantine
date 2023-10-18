@@ -95,7 +95,7 @@ const _FileInput = factory<FileInputFactory>((_props, ref) => {
   const [_value, setValue] = useUncontrolled<null | File | File[]>({
     value,
     defaultValue,
-    onChange,
+    onChange: onChange as any,
     finalValue: multiple ? [] : null,
   });
 
