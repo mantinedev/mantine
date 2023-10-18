@@ -30,6 +30,7 @@ import {
   MdxComboboxProps,
   MdxServerComponentsIncompatible,
   MdxWrapperProps,
+  MdxInputSections,
 } from './MdxSharedContent';
 
 export function MdxProvider({ children }: { children: React.ReactNode }) {
@@ -60,6 +61,7 @@ export function MdxProvider({ children }: { children: React.ReactNode }) {
         ServerComponentsIncompatible: MdxServerComponentsIncompatible,
         ExamplesButton: MdxExamplesButton,
         WrapperProps: MdxWrapperProps,
+        InputSections: MdxInputSections,
         pre: MdxPre,
         h1: h(1),
         h2: h(2),

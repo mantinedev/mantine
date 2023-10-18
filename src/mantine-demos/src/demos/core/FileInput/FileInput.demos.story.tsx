@@ -42,3 +42,8 @@ export const DemoValueComponent = {
   name: '⭐ Demo: valueComponent',
   render: renderDemo(demos.valueComponent),
 };
+
+export const DemoSections = {
+  name: '⭐ Demo: sections',
+  render: renderDemo(demos.sections),
+};
