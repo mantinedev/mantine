@@ -6,15 +6,21 @@ const code = `
 import { ColorInput } from '@mantine/core';
 
 function Demo() {
-  return <ColorInput readOnly label="Cannot modify value" defaultValue="#F0FCFE" />;
+  return <ColorInput withEyeDropper={false} label="Without eye dropper" placeholder="Not fun" />;
 }
 `;
 
 function Demo() {
-  return <ColorInput readOnly label="Cannot modify value" defaultValue="#F0FCFE" />;
+  return (
+    <ColorInput
+      fixOnBlur={false}
+      label="Value is not fixed on blur"
+      placeholder="May contain invalid value"
+    />
+  );
 }
 
-export const readOnly: MantineDemo = {
+export const fixOnBlur: MantineDemo = {
   type: 'code',
   component: Demo,
   code,

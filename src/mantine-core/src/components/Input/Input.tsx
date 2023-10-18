@@ -28,7 +28,11 @@ import {
 } from './InputWrapper/InputWrapper';
 import classes from './Input.module.css';
 
-export interface __BaseInputProps extends __InputWrapperProps, __InputProps {}
+export interface __BaseInputProps extends __InputWrapperProps, Omit<__InputProps, 'wrapperProps'> {
+  /** Props passed down to the root element */
+  wrapperProps?: Record<string, any>;
+}
+
 export type __InputStylesNames = InputStylesNames | InputWrapperStylesNames;
 
 export type InputStylesNames = 'input' | 'wrapper' | 'section';

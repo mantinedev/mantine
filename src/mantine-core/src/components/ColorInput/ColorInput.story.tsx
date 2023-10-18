@@ -6,7 +6,7 @@ export default { title: 'ColorInput' };
 export function Usage() {
   return (
     <div style={{ padding: 40 }}>
-      <ColorInput />
+      <ColorInput wrapperProps={{ 'data-test': 'hello' }} />
     </div>
   );
 }

@@ -28,9 +28,9 @@ export const DemoFormatsConfigurator = {
   render: renderDemo(demos.formatsConfigurator),
 };
 
-export const DemoReadOnly = {
-  name: '⭐ Demo: readOnly',
-  render: renderDemo(demos.readOnly),
+export const DemoDisallowInput = {
+  name: '⭐ Demo: disallowInput',
+  render: renderDemo(demos.disallowInput),
 };
 
 export const DemoRightSection = {
@@ -46,4 +46,44 @@ export const DemoSwatches = {
 export const DemoSwatchesOnly = {
   name: '⭐ Demo: swatchesOnly',
   render: renderDemo(demos.swatchesOnly),
+};
+
+export const DemoNoEyeDropper = {
+  name: '⭐ Demo: noEyeDropper',
+  render: renderDemo(demos.noEyeDropper),
+};
+
+export const DemoSections = {
+  name: '⭐ Demo: sections',
+  render: renderDemo(demos.sections),
+};
+
+export const DemoCloseOnColorSwatchClick = {
+  name: '⭐ Demo: closeOnColorSwatchClick',
+  render: renderDemo(demos.closeOnColorSwatchClick),
+};
+
+export const DemoEyeDropperIcon = {
+  name: '⭐ Demo: eyeDropperIcon',
+  render: renderDemo(demos.eyeDropperIcon),
+};
+
+export const DemoFixOnBlur = {
+  name: '⭐ Demo: fixOnBlur',
+  render: renderDemo(demos.fixOnBlur),
+};
+
+export const DemoOnChangeEnd = {
+  name: '⭐ Demo: onChangeEnd',
+  render: renderDemo(demos.onChangeEnd),
+};
+
+export const DemoReadOnly = {
+  name: '⭐ Demo: readOnly',
+  render: renderDemo(demos.readOnly),
+};
+
+export const DemoWithPicker = {
+  name: '⭐ Demo: withPicker',
+  render: renderDemo(demos.withPicker),
 };

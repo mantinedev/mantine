@@ -6,15 +6,19 @@ const code = `
 import { ColorInput } from '@mantine/core';
 
 function Demo() {
-  return <ColorInput readOnly label="Cannot modify value" defaultValue="#F0FCFE" />;
+  return (
+    <ColorInput withPicker={false} pointer label="Without dropdown" placeholder="Enter value" />
+  );
 }
 `;
 
 function Demo() {
-  return <ColorInput readOnly label="Cannot modify value" defaultValue="#F0FCFE" />;
+  return (
+    <ColorInput withPicker={false} pointer label="Without dropdown" placeholder="Enter value" />
+  );
 }
 
-export const readOnly: MantineDemo = {
+export const withPicker: MantineDemo = {
   type: 'code',
   component: Demo,
   code,
