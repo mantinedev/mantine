@@ -1,10 +1,16 @@
 import React from 'react';
 import TextareaAutosize from 'react-textarea-autosize';
-import { factory, ElementProps, useProps, Factory } from '../../core';
-import { InputBase, InputBaseProps } from '../InputBase';
-import { __InputStylesNames } from '../Input';
+import { factory, ElementProps, useProps, Factory, BoxProps, StylesApiProps } from '../../core';
+import { __BaseInputProps, __InputStylesNames } from '../Input';
+import { InputBase } from '../InputBase';
 
-export interface TextareaProps extends InputBaseProps, ElementProps<'textarea', 'size'> {
+export interface TextareaProps
+  extends BoxProps,
+    __BaseInputProps,
+    StylesApiProps<TextareaFactory>,
+    ElementProps<'textarea', 'size'> {
+  __staticSelector?: string;
+
   /** Determines whether the textarea height should grow with its content, `false` by default */
   autosize?: boolean;
 

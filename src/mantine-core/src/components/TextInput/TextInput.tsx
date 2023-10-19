@@ -1,9 +1,13 @@
 import React from 'react';
-import { factory, ElementProps, useProps, Factory } from '../../core';
-import { InputBase, InputBaseProps } from '../InputBase';
-import { __InputStylesNames } from '../Input';
+import { factory, ElementProps, useProps, Factory, BoxProps, StylesApiProps } from '../../core';
+import { InputBase } from '../InputBase';
+import { __InputStylesNames, __BaseInputProps } from '../Input';
 
-export interface TextInputProps extends InputBaseProps, ElementProps<'input', 'size'> {}
+export interface TextInputProps
+  extends BoxProps,
+    __BaseInputProps,
+    StylesApiProps<TextInputFactory>,
+    ElementProps<'input', 'size'> {}
 
 export type TextInputFactory = Factory<{
   props: TextInputProps;

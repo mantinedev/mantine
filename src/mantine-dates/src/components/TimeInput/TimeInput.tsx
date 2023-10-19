@@ -6,13 +6,19 @@ import {
   useResolvedStylesApi,
   Factory,
   InputBase,
-  InputBaseProps,
+  __BaseInputProps,
+  BoxProps,
+  StylesApiProps,
   __InputStylesNames,
   ElementProps,
 } from '@mantine/core';
 import classes from './TimeInput.module.css';
 
-export interface TimeInputProps extends InputBaseProps, ElementProps<'input', 'size'> {
+export interface TimeInputProps
+  extends BoxProps,
+    __BaseInputProps,
+    StylesApiProps<TimeInputFactory>,
+    ElementProps<'input', 'size'> {
   /** Determines whether seconds input should be rendered */
   withSeconds?: boolean;
 }

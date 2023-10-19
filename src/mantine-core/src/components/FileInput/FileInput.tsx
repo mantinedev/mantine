@@ -1,13 +1,15 @@
 import React, { useEffect, useRef } from 'react';
 import { useUncontrolled } from '@mantine/hooks';
-import { factory, ElementProps, useProps, Factory } from '../../core';
-import { __InputStylesNames, Input, InputVariant } from '../Input';
-import { InputBase, InputBaseProps } from '../InputBase/InputBase';
+import { factory, ElementProps, useProps, Factory, BoxProps, StylesApiProps } from '../../core';
+import { __InputStylesNames, Input, InputVariant, __BaseInputProps } from '../Input';
+import { InputBase } from '../InputBase/InputBase';
 import { CloseButton } from '../CloseButton';
 import { FileButton } from '../FileButton';
 
 export interface FileInputProps<Multiple = false>
-  extends InputBaseProps,
+  extends BoxProps,
+    __BaseInputProps,
+    StylesApiProps<FileInputFactory>,
     ElementProps<'button', 'value' | 'defaultValue' | 'onChange'> {
   /** Called when value changes */
   onChange?: (payload: Multiple extends true ? File[] : File | null) => void;
