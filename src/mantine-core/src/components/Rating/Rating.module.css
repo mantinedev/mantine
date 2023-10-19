@@ -6,8 +6,7 @@
   --rating-size-xl: rem(32px);
 
   display: flex;
-  width: fit-content;
-  flex-wrap: wrap;
+  width: max-content;
   pointer-events: var(--_pointer-events);
 
   &:has(input:disabled) {
