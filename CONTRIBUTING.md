@@ -20,28 +20,6 @@ First of all, thank you for showing interest in contributing to Mantine, all you
 - If you cannot finish your task or changed your mind – that's totally fine, just let us know in GitHub issue that you've created in first step. Mantine community is friendly – we won't judge or ask any questions if you decide to cancel your submission
 - Your PR is merged, you are awesome!
 
-## Commit convention
-
-Mantine is a monorepo and it is important to write correct commit messages to keep git history clean.
-All commits made in this repository are divided in 3 groups:
-
-- **package commits** related to particular package
-- **docs commits** related to documentation
-- **core commits** only related to repository tooling and not associated with any package
-
-Commit message consists of 3 parts:
-
-```bash
-[area] Optional title: Message
-```
-
-Examples:
-
-- `[core] Fix documentation deployment script` – Change made in repository script, it is not related to documentation or any package
-- `[docs] Update report issues link` – Change related to documentation website
-- `[@mantine/core] Button: Add theme focus styles` – Change in `@mantine/core` package at Button component
-- `[@mantine/hooks] use-list-state: Add remove handler` – Change in `@mantine/hooks` package at use-list-state hook
-
 ## Git branches
 
 - **master** – current version, patches for current minor version (1.0.x)
