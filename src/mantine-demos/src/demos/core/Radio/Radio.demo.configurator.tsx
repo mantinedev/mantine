@@ -5,6 +5,7 @@ import { RadioProps, Radio } from '@mantine/core';
 const code = `
 import { Radio } from '@mantine/core';
 
+
 function Demo() {
   return (
     <Radio

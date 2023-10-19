@@ -5,6 +5,7 @@ import { RadioGroupProps, Radio, Group } from '@mantine/core';
 const code = `
 import { Radio } from '@mantine/core';
 
+
 function Demo() {
   return (
     <Radio.Group
