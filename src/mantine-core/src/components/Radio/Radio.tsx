@@ -83,6 +83,7 @@ const varsResolver = createVarsResolver<RadioFactory>((theme, { size, radius, co
     '--radio-size': getSize(size, 'radio-size'),
     '--radio-radius': radius === undefined ? undefined : getRadius(radius),
     '--radio-color': color ? getThemeColor(color, theme) : undefined,
+    '--radio-icon-size': getSize(size, 'radio-icon-size'),
   },
 }));
 
