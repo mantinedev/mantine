@@ -32,6 +32,35 @@ function Demo() {
 
 <Demo data={SwitchDemos.thumbIcon} />
 
+## With tooltip
+
+Set `refProp="rootRef"` on [Tooltip](/core/tooltip/) and other similar components to make them work with `Switch`:
+
+<Demo data={SwitchDemos.tooltip} />
+
+## Pointer cursor
+
+By default, switch input and label have `cursor: default` (same as native `input[type="checkbox"]`).
+To change cursor to pointer, set `cursorType` on [theme](/theming/theme-object/):
+
+```tsx
+import { MantineProvider, createTheme, Switch } from '@mantine/core';
+
+const theme = createTheme({
+  cursorType: 'pointer',
+});
+
+function Demo() {
+  return (
+    <MantineProvider theme={theme}>
+      <Switch label="Pointer cursor" />
+    </MantineProvider>
+  );
+}
+```
+
+<WrapperProps component="Switch" />
+
 ## Switch.Group
 
 <Demo data={SwitchDemos.groupConfigurator} />
