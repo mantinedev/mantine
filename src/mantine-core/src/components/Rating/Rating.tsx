@@ -49,7 +49,7 @@ export interface RatingProps
   value?: number;
 
   /** Called when value changes */
-  onChange?(value: number): void;
+  onChange?: (value: number) => void;
 
   /** The icon that is displayed when symbol is empty */
   emptySymbol?: React.ReactNode | ((value: number) => React.ReactNode);
@@ -67,7 +67,7 @@ export interface RatingProps
   count?: number;
 
   /** Called when item is hovered */
-  onHover?(value: number): void;
+  onHover?: (value: number) => void;
 
   /** Function should return labelText for the symbols */
   getSymbolLabel?: (value: number) => string;

@@ -5,7 +5,7 @@ import { createSafeContext } from './create-safe-context';
 
 interface ContextType {
   value: number;
-  onChange(value: number): void;
+  onChange: (value: number) => void;
 }
 
 describe('@mantine/core/create-safe-context', () => {

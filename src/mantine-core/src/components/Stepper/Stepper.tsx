@@ -60,7 +60,7 @@ export interface StepperProps
   children: React.ReactNode;
 
   /** Called when step is clicked */
-  onStepClick?(stepIndex: number): void;
+  onStepClick?: (stepIndex: number) => void;
 
   /** Index of the active step */
   active: number;

@@ -62,19 +62,19 @@ export interface CalendarSettings
   level?: CalendarLevel;
 
   /** Called when level changes */
-  onLevelChange?(level: CalendarLevel): void;
+  onLevelChange?: (level: CalendarLevel) => void;
 
   /** Called when user clicks year on decade level */
-  onYearSelect?(date: Date): void;
+  onYearSelect?: (date: Date) => void;
 
   /** Called when user clicks month on year level */
-  onMonthSelect?(date: Date): void;
+  onMonthSelect?: (date: Date) => void;
 
   /** Called when mouse enters year control */
-  onYearMouseEnter?(event: React.MouseEvent<HTMLButtonElement>, date: Date): void;
+  onYearMouseEnter?: (event: React.MouseEvent<HTMLButtonElement>, date: Date) => void;
 
   /** Called when mouse enters month control */
-  onMonthMouseEnter?(event: React.MouseEvent<HTMLButtonElement>, date: Date): void;
+  onMonthMouseEnter?: (event: React.MouseEvent<HTMLButtonElement>, date: Date) => void;
 }
 
 export interface CalendarBaseProps {
@@ -99,7 +99,7 @@ export interface CalendarBaseProps {
   date?: Date;
 
   /** Called when date changes */
-  onDateChange?(date: Date): void;
+  onDateChange?: (date: Date) => void;
 
   /** Number of columns to render next to each other */
   numberOfColumns?: number;
@@ -111,22 +111,22 @@ export interface CalendarBaseProps {
   ariaLabels?: CalendarAriaLabels;
 
   /** Called when next decade button is clicked */
-  onNextDecade?(date: Date): void;
+  onNextDecade?: (date: Date) => void;
 
   /** Called when previous decade button is clicked */
-  onPreviousDecade?(date: Date): void;
+  onPreviousDecade?: (date: Date) => void;
 
   /** Called when next year button is clicked */
-  onNextYear?(date: Date): void;
+  onNextYear?: (date: Date) => void;
 
   /** Called when previous year button is clicked */
-  onPreviousYear?(date: Date): void;
+  onPreviousYear?: (date: Date) => void;
 
   /** Called when next month button is clicked */
-  onNextMonth?(date: Date): void;
+  onNextMonth?: (date: Date) => void;
 
   /** Called when previous month button is clicked */
-  onPreviousMonth?(date: Date): void;
+  onPreviousMonth?: (date: Date) => void;
 }
 
 export interface CalendarProps

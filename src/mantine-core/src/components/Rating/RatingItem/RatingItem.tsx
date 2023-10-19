@@ -13,8 +13,8 @@ export interface RatingItemProps extends BoxProps, ElementProps<'input', 'value'
   fractionValue: number;
   value: number;
   id: string;
-  onChange(event: React.ChangeEvent<HTMLInputElement> | number): void;
-  onInputChange(event: React.ChangeEvent<HTMLInputElement> | number): void;
+  onChange: (event: React.ChangeEvent<HTMLInputElement> | number) => void;
+  onInputChange: (event: React.ChangeEvent<HTMLInputElement> | number) => void;
 }
 
 export function RatingItem({

@@ -34,7 +34,7 @@ export interface PillProps extends BoxProps, StylesApiProps<PillFactory>, Elemen
   withRemoveButton?: boolean;
 
   /** Called when the remove button is clicked */
-  onRemove?(): void;
+  onRemove?: () => void;
 
   /** Props passed down to the remove button */
   removeButtonProps?: React.ComponentPropsWithoutRef<'button'>;

@@ -5,7 +5,7 @@ import { defaultCssVariablesResolver } from './default-css-variables-resolver';
 
 interface GetMergedVariablesInput {
   theme: MantineTheme;
-  generator?(theme: MantineTheme): ConvertCSSVariablesInput;
+  generator?: (theme: MantineTheme) => ConvertCSSVariablesInput;
 }
 
 export function getMergedVariables({ theme, generator }: GetMergedVariablesInput) {

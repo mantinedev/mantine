@@ -44,7 +44,7 @@ export interface TabsProps
   value?: string | null;
 
   /** Called when value changes */
-  onChange?(value: string | null): void;
+  onChange?: (value: string | null) => void;
 
   /** Tabs orientation, `'horizontal'` by default */
   orientation?: 'vertical' | 'horizontal';

@@ -14,7 +14,7 @@ export interface ConfiguratorSegmentedControlProps
     ElementProps<'div', 'onChange'> {
   data: SelectData;
   value: string;
-  onChange(value: string): void;
+  onChange: (value: string) => void;
   prop: string;
 }
 

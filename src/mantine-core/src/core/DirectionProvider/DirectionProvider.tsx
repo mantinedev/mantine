@@ -5,8 +5,8 @@ export type Direction = 'ltr' | 'rtl';
 
 export interface DirectionContextValue {
   dir: Direction;
-  toggleDirection(): void;
-  setDirection(dir: Direction): void;
+  toggleDirection: () => void;
+  setDirection: (dir: Direction) => void;
 }
 
 export const DirectionContext = createContext<DirectionContextValue>({

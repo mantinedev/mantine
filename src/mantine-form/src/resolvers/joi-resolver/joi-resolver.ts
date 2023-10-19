@@ -13,7 +13,7 @@ interface JoiResults {
 }
 
 interface JoiSchema {
-  validate(values: Record<string, any>, options: { abortEarly: boolean }): JoiResults;
+  validate: (values: Record<string, any>, options: { abortEarly: boolean }) => JoiResults;
 }
 
 export function joiResolver(schema: any, options?: any) {

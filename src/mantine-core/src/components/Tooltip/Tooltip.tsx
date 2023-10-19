@@ -31,7 +31,7 @@ import classes from './Tooltip.module.css';
 
 export interface TooltipProps extends TooltipBaseProps {
   /** Called when tooltip position changes */
-  onPositionChange?(position: FloatingPosition): void;
+  onPositionChange?: (position: FloatingPosition) => void;
 
   /** Open delay in ms */
   openDelay?: number;

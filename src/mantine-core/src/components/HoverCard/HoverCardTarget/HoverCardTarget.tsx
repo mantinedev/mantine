@@ -3,14 +3,21 @@ import { isElement, createEventHandler, useProps } from '../../../core';
 import { Popover, PopoverTargetProps } from '../../Popover';
 import { useHoverCardContext } from '../HoverCard.context';
 
-export interface HoverCardTargetProps extends PopoverTargetProps {}
+export interface HoverCardTargetProps extends PopoverTargetProps {
+  /** Key of the prop that is used to pass event listeners, by default event listeners are passed directly to component */
+  eventPropsWrapperName?: string;
+}
 
 const defaultProps: Partial<HoverCardTargetProps> = {
   refProp: 'ref',
 };
 
 export const HoverCardTarget = forwardRef<HTMLElement, HoverCardTargetProps>((props, ref) => {
-  const { children, refProp, ...others } = useProps('HoverCardTarget', defaultProps, props);
+  const { children, refProp, eventPropsWrapperName, ...others } = useProps(
+    'HoverCardTarget',
+    defaultProps,
+    props
+  );
 
   if (!isElement(children)) {
     throw new Error(
@@ -22,9 +29,14 @@ export const HoverCardTarget = forwardRef<HTMLElement, HoverCardTargetProps>((pr
   const onMouseEnter = createEventHandler(children.props.onMouseEnter, ctx.openDropdown);
   const onMouseLeave = createEventHandler(children.props.onMouseLeave, ctx.closeDropdown);
 
+  const eventListeners = { onMouseEnter, onMouseLeave };
+
   return (
     <Popover.Target refProp={refProp} ref={ref} {...others}>
-      {cloneElement(children as React.ReactElement, { onMouseEnter, onMouseLeave })}
+      {cloneElement(
+        children as React.ReactElement,
+        eventPropsWrapperName ? { [eventPropsWrapperName]: eventListeners } : eventListeners
+      )}
     </Popover.Target>
   );
 });

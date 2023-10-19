@@ -15,10 +15,10 @@ export interface NotificationData extends Omit<NotificationProps, 'onClose'> {
   autoClose?: boolean | number;
 
   /** Called when notification closes */
-  onClose?(props: NotificationData): void;
+  onClose?: (props: NotificationData) => void;
 
   /** Called when notification opens */
-  onOpen?(props: NotificationData): void;
+  onOpen?: (props: NotificationData) => void;
 }
 
 export interface NotificationsState {

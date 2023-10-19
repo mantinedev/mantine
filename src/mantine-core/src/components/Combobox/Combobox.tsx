@@ -56,7 +56,7 @@ export interface ComboboxProps extends __PopoverProps, StylesApiProps<ComboboxFa
   store?: ComboboxStore;
 
   /** Called when item is selected with `Enter` key or by clicking it */
-  onOptionSubmit?(value: string, optionProps: ComboboxOptionProps): void;
+  onOptionSubmit?: (value: string, optionProps: ComboboxOptionProps) => void;
 
   /** Controls items `font-size` and `padding`, `'sm'` by default */
   size?: MantineSize | (string & {});

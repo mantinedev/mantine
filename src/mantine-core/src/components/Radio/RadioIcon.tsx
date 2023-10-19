@@ -14,7 +14,7 @@ export function RadioIcon({ size, style, ...others }: RadioIconProps) {
       style={{ width: rem(size), height: rem(size), ...style }}
       {...others}
     >
-      <path fill="currentColor" d="M0 2.5a2.5 2.5 0 115 0 2.5 2.5 0 01-5 0z" />
+      <circle cx="2.5" cy="2.5" r="2.5" fill="currentColor" />
     </svg>
   );
 }

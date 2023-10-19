@@ -102,6 +102,6 @@ export interface MantineVars {
   darkSelector: string;
   lightSelector: string;
 
-  smallerThan(breakpoint: MantineBreakpoint | (string & {}) | number): string;
-  largerThan(breakpoint: MantineBreakpoint | (string & {}) | number): string;
+  smallerThan: (breakpoint: MantineBreakpoint | (string & {}) | number) => string;
+  largerThan: (breakpoint: MantineBreakpoint | (string & {}) | number) => string;
 }

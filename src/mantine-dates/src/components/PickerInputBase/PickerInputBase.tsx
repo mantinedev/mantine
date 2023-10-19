@@ -67,7 +67,7 @@ export interface PickerInputBaseProps
   formattedValue: string | null | undefined;
   dropdownHandlers: ReturnType<typeof useDisclosure>[1];
   dropdownOpened: boolean;
-  onClear(): void;
+  onClear: () => void;
   shouldClear: boolean;
   value: HiddenDatesInputValue;
   type: DatePickerType;

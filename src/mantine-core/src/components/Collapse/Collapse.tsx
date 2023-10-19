@@ -10,7 +10,7 @@ export interface CollapseProps
   in: boolean;
 
   /** Called each time transition ends */
-  onTransitionEnd?(): void;
+  onTransitionEnd?: () => void;
 
   /** Transition duration in ms, `200` by default */
   transitionDuration?: number;

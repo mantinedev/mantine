@@ -8,14 +8,14 @@ import {
 } from './context';
 
 type ModalsEvents = {
-  openModal(payload: ModalSettings): void;
-  closeModal(id: string): void;
-  closeContextModal<TKey extends MantineModal>(id: TKey): void;
-  closeAllModals(): void;
-  openConfirmModal(payload: OpenConfirmModal): void;
-  openContextModal<TKey extends MantineModal>(
+  openModal: (payload: ModalSettings) => void;
+  closeModal: (id: string) => void;
+  closeContextModal: <TKey extends MantineModal>(id: TKey) => void;
+  closeAllModals: () => void;
+  openConfirmModal: (payload: OpenConfirmModal) => void;
+  openContextModal: <TKey extends MantineModal>(
     payload: OpenContextModal<Parameters<MantineModals[TKey]>[0]['innerProps']> & { modal: TKey }
-  ): void;
+  ) => void;
 };
 
 export const [useModalsEvents, createEvent] =

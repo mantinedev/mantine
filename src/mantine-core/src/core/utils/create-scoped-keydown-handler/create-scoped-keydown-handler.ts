@@ -67,7 +67,7 @@ interface GetElementsSiblingsInput {
   activateOnFocus?: boolean;
 
   /** External keydown event */
-  onKeyDown?(event: React.KeyboardEvent<HTMLButtonElement>): void;
+  onKeyDown?: (event: React.KeyboardEvent<HTMLButtonElement>) => void;
 }
 
 export function createScopedKeydownHandler({

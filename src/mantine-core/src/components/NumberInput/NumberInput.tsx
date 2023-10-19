@@ -20,8 +20,8 @@ import { NumberInputChevron } from './NumberInputChevron';
 import classes from './NumberInput.module.css';
 
 export interface NumberInputHandlers {
-  increment(): void;
-  decrement(): void;
+  increment: () => void;
+  decrement: () => void;
 }
 
 function isValidNumber(value: number | undefined): value is number {
@@ -81,7 +81,7 @@ export interface NumberInputProps
   defaultValue?: number | string;
 
   /** Called when value changes */
-  onChange?(value: number | string): void;
+  onChange?: (value: number | string) => void;
 
   /** Called when value changes with `react-number-format` payload */
   onValueChange?: OnValueChange;
@@ -114,7 +114,7 @@ export interface NumberInputProps
   thousandsGroupStyle?: 'thousand' | 'lakh' | 'wan' | 'none';
 
   /** A function to validate the input value. If this function returns `false`, the `onChange` will not be called and the input value will not change. */
-  isAllowed?(values: NumberFormatValues): boolean;
+  isAllowed?: (values: NumberFormatValues) => boolean;
 
   /** If value is passed as string representation of numbers (unformatted) and number is used in any format props like in prefix or suffix in numeric format and format prop in pattern format then this should be passed as `true`. `false` by default. */
   valueIsNumericString?: boolean;

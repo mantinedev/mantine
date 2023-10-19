@@ -11,7 +11,7 @@ export interface PickerBaseProps<Type extends DatePickerType = 'default'> {
   defaultValue?: DatePickerValue<Type>;
 
   /** Called when value changes */
-  onChange?(value: DatePickerValue<Type>): void;
+  onChange?: (value: DatePickerValue<Type>) => void;
 
   /** Determines whether user can deselect the date by clicking on selected item, applicable only when type="default" */
   allowDeselect?: Type extends 'default' ? boolean : never;

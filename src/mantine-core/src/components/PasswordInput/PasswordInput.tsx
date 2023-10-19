@@ -47,7 +47,7 @@ export interface PasswordInputProps
   defaultVisible?: boolean;
 
   /** Called when visibility changes */
-  onVisibilityChange?(visible: boolean): void;
+  onVisibilityChange?: (visible: boolean) => void;
 }
 
 export type PasswordInputFactory = Factory<{

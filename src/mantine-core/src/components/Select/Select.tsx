@@ -37,7 +37,7 @@ export interface SelectProps
   defaultValue?: string | null;
 
   /** Called when value changes */
-  onChange?(value: string | null): void;
+  onChange?: (value: string | null) => void;
 
   /** Determines whether the select should be searchable, `false` by default */
   searchable?: boolean;
@@ -58,7 +58,7 @@ export interface SelectProps
   defaultSearchValue?: string;
 
   /** Called when search changes */
-  onSearchChange?(value: string): void;
+  onSearchChange?: (value: string) => void;
 
   /** Determines whether it should be possible to deselect value by clicking on the selected option, `true` by default */
   allowDeselect?: boolean;

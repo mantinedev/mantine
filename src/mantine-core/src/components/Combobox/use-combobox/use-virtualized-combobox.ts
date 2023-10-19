@@ -12,31 +12,31 @@ interface UseComboboxOptions {
   opened?: boolean;
 
   /** Called when `dropdownOpened` state changes */
-  onOpenedChange?(opened: boolean): void;
+  onOpenedChange?: (opened: boolean) => void;
 
   /** Called when dropdown closes */
-  onDropdownClose?(): void;
+  onDropdownClose?: () => void;
 
   /** Called when dropdown opens */
-  onDropdownOpen?(): void;
+  onDropdownOpen?: () => void;
 
   /** Determines whether arrow key presses should loop though items (first to last and last to first), `true` by default */
   loop?: boolean;
 
   /** Function to determine whether the option is disabled */
-  isOptionDisabled?(optionIndex: number): boolean;
+  isOptionDisabled?: (optionIndex: number) => boolean;
 
   totalOptionsCount: number;
 
-  getOptionId(index: number): string | null;
+  getOptionId: (index: number) => string | null;
 
   selectedOptionIndex: number;
 
-  setSelectedOptionIndex(index: number): void;
+  setSelectedOptionIndex: (index: number) => void;
 
   activeOptionIndex?: number;
 
-  onSelectedOptionSubmit(index: number): void;
+  onSelectedOptionSubmit: (index: number) => void;
 }
 
 export function useVirtualizedCombobox(

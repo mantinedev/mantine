@@ -6,8 +6,8 @@ import { useModals } from './use-modals/use-modals';
 export interface ConfirmModalProps {
   id?: string;
   children?: React.ReactNode;
-  onCancel?(): void;
-  onConfirm?(): void;
+  onCancel?: () => void;
+  onConfirm?: () => void;
   closeOnConfirm?: boolean;
   closeOnCancel?: boolean;
   cancelProps?: ButtonProps & React.ComponentPropsWithoutRef<'button'>;

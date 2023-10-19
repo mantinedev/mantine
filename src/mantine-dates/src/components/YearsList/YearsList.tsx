@@ -36,7 +36,7 @@ export interface YearsListSettings extends ControlsGroupSettings {
   yearsListFormat?: string;
 
   /** Adds props to year picker control based on date */
-  getYearControlProps?(date: Date): Partial<PickerControlProps>;
+  getYearControlProps?: (date: Date) => Partial<PickerControlProps>;
 
   /** Component size */
   size?: MantineSize;

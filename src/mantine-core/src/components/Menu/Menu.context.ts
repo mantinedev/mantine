@@ -2,12 +2,12 @@ import { createSafeContext, GetStylesApi } from '../../core';
 import type { MenuFactory } from './Menu';
 
 interface MenuContext {
-  toggleDropdown(): void;
-  closeDropdownImmediately(): void;
-  closeDropdown(): void;
-  openDropdown(): void;
-  getItemIndex(node: HTMLButtonElement): number | null;
-  setHovered(index: number | null): void;
+  toggleDropdown: () => void;
+  closeDropdownImmediately: () => void;
+  closeDropdown: () => void;
+  openDropdown: () => void;
+  getItemIndex: (node: HTMLButtonElement) => number | null;
+  setHovered: (index: number | null) => void;
   hovered: number | null;
   closeOnItemClick: boolean | undefined;
   loop: boolean | undefined;

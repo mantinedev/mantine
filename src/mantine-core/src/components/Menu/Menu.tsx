@@ -47,13 +47,13 @@ export interface MenuProps extends __PopoverProps, StylesApiProps<MenuFactory> {
   defaultOpened?: boolean;
 
   /** Called when menu opened state changes */
-  onChange?(opened: boolean): void;
+  onChange?: (opened: boolean) => void;
 
   /** Called when Menu is opened */
-  onOpen?(): void;
+  onOpen?: () => void;
 
   /** Called when Menu is closed */
-  onClose?(): void;
+  onClose?: () => void;
 
   /** Determines whether Menu should be closed when item is clicked */
   closeOnItemClick?: boolean;

@@ -63,7 +63,7 @@ export interface ChipProps
   defaultChecked?: boolean;
 
   /** Calls when checked state changes */
-  onChange?(checked: boolean): void;
+  onChange?: (checked: boolean) => void;
 
   /** Key of `theme.colors` or any valid CSS color, `theme.primaryColor` by default */
   color?: MantineColor;

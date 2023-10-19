@@ -9,7 +9,7 @@ export interface SwatchesProps extends ElementProps<'div'> {
   swatchesPerRow?: number;
   focusable?: boolean;
   onChangeEnd?: (color: string) => void;
-  setValue(value: string): void;
+  setValue: (value: string) => void;
 }
 
 export const Swatches = forwardRef<HTMLDivElement, SwatchesProps>(

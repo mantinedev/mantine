@@ -64,10 +64,10 @@ export interface RangeSliderProps
   defaultValue?: RangeSliderValue;
 
   /** Called when value changes */
-  onChange?(value: RangeSliderValue): void;
+  onChange?: (value: RangeSliderValue) => void;
 
   /** Called when user stops dragging slider or changes value with arrows */
-  onChangeEnd?(value: RangeSliderValue): void;
+  onChangeEnd?: (value: RangeSliderValue) => void;
 
   /** Hidden input name, use with uncontrolled component */
   name?: string;
@@ -97,7 +97,7 @@ export interface RangeSliderProps
   thumbSize?: number | string;
 
   /** A transformation function to change the scale of the slider */
-  scale?(value: number): number;
+  scale?: (value: number) => number;
 
   /** Determines whether track values representation should be inverted, `false` by default */
   inverted?: boolean;

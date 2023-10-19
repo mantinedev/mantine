@@ -10,7 +10,7 @@ export interface FileInputProps<Multiple = false>
   extends InputBaseProps,
     ElementProps<'button', 'value' | 'defaultValue' | 'onChange'> {
   /** Called when value changes */
-  onChange?(payload: Multiple extends true ? File[] : File | null): void;
+  onChange?: (payload: Multiple extends true ? File[] : File | null) => void;
 
   /** Controlled component value */
   value?: Multiple extends true ? File[] : File | null;
@@ -95,7 +95,7 @@ const _FileInput = factory<FileInputFactory>((_props, ref) => {
   const [_value, setValue] = useUncontrolled<null | File | File[]>({
     value,
     defaultValue,
-    onChange,
+    onChange: onChange as any,
     finalValue: multiple ? [] : null,
   });
 

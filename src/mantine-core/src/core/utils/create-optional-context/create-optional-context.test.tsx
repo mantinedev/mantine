@@ -4,7 +4,7 @@ import { createOptionalContext } from './create-optional-context';
 
 interface ContextType {
   value: number;
-  onChange(value: number): void;
+  onChange: (value: number) => void;
 }
 
 describe('@mantine/core/create-optional-context', () => {

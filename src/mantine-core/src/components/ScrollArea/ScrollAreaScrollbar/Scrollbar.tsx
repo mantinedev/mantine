@@ -13,9 +13,9 @@ export interface ScrollbarPrivateProps {
   onThumbPointerUp: ScrollbarContextValue['onThumbPointerUp'];
   onThumbPointerDown: ScrollbarContextValue['onThumbPointerDown'];
   onThumbPositionChange: ScrollbarContextValue['onThumbPositionChange'];
-  onWheelScroll(event: WheelEvent, maxScrollPos: number): void;
-  onDragScroll(pointerPos: { x: number; y: number }): void;
-  onResize(): void;
+  onWheelScroll: (event: WheelEvent, maxScrollPos: number) => void;
+  onDragScroll: (pointerPos: { x: number; y: number }) => void;
+  onResize: () => void;
 }
 
 interface ScrollbarProps

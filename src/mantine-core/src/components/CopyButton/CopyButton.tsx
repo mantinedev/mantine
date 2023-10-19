@@ -5,7 +5,7 @@ import { useProps } from '../../core';
 
 export interface CopyButtonProps {
   /** Children callback, provides current status and copy function as an argument */
-  children(payload: { copied: boolean; copy(): void }): React.ReactNode;
+  children: (payload: { copied: boolean; copy: () => void }) => React.ReactNode;
 
   /** Value that will be copied to the clipboard when the button is clicked */
   value: string;

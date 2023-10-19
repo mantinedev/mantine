@@ -12,13 +12,13 @@ interface UseHeadroomInput {
   fixedAt?: number;
 
   /** Called when element is pinned */
-  onPin?(): void;
+  onPin?: () => void;
 
   /** Called when element is at fixed position */
-  onFix?(): void;
+  onFix?: () => void;
 
   /** Called when element is unpinned */
-  onRelease?(): void;
+  onRelease?: () => void;
 }
 
 export function useHeadroom({ fixedAt = 0, onPin, onFix, onRelease }: UseHeadroomInput = {}) {

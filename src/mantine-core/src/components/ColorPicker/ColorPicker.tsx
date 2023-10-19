@@ -57,10 +57,10 @@ export interface __ColorPickerProps {
   defaultValue?: string;
 
   /** Called when color changes */
-  onChange?(value: string): void;
+  onChange?: (value: string) => void;
 
   /** Called when user stops dragging or changes value with arrow keys */
-  onChangeEnd?(value: string): void;
+  onChangeEnd?: (value: string) => void;
 
   /** Color format, `'hex'` by default */
   format?: ColorFormat;
@@ -101,7 +101,7 @@ export interface ColorPickerProps
   alphaLabel?: string;
 
   /** Called when one of the color swatches is clicked */
-  onColorSwatchClick?(color: string): void;
+  onColorSwatchClick?: (color: string) => void;
 }
 
 export type ColorPickerFactory = Factory<{

@@ -6,7 +6,12 @@
   --radio-size-xl: rem(36px);
   --radio-size: var(--radio-size-sm);
 
-  --radio-icon-size: calc(var(--radio-size) / 2.25);
+  --radio-icon-size-xs: rem(6px);
+  --radio-icon-size-sm: rem(8px);
+  --radio-icon-size-md: rem(10px);
+  --radio-icon-size-lg: rem(14px);
+  --radio-icon-size-xl: rem(16px);
+  --radio-icon-size: var(--radio-icon-size-sm);
 }
 
 .inner {
