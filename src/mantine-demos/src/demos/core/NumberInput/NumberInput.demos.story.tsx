@@ -77,3 +77,8 @@ export const DemoStylesApi = {
   name: '⭐ Demo: stylesApi',
   render: renderDemo(demos.stylesApi),
 };
+
+export const DemoSections = {
+  name: '⭐ Demo: sections',
+  render: renderDemo(demos.sections),
+};

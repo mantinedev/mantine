@@ -20,6 +20,7 @@ export const CheckboxStylesApi: StylesApiData<CheckboxFactory> = {
       '--checkbox-color': 'Controls checked checkbox `background-color`',
       '--checkbox-radius': 'Controls checkbox `border-radius`',
       '--checkbox-size': 'Controls checkbox `width` and `height`',
+      '--checkbox-icon-color': 'Controls checkbox icon `color`',
     },
   },
 
