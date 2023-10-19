@@ -5,7 +5,6 @@ import { CheckboxStylesApi } from '@mantine/styles-api';
 
 const code = `
 import { Checkbox } from '@mantine/core';
-import { IconAt } from '@tabler/icons-react';
 
 function Demo() {
   return (

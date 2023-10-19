@@ -114,6 +114,7 @@ export const Radio = factory<RadioFactory>((_props, ref) => {
     wrapperProps,
     icon: Icon = RadioIcon,
     rootRef,
+    iconColor,
     ...others
   } = props;
 
