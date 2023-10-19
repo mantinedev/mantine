@@ -15,10 +15,10 @@ export interface HoverCardProps extends PopoverProps {
   initiallyOpened?: boolean;
 
   /** Called when dropdown is opened */
-  onOpen?(): void;
+  onOpen?: () => void;
 
   /** Called when dropdown is closed */
-  onClose?(): void;
+  onClose?: () => void;
 
   /** Open delay in ms */
   openDelay?: number;

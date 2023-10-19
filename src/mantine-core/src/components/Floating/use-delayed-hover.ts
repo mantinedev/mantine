@@ -1,8 +1,8 @@
 import { useRef, useEffect } from 'react';
 
 interface UseDelayedHoverInput {
-  open(): void;
-  close(): void;
+  open: () => void;
+  close: () => void;
   openDelay: number | undefined;
   closeDelay: number | undefined;
 }

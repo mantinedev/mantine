@@ -35,7 +35,7 @@ export interface DialogProps
   withCloseButton?: boolean;
 
   /** Called when the close button is clicked */
-  onClose?(): void;
+  onClose?: () => void;
 
   /** Dialog content */
   children?: React.ReactNode;

@@ -53,7 +53,7 @@ export interface ScrollAreaProps
   viewportProps?: React.ComponentPropsWithRef<'div'>;
 
   /** Called with current position (`x` and `y` coordinates) when viewport is scrolled */
-  onScrollPositionChange?(position: { x: number; y: number }): void;
+  onScrollPositionChange?: (position: { x: number; y: number }) => void;
 }
 
 export interface ScrollAreaAutosizeProps extends ScrollAreaProps {}

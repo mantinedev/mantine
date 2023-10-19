@@ -12,7 +12,7 @@ export interface ConfiguratorBooleanControlProps
   extends BoxProps,
     ElementProps<'input', 'onChange' | 'value' | 'size'> {
   value: boolean;
-  onChange(value: boolean): void;
+  onChange: (value: boolean) => void;
   prop: string;
 }
 

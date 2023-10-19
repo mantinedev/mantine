@@ -3,7 +3,7 @@ import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { useEventListener } from './use-event-listener';
 
-function Test({ spy }: { spy(): void }) {
+function Test({ spy }: { spy: () => void }) {
   const ref = useEventListener('click', () => spy());
   return (
     <button ref={ref} type="button">

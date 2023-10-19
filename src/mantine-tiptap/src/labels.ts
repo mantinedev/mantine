@@ -84,7 +84,7 @@ export interface RichTextEditorLabels {
   highlightControlLabel: string;
 
   /** A function go get RichTextEditor.Color control aria-label based on color that control applies */
-  colorControlLabel(color: string): string;
+  colorControlLabel: (color: string) => string;
 
   /** aria-label for link editor url input */
   linkEditorInputLabel: string;
@@ -117,7 +117,7 @@ export interface RichTextEditorLabels {
   colorPickerSave: string;
 
   /** aria-label for color palette colors */
-  colorPickerColorLabel(color: string): string;
+  colorPickerColorLabel: (color: string) => string;
 }
 
 export const DEFAULT_LABELS: RichTextEditorLabels = {

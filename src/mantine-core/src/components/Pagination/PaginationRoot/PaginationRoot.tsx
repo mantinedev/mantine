@@ -48,7 +48,7 @@ export interface PaginationRootProps
   defaultValue?: number;
 
   /** Called when page changes */
-  onChange?(value: number): void;
+  onChange?: (value: number) => void;
 
   /** Determines whether all controls should be disabled, `false` by default */
   disabled?: boolean;
@@ -66,19 +66,19 @@ export interface PaginationRootProps
   radius?: MantineRadius;
 
   /** Called when next page control is clicked */
-  onNextPage?(): void;
+  onNextPage?: () => void;
 
   /** Called when previous page control is clicked */
-  onPreviousPage?(): void;
+  onPreviousPage?: () => void;
 
   /** Called when first page control is clicked */
-  onFirstPage?(): void;
+  onFirstPage?: () => void;
 
   /** Called when last page control is clicked */
-  onLastPage?(): void;
+  onLastPage?: () => void;
 
   /** Additional props passed down to controls */
-  getItemProps?(page: number): Record<string, any>;
+  getItemProps?: (page: number) => Record<string, any>;
 }
 
 export type PaginationRootFactory = Factory<{

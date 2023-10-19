@@ -14,7 +14,7 @@ export interface JsonInputProps extends Omit<TextareaProps, 'onChange'> {
   defaultValue?: string;
 
   /** Called when value changes */
-  onChange?(value: string): void;
+  onChange?: (value: string) => void;
 
   /** Determines whether the value should be formatted on blur, `false` by default */
   formatOnBlur?: boolean;

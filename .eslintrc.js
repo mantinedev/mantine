@@ -11,6 +11,7 @@ module.exports = {
     'jsx-a11y/label-has-associated-control': 'off',
     'react/self-closing-comp': 'off',
     'react/jsx-closing-bracket-location': 'off',
+    '@typescript-eslint/method-signature-style': ['error', 'property'],
     '@typescript-eslint/no-loop-func': 'off',
     'no-restricted-syntax': 'off',
   },

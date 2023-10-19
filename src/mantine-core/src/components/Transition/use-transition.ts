@@ -15,10 +15,10 @@ interface UseTransition {
   exitDuration: number;
   timingFunction: string;
   mounted: boolean;
-  onEnter?(): void;
-  onExit?(): void;
-  onEntered?(): void;
-  onExited?(): void;
+  onEnter?: () => void;
+  onExit?: () => void;
+  onEntered?: () => void;
+  onExited?: () => void;
 }
 
 export function useTransition({

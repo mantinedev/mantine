@@ -33,16 +33,16 @@ export interface ComboboxLikeProps {
   defaultDropdownOpened?: boolean;
 
   /** Called when dropdown opens */
-  onDropdownOpen?(): void;
+  onDropdownOpen?: () => void;
 
   /** Called when dropdown closes */
-  onDropdownClose?(): void;
+  onDropdownClose?: () => void;
 
   /** Determines whether the first option should be selected when value changes, `false` by default */
   selectFirstOptionOnChange?: boolean;
 
   /** Called when option is submitted from dropdown with mouse click or `Enter` key */
-  onOptionSubmit?(value: string): void;
+  onOptionSubmit?: (value: string) => void;
 
   /** Props passed down to `Combobox` component */
   comboboxProps?: ComboboxProps;

@@ -8,7 +8,7 @@ interface UseDatesRangeInput<Type extends DatePickerType = 'default'>
   extends PickerBaseProps<Type> {
   level: 'year' | 'month' | 'day';
   type: Type;
-  onMouseLeave?(event: React.MouseEvent<HTMLDivElement>): void;
+  onMouseLeave?: (event: React.MouseEvent<HTMLDivElement>) => void;
   applyTimezone?: boolean;
 }
 

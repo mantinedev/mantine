@@ -61,10 +61,10 @@ export interface PinInputProps
   defaultValue?: string;
 
   /** Called when value changes */
-  onChange?(value: string): void;
+  onChange?: (value: string) => void;
 
   /** Called when all inputs have value */
-  onComplete?(value: string): void;
+  onComplete?: (value: string) => void;
 
   /** Inputs placeholder, `'○'` by default */
   placeholder?: string;

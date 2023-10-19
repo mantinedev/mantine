@@ -8,9 +8,9 @@ export interface TabsContextValue {
   loop: boolean | undefined;
   activateTabWithKeyboard: boolean | undefined;
   allowTabDeactivation: boolean | undefined;
-  onChange(value: string | null): void;
-  getTabId(value: string): string;
-  getPanelId(value: string): string;
+  onChange: (value: string | null) => void;
+  getTabId: (value: string) => string;
+  getPanelId: (value: string) => string;
   variant: string | undefined;
   color: string | undefined;
   radius: string | number | undefined;

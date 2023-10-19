@@ -26,7 +26,7 @@ export interface ModalBaseProps extends BoxProps, ElementProps<'div', 'title'> {
   opened: boolean;
 
   /** Called when modal/drawer is closed */
-  onClose(): void;
+  onClose: () => void;
 
   /** Id used to connect modal/drawer with body and title */
   id?: string;

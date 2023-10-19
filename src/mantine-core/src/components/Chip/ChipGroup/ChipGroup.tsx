@@ -15,7 +15,7 @@ export interface ChipGroupProps<T extends boolean = false> {
   defaultValue?: T extends true ? string[] : string | null;
 
   /** Called when value changes */
-  onChange?(value: T extends true ? string[] : string): void;
+  onChange?: (value: T extends true ? string[] : string) => void;
 
   /** <Chip /> components */
   children?: React.ReactNode;

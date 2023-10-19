@@ -5,7 +5,7 @@ import { getAutoClose } from './get-auto-close/get-auto-close';
 
 interface NotificationContainerProps extends NotificationProps {
   data: NotificationData;
-  onHide(id: string): void;
+  onHide: (id: string) => void;
   autoClose: number | false;
 }
 

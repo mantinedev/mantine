@@ -17,12 +17,12 @@ interface UsePopoverOptions {
   offset: number | FloatingAxesOffsets;
   position: FloatingPosition;
   positionDependencies: any[] | undefined;
-  onPositionChange?(position: FloatingPosition): void;
+  onPositionChange?: (position: FloatingPosition) => void;
   opened: boolean | undefined;
   defaultOpened: boolean | undefined;
-  onChange?(opened: boolean): void;
-  onClose?(): void;
-  onOpen?(): void;
+  onChange?: (opened: boolean) => void;
+  onClose?: () => void;
+  onOpen?: () => void;
   width: PopoverWidth;
   middlewares: PopoverMiddlewares | undefined;
   arrowRef: React.RefObject<HTMLDivElement>;

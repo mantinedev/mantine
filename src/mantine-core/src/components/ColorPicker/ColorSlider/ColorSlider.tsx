@@ -12,10 +12,10 @@ import { useColorPickerContext } from '../ColorPicker.context';
 
 export interface __ColorSliderProps extends ElementProps<'div', 'onChange'> {
   value: number;
-  onChange?(value: number): void;
-  onChangeEnd?(value: number): void;
-  onScrubStart?(): void;
-  onScrubEnd?(): void;
+  onChange?: (value: number) => void;
+  onChangeEnd?: (value: number) => void;
+  onScrubStart?: () => void;
+  onScrubEnd?: () => void;
   size?: MantineSize | (string & {});
   focusable?: boolean;
 }

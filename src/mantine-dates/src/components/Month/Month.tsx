@@ -42,19 +42,19 @@ export interface MonthSettings {
   __preventFocus?: boolean;
 
   /** Called when day is clicked with click event and date */
-  __onDayClick?(event: React.MouseEvent<HTMLButtonElement>, date: Date): void;
+  __onDayClick?: (event: React.MouseEvent<HTMLButtonElement>, date: Date) => void;
 
   /** Called when mouse enters day */
-  __onDayMouseEnter?(event: React.MouseEvent<HTMLButtonElement>, date: Date): void;
+  __onDayMouseEnter?: (event: React.MouseEvent<HTMLButtonElement>, date: Date) => void;
 
   /** Called when any keydown event is registered on day, used for arrows navigation */
-  __onDayKeyDown?(
+  __onDayKeyDown?: (
     event: React.KeyboardEvent<HTMLButtonElement>,
     payload: ControlKeydownPayload
-  ): void;
+  ) => void;
 
   /** Assigns ref of every day based on its position in the table, used for arrows navigation */
-  __getDayRef?(rowIndex: number, cellIndex: number, node: HTMLButtonElement): void;
+  __getDayRef?: (rowIndex: number, cellIndex: number, node: HTMLButtonElement) => void;
 
   /** dayjs locale, defaults to value defined in DatesProvider */
   locale?: string;
@@ -69,10 +69,10 @@ export interface MonthSettings {
   weekendDays?: DayOfWeek[];
 
   /** Adds props to Day component based on date */
-  getDayProps?(date: Date): Omit<Partial<DayProps>, 'classNames' | 'styles' | 'vars'>;
+  getDayProps?: (date: Date) => Omit<Partial<DayProps>, 'classNames' | 'styles' | 'vars'>;
 
   /** Callback function to determine whether the day should be disabled */
-  excludeDate?(date: Date): boolean;
+  excludeDate?: (date: Date) => boolean;
 
   /** Minimum possible date */
   minDate?: Date;
@@ -81,7 +81,7 @@ export interface MonthSettings {
   maxDate?: Date;
 
   /** Controls day value rendering */
-  renderDay?(date: Date): React.ReactNode;
+  renderDay?: (date: Date) => React.ReactNode;
 
   /** Determines whether outside dates should be hidden, defaults to false */
   hideOutsideDates?: boolean;
@@ -90,7 +90,7 @@ export interface MonthSettings {
   hideWeekdays?: boolean;
 
   /** Assigns aria-label to days based on date */
-  getDayAriaLabel?(date: Date): string;
+  getDayAriaLabel?: (date: Date) => string;
 
   /** Controls size */
   size?: MantineSize;

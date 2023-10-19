@@ -5,7 +5,7 @@ import { TransitionOverride } from '../Transition';
 
 interface UseModalInput {
   opened: boolean;
-  onClose(): void;
+  onClose: () => void;
   id: string | undefined;
   transitionProps: TransitionOverride | undefined;
   trapFocus: boolean | undefined;

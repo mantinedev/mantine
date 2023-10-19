@@ -69,7 +69,7 @@ export interface __InputWrapperProps {
   errorProps?: Record<string, any>;
 
   /** Input container component, defaults to `React.Fragment` */
-  inputContainer?(children: React.ReactNode): React.ReactNode;
+  inputContainer?: (children: React.ReactNode) => React.ReactNode;
 
   /** Controls order of the elements, `['label', 'description', 'input', 'error']` by default */
   inputWrapperOrder?: ('label' | 'input' | 'description' | 'error')[];

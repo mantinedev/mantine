@@ -17,7 +17,7 @@ interface ZodParseError {
 }
 
 interface ZodSchema<T extends Record<string, any>> {
-  safeParse(values: T): ZodParseSuccess | ZodParseError;
+  safeParse: (values: T) => ZodParseSuccess | ZodParseError;
 }
 
 export function zodResolver<T extends Record<string, any>>(schema: ZodSchema<T>) {

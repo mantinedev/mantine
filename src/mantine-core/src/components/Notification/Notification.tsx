@@ -37,7 +37,7 @@ export interface NotificationProps
   variant?: string;
 
   /** Called when close button is clicked */
-  onClose?(): void;
+  onClose?: () => void;
 
   /** Controls notification line or icon color, key of `theme.colors` or any valid CSS color, `theme.primaryColor` by default */
   color?: MantineColor;

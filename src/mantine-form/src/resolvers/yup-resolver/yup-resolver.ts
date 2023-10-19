@@ -10,7 +10,7 @@ interface YupValidationResult {
 }
 
 interface YupSchema {
-  validateSync(values: Record<string, any>, options: { abortEarly: boolean }): void;
+  validateSync: (values: Record<string, any>, options: { abortEarly: boolean }) => void;
 }
 
 export function yupResolver(schema: any) {

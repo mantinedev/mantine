@@ -14,7 +14,7 @@ export interface ConfiguratorSelectControlProps
     ElementProps<'select', 'onChange' | 'value' | 'size'> {
   value: string;
   data: SelectData;
-  onChange(value: string): void;
+  onChange: (value: string) => void;
   prop: string;
 }
 

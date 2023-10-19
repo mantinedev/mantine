@@ -65,7 +65,7 @@ export interface CodeHighlightTabsProps
   activeTab?: number;
 
   /** Called when tab changes */
-  onTabChange?(tab: number): void;
+  onTabChange?: (tab: number) => void;
 
   /** Determines whether header with file names and copy button should be rendered, `true` by default */
   withHeader?: boolean;
@@ -77,7 +77,7 @@ export interface CodeHighlightTabsProps
   copiedLabel?: string;
 
   /** Function that returns icon based on file name */
-  getFileIcon?(fileName: string): React.ReactNode;
+  getFileIcon?: (fileName: string) => React.ReactNode;
 
   /** `max-height` of code in collapsed state */
   maxCollapsedHeight?: React.CSSProperties['maxHeight'];
@@ -89,7 +89,7 @@ export interface CodeHighlightTabsProps
   defaultExpanded?: boolean;
 
   /** Called when expanded state changes */
-  onExpandedChange?(expanded: boolean): void;
+  onExpandedChange?: (expanded: boolean) => void;
 
   /** Expand button label and tooltip, `'Expand code'` by default */
   expandCodeLabel?: string;

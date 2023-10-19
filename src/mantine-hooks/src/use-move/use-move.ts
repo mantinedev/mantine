@@ -13,8 +13,8 @@ export const clampUseMovePosition = (position: UseMovePosition) => ({
 });
 
 interface useMoveHandlers {
-  onScrubStart?(): void;
-  onScrubEnd?(): void;
+  onScrubStart?: () => void;
+  onScrubEnd?: () => void;
 }
 
 export function useMove<T extends HTMLElement = HTMLDivElement>(

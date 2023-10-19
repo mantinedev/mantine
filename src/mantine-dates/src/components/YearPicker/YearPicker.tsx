@@ -30,7 +30,7 @@ export interface YearPickerProps<Type extends DatePickerType = 'default'>
     StylesApiProps<YearPickerFactory>,
     ElementProps<'div', 'onChange' | 'value' | 'defaultValue'> {
   /** Called when year is selected */
-  onYearSelect?(date: Date): void;
+  onYearSelect?: (date: Date) => void;
 }
 
 export type YearPickerFactory = Factory<{
@@ -75,7 +75,7 @@ export const YearPicker: YearPickerComponent = factory<YearPickerFactory>((_prop
     allowSingleDateInRange,
     value,
     defaultValue,
-    onChange,
+    onChange: onChange as any,
     onMouseLeave,
     applyTimezone: !__timezoneApplied,
   });

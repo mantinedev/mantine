@@ -54,7 +54,7 @@ export interface AccordionProps<Multiple extends boolean = false>
   defaultValue?: AccordionValue<Multiple>;
 
   /** Called when value changes */
-  onChange?(value: AccordionValue<Multiple>): void;
+  onChange?: (value: AccordionValue<Multiple>) => void;
 
   /** Determines whether arrow key presses should loop though items (first to last and last to first), `true` by default */
   loop?: boolean;
