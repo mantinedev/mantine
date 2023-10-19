@@ -8,9 +8,16 @@ export default { title: 'Radio' };
 export function Usage() {
   return (
     <div style={{ padding: 20, display: 'flex', gap: 40 }}>
-      <Radio label="React" value="react" name="hello" />
-      <Radio label="Angular" value="nu" name="hello" />
-      <Radio label="Svelte" value="sv" disabled={false} name="hello" />
+      <Radio iconColor="dark.8" color="lime.4" label="React" value="react" name="hello" />
+      <Radio iconColor="dark.8" color="lime.4" label="Angular" value="nu" name="hello" />
+      <Radio
+        iconColor="dark.8"
+        color="lime.4"
+        label="Svelte"
+        value="sv"
+        disabled={false}
+        name="hello"
+      />
     </div>
   );
 }
