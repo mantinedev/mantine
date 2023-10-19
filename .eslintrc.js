@@ -1,5 +1,5 @@
 module.exports = {
-  extends: ['mantine', 'plugin:jest/recommended', 'plugin:storybook/recommended'],
+  extends: ['mantine', 'plugin:jest/recommended'],
   plugins: ['jest'],
   rules: {
     'jest/no-export': 'off',
