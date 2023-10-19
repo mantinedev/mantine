@@ -26,5 +26,9 @@ export function useHighlight({ code, language, highlightOnClient }: UseHighlight
     }
   }, []);
 
+  useEffect(() => {
+    setHighlightedCode(getHighlightedCode());
+  }, [code]);
+
   return getCodeProps;
 }
