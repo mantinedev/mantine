@@ -18,6 +18,11 @@ export const DemoModal = {
   render: renderDemo(demos.modal),
 };
 
+export const DemoRange = {
+  name: '⭐ Demo: range',
+  render: renderDemo(demos.range),
+};
+
 export const DemoConfigurator = {
   name: '⭐ Demo: configurator',
   render: renderDemo(demos.configurator),

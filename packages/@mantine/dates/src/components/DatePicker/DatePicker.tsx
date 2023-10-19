@@ -36,6 +36,9 @@ export interface DatePickerBaseProps<Type extends DatePickerType = 'default'>
   /** Current level displayed to the user (decade, year, month), used for controlled component */
   level?: CalendarLevel;
 
+  /** Allow same day for range selects */
+  allowSameDay?: boolean;
+
   /** Called when level changes */
   onLevelChange?: (level: CalendarLevel) => void;
 }
@@ -67,6 +70,7 @@ export const DatePicker: DatePickerComponent = factory<DatePickerFactory>((_prop
   const {
     classNames,
     styles,
+    allowSameDay,
     vars,
     type,
     defaultValue,
@@ -88,6 +92,7 @@ export const DatePicker: DatePickerComponent = factory<DatePickerFactory>((_prop
   const { onDateChange, onRootMouseLeave, onHoveredDateChange, getControlProps } = useDatesState({
     type: type as any,
     level: 'day',
+    allowSameDay,
     allowDeselect,
     allowSingleDateInRange,
     value,

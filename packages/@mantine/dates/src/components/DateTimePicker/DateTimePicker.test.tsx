@@ -20,7 +20,7 @@ import {
 import { DatesProvider } from '../DatesProvider';
 import { DateTimePicker, DateTimePickerProps } from './DateTimePicker';
 
-const defaultProps: DateTimePickerProps = {
+const defaultProps = {
   popoverProps: { withinPortal: false, transitionProps: { duration: 0 } },
   modalProps: { withinPortal: false, transitionProps: { duration: 0 } },
   timeInputProps: { 'aria-label': 'test-time-input' },
@@ -44,6 +44,7 @@ const defaultPropsWithInputProps: DateTimePickerProps = {
 };
 
 const getTimeInput = () => screen.getByLabelText('test-time-input');
+const getTimeInputs = () => screen.getAllByLabelText('test-time-input');
 const getSubmitButton = () => screen.getByLabelText('test-submit');
 const getClearButton = () => screen.queryAllByLabelText('test-clear')[0];
 
@@ -182,6 +183,32 @@ describe('@mantine/dates/DateTimePicker', () => {
     expectValue(container, '03/04/2022 14:45');
   });
 
+  it('supports uncontrolled state with range', async () => {
+    const { container } = render(
+      <DateTimePicker
+        {...defaultProps}
+        defaultValue={[new Date(2022, 3, 11), new Date(2022, 3, 12)]}
+        type="range"
+      />
+    );
+    expectValue(container, '11/04/2022 00:00 – 12/04/2022 00:00');
+
+    await clickInput(container);
+    await userEvent.click(container.querySelectorAll('table button')[6]);
+    expectValue(container, '03/04/2022 00:00 – ');
+
+    await userEvent.click(container.querySelectorAll('table button')[7]);
+    expectValue(container, '03/04/2022 00:00 – 04/04/2022 00:00');
+
+    await userEvent.clear(getTimeInputs()[0]);
+    await userEvent.type(getTimeInputs()[0], '14:45');
+    expectValue(container, '03/04/2022 14:45 – 04/04/2022 00:00');
+
+    await userEvent.clear(getTimeInputs()[1]);
+    await userEvent.type(getTimeInputs()[1], '12:35');
+    expectValue(container, '03/04/2022 14:45 – 04/04/2022 12:35');
+  });
+
   it('supports uncontrolled state with timezone', async () => {
     const { container } = render(
       <DatesProvider settings={{ timezone: 'UTC' }}>
@@ -210,6 +237,24 @@ describe('@mantine/dates/DateTimePicker', () => {
     await userEvent.click(container.querySelectorAll('table button')[6]);
     expectValue(container, '11/04/2022 00:00');
     expect(spy).toHaveBeenLastCalledWith(new Date(2022, 3, 3));
+  });
+
+  it('supports controlled state with range', async () => {
+    const spy = jest.fn();
+    const { container } = render(
+      <DateTimePicker
+        {...defaultProps}
+        value={[new Date(2022, 3, 11), new Date(2022, 3, 12)]}
+        onChange={spy}
+        type="range"
+      />
+    );
+    expectValue(container, '11/04/2022 00:00 – 12/04/2022 00:00');
+
+    await clickInput(container);
+    await userEvent.click(container.querySelectorAll('table button')[6]);
+    expectValue(container, '11/04/2022 00:00 – 12/04/2022 00:00');
+    expect(spy).toHaveBeenLastCalledWith([new Date(2022, 3, 3), null]);
   });
 
   it('supports controlled state with timezone', async () => {
