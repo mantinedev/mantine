@@ -25,3 +25,4 @@ export { transformValues } from './Form.demo.transformValues';
 export { validators } from './Form.demo.validators';
 export { validatorsEmpty } from './Form.demo.validatorsEmpty';
 export { superstruct } from './Form.demo.superstruct';
+export { valibot } from './Form.demo.valibot';

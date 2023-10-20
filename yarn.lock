@@ -15548,6 +15548,11 @@ v8-to-istanbul@^9.0.0, v8-to-istanbul@^9.0.1:
     "@types/istanbul-lib-coverage" "^2.0.1"
     convert-source-map "^1.6.0"
 
+valibot@^0.19.0:
+  version "0.19.0"
+  resolved "https://registry.yarnpkg.com/valibot/-/valibot-0.19.0.tgz#de73c517d851a61586e4a463ab6d8ffda5318101"
+  integrity sha512-vzeuctzVirzoiDN9BTc4GludHaSgFYoy6AnbHOjfBUbX0DibqKuNCr2Ti4ox8eLdBdDSEZSZ3LwXZgjL6aE4RQ==
+
 validate-npm-package-license@^3.0.1:
   version "3.0.4"
   resolved "https://registry.yarnpkg.com/validate-npm-package-license/-/validate-npm-package-license-3.0.4.tgz#fc91f6b9c7ba15c857f4cb2c5defeec39d4f410a"
