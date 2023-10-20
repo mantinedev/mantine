@@ -116,6 +116,7 @@ export interface UseFormInput<
   Values,
   TransformValues extends _TransformValues<Values> = (values: Values) => Values,
 > {
+  name?: string;
   initialValues?: Values;
   initialErrors?: FormErrors;
   initialTouched?: FormStatus;

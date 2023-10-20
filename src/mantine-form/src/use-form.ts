@@ -6,6 +6,7 @@ import { filterErrors } from './filter-errors';
 import { shouldValidateOnChange, validateFieldValue, validateValues } from './validate';
 import { getStatus } from './get-status';
 import { changeErrorIndices, clearListState, reorderErrors } from './lists';
+import { useFormActions } from './actions';
 import {
   _TransformValues,
   ClearErrors,
@@ -36,6 +37,7 @@ export function useForm<
   Values = Record<string, unknown>,
   TransformValues extends _TransformValues<Values> = (values: Values) => Values,
 >({
+  name,
   initialValues = {} as Values,
   initialErrors = {},
   initialDirty = {},
@@ -258,7 +260,7 @@ export function useForm<
     [values, rules]
   );
 
-  return {
+  const form: UseFormReturnType<Values, TransformValues> = {
     values,
     errors,
     setValues,
@@ -286,4 +288,8 @@ export function useForm<
     isValid,
     getTransformedValues,
   };
+
+  useFormActions(name, form);
+
+  return form;
 }
