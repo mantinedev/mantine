@@ -50,10 +50,10 @@ describe('@mantine/core/Checkbox', () => {
   });
 
   it('sets data-checked attribute on the root element if checked prop is true', () => {
-    const { container, rerender } = render(<Checkbox checked />);
+    const { container, rerender } = render(<Checkbox checked onChange={() => {}} />);
     expect(container.querySelector('.mantine-Checkbox-root')).toHaveAttribute('data-checked');
 
-    rerender(<Checkbox checked={false} />);
+    rerender(<Checkbox checked={false} onChange={() => {}} />);
     expect(container.querySelector('.mantine-Checkbox-root')).not.toHaveAttribute('data-checked');
   });
 
