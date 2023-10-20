@@ -23,11 +23,21 @@ function dispatchEvent(type: string, detail?: any): any {
   window.dispatchEvent(new CustomEvent(type, { detail }));
 }
 
+function validateFormName(name: string) {
+  if (!/^[0-9a-zA-Z-]+$/.test(name)) {
+    throw new Error(
+      `[@mantine/use-form] Form name "${name}" is invalid, it should contain only letters, numbers and dashes`
+    );
+  }
+}
+
 export const useIsomorphicEffect = typeof window !== 'undefined' ? useLayoutEffect : useEffect;
 
 export function createFormActions<FormValues extends Record<string, any> = Record<string, any>>(
   name: string
 ) {
+  validateFormName(name);
+
   const setFieldValue: SetFieldValue<FormValues> = (path, value) =>
     dispatchEvent(`mantine-form:${name}:set-field-value`, { path, value });
 
@@ -108,6 +118,10 @@ export function useFormActions<
   Values = Record<string, unknown>,
   TransformValues extends _TransformValues<Values> = (values: Values) => Values,
 >(name: string | undefined, form: UseFormReturnType<Values, TransformValues>) {
+  if (name) {
+    validateFormName(name);
+  }
+
   useFormEvent(`mantine-form:${name}:set-field-value`, (event: CustomEvent) =>
     form.setFieldValue(event.detail.path, event.detail.value)
   );
