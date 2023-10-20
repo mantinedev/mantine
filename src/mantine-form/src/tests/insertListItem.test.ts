@@ -69,4 +69,19 @@ describe('@mantine/form/insertListItem', () => {
       'a.3.b': 'error-3',
     });
   });
+
+  it('calls onValuesChange when insertListItem is called', () => {
+    const spy = jest.fn();
+    const hook = renderHook(() =>
+      useForm({
+        onValuesChange: spy,
+        initialValues: {
+          a: [{ b: 1 }, { b: 2 }],
+        },
+      })
+    );
+
+    act(() => hook.result.current.insertListItem('a', { b: 3 }, 1));
+    expect(spy).toHaveBeenCalledWith({ a: [{ b: 1 }, { b: 3 }, { b: 2 }] });
+  });
 });

@@ -23,4 +23,32 @@ describe('@mantine/form/values', () => {
     act(() => hook.result.current.setValues({ a: 3, b: 4 }));
     expect(hook.result.current.values).toStrictEqual({ a: 3, b: 4 });
   });
+
+  it('calls onValuesChange when setValues is called', () => {
+    const spy = jest.fn();
+    const hook = renderHook(() => useForm({ initialValues: { a: 1, b: 2 }, onValuesChange: spy }));
+    act(() => hook.result.current.setValues({ a: 3, b: 4 }));
+    expect(spy).toHaveBeenCalledWith({ a: 3, b: 4 });
+  });
+
+  it('calls onValuesChange when setValues is called with function', () => {
+    const spy = jest.fn();
+    const hook = renderHook(() => useForm({ initialValues: { a: 1, b: 2 }, onValuesChange: spy }));
+    act(() => hook.result.current.setValues((current) => ({ ...current, a: 3 })));
+    expect(spy).toHaveBeenCalledWith({ a: 3, b: 2 });
+  });
+
+  it('calls onValuesChange when setValues is called with values partial', () => {
+    const spy = jest.fn();
+    const hook = renderHook(() => useForm({ initialValues: { a: 1, b: 2 }, onValuesChange: spy }));
+    act(() => hook.result.current.setValues({ a: 3 }));
+    expect(spy).toHaveBeenCalledWith({ a: 3, b: 2 });
+  });
+
+  it('calls onValuesChange when setFieldValue is called', () => {
+    const spy = jest.fn();
+    const hook = renderHook(() => useForm({ initialValues: { a: 1, b: 2 }, onValuesChange: spy }));
+    act(() => hook.result.current.setFieldValue('a', 3));
+    expect(spy).toHaveBeenCalledWith({ a: 3, b: 2 });
+  });
 });
