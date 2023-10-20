@@ -150,6 +150,7 @@ export const MDX_PAGES_GROUPS: MdxPagesGroup[] = [
       MDX_DATA.formNested,
       MDX_DATA.formStatus,
       MDX_DATA.createFormContext,
+      MDX_DATA.formActions,
       MDX_DATA.formRecipes,
     ],
   },

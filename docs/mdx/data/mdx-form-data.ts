@@ -74,4 +74,12 @@ export const MDX_FORM_DATA: Record<string, Frontmatter> = {
     description: 'Manipulate form values with use-form',
     docs: 'form/values.mdx',
   },
+
+  formActions: {
+    title: 'Form actions',
+    package: '@mantine/form',
+    slug: '/form/actions',
+    description: 'Change form state from anywhere in the application',
+    docs: 'form/actions.mdx',
+  },
 };

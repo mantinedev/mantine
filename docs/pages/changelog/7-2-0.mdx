@@ -4,6 +4,69 @@ import { LoadingOverlayDemos, StylesDemos } from '@mantine/demos';
 
 export default Layout(MDX_DATA.Changelog720);
 
+## Form actions
+
+`@mantine/form` package now exports `createFormActions` function that
+can be used to [change form state](/form/actions/) from anywhere in your application.
+The mechanism of form actions is similar to [notifications system](/others/notifications/),
+[modals manager](/others/modals/) and other similar packages.
+
+To use form actions, set `name` property in [use-form](/form/use-form/) settings:
+
+```tsx
+import { useForm } from '@mantine/form';
+
+export interface DemoFormValues {
+  name: string;
+  age: number;
+}
+
+function Demo() {
+  const form = useForm<DemoFormValues>({
+    name: 'demo-form',
+    initialValues: {
+      name: '',
+      age: 0,
+    },
+  });
+}
+```
+
+Then call `createFormActions` function with the same form name as specified in `useForm` settings:
+
+```tsx
+// Import type of form values from the file where you defined useForm
+import type { DemoFormValues } from './DemoForm';
+import { createFormActions } from '@mantine/form';
+
+export const demoFormActions = createFormActions<DemoFormValues>('demo-form');
+```
+
+After that you can use `demoFormActions` to change form state from anywhere in your application.
+For example, after a fetch request or after a user interaction with component that does not have access
+to the form state:
+
+```tsx
+import { useEffect } from 'react';
+import { Button } from '@mantine/core';
+import { demoFormActions } from './demoFormActions';
+
+function ExternalComponent() {
+  useEffect(() => {
+    fetch('/api/user')
+      .then((res) => res.json())
+      .then((res) =>
+        demoFormActions.setValues({
+          name: res.name,
+          age: res.age,
+        })
+      );
+  }, []);
+
+  return <Button onClick={() => demoFormActions.reset()}>Reset demo form</Button>;
+}
+```
+
 ## Usage with Sass
 
 It is now possible to use Mantine with [Sass](https://sass-lang.com/). You can find documentation
