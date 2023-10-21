@@ -1,8 +1,16 @@
 import { Layout } from '@/layout';
 import { MDX_DATA } from '@/mdx';
-import { LoadingOverlayDemos, StylesDemos } from '@mantine/demos';
+import { LoadingOverlayDemos, StylesDemos, NumberFormatterDemos } from '@mantine/demos';
 
 export default Layout(MDX_DATA.Changelog720);
+
+## NumberFormatter component
+
+New [NumberFormatter](/core/number-formatter/) component allows to format numbers
+with thousands separators, decimal separators, and custom number of decimal places.
+It supports the same formatting related props as [NumberInput](/core/number-input/) component.
+
+<Demo data={NumberFormatterDemos.usage} />
 
 ## Form actions
 

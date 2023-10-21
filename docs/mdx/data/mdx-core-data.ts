@@ -1117,4 +1117,15 @@ export const MDX_CORE_DATA: Record<string, Frontmatter> = {
     source: 'mantine-core/src/components/NavLink/NavLink.tsx',
     docs: 'core/nav-link.mdx',
   },
+
+  NumberFormatter: {
+    title: 'NumberFormatter',
+    package: '@mantine/core',
+    slug: '/core/number-formatter',
+    props: ['NumberFormatter'],
+    description: 'Format number with thousands/decimal separators and suffix/prefix',
+    import: "import { NumberFormatter } from '@mantine/core';",
+    source: 'mantine-core/src/components/NumberFormatter/NumberFormatter.tsx',
+    docs: 'core/number-formatter.mdx',
+  },
 };
