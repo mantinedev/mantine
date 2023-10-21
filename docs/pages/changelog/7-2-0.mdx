@@ -1,6 +1,6 @@
 import { Layout } from '@/layout';
 import { MDX_DATA } from '@/mdx';
-import { LoadingOverlayDemos, StylesDemos, NumberFormatterDemos } from '@mantine/demos';
+import { LoadingOverlayDemos, StylesDemos, NumberFormatterDemos, TableDemos } from '@mantine/demos';
 
 export default Layout(MDX_DATA.Changelog720);
 
@@ -74,6 +74,13 @@ function ExternalComponent() {
   return <Button onClick={() => demoFormActions.reset()}>Reset demo form</Button>;
 }
 ```
+
+## Table improvements
+
+[Table](/core/table/) component now supports `data` prop which can be used to generate table rows
+from given data:
+
+<Demo data={TableDemos.data} />
 
 ## Usage with Sass
 

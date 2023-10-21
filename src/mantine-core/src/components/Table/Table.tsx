@@ -23,6 +23,7 @@ import {
   TableTr,
   TableThead,
 } from './Table.components';
+import { TableDataRenderer } from './TableDataRenderer';
 import { TableScrollContainer } from './TableScrollContainer';
 import { TableProvider } from './Table.context';
 import classes from './Table.module.css';
@@ -47,6 +48,13 @@ export type TableCssVariables = {
     | '--table-striped-color'
     | '--table-highlight-on-hover-color';
 };
+
+export interface TableData {
+  head?: React.ReactNode[];
+  body?: React.ReactNode[][];
+  foot?: React.ReactNode[];
+  caption?: string;
+}
 
 export interface TableProps extends BoxProps, StylesApiProps<TableFactory>, ElementProps<'table'> {
   /** Value of `table-layout` style, `auto` by default */
@@ -84,6 +92,9 @@ export interface TableProps extends BoxProps, StylesApiProps<TableFactory>, Elem
 
   /** Background color of table rows when hovered, key of `theme.colors` or any valid CSS color */
   highlightOnHoverColor?: MantineColor;
+
+  /** Data that should be used to generate table, ignored if `children` prop is set */
+  data?: TableData;
 }
 
 export type TableFactory = Factory<{
@@ -100,6 +111,7 @@ export type TableFactory = Factory<{
     Tr: typeof TableTr;
     Caption: typeof TableCaption;
     ScrollContainer: typeof TableScrollContainer;
+    DataRenderer: typeof TableDataRenderer;
   };
 }>;
 
@@ -161,6 +173,8 @@ export const Table = factory<TableFactory>((_props, ref) => {
     borderColor,
     layout,
     variant,
+    data,
+    children,
     ...others
   } = props;
 
@@ -196,7 +210,9 @@ export const Table = factory<TableFactory>((_props, ref) => {
         mod={{ 'data-with-table-border': withTableBorder }}
         {...getStyles('table')}
         {...others}
-      />
+      >
+        {children || (!!data && <TableDataRenderer data={data} />)}
+      </Box>
     </TableProvider>
   );
 });
@@ -211,3 +227,4 @@ Table.Tbody = TableTbody;
 Table.Tfoot = TableTfoot;
 Table.Caption = TableCaption;
 Table.ScrollContainer = TableScrollContainer;
+Table.DataRenderer = TableDataRenderer;

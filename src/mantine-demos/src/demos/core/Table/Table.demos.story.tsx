@@ -37,3 +37,8 @@ export const DemoScrollRowSelection = {
   name: '⭐ Demo: rowSelection',
   render: renderDemo(demos.rowSelection),
 };
+
+export const DemoData = {
+  name: '⭐ Demo: data',
+  render: renderDemo(demos.data),
+};
