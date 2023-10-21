@@ -5,7 +5,7 @@ import { SchemaBase } from './_schema-base';
 const code = `
 import { Box, Button, Group, NumberInput, TextInput } from '@mantine/core';
 import { useForm, valibotResolver } from '@mantine/form';
-import { minLength, object, string } from 'valibot';
+import { Input, minLength, object, string } from 'valibot';
 
 const schema = object({
   username: string('Username is required', [
@@ -15,6 +15,8 @@ const schema = object({
     minLength(8, 'Password must have at least 8 characters'),
   ]),
 });
+
+export type FormData = Input<typeof schema>;
 
 function Demo() {
   const form = useForm({
