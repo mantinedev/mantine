@@ -65,6 +65,7 @@ export * from './MultiSelect';
 export * from './NativeSelect';
 export * from './NavLink';
 export * from './Notification';
+export * from './NumberFormatter';
 export * from './NumberInput';
 export * from './Pagination';
 export * from './PasswordInput';
