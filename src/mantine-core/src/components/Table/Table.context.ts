@@ -3,6 +3,7 @@ import type { TableFactory } from './Table';
 
 export interface TableContextValue {
   getStyles: GetStylesApi<TableFactory>;
+  stickyHeader: boolean | undefined;
   striped: 'odd' | 'even' | undefined;
   highlightOnHover: boolean | undefined;
   withColumnBorders: boolean | undefined;

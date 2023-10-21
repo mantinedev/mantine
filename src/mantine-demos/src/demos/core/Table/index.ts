@@ -6,3 +6,4 @@ export { scrollContainer } from './Table.demo.scrollContainer';
 export { scrollContainerNative } from './Table.demo.scrollContainerNative';
 export { rowSelection } from './Table.demo.rowSelection';
 export { data } from './Table.demo.data';
+export { stickyHeader } from './Table.demo.stickyHeader';

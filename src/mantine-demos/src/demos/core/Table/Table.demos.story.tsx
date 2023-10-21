@@ -42,3 +42,8 @@ export const DemoData = {
   name: '⭐ Demo: data',
   render: renderDemo(demos.data),
 };
+
+export const DemoStickyHeader = {
+  name: '⭐ Demo: stickyHeader',
+  render: renderDemo(demos.stickyHeader),
+};

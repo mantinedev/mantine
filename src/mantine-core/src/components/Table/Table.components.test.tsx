@@ -146,6 +146,16 @@ describe('@mantine/core/Table', () => {
       stylesApiSelectors: ['thead'],
       providerStylesApi: false,
     });
+
+    it('sets data-sticky attribute when stickyHeader prop is set on Table component', () => {
+      const Sticky = createContextContainer(TableThead, Table, { stickyHeader: true });
+      const NotSticky = createContextContainer(TableThead, Table, { stickyHeader: false });
+
+      const { rerender } = render(<Sticky />);
+      expect(screen.getByRole('rowgroup')).toHaveAttribute('data-sticky');
+      rerender(<NotSticky />);
+      expect(screen.getByRole('rowgroup')).not.toHaveAttribute('data-sticky');
+    });
   });
 
   describe('TableTbody', () => {

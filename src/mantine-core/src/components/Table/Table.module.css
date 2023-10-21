@@ -86,6 +86,16 @@
   }
 }
 
+.thead {
+  position: var(--_thead-position, static);
+  top: var(--table-sticky-header-offset, 0);
+  background-color: var(--mantine-color-body);
+
+  &[data-sticky] {
+    --_thead-position: sticky;
+  }
+}
+
 .caption {
   color: var(--mantine-color-dimmed);
   margin-top: var(--_margin-top, 0);

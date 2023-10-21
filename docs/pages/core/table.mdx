@@ -32,6 +32,14 @@ You can use `data` prop to automatically generate table rows from array of React
 
 <Demo data={TableDemos.data} />
 
+## Sticky header
+
+Set `stickyHeader` to make table header sticky. To customize top position of the header use `stickyHeaderOffset` prop:
+it is useful when you have a fixed header in your application. For example, Mantine documentation website has a fixed
+header with 60px height:
+
+<Demo data={TableDemos.stickyHeader} />
+
 ## Spacing
 
 To control spacing use `horizontalSpacing` and `verticalSpacing` props. Both props support spacing from `theme.spacing` and any valid CSS value to set cell padding:

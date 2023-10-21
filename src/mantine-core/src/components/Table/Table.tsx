@@ -13,6 +13,7 @@ import {
   getThemeColor,
   createVarsResolver,
   Factory,
+  rem,
 } from '../../core';
 import {
   TableCaption,
@@ -46,7 +47,8 @@ export type TableCssVariables = {
     | '--table-horizontal-spacing'
     | '--table-vertical-spacing'
     | '--table-striped-color'
-    | '--table-highlight-on-hover-color';
+    | '--table-highlight-on-hover-color'
+    | '--table-sticky-header-offset';
 };
 
 export interface TableData {
@@ -95,6 +97,12 @@ export interface TableProps extends BoxProps, StylesApiProps<TableFactory>, Elem
 
   /** Data that should be used to generate table, ignored if `children` prop is set */
   data?: TableData;
+
+  /** Determines whether `Table.Thead` should be sticky, `false` by default */
+  stickyHeader?: boolean;
+
+  /** Offset from top at which `Table.Thead` should become sticky, `0` by default */
+  stickyHeaderOffset?: number | string;
 }
 
 export type TableFactory = Factory<{
@@ -133,6 +141,8 @@ const varsResolver = createVarsResolver<TableFactory>(
       highlightOnHoverColor,
       striped,
       highlightOnHover,
+      stickyHeaderOffset,
+      stickyHeader,
     }
   ) => ({
     table: {
@@ -147,6 +157,7 @@ const varsResolver = createVarsResolver<TableFactory>(
         highlightOnHover && highlightOnHoverColor
           ? getThemeColor(highlightOnHoverColor, theme)
           : undefined,
+      '--table-sticky-header-offset': stickyHeader ? rem(stickyHeaderOffset) : undefined,
     },
   })
 );
@@ -175,6 +186,8 @@ export const Table = factory<TableFactory>((_props, ref) => {
     variant,
     data,
     children,
+    stickyHeader,
+    stickyHeaderOffset,
     ...others
   } = props;
 
@@ -196,6 +209,7 @@ export const Table = factory<TableFactory>((_props, ref) => {
     <TableProvider
       value={{
         getStyles,
+        stickyHeader,
         striped: striped === true ? 'odd' : striped || undefined,
         highlightOnHover,
         withColumnBorders,
