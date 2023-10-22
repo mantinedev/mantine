@@ -73,7 +73,7 @@
     --_button-cursor: not-allowed;
     --_button-bg: var(--_disabled-bg);
     --_button-color: var(--_disabled-color);
-    --_button-bd: transparent;
+    --_button-bd: rem(1px) solid transparent;
     transform: none;
   }
 
@@ -195,7 +195,6 @@
           border-bottom-left-radius: 0;
           border-top-left-radius: 0;
           border-left-width: calc(var(--button-border-width) / 2);
-
         }
 
         &:not(:only-child):last-child {
@@ -204,7 +203,6 @@
           border-bottom-right-radius: 0;
           border-top-right-radius: 0;
           border-right-width: calc(var(--button-border-width) / 2);
-
         }
       }
     }
