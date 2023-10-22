@@ -62,8 +62,8 @@ import { createFormActions } from '@mantine/form';
 export const demoFormActions = createFormActions<DemoFormValues>('demo-form');
 ```
 
-After that you can use `demoFormActions` to change form state from anywhere in your application.
-For example, after a fetch request or after a user interaction with component that does not have access
+After that, you can use `demoFormActions` to change form state from anywhere in your application.
+For example, after a fetch request or after a user interaction with a component that does not have access
 to the form state:
 
 ```tsx
@@ -96,7 +96,7 @@ from given data:
 
 ## Table sticky header
 
-[Table](/core/table/) component now supports `stickyHeader` prop which can be used to make table header
+[Table](/core/table/) component now supports `stickyHeader` prop, which can be used to make the table header
 stick to the top of the table:
 
 <Demo data={TableDemos.stickyHeader} />
@@ -108,7 +108,7 @@ on [this page](/styles/sass/). Note that it is still required to set up [postcss
 in order for all functions to work properly. Sass can be used as a replacement for [CSS modules](/styles/css-modules/)
 – it supports all features that CSS modules support.
 
-You can find example of Mantine + Sass usage in separate branches of templates:
+You can find examples of Mantine + Sass usage in separate branches of templates:
 
 - [Next.js app router + Sass example](https://github.com/mantinedev/next-app-template/tree/sass)
 - [Vite + Sass example](https://github.com/mantinedev/vite-template/tree/sass)
@@ -124,7 +124,7 @@ loader with any React node. It is useful in components that support `loaderProps
 ## lightHidden and darkHidden props
 
 All Mantine components now support `lightHidden` and `darkHidden` props that can be used to hide
-component in specific color scheme:
+components in a specific color scheme:
 
 <Demo data={StylesDemos.lightDarkHidden} />
 
@@ -132,7 +132,7 @@ component in specific color scheme:
 
 New `light-root` and `dark-root` mixins were added to [postcss-preset-mantine](/styles/postcss-preset/).
 These mixins can be used to add color scheme specific styles to the `:root`/`html` element.
-Note that to use these mixins you need to update `postcss-preset-mantine` to `1.9.0` or higher.
+Note that to use these mixins, you need to update `postcss-preset-mantine` to `1.9.0` or higher.
 
 ```scss
 :root {
@@ -160,8 +160,8 @@ Note that to use these mixins you need to update `postcss-preset-mantine` to `1.
 ## Other changes
 
 - [Dropzone](/others/dropzone/) now supports `loaderProps` prop to pass props down to the [Loader](/core/loader/) component
-- [theme.variantColorResolver](/theming/colors/#colors-variant-resolver) now supports `hoverColor` prop which allows to control `color` property when the component is hovered. New property is supported in [Button](/core/button/) and [ActionIcon](/core/action-icon/) components.
-- [Flex](/core/flex/) is now [polymorphic](/guides/polymorphic/) component – it accepts `renderRoot` and `component` props
+- [theme.variantColorResolver](/theming/colors/#colors-variant-resolver) now supports `hoverColor` prop, which allows controlling `color` property when the component is hovered. New property is supported in [Button](/core/button/) and [ActionIcon](/core/action-icon/) components.
+- [Flex](/core/flex/) is now a [polymorphic](/guides/polymorphic/) component – it accepts `renderRoot` and `component` props
 - [Checkbox](/core/checkbox/) root element now has `data-checked` attribute when the checkbox is checked
 - [Checkbox](/core/checkbox/) and [Radio](/core/radio/) components now support changing icon color with `iconColor` prop
 - [use-form](/form/use-form/) now supports `onValuesChange` option which can be used to sync form values with external state
