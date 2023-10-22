@@ -81,12 +81,19 @@ export function createStorage<T>(type: StorageType, hookName: string) {
   }: StorageProperties<T>) {
     const readStorageValue = useCallback(
       (skipStorage?: boolean): T => {
-        if (
-          typeof window === 'undefined' ||
-          !(type in window) ||
-          window[type] === null ||
-          skipStorage
-        ) {
+        let storageBlockedOrSkipped;
+
+        try {
+          storageBlockedOrSkipped =
+            typeof window === 'undefined' ||
+            !(type in window) ||
+            window[type] === null ||
+            !!skipStorage;
+        } catch (_e) {
+          storageBlockedOrSkipped = true;
+        }
+
+        if (storageBlockedOrSkipped) {
           return defaultValue as T;
         }
 
