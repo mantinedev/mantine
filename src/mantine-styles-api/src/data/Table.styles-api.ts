@@ -25,6 +25,7 @@ export const TableStylesApi: StylesApiData<TableFactory> = {
       '--table-striped-color': 'Controls `background-color` of even/odd `Table.Tr` elements',
       '--table-highlight-on-hover-color':
         'Controls `background-color` of `Table.Tr` elements when hovered',
+      '--table-sticky-header-offset': 'Controls `top` offset of sticky header',
     },
   },
 

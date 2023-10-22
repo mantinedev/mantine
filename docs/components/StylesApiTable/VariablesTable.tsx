@@ -4,7 +4,7 @@ import { HtmlText } from '@/components/HtmlText';
 import { TableInlineCode } from '@/components/TableInlineCode';
 import type { StylesApiData } from './StylesApiTable';
 
-interface VariablesTableProps extends TableProps {
+interface VariablesTableProps extends Omit<TableProps, 'data'> {
   data: StylesApiData;
   fixedLayout?: boolean;
 }
