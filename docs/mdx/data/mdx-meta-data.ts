@@ -49,6 +49,14 @@ export const MDX_META_DATA: Record<string, Frontmatter> = {
     hideHeader: true,
   },
 
+  SubmitTemplate: {
+    title: 'Submit a template',
+    slug: '/submit-template',
+    search: 'Learn how to submit a template',
+    hideSiblings: true,
+    hideHeader: true,
+  },
+
   Changelog700: {
     title: 'Version v7.0.0',
     slug: '/changelog/7-0-0',
