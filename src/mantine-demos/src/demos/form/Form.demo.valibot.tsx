@@ -16,8 +16,6 @@ const schema = object({
   ]),
 });
 
-export type FormData = Input<typeof schema>;
-
 function Demo() {
   const form = useForm({
     validate: valibotResolver(schema),
