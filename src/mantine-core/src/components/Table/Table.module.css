@@ -37,7 +37,9 @@
   background-color: var(--_tr-bg, transparent);
 
   @mixin hover {
-    --_tr-bg: var(--_tr-hover-bg, transparent) !important;
+    [data-mantine-color-scheme] &[data-hover] {
+      --_tr-bg: var(--_tr-hover-bg) !important;
+    }
   }
 
   &[data-with-row-border] {

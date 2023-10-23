@@ -60,6 +60,7 @@ function Demo() {
 `;
 
 export function MdxComboboxData({ component }: MdxComboboxDataProps) {
+  const stringDataFormat = component !== 'Autocomplete' && component !== 'TagsInput';
   return (
     <>
       <MdxTitle id="data-formats">Data formats</MdxTitle>
@@ -72,7 +73,7 @@ export function MdxComboboxData({ component }: MdxComboboxDataProps) {
 
       <MdxCodeHighlight language="tsx" code={getStringArrayCode(component)} />
 
-      {component !== 'Autocomplete' && (
+      {stringDataFormat && (
         <>
           <MdxParagraph>
             Array of object with <MdxCode>value</MdxCode>, <MdxCode>label</MdxCode> and optional{' '}
@@ -85,7 +86,7 @@ export function MdxComboboxData({ component }: MdxComboboxDataProps) {
       <MdxParagraph>Array of groups with string options:</MdxParagraph>
       <MdxCodeHighlight language="tsx" code={getStringGroupsCode(component)} />
 
-      {component !== 'Autocomplete' && (
+      {stringDataFormat && (
         <>
           <MdxParagraph>Array of groups with object options:</MdxParagraph>
           <MdxCodeHighlight language="tsx" code={getGroupsCode(component)} />

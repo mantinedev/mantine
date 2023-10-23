@@ -29,11 +29,11 @@ export type MantineTransitionName =
 
 export type MantineTransition = MantineTransitionName | MantineTransitionStyles;
 
-const popIn = {
+const popIn = (from: 'top' | 'bottom') => ({
   in: { opacity: 1, transform: 'scale(1)' },
-  out: { opacity: 0, transform: `scale(.9) translateY(${rem(10)})` },
+  out: { opacity: 0, transform: `scale(.9) translateY(${rem(from === 'bottom' ? 10 : -10)})` },
   transitionProperty: 'transform, opacity',
-};
+});
 
 export const transitions: Record<MantineTransitionName, MantineTransitionStyles> = {
   fade: {
@@ -120,27 +120,27 @@ export const transitions: Record<MantineTransitionName, MantineTransitionStyles>
   },
 
   pop: {
-    ...popIn,
+    ...popIn('bottom'),
     common: { transformOrigin: 'center center' },
   },
 
   'pop-bottom-left': {
-    ...popIn,
+    ...popIn('bottom'),
     common: { transformOrigin: 'bottom left' },
   },
 
   'pop-bottom-right': {
-    ...popIn,
+    ...popIn('bottom'),
     common: { transformOrigin: 'bottom right' },
   },
 
   'pop-top-left': {
-    ...popIn,
+    ...popIn('top'),
     common: { transformOrigin: 'top left' },
   },
 
   'pop-top-right': {
-    ...popIn,
+    ...popIn('top'),
     common: { transformOrigin: 'top right' },
   },
 };

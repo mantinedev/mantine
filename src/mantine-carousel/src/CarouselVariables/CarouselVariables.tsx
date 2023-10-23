@@ -8,6 +8,7 @@ import {
   filterProps,
   InlineStyles,
   getBaseValue,
+  rem,
 } from '@mantine/core';
 import type { CarouselProps } from '../Carousel';
 
@@ -20,7 +21,7 @@ export function CarouselVariables({ slideGap, slideSize, selector }: CarouselVar
 
   const baseStyles: Record<string, string | undefined> = filterProps({
     '--carousel-slide-gap': getSpacing(getBaseValue(slideGap)),
-    '--carousel-slide-size': getBaseValue(slideSize)?.toString(),
+    '--carousel-slide-size': rem(getBaseValue(slideSize)),
   });
 
   const queries = keys(theme.breakpoints).reduce<Record<string, Record<string, any>>>(

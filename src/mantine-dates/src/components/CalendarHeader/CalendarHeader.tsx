@@ -167,7 +167,7 @@ export const CalendarHeader = factory<CalendarHeaderFactory>((_props, ref) => {
           onMouseDown={preventFocus}
           disabled={previousDisabled}
           data-disabled={previousDisabled || undefined}
-          tabIndex={__preventFocus ? -1 : 0}
+          tabIndex={__preventFocus || previousDisabled ? -1 : 0}
           data-mantine-stop-propagation={__stopPropagation || undefined}
         >
           {previousIcon || (
@@ -205,7 +205,7 @@ export const CalendarHeader = factory<CalendarHeaderFactory>((_props, ref) => {
           onMouseDown={preventFocus}
           disabled={nextDisabled}
           data-disabled={nextDisabled || undefined}
-          tabIndex={__preventFocus ? -1 : 0}
+          tabIndex={__preventFocus || nextDisabled ? -1 : 0}
           data-mantine-stop-propagation={__stopPropagation || undefined}
         >
           {nextIcon || (

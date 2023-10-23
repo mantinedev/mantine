@@ -16,7 +16,16 @@ export function RenderRoot() {
 export function SingleButton() {
   return (
     <div style={{ padding: 40 }}>
-      <Button loading>Button</Button>
+      <div>
+        <Button variant="outline" size="xl">
+          Button
+        </Button>
+      </div>
+      <div>
+        <Button disabled variant="outline" size="xl">
+          Button
+        </Button>
+      </div>
     </div>
   );
 }
