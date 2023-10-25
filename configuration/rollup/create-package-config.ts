@@ -52,8 +52,16 @@ export default async function createPackageConfig(config: PkgConfigInput): Promi
       modules: { generateScopedName },
       minimize: true,
     }),
-    banner((chunk) => {
-      if (chunk.fileName !== 'index.js' && chunk.fileName !== 'index.mjs') {
+    banner((chunk, options) => {
+      const isMainEntry = chunk.fileName === 'index.js' || chunk.fileName === 'index.mjs';
+      const isUtils =
+        (config.basePath.endsWith('mantine-core') &&
+          ['core/factory', 'core/styles-api', 'core/utils'].some((pkg) =>
+            chunk.fileName.startsWith(pkg)
+          )) ||
+        config.basePath.endsWith('mantine-colors-generator');
+
+      if (!isMainEntry && !isUtils) {
         return "'use client';\n";
       }
 
