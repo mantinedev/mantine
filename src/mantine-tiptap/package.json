@@ -1,7 +1,7 @@
 {
   "name": "@mantine/tiptap",
   "description": "Rich text editor based on tiptap",
-  "version": "7.1.6",
+  "version": "7.1.7",
   "main": "./cjs/index.js",
   "types": "./lib/index.d.ts",
   "module": "./esm/index.mjs",
@@ -44,8 +44,8 @@
     "rich-text-editor"
   ],
   "peerDependencies": {
-    "@mantine/core": "7.1.6",
-    "@mantine/hooks": "7.1.6",
+    "@mantine/core": "7.1.7",
+    "@mantine/hooks": "7.1.7",
     "@tabler/icons-react": "^2.29.0",
     "@tiptap/extension-link": "^2.0.4",
     "@tiptap/react": "^2.0.4",
