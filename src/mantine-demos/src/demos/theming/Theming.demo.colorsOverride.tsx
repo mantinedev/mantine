@@ -16,8 +16,10 @@ function Demo() {
       }}
     >
       <Group>
-        <Button>Primary button</Button>
-        <Button color="blue">Blue button</Button>
+        <Button color="ocean-blue">Ocean blue button</Button>
+        <Button color="bright-pink" variant="filled">
+          Bright pink button
+        </Button>
       </Group>
     </MantineProvider>
   );

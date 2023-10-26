@@ -98,7 +98,7 @@ const defaultProps: Partial<ChipProps> = {
 
 const varsResolver = createVarsResolver<ChipFactory>((theme, { size, radius, variant, color }) => {
   const colors = theme.variantColorResolver({
-    color: color || theme.primaryColor,
+    color,
     theme,
     variant: variant!,
   });

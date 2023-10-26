@@ -103,7 +103,7 @@ const defaultProps: Partial<ButtonProps> = {};
 const varsResolver = createVarsResolver<ButtonFactory>(
   (theme, { radius, color, gradient, variant, size, justify }) => {
     const colors = theme.variantColorResolver({
-      color: color || theme.primaryColor,
+      color,
       theme,
       gradient,
       variant: variant || 'filled',

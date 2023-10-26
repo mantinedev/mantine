@@ -246,7 +246,7 @@ export const Select = factory<SelectFactory>((_props, ref) => {
             }}
             onBlur={(event) => {
               searchable && combobox.closeDropdown();
-              setSearch(_value ? optionsLockup[_value].label : '');
+              setSearch(_value ? optionsLockup[_value]?.label || '' : '');
               onBlur?.(event);
             }}
             onClick={(event) => {
