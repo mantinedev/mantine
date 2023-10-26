@@ -29,7 +29,7 @@ export const defaultVariantColorsResolver: VariantColorsResolver = ({
   variant,
   gradient,
 }) => {
-  const parsed = parseThemeColor({ color: color || theme.primaryColor, theme });
+  const parsed = parseThemeColor({ color, theme });
 
   if (variant === 'filled') {
     if (parsed.isThemeColor) {

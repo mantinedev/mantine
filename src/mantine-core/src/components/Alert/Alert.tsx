@@ -69,7 +69,7 @@ const defaultProps: Partial<AlertProps> = {};
 
 const varsResolver = createVarsResolver<AlertFactory>((theme, { radius, color, variant }) => {
   const colors = theme.variantColorResolver({
-    color,
+    color: color || theme.primaryColor,
     theme,
     variant: variant || 'light',
   });

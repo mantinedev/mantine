@@ -93,7 +93,7 @@ const defaultProps: Partial<NavLinkProps> = {};
 const varsResolver = createVarsResolver<NavLinkFactory>(
   (theme, { variant, color, childrenOffset }) => {
     const colors = theme.variantColorResolver({
-      color,
+      color: color || theme.primaryColor,
       theme,
       variant: variant || 'light',
     });
