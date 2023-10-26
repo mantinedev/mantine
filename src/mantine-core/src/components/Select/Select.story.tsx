@@ -28,6 +28,20 @@ export function LongOptions() {
   );
 }
 
+export function SelectedValueNotInDataArray() {
+  return (
+    <div style={{ padding: 40, maxWidth: 300 }}>
+      <Select
+        data={['Angular', 'React']}
+        value="test"
+        placeholder="Select something"
+        defaultValue="First"
+        onChange={() => {}}
+      />
+    </div>
+  );
+}
+
 export function WithinForm() {
   return (
     <form
