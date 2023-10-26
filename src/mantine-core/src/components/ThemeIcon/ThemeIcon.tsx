@@ -65,7 +65,7 @@ const defaultProps: Partial<ThemeIconProps> = {};
 const varsResolver = createVarsResolver<ThemeIconFactory>(
   (theme, { size, radius, variant, gradient, color }) => {
     const colors = theme.variantColorResolver({
-      color,
+      color: color || theme.primaryColor,
       theme,
       gradient,
       variant: variant || 'filled',
