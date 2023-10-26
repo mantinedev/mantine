@@ -81,7 +81,7 @@ const defaultProps: Partial<BadgeProps> = {};
 const varsResolver = createVarsResolver<BadgeFactory>(
   (theme, { radius, color, gradient, variant, size }) => {
     const colors = theme.variantColorResolver({
-      color: color || theme.primaryColor,
+      color,
       theme,
       gradient,
       variant: variant || 'filled',

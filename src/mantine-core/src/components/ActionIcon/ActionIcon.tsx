@@ -80,7 +80,7 @@ const defaultProps: Partial<ActionIconProps> = {};
 const varsResolver = createVarsResolver<ActionIconFactory>(
   (theme, { size, radius, variant, gradient, color }) => {
     const colors = theme.variantColorResolver({
-      color: color || theme.primaryColor,
+      color,
       theme,
       gradient,
       variant: variant || 'filled',
