@@ -16,6 +16,18 @@ export function Usage() {
   );
 }
 
+export function LongOptions() {
+  return (
+    <div style={{ padding: 40, maxWidth: 300 }}>
+      <Select
+        data={['Option that is so long that is collapses to the next line', 'React']}
+        placeholder="Select something"
+        defaultValue="First"
+      />
+    </div>
+  );
+}
+
 export function WithinForm() {
   return (
     <form
