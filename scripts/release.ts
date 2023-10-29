@@ -5,9 +5,9 @@ import githubRelease from 'new-github-release-url';
 import open from 'open';
 import yargs from 'yargs/yargs';
 import { hideBin } from 'yargs/helpers';
+import { getNextVersion } from 'version-next';
 import { Logger } from './utils/Logger';
 import { publishPackage } from './utils/publish-package';
-import { getIncrementedVersion } from './release/get-incremented-version';
 import { setPackagesVersion } from './release/set-packages-version';
 import { buildAllPackages } from './utils/build-all-packages';
 import { getPackagesBuildOrder } from './utils/get-packages-build-order';
@@ -59,13 +59,12 @@ const { argv }: { argv: any } = yargs(hideBin(process.argv))
   let incrementedVersion = packageJson.version;
 
   if (!argv.skipVersionCheck) {
-    incrementedVersion = getIncrementedVersion(incrementedVersion, {
+    incrementedVersion = getNextVersion(incrementedVersion, {
       type: argv._[0] as string,
-
       stage: argv.stage,
     });
-    logger.info(`New version: ${chalk.cyan(incrementedVersion)}`);
 
+    logger.info(`New version: ${chalk.cyan(incrementedVersion)}`);
     await setPackagesVersion(incrementedVersion);
   }
 
