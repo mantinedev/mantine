@@ -11,8 +11,8 @@ import visualizer from 'rollup-plugin-visualizer';
 import postcss from 'rollup-plugin-postcss';
 import banner from 'rollup-plugin-banner2';
 import esbuild from 'rollup-plugin-esbuild';
+import { generateScopedName } from 'hash-css-selector';
 import { getPackagesList } from '../../scripts/utils/get-packages-list';
-import { generateScopedName } from './hash-css-name';
 
 interface PkgConfigInput {
   basePath: string;

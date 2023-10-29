@@ -1,11 +1,7 @@
 {
   "name": "@mantine/tiptap",
   "description": "Rich text editor based on tiptap",
-<<<<<<< HEAD
   "version": "7.2.0-alpha.0",
-=======
-  "version": "7.1.7",
->>>>>>> b10a09646e3359b144e6b3ad57db6c1bdfa71a8d
   "main": "./cjs/index.js",
   "types": "./lib/index.d.ts",
   "module": "./esm/index.mjs",
