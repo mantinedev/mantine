@@ -1,7 +1,33 @@
 import path from 'path';
 import fs from 'fs-extra';
-import { DeclarationPath } from './docgen/get-declarations-list';
-import { generateDeclarations } from './docgen/generate-declarations';
+import { generateDeclarations } from 'mantine-docgen-script';
+
+function getPackagePaths(packageFolder: string) {
+  return fs
+    .readdirSync(packageFolder)
+    .filter((p) => fs.pathExistsSync(path.join(packageFolder, p, `${p}.tsx`)))
+    .map((p) => path.join(packageFolder, p, `${p}.tsx`));
+}
+
+export interface DeclarationPath {
+  path: string;
+  type: 'package' | 'file';
+}
+
+export function getDeclarationsList(paths: DeclarationPath[]): string[] {
+  return paths.reduce<string[]>((acc, info) => {
+    if (info.type === 'package') {
+      const items = getPackagePaths(info.path);
+      return [...acc, ...items];
+    }
+
+    if (info.type === 'file') {
+      return [...acc, info.path];
+    }
+
+    return acc;
+  }, []);
+}
 
 const EXTRA_FILES_PATHS = [
   // Input
@@ -134,8 +160,10 @@ const PATHS: DeclarationPath[] = [
   })),
 ];
 
-fs.ensureDirSync(path.join(__dirname, '../docs/.docgen'));
-
-fs.writeJSONSync(path.join(__dirname, '../docs/.docgen/docgen.json'), generateDeclarations(PATHS), {
-  spaces: 2,
+generateDeclarations({
+  tsConfigPath: path.join(__dirname, '../tsconfig.json'),
+  outputPath: path.join(__dirname, '../docs/.docgen'),
+  componentsPaths: getDeclarationsList(PATHS),
+  excludeProps: [],
+  typesReplacement: {},
 });
