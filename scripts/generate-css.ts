@@ -1,5 +1,4 @@
 // Generates separate css files for each @mantine/core component
-// @ts-ignore
 import postcssPresetMantine from 'postcss-preset-mantine';
 import postcss from 'postcss';
 import cssnano from 'cssnano';

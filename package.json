@@ -130,7 +130,7 @@
     "postcss": "^8.4.24",
     "postcss-flexbugs-fixes": "^5.0.2",
     "postcss-loader": "^7.3.3",
-    "postcss-preset-mantine": "1.7.0",
+    "postcss-preset-mantine": "1.9.1",
     "postcss-simple-vars": "^7.0.1",
     "prettier": "^3.0.0",
     "react-docgen-typescript": "2.1.0",
