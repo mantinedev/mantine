@@ -116,6 +116,7 @@ export interface UseFormInput<
   Values,
   TransformValues extends _TransformValues<Values> = (values: Values) => Values,
 > {
+  name?: string;
   initialValues?: Values;
   initialErrors?: FormErrors;
   initialTouched?: FormStatus;
@@ -125,6 +126,7 @@ export interface UseFormInput<
   clearInputErrorOnChange?: boolean;
   validateInputOnChange?: boolean | LooseKeys<Values>[];
   validateInputOnBlur?: boolean | LooseKeys<Values>[];
+  onValuesChange?: (values: Values) => void;
 }
 
 export interface UseFormReturnType<

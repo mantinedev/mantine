@@ -27,6 +27,14 @@ Templates list:
 
 <TemplatesList />
 
+## Community templates
+
+Community templates are created and maintained by the community. These templates
+usually include additional features and third-party integrations. You are welcome
+to share your template with the community by following [this guide](/submit-template/).
+
+<TemplatesList community />
+
 ## Framework guide
 
 Follow one of the guides below to get started with Mantine and your preferred framework.
@@ -43,7 +51,7 @@ Install PostCSS plugins and [postcss-preset-mantine](/styles/postcss-preset):
 
 <InstallScript packages="postcss postcss-preset-mantine postcss-simple-vars" dev />
 
-Create `postcss.config.js` file at the root of your application with the following content:
+Create `postcss.config.cjs` file at the root of your application with the following content:
 
 ```js
 module.exports = {
@@ -123,6 +131,27 @@ function Demo() {
 
 All set! Now you can use Mantine components in your application.
 
+## Set up VS Code
+
+By default, VS Code does not recognize postcss syntax, you need to install
+[PostCSS Language Support extension](https://marketplace.visualstudio.com/items?itemName=csstools.postcss)
+to enable syntax highlighting and suppress variables (`$variable`) errors.
+
+To get CSS variables autocomplete, install [CSS Variable Autocomplete extension](https://marketplace.visualstudio.com/items?itemName=vunguyentuan.vscode-css-variables).
+Then create `.vscode/settings.json` file in the root folder of your project with the following content:
+
+```json
+{
+  "cssVariables.lookupFiles": [
+    "**/*.css",
+    "**/*.scss",
+    "**/*.sass",
+    "**/*.less",
+    "node_modules/@mantine/core/esm/index.css"
+  ]
+}
+```
+
 ## Learn
 
 Before you jump into the code, it is recommended to learn more about Mantine theming and styling options.
@@ -171,9 +200,9 @@ Figma or Sketch files. However, there are community-driven projects that provide
 based on Mantine. Note that these projects are not maintained by Mantine team, and we do not guarantee
 that they are up-to-date with the latest Mantine version.
 
-- [Design files by Ravn](https://www.figma.com/file/MzVOmnmXGy0tHBEcRvvl5t/Mantine-UI-v1?type=design&node-id=0-1&mode=design&t=gPfeGEqCpvjPZCKT-0)
-- [Design files by In The Zone](https://www.figma.com/community/file/1067173247578645134)
-- [Design files by Devias](https://www.figma.com/community/file/1212329956432440320/Mantine-UI-Design-System---v5.10)
+- [Design files by **Ravn**](https://www.figma.com/community/file/1293978471602433537)
+- [Design files by **In The Zone**](https://www.figma.com/community/file/1067173247578645134)
+- [Design files by **Devias**](https://www.figma.com/community/file/1212329956432440320/Mantine-UI-Design-System---v5.10)
 
 ## License
 

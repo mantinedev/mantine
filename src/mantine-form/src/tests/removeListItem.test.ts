@@ -67,4 +67,19 @@ describe('@mantine/form/removeListItem', () => {
       'a.1.b': 'error-3',
     });
   });
+
+  it('calls onValuesChange when removeListItem is called', () => {
+    const spy = jest.fn();
+    const hook = renderHook(() =>
+      useForm({
+        onValuesChange: spy,
+        initialValues: {
+          a: [{ b: 1 }, { b: 2 }, { b: 3 }],
+        },
+      })
+    );
+
+    act(() => hook.result.current.removeListItem('a', 1));
+    expect(spy).toHaveBeenCalledWith({ a: [{ b: 1 }, { b: 3 }] });
+  });
 });

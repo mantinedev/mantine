@@ -1,6 +1,6 @@
 import { Layout } from '@/layout';
 import { MDX_DATA } from '@/mdx';
-import { LoaderDemos } from '@mantine/demos';
+import { LoaderDemos, LoadingOverlayDemos } from '@mantine/demos';
 
 export default Layout(MDX_DATA.Loader);
 
@@ -45,3 +45,11 @@ you would need to set `width` and `height` to `var(--loader-size)` and `fill`/`s
 `var(--loader-color)`.
 
 <Demo data={LoaderDemos.customType} />
+
+## children prop
+
+`Loader` supports `children` prop. If you pass anything to `children`, it will be rendered
+instead of the loader. This is useful when you want to control `Loader` representation
+in components that use `loaderProps`, for example [Button](/core/button/), [LoadingOverlay](/core/loading-overlay/), [Dropzone](/others/dropzone/).
+
+<Demo data={LoadingOverlayDemos.customLoader} />

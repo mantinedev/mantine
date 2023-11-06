@@ -49,6 +49,14 @@ export const MDX_META_DATA: Record<string, Frontmatter> = {
     hideHeader: true,
   },
 
+  SubmitTemplate: {
+    title: 'Submit a template',
+    slug: '/submit-template',
+    search: 'Learn how to submit a template',
+    hideSiblings: true,
+    hideHeader: true,
+  },
+
   Changelog700: {
     title: 'Version v7.0.0',
     slug: '/changelog/7-0-0',
@@ -61,6 +69,13 @@ export const MDX_META_DATA: Record<string, Frontmatter> = {
     slug: '/changelog/7-1-0',
     release: 'https://github.com/mantinedev/mantine/releases/tag/7.1.0',
     date: 'September 28th, 2023',
+  },
+
+  Changelog720: {
+    title: 'Version v7.2.0',
+    slug: '/changelog/7-2-0',
+    release: 'https://github.com/mantinedev/mantine/releases/tag/7.2.0',
+    date: 'November 7th, 2023',
   },
 
   PreviousChangelogs: {

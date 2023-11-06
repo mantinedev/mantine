@@ -65,6 +65,26 @@ console.log(classes);
 
 With CSS modules, you do not need to worry about class name collisions, you can use any class name you want.
 
+## Referencing global class names
+
+To reference global class names in CSS Modules, you can use `:global` selector:
+
+```scss
+.test {
+  & :global(.global-class-name) {
+    color: red;
+  }
+}
+```
+
+The code above will compile to the following CSS:
+
+```css
+.m-dj3w33 .global-class-name {
+  color: red;
+}
+```
+
 ## Adding styles to Mantine components
 
 You can add styles to most of Mantine components using `className` prop

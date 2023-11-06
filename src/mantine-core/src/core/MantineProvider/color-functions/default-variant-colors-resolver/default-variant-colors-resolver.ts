@@ -17,6 +17,7 @@ export interface VariantColorResolverResult {
   hover: string;
   color: string;
   border: string;
+  hoverColor?: string;
 }
 
 export type VariantColorsResolver = (

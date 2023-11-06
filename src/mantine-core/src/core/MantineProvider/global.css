@@ -48,6 +48,18 @@ body {
   }
 }
 
+.mantine-light-hidden {
+  @mixin light {
+    display: none;
+  }
+}
+
+.mantine-dark-hidden {
+  @mixin dark {
+    display: none;
+  }
+}
+
 .mantine-focus-auto {
   &:focus-visible {
     outline: rem(2px) solid var(--mantine-primary-color-filled);

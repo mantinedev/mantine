@@ -32,3 +32,33 @@ export const DemoAnchor = {
   name: '⭐ Demo: anchor',
   render: renderDemo(demos.anchor),
 };
+
+export const DemoCard = {
+  name: '⭐ Demo: card',
+  render: renderDemo(demos.card),
+};
+
+export const DemoStylesApi = {
+  name: '⭐ Demo: stylesApi',
+  render: renderDemo(demos.stylesApi),
+};
+
+export const DemoCustomize = {
+  name: '⭐ Demo: customize',
+  render: renderDemo(demos.customize),
+};
+
+export const DemoIconColor = {
+  name: '⭐ Demo: iconColor',
+  render: renderDemo(demos.iconColor),
+};
+
+export const DemoTooltip = {
+  name: '⭐ Demo: tooltip',
+  render: renderDemo(demos.tooltip),
+};
+
+export const DemoCustomSize = {
+  name: '⭐ Demo: customSize',
+  render: renderDemo(demos.customSize),
+};

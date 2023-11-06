@@ -12,6 +12,7 @@
   --radio-icon-size-lg: rem(14px);
   --radio-icon-size-xl: rem(16px);
   --radio-icon-size: var(--radio-icon-size-sm);
+  --radio-icon-color: var(--mantine-color-white);
 }
 
 .inner {
@@ -26,7 +27,7 @@
 }
 
 .icon {
-  color: var(--_radio-icon-color, var(--mantine-color-white));
+  color: var(--_radio-icon-color, var(--radio-icon-color));
   opacity: var(--_radio-icon-opacity, 0);
   transform: var(--_radio-icon-transform, scale(0.2) translateY(rem(10px)));
   transition:

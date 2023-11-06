@@ -80,6 +80,7 @@ interface TableElementOptions {
   striped?: true;
   highlightOnHover?: true;
   captionSide?: true;
+  stickyHeader?: true;
 }
 
 function getDataAttributes(ctx: TableContextValue, options?: TableElementOptions) {
@@ -107,6 +108,10 @@ function getDataAttributes(ctx: TableContextValue, options?: TableElementOptions
 
   if (options.captionSide && ctx.captionSide) {
     data['data-side'] = ctx.captionSide;
+  }
+
+  if (options.stickyHeader && ctx.stickyHeader) {
+    data['data-sticky'] = true;
   }
 
   return data;
@@ -146,7 +151,7 @@ export const TableTr = tableElement<TableTrFactory>('tr', {
   striped: true,
   highlightOnHover: true,
 });
-export const TableThead = tableElement<TableTheadFactory>('thead');
+export const TableThead = tableElement<TableTheadFactory>('thead', { stickyHeader: true });
 export const TableTbody = tableElement<TableTbodyFactory>('tbody');
 export const TableTfoot = tableElement<TableTfootFactory>('tfoot');
 export const TableCaption = tableElement<TableCaptionFactory>('caption', { captionSide: true });

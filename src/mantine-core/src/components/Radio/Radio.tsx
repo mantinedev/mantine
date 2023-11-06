@@ -26,7 +26,7 @@ import classes from './Radio.module.css';
 
 export type RadioStylesNames = InlineInputStylesNames | 'inner' | 'radio' | 'icon';
 export type RadioCssVariables = {
-  root: '--radio-size' | '--radio-radius' | '--radio-color';
+  root: '--radio-size' | '--radio-radius' | '--radio-color' | '--radio-icon-color';
 };
 
 export interface RadioProps
@@ -62,6 +62,9 @@ export interface RadioProps
 
   /** Assigns ref of the root element, can be used with `Tooltip` and other similar components */
   rootRef?: React.ForwardedRef<HTMLDivElement>;
+
+  /** Key of `theme.colors` or any valid CSS color to set icon color, `theme.white` by default */
+  iconColor?: MantineColor;
 }
 
 export type RadioFactory = Factory<{
@@ -78,14 +81,16 @@ const defaultProps: Partial<RadioProps> = {
   labelPosition: 'right',
 };
 
-const varsResolver = createVarsResolver<RadioFactory>((theme, { size, radius, color }) => ({
-  root: {
-    '--radio-size': getSize(size, 'radio-size'),
-    '--radio-radius': radius === undefined ? undefined : getRadius(radius),
-    '--radio-color': color ? getThemeColor(color, theme) : undefined,
-    '--radio-icon-size': getSize(size, 'radio-icon-size'),
-  },
-}));
+const varsResolver = createVarsResolver<RadioFactory>(
+  (theme, { size, radius, color, iconColor }) => ({
+    root: {
+      '--radio-size': getSize(size, 'radio-size'),
+      '--radio-radius': radius === undefined ? undefined : getRadius(radius),
+      '--radio-color': color ? getThemeColor(color, theme) : undefined,
+      '--radio-icon-color': iconColor ? getThemeColor(iconColor, theme) : undefined,
+    },
+  })
+);
 
 export const Radio = factory<RadioFactory>((_props, ref) => {
   const props = useProps('Radio', defaultProps, _props);
@@ -109,6 +114,7 @@ export const Radio = factory<RadioFactory>((_props, ref) => {
     wrapperProps,
     icon: Icon = RadioIcon,
     rootRef,
+    iconColor,
     ...others
   } = props;
 

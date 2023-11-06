@@ -11,9 +11,15 @@ export function DirectionControl() {
       tooltip={`${dir === 'ltr' ? 'RTL' : 'LTR'} direction`}
     >
       {dir === 'rtl' ? (
-        <IconTextDirectionLtr style={{ width: rem(22), height: rem(22) }} stroke={1.5} />
+        <IconTextDirectionLtr
+          style={{ width: rem(22), height: rem(22), pointerEvents: 'none' }}
+          stroke={1.5}
+        />
       ) : (
-        <IconTextDirectionRtl style={{ width: rem(22), height: rem(22) }} stroke={1.5} />
+        <IconTextDirectionRtl
+          style={{ width: rem(22), height: rem(22), pointerEvents: 'none' }}
+          stroke={1.5}
+        />
       )}
     </HeaderControl>
   );

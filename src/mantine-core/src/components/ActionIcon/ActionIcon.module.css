@@ -34,6 +34,7 @@
   @mixin hover {
     &:not([data-loading]):not(:disabled):not([data-disabled]) {
       --_ai-bg: var(--ai-hover, var(--mantine-primary-color-filled-hover));
+      --_ai-color: var(--ai-hover-color);
     }
   }
 

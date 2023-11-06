@@ -11,22 +11,27 @@ export default Layout(MDX_DATA.StylesApi);
 
 ## What is Styles API
 
-Styles API is a set of props and techniques that allows you to customize styles of any element
-inside Mantine component inline or with [theme object](/theming/theme-object). All Mantine components that
+The styles API is a set of props and techniques that allows you to customize the style of any element
+inside a Mantine component – inline or using the [theme object](/theming/theme-object). All Mantine components that
 have styles support Styles API.
 
 ## Styles API selectors
 
-Every Mantine component that supports Styles API has a set of elements names that can be used to
+Every Mantine component that supports the styles API has a set of element names that can be used to
 apply styles to inner elements inside the component. For simplicity, these elements names are called
-selectors in Mantine documentation. You can find selectors information under `Styles API` tab
-in component documentation.
+selectors in Mantine documentation. You can find selectors information under the `Styles API` tab
+in a component's documentation.
 
 Example of [Button](/core/button) component selectors:
 
-<SelectorsTable data={ButtonStylesApi} component="Button" withTableBorder={false} />
+<SelectorsTable
+  data={ButtonStylesApi}
+  component="Button"
+  withTableBorder={false}
+  fixedLayout={false}
+/>
 
-You can use these selectors in `classNames` and `styles` both in component props and in `theme.components`:
+You can use these selectors in `classNames` and `styles` in, both, component props and `theme.components`:
 
 ```tsx
 import { Button, createTheme, MantineProvider } from '@mantine/core';
@@ -87,15 +92,15 @@ function ProviderDemo() {
 
 ## classNames prop
 
-With `classNames` prop you can add classes to inner elements of Mantine components. It accepts
-object with keys as element names and values as classes:
+With the `classNames` prop you can add classes to inner elements of Mantine components. It accepts
+an object with element names as keys and classes as values:
 
 <Demo data={StylesDemos.classNames} />
 
 ## classNames in theme.components
 
-You can also define classNames in [theme.components](/theming/theme-object) to apply them to all
-components of specific type:
+You can also define `classNames` in [`theme.components`](/theming/theme-object) to apply them to all
+components of a specific type:
 
 ```tsx
 import { useState } from 'react';
@@ -127,42 +132,42 @@ function Demo() {
 ## Components CSS variables
 
 Most of Mantine components use CSS variables to define colors, sizes, paddings and other
-properties. You can override these values by with a custom CSS variables resolver function
-in [theme.components](/theming/theme-object) or by passing it to `vars` prop.
+properties. You can override these values using a custom CSS variables resolver function
+in [theme.components](/theming/theme-object) or by passing it to the `vars` prop.
 
-You can find CSS variables information under `Styles API` tab in component documentation.
+You can find CSS variables information under the `Styles API` tab in a component's documentation.
 Example of [Button](/core/button) component CSS variables:
 
-<VariablesTable data={ButtonStylesApi} withTableBorder={false} />
+<VariablesTable data={ButtonStylesApi} withTableBorder={false} fixedLayout={false} />
 
-Example of custom CSS variables resolver function used to add more sizes to [Button](/core/button) component:
+Example of a custom CSS variables resolver function used to add more sizes to the [Button](/core/button) component:
 
 <Demo data={StylesDemos.vars} />
 
 ## styles prop
 
-`styles` prop works the same way as `classNames`, but applies inline styles. Note that inline
+The `styles` prop works the same way as `classNames`, but applies inline styles. Note that inline
 styles have higher specificity than classes, so you will not be able to override them with classes
 without using `!important`. You cannot use pseudo-classes (for example, `:hover`, `:first-of-type`)
-and media queries inside `styles` prop.
+and media queries inside the `styles` prop.
 
 <Demo data={StylesDemos.styles} />
 
 > **styles prop usage**
 >
-> Some examples and demos in the documentation use `styles` prop for convenience, but it is not
-> recommended to use `styles` prop as the primary means of styling components, as `classNames`
+> Some examples and demos in the documentation use the `styles` prop for convenience, but it is not
+> recommended to use the `styles` prop as the primary means of styling components, as the `classNames`
 > prop is more flexible and has [better performance](/styles/styles-performance).
 
 ## Styles API based on component props
 
 You can also pass a callback function to `classNames` and `styles`. This function will receive
 [theme](/theming/theme-object) as first argument and component props as second. It should return
-object of classes (`classNames`) or styles (`styles`).
+an object of classes (for `classNames`) or styles (for `styles`).
 
 You can use this feature to conditionally apply styles based on component props. For example,
-you can change [TextInput](/core/text-input) label color if the input is required or change the input
-background color if input has error:
+you can change the [TextInput](/core/text-input) label color if the input is required or change the input
+background color if the input is wrong:
 
 <Demo data={StylesDemos.classNamesProps} />
 
@@ -173,7 +178,7 @@ component without using `classNames` or `styles` props. By default, static class
 `.mantine-{ComponentName}-{selector}` format. For example, `root` selector of [Button](/core/button)
 component will have `.mantine-Button-root` class.
 
-You can use static classes to style component with CSS or [any other styling solution](/styles/css-modules#styling-mantine-components-without-css-modules):
+You can use static classes to style a component with CSS or [any other styling solution](/styles/css-modules#styling-mantine-components-without-css-modules):
 
 ```css
 .mantine-Button-root {
@@ -181,12 +186,12 @@ You can use static classes to style component with CSS or [any other styling sol
 }
 ```
 
-Static classes prefix can be changed with `classNamesPrefix` on [MantineProvider](/theming/mantine-provider#classnamesprefix).
+The prefix of static classes can be changed with `classNamesPrefix` of [MantineProvider](/theming/mantine-provider#classnamesprefix).
 
 ## Components classes
 
-Classes of each component are available in `Component.classes` object. For example, you can
-find [Button](/core/button) classes in `Button.classes`:
+Classes of each component are available in the `Component.classes` object. For example, you can
+find the classes of [Button](/core/button) in `Button.classes`:
 
 <DataTable
   head={['Key', 'Class']}

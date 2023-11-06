@@ -4,7 +4,7 @@ const testDate = new Date(2022, 3, 11, 20, 45, 13);
 
 describe('@mantine/dates/get-timezone-offset', () => {
   it('test environment timezone should be "America/New_York"', () => {
-    expect(new Date().getTimezoneOffset()).toBe(240);
+    expect(testDate.getTimezoneOffset()).toBe(240);
   });
 
   it('should return correct timezone offset', () => {

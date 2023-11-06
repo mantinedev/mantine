@@ -22,3 +22,18 @@ export const DemoIcon = {
   name: '⭐ Demo: icon',
   render: renderDemo(demos.icon),
 };
+
+export const DemoIconColor = {
+  name: '⭐ Demo: iconColor',
+  render: renderDemo(demos.iconColor),
+};
+
+export const DemoStylesApi = {
+  name: '⭐ Demo: stylesApi',
+  render: renderDemo(demos.stylesApi),
+};
+
+export const DemoTooltip = {
+  name: '⭐ Demo: tooltip',
+  render: renderDemo(demos.tooltip),
+};

@@ -208,6 +208,7 @@
 .optionsDropdownCheckIcon {
   opacity: 0.4;
   width: 0.8em;
+  min-width: 0.8em;
   height: 0.8em;
 
   [data-combobox-selected] & {

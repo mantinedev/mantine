@@ -12,9 +12,10 @@ import {
   extractStyleProps,
   useResolvedStylesApi,
   getSize,
+  BoxProps,
 } from '../../core';
-import { InputBase, InputBaseProps } from '../InputBase';
-import { Input, InputVariant, __InputStylesNames } from '../Input';
+import { InputBase } from '../InputBase';
+import { Input, InputVariant, __InputStylesNames, __BaseInputProps } from '../Input';
 import { ActionIcon } from '../ActionIcon';
 import { PasswordToggleIcon } from './PasswordToggleIcon';
 import classes from './PasswordInput.module.css';
@@ -29,7 +30,8 @@ export type PasswordInputCssVariables = {
 };
 
 export interface PasswordInputProps
-  extends Omit<InputBaseProps, 'classNames' | 'styles' | 'vars'>,
+  extends BoxProps,
+    __BaseInputProps,
     StylesApiProps<PasswordInputFactory>,
     ElementProps<'input', 'size'> {
   /** Custom visibility toggle icon */
@@ -57,7 +59,6 @@ export type PasswordInputFactory = Factory<{
 }>;
 
 const defaultProps: Partial<PasswordInputProps> = {
-  __staticSelector: 'PasswordInput',
   visibilityToggleIcon: PasswordToggleIcon,
 };
 
@@ -87,7 +88,6 @@ export const PasswordInput = factory<PasswordInputFactory>((_props, ref) => {
     description,
     label,
     size,
-    __staticSelector,
     errorProps,
     descriptionProps,
     labelProps,
@@ -97,6 +97,7 @@ export const PasswordInput = factory<PasswordInputFactory>((_props, ref) => {
     radius,
     rightSection,
     rightSectionWidth,
+    rightSectionPointerEvents,
     leftSectionWidth,
     visible,
     defaultVisible,
@@ -179,7 +180,7 @@ export const PasswordInput = factory<PasswordInputFactory>((_props, ref) => {
       size={size}
       classNames={resolvedClassNames}
       styles={resolvedStyles}
-      __staticSelector={__staticSelector}
+      __staticSelector="PasswordInput"
       errorProps={errorProps}
       descriptionProps={descriptionProps}
       unstyled={unstyled}
@@ -201,13 +202,13 @@ export const PasswordInput = factory<PasswordInputFactory>((_props, ref) => {
         styles={resolvedStyles}
         radius={radius}
         disabled={disabled}
-        __staticSelector={__staticSelector}
+        __staticSelector="PasswordInput"
         rightSectionWidth={rightSectionWidth}
         rightSection={rightSection ?? visibilityToggleButton}
         variant={variant}
         unstyled={unstyled}
         leftSectionWidth={leftSectionWidth}
-        rightSectionPointerEvents="all"
+        rightSectionPointerEvents={rightSectionPointerEvents || 'all'}
         rightSectionProps={rightSectionProps}
         leftSectionProps={leftSectionProps}
         leftSectionPointerEvents={leftSectionPointerEvents}

@@ -1,6 +1,13 @@
 import { Frontmatter } from '@/types';
 
 export const MDX_STYLES_DATA: Record<string, Frontmatter> = {
+  StylesOverview: {
+    title: 'Styles overview',
+    slug: '/styles/styles-overview',
+    search: 'Overview of the ways to apply styles',
+    hideHeader: true,
+  },
+
   MantineStyles: {
     title: 'Mantine styles',
     slug: '/styles/mantine-styles',
@@ -19,6 +26,13 @@ export const MDX_STYLES_DATA: Record<string, Frontmatter> = {
     title: 'Vanilla extract',
     slug: '/styles/vanilla-extract',
     search: 'Mantine + Vanilla extract integration',
+    hideHeader: true,
+  },
+
+  UsageWithSass: {
+    title: 'Usage with Sass',
+    slug: '/styles/sass',
+    search: 'Mantine Sass mixins, functions and variables',
     hideHeader: true,
   },
 

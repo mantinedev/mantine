@@ -1,11 +1,19 @@
 import React, { useRef } from 'react';
-import { factory, ElementProps, useProps, Factory } from '../../core';
-import { __InputStylesNames } from '../Input';
-import { InputBase, InputBaseProps } from '../InputBase';
+import { factory, ElementProps, useProps, Factory, BoxProps, StylesApiProps } from '../../core';
+import { __InputStylesNames, __BaseInputProps } from '../Input';
+import { InputBase } from '../InputBase';
 import { PillsInputProvider } from './PillsInput.context';
 import { PillsInputField } from './PillsInputField/PillsInputField';
 
-export interface PillsInputProps extends InputBaseProps, ElementProps<'div', 'size'> {}
+export interface PillsInputProps
+  extends BoxProps,
+    __BaseInputProps,
+    StylesApiProps<PillsInputFactory>,
+    ElementProps<'div', 'size'> {
+  __stylesApiProps?: Record<string, any>;
+  __staticSelector?: string;
+  multiline?: boolean;
+}
 
 export type PillsInputFactory = Factory<{
   props: PillsInputProps;

@@ -20,10 +20,12 @@ export const CheckboxStylesApi: StylesApiData<CheckboxFactory> = {
       '--checkbox-color': 'Controls checked checkbox `background-color`',
       '--checkbox-radius': 'Controls checkbox `border-radius`',
       '--checkbox-size': 'Controls checkbox `width` and `height`',
+      '--checkbox-icon-color': 'Controls checkbox icon `color`',
     },
   },
 
   modifiers: [
+    { modifier: 'data-checked', selector: 'root', condition: '`checked` prop is set' },
     { modifier: 'data-error', selector: 'input', condition: '`error` prop is set' },
     { modifier: 'data-indeterminate', selector: 'input', condition: '`indeterminate` prop is set' },
     { modifier: 'data-label-position', selector: 'inner', value: 'Value of `labelPosition` prop' },

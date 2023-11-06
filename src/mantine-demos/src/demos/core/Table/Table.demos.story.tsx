@@ -32,3 +32,18 @@ export const DemoScrollContainerNative = {
   name: '⭐ Demo: scrollContainerNative',
   render: renderDemo(demos.scrollContainerNative),
 };
+
+export const DemoScrollRowSelection = {
+  name: '⭐ Demo: rowSelection',
+  render: renderDemo(demos.rowSelection),
+};
+
+export const DemoData = {
+  name: '⭐ Demo: data',
+  render: renderDemo(demos.data),
+};
+
+export const DemoStickyHeader = {
+  name: '⭐ Demo: stickyHeader',
+  render: renderDemo(demos.stickyHeader),
+};

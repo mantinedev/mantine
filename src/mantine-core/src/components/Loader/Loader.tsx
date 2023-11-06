@@ -39,6 +39,9 @@ export interface LoaderProps
 
   /** Object of loaders components, can be customized via default props or inline. Default value contains `bars`, `oval` and `dots` */
   loaders?: MantineLoadersRecord;
+
+  /** Overrides default loader with given content */
+  children?: React.ReactNode;
 }
 
 export type LoaderFactory = Factory<{
@@ -83,6 +86,7 @@ export const Loader = factory<LoaderFactory>((_props, ref) => {
     unstyled,
     loaders,
     variant,
+    children,
     ...others
   } = props;
 
@@ -98,6 +102,14 @@ export const Loader = factory<LoaderFactory>((_props, ref) => {
     vars,
     varsResolver,
   });
+
+  if (children) {
+    return (
+      <Box {...getStyles('root')} ref={ref as any} {...(others as any)}>
+        {children}
+      </Box>
+    );
+  }
 
   return (
     <Box

@@ -84,7 +84,7 @@ const defaultProps: Partial<ColorInputProps> = {
   format: 'hex',
   fixOnBlur: true,
   withPreview: true,
-  swatchesPerRow: 10,
+  swatchesPerRow: 7,
   withPicker: true,
   popoverProps: { transitionProps: { transition: 'fade', duration: 0 } },
   withEyeDropper: true,

@@ -19,9 +19,17 @@ export function WithinDisabledFieldset() {
 export function Usage() {
   return (
     <div style={{ padding: 40 }}>
-      <Checkbox label="Default" defaultChecked />
+      <Checkbox label="Default" value="hello" />
       <Checkbox label="Disabled" checked disabled mt="xl" />
       <Checkbox label="Indeterminate" indeterminate mt="xl" />
+    </div>
+  );
+}
+
+export function IconColor() {
+  return (
+    <div style={{ padding: 40 }}>
+      <Checkbox label="Default" color="lime.4" iconColor="dark.8" />
     </div>
   );
 }

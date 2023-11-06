@@ -16,6 +16,7 @@ export const ButtonStylesApi: StylesApiData<ButtonFactory> = {
       '--button-bd': 'Control `border`',
       '--button-hover': 'Controls `background` when hovered',
       '--button-color': 'Control text `color`',
+      '--button-hover-color': 'Control text `color` when hovered',
       '--button-radius': 'Controls `border-radius`',
       '--button-height': 'Controls `height` of the button',
       '--button-padding-x': 'Controls horizontal `padding` of the button',

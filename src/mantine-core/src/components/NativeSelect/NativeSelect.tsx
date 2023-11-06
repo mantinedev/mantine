@@ -1,11 +1,15 @@
 import React from 'react';
-import { factory, ElementProps, useProps, Factory } from '../../core';
-import { InputBase, InputBaseProps } from '../InputBase';
-import { __InputStylesNames } from '../Input';
+import { factory, ElementProps, useProps, Factory, BoxProps, StylesApiProps } from '../../core';
+import { InputBase } from '../InputBase';
+import { __InputStylesNames, __BaseInputProps } from '../Input';
 import { ComboboxData, getParsedComboboxData, ComboboxChevron } from '../Combobox';
 import { NativeSelectOption } from './NativeSelectOption';
 
-export interface NativeSelectProps extends InputBaseProps, ElementProps<'select', 'size'> {
+export interface NativeSelectProps
+  extends BoxProps,
+    __BaseInputProps,
+    StylesApiProps<NativeSelectFactory>,
+    ElementProps<'select', 'size'> {
   /** Data used to render options, can be replaced with `children` */
   data?: ComboboxData;
 }

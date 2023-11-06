@@ -52,3 +52,8 @@ export const DemoDisabled = {
   name: '⭐ Demo: disabled',
   render: renderDemo(demos.disabled),
 };
+
+export const DemoPortalChildren = {
+  name: '⭐ Demo: portalChildren',
+  render: renderDemo(demos.portalChildren),
+};

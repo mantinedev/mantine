@@ -25,7 +25,7 @@ Install `postcss-preset-mantine` as a dev dependency:
 
 Note that setting up PostCSS may be different depending on your build tool/framework, check
 a [dedicated framework guide](/getting-started) to learn more.
-Add `postcss-preset-mantine` to your `postcss.config.js` file (usually it is located in the root of your project):
+Add `postcss-preset-mantine` to your `postcss.config.cjs` file (usually it is located in the root of your project):
 
 ```js
 module.exports = {
@@ -108,6 +108,20 @@ It is easier to define styles for light color scheme and then use `dark` mixin t
 }
 ```
 
+To define values for light/dark color scheme on the `:root`/`html` element, use `light-root` and `dark-root` mixins instead:
+
+```scss
+:root {
+  @mixin light-root {
+    --color: red;
+  }
+
+  @mixin dark-root {
+    --color: blue;
+  }
+}
+```
+
 ## light-dark function
 
 `light-dark` function is an alternative to `light` and `dark` mixins. It accepts two arguments:
@@ -128,6 +142,26 @@ Will be transformed to:
 
 [data-mantine-color-scheme='dark'] .demo {
   color: blue;
+}
+```
+
+Note that `light-dark` function does not work on `:root`/`html` element. Use `light-root` and `dark-root` mixins instead:
+
+```scss
+// ❌ Does not work
+:root {
+  --color: light-dark(red, blue);
+}
+
+// ✅ Works
+:root {
+  @mixin light-root {
+    --color: red;
+  }
+
+  @mixin dark-root {
+    --color: blue;
+  }
 }
 ```
 
@@ -159,11 +193,11 @@ Will be transformed to:
 }
 ```
 
-## rtl mixin
+## rtl/ltr mixins
 
 `rtl` mixin can be used to create styles that will be applied when `dir="rtl"` is set on parent element (usually `<html />`).
 
-```css
+```scss
 .demo {
   margin-left: 1rem;
 
@@ -183,6 +217,53 @@ Will be transformed to:
 
 [dir='rtl'] .demo {
   margin-left: 0;
+  margin-right: 1rem;
+}
+```
+
+`ltr` mixin works the same way, but for `dir="ltr"`:
+
+```scss
+.demo {
+  margin-left: 1rem;
+
+  @mixin ltr {
+    margin-left: 0;
+    margin-right: 1rem;
+  }
+}
+```
+
+Will be transformed to:
+
+```css
+.demo {
+  margin-left: 1rem;
+}
+
+[dir='ltr'] .demo {
+  margin-left: 0;
+  margin-right: 1rem;
+}
+```
+
+## not-rtl/not-ltr mixins
+
+`not-rtl`/`not-ltr` mixins can be used to create styles that will be applied when the direction is set to the opposite value or not set at all.
+For example, `not-rtl` styles will be applied when `dir="ltr"` or when `dir` is not set at all.
+
+```scss
+.demo {
+  @mixin not-rtl {
+    margin-right: 1rem;
+  }
+}
+```
+
+Will be transformed to:
+
+```css
+:root:not([dir='rtl']) .demo {
   margin-right: 1rem;
 }
 ```

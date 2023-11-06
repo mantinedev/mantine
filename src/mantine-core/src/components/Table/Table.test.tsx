@@ -63,6 +63,25 @@ describe('@mantine/core/Table', () => {
     expect(document.querySelector('[data-test="tbody"]')).toBeInTheDocument();
   });
 
+  it('renders table rows based on data prop', () => {
+    const { container } = render(
+      <Table
+        data={{
+          head: ['test-thead'],
+          body: [['test-td']],
+          foot: ['test-tfoot'],
+          caption: 'test-caption',
+        }}
+      />
+    );
+
+    expect(container.querySelectorAll('tr')).toHaveLength(3);
+    expect(container.querySelector('td')).toHaveTextContent('test-td');
+    expect(container.querySelector('thead th')).toHaveTextContent('test-thead');
+    expect(container.querySelector('tfoot th')).toHaveTextContent('test-tfoot');
+    expect(container.querySelector('caption')).toHaveTextContent('test-caption');
+  });
+
   it('sets data-with-table-border attribute when withTableBorder prop is set', () => {
     render(<Table withTableBorder />);
     expect(screen.getByRole('table')).toHaveAttribute('data-with-table-border');

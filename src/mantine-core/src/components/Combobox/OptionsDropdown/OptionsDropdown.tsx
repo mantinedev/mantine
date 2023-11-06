@@ -36,6 +36,7 @@ function Option({ data, withCheckIcon, value, checkIconPosition, unstyled }: Opt
     const check = withCheckIcon && isValueChecked(value, data.value) && (
       <CheckIcon className={classes.optionsDropdownCheckIcon} />
     );
+
     return (
       <Combobox.Option
         value={data.value}

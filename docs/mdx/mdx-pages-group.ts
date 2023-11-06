@@ -17,10 +17,12 @@ export const MDX_PAGES_GROUPS: MdxPagesGroup[] = [
   {
     group: 'styles',
     pages: [
+      MDX_DATA.StylesOverview,
       MDX_DATA.MantineStyles,
       MDX_DATA.CSSFilesList,
       MDX_DATA.CSSModules,
       MDX_DATA.PostCSSPreset,
+      MDX_DATA.UsageWithSass,
       MDX_DATA.VanillaExtract,
       MDX_DATA.GlobalStyles,
       MDX_DATA.CssVariables,
@@ -148,6 +150,7 @@ export const MDX_PAGES_GROUPS: MdxPagesGroup[] = [
       MDX_DATA.formNested,
       MDX_DATA.formStatus,
       MDX_DATA.createFormContext,
+      MDX_DATA.formActions,
       MDX_DATA.formRecipes,
     ],
   },
@@ -269,6 +272,7 @@ export const MDX_PAGES_GROUPS: MdxPagesGroup[] = [
           MDX_DATA.ThemeIcon,
           MDX_DATA.Timeline,
           MDX_DATA.Spoiler,
+          MDX_DATA.NumberFormatter,
         ],
       },
       {
@@ -333,12 +337,17 @@ export const MDX_PAGES_GROUPS: MdxPagesGroup[] = [
   },
   {
     group: 'changelog',
-    pages: [MDX_DATA.Changelog700, MDX_DATA.Changelog710, MDX_DATA.PreviousChangelogs],
+    pages: [
+      MDX_DATA.Changelog720,
+      MDX_DATA.Changelog710,
+      MDX_DATA.Changelog700,
+      MDX_DATA.PreviousChangelogs,
+    ],
   },
 ];
 
-export const ALL_MDX_PAGES: Frontmatter[] = [
-  ...MDX_PAGES_GROUPS.reduce<Frontmatter[]>((acc, group) => {
+export const NAVIGATION_MDX_PAGES: Frontmatter[] = MDX_PAGES_GROUPS.reduce<Frontmatter[]>(
+  (acc, group) => {
     group.pages.forEach((item) => {
       if (item.category) {
         const categoryPages = [...(item as MdxPagesCategory).pages];
@@ -350,6 +359,21 @@ export const ALL_MDX_PAGES: Frontmatter[] = [
     });
 
     return acc;
-  }, []),
+  },
+  []
+);
+
+export const SEARCH_MDX_PAGES: Frontmatter[] = [
+  ...NAVIGATION_MDX_PAGES,
   ...Object.keys(MDX_META_DATA).map((key) => MDX_META_DATA[key]),
+  {
+    title: 'Combobox examples',
+    slug: '/combobox/?e=BasicSelect',
+    search: '50+ examples of Combobox usage',
+  },
+  {
+    title: 'AppShell examples',
+    slug: '/app-shell/?e=BasicAppShell',
+    search: '10+ examples of AppShell usage',
+  },
 ];

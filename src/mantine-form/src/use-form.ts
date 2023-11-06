@@ -6,6 +6,7 @@ import { filterErrors } from './filter-errors';
 import { shouldValidateOnChange, validateFieldValue, validateValues } from './validate';
 import { getStatus } from './get-status';
 import { changeErrorIndices, clearListState, reorderErrors } from './lists';
+import { useFormActions } from './actions';
 import {
   _TransformValues,
   ClearErrors,
@@ -36,6 +37,7 @@ export function useForm<
   Values = Record<string, unknown>,
   TransformValues extends _TransformValues<Values> = (values: Values) => Values,
 >({
+  name,
   initialValues = {} as Values,
   initialErrors = {},
   initialDirty = {},
@@ -43,6 +45,7 @@ export function useForm<
   clearInputErrorOnChange = true,
   validateInputOnChange = false,
   validateInputOnBlur = false,
+  onValuesChange,
   transformValues = ((values: Values) => values) as any,
   validate: rules,
 }: UseFormInput<Values, TransformValues> = {}): UseFormReturnType<Values, TransformValues> {
@@ -71,9 +74,8 @@ export function useForm<
 
   const clearErrors: ClearErrors = useCallback(() => _setErrors({}), []);
   const reset: Reset = useCallback(() => {
-    _setValues(initialValues);
+    _setValues(valuesSnapshot.current);
     clearErrors();
-    setValuesSnapshot(initialValues);
     setDirty({});
     resetTouched();
   }, []);
@@ -125,6 +127,8 @@ export function useForm<
           : clearFieldError(path);
       }
 
+      onValuesChange?.(result);
+
       return result;
     });
 
@@ -134,26 +138,40 @@ export function useForm<
   const setValues: SetValues<Values> = useCallback((payload) => {
     _setValues((currentValues) => {
       const valuesPartial = typeof payload === 'function' ? payload(currentValues) : payload;
-      return { ...currentValues, ...valuesPartial };
+      const result = { ...currentValues, ...valuesPartial };
+      onValuesChange?.(result);
+      return result;
     });
     clearInputErrorOnChange && clearErrors();
   }, []);
 
   const reorderListItem: ReorderListItem<Values> = useCallback((path, payload) => {
     clearFieldDirty(path);
-    _setValues((current) => reorderPath(path, payload, current));
+    _setValues((current) => {
+      const result = reorderPath(path, payload, current);
+      onValuesChange?.(result);
+      return result;
+    });
     _setErrors((errs) => reorderErrors(path, payload, errs));
   }, []);
 
   const removeListItem: RemoveListItem<Values> = useCallback((path, index) => {
     clearFieldDirty(path);
-    _setValues((current) => removePath(path, index, current));
+    _setValues((current) => {
+      const result = removePath(path, index, current);
+      onValuesChange?.(result);
+      return result;
+    });
     _setErrors((errs) => changeErrorIndices(path, index, errs, -1));
   }, []);
 
   const insertListItem: InsertListItem<Values> = useCallback((path, item, index) => {
     clearFieldDirty(path);
-    _setValues((current) => insertPath(path, item, index, current));
+    _setValues((current) => {
+      const result = insertPath(path, item, index, current);
+      onValuesChange?.(result);
+      return result;
+    });
     _setErrors((errs) => changeErrorIndices(path, index, errs, 1));
   }, []);
 
@@ -258,7 +276,7 @@ export function useForm<
     [values, rules]
   );
 
-  return {
+  const form: UseFormReturnType<Values, TransformValues> = {
     values,
     errors,
     setValues,
@@ -286,4 +304,8 @@ export function useForm<
     isValid,
     getTransformedValues,
   };
+
+  useFormActions(name, form);
+
+  return form;
 }

@@ -1,21 +1,26 @@
 import React from 'react';
+import Link from 'next/link';
 import { Table, Button, Text } from '@mantine/core';
-import { IconExternalLink } from '@tabler/icons-react';
+import { IconExternalLink, IconCircleDashed } from '@tabler/icons-react';
 import { frameworkIcons } from '@/components/icons';
 import { TEMPLATES_DATA, Template } from './data';
+import { COMMUNITY_TEMPLATES_DATA } from './community-data';
 import classes from './MdxTemplatesList.module.css';
 
 interface MdxTemplatesListProps {
+  community?: boolean;
   type?: Template['type'];
   name?: string[];
 }
 
-export function MdxTemplatesList({ type, name }: MdxTemplatesListProps) {
+export function MdxTemplatesList({ type, name, community = false }: MdxTemplatesListProps) {
+  const templatesData = community ? COMMUNITY_TEMPLATES_DATA : TEMPLATES_DATA;
+
   const data = name
-    ? TEMPLATES_DATA.filter((template) => name.includes(template.name))
+    ? templatesData.filter((template) => name.includes(template.name))
     : type
-    ? TEMPLATES_DATA.filter((template) => template.type === type)
-    : TEMPLATES_DATA;
+    ? templatesData.filter((template) => template.type === type)
+    : templatesData;
 
   const rows = data.map((template) => {
     const Icon = frameworkIcons[template.type];
@@ -50,7 +55,29 @@ export function MdxTemplatesList({ type, name }: MdxTemplatesListProps) {
 
   return (
     <Table highlightOnHover verticalSpacing="sm" layout="fixed">
-      <Table.Tbody>{rows}</Table.Tbody>
+      <Table.Tbody>
+        {community && (
+          <Table.Tr>
+            <Table.Td className={classes.iconCell} w={70}>
+              <div className={classes.icon} data-type="empty">
+                <IconCircleDashed stroke={1.5} size={40} />
+              </div>
+            </Table.Td>
+            <Table.Td>
+              <Text fz="sm" fw={500}>
+                Your template here
+              </Text>
+              <Text fz="xs">Create a template with your stack and share it with the community</Text>
+            </Table.Td>
+            <Table.Td w={146}>
+              <Button component={Link} href="/submit-template/" size="xs">
+                Submit template
+              </Button>
+            </Table.Td>
+          </Table.Tr>
+        )}
+        {rows}
+      </Table.Tbody>
     </Table>
   );
 }

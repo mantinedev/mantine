@@ -1,6 +1,6 @@
 import { Layout } from '@/layout';
 import { MDX_DATA } from '@/mdx';
-import { CheckboxDemos } from '@mantine/demos';
+import { CheckboxDemos, TableDemos, ThemingDemos } from '@mantine/demos';
 
 export default Layout(MDX_DATA.Checkbox);
 
@@ -12,14 +12,20 @@ export default Layout(MDX_DATA.Checkbox);
 
 <Demo data={CheckboxDemos.states} />
 
-## Replace icon
+## Change icons
 
 <Demo data={CheckboxDemos.icon} />
 
+## Change icon color
+
+Use `iconColor` prop to change icon color. You can reference colors from `theme.colors` or use any valid CSS color:
+
+<Demo data={CheckboxDemos.iconColor} />
+
 ## Indeterminate state
 
-`Checkbox` supports indeterminate state. When `indeterminate` prop is true,
-`checked` prop is ignored:
+`Checkbox` supports indeterminate state. When `indeterminate` prop is set,
+`checked` prop is ignored (checkbox always has checked styles):
 
 <Demo data={CheckboxDemos.indeterminate} demoProps={{ toggle: true }} />
 
@@ -40,6 +46,30 @@ function Demo() {
 ## Label with link
 
 <Demo data={CheckboxDemos.anchor} />
+
+## Checkbox with tooltip
+
+You can change target element to which tooltip is attached with `refProp`:
+
+- If `refProp` is not set, the tooltip is attached to the checkbox input
+- If `refProp="rootRef"` is set, the tooltip is attached to the root element (contains label, input and other elements)
+
+<Demo data={CheckboxDemos.tooltip} />
+
+## Pointer cursor
+
+By default, checkbox input and label have `cursor: default` (same as native `input[type="checkbox"]`).
+To change cursor to pointer, set `cursorType` on [theme](/theming/theme-object/):
+
+<Demo data={ThemingDemos.cursorType} />
+
+## Add custom sizes
+
+You can add any number of custom sizes with [data-size](/styles/data-attributes/) attribute:
+
+<Demo data={CheckboxDemos.customSize} />
+
+<WrapperProps component="Checkbox" />
 
 ## Checkbox.Group
 
@@ -65,9 +95,25 @@ function Demo() {
 
 <GetElementRef component="Checkbox" refType="input" />
 
+<StylesApiSelectors component="Checkbox" />
+
+<Demo data={CheckboxDemos.stylesApi} />
+
+## Example: Table with row selection
+
+<Demo data={TableDemos.rowSelection} />
+
+## Example: Checkbox card
+
+<Demo data={CheckboxDemos.card} />
+
+## Example: Customize with Styles API
+
+<Demo data={CheckboxDemos.customize} />
+
 ## Accessibility
 
-Set `aria-label` or `label` prop to make checkbox accessible:
+Set `aria-label` or `label` prop to make the checkbox accessible:
 
 ```tsx
 import { Checkbox } from '@mantine/core';

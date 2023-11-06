@@ -17,3 +17,8 @@ export const DemoVideo = {
   name: '⭐ Demo: video',
   render: renderDemo(demos.video),
 };
+
+export const DemoFlex = {
+  name: '⭐ Demo: flex',
+  render: renderDemo(demos.flex),
+};

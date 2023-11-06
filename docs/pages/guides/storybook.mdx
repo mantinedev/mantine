@@ -21,12 +21,15 @@ npx storybook@latest init
 
 ## Configure addons
 
+Note that `@storybook/addon-styling-webpack` is required only if you are
+not using Vite. **If you are using Vite, do not install `@storybook/addon-styling-webpack` and do not add it to the addons section in `main.ts` file**.
+
 Install Storybook addons:
 
 - [storybook-dark-mode](https://storybook.js.org/addons/storybook-dark-mode/)
-- [@storybook/addon-styling](https://storybook.js.org/addons/@storybook/addon-styling)
+- [@storybook/addon-styling-webpack](https://storybook.js.org/addons/@storybook/addon-styling-webpack)
 
-<InstallScript packages="storybook-dark-mode @storybook/addon-styling" dev />
+<InstallScript packages="storybook-dark-mode @storybook/addon-styling-webpack" dev />
 
 Add addons to `.storybook/main.ts`:
 
@@ -37,7 +40,7 @@ const config: StorybookConfig = {
   // ... other config properties
   addons: [
     // ... other addons
-    '@storybook/addon-styling',
+    '@storybook/addon-styling-webpack', // Add this line only if you are not using Vite
     'storybook-dark-mode',
   ],
 };

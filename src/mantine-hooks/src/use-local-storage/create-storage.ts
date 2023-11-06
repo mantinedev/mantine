@@ -74,19 +74,26 @@ export function createStorage<T>(type: StorageType, hookName: string) {
 
   return function useStorage({
     key,
-    defaultValue = undefined,
+    defaultValue,
     getInitialValueInEffect = true,
     deserialize = deserializeJSON,
     serialize = (value: T) => serializeJSON(value, hookName),
   }: StorageProperties<T>) {
     const readStorageValue = useCallback(
       (skipStorage?: boolean): T => {
-        if (
-          typeof window === 'undefined' ||
-          !(type in window) ||
-          window[type] === null ||
-          skipStorage
-        ) {
+        let storageBlockedOrSkipped;
+
+        try {
+          storageBlockedOrSkipped =
+            typeof window === 'undefined' ||
+            !(type in window) ||
+            window[type] === null ||
+            !!skipStorage;
+        } catch (_e) {
+          storageBlockedOrSkipped = true;
+        }
+
+        if (storageBlockedOrSkipped) {
           return defaultValue as T;
         }
 
@@ -147,10 +154,10 @@ export function createStorage<T>(type: StorageType, hookName: string) {
       }
     }, []);
 
-    return [
-      value === undefined ? defaultValue : value,
-      setStorageValue,
-      removeStorageValue,
-    ] as const;
+    return [value === undefined ? defaultValue : value, setStorageValue, removeStorageValue] as [
+      T,
+      (val: T | ((prevState: T) => T)) => void,
+      () => void,
+    ];
   };
 }

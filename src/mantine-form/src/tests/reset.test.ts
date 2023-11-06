@@ -45,4 +45,15 @@ describe('@mantine/form/reset', () => {
     expect(hook.result.current.isDirty()).toBe(false);
     expect(hook.result.current.values).toStrictEqual({ a: 1, b: 2 });
   });
+
+  it('resets values correctly after updating initial values', () => {
+    const hook = renderHook(() => useForm({ initialValues: { a: 1, b: 2 } }));
+    const newInitialState = { a: 3, b: 4 };
+
+    act(() => hook.result.current.setValues({ a: 100, b: 200 }));
+    act(() => hook.result.current.setInitialValues(newInitialState));
+    act(() => hook.result.current.reset());
+
+    expect(hook.result.current.values).toStrictEqual(newInitialState);
+  });
 });

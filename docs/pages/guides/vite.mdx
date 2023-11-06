@@ -23,7 +23,7 @@ Install PostCSS plugins and [postcss-preset-mantine](/styles/postcss-preset):
 
 <InstallScript packages="postcss postcss-preset-mantine postcss-simple-vars" dev />
 
-Create `postcss.config.js` file at the root of your application with the following content:
+Create `postcss.config.cjs` file at the root of your application with the following content:
 
 ```js
 module.exports = {
@@ -41,8 +41,6 @@ module.exports = {
   },
 };
 ```
-
-Note that if you use Node.js 18+, you will need to replace `module.exports = ` with `export default`.
 
 ## Setup
 

@@ -1,16 +1,15 @@
 name: Report an issue with @mantine/ scoped package
 description: Tell us if something is not working as expected
-labels: 'review required'
 body:
   - type: markdown
     attributes:
       value: |
         ## Thanks for reaching out!
-        Before submitting an issue please make sure that you use latest version of all @mantine/ packages.
+        Before submitting an issue please make sure that you use latest version of all @mantine/* packages.
   - type: dropdown
     id: package
     attributes:
-      label: What package has an issue
+      label: What package has an issue?
       options:
         - '@mantine/core'
         - '@mantine/dates'
@@ -44,7 +43,7 @@ body:
   - type: input
     id: link
     attributes:
-      label: If possible, please include a link to a codesandbox with the reproduced problem
+      label: If possible, please include a link to a codesandbox with a minimal reproduction
       description: Codesandbox template – https://codesandbox.io/s/mantine-template-9ze89
   - type: dropdown
     id: fix
@@ -56,7 +55,7 @@ body:
   - type: dropdown
     id: participate
     attributes:
-      label: Are you willing to participate in fixing this issue and create a pull request with the fix
+      label: Do you want to send a pull request with a fix?
       options:
         - 'Yes'
         - 'No'

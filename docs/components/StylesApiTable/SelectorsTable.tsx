@@ -4,12 +4,18 @@ import { HtmlText } from '@/components/HtmlText';
 import { TableInlineCode } from '@/components/TableInlineCode';
 import type { StylesApiData } from './StylesApiTable';
 
-interface SelectorsTableProps extends TableProps {
+interface SelectorsTableProps extends Omit<TableProps, 'data'> {
   data: StylesApiData;
   component: string;
+  fixedLayout?: boolean;
 }
 
-export function SelectorsTable({ data, component, ...others }: SelectorsTableProps) {
+export function SelectorsTable({
+  data,
+  component,
+  fixedLayout = true,
+  ...others
+}: SelectorsTableProps) {
   const rows = Object.keys(data.selectors).map((selector) => (
     <Table.Tr key={selector}>
       <Table.Td>{selector}</Table.Td>
@@ -26,11 +32,11 @@ export function SelectorsTable({ data, component, ...others }: SelectorsTablePro
 
   return (
     <Table.ScrollContainer minWidth={600}>
-      <Table layout="fixed" {...others}>
+      <Table layout={fixedLayout ? 'fixed' : undefined} {...others}>
         <Table.Thead>
           <Table.Tr>
-            <Table.Th w={210}>Selector</Table.Th>
-            <Table.Th w={310}>Static selector</Table.Th>
+            <Table.Th w={fixedLayout ? 210 : undefined}>Selector</Table.Th>
+            <Table.Th w={fixedLayout ? 310 : undefined}>Static selector</Table.Th>
             <Table.Th>Description</Table.Th>
           </Table.Tr>
         </Table.Thead>

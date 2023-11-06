@@ -9,8 +9,8 @@ export { fixedDecimalScale } from './NumberInput.demo.fixedDecimalScale';
 export { prefixSuffix } from './NumberInput.demo.prefixSuffix';
 export { minMax } from './NumberInput.demo.minMax';
 export { strictClamp } from './NumberInput.demo.strictClamp';
-
 export { usage } from './NumberInput.demo.usage';
 export { error } from './NumberInput.demo.error';
 export { disabled } from './NumberInput.demo.disabled';
 export { stylesApi } from './NumberInput.demo.stylesApi';
+export { sections } from './NumberInput.demo.sections';

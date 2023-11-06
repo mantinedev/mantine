@@ -34,7 +34,11 @@ const variantColorResolver: VariantColorsResolver = (input) => {
 
   // Override some properties for variant
   if (parsedColor.isThemeColor && parsedColor.color === 'lime' && input.variant === 'filled') {
-    return { ...defaultResolvedColors, color: 'var(--mantine-color-black)' };
+    return {
+      ...defaultResolvedColors,
+      color: 'var(--mantine-color-black)',
+      hoverColor: 'var(--mantine-color-white)',
+    };
   }
 
   // Completely override variant
@@ -88,7 +92,11 @@ const variantColorResolver: VariantColorsResolver = (input) => {
 
   // Override some properties for variant
   if (parsedColor.isThemeColor && parsedColor.color === 'lime' && input.variant === 'filled') {
-    return { ...defaultResolvedColors, color: 'var(--mantine-color-black)' };
+    return {
+      ...defaultResolvedColors,
+      color: 'var(--mantine-color-black)',
+      hoverColor: 'var(--mantine-color-white)',
+    };
   }
 
   // Completely override variant

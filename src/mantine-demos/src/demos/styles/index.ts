@@ -16,3 +16,4 @@ export { dataSize } from './Styles.demo.dataSize';
 export { classNamesProps } from './Styles.demo.classNamesProps';
 export { remSlider } from './Styles.demo.remSlider';
 export { hiddenVisible } from './Styles.demo.hiddenVisible';
+export { lightDarkHidden } from './Styles.demo.lightDarkHidden';

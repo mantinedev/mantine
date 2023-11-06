@@ -206,7 +206,12 @@ Every Mantine component has a set of elements names that can be used to
 apply styles to inner elements inside the component.
 Example of [TextInput](/core/text-input) component selectors:
 
-<SelectorsTable data={TextInputStylesApi} component="Button" withTableBorder={false} />
+<SelectorsTable
+  data={TextInputStylesApi}
+  component="Button"
+  withTableBorder={false}
+  fixedLayout={false}
+/>
 
 These selectors can be used to apply styles to inner elements with [classNames or styles](/styles/styles-api) props:
 

@@ -37,7 +37,9 @@
   background-color: var(--_tr-bg, transparent);
 
   @mixin hover {
-    --_tr-bg: var(--_tr-hover-bg, transparent) !important;
+    [data-mantine-color-scheme] &[data-hover] {
+      --_tr-bg: var(--_tr-hover-bg) !important;
+    }
   }
 
   &[data-with-row-border] {
@@ -83,6 +85,16 @@
     &[data-hover] {
       --_tr-hover-bg: var(--_table-hover-color);
     }
+  }
+}
+
+.thead {
+  position: var(--_thead-position, static);
+  top: var(--table-sticky-header-offset, 0);
+  background-color: var(--mantine-color-body);
+
+  &[data-sticky] {
+    --_thead-position: sticky;
   }
 }
 

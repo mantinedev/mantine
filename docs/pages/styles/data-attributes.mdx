@@ -10,7 +10,7 @@ export default Layout(MDX_DATA.DataAttributes);
 
 Mantine components use `data-*` attributes to apply styles. These attributes are used as
 a modifier to apply styles based on component state. General rule of Mantine components
-styles – one class with shared styles and any number of `data-*` attributes as modifiers.
+styles: one class with shared styles and any number of `data-*` attributes as modifiers.
 
 Example of applying styles with `data-*` attributes:
 
@@ -19,8 +19,8 @@ Example of applying styles with `data-*` attributes:
 ## data attributes values
 
 Most of the `data-*` attributes do not have associated values, they represent boolean
-state or feature. For example, when `disabled` prop on [Button](/core/button) is set
-`data-disabled` attribute is added to the `<button />` element:
+state or a feature. For example, when the `disabled` prop on [Button](/core/button) is set,
+the `data-disabled` attribute is added to the `<button />` element:
 
 ```tsx
 import { Button } from '@mantine/core';
@@ -40,7 +40,7 @@ Will output the following HTML:
 <button class="my-button" data-disabled>Disabled button</button>
 ```
 
-You can then use this attribute to apply styles to disabled button:
+You can then use this attribute to apply styles to the disabled button:
 
 ```css
 .my-button {
@@ -52,15 +52,15 @@ You can then use this attribute to apply styles to disabled button:
 }
 ```
 
-When `disabled` prop is not set, then `data-disabled` attribute is not added to the
+When the `disabled` prop is not set, then the `data-disabled` attribute is not added to the
 button:
 
 ```html
 <button class="my-button">Not disabled button</button>
 ```
 
-In some cases, `data-*` attributes have associated values, for example, [Button](/core/button)
-component `section` element has an associated `data-position` attribute which can be
+In some cases, `data-*` attributes have associated values, for example, a [Button](/core/button)
+component's `section` element has an associated `data-position` attribute which can be
 `left` or `right`. The following example will render two `section` elements, one with
 `data-position="left"` and another with `data-position="right"`:
 
@@ -107,23 +107,23 @@ You can then use this attribute to apply styles to the left and right sections:
 
 ## Components data attributes documentation
 
-Every component that uses `data-*` attributes has a dedicated section under `Styles API` tab.
+Every component that uses `data-*` attributes has a dedicated section under the `Styles API` tab.
 
 [Button](/core/button) component `data-*` attributes table:
 
-<ModifiersTable data={ButtonStylesApi} withTableBorder={false} my="xl" />
+<ModifiersTable data={ButtonStylesApi} withTableBorder={false} my="xl" fixedLayout={false} />
 
 How to read the table:
 
 - `selector` column – [Styles API](/styles/styles-api) selector (or multiple selectors) to which data attribute is added
 - `attribute` column – data attribute name
-- `condition` column – condition based on which data attribute is added to the element
+- `condition` column – condition based on which the data attribute is added to the element
 - `value` column – value of the data attribute
 
 ## Box component mod prop
 
-[Box](/core/box) component supports `mod` prop, which allows adding data attributes to
-the element. You can use to create custom components with data attributes.
+The [Box](/core/box) component supports a `mod` prop, which allows adding data attributes to
+the element. You can use it to create custom components with data attributes.
 
 ```tsx
 import { Box } from '@mantine/core';

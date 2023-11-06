@@ -11,6 +11,7 @@ import { itSupportsSize } from './shared/it-supports-size';
 import { itHasExtend } from './shared/it-has-extend';
 import { itHasClasses } from './shared/it-has-classes';
 import { itSupportsHiddenVisible } from './shared/it-supports-hidden-visible';
+import { itSupportsLightDarkHidden } from './shared/it-supports-light-dark-hidden';
 import { itSupportsId } from './shared/it-supports-id';
 
 import { itSupportsMarginsProps } from './style-props/it-supports-margins-props';
@@ -60,6 +61,7 @@ export function itSupportsSystemProps<
 
     itSupportsClassName(options);
     itSupportsHiddenVisible(options);
+    itSupportsLightDarkHidden(options);
     itSupportsStyle(options);
     itSupportsOthers(options);
     options.refType && itSupportsRef({ ...options, refType: options.refType });

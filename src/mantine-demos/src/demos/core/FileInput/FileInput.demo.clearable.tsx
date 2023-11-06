@@ -11,7 +11,7 @@ function Demo() {
 `;
 
 function Demo() {
-  return <FileInput label="Upload files" placeholder="Upload files" clearable />;
+  return <FileInput clearable label="Upload files" placeholder="Upload files" />;
 }
 
 export const clearable: MantineDemo = {

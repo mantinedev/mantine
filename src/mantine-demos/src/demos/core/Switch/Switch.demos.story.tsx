@@ -32,3 +32,8 @@ export const DemoStylesApi = {
   name: '⭐ Demo: stylesApi',
   render: renderDemo(demos.stylesApi),
 };
+
+export const DemoTooltip = {
+  name: '⭐ Demo: tooltip',
+  render: renderDemo(demos.tooltip),
+};

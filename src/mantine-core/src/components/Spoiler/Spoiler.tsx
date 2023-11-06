@@ -99,8 +99,8 @@ export const Spoiler = factory<SpoilerFactory>((_props, ref) => {
   const regionId = `${_id}-region`;
   const [show, setShowState] = useState(initialState);
   const { ref: contentRef, height } = useElementSize();
-  const spoiler = maxHeight! < height;
   const spoilerMoreContent = show ? hideLabel : showLabel;
+  const spoiler = spoilerMoreContent !== null && maxHeight! < height;
 
   return (
     <Box

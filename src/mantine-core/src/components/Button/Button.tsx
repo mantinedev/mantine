@@ -41,6 +41,7 @@ export type ButtonCssVariables = {
     | '--button-radius'
     | '--button-bg'
     | '--button-hover'
+    | '--button-hover-color'
     | '--button-color'
     | '--button-bd';
 };
@@ -121,6 +122,7 @@ const varsResolver = createVarsResolver<ButtonFactory>(
         '--button-hover': color || variant ? colors.hover : undefined,
         '--button-color': color || variant ? colors.color : undefined,
         '--button-bd': color || variant ? colors.border : undefined,
+        '--button-hover-color': color || variant ? colors.hoverColor : undefined,
       },
     };
   }

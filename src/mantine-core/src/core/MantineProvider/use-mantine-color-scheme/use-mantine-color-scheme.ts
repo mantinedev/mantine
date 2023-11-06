@@ -15,7 +15,7 @@ function disableTransition() {
   return clear;
 }
 
-export function useMantineColorScheme() {
+export function useMantineColorScheme({ keepTransitions }: { keepTransitions?: boolean } = {}) {
   const clearStylesRef = useRef<() => void>();
   const timeoutRef = useRef<number>();
   const ctx = useContext(MantineContext);
@@ -26,7 +26,7 @@ export function useMantineColorScheme() {
 
   const setColorScheme = (value: MantineColorScheme) => {
     ctx.setColorScheme(value);
-    clearStylesRef.current = disableTransition();
+    clearStylesRef.current = keepTransitions ? () => {} : disableTransition();
     window.clearTimeout(timeoutRef.current);
     timeoutRef.current = window.setTimeout(() => {
       clearStylesRef.current?.();
@@ -35,7 +35,7 @@ export function useMantineColorScheme() {
 
   const clearColorScheme = () => {
     ctx.clearColorScheme();
-    clearStylesRef.current = disableTransition();
+    clearStylesRef.current = keepTransitions ? () => {} : disableTransition();
     window.clearTimeout(timeoutRef.current);
     timeoutRef.current = window.setTimeout(() => {
       clearStylesRef.current?.();

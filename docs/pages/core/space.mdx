@@ -19,17 +19,34 @@ Use `Space` component to add horizontal or vertical spacing between elements:
 In most cases, you would want to use margin props instead of `Space` when working with Mantine components:
 
 ```tsx
-<Text>First line</Text>
-// <Space h="md" /> is not required as the same can be achieved with margin
-<Text mt="md">Second line</Text>
+import { Text, Space } from '@mantine/core';
+
+// Space is not required as the same can be achieved with `mt` prop
+function Demo() {
+  return (
+    <>
+      <Text>First line</Text>
+      <Text mt="md">Second line</Text>
+    </>
+  );
+}
 ```
 
 But when you work with regular HTML elements you do not have access to `theme.spacing` and you may want to use
 `Space` component to skip direct theme subscription:
 
 ```tsx
-<div>First line</div>
-<Space h="md" />
-// Margin props are not available on div, use Space to add spacing from theme
-<div>Second line</div>
+import { Space } from '@mantine/core';
+
+// Margin props are not available on div,
+// use Space to add spacing from theme
+function Demo() {
+  return (
+    <>
+      <div>First line</div>
+      <Space h="md" />
+      <div>Second line</div>
+    </>
+  );
+}
 ```

@@ -22,7 +22,7 @@ export const configurator: MantineDemo = {
   controls: [
     { prop: 'color', type: 'color', initialValue: 'yellow', libraryValue: 'yellow' },
     { prop: 'size', type: 'size', initialValue: 'md', libraryValue: 'md' },
-    { prop: 'count', type: 'number', initialValue: 5, libraryValue: 5, min: 1, max: 15 },
+    { prop: 'count', type: 'number', initialValue: 5, libraryValue: 5, min: 1, max: 8 },
     { prop: 'highlightSelectedOnly', type: 'boolean', initialValue: false, libraryValue: false },
   ],
 };

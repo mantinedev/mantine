@@ -1,5 +1,4 @@
 // Generates separate css files for each @mantine/core component
-// @ts-ignore
 import postcssPresetMantine from 'postcss-preset-mantine';
 import postcss from 'postcss';
 import cssnano from 'cssnano';
@@ -7,7 +6,7 @@ import postcssModules from 'postcss-modules';
 import glob from 'fast-glob';
 import fs from 'fs-extra';
 import path from 'path';
-import { generateScopedName } from '../configuration/rollup/hash-css-name';
+import { generateScopedName } from 'hash-css-selector';
 
 const files = glob.sync(path.resolve(__dirname, '../src/mantine-core/src/**/*.css'));
 const modules = files.filter((file) => file.endsWith('.module.css'));

@@ -1,5 +1,3 @@
-import { Button } from '@mantine/core';
-import { IconExternalLink } from '@tabler/icons-react';
 import { Layout } from '@/layout';
 import { MDX_DATA } from '@/mdx';
 
@@ -10,19 +8,7 @@ export default Layout(MDX_DATA.AppShell);
 This page includes only documentation. Since all associated `AppShell` components have fixed
 position, it is not possible to include demos on this page.
 
-<Button
-  component="a"
-  href="/app-shell?e=BasicAppShell"
-  target="_blank"
-  rightSection={<IconExternalLink size={18} stroke={1.5} />}
-  fullWidth
-  justify="space-between"
-  h={50}
-  px={20}
-  radius="md"
->
-  {'Open AppShell examples page'}
-</Button>
+<ExamplesButton link="/app-shell?e=BasicAppShell" label="Open AppShell examples page" />
 
 ## Usage
 
@@ -58,6 +44,16 @@ function Demo() {
   );
 }
 ```
+
+## AppShell components
+
+- `AppShell` – root component, it is required to wrap all other components, used to configure layout properties
+- `AppShell.Header` – header section rendered at the top of the page, has fixed position, its height and collapsed state are controlled by the AppShell `header` prop
+- `AppShell.Navbar` – navbar section rendered at the left side of the page, has fixed position, its width and collapsed state are controlled by the AppShell `navbar` prop
+- `AppShell.Aside` – aside section rendered at the right side of the page, has fixed position, its width and collapsed state are controlled by the AppShell `aside` prop
+- `AppShell.Footer` – footer section rendered at the bottom of the page, has fixed position, its height and collapsed state are controlled by the AppShell `footer` prop
+- `AppShell.Main` – main section rendered at the center of the page, has static position, all other sections are offset by its padding
+- `AppShell.Section` – utility component that can be used to render group of content inside `AppShell.Navbar` and `AppShell.Aside`, can be used to create areas with custom scrollbars
 
 ## Configuration
 
@@ -388,6 +384,37 @@ import { AppShell } from '@mantine/core';
 
 function Demo() {
   return <AppShell disabled>{/* AppShell content */}</AppShell>;
+}
+```
+
+## AppShell.Section component
+
+`AppShell.Section` component can be used to create scrollable areas inside `AppShell.Navbar` and `AppShell.Aside`.
+Root elements of `AppShell.Navbar` and `AppShell.Aside` are flexbox containers with `flex-direction: column`,
+`AppShell.Section` with `grow` attribute will take all available space and will be scrollable if `component={ScrollArea}`
+is set.
+
+In the following example:
+
+- First and last sections (header and footer) will take as much space as they need to render `children`
+- Second section will take all available space and will be scrollable if content height exceeds available space
+
+```tsx
+import { AppShell, ScrollArea } from '@mantine/core';
+
+function Demo() {
+  return (
+    <AppShell navbar={{ width: 300 }}>
+      <AppShell.Navbar>
+        <AppShell.Section>Navbar header</AppShell.Section>
+        <AppShell.Section grow component={ScrollArea}>
+          Navbar main section, it will
+        </AppShell.Section>
+        <AppShell.Section>Navbar footer – always at the bottom</AppShell.Section>
+      </AppShell.Navbar>
+      <AppShell.Main>Main</AppShell.Main>
+    </AppShell>
+  );
 }
 ```
 

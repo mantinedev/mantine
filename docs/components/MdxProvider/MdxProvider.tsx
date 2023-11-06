@@ -12,6 +12,7 @@ import { MdxInstallScript } from './MdxInstallScript/MdxInstallScript';
 import { MdxPackagesInstallation } from './MdxPackagesInstallation/MdxPackagesInstallation';
 import { MdxNpmScript } from './MdxNpmScript/MdxNpmScript';
 import { MdxTemplatesList } from './MdxTemplatesList/MdxTemplatesList';
+import { MdxExamplesButton } from './MdxExamplesButton/MdxExamplesButton';
 import {
   MdxGetElementRef,
   MdxPolymorphic,
@@ -28,6 +29,8 @@ import {
   MdxComboboxFiltering,
   MdxComboboxProps,
   MdxServerComponentsIncompatible,
+  MdxWrapperProps,
+  MdxInputSections,
 } from './MdxSharedContent';
 
 export function MdxProvider({ children }: { children: React.ReactNode }) {
@@ -56,6 +59,9 @@ export function MdxProvider({ children }: { children: React.ReactNode }) {
         ComboboxFiltering: MdxComboboxFiltering,
         ComboboxProps: MdxComboboxProps,
         ServerComponentsIncompatible: MdxServerComponentsIncompatible,
+        ExamplesButton: MdxExamplesButton,
+        WrapperProps: MdxWrapperProps,
+        InputSections: MdxInputSections,
         pre: MdxPre,
         h1: h(1),
         h2: h(2),
