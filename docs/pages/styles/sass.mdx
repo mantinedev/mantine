@@ -124,15 +124,15 @@ Install `sass`:
 
 <InstallScript packages="sass" dev />
 
-Add mantine resources in your `next.config.js` file:
+Add mantine resources in your `next.config.mjs` file:
 
 ```tsx
-module.exports = withBundleAnalyzer({
+export default {
   // ...other config
   sassOptions: {
     prependData: `@import "./_mantine.scss";`,
   },
-});
+};
 ```
 
 Create `_mantine.scss` file in the root folder of your project:

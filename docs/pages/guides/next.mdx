@@ -27,7 +27,7 @@ Install PostCSS plugins and [postcss-preset-mantine](/styles/postcss-preset):
 
 <InstallScript packages="postcss postcss-preset-mantine postcss-simple-vars" dev />
 
-Create `postcss.config.js` file at the root of your application with the following content:
+Create `postcss.config.cjs` file at the root of your application with the following content:
 
 ```js
 module.exports = {
@@ -237,4 +237,18 @@ export default function Page() {
     </Popover>
   );
 }
+```
+
+## app router tree shaking
+
+To enable tree shaking with app router, enable experimental `optimizePackageImports` feature in
+your `next.config.mjs`:
+
+```tsx
+export default {
+  // ...other configuration
+  experimental: {
+    optimizePackageImports: ['@mantine/core', '@mantine/hooks'],
+  },
+};
 ```
