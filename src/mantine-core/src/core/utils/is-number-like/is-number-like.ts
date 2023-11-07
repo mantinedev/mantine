@@ -4,7 +4,11 @@ export function isNumberLike(value: unknown) {
   }
 
   if (typeof value === 'string') {
-    if (value.startsWith('calc(') || value.startsWith('var(')) {
+    if (
+      value.startsWith('calc(') ||
+      value.startsWith('var(') ||
+      (value.includes(' ') && value.trim() !== '')
+    ) {
       return true;
     }
 

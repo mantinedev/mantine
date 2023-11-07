@@ -3,7 +3,7 @@ function scaleRem(remValue: string) {
 }
 
 function createConverter(units: string, { shouldScale = false } = {}) {
-  return (value: unknown) => {
+  function converter(value: unknown): string {
     if (value === 0 || value === '0') {
       return '0';
     }
@@ -14,8 +14,15 @@ function createConverter(units: string, { shouldScale = false } = {}) {
     }
 
     if (typeof value === 'string') {
-      if (value.includes('calc(') || value.includes('var(')) {
+      if (value.startsWith('calc(') || value.startsWith('var(')) {
         return value;
+      }
+
+      if (value.includes(' ')) {
+        return value
+          .split(' ')
+          .map((val) => converter(val))
+          .join(' ');
       }
 
       if (value.includes(units)) {
@@ -30,7 +37,9 @@ function createConverter(units: string, { shouldScale = false } = {}) {
     }
 
     return value as string;
-  };
+  }
+
+  return converter;
 }
 
 export const rem = createConverter('rem', { shouldScale: true });

@@ -31,6 +31,20 @@ describe('@mantine/units-converters/rem', () => {
   it('does not modify scaled values', () => {
     expect(rem('calc(2rem * var(--mantine-scale))')).toBe('calc(2rem * var(--mantine-scale))');
   });
+
+  it('converts values separated by space', () => {
+    expect(rem('10px 5px')).toBe(
+      'calc(0.625rem * var(--mantine-scale)) calc(0.3125rem * var(--mantine-scale))'
+    );
+
+    expect(rem('1rem 0.5rem')).toBe(
+      'calc(1rem * var(--mantine-scale)) calc(0.5rem * var(--mantine-scale))'
+    );
+
+    expect(rem('16px solid var(--mantine-color-primary)')).toBe(
+      'calc(1rem * var(--mantine-scale)) solid var(--mantine-color-primary)'
+    );
+  });
 });
 
 describe('@mantine/units-converters/em', () => {

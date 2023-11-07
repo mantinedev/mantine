@@ -38,5 +38,5 @@ export function getShadow(size: unknown) {
     return undefined;
   }
 
-  return getSize(size, 'mantine-shadow');
+  return getSize(size, 'mantine-shadow', false);
 }

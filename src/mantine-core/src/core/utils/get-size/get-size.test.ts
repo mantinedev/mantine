@@ -45,6 +45,9 @@ describe('@mantine/core/get-radius', () => {
     expect(getRadius('xs')).toBe('var(--mantine-radius-xs)');
     expect(getRadius('md')).toBe('var(--mantine-radius-md)');
     expect(getRadius(undefined)).toBe('var(--mantine-radius-default)');
+    expect(getRadius('16px 8px')).toBe(
+      'calc(1rem * var(--mantine-scale)) calc(0.5rem * var(--mantine-scale))'
+    );
   });
 });
 
