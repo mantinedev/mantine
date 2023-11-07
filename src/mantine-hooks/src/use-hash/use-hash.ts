@@ -1,8 +1,14 @@
 import { useState, useEffect } from 'react';
 import { useWindowEvent } from '../use-window-event/use-window-event';
 
-export function useHash() {
-  const [hash, setHashValue] = useState<string>('');
+interface UseHashOptions {
+  getInitialValueInEffect?: boolean;
+}
+
+export function useHash({ getInitialValueInEffect = false }: UseHashOptions = {}) {
+  const [hash, setHashValue] = useState<string>(
+    getInitialValueInEffect ? window.location.hash || '' : ''
+  );
 
   const setHash = (value: string) => {
     const valueWithHash = value.startsWith('#') ? value : `#${value}`;
@@ -18,7 +24,9 @@ export function useHash() {
   });
 
   useEffect(() => {
-    setHashValue(window.location.hash);
+    if (getInitialValueInEffect) {
+      setHashValue(window.location.hash);
+    }
   }, []);
 
   return [hash, setHash] as const;
