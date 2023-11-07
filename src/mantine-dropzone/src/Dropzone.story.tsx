@@ -8,7 +8,7 @@ export default { title: 'Dropzone' };
 export function Usage() {
   return (
     <div style={{ padding: 40 }}>
-      <Dropzone onDrop={console.log} accept={['image/jpeg', 'image/png']}>
+      <Dropzone onDrop={console.log} accept={['image/jpeg', 'image/png']} role="button">
         <div>Drag and drop files</div>
       </Dropzone>
     </div>

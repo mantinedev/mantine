@@ -276,9 +276,9 @@ export const Dropzone = factory<DropzoneFactory>((_props, ref) => {
   return (
     <DropzoneProvider value={{ accept: isDragAccept, reject: isDragReject, idle: isIdle }}>
       <Box
-        {...others}
         {...getRootProps({ ref })}
         {...getStyles('root', { focusable: true })}
+        {...others}
         mod={{
           accept: isDragAccept,
           reject: isDragReject,
