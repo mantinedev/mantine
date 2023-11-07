@@ -2,6 +2,7 @@
   padding: var(--mantine-spacing-lg);
   padding-top: var(--mantine-spacing-xs);
   border-radius: var(--fieldset-radius, var(--mantine-radius-default));
+  min-inline-size: auto;
 }
 
 .root--default {
