@@ -146,6 +146,7 @@ export const PasswordInput = factory<PasswordInputFactory>((_props, ref) => {
   const visibilityToggleButton = (
     <ActionIcon<'button'>
       {...getStyles('visibilityToggle')}
+      disabled={disabled}
       radius={radius}
       aria-hidden={!visibilityToggleButtonProps}
       tabIndex={-1}

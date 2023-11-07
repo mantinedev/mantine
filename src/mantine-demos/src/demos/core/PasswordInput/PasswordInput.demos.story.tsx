@@ -37,3 +37,8 @@ export const DemoSections = {
   name: '⭐ Demo: sections',
   render: renderDemo(demos.sections),
 };
+
+export const DemoDisabled = {
+  name: '⭐ Demo: disabled',
+  render: renderDemo(demos.disabled),
+};
