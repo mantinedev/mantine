@@ -52,7 +52,7 @@ import { Avatar } from '@mantine/core';
 function Demo() {
   return <Avatar{{props}} />;
 }
-`,g={type:"configurator",component:u.q,centered:!0,striped:!0,code:f,controls:[h.d_,{prop:"radius",type:"size",initialValue:"sm",libraryValue:"100%"},{prop:"size",type:"size",initialValue:"md",libraryValue:"md"},{prop:"color",type:"color",initialValue:"gray",libraryValue:"gray"},{prop:"src",type:"string",initialValue:"",libraryValue:null}]},y=`
+`,g={type:"configurator",component:u.q,centered:!0,code:f,controls:[h.d_,{prop:"radius",type:"size",initialValue:"sm",libraryValue:"100%"},{prop:"size",type:"size",initialValue:"md",libraryValue:"md"},{prop:"color",type:"color",initialValue:"gray",libraryValue:"gray"},{prop:"src",type:"string",initialValue:"",libraryValue:null}]},y=`
 import { Avatar } from '@mantine/core';
 
 function Demo() {

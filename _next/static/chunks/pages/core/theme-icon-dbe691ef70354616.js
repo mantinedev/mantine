@@ -9,7 +9,7 @@ function Demo() {
     </ThemeIcon>
   );
 }
-`,g={type:"configurator",component:function(e){return l.createElement("div",{style:{display:"flex",alignItems:"center",justifyContent:"center"}},l.createElement(s.k,f({},e),l.createElement(c.Z,{style:{width:"70%",height:"70%"}})))},code:y,centered:!0,striped:!0,controls:[{prop:"variant",type:"select",initialValue:"filled",libraryValue:"filled",data:[{label:"filled",value:"filled"},{label:"light",value:"light"},{label:"outline",value:"outline"},{label:"default",value:"default"},{label:"white",value:"white"}]},{prop:"radius",type:"size",initialValue:"sm",libraryValue:"sm"},{prop:"size",type:"size",initialValue:"md",libraryValue:"md"},{prop:"color",type:"color",initialValue:"blue",libraryValue:"blue"}]};var m=r(1002),b=r(69137);let k=e=>`
+`,g={type:"configurator",component:function(e){return l.createElement("div",{style:{display:"flex",alignItems:"center",justifyContent:"center"}},l.createElement(s.k,f({},e),l.createElement(c.Z,{style:{width:"70%",height:"70%"}})))},code:y,centered:!0,controls:[{prop:"variant",type:"select",initialValue:"filled",libraryValue:"filled",data:[{label:"filled",value:"filled"},{label:"light",value:"light"},{label:"outline",value:"outline"},{label:"default",value:"default"},{label:"white",value:"white"}]},{prop:"radius",type:"size",initialValue:"sm",libraryValue:"sm"},{prop:"size",type:"size",initialValue:"md",libraryValue:"md"},{prop:"color",type:"color",initialValue:"blue",libraryValue:"blue"}]};var m=r(1002),b=r(69137);let k=e=>`
 import { ThemeIcon } from '@mantine/core';
 import { IconHeart } from '@tabler/icons-react';
 

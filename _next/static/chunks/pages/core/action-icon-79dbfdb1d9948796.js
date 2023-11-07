@@ -9,7 +9,7 @@ function Demo() {
     </ActionIcon>
   );
 }
-`,j={type:"configurator",component:function(e){return c.createElement(s.A,y(x({},e),{"aria-label":"Settings"}),c.createElement(l,{style:{width:"70%",height:"70%"},stroke:1.5}))},code:g,centered:!0,striped:!0,controls:[d.cH,{prop:"color",type:"color",initialValue:"blue",libraryValue:"blue"},{prop:"size",type:"size",initialValue:"md",libraryValue:"md"},{prop:"radius",type:"size",initialValue:"sm",libraryValue:"sm"}]};var I=n(1002),A=n(69137);let k=e=>`
+`,j={type:"configurator",component:function(e){return c.createElement(s.A,y(x({},e),{"aria-label":"Settings"}),c.createElement(l,{style:{width:"70%",height:"70%"},stroke:1.5}))},code:g,centered:!0,controls:[d.cH,{prop:"color",type:"color",initialValue:"blue",libraryValue:"blue"},{prop:"size",type:"size",initialValue:"md",libraryValue:"md"},{prop:"radius",type:"size",initialValue:"sm",libraryValue:"sm"}]};var I=n(1002),A=n(69137);let k=e=>`
 import { ActionIcon } from '@mantine/core';
 import { IconHeart } from '@tabler/icons-react';
 
