@@ -44,6 +44,14 @@ export function Unstyled() {
   );
 }
 
+export function WithoutDescription() {
+  return (
+    <div style={{ maxWidth: 500, margin: 'auto', padding: 40 }}>
+      <Alert icon="$" title="Bummer!" color="red" variant="light" withCloseButton></Alert>
+    </div>
+  );
+}
+
 export function CSSVariables() {
   return (
     <MantineThemeProvider

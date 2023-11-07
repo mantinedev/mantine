@@ -30,7 +30,6 @@ export const usage: MantineDemo = {
   component: Wrapper,
   code,
   centered: true,
-  striped: true,
   controls: [
     interactiveVariantsControl,
     { prop: 'color', type: 'color', initialValue: 'blue', libraryValue: 'blue' },

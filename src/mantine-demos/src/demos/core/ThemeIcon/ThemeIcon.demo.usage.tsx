@@ -31,7 +31,6 @@ export const usage: MantineDemo = {
   component: Wrapper,
   code,
   centered: true,
-  striped: true,
   controls: [
     {
       prop: 'variant',

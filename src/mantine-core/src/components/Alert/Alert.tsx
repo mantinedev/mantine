@@ -146,9 +146,11 @@ export const Alert = factory<AlertFactory>((_props, ref) => {
             </div>
           )}
 
-          <div id={bodyId} {...getStyles('message')}>
-            {children}
-          </div>
+          {children && (
+            <div id={bodyId} {...getStyles('message')}>
+              {children}
+            </div>
+          )}
         </div>
 
         {withCloseButton && (

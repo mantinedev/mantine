@@ -27,7 +27,6 @@ export const configurator: MantineDemo = {
   component: Wrapper,
   code,
   centered: true,
-  striped: true,
   maxWidth: 400,
   controls: [
     { ...(staticVariantsControl as any), initialValue: 'light' },

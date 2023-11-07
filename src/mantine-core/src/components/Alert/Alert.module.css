@@ -25,14 +25,13 @@
 }
 
 .title {
-  margin-bottom: var(--mantine-spacing-xs);
   display: flex;
   align-items: center;
   justify-content: space-between;
   font-size: var(--mantine-font-size-sm);
   font-weight: 700;
 
-  &[data-with-clos-button] {
+  &[data-with-close-button] {
     padding-right: var(--mantine-spacing-md);
 
     @mixin rtl {
@@ -69,6 +68,7 @@
   overflow: hidden;
   font-size: var(--mantine-font-size-sm);
   color: var(--_message-color, var(--__message-color));
+  margin-top: var(--mantine-spacing-xs);
 
   @mixin light {
     --__message-color: var(--mantine-color-black);
