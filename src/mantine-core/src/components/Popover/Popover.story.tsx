@@ -219,6 +219,30 @@ export function Inline() {
   );
 }
 
+export function Size() {
+  const [opened, setState] = useState(false);
+
+  return (
+    <div style={{ padding: 40 }}>
+      <Popover
+        opened={opened}
+        middlewares={{ shift: true, flip: true, size: true }}
+        onChange={setState}
+      >
+        <Popover.Target>
+          <button type="button" onClick={() => setState((c) => !c)}>
+            Toggle popover
+          </button>
+        </Popover.Target>
+
+        <Popover.Dropdown style={{ overflow: 'auto' }}>
+          <div style={{ width: 100, height: 2000, background: 'pink' }} />
+        </Popover.Dropdown>
+      </Popover>
+    </div>
+  );
+}
+
 export function PopoverEvents() {
   const [opened, setState] = useState(false);
   const [toggle1, setToggle1] = useState(false);

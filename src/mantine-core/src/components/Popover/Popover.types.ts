@@ -4,4 +4,5 @@ export interface PopoverMiddlewares {
   shift: boolean;
   flip: boolean;
   inline?: boolean;
+  size?: boolean;
 }
