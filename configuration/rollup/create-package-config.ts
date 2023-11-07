@@ -25,6 +25,22 @@ interface PkgConfigInput {
   analyze: boolean;
 }
 
+const excludeUseClient = [
+  'index',
+  'core/utils/units-converters/rem',
+  'core/utils/units-converters/px',
+  'core/MantineProvider/create-theme/create-theme',
+  'core/MantineProvider/color-functions/darken/darken',
+  'core/MantineProvider/color-functions/lighten/lighten',
+  'core/MantineProvider/color-functions/rgba/rgba',
+  'core/MantineProvider/color-functions/to-rgba/to-rgba',
+  'core/MantineProvider/default-colors',
+  'core/MantineProvider/default-theme',
+].reduce<string[]>((acc, name) => {
+  acc.push(`${name}.js`, `${name}.mjs`);
+  return acc;
+}, []);
+
 export default async function createPackageConfig(config: PkgConfigInput): Promise<RollupOptions> {
   const packageJson = JSON.parse(
     fs.readFileSync(path.join(config.basePath, './package.json')).toString('utf-8')
@@ -53,7 +69,7 @@ export default async function createPackageConfig(config: PkgConfigInput): Promi
       minimize: true,
     }),
     banner((chunk) => {
-      if (chunk.fileName !== 'index.js' && chunk.fileName !== 'index.mjs') {
+      if (!excludeUseClient.includes(chunk.fileName)) {
         return "'use client';\n";
       }
 
