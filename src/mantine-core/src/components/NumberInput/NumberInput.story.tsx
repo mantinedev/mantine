@@ -20,6 +20,27 @@ export function Usage() {
   );
 }
 
+export function RightSectionSizes() {
+  return (
+    <div
+      style={{
+        maxWidth: 340,
+        margin: 'auto',
+        padding: 40,
+        display: 'flex',
+        flexDirection: 'column',
+        gap: 20,
+      }}
+    >
+      <NumberInput placeholder="xs" size="xs" styles={{ section: { background: 'transparent' } }} />
+      <NumberInput placeholder="sm" size="sm" styles={{ section: { background: 'transparent' } }} />
+      <NumberInput placeholder="md" size="md" styles={{ section: { background: 'transparent' } }} />
+      <NumberInput placeholder="lg" size="lg" styles={{ section: { background: 'transparent' } }} />
+      <NumberInput placeholder="xl" size="xl" styles={{ section: { background: 'transparent' } }} />
+    </div>
+  );
+}
+
 export function Unstyled() {
   const [value, setValue] = useState<number | string>(345);
   return (

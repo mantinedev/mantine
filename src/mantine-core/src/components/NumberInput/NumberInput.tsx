@@ -1,4 +1,5 @@
 import React from 'react';
+import cx from 'clsx';
 import { NumericFormat, OnValueChange, NumberFormatValues } from 'react-number-format';
 import { assignRef, clamp, useUncontrolled } from '@mantine/hooks';
 import {
@@ -175,6 +176,7 @@ const varsResolver = createVarsResolver<NumberInputFactory>((_, { size }) => ({
 export const NumberInput = factory<NumberInputFactory>((_props, ref) => {
   const props = useProps('NumberInput', defaultProps, _props);
   const {
+    className,
     classNames,
     styles,
     unstyled,
@@ -200,6 +202,8 @@ export const NumberInput = factory<NumberInputFactory>((_props, ref) => {
     rightSectionPointerEvents,
     allowNegative,
     readOnly,
+    size,
+    rightSectionWidth,
     ...others
   } = props;
 
@@ -304,6 +308,8 @@ export const NumberInput = factory<NumberInputFactory>((_props, ref) => {
     <InputBase
       component={NumericFormat}
       allowNegative={allowNegative}
+      className={cx(classes.root, className)}
+      size={size}
       {...others}
       readOnly={readOnly}
       disabled={disabled}
@@ -318,6 +324,7 @@ export const NumberInput = factory<NumberInputFactory>((_props, ref) => {
       decimalScale={allowDecimal ? decimalScale : 0}
       onKeyDown={handleKeyDown}
       rightSectionPointerEvents={rightSectionPointerEvents ?? disabled ? 'none' : undefined}
+      rightSectionWidth={rightSectionWidth ?? `var(--ni-right-section-width-${size || 'sm'})`}
       onBlur={(event) => {
         onBlur?.(event);
         if (clampBehavior === 'blur' && typeof _value === 'number') {

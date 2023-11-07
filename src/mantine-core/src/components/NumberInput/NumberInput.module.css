@@ -1,3 +1,11 @@
+.root {
+  --ni-right-section-width-xs: rem(17px);
+  --ni-right-section-width-sm: rem(24px);
+  --ni-right-section-width-md: rem(27px);
+  --ni-right-section-width-lg: rem(31px);
+  --ni-right-section-width-xl: rem(34px);
+}
+
 .controls {
   --ni-chevron-size-xs: rem(10px);
   --ni-chevron-size-sm: rem(14px);
