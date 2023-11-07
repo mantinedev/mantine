@@ -30,7 +30,10 @@ interface UsePopoverOptions {
   arrowOffset: number;
 }
 
-function getPopoverMiddlewares(options: UsePopoverOptions, getFloating: () => UseFloatingReturn) {
+function getPopoverMiddlewares(
+  options: UsePopoverOptions,
+  getFloating: () => UseFloatingReturn<Element>
+) {
   const middlewares: Middleware[] = [offset(options.offset)];
 
   if (options.middlewares?.shift) {
@@ -48,25 +51,27 @@ function getPopoverMiddlewares(options: UsePopoverOptions, getFloating: () => Us
   middlewares.push(arrow({ element: options.arrowRef, padding: options.arrowOffset }));
 
   if (options.middlewares?.size || options.width === 'target') {
-    middlewares.push(size({
-      apply({ rects, availableWidth, availableHeight }) {
-        const floating = getFloating();
-        const styles = floating.refs.floating.current?.style ?? {};
+    middlewares.push(
+      size({
+        apply({ rects, availableWidth, availableHeight }) {
+          const floating = getFloating();
+          const styles = floating.refs.floating.current?.style ?? {};
 
-        if (options.middlewares?.size) {
-          Object.assign(styles, {
-            maxWidth: `${availableWidth}px`,
-            maxHeight: `${availableHeight}px`,
-          });
-        }
+          if (options.middlewares?.size) {
+            Object.assign(styles, {
+              maxWidth: `${availableWidth}px`,
+              maxHeight: `${availableHeight}px`,
+            });
+          }
 
-        if (options.width === 'target') {
-          Object.assign(styles, {
-            width: `${rects.reference.width}px`,
-          });
-        }
-      },
-    }));
+          if (options.width === 'target') {
+            Object.assign(styles, {
+              width: `${rects.reference.width}px`,
+            });
+          }
+        },
+      })
+    );
   }
 
   return middlewares;
@@ -97,7 +102,7 @@ export function usePopover(options: UsePopoverOptions) {
     }
   };
 
-  const floating = useFloating({
+  const floating: UseFloatingReturn<Element> = useFloating({
     placement: options.position,
     middleware: getPopoverMiddlewares(options, () => floating),
   });

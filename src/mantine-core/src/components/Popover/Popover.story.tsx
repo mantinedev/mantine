@@ -227,7 +227,8 @@ export function Size() {
       <Popover
         opened={opened}
         middlewares={{ shift: true, flip: true, size: true }}
-        onChange={setState}>
+        onChange={setState}
+      >
         <Popover.Target>
           <button type="button" onClick={() => setState((c) => !c)}>
             Toggle popover
