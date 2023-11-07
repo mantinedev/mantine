@@ -18,6 +18,7 @@ export function CheckIcon({ size, style, ...others }: CheckIconProps) {
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
       style={_style}
+      aria-hidden
       {...others}
     >
       <path
@@ -33,7 +34,13 @@ export function CheckIcon({ size, style, ...others }: CheckIconProps) {
 export function CheckboxIcon({ indeterminate, ...others }: CheckboxIconProps) {
   if (indeterminate) {
     return (
-      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 32 6" {...others}>
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        viewBox="0 0 32 6"
+        aria-hidden
+        {...others}
+      >
         <rect width="32" height="6" fill="currentColor" rx="3" />
       </svg>
     );
