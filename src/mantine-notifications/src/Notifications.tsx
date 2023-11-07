@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useRef, useEffect } from 'react';
 import {
   Transition as _Transition,
   TransitionGroup,
@@ -181,6 +181,10 @@ export const Notifications = factory<NotificationsFactory>((_props, ref) => {
     vars,
     varsResolver,
   });
+
+  useEffect(() => {
+    store?.updateState((current) => ({ ...current, limit: limit || 5 }));
+  }, [limit]);
 
   useDidUpdate(() => {
     if (data.notifications.length > previousLength.current) {

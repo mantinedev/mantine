@@ -9,7 +9,6 @@ import {
   DirectionProvider,
   useDirection,
 } from '@mantine/core';
-import { Notifications } from '@mantine/notifications';
 import { theme } from '../docs/theme';
 
 export const parameters = { layout: 'fullscreen' };
@@ -45,7 +44,6 @@ function DirectionWrapper({ children }: { children: React.ReactNode }) {
       >
         {dir === 'ltr' ? <IconTextDirectionLtr /> : <IconTextDirectionRtl />}
       </ActionIcon>
-      <Notifications />
       {children}
     </>
   );

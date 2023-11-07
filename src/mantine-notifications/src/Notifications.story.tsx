@@ -8,7 +8,7 @@ export default { title: 'Notifications' };
 export function Usage() {
   return (
     <div style={{ padding: 40 }}>
-      <Notifications autoClose={false} position="top-center" />
+      <Notifications autoClose={false} position="top-center" limit={1} />
 
       <Group>
         <Button
