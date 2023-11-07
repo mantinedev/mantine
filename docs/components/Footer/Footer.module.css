@@ -4,12 +4,12 @@ $footer-breakpoint-mobile: 40em;
 .root {
   --docs-footer-height: rem(400px);
 
-  @media (max-width: 50em) {
-    --docs-footer-height: rem(460px);
+  @media (max-width: $footer-breakpoint-tablet) {
+    --docs-footer-height: rem(520px);
   }
 
   @media (max-width: $footer-breakpoint-mobile) {
-    --docs-footer-height: rem(320px);
+    --docs-footer-height: rem(380px);
   }
 }
 
