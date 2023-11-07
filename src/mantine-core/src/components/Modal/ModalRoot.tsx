@@ -62,6 +62,7 @@ const defaultProps: Partial<ModalRootProps> = {
   keepMounted: false,
   zIndex: getDefaultZIndex('modal'),
   transitionProps: { duration: 200, transition: 'pop' },
+  yOffset: '5dvh',
 };
 
 const varsResolver = createVarsResolver<ModalRootFactory>(
