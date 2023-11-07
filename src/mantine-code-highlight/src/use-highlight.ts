@@ -8,7 +8,8 @@ interface UseHighlightInput {
 }
 
 export function useHighlight({ code, language, highlightOnClient }: UseHighlightInput) {
-  const getHighlightedCode = () => hljs.highlight(code.trim(), { language: language! }).value;
+  const lang = hljs.getLanguage(language) ? language : 'plaintext';
+  const getHighlightedCode = () => hljs.highlight(code.trim(), { language: lang }).value;
   const [highlighted, setHighlighted] = useState(!highlightOnClient);
   const [highlightedCode, setHighlightedCode] = useState(
     highlightOnClient ? code : getHighlightedCode()
