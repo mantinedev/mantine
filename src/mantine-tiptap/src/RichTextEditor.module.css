@@ -71,7 +71,6 @@
 
     & code {
       background: none !important;
-      background-color: red;
       color: inherit;
       font-size: var(--mantine-font-size-sm);
       padding: 0;
