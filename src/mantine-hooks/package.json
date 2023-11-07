@@ -1,6 +1,6 @@
 {
   "name": "@mantine/hooks",
-  "version": "7.2.0",
+  "version": "7.2.1",
   "main": "./cjs/index.js",
   "types": "./lib/index.d.ts",
   "module": "./esm/index.mjs",
