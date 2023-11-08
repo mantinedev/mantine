@@ -1,0 +1,10 @@
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+import { LoadingOverlayDemos } from '@mantine/demos';
+
+export default Layout(MDX_DATA.Changelog730);
+
+## Other changes
+
+- [use-hash](/hooks/use-hash/) hook now supports `getInitialValueInEffect: false` option to get initial value during state initialization.
+- New `useMantineColorScheme({ keepTransitions: true })` option allows keeping transitions when color scheme changes. Note that it is `false` by default.
