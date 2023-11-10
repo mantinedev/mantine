@@ -89,6 +89,26 @@
   }
 }
 
+.input--outline {
+  & + .icon {
+    --_checkbox-icon-color: var(--checkbox-color);
+  }
+
+  &[data-indeterminate],
+  &:checked:not(:disabled) {
+    [data-mantine-color-scheme] & {
+      --_checkbox-bg: transparent;
+      --_checkbox-bd-color: var(--checkbox-color);
+
+      & + .icon {
+        --_checkbox-icon-color: var(--checkbox-color);
+        --_checkbox-icon-opacity: 1;
+        --_checkbox-icon-transform: none;
+      }
+    }
+  }
+}
+
 .icon {
   position: absolute;
   top: 0;

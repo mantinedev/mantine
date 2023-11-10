@@ -26,6 +26,16 @@ export function Usage() {
   );
 }
 
+export function OutlineVariant() {
+  return (
+    <div style={{ padding: 40 }}>
+      <Checkbox variant="outline" label="Default" value="hello" />
+      <Checkbox variant="outline" label="Disabled" checked disabled mt="xl" />
+      <Checkbox variant="outline" label="Indeterminate" indeterminate mt="xl" />
+    </div>
+  );
+}
+
 export function IconColor() {
   return (
     <div style={{ padding: 40 }}>
