@@ -62,3 +62,38 @@ export const DemoDisabledOptions = {
   name: '⭐ Demo: disabledOptions',
   render: renderDemo(demos.disabledOptions),
 };
+
+export const DemoSections = {
+  name: '⭐ Demo: sections',
+  render: renderDemo(demos.sections),
+};
+
+export const DemoDropdownOpened = {
+  name: '⭐ Demo: dropdownOpened',
+  render: renderDemo(demos.dropdownOpened),
+};
+
+export const DemoDropdownPosition = {
+  name: '⭐ Demo: dropdownPosition',
+  render: renderDemo(demos.dropdownPosition),
+};
+
+export const DemoDropdownAnimation = {
+  name: '⭐ Demo: dropdownAnimation',
+  render: renderDemo(demos.dropdownAnimation),
+};
+
+export const DemoDropdownPadding = {
+  name: '⭐ Demo: dropdownPadding',
+  render: renderDemo(demos.dropdownPadding),
+};
+
+export const DemoDropdownShadow = {
+  name: '⭐ Demo: dropdownShadow',
+  render: renderDemo(demos.dropdownShadow),
+};
+
+export const DemoWithinPopover = {
+  name: '⭐ Demo: withinPopover',
+  render: renderDemo(demos.withinPopover),
+};

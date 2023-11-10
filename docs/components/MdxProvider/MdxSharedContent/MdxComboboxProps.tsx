@@ -4,11 +4,19 @@ import { MdxCodeHighlight } from '../MdxPre/MdxPre';
 import { MdxTitle } from '../MdxTitle/MdxTitle';
 import { MdxLink } from '../MdxLink/MdxLink';
 
-const getCode = (component: string) => `
+const getPortalCode = (component: string) => `
 import { ${component} } from '@mantine/core';
 
 function Demo() {
   return <${component} comboboxProps={{ withinPortal: false }} data={[]} />;
+}
+`;
+
+const getZIndexCode = (component: string) => `
+import { ${component} } from '@mantine/core';
+
+function Demo() {
+  return <${component} comboboxProps={{ zIndex: 1000 }} data={[]} />;
 }
 `;
 
@@ -27,7 +35,11 @@ export function MdxComboboxProps({ component }: MdxComboboxPropsProps) {
         <MdxCode>withinPortal</MdxCode>:
       </MdxParagraph>
 
-      <MdxCodeHighlight language="tsx" code={getCode(component)} />
+      <MdxCodeHighlight language="tsx" code={getPortalCode(component)} />
+
+      <MdxTitle id="change-z-index">Change dropdown z-index</MdxTitle>
+
+      <MdxCodeHighlight language="tsx" code={getZIndexCode(component)} />
     </>
   );
 }
