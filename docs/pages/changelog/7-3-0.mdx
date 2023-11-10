@@ -46,6 +46,30 @@ form.errors;
 // }
 ```
 
+## rem/em functions improvements
+
+[rem and em](/styles/rem) function now support space separated values. This feature is available
+both in `rem` function exported from `@mantine/core` package and [postcss-preset-mantine](/styles/postcss-preset).
+Note that you need to update `postcss-preset-mantine` to `1.10.0` to use this feature.
+
+```tsx
+import { rem } from '@mantine/core';
+
+rem('16px 32px');
+// -> calc(1rem * var(--mantine-scale)) calc(2rem * var(--mantine-scale))
+```
+
+All components props that are converted to `rem` units now support space separated values as well.
+For example, space separated values can be used in `radius` prop of [Modal](/core/modal) component:
+
+```tsx
+import { Modal } from '@mantine/core';
+
+function Demo() {
+  return <Modal radius="10px 10px 0 0" opened onClose={() => {}} />;
+}
+```
+
 ## Documentation updates
 
 - Schema based validation with `@mantine/form` now has [dedicated page](/form/schema-validation). It includes more examples for basic, nested and list fields validation for each resolver.
