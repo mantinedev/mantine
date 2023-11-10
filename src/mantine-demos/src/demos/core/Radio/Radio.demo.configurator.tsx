@@ -44,5 +44,15 @@ export const configurator: MantineDemo = {
     { prop: 'error', type: 'string', initialValue: '', libraryValue: '' },
     { prop: 'size', type: 'size', initialValue: 'sm', libraryValue: 'sm' },
     { prop: 'color', type: 'color', initialValue: 'blue', libraryValue: 'blue' },
+    {
+      prop: 'variant',
+      type: 'segmented',
+      data: [
+        { value: 'filled', label: 'Filled' },
+        { value: 'outline', label: 'Outline' },
+      ],
+      initialValue: 'filled',
+      libraryValue: 'filled',
+    },
   ],
 };

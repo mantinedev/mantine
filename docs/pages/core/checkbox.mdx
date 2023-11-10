@@ -8,6 +8,20 @@ export default Layout(MDX_DATA.Checkbox);
 
 <Demo data={CheckboxDemos.configurator} />
 
+## Controlled
+
+```tsx
+import { useState } from 'react';
+import { Checkbox } from '@mantine/core';
+
+function Demo() {
+  const [checked, setChecked] = useState(false);
+  return (
+    <Checkbox checked={checked} onChange={(event) => setChecked(event.currentTarget.checked)} />
+  );
+}
+```
+
 ## States
 
 <Demo data={CheckboxDemos.states} />
@@ -28,20 +42,6 @@ Use `iconColor` prop to change icon color. You can reference colors from `theme.
 `checked` prop is ignored (checkbox always has checked styles):
 
 <Demo data={CheckboxDemos.indeterminate} demoProps={{ toggle: true }} />
-
-## Controlled
-
-```tsx
-import { useState } from 'react';
-import { Checkbox } from '@mantine/core';
-
-function Demo() {
-  const [checked, setChecked] = useState(false);
-  return (
-    <Checkbox checked={checked} onChange={(event) => setChecked(event.currentTarget.checked)} />
-  );
-}
-```
 
 ## Label with link
 

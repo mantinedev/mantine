@@ -3,19 +3,25 @@ import { MantineDemo } from '@mantine/ds';
 import { Checkbox, Stack } from '@mantine/core';
 
 const code = `
-import { Checkbox } from '@mantine/core';
+import { Checkbox, Stack } from '@mantine/core';
 
 function Demo() {
   return (
-    <>
-      <Checkbox />
-      <Checkbox indeterminate />
-      <Checkbox checked indeterminate />
-      <Checkbox checked />
-      <Checkbox disabled />
-      <Checkbox disabled checked />
-      <Checkbox disabled indeterminate />
-    </>
+    <Stack>
+      <Checkbox checked={false} onChange={() => {}} label="Default checkbox" />
+      <Checkbox checked={false} onChange={() => {}} indeterminate label="Indeterminate checkbox" />
+      <Checkbox checked onChange={() => {}} label="Checked checkbox" />
+      <Checkbox checked variant="outline" onChange={() => {}} label="Outline checked checkbox" />
+      <Checkbox
+        variant="outline"
+        onChange={() => {}}
+        indeterminate
+        label="Outline indeterminate checkbox"
+      />
+      <Checkbox disabled label="Disabled checkbox" />
+      <Checkbox disabled checked onChange={() => {}} label="Disabled checked checkbox" />
+      <Checkbox disabled indeterminate label="Disabled indeterminate checkbox" />
+    </Stack>
   );
 }
 `;
@@ -25,8 +31,14 @@ function Demo() {
     <Stack>
       <Checkbox checked={false} onChange={() => {}} label="Default checkbox" />
       <Checkbox checked={false} onChange={() => {}} indeterminate label="Indeterminate checkbox" />
-      <Checkbox checked onChange={() => {}} indeterminate label="Indeterminate checked checkbox" />
       <Checkbox checked onChange={() => {}} label="Checked checkbox" />
+      <Checkbox checked variant="outline" onChange={() => {}} label="Outline checked checkbox" />
+      <Checkbox
+        variant="outline"
+        onChange={() => {}}
+        indeterminate
+        label="Outline indeterminate checkbox"
+      />
       <Checkbox disabled label="Disabled checkbox" />
       <Checkbox disabled checked onChange={() => {}} label="Disabled checked checkbox" />
       <Checkbox disabled indeterminate label="Disabled indeterminate checkbox" />
