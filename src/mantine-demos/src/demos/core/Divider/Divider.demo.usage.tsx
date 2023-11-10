@@ -1,33 +1,72 @@
 import React from 'react';
 import { MantineDemo } from '@mantine/ds';
-import { Divider } from '@mantine/core';
+import { Text, Divider } from '@mantine/core';
 
 const code = `
-import { Divider } from '@mantine/core';
+import { Text, Divider } from '@mantine/core';
 
 function Demo() {
   return (
     <>
-      <Divider my="sm" />
-      <Divider my="sm" variant="dashed" />
-      <Divider my="sm" variant="dotted" />
+      <Text>
+        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aperiam, officiis! Fugit minus ea,
+        perferendis eum consectetur quae vitae. Aliquid, quam reprehenderit? Maiores sed pariatur
+        aliquid commodi atque sunt officiis natus?
+      </Text>
+
+      <Divider my="md" />
+
+      <Text>
+        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aperiam, officiis! Fugit minus ea,
+        perferendis eum consectetur quae vitae. Aliquid, quam reprehenderit? Maiores sed pariatur
+        aliquid commodi atque sunt officiis natus?
+      </Text>
+
+      <Divider my="md" />
+
+      <Text>
+        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aperiam, officiis! Fugit minus ea,
+        perferendis eum consectetur quae vitae. Aliquid, quam reprehenderit? Maiores sed pariatur
+        aliquid commodi atque sunt officiis natus?
+      </Text>
     </>
   );
 }
+
 `;
 
 function Demo() {
   return (
     <>
-      <Divider my="sm" />
-      <Divider my="sm" variant="dashed" />
-      <Divider my="sm" variant="dotted" />
+      <Text>
+        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aperiam, officiis! Fugit minus ea,
+        perferendis eum consectetur quae vitae. Aliquid, quam reprehenderit? Maiores sed pariatur
+        aliquid commodi atque sunt officiis natus?
+      </Text>
+
+      <Divider my="md" />
+
+      <Text>
+        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aperiam, officiis! Fugit minus ea,
+        perferendis eum consectetur quae vitae. Aliquid, quam reprehenderit? Maiores sed pariatur
+        aliquid commodi atque sunt officiis natus?
+      </Text>
+
+      <Divider my="md" />
+
+      <Text>
+        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aperiam, officiis! Fugit minus ea,
+        perferendis eum consectetur quae vitae. Aliquid, quam reprehenderit? Maiores sed pariatur
+        aliquid commodi atque sunt officiis natus?
+      </Text>
     </>
   );
 }
 
 export const usage: MantineDemo = {
   type: 'code',
-  code,
   component: Demo,
+  code,
+  centered: true,
+  maxWidth: 500,
 };

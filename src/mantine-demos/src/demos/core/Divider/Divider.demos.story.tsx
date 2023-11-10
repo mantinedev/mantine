@@ -22,3 +22,8 @@ export const DemoOrientation = {
   name: '⭐ Demo: orientation',
   render: renderDemo(demos.orientation),
 };
+
+export const DemoVariants = {
+  name: '⭐ Demo: variants',
+  render: renderDemo(demos.variants),
+};
