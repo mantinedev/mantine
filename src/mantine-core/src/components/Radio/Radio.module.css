@@ -105,3 +105,22 @@
     --_radio-bd-color: var(--mantine-color-error);
   }
 }
+
+.radio--outline {
+  & + .icon {
+    --_radio-icon-color: var(--radio-color);
+  }
+
+  &:checked:not(:disabled) {
+    [data-mantine-color-scheme] & {
+      --_radio-bg: transparent;
+      --_radio-bd-color: var(--radio-color);
+
+      & + .icon {
+        --_radio-icon-color: var(--radio-color);
+        --_radio-icon-opacity: 1;
+        --_radio-icon-transform: none;
+      }
+    }
+  }
+}

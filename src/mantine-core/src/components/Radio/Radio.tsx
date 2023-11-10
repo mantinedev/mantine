@@ -17,6 +17,7 @@ import {
   MantineSize,
   MantineRadius,
   extractStyleProps,
+  parseThemeColor,
 } from '../../core';
 import { InlineInput, InlineInputStylesNames } from '../InlineInput';
 import { RadioIcon, RadioIconProps } from './RadioIcon';
@@ -24,6 +25,7 @@ import { RadioGroup } from './RadioGroup/RadioGroup';
 import { useRadioGroupContext } from './RadioGroup.context';
 import classes from './Radio.module.css';
 
+export type RadioVariant = 'filled' | 'outline';
 export type RadioStylesNames = InlineInputStylesNames | 'inner' | 'radio' | 'icon';
 export type RadioCssVariables = {
   root: '--radio-size' | '--radio-radius' | '--radio-color' | '--radio-icon-color';
@@ -72,6 +74,7 @@ export type RadioFactory = Factory<{
   ref: HTMLInputElement;
   stylesNames: RadioStylesNames;
   vars: RadioCssVariables;
+  variant: RadioVariant;
   staticComponents: {
     Group: typeof RadioGroup;
   };
@@ -82,14 +85,22 @@ const defaultProps: Partial<RadioProps> = {
 };
 
 const varsResolver = createVarsResolver<RadioFactory>(
-  (theme, { size, radius, color, iconColor }) => ({
-    root: {
-      '--radio-size': getSize(size, 'radio-size'),
-      '--radio-radius': radius === undefined ? undefined : getRadius(radius),
-      '--radio-color': color ? getThemeColor(color, theme) : undefined,
-      '--radio-icon-color': iconColor ? getThemeColor(iconColor, theme) : undefined,
-    },
-  })
+  (theme, { size, radius, color, iconColor, variant }) => {
+    const parsedColor = parseThemeColor({ color: color || theme.primaryColor, theme });
+    const outlineColor =
+      parsedColor.isThemeColor && parsedColor.shade === undefined
+        ? `var(--mantine-color-${parsedColor.color}-outline)`
+        : parsedColor.color;
+
+    return {
+      root: {
+        '--radio-size': getSize(size, 'radio-size'),
+        '--radio-radius': radius === undefined ? undefined : getRadius(radius),
+        '--radio-color': variant === 'outline' ? outlineColor : getThemeColor(color, theme),
+        '--radio-icon-color': iconColor ? getThemeColor(iconColor, theme) : undefined,
+      },
+    };
+  }
 );
 
 export const Radio = factory<RadioFactory>((_props, ref) => {
@@ -170,7 +181,7 @@ export const Radio = factory<RadioFactory>((_props, ref) => {
     >
       <Box {...getStyles('inner')} mod={{ 'label-position': labelPosition }}>
         <Box
-          {...getStyles('radio', { focusable: true })}
+          {...getStyles('radio', { focusable: true, variant })}
           {...rest}
           {...contextProps}
           component="input"
