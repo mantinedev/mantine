@@ -84,6 +84,9 @@ export interface MultiSelectProps
 
   /** Props passed down to the hidden input */
   hiddenInputProps?: React.ComponentPropsWithoutRef<'input'>;
+
+  /** Divider used to separate values in the hidden input `value` attribute, `','` by default */
+  hiddenInputValuesDivider?: string;
 }
 
 export type MultiSelectFactory = Factory<{
@@ -96,6 +99,7 @@ const defaultProps: Partial<MultiSelectProps> = {
   maxValues: Infinity,
   withCheckIcon: true,
   checkIconPosition: 'left',
+  hiddenInputValuesDivider: ',',
 };
 
 export const MultiSelect = factory<MultiSelectFactory>((_props, ref) => {
@@ -166,6 +170,7 @@ export const MultiSelect = factory<MultiSelectFactory>((_props, ref) => {
     clearButtonProps,
     hiddenInputProps,
     placeholder,
+    hiddenInputValuesDivider,
     ...others
   } = props;
 
@@ -382,7 +387,7 @@ export const MultiSelect = factory<MultiSelectFactory>((_props, ref) => {
       <input
         type="hidden"
         name={name}
-        value={_value.join(',')}
+        value={_value.join(hiddenInputValuesDivider)}
         form={form}
         disabled={disabled}
         {...hiddenInputProps}
