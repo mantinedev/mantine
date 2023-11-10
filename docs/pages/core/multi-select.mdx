@@ -55,7 +55,9 @@ import { MultiSelect } from '@mantine/core';
 
 function Demo() {
   const [searchValue, setSearchValue] = useState('');
-  return <MultiSelect searchValue={searchValue} onSearchChange={setSearchValue} data={[]} />;
+  return (
+    <MultiSelect searchable searchValue={searchValue} onSearchChange={setSearchValue} data={[]} />
+  );
 }
 ```
 
