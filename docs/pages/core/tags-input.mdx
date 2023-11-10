@@ -28,6 +28,20 @@ function Demo() {
 }
 ```
 
+## Controlled search value
+
+You can control search value with `searchValue` and `onSearchChange` props:
+
+```tsx
+import { useState } from 'react';
+import { TagsInput } from '@mantine/core';
+
+function Demo() {
+  const [searchValue, setSearchValue] = useState('');
+  return <TagsInput searchValue={searchValue} onSearchChange={setSearchValue} data={[]} />;
+}
+```
+
 ## Clearable
 
 Set `clearable` prop to display the clear button in the right section. The button is not displayed
@@ -113,6 +127,48 @@ use controlled component and filter them out in `onChange` function.
 
 <ComboboxProps component="TagsInput" />
 
+## Inside Popover
+
+To use `TagsInput` inside popover, you need to set `withinPortal: false`:
+
+<Demo data={TagsInputDemos.withinPopover} />
+
+## Control dropdown opened state
+
+You can control dropdown opened state with `dropdownOpened` prop. Additionally,
+you can use `onDropdownClose` and `onDropdownOpen` to listen to dropdown opened state changes.
+
+<Demo data={TagsInputDemos.dropdownOpened} />
+
+## Dropdown position
+
+By default, the dropdown is displayed below the input if there is enough space; otherwise it is displayed above the input.
+You can change this behavior by setting `position` and `middlewares` props, which are passed down to the
+underlying [Popover](/core/popover) component.
+
+Example of dropdown that is always displayed above the input:
+
+<Demo data={TagsInputDemos.dropdownPosition} />
+
+## Dropdown animation
+
+By default, dropdown animations are disabled. To enable them, you can set `transitionProps`,
+which will be passed down to the underlying [Transition](/core/transition) component.
+
+<Demo data={TagsInputDemos.dropdownAnimation} />
+
+## Dropdown padding
+
+<Demo data={TagsInputDemos.dropdownPadding} />
+
+## Dropdown shadow
+
+<Demo data={TagsInputDemos.dropdownShadow} />
+
+<InputSections component="TagsInput" />
+
+<Demo data={TagsInputDemos.sections} />
+
 ## Input props
 
 <InputFeatures component="TagsInput" element="input" />
@@ -144,3 +200,22 @@ user cannot interact with the input and `TagsInput` will not show suggestions.
 <GetElementRef component="TagsInput" refType="input" />
 
 <InputAccessibility component="TagsInput" />
+
+To set `aria-label` on the clear button, use `clearButtonProps`. Note that it is required
+only when `clearable` is set.
+
+```tsx
+import { TagsInput } from '@mantine/core';
+
+function Demo() {
+  return (
+    <TagsInput
+      data={[]}
+      clearable
+      clearButtonProps={{
+        'aria-label': 'Clear input',
+      }}
+    />
+  );
+}
+```
