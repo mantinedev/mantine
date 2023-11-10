@@ -10,6 +10,7 @@ export const GridStylesApi: StylesApiData<GridFactory> = {
 
   vars: {
     root: {
+      '--grid-overflow': 'Controls `overflow` property',
       '--grid-align': 'Controls `align-items` property',
       '--grid-justify': 'Controls `justify-content` property',
     },
