@@ -59,6 +59,14 @@ export const MDX_FORM_DATA: Record<string, Frontmatter> = {
     docs: 'form/validation.mdx',
   },
 
+  formSchemaValidation: {
+    title: 'Form schema validation',
+    package: '@mantine/form',
+    slug: '/form/schema-validation',
+    description: 'use-form schema based validation with zod, yup, joi and superstruct',
+    docs: 'form/schema-validation.mdx',
+  },
+
   formValidators: {
     title: 'Form validators',
     package: '@mantine/form',

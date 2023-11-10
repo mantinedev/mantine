@@ -18,11 +18,6 @@ export const DemoDnd = {
   render: renderDemo(demos.dnd),
 };
 
-export const DemoZod = {
-  name: '⭐ Demo: zod',
-  render: renderDemo(demos.zod),
-};
-
 export const DemoPassword = {
   name: '⭐ Demo: password',
   render: renderDemo(demos.password),
@@ -31,16 +26,6 @@ export const DemoPassword = {
 export const DemoValidateFunction = {
   name: '⭐ Demo: validateFunction',
   render: renderDemo(demos.validateFunction),
-};
-
-export const DemoJoi = {
-  name: '⭐ Demo: joi',
-  render: renderDemo(demos.joi),
-};
-
-export const DemoYup = {
-  name: '⭐ Demo: yup',
-  render: renderDemo(demos.yup),
 };
 
 export const DemoLocalStorage = {
@@ -131,9 +116,4 @@ export const DemoValidators = {
 export const DemoValidatorsEmpty = {
   name: '⭐ Demo: validatorsEmpty',
   render: renderDemo(demos.validatorsEmpty),
-};
-
-export const DemoSuperstruct = {
-  name: '⭐ Demo: superstruct',
-  render: renderDemo(demos.superstruct),
 };

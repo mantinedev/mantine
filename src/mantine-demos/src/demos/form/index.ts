@@ -1,11 +1,8 @@
 export { usage } from './Form.demo.usage';
 export { lists } from './Form.demo.lists';
 export { dnd } from './Form.demo.dnd';
-export { zod } from './Form.demo.zod';
 export { password } from './Form.demo.password';
 export { validateFunction } from './Form.demo.validateFunction';
-export { joi } from './Form.demo.joi';
-export { yup } from './Form.demo.yup';
 export { localStorage } from './Form.demo.localStorage';
 export { nested } from './Form.demo.nested';
 export { rulesValidation } from './Form.demo.rulesValidation';
@@ -24,4 +21,3 @@ export { blurFieldValidation } from './Form.demo.blurFieldValidation';
 export { transformValues } from './Form.demo.transformValues';
 export { validators } from './Form.demo.validators';
 export { validatorsEmpty } from './Form.demo.validatorsEmpty';
-export { superstruct } from './Form.demo.superstruct';

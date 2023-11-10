@@ -4,7 +4,54 @@ import { LoadingOverlayDemos } from '@mantine/demos';
 
 export default Layout(MDX_DATA.Changelog730);
 
+## Form schema resolvers packages
+
+`@mantine/form` schema validation resolver packages are now available as [separate packages](/form/schema-validation).
+Moving resolvers to separate packages allows to make them type-safe and fully tested.
+Old resolvers are still exported from `@mantine/form` package – you will be able to use them without any changes
+until 8.0.0 release.
+
+The new packages are drop-in replacements for old resolvers, they have the same API and can be used in the same way.
+
+Example of zod resolver:
+
+<InstallScript packages="zod mantine-form-zod-resolver" />
+
+```tsx
+import { z } from 'zod';
+import { useForm } from '@mantine/form';
+import { zodResolver } from 'mantine-form-zod-resolver';
+
+const schema = z.object({
+  name: z.string().min(2, { message: 'Name should have at least 2 letters' }),
+  email: z.string().email({ message: 'Invalid email' }),
+  age: z.number().min(18, { message: 'You must be at least 18 to create an account' }),
+});
+
+const form = useForm({
+  initialValues: {
+    name: '',
+    email: '',
+    age: 16,
+  },
+  validate: zodResolver(schema),
+});
+
+form.validate();
+form.errors;
+// -> {
+//  name: 'Name should have at least 2 letters',
+//  email: 'Invalid email',
+//  age: 'You must be at least 18 to create an account'
+// }
+```
+
+## Documentation updates
+
+- Schema based validation with `@mantine/form` now has [dedicated page](/form/schema-validation). It includes more examples for basic, nested and list fields validation for each resolver.
+
 ## Other changes
 
 - [use-hash](/hooks/use-hash/) hook now supports `getInitialValueInEffect: false` option to get initial value during state initialization.
 - New `useMantineColorScheme({ keepTransitions: true })` option allows keeping transitions when color scheme changes. Note that it is `false` by default.
+- All templates were migrated to [yarn v4](https://yarnpkg.com/blog/release/4.0) – this change significantly improves installation speed.

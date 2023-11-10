@@ -51,35 +51,6 @@ from the validation results.
 
 <Demo data={FormDemos.validateFunction} />
 
-## Schema based validation
-
-Out of the box `@mantine/form` supports schema validation with:
-
-- [zod](https://www.npmjs.com/package/zod)
-- [joi](https://www.npmjs.com/package/joi)
-- [yup](https://www.npmjs.com/package/yup)
-- [superstruct](https://www.npmjs.com/package/superstruct)
-
-You will need to install one of the libraries yourself, as `@mantine/form` package does not depend on any of them.
-If you do not know what validation library to choose, we recommend choosing [zod](https://www.npmjs.com/package/zod)
-as the most modern and developer-friendly library.
-
-### zod
-
-<Demo data={FormDemos.zod} demoProps={{ toggle: true }} />
-
-### joi
-
-<Demo data={FormDemos.joi} demoProps={{ toggle: true }} />
-
-### yup
-
-<Demo data={FormDemos.yup} demoProps={{ toggle: true }} />
-
-### superstruct
-
-<Demo data={FormDemos.superstruct} demoProps={{ toggle: true }} />
-
 ## Validate fields on change
 
 To validate all fields on change set `validateInputOnChange` option to `true`:
