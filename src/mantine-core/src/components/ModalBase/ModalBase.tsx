@@ -16,6 +16,8 @@ import { TransitionOverride } from '../Transition';
 import { ModalBaseProvider } from './ModalBase.context';
 import { useModal } from './use-modal';
 
+type RemoveScrollProps = Omit<React.ComponentProps<typeof RemoveScroll>, 'children'>;
+
 export interface ModalBaseProps extends BoxProps, ElementProps<'div', 'title'> {
   unstyled?: boolean;
 
@@ -69,6 +71,9 @@ export interface ModalBaseProps extends BoxProps, ElementProps<'div', 'title'> {
 
   /** Controls width of the content area, `'md'` by default */
   size?: MantineSize | (string & {}) | number;
+
+  /** Props passed down to react-remove-scroll, can be used to customize scroll lock behavior */
+  removeScrollProps?: RemoveScrollProps;
 }
 
 export const ModalBase = forwardRef<HTMLDivElement, ModalBaseProps>(
@@ -92,6 +97,7 @@ export const ModalBase = forwardRef<HTMLDivElement, ModalBaseProps>(
       padding,
       __vars,
       unstyled,
+      removeScrollProps,
       ...others
     },
     ref
@@ -119,7 +125,7 @@ export const ModalBase = forwardRef<HTMLDivElement, ModalBaseProps>(
             unstyled,
           }}
         >
-          <RemoveScroll enabled={shouldLockScroll && lockScroll}>
+          <RemoveScroll enabled={shouldLockScroll && lockScroll} {...removeScrollProps}>
             <Box
               ref={ref}
               {...others}

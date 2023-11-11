@@ -104,6 +104,20 @@ it will make the component less accessible.
 - `closeOnClickOutside` – determines whether the modal should be closed when user clicks on the overlay
 - `returnFocus` – determines whether focus should be returned to the element that was focused before the modal was opened
 
+## react-remove-scroll settings
+
+`Modal` uses [react-remove-scroll](https://github.com/theKashey/react-remove-scroll)
+package to lock scroll. You can pass props down to the `RemoveScroll` component
+with `removeScrollProps`:
+
+```tsx
+import { Modal } from '@mantine/core';
+
+function Demo() {
+  return <Modal removeScrollProps={{ allowPinchZoom: true }} />;
+}
+```
+
 ## Compound components
 
 You can use the following compound components to have full control over the `Modal` rendering:
