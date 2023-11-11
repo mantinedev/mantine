@@ -56,7 +56,7 @@ export const AppShellHeader = factory<AppShellHeaderFactory>((_props, ref) => {
       ref={ref}
       mod={{ 'with-border': withBorder ?? ctx.withBorder }}
       {...ctx.getStyles('header', {
-        className: cx(RemoveScroll.classNames.zeroRight, className),
+        className: cx({ [RemoveScroll.classNames.zeroRight]: ctx.offsetScrollbars }, className),
         classNames,
         styles,
         style,
