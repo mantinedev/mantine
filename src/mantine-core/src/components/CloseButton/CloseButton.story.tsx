@@ -7,7 +7,6 @@ export function SingleButton() {
   return (
     <div style={{ padding: 40 }}>
       <CloseButton />
-      <CloseButton variant="transparent" />
     </div>
   );
 }

@@ -4,6 +4,56 @@ import { Changelog730Demos, ColorPickerDemos } from '@mantine/demos';
 
 export default Layout(MDX_DATA.Changelog730);
 
+## smaller-than and larger-than mixins
+
+`smaller-than` and `larger-than` mixins can be used to create styles that will be applied only when screen is smaller or larger than specified breakpoint.
+Note that to use these mixins, you need to update [postcss-preset-mantine](/styles/postcss-preset) to version `1.11.0` or higher.
+
+```scss
+.demo {
+  @mixin smaller-than 320px {
+    color: red;
+  }
+
+  @mixin larger-than 320px {
+    color: blue;
+  }
+}
+```
+
+Will be transformed to:
+
+```scss
+// Breakpoint values are converted to em units
+// In smaller-than mixin 0.1px is subtracted from breakpoint value
+// to avoid intersection with larger-than mixin
+@media (max-width: 19.99375em) {
+  .demo {
+    color: red;
+  }
+}
+
+@media (min-width: 20em) {
+  .demo {
+    color: blue;
+  }
+}
+```
+
+You can also use `smaller-than` and `larger-than` mixins with [mantine breakpoints](/styles/responsive/#breakpoints-variables-in-css-modules):
+
+```scss
+.demo {
+  @mixin smaller-than $mantine-breakpoint-sm {
+    color: red;
+  }
+
+  @mixin larger-than $mantine-breakpoint-sm {
+    color: blue;
+  }
+}
+```
+
 ## Form schema resolvers packages
 
 `@mantine/form` schema validation resolver packages are now available as [separate packages](/form/schema-validation).
@@ -50,7 +100,7 @@ form.errors;
 
 [rem and em](/styles/rem) function now support space separated values. This feature is available
 both in `rem` function exported from `@mantine/core` package and [postcss-preset-mantine](/styles/postcss-preset).
-Note that you need to update `postcss-preset-mantine` to `1.10.0` to use this feature.
+Note that you need to update [postcss-preset-mantine](/styles/postcss-preset) to `1.11.0` to use this feature.
 
 ```tsx
 import { rem } from '@mantine/core';
@@ -71,6 +121,8 @@ function Demo() {
 ```
 
 ## Outline Checkbox and Radio variant
+
+[Checkbox](/core/checkbox) and [Radio](/core/radio) components now support `outline` variant:
 
 <Demo data={Changelog730Demos.checkboxRadioVariant} />
 

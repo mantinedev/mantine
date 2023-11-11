@@ -43,4 +43,12 @@
       --_cb-bg: var(--mantine-color-dark-6);
     }
   }
+
+  @mixin smaller-than $mantine-breakpoint-xs {
+    background-color: red;
+  }
+
+  @mixin larger-than $mantine-breakpoint-xs {
+    background-color: blue;
+  }
 }

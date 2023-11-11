@@ -122,6 +122,55 @@ To define values for light/dark color scheme on the `:root`/`html` element, use 
 }
 ```
 
+## smaller-than and larger-than mixins
+
+`smaller-than` and `larger-than` mixins can be used to create styles that will be applied only when screen is smaller or larger than specified breakpoint.
+
+```scss
+.demo {
+  @mixin smaller-than 320px {
+    color: red;
+  }
+
+  @mixin larger-than 320px {
+    color: blue;
+  }
+}
+```
+
+Will be transformed to:
+
+```scss
+// Breakpoint values are converted to em units
+// In smaller-than mixin 0.1px is subtracted from breakpoint value
+// to avoid intersection with larger-than mixin
+@media (max-width: 19.99375em) {
+  .demo {
+    color: red;
+  }
+}
+
+@media (min-width: 20em) {
+  .demo {
+    color: blue;
+  }
+}
+```
+
+You can also use `smaller-than` and `larger-than` mixins with [mantine breakpoints](/styles/responsive/#breakpoints-variables-in-css-modules):
+
+```scss
+.demo {
+  @mixin smaller-than $mantine-breakpoint-sm {
+    color: red;
+  }
+
+  @mixin larger-than $mantine-breakpoint-sm {
+    color: blue;
+  }
+}
+```
+
 ## light-dark function
 
 `light-dark` function is an alternative to `light` and `dark` mixins. It accepts two arguments:
