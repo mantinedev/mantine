@@ -42,3 +42,13 @@ export const DemoStylesApi = {
   name: '⭐ Demo: stylesApi',
   render: renderDemo(demos.stylesApi),
 };
+
+export const DemoHueSlider = {
+  name: '⭐ Demo: hueSlider',
+  render: renderDemo(demos.hueSlider),
+};
+
+export const DemoAlphaSlider = {
+  name: '⭐ Demo: alphaSlider',
+  render: renderDemo(demos.alphaSlider),
+};

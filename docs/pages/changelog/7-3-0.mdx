@@ -1,6 +1,6 @@
 import { Layout } from '@/layout';
 import { MDX_DATA } from '@/mdx';
-import { Changelog730Demos } from '@mantine/demos';
+import { Changelog730Demos, ColorPickerDemos } from '@mantine/demos';
 
 export default Layout(MDX_DATA.Changelog730);
 
@@ -73,6 +73,16 @@ function Demo() {
 ## Outline Checkbox and Radio variant
 
 <Demo data={Changelog730Demos.checkboxRadioVariant} />
+
+## HueSlider and AlphaSlider components
+
+[HueSlider and AlphaSlider](/core/color-picker) components were added back:
+
+<Demo data={ColorPickerDemos.hueSlider} />
+
+<br />
+
+<Demo data={ColorPickerDemos.alphaSlider} />
 
 ## Documentation updates
 

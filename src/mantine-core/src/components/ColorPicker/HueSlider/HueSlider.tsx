@@ -1,15 +1,11 @@
 import React, { forwardRef } from 'react';
 import { useProps, rem } from '../../../core';
-import { ColorSlider, __ColorSliderProps } from '../ColorSlider/ColorSlider';
+import { ColorSlider, ColorSliderProps } from '../ColorSlider/ColorSlider';
 
-const defaultProps: Partial<__ColorSliderProps> = {};
+export interface HueSliderProps extends Omit<ColorSliderProps, 'maxValue' | 'overlays' | 'round'> {}
 
-export const HueSlider = forwardRef<HTMLDivElement, __ColorSliderProps>((props, ref) => {
-  const { value, onChange, onChangeEnd, color, ...others } = useProps(
-    'HueSlider',
-    defaultProps,
-    props
-  );
+export const HueSlider = forwardRef<HTMLDivElement, HueSliderProps>((props, ref) => {
+  const { value, onChange, onChangeEnd, color, ...others } = useProps('HueSlider', {}, props);
 
   return (
     <ColorSlider

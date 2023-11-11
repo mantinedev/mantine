@@ -1,7 +1,31 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { ColorPicker } from './ColorPicker';
+import { AlphaSlider } from './AlphaSlider/AlphaSlider';
+import { HueSlider } from './HueSlider/HueSlider';
 
 export default { title: 'ColorPicker' };
+
+export function SeparateAlphaSlider() {
+  const [value, onChange] = useState(1);
+
+  return (
+    <>
+      <div>Alpha value: {value}</div>
+      <AlphaSlider color="#1c7ed6" value={value} onChange={onChange} size="xl" />
+    </>
+  );
+}
+
+export function SeparateHueSlider() {
+  const [value, onChange] = useState(255);
+
+  return (
+    <>
+      <div>Alpha value: {value}</div>
+      <HueSlider value={value} onChange={onChange} size="xl" />
+    </>
+  );
+}
 
 export function Usage() {
   return (

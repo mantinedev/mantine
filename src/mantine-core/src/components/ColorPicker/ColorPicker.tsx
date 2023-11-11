@@ -276,7 +276,14 @@ export const ColorPicker = factory<ColorPickerFactory>((_props, ref) => {
                 )}
               </div>
 
-              {withAlpha && <ColorSwatch color={_value} radius="sm" {...getStyles('preview')} />}
+              {withAlpha && (
+                <ColorSwatch
+                  color={_value}
+                  radius="sm"
+                  size="var(--cp-preview-size)"
+                  {...getStyles('preview')}
+                />
+              )}
             </div>
           </>
         )}

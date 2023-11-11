@@ -60,21 +60,22 @@
   position: absolute;
   box-shadow: 0 0 rem(1px) rgba(0, 0, 0, 0.6);
   border: rem(2px) solid var(--mantine-color-white);
-  width: var(--cp-thumb-size);
-  height: var(--cp-thumb-size);
-  border-radius: var(--cp-thumb-size);
+  width: var(--_cp-thumb-size);
+  height: var(--_cp-thumb-size);
+  border-radius: var(--_cp-thumb-size);
   outline: var(--_outline);
-  left: calc(var(--_thumb-x-offset) - var(--cp-thumb-size) / 2);
-  top: calc(var(--_thumb-y-offset) - var(--cp-thumb-size) / 2);
+  left: calc(var(--_thumb-x-offset) - var(--_cp-thumb-size) / 2);
+  top: calc(var(--_thumb-y-offset) - var(--_cp-thumb-size) / 2);
 }
 
 .swatch {
-  height: 0;
+  height: unset !important;
+  width: unset !important;
+  min-width: 0 !important;
+  min-height: 0 !important;
   margin: rem(2px);
   cursor: pointer;
   padding-bottom: calc(var(--cp-swatch-size) - rem(4px));
-  min-width: 0;
-  min-height: 0;
   flex: 0 0 calc(var(--cp-swatch-size) - rem(4px));
 }
 
@@ -87,6 +88,13 @@
 }
 
 .saturation {
+  --cp-thumb-size-xs: rem(8px);
+  --cp-thumb-size-sm: rem(12px);
+  --cp-thumb-size-md: rem(16px);
+  --cp-thumb-size-lg: rem(20px);
+  --cp-thumb-size-xl: rem(22px);
+  --_cp-thumb-size: var(--cp-thumb-size, rem(12px));
+
   -webkit-tap-highlight-color: transparent;
   position: relative;
   height: var(--cp-saturation-height);
@@ -117,10 +125,18 @@
 }
 
 .slider {
+  --cp-thumb-size-xs: rem(8px);
+  --cp-thumb-size-sm: rem(12px);
+  --cp-thumb-size-md: rem(16px);
+  --cp-thumb-size-lg: rem(20px);
+  --cp-thumb-size-xl: rem(22px);
+
+  --_cp-thumb-size: var(--cp-thumb-size, rem(12px));
+
   position: relative;
-  height: calc(var(--cp-thumb-size) + rem(2px));
-  margin-left: calc(var(--cp-thumb-size) / 2);
-  margin-right: calc(var(--cp-thumb-size) / 2);
+  height: calc(var(--_cp-thumb-size) + rem(2px));
+  margin-left: calc(var(--_cp-thumb-size) / 2);
+  margin-right: calc(var(--_cp-thumb-size) / 2);
   outline: none;
 
   & + & {
@@ -156,7 +172,7 @@
   position: absolute;
   top: 0;
   bottom: 0;
-  left: calc(var(--cp-thumb-size) * -1 / 2 - rem(1px));
-  right: calc(var(--cp-thumb-size) * -1 / 2 - rem(1px));
+  left: calc(var(--_cp-thumb-size) * -1 / 2 - rem(1px));
+  right: calc(var(--_cp-thumb-size) * -1 / 2 - rem(1px));
   border-radius: 10000rem;
 }

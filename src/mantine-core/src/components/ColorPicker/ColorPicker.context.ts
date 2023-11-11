@@ -1,4 +1,4 @@
-import { createSafeContext, GetStylesApi } from '../../core';
+import { createOptionalContext, GetStylesApi } from '../../core';
 import type { ColorPickerFactory } from './ColorPicker';
 
 interface ColorPickerContextValue {
@@ -7,4 +7,4 @@ interface ColorPickerContextValue {
 }
 
 export const [ColorPickerProvider, useColorPickerContext] =
-  createSafeContext<ColorPickerContextValue>('ColorPicker component was not found in tree');
+  createOptionalContext<ColorPickerContextValue>(null);
