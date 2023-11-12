@@ -207,17 +207,36 @@
     border-radius: 0;
 
     &:not(:last-of-type) {
-      border-right: 0;
+      border-right-width: 0;
+
+      @mixin rtl {
+        border-right-width: rem(1px);
+        border-left-width: 0;
+      }
     }
 
     &:last-of-type {
       border-top-right-radius: var(--mantine-radius-default);
       border-bottom-right-radius: var(--mantine-radius-default);
+
+      @mixin rtl {
+        border-top-right-radius: 0;
+        border-bottom-right-radius: 0;
+        border-top-left-radius: var(--mantine-radius-default);
+        border-bottom-left-radius: var(--mantine-radius-default);
+      }
     }
 
     &:first-of-type {
       border-top-left-radius: var(--mantine-radius-default);
       border-bottom-left-radius: var(--mantine-radius-default);
+
+      @mixin rtl {
+        border-top-left-radius: 0;
+        border-bottom-left-radius: 0;
+        border-top-right-radius: var(--mantine-radius-default);
+        border-bottom-right-radius: var(--mantine-radius-default);
+      }
     }
   }
 }
