@@ -10,7 +10,8 @@ import {
   useStyles,
   Factory,
 } from '@mantine/core';
-import hljs from 'highlight.js';
+import hljs from 'highlight.js/lib/core';
+// import hljs from 'highlight.js';
 import _classes from './CodeHighlight.module.css';
 import themeClasses from './CodeHighlight.theme.module.css';
 

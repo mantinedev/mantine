@@ -18,3 +18,4 @@ export type {
   InlineCodeHighlightProps,
   InlineCodeHighlightStylesNames,
 } from './InlineCodeHighlight';
+export * from './HighlightProvider';

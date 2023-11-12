@@ -1,5 +1,6 @@
 import React from 'react';
 import hljs from 'highlight.js/lib/core';
+// import hljs from 'highlight.js';
 import cx from 'clsx';
 import { useUncontrolled } from '@mantine/hooks';
 import {

@@ -8,11 +8,11 @@
     ".": {
       "import": {
         "types": "./lib/index.d.mts",
-        "default": "./esm/index.mjs"
+        "default": "./esm/src/mantine-code-highlight-lite/src/index.mjs"
       },
       "require": {
         "types": "./lib/index.d.ts",
-        "default": "./cjs/index.js"
+        "default": "./cjs/src/mantine-code-highlight-lite/src/index.js"
       }
     },
     "./styles.css": "./esm/index.css",
@@ -20,7 +20,9 @@
   },
   "license": "MIT",
   "author": "Vitaly Rtishchev <rtivital@gmail.com>",
-  "sideEffects": false,
+  "sideEffects": [
+    "*.css"
+  ],
   "homepage": "https://mantine.dev/others/prism/",
   "repository": {
     "url": "https://github.com/mantinedev/mantine.git",
