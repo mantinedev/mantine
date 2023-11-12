@@ -42,3 +42,8 @@ export const DemoLinks = {
   name: '⭐ Demo: links',
   render: renderDemo(demos.links),
 };
+
+export const DemoWithContent = {
+  name: '⭐ Demo: withContent',
+  render: renderDemo(demos.withContent),
+};
