@@ -26,7 +26,12 @@ import classes from './Radio.module.css';
 
 export type RadioStylesNames = InlineInputStylesNames | 'inner' | 'radio' | 'icon';
 export type RadioCssVariables = {
-  root: '--radio-size' | '--radio-radius' | '--radio-color' | '--radio-icon-color';
+  root:
+    | '--radio-size'
+    | '--radio-radius'
+    | '--radio-color'
+    | '--radio-icon-color'
+    | '--radio-icon-size';
 };
 
 export interface RadioProps
@@ -85,6 +90,7 @@ const varsResolver = createVarsResolver<RadioFactory>(
   (theme, { size, radius, color, iconColor }) => ({
     root: {
       '--radio-size': getSize(size, 'radio-size'),
+      '--radio-icon-size': getSize(size, 'radio-icon-size'),
       '--radio-radius': radius === undefined ? undefined : getRadius(radius),
       '--radio-color': color ? getThemeColor(color, theme) : undefined,
       '--radio-icon-color': iconColor ? getThemeColor(iconColor, theme) : undefined,
