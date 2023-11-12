@@ -6,10 +6,9 @@
   background-color: var(--_bq-bg);
   border-left: var(--_bq-border-left, var(--_bq-border));
   border-right: var(--_bq-border-right, 0);
-  border-radius: var(--bq-radius);
-  border-top-left-radius: var(--_bq-radius-left, 0);
+  border-top-left-radius: var(--_bq-radius-left, 0rem);
   border-top-right-radius: var(--_bq-radius-right, var(--bq-radius));
-  border-bottom-left-radius: var(--_bq-radius-left, 0);
+  border-bottom-left-radius: var(--_bq-radius-left, 0rem);
   border-bottom-right-radius: var(--_bq-radius-right, var(--bq-radius));
   padding: var(--mantine-spacing-xl) rem(38px);
 
