@@ -25,8 +25,8 @@ export interface NumberInputHandlers {
   decrement: () => void;
 }
 
-function isValidNumber(value: number | undefined): value is number {
-  return typeof value === 'number' && !Number.isNaN(value);
+function isValidNumber(value: number | string | undefined): value is number {
+  return (typeof value === 'number' || !Number.isNaN(Number(value))) && !Number.isNaN(value);
 }
 
 interface GetDecrementedValueInput {
@@ -231,11 +231,7 @@ export const NumberInput = factory<NumberInputFactory>((_props, ref) => {
   });
 
   const handleValueChange: OnValueChange = (payload, event) => {
-    setValue(
-      typeof _value === 'number' && isValidNumber(payload.floatValue)
-        ? payload.floatValue
-        : payload.value
-    );
+    setValue(isValidNumber(payload.floatValue) ? payload.floatValue : payload.value);
     onValueChange?.(payload, event);
   };
 
