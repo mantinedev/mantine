@@ -9,9 +9,12 @@ import { searchHandlers } from '@/components/Search';
 import packageJson from '../../../../package.json';
 import classes from './Header.module.css';
 
+export type HeaderControlsProps = Partial<React.ComponentProps<typeof HeaderControls>>;
+
 interface HeaderProps {
   navbarOpened: boolean;
-  onNavbarToggle(): void;
+  onNavbarToggle: () => void;
+  headerControlsProps?: HeaderControlsProps;
 }
 
 const versions = [
@@ -23,7 +26,7 @@ const versions = [
   { v: 'v1', name: '1.3.1', link: 'https://v1.mantine.dev/' },
 ];
 
-export function Header({ navbarOpened, onNavbarToggle }: HeaderProps) {
+export function Header({ navbarOpened, onNavbarToggle, headerControlsProps }: HeaderProps) {
   const versionItems = versions.map((item) => (
     <Menu.Item
       key={item.name}
@@ -62,6 +65,7 @@ export function Header({ navbarOpened, onNavbarToggle }: HeaderProps) {
           className={classes.controls}
           onSearch={searchHandlers.open}
           githubLink="https://github.com/mantinedev/mantine"
+          {...headerControlsProps}
         />
       </header>
 

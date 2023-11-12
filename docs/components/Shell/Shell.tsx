@@ -1,6 +1,6 @@
 import React from 'react';
 import { useUncontrolled } from '@mantine/hooks';
-import { Header } from './Header/Header';
+import { Header, HeaderControlsProps } from './Header/Header';
 import { Navbar } from './Navbar/Navbar';
 import classes from './Shell.module.css';
 
@@ -9,7 +9,8 @@ interface ShellProps {
   withNavbar?: boolean;
   navbarOpened?: boolean;
   mobileNavbarOnly?: boolean;
-  onNavbarOpenedChange?(opened: boolean): void;
+  onNavbarOpenedChange?: (opened: boolean) => void;
+  headerControlsProps?: HeaderControlsProps;
 }
 
 export function Shell({
@@ -18,6 +19,7 @@ export function Shell({
   mobileNavbarOnly = false,
   navbarOpened,
   onNavbarOpenedChange,
+  headerControlsProps,
 }: ShellProps) {
   const [opened, setNavbarOpened] = useUncontrolled({
     value: navbarOpened,
@@ -31,7 +33,11 @@ export function Shell({
 
   return (
     <>
-      <Header navbarOpened={opened} onNavbarToggle={toggleNavbar} />
+      <Header
+        navbarOpened={opened}
+        onNavbarToggle={toggleNavbar}
+        headerControlsProps={headerControlsProps}
+      />
       {withNavbar && (
         <Navbar
           navbarOpened={opened}
