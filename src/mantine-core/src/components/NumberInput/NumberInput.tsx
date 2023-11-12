@@ -324,7 +324,10 @@ export const NumberInput = factory<NumberInputFactory>((_props, ref) => {
       onBlur={(event) => {
         onBlur?.(event);
         if (clampBehavior === 'blur' && typeof _value === 'number') {
-          setValue(clamp(_value, min, max));
+          const clampedValue = clamp(_value, min, max);
+          if (clampedValue !== _value) {
+            setValue(clamp(_value, min, max));
+          }
         }
       }}
       isAllowed={(val) => {

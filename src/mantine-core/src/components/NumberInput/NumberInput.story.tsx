@@ -100,7 +100,9 @@ export function MinMax() {
         value={value}
         label="Number input"
         placeholder="Number input"
-        onChange={setValue}
+        onChange={(val) => {
+          setValue(val);
+        }}
         min={0}
         max={100}
       />
