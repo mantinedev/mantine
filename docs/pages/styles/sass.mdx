@@ -80,6 +80,18 @@ $mantine-breakpoint-xl: '88em';
   }
 }
 
+@mixin smaller-than($breakpoint) {
+  @media (max-width: $breakpoint) {
+    @content;
+  }
+}
+
+@mixin larger-than($breakpoint) {
+  @media (min-width: $breakpoint) {
+    @content;
+  }
+}
+
 // Add direction mixins if you need rtl support
 @mixin rtl {
   [dir='rtl'] & {
@@ -112,7 +124,7 @@ All done! you can now use breakpoint variables, `rem` function, `hover`, `light`
     background-color: blue;
   }
 
-  @media (max-width: $mantine-breakpoint-md) {
+  @include smaller-than($mantine-breakpoint-md) {
     font-size: rem(50px);
   }
 }
@@ -178,6 +190,18 @@ $mantine-breakpoint-xl: '88em';
   }
 }
 
+@mixin smaller-than($breakpoint) {
+  @media (max-width: $breakpoint) {
+    @content;
+  }
+}
+
+@mixin larger-than($breakpoint) {
+  @media (min-width: $breakpoint) {
+    @content;
+  }
+}
+
 // Add direction mixins if you need rtl support
 @mixin rtl {
   [dir='rtl'] & {
@@ -210,7 +234,7 @@ All done! you can now use breakpoint variables, `rem` function, `hover`, `light`
     background-color: blue;
   }
 
-  @media (max-width: $mantine-breakpoint-md) {
+  @include smaller-than($mantine-breakpoint-md) {
     font-size: rem(50px);
   }
 }
