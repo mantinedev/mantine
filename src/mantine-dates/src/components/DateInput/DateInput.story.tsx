@@ -17,6 +17,16 @@ export function Usage() {
     </div>
   );
 }
+
+export function ControlledValue() {
+  const [value, setValue] = useState<Date | null>(null);
+  return (
+    <div style={{ padding: 40, maxWidth: 400 }}>
+      <DateInput placeholder="Enter date" value={value} onChange={setValue} />
+    </div>
+  );
+}
+
 export function Unstyled() {
   return (
     <div style={{ padding: 40, maxWidth: 400 }}>
@@ -53,7 +63,7 @@ export function LocaleChangesDatesProvider() {
   );
 }
 
-export function ControlledValues() {
+export function ValueValues() {
   const [value, setValue] = useState<Date | null>(new Date());
   const incrementDate = () => setValue((current) => dayjs(current!).subtract(-1, 'month').toDate());
 

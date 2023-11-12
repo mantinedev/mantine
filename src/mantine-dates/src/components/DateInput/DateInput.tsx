@@ -135,6 +135,7 @@ export const DateInput = factory<DateInputFactory>((_props, ref) => {
     ...rest
   } = props;
 
+  const [dropdownOpened, setDropdownOpened] = useState(false);
   const { calendarProps, others } = pickCalendarProps(rest);
   const ctx = useDatesContext();
   const defaultDateParser = (val: string) => {
@@ -176,11 +177,10 @@ export const DateInput = factory<DateInputFactory>((_props, ref) => {
     setInputValue(formatValue(_value!));
   }, [ctx.getLocale(locale)]);
 
-  const [dropdownOpened, setDropdownOpened] = useState(false);
-
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const val = event.currentTarget.value;
     setInputValue(val);
+    setDropdownOpened(true);
 
     if (val.trim() === '' && clearable) {
       setValue(null);
