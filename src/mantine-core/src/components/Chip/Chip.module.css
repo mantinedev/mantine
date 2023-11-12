@@ -62,8 +62,16 @@
   }
 
   &[data-disabled] {
-    --_chip-bg: var(--mantine-color-gray-2);
-    --_chip-color: var(--mantine-color-gray-5);
+    @mixin light {
+      --_chip-bg: var(--mantine-color-gray-2);
+      --_chip-color: var(--mantine-color-gray-5);
+    }
+
+    @mixin dark {
+      --_chip-bg: var(--mantine-color-dark-5);
+      --_chip-color: var(--mantine-color-dark-3);
+    }
+
     --_chip-cursor: not-allowed;
   }
 }
