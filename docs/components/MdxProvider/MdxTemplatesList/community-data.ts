@@ -7,4 +7,17 @@ export const COMMUNITY_TEMPLATES_DATA: Template[] = [
     link: 'https://github.com/jason-dark/next-app-mantine-v7-tss-template',
     description: 'Next.js template with app router and tss (emotion based) setup',
   },
+  {
+    type: 'next',
+    name: 'next-pages-tss-template',
+    link: 'https://github.com/enyelsequeira/tss-with-pages-dir',
+    description: 'Next.js template with pages router and tss (emotion based) setup',
+  },
+  {
+    type: 'vite',
+    name: 'nx-vite-monorepo-template',
+    link: 'https://github.com/dipiash/nx-vite-react-ts-mantine-boilerplate',
+    description:
+      'NX monorepo template with: Vite, GraphQL / Apollo, Typescript, Storybook / CSS Modules',
+  },
 ];
