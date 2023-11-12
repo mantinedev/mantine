@@ -8,11 +8,11 @@
     ".": {
       "import": {
         "types": "./lib/index.d.mts",
-        "default": "./esm/src/mantine-code-highlight-lite/src/index.mjs"
+        "default": "./esm/index.mjs"
       },
       "require": {
         "types": "./lib/index.d.ts",
-        "default": "./cjs/src/mantine-code-highlight-lite/src/index.js"
+        "default": "./cjs/index.js"
       }
     },
     "./styles.css": "./esm/index.css",
