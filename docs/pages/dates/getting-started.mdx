@@ -38,3 +38,35 @@ import customParseFormat from 'dayjs/plugin/customParseFormat';
 
 dayjs.extend(customParseFormat);
 ```
+
+## Localization and server components
+
+To add localization you must import `import 'dayjs/locale/x';` in your application (`x` is locale name)
+and set `locale` either on [DatesProvider](/dates/dates-provider) or on each component individually.
+
+Example of setting locale on DatesProvider:
+
+```tsx
+import 'dayjs/locale/ru';
+import { DatesProvider, MonthPickerInput, DatePickerInput } from '@mantine/dates';
+
+function Demo() {
+  return <DatesProvider settings={{ locale: 'ru' }}>{/* Your app  */}</DatesProvider>;
+}
+```
+
+The code above works in all environments, except Next.js app router.
+If you are using Next.js app router, you must add `'use client';` to the
+top of the file where you are importing `dayjs/locale/x` – locale data
+is required both on client and server.
+
+```tsx
+'use client';
+
+import 'dayjs/locale/ru';
+import { DatesProvider, MonthPickerInput, DatePickerInput } from '@mantine/dates';
+
+function Demo() {
+  return <DatesProvider settings={{ locale: 'ru' }}>{/* Your app  */}</DatesProvider>;
+}
+```
