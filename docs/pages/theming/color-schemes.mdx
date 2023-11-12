@@ -307,3 +307,33 @@ All Mantine components support `lightHidden` and `darkHidden` props that can be 
 component in specific color scheme:
 
 <Demo data={StylesDemos.lightDarkHidden} />
+
+## With disabled JavaScript
+
+If you need to support users with disabled JavaScript, you need to set `data-mantine-color-scheme`
+attribute on the `<html />` element manually.
+
+Example with Next.js app router that supports disabled JavaScript:
+
+```tsx
+import '@mantine/core/styles.css';
+import { MantineProvider, ColorSchemeScript } from '@mantine/core';
+
+export const metadata = {
+  title: 'My Mantine app',
+  description: 'I have followed setup instructions carefully',
+};
+
+export default function RootLayout({ children }: { children: React.ReactNode }) {
+  return (
+    <html lang="en" data-mantine-color-scheme="light">
+      <head>
+        <ColorSchemeScript />
+      </head>
+      <body>
+        <MantineProvider>{children}</MantineProvider>
+      </body>
+    </html>
+  );
+}
+```
