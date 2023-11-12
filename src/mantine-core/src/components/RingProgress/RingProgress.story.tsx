@@ -28,6 +28,31 @@ export function ColorsIndex() {
   );
 }
 
+export function ThicknessOverlap() {
+  return (
+    <div style={{ padding: 40 }}>
+      <RingProgress
+        size={60}
+        thickness={22}
+        sections={[
+          {
+            value: 10,
+            color: 'blue.4',
+          },
+          {
+            value: 40,
+            color: 'red.1',
+          },
+          {
+            value: 30,
+            color: 'orange.9',
+          },
+        ]}
+      />
+    </div>
+  );
+}
+
 export function WithTooltips() {
   return (
     <div style={{ padding: 40 }}>
