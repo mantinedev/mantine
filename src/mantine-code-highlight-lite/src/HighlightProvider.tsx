@@ -2,24 +2,24 @@ import React, { PropsWithChildren, createContext, useEffect } from 'react';
 import { HLJSApi } from 'highlight.js';
 
 interface HighlightContextType {
-  highlight?: HLJSApi;
+  hljs?: HLJSApi;
 }
 
 export const HighlightContext = createContext<HighlightContextType>({
-  highlight: undefined,
+  hljs: undefined,
 });
 
 export const HighlightProvider = ({
   children,
-  highlightInstance,
+  hljsInstance,
 }: PropsWithChildren<{
-  highlightInstance: HLJSApi;
+  hljsInstance: HLJSApi;
 }>) => {
-  const [highlight, setHighlight] = React.useState(highlightInstance);
+  const [hljs, setHljs] = React.useState(hljsInstance);
 
   useEffect(() => {
-    setHighlight(highlightInstance);
-  }, [highlightInstance]);
+    setHljs(hljsInstance);
+  }, [hljsInstance]);
 
-  return <HighlightContext.Provider value={{ highlight }}>{children}</HighlightContext.Provider>;
+  return <HighlightContext.Provider value={{ hljs }}>{children}</HighlightContext.Provider>;
 };

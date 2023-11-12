@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import cx from 'clsx';
 import {
   Box,
@@ -10,8 +10,7 @@ import {
   useStyles,
   Factory,
 } from '@mantine/core';
-import hljs from 'highlight.js/lib/core';
-// import hljs from 'highlight.js';
+import { HighlightContext } from './HighlightProvider';
 import _classes from './CodeHighlight.module.css';
 import themeClasses from './CodeHighlight.theme.module.css';
 
@@ -41,6 +40,7 @@ const defaultProps: Partial<InlineCodeHighlightProps> = {
 };
 
 export const InlineCodeHighlight = factory<InlineCodeHighlightFactory>((_props, ref) => {
+  const { hljs } = useContext(HighlightContext);
   const props = useProps('InlineCodeHighlight', defaultProps, _props);
   const { classNames, className, style, styles, unstyled, vars, code, language, ...others } = props;
 
@@ -56,7 +56,7 @@ export const InlineCodeHighlight = factory<InlineCodeHighlightFactory>((_props, 
     rootSelector: 'code',
   });
 
-  const highlighted = hljs.highlight(code.trim(), { language: language! }).value;
+  const highlighted = hljs!.highlight(code.trim(), { language: language! }).value;
 
   return (
     <Box

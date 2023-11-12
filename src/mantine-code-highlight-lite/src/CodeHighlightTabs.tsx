@@ -1,6 +1,4 @@
-import React from 'react';
-import hljs from 'highlight.js/lib/core';
-// import hljs from 'highlight.js';
+import React, { useContext } from 'react';
 import cx from 'clsx';
 import { useUncontrolled } from '@mantine/hooks';
 import {
@@ -20,6 +18,7 @@ import {
   rem,
   Factory,
 } from '@mantine/core';
+import { HighlightContext } from './HighlightProvider';
 import { CopyIcon } from './CopyIcon';
 import { FileIcon } from './FileIcon';
 import { ExpandIcon } from './ExpandIcon';
@@ -122,6 +121,7 @@ const varsResolver = createVarsResolver<CodeHighlightTabsFactory>((_, { maxColla
 }));
 
 export const CodeHighlightTabs = factory<CodeHighlightTabsFactory>((_props, ref) => {
+  const { hljs } = useContext(HighlightContext);
   const props = useProps('CodeHighlightTabs', defaultProps, _props);
   const {
     classNames,
@@ -179,7 +179,7 @@ export const CodeHighlightTabs = factory<CodeHighlightTabsFactory>((_props, ref)
   const nodes = Array.isArray(code) ? code : [code];
   const currentCode = nodes[value];
 
-  const highlighted = hljs.highlight(currentCode.code.trim(), {
+  const highlighted = hljs!.highlight(currentCode.code.trim(), {
     language: currentCode.language || 'plaintext',
   }).value;
 

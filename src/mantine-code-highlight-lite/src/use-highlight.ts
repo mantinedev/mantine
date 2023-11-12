@@ -8,8 +8,7 @@ interface UseHighlightInput {
 }
 
 export function useHighlight({ code, language, highlightOnClient }: UseHighlightInput) {
-  const highlight = useContext(HighlightContext);
-  const { highlight: hljs } = highlight;
+  const { hljs } = useContext(HighlightContext);
 
   const lang = hljs?.getLanguage(language) ? language : 'plaintext';
 
