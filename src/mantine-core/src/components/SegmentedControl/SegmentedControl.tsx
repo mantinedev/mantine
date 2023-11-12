@@ -20,6 +20,7 @@ import {
   createVarsResolver,
   Factory,
 } from '../../core';
+import { getRootPadding } from './get-root-padding';
 import classes from './SegmentedControl.module.css';
 
 const WRAPPER_PADDING = 4;
@@ -176,27 +177,34 @@ export const SegmentedControl = factory<SegmentedControlFactory>((_props, ref) =
   });
   const uuid = useId(name);
   const refs = useRef<Record<string, HTMLLabelElement>>({});
+  const rootRef = useRef<HTMLDivElement>(null);
   const [observerRef, containerRect] = useResizeObserver();
 
   useEffect(() => {
     if (_value in refs.current && observerRef.current) {
       const element = refs.current[_value];
       if (element) {
+        const rootPadding = getRootPadding(rootRef.current!, WRAPPER_PADDING);
         const elementRect = element.getBoundingClientRect();
         const scaledValue = element.offsetWidth / elementRect.width;
         const width = element.clientWidth * scaledValue || 0;
         const height = element.clientHeight * scaledValue || 0;
 
         const offsetRight =
-          containerRect.width - element.parentElement!.offsetLeft + WRAPPER_PADDING - width;
-        const offsetLeft = element.parentElement!.offsetLeft - WRAPPER_PADDING;
+          containerRect.width -
+          element.parentElement!.offsetLeft +
+          (dir === 'rtl' ? rootPadding.left : rootPadding.right) -
+          width;
+        const offsetLeft =
+          element.parentElement!.offsetLeft -
+          (dir === 'rtl' ? rootPadding.right : rootPadding.left);
 
         setActivePosition({
           width,
           height,
           translate: [
             dir === 'rtl' ? offsetRight * -1 : offsetLeft,
-            element.parentElement!.offsetTop - WRAPPER_PADDING,
+            element.parentElement!.offsetTop - rootPadding.top,
           ],
         });
       } else {
@@ -243,7 +251,7 @@ export const SegmentedControl = factory<SegmentedControlFactory>((_props, ref) =
     </Box>
   ));
 
-  const mergedRef = useMergedRef(observerRef, ref);
+  const mergedRef = useMergedRef(observerRef, rootRef, ref);
 
   if (data.length === 0) {
     return null;

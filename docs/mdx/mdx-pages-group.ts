@@ -378,4 +378,9 @@ export const SEARCH_MDX_PAGES: Frontmatter[] = [
     slug: '/app-shell/?e=BasicAppShell',
     search: '10+ examples of AppShell usage',
   },
-];
+].reduce<Frontmatter[]>((acc, item) => {
+  if (!acc.some((accItem) => accItem.slug === item.slug)) {
+    acc.push(item);
+  }
+  return acc;
+}, []);

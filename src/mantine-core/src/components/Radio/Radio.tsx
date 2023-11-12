@@ -28,7 +28,12 @@ import classes from './Radio.module.css';
 export type RadioVariant = 'filled' | 'outline';
 export type RadioStylesNames = InlineInputStylesNames | 'inner' | 'radio' | 'icon';
 export type RadioCssVariables = {
-  root: '--radio-size' | '--radio-radius' | '--radio-color' | '--radio-icon-color';
+  root:
+    | '--radio-size'
+    | '--radio-radius'
+    | '--radio-color'
+    | '--radio-icon-color'
+    | '--radio-icon-size';
 };
 
 export interface RadioProps
@@ -98,6 +103,7 @@ const varsResolver = createVarsResolver<RadioFactory>(
         '--radio-radius': radius === undefined ? undefined : getRadius(radius),
         '--radio-color': variant === 'outline' ? outlineColor : getThemeColor(color, theme),
         '--radio-icon-color': iconColor ? getThemeColor(iconColor, theme) : undefined,
+        '--radio-icon-size': getSize(size, 'radio-icon-size'),
       },
     };
   }

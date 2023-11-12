@@ -1,6 +1,6 @@
 import React from 'react';
 import { MantineDemo } from '@mantine/ds';
-import { rem, Title } from '@mantine/core';
+import { Title } from '@mantine/core';
 
 const code = `
 import { Title } from '@mantine/core';
@@ -12,7 +12,7 @@ function Demo() {
         H3 heading with h1 font-size
       </Title>
       <Title size="h4">H1 heading with h4 font-size</Title>
-      <Title size="${rem(12)}">H1 heading with ${rem(12)} size</Title>
+      <Title size="1rem">H1 heading with 1rem size</Title>
     </>
   );
 }
@@ -25,7 +25,7 @@ function Demo() {
         H3 heading with h1 font-size
       </Title>
       <Title size="h4">H1 heading with h4 font-size</Title>
-      <Title size={rem(12)}>H1 heading with {rem(12)} size</Title>
+      <Title size="1rem">H1 heading with 1rem size</Title>
     </>
   );
 }

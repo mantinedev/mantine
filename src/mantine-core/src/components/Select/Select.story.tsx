@@ -16,6 +16,20 @@ export function Usage() {
   );
 }
 
+export function EmptyOptionValue() {
+  return (
+    <div style={{ padding: 40 }}>
+      <Select
+        data={[
+          { value: '', label: 'Empty value' },
+          { value: 'test', label: 'Not empty' },
+        ]}
+        placeholder="Select value"
+      />
+    </div>
+  );
+}
+
 export function LongOptions() {
   return (
     <div style={{ padding: 40, maxWidth: 300 }}>

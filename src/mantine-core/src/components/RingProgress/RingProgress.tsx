@@ -16,6 +16,10 @@ import classes from './RingProgress.module.css';
 import { getCurves } from './get-curves/get-curves';
 import { Curve } from './Curve/Curve';
 
+function getClampedThickness(thickness: number, size: number) {
+  return Math.min(thickness, size / 4);
+}
+
 interface RingProgressSection extends React.ComponentPropsWithRef<'circle'> {
   value: number;
   color: MantineColor;
@@ -100,9 +104,11 @@ export const RingProgress = factory<RingProgressFactory>((_props, ref) => {
     varsResolver,
   });
 
+  const clampedThickness = getClampedThickness(thickness!, size!);
+
   const curves = getCurves({
     size: size!,
-    thickness: thickness!,
+    thickness: clampedThickness,
     sections,
     renderRoundedLineCaps: roundCaps,
     rootColor,
@@ -111,7 +117,7 @@ export const RingProgress = factory<RingProgressFactory>((_props, ref) => {
       {...data}
       key={index}
       size={size!}
-      thickness={thickness!}
+      thickness={clampedThickness}
       sum={sum}
       offset={offset}
       color={data?.color}

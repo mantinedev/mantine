@@ -6,12 +6,12 @@ const code = `
 import { PinInput } from '@mantine/core';
 
 function Demo() {
-  return <PinInput type={/^[0-3]+/} inputType="tel" inputMode="numeric" />;
+  return <PinInput type={/^[0-3]*$/} inputType="tel" inputMode="numeric" />;
 }
 `;
 
 function Demo() {
-  return <PinInput type={/^[0-3]+/} inputType="tel" inputMode="numeric" />;
+  return <PinInput type={/^[0-3]*$/} inputType="tel" inputMode="numeric" />;
 }
 
 export const regexp: MantineDemo = {
