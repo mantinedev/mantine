@@ -16,10 +16,11 @@ export function MultiSelectCreatable() {
   const exactOptionMatch = data.some((item) => item === search);
 
   const handleValueSelect = (val: string) => {
+    setSearch('');
+
     if (val === '$create') {
       setData((current) => [...current, search]);
       setValue((current) => [...current, search]);
-      setSearch('');
     } else {
       setValue((current) =>
         current.includes(val) ? current.filter((v) => v !== val) : [...current, val]
@@ -36,7 +37,7 @@ export function MultiSelectCreatable() {
     </Pill>
   ));
 
-  const options = groceries
+  const options = data
     .filter((item) => item.toLowerCase().includes(search.trim().toLowerCase()))
     .map((item) => (
       <Combobox.Option value={item} key={item} active={value.includes(item)}>
