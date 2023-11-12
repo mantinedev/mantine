@@ -1,0 +1,55 @@
+{
+  "name": "@mantine/code-highlight-lite",
+  "version": "7.2.1",
+  "main": "./cjs/index.js",
+  "types": "./lib/index.d.ts",
+  "module": "./esm/index.mjs",
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./lib/index.d.mts",
+        "default": "./esm/index.mjs"
+      },
+      "require": {
+        "types": "./lib/index.d.ts",
+        "default": "./cjs/index.js"
+      }
+    },
+    "./styles.css": "./esm/index.css",
+    "./styles.layer.css": "./esm/index.layer.css"
+  },
+  "license": "MIT",
+  "author": "Vitaly Rtishchev <rtivital@gmail.com>",
+  "sideEffects": false,
+  "homepage": "https://mantine.dev/others/prism/",
+  "repository": {
+    "url": "https://github.com/mantinedev/mantine.git",
+    "type": "git",
+    "directory": "src/mantine-code-highlight-lite"
+  },
+  "keywords": [
+    "react",
+    "next",
+    "nextjs",
+    "ui",
+    "components",
+    "ui-kit",
+    "library",
+    "frontend",
+    "code",
+    "highlight",
+    "syntax",
+    "syntax-highlight"
+  ],
+  "peerDependencies": {
+    "@mantine/core": "7.2.1",
+    "@mantine/hooks": "7.2.1",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "highlight.js": "^11.7.0"
+  },
+  "dependencies": {
+    "clsx": "2.0.0"
+  },
+  "devDependencies": {}
+}
