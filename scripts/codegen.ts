@@ -1,13 +1,22 @@
 import fs from 'fs-extra';
 import path from 'path';
 
+function transformImportStatement(input: string) {
+  const regex = /import React, (\{[^}]+\}) from 'react';/g;
+  const match = regex.exec(input);
+  if (!match) {
+    return input;
+  }
+  return `import ${match[1]} from 'react';`;
+}
+
 function removeReact(input: string) {
   const lines = input.split('\n');
 
   if (lines[0].includes("import React from 'react';")) {
     lines.shift();
   } else if (lines[0].includes('import React')) {
-    const remainingImports = lines[0].replace(/import React[^;]+;/, '');
+    const remainingImports = transformImportStatement(lines[0]);
     lines[0] = remainingImports;
   }
 
