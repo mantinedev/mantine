@@ -1,0 +1,30 @@
+(self.webpackChunk_N_E=self.webpackChunk_N_E||[]).push([[1206],{33507:function(e,t,i){"use strict";i.d(t,{Z:function(){return n}});var n=(0,i(30853).Z)("arrow-left","IconArrowLeft",[["path",{d:"M5 12l14 0",key:"svg-0"}],["path",{d:"M5 12l6 6",key:"svg-1"}],["path",{d:"M5 12l6 -6",key:"svg-2"}]])},12162:function(e,t,i){"use strict";i.d(t,{Z:function(){return n}});var n=(0,i(30853).Z)("arrow-right","IconArrowRight",[["path",{d:"M5 12l14 0",key:"svg-0"}],["path",{d:"M13 18l6 -6",key:"svg-1"}],["path",{d:"M13 6l6 6",key:"svg-2"}]])},8427:function(e,t,i){"use strict";i.d(t,{Z:function(){return n}});var n=(0,i(30853).Z)("calendar","IconCalendar",[["path",{d:"M4 7a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12z",key:"svg-0"}],["path",{d:"M16 3v4",key:"svg-1"}],["path",{d:"M8 3v4",key:"svg-2"}],["path",{d:"M4 11h16",key:"svg-3"}],["path",{d:"M11 15h1",key:"svg-4"}],["path",{d:"M12 15v3",key:"svg-5"}]])},38767:function(e,t,i){"use strict";i.d(t,{Z:function(){return n}});var n=(0,i(30853).Z)("license","IconLicense",[["path",{d:"M15 21h-9a3 3 0 0 1 -3 -3v-1h10v2a2 2 0 0 0 4 0v-14a2 2 0 1 1 2 2h-2m2 -4h-11a3 3 0 0 0 -3 3v11",key:"svg-0"}],["path",{d:"M9 7l4 0",key:"svg-1"}],["path",{d:"M9 11l4 0",key:"svg-2"}]])},94342:function(e,t,i){"use strict";i.d(t,{Z:function(){return n}});var n=(0,i(30853).Z)("list","IconList",[["path",{d:"M9 6l11 0",key:"svg-0"}],["path",{d:"M9 12l11 0",key:"svg-1"}],["path",{d:"M9 18l11 0",key:"svg-2"}],["path",{d:"M5 6l0 .01",key:"svg-3"}],["path",{d:"M5 12l0 .01",key:"svg-4"}],["path",{d:"M5 18l0 .01",key:"svg-5"}]])},30471:function(e,t,i){"use strict";i.d(t,{Z:function(){return n}});var n=(0,i(30853).Z)("pencil","IconPencil",[["path",{d:"M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4",key:"svg-0"}],["path",{d:"M13.5 6.5l4 4",key:"svg-1"}]])},62640:function(e,t,i){"use strict";i.d(t,{Z:function(){return n}});var n=(0,i(30853).Z)("switch-2","IconSwitch2",[["path",{d:"M3 17h5l1.67 -2.386m3.66 -5.227l1.67 -2.387h6",key:"svg-0"}],["path",{d:"M18 4l3 3l-3 3",key:"svg-1"}],["path",{d:"M3 7h5l7 10h6",key:"svg-2"}],["path",{d:"M18 20l3 -3l-3 -3",key:"svg-3"}]])},73233:function(e,t,i){(window.__NEXT_P=window.__NEXT_P||[]).push(["/core/title",function(){return i(9524)}])},9524:function(e,t,i){"use strict";i.r(t),i.d(t,{default:function(){return f}});var n=i(85893),r=i(11151),h=i(19905),s=i(9904),l=i(67294),d=i(44907);let o=`
+import { Title } from '@mantine/core';
+
+function Demo() {
+  return (
+    <>
+      <Title order={1}>This is h1 title</Title>
+      <Title order={2}>This is h2 title</Title>
+      <Title order={3}>This is h3 title</Title>
+      <Title order={4}>This is h4 title</Title>
+      <Title order={5}>This is h5 title</Title>
+      <Title order={6}>This is h6 title</Title>
+    </>
+  );
+}
+`,c={type:"code",code:o,component:function(){return l.createElement(l.Fragment,null,l.createElement(d.D,{order:1},"This is h1 title"),l.createElement(d.D,{order:2},"This is h2 title"),l.createElement(d.D,{order:3},"This is h3 title"),l.createElement(d.D,{order:4},"This is h4 title"),l.createElement(d.D,{order:5},"This is h5 title"),l.createElement(d.D,{order:6},"This is h6 title"))}},a=`
+import { Title } from '@mantine/core';
+
+function Demo() {
+  return (
+    <>
+      <Title order={3} size="h1">
+        H3 heading with h1 font-size
+      </Title>
+      <Title size="h4">H1 heading with h4 font-size</Title>
+      <Title size="1rem">H1 heading with 1rem size</Title>
+    </>
+  );
+}
+`,u={type:"code",component:function(){return l.createElement(l.Fragment,null,l.createElement(d.D,{order:3,size:"h1"},"H3 heading with h1 font-size"),l.createElement(d.D,{size:"h4"},"H1 heading with h4 font-size"),l.createElement(d.D,{size:"1rem"},"H1 heading with 1rem size"))},code:a},p=(0,h.A)(s.us.Title);function g(e){let t=Object.assign({h2:"h2",p:"p",a:"a",code:"code",ul:"ul",li:"li"},(0,r.ah)(),e.components),{Demo:i}=t;return i||function(e,t){throw Error("Expected "+(t?"component":"object")+" `"+e+"` to be defined: you likely forgot to import, pass, or provide it.")}("Demo",!0),(0,n.jsxs)(n.Fragment,{children:[(0,n.jsx)(t.h2,{id:"usage",children:"Usage"}),"\n",(0,n.jsxs)(t.p,{children:["Use Title component to render h1-h6 headings with Mantine ",(0,n.jsx)(t.a,{href:"/theming/theme-object",children:"theme"})," styles.\nBy default, ",(0,n.jsx)(t.code,{children:"Title"})," has no margins and paddings.\nYou can change ",(0,n.jsx)(t.code,{children:"font-size"}),", ",(0,n.jsx)(t.code,{children:"font-weight"})," and ",(0,n.jsx)(t.code,{children:"line-height"})," per heading with ",(0,n.jsx)(t.a,{href:"/theming/typography",children:"theme.headings"}),"."]}),"\n",(0,n.jsxs)(t.p,{children:["Set ",(0,n.jsx)(t.code,{children:"order"})," prop to render a specific element (h1-h6), default order is ",(0,n.jsx)(t.code,{children:"1"}),":"]}),"\n",(0,n.jsx)(i,{data:c}),"\n",(0,n.jsx)(t.h2,{id:"size",children:"Size"}),"\n",(0,n.jsxs)(t.p,{children:["You can change Title ",(0,n.jsx)(t.code,{children:"size"})," independent of its ",(0,n.jsx)(t.code,{children:"order"}),":"]}),"\n",(0,n.jsxs)(t.ul,{children:["\n",(0,n.jsxs)(t.li,{children:["If you set size to ",(0,n.jsx)(t.code,{children:"h1"}),"-",(0,n.jsx)(t.code,{children:"h6"}),", then component will add corresponding ",(0,n.jsx)(t.code,{children:"font-size"})," and ",(0,n.jsx)(t.code,{children:"line-height"})," from the ",(0,n.jsx)(t.a,{href:"/theming/theme-object/",children:"theme"})]}),"\n",(0,n.jsxs)(t.li,{children:["If you set size to any other value, then ",(0,n.jsx)(t.code,{children:"line-height"})," will be calculated based on ",(0,n.jsx)(t.code,{children:"order"})," – ",(0,n.jsx)(t.code,{children:"size"})," will impact only ",(0,n.jsx)(t.code,{children:"font-size"})]}),"\n"]}),"\n",(0,n.jsx)(i,{data:u})]})}var f=function(){let e=arguments.length>0&&void 0!==arguments[0]?arguments[0]:{};return(0,n.jsx)(p,Object.assign({},e,{children:(0,n.jsx)(g,e)}))}}},function(e){e.O(0,[8992,178,9774,2888,179],function(){return e(e.s=73233)}),_N_E=e.O()}]);
