@@ -17,7 +17,7 @@ import { getCurves } from './get-curves/get-curves';
 import { Curve } from './Curve/Curve';
 
 function getClampedThickness(thickness: number, size: number) {
-  return Math.min(thickness, size / 4);
+  return Math.min(thickness || 12, (size || 120) / 4);
 }
 
 interface RingProgressSection extends React.ComponentPropsWithRef<'circle'> {

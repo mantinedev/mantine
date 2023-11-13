@@ -17,7 +17,7 @@ export function getCurveProps({ size, thickness, sum, value, root, offset }: Get
       : `${value * deg}, ${(100 - value) * deg}`;
 
   return {
-    strokeWidth: thickness,
+    strokeWidth: Number.isNaN(thickness) ? 12 : thickness,
     cx: size / 2 || 0,
     cy: size / 2 || 0,
     r: radius || 0,
