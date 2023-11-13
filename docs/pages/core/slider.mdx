@@ -59,6 +59,20 @@ To change label behavior and appearance, set the following props:
 
 <Demo data={SliderDemos.step} />
 
+## Decimal values
+
+To use `Slider` with decimal values, set `min`, `max` and `step` props:
+
+<Demo data={SliderDemos.decimal} />
+
+## minRange
+
+Use `minRange` prop to control minimum range between `from` and `to` values
+in `RangeSlider`. The default value is `10`. The example below shows how to
+use `minRange` prop to capture decimal values from the user:
+
+<Demo data={SliderDemos.decimalRange} />
+
 ## Marks
 
 Add any number of marks to slider by setting `marks` prop to an array of objects:

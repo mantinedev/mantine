@@ -10,3 +10,5 @@ export { thumbChildren } from './Slider.demo.thumbChildren';
 export { scale } from './Slider.demo.scale';
 export { inverted } from './Slider.demo.inverted';
 export { stylesApi } from './Slider.demo.stylesApi';
+export { decimal } from './Slider.demo.decimal';
+export { decimalRange } from './Slider.demo.decimalRange';

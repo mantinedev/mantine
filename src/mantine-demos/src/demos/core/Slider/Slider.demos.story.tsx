@@ -62,3 +62,13 @@ export const DemoStylesApi = {
   name: '⭐ Demo: stylesApi',
   render: renderDemo(demos.stylesApi),
 };
+
+export const DemoDecimal = {
+  name: '⭐ Demo: decimal',
+  render: renderDemo(demos.decimal),
+};
+
+export const DemoDecimalRange = {
+  name: '⭐ Demo: decimalRange',
+  render: renderDemo(demos.decimalRange),
+};
