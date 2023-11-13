@@ -31,6 +31,29 @@ export function Usage() {
   );
 }
 
+export function FloatingVariant() {
+  const [opened, { open, close }] = useDisclosure(true);
+  return (
+    <div style={{ padding: 40 }}>
+      <Button onClick={open}>Open modal</Button>
+      {content}
+      <Button onClick={open}>Open modal</Button>
+      <Drawer
+        opened={opened}
+        onClose={close}
+        title="Just a Drawer"
+        size="md"
+        zIndex={73812}
+        radius="md"
+        offset={8}
+        position="right"
+      >
+        <input data-autofocus />
+      </Drawer>
+    </div>
+  );
+}
+
 export function WithTabs() {
   const [opened, { open, close }] = useDisclosure(true);
   return (

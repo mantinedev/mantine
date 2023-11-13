@@ -52,3 +52,8 @@ export const DemoOverflow = {
   name: '⭐ Demo: overflow',
   render: renderDemo(demos.overflow),
 };
+
+export const DemoOffset = {
+  name: '⭐ Demo: offset',
+  render: renderDemo(demos.offset),
+};

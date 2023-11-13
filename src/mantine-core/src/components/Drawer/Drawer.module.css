@@ -5,6 +5,7 @@
   --drawer-size-lg: rem(620px);
   --drawer-size-xl: rem(780px);
   --drawer-size: var(--drawer-size-md);
+  --drawer-offset: 0rem;
 }
 
 .header {
@@ -12,12 +13,11 @@
 }
 
 .content {
-  --paper-radius: 0 !important;
   flex: var(--drawer-flex, 0 0 var(--drawer-size));
-  height: var(--drawer-height, 100%);
+  height: var(--drawer-height, calc(100% - var(--drawer-offset) * 2));
+  margin: var(--drawer-offset);
   max-width: 100%;
   max-height: 100%;
-  border-radius: 0;
   overflow-y: auto;
 }
 

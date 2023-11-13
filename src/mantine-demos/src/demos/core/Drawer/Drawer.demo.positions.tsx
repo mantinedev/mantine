@@ -23,18 +23,10 @@ function Demo() {
       </Drawer>
 
       <Group justify="center">
-        <Button variant="outline" onClick={() => open('left')}>
-          Left
-        </Button>
-        <Button variant="outline" onClick={() => open('right')}>
-          Right
-        </Button>
-        <Button variant="outline" onClick={() => open('top')}>
-          Top
-        </Button>
-        <Button variant="outline" onClick={() => open('bottom')}>
-          Bottom
-        </Button>
+        <Button onClick={() => open('left')}>Left</Button>
+        <Button onClick={() => open('right')}>Right</Button>
+        <Button onClick={() => open('top')}>Top</Button>
+        <Button onClick={() => open('bottom')}>Bottom</Button>
       </Group>
     </>
   );

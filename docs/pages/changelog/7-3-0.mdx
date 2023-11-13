@@ -1,6 +1,6 @@
 import { Layout } from '@/layout';
 import { MDX_DATA } from '@/mdx';
-import { Changelog730Demos, ColorPickerDemos, ButtonDemos } from '@mantine/demos';
+import { Changelog730Demos, ColorPickerDemos, ButtonDemos, DrawerDemos } from '@mantine/demos';
 
 export default Layout(MDX_DATA.Changelog730);
 
@@ -141,6 +141,12 @@ function Demo() {
 [Button](/core/button) component now has loading state animation:
 
 <Demo data={ButtonDemos.loading} />
+
+## Drawer offset
+
+[Drawer](/core/drawer) now supports `offset` prop. It changes drawer offset from the edge of the viewport:
+
+<Demo data={DrawerDemos.offset} />
 
 ## Documentation updates
 
