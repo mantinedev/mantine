@@ -14,6 +14,7 @@ import React from 'react';
 import { AppProps } from 'next/app';
 import Head from 'next/head';
 import { MantineProvider, DirectionProvider } from '@mantine/core';
+import { useHotkeys, useLocalStorage } from '@mantine/hooks';
 import { Notifications } from '@mantine/notifications';
 import { MdxProvider } from '@/components/MdxProvider';
 import { HotKeysHandler } from '@/components/HotKeysHandler';
@@ -21,15 +22,21 @@ import { Search } from '@/components/Search';
 import { FontsStyle } from '@/fonts';
 import { Shell } from '@/components/Shell';
 import { GaScript } from '@/components/GaScript';
+import { ModalsProviderDemo } from '@/components/ModalsProviderDemo';
 import { theme } from '../theme';
 import '../styles/variables.css';
 import '../styles/global.css';
-import { ModalsProviderDemo } from '@/components/ModalsProviderDemo';
 
 const excludeShell = ['/', '/combobox', '/app-shell'];
 
 export default function App({ Component, pageProps, router }: AppProps) {
   const shouldRenderShell = !excludeShell.includes(router.pathname);
+  const [navbarOpened, setNavbarOpened] = useLocalStorage({
+    key: 'mantine-navbar-opened',
+    defaultValue: true,
+  });
+
+  useHotkeys([['mod + alt + N', () => setNavbarOpened(!navbarOpened)]]);
 
   return (
     <>
@@ -60,7 +67,7 @@ export default function App({ Component, pageProps, router }: AppProps) {
             <MdxProvider>
               <HotKeysHandler />
               {shouldRenderShell ? (
-                <Shell>
+                <Shell withNavbar={navbarOpened}>
                   <Component {...pageProps} />
                 </Shell>
               ) : (
