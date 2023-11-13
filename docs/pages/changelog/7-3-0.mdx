@@ -120,6 +120,30 @@ function Demo() {
 }
 ```
 
+## component and renderRoot props for non-polymorphic components
+
+All Mantine components now support `component` and `renderRoot` props event if they are not [polymorphic](/guides/polymorphic).
+The difference between polymorphic and non-polymorphic components is that polymorphic components
+include full set of props of the component passed to the `component` prop, while non-polymorphic
+components only include props that are specific to the original component. It is done this way to
+improve TypeScript performance.
+
+```tsx
+import { Group } from '@mantine/core';
+
+// Group is not polymorphic component,
+// but it still supports component and renderRoot props
+function Demo() {
+  return (
+    <Group component="nav">
+      <a>Item 1</a>
+      <a>Item 2</a>
+      <a>Item 3</a>
+    </Group>
+  );
+}
+```
+
 ## Outline Checkbox and Radio variant
 
 [Checkbox](/core/checkbox) and [Radio](/core/radio) components now support `outline` variant:

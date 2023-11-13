@@ -15,6 +15,7 @@ export const DrawerStylesApi: StylesApiData<DrawerFactory> = {
 
   vars: {
     root: {
+      '--drawer-offset': 'Controls `margin` of `Drawer.Content`',
       '--drawer-size': 'Controls `width` of `Drawer.Content`',
       '--drawer-flex': 'Controls `flex` property of `Drawer.Content`',
       '--drawer-align': 'Controls `align-items` property of `Drawer.Content`',

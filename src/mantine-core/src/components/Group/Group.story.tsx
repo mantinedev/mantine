@@ -6,7 +6,7 @@ export default { title: 'Group' };
 export function Usage() {
   return (
     <div style={{ padding: 40 }}>
-      <Group>
+      <Group component="nav">
         <button type="button">First</button>
         <button type="button">Second</button>
         <button type="button">Third</button>

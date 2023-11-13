@@ -47,7 +47,11 @@ export type MantineComponentStaticProperties<Payload extends FactoryPayload> =
   ThemeExtend<Payload> & ComponentClasses<Payload> & StaticComponents<Payload['staticComponents']>;
 
 export type MantineComponent<Payload extends FactoryPayload> = React.ForwardRefExoticComponent<
-  Payload['props'] & React.RefAttributes<Payload['ref']>
+  Payload['props'] &
+    React.RefAttributes<Payload['ref']> & {
+      component?: any;
+      renderRoot?: (props: Record<string, any>) => React.ReactNode;
+    }
 > &
   MantineComponentStaticProperties<Payload>;
 
