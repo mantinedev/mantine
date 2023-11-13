@@ -1,7 +1,7 @@
 {
   "name": "@mantine/modals",
   "description": "Modals manager based on Mantine components",
-  "version": "7.2.1",
+  "version": "7.2.2",
   "main": "./cjs/index.js",
   "types": "./lib/index.d.ts",
   "module": "./esm/index.mjs",
@@ -41,8 +41,8 @@
     "confirm"
   ],
   "peerDependencies": {
-    "@mantine/core": "7.2.1",
-    "@mantine/hooks": "7.2.1",
+    "@mantine/core": "7.2.2",
+    "@mantine/hooks": "7.2.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },

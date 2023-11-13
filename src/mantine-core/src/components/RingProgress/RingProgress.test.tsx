@@ -3,6 +3,7 @@ import { RingProgress, RingProgressProps, RingProgressStylesNames } from './Ring
 
 const defaultProps: RingProgressProps = {
   size: 100,
+  thickness: 10,
   label: 'test',
   sections: [{ value: 20, color: 'orange' }],
 };

@@ -8,7 +8,7 @@ import { HoverCardDropdown } from './HoverCardDropdown/HoverCardDropdown';
 import { HoverCardTarget } from './HoverCardTarget/HoverCardTarget';
 import { PopoverCssVariables } from '../Popover/Popover';
 
-export interface HoverCardProps extends PopoverProps {
+export interface HoverCardProps extends Omit<PopoverProps, 'opened' | 'onChange'> {
   variant?: string;
 
   /** Initial opened state */

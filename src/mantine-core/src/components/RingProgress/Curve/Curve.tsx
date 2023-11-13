@@ -32,11 +32,6 @@ export function Curve({
   ...others
 }: CurveProps) {
   const theme = useMantineTheme();
-  // const stroke = theme.fn.themeColor(
-  //   color || (theme.colorScheme === 'dark' ? 'dark' : 'gray'),
-  //   color ? theme.fn.primaryShade() : theme.colorScheme === 'dark' ? 4 : 1,
-  //   false
-  // );
 
   return (
     <Tooltip.Floating disabled={!tooltip} label={tooltip}>
@@ -47,7 +42,6 @@ export function Curve({
         __vars={{ '--curve-color': color ? getThemeColor(color, theme) : undefined }}
         fill="none"
         strokeLinecap={lineRoundCaps ? 'round' : 'butt'}
-        // stroke={color ? getThemeColor(color, theme) : undefined}
         {...getCurveProps({ sum, size, thickness, value, offset, root })}
       />
     </Tooltip.Floating>
