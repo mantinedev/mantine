@@ -27,3 +27,8 @@ export const DemoContent = {
   name: '⭐ Demo: content',
   render: renderDemo(demos.content),
 };
+
+export const DemoModalProps = {
+  name: '⭐ Demo: modalProps',
+  render: renderDemo(demos.modalProps),
+};
