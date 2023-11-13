@@ -32,6 +32,7 @@
   position: relative;
   line-height: 1;
   text-align: center;
+  overflow: hidden;
 
   width: var(--_button-width, auto);
   cursor: var(--_button-cursor, pointer);
@@ -77,16 +78,38 @@
     transform: none;
   }
 
+  &::before {
+    content: '';
+    pointer-events: none;
+    position: absolute;
+    inset: rem(-1px);
+    border-radius: var(--button-radius, var(--mantine-radius-default));
+    transform: translateY(-100%);
+    background-color: var(--_button-loading-overlay-bg);
+    opacity: 0;
+    filter: blur(12px);
+    transition:
+      transform 150ms ease,
+      opacity 100ms ease;
+  }
+
   &[data-loading] {
     --_button-cursor: not-allowed;
     transform: none;
 
     &::before {
-      content: '';
-      position: absolute;
-      inset: rem(-1px);
-      border-radius: var(--button-radius, var(--mantine-radius-default));
-      background-color: var(--_button-loading-overlay-bg);
+      transform: translateY(0);
+      opacity: 1;
+    }
+
+    & .inner {
+      opacity: 0;
+      transform: translateY(100%);
+    }
+
+    & .loader {
+      opacity: 1;
+      transform: translate(-50%, -50%);
     }
   }
 
@@ -100,13 +123,13 @@
   @mixin light {
     --_disabled-color: var(--mantine-color-gray-5);
     --_disabled-bg: var(--mantine-color-gray-1);
-    --_button-loading-overlay-bg: rgba(255, 255, 255, 0.35);
+    --_button-loading-overlay-bg: rgba(255, 255, 255, 0.15);
   }
 
   @mixin dark {
     --_disabled-color: var(--mantine-color-dark-3);
     --_disabled-bg: var(--mantine-color-dark-6);
-    --_button-loading-overlay-bg: rgba(0, 0, 0, 0.35);
+    --_button-loading-overlay-bg: rgba(0, 0, 0, 0.15);
   }
 }
 
@@ -116,6 +139,9 @@
   justify-content: var(--button-justify, center);
   height: 100%;
   overflow: visible;
+  transition:
+    transform 150ms ease,
+    opacity 100ms ease;
 }
 
 .label {
@@ -160,7 +186,11 @@
   position: absolute;
   left: 50%;
   top: 50%;
-  transform: translate(-50%, -50%);
+  transition:
+    transform 150ms ease,
+    opacity 100ms ease;
+  opacity: 0;
+  transform: translate(-50%, -200%);
 }
 
 .group {

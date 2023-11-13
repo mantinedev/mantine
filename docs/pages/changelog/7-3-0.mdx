@@ -1,6 +1,6 @@
 import { Layout } from '@/layout';
 import { MDX_DATA } from '@/mdx';
-import { Changelog730Demos, ColorPickerDemos } from '@mantine/demos';
+import { Changelog730Demos, ColorPickerDemos, ButtonDemos } from '@mantine/demos';
 
 export default Layout(MDX_DATA.Changelog730);
 
@@ -135,6 +135,12 @@ function Demo() {
 <br />
 
 <Demo data={ColorPickerDemos.alphaSlider} />
+
+## Button loading state animation
+
+[Button](/core/button) component now has loading state animation:
+
+<Demo data={ButtonDemos.loading} />
 
 ## Documentation updates
 

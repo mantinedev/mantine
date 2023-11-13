@@ -1,36 +1,47 @@
 import React from 'react';
 import { MantineDemo } from '@mantine/ds';
-import { Button, Group } from '@mantine/core';
+import { useDisclosure } from '@mantine/hooks';
+import { Button, Group, Switch } from '@mantine/core';
 
 const code = `
 import { Button, Group } from '@mantine/core';
 
 function Demo() {
+  const [loading, { toggle }] = useDisclosure();
   return (
-    <Group>
-      <Button loading>Filled button</Button>
-      <Button variant="light" loading>
-        Light button
-      </Button>
-      <Button variant="outline" loading>
-        Outline button
-      </Button>
-    </Group>
+    <>
+      <Group>
+        <Button loading={loading}>Filled button</Button>
+        <Button variant="light" loading={loading}>
+          Light button
+        </Button>
+        <Button variant="outline" loading={loading}>
+          Outline button
+        </Button>
+      </Group>
+
+      <Switch checked={loading} onChange={toggle} label="Loading state" mt="md" />
+    </>
   );
 }
 `;
 
 function Demo() {
+  const [loading, { toggle }] = useDisclosure();
   return (
-    <Group>
-      <Button loading>Filled button</Button>
-      <Button variant="light" loading>
-        Light button
-      </Button>
-      <Button variant="outline" loading>
-        Outline button
-      </Button>
-    </Group>
+    <>
+      <Group>
+        <Button loading={loading}>Filled button</Button>
+        <Button variant="light" loading={loading}>
+          Light button
+        </Button>
+        <Button variant="outline" loading={loading}>
+          Outline button
+        </Button>
+      </Group>
+
+      <Switch checked={loading} onChange={toggle} label="Loading state" mt="md" />
+    </>
   );
 }
 

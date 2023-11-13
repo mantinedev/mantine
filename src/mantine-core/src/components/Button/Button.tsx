@@ -184,20 +184,18 @@ export const Button = polymorphicFactory<ButtonFactory>((_props, ref) => {
       }}
       {...others}
     >
+      <Box component="span" {...getStyles('loader')} aria-hidden>
+        <Loader
+          color="var(--button-color)"
+          size="calc(var(--button-height) / 1.8)"
+          {...loaderProps}
+        />
+      </Box>
+
       <span {...getStyles('inner')}>
         {leftSection && (
           <Box component="span" {...getStyles('section')} mod={{ position: 'left' }}>
             {leftSection}
-          </Box>
-        )}
-
-        {loading && (
-          <Box component="span" {...getStyles('loader')}>
-            <Loader
-              color="var(--button-color)"
-              size="calc(var(--button-height) / 1.8)"
-              {...loaderProps}
-            />
           </Box>
         )}
 
