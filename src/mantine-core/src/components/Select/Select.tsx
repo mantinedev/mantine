@@ -184,6 +184,8 @@ export const Select = factory<SelectFactory>((_props, ref) => {
     if (typeof value === 'string' && selectedOption) {
       setSearch(selectedOption.label);
     }
+
+    console.log(value);
   }, [value, selectedOption]);
 
   const clearButton = clearable && !!_value && !disabled && !readOnly && (
@@ -222,7 +224,7 @@ export const Select = factory<SelectFactory>((_props, ref) => {
       >
         <Combobox.Target targetType={searchable ? 'input' : 'button'}>
           <InputBase
-            id={_id}
+            id={_id + ' here 123'}
             ref={ref}
             rightSection={
               rightSection ||
@@ -234,7 +236,7 @@ export const Select = factory<SelectFactory>((_props, ref) => {
             __staticSelector="Select"
             disabled={disabled}
             readOnly={readOnly || !searchable}
-            value={search}
+            value={!searchable ? (_value ? _value : '') : search}
             onChange={(event) => {
               setSearch(event.currentTarget.value);
               combobox.openDropdown();
