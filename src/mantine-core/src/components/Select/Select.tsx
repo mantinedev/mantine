@@ -197,7 +197,7 @@ export const Select = factory<SelectFactory>((_props, ref) => {
     />
   );
 
-  const inputValue = !searchable ? (_value ? _value : '') : search;
+  const inputValue = searchable ? search : _value ? _value : '';
 
   return (
     <>
