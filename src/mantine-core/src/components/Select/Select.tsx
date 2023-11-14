@@ -234,7 +234,7 @@ export const Select = factory<SelectFactory>((_props, ref) => {
             __staticSelector="Select"
             disabled={disabled}
             readOnly={readOnly || !searchable}
-            value={search}
+            value={!searchable ? (_value ? _value : '') : search}
             onChange={(event) => {
               setSearch(event.currentTarget.value);
               combobox.openDropdown();
