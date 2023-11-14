@@ -101,6 +101,9 @@ export interface __InputProps {
 
   /** Determines whether the input should have red border and text color when `error` prop is set, `true` by default */
   withErrorStyles?: boolean;
+
+  /** Determines whether form has been reset or not `false` by default */
+  isreset?: string;
 }
 
 export interface InputProps extends BoxProps, __InputProps, StylesApiProps<InputFactory> {

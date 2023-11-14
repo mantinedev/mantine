@@ -132,6 +132,7 @@ export const Select = factory<SelectFactory>((_props, ref) => {
     clearable,
     clearButtonProps,
     hiddenInputProps,
+    isreset,
     ...others
   } = props;
 
@@ -185,6 +186,13 @@ export const Select = factory<SelectFactory>((_props, ref) => {
       setSearch(selectedOption.label);
     }
   }, [value, selectedOption]);
+
+  useEffect(() => {
+    if (isreset === 'true') {
+      setSearch('');
+      setValue('');
+    }
+  }, [isreset]);
 
   const clearButton = clearable && !!_value && !disabled && !readOnly && (
     <Combobox.ClearButton

@@ -53,6 +53,7 @@ export function useForm<
   const [dirty, setDirty] = useState(initialDirty);
   const [values, _setValues] = useState(initialValues);
   const [errors, _setErrors] = useState(filterErrors(initialErrors));
+  const [isReset, setIsReset] = useState(false);
 
   const valuesSnapshot = useRef<Values>(initialValues);
   const setValuesSnapshot = (_values: Values) => {
@@ -75,9 +76,11 @@ export function useForm<
   const clearErrors: ClearErrors = useCallback(() => _setErrors({}), []);
   const reset: Reset = useCallback(() => {
     _setValues(valuesSnapshot.current);
+    setIsReset(true);
     clearErrors();
     setDirty({});
     resetTouched();
+    setTimeout(() => setIsReset(false), 100);
   }, []);
 
   const setFieldError: SetFieldError<Values> = useCallback(
@@ -219,6 +222,8 @@ export function useForm<
         }
       };
     }
+
+    payload.isreset = `${isReset}`;
 
     return payload;
   };
