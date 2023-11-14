@@ -15,6 +15,7 @@ interface PackageJson {
   readonly peerDependencies?: Record<string, string>;
   readonly dependencies?: Record<string, string>;
   readonly devDependencies?: Record<string, string>;
+  readonly exports?: Record<string, any>;
 }
 
 export interface Package {
