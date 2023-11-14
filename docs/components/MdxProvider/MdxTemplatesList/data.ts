@@ -42,7 +42,7 @@ export const TEMPLATES_DATA: Template[] = [
     type: 'vite',
     name: 'vite-template',
     link: 'https://github.com/mantinedev/vite-template',
-    description: 'Vite template with full setup: Jest, Storybook, ESLint',
+    description: 'Vite template with full setup: Vitest, Prettier, Storybook, ESLint',
   },
   {
     type: 'vite',
