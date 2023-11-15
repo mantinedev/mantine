@@ -46,6 +46,7 @@
     "@tiptap/extension-text-align": "^2.0.4",
     "@tiptap/extension-text-style": "^2.0.4",
     "@tiptap/extension-underline": "^2.0.4",
+    "@tiptap/pm": "^2.1.12",
     "@tiptap/react": "^2.0.4",
     "@tiptap/starter-kit": "^2.0.4",
     "@types/node": "^18.14.2",
