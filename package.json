@@ -1,6 +1,10 @@
 {
   "name": "mantine-a91763c0e2",
   "private": true,
+  "packageManager": "yarn@4.0.2",
+  "engines": {
+    "node": ">=20.9.0"
+  },
   "workspaces": [
     "src/*",
     "docs"
@@ -193,9 +197,5 @@
     "react-textarea-autosize": "8.5.3",
     "react-transition-group": "4.4.5",
     "type-fest": "^3.13.1"
-  },
-  "volta": {
-    "node": "20.5.0"
-  },
-  "packageManager": "yarn@4.0.2"
+  }
 }
