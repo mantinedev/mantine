@@ -11,6 +11,7 @@ import banner from 'rollup-plugin-banner2';
 import esbuild from 'rollup-plugin-esbuild';
 import { generateScopedName } from 'hash-css-selector';
 import { getPackagesList } from '../../scripts/utils/get-packages-list';
+import { ROLLUP_EXTERNALS } from './rollup-externals';
 
 interface PkgConfigInput {
   basePath: string;
@@ -38,10 +39,6 @@ const excludeUseClient = [
   acc.push(`${name}.js`, `${name}.mjs`);
   return acc;
 }, []);
-
-const rootPackageJson = JSON.parse(
-  fs.readFileSync(path.join(process.cwd(), './package.json')).toString('utf-8')
-);
 
 export default async function createPackageConfig(config: PkgConfigInput): Promise<RollupOptions> {
   const packageJson = JSON.parse(
@@ -79,27 +76,6 @@ export default async function createPackageConfig(config: PkgConfigInput): Promi
     }),
   ];
 
-  const externals = [
-    'dayjs/locale/ru',
-    'dayjs/plugin/customParseFormat.js',
-    'dayjs/plugin/customParseFormat',
-    'dayjs/plugin/utc.js',
-    'dayjs/plugin/timezone.js',
-    'klona/full',
-    'highlight.js/lib/languages/typescript',
-    ...(config?.externals || []),
-    ...Object.keys({
-      ...packageJson.peerDependencies,
-      ...packageJson.devDependencies,
-      ...packageJson.dependencies,
-    }),
-    ...Object.keys({
-      ...rootPackageJson.devDependencies,
-      ...rootPackageJson.peerDependencies,
-      ...rootPackageJson.dependencies,
-    }),
-  ];
-
   const output: OutputOptions = {
     name: packageJson.name,
     format: config.format as ModuleFormat,
@@ -122,7 +98,7 @@ export default async function createPackageConfig(config: PkgConfigInput): Promi
   return {
     input: config?.entry || path.resolve(config.basePath, 'src/index.ts'),
     output,
-    external: externals,
+    external: ROLLUP_EXTERNALS,
     plugins,
   };
 }
