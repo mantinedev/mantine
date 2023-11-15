@@ -2,41 +2,42 @@ import chalk from 'chalk';
 import { createPackageConfig } from './rollup/create-package-config';
 import { compile } from './compile';
 import { generateDts } from './generate-dts';
+import { createLogger } from '../utils/signale';
 import locatePackage from '../utils/locate-package';
-import { Logger } from '../utils/Logger';
 import { getPackageName } from '../utils/get-package-name';
+import { getBuildTime } from './get-build-time';
 
-const logger = new Logger('build-package');
+const logger = createLogger('build-package');
 
 export async function buildPackage(_packageName: string) {
   const packageName = getPackageName(_packageName);
   const packagePath = await locatePackage(packageName);
+  const formattedPackageName = chalk.cyan(packageName);
 
   if (!packagePath) {
-    logger.error(`Package ${chalk.cyan(packageName)} does not exist`);
+    logger.error(`Package ${formattedPackageName} does not exist`);
     process.exit(1);
   }
 
-  logger.info(`Building package ${chalk.cyan(packageName)}`);
+  logger.log(`Building package ${formattedPackageName}`);
 
   try {
     const startTime = Date.now();
+    logger.log(`Generating ${formattedPackageName} *.d.ts files...`);
     await generateDts(packagePath);
 
     for (const format of ['es', 'cjs']) {
       const config = await createPackageConfig({ basePath: packagePath, format });
-      logger.info(`Building to ${chalk.cyan(format)} format...`);
+      logger.log(`Compiling ${formattedPackageName} package to ${chalk.cyan(format)} format...`);
       await compile(config);
     }
 
-    logger.info(
-      `Package ${chalk.cyan(packageName)} was built in ${chalk.green(
-        `${((Date.now() - startTime) / 1000).toFixed(2)}s`
-      )}`
+    logger.success(
+      `Package ${formattedPackageName} has been built in ${chalk.green(getBuildTime(startTime))}`
     );
   } catch (err: any) {
-    logger.error(`Failed to compile package: ${chalk.cyan(packageName)}`);
-    process.stdout.write(`${err.toString('minimal')}\n`);
+    logger.error(`Failed to compile package: ${formattedPackageName}`);
+    logger.error(err);
     process.exit(1);
   }
 }
