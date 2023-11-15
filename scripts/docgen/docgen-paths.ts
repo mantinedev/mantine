@@ -1,35 +1,7 @@
-import path from 'node:path';
-import fs from 'fs-extra';
-import { generateDeclarations } from 'mantine-docgen-script';
+import { getDeclarationsPaths } from './get-declarations-paths';
+import { getPath, getPaths } from '../utils/get-path';
 
-function getPackagePaths(packageFolder: string) {
-  return fs
-    .readdirSync(packageFolder)
-    .filter((p) => fs.pathExistsSync(path.join(packageFolder, p, `${p}.tsx`)))
-    .map((p) => path.join(packageFolder, p, `${p}.tsx`));
-}
-
-export interface DeclarationPath {
-  path: string;
-  type: 'package' | 'file';
-}
-
-export function getDeclarationsList(paths: DeclarationPath[]): string[] {
-  return paths.reduce<string[]>((acc, info) => {
-    if (info.type === 'package') {
-      const items = getPackagePaths(info.path);
-      return [...acc, ...items];
-    }
-
-    if (info.type === 'file') {
-      return [...acc, info.path];
-    }
-
-    return acc;
-  }, []);
-}
-
-const EXTRA_FILES_PATHS = [
+const FILES_PATHS = getPaths([
   // Input
   'src/mantine-core/src/components/Input/InputLabel/InputLabel.tsx',
   'src/mantine-core/src/components/Input/InputWrapper/InputWrapper.tsx',
@@ -149,21 +121,10 @@ const EXTRA_FILES_PATHS = [
 
   // Notifications
   'src/mantine-notifications/src/Notifications.tsx',
-];
+]);
 
-const PATHS: DeclarationPath[] = [
-  { type: 'package', path: path.join(process.cwd(), 'src/mantine-core/src/components') },
-  { type: 'package', path: path.join(process.cwd(), 'src/mantine-dates/src/components') },
-  ...EXTRA_FILES_PATHS.map((filePath) => ({
-    type: 'file' as const,
-    path: path.join(process.cwd(), filePath),
-  })),
-];
-
-generateDeclarations({
-  tsConfigPath: path.join(process.cwd(), 'tsconfig.json'),
-  outputPath: path.join(process.cwd(), 'docs/.docgen'),
-  componentsPaths: getDeclarationsList(PATHS),
-  excludeProps: [],
-  typesReplacement: {},
-});
+export const DOCGEN_PATHS = getDeclarationsPaths([
+  { type: 'package', path: getPath('src/mantine-core/src/components') },
+  { type: 'package', path: getPath('src/mantine-dates/src/components') },
+  ...FILES_PATHS.map((filePath) => ({ type: 'file' as const, path: filePath })),
+]);
