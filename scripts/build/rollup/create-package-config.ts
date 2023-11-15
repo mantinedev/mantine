@@ -9,7 +9,7 @@ import postcss from 'rollup-plugin-postcss';
 import banner from 'rollup-plugin-banner2';
 import esbuild from 'rollup-plugin-esbuild';
 import { generateScopedName } from 'hash-css-selector';
-import { getPackagesList } from '../../utils/get-packages-list';
+import { getPackagesList } from '../../packages/get-packages-list';
 import { ROLLUP_EXTERNALS } from './rollup-externals';
 import { ROLLUP_EXCLUDE_USE_CLIENT } from './rollup-exclude-use-client';
 

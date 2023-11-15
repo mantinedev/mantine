@@ -1,10 +1,10 @@
 import chalk from 'chalk';
+import { createLogger } from '../utils/signale';
+import { locatePackage } from '../packages/locate-package';
+import { getPackageName } from '../packages/get-package-name';
 import { createPackageConfig } from './rollup/create-package-config';
 import { compile } from './compile';
 import { generateDts } from './generate-dts';
-import { createLogger } from '../utils/signale';
-import locatePackage from '../utils/locate-package';
-import { getPackageName } from '../utils/get-package-name';
 import { getBuildTime } from './get-build-time';
 
 const logger = createLogger('build-package');
