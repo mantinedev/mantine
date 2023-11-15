@@ -1,13 +1,10 @@
 import execa from 'execa';
 import fg from 'fast-glob';
-import path from 'path';
+import path from 'node:path';
 import fs from 'fs-extra';
 
 export default async function generateDts(packagePath: string) {
-  await execa('yarn', ['tsc', '--project', 'tsconfig.build.json'], {
-    cwd: packagePath,
-  });
-
+  await execa('yarn', ['tsc', '--project', path.join(packagePath, 'tsconfig.build.json')]);
   const files = await fg(['lib/**/*.js'], { cwd: packagePath });
 
   // Duplicate the type definitions for ESM
