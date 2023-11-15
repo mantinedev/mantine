@@ -23,15 +23,14 @@ export async function buildPackage(_packageName: string) {
 
   try {
     const startTime = Date.now();
+
     logger.log(`Generating ${formattedPackageName} *.d.ts files...`);
     await generateDts(packagePath);
 
-    for (const format of ['es', 'cjs']) {
-      const config = await createPackageConfig({ basePath: packagePath, format });
-      logger.log(`Compiling ${formattedPackageName} package to ${chalk.cyan(format)} format...`);
-      await compile(config);
-    }
+    const config = await createPackageConfig(packagePath);
+    logger.log(`Compiling ${formattedPackageName} package with rollup...`);
 
+    await compile(config);
     logger.success(
       `Package ${formattedPackageName} has been built in ${chalk.green(getBuildTime(startTime))}`
     );

@@ -1,6 +1,5 @@
-import path from 'path';
-import fs from 'fs-extra';
-import { RollupOptions, OutputOptions, ModuleFormat } from 'rollup';
+import path from 'node:path';
+import { RollupOptions } from 'rollup';
 import commonjs from '@rollup/plugin-commonjs';
 import { nodeResolve } from '@rollup/plugin-node-resolve';
 import json from '@rollup/plugin-json';
@@ -14,19 +13,7 @@ import { getPackagesList } from '../../utils/get-packages-list';
 import { ROLLUP_EXTERNALS } from './rollup-externals';
 import { ROLLUP_EXCLUDE_USE_CLIENT } from './rollup-exclude-use-client';
 
-interface PkgConfigInput {
-  basePath: string;
-  format: string;
-  entry?: string;
-  publicPath?: string;
-  externals?: string[];
-}
-
-export async function createPackageConfig(config: PkgConfigInput): Promise<RollupOptions> {
-  const packageJson = JSON.parse(
-    fs.readFileSync(path.join(config.basePath, './package.json')).toString('utf-8')
-  );
-
+export async function createPackageConfig(packagePath: string): Promise<RollupOptions> {
   const pkgList = await getPackagesList();
 
   const aliasEntries: Alias[] = pkgList.map((pkg) => ({
@@ -58,28 +45,23 @@ export async function createPackageConfig(config: PkgConfigInput): Promise<Rollu
     }),
   ];
 
-  const output: OutputOptions = {
-    name: packageJson.name,
-    format: config.format as ModuleFormat,
-    externalLiveBindings: false,
-    sourcemap: true,
-  };
-
-  if (config.format === 'es') {
-    output.dir = path.resolve(config.basePath, 'esm');
-    output.preserveModules = true;
-    output.entryFileNames = '[name].mjs';
-  }
-
-  if (config.format === 'cjs') {
-    output.dir = path.resolve(config.basePath, 'cjs');
-    output.preserveModules = true;
-    output.exports = 'named';
-  }
-
   return {
-    input: config?.entry || path.resolve(config.basePath, 'src/index.ts'),
-    output,
+    input: path.resolve(packagePath, 'src/index.ts'),
+    output: [
+      {
+        format: 'es',
+        entryFileNames: '[name].mjs',
+        dir: path.resolve(packagePath, 'esm'),
+        preserveModules: true,
+        sourcemap: true,
+      },
+      {
+        format: 'cjs',
+        entryFileNames: '[name].js',
+        dir: path.resolve(packagePath, 'cjs'),
+        exports: 'named',
+      },
+    ],
     external: ROLLUP_EXTERNALS,
     plugins,
   };
