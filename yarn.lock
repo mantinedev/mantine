@@ -5849,25 +5849,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@rollup/plugin-typescript@npm:^11.1.5":
-  version: 11.1.5
-  resolution: "@rollup/plugin-typescript@npm:11.1.5"
-  dependencies:
-    "@rollup/pluginutils": "npm:^5.0.1"
-    resolve: "npm:^1.22.1"
-  peerDependencies:
-    rollup: ^2.14.0||^3.0.0||^4.0.0
-    tslib: "*"
-    typescript: ">=3.7.0"
-  peerDependenciesMeta:
-    rollup:
-      optional: true
-    tslib:
-      optional: true
-  checksum: ce49baf4cf97f3a33d0e60324a0f80ebe963fee002e791171bec2d05a1ae5e5be6de2bc4191790d88fbc78d4c2bac1be141fc47bd5f2dec7172514acd7652ffe
-  languageName: node
-  linkType: hard
-
 "@rollup/pluginutils@npm:^5.0.1":
   version: 5.0.2
   resolution: "@rollup/pluginutils@npm:5.0.2"
@@ -17902,7 +17883,6 @@ __metadata:
     "@rollup/plugin-json": "npm:^6.0.1"
     "@rollup/plugin-node-resolve": "npm:^15.2.3"
     "@rollup/plugin-replace": "npm:^5.0.5"
-    "@rollup/plugin-typescript": "npm:^11.1.5"
     "@storybook/addon-actions": "npm:^7.5.3"
     "@storybook/addon-essentials": "npm:^7.5.3"
     "@storybook/addon-interactions": "npm:^7.5.3"
@@ -18007,7 +17987,6 @@ __metadata:
     rollup-plugin-esbuild: "npm:^6.1.0"
     rollup-plugin-node-externals: "npm:^6.1.2"
     rollup-plugin-postcss: "npm:^4.0.2"
-    rollup-plugin-visualizer: "npm:^5.9.2"
     simple-git: "npm:^2.39.0"
     storybook: "npm:^7.4.6"
     storybook-dark-mode: "npm:^3.0.1"
@@ -22560,25 +22539,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"rollup-plugin-visualizer@npm:^5.9.2":
-  version: 5.9.2
-  resolution: "rollup-plugin-visualizer@npm:5.9.2"
-  dependencies:
-    open: "npm:^8.4.0"
-    picomatch: "npm:^2.3.1"
-    source-map: "npm:^0.7.4"
-    yargs: "npm:^17.5.1"
-  peerDependencies:
-    rollup: 2.x || 3.x
-  peerDependenciesMeta:
-    rollup:
-      optional: true
-  bin:
-    rollup-plugin-visualizer: dist/bin/cli.js
-  checksum: e6280bed797084e9f9ee06726e46706e32854fc7647c5c5bcec68a9be8ca8e6fbf7f8a0b2f76255e9df72e84135a7d57eb2662b6cfd68496a1ef60fa33597eaf
-  languageName: node
-  linkType: hard
-
 "rollup-pluginutils@npm:^2.8.2":
   version: 2.8.2
   resolution: "rollup-pluginutils@npm:2.8.2"
@@ -23223,7 +23183,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"source-map@npm:^0.7.0, source-map@npm:^0.7.4":
+"source-map@npm:^0.7.0":
   version: 0.7.4
   resolution: "source-map@npm:0.7.4"
   checksum: dc0cf3768fe23c345ea8760487f8c97ef6fca8a73c83cd7c9bf2fde8bc2c34adb9c0824d6feb14bc4f9e37fb522e18af621543f1289038a66ac7586da29aa7dc
@@ -25938,7 +25898,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"yargs@npm:^17.3.1, yargs@npm:^17.5.1, yargs@npm:^17.7.2":
+"yargs@npm:^17.3.1, yargs@npm:^17.7.2":
   version: 17.7.2
   resolution: "yargs@npm:17.7.2"
   dependencies:

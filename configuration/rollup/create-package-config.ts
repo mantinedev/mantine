@@ -7,7 +7,6 @@ import { nodeResolve } from '@rollup/plugin-node-resolve';
 import json from '@rollup/plugin-json';
 import alias, { Alias } from '@rollup/plugin-alias';
 import replace from '@rollup/plugin-replace';
-import visualizer from 'rollup-plugin-visualizer';
 import postcss from 'rollup-plugin-postcss';
 import banner from 'rollup-plugin-banner2';
 import esbuild from 'rollup-plugin-esbuild';
@@ -77,31 +76,20 @@ export default async function createPackageConfig(config: PkgConfigInput): Promi
     }),
   ];
 
-  let externals;
-
-  if (config.format === 'umd') {
-    externals = [
-      ...(config?.externals || []),
-      ...Object.keys({
-        ...packageJson.peerDependencies,
-      }),
-    ];
-  } else {
-    externals = [
-      'dayjs/locale/ru',
-      'dayjs/plugin/customParseFormat.js',
-      'dayjs/plugin/customParseFormat',
-      'dayjs/plugin/utc.js',
-      'dayjs/plugin/timezone.js',
-      'klona/full',
-      'highlight.js/lib/languages/typescript',
-      ...(config?.externals || []),
-      ...Object.keys({
-        ...packageJson.peerDependencies,
-        ...packageJson.dependencies,
-      }),
-    ];
-  }
+  const externals = [
+    'dayjs/locale/ru',
+    'dayjs/plugin/customParseFormat.js',
+    'dayjs/plugin/customParseFormat',
+    'dayjs/plugin/utc.js',
+    'dayjs/plugin/timezone.js',
+    'klona/full',
+    'highlight.js/lib/languages/typescript',
+    ...(config?.externals || []),
+    ...Object.keys({
+      ...packageJson.peerDependencies,
+      ...packageJson.dependencies,
+    }),
+  ];
 
   const output: OutputOptions = {
     name: packageJson.name,
@@ -113,7 +101,6 @@ export default async function createPackageConfig(config: PkgConfigInput): Promi
   if (config.format === 'es') {
     output.dir = path.resolve(config.basePath, 'esm');
     output.preserveModules = true;
-    // Output ESM as .mjs files
     output.entryFileNames = '[name].mjs';
   }
 
@@ -121,26 +108,6 @@ export default async function createPackageConfig(config: PkgConfigInput): Promi
     output.dir = path.resolve(config.basePath, 'cjs');
     output.preserveModules = true;
     output.exports = 'named';
-  }
-
-  if (config.analyze && config.format === 'es') {
-    plugins.push(
-      visualizer({
-        title: packageJson.name,
-        filename: path.join(config.basePath, 'lib/stats.html'),
-        projectRoot: path.join(config.basePath, 'src'),
-        sourcemap: true,
-        gzipSize: true,
-      }),
-      visualizer({
-        title: packageJson.name,
-        filename: path.join(config.basePath, 'lib/stats.json'),
-        projectRoot: path.join(config.basePath, 'src'),
-        json: true,
-        sourcemap: true,
-        gzipSize: true,
-      })
-    );
   }
 
   return {
