@@ -1,6 +1,6 @@
 import chalk from 'chalk';
 import execa from 'execa';
-import { createLogger } from './signale';
+import { createLogger } from '../utils/signale';
 
 const logger = createLogger('publish-package');
 
