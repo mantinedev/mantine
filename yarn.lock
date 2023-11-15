@@ -17991,7 +17991,6 @@ __metadata:
     postcss-preset-mantine: "npm:1.11.0"
     postcss-simple-vars: "npm:^7.0.1"
     prettier: "npm:^3.0.0"
-    prism-react-renderer: "npm:^1.2.1"
     react: "npm:^18.2.0"
     react-docgen-typescript: "npm:2.1.0"
     react-dom: "npm:^18.2.0"
@@ -21153,15 +21152,6 @@ __metadata:
   version: 1.0.3
   resolution: "pretty-hrtime@npm:1.0.3"
   checksum: 67cb3fc283a72252b49ac488647e6a01b78b7aa1b8f2061834aa1650691229081518ef3ca940f77f41cc8a8f02ba9eeb74b843481596670209e493062f2e89e0
-  languageName: node
-  linkType: hard
-
-"prism-react-renderer@npm:^1.2.1":
-  version: 1.2.1
-  resolution: "prism-react-renderer@npm:1.2.1"
-  peerDependencies:
-    react: ">=0.14.9"
-  checksum: 55ca73be47c1268a80a0ac2d1bef8784b58a9af76bc749f6255974d7a108df7dd799ee10e244810cca95ef015131ce6bba880ff53ec9366debe39bd4fe6daa92
   languageName: node
   linkType: hard
 
