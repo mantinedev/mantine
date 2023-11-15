@@ -184,6 +184,10 @@ export const Select = factory<SelectFactory>((_props, ref) => {
     if (typeof value === 'string' && selectedOption) {
       setSearch(selectedOption.label);
     }
+
+    if (value === '') {
+      setSearch('');
+    }
   }, [value, selectedOption]);
 
   const clearButton = clearable && !!_value && !disabled && !readOnly && (
