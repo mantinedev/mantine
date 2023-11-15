@@ -155,7 +155,7 @@
     "stylelint-config-standard-scss": "^10.0.0",
     "syncpack": "^10.7.3",
     "tsconfig-paths-webpack-plugin": "^4.0.0",
-    "typescript": "5.1.6",
+    "typescript": "5.2.2",
     "version-next": "^1.0.2",
     "webpack": "^5.75.0",
     "yargs": "^17.7.2"
