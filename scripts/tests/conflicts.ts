@@ -4,10 +4,11 @@ import path from 'node:path';
 import isDir from 'is-directory';
 import chalk from 'chalk';
 import { createLogger } from '../utils/signale';
+import { getPath } from '../utils/get-path';
 
 const logger = createLogger('check-conflicts');
 
-const src = path.join(process.cwd(), 'src');
+const src = getPath('src');
 
 const errors: string[] = fs
   .readdirSync(src)
@@ -23,7 +24,7 @@ const errors: string[] = fs
   }, []);
 
 try {
-  fs.readJsonSync(path.join(process.cwd(), 'package.json'));
+  fs.readJsonSync(getPath('package.json'));
 } catch (err) {
   errors.push('root');
 }

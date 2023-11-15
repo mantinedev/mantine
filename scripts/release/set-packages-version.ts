@@ -1,5 +1,6 @@
 import path from 'node:path';
 import fs from 'fs-extra';
+import { getPath } from '../utils/get-path';
 
 async function writeVersionToPackageJson(filePath: string, version: string) {
   const current = await fs.readJSON(filePath);
@@ -25,7 +26,7 @@ async function writeVersionToPackageJson(filePath: string, version: string) {
 }
 
 export async function setPackagesVersion(version: string) {
-  const src = path.join(process.cwd(), 'src');
+  const src = getPath('src');
 
   const folders = (await fs.readdir(src)).filter((folder) =>
     fs.pathExistsSync(path.join(src, folder, 'package.json'))
@@ -37,5 +38,5 @@ export async function setPackagesVersion(version: string) {
     )
   );
 
-  await writeVersionToPackageJson(path.join(process.cwd(), 'package.json'), version);
+  await writeVersionToPackageJson(getPath('package.json'), version);
 }

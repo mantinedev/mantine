@@ -1,6 +1,7 @@
 import path from 'node:path';
 import fs from 'fs-extra';
 import type { PackageJson } from 'type-fest';
+import { getPath } from '../utils/get-path';
 
 export interface Package {
   path: string;
@@ -9,7 +10,7 @@ export interface Package {
 }
 
 export async function getPackagesList() {
-  const basePath = path.join(process.cwd(), 'src');
+  const basePath = getPath('src');
   const srcPaths = await fs.readdir(basePath);
   const packages: Package[] = [];
 

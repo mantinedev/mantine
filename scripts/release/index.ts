@@ -1,4 +1,3 @@
-import path from 'node:path';
 import chalk from 'chalk';
 import simpleGit from 'simple-git';
 import yargs from 'yargs/yargs';
@@ -6,6 +5,7 @@ import { hideBin } from 'yargs/helpers';
 import { getNextVersion } from 'version-next';
 import { createLogger } from '../utils/signale';
 import { buildAllPackages } from '../build/build-all-packages';
+import { getPath } from '../utils/get-path';
 import { publishPackage } from './publish-package';
 import { setPackagesVersion } from './set-packages-version';
 import { openGithubRelease } from './open-github-release';
@@ -61,7 +61,7 @@ async function release() {
 
   logger.success('All packages were published successfully');
 
-  await git.add([path.join(process.cwd(), 'src'), path.join(process.cwd(), 'package.json')]);
+  await git.add([getPath('src'), getPath('package.json')]);
   await git.commit(`[release] Version: ${incrementedVersion}`);
   await git.push();
 

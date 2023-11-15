@@ -7,6 +7,7 @@ import glob from 'fast-glob';
 import fs from 'fs-extra';
 import path from 'node:path';
 import { generateScopedName } from 'hash-css-selector';
+import { getPath } from '../utils/get-path';
 
 function transformFileName(filePath: string) {
   return path.basename(filePath).replace('.module.css', '.css');
@@ -33,7 +34,7 @@ async function processFile(
 
 // Generates styles.layers.css files for each @mantine/* component
 async function generateCSSLayers() {
-  const files = await glob(path.resolve(process.cwd(), 'src/mantine-*/esm/index.css'));
+  const files = await glob(getPath('src/mantine-*/esm/index.css'));
 
   files.forEach((filePath) => {
     const directory = path.normalize(path.join(filePath, '..'));
@@ -45,17 +46,17 @@ async function generateCSSLayers() {
 
 // Generates individual css files for each @mantine/core component
 export async function generateCoreCSS() {
-  const files = await glob(path.resolve(process.cwd(), 'src/mantine-core/src/**/*.css'));
+  const files = await glob(getPath('src/mantine-core/src/**/*.css'));
   const modules = files.filter((file) => file.endsWith('.module.css'));
   const global = files.find((file) => file.endsWith('global.css'))!;
 
   fs.writeJsonSync(
-    path.join(process.cwd(), 'docs/.docgen/css-exports.json'),
+    getPath('docs/.docgen/css-exports.json'),
     { modules: modules.map(transformFileName), global: transformFileName(global) },
     { spaces: 2 }
   );
 
-  const outputFolder = path.resolve(process.cwd(), 'src/mantine-core/esm/styles');
+  const outputFolder = getPath('src/mantine-core/esm/styles');
 
   await fs.ensureDir(outputFolder);
 

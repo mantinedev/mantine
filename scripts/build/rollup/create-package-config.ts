@@ -10,6 +10,7 @@ import banner from 'rollup-plugin-banner2';
 import esbuild from 'rollup-plugin-esbuild';
 import { generateScopedName } from 'hash-css-selector';
 import { getPackagesList } from '../../packages/get-packages-list';
+import { getPath } from '../../utils/get-path';
 import { ROLLUP_EXTERNALS } from './rollup-externals';
 import { ROLLUP_EXCLUDE_USE_CLIENT } from './rollup-exclude-use-client';
 
@@ -26,7 +27,7 @@ export async function createPackageConfig(packagePath: string): Promise<RollupOp
     nodeResolve({ extensions: ['.ts', '.tsx', '.js', '.jsx'] }),
     esbuild({
       sourceMap: false,
-      tsconfig: path.resolve(process.cwd(), 'tsconfig.json'),
+      tsconfig: getPath('tsconfig.json'),
     }),
     json(),
     alias({ entries: aliasEntries }),
