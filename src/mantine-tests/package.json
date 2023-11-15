@@ -18,8 +18,5 @@
     }
   },
   "license": "MIT",
-  "author": "Vitaly Rtishchev <rtivital@gmail.com>",
-  "peerDependencies": {},
-  "dependencies": {},
-  "devDependencies": {}
+  "author": "Vitaly Rtishchev <rtivital@gmail.com>"
 }

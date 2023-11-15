@@ -51,6 +51,5 @@
   "dependencies": {
     "@mantine/store": "7.2.2",
     "react-transition-group": "4.4.5"
-  },
-  "devDependencies": {}
+  }
 }

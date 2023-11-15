@@ -51,6 +51,5 @@
   },
   "dependencies": {
     "react-dropzone-esm": "15.0.1"
-  },
-  "devDependencies": {}
+  }
 }

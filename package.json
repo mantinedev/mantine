@@ -2,7 +2,8 @@
   "name": "mantine-a91763c0e2",
   "private": true,
   "workspaces": [
-    "src/*"
+    "src/*",
+    "docs"
   ],
   "version": "7.2.2",
   "description": "Mantine Components Monorepo",
@@ -196,5 +197,6 @@
   },
   "volta": {
     "node": "20.5.0"
-  }
+  },
+  "packageManager": "yarn@4.0.2"
 }

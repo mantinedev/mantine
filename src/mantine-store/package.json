@@ -37,7 +37,5 @@
   ],
   "peerDependencies": {
     "react": "^18.2.0"
-  },
-  "dependencies": {},
-  "devDependencies": {}
+  }
 }

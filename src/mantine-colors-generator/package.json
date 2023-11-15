@@ -37,7 +37,5 @@
   ],
   "peerDependencies": {
     "chroma-js": "^2.4.2"
-  },
-  "dependencies": {},
-  "devDependencies": {}
+  }
 }

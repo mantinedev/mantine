@@ -51,8 +51,7 @@
     "react-dom": "^18.2.0"
   },
   "dependencies": {
-    "highlight.js": "^11.7.0",
-    "clsx": "2.0.0"
-  },
-  "devDependencies": {}
+    "clsx": "2.0.0",
+    "highlight.js": "^11.7.0"
+  }
 }

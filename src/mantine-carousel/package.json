@@ -49,7 +49,5 @@
     "@mantine/hooks": "7.2.2",
     "embla-carousel-react": "^7.0.0",
     "react": "^18.2.0"
-  },
-  "dependencies": {},
-  "devDependencies": {}
+  }
 }

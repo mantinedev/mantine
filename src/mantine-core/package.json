@@ -50,10 +50,9 @@
   "dependencies": {
     "@floating-ui/react": "^0.24.8",
     "clsx": "2.0.0",
-    "react-textarea-autosize": "8.5.3",
+    "react-number-format": "^5.2.2",
     "react-remove-scroll": "^2.5.6",
-    "type-fest": "^3.13.1",
-    "react-number-format": "^5.2.2"
-  },
-  "devDependencies": {}
+    "react-textarea-autosize": "8.5.3",
+    "type-fest": "^3.13.1"
+  }
 }
