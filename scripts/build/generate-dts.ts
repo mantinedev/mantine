@@ -3,7 +3,7 @@ import fg from 'fast-glob';
 import path from 'node:path';
 import fs from 'fs-extra';
 
-export default async function generateDts(packagePath: string) {
+export async function generateDts(packagePath: string) {
   await execa('yarn', ['tsc', '--project', path.join(packagePath, 'tsconfig.build.json')]);
   const files = await fg(['lib/**/*.js'], { cwd: packagePath });
 

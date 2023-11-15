@@ -1,6 +1,6 @@
 import fs from 'fs';
 import path from 'path';
-import { getPackagesBuildOrder } from './utils/get-packages-build-order';
+import { getPackagesBuildOrder } from './build/get-packages-build-order';
 import { Logger } from './utils/Logger';
 
 const logger = new Logger('exports');

@@ -9,8 +9,8 @@ import { getNextVersion } from 'version-next';
 import { Logger } from './utils/Logger';
 import { publishPackage } from './utils/publish-package';
 import { setPackagesVersion } from './release/set-packages-version';
-import { buildAllPackages } from './utils/build-all-packages';
-import { getPackagesBuildOrder } from './utils/get-packages-build-order';
+import { buildAllPackages } from './build/build-all-packages';
+import { getPackagesBuildOrder } from './build/get-packages-build-order';
 import packageJson from '../package.json';
 
 const logger = new Logger('release');

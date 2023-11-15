@@ -1,17 +1,16 @@
-/* eslint-disable no-await-in-loop, no-restricted-syntax */
 import chalk from 'chalk';
-import createPackageConfig from '../../configuration/rollup/create-package-config';
-import locatePackage from './locate-package';
-import compile from './compile';
-import generateDts from './generate-dts';
-import { Logger } from './Logger';
-import { getPackageName } from './get-package-name';
+import { createPackageConfig } from './rollup/create-package-config';
+import { compile } from './compile';
+import { generateDts } from './generate-dts';
+import locatePackage from '../utils/locate-package';
+import { Logger } from '../utils/Logger';
+import { getPackageName } from '../utils/get-package-name';
 
 const logger = new Logger('build-package');
 
 export async function buildPackage(_packageName: string) {
   const packageName = getPackageName(_packageName);
-  const packagePath = await locatePackage(packageName || '');
+  const packagePath = await locatePackage(packageName);
 
   if (!packagePath) {
     logger.error(`Package ${chalk.cyan(packageName)} does not exist`);

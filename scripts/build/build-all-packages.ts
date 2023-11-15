@@ -1,4 +1,3 @@
-/* eslint-disable no-await-in-loop */
 import execa from 'execa';
 import { buildPackage } from './build-package';
 import { getPackagesBuildOrder } from './get-packages-build-order';

@@ -1,8 +1,8 @@
 /* eslint-disable no-await-in-loop */
 import yargs from 'yargs/yargs';
 import { hideBin } from 'yargs/helpers';
-import { buildPackage } from './utils/build-package';
-import { buildAllPackages } from './utils/build-all-packages';
+import { buildPackage } from './build-package';
+import { buildAllPackages } from './build-all-packages';
 
 const { argv } = yargs(hideBin(process.argv)) as any;
 

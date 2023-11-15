@@ -14,6 +14,7 @@ module.exports = {
     '@typescript-eslint/method-signature-style': ['error', 'property'],
     '@typescript-eslint/no-loop-func': 'off',
     'no-restricted-syntax': 'off',
+    'no-await-in-loop': 'off',
   },
   parserOptions: {
     project: './tsconfig.eslint.json',

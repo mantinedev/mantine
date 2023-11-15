@@ -1,5 +1,5 @@
-/* eslint-disable no-param-reassign, no-restricted-syntax, no-continue, no-await-in-loop */
-import { getPackagesList, Package } from './get-packages-list';
+/* eslint-disable no-param-reassign */
+import { getPackagesList, Package } from '../utils/get-packages-list';
 
 export async function getPackageBuildOrder(
   packages: Package[],

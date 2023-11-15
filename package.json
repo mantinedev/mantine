@@ -26,7 +26,7 @@
     "lint": "npm run lint:eslint && npm run lint:stylelint",
     "lint:eslint": "eslint src src --ext .ts,.tsx --cache",
     "lint:stylelint": "stylelint '**/*.css' --cache",
-    "build": "esno --max-old-space-size=8096 scripts/build",
+    "build": "esno scripts/build",
     "build:all": "npm run clean:tsbuildinfo && npm run build all && npm run build:private",
     "build:demos": "npm run build @mantine/demos",
     "build:private": "npm run build @mantine/styles-api && npm run build @mantine/demos",
