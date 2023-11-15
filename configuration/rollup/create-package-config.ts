@@ -12,6 +12,7 @@ import esbuild from 'rollup-plugin-esbuild';
 import { generateScopedName } from 'hash-css-selector';
 import { getPackagesList } from '../../scripts/utils/get-packages-list';
 import { ROLLUP_EXTERNALS } from './rollup-externals';
+import { ROLLUP_EXCLUDE_USE_CLIENT } from './rollup-exclude-use-client';
 
 interface PkgConfigInput {
   basePath: string;
@@ -24,26 +25,11 @@ interface PkgConfigInput {
   analyze: boolean;
 }
 
-const excludeUseClient = [
-  'index',
-  'core/utils/units-converters/rem',
-  'core/utils/units-converters/px',
-  'core/MantineProvider/create-theme/create-theme',
-  'core/MantineProvider/color-functions/darken/darken',
-  'core/MantineProvider/color-functions/lighten/lighten',
-  'core/MantineProvider/color-functions/rgba/rgba',
-  'core/MantineProvider/color-functions/to-rgba/to-rgba',
-  'core/MantineProvider/default-colors',
-  'core/MantineProvider/default-theme',
-].reduce<string[]>((acc, name) => {
-  acc.push(`${name}.js`, `${name}.mjs`);
-  return acc;
-}, []);
-
 export default async function createPackageConfig(config: PkgConfigInput): Promise<RollupOptions> {
   const packageJson = JSON.parse(
     fs.readFileSync(path.join(config.basePath, './package.json')).toString('utf-8')
   );
+
   const pkgList = await getPackagesList();
 
   const aliasEntries: Alias[] = pkgList.map((pkg) => ({
@@ -53,7 +39,6 @@ export default async function createPackageConfig(config: PkgConfigInput): Promi
 
   const plugins = [
     commonjs(),
-    // nodeExternals({ packagePath: path.resolve(config.basePath, 'package.json') }),
     nodeResolve({ extensions: ['.ts', '.tsx', '.js', '.jsx'] }),
     esbuild({
       sourceMap: false,
@@ -68,7 +53,7 @@ export default async function createPackageConfig(config: PkgConfigInput): Promi
       minimize: true,
     }),
     banner((chunk) => {
-      if (!excludeUseClient.includes(chunk.fileName)) {
+      if (!ROLLUP_EXCLUDE_USE_CLIENT.includes(chunk.fileName)) {
         return "'use client';\n";
       }
 
