@@ -1,22 +1,7 @@
 /* eslint-disable no-restricted-syntax, no-await-in-loop */
 import path from 'path';
 import fs from 'fs-extra';
-
-interface PackageJson {
-  readonly name: string;
-  readonly version: string;
-  readonly private: boolean;
-  readonly main: string;
-  readonly license: string;
-  readonly types?: string;
-  readonly author: string;
-  readonly sideEffects?: boolean;
-  readonly scripts?: Record<string, string>;
-  readonly peerDependencies?: Record<string, string>;
-  readonly dependencies?: Record<string, string>;
-  readonly devDependencies?: Record<string, string>;
-  readonly exports?: Record<string, any>;
-}
+import type { PackageJson } from 'type-fest';
 
 export interface Package {
   path: string;

@@ -9,7 +9,7 @@ getPackagesBuildOrder().then((packages) => {
   const errors: string[] = [];
   packages.forEach((pkg) => {
     // Base properties
-    const main = fs.existsSync(path.join(pkg!.path, pkg!.packageJson.main));
+    const main = fs.existsSync(path.join(pkg!.path, pkg!.packageJson.main!));
     const types = fs.existsSync(path.join(pkg!.path, pkg!.packageJson.types!));
     const module = fs.existsSync(path.join(pkg!.path, pkg!.packageJson.types!));
 
@@ -18,7 +18,7 @@ getPackagesBuildOrder().then((packages) => {
     !module && errors.push(`Missing module for package ${pkg!.packageJson.name}`);
 
     // Exports properties
-    const exports = pkg!.packageJson.exports!;
+    const exports = pkg!.packageJson.exports as any;
     const esmTypes = fs.existsSync(path.join(pkg!.path, exports['.'].import.types));
     const esmFile = fs.existsSync(path.join(pkg!.path, exports['.'].import.default));
     const cjsTypes = fs.existsSync(path.join(pkg!.path, exports['.'].require.types));

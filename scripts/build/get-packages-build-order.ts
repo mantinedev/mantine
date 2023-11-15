@@ -6,7 +6,7 @@ export async function getPackageBuildOrder(
   pkg: Package,
   order: Record<string, number> = {}
 ) {
-  const { name } = pkg.packageJson;
+  const name = pkg.packageJson.name!;
 
   if (name in order) return;
   if (pkg.packageJson.private) {
@@ -33,7 +33,7 @@ export async function getPackageBuildOrder(
   );
 
   order[name] =
-    1 + Math.max(...dependencies.map((dependency) => order[dependency!.packageJson.name]));
+    1 + Math.max(...dependencies.map((dependency) => order[dependency!.packageJson.name!]));
 }
 
 export async function getPackagesBuildOrder(
