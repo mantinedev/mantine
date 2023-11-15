@@ -26,15 +26,5 @@
     "url": "https://github.com/mantinedev/mantine.git",
     "type": "git",
     "directory": "src/mantine-styles-api"
-  },
-  "peerDependencies": {
-    "@mantine/carousel": "7.2.2",
-    "@mantine/core": "7.2.2",
-    "@mantine/dates": "7.2.2",
-    "@mantine/dropzone": "7.2.2",
-    "@mantine/hooks": "7.2.2",
-    "@mantine/notifications": "7.2.2",
-    "@mantine/spotlight": "7.2.2",
-    "@mantine/tiptap": "7.2.2"
   }
 }
