@@ -11,7 +11,7 @@ import TextAlign from '@tiptap/extension-text-align';
 import Superscript from '@tiptap/extension-superscript';
 import SubScript from '@tiptap/extension-subscript';
 import Placeholder from '@tiptap/extension-placeholder';
-import { lowlight } from 'lowlight';
+import { createLowlight } from 'lowlight';
 import css from 'highlight.js/lib/languages/css';
 import js from 'highlight.js/lib/languages/javascript';
 import ts from 'highlight.js/lib/languages/typescript';
@@ -21,10 +21,12 @@ import { Link } from './extensions/Link';
 import { RichTextEditor, RichTextEditorProps } from './RichTextEditor';
 import { RichTextEditorToolbarProps } from './RichTextEditorToolbar/RichTextEditorToolbar';
 
-lowlight.registerLanguage('html', html);
-lowlight.registerLanguage('css', css);
-lowlight.registerLanguage('js', js);
-lowlight.registerLanguage('ts', ts);
+const lowlight = createLowlight();
+
+lowlight.register('html', html);
+lowlight.register('css', css);
+lowlight.register('js', js);
+lowlight.register('ts', ts);
 
 export default { title: 'TipTap' };
 

@@ -4,8 +4,10 @@ import { RichTextEditor } from '@mantine/tiptap';
 import { useEditor } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
 import CodeBlockLowlight from '@tiptap/extension-code-block-lowlight';
-import { lowlight } from 'lowlight';
+import { createLowlight } from 'lowlight';
 import tsLanguageSyntax from 'highlight.js/lib/languages/typescript';
+
+const lowlight = createLowlight();
 
 const code = `
 import { RichTextEditor } from '@mantine/tiptap';
@@ -16,7 +18,7 @@ import { lowlight } from 'lowlight';
 import tsLanguageSyntax from 'highlight.js/lib/languages/typescript';
 
 // register languages that your are planning to use
-lowlight.registerLanguage('ts', tsLanguageSyntax);
+lowlight.register('ts', tsLanguageSyntax);
 
 function escapeHtml(unsafe: string) {
   return unsafe
@@ -83,7 +85,7 @@ function Demo() {
 `;
 
 // register languages that your are planning to use
-lowlight.registerLanguage('ts', tsLanguageSyntax);
+lowlight.register('ts', tsLanguageSyntax);
 
 function escapeHtml(unsafe: string) {
   return unsafe
