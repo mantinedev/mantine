@@ -2,7 +2,7 @@ import glob from 'fast-glob';
 import path from 'path';
 import fs from 'fs';
 
-const files = glob.sync(path.resolve(__dirname, '../src/mantine-demos/src/**/*.demos.story.tsx'));
+const files = glob.sync(path.resolve(process.cwd(), 'src/mantine-demos/src/**/*.demos.story.tsx'));
 
 function ucFirst(string: string) {
   return string.charAt(0).toUpperCase() + string.slice(1);
@@ -31,7 +31,7 @@ for (const file of files) {
     }
   }
 
-  const relativePath = file.replace(`${path.resolve(__dirname, '../src/mantine-demos/src')}/`, '');
+  const relativePath = file.replace(`${path.resolve(process.cwd(), 'src/mantine-demos/src')}/`, '');
   const depth = relativePath.split('/').length - 1;
   const depthArray = new Array(depth).fill('..');
 

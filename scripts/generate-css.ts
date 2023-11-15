@@ -8,7 +8,7 @@ import fs from 'fs-extra';
 import path from 'path';
 import { generateScopedName } from 'hash-css-selector';
 
-const files = glob.sync(path.resolve(__dirname, '../src/mantine-core/src/**/*.css'));
+const files = glob.sync(path.resolve(process.cwd(), 'src/mantine-core/src/**/*.css'));
 const modules = files.filter((file) => file.endsWith('.module.css'));
 const global = files.find((file) => file.endsWith('global.css'))!;
 
@@ -17,12 +17,12 @@ function prepareFileName(filePath: string) {
 }
 
 fs.writeJsonSync(
-  path.join(__dirname, '../docs/.docgen/css-exports.json'),
+  path.join(process.cwd(), 'docs/.docgen/css-exports.json'),
   { modules: modules.map(prepareFileName), global: prepareFileName(global) },
   { spaces: 2 }
 );
 
-const outputFolder = path.resolve(__dirname, '../src/mantine-core/esm/styles');
+const outputFolder = path.resolve(process.cwd(), 'src/mantine-core/esm/styles');
 fs.ensureDirSync(outputFolder);
 
 async function processFile(filePath: string, scopeBehaviour: 'local' | 'global') {

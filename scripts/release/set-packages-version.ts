@@ -25,17 +25,17 @@ async function writeVersionToPackageJson(filePath: string, version: string) {
 }
 
 export async function setPackagesVersion(version: string) {
-  const src = path.join(__dirname, '../../src');
+  const src = path.join(process.cwd(), 'src');
 
   const folders = (await fs.readdir(src)).filter((folder) =>
-    fs.pathExistsSync(path.join(src, folder, '/package.json'))
+    fs.pathExistsSync(path.join(src, folder, 'package.json'))
   );
 
   await Promise.all(
     folders.map((folder) =>
-      writeVersionToPackageJson(path.join(src, folder, '/package.json'), version)
+      writeVersionToPackageJson(path.join(src, folder, 'package.json'), version)
     )
   );
 
-  await writeVersionToPackageJson(path.join(__dirname, '../../package.json'), version);
+  await writeVersionToPackageJson(path.join(process.cwd(), 'package.json'), version);
 }

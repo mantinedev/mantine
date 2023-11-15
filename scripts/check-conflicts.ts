@@ -6,7 +6,7 @@ import { createLogger } from './utils/signale';
 
 const logger = createLogger('check-conflicts');
 
-const src = path.join(__dirname, '../src');
+const src = path.join(process.cwd(), 'src');
 
 const errors: string[] = fs
   .readdirSync(src)
@@ -22,7 +22,7 @@ const errors: string[] = fs
   }, []);
 
 try {
-  fs.readJsonSync(path.join(__dirname, '../package.json'));
+  fs.readJsonSync(path.join(process.cwd(), 'package.json'));
 } catch (err) {
   errors.push('root');
 }

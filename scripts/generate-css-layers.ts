@@ -2,7 +2,7 @@ import fs from 'fs';
 import path from 'path';
 import glob from 'fast-glob';
 
-const files = glob.sync(path.resolve(__dirname, '../src/mantine-*/esm/index.css'));
+const files = glob.sync(path.resolve(process.cwd(), 'src/mantine-*/esm/index.css'));
 
 files.forEach((filePath) => {
   const directory = path.normalize(path.join(filePath, '..'));

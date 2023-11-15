@@ -4,7 +4,7 @@ import { getPackageName } from './get-package-name';
 
 export default async function locatePackage(packageName: string) {
   const folder = getPackageName(packageName).replace('@', '').replace('/', '-');
-  const packagePath = path.join(__dirname, '../../src', folder);
+  const packagePath = path.join(process.cwd(), 'src', folder);
   const exists = await fs.pathExists(packagePath);
   return exists ? packagePath : null;
 }

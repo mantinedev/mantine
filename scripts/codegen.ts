@@ -61,5 +61,5 @@ function generateExamplesCode(examplesFolder: string) {
   });
 }
 
-generateExamplesCode(path.resolve(__dirname, '../docs/combobox-examples/examples'));
-generateExamplesCode(path.resolve(__dirname, '../docs/app-shell-examples/examples'));
+generateExamplesCode(path.resolve(process.cwd(), 'docs/combobox-examples/examples'));
+generateExamplesCode(path.resolve(process.cwd(), 'docs/app-shell-examples/examples'));
