@@ -5,8 +5,8 @@ module.exports = {
     '^.+\\.tsx?$': '@sucrase/jest-plugin',
   },
   testMatch: ['**/__tests__/**/*.ts?(x)', '**/?(*.)+(spec|test).ts?(x)'],
-  setupFilesAfterEnv: ['./configuration/jest/jsdom.mocks.cjs'],
-  globalSetup: './configuration/jest/global-setup.cjs',
+  setupFilesAfterEnv: ['./jsdom.mocks.cjs'],
+  globalSetup: './jest.setup.cjs',
   moduleNameMapper: {
     '@mantine/(.*)': '<rootDir>/src/mantine-$1/src',
     '\\.(css)$': 'identity-obj-proxy',
