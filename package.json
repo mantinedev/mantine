@@ -18,9 +18,6 @@
   "scripts": {
     "setup": "npm run docgen && esno scripts/docs/generate-css-exports",
     "codegen": "esno scripts/codegen",
-    "dev": "cd docs && npm run dev",
-    "demos": "esno scripts/demo-import",
-    "sync-branches": "sh scripts/sync-branches.sh",
     "changelog": "esno scripts/changelog",
     "syncpack": "syncpack list-mismatches",
     "typecheck": "tsc --noEmit && npm run docs:typecheck",
