@@ -1,6 +1,6 @@
 {
   "extends": "../../tsconfig.base.json",
-  "include": ["./src", "../../configuration/types", "../../tests"],
+  "include": ["./src", "../../@types", "../../tests"],
   "exclude": ["./lib", "./esm", "./cjs", "**/*.test.tsx", "**/*.test.ts", "**/*.story.tsx"],
   "compilerOptions": {
     "rootDir": "src",

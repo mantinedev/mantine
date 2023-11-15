@@ -1,6 +1,6 @@
 {
   "extends": "../../tsconfig.base.json",
-  "include": ["./src", "../../configuration/types"],
+  "include": ["./src", "../../@types"],
   "exclude": ["./src/mantine-core/lib/*.d.ts"],
   "compilerOptions": {
     "rootDir": "src",

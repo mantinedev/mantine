@@ -8,7 +8,7 @@
     "./types",
     "./scripts",
     "./configuration",
-    "./configuration/types",
+    "./@types",
     "./tests"
   ],
   "exclude": [
