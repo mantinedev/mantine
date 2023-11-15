@@ -139,7 +139,7 @@
     "style-loader": "^3.3.3",
     "stylelint": "^15.10.2",
     "stylelint-config-standard-scss": "^10.0.0",
-    "syncpack": "^10.7.3",
+    "syncpack": "^11.2.1",
     "tsconfig-paths-webpack-plugin": "^4.0.0",
     "typescript": "5.2.2",
     "version-next": "^1.0.2",
