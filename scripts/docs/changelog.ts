@@ -1,6 +1,6 @@
 import simpleGit from 'simple-git';
 import chalk from 'chalk';
-import packageJson from '../package.json';
+import packageJson from '../../package.json';
 
 const git = simpleGit();
 

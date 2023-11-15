@@ -1,29 +1,8 @@
 import fs from 'fs-extra';
 import path from 'node:path';
+import { removeReactImport } from './remove-react-import';
 
-function transformImportStatement(input: string) {
-  const regex = /import React, (\{[^}]+\}) from 'react';/g;
-  const match = regex.exec(input);
-  if (!match) {
-    return input;
-  }
-  return `import ${match[1]} from 'react';`;
-}
-
-function removeReact(input: string) {
-  const lines = input.split('\n');
-
-  if (lines[0].includes("import React from 'react';")) {
-    lines.shift();
-  } else if (lines[0].includes('import React')) {
-    const remainingImports = transformImportStatement(lines[0]);
-    lines[0] = remainingImports;
-  }
-
-  return lines.join('\n');
-}
-
-function generateExamplesCode(examplesFolder: string) {
+export function generateExamplesCode(examplesFolder: string) {
   const examples = fs
     .readdirSync(examplesFolder)
     .filter((item) => fs.lstatSync(path.join(examplesFolder, item)).isDirectory());
@@ -34,14 +13,14 @@ function generateExamplesCode(examplesFolder: string) {
       .readdirSync(examplePath)
       .filter((item) => item.endsWith('.tsx') || item.endsWith('.ts') || item.endsWith('.css'));
 
-    const mainFileContent = removeReact(
+    const mainFileContent = removeReactImport(
       fs.readFileSync(path.join(examplePath, `${exampleName}.tsx`), 'utf-8')
     );
     const otherFilesContent = exampleContents
       .filter((file) => file !== `${exampleName}.tsx`)
       .map((file) => ({
         name: file,
-        content: removeReact(fs.readFileSync(path.join(examplePath, file), 'utf-8')),
+        content: removeReactImport(fs.readFileSync(path.join(examplePath, file), 'utf-8')),
       }));
 
     return [
@@ -60,6 +39,3 @@ function generateExamplesCode(examplesFolder: string) {
     fs.writeFileSync(path.join(examplesFolder, example, 'code.json'), codeString, 'utf-8');
   });
 }
-
-generateExamplesCode(path.resolve(process.cwd(), 'docs/combobox-examples/examples'));
-generateExamplesCode(path.resolve(process.cwd(), 'docs/app-shell-examples/examples'));
