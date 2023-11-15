@@ -55,9 +55,7 @@
     "release:patch:no-test": "npm run _release:no-test patch && npm run docs:deploy",
     "release:minor": "npm run _release minor && npm run docs:deploy",
     "release:major": "npm run _release major && npm run docs:deploy",
-    "storybook": "storybook dev -p 6006",
-    "generate-css": "esno scripts/generate-css",
-    "generate-css-layers": "esno scripts/generate-css-layers"
+    "storybook": "storybook dev -p 6006"
   },
   "resolutions": {
     "@types/react": "18.2.17",

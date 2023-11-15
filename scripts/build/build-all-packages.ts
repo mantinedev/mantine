@@ -1,6 +1,6 @@
-import execa from 'execa';
 import { buildPackage } from './build-package';
 import { getPackagesBuildOrder } from './get-packages-build-order';
+import { generateCSS } from './generate-css';
 
 export async function buildAllPackages() {
   const packages = await getPackagesBuildOrder();
@@ -13,8 +13,7 @@ export async function buildAllPackages() {
     }
   }
 
-  await execa('npm', ['run', 'generate-css']);
-  await execa('npm', ['run', 'generate-css-layers']);
+  await generateCSS();
 
   return packages;
 }
