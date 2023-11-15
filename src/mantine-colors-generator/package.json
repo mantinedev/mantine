@@ -1,7 +1,7 @@
 {
   "name": "@mantine/colors-generator",
   "version": "7.2.2",
-  "main": "./cjs/index.js",
+  "main": "./cjs/index.cjs",
   "types": "./lib/index.d.ts",
   "module": "./esm/index.mjs",
   "exports": {
@@ -12,7 +12,7 @@
       },
       "require": {
         "types": "./lib/index.d.ts",
-        "default": "./cjs/index.js"
+        "default": "./cjs/index.cjs"
       }
     }
   },
