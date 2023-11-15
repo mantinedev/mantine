@@ -17644,7 +17644,6 @@ __metadata:
     rollup: "npm:^4.4.1"
     rollup-plugin-banner2: "npm:^1.2.2"
     rollup-plugin-esbuild: "npm:^6.1.0"
-    rollup-plugin-node-externals: "npm:^6.1.2"
     rollup-plugin-postcss: "npm:^4.0.2"
     simple-git: "npm:^2.39.0"
     storybook: "npm:^7.4.6"
@@ -22133,15 +22132,6 @@ __metadata:
     esbuild: ">=0.18.0"
     rollup: ^1.20.0 || ^2.0.0 || ^3.0.0 || ^4.0.0
   checksum: 91af17d4ae1708343e46452cab919e498c7cf5d7701818940a66a5d433a8fb86e2455a6039791ef2c99684b6c1367b0ed683743bf93370997f99fd5fef8c3ff0
-  languageName: node
-  linkType: hard
-
-"rollup-plugin-node-externals@npm:^6.1.2":
-  version: 6.1.2
-  resolution: "rollup-plugin-node-externals@npm:6.1.2"
-  peerDependencies:
-    rollup: ^3.0.0 || ^4.0.0
-  checksum: 69482117b33fae4c197905f0bfcba6c472e78c97db1dd171603e1dd208265259d22f9a8157e22c8e9fff384fc881c07c76a4a0bd4ce34e811d8507a29f9cb253
   languageName: node
   linkType: hard
 

@@ -143,7 +143,6 @@
     "rollup": "^4.4.1",
     "rollup-plugin-banner2": "^1.2.2",
     "rollup-plugin-esbuild": "^6.1.0",
-    "rollup-plugin-node-externals": "^6.1.2",
     "rollup-plugin-postcss": "^4.0.2",
     "simple-git": "^2.39.0",
     "storybook": "^7.4.6",

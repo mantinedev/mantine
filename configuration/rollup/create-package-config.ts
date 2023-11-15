@@ -2,7 +2,6 @@ import path from 'path';
 import fs from 'fs-extra';
 import { RollupOptions, OutputOptions, ModuleFormat } from 'rollup';
 import commonjs from '@rollup/plugin-commonjs';
-import nodeExternals from 'rollup-plugin-node-externals';
 import { nodeResolve } from '@rollup/plugin-node-resolve';
 import json from '@rollup/plugin-json';
 import alias, { Alias } from '@rollup/plugin-alias';
@@ -40,6 +39,10 @@ const excludeUseClient = [
   return acc;
 }, []);
 
+const rootPackageJson = JSON.parse(
+  fs.readFileSync(path.join(process.cwd(), './package.json')).toString('utf-8')
+);
+
 export default async function createPackageConfig(config: PkgConfigInput): Promise<RollupOptions> {
   const packageJson = JSON.parse(
     fs.readFileSync(path.join(config.basePath, './package.json')).toString('utf-8')
@@ -53,7 +56,7 @@ export default async function createPackageConfig(config: PkgConfigInput): Promi
 
   const plugins = [
     commonjs(),
-    nodeExternals(),
+    // nodeExternals({ packagePath: path.resolve(config.basePath, 'package.json') }),
     nodeResolve({ extensions: ['.ts', '.tsx', '.js', '.jsx'] }),
     esbuild({
       sourceMap: false,
@@ -87,7 +90,13 @@ export default async function createPackageConfig(config: PkgConfigInput): Promi
     ...(config?.externals || []),
     ...Object.keys({
       ...packageJson.peerDependencies,
+      ...packageJson.devDependencies,
       ...packageJson.dependencies,
+    }),
+    ...Object.keys({
+      ...rootPackageJson.devDependencies,
+      ...rootPackageJson.peerDependencies,
+      ...rootPackageJson.dependencies,
     }),
   ];
 
