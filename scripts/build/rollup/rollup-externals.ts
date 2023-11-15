@@ -1,7 +1,4 @@
-import path from 'node:path';
-import fs from 'fs-extra';
-
-const packageJson = fs.readJSONSync(path.join(process.cwd(), './package.json'));
+import packageJson from '../../../package.json';
 
 export const ROLLUP_EXTERNALS = [
   'dayjs/locale/ru',
@@ -30,7 +27,6 @@ export const ROLLUP_EXTERNALS = [
   '@mantine/tiptap',
   '@mantine/vanilla-extract',
   ...Object.keys({
-    ...packageJson.peerDependencies,
     ...packageJson.devDependencies,
     ...packageJson.dependencies,
   }),
