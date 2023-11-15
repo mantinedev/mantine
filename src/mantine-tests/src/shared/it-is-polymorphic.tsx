@@ -1,4 +1,3 @@
-/* eslint-disable jsx-a11y/anchor-has-content */
 import React, { forwardRef } from 'react';
 import { render } from '../render';
 

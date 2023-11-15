@@ -1,4 +1,3 @@
-/* eslint-disable no-param-reassign */
 import { keys, rem } from '../../../../core';
 import type { CSSVariables, MediaQueryVariables } from '../get-variables/get-variables';
 import type { AppShellProps } from '../../AppShell';

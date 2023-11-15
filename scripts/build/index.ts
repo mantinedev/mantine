@@ -1,4 +1,3 @@
-/* eslint-disable no-await-in-loop */
 import yargs from 'yargs/yargs';
 import { hideBin } from 'yargs/helpers';
 import { buildPackage } from './build-package';

@@ -1,4 +1,3 @@
-/* eslint-disable no-param-reassign */
 import { useCallback, Ref } from 'react';
 
 type PossibleRef<T> = Ref<T> | undefined;

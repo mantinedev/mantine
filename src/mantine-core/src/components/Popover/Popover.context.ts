@@ -15,8 +15,8 @@ import type { PopoverFactory } from './Popover';
 interface PopoverContext {
   x: number;
   y: number;
-  arrowX: number;
-  arrowY: number;
+  arrowX: number | undefined;
+  arrowY: number | undefined;
   arrowRef: React.RefObject<HTMLDivElement>;
   opened: boolean;
   transitionProps?: TransitionOverride;

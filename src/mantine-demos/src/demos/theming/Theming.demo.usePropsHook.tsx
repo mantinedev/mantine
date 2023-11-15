@@ -1,4 +1,3 @@
-/* eslint-disable react/no-unused-prop-types */
 import React from 'react';
 import { MantineDemo } from '@mantine/ds';
 import { useProps, MantineThemeProvider, createTheme } from '@mantine/core';

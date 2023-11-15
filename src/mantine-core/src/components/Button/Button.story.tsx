@@ -1,4 +1,3 @@
-/* eslint-disable jsx-a11y/anchor-has-content */
 import React from 'react';
 import { Button, ButtonProps } from './Button';
 import { DEFAULT_THEME, rem } from '../../core';

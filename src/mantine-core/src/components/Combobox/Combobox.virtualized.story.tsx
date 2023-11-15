@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-use-before-define */
 import React from 'react';
 import { Virtuoso } from 'react-virtuoso';
 import { Combobox } from './Combobox';

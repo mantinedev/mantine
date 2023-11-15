@@ -138,7 +138,6 @@ const CONVERTERS: Record<ColorFormat, (color: string) => HsvaColor> = {
 };
 
 export function isColorValid(color: string) {
-  // eslint-disable-next-line no-restricted-syntax
   for (const [, regexp] of Object.entries(VALIDATION_REGEXP)) {
     if (regexp.test(color)) {
       return true;
@@ -159,7 +158,6 @@ export function parseColor(color: string): HsvaColor {
 
   const trimmed = color.trim();
 
-  // eslint-disable-next-line no-restricted-syntax
   for (const [rule, regexp] of Object.entries(VALIDATION_REGEXP)) {
     if (regexp.test(trimmed)) {
       return CONVERTERS[rule as keyof typeof CONVERTERS](trimmed);

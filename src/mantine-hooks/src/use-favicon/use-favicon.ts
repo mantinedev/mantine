@@ -1,7 +1,7 @@
 import { useRef } from 'react';
 import { useIsomorphicEffect } from '../use-isomorphic-effect/use-isomorphic-effect';
 
-const MIME_TYPES = {
+const MIME_TYPES: Record<string, string> = {
   ico: 'image/x-icon',
   png: 'image/png',
   svg: 'image/svg+xml',
@@ -29,7 +29,6 @@ export function useFavicon(url: string) {
     const splittedUrl = url.split('.');
     link.current.setAttribute(
       'type',
-      // @ts-ignore
       MIME_TYPES[splittedUrl[splittedUrl.length - 1].toLowerCase()]
     );
     link.current.setAttribute('href', url);

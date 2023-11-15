@@ -3,7 +3,6 @@ function isMultiLine(code: string) {
   return placeholderLine && placeholderLine.trim().startsWith('{{props}}');
 }
 
-/* eslint-disable no-restricted-syntax */
 export function injectProps(props: any, code: string) {
   const propStrings: string[] = [];
   const multiline = isMultiLine(code);

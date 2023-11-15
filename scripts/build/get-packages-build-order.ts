@@ -1,4 +1,3 @@
-/* eslint-disable no-param-reassign */
 import { getPackagesList, Package } from '../packages/get-packages-list';
 
 export async function getPackageBuildOrder(

@@ -1,4 +1,3 @@
-/* eslint-disable react/no-unused-prop-types */
 import React, { useRef, useState, forwardRef } from 'react';
 import { createPortal } from 'react-dom';
 import { useIsomorphicEffect, assignRef } from '@mantine/hooks';

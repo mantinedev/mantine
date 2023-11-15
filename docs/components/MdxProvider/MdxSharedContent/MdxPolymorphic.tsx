@@ -1,4 +1,3 @@
-/* eslint-disable react/no-unused-prop-types */
 import React from 'react';
 import { TypeScriptCircleIcon } from '@mantine/ds';
 import { MdxTitle } from '../MdxTitle/MdxTitle';

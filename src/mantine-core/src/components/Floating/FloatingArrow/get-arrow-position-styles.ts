@@ -3,7 +3,7 @@ import type { FloatingPosition, FloatingSide, FloatingPlacement, ArrowPosition }
 
 function horizontalSide(
   placement: FloatingPlacement | 'center',
-  arrowY: number,
+  arrowY: number | undefined,
   arrowOffset: number,
   arrowPosition: ArrowPosition
 ) {
@@ -24,7 +24,7 @@ function horizontalSide(
 
 function verticalSide(
   placement: FloatingPlacement | 'center',
-  arrowX: number,
+  arrowX: number | undefined,
   arrowOffset: number,
   arrowPosition: ArrowPosition,
   dir: 'rtl' | 'ltr'
@@ -75,8 +75,8 @@ export function getArrowPositionStyles({
   arrowOffset: number;
   arrowRadius: number;
   arrowPosition: ArrowPosition;
-  arrowX: number;
-  arrowY: number;
+  arrowX: number | undefined;
+  arrowY: number | undefined;
   dir: 'rtl' | 'ltr';
 }) {
   const [side, placement = 'center'] = position.split('-') as [FloatingSide, FloatingPlacement];

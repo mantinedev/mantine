@@ -261,8 +261,6 @@ export const DateTimePicker = factory<DateTimePickerFactory>((_props, ref) => {
             })}
             unstyled={unstyled}
             data-mantine-stop-propagation={__stopPropagation || undefined}
-            // children prop is required to allow overriding icon with submitButtonProps
-            // eslint-disable-next-line react/no-children-prop
             children={<CheckIcon size="30%" />}
             {...submitButtonProps}
             onClick={(event) => {

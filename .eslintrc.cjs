@@ -1,22 +1,16 @@
+/* eslint-env node */
 module.exports = {
-  extends: ['mantine', 'plugin:jest/recommended'],
-  plugins: ['jest'],
-  rules: {
-    'jest/no-export': 'off',
-    'jest/expect-expect': 'off',
-    'jest/valid-title': 'off',
-    'react/jsx-pascal-case': 'off',
-    'newline-per-chained-call': 'off',
-    'import/extensions': 'off',
-    'jsx-a11y/label-has-associated-control': 'off',
-    'react/self-closing-comp': 'off',
-    'react/jsx-closing-bracket-location': 'off',
-    '@typescript-eslint/method-signature-style': ['error', 'property'],
-    '@typescript-eslint/no-loop-func': 'off',
-    'no-restricted-syntax': 'off',
-    'no-await-in-loop': 'off',
-  },
+  extends: ['eslint:recommended', 'plugin:@typescript-eslint/recommended'],
+  parser: '@typescript-eslint/parser',
+  plugins: ['@typescript-eslint'],
+  root: true,
   parserOptions: {
     project: './tsconfig.eslint.json',
+  },
+  rules: {
+    '@typescript-eslint/ban-types': 'off',
+    '@typescript-eslint/no-unused-vars': 'off',
+    '@typescript-eslint/no-explicit-any': 'off',
+    'no-console': 'warn',
   },
 };

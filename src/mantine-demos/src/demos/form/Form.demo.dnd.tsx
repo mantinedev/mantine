@@ -45,7 +45,7 @@ function Demo() {
     <Box maw={500} mx="auto">
       <DragDropContext
         onDragEnd={({ destination, source }) =>
-          form.reorderListItem('employees', { from: source.index, to: destination?.index! })
+          destination?.index !== undefined && form.reorderListItem('employees', { from: source.index, to: destination.index })
         }
       >
         <Droppable droppableId="dnd-list" direction="vertical">
@@ -107,7 +107,8 @@ function Demo() {
     <Box maw={500} mx="auto">
       <DragDropContext
         onDragEnd={({ destination, source }) =>
-          form.reorderListItem('employees', { from: source.index, to: destination?.index! })
+          destination?.index !== undefined &&
+          form.reorderListItem('employees', { from: source.index, to: destination?.index })
         }
       >
         <Droppable droppableId="dnd-list" direction="vertical">

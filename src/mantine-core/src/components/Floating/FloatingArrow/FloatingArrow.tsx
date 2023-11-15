@@ -9,8 +9,8 @@ interface FloatingArrowProps extends React.ComponentPropsWithoutRef<'div'> {
   arrowOffset: number;
   arrowRadius: number;
   arrowPosition: ArrowPosition;
-  arrowX: number;
-  arrowY: number;
+  arrowX: number | undefined;
+  arrowY: number | undefined;
   visible: boolean | undefined;
 }
 

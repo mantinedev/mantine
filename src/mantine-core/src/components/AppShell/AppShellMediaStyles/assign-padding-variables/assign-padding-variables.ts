@@ -1,4 +1,3 @@
-/* eslint-disable no-param-reassign */
 import { keys } from '../../../../core';
 import type { AppShellProps } from '../../AppShell';
 import { getBaseSize } from '../get-base-size/get-base-size';

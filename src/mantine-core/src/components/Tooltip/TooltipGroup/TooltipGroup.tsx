@@ -1,4 +1,3 @@
-/* eslint-disable react/no-unused-prop-types */
 import React from 'react';
 import { FloatingDelayGroup } from '@floating-ui/react';
 import { useProps } from '../../../core';

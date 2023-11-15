@@ -47,7 +47,7 @@ export function focusable(element: HTMLElement) {
   const nodeName = element.nodeName.toLowerCase();
   const isTabIndexNotNaN = !Number.isNaN(getElementTabIndex(element));
   const res =
-    // @ts-ignore
+    // @ts-expect-error function accepts any html element but if it is a button, it should not be disabled to trigger the condition
     (TABBABLE_NODES.test(nodeName) && !element.disabled) ||
     (element instanceof HTMLAnchorElement ? element.href || isTabIndexNotNaN : isTabIndexNotNaN);
 

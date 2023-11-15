@@ -1,4 +1,3 @@
-/* eslint-disable import/no-relative-packages */
 import React from 'react';
 import cx from 'clsx';
 import { IconChevronDown, IconExternalLink } from '@tabler/icons-react';

@@ -1,4 +1,3 @@
-/* eslint-disable wrap-iife */
 export function addUnlinkedScrollListener(node: HTMLElement, handler = () => {}) {
   let prevPosition = { left: node.scrollLeft, top: node.scrollTop };
   let rAF = 0;

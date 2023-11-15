@@ -1,4 +1,3 @@
-/* eslint-disable react/no-unused-prop-types */
 import React from 'react';
 import { useClipboard } from '@mantine/hooks';
 import { useProps } from '../../core';

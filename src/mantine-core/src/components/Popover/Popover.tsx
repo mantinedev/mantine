@@ -1,4 +1,3 @@
-/* eslint-disable react/no-unused-prop-types */
 import React, { useRef, useState, useCallback } from 'react';
 import { useId, useClickOutside } from '@mantine/hooks';
 import {
@@ -281,8 +280,8 @@ export function Popover(_props: PopoverProps) {
         floating,
         x: popover.floating.x!,
         y: popover.floating.y!,
-        arrowX: popover.floating?.middlewareData?.arrow?.x!,
-        arrowY: popover.floating?.middlewareData?.arrow?.y!,
+        arrowX: popover.floating?.middlewareData?.arrow?.x,
+        arrowY: popover.floating?.middlewareData?.arrow?.y,
         opened: popover.opened,
         arrowRef,
         transitionProps,

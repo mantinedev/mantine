@@ -1,4 +1,3 @@
-/* eslint-disable react/no-unused-prop-types */
 import React, { useRef, forwardRef } from 'react';
 import { assignRef, useMergedRef } from '@mantine/hooks';
 import { useProps } from '../../core';

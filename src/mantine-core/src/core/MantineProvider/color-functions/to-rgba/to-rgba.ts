@@ -1,5 +1,3 @@
-/* eslint-disable no-bitwise */
-
 export interface RGBA {
   r: number;
   g: number;
