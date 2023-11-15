@@ -1,5 +1,5 @@
 import fs from 'fs-extra';
-import path from 'path';
+import path from 'node:path';
 
 function transformImportStatement(input: string) {
   const regex = /import React, (\{[^}]+\}) from 'react';/g;

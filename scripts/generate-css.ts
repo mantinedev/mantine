@@ -5,7 +5,7 @@ import cssnano from 'cssnano';
 import postcssModules from 'postcss-modules';
 import glob from 'fast-glob';
 import fs from 'fs-extra';
-import path from 'path';
+import path from 'node:path';
 import { generateScopedName } from 'hash-css-selector';
 
 const files = glob.sync(path.resolve(process.cwd(), 'src/mantine-core/src/**/*.css'));

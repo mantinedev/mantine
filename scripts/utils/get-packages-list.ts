@@ -1,5 +1,4 @@
-/* eslint-disable no-restricted-syntax, no-await-in-loop */
-import path from 'path';
+import path from 'node:path';
 import fs from 'fs-extra';
 import type { PackageJson } from 'type-fest';
 

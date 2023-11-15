@@ -1,5 +1,5 @@
-import fs from 'fs';
-import path from 'path';
+import fs from 'fs-extra';
+import path from 'node:path';
 import { getPackagesBuildOrder } from './build/get-packages-build-order';
 import { createLogger } from './utils/signale';
 

@@ -1,5 +1,5 @@
-import fs from 'fs';
-import path from 'path';
+import fs from 'fs-extra';
+import path from 'node:path';
 import glob from 'fast-glob';
 
 const files = glob.sync(path.resolve(process.cwd(), 'src/mantine-*/esm/index.css'));
