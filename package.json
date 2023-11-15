@@ -16,6 +16,7 @@
   "author": "Vitaly Rtishchev <rtivital@gmail.com>",
   "license": "MIT",
   "scripts": {
+    "setup": "npm run docgen && esno scripts/docs/generate-css-exports",
     "codegen": "esno scripts/codegen",
     "dev": "cd docs && npm run dev",
     "demos": "esno scripts/demo-import",
