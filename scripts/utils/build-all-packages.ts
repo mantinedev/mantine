@@ -1,22 +1,13 @@
-/* eslint-disable no-await-in-loop, no-restricted-syntax */
-
+/* eslint-disable no-await-in-loop */
 import execa from 'execa';
-import { buildPackage, BuildOptions } from './build-package';
+import { buildPackage } from './build-package';
 import { getPackagesBuildOrder } from './get-packages-build-order';
 
-export async function buildAllPackages(options?: BuildOptions) {
+export async function buildAllPackages() {
   const packages = await getPackagesBuildOrder();
 
-  // eslint-disable-next-line no-param-reassign
-  options = options || {
-    analyze: false,
-    sourcemap: true,
-    minify: false,
-    formats: ['es', 'cjs'],
-  };
-
   for (const item of packages) {
-    await buildPackage(item!.packageJson.name, options);
+    await buildPackage(item!.packageJson.name);
   }
 
   await execa('npm', ['run', 'generate-css']);

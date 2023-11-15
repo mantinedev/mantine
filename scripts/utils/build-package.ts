@@ -9,14 +9,7 @@ import { getPackageName } from './get-package-name';
 
 const logger = new Logger('build-package');
 
-export interface BuildOptions {
-  analyze: boolean;
-  sourcemap: boolean;
-  minify: boolean;
-  formats: string[];
-}
-
-export async function buildPackage(_packageName: string, options?: BuildOptions) {
+export async function buildPackage(_packageName: string) {
   const packageName = getPackageName(_packageName);
   const packagePath = await locatePackage(packageName || '');
 
@@ -31,17 +24,10 @@ export async function buildPackage(_packageName: string, options?: BuildOptions)
     const startTime = Date.now();
     await generateDts(packagePath);
 
-    if (options?.formats) {
-      for (const format of options.formats) {
-        const config = await createPackageConfig({
-          ...options,
-          basePath: packagePath,
-          format,
-        });
-
-        logger.info(`Building to ${chalk.cyan(format)} format...`);
-        await compile(config);
-      }
+    for (const format of ['es', 'cjs']) {
+      const config = await createPackageConfig({ basePath: packagePath, format });
+      logger.info(`Building to ${chalk.cyan(format)} format...`);
+      await compile(config);
     }
 
     logger.info(

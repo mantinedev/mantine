@@ -20,9 +20,6 @@ interface PkgConfigInput {
   entry?: string;
   publicPath?: string;
   externals?: string[];
-  sourcemap: boolean;
-  minify: boolean;
-  analyze: boolean;
 }
 
 export default async function createPackageConfig(config: PkgConfigInput): Promise<RollupOptions> {
@@ -65,7 +62,7 @@ export default async function createPackageConfig(config: PkgConfigInput): Promi
     name: packageJson.name,
     format: config.format as ModuleFormat,
     externalLiveBindings: false,
-    sourcemap: config.sourcemap,
+    sourcemap: true,
   };
 
   if (config.format === 'es') {
