@@ -2,9 +2,9 @@ import fs from 'fs-extra';
 import path from 'path';
 import isDir from 'is-directory';
 import chalk from 'chalk';
-import { Logger } from './utils/Logger';
+import { createLogger } from './utils/signale';
 
-const logger = new Logger('check-conflicts');
+const logger = createLogger('check-conflicts');
 
 const src = path.join(__dirname, '../src');
 

@@ -1,9 +1,9 @@
 import fs from 'fs';
 import path from 'path';
 import { getPackagesBuildOrder } from './build/get-packages-build-order';
-import { Logger } from './utils/Logger';
+import { createLogger } from './utils/signale';
 
-const logger = new Logger('exports');
+const logger = createLogger('exports');
 
 getPackagesBuildOrder().then((packages) => {
   const errors: string[] = [];

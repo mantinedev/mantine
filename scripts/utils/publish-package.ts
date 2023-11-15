@@ -1,8 +1,8 @@
 import chalk from 'chalk';
 import execa from 'execa';
-import { Logger } from './Logger';
+import { createLogger } from './signale';
 
-const logger = new Logger('publish-package');
+const logger = createLogger('publish-package');
 
 export async function publishPackage({
   path,

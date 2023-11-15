@@ -6,14 +6,14 @@ import open from 'open';
 import yargs from 'yargs/yargs';
 import { hideBin } from 'yargs/helpers';
 import { getNextVersion } from 'version-next';
-import { Logger } from './utils/Logger';
+import { createLogger } from './utils/signale';
 import { publishPackage } from './utils/publish-package';
 import { setPackagesVersion } from './release/set-packages-version';
 import { buildAllPackages } from './build/build-all-packages';
 import { getPackagesBuildOrder } from './build/get-packages-build-order';
 import packageJson from '../package.json';
 
-const logger = new Logger('release');
+const logger = createLogger('release');
 const git = simpleGit();
 const { argv }: { argv: any } = yargs(hideBin(process.argv))
   .option('stage', {
