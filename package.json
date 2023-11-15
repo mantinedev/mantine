@@ -31,6 +31,7 @@
     "build:demos": "npm run build @mantine/demos",
     "build:private": "npm run build @mantine/styles-api && npm run build @mantine/demos",
     "jest": "jest",
+    "esno": "esno",
     "prettier:test": "prettier --check \"**/*.{ts,tsx}\"",
     "prettier:write": "prettier --write \"**/*.{ts,tsx}\"",
     "exports": "esno scripts/check-exports",
@@ -56,7 +57,6 @@
     "release:minor": "npm run _release minor && npm run docs:deploy",
     "release:major": "npm run _release major && npm run docs:deploy",
     "storybook": "storybook dev -p 6006",
-    "generate-demo-stories": "esno scripts/generate-demo-stories",
     "generate-css": "esno scripts/generate-css",
     "generate-css-layers": "esno scripts/generate-css-layers"
   },
