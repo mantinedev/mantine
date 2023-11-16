@@ -47,10 +47,6 @@
     "prettier:test": "prettier --check \"**/*.{ts,tsx}\"",
     "prettier:write": "prettier --write \"**/*.{ts,tsx}\""
   },
-  "resolutions": {
-    "@types/react": "18.2.17",
-    "wrap-ansi": "^7.0.0"
-  },
   "devDependencies": {
     "@babel/core": "^7.23.3",
     "@babel/preset-env": "^7.23.3",
