@@ -15,7 +15,7 @@
     "docs"
   ],
   "scripts": {
-    "setup": "npm run docgen && esno scripts/docs/generate-css-exports",
+    "setup": "npm run docs:docgen && esno scripts/docs/generate-css-exports",
     "changelog": "esno scripts/docs/changelog",
     "storybook": "storybook dev -p 6006",
     "docs": "cd docs && npm run dev",
