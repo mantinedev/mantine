@@ -4425,13 +4425,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@mantine/carousel@link:../src/mantine-carousel::locator=docs%40workspace%3Adocs":
-  version: 0.0.0-use.local
-  resolution: "@mantine/carousel@link:../src/mantine-carousel::locator=docs%40workspace%3Adocs"
-  languageName: node
-  linkType: soft
-
-"@mantine/carousel@workspace:src/mantine-carousel":
+"@mantine/carousel@workspace:*, @mantine/carousel@workspace:src/mantine-carousel":
   version: 0.0.0-use.local
   resolution: "@mantine/carousel@workspace:src/mantine-carousel"
   peerDependencies:
@@ -4442,13 +4436,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@mantine/code-highlight@link:../src/mantine-code-highlight::locator=docs%40workspace%3Adocs":
-  version: 0.0.0-use.local
-  resolution: "@mantine/code-highlight@link:../src/mantine-code-highlight::locator=docs%40workspace%3Adocs"
-  languageName: node
-  linkType: soft
-
-"@mantine/code-highlight@workspace:src/mantine-code-highlight":
+"@mantine/code-highlight@workspace:*, @mantine/code-highlight@workspace:src/mantine-code-highlight":
   version: 0.0.0-use.local
   resolution: "@mantine/code-highlight@workspace:src/mantine-code-highlight"
   dependencies:
@@ -4462,13 +4450,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@mantine/colors-generator@link:../src/mantine-colors-generator::locator=docs%40workspace%3Adocs":
-  version: 0.0.0-use.local
-  resolution: "@mantine/colors-generator@link:../src/mantine-colors-generator::locator=docs%40workspace%3Adocs"
-  languageName: node
-  linkType: soft
-
-"@mantine/colors-generator@workspace:src/mantine-colors-generator":
+"@mantine/colors-generator@workspace:*, @mantine/colors-generator@workspace:src/mantine-colors-generator":
   version: 0.0.0-use.local
   resolution: "@mantine/colors-generator@workspace:src/mantine-colors-generator"
   peerDependencies:
@@ -4476,13 +4458,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@mantine/core@link:../src/mantine-core::locator=docs%40workspace%3Adocs":
-  version: 0.0.0-use.local
-  resolution: "@mantine/core@link:../src/mantine-core::locator=docs%40workspace%3Adocs"
-  languageName: node
-  linkType: soft
-
-"@mantine/core@workspace:src/mantine-core":
+"@mantine/core@workspace:*, @mantine/core@workspace:src/mantine-core":
   version: 0.0.0-use.local
   resolution: "@mantine/core@workspace:src/mantine-core"
   dependencies:
@@ -4505,13 +4481,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@mantine/dates@link:../src/mantine-dates::locator=docs%40workspace%3Adocs":
-  version: 0.0.0-use.local
-  resolution: "@mantine/dates@link:../src/mantine-dates::locator=docs%40workspace%3Adocs"
-  languageName: node
-  linkType: soft
-
-"@mantine/dates@workspace:src/mantine-dates":
+"@mantine/dates@workspace:*, @mantine/dates@workspace:src/mantine-dates":
   version: 0.0.0-use.local
   resolution: "@mantine/dates@workspace:src/mantine-dates"
   dependencies:
@@ -4525,25 +4495,13 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@mantine/demos@link:../src/mantine-demos::locator=docs%40workspace%3Adocs":
-  version: 0.0.0-use.local
-  resolution: "@mantine/demos@link:../src/mantine-demos::locator=docs%40workspace%3Adocs"
-  languageName: node
-  linkType: soft
-
-"@mantine/demos@workspace:src/mantine-demos":
+"@mantine/demos@workspace:*, @mantine/demos@workspace:src/mantine-demos":
   version: 0.0.0-use.local
   resolution: "@mantine/demos@workspace:src/mantine-demos"
   languageName: unknown
   linkType: soft
 
-"@mantine/dropzone@link:../src/mantine-dropzone::locator=docs%40workspace%3Adocs":
-  version: 0.0.0-use.local
-  resolution: "@mantine/dropzone@link:../src/mantine-dropzone::locator=docs%40workspace%3Adocs"
-  languageName: node
-  linkType: soft
-
-"@mantine/dropzone@workspace:src/mantine-dropzone":
+"@mantine/dropzone@workspace:*, @mantine/dropzone@workspace:src/mantine-dropzone":
   version: 0.0.0-use.local
   resolution: "@mantine/dropzone@workspace:src/mantine-dropzone"
   dependencies:
@@ -4556,13 +4514,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@mantine/ds@link:../src/mantine-ds::locator=docs%40workspace%3Adocs":
-  version: 0.0.0-use.local
-  resolution: "@mantine/ds@link:../src/mantine-ds::locator=docs%40workspace%3Adocs"
-  languageName: node
-  linkType: soft
-
-"@mantine/ds@workspace:src/mantine-ds":
+"@mantine/ds@workspace:*, @mantine/ds@workspace:src/mantine-ds":
   version: 0.0.0-use.local
   resolution: "@mantine/ds@workspace:src/mantine-ds"
   dependencies:
@@ -4577,13 +4529,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@mantine/form@link:../src/mantine-form::locator=docs%40workspace%3Adocs":
-  version: 0.0.0-use.local
-  resolution: "@mantine/form@link:../src/mantine-form::locator=docs%40workspace%3Adocs"
-  languageName: node
-  linkType: soft
-
-"@mantine/form@workspace:src/mantine-form":
+"@mantine/form@workspace:*, @mantine/form@workspace:src/mantine-form":
   version: 0.0.0-use.local
   resolution: "@mantine/form@workspace:src/mantine-form"
   dependencies:
@@ -4594,13 +4540,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@mantine/hooks@link:../src/mantine-hooks::locator=docs%40workspace%3Adocs":
-  version: 0.0.0-use.local
-  resolution: "@mantine/hooks@link:../src/mantine-hooks::locator=docs%40workspace%3Adocs"
-  languageName: node
-  linkType: soft
-
-"@mantine/hooks@workspace:src/mantine-hooks":
+"@mantine/hooks@workspace:*, @mantine/hooks@workspace:src/mantine-hooks":
   version: 0.0.0-use.local
   resolution: "@mantine/hooks@workspace:src/mantine-hooks"
   peerDependencies:
@@ -4608,13 +4548,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@mantine/modals@link:../src/mantine-modals::locator=docs%40workspace%3Adocs":
-  version: 0.0.0-use.local
-  resolution: "@mantine/modals@link:../src/mantine-modals::locator=docs%40workspace%3Adocs"
-  languageName: node
-  linkType: soft
-
-"@mantine/modals@workspace:src/mantine-modals":
+"@mantine/modals@workspace:*, @mantine/modals@workspace:src/mantine-modals":
   version: 0.0.0-use.local
   resolution: "@mantine/modals@workspace:src/mantine-modals"
   peerDependencies:
@@ -4625,13 +4559,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@mantine/notifications@link:../src/mantine-notifications::locator=docs%40workspace%3Adocs":
-  version: 0.0.0-use.local
-  resolution: "@mantine/notifications@link:../src/mantine-notifications::locator=docs%40workspace%3Adocs"
-  languageName: node
-  linkType: soft
-
-"@mantine/notifications@workspace:src/mantine-notifications":
+"@mantine/notifications@workspace:*, @mantine/notifications@workspace:src/mantine-notifications":
   version: 0.0.0-use.local
   resolution: "@mantine/notifications@workspace:src/mantine-notifications"
   dependencies:
@@ -4645,13 +4573,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@mantine/nprogress@link:../src/mantine-nprogress::locator=docs%40workspace%3Adocs":
-  version: 0.0.0-use.local
-  resolution: "@mantine/nprogress@link:../src/mantine-nprogress::locator=docs%40workspace%3Adocs"
-  languageName: node
-  linkType: soft
-
-"@mantine/nprogress@workspace:src/mantine-nprogress":
+"@mantine/nprogress@workspace:*, @mantine/nprogress@workspace:src/mantine-nprogress":
   version: 0.0.0-use.local
   resolution: "@mantine/nprogress@workspace:src/mantine-nprogress"
   dependencies:
@@ -4664,13 +4586,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@mantine/spotlight@link:../src/mantine-spotlight::locator=docs%40workspace%3Adocs":
-  version: 0.0.0-use.local
-  resolution: "@mantine/spotlight@link:../src/mantine-spotlight::locator=docs%40workspace%3Adocs"
-  languageName: node
-  linkType: soft
-
-"@mantine/spotlight@workspace:src/mantine-spotlight":
+"@mantine/spotlight@workspace:*, @mantine/spotlight@workspace:src/mantine-spotlight":
   version: 0.0.0-use.local
   resolution: "@mantine/spotlight@workspace:src/mantine-spotlight"
   dependencies:
@@ -4683,13 +4599,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@mantine/store@link:../src/mantine-store::locator=docs%40workspace%3Adocs":
-  version: 0.0.0-use.local
-  resolution: "@mantine/store@link:../src/mantine-store::locator=docs%40workspace%3Adocs"
-  languageName: node
-  linkType: soft
-
-"@mantine/store@npm:7.3.0-alpha.0, @mantine/store@workspace:src/mantine-store":
+"@mantine/store@npm:7.3.0-alpha.0, @mantine/store@workspace:*, @mantine/store@workspace:src/mantine-store":
   version: 0.0.0-use.local
   resolution: "@mantine/store@workspace:src/mantine-store"
   peerDependencies:
@@ -4697,13 +4607,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@mantine/styles-api@link:../src/mantine-styles-api::locator=docs%40workspace%3Adocs":
-  version: 0.0.0-use.local
-  resolution: "@mantine/styles-api@link:../src/mantine-styles-api::locator=docs%40workspace%3Adocs"
-  languageName: node
-  linkType: soft
-
-"@mantine/styles-api@workspace:src/mantine-styles-api":
+"@mantine/styles-api@workspace:*, @mantine/styles-api@workspace:src/mantine-styles-api":
   version: 0.0.0-use.local
   resolution: "@mantine/styles-api@workspace:src/mantine-styles-api"
   languageName: unknown
@@ -4715,13 +4619,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@mantine/tiptap@link:../src/mantine-tiptap::locator=docs%40workspace%3Adocs":
-  version: 0.0.0-use.local
-  resolution: "@mantine/tiptap@link:../src/mantine-tiptap::locator=docs%40workspace%3Adocs"
-  languageName: node
-  linkType: soft
-
-"@mantine/tiptap@workspace:src/mantine-tiptap":
+"@mantine/tiptap@workspace:*, @mantine/tiptap@workspace:src/mantine-tiptap":
   version: 0.0.0-use.local
   resolution: "@mantine/tiptap@workspace:src/mantine-tiptap"
   peerDependencies:
@@ -10988,23 +10886,23 @@ __metadata:
   dependencies:
     "@floating-ui/react": "npm:^0.24.8"
     "@hello-pangea/dnd": "npm:^16.3.0"
-    "@mantine/carousel": "link:../src/mantine-carousel"
-    "@mantine/code-highlight": "link:../src/mantine-code-highlight"
-    "@mantine/colors-generator": "link:../src/mantine-colors-generator"
-    "@mantine/core": "link:../src/mantine-core"
-    "@mantine/dates": "link:../src/mantine-dates"
-    "@mantine/demos": "link:../src/mantine-demos"
-    "@mantine/dropzone": "link:../src/mantine-dropzone"
-    "@mantine/ds": "link:../src/mantine-ds"
-    "@mantine/form": "link:../src/mantine-form"
-    "@mantine/hooks": "link:../src/mantine-hooks"
-    "@mantine/modals": "link:../src/mantine-modals"
-    "@mantine/notifications": "link:../src/mantine-notifications"
-    "@mantine/nprogress": "link:../src/mantine-nprogress"
-    "@mantine/spotlight": "link:../src/mantine-spotlight"
-    "@mantine/store": "link:../src/mantine-store"
-    "@mantine/styles-api": "link:../src/mantine-styles-api"
-    "@mantine/tiptap": "link:../src/mantine-tiptap"
+    "@mantine/carousel": "workspace:*"
+    "@mantine/code-highlight": "workspace:*"
+    "@mantine/colors-generator": "workspace:*"
+    "@mantine/core": "workspace:*"
+    "@mantine/dates": "workspace:*"
+    "@mantine/demos": "workspace:*"
+    "@mantine/dropzone": "workspace:*"
+    "@mantine/ds": "workspace:*"
+    "@mantine/form": "workspace:*"
+    "@mantine/hooks": "workspace:*"
+    "@mantine/modals": "workspace:*"
+    "@mantine/notifications": "workspace:*"
+    "@mantine/nprogress": "workspace:*"
+    "@mantine/spotlight": "workspace:*"
+    "@mantine/store": "workspace:*"
+    "@mantine/styles-api": "workspace:*"
+    "@mantine/tiptap": "workspace:*"
     "@mdx-js/loader": "npm:^3.0.0"
     "@mdx-js/react": "npm:^3.0.0"
     "@next/mdx": "npm:^14.0.2"
