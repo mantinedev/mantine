@@ -1,8 +1,6 @@
 import path from 'node:path';
 import { RollupOptions } from 'rollup';
-import commonjs from '@rollup/plugin-commonjs';
 import { nodeResolve } from '@rollup/plugin-node-resolve';
-import json from '@rollup/plugin-json';
 import alias, { Alias } from '@rollup/plugin-alias';
 import replace from '@rollup/plugin-replace';
 import postcss from 'rollup-plugin-postcss';
@@ -23,13 +21,11 @@ export async function createPackageConfig(packagePath: string): Promise<RollupOp
   }));
 
   const plugins = [
-    commonjs(),
     nodeResolve({ extensions: ['.ts', '.tsx', '.js', '.jsx'] }),
     esbuild({
       sourceMap: false,
       tsconfig: getPath('tsconfig.json'),
     }),
-    json(),
     alias({ entries: aliasEntries }),
     replace({ preventAssignment: true }),
     postcss({

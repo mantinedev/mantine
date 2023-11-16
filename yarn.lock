@@ -4435,8 +4435,8 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@mantine/carousel@workspace:src/mantine-carousel"
   peerDependencies:
-    "@mantine/core": 7.2.2
-    "@mantine/hooks": 7.2.2
+    "@mantine/core": 7.3.0-alpha.0
+    "@mantine/hooks": 7.3.0-alpha.0
     embla-carousel-react: ">=7.0.0"
     react: ^18.2.0
   languageName: unknown
@@ -4455,8 +4455,8 @@ __metadata:
     clsx: "npm:2.0.0"
     highlight.js: "npm:^11.9.0"
   peerDependencies:
-    "@mantine/core": 7.2.2
-    "@mantine/hooks": 7.2.2
+    "@mantine/core": 7.3.0-alpha.0
+    "@mantine/hooks": 7.3.0-alpha.0
     react: ^18.2.0
     react-dom: ^18.2.0
   languageName: unknown
@@ -4493,7 +4493,7 @@ __metadata:
     react-textarea-autosize: "npm:8.5.3"
     type-fest: "npm:^3.13.1"
   peerDependencies:
-    "@mantine/hooks": 7.2.2
+    "@mantine/hooks": 7.3.0-alpha.0
     react: ^18.2.0
     react-dom: ^18.2.0
   languageName: unknown
@@ -4517,8 +4517,8 @@ __metadata:
   dependencies:
     clsx: "npm:2.0.0"
   peerDependencies:
-    "@mantine/core": 7.2.2
-    "@mantine/hooks": 7.2.2
+    "@mantine/core": 7.3.0-alpha.0
+    "@mantine/hooks": 7.3.0-alpha.0
     dayjs: ">=1.0.0"
     react: ^18.2.0
     react-dom: ^18.2.0
@@ -4549,8 +4549,8 @@ __metadata:
   dependencies:
     react-dropzone-esm: "npm:15.0.1"
   peerDependencies:
-    "@mantine/core": 7.2.2
-    "@mantine/hooks": 7.2.2
+    "@mantine/core": 7.3.0-alpha.0
+    "@mantine/hooks": 7.3.0-alpha.0
     react: ^18.2.0
     react-dom: ^18.2.0
   languageName: unknown
@@ -4568,9 +4568,9 @@ __metadata:
   dependencies:
     clsx: "npm:2.0.0"
   peerDependencies:
-    "@mantine/code-highlight": 7.2.2
-    "@mantine/core": 7.2.2
-    "@mantine/hooks": 7.2.2
+    "@mantine/code-highlight": 7.3.0-alpha.0
+    "@mantine/core": 7.3.0-alpha.0
+    "@mantine/hooks": 7.3.0-alpha.0
     "@tabler/icons-react": ">=2.0.0"
     react: ^18.2.0
     react-dom: ^18.2.0
@@ -4618,8 +4618,8 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@mantine/modals@workspace:src/mantine-modals"
   peerDependencies:
-    "@mantine/core": 7.2.2
-    "@mantine/hooks": 7.2.2
+    "@mantine/core": 7.3.0-alpha.0
+    "@mantine/hooks": 7.3.0-alpha.0
     react: ^18.2.0
     react-dom: ^18.2.0
   languageName: unknown
@@ -4635,11 +4635,11 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@mantine/notifications@workspace:src/mantine-notifications"
   dependencies:
-    "@mantine/store": "npm:7.2.2"
+    "@mantine/store": "npm:7.3.0-alpha.0"
     react-transition-group: "npm:4.4.5"
   peerDependencies:
-    "@mantine/core": 7.2.2
-    "@mantine/hooks": 7.2.2
+    "@mantine/core": 7.3.0-alpha.0
+    "@mantine/hooks": 7.3.0-alpha.0
     react: ^18.2.0
     react-dom: ^18.2.0
   languageName: unknown
@@ -4655,10 +4655,10 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@mantine/nprogress@workspace:src/mantine-nprogress"
   dependencies:
-    "@mantine/store": "npm:7.2.2"
+    "@mantine/store": "npm:7.3.0-alpha.0"
   peerDependencies:
-    "@mantine/core": 7.2.2
-    "@mantine/hooks": 7.2.2
+    "@mantine/core": 7.3.0-alpha.0
+    "@mantine/hooks": 7.3.0-alpha.0
     react: ^18.2.0
     react-dom: ^18.2.0
   languageName: unknown
@@ -4674,10 +4674,10 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@mantine/spotlight@workspace:src/mantine-spotlight"
   dependencies:
-    "@mantine/store": "npm:7.2.2"
+    "@mantine/store": "npm:7.3.0-alpha.0"
   peerDependencies:
-    "@mantine/core": 7.2.2
-    "@mantine/hooks": 7.2.2
+    "@mantine/core": 7.3.0-alpha.0
+    "@mantine/hooks": 7.3.0-alpha.0
     react: ^18.2.0
     react-dom: ^18.2.0
   languageName: unknown
@@ -4689,7 +4689,7 @@ __metadata:
   languageName: node
   linkType: soft
 
-"@mantine/store@npm:7.2.2, @mantine/store@workspace:src/mantine-store":
+"@mantine/store@npm:7.3.0-alpha.0, @mantine/store@workspace:src/mantine-store":
   version: 0.0.0-use.local
   resolution: "@mantine/store@workspace:src/mantine-store"
   peerDependencies:
@@ -4725,8 +4725,8 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@mantine/tiptap@workspace:src/mantine-tiptap"
   peerDependencies:
-    "@mantine/core": 7.2.2
-    "@mantine/hooks": 7.2.2
+    "@mantine/core": 7.3.0-alpha.0
+    "@mantine/hooks": 7.3.0-alpha.0
     "@tabler/icons-react": ">=2.0.0"
     "@tiptap/extension-link": ^2.1.12
     "@tiptap/react": ^2.1.12
@@ -4739,7 +4739,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@mantine/vanilla-extract@workspace:src/mantine-vanilla-extract"
   peerDependencies:
-    "@mantine/core": 7.2.2
+    "@mantine/core": 7.3.0-alpha.0
   languageName: unknown
   linkType: soft
 
@@ -5649,39 +5649,6 @@ __metadata:
     rollup:
       optional: true
   checksum: 5b3d095f0ab729925144a6df2b5431a8ee1dea46ab0e53e5415600ebc551bc17d7179f0171a6f252c2a16085d3f3f904295c3adb271a32ea203f7443d909173a
-  languageName: node
-  linkType: hard
-
-"@rollup/plugin-commonjs@npm:^25.0.7":
-  version: 25.0.7
-  resolution: "@rollup/plugin-commonjs@npm:25.0.7"
-  dependencies:
-    "@rollup/pluginutils": "npm:^5.0.1"
-    commondir: "npm:^1.0.1"
-    estree-walker: "npm:^2.0.2"
-    glob: "npm:^8.0.3"
-    is-reference: "npm:1.2.1"
-    magic-string: "npm:^0.30.3"
-  peerDependencies:
-    rollup: ^2.68.0||^3.0.0||^4.0.0
-  peerDependenciesMeta:
-    rollup:
-      optional: true
-  checksum: d096af5aedd55c19ac528daa84a4cacdf21a69c9c9b20c23e04f27a64966cb383f5e2b01b9c903d40318e35dcaa74dc7b5292a844c6cbc66c252f5447eac05b4
-  languageName: node
-  linkType: hard
-
-"@rollup/plugin-json@npm:^6.0.1":
-  version: 6.0.1
-  resolution: "@rollup/plugin-json@npm:6.0.1"
-  dependencies:
-    "@rollup/pluginutils": "npm:^5.0.1"
-  peerDependencies:
-    rollup: ^1.20.0||^2.0.0||^3.0.0||^4.0.0
-  peerDependenciesMeta:
-    rollup:
-      optional: true
-  checksum: 8a8aed6376c86fb7e551b8b17181e585a9141f94d9c205d99dcdf834242720ee029693c3c44c36e4c4e72c61595c0976d89da4b04e790f0a3698a3cd1eb283fc
   languageName: node
   linkType: hard
 
@@ -13041,19 +13008,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"glob@npm:^8.0.3":
-  version: 8.1.0
-  resolution: "glob@npm:8.1.0"
-  dependencies:
-    fs.realpath: "npm:^1.0.0"
-    inflight: "npm:^1.0.4"
-    inherits: "npm:2"
-    minimatch: "npm:^5.0.1"
-    once: "npm:^1.3.0"
-  checksum: cb0b5cab17a59c57299376abe5646c7070f8acb89df5595b492dba3bfb43d301a46c01e5695f01154e6553168207cb60d4eaf07d3be4bc3eb9b0457c5c561d0f
-  languageName: node
-  linkType: hard
-
 "global-modules@npm:^2.0.0":
   version: 2.0.0
   resolution: "global-modules@npm:2.0.0"
@@ -14224,15 +14178,6 @@ __metadata:
   version: 1.0.1
   resolution: "is-potential-custom-element-name@npm:1.0.1"
   checksum: b73e2f22bc863b0939941d369486d308b43d7aef1f9439705e3582bfccaa4516406865e32c968a35f97a99396dac84e2624e67b0a16b0a15086a785e16ce7db9
-  languageName: node
-  linkType: hard
-
-"is-reference@npm:1.2.1":
-  version: 1.2.1
-  resolution: "is-reference@npm:1.2.1"
-  dependencies:
-    "@types/estree": "npm:*"
-  checksum: 7dc819fc8de7790264a0a5d531164f9f5b9ef5aa1cd05f35322d14db39c8a2ec78fd5d4bf57f9789f3ddd2b3abeea7728432b759636157a42db12a9e8c3b549b
   languageName: node
   linkType: hard
 
@@ -15856,8 +15801,6 @@ __metadata:
     "@floating-ui/react": "npm:^0.24.8"
     "@hello-pangea/dnd": "npm:^16.3.0"
     "@rollup/plugin-alias": "npm:^5.0.1"
-    "@rollup/plugin-commonjs": "npm:^25.0.7"
-    "@rollup/plugin-json": "npm:^6.0.1"
     "@rollup/plugin-node-resolve": "npm:^15.2.3"
     "@rollup/plugin-replace": "npm:^5.0.5"
     "@storybook/addon-styling-webpack": "npm:^0.0.5"
