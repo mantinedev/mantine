@@ -1,6 +1,7 @@
-const remarkSlug = require('remark-slug');
+import remarkSlug from 'remark-slug';
+import createMdx from '@next/mdx';
 
-const withMDX = require('@next/mdx')({
+const withMDX = createMdx({
   extension: /\.mdx?$/,
   options: {
     providerImportSource: '@mdx-js/react',
@@ -34,4 +35,4 @@ const nextConfig = {
   },
 };
 
-module.exports = withMDX(nextConfig);
+export default withMDX(nextConfig);
