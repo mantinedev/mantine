@@ -109,15 +109,15 @@ export const YearLevel = factory<YearLevelFactory>((_props, ref) => {
     typeof nextDisabled === 'boolean'
       ? nextDisabled
       : maxDate
-      ? !dayjs(year).endOf('year').isBefore(maxDate)
-      : false;
+        ? !dayjs(year).endOf('year').isBefore(maxDate)
+        : false;
 
   const _previousDisabled =
     typeof previousDisabled === 'boolean'
       ? previousDisabled
       : minDate
-      ? !dayjs(year).startOf('year').isAfter(minDate)
-      : false;
+        ? !dayjs(year).startOf('year').isAfter(minDate)
+        : false;
 
   return (
     <Box data-year-level size={size} ref={ref} {...others}>

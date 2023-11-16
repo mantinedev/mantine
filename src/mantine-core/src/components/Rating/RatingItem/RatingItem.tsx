@@ -74,8 +74,8 @@ export function RatingItem({
               fractionValue === 1
                 ? undefined
                 : dir === 'ltr'
-                ? `inset(0 ${active ? 100 - fractionValue * 100 : 100}% 0 0)`
-                : `inset(0 0 0 ${active ? 100 - fractionValue * 100 : 100}% )`,
+                  ? `inset(0 ${active ? 100 - fractionValue * 100 : 100}% 0 0)`
+                  : `inset(0 0 0 ${active ? 100 - fractionValue * 100 : 100}% )`,
           }}
         >
           {full

@@ -11,6 +11,6 @@ export function isMarkFilled({ mark, offset, value, inverted = false }: IsMarkFi
       ? mark.value <= offset || mark.value >= value
       : mark.value >= value
     : typeof offset === 'number'
-    ? mark.value >= offset && mark.value <= value
-    : mark.value <= value;
+      ? mark.value >= offset && mark.value <= value
+      : mark.value <= value;
 }

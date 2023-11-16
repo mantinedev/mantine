@@ -23,14 +23,14 @@ export type StylesApiRecord<
     ? StylesRecord<Payload['stylesNames'], DataType>
     : never
   : Payload['stylesNames'] extends string
-  ?
-      | StylesRecord<Payload['stylesNames'], DataType>
-      | ((
-          theme: MantineTheme,
-          props: Payload['props'],
-          ctx: Payload['ctx']
-        ) => StylesRecord<Payload['stylesNames'], DataType>)
-  : never;
+    ?
+        | StylesRecord<Payload['stylesNames'], DataType>
+        | ((
+            theme: MantineTheme,
+            props: Payload['props'],
+            ctx: Payload['ctx']
+          ) => StylesRecord<Payload['stylesNames'], DataType>)
+    : never;
 
 export type Styles<Payload extends FactoryPayload> = StylesApiRecord<Payload, CSSProperties>;
 export type ClassNames<Payload extends FactoryPayload> = StylesApiRecord<Payload, string>;

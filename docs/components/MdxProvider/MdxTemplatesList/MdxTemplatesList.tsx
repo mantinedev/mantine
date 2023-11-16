@@ -19,8 +19,8 @@ export function MdxTemplatesList({ type, name, community = false }: MdxTemplates
   const data = name
     ? templatesData.filter((template) => name.includes(template.name))
     : type
-    ? templatesData.filter((template) => template.type === type)
-    : templatesData;
+      ? templatesData.filter((template) => template.type === type)
+      : templatesData;
 
   const rows = data.map((template) => {
     const Icon = frameworkIcons[template.type];

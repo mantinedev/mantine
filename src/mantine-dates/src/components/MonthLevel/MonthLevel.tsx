@@ -120,15 +120,15 @@ export const MonthLevel = factory<MonthLevelFactory>((_props, ref) => {
     typeof nextDisabled === 'boolean'
       ? nextDisabled
       : maxDate
-      ? !dayjs(month).endOf('month').isBefore(maxDate)
-      : false;
+        ? !dayjs(month).endOf('month').isBefore(maxDate)
+        : false;
 
   const _previousDisabled =
     typeof previousDisabled === 'boolean'
       ? previousDisabled
       : minDate
-      ? !dayjs(month).startOf('month').isAfter(minDate)
-      : false;
+        ? !dayjs(month).startOf('month').isAfter(minDate)
+        : false;
 
   return (
     <Box data-month-level size={size} ref={ref} {...others}>

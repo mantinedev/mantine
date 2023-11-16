@@ -111,15 +111,15 @@ export const DecadeLevel = factory<DecadeLevelFactory>((_props, ref) => {
     typeof nextDisabled === 'boolean'
       ? nextDisabled
       : maxDate
-      ? !dayjs(endOfDecade).endOf('year').isBefore(maxDate)
-      : false;
+        ? !dayjs(endOfDecade).endOf('year').isBefore(maxDate)
+        : false;
 
   const _previousDisabled =
     typeof previousDisabled === 'boolean'
       ? previousDisabled
       : minDate
-      ? !dayjs(startOfDecade).startOf('year').isAfter(minDate)
-      : false;
+        ? !dayjs(startOfDecade).startOf('year').isAfter(minDate)
+        : false;
 
   const formatDecade = (date: Date, format: string) =>
     dayjs(date)

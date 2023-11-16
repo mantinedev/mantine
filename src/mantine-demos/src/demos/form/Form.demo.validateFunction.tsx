@@ -46,8 +46,8 @@ function Demo() {
         values.age === undefined
           ? 'Age is required'
           : values.age < 18
-          ? 'You must be at least 18'
-          : null,
+            ? 'You must be at least 18'
+            : null,
     }),
   });
 

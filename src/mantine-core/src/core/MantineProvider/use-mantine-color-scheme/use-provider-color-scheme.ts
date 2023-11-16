@@ -11,8 +11,8 @@ function setColorSchemeAttribute(
     colorScheme !== 'auto'
       ? colorScheme
       : window.matchMedia('(prefers-color-scheme: dark)').matches
-      ? 'dark'
-      : 'light';
+        ? 'dark'
+        : 'light';
   getRootElement()?.setAttribute('data-mantine-color-scheme', computedColorScheme);
 }
 

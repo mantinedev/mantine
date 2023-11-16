@@ -111,7 +111,7 @@
     "postcss-loader": "^7.3.3",
     "postcss-preset-mantine": "1.11.0",
     "postcss-simple-vars": "^7.0.1",
-    "prettier": "^3.0.0",
+    "prettier": "^3.1.0",
     "react-docgen-typescript": "2.2.2",
     "react-dom": "^18.2.0",
     "react-virtuoso": "^4.6.2",

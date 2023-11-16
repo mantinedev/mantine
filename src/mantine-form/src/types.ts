@@ -30,8 +30,8 @@ export type FormRule<Value, Values> = NonNullable<Value> extends Array<infer Lis
         }>
       | Rule<Value, Values>
   : NonNullable<Value> extends Record<string, any>
-  ? FormRulesRecord<Value, Values> | Rule<Value, Values>
-  : Rule<Value, Values>;
+    ? FormRulesRecord<Value, Values> | Rule<Value, Values>
+    : Rule<Value, Values>;
 
 export type FormRulesRecord<Values, InitValues = Values> = Partial<{
   [Key in keyof Values]: FormRule<Values[Key], InitValues>;

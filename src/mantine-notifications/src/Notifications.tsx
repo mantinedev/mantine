@@ -127,8 +127,8 @@ const varsResolver = createVarsResolver<NotificationsFactory>(
           horizontal === 'left'
             ? 'var(--mantine-spacing-md)'
             : horizontal === 'center'
-            ? '50%'
-            : undefined,
+              ? '50%'
+              : undefined,
         '--notifications-right': horizontal === 'right' ? 'var(--mantine-spacing-md)' : undefined,
         '--notifications-transform': horizontal === 'center' ? 'translateX(-50%)' : undefined,
         '--notifications-container-width': rem(containerWidth),

@@ -33,8 +33,8 @@ export const Portal = forwardRef<HTMLDivElement, PortalProps>((props, ref) => {
     nodeRef.current = !target
       ? createPortalNode(others)
       : typeof target === 'string'
-      ? document.querySelector(target)
-      : target;
+        ? document.querySelector(target)
+        : target;
 
     assignRef(ref, nodeRef.current);
 

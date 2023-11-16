@@ -51,8 +51,8 @@ function rgbaToHsva({ r, g, b, a }: RgbaColor): HsvaColor {
     ? max === r
       ? (g - b) / delta
       : max === g
-      ? 2 + (b - r) / delta
-      : 4 + (r - g) / delta
+        ? 2 + (b - r) / delta
+        : 4 + (r - g) / delta
     : 0;
 
   return {
