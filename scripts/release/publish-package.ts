@@ -4,17 +4,17 @@ import { createLogger } from '../utils/signale';
 
 const logger = createLogger('publish-package');
 
-export async function publishPackage({
-  path,
-  name,
-  tag,
-}: {
-  path: string;
+interface PublishPackage {
+  packagePath: string;
   name: string;
   tag: string;
-}) {
+}
+
+export async function publishPackage({ packagePath, name, tag }: PublishPackage) {
   try {
-    await execa('yarn', ['publish', path, '--tag', tag]);
+    await execa('yarn', ['npm', 'publish', '--access', 'public', '--tag', tag], {
+      cwd: packagePath,
+    });
     logger.success(`Package ${chalk.cyan(name)} was published`);
   } catch (error: any) {
     logger.error(`Failed to publish package ${chalk.red(name)}`);

@@ -55,7 +55,7 @@ async function release() {
 
   await Promise.all(
     packages.map((p) =>
-      publishPackage({ path: p!.path, name: p!.packageJson.name!, tag: argv.tag })
+      publishPackage({ packagePath: p!.path, name: p!.packageJson.name!, tag: argv.tag })
     )
   );
 
