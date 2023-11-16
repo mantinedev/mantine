@@ -11648,7 +11648,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"domhandler@npm:4.3.1, domhandler@npm:^4.0.0, domhandler@npm:^4.2.2, domhandler@npm:^4.3.1":
+"domhandler@npm:^4.0.0, domhandler@npm:^4.3.1":
   version: 4.3.1
   resolution: "domhandler@npm:4.3.1"
   dependencies:
@@ -11928,17 +11928,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"entities@npm:^3.0.1, entities@npm:~3.0.1":
-  version: 3.0.1
-  resolution: "entities@npm:3.0.1"
-  checksum: 2d93f48fd86de0b0ed8ee34456aa47b4e74a916a5e663cfcc7048302e2c7e932002926daf5a00ad6d5691e3c90673a15d413704d86d7e1b9532f9bc00d975590
-  languageName: node
-  linkType: hard
-
 "entities@npm:^4.2.0, entities@npm:^4.4.0":
   version: 4.5.0
   resolution: "entities@npm:4.5.0"
   checksum: 5b039739f7621f5d1ad996715e53d964035f75ad3b9a4d38c6b3804bb226e282ffeae2443624d8fdd9c47d8e926ae9ac009c54671243f0c3294c26af7cc85250
+  languageName: node
+  linkType: hard
+
+"entities@npm:~3.0.1":
+  version: 3.0.1
+  resolution: "entities@npm:3.0.1"
+  checksum: 2d93f48fd86de0b0ed8ee34456aa47b4e74a916a5e663cfcc7048302e2c7e932002926daf5a00ad6d5691e3c90673a15d413704d86d7e1b9532f9bc00d975590
   languageName: node
   linkType: hard
 
@@ -13920,16 +13920,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"html-dom-parser@npm:1.2.0":
-  version: 1.2.0
-  resolution: "html-dom-parser@npm:1.2.0"
-  dependencies:
-    domhandler: "npm:4.3.1"
-    htmlparser2: "npm:7.2.0"
-  checksum: 46ed494428cbaedeafffe944e8648f202b9ed851a145b114d5c770dd9a7a80607dcf12e816c197db7a30a009df03aef16ca134ad54f1db9275006878dd2a6910
-  languageName: node
-  linkType: hard
-
 "html-encoding-sniffer@npm:^3.0.0":
   version: 3.0.0
   resolution: "html-encoding-sniffer@npm:3.0.0"
@@ -13970,20 +13960,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"html-react-parser@npm:1.4.12":
-  version: 1.4.12
-  resolution: "html-react-parser@npm:1.4.12"
-  dependencies:
-    domhandler: "npm:4.3.1"
-    html-dom-parser: "npm:1.2.0"
-    react-property: "npm:2.0.0"
-    style-to-js: "npm:1.1.0"
-  peerDependencies:
-    react: 0.14 || 15 || 16 || 17 || 18
-  checksum: e4c701e71823de2a29ad4d8e026bd7e874797300407c62f78cb470d50320e1d5634127958409550c91d2a98e1d65bf209452ac4e9726232430ad27f94df7e250
-  languageName: node
-  linkType: hard
-
 "html-tags@npm:^3.1.0":
   version: 3.2.0
   resolution: "html-tags@npm:3.2.0"
@@ -14010,18 +13986,6 @@ __metadata:
   peerDependencies:
     webpack: ^5.20.0
   checksum: 7ba0d0f87d08f5c4c51f821842d736ec1762940bc39798932528adaec1e9cca8f52944987b88789007f5706d15110edbdfa30df445d61c6628b02ebe163c4f42
-  languageName: node
-  linkType: hard
-
-"htmlparser2@npm:7.2.0":
-  version: 7.2.0
-  resolution: "htmlparser2@npm:7.2.0"
-  dependencies:
-    domelementtype: "npm:^2.0.1"
-    domhandler: "npm:^4.2.2"
-    domutils: "npm:^2.8.0"
-    entities: "npm:^3.0.1"
-  checksum: 7e1fa7f3b2635f2a1c5272765e25aab33b241d84a43e9d27f28a0b7166b51a8025dec40a6a29af38d6a698a2f1d2983cb43e5c61d4e07ec5aa9df672a7460e16
   languageName: node
   linkType: hard
 
@@ -16494,7 +16458,6 @@ __metadata:
     glob: "npm:^10.3.10"
     hash-css-selector: "npm:^1.0.0"
     highlight.js: "npm:^11.9.0"
-    html-react-parser: "npm:1.4.12"
     identity-obj-proxy: "npm:^3.0.0"
     is-directory: "npm:^0.3.1"
     jest: "npm:^29.7.0"
@@ -20211,13 +20174,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-property@npm:2.0.0":
-  version: 2.0.0
-  resolution: "react-property@npm:2.0.0"
-  checksum: d783292999b8bcfc45c457ab00d60faed66a15ada2cd8a9e00db8573b04a7102e81f38fec724a052698b4d2a305e3bbaf49913fc733035674496b1eb40174d55
-  languageName: node
-  linkType: hard
-
 "react-redux@npm:^8.1.1":
   version: 8.1.2
   resolution: "react-redux@npm:8.1.2"
@@ -21946,24 +21902,6 @@ __metadata:
   version: 0.1.0
   resolution: "style-search@npm:0.1.0"
   checksum: 9e5cb735e5dc4fc2f8c61bebdf211d5352f1cf01511a64da12bb726a01e8c6948c50d357eb8fd7893d44b4e3189655bdddcf8ab338f9d508fe89a8942c650b14
-  languageName: node
-  linkType: hard
-
-"style-to-js@npm:1.1.0":
-  version: 1.1.0
-  resolution: "style-to-js@npm:1.1.0"
-  dependencies:
-    style-to-object: "npm:0.3.0"
-  checksum: 7a2b90623d3dd857c5ee22d99dd57eb01b10df82f055b851cfd74251eafa047e6727e0ccab0c54338c7f2ffb4274617240dfc2f303ebfbc142cce9e3eab64e1c
-  languageName: node
-  linkType: hard
-
-"style-to-object@npm:0.3.0":
-  version: 0.3.0
-  resolution: "style-to-object@npm:0.3.0"
-  dependencies:
-    inline-style-parser: "npm:0.1.1"
-  checksum: afe9b96ba077a9068baf8887091870f50298157c0ebf5378151792cf2a2ce084fec9b34fc544da0d9f8e6c22ca0c9e23aa6f075bb8eb051aa1d64363e9987600
   languageName: node
   linkType: hard
 
