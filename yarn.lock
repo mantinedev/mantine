@@ -15914,7 +15914,6 @@ __metadata:
     fast-glob: "npm:^3.3.2"
     fs-extra: "npm:^11.1.1"
     gh-pages: "npm:^6.0.0"
-    glob: "npm:^10.3.10"
     hash-css-selector: "npm:^1.0.0"
     highlight.js: "npm:^11.9.0"
     identity-obj-proxy: "npm:^3.0.0"

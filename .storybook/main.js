@@ -1,20 +1,23 @@
 const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin').default;
 const path = require('path');
-const { globSync } = require('glob');
+const fg = require('fast-glob');
 const argv = require('yargs').argv;
 
-const getPath = (storyPath) => path.resolve(__dirname, storyPath).replace(/\\/g, '/');
+const getPath = (storyPath) => path.resolve(process.cwd(), storyPath).replace(/\\/g, '/');
 
 const getStoryPaths = (fileName = '*') => {
-  const basePath = globSync(getPath('../src'))[0];
-  const files = globSync(getPath('../src/mantine-*/src/**/*.story.@(ts|tsx)'));
+  const basePath = path.join(process.cwd(), 'src');
+  const files = fg.sync(getPath('src/mantine-*/src/**/*.story.@(ts|tsx)'));
+
   const packagesWithStories = {};
+
   for (const file of files) {
     const packageName = file.replace(basePath, '').split(path.sep)[1];
     packagesWithStories[packageName] = true;
   }
+
   return Object.keys(packagesWithStories).map((packageName) => {
-    return getPath(`../src/${packageName}/src/**/${fileName}.story.@(ts|tsx)`);
+    return getPath(`src/${packageName}/src/**/${fileName}.story.@(ts|tsx)`);
   });
 };
 

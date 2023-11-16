@@ -126,7 +126,6 @@
     "fast-glob": "^3.3.2",
     "fs-extra": "^11.1.1",
     "gh-pages": "^6.0.0",
-    "glob": "^10.3.10",
     "hash-css-selector": "^1.0.0",
     "identity-obj-proxy": "^3.0.0",
     "is-directory": "^0.3.1",
