@@ -1,6 +1,6 @@
 {
   "name": "@mantine/notifications",
-  "version": "7.2.2",
+  "version": "7.3.0-alpha.0",
   "homepage": "https://mantine.dev",
   "license": "MIT",
   "author": "Vitaly Rtishchev <rtivital@gmail.com>",
@@ -43,13 +43,13 @@
     "directory": "src/mantine-spotlight"
   },
   "peerDependencies": {
-    "@mantine/core": "7.2.2",
-    "@mantine/hooks": "7.2.2",
+    "@mantine/core": "7.3.0-alpha.0",
+    "@mantine/hooks": "7.3.0-alpha.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },
   "dependencies": {
-    "@mantine/store": "7.2.2",
+    "@mantine/store": "7.3.0-alpha.0",
     "react-transition-group": "4.4.5"
   }
 }

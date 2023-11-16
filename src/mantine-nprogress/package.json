@@ -1,6 +1,6 @@
 {
   "name": "@mantine/nprogress",
-  "version": "7.2.2",
+  "version": "7.3.0-alpha.0",
   "description": "Navigation progress bar",
   "homepage": "https://mantine.dev/others/nprogress/",
   "license": "MIT",
@@ -31,12 +31,12 @@
     "directory": "src/mantine-nprogress"
   },
   "peerDependencies": {
-    "@mantine/core": "7.2.2",
-    "@mantine/hooks": "7.2.2",
+    "@mantine/core": "7.3.0-alpha.0",
+    "@mantine/hooks": "7.3.0-alpha.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },
   "dependencies": {
-    "@mantine/store": "7.2.2"
+    "@mantine/store": "7.3.0-alpha.0"
   }
 }
