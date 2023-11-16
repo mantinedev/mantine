@@ -7597,6 +7597,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/lodash@npm:^4.14.201":
+  version: 4.14.201
+  resolution: "@types/lodash@npm:4.14.201"
+  checksum: 14dc43787296c429433d7d034ed47c5ac24b92217056f80a0e6c990449120b9c9c1058918188945fb88353c0c8333c5c36dccc40c51edbd39b05d2169ab2e0ad
+  languageName: node
+  linkType: hard
+
 "@types/mdast@npm:^3.0.0":
   version: 3.0.15
   resolution: "@types/mdast@npm:3.0.15"
@@ -15880,6 +15887,7 @@ __metadata:
     "@types/fs-extra": "npm:^11.0.4"
     "@types/jest": "npm:^29.5.8"
     "@types/jest-axe": "npm:^3.5.8"
+    "@types/lodash": "npm:^4.14.201"
     "@types/react": "npm:18.2.37"
     "@types/react-dom": "npm:18.2.15"
     "@types/react-transition-group": "npm:^4.4.9"
@@ -15914,6 +15922,7 @@ __metadata:
     jest-axe: "npm:^8.0.0"
     jest-environment-jsdom: "npm:^29.7.0"
     klona: "npm:^2.0.6"
+    lodash: "npm:^4.17.21"
     lowlight: "npm:^3.1.0"
     mantine-docgen-script: "npm:^1.1.0"
     new-github-release-url: "npm:^2.0.0"
