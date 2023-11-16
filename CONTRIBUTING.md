@@ -30,8 +30,8 @@ First of all, thank you for showing interest in contributing to Mantine, all you
 - Install [editorconfig](https://editorconfig.org/) extension for your editor
 - Fork [repository](https://github.com/mantinedev/mantine), clone or download your fork
 - Install dependencies with yarn – `yarn`
+- Setup project – `npm run setup`
 - Build local version of all packages – `npm run build:all`
-- Build local version of specific packages – `npm run build @mantine/core @mantine/demos @mantine/hooks`
 - To start storybook – `npm run storybook`
 - To start docs – `npm run docs`
 - To rebuild props descriptions – `npm run docs:docgen`
