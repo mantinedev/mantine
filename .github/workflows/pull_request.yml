@@ -21,9 +21,9 @@ jobs:
           cache-dependency-path: '**/yarn.lock'
       - name: Install dependencies
         run: yarn
-      - name: Build public packages
-        run: npm run build:all
       - name: Generate files for docs
         run: npm run setup
+      - name: Build public packages
+        run: npm run build:all
       - name: Run syncpack, eslint, tsc and jest
         run: npm test
