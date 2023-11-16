@@ -4450,7 +4450,7 @@ __metadata:
   peerDependencies:
     "@mantine/core": 7.2.2
     "@mantine/hooks": 7.2.2
-    embla-carousel-react: ^7.0.0
+    embla-carousel-react: ">=7.0.0"
     react: ^18.2.0
   languageName: unknown
   linkType: soft
@@ -4466,7 +4466,7 @@ __metadata:
   resolution: "@mantine/code-highlight@workspace:src/mantine-code-highlight"
   dependencies:
     clsx: "npm:2.0.0"
-    highlight.js: "npm:^11.7.0"
+    highlight.js: "npm:^11.9.0"
   peerDependencies:
     "@mantine/core": 7.2.2
     "@mantine/hooks": 7.2.2
@@ -4501,8 +4501,8 @@ __metadata:
   dependencies:
     "@floating-ui/react": "npm:^0.24.8"
     clsx: "npm:2.0.0"
-    react-number-format: "npm:^5.2.2"
-    react-remove-scroll: "npm:^2.5.6"
+    react-number-format: "npm:^5.3.1"
+    react-remove-scroll: "npm:^2.5.7"
     react-textarea-autosize: "npm:8.5.3"
     type-fest: "npm:^3.13.1"
   peerDependencies:
@@ -4532,7 +4532,7 @@ __metadata:
   peerDependencies:
     "@mantine/core": 7.2.2
     "@mantine/hooks": 7.2.2
-    dayjs: ^1.10.5
+    dayjs: ">=1.0.0"
     react: ^18.2.0
     react-dom: ^18.2.0
   languageName: unknown
@@ -4584,7 +4584,7 @@ __metadata:
     "@mantine/code-highlight": 7.2.2
     "@mantine/core": 7.2.2
     "@mantine/hooks": 7.2.2
-    "@tabler/icons-react": ^2.29.0
+    "@tabler/icons-react": ">=2.0.0"
     react: ^18.2.0
     react-dom: ^18.2.0
   languageName: unknown
@@ -4601,7 +4601,7 @@ __metadata:
   resolution: "@mantine/form@workspace:src/mantine-form"
   dependencies:
     fast-deep-equal: "npm:^3.1.3"
-    klona: "npm:^2.0.5"
+    klona: "npm:^2.0.6"
   peerDependencies:
     react: ^18.2.0
   languageName: unknown
@@ -4740,9 +4740,9 @@ __metadata:
   peerDependencies:
     "@mantine/core": 7.2.2
     "@mantine/hooks": 7.2.2
-    "@tabler/icons-react": ^2.29.0
-    "@tiptap/extension-link": ^2.0.4
-    "@tiptap/react": ^2.0.4
+    "@tabler/icons-react": ">=2.0.0"
+    "@tiptap/extension-link": ^2.1.12
+    "@tiptap/react": ^2.1.12
     react: ^18.2.0
     react-dom: ^18.2.0
   languageName: unknown
@@ -13835,13 +13835,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"highlight.js@npm:^11.7.0":
-  version: 11.7.0
-  resolution: "highlight.js@npm:11.7.0"
-  checksum: dea760e130a5655b617e69ebb3a03a1012c9566857b85318e4e2201ee0fc0b83eaf77ee4f2bc59515ae4cde8df718283be21299cad0b951d94ad6866afe9d551
-  languageName: node
-  linkType: hard
-
 "highlight.js@npm:^11.9.0, highlight.js@npm:~11.9.0":
   version: 11.9.0
   resolution: "highlight.js@npm:11.9.0"
@@ -15931,13 +15924,6 @@ __metadata:
   version: 3.0.3
   resolution: "kleur@npm:3.0.3"
   checksum: cd3a0b8878e7d6d3799e54340efe3591ca787d9f95f109f28129bdd2915e37807bf8918bb295ab86afb8c82196beec5a1adcaf29042ce3f2bd932b038fe3aa4b
-  languageName: node
-  linkType: hard
-
-"klona@npm:^2.0.5":
-  version: 2.0.5
-  resolution: "klona@npm:2.0.5"
-  checksum: 5b752c11ca8e2996612386699f52cc5aed802aa4116663d26239ac0b054fae25191dacb95587ecf1a167b039daa9fc3fa2da17dfd5d0821f3037de3821d9a9e5
   languageName: node
   linkType: hard
 
@@ -20101,18 +20087,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-number-format@npm:^5.2.2":
-  version: 5.2.2
-  resolution: "react-number-format@npm:5.2.2"
-  dependencies:
-    prop-types: "npm:^15.7.2"
-  peerDependencies:
-    react: ^0.14 || ^15.0.0 || ^16.0.0 || ^17.0.0 || ^18.0.0
-    react-dom: ^0.14 || ^15.0.0 || ^16.0.0 || ^17.0.0 || ^18.0.0
-  checksum: 186442ee43db7553353fcf138f63d175a2335d7d1d123361315ed5bdf9f16df9308bf530932d1cf77b1dbfeae514e8921a416279aafddd567ab74fa8deb9dcf7
-  languageName: node
-  linkType: hard
-
 "react-number-format@npm:^5.3.1":
   version: 5.3.1
   resolution: "react-number-format@npm:5.3.1"
@@ -20196,25 +20170,6 @@ __metadata:
     "@types/react":
       optional: true
   checksum: 4952657e6a7b9d661d4ad4dfcef81b9c7fa493e35164abff99c35c0b27b3d172ef7ad70c09416dc44dd14ff2e6b38a5ec7da27e27e90a15cbad36b8fd2fd8054
-  languageName: node
-  linkType: hard
-
-"react-remove-scroll@npm:^2.5.6":
-  version: 2.5.6
-  resolution: "react-remove-scroll@npm:2.5.6"
-  dependencies:
-    react-remove-scroll-bar: "npm:^2.3.4"
-    react-style-singleton: "npm:^2.2.1"
-    tslib: "npm:^2.1.0"
-    use-callback-ref: "npm:^1.3.0"
-    use-sidecar: "npm:^1.1.2"
-  peerDependencies:
-    "@types/react": ^16.8.0 || ^17.0.0 || ^18.0.0
-    react: ^16.8.0 || ^17.0.0 || ^18.0.0
-  peerDependenciesMeta:
-    "@types/react":
-      optional: true
-  checksum: c9831df3b67349c0e4aa8bbd2233dcb44f671b25fe84c790e1c42667fe63c8d5b9e7a1f2541a4bc081957c7a2fa4e4d295d24c5f5aed0718f9b1b73b246a7136
   languageName: node
   linkType: hard
 

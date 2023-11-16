@@ -1,9 +1,21 @@
 {
   "name": "@mantine/vanilla-extract",
   "version": "7.2.2",
+  "homepage": "https://mantine.dev",
+  "license": "MIT",
+  "author": "Vitaly Rtishchev <rtivital@gmail.com>",
+  "keywords": [
+    "frontend",
+    "library",
+    "next",
+    "nextjs",
+    "react",
+    "vanilla-extract"
+  ],
+  "sideEffects": false,
   "main": "./cjs/index.cjs",
-  "types": "./lib/index.d.ts",
   "module": "./esm/index.mjs",
+  "types": "./lib/index.d.ts",
   "exports": {
     ".": {
       "import": {
@@ -16,23 +28,11 @@
       }
     }
   },
-  "license": "MIT",
-  "author": "Vitaly Rtishchev <rtivital@gmail.com>",
-  "sideEffects": false,
-  "homepage": "https://mantine.dev",
   "repository": {
     "url": "https://github.com/mantinedev/mantine.git",
     "type": "git",
     "directory": "src/mantine-vanilla-extract"
   },
-  "keywords": [
-    "react",
-    "next",
-    "nextjs",
-    "library",
-    "frontend",
-    "vanilla-extract"
-  ],
   "peerDependencies": {
     "@mantine/core": "7.2.2"
   }

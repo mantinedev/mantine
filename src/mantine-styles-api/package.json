@@ -1,11 +1,15 @@
 {
   "name": "@mantine/styles-api",
-  "description": "Mantine components styles api descriptions",
-  "private": true,
   "version": "7.2.2",
+  "description": "Mantine components styles api descriptions",
+  "homepage": "https://mantine.dev",
+  "license": "MIT",
+  "private": true,
+  "author": "Vitaly Rtishchev <rtivital@gmail.com>",
+  "sideEffects": false,
   "main": "./cjs/index.cjs",
-  "types": "./lib/index.d.ts",
   "module": "./esm/index.mjs",
+  "types": "./lib/index.d.ts",
   "exports": {
     ".": {
       "import": {
@@ -18,10 +22,6 @@
       }
     }
   },
-  "license": "MIT",
-  "author": "Vitaly Rtishchev <rtivital@gmail.com>",
-  "sideEffects": false,
-  "homepage": "https://mantine.dev",
   "repository": {
     "url": "https://github.com/mantinedev/mantine.git",
     "type": "git",

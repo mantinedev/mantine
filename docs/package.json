@@ -3,9 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev -p 7545",
-    "clean": "rm -rf .next",
     "build": "next build && next export && cp CNAME out/CNAME && touch out/.nojekyll",
+    "clean": "rm -rf .next",
+    "dev": "next dev -p 7545",
     "postbuild": "next-sitemap",
     "start": "next start",
     "typecheck": "tsc --noEmit"

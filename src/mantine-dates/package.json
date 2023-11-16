@@ -1,10 +1,30 @@
 {
   "name": "@mantine/dates",
-  "description": "Calendars, date and time pickers based on Mantine components",
   "version": "7.2.2",
+  "description": "Calendars, date and time pickers based on Mantine components",
+  "homepage": "https://mantine.dev/dates/getting-started/",
+  "license": "MIT",
+  "author": "Vitaly Rtishchev <rtivital@gmail.com>",
+  "keywords": [
+    "calendar",
+    "components",
+    "date",
+    "frontend",
+    "library",
+    "next",
+    "nextjs",
+    "picker",
+    "react",
+    "time",
+    "ui",
+    "ui-kit"
+  ],
+  "sideEffects": [
+    "*.css"
+  ],
   "main": "./cjs/index.cjs",
-  "types": "./lib/index.d.ts",
   "module": "./esm/index.mjs",
+  "types": "./lib/index.d.ts",
   "exports": {
     ".": {
       "import": {
@@ -19,35 +39,15 @@
     "./styles.css": "./esm/index.css",
     "./styles.layer.css": "./esm/index.layer.css"
   },
-  "sideEffects": [
-    "*.css"
-  ],
-  "license": "MIT",
-  "author": "Vitaly Rtishchev <rtivital@gmail.com>",
-  "homepage": "https://mantine.dev/dates/getting-started/",
   "repository": {
     "url": "https://github.com/mantinedev/mantine.git",
     "type": "git",
     "directory": "src/mantine-dates"
   },
-  "keywords": [
-    "react",
-    "next",
-    "nextjs",
-    "ui",
-    "components",
-    "ui-kit",
-    "library",
-    "frontend",
-    "calendar",
-    "date",
-    "time",
-    "picker"
-  ],
   "peerDependencies": {
     "@mantine/core": "7.2.2",
     "@mantine/hooks": "7.2.2",
-    "dayjs": "^1.10.5",
+    "dayjs": ">=1.0.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },

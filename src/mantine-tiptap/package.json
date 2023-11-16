@@ -1,10 +1,29 @@
 {
   "name": "@mantine/tiptap",
-  "description": "Rich text editor based on tiptap",
   "version": "7.2.2",
+  "description": "Rich text editor based on tiptap",
+  "homepage": "https://mantine.dev/others/tiptap",
+  "license": "MIT",
+  "author": "Vitaly Rtishchev <rtivital@gmail.com>",
+  "keywords": [
+    "components",
+    "frontend",
+    "library",
+    "next",
+    "nextjs",
+    "react",
+    "rich-text-editor",
+    "rte",
+    "tiptap",
+    "ui",
+    "ui-kit"
+  ],
+  "sideEffects": [
+    "*.css"
+  ],
   "main": "./cjs/index.cjs",
-  "types": "./lib/index.d.ts",
   "module": "./esm/index.mjs",
+  "types": "./lib/index.d.ts",
   "exports": {
     ".": {
       "import": {
@@ -19,36 +38,17 @@
     "./styles.css": "./esm/index.css",
     "./styles.layer.css": "./esm/index.layer.css"
   },
-  "sideEffects": [
-    "*.css"
-  ],
-  "license": "MIT",
-  "author": "Vitaly Rtishchev <rtivital@gmail.com>",
-  "homepage": "https://mantine.dev/others/tiptap",
   "repository": {
     "url": "https://github.com/mantinedev/mantine.git",
     "type": "git",
     "directory": "src/mantine-tiptap"
   },
-  "keywords": [
-    "react",
-    "next",
-    "nextjs",
-    "ui",
-    "components",
-    "ui-kit",
-    "library",
-    "frontend",
-    "tiptap",
-    "rte",
-    "rich-text-editor"
-  ],
   "peerDependencies": {
     "@mantine/core": "7.2.2",
     "@mantine/hooks": "7.2.2",
-    "@tabler/icons-react": "^2.29.0",
-    "@tiptap/extension-link": "^2.0.4",
-    "@tiptap/react": "^2.0.4",
+    "@tabler/icons-react": ">=2.0.0",
+    "@tiptap/extension-link": "^2.1.12",
+    "@tiptap/react": "^2.1.12",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   }

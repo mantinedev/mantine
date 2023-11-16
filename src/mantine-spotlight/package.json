@@ -1,9 +1,25 @@
 {
   "name": "@mantine/spotlight",
   "version": "7.2.2",
+  "homepage": "https://mantine.dev",
+  "license": "MIT",
+  "author": "Vitaly Rtishchev <rtivital@gmail.com>",
+  "keywords": [
+    "command-center",
+    "components",
+    "frontend",
+    "library",
+    "next",
+    "nextjs",
+    "react",
+    "search",
+    "ui",
+    "ui-kit"
+  ],
+  "sideEffects": false,
   "main": "./cjs/index.cjs",
-  "types": "./lib/index.d.ts",
   "module": "./esm/index.mjs",
+  "types": "./lib/index.d.ts",
   "exports": {
     ".": {
       "import": {
@@ -18,27 +34,11 @@
     "./styles.css": "./esm/index.css",
     "./styles.layer.css": "./esm/index.layer.css"
   },
-  "license": "MIT",
-  "author": "Vitaly Rtishchev <rtivital@gmail.com>",
-  "sideEffects": false,
-  "homepage": "https://mantine.dev",
   "repository": {
     "url": "https://github.com/mantinedev/mantine.git",
     "type": "git",
     "directory": "src/mantine-spotlight"
   },
-  "keywords": [
-    "react",
-    "next",
-    "nextjs",
-    "ui",
-    "components",
-    "ui-kit",
-    "library",
-    "frontend",
-    "search",
-    "command-center"
-  ],
   "peerDependencies": {
     "@mantine/core": "7.2.2",
     "@mantine/hooks": "7.2.2",

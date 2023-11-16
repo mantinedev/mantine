@@ -1,10 +1,26 @@
 {
   "name": "@mantine/modals",
-  "description": "Modals manager based on Mantine components",
   "version": "7.2.2",
+  "description": "Modals manager based on Mantine components",
+  "homepage": "https://mantine.dev/others/modals/",
+  "license": "MIT",
+  "author": "Vitaly Rtishchev <rtivital@gmail.com>",
+  "keywords": [
+    "components",
+    "confirm",
+    "frontend",
+    "library",
+    "modal",
+    "next",
+    "nextjs",
+    "react",
+    "ui",
+    "ui-kit"
+  ],
+  "sideEffects": false,
   "main": "./cjs/index.cjs",
-  "types": "./lib/index.d.ts",
   "module": "./esm/index.mjs",
+  "types": "./lib/index.d.ts",
   "exports": {
     ".": {
       "import": {
@@ -19,27 +35,11 @@
     "./styles.css": "./esm/index.css",
     "./styles.layer.css": "./esm/index.layer.css"
   },
-  "sideEffects": false,
-  "license": "MIT",
-  "author": "Vitaly Rtishchev <rtivital@gmail.com>",
-  "homepage": "https://mantine.dev/others/modals/",
   "repository": {
     "url": "https://github.com/mantinedev/mantine.git",
     "type": "git",
     "directory": "src/mantine-modals"
   },
-  "keywords": [
-    "react",
-    "next",
-    "nextjs",
-    "ui",
-    "components",
-    "ui-kit",
-    "library",
-    "frontend",
-    "modal",
-    "confirm"
-  ],
   "peerDependencies": {
     "@mantine/core": "7.2.2",
     "@mantine/hooks": "7.2.2",

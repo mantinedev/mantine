@@ -1,11 +1,17 @@
 {
   "name": "@mantine/demos",
-  "description": "Demos used in documentation",
-  "private": true,
   "version": "7.2.2",
+  "description": "Demos used in documentation",
+  "homepage": "https://mantine.dev",
+  "license": "MIT",
+  "private": true,
+  "author": "Vitaly Rtishchev <rtivital@gmail.com>",
+  "sideEffects": [
+    "*.css"
+  ],
   "main": "./cjs/index.cjs",
-  "types": "./lib/index.d.ts",
   "module": "./esm/index.mjs",
+  "types": "./lib/index.d.ts",
   "exports": {
     ".": {
       "import": {
@@ -20,12 +26,6 @@
     "./styles.css": "./esm/index.css",
     "./styles.layer.css": "./esm/index.layer.css"
   },
-  "license": "MIT",
-  "author": "Vitaly Rtishchev <rtivital@gmail.com>",
-  "sideEffects": [
-    "*.css"
-  ],
-  "homepage": "https://mantine.dev",
   "repository": {
     "url": "https://github.com/mantinedev/mantine.git",
     "type": "git",

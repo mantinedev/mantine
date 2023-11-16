@@ -1,10 +1,27 @@
 {
   "name": "@mantine/core",
-  "description": "React components library focused on usability, accessibility and developer experience",
   "version": "7.2.2",
+  "description": "React components library focused on usability, accessibility and developer experience",
+  "homepage": "https://mantine.dev/",
+  "license": "MIT",
+  "author": "Vitaly Rtishchev <rtivital@gmail.com>",
+  "keywords": [
+    "components",
+    "design",
+    "frontend",
+    "library",
+    "next",
+    "nextjs",
+    "react",
+    "ui",
+    "ui-kit"
+  ],
+  "sideEffects": [
+    "*.css"
+  ],
   "main": "./cjs/index.cjs",
-  "types": "./lib/index.d.ts",
   "module": "./esm/index.mjs",
+  "types": "./lib/index.d.ts",
   "exports": {
     ".": {
       "import": {
@@ -20,28 +37,11 @@
     "./styles.layer.css": "./esm/index.layer.css",
     "./styles/*": "./esm/styles/*"
   },
-  "license": "MIT",
-  "author": "Vitaly Rtishchev <rtivital@gmail.com>",
-  "sideEffects": [
-    "*.css"
-  ],
-  "homepage": "https://mantine.dev/",
   "repository": {
     "url": "https://github.com/mantinedev/mantine.git",
     "type": "git",
     "directory": "src/mantine-core"
   },
-  "keywords": [
-    "react",
-    "next",
-    "nextjs",
-    "ui",
-    "components",
-    "ui-kit",
-    "library",
-    "frontend",
-    "design"
-  ],
   "peerDependencies": {
     "@mantine/hooks": "7.2.2",
     "react": "^18.2.0",
@@ -50,8 +50,8 @@
   "dependencies": {
     "@floating-ui/react": "^0.24.8",
     "clsx": "2.0.0",
-    "react-number-format": "^5.2.2",
-    "react-remove-scroll": "^2.5.6",
+    "react-number-format": "^5.3.1",
+    "react-remove-scroll": "^2.5.7",
     "react-textarea-autosize": "8.5.3",
     "type-fest": "^3.13.1"
   }

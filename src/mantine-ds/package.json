@@ -1,10 +1,19 @@
 {
   "name": "@mantine/ds",
-  "description": "Internal Mantine components used on *.mantine.dev websites",
   "version": "7.2.2",
+  "description": "Internal Mantine components used on *.mantine.dev websites",
+  "homepage": "https://mantine.dev/",
+  "license": "MIT",
+  "author": "Vitaly Rtishchev <rtivital@gmail.com>",
+  "keywords": [
+    "react"
+  ],
+  "sideEffects": [
+    "*.css"
+  ],
   "main": "./cjs/index.cjs",
-  "types": "./lib/index.d.ts",
   "module": "./esm/index.mjs",
+  "types": "./lib/index.d.ts",
   "exports": {
     ".": {
       "import": {
@@ -19,25 +28,16 @@
     "./styles.css": "./esm/index.css",
     "./styles.layer.css": "./esm/index.layer.css"
   },
-  "license": "MIT",
-  "author": "Vitaly Rtishchev <rtivital@gmail.com>",
-  "sideEffects": [
-    "*.css"
-  ],
-  "homepage": "https://mantine.dev/",
   "repository": {
     "url": "https://github.com/mantinedev/mantine.git",
     "type": "git",
     "directory": "src/mantine-ds"
   },
-  "keywords": [
-    "react"
-  ],
   "peerDependencies": {
     "@mantine/code-highlight": "7.2.2",
     "@mantine/core": "7.2.2",
     "@mantine/hooks": "7.2.2",
-    "@tabler/icons-react": "^2.29.0",
+    "@tabler/icons-react": ">=2.0.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },
