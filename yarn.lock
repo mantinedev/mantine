@@ -11078,13 +11078,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"csstype@npm:3.1.2":
-  version: 3.1.2
-  resolution: "csstype@npm:3.1.2"
-  checksum: 32c038af259897c807ac738d9eab16b3d86747c72b09d5c740978e06f067f9b7b1737e1b75e407c7ab1fe1543dc95f20e202b4786aeb1b8d3bdf5d5ce655e6c6
-  languageName: node
-  linkType: hard
-
 "csstype@npm:^3.0.2":
   version: 3.0.8
   resolution: "csstype@npm:3.0.8"
@@ -16422,7 +16415,6 @@ __metadata:
     clsx: "npm:2.0.0"
     css-loader: "npm:^6.8.1"
     cssnano: "npm:^6.0.1"
-    csstype: "npm:3.1.2"
     dayjs: "npm:^1.11.10"
     embla-carousel-autoplay: "npm:^7.1.0"
     embla-carousel-react: "npm:^7.1.0"

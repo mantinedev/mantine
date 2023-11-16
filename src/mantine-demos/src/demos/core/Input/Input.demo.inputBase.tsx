@@ -10,7 +10,7 @@ import { IMaskInput } from 'react-imask';
 function Demo() {
   return (
     <>
-      <InputBase<any>
+      <InputBase
         label="Your phone"
         component={IMaskInput}
         mask="+7 (000) 000-0000"
@@ -30,7 +30,7 @@ function Demo() {
 function Demo() {
   return (
     <>
-      <InputBase<any>
+      <InputBase
         label="Your phone"
         component={IMaskInput}
         mask="+7 (000) 000-0000"
