@@ -1,6 +1,5 @@
 module.exports = {
   plugins: {
-    'postcss-flexbugs-fixes': {},
     'postcss-preset-mantine': {},
     'postcss-simple-vars': {
       variables: {
