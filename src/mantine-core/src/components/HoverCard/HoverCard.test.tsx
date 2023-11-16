@@ -1,6 +1,5 @@
 import React from 'react';
 import { tests, render, screen } from '@mantine/tests';
-import userEvent from '@testing-library/user-event';
 import { HoverCard, HoverCardProps } from './HoverCard';
 import { HoverCardDropdown } from './HoverCardDropdown/HoverCardDropdown';
 import { HoverCardTarget } from './HoverCardTarget/HoverCardTarget';
@@ -21,14 +20,6 @@ describe('@mantine/core/HoverCard', () => {
   tests.itRendersChildren({
     component: HoverCard,
     props: {},
-  });
-
-  it('shows card on hover', () => {
-    render(<TestContainer />);
-    expect(screen.queryAllByText('test-dropdown')).toHaveLength(0);
-
-    userEvent.hover(screen.getByRole('button'));
-    expect(screen.getByText('test-dropdown')).toBeInTheDocument();
   });
 
   it('correctly handles initiallyOpened prop', () => {

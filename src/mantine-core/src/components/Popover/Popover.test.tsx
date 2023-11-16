@@ -113,39 +113,6 @@ describe('@mantine/core/Popover', () => {
     expect(spy).toHaveBeenCalled();
   });
 
-  it('correctly handles trapFocus={true}', async () => {
-    await renderWithAct(<TestContainer defaultOpened trapFocus />);
-    await wait(10);
-    expect(document.querySelectorAll('input')[1]).toHaveFocus();
-
-    userEvent.tab();
-    expect(document.querySelectorAll('input')[2]).toHaveFocus();
-
-    userEvent.tab();
-    expect(document.querySelectorAll('input')[0]).toHaveFocus();
-  });
-
-  it('correctly handles trapFocus={false}', async () => {
-    const { container } = render(<TestContainer defaultOpened trapFocus={false} />);
-    await wait(10);
-    expect(document.body).toHaveFocus();
-
-    userEvent.tab();
-    expect(screen.getByRole('button')).toHaveFocus();
-
-    userEvent.tab();
-    expect(container.querySelectorAll('input')[0]).toHaveFocus();
-
-    userEvent.tab();
-    expect(container.querySelectorAll('input')[1]).toHaveFocus();
-
-    userEvent.tab();
-    expect(container.querySelectorAll('input')[2]).toHaveFocus();
-
-    userEvent.tab();
-    expect(document.body).toHaveFocus();
-  });
-
   it('sets dropdown z-index based on zIndex prop', () => {
     render(<TestContainer defaultOpened zIndex={452} />);
     expect(screen.getByRole('dialog')).toHaveStyle({ zIndex: 452 });

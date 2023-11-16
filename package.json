@@ -66,7 +66,6 @@
     "@storybook/react": "^7.5.3",
     "@storybook/react-webpack5": "7.5.3",
     "@storybook/testing-library": "^0.2.2",
-    "@sucrase/jest-plugin": "^2.1.1",
     "@testing-library/dom": "9.3.3",
     "@testing-library/jest-dom": "6.1.4",
     "@testing-library/react": "14.1.0",
