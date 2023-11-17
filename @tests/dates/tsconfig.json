@@ -1,0 +1,23 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "include": ["./src", "./types", "../../@types"],
+  "compilerOptions": {
+    "rootDir": "src",
+    "baseUrl": ".",
+    "outDir": "lib",
+    "declaration": true,
+    "declarationDir": "lib",
+    "composite": true,
+    "paths": {
+      "@tests/core": ["../core/src"]
+    }
+  },
+
+  "references": [
+    { "path": "../../src/mantine-core" },
+    { "path": "../../src/mantine-hooks" },
+    { "path": "../../src/mantine-dates" },
+    { "path": "../../src/mantine-store" },
+    { "path": "../core" }
+  ]
+}
