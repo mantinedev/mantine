@@ -1,4 +1,4 @@
-import { tests } from '@mantine/tests';
+import { tests } from '@tests/core';
 import { Affix, AffixProps, AffixStylesNames } from './Affix';
 
 const defaultProps: AffixProps = {

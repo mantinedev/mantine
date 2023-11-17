@@ -1,4 +1,4 @@
-import { tests } from '@mantine/tests';
+import { tests } from '@tests/core';
 import { Space, SpaceProps } from './Space';
 
 const defaultProps: SpaceProps = {};

@@ -1,5 +1,5 @@
 import React from 'react';
-import { tests, createContextContainer, screen, render } from '@mantine/tests';
+import { tests, createContextContainer, screen, render } from '@tests/core';
 import {
   PaginationControl,
   PaginationControlProps,

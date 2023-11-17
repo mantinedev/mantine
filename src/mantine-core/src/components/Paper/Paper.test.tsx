@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, tests } from '@mantine/tests';
+import { render, tests } from '@tests/core';
 import { Paper, PaperProps, PaperStylesNames } from './Paper';
 
 const defaultProps: PaperProps = {};

@@ -1,4 +1,4 @@
-import { tests } from '@mantine/tests';
+import { tests } from '@tests/core';
 import { ThemeIcon, ThemeIconProps, ThemeIconStylesNames } from './ThemeIcon';
 
 const defaultProps: ThemeIconProps = {};

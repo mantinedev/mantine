@@ -1,4 +1,4 @@
-import { tests } from '@mantine/tests';
+import { tests } from '@tests/core';
 import { SimpleGrid, SimpleGridProps, SimpleGridStylesNames } from './SimpleGrid';
 
 const defaultProps: SimpleGridProps = {};

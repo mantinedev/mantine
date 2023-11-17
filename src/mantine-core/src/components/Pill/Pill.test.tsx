@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, tests, userEvent } from '@mantine/tests';
+import { render, tests, userEvent } from '@tests/core';
 import { Pill, PillProps, PillStylesNames } from './Pill';
 
 const defaultProps: PillProps = {

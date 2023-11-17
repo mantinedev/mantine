@@ -1,4 +1,4 @@
-import { tests } from '@mantine/tests';
+import { tests } from '@tests/core';
 import { InputError, InputErrorProps, InputErrorStylesNames } from './InputError';
 
 const defaultProps: InputErrorProps = {};

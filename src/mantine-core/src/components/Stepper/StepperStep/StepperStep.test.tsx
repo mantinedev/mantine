@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, tests, createContextContainer, screen } from '@mantine/tests';
+import { render, tests, createContextContainer, screen } from '@tests/core';
 import { StepperStep, StepperStepProps, StepperStepStylesNames } from './StepperStep';
 import { Stepper } from '../Stepper';
 

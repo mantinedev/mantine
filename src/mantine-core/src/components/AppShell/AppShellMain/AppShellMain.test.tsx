@@ -1,4 +1,4 @@
-import { tests, createContextContainer } from '@mantine/tests';
+import { tests, createContextContainer } from '@tests/core';
 import { AppShellMain, AppShellMainProps, AppShellMainStylesNames } from './AppShellMain';
 import { AppShell } from '../AppShell';
 

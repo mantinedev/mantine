@@ -1,5 +1,5 @@
 import React from 'react';
-import { tests } from '@mantine/tests';
+import { tests } from '@tests/core';
 import { Grid, GridProps, GridStylesNames } from './Grid';
 import { GridCol } from './GridCol/GridCol';
 

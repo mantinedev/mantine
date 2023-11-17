@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, tests, inputWrapperQueries } from '@mantine/tests';
+import { render, tests, inputWrapperQueries } from '@tests/core';
 import { Input } from '../Input';
 import { InputWrapper, InputWrapperProps, InputWrapperStylesNames } from './InputWrapper';
 

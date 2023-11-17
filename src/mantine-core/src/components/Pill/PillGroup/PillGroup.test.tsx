@@ -1,4 +1,4 @@
-import { tests } from '@mantine/tests';
+import { tests } from '@tests/core';
 import { PillGroup, PillGroupProps, PillGroupStylesNames } from './PillGroup';
 
 const defaultProps: PillGroupProps = {};

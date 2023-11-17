@@ -1,4 +1,4 @@
-import { tests } from '@mantine/tests';
+import { tests } from '@tests/core';
 import { AspectRatio, AspectRatioProps, AspectRatioStylesNames } from './AspectRatio';
 
 const defaultProps: AspectRatioProps = {};

@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, tests } from '@mantine/tests';
+import { render, tests } from '@tests/core';
 import { Card, CardProps, CardStylesNames } from './Card';
 import { CardSection } from './CardSection/CardSection';
 

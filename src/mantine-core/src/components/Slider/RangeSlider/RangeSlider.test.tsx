@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, tests } from '@mantine/tests';
+import { render, tests } from '@tests/core';
 import { RangeSlider, RangeSliderProps } from './RangeSlider';
 import { SliderStylesNames } from '../Slider.context';
 

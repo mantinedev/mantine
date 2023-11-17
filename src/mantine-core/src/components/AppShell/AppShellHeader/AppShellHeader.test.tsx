@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, tests, createContextContainer } from '@mantine/tests';
+import { render, tests, createContextContainer } from '@tests/core';
 import { AppShellHeader, AppShellHeaderProps, AppShellHeaderStylesNames } from './AppShellHeader';
 import { AppShell } from '../AppShell';
 

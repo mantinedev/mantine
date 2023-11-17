@@ -1,4 +1,4 @@
-import { tests } from '@mantine/tests';
+import { tests } from '@tests/core';
 import { Spotlight, SpotlightProps, SpotlightStylesNames } from './Spotlight';
 import { SpotlightAction } from './SpotlightAction';
 import { SpotlightActionsList } from './SpotlightActionsList';

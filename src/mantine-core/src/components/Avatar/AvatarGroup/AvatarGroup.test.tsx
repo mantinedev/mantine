@@ -1,4 +1,4 @@
-import { tests } from '@mantine/tests';
+import { tests } from '@tests/core';
 import { AvatarGroup, AvatarGroupProps, AvatarGroupStylesNames } from './AvatarGroup';
 
 const defaultProps: AvatarGroupProps = {};

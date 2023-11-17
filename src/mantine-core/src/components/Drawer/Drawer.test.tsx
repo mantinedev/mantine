@@ -1,5 +1,5 @@
 import React from 'react';
-import { createContextContainer, render, tests } from '@mantine/tests';
+import { createContextContainer, render, tests } from '@tests/core';
 import { Drawer, DrawerProps, DrawerStylesNames } from './Drawer';
 import { DrawerBody, DrawerBodyProps } from './DrawerBody';
 import { DrawerCloseButton, DrawerCloseButtonProps } from './DrawerCloseButton';

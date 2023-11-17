@@ -1,5 +1,5 @@
 import React from 'react';
-import { createContextContainer, render, tests } from '@mantine/tests';
+import { createContextContainer, render, tests } from '@tests/core';
 import { Modal, ModalProps, ModalStylesNames } from './Modal';
 import { ModalBody, ModalBodyProps } from './ModalBody';
 import { ModalCloseButton, ModalCloseButtonProps } from './ModalCloseButton';

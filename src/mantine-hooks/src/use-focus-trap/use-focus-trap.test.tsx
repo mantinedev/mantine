@@ -1,6 +1,6 @@
+/* eslint-disable no-console */
 import { fireEvent, render, RenderOptions, RenderResult, screen } from '@testing-library/react';
 import React, { ReactElement, useState } from 'react';
-import { patchConsoleError } from '@mantine/tests';
 import { useFocusTrap } from './use-focus-trap';
 
 function InnerComponent({ testId }: { testId: string }) {
@@ -34,9 +34,10 @@ function WrapperComponent({ shouldMount = true }) {
 }
 
 function quietRender(ui: ReactElement, options: RenderOptions): RenderResult {
-  patchConsoleError();
+  const originalConsoleError = console.error;
+  console.error = jest.fn();
   const rendered = render(ui, options);
-  patchConsoleError.release();
+  console.error = originalConsoleError;
   return rendered;
 }
 

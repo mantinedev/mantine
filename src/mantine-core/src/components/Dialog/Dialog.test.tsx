@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, tests, userEvent, screen } from '@mantine/tests';
+import { render, tests, userEvent, screen } from '@tests/core';
 import { Dialog, DialogProps, DialogStylesNames } from './Dialog';
 
 const defaultProps: DialogProps = {

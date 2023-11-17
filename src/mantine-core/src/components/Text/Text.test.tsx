@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, tests } from '@mantine/tests';
+import { render, tests } from '@tests/core';
 import { Text, TextProps, TextStylesNames } from './Text';
 
 const defaultProps: TextProps = {};

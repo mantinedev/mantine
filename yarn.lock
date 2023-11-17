@@ -4475,12 +4475,6 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@mantine/dates-tests@workspace:src/mantine-dates-tests":
-  version: 0.0.0-use.local
-  resolution: "@mantine/dates-tests@workspace:src/mantine-dates-tests"
-  languageName: unknown
-  linkType: soft
-
 "@mantine/dates@workspace:*, @mantine/dates@workspace:src/mantine-dates":
   version: 0.0.0-use.local
   resolution: "@mantine/dates@workspace:src/mantine-dates"
@@ -4610,12 +4604,6 @@ __metadata:
 "@mantine/styles-api@workspace:*, @mantine/styles-api@workspace:src/mantine-styles-api":
   version: 0.0.0-use.local
   resolution: "@mantine/styles-api@workspace:src/mantine-styles-api"
-  languageName: unknown
-  linkType: soft
-
-"@mantine/tests@workspace:src/mantine-tests":
-  version: 0.0.0-use.local
-  resolution: "@mantine/tests@workspace:src/mantine-tests"
   languageName: unknown
   linkType: soft
 

@@ -1,4 +1,4 @@
-import { tests } from '@mantine/tests';
+import { tests } from '@tests/core';
 import { Container, ContainerProps, ContainerStylesNames } from './Container';
 
 const defaultProps: ContainerProps = {};

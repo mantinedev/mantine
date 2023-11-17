@@ -1,5 +1,5 @@
 import React from 'react';
-import { tests } from '@mantine/tests';
+import { tests } from '@tests/core';
 import { Collapse, CollapseProps } from './Collapse';
 
 const defaultProps: CollapseProps = {

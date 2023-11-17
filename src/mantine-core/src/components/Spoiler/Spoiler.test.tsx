@@ -1,4 +1,4 @@
-import { tests } from '@mantine/tests';
+import { tests } from '@tests/core';
 import { Spoiler, SpoilerProps, SpoilerStylesNames } from './Spoiler';
 
 const defaultProps: SpoilerProps = {

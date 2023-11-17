@@ -1,4 +1,4 @@
-import { tests } from '@mantine/tests';
+import { tests } from '@tests/core';
 import { Notifications, NotificationsProps, NotificationsStylesNames } from './Notifications';
 
 const defaultProps: NotificationsProps = {

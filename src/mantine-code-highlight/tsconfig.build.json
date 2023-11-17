@@ -11,13 +11,8 @@
     "composite": true,
     "paths": {
       "@mantine/core": ["../mantine-core/src"],
-      "@mantine/hooks": ["../mantine-hooks/src"],
-      "@mantine/tests": ["../mantine-tests/src"]
+      "@mantine/hooks": ["../mantine-hooks/src"]
     }
   },
-  "references": [
-    { "path": "../mantine-core" },
-    { "path": "../mantine-hooks" },
-    { "path": "../mantine-tests" }
-  ]
+  "references": [{ "path": "../mantine-core" }, { "path": "../mantine-hooks" }]
 }

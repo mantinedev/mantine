@@ -1,5 +1,5 @@
 import React, { createRef } from 'react';
-import { tests, render } from '@mantine/tests';
+import { tests, render } from '@tests/core';
 import { Radio, RadioProps, RadioStylesNames } from './Radio';
 import { RadioGroup } from './RadioGroup/RadioGroup';
 

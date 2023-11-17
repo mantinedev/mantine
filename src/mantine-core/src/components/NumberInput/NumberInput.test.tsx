@@ -6,7 +6,7 @@ import {
   inputStylesApiSelectors,
   userEvent,
   screen,
-} from '@mantine/tests';
+} from '@tests/core';
 import { act, fireEvent } from '@testing-library/react';
 import { NumberInput, NumberInputHandlers, NumberInputProps } from './NumberInput';
 import { __InputStylesNames } from '../Input';

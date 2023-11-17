@@ -1,4 +1,4 @@
-import { tests } from '@mantine/tests';
+import { tests } from '@tests/core';
 import { Blockquote, BlockquoteProps, BlockquoteStylesNames } from './Blockquote';
 
 const defaultProps: BlockquoteProps = {

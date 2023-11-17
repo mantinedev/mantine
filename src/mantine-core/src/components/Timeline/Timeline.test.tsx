@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, tests } from '@mantine/tests';
+import { render, tests } from '@tests/core';
 import { Timeline, TimelineProps, TimelineStylesNames } from './Timeline';
 import { TimelineItem } from './TimelineItem/TimelineItem';
 

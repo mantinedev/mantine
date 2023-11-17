@@ -1,5 +1,5 @@
 import React from 'react';
-import { tests, render } from '@mantine/tests';
+import { tests, render } from '@tests/core';
 import { FileButton, FileButtonProps } from './FileButton';
 
 const defaultProps: FileButtonProps = {

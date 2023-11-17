@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, tests, screen } from '@mantine/tests';
+import { render, tests, screen } from '@tests/core';
 import { Image, ImageProps, ImageStylesNames } from './Image';
 
 const defaultProps: ImageProps = {};

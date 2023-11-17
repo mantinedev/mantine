@@ -1,5 +1,5 @@
 import React from 'react';
-import { tests, inputDefaultProps, inputStylesApiSelectors } from '@mantine/tests';
+import { tests, inputDefaultProps, inputStylesApiSelectors } from '@tests/core';
 import { MultiSelect, MultiSelectProps, MultiSelectStylesNames } from './MultiSelect';
 
 const defaultProps: MultiSelectProps = {

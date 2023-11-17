@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, tests, patchConsoleError, createContextContainer } from '@mantine/tests';
+import { render, tests, patchConsoleError, createContextContainer } from '@tests/core';
 import { PopoverTarget, PopoverTargetProps } from './PopoverTarget';
 import { Popover } from '../Popover';
 

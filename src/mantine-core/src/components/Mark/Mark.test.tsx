@@ -1,4 +1,4 @@
-import { tests } from '@mantine/tests';
+import { tests } from '@tests/core';
 import { Mark, MarkProps, MarkStylesNames } from './Mark';
 
 const defaultProps: MarkProps = {};

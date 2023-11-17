@@ -1,4 +1,4 @@
-import { createContextContainer, tests } from '@mantine/tests';
+import { createContextContainer, tests } from '@tests/core';
 import { MenuDropdown, MenuDropdownProps, MenuDropdownStylesNames } from './MenuDropdown';
 import { Menu } from '../Menu';
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import { render } from '@mantine/tests';
+import { render } from '@tests/core';
 import { InlineStyles } from './InlineStyles';
 
 describe('@mantine/core/InlineStyles', () => {

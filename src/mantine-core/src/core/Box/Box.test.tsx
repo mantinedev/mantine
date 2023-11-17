@@ -1,5 +1,5 @@
 import React from 'react';
-import { tests, render, screen } from '@mantine/tests';
+import { tests, render, screen } from '@tests/core';
 import { Box, BoxProps } from './Box';
 
 const defaultProps: BoxProps = {};

@@ -8,10 +8,6 @@
     "outDir": "lib",
     "declaration": true,
     "declarationDir": "lib",
-    "composite": true,
-    "paths": {
-      "@mantine/tests": ["../mantine-tests/src"]
-    }
-  },
-  "references": [{ "path": "../mantine-tests" }]
+    "composite": true
+  }
 }

@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, tests, screen, userEvent } from '@mantine/tests';
+import { render, tests, screen, userEvent } from '@tests/core';
 import { Stepper, StepperProps, StepperStylesNames } from './Stepper';
 import { StepperStep } from './StepperStep/StepperStep';
 import { StepperCompleted } from './StepperCompleted/StepperCompleted';

@@ -1,4 +1,4 @@
-import { tests } from '@mantine/tests';
+import { tests } from '@tests/core';
 import { Stack, StackProps, StackStylesNames } from './Stack';
 
 const defaultProps: StackProps = {};

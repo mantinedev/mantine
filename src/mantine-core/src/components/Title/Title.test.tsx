@@ -1,4 +1,4 @@
-import { tests } from '@mantine/tests';
+import { tests } from '@tests/core';
 import { Title, TitleProps, TitleStylesNames } from './Title';
 
 const defaultProps: TitleProps = {};

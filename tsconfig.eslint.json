@@ -25,6 +25,7 @@
   "compilerOptions": {
     "paths": {
       "@mantine/*": ["src/mantine-*/src"],
+      "@tests/*": ["@tests/*/src"],
       "@demos/*": ["src/mantine-*/src/demos"]
     }
   }

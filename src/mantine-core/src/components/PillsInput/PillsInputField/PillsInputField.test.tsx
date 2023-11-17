@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, screen, tests, createContextContainer } from '@mantine/tests';
+import { render, screen, tests, createContextContainer } from '@tests/core';
 import {
   PillsInputField,
   PillsInputFieldProps,

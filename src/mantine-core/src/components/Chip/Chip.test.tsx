@@ -1,5 +1,5 @@
 import React, { createRef } from 'react';
-import { render, tests } from '@mantine/tests';
+import { render, tests } from '@tests/core';
 import { Chip, ChipProps, ChipStylesNames } from './Chip';
 
 const defaultProps: ChipProps = {

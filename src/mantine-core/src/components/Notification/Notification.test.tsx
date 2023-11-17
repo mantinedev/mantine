@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, tests } from '@mantine/tests';
+import { render, tests } from '@tests/core';
 import { IconMoodSmile } from '@tabler/icons-react';
 import { Notification, NotificationProps, NotificationStylesNames } from './Notification';
 
