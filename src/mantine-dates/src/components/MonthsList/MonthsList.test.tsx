@@ -1,6 +1,6 @@
 import React from 'react';
-import { render, tests, screen } from '@mantine/tests';
-import { datesTests } from '@mantine/dates-tests';
+import { render, tests, screen } from '@tests/core';
+import { datesTests } from '@tests/dates';
 import { MonthsList, MonthsListProps, MonthsListStylesNames } from './MonthsList';
 
 const defaultProps: MonthsListProps = {

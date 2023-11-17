@@ -1,7 +1,7 @@
 import React from 'react';
-import { tests, inputDefaultProps, inputStylesApiSelectors, render } from '@mantine/tests';
+import { tests, inputDefaultProps, inputStylesApiSelectors, render } from '@tests/core';
 import { __InputStylesNames } from '@mantine/core';
-import { clickControl, clickInput, datesTests, expectValue } from '@mantine/dates-tests';
+import { clickControl, clickInput, datesTests, expectValue } from '@tests/dates';
 import { DatePickerInput, DatePickerInputProps } from './DatePickerInput';
 import { DatesProvider } from '../DatesProvider';
 

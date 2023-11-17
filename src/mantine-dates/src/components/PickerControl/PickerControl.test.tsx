@@ -1,6 +1,6 @@
 import React from 'react';
 import lodash from 'lodash';
-import { render, tests, screen } from '@mantine/tests';
+import { render, tests, screen } from '@tests/core';
 import { PickerControl, PickerControlProps, PickerControlStylesNames } from './PickerControl';
 
 const defaultProps: PickerControlProps = {};

@@ -1,6 +1,6 @@
 import React from 'react';
 import lodash from 'lodash';
-import { render, tests, screen } from '@mantine/tests';
+import { render, tests, screen } from '@tests/core';
 import { Day, DayProps, DayStylesNames } from './Day';
 
 const defaultProps: DayProps = {

@@ -1,7 +1,7 @@
 import dayjs from 'dayjs';
 import React from 'react';
-import { render, tests, screen, userEvent } from '@mantine/tests';
-import { datesTests } from '@mantine/dates-tests';
+import { render, tests, screen, userEvent } from '@tests/core';
+import { datesTests } from '@tests/dates';
 import { Calendar, CalendarProps, CalendarStylesNames } from './Calendar';
 import { DatesProvider } from '../DatesProvider';
 

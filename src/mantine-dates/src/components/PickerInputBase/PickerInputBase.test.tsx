@@ -1,6 +1,6 @@
 import React from 'react';
-import { userEvent, render, screen } from '@mantine/tests';
-import { datesTests } from '@mantine/dates-tests';
+import { userEvent, render, screen } from '@tests/core';
+import { datesTests } from '@tests/dates';
 import { PickerInputBase, PickerInputBaseProps } from './PickerInputBase';
 
 const noop = () => {};

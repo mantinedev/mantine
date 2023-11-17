@@ -6668,6 +6668,18 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@tests/core@workspace:@tests/core":
+  version: 0.0.0-use.local
+  resolution: "@tests/core@workspace:@tests/core"
+  languageName: unknown
+  linkType: soft
+
+"@tests/dates@workspace:@tests/dates":
+  version: 0.0.0-use.local
+  resolution: "@tests/dates@workspace:@tests/dates"
+  languageName: unknown
+  linkType: soft
+
 "@tiptap/core@npm:^2.1.12":
   version: 2.1.12
   resolution: "@tiptap/core@npm:2.1.12"

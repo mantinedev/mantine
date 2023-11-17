@@ -1,13 +1,7 @@
 import React from 'react';
-import {
-  tests,
-  inputDefaultProps,
-  inputStylesApiSelectors,
-  render,
-  userEvent,
-} from '@mantine/tests';
+import { tests, inputDefaultProps, inputStylesApiSelectors, render, userEvent } from '@tests/core';
 import { __InputStylesNames } from '@mantine/core';
-import { clickInput, datesTests, expectValue } from '@mantine/dates-tests';
+import { clickInput, datesTests, expectValue } from '@tests/dates';
 import { YearPickerInput, YearPickerInputProps } from './YearPickerInput';
 import { DatesProvider } from '../DatesProvider';
 

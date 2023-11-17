@@ -1,7 +1,7 @@
 {
   "extends": "../../tsconfig.base.json",
   "include": ["./src", "./types", "../../@types"],
-  "exclude": ["./lib", "./esm", "./cjs"],
+  "exclude": ["./lib"],
   "compilerOptions": {
     "rootDir": "src",
     "baseUrl": ".",
@@ -13,14 +13,14 @@
     "paths": {
       "@mantine/core": ["../mantine-core/src"],
       "@mantine/hooks": ["../mantine-hooks/src"],
-      "@mantine/tests": ["../mantine-tests/src"],
-      "@mantine/dates-tests": ["../mantine-dates-tests/src"]
+      "@tests/core": ["../../@tests/core/src"],
+      "@tests/dates": ["../../@tests/dates/src"]
     }
   },
   "references": [
     { "path": "../mantine-core" },
     { "path": "../mantine-hooks" },
-    { "path": "../mantine-tests" },
-    { "path": "../mantine-dates-tests" }
+    { "path": "../../@tests/core" },
+    { "path": "../../@tests/dates" }
   ]
 }
