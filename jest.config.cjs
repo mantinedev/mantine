@@ -8,7 +8,7 @@ module.exports = {
   globalSetup: './jest.setup.cjs',
   moduleNameMapper: {
     '@mantine/(.*)': '<rootDir>/src/mantine-$1/src',
-    '@tests/(.*)': '<rootDir>/@tests/$1/src',
+    '@tests/(.*)': '<rootDir>/packages/@tests/$1/src',
     '\\.(css)$': 'identity-obj-proxy',
   },
 };

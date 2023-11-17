@@ -13,8 +13,8 @@
     "importHelpers": true,
     "paths": {
       "@mantine/hooks": ["../mantine-hooks/src"],
-      "@tests/core": ["../../@tests/core/src"]
+      "@tests/core": ["../../packages/@tests/core/src"]
     }
   },
-  "references": [{ "path": "../mantine-hooks" }, { "path": "../../@tests/core" }]
+  "references": [{ "path": "../mantine-hooks" }, { "path": "../../packages/@tests/core" }]
 }

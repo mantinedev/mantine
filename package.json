@@ -12,7 +12,7 @@
   },
   "workspaces": [
     "src/*",
-    "@tests/*",
+    "packages/@tests/*",
     "docs"
   ],
   "scripts": {
