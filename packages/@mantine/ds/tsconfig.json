@@ -1,0 +1,19 @@
+{
+  "extends": "../../../tsconfig.base.json",
+  "include": ["./src", "./types", "../../@types"],
+  "exclude": ["./lib", "./esm", "./cjs"],
+  "compilerOptions": {
+    "rootDir": "src",
+    "baseUrl": ".",
+    "outDir": "lib",
+    "declaration": true,
+    "composite": true,
+    "declarationDir": "lib",
+    "paths": {
+      "@mantine/core": ["../core/src"],
+      "@mantine/hooks": ["../hooks/src"],
+      "@mantine/code-highlight": ["../code-highlight/src"]
+    }
+  },
+  "references": [{ "path": "../core" }, { "path": "../code-highlight" }, { "path": "../hooks" }]
+}

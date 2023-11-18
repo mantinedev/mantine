@@ -2,11 +2,11 @@
   "extends": "./tsconfig.base.json",
   "include": [
     "./docs",
-    "src/mantine-*/src",
     "./scripts",
     "./@types",
     "./packages/@tests/*/src",
-    "./packages/@docs/*/src"
+    "./packages/@docs/*/src",
+    "./packages/@mantine/*/src"
   ],
   "exclude": [
     "public",

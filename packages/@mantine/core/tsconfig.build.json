@@ -1,0 +1,20 @@
+{
+  "extends": "../../../tsconfig.base.json",
+  "include": ["./src", "../../../@types"],
+  "exclude": ["./lib", "./esm", "./cjs", "**/*.test.tsx", "**/*.test.ts", "**/*.story.tsx"],
+  "compilerOptions": {
+    "rootDir": "src",
+    "baseUrl": ".",
+    "outDir": "lib",
+    "declaration": true,
+    "declarationDir": "lib",
+    "composite": true,
+    "strict": true,
+    "jsx": "react-jsx",
+    "importHelpers": true,
+    "paths": {
+      "@mantine/hooks": ["../hooks/src"]
+    }
+  },
+  "references": [{ "path": "../hooks" }]
+}
