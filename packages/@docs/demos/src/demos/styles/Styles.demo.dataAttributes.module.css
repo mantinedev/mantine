@@ -1,0 +1,53 @@
+.root {
+  border-top-left-radius: var(--mantine-radius-xl);
+  border-bottom-left-radius: var(--mantine-radius-xl);
+  padding-left: rem(4px);
+
+  @mixin rtl {
+    padding-left: calc(var(--button-padding-x) / 1.5);
+    padding-right: rem(4px);
+    border-top-left-radius: var(--mantine-radius-md);
+    border-top-right-radius: var(--mantine-radius-xl);
+    border-bottom-left-radius: var(--mantine-radius-md);
+    border-bottom-right-radius: var(--mantine-radius-xl);
+  }
+
+  /* The following styles will be applied only when button is disabled */
+  &[data-disabled] {
+    /* You can use Mantine PostCSS mixins inside data attributes */
+    @mixin light {
+      border: rem(1px) solid var(--mantine-color-gray-2);
+    }
+
+    @mixin dark {
+      border: rem(1px) solid var(--mantine-color-dark-4);
+    }
+
+    /* You can target child elements that are inside .root[data-disabled] */
+    & .section[data-position='left'] {
+      opacity: 0.6;
+    }
+  }
+}
+
+.section {
+  /* Apply styles only to left section */
+  &[data-position='left'] {
+    --section-size: calc(var(--button-height) - rem(8px));
+
+    background-color: var(--mantine-color-body);
+    color: var(--mantine-color-text);
+    height: var(--section-size);
+    width: var(--section-size);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--mantine-radius-xl);
+  }
+
+  &[data-position='right'] {
+    @mixin rtl {
+      transform: rotate(180deg);
+    }
+  }
+}

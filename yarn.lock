@@ -3382,6 +3382,12 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@docs/demos@workspace:*, @docs/demos@workspace:packages/@docs/mantine-demos":
+  version: 0.0.0-use.local
+  resolution: "@docs/demos@workspace:packages/@docs/mantine-demos"
+  languageName: unknown
+  linkType: soft
+
 "@effect/data@npm:0.17.1":
   version: 0.17.1
   resolution: "@effect/data@npm:0.17.1"
@@ -6656,15 +6662,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tests/core@workspace:@tests/core":
+"@tests/core@workspace:packages/@tests/core":
   version: 0.0.0-use.local
-  resolution: "@tests/core@workspace:@tests/core"
+  resolution: "@tests/core@workspace:packages/@tests/core"
   languageName: unknown
   linkType: soft
 
-"@tests/dates@workspace:@tests/dates":
+"@tests/dates@workspace:packages/@tests/dates":
   version: 0.0.0-use.local
-  resolution: "@tests/dates@workspace:@tests/dates"
+  resolution: "@tests/dates@workspace:packages/@tests/dates"
   languageName: unknown
   linkType: soft
 
@@ -10884,6 +10890,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "docs@workspace:docs"
   dependencies:
+    "@docs/demos": "workspace:*"
     "@floating-ui/react": "npm:^0.24.8"
     "@hello-pangea/dnd": "npm:^16.3.0"
     "@mantine/carousel": "workspace:*"

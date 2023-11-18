@@ -1,0 +1,16 @@
+/* Use `&:focus` when you want focus ring to be visible when control is clicked */
+.focus {
+  &:focus {
+    outline: rem(2px) solid var(--mantine-color-red-filled);
+    outline-offset: rem(3px);
+  }
+}
+
+/* Use `&:focus-visible` when you want focus ring to be visible
+   only when user navigates with keyboard, for example by pressing Tab key */
+.focus-auto {
+  &:focus-visible {
+    outline: rem(2px) solid var(--mantine-color-red-filled);
+    outline-offset: rem(2px);
+  }
+}

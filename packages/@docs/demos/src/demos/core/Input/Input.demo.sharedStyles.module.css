@@ -1,0 +1,7 @@
+.label {
+  background-color: var(--mantine-color-blue-light);
+}
+
+.input {
+  border: rem(1px) solid var(--mantine-color-violet-filled);
+}

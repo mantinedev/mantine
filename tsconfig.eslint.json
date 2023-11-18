@@ -1,6 +1,13 @@
 {
   "extends": "./tsconfig.base.json",
-  "include": ["./docs", "src/mantine-*/src", "./scripts", "./@types", "./@tests"],
+  "include": [
+    "./docs",
+    "src/mantine-*/src",
+    "./scripts",
+    "./@types",
+    "./packages/@tests/*/src",
+    "./packages/@docs/*/src"
+  ],
   "exclude": [
     "public",
     "node_modules",
@@ -11,7 +18,8 @@
   "compilerOptions": {
     "paths": {
       "@mantine/*": ["src/mantine-*/src"],
-      "@tests/*": ["packages/@tests/*/src"]
+      "@tests/*": ["packages/@tests/*/src"],
+      "@docs/*": ["packages/@docs/*/src"]
     }
   }
 }
