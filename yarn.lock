@@ -4437,9 +4437,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@mantine/carousel@workspace:*, @mantine/carousel@workspace:src/mantine-carousel":
+"@mantine/carousel@workspace:*, @mantine/carousel@workspace:packages/@mantine/carousel":
   version: 0.0.0-use.local
-  resolution: "@mantine/carousel@workspace:src/mantine-carousel"
+  resolution: "@mantine/carousel@workspace:packages/@mantine/carousel"
   peerDependencies:
     "@mantine/core": 7.3.0-alpha.0
     "@mantine/hooks": 7.3.0-alpha.0
@@ -4448,9 +4448,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@mantine/code-highlight@workspace:*, @mantine/code-highlight@workspace:src/mantine-code-highlight":
+"@mantine/code-highlight@workspace:*, @mantine/code-highlight@workspace:packages/@mantine/code-highlight":
   version: 0.0.0-use.local
-  resolution: "@mantine/code-highlight@workspace:src/mantine-code-highlight"
+  resolution: "@mantine/code-highlight@workspace:packages/@mantine/code-highlight"
   dependencies:
     clsx: "npm:2.0.0"
     highlight.js: "npm:^11.9.0"
@@ -4462,17 +4462,17 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@mantine/colors-generator@workspace:*, @mantine/colors-generator@workspace:src/mantine-colors-generator":
+"@mantine/colors-generator@workspace:*, @mantine/colors-generator@workspace:packages/@mantine/colors-generator":
   version: 0.0.0-use.local
-  resolution: "@mantine/colors-generator@workspace:src/mantine-colors-generator"
+  resolution: "@mantine/colors-generator@workspace:packages/@mantine/colors-generator"
   peerDependencies:
     chroma-js: ^2.4.2
   languageName: unknown
   linkType: soft
 
-"@mantine/core@workspace:*, @mantine/core@workspace:src/mantine-core":
+"@mantine/core@workspace:*, @mantine/core@workspace:packages/@mantine/core":
   version: 0.0.0-use.local
-  resolution: "@mantine/core@workspace:src/mantine-core"
+  resolution: "@mantine/core@workspace:packages/@mantine/core"
   dependencies:
     "@floating-ui/react": "npm:^0.24.8"
     clsx: "npm:2.0.0"
@@ -4487,9 +4487,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@mantine/dates@workspace:*, @mantine/dates@workspace:src/mantine-dates":
+"@mantine/dates@workspace:*, @mantine/dates@workspace:packages/@mantine/dates":
   version: 0.0.0-use.local
-  resolution: "@mantine/dates@workspace:src/mantine-dates"
+  resolution: "@mantine/dates@workspace:packages/@mantine/dates"
   dependencies:
     clsx: "npm:2.0.0"
   peerDependencies:
@@ -4501,9 +4501,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@mantine/dropzone@workspace:*, @mantine/dropzone@workspace:src/mantine-dropzone":
+"@mantine/dropzone@workspace:*, @mantine/dropzone@workspace:packages/@mantine/dropzone":
   version: 0.0.0-use.local
-  resolution: "@mantine/dropzone@workspace:src/mantine-dropzone"
+  resolution: "@mantine/dropzone@workspace:packages/@mantine/dropzone"
   dependencies:
     react-dropzone-esm: "npm:15.0.1"
   peerDependencies:
@@ -4514,9 +4514,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@mantine/ds@workspace:*, @mantine/ds@workspace:src/mantine-ds":
+"@mantine/ds@workspace:*, @mantine/ds@workspace:packages/@mantine/ds":
   version: 0.0.0-use.local
-  resolution: "@mantine/ds@workspace:src/mantine-ds"
+  resolution: "@mantine/ds@workspace:packages/@mantine/ds"
   dependencies:
     clsx: "npm:2.0.0"
   peerDependencies:
@@ -4529,9 +4529,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@mantine/form@workspace:*, @mantine/form@workspace:src/mantine-form":
+"@mantine/form@workspace:*, @mantine/form@workspace:packages/@mantine/form":
   version: 0.0.0-use.local
-  resolution: "@mantine/form@workspace:src/mantine-form"
+  resolution: "@mantine/form@workspace:packages/@mantine/form"
   dependencies:
     fast-deep-equal: "npm:^3.1.3"
     klona: "npm:^2.0.6"
@@ -4540,17 +4540,17 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@mantine/hooks@workspace:*, @mantine/hooks@workspace:src/mantine-hooks":
+"@mantine/hooks@workspace:*, @mantine/hooks@workspace:packages/@mantine/hooks":
   version: 0.0.0-use.local
-  resolution: "@mantine/hooks@workspace:src/mantine-hooks"
+  resolution: "@mantine/hooks@workspace:packages/@mantine/hooks"
   peerDependencies:
     react: ^18.2.0
   languageName: unknown
   linkType: soft
 
-"@mantine/modals@workspace:*, @mantine/modals@workspace:src/mantine-modals":
+"@mantine/modals@workspace:*, @mantine/modals@workspace:packages/@mantine/modals":
   version: 0.0.0-use.local
-  resolution: "@mantine/modals@workspace:src/mantine-modals"
+  resolution: "@mantine/modals@workspace:packages/@mantine/modals"
   peerDependencies:
     "@mantine/core": 7.3.0-alpha.0
     "@mantine/hooks": 7.3.0-alpha.0
@@ -4559,9 +4559,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@mantine/notifications@workspace:*, @mantine/notifications@workspace:src/mantine-notifications":
+"@mantine/notifications@workspace:*, @mantine/notifications@workspace:packages/@mantine/notifications":
   version: 0.0.0-use.local
-  resolution: "@mantine/notifications@workspace:src/mantine-notifications"
+  resolution: "@mantine/notifications@workspace:packages/@mantine/notifications"
   dependencies:
     "@mantine/store": "npm:7.3.0-alpha.0"
     react-transition-group: "npm:4.4.5"
@@ -4573,9 +4573,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@mantine/nprogress@workspace:*, @mantine/nprogress@workspace:src/mantine-nprogress":
+"@mantine/nprogress@workspace:*, @mantine/nprogress@workspace:packages/@mantine/nprogress":
   version: 0.0.0-use.local
-  resolution: "@mantine/nprogress@workspace:src/mantine-nprogress"
+  resolution: "@mantine/nprogress@workspace:packages/@mantine/nprogress"
   dependencies:
     "@mantine/store": "npm:7.3.0-alpha.0"
   peerDependencies:
@@ -4586,9 +4586,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@mantine/spotlight@workspace:*, @mantine/spotlight@workspace:src/mantine-spotlight":
+"@mantine/spotlight@workspace:*, @mantine/spotlight@workspace:packages/@mantine/spotlight":
   version: 0.0.0-use.local
-  resolution: "@mantine/spotlight@workspace:src/mantine-spotlight"
+  resolution: "@mantine/spotlight@workspace:packages/@mantine/spotlight"
   dependencies:
     "@mantine/store": "npm:7.3.0-alpha.0"
   peerDependencies:
@@ -4599,17 +4599,17 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@mantine/store@npm:7.3.0-alpha.0, @mantine/store@workspace:*, @mantine/store@workspace:src/mantine-store":
+"@mantine/store@npm:7.3.0-alpha.0, @mantine/store@workspace:*, @mantine/store@workspace:packages/@mantine/store":
   version: 0.0.0-use.local
-  resolution: "@mantine/store@workspace:src/mantine-store"
+  resolution: "@mantine/store@workspace:packages/@mantine/store"
   peerDependencies:
     react: ^18.2.0
   languageName: unknown
   linkType: soft
 
-"@mantine/tiptap@workspace:*, @mantine/tiptap@workspace:src/mantine-tiptap":
+"@mantine/tiptap@workspace:*, @mantine/tiptap@workspace:packages/@mantine/tiptap":
   version: 0.0.0-use.local
-  resolution: "@mantine/tiptap@workspace:src/mantine-tiptap"
+  resolution: "@mantine/tiptap@workspace:packages/@mantine/tiptap"
   peerDependencies:
     "@mantine/core": 7.3.0-alpha.0
     "@mantine/hooks": 7.3.0-alpha.0
@@ -4621,9 +4621,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@mantine/vanilla-extract@workspace:src/mantine-vanilla-extract":
+"@mantine/vanilla-extract@workspace:packages/@mantine/vanilla-extract":
   version: 0.0.0-use.local
-  resolution: "@mantine/vanilla-extract@workspace:src/mantine-vanilla-extract"
+  resolution: "@mantine/vanilla-extract@workspace:packages/@mantine/vanilla-extract"
   peerDependencies:
     "@mantine/core": 7.3.0-alpha.0
   languageName: unknown
@@ -6656,15 +6656,24 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tests/core@workspace:packages/@tests/core":
+"@tests/core@workspace:*, @tests/core@workspace:packages/@tests/core":
   version: 0.0.0-use.local
   resolution: "@tests/core@workspace:packages/@tests/core"
+  dependencies:
+    "@mantine/core": "workspace:*"
+    "@mantine/hooks": "workspace:*"
+    "@mantine/store": "workspace:*"
   languageName: unknown
   linkType: soft
 
 "@tests/dates@workspace:packages/@tests/dates":
   version: 0.0.0-use.local
   resolution: "@tests/dates@workspace:packages/@tests/dates"
+  dependencies:
+    "@mantine/core": "workspace:*"
+    "@mantine/dates": "workspace:*"
+    "@mantine/hooks": "workspace:*"
+    "@tests/core": "workspace:*"
   languageName: unknown
   linkType: soft
 

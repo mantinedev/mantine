@@ -10,7 +10,7 @@ export interface Package {
 }
 
 export async function getPackagesList() {
-  const basePath = getPath('src');
+  const basePath = getPath('packages/@mantine');
   const srcPaths = await fs.readdir(basePath);
   const packages: Package[] = [];
 

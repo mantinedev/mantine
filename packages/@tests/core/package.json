@@ -15,5 +15,10 @@
         "default": "./cjs/index.cjs"
       }
     }
+  },
+  "devDependencies": {
+    "@mantine/core": "workspace:*",
+    "@mantine/hooks": "workspace:*",
+    "@mantine/store": "workspace:*"
   }
 }

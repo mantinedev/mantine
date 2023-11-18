@@ -7,7 +7,7 @@ module.exports = {
   setupFilesAfterEnv: ['./jsdom.mocks.cjs'],
   globalSetup: './jest.setup.cjs',
   moduleNameMapper: {
-    '@mantine/(.*)': '<rootDir>/src/mantine-$1/src',
+    '@mantine/(.*)': '<rootDir>/packages/@mantine/$1/src',
     '@tests/(.*)': '<rootDir>/packages/@tests/$1/src',
     '\\.(css)$': 'identity-obj-proxy',
   },

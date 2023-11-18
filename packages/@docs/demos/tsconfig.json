@@ -1,6 +1,6 @@
 {
   "extends": "../../../tsconfig.base.json",
-  "include": ["./src", "./types", "../../@types"],
+  "include": ["./src", "./types", "../../../@types"],
   "exclude": ["./lib", "./esm", "./cjs"],
   "compilerOptions": {
     "rootDir": "src",
@@ -10,28 +10,28 @@
     "declarationDir": "lib",
     "composite": true,
     "paths": {
-      "@mantine/core": ["../../../src/mantine-core/src"],
-      "@mantine/hooks": ["../../../src/mantine-hooks/src"],
-      "@mantine/ds": ["../../../src/mantine-ds/src"],
-      "@mantine/notifications": ["../../../src/mantine-notifications/src"],
-      "@mantine/code-highlight": ["../../../src/mantine-code-highlight/src"],
-      "@mantine/dropzone": ["../../../src/mantine-dropzone/src"],
-      "@mantine/nprogress": ["../../../src/mantine-nprogress/src"],
-      "@mantine/modals": ["../../../src/mantine-modals/src"],
-      "@mantine/dates": ["../../../src/mantine-dates/src"],
+      "@mantine/core": ["../../@mantine/core/src"],
+      "@mantine/hooks": ["../../@mantine/hooks/src"],
+      "@mantine/ds": ["../../@mantine/ds/src"],
+      "@mantine/notifications": ["../../@mantine/notifications/src"],
+      "@mantine/code-highlight": ["../../@mantine/code-highlight/src"],
+      "@mantine/dropzone": ["../../@mantine/dropzone/src"],
+      "@mantine/nprogress": ["../../@mantine/nprogress/src"],
+      "@mantine/modals": ["../../@mantine/modals/src"],
+      "@mantine/dates": ["../../@mantine/dates/src"],
       "@docs/styles-api": ["../styles-api/src"]
     }
   },
   "references": [
-    { "path": "../../../src/mantine-core" },
-    { "path": "../../../src/mantine-hooks" },
-    { "path": "../../../src/mantine-ds" },
-    { "path": "../../../src/mantine-dates" },
-    { "path": "../../../src/mantine-notifications" },
-    { "path": "../../../src/mantine-dropzone" },
-    { "path": "../../../src/mantine-nprogress" },
-    { "path": "../../../src/mantine-modals" },
-    { "path": "../../../src/mantine-code-highlight" },
+    { "path": "../../@mantine/core" },
+    { "path": "../../@mantine/hooks" },
+    { "path": "../../@mantine/ds" },
+    { "path": "../../@mantine/dates" },
+    { "path": "../../@mantine/notifications" },
+    { "path": "../../@mantine/dropzone" },
+    { "path": "../../@mantine/nprogress" },
+    { "path": "../../@mantine/modals" },
+    { "path": "../../@mantine/code-highlight" },
     { "path": "../styles-api" }
   ]
 }

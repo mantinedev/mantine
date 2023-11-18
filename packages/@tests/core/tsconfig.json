@@ -8,11 +8,5 @@
     "declaration": true,
     "declarationDir": "lib",
     "composite": true
-  },
-
-  "references": [
-    { "path": "../../@mantine/core" },
-    { "path": "../../@mantine/hooks" },
-    { "path": "../../@mantine/store" }
-  ]
+  }
 }

@@ -23,6 +23,7 @@ export const ROLLUP_EXTERNALS = [
   '@mantine/spotlight',
   '@mantine/store',
   '@mantine/tiptap',
+  '@tests/core',
   '@mantine/vanilla-extract',
   ...Object.keys({
     ...packageJson.devDependencies,
