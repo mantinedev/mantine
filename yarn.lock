@@ -4501,12 +4501,6 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@mantine/demos@workspace:*, @mantine/demos@workspace:src/mantine-demos":
-  version: 0.0.0-use.local
-  resolution: "@mantine/demos@workspace:src/mantine-demos"
-  languageName: unknown
-  linkType: soft
-
 "@mantine/dropzone@workspace:*, @mantine/dropzone@workspace:src/mantine-dropzone":
   version: 0.0.0-use.local
   resolution: "@mantine/dropzone@workspace:src/mantine-dropzone"
@@ -4610,12 +4604,6 @@ __metadata:
   resolution: "@mantine/store@workspace:src/mantine-store"
   peerDependencies:
     react: ^18.2.0
-  languageName: unknown
-  linkType: soft
-
-"@mantine/styles-api@workspace:src/mantine-styles-api":
-  version: 0.0.0-use.local
-  resolution: "@mantine/styles-api@workspace:src/mantine-styles-api"
   languageName: unknown
   linkType: soft
 
@@ -10905,7 +10893,6 @@ __metadata:
     "@mantine/colors-generator": "workspace:*"
     "@mantine/core": "workspace:*"
     "@mantine/dates": "workspace:*"
-    "@mantine/demos": "workspace:*"
     "@mantine/dropzone": "workspace:*"
     "@mantine/ds": "workspace:*"
     "@mantine/form": "workspace:*"

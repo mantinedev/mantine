@@ -38,7 +38,6 @@ const config = {
       packages: ['docs'],
       dependencies: [
         '@mantine/store',
-        '@mantine/styles-api',
         '@mantine/code-highlight',
         '@mantine/core',
         '@mantine/ds',

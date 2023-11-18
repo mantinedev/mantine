@@ -13,7 +13,6 @@ export const ROLLUP_EXTERNALS = [
   '@mantine/colors-generator',
   '@mantine/core',
   '@mantine/dates',
-  '@mantine/demos',
   '@mantine/dropzone',
   '@mantine/ds',
   '@mantine/form',
@@ -23,7 +22,6 @@ export const ROLLUP_EXTERNALS = [
   '@mantine/nprogress',
   '@mantine/spotlight',
   '@mantine/store',
-  '@mantine/styles-api',
   '@mantine/tiptap',
   '@mantine/vanilla-extract',
   ...Object.keys({

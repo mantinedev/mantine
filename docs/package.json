@@ -20,7 +20,6 @@
     "@mantine/colors-generator": "workspace:*",
     "@mantine/core": "workspace:*",
     "@mantine/dates": "workspace:*",
-    "@mantine/demos": "workspace:*",
     "@mantine/dropzone": "workspace:*",
     "@mantine/ds": "workspace:*",
     "@mantine/form": "workspace:*",
