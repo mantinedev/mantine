@@ -7,7 +7,7 @@ import {
   ElementProps,
   useProps,
   Factory,
-} from '../../../core/src';
+} from '@mantine/core';
 import { useCarouselContext } from '../Carousel.context';
 import classes from '../Carousel.module.css';
 

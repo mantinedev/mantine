@@ -54,5 +54,9 @@
     "react-remove-scroll": "^2.5.7",
     "react-textarea-autosize": "8.5.3",
     "type-fest": "^3.13.1"
+  },
+  "devDependencies": {
+    "@mantine/hooks": "workspace:*",
+    "@tests/core": "workspace:*"
   }
 }

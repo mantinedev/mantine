@@ -11,10 +11,6 @@
     "composite": true,
     "strict": true,
     "jsx": "react-jsx",
-    "importHelpers": true,
-    "paths": {
-      "@mantine/hooks": ["../hooks/src"]
-    }
-  },
-  "references": [{ "path": "../hooks" }]
+    "importHelpers": true
+  }
 }

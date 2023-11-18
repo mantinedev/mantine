@@ -53,5 +53,10 @@
   "dependencies": {
     "clsx": "2.0.0",
     "highlight.js": "^11.9.0"
+  },
+  "devDependencies": {
+    "@mantine/core": "workspace:*",
+    "@mantine/hooks": "workspace:*",
+    "@tests/core": "workspace:*"
   }
 }

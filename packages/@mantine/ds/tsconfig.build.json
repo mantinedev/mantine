@@ -18,12 +18,6 @@
     "outDir": "lib",
     "declaration": true,
     "composite": true,
-    "declarationDir": "lib",
-    "paths": {
-      "@mantine/core": ["../core/src"],
-      "@mantine/hooks": ["../hooks/src"],
-      "@mantine/code-highlight": ["../code-highlight/src"]
-    }
-  },
-  "references": [{ "path": "../core" }, { "path": "../code-highlight" }, { "path": "../hooks" }]
+    "declarationDir": "lib"
+  }
 }

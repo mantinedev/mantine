@@ -1,4 +1,4 @@
-import { createSafeContext, GetStylesApi } from '../../core/src';
+import { createSafeContext, GetStylesApi } from '@mantine/core';
 import type { CarouselFactory } from './Carousel';
 
 interface CarouselContextValue {

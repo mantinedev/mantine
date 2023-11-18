@@ -9,11 +9,6 @@
     "declaration": true,
     "declarationMap": true,
     "composite": true,
-    "declarationDir": "lib",
-    "paths": {
-      "@mantine/core": ["../core/src"],
-      "@mantine/hooks": ["../hooks/src"]
-    }
-  },
-  "references": [{ "path": "../core" }, { "path": "../hooks" }]
+    "declarationDir": "lib"
+  }
 }

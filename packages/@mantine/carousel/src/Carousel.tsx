@@ -17,7 +17,7 @@ import {
   useRandomClassName,
   rem,
   getSpacing,
-} from '../../core/src';
+} from '@mantine/core';
 import { clamp } from '@mantine/hooks';
 import useEmblaCarousel, { EmblaPluginType, EmblaCarouselType } from 'embla-carousel-react';
 import { getChevronRotation } from './get-chevron-rotation';

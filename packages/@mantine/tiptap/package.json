@@ -51,5 +51,10 @@
     "@tiptap/react": "^2.1.12",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
+  },
+  "devDependencies": {
+    "@mantine/core": "workspace:*",
+    "@mantine/hooks": "workspace:*",
+    "@tests/core": "workspace:*"
   }
 }

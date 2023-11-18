@@ -51,5 +51,10 @@
   },
   "dependencies": {
     "react-dropzone-esm": "15.0.1"
+  },
+  "devDependencies": {
+    "@mantine/core": "workspace:*",
+    "@mantine/hooks": "workspace:*",
+    "@tests/core": "workspace:*"
   }
 }

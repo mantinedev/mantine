@@ -1,5 +1,5 @@
 import React, { useRef, useState } from 'react';
-import { Button, Modal } from '../../core/src';
+import { Button, Modal } from '@mantine/core';
 import Autoplay from 'embla-carousel-autoplay';
 import type { EmblaCarouselType } from 'embla-carousel-react';
 import { Carousel } from './Carousel';

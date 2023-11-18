@@ -43,5 +43,10 @@
   },
   "dependencies": {
     "clsx": "2.0.0"
+  },
+  "devDependencies": {
+    "@mantine/code-highlight": "workspace:*",
+    "@mantine/core": "workspace:*",
+    "@mantine/hooks": "workspace:*"
   }
 }

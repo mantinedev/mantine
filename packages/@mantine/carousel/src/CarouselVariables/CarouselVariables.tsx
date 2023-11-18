@@ -9,7 +9,7 @@ import {
   InlineStyles,
   getBaseValue,
   rem,
-} from '../../../core/src';
+} from '@mantine/core';
 import type { CarouselProps } from '../Carousel';
 
 interface CarouselVariablesProps extends CarouselProps {

@@ -38,5 +38,11 @@
   },
   "dependencies": {
     "@mantine/store": "7.3.0-alpha.0"
+  },
+  "devDependencies": {
+    "@mantine/core": "workspace:*",
+    "@mantine/hooks": "workspace:*",
+    "@mantine/store": "workspace:*",
+    "@tests/core": "workspace:*"
   }
 }

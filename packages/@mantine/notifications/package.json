@@ -51,5 +51,11 @@
   "dependencies": {
     "@mantine/store": "7.3.0-alpha.0",
     "react-transition-group": "4.4.5"
+  },
+  "devDependencies": {
+    "@mantine/core": "workspace:*",
+    "@mantine/hooks": "workspace:*",
+    "@mantine/store": "workspace:*",
+    "@tests/core": "workspace:*"
   }
 }

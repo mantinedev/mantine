@@ -19,16 +19,6 @@
     "declaration": true,
     "declarationMap": true,
     "composite": true,
-    "declarationDir": "lib",
-    "paths": {
-      "@mantine/core": ["../mantine-core/src"],
-      "@mantine/hooks": ["../mantine-hooks/src"],
-      "@mantine/store": ["../mantine-store/src"]
-    }
-  },
-  "references": [
-    { "path": "../mantine-core" },
-    { "path": "../mantine-hooks" },
-    { "path": "../mantine-store" }
-  ]
+    "declarationDir": "lib"
+  }
 }

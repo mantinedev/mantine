@@ -45,5 +45,9 @@
     "@mantine/hooks": "7.3.0-alpha.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
+  },
+  "devDependencies": {
+    "@mantine/core": "workspace:*",
+    "@mantine/hooks": "workspace:*"
   }
 }
