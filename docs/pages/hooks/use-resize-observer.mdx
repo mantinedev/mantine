@@ -1,6 +1,6 @@
 import { Layout } from '@/layout';
 import { MDX_DATA } from '@/mdx';
-import { HooksDemos } from '@mantine/demos';
+import { HooksDemos } from '@docs/demos';
 
 export default Layout(MDX_DATA.useResizeObserver);
 
@@ -39,6 +39,6 @@ function useResizeObserver<T extends HTMLElement = any>(): [
     bottom: number;
     height: number;
     width: number;
-  }
+  },
 ];
 ```

@@ -1,6 +1,6 @@
 import { Layout } from '@/layout';
 import { MDX_DATA } from '@/mdx';
-import { HooksDemos } from '@mantine/demos';
+import { HooksDemos } from '@docs/demos';
 
 export default Layout(MDX_DATA.useValidatedState);
 
@@ -43,6 +43,6 @@ function useValidatedState<T>(
     lastValidValue: T;
     valid: boolean;
   },
-  (val: T) => void
+  (val: T) => void,
 ];
 ```

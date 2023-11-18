@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@docs/demos": "workspace:*",
+    "@docs/styles-api": "workspace:*",
     "@floating-ui/react": "^0.24.8",
     "@hello-pangea/dnd": "^16.3.0",
     "@mantine/carousel": "workspace:*",
@@ -29,7 +30,6 @@
     "@mantine/nprogress": "workspace:*",
     "@mantine/spotlight": "workspace:*",
     "@mantine/store": "workspace:*",
-    "@mantine/styles-api": "workspace:*",
     "@mantine/tiptap": "workspace:*",
     "@mdx-js/loader": "^3.0.0",
     "@mdx-js/react": "^3.0.0",

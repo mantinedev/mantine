@@ -15,7 +15,7 @@ import {
   Pagination,
   Box,
 } from '@mantine/core';
-import { AuthenticationForm, HoverCardHomePageDemo } from '@mantine/demos';
+import { AuthenticationForm, HoverCardHomePageDemo } from '@docs/demos';
 
 function StepperDemo() {
   const [active, setActive] = useState(1);

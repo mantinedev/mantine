@@ -1,6 +1,6 @@
 import { Layout } from '@/layout';
 import { MDX_DATA } from '@/mdx';
-import { HooksDemos } from '@mantine/demos';
+import { HooksDemos } from '@docs/demos';
 
 export default Layout(MDX_DATA.useWindowScroll);
 
@@ -15,6 +15,6 @@ export default Layout(MDX_DATA.useWindowScroll);
 ```tsx
 function useWindowScroll(): readonly [
   { x: number; y: number },
-  (position: { x?: number; y?: number }) => void
+  (position: { x?: number; y?: number }) => void,
 ];
 ```

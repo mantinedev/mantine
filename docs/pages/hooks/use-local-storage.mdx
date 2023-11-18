@@ -1,6 +1,6 @@
 import { Layout } from '@/layout';
 import { MDX_DATA } from '@/mdx';
-import { HooksDemos } from '@mantine/demos';
+import { HooksDemos } from '@docs/demos';
 
 export default Layout(MDX_DATA.useLocalStorage);
 
@@ -144,7 +144,7 @@ function useLocalStorage<T = string>({
 }: UseLocalStorage<T>): readonly [
   T, // current value
   (val: T | ((prevState: T) => T)) => void, // callback to set value in storage
-  () => void // callback to remove value from storage
+  () => void, // callback to remove value from storage
 ];
 ```
 

@@ -3382,9 +3382,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@docs/demos@workspace:*, @docs/demos@workspace:packages/@docs/mantine-demos":
+"@docs/demos@workspace:*, @docs/demos@workspace:packages/@docs/demos":
   version: 0.0.0-use.local
-  resolution: "@docs/demos@workspace:packages/@docs/mantine-demos"
+  resolution: "@docs/demos@workspace:packages/@docs/demos"
+  languageName: unknown
+  linkType: soft
+
+"@docs/styles-api@workspace:*, @docs/styles-api@workspace:packages/@docs/styles-api":
+  version: 0.0.0-use.local
+  resolution: "@docs/styles-api@workspace:packages/@docs/styles-api"
   languageName: unknown
   linkType: soft
 
@@ -4607,7 +4613,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@mantine/styles-api@workspace:*, @mantine/styles-api@workspace:src/mantine-styles-api":
+"@mantine/styles-api@workspace:src/mantine-styles-api":
   version: 0.0.0-use.local
   resolution: "@mantine/styles-api@workspace:src/mantine-styles-api"
   languageName: unknown
@@ -10891,6 +10897,7 @@ __metadata:
   resolution: "docs@workspace:docs"
   dependencies:
     "@docs/demos": "workspace:*"
+    "@docs/styles-api": "workspace:*"
     "@floating-ui/react": "npm:^0.24.8"
     "@hello-pangea/dnd": "npm:^16.3.0"
     "@mantine/carousel": "workspace:*"
@@ -10908,7 +10915,6 @@ __metadata:
     "@mantine/nprogress": "workspace:*"
     "@mantine/spotlight": "workspace:*"
     "@mantine/store": "workspace:*"
-    "@mantine/styles-api": "workspace:*"
     "@mantine/tiptap": "workspace:*"
     "@mdx-js/loader": "npm:^3.0.0"
     "@mdx-js/react": "npm:^3.0.0"

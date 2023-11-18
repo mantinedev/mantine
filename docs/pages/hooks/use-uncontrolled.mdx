@@ -1,6 +1,6 @@
 import { Layout } from '@/layout';
 import { MDX_DATA } from '@/mdx';
-import { HooksDemos } from '@mantine/demos';
+import { HooksDemos } from '@docs/demos';
 
 export default Layout(MDX_DATA.useUncontrolled);
 
@@ -62,6 +62,6 @@ interface UseUncontrolledInput<T> {
 function useUncontrolled<T>(input: UseUncontrolledInput<T>): [
   T, // current value
   (value: T) => void, // onChange function
-  boolean // value that indicates if input is controlled or not
+  boolean, // value that indicates if input is controlled or not
 ];
 ```
