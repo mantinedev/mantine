@@ -1,6 +1,6 @@
 {
   "name": "@mantine/vanilla-extract",
-  "version": "7.3.0-alpha.0",
+  "version": "7.3.0-alpha.1",
   "homepage": "https://mantine.dev",
   "license": "MIT",
   "author": "Vitaly Rtishchev <rtivital@gmail.com>",
@@ -34,6 +34,6 @@
     "directory": "src/mantine-vanilla-extract"
   },
   "peerDependencies": {
-    "@mantine/core": "7.3.0-alpha.0"
+    "@mantine/core": "7.3.0-alpha.1"
   }
 }
