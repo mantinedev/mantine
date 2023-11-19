@@ -18,6 +18,7 @@ export async function getPackageBuildOrder(
   const dependencies = Object.keys({
     ...pkg.packageJson.peerDependencies,
     ...pkg.packageJson.dependencies,
+    ...pkg.packageJson.devDependencies,
   })
     .filter((dependency) => dependency.includes('@mantine/'))
     .map((dependency) => packages.find((pkgItem) => pkgItem.packageJson.name === dependency));

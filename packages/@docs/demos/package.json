@@ -20,5 +20,20 @@
     },
     "./styles.css": "./esm/index.css",
     "./styles.layer.css": "./esm/index.layer.css"
+  },
+  "devDependencies": {
+    "@mantine/core": "workspace: *",
+    "@mantine/form": "workspace: *",
+    "@mantine/hooks": "workspace: *",
+    "@mantine/notifications": "workspace: *",
+    "@mantine/code-highlight": "workspace: *",
+    "@mantine/carousel": "workspace: *",
+    "@mantine/colors-generator": "workspace: *",
+    "@mantine/dates": "workspace: *",
+    "@mantine/dropzone": "workspace: *",
+    "@mantine/spotlight": "workspace: *",
+    "@mantine/nprogress": "workspace: *",
+    "@mantine/store": "workspace: *",
+    "@mantine/tiptap": "workspace: *"
   }
 }

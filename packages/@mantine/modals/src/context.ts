@@ -1,5 +1,5 @@
 import { createContext, ReactNode } from 'react';
-import { ModalProps } from '../../core/src';
+import { ModalProps } from '@mantine/core';
 import type { ConfirmModalProps } from './ConfirmModal';
 
 export type ModalSettings = Partial<Omit<ModalProps, 'opened'>> & { modalId?: string };

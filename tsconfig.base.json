@@ -1,15 +1,5 @@
 {
-  "exclude": [
-    "node_modules",
-    "lib",
-    "esm",
-    "cjs",
-    "jest-config.js",
-    "configuration/storybook/main.js",
-    "lib/**/*",
-    "esm/**/*",
-    "cjs/**/*"
-  ],
+  "exclude": ["node_modules", "lib", "esm", "cjs", "lib/**/*", "esm/**/*", "cjs/**/*"],
   "compilerOptions": {
     "types": ["node", "jest", "@testing-library/jest-dom"],
     "target": "ES2015",

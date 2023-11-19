@@ -1,6 +1,6 @@
 import React, { useEffect, PropsWithChildren } from 'react';
 import { renderHook, render, screen } from '@testing-library/react';
-import { MantineProvider } from '../../../core/src';
+import { MantineProvider } from '@mantine/core';
 import { useModals } from './use-modals';
 import { ModalsProvider } from '../ModalsProvider';
 import { ContextModalProps } from '../context';

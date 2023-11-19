@@ -10,8 +10,22 @@ export interface Package {
 }
 
 export async function getPackagesList() {
-  const basePath = getPath('packages/@mantine');
-  const srcPaths = await fs.readdir(basePath);
+  const basePath = getPath('packages');
+  const namespacesPaths = await fs.readdir(basePath);
+  const srcPaths: string[] = [];
+
+  for (const namespacePath of namespacesPaths) {
+    if (fs.lstatSync(path.join(basePath, namespacePath)).isDirectory()) {
+      const packages = await fs.readdir(path.join(basePath, namespacePath));
+
+      for (const packageName of packages) {
+        if (fs.lstatSync(path.join(basePath, namespacePath, packageName)).isDirectory()) {
+          srcPaths.push(path.join(namespacePath, packageName));
+        }
+      }
+    }
+  }
+
   const packages: Package[] = [];
 
   for (const srcPath of srcPaths) {
