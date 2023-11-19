@@ -1,4 +1,2 @@
-src/**/*
-!src/**/*.d.ts
-demos/
+src/
 tsconfig.*

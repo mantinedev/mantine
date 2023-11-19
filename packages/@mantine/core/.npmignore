@@ -1,3 +1,2 @@
-src/**/*
-!src/**/*.d.ts
+src/
 tsconfig.*
