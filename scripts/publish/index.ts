@@ -48,6 +48,11 @@ async function publish() {
   const packageName = getPackageName(argv._[1]);
   const packagePath = await locatePackage(packageName);
 
+  if (packageName.includes('@mantine/')) {
+    logger.error(`Cannot publish @mantine/* packages separately`);
+    process.exit(1);
+  }
+
   if (!packagePath) {
     logger.error(`Package ${chalk.cyan(packageName)} does not exist`);
     process.exit(1);
