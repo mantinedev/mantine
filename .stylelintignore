@@ -1,4 +1,4 @@
-src/*/esm/**/*.css
-src/*/cjs/**/*.css
+packages/*/*/esm/**/*.css
+packages/*/*/cjs/**/*.css
 docs/.next
 docs/out
