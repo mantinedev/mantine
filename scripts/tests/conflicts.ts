@@ -1,37 +1,28 @@
 // Validates that there are no git conflicts in package.json files
 import fs from 'fs-extra';
-import path from 'node:path';
-import chalk from 'chalk';
 import { createLogger } from '../utils/signale';
-import { getPath } from '../utils/get-path';
+import { getPackagesBuildOrder } from '../build/get-packages-build-order';
 
 const logger = createLogger('check-conflicts');
 
-const src = getPath('src');
-
-const errors: string[] = fs
-  .readdirSync(src)
-  .filter((folder) => fs.lstatSync(path.join(src, folder)).isDirectory())
-  .reduce<string[]>((acc, folder) => {
+getPackagesBuildOrder().then((packages) => {
+  const errors = packages.reduce<string[]>((acc, pkg) => {
     try {
-      fs.readJsonSync(path.join(src, folder, 'package.json'));
+      fs.readJsonSync(pkg.packageJsonPath);
       return acc;
     } catch (err) {
-      acc.push(folder);
+      acc.push(pkg.packageJsonPath);
       return acc;
     }
   }, []);
 
-try {
-  fs.readJsonSync(getPath('package.json'));
-} catch (err) {
-  errors.push('root');
-}
-
-if (errors.length === 0) {
-  logger.success('All package.json files are valid');
-  process.exit(0);
-} else {
-  logger.error(`package.json files with conflicts: ${chalk.red(errors.join(', '))}`);
-  process.exit(1);
-}
+  if (errors.length > 0) {
+    errors.forEach((error) => {
+      logger.error(error);
+    });
+    process.exit(1);
+  } else {
+    logger.success('All files are in place');
+    process.exit(0);
+  }
+});

@@ -39,15 +39,15 @@ export async function getPackageBuildOrder(
 export async function getPackagesBuildOrder(
   packages?: Package[],
   order: Record<string, number> = {}
-) {
-  packages = packages || (await getPackagesList());
+): Promise<Package[]> {
+  const _packages = packages || ((await getPackagesList()) as Package[]);
 
-  for (const pkg of packages) {
-    await getPackageBuildOrder(packages, pkg, order);
+  for (const pkg of _packages) {
+    await getPackageBuildOrder(_packages, pkg, order);
   }
 
   return Object.keys(order)
     .filter((p) => order[p] !== -1)
     .sort((a, b) => order[a] - order[b])
-    .map((p) => packages!.find((dataItem) => dataItem.packageJson.name === p));
+    .map((p) => _packages.find((dataItem) => dataItem.packageJson.name === p)!);
 }
