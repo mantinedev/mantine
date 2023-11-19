@@ -1,5 +1,5 @@
 import React from 'react';
-import { tests, inputDefaultProps, inputStylesApiSelectors } from '@tests/core';
+import { tests, inputDefaultProps, inputStylesApiSelectors } from '@mantine-tests/core';
 import { Autocomplete, AutocompleteProps, AutocompleteStylesNames } from './Autocomplete';
 
 const defaultProps: AutocompleteProps = {

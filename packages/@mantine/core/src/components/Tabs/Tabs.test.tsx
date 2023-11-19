@@ -1,5 +1,5 @@
 import React from 'react';
-import { tests, render, userEvent, screen } from '@tests/core';
+import { tests, render, userEvent, screen } from '@mantine-tests/core';
 import { DirectionProvider } from '../../core';
 import { TabsTab } from './TabsTab/TabsTab';
 import { TabsList } from './TabsList/TabsList';

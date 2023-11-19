@@ -1,6 +1,6 @@
 import React from 'react';
-import { render, tests, patchConsoleError, screen } from '@tests/core';
-import { datesTests } from '@tests/dates';
+import { render, tests, patchConsoleError, screen } from '@mantine-tests/core';
+import { datesTests } from '@mantine-tests/dates';
 import { WeekdaysRow, WeekdaysRowProps, WeekdaysRowStylesNames } from './WeekdaysRow';
 
 const defaultProps: WeekdaysRowProps = {};

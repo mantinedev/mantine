@@ -1,5 +1,5 @@
 import React from 'react';
-import { tests, render, createContextContainer, screen } from '@tests/core';
+import { tests, render, createContextContainer, screen } from '@mantine-tests/core';
 import { Tabs } from '../Tabs';
 import { TabsPanel, TabsPanelProps, TabsPanelStylesNames } from './TabsPanel';
 

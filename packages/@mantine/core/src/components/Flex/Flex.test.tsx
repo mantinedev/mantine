@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, tests } from '@tests/core';
+import { render, tests } from '@mantine-tests/core';
 import { Flex, FlexProps, FlexStylesNames } from './Flex';
 
 const defaultProps: FlexProps = {};

@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, screen, tests, createContextContainer } from '@tests/core';
+import { render, screen, tests, createContextContainer } from '@mantine-tests/core';
 import {
   ProgressSection,
   ProgressSectionProps,

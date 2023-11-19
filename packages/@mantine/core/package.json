@@ -56,7 +56,7 @@
     "type-fest": "^3.13.1"
   },
   "devDependencies": {
-    "@mantine/hooks": "workspace:*",
-    "@tests/core": "workspace:*"
+    "@mantine-tests/core": "workspace:*",
+    "@mantine/hooks": "workspace:*"
   }
 }

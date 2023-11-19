@@ -1,4 +1,4 @@
-import { tests } from '@tests/core';
+import { tests } from '@mantine-tests/core';
 import { ScrollArea, ScrollAreaProps, ScrollAreaStylesNames } from './ScrollArea';
 
 const defaultProps: ScrollAreaProps = {

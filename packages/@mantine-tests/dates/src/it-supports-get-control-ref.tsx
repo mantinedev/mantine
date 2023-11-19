@@ -1,5 +1,5 @@
 import React from 'react';
-import { render } from '@tests/core';
+import { render } from '@mantine-tests/core';
 
 export interface ComponentTestProps {
   __getControlRef?: (rowIndex: number, cellIndex: number, node: HTMLButtonElement) => void;

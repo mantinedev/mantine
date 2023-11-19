@@ -1,5 +1,5 @@
 import React from 'react';
-import { tests } from '@tests/core';
+import { tests } from '@mantine-tests/core';
 import { TextInput } from '../TextInput';
 import { Combobox } from './Combobox';
 import { useCombobox } from './use-combobox/use-combobox';

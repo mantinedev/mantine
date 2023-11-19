@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, userEvent, screen, createContextContainer, tests } from '@tests/core';
+import { render, userEvent, screen, createContextContainer, tests } from '@mantine-tests/core';
 import { MenuItem, MenuItemProps, MenuItemStylesNames } from './MenuItem';
 import { Menu } from '../Menu';
 

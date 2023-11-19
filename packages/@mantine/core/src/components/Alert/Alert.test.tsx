@@ -1,5 +1,5 @@
 import React from 'react';
-import { tests } from '@tests/core';
+import { tests } from '@mantine-tests/core';
 import { Alert, AlertProps, AlertStylesNames } from './Alert';
 
 const defaultProps: AlertProps = {

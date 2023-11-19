@@ -1,7 +1,7 @@
 import dayjs from 'dayjs';
 import React from 'react';
-import { render, tests, userEvent, screen } from '@tests/core';
-import { datesTests } from '@tests/dates';
+import { render, tests, userEvent, screen } from '@mantine-tests/core';
+import { datesTests } from '@mantine-tests/dates';
 import { YearPicker, YearPickerProps, YearPickerStylesNames } from './YearPicker';
 import { DatesProvider } from '../DatesProvider';
 

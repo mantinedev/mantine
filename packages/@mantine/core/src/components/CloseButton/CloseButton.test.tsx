@@ -1,5 +1,5 @@
 import React from 'react';
-import { tests, render } from '@tests/core';
+import { tests, render } from '@mantine-tests/core';
 import { CloseButton, CloseButtonProps, CloseButtonStylesNames } from './CloseButton';
 import { CloseIcon } from './CloseIcon';
 

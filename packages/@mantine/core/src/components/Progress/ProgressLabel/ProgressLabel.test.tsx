@@ -1,4 +1,4 @@
-import { tests, createContextContainer } from '@tests/core';
+import { tests, createContextContainer } from '@mantine-tests/core';
 import { ProgressLabel, ProgressLabelProps, ProgressLabelStylesNames } from './ProgressLabel';
 import { ProgressRoot } from '../ProgressRoot/ProgressRoot';
 

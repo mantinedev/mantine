@@ -1,4 +1,4 @@
-import { tests } from '@tests/core';
+import { tests } from '@mantine-tests/core';
 import { Kbd, KbdProps, KbdStylesNames } from './Kbd';
 
 const defaultProps: KbdProps = {};

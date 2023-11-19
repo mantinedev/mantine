@@ -1,5 +1,5 @@
 import React from 'react';
-import { tests, render, screen, userEvent, createContextContainer } from '@tests/core';
+import { tests, render, screen, userEvent, createContextContainer } from '@mantine-tests/core';
 import { Combobox } from '../Combobox';
 import { ComboboxOption, ComboboxOptionProps, ComboboxOptionStylesNames } from './ComboboxOption';
 

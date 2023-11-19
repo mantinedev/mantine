@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, tests } from '@tests/core';
+import { render, tests } from '@mantine-tests/core';
 import { ColorSwatch, ColorSwatchProps, ColorSwatchStylesNames } from './ColorSwatch';
 
 const defaultProps: ColorSwatchProps = {

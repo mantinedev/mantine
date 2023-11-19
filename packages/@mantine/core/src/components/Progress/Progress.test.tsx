@@ -1,5 +1,5 @@
 import React from 'react';
-import { tests } from '@tests/core';
+import { tests } from '@mantine-tests/core';
 import { Progress, ProgressProps, ProgressStylesNames } from './Progress';
 import { ProgressRoot } from './ProgressRoot/ProgressRoot';
 import { ProgressLabel } from './ProgressLabel/ProgressLabel';

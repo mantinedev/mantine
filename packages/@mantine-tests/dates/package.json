@@ -1,5 +1,5 @@
 {
-  "name": "@tests/dates",
+  "name": "@mantine-tests/dates",
   "version": "1.0.0",
   "main": "./cjs/index.cjs",
   "module": "./esm/index.mjs",
@@ -22,9 +22,9 @@
     "react-dom": "^18.2.0"
   },
   "devDependencies": {
+    "@mantine-tests/core": "workspace:*",
     "@mantine/core": "workspace:*",
     "@mantine/dates": "workspace:*",
-    "@mantine/hooks": "workspace:*",
-    "@tests/core": "workspace:*"
+    "@mantine/hooks": "workspace:*"
   }
 }

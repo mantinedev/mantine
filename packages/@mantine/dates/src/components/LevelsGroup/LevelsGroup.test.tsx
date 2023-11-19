@@ -1,4 +1,4 @@
-import { tests } from '@tests/core';
+import { tests } from '@mantine-tests/core';
 import { LevelsGroup, LevelsGroupProps, LevelsGroupStylesNames } from './LevelsGroup';
 
 const defaultProps: LevelsGroupProps = {};

@@ -4477,13 +4477,40 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@mantine-tests/core@workspace:*, @mantine-tests/core@workspace:packages/@mantine-tests/core":
+  version: 0.0.0-use.local
+  resolution: "@mantine-tests/core@workspace:packages/@mantine-tests/core"
+  dependencies:
+    "@mantine/core": "workspace:*"
+    "@mantine/hooks": "workspace:*"
+  peerDependencies:
+    react: ^18.2.0
+    react-dom: ^18.2.0
+  languageName: unknown
+  linkType: soft
+
+"@mantine-tests/dates@workspace:*, @mantine-tests/dates@workspace:packages/@mantine-tests/dates":
+  version: 0.0.0-use.local
+  resolution: "@mantine-tests/dates@workspace:packages/@mantine-tests/dates"
+  dependencies:
+    "@mantine-tests/core": "workspace:*"
+    "@mantine/core": "workspace:*"
+    "@mantine/dates": "workspace:*"
+    "@mantine/hooks": "workspace:*"
+  peerDependencies:
+    dayjs: "*"
+    react: ^18.2.0
+    react-dom: ^18.2.0
+  languageName: unknown
+  linkType: soft
+
 "@mantine/carousel@workspace:*, @mantine/carousel@workspace:packages/@mantine/carousel":
   version: 0.0.0-use.local
   resolution: "@mantine/carousel@workspace:packages/@mantine/carousel"
   dependencies:
+    "@mantine-tests/core": "workspace:*"
     "@mantine/core": "workspace:*"
     "@mantine/hooks": "workspace:*"
-    "@tests/core": "workspace:*"
   peerDependencies:
     "@mantine/core": 7.3.0-alpha.1
     "@mantine/hooks": 7.3.0-alpha.1
@@ -4497,9 +4524,9 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@mantine/code-highlight@workspace:packages/@mantine/code-highlight"
   dependencies:
+    "@mantine-tests/core": "workspace:*"
     "@mantine/core": "workspace:*"
     "@mantine/hooks": "workspace:*"
-    "@tests/core": "workspace:*"
     clsx: "npm:2.0.0"
     highlight.js: "npm:^11.9.0"
   peerDependencies:
@@ -4523,8 +4550,8 @@ __metadata:
   resolution: "@mantine/core@workspace:packages/@mantine/core"
   dependencies:
     "@floating-ui/react": "npm:^0.24.8"
+    "@mantine-tests/core": "workspace:*"
     "@mantine/hooks": "workspace:*"
-    "@tests/core": "workspace:*"
     clsx: "npm:2.0.0"
     react-number-format: "npm:^5.3.1"
     react-remove-scroll: "npm:^2.5.7"
@@ -4541,10 +4568,10 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@mantine/dates@workspace:packages/@mantine/dates"
   dependencies:
+    "@mantine-tests/core": "workspace:*"
+    "@mantine-tests/dates": "workspace:*"
     "@mantine/core": "workspace:*"
     "@mantine/hooks": "workspace:*"
-    "@tests/core": "workspace:*"
-    "@tests/dates": "workspace:*"
     clsx: "npm:2.0.0"
   peerDependencies:
     "@mantine/core": 7.3.0-alpha.1
@@ -4559,9 +4586,9 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@mantine/dropzone@workspace:packages/@mantine/dropzone"
   dependencies:
+    "@mantine-tests/core": "workspace:*"
     "@mantine/core": "workspace:*"
     "@mantine/hooks": "workspace:*"
-    "@tests/core": "workspace:*"
     react-dropzone-esm: "npm:15.0.1"
   peerDependencies:
     "@mantine/core": 7.3.0-alpha.1
@@ -4626,10 +4653,10 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@mantine/notifications@workspace:packages/@mantine/notifications"
   dependencies:
+    "@mantine-tests/core": "workspace:*"
     "@mantine/core": "workspace:*"
     "@mantine/hooks": "workspace:*"
     "@mantine/store": "npm:7.3.0-alpha.1"
-    "@tests/core": "workspace:*"
     react-transition-group: "npm:4.4.5"
   peerDependencies:
     "@mantine/core": 7.3.0-alpha.1
@@ -4643,10 +4670,10 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@mantine/nprogress@workspace:packages/@mantine/nprogress"
   dependencies:
+    "@mantine-tests/core": "workspace:*"
     "@mantine/core": "workspace:*"
     "@mantine/hooks": "workspace:*"
     "@mantine/store": "npm:7.3.0-alpha.1"
-    "@tests/core": "workspace:*"
   peerDependencies:
     "@mantine/core": 7.3.0-alpha.1
     "@mantine/hooks": 7.3.0-alpha.1
@@ -4659,10 +4686,10 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@mantine/spotlight@workspace:packages/@mantine/spotlight"
   dependencies:
+    "@mantine-tests/core": "workspace:*"
     "@mantine/core": "workspace:*"
     "@mantine/hooks": "workspace:*"
     "@mantine/store": "npm:7.3.0-alpha.1"
-    "@tests/core": "workspace:*"
   peerDependencies:
     "@mantine/core": 7.3.0-alpha.1
     "@mantine/hooks": 7.3.0-alpha.1
@@ -4683,9 +4710,9 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@mantine/tiptap@workspace:packages/@mantine/tiptap"
   dependencies:
+    "@mantine-tests/core": "workspace:*"
     "@mantine/core": "workspace:*"
     "@mantine/hooks": "workspace:*"
-    "@tests/core": "workspace:*"
   peerDependencies:
     "@mantine/core": 7.3.0-alpha.1
     "@mantine/hooks": 7.3.0-alpha.1
@@ -6731,33 +6758,6 @@ __metadata:
   checksum: 1e00d6ead23377885b906db6e46e259161a0efb4138f7527481d7435f3c8f65cb7e3eab2900e2ac1886fa6dd03416e773a3a60dea87a9a2086a7127dee315f6f
   languageName: node
   linkType: hard
-
-"@tests/core@workspace:*, @tests/core@workspace:packages/@tests/core":
-  version: 0.0.0-use.local
-  resolution: "@tests/core@workspace:packages/@tests/core"
-  dependencies:
-    "@mantine/core": "workspace:*"
-    "@mantine/hooks": "workspace:*"
-  peerDependencies:
-    react: ^18.2.0
-    react-dom: ^18.2.0
-  languageName: unknown
-  linkType: soft
-
-"@tests/dates@workspace:*, @tests/dates@workspace:packages/@tests/dates":
-  version: 0.0.0-use.local
-  resolution: "@tests/dates@workspace:packages/@tests/dates"
-  dependencies:
-    "@mantine/core": "workspace:*"
-    "@mantine/dates": "workspace:*"
-    "@mantine/hooks": "workspace:*"
-    "@tests/core": "workspace:*"
-  peerDependencies:
-    dayjs: "*"
-    react: ^18.2.0
-    react-dom: ^18.2.0
-  languageName: unknown
-  linkType: soft
 
 "@tiptap/core@npm:^2.1.12":
   version: 2.1.12

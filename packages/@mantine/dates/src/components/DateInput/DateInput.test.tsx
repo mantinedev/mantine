@@ -6,14 +6,14 @@ import {
   render,
   screen,
   userEvent,
-} from '@tests/core';
+} from '@mantine-tests/core';
 import {
   datesTests,
   expectNoPopover,
   expectOpenedPopover,
   expectValue,
   clickControl,
-} from '@tests/dates';
+} from '@mantine-tests/dates';
 import { __InputStylesNames } from '@mantine/core';
 import { DateInput, DateInputProps } from './DateInput';
 import { DatesProvider } from '../DatesProvider';

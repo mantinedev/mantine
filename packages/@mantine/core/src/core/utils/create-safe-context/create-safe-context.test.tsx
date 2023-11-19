@@ -1,6 +1,6 @@
 import React from 'react';
 import { renderHook } from '@testing-library/react';
-import { patchConsoleError } from '@tests/core';
+import { patchConsoleError } from '@mantine-tests/core';
 import { createSafeContext } from './create-safe-context';
 
 interface ContextType {

@@ -3,7 +3,7 @@ import React from 'react';
 import { screen } from '@testing-library/react';
 import dayjs from 'dayjs';
 import { DatesProvider } from '@mantine/dates';
-import { render } from '@tests/core';
+import { render } from '@mantine-tests/core';
 
 export function expectWeekdaysNames(names: string[]) {
   expect(screen.getAllByRole('columnheader').map((th) => th.textContent)).toStrictEqual(names);

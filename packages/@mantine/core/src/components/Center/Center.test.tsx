@@ -1,5 +1,5 @@
 import React from 'react';
-import { tests } from '@tests/core';
+import { tests } from '@mantine-tests/core';
 import { Center, CenterProps, CenterStylesNames } from './Center';
 
 const defaultProps: CenterProps = {

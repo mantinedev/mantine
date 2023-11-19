@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, tests } from '@tests/core';
+import { render, tests } from '@mantine-tests/core';
 import { ListItem } from './ListItem/ListItem';
 import { List, ListProps, ListStylesNames } from './List';
 

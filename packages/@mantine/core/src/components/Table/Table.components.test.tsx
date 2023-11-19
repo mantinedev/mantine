@@ -1,5 +1,11 @@
 import React from 'react';
-import { render, tests, createContextContainer, patchConsoleError, screen } from '@tests/core';
+import {
+  render,
+  tests,
+  createContextContainer,
+  patchConsoleError,
+  screen,
+} from '@mantine-tests/core';
 import {
   TableTh,
   TableThProps,

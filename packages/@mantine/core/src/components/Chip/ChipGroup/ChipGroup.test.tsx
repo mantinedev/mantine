@@ -1,5 +1,5 @@
 import React from 'react';
-import { tests, render, screen, userEvent } from '@tests/core';
+import { tests, render, screen, userEvent } from '@mantine-tests/core';
 import { ChipGroup } from './ChipGroup';
 import { Chip } from '../Chip';
 

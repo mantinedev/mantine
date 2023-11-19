@@ -1,5 +1,11 @@
 import React from 'react';
-import { tests, inputDefaultProps, inputStylesApiSelectors, render, userEvent } from '@tests/core';
+import {
+  tests,
+  inputDefaultProps,
+  inputStylesApiSelectors,
+  render,
+  userEvent,
+} from '@mantine-tests/core';
 import { NativeSelect, NativeSelectProps } from './NativeSelect';
 import { __InputStylesNames } from '../Input';
 

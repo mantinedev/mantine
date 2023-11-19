@@ -1,4 +1,4 @@
-import { createContextContainer, tests } from '@tests/core';
+import { createContextContainer, tests } from '@mantine-tests/core';
 import { MenuLabel, MenuLabelProps, MenuLabelStylesNames } from './MenuLabel';
 import { Menu } from '../Menu';
 

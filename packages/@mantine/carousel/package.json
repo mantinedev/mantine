@@ -52,8 +52,8 @@
     "react-dom": "^18.2.0"
   },
   "devDependencies": {
+    "@mantine-tests/core": "workspace:*",
     "@mantine/core": "workspace:*",
-    "@mantine/hooks": "workspace:*",
-    "@tests/core": "workspace:*"
+    "@mantine/hooks": "workspace:*"
   }
 }

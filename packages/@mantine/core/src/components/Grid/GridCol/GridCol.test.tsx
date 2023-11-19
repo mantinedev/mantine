@@ -1,4 +1,4 @@
-import { tests, createContextContainer } from '@tests/core';
+import { tests, createContextContainer } from '@mantine-tests/core';
 import { GridCol, GridColProps, GridColStylesNames } from './GridCol';
 import { Grid } from '../Grid';
 

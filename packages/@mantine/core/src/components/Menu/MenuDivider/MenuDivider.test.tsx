@@ -1,4 +1,4 @@
-import { createContextContainer, tests } from '@tests/core';
+import { createContextContainer, tests } from '@mantine-tests/core';
 import { MenuDivider, MenuDividerProps, MenuDividerStylesNames } from './MenuDivider';
 import { Menu } from '../Menu';
 

@@ -1,4 +1,4 @@
-import { tests } from '@tests/core';
+import { tests } from '@mantine-tests/core';
 import { ProgressRoot, ProgressRootProps, ProgressRootStylesNames } from './ProgressRoot';
 
 const defaultProps: ProgressRootProps = {};

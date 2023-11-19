@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, tests } from '@tests/core';
+import { render, tests } from '@mantine-tests/core';
 import { Anchor, AnchorProps, AnchorStylesNames } from './Anchor';
 
 const defaultProps: AnchorProps = {};

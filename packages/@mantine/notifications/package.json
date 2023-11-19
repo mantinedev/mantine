@@ -53,8 +53,8 @@
     "react-transition-group": "4.4.5"
   },
   "devDependencies": {
+    "@mantine-tests/core": "workspace:*",
     "@mantine/core": "workspace:*",
-    "@mantine/hooks": "workspace:*",
-    "@tests/core": "workspace:*"
+    "@mantine/hooks": "workspace:*"
   }
 }

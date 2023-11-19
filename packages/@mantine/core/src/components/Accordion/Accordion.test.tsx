@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, tests, userEvent, screen } from '@tests/core';
+import { render, tests, userEvent, screen } from '@mantine-tests/core';
 import { AccordionChevron } from './AccordionChevron';
 import { AccordionControl } from './AccordionControl/AccordionControl';
 import { AccordionItem } from './AccordionItem/AccordionItem';

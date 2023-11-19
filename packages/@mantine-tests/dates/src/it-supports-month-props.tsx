@@ -4,7 +4,7 @@ import React from 'react';
 import userEvent from '@testing-library/user-event';
 import { screen } from '@testing-library/react';
 import { DatesProvider } from '@mantine/dates';
-import { render } from '@tests/core';
+import { render } from '@mantine-tests/core';
 import { itSupportsWeekdaysProps } from './it-supports-weekdays-props';
 
 interface Options {

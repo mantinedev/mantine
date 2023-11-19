@@ -1,4 +1,4 @@
-import { tests, createContextContainer } from '@tests/core';
+import { tests, createContextContainer } from '@mantine-tests/core';
 import { PaginationDots, PaginationDotsProps, PaginationDotsStylesNames } from './PaginationDots';
 import { PaginationRoot } from '../PaginationRoot/PaginationRoot';
 

@@ -1,5 +1,5 @@
 import React, { createRef } from 'react';
-import { render, tests, screen } from '@tests/core';
+import { render, tests, screen } from '@mantine-tests/core';
 import { Checkbox, CheckboxProps, CheckboxStylesNames } from './Checkbox';
 
 const defaultProps: CheckboxProps = {

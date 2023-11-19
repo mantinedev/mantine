@@ -1,5 +1,5 @@
 import React from 'react';
-import { render } from '@tests/core';
+import { render } from '@mantine-tests/core';
 import { HiddenDatesInput } from './HiddenDatesInput';
 
 describe('@mantine/dates/HiddenDatesInput', () => {

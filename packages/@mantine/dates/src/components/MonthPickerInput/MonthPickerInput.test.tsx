@@ -1,7 +1,13 @@
 import React from 'react';
-import { tests, inputDefaultProps, inputStylesApiSelectors, render, userEvent } from '@tests/core';
+import {
+  tests,
+  inputDefaultProps,
+  inputStylesApiSelectors,
+  render,
+  userEvent,
+} from '@mantine-tests/core';
 import { __InputStylesNames } from '@mantine/core';
-import { clickInput, datesTests, expectValue } from '@tests/dates';
+import { clickInput, datesTests, expectValue } from '@mantine-tests/dates';
 import { MonthPickerInput, MonthPickerInputProps } from './MonthPickerInput';
 import { DatesProvider } from '../DatesProvider';
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, tests, screen } from '@tests/core';
+import { render, tests, screen } from '@mantine-tests/core';
 import { Indicator, IndicatorProps, IndicatorStylesNames } from './Indicator';
 
 const defaultProps: IndicatorProps = {};

@@ -7,7 +7,7 @@ import {
   screen,
   render,
   userEvent,
-} from '@tests/core';
+} from '@mantine-tests/core';
 import {
   datesTests,
   clickInput,
@@ -16,7 +16,7 @@ import {
   expectOpenedModal,
   expectOpenedPopover,
   expectValue,
-} from '@tests/dates';
+} from '@mantine-tests/dates';
 import { DateTimePicker, DateTimePickerProps } from './DateTimePicker';
 import { DatesProvider } from '../DatesProvider';
 

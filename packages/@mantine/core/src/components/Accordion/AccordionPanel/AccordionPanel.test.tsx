@@ -1,4 +1,4 @@
-import { tests, createContextContainer } from '@tests/core';
+import { tests, createContextContainer } from '@mantine-tests/core';
 import { AccordionItem } from '../AccordionItem/AccordionItem';
 import { AccordionPanel, AccordionPanelProps, AccordionPanelStylesNames } from './AccordionPanel';
 import { Accordion } from '../Accordion';

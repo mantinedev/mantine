@@ -1,4 +1,4 @@
-import { createContextContainer, tests } from '@tests/core';
+import { createContextContainer, tests } from '@mantine-tests/core';
 import { CarouselSlide, CarouselSlideProps, CarouselSlideStylesNames } from './CarouselSlide';
 import { Carousel } from '../Carousel';
 

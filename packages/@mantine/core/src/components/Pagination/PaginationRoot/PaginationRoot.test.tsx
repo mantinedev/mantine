@@ -1,4 +1,4 @@
-import { tests } from '@tests/core';
+import { tests } from '@mantine-tests/core';
 import { PaginationRoot, PaginationRootProps, PaginationRootStylesNames } from './PaginationRoot';
 
 const defaultProps: PaginationRootProps = {

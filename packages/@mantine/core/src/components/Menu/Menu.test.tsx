@@ -1,6 +1,6 @@
 import React from 'react';
 import { cleanup } from '@testing-library/react';
-import { tests, render, screen, userEvent } from '@tests/core';
+import { tests, render, screen, userEvent } from '@mantine-tests/core';
 import { Menu, MenuProps } from './Menu';
 import { MenuItem } from './MenuItem/MenuItem';
 import { MenuDropdown } from './MenuDropdown/MenuDropdown';

@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, tests, screen } from '@tests/core';
+import { render, tests, screen } from '@mantine-tests/core';
 import { Code, CodeProps, CodeStylesNames } from './Code';
 
 const defaultProps: CodeProps = {};
