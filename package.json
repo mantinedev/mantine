@@ -41,6 +41,7 @@
     "test:exports": "esno scripts/tests/exports",
     "test:conflicts": "esno scripts/tests/conflicts",
     "test:validate-package-json": "esno scripts/tests/validate-package-json",
+    "test:validate-packages-files": "esno scripts/tests/validate-packages-files",
     "jest": "jest",
     "typecheck": "tsc --noEmit && cd docs && npm run typecheck",
     "lint": "npm run eslint && npm run stylelint",

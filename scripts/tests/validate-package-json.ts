@@ -3,7 +3,7 @@ import { createLogger } from '../utils/signale';
 import { getPackagesBuildOrder } from '../build/get-packages-build-order';
 import { PackageJson } from 'type-fest';
 
-const logger = createLogger('package-json');
+const logger = createLogger('validate-package-json');
 
 function validatePackageJson(content: PackageJson, errors: string[]) {
   !content.name && errors.push(`Missing name for package ${content.name}`);
