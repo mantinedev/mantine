@@ -11,9 +11,9 @@
   "exclude": [
     "public",
     "node_modules",
-    "src/mantine-*/esm/**/*",
-    "src/mantine-*/lib/**/*",
-    "src/mantine-*/cjs/**/*"
+    "./packages/@tests/*/esm/**/*",
+    "./packages/@docs/*/cjs/**/*",
+    "./packages/@mantine/*/lib/**/*"
   ],
   "compilerOptions": {
     "paths": {
