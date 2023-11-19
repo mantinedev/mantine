@@ -47,7 +47,8 @@ You can find other popular examples on [easings.net](https://easings.net/)
 ```tsx
 useScrollIntoView({
   target: someDomElement,
-  easing: (t) => (t < 0.5 ? 16 * Math.pow(t, 5) : 1 - Math.pow(-2 * x + 2, 5) / 2), // easeInOutQuint
+  easing: (t) =>
+    t < 0.5 ? 16 * Math.pow(t, 5) : 1 - Math.pow(-2 * x + 2, 5) / 2, // easeInOutQuint
 });
 ```
 

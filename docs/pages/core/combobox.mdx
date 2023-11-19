@@ -9,7 +9,10 @@ export default Layout(MDX_DATA.Combobox);
 This page contains only a small set of examples, as the full code of the demos is long.
 You can find all 50+ examples on a [separate page](/combobox?e=BasicSelect).
 
-<ExamplesButton link="/combobox?e=BasicSelect" label="Open Combobox examples page" />
+<ExamplesButton
+  link="/combobox?e=BasicSelect"
+  label="Open Combobox examples page"
+/>
 
 ## Usage
 
@@ -28,7 +31,9 @@ import { useCombobox, Combobox } from '@mantine/core';
 
 function Demo() {
   const combobox = useCombobox();
-  return <Combobox store={combobox}>{/* Your implementation */}</Combobox>;
+  return (
+    <Combobox store={combobox}>{/* Your implementation */}</Combobox>
+  );
 }
 ```
 
@@ -83,7 +88,9 @@ interface ComboboxStore {
   closeDropdown(eventSource?: 'keyboard' | 'mouse' | 'unknown'): void;
 
   /** Toggles dropdown opened state */
-  toggleDropdown(eventSource?: 'keyboard' | 'mouse' | 'unknown'): void;
+  toggleDropdown(
+    eventSource?: 'keyboard' | 'mouse' | 'unknown'
+  ): void;
 
   /** Selected option index */
   selectedOptionIndex: number;
@@ -165,7 +172,9 @@ function Demo() {
   return (
     <Combobox>
       <Combobox.Target>
-        <Button onClick={() => combobox.openDropdown()}>Open dropdown</Button>
+        <Button onClick={() => combobox.openDropdown()}>
+          Open dropdown
+        </Button>
       </Combobox.Target>
 
       {/* Your implementation */}
@@ -187,7 +196,9 @@ function Demo() {
     onDropdownClose: () => combobox.resetSelectedOption(),
   });
 
-  return <Combobox store={combobox}>{/* Your implementation */}</Combobox>;
+  return (
+    <Combobox store={combobox}>{/* Your implementation */}</Combobox>
+  );
 }
 ```
 

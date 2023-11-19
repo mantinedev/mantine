@@ -182,7 +182,9 @@ function Demo() {
   return (
     <DatePicker
       getDayProps={(date) => ({
-        'aria-label': `Select date ${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}`,
+        'aria-label': `Select date ${
+          date.getMonth() + 1
+        }/${date.getDate()}/${date.getFullYear()}`,
       })}
       getYearControlProps={(date) => ({
         'aria-label': `Select year ${date.getFullYear()}`,
@@ -211,11 +213,13 @@ Note that the following events will only trigger if focus is on date control.
     },
     {
       key: 'ArrowDown',
-      description: 'Focuses next non-disabled date in the same column',
+      description:
+        'Focuses next non-disabled date in the same column',
     },
     {
       key: 'ArrowUp',
-      description: 'Focuses previous non-disabled date in the same column',
+      description:
+        'Focuses previous non-disabled date in the same column',
     },
   ]}
 />

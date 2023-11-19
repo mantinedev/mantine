@@ -17,7 +17,12 @@ import { Transition } from '@mantine/core';
 
 function Demo({ opened }: { opened: boolean }) {
   return (
-    <Transition mounted={opened} transition="fade" duration={400} timingFunction="ease">
+    <Transition
+      mounted={opened}
+      transition="fade"
+      duration={400}
+      timingFunction="ease"
+    >
       {(styles) => <div style={styles}>Your modal</div>}
     </Transition>
   );

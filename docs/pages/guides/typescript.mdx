@@ -48,7 +48,9 @@ Example of extending [polymorphic components](/guides/polymorphic) props:
 ```tsx
 import { ButtonProps, Button, ElementProps } from '@mantine/core';
 
-interface MyButtonProps extends ButtonProps, ElementProps<'button', keyof ButtonProps> {
+interface MyButtonProps
+  extends ButtonProps,
+    ElementProps<'button', keyof ButtonProps> {
   height: number;
 }
 
@@ -102,7 +104,11 @@ function Demo() {
 that accept theme override as an argument:
 
 ```tsx
-import { MantineThemeOverride, createTheme, mergeThemeOverrides } from '@mantine/core';
+import {
+  MantineThemeOverride,
+  createTheme,
+  mergeThemeOverrides,
+} from '@mantine/core';
 
 const baseTheme = createTheme({
   fontFamily: 'Helvetica, sans-serif',
@@ -129,7 +135,10 @@ const mergedTheme = mergeThemes([overrideTheme, overrideTheme2]);
 to function that accept color scheme as an argument:
 
 ```tsx
-import { MantineColorScheme, useMantineColorScheme } from '@mantine/core';
+import {
+  MantineColorScheme,
+  useMantineColorScheme,
+} from '@mantine/core';
 
 function getComputedColorScheme(colorScheme: MantineColorScheme) {
   return colorScheme === 'auto' ? 'light' : colorScheme;
@@ -181,9 +190,15 @@ declare module '@mantine/core' {
 To override `theme.colors`:
 
 ```tsx
-import { MantineColorsTuple, DefaultMantineColor } from '@mantine/core';
+import {
+  MantineColorsTuple,
+  DefaultMantineColor,
+} from '@mantine/core';
 
-type ExtendedCustomColors = 'primaryColorName' | 'secondaryColorName' | DefaultMantineColor;
+type ExtendedCustomColors =
+  | 'primaryColorName'
+  | 'secondaryColorName'
+  | DefaultMantineColor;
 
 declare module '@mantine/core' {
   export interface MantineThemeColorsOverride {

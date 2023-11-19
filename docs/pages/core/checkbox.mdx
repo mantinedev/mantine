@@ -17,7 +17,10 @@ import { Checkbox } from '@mantine/core';
 function Demo() {
   const [checked, setChecked] = useState(false);
   return (
-    <Checkbox checked={checked} onChange={(event) => setChecked(event.currentTarget.checked)} />
+    <Checkbox
+      checked={checked}
+      onChange={(event) => setChecked(event.currentTarget.checked)}
+    />
   );
 }
 ```
@@ -41,7 +44,10 @@ Use `iconColor` prop to change icon color. You can reference colors from `theme.
 `Checkbox` supports indeterminate state. When `indeterminate` prop is set,
 `checked` prop is ignored (checkbox always has checked styles):
 
-<Demo data={CheckboxDemos.indeterminate} demoProps={{ toggle: true }} />
+<Demo
+  data={CheckboxDemos.indeterminate}
+  demoProps={{ toggle: true }}
+/>
 
 ## Label with link
 

@@ -14,8 +14,10 @@ import { useForm } from '@mantine/form';
 const form = useForm({
   initialValues: { firstName: '', lastName: '' },
   validate: {
-    firstName: (value) => (value.length < 2 ? 'First name is too short' : null),
-    lastName: (value) => (value.length < 2 ? 'Last name is too short' : null),
+    firstName: (value) =>
+      value.length < 2 ? 'First name is too short' : null,
+    lastName: (value) =>
+      value.length < 2 ? 'Last name is too short' : null,
   },
 });
 
@@ -81,7 +83,9 @@ form.errors; // -> { email: 'Invalid email' }
 ```tsx
 import { useForm } from '@mantine/form';
 
-const form = useForm({ initialErrors: { name: 'Too short', email: 'Invalid email' } });
+const form = useForm({
+  initialErrors: { name: 'Too short', email: 'Invalid email' },
+});
 form.clearErrors();
 
 console.log(form.errors);
@@ -95,7 +99,9 @@ console.log(form.errors);
 ```tsx
 import { useForm } from '@mantine/form';
 
-const form = useForm({ initialErrors: { name: 'Too short', email: 'Invalid email' } });
+const form = useForm({
+  initialErrors: { name: 'Too short', email: 'Invalid email' },
+});
 form.clearFieldError('name');
 
 console.log(form.errors);
@@ -123,7 +129,9 @@ Note that errors that are `false`, `null` or `undefined` will be automatically r
 ```tsx
 import { useForm } from '@mantine/form';
 
-const form = useForm({ initialErrors: { name: 'name-error', email: null } });
+const form = useForm({
+  initialErrors: { name: 'name-error', email: null },
+});
 form.errors; // -> { name: 'name-error' }, email error is not included in errors object
 ```
 

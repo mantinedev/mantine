@@ -28,7 +28,9 @@ Hook returns object with properties:
 ## Definition
 
 ```tsx
-function useClipboard(options: { timeout: number } = { timeout: 2000 }): {
+function useClipboard(
+  options: { timeout: number } = { timeout: 2000 }
+): {
   copy: (valueToCopy: any) => void;
   reset: () => void;
   error: Error;

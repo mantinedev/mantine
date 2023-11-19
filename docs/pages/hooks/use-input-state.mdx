@@ -20,7 +20,11 @@ function WithUseInputState() {
 
   return (
     <>
-      <input type="text" value={stringValue} onChange={setStringValue} />
+      <input
+        type="text"
+        value={stringValue}
+        onChange={setStringValue}
+      />
       <TextInput value={stringValue} onChange={setStringValue} />
       <NumberInput value={numberValue} onChange={setNumberValue} />
     </>
@@ -36,11 +40,15 @@ function WithUseState() {
       <input
         type="text"
         value={stringValue}
-        onChange={(event) => setStringValue(event.currentTarget.value)}
+        onChange={(event) =>
+          setStringValue(event.currentTarget.value)
+        }
       />
       <TextInput
         value={stringValue}
-        onChange={(event) => setStringValue(event.currentTarget.value)}
+        onChange={(event) =>
+          setStringValue(event.currentTarget.value)
+        }
       />
       <NumberInput value={numberValue} onChange={setNumberValue} />
     </>
@@ -53,5 +61,8 @@ function WithUseState() {
 ```tsx
 function useInputState<T>(
   initialState: T
-): [T, (value: null | undefined | T | React.ChangeEvent<any>) => void];
+): [
+  T,
+  (value: null | undefined | T | React.ChangeEvent<any>) => void,
+];
 ```

@@ -10,10 +10,8 @@ export default Layout(MDX_DATA.useValidatedState);
 It returns an object with current validation state, last valid value and current value:
 
 ```tsx
-const [{ lastValidValue, value, valid }, setValue] = useValidatedState(
-  'valid',
-  (value) => value === 'valid'
-);
+const [{ lastValidValue, value, valid }, setValue] =
+  useValidatedState('valid', (value) => value === 'valid');
 
 lastValidValue; // -> valid
 value; // -> valid

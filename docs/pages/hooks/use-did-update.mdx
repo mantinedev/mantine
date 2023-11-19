@@ -12,7 +12,10 @@ export default Layout(MDX_DATA.useDidUpdate);
 import { useDidUpdate } from '@mantine/hooks';
 
 function Demo() {
-  useDidUpdate(() => console.log("Won't be called when mounted"), [value]);
+  useDidUpdate(
+    () => console.log("Won't be called when mounted"),
+    [value]
+  );
 }
 ```
 

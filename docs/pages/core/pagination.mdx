@@ -22,7 +22,9 @@ import { Pagination } from '@mantine/core';
 
 function Demo() {
   const [activePage, setPage] = useState(1);
-  return <Pagination value={activePage} onChange={setPage} total={10} />;
+  return (
+    <Pagination value={activePage} onChange={setPage} total={10} />
+  );
 }
 ```
 

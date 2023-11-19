@@ -1,6 +1,11 @@
 import { Layout } from '@/layout';
 import { MDX_DATA } from '@/mdx';
-import { Changelog730Demos, ColorPickerDemos, ButtonDemos, DrawerDemos } from '@docs/demos';
+import {
+  Changelog730Demos,
+  ColorPickerDemos,
+  ButtonDemos,
+  DrawerDemos,
+} from '@docs/demos';
 
 export default Layout(MDX_DATA.Changelog730);
 
@@ -73,9 +78,13 @@ import { useForm } from '@mantine/form';
 import { zodResolver } from 'mantine-form-zod-resolver';
 
 const schema = z.object({
-  name: z.string().min(2, { message: 'Name should have at least 2 letters' }),
+  name: z
+    .string()
+    .min(2, { message: 'Name should have at least 2 letters' }),
   email: z.string().email({ message: 'Invalid email' }),
-  age: z.number().min(18, { message: 'You must be at least 18 to create an account' }),
+  age: z.number().min(18, {
+    message: 'You must be at least 18 to create an account',
+  }),
 });
 
 const form = useForm({

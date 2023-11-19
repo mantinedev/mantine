@@ -103,7 +103,10 @@ const form = useForm({
   validate: {
     maxRange: isInRange({ max: 20 }, 'Value must be 20 or less'),
     minRange: isInRange({ min: 10 }, 'Value must be 10 or more'),
-    minMaxRange: isInRange({ min: 10, max: 20 }, 'Value must be between 10 and 20'),
+    minMaxRange: isInRange(
+      { min: 10, max: 20 },
+      'Value must be between 10 and 20'
+    ),
   },
 });
 ```
@@ -149,7 +152,10 @@ const form = useForm({
   },
 
   validate: {
-    confirmPassword: matchesField('password', 'Passwords are not the same'),
+    confirmPassword: matchesField(
+      'password',
+      'Passwords are not the same'
+    ),
   },
 });
 ```

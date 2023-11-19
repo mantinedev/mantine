@@ -74,7 +74,11 @@ You can define any amount of modals in ModalsProvider context:
 import { ContextModalProps, ModalsProvider } from '@mantine/modals';
 import { Text, Button } from '@mantine/core';
 
-const TestModal = ({ context, id, innerProps }: ContextModalProps<{ modalBody: string }>) => (
+const TestModal = ({
+  context,
+  id,
+  innerProps,
+}: ContextModalProps<{ modalBody: string }>) => (
   <>
     <Text size="sm">{innerProps.modalBody}</Text>
     <Button fullWidth mt="md" onClick={() => context.closeModal(id)}>
@@ -85,7 +89,9 @@ const TestModal = ({ context, id, innerProps }: ContextModalProps<{ modalBody: s
 
 function Demo() {
   return (
-    <ModalsProvider modals={{ demonstration: TestModal /* ...other modals */ }}>
+    <ModalsProvider
+      modals={{ demonstration: TestModal /* ...other modals */ }}
+    >
       <App />
     </ModalsProvider>
   );
@@ -102,7 +108,11 @@ And then open one of these modals with `modals.openContextModal` function.
 By default `innerProps` and `modal` are not typesafe. You can add typesafety with a Typescript module declaration.
 
 ```tsx
-const TestModal = ({ context, id, innerProps }: ContextModalProps<{ modalBody: string }>) => (
+const TestModal = ({
+  context,
+  id,
+  innerProps,
+}: ContextModalProps<{ modalBody: string }>) => (
   <>
     <Text size="sm">{innerProps.modalBody}</Text>
     <Button fullWidth mt="md" onClick={() => context.closeModal(id)}>

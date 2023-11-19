@@ -109,7 +109,9 @@ function Demo() {
     ],
   });
 
-  return <RichTextEditor editor={editor}>{/* content */}</RichTextEditor>;
+  return (
+    <RichTextEditor editor={editor}>{/* content */}</RichTextEditor>
+  );
 }
 ```
 
@@ -214,7 +216,13 @@ import { Button } from '@mantine/core';
 
 function Demo() {
   const { editor } = useRichTextEditorContext();
-  return <Button onClick={() => editor?.chain().focus().toggleBold().run()}>Make bold</Button>;
+  return (
+    <Button
+      onClick={() => editor?.chain().focus().toggleBold().run()}
+    >
+      Make bold
+    </Button>
+  );
 }
 ```
 

@@ -51,13 +51,21 @@ To combine `use-focus-trap` with other ref based hooks, use [use-merged-ref](/ho
 
 ```tsx
 import { useRef } from 'react';
-import { useClickOutside, useFocusTrap, useMergedRef } from '@mantine/hooks';
+import {
+  useClickOutside,
+  useFocusTrap,
+  useMergedRef,
+} from '@mantine/hooks';
 
 function Demo() {
   const myRef = useRef();
   const useClickOutsideRef = useClickOutside(() => {});
   const focusTrapRef = useFocusTrap();
-  const mergedRef = useMergedRef(myRef, useClickOutsideRef, focusTrapRef);
+  const mergedRef = useMergedRef(
+    myRef,
+    useClickOutsideRef,
+    focusTrapRef
+  );
 
   return <div ref={mergedRef} />;
 }
@@ -88,5 +96,7 @@ function Demo() {
 ## Definition
 
 ```tsx
-function useFocusTrap(active?: boolean): (instance: HTMLElement) => void;
+function useFocusTrap(
+  active?: boolean
+): (instance: HTMLElement) => void;
 ```

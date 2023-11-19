@@ -29,7 +29,10 @@ Install Storybook addons:
 - [storybook-dark-mode](https://storybook.js.org/addons/storybook-dark-mode/)
 - [@storybook/addon-styling-webpack](https://storybook.js.org/addons/@storybook/addon-styling-webpack)
 
-<InstallScript packages="storybook-dark-mode @storybook/addon-styling-webpack" dev />
+<InstallScript
+  packages="storybook-dark-mode @storybook/addon-styling-webpack"
+  dev
+/>
 
 Add addons to `.storybook/main.ts`:
 
@@ -89,16 +92,24 @@ import '@mantine/core/styles.css';
 import React, { useEffect } from 'react';
 import { addons } from '@storybook/preview-api';
 import { DARK_MODE_EVENT_NAME } from 'storybook-dark-mode';
-import { MantineProvider, useMantineColorScheme } from '@mantine/core';
+import {
+  MantineProvider,
+  useMantineColorScheme,
+} from '@mantine/core';
 
 // theme.ts file from previous step
 import { theme } from '../src/theme';
 
 const channel = addons.getChannel();
 
-function ColorSchemeWrapper({ children }: { children: React.ReactNode }) {
+function ColorSchemeWrapper({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   const { setColorScheme } = useMantineColorScheme();
-  const handleColorScheme = (value: boolean) => setColorScheme(value ? 'dark' : 'light');
+  const handleColorScheme = (value: boolean) =>
+    setColorScheme(value ? 'dark' : 'light');
 
   useEffect(() => {
     channel.on(DARK_MODE_EVENT_NAME, handleColorScheme);
@@ -109,8 +120,12 @@ function ColorSchemeWrapper({ children }: { children: React.ReactNode }) {
 }
 
 export const decorators = [
-  (renderStory: any) => <ColorSchemeWrapper>{renderStory()}</ColorSchemeWrapper>,
-  (renderStory: any) => <MantineProvider theme={theme}>{renderStory()}</MantineProvider>,
+  (renderStory: any) => (
+    <ColorSchemeWrapper>{renderStory()}</ColorSchemeWrapper>
+  ),
+  (renderStory: any) => (
+    <MantineProvider theme={theme}>{renderStory()}</MantineProvider>
+  ),
 ];
 ```
 

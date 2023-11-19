@@ -62,7 +62,14 @@ import { Select } from '@mantine/core';
 
 function Demo() {
   const [searchValue, setSearchValue] = useState('');
-  return <Select searchable searchValue={searchValue} onSearchChange={setSearchValue} data={[]} />;
+  return (
+    <Select
+      searchable
+      searchValue={searchValue}
+      onSearchChange={setSearchValue}
+      data={[]}
+    />
+  );
 }
 ```
 

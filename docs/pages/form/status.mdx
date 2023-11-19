@@ -18,7 +18,9 @@ export default Layout(MDX_DATA.formStatus);
 ```tsx
 import { useForm } from '@mantine/form';
 
-const form = useForm({ initialValues: { a: 1, nested: { field: '' } } });
+const form = useForm({
+  initialValues: { a: 1, nested: { field: '' } },
+});
 
 // Provide path as first argument to get state of single field
 form.isTouched('a'); // -> was field 'a' focused or changed?

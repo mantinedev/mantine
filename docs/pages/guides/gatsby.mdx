@@ -12,7 +12,10 @@ export default Layout(MDX_DATA.Gatsby);
 Follow [Gatsby quick start](https://www.gatsbyjs.com/docs/quick-start/) guide to
 create new Gatsby application:
 
-<NpmScript yarnScript="yarn create gatsby" npmScript="npm init gatsby" />
+<NpmScript
+  yarnScript="yarn create gatsby"
+  npmScript="npm init gatsby"
+/>
 
 When asked "Would you like to install a styling system?", select `PostCSS`.
 
@@ -24,7 +27,10 @@ When asked "Would you like to install a styling system?", select `PostCSS`.
 
 Install PostCSS plugins and [postcss-preset-mantine](/styles/postcss-preset):
 
-<InstallScript packages="postcss postcss-preset-mantine postcss-simple-vars" dev />
+<InstallScript
+  packages="postcss postcss-preset-mantine postcss-simple-vars"
+  dev
+/>
 
 Create `postcss.config.cjs` file at the root of your application with the following content:
 
@@ -66,9 +72,15 @@ import React from 'react';
 import { ColorSchemeScript, MantineProvider } from '@mantine/core';
 import { theme } from './src/theme';
 
-export const onPreRenderHTML = ({ getHeadComponents, replaceHeadComponents }) => {
+export const onPreRenderHTML = ({
+  getHeadComponents,
+  replaceHeadComponents,
+}) => {
   const headComponents = getHeadComponents();
-  replaceHeadComponents([...headComponents, <ColorSchemeScript key="color-scheme-script" />]);
+  replaceHeadComponents([
+    ...headComponents,
+    <ColorSchemeScript key="color-scheme-script" />,
+  ]);
 };
 
 export const wrapPageElement = ({ element }) => {

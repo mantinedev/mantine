@@ -25,7 +25,9 @@ import { useMediaQuery } from '@mantine/hooks';
 
 function Demo() {
   // Set initial value in second argument and getInitialValueInEffect option to false
-  const matches = useMediaQuery('(max-width: 40em)', true, { getInitialValueInEffect: false });
+  const matches = useMediaQuery('(max-width: 40em)', true, {
+    getInitialValueInEffect: false,
+  });
 }
 ```
 

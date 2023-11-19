@@ -29,7 +29,9 @@ function Demo() {
         <Badge>Mantine component – ok</Badge>
       </Tooltip>
 
-      <Tooltip label="Throws">Raw string, NOT OK – will throw error</Tooltip>
+      <Tooltip label="Throws">
+        Raw string, NOT OK – will throw error
+      </Tooltip>
 
       {/* Number, NOT OK – will throw error */}
       <Tooltip label="Throws">{2}</Tooltip>
@@ -138,7 +140,10 @@ import { Tooltip } from '@mantine/core';
 
 function Demo() {
   return (
-    <Tooltip label="Tooltip" events={{ hover: true, focus: true, touch: false }}>
+    <Tooltip
+      label="Tooltip"
+      events={{ hover: true, focus: true, touch: false }}
+    >
       <button>target</button>
     </Tooltip>
   );
@@ -209,11 +214,13 @@ import { forwardRef } from 'react';
 import { Tooltip } from '@mantine/core';
 
 // forwardRef function will allow to get root element ref
-const MyBadge = forwardRef<HTMLDivElement, { color: string }>(({ color }, ref) => (
-  <div ref={ref} color={color}>
-    Badge
-  </div>
-));
+const MyBadge = forwardRef<HTMLDivElement, { color: string }>(
+  ({ color }, ref) => (
+    <div ref={ref} color={color}>
+      Badge
+    </div>
+  )
+);
 
 // other props can also be used
 function MyOtherBadge({
@@ -263,7 +270,10 @@ import { Tooltip, Button } from '@mantine/core';
 // Tooltip will be visible for screen readers
 function Demo() {
   return (
-    <Tooltip label="Tooltip" events={{ hover: true, focus: true, touch: false }}>
+    <Tooltip
+      label="Tooltip"
+      events={{ hover: true, focus: true, touch: false }}
+    >
       <Button>Button with tooltip</Button>
     </Tooltip>
   );

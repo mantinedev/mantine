@@ -77,7 +77,11 @@ function StylePropsArray() {
   const inputs = Array(1000)
     .fill(0)
     .map((_, index) => (
-      <TextInput key={index} label={`Input ${index}`} mt={{ base: 10, md: 20 }} />
+      <TextInput
+        key={index}
+        label={`Input ${index}`}
+        mt={{ base: 10, md: 20 }}
+      />
     ));
 
   return <>{inputs}</>;

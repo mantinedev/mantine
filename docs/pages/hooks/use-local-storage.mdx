@@ -15,7 +15,10 @@ import { useLocalStorage } from '@mantine/hooks';
 // The hook will read value from localStorage.getItem('color-scheme')
 // If localStorage is not available or value at a given key does not exist
 // 'dark' will be assigned to value variable
-const [value, setValue] = useLocalStorage({ key: 'color-scheme', defaultValue: 'dark' });
+const [value, setValue] = useLocalStorage({
+  key: 'color-scheme',
+  defaultValue: 'dark',
+});
 
 // Value is set both to state and localStorage at 'color-scheme'
 setValue('light');
@@ -41,7 +44,9 @@ function ColorSchemeToggle() {
   });
 
   const toggleColorScheme = () =>
-    setColorScheme((current) => (current === 'dark' ? 'light' : 'dark'));
+    setColorScheme((current) =>
+      current === 'dark' ? 'light' : 'dark'
+    );
 
   return (
     <ActionIcon onClick={toggleColorScheme}>
@@ -101,7 +106,8 @@ const [value, setValue] = useLocalStorage({
   key,
   defaultValue,
   serialize: superjson.stringify,
-  deserialize: (str) => (str === undefined ? defaultValue : superjson.parse(str)),
+  deserialize: (str) =>
+    str === undefined ? defaultValue : superjson.parse(str),
 });
 ```
 
@@ -112,7 +118,10 @@ const [value, setValue] = useLocalStorage({
 ```tsx
 import { useSessionStorage } from '@mantine/hooks';
 
-const [value, setValue] = useSessionStorage({ key: 'session-key', defaultValue: 'mantine' });
+const [value, setValue] = useSessionStorage({
+  key: 'session-key',
+  defaultValue: 'mantine',
+});
 ```
 
 ## Definition

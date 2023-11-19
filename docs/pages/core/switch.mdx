@@ -16,7 +16,12 @@ import { Switch } from '@mantine/core';
 
 function Demo() {
   const [checked, setChecked] = useState(false);
-  return <Switch checked={checked} onChange={(event) => setChecked(event.currentTarget.checked)} />;
+  return (
+    <Switch
+      checked={checked}
+      onChange={(event) => setChecked(event.currentTarget.checked)}
+    />
+  );
 }
 ```
 

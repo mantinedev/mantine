@@ -100,7 +100,14 @@ import { Dropzone } from '@mantine/dropzone';
 
 function Demo() {
   return (
-    <Dropzone accept={['image/png', 'image/jpeg', 'image/sgv+xml', 'image/gif']}>
+    <Dropzone
+      accept={[
+        'image/png',
+        'image/jpeg',
+        'image/sgv+xml',
+        'image/gif',
+      ]}
+    >
       {/* children */}
     </Dropzone>
   );
@@ -114,7 +121,14 @@ import { Dropzone, MIME_TYPES } from '@mantine/dropzone';
 
 function Demo() {
   return (
-    <Dropzone accept={[MIME_TYPES.png, MIME_TYPES.jpeg, MIME_TYPES.svg, MIME_TYPES.gif]}>
+    <Dropzone
+      accept={[
+        MIME_TYPES.png,
+        MIME_TYPES.jpeg,
+        MIME_TYPES.svg,
+        MIME_TYPES.gif,
+      ]}
+    >
       {/* children */}
     </Dropzone>
   );
@@ -145,7 +159,9 @@ Additionally you can use grouped mime types:
 import { IMAGE_MIME_TYPE, Dropzone } from '@mantine/dropzone';
 
 function Demo() {
-  return <Dropzone accept={IMAGE_MIME_TYPE}>{/* children */}</Dropzone>;
+  return (
+    <Dropzone accept={IMAGE_MIME_TYPE}>{/* children */}</Dropzone>
+  );
 }
 ```
 

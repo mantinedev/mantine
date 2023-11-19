@@ -54,7 +54,9 @@ const useStyles = createStyles((theme) => ({
 import { Box } from '@mantine/core';
 
 function Demo() {
-  return <Box sx={(theme) => ({ backgroundColor: theme.colors.red[5] })} />;
+  return (
+    <Box sx={(theme) => ({ backgroundColor: theme.colors.red[5] })} />
+  );
 }
 ```
 
@@ -63,7 +65,9 @@ function Demo() {
 import { Box } from '@mantine/core';
 
 function Demo() {
-  return <Box style={{ backgroundColor: 'var(--mantine-color-red-5)' }} />;
+  return (
+    <Box style={{ backgroundColor: 'var(--mantine-color-red-5)' }} />
+  );
 }
 ```
 
@@ -156,8 +160,14 @@ function Demo() {
         },
 
         body: {
-          backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.white,
-          color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
+          backgroundColor:
+            theme.colorScheme === 'dark'
+              ? theme.colors.dark[7]
+              : theme.white,
+          color:
+            theme.colorScheme === 'dark'
+              ? theme.colors.dark[0]
+              : theme.black,
           lineHeight: theme.lineHeight,
         },
 
@@ -184,8 +194,14 @@ function Demo() {
 }
 
 body {
-  background-color: light-dark(var(--mantine-color-white), var(--mantine-color-dark-7));
-  color: light-dark(var(--mantine-color-black), var(--mantine-color-white));
+  background-color: light-dark(
+    var(--mantine-color-white),
+    var(--mantine-color-dark-7)
+  );
+  color: light-dark(
+    var(--mantine-color-black),
+    var(--mantine-color-white)
+  );
   line-height: var(--mantine-line-height);
 }
 
@@ -246,7 +262,10 @@ import { createStyles } from '@mantine/core';
 
 const useStyles = createStyles((theme) => ({
   root: {
-    backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[0],
+    backgroundColor:
+      theme.colorScheme === 'dark'
+        ? theme.colors.dark[6]
+        : theme.colors.gray[0],
     color: theme.colorScheme === 'dark' ? theme.white : theme.black,
   },
 }));
@@ -257,8 +276,14 @@ const useStyles = createStyles((theme) => ({
 
 /* With light-dark function */
 .root {
-  background-color: light-dark(var(--mantine-color-gray-0), var(--mantine-color-dark-6));
-  color: light-dark(var(--mantine-color-black), var(--mantine-color-white));
+  background-color: light-dark(
+    var(--mantine-color-gray-0),
+    var(--mantine-color-dark-6)
+  );
+  color: light-dark(
+    var(--mantine-color-black),
+    var(--mantine-color-white)
+  );
 }
 
 /* With light/dark mixins */

@@ -68,7 +68,9 @@ function IncorrectItem() {
 }
 
 // ✅ Will work correctly with Menu.Item
-function CorrectItem(props: React.ComponentPropsWithoutRef<'button'>) {
+function CorrectItem(
+  props: React.ComponentPropsWithoutRef<'button'>
+) {
   return (
     <button type="button" {...props}>
       My custom Menu item

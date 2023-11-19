@@ -32,7 +32,9 @@ With `form.setValues` you can set all form values, for example you can set value
 ```tsx
 import { useForm } from '@mantine/form';
 
-const form = useForm({ initialValues: { name: '', email: '', age: 0 } });
+const form = useForm({
+  initialValues: { name: '', email: '', age: 0 },
+});
 
 form.setValues({ name: 'John', age: 21 });
 form.values; // -> { name: 'John', email: '', age: 21 }

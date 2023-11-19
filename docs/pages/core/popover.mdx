@@ -21,7 +21,9 @@ function Demo() {
   return (
     <Popover opened={opened} onChange={setOpened}>
       <Popover.Target>
-        <Button onClick={() => setOpened((o) => !o)}>Toggle popover</Button>
+        <Button onClick={() => setOpened((o) => !o)}>
+          Toggle popover
+        </Button>
       </Popover.Target>
 
       <Popover.Dropdown>Dropdown</Popover.Dropdown>

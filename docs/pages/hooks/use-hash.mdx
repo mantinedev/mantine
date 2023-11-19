@@ -22,7 +22,9 @@ import { useHash } from '@mantine/hooks';
 
 function Demo() {
   const [hash, setHash] = useHash({ getInitialValueInEffect: false });
-  return <Button onClick={() => setHash('new-hash')}>Change hash</Button>;
+  return (
+    <Button onClick={() => setHash('new-hash')}>Change hash</Button>
+  );
 }
 ```
 

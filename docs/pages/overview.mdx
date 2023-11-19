@@ -2,7 +2,10 @@ import { Layout } from '@/layout';
 import { MDX_DATA } from '@/mdx';
 import { StylesDemos, ThemingDemos } from '@docs/demos';
 import { TextInputStylesApi } from '@docs/styles-api';
-import { SelectorsTable, VariablesTable } from '@/components/StylesApiTable';
+import {
+  SelectorsTable,
+  VariablesTable,
+} from '@/components/StylesApiTable';
 import { ColorsGroup } from '@/components/ThemeColors';
 
 export default Layout(MDX_DATA.Overview);
@@ -164,7 +167,10 @@ assume that you have this preset installed.
   }
 
   /* light-dark function as an inline shortcut for light and dark mixins */
-  background: light-dark(var(--mantine-color-white), var(--mantine-color-black));
+  background: light-dark(
+    var(--mantine-color-white),
+    var(--mantine-color-black)
+  );
 
   /* rtl mixin to apply styles for right-to-left direction */
   padding-left: 1rem;

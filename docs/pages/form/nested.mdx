@@ -83,8 +83,10 @@ const form = useForm({
 
   validate: {
     user: {
-      name: (value) => (value.length < 2 ? 'Name is too short' : null),
-      occupation: (value) => (value.length < 2 ? 'Occupation is too short' : null),
+      name: (value) =>
+        value.length < 2 ? 'Name is too short' : null,
+      occupation: (value) =>
+        value.length < 2 ? 'Occupation is too short' : null,
     },
   },
 });
@@ -120,8 +122,12 @@ const form = useForm({
 
   validate: {
     users: {
-      name: (value) => (value.length < 2 ? 'Name should have at least 2 letters' : null),
-      age: (value) => (value < 18 ? 'User must be 18 or older' : null),
+      name: (value) =>
+        value.length < 2
+          ? 'Name should have at least 2 letters'
+          : null,
+      age: (value) =>
+        value < 18 ? 'User must be 18 or older' : null,
     },
   },
 });

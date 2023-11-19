@@ -12,13 +12,21 @@ when you want to use [use-click-outside](/hooks/use-click-outside/) and [use-foc
 
 ```tsx
 import { useRef } from 'react';
-import { useClickOutside, useFocusTrap, useMergedRef } from '@mantine/hooks';
+import {
+  useClickOutside,
+  useFocusTrap,
+  useMergedRef,
+} from '@mantine/hooks';
 
 function Demo() {
   const myRef = useRef();
   const useClickOutsideRef = useClickOutside(() => {});
   const focusTrapRef = useFocusTrap();
-  const mergedRef = useMergedRef(myRef, useClickOutsideRef, focusTrapRef);
+  const mergedRef = useMergedRef(
+    myRef,
+    useClickOutsideRef,
+    focusTrapRef
+  );
 
   return <div ref={mergedRef} />;
 }
@@ -51,7 +59,9 @@ use `use-merged-ref` with it.
 ## Definition
 
 ```tsx
-function useMergedRef<T = any>(...refs: React.ForwardedRef<T>[]): (node: T) => void;
+function useMergedRef<T = any>(
+  ...refs: React.ForwardedRef<T>[]
+): (node: T) => void;
 ```
 
 ## Set node type

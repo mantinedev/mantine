@@ -25,7 +25,12 @@ import { Textarea } from '@mantine/core';
 
 function Demo() {
   const [value, setValue] = useState('');
-  return <Textarea value={value} onChange={(event) => setValue(event.currentTarget.value)} />;
+  return (
+    <Textarea
+      value={value}
+      onChange={(event) => setValue(event.currentTarget.value)}
+    />
+  );
 }
 ```
 

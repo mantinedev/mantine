@@ -15,7 +15,10 @@ After the component is unmounted, the listener is automatically removed.
 ## Definition
 
 ```tsx
-function useEventListener<K extends keyof HTMLElementEventMap, T extends HTMLElement = any>(
+function useEventListener<
+  K extends keyof HTMLElementEventMap,
+  T extends HTMLElement = any,
+>(
   type: K,
   listener: (this: HTMLDivElement, ev: HTMLElementEventMap[K]) => any,
   options?: boolean | AddEventListenerOptions

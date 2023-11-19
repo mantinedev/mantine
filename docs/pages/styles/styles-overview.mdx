@@ -149,7 +149,10 @@ CSS modules are the most performant and flexible way of styling components.
   }
 
   @mixin hover {
-    background-color: light-dark(var(--mantine-color-blue-1), var(--mantine-color-blue-9));
+    background-color: light-dark(
+      var(--mantine-color-blue-1),
+      var(--mantine-color-blue-9)
+    );
   }
 }
 ```
@@ -160,7 +163,10 @@ import classes from './Demo.module.css';
 
 function Demo({ collapsed }: { collapsed: boolean }) {
   return (
-    <div className={classes.root} data-collapsed={collapsed || undefined}>
+    <div
+      className={classes.root}
+      data-collapsed={collapsed || undefined}
+    >
       <button type="button" className={classes.control}>
         Control
       </button>
@@ -216,11 +222,21 @@ import { Box } from '@mantine/core';
 function Demo() {
   return (
     <>
-      <Box style={{ margin: 'var(--mantine-spacing-xl)', color: 'var(--mantine-color-orange-5)' }}>
+      <Box
+        style={{
+          margin: 'var(--mantine-spacing-xl)',
+          color: 'var(--mantine-color-orange-5)',
+        }}
+      >
         With CSS variables
       </Box>
 
-      <Box style={(theme) => ({ margin: theme.spacing.xl, color: theme.colors.orange[5] })}>
+      <Box
+        style={(theme) => ({
+          margin: theme.spacing.xl,
+          color: theme.colors.orange[5],
+        })}
+      >
         With theme object
       </Box>
     </>

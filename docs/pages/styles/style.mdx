@@ -37,7 +37,11 @@ You can define CSS variables in the style prop. Note that it only works with Man
 import { Box } from '@mantine/core';
 
 function Demo() {
-  return <Box style={{ '--radius': '0.5rem', borderRadius: 'var(--radius)' }} />;
+  return (
+    <Box
+      style={{ '--radius': '0.5rem', borderRadius: 'var(--radius)' }}
+    />
+  );
 }
 ```
 

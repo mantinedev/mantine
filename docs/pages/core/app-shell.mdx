@@ -8,7 +8,10 @@ export default Layout(MDX_DATA.AppShell);
 This page includes only documentation. Since all associated `AppShell` components have fixed
 position, it is not possible to include demos on this page.
 
-<ExamplesButton link="/app-shell?e=BasicAppShell" label="Open AppShell examples page" />
+<ExamplesButton
+  link="/app-shell?e=BasicAppShell"
+  label="Open AppShell examples page"
+/>
 
 ## Usage
 
@@ -29,11 +32,20 @@ function Demo() {
   return (
     <AppShell
       header={{ height: 60 }}
-      navbar={{ width: 300, breakpoint: 'sm', collapsed: { mobile: !opened } }}
+      navbar={{
+        width: 300,
+        breakpoint: 'sm',
+        collapsed: { mobile: !opened },
+      }}
       padding="md"
     >
       <AppShell.Header>
-        <Burger opened={opened} onClick={toggle} hiddenFrom="sm" size="sm" />
+        <Burger
+          opened={opened}
+          onClick={toggle}
+          hiddenFrom="sm"
+          size="sm"
+        />
         <div>Logo</div>
       </AppShell.Header>
 
@@ -184,7 +196,9 @@ import { AppShell } from '@mantine/core';
 // - width is 300 when viewport width is >= theme.breakpoints.lg
 function Demo() {
   return (
-    <AppShell navbar={{ width: { sm: 200, lg: 300 }, breakpoint: 'sm' }}>
+    <AppShell
+      navbar={{ width: { sm: 200, lg: 300 }, breakpoint: 'sm' }}
+    >
       <AppShell.Navbar>Navbar</AppShell.Navbar>
     </AppShell>
   );
@@ -218,7 +232,11 @@ import { AppShell } from '@mantine/core';
 // - 15 when viewport width is >= theme.breakpoints.sm and < theme.breakpoints.lg
 // - theme.spacing.xl when viewport width is >= theme.breakpoints.lg
 function Demo() {
-  return <AppShell padding={{ base: 10, sm: 15, lg: 'xl' }}>{/* AppShell content */}</AppShell>;
+  return (
+    <AppShell padding={{ base: 10, sm: 15, lg: 'xl' }}>
+      {/* AppShell content */}
+    </AppShell>
+  );
 }
 ```
 
@@ -236,10 +254,15 @@ function Demo() {
   const pinned = useHeadroom({ fixedAt: 120 });
 
   return (
-    <AppShell header={{ height: 60, collapsed: !pinned, offset: false }} padding="md">
+    <AppShell
+      header={{ height: 60, collapsed: !pinned, offset: false }}
+      padding="md"
+    >
       <AppShell.Header>Header</AppShell.Header>
 
-      <AppShell.Main pt={`calc(${rem(60)} + var(--mantine-spacing-md))`}>
+      <AppShell.Main
+        pt={`calc(${rem(60)} + var(--mantine-spacing-md))`}
+      >
         {/* Content */}
       </AppShell.Main>
     </AppShell>
@@ -261,7 +284,8 @@ import { AppShell, Button } from '@mantine/core';
 
 export function CollapseDesktop() {
   const [mobileOpened, { toggle: toggleMobile }] = useDisclosure();
-  const [desktopOpened, { toggle: toggleDesktop }] = useDisclosure(true);
+  const [desktopOpened, { toggle: toggleDesktop }] =
+    useDisclosure(true);
 
   return (
     <AppShell
@@ -302,7 +326,9 @@ import { AppShell } from '@mantine/core';
 
 // None of the components will have a border
 function Demo() {
-  return <AppShell withBorder={false}>{/* AppShell content */}</AppShell>;
+  return (
+    <AppShell withBorder={false}>{/* AppShell content */}</AppShell>
+  );
 }
 ```
 
@@ -367,7 +393,10 @@ import { AppShell } from '@mantine/core';
 
 function Demo() {
   return (
-    <AppShell transitionDuration={500} transitionTimingFunction="ease">
+    <AppShell
+      transitionDuration={500}
+      transitionTimingFunction="ease"
+    >
       {/* AppShell content */}
     </AppShell>
   );
@@ -410,7 +439,9 @@ function Demo() {
         <AppShell.Section grow component={ScrollArea}>
           Navbar main section, it will
         </AppShell.Section>
-        <AppShell.Section>Navbar footer – always at the bottom</AppShell.Section>
+        <AppShell.Section>
+          Navbar footer – always at the bottom
+        </AppShell.Section>
       </AppShell.Navbar>
       <AppShell.Main>Main</AppShell.Main>
     </AppShell>

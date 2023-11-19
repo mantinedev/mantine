@@ -149,6 +149,12 @@ To set close button `aria-label` use `closeButtonProps`:
 import { Drawer } from '@mantine/core';
 
 function Demo() {
-  return <Drawer closeButtonProps={{ 'aria-label': 'Close modal' }} opened onClose={() => {}} />;
+  return (
+    <Drawer
+      closeButtonProps={{ 'aria-label': 'Close modal' }}
+      opened
+      onClose={() => {}}
+    />
+  );
 }
 ```

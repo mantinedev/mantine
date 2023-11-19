@@ -1,6 +1,11 @@
 import { Layout } from '@/layout';
 import { MDX_DATA } from '@/mdx';
-import { LoadingOverlayDemos, StylesDemos, NumberFormatterDemos, TableDemos } from '@docs/demos';
+import {
+  LoadingOverlayDemos,
+  StylesDemos,
+  NumberFormatterDemos,
+  TableDemos,
+} from '@docs/demos';
 
 export default Layout(MDX_DATA.Changelog720);
 
@@ -59,7 +64,8 @@ Then call `createFormActions` function with the same form name as specified in `
 import type { DemoFormValues } from './DemoForm';
 import { createFormActions } from '@mantine/form';
 
-export const demoFormActions = createFormActions<DemoFormValues>('demo-form');
+export const demoFormActions =
+  createFormActions<DemoFormValues>('demo-form');
 ```
 
 After that, you can use `demoFormActions` to change form state from anywhere in your application.
@@ -83,7 +89,11 @@ function ExternalComponent() {
       );
   }, []);
 
-  return <Button onClick={() => demoFormActions.reset()}>Reset demo form</Button>;
+  return (
+    <Button onClick={() => demoFormActions.reset()}>
+      Reset demo form
+    </Button>
+  );
 }
 ```
 

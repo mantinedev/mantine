@@ -56,7 +56,10 @@ function useMantineColorScheme(): {
 It can be used to implement color scheme toggle logic:
 
 ```tsx
-import { useComputedColorScheme, useMantineColorScheme } from '@mantine/core';
+import {
+  useComputedColorScheme,
+  useMantineColorScheme,
+} from '@mantine/core';
 
 function Demo() {
   // -> colorScheme is 'auto' | 'light' | 'dark'
@@ -91,7 +94,9 @@ option on `useMantineColorScheme` hook:
 import { useMantineColorScheme } from '@mantine/core';
 
 function Demo() {
-  const { colorScheme, setColorScheme } = useMantineColorScheme({ keepTransition: true });
+  const { colorScheme, setColorScheme } = useMantineColorScheme({
+    keepTransition: true,
+  });
 }
 ```
 
@@ -129,7 +134,12 @@ for example, you can add [nonce](https://developer.mozilla.org/en-US/docs/Web/HT
 import { ColorSchemeScript } from '@mantine/core';
 
 function Demo() {
-  return <ColorSchemeScript nonce="8IBTHwOdqNKAWeKl7plt8g==" defaultColorScheme="dark" />;
+  return (
+    <ColorSchemeScript
+      nonce="8IBTHwOdqNKAWeKl7plt8g=="
+      defaultColorScheme="dark"
+    />
+  );
 }
 ```
 
@@ -169,7 +179,9 @@ interface MantineColorSchemeManager {
   set(value: MantineColorScheme): void;
 
   /** Function to subscribe to color scheme changes triggered by external events */
-  subscribe(onUpdate: (colorScheme: MantineColorScheme) => void): void;
+  subscribe(
+    onUpdate: (colorScheme: MantineColorScheme) => void
+  ): void;
 
   /** Function to unsubscribe from color scheme changes triggered by external events */
   unsubscribe(): void;
@@ -183,7 +195,11 @@ Usually, it is better to wrap color scheme manager in a creator function to prov
 configure it. Default local storage based color scheme manager example:
 
 ```tsx
-import { MantineColorScheme, MantineColorSchemeManager, isMantineColorScheme } from '@mantine/core';
+import {
+  MantineColorScheme,
+  MantineColorSchemeManager,
+  isMantineColorScheme,
+} from '@mantine/core';
 
 export interface LocalStorageColorSchemeManagerOptions {
   /** Local storage key used to retrieve value with `localStorage.getItem(key)`, `mantine-color-scheme` by default */
@@ -202,7 +218,10 @@ export function localStorageColorSchemeManager({
       }
 
       try {
-        return (window.localStorage.getItem(key) as MantineColorScheme) || defaultValue;
+        return (
+          (window.localStorage.getItem(key) as MantineColorScheme) ||
+          defaultValue
+        );
       } catch {
         return defaultValue;
       }
@@ -222,8 +241,12 @@ export function localStorageColorSchemeManager({
 
     subscribe: (onUpdate) => {
       handleStorageEvent = (event) => {
-        if (event.storageArea === window.localStorage && event.key === key) {
-          isMantineColorScheme(event.newValue) && onUpdate(event.newValue);
+        if (
+          event.storageArea === window.localStorage &&
+          event.key === key
+        ) {
+          isMantineColorScheme(event.newValue) &&
+            onUpdate(event.newValue);
         }
       };
 
@@ -247,7 +270,9 @@ Then custom color scheme manager can be passed to [MantineProvider](/theming/man
 import { MantineProvider } from '@mantine/core';
 import { localStorageColorSchemeManager } from './localStorageColorSchemeManager';
 
-const colorSchemeManager = localStorageColorSchemeManager({ key: 'my-color-scheme' });
+const colorSchemeManager = localStorageColorSchemeManager({
+  key: 'my-color-scheme',
+});
 
 function Demo() {
   return (
@@ -324,7 +349,11 @@ export const metadata = {
   description: 'I have followed setup instructions carefully',
 };
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return (
     <html lang="en" data-mantine-color-scheme="light">
       <head>

@@ -11,7 +11,9 @@ export default Layout(MDX_DATA.useTimeout);
 ## API
 
 ```tsx
-const { start, clear } = useTimeout(callback, delay, { autoInvoke: true });
+const { start, clear } = useTimeout(callback, delay, {
+  autoInvoke: true,
+});
 ```
 
 Arguments:

@@ -66,10 +66,19 @@ You can also provide an array of fields paths to validate only those values:
 ```tsx
 import { FORM_INDEX, useForm } from '@mantine/form';
 
-const form = useForm({ validateInputOnChange: ['name', 'email', `jobs.${FORM_INDEX}.title`] });
+const form = useForm({
+  validateInputOnChange: [
+    'name',
+    'email',
+    `jobs.${FORM_INDEX}.title`,
+  ],
+});
 ```
 
-<Demo data={FormDemos.liveFieldValidation} demoProps={{ toggle: true }} />
+<Demo
+  data={FormDemos.liveFieldValidation}
+  demoProps={{ toggle: true }}
+/>
 
 ## Validate fields on blur
 
@@ -86,10 +95,15 @@ You can also provide an array of fields paths to validate only those values:
 ```tsx
 import { FORM_INDEX, useForm } from '@mantine/form';
 
-const form = useForm({ validateInputOnBlur: ['name', 'email', `jobs.${FORM_INDEX}.title`] });
+const form = useForm({
+  validateInputOnBlur: ['name', 'email', `jobs.${FORM_INDEX}.title`],
+});
 ```
 
-<Demo data={FormDemos.blurFieldValidation} demoProps={{ toggle: true }} />
+<Demo
+  data={FormDemos.blurFieldValidation}
+  demoProps={{ toggle: true }}
+/>
 
 ## Clear field error on change
 
@@ -99,7 +113,10 @@ By default, field error is cleared when value changes. To change this, set `clea
 const form = useForm({ clearInputErrorOnChange: false });
 ```
 
-<Demo data={FormDemos.clearErrorOnChange} demoProps={{ toggle: true }} />
+<Demo
+  data={FormDemos.clearErrorOnChange}
+  demoProps={{ toggle: true }}
+/>
 
 ## Validation in onSubmit handler
 

@@ -283,7 +283,11 @@ function Demo() {
 Use `mergeThemeOverrides` function to merge multiple themes into one theme override object:
 
 ```tsx
-import { createTheme, mergeThemeOverrides, MantineProvider } from '@mantine/core';
+import {
+  createTheme,
+  mergeThemeOverrides,
+  MantineProvider,
+} from '@mantine/core';
 
 const theme1 = createTheme({
   primaryColor: 'orange',
@@ -339,7 +343,11 @@ To access theme outside of components, you need to create a full theme object
 
 ```tsx
 // theme.ts
-import { createTheme, mergeMantineTheme, DEFAULT_THEME } from '@mantine/theme';
+import {
+  createTheme,
+  mergeMantineTheme,
+  DEFAULT_THEME,
+} from '@mantine/theme';
 
 const themeOverride = createTheme({
   primaryColor: 'orange',

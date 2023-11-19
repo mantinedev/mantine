@@ -23,7 +23,8 @@ based on which outside clicks should be captured.
 import { useClickOutside } from '@mantine/hooks';
 
 function Example() {
-  const handleClickOutside = () => console.log('Clicked outside of div');
+  const handleClickOutside = () =>
+    console.log('Clicked outside of div');
   const ref = useClickOutside(handleClickOutside);
   return <div ref={ref} />;
 }
@@ -45,10 +46,15 @@ import { useClickOutside } from '@mantine/hooks';
 import { Portal } from '@mantine/core';
 
 function Demo() {
-  const [dropdown, setDropdown] = useState<HTMLDivElement | null>(null);
+  const [dropdown, setDropdown] = useState<HTMLDivElement | null>(
+    null
+  );
   const [control, setControl] = useState<HTMLDivElement | null>(null);
 
-  useClickOutside(() => console.log('outside'), null, [control, dropdown]);
+  useClickOutside(() => console.log('outside'), null, [
+    control,
+    dropdown,
+  ]);
 
   return (
     // We cannot use root element ref as it does not contain dropdown

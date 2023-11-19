@@ -16,6 +16,8 @@ Check [browser support](https://caniuse.com/mdn-api_eyedropper) to learn which b
 ```tsx
 function useEyeDropper(): {
   supported: boolean;
-  open: (options?: { signal?: AbortSignal }) => Promise<{ sRGBHex: string }>;
+  open: (options?: {
+    signal?: AbortSignal;
+  }) => Promise<{ sRGBHex: string }>;
 };
 ```

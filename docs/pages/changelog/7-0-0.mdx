@@ -254,7 +254,10 @@ find [Button](/core/button) classes in `Button.classes`:
 
 <DataTable
   head={['Key', 'Class']}
-  data={Object.keys(Button.classes).map((key) => [key, Button.classes[key]])}
+  data={Object.keys(Button.classes).map((key) => [
+    key,
+    Button.classes[key],
+  ])}
 />
 
 You can use these classes to create components with the same styles as Mantine components:

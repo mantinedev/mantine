@@ -25,7 +25,10 @@ create new Next.js application:
 
 Install PostCSS plugins and [postcss-preset-mantine](/styles/postcss-preset):
 
-<InstallScript packages="postcss postcss-preset-mantine postcss-simple-vars" dev />
+<InstallScript
+  packages="postcss postcss-preset-mantine postcss-simple-vars"
+  dev
+/>
 
 Create `postcss.config.cjs` file at the root of your application with the following content:
 
@@ -116,7 +119,11 @@ export const metadata = {
   description: 'I have followed setup instructions carefully',
 };
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return (
     <html lang="en">
       <head>
@@ -226,7 +233,11 @@ export default function Page() {
 Example with `ComponentXXX` syntax:
 
 ```tsx
-import { Popover, PopoverTarget, PopoverDropdown } from '@mantine/core';
+import {
+  Popover,
+  PopoverTarget,
+  PopoverDropdown,
+} from '@mantine/core';
 
 // No error
 export default function Page() {

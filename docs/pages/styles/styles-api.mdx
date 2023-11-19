@@ -3,7 +3,10 @@ import { MDX_DATA } from '@/mdx';
 import { Button } from '@mantine/core';
 import { StylesDemos } from '@docs/demos';
 import { ButtonStylesApi } from '@docs/styles-api';
-import { SelectorsTable, VariablesTable } from '@/components/StylesApiTable';
+import {
+  SelectorsTable,
+  VariablesTable,
+} from '@/components/StylesApiTable';
 
 export default Layout(MDX_DATA.StylesApi);
 
@@ -104,7 +107,11 @@ components of a specific type:
 
 ```tsx
 import { useState } from 'react';
-import { TextInput, MantineProvider, createTheme } from '@mantine/core';
+import {
+  TextInput,
+  MantineProvider,
+  createTheme,
+} from '@mantine/core';
 // Styles are the same as in previous example
 import classes from './Demo.module.css';
 
@@ -138,7 +145,11 @@ in [theme.components](/theming/theme-object) or by passing it to the `vars` prop
 You can find CSS variables information under the `Styles API` tab in a component's documentation.
 Example of [Button](/core/button) component CSS variables:
 
-<VariablesTable data={ButtonStylesApi} withTableBorder={false} fixedLayout={false} />
+<VariablesTable
+  data={ButtonStylesApi}
+  withTableBorder={false}
+  fixedLayout={false}
+/>
 
 Example of a custom CSS variables resolver function used to add more sizes to the [Button](/core/button) component:
 
@@ -195,7 +206,10 @@ find the classes of [Button](/core/button) in `Button.classes`:
 
 <DataTable
   head={['Key', 'Class']}
-  data={Object.keys(Button.classes).map((key) => [key, Button.classes[key]])}
+  data={Object.keys(Button.classes).map((key) => [
+    key,
+    Button.classes[key],
+  ])}
 />
 
 You can use these classes to create components with the same styles as Mantine components:

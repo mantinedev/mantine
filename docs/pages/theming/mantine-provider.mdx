@@ -96,9 +96,14 @@ implementation to `colorSchemeManager` prop. You can learn more about color sche
 [color schemes guide](/theming/color-schemes).
 
 ```tsx
-import { MantineProvider, localStorageColorSchemeManager } from '@mantine/core';
+import {
+  MantineProvider,
+  localStorageColorSchemeManager,
+} from '@mantine/core';
 
-const colorSchemeManager = localStorageColorSchemeManager({ key: 'my-app-color-scheme' });
+const colorSchemeManager = localStorageColorSchemeManager({
+  key: 'my-app-color-scheme',
+});
 
 function Demo() {
   return (
@@ -176,7 +181,8 @@ attribute will be added to `<html />` tag. You can learn more about color scheme
 ```tsx
 import { MantineProvider } from '@mantine/core';
 
-const getRootElement = () => (typeof window === 'undefined' ? undefined : document.body);
+const getRootElement = () =>
+  typeof window === 'undefined' ? undefined : document.body;
 
 function Demo() {
   return (

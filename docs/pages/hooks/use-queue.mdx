@@ -93,7 +93,10 @@ q.add({ name: 'Bob', id: 1 });
 ## Definition
 
 ```tsx
-function useQueue<T>(configuration: { initialValues?: T[]; limit: number }): {
+function useQueue<T>(configuration: {
+  initialValues?: T[];
+  limit: number;
+}): {
   state: T[];
   queue: T[];
   add: (...items: T[]) => void;

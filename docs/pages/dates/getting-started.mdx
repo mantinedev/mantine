@@ -48,10 +48,18 @@ Example of setting locale on DatesProvider:
 
 ```tsx
 import 'dayjs/locale/ru';
-import { DatesProvider, MonthPickerInput, DatePickerInput } from '@mantine/dates';
+import {
+  DatesProvider,
+  MonthPickerInput,
+  DatePickerInput,
+} from '@mantine/dates';
 
 function Demo() {
-  return <DatesProvider settings={{ locale: 'ru' }}>{/* Your app  */}</DatesProvider>;
+  return (
+    <DatesProvider settings={{ locale: 'ru' }}>
+      {/* Your app  */}
+    </DatesProvider>
+  );
 }
 ```
 
@@ -64,9 +72,17 @@ is required both on client and server.
 'use client';
 
 import 'dayjs/locale/ru';
-import { DatesProvider, MonthPickerInput, DatePickerInput } from '@mantine/dates';
+import {
+  DatesProvider,
+  MonthPickerInput,
+  DatePickerInput,
+} from '@mantine/dates';
 
 function Demo() {
-  return <DatesProvider settings={{ locale: 'ru' }}>{/* Your app  */}</DatesProvider>;
+  return (
+    <DatesProvider settings={{ locale: 'ru' }}>
+      {/* Your app  */}
+    </DatesProvider>
+  );
 }
 ```

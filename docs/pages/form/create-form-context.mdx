@@ -22,11 +22,14 @@ interface FormValues {
 // FormProvider is a component that sets form context
 // useFormContext hook return form object that was previously set in FormProvider
 // useForm hook works the same way as useForm exported from the package but has predefined type
-const [FormProvider, useFormContext, useForm] = createFormContext<FormValues>();
+const [FormProvider, useFormContext, useForm] =
+  createFormContext<FormValues>();
 
 function ContextField() {
   const form = useFormContext();
-  return <TextInput label="Your name" {...form.getInputProps('name')} />;
+  return (
+    <TextInput label="Your name" {...form.getInputProps('name')} />
+  );
 }
 
 export function Context() {

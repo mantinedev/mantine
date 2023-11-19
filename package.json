@@ -43,12 +43,12 @@
     "jest": "jest",
     "typecheck": "tsc --noEmit && cd docs && npm run typecheck",
     "lint": "npm run eslint && npm run stylelint",
-    "eslint": "eslint src --ext .ts,.tsx --cache",
+    "eslint": "eslint packages --ext .ts,.tsx --cache",
     "stylelint": "stylelint '**/*.css' --cache",
     "syncpack": "syncpack list-mismatches",
     "syncpack:format": "syncpack format",
-    "prettier:test": "prettier --check \"**/*.{ts,tsx}\"",
-    "prettier:write": "prettier --write \"**/*.{ts,tsx}\""
+    "prettier:test": "prettier --check \"**/*.{ts,tsx,mdx}\"",
+    "prettier:write": "prettier --write \"**/*.{ts,tsx,mdx}\""
   },
   "dependencies": {
     "@floating-ui/react": "^0.24.8",

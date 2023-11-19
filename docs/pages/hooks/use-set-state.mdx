@@ -10,7 +10,11 @@ export default Layout(MDX_DATA.useSetState);
 into current state.
 
 ```tsx
-const [state, setState] = useSetState({ name: 'John', age: 35, job: 'Engineer' });
+const [state, setState] = useSetState({
+  name: 'John',
+  age: 35,
+  job: 'Engineer',
+});
 
 state; // -> { name: 'John', age: 35, job: 'Engineer' }
 
@@ -32,5 +36,10 @@ useSetState({ skills: ['JavaScript', 'TypeScript'] }); // -> works fine
 ```tsx
 function useSetState<T extends Record<string, any>>(
   initialState: T
-): readonly [T, (statePartial: Partial<T> | ((currentState: T) => Partial<T>)) => void];
+): readonly [
+  T,
+  (
+    statePartial: Partial<T> | ((currentState: T) => Partial<T>)
+  ) => void,
+];
 ```

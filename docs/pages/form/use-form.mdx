@@ -106,7 +106,10 @@ const form = useForm({
   validate: {
     email: (value) => (value.length < 2 ? 'Invalid email' : null),
     user: {
-      firstName: (value) => (value.length < 2 ? 'First name must have at least 2 letters' : null),
+      firstName: (value) =>
+        value.length < 2
+          ? 'First name must have at least 2 letters'
+          : null,
     },
   },
 });
@@ -222,16 +225,26 @@ interface FormValues {
   occupation: string;
 }
 
-function NameInput({ form }: { form: UseFormReturnType<FormValues> }) {
+function NameInput({
+  form,
+}: {
+  form: UseFormReturnType<FormValues>;
+}) {
   return <TextInput {...form.getInputProps('name')} />;
 }
 
-function OccupationInput({ form }: { form: UseFormReturnType<FormValues> }) {
+function OccupationInput({
+  form,
+}: {
+  form: UseFormReturnType<FormValues>;
+}) {
   return <TextInput {...form.getInputProps('occupation')} />;
 }
 
 function Demo() {
-  const form = useForm<FormValues>({ initialValues: { name: '', occupation: '' } });
+  const form = useForm<FormValues>({
+    initialValues: { name: '', occupation: '' },
+  });
   return (
     <>
       <NameInput form={form} />

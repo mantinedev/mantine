@@ -28,7 +28,8 @@ const insert = () => handlers.insert(1, { a: 5 });
 // values -> [{ a: 4 }, { a: 5 }, { a: 2 }]
 
 // apply function to each element of the list
-const apply = () => handlers.apply((item, index) => ({ a: item.a * index }));
+const apply = () =>
+  handlers.apply((item, index) => ({ a: item.a * index }));
 // values -> [{ a: 0 }, { a: 5 }, { a: 4 }]
 
 // move item from one position to another
@@ -83,7 +84,10 @@ The hook provides handlers to work with array data:
 
 ## Indeterminate state checkbox example
 
-<Demo data={CheckboxDemos.indeterminate} demoProps={{ toggle: true }} />
+<Demo
+  data={CheckboxDemos.indeterminate}
+  demoProps={{ toggle: true }}
+/>
 
 ## Definition
 

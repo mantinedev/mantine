@@ -43,7 +43,9 @@ function Demo() {
 import { SegmentedControl } from '@mantine/core';
 
 function ArrayOfStrings() {
-  return <SegmentedControl data={['React', 'Angular', 'Svelte', 'Vue']} />;
+  return (
+    <SegmentedControl data={['React', 'Angular', 'Svelte', 'Vue']} />
+  );
 }
 
 function ArrayOfObjects() {

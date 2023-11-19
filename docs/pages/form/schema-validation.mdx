@@ -30,9 +30,13 @@ import { useForm } from '@mantine/form';
 import { zodResolver } from 'mantine-form-zod-resolver';
 
 const schema = z.object({
-  name: z.string().min(2, { message: 'Name should have at least 2 letters' }),
+  name: z
+    .string()
+    .min(2, { message: 'Name should have at least 2 letters' }),
   email: z.string().email({ message: 'Invalid email' }),
-  age: z.number().min(18, { message: 'You must be at least 18 to create an account' }),
+  age: z.number().min(18, {
+    message: 'You must be at least 18 to create an account',
+  }),
 });
 
 const form = useForm({
@@ -62,7 +66,9 @@ import { zodResolver } from 'mantine-form-zod-resolver';
 
 const nestedSchema = z.object({
   nested: z.object({
-    field: z.string().min(2, { message: 'Field should have at least 2 letters' }),
+    field: z
+      .string()
+      .min(2, { message: 'Field should have at least 2 letters' }),
   }),
 });
 
@@ -92,7 +98,9 @@ import { zodResolver } from 'mantine-form-zod-resolver';
 const listSchema = z.object({
   list: z.array(
     z.object({
-      name: z.string().min(2, { message: 'Name should have at least 2 letters' }),
+      name: z
+        .string()
+        .min(2, { message: 'Name should have at least 2 letters' }),
     })
   ),
 });
@@ -126,8 +134,13 @@ import { yupResolver } from 'mantine-form-yup-resolver';
 
 const schema = yup.object().shape({
   name: yup.string().min(2, 'Name should have at least 2 letters'),
-  email: yup.string().required('Invalid email').email('Invalid email'),
-  age: yup.number().min(18, 'You must be at least 18 to create an account'),
+  email: yup
+    .string()
+    .required('Invalid email')
+    .email('Invalid email'),
+  age: yup
+    .number()
+    .min(18, 'You must be at least 18 to create an account'),
 });
 
 const form = useForm({
@@ -157,7 +170,9 @@ import { yupResolver } from 'mantine-form-yup-resolver';
 
 const nestedSchema = yup.object().shape({
   nested: yup.object().shape({
-    field: yup.string().min(2, 'Field should have at least 2 letters'),
+    field: yup
+      .string()
+      .min(2, 'Field should have at least 2 letters'),
   }),
 });
 
@@ -187,7 +202,9 @@ import { yupResolver } from 'mantine-form-yup-resolver';
 const listSchema = yup.object().shape({
   list: yup.array().of(
     yup.object().shape({
-      name: yup.string().min(2, 'Name should have at least 2 letters'),
+      name: yup
+        .string()
+        .min(2, 'Name should have at least 2 letters'),
     })
   ),
 });
@@ -230,7 +247,9 @@ const schema = Joi.object({
       'string.email': 'Invalid email',
       'string.empty': 'Invalid email',
     }),
-  age: Joi.number().min(18).message('You must be at least 18 to create an account'),
+  age: Joi.number()
+    .min(18)
+    .message('You must be at least 18 to create an account'),
 });
 
 const form = useForm({

@@ -29,7 +29,11 @@ import { Button } from '@mantine/core';
 
 function Demo() {
   return (
-    <Button renderRoot={(props) => <a href="https://mantine.dev/" target="_blank" {...props} />}>
+    <Button
+      renderRoot={(props) => (
+        <a href="https://mantine.dev/" target="_blank" {...props} />
+      )}
+    >
       Mantine website
     </Button>
   );
@@ -129,7 +133,9 @@ function Demo() {
     <Button
       renderRoot={({ className, ...others }) => (
         <NavLink
-          className={({ isActive }) => cx(className, { 'active-class': isActive })}
+          className={({ isActive }) =>
+            cx(className, { 'active-class': isActive })
+          }
           {...others}
         />
       )}
@@ -166,11 +172,17 @@ or disable type checking by passing `any` as a type argument to the polymorphic 
 import { Box } from '@mantine/core';
 
 function KeepTypes() {
-  return <Box<'input'> component={(Math.random() > 0.5 ? 'input' : 'div') as any} />;
+  return (
+    <Box<'input'>
+      component={(Math.random() > 0.5 ? 'input' : 'div') as any}
+    />
+  );
 }
 
 function NukeTypes() {
-  return <Box<any> component={Math.random() > 0.5 ? 'input' : 'div'} />;
+  return (
+    <Box<any> component={Math.random() > 0.5 ? 'input' : 'div'} />
+  );
 }
 ```
 
@@ -190,11 +202,20 @@ To make Mantine component polymorphic, use `createPolymorphicComponent` function
 as in the previous example:
 
 ```tsx
-import { Group, GroupProps, createPolymorphicComponent } from '@mantine/core';
+import {
+  Group,
+  GroupProps,
+  createPolymorphicComponent,
+} from '@mantine/core';
 
-const PolymorphicGroup = createPolymorphicComponent<'button', GroupProps>(Group);
+const PolymorphicGroup = createPolymorphicComponent<
+  'button',
+  GroupProps
+>(Group);
 
 function Demo() {
-  return <PolymorphicGroup component="a" href="https://mantine.dev" />;
+  return (
+    <PolymorphicGroup component="a" href="https://mantine.dev" />
+  );
 }
 ```

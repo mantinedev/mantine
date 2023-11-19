@@ -165,7 +165,10 @@ function Demo() {
   const { tabValue } = useParams();
 
   return (
-    <Tabs value={tabValue} onChange={(value) => navigate(`/tabs/${value}`)}>
+    <Tabs
+      value={tabValue}
+      onChange={(value) => navigate(`/tabs/${value}`)}
+    >
       <Tabs.List>
         <Tabs.Tab value="first">First tab</Tabs.Tab>
         <Tabs.Tab value="second">Second tab</Tabs.Tab>
@@ -226,7 +229,11 @@ function Demo() {
         <Tabs.Tab value="chat">Chat</Tabs.Tab>
 
         {/* aria-label is required, tab is not labelled by children */}
-        <Tabs.Tab value="money" aria-label="Get money" leftSection={<IconCoin size={14} />} />
+        <Tabs.Tab
+          value="money"
+          aria-label="Get money"
+          leftSection={<IconCoin size={14} />}
+        />
 
         {/* You can use VisuallyHidden instead of aria-label */}
         <Tabs.Tab value="money" leftSection={<IconCoin size={14} />}>
@@ -263,22 +270,26 @@ function Demo() {
   data={[
     {
       key: 'ArrowRight',
-      description: 'Focuses and activates next tab that is not disabled',
+      description:
+        'Focuses and activates next tab that is not disabled',
       condition: 'orientation="horizontal"',
     },
     {
       key: 'ArrowLeft',
-      description: 'Focuses and activates previous tab that is not disabled',
+      description:
+        'Focuses and activates previous tab that is not disabled',
       condition: 'orientation="horizontal"',
     },
     {
       key: 'ArrowDown',
-      description: 'Focuses and activates next tab that is not disabled',
+      description:
+        'Focuses and activates next tab that is not disabled',
       condition: 'orientation="vertical"',
     },
     {
       key: 'ArrowUp',
-      description: 'Focuses and activates previous tab that is not disabled',
+      description:
+        'Focuses and activates previous tab that is not disabled',
       condition: 'orientation="vertical"',
     },
     { key: 'Home', description: 'Focuses and activates first tab' },

@@ -32,7 +32,10 @@ cd web
 
 Install PostCSS plugins and [postcss-preset-mantine](/styles/postcss-preset):
 
-<InstallScript packages="postcss postcss-preset-mantine postcss-simple-vars postcss-loader" dev />
+<InstallScript
+  packages="postcss postcss-preset-mantine postcss-simple-vars postcss-loader"
+  dev
+/>
 
 Create `postcss.config.cjs` file in `web` directory with the following content:
 
@@ -58,7 +61,12 @@ Create `web/config/webpack.config.js` file with the following content:
 ```js
 /** @returns {import('webpack').Configuration} Webpack Configuration */
 module.exports = (config) => {
-  const stylesRules = ['\\.css$', '\\.module\\.css$', '\\.scss$', '\\.module\\.scss$'];
+  const stylesRules = [
+    '\\.css$',
+    '\\.module\\.css$',
+    '\\.scss$',
+    '\\.module\\.scss$',
+  ];
 
   config.module.rules[0].oneOf.forEach((rule) => {
     if (stylesRules.includes(rule.test.source)) {

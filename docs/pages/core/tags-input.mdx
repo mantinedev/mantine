@@ -38,7 +38,13 @@ import { TagsInput } from '@mantine/core';
 
 function Demo() {
   const [searchValue, setSearchValue] = useState('');
-  return <TagsInput searchValue={searchValue} onSearchChange={setSearchValue} data={[]} />;
+  return (
+    <TagsInput
+      searchValue={searchValue}
+      onSearchChange={setSearchValue}
+      data={[]}
+    />
+  );
 }
 ```
 
