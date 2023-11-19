@@ -47,7 +47,7 @@ async function release() {
   await setMantinePackagesVersion(incrementedVersion);
 
   await buildAllPackages();
-  logger.success('All packages were built successfully');
+  logger.success('All packages have been built successfully');
 
   logger.log('Publishing packages to npm');
 
@@ -63,7 +63,7 @@ async function release() {
     )
   );
 
-  logger.success('All packages were published successfully');
+  logger.success('All packages have been published successfully');
 
   await execa('yarn');
   await git.add([
