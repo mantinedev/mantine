@@ -3385,12 +3385,52 @@ __metadata:
 "@docs/demos@workspace:*, @docs/demos@workspace:packages/@docs/demos":
   version: 0.0.0-use.local
   resolution: "@docs/demos@workspace:packages/@docs/demos"
+  dependencies:
+    "@mantine/carousel": "workspace:*"
+    "@mantine/code-highlight": "workspace:*"
+    "@mantine/core": "workspace:*"
+    "@mantine/dates": "workspace:*"
+    "@mantine/dropzone": "workspace:*"
+    "@mantine/ds": "workspace:*"
+    "@mantine/form": "workspace:*"
+    "@mantine/hooks": "workspace:*"
+    "@mantine/notifications": "workspace:*"
+    "@mantine/nprogress": "workspace:*"
+    "@mantine/spotlight": "workspace:*"
+    "@mantine/store": "workspace:*"
+    "@mantine/tiptap": "workspace:*"
+  peerDependencies:
+    "@tabler/icons-react": "*"
+    "@tiptap/extension-link": "*"
+    "@tiptap/react": "*"
+    dayjs: "*"
+    embla-carousel-react: "*"
+    react: ^18.2.0
+    react-dom: ^18.2.0
   languageName: unknown
   linkType: soft
 
 "@docs/styles-api@workspace:*, @docs/styles-api@workspace:packages/@docs/styles-api":
   version: 0.0.0-use.local
   resolution: "@docs/styles-api@workspace:packages/@docs/styles-api"
+  dependencies:
+    "@mantine/carousel": "workspace:*"
+    "@mantine/code-highlight": "workspace:*"
+    "@mantine/core": "workspace:*"
+    "@mantine/dates": "workspace:*"
+    "@mantine/dropzone": "workspace:*"
+    "@mantine/notifications": "workspace:*"
+    "@mantine/nprogress": "workspace:*"
+    "@mantine/spotlight": "workspace:*"
+    "@mantine/tiptap": "workspace:*"
+  peerDependencies:
+    "@tabler/icons-react": "*"
+    "@tiptap/extension-link": "*"
+    "@tiptap/react": "*"
+    dayjs: "*"
+    embla-carousel-react: "*"
+    react: ^18.2.0
+    react-dom: ^18.2.0
   languageName: unknown
   linkType: soft
 
@@ -10980,6 +11020,7 @@ __metadata:
     "@types/react": "npm:18.2.37"
     chroma-js: "npm:^2.4.2"
     dayjs: "npm:^1.11.10"
+    embla-carousel: "npm:^7.1.0"
     embla-carousel-autoplay: "npm:^7.1.0"
     embla-carousel-react: "npm:^7.1.0"
     github-slugger: "npm:^2.0.0"
@@ -11248,7 +11289,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"embla-carousel@npm:7.1.0":
+"embla-carousel@npm:7.1.0, embla-carousel@npm:^7.1.0":
   version: 7.1.0
   resolution: "embla-carousel@npm:7.1.0"
   checksum: 3fcfe5b287c5d09d35dac76b6612567cf6f15abdae0bbf7d10754db9f732dd90cdfdf5bc7405d8fb3f65542bdead09971e93e024a0db9b3f1fcc653a70e733bc
@@ -15797,6 +15838,7 @@ __metadata:
     css-loader: "npm:^6.8.1"
     cssnano: "npm:^6.0.1"
     dayjs: "npm:^1.11.10"
+    embla-carousel: "npm:^7.1.0"
     embla-carousel-autoplay: "npm:^7.1.0"
     embla-carousel-react: "npm:^7.1.0"
     esbuild: "npm:^0.19.5"

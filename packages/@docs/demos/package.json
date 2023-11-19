@@ -21,20 +21,28 @@
     "./styles.css": "./esm/index.css",
     "./styles.layer.css": "./esm/index.layer.css"
   },
+  "peerDependencies": {
+    "@tabler/icons-react": "*",
+    "@tiptap/extension-link": "*",
+    "@tiptap/react": "*",
+    "dayjs": "*",
+    "embla-carousel-react": "*",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  },
   "devDependencies": {
-    "@mantine/core": "workspace: *",
-    "@mantine/ds": "workspace: *",
-    "@mantine/form": "workspace: *",
-    "@mantine/hooks": "workspace: *",
-    "@mantine/notifications": "workspace: *",
-    "@mantine/code-highlight": "workspace: *",
-    "@mantine/carousel": "workspace: *",
-    "@mantine/colors-generator": "workspace: *",
-    "@mantine/dates": "workspace: *",
-    "@mantine/dropzone": "workspace: *",
-    "@mantine/spotlight": "workspace: *",
-    "@mantine/nprogress": "workspace: *",
-    "@mantine/store": "workspace: *",
-    "@mantine/tiptap": "workspace: *"
+    "@mantine/carousel": "workspace:*",
+    "@mantine/code-highlight": "workspace:*",
+    "@mantine/core": "workspace:*",
+    "@mantine/dates": "workspace:*",
+    "@mantine/dropzone": "workspace:*",
+    "@mantine/ds": "workspace:*",
+    "@mantine/form": "workspace:*",
+    "@mantine/hooks": "workspace:*",
+    "@mantine/notifications": "workspace:*",
+    "@mantine/nprogress": "workspace:*",
+    "@mantine/spotlight": "workspace:*",
+    "@mantine/store": "workspace:*",
+    "@mantine/tiptap": "workspace:*"
   }
 }

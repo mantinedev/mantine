@@ -71,6 +71,7 @@
     "chroma-js": "^2.4.2",
     "clsx": "2.0.0",
     "dayjs": "^1.11.10",
+    "embla-carousel": "^7.1.0",
     "embla-carousel-autoplay": "^7.1.0",
     "embla-carousel-react": "^7.1.0",
     "fast-deep-equal": "^3.1.3",
