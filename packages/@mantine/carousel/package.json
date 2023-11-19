@@ -36,8 +36,7 @@
       }
     },
     "./styles.css": "./esm/index.css",
-    "./styles.layer.css": "./esm/index.layer.css",
-    "./styles/*": "./esm/styles/*"
+    "./styles.layer.css": "./esm/index.layer.css"
   },
   "repository": {
     "url": "https://github.com/mantinedev/mantine.git",
