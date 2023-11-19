@@ -40,6 +40,7 @@
     "test": "npm run prettier:test && npm run syncpack && npm run typecheck && npm run lint && npm run jest",
     "test:exports": "esno scripts/tests/exports",
     "test:conflicts": "esno scripts/tests/conflicts",
+    "test:validate-package-json": "esno scripts/tests/validate-package-json",
     "jest": "jest",
     "typecheck": "tsc --noEmit && cd docs && npm run typecheck",
     "lint": "npm run eslint && npm run stylelint",
