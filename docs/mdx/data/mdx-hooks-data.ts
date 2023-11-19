@@ -8,7 +8,7 @@ function hDocs(hook: string, description: string): Frontmatter {
     slug: `/hooks/${name}`,
     description,
     import: `import { ${hook} } from '@mantine/hooks';`,
-    source: `mantine-hooks/src/${name}/${name}.ts`,
+    source: `@mantine/hooks/src/${name}/${name}.ts`,
     docs: `hooks/${name}.mdx`,
   };
 }

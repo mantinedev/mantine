@@ -18,7 +18,7 @@ export const MDX_DATES_DATA: Record<string, Frontmatter> = {
     props: ['Calendar'],
     styles: ['Calendar'],
     import: "import { Calendar } from '@mantine/dates';",
-    source: 'mantine-dates/src/components/Calendar/Calendar.tsx',
+    source: '@mantine/dates/src/components/Calendar/Calendar.tsx',
     docs: 'dates/calendar.mdx',
   },
 
@@ -30,7 +30,7 @@ export const MDX_DATES_DATA: Record<string, Frontmatter> = {
     props: ['DateInput'],
     styles: ['DateInput'],
     import: "import { DateInput } from '@mantine/dates';",
-    source: 'mantine-dates/src/components/DateInput/DateInput.tsx',
+    source: '@mantine/dates/src/components/DateInput/DateInput.tsx',
     docs: 'dates/date-input.mdx',
   },
 
@@ -42,7 +42,7 @@ export const MDX_DATES_DATA: Record<string, Frontmatter> = {
     props: ['DatePicker'],
     styles: ['DatePicker'],
     import: "import { DatePicker } from '@mantine/dates';",
-    source: 'mantine-dates/src/components/DatePicker/DatePicker.tsx',
+    source: '@mantine/dates/src/components/DatePicker/DatePicker.tsx',
     docs: 'dates/date-picker.mdx',
   },
 
@@ -54,7 +54,7 @@ export const MDX_DATES_DATA: Record<string, Frontmatter> = {
     props: ['DatePickerInput'],
     styles: ['DatePickerInput'],
     import: "import { DatePickerInput } from '@mantine/dates';",
-    source: 'mantine-dates/src/components/DatePickerInput/DatePickerInput.tsx',
+    source: '@mantine/dates/src/components/DatePickerInput/DatePickerInput.tsx',
     docs: 'dates/date-picker-input.mdx',
   },
 
@@ -64,7 +64,7 @@ export const MDX_DATES_DATA: Record<string, Frontmatter> = {
     slug: '/dates/dates-provider',
     description: 'Settings provider for @mantine/dates components',
     import: "import { DatesProvider } from '@mantine/dates';",
-    source: 'mantine-dates/src/components/DatesProvider/DatesProvider.tsx',
+    source: '@mantine/dates/src/components/DatesProvider/DatesProvider.tsx',
     docs: 'dates/dates-provider.mdx',
   },
 
@@ -76,7 +76,7 @@ export const MDX_DATES_DATA: Record<string, Frontmatter> = {
     styles: ['DateTimePicker'],
     description: 'Capture datetime from the user',
     import: "import { DateTimePicker } from '@mantine/dates';",
-    source: 'mantine-dates/src/components/DateTimePicker/DateTimePicker.tsx',
+    source: '@mantine/dates/src/components/DateTimePicker/DateTimePicker.tsx',
     docs: 'dates/date-time-picker.mdx',
   },
 
@@ -88,7 +88,7 @@ export const MDX_DATES_DATA: Record<string, Frontmatter> = {
     styles: ['MonthPicker'],
     description: 'Inline month, multiple months and months range picker',
     import: "import { MonthPicker } from '@mantine/dates';",
-    source: 'mantine-dates/src/components/MonthPicker/MonthPicker.tsx',
+    source: '@mantine/dates/src/components/MonthPicker/MonthPicker.tsx',
     docs: 'dates/month-picker.mdx',
   },
 
@@ -100,7 +100,7 @@ export const MDX_DATES_DATA: Record<string, Frontmatter> = {
     styles: ['MonthPickerInput'],
     description: 'Month, multiple months and months range picker input',
     import: "import { MonthPickerInput } from '@mantine/dates';",
-    source: 'mantine-dates/src/components/MonthPickerInput/MonthPickerInput.tsx',
+    source: '@mantine/dates/src/components/MonthPickerInput/MonthPickerInput.tsx',
     docs: 'dates/month-picker-input.mdx',
   },
 
@@ -112,7 +112,7 @@ export const MDX_DATES_DATA: Record<string, Frontmatter> = {
     styles: ['TimeInput'],
     description: 'Capture time from the user',
     import: "import { TimeInput } from '@mantine/dates';",
-    source: 'mantine-dates/src/components/TimeInput/TimeInput.tsx',
+    source: '@mantine/dates/src/components/TimeInput/TimeInput.tsx',
     docs: 'dates/time-input.mdx',
   },
 
@@ -124,7 +124,7 @@ export const MDX_DATES_DATA: Record<string, Frontmatter> = {
     styles: ['YearPicker'],
     description: 'Inline year, multiple years and years range picker',
     import: "import { YearPicker } from '@mantine/dates';",
-    source: 'mantine-dates/src/components/YearPicker/YearPicker.tsx',
+    source: '@mantine/dates/src/components/YearPicker/YearPicker.tsx',
     docs: 'dates/year-picker.mdx',
   },
 
@@ -136,7 +136,7 @@ export const MDX_DATES_DATA: Record<string, Frontmatter> = {
     styles: ['YearPickerInput'],
     description: 'Inline year, multiple years and years range picker',
     import: "import { YearPickerInput } from '@mantine/dates';",
-    source: 'mantine-dates/src/components/YearPickerInput/YearPickerInput.tsx',
+    source: '@mantine/dates/src/components/YearPickerInput/YearPickerInput.tsx',
     docs: 'dates/year-picker-input.mdx',
   },
 };

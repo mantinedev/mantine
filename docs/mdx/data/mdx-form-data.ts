@@ -6,7 +6,7 @@ export const MDX_FORM_DATA: Record<string, Frontmatter> = {
     package: '@mantine/form',
     slug: '/form/use-form',
     description: 'Manage form state',
-    source: 'mantine-form/src',
+    source: '@mantine/form/src',
     license: 'MIT',
     docs: 'form/use-form.mdx',
   },

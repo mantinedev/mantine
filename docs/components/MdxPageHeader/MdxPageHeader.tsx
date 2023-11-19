@@ -9,7 +9,7 @@ import { ImportStatement } from './ImportStatement/ImportStatement';
 
 const REPO_BASE = 'https://github.com/rtivital/mantine/blob/master';
 const DOCS_BASE = `${REPO_BASE}/docs/pages`;
-const SOURCE_BASE = `${REPO_BASE}/src`;
+const SOURCE_BASE = `${REPO_BASE}/packages`;
 
 interface MdxPageHeaderProps {
   meta: Frontmatter;
