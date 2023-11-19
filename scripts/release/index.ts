@@ -7,7 +7,7 @@ import { createLogger } from '../utils/signale';
 import { buildAllPackages } from '../build/build-all-packages';
 import { getMantinePackagesList } from '../packages/get-packages-list';
 import { getPath } from '../utils/get-path';
-import { publishPackage } from './publish-package';
+import { publishPackage } from '../publish/publish-package';
 import { setMantinePackagesVersion } from './set-mantine-packages-version';
 import { openGithubRelease } from './open-github-release';
 import packageJson from '../../package.json';
