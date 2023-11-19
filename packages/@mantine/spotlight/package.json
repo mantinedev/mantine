@@ -1,6 +1,7 @@
 {
   "name": "@mantine/spotlight",
   "version": "7.3.0-alpha.1",
+  "description": "Command center components for react and Mantine",
   "homepage": "https://mantine.dev",
   "license": "MIT",
   "author": "Vitaly Rtishchev <rtivital@gmail.com>",

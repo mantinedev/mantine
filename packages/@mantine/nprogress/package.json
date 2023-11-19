@@ -5,6 +5,18 @@
   "homepage": "https://mantine.dev/others/nprogress/",
   "license": "MIT",
   "author": "Vitaly Rtishchev <rtivital@gmail.com>",
+  "keywords": [
+    "components",
+    "frontend",
+    "library",
+    "next",
+    "nextjs",
+    "nprogress",
+    "progress",
+    "react",
+    "ui",
+    "ui-kit"
+  ],
   "sideEffects": [
     "*.css"
   ],

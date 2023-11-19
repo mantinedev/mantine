@@ -1,6 +1,7 @@
 {
   "name": "@mantine/notifications",
   "version": "7.3.0-alpha.1",
+  "description": "Mantine notifications system",
   "homepage": "https://mantine.dev",
   "license": "MIT",
   "author": "Vitaly Rtishchev <rtivital@gmail.com>",

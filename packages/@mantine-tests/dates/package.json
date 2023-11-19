@@ -1,6 +1,16 @@
 {
   "name": "@mantine-tests/dates",
   "version": "1.0.0",
+  "description": "Dates tests package for Mantine",
+  "homepage": "https://mantine.dev",
+  "license": "MIT",
+  "author": "Vitaly Rtishchev <rtivital@gmail.com>",
+  "keywords": [
+    "jest",
+    "mantine",
+    "tests"
+  ],
+  "sideEffects": false,
   "main": "./cjs/index.cjs",
   "module": "./esm/index.mjs",
   "types": "./lib/index.d.ts",

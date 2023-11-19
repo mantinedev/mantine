@@ -1,6 +1,11 @@
 {
   "name": "@docs/styles-api",
   "version": "1.0.0",
+  "description": "Mantine components styles api data",
+  "homepage": "https://mantine.dev",
+  "license": "MIT",
+  "author": "Vitaly Rtishchev <rtivital@gmail.com>",
+  "keywords": [],
   "sideEffects": false,
   "main": "./cjs/index.cjs",
   "module": "./esm/index.mjs",
@@ -16,6 +21,11 @@
         "default": "./cjs/index.cjs"
       }
     }
+  },
+  "repository": {
+    "url": "https://github.com/mantinedev/mantine.git",
+    "type": "git",
+    "directory": "packages/@docs/styles-api"
   },
   "peerDependencies": {
     "@tabler/icons-react": "*",

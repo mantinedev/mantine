@@ -5,6 +5,11 @@
   "homepage": "https://mantine.dev",
   "license": "MIT",
   "author": "Vitaly Rtishchev <rtivital@gmail.com>",
+  "keywords": [
+    "form",
+    "react",
+    "state"
+  ],
   "sideEffects": false,
   "main": "./cjs/index.cjs",
   "module": "./esm/index.mjs",

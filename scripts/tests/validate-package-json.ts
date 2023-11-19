@@ -16,7 +16,7 @@ function validatePackageJson(content: PackageJson, errors: string[]) {
   !content.author && errors.push(`Missing author for package ${content.name}`);
   !content.license && errors.push(`Missing license for package ${content.name}`);
   !content.repository && errors.push(`Missing repository for package ${content.name}`);
-  !content.sideEffects && errors.push(`Missing sideEffects for package ${content.name}`);
+  content.sideEffects == null && errors.push(`Missing sideEffects for package ${content.name}`);
   !content.homepage && errors.push(`Missing homepage for package ${content.name}`);
   !content.keywords && errors.push(`Missing keywords for package ${content.name}`);
 }

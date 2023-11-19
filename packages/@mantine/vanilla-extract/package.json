@@ -1,7 +1,7 @@
 {
   "name": "@mantine/vanilla-extract",
-  "description": "Vanilla Extract integration for Mantine theme",
   "version": "7.3.0-alpha.1",
+  "description": "Vanilla Extract integration for Mantine theme",
   "homepage": "https://mantine.dev",
   "license": "MIT",
   "author": "Vitaly Rtishchev <rtivital@gmail.com>",

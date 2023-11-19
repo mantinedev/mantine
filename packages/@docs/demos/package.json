@@ -1,6 +1,15 @@
 {
   "name": "@docs/demos",
   "version": "1.0.0",
+  "description": "Mantine components demos used on mantine.dev website",
+  "homepage": "https://mantine.dev",
+  "license": "MIT",
+  "author": "Vitaly Rtishchev <rtivital@gmail.com>",
+  "keywords": [
+    "jest",
+    "mantine",
+    "tests"
+  ],
   "sideEffects": [
     "*.css"
   ],
@@ -20,6 +29,11 @@
     },
     "./styles.css": "./esm/index.css",
     "./styles.layer.css": "./esm/index.layer.css"
+  },
+  "repository": {
+    "url": "https://github.com/mantinedev/mantine.git",
+    "type": "git",
+    "directory": "packages/@docs/demos"
   },
   "peerDependencies": {
     "@tabler/icons-react": "*",
