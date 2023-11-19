@@ -29,6 +29,20 @@ getPackagesBuildOrder().then((packages) => {
     !esmFile && errors.push(`Missing esm file for package ${pkg!.packageJson.name}`);
     !cjsTypes && errors.push(`Missing cjs types for package ${pkg!.packageJson.name}`);
     !cjsFile && errors.push(`Missing cjs file for package ${pkg!.packageJson.name}`);
+
+    // Styles exports
+    if (exports['./styles.css']) {
+      const styles = fs.existsSync(path.join(pkg!.path, exports['./styles.css']));
+      !styles && errors.push(`Missing styles for package ${pkg!.packageJson.name}`);
+
+      if (!exports['./styles.layer.css']) {
+        errors.push(`Missing styles.layer.css declaration for package ${pkg!.packageJson.name}`);
+      } else {
+        const stylesLayer = fs.existsSync(path.join(pkg!.path, exports['./styles.layer.css']));
+        !stylesLayer &&
+          errors.push(`Missing styles.layer.css for package ${pkg!.packageJson.name}`);
+      }
+    }
   });
 
   if (errors.length > 0) {

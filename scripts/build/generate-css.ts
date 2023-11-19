@@ -34,7 +34,7 @@ async function processFile(
 
 // Generates styles.layers.css files for each @mantine/* component
 async function generateCSSLayers() {
-  const files = await glob(getPath('packages/@mantine/*/esm/index.css'));
+  const files = await glob(getPath('packages/*/*/esm/index.css'));
 
   files.forEach((filePath) => {
     const directory = path.normalize(path.join(filePath, '..'));
