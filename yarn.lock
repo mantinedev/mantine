@@ -3398,7 +3398,6 @@ __metadata:
     "@mantine/notifications": "workspace:*"
     "@mantine/nprogress": "workspace:*"
     "@mantine/spotlight": "workspace:*"
-    "@mantine/store": "workspace:*"
     "@mantine/tiptap": "workspace:*"
   peerDependencies:
     "@tabler/icons-react": "*"
@@ -4629,7 +4628,7 @@ __metadata:
   dependencies:
     "@mantine/core": "workspace:*"
     "@mantine/hooks": "workspace:*"
-    "@mantine/store": "workspace:*"
+    "@mantine/store": "npm:7.3.0-alpha.0"
     "@tests/core": "workspace:*"
     react-transition-group: "npm:4.4.5"
   peerDependencies:
@@ -4646,7 +4645,7 @@ __metadata:
   dependencies:
     "@mantine/core": "workspace:*"
     "@mantine/hooks": "workspace:*"
-    "@mantine/store": "workspace:*"
+    "@mantine/store": "npm:7.3.0-alpha.0"
     "@tests/core": "workspace:*"
   peerDependencies:
     "@mantine/core": 7.3.0-alpha.0
@@ -4662,7 +4661,7 @@ __metadata:
   dependencies:
     "@mantine/core": "workspace:*"
     "@mantine/hooks": "workspace:*"
-    "@mantine/store": "workspace:*"
+    "@mantine/store": "npm:7.3.0-alpha.0"
     "@tests/core": "workspace:*"
   peerDependencies:
     "@mantine/core": 7.3.0-alpha.0
@@ -4672,7 +4671,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@mantine/store@workspace:*, @mantine/store@workspace:packages/@mantine/store":
+"@mantine/store@npm:7.3.0-alpha.0, @mantine/store@workspace:*, @mantine/store@workspace:packages/@mantine/store":
   version: 0.0.0-use.local
   resolution: "@mantine/store@workspace:packages/@mantine/store"
   peerDependencies:
@@ -6739,7 +6738,6 @@ __metadata:
   dependencies:
     "@mantine/core": "workspace:*"
     "@mantine/hooks": "workspace:*"
-    "@mantine/store": "workspace:*"
   peerDependencies:
     react: ^18.2.0
     react-dom: ^18.2.0

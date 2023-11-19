@@ -43,7 +43,6 @@
     "@mantine/notifications": "workspace:*",
     "@mantine/nprogress": "workspace:*",
     "@mantine/spotlight": "workspace:*",
-    "@mantine/store": "workspace:*",
     "@mantine/tiptap": "workspace:*"
   }
 }

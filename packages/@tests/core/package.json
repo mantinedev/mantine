@@ -22,7 +22,6 @@
   },
   "devDependencies": {
     "@mantine/core": "workspace:*",
-    "@mantine/hooks": "workspace:*",
-    "@mantine/store": "workspace:*"
+    "@mantine/hooks": "workspace:*"
   }
 }

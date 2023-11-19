@@ -1,7 +1,7 @@
 /** @type {import("syncpack").RcFile} */
 const config = {
   dependencyTypes: ['dev', 'prod'],
-  source: ['package.json', 'src/*/package.json', 'docs/package.json'],
+  source: ['package.json', 'packages/**/package.json', 'docs/package.json'],
   sortFirst: [
     'name',
     'version',
@@ -36,22 +36,7 @@ const config = {
   versionGroups: [
     {
       packages: ['docs'],
-      dependencies: [
-        '@mantine/store',
-        '@mantine/code-highlight',
-        '@mantine/core',
-        '@mantine/ds',
-        '@mantine/hooks',
-        '@mantine/notifications',
-        '@mantine/spotlight',
-        '@mantine/carousel',
-        '@mantine/dropzone',
-        '@mantine/form',
-        '@mantine/nprogress',
-        '@mantine/dates',
-        '@mantine/modals',
-        '@mantine/tiptap',
-      ],
+      dependencies: ['@mantine/store'],
       isIgnored: true,
     },
   ],
