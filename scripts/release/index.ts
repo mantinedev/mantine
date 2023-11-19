@@ -11,6 +11,7 @@ import { publishPackage } from './publish-package';
 import { setMantinePackagesVersion } from './set-mantine-packages-version';
 import { openGithubRelease } from './open-github-release';
 import packageJson from '../../package.json';
+import { execa } from 'execa';
 
 const logger = createLogger('release');
 const git = simpleGit();
@@ -64,7 +65,8 @@ async function release() {
 
   logger.success('All packages were published successfully');
 
-  await git.add([getPath('packages'), getPath('package.json')]);
+  await execa('yarn');
+  await git.add([getPath('packages'), getPath('package.json'), getPath('yarn.lock')]);
   await git.commit(`[release] Version: ${incrementedVersion}`);
   await git.push();
 
