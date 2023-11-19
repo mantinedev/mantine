@@ -5,27 +5,12 @@ const argv = require('yargs').argv;
 
 const getPath = (storyPath) => path.resolve(process.cwd(), storyPath).replace(/\\/g, '/');
 
-const getStoryPaths = (fileName = '*') => {
-  const basePath = path.join(process.cwd(), 'src');
-  const files = fg.sync(getPath('src/mantine-*/src/**/*.story.@(ts|tsx)'));
-
-  const packagesWithStories = {};
-
-  for (const file of files) {
-    const packageName = file.replace(basePath, '').split(path.sep)[1];
-    packagesWithStories[packageName] = true;
-  }
-
-  return Object.keys(packagesWithStories).map((packageName) => {
-    return getPath(`src/${packageName}/src/**/${fileName}.story.@(ts|tsx)`);
-  });
-};
+function getStoryPaths(fileName = '*') {
+  return [getPath(`packages/@mantine/*/src/**/${fileName}.story.@(ts|tsx)`)];
+}
 
 const storiesPath = !argv._[1]
-  ? [
-      // can't use glob pattern (see https://github.com/storybookjs/storybook/issues/19812)
-      ...getStoryPaths(),
-    ]
+  ? [...getStoryPaths()]
   : [...getStoryPaths(argv._[1]), ...getStoryPaths(`${argv._[1]}.demos`)];
 
 module.exports = {
