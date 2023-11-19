@@ -24,6 +24,9 @@ export const ROLLUP_EXTERNALS = [
   '@mantine/store',
   '@mantine/tiptap',
   '@tests/core',
+  '@tests/dates',
+  '@docs/styles-api',
+  '@docs/demos',
   '@mantine/vanilla-extract',
   ...Object.keys({
     ...packageJson.devDependencies,

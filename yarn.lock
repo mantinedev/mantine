@@ -3386,6 +3386,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@docs/demos@workspace:packages/@docs/demos"
   dependencies:
+    "@docs/styles-api": "workspace:*"
     "@mantine/carousel": "workspace:*"
     "@mantine/code-highlight": "workspace:*"
     "@mantine/core": "workspace:*"

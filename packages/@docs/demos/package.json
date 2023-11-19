@@ -31,6 +31,7 @@
     "react-dom": "^18.2.0"
   },
   "devDependencies": {
+    "@docs/styles-api": "workspace:*",
     "@mantine/carousel": "workspace:*",
     "@mantine/code-highlight": "workspace:*",
     "@mantine/core": "workspace:*",
