@@ -25,8 +25,8 @@ async function writeVersionToPackageJson(filePath: string, version: string) {
   await fs.writeJSON(filePath, current, { spaces: 2 });
 }
 
-export async function setPackagesVersion(version: string) {
-  const src = getPath('src');
+export async function setMantinePackagesVersion(version: string) {
+  const src = getPath('packages/@mantine');
 
   const folders = (await fs.readdir(src)).filter((folder) =>
     fs.pathExistsSync(path.join(src, folder, 'package.json'))

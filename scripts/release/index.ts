@@ -5,9 +5,10 @@ import { hideBin } from 'yargs/helpers';
 import { getNextVersion } from 'version-next';
 import { createLogger } from '../utils/signale';
 import { buildAllPackages } from '../build/build-all-packages';
+import { getMantinePackagesList } from '../packages/get-packages-list';
 import { getPath } from '../utils/get-path';
 import { publishPackage } from './publish-package';
-import { setPackagesVersion } from './set-packages-version';
+import { setMantinePackagesVersion } from './set-mantine-packages-version';
 import { openGithubRelease } from './open-github-release';
 import packageJson from '../../package.json';
 
@@ -42,9 +43,9 @@ async function release() {
   });
 
   logger.log(`New version: ${chalk.cyan(incrementedVersion)}`);
-  await setPackagesVersion(incrementedVersion);
+  await setMantinePackagesVersion(incrementedVersion);
 
-  const packages = await buildAllPackages();
+  await buildAllPackages();
   logger.success('All packages were built successfully');
 
   logger.log('Publishing packages to npm');
@@ -53,15 +54,17 @@ async function release() {
     argv.tag = 'next';
   }
 
+  const mantinePackages = await getMantinePackagesList();
+
   await Promise.all(
-    packages.map((p) =>
+    mantinePackages.map((p) =>
       publishPackage({ packagePath: p!.path, name: p!.packageJson.name!, tag: argv.tag })
     )
   );
 
   logger.success('All packages were published successfully');
 
-  await git.add([getPath('src'), getPath('package.json')]);
+  await git.add([getPath('packages'), getPath('package.json')]);
   await git.commit(`[release] Version: ${incrementedVersion}`);
   await git.push();
 

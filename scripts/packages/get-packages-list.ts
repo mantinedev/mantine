@@ -41,3 +41,8 @@ export async function getPackagesList() {
 
   return packages;
 }
+
+export async function getMantinePackagesList() {
+  const packages = await getPackagesList();
+  return packages.filter((pkg) => pkg.packageJson.name?.startsWith('@mantine/'));
+}
