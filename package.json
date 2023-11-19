@@ -11,9 +11,10 @@
     "node": ">=20.9.0"
   },
   "workspaces": [
-    "packages/@docs/*",
     "packages/@mantine/*",
+    "packages/@mantinex/*",
     "packages/@mantine-tests/*",
+    "packages/@docs/*",
     "docs"
   ],
   "scripts": {

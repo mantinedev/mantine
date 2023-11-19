@@ -14,5 +14,9 @@ export function getPackageName(input: string) {
     return `@tests/${input.replace('tests-', '')}`;
   }
 
+  if (input.startsWith('x-')) {
+    return `@mantinex/${input.replace('x-', '')}`;
+  }
+
   return `@mantine/${input}`;
 }
