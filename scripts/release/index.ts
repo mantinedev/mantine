@@ -66,7 +66,12 @@ async function release() {
   logger.success('All packages were published successfully');
 
   await execa('yarn');
-  await git.add([getPath('packages'), getPath('package.json'), getPath('yarn.lock')]);
+  await git.add([
+    getPath('packages'),
+    getPath('package.json'),
+    getPath('yarn.lock'),
+    getPath('scripts/plop/templates/package.json'),
+  ]);
   await git.commit(`[release] Version: ${incrementedVersion}`);
   await git.push();
 
