@@ -34,7 +34,7 @@ async function processFile(
 
 // Generates styles.layers.css files for each @mantine/* component
 async function generateCSSLayers() {
-  const files = await glob(getPath('src/mantine-*/esm/index.css'));
+  const files = await glob(getPath('packages/@mantine/*/esm/index.css'));
 
   files.forEach((filePath) => {
     const directory = path.normalize(path.join(filePath, '..'));
@@ -46,7 +46,7 @@ async function generateCSSLayers() {
 
 // Generates individual css files for each @mantine/core component
 export async function generateCoreCSS() {
-  const files = await glob(getPath('src/mantine-core/src/**/*.css'));
+  const files = await glob(getPath('packages/@mantine/core/src/**/*.css'));
   const modules = files.filter((file) => file.endsWith('.module.css'));
   const global = files.find((file) => file.endsWith('global.css'))!;
 
@@ -56,7 +56,7 @@ export async function generateCoreCSS() {
     { spaces: 2 }
   );
 
-  const outputFolder = getPath('src/mantine-core/esm/styles');
+  const outputFolder = getPath('packages/@mantine/core/esm/styles');
 
   await fs.ensureDir(outputFolder);
 
