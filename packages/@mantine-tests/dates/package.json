@@ -16,6 +16,11 @@
       }
     }
   },
+  "repository": {
+    "url": "https://github.com/mantinedev/mantine.git",
+    "type": "git",
+    "directory": "packages/@mantine-core/core"
+  },
   "peerDependencies": {
     "dayjs": "*",
     "react": "^18.2.0",

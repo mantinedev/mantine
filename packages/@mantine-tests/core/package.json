@@ -1,5 +1,6 @@
 {
   "name": "@mantine-tests/core",
+  "description": "Core tests package for Mantine",
   "version": "1.0.0",
   "main": "./cjs/index.cjs",
   "module": "./esm/index.mjs",
@@ -15,6 +16,11 @@
         "default": "./cjs/index.cjs"
       }
     }
+  },
+  "repository": {
+    "url": "https://github.com/mantinedev/mantine.git",
+    "type": "git",
+    "directory": "packages/@mantine-tests/core"
   },
   "peerDependencies": {
     "react": "^18.2.0",

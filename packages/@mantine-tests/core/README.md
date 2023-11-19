@@ -1,3 +1,7 @@
 # Mantine tests
 
-Internal package for testing mantine components
+Test utilities for Mantine components.
+
+## License
+
+MIT

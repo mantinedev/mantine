@@ -33,7 +33,7 @@
   "repository": {
     "url": "https://github.com/mantinedev/mantine.git",
     "type": "git",
-    "directory": "src/mantine-hooks"
+    "directory": "packages/@mantine/hooks"
   },
   "peerDependencies": {
     "react": "^18.2.0"

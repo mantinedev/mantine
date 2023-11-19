@@ -41,7 +41,7 @@
   "repository": {
     "url": "https://github.com/mantinedev/mantine.git",
     "type": "git",
-    "directory": "src/mantine-dropzone"
+    "directory": "packages/@mantine/dropzone"
   },
   "peerDependencies": {
     "@mantine/core": "7.3.0-alpha.1",

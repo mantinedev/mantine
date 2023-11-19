@@ -33,7 +33,7 @@
   "repository": {
     "url": "https://github.com/mantinedev/mantine.git",
     "type": "git",
-    "directory": "src/mantine-colors-generator"
+    "directory": "packages/@mantine/colors-generator"
   },
   "peerDependencies": {
     "chroma-js": "^2.4.2"

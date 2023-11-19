@@ -42,7 +42,7 @@
   "repository": {
     "url": "https://github.com/mantinedev/mantine.git",
     "type": "git",
-    "directory": "src/mantine-carousel"
+    "directory": "packages/@mantine/carousel"
   },
   "peerDependencies": {
     "@mantine/core": "7.3.0-alpha.1",

@@ -1,5 +1,6 @@
 {
   "name": "@mantine/vanilla-extract",
+  "description": "Vanilla Extract integration for Mantine theme",
   "version": "7.3.0-alpha.1",
   "homepage": "https://mantine.dev",
   "license": "MIT",
@@ -31,7 +32,7 @@
   "repository": {
     "url": "https://github.com/mantinedev/mantine.git",
     "type": "git",
-    "directory": "src/mantine-vanilla-extract"
+    "directory": "packages/@mantine/vanilla-extract"
   },
   "peerDependencies": {
     "@mantine/core": "7.3.0-alpha.1"

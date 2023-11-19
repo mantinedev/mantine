@@ -40,7 +40,7 @@
   "repository": {
     "url": "https://github.com/mantinedev/mantine.git",
     "type": "git",
-    "directory": "src/mantine-spotlight"
+    "directory": "packages/@mantine/notifications"
   },
   "peerDependencies": {
     "@mantine/core": "7.3.0-alpha.1",

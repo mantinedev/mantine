@@ -24,7 +24,7 @@
   "repository": {
     "url": "https://github.com/mantinedev/mantine.git",
     "type": "git",
-    "directory": "src/mantine-hooks"
+    "directory": "packages/@mantine/form"
   },
   "peerDependencies": {
     "react": "^18.2.0"

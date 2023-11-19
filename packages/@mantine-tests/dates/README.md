@@ -1,3 +1,7 @@
 # Mantine dates tests
 
-Internal package for testing mantine dates components
+Test utilities for Mantine components.
+
+## License
+
+MIT

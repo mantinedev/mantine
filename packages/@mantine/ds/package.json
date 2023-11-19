@@ -31,7 +31,7 @@
   "repository": {
     "url": "https://github.com/mantinedev/mantine.git",
     "type": "git",
-    "directory": "src/mantine-ds"
+    "directory": "packages/@mantine/ds"
   },
   "peerDependencies": {
     "@mantine/code-highlight": "7.3.0-alpha.1",
