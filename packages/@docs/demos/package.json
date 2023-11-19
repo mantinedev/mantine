@@ -23,6 +23,7 @@
   },
   "devDependencies": {
     "@mantine/core": "workspace: *",
+    "@mantine/ds": "workspace: *",
     "@mantine/form": "workspace: *",
     "@mantine/hooks": "workspace: *",
     "@mantine/notifications": "workspace: *",
