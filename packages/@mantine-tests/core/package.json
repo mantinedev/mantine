@@ -1,6 +1,6 @@
 {
   "name": "@mantine-tests/core",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Core tests package for Mantine",
   "homepage": "https://mantine.dev",
   "license": "MIT",
