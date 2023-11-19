@@ -11,7 +11,7 @@ export function getPackageName(input: string) {
   }
 
   if (TESTS_PACKAGES.includes(input)) {
-    return `@tests/${input.replace('tests-', '')}`;
+    return `@mantine-tests/${input.replace('tests-', '')}`;
   }
 
   if (input.startsWith('x-')) {
