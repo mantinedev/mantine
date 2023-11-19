@@ -29,7 +29,6 @@
     "clean": "rimraf packages/*/*/{esm,cjs,lib,dist} && npm run clean:tsbuildinfo",
     "clean:tsbuildinfo": "rimraf packages/*/*/*.tsbuildinfo",
     "build": "esno scripts/build",
-    "build:all": "npm run clean:tsbuildinfo && npm run build all && npm run build styles-api demos",
     "release": "npm test && npm run clean && esno scripts/release",
     "release:alpha:patch": "esno scripts/release patch --stage alpha --tag next",
     "release:alpha:minor": "esno scripts/release minor --stage alpha --tag next",
