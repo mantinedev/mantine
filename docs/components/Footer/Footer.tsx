@@ -1,7 +1,7 @@
 import React from 'react';
 import cx from 'clsx';
 import { Container, Text, Group, Box, RemoveScroll } from '@mantine/core';
-import { TwitterButton, DiscordButton } from '@mantine/ds';
+import { TwitterButton, DiscordButton } from '../SocialButton';
 import { Logo } from '../Logo/Logo';
 import { LinksGroup } from './LinksGroup/LinksGroup';
 import { FOOTER_LINKS_DATA } from './data';

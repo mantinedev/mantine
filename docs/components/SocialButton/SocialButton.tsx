@@ -1,8 +1,7 @@
 import React from 'react';
 import cx from 'clsx';
 import { BoxProps, ElementProps, Button } from '@mantine/core';
-import { meta } from '../meta';
-import { DiscordIcon, TwitterIcon } from '../Icons';
+import { meta, DiscordIcon, TwitterIcon } from '@mantine/ds';
 import classes from './SocialButton.module.css';
 
 export interface SocialButtonProps extends BoxProps, ElementProps<'a', 'type'> {

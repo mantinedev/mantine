@@ -7,5 +7,4 @@ export * from './SearchControl';
 export * from './HeaderControl';
 export { MantineLogo } from './MantineLogo';
 export type { MantineLogoProps } from './MantineLogo';
-export { TwitterButton, DiscordButton } from './SocialButton/SocialButton';
 export type { ConfiguratorControlOptions } from './ConfiguratorDemo/ConfiguratorDemo';
