@@ -8,6 +8,8 @@ import '@mantine/spotlight/styles.css';
 import '@mantine/carousel/styles.css';
 import '@mantine/tiptap/styles.css';
 import '@mantine/ds/styles.css';
+import '@mantinex/mantine-logo/styles.css';
+import '@mantinex/mantine-header/styles.css';
 import '@docs/demos/styles.css';
 
 import React from 'react';

@@ -2,7 +2,7 @@ import React from 'react';
 import cx from 'clsx';
 import { IconChevronDown, IconExternalLink } from '@tabler/icons-react';
 import { Code, Group, Burger, RemoveScroll, Menu, UnstyledButton, Text, Box } from '@mantine/core';
-import { HeaderControls, ColorSchemeControl, SearchMobileControl } from '@mantine/ds';
+import { HeaderControls, ColorSchemeControl, SearchMobileControl } from '@mantinex/mantine-header';
 import { meta } from '@mantinex/mantine-meta';
 import { Logo } from '@/components/Logo';
 import { searchHandlers } from '@/components/Search';

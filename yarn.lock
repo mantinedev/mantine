@@ -4740,14 +4740,14 @@ __metadata:
     "@mantine/core": "workspace:*"
     "@mantine/hooks": "workspace:*"
   peerDependencies:
-    "@mantine/core": 7.3.0-alpha.1
-    "@mantine/hooks": 7.3.0-alpha.1
+    "@mantine/core": ">=7.0.0"
+    "@mantine/hooks": ">=7.0.0"
     react: ^18.2.0
     react-dom: ^18.2.0
   languageName: unknown
   linkType: soft
 
-"@mantinex/mantine-header@workspace:packages/@mantinex/mantine-header":
+"@mantinex/mantine-header@workspace:*, @mantinex/mantine-header@workspace:packages/@mantinex/mantine-header":
   version: 0.0.0-use.local
   resolution: "@mantinex/mantine-header@workspace:packages/@mantinex/mantine-header"
   dependencies:
@@ -4755,8 +4755,10 @@ __metadata:
     "@mantine/core": "workspace:*"
     "@mantine/hooks": "workspace:*"
   peerDependencies:
-    "@mantine/core": 7.3.0-alpha.1
-    "@mantine/hooks": 7.3.0-alpha.1
+    "@mantine/core": ">=7.0.0"
+    "@mantine/hooks": ">=7.0.0"
+    "@mantinex/dev-icons": ">=1.0.0"
+    "@tabler/icons-react": ">=2.0.0"
     react: ^18.2.0
     react-dom: ^18.2.0
   languageName: unknown
@@ -4785,8 +4787,8 @@ __metadata:
     "@mantine/core": "workspace:*"
     "@mantine/hooks": "workspace:*"
   peerDependencies:
-    "@mantine/core": 7.3.0-alpha.1
-    "@mantine/hooks": 7.3.0-alpha.1
+    "@mantine/core": ">=7.0.0"
+    "@mantine/hooks": ">=7.0.0"
     react: ^18.2.0
     react-dom: ^18.2.0
   languageName: unknown
@@ -11055,6 +11057,7 @@ __metadata:
     "@mantine/store": "workspace:*"
     "@mantine/tiptap": "workspace:*"
     "@mantinex/dev-icons": "workspace:*"
+    "@mantinex/mantine-header": "workspace:*"
     "@mantinex/mantine-logo": "workspace:*"
     "@mantinex/mantine-meta": "workspace:*"
     "@mdx-js/loader": "npm:^3.0.0"
