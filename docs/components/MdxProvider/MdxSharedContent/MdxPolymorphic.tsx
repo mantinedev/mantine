@@ -1,5 +1,5 @@
 import React from 'react';
-import { TypeScriptCircleIcon } from '@mantine/ds';
+import { TypeScriptCircleIcon } from '@mantinex/dev-icons';
 import { MdxTitle } from '../MdxTitle/MdxTitle';
 import { MdxCodeHighlight } from '../MdxPre/MdxPre';
 import { MdxParagraph, MdxCode } from '../MdxTypography/MdxTypography';

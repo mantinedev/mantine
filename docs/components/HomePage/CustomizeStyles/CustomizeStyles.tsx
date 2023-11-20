@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { IconArrowRight } from '@tabler/icons-react';
 import { Text, SimpleGrid, Slider, Button, rem } from '@mantine/core';
 import { CodeHighlightTabs, CodeHighlight } from '@mantine/code-highlight';
-import { getCodeFileIcon } from '@mantine/ds';
+import { getCodeFileIcon } from '@mantinex/dev-icons';
 import { SliderStylesApi } from '@docs/styles-api';
 import { MdxDataTable } from '../../MdxProvider/MdxDataTable/MdxDataTable';
 import { PageSection } from '../PageSection/PageSection';

@@ -2,7 +2,7 @@ import React from 'react';
 import cx from 'clsx';
 import { RemoveScroll, Text, Badge } from '@mantine/core';
 import { useRouter } from 'next/router';
-import { getCodeFileIcon } from '@mantine/ds';
+import { getCodeFileIcon } from '@mantinex/dev-icons';
 import { CodeHighlightTabs } from '@mantine/code-highlight';
 import { COMBOBOX_EXAMPLES_COMPONENTS, ComboboxExampleId } from '../examples';
 import { COMBOBOX_EXAMPLES_DATA } from '../combobox-examples-data';

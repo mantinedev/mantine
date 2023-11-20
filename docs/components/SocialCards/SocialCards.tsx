@@ -1,6 +1,6 @@
 import React from 'react';
 import cx from 'clsx';
-import { DiscordIcon, GithubIcon, TwitterIcon } from '@mantine/ds';
+import { DiscordIcon, GithubIcon, TwitterIcon } from '@mantinex/dev-icons';
 import { meta } from '@mantinex/mantine-meta';
 import classes from './SocialCards.module.css';
 

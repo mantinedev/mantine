@@ -1,7 +1,7 @@
 import React from 'react';
 import { useLocalStorage } from '@mantine/hooks';
 import { CodeHighlightTabs } from '@mantine/code-highlight';
-import { YarnIcon, NpmIcon } from '@mantine/ds';
+import { YarnIcon, NpmIcon } from '@mantinex/dev-icons';
 import classes from './MdxNpmScript.module.css';
 
 interface MdxNpmScriptProps {

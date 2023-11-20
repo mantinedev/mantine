@@ -1,7 +1,7 @@
 {
-  "name": "@mantinex/mantine-meta",
+  "name": "@mantinex/dev-icons",
   "version": "1.0.0",
-  "description": "Meta data for *.mantine.dev websites",
+  "description": "Dev icons used on *.mantine.dev websites",
   "homepage": "https://mantine.dev/",
   "license": "MIT",
   "author": "Vitaly Rtishchev <rtivital@gmail.com>",
@@ -30,7 +30,7 @@
   "repository": {
     "url": "https://github.com/mantinedev/mantine.git",
     "type": "git",
-    "directory": "packages/@mantinex/mantine-meta"
+    "directory": "packages/@mantinex/dev-icons"
   },
   "peerDependencies": {
     "@mantine/core": "7.3.0-alpha.1",

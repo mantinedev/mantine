@@ -26,6 +26,8 @@ export const ROLLUP_EXTERNALS = [
   '@mantine-tests/core',
   '@mantine-tests/dates',
   '@mantinex/mantine-logo',
+  '@mantinex/mantine-meta',
+  '@mantinex/dev-icons',
   '@docs/styles-api',
   '@docs/demos',
   '@mantine/vanilla-extract',

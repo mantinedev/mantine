@@ -1,6 +1,6 @@
 import React from 'react';
 import { Title, Overlay, Text, Button, Container } from '@mantine/core';
-import { GithubIcon } from '@mantine/ds';
+import { GithubIcon } from '@mantinex/dev-icons';
 import banner from './banner.webp';
 import classes from './Banner.module.css';
 

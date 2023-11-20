@@ -1,7 +1,7 @@
 import React from 'react';
 import Link from 'next/link';
 import { Container, Group, Button, Text, SimpleGrid, rem } from '@mantine/core';
-import { GithubIcon } from '@mantine/ds';
+import { GithubIcon } from '@mantinex/dev-icons';
 import { Hero } from './Hero';
 import { FEATURES_DATA } from './features';
 import classes from './Jumbotron.module.css';
