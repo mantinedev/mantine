@@ -1,7 +1,7 @@
 {
-  "name": "{{package}}",
+  "name": "@mantinex/mantine-header",
   "version": "1.0.0",
-  "description": "{{description}}",
+  "description": "Components used in headers of *.mantine.dev websites",
   "homepage": "https://mantine.dev/",
   "license": "MIT",
   "author": "Vitaly Rtishchev <rtivital@gmail.com>",
@@ -32,11 +32,13 @@
   "repository": {
     "url": "https://github.com/mantinedev/mantine.git",
     "type": "git",
-    "directory": "packages/{{package}}"
+    "directory": "packages/@mantinex/mantine-header"
   },
   "peerDependencies": {
     "@mantine/core": ">=7.0.0",
     "@mantine/hooks": ">=7.0.0",
+    "@mantinex/dev-icons": ">=1.0.0",
+    "@tabler/icons-react": ">=2.0.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },

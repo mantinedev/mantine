@@ -1,0 +1,29 @@
+.control {
+  width: rem(34px);
+  height: rem(34px);
+  border-radius: var(--mantine-radius-md);
+  border: rem(1px) solid;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  @mixin light {
+    border-color: var(--mantine-color-gray-3);
+    color: var(--mantine-color-gray-7);
+    background-color: var(--mantine-color-white);
+
+    @mixin hover {
+      background-color: var(--mantine-color-gray-0);
+    }
+  }
+
+  @mixin dark {
+    border-color: var(--mantine-color-dark-4);
+    color: var(--mantine-color-white);
+    background-color: var(--mantine-color-dark-6);
+
+    @mixin hover {
+      background-color: var(--mantine-color-dark-5);
+    }
+  }
+}

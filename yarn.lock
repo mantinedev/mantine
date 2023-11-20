@@ -4747,6 +4747,21 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@mantinex/mantine-header@workspace:packages/@mantinex/mantine-header":
+  version: 0.0.0-use.local
+  resolution: "@mantinex/mantine-header@workspace:packages/@mantinex/mantine-header"
+  dependencies:
+    "@mantine-tests/core": "workspace:*"
+    "@mantine/core": "workspace:*"
+    "@mantine/hooks": "workspace:*"
+  peerDependencies:
+    "@mantine/core": 7.3.0-alpha.1
+    "@mantine/hooks": 7.3.0-alpha.1
+    react: ^18.2.0
+    react-dom: ^18.2.0
+  languageName: unknown
+  linkType: soft
+
 "@mantinex/mantine-logo@workspace:*, @mantinex/mantine-logo@workspace:packages/@mantinex/mantine-logo":
   version: 0.0.0-use.local
   resolution: "@mantinex/mantine-logo@workspace:packages/@mantinex/mantine-logo"

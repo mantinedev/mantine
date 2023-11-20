@@ -39,5 +39,4 @@ export async function setMantinePackagesVersion(version: string) {
   );
 
   await writeVersionToPackageJson(getPath('package.json'), version);
-  await writeVersionToPackageJson(getPath('scripts/plop/templates/package.json'), version);
 }

@@ -1,0 +1,44 @@
+.root {
+  height: rem(34px);
+  padding-left: var(--mantine-spacing-sm);
+  padding-right: rem(4px);
+  border-radius: var(--mantine-radius-md);
+  color: var(--mantine-color-placeholder);
+  border: rem(1px) solid;
+
+  @mixin light {
+    border-color: var(--mantine-color-gray-3);
+    background-color: var(--mantine-color-white);
+  }
+
+  @mixin dark {
+    border-color: var(--mantine-color-dark-4);
+    background-color: var(--mantine-color-dark-6);
+  }
+
+  @mixin rtl {
+    padding-left: rem(4px);
+    padding-right: var(--mantine-spacing-sm);
+  }
+}
+
+.shortcut {
+  font-size: rem(11px);
+  line-height: 1;
+  padding: rem(4px) rem(7px);
+  border-radius: var(--mantine-radius-sm);
+  border: rem(1px) solid;
+  font-weight: bold;
+
+  @mixin light {
+    color: var(--mantine-color-gray-7);
+    border-color: var(--mantine-color-gray-2);
+    background-color: var(--mantine-color-gray-0);
+  }
+
+  @mixin dark {
+    color: var(--mantine-color-dark-0);
+    border-color: var(--mantine-color-dark-7);
+    background-color: var(--mantine-color-dark-7);
+  }
+}
