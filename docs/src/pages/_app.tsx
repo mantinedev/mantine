@@ -25,7 +25,7 @@ import { FontsStyle } from '@/fonts';
 import { Shell } from '@/components/Shell';
 import { GaScript } from '@/components/GaScript';
 import { ModalsProviderDemo } from '@/components/ModalsProviderDemo';
-import { theme } from '../theme';
+import { theme } from '../../theme';
 import '../styles/variables.css';
 import '../styles/global.css';
 

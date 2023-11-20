@@ -4,7 +4,7 @@ import { getPath } from '../utils/get-path';
 
 generateDeclarations({
   tsConfigPath: getPath('tsconfig.json'),
-  outputPath: getPath('docs/.docgen'),
+  outputPath: getPath('docs/src/.docgen'),
   componentsPaths: DOCGEN_PATHS,
   excludeProps: [],
   typesReplacement: {},

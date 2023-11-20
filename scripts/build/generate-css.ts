@@ -51,7 +51,7 @@ export async function generateCoreCSS() {
   const global = files.find((file) => file.endsWith('global.css'))!;
 
   fs.writeJsonSync(
-    getPath('docs/.docgen/css-exports.json'),
+    getPath('docs/src/.docgen/css-exports.json'),
     { modules: modules.map(transformFileName), global: transformFileName(global) },
     { spaces: 2 }
   );

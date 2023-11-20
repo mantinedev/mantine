@@ -6,7 +6,7 @@ import { HeaderControls, ColorSchemeControl, SearchMobileControl } from '@mantin
 import { meta, majorVersions } from '@mantinex/mantine-meta';
 import { Logo } from '@/components/Logo';
 import { searchHandlers } from '@/components/Search';
-import packageJson from '../../../../package.json';
+import packageJson from '../../../../../package.json';
 import classes from './Header.module.css';
 
 export type HeaderControlsProps = Partial<React.ComponentProps<typeof HeaderControls>>;
