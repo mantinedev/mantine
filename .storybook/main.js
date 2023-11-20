@@ -6,7 +6,10 @@ const argv = require('yargs').argv;
 const getPath = (storyPath) => path.resolve(process.cwd(), storyPath).replace(/\\/g, '/');
 
 function getStoryPaths(fileName = '*') {
-  return [getPath(`packages/@mantine/*/src/**/${fileName}.story.@(ts|tsx)`)];
+  return [
+    getPath(`packages/@mantine/*/src/**/${fileName}.story.@(ts|tsx)`),
+    getPath(`packages/@mantinex/*/src/**/${fileName}.story.@(ts|tsx)`),
+  ];
 }
 
 const storiesPath = !argv._[1]

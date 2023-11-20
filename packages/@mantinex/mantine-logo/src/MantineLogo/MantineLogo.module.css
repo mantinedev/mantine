@@ -1,0 +1,15 @@
+.logo {
+  color: light-dark(var(--mantine-color-black), var(--mantine-color-white));
+}
+
+.mantineUILogo {
+  @mixin light {
+    --mantine-logo-fill: var(--mantine-color-cyan-6);
+    --mantine-logo-color: var(--mantine-color-white);
+  }
+
+  @mixin dark {
+    --mantine-logo-fill: var(--mantine-color-yellow-4);
+    --mantine-logo-color: var(--mantine-color-dark-8);
+  }
+}

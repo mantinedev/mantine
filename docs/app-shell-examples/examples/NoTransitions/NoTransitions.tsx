@@ -1,7 +1,7 @@
 import React from 'react';
 import { useDisclosure } from '@mantine/hooks';
 import { AppShell, Burger, Group, Skeleton } from '@mantine/core';
-import { MantineLogo } from '@mantine/ds';
+import { MantineLogo } from '@mantinex/mantine-logo';
 
 export function NoTransitions() {
   const [opened, { toggle }] = useDisclosure();

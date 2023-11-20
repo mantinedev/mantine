@@ -1,7 +1,7 @@
 import React from 'react';
 import { useHeadroom } from '@mantine/hooks';
 import { AppShell, Group, Text, rem } from '@mantine/core';
-import { MantineLogo } from '@mantine/ds';
+import { MantineLogo } from '@mantinex/mantine-logo';
 
 const lorem =
   'Lorem ipsum dolor sit amet consectetur adipisicing elit. Eos ullam, ex cum repellat alias ea nemo. Ducimus ex nesciunt hic ad saepe molestiae nobis necessitatibus laboriosam officia, reprehenderit, earum fugiat?';

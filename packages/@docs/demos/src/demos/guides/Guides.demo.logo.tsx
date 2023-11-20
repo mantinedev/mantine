@@ -1,7 +1,8 @@
-import { MantineDemo, MantineLogo } from '@mantine/ds';
+import { MantineDemo } from '@mantine/ds';
+import { MantineLogo } from '@mantinex/mantine-logo';
 
 const code = `
-import { MantineLogo } from '@mantine/ds';
+import { MantineLogo } from '@mantinex/mantine-logo';
 
 function Demo() {
   return <MantineLogo{{props}} />;

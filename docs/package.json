@@ -30,6 +30,7 @@
     "@mantine/spotlight": "workspace:*",
     "@mantine/store": "workspace:*",
     "@mantine/tiptap": "workspace:*",
+    "@mantinex/mantine-logo": "workspace:*",
     "@mdx-js/loader": "^3.0.0",
     "@mdx-js/react": "^3.0.0",
     "@next/mdx": "^14.0.2",
