@@ -1,4 +1,5 @@
 import packageJson from '../../../package.json';
+import { getPackagesList } from '../../packages/get-packages-list';
 
 export const ROLLUP_EXTERNALS = [
   'dayjs/locale/ru',
@@ -8,29 +9,7 @@ export const ROLLUP_EXTERNALS = [
   'dayjs/plugin/timezone.js',
   'klona/full',
   'highlight.js/lib/languages/typescript',
-  '@mantine/carousel',
-  '@mantine/code-highlight',
-  '@mantine/colors-generator',
-  '@mantine/core',
-  '@mantine/dates',
-  '@mantine/dropzone',
-  '@mantine/ds',
-  '@mantine/form',
-  '@mantine/hooks',
-  '@mantine/modals',
-  '@mantine/notifications',
-  '@mantine/nprogress',
-  '@mantine/spotlight',
-  '@mantine/store',
-  '@mantine/tiptap',
-  '@mantine-tests/core',
-  '@mantine-tests/dates',
-  '@mantinex/mantine-logo',
-  '@mantinex/mantine-meta',
-  '@mantinex/dev-icons',
-  '@docs/styles-api',
-  '@docs/demos',
-  '@mantine/vanilla-extract',
+  ...getPackagesList().map((pkg) => pkg.packageJson.name!),
   ...Object.keys({
     ...packageJson.devDependencies,
     ...packageJson.dependencies,
