@@ -86,8 +86,14 @@ export const MDX_META_DATA: Record<string, Frontmatter> = {
   },
 
   PreviousChangelogs: {
-    title: 'Previous versions',
+    title: 'All releases',
     slug: '/changelog/previous-versions',
+    hideHeader: true,
+  },
+
+  AllReleases: {
+    title: 'All releases',
+    slug: '/changelog/all-releases',
     hideHeader: true,
   },
 };
