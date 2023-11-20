@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "build": "next build && next export && cp CNAME out/CNAME && touch out/.nojekyll",
+    "build": "next build && echo 'mantine.dev' > out/CNAME && touch out/.nojekyll",
     "clean": "rm -rf .next",
     "dev": "next dev -p 7545",
     "postbuild": "next-sitemap",
