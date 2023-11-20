@@ -1,7 +1,7 @@
 import React from 'react';
 import { Carousel } from '@mantine/carousel';
 import { Image } from '@mantine/core';
-import { MantineDemo } from '@mantine/ds';
+import { MantineDemo } from '@mantinex/demo';
 import { images as _images } from './_images';
 
 const code = `

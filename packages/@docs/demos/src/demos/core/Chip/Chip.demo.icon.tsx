@@ -1,5 +1,5 @@
 import React from 'react';
-import { MantineDemo } from '@mantine/ds';
+import { MantineDemo } from '@mantinex/demo';
 import { Chip, rem } from '@mantine/core';
 import { IconX } from '@tabler/icons-react';
 

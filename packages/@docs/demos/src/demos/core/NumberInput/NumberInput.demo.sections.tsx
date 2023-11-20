@@ -1,5 +1,5 @@
 import React from 'react';
-import { MantineDemo } from '@mantine/ds';
+import { MantineDemo } from '@mantinex/demo';
 import { NumberInput, rem } from '@mantine/core';
 import { IconCurrencyDram } from '@tabler/icons-react';
 

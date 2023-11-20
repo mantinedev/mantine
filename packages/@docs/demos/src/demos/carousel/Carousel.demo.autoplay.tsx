@@ -1,7 +1,7 @@
 import React, { useRef } from 'react';
 import { Carousel } from '@mantine/carousel';
 import Autoplay from 'embla-carousel-autoplay';
-import { MantineDemo } from '@mantine/ds';
+import { MantineDemo } from '@mantinex/demo';
 import { Slides } from './_slides';
 
 const code = `

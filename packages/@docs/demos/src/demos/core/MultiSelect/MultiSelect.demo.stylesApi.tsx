@@ -1,5 +1,5 @@
 import React from 'react';
-import { MantineDemo } from '@mantine/ds';
+import { MantineDemo } from '@mantinex/demo';
 import { IconAt } from '@tabler/icons-react';
 import { MultiSelect, rem } from '@mantine/core';
 import { MultiSelectStylesApi } from '@docs/styles-api';

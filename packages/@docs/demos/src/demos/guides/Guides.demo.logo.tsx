@@ -1,4 +1,4 @@
-import { MantineDemo } from '@mantine/ds';
+import { MantineDemo } from '@mantinex/demo';
 import { MantineLogo } from '@mantinex/mantine-logo';
 
 const code = `

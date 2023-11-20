@@ -1,6 +1,6 @@
 import React from 'react';
 import { TimelineProps, Box } from '@mantine/core';
-import { MantineDemo } from '@mantine/ds';
+import { MantineDemo } from '@mantinex/demo';
 import { TimelineBase } from './_base';
 
 function Wrapper(props: TimelineProps) {

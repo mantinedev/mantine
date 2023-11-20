@@ -1,5 +1,5 @@
 import React from 'react';
-import { MantineDemo } from '@mantine/ds';
+import { MantineDemo } from '@mantinex/demo';
 import { Blockquote } from '@mantine/core';
 import { IconInfoCircle } from '@tabler/icons-react';
 

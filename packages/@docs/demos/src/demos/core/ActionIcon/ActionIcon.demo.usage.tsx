@@ -1,5 +1,5 @@
 import React from 'react';
-import { MantineDemo } from '@mantine/ds';
+import { MantineDemo } from '@mantinex/demo';
 import { IconAdjustments } from '@tabler/icons-react';
 import { ActionIcon } from '@mantine/core';
 import { interactiveVariantsControl } from '../../../shared';

@@ -1,7 +1,7 @@
 import React from 'react';
 import { useDisclosure } from '@mantine/hooks';
 import { Modal, Button } from '@mantine/core';
-import { MantineDemo } from '@mantine/ds';
+import { MantineDemo } from '@mantinex/demo';
 import { AuthenticationForm } from '../../../shared/AuthenticationForm/AuthenticationForm';
 
 const code = `

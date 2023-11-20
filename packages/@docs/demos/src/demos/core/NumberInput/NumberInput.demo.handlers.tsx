@@ -1,5 +1,5 @@
 import React, { useRef } from 'react';
-import { MantineDemo } from '@mantine/ds';
+import { MantineDemo } from '@mantinex/demo';
 import { NumberInput, Group, Button, NumberInputHandlers } from '@mantine/core';
 
 const code = `

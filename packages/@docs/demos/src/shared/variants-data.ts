@@ -1,4 +1,4 @@
-import { ConfiguratorControlOptions } from '@mantine/ds';
+import { ConfiguratorControlOptions } from '@mantinex/demo';
 
 export const STATIC_VARIANTS = ['filled', 'light', 'outline', 'transparent', 'white', 'default'];
 

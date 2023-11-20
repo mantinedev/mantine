@@ -1,5 +1,5 @@
 import React from 'react';
-import { MantineDemo } from '@mantine/ds';
+import { MantineDemo } from '@mantinex/demo';
 import { Loader, MantineThemeProvider } from '@mantine/core';
 import { CssLoader, cssLoaderModuleCssCode, cssLoaderTsxCode } from './_CssLoader';
 

@@ -1,6 +1,6 @@
 import React from 'react';
 import { useHash, randomId } from '@mantine/hooks';
-import { MantineDemo } from '@mantine/ds';
+import { MantineDemo } from '@mantinex/demo';
 import { Group, Button, Text, Code } from '@mantine/core';
 
 const code = `

@@ -1,5 +1,5 @@
 import React from 'react';
-import { MantineDemo } from '@mantine/ds';
+import { MantineDemo } from '@mantinex/demo';
 import { MantineThemeProvider, Button } from '@mantine/core';
 import classes from './Theming.demo.focusClassName.module.css';
 

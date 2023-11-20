@@ -1,6 +1,6 @@
 import React from 'react';
 import { Table } from '@mantine/core';
-import { MantineDemo } from '@mantine/ds';
+import { MantineDemo } from '@mantinex/demo';
 import { elements } from './_data';
 
 const code = `

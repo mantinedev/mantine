@@ -1,5 +1,5 @@
 import React from 'react';
-import { MantineDemo } from '@mantine/ds';
+import { MantineDemo } from '@mantinex/demo';
 import { Button, rem } from '@mantine/core';
 import { ButtonStylesApi } from '@docs/styles-api';
 import { IconAt } from '@tabler/icons-react';

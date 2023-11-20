@@ -1,5 +1,5 @@
 import React from 'react';
-import { MantineDemo } from '@mantine/ds';
+import { MantineDemo } from '@mantinex/demo';
 import { Button, ButtonProps, Group, rem } from '@mantine/core';
 import { IconArrowRight } from '@tabler/icons-react';
 import classes from './Styles.demo.dataAttributes.module.css';

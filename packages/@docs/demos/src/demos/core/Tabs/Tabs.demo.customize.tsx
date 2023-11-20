@@ -1,5 +1,5 @@
 import React from 'react';
-import { MantineDemo } from '@mantine/ds';
+import { MantineDemo } from '@mantinex/demo';
 import { Tabs, rem } from '@mantine/core';
 import { IconPhoto, IconMessageCircle, IconSettings } from '@tabler/icons-react';
 import classes from './Tabs.demo.customize.module.css';

@@ -1,6 +1,6 @@
 import React from 'react';
 import { ThemeIcon, Text, Avatar, Timeline } from '@mantine/core';
-import { MantineDemo } from '@mantine/ds';
+import { MantineDemo } from '@mantinex/demo';
 import { IconSun, IconVideo } from '@tabler/icons-react';
 
 const code = `

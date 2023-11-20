@@ -1,5 +1,5 @@
 import React from 'react';
-import { MantineDemo } from '@mantine/ds';
+import { MantineDemo } from '@mantinex/demo';
 import { ActionIcon } from '@mantine/core';
 import { IconHeart } from '@tabler/icons-react';
 import classes from './ActionIcon.demo.disabledStyles.module.css';

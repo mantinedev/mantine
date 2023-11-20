@@ -1,5 +1,5 @@
 import React from 'react';
-import { MantineDemo } from '@mantine/ds';
+import { MantineDemo } from '@mantinex/demo';
 import { TypographyStylesProvider, Box } from '@mantine/core';
 
 const html = `

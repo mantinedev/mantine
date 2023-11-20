@@ -1,6 +1,6 @@
 import React from 'react';
 import { Carousel } from '@mantine/carousel';
-import { MantineDemo } from '@mantine/ds';
+import { MantineDemo } from '@mantinex/demo';
 import { Slides } from './_slides';
 import classes from './Carousel.demo.controlsHover.module.css';
 

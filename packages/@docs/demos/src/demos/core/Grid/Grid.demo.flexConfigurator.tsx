@@ -1,6 +1,6 @@
 import React from 'react';
 import { Grid, GridProps, rem } from '@mantine/core';
-import { MantineDemo } from '@mantine/ds';
+import { MantineDemo } from '@mantinex/demo';
 import { ColWrapper as Col } from './_col-wrapper';
 
 function Wrapper(props: GridProps) {

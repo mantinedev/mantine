@@ -1,5 +1,5 @@
 import React from 'react';
-import { MantineDemo } from '@mantine/ds';
+import { MantineDemo } from '@mantinex/demo';
 import { ColorInput, rem } from '@mantine/core';
 import { IconColorPicker } from '@tabler/icons-react';
 

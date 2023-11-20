@@ -1,6 +1,6 @@
 import React from 'react';
 import { useCounter } from '@mantine/hooks';
-import { MantineDemo } from '@mantine/ds';
+import { MantineDemo } from '@mantinex/demo';
 import { ScrollArea, Button, Group } from '@mantine/core';
 
 const lorem =

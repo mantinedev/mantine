@@ -1,5 +1,5 @@
 import React from 'react';
-import { MantineDemo } from '@mantine/ds';
+import { MantineDemo } from '@mantinex/demo';
 import { Accordion } from '@mantine/core';
 import { IconPlus } from '@tabler/icons-react';
 import { groceries } from './_base';

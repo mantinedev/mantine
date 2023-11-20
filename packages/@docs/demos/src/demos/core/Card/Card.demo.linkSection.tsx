@@ -1,6 +1,6 @@
 import React from 'react';
 import { Card, Image, Text, Badge, Button, Group } from '@mantine/core';
-import { MantineDemo } from '@mantine/ds';
+import { MantineDemo } from '@mantinex/demo';
 
 const code = `
 import { Card, Image, Text, Badge, Button, Group } from '@mantine/core';

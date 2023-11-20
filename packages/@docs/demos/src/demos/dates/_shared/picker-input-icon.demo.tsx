@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { MantineDemo } from '@mantine/ds';
+import { MantineDemo } from '@mantinex/demo';
 import { IconCalendar } from '@tabler/icons-react';
 import { rem } from '@mantine/core';
 

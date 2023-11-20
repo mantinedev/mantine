@@ -1,7 +1,7 @@
 import React from 'react';
 import { Card, Group, Text, Menu, ActionIcon, Image, SimpleGrid, rem } from '@mantine/core';
 import { IconDots, IconEye, IconFileZip, IconTrash } from '@tabler/icons-react';
-import { MantineDemo } from '@mantine/ds';
+import { MantineDemo } from '@mantinex/demo';
 
 const code = `
 import { Card, Group, Text, Menu, ActionIcon, Image, SimpleGrid, rem } from '@mantine/core';

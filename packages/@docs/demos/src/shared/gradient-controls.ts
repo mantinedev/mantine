@@ -1,4 +1,4 @@
-import { ConfiguratorControlOptions } from '@mantine/ds';
+import { ConfiguratorControlOptions } from '@mantinex/demo';
 
 export const gradientControls: ConfiguratorControlOptions[] = [
   { type: 'color', prop: 'gradientFrom', initialValue: 'blue', libraryValue: '__none__' },

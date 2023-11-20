@@ -1,6 +1,6 @@
 import React from 'react';
 import { Accordion, ActionIcon, AccordionControlProps, Center } from '@mantine/core';
-import { MantineDemo } from '@mantine/ds';
+import { MantineDemo } from '@mantinex/demo';
 import { IconDots } from '@tabler/icons-react';
 
 const code = `

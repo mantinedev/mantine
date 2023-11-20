@@ -1,5 +1,5 @@
 import React from 'react';
-import { MantineDemo } from '@mantine/ds';
+import { MantineDemo } from '@mantinex/demo';
 import { Group, Button, MantineThemeProvider, createTheme } from '@mantine/core';
 import classes from './Button.demo.customVariant.module.css';
 

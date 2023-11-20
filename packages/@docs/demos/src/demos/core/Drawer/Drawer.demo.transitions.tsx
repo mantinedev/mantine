@@ -1,6 +1,6 @@
 import React from 'react';
 import { Drawer, Button } from '@mantine/core';
-import { MantineDemo } from '@mantine/ds';
+import { MantineDemo } from '@mantinex/demo';
 import { useDisclosure } from '@mantine/hooks';
 import { AuthenticationForm } from '../../../shared/AuthenticationForm/AuthenticationForm';
 

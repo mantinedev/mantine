@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { MantineDemo } from '@mantine/ds';
+import { MantineDemo } from '@mantinex/demo';
 import { Combobox, TextInput, useCombobox } from '@mantine/core';
 
 const code = `

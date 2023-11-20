@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { MantineDemo } from '@mantine/ds';
+import { MantineDemo } from '@mantinex/demo';
 import { useClickOutside } from '@mantine/hooks';
 import { Transition, Paper, Button, Box } from '@mantine/core';
 

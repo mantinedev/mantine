@@ -1,6 +1,6 @@
 import React from 'react';
 import { useViewportSize } from '@mantine/hooks';
-import { MantineDemo } from '@mantine/ds';
+import { MantineDemo } from '@mantinex/demo';
 import { Text } from '@mantine/core';
 
 const code = `

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Text } from '@mantine/core';
-import { MantineDemo } from '@mantine/ds';
+import { MantineDemo } from '@mantinex/demo';
 import { Dropzone, IMAGE_MIME_TYPE } from '@mantine/dropzone';
 import classes from './Dropzone.demo.stylesApi.module.css';
 

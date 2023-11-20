@@ -1,6 +1,6 @@
 import React from 'react';
 import { Menu } from '@mantine/core';
-import { MantineDemo } from '@mantine/ds';
+import { MantineDemo } from '@mantinex/demo';
 import { DemoMenuItems } from './_menu-items';
 
 const code = `

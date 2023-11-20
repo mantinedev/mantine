@@ -1,5 +1,5 @@
 import React from 'react';
-import { MantineDemo } from '@mantine/ds';
+import { MantineDemo } from '@mantinex/demo';
 import { DEFAULT_THEME, ColorPicker, ColorPickerProps } from '@mantine/core';
 
 function Wrapper(props: ColorPickerProps) {

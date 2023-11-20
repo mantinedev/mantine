@@ -1,6 +1,6 @@
 import React from 'react';
 import { TextInput, Text, Box } from '@mantine/core';
-import { MantineDemo } from '@mantine/ds';
+import { MantineDemo } from '@mantinex/demo';
 import { useValidatedState } from '@mantine/hooks';
 
 const code = `

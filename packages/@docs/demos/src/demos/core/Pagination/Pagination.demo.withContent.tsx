@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { MantineDemo } from '@mantine/ds';
+import { MantineDemo } from '@mantinex/demo';
 import { randomId } from '@mantine/hooks';
 import { Pagination, Text } from '@mantine/core';
 

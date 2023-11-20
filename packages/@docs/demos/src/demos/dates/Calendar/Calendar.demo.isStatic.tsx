@@ -1,5 +1,5 @@
 import React from 'react';
-import { MantineDemo } from '@mantine/ds';
+import { MantineDemo } from '@mantinex/demo';
 import { Indicator } from '@mantine/core';
 import { Calendar } from '@mantine/dates';
 

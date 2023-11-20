@@ -1,6 +1,6 @@
 import React, { useState, useCallback } from 'react';
 import { Button } from '@mantine/core';
-import { MantineDemo } from '@mantine/ds';
+import { MantineDemo } from '@mantinex/demo';
 import { useEventListener } from '@mantine/hooks';
 
 const code = `

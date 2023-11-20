@@ -1,4 +1,4 @@
-import { MantineDemo } from '@mantine/ds';
+import { MantineDemo } from '@mantinex/demo';
 import { Loader } from '@mantine/core';
 
 const code = `

@@ -1,7 +1,7 @@
 import React from 'react';
 import { useDisclosure, useMediaQuery } from '@mantine/hooks';
 import { Modal, Button, em } from '@mantine/core';
-import { MantineDemo } from '@mantine/ds';
+import { MantineDemo } from '@mantinex/demo';
 
 const code = `
 import { useDisclosure, useMediaQuery } from '@mantine/hooks';

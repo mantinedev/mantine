@@ -1,6 +1,6 @@
 import React from 'react';
 import { IconEye, IconCode, IconExternalLink } from '@tabler/icons-react';
-import { MantineDemo } from '@mantine/ds';
+import { MantineDemo } from '@mantinex/demo';
 import { SegmentedControl, VisuallyHidden, rem } from '@mantine/core';
 
 const code = `

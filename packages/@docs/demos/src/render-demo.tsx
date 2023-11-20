@@ -1,5 +1,5 @@
 import React from 'react';
-import { Demo, MantineDemo } from '@mantine/ds';
+import { Demo, MantineDemo } from '@mantinex/demo';
 import { ArgsStoryFn } from '@storybook/types';
 import { R as ReactRenderer } from '@storybook/react/dist/types-0a347bb9';
 

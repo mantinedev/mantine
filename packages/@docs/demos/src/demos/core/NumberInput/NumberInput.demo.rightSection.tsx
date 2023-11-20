@@ -1,5 +1,5 @@
 import React from 'react';
-import { MantineDemo } from '@mantine/ds';
+import { MantineDemo } from '@mantinex/demo';
 import { NumberInput } from '@mantine/core';
 import { IconChartBubble } from '@tabler/icons-react';
 

@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
 import React from 'react';
 import { useForm } from '@mantine/form';
-import { MantineDemo } from '@mantine/ds';
+import { MantineDemo } from '@mantinex/demo';
 import { Box, TextInput, NumberInput, Button, Group } from '@mantine/core';
 
 const code = `

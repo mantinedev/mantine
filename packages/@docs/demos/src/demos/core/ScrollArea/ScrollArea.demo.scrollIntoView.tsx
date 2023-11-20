@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react';
-import { MantineDemo } from '@mantine/ds';
+import { MantineDemo } from '@mantinex/demo';
 import { ScrollArea, UnstyledButton, TextInput } from '@mantine/core';
 
 const code = `

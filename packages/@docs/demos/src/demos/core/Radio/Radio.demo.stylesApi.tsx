@@ -1,5 +1,5 @@
 import React from 'react';
-import { MantineDemo } from '@mantine/ds';
+import { MantineDemo } from '@mantinex/demo';
 import { Radio } from '@mantine/core';
 import { RadioStylesApi } from '@docs/styles-api';
 

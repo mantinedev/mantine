@@ -2,7 +2,7 @@ import React from 'react';
 import { useForm } from '@mantine/form';
 import { TextInput, Switch, Group, ActionIcon, Box, Text, Button, Code } from '@mantine/core';
 import { randomId } from '@mantine/hooks';
-import { MantineDemo } from '@mantine/ds';
+import { MantineDemo } from '@mantinex/demo';
 import { IconTrash } from '@tabler/icons-react';
 
 const code = `

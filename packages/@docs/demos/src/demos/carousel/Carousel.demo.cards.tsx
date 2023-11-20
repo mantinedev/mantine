@@ -2,7 +2,7 @@ import React from 'react';
 import { Carousel, CarouselProps } from '@mantine/carousel';
 import { useMediaQuery } from '@mantine/hooks';
 import { Button, Paper, Title, useMantineTheme, Text } from '@mantine/core';
-import { MantineDemo } from '@mantine/ds';
+import { MantineDemo } from '@mantinex/demo';
 import classes from './Carousel.demo.cards.module.css';
 
 const cssCode = `.card {

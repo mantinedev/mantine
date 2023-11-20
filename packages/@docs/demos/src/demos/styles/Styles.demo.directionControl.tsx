@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { MantineDemo } from '@mantine/ds';
+import { MantineDemo } from '@mantinex/demo';
 import { ActionIcon, useDirection } from '@mantine/core';
 import { IconTextDirectionLtr, IconTextDirectionRtl } from '@tabler/icons-react';
 

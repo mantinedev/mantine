@@ -1,7 +1,7 @@
 import React, { useRef } from 'react';
 import { Button, Group } from '@mantine/core';
 import { Dropzone } from '@mantine/dropzone';
-import { MantineDemo } from '@mantine/ds';
+import { MantineDemo } from '@mantinex/demo';
 
 const code = `
 import { useRef } from 'react';

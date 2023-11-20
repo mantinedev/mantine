@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { MantineDemo } from '@mantine/ds';
+import { MantineDemo } from '@mantinex/demo';
 import { ActionIcon, Group, ColorSwatch, Text } from '@mantine/core';
 import { IconColorPicker } from '@tabler/icons-react';
 import { useEyeDropper } from '@mantine/hooks';

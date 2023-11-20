@@ -1,7 +1,7 @@
 import React from 'react';
 import { Button, Group } from '@mantine/core';
 import { nprogress, NavigationProgress } from '@mantine/nprogress';
-import { MantineDemo } from '@mantine/ds';
+import { MantineDemo } from '@mantinex/demo';
 
 const code = `
 import { Button, Group } from '@mantine/core';

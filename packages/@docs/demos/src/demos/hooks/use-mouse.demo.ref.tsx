@@ -1,6 +1,6 @@
 import React from 'react';
 import { Group, Text, Code, Box } from '@mantine/core';
-import { MantineDemo } from '@mantine/ds';
+import { MantineDemo } from '@mantinex/demo';
 import { useMouse } from '@mantine/hooks';
 
 const code = `

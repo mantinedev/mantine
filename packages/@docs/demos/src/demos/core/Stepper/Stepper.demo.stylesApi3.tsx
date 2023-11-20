@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { MantineDemo } from '@mantine/ds';
+import { MantineDemo } from '@mantinex/demo';
 import { Stepper } from '@mantine/core';
 import classes from './Stepper.demo.stylesApi3.module.css';
 

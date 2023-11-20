@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
 import React from 'react';
 import { useForm, FORM_INDEX } from '@mantine/form';
-import { MantineDemo } from '@mantine/ds';
+import { MantineDemo } from '@mantinex/demo';
 import { NumberInput, TextInput, Button, Box } from '@mantine/core';
 
 const code = `

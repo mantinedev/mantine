@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { MantineDemo } from '@mantine/ds';
+import { MantineDemo } from '@mantinex/demo';
 import { TextInput } from '@mantine/core';
 import classes from './Styles.demo.classNames.module.css';
 

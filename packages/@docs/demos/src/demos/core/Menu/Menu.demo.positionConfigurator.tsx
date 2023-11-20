@@ -1,6 +1,6 @@
 import React from 'react';
 import { Menu, MenuProps } from '@mantine/core';
-import { MantineDemo } from '@mantine/ds';
+import { MantineDemo } from '@mantinex/demo';
 import { DemoMenuItems } from './_menu-items';
 import { FLOATING_ARROW_POSITION_DATA } from '../../../shared/floating-position-data';
 

@@ -1,5 +1,5 @@
 import { Avatar } from '@mantine/core';
-import { MantineDemo } from '@mantine/ds';
+import { MantineDemo } from '@mantinex/demo';
 import { staticVariantsControl } from '../../../shared';
 
 const code = `

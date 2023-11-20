@@ -1,5 +1,5 @@
 import React from 'react';
-import { MantineDemo } from '@mantine/ds';
+import { MantineDemo } from '@mantinex/demo';
 import { useDisclosure } from '@mantine/hooks';
 import { Avatar, Indicator, Button, Stack } from '@mantine/core';
 

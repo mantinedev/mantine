@@ -1,6 +1,6 @@
 import React from 'react';
 import { Badge, NavLink } from '@mantine/core';
-import { MantineDemo } from '@mantine/ds';
+import { MantineDemo } from '@mantinex/demo';
 import {
   IconHome2,
   IconGauge,

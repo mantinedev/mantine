@@ -1,6 +1,6 @@
 import React from 'react';
 import { SimpleGrid, SimpleGridProps } from '@mantine/core';
-import { MantineDemo } from '@mantine/ds';
+import { MantineDemo } from '@mantinex/demo';
 import { defaultItems } from './_demo-item';
 
 function Demo(props: SimpleGridProps) {

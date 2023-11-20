@@ -1,6 +1,6 @@
 import React from 'react';
 import { TextInput, Button } from '@mantine/core';
-import { MantineDemo } from '@mantine/ds';
+import { MantineDemo } from '@mantinex/demo';
 import { modals } from '@mantine/modals';
 
 const code = `

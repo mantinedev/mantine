@@ -1,5 +1,5 @@
 import React from 'react';
-import { MantineDemo } from '@mantine/ds';
+import { MantineDemo } from '@mantinex/demo';
 import { Tooltip, Badge, Group, keys, MANTINE_TRANSITIONS } from '@mantine/core';
 
 export function Demo() {

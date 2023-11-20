@@ -1,5 +1,5 @@
 import React from 'react';
-import { MantineDemo } from '@mantine/ds';
+import { MantineDemo } from '@mantinex/demo';
 import cx from 'clsx';
 import { IconSun, IconMoon } from '@tabler/icons-react';
 import { ActionIcon, useMantineColorScheme, useComputedColorScheme } from '@mantine/core';

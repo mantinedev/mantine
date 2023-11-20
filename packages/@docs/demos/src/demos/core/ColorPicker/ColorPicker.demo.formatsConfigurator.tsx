@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { MantineDemo } from '@mantine/ds';
+import { MantineDemo } from '@mantinex/demo';
 import { Stack, Text, ColorPicker, ColorPickerProps } from '@mantine/core';
 
 function Wrapper(props: ColorPickerProps) {

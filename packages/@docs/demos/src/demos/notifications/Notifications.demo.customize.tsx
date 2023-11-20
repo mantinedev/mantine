@@ -1,6 +1,6 @@
 import React from 'react';
 import { Button, Group } from '@mantine/core';
-import { MantineDemo } from '@mantine/ds';
+import { MantineDemo } from '@mantinex/demo';
 import { notifications } from '@mantine/notifications';
 import classes from './Notifications.demo.customize.module.css';
 

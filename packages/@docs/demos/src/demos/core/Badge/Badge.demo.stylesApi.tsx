@@ -1,5 +1,5 @@
 import React from 'react';
-import { MantineDemo } from '@mantine/ds';
+import { MantineDemo } from '@mantinex/demo';
 import { BadgeStylesApi } from '@docs/styles-api';
 import { Badge, rem } from '@mantine/core';
 import { IconAt } from '@tabler/icons-react';

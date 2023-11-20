@@ -1,6 +1,6 @@
 import React from 'react';
 import { IconPhoto } from '@tabler/icons-react';
-import { MantineDemo } from '@mantine/ds';
+import { MantineDemo } from '@mantinex/demo';
 import { ThemeIcon, ThemeIconProps } from '@mantine/core';
 
 function Wrapper(props: ThemeIconProps) {

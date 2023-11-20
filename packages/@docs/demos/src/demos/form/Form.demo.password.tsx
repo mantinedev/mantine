@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
 import React from 'react';
 import { PasswordInput, Group, Button, Box } from '@mantine/core';
-import { MantineDemo } from '@mantine/ds';
+import { MantineDemo } from '@mantinex/demo';
 import { useForm } from '@mantine/form';
 
 const code = `

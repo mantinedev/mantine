@@ -1,5 +1,5 @@
 import React from 'react';
-import { MantineDemo } from '@mantine/ds';
+import { MantineDemo } from '@mantinex/demo';
 import { SimpleGrid } from '@mantine/core';
 import { defaultItems } from './_demo-item';
 

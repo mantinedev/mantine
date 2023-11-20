@@ -1,6 +1,6 @@
 import React from 'react';
 import { useDisclosure } from '@mantine/hooks';
-import { MantineDemo } from '@mantine/ds';
+import { MantineDemo } from '@mantinex/demo';
 import { Popover, Text, Button } from '@mantine/core';
 
 const code = `

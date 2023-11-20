@@ -1,5 +1,5 @@
 import React from 'react';
-import { MantineDemo } from '@mantine/ds';
+import { MantineDemo } from '@mantinex/demo';
 import { Accordion, AccordionProps } from '@mantine/core';
 import { AccordionStylesApi } from '@docs/styles-api';
 import { groceries } from './_base';

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Text } from '@mantine/core';
-import { MantineDemo } from '@mantine/ds';
+import { MantineDemo } from '@mantinex/demo';
 import { useDocumentTitle, useDocumentVisibility } from '@mantine/hooks';
 
 const code = `

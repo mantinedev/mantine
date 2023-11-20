@@ -1,5 +1,5 @@
 import React from 'react';
-import { MantineDemo } from '@mantine/ds';
+import { MantineDemo } from '@mantinex/demo';
 import { Box, Notification } from '@mantine/core';
 import { NotificationStylesApi } from '@docs/styles-api';
 import { IconCheck } from '@tabler/icons-react';

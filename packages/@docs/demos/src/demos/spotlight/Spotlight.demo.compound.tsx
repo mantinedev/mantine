@@ -1,5 +1,5 @@
 import React, { useMemo, useState } from 'react';
-import { MantineDemo } from '@mantine/ds';
+import { MantineDemo } from '@mantinex/demo';
 import { Spotlight, createSpotlight } from '@mantine/spotlight';
 import { Button } from '@mantine/core';
 import { IconSearch } from '@tabler/icons-react';

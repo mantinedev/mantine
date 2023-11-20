@@ -1,6 +1,6 @@
 import React from 'react';
 import { useListState, randomId } from '@mantine/hooks';
-import { MantineDemo } from '@mantine/ds';
+import { MantineDemo } from '@mantinex/demo';
 import { Checkbox, Box } from '@mantine/core';
 
 const code = `

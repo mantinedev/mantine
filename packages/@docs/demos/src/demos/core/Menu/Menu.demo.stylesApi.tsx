@@ -1,5 +1,5 @@
 import React from 'react';
-import { MantineDemo } from '@mantine/ds';
+import { MantineDemo } from '@mantinex/demo';
 import { Menu } from '@mantine/core';
 import { MenuStylesApi } from '@docs/styles-api';
 import { DemoMenuItems } from './_menu-items';

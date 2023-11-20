@@ -1,5 +1,5 @@
 import React from 'react';
-import { MantineDemo } from '@mantine/ds';
+import { MantineDemo } from '@mantinex/demo';
 import { NativeSelect, rem } from '@mantine/core';
 import { IconChevronDown, IconHash } from '@tabler/icons-react';
 

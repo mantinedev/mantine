@@ -1,5 +1,6 @@
 import React from 'react';
-import { MantineDemo, TypeScriptIcon, CssIcon } from '@mantine/ds';
+import { MantineDemo } from '@mantinex/demo';
+import { TypeScriptIcon, CssIcon } from '@mantinex/dev-icons';
 import { CodeHighlightTabs } from '@mantine/code-highlight';
 
 const tsxCode = `
@@ -17,7 +18,7 @@ const cssCode = `
 
 const code = `
 import { CodeHighlightTabs } from '@mantine/code-highlight';
-import { TypeScriptIcon, CssIcon } from '@mantine/ds';
+import { TypeScriptIcon, CssIcon } from '@mantinex/dev-icons';
 
 const tsxCode = \`${tsxCode}\`;
 

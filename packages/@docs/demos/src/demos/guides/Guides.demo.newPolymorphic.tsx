@@ -1,5 +1,5 @@
 import React, { forwardRef } from 'react';
-import { MantineDemo } from '@mantine/ds';
+import { MantineDemo } from '@mantinex/demo';
 import { Box, BoxProps, createPolymorphicComponent, Group } from '@mantine/core';
 
 const code = `

@@ -1,7 +1,7 @@
 import React from 'react';
 import { LoadingOverlay, Button, Group, Box } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
-import { MantineDemo } from '@mantine/ds';
+import { MantineDemo } from '@mantinex/demo';
 import { AuthenticationForm } from '../../../shared/AuthenticationForm/AuthenticationForm';
 
 const code = `

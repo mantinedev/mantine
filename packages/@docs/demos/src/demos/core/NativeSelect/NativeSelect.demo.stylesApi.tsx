@@ -1,5 +1,5 @@
 import React from 'react';
-import { MantineDemo } from '@mantine/ds';
+import { MantineDemo } from '@mantinex/demo';
 import { NativeSelect } from '@mantine/core';
 import { NativeSelectStylesApi } from '@docs/styles-api';
 

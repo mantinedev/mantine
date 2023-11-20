@@ -1,5 +1,5 @@
 import React from 'react';
-import { MantineDemo } from '@mantine/ds';
+import { MantineDemo } from '@mantinex/demo';
 import cx from 'clsx';
 import { MantineThemeProvider, Container, createTheme } from '@mantine/core';
 import classes from './Container.demo.responsive.module.css';

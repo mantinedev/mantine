@@ -1,5 +1,5 @@
 import React from 'react';
-import { MantineDemo } from '@mantine/ds';
+import { MantineDemo } from '@mantinex/demo';
 import { IconClock } from '@tabler/icons-react';
 import { TimeInput } from '@mantine/dates';
 import { rem } from '@mantine/core';

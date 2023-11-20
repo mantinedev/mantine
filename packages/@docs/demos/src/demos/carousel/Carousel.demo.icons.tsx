@@ -2,7 +2,7 @@ import React from 'react';
 import { rem } from '@mantine/core';
 import { Carousel } from '@mantine/carousel';
 import { IconArrowRight, IconArrowLeft } from '@tabler/icons-react';
-import { MantineDemo } from '@mantine/ds';
+import { MantineDemo } from '@mantinex/demo';
 import { Slides } from './_slides';
 
 const code = `

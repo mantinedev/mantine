@@ -1,6 +1,6 @@
 /* eslint-disable no-console */
 import React from 'react';
-import { MantineDemo } from '@mantine/ds';
+import { MantineDemo } from '@mantinex/demo';
 import { IconSearch } from '@tabler/icons-react';
 import { rem } from '@mantine/core';
 import { SpotlightActionData, SpotlightActionGroupData } from '@mantine/spotlight';

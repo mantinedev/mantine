@@ -1,5 +1,5 @@
 import React from 'react';
-import { MantineDemo } from '@mantine/ds';
+import { MantineDemo } from '@mantinex/demo';
 import { ColorInput } from '@mantine/core';
 import { ColorInputStylesApi } from '@docs/styles-api';
 

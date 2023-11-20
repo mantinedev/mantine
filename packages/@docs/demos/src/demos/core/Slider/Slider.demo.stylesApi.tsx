@@ -1,5 +1,5 @@
 import React from 'react';
-import { MantineDemo } from '@mantine/ds';
+import { MantineDemo } from '@mantinex/demo';
 import { Slider } from '@mantine/core';
 import { SliderStylesApi } from '@docs/styles-api';
 

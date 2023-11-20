@@ -1,6 +1,6 @@
 import React from 'react';
 import { IconArrowLeft } from '@tabler/icons-react';
-import { MantineDemo } from '@mantine/ds';
+import { MantineDemo } from '@mantinex/demo';
 import { Center, Anchor, Box, rem } from '@mantine/core';
 
 const code = `

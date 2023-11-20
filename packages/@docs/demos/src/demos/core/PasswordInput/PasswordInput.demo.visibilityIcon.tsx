@@ -1,6 +1,6 @@
 import React from 'react';
 import { IconEyeCheck, IconEyeOff } from '@tabler/icons-react';
-import { MantineDemo } from '@mantine/ds';
+import { MantineDemo } from '@mantinex/demo';
 import { PasswordInput } from '@mantine/core';
 
 const code = `
