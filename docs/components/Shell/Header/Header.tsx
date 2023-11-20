@@ -3,6 +3,7 @@ import cx from 'clsx';
 import { IconChevronDown, IconExternalLink } from '@tabler/icons-react';
 import { Code, Group, Burger, RemoveScroll, Menu, UnstyledButton, Text, Box } from '@mantine/core';
 import { HeaderControls, ColorSchemeControl, SearchMobileControl } from '@mantine/ds';
+import { meta } from '@mantinex/mantine-meta';
 import { Logo } from '@/components/Logo';
 import { searchHandlers } from '@/components/Search';
 import packageJson from '../../../../package.json';
@@ -64,6 +65,7 @@ export function Header({ navbarOpened, onNavbarToggle, headerControlsProps }: He
           className={classes.controls}
           onSearch={searchHandlers.open}
           githubLink="https://github.com/mantinedev/mantine"
+          discordLink={meta.discordLink}
           {...headerControlsProps}
         />
       </header>

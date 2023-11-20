@@ -6,7 +6,7 @@ export default { title: 'DS/DiscordControl' };
 export function Usage() {
   return (
     <div style={{ padding: 40 }}>
-      <DiscordControl />
+      <DiscordControl link="https://mantine.dev" />
     </div>
   );
 }

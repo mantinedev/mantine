@@ -1,4 +1,4 @@
-import { meta } from '@mantine/ds';
+import { meta } from '@mantinex/mantine-meta';
 import { LinksGroupProps } from './LinksGroup/LinksGroup';
 
 export const FOOTER_LINKS_DATA: LinksGroupProps[] = [

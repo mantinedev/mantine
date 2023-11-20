@@ -1,6 +1,7 @@
 import React from 'react';
 import cx from 'clsx';
-import { DiscordIcon, GithubIcon, TwitterIcon, meta } from '@mantine/ds';
+import { DiscordIcon, GithubIcon, TwitterIcon } from '@mantine/ds';
+import { meta } from '@mantinex/mantine-meta';
 import classes from './SocialCards.module.css';
 
 interface CardBaseProps extends React.ComponentPropsWithoutRef<'a'> {
