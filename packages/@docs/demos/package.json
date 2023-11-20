@@ -51,7 +51,6 @@
     "@mantine/core": "workspace:*",
     "@mantine/dates": "workspace:*",
     "@mantine/dropzone": "workspace:*",
-    "@mantine/ds": "workspace:*",
     "@mantine/form": "workspace:*",
     "@mantine/hooks": "workspace:*",
     "@mantine/notifications": "workspace:*",

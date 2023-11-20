@@ -3392,7 +3392,6 @@ __metadata:
     "@mantine/core": "workspace:*"
     "@mantine/dates": "workspace:*"
     "@mantine/dropzone": "workspace:*"
-    "@mantine/ds": "workspace:*"
     "@mantine/form": "workspace:*"
     "@mantine/hooks": "workspace:*"
     "@mantine/notifications": "workspace:*"
@@ -4593,24 +4592,6 @@ __metadata:
   peerDependencies:
     "@mantine/core": 7.3.0-alpha.1
     "@mantine/hooks": 7.3.0-alpha.1
-    react: ^18.2.0
-    react-dom: ^18.2.0
-  languageName: unknown
-  linkType: soft
-
-"@mantine/ds@workspace:*, @mantine/ds@workspace:packages/@mantine/ds":
-  version: 0.0.0-use.local
-  resolution: "@mantine/ds@workspace:packages/@mantine/ds"
-  dependencies:
-    "@mantine/code-highlight": "workspace:*"
-    "@mantine/core": "workspace:*"
-    "@mantine/hooks": "workspace:*"
-    clsx: "npm:2.0.0"
-  peerDependencies:
-    "@mantine/code-highlight": 7.3.0-alpha.1
-    "@mantine/core": 7.3.0-alpha.1
-    "@mantine/hooks": 7.3.0-alpha.1
-    "@tabler/icons-react": ">=2.0.0"
     react: ^18.2.0
     react-dom: ^18.2.0
   languageName: unknown
@@ -11063,7 +11044,6 @@ __metadata:
     "@mantine/core": "workspace:*"
     "@mantine/dates": "workspace:*"
     "@mantine/dropzone": "workspace:*"
-    "@mantine/ds": "workspace:*"
     "@mantine/form": "workspace:*"
     "@mantine/hooks": "workspace:*"
     "@mantine/modals": "workspace:*"
