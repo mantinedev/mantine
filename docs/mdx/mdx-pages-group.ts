@@ -26,6 +26,7 @@ export const MDX_PAGES_GROUPS: MdxPagesGroup[] = [
       MDX_DATA.VanillaExtract,
       MDX_DATA.GlobalStyles,
       MDX_DATA.CssVariables,
+      MDX_DATA.CSSVariablesList,
       MDX_DATA.Rem,
       MDX_DATA.StyleProp,
       MDX_DATA.ResponsiveStyles,
