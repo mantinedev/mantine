@@ -9,14 +9,14 @@ export interface Package {
   packageJson: PackageJson;
 }
 
-export async function getPackagesList() {
+export function getPackagesList() {
   const basePath = getPath('packages');
-  const namespacesPaths = await fs.readdir(basePath);
+  const namespacesPaths = fs.readdirSync(basePath);
   const srcPaths: string[] = [];
 
   for (const namespacePath of namespacesPaths) {
     if (fs.lstatSync(path.join(basePath, namespacePath)).isDirectory()) {
-      const packages = await fs.readdir(path.join(basePath, namespacePath));
+      const packages = fs.readdirSync(path.join(basePath, namespacePath));
 
       for (const packageName of packages) {
         if (fs.lstatSync(path.join(basePath, namespacePath, packageName)).isDirectory()) {
@@ -30,11 +30,11 @@ export async function getPackagesList() {
 
   for (const srcPath of srcPaths) {
     const packageJsonPath = path.join(basePath, srcPath, 'package.json');
-    if (await fs.pathExists(packageJsonPath)) {
+    if (fs.pathExistsSync(packageJsonPath)) {
       packages.push({
         path: path.join(basePath, srcPath),
         packageJsonPath,
-        packageJson: await fs.readJSON(packageJsonPath),
+        packageJson: fs.readJSONSync(packageJsonPath),
       });
     }
   }
@@ -42,7 +42,7 @@ export async function getPackagesList() {
   return packages;
 }
 
-export async function getMantinePackagesList() {
-  const packages = await getPackagesList();
+export function getMantinePackagesList() {
+  const packages = getPackagesList();
   return packages.filter((pkg) => pkg.packageJson.name?.startsWith('@mantine/'));
 }

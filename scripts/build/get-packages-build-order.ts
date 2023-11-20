@@ -40,7 +40,7 @@ export async function getPackagesBuildOrder(
   packages?: Package[],
   order: Record<string, number> = {}
 ): Promise<Package[]> {
-  const _packages = packages || ((await getPackagesList()) as Package[]);
+  const _packages = packages || getPackagesList();
 
   for (const pkg of _packages) {
     await getPackageBuildOrder(_packages, pkg, order);

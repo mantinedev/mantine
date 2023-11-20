@@ -13,9 +13,9 @@ import { ROLLUP_EXTERNALS } from './rollup-externals';
 import { ROLLUP_EXCLUDE_USE_CLIENT } from './rollup-exclude-use-client';
 
 export async function createPackageConfig(packagePath: string): Promise<RollupOptions> {
-  const pkgList = await getPackagesList();
+  const packagesList = getPackagesList();
 
-  const aliasEntries: Alias[] = pkgList.map((pkg) => ({
+  const aliasEntries: Alias[] = packagesList.map((pkg) => ({
     find: new RegExp(`^${pkg.packageJson.name}`),
     replacement: path.resolve(pkg.path, 'src'),
   }));
