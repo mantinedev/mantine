@@ -8,7 +8,7 @@ import {
   IconMaximize,
   IconResize,
 } from '@tabler/icons-react';
-import { Demo } from '@mantine/ds';
+import { Demo } from '@mantinex/demo';
 import { FormDemos, HooksDemos } from '@docs/demos';
 import { DemoTabs } from '../DemoTabs/DemoTabs';
 import classes from './Hooks.module.css';

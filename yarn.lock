@@ -4732,6 +4732,22 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@mantinex/demo@workspace:*, @mantinex/demo@workspace:packages/@mantinex/demo":
+  version: 0.0.0-use.local
+  resolution: "@mantinex/demo@workspace:packages/@mantinex/demo"
+  dependencies:
+    "@mantine-tests/core": "workspace:*"
+    "@mantine/core": "workspace:*"
+    "@mantine/hooks": "workspace:*"
+  peerDependencies:
+    "@mantine/core": ">=7.0.0"
+    "@mantine/hooks": ">=7.0.0"
+    "@mantinex/dev-icons": ">=1.0.0"
+    react: ^18.2.0
+    react-dom: ^18.2.0
+  languageName: unknown
+  linkType: soft
+
 "@mantinex/dev-icons@workspace:*, @mantinex/dev-icons@workspace:packages/@mantinex/dev-icons":
   version: 0.0.0-use.local
   resolution: "@mantinex/dev-icons@workspace:packages/@mantinex/dev-icons"
@@ -11056,6 +11072,7 @@ __metadata:
     "@mantine/spotlight": "workspace:*"
     "@mantine/store": "workspace:*"
     "@mantine/tiptap": "workspace:*"
+    "@mantinex/demo": "workspace:*"
     "@mantinex/dev-icons": "workspace:*"
     "@mantinex/mantine-header": "workspace:*"
     "@mantinex/mantine-logo": "workspace:*"

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Demo } from '@mantine/ds';
+import { Demo } from '@mantinex/demo';
 import { MDXProvider } from '@mdx-js/react';
 import { MdxDataTable } from './MdxDataTable/MdxDataTable';
 import { MdxPre } from './MdxPre/MdxPre';

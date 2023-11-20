@@ -30,6 +30,7 @@
     "@mantine/spotlight": "workspace:*",
     "@mantine/store": "workspace:*",
     "@mantine/tiptap": "workspace:*",
+    "@mantinex/demo": "workspace:*",
     "@mantinex/dev-icons": "workspace:*",
     "@mantinex/mantine-header": "workspace:*",
     "@mantinex/mantine-logo": "workspace:*",
