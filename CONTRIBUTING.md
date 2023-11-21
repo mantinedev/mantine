@@ -27,8 +27,9 @@ First of all, thank you for showing interest in contributing to Mantine, all you
 
 ## Get started with Mantine locally
 
-- Install [editorconfig](https://editorconfig.org/) extension for your editor
-- Fork [repository](https://github.com/mantinedev/mantine), clone or download your fork
+- Install the [editorconfig](https://editorconfig.org/) extension for your editor.
+- Fork the [repository](https://github.com/mantinedev/mantine), then clone or download your fork.
+- Run `nvm use` to switch to the Node version specified in `.nvmrc` file ([nvm installation instructions](https://github.com/nvm-sh/nvm)).
 - Install dependencies with yarn – `yarn`
 - Setup project – `npm run setup`
 - Build local version of all packages – `npm run build all`

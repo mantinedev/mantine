@@ -3398,6 +3398,7 @@ __metadata:
     "@mantine/nprogress": "workspace:*"
     "@mantine/spotlight": "workspace:*"
     "@mantine/tiptap": "workspace:*"
+    "@mantinex/demo": "workspace:*"
   peerDependencies:
     "@tabler/icons-react": "*"
     "@tiptap/extension-link": "*"
