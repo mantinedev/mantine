@@ -45,6 +45,8 @@ docs/.cache
 storybook-static
 .next
 docs/components/___test.internal.tsx
-src/*/styles.css
+packages/*/*/styles.css
+packages/*/*/styles.layer.css
+packages/@mantine/core/styles
 .stylelintcache
 ____test.*

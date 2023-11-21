@@ -1,3 +1,5 @@
+import path from 'node:path';
+import fs from 'fs-extra';
 import chalk from 'chalk';
 import { createLogger } from '../utils/signale';
 import { locatePackage } from '../packages/locate-package';
@@ -31,6 +33,17 @@ export async function buildPackage(_packageName: string) {
     logger.log(`Compiling ${formattedPackageName} package with rollup...`);
 
     await compile(config);
+
+    if (await fs.pathExists(path.join(packagePath, 'esm/index.css'))) {
+      await fs.copyFile(
+        path.join(packagePath, 'esm/index.css'),
+        path.join(packagePath, 'styles.css')
+      );
+
+      await fs.remove(path.join(packagePath, 'esm/index.css'));
+      await fs.remove(path.join(packagePath, 'cjs/index.css'));
+    }
+
     logger.success(
       `Package ${formattedPackageName} has been built in ${chalk.green(getBuildTime(startTime))}`
     );

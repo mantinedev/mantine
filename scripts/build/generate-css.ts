@@ -34,13 +34,13 @@ async function processFile(
 
 // Generates styles.layers.css files for each @mantine/* component
 async function generateCSSLayers() {
-  const files = await glob(getPath('packages/*/*/esm/index.css'));
+  const files = await glob(getPath('packages/*/*/styles.css'));
 
   files.forEach((filePath) => {
     const directory = path.normalize(path.join(filePath, '..'));
     const fileContent = fs.readFileSync(filePath, 'utf-8');
     const fileContentWitLayer = `@layer mantine {${fileContent}}`;
-    fs.writeFileSync(path.join(directory, 'index.layer.css'), fileContentWitLayer);
+    fs.writeFileSync(path.join(directory, 'styles.layer.css'), fileContentWitLayer);
   });
 }
 
@@ -56,7 +56,7 @@ export async function generateCoreCSS() {
     { spaces: 2 }
   );
 
-  const outputFolder = getPath('packages/@mantine/core/esm/styles');
+  const outputFolder = getPath('packages/@mantine/core/styles');
 
   await fs.ensureDir(outputFolder);
 

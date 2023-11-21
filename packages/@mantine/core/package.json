@@ -33,9 +33,9 @@
         "default": "./cjs/index.cjs"
       }
     },
-    "./styles.css": "./esm/index.css",
-    "./styles.layer.css": "./esm/index.layer.css",
-    "./styles/*": "./esm/styles/*"
+    "./styles.css": "./styles.css",
+    "./styles.layer.css": "./styles.layer.css",
+    "./styles/*": "./styles/*"
   },
   "repository": {
     "url": "https://github.com/mantinedev/mantine.git",
