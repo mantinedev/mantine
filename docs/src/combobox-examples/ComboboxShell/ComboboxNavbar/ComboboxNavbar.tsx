@@ -9,7 +9,7 @@ import classes from './ComboboxNavbar.module.css';
 
 interface ComboboxNavbarProps {
   opened: boolean;
-  onClose(): void;
+  onClose: () => void;
 }
 
 export function ComboboxNavbar({ opened, onClose }: ComboboxNavbarProps) {

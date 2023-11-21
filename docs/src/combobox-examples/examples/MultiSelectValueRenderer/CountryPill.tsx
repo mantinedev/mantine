@@ -5,7 +5,7 @@ import classes from './CountryPill.module.css';
 
 interface CountryPillProps extends React.ComponentPropsWithoutRef<'div'> {
   value: string;
-  onRemove?(): void;
+  onRemove?: () => void;
 }
 
 export function CountryPill({ value, onRemove, ...others }: CountryPillProps) {

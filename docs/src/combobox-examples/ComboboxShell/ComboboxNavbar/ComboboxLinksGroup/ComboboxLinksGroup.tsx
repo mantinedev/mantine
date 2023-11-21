@@ -10,7 +10,7 @@ import classes from './ComboboxLinksGroup.module.css';
 interface ComboboxLinksGroupProps {
   data: ComboboxExamplesGroup;
   searchQuery: string | string[];
-  onClose(): void;
+  onClose: () => void;
 }
 
 export function ComboboxLinksGroup({ data, searchQuery, onClose }: ComboboxLinksGroupProps) {

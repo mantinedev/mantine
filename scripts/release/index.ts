@@ -3,6 +3,7 @@ import simpleGit from 'simple-git';
 import yargs from 'yargs/yargs';
 import { hideBin } from 'yargs/helpers';
 import { getNextVersion } from 'version-next';
+import { execa } from 'execa';
 import { createLogger } from '../utils/signale';
 import { buildAllPackages } from '../build/build-all-packages';
 import { getMantinePackagesList } from '../packages/get-packages-list';
@@ -11,7 +12,6 @@ import { publishPackage } from '../publish/publish-package';
 import { setMantinePackagesVersion } from './set-mantine-packages-version';
 import { openGithubRelease } from './open-github-release';
 import packageJson from '../../package.json';
-import { execa } from 'execa';
 
 const logger = createLogger('release');
 const git = simpleGit();

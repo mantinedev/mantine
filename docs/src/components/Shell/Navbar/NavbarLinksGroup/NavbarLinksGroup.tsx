@@ -23,7 +23,7 @@ function hasActiveLink(data: MdxPagesGroup, pathname: string) {
 
 interface NavbarLinkProps {
   data: Frontmatter;
-  onNavbarClose(): void;
+  onNavbarClose: () => void;
   linkRef: React.ForwardedRef<HTMLAnchorElement>;
 }
 
@@ -45,7 +45,7 @@ function NavbarLink({ data, onNavbarClose, linkRef }: NavbarLinkProps) {
 
 interface NavbarLinksGroupProps {
   data: MdxPagesGroup;
-  onNavbarClose(): void;
+  onNavbarClose: () => void;
 }
 
 export function NavbarLinksGroup({ data, onNavbarClose }: NavbarLinksGroupProps) {

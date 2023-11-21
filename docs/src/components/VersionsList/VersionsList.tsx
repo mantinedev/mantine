@@ -19,6 +19,7 @@ export function VersionsList() {
             href={`https://github.com/mantinedev/mantine/releases/tag/${patch.version}`}
             target="_blank"
             className={classes.patchLink}
+            rel="noreferrer"
           >
             <Code className={classes.patchBadge}>{patch.version}</Code> –{' '}
             <span className={classes.patchLinkLabel}>{patch.date}</span>
@@ -33,6 +34,7 @@ export function VersionsList() {
             href={minorVersion.version !== '1.0.0' ? minorVersion.link : minorVersion.github}
             className={classes.minorVersionBadgeWrapper}
             target="_blank"
+            rel="noreferrer"
           >
             <Code className={classes.minorVersionBadge}>{minorVersion.version}</Code>
           </a>

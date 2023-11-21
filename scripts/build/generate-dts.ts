@@ -1,5 +1,4 @@
 import { execa } from 'execa';
-import fg from 'fast-glob';
 import path from 'node:path';
 import fs from 'fs-extra';
 

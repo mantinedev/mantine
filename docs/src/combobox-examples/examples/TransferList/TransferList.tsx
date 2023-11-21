@@ -9,7 +9,7 @@ const vegetables = ['🥦 Broccoli', '🥕 Carrots', '🥬 Lettuce'];
 
 interface RenderListProps {
   options: string[];
-  onTransfer(options: string[]): void;
+  onTransfer: (options: string[]) => void;
   type: 'forward' | 'backward';
 }
 

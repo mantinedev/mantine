@@ -16,7 +16,7 @@ import classes from './Navbar.module.css';
 interface NavbarProps {
   navbarOpened: boolean;
   mobileNavbarOnly: boolean | undefined;
-  onNavbarClose(): void;
+  onNavbarClose: () => void;
 }
 
 export function Navbar({ navbarOpened, onNavbarClose, mobileNavbarOnly }: NavbarProps) {

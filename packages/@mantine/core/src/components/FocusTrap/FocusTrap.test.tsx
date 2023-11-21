@@ -1,5 +1,5 @@
 import React from 'react';
-import { wait, render, screen, userEvent } from '@mantine-tests/core';
+import { render, screen } from '@mantine-tests/core';
 import { FocusTrap } from './FocusTrap';
 
 describe('@mantine/core/FocusTrap', () => {

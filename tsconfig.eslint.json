@@ -3,7 +3,7 @@
     "./docs",
     "./scripts",
     "./@types",
-    "./packages/@tests/*/src",
+    "./packages/@mantine-tests/*/src",
     "./packages/@docs/*/src",
     "./packages/@mantine/*/src",
     "./packages/@mantinex/*/src"
@@ -11,9 +11,9 @@
   "exclude": [
     "public",
     "node_modules",
-    "./packages/@tests/*/esm/**/*",
-    "./packages/@tests/*/cjs/**/*",
-    "./packages/@tests/*/lib/**/*",
+    "./packages/@mantine-tests/*/esm/**/*",
+    "./packages/@mantine-tests/*/cjs/**/*",
+    "./packages/@mantine-tests/*/lib/**/*",
     "./packages/@docs/*/ems/**/*",
     "./packages/@docs/*/cjs/**/*",
     "./packages/@docs/*/lib/**/*",

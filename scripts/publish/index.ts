@@ -49,7 +49,7 @@ async function publish() {
   const packagePath = await locatePackage(packageName);
 
   if (packageName.includes('@mantine/')) {
-    logger.error(`Cannot publish @mantine/* packages separately`);
+    logger.error('Cannot publish @mantine/* packages separately');
     process.exit(1);
   }
 

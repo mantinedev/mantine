@@ -8,7 +8,7 @@ interface NavbarMainLinkProps extends React.ComponentPropsWithoutRef<'a'> {
   external?: boolean;
   children: React.ReactNode;
   icon: React.ReactNode;
-  onNavbarClose(): void;
+  onNavbarClose: () => void;
 }
 
 export function NavbarMainLink({

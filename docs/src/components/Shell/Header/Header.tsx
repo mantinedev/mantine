@@ -4,9 +4,9 @@ import { IconChevronDown, IconExternalLink } from '@tabler/icons-react';
 import { Code, Group, Burger, RemoveScroll, Menu, UnstyledButton, Text, Box } from '@mantine/core';
 import { HeaderControls, ColorSchemeControl, SearchMobileControl } from '@mantinex/mantine-header';
 import { meta, majorVersions } from '@mantinex/mantine-meta';
+import packageJson from 'mantine-a91763c0e2/package.json';
 import { Logo } from '@/components/Logo';
 import { searchHandlers } from '@/components/Search';
-import packageJson from '../../../../../package.json';
 import classes from './Header.module.css';
 
 export type HeaderControlsProps = Partial<React.ComponentProps<typeof HeaderControls>>;

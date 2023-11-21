@@ -18,9 +18,9 @@ import classes from './ColorsInput.module.css';
 
 interface ColorsInputProps {
   value: string;
-  onChange(value: string): void;
+  onChange: (value: string) => void;
   displayColorsInfo: boolean | undefined;
-  setDisplayColorsInfo(value: boolean): void;
+  setDisplayColorsInfo: (value: boolean) => void;
 }
 
 export function ColorsInput({

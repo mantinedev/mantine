@@ -1,6 +1,6 @@
 import React from 'react';
-import { HeaderControl } from './HeaderControl';
 import { GithubIcon } from '@mantinex/dev-icons';
+import { HeaderControl } from './HeaderControl';
 
 interface GithubControlProps {
   link: string;
