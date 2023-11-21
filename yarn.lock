@@ -12229,9 +12229,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-config-mantine@npm:3.0.0":
-  version: 3.0.0
-  resolution: "eslint-config-mantine@npm:3.0.0"
+"eslint-config-mantine@npm:3.1.0":
+  version: 3.1.0
+  resolution: "eslint-config-mantine@npm:3.1.0"
   peerDependencies:
     "@typescript-eslint/eslint-plugin": ^6.8.0
     "@typescript-eslint/parser": ^6.8.0
@@ -12242,7 +12242,7 @@ __metadata:
     eslint-plugin-jsx-a11y: ^6.7.1
     eslint-plugin-react: ^7.33.2
     eslint-plugin-react-hooks: ^4.6.0
-  checksum: 0a26ac09c272f9fd969610d5739007542cd3561306ac3e73e583b4553bba28f47c605bf66a20fbe5efc9c91d23d4c38d45c8a4eb0b5c22eb4875d57df9d323d1
+  checksum: 6e4372638bfa233c05c296cb0d758db4aa76800f0c4901586cd62b7214cb5c4f81364c1a5a2dbd2a5fe13fc4c44a1657db0cec7a04fe78aef429afaa847c26b8
   languageName: node
   linkType: hard
 
@@ -16685,7 +16685,7 @@ __metadata:
     eslint: "npm:^8.51.0"
     eslint-config-airbnb: "npm:19.0.4"
     eslint-config-airbnb-typescript: "npm:^17.1.0"
-    eslint-config-mantine: "npm:3.0.0"
+    eslint-config-mantine: "npm:3.1.0"
     eslint-plugin-import: "npm:^2.28.1"
     eslint-plugin-jest: "npm:^27.6.0"
     eslint-plugin-jsx-a11y: "npm:^6.7.1"
