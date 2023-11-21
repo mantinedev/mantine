@@ -20,6 +20,7 @@
   "scripts": {
     "setup": "npm run docs:docgen && esno scripts/docs/generate-css-exports",
     "plop": "esno scripts/plop",
+    "format-changelogs": "esno scripts/docs/format-changelogs",
     "changelog": "esno scripts/docs/changelog",
     "storybook": "storybook dev -p 6006",
     "docs": "cd docs && npm run dev",
