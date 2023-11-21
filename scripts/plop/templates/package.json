@@ -26,8 +26,8 @@
         "default": "./cjs/index.cjs"
       }
     },
-    packages/*/*/styles.css
-    "./styles.layer.css": "./index.layer.css"
+    "./styles.css": "./styles.css",
+    "./styles.layer.css": "./styles.layer.css"
   },
   "repository": {
     "url": "https://github.com/mantinedev/mantine.git",

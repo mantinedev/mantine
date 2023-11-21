@@ -18,6 +18,7 @@
     "docs"
   ],
   "scripts": {
+    "s": "tsc --project tsconfig.eslint.json",
     "setup": "npm run docs:docgen && esno scripts/docs/generate-css-exports",
     "plop": "esno scripts/plop",
     "changelog": "esno scripts/docs/changelog",
