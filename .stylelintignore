@@ -1,4 +1,5 @@
-packages/*/*/esm/**/*.css
-packages/*/*/cjs/**/*.css
+packages/*/*/styles.css
+packages/*/*/styles.layer.css
+packages/*/*/styles/*.css
 docs/.next
 docs/out
