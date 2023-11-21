@@ -19,7 +19,8 @@ export interface TabsPanelProps
     ElementProps<'div'> {
   /** Panel content */
   children: React.ReactNode;
-
+  /** If set to `true`, the content will be kept mounted, even if `keepMounted` is set `false` in the parent `Tabs` component */
+  keepMounted?: boolean;
   /** Value of associated control */
   value: string;
 }
@@ -40,7 +41,7 @@ export const TabsPanel = factory<TabsPanelFactory>((_props, ref) => {
   const ctx = useTabsContext();
 
   const active = ctx.value === value;
-  const content = ctx.keepMounted ? children : active ? children : null;
+  const content = ctx.keepMounted || props.keepMounted ? children : active ? children : null;
 
   return (
     <Box
