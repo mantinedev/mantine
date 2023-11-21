@@ -8,6 +8,6 @@ export function addUnlinkedScrollListener(node: HTMLElement, handler = () => {})
     if (isHorizontalScroll || isVerticalScroll) handler();
     prevPosition = position;
     rAF = window.requestAnimationFrame(loop);
-  }());
+  })();
   return () => window.cancelAnimationFrame(rAF);
 }

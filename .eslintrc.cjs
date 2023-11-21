@@ -5,6 +5,7 @@ module.exports = {
     'jest/no-export': 'off',
     'jest/expect-expect': 'off',
     'jest/valid-title': 'off',
+    'wrap-iife': 'off',
   },
   parserOptions: {
     project: './tsconfig.eslint.json',
