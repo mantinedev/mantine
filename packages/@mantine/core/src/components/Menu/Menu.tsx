@@ -65,7 +65,7 @@ export interface MenuProps extends __PopoverProps, StylesApiProps<MenuFactory> {
   closeOnEscape?: boolean;
 
   /** Event which should open menu */
-  trigger?: 'click' | 'hover' | 'both';
+  trigger?: 'click' | 'hover' | 'click-hover';
 
   /** Open delay in ms, applicable only to trigger="hover" variant */
   openDelay?: number;

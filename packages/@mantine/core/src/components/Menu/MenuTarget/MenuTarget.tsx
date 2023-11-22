@@ -28,17 +28,17 @@ export const MenuTarget = forwardRef<HTMLElement, MenuTargetProps>((props, ref) 
 
   const onClick = createEventHandler(
     children.props.onClick,
-    () => (ctx.trigger === 'click' || ctx.trigger === 'both') && ctx.toggleDropdown()
+    () => (ctx.trigger === 'click' || ctx.trigger === 'click-hover') && ctx.toggleDropdown()
   );
 
   const onMouseEnter = createEventHandler(
     children.props.onMouseEnter,
-    () => (ctx.trigger === 'hover' || ctx.trigger === 'both') && ctx.openDropdown()
+    () => (ctx.trigger === 'hover' || ctx.trigger === 'click-hover') && ctx.openDropdown()
   );
 
   const onMouseLeave = createEventHandler(
     children.props.onMouseLeave,
-    () => (ctx.trigger === 'hover' || ctx.trigger === 'both') && ctx.closeDropdown()
+    () => (ctx.trigger === 'hover' || ctx.trigger === 'click-hover') && ctx.closeDropdown()
   );
 
   return (

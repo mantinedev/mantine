@@ -42,3 +42,8 @@ export const DemoCustomControl = {
   name: '⭐ Demo: customControl',
   render: renderDemo(demos.customControl),
 };
+
+export const DemoClickHover = {
+  name: '⭐ Demo: clickHover',
+  render: renderDemo(demos.clickHover),
+};
