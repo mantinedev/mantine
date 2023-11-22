@@ -11,7 +11,7 @@ interface MenuContext {
   hovered: number | null;
   closeOnItemClick: boolean | undefined;
   loop: boolean | undefined;
-  trigger: 'click' | 'hover' | undefined;
+  trigger: 'click' | 'hover' | 'both' | undefined;
   opened: boolean;
   unstyled: boolean | undefined;
   getStyles: GetStylesApi<MenuFactory>;
