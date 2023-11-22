@@ -32,7 +32,13 @@ export const openContextModal: ModalsEvents['openContextModal'] = <TKey extends 
   payload: OpenContextModal<Parameters<MantineModals[TKey]>[0]['innerProps']> & { modal: TKey }
 ) => createEvent('openContextModal')(payload);
 
-export const modals = {
+export const modals: {
+  open: ModalsEvents['openModal'];
+  close: ModalsEvents['closeModal'];
+  closeAll: ModalsEvents['closeAllModals'];
+  openConfirmModal: ModalsEvents['openConfirmModal'];
+  openContextModal: ModalsEvents['openContextModal'];
+} = {
   open: openModal,
   close: closeModal,
   closeAll: closeAllModals,
