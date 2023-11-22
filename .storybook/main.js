@@ -9,6 +9,7 @@ function getStoryPaths(fileName = '*') {
   return [
     getPath(`packages/@mantine/*/src/**/${fileName}.story.@(ts|tsx)`),
     getPath(`packages/@mantinex/*/src/**/${fileName}.story.@(ts|tsx)`),
+    getPath(`packages/@docs/*/src/**/${fileName}.story.@(ts|tsx)`),
   ];
 }
 
