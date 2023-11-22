@@ -65,7 +65,7 @@ export interface MenuProps extends __PopoverProps, StylesApiProps<MenuFactory> {
   closeOnEscape?: boolean;
 
   /** Event which should open menu */
-  trigger?: 'click' | 'hover';
+  trigger?: 'click' | 'hover' | 'both';
 
   /** Open delay in ms, applicable only to trigger="hover" variant */
   openDelay?: number;
@@ -183,8 +183,8 @@ export function Menu(_props: MenuProps) {
         opened={_opened}
         onChange={toggleDropdown}
         defaultOpened={defaultOpened}
-        trapFocus={trigger === 'click'}
-        closeOnEscape={closeOnEscape && trigger === 'click'}
+        trapFocus
+        closeOnEscape={closeOnEscape}
         __staticSelector="Menu"
         classNames={resolvedClassNames}
         styles={resolvedStyles}
