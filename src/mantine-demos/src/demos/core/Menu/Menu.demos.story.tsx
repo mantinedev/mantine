@@ -23,6 +23,11 @@ export const DemoHover = {
   render: renderDemo(demos.hover),
 };
 
+export const DemoBoth = {
+  name: '⭐ Demo: both',
+  render: renderDemo(demos.both),
+};
+
 export const DemoStylesApi = {
   name: '⭐ Demo: stylesApi',
   render: renderDemo(demos.stylesApi),

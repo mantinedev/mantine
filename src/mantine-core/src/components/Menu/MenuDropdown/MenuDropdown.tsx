@@ -56,12 +56,12 @@ export const MenuDropdown = factory<MenuDropdownFactory>((props, ref) => {
 
   const handleMouseEnter = createEventHandler<any>(
     onMouseEnter,
-    () => ctx.trigger === 'hover' && ctx.openDropdown()
+    () => (ctx.trigger === 'hover' || ctx.trigger === 'both') && ctx.openDropdown()
   );
 
   const handleMouseLeave = createEventHandler<any>(
     onMouseLeave,
-    () => ctx.trigger === 'hover' && ctx.closeDropdown()
+    () => (ctx.trigger === 'hover' || ctx.trigger === 'both') && ctx.closeDropdown()
   );
 
   return (
