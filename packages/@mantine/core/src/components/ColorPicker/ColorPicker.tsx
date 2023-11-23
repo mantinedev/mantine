@@ -115,6 +115,7 @@ const defaultProps: Partial<ColorPickerProps> = {
   swatchesPerRow: 7,
   withPicker: true,
   focusable: true,
+  size: 'md',
   __staticSelector: 'ColorPicker',
 };
 
