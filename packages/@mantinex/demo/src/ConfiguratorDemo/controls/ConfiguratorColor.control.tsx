@@ -10,6 +10,7 @@ import {
   UnstyledButton,
   ColorPicker,
   DEFAULT_THEME,
+  TextInput,
 } from '@mantine/core';
 import { getControlLabel } from './get-control-label';
 import { ConfiguratorControl } from './types';
@@ -74,6 +75,14 @@ export function ConfiguratorColorControl({
               value={colorPickerColor}
               onChange={handleColorPickerChange}
               format="rgba"
+            />
+            <TextInput
+              value={colorPickerColor}
+              onChange={(event) => handleColorPickerChange(event.currentTarget.value)}
+              placeholder="Enter color"
+              radius="md"
+              size="xs"
+              mt="xs"
             />
           </Popover.Dropdown>
         </Popover>
