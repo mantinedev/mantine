@@ -122,3 +122,8 @@ export const DemoWithinPopover = {
   name: '⭐ Demo: withinPopover',
   render: renderDemo(demos.withinPopover),
 };
+
+export const DemoDropdownOffset = {
+  name: '⭐ Demo: dropdownOffset',
+  render: renderDemo(demos.dropdownOffset),
+};

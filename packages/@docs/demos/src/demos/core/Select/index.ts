@@ -22,3 +22,4 @@ export { dropdownAnimation } from './Select.demo.dropdownAnimation';
 export { dropdownPadding } from './Select.demo.dropdownPadding';
 export { dropdownShadow } from './Select.demo.dropdownShadow';
 export { withinPopover } from './Select.demo.withinPopover';
+export { dropdownOffset } from './Select.demo.dropdownOffset';

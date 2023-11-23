@@ -323,6 +323,7 @@ export const MultiSelect = factory<MultiSelectFactory>((_props, ref) => {
             __stylesApiProps={{ ...props, multiline: true }}
             pointer={!searchable}
             onClick={() => (searchable ? combobox.openDropdown() : combobox.toggleDropdown())}
+            data-expanded={combobox.dropdownOpened || undefined}
             id={_id}
           >
             <Pill.Group disabled={disabled} unstyled={unstyled} {...getStyles('pillsList')}>
