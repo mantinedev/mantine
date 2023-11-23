@@ -188,6 +188,27 @@ Usage:
 }
 ```
 
+## z-index
+
+The following CSS variables are used to control z-index in Mantine components:
+
+- `--mantine-z-index-app` – value `100`
+- `--mantine-z-index-modal` – value `200`
+- `--mantine-z-index-popover` – value `300`
+- `--mantine-z-index-overlay` – value `400`
+- `--mantine-z-index-max` – value `9999`
+
+Example of using `--mantine-z-index-modal` variable:
+
+```css
+/* Display content above the modal */
+.my-content {
+  z-index: calc(var(--mantine-z-index-modal) + 1);
+}
+```
+
+Note that z-index variables are static and cannot be changed in theme object.
+
 ## CSS variables resolver
 
 `cssVariablesResolver` prop on [MantineProvider](/theming/mantine-provider) allows you to

@@ -97,6 +97,12 @@ body {
 :root {
   color-scheme: var(--mantine-color-scheme);
 
+  --mantine-z-index-app: 100;
+  --mantine-z-index-modal: 200;
+  --mantine-z-index-popover: 300;
+  --mantine-z-index-overlay: 400;
+  --mantine-z-index-max: 9999;
+
   --mantine-scale: 1;
   --mantine-cursor-type: default;
   --mantine-webkit-font-smoothing: antialiased;
