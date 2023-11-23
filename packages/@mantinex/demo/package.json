@@ -1,6 +1,6 @@
 {
   "name": "@mantinex/demo",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Demo base components used on *.mantine.dev websites",
   "homepage": "https://mantine.dev/",
   "license": "MIT",
