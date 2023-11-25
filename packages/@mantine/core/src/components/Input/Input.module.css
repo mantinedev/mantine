@@ -299,7 +299,7 @@
 }
 
 .required {
-  color: var(--input-asterisk-color, var(--mantine-color-red-filled));
+  color: var(--input-asterisk-color, var(--mantine-color-error));
 }
 
 .error,

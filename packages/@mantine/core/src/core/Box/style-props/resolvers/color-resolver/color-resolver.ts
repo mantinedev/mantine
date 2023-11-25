@@ -11,5 +11,9 @@ export function colorResolver(color: unknown, theme: MantineTheme) {
     return 'var(--mantine-color-bright)';
   }
 
+  if (parsedColor.isThemeColor && parsedColor.shade === undefined) {
+    return `var(--mantine-color-${parsedColor.color}-text)`;
+  }
+
   return parsedColor.variable ? `var(${parsedColor.variable})` : parsedColor.color;
 }
