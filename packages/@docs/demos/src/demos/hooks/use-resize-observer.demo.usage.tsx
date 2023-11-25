@@ -35,7 +35,7 @@ function Demo() {
             width: rem(400),
             height: rem(120),
             border: 'none',
-            backgroundColor: 'var(--mantine-color-blue-light)',
+            backgroundColor: 'var(--mantine-color-body)',
             position: 'relative',
           }}
         />
@@ -51,4 +51,5 @@ export const useResizeObserverDemo: MantineDemo = {
   type: 'code',
   code,
   component: Demo,
+  dimmed: true,
 };

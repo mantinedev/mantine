@@ -15,6 +15,7 @@ function Wrapper(props: FlexProps) {
 const code = `
 import { Flex, Button } from '@mantine/core';
 
+
 function Demo() {
   return (
     <Flex

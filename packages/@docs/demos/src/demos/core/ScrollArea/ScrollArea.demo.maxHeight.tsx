@@ -26,10 +26,10 @@ function Demo() {
       </ScrollArea.Autosize>
 
       <Group justify="center" mt="md">
-        <Button variant="outline" color="red" onClick={handlers.decrement}>
+        <Button color="red" onClick={handlers.decrement}>
           Remove paragraph
         </Button>
-        <Button variant="outline" onClick={handlers.increment}>
+        <Button onClick={handlers.increment}>
           Add paragraph
         </Button>
       </Group>
@@ -51,12 +51,10 @@ function Demo() {
       </ScrollArea.Autosize>
 
       <Group justify="center" mt="md">
-        <Button variant="outline" color="red" onClick={handlers.decrement}>
+        <Button color="red" onClick={handlers.decrement}>
           Remove paragraph
         </Button>
-        <Button variant="outline" onClick={handlers.increment}>
-          Add paragraph
-        </Button>
+        <Button onClick={handlers.increment}>Add paragraph</Button>
       </Group>
     </>
   );

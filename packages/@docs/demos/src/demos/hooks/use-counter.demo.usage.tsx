@@ -33,16 +33,16 @@ function Demo() {
         Count: {count}
       </Text>
       <Group justify="center">
-        <Button variant="outline" size="xs" onClick={handlers.increment}>
+        <Button size="xs" onClick={handlers.increment}>
           Increment
         </Button>
-        <Button variant="outline" size="xs" onClick={handlers.decrement}>
+        <Button size="xs" onClick={handlers.decrement}>
           Decrement
         </Button>
-        <Button variant="outline" size="xs" onClick={handlers.reset}>
+        <Button size="xs" onClick={handlers.reset}>
           Reset
         </Button>
-        <Button variant="outline" size="xs" onClick={() => handlers.set(5)}>
+        <Button size="xs" onClick={() => handlers.set(5)}>
           Set 5
         </Button>
       </Group>

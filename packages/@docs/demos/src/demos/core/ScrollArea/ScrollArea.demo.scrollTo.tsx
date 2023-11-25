@@ -25,15 +25,9 @@ function Demo() {
       </ScrollArea>
 
       <Group justify="center">
-        <Button onClick={scrollToBottom} variant="outline">
-          Scroll to bottom
-        </Button>
-        <Button onClick={scrollToCenter} variant="outline">
-          Scroll to center
-        </Button>
-        <Button onClick={scrollToTop} variant="outline">
-          Scroll to top
-        </Button>
+        <Button onClick={scrollToBottom}>Scroll to bottom</Button>
+        <Button onClick={scrollToCenter}>Scroll to center</Button>
+        <Button onClick={scrollToTop}>Scroll to top</Button>
       </Group>
     </Stack>
   );
@@ -54,15 +48,9 @@ function Demo() {
         <Content />
       </ScrollArea>
       <Group justify="center">
-        <Button onClick={scrollToBottom} variant="outline">
-          Scroll to bottom
-        </Button>
-        <Button onClick={scrollToCenter} variant="outline">
-          Scroll to center
-        </Button>
-        <Button onClick={scrollToTop} variant="outline">
-          Scroll to top
-        </Button>
+        <Button onClick={scrollToBottom}>Scroll to bottom</Button>
+        <Button onClick={scrollToCenter}>Scroll to center</Button>
+        <Button onClick={scrollToTop}>Scroll to top</Button>
       </Group>
     </Stack>
   );

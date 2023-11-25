@@ -23,8 +23,8 @@ function Demo() {
           p="xl"
           style={{
             backgroundColor: entry?.isIntersecting
-              ? 'var(--mantine-color-green-6)'
-              : 'var(--mantine-color-red-6)',
+              ? 'var(--mantine-color-teal-7)'
+              : 'var(--mantine-color-red-7)',
             minWidth: '50%',
           }}
         >
@@ -53,8 +53,8 @@ function Demo() {
           p="xl"
           style={{
             backgroundColor: entry?.isIntersecting
-              ? 'var(--mantine-color-green-6)'
-              : 'var(--mantine-color-red-6)',
+              ? 'var(--mantine-color-teal-7)'
+              : 'var(--mantine-color-red-7)',
             minWidth: '50%',
           }}
         >

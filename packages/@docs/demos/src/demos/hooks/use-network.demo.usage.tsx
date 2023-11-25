@@ -23,7 +23,7 @@ function Demo() {
         <Table.Tr>
           <Table.Td>Online</Table.Td>
           <Table.Td>
-            <Text size="sm" c={networkStatus.online ? 'teal' : 'red'}>
+            <Text size="sm" c={networkStatus.online ? 'teal.6' : 'red.6'}>
               {networkStatus.online ? 'Online' : 'Offline'}
             </Text>
           </Table.Td>
@@ -47,7 +47,7 @@ function Demo() {
         <Table.Tr>
           <Table.Td>saveData</Table.Td>
           <Table.Td>
-            <Text size="sm" c={networkStatus.saveData ? 'teal' : 'red'}>
+            <Text size="sm" c={networkStatus.saveData ? 'teal.6' : 'red.6'}>
               {networkStatus.saveData ? 'true' : 'false'}
             </Text>
           </Table.Td>
@@ -74,7 +74,7 @@ function Demo() {
         <Table.Tr>
           <Table.Td>Online</Table.Td>
           <Table.Td>
-            <Text size="sm" c={networkStatus.online ? 'teal' : 'red'}>
+            <Text size="sm" c={networkStatus.online ? 'teal.6' : 'red.6'}>
               {networkStatus.online ? 'Online' : 'Offline'}
             </Text>
           </Table.Td>
@@ -98,7 +98,7 @@ function Demo() {
         <Table.Tr>
           <Table.Td>saveData</Table.Td>
           <Table.Td>
-            <Text size="sm" c={networkStatus.saveData ? 'teal' : 'red'}>
+            <Text size="sm" c={networkStatus.saveData ? 'teal.6' : 'red.6'}>
               {networkStatus.saveData ? 'true' : 'false'}
             </Text>
           </Table.Td>
