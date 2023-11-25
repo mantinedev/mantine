@@ -2,16 +2,16 @@ import type { MantineThemeColors } from './theme.types';
 
 export const DEFAULT_COLORS: MantineThemeColors = {
   dark: [
-    '#C1C2C5',
-    '#A6A7AB',
-    '#909296',
-    '#5c5f66',
-    '#373A40',
-    '#2C2E33',
-    '#25262b',
-    '#1A1B1E',
-    '#141517',
-    '#101113',
+    '#c3c6c9',
+    '#bbbdbf',
+    '#898f96',
+    '#656b73',
+    '#46484d',
+    '#40444a',
+    '#35373b',
+    '#2a2c2e',
+    '#232529',
+    '#27292e',
   ],
 
   gray: [
