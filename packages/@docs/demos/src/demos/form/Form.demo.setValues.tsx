@@ -24,7 +24,6 @@ function Demo() {
 
       <Group justify="center" mt="xl">
         <Button
-          variant="outline"
           onClick={() =>
             form.setValues({
               name: randomId(),
@@ -55,7 +54,6 @@ function Demo() {
 
       <Group justify="center" mt="xl">
         <Button
-          variant="outline"
           onClick={() =>
             form.setValues({
               name: randomId(),

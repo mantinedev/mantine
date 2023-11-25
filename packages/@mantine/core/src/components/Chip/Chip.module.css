@@ -68,7 +68,7 @@
     }
 
     @mixin dark {
-      --_chip-bg: var(--mantine-color-dark-5);
+      --_chip-bg: var(--mantine-color-dark-6);
       --_chip-color: var(--mantine-color-dark-3);
     }
 
@@ -118,20 +118,20 @@
 
   @mixin hover {
     @mixin light {
-      --_chip-bg: var(--mantine-color-gray-1);
+      --_chip-bg: var(--mantine-color-gray-2);
     }
 
     @mixin dark {
-      --_chip-bg: var(--mantine-color-dark-5);
+      --_chip-bg: var(--mantine-color-dark-4);
     }
   }
 
   @mixin light {
-    --_chip-bg: var(--mantine-color-gray-0);
+    --_chip-bg: var(--mantine-color-gray-1);
   }
 
   @mixin dark {
-    --_chip-bg: var(--mantine-color-dark-6);
+    --_chip-bg: var(--mantine-color-dark-5);
   }
 
   [data-mantine-color-scheme] &[data-checked] {

@@ -11,6 +11,7 @@ export const TooltipStylesApi: StylesApiData<TooltipFactory> = {
     tooltip: {
       '--tooltip-bg': 'Tooltip `background-color`',
       '--tooltip-radius': 'Tooltip `border-radius`',
+      '--tooltip-color': 'Controls tooltip text color',
     },
   },
 

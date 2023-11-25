@@ -256,7 +256,7 @@
   justify-content: center;
   width: var(--_section-size);
   border-radius: var(--_section-border-radius);
-  color: var(--mantine-color-placeholder);
+  color: var(--mantine-color-dimmed);
 
   &[data-position='right'] {
     --_section-pointer-events: var(--input-right-section-pointer-events);

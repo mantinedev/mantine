@@ -21,7 +21,7 @@ function Demo() {
       <TextInput mt="md" label="Email" placeholder="Email" {...form.getInputProps('email')} />
 
       <Group justify="center" mt="xl">
-        <Button variant="outline" onClick={() => form.reset()}>
+        <Button onClick={() => form.reset()}>
           Reset to initial values
         </Button>
       </Group>
@@ -44,9 +44,7 @@ function Demo() {
       <TextInput mt="md" label="Email" placeholder="Email" {...form.getInputProps('email')} />
 
       <Group justify="center" mt="xl">
-        <Button variant="outline" onClick={() => form.reset()}>
-          Reset to initial values
-        </Button>
+        <Button onClick={() => form.reset()}>Reset to initial values</Button>
       </Group>
     </Box>
   );

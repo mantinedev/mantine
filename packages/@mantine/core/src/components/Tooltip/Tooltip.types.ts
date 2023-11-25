@@ -5,7 +5,7 @@ import type { TooltipFactory } from './Tooltip';
 
 export type TooltipStylesNames = 'tooltip' | 'arrow';
 export type TooltipCssVariables = {
-  tooltip: '--tooltip-radius' | '--tooltip-bg';
+  tooltip: '--tooltip-radius' | '--tooltip-bg' | '--tooltip-color';
 };
 
 export interface TooltipBaseProps

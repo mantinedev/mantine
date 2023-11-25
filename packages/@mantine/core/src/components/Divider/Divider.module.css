@@ -11,7 +11,7 @@
   }
 
   @mixin dark {
-    --_divider-color: var(--mantine-color-dark-4);
+    --_divider-color: var(--mantine-color-dark-3);
   }
 
   &[data-orientation='horizontal'] {

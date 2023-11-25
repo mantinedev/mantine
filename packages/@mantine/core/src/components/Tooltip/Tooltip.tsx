@@ -107,6 +107,7 @@ const varsResolver = createVarsResolver<TooltipFactory>((theme, { radius, color 
   tooltip: {
     '--tooltip-radius': radius === undefined ? undefined : getRadius(radius),
     '--tooltip-bg': color ? getThemeColor(color, theme) : undefined,
+    '--tooltip-color': color ? 'var(--mantine-color-white)' : undefined,
   },
 }));
 

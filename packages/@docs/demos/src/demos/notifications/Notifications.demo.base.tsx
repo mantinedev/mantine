@@ -10,7 +10,6 @@ import { notifications } from '@mantine/notifications';
 function Demo() {
   return (
     <Button
-      variant="outline"
       onClick={() =>
         notifications.show({
           title: 'Default notification',
@@ -26,7 +25,6 @@ function Demo() {
 function Demo() {
   return (
     <Button
-      variant="outline"
       onClick={() =>
         notifications.show({
           title: 'Default notification',

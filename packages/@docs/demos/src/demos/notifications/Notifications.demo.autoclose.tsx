@@ -11,14 +11,12 @@ function Demo() {
   return (
     <Group justify="center">
       <Button
-        variant="outline"
         onClick={() => notifications.show({ message: 'I will close in 4 seconds' })}
       >
         Notifications Provider timeout
       </Button>
 
       <Button
-        variant="outline"
         onClick={() =>
           notifications.show({
             message: 'I will close in 500ms',
@@ -30,7 +28,6 @@ function Demo() {
       </Button>
 
       <Button
-        variant="outline"
         onClick={() =>
           notifications.show({
             color: 'blue',
@@ -50,15 +47,11 @@ function Demo() {
 function Demo() {
   return (
     <Group justify="center">
-      <Button
-        variant="outline"
-        onClick={() => notifications.show({ message: 'I will close in 4 seconds' })}
-      >
+      <Button onClick={() => notifications.show({ message: 'I will close in 4 seconds' })}>
         Notifications Provider timeout
       </Button>
 
       <Button
-        variant="outline"
         onClick={() =>
           notifications.show({
             message: 'I will close in 500ms',
@@ -70,7 +63,6 @@ function Demo() {
       </Button>
 
       <Button
-        variant="outline"
         onClick={() =>
           notifications.show({
             color: 'blue',

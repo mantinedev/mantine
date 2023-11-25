@@ -1,7 +1,7 @@
 import * as demos from './index';
 import { renderDemo } from '../../../render-demo';
 
-export default { title: 'Accodrion' };
+export default { title: 'Accordion' };
 
 export const DemoConfigurator = {
   name: '⭐ Demo: configurator',

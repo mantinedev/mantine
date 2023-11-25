@@ -23,13 +23,10 @@ function Demo() {
       <TextInput mt="md" label="Email" placeholder="Email" {...form.getInputProps('email')} />
 
       <Group justify="center" mt="xl">
-        <Button variant="outline" onClick={() => form.setFieldValue('name', randomId())}>
+        <Button onClick={() => form.setFieldValue('name', randomId())}>
           Random name
         </Button>
-        <Button
-          variant="outline"
-          onClick={() => form.setFieldValue('email', \`\${randomId()}@test.com\`)}
-        >
+        <Button onClick={() => form.setFieldValue('email', \`\${randomId()}@test.com\`)}>
           Random email
         </Button>
       </Group>
@@ -52,13 +49,8 @@ function Demo() {
       <TextInput mt="md" label="Email" placeholder="Email" {...form.getInputProps('email')} />
 
       <Group justify="center" mt="xl">
-        <Button variant="outline" onClick={() => form.setFieldValue('name', randomId())}>
-          Random name
-        </Button>
-        <Button
-          variant="outline"
-          onClick={() => form.setFieldValue('email', `${randomId()}@test.com`)}
-        >
+        <Button onClick={() => form.setFieldValue('name', randomId())}>Random name</Button>
+        <Button onClick={() => form.setFieldValue('email', `${randomId()}@test.com`)}>
           Random email
         </Button>
       </Group>

@@ -43,6 +43,7 @@ const varsResolver = createVarsResolver<TooltipFloatingFactory>((theme, { radius
   tooltip: {
     '--tooltip-radius': radius === undefined ? undefined : getRadius(radius),
     '--tooltip-bg': color ? getThemeColor(color, theme) : undefined,
+    '--tooltip-color': color ? 'var(--mantine-color-white)' : undefined,
   },
 }));
 

@@ -38,7 +38,7 @@
   }
 
   @mixin dark {
-    --_star-color: var(--mantine-color-dark-4);
+    --_star-color: var(--mantine-color-dark-3);
   }
 
   [data-mantine-color-scheme] &[data-filled] {

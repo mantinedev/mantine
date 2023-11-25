@@ -10,7 +10,6 @@ import { notifications } from '@mantine/notifications';
 function Demo() {
   return (
     <Button
-      variant="outline"
       onClick={() => {
         Array(10).fill(0).forEach((_, index) => {
           setTimeout(() => {
@@ -30,7 +29,6 @@ function Demo() {
 function Demo() {
   return (
     <Button
-      variant="outline"
       onClick={() => {
         Array(10)
           .fill(0)

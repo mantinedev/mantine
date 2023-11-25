@@ -14,7 +14,7 @@ function Demo() {
         <Accordion.Control
           icon={
             <IconPhoto
-              style={{ color: 'var(--mantine-color-red-filled', width: rem(20), height: rem(20) }}
+              style={{ color: 'var(--mantine-color-red-6', width: rem(20), height: rem(20) }}
             />
           }
         >
@@ -27,7 +27,7 @@ function Demo() {
         <Accordion.Control
           icon={
             <IconPrinter
-              style={{ color: 'var(--mantine-color-blue-filled', width: rem(20), height: rem(20) }}
+              style={{ color: 'var(--mantine-color-blue-6', width: rem(20), height: rem(20) }}
             />
           }
         >
@@ -40,7 +40,7 @@ function Demo() {
         <Accordion.Control
           icon={
             <IconCameraSelfie
-              style={{ color: 'var(--mantine-color-teal-filled)', width: rem(20), height: rem(20) }}
+              style={{ color: 'var(--mantine-color-teal-6)', width: rem(20), height: rem(20) }}
             />
           }
         >
@@ -60,7 +60,7 @@ function Demo() {
         <Accordion.Control
           icon={
             <IconPhoto
-              style={{ color: 'var(--mantine-color-red-filled', width: rem(20), height: rem(20) }}
+              style={{ color: 'var(--mantine-color-red-6', width: rem(20), height: rem(20) }}
             />
           }
         >
@@ -73,7 +73,7 @@ function Demo() {
         <Accordion.Control
           icon={
             <IconPrinter
-              style={{ color: 'var(--mantine-color-blue-filled', width: rem(20), height: rem(20) }}
+              style={{ color: 'var(--mantine-color-blue-6', width: rem(20), height: rem(20) }}
             />
           }
         >
@@ -86,7 +86,7 @@ function Demo() {
         <Accordion.Control
           icon={
             <IconCameraSelfie
-              style={{ color: 'var(--mantine-color-teal-filled)', width: rem(20), height: rem(20) }}
+              style={{ color: 'var(--mantine-color-teal-6)', width: rem(20), height: rem(20) }}
             />
           }
         >

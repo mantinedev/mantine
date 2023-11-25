@@ -5,7 +5,7 @@
   font-size: var(--mantine-font-size-sm);
   white-space: var(--_tooltip-white-space, nowrap);
   background-color: var(--_tooltip-bg);
-  color: var(--_tooltip-color);
+  color: var(--tooltip-color, var(--_tooltip-color));
   border-radius: var(--tooltip-radius, var(--mantine-radius-default));
 
   @mixin light {

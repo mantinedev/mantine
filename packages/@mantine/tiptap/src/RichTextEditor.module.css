@@ -140,12 +140,12 @@
 
   @mixin dark {
     --_code-bg: var(--mantine-color-dark-8);
-    --_code-color: var(--mantine-color-dark-0);
+    --_code-color: var(--mantine-color-dark-1);
     --_code-color-comment: var(--mantine-color-dark-2);
     --_code-color-var: var(--mantine-color-red-5);
     --_code-color-number: var(--mantine-color-cyan-5);
     --_code-color-title: var(--mantine-color-yellow-5);
-    --_code-color-keyword: var(--mantine-color-violet-5);
+    --_code-color-keyword: var(--mantine-color-violet-3);
   }
 }
 

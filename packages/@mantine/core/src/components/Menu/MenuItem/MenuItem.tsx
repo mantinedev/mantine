@@ -11,6 +11,7 @@ import {
   createScopedKeydownHandler,
   useDirection,
   useMantineTheme,
+  parseThemeColor,
 } from '../../../core';
 import { UnstyledButton } from '../../UnstyledButton';
 import { useMenuContext } from '../Menu.context';
@@ -89,6 +90,7 @@ export const MenuItem = polymorphicFactory<MenuItemFactory>((props, ref) => {
   );
 
   const colors = color ? theme.variantColorResolver({ color, theme, variant: 'light' }) : undefined;
+  const parsedThemeColor = color ? parseThemeColor({ color, theme }) : null;
 
   return (
     <UnstyledButton
@@ -116,7 +118,10 @@ export const MenuItem = polymorphicFactory<MenuItemFactory>((props, ref) => {
         onKeyDown: _others.onKeydown,
       })}
       __vars={{
-        '--menu-item-color': colors?.color,
+        '--menu-item-color':
+          parsedThemeColor?.isThemeColor && parsedThemeColor?.shade === undefined
+            ? `var(--mantine-color-${parsedThemeColor.color}-6)`
+            : colors?.color,
         '--menu-item-hover': colors?.hover,
       }}
     >

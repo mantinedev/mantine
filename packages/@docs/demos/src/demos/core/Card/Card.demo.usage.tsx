@@ -18,9 +18,7 @@ function Demo() {
 
       <Group justify="space-between" mt="md" mb="xs">
         <Text fw={500}>Norway Fjord Adventures</Text>
-        <Badge color="pink" variant="light">
-          On Sale
-        </Badge>
+        <Badge color="pink">On Sale</Badge>
       </Group>
 
       <Text size="sm" c="dimmed">
@@ -28,7 +26,7 @@ function Demo() {
         activities on and around the fjords of Norway
       </Text>
 
-      <Button variant="light" color="blue" fullWidth mt="md" radius="md">
+      <Button color="blue" fullWidth mt="md" radius="md">
         Book classic tour now
       </Button>
     </Card>
@@ -50,9 +48,7 @@ function Demo() {
 
       <Group justify="space-between" mt="md" mb="xs">
         <Text fw={500}>Norway Fjord Adventures</Text>
-        <Badge color="pink" variant="light">
-          On Sale
-        </Badge>
+        <Badge color="pink">On Sale</Badge>
       </Group>
 
       <Text size="sm" c="dimmed">
@@ -60,7 +56,7 @@ function Demo() {
         activities on and around the fjords of Norway
       </Text>
 
-      <Button variant="light" color="blue" fullWidth mt="md" radius="md">
+      <Button color="blue" fullWidth mt="md" radius="md">
         Book classic tour now
       </Button>
     </Card>

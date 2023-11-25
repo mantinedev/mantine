@@ -12,7 +12,6 @@ import { IconCheck } from '@tabler/icons-react';
 function Demo() {
   return (
     <Button
-      variant="outline"
       onClick={() => {
         const id = notifications.show({
           loading: true,
@@ -44,7 +43,6 @@ function Demo() {
 function Demo() {
   return (
     <Button
-      variant="outline"
       onClick={() => {
         const id = notifications.show({
           loading: true,

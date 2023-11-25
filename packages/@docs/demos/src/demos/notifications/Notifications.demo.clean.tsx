@@ -11,7 +11,6 @@ function Demo() {
   return (
     <Group justify="center">
       <Button
-        variant="outline"
         onClick={() => {
           Array(10)
             .fill(0)
@@ -27,11 +26,11 @@ function Demo() {
         Show 10 notifications
       </Button>
 
-      <Button variant="outline" color="gray" onClick={() => notifications.cleanQueue()}>
+      <Button color="gray" onClick={() => notifications.cleanQueue()}>
         Clean queue
       </Button>
 
-      <Button variant="outline" color="red" onClick={() => notifications.clean()}>
+      <Button color="red" onClick={() => notifications.clean()}>
         Clean all
       </Button>
     </Group>
@@ -42,7 +41,6 @@ function Demo() {
   return (
     <Group justify="center">
       <Button
-        variant="outline"
         onClick={() => {
           Array(10)
             .fill(0)
@@ -58,11 +56,11 @@ function Demo() {
         Show 10 notifications
       </Button>
 
-      <Button variant="outline" color="gray" onClick={() => notifications.cleanQueue()}>
+      <Button color="gray" onClick={() => notifications.cleanQueue()}>
         Clean queue
       </Button>
 
-      <Button variant="outline" color="red" onClick={() => notifications.clean()}>
+      <Button color="red" onClick={() => notifications.clean()}>
         Clean all
       </Button>
     </Group>
