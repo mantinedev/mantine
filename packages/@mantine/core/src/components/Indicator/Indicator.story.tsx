@@ -38,7 +38,7 @@ export const WithRadius = () => (
       <Avatar
         radius={50000}
         size="xl"
-        src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=250&q=80"
+        src="https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/images/bg-8.png"
       />
     </Indicator>
   </Box>
@@ -60,7 +60,7 @@ export const Processing = () => (
         <Indicator inline processing size={12}>
           <Avatar
             size="lg"
-            src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=250&q=80"
+            src="https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/images/bg-8.png"
           />
         </Indicator>
       </Box>
@@ -70,7 +70,7 @@ export const Processing = () => (
         <Indicator inline processing disabled size={12}>
           <Avatar
             size="lg"
-            src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=250&q=80"
+            src="https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/images/bg-8.png"
           />
         </Indicator>
       </Box>

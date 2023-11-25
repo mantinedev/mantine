@@ -7,7 +7,7 @@ function Wrapper(props: BackgroundImageProps) {
     <Box maw={300} mx="auto">
       <BackgroundImage
         {...props}
-        src="https://images.unsplash.com/photo-1419242902214-272b3f66ee7a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=720&q=80"
+        src="https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/images/bg-6.png"
       >
         <Center p="md">
           <Text c="white">
@@ -28,7 +28,7 @@ function Demo() {
   return (
     <Box maw={300} mx="auto">
       <BackgroundImage
-        src="https://images.unsplash.com/photo-1419242902214-272b3f66ee7a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=720&q=80"
+        src="https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/images/bg-6.png"
         {{props}}
       >
         <Center p="md">

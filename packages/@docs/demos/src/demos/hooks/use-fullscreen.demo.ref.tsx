@@ -14,8 +14,8 @@ function RefDemo() {
     <Stack align="center">
       <img
         ref={ref}
-        src="https://images.unsplash.com/photo-1545569341-9eb8b30979d9?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1650&q=80"
-        alt="From unsplash.com"
+        src="https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/images/bg-4.png"
+        alt="For demo"
         width={200}
       />
       <Button onClick={toggle} color={fullscreen ? 'red' : 'blue'}>
@@ -33,8 +33,8 @@ function RefDemo() {
     <Stack align="center">
       <img
         ref={ref}
-        src="https://images.unsplash.com/photo-1545569341-9eb8b30979d9?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1650&q=80"
-        alt="From unsplash.com"
+        src="https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/images/bg-4.png"
+        alt="For demo"
         width={200}
       />
       <Button onClick={toggle} color={fullscreen ? 'red' : 'blue'}>
