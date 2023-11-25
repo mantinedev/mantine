@@ -7,6 +7,6 @@
   }
 
   @mixin dark {
-    color: var(--mantine-color-red-filled);
+    color: var(--mantine-color-red-6);
   }
 }
