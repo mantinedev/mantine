@@ -141,7 +141,7 @@
     }
 
     @mixin dark {
-      --_kbd-border-color: var(--mantine-color-dark-4);
+      --_kbd-border-color: var(--mantine-color-dark-3);
       --_kbd-color: var(--mantine-color-dark-0);
       --_kbd-bg: var(--mantine-color-dark-5);
     }
