@@ -200,6 +200,55 @@ Example of using `--mantine-z-index-modal` variable:
 }
 ```
 
+## Improved dark color scheme colors
+
+`theme.colors.dark` colors were slightly changed to improve contrast and make it easier to read text.
+You can preview new colors on [this page](/theming/colors/#default-colors). New colors values are:
+
+```scss
+--mantine-color-dark-0: #c3c6c9;
+--mantine-color-dark-1: #bbbdbf;
+--mantine-color-dark-2: #898f96;
+--mantine-color-dark-3: #656b73;
+--mantine-color-dark-4: #46484d;
+--mantine-color-dark-5: #40444a;
+--mantine-color-dark-6: #35373b;
+--mantine-color-dark-7: #2a2c2e;
+--mantine-color-dark-8: #232529;
+--mantine-color-dark-9: #27292e;
+```
+
+If you prefer old colors, change theme settings on `MantineProvider`:
+
+```tsx
+import { createTheme } from '@mantine/core';
+
+const theme = createTheme({
+  colors: {
+    dark: [
+      '#C1C2C5',
+      '#A6A7AB',
+      '#909296',
+      '#5c5f66',
+      '#373A40',
+      '#2C2E33',
+      '#25262b',
+      '#1A1B1E',
+      '#141517',
+      '#101113',
+    ],
+  },
+});
+
+function Demo() {
+  return (
+    <MantineProvider theme={theme}>
+      {/* Your app here */}
+    </MantineProvider>
+  );
+}
+```
+
 ## Documentation updates
 
 - Schema-based validation with `@mantine/form` now has a [dedicated page](/form/schema-validation). It includes more examples for basic, nested and list fields validation for each resolver.
