@@ -281,7 +281,10 @@ export const ColorInput = factory<ColorInputFactory>((_props, ref) => {
           />
         </Popover.Target>
 
-        <Popover.Dropdown onMouseDown={(event) => event.preventDefault()} p={inputProps.size}>
+        <Popover.Dropdown
+          onMouseDown={(event) => event.preventDefault()}
+          className={classes.dropdown}
+        >
           <ColorPicker
             __staticSelector="ColorInput"
             value={_value}

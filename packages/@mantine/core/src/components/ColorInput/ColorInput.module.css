@@ -15,3 +15,7 @@
   --ci-preview-size-xl: rem(36px);
   --ci-preview-size: var(--ci-preview-size-sm);
 }
+
+.dropdown {
+  padding: rem(8px);
+}
