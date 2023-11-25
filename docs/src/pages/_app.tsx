@@ -10,6 +10,7 @@ import '@mantine/tiptap/styles.css';
 import '@mantinex/demo/styles.css';
 import '@mantinex/mantine-logo/styles.css';
 import '@mantinex/mantine-header/styles.css';
+import '@mantinex/shiki/styles.css';
 import '@docs/demos/styles.css';
 
 import React from 'react';
@@ -18,6 +19,7 @@ import Head from 'next/head';
 import { MantineProvider, DirectionProvider } from '@mantine/core';
 import { useHotkeys, useLocalStorage } from '@mantine/hooks';
 import { Notifications } from '@mantine/notifications';
+import { ShikiProvider } from '@mantinex/shiki';
 import { MdxProvider } from '@/components/MdxProvider';
 import { HotKeysHandler } from '@/components/HotKeysHandler';
 import { Search } from '@/components/Search';
@@ -30,6 +32,15 @@ import '../styles/variables.css';
 import '../styles/global.css';
 
 const excludeShell = ['/', '/combobox', '/app-shell'];
+
+async function loadShiki() {
+  const { getHighlighter } = await import('shikiji');
+  const shiki = await getHighlighter({
+    langs: ['tsx', 'scss', 'html', 'bash', 'json'],
+  });
+
+  return shiki;
+}
 
 export default function App({ Component, pageProps, router }: AppProps) {
   const shouldRenderShell = !excludeShell.includes(router.pathname);
@@ -63,20 +74,22 @@ export default function App({ Component, pageProps, router }: AppProps) {
       <FontsStyle />
       <DirectionProvider initialDirection="ltr" detectDirection={false}>
         <MantineProvider theme={theme} defaultColorScheme="light">
-          <Search />
-          <Notifications />
-          <ModalsProviderDemo>
-            <MdxProvider>
-              <HotKeysHandler />
-              {shouldRenderShell ? (
-                <Shell withNavbar={navbarOpened}>
+          <ShikiProvider loadShiki={loadShiki}>
+            <Search />
+            <Notifications />
+            <ModalsProviderDemo>
+              <MdxProvider>
+                <HotKeysHandler />
+                {shouldRenderShell ? (
+                  <Shell withNavbar={navbarOpened}>
+                    <Component {...pageProps} />
+                  </Shell>
+                ) : (
                   <Component {...pageProps} />
-                </Shell>
-              ) : (
-                <Component {...pageProps} />
-              )}
-            </MdxProvider>
-          </ModalsProviderDemo>
+                )}
+              </MdxProvider>
+            </ModalsProviderDemo>
+          </ShikiProvider>
         </MantineProvider>
       </DirectionProvider>
     </>

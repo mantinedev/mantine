@@ -2,7 +2,7 @@ import React from 'react';
 import Link from 'next/link';
 import { IconArrowRight } from '@tabler/icons-react';
 import { Text, SimpleGrid, Slider, Button, rem } from '@mantine/core';
-import { CodeHighlightTabs, CodeHighlight } from '@mantine/code-highlight';
+import { CodeHighlightTabs, CodeHighlight } from '@mantinex/shiki';
 import { getCodeFileIcon } from '@mantinex/dev-icons';
 import { SliderStylesApi } from '@docs/styles-api';
 import { MdxDataTable } from '../../MdxProvider/MdxDataTable/MdxDataTable';

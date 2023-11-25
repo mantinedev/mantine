@@ -42,7 +42,8 @@
     "dayjs": "*",
     "embla-carousel-react": "*",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "shikiji": "^0.7.4"
   },
   "devDependencies": {
     "@docs/styles-api": "workspace:*",
@@ -57,6 +58,8 @@
     "@mantine/nprogress": "workspace:*",
     "@mantine/spotlight": "workspace:*",
     "@mantine/tiptap": "workspace:*",
-    "@mantinex/demo": "workspace:*"
+    "@mantinex/demo": "workspace:*",
+    "@mantinex/dev-icons": "workspace:*",
+    "@mantinex/shiki": "workspace:*"
   }
 }

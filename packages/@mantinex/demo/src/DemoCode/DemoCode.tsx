@@ -1,5 +1,5 @@
 import React from 'react';
-import { CodeHighlightTabs, CodeHighlightTabsCode } from '@mantine/code-highlight';
+import { CodeHighlightTabs, CodeHighlightTabsCode } from '@mantinex/shiki';
 import { getCodeFileIcon } from '@mantinex/dev-icons';
 import classes from './DemoCode.module.css';
 

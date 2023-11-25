@@ -1,7 +1,7 @@
 {
-  "name": "@mantinex/demo",
-  "version": "1.0.2",
-  "description": "Demo base components used on *.mantine.dev websites",
+  "name": "@mantinex/shiki",
+  "version": "1.0.0",
+  "description": "Code highlighing with shiki",
   "homepage": "https://mantine.dev/",
   "license": "MIT",
   "author": "Vitaly Rtishchev <rtivital@gmail.com>",
@@ -32,13 +32,11 @@
   "repository": {
     "url": "https://github.com/mantinedev/mantine.git",
     "type": "git",
-    "directory": "packages/@mantinex/demo"
+    "directory": "packages/@mantinex/shiki"
   },
   "peerDependencies": {
     "@mantine/core": ">=7.0.0",
     "@mantine/hooks": ">=7.0.0",
-    "@mantinex/dev-icons": ">=1.0.0",
-    "@mantinex/shiki": ">=1.0.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "shikiji": "^0.7.4"
@@ -46,7 +44,6 @@
   "devDependencies": {
     "@mantine-tests/core": "workspace:*",
     "@mantine/core": "workspace:*",
-    "@mantine/hooks": "workspace:*",
-    "@mantinex/shiki": "workspace:*"
+    "@mantine/hooks": "workspace:*"
   }
 }

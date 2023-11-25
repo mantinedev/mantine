@@ -1,6 +1,6 @@
 import React from 'react';
 import cx from 'clsx';
-import { CodeHighlight, CodeHighlightProps } from '@mantine/code-highlight';
+import { CodeHighlight, CodeHighlightProps } from '@mantinex/shiki';
 import classes from './MdxPre.module.css';
 
 interface PreProps {

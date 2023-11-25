@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useRouter } from 'next/router';
-import { CodeHighlightTabs } from '@mantine/code-highlight';
+import { CodeHighlightTabs } from '@mantinex/shiki';
 import { getCodeFileIcon } from '@mantinex/dev-icons';
 import { PageHead } from '@/components/PageHead';
 import { ExamplesDrawer } from './ExamplesDrawer/ExamplesDrawer';

@@ -1,5 +1,5 @@
 import React from 'react';
-import { CodeHighlightTabsCode } from '@mantine/code-highlight';
+import { CodeHighlightTabsCode } from '@mantinex/shiki';
 import { CodeDemo } from './CodeDemo';
 
 export default { title: 'DS/CodeDemo' };

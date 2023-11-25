@@ -1,6 +1,6 @@
 import React from 'react';
 import { Button, Image, SimpleGrid, Text, useMantineColorScheme, Group } from '@mantine/core';
-import { CodeHighlight } from '@mantine/code-highlight';
+import { CodeHighlight } from '@mantinex/shiki';
 import { IconMoonStars, IconSun } from '@tabler/icons-react';
 import { PageSection } from '../PageSection/PageSection';
 import classes from './DarkTheme.module.css';

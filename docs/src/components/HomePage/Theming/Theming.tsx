@@ -1,6 +1,6 @@
 import React from 'react';
 import { Group, Button, Badge } from '@mantine/core';
-import { CodeHighlight } from '@mantine/code-highlight';
+import { CodeHighlight } from '@mantinex/shiki';
 import { PageSection } from '../PageSection/PageSection';
 import classes from './Theming.module.css';
 
