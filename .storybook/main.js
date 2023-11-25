@@ -4,13 +4,14 @@ const fg = require('fast-glob');
 const argv = require('yargs').argv;
 
 const getPath = (storyPath) => path.resolve(process.cwd(), storyPath).replace(/\\/g, '/');
+const getGlobPaths = (paths) => paths.reduce((acc, path) => [...acc, ...fg.sync(path)], []);
 
 function getStoryPaths(fileName = '*') {
-  return [
+  return getGlobPaths([
     getPath(`packages/@mantine/*/src/**/${fileName}.story.@(ts|tsx)`),
     getPath(`packages/@mantinex/*/src/**/${fileName}.story.@(ts|tsx)`),
     getPath(`packages/@docs/*/src/**/${fileName}.story.@(ts|tsx)`),
-  ];
+  ]);
 }
 
 const storiesPath = !argv._[1]
