@@ -80,7 +80,7 @@
 }
 
 .controlIcon {
-  color: var(--mantine-color-blue-6);
+  color: light-dark(var(--mantine-color-blue-6), var(--mantine-color-blue-5));
   margin-right: var(--mantine-spacing-md);
 
   @mixin rtl {

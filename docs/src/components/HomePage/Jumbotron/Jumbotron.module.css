@@ -56,7 +56,7 @@ $jumbotron-breakpoint: em(960px);
   }
 
   &[data-github] {
-    background-color: var(--mantine-color-dark-6);
+    background-color: var(--mantine-color-black);
     color: var(--mantine-color-white);
 
     & :global(.mantine-Button-section) {
@@ -69,7 +69,7 @@ $jumbotron-breakpoint: em(960px);
     }
 
     @mixin hover {
-      background-color: var(--mantine-color-dark-5);
+      background-color: var(--mantine-color-dark-6);
     }
   }
 }

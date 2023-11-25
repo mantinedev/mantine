@@ -12,7 +12,9 @@
   border-radius: var(--mantine-radius-md);
   padding: var(--mantine-spacing-md);
   text-decoration: none;
-  transition: transform 200ms ease, box-shadow 200ms ease;
+  transition:
+    transform 200ms ease,
+    box-shadow 200ms ease;
 
   @mixin hover {
     transform: scale(1.03);
@@ -29,7 +31,7 @@
 }
 
 .github {
-  background-color: var(--mantine-color-dark-9);
+  background-color: var(--mantine-color-black);
 }
 
 .icon {
