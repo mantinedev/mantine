@@ -37,6 +37,7 @@ const cssCode = `
   &[data-variant='primary'] {
     background: linear-gradient(45deg, #4b6cb7 10%, #253b67 90%);
     color: var(--mantine-color-white);
+    border-width: 0;
   }
 }
 `;
