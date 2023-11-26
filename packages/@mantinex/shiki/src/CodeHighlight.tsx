@@ -107,7 +107,7 @@ export const CodeHighlight = factory<CodeHighlightFactory>((_props, ref) => {
       <ScrollArea type="hover" dir="ltr" offsetScrollbars={false}>
         {!highlighted.highlighted ? (
           <pre {...getStyles('pre')}>
-            <code {...getStyles('code')}>{code}</code>
+            <code {...getStyles('code')}>{code.trim()}</code>
           </pre>
         ) : (
           <div dangerouslySetInnerHTML={{ __html: highlighted.code }} />
