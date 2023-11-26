@@ -15,9 +15,9 @@ function prepareHtmlCode(code: string) {
     .replaceAll('tabindex="0"', '')
     .replaceAll('class="shiki "', `class="${classes.pre}"`)
     .replace('<code>', `<code class="${classes.code}">`)
-    .replaceAll('class="shiki Monokai Light Theme"', `class="${classes.pre}"`)
+    .replaceAll('class="shiki OneLight"', `class="${classes.pre}"`)
     .replaceAll('style="background-color:#1e1e1e;color:#C5C8C6"', '')
-    .replaceAll('style="background-color:#fafafa;color:#49483e"', '');
+    .replaceAll('style="background-color:#FAFAFA;color:#383A42"', '');
 }
 
 const ShikiContext = createContext<HighlightCode | null>(null);
