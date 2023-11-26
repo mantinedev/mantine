@@ -1,3 +1,4 @@
+import { ShikiLanguage } from '@mantinex/shiki';
 import { BasicAppShell } from './BasicAppShell/BasicAppShell';
 import { ResponsiveSizes } from './ResponsiveSizes/ResponsiveSizes';
 import { MobileNavbar } from './MobileNavbar/MobileNavbar';
@@ -24,52 +25,52 @@ interface AppShellExampleComponent {
   component: () => JSX.Element;
   code: {
     fileName: string;
-    language: string;
+    language: ShikiLanguage;
     code: string;
   }[];
 }
 
-export const APP_SHELL_EXAMPLES_COMPONENTS = {
+export const APP_SHELL_EXAMPLES_COMPONENTS: Record<string, AppShellExampleComponent> = {
   BasicAppShell: {
     component: BasicAppShell,
-    code: BasicAppShellCode,
+    code: BasicAppShellCode as AppShellExampleComponent['code'],
   },
   ResponsiveSizes: {
     component: ResponsiveSizes,
-    code: ResponsiveSizesCode,
+    code: ResponsiveSizesCode as AppShellExampleComponent['code'],
   },
   MobileNavbar: {
     component: MobileNavbar,
-    code: MobileNavbarCode,
+    code: MobileNavbarCode as AppShellExampleComponent['code'],
   },
   FullLayout: {
     component: FullLayout,
-    code: FullLayoutCode,
+    code: FullLayoutCode as AppShellExampleComponent['code'],
   },
   AltLayout: {
     component: AltLayout,
-    code: AltLayoutCode,
+    code: AltLayoutCode as AppShellExampleComponent['code'],
   },
   CollapseDesktop: {
     component: CollapseDesktop,
-    code: CollapseDesktopCode,
+    code: CollapseDesktopCode as AppShellExampleComponent['code'],
   },
   NoTransitions: {
     component: NoTransitions,
-    code: NoTransitionsCode,
+    code: NoTransitionsCode as AppShellExampleComponent['code'],
   },
   Disabled: {
     component: Disabled,
-    code: DisabledCode,
+    code: DisabledCode as AppShellExampleComponent['code'],
   },
   Headroom: {
     component: Headroom,
-    code: HeadroomCode,
+    code: HeadroomCode as AppShellExampleComponent['code'],
   },
   NavbarSection: {
     component: NavbarSection,
-    code: NavbarSectionCode,
+    code: NavbarSectionCode as AppShellExampleComponent['code'],
   },
-} satisfies Record<string, AppShellExampleComponent>;
+};
 
 export type AppShellExampleId = keyof typeof APP_SHELL_EXAMPLES_COMPONENTS;

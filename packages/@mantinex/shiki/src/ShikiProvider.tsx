@@ -2,11 +2,12 @@ import React, { createContext, useContext, useEffect, useState, useCallback } fr
 import type { HighlighterGeneric } from 'shikiji';
 import { useComputedColorScheme } from '@mantine/core';
 import { dark, light } from './themes';
+import { ShikiLanguage } from './types';
 import classes from './Shiki.module.css';
 
 type HighlightCode = (
   code: string,
-  language: 'tsx' | 'scss' | 'html'
+  language: ShikiLanguage
 ) => { code: string; highlighted: boolean };
 
 function prepareHtmlCode(code: string) {

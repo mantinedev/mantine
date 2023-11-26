@@ -55,7 +55,7 @@ export const dropdownOffset: MantineDemo = {
   component: Demo,
   code: [
     { fileName: 'Demo.tsx', code, language: 'tsx' },
-    { fileName: 'Demo.module.css', code: cssCode, language: 'css' },
+    { fileName: 'Demo.module.css', code: cssCode, language: 'scss' },
   ],
   maxWidth: 340,
   centered: true,

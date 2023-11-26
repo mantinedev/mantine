@@ -67,6 +67,6 @@ export const dataSize: MantineDemo = {
   centered: true,
   code: [
     { language: 'tsx', code, fileName: 'Demo.tsx' },
-    { language: 'css', code: cssCode, fileName: 'Demo.module.css' },
+    { language: 'scss', code: cssCode, fileName: 'Demo.module.css' },
   ],
 };

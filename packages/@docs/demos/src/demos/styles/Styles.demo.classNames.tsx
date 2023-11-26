@@ -94,6 +94,6 @@ export const classNames: MantineDemo = {
   centered: true,
   code: [
     { fileName: 'Demo.tsx', language: 'tsx', code },
-    { fileName: 'Demo.module.css', language: 'css', code: cssCode },
+    { fileName: 'Demo.module.css', language: 'scss', code: cssCode },
   ],
 };

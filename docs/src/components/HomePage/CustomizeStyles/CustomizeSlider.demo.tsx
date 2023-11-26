@@ -62,6 +62,6 @@ const cssCode = `
 `;
 
 export const code = [
-  { fileName: 'Demo.module.css', code: cssCode, language: 'scss' },
-  { fileName: 'Demo.tsx', code: tsxCode, language: 'tsx' },
+  { fileName: 'Demo.module.css', code: cssCode, language: 'scss' as const },
+  { fileName: 'Demo.tsx', code: tsxCode, language: 'tsx' as const },
 ];

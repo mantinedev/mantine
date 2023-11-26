@@ -13,6 +13,7 @@ import {
   ScrollArea,
   Factory,
 } from '@mantine/core';
+import { ShikiLanguage } from './types';
 import { useShiki } from './ShikiProvider';
 import { CopyIcon } from './CopyIcon';
 import classes from './Shiki.module.css';
@@ -27,7 +28,7 @@ export interface CodeHighlightProps
   code: string;
 
   /** Code language, `'tsx'` by default */
-  language?: 'tsx' | 'scss' | 'html';
+  language?: ShikiLanguage;
 
   /** Determines whether copy button should be displayed, `true` by default */
   withCopyButton?: boolean;

@@ -201,10 +201,10 @@ export function Tabs() {
       <CodeHighlightTabs
         code={[
           { code: tsxCode, language: 'tsx', icon: <TsIcon />, fileName: 'Component.tsx' },
-          { code: cssCode, language: 'css', icon: <CSSIcon />, fileName: 'Component.module.css' },
+          { code: cssCode, language: 'scss', icon: <CSSIcon />, fileName: 'Component.module.css' },
           {
             code: cssCode,
-            language: 'css',
+            language: 'scss',
             icon: <CSSIcon />,
             fileName: 'Long-file-name-that-will-break-to-another-line.css',
           },
@@ -224,10 +224,10 @@ export function TabsUnstyled() {
         unstyled
         code={[
           { code: tsxCode, language: 'tsx', icon: <TsIcon />, fileName: 'Component.tsx' },
-          { code: cssCode, language: 'css', icon: <CSSIcon />, fileName: 'Component.module.css' },
+          { code: cssCode, language: 'scss', icon: <CSSIcon />, fileName: 'Component.module.css' },
           {
             code: cssCode,
-            language: 'css',
+            language: 'scss',
             icon: <CSSIcon />,
             fileName: 'Long-file-name-that-will-break-to-another-line.css',
           },

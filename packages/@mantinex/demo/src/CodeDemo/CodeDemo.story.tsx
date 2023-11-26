@@ -62,7 +62,7 @@ const cssCode = `.code {
 
 const code: CodeHighlightTabsCode[] = [
   { language: 'tsx', code: reactCode, fileName: 'Demo.tsx' },
-  { language: 'css', code: cssCode, fileName: 'Demo.module.css' },
+  { language: 'scss', code: cssCode, fileName: 'Demo.module.css' },
 ];
 
 function DemoComponent() {

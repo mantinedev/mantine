@@ -70,7 +70,7 @@ export function StylesApiDemo({
 
         <DemoCode
           code={[
-            { fileName: 'Demo.module.css', language: 'css', code: getCss(hovered) },
+            { fileName: 'Demo.module.css', language: 'scss', code: getCss(hovered) },
             {
               fileName: 'Demo.tsx',
               language: 'tsx',

@@ -7,7 +7,7 @@ export function getCodeFileIcon(fileName: string) {
     return <TypeScriptIcon size={18} />;
   }
 
-  if (fileName.endsWith('.css')) {
+  if (fileName.endsWith('.css') || fileName.endsWith('.scss')) {
     return <CssIcon size={18} />;
   }
 

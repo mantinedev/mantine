@@ -1,3 +1,4 @@
+import { ShikiLanguage } from '@mantinex/shiki';
 import { BasicSelect } from './BasicSelect/BasicSelect';
 import { BasicAutocomplete } from './BasicAutocomplete/BasicAutocomplete';
 import { SearchableSelect } from './SearchableSelect/SearchableSelect';
@@ -90,226 +91,226 @@ interface ComboboxExampleComponent {
   component: () => JSX.Element;
   code: {
     fileName: string;
-    language: string;
+    language: ShikiLanguage;
     code: string;
   }[];
 }
 
-export const COMBOBOX_EXAMPLES_COMPONENTS = {
+export const COMBOBOX_EXAMPLES_COMPONENTS: Record<string, ComboboxExampleComponent> = {
   BasicSelect: {
     component: BasicSelect,
-    code: BasicSelectCode,
+    code: BasicSelectCode as ComboboxExampleComponent['code'],
   },
 
   SearchableSelect: {
     component: SearchableSelect,
-    code: SearchableSelectCode,
+    code: SearchableSelectCode as ComboboxExampleComponent['code'],
   },
 
   BasicAutocomplete: {
     component: BasicAutocomplete,
-    code: BasicAutocompleteCode,
+    code: BasicAutocompleteCode as ComboboxExampleComponent['code'],
   },
 
   AutocompleteLimit: {
     component: AutocompleteLimit,
-    code: AutocompleteLimitCode,
+    code: AutocompleteLimitCode as ComboboxExampleComponent['code'],
   },
 
   AsyncAutocomplete: {
     component: AsyncAutocomplete,
-    code: AsyncAutocompleteCode,
+    code: AsyncAutocompleteCode as ComboboxExampleComponent['code'],
   },
 
   AutocompleteHighlight: {
     component: AutocompleteHighlight,
-    code: AutocompleteHighlightCode,
+    code: AutocompleteHighlightCode as ComboboxExampleComponent['code'],
   },
 
   SelectActive: {
     component: SelectActive,
-    code: SelectActiveCode,
+    code: SelectActiveCode as ComboboxExampleComponent['code'],
   },
 
   SelectOptionComponent: {
     component: SelectOptionComponent,
-    code: SelectOptionComponentCode,
+    code: SelectOptionComponentCode as ComboboxExampleComponent['code'],
   },
 
   SelectLimit: {
     component: SelectLimit,
-    code: SelectLimitCode,
+    code: SelectLimitCode as ComboboxExampleComponent['code'],
   },
 
   SelectAsync: {
     component: SelectAsync,
-    code: SelectAsyncCode,
+    code: SelectAsyncCode as ComboboxExampleComponent['code'],
   },
 
   AutocompleteSelectFirstOption: {
     component: AutocompleteSelectFirstOption,
-    code: AutocompleteSelectFirstOptionCode,
+    code: AutocompleteSelectFirstOptionCode as ComboboxExampleComponent['code'],
   },
 
   SelectClearable: {
     component: SelectClearable,
-    code: SelectClearableCode,
+    code: SelectClearableCode as ComboboxExampleComponent['code'],
   },
 
   DropdownScroll: {
     component: DropdownScroll,
-    code: DropdownScrollCode,
+    code: DropdownScrollCode as ComboboxExampleComponent['code'],
   },
 
   DropdownScrollArea: {
     component: DropdownScrollArea,
-    code: DropdownScrollAreaCode,
+    code: DropdownScrollAreaCode as ComboboxExampleComponent['code'],
   },
 
   AutocompleteDynamic: {
     component: AutocompleteDynamic,
-    code: AutocompleteDynamicCode,
+    code: AutocompleteDynamicCode as ComboboxExampleComponent['code'],
   },
 
   DropdownAnimation: {
     component: DropdownAnimation,
-    code: DropdownAnimationCode,
+    code: DropdownAnimationCode as ComboboxExampleComponent['code'],
   },
 
   DropdownPositionStyles: {
     component: DropdownPositionStyles,
-    code: DropdownPositionStylesCode,
+    code: DropdownPositionStylesCode as ComboboxExampleComponent['code'],
   },
 
   SelectDropdownSearch: {
     component: SelectDropdownSearch,
-    code: SelectDropdownSearchCode,
+    code: SelectDropdownSearchCode as ComboboxExampleComponent['code'],
   },
 
   BasicButton: {
     component: BasicButton,
-    code: BasicButtonCode,
+    code: BasicButtonCode as ComboboxExampleComponent['code'],
   },
 
   ButtonSearch: {
     component: ButtonSearch,
-    code: ButtonSearchCode,
+    code: ButtonSearchCode as ComboboxExampleComponent['code'],
   },
 
   DropdownOptionsAnimation: {
     component: DropdownOptionsAnimation,
-    code: DropdownOptionsAnimationCode,
+    code: DropdownOptionsAnimationCode as ComboboxExampleComponent['code'],
   },
 
   SelectOptionOnHover: {
     component: SelectOptionOnHover,
-    code: SelectOptionOnHoverCode,
+    code: SelectOptionOnHoverCode as ComboboxExampleComponent['code'],
   },
 
   SelectedStyles: {
     component: SelectedStyles,
-    code: SelectedStylesCode,
+    code: SelectedStylesCode as ComboboxExampleComponent['code'],
   },
 
   DropdownFooter: {
     component: DropdownFooter,
-    code: DropdownFooterCode,
+    code: DropdownFooterCode as ComboboxExampleComponent['code'],
   },
 
   DropdownHeader: {
     component: DropdownHeader,
-    code: DropdownHeaderCode,
+    code: DropdownHeaderCode as ComboboxExampleComponent['code'],
   },
 
   SelectedAnimation: {
     component: SelectedAnimation,
-    code: SelectedAnimationCode,
+    code: SelectedAnimationCode as ComboboxExampleComponent['code'],
   },
 
   AutocompleteClearable: {
     component: AutocompleteClearable,
-    code: AutocompleteClearableCode,
+    code: AutocompleteClearableCode as ComboboxExampleComponent['code'],
   },
 
   BasicMultiSelect: {
     component: BasicMultiSelect,
-    code: BasicMultiSelectCode,
+    code: BasicMultiSelectCode as ComboboxExampleComponent['code'],
   },
 
   SearchableMultiSelect: {
     component: SearchableMultiSelect,
-    code: SearchableMultiSelectCode,
+    code: SearchableMultiSelectCode as ComboboxExampleComponent['code'],
   },
 
   DropdownSmoothScroll: {
     component: DropdownSmoothScroll,
-    code: DropdownSmoothScrollCode,
+    code: DropdownSmoothScrollCode as ComboboxExampleComponent['code'],
   },
 
   ButtonMultiSelect: {
     component: ButtonMultiSelect,
-    code: ButtonMultiSelectCode,
+    code: ButtonMultiSelectCode as ComboboxExampleComponent['code'],
   },
 
   MaxSelectedItems: {
     component: MaxSelectedItems,
-    code: MaxSelectedItemsCode,
+    code: MaxSelectedItemsCode as ComboboxExampleComponent['code'],
   },
 
   MultiSelectCheckbox: {
     component: MultiSelectCheckbox,
-    code: MultiSelectCheckboxCode,
+    code: MultiSelectCheckboxCode as ComboboxExampleComponent['code'],
   },
 
   ActiveOptionsFilter: {
     component: ActiveOptionsFilter,
-    code: ActiveOptionsFilterCode,
+    code: ActiveOptionsFilterCode as ComboboxExampleComponent['code'],
   },
 
   MaxDisplayedItems: {
     component: MaxDisplayedItems,
-    code: MaxDisplayedItemsCode,
+    code: MaxDisplayedItemsCode as ComboboxExampleComponent['code'],
   },
 
   MultiSelectValueRenderer: {
     component: MultiSelectValueRenderer,
-    code: MultiSelectValueRendererCode,
+    code: MultiSelectValueRendererCode as ComboboxExampleComponent['code'],
   },
 
   SelectGroups: {
     component: SelectGroups,
-    code: SelectGroupsCode,
+    code: SelectGroupsCode as ComboboxExampleComponent['code'],
   },
 
   SelectGroupsSearchable: {
     component: SelectGroupsSearchable,
-    code: SelectGroupsSearchableCode,
+    code: SelectGroupsSearchableCode as ComboboxExampleComponent['code'],
   },
 
   SelectGroupsStyles: {
     component: SelectGroupsStyles,
-    code: SelectGroupsStylesCode,
+    code: SelectGroupsStylesCode as ComboboxExampleComponent['code'],
   },
 
   SelectCreatable: {
     component: SelectCreatable,
-    code: SelectCreatableCode,
+    code: SelectCreatableCode as ComboboxExampleComponent['code'],
   },
 
   MultiSelectCreatable: {
     component: MultiSelectCreatable,
-    code: MultiSelectCreatableCode,
+    code: MultiSelectCreatableCode as ComboboxExampleComponent['code'],
   },
 
   SelectList: {
     component: SelectList,
-    code: SelectListCode,
+    code: SelectListCode as ComboboxExampleComponent['code'],
   },
 
   TransferList: {
     component: TransferList,
-    code: TransferListCode,
+    code: TransferListCode as ComboboxExampleComponent['code'],
   },
-} satisfies Record<string, ComboboxExampleComponent>;
+};
 
 export type ComboboxExampleId = keyof typeof COMBOBOX_EXAMPLES_COMPONENTS;

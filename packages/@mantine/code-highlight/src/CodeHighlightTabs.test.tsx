@@ -8,7 +8,7 @@ import {
 const defaultProps: CodeHighlightTabsProps = {
   code: [
     { fileName: 'Demo.tsx', language: 'tsx', code: 'test-tsx' },
-    { fileName: 'Demo.module.css', language: 'css', code: 'test-css' },
+    { fileName: 'Demo.module.css', language: 'scss', code: 'test-css' },
   ],
 };
 

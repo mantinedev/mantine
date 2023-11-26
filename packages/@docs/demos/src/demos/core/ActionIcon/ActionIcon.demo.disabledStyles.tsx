@@ -41,7 +41,7 @@ export const disabledStyles: MantineDemo = {
   component: Demo,
   centered: true,
   code: [
-    { fileName: 'Demo.module.css', code: cssCode, language: 'css' },
+    { fileName: 'Demo.module.css', code: cssCode, language: 'scss' },
     { fileName: 'Demo.tsx', code, language: 'tsx' },
   ],
 };

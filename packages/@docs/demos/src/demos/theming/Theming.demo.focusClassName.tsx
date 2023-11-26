@@ -49,6 +49,6 @@ export const focusClassName: MantineDemo = {
   centered: true,
   code: [
     { fileName: 'Demo.tsx', language: 'tsx', code: tsxCode },
-    { fileName: 'focus.module.css', language: 'css', code: cssCode },
+    { fileName: 'focus.module.css', language: 'scss', code: cssCode },
   ],
 };

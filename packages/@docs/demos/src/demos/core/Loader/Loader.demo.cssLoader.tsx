@@ -53,6 +53,6 @@ export const cssLoader: MantineDemo = {
   code: [
     { fileName: 'Demo.tsx', language: 'tsx', code },
     { fileName: 'CssLoader.tsx', language: 'tsx', code: cssLoaderTsxCode },
-    { fileName: 'CssLoader.module.css', language: 'css', code: cssLoaderModuleCssCode },
+    { fileName: 'CssLoader.module.css', language: 'scss', code: cssLoaderModuleCssCode },
   ],
 };

@@ -21,6 +21,7 @@ import { useShiki } from './ShikiProvider';
 import { CopyIcon } from './CopyIcon';
 import { FileIcon } from './FileIcon';
 import { ExpandIcon } from './ExpandIcon';
+import { ShikiLanguage } from './types';
 import classes from './Shiki.module.css';
 
 export type CodeHighlightTabsStylesNames =
@@ -41,7 +42,7 @@ export type CodeHighlightTabsCssVariables = {
 };
 
 export interface CodeHighlightTabsCode {
-  language?: 'scss' | 'tsx' | 'html';
+  language?: ShikiLanguage;
   code: string;
   fileName?: string;
   icon?: React.ReactNode;

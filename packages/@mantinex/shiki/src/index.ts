@@ -13,3 +13,4 @@ export type {
   CodeHighlightProps,
   CodeHighlightStylesNames,
 } from './CodeHighlight';
+export type { ShikiLanguage } from './types';
