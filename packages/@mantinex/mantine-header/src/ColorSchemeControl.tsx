@@ -13,6 +13,7 @@ export function ColorSchemeControl() {
     <HeaderControl
       onClick={() => setColorScheme(computedColorScheme === 'light' ? 'dark' : 'light')}
       tooltip={`${computedColorScheme === 'dark' ? 'Light' : 'Dark'} mode`}
+      aria-label="Toggle color scheme"
     >
       <IconSun className={cx(classes.icon, classes.light)} stroke={1.5} />
       <IconMoon className={cx(classes.icon, classes.dark)} stroke={1.5} />
