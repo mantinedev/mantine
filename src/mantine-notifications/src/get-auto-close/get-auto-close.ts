@@ -1,14 +1,18 @@
+import { NotificationData } from '../notifications.store';
+
 export function getAutoClose(
-  autoClose: boolean | number | undefined,
-  notificationAutoClose: boolean | number | undefined
+  autoClose: number | false | ((data: NotificationData) => number | false) | undefined,
+  notificationData: NotificationData
 ) {
-  if (typeof notificationAutoClose === 'number') {
-    return notificationAutoClose;
+  const _autoClose = notificationData.autoClose ?? autoClose;
+
+  if (typeof _autoClose === 'number') {
+    return _autoClose;
   }
 
-  if (notificationAutoClose === false || autoClose === false) {
+  if (_autoClose === false) {
     return false;
   }
 
-  return autoClose;
+  return _autoClose?.(notificationData);
 }

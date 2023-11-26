@@ -190,6 +190,21 @@ function Demo() {
 }
 ```
 
+Or globally customize the duration based on the notification data
+
+```tsx
+import { Notifications, NotificationData, DEFAULT_AUTO_CLOSE_DURATION_MS } from '@mantine/notifications';
+
+// All notifications will be closed automatically in 4000ms
+function Demo() {
+  return <Notifications autoClose={(data: NotificationData) => {
+    if (data.color === 'red') return false;
+
+    return DEFAULT_AUTO_CLOSE_DURATION_MS;
+  }} />;
+}
+```
+
 Or per notification in `notifications.show`/`notifications.update` functions:
 
 ```tsx

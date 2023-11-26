@@ -12,7 +12,7 @@ export interface NotificationData extends Omit<NotificationProps, 'onClose'> {
   /** Determines whether notification should be closed automatically,
    *  number is auto close timeout in ms, overrides `autoClose` from `Notifications`
    * */
-  autoClose?: boolean | number;
+  autoClose?: number | false | ((data: NotificationData) => number | false);
 
   /** Called when notification closes */
   onClose?: (props: NotificationData) => void;

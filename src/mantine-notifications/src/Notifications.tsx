@@ -27,6 +27,7 @@ import {
   notificationsStore,
   hideNotification,
   notifications,
+  NotificationData,
 } from './notifications.store';
 import { NotificationContainer } from './NotificationContainer';
 import { getNotificationStateStyles } from './get-notification-state-styles';
@@ -59,8 +60,8 @@ export interface NotificationsProps
     | 'bottom-right'
     | 'bottom-center';
 
-  /** Auto close timeout for all notifications in ms, `false` to disable auto close, can be overwritten for individual notifications in `notifications.show` function, `4000` by defualt */
-  autoClose?: number | false;
+  /** Auto close timeout for all notifications in ms, `false` to disable auto close, can be overwritten for individual notifications in `notifications.show` function, `4000` by defualt, or a function receiving the notification data to customize the auto close ruleset */
+  autoClose?: number | false | ((data: NotificationData) => number | false);
 
   /** Notification transition duration in ms, `250` by default */
   transitionDuration?: number;
@@ -102,9 +103,11 @@ export type NotificationsFactory = Factory<{
   };
 }>;
 
+export const DEFAULT_AUTO_CLOSE_DURATION_MS = 4000;
+
 const defaultProps: Partial<NotificationsProps> = {
   position: 'bottom-right',
-  autoClose: 4000,
+  autoClose: DEFAULT_AUTO_CLOSE_DURATION_MS,
   transitionDuration: 250,
   containerWidth: 440,
   notificationMaxHeight: 200,

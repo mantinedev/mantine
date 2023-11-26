@@ -6,13 +6,13 @@ import { getAutoClose } from './get-auto-close/get-auto-close';
 interface NotificationContainerProps extends NotificationProps {
   data: NotificationData;
   onHide: (id: string) => void;
-  autoClose: number | false;
+  autoClose: number | false | ((data: NotificationData) => number | false);
 }
 
 export const NotificationContainer = forwardRef<HTMLDivElement, NotificationContainerProps>(
   ({ data, onHide, autoClose, ...others }, ref) => {
     const { autoClose: _autoClose, message, ...notificationProps } = data;
-    const autoCloseDuration = getAutoClose(autoClose, data.autoClose);
+    const autoCloseDuration = getAutoClose(autoClose, data);
     const autoCloseTimeout = useRef<number>();
 
     const cancelAutoClose = () => window.clearTimeout(autoCloseTimeout.current);
