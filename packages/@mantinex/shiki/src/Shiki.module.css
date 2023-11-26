@@ -27,6 +27,15 @@
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
+  background: var(--_background);
+
+  @mixin light {
+    --_background: var(--mantine-color-gray-0);
+  }
+
+  @mixin dark {
+    --_background: var(--mantine-color-dark-8);
+  }
 }
 
 .controls {
