@@ -7,3 +7,4 @@ export { stylesApi } from './Menu.demo.stylesApi';
 export { positionConfigurator } from './Menu.demo.positionConfigurator';
 export { disabled } from './Menu.demo.disabled';
 export { customControl } from './Menu.demo.customControl';
+export { navigation } from './Menu.demo.navigation';

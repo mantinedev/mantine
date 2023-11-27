@@ -47,3 +47,8 @@ export const DemoCustomControl = {
   name: '⭐ Demo: customControl',
   render: renderDemo(demos.customControl),
 };
+
+export const DemoNavigation = {
+  name: '⭐ Demo: navigation',
+  render: renderDemo(demos.navigation),
+};
