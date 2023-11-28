@@ -1,7 +1,9 @@
 .codeHighlight {
-  background-color: light-dark(var(--mantine-color-gray-0), var(--mantine-color-dark-7));
-  border-radius: var(--mantine-radius-md);
-  overflow: hidden;
+  & pre,
+  & :global(.mantine-CodeHighlightTabs-header) {
+    background-color: light-dark(var(--mantine-color-gray-0), var(--mantine-color-dark-7));
+    overflow: hidden;
+  }
 }
 
 .control {
