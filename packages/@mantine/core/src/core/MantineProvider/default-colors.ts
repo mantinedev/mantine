@@ -11,7 +11,7 @@ export const DEFAULT_COLORS: MantineThemeColors = {
     '#35373b',
     '#2a2c2e',
     '#232529',
-    '#27292e',
+    '#1b1d21',
   ],
 
   gray: [
