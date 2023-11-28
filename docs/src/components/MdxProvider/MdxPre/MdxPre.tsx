@@ -9,7 +9,22 @@ interface PreProps {
 
 function getLanguage(children: any) {
   const matches = (children.props.className || '').match(/language-(?<lang>.*)/);
-  return matches && matches.groups && matches.groups.lang ? matches.groups.lang : 'tsx';
+  const matchedLanguage =
+    matches && matches.groups && matches.groups.lang ? matches.groups.lang : 'tsx';
+
+  if (['js', 'jsx', 'ts', 'tsx'].includes(matchedLanguage)) {
+    return 'tsx';
+  }
+
+  if (['css', 'scss'].includes(matchedLanguage)) {
+    return 'scss';
+  }
+
+  if (['html', 'bash', 'json'].includes(matchedLanguage)) {
+    return matchedLanguage;
+  }
+
+  throw new Error(`Unknown language: ${matchedLanguage}`);
 }
 
 function getCode(children: any) {
