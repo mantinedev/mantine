@@ -1,6 +1,17 @@
 import { Frontmatter } from '@/types';
 
 export const MDX_CORE_DATA: Record<string, Frontmatter> = {
+  Flip: {
+    title: 'Flip',
+    package: '@mantine/core',
+    slug: '/core/flip',
+    props: ['Flip'],
+    styles: ['Flip'],
+    description: 'Flippable component that can be used to create cards, flip boxes and more',
+    import: "import { Flip } from '@mantine/core';",
+    source: 'mantine-core/src/components/Flip/Flip.tsx',
+    docs: 'core/flip.mdx',
+  },
   Box: {
     title: 'Box',
     package: '@mantine/core',

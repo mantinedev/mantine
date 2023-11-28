@@ -1,0 +1,46 @@
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+import { FlipDemos } from '@docs/demos';
+
+export default Layout(MDX_DATA.Flip);
+
+## Usage
+
+`Flip` component is a wrapper for any component that can be flipped. It is used to create cards, flip boxes and more.
+
+<Demo data={FlipDemos.configurator} />
+
+## Flip.Target
+
+`Flip.Target` should be used as a wrapper for the button that triggers flip animation. It should be placed inside `Flip` component. 
+
+<Demo data={FlipDemos.usage} />
+
+> `Flip.Target` component children should be an element or a component that accepts ref. Fragments, strings, numbers and other primitive values are not supported.
+
+## Controlled
+
+<Demo data={FlipDemos.controlled} />
+
+## Uncontrolled
+
+For uncontrolled flip, you may set the `defaultFlipped` prop to `true` or `false` to set the initial state of the flip.
+
+<Demo data={FlipDemos.flipped} />
+
+## Flip children
+
+`Flip` always has two children. First child is the front side of the flip and the second child is the back side of the flip.
+
+The below example won't work because `Flip` has more than two children.
+
+```tsx
+<Flip>
+    Hello
+    <p>second child</p>
+</Flip>
+```
+
+
+
+<StylesApiSelectors component="Flip" />

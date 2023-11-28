@@ -1,14 +1,14 @@
 // Inline demos
-export { AuthenticationForm } from './shared/AuthenticationForm/AuthenticationForm';
-export { AccordionDemo } from './demos/core/Accordion/Accordion.demo.label';
-export { TimelineBase } from './demos/core/Timeline/_base';
-export { HoverCardHomePageDemo } from './demos/core/HoverCard/HoverCard.demo.profile';
 export { CarouselCardsDemos } from './demos/carousel/Carousel.demo.cards';
+export { AccordionDemo } from './demos/core/Accordion/Accordion.demo.label';
+export { HoverCardHomePageDemo } from './demos/core/HoverCard/HoverCard.demo.profile';
+export { TimelineBase } from './demos/core/Timeline/_base';
+export { AuthenticationForm } from './shared/AuthenticationForm/AuthenticationForm';
 
 // System demos
-export * as ThemingDemos from './demos/theming';
-export * as StylesDemos from './demos/styles';
 export * as GuidesDemos from './demos/guides';
+export * as StylesDemos from './demos/styles';
+export * as ThemingDemos from './demos/theming';
 
 // Core demos
 export * as AccordionDemos from './demos/core/Accordion';
@@ -45,6 +45,7 @@ export * as FieldsetDemos from './demos/core/Fieldset';
 export * as FileButtonDemos from './demos/core/FileButton';
 export * as FileInputDemos from './demos/core/FileInput';
 export * as FlexDemos from './demos/core/Flex';
+export * as FlipDemos from './demos/core/Flip';
 export * as FocusTrapDemos from './demos/core/FocusTrap';
 export * as GridDemos from './demos/core/Grid';
 export * as GroupDemos from './demos/core/Group';
@@ -64,6 +65,9 @@ export * as ModalDemos from './demos/core/Modal';
 export * as MultiSelectDemos from './demos/core/MultiSelect';
 export * as NativeSelectDemos from './demos/core/NativeSelect';
 export * as NavLinkDemos from './demos/core/NavLink';
+export * as NotificationDemos from './demos/core/Notification';
+export * as NumberFormatterDemos from './demos/core/NumberFormatter';
+export * as NumberInputDemos from './demos/core/NumberInput';
 export * as OverlayDemos from './demos/core/Overlay';
 export * as PaginationDemos from './demos/core/Pagination';
 export * as PaperDemos from './demos/core/Paper';
@@ -91,8 +95,8 @@ export * as TableDemos from './demos/core/Table';
 export * as TabsDemos from './demos/core/Tabs';
 export * as TagsInputDemos from './demos/core/TagsInput';
 export * as TextDemos from './demos/core/Text';
-export * as TextareaDemos from './demos/core/Textarea';
 export * as TextInputDemos from './demos/core/TextInput';
+export * as TextareaDemos from './demos/core/Textarea';
 export * as ThemeIconDemos from './demos/core/ThemeIcon';
 export * as TimelineDemos from './demos/core/Timeline';
 export * as TitleDemos from './demos/core/Title';
@@ -100,22 +104,19 @@ export * as TooltipDemos from './demos/core/Tooltip';
 export * as TransitionDemos from './demos/core/Transition';
 export * as TypographyStylesProviderDemos from './demos/core/TypographyStylesProvider';
 export * as UnstyledButtonDemos from './demos/core/UnstyledButton';
-export * as NotificationDemos from './demos/core/Notification';
-export * as NumberInputDemos from './demos/core/NumberInput';
-export * as NumberFormatterDemos from './demos/core/NumberFormatter';
 
 // @mantine/dates
-export * as YearPickerDemos from './demos/dates/YearPicker';
-export * as YearPickerInputDemos from './demos/dates/YearPickerInput';
-export * as MonthPickerDemos from './demos/dates/MonthPicker';
-export * as MonthPickerInputDemos from './demos/dates/MonthPickerInput';
+export * as CalendarDemos from './demos/dates/Calendar';
+export * as DateInputDemos from './demos/dates/DateInput';
 export * as DatePickerDemos from './demos/dates/DatePicker';
 export * as DatePickerInputDemos from './demos/dates/DatePickerInput';
-export * as TimeInputDemos from './demos/dates/TimeInput';
-export * as DatesProviderDemos from './demos/dates/DatesProvider';
 export * as DateTimePickerDemos from './demos/dates/DateTimePicker';
-export * as DateInputDemos from './demos/dates/DateInput';
-export * as CalendarDemos from './demos/dates/Calendar';
+export * as DatesProviderDemos from './demos/dates/DatesProvider';
+export * as MonthPickerDemos from './demos/dates/MonthPicker';
+export * as MonthPickerInputDemos from './demos/dates/MonthPickerInput';
+export * as TimeInputDemos from './demos/dates/TimeInput';
+export * as YearPickerDemos from './demos/dates/YearPicker';
+export * as YearPickerInputDemos from './demos/dates/YearPickerInput';
 
 // @mantine/charts
 export * as AreaChartDemos from './demos/charts/AreaChart';
@@ -124,15 +125,15 @@ export * as LineChartDemos from './demos/charts/LineChart';
 export * as SparklineDemos from './demos/charts/Sparkline';
 
 // Extensions demos
-export * as NotificationsDemos from './demos/notifications';
 export * as CarouselDemos from './demos/carousel';
-export * as SpotlightDemos from './demos/spotlight';
-export * as HooksDemos from './demos/hooks';
-export * as FormDemos from './demos/form';
-export * as NprogressDemos from './demos/nprogress';
 export * as CodeHighlightDemos from './demos/code-highlight';
 export * as DropzoneDemos from './demos/dropzone';
+export * as FormDemos from './demos/form';
+export * as HooksDemos from './demos/hooks';
 export * as ModalsDemos from './demos/modals';
+export * as NotificationsDemos from './demos/notifications';
+export * as NprogressDemos from './demos/nprogress';
+export * as SpotlightDemos from './demos/spotlight';
 export * as TipTapDemos from './demos/tiptap';
 
 // Changelog demos

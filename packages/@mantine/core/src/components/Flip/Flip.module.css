@@ -1,0 +1,18 @@
+.root {
+  perspective: var(--flip-perspective, "1000px");
+}
+
+.flip-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transition: transform var(--flip-transition-duration, ".1") var(--flip-transition-timing-function, "ease-in-out");
+  transform-style: preserve-3d;
+}
+
+.flip-content {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+}
