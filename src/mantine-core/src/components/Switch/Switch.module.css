@@ -129,6 +129,12 @@
   left: var(--_switch-thumb-left, var(--switch-track-label-padding));
   transition: left 150ms ease;
 
+  @mixin rtl {
+    left: unset;
+    transition: right 150ms ease;
+    right: var(--_switch-thumb-left, var(--switch-track-label-padding));
+  }
+
   & > * {
     margin: auto;
   }
@@ -164,7 +170,15 @@
   margin: 0 0 0 calc(var(--switch-thumb-size) + var(--switch-track-label-padding));
   transition: margin 150ms ease;
 
+  @mixin rtl {
+    margin: 0 calc(var(--switch-thumb-size) + var(--switch-track-label-padding)) 0 0;
+  }
+
   .input:checked + * > & {
     margin: 0 calc(var(--switch-thumb-size) + var(--switch-track-label-padding)) 0 0;
+
+    @mixin rtl {
+      margin: 0 0 0 calc(var(--switch-thumb-size) + var(--switch-track-label-padding));
+    }
   }
 }
