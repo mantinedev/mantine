@@ -25,7 +25,6 @@ function Demo() {
       {/* Regular pagination */}
       <Pagination
         total={10}
-        position="center"
         withEdges
         nextIcon={IconArrowRight}
         previousIcon={IconArrowLeft}
