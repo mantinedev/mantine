@@ -7469,6 +7469,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/gh-pages@npm:^5.0.1":
+  version: 5.0.1
+  resolution: "@types/gh-pages@npm:5.0.1"
+  checksum: 0e1c75c8e8735419697d8c6eb057ad45134094d7d510c220bc009dab19e195f6c0b66eb17ff3c3886afb3c3ceef58b6cf830b058dff7328121c9678e3fc2db6f
+  languageName: node
+  linkType: hard
+
 "@types/github-slugger@npm:^2.0.0":
   version: 2.0.0
   resolution: "@types/github-slugger@npm:2.0.0"
@@ -16782,6 +16789,7 @@ __metadata:
     "@tiptap/starter-kit": "npm:^2.1.12"
     "@types/chroma-js": "npm:^2.4.3"
     "@types/fs-extra": "npm:^11.0.4"
+    "@types/gh-pages": "npm:^5.0.1"
     "@types/jest": "npm:^29.5.8"
     "@types/jest-axe": "npm:^3.5.8"
     "@types/lodash": "npm:^4.14.201"
