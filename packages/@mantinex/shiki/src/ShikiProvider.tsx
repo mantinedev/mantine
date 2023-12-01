@@ -13,11 +13,11 @@ type HighlightCode = (
 function prepareHtmlCode(code: string) {
   return code
     .replaceAll('tabindex="0"', '')
-    .replaceAll('class="shiki "', `class="${classes.pre}"`)
     .replace('<code>', `<code class="${classes.code}">`)
-    .replaceAll('class="shiki OneLight"', `class="${classes.pre}"`)
-    .replaceAll('style="background-color:#1e1e1e;color:#C5C8C6"', '')
-    .replaceAll('style="background-color:#FAFAFA;color:#383A42"', '');
+    .replaceAll('class="shiki Eva Light"', `class="${classes.pre}"`)
+    .replaceAll('class="shiki Eva Dark"', `class="${classes.pre}"`)
+    .replaceAll('style="background-color:#EBEEF5;color:#25262B"', '')
+    .replaceAll('style="background-color:#282c34;color:#9DA5B3"', '');
 }
 
 const ShikiContext = createContext<HighlightCode | null>(null);
