@@ -14,8 +14,7 @@ function prepareHtmlCode(code: string) {
   return code
     .replaceAll('tabindex="0"', '')
     .replace('<code>', `<code class="${classes.code}">`)
-    .replaceAll('class="shiki Eva Light"', `class="${classes.pre}"`)
-    .replaceAll('class="shiki Eva Dark"', `class="${classes.pre}"`)
+    .replaceAll('class="shiki "', `class="${classes.pre}"`)
     .replaceAll('style="background-color:#EBEEF5;color:#25262B"', '')
     .replaceAll('style="background-color:#282c34;color:#9DA5B3"', '');
 }

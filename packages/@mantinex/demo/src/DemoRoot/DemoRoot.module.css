@@ -7,6 +7,6 @@
   }
 
   @mixin dark {
-    --_demo-border: var(--mantine-color-dark-4);
+    --_demo-border: var(--mantine-color-dark-5);
   }
 }

@@ -1,5 +1,4 @@
 export const light = {
-  name: 'Eva Light',
   type: 'light',
   $schema: 'vscode://schemas/color-theme',
   colors: {
@@ -35,7 +34,7 @@ export const light = {
     'charts.orange': '#FF6D12',
     'charts.purple': '#7C4DFF',
     'charts.red': '#f14c4c',
-    'charts.yellow': '#F0AA0B',
+    'charts.yellow': '#E67700',
     'charts.foreground': '#25262B',
     'charts.lines': '#CED1D7',
     'checkbox.background': '#EDF0F7',
@@ -127,7 +126,7 @@ export const light = {
     'editorIndentGuide.background1': '#CED1D7',
     'editorInfo.foreground': '#4480F4',
     'editorInlayHint.foreground': '#888',
-    'editorLightBulb.foreground': '#F0AA0B',
+    'editorLightBulb.foreground': '#E67700',
     'editorLineNumber.foreground': '#B3B3B4',
     'editorLineNumber.activeForeground': '#25262B',
     'editorLink.activeForeground': '#D73BD5',
@@ -172,7 +171,7 @@ export const light = {
     'extensionBadge.remoteForeground': '#ffffff',
     'extensionButton.prominentForeground': '#fff',
     'extensionButton.prominentBackground': '#499149',
-    'extensionButton.prominentHoverBackground': '#0065FFA8' /*377337深绿色*/,
+    'extensionButton.prominentHoverBackground': '#0065FFA8',
     'extensionButton.separator': '#fff',
     'extensionIcon.preReleaseForeground': '#1098AD',
     'extensionIcon.sponsorForeground': '#FA278E',
@@ -184,7 +183,7 @@ export const light = {
     'gitDecoration.deletedResourceForeground': '#f14c4c',
     'gitDecoration.ignoredResourceForeground': '#A9A9AA',
     'gitDecoration.modifiedResourceForeground': '#7C4DFF',
-    'gitDecoration.renamedResourceForeground': '#F3AD01' /*2276FF蓝色*/,
+    'gitDecoration.renamedResourceForeground': '#F3AD01',
     'gitDecoration.submoduleResourceForeground': '#F183DA',
     'gitDecoration.stageDeletedResourceForeground': '#CD6069',
     'gitDecoration.stageModifiedResourceForeground': '#d73bd5',
@@ -357,36 +356,36 @@ export const light = {
     'statusBarItem.remoteForeground': '#ffffff',
     'statusBarItem.warningBackground': '#E1E4EB',
     'statusBarItem.warningForeground': '#ff6d12',
-    'symbolIcon.arrayForeground': '#25262B', //颜色同变量
+    'symbolIcon.arrayForeground': '#25262B',
     'symbolIcon.booleanForeground': '#C838C6',
     'symbolIcon.classForeground': '#1098AD',
     'symbolIcon.constantForeground': '#FF6D12',
     'symbolIcon.constructorForeground': '#437AED',
     'symbolIcon.enumeratorMemberForeground': '#FF6D12',
     'symbolIcon.eventForeground': '#437AED',
-    'symbolIcon.fieldForeground': '#CD6069', //颜色同tag
-    'symbolIcon.fileForeground': '#626264D8', //颜色同sideBar.foreground
-    'symbolIcon.folderForeground': '#25262B', //颜色同sideBarSectionHeader.foreground
+    'symbolIcon.fieldForeground': '#CD6069',
+    'symbolIcon.fileForeground': '#626264D8',
+    'symbolIcon.folderForeground': '#25262B',
     'symbolIcon.functionForeground': '#437AED',
     'symbolIcon.interfaceForeground': '#1098AD',
-    'symbolIcon.keyForeground': '#25262B', //颜色同变量
+    'symbolIcon.keyForeground': '#25262B',
     'symbolIcon.keywordForeground': '#7C4DFF',
     'symbolIcon.methodForeground': '#437AED',
     'symbolIcon.moduleForeground': '#CD6069',
     'symbolIcon.namespaceForeground': '#CD6069',
     'symbolIcon.nullForeground': '#C838C6',
     'symbolIcon.numberForeground': '#FF6D12',
-    'symbolIcon.objectForeground': '#25262B', //颜色同变量
+    'symbolIcon.objectForeground': '#25262B',
     'symbolIcon.operatorForeground': '#1098AD',
     'symbolIcon.packageForeground': '#CD6069',
-    'symbolIcon.propertyForeground': '#888888', //这条既包含css属性，也包含对象属性
-    'symbolIcon.snippetForeground': '#7C4DFF', //颜色同keyword
+    'symbolIcon.propertyForeground': '#888888',
+    'symbolIcon.snippetForeground': '#7C4DFF',
     'symbolIcon.stringForeground': '#53A053',
     'symbolIcon.structForeground': '#1098AD',
-    'symbolIcon.textForeground': '#A9A9AA', //颜色同注释
-    'symbolIcon.typeParameterForeground': '#EF8ED8', //颜色同数据类型
+    'symbolIcon.textForeground': '#A9A9AA',
+    'symbolIcon.typeParameterForeground': '#A61E4D',
     'symbolIcon.unitForeground': '#FF6D12',
-    'symbolIcon.variableForeground': '#25262B', //颜色同变量
+    'symbolIcon.variableForeground': '#25262B',
     'tab.activeBackground': '#EBEEF5',
     'tab.activeBorder': '#EBEEF500',
     'tab.activeBorderTop': '#EBEEF500',
@@ -415,14 +414,14 @@ export const light = {
     'terminal.ansiCyan': '#1098AD',
     'terminal.ansiRed': '#EC0000',
     'terminal.ansiMagenta': '#C838C6',
-    'terminal.ansiYellow': '#F0AA0B',
+    'terminal.ansiYellow': '#E67700',
     'terminal.ansiWhite': '#000',
     'terminal.ansiBrightBlack': '#AAADB4',
     'terminal.ansiBrightBlue': '#4d91f8',
     'terminal.ansiBrightGreen': '#3EC141',
     'terminal.ansiBrightCyan': '#1098AD',
     'terminal.ansiBrightRed': '#f14c4c',
-    'terminal.ansiBrightMagenta': '#EF8ED8',
+    'terminal.ansiBrightMagenta': '#A61E4D',
     'terminal.ansiBrightYellow': '#FF6D12',
     'terminal.ansiBrightWhite': '#888',
     'terminal.background': '#EBEEF5',
@@ -459,12 +458,9 @@ export const light = {
     'widget.shadow': '#AAADB4',
   },
   semanticHighlighting: false,
-  // "semanticTokenColors": {
-  //     "variable.parameter":{ "foreground": "","fontStyle": "" },
-  // },
+
   tokenColors: [
     {
-      name: 'new | CSS from to,js from | Keyword | js module | ',
       scope:
         'keyword.operator.new,keyword.other.new,storage.modifier.c,keyword.control.directive.define,keyword.control.def,keyword.control.class,keyword.control.module,keyword.control.new,keyword.preprocessor.define,meta.preprocessor.cs punctuation.separator.hash.cs,keyword.control.directive.undef,keyword.other.fn,storage.type.rust,storage.modifier.extern,storage.modifier.const,storage.modifier.extends,storage.modifier.ts,keyword.control.at-rule,keyword.other.let,keyword.other.instance,keyword.other.newtype,keyword.other.data,keyword.other.module,keyword.other,keyword.other.preprocessor,keyword.cs,entity.other.keyframe-offset,keyword.control.import,keyword.other.import,keyword.import,keyword.control.from,keyword.control.directive.include,keyword.other.package,keyword.other.class,keyword.other.namespace,keyword.other.enum,keyword.other.operator-decl,keyword.other.interface,keyword.preprocessor,keyword.other.delegate,storage.type.cpp,storage.type.namespace,storage.type.language.primitive.cpp,storage.type.struct,storage.type.template,support.type.built-in.posix-reserved.pthread,keyword.other.typedef,storage.modifier.dart,meta.class.identifier.java storage.modifier.java,meta.enum.java storage.modifier.java,storage.type.modifier,storage.modifier,keyword.control.as,keyword.other.phpdoc,keyword.other.var,storage.modifier.java,meta.var.expr,storage.type.function,keyword.function,keyword.var,keyword.const,keyword.channel,keyword.struct,keyword.other.struct,keyword.map,keyword.reserved,storage.type.class,storage.type.php,storage.type.interface,storage.type.object,keyword.declaration,storage.type.enum,storage.type.type,storage.type.const,storage.modifier.specifier,storage.type.class.jsdoc,support.module.node.js,support.type.object.module.js,support.type.object.module.ts,support.module.node.ts,keyword.control.preamble.latex,keyword.control.cite.latex,keyword.control.label.latex,keyword.storage.modifier,',
       settings: {
@@ -472,9 +468,8 @@ export const light = {
         foreground: '#7C4DFF',
       },
     },
-    //#7C4DFF normal (In Bold : #7C4DFF bold)
+
     {
-      name: '-> | $',
       scope:
         'keyword.operator.arrow.skinny,keyword.operator.interpolation,keyword.operator.borrow,',
       settings: {
@@ -482,9 +477,8 @@ export const light = {
         foreground: '#7C4DFF',
       },
     },
-    //#7C4DFF normal
+
     {
-      name: 'Tex: punctuation.definition.keyword',
       scope:
         'punctuation.definition.block.tag.jsdoc,keyword.control.directive.include punctuation.definition.directive,keyword.control.directive.undef punctuation.definition.directive,keyword.control.directive.define punctuation.definition.directive,punctuation.definition.directive,punctuation.definition.keyword.latex,keyword.control punctuation.definition.function.latex,keyword.control punctuation.definition.keyword.latex,',
       settings: {
@@ -492,9 +486,8 @@ export const light = {
         foreground: '#7C4DFF',
       },
     },
-    //#437AED normal (In Bold : #437AED bold, In Italic : #437AED italic)
+
     {
-      name: 'support.function | try...catch | Functions,pthread | 单独的函数,C++线程 | less sass里的自定义的代码块名 类似函数 | [VSCODE-CUSTOM] Markdown Link Title/Description | ',
       scope:
         'meta.function-call,support.function.construct.output,invalid.deprecated.gradient.function.css,invalid.deprecated.function.css,support.function.builtin.python,support.function.go,entity.name.function.macro,meta.attribute.rust,new.expr meta.function-call support.class.builtin,new.expr meta.function-call support.class,keyword.operator.function,support.function.dom,support.function.console,support.function.any-method.builtin.url,support.function.any-method.builtin,support.function.url,support.function.misc,support.function.transform,support.function.calc,support.function.var,support.function.string,support.function.basic_functions,support.function.array,support.function.construct,support.function.datetime,support.function.file,support.function.network,support.function.session,support.function.mail,support.function.filter,support.function.errorfunc,support.function.mysql,support.function.php_odbc,support.function.xml,support.function.math,entity.name.type.lifetime.rust,entity.name.class,meta.method.declaration,keyword.control.trycatch,keyword.control.catch-exception,keyword.operator.cast,keyword.operator.big-arrow,entity.name.function,support.type.pthread,meta.block.class.cpp meta.body.class.cpp meta.block.class.cpp entity.name.function.definition.special.constructor.cpp,support.function,keyword.operator.sizeof,meta.function-call.python support.type.python,meta.function-call keyword.operator.expression.import,entity.name.type.js,new.expr.ts,entity.other.attribute-name.class.mixin,support.function.be.latex,keyword.other.special-method,',
       settings: {
@@ -502,27 +495,24 @@ export const light = {
         foreground: '#437AED',
       },
     },
-    //#437AED normal (In Italic : #437AED italic)
+
     {
-      name: 'markdown link title',
       scope: 'string.other.link.title.markdown,string.other.link.description.markdown,',
       settings: {
         fontStyle: '',
         foreground: '#437AED',
       },
     },
-    //#437AED normal (In Bold : #437AED bold)
+
     {
-      name: 'arrow | 箭头函数 | ',
       scope: 'storage.type.function.arrow,keyword.operator.arrow,keyword.operator.closure,',
       settings: {
         fontStyle: '',
         foreground: '#437AED',
       },
     },
-    //#437AED normal
+
     {
-      name: 'js template-expression;模板字符串里的${};vue里的{{}} | Markdown里引用块符号 > | [VSCODE-CUSTOM] Markdown List Punctuation Definition;Markdown里定义有序项和无序项的 - * + 1. 2. | Tex: punctuation definition Function | ',
       scope:
         'punctuation.definition.template-expression.begin,punctuation.definition.template-expression.end,punctuation.definition.generic.begin.html,punctuation.definition.generic.end.html,punctuation.definition.interpolation.begin.bracket,punctuation.definition.interpolation.end.bracket,support.constant.handlebars.wxml,constant.character.format.placeholder.other.python,punctuation.definition.interpolation.begin.html,punctuation.definition.interpolation.end.html,punctuation.definition.interpolation,punctuation.definition.lifetime.rust,beginning.punctuation.definition.quote.markdown,beginning.punctuation.definition.list.markdown,punctuation.definition.string.begin.markdown,punctuation.definition.string.end.markdown,punctuation.definition.function.latex,punctuation.definition.function.tex,punctuation.definition.link.description.begin.markdown,punctuation.definition.link.description.end.markdown,punctuation.section.embedded.begin.ruby,punctuation.section.embedded.end.ruby source.ruby,',
       settings: {
@@ -530,9 +520,8 @@ export const light = {
         foreground: '#437AED',
       },
     },
-    //#1098AD normal (In Italic : #1098AD Italic)
+
     {
-      name: 'Attributes | pseudo-class;css里的伪类 hover等 和 伪类选择器 如nth-child() | Classes | ',
       scope:
         'entity.other.attribute-name,invalid.deprecated.entity.other.attribute-name,entity.name.tag.custom.scss,storage.type.java,entity.other.attribute-name.pseudo-class.css,support.type.property-name.media.css,support.constant.media.css,source.css.less entity.name.tag.custom.css,keyword.operator.gradient.css,entity.name.type,keyword.operator.expression,entity.other.inherited-class,entity.name.type.class,support.class,entity.name.type.interface,support.class.dart,entity.name.scope-resolution,',
       settings: {
@@ -540,9 +529,8 @@ export const light = {
         foreground: '#1098AD',
       },
     },
-    //#1098AD normal
+
     {
-      name: 'keyword Operators increment decrement | 关键字 运算符 + - * / | 自增++ 自减-- | += -= | less sass里的关键字(用于+ -号) | string operator in php | php的string操作符 | 定义namespace符号 | ::',
       scope:
         'keyword.operator,keyword.operator.arithmetic,keyword.operator.decrement,keyword.operator.increment,keyword.operator.assignment.compound,keyword.operator.less,meta.property-list.css,keyword.operator.sass,keyword.operator.increment-decrement,keyword.operator.css,entity.name.tag.wildcard.scss,keyword.operator.string,keyword.operator.bitwise,keyword.operator.assignment.augmented,storage.type.variable.ruby,keyword.operator.assignment.arithmetic,punctuation.definition.list.begin.markdown,variable.language.import-all,constant.language.import-export-all,storage.modifier.reference,storage.modifier.pointer,keyword.operator.assignment.rust,meta.directive.vue,punctuation.definition.quote.begin.markdown,meta.format.brace constant,meta.selector invalid.deprecated.combinator,meta.selector,storage.type.operator,entity.name.function.infix.haskell,constant.other.operator.infix.haskell,punctuation.separator.annotation.result.python,keyword.operator.string.php,entity.name.type.struct,keyword.interface,entity.name.type.delegate,storage.type.cs,support.class.builtin,support.type.graphql,punctuation.separator.namespace,keyword.operator.namespace,entity.other.attribute-name.pseudo-element.css punctuation.definition.entity.css,entity.other.attribute-name.pseudo-class.css punctuation.definition.entity.css,punctuation.attribute-shorthand.event.html,punctuation.attribute-shorthand.bind.html,punctuation.math.operator.latex,support.constant.mathematical-symbols.scss,meta.attribute.directive.vue,keyword.operator.relation.types.julia,keyword.operator.borrow.and.rust,punctuation.separator.key-value.css,',
       settings: {
@@ -550,9 +538,8 @@ export const light = {
         foreground: '#1098AD',
       },
     },
-    //#FA278E normal
+
     {
-      name: 'js ts this super,python self,C++ delete',
       scope:
         'variable.language.self,variable.language.this,variable.language.super,variable.language.special.self.python,variable.language.dart,keyword.operator.delete,keyword.operator.expression.delete,keyword.other.important,',
       settings: {
@@ -560,19 +547,17 @@ export const light = {
         foreground: '#FA278E',
       },
     },
-    //#EF8ED8 normal
+
     {
-      name: 'typeof | support type ts |  class | ts里默认数据类型 | 自定义数据类型 | Markdown里引用语言声明 | ',
       scope:
         'support.type,keyword.operator.expression.typeof,keyword.other.typeof,support.type.primitive,support.type.builtin,entity.name.type.instance,storage.type.string,storage.type.numeric,storage.type.boolean,storage.type.primitive,meta.method.identifier,entity.other.inherited-classentity.name.type.interface,meta.return.type,meta.type.parameters,keyword.interface,storage.type.generic,keyword.type,entity.name.type.type-parameter,storage.type.object.array,entity.name.type.delegate,storage.type.c,meta.declaration.dart,meta.type.declaration,meta.block.ts,meta.class-struct-block.cpp entity.name.type.cpp,meta.function.definition.parameters.cpp storage.type.language.primitive.cpp,meta.function.definition.parameters.cpp storage.type.struct.cpp,meta.function.constructor.cpp storage.type.language.primitive.cpp,storage.type.template.argument,entity.name.type.numeric.rust,storage.modifier.mut,entity.name.type.primitive,storage.type.built-in,support.type.built-in.posix-reserved,keyword.other.type,storage.type.haskell,meta.method.identifier.java storage.type.java,support.type.python,fenced_code.block.language,',
       settings: {
         fontStyle: '',
-        foreground: '#EF8ED8',
+        foreground: '#A61E4D',
       },
     },
-    //#FF6D12 normal (In Italic : #FF6D12 Italic)
+
     {
-      name: 'number,unit,数字 | 单位 | constant,非数字的常量 | enum枚举里的元素,Infinity | id,symbol in C# | HTML行间的id和CSS里的id名 | C#中预处理器指令创建符号常量 | URL,math | ',
       scope:
         'constant.numeric,entity.other.keyframe-offset.percentage.css,keyword.other.unit,support.constant.dom,support.constant.property.math,support.constant.ext,support.constant.core,entity.name.function.preprocessor.c,constant.other.js,meta.at-rule.keyframes.scss entity.other.attribute-name.scss,constant,variable.other.enummember,constant.other.enum,entity.name.variable.enum-member,constant.language.infinity,text.log constant.language,meta.attribute.id.html entity.other.attribute-name.html,entity.other.attribute-name.id,entity.name.variable.preprocessor.symbol,variable.other.constant.object,',
       settings: {
@@ -580,9 +565,8 @@ export const light = {
         foreground: '#FF6D12',
       },
     },
-    //#FF6D12 normal
+
     {
-      name: '正则字符串里的符号 | ',
       scope:
         'constant.other.character-class.regexp,constant.other.character-class.range.regexp,constant.other.character-class.set.regexp,support.constant,support.constant.math,support.constant.json,entity.other.attribute-name.id.css punctuation.definition.entity.css,',
       settings: {
@@ -590,29 +574,26 @@ export const light = {
         foreground: '#FF6D12',
       },
     },
-    //#F0AA0B normal (In Italic : #F0AA0B Italic)
+
     {
-      name: 'variable.parameter,keyframe-list,sass,less里的变量 | css3里的关键帧 | Tex: \\label { } | markup bold | Markdown里的bold | ',
       scope:
         'variable.parameter,token.variable.parameter,variable.other.jsdoc,variable.language.arguments,function.parameter,entity.name.variable.parameter,meta.function.c,punctuation.vararg-ellipses,variable.other.block.ruby,meta.arguments,entity.name.type.template,meta.type.parameters entity.name.type,meta.parameters,meta.function.parameter variable.other,variable.other.less,variable.other.sass,variable.scss,source.sass variable.other,variable.argument.css,variable.parameter.function.latex,variable.parameter.definition.label.latex,markup.bold.markdown,',
       settings: {
         fontStyle: '',
-        foreground: '#F0AA0B',
+        foreground: '#E67700',
       },
     },
-    //#F0AA0B normal
+
     {
-      name: 'regexp ^ ?: $ + | ',
       scope:
         'keyword.operator.negetion.regexp,keyword.control.anchor.regexp,punctuation.definition.group.capture.regexp,keyword.operator.quantifier.regexp,punctuation.definition.bold.markdown,',
       settings: {
         fontStyle: '',
-        foreground: '#F0AA0B',
+        foreground: '#E67700',
       },
     },
-    //#53A053 normal (In Italic : #53A053 Italic)
+
     {
-      name: 'variable.parameter | css里url文件引用的链接 | Strings | Attribute class;css里的class名 | font-name | css里字体 如 微软雅黑 | [VSCODE-CUSTOM] Markdown Inline Raw | [VSCODE-CUSTOM] Markdown Link/Image | ',
       scope:
         'variable.parameter.url,string,markup.inline.raw.string,text.html.vue-html meta.object-literal.key,meta.preprocessor.cs,text.html.vue-html meta.object-literal.key string.quoted,entity.other.attribute-name.class.css,selector.sass,entity.other.attribute-name.parent-selector.css,meta.at-rule.extend.scss,string.other.math.tex,support.constant.font-name,markup.inline.raw.markdown,markup.underline.link.markdown,markup.underline.link.image.markdown,',
       settings: {
@@ -620,9 +601,8 @@ export const light = {
         foreground: '#53A053',
       },
     },
-    //#53A053 normal
+
     {
-      name: 'Regular Expressions;正则表达式 | ',
       scope:
         'punctuation.definition.metadata.markdown,string.regexp,source.jsonmeta.structure.dictionary.json>value.json>string.quoted.json,source.jsonmeta.structure.array.json>value.json>string.quoted.json,source.jsonmeta.structure.dictionary.json>value.json>string.quoted.json>punctuation,source.jsonmeta.structure.array.json>value.json>string.quoted.json>punctuation,string.quoted source,punctuation.definition.entity.css,meta.attribute-selector.scss,string invalid.illegal,string.other.math.tex,punctuation.definition.string.begin.tex,punctuation.definition.string.end.tex,punctuation.definition.string,text.html.vue-html meta.object-literal.key punctuation.definition.string,string punctuation.attribute-shorthand.bind.html,string punctuation.attribute-shorthand.event.html,punctuation.definition.string.template.begin,punctuation.definition.string.template.end,',
       settings: {
@@ -630,9 +610,8 @@ export const light = {
         foreground: '#53A053',
       },
     },
-    //#CD6069 normal (In italic: #CD6069 italic)
+
     {
-      name: 'module | 模块 | 对象属性名 | namespace | dom,C系语言的命名空间 | console输出台 | pseudo-element;css里的伪元素 before after | [VSCODE-CUSTOM] Markdown headings;Markdown里的标题 和 定义标题的# | section | ',
       scope:
         'entity.name.type.module,entity.name.package,variable.other.property,variable.other.object.property,variable.other.constant.property,entity.name.type.option,entity.name.label,variable.other.object.property.cs,entity.name.variable.tuple-element.cs,meta.object-literal.key,meta.object-literal.key string.quoted,variable.object.property,support.type.map.key,meta.at-rule.each.scss,meta.attribute.python,support.variable.dom,support.variable.property,support.variable.property.dom,storage.modifier.import,constant.other.php,entity.name.type.namespace,variable.other.member.c,meta.using-namespace-declaration.cpp entity.name.type.cpp,meta.class-struct-block.cpp meta.namespace-block.cpp entity.name.type.cpp,variable.other.source.dart,entity.name.namespace,entity.name.module,entity.name.type.result.rust,entity.name.scope-resolution.namespace,support.class.console,meta.use.rust,keyword.other.preprocessor.extension,entity.other.attribute-name.pseudo-element.css,entity.name.section.markdown,markup.heading,source.json meta.structure.dictionary.json > string.quoted.json,support.type.property-name.json,support.function.section.latex,support.function.general.tex,meta.object-literal.key punctuation.definition.string,variable.other.constant.object.property,',
       settings: {
@@ -640,9 +619,8 @@ export const light = {
         foreground: '#CD6069',
       },
     },
-    //#CD6069 normal
+
     {
-      name: 'Tags;HTML的标签名 | react组件 | Tex: punctuation.definition.function | 正则表达式里的关键字 | ',
       scope:
         'entity.name.tag,entity.other.attribute-name.parent-selector.css punctuation.definition.entity.css,punctuation.definition.heading.markdown,support.function.general.tex punctuation.definition.function.tex,support.function.section.latex punctuation.definition.function.latex,punctuation.support.type.property-name.begin.json.comments,punctuation.support.type.property-name.end.json.comments,support.class.component,keyword.operator.optional,punctuation.section.embedded.begin.php,punctuation.section.embedded.end.php,punctuation.section.embedded.end.php source.php,string.regexp keyword.other,entity.name.tag.custom.css,',
       settings: {
@@ -650,9 +628,8 @@ export const light = {
         foreground: '#CD6069',
       },
     },
-    //#C838C6 normal (In bold : #C838C6 bold, In Italic : #C838C6 Italic)
+
     {
-      name: 'instanceof | Keyword Control,Using | Constant | 语言常量,包含 true false null undefined等 |  void | loop | ',
       scope:
         'keyword.operator.expression.instanceof,keyword.operator.instanceof,keyword.operator.expression.in,keyword.operator.expression.of,keyword.control,keyword.other.using,keyword.preprocessor.elif,keyword.preprocessor.if,keyword.preprocessor.else,keyword.preprocessor.endif,keyword.control.directive,punctuation.separator.hash,keyword.package,keyword.control.flow,keyword.input,keyword.type.graphql,keyword.cmake,keyword.control.rust,keyword.other.rust,keyword.control.default,keyword.control.export,keyword.other.where,keyword.other.forall,keyword.other.deriving,keyword.other.qualified,keyword.other.hiding,keyword.other.in,constant.language,constant.language.boolean,keyword.operator.expression.void,keyword.control.loop,keyword.control.ref.latex,keyword.other.item.latex,keyword.operator.relation.in,storage.type.primitive.dart,',
       settings: {
@@ -660,9 +637,8 @@ export const light = {
         foreground: '#C838C6',
       },
     },
-    //#C838C6 normal (In bold : #C838C6 bold)
+
     {
-      name: 'keyword Operators ternary,logical,comparison,relational,tilde | 三元运算符 ? : | logical | == === != !== | < > <= >= | 正则表达式里的 或| | 波浪号~',
       scope:
         'keyword.operator.boolean,keyword.operator.relation,keyword.operator.ternary,keyword.control.ternary,keyword.operator.logical,keyword.operator.comparison,keyword.operator.relational,keyword.operator.or.regexp,keyword.operator.class,keyword.operator.type,keyword.operator.other.ruby,keyword.operator.conditional,punctuation.separator.question-mark,keyword.operator.null-coalescing,punctuation.tilde,punctuation.separator.pointer-access,keyword.operator.dart,keyword.operator.nulltype,keyword.operator.arrow.haskell,keyword.operator.arrow.left.haskell,keyword.control.directive punctuation.definition.directive,keyword.control.equation.align.latex,keyword.operator.bitwise.dart,',
       settings: {
@@ -670,9 +646,8 @@ export const light = {
         foreground: '#C838C6',
       },
     },
-    //#C838C6 normal
+
     {
-      name: 'Tex: New Line Label \\',
       scope:
         'keyword.control.equation.newline.latex,keyword.control.newline.tex,keyword.other.item.latex punctuation.definition.keyword.latex,token.debug-token',
       settings: {
@@ -680,9 +655,8 @@ export const light = {
         foreground: '#C838C6',
       },
     },
-    //#C57BDB normal (In italic : #C57BDB italic)
+
     {
-      name: 'support.constant.property-value.scss | css属性值常量 block inline inline-block none solid等 | ',
       scope:
         'support.constant.property-value.scss,support.constant.property-value.css,support.constant.vendored.property-value.css,source.css keyword.other.default,',
       settings: {
@@ -690,27 +664,24 @@ export const light = {
         foreground: '#C57BDB',
       },
     },
-    //#C57BDB italic
+
     {
-      name: 'Italic;Markdown里的斜体字 | ',
       scope: 'markup.italic',
       settings: {
         fontStyle: 'italic',
         foreground: '#C57BDB',
       },
     },
-    //#C57BDB normal
+
     {
-      name: 'Markdown里的定义斜体字的符号',
       scope: 'punctuation.definition.italic,',
       settings: {
         fontStyle: '',
         foreground: '#C57BDB',
       },
     },
-    //#25262B normal (In Italic : #25262B Italic)
+
     {
-      name: 'Variable | 变量 | css color standard name;css 颜色名词 red orange pink plum 等 | Tex: Constant Math | ',
       scope:
         'variable.other,support.variable,meta.definition.variable,variable.other.object,variable.other.readwrite,entity.name.type.enum,meta.method.body,entity.name.variable,meta.block.c,meta.class-struct-block,meta.item-access.python,meta.function-call.arguments.python,meta.item-access.arguments.python,variable.parameter.keyframe-list.css,meta.property-value.css,meta.property-value.scss,entity.name.tag.custom,entity.name.function.scss,variable,meta.function-call.c,entity.name.function.preprocessor,meta.parens,support.constant.color.w3c-standard-color-name,support.constant.color.w3c-extended-color-name,constant.other.color.rgb-value.hex,constant.other.rgb-value,support.constant.color.w3c-extended-color-name.css,text.tex.latex constant.other.math.tex,constant.other.general.math.tex,constant.other.general.math.tex,constant.character.math.tex,constant.other.reference.citation.latex,code-runner.output,',
       settings: {
@@ -718,9 +689,8 @@ export const light = {
         foreground: '#25262B',
       },
     },
-    //#25262B normal
+
     {
-      name: 'Tex: Math \\\\',
       scope:
         'punctuation.definition.constant.math.tex,constant.other.math.tex punctuation.definition.function.tex,support.class.math.block.environment.latex punctuation.definition.function.tex,source,source.c,source.cpp,source.ruby,source.go,source.dart,source.python,source.css.less,source.js,punctuation.definition.link.title.begin.markdown,punctuation.definition.link.title.end.markdown,',
       settings: {
@@ -728,9 +698,8 @@ export const light = {
         foreground: '#25262B',
       },
     },
-    //#626264 normal
+
     {
-      name: 'text;HTML标签里的文字;Markdown里书写的普通文字',
       scope:
         'text.html.basic,text.html.markdown,meta.paragraph.markdown,text.html.php,text.html.derivative,text.html.wxml,text.xml,text.html,source.ignore,source.nginx,text,text.tex.latex,entity.name.section.latex,',
       settings: {
@@ -738,9 +707,8 @@ export const light = {
         foreground: '#626264',
       },
     },
-    //#25262BD8 bold
+
     {
-      name: 'Punctuation accessor 点号 .',
       scope:
         'keyword.operator.dots,punctuation.accessor,punctuation.separator.period,punctuation.separator.dot-access,punctuation.separator.method,punctuation.other.period,punctuation.dot,meta.delimiter.property.period,keyword.operator.access.dot,keyword.operator.period',
       settings: {
@@ -748,9 +716,8 @@ export const light = {
         foreground: '#25262BD8',
       },
     },
-    //#25262BD8 normal
+
     {
-      name: 'meta.parameters;scope值不规则的点. 引号 | keyword Operators assignment;等号 = (不包括HTML标签里的=号,把+= -=包含进来了,然后单独设) | block,embedded,definition,bracket,typeparameters;大括号 {},中括号[],圆括号(),尖括号<> | ',
       scope:
         'keyword.operator.update,meta.bracket,meta.parameters.js,keyword.operator.assignment,keyword.operator.assignment.equal,keyword.operator.eq,punctuation.section.block.begin.bracket,punctuation.section.block.end.bracket,punctuation.definition.block,punctuation.section.embedded.begin,punctuation.section.embedded.end,meta.brace,punctuation.bracket,punctuation.definition.parameters.ruby,punctuation.definition.parameters.begin,punctuation.definition.parameters.end,punctuation.section.function.begin.bracket,punctuation.section.function.end.bracket,punctuation.definition.typeparameters.begin,punctuation.definition.typeparameters.end,punctuation.section.array.end,punctuation.section.array.begin,punctuation.definition.array.end,punctuation.definition.array.begin,punctuation.section.scope.end,punctuation.section.scope.begin,meta.parameter.object-binding-pattern,punctuation.definition.binding-pattern.object,punctuation.definition.arguments.end,punctuation.definition.arguments.begin,punctuation.definition.begin.bracket,punctuation.definition.end.bracket,punctuation.curlybrace.open,punctuation.curlybrace.close,punctuation.parenthesis.open,punctuation.parenthesis.close,punctuation.squarebracket.open,,punctuation.squarebracket.close,punctuation.section.method.begin,punctuation.section.method.end,punctuation.section.class.begin,punctuation.section.class.end,punctuation.section.enum.begin,punctuation.section.enum.end,punctuation.section.parameters.begin.bracket,punctuation.section.parameters.end.bracket,punctuation.section.parens.begin.bracket,punctuation.section.parens.end.bracket,punctuation.section.arguments.begin.bracket,punctuation.section.arguments.end.bracket,punctuation.separator.arguments,punctuation.section.function.ruby,punctuation.definition.dictionary.begin,punctuation.definition.dictionary.end,punctuation.separator.dictionary.pair,punctuation.separator.array,punctuation.definition.map.begin.bracket,punctuation.definition.map.end.bracket,punctuation.section.function,punctuation.definition.parameters.end.bracket,punctuation.definition.parameters.begin.bracket,punctuation.section.property-list.begin.bracket,punctuation.section.property-list.end.bracket,punctuation.definition.list.begin,punctuation.definition.list.end,punctuation.definition.binding-pattern.array,punctuation.section.embedded.begin.ruby source.ruby,source.cs,punctuation.definition.function.body.begin.bracket,punctuation.definition.function.body.end.bracket,punctuation.definition.modules.begin,punctuation.definition.modules.end,constant.character.brace,punctuation.operation.graphql,punctuation.definition.optional.arguments.begin,punctuation.definition.optional.arguments.end,punctuation.definition.brackets,punctuation.math.begin.bracket,punctuation.math.end.bracket,punctuation.section.angle-brackets,keyword.operator.delete.array.bracket,punctuation.brackets.round,punctuation.brackets.curly,punctuation.brackets.square,punctuation.brackets.attribute,punctuation.definition.attribute,punctuation.brackets,punctuation.definition.bracket,punctuation.definition.character-class.regexp,meta.preprocessor.haskell,punctuation.paren,punctuation.brace,punctuation.parenthesis.begin,punctuation.parenthesis.end,punctuation.section.group.tex,punctuation.definition.arguments.begin.latex,punctuation.definition.arguments.end.latex,punctuation.definition.arguments.latex,meta.group.braces.tex,punctuation.math.begin.bracket.curly,punctuation.math.end.bracket.curly,punctuation.definition.begin.entity,punctuation.definition.end.entity,punctuation.separator.operator,',
       settings: {
@@ -758,9 +725,8 @@ export const light = {
         foreground: '#25262BD8',
       },
     },
-    //#888888 normal
+
     {
-      name: 'css Support type;css less sass属性名 如果不填就与support.type同色 | Tex: text | ',
       scope:
         'support.type.property-name.css,support.type.vendored.property-name.css,meta.at-rule.each.scss support.constant.property-value.css,source.css.scss,meta.text.normal.tex,meta.function.environment.frame.latex,meta.tag meta.attribute entity.name.label,',
       settings: {
@@ -768,18 +734,16 @@ export const light = {
         foreground: '#888888',
       },
     },
-    //#888888 normal
+
     {
-      name: 'escape;转义字符',
       scope: 'constant.character.escape,constant.character.entity',
       settings: {
         fontStyle: '',
         foreground: '#888888',
       },
     },
-    //#888888D9 normal
+
     {
-      name: 'curly;CSS里的括号 {} [] ()',
       scope:
         'meta.brace.round.css,punctuation.section.property-list.begin.bracket.curly.css,punctuation.section.property-list.end.bracket.curly.css,punctuation.section.function.begin.bracket.round.css,punctuation.section.function.end.bracket.round.css,punctuation.section.media.begin.bracket.curly.css,punctuation.section.media.end.bracket.curly.css,punctuation.definition.parameters.begin.bracket.round.css,punctuation.definition.parameters.end.bracket.round.css,punctuation.section.keyframes.begin.bracket.curly.css,punctuation.section.keyframes.end.bracket.curly.css,punctuation.definition.entity.end.bracket.square.css,punctuation.definition.entity.begin.bracket.square.css,punctuation.section.property-list.begin.bracket.curly.scss,punctuation.section.property-list.end.bracket.curly.scss,punctuation.section.function.scss,punctuation.definition.attribute-selector.begin.bracket.square.scss,punctuation.definition.attribute-selector.end.bracket.square.scss,punctuation.definition.pseudo-class.begin.bracket.round.css,punctuation.definition.pseudo-class.end.bracket.round.css,punctuation.definition.begin.entity.css,punctuation.definition.end.entity.css,',
       settings: {
@@ -787,7 +751,7 @@ export const light = {
         foreground: '#888888D9',
       },
     },
-    //#8E8E90 normal (In Italic : #8E8E90 italic)
+
     {
       scope: 'variable.parameter.url.scss,',
       settings: {
@@ -795,9 +759,8 @@ export const light = {
         foreground: '#8E8E90',
       },
     },
-    //#8E8E90 normal
+
     {
-      name: 'Punctuation colon 冒号 : | PHP、julia里的 => 类似JS里的对象里的冒号: | ',
       scope:
         'keyword.operator.range,punctuation.separator.key-value,keyword.operator.type.annotation,punctuation.definition.section.case-statement,punctuation.separator.colon,punctuation.separator.other,punctuation.definition.parameters,punctuation.definition.constant.ruby,punctuation.separator.dictionary.key-value,punctuation.section.function.begin.python,meta.property-list.css.sass,sass-script-maps,punctuation.colon,punctuation.separator.initializers,keyword.operator.key-value,punctuation.separator.label,keyword.operator.colon,punctuation.separator.annotation.python,source.ts.embedded.html meta.block.ts,keyword.operator.key.php,keyword.operator.arrow.julia,keyword.operator.ternary.dart,meta.property-list.css punctuation.separator.key-value.css,source.css.embedded.html punctuation.separator.key-value.css,',
       settings: {
@@ -806,7 +769,6 @@ export const light = {
       },
     },
     {
-      name: 'Illegal;非法的 | Broken | Deprecated;不赞成的 | ',
       scope:
         'invalid.illegal,invalid.illegal.expected-dictionary-separator.json,invalid.broken,invalid.deprecated,',
       settings: {
@@ -815,7 +777,6 @@ export const light = {
       },
     },
     {
-      name: 'jsx里的文字 | ',
       scope: 'meta.jsx.children,',
       settings: {
         fontStyle: '',
@@ -823,7 +784,6 @@ export const light = {
       },
     },
     {
-      name: 'punctuation;html标签里的</> = | punctuation.definition.markdown;Markdown里引用块符号 ``` | ',
       scope:
         'punctuation.definition.tag,meta.tag.inline.any,meta.tag.block.any,meta.tag.any ,meta.tag.structure.any,meta.tag.metadata.script,punctuation.definition.tag.begin,punctuation.definition.tag.end,meta.tag.preprocessor.xml,punctuation.separator.key-value.html,meta.tag.metadata.style.html,meta.tag.attributes.js keyword.operator.assignment,meta.tag.other.html,meta.tag.inline.any.html source.directive.vue meta.brace,punctuation.definition.tag.begin source.js,punctuation.definition.tag.end source.js,punctuation.definition.tag source,source.vue,meta.attribute-selector.scss keyword.operator.scss,punctuation.separator.equals,meta.tag.svg,text.xml.svg meta.tag.style,punctuation.definition.markdown,meta.tag keyword.operator.assignment,meta.tag.xml,punctuation.separator.operator.css,',
       settings: {
@@ -832,7 +792,6 @@ export const light = {
       },
     },
     {
-      name: 'Punctuation comma 逗号 ,',
       scope:
         'punctuation.separator.comma,punctuation.separator.delimiter,punctuation.separator.list.comma,punctuation.separator.parameter,meta.array.php,punctuation.separator.parameters,punctuation.separator.arguments.python,punctuation.separator.object,meta.function.method.with-arguments.ruby,punctuation.comma,punctuation.separator.element.python,comment.punctuation.comma.sass,meta.at-rule.keyframes.body.css,meta.delimiter.object.comma,punctuation.other.comma,meta.math.block.latex support.function.general.tex,',
       settings: {
@@ -840,18 +799,16 @@ export const light = {
         foreground: '#25262BF2',
       },
     },
-    //#A9A9AA italic
+
     {
-      name: 'comment | 注释',
       scope: 'comment,comment markup.link,punctuation.definition.comment,markup.quote.markdown',
       settings: {
         fontStyle: 'italic',
         foreground: '#A9A9AA',
       },
     },
-    //#A9A9AA normal
+
     {
-      name: 'Punctuation Terminator 分号 ; | Punctuation Definition Comment | 注释的定义符号 // /* */ | css里未写完整的属性名 | Markdown里引用块符号 ```',
       scope:
         'punctuation.terminator,punctuation.terminator.statement,punctuation.terminator.rule,punctuation.terminator.expression,punctuation.separator.statement,meta.using-namespace-declaration.cpp,invalid.deprecated.semicolon,constant.character.end,punctuation.semi,punctuation.definition.comment,meta.property-name.css,',
       settings: {
@@ -859,16 +816,15 @@ export const light = {
         foreground: '#A9A9AA',
       },
     },
-    //#A9A9AA underline
+
     {
-      name: 'Illegal | 无效的 | Unimplemented | 未生效的',
       scope: 'invalid,invalid.unimplemented,',
       settings: {
         fontStyle: 'underline',
         foreground: '#A9A9AA',
       },
     },
-    //#4480F4 normal
+
     {
       scope: 'log.info,token.info-token,',
       settings: {
@@ -876,7 +832,7 @@ export const light = {
         foreground: '#4480F4',
       },
     },
-    //#FF6D12 normal
+
     {
       scope: 'token.warn-token,log.warning',
       settings: {
@@ -884,7 +840,7 @@ export const light = {
         foreground: '#FF6D12',
       },
     },
-    //#EC0000 normal
+
     {
       scope: 'token.error-token,log.error,',
       settings: {
@@ -892,7 +848,7 @@ export const light = {
         foreground: '#EC0000',
       },
     },
-    //#EC0000 normal
+
     {
       scope: 'keyword.other.debugger',
       settings: {
@@ -901,7 +857,6 @@ export const light = {
       },
     },
     {
-      name: 'diff',
       scope:
         'meta.diff.range.unified,meta.diff.header.from-file,meta.diff.header.to-file,punctuation.definition.from-file.diff,punctuation.definition.to-file.diff',
       settings: {
@@ -909,14 +864,12 @@ export const light = {
       },
     },
     {
-      name: 'inserted.diff',
       scope: 'markup.inserted.diff',
       settings: {
         foreground: '#44C145',
       },
     },
     {
-      name: 'deleted.diff',
       scope: 'markup.deleted.diff',
       settings: {
         foreground: '#f14c4c',
@@ -926,7 +879,6 @@ export const light = {
 };
 
 export const dark = {
-  name: 'Eva Dark',
   type: 'dark',
   $schema: 'vscode://schemas/color-theme',
   colors: {
@@ -1099,9 +1051,9 @@ export const dark = {
     'extensionBadge.remoteForeground': '#ffffff',
     'extensionButton.prominentForeground': '#fff',
     'extensionButton.prominentBackground': '#499149',
-    'extensionButton.prominentHoverBackground': '#598DEFE6' /*377337深绿色*/,
+    'extensionButton.prominentHoverBackground': '#598DEFE6',
     'extensionButton.separator': '#DCDFE5',
-    'extensionIcon.preReleaseForeground': '#56B7C3', //#7BBE54
+    'extensionIcon.preReleaseForeground': '#56B7C3',
     'extensionIcon.sponsorForeground': '#F02B77',
     'extensionIcon.starForeground': '#FF8A4C',
     focusBorder: '#4480F4',
@@ -1111,7 +1063,7 @@ export const dark = {
     'gitDecoration.deletedResourceForeground': '#F14C4C',
     'gitDecoration.ignoredResourceForeground': '#676E95',
     'gitDecoration.modifiedResourceForeground': '#A78CFA',
-    'gitDecoration.renamedResourceForeground': '#E4BF7F' /*518DFF蓝色*/,
+    'gitDecoration.renamedResourceForeground': '#E4BF7F',
     'gitDecoration.submoduleResourceForeground': '#FF6AB3',
     'gitDecoration.stageDeletedResourceForeground': '#E06C75',
     'gitDecoration.stageModifiedResourceForeground': '#D365E5',
@@ -1284,36 +1236,36 @@ export const dark = {
     'statusBarItem.remoteForeground': '#ffffff',
     'statusBarItem.warningBackground': '#21252B',
     'statusBarItem.warningForeground': '#ff8a4c',
-    'symbolIcon.arrayForeground': '#C1C2C5', //颜色同变量
+    'symbolIcon.arrayForeground': '#C1C2C5',
     'symbolIcon.booleanForeground': '#CF68E1',
     'symbolIcon.classForeground': '#56B7C3',
     'symbolIcon.constantForeground': '#FF9070',
     'symbolIcon.constructorForeground': '#6495EE',
     'symbolIcon.enumeratorMemberForeground': '#FF9070',
     'symbolIcon.eventForeground': '#6495EE',
-    'symbolIcon.fieldForeground': '#E06C75', //颜色同tag
-    'symbolIcon.fileForeground': '#8E99B1', //颜色同sideBar.foreground
-    'symbolIcon.folderForeground': '#9DA5B3', //颜色同sideBarSectionHeader.foreground
+    'symbolIcon.fieldForeground': '#E06C75',
+    'symbolIcon.fileForeground': '#8E99B1',
+    'symbolIcon.folderForeground': '#9DA5B3',
     'symbolIcon.functionForeground': '#6495EE',
     'symbolIcon.interfaceForeground': '#56B7C3',
-    'symbolIcon.keyForeground': '#C1C2C5', //颜色同变量
+    'symbolIcon.keyForeground': '#C1C2C5',
     'symbolIcon.keywordForeground': '#A78CFA',
     'symbolIcon.methodForeground': '#6495EE',
     'symbolIcon.moduleForeground': '#E06C75',
     'symbolIcon.namespaceForeground': '#E06C75',
     'symbolIcon.nullForeground': '#CF68E1',
     'symbolIcon.numberForeground': '#FF9070',
-    'symbolIcon.objectForeground': '#C1C2C5', //颜色同变量
+    'symbolIcon.objectForeground': '#C1C2C5',
     'symbolIcon.operatorForeground': '#56B7C3',
     'symbolIcon.packageForeground': '#E06C75',
-    'symbolIcon.propertyForeground': '#8A97C3', //这条既包含css属性，也包含对象属性
-    'symbolIcon.snippetForeground': '#A78CFA', //颜色同keyword
+    'symbolIcon.propertyForeground': '#8A97C3',
+    'symbolIcon.snippetForeground': '#A78CFA',
     'symbolIcon.stringForeground': '#98c379',
     'symbolIcon.structForeground': '#56B7C3',
-    'symbolIcon.textForeground': '#676E95', //颜色同注释
-    'symbolIcon.typeParameterForeground': '#FF6AB3', //颜色同数据类型
+    'symbolIcon.textForeground': '#676E95',
+    'symbolIcon.typeParameterForeground': '#FF6AB3',
     'symbolIcon.unitForeground': '#FF9070',
-    'symbolIcon.variableForeground': '#C1C2C5', //颜色同变量
+    'symbolIcon.variableForeground': '#C1C2C5',
     'tab.activeBackground': '#282c34',
     'tab.activeBorder': '#282c3400',
     'tab.activeBorderTop': '#282c3400',
@@ -1388,7 +1340,6 @@ export const dark = {
   semanticHighlighting: false,
   tokenColors: [
     {
-      name: 'new | CSS from to,js from | Keyword | js module | ',
       scope:
         'keyword.operator.new,keyword.other.new,storage.modifier.c,keyword.control.directive.define,keyword.control.def,keyword.control.class,keyword.control.module,keyword.control.new,keyword.preprocessor.define,meta.preprocessor.cs punctuation.separator.hash.cs,keyword.control.directive.undef,keyword.other.fn,storage.type.rust,storage.modifier.extern,storage.modifier.const,storage.modifier.extends,storage.modifier.ts,keyword.control.at-rule,keyword.other.let,keyword.other.instance,keyword.other.newtype,keyword.other.data,keyword.other.module,keyword.other,keyword.other.preprocessor,keyword.cs,entity.other.keyframe-offset,keyword.control.import,keyword.other.import,keyword.import,keyword.control.from,keyword.control.directive.include,keyword.other.package,keyword.other.class,keyword.other.namespace,keyword.other.enum,keyword.other.operator-decl,keyword.other.interface,keyword.preprocessor,keyword.other.delegate,storage.type.cpp,storage.type.namespace,storage.type.language.primitive.cpp,storage.type.struct,storage.type.template,support.type.built-in.posix-reserved.pthread,keyword.other.typedef,storage.modifier.dart,meta.class.identifier.java storage.modifier.java,meta.enum.java storage.modifier.java,storage.type.modifier,storage.modifier,keyword.control.as,keyword.other.phpdoc,keyword.other.var,storage.modifier.java,meta.var.expr,storage.type.function,keyword.function,keyword.var,keyword.const,keyword.channel,keyword.struct,keyword.other.struct,keyword.map,keyword.reserved,storage.type.class,storage.type.php,storage.type.interface,storage.type.object,keyword.declaration,storage.type.enum,storage.type.type,storage.type.const,storage.modifier.specifier,storage.type.class.jsdoc,support.module.node.js,support.type.object.module.js,support.type.object.module.ts,support.module.node.ts,keyword.control.preamble.latex,keyword.control.cite.latex,keyword.control.label.latex,keyword.storage.modifier,',
       settings: {
@@ -1397,7 +1348,6 @@ export const dark = {
       },
     },
     {
-      name: '-> | $',
       scope:
         'keyword.operator.arrow.skinny,keyword.operator.interpolation,keyword.operator.borrow,',
       settings: {
@@ -1406,7 +1356,6 @@ export const dark = {
       },
     },
     {
-      name: 'Tex: punctuation.definition.keyword',
       scope:
         'punctuation.definition.block.tag.jsdoc,keyword.control.directive.include punctuation.definition.directive,keyword.control.directive.undef punctuation.definition.directive,keyword.control.directive.define punctuation.definition.directive,punctuation.definition.directive,punctuation.definition.keyword.latex,keyword.control punctuation.definition.function.latex,keyword.control punctuation.definition.keyword.latex,',
       settings: {
@@ -1414,9 +1363,8 @@ export const dark = {
         foreground: '#A78CFA',
       },
     },
-    //#6495EE normal (In Bold : #6495EE bold, In Italic : #6495EE italic)
+
     {
-      name: 'support.function | try...catch | Functions,pthread | 单独的函数,C++线程 | less sass里的自定义的代码块名 类似函数 | [VSCODE-CUSTOM] Markdown Link Title/Description | ',
       scope:
         'meta.function-call,support.function.construct.output,invalid.deprecated.gradient.function.css,invalid.deprecated.function.css,support.function.builtin.python,support.function.go,entity.name.function.macro,meta.attribute.rust,new.expr meta.function-call support.class.builtin,new.expr meta.function-call support.class,keyword.operator.function,support.function.dom,support.function.console,support.function.any-method.builtin.url,support.function.any-method.builtin,support.function.url,support.function.misc,support.function.transform,support.function.calc,support.function.var,support.function.string,support.function.basic_functions,support.function.array,support.function.construct,support.function.datetime,support.function.file,support.function.network,support.function.session,support.function.mail,support.function.filter,support.function.errorfunc,support.function.mysql,support.function.php_odbc,support.function.xml,support.function.math,entity.name.type.lifetime.rust,entity.name.class,meta.method.declaration,keyword.control.trycatch,keyword.control.catch-exception,keyword.operator.cast,keyword.operator.big-arrow,entity.name.function,support.type.pthread,meta.block.class.cpp meta.body.class.cpp meta.block.class.cpp entity.name.function.definition.special.constructor.cpp,support.function,keyword.operator.sizeof,meta.function-call.python support.type.python,meta.function-call keyword.operator.expression.import,entity.name.type.js,new.expr.ts,entity.other.attribute-name.class.mixin,support.function.be.latex,keyword.other.special-method,',
       settings: {
@@ -1424,27 +1372,24 @@ export const dark = {
         foreground: '#6495EE',
       },
     },
-    //#6495EE normal (In Italic : #6495EE italic)
+
     {
-      name: 'markdown link title',
       scope: 'string.other.link.title.markdown,string.other.link.description.markdown,',
       settings: {
         fontStyle: '',
         foreground: '#6495EE',
       },
     },
-    //#6495EE normal (In Bold : #6495EE bold)
+
     {
-      name: 'arrow | 箭头函数 | ',
       scope: 'storage.type.function.arrow,keyword.operator.arrow,keyword.operator.closure,',
       settings: {
         fontStyle: '',
         foreground: '#6495EE',
       },
     },
-    //#6495EE normal
+
     {
-      name: 'js template-expression;模板字符串里的${};vue里的{{}} | Markdown里引用块符号 > | [VSCODE-CUSTOM] Markdown List Punctuation Definition;Markdown里定义有序项和无序项的 - * + 1. 2. | Tex: punctuation definition Function | ',
       scope:
         'punctuation.definition.template-expression.begin,punctuation.definition.template-expression.end,punctuation.definition.generic.begin.html,punctuation.definition.generic.end.html,punctuation.definition.interpolation.begin.bracket,punctuation.definition.interpolation.end.bracket,support.constant.handlebars.wxml,constant.character.format.placeholder.other.python,punctuation.definition.interpolation.begin.html,punctuation.definition.interpolation.end.html,punctuation.definition.interpolation,punctuation.definition.lifetime.rust,beginning.punctuation.definition.quote.markdown,beginning.punctuation.definition.list.markdown,punctuation.definition.string.begin.markdown,punctuation.definition.string.end.markdown,punctuation.definition.function.latex,punctuation.definition.function.tex,punctuation.definition.link.description.begin.markdown,punctuation.definition.link.description.end.markdown,punctuation.section.embedded.begin.ruby,punctuation.section.embedded.end.ruby source.ruby,',
       settings: {
@@ -1452,9 +1397,8 @@ export const dark = {
         foreground: '#6495EE',
       },
     },
-    //#56B7C3 normal (In Italic : #56B7C3 Italic)
+
     {
-      name: 'Attributes | pseudo-class;css里的伪类 hover等 和 伪类选择器 如nth-child() | Classes | ',
       scope:
         'entity.other.attribute-name,invalid.deprecated.entity.other.attribute-name,entity.name.tag.custom.scss,storage.type.java,entity.other.attribute-name.pseudo-class.css,support.type.property-name.media.css,support.constant.media.css,source.css.less entity.name.tag.custom.css,keyword.operator.gradient.css,entity.name.type,keyword.operator.expression,entity.other.inherited-class,entity.name.type.class,support.class,entity.name.type.interface,support.class.dart,entity.name.scope-resolution,',
       settings: {
@@ -1462,9 +1406,8 @@ export const dark = {
         foreground: '#56B7C3',
       },
     },
-    //#56B7C3 normal
+
     {
-      name: 'keyword Operators increment decrement | 关键字 运算符 + - * / | 自增++ 自减-- | += -= | less sass里的关键字(用于+ -号) | string operator in php | php的string操作符 | 定义namespace符号 | ::',
       scope:
         'keyword.operator,keyword.operator.arithmetic,keyword.operator.decrement,keyword.operator.increment,keyword.operator.assignment.compound,keyword.operator.less,meta.property-list.css,keyword.operator.sass,keyword.operator.increment-decrement,keyword.operator.css,entity.name.tag.wildcard.scss,keyword.operator.string,keyword.operator.bitwise,keyword.operator.assignment.augmented,storage.type.variable.ruby,keyword.operator.assignment.arithmetic,punctuation.definition.list.begin.markdown,variable.language.import-all,constant.language.import-export-all,storage.modifier.reference,storage.modifier.pointer,keyword.operator.assignment.rust,meta.directive.vue,punctuation.definition.quote.begin.markdown,meta.format.brace constant,meta.selector invalid.deprecated.combinator,meta.selector,storage.type.operator,entity.name.function.infix.haskell,constant.other.operator.infix.haskell,punctuation.separator.annotation.result.python,keyword.operator.string.php,entity.name.type.struct,keyword.interface,entity.name.type.delegate,storage.type.cs,support.class.builtin,support.type.graphql,punctuation.separator.namespace,keyword.operator.namespace,entity.other.attribute-name.pseudo-element.css punctuation.definition.entity.css,entity.other.attribute-name.pseudo-class.css punctuation.definition.entity.css,punctuation.attribute-shorthand.event.html,punctuation.attribute-shorthand.bind.html,punctuation.math.operator.latex,support.constant.mathematical-symbols.scss,meta.attribute.directive.vue,keyword.operator.relation.types.julia,keyword.operator.borrow.and.rust,punctuation.separator.key-value.css,',
       settings: {
@@ -1472,9 +1415,8 @@ export const dark = {
         foreground: '#56B7C3',
       },
     },
-    //#F02B77 normal
+
     {
-      name: 'js ts this super,python self,C++ delete',
       scope:
         'variable.language.self,variable.language.this,variable.language.super,variable.language.special.self.python,variable.language.dart,keyword.operator.delete,keyword.operator.expression.delete,keyword.other.important,',
       settings: {
@@ -1482,9 +1424,8 @@ export const dark = {
         foreground: '#F02B77',
       },
     },
-    //#FF6AB3 normal
+
     {
-      name: 'typeof | support type ts |  class | ts里默认数据类型 | 自定义数据类型 | Markdown里引用语言声明 | ',
       scope:
         'support.type,keyword.operator.expression.typeof,keyword.other.typeof,support.type.primitive,support.type.builtin,entity.name.type.instance,storage.type.string,storage.type.numeric,storage.type.boolean,storage.type.primitive,meta.method.identifier,entity.other.inherited-classentity.name.type.interface,meta.return.type,meta.type.parameters,keyword.interface,storage.type.generic,keyword.type,entity.name.type.type-parameter,storage.type.object.array,entity.name.type.delegate,storage.type.c,meta.declaration.dart,meta.type.declaration,meta.block.ts,meta.class-struct-block.cpp entity.name.type.cpp,meta.function.definition.parameters.cpp storage.type.language.primitive.cpp,meta.function.definition.parameters.cpp storage.type.struct.cpp,meta.function.constructor.cpp storage.type.language.primitive.cpp,storage.type.template.argument,entity.name.type.numeric.rust,storage.modifier.mut,entity.name.type.primitive,storage.type.built-in,support.type.built-in.posix-reserved,keyword.other.type,storage.type.haskell,meta.method.identifier.java storage.type.java,support.type.python,fenced_code.block.language,',
       settings: {
@@ -1492,9 +1433,8 @@ export const dark = {
         foreground: '#FF6AB3',
       },
     },
-    //#FF9070 normal (In Italic : #FF9070 Italic)
+
     {
-      name: 'number,unit,数字 | 单位 | constant,非数字的常量 | enum枚举里的元素,Infinity | id,symbol in C# | HTML行间的id和CSS里的id名 | C#中预处理器指令创建符号常量 | URL,math | ',
       scope:
         'constant.numeric,entity.other.keyframe-offset.percentage.css,keyword.other.unit,support.constant.dom,support.constant.property.math,support.constant.ext,support.constant.core,entity.name.function.preprocessor.c,constant.other.js,meta.at-rule.keyframes.scss entity.other.attribute-name.scss,constant,variable.other.enummember,constant.other.enum,entity.name.variable.enum-member,constant.language.infinity,text.log constant.language,meta.attribute.id.html entity.other.attribute-name.html,entity.other.attribute-name.id,entity.name.variable.preprocessor.symbol,variable.other.constant.object,',
       settings: {
@@ -1502,9 +1442,8 @@ export const dark = {
         foreground: '#FF9070',
       },
     },
-    //#FF9070 normal
+
     {
-      name: '正则字符串里的符号 | ',
       scope:
         'constant.other.character-class.regexp,constant.other.character-class.range.regexp,constant.other.character-class.set.regexp,support.constant,support.constant.math,support.constant.json,entity.other.attribute-name.id.css punctuation.definition.entity.css,',
       settings: {
@@ -1512,9 +1451,8 @@ export const dark = {
         foreground: '#FF9070',
       },
     },
-    //#E4BF7F normal (In Italic : #E4BF7F Italic)
+
     {
-      name: 'variable.parameter,keyframe-list,sass,less里的变量 | css3里的关键帧 | Tex: \\label { } | markup bold | Markdown里的bold | ',
       scope:
         'variable.parameter,token.variable.parameter,variable.other.jsdoc,variable.language.arguments,function.parameter,entity.name.variable.parameter,meta.function.c,punctuation.vararg-ellipses,variable.other.block.ruby,meta.arguments,entity.name.type.template,meta.type.parameters entity.name.type,meta.parameters,meta.function.parameter variable.other,variable.other.less,variable.other.sass,variable.scss,source.sass variable.other,variable.argument.css,variable.parameter.function.latex,variable.parameter.definition.label.latex,markup.bold.markdown,meta.function.definition variable.other,',
       settings: {
@@ -1522,9 +1460,8 @@ export const dark = {
         foreground: '#E4BF7F',
       },
     },
-    //#E4BF7F normal
+
     {
-      name: 'regexp ^ ?: $ + | ',
       scope:
         'keyword.operator.negetion.regexp,keyword.control.anchor.regexp,punctuation.definition.group.capture.regexp,keyword.operator.quantifier.regexp,punctuation.definition.bold.markdown,',
       settings: {
@@ -1532,9 +1469,8 @@ export const dark = {
         foreground: '#E4BF7F',
       },
     },
-    //#98C379 normal (In Italic : #98C379 Italic)
+
     {
-      name: 'variable.parameter | css里url文件引用的链接 | Strings | Attribute class;css里的class名 | font-name | css里字体 如 微软雅黑 | [VSCODE-CUSTOM] Markdown Inline Raw | [VSCODE-CUSTOM] Markdown Link/Image | ',
       scope:
         'variable.parameter.url,string,markup.inline.raw.string,text.html.vue-html meta.object-literal.key,meta.preprocessor.cs,text.html.vue-html meta.object-literal.key string.quoted,entity.other.attribute-name.class.css,selector.sass,entity.other.attribute-name.parent-selector.css,meta.at-rule.extend.scss,string.other.math.tex,support.constant.font-name,markup.inline.raw.markdown,markup.underline.link.markdown,markup.underline.link.image.markdown,',
       settings: {
@@ -1542,9 +1478,8 @@ export const dark = {
         foreground: '#98C379',
       },
     },
-    //#98C379 normal
+
     {
-      name: 'Regular Expressions;正则表达式 | ',
       scope:
         'punctuation.definition.metadata.markdown,string.regexp,source.jsonmeta.structure.dictionary.json>value.json>string.quoted.json,source.jsonmeta.structure.array.json>value.json>string.quoted.json,source.jsonmeta.structure.dictionary.json>value.json>string.quoted.json>punctuation,source.jsonmeta.structure.array.json>value.json>string.quoted.json>punctuation,string.quoted source,punctuation.definition.entity.css,meta.attribute-selector.scss,string invalid.illegal,string.other.math.tex,punctuation.definition.string.begin.tex,punctuation.definition.string.end.tex,punctuation.definition.string,text.html.vue-html meta.object-literal.key punctuation.definition.string,string punctuation.attribute-shorthand.bind.html,string punctuation.attribute-shorthand.event.html,punctuation.definition.string.template.begin,punctuation.definition.string.template.end,',
       settings: {
@@ -1552,9 +1487,8 @@ export const dark = {
         foreground: '#98C379',
       },
     },
-    //#E06C75 normal (In italic: #E06C75 italic)
+
     {
-      name: 'module | 模块 | 对象属性名 | namespace | dom,C系语言的命名空间 | console输出台 | pseudo-element;css里的伪元素 before after | [VSCODE-CUSTOM] Markdown headings;Markdown里的标题 和 定义标题的# | section | ',
       scope:
         'entity.name.type.module,entity.name.package,variable.other.property,variable.other.object.property,variable.other.constant.property,entity.name.type.option,entity.name.label,variable.other.object.property.cs,entity.name.variable.tuple-element.cs,meta.object-literal.key,meta.object-literal.key string.quoted,variable.object.property,support.type.map.key,meta.at-rule.each.scss,meta.attribute.python,support.variable.dom,support.variable.property,support.variable.property.dom,storage.modifier.import,constant.other.php,entity.name.type.namespace,variable.other.member.c,meta.using-namespace-declaration.cpp entity.name.type.cpp,meta.class-struct-block.cpp meta.namespace-block.cpp entity.name.type.cpp,variable.other.source.dart,entity.name.namespace,entity.name.module,entity.name.type.result.rust,entity.name.scope-resolution.namespace,support.class.console,meta.use.rust,keyword.other.preprocessor.extension,entity.other.attribute-name.pseudo-element.css,entity.name.section.markdown,markup.heading,source.json meta.structure.dictionary.json > string.quoted.json,support.type.property-name.json,support.function.section.latex,support.function.general.tex,meta.object-literal.key punctuation.definition.string,variable.other.constant.object.property,',
       settings: {
@@ -1562,9 +1496,8 @@ export const dark = {
         foreground: '#E06C75',
       },
     },
-    //#E06C75 normal
+
     {
-      name: 'Tags;HTML的标签名 | react组件 | Tex: punctuation.definition.function | 正则表达式里的关键字 | ',
       scope:
         'entity.name.tag,entity.other.attribute-name.parent-selector.css punctuation.definition.entity.css,punctuation.definition.heading.markdown,support.function.general.tex punctuation.definition.function.tex,support.function.section.latex punctuation.definition.function.latex,punctuation.support.type.property-name.begin.json.comments,punctuation.support.type.property-name.end.json.comments,support.class.component,keyword.operator.optional,punctuation.section.embedded.begin.php,punctuation.section.embedded.end.php,punctuation.section.embedded.end.php source.php,string.regexp keyword.other,entity.name.tag.custom.css,',
       settings: {
@@ -1572,9 +1505,8 @@ export const dark = {
         foreground: '#E06C75',
       },
     },
-    //#CF68E1 normal (In bold : #CF68E1 bold, In Italic : #CF68E1 Italic)
+
     {
-      name: 'instanceof | Keyword Control,Using | Constant | 语言常量,包含 true false null undefined等 |  void | loop | ',
       scope:
         'keyword.operator.expression.instanceof,keyword.operator.instanceof,keyword.operator.expression.in,keyword.operator.expression.of,keyword.control,keyword.other.using,keyword.preprocessor.elif,keyword.preprocessor.if,keyword.preprocessor.else,keyword.preprocessor.endif,keyword.control.directive,punctuation.separator.hash,keyword.package,keyword.control.flow,keyword.input,keyword.type.graphql,keyword.cmake,keyword.control.rust,keyword.other.rust,keyword.control.default,keyword.control.export,keyword.other.where,keyword.other.forall,keyword.other.deriving,keyword.other.qualified,keyword.other.hiding,keyword.other.in,constant.language,constant.language.boolean,keyword.operator.expression.void,keyword.control.loop,keyword.control.ref.latex,keyword.other.item.latex,keyword.operator.relation.in,storage.type.primitive.dart,',
       settings: {
@@ -1582,9 +1514,8 @@ export const dark = {
         foreground: '#CF68E1',
       },
     },
-    //#CF68E1 normal (In bold : #CF68E1 bold)
+
     {
-      name: 'keyword Operators ternary,logical,comparison,relational,tilde | 三元运算符 ? : | logical | == === != !== | < > <= >= | 正则表达式里的 或| | 波浪号~',
       scope:
         'keyword.operator.boolean,keyword.operator.relation,keyword.operator.ternary,keyword.control.ternary,keyword.operator.logical,keyword.operator.comparison,keyword.operator.relational,keyword.operator.or.regexp,keyword.operator.class,keyword.operator.type,keyword.operator.other.ruby,keyword.operator.conditional,punctuation.separator.question-mark,keyword.operator.null-coalescing,punctuation.tilde,punctuation.separator.pointer-access,keyword.operator.dart,keyword.operator.nulltype,keyword.operator.arrow.haskell,keyword.operator.arrow.left.haskell,keyword.control.directive punctuation.definition.directive,keyword.control.equation.align.latex,keyword.operator.bitwise.dart,',
       settings: {
@@ -1592,9 +1523,8 @@ export const dark = {
         foreground: '#CF68E1',
       },
     },
-    //#CF68E1 normal
+
     {
-      name: 'Tex: New Line Label \\',
       scope:
         'keyword.control.equation.newline.latex,keyword.control.newline.tex,keyword.other.item.latex punctuation.definition.keyword.latex,token.debug-token',
       settings: {
@@ -1602,9 +1532,8 @@ export const dark = {
         foreground: '#CF68E1',
       },
     },
-    //#C57BDB normal (In italic : #C57BDB italic)
+
     {
-      name: 'support.constant.property-value.scss | css属性值常量 block inline inline-block none solid等 | ',
       scope:
         'support.constant.property-value.scss,support.constant.property-value.css,support.constant.vendored.property-value.css,source.css keyword.other.default,',
       settings: {
@@ -1612,27 +1541,24 @@ export const dark = {
         foreground: '#C57BDB',
       },
     },
-    //#C57BDB italic
+
     {
-      name: 'Italic;Markdown里的斜体字 | ',
       scope: 'markup.italic',
       settings: {
         fontStyle: 'italic',
         foreground: '#C57BDB',
       },
     },
-    //#C57BDB normal
+
     {
-      name: 'Markdown里的定义斜体字的符号',
       scope: 'punctuation.definition.italic,',
       settings: {
         fontStyle: '',
         foreground: '#C57BDB',
       },
     },
-    //#C1C2C5 normal (In Italic : #C1C2C5 Italic)
+
     {
-      name: 'Variable | 变量 | css color standard name;css 颜色名词 red orange pink plum 等 | Tex: Constant Math | ',
       scope:
         'variable.other,support.variable,meta.definition.variable,variable.other.object,variable.other.readwrite,entity.name.type.enum,meta.method.body,entity.name.variable,meta.block.c,meta.class-struct-block,meta.item-access.python,meta.function-call.arguments.python,meta.item-access.arguments.python,variable.parameter.keyframe-list.css,meta.property-value.css,meta.property-value.scss,entity.name.tag.custom,entity.name.function.scss,variable,meta.function-call.c,entity.name.function.preprocessor,meta.parens,support.constant.color.w3c-standard-color-name,support.constant.color.w3c-extended-color-name,constant.other.color.rgb-value.hex,constant.other.rgb-value,support.constant.color.w3c-extended-color-name.css,text.tex.latex constant.other.math.tex,constant.other.general.math.tex,constant.other.general.math.tex,constant.character.math.tex,constant.other.reference.citation.latex,code-runner.output,',
       settings: {
@@ -1640,9 +1566,8 @@ export const dark = {
         foreground: '#C1C2C5',
       },
     },
-    //#C1C2C5 normal (In Light : #25262B)
+
     {
-      name: 'Tex: Math \\\\',
       scope:
         'punctuation.definition.constant.math.tex,constant.other.math.tex punctuation.definition.function.tex,support.class.math.block.environment.latex punctuation.definition.function.tex,source,source.c,source.cpp,source.ruby,source.go,source.dart,source.python,source.css.less,source.js,punctuation.definition.link.title.begin.markdown,punctuation.definition.link.title.end.markdown,',
       settings: {
@@ -1650,9 +1575,8 @@ export const dark = {
         foreground: '#C1C2C5',
       },
     },
-    //#C1C2C5 normal (In Light : #626264)
+
     {
-      name: 'text;HTML标签里的文字;Markdown里书写的普通文字',
       scope:
         'text.html.basic,text.html.markdown,meta.paragraph.markdown,text.html.php,text.html.derivative,text.html.wxml,text.xml,text.html,source.ignore,source.nginx,text,text.tex.latex,entity.name.section.latex,',
       settings: {
@@ -1660,9 +1584,8 @@ export const dark = {
         foreground: '#C1C2C5',
       },
     },
-    //#838FA7 bold
+
     {
-      name: 'Punctuation accessor 点号 .',
       scope:
         'keyword.operator.dots,punctuation.accessor,punctuation.separator.period,punctuation.separator.dot-access,punctuation.separator.method,punctuation.other.period,punctuation.dot,meta.delimiter.property.period,keyword.operator.access.dot,keyword.operator.period',
       settings: {
@@ -1670,9 +1593,8 @@ export const dark = {
         foreground: '#838FA7',
       },
     },
-    //#838FA7 normal
+
     {
-      name: 'meta.parameters;scope值不规则的点. 引号 | keyword Operators assignment;等号 = (不包括HTML标签里的=号,把+= -=包含进来了,然后单独设) | block,embedded,definition,bracket,typeparameters;大括号 {},中括号[],圆括号(),尖括号<> | ',
       scope:
         'keyword.operator.update,meta.bracket,meta.parameters.js,keyword.operator.assignment,keyword.operator.assignment.equal,keyword.operator.eq,punctuation.section.block.begin.bracket,punctuation.section.block.end.bracket,punctuation.definition.block,punctuation.section.embedded.begin,punctuation.section.embedded.end,meta.brace,punctuation.bracket,punctuation.definition.parameters.ruby,punctuation.definition.parameters.begin,punctuation.definition.parameters.end,punctuation.section.function.begin.bracket,punctuation.section.function.end.bracket,punctuation.definition.typeparameters.begin,punctuation.definition.typeparameters.end,punctuation.section.array.end,punctuation.section.array.begin,punctuation.definition.array.end,punctuation.definition.array.begin,punctuation.section.scope.end,punctuation.section.scope.begin,meta.parameter.object-binding-pattern,punctuation.definition.binding-pattern.object,punctuation.definition.arguments.end,punctuation.definition.arguments.begin,punctuation.definition.begin.bracket,punctuation.definition.end.bracket,punctuation.curlybrace.open,punctuation.curlybrace.close,punctuation.parenthesis.open,punctuation.parenthesis.close,punctuation.squarebracket.open,,punctuation.squarebracket.close,punctuation.section.method.begin,punctuation.section.method.end,punctuation.section.class.begin,punctuation.section.class.end,punctuation.section.enum.begin,punctuation.section.enum.end,punctuation.section.parameters.begin.bracket,punctuation.section.parameters.end.bracket,punctuation.section.parens.begin.bracket,punctuation.section.parens.end.bracket,punctuation.section.arguments.begin.bracket,punctuation.section.arguments.end.bracket,punctuation.separator.arguments,punctuation.section.function.ruby,punctuation.definition.dictionary.begin,punctuation.definition.dictionary.end,punctuation.separator.dictionary.pair,punctuation.separator.array,punctuation.definition.map.begin.bracket,punctuation.definition.map.end.bracket,punctuation.section.function,punctuation.definition.parameters.end.bracket,punctuation.definition.parameters.begin.bracket,punctuation.section.property-list.begin.bracket,punctuation.section.property-list.end.bracket,punctuation.definition.list.begin,punctuation.definition.list.end,punctuation.definition.binding-pattern.array,punctuation.section.embedded.begin.ruby source.ruby,source.cs,punctuation.definition.function.body.begin.bracket,punctuation.definition.function.body.end.bracket,punctuation.definition.modules.begin,punctuation.definition.modules.end,constant.character.brace,punctuation.operation.graphql,punctuation.definition.optional.arguments.begin,punctuation.definition.optional.arguments.end,punctuation.definition.brackets,punctuation.math.begin.bracket,punctuation.math.end.bracket,punctuation.section.angle-brackets,keyword.operator.delete.array.bracket,punctuation.brackets.round,punctuation.brackets.curly,punctuation.brackets.square,punctuation.brackets.attribute,punctuation.definition.attribute,punctuation.brackets,punctuation.definition.bracket,punctuation.definition.character-class.regexp,meta.preprocessor.haskell,punctuation.paren,punctuation.brace,punctuation.parenthesis.begin,punctuation.parenthesis.end,punctuation.section.group.tex,punctuation.definition.arguments.begin.latex,punctuation.definition.arguments.end.latex,punctuation.definition.arguments.latex,meta.group.braces.tex,punctuation.math.begin.bracket.curly,punctuation.math.end.bracket.curly,punctuation.definition.begin.entity,punctuation.definition.end.entity,punctuation.separator.operator,',
       settings: {
@@ -1680,9 +1602,8 @@ export const dark = {
         foreground: '#838FA7',
       },
     },
-    //#8A97C3 normal (In Italic : #8A97C3 Italic)
+
     {
-      name: 'css Support type;css less sass属性名 如果不填就与support.type同色 | Tex: text | ',
       scope:
         'support.type.property-name.css,support.type.vendored.property-name.css,meta.at-rule.each.scss support.constant.property-value.css,source.css.scss,meta.text.normal.tex,meta.function.environment.frame.latex,meta.tag meta.attribute entity.name.label,',
       settings: {
@@ -1690,18 +1611,16 @@ export const dark = {
         foreground: '#8A97C3',
       },
     },
-    //#8A97C3 normal
+
     {
-      name: 'escape;转义字符',
       scope: 'constant.character.escape,constant.character.entity',
       settings: {
         fontStyle: '',
         foreground: '#8A97C3',
       },
     },
-    //#838FA7CC normal
+
     {
-      name: 'curly;CSS里的括号 {} [] ()',
       scope:
         'meta.brace.round.css,punctuation.section.property-list.begin.bracket.curly.css,punctuation.section.property-list.end.bracket.curly.css,punctuation.section.function.begin.bracket.round.css,punctuation.section.function.end.bracket.round.css,punctuation.section.media.begin.bracket.curly.css,punctuation.section.media.end.bracket.curly.css,punctuation.definition.parameters.begin.bracket.round.css,punctuation.definition.parameters.end.bracket.round.css,punctuation.section.keyframes.begin.bracket.curly.css,punctuation.section.keyframes.end.bracket.curly.css,punctuation.definition.entity.end.bracket.square.css,punctuation.definition.entity.begin.bracket.square.css,punctuation.section.property-list.begin.bracket.curly.scss,punctuation.section.property-list.end.bracket.curly.scss,punctuation.section.function.scss,punctuation.definition.attribute-selector.begin.bracket.square.scss,punctuation.definition.attribute-selector.end.bracket.square.scss,punctuation.definition.pseudo-class.begin.bracket.round.css,punctuation.definition.pseudo-class.end.bracket.round.css,punctuation.definition.begin.entity.css,punctuation.definition.end.entity.css,',
       settings: {
@@ -1709,7 +1628,7 @@ export const dark = {
         foreground: '#838FA7CC',
       },
     },
-    //#8E99B1 normal (In Italic : #8E99B1 italic)
+
     {
       scope: 'variable.parameter.url.scss,',
       settings: {
@@ -1717,9 +1636,8 @@ export const dark = {
         foreground: '#8E99B1',
       },
     },
-    //#8E99B1 normal
+
     {
-      name: 'Punctuation colon 冒号 : | PHP里的 => 类似JS里的对象里的冒号: | ',
       scope:
         'keyword.operator.range,punctuation.separator.key-value,keyword.operator.type.annotation,punctuation.definition.section.case-statement,punctuation.separator.colon,punctuation.separator.other,punctuation.definition.parameters,punctuation.definition.constant.ruby,punctuation.separator.dictionary.key-value,punctuation.section.function.begin.python,meta.property-list.css.sass,sass-script-maps,punctuation.colon,punctuation.separator.initializers,keyword.operator.key-value,punctuation.separator.label,keyword.operator.colon,punctuation.separator.annotation.python,source.ts.embedded.html meta.block.ts,keyword.operator.key.php,keyword.operator.arrow.julia,keyword.operator.ternary.dart,meta.property-list.css punctuation.separator.key-value.css,source.css.embedded.html punctuation.separator.key-value.css,',
       settings: {
@@ -1728,7 +1646,6 @@ export const dark = {
       },
     },
     {
-      name: 'Illegal;非法的 | Broken | Deprecated;不赞成的 | ',
       scope:
         'invalid.illegal,invalid.illegal.expected-dictionary-separator.json,invalid.broken,invalid.deprecated,',
       settings: {
@@ -1736,18 +1653,16 @@ export const dark = {
         foreground: '#8E99B1',
       },
     },
-    //#C1C2C5 normal (In Italic : #C1C2C5 italic)
+
     {
-      name: 'jsx里的文字 | ',
       scope: 'meta.jsx.children,',
       settings: {
         fontStyle: '',
         foreground: '#C1C2C5',
       },
     },
-    //#C1C2C5 normal
+
     {
-      name: 'punctuation;html标签里的</> = | punctuation.definition.markdown;Markdown里引用块符号 ``` | ',
       scope:
         'punctuation.definition.tag,meta.tag.inline.any,meta.tag.block.any,meta.tag.any ,meta.tag.structure.any,meta.tag.metadata.script,punctuation.definition.tag.begin,punctuation.definition.tag.end,meta.tag.preprocessor.xml,punctuation.separator.key-value.html,meta.tag.metadata.style.html,meta.tag.attributes.js keyword.operator.assignment,meta.tag.other.html,meta.tag.inline.any.html source.directive.vue meta.brace,punctuation.definition.tag.begin source.js,punctuation.definition.tag.end source.js,punctuation.definition.tag source,source.vue,meta.attribute-selector.scss keyword.operator.scss,punctuation.separator.equals,meta.tag.svg,text.xml.svg meta.tag.style,punctuation.definition.markdown,meta.tag keyword.operator.assignment,meta.tag.xml,punctuation.separator.operator.css,',
       settings: {
@@ -1755,9 +1670,8 @@ export const dark = {
         foreground: '#C1C2C5',
       },
     },
-    //#79859D normal
+
     {
-      name: 'Punctuation comma 逗号 ,',
       scope:
         'punctuation.separator.comma,punctuation.separator.delimiter,punctuation.separator.list.comma,punctuation.separator.parameter,meta.array.php,punctuation.separator.parameters,punctuation.separator.arguments.python,punctuation.separator.object,meta.function.method.with-arguments.ruby,punctuation.comma,punctuation.separator.element.python,comment.punctuation.comma.sass,meta.at-rule.keyframes.body.css,meta.delimiter.object.comma,punctuation.other.comma,meta.math.block.latex support.function.general.tex,',
       settings: {
@@ -1765,18 +1679,16 @@ export const dark = {
         foreground: '#79859D',
       },
     },
-    //#676E95 italic
+
     {
-      name: 'comment | 注释',
       scope: 'comment,comment markup.link,punctuation.definition.comment,markup.quote.markdown',
       settings: {
         fontStyle: 'italic',
         foreground: '#676E95',
       },
     },
-    //#676E95 normal
+
     {
-      name: 'Punctuation Terminator 分号 ; | Punctuation Definition Comment | 注释的定义符号 // /* */ | css里未写完整的属性名 | Markdown里引用块符号 ```',
       scope:
         'punctuation.terminator,punctuation.terminator.statement,punctuation.terminator.rule,punctuation.terminator.expression,punctuation.separator.statement,meta.using-namespace-declaration.cpp,invalid.deprecated.semicolon,constant.character.end,punctuation.semi,punctuation.definition.comment,meta.property-name.css,',
       settings: {
@@ -1784,16 +1696,15 @@ export const dark = {
         foreground: '#676E95',
       },
     },
-    //#676E95 underline
+
     {
-      name: 'Illegal | 无效的 | Unimplemented | 未生效的',
       scope: 'invalid,invalid.unimplemented,',
       settings: {
         fontStyle: 'underline',
         foreground: '#676E95',
       },
     },
-    //#4480F4 normal
+
     {
       scope: 'log.info,token.info-token,',
       settings: {
@@ -1801,7 +1712,7 @@ export const dark = {
         foreground: '#4480F4',
       },
     },
-    //#FF8A4C normal
+
     {
       scope: 'token.warn-token,log.warning',
       settings: {
@@ -1809,7 +1720,7 @@ export const dark = {
         foreground: '#FF8A4C',
       },
     },
-    //#E51400 normal
+
     {
       scope: 'token.error-token,log.error,',
       settings: {
@@ -1817,7 +1728,7 @@ export const dark = {
         foreground: '#E51400',
       },
     },
-    //#E51400 normal (In bold : #E51400 bold, In Italic : #E51400 Italic)
+
     {
       scope: 'keyword.other.debugger',
       settings: {
@@ -1826,7 +1737,6 @@ export const dark = {
       },
     },
     {
-      name: 'diff',
       scope:
         'meta.diff.range.unified,meta.diff.header.from-file,meta.diff.header.to-file,punctuation.definition.from-file.diff,punctuation.definition.to-file.diff',
       settings: {
@@ -1834,14 +1744,12 @@ export const dark = {
       },
     },
     {
-      name: 'inserted.diff',
       scope: 'markup.inserted.diff',
       settings: {
         foreground: '#77BE4E',
       },
     },
     {
-      name: 'deleted.diff',
       scope: 'markup.deleted.diff',
       settings: {
         foreground: '#F14C4C',

@@ -13,14 +13,6 @@
   padding: var(--mantine-spacing-xs) var(--mantine-spacing-md);
   margin: 0;
   background: var(--_background);
-
-  @mixin light {
-    --_background: var(--mantine-color-gray-0);
-  }
-
-  @mixin dark {
-    --_background: var(--mantine-color-dark-8);
-  }
 }
 
 .header {
@@ -118,8 +110,8 @@
 
   @mixin dark {
     --_file-color: var(--mantine-color-dark-0);
-    --_file-bd: var(--mantine-color-dark-4);
-    --_file-active-bg: var(--mantine-color-dark-6);
+    --_file-bd: var(--mantine-color-dark-5);
+    --_file-active-bg: var(--mantine-color-dark-7);
     --_file-active-color: var(--mantine-color-white);
   }
 }
@@ -176,6 +168,14 @@
 
   &[data-collapsed] :global(.mantine-ScrollArea-viewport > div) {
     display: block !important;
+  }
+
+  @mixin light {
+    --_background: var(--mantine-color-gray-0);
+  }
+
+  @mixin dark {
+    --_background: var(--mantine-color-dark-8);
   }
 }
 

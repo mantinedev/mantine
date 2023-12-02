@@ -85,15 +85,17 @@ export const defaultCssVariablesResolver: CSSVariablesResolver = (theme) => {
       result.variables[`--mantine-color-${color}-${index}`] = shade;
     });
 
-    const lightFilledHover =
-      lightPrimaryShade === 9 ? theme.colors[color][8] : theme.colors[color][lightPrimaryShade + 1];
-
-    const darkFilledHover =
-      darkPrimaryShade === 9 ? theme.colors[color][8] : theme.colors[color][darkPrimaryShade + 1];
+    const lightFilledHover = `var(--mantine-color-${color}-${
+      lightPrimaryShade === 9 ? 8 : lightPrimaryShade + 1
+    })`;
+    const darkFilledHover = `var(--mantine-color-${color}-${
+      darkPrimaryShade === 9 ? 8 : darkPrimaryShade + 1
+    })`;
 
     result.light['--mantine-color-dimmed'] = 'var(--mantine-color-gray-6)';
     result.light[`--mantine-color-${color}-text`] = `var(--mantine-color-${color}-filled)`;
-    result.light[`--mantine-color-${color}-filled`] = theme.colors[color][lightPrimaryShade];
+    result.light[`--mantine-color-${color}-filled`] =
+      `var(--mantine-color-${color}-${lightPrimaryShade})`;
     result.light[`--mantine-color-${color}-filled-hover`] = lightFilledHover;
     result.light[`--mantine-color-${color}-light`] = rgba(
       theme.colors[color][lightPrimaryShade],
@@ -103,8 +105,10 @@ export const defaultCssVariablesResolver: CSSVariablesResolver = (theme) => {
       theme.colors[color][lightPrimaryShade],
       0.12
     );
-    result.light[`--mantine-color-${color}-light-color`] = theme.colors[color][lightPrimaryShade];
-    result.light[`--mantine-color-${color}-outline`] = theme.colors[color][lightPrimaryShade];
+    result.light[`--mantine-color-${color}-light-color`] =
+      `var(--mantine-color-${color}-${lightPrimaryShade})`;
+    result.light[`--mantine-color-${color}-outline`] =
+      `var(--mantine-color-${color}-${lightPrimaryShade})`;
     result.light[`--mantine-color-${color}-outline-hover`] = rgba(
       theme.colors[color][lightPrimaryShade],
       0.05
@@ -112,7 +116,8 @@ export const defaultCssVariablesResolver: CSSVariablesResolver = (theme) => {
 
     result.dark['--mantine-color-dimmed'] = 'var(--mantine-color-dark-2)';
     result.dark[`--mantine-color-${color}-text`] = `var(--mantine-color-${color}-4)`;
-    result.dark[`--mantine-color-${color}-filled`] = theme.colors[color][darkPrimaryShade];
+    result.dark[`--mantine-color-${color}-filled`] =
+      `var(--mantine-color-${color}-${darkPrimaryShade})`;
     result.dark[`--mantine-color-${color}-filled-hover`] = darkFilledHover;
     result.dark[`--mantine-color-${color}-light`] = rgba(
       theme.colors[color][Math.max(0, darkPrimaryShade - 2)],
@@ -122,10 +127,14 @@ export const defaultCssVariablesResolver: CSSVariablesResolver = (theme) => {
       theme.colors[color][Math.max(0, darkPrimaryShade - 2)],
       0.2
     );
-    result.dark[`--mantine-color-${color}-light-color`] =
-      theme.colors[color][Math.max(darkPrimaryShade - 5, 0)];
-    result.dark[`--mantine-color-${color}-outline`] =
-      theme.colors[color][Math.max(darkPrimaryShade - 4, 0)];
+    result.dark[`--mantine-color-${color}-light-color`] = `var(--mantine-color-${color}-${Math.max(
+      darkPrimaryShade - 5,
+      0
+    )})`;
+    result.dark[`--mantine-color-${color}-outline`] = `var(--mantine-color-${color}-${Math.max(
+      darkPrimaryShade - 4,
+      0
+    )})`;
     result.dark[`--mantine-color-${color}-outline-hover`] = rgba(
       theme.colors[color][Math.max(darkPrimaryShade - 4, 0)],
       0.05
