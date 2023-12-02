@@ -151,6 +151,11 @@
     @mixin dark {
       --_divider-bg: var(--mantine-color-dark-4);
     }
+
+    @mixin rtl {
+      margin-left: unset;
+      margin-right: var(--mantine-spacing-xs);
+    }
   }
 
   &:only-child {
