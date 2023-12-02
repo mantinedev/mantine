@@ -22,6 +22,9 @@
 
 .body {
   flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: var(--mantine-spacing-xs);
 }
 
 .title {
@@ -68,7 +71,6 @@
   overflow: hidden;
   font-size: var(--mantine-font-size-sm);
   color: var(--_message-color, var(--__message-color));
-  margin-top: var(--mantine-spacing-xs);
 
   @mixin light {
     --__message-color: var(--mantine-color-black);

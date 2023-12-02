@@ -64,7 +64,9 @@ function Demo() {
       <NavLink
         label="With right section"
         leftSection={<IconGauge size="1rem" stroke={1.5} />}
-        rightSection={<IconChevronRight size="0.8rem" stroke={1.5} />}
+        rightSection={
+          <IconChevronRight size="0.8rem" stroke={1.5} className="mantine-rotate-rtl" />
+        }
       />
       <NavLink label="Disabled" leftSection={<IconCircleOff size="1rem" stroke={1.5} />} disabled />
       <NavLink
@@ -79,20 +81,26 @@ function Demo() {
       <NavLink
         label="Active subtle"
         leftSection={<IconActivity size="1rem" stroke={1.5} />}
-        rightSection={<IconChevronRight size="0.8rem" stroke={1.5} />}
+        rightSection={
+          <IconChevronRight size="0.8rem" stroke={1.5} className="mantine-rotate-rtl" />
+        }
         variant="subtle"
         active
       />
       <NavLink
         label="Active light"
         leftSection={<IconActivity size="1rem" stroke={1.5} />}
-        rightSection={<IconChevronRight size="0.8rem" stroke={1.5} />}
+        rightSection={
+          <IconChevronRight size="0.8rem" stroke={1.5} className="mantine-rotate-rtl" />
+        }
         active
       />
       <NavLink
         label="Active filled"
         leftSection={<IconActivity size="1rem" stroke={1.5} />}
-        rightSection={<IconChevronRight size="0.8rem" stroke={1.5} />}
+        rightSection={
+          <IconChevronRight size="0.8rem" stroke={1.5} className="mantine-rotate-rtl" />
+        }
         variant="filled"
         active
       />
