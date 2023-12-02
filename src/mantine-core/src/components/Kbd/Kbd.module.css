@@ -23,6 +23,7 @@
   border-bottom-width: rem(3px);
   background-color: var(--_kbd-bg);
   color: var(--_kbd-color);
+  unicode-bidi: embed;
 
   @mixin light {
     --_kbd-border-color: var(--mantine-color-gray-3);

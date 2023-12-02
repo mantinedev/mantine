@@ -103,6 +103,18 @@
     --_action-section-ml: var(--mantine-spacing-md);
   }
 
+  @mixin rtl {
+    &[data-position='left'] {
+      --_action-section-mr: unset;
+      --_action-section-ml: var(--mantine-spacing-md);
+    }
+
+    &[data-position='right'] {
+      --_action-section-ml: unset;
+      --_action-section-mr: var(--mantine-spacing-md);
+    }
+  }
+
   & > svg {
     display: block;
   }
