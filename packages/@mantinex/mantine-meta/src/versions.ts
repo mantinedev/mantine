@@ -1035,7 +1035,7 @@ export const allVersions = [
     version: '1.3.0',
     date: 'June 1, 2021',
     github: 'https://github.com/mantinedev/mantine/releases/tag/1.3.0',
-    link: 'https://v1.mantine.dev/changelog/1-3-0',
+    link: 'https://v2.mantine.dev/changelog/1-3-0',
     patches: [
       {
         version: '1.3.1',
@@ -1051,7 +1051,7 @@ export const allVersions = [
     version: '1.1.0',
     date: 'May 19, 2021',
     github: 'https://github.com/mantinedev/mantine/releases/tag/1.1.0',
-    link: 'https://v1.mantine.dev/changelog/1-1-0',
+    link: 'https://v2.mantine.dev/changelog/1-1-0',
     patches: [
       {
         version: '1.1.1',
@@ -1067,7 +1067,7 @@ export const allVersions = [
     version: '1.0.0',
     date: 'May 3, 2021',
     github: 'https://github.com/mantinedev/mantine/releases/tag/1.0.0',
-    link: 'https://v1.mantine.dev/changelog/1-0-0',
+    link: 'https://v2.mantine.dev/changelog/1-0-0',
     patches: [
       {
         version: '1.0.6',
