@@ -37,7 +37,7 @@ const variantColorResolver: VariantColorsResolver = (input) => {
     return {
       ...defaultResolvedColors,
       color: 'var(--mantine-color-black)',
-      hoverColor: 'var(--mantine-color-white)',
+      hoverColor: 'var(--mantine-color-black)',
     };
   }
 
@@ -95,7 +95,7 @@ const variantColorResolver: VariantColorsResolver = (input) => {
     return {
       ...defaultResolvedColors,
       color: 'var(--mantine-color-black)',
-      hoverColor: 'var(--mantine-color-white)',
+      hoverColor: 'var(--mantine-color-black)',
     };
   }
 
