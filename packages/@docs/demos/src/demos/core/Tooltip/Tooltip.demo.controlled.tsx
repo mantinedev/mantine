@@ -11,7 +11,7 @@ function Demo() {
 
   return (
     <Tooltip label="Ctrl + J" opened={opened}>
-      <Button variant="outline" onClick={() => setOpened((o) => !o)}>
+      <Button onClick={() => setOpened((o) => !o)}>
         Toggle color scheme
       </Button>
     </Tooltip>
@@ -23,9 +23,7 @@ export function Demo() {
 
   return (
     <Tooltip label="Ctrl + J" opened={opened}>
-      <Button variant="outline" onClick={() => setOpened((o) => !o)}>
-        Toggle color scheme
-      </Button>
+      <Button onClick={() => setOpened((o) => !o)}>Toggle color scheme</Button>
     </Tooltip>
   );
 }

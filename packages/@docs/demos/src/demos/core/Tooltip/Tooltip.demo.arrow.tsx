@@ -8,7 +8,7 @@ import { Tooltip, Button } from '@mantine/core';
 function Demo() {
   return (
     <Tooltip{{props}} label="Tooltip" withArrow opened position="top-start">
-      <Button variant="outline">Button with tooltip</Button>
+      <Button>Button with tooltip</Button>
     </Tooltip>
   );
 }
@@ -17,7 +17,7 @@ function Demo() {
 function Wrapper(props: any) {
   return (
     <Tooltip label="Tooltip" withArrow opened position="top-start" {...props}>
-      <Button variant="outline">Button with tooltip</Button>
+      <Button>Button with tooltip</Button>
     </Tooltip>
   );
 }

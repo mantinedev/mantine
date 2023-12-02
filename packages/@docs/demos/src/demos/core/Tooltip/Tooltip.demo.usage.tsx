@@ -8,7 +8,7 @@ import { Tooltip, Button } from '@mantine/core';
 function Demo() {
   return (
     <Tooltip label="Tooltip">
-      <Button variant="outline">Button with tooltip</Button>
+      <Button>Button with tooltip</Button>
     </Tooltip>
   );
 }
@@ -17,7 +17,7 @@ function Demo() {
 function Demo() {
   return (
     <Tooltip label="Tooltip">
-      <Button variant="outline">Button with tooltip</Button>
+      <Button>Button with tooltip</Button>
     </Tooltip>
   );
 }

@@ -5,7 +5,7 @@ import { MantineDemo } from '@mantinex/demo';
 function Wrapper(props: any) {
   return (
     <Tooltip label="Tooltip" {...props}>
-      <Button variant="outline">With tooltip</Button>
+      <Button>With tooltip</Button>
     </Tooltip>
   );
 }
@@ -16,9 +16,7 @@ import { Tooltip, Button } from '@mantine/core';
 function Demo() {
   return (
     <Tooltip label="Tooltip"{{props}}>
-      <Button variant="outline">
-        With tooltip
-      </Button>
+      <Button>With tooltip</Button>
     </Tooltip>
   );
 }

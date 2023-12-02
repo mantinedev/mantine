@@ -10,13 +10,13 @@ function Demo() {
     <Tooltip.Group openDelay={500} closeDelay={100}>
       <Group justify="center">
         <Tooltip label="Tooltip 1">
-          <Button variant="outline">Button 1</Button>
+          <Button>Button 1</Button>
         </Tooltip>
         <Tooltip label="Tooltip 2">
-          <Button variant="outline">Button 2</Button>
+          <Button>Button 2</Button>
         </Tooltip>
         <Tooltip label="Tooltip 3">
-          <Button variant="outline">Button 3</Button>
+          <Button>Button 3</Button>
         </Tooltip>
       </Group>
     </Tooltip.Group>
@@ -29,13 +29,13 @@ function Demo() {
     <Tooltip.Group openDelay={500} closeDelay={100}>
       <Group justify="center">
         <Tooltip label="Tooltip 1">
-          <Button variant="outline">Button 1</Button>
+          <Button>Button 1</Button>
         </Tooltip>
         <Tooltip label="Tooltip 2">
-          <Button variant="outline">Button 2</Button>
+          <Button>Button 2</Button>
         </Tooltip>
         <Tooltip label="Tooltip 3">
-          <Button variant="outline">Button 3</Button>
+          <Button>Button 3</Button>
         </Tooltip>
       </Group>
     </Tooltip.Group>

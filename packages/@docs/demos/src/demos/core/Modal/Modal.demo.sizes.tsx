@@ -12,7 +12,6 @@ function Demo() {
   const buttons = SIZES.map((s) => (
     <Button
       key={s}
-      variant="outline"
       onClick={() => {
         setSize(s);
         setOpened(true);

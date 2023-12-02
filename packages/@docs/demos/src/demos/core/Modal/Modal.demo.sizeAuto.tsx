@@ -25,12 +25,8 @@ function Demo() {
         </Group>
 
         <Group mt="xl">
-          <Button variant="outline" onClick={increment}>
-            Add badge
-          </Button>
-          <Button variant="outline" onClick={decrement}>
-            Remove badge
-          </Button>
+          <Button onClick={increment}>Add badge</Button>
+          <Button onClick={decrement}>Remove badge</Button>
         </Group>
       </Modal>
 
@@ -58,12 +54,8 @@ function Demo() {
         </Group>
 
         <Group mt="xl">
-          <Button variant="outline" onClick={increment}>
-            Add badge
-          </Button>
-          <Button variant="outline" onClick={decrement}>
-            Remove badge
-          </Button>
+          <Button onClick={increment}>Add badge</Button>
+          <Button onClick={decrement}>Remove badge</Button>
         </Group>
       </Modal>
 
