@@ -20,4 +20,10 @@ export const COMMUNITY_TEMPLATES_DATA: Template[] = [
     description:
       'NX monorepo template with: Vite, GraphQL / Apollo, Typescript, Storybook / CSS Modules',
   },
+  {
+    type: 'vite',
+    name: 'vike-mantine-template',
+    link: 'https://github.com/Kenzo-Wada/vike-mantine-template',
+    description: 'Vite ssr template with Vike',
+  },
 ];
