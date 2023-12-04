@@ -23,6 +23,31 @@ export function DisabledFirstItem() {
     </Menu>
   );
 }
+export function FormTab() {
+  return (
+    <div>
+      <form>
+        <input />
+        <input />
+      </form>
+
+      <Menu keepMounted>
+        <Menu.Target>
+          <Button>Hey</Button>
+        </Menu.Target>
+        <Menu.Dropdown>
+          <Menu.Item>Item 2</Menu.Item>
+          <Menu.Item>Item 3</Menu.Item>
+        </Menu.Dropdown>
+      </Menu>
+
+      <form>
+        <input />
+        <input />
+      </form>
+    </div>
+  );
+}
 
 export function Unstyled() {
   return (

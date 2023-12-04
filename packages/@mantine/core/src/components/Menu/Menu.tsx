@@ -183,7 +183,7 @@ export function Menu(_props: MenuProps) {
         opened={_opened}
         onChange={toggleDropdown}
         defaultOpened={defaultOpened}
-        trapFocus
+        trapFocus={trigger === 'click' && _opened}
         closeOnEscape={closeOnEscape}
         __staticSelector="Menu"
         classNames={resolvedClassNames}
