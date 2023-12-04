@@ -1,4 +1,5 @@
 import React from 'react';
+import { IconPhone } from '@tabler/icons-react';
 import { TextInput } from './TextInput';
 
 export default { title: 'TextInput' };
@@ -18,6 +19,22 @@ export function Usage() {
     <div style={{ padding: 40 }}>
       <TextInput
         label="Text input"
+        placeholder="This is text input"
+        description="Description"
+        id="test-id"
+      />
+    </div>
+  );
+}
+
+export function ErrorWithIcon() {
+  return (
+    <div style={{ padding: 40 }}>
+      <TextInput
+        label="Text input"
+        leftSection={<IconPhone />}
+        rightSection={<IconPhone />}
+        error="Error"
         placeholder="This is text input"
         description="Description"
         id="test-id"
