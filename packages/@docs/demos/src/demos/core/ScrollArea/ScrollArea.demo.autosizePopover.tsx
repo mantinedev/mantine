@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react';
 import { MantineDemo } from '@mantinex/demo';
-import { ScrollArea, Popover, TextInput, UnstyledButton, Text } from '@mantine/core';
+import { ScrollArea, Popover, TextInput, UnstyledButton, Text, Box } from '@mantine/core';
 
 const code = `
 import { useState, useRef } from 'react';
@@ -95,9 +95,11 @@ function Demo() {
           placeholder="Search groceries"
         />
       </Popover.Target>
-      <Popover.Dropdown p="xs">
-        <ScrollArea.Autosize viewportRef={viewportRef} mah={200} type="always">
-          {items.length > 0 ? items : <Text c="dimmed">Nothing found</Text>}
+      <Popover.Dropdown p={0}>
+        <ScrollArea.Autosize viewportRef={viewportRef} mah={200} type="always" scrollbars="y">
+          <Box px="xs" py={5}>
+            {items.length > 0 ? items : <Text c="dimmed">Nothing found</Text>}
+          </Box>
         </ScrollArea.Autosize>
       </Popover.Dropdown>
     </Popover>
@@ -194,9 +196,11 @@ function Demo() {
           placeholder="Search groceries"
         />
       </Popover.Target>
-      <Popover.Dropdown p="xs">
-        <ScrollArea.Autosize viewportRef={viewportRef} mah={200} type="always">
-          {items.length > 0 ? items : <Text c="dimmed">Nothing found</Text>}
+      <Popover.Dropdown p={0}>
+        <ScrollArea.Autosize viewportRef={viewportRef} mah={200} type="always" scrollbars="y">
+          <Box px="xs" py={5}>
+            {items.length > 0 ? items : <Text c="dimmed">Nothing found</Text>}
+          </Box>
         </ScrollArea.Autosize>
       </Popover.Dropdown>
     </Popover>

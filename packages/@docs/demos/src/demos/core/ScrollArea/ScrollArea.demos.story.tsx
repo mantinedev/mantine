@@ -42,3 +42,7 @@ export const DemoAutosizePopover = {
   name: '⭐ Demo: autosizePopover',
   render: renderDemo(demos.autosizePopover),
 };
+export const DemoScrollbars = {
+  name: '⭐ Demo: scrollbars',
+  render: renderDemo(demos.scrollbars),
+};

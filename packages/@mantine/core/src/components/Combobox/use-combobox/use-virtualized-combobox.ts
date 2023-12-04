@@ -1,5 +1,5 @@
 // WIP, not planned to be released in 7.0, maybe in 7.x
-import { useEffect, useRef } from 'react';
+import { useCallback, useEffect, useRef } from 'react';
 import { useUncontrolled } from '@mantine/hooks';
 import { getPreviousIndex, getNextIndex, getFirstIndex } from './get-index/get-virtualized-index';
 import { ComboboxStore } from './use-combobox';
@@ -151,6 +151,8 @@ export function useVirtualizedCombobox(
     []
   );
 
+  const getSelectedOptionIndex = useCallback(() => selectedOptionIndex, []);
+
   return {
     dropdownOpened,
     openDropdown,
@@ -158,6 +160,7 @@ export function useVirtualizedCombobox(
     toggleDropdown,
 
     selectedOptionIndex,
+    getSelectedOptionIndex,
     selectOption,
     selectFirstOption,
     selectActiveOption,

@@ -43,6 +43,9 @@ export interface ScrollAreaProps
   /** Scroll hide delay in ms, applicable only when type is set to `hover` or `scroll`, `1000` by default */
   scrollHideDelay?: number;
 
+  /** Axis at which scrollbars must be rendered, `'xy'` by default */
+  scrollbars?: 'x' | 'y' | 'xy' | false;
+
   /** Determines whether scrollbars should be offset with padding on given axis, `false` by default */
   offsetScrollbars?: boolean | 'x' | 'y';
 
@@ -71,6 +74,7 @@ export type ScrollAreaFactory = Factory<{
 const defaultProps: Partial<ScrollAreaProps> = {
   scrollHideDelay: 1000,
   type: 'hover',
+  scrollbars: 'xy',
 };
 
 const varsResolver = createVarsResolver<ScrollAreaFactory>((_, { scrollbarSize }) => ({
@@ -96,6 +100,7 @@ export const ScrollArea = factory<ScrollAreaFactory>((_props, ref) => {
     onScrollPositionChange,
     children,
     offsetScrollbars,
+    scrollbars,
     ...others
   } = props;
 
@@ -119,6 +124,7 @@ export const ScrollArea = factory<ScrollAreaFactory>((_props, ref) => {
       type={type === 'never' ? 'always' : type}
       scrollHideDelay={scrollHideDelay}
       ref={ref}
+      scrollbars={scrollbars}
       {...getStyles('root')}
       {...others}
     >
@@ -127,6 +133,7 @@ export const ScrollArea = factory<ScrollAreaFactory>((_props, ref) => {
         {...getStyles('viewport')}
         ref={viewportRef}
         data-offset-scrollbars={offsetScrollbars === true ? 'xy' : offsetScrollbars || undefined}
+        data-scrollbars={scrollbars || undefined}
         onScroll={
           typeof onScrollPositionChange === 'function'
             ? ({ currentTarget }) =>
@@ -139,26 +146,33 @@ export const ScrollArea = factory<ScrollAreaFactory>((_props, ref) => {
       >
         {children}
       </ScrollAreaViewport>
-      <ScrollAreaScrollbar
-        {...getStyles('scrollbar')}
-        orientation="horizontal"
-        data-hidden={type === 'never' || undefined}
-        forceMount
-        onMouseEnter={() => setScrollbarHovered(true)}
-        onMouseLeave={() => setScrollbarHovered(false)}
-      >
-        <ScrollAreaThumb {...getStyles('thumb')} />
-      </ScrollAreaScrollbar>
-      <ScrollAreaScrollbar
-        {...getStyles('scrollbar')}
-        orientation="vertical"
-        data-hidden={type === 'never' || undefined}
-        forceMount
-        onMouseEnter={() => setScrollbarHovered(true)}
-        onMouseLeave={() => setScrollbarHovered(false)}
-      >
-        <ScrollAreaThumb {...getStyles('thumb')} />
-      </ScrollAreaScrollbar>
+
+      {(scrollbars === 'xy' || scrollbars === 'x') && (
+        <ScrollAreaScrollbar
+          {...getStyles('scrollbar')}
+          orientation="horizontal"
+          data-hidden={type === 'never' || undefined}
+          forceMount
+          onMouseEnter={() => setScrollbarHovered(true)}
+          onMouseLeave={() => setScrollbarHovered(false)}
+        >
+          <ScrollAreaThumb {...getStyles('thumb')} />
+        </ScrollAreaScrollbar>
+      )}
+
+      {(scrollbars === 'xy' || scrollbars === 'y') && (
+        <ScrollAreaScrollbar
+          {...getStyles('scrollbar')}
+          orientation="vertical"
+          data-hidden={type === 'never' || undefined}
+          forceMount
+          onMouseEnter={() => setScrollbarHovered(true)}
+          onMouseLeave={() => setScrollbarHovered(false)}
+        >
+          <ScrollAreaThumb {...getStyles('thumb')} />
+        </ScrollAreaScrollbar>
+      )}
+
       <ScrollAreaCorner
         {...getStyles('corner')}
         data-hovered={scrollbarHovered || undefined}
@@ -185,6 +199,7 @@ export const ScrollAreaAutosize = factory<ScrollAreaFactory>((props, ref) => {
     unstyled,
     variant,
     viewportProps,
+    scrollbars,
     style,
     vars,
     ...others
@@ -207,6 +222,7 @@ export const ScrollAreaAutosize = factory<ScrollAreaFactory>((props, ref) => {
           variant={variant}
           viewportProps={viewportProps}
           vars={vars}
+          scrollbars={scrollbars}
         >
           {children}
         </ScrollArea>
