@@ -26,6 +26,18 @@ export function Usage() {
   );
 }
 
+export function ContentAuto() {
+  return (
+    <div style={{ padding: 0 }}>
+      <Grid bg="pink.3">
+        <Grid.Col span={{ base: 'auto', sm: 'content' }}>
+          <Button fullWidth>First</Button>
+        </Grid.Col>
+      </Grid>
+    </div>
+  );
+}
+
 export function Offset() {
   return (
     <div style={{ padding: 0 }}>

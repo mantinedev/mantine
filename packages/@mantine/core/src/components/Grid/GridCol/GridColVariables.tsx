@@ -47,7 +47,7 @@ const getColumnFlexGrow = (colSpan: ColSpan | undefined, grow: boolean | undefin
     return undefined;
   }
 
-  return colSpan === 'auto' || grow ? '1' : undefined;
+  return colSpan === 'auto' || grow ? '1' : 'auto';
 };
 
 const getColumnOffset = (offset: number | undefined, columns: number) =>
