@@ -13,6 +13,14 @@ export function Usage() {
   );
 }
 
+export function HideOutsideDates() {
+  return (
+    <div style={{ padding: 40 }}>
+      <DatePicker hideOutsideDates />
+    </div>
+  );
+}
+
 export function Unstyled() {
   return (
     <div style={{ padding: 40 }}>
