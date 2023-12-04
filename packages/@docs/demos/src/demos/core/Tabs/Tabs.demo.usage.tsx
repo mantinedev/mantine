@@ -1,10 +1,12 @@
 import React from 'react';
 import { IconPhoto, IconMessageCircle, IconSettings } from '@tabler/icons-react';
 import { MantineDemo } from '@mantinex/demo';
-import { Tabs, TabsProps, rem } from '@mantine/core';
+import { Tabs, TabsProps, rem, useDirection } from '@mantine/core';
 
 function Wrapper(props: TabsProps) {
-  const panelProps = props.orientation === 'vertical' ? { pl: 'xs' } : { pt: 'xs' };
+  const { dir } = useDirection();
+  const panelProps =
+    props.orientation === 'vertical' ? { [dir === 'rtl' ? 'pr' : 'pl']: 'xs' } : { pt: 'xs' };
   const iconStyle = { width: rem(12), height: rem(12) };
 
   return (

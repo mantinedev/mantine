@@ -19,4 +19,9 @@
   left: 0;
   top: 100%;
   height: rem(24px);
+
+  @mixin rtl {
+    left: auto;
+    right: 0;
+  }
 }
