@@ -17,8 +17,11 @@ export interface ComboboxStore {
   /** Toggles dropdown opened state */
   toggleDropdown: (eventSource?: ComboboxDropdownEventSource) => void;
 
-  /** Selected option index */
+  /** Selected option index ref */
   selectedOptionIndex: number;
+
+  /** Returns currently selected option index or `-1` if none of the options is selected */
+  getSelectedOptionIndex: () => number;
 
   /** Selects `Combobox.Option` by index */
   selectOption: (index: number) => void;
@@ -272,6 +275,8 @@ export function useCombobox({
     focusTargetTimeout.current = window.setTimeout(() => targetRef.current!.focus(), 0);
   }, []);
 
+  const getSelectedOptionIndex = useCallback(() => selectedOptionIndex.current, []);
+
   useEffect(
     () => () => {
       window.clearTimeout(focusSearchTimeout.current);
@@ -288,6 +293,7 @@ export function useCombobox({
     toggleDropdown,
 
     selectedOptionIndex: selectedOptionIndex.current,
+    getSelectedOptionIndex,
     selectOption,
     selectFirstOption,
     selectActiveOption,

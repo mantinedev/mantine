@@ -29,7 +29,22 @@ const options = [
 export function Usage() {
   return (
     <div style={{ padding: 40, maxWidth: 400 }}>
-      <Autocomplete label="Test" placeholder="Test autocomplete" data={options} dropdownOpened />
+      <Autocomplete label="Test" placeholder="Test autocomplete" data={options} />
+    </div>
+  );
+}
+
+export function WithinForm() {
+  return (
+    <div style={{ padding: 40, maxWidth: 400 }}>
+      <form
+        onSubmit={(event) => {
+          event.preventDefault();
+          console.log('submit');
+        }}
+      >
+        <Autocomplete label="Test" placeholder="Test autocomplete" data={options} />
+      </form>
     </div>
   );
 }

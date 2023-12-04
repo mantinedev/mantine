@@ -50,7 +50,9 @@ export function useComboboxTargetProps({
       }
 
       if (event.nativeEvent.code === 'Enter') {
-        if (ctx.store.dropdownOpened) {
+        const selectedOptionIndex = ctx.store.getSelectedOptionIndex();
+
+        if (ctx.store.dropdownOpened && selectedOptionIndex !== -1) {
           event.preventDefault();
           ctx.store.clickSelectedOption();
         } else if (targetType === 'button') {
