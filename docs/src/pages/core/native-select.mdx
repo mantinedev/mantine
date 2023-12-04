@@ -1,0 +1,157 @@
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+import { NativeSelectDemos } from '@docs/demos';
+
+export default Layout(MDX_DATA.NativeSelect);
+
+## Usage
+
+<InputFeatures component="NativeSelect" element="select" />
+
+<Demo data={NativeSelectDemos.usage} />
+
+## Controlled
+
+```tsx
+import { useState } from 'react';
+import { NativeSelect } from '@mantine/core';
+
+function Demo() {
+  const [value, setValue] = useState('');
+
+  return (
+    <NativeSelect
+      value={value}
+      onChange={(event) => setValue(event.currentTarget.value)}
+      data={['React', 'Angular', 'Svelte', 'Vue']}
+    />
+  );
+}
+```
+
+## Adding options
+
+`NativeSelect` allows passing options in two ways:
+
+- `data` prop array
+- `children` prop with `option` components
+
+Note that if `children` is used, `data` will be ignored.
+
+### data prop
+
+`data` prop accepts values in one of the following formats:
+
+1. Array of strings:
+
+```tsx
+import { NativeSelect } from '@mantine/core';
+
+function Demo() {
+  return (
+    <NativeSelect data={['React', 'Angular', 'Svelte', 'Vue']} />
+  );
+}
+```
+
+2. Array of objects with `label`, `value` and `disabled` keys:
+
+```tsx
+import { NativeSelect } from '@mantine/core';
+
+function Demo() {
+  return (
+    <NativeSelect
+      data={[
+        { label: 'React', value: 'react' },
+        { label: 'Angular', value: 'angular' },
+        { label: 'Svelte', value: 'svelte', disabled: true },
+        { label: 'Vue', value: 'vue' },
+      ]}
+    />
+  );
+}
+```
+
+3. Array of grouped options (string format):
+
+```tsx
+import { NativeSelect } from '@mantine/core';
+
+function Demo() {
+  return (
+    <NativeSelect
+      data={[
+        {
+          group: 'Frontend libraries',
+          items: ['React', 'Angular', 'Svelte', 'Vue'],
+        },
+        {
+          group: 'Backend libraries',
+          items: ['Express', 'Koa', 'Django'],
+        },
+      ]}
+    />
+  );
+}
+```
+
+4. Array of grouped options (object format):
+
+```tsx
+import { NativeSelect } from '@mantine/core';
+
+function Demo() {
+  return (
+    <NativeSelect
+      data={[
+        {
+          group: 'Frontend libraries',
+          items: [
+            { label: 'React', value: 'react' },
+            { label: 'Angular', value: 'angular' },
+            { label: 'Vue', value: 'vue', disabled: true },
+          ],
+        },
+        {
+          group: 'Backend libraries',
+          items: [
+            { label: 'Express', value: 'express' },
+            { label: 'Koa', value: 'koa' },
+            { label: 'Django', value: 'django' },
+          ],
+        },
+      ]}
+    />
+  );
+}
+```
+
+Example of `data` prop with array of grouped options:
+
+<Demo data={NativeSelectDemos.data} />
+
+### children options
+
+To add options with `children` prop, use `option` elements to add options and `optgroup`
+elements to group them:
+
+<Demo data={NativeSelectDemos.options} />
+
+<InputSections component="NativeSelect" />
+
+<Demo data={NativeSelectDemos.sections} />
+
+## Disabled state
+
+<Demo data={NativeSelectDemos.disabled} />
+
+## Error state
+
+<Demo data={NativeSelectDemos.error} />
+
+<StylesApiSelectors component="NativeSelect" />
+
+<Demo data={NativeSelectDemos.stylesApi} />
+
+<InputAccessibility component="NativeSelect" />

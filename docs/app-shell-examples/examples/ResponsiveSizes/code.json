@@ -1,7 +1,0 @@
-[
-  {
-    "fileName": "ResponsiveSizes.tsx",
-    "language": "tsx",
-    "code": "import { useDisclosure } from '@mantine/hooks';\nimport { AppShell, Burger, Group, Skeleton } from '@mantine/core';\nimport { MantineLogo } from '@mantine/ds';\n\nexport function ResponsiveSizes() {\n  const [opened, { toggle }] = useDisclosure();\n\n  return (\n    <AppShell\n      header={{ height: { base: 60, md: 70, lg: 80 } }}\n      navbar={{\n        width: { base: 200, md: 300, lg: 400 },\n        breakpoint: 'sm',\n        collapsed: { mobile: !opened },\n      }}\n      padding=\"md\"\n    >\n      <AppShell.Header>\n        <Group h=\"100%\" px=\"md\">\n          <Burger opened={opened} onClick={toggle} hiddenFrom=\"sm\" size=\"sm\" />\n          <MantineLogo size={30} />\n        </Group>\n      </AppShell.Header>\n      <AppShell.Navbar p=\"md\">\n        Navbar\n        {Array(15)\n          .fill(0)\n          .map((_, index) => (\n            <Skeleton key={index} h={28} mt=\"sm\" animate={false} />\n          ))}\n      </AppShell.Navbar>\n      <AppShell.Main>Main</AppShell.Main>\n    </AppShell>\n  );\n}\n"
-  }
-]

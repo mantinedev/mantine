@@ -1,6 +1,0 @@
-.codeHighlight {
-  background-color: light-dark(var(--mantine-color-white), var(--mantine-color-dark-8));
-  box-shadow: var(--mantine-shadow-md);
-  border-radius: var(--mantine-radius-md);
-  margin-top: var(--mantine-spacing-xl);
-}

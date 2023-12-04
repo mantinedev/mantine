@@ -1,0 +1,59 @@
+{
+  "name": "@mantine/nprogress",
+  "version": "7.3.0",
+  "description": "Navigation progress bar",
+  "homepage": "https://mantine.dev/others/nprogress/",
+  "license": "MIT",
+  "author": "Vitaly Rtishchev <rtivital@gmail.com>",
+  "keywords": [
+    "components",
+    "frontend",
+    "library",
+    "next",
+    "nextjs",
+    "nprogress",
+    "progress",
+    "react",
+    "ui",
+    "ui-kit"
+  ],
+  "sideEffects": [
+    "*.css"
+  ],
+  "main": "./cjs/index.cjs",
+  "module": "./esm/index.mjs",
+  "types": "./lib/index.d.ts",
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./lib/index.d.mts",
+        "default": "./esm/index.mjs"
+      },
+      "require": {
+        "types": "./lib/index.d.ts",
+        "default": "./cjs/index.cjs"
+      }
+    },
+    "./styles.css": "./styles.css",
+    "./styles.layer.css": "./styles.layer.css"
+  },
+  "repository": {
+    "url": "https://github.com/mantinedev/mantine.git",
+    "type": "git",
+    "directory": "packages/@mantine/nprogress"
+  },
+  "peerDependencies": {
+    "@mantine/core": "7.3.0",
+    "@mantine/hooks": "7.3.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  },
+  "dependencies": {
+    "@mantine/store": "7.3.0"
+  },
+  "devDependencies": {
+    "@mantine-tests/core": "workspace:*",
+    "@mantine/core": "workspace:*",
+    "@mantine/hooks": "workspace:*"
+  }
+}

@@ -1,0 +1,58 @@
+{
+  "name": "@mantine/carousel",
+  "version": "7.3.0",
+  "description": "Embla based carousel",
+  "homepage": "https://mantine.dev/others/carousel/",
+  "license": "MIT",
+  "author": "Vitaly Rtishchev <rtivital@gmail.com>",
+  "keywords": [
+    "carousel",
+    "components",
+    "frontend",
+    "library",
+    "next",
+    "nextjs",
+    "react",
+    "slick",
+    "slider",
+    "ui",
+    "ui-kit"
+  ],
+  "sideEffects": [
+    "*.css"
+  ],
+  "main": "./cjs/index.cjs",
+  "module": "./esm/index.mjs",
+  "types": "./lib/index.d.ts",
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./lib/index.d.mts",
+        "default": "./esm/index.mjs"
+      },
+      "require": {
+        "types": "./lib/index.d.ts",
+        "default": "./cjs/index.cjs"
+      }
+    },
+    "./styles.css": "./styles.css",
+    "./styles.layer.css": "./styles.layer.css"
+  },
+  "repository": {
+    "url": "https://github.com/mantinedev/mantine.git",
+    "type": "git",
+    "directory": "packages/@mantine/carousel"
+  },
+  "peerDependencies": {
+    "@mantine/core": "7.3.0",
+    "@mantine/hooks": "7.3.0",
+    "embla-carousel-react": ">=7.0.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  },
+  "devDependencies": {
+    "@mantine-tests/core": "workspace:*",
+    "@mantine/core": "workspace:*",
+    "@mantine/hooks": "workspace:*"
+  }
+}

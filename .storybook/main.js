@@ -1,28 +1,21 @@
 const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin').default;
 const path = require('path');
-const { globSync } = require('glob');
+const fg = require('fast-glob');
 const argv = require('yargs').argv;
 
-const getPath = (storyPath) => path.resolve(__dirname, storyPath).replace(/\\/g, '/');
+const getPath = (storyPath) => path.resolve(process.cwd(), storyPath).replace(/\\/g, '/');
+const getGlobPaths = (paths) => paths.reduce((acc, path) => [...acc, ...fg.sync(path)], []);
 
-const getStoryPaths = (fileName = '*') => {
-  const basePath = globSync(getPath('../src'))[0];
-  const files = globSync(getPath('../src/mantine-*/src/**/*.story.@(ts|tsx)'));
-  const packagesWithStories = {};
-  for (const file of files) {
-    const packageName = file.replace(basePath, '').split(path.sep)[1];
-    packagesWithStories[packageName] = true;
-  }
-  return Object.keys(packagesWithStories).map((packageName) => {
-    return getPath(`../src/${packageName}/src/**/${fileName}.story.@(ts|tsx)`);
-  });
-};
+function getStoryPaths(fileName = '*') {
+  return getGlobPaths([
+    getPath(`packages/@mantine/*/src/**/${fileName}.story.@(ts|tsx)`),
+    getPath(`packages/@mantinex/*/src/**/${fileName}.story.@(ts|tsx)`),
+    getPath(`packages/@docs/*/src/**/${fileName}.story.@(ts|tsx)`),
+  ]);
+}
 
 const storiesPath = !argv._[1]
-  ? [
-      // can't use glob pattern (see https://github.com/storybookjs/storybook/issues/19812)
-      ...getStoryPaths(),
-    ]
+  ? [...getStoryPaths()]
   : [...getStoryPaths(argv._[1]), ...getStoryPaths(`${argv._[1]}.demos`)];
 
 module.exports = {
@@ -30,9 +23,6 @@ module.exports = {
 
   addons: [
     'storybook-dark-mode',
-    '@storybook/addon-links',
-    '@storybook/addon-essentials',
-    '@storybook/addon-interactions',
     {
       name: '@storybook/addon-styling-webpack',
       options: {

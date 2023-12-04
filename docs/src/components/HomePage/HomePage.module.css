@@ -1,0 +1,35 @@
+.root {
+  position: relative;
+  z-index: 1;
+  box-shadow: var(--mantine-shadow-md);
+  background-color: var(--mantine-color-body);
+  min-height: 100vh;
+
+  @mixin light {
+    --docs-home-page-gradient-text: linear-gradient(
+      52deg,
+      var(--mantine-color-blue-7) 3%,
+      var(--mantine-color-cyan-5) 97%
+    );
+
+    --docs-home-page-gradient: linear-gradient(
+      52deg,
+      var(--mantine-color-blue-7) 3%,
+      var(--mantine-color-cyan-5) 97%
+    );
+  }
+
+  @mixin dark {
+    --docs-home-page-gradient-text: linear-gradient(
+      52deg,
+      var(--mantine-color-blue-5) 3%,
+      var(--mantine-color-cyan-4) 97%
+    );
+
+    --docs-home-page-gradient: linear-gradient(
+      52deg,
+      var(--mantine-color-blue-7) 3%,
+      var(--mantine-color-cyan-7) 97%
+    );
+  }
+}

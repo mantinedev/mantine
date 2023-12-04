@@ -1,30 +1,46 @@
 {
-  "extends": "./tsconfig.base.json",
   "include": [
     "./docs",
-    "./dev",
-    "src/mantine-*/src",
-    "src/mantine-*/demos",
-    "./types",
     "./scripts",
-    "./configuration",
-    "./configuration/types",
-    "./tests"
+    "./@types",
+    "./packages/@mantine-tests/*/src",
+    "./packages/@docs/*/src",
+    "./packages/@mantine/*/src",
+    "./packages/@mantinex/*/src"
   ],
   "exclude": [
     "public",
-    ".cache",
-    "configuration/jest",
-    "configuration/storybook/main.js",
     "node_modules",
-    "src/mantine-*/esm/**/*",
-    "src/mantine-*/lib/**/*",
-    "src/mantine-*/cjs/**/*"
+    "./packages/@mantine-tests/*/esm/**/*",
+    "./packages/@mantine-tests/*/cjs/**/*",
+    "./packages/@mantine-tests/*/lib/**/*",
+    "./packages/@docs/*/ems/**/*",
+    "./packages/@docs/*/cjs/**/*",
+    "./packages/@docs/*/lib/**/*",
+    "./packages/@mantine/*/lib/**/*",
+    "./packages/@mantine/*/esm/**/*",
+    "./packages/@mantine/*/cjs/**/*",
+    "./packages/@mantinex/*/esm/**/*",
+    "./packages/@mantinex/*/cjs/**/*",
+    "./packages/@mantinex/*/lib/**/*"
   ],
   "compilerOptions": {
+    "types": ["node", "jest", "@testing-library/jest-dom"],
+    "target": "ES2015",
+    "lib": ["DOM", "ESNext"],
+    "module": "ESNext",
+    "moduleResolution": "Node",
+    "jsx": "react",
+    "resolveJsonModule": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "noEmit": true,
+    "strict": true,
     "paths": {
-      "@mantine/*": ["src/mantine-*/src"],
-      "@demos/*": ["src/mantine-*/src/demos"]
+      "@mantine/*": ["./packages/@mantine/*/src"],
+      "@mantinex/*": ["./packages/@mantinex/*/src"],
+      "@mantine-tests/*": ["./packages/@mantine-tests/*/src"],
+      "@docs/*": ["./packages/@docs/*/src"]
     }
   }
 }

@@ -25,7 +25,7 @@
 - [`@mantine/form`](https://mantine.dev/form/use-form) – forms management library
 - [`@mantine/notifications`](https://mantine.dev/others/notifications) – a fully featured notifications system
 - [`@mantine/spotlight`](https://mantine.dev/others/spotlight) – `Ctrl + K` command center for your application
-- [`@mantine/prism`](https://mantine.dev/others/prism/) – code highlight built with [prism-react-renderer](https://github.com/FormidableLabs/prism-react-renderer)
+- [`@mantine/code-highlight`](https://mantine.dev/others/code-highlight/) – code highlight built with [highlight.js](https://highlightjs.org/)
 - [`@mantine/tiptap`](https://mantine.dev/others/tiptap) – a Tiptap based rich text editor
 - [`@mantine/dropzone`](https://mantine.dev/others/dropzone) – manages files drag 'n' drop to an area or entire screen
 - [`@mantine/carousel`](https://mantine.dev/others/carousel) – Carousel component

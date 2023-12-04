@@ -1,0 +1,42 @@
+{
+  "name": "@mantine-tests/core",
+  "version": "1.0.1",
+  "description": "Core tests package for Mantine",
+  "homepage": "https://mantine.dev",
+  "license": "MIT",
+  "author": "Vitaly Rtishchev <rtivital@gmail.com>",
+  "keywords": [
+    "jest",
+    "mantine",
+    "tests"
+  ],
+  "sideEffects": false,
+  "main": "./cjs/index.cjs",
+  "module": "./esm/index.mjs",
+  "types": "./lib/index.d.ts",
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./lib/index.d.mts",
+        "default": "./esm/index.mjs"
+      },
+      "require": {
+        "types": "./lib/index.d.ts",
+        "default": "./cjs/index.cjs"
+      }
+    }
+  },
+  "repository": {
+    "url": "https://github.com/mantinedev/mantine.git",
+    "type": "git",
+    "directory": "packages/@mantine-tests/core"
+  },
+  "peerDependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  },
+  "devDependencies": {
+    "@mantine/core": "workspace:*",
+    "@mantine/hooks": "workspace:*"
+  }
+}
