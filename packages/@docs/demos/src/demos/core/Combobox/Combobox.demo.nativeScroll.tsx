@@ -64,6 +64,7 @@ function Demo() {
           component="button"
           pointer
           rightSection={<Combobox.Chevron />}
+          rightSectionPointerEvents="none"
           onClick={() => combobox.toggleDropdown()}
         >
           {value || <Input.Placeholder>Pick value</Input.Placeholder>}
@@ -138,6 +139,7 @@ function Demo() {
           component="button"
           pointer
           rightSection={<Combobox.Chevron />}
+          rightSectionPointerEvents="none"
           onClick={() => combobox.toggleDropdown()}
         >
           {value || <Input.Placeholder>Pick value</Input.Placeholder>}

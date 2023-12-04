@@ -49,6 +49,7 @@ export function SelectActive() {
           type="button"
           pointer
           rightSection={<Combobox.Chevron />}
+          rightSectionPointerEvents="none"
           onClick={() => combobox.toggleDropdown()}
         >
           {value || <Input.Placeholder>Pick value</Input.Placeholder>}

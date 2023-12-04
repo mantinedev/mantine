@@ -39,6 +39,7 @@ function Demo() {
       <Combobox.Target>
         <InputBase
           rightSection={<Combobox.Chevron />}
+          rightSectionPointerEvents="none"
           onClick={() => combobox.openDropdown()}
           onFocus={() => combobox.openDropdown()}
           onBlur={() => {
@@ -97,6 +98,7 @@ function Demo() {
       <Combobox.Target>
         <InputBase
           rightSection={<Combobox.Chevron />}
+          rightSectionPointerEvents="none"
           onClick={() => combobox.openDropdown()}
           onFocus={() => combobox.openDropdown()}
           onBlur={() => {
