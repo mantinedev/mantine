@@ -15,7 +15,7 @@ import {
   useResolvedStylesApi,
 } from '@mantine/core';
 import { useInputState, useDisclosure, useWindowEvent } from '@mantine/hooks';
-import { IconExternalLink, IconLink } from '@tabler/icons-react';
+import { IconLink, IconExternalLink } from '../icons/Icons';
 import { useRichTextEditorContext } from '../RichTextEditor.context';
 import { RichTextEditorControlBaseProps, RichTextEditorControlBase } from './RichTextEditorControl';
 import classes from '../RichTextEditor.module.css';
@@ -48,9 +48,7 @@ export type RichTextEditorLinkControlFactory = Factory<{
   compound: true;
 }>;
 
-const LinkIcon: RichTextEditorControlBaseProps['icon'] = (props) => (
-  <IconLink stroke={1.5} {...props} />
-);
+const LinkIcon: RichTextEditorControlBaseProps['icon'] = (props) => <IconLink {...props} />;
 
 const defaultProps: Partial<RichTextEditorLinkControlProps> = {};
 
@@ -168,7 +166,7 @@ export const RichTextEditorLinkControl = factory<RichTextEditorLinkControlFactor
                     data-active={external || undefined}
                     {...ctx.getStyles('linkEditorExternalControl', stylesApiProps)}
                   >
-                    <IconExternalLink style={{ width: rem(14), height: rem(14) }} stroke={1.5} />
+                    <IconExternalLink style={{ width: rem(14), height: rem(14) }} />
                   </UnstyledButton>
                 </Tooltip>
               }

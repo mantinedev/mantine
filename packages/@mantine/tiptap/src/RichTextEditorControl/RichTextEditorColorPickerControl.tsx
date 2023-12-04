@@ -12,9 +12,10 @@ import {
   ColorPickerProps,
   useProps,
   ElementProps,
+  rem,
 } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
-import { IconCircleOff, IconColorPicker, IconX, IconPalette, IconCheck } from '@tabler/icons-react';
+import { IconCircleOff, IconColorPicker, IconX, IconPalette, IconCheck } from '../icons/Icons';
 import { RichTextEditorControl } from './RichTextEditorControl';
 import { useRichTextEditorContext } from '../RichTextEditor.context';
 
@@ -108,7 +109,7 @@ export const RichTextEditorColorPickerControl = forwardRef<
                 title={labels.colorPickerCancel}
                 aria-label={labels.colorPickerCancel}
               >
-                <IconX stroke={1.5} size="1rem" />
+                <IconX style={{ width: rem(16), height: rem(16) }} />
               </ActionIcon>
             )}
 
@@ -118,7 +119,7 @@ export const RichTextEditorColorPickerControl = forwardRef<
               title={labels.colorPickerClear}
               aria-label={labels.colorPickerClear}
             >
-              <IconCircleOff stroke={1.5} size="1rem" />
+              <IconCircleOff style={{ width: rem(16), height: rem(16) }} />
             </ActionIcon>
 
             {state === 'palette' ? (
@@ -128,7 +129,7 @@ export const RichTextEditorColorPickerControl = forwardRef<
                 title={labels.colorPickerColorPicker}
                 aria-label={labels.colorPickerColorPicker}
               >
-                <IconColorPicker stroke={1.5} size="1rem" />
+                <IconColorPicker style={{ width: rem(16), height: rem(16) }} />
               </ActionIcon>
             ) : (
               <ActionIcon
@@ -137,7 +138,7 @@ export const RichTextEditorColorPickerControl = forwardRef<
                 aria-label={labels.colorPickerPalette}
                 title={labels.colorPickerPalette}
               >
-                <IconPalette stroke={1.5} size="1rem" />
+                <IconPalette style={{ width: rem(16), height: rem(16) }} />
               </ActionIcon>
             )}
 
@@ -148,7 +149,7 @@ export const RichTextEditorColorPickerControl = forwardRef<
                 title={labels.colorPickerSave}
                 aria-label={labels.colorPickerSave}
               >
-                <IconCheck stroke={1.5} size="1rem" />
+                <IconCheck style={{ width: rem(16), height: rem(16) }} />
               </ActionIcon>
             )}
           </Group>
