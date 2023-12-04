@@ -1,6 +1,14 @@
-import React, { forwardRef } from 'react';
+import React from 'react';
 import { useReducedMotion } from '@mantine/hooks';
-import { BoxProps, useProps, useMantineTheme, Box, getStyleObject } from '../../core';
+import {
+  BoxProps,
+  useProps,
+  useMantineTheme,
+  Box,
+  getStyleObject,
+  Factory,
+  factory,
+} from '../../core';
 import { useCollapse } from './use-collapse';
 
 export interface CollapseProps
@@ -22,13 +30,18 @@ export interface CollapseProps
   animateOpacity?: boolean;
 }
 
+export type CollapseFactory = Factory<{
+  props: CollapseProps;
+  ref: HTMLDivElement;
+}>;
+
 const defaultProps: Partial<CollapseProps> = {
   transitionDuration: 200,
   transitionTimingFunction: 'ease',
   animateOpacity: true,
 };
 
-export const Collapse = forwardRef<HTMLDivElement, CollapseProps>((props, ref) => {
+export const Collapse = factory<CollapseFactory>((props, ref) => {
   const {
     children,
     in: opened,
