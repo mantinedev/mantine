@@ -1,5 +1,11 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { useId, useMergedRef, useResizeObserver, useUncontrolled } from '@mantine/hooks';
+import {
+  useId,
+  useMergedRef,
+  useResizeObserver,
+  useUncontrolled,
+  useTimeout,
+} from '@mantine/hooks';
 import {
   Box,
   BoxProps,
@@ -178,6 +184,7 @@ export const SegmentedControl = factory<SegmentedControlFactory>((_props, ref) =
   const uuid = useId(name);
   const refs = useRef<Record<string, HTMLLabelElement>>({});
   const rootRef = useRef<HTMLDivElement>(null);
+  const [initialized, setInitialized] = useState(false);
   const [observerRef, containerRect] = useResizeObserver();
 
   useEffect(() => {
@@ -212,6 +219,8 @@ export const SegmentedControl = factory<SegmentedControlFactory>((_props, ref) =
       }
     }
   }, [_value, containerRect, dir]);
+
+  useTimeout(() => setInitialized(true), 20, { autoInvoke: true });
 
   const controls = _data.map((item) => (
     <Box
@@ -263,7 +272,7 @@ export const SegmentedControl = factory<SegmentedControlFactory>((_props, ref) =
       variant={variant}
       size={size}
       ref={mergedRef}
-      mod={{ 'full-width': fullWidth, orientation }}
+      mod={{ 'full-width': fullWidth, orientation, initialization: !initialized }}
       {...others}
       role="radiogroup"
     >

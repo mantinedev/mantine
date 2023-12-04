@@ -19,6 +19,10 @@
   overflow: hidden;
   padding: 4px; /* px required for correct indicator calculations */
 
+  &[data-initialization] {
+    --sc-transition-duration: 0ms !important;
+  }
+
   &[data-full-width] {
     --_display: flex;
   }
