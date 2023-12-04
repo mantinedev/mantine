@@ -14,7 +14,7 @@ function createConverter(units: string, { shouldScale = false } = {}) {
     }
 
     if (typeof value === 'string') {
-      if (value.startsWith('calc(') || value.startsWith('var(')) {
+      if (value.startsWith('calc(') || value.startsWith('var(') || value.startsWith('clamp(')) {
         return value;
       }
 

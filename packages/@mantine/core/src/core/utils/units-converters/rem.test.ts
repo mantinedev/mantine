@@ -32,6 +32,12 @@ describe('@mantine/units-converters/rem', () => {
     expect(rem('calc(2rem * var(--mantine-scale))')).toBe('calc(2rem * var(--mantine-scale))');
   });
 
+  it('does not modify calc, var, clamp and other functions', () => {
+    expect(rem('calc(2rem + 10px)')).toBe('calc(2rem + 10px)');
+    expect(rem('var(--mantine-size-xs)')).toBe('var(--mantine-size-xs)');
+    expect(rem('clamp(10px, 2rem, 20px)')).toBe('clamp(10px, 2rem, 20px)');
+  });
+
   it('converts values separated by space', () => {
     expect(rem('10px 5px')).toBe(
       'calc(0.625rem * var(--mantine-scale)) calc(0.3125rem * var(--mantine-scale))'
