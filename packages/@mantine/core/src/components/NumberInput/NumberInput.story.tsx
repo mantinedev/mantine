@@ -24,6 +24,14 @@ export function Usage() {
   );
 }
 
+export function MinWithStartValue() {
+  return (
+    <div style={{ padding: 40 }}>
+      <NumberInput label="with min" min={-1000} startValue={20} />
+    </div>
+  );
+}
+
 export function OnChangeValue() {
   const [value, setValue] = useState<number | string>(345);
   return (
