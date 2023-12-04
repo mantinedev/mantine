@@ -43,6 +43,7 @@ function Demo() {
       <Combobox.Target targetType="button">
         <InputBase
           component="button"
+          type="button"
           pointer
           rightSection={<Combobox.Chevron />}
           rightSectionPointerEvents="none"
@@ -97,6 +98,7 @@ function Demo() {
       <Combobox.Target targetType="button">
         <InputBase
           component="button"
+          type="button"
           pointer
           rightSection={<Combobox.Chevron />}
           rightSectionPointerEvents="none"
