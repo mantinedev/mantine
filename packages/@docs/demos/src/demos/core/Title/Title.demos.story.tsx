@@ -12,3 +12,8 @@ export const DemoSize = {
   name: '⭐ Demo: size',
   render: renderDemo(demos.size),
 };
+
+export const DemoLineClamp = {
+  name: '⭐ Demo: lineClamp',
+  render: renderDemo(demos.lineClamp),
+};

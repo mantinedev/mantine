@@ -15,3 +15,20 @@ export function Usage() {
     </div>
   );
 }
+
+export function LineClamp() {
+  return (
+    <div style={{ padding: 40 }}>
+      <Title order={1}>
+        Lorem ipsum dolor sit amet consectetur, adipisicing elit. Nobis reiciendis, commodi placeat
+        doloribus iusto autem, odit maxime, at dolor blanditiis est ea incidunt nostrum esse quod
+        rerum error ipsum laboriosam?
+      </Title>
+      <Title order={1} lineClamp={2}>
+        Lorem ipsum dolor sit amet consectetur, adipisicing elit. Nobis reiciendis, commodi placeat
+        doloribus iusto autem, odit maxime, at dolor blanditiis est ea incidunt nostrum esse quod
+        rerum error ipsum laboriosam?
+      </Title>
+    </div>
+  );
+}

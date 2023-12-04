@@ -11,8 +11,12 @@ export const TitleStylesApi: StylesApiData<TitleFactory> = {
       '--title-fw': 'Title `font-weight`, by default value from `theme.headings`',
       '--title-fz': 'Title `font-size`, by default value from `theme.headings`',
       '--title-lh': 'Title `line-heigh`t, by default value from `theme.headings`',
+      '--title-line-clamp': 'Controls `-webkit-line-clamp` css property',
     },
   },
 
-  modifiers: [{ modifier: 'data-order', selector: 'root', value: 'Value of the `order` prop' }],
+  modifiers: [
+    { modifier: 'data-order', selector: 'root', value: 'Value of the `order` prop' },
+    { modifier: 'data-line-clamp', selector: 'root', condition: '`lineClamp` prop is a number' },
+  ],
 };
