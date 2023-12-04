@@ -23,10 +23,22 @@ function Demo() {
 function Demo() {
   return (
     <Group>
-      <Menu trigger="click-hover" loop={false} withinPortal={false} trapFocus={false} menuItemTabIndex={0}>
+      <Menu
+        trigger="click-hover"
+        loop={false}
+        withinPortal={false}
+        trapFocus={false}
+        menuItemTabIndex={0}
+      >
         <DemoMenuItems />
       </Menu>
-      <Menu trigger="click-hover" loop={false} withinPortal={false} trapFocus={false} menuItemTabIndex={0}>
+      <Menu
+        trigger="click-hover"
+        loop={false}
+        withinPortal={false}
+        trapFocus={false}
+        menuItemTabIndex={0}
+      >
         <DemoMenuItems />
       </Menu>
     </Group>
