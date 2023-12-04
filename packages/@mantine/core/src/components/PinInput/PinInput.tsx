@@ -289,7 +289,7 @@ export const PinInput = factory<PinInputFactory>((props, ref) => {
   const handlePaste = (event: React.ClipboardEvent<HTMLInputElement>) => {
     event.preventDefault();
     const copyValue = event.clipboardData.getData('Text');
-    const isValid = validate(copyValue);
+    const isValid = validate(copyValue.trim());
 
     if (isValid) {
       setValues(copyValue);
