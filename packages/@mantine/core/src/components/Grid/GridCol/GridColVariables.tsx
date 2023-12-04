@@ -35,7 +35,11 @@ const getColumnMaxWidth = (
   columns: number,
   grow: boolean | undefined
 ) => {
-  if (grow || colSpan === 'auto' || colSpan === 'content') {
+  if (grow || colSpan === 'auto') {
+    return '100%';
+  }
+
+  if (colSpan === 'content') {
     return 'unset';
   }
 
