@@ -1,5 +1,5 @@
 import React, { useRef, useState, useEffect } from 'react';
-import { useUncontrolled, useId } from '@mantine/hooks';
+import { useUncontrolled, useId, assignRef } from '@mantine/hooks';
 import {
   BoxProps,
   ElementProps,
@@ -310,7 +310,6 @@ export const PinInput = factory<PinInputFactory>((props, ref) => {
         role="group"
         id={uuid}
         gap={gap}
-        ref={ref}
         unstyled={unstyled}
         wrap="nowrap"
         variant={variant}
@@ -343,6 +342,7 @@ export const PinInput = factory<PinInputFactory>((props, ref) => {
             variant={variant}
             disabled={disabled}
             ref={(node) => {
+              index === 0 && assignRef(ref, node);
               inputsRef.current[index] = node!;
             }}
             autoComplete={oneTimeCode ? 'one-time-code' : 'off'}

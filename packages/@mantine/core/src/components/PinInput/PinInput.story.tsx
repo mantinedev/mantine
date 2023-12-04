@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { PinInput } from './PinInput';
+import { Button } from '../Button';
 import { DEFAULT_THEME, MantineSize } from '../../core';
 
 export default { title: 'PinInput' };
@@ -8,6 +9,17 @@ export function Usage() {
   return (
     <div style={{ padding: 40 }}>
       <PinInput id="test-id" />
+    </div>
+  );
+}
+
+export function InputRef() {
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  return (
+    <div style={{ padding: 40 }}>
+      <PinInput ref={inputRef} />
+      <Button onClick={() => inputRef.current?.focus()}>Focus first input</Button>
     </div>
   );
 }

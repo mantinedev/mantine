@@ -18,7 +18,7 @@ describe('@mantine/core/PinInput', () => {
     variant: true,
     classes: true,
     id: true,
-    refType: HTMLDivElement,
+    refType: HTMLInputElement,
     displayName: '@mantine/core/PinInput',
     stylesApiSelectors: ['root', 'pinInput', 'input'],
     providerStylesApi: false,
