@@ -1,5 +1,5 @@
 .root {
-  overflow: var(--grid-overflow, hidden);
+  overflow: var(--grid-overflow, visible);
 }
 
 .inner {

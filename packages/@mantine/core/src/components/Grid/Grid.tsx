@@ -39,7 +39,7 @@ export interface GridProps extends BoxProps, StylesApiProps<GridFactory>, Elemen
   /** Number of columns in each row, `12` by default */
   columns?: number;
 
-  /** Sets `overflow` CSS property on the root element, `'hidden'` by default */
+  /** Sets `overflow` CSS property on the root element, `'visible'` by default */
   overflow?: React.CSSProperties['overflow'];
 }
 

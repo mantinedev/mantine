@@ -98,16 +98,17 @@ In the following example, first column takes 50% with 12 span (12/24), second an
 
 ## overflow: hidden
 
-By default, `Grid` has `overflow: hidden` style on the root elements to prevent horizontal
-scrollbars from appearing when the component is used inside element without padding to offset
-negative margins. If you want to disable this behavior, set `overflow="visible"`:
+By default, `Grid` has `overflow: visible` style on the root element. In some cases
+you might want to change it to `overflow: hidden` to prevent negative margins from
+overflowing the grid container. For example, if you use `Grid` without parent container
+which has padding.
 
 ```tsx
 import { Grid } from '@mantine/core';
 
 function Demo() {
   return (
-    <Grid overflow="visible">
+    <Grid overflow="hidden">
       <Grid.Col span={6}>1</Grid.Col>
       <Grid.Col span={6}>2</Grid.Col>
     </Grid>
