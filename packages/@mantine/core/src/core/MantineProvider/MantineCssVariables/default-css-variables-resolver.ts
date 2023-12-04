@@ -80,6 +80,11 @@ export const defaultCssVariablesResolver: CSSVariablesResolver = (theme) => {
   assignSizeVariables(result.variables, theme.shadows, 'shadow');
   assignSizeVariables(result.variables, theme.radius, 'radius');
 
+  theme.colors[theme.primaryColor].forEach((_, index) => {
+    result.variables[`--mantine-primary-color-${index}`] =
+      `var(--mantine-color-${theme.primaryColor}-${index})`;
+  });
+
   keys(theme.colors).forEach((color) => {
     theme.colors[color].forEach((shade, index) => {
       result.variables[`--mantine-color-${color}-${index}`] = shade;

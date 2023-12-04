@@ -119,6 +119,16 @@ body {
     Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji;
   --mantine-heading-font-weight: 700;
   --mantine-radius-default: calc(0.25rem * var(--mantine-scale));
+  --mantine-primary-color-0: var(--mantine-color-blue-0);
+  --mantine-primary-color-1: var(--mantine-color-blue-1);
+  --mantine-primary-color-2: var(--mantine-color-blue-2);
+  --mantine-primary-color-3: var(--mantine-color-blue-3);
+  --mantine-primary-color-4: var(--mantine-color-blue-4);
+  --mantine-primary-color-5: var(--mantine-color-blue-5);
+  --mantine-primary-color-6: var(--mantine-color-blue-6);
+  --mantine-primary-color-7: var(--mantine-color-blue-7);
+  --mantine-primary-color-8: var(--mantine-color-blue-8);
+  --mantine-primary-color-9: var(--mantine-color-blue-9);
   --mantine-primary-color-filled: var(--mantine-color-blue-filled);
   --mantine-primary-color-filled-hover: var(--mantine-color-blue-filled-hover);
   --mantine-primary-color-light: var(--mantine-color-blue-light);
