@@ -21,6 +21,7 @@ import { RichTextEditorControlBaseProps, RichTextEditorControlBase } from './Ric
 import classes from '../RichTextEditor.module.css';
 
 export type RichTextEditorLinkControlStylesNames =
+  | 'control'
   | 'linkEditor'
   | 'linkEditorDropdown'
   | 'linkEditorSave'
