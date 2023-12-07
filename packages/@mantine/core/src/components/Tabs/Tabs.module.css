@@ -253,6 +253,7 @@
   border-left-color: var(--_tab-border-left-color);
   border-right-color: var(--_tab-border-right-color);
   border-radius: var(--_tab-radius);
+  position: relative;
 
   --_tab-border-bottom-color: transparent;
   --_tab-border-top-color: transparent;
@@ -260,6 +261,30 @@
   --_tab-border-left-color: transparent;
 
   &[data-active] {
+    &::before {
+      content: '';
+      position: absolute;
+      background-color: var(--_tab-border-color);
+      bottom: var(--_tab-before-bottom, rem(-1px));
+      left: var(--_tab-before-left, rem(-1px));
+      right: var(--_tab-before-right, auto);
+      top: var(--_tab-before-top, auto);
+      width: rem(1px);
+      height: rem(1px);
+    }
+
+    &::after {
+      content: '';
+      position: absolute;
+      background-color: var(--_tab-border-color);
+      bottom: var(--_tab-after-bottom, rem(-1px));
+      right: var(--_tab-after-right, rem(-1px));
+      left: var(--_tab-after-left, auto);
+      top: var(--_tab-after-top, auto);
+      width: rem(1px);
+      height: rem(1px);
+    }
+
     --_tab-border-top-color: var(--_tab-border-color);
     --_tab-border-left-color: var(--_tab-border-color);
     --_tab-border-right-color: var(--_tab-border-color);
@@ -268,6 +293,11 @@
     &[data-inverted] {
       --_tab-border-bottom-color: var(--_tab-border-color);
       --_tab-border-top-color: var(--mantine-color-body);
+
+      --_tab-before-bottom: auto;
+      --_tab-before-top: rem(-1px);
+      --_tab-after-bottom: auto;
+      --_tab-after-top: rem(-1px);
     }
 
     &[data-orientation='vertical'] {
@@ -276,9 +306,21 @@
         --_tab-border-left-color: var(--_tab-border-color);
         --_tab-border-bottom-color: var(--_tab-border-color);
 
+        --_tab-before-right: rem(-1px);
+        --_tab-before-left: auto;
+        --_tab-before-bottom: auto;
+        --_tab-before-top: rem(-1px);
+        --_tab-after-left: auto;
+        --_tab-after-right: rem(-1px);
+
         @mixin rtl {
           --_tab-border-right-color: var(--_tab-border-color);
           --_tab-border-left-color: var(--mantine-color-body);
+
+          --_tab-before-right: auto;
+          --_tab-before-left: rem(-1px);
+          --_tab-after-left: rem(-1px);
+          --_tab-after-right: auto;
         }
       }
 
@@ -287,9 +329,21 @@
         --_tab-border-right-color: var(--_tab-border-color);
         --_tab-border-bottom-color: var(--_tab-border-color);
 
+        --_tab-before-left: rem(-1px);
+        --_tab-before-right: auto;
+        --_tab-before-bottom: auto;
+        --_tab-before-top: rem(-1px);
+        --_tab-after-right: auto;
+        --_tab-after-left: rem(-1px);
+
         @mixin rtl {
           --_tab-border-left-color: var(--_tab-border-color);
           --_tab-border-right-color: var(--mantine-color-body);
+
+          --_tab-before-left: auto;
+          --_tab-before-right: rem(-1px);
+          --_tab-after-right: rem(-1px);
+          --_tab-after-left: auto;
         }
       }
     }
