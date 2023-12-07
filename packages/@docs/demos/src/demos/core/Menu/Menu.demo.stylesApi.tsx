@@ -18,7 +18,7 @@ function Demo() {
 
 function Demo(props: any) {
   return (
-    <Menu {...props} opened withArrow position="left">
+    <Menu {...props} opened withArrow position="left" trapFocus={false}>
       <DemoMenuItems />
     </Menu>
   );

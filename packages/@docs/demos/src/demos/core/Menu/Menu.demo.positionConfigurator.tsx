@@ -6,7 +6,7 @@ import { FLOATING_ARROW_POSITION_DATA } from '../../../shared/floating-position-
 
 function Wrapper(props: MenuProps) {
   return (
-    <Menu opened trigger="hover" {...props}>
+    <Menu opened trapFocus={false} {...props}>
       <DemoMenuItems />
     </Menu>
   );
