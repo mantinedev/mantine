@@ -162,6 +162,7 @@ export function WithButtonTarget() {
           <Combobox.Search
             placeholder="Search options"
             value={search}
+            rightSection={<Combobox.Chevron size="xs" />}
             onChange={(event) => {
               setSearch(event.currentTarget.value);
             }}
