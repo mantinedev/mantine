@@ -301,7 +301,7 @@ export const MultiSelect = factory<MultiSelectFactory>((_props, ref) => {
               rightSection ||
               clearButton || <Combobox.Chevron size={size} error={error} unstyled={unstyled} />
             }
-            rightSectionPointerEvents={rightSectionPointerEvents || clearButton ? 'all' : 'none'}
+            rightSectionPointerEvents={rightSectionPointerEvents || (clearButton ? 'all' : 'none')}
             rightSectionWidth={rightSectionWidth}
             rightSectionProps={rightSectionProps}
             leftSection={leftSection}

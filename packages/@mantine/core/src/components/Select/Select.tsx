@@ -228,7 +228,7 @@ export const Select = factory<SelectFactory>((_props, ref) => {
               rightSection ||
               clearButton || <Combobox.Chevron size={size} error={error} unstyled={unstyled} />
             }
-            rightSectionPointerEvents={rightSectionPointerEvents || clearButton ? 'all' : 'none'}
+            rightSectionPointerEvents={rightSectionPointerEvents || (clearButton ? 'all' : 'none')}
             {...others}
             size={size}
             __staticSelector="Select"

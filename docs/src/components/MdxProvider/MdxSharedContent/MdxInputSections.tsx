@@ -34,9 +34,9 @@ export function MdxInputSections({ component }: MdxInputSectionsProps) {
 
         <MdxLi>
           <MdxCode>rightSectionPointerEvents</MdxCode>/<MdxCode>leftSectionPointerEvents</MdxCode> –
-          controls <MdxCode>pointer-events</MdxCode> property of the section. By default, all
-          pointer events are enabled. If you want to render a non-interactive element, set it to{' '}
-          <MdxCode>none</MdxCode> to pass clicks through to the input.
+          controls <MdxCode>pointer-events</MdxCode> property of the section. If you want to render
+          a non-interactive element, set it to <MdxCode>none</MdxCode> to pass clicks through to the
+          input.
         </MdxLi>
       </MdxUl>
     </>
