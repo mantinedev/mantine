@@ -47,7 +47,7 @@ function Option({ data, withCheckIcon, value, checkIconPosition, unstyled }: Opt
         aria-selected={isValueChecked(value, data.value)}
       >
         {checkIconPosition === 'left' && check}
-        {data.label}
+        <span>{data.label}</span>
         {checkIconPosition === 'right' && check}
       </Combobox.Option>
     );
