@@ -92,6 +92,7 @@
   position: var(--_thead-position, static);
   top: var(--table-sticky-header-offset, 0);
   background-color: var(--_thead-bg, transparent);
+  z-index: 1;
 
   &[data-sticky] {
     --_thead-position: sticky;
