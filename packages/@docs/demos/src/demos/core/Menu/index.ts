@@ -7,3 +7,4 @@ export { positionConfigurator } from './Menu.demo.positionConfigurator';
 export { disabled } from './Menu.demo.disabled';
 export { customControl } from './Menu.demo.customControl';
 export { clickHover } from './Menu.demo.clickHover';
+export { navigation } from './Menu.demo.navigation';

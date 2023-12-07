@@ -47,3 +47,8 @@ export const DemoClickHover = {
   name: '⭐ Demo: clickHover',
   render: renderDemo(demos.clickHover),
 };
+
+export const DemoNavigation = {
+  name: '⭐ Demo: navigation',
+  render: renderDemo(demos.navigation),
+};
