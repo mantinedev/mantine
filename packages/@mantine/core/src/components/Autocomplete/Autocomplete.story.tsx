@@ -40,6 +40,7 @@ export function WithinForm() {
       <form
         onSubmit={(event) => {
           event.preventDefault();
+          // eslint-disable-next-line no-console
           console.log('submit');
         }}
       >
