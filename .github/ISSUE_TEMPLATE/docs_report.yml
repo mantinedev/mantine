@@ -2,21 +2,22 @@ name: Report an issue with mantine.dev website
 description: Help us find and fix mistakes, bad wording, etc.
 labels: 'review required'
 body:
-  - type: markdown
-    attributes:
-      value: '## Thanks for reaching out!'
   - type: input
     id: link
     attributes:
       label: Link to the page where something is not right
+      placeholder: https://mantine.dev/some/page
   - type: textarea
     id: quote
     attributes:
-      label: Exact quote of what is wrong
-  - type: dropdown
-    id: participate
+      label: What is wrong?
+      placeholder: Describe the issue
+    validations:
+      required: true
+  - type: checkboxes
+    id: self-service
     attributes:
-      label: Do you want to send a pull request with a fix?
+      label: Self-service
+      description: You are welcome to submit a fix for this issue after it is reviewed.
       options:
-        - 'Yes'
-        - 'No'
+        - label: I would be willing to implement a fix for this issue

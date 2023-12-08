@@ -1,11 +1,21 @@
-name: Report an issue with @mantine/ scoped package
-description: Tell us if something is not working as expected
+name: Report an issue with @mantine/* or @mantinex/* scoped package
+description: Use this template to report issues with the library, to ask questions or to suggest new features, use GitHub discussions instead
 body:
-  - type: markdown
+  - type: checkboxes
+    id: dependencies
     attributes:
-      value: |
-        ## Thanks for reaching out!
-        Before submitting an issue please make sure that you use latest version of all @mantine/* packages.
+      label: Dependencies check up
+      description: Before submitting an issue please make sure that you use latest version of all @mantine/* packages.
+      options:
+        - label: I have verified that I use latest version of all @mantine/* packages
+          required: true
+  - type: input
+    id: version
+    attributes:
+      placeholder: 0.0.0
+      label: What version of @mantine/* packages do you have in package.json?
+    validations:
+      required: true
   - type: dropdown
     id: package
     attributes:
@@ -26,40 +36,60 @@ body:
         - '@mantine/colors-generator'
         - '@mantine/store'
         - '@mantine/vanilla-extract'
+        - '@mantinex/mantine-logo'
+        - '@mantinex/demo'
+        - '@mantinex/dev-icons'
+        - '@mantinex/mantine-header'
+        - '@mantinex/mantine-meta'
+        - '@mantinex/shiki'
     validations:
       required: true
+
+  - type: dropdown
+    id: framework
+    attributes:
+      label: What framework do you use?
+      options:
+        - 'Next.js'
+        - 'Vite'
+        - 'Remix'
+        - 'Gatsby'
+        - 'Redwood'
+        - 'create-react-app (CRA)'
+        - 'Other, I will specify in the bug description'
+    validations:
+      required: true
+  - type: dropdown
+    id: browser
+    attributes:
+      label: In which browsers you can reproduce the issue?
+      options:
+        - 'All'
+        - 'Chrome'
+        - 'Safari'
+        - 'Firefox'
+        - 'Other, I will specify in the bug description'
+        - 'Not applicable – issue is not related to the browser'
   - type: textarea
     id: description
     attributes:
       label: Describe the bug
-    validations:
-      required: true
-  - type: input
-    id: version
-    attributes:
-      label: What version of @mantine/* packages do you have in package.json? (Note that all @mantine/* packages must have the same version in order to work correctly)
+      placeholder: A clear and concise description of what the bug is and how to reproduce it
     validations:
       required: true
   - type: input
     id: link
     attributes:
-      label: If possible, please include a link to a codesandbox with a minimal reproduction
-      description: Codesandbox template – https://codesandbox.io/s/mantine-template-9ze89
-  - type: dropdown
-    id: fix
-    attributes:
-      label: Do you know how to fix the issue
-      options:
-        - 'Yes'
-        - 'No'
-  - type: dropdown
-    id: participate
-    attributes:
-      label: Do you want to send a pull request with a fix?
-      options:
-        - 'Yes'
-        - 'No'
+      label: If possible, include a link to a codesandbox with a minimal reproduction
+      description: Codesandbox template – https://codesandbox.io/p/sandbox/mantine-template-kczll7. Note that issues that cannot be reproduced by maintainers will be closed.
   - type: textarea
     id: possibleFix
     attributes:
       label: Possible fix
+  - type: checkboxes
+    id: self-service
+    attributes:
+      label: Self-service
+      description: You are welcome to contribute to the library, if you are willing to implement a fix for this issue, please check the box below. You can find contribution guide here – https://mantine.dev/contribute/
+      options:
+        - label: I would be willing to implement a fix for this issue
