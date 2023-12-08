@@ -1,5 +1,5 @@
 .group {
-  background-color: light-dark(var(--mantine-color-gray-0), var(--mantine-color-dark-7));
+  background-color: light-dark(var(--mantine-color-gray-1), var(--mantine-color-dark-5));
   border-radius: var(--mantine-radius-sm);
   margin-bottom: var(--mantine-spacing-xs);
 }
