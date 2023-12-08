@@ -132,6 +132,7 @@ export const Radio = factory<RadioFactory>((_props, ref) => {
     icon: Icon = RadioIcon,
     rootRef,
     iconColor,
+    onChange,
     ...others
   } = props;
 
@@ -160,7 +161,10 @@ export const Radio = factory<RadioFactory>((_props, ref) => {
     ? {
         checked: ctx.value === rest.value,
         name: rest.name ?? ctx.name,
-        onChange: ctx.onChange,
+        onChange: (event: React.ChangeEvent<HTMLInputElement>) => {
+          ctx.onChange(event);
+          onChange?.(event);
+        },
       }
     : {};
 
@@ -188,6 +192,7 @@ export const Radio = factory<RadioFactory>((_props, ref) => {
       <Box {...getStyles('inner')} mod={{ 'label-position': labelPosition }}>
         <Box
           {...getStyles('radio', { focusable: true, variant })}
+          onChange={onChange}
           {...rest}
           {...contextProps}
           component="input"

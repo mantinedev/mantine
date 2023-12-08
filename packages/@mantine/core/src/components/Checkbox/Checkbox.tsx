@@ -136,6 +136,7 @@ export const Checkbox = factory<CheckboxFactory>((_props, ref) => {
     icon,
     rootRef,
     iconColor,
+    onChange,
     ...others
   } = props;
 
@@ -162,7 +163,10 @@ export const Checkbox = factory<CheckboxFactory>((_props, ref) => {
   const contextProps = ctx
     ? {
         checked: ctx.value.includes(rest.value as string),
-        onChange: ctx.onChange,
+        onChange: (event: React.ChangeEvent<HTMLInputElement>) => {
+          ctx.onChange(event);
+          onChange?.(event);
+        },
       }
     : {};
 
@@ -196,6 +200,7 @@ export const Checkbox = factory<CheckboxFactory>((_props, ref) => {
           disabled={disabled}
           mod={{ error: !!error, indeterminate }}
           {...getStyles('input', { focusable: true, variant })}
+          onChange={onChange}
           {...rest}
           {...contextProps}
           type="checkbox"
