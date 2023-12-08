@@ -248,7 +248,14 @@ export const InputWrapper = factory<InputWrapperFactory>((_props, ref) => {
         ...getInputOffsets(inputWrapperOrder!, { hasDescription, hasError }),
       }}
     >
-      <Box ref={ref} variant={variant} size={size} {...getStyles('root')} {...others}>
+      <Box
+        ref={ref}
+        variant={variant}
+        size={size}
+        mod={{ error: !!error }}
+        {...getStyles('root')}
+        {...others}
+      >
         {content}
       </Box>
     </InputWrapperProvider>
