@@ -12,7 +12,7 @@ export interface ModalHeaderProps
 
 export type ModalHeaderFactory = Factory<{
   props: ModalHeaderProps;
-  ref: HTMLDivElement;
+  ref: HTMLElement;
   stylesNames: ModalHeaderStylesNames;
   compound: true;
 }>;

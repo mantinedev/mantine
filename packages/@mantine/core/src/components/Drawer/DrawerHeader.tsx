@@ -12,7 +12,7 @@ export interface DrawerHeaderProps
 
 export type DrawerHeaderFactory = Factory<{
   props: DrawerHeaderProps;
-  ref: HTMLDivElement;
+  ref: HTMLElement;
   stylesNames: DrawerHeaderStylesNames;
   compound: true;
 }>;

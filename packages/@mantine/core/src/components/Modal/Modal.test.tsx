@@ -181,7 +181,7 @@ describe('@mantine/core/ModalHeader', () => {
     variant: true,
     size: true,
     classes: true,
-    refType: HTMLDivElement,
+    refType: HTMLElement,
     displayName: '@mantine/core/ModalHeader',
     selector: '.mantine-Modal-header',
     variantSelector: '.mantine-Modal-header',

@@ -165,7 +165,7 @@ describe('@mantine/core/DrawerHeader', () => {
     variant: true,
     size: true,
     classes: true,
-    refType: HTMLDivElement,
+    refType: HTMLElement,
     displayName: '@mantine/core/DrawerHeader',
     selector: '.mantine-Drawer-header',
     variantSelector: '.mantine-Drawer-header',
