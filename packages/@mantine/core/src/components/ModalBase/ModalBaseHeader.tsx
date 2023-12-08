@@ -10,7 +10,12 @@ export const ModalBaseHeader = forwardRef<HTMLDivElement, ModalBaseHeaderProps>(
   ({ className, ...others }, ref) => {
     const ctx = useModalBaseContext();
     return (
-      <Box ref={ref} className={cx({ [classes.header]: !ctx.unstyled }, className)} {...others} />
+      <Box
+        component="header"
+        ref={ref}
+        className={cx({ [classes.header]: !ctx.unstyled }, className)}
+        {...others}
+      />
     );
   }
 );
