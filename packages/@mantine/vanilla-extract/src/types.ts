@@ -8,30 +8,33 @@ import {
   MantineRadius,
 } from '@mantine/core';
 
+interface ColorValues {
+  0: string;
+  1: string;
+  2: string;
+  3: string;
+  4: string;
+  5: string;
+  6: string;
+  7: string;
+  8: string;
+  9: string;
+  filled: string;
+  filledHover: string;
+  light: string;
+  lightHover: string;
+  lightColor: string;
+  outline: string;
+  outlineHover: string;
+}
+
 export type Colors = {
-  [key in MantineColor]: {
-    0: string;
-    1: string;
-    2: string;
-    3: string;
-    4: string;
-    5: string;
-    6: string;
-    7: string;
-    8: string;
-    9: string;
-    filled: string;
-    filledHover: string;
-    light: string;
-    lightHover: string;
-    lightColor: string;
-    outline: string;
-    outlineHover: string;
-  };
+  [key in MantineColor]: ColorValues;
 } & {
+  primary: string;
   white: string;
   black: string;
-  primary: string;
+  primaryColors: ColorValues;
   text: string;
   body: string;
   error: string;
