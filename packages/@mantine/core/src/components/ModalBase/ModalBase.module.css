@@ -17,6 +17,7 @@
   top: 0;
   background-color: var(--mantine-color-body);
   z-index: 1000;
+  min-height: rem(60px);
 
   @mixin rtl {
     --_pr: var(--mb-padding, var(--mantine-spacing-md));
