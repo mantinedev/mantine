@@ -25,6 +25,7 @@ import {
   useDirection,
   createVarsResolver,
   Factory,
+  getEnv,
 } from '../../core';
 import { getRootPadding } from './get-root-padding';
 import classes from './SegmentedControl.module.css';
@@ -220,7 +221,16 @@ export const SegmentedControl = factory<SegmentedControlFactory>((_props, ref) =
     }
   }, [_value, containerRect, dir]);
 
-  useTimeout(() => setInitialized(true), 20, { autoInvoke: true });
+  useTimeout(
+    () => {
+      // Prevents warning about state update without act
+      if (getEnv() !== 'test') {
+        setInitialized(true);
+      }
+    },
+    20,
+    { autoInvoke: true }
+  );
 
   const controls = _data.map((item) => (
     <Box
