@@ -109,7 +109,7 @@
 
     & .loader {
       opacity: 1;
-      transform: translate(-50%, -50%);
+      transform: translate(-50%, calc(-50% + rem(1px)));
     }
   }
 
