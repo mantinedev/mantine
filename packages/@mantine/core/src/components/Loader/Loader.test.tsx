@@ -58,4 +58,8 @@ describe('@mantine/core/Loader', () => {
     rerender(<Loader size={100} />);
     expect(container.querySelector('[data-size]')).not.toBeInTheDocument();
   });
+
+  it('exposes defaultLoaders as static property', () => {
+    expect(Loader.defaultLoaders).toStrictEqual(defaultLoaders);
+  });
 });

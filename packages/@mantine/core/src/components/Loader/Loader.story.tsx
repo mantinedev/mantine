@@ -1,4 +1,5 @@
 import React, { forwardRef } from 'react';
+import { MantineProvider, createTheme } from '@mantine/core';
 import { Loader, defaultLoaders } from './Loader';
 import { MantineLoaderComponent } from './Loader.types';
 
@@ -11,6 +12,31 @@ export function Usage() {
       <Loader type="bars" mt="xl" />
       <Loader type="dots" mt="xl" />
     </div>
+  );
+}
+
+export function LoaderOnProvider() {
+  const theme = createTheme({
+    components: {
+      Loader: Loader.extend({
+        defaultProps: {
+          type: 'ring',
+          loaders: {
+            ring: RingLoader,
+            ...Loader.defaultLoaders,
+          },
+        },
+      }),
+    },
+  });
+  return (
+    <MantineProvider theme={theme}>
+      <div style={{ padding: 40 }}>
+        <Loader />
+        <Loader type="bars" mt="xl" />
+        <Loader type="dots" mt="xl" />
+      </div>
+    </MantineProvider>
   );
 }
 
