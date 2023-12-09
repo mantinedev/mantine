@@ -21,6 +21,21 @@ export function Usage() {
   );
 }
 
+export function EmptyStringValue() {
+  return (
+    <div style={{ padding: 40 }}>
+      <MultiSelect
+        placeholder="MultiSelect something"
+        defaultValue={['']}
+        data={[
+          { value: '', label: 'Empty string' },
+          { value: 'something', label: 'Non empty string' },
+        ]}
+      />
+    </div>
+  );
+}
+
 export function Placeholder() {
   return (
     <>
