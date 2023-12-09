@@ -94,7 +94,7 @@ export const InlineInput = forwardRef<HTMLDivElement, InlineInputProps>(
         <div {...getStyles('body')}>
           {children}
 
-          <div {...getStyles('labelWrapper')}>
+          <div {...getStyles('labelWrapper')} data-disabled={disabled || undefined}>
             {label && (
               <label {...getStyles('label')} data-disabled={disabled || undefined} htmlFor={id}>
                 {label}
