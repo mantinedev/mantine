@@ -1,6 +1,14 @@
 import React from 'react';
 import TextareaAutosize from 'react-textarea-autosize';
-import { factory, ElementProps, useProps, Factory, BoxProps, StylesApiProps } from '../../core';
+import {
+  factory,
+  ElementProps,
+  useProps,
+  Factory,
+  BoxProps,
+  StylesApiProps,
+  getEnv,
+} from '../../core';
 import { __BaseInputProps, __InputStylesNames } from '../Input';
 import { InputBase } from '../InputBase';
 
@@ -36,11 +44,12 @@ export const Textarea = factory<TextareaFactory>((props, ref) => {
     props
   );
 
-  const autosizeProps = autosize ? { maxRows, minRows } : {};
+  const shouldAutosize = autosize && getEnv() !== 'test';
+  const autosizeProps = shouldAutosize ? { maxRows, minRows } : {};
 
   return (
     <InputBase<any>
-      component={autosize ? TextareaAutosize : 'textarea'}
+      component={shouldAutosize ? TextareaAutosize : 'textarea'}
       ref={ref}
       {...others}
       __staticSelector={__staticSelector || 'Textarea'}
