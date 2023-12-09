@@ -77,6 +77,9 @@ export interface NavLinkProps extends BoxProps, StylesApiProps<NavLinkFactory> {
 
   /** Called when the link is clicked */
   onClick?: (event: React.MouseEvent<HTMLAnchorElement>) => void;
+
+  /** Link `onkeydown` event */
+  onKeyDown?: (event: React.KeyboardEvent<HTMLAnchorElement>) => void;
 }
 
 export type NavLinkFactory = PolymorphicFactory<{
@@ -135,6 +138,7 @@ export const NavLink = polymorphicFactory<NavLinkFactory>((_props, ref) => {
     disableRightSectionRotation,
     noWrap,
     childrenOffset,
+    onKeyDown,
     ...others
   } = props;
 
@@ -161,12 +165,11 @@ export const NavLink = polymorphicFactory<NavLinkFactory>((_props, ref) => {
   const withChildren = !!children;
 
   const handleClick = (event: React.MouseEvent<HTMLAnchorElement>) => {
+    onClick?.(event);
+
     if (withChildren) {
       event.preventDefault();
-      onClick?.(event);
       setOpened(!_opened);
-    } else {
-      onClick?.(event);
     }
   };
 
@@ -177,6 +180,14 @@ export const NavLink = polymorphicFactory<NavLinkFactory>((_props, ref) => {
         component="a"
         ref={ref}
         onClick={handleClick}
+        onKeyDown={(event) => {
+          onKeyDown?.(event);
+
+          if (event.nativeEvent.code === 'Space' && withChildren) {
+            event.preventDefault();
+            setOpened(!_opened);
+          }
+        }}
         unstyled={unstyled}
         mod={{ disabled, active, expanded: _opened }}
         {...others}
