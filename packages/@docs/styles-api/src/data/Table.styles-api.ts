@@ -19,9 +19,9 @@ export const TableStylesApi: StylesApiData<TableFactory> = {
       '--table-layout': 'Controls `table-layout` of the table element, auto by default',
       '--table-caption-side': 'Controls caption-side of the table element, `bottom` by default',
       '--table-horizontal-spacing':
-        'Controls p`adding-left` and p`adding-right` of `Table.Th` and `Table.Td` elements',
+        'Controls `padding-left` and `padding-right` of `Table.Th` and `Table.Td` elements',
       '--table-vertical-spacing':
-        'Controls `padding-top` and `padding-bottom `of `Table.Td` and `Table.Th` elements',
+        'Controls `padding-top` and `padding-bottom` of `Table.Td` and `Table.Th` elements',
       '--table-striped-color': 'Controls `background-color` of even/odd `Table.Tr` elements',
       '--table-highlight-on-hover-color':
         'Controls `background-color` of `Table.Tr` elements when hovered',
