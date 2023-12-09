@@ -100,7 +100,7 @@ const varsResolver = createVarsResolver<ChipFactory>((theme, { size, radius, var
   const colors = theme.variantColorResolver({
     color: color || theme.primaryColor,
     theme,
-    variant: variant!,
+    variant: variant || 'filled',
   });
 
   return {
