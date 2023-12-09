@@ -81,6 +81,8 @@ export const PillsInputField = factory<PillsInputFieldFactory>((_props, ref) => 
       id={inputWrapperCtx?.inputId || id}
       aria-invalid={ctx?.hasError}
       aria-describedby={inputWrapperCtx?.describedBy}
+      type="text"
+      onMouseDown={(event) => !pointer && event.stopPropagation()}
     />
   );
 });
