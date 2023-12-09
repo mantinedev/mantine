@@ -1,15 +1,18 @@
+import dayjs from 'dayjs';
 import React from 'react';
 import { MantineDemo } from '@mantinex/demo';
 import { DateInput, DateInputProps } from '@mantine/dates';
 
 const code = `
+import dayjs from 'dayjs';
 import { DateInput, DateInputProps } from '@mantine/dates';
 
 const dateParser: DateInputProps['dateParser'] = (input) => {
   if (input === 'WW2') {
     return new Date(1939, 8, 1);
   }
-  return new Date(input);
+
+  return return dayjs(input, 'DD/MM/YYYY').toDate();
 };
 
 function Demo() {
@@ -28,7 +31,8 @@ const dateParser: DateInputProps['dateParser'] = (input) => {
   if (input === 'WW2') {
     return new Date(1939, 8, 1);
   }
-  return new Date(input);
+
+  return dayjs(input, 'DD/MM/YYYY').toDate();
 };
 
 function Demo() {
