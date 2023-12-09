@@ -16,14 +16,27 @@ import { IconHome2, IconGauge, IconChevronRight, IconActivity, IconCircleOff } f
 function Demo() {
   return (
     <>
-      <NavLink label="With icon" leftSection={<IconHome2 size="1rem" stroke={1.5} />} />
       <NavLink
+        href="#required-for-focus"
+        label="With icon"
+        leftSection={<IconHome2 size="1rem" stroke={1.5} />}
+      />
+      <NavLink
+        href="#required-for-focus"
         label="With right section"
         leftSection={<IconGauge size="1rem" stroke={1.5} />}
-        rightSection={<IconChevronRight size="0.8rem" stroke={1.5} />}
+        rightSection={
+          <IconChevronRight size="0.8rem" stroke={1.5} className="mantine-rotate-rtl" />
+        }
       />
-      <NavLink label="Disabled" leftSection={<IconCircleOff size="1rem" stroke={1.5} />} disabled />
       <NavLink
+        href="#required-for-focus"
+        label="Disabled"
+        leftSection={<IconCircleOff size="1rem" stroke={1.5} />}
+        disabled
+      />
+      <NavLink
+        href="#required-for-focus"
         label="With description"
         description="Additional information"
         leftSection={
@@ -33,22 +46,31 @@ function Demo() {
         }
       />
       <NavLink
+        href="#required-for-focus"
         label="Active subtle"
         leftSection={<IconActivity size="1rem" stroke={1.5} />}
-        rightSection={<IconChevronRight size="0.8rem" stroke={1.5} />}
+        rightSection={
+          <IconChevronRight size="0.8rem" stroke={1.5} className="mantine-rotate-rtl" />
+        }
         variant="subtle"
         active
       />
       <NavLink
+        href="#required-for-focus"
         label="Active light"
         leftSection={<IconActivity size="1rem" stroke={1.5} />}
-        rightSection={<IconChevronRight size="0.8rem" stroke={1.5} />}
+        rightSection={
+          <IconChevronRight size="0.8rem" stroke={1.5} className="mantine-rotate-rtl" />
+        }
         active
       />
       <NavLink
+        href="#required-for-focus"
         label="Active filled"
         leftSection={<IconActivity size="1rem" stroke={1.5} />}
-        rightSection={<IconChevronRight size="0.8rem" stroke={1.5} />}
+        rightSection={
+          <IconChevronRight size="0.8rem" stroke={1.5} className="mantine-rotate-rtl" />
+        }
         variant="filled"
         active
       />
@@ -60,16 +82,27 @@ function Demo() {
 function Demo() {
   return (
     <>
-      <NavLink label="With icon" leftSection={<IconHome2 size="1rem" stroke={1.5} />} />
       <NavLink
+        href="#required-for-focus"
+        label="With icon"
+        leftSection={<IconHome2 size="1rem" stroke={1.5} />}
+      />
+      <NavLink
+        href="#required-for-focus"
         label="With right section"
         leftSection={<IconGauge size="1rem" stroke={1.5} />}
         rightSection={
           <IconChevronRight size="0.8rem" stroke={1.5} className="mantine-rotate-rtl" />
         }
       />
-      <NavLink label="Disabled" leftSection={<IconCircleOff size="1rem" stroke={1.5} />} disabled />
       <NavLink
+        href="#required-for-focus"
+        label="Disabled"
+        leftSection={<IconCircleOff size="1rem" stroke={1.5} />}
+        disabled
+      />
+      <NavLink
+        href="#required-for-focus"
         label="With description"
         description="Additional information"
         leftSection={
@@ -79,6 +112,7 @@ function Demo() {
         }
       />
       <NavLink
+        href="#required-for-focus"
         label="Active subtle"
         leftSection={<IconActivity size="1rem" stroke={1.5} />}
         rightSection={
@@ -88,6 +122,7 @@ function Demo() {
         active
       />
       <NavLink
+        href="#required-for-focus"
         label="Active light"
         leftSection={<IconActivity size="1rem" stroke={1.5} />}
         rightSection={
@@ -96,6 +131,7 @@ function Demo() {
         active
       />
       <NavLink
+        href="#required-for-focus"
         label="Active filled"
         leftSection={<IconActivity size="1rem" stroke={1.5} />}
         rightSection={

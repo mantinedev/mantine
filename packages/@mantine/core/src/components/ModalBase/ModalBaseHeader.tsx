@@ -4,13 +4,18 @@ import { Box, BoxProps, ElementProps } from '../../core';
 import classes from './ModalBase.module.css';
 import { useModalBaseContext } from './ModalBase.context';
 
-export interface ModalBaseHeaderProps extends BoxProps, ElementProps<'div'> {}
+export interface ModalBaseHeaderProps extends BoxProps, ElementProps<'header'> {}
 
-export const ModalBaseHeader = forwardRef<HTMLDivElement, ModalBaseHeaderProps>(
+export const ModalBaseHeader = forwardRef<HTMLElement, ModalBaseHeaderProps>(
   ({ className, ...others }, ref) => {
     const ctx = useModalBaseContext();
     return (
-      <Box ref={ref} className={cx({ [classes.header]: !ctx.unstyled }, className)} {...others} />
+      <Box
+        component="header"
+        ref={ref}
+        className={cx({ [classes.header]: !ctx.unstyled }, className)}
+        {...others}
+      />
     );
   }
 );

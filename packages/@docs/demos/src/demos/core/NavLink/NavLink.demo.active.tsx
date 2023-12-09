@@ -23,6 +23,7 @@ function Demo() {
 
   const items = data.map((item, index) => (
     <NavLink
+      href="#required-for-focus"
       key={item.label}
       active={index === active}
       label={item.label}
@@ -53,6 +54,7 @@ function Demo(props: any) {
 
   const items = data.map((item, index) => (
     <NavLink
+      href="#required-for-focus"
       key={item.label}
       active={index === active}
       label={item.label}

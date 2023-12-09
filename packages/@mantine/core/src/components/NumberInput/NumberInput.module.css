@@ -41,14 +41,26 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  color: var(--mantine-color-text);
+  color: var(--_ni-control-color, var(--mantine-color-text));
   background-color: var(--_control-bg, transparent);
-  pointer-events: var(--_control-pointer-events, auto);
   opacity: var(--_control-opacity, 1);
+  cursor: var(--_control-cursor, pointer);
 
   &:disabled {
-    --_control-pointer-events: none;
-    --_control-opacity: 0.4;
+    --_control-bg: transparent !important;
+    --_control-cursor: not-allowed;
+
+    @mixin light {
+      --_ni-control-color: var(--mantine-color-gray-4);
+    }
+
+    @mixin dark {
+      --_ni-control-color: var(--mantine-color-dark-3);
+    }
+  }
+
+  .root[data-error] & {
+    --_ni-control-color: var(--mantine-color-error);
   }
 
   @mixin rtl {

@@ -239,6 +239,7 @@ export const DateInput = factory<DateInputFactory>((_props, ref) => {
           setDropdownOpened(false);
         }}
         unstyled={unstyled}
+        size={inputProps.size || 'sm'}
         {...clearButtonProps}
       />
     ) : null);

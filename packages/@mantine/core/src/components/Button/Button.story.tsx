@@ -12,6 +12,16 @@ export function RenderRoot() {
   );
 }
 
+export function PolymorphicAlignment() {
+  return (
+    <div style={{ padding: 40 }}>
+      <Button>Button</Button>
+      <Button component="div">Div</Button>
+      <Button component="a">Link</Button>
+    </div>
+  );
+}
+
 export function SingleButton() {
   return (
     <div style={{ padding: 40 }}>

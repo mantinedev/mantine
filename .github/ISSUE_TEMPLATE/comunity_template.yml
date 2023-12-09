@@ -6,7 +6,13 @@ body:
     id: link
     attributes:
       label: Link to the repository on GitHub
+      placeholder: https://github.com/username/repository
+    validations:
+      required: true
   - type: textarea
     id: description
     attributes:
       label: Features of the template, describe how it is different from other templates
+      placeholder: Your awesome template description
+    validations:
+      required: true

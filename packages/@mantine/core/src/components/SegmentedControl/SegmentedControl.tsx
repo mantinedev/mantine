@@ -256,6 +256,7 @@ export const SegmentedControl = factory<SegmentedControlFactory>((_props, ref) =
         mod={{
           active: _value === item.value && !(disabled || item.disabled),
           disabled: disabled || item.disabled,
+          'read-only': readOnly,
         }}
         htmlFor={`${uuid}-${item.value}`}
         ref={(node) => {

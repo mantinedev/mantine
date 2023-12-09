@@ -36,6 +36,28 @@ export function Usage() {
   );
 }
 
+export function ConsistentHeaderHeight() {
+  const [opened, { open, close }] = useDisclosure(true);
+  const [withCloseButton, handlers] = useDisclosure(true);
+
+  return (
+    <div style={{ padding: 40 }}>
+      <Button onClick={open}>Open modal</Button>
+      {content}
+      <Button onClick={open}>Open modal</Button>
+      <Modal
+        opened={opened}
+        onClose={close}
+        title="Toggle close button"
+        withCloseButton={withCloseButton}
+        zIndex={73812}
+      >
+        <Button onClick={handlers.toggle}>Toggle close button</Button>
+      </Modal>
+    </div>
+  );
+}
+
 export function WithTabs() {
   const [opened, { open, close }] = useDisclosure(true);
   return (

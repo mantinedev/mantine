@@ -90,6 +90,10 @@
   /* outline is controlled by .input */
   outline: var(--_outline, none);
 
+  &[data-read-only] {
+    --_cursor: default;
+  }
+
   fieldset:disabled &,
   &[data-disabled] {
     --_cursor: not-allowed;
@@ -113,7 +117,7 @@
     }
   }
 
-  &:not([data-disabled]):not([data-active]) {
+  &:not([data-disabled], [data-active], [data-read-only]) {
     @mixin hover {
       @mixin light {
         --_color: var(--mantine-color-black);

@@ -33,5 +33,6 @@ export const SegmentedControlStylesApi: StylesApiData<SegmentedControlFactory> =
       condition: 'Associated input is checked',
     },
     { modifier: 'data-disabled', selector: 'label', condition: 'Associated input is disabled' },
+    { modifier: 'data-read-only', selector: 'label', condition: '`readOnly` prop is set' },
   ],
 };
