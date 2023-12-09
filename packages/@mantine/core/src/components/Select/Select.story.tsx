@@ -24,6 +24,7 @@ export function EmptyOptionValue() {
           { value: '', label: 'Empty value' },
           { value: 'test', label: 'Not empty' },
         ]}
+        defaultValue=""
         placeholder="Select value"
       />
     </div>
