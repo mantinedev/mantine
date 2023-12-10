@@ -18,6 +18,10 @@ export function DynamicTotal() {
   );
 }
 
+export function AutoContrast() {
+  return <Pagination total={45} color="lime.3" autoContrast />;
+}
+
 export function Controlled() {
   const [value, setValue] = useState(1);
   return (

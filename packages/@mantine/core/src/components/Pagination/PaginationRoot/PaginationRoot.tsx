@@ -8,6 +8,7 @@ import {
   ElementProps,
   factory,
   Factory,
+  getContrastColor,
   getFontSize,
   getRadius,
   getSize,
@@ -28,7 +29,8 @@ export type PaginationRootCssVariables = {
     | '--pagination-control-size'
     | '--pagination-control-radius'
     | '--pagination-control-fz'
-    | '--pagination-active-bg';
+    | '--pagination-active-bg'
+    | '--pagination-active-color';
 };
 
 export interface PaginationRootProps
@@ -79,6 +81,9 @@ export interface PaginationRootProps
 
   /** Additional props passed down to controls */
   getItemProps?: (page: number) => Record<string, any>;
+
+  /** Determines whether active item text color should depend on `background-color` of the indicator. If luminosity of the `color` prop is less than `theme.luminosityThreshold`, then `theme.white` will be used for text color, otherwise `theme.black`. Override `theme.autoContrast`. */
+  autoContrast?: boolean;
 }
 
 export type PaginationRootFactory = Factory<{
@@ -94,12 +99,15 @@ const defaultProps: Partial<PaginationRootProps> = {
 };
 
 const varsResolver = createVarsResolver<PaginationRootFactory>(
-  (theme, { size, radius, color }) => ({
+  (theme, { size, radius, color, autoContrast }) => ({
     root: {
       '--pagination-control-radius': radius === undefined ? undefined : getRadius(radius),
       '--pagination-control-size': getSize(size, 'pagination-control-size'),
       '--pagination-control-fz': getFontSize(size),
       '--pagination-active-bg': color ? getThemeColor(color, theme) : undefined,
+      '--pagination-active-color': autoContrast
+        ? getContrastColor({ color, theme, autoContrast })
+        : undefined,
     },
   })
 );
@@ -127,6 +135,7 @@ export const PaginationRoot = factory<PaginationRootFactory>((_props, ref) => {
     onFirstPage,
     onLastPage,
     getItemProps,
+    autoContrast,
     ...others
   } = props;
 

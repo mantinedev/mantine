@@ -38,7 +38,7 @@
   &[data-active] {
     --_control-bg-color: var(--pagination-active-bg) !important;
     --_control-border-color: var(--pagination-active-bg) !important;
-    --_control-color: var(--mantine-color-white);
+    --_control-color: var(--pagination-active-color, var(--mantine-color-white));
   }
 
   @mixin light {
