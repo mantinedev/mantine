@@ -41,7 +41,7 @@
   padding-right: var(--_indicator-padding, 0);
   background-color: var(--indicator-color);
   border: var(--_indicator-border);
-  color: var(--mantine-color-white);
+  color: var(--indicator-text-color, var(--mantine-color-white));
   white-space: nowrap;
 
   &::before {

@@ -32,6 +32,17 @@ export const Inline = () => (
   </Box>
 );
 
+export const AutoContrast = () => (
+  <Box p={40}>
+    <Indicator inline autoContrast withBorder color="lime.4" label="New" size={20}>
+      <Avatar
+        radius="xl"
+        src="https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/images/bg-8.png"
+      />
+    </Indicator>
+  </Box>
+);
+
 export const WithRadius = () => (
   <Box p={40}>
     <Indicator inline offset={12} size={20} position="bottom-end" withBorder color="red">

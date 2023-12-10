@@ -7,7 +7,7 @@ interface GetContrastColorInput {
   autoContrast?: boolean | undefined;
 }
 
-export function getContrastColor({ color, theme, autoContrast }: GetContrastColorInput) {
+export function getContrastColor({ color, theme, autoContrast = true }: GetContrastColorInput) {
   const _autoContrast = typeof autoContrast === 'boolean' ? autoContrast : theme.autoContrast;
 
   if (!_autoContrast) {

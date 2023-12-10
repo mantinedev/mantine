@@ -6,6 +6,7 @@ import {
   ElementProps,
   factory,
   Factory,
+  getContrastColor,
   getRadius,
   getThemeColor,
   MantineColor,
@@ -31,6 +32,7 @@ export type IndicatorStylesNames = 'root' | 'indicator';
 export type IndicatorCssVariables = {
   root:
     | '--indicator-color'
+    | '--indicator-text-color'
     | '--indicator-size'
     | '--indicator-radius'
     | '--indicator-z-index'
@@ -73,6 +75,9 @@ export interface IndicatorProps
 
   /** Indicator z-index, `200` by default */
   zIndex?: string | number;
+
+  /** Determines whether text color should depend on `background-color`. If luminosity of the `color` prop is less than `theme.luminosityThreshold`, then `theme.white` will be used for text color, otherwise `theme.black`. Override `theme.autoContrast`. */
+  autoContrast?: boolean;
 }
 
 export type IndicatorFactory = Factory<{
@@ -92,9 +97,10 @@ const defaultProps: Partial<IndicatorProps> = {
 };
 
 const varsResolver = createVarsResolver<IndicatorFactory>(
-  (theme, { color, position, offset, size, radius, zIndex }) => ({
+  (theme, { color, position, offset, size, radius, zIndex, autoContrast }) => ({
     root: {
       '--indicator-color': color ? getThemeColor(color, theme) : undefined,
+      '--indicator-text-color': autoContrast ? getContrastColor({ color, theme }) : undefined,
       '--indicator-size': rem(size),
       '--indicator-radius': radius === undefined ? undefined : getRadius(radius),
       '--indicator-z-index': zIndex?.toString(),
