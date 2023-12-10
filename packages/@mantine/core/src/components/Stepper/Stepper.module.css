@@ -209,7 +209,7 @@
   }
 
   [data-mantine-color-scheme] &[data-completed] {
-    --_step-icon-color: var(--mantine-color-white);
+    --_step-icon-color: var(--stepper-icon-color, var(--mantine-color-white));
     --_step-icon-bg: var(--_step-color);
     --_step-icon-border-color: var(--_step-color);
   }
@@ -221,7 +221,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  color: var(--mantine-color-white);
+  color: var(--stepper-icon-color, var(--mantine-color-white));
 }
 
 .stepBody {

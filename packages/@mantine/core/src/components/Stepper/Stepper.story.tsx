@@ -12,7 +12,7 @@ export function Usage() {
 
   return (
     <div style={{ padding: 40 }}>
-      <Stepper active={active} onStepClick={setActive}>
+      <Stepper active={active} onStepClick={setActive} color="lime.3" autoContrast>
         <Stepper.Step label="First step" description="Create an account">
           Step 1 content: Create an account
         </Stepper.Step>

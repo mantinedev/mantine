@@ -6,6 +6,7 @@ import {
   ElementProps,
   factory,
   Factory,
+  getContrastColor,
   getFontSize,
   getRadius,
   getSize,
@@ -45,6 +46,7 @@ export type StepperStylesNames =
 export type StepperCssVariables = {
   root:
     | '--stepper-color'
+    | '--stepper-icon-color'
     | '--stepper-icon-size'
     | '--stepper-content-padding'
     | '--stepper-radius'
@@ -100,6 +102,9 @@ export interface StepperProps
 
   /** Determines whether steps should wrap to the next line if no space is available, `true` by default */
   wrap?: boolean;
+
+  /** Determines whether text color with filled variant should depend on `background-color`. If luminosity of the `color` prop is less than `theme.luminosityThreshold`, then `theme.white` will be used for text color, otherwise `theme.black`. Override `theme.autoContrast`. */
+  autoContrast?: boolean;
 }
 
 export type StepperFactory = Factory<{
@@ -121,9 +126,12 @@ const defaultProps: Partial<StepperProps> = {
 };
 
 const varsResolver = createVarsResolver<StepperFactory>(
-  (theme, { color, iconSize, size, contentPadding, radius }) => ({
+  (theme, { color, iconSize, size, contentPadding, radius, autoContrast }) => ({
     root: {
       '--stepper-color': color ? getThemeColor(color, theme) : undefined,
+      '--stepper-icon-color': autoContrast
+        ? getContrastColor({ color, theme, autoContrast })
+        : undefined,
       '--stepper-icon-size':
         iconSize === undefined ? getSize(size, 'stepper-icon-size') : rem(iconSize),
       '--stepper-content-padding': getSpacing(contentPadding),
