@@ -9,6 +9,7 @@ import {
   useDirection,
   useMantineColorScheme,
 } from '@mantine/core';
+import { ShikiProvider } from '@mantinex/shiki';
 import { theme } from '../docs/theme';
 
 export const parameters = { layout: 'fullscreen' };
@@ -49,8 +50,18 @@ function DirectionWrapper({ children }: { children: React.ReactNode }) {
   );
 }
 
+async function loadShiki() {
+  const { getHighlighter } = await import('shikiji');
+  const shiki = await getHighlighter({
+    langs: ['tsx', 'scss', 'html', 'bash', 'json'],
+  });
+
+  return shiki;
+}
+
 export const decorators = [
   (renderStory: any) => <DirectionWrapper>{renderStory()}</DirectionWrapper>,
   (renderStory: any) => <ColorSchemeWrapper>{renderStory()}</ColorSchemeWrapper>,
+  (renderStory: any) => <ShikiProvider loadShiki={loadShiki}>{renderStory()}</ShikiProvider>,
   (renderStory: any) => <MantineProvider theme={theme}>{renderStory()}</MantineProvider>,
 ];
