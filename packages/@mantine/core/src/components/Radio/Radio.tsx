@@ -109,7 +109,7 @@ const varsResolver = createVarsResolver<RadioFactory>(
         '--radio-icon-color': iconColor
           ? getThemeColor(iconColor, theme)
           : autoContrast
-            ? getContrastColor({ color, theme, autoContrast })
+            ? getContrastColor({ color, theme })
             : undefined,
         '--radio-icon-size': getSize(size, 'radio-icon-size'),
       },

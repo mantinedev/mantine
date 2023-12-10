@@ -86,9 +86,7 @@ export const ProgressSection = factory<ProgressSectionFactory>((props, ref) => {
       __vars={{
         '--progress-section-width': `${value}%`,
         '--progress-section-color': getThemeColor(color, theme),
-        '--progress-label-color': ctx.autoContrast
-          ? getContrastColor({ color, theme, autoContrast: ctx.autoContrast })
-          : undefined,
+        '--progress-label-color': ctx.autoContrast ? getContrastColor({ color, theme }) : undefined,
       }}
     />
   );

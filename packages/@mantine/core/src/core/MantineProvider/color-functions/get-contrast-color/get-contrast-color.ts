@@ -4,7 +4,7 @@ import { parseThemeColor } from '../parse-theme-color/parse-theme-color';
 interface GetContrastColorInput {
   color: string | null | undefined;
   theme: MantineTheme;
-  autoContrast: boolean | undefined;
+  autoContrast?: boolean | undefined;
 }
 
 export function getContrastColor({ color, theme, autoContrast }: GetContrastColorInput) {

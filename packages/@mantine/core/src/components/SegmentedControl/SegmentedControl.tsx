@@ -268,8 +268,7 @@ export const SegmentedControl = factory<SegmentedControlFactory>((_props, ref) =
           refs.current[item.value] = node!;
         }}
         __vars={{
-          '--sc-label-color':
-            color !== undefined ? getContrastColor({ color, theme, autoContrast }) : undefined,
+          '--sc-label-color': color !== undefined ? getContrastColor({ color, theme }) : undefined,
         }}
       >
         {item.label}

@@ -129,9 +129,7 @@ const varsResolver = createVarsResolver<StepperFactory>(
   (theme, { color, iconSize, size, contentPadding, radius, autoContrast }) => ({
     root: {
       '--stepper-color': color ? getThemeColor(color, theme) : undefined,
-      '--stepper-icon-color': autoContrast
-        ? getContrastColor({ color, theme, autoContrast })
-        : undefined,
+      '--stepper-icon-color': autoContrast ? getContrastColor({ color, theme }) : undefined,
       '--stepper-icon-size':
         iconSize === undefined ? getSize(size, 'stepper-icon-size') : rem(iconSize),
       '--stepper-content-padding': getSpacing(contentPadding),
