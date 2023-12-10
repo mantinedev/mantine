@@ -25,4 +25,16 @@ describe('@mantine/core/Portal', () => {
   it('has correct displayName', () => {
     expect(Portal.displayName).toStrictEqual('@mantine/core/Portal');
   });
+
+  it('syncs its className to the generated Portal node', () => {
+    render(<Portal className="test-portal">test-portal</Portal>);
+    const portal = document.querySelector('[data-portal]')!;
+    expect(portal.classList).toContain('test-portal');
+  });
+
+  it('does not crash when className is empty or contains extra spaces', () => {
+    render(<Portal className="">empty-className</Portal>);
+    render(<Portal className="hello  world">className-with-spaces</Portal>);
+    expect(document.querySelectorAll('[data-portal]')).toHaveLength(2);
+  });
 });
