@@ -7,6 +7,7 @@ import {
   ElementProps,
   factory,
   Factory,
+  getContrastColor,
   getRadius,
   getSafeId,
   getThemeColor,
@@ -78,6 +79,9 @@ export interface TabsProps
 
   /** If set to `false`, `Tabs.Panel` content will be unmounted when the associated tab is not active, `true` by default */
   keepMounted?: boolean;
+
+  /** Determines whether active item text color should depend on `background-color` of the indicator. If luminosity of the `color` prop is less than `theme.luminosityThreshold`, then `theme.white` will be used for text color, otherwise `theme.black`. Override `theme.autoContrast`. Only applicable when `variant="pills"` */
+  autoContrast?: boolean;
 }
 
 export type TabsFactory = Factory<{
@@ -108,10 +112,13 @@ const defaultProps: Partial<TabsProps> = {
   placement: 'left',
 };
 
-const varsResolver = createVarsResolver<TabsFactory>((theme, { radius, color }) => ({
+const varsResolver = createVarsResolver<TabsFactory>((theme, { radius, color, autoContrast }) => ({
   root: {
     '--tabs-radius': getRadius(radius),
     '--tabs-color': getThemeColor(color, theme),
+    '--tabs-text-color': autoContrast
+      ? getContrastColor({ color, theme, autoContrast })
+      : undefined,
   },
 }));
 
@@ -139,6 +146,7 @@ export const Tabs = factory<TabsFactory>((_props, ref) => {
     className,
     style,
     vars,
+    autoContrast,
     ...others
   } = props;
 

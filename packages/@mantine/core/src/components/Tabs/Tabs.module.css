@@ -367,7 +367,7 @@
 
   &[data-active][data-active] {
     --_tab-bg: var(--tabs-color);
-    --_tab-color: var(--mantine-color-white);
+    --_tab-color: var(--tabs-text-color, var(--mantine-color-white));
 
     @mixin hover {
       --_tab-bg: var(--tabs-color);

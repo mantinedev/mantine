@@ -105,7 +105,7 @@ export function OutlineVariant() {
 export function PillsVariant() {
   return (
     <div>
-      <Wrapper variant="pills" color="green.9" defaultValue="react">
+      <Wrapper variant="pills" color="lime.4" defaultValue="react" autoContrast>
         {base}
       </Wrapper>
 
