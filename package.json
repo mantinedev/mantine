@@ -54,8 +54,8 @@
     "stylelint": "stylelint '**/*.css' --cache",
     "syncpack": "syncpack list-mismatches",
     "syncpack:format": "syncpack format",
-    "prettier:test": "prettier --check \"**/*.{ts,tsx,mdx}\"",
-    "prettier:write": "prettier --write \"**/*.{ts,tsx,mdx}\""
+    "prettier:test": "prettier --check \"**/*.{ts,tsx,mdx,css}\"",
+    "prettier:write": "prettier --write \"**/*.{ts,tsx,mdx,css}\""
   },
   "dependencies": {
     "@floating-ui/react": "^0.24.8",

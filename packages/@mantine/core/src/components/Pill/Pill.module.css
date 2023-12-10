@@ -39,8 +39,6 @@
     --_pill-color: var(--mantine-color-black);
   }
 
-
-
   @mixin rtl {
     padding-right: 0.8em;
     padding-left: var(--_pill-padding-right, 0.8em);
