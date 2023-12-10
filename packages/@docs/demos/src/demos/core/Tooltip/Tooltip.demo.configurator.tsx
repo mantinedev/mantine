@@ -1,5 +1,5 @@
 import React from 'react';
-import { Tooltip, Button } from '@mantine/core';
+import { Button, Tooltip } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
 
 function Wrapper(props: any) {

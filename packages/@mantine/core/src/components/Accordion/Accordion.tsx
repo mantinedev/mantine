@@ -3,26 +3,26 @@ import { useId, useUncontrolled } from '@mantine/hooks';
 import {
   Box,
   BoxProps,
-  StylesApiProps,
-  ElementProps,
-  useProps,
-  useStyles,
   createVarsResolver,
-  Factory,
-  MantineRadius,
-  getSafeId,
+  ElementProps,
   ExtendComponent,
+  Factory,
+  getRadius,
+  getSafeId,
+  MantineRadius,
   MantineThemeComponent,
   rem,
-  getRadius,
+  StylesApiProps,
+  useProps,
+  useStyles,
 } from '../../core';
+import { AccordionProvider } from './Accordion.context';
+import { AccordionChevronPosition, AccordionHeadingOrder, AccordionValue } from './Accordion.types';
 import { AccordionChevron } from './AccordionChevron';
+import { AccordionControl } from './AccordionControl/AccordionControl';
 import { AccordionItem } from './AccordionItem/AccordionItem';
 import { AccordionPanel } from './AccordionPanel/AccordionPanel';
-import { AccordionControl } from './AccordionControl/AccordionControl';
-import { AccordionChevronPosition, AccordionHeadingOrder, AccordionValue } from './Accordion.types';
 import classes from './Accordion.module.css';
-import { AccordionProvider } from './Accordion.context';
 
 export type AccordionStylesNames =
   | 'root'

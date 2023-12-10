@@ -2,30 +2,30 @@ import React, { useEffect, useState } from 'react';
 import { useDidUpdate, useEyeDropper, useUncontrolled } from '@mantine/hooks';
 import {
   BoxProps,
-  StylesApiProps,
-  factory,
-  ElementProps,
-  Factory,
-  useResolvedStylesApi,
-  useProps,
-  useStyles,
   createVarsResolver,
+  ElementProps,
+  factory,
+  Factory,
   getSize,
+  StylesApiProps,
+  useProps,
+  useResolvedStylesApi,
+  useStyles,
 } from '../../core';
-import { InputBase } from '../InputBase';
+import { ActionIcon } from '../ActionIcon';
 import {
   __ColorPickerProps,
-  ColorPickerStylesNames,
   ColorPicker,
+  ColorPickerStylesNames,
   convertHsvaTo,
   isColorValid,
   parseColor,
 } from '../ColorPicker';
-import { __BaseInputProps, Input, InputVariant, __InputStylesNames, useInputProps } from '../Input';
+import { ColorSwatch } from '../ColorSwatch';
+import { __BaseInputProps, __InputStylesNames, Input, InputVariant, useInputProps } from '../Input';
+import { InputBase } from '../InputBase';
 import { Popover, PopoverProps } from '../Popover';
 import { EyeDropperIcon } from './EyeDropperIcon';
-import { ActionIcon } from '../ActionIcon';
-import { ColorSwatch } from '../ColorSwatch';
 import classes from './ColorInput.module.css';
 
 export type ColorInputStylesNames =

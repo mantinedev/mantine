@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, tests, screen } from '@mantine-tests/core';
+import { render, screen, tests } from '@mantine-tests/core';
 import { datesTests } from '@mantine-tests/dates';
 import { MonthLevel, MonthLevelProps, MonthLevelStylesNames } from './MonthLevel';
 

@@ -1,5 +1,5 @@
-import type { MantineColorSchemeManager } from './types';
 import { isMantineColorScheme } from './is-mantine-color-scheme';
+import type { MantineColorSchemeManager } from './types';
 
 export interface LocalStorageColorSchemeManagerOptions {
   /** Local storage key used to retrieve value with `localStorage.getItem(key)`, `mantine-color-scheme-value` by default */

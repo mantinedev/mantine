@@ -1,7 +1,7 @@
 import React from 'react';
-import { tests, createContextContainer, render, userEvent, screen } from '@mantine-tests/core';
-import { TabsTab, TabsTabProps, TabsTabStylesNames } from './TabsTab';
+import { createContextContainer, render, screen, tests, userEvent } from '@mantine-tests/core';
 import { Tabs } from '../Tabs';
+import { TabsTab, TabsTabProps, TabsTabStylesNames } from './TabsTab';
 
 const defaultProps: TabsTabProps = {
   value: 'test',

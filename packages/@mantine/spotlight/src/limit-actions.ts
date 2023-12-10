@@ -1,5 +1,5 @@
-import type { SpotlightActions, SpotlightActionData } from './Spotlight';
 import { isActionsGroup } from './is-actions-group';
+import type { SpotlightActionData, SpotlightActions } from './Spotlight';
 
 export function limitActions(actions: SpotlightActions[], limit: number) {
   const result: SpotlightActions[] = [];

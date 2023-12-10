@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
+import { Button, Group, Skeleton, Text } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
-import { Group, Button, Text, Skeleton } from '@mantine/core';
 
 const code = `
 import { useState } from 'react';

@@ -1,7 +1,7 @@
-import React, { useState, useRef } from 'react';
-import { PinInput } from './PinInput';
-import { Button } from '../Button';
+import React, { useRef, useState } from 'react';
 import { DEFAULT_THEME, MantineSize } from '../../core';
+import { Button } from '../Button';
+import { PinInput } from './PinInput';
 
 export default { title: 'PinInput' };
 

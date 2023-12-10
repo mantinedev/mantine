@@ -34,8 +34,8 @@ Then call `createFormActions` function with the same form name as specified in `
 
 ```tsx
 // Import type of form values from the file where you defined useForm
-import type { DemoFormValues } from './DemoForm';
 import { createFormActions } from '@mantine/form';
+import type { DemoFormValues } from './DemoForm';
 
 export const demoFormActions =
   createFormActions<DemoFormValues>('demo-form');

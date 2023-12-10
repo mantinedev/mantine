@@ -1,11 +1,11 @@
 import React from 'react';
-import { tests, createContextContainer, screen, render } from '@mantine-tests/core';
+import { createContextContainer, render, screen, tests } from '@mantine-tests/core';
+import { PaginationRoot } from '../PaginationRoot/PaginationRoot';
 import {
   PaginationControl,
   PaginationControlProps,
   PaginationControlStylesNames,
 } from './PaginationControl';
-import { PaginationRoot } from '../PaginationRoot/PaginationRoot';
 
 const TestContainer = createContextContainer(PaginationControl, PaginationRoot, { total: 10 });
 

@@ -2,14 +2,14 @@ import React, { useEffect, useState } from 'react';
 import {
   Box,
   BoxProps,
-  StylesApiProps,
+  createVarsResolver,
+  getRadius,
+  MantineRadius,
   polymorphicFactory,
+  PolymorphicFactory,
+  StylesApiProps,
   useProps,
   useStyles,
-  createVarsResolver,
-  PolymorphicFactory,
-  MantineRadius,
-  getRadius,
 } from '../../core';
 import classes from './Image.module.css';
 

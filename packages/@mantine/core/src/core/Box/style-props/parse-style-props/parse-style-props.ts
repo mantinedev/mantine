@@ -1,8 +1,8 @@
-import { keys } from '../../../utils';
-import type { StyleProp } from '../style-props.types';
-import type { SystemPropData } from '../style-props-data';
-import { resolvers } from '../resolvers';
 import { MantineTheme } from '../../../MantineProvider';
+import { keys } from '../../../utils';
+import { resolvers } from '../resolvers';
+import type { SystemPropData } from '../style-props-data';
+import type { StyleProp } from '../style-props.types';
 import type { SortMediaQueriesResult } from './sort-media-queries';
 import { sortMediaQueries } from './sort-media-queries';
 

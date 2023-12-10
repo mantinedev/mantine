@@ -1,5 +1,5 @@
 import { DEFAULT_THEME } from '../../../../MantineProvider';
-import { getGlobalClassNames, FOCUS_CLASS_NAMES } from './get-global-class-names';
+import { FOCUS_CLASS_NAMES, getGlobalClassNames } from './get-global-class-names';
 
 describe('@mantine/core/get-global-class-names', () => {
   it('returns empty string if both focusable and active options are false', () => {

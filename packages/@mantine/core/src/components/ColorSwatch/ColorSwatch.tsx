@@ -2,15 +2,15 @@ import React from 'react';
 import {
   Box,
   BoxProps,
-  MantineRadius,
-  StylesApiProps,
+  createVarsResolver,
   getRadius,
+  MantineRadius,
   polymorphicFactory,
+  PolymorphicFactory,
   rem,
+  StylesApiProps,
   useProps,
   useStyles,
-  createVarsResolver,
-  PolymorphicFactory,
 } from '../../core';
 import classes from './ColorSwatch.module.css';
 

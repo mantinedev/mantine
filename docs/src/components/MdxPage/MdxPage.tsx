@@ -1,7 +1,7 @@
 import React from 'react';
 import { MdxPageHeader } from '@/components/MdxPageHeader';
-import { MdxTabs } from '@/components/MdxTabs';
 import { MdxRawContent } from '@/components/MdxRawContent';
+import { MdxTabs } from '@/components/MdxTabs';
 import { Frontmatter } from '@/types';
 
 interface MdxPageProps {

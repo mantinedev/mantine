@@ -2,15 +2,15 @@ import React from 'react';
 import {
   Box,
   BoxProps,
-  StylesApiProps,
-  factory,
+  createVarsResolver,
   ElementProps,
+  factory,
+  Factory,
+  getRadius,
+  rem,
+  StylesApiProps,
   useProps,
   useStyles,
-  createVarsResolver,
-  Factory,
-  rem,
-  getRadius,
 } from '../../core';
 import classes from './Skeleton.module.css';
 

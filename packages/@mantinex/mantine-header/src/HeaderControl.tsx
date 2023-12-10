@@ -1,6 +1,6 @@
 import React from 'react';
 import cx from 'clsx';
-import { UnstyledButton, Tooltip, BoxProps, createPolymorphicComponent } from '@mantine/core';
+import { BoxProps, createPolymorphicComponent, Tooltip, UnstyledButton } from '@mantine/core';
 import classes from './HeaderControl.module.css';
 
 export interface HeaderControlProps extends BoxProps {

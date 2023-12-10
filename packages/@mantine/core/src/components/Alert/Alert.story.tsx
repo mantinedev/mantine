@@ -1,6 +1,6 @@
 import React from 'react';
-import { Alert } from './Alert';
 import { MantineThemeProvider } from '../../core';
+import { Alert } from './Alert';
 
 export default { title: 'Alert' };
 

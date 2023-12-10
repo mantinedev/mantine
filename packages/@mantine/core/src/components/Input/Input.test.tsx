@@ -1,11 +1,11 @@
 import React from 'react';
-import { render, tests, screen } from '@mantine-tests/core';
+import { render, screen, tests } from '@mantine-tests/core';
 import { Input, InputProps, InputStylesNames } from './Input';
-import { InputWrapper } from './InputWrapper/InputWrapper';
-import { InputLabel } from './InputLabel/InputLabel';
 import { InputDescription } from './InputDescription/InputDescription';
 import { InputError } from './InputError/InputError';
+import { InputLabel } from './InputLabel/InputLabel';
 import { InputPlaceholder } from './InputPlaceholder/InputPlaceholder';
+import { InputWrapper } from './InputWrapper/InputWrapper';
 
 const defaultProps: InputProps = {
   rightSection: 'right',

@@ -1,7 +1,7 @@
+import { ThemingDemos } from '@docs/demos';
+import { ThemeColors } from '@/components/ThemeColors';
 import { Layout } from '@/layout';
 import { MDX_DATA } from '@/mdx';
-import { ThemeColors } from '@/components/ThemeColors';
-import { ThemingDemos } from '@docs/demos';
 
 export default Layout(MDX_DATA.Colors);
 
@@ -183,8 +183,8 @@ colors with poor contrast for lighter colors (yellow, teal, orange). Usually, it
 colors in advance to avoid contrast issues.
 
 ```tsx
-import { MantineProvider } from '@mantine/core';
 import { generateColors } from '@mantine/colors-generator';
+import { MantineProvider } from '@mantine/core';
 
 function Demo() {
   return (

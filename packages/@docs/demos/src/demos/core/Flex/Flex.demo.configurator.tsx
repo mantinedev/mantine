@@ -1,6 +1,6 @@
 import React from 'react';
+import { Button, Flex, FlexProps } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
-import { FlexProps, Button, Flex } from '@mantine/core';
 
 function Wrapper(props: FlexProps) {
   return (

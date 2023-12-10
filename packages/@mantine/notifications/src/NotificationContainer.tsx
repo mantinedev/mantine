@@ -1,7 +1,7 @@
-import React, { forwardRef, useRef, useEffect } from 'react';
+import React, { forwardRef, useEffect, useRef } from 'react';
 import { Notification, NotificationProps } from '@mantine/core';
-import { NotificationData } from './notifications.store';
 import { getAutoClose } from './get-auto-close/get-auto-close';
+import { NotificationData } from './notifications.store';
 
 interface NotificationContainerProps extends NotificationProps {
   data: NotificationData;

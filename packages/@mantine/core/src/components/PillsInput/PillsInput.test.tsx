@@ -1,7 +1,7 @@
 import React from 'react';
-import { tests, inputStylesApiSelectors, inputDefaultProps } from '@mantine-tests/core';
-import { PillsInput, PillsInputProps } from './PillsInput';
+import { inputDefaultProps, inputStylesApiSelectors, tests } from '@mantine-tests/core';
 import { __InputStylesNames } from '../Input';
+import { PillsInput, PillsInputProps } from './PillsInput';
 
 const defaultProps: PillsInputProps = {
   ...inputDefaultProps,

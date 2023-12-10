@@ -1,7 +1,7 @@
 import React from 'react';
 import { Button } from '@mantine/core';
-import { MantineDemo } from '@mantinex/demo';
 import { useClipboard } from '@mantine/hooks';
+import { MantineDemo } from '@mantinex/demo';
 
 const code = `
 import { Button } from '@mantine/core';

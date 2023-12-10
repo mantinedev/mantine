@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { autoUpdate } from '@floating-ui/react';
 import { useDidUpdate } from '@mantine/hooks';
 import { FloatingPosition } from './types';

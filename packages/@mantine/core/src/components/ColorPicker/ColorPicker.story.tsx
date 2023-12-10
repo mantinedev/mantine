@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { ColorPicker } from './ColorPicker';
 import { AlphaSlider } from './AlphaSlider/AlphaSlider';
+import { ColorPicker } from './ColorPicker';
 import { HueSlider } from './HueSlider/HueSlider';
 
 export default { title: 'ColorPicker' };

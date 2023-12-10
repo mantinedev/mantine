@@ -1,4 +1,4 @@
-import { keys, camelToKebabCase } from '../../utils';
+import { camelToKebabCase, keys } from '../../utils';
 
 export function cssObjectToString(css: React.CSSProperties) {
   return keys(css)

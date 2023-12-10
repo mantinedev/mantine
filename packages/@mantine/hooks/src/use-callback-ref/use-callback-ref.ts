@@ -1,4 +1,4 @@
-import { useRef, useEffect, useMemo } from 'react';
+import { useEffect, useMemo, useRef } from 'react';
 
 export function useCallbackRef<T extends (...args: any[]) => any>(callback: T | undefined): T {
   const callbackRef = useRef(callback);

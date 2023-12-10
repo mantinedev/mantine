@@ -2,15 +2,15 @@ import React from 'react';
 import {
   Box,
   BoxProps,
-  StylesApiProps,
-  factory,
   ElementProps,
-  useProps,
-  useStyles,
   Factory,
-  useRandomClassName,
-  StyleProp,
+  factory,
   MantineSpacing,
+  StyleProp,
+  StylesApiProps,
+  useProps,
+  useRandomClassName,
+  useStyles,
 } from '../../core';
 import { SimpleGridVariables } from './SimpleGridVariables';
 import classes from './SimpleGrid.module.css';

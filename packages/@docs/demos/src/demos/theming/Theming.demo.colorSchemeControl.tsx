@@ -1,8 +1,8 @@
 import React from 'react';
-import { MantineDemo } from '@mantinex/demo';
+import { IconMoon, IconSun } from '@tabler/icons-react';
 import cx from 'clsx';
-import { IconSun, IconMoon } from '@tabler/icons-react';
-import { ActionIcon, useMantineColorScheme, useComputedColorScheme } from '@mantine/core';
+import { ActionIcon, useComputedColorScheme, useMantineColorScheme } from '@mantine/core';
+import { MantineDemo } from '@mantinex/demo';
 import classes from './Theming.demo.colorSchemeControl.module.css';
 
 const code = `

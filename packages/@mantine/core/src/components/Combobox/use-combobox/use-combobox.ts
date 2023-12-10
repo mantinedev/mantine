@@ -1,6 +1,6 @@
-import { useEffect, useRef, useCallback } from 'react';
+import { useCallback, useEffect, useRef } from 'react';
 import { useUncontrolled } from '@mantine/hooks';
-import { getPreviousIndex, getNextIndex, getFirstIndex } from './get-index/get-index';
+import { getFirstIndex, getNextIndex, getPreviousIndex } from './get-index/get-index';
 
 export type ComboboxDropdownEventSource = 'keyboard' | 'mouse' | 'unknown';
 

@@ -1,5 +1,6 @@
 import React from 'react';
 import { useDisclosure } from '@mantine/hooks';
+import { Button } from '../Button';
 import { ModalBase } from './ModalBase';
 import { ModalBaseBody } from './ModalBaseBody';
 import { ModalBaseCloseButton } from './ModalBaseCloseButton';
@@ -7,7 +8,6 @@ import { ModalBaseContent } from './ModalBaseContent';
 import { ModalBaseHeader } from './ModalBaseHeader';
 import { ModalBaseOverlay } from './ModalBaseOverlay';
 import { ModalBaseTitle } from './ModalBaseTitle';
-import { Button } from '../Button';
 
 export default { title: 'ModalBase' };
 

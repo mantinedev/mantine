@@ -1,14 +1,14 @@
 import React from 'react';
-import { MantineDemo } from '@mantinex/demo';
-import { Menu, Button, rem } from '@mantine/core';
 import {
-  IconSettings,
-  IconSearch,
-  IconPhoto,
-  IconMessageCircle,
-  IconTrash,
   IconArrowsLeftRight,
+  IconMessageCircle,
+  IconPhoto,
+  IconSearch,
+  IconSettings,
+  IconTrash,
 } from '@tabler/icons-react';
+import { Button, Menu, rem } from '@mantine/core';
+import { MantineDemo } from '@mantinex/demo';
 
 const code = `
 import { Menu, Button, rem } from '@mantine/core';

@@ -1,12 +1,12 @@
 import React from 'react';
-import cx from 'clsx';
 import { IconChevronDown, IconExternalLink } from '@tabler/icons-react';
-import { Code, Group, Burger, RemoveScroll, Menu, UnstyledButton, Text, Box } from '@mantine/core';
-import { HeaderControls, ColorSchemeControl, SearchMobileControl } from '@mantinex/mantine-header';
-import { meta, majorVersions } from '@mantinex/mantine-meta';
-import packageJson from '../../../../../package.json';
+import cx from 'clsx';
+import { Box, Burger, Code, Group, Menu, RemoveScroll, Text, UnstyledButton } from '@mantine/core';
+import { ColorSchemeControl, HeaderControls, SearchMobileControl } from '@mantinex/mantine-header';
+import { majorVersions, meta } from '@mantinex/mantine-meta';
 import { Logo } from '@/components/Logo';
 import { searchHandlers } from '@/components/Search';
+import packageJson from '../../../../../package.json';
 import classes from './Header.module.css';
 
 export type HeaderControlsProps = Partial<React.ComponentProps<typeof HeaderControls>>;

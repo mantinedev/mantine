@@ -1,5 +1,5 @@
 import { rem } from '../../../core';
-import type { FloatingPosition, FloatingSide, FloatingPlacement, ArrowPosition } from '../types';
+import type { ArrowPosition, FloatingPlacement, FloatingPosition, FloatingSide } from '../types';
 
 function horizontalSide(
   placement: FloatingPlacement | 'center',

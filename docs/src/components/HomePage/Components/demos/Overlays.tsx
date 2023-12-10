@@ -1,19 +1,19 @@
 import React, { useState } from 'react';
-import { IconPhoto, IconMessageCircle, IconSettings } from '@tabler/icons-react';
+import { IconMessageCircle, IconPhoto, IconSettings } from '@tabler/icons-react';
 import {
-  Text,
-  Group,
+  Box,
   Button,
-  Modal,
-  Drawer,
-  Divider,
   CloseButton,
+  Divider,
+  Drawer,
+  Group,
+  Modal,
+  Pagination,
   Popover,
   SimpleGrid,
-  Tabs,
   Stepper,
-  Pagination,
-  Box,
+  Tabs,
+  Text,
 } from '@mantine/core';
 import { AuthenticationForm, HoverCardHomePageDemo } from '@docs/demos';
 

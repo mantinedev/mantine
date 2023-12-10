@@ -1,8 +1,8 @@
 import React from 'react';
 import { useDisclosure } from '@mantine/hooks';
 import { Button } from '../Button';
-import { Tabs } from '../Tabs';
 import { ScrollArea } from '../ScrollArea';
+import { Tabs } from '../Tabs';
 import { Modal } from './Modal';
 
 export default { title: 'Modal' };

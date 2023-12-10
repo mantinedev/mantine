@@ -1,8 +1,8 @@
 import React from 'react';
-import { Frontmatter } from '@/types';
-import { TableOfContents } from '@/components/TableOfContents';
-import { PageBase } from '@/components/PageBase';
 import { MdxSiblings } from '@/components/MdxSiblings';
+import { PageBase } from '@/components/PageBase';
+import { TableOfContents } from '@/components/TableOfContents';
+import { Frontmatter } from '@/types';
 import classes from './MdxRawContent.module.css';
 
 interface MdxRawContentProps {

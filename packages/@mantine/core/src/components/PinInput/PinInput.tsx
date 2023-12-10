@@ -1,25 +1,25 @@
-import React, { useRef, useState, useEffect } from 'react';
-import { useUncontrolled, useId, assignRef } from '@mantine/hooks';
+import React, { useEffect, useRef, useState } from 'react';
+import { assignRef, useId, useUncontrolled } from '@mantine/hooks';
 import {
   BoxProps,
+  createVarsResolver,
   ElementProps,
   Factory,
+  factory,
+  getSize,
   MantineRadius,
   MantineSize,
   MantineSpacing,
   StylesApiProps,
-  createVarsResolver,
-  factory,
-  getSize,
   useProps,
   useResolvedStylesApi,
   useStyles,
 } from '../../core';
 import { Group } from '../Group';
 import { Input } from '../Input';
+import { InputBase } from '../InputBase';
 import { createPinArray } from './create-pin-array/create-pin-array';
 import classes from './PinInput.module.css';
-import { InputBase } from '../InputBase';
 
 const regex = {
   number: /^[0-9]+$/,

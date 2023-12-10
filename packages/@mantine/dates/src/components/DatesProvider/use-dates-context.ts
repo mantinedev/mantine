@@ -1,4 +1,4 @@
-import { useContext, useCallback } from 'react';
+import { useCallback, useContext } from 'react';
 import { DayOfWeek } from '../../types';
 import { DatesProviderContext } from './DatesProvider';
 

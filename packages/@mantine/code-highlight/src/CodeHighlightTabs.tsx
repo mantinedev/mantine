@@ -1,27 +1,27 @@
 import React from 'react';
-import hljs from 'highlight.js';
 import cx from 'clsx';
-import { useUncontrolled } from '@mantine/hooks';
+import hljs from 'highlight.js';
 import {
+  ActionIcon,
   Box,
   BoxProps,
-  StylesApiProps,
-  factory,
+  CopyButton,
+  createVarsResolver,
   ElementProps,
+  factory,
+  Factory,
+  rem,
+  ScrollArea,
+  StylesApiProps,
+  Tooltip,
+  UnstyledButton,
   useProps,
   useStyles,
-  CopyButton,
-  Tooltip,
-  ActionIcon,
-  UnstyledButton,
-  ScrollArea,
-  createVarsResolver,
-  rem,
-  Factory,
 } from '@mantine/core';
+import { useUncontrolled } from '@mantine/hooks';
 import { CopyIcon } from './CopyIcon';
-import { FileIcon } from './FileIcon';
 import { ExpandIcon } from './ExpandIcon';
+import { FileIcon } from './FileIcon';
 import _classes from './CodeHighlight.module.css';
 import themeClasses from './CodeHighlight.theme.module.css';
 

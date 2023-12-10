@@ -1,6 +1,6 @@
 import React from 'react';
-import { MantineDemo } from '@mantinex/demo';
 import { Carousel } from '@mantine/carousel';
+import { MantineDemo } from '@mantinex/demo';
 import { CarouselStylesApi } from '@docs/styles-api';
 import { Slides } from './_slides';
 

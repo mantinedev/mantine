@@ -1,12 +1,12 @@
 import React from 'react';
 import { useScrollAreaContext } from '../ScrollArea.context';
+import { ScrollAreaScrollbarAuto } from './ScrollAreaScrollbarAuto';
+import { ScrollAreaScrollbarHover } from './ScrollAreaScrollbarHover';
+import { ScrollAreaScrollbarScroll } from './ScrollAreaScrollbarScroll';
 import {
   ScrollAreaScrollbarVisible,
   ScrollAreaScrollbarVisibleProps,
 } from './ScrollAreaScrollbarVisible';
-import { ScrollAreaScrollbarHover } from './ScrollAreaScrollbarHover';
-import { ScrollAreaScrollbarScroll } from './ScrollAreaScrollbarScroll';
-import { ScrollAreaScrollbarAuto } from './ScrollAreaScrollbarAuto';
 
 interface ScrollAreaScrollbarProps extends ScrollAreaScrollbarVisibleProps {
   forceMount?: true;

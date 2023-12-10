@@ -1,21 +1,21 @@
 import React from 'react';
 import cx from 'clsx';
 import {
+  ActionIcon,
   Box,
   BoxProps,
-  StylesApiProps,
-  factory,
+  CopyButton,
   ElementProps,
+  factory,
+  Factory,
+  ScrollArea,
+  StylesApiProps,
+  Tooltip,
   useProps,
   useStyles,
-  CopyButton,
-  Tooltip,
-  ActionIcon,
-  ScrollArea,
-  Factory,
 } from '@mantine/core';
-import { useHighlight } from './use-highlight';
 import { CopyIcon } from './CopyIcon';
+import { useHighlight } from './use-highlight';
 import _classes from './CodeHighlight.module.css';
 import themeClasses from './CodeHighlight.theme.module.css';
 

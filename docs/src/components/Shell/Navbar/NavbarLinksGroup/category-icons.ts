@@ -1,17 +1,17 @@
 import {
-  IconRefresh,
-  IconBulb,
-  IconForms,
   IconBox,
-  IconLayout2,
+  IconBoxMultiple,
+  IconBulb,
   IconClick,
+  IconComponents,
+  IconForms,
+  IconLayout2,
+  IconLetterCase,
   IconMenu2,
   IconNotebook,
-  IconBoxMultiple,
-  IconLetterCase,
-  IconSpeakerphone,
-  IconComponents,
+  IconRefresh,
   IconSelector,
+  IconSpeakerphone,
 } from '@tabler/icons-react';
 
 export const CATEGORY_ICONS: Record<string, typeof IconBox> = {

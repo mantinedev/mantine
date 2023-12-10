@@ -1,5 +1,3 @@
-import { Layout } from '@/layout';
-import { MDX_DATA } from '@/mdx';
 import { StylesDemos, ThemingDemos } from '@docs/demos';
 import { TextInputStylesApi } from '@docs/styles-api';
 import {
@@ -7,6 +5,8 @@ import {
   VariablesTable,
 } from '@/components/StylesApiTable';
 import { ColorsGroup } from '@/components/ThemeColors';
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
 
 export default Layout(MDX_DATA.Overview);
 
@@ -44,7 +44,7 @@ and other data that can be accessed by any Mantine component. Most of the `theme
 [CSS variables](/styles/css-variables) and can be accessed both in JavaScript and CSS.
 
 ```tsx
-import { MantineProvider, createTheme } from '@mantine/core';
+import { createTheme, MantineProvider } from '@mantine/core';
 
 // Your theme configuration is merged with default theme
 const theme = createTheme({
@@ -75,7 +75,7 @@ Access theme values in styles:
 Access theme values in JavaScript:
 
 ```tsx
-import { useMantineTheme, lighten } from '@mantine/core';
+import { lighten, useMantineTheme } from '@mantine/core';
 
 function Demo() {
   const theme = useMantineTheme();

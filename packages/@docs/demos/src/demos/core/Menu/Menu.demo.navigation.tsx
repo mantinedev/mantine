@@ -1,5 +1,5 @@
 import React from 'react';
-import { Menu, Group } from '@mantine/core';
+import { Group, Menu } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
 import { DemoMenuItems } from './_menu-items';
 

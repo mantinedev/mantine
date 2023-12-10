@@ -3,19 +3,19 @@ import { useId } from '@mantine/hooks';
 import {
   Box,
   BoxProps,
-  StylesApiProps,
-  factory,
-  ElementProps,
-  useProps,
-  useStyles,
   createVarsResolver,
+  ElementProps,
+  factory,
   Factory,
   getRadius,
-  MantineRadius,
   MantineColor,
+  MantineRadius,
+  StylesApiProps,
+  useProps,
+  useStyles,
 } from '../../core';
-import classes from './Alert.module.css';
 import { CloseButton } from '../CloseButton';
+import classes from './Alert.module.css';
 
 export type AlertStylesNames =
   | 'root'

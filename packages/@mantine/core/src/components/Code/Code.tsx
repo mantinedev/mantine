@@ -2,15 +2,15 @@ import React from 'react';
 import {
   Box,
   BoxProps,
-  StylesApiProps,
-  factory,
+  createVarsResolver,
   ElementProps,
+  factory,
+  Factory,
+  getThemeColor,
+  MantineColor,
+  StylesApiProps,
   useProps,
   useStyles,
-  MantineColor,
-  getThemeColor,
-  createVarsResolver,
-  Factory,
 } from '../../core';
 import classes from './Code.module.css';
 

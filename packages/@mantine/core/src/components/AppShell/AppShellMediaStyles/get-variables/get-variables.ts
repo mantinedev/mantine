@@ -1,4 +1,4 @@
-import { MantineTheme, em, keys, getSortedBreakpoints } from '../../../../core';
+import { em, getSortedBreakpoints, keys, MantineTheme } from '../../../../core';
 import type { AppShellProps } from '../../AppShell';
 import { assignAsideVariables } from '../assign-aside-variables/assign-aside-variables';
 import { assignFooterVariables } from '../assign-footer-variables/assign-footer-variables';

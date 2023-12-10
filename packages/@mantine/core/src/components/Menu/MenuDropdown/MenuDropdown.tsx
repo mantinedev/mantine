@@ -4,15 +4,15 @@ import { useMergedRef } from '@mantine/hooks';
 import {
   BoxProps,
   CompoundStylesApiProps,
-  factory,
-  ElementProps,
-  useProps,
-  Factory,
   createEventHandler,
+  ElementProps,
+  factory,
+  Factory,
+  useProps,
 } from '../../../core';
 import { Popover } from '../../Popover';
-import classes from '../Menu.module.css';
 import { useMenuContext } from '../Menu.context';
+import classes from '../Menu.module.css';
 
 export type MenuDropdownStylesNames = 'dropdown';
 

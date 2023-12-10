@@ -1,7 +1,7 @@
 import React from 'react';
-import { MdxParagraph, MdxCode } from '../MdxTypography/MdxTypography';
 import { MdxCodeHighlight } from '../MdxPre/MdxPre';
 import { MdxTitle } from '../MdxTitle/MdxTitle';
+import { MdxCode, MdxParagraph } from '../MdxTypography/MdxTypography';
 
 interface MdxInputAccessibilityProps {
   component: string;

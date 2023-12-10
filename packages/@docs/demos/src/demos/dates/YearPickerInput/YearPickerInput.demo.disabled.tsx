@@ -1,6 +1,6 @@
 import React from 'react';
-import { MantineDemo } from '@mantinex/demo';
 import { YearPickerInput } from '@mantine/dates';
+import { MantineDemo } from '@mantinex/demo';
 
 const code = `
 import { YearPickerInput } from '@mantine/dates';

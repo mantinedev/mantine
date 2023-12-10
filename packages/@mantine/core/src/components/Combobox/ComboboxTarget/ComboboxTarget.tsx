@@ -1,7 +1,7 @@
 import React, { cloneElement } from 'react';
 import { useMergedRef } from '@mantine/hooks';
+import { factory, Factory, isElement, useProps } from '../../../core';
 import { Popover } from '../../Popover';
-import { isElement, useProps, factory, Factory } from '../../../core';
 import { useComboboxContext } from '../Combobox.context';
 import { useComboboxTargetProps } from '../use-combobox-target-props/use-combobox-target-props';
 

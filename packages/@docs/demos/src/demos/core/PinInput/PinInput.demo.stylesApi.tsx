@@ -1,6 +1,6 @@
 import React from 'react';
-import { MantineDemo } from '@mantinex/demo';
 import { PinInput } from '@mantine/core';
+import { MantineDemo } from '@mantinex/demo';
 import { PinInputStylesApi } from '@docs/styles-api';
 
 const code = `

@@ -1,9 +1,9 @@
-import React, { useEffect, PropsWithChildren } from 'react';
-import { renderHook, render, screen } from '@testing-library/react';
+import React, { PropsWithChildren, useEffect } from 'react';
+import { render, renderHook, screen } from '@testing-library/react';
 import { MantineProvider } from '@mantine/core';
-import { useModals } from './use-modals';
-import { ModalsProvider } from '../ModalsProvider';
 import { ContextModalProps } from '../context';
+import { ModalsProvider } from '../ModalsProvider';
+import { useModals } from './use-modals';
 
 describe('@mantine/modals/use-modals', () => {
   it('returns context value of ModalsProvider', () => {

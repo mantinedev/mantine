@@ -1,9 +1,9 @@
 import React from 'react';
-import { UnstyledButton, Text } from '@mantine/core';
+import { Text, UnstyledButton } from '@mantine/core';
 import { DemoAreaProps } from '../DemoArea';
 import { DemoCode } from '../DemoCode';
-import { DemoRoot } from '../DemoRoot';
 import { DemoColumns } from '../DemoColumns';
+import { DemoRoot } from '../DemoRoot';
 import classes from './StylesApiDemo.module.css';
 
 export interface StylesApiDemoProps extends DemoAreaProps {

@@ -1,5 +1,5 @@
-import { useState, useEffect, useRef } from 'react';
-import { useReducedMotion, useDidUpdate } from '@mantine/hooks';
+import { useEffect, useRef, useState } from 'react';
+import { useDidUpdate, useReducedMotion } from '@mantine/hooks';
 import { useMantineTheme } from '../../core';
 
 export type TransitionStatus =

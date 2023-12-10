@@ -1,6 +1,6 @@
+import { StylesDemos } from '@docs/demos';
 import { Layout } from '@/layout';
 import { MDX_DATA } from '@/mdx';
-import { StylesDemos } from '@docs/demos';
 
 export default Layout(MDX_DATA.CSSModules);
 
@@ -145,8 +145,8 @@ You can combine both approaches to achieve desired results, for example,
 a given component, and you can use static selectors to style inner elements:
 
 ```tsx
-import { Slider } from '@mantine/core';
 import styled from '@emotion/styled';
+import { Slider } from '@mantine/core';
 
 const StyledSlider = styled(Slider)`
   & .mantine-Slider-bar {

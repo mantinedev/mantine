@@ -1,7 +1,7 @@
 import { createContext, useContext } from 'react';
-import type { MantineTheme, MantineColorScheme } from './theme.types';
 import type { MantineColorSchemeManager } from './color-scheme-managers';
 import { ConvertCSSVariablesInput } from './convert-css-variables';
+import type { MantineColorScheme, MantineTheme } from './theme.types';
 
 interface MantineContextValue {
   colorScheme: MantineColorScheme;

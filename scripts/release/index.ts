@@ -1,17 +1,17 @@
 import chalk from 'chalk';
-import simpleGit from 'simple-git';
-import yargs from 'yargs/yargs';
-import { hideBin } from 'yargs/helpers';
-import { getNextVersion } from 'version-next';
 import { execa } from 'execa';
-import { createLogger } from '../utils/signale';
+import simpleGit from 'simple-git';
+import { getNextVersion } from 'version-next';
+import { hideBin } from 'yargs/helpers';
+import yargs from 'yargs/yargs';
+import packageJson from '../../package.json';
 import { buildAllPackages } from '../build/build-all-packages';
 import { getMantinePackagesList } from '../packages/get-packages-list';
-import { getPath } from '../utils/get-path';
 import { publishPackage } from '../publish/publish-package';
-import { setMantinePackagesVersion } from './set-mantine-packages-version';
+import { getPath } from '../utils/get-path';
+import { createLogger } from '../utils/signale';
 import { openGithubRelease } from './open-github-release';
-import packageJson from '../../package.json';
+import { setMantinePackagesVersion } from './set-mantine-packages-version';
 
 const logger = createLogger('release');
 const git = simpleGit();

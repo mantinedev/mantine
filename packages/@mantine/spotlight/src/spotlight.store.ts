@@ -1,5 +1,5 @@
 import { clamp } from '@mantine/hooks';
-import { createStore, useStore, MantineStore } from '@mantine/store';
+import { createStore, MantineStore, useStore } from '@mantine/store';
 
 export interface SpotlightState {
   opened: boolean;

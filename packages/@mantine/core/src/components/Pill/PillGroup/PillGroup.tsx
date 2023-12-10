@@ -2,18 +2,18 @@ import React from 'react';
 import {
   Box,
   BoxProps,
-  StylesApiProps,
-  factory,
+  createVarsResolver,
   ElementProps,
+  factory,
+  Factory,
+  getSize,
+  MantineSize,
+  StylesApiProps,
   useProps,
   useStyles,
-  createVarsResolver,
-  Factory,
-  MantineSize,
-  getSize,
 } from '../../../core';
-import { PillGroupProvider } from '../PillGroup.context';
 import { usePillsInputContext } from '../../PillsInput/PillsInput.context';
+import { PillGroupProvider } from '../PillGroup.context';
 import classes from '../Pill.module.css';
 
 export type PillGroupStylesNames = 'group';

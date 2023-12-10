@@ -3,12 +3,12 @@ import { useMergedRef } from '@mantine/hooks';
 import {
   Box,
   BoxProps,
-  StylesApiProps,
-  factory,
   ElementProps,
+  factory,
+  Factory,
+  StylesApiProps,
   useProps,
   useStyles,
-  Factory,
 } from '../../../core';
 import { useInputWrapperContext } from '../../Input';
 import { usePillsInputContext } from '../PillsInput.context';

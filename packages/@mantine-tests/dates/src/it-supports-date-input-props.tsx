@@ -2,14 +2,14 @@ import React from 'react';
 import { screen } from '@testing-library/react';
 import { render } from '@mantine-tests/core';
 import {
-  getInputValue,
+  clickControl,
   clickInput,
-  expectOpenedPopover,
+  expectNoModal,
   expectNoPopover,
   expectOpenedModal,
-  expectNoModal,
-  clickControl,
+  expectOpenedPopover,
   expectValue,
+  getInputValue,
 } from './date-input-test-helpers';
 
 interface Options {

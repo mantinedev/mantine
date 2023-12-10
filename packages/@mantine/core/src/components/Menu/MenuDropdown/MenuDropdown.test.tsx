@@ -1,6 +1,6 @@
 import { createContextContainer, tests } from '@mantine-tests/core';
-import { MenuDropdown, MenuDropdownProps, MenuDropdownStylesNames } from './MenuDropdown';
 import { Menu } from '../Menu';
+import { MenuDropdown, MenuDropdownProps, MenuDropdownStylesNames } from './MenuDropdown';
 
 const TestContainer = createContextContainer(MenuDropdown, Menu, {
   opened: true,

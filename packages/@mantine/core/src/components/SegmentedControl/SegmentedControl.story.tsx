@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { SegmentedControl } from './SegmentedControl';
 import { MantineThemeProvider } from '../../core';
+import { SegmentedControl } from './SegmentedControl';
 
 export default { title: 'SegmentedControl' };
 

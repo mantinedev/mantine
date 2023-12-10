@@ -1,7 +1,7 @@
 import React from 'react';
+import { IconMoonStars, IconSun } from '@tabler/icons-react';
+import { rem, Switch, useMantineTheme } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
-import { Switch, useMantineTheme, rem } from '@mantine/core';
-import { IconSun, IconMoonStars } from '@tabler/icons-react';
 
 const code = `
 import { Switch, useMantineTheme, rem } from '@mantine/core';

@@ -1,7 +1,7 @@
 import React from 'react';
 import { getTransitionStyles } from './get-transition-styles/get-transition-styles';
-import { useTransition } from './use-transition';
 import { MantineTransition } from './transitions';
+import { useTransition } from './use-transition';
 
 export interface TransitionProps {
   /** If set element will not be unmounted from the DOM when it is hidden, `display: none` styles will be applied instead */

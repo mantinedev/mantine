@@ -1,6 +1,6 @@
-import React, { useState, useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import { flushSync } from 'react-dom';
-import { useDidUpdate, mergeRefs } from '@mantine/hooks';
+import { mergeRefs, useDidUpdate } from '@mantine/hooks';
 import { CSSProperties } from '../../core';
 
 function getAutoHeightDuration(height: number | string) {

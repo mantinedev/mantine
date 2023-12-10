@@ -1,7 +1,7 @@
 import React from 'react';
-import { TextInput, Button } from '@mantine/core';
-import { MantineDemo } from '@mantinex/demo';
+import { Button, TextInput } from '@mantine/core';
 import { modals } from '@mantine/modals';
+import { MantineDemo } from '@mantinex/demo';
 
 const code = `
 import { TextInput, Button } from '@mantine/core';

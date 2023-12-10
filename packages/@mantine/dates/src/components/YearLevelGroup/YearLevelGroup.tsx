@@ -1,9 +1,9 @@
 import dayjs from 'dayjs';
 import React, { useRef } from 'react';
-import { BoxProps, StylesApiProps, factory, ElementProps, useProps, Factory } from '@mantine/core';
-import { YearLevel, YearLevelSettings, YearLevelStylesNames } from '../YearLevel';
-import { LevelsGroup, LevelsGroupStylesNames } from '../LevelsGroup';
+import { BoxProps, ElementProps, factory, Factory, StylesApiProps, useProps } from '@mantine/core';
 import { handleControlKeyDown } from '../../utils';
+import { LevelsGroup, LevelsGroupStylesNames } from '../LevelsGroup';
+import { YearLevel, YearLevelSettings, YearLevelStylesNames } from '../YearLevel';
 
 export type YearLevelGroupStylesNames = YearLevelStylesNames | LevelsGroupStylesNames;
 

@@ -28,7 +28,7 @@ type, for example `'div'`.
 Example of extending regular component props:
 
 ```tsx
-import { GroupProps, Group } from '@mantine/core';
+import { Group, GroupProps } from '@mantine/core';
 
 // Interface includes `React.ComponentPropsWithoutRef<'div'>`
 interface MyGroupProps extends GroupProps {
@@ -46,7 +46,7 @@ because their root element depends on the `component` prop value.
 Example of extending [polymorphic components](/guides/polymorphic) props:
 
 ```tsx
-import { ButtonProps, Button, ElementProps } from '@mantine/core';
+import { Button, ButtonProps, ElementProps } from '@mantine/core';
 
 interface MyButtonProps
   extends ButtonProps,
@@ -66,7 +66,7 @@ features. It replaces native elements `style` prop with Mantine [style prop](/st
 allows omitting properties that are passed as a second type.
 
 ```tsx
-import { ElementProps, ButtonProps } from '@mantine/core';
+import { ButtonProps, ElementProps } from '@mantine/core';
 
 // Equivalent of `React.ComponentPropsWithoutRef<'button'>`
 type ButtonElementProps = ElementProps<'button'>;
@@ -105,8 +105,8 @@ that accept theme override as an argument:
 
 ```tsx
 import {
-  MantineThemeOverride,
   createTheme,
+  MantineThemeOverride,
   mergeThemeOverrides,
 } from '@mantine/core';
 
@@ -191,8 +191,8 @@ To override `theme.colors`:
 
 ```tsx
 import {
-  MantineColorsTuple,
   DefaultMantineColor,
+  MantineColorsTuple,
 } from '@mantine/core';
 
 type ExtendedCustomColors =

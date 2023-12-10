@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { Box, MantineThemeProvider } from '../../core';
-import { Popover } from './Popover';
-import { Tooltip } from '../Tooltip';
 import { Group } from '../Group';
+import { Tooltip } from '../Tooltip';
+import { Popover } from './Popover';
 
 export default { title: 'Popover' };
 

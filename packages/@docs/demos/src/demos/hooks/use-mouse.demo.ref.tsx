@@ -1,7 +1,7 @@
 import React from 'react';
-import { Group, Text, Code, Box } from '@mantine/core';
-import { MantineDemo } from '@mantinex/demo';
+import { Box, Code, Group, Text } from '@mantine/core';
 import { useMouse } from '@mantine/hooks';
+import { MantineDemo } from '@mantinex/demo';
 
 const code = `
 import { Text, Code, Group, Box } from '@mantine/core';

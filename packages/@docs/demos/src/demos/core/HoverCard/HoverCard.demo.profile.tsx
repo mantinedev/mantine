@@ -1,6 +1,6 @@
 import React from 'react';
+import { Anchor, Avatar, Group, HoverCard, Stack, Text } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
-import { HoverCard, Avatar, Text, Group, Anchor, Stack } from '@mantine/core';
 
 const code = `
 import { HoverCard, Avatar, Text, Group, Anchor, Stack } from '@mantine/core';

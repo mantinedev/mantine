@@ -1,6 +1,6 @@
 import React from 'react';
+import { Button, Modal } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
-import { Modal, Button } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
 
 const code = `

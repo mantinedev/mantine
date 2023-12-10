@@ -2,21 +2,21 @@ import React, { useState } from 'react';
 import {
   Box,
   BoxProps,
-  StylesApiProps,
-  factory,
+  createVarsResolver,
   ElementProps,
+  factory,
+  Factory,
+  rem,
+  StylesApiProps,
   useProps,
   useStyles,
-  rem,
-  createVarsResolver,
-  Factory,
 } from '../../core';
-import { ScrollAreaScrollbar } from './ScrollAreaScrollbar/ScrollAreaScrollbar';
 import { ScrollAreaCorner } from './ScrollAreaCorner/ScrollAreaCorner';
 import { ScrollAreaRoot } from './ScrollAreaRoot/ScrollAreaRoot';
+import { ScrollAreaScrollbar } from './ScrollAreaScrollbar/ScrollAreaScrollbar';
+import { ScrollAreaThumb } from './ScrollAreaThumb/ScrollAreaThumb';
 import { ScrollAreaViewport } from './ScrollAreaViewport/ScrollAreaViewport';
 import classes from './ScrollArea.module.css';
-import { ScrollAreaThumb } from './ScrollAreaThumb/ScrollAreaThumb';
 
 export type ScrollAreaStylesNames = 'root' | 'viewport' | 'scrollbar' | 'thumb' | 'corner';
 export type ScrollAreaCssVariables = {

@@ -1,8 +1,8 @@
 import React from 'react';
 import { render, tests } from '@mantine-tests/core';
-import { Dropzone, DropzoneProps, DropzoneStylesNames } from './index';
-import { DropzoneAccept, DropzoneReject, DropzoneIdle } from './DropzoneStatus';
 import { DropzoneFullScreen } from './DropzoneFullScreen';
+import { DropzoneAccept, DropzoneIdle, DropzoneReject } from './DropzoneStatus';
+import { Dropzone, DropzoneProps, DropzoneStylesNames } from './index';
 
 const defaultProps: DropzoneProps = {
   onDrop: () => {},

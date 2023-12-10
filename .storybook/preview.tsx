@@ -3,11 +3,11 @@ import { addons } from '@storybook/preview-api';
 import { IconTextDirectionLtr, IconTextDirectionRtl } from '@tabler/icons-react';
 import { DARK_MODE_EVENT_NAME } from 'storybook-dark-mode';
 import {
-  MantineProvider,
-  useMantineColorScheme,
   ActionIcon,
   DirectionProvider,
+  MantineProvider,
   useDirection,
+  useMantineColorScheme,
 } from '@mantine/core';
 import { theme } from '../docs/theme';
 

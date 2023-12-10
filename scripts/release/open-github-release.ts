@@ -1,5 +1,5 @@
-import open from 'open';
 import githubRelease from 'new-github-release-url';
+import open from 'open';
 
 export function openGithubRelease(version: string) {
   open(

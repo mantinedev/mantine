@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { Stepper } from './Stepper';
 import { Button } from '../Button';
 import { Group } from '../Group';
+import { Stepper } from './Stepper';
 
 export default { title: 'Stepper' };
 

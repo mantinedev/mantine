@@ -1,6 +1,6 @@
 import { generateDeclarations } from 'mantine-docgen-script';
-import { DOCGEN_PATHS } from './docgen-paths';
 import { getPath } from '../utils/get-path';
+import { DOCGEN_PATHS } from './docgen-paths';
 
 generateDeclarations({
   tsConfigPath: getPath('tsconfig.json'),

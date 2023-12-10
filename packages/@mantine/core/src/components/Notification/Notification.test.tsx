@@ -1,6 +1,6 @@
 import React from 'react';
-import { render, tests } from '@mantine-tests/core';
 import { IconMoodSmile } from '@tabler/icons-react';
+import { render, tests } from '@mantine-tests/core';
 import { Notification, NotificationProps, NotificationStylesNames } from './Notification';
 
 const defaultProps: NotificationProps = {

@@ -1,9 +1,9 @@
 import React from 'react';
-import { tests, inputDefaultProps, inputStylesApiSelectors, render } from '@mantine-tests/core';
 import { __InputStylesNames } from '@mantine/core';
+import { inputDefaultProps, inputStylesApiSelectors, render, tests } from '@mantine-tests/core';
 import { clickControl, clickInput, datesTests, expectValue } from '@mantine-tests/dates';
-import { DatePickerInput, DatePickerInputProps } from './DatePickerInput';
 import { DatesProvider } from '../DatesProvider';
+import { DatePickerInput, DatePickerInputProps } from './DatePickerInput';
 
 const defaultProps = {
   popoverProps: { withinPortal: false, transitionProps: { duration: 0 } },

@@ -1,6 +1,6 @@
 import React from 'react';
-import { tests, inputDefaultProps, inputStylesApiSelectors } from '@mantine-tests/core';
 import { __InputStylesNames } from '@mantine/core';
+import { inputDefaultProps, inputStylesApiSelectors, tests } from '@mantine-tests/core';
 import { TimeInput, TimeInputProps } from './TimeInput';
 
 const defaultProps: TimeInputProps = {

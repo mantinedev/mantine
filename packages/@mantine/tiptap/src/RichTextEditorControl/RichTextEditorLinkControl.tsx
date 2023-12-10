@@ -1,23 +1,23 @@
 import React, { useState } from 'react';
 import {
   BoxProps,
+  Button,
   CompoundStylesApiProps,
   factory,
-  useProps,
   Factory,
-  PopoverProps,
   Popover,
-  TextInput,
-  Button,
-  UnstyledButton,
-  Tooltip,
+  PopoverProps,
   rem,
+  TextInput,
+  Tooltip,
+  UnstyledButton,
+  useProps,
   useResolvedStylesApi,
 } from '@mantine/core';
-import { useInputState, useDisclosure, useWindowEvent } from '@mantine/hooks';
-import { IconLink, IconExternalLink } from '../icons/Icons';
+import { useDisclosure, useInputState, useWindowEvent } from '@mantine/hooks';
+import { IconExternalLink, IconLink } from '../icons/Icons';
 import { useRichTextEditorContext } from '../RichTextEditor.context';
-import { RichTextEditorControlBaseProps, RichTextEditorControlBase } from './RichTextEditorControl';
+import { RichTextEditorControlBase, RichTextEditorControlBaseProps } from './RichTextEditorControl';
 import classes from '../RichTextEditor.module.css';
 
 export type RichTextEditorLinkControlStylesNames =

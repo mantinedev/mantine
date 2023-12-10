@@ -2,8 +2,8 @@ import React from 'react';
 import { BoxProps, Group, Tooltip } from '@mantine/core';
 import { ColorSchemeControl } from './ColorSchemeControl';
 import { DirectionControl } from './DirectionControl';
-import { GithubControl } from './GithubControl';
 import { DiscordControl } from './DiscordControl';
+import { GithubControl } from './GithubControl';
 import { SearchControl } from './SearchControl';
 
 interface HeaderControlsProps extends BoxProps {

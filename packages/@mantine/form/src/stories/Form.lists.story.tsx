@@ -1,8 +1,8 @@
 import React from 'react';
-import { TextInput, Switch, ActionIcon, Group, Text, Button } from '@mantine/core';
+import { ActionIcon, Button, Group, Switch, Text, TextInput } from '@mantine/core';
 import { randomId } from '@mantine/hooks';
-import { FormBase } from './_base';
 import { useForm } from '../use-form';
+import { FormBase } from './_base';
 
 export default { title: 'Form' };
 

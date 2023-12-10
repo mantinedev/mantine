@@ -2,21 +2,21 @@ import React from 'react';
 import {
   Box,
   BoxProps,
-  StylesApiProps,
-  factory,
-  ElementProps,
-  useProps,
-  useStyles,
   createVarsResolver,
+  ElementProps,
+  factory,
   Factory,
-  MantineSize,
-  MantineSpacing,
   getFontSize,
   getLineHeight,
   getSpacing,
+  MantineSize,
+  MantineSpacing,
+  StylesApiProps,
+  useProps,
+  useStyles,
 } from '../../core';
-import { ListItem, ListItemStylesNames } from './ListItem/ListItem';
 import { ListProvider } from './List.context';
+import { ListItem, ListItemStylesNames } from './ListItem/ListItem';
 import classes from './List.module.css';
 
 export type ListStylesNames = 'root' | ListItemStylesNames;

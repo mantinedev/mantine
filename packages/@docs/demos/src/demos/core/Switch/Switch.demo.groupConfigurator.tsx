@@ -1,6 +1,6 @@
 import React from 'react';
+import { Group, Switch, SwitchGroupProps } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
-import { SwitchGroupProps, Switch, Group } from '@mantine/core';
 
 const code = `
 import { Switch, Group } from '@mantine/core';

@@ -2,14 +2,14 @@ import React from 'react';
 import {
   Box,
   BoxProps,
-  StylesApiProps,
-  factory,
-  ElementProps,
-  useProps,
-  useStyles,
   createVarsResolver,
+  ElementProps,
+  factory,
   Factory,
   rem,
+  StylesApiProps,
+  useProps,
+  useStyles,
 } from '../../core';
 import { ScrollArea } from '../ScrollArea';
 import classes from './Table.module.css';

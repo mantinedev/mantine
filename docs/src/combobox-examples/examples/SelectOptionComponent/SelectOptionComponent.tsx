@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Combobox, InputBase, Input, useCombobox, Group, Text } from '@mantine/core';
+import { Combobox, Group, Input, InputBase, Text, useCombobox } from '@mantine/core';
 
 interface Item {
   emoji: string;

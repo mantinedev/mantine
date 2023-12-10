@@ -1,5 +1,5 @@
 import React from 'react';
-import { Drawer, Button, TextInput } from '@mantine/core';
+import { Button, Drawer, TextInput } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import { MantineDemo } from '@mantinex/demo';
 

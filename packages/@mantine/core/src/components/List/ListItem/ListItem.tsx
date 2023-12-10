@@ -3,10 +3,10 @@ import {
   Box,
   BoxProps,
   CompoundStylesApiProps,
-  factory,
   ElementProps,
-  useProps,
+  factory,
   Factory,
+  useProps,
 } from '../../../core';
 import { useListContext } from '../List.context';
 import classes from '../List.module.css';

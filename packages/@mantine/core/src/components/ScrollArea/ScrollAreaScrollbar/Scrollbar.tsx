@@ -1,10 +1,10 @@
-import React, { useEffect, forwardRef } from 'react';
-import { useMergedRef, useCallbackRef, useDebounceCallback } from '@mantine/hooks';
-import { useResizeObserver } from '../use-resize-observer';
+import React, { forwardRef, useEffect } from 'react';
+import { useCallbackRef, useDebounceCallback, useMergedRef } from '@mantine/hooks';
 import { useScrollAreaContext } from '../ScrollArea.context';
 import { Sizes } from '../ScrollArea.types';
-import { ScrollbarProvider, ScrollbarContextValue } from './Scrollbar.context';
+import { useResizeObserver } from '../use-resize-observer';
 import { composeEventHandlers } from '../utils';
+import { ScrollbarContextValue, ScrollbarProvider } from './Scrollbar.context';
 
 export interface ScrollbarPrivateProps {
   sizes: Sizes;

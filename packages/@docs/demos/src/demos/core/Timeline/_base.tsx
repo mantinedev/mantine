@@ -1,8 +1,8 @@
 import React from 'react';
 import {
   IconGitBranch,
-  IconGitPullRequest,
   IconGitCommit,
+  IconGitPullRequest,
   IconMessageDots,
 } from '@tabler/icons-react';
 import { Text, Timeline, TimelineProps } from '@mantine/core';

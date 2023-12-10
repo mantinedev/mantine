@@ -1,7 +1,7 @@
 import React from 'react';
-import { ComboboxShell } from '../ComboboxShell/ComboboxShell';
-import { ComboboxDemo } from '../ComboboxDemo/ComboboxDemo';
 import { PageHead } from '@/components/PageHead';
+import { ComboboxDemo } from '../ComboboxDemo/ComboboxDemo';
+import { ComboboxShell } from '../ComboboxShell/ComboboxShell';
 
 export function ComboboxPage() {
   return (

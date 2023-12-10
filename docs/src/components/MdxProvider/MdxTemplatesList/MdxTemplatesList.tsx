@@ -1,10 +1,10 @@
 import React from 'react';
 import Link from 'next/link';
-import { Table, Button, Text } from '@mantine/core';
-import { IconExternalLink, IconCircleDashed } from '@tabler/icons-react';
+import { IconCircleDashed, IconExternalLink } from '@tabler/icons-react';
+import { Button, Table, Text } from '@mantine/core';
 import { frameworkIcons } from '@/components/icons';
-import { TEMPLATES_DATA, Template } from './data';
 import { COMMUNITY_TEMPLATES_DATA } from './community-data';
+import { Template, TEMPLATES_DATA } from './data';
 import classes from './MdxTemplatesList.module.css';
 
 interface MdxTemplatesListProps {

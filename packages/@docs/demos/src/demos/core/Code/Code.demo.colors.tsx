@@ -1,6 +1,6 @@
 import React from 'react';
-import { MantineDemo } from '@mantinex/demo';
 import { Code, Group } from '@mantine/core';
+import { MantineDemo } from '@mantinex/demo';
 
 const code = `
 import { Code, Group } from '@mantine/core';

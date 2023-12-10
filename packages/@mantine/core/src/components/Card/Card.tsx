@@ -1,20 +1,20 @@
 import React, { Children, cloneElement } from 'react';
 import {
   BoxProps,
-  StylesApiProps,
+  createVarsResolver,
+  getSpacing,
+  MantineRadius,
+  MantineShadow,
+  MantineSpacing,
   polymorphicFactory,
+  PolymorphicFactory,
+  StylesApiProps,
   useProps,
   useStyles,
-  createVarsResolver,
-  PolymorphicFactory,
-  MantineShadow,
-  MantineRadius,
-  MantineSpacing,
-  getSpacing,
 } from '../../core';
 import { Paper } from '../Paper';
-import { CardSection } from './CardSection/CardSection';
 import { CardProvider } from './Card.context';
+import { CardSection } from './CardSection/CardSection';
 import classes from './Card.module.css';
 
 export type CardStylesNames = 'root' | 'section';

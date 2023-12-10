@@ -1,7 +1,7 @@
 import React from 'react';
-import { render, tests, createContextContainer } from '@mantine-tests/core';
-import { AppShellNavbar, AppShellNavbarProps, AppShellNavbarStylesNames } from './AppShellNavbar';
+import { createContextContainer, render, tests } from '@mantine-tests/core';
 import { AppShell } from '../AppShell';
+import { AppShellNavbar, AppShellNavbarProps, AppShellNavbarStylesNames } from './AppShellNavbar';
 
 const TestContainer = createContextContainer(AppShellNavbar, AppShell, {});
 

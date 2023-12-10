@@ -2,13 +2,13 @@ import React, { forwardRef } from 'react';
 import {
   Box,
   BoxProps,
-  useStyles,
-  StylesApiProps,
   ElementProps,
-  MantineSize,
+  Factory,
   getFontSize,
   getSize,
-  Factory,
+  MantineSize,
+  StylesApiProps,
+  useStyles,
 } from '../../core';
 import { Input } from '../Input';
 import classes from './InlineInput.module.css';

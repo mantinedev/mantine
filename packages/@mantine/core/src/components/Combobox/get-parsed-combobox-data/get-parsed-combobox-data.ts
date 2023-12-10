@@ -1,8 +1,8 @@
 import {
   ComboboxData,
-  ComboboxParsedItem,
   ComboboxItem,
   ComboboxItemGroup,
+  ComboboxParsedItem,
   ComboboxParsedItemGroup,
 } from '../Combobox.types';
 

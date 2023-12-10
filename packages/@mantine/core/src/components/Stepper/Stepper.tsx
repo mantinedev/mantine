@@ -2,27 +2,27 @@ import React, { Children, cloneElement } from 'react';
 import {
   Box,
   BoxProps,
-  StylesApiProps,
-  factory,
-  ElementProps,
-  useProps,
-  useStyles,
   createVarsResolver,
+  ElementProps,
+  factory,
   Factory,
-  MantineColor,
-  MantineSpacing,
-  MantineSize,
-  MantineRadius,
-  getThemeColor,
-  rem,
+  getFontSize,
+  getRadius,
   getSize,
   getSpacing,
-  getRadius,
-  getFontSize,
+  getThemeColor,
+  MantineColor,
+  MantineRadius,
+  MantineSize,
+  MantineSpacing,
+  rem,
+  StylesApiProps,
+  useProps,
+  useStyles,
 } from '../../core';
-import { StepperStep } from './StepperStep/StepperStep';
-import { StepperCompleted } from './StepperCompleted/StepperCompleted';
 import { StepperProvider } from './Stepper.context';
+import { StepperCompleted } from './StepperCompleted/StepperCompleted';
+import { StepperStep } from './StepperStep/StepperStep';
 import classes from './Stepper.module.css';
 
 export type StepFragmentComponent = React.FC<{ step: number }>;

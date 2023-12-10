@@ -1,6 +1,6 @@
 import React from 'react';
+import { Chip, Tooltip } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
-import { Tooltip, Chip } from '@mantine/core';
 
 const code = `
 import { Tooltip, Chip } from '@mantine/core';

@@ -1,6 +1,6 @@
+import { RadioDemos } from '@docs/demos';
 import { Layout } from '@/layout';
 import { MDX_DATA } from '@/mdx';
-import { RadioDemos } from '@docs/demos';
 
 export default Layout(MDX_DATA.Radio);
 
@@ -47,7 +47,7 @@ By default, radio input and label have `cursor: default` (same as native `input[
 To change cursor to pointer, set `cursorType` on [theme](/theming/theme-object/):
 
 ```tsx
-import { MantineProvider, createTheme, Radio } from '@mantine/core';
+import { createTheme, MantineProvider, Radio } from '@mantine/core';
 
 const theme = createTheme({
   cursorType: 'pointer',

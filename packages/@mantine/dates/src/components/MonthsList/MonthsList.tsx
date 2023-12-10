@@ -1,23 +1,23 @@
+import dayjs from 'dayjs';
 import React from 'react';
 import {
   Box,
   BoxProps,
-  StylesApiProps,
-  factory,
   ElementProps,
-  useProps,
-  useStyles,
+  factory,
   Factory,
   MantineSize,
+  StylesApiProps,
+  useProps,
+  useStyles,
 } from '@mantine/core';
-import dayjs from 'dayjs';
 import { ControlsGroupSettings } from '../../types';
-import { PickerControl, PickerControlProps } from '../PickerControl';
 import { useDatesContext } from '../DatesProvider';
-import classes from './MonthsList.module.css';
-import { getMonthsData } from './get-months-data/get-months-data';
+import { PickerControl, PickerControlProps } from '../PickerControl';
 import { getMonthInTabOrder } from './get-month-in-tab-order/get-month-in-tab-order';
+import { getMonthsData } from './get-months-data/get-months-data';
 import { isMonthDisabled } from './is-month-disabled/is-month-disabled';
+import classes from './MonthsList.module.css';
 
 export type MonthsListStylesNames =
   | 'monthsList'

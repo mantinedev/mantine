@@ -1,7 +1,7 @@
 import React, { forwardRef } from 'react';
 import { useDirection } from '../../../core';
-import { getArrowPositionStyles } from './get-arrow-position-styles';
 import { ArrowPosition, FloatingPosition } from '../types';
+import { getArrowPositionStyles } from './get-arrow-position-styles';
 
 interface FloatingArrowProps extends React.ComponentPropsWithoutRef<'div'> {
   position: FloatingPosition;

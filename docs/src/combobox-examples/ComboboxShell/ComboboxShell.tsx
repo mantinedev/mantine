@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDirection } from '@mantine/core';
 import { Shell } from '@/components/Shell';
 import { ComboboxNavbar } from './ComboboxNavbar/ComboboxNavbar';

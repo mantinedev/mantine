@@ -1,7 +1,7 @@
 import React, { forwardRef } from 'react';
 import cx from 'clsx';
 import { BoxProps, ElementProps } from '../../core';
-import { CloseButton, __CloseButtonProps } from '../CloseButton';
+import { __CloseButtonProps, CloseButton } from '../CloseButton';
 import { useModalBaseContext } from './ModalBase.context';
 import classes from './ModalBase.module.css';
 

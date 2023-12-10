@@ -1,7 +1,7 @@
 import React from 'react';
 import { MantineThemeProvider } from '../../core';
-import { Grid } from './Grid';
 import { Button } from '../Button';
+import { Grid } from './Grid';
 
 export default { title: 'Grid' };
 

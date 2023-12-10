@@ -1,7 +1,7 @@
 import React from 'react';
-import { IconPhoto, IconMessageCircle, IconSettings } from '@tabler/icons-react';
+import { IconMessageCircle, IconPhoto, IconSettings } from '@tabler/icons-react';
+import { rem, Tabs, TabsProps, useDirection } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
-import { Tabs, TabsProps, rem, useDirection } from '@mantine/core';
 
 function Wrapper(props: TabsProps) {
   const { dir } = useDirection();

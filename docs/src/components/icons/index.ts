@@ -1,9 +1,9 @@
-import { NextIcon } from './NextIcon';
-import { ViteIcon } from './ViteIcon';
-import { GatsbyIcon } from './GatsbyIcon';
-import { RemixIcon } from './RemixIcon';
-import { RedwoodIcon } from './RedwoodIcon';
 import type { Template } from '../MdxProvider/MdxTemplatesList/data';
+import { GatsbyIcon } from './GatsbyIcon';
+import { NextIcon } from './NextIcon';
+import { RedwoodIcon } from './RedwoodIcon';
+import { RemixIcon } from './RemixIcon';
+import { ViteIcon } from './ViteIcon';
 
 export const frameworkIcons: Record<Template['type'], typeof NextIcon> = {
   next: NextIcon,

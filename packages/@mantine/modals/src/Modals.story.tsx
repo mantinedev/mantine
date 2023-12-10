@@ -1,14 +1,14 @@
 /* eslint-disable no-console */
 import React, { useState } from 'react';
-import { Button, Text, Group, Modal } from '@mantine/core';
+import { Button, Group, Modal, Text } from '@mantine/core';
 import {
+  closeAllModals,
+  closeModal,
+  ContextModalProps,
   ModalsProvider,
   openConfirmModal,
   openContextModal,
   openModal,
-  closeAllModals,
-  closeModal,
-  ContextModalProps,
   useModals,
 } from './index';
 

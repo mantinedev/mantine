@@ -1,13 +1,13 @@
 import React from 'react';
 import {
+  Autocomplete,
+  ColorInput,
+  MultiSelect,
+  NativeSelect,
+  PasswordInput,
+  Select,
   SimpleGrid,
   TextInput,
-  PasswordInput,
-  ColorInput,
-  Select,
-  NativeSelect,
-  MultiSelect,
-  Autocomplete,
 } from '@mantine/core';
 
 export function Inputs() {

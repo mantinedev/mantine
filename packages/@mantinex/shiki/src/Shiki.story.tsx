@@ -1,6 +1,6 @@
 import React from 'react';
-import { CodeHighlightTabs } from './CodeHighlightTabs';
 import { CodeHighlight } from './CodeHighlight';
+import { CodeHighlightTabs } from './CodeHighlightTabs';
 
 export default { title: 'X/Shiki' };
 

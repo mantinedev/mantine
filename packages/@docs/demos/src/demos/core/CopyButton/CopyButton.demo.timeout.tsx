@@ -1,7 +1,7 @@
 import React from 'react';
+import { IconCheck, IconCopy } from '@tabler/icons-react';
+import { ActionIcon, CopyButton, rem, Tooltip } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
-import { CopyButton, ActionIcon, Tooltip, rem } from '@mantine/core';
-import { IconCopy, IconCheck } from '@tabler/icons-react';
 
 const code = `
 import { CopyButton, ActionIcon, Tooltip, rem } from '@mantine/core';

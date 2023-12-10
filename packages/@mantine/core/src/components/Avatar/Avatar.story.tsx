@@ -1,10 +1,10 @@
 import React from 'react';
-import { Tooltip } from '../Tooltip';
+import { Box } from '../../core';
 import { Center } from '../Center';
 import { Group } from '../Group';
 import { Stack } from '../Stack';
-import { Box } from '../../core';
 import { Text } from '../Text';
+import { Tooltip } from '../Tooltip';
 import { Avatar } from './Avatar';
 
 export default { title: 'Avatar' };

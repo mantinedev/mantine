@@ -1,16 +1,16 @@
 import React from 'react';
-import { MantineDemo } from '@mantinex/demo';
 import {
   Button,
+  darken,
+  defaultVariantColorsResolver,
   Group,
   MantineThemeProvider,
-  defaultVariantColorsResolver,
-  VariantColorsResolver,
   parseThemeColor,
   rem,
   rgba,
-  darken,
+  VariantColorsResolver,
 } from '@mantine/core';
+import { MantineDemo } from '@mantinex/demo';
 
 const code = `
 import {

@@ -1,9 +1,9 @@
 import type {
   MantineBreakpoint,
-  MantineSpacing,
+  MantineColor,
   MantineFontSize,
   MantineLineHeight,
-  MantineColor,
+  MantineSpacing,
 } from '../../MantineProvider';
 
 export type StyleProp<Value> = Value | Partial<Record<MantineBreakpoint | (string & {}), Value>>;

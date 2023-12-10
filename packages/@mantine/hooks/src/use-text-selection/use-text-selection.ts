@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useForceUpdate } from '../use-force-update/use-force-update';
 
 export function useTextSelection(): Selection | null {

@@ -1,6 +1,6 @@
 import React from 'react';
+import { Button, Group, Text, TextInput } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
-import { Group, Button, TextInput, Text } from '@mantine/core';
 import { Dialog } from './Dialog';
 
 export default { title: 'Dialog' };

@@ -1,5 +1,5 @@
 import React from 'react';
-import { renderHook, fireEvent, render, screen } from '@testing-library/react';
+import { fireEvent, render, renderHook, screen } from '@testing-library/react';
 import { useMouse } from './use-mouse';
 
 const Target: React.FunctionComponent<any> = () => {

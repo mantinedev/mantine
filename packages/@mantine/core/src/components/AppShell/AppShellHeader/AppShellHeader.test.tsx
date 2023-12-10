@@ -1,7 +1,7 @@
 import React from 'react';
-import { render, tests, createContextContainer } from '@mantine-tests/core';
-import { AppShellHeader, AppShellHeaderProps, AppShellHeaderStylesNames } from './AppShellHeader';
+import { createContextContainer, render, tests } from '@mantine-tests/core';
 import { AppShell } from '../AppShell';
+import { AppShellHeader, AppShellHeaderProps, AppShellHeaderStylesNames } from './AppShellHeader';
 
 const TestContainer = createContextContainer(AppShellHeader, AppShell, {});
 

@@ -1,8 +1,8 @@
 import {
   DEFAULT_THEME,
+  em,
   MantineTheme,
   MantineThemeOverride,
-  em,
   mergeMantineTheme,
 } from '@mantine/core';
 import {

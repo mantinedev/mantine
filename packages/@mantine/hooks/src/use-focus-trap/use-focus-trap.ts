@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useRef } from 'react';
-import { FOCUS_SELECTOR, focusable, tabbable } from './tabbable';
-import { scopeTab } from './scope-tab';
 import { createAriaHider } from './create-aria-hider';
+import { scopeTab } from './scope-tab';
+import { FOCUS_SELECTOR, focusable, tabbable } from './tabbable';
 
 export function useFocusTrap(active = true): (instance: HTMLElement | null) => void {
   const ref = useRef<HTMLElement | null>();

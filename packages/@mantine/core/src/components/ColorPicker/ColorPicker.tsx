@@ -3,25 +3,25 @@ import { useDidUpdate, useUncontrolled } from '@mantine/hooks';
 import {
   Box,
   BoxProps,
-  StylesApiProps,
-  factory,
+  createVarsResolver,
   ElementProps,
-  useProps,
-  useStyles,
-  MantineSize,
+  factory,
+  Factory,
   getSize,
   getSpacing,
-  createVarsResolver,
-  Factory,
+  MantineSize,
+  StylesApiProps,
+  useProps,
+  useStyles,
 } from '../../core';
+import { ColorSwatch } from '../ColorSwatch';
 import { AlphaSlider } from './AlphaSlider/AlphaSlider';
+import { ColorPickerProvider } from './ColorPicker.context';
+import { ColorFormat, HsvaColor } from './ColorPicker.types';
+import { convertHsvaTo, isColorValid, parseColor } from './converters';
 import { HueSlider } from './HueSlider/HueSlider';
 import { Saturation } from './Saturation/Saturation';
 import { Swatches } from './Swatches/Swatches';
-import { ColorFormat, HsvaColor } from './ColorPicker.types';
-import { convertHsvaTo, isColorValid, parseColor } from './converters';
-import { ColorSwatch } from '../ColorSwatch';
-import { ColorPickerProvider } from './ColorPicker.context';
 import classes from './ColorPicker.module.css';
 
 export type ColorPickerStylesNames =

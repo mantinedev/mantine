@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { MantineDemo } from '@mantinex/demo';
+import { Button, Group } from '@mantine/core';
 import { useFavicon } from '@mantine/hooks';
-import { Group, Button } from '@mantine/core';
+import { MantineDemo } from '@mantinex/demo';
 
 const code = `
 import { useState } from 'react';

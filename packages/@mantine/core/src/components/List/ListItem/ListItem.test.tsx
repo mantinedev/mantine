@@ -1,6 +1,6 @@
-import { tests, createContextContainer } from '@mantine-tests/core';
-import { ListItem, ListItemProps, ListItemStylesNames } from './ListItem';
+import { createContextContainer, tests } from '@mantine-tests/core';
 import { List } from '../List';
+import { ListItem, ListItemProps, ListItemStylesNames } from './ListItem';
 
 const TestContainer = createContextContainer(ListItem, List, {});
 

@@ -1,7 +1,7 @@
 import React from 'react';
 import { IconInfoCircle } from '@tabler/icons-react';
-import { Blockquote } from './Blockquote';
 import { rem } from '../../core';
+import { Blockquote } from './Blockquote';
 
 export default { title: 'Blockquote' };
 

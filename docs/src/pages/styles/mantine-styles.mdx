@@ -45,7 +45,6 @@ styles must always be imported before any other Mantine package styles:
 // ✅ Correct order
 import '@mantine/core/styles.css';
 import '@mantine/dates/styles.css';
-
 // ❌ Incorrect order
 import '@mantine/dates/styles.css';
 import '@mantine/core/styles.css';
@@ -78,6 +77,7 @@ All `@mantine/*` packages that export styles have an additional file in which al
 ```tsx
 import '@mantine/core/styles.layer.css';
 import '@mantine/dates/styles.layer.css';
+
 // ... other styles
 ```
 
@@ -95,6 +95,7 @@ Similar to package styles, you can import individual component styles with `@lay
 ```tsx
 import '@mantine/core/styles/UnstyledButton.layer.css';
 import '@mantine/core/styles/Button.layer.css';
+
 // ... other styles
 ```
 
@@ -108,6 +109,7 @@ regular styles.
 // ✅ If your styles are not wrapped in @layer directive,
 // they will be applied after Mantine styles
 import classes from './Demo.module.css';
+
 import '@mantine/core/styles.layer.css';
 ```
 

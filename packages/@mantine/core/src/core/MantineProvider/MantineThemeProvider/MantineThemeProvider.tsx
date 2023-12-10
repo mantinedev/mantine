@@ -1,7 +1,7 @@
 import React, { createContext, useContext, useMemo } from 'react';
-import { MantineTheme, MantineThemeOverride } from '../theme.types';
 import { DEFAULT_THEME } from '../default-theme';
 import { mergeMantineTheme } from '../merge-mantine-theme';
+import { MantineTheme, MantineThemeOverride } from '../theme.types';
 
 export const MantineThemeContext = createContext<MantineTheme | null>(null);
 

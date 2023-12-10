@@ -1,22 +1,22 @@
-import { useState, useCallback } from 'react';
+import { useCallback, useState } from 'react';
 import {
-  useFloating,
-  flip,
   arrow,
+  flip,
+  inline,
   offset,
   shift,
-  useInteractions,
-  useHover,
-  useFocus,
-  useRole,
-  useDismiss,
-  useDelayGroupContext,
   useDelayGroup,
-  inline,
+  useDelayGroupContext,
+  useDismiss,
+  useFloating,
+  useFocus,
+  useHover,
+  useInteractions,
+  useRole,
 } from '@floating-ui/react';
-import { useId, useDidUpdate } from '@mantine/hooks';
-import { useTooltipGroupContext } from './TooltipGroup/TooltipGroup.context';
+import { useDidUpdate, useId } from '@mantine/hooks';
 import { FloatingAxesOffsets, FloatingPosition, useFloatingAutoUpdate } from '../Floating';
+import { useTooltipGroupContext } from './TooltipGroup/TooltipGroup.context';
 
 interface UseTooltip {
   position: FloatingPosition;

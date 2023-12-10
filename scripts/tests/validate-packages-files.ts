@@ -1,8 +1,8 @@
 // Validates that all packages have the same files structure
-import fs from 'fs-extra';
 import path from 'node:path';
-import { createLogger } from '../utils/signale';
+import fs from 'fs-extra';
 import { getPackagesBuildOrder } from '../build/get-packages-build-order';
+import { createLogger } from '../utils/signale';
 
 const logger = createLogger('validate-packages-files');
 

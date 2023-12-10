@@ -1,6 +1,6 @@
 import React from 'react';
-import { MantineDemo } from '@mantinex/demo';
 import { MultiSelect } from '@mantine/core';
+import { MantineDemo } from '@mantinex/demo';
 
 const code = `
 import { MultiSelect } from '@mantine/core';

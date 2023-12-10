@@ -1,7 +1,7 @@
 import React from 'react';
+import { Box, Button, Group, NumberInput, TextInput } from '@mantine/core';
+import { hasLength, isEmail, isInRange, isNotEmpty, matches, useForm } from '@mantine/form';
 import { MantineDemo } from '@mantinex/demo';
-import { useForm, isNotEmpty, isEmail, isInRange, hasLength, matches } from '@mantine/form';
-import { Button, Group, TextInput, NumberInput, Box } from '@mantine/core';
 
 const code = `
 import { useForm, isNotEmpty, isEmail, isInRange, hasLength, matches } from '@mantine/form';

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
+import { Button, Drawer, Group } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
-import { Drawer, Button, Group } from '@mantine/core';
 
 function Demo() {
   const [opened, setOpened] = useState(false);

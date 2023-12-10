@@ -2,8 +2,8 @@ import React from 'react';
 import { useDisclosure } from '@mantine/hooks';
 import { Button } from '../Button';
 import { ScrollArea } from '../ScrollArea';
-import { Drawer } from './Drawer';
 import { Tabs } from '../Tabs';
+import { Drawer } from './Drawer';
 
 export default { title: 'Drawer' };
 

@@ -1,5 +1,5 @@
-import { closeOnEscape } from './close-on-escape';
 import { noop } from '../noop/noop';
+import { closeOnEscape } from './close-on-escape';
 
 const mockEvent: any = { key: 'Escape', code: 'Escape' };
 

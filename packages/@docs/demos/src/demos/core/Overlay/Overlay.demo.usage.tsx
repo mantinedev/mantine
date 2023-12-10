@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
+import { AspectRatio, Button, Overlay } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
-import { Button, Overlay, AspectRatio } from '@mantine/core';
 
 const code = `
 import { useState } from 'react';

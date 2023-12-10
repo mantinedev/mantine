@@ -1,6 +1,6 @@
 import React from 'react';
-import { MantineDemo } from '@mantinex/demo';
 import { Radio } from '@mantine/core';
+import { MantineDemo } from '@mantinex/demo';
 import { RadioStylesApi } from '@docs/styles-api';
 
 const code = `

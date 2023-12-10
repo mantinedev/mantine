@@ -1,10 +1,10 @@
 import React from 'react';
 import { TypeScriptCircleIcon } from '@mantinex/dev-icons';
-import { MdxTitle } from '../MdxTitle/MdxTitle';
-import { MdxCodeHighlight } from '../MdxPre/MdxPre';
-import { MdxParagraph, MdxCode } from '../MdxTypography/MdxTypography';
-import { MdxLink } from '../MdxLink/MdxLink';
 import { MdxInfo } from '../MdxInfo/MdxInfo';
+import { MdxLink } from '../MdxLink/MdxLink';
+import { MdxCodeHighlight } from '../MdxPre/MdxPre';
+import { MdxTitle } from '../MdxTitle/MdxTitle';
+import { MdxCode, MdxParagraph } from '../MdxTypography/MdxTypography';
 
 interface MdxPolymorphicProps {
   component: string;

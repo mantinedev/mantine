@@ -2,22 +2,22 @@ import React from 'react';
 import {
   Box,
   BoxProps,
-  StylesApiProps,
-  factory,
-  ElementProps,
-  useProps,
-  useStyles,
   createVarsResolver,
+  ElementProps,
+  factory,
   Factory,
-  MantineSize,
+  getRadius,
   getSize,
   MantineRadius,
-  getRadius,
+  MantineSize,
+  StylesApiProps,
+  useProps,
+  useStyles,
 } from '../../core';
 import { CloseButton } from '../CloseButton';
-import { PillGroup } from './PillGroup/PillGroup';
-import { usePillGroupContext } from './PillGroup.context';
 import { usePillsInputContext } from '../PillsInput/PillsInput.context';
+import { usePillGroupContext } from './PillGroup.context';
+import { PillGroup } from './PillGroup/PillGroup';
 import classes from './Pill.module.css';
 
 export type PillStylesNames = 'root' | 'label' | 'remove';

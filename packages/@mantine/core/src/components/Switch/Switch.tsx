@@ -1,24 +1,24 @@
 import React from 'react';
 import { useId, useUncontrolled } from '@mantine/hooks';
 import {
-  BoxProps,
-  StylesApiProps,
-  factory,
-  ElementProps,
-  useProps,
-  useStyles,
-  MantineColor,
-  MantineSize,
-  MantineRadius,
-  extractStyleProps,
-  getRadius,
   Box,
+  BoxProps,
+  createVarsResolver,
+  ElementProps,
+  extractStyleProps,
+  factory,
+  Factory,
+  getRadius,
   getSize,
   getThemeColor,
-  createVarsResolver,
-  Factory,
+  MantineColor,
+  MantineRadius,
+  MantineSize,
+  StylesApiProps,
+  useProps,
+  useStyles,
 } from '../../core';
-import { InlineInput, InlineInputStylesNames, InlineInputClasses } from '../InlineInput';
+import { InlineInput, InlineInputClasses, InlineInputStylesNames } from '../InlineInput';
 import { useSwitchGroupContext } from './SwitchGroup.context';
 import { SwitchGroup } from './SwitchGroup/SwitchGroup';
 import classes from './Switch.module.css';

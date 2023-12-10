@@ -1,7 +1,7 @@
 import React from 'react';
-import { NativeSelect, BoxProps, ElementProps } from '@mantine/core';
+import { BoxProps, ElementProps, NativeSelect } from '@mantine/core';
 import { getControlLabel } from './get-control-label';
-import { transformSelectData, SelectData } from './transform-select-data';
+import { SelectData, transformSelectData } from './transform-select-data';
 import { ConfiguratorControl } from './types';
 
 export type ConfiguratorSelectControlOptions = ConfiguratorControl<

@@ -3,13 +3,13 @@ import {
   Box,
   BoxProps,
   CompoundStylesApiProps,
-  factory,
   ElementProps,
-  useProps,
+  factory,
   Factory,
+  useProps,
 } from '../../../core';
-import classes from '../Progress.module.css';
 import { useProgressContext } from '../Progress.context';
+import classes from '../Progress.module.css';
 
 export type ProgressLabelStylesNames = 'label';
 

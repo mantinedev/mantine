@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
-import { MantineDemo } from '@mantinex/demo';
-import { ActionIcon, useDirection } from '@mantine/core';
 import { IconTextDirectionLtr, IconTextDirectionRtl } from '@tabler/icons-react';
+import { ActionIcon, useDirection } from '@mantine/core';
+import { MantineDemo } from '@mantinex/demo';
 
 const code = `
 import { ActionIcon, useDirection } from '@mantine/core';

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Combobox, InputBase, Input, Loader, useCombobox } from '@mantine/core';
+import { Combobox, Input, InputBase, Loader, useCombobox } from '@mantine/core';
 
 const MOCKDATA = [
   '🍎 Apples',

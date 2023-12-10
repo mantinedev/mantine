@@ -1,11 +1,11 @@
 import { CSSProperties } from 'react';
-import { useMantineTheme, useMantineClassNamesPrefix } from '../../MantineProvider';
 import type { MantineStyleProp } from '../../Box';
 import { FactoryPayload } from '../../factory';
+import { useMantineClassNamesPrefix, useMantineTheme } from '../../MantineProvider';
 import { PartialVarsResolver, VarsResolver } from '../create-vars-resolver/create-vars-resolver';
+import { ClassNames, ClassNamesArray, GetStylesApiOptions, Styles } from '../styles-api.types';
 import { getClassName } from './get-class-name/get-class-name';
 import { getStyle } from './get-style/get-style';
-import { Styles, ClassNames, GetStylesApiOptions, ClassNamesArray } from '../styles-api.types';
 
 export interface UseStylesInput<Payload extends FactoryPayload> {
   name: string | (string | undefined)[];

@@ -1,6 +1,6 @@
 import { rem } from '../../../core';
-import type { IndicatorPosition } from '../Indicator.types';
 import type { IndicatorPositionVariables } from '../Indicator';
+import type { IndicatorPosition } from '../Indicator.types';
 
 export function getPositionVariables(_position: IndicatorPosition = 'top-end', offset = 0) {
   const variables: Record<IndicatorPositionVariables, string | undefined> = {

@@ -1,9 +1,9 @@
 import React, { forwardRef } from 'react';
 import cx from 'clsx';
 import { BoxProps, ElementProps, MantineRadius, MantineShadow } from '../../core';
-import { Transition, TransitionOverride } from '../Transition';
 import { FocusTrap } from '../FocusTrap';
 import { Paper } from '../Paper';
+import { Transition, TransitionOverride } from '../Transition';
 import { useModalBaseContext } from './ModalBase.context';
 import classes from './ModalBase.module.css';
 

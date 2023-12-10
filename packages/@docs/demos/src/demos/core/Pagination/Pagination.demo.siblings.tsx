@@ -1,6 +1,6 @@
 import React from 'react';
+import { Pagination, Text } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
-import { Text, Pagination } from '@mantine/core';
 
 const code = `
 import { Text, Pagination } from '@mantine/core';

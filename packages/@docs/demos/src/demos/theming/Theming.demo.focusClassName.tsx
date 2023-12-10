@@ -1,6 +1,6 @@
 import React from 'react';
+import { Button, MantineThemeProvider } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
-import { MantineThemeProvider, Button } from '@mantine/core';
 import classes from './Theming.demo.focusClassName.module.css';
 
 const tsxCode = `

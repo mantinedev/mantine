@@ -1,6 +1,6 @@
 import React from 'react';
+import { Button, Popover, TextInput } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
-import { Popover, Button, TextInput } from '@mantine/core';
 
 const code = `
 import { Popover, Button, TextInput } from '@mantine/core';

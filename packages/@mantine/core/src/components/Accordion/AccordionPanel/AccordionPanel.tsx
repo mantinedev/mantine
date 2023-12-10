@@ -2,10 +2,10 @@ import React from 'react';
 import {
   BoxProps,
   CompoundStylesApiProps,
-  factory,
   ElementProps,
-  useProps,
+  factory,
   Factory,
+  useProps,
 } from '../../../core';
 import { Collapse } from '../../Collapse';
 import { useAccordionContext } from '../Accordion.context';

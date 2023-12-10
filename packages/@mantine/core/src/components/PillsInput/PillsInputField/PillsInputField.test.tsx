@@ -1,11 +1,11 @@
 import React from 'react';
-import { render, screen, tests, createContextContainer } from '@mantine-tests/core';
+import { createContextContainer, render, screen, tests } from '@mantine-tests/core';
+import { PillsInputProvider } from '../PillsInput.context';
 import {
   PillsInputField,
   PillsInputFieldProps,
   PillsInputFieldStylesNames,
 } from './PillsInputField';
-import { PillsInputProvider } from '../PillsInput.context';
 
 const TestContainer = createContextContainer(PillsInputField, PillsInputProvider, {
   value: { size: 'sm', fieldRef: { current: null } },

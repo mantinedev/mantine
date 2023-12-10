@@ -1,6 +1,6 @@
+import { ActionIconDemos } from '@docs/demos';
 import { Layout } from '@/layout';
 import { MDX_DATA } from '@/mdx';
-import { ActionIconDemos } from '@docs/demos';
 
 export default Layout(MDX_DATA.ActionIcon);
 
@@ -127,8 +127,8 @@ To make `ActionIcon` accessible for screen readers, you need to either set `aria
 use [VisuallyHidden](/core/visually-hidden) component:
 
 ```tsx
-import { ActionIcon, VisuallyHidden } from '@mantine/core';
 import { IconHeart } from '@tabler/icons-react';
+import { ActionIcon, VisuallyHidden } from '@mantine/core';
 
 function Demo() {
   return (

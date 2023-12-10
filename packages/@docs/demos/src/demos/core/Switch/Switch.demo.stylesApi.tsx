@@ -1,6 +1,6 @@
 import React from 'react';
-import { MantineDemo } from '@mantinex/demo';
 import { Switch } from '@mantine/core';
+import { MantineDemo } from '@mantinex/demo';
 import { SwitchStylesApi } from '@docs/styles-api';
 
 const code = `

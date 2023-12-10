@@ -3,10 +3,10 @@ import {
   Box,
   BoxProps,
   CompoundStylesApiProps,
-  factory,
   ElementProps,
-  useProps,
+  factory,
   Factory,
+  useProps,
 } from '../../../core';
 import { usePaginationContext } from '../Pagination.context';
 import { PaginationDotsIcon, PaginationIconProps } from '../Pagination.icons';

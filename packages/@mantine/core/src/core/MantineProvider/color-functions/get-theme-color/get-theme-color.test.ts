@@ -1,5 +1,5 @@
-import { getThemeColor } from './get-theme-color';
 import { DEFAULT_THEME } from '../../default-theme';
+import { getThemeColor } from './get-theme-color';
 
 describe('@mantine/core/get-theme-color', () => {
   it('returns color from theme', () => {

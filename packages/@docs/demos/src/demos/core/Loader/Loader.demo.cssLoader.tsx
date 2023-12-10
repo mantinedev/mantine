@@ -1,6 +1,6 @@
 import React from 'react';
-import { MantineDemo } from '@mantinex/demo';
 import { Loader, MantineThemeProvider } from '@mantine/core';
+import { MantineDemo } from '@mantinex/demo';
 import { CssLoader, cssLoaderModuleCssCode, cssLoaderTsxCode } from './_CssLoader';
 
 const code = `

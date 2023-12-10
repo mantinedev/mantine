@@ -1,6 +1,6 @@
+import { DatePickerInputDemos } from '@docs/demos';
 import { Layout } from '@/layout';
 import { MDX_DATA } from '@/mdx';
-import { DatePickerInputDemos } from '@docs/demos';
 
 export default Layout(MDX_DATA.GettingStartedDates);
 
@@ -48,10 +48,11 @@ Example of setting locale on DatesProvider:
 
 ```tsx
 import 'dayjs/locale/ru';
+
 import {
+  DatePickerInput,
   DatesProvider,
   MonthPickerInput,
-  DatePickerInput,
 } from '@mantine/dates';
 
 function Demo() {
@@ -72,10 +73,11 @@ is required both on client and server.
 'use client';
 
 import 'dayjs/locale/ru';
+
 import {
+  DatePickerInput,
   DatesProvider,
   MonthPickerInput,
-  DatePickerInput,
 } from '@mantine/dates';
 
 function Demo() {

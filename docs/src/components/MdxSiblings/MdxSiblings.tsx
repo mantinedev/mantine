@@ -1,11 +1,11 @@
 import React from 'react';
 import Link from 'next/link';
-import cx from 'clsx';
 import { IconArrowLeft, IconArrowRight } from '@tabler/icons-react';
-import { Text, Box, FOCUS_CLASS_NAMES } from '@mantine/core';
+import cx from 'clsx';
+import { Box, FOCUS_CLASS_NAMES, Text } from '@mantine/core';
+import { Frontmatter } from '@/types';
 import { getMdxSiblings } from './get-mdx-siblings';
 import classes from './MdxSiblings.module.css';
-import { Frontmatter } from '@/types';
 
 interface MdxSiblingsProps {
   meta: Frontmatter;

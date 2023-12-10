@@ -2,12 +2,12 @@ import React from 'react';
 import {
   Box,
   BoxProps,
-  StylesApiProps,
-  factory,
   ElementProps,
+  factory,
+  Factory,
+  StylesApiProps,
   useProps,
   useStyles,
-  Factory,
 } from '../../../core';
 import classes from '../Input.module.css';
 

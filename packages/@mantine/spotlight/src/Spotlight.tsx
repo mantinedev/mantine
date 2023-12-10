@@ -1,17 +1,17 @@
 import React from 'react';
+import { factory, Factory, getDefaultZIndex, useProps } from '@mantine/core';
 import { useUncontrolled } from '@mantine/hooks';
-import { factory, useProps, Factory, getDefaultZIndex } from '@mantine/core';
-import { spotlightStore, spotlight } from './spotlight.store';
-import { SpotlightSearch, SpotlightSearchProps } from './SpotlightSearch';
-import { SpotlightActionsList } from './SpotlightActionsList';
-import { SpotlightAction, SpotlightActionProps } from './SpotlightAction';
-import { SpotlightEmpty } from './SpotlightEmpty';
-import { SpotlightFooter } from './SpotlightFooter';
-import { SpotlightActionsGroup } from './SpotlightActionsGroup';
-import { SpotlightRoot, SpotlightRootProps, SpotlightRootStylesNames } from './SpotlightRoot';
 import { defaultSpotlightFilter } from './default-spotlight-filter';
 import { isActionsGroup } from './is-actions-group';
 import { limitActions } from './limit-actions';
+import { spotlight, spotlightStore } from './spotlight.store';
+import { SpotlightAction, SpotlightActionProps } from './SpotlightAction';
+import { SpotlightActionsGroup } from './SpotlightActionsGroup';
+import { SpotlightActionsList } from './SpotlightActionsList';
+import { SpotlightEmpty } from './SpotlightEmpty';
+import { SpotlightFooter } from './SpotlightFooter';
+import { SpotlightRoot, SpotlightRootProps, SpotlightRootStylesNames } from './SpotlightRoot';
+import { SpotlightSearch, SpotlightSearchProps } from './SpotlightSearch';
 import classes from './Spotlight.module.css';
 
 export type SpotlightFilterFunction = (

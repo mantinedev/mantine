@@ -1,7 +1,7 @@
 import React, { cloneElement, forwardRef } from 'react';
-import { isElement, createEventHandler, useProps } from '../../../core';
-import { useMenuContext } from '../Menu.context';
+import { createEventHandler, isElement, useProps } from '../../../core';
 import { Popover } from '../../Popover';
+import { useMenuContext } from '../Menu.context';
 
 export interface MenuTargetProps {
   /** Target element */

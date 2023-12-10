@@ -1,6 +1,6 @@
+import { SpotlightDemos } from '@docs/demos';
 import { Layout } from '@/layout';
 import { MDX_DATA } from '@/mdx';
-import { SpotlightDemos } from '@docs/demos';
 
 export default Layout(MDX_DATA.Spotlight);
 
@@ -38,8 +38,8 @@ These actions can be passed to event listeners or used anywhere in your applicat
 (not limited to React components):
 
 ```tsx
-import { spotlight } from '@mantine/spotlight';
 import { Button } from '@mantine/core';
+import { spotlight } from '@mantine/spotlight';
 
 function Demo() {
   return <Button onClick={spotlight.open}>Open spotlight</Button>;
@@ -50,8 +50,8 @@ You can also import actions directly from the `@mantine/spotlight` package, if y
 
 ```tsx
 import {
-  openSpotlight,
   closeSpotlight,
+  openSpotlight,
   toggleSpotlight,
 } from '@mantine/spotlight';
 

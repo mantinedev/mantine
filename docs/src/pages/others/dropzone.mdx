@@ -1,14 +1,14 @@
-import { Layout } from '@/layout';
-import { MDX_DATA } from '@/mdx';
-import { DropzoneDemos } from '@docs/demos';
 import {
-  MIME_TYPES,
   IMAGE_MIME_TYPE,
-  PDF_MIME_TYPE,
-  MS_WORD_MIME_TYPE,
+  MIME_TYPES,
   MS_EXCEL_MIME_TYPE,
   MS_POWERPOINT_MIME_TYPE,
+  MS_WORD_MIME_TYPE,
+  PDF_MIME_TYPE,
 } from '@mantine/dropzone';
+import { DropzoneDemos } from '@docs/demos';
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
 
 export default Layout(MDX_DATA.Dropzone);
 
@@ -156,7 +156,7 @@ Additionally you can use grouped mime types:
 />
 
 ```tsx
-import { IMAGE_MIME_TYPE, Dropzone } from '@mantine/dropzone';
+import { Dropzone, IMAGE_MIME_TYPE } from '@mantine/dropzone';
 
 function Demo() {
   return (
@@ -183,7 +183,7 @@ function Demo() {
 ## Get ref
 
 ```tsx
-import { useRef, useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import { Dropzone } from '@mantine/dropzone';
 
 function Demo() {

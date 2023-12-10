@@ -1,5 +1,5 @@
-import { parseThemeColor } from './parse-theme-color';
 import { DEFAULT_THEME } from '../../default-theme';
+import { parseThemeColor } from './parse-theme-color';
 
 describe('@mantine/core/parse-theme-color', () => {
   it('parses theme color correctly', () => {

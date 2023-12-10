@@ -1,4 +1,4 @@
-import { toRgba, RGBA } from '../to-rgba/to-rgba';
+import { RGBA, toRgba } from '../to-rgba/to-rgba';
 
 function getPartLuminance(value: number) {
   const x = value / 255;

@@ -1,6 +1,6 @@
+import { ThemingDemos } from '@docs/demos';
 import { Layout } from '@/layout';
 import { MDX_DATA } from '@/mdx';
-import { ThemingDemos } from '@docs/demos';
 
 export default Layout(MDX_DATA.DefaultProps);
 
@@ -18,9 +18,9 @@ for a part of your application:
 
 ```tsx
 import {
-  MantineThemeProvider,
   Button,
   createTheme,
+  MantineThemeProvider,
 } from '@mantine/core';
 
 const theme = createTheme({

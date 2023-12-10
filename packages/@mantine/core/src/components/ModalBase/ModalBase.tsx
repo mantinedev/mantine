@@ -4,12 +4,12 @@ import {
   Box,
   BoxProps,
   ElementProps,
-  MantineShadow,
-  MantineSize,
-  MantineSpacing,
   getDefaultZIndex,
   getShadow,
   getSpacing,
+  MantineShadow,
+  MantineSize,
+  MantineSpacing,
 } from '../../core';
 import { OptionalPortal, PortalProps } from '../Portal';
 import { TransitionOverride } from '../Transition';

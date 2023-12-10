@@ -1,7 +1,7 @@
 import React from 'react';
+import { IconFingerprint, IconGauge } from '@tabler/icons-react';
 import { NavLink } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
-import { IconGauge, IconFingerprint } from '@tabler/icons-react';
 
 const code = `
 import { NavLink } from '@mantine/core';

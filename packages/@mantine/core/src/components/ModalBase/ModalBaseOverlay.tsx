@@ -2,8 +2,8 @@ import React, { forwardRef } from 'react';
 import { ElementProps } from '../../core';
 import { Overlay, OverlayProps } from '../Overlay';
 import { Transition, TransitionOverride } from '../Transition';
-import { useModalTransition } from './use-modal-transition';
 import { useModalBaseContext } from './ModalBase.context';
+import { useModalTransition } from './use-modal-transition';
 
 export interface ModalBaseOverlayProps
   extends Omit<OverlayProps, 'styles' | 'classNames' | 'variant' | 'vars'>,

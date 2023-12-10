@@ -1,6 +1,6 @@
+import { ModalsDemos } from '@docs/demos';
 import { Layout } from '@/layout';
 import { MDX_DATA } from '@/mdx';
-import { ModalsDemos } from '@docs/demos';
 
 export default Layout(MDX_DATA.Modals);
 
@@ -71,8 +71,8 @@ function Demo() {
 You can define any amount of modals in ModalsProvider context:
 
 ```tsx
+import { Button, Text } from '@mantine/core';
 import { ContextModalProps, ModalsProvider } from '@mantine/modals';
-import { Text, Button } from '@mantine/core';
 
 const TestModal = ({
   context,
@@ -141,7 +141,8 @@ function Demo() {
 Typesafe context modals will force you to use the correct types for `openContextModal`:
 
 ```tsx
-import { openContextModal, closeModal } from '@mantine/modals';
+import { closeModal, openContextModal } from '@mantine/modals';
+
 openContextModal({
   modal: 'demonstration',
   title: 'Test modal from context',

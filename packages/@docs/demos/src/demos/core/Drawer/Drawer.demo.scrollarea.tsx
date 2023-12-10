@@ -1,6 +1,6 @@
 import React from 'react';
+import { Button, Drawer, ScrollArea } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
-import { Drawer, Button, ScrollArea } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
 
 const code = `

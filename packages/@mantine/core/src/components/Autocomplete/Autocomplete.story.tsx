@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { Autocomplete } from './Autocomplete';
 import { Button } from '../Button';
+import { Autocomplete } from './Autocomplete';
 
 export default { title: 'Autocomplete' };
 

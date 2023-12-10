@@ -1,11 +1,11 @@
 import React from 'react';
-import { MantineDemo } from '@mantinex/demo';
-import { RichTextEditor } from '@mantine/tiptap';
+import CodeBlockLowlight from '@tiptap/extension-code-block-lowlight';
 import { useEditor } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
-import CodeBlockLowlight from '@tiptap/extension-code-block-lowlight';
-import { createLowlight } from 'lowlight';
 import tsLanguageSyntax from 'highlight.js/lib/languages/typescript';
+import { createLowlight } from 'lowlight';
+import { RichTextEditor } from '@mantine/tiptap';
+import { MantineDemo } from '@mantinex/demo';
 
 const lowlight = createLowlight();
 

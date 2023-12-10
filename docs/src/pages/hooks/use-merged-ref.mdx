@@ -1,6 +1,6 @@
+import { HooksDemos } from '@docs/demos';
 import { Layout } from '@/layout';
 import { MDX_DATA } from '@/mdx';
-import { HooksDemos } from '@docs/demos';
 
 export default Layout(MDX_DATA.useMergedRef);
 
@@ -41,7 +41,7 @@ across two renders. To fix that issue, use `mergeRefs` function instead:
 
 ```tsx
 import { useRef } from 'react';
-import { useClickOutside, mergeRefs } from '@mantine/hooks';
+import { mergeRefs, useClickOutside } from '@mantine/hooks';
 
 function Demo() {
   const myRef = useRef();

@@ -1,6 +1,6 @@
 import React from 'react';
-import { MantineDemo } from '@mantinex/demo';
 import { TimeInput } from '@mantine/dates';
+import { MantineDemo } from '@mantinex/demo';
 import { inputControls } from '../../../shared';
 
 const code = `

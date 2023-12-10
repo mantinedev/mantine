@@ -2,19 +2,19 @@ import React from 'react';
 import {
   Box,
   BoxProps,
-  StylesApiProps,
-  factory,
-  ElementProps,
-  useProps,
-  useStyles,
   createVarsResolver,
+  ElementProps,
+  factory,
   Factory,
-  getSize,
   getRadius,
+  getSize,
+  MantineColor,
   MantineGradient,
   MantineRadius,
-  MantineColor,
   MantineSize,
+  StylesApiProps,
+  useProps,
+  useStyles,
 } from '../../core';
 import classes from './ThemeIcon.module.css';
 

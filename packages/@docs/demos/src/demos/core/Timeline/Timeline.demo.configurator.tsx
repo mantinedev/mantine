@@ -1,5 +1,5 @@
 import React from 'react';
-import { TimelineProps, Box } from '@mantine/core';
+import { Box, TimelineProps } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
 import { TimelineBase } from './_base';
 

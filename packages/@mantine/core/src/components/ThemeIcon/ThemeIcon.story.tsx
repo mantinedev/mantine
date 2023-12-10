@@ -1,6 +1,6 @@
 import React from 'react';
-import { ThemeIcon, ThemeIconProps } from './ThemeIcon';
 import { DEFAULT_THEME } from '../../core';
+import { ThemeIcon, ThemeIconProps } from './ThemeIcon';
 
 export default { title: 'ThemeIcon' };
 

@@ -1,18 +1,18 @@
 import React, { useCallback, useReducer, useRef } from 'react';
-import { Modal, getDefaultZIndex } from '@mantine/core';
+import { getDefaultZIndex, Modal } from '@mantine/core';
 import { randomId } from '@mantine/hooks';
+import { ConfirmModal } from './ConfirmModal';
 import {
-  ModalsContext,
-  ModalSettings,
   ConfirmLabels,
+  ContextModalProps,
+  ModalsContext,
+  ModalsContextProps,
+  ModalSettings,
   OpenConfirmModal,
   OpenContextModal,
-  ContextModalProps,
-  ModalsContextProps,
 } from './context';
-import { ConfirmModal } from './ConfirmModal';
-import { modalsReducer } from './reducer';
 import { useModalsEvents } from './events';
+import { modalsReducer } from './reducer';
 
 export interface ModalsProviderProps {
   /** Your app */

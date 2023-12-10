@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useWindowEvent } from '../use-window-event/use-window-event';
 
 interface ScrollPosition {

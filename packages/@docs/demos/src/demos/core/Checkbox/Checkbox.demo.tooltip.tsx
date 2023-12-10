@@ -1,6 +1,6 @@
 import React from 'react';
+import { Checkbox, Tooltip } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
-import { Tooltip, Checkbox } from '@mantine/core';
 
 const code = `
 import { Tooltip, Checkbox } from '@mantine/core';

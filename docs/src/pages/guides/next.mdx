@@ -59,7 +59,7 @@ Add styles imports and [MantineProvider](/theming/mantine-provider) to the `page
 import '@mantine/core/styles.css';
 
 import type { AppProps } from 'next/app';
-import { MantineProvider, createTheme } from '@mantine/core';
+import { createTheme, MantineProvider } from '@mantine/core';
 
 const theme = createTheme({
   /** Put your mantine theme override here */
@@ -78,7 +78,7 @@ Create `pages/_document.tsx` file with [ColorSchemeScript](/theming/color-scheme
 Note that it is required even if you use only one color scheme in your application.
 
 ```tsx
-import { Html, Head, Main, NextScript } from 'next/document';
+import { Head, Html, Main, NextScript } from 'next/document';
 import { ColorSchemeScript } from '@mantine/core';
 
 export default function Document() {
@@ -112,7 +112,7 @@ and styles imports to the `app/layout.tsx` file:
 // All packages except `@mantine/hooks` require styles imports
 import '@mantine/core/styles.css';
 
-import { MantineProvider, ColorSchemeScript } from '@mantine/core';
+import { ColorSchemeScript, MantineProvider } from '@mantine/core';
 
 export const metadata = {
   title: 'My Mantine app',
@@ -217,6 +217,7 @@ Example with `'use client';` directive:
 
 ```tsx
 'use client';
+
 import { Popover } from '@mantine/core';
 
 // No error
@@ -235,8 +236,8 @@ Example with `ComponentXXX` syntax:
 ```tsx
 import {
   Popover,
-  PopoverTarget,
   PopoverDropdown,
+  PopoverTarget,
 } from '@mantine/core';
 
 // No error

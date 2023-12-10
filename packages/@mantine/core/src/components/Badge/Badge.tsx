@@ -2,19 +2,19 @@ import React from 'react';
 import {
   Box,
   BoxProps,
-  StylesApiProps,
-  polymorphicFactory,
-  useProps,
-  useStyles,
   createVarsResolver,
-  PolymorphicFactory,
-  getSize,
   getRadius,
-  MantineSize,
-  MantineRadius,
+  getSize,
+  getThemeColor,
   MantineColor,
   MantineGradient,
-  getThemeColor,
+  MantineRadius,
+  MantineSize,
+  polymorphicFactory,
+  PolymorphicFactory,
+  StylesApiProps,
+  useProps,
+  useStyles,
 } from '../../core';
 import classes from './Badge.module.css';
 

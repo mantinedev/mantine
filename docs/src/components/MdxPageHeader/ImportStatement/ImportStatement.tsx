@@ -1,6 +1,6 @@
 import React from 'react';
-import { em, Tooltip, UnstyledButton } from '@mantine/core';
 import { InlineCodeHighlight } from '@mantine/code-highlight';
+import { em, Tooltip, UnstyledButton } from '@mantine/core';
 import { useClipboard, useMediaQuery } from '@mantine/hooks';
 import { HeaderItem } from '../HeaderItem/HeaderItem';
 import classes from './ImportStatement.module.css';

@@ -1,4 +1,4 @@
-import { renderHook, act } from '@testing-library/react';
+import { act, renderHook } from '@testing-library/react';
 import { useInterval } from './use-interval';
 
 const defaultTimeout = 2000;

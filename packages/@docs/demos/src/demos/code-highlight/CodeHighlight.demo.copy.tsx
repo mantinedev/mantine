@@ -1,6 +1,6 @@
 import React from 'react';
-import { MantineDemo } from '@mantinex/demo';
 import { CodeHighlight } from '@mantine/code-highlight';
+import { MantineDemo } from '@mantinex/demo';
 
 const exampleCode = `
 function Button() {

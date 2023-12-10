@@ -1,7 +1,7 @@
 import { useState } from 'react';
-import { useId, useWindowEvent, useFocusReturn } from '@mantine/hooks';
-import { useLockScroll } from './use-lock-scroll';
+import { useFocusReturn, useId, useWindowEvent } from '@mantine/hooks';
 import { TransitionOverride } from '../Transition';
+import { useLockScroll } from './use-lock-scroll';
 
 interface UseModalInput {
   opened: boolean;

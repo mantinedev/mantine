@@ -1,11 +1,11 @@
 import React, { forwardRef } from 'react';
 import {
-  BoxProps,
   Box,
+  BoxProps,
   ElementProps,
-  MantineSize,
   MantineColor,
   MantineRadius,
+  MantineSize,
 } from '../../../core';
 import { useSliderContext } from '../Slider.context';
 

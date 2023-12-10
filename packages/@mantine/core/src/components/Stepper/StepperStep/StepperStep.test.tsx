@@ -1,7 +1,7 @@
 import React from 'react';
-import { render, tests, createContextContainer, screen } from '@mantine-tests/core';
-import { StepperStep, StepperStepProps, StepperStepStylesNames } from './StepperStep';
+import { createContextContainer, render, screen, tests } from '@mantine-tests/core';
 import { Stepper } from '../Stepper';
+import { StepperStep, StepperStepProps, StepperStepStylesNames } from './StepperStep';
 
 const TestContainer = createContextContainer(StepperStep, Stepper, { active: 0 });
 

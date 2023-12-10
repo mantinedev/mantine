@@ -1,7 +1,7 @@
 import React from 'react';
 import { Badge, em } from '@mantine/core';
-import { MantineDemo } from '@mantinex/demo';
 import { useMediaQuery } from '@mantine/hooks';
+import { MantineDemo } from '@mantinex/demo';
 
 const code = `
 import { Badge } from '@mantine/core';

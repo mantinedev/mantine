@@ -1,7 +1,7 @@
 import React from 'react';
-import { NativeSelect } from './NativeSelect';
-import { TextInput } from '../TextInput';
 import { rem } from '../../core';
+import { TextInput } from '../TextInput';
+import { NativeSelect } from './NativeSelect';
 
 export default { title: 'NativeSelect' };
 

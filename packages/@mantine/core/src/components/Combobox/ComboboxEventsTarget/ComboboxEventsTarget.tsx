@@ -1,8 +1,8 @@
 import React, { cloneElement } from 'react';
 import { useMergedRef } from '@mantine/hooks';
-import { isElement, useProps, factory, Factory } from '../../../core';
-import { useComboboxTargetProps } from '../use-combobox-target-props/use-combobox-target-props';
+import { factory, Factory, isElement, useProps } from '../../../core';
 import { useComboboxContext } from '../Combobox.context';
+import { useComboboxTargetProps } from '../use-combobox-target-props/use-combobox-target-props';
 
 export interface ComboboxEventsTargetProps {
   /** Target element */

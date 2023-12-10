@@ -1,32 +1,32 @@
 import React from 'react';
-import { useUncontrolled, useId } from '@mantine/hooks';
+import { useId, useUncontrolled } from '@mantine/hooks';
 import {
   BoxProps,
-  StylesApiProps,
-  factory,
   ElementProps,
-  useProps,
-  Factory,
   extractStyleProps,
-  useStyles,
+  factory,
+  Factory,
+  StylesApiProps,
+  useProps,
   useResolvedStylesApi,
+  useStyles,
 } from '../../core';
+import { __CloseButtonProps } from '../CloseButton';
 import {
   Combobox,
-  OptionsDropdown,
-  useCombobox,
-  getParsedComboboxData,
-  getOptionsLockup,
   ComboboxLikeProps,
   ComboboxLikeStylesNames,
+  getOptionsLockup,
+  getParsedComboboxData,
+  OptionsDropdown,
+  useCombobox,
 } from '../Combobox';
 import { __BaseInputProps, __InputStylesNames } from '../Input';
-import { PillsInput } from '../PillsInput';
-import { Pill } from '../Pill';
 import { InputBase } from '../InputBase';
-import { __CloseButtonProps } from '../CloseButton';
-import { getSplittedTags } from './get-splitted-tags';
+import { Pill } from '../Pill';
+import { PillsInput } from '../PillsInput';
 import { filterPickedTags } from './filter-picked-tags';
+import { getSplittedTags } from './get-splitted-tags';
 
 export type TagsInputStylesNames =
   | __InputStylesNames

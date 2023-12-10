@@ -1,6 +1,6 @@
 import { Frontmatter, MdxPagesCategory, MdxPagesGroup } from '@/types';
-import { MDX_DATA } from './mdx-data';
 import { MDX_META_DATA } from './data/mdx-meta-data';
+import { MDX_DATA } from './mdx-data';
 
 export const MDX_PAGES_GROUPS: MdxPagesGroup[] = [
   {

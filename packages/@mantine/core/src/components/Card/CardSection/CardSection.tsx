@@ -4,8 +4,8 @@ import {
   BoxProps,
   CompoundStylesApiProps,
   polymorphicFactory,
-  useProps,
   PolymorphicFactory,
+  useProps,
 } from '../../../core';
 import { useCardContext } from '../Card.context';
 import classes from '../Card.module.css';

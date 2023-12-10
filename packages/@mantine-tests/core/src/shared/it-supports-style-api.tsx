@@ -1,5 +1,5 @@
 import React from 'react';
-import { MantineTheme, DEFAULT_THEME } from '@mantine/core';
+import { DEFAULT_THEME, MantineTheme } from '@mantine/core';
 import { render } from '../render';
 
 const randomNumber = (min = 10, max = 100) => Math.floor(Math.random() * (max - min + 1) + min);

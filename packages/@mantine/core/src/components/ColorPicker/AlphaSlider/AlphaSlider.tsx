@@ -1,5 +1,5 @@
 import React, { forwardRef } from 'react';
-import { useProps, rem } from '../../../core';
+import { rem, useProps } from '../../../core';
 import { ColorSlider, ColorSliderProps } from '../ColorSlider/ColorSlider';
 import { round } from '../converters/parsers';
 

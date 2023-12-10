@@ -1,6 +1,6 @@
 import React from 'react';
-import { MantineDemo } from '@mantinex/demo';
 import { MultiSelect } from '@mantine/core';
+import { MantineDemo } from '@mantinex/demo';
 import classes from './MultiSelect.demo.dropdownOffset.module.css';
 
 const cssCode = `.dropdown {

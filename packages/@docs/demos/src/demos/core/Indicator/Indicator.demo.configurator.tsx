@@ -1,6 +1,6 @@
 import React from 'react';
+import { Avatar, Indicator, IndicatorProps } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
-import { Indicator, IndicatorProps, Avatar } from '@mantine/core';
 
 function Demo(props: IndicatorProps) {
   return (

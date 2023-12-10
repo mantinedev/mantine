@@ -1,5 +1,5 @@
-import type { MantineTheme, MantineColorShade, MantineColorScheme } from '../../theme.types';
 import type { CssVariable } from '../../../Box';
+import type { MantineColorScheme, MantineColorShade, MantineTheme } from '../../theme.types';
 import { getPrimaryShade } from '../get-primary-shade/get-primary-shade';
 
 interface ParseThemeColorOptions {

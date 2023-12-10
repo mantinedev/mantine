@@ -1,10 +1,10 @@
 import React from 'react';
-import { Table, Text, Highlight } from '@mantine/core';
+import { Highlight, Table, Text } from '@mantine/core';
+import docgenData from '@/.docgen/docgen.json';
 import { DocsSection } from '@/components/DocsSection';
 import { HtmlText } from '@/components/HtmlText';
-import { TableInlineCode } from '@/components/TableInlineCode';
 import { TableError } from '@/components/TableError';
-import docgenData from '@/.docgen/docgen.json';
+import { TableInlineCode } from '@/components/TableInlineCode';
 
 export interface DocgenProp {
   defaultValue: {

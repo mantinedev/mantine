@@ -1,8 +1,8 @@
 import React from 'react';
+import { IconHeart } from '@tabler/icons-react';
+import { Alert } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
 import { AlertStylesApi } from '@docs/styles-api';
-import { Alert } from '@mantine/core';
-import { IconHeart } from '@tabler/icons-react';
 
 const code = `
 import { Alert } from '@mantine/core';

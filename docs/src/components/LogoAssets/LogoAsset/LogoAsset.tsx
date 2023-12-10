@@ -1,5 +1,5 @@
 import React from 'react';
-import { Group, Button } from '@mantine/core';
+import { Button, Group } from '@mantine/core';
 import { useClipboard } from '@mantine/hooks';
 import classes from './LogoAsset.module.css';
 

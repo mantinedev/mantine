@@ -1,7 +1,7 @@
 import React from 'react';
-import { useMantineStyleNonce, useMantineCssVariablesResolver } from '../Mantine.context';
-import { useMantineTheme } from '../MantineThemeProvider';
 import { convertCssVariables } from '../convert-css-variables/convert-css-variables';
+import { useMantineCssVariablesResolver, useMantineStyleNonce } from '../Mantine.context';
+import { useMantineTheme } from '../MantineThemeProvider';
 import { getMergedVariables } from './get-merged-variables';
 import { removeDefaultVariables } from './remove-default-variables';
 

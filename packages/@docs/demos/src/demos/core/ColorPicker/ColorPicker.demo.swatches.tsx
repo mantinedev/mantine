@@ -1,6 +1,6 @@
 import React from 'react';
+import { ColorPicker, DEFAULT_THEME, Stack } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
-import { DEFAULT_THEME, Stack, ColorPicker } from '@mantine/core';
 
 const code = `
 import { ColorPicker } from '@mantine/core';

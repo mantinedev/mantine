@@ -1,25 +1,24 @@
 import { ShikiLanguage } from '@mantinex/shiki';
-import { BasicAppShell } from './BasicAppShell/BasicAppShell';
-import { ResponsiveSizes } from './ResponsiveSizes/ResponsiveSizes';
-import { MobileNavbar } from './MobileNavbar/MobileNavbar';
-import { FullLayout } from './FullLayout/FullLayout';
 import { AltLayout } from './AltLayout/AltLayout';
-import { CollapseDesktop } from './CollapseDesktop/CollapseDesktop';
-import { NoTransitions } from './NoTransitions/NoTransitions';
-import { Disabled } from './Disabled/Disabled';
-import { Headroom } from './Headroom/Headroom';
-import { NavbarSection } from './NavbarSection/NavbarSection';
-
-import BasicAppShellCode from './BasicAppShell/code.json';
-import ResponsiveSizesCode from './ResponsiveSizes/code.json';
-import MobileNavbarCode from './MobileNavbar/code.json';
-import FullLayoutCode from './FullLayout/code.json';
 import AltLayoutCode from './AltLayout/code.json';
+import { BasicAppShell } from './BasicAppShell/BasicAppShell';
+import BasicAppShellCode from './BasicAppShell/code.json';
 import CollapseDesktopCode from './CollapseDesktop/code.json';
-import NoTransitionsCode from './NoTransitions/code.json';
+import { CollapseDesktop } from './CollapseDesktop/CollapseDesktop';
 import DisabledCode from './Disabled/code.json';
+import { Disabled } from './Disabled/Disabled';
+import FullLayoutCode from './FullLayout/code.json';
+import { FullLayout } from './FullLayout/FullLayout';
 import HeadroomCode from './Headroom/code.json';
+import { Headroom } from './Headroom/Headroom';
+import MobileNavbarCode from './MobileNavbar/code.json';
+import { MobileNavbar } from './MobileNavbar/MobileNavbar';
 import NavbarSectionCode from './NavbarSection/code.json';
+import { NavbarSection } from './NavbarSection/NavbarSection';
+import NoTransitionsCode from './NoTransitions/code.json';
+import { NoTransitions } from './NoTransitions/NoTransitions';
+import ResponsiveSizesCode from './ResponsiveSizes/code.json';
+import { ResponsiveSizes } from './ResponsiveSizes/ResponsiveSizes';
 
 interface AppShellExampleComponent {
   component: () => JSX.Element;

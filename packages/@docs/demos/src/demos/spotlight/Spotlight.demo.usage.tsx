@@ -1,9 +1,9 @@
 /* eslint-disable no-console */
 import React from 'react';
-import { MantineDemo } from '@mantinex/demo';
-import { IconHome, IconDashboard, IconFileText, IconSearch } from '@tabler/icons-react';
+import { IconDashboard, IconFileText, IconHome, IconSearch } from '@tabler/icons-react';
 import { rem } from '@mantine/core';
 import { SpotlightActionData } from '@mantine/spotlight';
+import { MantineDemo } from '@mantinex/demo';
 import { SpotlightDemoBase } from './_demo-base';
 
 const actions: SpotlightActionData[] = [

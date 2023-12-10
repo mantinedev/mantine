@@ -1,4 +1,4 @@
-import { MantineSize, createOptionalContext } from '../../core';
+import { createOptionalContext, MantineSize } from '../../core';
 
 interface RadioGroupContextValue {
   size: MantineSize | undefined;

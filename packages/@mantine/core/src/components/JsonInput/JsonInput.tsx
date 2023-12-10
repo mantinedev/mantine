@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { useUncontrolled } from '@mantine/hooks';
-import { factory, useProps, Factory } from '../../core';
+import { factory, Factory, useProps } from '../../core';
+import { __InputStylesNames } from '../Input';
 import { InputBase } from '../InputBase';
 import { Textarea, TextareaProps } from '../Textarea';
-import { __InputStylesNames } from '../Input';
 import { validateJson } from './validate-json/validate-json';
 
 export interface JsonInputProps extends Omit<TextareaProps, 'onChange'> {

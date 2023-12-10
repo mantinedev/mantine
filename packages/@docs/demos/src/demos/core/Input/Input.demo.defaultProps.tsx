@@ -1,6 +1,6 @@
 import React from 'react';
+import { createTheme, Input, MantineThemeProvider, NativeSelect, TextInput } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
-import { TextInput, NativeSelect, MantineThemeProvider, createTheme, Input } from '@mantine/core';
 
 const code = `
 import { TextInput, NativeSelect, MantineProvider, createTheme, Input } from '@mantine/core';

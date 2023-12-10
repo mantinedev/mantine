@@ -1,6 +1,6 @@
+import { InputDemos } from '@docs/demos';
 import { Layout } from '@/layout';
 import { MDX_DATA } from '@/mdx';
-import { InputDemos } from '@docs/demos';
 
 export default Layout(MDX_DATA.Input);
 
@@ -211,8 +211,8 @@ function Demo() {
 You can use [use-id](/hooks/use-id) to generate unique ids:
 
 ```tsx
-import { useId } from '@mantine/hooks';
 import { Input } from '@mantine/core';
+import { useId } from '@mantine/hooks';
 
 function Demo() {
   const id = useId();

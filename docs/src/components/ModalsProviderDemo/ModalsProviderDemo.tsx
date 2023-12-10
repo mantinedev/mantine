@@ -1,6 +1,6 @@
 import React from 'react';
-import { Text, Button } from '@mantine/core';
-import { ModalsProvider, ContextModalProps } from '@mantine/modals';
+import { Button, Text } from '@mantine/core';
+import { ContextModalProps, ModalsProvider } from '@mantine/modals';
 
 interface ModalsProviderDemoProps {
   children: React.ReactNode;

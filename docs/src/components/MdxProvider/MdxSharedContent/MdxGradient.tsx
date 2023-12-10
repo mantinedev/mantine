@@ -1,7 +1,7 @@
 import React from 'react';
-import { MdxParagraph, MdxCode } from '../MdxTypography/MdxTypography';
-import { MdxTitle } from '../MdxTitle/MdxTitle';
 import { MdxLink } from '../MdxLink/MdxLink';
+import { MdxTitle } from '../MdxTitle/MdxTitle';
+import { MdxCode, MdxParagraph } from '../MdxTypography/MdxTypography';
 
 interface MdxGradientProps {
   component: string;

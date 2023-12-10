@@ -3,11 +3,11 @@ import {
   Box,
   BoxProps,
   CompoundStylesApiProps,
-  factory,
-  ElementProps,
-  useProps,
-  Factory,
   createScopedKeydownHandler,
+  ElementProps,
+  factory,
+  Factory,
+  useProps,
 } from '../../../core';
 import { UnstyledButton } from '../../UnstyledButton';
 import { useAccordionContext } from '../Accordion.context';

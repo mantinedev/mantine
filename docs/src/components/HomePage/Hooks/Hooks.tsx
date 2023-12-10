@@ -1,5 +1,4 @@
 import React from 'react';
-import { Box } from '@mantine/core';
 import {
   IconArrowsMaximize,
   IconClock,
@@ -8,6 +7,7 @@ import {
   IconMaximize,
   IconResize,
 } from '@tabler/icons-react';
+import { Box } from '@mantine/core';
 import { Demo } from '@mantinex/demo';
 import { FormDemos, HooksDemos } from '@docs/demos';
 import { DemoTabs } from '../DemoTabs/DemoTabs';

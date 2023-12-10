@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { TagsInput } from './TagsInput';
 import { Button } from '../Button';
+import { TagsInput } from './TagsInput';
 
 export default { title: 'TagsInput' };
 

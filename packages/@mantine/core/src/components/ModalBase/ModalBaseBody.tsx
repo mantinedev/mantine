@@ -1,9 +1,9 @@
 import React, { forwardRef } from 'react';
 import cx from 'clsx';
 import { Box, BoxProps, ElementProps } from '../../core';
+import { useModalBaseContext } from './ModalBase.context';
 import { useModalBodyId } from './use-modal-body-id';
 import classes from './ModalBase.module.css';
-import { useModalBaseContext } from './ModalBase.context';
 
 export interface ModalBaseBodyProps extends BoxProps, ElementProps<'div'> {}
 

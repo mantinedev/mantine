@@ -1,6 +1,6 @@
 import React from 'react';
+import { Radio, Tooltip } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
-import { Tooltip, Radio } from '@mantine/core';
 
 const code = `
 import { Tooltip, Radio } from '@mantine/core';

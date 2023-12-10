@@ -3,32 +3,32 @@ import { useId } from '@mantine/hooks';
 import {
   Box,
   BoxProps,
-  StylesApiProps,
-  factory,
+  createVarsResolver,
   ElementProps,
+  factory,
+  Factory,
+  getFontSize,
+  MantineSize,
+  rem,
+  StylesApiProps,
   useProps,
   useStyles,
-  MantineSize,
-  Factory,
-  createVarsResolver,
-  getFontSize,
-  rem,
 } from '../../../core';
 import {
-  InputLabel,
-  InputLabelStylesNames,
-  InputLabelCssVariables,
-} from '../InputLabel/InputLabel';
-import {
   InputDescription,
-  InputDescriptionStylesNames,
   InputDescriptionCssVariables,
+  InputDescriptionStylesNames,
 } from '../InputDescription/InputDescription';
 import {
   InputError,
-  InputErrorStylesNames,
   InputErrorCssVariables,
+  InputErrorStylesNames,
 } from '../InputError/InputError';
+import {
+  InputLabel,
+  InputLabelCssVariables,
+  InputLabelStylesNames,
+} from '../InputLabel/InputLabel';
 import { InputWrapperProvider } from '../InputWrapper.context';
 import { getInputOffsets } from './get-input-offsets/get-input-offsets';
 import classes from '../Input.module.css';

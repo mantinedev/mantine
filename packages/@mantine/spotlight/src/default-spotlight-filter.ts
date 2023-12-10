@@ -1,8 +1,8 @@
 import type {
-  SpotlightFilterFunction,
   SpotlightActionData,
   SpotlightActionGroupData,
   SpotlightActions,
+  SpotlightFilterFunction,
 } from './Spotlight';
 
 function getKeywords(keywords: string | string[] | undefined) {

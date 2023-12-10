@@ -1,7 +1,7 @@
 import React from 'react';
-import { IconPhoto, IconPrinter, IconCameraSelfie } from '@tabler/icons-react';
-import { MantineDemo } from '@mantinex/demo';
+import { IconCameraSelfie, IconPhoto, IconPrinter } from '@tabler/icons-react';
 import { Accordion, rem } from '@mantine/core';
+import { MantineDemo } from '@mantinex/demo';
 
 const code = `
 import { IconPhoto, IconPrinter, IconCameraSelfie } from '@tabler/icons-react';

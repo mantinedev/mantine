@@ -1,16 +1,16 @@
-import cx from 'clsx';
 import React from 'react';
 import {
+  IconApi,
   IconBrandMantine,
   IconCompass,
-  IconApi,
   IconHeartHandshake,
   IconPalette,
 } from '@tabler/icons-react';
-import { Box, ScrollArea, rem, RemoveScroll, useDirection } from '@mantine/core';
+import cx from 'clsx';
+import { Box, rem, RemoveScroll, ScrollArea, useDirection } from '@mantine/core';
 import { MDX_PAGES_GROUPS } from '@/mdx';
-import { NavbarMainLink } from './NavbarMainLink/NavbarMainLink';
 import { NavbarLinksGroup } from './NavbarLinksGroup/NavbarLinksGroup';
+import { NavbarMainLink } from './NavbarMainLink/NavbarMainLink';
 import classes from './Navbar.module.css';
 
 interface NavbarProps {

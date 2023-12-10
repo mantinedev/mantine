@@ -1,7 +1,7 @@
 import React from 'react';
-import { TextInput, Text } from '@mantine/core';
+import { Text, TextInput } from '@mantine/core';
+import { useInputState, usePrevious } from '@mantine/hooks';
 import { MantineDemo } from '@mantinex/demo';
-import { usePrevious, useInputState } from '@mantine/hooks';
 
 const code = `
 import { TextInput, Text } from '@mantine/core';

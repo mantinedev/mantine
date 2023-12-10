@@ -1,5 +1,5 @@
 import React from 'react';
-import { IconHome2, IconChevronRight } from '@tabler/icons-react';
+import { IconChevronRight, IconHome2 } from '@tabler/icons-react';
 import { useCounter } from '@mantine/hooks';
 import { Button } from '../Button';
 import { NavLink } from './NavLink';

@@ -1,6 +1,6 @@
 import React from 'react';
-import { MantineDemo } from '@mantinex/demo';
 import { SegmentedControl } from '@mantine/core';
+import { MantineDemo } from '@mantinex/demo';
 import { SegmentedControlStylesApi } from '@docs/styles-api';
 
 const code = `

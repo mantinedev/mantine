@@ -1,19 +1,19 @@
 import React from 'react';
 import {
-  StylesApiProps,
-  factory,
-  useProps,
-  useStyles,
   createVarsResolver,
+  factory,
   Factory,
   getDefaultZIndex,
   getSize,
-  useDirection,
   MantineRadius,
   rem,
+  StylesApiProps,
+  useDirection,
+  useProps,
+  useStyles,
 } from '../../core';
+import { ModalBase, ModalBaseProps, ModalBaseStylesNames } from '../ModalBase';
 import { MantineTransition } from '../Transition';
-import { ModalBaseProps, ModalBase, ModalBaseStylesNames } from '../ModalBase';
 import { DrawerProvider, ScrollAreaComponent } from './Drawer.context';
 import classes from './Drawer.module.css';
 

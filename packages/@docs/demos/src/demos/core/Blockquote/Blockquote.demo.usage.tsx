@@ -1,7 +1,7 @@
 import React from 'react';
-import { MantineDemo } from '@mantinex/demo';
-import { Blockquote } from '@mantine/core';
 import { IconInfoCircle } from '@tabler/icons-react';
+import { Blockquote } from '@mantine/core';
+import { MantineDemo } from '@mantinex/demo';
 
 const code = `
 import { Blockquote } from '@mantine/core';

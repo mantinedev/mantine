@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
+import { Box, Button, Collapse, CollapseProps, Text } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
-import { Button, Text, Collapse, CollapseProps, Box } from '@mantine/core';
 
 export function CollapsedDemo({
   children,

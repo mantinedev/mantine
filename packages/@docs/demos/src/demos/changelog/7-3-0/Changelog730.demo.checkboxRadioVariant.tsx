@@ -1,6 +1,6 @@
 import React from 'react';
+import { Checkbox, Radio, Stack } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
-import { Radio, Checkbox, Stack } from '@mantine/core';
 
 const code = `
 import { Radio, Checkbox, Stack } from '@mantine/core';

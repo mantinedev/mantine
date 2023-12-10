@@ -1,5 +1,5 @@
 import React from 'react';
-import { tests, render } from '@mantine-tests/core';
+import { render, tests } from '@mantine-tests/core';
 import { AppShell, AppShellProps, AppShellStylesNames } from './AppShell';
 
 const defaultProps: AppShellProps = {};

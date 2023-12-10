@@ -1,7 +1,7 @@
 import React from 'react';
+import { Box, Text, TextInput } from '@mantine/core';
 import { useForm } from '@mantine/form';
 import { MantineDemo } from '@mantinex/demo';
-import { TextInput, Text, Box } from '@mantine/core';
 
 const code = `
 import { useForm } from '@mantine/form';

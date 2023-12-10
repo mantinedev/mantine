@@ -1,14 +1,14 @@
 import cx from 'clsx';
 import { MantineTheme } from '../../../MantineProvider';
 import { GetStylesApiOptions } from '../../styles-api.types';
-import { getStaticClassNames } from './get-static-class-names/get-static-class-names';
-import { getThemeClassNames } from './get-theme-class-names/get-theme-class-names';
 import { getGlobalClassNames } from './get-global-class-names/get-global-class-names';
-import { getVariantClassName } from './get-variant-class-name/get-variant-class-name';
+import { getOptionsClassNames } from './get-options-class-names/get-options-class-names';
+import { getResolvedClassNames } from './get-resolved-class-names/get-resolved-class-names';
 import { getRootClassName } from './get-root-class-name/get-root-class-name';
 import { getSelectorClassName } from './get-selector-class-name/get-selector-class-name';
-import { getResolvedClassNames } from './get-resolved-class-names/get-resolved-class-names';
-import { getOptionsClassNames } from './get-options-class-names/get-options-class-names';
+import { getStaticClassNames } from './get-static-class-names/get-static-class-names';
+import { getThemeClassNames } from './get-theme-class-names/get-theme-class-names';
+import { getVariantClassName } from './get-variant-class-name/get-variant-class-name';
 
 type __ClassNames =
   | undefined

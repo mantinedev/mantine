@@ -1,7 +1,7 @@
 import React from 'react';
-import { Text, Table } from '@mantine/core';
-import { MantineDemo } from '@mantinex/demo';
+import { Table, Text } from '@mantine/core';
 import { useNetwork } from '@mantine/hooks';
+import { MantineDemo } from '@mantinex/demo';
 
 const code = `
 import { Text, Table } from '@mantine/core';

@@ -1,6 +1,6 @@
+import { TipTapDemos } from '@docs/demos';
 import { Layout } from '@/layout';
 import { MDX_DATA } from '@/mdx';
-import { TipTapDemos } from '@docs/demos';
 
 export default Layout(MDX_DATA.TipTap);
 
@@ -98,8 +98,8 @@ To use placeholder you will need to install [@tiptap/extension-placeholder](http
 
 ```tsx
 // Use Link extension exported from the @mantine/tiptap package
-import { RichTextEditor, Link } from '@mantine/tiptap';
 import { useEditor } from '@tiptap/react';
+import { Link, RichTextEditor } from '@mantine/tiptap';
 
 function Demo() {
   const editor = useEditor({
@@ -143,8 +143,8 @@ By default, `RichTextEditor` renders content with [TypographyStylesProvider](/co
 You can disable these styles by setting `withTypographyStyles={false}`:
 
 ```tsx
-import { RichTextEditor } from '@mantine/tiptap';
 import { useEditor } from '@tiptap/react';
+import { RichTextEditor } from '@mantine/tiptap';
 
 function Demo() {
   const editor = useEditor({
@@ -211,8 +211,8 @@ the context. This hook can be used to create custom control or run any operation
 by the Tiptap [editor API](https://tiptap.dev/api/editor).
 
 ```tsx
-import { useRichTextEditorContext } from '@mantine/tiptap';
 import { Button } from '@mantine/core';
+import { useRichTextEditorContext } from '@mantine/tiptap';
 
 function Demo() {
   const { editor } = useRichTextEditorContext();
@@ -246,8 +246,8 @@ that must handle `size` prop:
 `RichTextEditor` supports changing labels for all controls with `labels` prop:
 
 ```tsx
-import { RichTextEditor } from '@mantine/tiptap';
 import { useEditor } from '@tiptap/react';
+import { RichTextEditor } from '@mantine/tiptap';
 
 function Demo() {
   const editor = useEditor({

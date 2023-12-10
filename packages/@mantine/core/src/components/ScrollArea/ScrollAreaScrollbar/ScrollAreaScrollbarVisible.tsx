@@ -1,14 +1,14 @@
-import React, { useRef, useState, forwardRef } from 'react';
+import React, { forwardRef, useRef, useState } from 'react';
 import { useDirection } from '../../../core';
+import { useScrollAreaContext } from '../ScrollArea.context';
 import {
   ScrollAreaScrollbarAxisPrivateProps,
   ScrollAreaScrollbarAxisProps,
   Sizes,
 } from '../ScrollArea.types';
-import { useScrollAreaContext } from '../ScrollArea.context';
+import { getScrollPositionFromPointer, getThumbOffsetFromScroll, getThumbRatio } from '../utils';
 import { ScrollAreaScrollbarX } from './ScrollbarX';
 import { ScrollAreaScrollbarY } from './ScrollbarY';
-import { getThumbRatio, getThumbOffsetFromScroll, getScrollPositionFromPointer } from '../utils';
 
 export interface ScrollAreaScrollbarVisibleProps
   extends Omit<ScrollAreaScrollbarAxisProps, keyof ScrollAreaScrollbarAxisPrivateProps> {

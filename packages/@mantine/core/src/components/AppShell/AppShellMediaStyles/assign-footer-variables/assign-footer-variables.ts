@@ -1,9 +1,9 @@
 import { keys, rem } from '../../../../core';
-import type { CSSVariables, MediaQueryVariables } from '../get-variables/get-variables';
 import type { AppShellProps } from '../../AppShell';
-import { isResponsiveSize } from '../is-responsive-size/is-responsive-size';
-import { isPrimitiveSize } from '../is-primitive-size/is-primitive-size';
 import { getBaseSize } from '../get-base-size/get-base-size';
+import type { CSSVariables, MediaQueryVariables } from '../get-variables/get-variables';
+import { isPrimitiveSize } from '../is-primitive-size/is-primitive-size';
+import { isResponsiveSize } from '../is-responsive-size/is-responsive-size';
 
 interface AssignFooterVariablesInput {
   baseStyles: CSSVariables;

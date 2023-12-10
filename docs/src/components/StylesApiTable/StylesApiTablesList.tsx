@@ -1,6 +1,6 @@
 import React from 'react';
 import { Code } from '@mantine/core';
-import { MdxParagraph, MdxLink, MdxTitle } from '@/components/MdxProvider';
+import { MdxLink, MdxParagraph, MdxTitle } from '@/components/MdxProvider';
 import { StylesApiTable } from './StylesApiTable';
 import classes from './StylesApiTable.module.css';
 

@@ -1,5 +1,5 @@
 import React, { createRef } from 'react';
-import { render, tests, screen } from '@mantine-tests/core';
+import { render, screen, tests } from '@mantine-tests/core';
 import { Switch, SwitchProps, SwitchStylesNames } from './Switch';
 import { SwitchGroup } from './SwitchGroup/SwitchGroup';
 

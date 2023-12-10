@@ -2,15 +2,15 @@ import React from 'react';
 import {
   Box,
   BoxProps,
-  StylesApiProps,
-  factory,
+  createVarsResolver,
   ElementProps,
+  factory,
+  Factory,
+  getSpacing,
+  MantineSpacing,
+  StylesApiProps,
   useProps,
   useStyles,
-  MantineSpacing,
-  getSpacing,
-  createVarsResolver,
-  Factory,
 } from '../../core';
 import { filterFalsyChildren } from './filter-falsy-children/filter-falsy-children';
 import classes from './Group.module.css';

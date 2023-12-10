@@ -1,8 +1,8 @@
-import { useUncontrolled } from '@mantine/hooks';
 import { useRef } from 'react';
+import { useUncontrolled } from '@mantine/hooks';
+import { useDatesContext } from '../../components/DatesProvider';
 import { DatePickerType, DatePickerValue } from '../../types';
 import { shiftTimezone } from '../../utils';
-import { useDatesContext } from '../../components/DatesProvider';
 
 interface UseUncontrolledDates<Type extends DatePickerType = 'default'> {
   type: Type;

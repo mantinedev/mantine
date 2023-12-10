@@ -1,6 +1,6 @@
-import React, { useRef, useState, forwardRef } from 'react';
+import React, { forwardRef, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
-import { useIsomorphicEffect, assignRef } from '@mantine/hooks';
+import { assignRef, useIsomorphicEffect } from '@mantine/hooks';
 import { useProps } from '../../core';
 
 function createPortalNode(props: React.ComponentPropsWithoutRef<'div'>) {

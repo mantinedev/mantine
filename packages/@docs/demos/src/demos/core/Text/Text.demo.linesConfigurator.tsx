@@ -1,6 +1,6 @@
 import React from 'react';
+import { Box, Text, TextProps } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
-import { Text, TextProps, Box } from '@mantine/core';
 
 function Wrapper(props: TextProps) {
   return (

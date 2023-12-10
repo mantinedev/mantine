@@ -2,13 +2,13 @@ import React from 'react';
 import {
   Box,
   BoxProps,
-  StylesApiProps,
-  factory,
   ElementProps,
-  useProps,
-  useStyles,
+  factory,
   Factory,
   MantineSize,
+  StylesApiProps,
+  useProps,
+  useStyles,
 } from '@mantine/core';
 import classes from './LevelsGroup.module.css';
 

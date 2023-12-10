@@ -1,7 +1,7 @@
 import React from 'react';
-import { MantineDemo } from '@mantinex/demo';
+import { Button, MultiSelect } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
-import { MultiSelect, Button } from '@mantine/core';
+import { MantineDemo } from '@mantinex/demo';
 
 const code = `
 import { MultiSelect, Button } from '@mantine/core';

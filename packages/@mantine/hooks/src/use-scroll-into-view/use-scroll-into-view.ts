@@ -1,4 +1,4 @@
-import { useCallback, useRef, useEffect } from 'react';
+import { useCallback, useEffect, useRef } from 'react';
 import { useReducedMotion } from '../use-reduced-motion/use-reduced-motion';
 import { useWindowEvent } from '../use-window-event/use-window-event';
 import { easeInOutQuad } from './utils/ease-in-out-quad';

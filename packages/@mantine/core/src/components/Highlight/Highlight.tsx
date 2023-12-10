@@ -1,13 +1,13 @@
 import React from 'react';
 import {
-  polymorphicFactory,
-  useProps,
   MantineColor,
   MantineTheme,
+  polymorphicFactory,
   PolymorphicFactory,
+  useProps,
 } from '../../core';
-import { Text, TextStylesNames, TextProps, TextVariant } from '../Text';
 import { Mark } from '../Mark';
+import { Text, TextProps, TextStylesNames, TextVariant } from '../Text';
 import { highlighter } from './highlighter/highlighter';
 
 export interface HighlightProps extends Omit<TextProps, 'color'> {

@@ -1,15 +1,15 @@
 import React from 'react';
+import { act, fireEvent } from '@testing-library/react';
 import {
-  tests,
-  render,
   inputDefaultProps,
   inputStylesApiSelectors,
-  userEvent,
+  render,
   screen,
+  tests,
+  userEvent,
 } from '@mantine-tests/core';
-import { act, fireEvent } from '@testing-library/react';
-import { NumberInput, NumberInputHandlers, NumberInputProps } from './NumberInput';
 import { __InputStylesNames } from '../Input';
+import { NumberInput, NumberInputHandlers, NumberInputProps } from './NumberInput';
 
 const defaultProps: NumberInputProps = {
   ...inputDefaultProps,

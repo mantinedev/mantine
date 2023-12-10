@@ -1,7 +1,7 @@
 import React from 'react';
+import { rem, Text } from '@mantine/core';
 import { useHover } from '@mantine/hooks';
 import { MantineDemo } from '@mantinex/demo';
-import { Text, rem } from '@mantine/core';
 
 const code = `
 import { useHover } from '@mantine/hooks';

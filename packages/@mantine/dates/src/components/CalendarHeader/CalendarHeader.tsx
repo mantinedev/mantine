@@ -1,19 +1,19 @@
 import React from 'react';
 import {
+  AccordionChevron,
   Box,
   BoxProps,
-  StylesApiProps,
-  factory,
+  createVarsResolver,
   ElementProps,
+  factory,
+  Factory,
+  getFontSize,
+  getSize,
+  MantineSize,
+  StylesApiProps,
+  UnstyledButton,
   useProps,
   useStyles,
-  createVarsResolver,
-  Factory,
-  MantineSize,
-  UnstyledButton,
-  AccordionChevron,
-  getSize,
-  getFontSize,
 } from '@mantine/core';
 import classes from './CalendarHeader.module.css';
 

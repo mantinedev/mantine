@@ -1,6 +1,6 @@
 import React from 'react';
-import { MantineDemo } from '@mantinex/demo';
 import { Loader, MantineThemeProvider } from '@mantine/core';
+import { MantineDemo } from '@mantinex/demo';
 import { RingLoader, ringLoaderCode } from './_RingLoader';
 
 const code = `

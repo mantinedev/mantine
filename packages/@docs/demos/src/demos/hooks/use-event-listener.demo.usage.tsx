@@ -1,7 +1,7 @@
-import React, { useState, useCallback } from 'react';
+import React, { useCallback, useState } from 'react';
 import { Button } from '@mantine/core';
-import { MantineDemo } from '@mantinex/demo';
 import { useEventListener } from '@mantine/hooks';
+import { MantineDemo } from '@mantinex/demo';
 
 const code = `
 import { useState, useCallback } from 'react';

@@ -1,22 +1,22 @@
 import React, { useMemo } from 'react';
+import { Editor } from '@tiptap/react';
 import {
   Box,
   BoxProps,
-  StylesApiProps,
-  factory,
   ElementProps,
+  factory,
+  Factory,
+  StylesApiProps,
   useProps,
   useStyles,
-  Factory,
 } from '@mantine/core';
-import { Editor } from '@tiptap/react';
 import { DEFAULT_LABELS, RichTextEditorLabels } from './labels';
 import { RichTextEditorProvider } from './RichTextEditor.context';
-import { RichTextEditorToolbar } from './RichTextEditorToolbar/RichTextEditorToolbar';
-import { RichTextEditorControlsGroup } from './RichTextEditorControlsGroup/RichTextEditorControlsGroup';
 import { RichTextEditorContent } from './RichTextEditorContent/RichTextEditorContent';
-import { RichTextEditorControl } from './RichTextEditorControl/RichTextEditorControl';
 import * as controls from './RichTextEditorControl';
+import { RichTextEditorControl } from './RichTextEditorControl/RichTextEditorControl';
+import { RichTextEditorControlsGroup } from './RichTextEditorControlsGroup/RichTextEditorControlsGroup';
+import { RichTextEditorToolbar } from './RichTextEditorToolbar/RichTextEditorToolbar';
 import classes from './RichTextEditor.module.css';
 
 export type RichTextEditorStylesNames =

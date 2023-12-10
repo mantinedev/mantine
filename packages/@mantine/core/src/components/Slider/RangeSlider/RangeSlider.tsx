@@ -2,32 +2,32 @@ import React, { useEffect, useRef, useState } from 'react';
 import { useMove, useUncontrolled } from '@mantine/hooks';
 import {
   BoxProps,
-  StylesApiProps,
-  factory,
+  createVarsResolver,
   ElementProps,
-  useProps,
+  factory,
+  Factory,
+  getRadius,
+  getSize,
+  getThemeColor,
   MantineColor,
   MantineRadius,
   MantineSize,
-  useDirection,
-  Factory,
-  createVarsResolver,
-  getSize,
-  getThemeColor,
-  getRadius,
   rem,
+  StylesApiProps,
+  useDirection,
+  useProps,
   useStyles,
 } from '../../../core';
 import { TransitionOverride } from '../../Transition';
-import { SliderStylesNames, SliderProvider, SliderCssVariables } from '../Slider.context';
+import { SliderCssVariables, SliderProvider, SliderStylesNames } from '../Slider.context';
 import { SliderRoot } from '../SliderRoot/SliderRoot';
-import { Track } from '../Track/Track';
 import { Thumb } from '../Thumb/Thumb';
-import { getPosition } from '../utils/get-position/get-position';
+import { Track } from '../Track/Track';
 import { getChangeValue } from '../utils/get-change-value/get-change-value';
-import { getPrecision } from '../utils/get-precision/get-precision';
-import { getFloatingValue } from '../utils/get-floating-value/get-gloating-value';
 import { getClientPosition } from '../utils/get-client-position/get-client-position';
+import { getFloatingValue } from '../utils/get-floating-value/get-gloating-value';
+import { getPosition } from '../utils/get-position/get-position';
+import { getPrecision } from '../utils/get-precision/get-precision';
 import classes from '../Slider.module.css';
 
 export type RangeSliderValue = [number, number];

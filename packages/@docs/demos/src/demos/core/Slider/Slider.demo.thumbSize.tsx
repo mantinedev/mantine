@@ -1,6 +1,6 @@
 import React from 'react';
-import { MantineDemo } from '@mantinex/demo';
 import { Slider } from '@mantine/core';
+import { MantineDemo } from '@mantinex/demo';
 
 function Wrapper(props: any) {
   return <Slider {...props} defaultValue={20} />;

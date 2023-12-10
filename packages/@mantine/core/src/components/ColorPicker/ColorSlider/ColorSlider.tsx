@@ -1,28 +1,28 @@
 import React, { useRef, useState } from 'react';
 import {
-  UseMovePosition,
   clampUseMovePosition,
   useDidUpdate,
   useMergedRef,
   useMove,
+  UseMovePosition,
 } from '@mantine/hooks';
 import {
   Box,
   BoxProps,
-  StylesApiProps,
-  factory,
-  ElementProps,
-  useProps,
-  useStyles,
   createVarsResolver,
+  ElementProps,
+  factory,
   Factory,
   MantineSize,
-  useMantineTheme,
   rem,
+  StylesApiProps,
+  useMantineTheme,
+  useProps,
+  useStyles,
 } from '../../../core';
-import classes from '../ColorPicker.module.css';
 import { useColorPickerContext } from '../ColorPicker.context';
 import { Thumb } from '../Thumb/Thumb';
+import classes from '../ColorPicker.module.css';
 
 export type ColorSliderStylesNames = 'slider' | 'sliderOverlay' | 'thumb';
 export type ColorSliderVariant = string;

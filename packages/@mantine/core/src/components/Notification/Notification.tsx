@@ -2,21 +2,21 @@ import React from 'react';
 import {
   Box,
   BoxProps,
-  StylesApiProps,
-  factory,
-  ElementProps,
-  useProps,
-  useStyles,
   createVarsResolver,
+  ElementProps,
+  factory,
   Factory,
-  MantineRadius,
-  MantineColor,
   getRadius,
   getThemeColor,
+  MantineColor,
+  MantineRadius,
+  StylesApiProps,
+  useProps,
+  useStyles,
 } from '../../core';
-import classes from './Notification.module.css';
-import { Loader } from '../Loader';
 import { CloseButton } from '../CloseButton';
+import { Loader } from '../Loader';
+import classes from './Notification.module.css';
 
 export type NotificationStylesNames =
   | 'root'

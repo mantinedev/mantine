@@ -1,6 +1,6 @@
+import { PopoverDemos } from '@docs/demos';
 import { Layout } from '@/layout';
 import { MDX_DATA } from '@/mdx';
-import { PopoverDemos } from '@docs/demos';
 
 export default Layout(MDX_DATA.Popover);
 
@@ -14,7 +14,7 @@ You can control Popover state with `opened` and `onChange` props:
 
 ```tsx
 import { useState } from 'react';
-import { Popover, Button } from '@mantine/core';
+import { Button, Popover } from '@mantine/core';
 
 function Demo() {
   const [opened, setOpened] = useState(false);

@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, tests, userEvent, screen } from '@mantine-tests/core';
+import { render, screen, tests, userEvent } from '@mantine-tests/core';
 import { Checkbox } from '../Checkbox';
 import { CheckboxGroup, CheckboxGroupProps, CheckboxGroupStylesNames } from './CheckboxGroup';
 

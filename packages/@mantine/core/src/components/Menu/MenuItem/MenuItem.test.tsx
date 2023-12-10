@@ -1,7 +1,7 @@
 import React from 'react';
-import { render, userEvent, screen, createContextContainer, tests } from '@mantine-tests/core';
-import { MenuItem, MenuItemProps, MenuItemStylesNames } from './MenuItem';
+import { createContextContainer, render, screen, tests, userEvent } from '@mantine-tests/core';
 import { Menu } from '../Menu';
+import { MenuItem, MenuItemProps, MenuItemStylesNames } from './MenuItem';
 
 const TestContainer = createContextContainer<any>(MenuItem, Menu, { opened: true });
 

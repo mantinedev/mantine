@@ -77,8 +77,8 @@ Import `vars` object in `*.css.ts` files to access Mantine [CSS variables](/styl
 
 ```tsx
 // Demo.css.ts
-import { vars } from './theme';
 import { style } from '@vanilla-extract/css';
+import { vars } from './theme';
 
 export const demo = style({
   fontSize: vars.fontSizes.xl,
@@ -93,8 +93,8 @@ To convert px to [rem or em](/styles/rem) use `rem` and `em` functions from `@ma
 
 ```tsx
 // Demo.css.ts
-import { rem } from '@mantine/core';
 import { style } from '@vanilla-extract/css';
+import { rem } from '@mantine/core';
 
 export const demo = style({
   fontSize: rem(16),
@@ -114,8 +114,8 @@ apply styles only in light or dark color scheme:
 
 ```tsx
 // Demo.css.ts
-import { vars } from './theme';
 import { style } from '@vanilla-extract/css';
+import { vars } from './theme';
 
 export const demo = style({
   fontSize: vars.fontSizes.xl,
@@ -140,8 +140,8 @@ with `vars.darkSelector` (or vice versa):
 
 ```tsx
 // Demo.css.ts
-import { vars } from './theme';
 import { style } from '@vanilla-extract/css';
+import { vars } from './theme';
 
 export const demo = style({
   fontSize: vars.fontSizes.xl,
@@ -164,8 +164,8 @@ export const demo = style({
 
 ```tsx
 // Demo.css.ts
-import { vars } from './theme';
 import { style } from '@vanilla-extract/css';
+import { vars } from './theme';
 
 export const demo = style({
   fontSize: vars.fontSizes.sm,
@@ -197,8 +197,8 @@ Use `vars.rtlSelector` to apply styles only in rtl direction:
 
 ```tsx
 // Demo.css.ts
-import { vars } from './theme';
 import { style } from '@vanilla-extract/css';
+import { vars } from './theme';
 
 export const demo = style({
   paddingRight: vars.spacing.md,

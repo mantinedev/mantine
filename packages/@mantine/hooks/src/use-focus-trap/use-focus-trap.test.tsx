@@ -1,6 +1,6 @@
 /* eslint-disable no-console */
-import { fireEvent, render, RenderOptions, RenderResult, screen } from '@testing-library/react';
 import React, { ReactElement, useState } from 'react';
+import { fireEvent, render, RenderOptions, RenderResult, screen } from '@testing-library/react';
 import { useFocusTrap } from './use-focus-trap';
 
 function InnerComponent({ testId }: { testId: string }) {

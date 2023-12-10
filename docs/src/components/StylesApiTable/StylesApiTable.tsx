@@ -2,11 +2,11 @@ import React from 'react';
 import { Title } from '@mantine/core';
 import * as stylesData from '@docs/styles-api';
 import type { Modifier } from '@docs/styles-api';
-import { TableError } from '@/components/TableError';
 import { getComponentName } from '@/components/PropsTable';
+import { TableError } from '@/components/TableError';
+import { ModifiersTable } from './ModifiersTable';
 import { SelectorsTable } from './SelectorsTable';
 import { VariablesTable } from './VariablesTable';
-import { ModifiersTable } from './ModifiersTable';
 import classes from './StylesApiTable.module.css';
 
 export interface StylesApiData {

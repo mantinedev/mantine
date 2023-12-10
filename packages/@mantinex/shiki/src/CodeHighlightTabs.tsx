@@ -1,26 +1,26 @@
 import React from 'react';
-import { useUncontrolled } from '@mantine/hooks';
 import {
+  ActionIcon,
   Box,
   BoxProps,
-  StylesApiProps,
-  factory,
+  CopyButton,
+  createVarsResolver,
   ElementProps,
+  factory,
+  Factory,
+  rem,
+  ScrollArea,
+  StylesApiProps,
+  Tooltip,
+  UnstyledButton,
   useProps,
   useStyles,
-  CopyButton,
-  Tooltip,
-  ActionIcon,
-  UnstyledButton,
-  ScrollArea,
-  createVarsResolver,
-  rem,
-  Factory,
 } from '@mantine/core';
-import { useShiki } from './ShikiProvider';
+import { useUncontrolled } from '@mantine/hooks';
 import { CopyIcon } from './CopyIcon';
-import { FileIcon } from './FileIcon';
 import { ExpandIcon } from './ExpandIcon';
+import { FileIcon } from './FileIcon';
+import { useShiki } from './ShikiProvider';
 import { ShikiLanguage } from './types';
 import classes from './Shiki.module.css';
 

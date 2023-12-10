@@ -2,16 +2,16 @@ import React from 'react';
 import {
   Box,
   BoxProps,
-  StylesApiProps,
-  factory,
-  ElementProps,
-  useProps,
-  useStyles,
   createVarsResolver,
+  ElementProps,
+  factory,
   Factory,
+  getSpacing,
   isElement,
   MantineSpacing,
-  getSpacing,
+  StylesApiProps,
+  useProps,
+  useStyles,
 } from '../../core';
 import classes from './Breadcrumbs.module.css';
 

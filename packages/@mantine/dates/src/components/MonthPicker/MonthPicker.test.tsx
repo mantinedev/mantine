@@ -1,8 +1,8 @@
 import React from 'react';
 import { render, tests, userEvent } from '@mantine-tests/core';
 import { datesTests } from '@mantine-tests/dates';
-import { MonthPicker, MonthPickerProps, MonthPickerStylesNames } from './MonthPicker';
 import { DatesProvider } from '../DatesProvider';
+import { MonthPicker, MonthPickerProps, MonthPickerStylesNames } from './MonthPicker';
 
 const defaultProps = {
   defaultDate: new Date(2022, 3, 11),

@@ -1,8 +1,8 @@
 import React from 'react';
-import { factory, ElementProps, useProps, Factory, BoxProps, StylesApiProps } from '../../core';
+import { BoxProps, ElementProps, factory, Factory, StylesApiProps, useProps } from '../../core';
+import { ComboboxChevron, ComboboxData, getParsedComboboxData } from '../Combobox';
+import { __BaseInputProps, __InputStylesNames } from '../Input';
 import { InputBase } from '../InputBase';
-import { __InputStylesNames, __BaseInputProps } from '../Input';
-import { ComboboxData, getParsedComboboxData, ComboboxChevron } from '../Combobox';
 import { NativeSelectOption } from './NativeSelectOption';
 
 export interface NativeSelectProps

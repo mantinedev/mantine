@@ -1,21 +1,21 @@
 import React from 'react';
 import {
   Box,
-  BoxProps,
-  StylesApiProps,
-  polymorphicFactory,
-  MantineGradient,
-  useStyles,
-  useProps,
-  getGradient,
   BoxMod,
+  BoxProps,
   createVarsResolver,
-  PolymorphicFactory,
-  MantineSize,
   getFontSize,
+  getGradient,
   getLineHeight,
-  MantineColor,
   getThemeColor,
+  MantineColor,
+  MantineGradient,
+  MantineSize,
+  polymorphicFactory,
+  PolymorphicFactory,
+  StylesApiProps,
+  useProps,
+  useStyles,
 } from '../../core';
 import classes from './Text.module.css';
 

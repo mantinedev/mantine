@@ -1,9 +1,9 @@
 import React from 'react';
-import { MantineDemo } from '@mantinex/demo';
+import { IconStar } from '@tabler/icons-react';
 import { useEditor } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
 import { RichTextEditor, useRichTextEditorContext } from '@mantine/tiptap';
-import { IconStar } from '@tabler/icons-react';
+import { MantineDemo } from '@mantinex/demo';
 
 const code = `
 import { useEditor } from '@tiptap/react';

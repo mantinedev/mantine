@@ -1,7 +1,7 @@
 import React from 'react';
-import { tests, inputDefaultProps, inputStylesApiSelectors } from '@mantine-tests/core';
-import { JsonInput, JsonInputProps } from './JsonInput';
+import { inputDefaultProps, inputStylesApiSelectors, tests } from '@mantine-tests/core';
 import { __InputStylesNames } from '../Input';
+import { JsonInput, JsonInputProps } from './JsonInput';
 
 const defaultProps: JsonInputProps = {
   ...inputDefaultProps,

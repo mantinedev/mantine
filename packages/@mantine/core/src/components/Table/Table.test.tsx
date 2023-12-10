@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, tests, screen } from '@mantine-tests/core';
+import { render, screen, tests } from '@mantine-tests/core';
 import { Table, TableProps, TableStylesNames } from './Table';
 import {
   TableCaption,
@@ -7,8 +7,8 @@ import {
   TableTd,
   TableTfoot,
   TableTh,
-  TableTr,
   TableThead,
+  TableTr,
 } from './Table.components';
 
 const defaultProps: TableProps = {

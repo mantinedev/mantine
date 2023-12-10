@@ -1,7 +1,7 @@
 import React from 'react';
-import { SegmentedControl, Input, BoxProps, ElementProps } from '@mantine/core';
-import { transformSelectData, SelectData } from './transform-select-data';
+import { BoxProps, ElementProps, Input, SegmentedControl } from '@mantine/core';
 import { getControlLabel } from './get-control-label';
+import { SelectData, transformSelectData } from './transform-select-data';
 import { ConfiguratorControl } from './types';
 
 export type ConfiguratorSegmentedControlOptions = ConfiguratorControl<

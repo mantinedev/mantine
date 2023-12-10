@@ -1,7 +1,7 @@
 import React from 'react';
-import { tests, inputDefaultProps, inputStylesApiSelectors } from '@mantine-tests/core';
-import { FileInput, FileInputProps } from './FileInput';
+import { inputDefaultProps, inputStylesApiSelectors, tests } from '@mantine-tests/core';
 import { __InputStylesNames } from '../Input';
+import { FileInput, FileInputProps } from './FileInput';
 
 const defaultProps: FileInputProps = {
   ...inputDefaultProps,

@@ -1,7 +1,7 @@
 import React from 'react';
-import { render, tests, patchConsoleError, createContextContainer } from '@mantine-tests/core';
-import { MenuTarget, MenuTargetProps } from './MenuTarget';
+import { createContextContainer, patchConsoleError, render, tests } from '@mantine-tests/core';
 import { Menu } from '../Menu';
+import { MenuTarget, MenuTargetProps } from './MenuTarget';
 
 const defaultProps: MenuTargetProps = {
   children: <div>test</div>,

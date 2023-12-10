@@ -1,6 +1,6 @@
 import React from 'react';
-import { BoxProps, StylesApiProps, polymorphicFactory, PolymorphicFactory } from '../../core';
-import { __InputStylesNames, __BaseInputProps, InputVariant, useInputProps, Input } from '../Input';
+import { BoxProps, polymorphicFactory, PolymorphicFactory, StylesApiProps } from '../../core';
+import { __BaseInputProps, __InputStylesNames, Input, InputVariant, useInputProps } from '../Input';
 
 export interface InputBaseProps
   extends BoxProps,

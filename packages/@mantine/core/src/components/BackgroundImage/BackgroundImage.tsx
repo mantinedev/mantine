@@ -2,14 +2,14 @@ import React from 'react';
 import {
   Box,
   BoxProps,
-  StylesApiProps,
+  createVarsResolver,
+  getRadius,
+  MantineRadius,
   polymorphicFactory,
+  PolymorphicFactory,
+  StylesApiProps,
   useProps,
   useStyles,
-  MantineRadius,
-  getRadius,
-  createVarsResolver,
-  PolymorphicFactory,
 } from '../../core';
 import classes from './BackgroundImage.module.css';
 

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Button, Group, Code, rem } from '@mantine/core';
+import { Button, Code, Group, rem } from '@mantine/core';
 
 export function FormBase({ children, form }: any) {
   const [values, setValues] = useState({});

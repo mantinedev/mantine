@@ -1,6 +1,6 @@
 import React from 'react';
 import cx from 'clsx';
-import { Box, Text, BoxProps, ElementProps } from '@mantine/core';
+import { Box, BoxProps, ElementProps, Text } from '@mantine/core';
 import classes from './_item.module.css';
 
 interface GridItemProps extends BoxProps, ElementProps<'div'> {}

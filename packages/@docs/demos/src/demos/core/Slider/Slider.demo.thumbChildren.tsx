@@ -1,7 +1,7 @@
 import React from 'react';
-import { Slider, RangeSlider, rem } from '@mantine/core';
-import { MantineDemo } from '@mantinex/demo';
 import { IconHeart, IconHeartBroken } from '@tabler/icons-react';
+import { RangeSlider, rem, Slider } from '@mantine/core';
+import { MantineDemo } from '@mantinex/demo';
 
 const code = `
 import { Slider, RangeSlider, rem } from '@mantine/core';

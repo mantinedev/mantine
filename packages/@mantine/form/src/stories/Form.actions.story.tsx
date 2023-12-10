@@ -1,8 +1,8 @@
 import React from 'react';
-import { TextInput, Textarea, Checkbox, NativeSelect, Button } from '@mantine/core';
-import { FormBase } from './_base';
-import { useForm } from '../use-form';
+import { Button, Checkbox, NativeSelect, Textarea, TextInput } from '@mantine/core';
 import { createFormActions } from '../actions';
+import { useForm } from '../use-form';
+import { FormBase } from './_base';
 
 export default { title: 'Form' };
 

@@ -3,22 +3,22 @@ import { clamp, useId, useMergedRef, useUncontrolled } from '@mantine/hooks';
 import {
   Box,
   BoxProps,
-  StylesApiProps,
-  factory,
-  ElementProps,
-  useProps,
-  useStyles,
   createVarsResolver,
+  ElementProps,
+  factory,
   Factory,
-  MantineSize,
-  MantineColor,
-  useDirection,
   getSize,
   getThemeColor,
+  MantineColor,
+  MantineSize,
+  StylesApiProps,
+  useDirection,
+  useProps,
+  useStyles,
 } from '../../core';
 import { RatingProvider } from './Rating.context';
-import classes from './Rating.module.css';
 import { RatingItem } from './RatingItem/RatingItem';
+import classes from './Rating.module.css';
 
 function roundValueTo(value: number, to: number) {
   const rounded = Math.round(value / to) * to;

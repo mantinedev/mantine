@@ -1,16 +1,16 @@
 import React from 'react';
 import cx from 'clsx';
+import hljs from 'highlight.js';
 import {
   Box,
   BoxProps,
-  StylesApiProps,
-  factory,
   ElementProps,
+  factory,
+  Factory,
+  StylesApiProps,
   useProps,
   useStyles,
-  Factory,
 } from '@mantine/core';
-import hljs from 'highlight.js';
 import _classes from './CodeHighlight.module.css';
 import themeClasses from './CodeHighlight.theme.module.css';
 

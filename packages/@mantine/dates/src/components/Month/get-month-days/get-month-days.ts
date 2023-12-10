@@ -1,7 +1,7 @@
 import { DayOfWeek } from '../../../types';
-import { getStartOfWeek } from '../get-start-of-week/get-start-of-week';
-import { getEndOfWeek } from '../get-end-of-week/get-end-of-week';
 import { shiftTimezone } from '../../../utils';
+import { getEndOfWeek } from '../get-end-of-week/get-end-of-week';
+import { getStartOfWeek } from '../get-start-of-week/get-start-of-week';
 
 export function getMonthDays(
   month: Date,

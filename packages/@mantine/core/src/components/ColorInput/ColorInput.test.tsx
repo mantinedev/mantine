@@ -1,7 +1,7 @@
 import React from 'react';
-import { tests, inputDefaultProps, inputStylesApiSelectors } from '@mantine-tests/core';
-import { ColorInput, ColorInputProps } from './ColorInput';
+import { inputDefaultProps, inputStylesApiSelectors, tests } from '@mantine-tests/core';
 import { __InputStylesNames } from '../Input';
+import { ColorInput, ColorInputProps } from './ColorInput';
 
 const defaultProps: ColorInputProps = {
   ...inputDefaultProps,

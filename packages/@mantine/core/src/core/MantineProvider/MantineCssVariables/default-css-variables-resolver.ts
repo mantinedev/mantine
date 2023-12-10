@@ -1,8 +1,8 @@
 /* eslint-disable prefer-destructuring */
-import { MantineTheme } from '../theme.types';
 import { keys, rem } from '../../utils';
 import { getPrimaryShade, rgba } from '../color-functions';
 import { ConvertCSSVariablesInput } from '../convert-css-variables';
+import { MantineTheme } from '../theme.types';
 
 export type CSSVariablesResolver = (theme: MantineTheme) => ConvertCSSVariablesInput;
 

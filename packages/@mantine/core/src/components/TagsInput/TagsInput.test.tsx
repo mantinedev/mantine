@@ -1,5 +1,5 @@
 import React from 'react';
-import { tests, inputDefaultProps, inputStylesApiSelectors } from '@mantine-tests/core';
+import { inputDefaultProps, inputStylesApiSelectors, tests } from '@mantine-tests/core';
 import { TagsInput, TagsInputProps, TagsInputStylesNames } from './TagsInput';
 
 const defaultProps: TagsInputProps = {

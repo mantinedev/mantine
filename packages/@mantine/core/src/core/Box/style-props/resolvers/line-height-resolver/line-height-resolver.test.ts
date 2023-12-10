@@ -1,5 +1,5 @@
-import { lineHeightResolver } from './line-height-resolver';
 import { DEFAULT_THEME } from '../../../../MantineProvider';
+import { lineHeightResolver } from './line-height-resolver';
 
 describe('@mantine/core/Box/line-height-resolver', () => {
   it('resolves theme line height', () => {

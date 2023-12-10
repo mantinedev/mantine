@@ -1,16 +1,16 @@
 import React from 'react';
 import {
-  polymorphicFactory,
-  useProps,
-  rem,
-  PolymorphicFactory,
-  MantineSize,
-  MantineRadius,
   BoxProps,
-  StylesApiProps,
-  getSize,
-  getRadius,
   createVarsResolver,
+  getRadius,
+  getSize,
+  MantineRadius,
+  MantineSize,
+  polymorphicFactory,
+  PolymorphicFactory,
+  rem,
+  StylesApiProps,
+  useProps,
   useStyles,
 } from '../../core';
 import { UnstyledButton } from '../UnstyledButton';

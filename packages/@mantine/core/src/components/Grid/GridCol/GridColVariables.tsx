@@ -1,15 +1,15 @@
 import React from 'react';
 import {
+  filterProps,
+  getBaseValue,
   getSortedBreakpoints,
-  useMantineTheme,
+  InlineStyles,
   keys,
   MantineBreakpoint,
-  filterProps,
-  InlineStyles,
-  getBaseValue,
+  useMantineTheme,
 } from '../../../core';
-import type { GridColProps, ColSpan } from './GridCol';
 import { useGridContext } from '../Grid.context';
+import type { ColSpan, GridColProps } from './GridCol';
 
 interface GridColVariablesProps {
   selector: string;

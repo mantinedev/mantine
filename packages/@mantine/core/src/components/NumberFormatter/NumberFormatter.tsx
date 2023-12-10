@@ -1,6 +1,6 @@
 import React from 'react';
 import { NumericFormat } from 'react-number-format';
-import { useProps, Factory, ExtendComponent, MantineThemeComponent } from '../../core';
+import { ExtendComponent, Factory, MantineThemeComponent, useProps } from '../../core';
 
 export interface NumberFormatterProps extends React.ComponentPropsWithoutRef<'span'> {
   /** Value to format */

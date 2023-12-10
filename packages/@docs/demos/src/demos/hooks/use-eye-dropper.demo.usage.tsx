@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import { MantineDemo } from '@mantinex/demo';
-import { ActionIcon, Group, ColorSwatch, Text } from '@mantine/core';
 import { IconColorPicker } from '@tabler/icons-react';
+import { ActionIcon, ColorSwatch, Group, Text } from '@mantine/core';
 import { useEyeDropper } from '@mantine/hooks';
+import { MantineDemo } from '@mantinex/demo';
 
 const code = `
 import { useState } from 'react';

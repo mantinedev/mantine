@@ -1,7 +1,7 @@
 import React from 'react';
-import { MdxParagraph, MdxCode, MdxUl, MdxLi } from '../MdxTypography/MdxTypography';
-import { MdxTitle } from '../MdxTitle/MdxTitle';
 import { MdxCodeHighlight } from '../MdxPre/MdxPre';
+import { MdxTitle } from '../MdxTitle/MdxTitle';
+import { MdxCode, MdxLi, MdxParagraph, MdxUl } from '../MdxTypography/MdxTypography';
 
 const getCode = (component: string) => `
 import { ${component} } from '@mantine/core';

@@ -1,4 +1,4 @@
-import { renderHook, act } from '@testing-library/react';
+import { act, renderHook } from '@testing-library/react';
 import { useCombobox } from './use-combobox';
 
 describe('@mantine/core/Combobox/use-combobox', () => {

@@ -1,12 +1,12 @@
 import { forwardRef } from 'react';
+import { PolymorphicComponentProps } from './create-polymorphic-component';
 import {
+  ComponentClasses,
   FactoryPayload,
+  identity,
   StaticComponents,
   ThemeExtend,
-  identity,
-  ComponentClasses,
 } from './factory';
-import { PolymorphicComponentProps } from './create-polymorphic-component';
 
 export interface PolymorphicFactoryPayload extends FactoryPayload {
   defaultComponent: any;

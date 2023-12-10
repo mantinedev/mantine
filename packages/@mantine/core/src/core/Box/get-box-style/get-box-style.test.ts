@@ -1,5 +1,5 @@
-import { getBoxStyle } from './get-box-style';
 import { DEFAULT_THEME } from '../../MantineProvider';
+import { getBoxStyle } from './get-box-style';
 
 describe('@mantine/core/Box/get-box-style', () => {
   it('returns empty object if no style or vars provided', () => {

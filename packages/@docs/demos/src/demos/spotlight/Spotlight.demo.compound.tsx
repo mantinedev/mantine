@@ -1,8 +1,8 @@
 import React, { useMemo, useState } from 'react';
-import { MantineDemo } from '@mantinex/demo';
-import { Spotlight, createSpotlight } from '@mantine/spotlight';
-import { Button } from '@mantine/core';
 import { IconSearch } from '@tabler/icons-react';
+import { Button } from '@mantine/core';
+import { createSpotlight, Spotlight } from '@mantine/spotlight';
+import { MantineDemo } from '@mantinex/demo';
 
 const code = `
 import { useState } from 'react';

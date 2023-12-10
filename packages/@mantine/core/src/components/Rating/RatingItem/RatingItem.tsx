@@ -1,7 +1,7 @@
 import React from 'react';
-import { MantineSize, BoxProps, ElementProps, Box, useDirection } from '../../../core';
-import { StarSymbol } from '../StarSymbol/StarSymbol';
+import { Box, BoxProps, ElementProps, MantineSize, useDirection } from '../../../core';
 import { useRatingContext } from '../Rating.context';
+import { StarSymbol } from '../StarSymbol/StarSymbol';
 
 export interface RatingItemProps extends BoxProps, ElementProps<'input', 'value' | 'size'> {
   size: MantineSize;

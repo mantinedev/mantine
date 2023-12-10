@@ -1,6 +1,6 @@
 import React from 'react';
+import { createTheme, Input, MantineThemeProvider, NativeSelect, TextInput } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
-import { TextInput, NativeSelect, MantineThemeProvider, createTheme, Input } from '@mantine/core';
 import classes from './Input.demo.sharedStyles.module.css';
 
 const code = `

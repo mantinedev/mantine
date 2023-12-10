@@ -1,7 +1,7 @@
 import React from 'react';
-import { MantineDemo } from '@mantinex/demo';
-import { Autocomplete, rem } from '@mantine/core';
 import { IconComponents } from '@tabler/icons-react';
+import { Autocomplete, rem } from '@mantine/core';
+import { MantineDemo } from '@mantinex/demo';
 
 const code = `
 import { Autocomplete, rem } from '@mantine/core';

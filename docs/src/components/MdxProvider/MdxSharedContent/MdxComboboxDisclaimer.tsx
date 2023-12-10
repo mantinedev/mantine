@@ -1,7 +1,7 @@
 import React from 'react';
-import { MdxParagraph, MdxCode } from '../MdxTypography/MdxTypography';
 import { MdxLink } from '../MdxLink/MdxLink';
 import { MdxTitle } from '../MdxTitle/MdxTitle';
+import { MdxCode, MdxParagraph } from '../MdxTypography/MdxTypography';
 
 interface MdxComboboxDisclaimerProps {
   component: string;

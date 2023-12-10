@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react';
+import { useCallback, useState } from 'react';
 
 export function useSetState<T extends Record<string, any>>(initialState: T) {
   const [state, _setState] = useState(initialState);

@@ -1,9 +1,9 @@
 import React from 'react';
-import { Group, TextInput, Box, Text, Code, Button, Center } from '@mantine/core';
-import { useForm } from '@mantine/form';
-import { DragDropContext, Droppable, Draggable } from '@hello-pangea/dnd';
-import { MantineDemo } from '@mantinex/demo';
+import { DragDropContext, Draggable, Droppable } from '@hello-pangea/dnd';
 import { IconGripVertical } from '@tabler/icons-react';
+import { Box, Button, Center, Code, Group, Text, TextInput } from '@mantine/core';
+import { useForm } from '@mantine/form';
+import { MantineDemo } from '@mantinex/demo';
 
 const code = `
 import { Group, TextInput, Box, Text, Code, Button, Center } from '@mantine/core';

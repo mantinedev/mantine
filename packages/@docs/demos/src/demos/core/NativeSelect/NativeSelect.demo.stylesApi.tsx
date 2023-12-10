@@ -1,6 +1,6 @@
 import React from 'react';
-import { MantineDemo } from '@mantinex/demo';
 import { NativeSelect } from '@mantine/core';
+import { MantineDemo } from '@mantinex/demo';
 import { NativeSelectStylesApi } from '@docs/styles-api';
 
 const code = `

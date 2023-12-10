@@ -2,18 +2,18 @@ import React from 'react';
 import {
   Box,
   BoxProps,
-  StylesApiProps,
-  factory,
+  createVarsResolver,
   ElementProps,
+  factory,
+  Factory,
+  getRadius,
+  getThemeColor,
+  MantineColor,
+  MantineRadius,
+  rem,
+  StylesApiProps,
   useProps,
   useStyles,
-  createVarsResolver,
-  Factory,
-  MantineRadius,
-  MantineColor,
-  getThemeColor,
-  rem,
-  getRadius,
 } from '../../core';
 import { getPositionVariables } from './get-position-variables/get-position-variables';
 import { IndicatorPosition } from './Indicator.types';

@@ -1,7 +1,7 @@
 import React from 'react';
-import { MantineDemo } from '@mantinex/demo';
-import { PasswordInput, rem } from '@mantine/core';
 import { IconLock } from '@tabler/icons-react';
+import { PasswordInput, rem } from '@mantine/core';
+import { MantineDemo } from '@mantinex/demo';
 import { PasswordInputStylesApi } from '@docs/styles-api';
 
 const code = `

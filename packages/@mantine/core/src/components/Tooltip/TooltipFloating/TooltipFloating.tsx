@@ -2,22 +2,22 @@ import React, { cloneElement } from 'react';
 import { useMergedRef } from '@mantine/hooks';
 import {
   Box,
+  createVarsResolver,
   factory,
+  Factory,
   getDefaultZIndex,
+  getRadius,
+  getStyleObject,
+  getThemeColor,
   isElement,
+  useMantineTheme,
   useProps,
   useStyles,
-  getStyleObject,
-  useMantineTheme,
-  Factory,
-  createVarsResolver,
-  getRadius,
-  getThemeColor,
 } from '../../../core';
 import { OptionalPortal } from '../../Portal';
 import { TooltipBaseProps, TooltipCssVariables, TooltipStylesNames } from '../Tooltip.types';
-import classes from '../Tooltip.module.css';
 import { useFloatingTooltip } from './use-floating-tooltip';
+import classes from '../Tooltip.module.css';
 
 export interface TooltipFloatingProps extends TooltipBaseProps {
   /** Offset from mouse in px, `10` by default */

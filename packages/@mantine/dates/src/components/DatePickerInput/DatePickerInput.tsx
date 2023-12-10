@@ -1,22 +1,22 @@
 import React from 'react';
 import {
+  __InputStylesNames,
   BoxProps,
-  StylesApiProps,
   factory,
-  useProps,
-  useResolvedStylesApi,
   Factory,
   InputVariant,
-  __InputStylesNames,
   MantineComponentStaticProperties,
+  StylesApiProps,
+  useProps,
+  useResolvedStylesApi,
 } from '@mantine/core';
-import { CalendarStylesNames, pickCalendarProps } from '../Calendar';
 import { useDatesInput } from '../../hooks';
-import { DatePicker, DatePickerBaseProps } from '../DatePicker';
 import { DatePickerType } from '../../types';
 import { getDefaultClampedDate, shiftTimezone } from '../../utils';
-import { PickerInputBase, DateInputSharedProps } from '../PickerInputBase';
+import { CalendarStylesNames, pickCalendarProps } from '../Calendar';
+import { DatePicker, DatePickerBaseProps } from '../DatePicker';
 import { useDatesContext } from '../DatesProvider';
+import { DateInputSharedProps, PickerInputBase } from '../PickerInputBase';
 
 export type DatePickerInputStylesNames = __InputStylesNames | CalendarStylesNames;
 

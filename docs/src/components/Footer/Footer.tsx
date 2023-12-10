@@ -1,10 +1,10 @@
 import React from 'react';
 import cx from 'clsx';
-import { Container, Text, Group, Box, RemoveScroll } from '@mantine/core';
-import { TwitterButton, DiscordButton } from '../SocialButton';
+import { Box, Container, Group, RemoveScroll, Text } from '@mantine/core';
 import { Logo } from '../Logo/Logo';
-import { LinksGroup } from './LinksGroup/LinksGroup';
+import { DiscordButton, TwitterButton } from '../SocialButton';
 import { FOOTER_LINKS_DATA } from './data';
+import { LinksGroup } from './LinksGroup/LinksGroup';
 import classes from './Footer.module.css';
 
 interface FooterProps {

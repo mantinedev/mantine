@@ -1,6 +1,6 @@
 import { deepMerge } from '../../utils';
-import { MantineTheme } from '../theme.types';
 import { ConvertCSSVariablesInput } from '../convert-css-variables';
+import { MantineTheme } from '../theme.types';
 import { defaultCssVariablesResolver } from './default-css-variables-resolver';
 
 interface GetMergedVariablesInput {

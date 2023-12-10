@@ -1,6 +1,6 @@
 import React from 'react';
-import { MantineDemo } from '@mantinex/demo';
 import { DateTimePicker } from '@mantine/dates';
+import { MantineDemo } from '@mantinex/demo';
 
 const code = `
 import { DateTimePicker } from '@mantine/dates';

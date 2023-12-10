@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, tests } from '@mantine-tests/core';
-import { RangeSlider, RangeSliderProps } from './RangeSlider';
 import { SliderStylesNames } from '../Slider.context';
+import { RangeSlider, RangeSliderProps } from './RangeSlider';
 
 const defaultProps: RangeSliderProps = {
   marks: [{ value: 0, label: 'test-mark' }],

@@ -1,11 +1,13 @@
 import dayjs from 'dayjs';
+
 import 'dayjs/locale/ru';
-import React, { useState } from 'react';
+
 import customParseFormat from 'dayjs/plugin/customParseFormat';
-import { TextInput, Button, Group } from '@mantine/core';
-import { DateInput } from './DateInput';
+import React, { useState } from 'react';
+import { Button, Group, TextInput } from '@mantine/core';
 import { DatePickerInput } from '../DatePickerInput';
 import { DatesProvider } from '../DatesProvider';
+import { DateInput } from './DateInput';
 
 dayjs.extend(customParseFormat);
 

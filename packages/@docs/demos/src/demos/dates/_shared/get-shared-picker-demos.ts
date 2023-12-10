@@ -1,11 +1,11 @@
 import React from 'react';
 import { getPickerDeselectDemo } from './picker-deselect.demo';
 import { getPickerMultipleDemo } from './picker-multiple.demo';
-import { getPickerRangeDemo } from './picker-range.demo';
-import { getPickerUsageDemo } from './picker-usage.demo';
-import { getPickerSingleRangeDemo } from './picker-singleRange.demo';
 import { getPickerNumberOfColumnsDemo } from './picker-numberOfColumns.demo';
+import { getPickerRangeDemo } from './picker-range.demo';
+import { getPickerSingleRangeDemo } from './picker-singleRange.demo';
 import { getPickerSizeConfiguratorDemo } from './picker-sizeConfigurator.demo';
+import { getPickerUsageDemo } from './picker-usage.demo';
 
 export function getSharedPickerDemos(component: React.FC<any>) {
   return {

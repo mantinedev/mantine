@@ -1,7 +1,7 @@
+import { LogoAssetProps } from '../LogoAsset/LogoAsset';
 import logoFull from './mantine-logo-full.svg';
 import logoWhite from './mantine-logo-white.svg';
 import logo from './mantine-logo.svg';
-import { LogoAssetProps } from '../LogoAsset/LogoAsset';
 
 export const logos: LogoAssetProps[] = [
   {

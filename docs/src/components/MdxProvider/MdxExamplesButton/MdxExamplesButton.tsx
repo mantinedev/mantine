@@ -1,6 +1,6 @@
 import React from 'react';
-import { Button, rem } from '@mantine/core';
 import { IconExternalLink } from '@tabler/icons-react';
+import { Button, rem } from '@mantine/core';
 
 interface MdxExamplesButtonProps {
   label: string;

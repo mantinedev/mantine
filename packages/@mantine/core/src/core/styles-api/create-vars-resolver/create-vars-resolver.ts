@@ -1,6 +1,6 @@
 import { CssVariable } from '../../Box';
-import { MantineTheme } from '../../MantineProvider';
 import { FactoryPayload } from '../../factory';
+import { MantineTheme } from '../../MantineProvider';
 
 export type TransformVars<V> = {
   [Key in keyof V]: V[Key] extends CssVariable ? Record<V[Key], string | undefined> : never;

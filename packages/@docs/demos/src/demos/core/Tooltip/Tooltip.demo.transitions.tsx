@@ -1,6 +1,6 @@
 import React from 'react';
+import { Badge, Group, keys, MANTINE_TRANSITIONS, Tooltip } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
-import { Tooltip, Badge, Group, keys, MANTINE_TRANSITIONS } from '@mantine/core';
 
 export function Demo() {
   const transitions = keys(MANTINE_TRANSITIONS).map((transition) => (

@@ -2,19 +2,19 @@ import React, { useEffect, useState } from 'react';
 import {
   Box,
   BoxProps,
-  StylesApiProps,
-  factory,
   ElementProps,
-  useProps,
-  useStyles,
+  factory,
   Factory,
-  PortalProps,
-  OptionalPortal,
-  useResolvedStylesApi,
   getDefaultZIndex,
+  OptionalPortal,
+  PortalProps,
+  StylesApiProps,
+  useProps,
+  useResolvedStylesApi,
+  useStyles,
 } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
-import { Dropzone, DropzoneProps, DropzoneVariant, DropzoneStylesNames } from './Dropzone';
+import { Dropzone, DropzoneProps, DropzoneStylesNames, DropzoneVariant } from './Dropzone';
 import classes from './Dropzone.module.css';
 
 export type DropzoneFullScreenStylesNames = DropzoneStylesNames | 'fullScreen';

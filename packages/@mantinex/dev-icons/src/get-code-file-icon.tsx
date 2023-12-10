@@ -1,6 +1,6 @@
 import React from 'react';
-import { TypeScriptIcon } from './TypeScriptIcon';
 import { CssIcon } from './CssIcon';
+import { TypeScriptIcon } from './TypeScriptIcon';
 
 export function getCodeFileIcon(fileName: string) {
   if (fileName.endsWith('.ts') || fileName.endsWith('.tsx')) {

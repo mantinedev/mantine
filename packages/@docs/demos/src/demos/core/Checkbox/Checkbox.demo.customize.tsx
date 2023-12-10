@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { MantineDemo } from '@mantinex/demo';
 import { Checkbox } from '@mantine/core';
+import { MantineDemo } from '@mantinex/demo';
 import classes from './Checkbox.demo.customize.module.css';
 
 const cssCode = `

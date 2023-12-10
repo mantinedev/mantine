@@ -1,6 +1,6 @@
 import React from 'react';
-import { InlineStylesInput, stylesToString } from './styles-to-string/styles-to-string';
 import { useMantineStyleNonce } from '../MantineProvider';
+import { InlineStylesInput, stylesToString } from './styles-to-string/styles-to-string';
 
 export interface InlineStylesProps
   extends InlineStylesInput,

@@ -1,12 +1,12 @@
 import React, { forwardRef } from 'react';
-import { createPolymorphicComponent, useProps, BoxProps } from '../../../core';
+import { BoxProps, createPolymorphicComponent, useProps } from '../../../core';
 import { usePaginationContext } from '../Pagination.context';
 import {
+  PaginationFirstIcon,
+  PaginationIconProps,
+  PaginationLastIcon,
   PaginationNextIcon,
   PaginationPreviousIcon,
-  PaginationFirstIcon,
-  PaginationLastIcon,
-  PaginationIconProps,
 } from '../Pagination.icons';
 import { PaginationControl } from '../PaginationControl/PaginationControl';
 

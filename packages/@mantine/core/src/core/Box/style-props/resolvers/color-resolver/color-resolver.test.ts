@@ -1,5 +1,5 @@
-import { colorResolver } from './color-resolver';
 import { DEFAULT_THEME } from '../../../../MantineProvider';
+import { colorResolver } from './color-resolver';
 
 describe('@mantine/core/Box/color-resolver', () => {
   it('resolves theme color', () => {

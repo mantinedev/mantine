@@ -1,7 +1,7 @@
 import React from 'react';
 import { IconCircleX } from '@tabler/icons-react';
+import { rem, Stepper } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
-import { Stepper, rem } from '@mantine/core';
 
 const code = `
 import { Stepper, rem } from '@mantine/core';

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { MantineDemo } from '@mantinex/demo';
 import { HueSlider, Text } from '@mantine/core';
+import { MantineDemo } from '@mantinex/demo';
 
 const code = `
 import { useState } from 'react';

@@ -1,5 +1,5 @@
 import React from 'react';
-import { useMantineTheme, useMantineContext, InlineStyles } from '../../../core';
+import { InlineStyles, useMantineContext, useMantineTheme } from '../../../core';
 import type { AppShellProps } from '../AppShell';
 import { getVariables } from './get-variables/get-variables';
 

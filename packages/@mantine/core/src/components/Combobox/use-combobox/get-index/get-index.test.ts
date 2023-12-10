@@ -1,4 +1,4 @@
-import { getNextIndex, getFirstIndex, getPreviousIndex } from './get-index';
+import { getFirstIndex, getNextIndex, getPreviousIndex } from './get-index';
 
 function getElements(count: number = 5, disabledIndices: number[] = []) {
   return Array(count)

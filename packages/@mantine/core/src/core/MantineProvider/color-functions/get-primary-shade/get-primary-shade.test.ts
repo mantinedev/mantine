@@ -1,5 +1,5 @@
-import { getPrimaryShade } from './get-primary-shade';
 import { DEFAULT_THEME } from '../../default-theme';
+import { getPrimaryShade } from './get-primary-shade';
 
 describe('@mantine/core/get-primary-shade', () => {
   it('returns correct primary shade', () => {

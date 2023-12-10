@@ -1,8 +1,8 @@
 import React from 'react';
-import { MantineDemo } from '@mantinex/demo';
-import { Input, rem } from '@mantine/core';
-import { InputStylesApi } from '@docs/styles-api';
 import { IconAt, IconChevronDown } from '@tabler/icons-react';
+import { Input, rem } from '@mantine/core';
+import { MantineDemo } from '@mantinex/demo';
+import { InputStylesApi } from '@docs/styles-api';
 
 const code = `
 import { Input, rem } from '@mantine/core';

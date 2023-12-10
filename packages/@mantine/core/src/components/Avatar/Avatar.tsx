@@ -2,18 +2,18 @@ import React, { useEffect, useState } from 'react';
 import {
   Box,
   BoxProps,
-  StylesApiProps,
-  polymorphicFactory,
-  useProps,
-  useStyles,
   createVarsResolver,
-  PolymorphicFactory,
-  getSize,
   getRadius,
-  MantineSize,
-  MantineRadius,
+  getSize,
   MantineColor,
   MantineGradient,
+  MantineRadius,
+  MantineSize,
+  polymorphicFactory,
+  PolymorphicFactory,
+  StylesApiProps,
+  useProps,
+  useStyles,
 } from '../../core';
 import { AvatarGroup } from './AvatarGroup/AvatarGroup';
 import { useAvatarGroupContext } from './AvatarGroup/AvatarGroup.context';

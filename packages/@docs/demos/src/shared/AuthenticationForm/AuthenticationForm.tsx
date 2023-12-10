@@ -1,17 +1,17 @@
 import React, { useState } from 'react';
-import { useForm } from '@mantine/form';
-import { IconLock, IconAt } from '@tabler/icons-react';
+import { IconAt, IconLock } from '@tabler/icons-react';
 import {
-  TextInput,
-  PasswordInput,
-  Group,
-  Checkbox,
-  Button,
-  Paper,
-  Text,
-  LoadingOverlay,
   Anchor,
+  Button,
+  Checkbox,
+  Group,
+  LoadingOverlay,
+  Paper,
+  PasswordInput,
+  Text,
+  TextInput,
 } from '@mantine/core';
+import { useForm } from '@mantine/form';
 
 export interface AuthenticationFormProps {
   noShadow?: boolean;

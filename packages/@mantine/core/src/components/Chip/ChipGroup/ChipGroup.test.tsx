@@ -1,7 +1,7 @@
 import React from 'react';
-import { tests, render, screen, userEvent } from '@mantine-tests/core';
-import { ChipGroup } from './ChipGroup';
+import { render, screen, tests, userEvent } from '@mantine-tests/core';
 import { Chip } from '../Chip';
+import { ChipGroup } from './ChipGroup';
 
 const defaultProps = {
   children: (

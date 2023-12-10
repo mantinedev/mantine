@@ -1,21 +1,21 @@
+import dayjs from 'dayjs';
 import React from 'react';
 import {
   Box,
   BoxProps,
-  StylesApiProps,
-  factory,
   ElementProps,
-  useProps,
+  factory,
   Factory,
+  StylesApiProps,
+  useProps,
 } from '@mantine/core';
-import dayjs from 'dayjs';
 import {
   CalendarHeader,
-  CalendarHeaderStylesNames,
   CalendarHeaderSettings,
+  CalendarHeaderStylesNames,
 } from '../CalendarHeader';
 import { useDatesContext } from '../DatesProvider';
-import { MonthsListSettings, MonthsListStylesNames, MonthsList } from '../MonthsList';
+import { MonthsList, MonthsListSettings, MonthsListStylesNames } from '../MonthsList';
 
 export type YearLevelStylesNames = MonthsListStylesNames | CalendarHeaderStylesNames;
 

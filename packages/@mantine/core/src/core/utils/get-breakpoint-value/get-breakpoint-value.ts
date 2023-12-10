@@ -1,4 +1,4 @@
-import type { MantineTheme, MantineBreakpoint } from '../../MantineProvider';
+import type { MantineBreakpoint, MantineTheme } from '../../MantineProvider';
 import { px } from '../units-converters';
 
 export function getBreakpointValue(breakpoint: number | string, theme: MantineTheme) {

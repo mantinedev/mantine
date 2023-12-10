@@ -1,6 +1,6 @@
 import React from 'react';
+import { Anchor, Breadcrumbs } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
-import { Breadcrumbs, Anchor } from '@mantine/core';
 
 const code = `
 import { Breadcrumbs, Anchor } from '@mantine/core';

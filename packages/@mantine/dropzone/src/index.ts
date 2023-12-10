@@ -1,5 +1,5 @@
-import { DropzoneFullScreen } from './DropzoneFullScreen';
 import { Dropzone as _Dropzone } from './Dropzone';
+import { DropzoneFullScreen } from './DropzoneFullScreen';
 
 _Dropzone.FullScreen = DropzoneFullScreen;
 export const Dropzone = _Dropzone;

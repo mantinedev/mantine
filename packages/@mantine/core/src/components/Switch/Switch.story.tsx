@@ -1,8 +1,8 @@
 import React from 'react';
 import { IconBadge } from '@tabler/icons-react';
 import { Group } from '../Group';
-import { Switch } from './Switch';
 import { Stack } from '../Stack';
+import { Switch } from './Switch';
 
 export default { title: 'Switch' };
 

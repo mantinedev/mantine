@@ -2,15 +2,15 @@ import React, { useEffect, useId } from 'react';
 import {
   BoxProps,
   CompoundStylesApiProps,
-  factory,
   ElementProps,
-  useProps,
+  factory,
   Factory,
   ScrollArea,
+  useProps,
 } from '@mantine/core';
-import classes from './Spotlight.module.css';
 import { useSpotlightContext } from './Spotlight.context';
 import { spotlightActions } from './spotlight.store';
+import classes from './Spotlight.module.css';
 
 export type SpotlightActionsListStylesNames = 'actionsList' | 'actionsListInner';
 

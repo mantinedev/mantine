@@ -1,9 +1,9 @@
-import { getMergedVariables } from './get-merged-variables';
 import { DEFAULT_THEME } from '../default-theme';
 import {
-  defaultCssVariablesResolver,
   CSSVariablesResolver,
+  defaultCssVariablesResolver,
 } from './default-css-variables-resolver';
+import { getMergedVariables } from './get-merged-variables';
 
 const defaultVariables = defaultCssVariablesResolver(DEFAULT_THEME);
 

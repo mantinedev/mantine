@@ -1,6 +1,6 @@
 import React from 'react';
+import { Rating, RatingProps } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
-import { RatingProps, Rating } from '@mantine/core';
 
 const code = `
 import { Rating } from '@mantine/core';

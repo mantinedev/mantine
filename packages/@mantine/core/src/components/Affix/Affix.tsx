@@ -2,15 +2,15 @@ import React from 'react';
 import {
   Box,
   BoxProps,
-  StylesApiProps,
-  factory,
-  ElementProps,
-  useProps,
-  useStyles,
   createVarsResolver,
+  ElementProps,
+  factory,
   Factory,
   getDefaultZIndex,
   rem,
+  StylesApiProps,
+  useProps,
+  useStyles,
 } from '../../core';
 import { OptionalPortal, PortalProps } from '../Portal';
 import classes from './Affix.module.css';

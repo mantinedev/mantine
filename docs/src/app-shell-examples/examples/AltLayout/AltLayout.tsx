@@ -1,6 +1,6 @@
 import React from 'react';
-import { useDisclosure } from '@mantine/hooks';
 import { AppShell, Burger, Group, Skeleton, Text } from '@mantine/core';
+import { useDisclosure } from '@mantine/hooks';
 import { MantineLogo } from '@mantinex/mantine-logo';
 
 export function AltLayout() {

@@ -1,6 +1,6 @@
+import { TooltipDemos } from '@docs/demos';
 import { Layout } from '@/layout';
 import { MDX_DATA } from '@/mdx';
-import { TooltipDemos } from '@docs/demos';
 
 export default Layout(MDX_DATA.Tooltip);
 
@@ -16,7 +16,7 @@ Custom components must provide a prop to get root element ref,
 all Mantine components support ref out of the box.
 
 ```tsx
-import { Tooltip, Badge } from '@mantine/core';
+import { Badge, Tooltip } from '@mantine/core';
 
 function Demo() {
   return (
@@ -167,7 +167,7 @@ Set `inline` prop to use `Tooltip` with inline elements:
 Tooltip is built with [Transition](/core/transition/) component, it supports `transitionProps` props:
 
 ```tsx
-import { Tooltip, Button } from '@mantine/core';
+import { Button, Tooltip } from '@mantine/core';
 
 function Demo() {
   return (
@@ -265,7 +265,7 @@ or navigate with keyboard will not be able to get tooltip content. Set `events` 
 focus/blur tooltip events:
 
 ```tsx
-import { Tooltip, Button } from '@mantine/core';
+import { Button, Tooltip } from '@mantine/core';
 
 // Tooltip will be visible for screen readers
 function Demo() {

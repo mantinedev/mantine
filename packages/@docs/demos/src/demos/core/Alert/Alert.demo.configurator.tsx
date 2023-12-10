@@ -1,7 +1,7 @@
 import React from 'react';
-import { MantineDemo } from '@mantinex/demo';
-import { Alert } from '@mantine/core';
 import { IconInfoCircle } from '@tabler/icons-react';
+import { Alert } from '@mantine/core';
+import { MantineDemo } from '@mantinex/demo';
 import { staticVariantsControl } from '../../../shared';
 
 const code = `

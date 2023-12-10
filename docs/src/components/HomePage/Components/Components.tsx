@@ -1,19 +1,19 @@
 import React from 'react';
 import {
-  IconForms,
-  IconCalendar,
-  IconStack2,
   IconBold,
+  IconCalendar,
+  IconForms,
   IconNotebook,
   IconSlideshow,
+  IconStack2,
 } from '@tabler/icons-react';
-import { Inputs } from './demos/Inputs';
-import { Dates } from './demos/Dates';
-import { Overlays } from './demos/Overlays';
-import { Content } from './demos/Content';
-import { RichText } from './demos/RichText';
-import { Carousel } from './demos/Carousel';
 import { DemoTabs } from '../DemoTabs/DemoTabs';
+import { Carousel } from './demos/Carousel';
+import { Content } from './demos/Content';
+import { Dates } from './demos/Dates';
+import { Inputs } from './demos/Inputs';
+import { Overlays } from './demos/Overlays';
+import { RichText } from './demos/RichText';
 
 const data = [
   { demo: Inputs, icon: IconForms, name: 'Inputs', description: '20+ input components' },

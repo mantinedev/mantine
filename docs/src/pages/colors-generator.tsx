@@ -1,6 +1,6 @@
 import React from 'react';
-import { ContentPageBase } from '@/components/ContentPageBase';
 import { ColorsGenerator } from '@/components/ColorsGenerator';
+import { ContentPageBase } from '@/components/ContentPageBase';
 
 export default function ColorsGeneratorPage() {
   return (

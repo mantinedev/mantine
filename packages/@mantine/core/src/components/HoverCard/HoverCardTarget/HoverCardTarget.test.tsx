@@ -1,7 +1,7 @@
 import React from 'react';
-import { render, tests, patchConsoleError, createContextContainer } from '@mantine-tests/core';
-import { HoverCardTarget, HoverCardTargetProps } from './HoverCardTarget';
+import { createContextContainer, patchConsoleError, render, tests } from '@mantine-tests/core';
 import { HoverCard } from '../HoverCard';
+import { HoverCardTarget, HoverCardTargetProps } from './HoverCardTarget';
 
 const defaultProps: HoverCardTargetProps = {
   children: <div>test</div>,

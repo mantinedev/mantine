@@ -1,7 +1,7 @@
-import React, { forwardRef, useRef, useEffect } from 'react';
+import React, { forwardRef, useEffect, useRef } from 'react';
 import { useDebounceCallback, useMergedRef } from '@mantine/hooks';
-import { useScrollbarContext } from '../ScrollAreaScrollbar/Scrollbar.context';
 import { useScrollAreaContext } from '../ScrollArea.context';
+import { useScrollbarContext } from '../ScrollAreaScrollbar/Scrollbar.context';
 import { addUnlinkedScrollListener, composeEventHandlers } from '../utils';
 
 interface ThumbProps extends React.ComponentPropsWithoutRef<'div'> {}

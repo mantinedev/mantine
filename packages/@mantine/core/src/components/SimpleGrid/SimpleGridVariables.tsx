@@ -1,13 +1,13 @@
 import React from 'react';
 import {
-  getSortedBreakpoints,
-  useMantineTheme,
-  keys,
-  getSpacing,
-  MantineBreakpoint,
   filterProps,
-  InlineStyles,
   getBaseValue,
+  getSortedBreakpoints,
+  getSpacing,
+  InlineStyles,
+  keys,
+  MantineBreakpoint,
+  useMantineTheme,
 } from '../../core';
 import type { SimpleGridProps } from './SimpleGrid';
 
