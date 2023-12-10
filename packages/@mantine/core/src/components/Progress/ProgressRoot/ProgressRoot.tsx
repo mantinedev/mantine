@@ -28,6 +28,9 @@ export interface __ProgressRootProps extends BoxProps, ElementProps<'div'> {
 
   /** Key of `theme.radius` or any valid CSS value to set `border-radius`, `theme.defaultRadius` by default */
   radius?: MantineRadius;
+
+  /** Determines whether label text color should depend on `background-color`. If luminosity of the `color` prop is less than `theme.luminosityThreshold`, then `theme.white` will be used for text color, otherwise `theme.black`. Override `theme.autoContrast`. */
+  autoContrast?: boolean;
 }
 
 export interface ProgressRootProps
@@ -52,7 +55,7 @@ const varsResolver = createVarsResolver<ProgressRootFactory>((_, { size, radius 
 
 export const ProgressRoot = factory<ProgressRootFactory>((_props, ref) => {
   const props = useProps('ProgressRoot', defaultProps, _props);
-  const { classNames, className, style, styles, unstyled, vars, ...others } = props;
+  const { classNames, className, style, styles, unstyled, vars, autoContrast, ...others } = props;
 
   const getStyles = useStyles<ProgressRootFactory>({
     name: 'Progress',
@@ -68,7 +71,7 @@ export const ProgressRoot = factory<ProgressRootFactory>((_props, ref) => {
   });
 
   return (
-    <ProgressProvider value={{ getStyles }}>
+    <ProgressProvider value={{ getStyles, autoContrast }}>
       <Box ref={ref} {...getStyles('root')} {...others} />
     </ProgressProvider>
   );

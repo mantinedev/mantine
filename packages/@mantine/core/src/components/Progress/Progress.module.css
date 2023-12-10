@@ -81,7 +81,7 @@
 }
 
 .label {
-  color: var(--mantine-color-white);
+  color: var(--progress-label-color, var(--mantine-color-white));
   font-weight: bold;
   user-select: none;
   overflow: hidden;

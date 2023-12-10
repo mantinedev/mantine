@@ -3,6 +3,7 @@ import type { ProgressRootFactory } from './ProgressRoot/ProgressRoot';
 
 interface ProgressContextValue {
   getStyles: GetStylesApi<ProgressRootFactory>;
+  autoContrast: boolean | undefined;
 }
 
 export const [ProgressProvider, useProgressContext] = createSafeContext<ProgressContextValue>(
