@@ -180,6 +180,45 @@ function Demo() {
 
 ## Theme properties
 
+### autoContrast
+
+`autoContrast` controls whether text color should be changed based on the given `color` prop
+in the following components:
+
+- [ActionIcon](/core/action-icon) with `variant="filled"` only
+- [Alert](/core/alert) with `variant="filled"` only
+- [Avatar](/core/avatar) with `variant="filled"` only
+- [Badge](/core/badge) with `variant="filled"` only
+- [Button](/core/button) with `variant="filled"` only
+- [Chip](/core/chip) with `variant="filled"` only
+- [NavLink](/core/nav-link) with `variant="filled"` only
+- [ThemeIcon](/core/theme-icon) with `variant="filled"` only
+- [Checkbox](/core/checkbox) with `variant="filled"` only
+- [Radio](/core/radio) with `variant="filled"` only
+- [Tabs](/core/tabs) with `variant="pills"` only
+- [SegmentedControl](/core/segmented-control)
+- [Stepper](/core/stepper)
+- [Pagination](/core/pagination)
+- [Progress](/core/progress)
+- [Indicator](/core/indicator)
+- [Timeline](/core/timeline)
+- [Spotlight](/others/spotlight)
+- All [@mantine/dates](/dates/getting-started) components that are based on [Calendar](/dates/calendar) component
+
+`autoContrast` checks whether the given color luminosity is above or below the `luminanceThreshold` value
+and changes text color to either `theme.white` or `theme.black` accordingly.
+
+`autoContrast` can be set globally on the theme level or individually for each component via `autoContrast` prop.
+
+<Demo data={ThemingDemos.autoContrast} />
+
+### luminanceThreshold
+
+`luminanceThreshold` controls which luminance value is used to determine if text color should be light or dark.
+It is used only if `theme.autoContrast` is set to `true`. Default value is `0.3`.
+
+<Demo data={ThemingDemos.luminanceThreshold} />
+
 ### focusRing
 
 `theme.focusRing` controls focus ring styles, it supports the following values:

@@ -18,8 +18,6 @@ const theme = createTheme({
 });
 
 function Wrapper(props: any) {
-  const theme = useMantineTheme();
-
   const buttons = Array(10)
     .fill(0)
     .map((_, index) => (
@@ -36,10 +34,7 @@ function Wrapper(props: any) {
     ));
 
   return (
-    <MantineProvider
-      inherit
-      theme={theme}
-    >
+    <MantineProvider theme={theme}>
       <Stack>{buttons}</Stack>
     </MantineProvider>
   );

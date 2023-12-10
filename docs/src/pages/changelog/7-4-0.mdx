@@ -1,4 +1,8 @@
-import { ScrollAreaDemos, TitleDemos } from '@docs/demos';
+import {
+  ScrollAreaDemos,
+  ThemingDemos,
+  TitleDemos,
+} from '@docs/demos';
 import { Layout } from '@/layout';
 import { MDX_DATA } from '@/mdx';
 
@@ -6,7 +10,8 @@ export default Layout(MDX_DATA.Changelog730);
 
 ## autoContrast
 
-Components that support `autoContrast` feature:
+New `theme.autoContrast` property controls whether text color should be changed based on the given `color` prop
+in the following components:
 
 - [ActionIcon](/core/action-icon) with `variant="filled"` only
 - [Alert](/core/alert) with `variant="filled"` only
@@ -27,6 +32,15 @@ Components that support `autoContrast` feature:
 - [Timeline](/core/timeline)
 - [Spotlight](/others/spotlight)
 - All [@mantine/dates](/dates/getting-started) components that are based on [Calendar](/dates/calendar) component
+
+`autoContrast` can be set globally on the theme level or individually for each component via `autoContrast` prop.
+
+<Demo data={ThemingDemos.autoContrast} />
+
+`autoContrast` checks whether the given color luminosity is above or below the `luminanceThreshold` value
+and changes text color to either `theme.white` or `theme.black` accordingly:
+
+<Demo data={ThemingDemos.luminanceThreshold} />
 
 ## ScrollArea scrollbars prop
 
@@ -56,6 +70,7 @@ CSS variables for primary color are now available, you can use the following var
 --mantine-primary-color-7
 --mantine-primary-color-8
 --mantine-primary-color-9
+--mantine-primary-color-contrast
 --mantine-primary-color-filled
 --mantine-primary-color-filled-hover
 --mantine-primary-color-light
