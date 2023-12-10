@@ -15,6 +15,7 @@ export const TimelineStylesApi: StylesApiData<TimelineFactory> = {
     root: {
       '--tl-bullet-size': 'Controls bullet `width` and `height`',
       '--tl-color': 'Controls active bullet and line colors',
+      '--tl-icon-color': 'Controls icon color',
       '--tl-line-width': 'Controls width of the line between bullets',
       '--tl-radius': 'Controls bullet `border-radius`',
     },

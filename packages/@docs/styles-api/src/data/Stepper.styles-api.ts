@@ -21,6 +21,7 @@ export const StepperStylesApi: StylesApiData<StepperFactory> = {
   vars: {
     root: {
       '--stepper-color': 'Controls color of the active step and separator',
+      '--stepper-icon-color': 'Controls `color` of the step icon',
       '--stepper-icon-size': 'Controls `width` and `height` of the icons',
       '--stepper-content-padding': 'Controls `padding-top` of the content',
       '--stepper-radius': 'Controls `border-radius` of the step icon',

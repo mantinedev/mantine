@@ -19,6 +19,7 @@ export const IndicatorStylesApi: StylesApiData<IndicatorFactory> = {
       '--indicator-translate-y': 'Controls `translateY` style, used for positioning',
       '--indicator-z-index': 'Controls `z-index` style',
       '--indicator-color': 'Controls `background-color`',
+      '--indicator-text-color': 'Controls `color`',
     },
   },
 
