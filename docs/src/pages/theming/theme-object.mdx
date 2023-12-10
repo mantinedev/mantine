@@ -1,6 +1,6 @@
+import { ThemingDemos } from '@docs/demos';
 import { Layout } from '@/layout';
 import { MDX_DATA } from '@/mdx';
-import { ThemingDemos } from '@docs/demos';
 
 export default Layout(MDX_DATA.ThemeObject);
 
@@ -134,7 +134,7 @@ To customize theme, pass theme override object to [MantineProvider](/theming/man
 Theme override will be deeply merged with the default theme.
 
 ```tsx
-import { MantineProvider, createTheme, rem } from '@mantine/core';
+import { createTheme, MantineProvider, rem } from '@mantine/core';
 
 const theme = createTheme({
   colors: {
@@ -285,8 +285,8 @@ Use `mergeThemeOverrides` function to merge multiple themes into one theme overr
 ```tsx
 import {
   createTheme,
-  mergeThemeOverrides,
   MantineProvider,
+  mergeThemeOverrides,
 } from '@mantine/core';
 
 const theme1 = createTheme({
@@ -345,8 +345,8 @@ To access theme outside of components, you need to create a full theme object
 // theme.ts
 import {
   createTheme,
-  mergeMantineTheme,
   DEFAULT_THEME,
+  mergeMantineTheme,
 } from '@mantine/theme';
 
 const themeOverride = createTheme({

@@ -1,6 +1,6 @@
 import React from 'react';
-import { MantineDemo } from '@mantinex/demo';
 import { TextInput } from '@mantine/core';
+import { MantineDemo } from '@mantinex/demo';
 import classes from './Styles.demo.sizesMedia.module.css';
 
 const code = `

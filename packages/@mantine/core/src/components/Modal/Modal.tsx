@@ -1,18 +1,18 @@
 import React from 'react';
-import { factory, useProps, Factory, getDefaultZIndex } from '../../core';
-import { ModalBaseOverlayProps, ModalBaseCloseButtonProps } from '../ModalBase';
-import {
-  ModalRoot,
-  ModalRootProps,
-  ModalRootCssVariables,
-  ModalRootStylesNames,
-} from './ModalRoot';
+import { factory, Factory, getDefaultZIndex, useProps } from '../../core';
+import { ModalBaseCloseButtonProps, ModalBaseOverlayProps } from '../ModalBase';
 import { ModalBody } from './ModalBody';
 import { ModalCloseButton } from './ModalCloseButton';
-import { ModalOverlay } from './ModalOverlay';
 import { ModalContent } from './ModalContent';
-import { ModalTitle } from './ModalTitle';
 import { ModalHeader } from './ModalHeader';
+import { ModalOverlay } from './ModalOverlay';
+import {
+  ModalRoot,
+  ModalRootCssVariables,
+  ModalRootProps,
+  ModalRootStylesNames,
+} from './ModalRoot';
+import { ModalTitle } from './ModalTitle';
 import classes from './Modal.module.css';
 
 export type ModalStylesNames = ModalRootStylesNames;

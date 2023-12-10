@@ -1,6 +1,6 @@
 import React from 'react';
-import { MantineDemo } from '@mantinex/demo';
 import { Pagination } from '@mantine/core';
+import { MantineDemo } from '@mantinex/demo';
 
 function Demo() {
   return <Pagination total={10} />;

@@ -1,6 +1,6 @@
 import React from 'react';
-import { MdxParagraph, MdxCode } from '../MdxTypography/MdxTypography';
 import { MdxTitle } from '../MdxTitle/MdxTitle';
+import { MdxCode, MdxParagraph } from '../MdxTypography/MdxTypography';
 
 interface MdxServerComponentsIncompatibleProps {
   component: string;

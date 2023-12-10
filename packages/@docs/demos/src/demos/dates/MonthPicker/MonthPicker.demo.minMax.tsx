@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { MantineDemo } from '@mantinex/demo';
 import { MonthPicker } from '@mantine/dates';
+import { MantineDemo } from '@mantinex/demo';
 
 const code = `
 import { useState } from 'react';

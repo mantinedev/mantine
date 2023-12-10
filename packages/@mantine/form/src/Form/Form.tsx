@@ -1,5 +1,5 @@
 import React, { forwardRef } from 'react';
-import { UseFormReturnType, TransformedValues } from '../types';
+import { TransformedValues, UseFormReturnType } from '../types';
 
 export interface FormProps<Form extends UseFormReturnType<any>>
   extends React.ComponentPropsWithRef<'form'> {

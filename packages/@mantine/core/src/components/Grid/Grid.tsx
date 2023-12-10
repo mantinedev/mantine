@@ -2,19 +2,19 @@ import React from 'react';
 import {
   Box,
   BoxProps,
-  StylesApiProps,
-  factory,
-  ElementProps,
-  useProps,
-  useStyles,
   createVarsResolver,
+  ElementProps,
+  factory,
   Factory,
-  StyleProp,
   MantineSpacing,
+  StyleProp,
+  StylesApiProps,
+  useProps,
   useRandomClassName,
+  useStyles,
 } from '../../core';
-import { GridCol } from './GridCol/GridCol';
 import { GridProvider } from './Grid.context';
+import { GridCol } from './GridCol/GridCol';
 import { GridVariables } from './GridVariables';
 import classes from './Grid.module.css';
 

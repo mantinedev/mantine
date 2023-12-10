@@ -1,16 +1,16 @@
 import {
+  ClassNames,
   createSafeContext,
+  GetStylesApi,
+  MantineRadius,
   MantineShadow,
   Styles,
-  ClassNames,
-  MantineRadius,
-  GetStylesApi,
 } from '../../core';
-import { FloatingPosition, ArrowPosition } from '../Floating';
-import { TransitionOverride } from '../Transition';
+import { ArrowPosition, FloatingPosition } from '../Floating';
 import { PortalProps } from '../Portal';
-import { PopoverWidth } from './Popover.types';
+import { TransitionOverride } from '../Transition';
 import type { PopoverFactory } from './Popover';
+import { PopoverWidth } from './Popover.types';
 
 interface PopoverContext {
   x: number;

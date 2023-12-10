@@ -1,6 +1,6 @@
 import React from 'react';
+import { Mark, Popover, Text } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
-import { Popover, Mark, Text } from '@mantine/core';
 
 const code = `
 import { Popover, Mark, Text } from '@mantine/core';

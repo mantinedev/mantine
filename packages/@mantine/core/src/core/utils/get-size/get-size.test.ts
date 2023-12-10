@@ -1,4 +1,4 @@
-import { getSize, getSpacing, getShadow, getRadius, getFontSize, getLineHeight } from './get-size';
+import { getFontSize, getLineHeight, getRadius, getShadow, getSize, getSpacing } from './get-size';
 
 describe('@mantine/core/get-size', () => {
   it('returns correct size for numbers and number like values', () => {

@@ -1,29 +1,29 @@
 import React, { Children, useCallback, useEffect, useState } from 'react';
+import useEmblaCarousel, { EmblaCarouselType, EmblaPluginType } from 'embla-carousel-react';
 import {
+  AccordionChevron,
   Box,
   BoxProps,
-  StylesApiProps,
-  factory,
-  ElementProps,
-  useProps,
-  useStyles,
   createVarsResolver,
+  ElementProps,
+  factory,
   Factory,
-  MantineSpacing,
-  StyleProp,
-  useDirection,
-  UnstyledButton,
-  AccordionChevron,
-  useRandomClassName,
-  rem,
   getSpacing,
+  MantineSpacing,
+  rem,
+  StyleProp,
+  StylesApiProps,
+  UnstyledButton,
+  useDirection,
+  useProps,
+  useRandomClassName,
+  useStyles,
 } from '@mantine/core';
 import { clamp } from '@mantine/hooks';
-import useEmblaCarousel, { EmblaPluginType, EmblaCarouselType } from 'embla-carousel-react';
-import { getChevronRotation } from './get-chevron-rotation';
 import { CarouselProvider } from './Carousel.context';
 import { CarouselSlide } from './CarouselSlide/CarouselSlide';
 import { CarouselVariables } from './CarouselVariables/CarouselVariables';
+import { getChevronRotation } from './get-chevron-rotation';
 import classes from './Carousel.module.css';
 
 export type CarouselStylesNames =

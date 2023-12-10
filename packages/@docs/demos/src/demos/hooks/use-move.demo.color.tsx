@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { rem } from '@mantine/core';
-import { MantineDemo } from '@mantinex/demo';
 import { useMove } from '@mantine/hooks';
+import { MantineDemo } from '@mantinex/demo';
 
 const code = `
 import { useState } from 'react';

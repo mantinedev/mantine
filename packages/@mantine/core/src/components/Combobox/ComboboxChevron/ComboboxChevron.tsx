@@ -1,15 +1,15 @@
 import React from 'react';
 import {
-  MantineSize,
   Box,
   BoxProps,
+  createVarsResolver,
   ElementProps,
-  getSize,
-  useProps,
   Factory,
   factory,
-  createVarsResolver,
+  getSize,
+  MantineSize,
   StylesApiProps,
+  useProps,
   useStyles,
 } from '../../../core';
 import classes from '../Combobox.module.css';

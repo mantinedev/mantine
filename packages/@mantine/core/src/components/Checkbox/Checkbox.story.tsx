@@ -1,8 +1,8 @@
 import React from 'react';
 import { MantineThemeProvider } from '../../core';
-import { Checkbox } from './Checkbox';
 import { Stack } from '../Stack';
 import { Tooltip } from '../Tooltip';
+import { Checkbox } from './Checkbox';
 
 export default { title: 'Checkbox' };
 

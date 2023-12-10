@@ -1,5 +1,5 @@
 import React from 'react';
-import { MantineSize, createOptionalContext } from '../../core';
+import { createOptionalContext, MantineSize } from '../../core';
 import { InputVariant } from '../Input';
 
 export interface PillsInputContextValue {

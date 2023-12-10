@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
-import { MantineDemo } from '@mantinex/demo';
 import { Slider } from '@mantine/core';
+import { MantineDemo } from '@mantinex/demo';
 
 const code = `
 import { Slider } from '@mantine/core';

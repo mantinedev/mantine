@@ -1,12 +1,7 @@
 import React from 'react';
-import { factory, useProps, Factory, MantineSize } from '../../core';
+import { factory, Factory, MantineSize, useProps } from '../../core';
 import { Group } from '../Group/Group';
-import {
-  PaginationRoot,
-  PaginationRootCssVariables,
-  PaginationRootProps,
-  PaginationRootStylesNames,
-} from './PaginationRoot/PaginationRoot';
+import { PaginationIcon } from './Pagination.icons';
 import { PaginationControl } from './PaginationControl/PaginationControl';
 import { PaginationDots } from './PaginationDots/PaginationDots';
 import {
@@ -16,7 +11,12 @@ import {
   PaginationPrevious,
 } from './PaginationEdges/PaginationEdges';
 import { PaginationItems } from './PaginationItems/PaginationItems';
-import { PaginationIcon } from './Pagination.icons';
+import {
+  PaginationRoot,
+  PaginationRootCssVariables,
+  PaginationRootProps,
+  PaginationRootStylesNames,
+} from './PaginationRoot/PaginationRoot';
 import classes from './Pagination.module.css';
 
 export type PaginationStylesNames = PaginationRootStylesNames;

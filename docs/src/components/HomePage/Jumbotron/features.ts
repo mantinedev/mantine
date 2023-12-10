@@ -1,4 +1,4 @@
-import { IconScale, IconRocket, IconLifebuoy } from '@tabler/icons-react';
+import { IconLifebuoy, IconRocket, IconScale } from '@tabler/icons-react';
 
 export const FEATURES_DATA = [
   {

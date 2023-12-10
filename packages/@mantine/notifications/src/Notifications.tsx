@@ -1,35 +1,35 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import {
   Transition as _Transition,
   TransitionGroup,
   TransitionStatus,
 } from 'react-transition-group';
-import { useForceUpdate, useDidUpdate, useReducedMotion } from '@mantine/hooks';
 import {
   Box,
   BoxProps,
-  StylesApiProps,
-  factory,
+  createVarsResolver,
   ElementProps,
+  factory,
+  Factory,
+  getDefaultZIndex,
+  OptionalPortal,
+  PortalProps,
+  rem,
+  StylesApiProps,
+  useMantineTheme,
   useProps,
   useStyles,
-  createVarsResolver,
-  Factory,
-  PortalProps,
-  getDefaultZIndex,
-  useMantineTheme,
-  OptionalPortal,
-  rem,
 } from '@mantine/core';
+import { useDidUpdate, useForceUpdate, useReducedMotion } from '@mantine/hooks';
+import { getNotificationStateStyles } from './get-notification-state-styles';
+import { NotificationContainer } from './NotificationContainer';
 import {
-  useNotifications,
-  NotificationsStore,
-  notificationsStore,
   hideNotification,
   notifications,
+  NotificationsStore,
+  notificationsStore,
+  useNotifications,
 } from './notifications.store';
-import { NotificationContainer } from './NotificationContainer';
-import { getNotificationStateStyles } from './get-notification-state-styles';
 import classes from './Notifications.module.css';
 
 const Transition: any = _Transition;

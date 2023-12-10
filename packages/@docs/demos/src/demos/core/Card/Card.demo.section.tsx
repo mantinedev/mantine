@@ -1,6 +1,6 @@
 import React from 'react';
-import { Card, Group, Text, Menu, ActionIcon, Image, SimpleGrid, rem } from '@mantine/core';
 import { IconDots, IconEye, IconFileZip, IconTrash } from '@tabler/icons-react';
+import { ActionIcon, Card, Group, Image, Menu, rem, SimpleGrid, Text } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
 
 const code = `

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Container, Text, BoxProps, ElementProps, Box } from '@mantine/core';
+import { Box, BoxProps, Container, ElementProps, Text } from '@mantine/core';
 import { SectionTitle } from '../SectionTitle/SectionTitle';
 import classes from './PageSection.module.css';
 

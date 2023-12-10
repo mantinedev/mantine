@@ -1,6 +1,6 @@
 import { DEFAULT_THEME, MantineTheme } from '../../../MantineProvider';
-import { FOCUS_CLASS_NAMES } from './get-global-class-names/get-global-class-names';
 import { getClassName, GetClassNameOptions } from './get-class-name';
+import { FOCUS_CLASS_NAMES } from './get-global-class-names/get-global-class-names';
 
 const THEME_WITH_CLASSNAMES: MantineTheme = {
   ...DEFAULT_THEME,

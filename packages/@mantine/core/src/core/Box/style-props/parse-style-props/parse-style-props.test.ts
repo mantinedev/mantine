@@ -1,6 +1,6 @@
 import { DEFAULT_THEME } from '../../../MantineProvider';
-import { parseStyleProps } from './parse-style-props';
 import { STYlE_PROPS_DATA } from '../style-props-data';
+import { parseStyleProps } from './parse-style-props';
 
 describe('@mantine/core/Box/parse-style-props', () => {
   it('parses non responsive style props correctly', () => {

@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import { MultiSelect } from './MultiSelect';
 import { Button } from '../Button';
 import { Group } from '../Group';
 import { TextInput } from '../TextInput';
+import { MultiSelect } from './MultiSelect';
 
 export default { title: 'MultiSelect' };
 

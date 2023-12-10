@@ -1,10 +1,10 @@
 import React, { useEffect } from 'react';
 import { useRouter } from 'next/router';
-import { CodeHighlightTabs } from '@mantinex/shiki';
 import { getCodeFileIcon } from '@mantinex/dev-icons';
+import { CodeHighlightTabs } from '@mantinex/shiki';
 import { PageHead } from '@/components/PageHead';
-import { ExamplesDrawer } from './ExamplesDrawer/ExamplesDrawer';
 import { APP_SHELL_EXAMPLES_COMPONENTS } from '../examples';
+import { ExamplesDrawer } from './ExamplesDrawer/ExamplesDrawer';
 
 export function AppShellPage() {
   const router = useRouter();

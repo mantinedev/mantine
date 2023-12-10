@@ -1,7 +1,7 @@
 import React from 'react';
-import { MantineDemo } from '@mantinex/demo';
-import { Chip, rem } from '@mantine/core';
 import { IconX } from '@tabler/icons-react';
+import { Chip, rem } from '@mantine/core';
+import { MantineDemo } from '@mantinex/demo';
 
 const code = `
 import { Chip, rem } from '@mantine/core';

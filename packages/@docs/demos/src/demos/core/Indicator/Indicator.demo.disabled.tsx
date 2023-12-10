@@ -1,7 +1,7 @@
 import React from 'react';
-import { MantineDemo } from '@mantinex/demo';
+import { Avatar, Button, Indicator, Stack } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
-import { Avatar, Indicator, Button, Stack } from '@mantine/core';
+import { MantineDemo } from '@mantinex/demo';
 
 const code = `
 import { useDisclosure } from '@mantine/hooks';

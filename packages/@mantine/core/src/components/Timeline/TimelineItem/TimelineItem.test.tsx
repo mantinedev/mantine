@@ -1,7 +1,7 @@
 import React from 'react';
-import { render, tests, createContextContainer, screen } from '@mantine-tests/core';
-import { TimelineItem, TimelineItemProps, TimelineItemStylesNames } from './TimelineItem';
+import { createContextContainer, render, screen, tests } from '@mantine-tests/core';
 import { Timeline } from '../Timeline';
+import { TimelineItem, TimelineItemProps, TimelineItemStylesNames } from './TimelineItem';
 
 const TestContainer = createContextContainer(TimelineItem, Timeline, {});
 

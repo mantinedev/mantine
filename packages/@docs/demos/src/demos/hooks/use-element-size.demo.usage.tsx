@@ -1,7 +1,7 @@
 import React from 'react';
-import { useMantineTheme, Text, Group, rem } from '@mantine/core';
-import { MantineDemo } from '@mantinex/demo';
+import { Group, rem, Text, useMantineTheme } from '@mantine/core';
 import { useElementSize } from '@mantine/hooks';
+import { MantineDemo } from '@mantinex/demo';
 
 const code = `
 import { useElementSize } from '@mantine/hooks';

@@ -1,14 +1,14 @@
 import React from 'react';
 import {
-  StylesApiProps,
-  factory,
-  ElementProps,
-  useProps,
-  useStyles,
-  createVarsResolver,
-  Factory,
   Box,
   BoxProps,
+  createVarsResolver,
+  ElementProps,
+  factory,
+  Factory,
+  StylesApiProps,
+  useProps,
+  useStyles,
 } from '../../core';
 import { getTitleSize } from './get-title-size';
 import classes from './Title.module.css';

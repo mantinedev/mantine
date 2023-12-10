@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { TextInput, Combobox, useCombobox, Checkbox, Group } from '@mantine/core';
+import { Checkbox, Combobox, Group, TextInput, useCombobox } from '@mantine/core';
 import classes from './SelectList.module.css';
 
 const groceries = ['🍎 Apples', '🍌 Bananas', '🥦 Broccoli', '🥕 Carrots', '🍫 Chocolate'];

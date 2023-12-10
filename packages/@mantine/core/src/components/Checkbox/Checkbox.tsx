@@ -1,25 +1,25 @@
 import React from 'react';
 import { useId } from '@mantine/hooks';
 import {
+  Box,
   BoxProps,
-  StylesApiProps,
-  factory,
+  createVarsResolver,
   ElementProps,
-  useProps,
-  useStyles,
-  MantineColor,
-  MantineSize,
-  MantineRadius,
   extractStyleProps,
+  factory,
+  Factory,
   getRadius,
   getSize,
   getThemeColor,
-  createVarsResolver,
-  Factory,
-  Box,
+  MantineColor,
+  MantineRadius,
+  MantineSize,
   parseThemeColor,
+  StylesApiProps,
+  useProps,
+  useStyles,
 } from '../../core';
-import { InlineInput, InlineInputStylesNames, InlineInputClasses } from '../InlineInput';
+import { InlineInput, InlineInputClasses, InlineInputStylesNames } from '../InlineInput';
 import { useCheckboxGroupContext } from './CheckboxGroup.context';
 import { CheckboxGroup } from './CheckboxGroup/CheckboxGroup';
 import { CheckboxIcon } from './CheckIcon';

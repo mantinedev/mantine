@@ -1,8 +1,8 @@
 import React from 'react';
 import { DiscordIcon } from './DiscordIcon';
 import { GithubIcon } from './GithubIcon';
-import { TwitterIcon } from './TwitterIcon';
 import { NpmIcon } from './NpmIcon';
+import { TwitterIcon } from './TwitterIcon';
 import { YarnIcon } from './YarnIcon';
 
 export default { title: 'x/DevIcons' };

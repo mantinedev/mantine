@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-import { IconTable, IconSearch } from '@tabler/icons-react';
+import { IconSearch, IconTable } from '@tabler/icons-react';
 import { useDisclosure } from '@mantine/hooks';
-import { Menu } from './Menu';
 import { Button } from '../Button';
-import { Tooltip } from '../Tooltip';
 import { Text } from '../Text';
+import { Tooltip } from '../Tooltip';
+import { Menu } from './Menu';
 
 export default { title: 'Menu' };
 

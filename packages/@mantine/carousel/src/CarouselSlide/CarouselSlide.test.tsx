@@ -1,6 +1,6 @@
 import { createContextContainer, tests } from '@mantine-tests/core';
-import { CarouselSlide, CarouselSlideProps, CarouselSlideStylesNames } from './CarouselSlide';
 import { Carousel } from '../Carousel';
+import { CarouselSlide, CarouselSlideProps, CarouselSlideStylesNames } from './CarouselSlide';
 
 const TestContainer = createContextContainer(CarouselSlide, Carousel, {});
 

@@ -1,6 +1,6 @@
 import cx from 'clsx';
-import { GetStylesApiOptions } from '../../../styles-api.types';
 import { MantineTheme } from '../../../../MantineProvider';
+import { GetStylesApiOptions } from '../../../styles-api.types';
 
 interface GetGlobalClassNamesOptions {
   theme: MantineTheme;

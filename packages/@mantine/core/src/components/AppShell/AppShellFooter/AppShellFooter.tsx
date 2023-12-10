@@ -1,17 +1,17 @@
-import cx from 'clsx';
 import React from 'react';
+import cx from 'clsx';
 import { RemoveScroll } from 'react-remove-scroll';
 import {
   Box,
   BoxProps,
-  StylesApiProps,
-  factory,
   ElementProps,
-  useProps,
+  factory,
   Factory,
+  StylesApiProps,
+  useProps,
 } from '../../../core';
-import classes from '../AppShell.module.css';
 import { useAppShellContext } from '../AppShell.context';
+import classes from '../AppShell.module.css';
 
 export type AppShellFooterStylesNames = 'footer';
 export type AppShellFooterVariant = string;

@@ -2,17 +2,17 @@ import React from 'react';
 import {
   Box,
   BoxProps,
-  StylesApiProps,
-  factory,
+  createVarsResolver,
   ElementProps,
+  factory,
+  Factory,
+  getSize,
+  getThemeColor,
+  MantineColor,
+  MantineSize,
+  StylesApiProps,
   useProps,
   useStyles,
-  createVarsResolver,
-  Factory,
-  MantineColor,
-  getThemeColor,
-  getSize,
-  MantineSize,
 } from '../../core';
 import classes from './Divider.module.css';
 

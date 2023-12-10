@@ -1,5 +1,5 @@
-import { Frontmatter } from '@/types';
 import { NAVIGATION_MDX_PAGES } from '@/mdx';
+import { Frontmatter } from '@/types';
 
 export function getMdxSiblings(slug: string): {
   prev: Frontmatter | undefined;

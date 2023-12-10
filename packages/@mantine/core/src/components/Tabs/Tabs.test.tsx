@@ -1,10 +1,10 @@
 import React from 'react';
-import { tests, render, userEvent, screen } from '@mantine-tests/core';
+import { render, screen, tests, userEvent } from '@mantine-tests/core';
 import { DirectionProvider } from '../../core';
-import { TabsTab } from './TabsTab/TabsTab';
+import { Tabs, TabsProps, TabsStylesNames } from './Tabs';
 import { TabsList } from './TabsList/TabsList';
 import { TabsPanel } from './TabsPanel/TabsPanel';
-import { Tabs, TabsProps, TabsStylesNames } from './Tabs';
+import { TabsTab } from './TabsTab/TabsTab';
 
 const defaultProps: TabsProps = {
   children: (

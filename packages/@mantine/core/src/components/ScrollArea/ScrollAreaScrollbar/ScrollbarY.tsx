@@ -1,9 +1,9 @@
 import React, { forwardRef, useEffect, useRef } from 'react';
 import { useMergedRef } from '@mantine/hooks';
-import { Scrollbar } from './Scrollbar';
 import { useScrollAreaContext } from '../ScrollArea.context';
 import { ScrollAreaScrollbarAxisProps } from '../ScrollArea.types';
-import { isScrollingWithinScrollbarBounds, getThumbSize, toInt } from '../utils';
+import { getThumbSize, isScrollingWithinScrollbarBounds, toInt } from '../utils';
+import { Scrollbar } from './Scrollbar';
 
 export const ScrollAreaScrollbarY = forwardRef<HTMLDivElement, ScrollAreaScrollbarAxisProps>(
   (props, forwardedRef) => {

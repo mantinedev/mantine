@@ -1,11 +1,11 @@
 import React from 'react';
-import { Box, Title, Text, rem } from '@mantine/core';
-import { GithubIcon, NpmIcon } from '@mantinex/dev-icons';
 import { IconCalendar, IconLicense, IconPencil, IconSwitch2 } from '@tabler/icons-react';
+import { Box, rem, Text, Title } from '@mantine/core';
+import { GithubIcon, NpmIcon } from '@mantinex/dev-icons';
 import { Frontmatter } from '@/types';
+import { ImportStatement } from './ImportStatement/ImportStatement';
 import { LinkItem } from './LinkItem/LinkItem';
 import classes from './MdxPageHeader.module.css';
-import { ImportStatement } from './ImportStatement/ImportStatement';
 
 const REPO_BASE = 'https://github.com/mantinedev/mantine/blob/master';
 const DOCS_BASE = `${REPO_BASE}/docs/src/pages`;

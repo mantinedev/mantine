@@ -2,16 +2,16 @@ import React from 'react';
 import {
   Box,
   BoxProps,
-  StylesApiProps,
-  factory,
+  createVarsResolver,
   ElementProps,
+  factory,
+  Factory,
+  getFontSize,
+  MantineSize,
+  rem,
+  StylesApiProps,
   useProps,
   useStyles,
-  MantineSize,
-  getFontSize,
-  rem,
-  createVarsResolver,
-  Factory,
 } from '../../../core';
 import { useInputWrapperContext } from '../InputWrapper.context';
 import classes from '../Input.module.css';

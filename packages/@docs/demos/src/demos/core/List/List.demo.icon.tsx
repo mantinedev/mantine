@@ -1,7 +1,7 @@
 import React from 'react';
 import { IconCircleCheck, IconCircleDashed } from '@tabler/icons-react';
+import { List, rem, ThemeIcon } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
-import { ThemeIcon, List, rem } from '@mantine/core';
 
 const code = `
 import { List, ThemeIcon, rem } from '@mantine/core';

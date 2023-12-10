@@ -1,13 +1,13 @@
 import React from 'react';
-import { MantineDemo } from '@mantinex/demo';
-import { Rating, rem } from '@mantine/core';
 import {
+  IconMoodCrazyHappy,
   IconMoodCry,
+  IconMoodHappy,
   IconMoodSad,
   IconMoodSmile,
-  IconMoodHappy,
-  IconMoodCrazyHappy,
 } from '@tabler/icons-react';
+import { Rating, rem } from '@mantine/core';
+import { MantineDemo } from '@mantinex/demo';
 
 const code = `
 import { Rating, rem } from '@mantine/core';

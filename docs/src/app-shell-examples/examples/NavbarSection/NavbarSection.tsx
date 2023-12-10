@@ -1,6 +1,6 @@
 import React from 'react';
+import { AppShell, Burger, Group, ScrollArea, Skeleton } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
-import { AppShell, Burger, Group, Skeleton, ScrollArea } from '@mantine/core';
 import { MantineLogo } from '@mantinex/mantine-logo';
 
 export function NavbarSection() {

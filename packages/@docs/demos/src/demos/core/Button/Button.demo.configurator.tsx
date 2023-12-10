@@ -1,6 +1,6 @@
 import React from 'react';
-import { MantineDemo } from '@mantinex/demo';
 import { Button } from '@mantine/core';
+import { MantineDemo } from '@mantinex/demo';
 import { interactiveVariantsControl } from '../../../shared';
 
 const code = `

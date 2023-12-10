@@ -1,16 +1,16 @@
 import path from 'node:path';
-import { RollupOptions } from 'rollup';
-import { nodeResolve } from '@rollup/plugin-node-resolve';
 import alias, { Alias } from '@rollup/plugin-alias';
+import { nodeResolve } from '@rollup/plugin-node-resolve';
 import replace from '@rollup/plugin-replace';
-import postcss from 'rollup-plugin-postcss';
+import { generateScopedName } from 'hash-css-selector';
+import { RollupOptions } from 'rollup';
 import banner from 'rollup-plugin-banner2';
 import esbuild from 'rollup-plugin-esbuild';
-import { generateScopedName } from 'hash-css-selector';
+import postcss from 'rollup-plugin-postcss';
 import { getPackagesList } from '../../packages/get-packages-list';
 import { getPath } from '../../utils/get-path';
-import { ROLLUP_EXTERNALS } from './rollup-externals';
 import { ROLLUP_EXCLUDE_USE_CLIENT } from './rollup-exclude-use-client';
+import { ROLLUP_EXTERNALS } from './rollup-externals';
 
 export async function createPackageConfig(packagePath: string): Promise<RollupOptions> {
   const packagesList = getPackagesList();

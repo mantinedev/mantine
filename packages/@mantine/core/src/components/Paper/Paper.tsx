@@ -2,16 +2,16 @@ import React from 'react';
 import {
   Box,
   BoxProps,
-  StylesApiProps,
-  polymorphicFactory,
-  useProps,
-  useStyles,
-  MantineShadow,
-  MantineRadius,
+  createVarsResolver,
   getRadius,
   getShadow,
-  createVarsResolver,
+  MantineRadius,
+  MantineShadow,
+  polymorphicFactory,
   PolymorphicFactory,
+  StylesApiProps,
+  useProps,
+  useStyles,
 } from '../../core';
 import classes from './Paper.module.css';
 

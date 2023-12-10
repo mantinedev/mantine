@@ -1,11 +1,11 @@
 import {
-  MantineColor,
   MantineBreakpoint,
-  MantineSpacing,
+  MantineColor,
   MantineFontSize,
   MantineLineHeight,
-  MantineShadow,
   MantineRadius,
+  MantineShadow,
+  MantineSpacing,
 } from '@mantine/core';
 
 interface ColorValues {

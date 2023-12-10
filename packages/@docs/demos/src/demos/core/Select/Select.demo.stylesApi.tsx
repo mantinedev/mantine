@@ -1,7 +1,7 @@
 import React from 'react';
-import { MantineDemo } from '@mantinex/demo';
 import { IconAt } from '@tabler/icons-react';
-import { Select, rem } from '@mantine/core';
+import { rem, Select } from '@mantine/core';
+import { MantineDemo } from '@mantinex/demo';
 import { SelectStylesApi } from '@docs/styles-api';
 
 const code = `

@@ -1,18 +1,18 @@
 import React from 'react';
 import {
-  StylesApiProps,
+  createVarsResolver,
   factory,
+  Factory,
+  getDefaultZIndex,
+  getRadius,
+  getSize,
+  MantineRadius,
+  rem,
+  StylesApiProps,
   useProps,
   useStyles,
-  createVarsResolver,
-  Factory,
-  MantineRadius,
-  getRadius,
-  getDefaultZIndex,
-  getSize,
-  rem,
 } from '../../core';
-import { ModalBaseProps, ModalBase, ModalBaseStylesNames } from '../ModalBase';
+import { ModalBase, ModalBaseProps, ModalBaseStylesNames } from '../ModalBase';
 import { ModalProvider, ScrollAreaComponent } from './Modal.context';
 import classes from './Modal.module.css';
 

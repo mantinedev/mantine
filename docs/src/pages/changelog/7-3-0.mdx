@@ -1,11 +1,11 @@
-import { Layout } from '@/layout';
-import { MDX_DATA } from '@/mdx';
 import {
+  ButtonDemos,
   Changelog730Demos,
   ColorPickerDemos,
-  ButtonDemos,
   DrawerDemos,
 } from '@docs/demos';
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
 
 export default Layout(MDX_DATA.Changelog730);
 
@@ -73,9 +73,9 @@ Example of zod resolver:
 <InstallScript packages="zod mantine-form-zod-resolver" />
 
 ```tsx
+import { zodResolver } from 'mantine-form-zod-resolver';
 import { z } from 'zod';
 import { useForm } from '@mantine/form';
-import { zodResolver } from 'mantine-form-zod-resolver';
 
 const schema = z.object({
   name: z

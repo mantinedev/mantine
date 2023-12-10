@@ -1,6 +1,6 @@
 import { createSafeContext, GetStylesApi } from '@mantine/core';
-import type { SpotlightRootFactory } from './SpotlightRoot';
 import { SpotlightStore } from './spotlight.store';
+import type { SpotlightRootFactory } from './SpotlightRoot';
 
 interface SpotlightContextValue {
   query: string;

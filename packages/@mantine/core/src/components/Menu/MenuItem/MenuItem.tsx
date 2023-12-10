@@ -3,15 +3,15 @@ import { useMergedRef } from '@mantine/hooks';
 import {
   BoxProps,
   CompoundStylesApiProps,
-  polymorphicFactory,
-  useProps,
-  PolymorphicFactory,
-  MantineColor,
   createEventHandler,
   createScopedKeydownHandler,
+  MantineColor,
+  parseThemeColor,
+  polymorphicFactory,
+  PolymorphicFactory,
   useDirection,
   useMantineTheme,
-  parseThemeColor,
+  useProps,
 } from '../../../core';
 import { UnstyledButton } from '../../UnstyledButton';
 import { useMenuContext } from '../Menu.context';

@@ -1,6 +1,6 @@
-import { tests, createContextContainer } from '@mantine-tests/core';
-import { GridCol, GridColProps, GridColStylesNames } from './GridCol';
+import { createContextContainer, tests } from '@mantine-tests/core';
 import { Grid } from '../Grid';
+import { GridCol, GridColProps, GridColStylesNames } from './GridCol';
 
 const TestContainer = createContextContainer(GridCol, Grid, {});
 

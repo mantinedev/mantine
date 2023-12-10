@@ -1,6 +1,6 @@
 import React from 'react';
-import { MantineDemo } from '@mantinex/demo';
 import { ColorInput, ColorInputProps } from '@mantine/core';
+import { MantineDemo } from '@mantinex/demo';
 
 function Wrapper(props: ColorInputProps) {
   return (

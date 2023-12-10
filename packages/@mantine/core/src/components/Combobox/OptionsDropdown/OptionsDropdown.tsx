@@ -1,7 +1,7 @@
 import React from 'react';
 import cx from 'clsx';
-import { ScrollArea } from '../../ScrollArea/ScrollArea';
 import { CheckIcon } from '../../Checkbox';
+import { ScrollArea } from '../../ScrollArea/ScrollArea';
 import { Combobox } from '../Combobox';
 import { ComboboxItem, ComboboxParsedItem } from '../Combobox.types';
 import { defaultOptionsFilter, FilterOptionsInput } from './default-options-filter';

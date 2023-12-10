@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { PillsInput, Pill, Input, Combobox, useCombobox } from '@mantine/core';
+import { Combobox, Input, Pill, PillsInput, useCombobox } from '@mantine/core';
 
 const groceries = ['🍎 Apples', '🍌 Bananas', '🥦 Broccoli', '🥕 Carrots', '🍫 Chocolate'];
 

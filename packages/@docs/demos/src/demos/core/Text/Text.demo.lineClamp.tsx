@@ -1,6 +1,6 @@
 import React from 'react';
+import { Text, TypographyStylesProvider } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
-import { TypographyStylesProvider, Text } from '@mantine/core';
 
 const code = `
 import { TypographyStylesProvider, Text } from '@mantine/core';

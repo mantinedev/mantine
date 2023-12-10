@@ -3,17 +3,17 @@ import {
   Box,
   BoxProps,
   CompoundStylesApiProps,
-  factory,
   ElementProps,
-  useProps,
+  factory,
   Factory,
-  UnstyledButton,
-  MantineColor,
   Highlight,
+  MantineColor,
+  UnstyledButton,
+  useProps,
 } from '@mantine/core';
-import classes from './Spotlight.module.css';
 import { useSpotlightContext } from './Spotlight.context';
 import { spotlightActions } from './spotlight.store';
+import classes from './Spotlight.module.css';
 
 export type SpotlightActionStylesNames =
   | 'action'

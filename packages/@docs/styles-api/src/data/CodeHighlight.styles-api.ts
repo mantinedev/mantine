@@ -1,6 +1,6 @@
 import type {
-  CodeHighlightTabsFactory,
   CodeHighlightFactory,
+  CodeHighlightTabsFactory,
   InlineCodeHighlightFactory,
 } from '@mantine/code-highlight';
 import type { StylesApiData } from '../types';

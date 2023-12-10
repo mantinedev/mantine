@@ -1,14 +1,14 @@
 import React from 'react';
-import {
-  TableTd,
-  TableTr,
-  TableTh,
-  TableTbody,
-  TableTfoot,
-  TableThead,
-  TableCaption,
-} from './Table.components';
 import type { TableData } from './Table';
+import {
+  TableCaption,
+  TableTbody,
+  TableTd,
+  TableTfoot,
+  TableTh,
+  TableThead,
+  TableTr,
+} from './Table.components';
 
 export interface TableDataRendererProps {
   data: TableData;

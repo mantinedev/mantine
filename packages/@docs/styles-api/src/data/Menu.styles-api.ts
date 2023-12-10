@@ -1,6 +1,6 @@
 import type { MenuFactory } from '@mantine/core';
-import { PopoverStylesApi } from './Popover.styles-api';
 import type { StylesApiData } from '../types';
+import { PopoverStylesApi } from './Popover.styles-api';
 
 export const MenuStylesApi: StylesApiData<MenuFactory> = {
   selectors: {

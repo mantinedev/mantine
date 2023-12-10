@@ -1,6 +1,6 @@
-import { tests, createContextContainer } from '@mantine-tests/core';
-import { PopoverDropdown, PopoverDropdownProps } from './PopoverDropdown';
+import { createContextContainer, tests } from '@mantine-tests/core';
 import { Popover } from '../Popover';
+import { PopoverDropdown, PopoverDropdownProps } from './PopoverDropdown';
 
 const defaultProps: PopoverDropdownProps = {};
 

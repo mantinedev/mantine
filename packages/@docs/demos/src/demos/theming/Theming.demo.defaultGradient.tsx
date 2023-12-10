@@ -1,6 +1,6 @@
 import React from 'react';
+import { Button, createTheme, MantineThemeProvider } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
-import { MantineThemeProvider, createTheme, Button } from '@mantine/core';
 
 const code = `
 import { MantineProvider, createTheme, Button } from '@mantine/core';

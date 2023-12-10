@@ -1,15 +1,15 @@
 import React from 'react';
 import {
-  useProps,
-  factory,
-  ElementProps,
-  MantineColor,
+  CompoundStylesApiProps,
   createScopedKeydownHandler,
+  ElementProps,
+  factory,
+  Factory,
+  getThemeColor,
+  MantineColor,
   useDirection,
   useMantineTheme,
-  getThemeColor,
-  CompoundStylesApiProps,
-  Factory,
+  useProps,
 } from '../../../core';
 import { UnstyledButton, UnstyledButtonProps } from '../../UnstyledButton';
 import { useTabsContext } from '../Tabs.context';

@@ -1,14 +1,13 @@
 import React from 'react';
 import {
-  render,
-  tests,
   createContextContainer,
   patchConsoleError,
+  render,
   screen,
+  tests,
 } from '@mantine-tests/core';
+import { Table } from './Table';
 import {
-  TableTh,
-  TableThProps,
   TableCaption,
   TableCaptionProps,
   TableTbody,
@@ -17,12 +16,13 @@ import {
   TableTdProps,
   TableTfoot,
   TableTfootProps,
-  TableTr,
-  TableTrProps,
+  TableTh,
   TableThead,
   TableTheadProps,
+  TableThProps,
+  TableTr,
+  TableTrProps,
 } from './Table.components';
-import { Table } from './Table';
 
 describe('@mantine/core/Table', () => {
   beforeAll(patchConsoleError);

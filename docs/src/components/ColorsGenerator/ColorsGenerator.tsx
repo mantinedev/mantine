@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
-import { useLocalStorage } from '@mantine/hooks';
 import { generateColorsMap } from '@mantine/colors-generator';
+import { useLocalStorage } from '@mantine/hooks';
 import { MdxTitle } from '@/components/MdxProvider';
-import { ColorsList } from './ColorsList/ColorsList';
 import { ColorsInput } from './ColorsInput/ColorsInput';
-import { ComponentsPreview } from './ComponentsPreview/ComponentsPreview';
+import { ColorsList } from './ColorsList/ColorsList';
 import { ColorsOutput } from './ColorsOutput/ColorsOutput';
+import { ComponentsPreview } from './ComponentsPreview/ComponentsPreview';
 
 export function ColorsGenerator() {
   const router = useRouter();

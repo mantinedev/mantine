@@ -1,23 +1,23 @@
 import React from 'react';
 import {
-  BoxProps,
-  StylesApiProps,
-  polymorphicFactory,
-  useProps,
-  useStyles,
-  createVarsResolver,
-  PolymorphicFactory,
-  MantineSize,
-  MantineColor,
-  MantineRadius,
-  MantineGradient,
   Box,
+  BoxProps,
+  createVarsResolver,
+  getFontSize,
   getRadius,
   getSize,
-  getFontSize,
+  MantineColor,
+  MantineGradient,
+  MantineRadius,
+  MantineSize,
+  polymorphicFactory,
+  PolymorphicFactory,
+  StylesApiProps,
+  useProps,
+  useStyles,
 } from '../../core';
-import { UnstyledButton } from '../UnstyledButton';
 import { Loader, LoaderProps } from '../Loader';
+import { UnstyledButton } from '../UnstyledButton';
 import { ButtonGroup } from './ButtonGroup/ButtonGroup';
 import classes from './Button.module.css';
 

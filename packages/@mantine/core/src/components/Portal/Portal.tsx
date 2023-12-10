@@ -1,12 +1,13 @@
-import React, { useRef, useState, forwardRef } from 'react';
+import React, { forwardRef, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
-import { useIsomorphicEffect, assignRef } from '@mantine/hooks';
+import { assignRef, useIsomorphicEffect } from '@mantine/hooks';
 import { useProps } from '../../core';
 
 function createPortalNode(props: React.ComponentPropsWithoutRef<'div'>) {
   const node = document.createElement('div');
   node.setAttribute('data-portal', 'true');
-  typeof props.className === 'string' && node.classList.add(...props.className.split(' '));
+  typeof props.className === 'string' &&
+    node.classList.add(...props.className.split(' ').filter(Boolean));
   typeof props.style === 'object' && Object.assign(node.style, props.style);
   typeof props.id === 'string' && node.setAttribute('id', props.id);
   return node;

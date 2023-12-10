@@ -1,7 +1,7 @@
 import React from 'react';
 import Link from 'next/link';
 import cx from 'clsx';
-import { VisuallyHidden, FOCUS_CLASS_NAMES } from '@mantine/core';
+import { FOCUS_CLASS_NAMES, VisuallyHidden } from '@mantine/core';
 import { MantineLogo, MantineLogoProps } from '@mantinex/mantine-logo';
 import classes from './Logo.module.css';
 

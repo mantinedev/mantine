@@ -1,13 +1,13 @@
 import React from 'react';
+import {
+  IconActivity,
+  IconChevronRight,
+  IconCircleOff,
+  IconGauge,
+  IconHome2,
+} from '@tabler/icons-react';
 import { Badge, NavLink } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
-import {
-  IconHome2,
-  IconGauge,
-  IconChevronRight,
-  IconActivity,
-  IconCircleOff,
-} from '@tabler/icons-react';
 
 const code = `
 import { Badge, NavLink } from '@mantine/core';

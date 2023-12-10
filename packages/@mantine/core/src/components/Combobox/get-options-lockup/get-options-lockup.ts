@@ -1,4 +1,4 @@
-import { ComboboxParsedItem, ComboboxItem } from '../Combobox.types';
+import { ComboboxItem, ComboboxParsedItem } from '../Combobox.types';
 
 export function getOptionsLockup(options: ComboboxParsedItem[]): Record<string, ComboboxItem> {
   return options.reduce<Record<string, ComboboxItem>>((acc, item) => {

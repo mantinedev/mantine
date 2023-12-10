@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
+import { Box, Checkbox, TextInput } from '@mantine/core';
 import { useForm } from '@mantine/form';
 import { MantineDemo } from '@mantinex/demo';
-import { TextInput, Checkbox, Box } from '@mantine/core';
 
 const code = `
 import { useEffect } from 'react';

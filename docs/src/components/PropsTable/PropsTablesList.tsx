@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import { TextInput, Title } from '@mantine/core';
 import { IconSearch } from '@tabler/icons-react';
-import { PropsTable } from './PropsTable';
+import { TextInput, Title } from '@mantine/core';
 import { getComponentName } from './getComponentName';
+import { PropsTable } from './PropsTable';
 import classes from './PropsTablesList.module.css';
 
 export interface PropsTablesListProps {

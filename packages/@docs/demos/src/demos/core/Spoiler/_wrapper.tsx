@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, Box, Spoiler, SpoilerProps } from '@mantine/core';
+import { Box, Spoiler, SpoilerProps, Text } from '@mantine/core';
 
 const content = (
   <div>

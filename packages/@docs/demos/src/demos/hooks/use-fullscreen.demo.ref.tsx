@@ -1,6 +1,6 @@
 import React from 'react';
-import { useFullscreen } from '@mantine/hooks';
 import { Button, Stack } from '@mantine/core';
+import { useFullscreen } from '@mantine/hooks';
 import { MantineDemo } from '@mantinex/demo';
 
 const refCode = `

@@ -1,25 +1,25 @@
-import { Layout } from '@/layout';
-import { MDX_DATA } from '@/mdx';
 import { Button } from '@mantine/core';
 import {
-  ThemingDemos,
-  LoaderDemos,
-  TableDemos,
-  GroupDemos,
-  StylesDemos,
-  FieldsetDemos,
-  ComboboxDemos,
-  TagsInputDemos,
-  InputDemos,
-  SimpleGridDemos,
-  GridDemos,
-  ProgressDemos,
-  SpotlightDemos,
-  ImageDemos,
   CarouselDemos,
-  NumberInputDemos,
   CodeHighlightDemos,
+  ComboboxDemos,
+  FieldsetDemos,
+  GridDemos,
+  GroupDemos,
+  ImageDemos,
+  InputDemos,
+  LoaderDemos,
+  NumberInputDemos,
+  ProgressDemos,
+  SimpleGridDemos,
+  SpotlightDemos,
+  StylesDemos,
+  TableDemos,
+  TagsInputDemos,
+  ThemingDemos,
 } from '@docs/demos';
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
 
 export default Layout(MDX_DATA.Changelog700);
 
@@ -61,7 +61,7 @@ Note that `auto` is not the default value. You need to set it manually to enable
 both on [MantineProvider](/theming/mantine-provider) and in [ColorSchemeScript](/theming/color-schemes#colorschemescript):
 
 ```tsx
-import { MantineProvider, ColorSchemeScript } from '@mantine/core';
+import { ColorSchemeScript, MantineProvider } from '@mantine/core';
 
 function Demo() {
   return (
@@ -222,7 +222,7 @@ to set `scale` to `1 / (10 / 16)` (16 – default font-size) = `1 / 0.625` = `1.
 ```
 
 ```tsx
-import { MantineProvider, createTheme } from '@mantine/core';
+import { createTheme, MantineProvider } from '@mantine/core';
 
 const theme = createTheme({
   scale: 1.6,
@@ -292,8 +292,8 @@ color palettes based on single color value. It is also available as [online tool
 Note that it is usually better to generate colors in advance to avoid contrast issues.
 
 ```tsx
-import { MantineProvider } from '@mantine/core';
 import { generateColors } from '@mantine/colors-generator';
+import { MantineProvider } from '@mantine/core';
 
 function Demo() {
   return (

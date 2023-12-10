@@ -1,10 +1,10 @@
 /* eslint-disable no-console */
-import React, { useState, useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import { useForm } from '@mantine/form';
-import { NumberInput, NumberInputHandlers } from './NumberInput';
 import { Button } from '../Button';
-import { TextInput } from '../TextInput';
 import { Group } from '../Group';
+import { TextInput } from '../TextInput';
+import { NumberInput, NumberInputHandlers } from './NumberInput';
 
 export default { title: 'NumberInput' };
 

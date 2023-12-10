@@ -1,8 +1,8 @@
 import React, { useRef } from 'react';
-import { MantineDemo } from '@mantinex/demo';
 import { IconClock } from '@tabler/icons-react';
 import { ActionIcon, rem } from '@mantine/core';
 import { TimeInput } from '@mantine/dates';
+import { MantineDemo } from '@mantinex/demo';
 
 const code = `
 import { useRef } from 'react';

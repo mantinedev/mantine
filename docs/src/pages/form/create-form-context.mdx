@@ -1,6 +1,6 @@
+import { FormDemos } from '@docs/demos';
 import { Layout } from '@/layout';
 import { MDX_DATA } from '@/mdx';
-import { FormDemos } from '@docs/demos';
 
 export default Layout(MDX_DATA.createFormContext);
 
@@ -9,8 +9,8 @@ export default Layout(MDX_DATA.createFormContext);
 `createFormContext` function creates context provider and hook to get form object from context:
 
 ```tsx
-import { createFormContext } from '@mantine/form';
 import { TextInput } from '@mantine/core';
+import { createFormContext } from '@mantine/form';
 
 // Definition of form values is required
 interface FormValues {

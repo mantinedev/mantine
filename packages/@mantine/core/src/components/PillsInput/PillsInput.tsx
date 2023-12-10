@@ -1,6 +1,6 @@
 import React, { useRef } from 'react';
-import { factory, ElementProps, useProps, Factory, BoxProps, StylesApiProps } from '../../core';
-import { __InputStylesNames, __BaseInputProps } from '../Input';
+import { BoxProps, ElementProps, factory, Factory, StylesApiProps, useProps } from '../../core';
+import { __BaseInputProps, __InputStylesNames } from '../Input';
 import { InputBase } from '../InputBase';
 import { PillsInputProvider } from './PillsInput.context';
 import { PillsInputField } from './PillsInputField/PillsInputField';

@@ -1,6 +1,6 @@
-import { tests, createContextContainer } from '@mantine-tests/core';
-import { AppShellMain, AppShellMainProps, AppShellMainStylesNames } from './AppShellMain';
+import { createContextContainer, tests } from '@mantine-tests/core';
 import { AppShell } from '../AppShell';
+import { AppShellMain, AppShellMainProps, AppShellMainStylesNames } from './AppShellMain';
 
 const TestContainer = createContextContainer(AppShellMain, AppShell, {});
 

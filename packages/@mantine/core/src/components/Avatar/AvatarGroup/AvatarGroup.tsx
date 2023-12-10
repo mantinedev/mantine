@@ -2,15 +2,15 @@ import React from 'react';
 import {
   Box,
   BoxProps,
-  StylesApiProps,
-  factory,
+  createVarsResolver,
   ElementProps,
+  factory,
+  Factory,
+  getSpacing,
+  MantineSpacing,
+  StylesApiProps,
   useProps,
   useStyles,
-  createVarsResolver,
-  Factory,
-  MantineSpacing,
-  getSpacing,
 } from '../../../core';
 import { AvatarGroupProvider } from './AvatarGroup.context';
 import classes from '../Avatar.module.css';

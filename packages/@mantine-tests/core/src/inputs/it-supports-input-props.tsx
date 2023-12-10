@@ -1,7 +1,7 @@
 import React from 'react';
-import { itSupportsInputWrapperProps } from './it-supports-input-wrapper-props';
-import { itSupportsInputSections } from './it-supports-input-sections';
 import { itSupportsFocusEvents } from '../shared/it-supports-focus-events';
+import { itSupportsInputSections } from './it-supports-input-sections';
+import { itSupportsInputWrapperProps } from './it-supports-input-wrapper-props';
 
 interface Options<Props = any> {
   component: React.ComponentType<Props>;

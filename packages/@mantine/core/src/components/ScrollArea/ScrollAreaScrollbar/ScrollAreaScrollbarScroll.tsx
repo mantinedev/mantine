@@ -1,11 +1,11 @@
 import React, { forwardRef, useEffect, useState } from 'react';
 import { useDebounceCallback } from '@mantine/hooks';
 import { useScrollAreaContext } from '../ScrollArea.context';
+import { composeEventHandlers } from '../utils';
 import {
   ScrollAreaScrollbarVisible,
   ScrollAreaScrollbarVisibleProps,
 } from './ScrollAreaScrollbarVisible';
-import { composeEventHandlers } from '../utils';
 
 interface ScrollAreaScrollbarScrollProps extends ScrollAreaScrollbarVisibleProps {
   forceMount?: true;

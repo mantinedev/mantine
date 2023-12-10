@@ -1,6 +1,6 @@
 import React from 'react';
-import { MantineDemo } from '@mantinex/demo';
 import { Highlight, HighlightProps } from '@mantine/core';
+import { MantineDemo } from '@mantinex/demo';
 
 function Wrapper(props: HighlightProps) {
   return <Highlight maw={400} mx="auto" {...props} />;

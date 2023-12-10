@@ -1,8 +1,8 @@
 import React from 'react';
-import { TextInput } from '../TextInput';
 import { Group } from '../Group';
-import { PillsInput } from './PillsInput';
 import { Pill } from '../Pill';
+import { TextInput } from '../TextInput';
+import { PillsInput } from './PillsInput';
 
 export default { title: 'PillsInput' };
 

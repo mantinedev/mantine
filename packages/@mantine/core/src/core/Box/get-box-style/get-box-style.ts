@@ -1,5 +1,5 @@
 import type { MantineTheme } from '../../MantineProvider';
-import type { MantineStyleProp, CssVarsProp } from '../Box.types';
+import type { CssVarsProp, MantineStyleProp } from '../Box.types';
 
 interface GetBoxStyleOptions {
   theme: MantineTheme;

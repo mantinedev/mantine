@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useWindowEvent } from '../use-window-event/use-window-event';
 
 interface NetworkStatus {

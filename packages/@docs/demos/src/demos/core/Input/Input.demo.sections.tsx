@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { MantineDemo } from '@mantinex/demo';
-import { Input, CloseButton } from '@mantine/core';
 import { IconAt } from '@tabler/icons-react';
+import { CloseButton, Input } from '@mantine/core';
+import { MantineDemo } from '@mantinex/demo';
 
 const code = `
 import { useState } from 'react';

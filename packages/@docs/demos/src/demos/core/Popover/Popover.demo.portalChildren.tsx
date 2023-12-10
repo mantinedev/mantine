@@ -1,7 +1,7 @@
 import React from 'react';
-import { MantineDemo } from '@mantinex/demo';
 import { Button, Popover, Select } from '@mantine/core';
 import { DatePickerInput } from '@mantine/dates';
+import { MantineDemo } from '@mantinex/demo';
 
 const code = `
 import { Button, Popover, Select } from '@mantine/core';

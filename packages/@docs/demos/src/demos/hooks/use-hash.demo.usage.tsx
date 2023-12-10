@@ -1,7 +1,7 @@
 import React from 'react';
-import { useHash, randomId } from '@mantine/hooks';
+import { Button, Code, Group, Text } from '@mantine/core';
+import { randomId, useHash } from '@mantine/hooks';
 import { MantineDemo } from '@mantinex/demo';
-import { Group, Button, Text, Code } from '@mantine/core';
 
 const code = `
 import { useHash, randomId } from '@mantine/hooks';

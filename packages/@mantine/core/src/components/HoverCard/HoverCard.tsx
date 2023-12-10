@@ -1,12 +1,12 @@
 import React from 'react';
 import { useDisclosure } from '@mantine/hooks';
-import { ExtendComponent, useProps, Factory } from '../../core';
+import { ExtendComponent, Factory, useProps } from '../../core';
 import { useDelayedHover } from '../Floating';
 import { Popover, PopoverProps, PopoverStylesNames } from '../Popover';
+import { PopoverCssVariables } from '../Popover/Popover';
 import { HoverCardContextProvider } from './HoverCard.context';
 import { HoverCardDropdown } from './HoverCardDropdown/HoverCardDropdown';
 import { HoverCardTarget } from './HoverCardTarget/HoverCardTarget';
-import { PopoverCssVariables } from '../Popover/Popover';
 
 export interface HoverCardProps extends Omit<PopoverProps, 'opened' | 'onChange'> {
   variant?: string;

@@ -1,4 +1,4 @@
-import { useRef, useEffect, useCallback } from 'react';
+import { useCallback, useEffect, useRef } from 'react';
 import { useCallbackRef } from '../use-callback-ref/use-callback-ref';
 
 export function useDebounceCallback(callback: () => void, delay: number) {

@@ -1,7 +1,7 @@
 import React from 'react';
 import { useDisclosure } from '@mantine/hooks';
-import { Group } from '../Group';
 import { Button } from '../Button';
+import { Group } from '../Group';
 import { AppShell } from './AppShell';
 
 export default { title: 'AppShell' };

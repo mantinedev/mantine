@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Stack, Code, Text, ScrollArea, Box } from '@mantine/core';
+import { Box, Code, ScrollArea, Stack, Text } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
 import { Content } from './_content';
 

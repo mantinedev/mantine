@@ -1,6 +1,6 @@
 import React from 'react';
+import { Button, Modal, Text } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
-import { Modal, Button, Text } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
 import { AuthenticationForm } from '../../../shared/AuthenticationForm/AuthenticationForm';
 

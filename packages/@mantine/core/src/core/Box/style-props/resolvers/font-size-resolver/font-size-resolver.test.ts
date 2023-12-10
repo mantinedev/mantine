@@ -1,6 +1,6 @@
-import { fontSizeResolver } from './font-size-resolver';
 import { DEFAULT_THEME } from '../../../../MantineProvider';
 import { rem } from '../../../../utils';
+import { fontSizeResolver } from './font-size-resolver';
 
 describe('@mantine/core/Box/font-size-resolver', () => {
   it('resolves theme font size', () => {

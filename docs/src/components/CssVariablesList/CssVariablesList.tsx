@@ -1,6 +1,6 @@
 import React from 'react';
 import { Code, DEFAULT_THEME, defaultCssVariablesResolver, keys } from '@mantine/core';
-import { MdxTitle, MdxDataTable } from '../MdxProvider';
+import { MdxDataTable, MdxTitle } from '../MdxProvider';
 
 export function CssVariablesList() {
   const resolvedVariables = defaultCssVariablesResolver(DEFAULT_THEME);

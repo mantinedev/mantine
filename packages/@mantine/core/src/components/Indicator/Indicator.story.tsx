@@ -1,9 +1,9 @@
 import React from 'react';
-import { Avatar } from '../Avatar';
 import { Box } from '../../core';
+import { Avatar } from '../Avatar';
 import { Group } from '../Group';
-import { Indicator } from './Indicator';
 import { Text } from '../Text';
+import { Indicator } from './Indicator';
 
 export default { title: 'Indicator' };
 

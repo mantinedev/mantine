@@ -1,5 +1,5 @@
-import { getDeclarationsPaths } from './get-declarations-paths';
 import { getPath, getPaths } from '../utils/get-path';
+import { getDeclarationsPaths } from './get-declarations-paths';
 
 const FILES_PATHS = getPaths([
   // Input

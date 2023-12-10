@@ -1,6 +1,6 @@
 import React from 'react';
-import { rem, useDirection } from '@mantine/core';
 import { IconTextDirectionLtr, IconTextDirectionRtl } from '@tabler/icons-react';
+import { rem, useDirection } from '@mantine/core';
 import { HeaderControl } from './HeaderControl';
 
 export function DirectionControl() {

@@ -1,6 +1,6 @@
 import dayjs from 'dayjs';
-import { getTimezoneOffset } from './get-timezone-offset';
 import { DatesRangeValue, DateValue } from '../types';
+import { getTimezoneOffset } from './get-timezone-offset';
 
 type TimeShiftDirection = 'add' | 'remove';
 

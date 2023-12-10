@@ -1,8 +1,8 @@
 import React from 'react';
-import { useMantineTheme, MantineColor, getThemeColor, GetStylesApi, Box } from '../../../core';
+import { Box, GetStylesApi, getThemeColor, MantineColor, useMantineTheme } from '../../../core';
 import { Tooltip } from '../../Tooltip';
-import { getCurveProps } from './get-curve-props';
 import type { RingProgressFactory } from '../RingProgress';
+import { getCurveProps } from './get-curve-props';
 
 interface CurveProps extends React.ComponentPropsWithRef<'circle'> {
   value?: number;

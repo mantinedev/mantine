@@ -1,12 +1,12 @@
 // Generates separate css files for each @mantine/core component
-import postcssPresetMantine from 'postcss-preset-mantine';
-import postcss from 'postcss';
+import path from 'node:path';
 import cssnano from 'cssnano';
-import postcssModules from 'postcss-modules';
 import glob from 'fast-glob';
 import fs from 'fs-extra';
-import path from 'node:path';
 import { generateScopedName } from 'hash-css-selector';
+import postcss from 'postcss';
+import postcssModules from 'postcss-modules';
+import postcssPresetMantine from 'postcss-preset-mantine';
 import { getPath } from '../utils/get-path';
 
 function transformFileName(filePath: string) {

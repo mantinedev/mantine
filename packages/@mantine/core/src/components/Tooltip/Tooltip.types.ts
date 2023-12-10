@@ -1,4 +1,4 @@
-import { BoxProps, ElementProps, MantineColor, StylesApiProps, MantineRadius } from '../../core';
+import { BoxProps, ElementProps, MantineColor, MantineRadius, StylesApiProps } from '../../core';
 import { FloatingPosition } from '../Floating';
 import { PortalProps } from '../Portal';
 import type { TooltipFactory } from './Tooltip';

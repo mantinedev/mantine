@@ -1,7 +1,7 @@
 import React from 'react';
+import { Box, Text, TextInput } from '@mantine/core';
 import { useDebouncedState } from '@mantine/hooks';
 import { MantineDemo } from '@mantinex/demo';
-import { TextInput, Text, Box } from '@mantine/core';
 
 const code = `
 import { useDebouncedState } from '@mantine/hooks';

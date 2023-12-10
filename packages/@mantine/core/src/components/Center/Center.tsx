@@ -2,11 +2,11 @@ import React from 'react';
 import {
   Box,
   BoxProps,
-  StylesApiProps,
   polymorphicFactory,
+  PolymorphicFactory,
+  StylesApiProps,
   useProps,
   useStyles,
-  PolymorphicFactory,
 } from '../../core';
 import classes from './Center.module.css';
 

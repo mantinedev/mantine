@@ -1,6 +1,6 @@
 import React from 'react';
+import { AspectRatio, Overlay } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
-import { Overlay, AspectRatio } from '@mantine/core';
 
 const code = `
 import { Overlay, AspectRatio } from '@mantine/core';

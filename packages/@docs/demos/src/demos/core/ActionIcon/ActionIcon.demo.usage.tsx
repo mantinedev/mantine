@@ -1,7 +1,7 @@
 import React from 'react';
-import { MantineDemo } from '@mantinex/demo';
 import { IconAdjustments } from '@tabler/icons-react';
 import { ActionIcon } from '@mantine/core';
+import { MantineDemo } from '@mantinex/demo';
 import { interactiveVariantsControl } from '../../../shared';
 
 const code = `

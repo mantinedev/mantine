@@ -1,11 +1,11 @@
-import { tests, createContextContainer } from '@mantine-tests/core';
+import { createContextContainer, tests } from '@mantine-tests/core';
+import { Accordion } from '../Accordion';
 import { AccordionItem } from '../AccordionItem/AccordionItem';
 import {
   AccordionControl,
   AccordionControlProps,
   AccordionControlStylesNames,
 } from './AccordionControl';
-import { Accordion } from '../Accordion';
 
 const defaultProps: AccordionControlProps = {
   icon: '$',

@@ -1,6 +1,6 @@
+import { StylesDemos } from '@docs/demos';
 import { Layout } from '@/layout';
 import { MDX_DATA } from '@/mdx';
-import { StylesDemos } from '@docs/demos';
 
 export default Layout(MDX_DATA.Rem);
 
@@ -29,7 +29,7 @@ to set `scale` to `1 / (10 / 16)` (16 – default font-size) = `1 / 0.625` = `1.
 ```
 
 ```tsx
-import { MantineProvider, createTheme } from '@mantine/core';
+import { createTheme, MantineProvider } from '@mantine/core';
 
 const theme = createTheme({
   scale: 1.6,
@@ -85,7 +85,7 @@ function Demo() {
 `@mantine/core` package exports `rem` and `em` function that can be used to convert `px` into `rem`/`em`:
 
 ```tsx
-import { rem, em } from '@mantine/core';
+import { em, rem } from '@mantine/core';
 
 // numbers and values in px are converted to rem
 rem(32); // -> calc(2rem * var(--mantine-scale))

@@ -2,25 +2,25 @@ import React, { useEffect, useMemo } from 'react';
 import { useId, useUncontrolled } from '@mantine/hooks';
 import {
   BoxProps,
-  StylesApiProps,
-  factory,
   ElementProps,
-  useProps,
   Factory,
+  factory,
+  StylesApiProps,
+  useProps,
   useResolvedStylesApi,
 } from '../../core';
-import { InputBase } from '../InputBase';
 import { __CloseButtonProps } from '../CloseButton';
-import { __InputStylesNames, __BaseInputProps, InputVariant } from '../Input';
 import {
   Combobox,
-  OptionsDropdown,
-  useCombobox,
-  getParsedComboboxData,
-  getOptionsLockup,
   ComboboxLikeProps,
   ComboboxLikeStylesNames,
+  getOptionsLockup,
+  getParsedComboboxData,
+  OptionsDropdown,
+  useCombobox,
 } from '../Combobox';
+import { __BaseInputProps, __InputStylesNames, InputVariant } from '../Input';
+import { InputBase } from '../InputBase';
 
 export type SelectStylesNames = __InputStylesNames | ComboboxLikeStylesNames;
 

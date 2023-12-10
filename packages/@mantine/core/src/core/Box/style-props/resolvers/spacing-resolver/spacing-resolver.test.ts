@@ -1,6 +1,6 @@
-import { spacingResolver } from './spacing-resolver';
 import { DEFAULT_THEME } from '../../../../MantineProvider';
 import { rem } from '../../../../utils';
+import { spacingResolver } from './spacing-resolver';
 
 describe('@mantine/core/Box/spacing-resolver', () => {
   it('resolves number correctly', () => {

@@ -1,19 +1,19 @@
 import React, { forwardRef } from 'react';
 import cx from 'clsx';
-import { useMantineTheme, MantineBreakpoint } from '../MantineProvider';
-import { InlineStyles } from '../InlineStyles';
 import { createPolymorphicComponent } from '../factory';
-import type { MantineStyleProp, CssVarsProp } from './Box.types';
+import { InlineStyles } from '../InlineStyles';
+import { MantineBreakpoint, useMantineTheme } from '../MantineProvider';
+import { isNumberLike } from '../utils';
+import type { CssVarsProp, MantineStyleProp } from './Box.types';
+import { getBoxMod } from './get-box-mod/get-box-mod';
 import { getBoxStyle } from './get-box-style/get-box-style';
-import { useRandomClassName } from './use-random-classname/use-random-classname';
 import {
-  MantineStyleProps,
   extractStyleProps,
+  MantineStyleProps,
   parseStyleProps,
   STYlE_PROPS_DATA,
 } from './style-props';
-import { getBoxMod } from './get-box-mod/get-box-mod';
-import { isNumberLike } from '../utils';
+import { useRandomClassName } from './use-random-classname/use-random-classname';
 
 export type Mod = Record<string, any> | string;
 export type BoxMod = Mod | Mod[] | BoxMod[];

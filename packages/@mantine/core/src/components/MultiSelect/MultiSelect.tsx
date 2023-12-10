@@ -2,29 +2,29 @@ import React, { useEffect } from 'react';
 import { useId, useUncontrolled } from '@mantine/hooks';
 import {
   BoxProps,
-  StylesApiProps,
-  factory,
   ElementProps,
-  useProps,
-  Factory,
   extractStyleProps,
-  useStyles,
+  factory,
+  Factory,
+  StylesApiProps,
+  useProps,
   useResolvedStylesApi,
+  useStyles,
 } from '../../core';
+import { __CloseButtonProps } from '../CloseButton';
 import {
   Combobox,
-  OptionsDropdown,
-  useCombobox,
-  getParsedComboboxData,
-  getOptionsLockup,
   ComboboxLikeProps,
   ComboboxLikeStylesNames,
+  getOptionsLockup,
+  getParsedComboboxData,
+  OptionsDropdown,
+  useCombobox,
 } from '../Combobox';
 import { __BaseInputProps, __InputStylesNames } from '../Input';
-import { PillsInput } from '../PillsInput';
-import { Pill } from '../Pill';
 import { InputBase } from '../InputBase';
-import { __CloseButtonProps } from '../CloseButton';
+import { Pill } from '../Pill';
+import { PillsInput } from '../PillsInput';
 import { filterPickedValues } from './filter-picked-values';
 
 export type MultiSelectStylesNames =

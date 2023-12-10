@@ -1,6 +1,6 @@
 import React from 'react';
-import { MdxParagraph, MdxCode, MdxLi, MdxUl } from '../MdxTypography/MdxTypography';
 import { MdxTitle } from '../MdxTitle/MdxTitle';
+import { MdxCode, MdxLi, MdxParagraph, MdxUl } from '../MdxTypography/MdxTypography';
 
 interface MdxInputSectionsProps {
   component: string;

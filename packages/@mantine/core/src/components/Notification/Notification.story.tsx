@@ -1,10 +1,10 @@
 import React from 'react';
 import {
-  IconMoodSmile,
-  IconCheck,
-  IconX,
-  IconExclamationMark,
   IconBookmark,
+  IconCheck,
+  IconExclamationMark,
+  IconMoodSmile,
+  IconX,
 } from '@tabler/icons-react';
 import { Notification } from './Notification';
 

@@ -1,13 +1,13 @@
 import React from 'react';
-import { MantineDemo } from '@mantinex/demo';
-import { Group, Pagination } from '@mantine/core';
 import {
-  IconArrowBarToRight,
   IconArrowBarToLeft,
+  IconArrowBarToRight,
   IconArrowLeft,
   IconArrowRight,
   IconGripHorizontal,
 } from '@tabler/icons-react';
+import { Group, Pagination } from '@mantine/core';
+import { MantineDemo } from '@mantinex/demo';
 
 const code = `
 import { Group, Pagination } from '@mantine/core';

@@ -1,7 +1,7 @@
 import React from 'react';
-import { MantineDemo } from '@mantinex/demo';
-import { JsonInput, rem } from '@mantine/core';
 import { IconAt } from '@tabler/icons-react';
+import { JsonInput, rem } from '@mantine/core';
+import { MantineDemo } from '@mantinex/demo';
 import { JsonInputStylesApi } from '@docs/styles-api';
 
 const code = `

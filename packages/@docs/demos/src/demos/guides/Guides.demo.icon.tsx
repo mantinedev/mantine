@@ -1,7 +1,7 @@
 import React from 'react';
-import { MantineDemo } from '@mantinex/demo';
 import { IconBrandMantine } from '@tabler/icons-react';
 import { rem } from '@mantine/core';
+import { MantineDemo } from '@mantinex/demo';
 
 const code = `
 import { rem } from '@mantine/core';

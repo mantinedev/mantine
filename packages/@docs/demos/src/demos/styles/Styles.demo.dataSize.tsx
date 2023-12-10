@@ -1,6 +1,6 @@
 import React from 'react';
+import { createTheme, Input, MantineThemeProvider } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
-import { Input, createTheme, MantineThemeProvider } from '@mantine/core';
 import classes from './Styles.demo.dataSize.module.css';
 
 const code = `

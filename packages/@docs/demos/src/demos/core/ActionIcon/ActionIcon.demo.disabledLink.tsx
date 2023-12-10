@@ -1,7 +1,7 @@
 import React from 'react';
-import { MantineDemo } from '@mantinex/demo';
-import { ActionIcon } from '@mantine/core';
 import { IconExternalLink } from '@tabler/icons-react';
+import { ActionIcon } from '@mantine/core';
+import { MantineDemo } from '@mantinex/demo';
 
 const code = `
 import { ActionIcon } from '@mantine/core';

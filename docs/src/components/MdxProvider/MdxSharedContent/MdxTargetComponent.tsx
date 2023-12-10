@@ -1,7 +1,7 @@
 import React from 'react';
+import { MdxCodeHighlight } from '../MdxPre/MdxPre';
 import { MdxTitle } from '../MdxTitle/MdxTitle';
 import { MdxCode, MdxParagraph } from '../MdxTypography/MdxTypography';
-import { MdxCodeHighlight } from '../MdxPre/MdxPre';
 
 const getTargetCode = (component: string) => `import { ${component}, Button } from '@mantine/core';
 

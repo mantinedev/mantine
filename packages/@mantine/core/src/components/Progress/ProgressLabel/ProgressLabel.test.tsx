@@ -1,6 +1,6 @@
-import { tests, createContextContainer } from '@mantine-tests/core';
-import { ProgressLabel, ProgressLabelProps, ProgressLabelStylesNames } from './ProgressLabel';
+import { createContextContainer, tests } from '@mantine-tests/core';
 import { ProgressRoot } from '../ProgressRoot/ProgressRoot';
+import { ProgressLabel, ProgressLabelProps, ProgressLabelStylesNames } from './ProgressLabel';
 
 const TestContainer = createContextContainer(ProgressLabel, ProgressRoot, {});
 

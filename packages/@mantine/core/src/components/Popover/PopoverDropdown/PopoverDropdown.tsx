@@ -3,18 +3,18 @@ import { useFocusReturn, useMergedRef } from '@mantine/hooks';
 import {
   Box,
   BoxProps,
-  CompoundStylesApiProps,
-  factory,
-  ElementProps,
-  useProps,
-  rem,
   closeOnEscape,
+  CompoundStylesApiProps,
+  ElementProps,
+  factory,
   Factory,
+  rem,
+  useProps,
 } from '../../../core';
+import { FloatingArrow } from '../../Floating';
+import { FocusTrap } from '../../FocusTrap';
 import { OptionalPortal } from '../../Portal';
 import { Transition } from '../../Transition';
-import { FocusTrap } from '../../FocusTrap';
-import { FloatingArrow } from '../../Floating';
 import type { PopoverStylesNames } from '../Popover';
 import { usePopoverContext } from '../Popover.context';
 import classes from '../Popover.module.css';

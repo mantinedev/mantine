@@ -1,10 +1,10 @@
 import React, { useEffect, useRef } from 'react';
 import { useUncontrolled } from '@mantine/hooks';
-import { factory, ElementProps, useProps, Factory, BoxProps, StylesApiProps } from '../../core';
-import { __InputStylesNames, Input, InputVariant, __BaseInputProps } from '../Input';
-import { InputBase } from '../InputBase/InputBase';
+import { BoxProps, ElementProps, factory, Factory, StylesApiProps, useProps } from '../../core';
 import { CloseButton } from '../CloseButton';
 import { FileButton } from '../FileButton';
+import { __BaseInputProps, __InputStylesNames, Input, InputVariant } from '../Input';
+import { InputBase } from '../InputBase/InputBase';
 
 export interface FileInputProps<Multiple = false>
   extends BoxProps,

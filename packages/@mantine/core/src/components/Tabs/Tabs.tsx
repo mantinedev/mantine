@@ -3,18 +3,18 @@ import { useId, useUncontrolled } from '@mantine/hooks';
 import {
   Box,
   BoxProps,
+  createVarsResolver,
+  ElementProps,
+  factory,
+  Factory,
+  getRadius,
+  getSafeId,
+  getThemeColor,
   MantineColor,
   MantineRadius,
   StylesApiProps,
-  factory,
   useProps,
-  getSafeId,
   useStyles,
-  ElementProps,
-  getRadius,
-  getThemeColor,
-  createVarsResolver,
-  Factory,
 } from '../../core';
 import { TabsProvider } from './Tabs.context';
 import { TabsList, TabsListStylesNames } from './TabsList/TabsList';

@@ -1,12 +1,12 @@
 import React from 'react';
 import { cleanup } from '@testing-library/react';
-import { tests, render, screen, userEvent } from '@mantine-tests/core';
+import { render, screen, tests, userEvent } from '@mantine-tests/core';
 import { Menu, MenuProps } from './Menu';
-import { MenuItem } from './MenuItem/MenuItem';
-import { MenuDropdown } from './MenuDropdown/MenuDropdown';
-import { MenuTarget } from './MenuTarget/MenuTarget';
-import { MenuLabel } from './MenuLabel/MenuLabel';
 import { MenuDivider } from './MenuDivider/MenuDivider';
+import { MenuDropdown } from './MenuDropdown/MenuDropdown';
+import { MenuItem } from './MenuItem/MenuItem';
+import { MenuLabel } from './MenuLabel/MenuLabel';
+import { MenuTarget } from './MenuTarget/MenuTarget';
 
 function TestContainer(props: MenuProps) {
   return (

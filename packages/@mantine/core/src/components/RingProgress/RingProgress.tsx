@@ -2,19 +2,19 @@ import React from 'react';
 import {
   Box,
   BoxProps,
-  StylesApiProps,
-  factory,
-  ElementProps,
-  useProps,
-  useStyles,
   createVarsResolver,
+  ElementProps,
+  factory,
   Factory,
   MantineColor,
   rem,
+  StylesApiProps,
+  useProps,
+  useStyles,
 } from '../../core';
-import classes from './RingProgress.module.css';
-import { getCurves } from './get-curves/get-curves';
 import { Curve } from './Curve/Curve';
+import { getCurves } from './get-curves/get-curves';
+import classes from './RingProgress.module.css';
 
 function getClampedThickness(thickness: number, size: number) {
   return Math.min(thickness || 12, (size || 120) / 4);

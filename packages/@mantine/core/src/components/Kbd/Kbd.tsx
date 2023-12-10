@@ -2,15 +2,15 @@ import React from 'react';
 import {
   Box,
   BoxProps,
-  StylesApiProps,
-  factory,
-  ElementProps,
-  useProps,
-  useStyles,
   createVarsResolver,
+  ElementProps,
+  factory,
   Factory,
   getSize,
   MantineSize,
+  StylesApiProps,
+  useProps,
+  useStyles,
 } from '../../core';
 import classes from './Kbd.module.css';
 

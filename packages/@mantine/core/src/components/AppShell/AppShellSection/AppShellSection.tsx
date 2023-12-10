@@ -4,8 +4,8 @@ import {
   BoxProps,
   CompoundStylesApiProps,
   polymorphicFactory,
-  useProps,
   PolymorphicFactory,
+  useProps,
 } from '../../../core';
 import { useAppShellContext } from '../AppShell.context';
 import classes from '../AppShell.module.css';

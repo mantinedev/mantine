@@ -1,6 +1,6 @@
+import { HooksDemos } from '@docs/demos';
 import { Layout } from '@/layout';
 import { MDX_DATA } from '@/mdx';
-import { HooksDemos } from '@docs/demos';
 
 export default Layout(MDX_DATA.useInputState);
 
@@ -11,8 +11,8 @@ Hook works with all Mantine and native inputs:
 
 ```tsx
 import { useState } from 'react';
+import { NumberInput, TextInput } from '@mantine/core';
 import { useInputState } from '@mantine/hooks';
-import { TextInput, NumberInput } from '@mantine/core';
 
 function WithUseInputState() {
   const [stringValue, setStringValue] = useInputState('');

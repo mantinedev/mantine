@@ -1,7 +1,7 @@
 import React from 'react';
 import { Checkbox } from '../Checkbox';
-import { Radio } from './Radio';
 import { Stack } from '../Stack';
+import { Radio } from './Radio';
 
 export default { title: 'Radio' };
 

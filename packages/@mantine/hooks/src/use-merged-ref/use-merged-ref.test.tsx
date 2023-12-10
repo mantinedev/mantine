@@ -1,4 +1,4 @@
-import React, { useRef, createRef } from 'react';
+import React, { createRef, useRef } from 'react';
 import { render } from '@testing-library/react';
 import { useMergedRef } from './use-merged-ref';
 

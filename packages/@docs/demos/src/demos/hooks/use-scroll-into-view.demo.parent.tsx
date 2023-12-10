@@ -1,7 +1,7 @@
 import React from 'react';
+import { Box, Button, Group, Paper, Text } from '@mantine/core';
 import { useScrollIntoView } from '@mantine/hooks';
 import { MantineDemo } from '@mantinex/demo';
-import { Button, Text, Group, Paper, Box } from '@mantine/core';
 
 const code = `
 import { useScrollIntoView } from '@mantine/hooks';

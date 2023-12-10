@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Checkbox, Code, Text, Table } from '@mantine/core';
+import { Checkbox, Code, Table, Text } from '@mantine/core';
 import { MdxInstallScript } from '../MdxInstallScript/MdxInstallScript';
 import { MdxParagraph } from '../MdxTypography/MdxTypography';
 import { PACKAGES_DATA } from './data';

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Button, Group } from '@mantine/core';
-import { nprogress, NavigationProgress } from '@mantine/nprogress';
+import { NavigationProgress, nprogress } from '@mantine/nprogress';
 import { MantineDemo } from '@mantinex/demo';
 
 const code = `

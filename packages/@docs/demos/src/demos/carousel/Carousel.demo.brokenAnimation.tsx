@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
+import { Carousel } from '@mantine/carousel';
 import { Button, Modal, rem } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
-import { Carousel } from '@mantine/carousel';
 
 const code = `
 import { useState } from 'react';

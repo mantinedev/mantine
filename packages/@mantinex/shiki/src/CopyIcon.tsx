@@ -1,5 +1,5 @@
-import { rem } from '@mantine/core';
 import React from 'react';
+import { rem } from '@mantine/core';
 
 interface CopyIconProps extends React.ComponentPropsWithoutRef<'svg'> {
   copied: boolean;

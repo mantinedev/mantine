@@ -1,20 +1,20 @@
 import React, { useState } from 'react';
 import {
-  ColorSwatch,
-  Input,
   BoxProps,
-  ElementProps,
   CheckIcon,
-  Group,
-  Popover,
-  UnstyledButton,
   ColorPicker,
+  ColorSwatch,
   DEFAULT_THEME,
+  ElementProps,
+  Group,
+  Input,
+  Popover,
   TextInput,
+  UnstyledButton,
 } from '@mantine/core';
+import { ColorWheelIcon } from './ColorWheelIcon';
 import { getControlLabel } from './get-control-label';
 import { ConfiguratorControl } from './types';
-import { ColorWheelIcon } from './ColorWheelIcon';
 import classes from './ConfiguratorColor.control.module.css';
 
 export type ConfiguratorColorControlOptions = ConfiguratorControl<

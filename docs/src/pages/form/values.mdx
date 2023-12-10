@@ -1,6 +1,6 @@
+import { FormDemos } from '@docs/demos';
 import { Layout } from '@/layout';
 import { MDX_DATA } from '@/mdx';
-import { FormDemos } from '@docs/demos';
 
 export default Layout(MDX_DATA.formValues);
 
@@ -140,7 +140,7 @@ To get transformed values (output of [transformValues](#transformvalues)) use `T
 It is useful when you want to create a custom submit function:
 
 ```tsx
-import { useForm, TransformedValues } from '@mantine/form';
+import { TransformedValues, useForm } from '@mantine/form';
 
 function Demo() {
   const form = useForm({

@@ -1,12 +1,13 @@
 import './global.css';
+
 import React from 'react';
-import { suppressNextjsWarning } from './suppress-nextjs-warning';
-import { MantineCssVariables, CSSVariablesResolver } from './MantineCssVariables';
-import { MantineThemeProvider } from './MantineThemeProvider';
-import type { MantineColorScheme, MantineThemeOverride } from './theme.types';
-import { MantineClasses } from './MantineClasses';
 import { localStorageColorSchemeManager, MantineColorSchemeManager } from './color-scheme-managers';
 import { MantineContext } from './Mantine.context';
+import { MantineClasses } from './MantineClasses';
+import { CSSVariablesResolver, MantineCssVariables } from './MantineCssVariables';
+import { MantineThemeProvider } from './MantineThemeProvider';
+import { suppressNextjsWarning } from './suppress-nextjs-warning';
+import type { MantineColorScheme, MantineThemeOverride } from './theme.types';
 import { useProviderColorScheme } from './use-mantine-color-scheme';
 import { useRespectReduceMotion } from './use-respect-reduce-motion';
 

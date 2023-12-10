@@ -1,6 +1,6 @@
 import React from 'react';
-import { StarIcon } from './StarIcon';
 import { useRatingContext } from '../Rating.context';
+import { StarIcon } from './StarIcon';
 
 export interface StarSymbolProps {
   type: 'empty' | 'full';

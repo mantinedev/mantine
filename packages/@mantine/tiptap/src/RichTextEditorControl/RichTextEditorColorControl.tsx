@@ -1,7 +1,7 @@
 import React, { forwardRef } from 'react';
-import { ColorSwatch, BoxProps, useProps, ElementProps } from '@mantine/core';
-import { RichTextEditorControl } from './RichTextEditorControl';
+import { BoxProps, ColorSwatch, ElementProps, useProps } from '@mantine/core';
 import { useRichTextEditorContext } from '../RichTextEditor.context';
+import { RichTextEditorControl } from './RichTextEditorControl';
 
 export interface RichTextEditorColorControlProps extends BoxProps, ElementProps<'button'> {
   /** Color that will be set as text color, for example #ef457e */

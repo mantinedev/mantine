@@ -1,6 +1,6 @@
 import React from 'react';
+import { ComboboxItem, OptionsFilter, TagsInput } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
-import { TagsInput, ComboboxItem, OptionsFilter } from '@mantine/core';
 
 const code = `
 import { TagsInput, ComboboxItem, OptionsFilter } from '@mantine/core';

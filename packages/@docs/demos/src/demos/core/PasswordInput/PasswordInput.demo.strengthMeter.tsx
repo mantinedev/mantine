@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { IconX, IconCheck } from '@tabler/icons-react';
+import { IconCheck, IconX } from '@tabler/icons-react';
+import { Box, PasswordInput, Popover, Progress, rem, Text } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
-import { PasswordInput, Progress, Text, Popover, Box, rem } from '@mantine/core';
 
 const code = `
 import { useState } from 'react';

@@ -1,9 +1,9 @@
 import dayjs from 'dayjs';
 import React from 'react';
-import { render, tests, userEvent, screen } from '@mantine-tests/core';
+import { render, screen, tests, userEvent } from '@mantine-tests/core';
 import { datesTests } from '@mantine-tests/dates';
-import { YearPicker, YearPickerProps, YearPickerStylesNames } from './YearPicker';
 import { DatesProvider } from '../DatesProvider';
+import { YearPicker, YearPickerProps, YearPickerStylesNames } from './YearPicker';
 
 const defaultProps = {};
 

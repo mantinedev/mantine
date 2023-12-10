@@ -1,7 +1,7 @@
-import { ConvertCSSVariablesInput } from '../convert-css-variables';
-import { defaultCssVariablesResolver } from './default-css-variables-resolver';
-import { DEFAULT_THEME } from '../default-theme';
 import { keys } from '../../utils';
+import { ConvertCSSVariablesInput } from '../convert-css-variables';
+import { DEFAULT_THEME } from '../default-theme';
+import { defaultCssVariablesResolver } from './default-css-variables-resolver';
 
 const defaultCssVariables = defaultCssVariablesResolver(DEFAULT_THEME);
 

@@ -1,4 +1,4 @@
-import { rem, em } from './rem';
+import { em, rem } from './rem';
 
 describe('@mantine/units-converters/rem', () => {
   it('returns undefined if input is undefined', () => {

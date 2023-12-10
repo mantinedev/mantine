@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
+import { Combobox, InputBase, useCombobox } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
-import { InputBase, Combobox, useCombobox } from '@mantine/core';
 
 const code = `
 import { useState } from 'react';

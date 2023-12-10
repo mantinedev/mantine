@@ -1,7 +1,7 @@
 import React from 'react';
-import { MantineDemo } from '@mantinex/demo';
-import { Tooltip, Button, em } from '@mantine/core';
+import { Button, em, Tooltip } from '@mantine/core';
 import { useMediaQuery } from '@mantine/hooks';
+import { MantineDemo } from '@mantinex/demo';
 
 const code = `
 import { Tooltip, Button, em } from '@mantine/core';

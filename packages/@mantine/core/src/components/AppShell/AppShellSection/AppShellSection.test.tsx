@@ -1,11 +1,11 @@
 import React from 'react';
-import { render, tests, createContextContainer } from '@mantine-tests/core';
+import { createContextContainer, render, tests } from '@mantine-tests/core';
+import { AppShell } from '../AppShell';
 import {
   AppShellSection,
   AppShellSectionProps,
   AppShellSectionStylesNames,
 } from './AppShellSection';
-import { AppShell } from '../AppShell';
 
 const TestContainer = createContextContainer<any>(AppShellSection, AppShell, {});
 

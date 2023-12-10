@@ -2,28 +2,28 @@ import React from 'react';
 import {
   Box,
   BoxProps,
-  StylesApiProps,
-  polymorphicFactory,
-  useProps,
-  useStyles,
-  MantineRadius,
-  MantineSize,
+  createVarsResolver,
   extractStyleProps,
-  getSize,
   getFontSize,
   getRadius,
-  rem,
-  createVarsResolver,
+  getSize,
+  MantineRadius,
+  MantineSize,
+  polymorphicFactory,
   PolymorphicFactory,
+  rem,
+  StylesApiProps,
+  useProps,
+  useStyles,
 } from '../../core';
-import { useInputWrapperContext } from './InputWrapper.context';
-import { InputLabel } from './InputLabel/InputLabel';
-import { InputError } from './InputError/InputError';
 import { InputDescription } from './InputDescription/InputDescription';
+import { InputError } from './InputError/InputError';
+import { InputLabel } from './InputLabel/InputLabel';
 import { InputPlaceholder } from './InputPlaceholder/InputPlaceholder';
+import { useInputWrapperContext } from './InputWrapper.context';
 import {
-  InputWrapper,
   __InputWrapperProps,
+  InputWrapper,
   InputWrapperStylesNames,
 } from './InputWrapper/InputWrapper';
 import classes from './Input.module.css';

@@ -1,7 +1,7 @@
 import React from 'react';
 import { renderHook } from '@testing-library/react';
-import { useProps } from './use-props';
 import { MantineProvider } from '../MantineProvider';
+import { useProps } from './use-props';
 
 function Wrapper({ children }: { children: React.ReactNode }) {
   return (

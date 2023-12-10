@@ -1,4 +1,4 @@
-import { cssVariablesObjectToString, CSSVariables } from './css-variables-object-to-string';
+import { CSSVariables, cssVariablesObjectToString } from './css-variables-object-to-string';
 import { wrapWithSelector } from './wrap-with-selector';
 
 export interface ConvertCSSVariablesInput {

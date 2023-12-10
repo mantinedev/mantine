@@ -1,6 +1,6 @@
 import React from 'react';
+import { Anchor, Checkbox } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
-import { Checkbox, Anchor } from '@mantine/core';
 
 const code = `
 import { Checkbox, Anchor } from '@mantine/core';

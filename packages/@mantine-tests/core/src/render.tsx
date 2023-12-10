@@ -1,6 +1,6 @@
 import React from 'react';
-import { render as testingLibraryRender, act, RenderResult } from '@testing-library/react';
-import { MantineProvider, MantineThemeOverride, MantineProviderProps } from '@mantine/core';
+import { act, RenderResult, render as testingLibraryRender } from '@testing-library/react';
+import { MantineProvider, MantineProviderProps, MantineThemeOverride } from '@mantine/core';
 
 export function render(
   ui: React.ReactNode,

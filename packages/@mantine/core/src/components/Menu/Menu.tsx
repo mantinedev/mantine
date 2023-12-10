@@ -1,23 +1,23 @@
 import React from 'react';
 import { useDidUpdate, useUncontrolled } from '@mantine/hooks';
 import {
-  getContextItemIndex,
-  useHovered,
-  StylesApiProps,
-  useProps,
-  Factory,
-  useStyles,
-  useResolvedStylesApi,
   ExtendComponent,
+  Factory,
+  getContextItemIndex,
+  StylesApiProps,
+  useHovered,
+  useProps,
+  useResolvedStylesApi,
+  useStyles,
 } from '../../core';
 import { useDelayedHover } from '../Floating';
-import { Popover, __PopoverProps, PopoverStylesNames } from '../Popover';
+import { __PopoverProps, Popover, PopoverStylesNames } from '../Popover';
+import { MenuContextProvider } from './Menu.context';
 import { MenuDivider } from './MenuDivider/MenuDivider';
 import { MenuDropdown } from './MenuDropdown/MenuDropdown';
 import { MenuItem } from './MenuItem/MenuItem';
 import { MenuLabel } from './MenuLabel/MenuLabel';
 import { MenuTarget } from './MenuTarget/MenuTarget';
-import { MenuContextProvider } from './Menu.context';
 import classes from './Menu.module.css';
 
 export type MenuStylesNames =

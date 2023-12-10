@@ -1,9 +1,11 @@
+// prettier-ignore
 import chalk from 'chalk';
-import { buildPackage } from './build-package';
-import { getPackagesBuildOrder } from './get-packages-build-order';
+
 import { generateCSS } from './generate-css';
 import { createLogger } from '../utils/signale';
+import { buildPackage } from './build-package';
 import { getBuildTime } from './get-build-time';
+import { getPackagesBuildOrder } from './get-packages-build-order';
 
 const logger = createLogger('build-all-packages');
 

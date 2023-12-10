@@ -1,22 +1,22 @@
-import React, { cloneElement, Children } from 'react';
+import React, { Children, cloneElement } from 'react';
 import {
   Box,
   BoxProps,
-  StylesApiProps,
-  factory,
-  ElementProps,
-  useProps,
-  useStyles,
   createVarsResolver,
+  ElementProps,
+  factory,
   Factory,
+  getRadius,
+  getThemeColor,
   MantineColor,
   MantineRadius,
   rem,
-  getRadius,
-  getThemeColor,
+  StylesApiProps,
+  useProps,
+  useStyles,
 } from '../../core';
-import { TimelineItem, TimelineItemStylesNames } from './TimelineItem/TimelineItem';
 import { TimelineProvider } from './Timeline.context';
+import { TimelineItem, TimelineItemStylesNames } from './TimelineItem/TimelineItem';
 import classes from './Timeline.module.css';
 
 export type TimelineStylesNames = 'root' | TimelineItemStylesNames;

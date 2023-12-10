@@ -1,8 +1,8 @@
 import { DEFAULT_THEME } from '../default-theme';
 import {
-  mergeMantineTheme,
   INVALID_PRIMARY_COLOR_ERROR,
   INVALID_PRIMARY_SHADE_ERROR,
+  mergeMantineTheme,
 } from './merge-mantine-theme';
 
 describe('@mantine/core/merge-mantine-theme', () => {

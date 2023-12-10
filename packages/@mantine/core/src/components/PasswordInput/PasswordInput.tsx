@@ -2,21 +2,21 @@ import React from 'react';
 import cx from 'clsx';
 import { useId, useUncontrolled } from '@mantine/hooks';
 import {
-  StylesApiProps,
-  factory,
-  ElementProps,
-  useProps,
-  useStyles,
-  createVarsResolver,
-  Factory,
-  extractStyleProps,
-  useResolvedStylesApi,
-  getSize,
   BoxProps,
+  createVarsResolver,
+  ElementProps,
+  extractStyleProps,
+  factory,
+  Factory,
+  getSize,
+  StylesApiProps,
+  useProps,
+  useResolvedStylesApi,
+  useStyles,
 } from '../../core';
-import { InputBase } from '../InputBase';
-import { Input, InputVariant, __InputStylesNames, __BaseInputProps } from '../Input';
 import { ActionIcon } from '../ActionIcon';
+import { __BaseInputProps, __InputStylesNames, Input, InputVariant } from '../Input';
+import { InputBase } from '../InputBase';
 import { PasswordToggleIcon } from './PasswordToggleIcon';
 import classes from './PasswordInput.module.css';
 

@@ -3,15 +3,15 @@ import {
   Box,
   BoxProps,
   CompoundStylesApiProps,
-  factory,
   ElementProps,
-  useProps,
+  factory,
   Factory,
-  MantineRadius,
-  MantineColor,
   getRadius,
-  useMantineTheme,
   getThemeColor,
+  MantineColor,
+  MantineRadius,
+  useMantineTheme,
+  useProps,
 } from '../../../core';
 import { useTimelineContext } from '../Timeline.context';
 import classes from '../Timeline.module.css';

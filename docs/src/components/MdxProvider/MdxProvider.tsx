@@ -1,37 +1,37 @@
 import React from 'react';
-import { Demo } from '@mantinex/demo';
 import { MDXProvider } from '@mdx-js/react';
+import { Demo } from '@mantinex/demo';
 import { MdxDataTable } from './MdxDataTable/MdxDataTable';
-import { MdxPre } from './MdxPre/MdxPre';
-import { MdxLink } from './MdxLink/MdxLink';
-import { MdxParagraph, MdxLi, MdxUl, MdxCode } from './MdxTypography/MdxTypography';
-import { h } from './MdxTitle/MdxTitle';
-import { MdxInfo } from './MdxInfo/MdxInfo';
-import { MdxKeyboardEventsTable } from './MdxKeyboardEventsTable/MdxKeyboardEventsTable';
-import { MdxInstallScript } from './MdxInstallScript/MdxInstallScript';
-import { MdxPackagesInstallation } from './MdxPackagesInstallation/MdxPackagesInstallation';
-import { MdxNpmScript } from './MdxNpmScript/MdxNpmScript';
-import { MdxTemplatesList } from './MdxTemplatesList/MdxTemplatesList';
 import { MdxExamplesButton } from './MdxExamplesButton/MdxExamplesButton';
+import { MdxInfo } from './MdxInfo/MdxInfo';
+import { MdxInstallScript } from './MdxInstallScript/MdxInstallScript';
+import { MdxKeyboardEventsTable } from './MdxKeyboardEventsTable/MdxKeyboardEventsTable';
+import { MdxLink } from './MdxLink/MdxLink';
+import { MdxNpmScript } from './MdxNpmScript/MdxNpmScript';
+import { MdxPackagesInstallation } from './MdxPackagesInstallation/MdxPackagesInstallation';
+import { MdxPre } from './MdxPre/MdxPre';
 import {
-  MdxGetElementRef,
-  MdxPolymorphic,
-  MdxTargetComponent,
-  MdxInputFeatures,
-  MdxInputAccessibility,
-  MdxFlexboxGapSupport,
-  MdxGradient,
-  MdxStylesApiSelectors,
-  MdxGetTemplates,
-  MdxComboboxDisclaimer,
   MdxComboboxData,
-  MdxComboboxLargeData,
+  MdxComboboxDisclaimer,
   MdxComboboxFiltering,
+  MdxComboboxLargeData,
   MdxComboboxProps,
-  MdxServerComponentsIncompatible,
-  MdxWrapperProps,
+  MdxFlexboxGapSupport,
+  MdxGetElementRef,
+  MdxGetTemplates,
+  MdxGradient,
+  MdxInputAccessibility,
+  MdxInputFeatures,
   MdxInputSections,
+  MdxPolymorphic,
+  MdxServerComponentsIncompatible,
+  MdxStylesApiSelectors,
+  MdxTargetComponent,
+  MdxWrapperProps,
 } from './MdxSharedContent';
+import { MdxTemplatesList } from './MdxTemplatesList/MdxTemplatesList';
+import { h } from './MdxTitle/MdxTitle';
+import { MdxCode, MdxLi, MdxParagraph, MdxUl } from './MdxTypography/MdxTypography';
 
 export function MdxProvider({ children }: { children: React.ReactNode }) {
   return (

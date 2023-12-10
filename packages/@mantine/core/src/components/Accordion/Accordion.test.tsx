@@ -1,10 +1,10 @@
 import React from 'react';
-import { render, tests, userEvent, screen } from '@mantine-tests/core';
+import { render, screen, tests, userEvent } from '@mantine-tests/core';
+import { Accordion, AccordionProps, AccordionStylesNames } from './Accordion';
 import { AccordionChevron } from './AccordionChevron';
 import { AccordionControl } from './AccordionControl/AccordionControl';
 import { AccordionItem } from './AccordionItem/AccordionItem';
 import { AccordionPanel } from './AccordionPanel/AccordionPanel';
-import { Accordion, AccordionProps, AccordionStylesNames } from './Accordion';
 
 const defaultProps = {
   transitionDuration: 0,

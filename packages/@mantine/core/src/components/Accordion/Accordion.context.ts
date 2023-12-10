@@ -1,6 +1,6 @@
 import { createSafeContext, GetStylesApi } from '../../core';
-import { AccordionChevronPosition, AccordionHeadingOrder } from './Accordion.types';
 import type { AccordionFactory } from './Accordion';
+import { AccordionChevronPosition, AccordionHeadingOrder } from './Accordion.types';
 
 interface AccordionContext {
   loop: boolean | undefined;

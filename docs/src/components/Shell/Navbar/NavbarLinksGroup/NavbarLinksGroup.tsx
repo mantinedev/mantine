@@ -2,8 +2,8 @@ import React, { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { IconChevronDown } from '@tabler/icons-react';
-import { UnstyledButton, Text, Box } from '@mantine/core';
-import { MdxPagesGroup, MdxPagesCategory, Frontmatter } from '@/types';
+import { Box, Text, UnstyledButton } from '@mantine/core';
+import { Frontmatter, MdxPagesCategory, MdxPagesGroup } from '@/types';
 import { CATEGORY_ICONS } from './category-icons';
 import classes from './NavbarLinksGroup.module.css';
 

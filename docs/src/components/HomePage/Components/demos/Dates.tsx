@@ -1,7 +1,7 @@
-import React from 'react';
-import { Paper, SimpleGrid, Input } from '@mantine/core';
-import { DatePickerInput, TimeInput, DatePicker, DateTimePicker } from '@mantine/dates';
 import dayjs from 'dayjs';
+import React from 'react';
+import { Input, Paper, SimpleGrid } from '@mantine/core';
+import { DatePicker, DatePickerInput, DateTimePicker, TimeInput } from '@mantine/dates';
 import classes from './Demos.module.css';
 
 function CalendarWrapper() {

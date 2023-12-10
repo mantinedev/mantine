@@ -1,8 +1,8 @@
 import React from 'react';
+import { Box, Button, Group, TextInput } from '@mantine/core';
 import { useForm } from '@mantine/form';
-import { TextInput, Button, Group, Box } from '@mantine/core';
-import { MantineDemo } from '@mantinex/demo';
 import { randomId } from '@mantine/hooks';
+import { MantineDemo } from '@mantinex/demo';
 
 const code = `
 import { useForm } from '@mantine/form';

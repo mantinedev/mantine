@@ -3,10 +3,10 @@ import {
   Box,
   BoxProps,
   CompoundStylesApiProps,
-  factory,
   ElementProps,
-  useProps,
+  factory,
   Factory,
+  useProps,
 } from '../../../core';
 import { useAccordionContext } from '../Accordion.context';
 import { AccordionItemProvider } from '../AccordionItem.context';

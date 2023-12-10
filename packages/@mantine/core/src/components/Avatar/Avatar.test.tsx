@@ -1,6 +1,6 @@
 import React from 'react';
-import { render, tests } from '@mantine-tests/core';
 import { fireEvent } from '@testing-library/react';
+import { render, tests } from '@mantine-tests/core';
 import { Avatar, AvatarProps, AvatarStylesNames } from './Avatar';
 import { AvatarGroup } from './AvatarGroup/AvatarGroup';
 

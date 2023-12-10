@@ -1,7 +1,7 @@
 import React from 'react';
 import cx from 'clsx';
 import { rem } from '@mantine/core';
-import { useMantineLogoColors, LogoProps } from './use-mantine-logo-colors';
+import { LogoProps, useMantineLogoColors } from './use-mantine-logo-colors';
 import classes from './MantineLogo.module.css';
 
 export function MantineLogoText({

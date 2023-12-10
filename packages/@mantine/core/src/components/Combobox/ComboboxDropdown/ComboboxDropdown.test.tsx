@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, tests, createContextContainer } from '@mantine-tests/core';
+import { createContextContainer, render, tests } from '@mantine-tests/core';
 import { Combobox } from '../Combobox';
 import {
   ComboboxDropdown,

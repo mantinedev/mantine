@@ -1,6 +1,6 @@
+import { ThemingDemos } from '@docs/demos';
 import { Layout } from '@/layout';
 import { MDX_DATA } from '@/mdx';
-import { ThemingDemos } from '@docs/demos';
 
 export default Layout(MDX_DATA.MantineProvider);
 
@@ -13,7 +13,7 @@ application and should be used only once.
 ## Usage
 
 ```tsx
-import { MantineProvider, createTheme } from '@mantine/core';
+import { createTheme, MantineProvider } from '@mantine/core';
 
 const theme = createTheme({
   /** Your theme override here */
@@ -72,7 +72,7 @@ Pass [theme object](/theming/theme-object) override to `theme` prop. It will be 
 theme and used in all components.
 
 ```tsx
-import { MantineProvider, createTheme } from '@mantine/core';
+import { createTheme, MantineProvider } from '@mantine/core';
 
 const theme = createTheme({
   fontFamily: 'Open Sans, sans-serif',
@@ -97,8 +97,8 @@ implementation to `colorSchemeManager` prop. You can learn more about color sche
 
 ```tsx
 import {
-  MantineProvider,
   localStorageColorSchemeManager,
+  MantineProvider,
 } from '@mantine/core';
 
 const colorSchemeManager = localStorageColorSchemeManager({
@@ -199,7 +199,7 @@ function Demo() {
 Default value is `mantine` – all components will have `mantine-` prefix in their **static classes**.
 
 ```tsx
-import { Text, MantineProvider } from '@mantine/core';
+import { MantineProvider, Text } from '@mantine/core';
 
 function Demo() {
   return (
@@ -219,7 +219,7 @@ In this case (default `classNamesPrefix`), [Text](/core/text) component will hav
 With `classNamesPrefix` you can change only **static class**:
 
 ```tsx
-import { Text, MantineProvider } from '@mantine/core';
+import { MantineProvider, Text } from '@mantine/core';
 
 function Demo() {
   return (

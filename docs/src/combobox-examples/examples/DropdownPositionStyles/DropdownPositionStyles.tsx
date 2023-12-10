@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Combobox, InputBase, Input, useCombobox } from '@mantine/core';
+import { Combobox, Input, InputBase, useCombobox } from '@mantine/core';
 import classes from './DropdownPositionStyles.module.css';
 
 const groceries = [

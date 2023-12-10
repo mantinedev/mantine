@@ -1,13 +1,13 @@
 import React from 'react';
 import Link from 'next/link';
 import { IconArrowRight } from '@tabler/icons-react';
-import { Text, SimpleGrid, Slider, Button, rem } from '@mantine/core';
-import { CodeHighlightTabs, CodeHighlight } from '@mantinex/shiki';
+import { Button, rem, SimpleGrid, Slider, Text } from '@mantine/core';
 import { getCodeFileIcon } from '@mantinex/dev-icons';
+import { CodeHighlight, CodeHighlightTabs } from '@mantinex/shiki';
 import { SliderStylesApi } from '@docs/styles-api';
 import { MdxDataTable } from '../../MdxProvider/MdxDataTable/MdxDataTable';
 import { PageSection } from '../PageSection/PageSection';
-import { CustomizeSliderDemo, code } from './CustomizeSlider.demo';
+import { code, CustomizeSliderDemo } from './CustomizeSlider.demo';
 import classes from './CustomizeStyles.module.css';
 
 const marks = [

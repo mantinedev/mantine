@@ -1,7 +1,7 @@
 import React from 'react';
 import { IconCheck } from '@tabler/icons-react';
-import { Chip } from './Chip';
 import { Tooltip } from '../Tooltip';
+import { Chip } from './Chip';
 
 export default { title: 'Chip' };
 

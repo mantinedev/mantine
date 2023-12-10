@@ -2,19 +2,19 @@ import React from 'react';
 import {
   Box,
   BoxProps,
-  StylesApiProps,
-  factory,
+  createVarsResolver,
   ElementProps,
+  factory,
+  Factory,
+  getDefaultZIndex,
+  StylesApiProps,
+  useMantineTheme,
   useProps,
   useStyles,
-  createVarsResolver,
-  Factory,
-  useMantineTheme,
-  getDefaultZIndex,
 } from '../../core';
-import { Transition, TransitionOverride } from '../Transition';
 import { Loader, LoaderProps } from '../Loader';
 import { Overlay, OverlayProps } from '../Overlay';
+import { Transition, TransitionOverride } from '../Transition';
 import classes from './LoadingOverlay.module.css';
 
 export type LoadingOverlayStylesNames = 'root' | 'loader' | 'overlay';

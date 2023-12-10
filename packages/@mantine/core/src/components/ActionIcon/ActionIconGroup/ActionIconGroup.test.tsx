@@ -1,5 +1,5 @@
 import React from 'react';
-import { tests, render, screen } from '@mantine-tests/core';
+import { render, screen, tests } from '@mantine-tests/core';
 import {
   ActionIconGroup,
   ActionIconGroupProps,

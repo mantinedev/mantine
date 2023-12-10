@@ -1,6 +1,6 @@
 import React from 'react';
-import { MantineDemo } from '@mantinex/demo';
 import { Select } from '@mantine/core';
+import { MantineDemo } from '@mantinex/demo';
 import classes from './Select.demo.dropdownOffset.module.css';
 
 const cssCode = `.dropdown {

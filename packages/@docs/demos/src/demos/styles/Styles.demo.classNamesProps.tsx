@@ -1,7 +1,7 @@
 import React from 'react';
-import { MantineDemo } from '@mantinex/demo';
 import cx from 'clsx';
-import { MantineThemeProvider, createTheme, TextInput } from '@mantine/core';
+import { createTheme, MantineThemeProvider, TextInput } from '@mantine/core';
+import { MantineDemo } from '@mantinex/demo';
 import classes from './Styles.demo.classNamesProps.module.css';
 
 const code = `

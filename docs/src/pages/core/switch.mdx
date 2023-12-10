@@ -1,6 +1,6 @@
+import { SwitchDemos } from '@docs/demos';
 import { Layout } from '@/layout';
 import { MDX_DATA } from '@/mdx';
-import { SwitchDemos } from '@docs/demos';
 
 export default Layout(MDX_DATA.Switch);
 
@@ -49,7 +49,7 @@ By default, switch input and label have `cursor: default` (same as native `input
 To change cursor to pointer, set `cursorType` on [theme](/theming/theme-object/):
 
 ```tsx
-import { MantineProvider, createTheme, Switch } from '@mantine/core';
+import { createTheme, MantineProvider, Switch } from '@mantine/core';
 
 const theme = createTheme({
   cursorType: 'pointer',

@@ -1,5 +1,5 @@
 import React from 'react';
-import { TextInput, BoxProps, ElementProps } from '@mantine/core';
+import { BoxProps, ElementProps, TextInput } from '@mantine/core';
 import { getControlLabel } from './get-control-label';
 import { ConfiguratorControl } from './types';
 

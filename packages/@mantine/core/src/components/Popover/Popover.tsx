@@ -1,32 +1,32 @@
-import React, { useRef, useState, useCallback } from 'react';
-import { useId, useClickOutside } from '@mantine/hooks';
+import React, { useCallback, useRef, useState } from 'react';
+import { useClickOutside, useId } from '@mantine/hooks';
 import {
-  MantineShadow,
-  getDefaultZIndex,
-  useProps,
-  MantineRadius,
-  useDirection,
-  useStyles,
-  Factory,
   createVarsResolver,
+  ExtendComponent,
+  Factory,
+  getDefaultZIndex,
   getRadius,
   getShadow,
+  MantineRadius,
+  MantineShadow,
   StylesApiProps,
-  ExtendComponent,
+  useDirection,
+  useProps,
+  useStyles,
 } from '../../core';
-import { TransitionOverride } from '../Transition';
 import {
-  getFloatingPosition,
+  ArrowPosition,
   FloatingAxesOffsets,
   FloatingPosition,
-  ArrowPosition,
+  getFloatingPosition,
 } from '../Floating';
 import { PortalProps } from '../Portal';
-import { usePopover } from './use-popover';
+import { TransitionOverride } from '../Transition';
 import { PopoverContextProvider } from './Popover.context';
-import { PopoverWidth, PopoverMiddlewares } from './Popover.types';
-import { PopoverTarget } from './PopoverTarget/PopoverTarget';
+import { PopoverMiddlewares, PopoverWidth } from './Popover.types';
 import { PopoverDropdown } from './PopoverDropdown/PopoverDropdown';
+import { PopoverTarget } from './PopoverTarget/PopoverTarget';
+import { usePopover } from './use-popover';
 import classes from './Popover.module.css';
 
 export type PopoverStylesNames = 'dropdown' | 'arrow';

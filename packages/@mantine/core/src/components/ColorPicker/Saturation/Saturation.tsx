@@ -1,10 +1,10 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { UseMovePosition, clampUseMovePosition, useMove } from '@mantine/hooks';
+import { clampUseMovePosition, useMove, UseMovePosition } from '@mantine/hooks';
 import { Box, ElementProps, MantineSize } from '../../../core';
+import { useColorPickerContext } from '../ColorPicker.context';
 import { HsvaColor } from '../ColorPicker.types';
 import { convertHsvaTo } from '../converters';
 import { Thumb } from '../Thumb/Thumb';
-import { useColorPickerContext } from '../ColorPicker.context';
 
 export interface SaturationProps extends ElementProps<'div', 'onChange'> {
   value: HsvaColor;

@@ -3,10 +3,10 @@ import {
   Box,
   BoxProps,
   CompoundStylesApiProps,
-  factory,
   ElementProps,
-  useProps,
+  factory,
   Factory,
+  useProps,
 } from '@mantine/core';
 import { useCarouselContext } from '../Carousel.context';
 import classes from '../Carousel.module.css';

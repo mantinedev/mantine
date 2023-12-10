@@ -1,6 +1,6 @@
 import React, { forwardRef } from 'react';
-import { MantineDemo } from '@mantinex/demo';
 import { Box, BoxProps, createPolymorphicComponent, Group } from '@mantine/core';
+import { MantineDemo } from '@mantinex/demo';
 
 const code = `
 import { forwardRef } from 'react';

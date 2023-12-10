@@ -1,7 +1,7 @@
 import type { ColorInputFactory } from '@mantine/core';
 import type { StylesApiData } from '../types';
-import { InputStylesApi, InputWrapperStylesApi } from './Input.styles-api';
 import { ColorPickerStylesApi } from './ColorPicker.styles-api';
+import { InputStylesApi, InputWrapperStylesApi } from './Input.styles-api';
 
 export const ColorInputStylesApi: StylesApiData<ColorInputFactory> = {
   selectors: {

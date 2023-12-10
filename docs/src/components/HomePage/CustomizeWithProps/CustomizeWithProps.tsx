@@ -1,7 +1,7 @@
 import React from 'react';
 import { Box } from '@mantine/core';
-import { TimelineDemos } from '@docs/demos';
 import { Demo } from '@mantinex/demo';
+import { TimelineDemos } from '@docs/demos';
 import { PageSection } from '../PageSection/PageSection';
 import classes from './CustomizeWithProps.module.css';
 

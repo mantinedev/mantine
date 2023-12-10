@@ -1,5 +1,5 @@
 import React from 'react';
-import { CompoundStylesApiProps, factory, useProps, Factory, rem } from '../../core';
+import { CompoundStylesApiProps, factory, Factory, rem, useProps } from '../../core';
 import { ModalBaseContent, ModalBaseContentProps, NativeScrollArea } from '../ModalBase';
 import { useModalContext } from './Modal.context';
 import classes from './Modal.module.css';

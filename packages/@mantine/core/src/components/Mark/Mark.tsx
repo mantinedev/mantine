@@ -2,14 +2,14 @@ import React from 'react';
 import {
   Box,
   BoxProps,
-  StylesApiProps,
-  factory,
+  createVarsResolver,
   ElementProps,
+  factory,
+  Factory,
+  MantineColor,
+  StylesApiProps,
   useProps,
   useStyles,
-  MantineColor,
-  createVarsResolver,
-  Factory,
 } from '../../core';
 import { getMarkColor } from './get-mark-color';
 import classes from './Mark.module.css';

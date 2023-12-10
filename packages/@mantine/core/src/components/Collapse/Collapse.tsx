@@ -1,13 +1,13 @@
 import React from 'react';
 import { useReducedMotion } from '@mantine/hooks';
 import {
-  BoxProps,
-  useProps,
-  useMantineTheme,
   Box,
-  getStyleObject,
+  BoxProps,
   Factory,
   factory,
+  getStyleObject,
+  useMantineTheme,
+  useProps,
 } from '../../core';
 import { useCollapse } from './use-collapse';
 

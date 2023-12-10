@@ -1,5 +1,5 @@
-import { useState, useEffect, useCallback, useRef } from 'react';
-import { useFloating, shift, getOverflowAncestors } from '@floating-ui/react';
+import { useCallback, useEffect, useRef, useState } from 'react';
+import { getOverflowAncestors, shift, useFloating } from '@floating-ui/react';
 import { FloatingPosition } from '../../Floating';
 
 interface UseFloatingTooltip {

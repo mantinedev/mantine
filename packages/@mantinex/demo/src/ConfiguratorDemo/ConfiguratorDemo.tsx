@@ -4,24 +4,24 @@ import { DemoAreaProps } from '../DemoArea';
 import { DemoCode } from '../DemoCode';
 import { DemoColumns } from '../DemoColumns';
 import { DemoRoot } from '../DemoRoot';
+import { clearProps } from './clear-props';
 import {
   ConfiguratorBooleanControl,
-  ConfiguratorSegmentedControl,
-  ConfiguratorColorControl,
-  ConfiguratorStringControl,
-  ConfiguratorSelectControl,
-  ConfiguratorSizeControl,
-  ConfiguratorNumberControl,
   ConfiguratorBooleanControlOptions,
-  ConfiguratorSegmentedControlOptions,
+  ConfiguratorColorControl,
   ConfiguratorColorControlOptions,
-  ConfiguratorStringControlOptions,
-  ConfiguratorSelectControlOptions,
-  ConfiguratorSizeControlOptions,
+  ConfiguratorNumberControl,
   ConfiguratorNumberControlOptions,
+  ConfiguratorSegmentedControl,
+  ConfiguratorSegmentedControlOptions,
+  ConfiguratorSelectControl,
+  ConfiguratorSelectControlOptions,
+  ConfiguratorSizeControl,
+  ConfiguratorSizeControlOptions,
+  ConfiguratorStringControl,
+  ConfiguratorStringControlOptions,
 } from './controls';
 import { injectProps } from './inject-props';
-import { clearProps } from './clear-props';
 import classes from './ConfiguratorDemo.module.css';
 
 const ControlComponents = {

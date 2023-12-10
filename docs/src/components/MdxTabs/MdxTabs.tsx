@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from 'react';
-import { Tabs, rem } from '@mantine/core';
+import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
-import { TableOfContents } from '@/components/TableOfContents';
-import { PageBase } from '@/components/PageBase';
+import { rem, Tabs } from '@mantine/core';
 import { MdxSiblings } from '@/components/MdxSiblings';
+import { PageBase } from '@/components/PageBase';
 import { PropsTablesList } from '@/components/PropsTable';
 import { StylesApiTablesList } from '@/components/StylesApiTable';
+import { TableOfContents } from '@/components/TableOfContents';
 import { Frontmatter } from '@/types';
 import classes from './MdxTabs.module.css';
 

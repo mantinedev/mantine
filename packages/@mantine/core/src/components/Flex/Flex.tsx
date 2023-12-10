@@ -2,19 +2,19 @@ import React from 'react';
 import {
   Box,
   BoxProps,
-  StylesApiProps,
   ElementProps,
-  useProps,
-  useStyles,
-  InlineStyles,
-  useRandomClassName,
-  parseStyleProps,
-  StyleProp,
-  MantineSize,
-  useMantineTheme,
   filterProps,
+  InlineStyles,
+  MantineSize,
+  parseStyleProps,
   polymorphicFactory,
   PolymorphicFactory,
+  StyleProp,
+  StylesApiProps,
+  useMantineTheme,
+  useProps,
+  useRandomClassName,
+  useStyles,
 } from '../../core';
 import { FLEX_STYLE_PROPS_DATA } from './flex-props';
 import classes from './Flex.module.css';

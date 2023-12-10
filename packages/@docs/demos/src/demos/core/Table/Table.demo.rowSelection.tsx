@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
+import { Checkbox, Table } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
-import { Table, Checkbox } from '@mantine/core';
 
 const code = `
 import { Table, Checkbox } from '@mantine/core';

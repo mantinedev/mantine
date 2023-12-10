@@ -1,26 +1,25 @@
-import { itSupportsClassName } from './shared/it-supports-classname';
-import { itSupportsStyle } from './shared/it-supports-style';
-import { itSupportsRef } from './shared/it-supports-ref';
-import { itSupportsOthers } from './shared/it-supports-others';
+import { itHasClasses } from './shared/it-has-classes';
+import { itHasExtend } from './shared/it-has-extend';
 import { itIsPolymorphic } from './shared/it-is-polymorphic';
 import { itRendersChildren } from './shared/it-renders-children';
+import { itSupportsClassName } from './shared/it-supports-classname';
+import { itSupportsHiddenVisible } from './shared/it-supports-hidden-visible';
+import { itSupportsId } from './shared/it-supports-id';
+import { itSupportsLightDarkHidden } from './shared/it-supports-light-dark-hidden';
+import { itSupportsOthers } from './shared/it-supports-others';
 import { itSupportsProviderDefaultProps } from './shared/it-supports-provider-default-props';
+import { itSupportsRef } from './shared/it-supports-ref';
+import { itSupportsSize } from './shared/it-supports-size';
+import { itSupportsStyle } from './shared/it-supports-style';
 import { itSupportsStylesApi } from './shared/it-supports-style-api';
 import { itSupportsVariant } from './shared/it-supports-variant';
-import { itSupportsSize } from './shared/it-supports-size';
-import { itHasExtend } from './shared/it-has-extend';
-import { itHasClasses } from './shared/it-has-classes';
-import { itSupportsHiddenVisible } from './shared/it-supports-hidden-visible';
-import { itSupportsLightDarkHidden } from './shared/it-supports-light-dark-hidden';
-import { itSupportsId } from './shared/it-supports-id';
-
-import { itSupportsMarginsProps } from './style-props/it-supports-margins-props';
-import { itSupportsPaddingsProps } from './style-props/it-supports-paddings-props';
+import { itSupportsBackgroundProps } from './style-props/it-supports-background-props';
 import { itSupportsColorsProps } from './style-props/it-supports-colors-props';
 import { itSupportsFontsProps } from './style-props/it-supports-fonts-props';
-import { itSupportsSizeProps } from './style-props/it-supports-size-props';
-import { itSupportsBackgroundProps } from './style-props/it-supports-background-props';
+import { itSupportsMarginsProps } from './style-props/it-supports-margins-props';
+import { itSupportsPaddingsProps } from './style-props/it-supports-paddings-props';
 import { itSupportsPositionProps } from './style-props/it-supports-position-props';
+import { itSupportsSizeProps } from './style-props/it-supports-size-props';
 
 interface Options<Props extends Record<string, any>, StylesApiSelectors extends string> {
   component: React.ComponentType<Props>;

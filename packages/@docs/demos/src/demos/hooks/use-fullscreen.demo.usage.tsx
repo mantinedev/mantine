@@ -1,7 +1,7 @@
 import React from 'react';
+import { Button } from '@mantine/core';
 import { useFullscreen } from '@mantine/hooks';
 import { MantineDemo } from '@mantinex/demo';
-import { Button } from '@mantine/core';
 
 const code = `
 import { useFullscreen } from '@mantine/hooks';

@@ -1,5 +1,5 @@
 import React from 'react';
-import { factory, useProps, Factory } from '../../../core';
+import { factory, Factory, useProps } from '../../../core';
 import { Popover, PopoverDropdownProps } from '../../Popover';
 import { useComboboxContext } from '../Combobox.context';
 import classes from '../Combobox.module.css';

@@ -1,6 +1,6 @@
+import { SpaceDemos } from '@docs/demos';
 import { Layout } from '@/layout';
 import { MDX_DATA } from '@/mdx';
-import { SpaceDemos } from '@docs/demos';
 
 export default Layout(MDX_DATA.Space);
 
@@ -19,7 +19,7 @@ Use `Space` component to add horizontal or vertical spacing between elements:
 In most cases, you would want to use margin props instead of `Space` when working with Mantine components:
 
 ```tsx
-import { Text, Space } from '@mantine/core';
+import { Space, Text } from '@mantine/core';
 
 // Space is not required as the same can be achieved with `mt` prop
 function Demo() {

@@ -1,4 +1,5 @@
 import 'dayjs/locale/ru';
+
 import React, { useState } from 'react';
 import { DatesRangeValue } from '../../types';
 import { DatePicker } from './DatePicker';

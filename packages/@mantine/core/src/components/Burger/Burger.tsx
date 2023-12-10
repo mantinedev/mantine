@@ -2,20 +2,20 @@ import React from 'react';
 import {
   Box,
   BoxProps,
-  StylesApiProps,
-  factory,
+  createVarsResolver,
   ElementProps,
+  factory,
+  Factory,
+  getSize,
+  getThemeColor,
+  MantineColor,
+  MantineSize,
+  StylesApiProps,
   useProps,
   useStyles,
-  createVarsResolver,
-  Factory,
-  MantineSize,
-  MantineColor,
-  getThemeColor,
-  getSize,
 } from '../../core';
-import classes from './Burger.module.css';
 import { UnstyledButton } from '../UnstyledButton';
+import classes from './Burger.module.css';
 
 export type BurgerStylesNames = 'root' | 'burger';
 export type BurgerCssVariables = {

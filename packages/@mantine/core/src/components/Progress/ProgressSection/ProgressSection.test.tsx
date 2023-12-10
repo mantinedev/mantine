@@ -1,11 +1,11 @@
 import React from 'react';
-import { render, screen, tests, createContextContainer } from '@mantine-tests/core';
+import { createContextContainer, render, screen, tests } from '@mantine-tests/core';
+import { ProgressRoot } from '../ProgressRoot/ProgressRoot';
 import {
   ProgressSection,
   ProgressSectionProps,
   ProgressSectionStylesNames,
 } from './ProgressSection';
-import { ProgressRoot } from '../ProgressRoot/ProgressRoot';
 
 const TestContainer = createContextContainer(ProgressSection, ProgressRoot, {});
 

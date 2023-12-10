@@ -1,5 +1,5 @@
 import React from 'react';
-import { useMantineTheme, Text, ColorSwatch, Box } from '@mantine/core';
+import { Box, ColorSwatch, Text, useMantineTheme } from '@mantine/core';
 import classes from './ColorsGroup.module.css';
 
 interface ColorsGroupProps {

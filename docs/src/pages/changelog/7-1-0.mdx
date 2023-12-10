@@ -16,6 +16,7 @@ regular styles.
 // they will be applied after Mantine styles.
 // Import order does not affect styles in this case
 import classes from './Demo.module.css';
+
 import '@mantine/core/styles.layer.css';
 ```
 
@@ -26,6 +27,7 @@ you should not import both of them.
 ```tsx
 import '@mantine/core/styles.layer.css';
 import '@mantine/dates/styles.layer.css';
+
 // ... other styles
 ```
 
@@ -58,8 +60,8 @@ to any other component or HTML tag with a callback function. It can be used in c
 
 ```tsx
 import cx from 'clsx';
-import { Button } from '@mantine/core';
 import { NavLink } from 'react-router-dom';
+import { Button } from '@mantine/core';
 
 function Demo() {
   return (

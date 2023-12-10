@@ -86,9 +86,9 @@ or component body:
 
 ```tsx
 import {
+  MantineColor,
   parseThemeColor,
   useMantineTheme,
-  MantineColor,
 } from '@mantine/core';
 
 interface DemoProps {
@@ -149,7 +149,7 @@ function Demo() {
 `isLightColor` function can be used to achieve better contrast between text and background:
 
 ```tsx
-import { isLightColor, Box } from '@mantine/core';
+import { Box, isLightColor } from '@mantine/core';
 
 interface DemoProps {
   color: string;

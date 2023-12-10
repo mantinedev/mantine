@@ -2,17 +2,17 @@ import React from 'react';
 import {
   Box,
   BoxProps,
-  StylesApiProps,
-  factory,
+  createVarsResolver,
   ElementProps,
+  factory,
+  Factory,
+  getRadius,
+  getSize,
+  MantineRadius,
+  MantineSize,
+  StylesApiProps,
   useProps,
   useStyles,
-  createVarsResolver,
-  Factory,
-  MantineSize,
-  MantineRadius,
-  getSize,
-  getRadius,
 } from '../../../core';
 import { ProgressProvider } from '../Progress.context';
 import classes from '../Progress.module.css';

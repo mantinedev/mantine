@@ -1,8 +1,8 @@
+import dayjs from 'dayjs';
 import React, { useState } from 'react';
 import { Button, Group } from '@mantine/core';
-import dayjs from 'dayjs';
-import { DatePickerInput } from './DatePickerInput';
 import { DatesProvider } from '../DatesProvider';
+import { DatePickerInput } from './DatePickerInput';
 
 export default { title: 'DatePickerInput' };
 

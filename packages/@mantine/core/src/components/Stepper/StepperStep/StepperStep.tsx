@@ -2,18 +2,18 @@ import React from 'react';
 import {
   BoxProps,
   CompoundStylesApiProps,
-  factory,
   ElementProps,
-  useProps,
+  factory,
   Factory,
-  MantineColor,
   getThemeColor,
+  MantineColor,
   useMantineTheme,
+  useProps,
 } from '../../../core';
-import { UnstyledButton } from '../../UnstyledButton';
-import { Transition } from '../../Transition';
-import { Loader } from '../../Loader';
 import { CheckIcon } from '../../Checkbox';
+import { Loader } from '../../Loader';
+import { Transition } from '../../Transition';
+import { UnstyledButton } from '../../UnstyledButton';
 import type { StepFragmentComponent } from '../Stepper';
 import { useStepperContext } from '../Stepper.context';
 import classes from '../Stepper.module.css';

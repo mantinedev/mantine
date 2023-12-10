@@ -3,19 +3,19 @@ import { useUncontrolled } from '@mantine/hooks';
 import {
   Box,
   BoxProps,
-  StylesApiProps,
-  polymorphicFactory,
-  useProps,
-  useStyles,
   createVarsResolver,
-  PolymorphicFactory,
+  getSpacing,
   MantineColor,
   MantineSize,
-  getSpacing,
+  polymorphicFactory,
+  PolymorphicFactory,
+  StylesApiProps,
+  useProps,
+  useStyles,
 } from '../../core';
-import { UnstyledButton } from '../UnstyledButton';
 import { AccordionChevron } from '../Accordion';
 import { Collapse } from '../Collapse';
+import { UnstyledButton } from '../UnstyledButton';
 import classes from './NavLink.module.css';
 
 export type NavLinkStylesNames =

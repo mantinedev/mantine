@@ -1,7 +1,7 @@
 import React from 'react';
-import { Group, Button } from '@mantine/core';
-import { MantineDemo } from '@mantinex/demo';
+import { Button, Group } from '@mantine/core';
 import { notifications } from '@mantine/notifications';
+import { MantineDemo } from '@mantinex/demo';
 
 const code = `
 import { Group, Button } from '@mantine/core';

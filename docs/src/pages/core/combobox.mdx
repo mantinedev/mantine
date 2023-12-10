@@ -1,6 +1,6 @@
+import { ComboboxDemos } from '@docs/demos';
 import { Layout } from '@/layout';
 import { MDX_DATA } from '@/mdx';
-import { ComboboxDemos } from '@docs/demos';
 
 export default Layout(MDX_DATA.Combobox);
 
@@ -27,7 +27,7 @@ The component is very flexible – you have full control of the rendering and lo
 and handlers to update it. Created store must be passed to the `store` prop of `Combobox`:
 
 ```tsx
-import { useCombobox, Combobox } from '@mantine/core';
+import { Combobox, useCombobox } from '@mantine/core';
 
 function Demo() {
   const combobox = useCombobox();
@@ -164,7 +164,7 @@ Combobox store handlers can be used to control `Combobox` state.
 For example, to open the dropdown, call `openDropdown` handler:
 
 ```tsx
-import { useCombobox, Combobox, Button } from '@mantine/core';
+import { Button, Combobox, useCombobox } from '@mantine/core';
 
 function Demo() {
   const combobox = useCombobox();
@@ -188,7 +188,7 @@ call `selectFirstOption` when the dropdown is opened and `resetSelectedOption`
 when it is closed:
 
 ```tsx
-import { useCombobox, Combobox } from '@mantine/core';
+import { Combobox, useCombobox } from '@mantine/core';
 
 function Demo() {
   const combobox = useCombobox({

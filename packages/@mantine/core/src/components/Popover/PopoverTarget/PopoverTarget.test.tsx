@@ -1,7 +1,7 @@
 import React from 'react';
-import { render, tests, patchConsoleError, createContextContainer } from '@mantine-tests/core';
-import { PopoverTarget, PopoverTargetProps } from './PopoverTarget';
+import { createContextContainer, patchConsoleError, render, tests } from '@mantine-tests/core';
 import { Popover } from '../Popover';
+import { PopoverTarget, PopoverTargetProps } from './PopoverTarget';
 
 const defaultProps: PopoverTargetProps = {
   children: <div>test</div>,

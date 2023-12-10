@@ -1,4 +1,4 @@
-import { useRef, useState, useEffect } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 export interface UseFocusWithinOptions {
   onFocus?: (event: FocusEvent) => void;

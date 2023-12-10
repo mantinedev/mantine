@@ -3,13 +3,13 @@ import {
   Box,
   BoxProps,
   CompoundStylesApiProps,
-  factory,
   ElementProps,
-  useProps,
+  factory,
   Factory,
+  getThemeColor,
   MantineColor,
   useMantineTheme,
-  getThemeColor,
+  useProps,
 } from '../../../core';
 import { useProgressContext } from '../Progress.context';
 import classes from '../Progress.module.css';

@@ -1,7 +1,7 @@
 import React from 'react';
-import { MantineDemo } from '@mantinex/demo';
-import { ActionIcon } from '@mantine/core';
 import { IconHeart } from '@tabler/icons-react';
+import { ActionIcon } from '@mantine/core';
+import { MantineDemo } from '@mantinex/demo';
 import { gradientControls } from '../../../shared';
 
 const code = (props: any) => `

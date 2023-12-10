@@ -1,23 +1,23 @@
 import React, { forwardRef, useState } from 'react';
 import {
+  ActionIcon,
   BoxProps,
+  ColorPicker,
+  ColorPickerProps,
+  ColorSwatch,
+  ElementProps,
+  Group,
   Popover,
   PopoverProps,
-  ColorSwatch,
-  SimpleGrid,
-  ColorPicker,
-  Group,
-  ActionIcon,
-  Tooltip,
-  ColorPickerProps,
-  useProps,
-  ElementProps,
   rem,
+  SimpleGrid,
+  Tooltip,
+  useProps,
 } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
-import { IconCircleOff, IconColorPicker, IconX, IconPalette, IconCheck } from '../icons/Icons';
-import { RichTextEditorControl } from './RichTextEditorControl';
+import { IconCheck, IconCircleOff, IconColorPicker, IconPalette, IconX } from '../icons/Icons';
 import { useRichTextEditorContext } from '../RichTextEditor.context';
+import { RichTextEditorControl } from './RichTextEditorControl';
 
 export interface RichTextEditorColorPickerControlProps extends BoxProps, ElementProps<'button'> {
   /** Props added to Popover component */

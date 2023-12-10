@@ -3,10 +3,10 @@ import {
   Box,
   BoxProps,
   CompoundStylesApiProps,
-  factory,
   ElementProps,
-  useProps,
+  factory,
   Factory,
+  useProps,
 } from '../../../core';
 import { useMenuContext } from '../Menu.context';
 import classes from '../Menu.module.css';

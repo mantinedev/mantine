@@ -1,21 +1,21 @@
 import React from 'react';
 import {
+  ActionIcon,
   Box,
   BoxProps,
-  StylesApiProps,
-  factory,
+  CopyButton,
   ElementProps,
+  factory,
+  Factory,
+  ScrollArea,
+  StylesApiProps,
+  Tooltip,
   useProps,
   useStyles,
-  CopyButton,
-  Tooltip,
-  ActionIcon,
-  ScrollArea,
-  Factory,
 } from '@mantine/core';
-import { ShikiLanguage } from './types';
-import { useShiki } from './ShikiProvider';
 import { CopyIcon } from './CopyIcon';
+import { useShiki } from './ShikiProvider';
+import { ShikiLanguage } from './types';
 import classes from './Shiki.module.css';
 
 export type CodeHighlightStylesNames = 'root' | 'code' | 'pre' | 'copy';

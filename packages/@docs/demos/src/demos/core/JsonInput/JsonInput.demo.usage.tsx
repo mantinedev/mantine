@@ -1,6 +1,6 @@
 import React from 'react';
-import { MantineDemo } from '@mantinex/demo';
 import { JsonInput } from '@mantine/core';
+import { MantineDemo } from '@mantinex/demo';
 
 const code = `
 import { JsonInput } from '@mantine/core';

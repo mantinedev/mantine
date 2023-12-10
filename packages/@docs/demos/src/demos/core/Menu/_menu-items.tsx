@@ -1,13 +1,13 @@
 import React from 'react';
 import {
-  IconSettings,
-  IconSearch,
-  IconPhoto,
-  IconMessageCircle,
-  IconTrash,
   IconArrowsLeftRight,
+  IconMessageCircle,
+  IconPhoto,
+  IconSearch,
+  IconSettings,
+  IconTrash,
 } from '@tabler/icons-react';
-import { Menu, Text, Button, rem } from '@mantine/core';
+import { Button, Menu, rem, Text } from '@mantine/core';
 
 export function DemoMenuItems({ widthRightSection = true, withTarget = true }) {
   const iconProps = { style: { width: rem(14), height: rem(14) } };

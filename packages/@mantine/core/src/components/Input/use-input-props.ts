@@ -1,4 +1,4 @@
-import { extractStyleProps, useProps, BoxProps, StylesApiProps } from '../../core';
+import { BoxProps, extractStyleProps, StylesApiProps, useProps } from '../../core';
 import { __BaseInputProps } from './Input';
 
 interface BaseProps

@@ -1,8 +1,8 @@
 import React from 'react';
-import { MdxParagraph, MdxCode } from '../MdxTypography/MdxTypography';
+import { MdxLink } from '../MdxLink/MdxLink';
 import { MdxCodeHighlight } from '../MdxPre/MdxPre';
 import { MdxTitle } from '../MdxTitle/MdxTitle';
-import { MdxLink } from '../MdxLink/MdxLink';
+import { MdxCode, MdxParagraph } from '../MdxTypography/MdxTypography';
 
 const getPortalCode = (component: string) => `
 import { ${component} } from '@mantine/core';

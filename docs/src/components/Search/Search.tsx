@@ -2,7 +2,7 @@ import React from 'react';
 import { useRouter } from 'next/router';
 import { IconSearch } from '@tabler/icons-react';
 import { rem } from '@mantine/core';
-import { Spotlight, createSpotlight } from '@mantine/spotlight';
+import { createSpotlight, Spotlight } from '@mantine/spotlight';
 import { SEARCH_MDX_PAGES } from '@/mdx';
 
 export const [searchStore, searchHandlers] = createSpotlight();

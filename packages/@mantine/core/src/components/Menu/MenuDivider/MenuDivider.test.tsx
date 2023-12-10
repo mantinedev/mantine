@@ -1,6 +1,6 @@
 import { createContextContainer, tests } from '@mantine-tests/core';
-import { MenuDivider, MenuDividerProps, MenuDividerStylesNames } from './MenuDivider';
 import { Menu } from '../Menu';
+import { MenuDivider, MenuDividerProps, MenuDividerStylesNames } from './MenuDivider';
 
 const TestContainer = createContextContainer(MenuDivider, Menu, { opened: true });
 

@@ -1,5 +1,5 @@
 import { rem } from '../../core';
-import type { TitleSize, TitleOrder } from './Title';
+import type { TitleOrder, TitleSize } from './Title';
 
 const headings: unknown[] = ['h1', 'h2', 'h3', 'h4', 'h5', 'h6'];
 

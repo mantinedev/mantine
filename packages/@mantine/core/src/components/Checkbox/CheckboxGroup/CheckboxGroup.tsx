@@ -1,7 +1,7 @@
 import React from 'react';
 import { useUncontrolled } from '@mantine/hooks';
-import { factory, useProps, MantineSize, Factory } from '../../../core';
-import { InputWrapperStylesNames, Input, InputWrapperProps } from '../../Input';
+import { factory, Factory, MantineSize, useProps } from '../../../core';
+import { Input, InputWrapperProps, InputWrapperStylesNames } from '../../Input';
 import { InputsGroupFieldset } from '../../InputsGroupFieldset';
 import { CheckboxGroupProvider } from '../CheckboxGroup.context';
 

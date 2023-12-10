@@ -1,6 +1,6 @@
 import React from 'react';
-import { MantineDemo } from '@mantinex/demo';
 import { CloseButton } from '@mantine/core';
+import { MantineDemo } from '@mantinex/demo';
 
 const code = `
 import { CloseButton } from '@mantine/core';

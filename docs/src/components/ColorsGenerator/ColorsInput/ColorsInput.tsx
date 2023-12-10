@@ -1,18 +1,18 @@
 import React, { useState } from 'react';
 import { useRouter } from 'next/router';
+import { IconCheck, IconCopy } from '@tabler/icons-react';
 import chroma from 'chroma-js';
-import { IconCopy, IconCheck } from '@tabler/icons-react';
-import { useClipboard } from '@mantine/hooks';
 import {
-  ColorPicker,
-  TextInput,
-  Input,
   Button,
+  ColorPicker,
   ColorSwatch,
   Group,
-  Switch,
+  Input,
   rem,
+  Switch,
+  TextInput,
 } from '@mantine/core';
+import { useClipboard } from '@mantine/hooks';
 import { COLORS_PRESET } from './colors-preset';
 import classes from './ColorsInput.module.css';
 

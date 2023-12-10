@@ -1,22 +1,22 @@
 import React from 'react';
 import cx from 'clsx';
-import { NumericFormat, OnValueChange, NumberFormatValues } from 'react-number-format';
+import { NumberFormatValues, NumericFormat, OnValueChange } from 'react-number-format';
 import { assignRef, clamp, useUncontrolled } from '@mantine/hooks';
 import {
   BoxProps,
-  StylesApiProps,
-  factory,
-  ElementProps,
-  useProps,
-  useStyles,
   createVarsResolver,
+  ElementProps,
+  factory,
   Factory,
   getSize,
+  StylesApiProps,
+  useProps,
   useResolvedStylesApi,
+  useStyles,
 } from '../../core';
-import { UnstyledButton } from '../UnstyledButton';
-import { InputBase } from '../InputBase';
 import { __BaseInputProps, __InputStylesNames, InputVariant } from '../Input';
+import { InputBase } from '../InputBase';
+import { UnstyledButton } from '../UnstyledButton';
 import { NumberInputChevron } from './NumberInputChevron';
 import classes from './NumberInput.module.css';
 

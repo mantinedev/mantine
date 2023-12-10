@@ -1,15 +1,15 @@
 import React from 'react';
+import { EditorContent } from '@tiptap/react';
 import {
   Box,
   BoxProps,
   CompoundStylesApiProps,
-  factory,
   ElementProps,
-  useProps,
+  factory,
   Factory,
   TypographyStylesProvider,
+  useProps,
 } from '@mantine/core';
-import { EditorContent } from '@tiptap/react';
 import { useRichTextEditorContext } from '../RichTextEditor.context';
 import classes from '../RichTextEditor.module.css';
 

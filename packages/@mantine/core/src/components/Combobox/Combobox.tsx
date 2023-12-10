@@ -1,33 +1,33 @@
 import React from 'react';
 import {
+  createVarsResolver,
+  ExtendComponent,
+  Factory,
+  getFontSize,
+  getSize,
+  MantineSize,
+  MantineThemeComponent,
+  rem,
   StylesApiProps,
   useProps,
   useStyles,
-  Factory,
-  createVarsResolver,
-  MantineSize,
-  getFontSize,
-  rem,
-  getSize,
-  ExtendComponent,
-  MantineThemeComponent,
 } from '../../core';
 import { __PopoverProps, Popover } from '../Popover';
-import { useCombobox, ComboboxStore } from './use-combobox/use-combobox';
 import { ComboboxProvider } from './Combobox.context';
-import { ComboboxTarget } from './ComboboxTarget/ComboboxTarget';
-import { ComboboxDropdown } from './ComboboxDropdown/ComboboxDropdown';
-import { ComboboxOptions } from './ComboboxOptions/ComboboxOptions';
-import { ComboboxOption, ComboboxOptionProps } from './ComboboxOption/ComboboxOption';
-import { ComboboxSearch } from './ComboboxSearch/ComboboxSearch';
-import { ComboboxEmpty } from './ComboboxEmpty/ComboboxEmpty';
 import { ComboboxChevron } from './ComboboxChevron/ComboboxChevron';
-import { ComboboxFooter } from './ComboboxFooter/ComboboxFooter';
-import { ComboboxHeader } from './ComboboxHeader/ComboboxHeader';
-import { ComboboxEventsTarget } from './ComboboxEventsTarget/ComboboxEventsTarget';
-import { ComboboxDropdownTarget } from './ComboboxDropdownTarget/ComboboxDropdownTarget';
-import { ComboboxGroup } from './ComboboxGroup/ComboboxGroup';
 import { ComboboxClearButton } from './ComboboxClearButton/ComboboxClearButton';
+import { ComboboxDropdown } from './ComboboxDropdown/ComboboxDropdown';
+import { ComboboxDropdownTarget } from './ComboboxDropdownTarget/ComboboxDropdownTarget';
+import { ComboboxEmpty } from './ComboboxEmpty/ComboboxEmpty';
+import { ComboboxEventsTarget } from './ComboboxEventsTarget/ComboboxEventsTarget';
+import { ComboboxFooter } from './ComboboxFooter/ComboboxFooter';
+import { ComboboxGroup } from './ComboboxGroup/ComboboxGroup';
+import { ComboboxHeader } from './ComboboxHeader/ComboboxHeader';
+import { ComboboxOption, ComboboxOptionProps } from './ComboboxOption/ComboboxOption';
+import { ComboboxOptions } from './ComboboxOptions/ComboboxOptions';
+import { ComboboxSearch } from './ComboboxSearch/ComboboxSearch';
+import { ComboboxTarget } from './ComboboxTarget/ComboboxTarget';
+import { ComboboxStore, useCombobox } from './use-combobox/use-combobox';
 import classes from './Combobox.module.css';
 
 export type ComboboxStylesNames =

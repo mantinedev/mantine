@@ -2,32 +2,32 @@ import React from 'react';
 import {
   Box,
   BoxProps,
-  StylesApiProps,
-  factory,
+  createVarsResolver,
   ElementProps,
+  factory,
+  Factory,
+  getDefaultZIndex,
+  MantineSpacing,
+  StylesApiProps,
   useProps,
   useStyles,
-  createVarsResolver,
-  Factory,
-  MantineSpacing,
-  getDefaultZIndex,
 } from '../../core';
-import { AppShellNavbar } from './AppShellNavbar/AppShellNavbar';
-import { AppShellHeader } from './AppShellHeader/AppShellHeader';
-import { AppShellFooter } from './AppShellFooter/AppShellFooter';
-import { AppShellAside } from './AppShellAside/AppShellAside';
-import { AppShellMain } from './AppShellMain/AppShellMain';
-import { AppShellSection } from './AppShellSection/AppShellSection';
-import { AppShellMediaStyles } from './AppShellMediaStyles/AppShellMediaStyles';
 import { AppShellProvider } from './AppShell.context';
-import { useResizing } from './use-resizing/use-resizing';
 import {
   AppShellAsideConfiguration,
+  AppShellFooterConfiguration,
   AppShellHeaderConfiguration,
   AppShellNavbarConfiguration,
-  AppShellFooterConfiguration,
   AppShellResponsiveSize,
 } from './AppShell.types';
+import { AppShellAside } from './AppShellAside/AppShellAside';
+import { AppShellFooter } from './AppShellFooter/AppShellFooter';
+import { AppShellHeader } from './AppShellHeader/AppShellHeader';
+import { AppShellMain } from './AppShellMain/AppShellMain';
+import { AppShellMediaStyles } from './AppShellMediaStyles/AppShellMediaStyles';
+import { AppShellNavbar } from './AppShellNavbar/AppShellNavbar';
+import { AppShellSection } from './AppShellSection/AppShellSection';
+import { useResizing } from './use-resizing/use-resizing';
 import classes from './AppShell.module.css';
 
 export type AppShellStylesNames =

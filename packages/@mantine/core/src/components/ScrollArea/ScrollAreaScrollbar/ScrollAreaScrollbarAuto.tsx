@@ -1,11 +1,11 @@
 import React, { forwardRef, useState } from 'react';
 import { useDebounceCallback } from '@mantine/hooks';
 import { useScrollAreaContext } from '../ScrollArea.context';
-import {
-  ScrollAreaScrollbarVisibleProps,
-  ScrollAreaScrollbarVisible,
-} from './ScrollAreaScrollbarVisible';
 import { useResizeObserver } from '../use-resize-observer';
+import {
+  ScrollAreaScrollbarVisible,
+  ScrollAreaScrollbarVisibleProps,
+} from './ScrollAreaScrollbarVisible';
 
 export interface ScrollAreaScrollbarAutoProps extends ScrollAreaScrollbarVisibleProps {
   forceMount?: true;

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Stepper, Button, Group } from '@mantine/core';
+import { Button, Group, Stepper } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
 import { Content } from './_content';
 

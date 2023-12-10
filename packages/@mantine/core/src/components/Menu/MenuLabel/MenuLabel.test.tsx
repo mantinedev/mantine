@@ -1,6 +1,6 @@
 import { createContextContainer, tests } from '@mantine-tests/core';
-import { MenuLabel, MenuLabelProps, MenuLabelStylesNames } from './MenuLabel';
 import { Menu } from '../Menu';
+import { MenuLabel, MenuLabelProps, MenuLabelStylesNames } from './MenuLabel';
 
 const TestContainer = createContextContainer(MenuLabel, Menu, { opened: true });
 

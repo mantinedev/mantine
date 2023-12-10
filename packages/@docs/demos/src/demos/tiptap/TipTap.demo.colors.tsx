@@ -1,11 +1,11 @@
 import React from 'react';
-import { MantineDemo } from '@mantinex/demo';
-import { useEditor } from '@tiptap/react';
 import { IconColorPicker } from '@tabler/icons-react';
 import { Color } from '@tiptap/extension-color';
 import TextStyle from '@tiptap/extension-text-style';
+import { useEditor } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
 import { RichTextEditor } from '@mantine/tiptap';
+import { MantineDemo } from '@mantinex/demo';
 
 const code = `
 import { useEditor } from '@tiptap/react';

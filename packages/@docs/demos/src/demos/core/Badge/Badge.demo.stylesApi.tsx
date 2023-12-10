@@ -1,8 +1,8 @@
 import React from 'react';
+import { IconAt } from '@tabler/icons-react';
+import { Badge, rem } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
 import { BadgeStylesApi } from '@docs/styles-api';
-import { Badge, rem } from '@mantine/core';
-import { IconAt } from '@tabler/icons-react';
 
 const code = `
 import { Badge, rem } from '@mantine/core';

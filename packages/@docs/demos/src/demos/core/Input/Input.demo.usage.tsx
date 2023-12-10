@@ -1,6 +1,6 @@
 import React from 'react';
-import { MantineDemo } from '@mantinex/demo';
 import { Input } from '@mantine/core';
+import { MantineDemo } from '@mantinex/demo';
 import { inputOnlyControls } from '../../../shared';
 
 const code = `

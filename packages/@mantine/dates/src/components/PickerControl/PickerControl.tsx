@@ -1,17 +1,17 @@
 import React from 'react';
 import {
   BoxProps,
-  StylesApiProps,
-  factory,
-  ElementProps,
-  useProps,
-  useStyles,
   createVarsResolver,
+  ElementProps,
+  factory,
   Factory,
   getFontSize,
   getSize,
   MantineSize,
+  StylesApiProps,
   UnstyledButton,
+  useProps,
+  useStyles,
 } from '@mantine/core';
 import classes from './PickerControl.module.css';
 

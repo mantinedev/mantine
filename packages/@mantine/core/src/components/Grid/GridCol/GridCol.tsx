@@ -4,11 +4,11 @@ import {
   Box,
   BoxProps,
   CompoundStylesApiProps,
-  factory,
   ElementProps,
-  useProps,
+  factory,
   Factory,
   StyleProp,
+  useProps,
   useRandomClassName,
 } from '../../../core';
 import { useGridContext } from '../Grid.context';

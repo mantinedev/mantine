@@ -1,12 +1,12 @@
 import React from 'react';
 import {
   IconGitBranch,
-  IconGitPullRequest,
   IconGitCommit,
+  IconGitPullRequest,
   IconMessageDots,
 } from '@tabler/icons-react';
-import { Timeline } from './Timeline';
 import { Text } from '../Text';
+import { Timeline } from './Timeline';
 
 export default { title: 'Timeline' };
 

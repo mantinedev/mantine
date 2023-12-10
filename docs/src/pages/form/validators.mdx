@@ -1,6 +1,6 @@
+import { FormDemos } from '@docs/demos';
 import { Layout } from '@/layout';
 import { MDX_DATA } from '@/mdx';
-import { FormDemos } from '@docs/demos';
 
 export default Layout(MDX_DATA.formValidators);
 
@@ -24,7 +24,7 @@ only have invalid styles without error message:
 values are considered to be empty. Strings are trimmed before validation.
 
 ```tsx
-import { useForm, isNotEmpty } from '@mantine/form';
+import { isNotEmpty, useForm } from '@mantine/form';
 
 const form = useForm({
   initialValues: {
@@ -55,7 +55,7 @@ const form = useForm({
 `isEmail` uses `/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,})+$/` regexp to determine whether form value is an email:
 
 ```tsx
-import { useForm, isEmail } from '@mantine/form';
+import { isEmail, useForm } from '@mantine/form';
 
 const form = useForm({
   initialValues: {
@@ -73,7 +73,7 @@ const form = useForm({
 `matches` checks whether form value matches given regexp. If form value is not a string, validation will be failed.
 
 ```tsx
-import { useForm, matches } from '@mantine/form';
+import { matches, useForm } from '@mantine/form';
 
 const form = useForm({
   initialValues: {
@@ -91,7 +91,7 @@ const form = useForm({
 `isInRange` checks whether form value is within given `min`-`max` range. If form value is not a number, validation will be failed.
 
 ```tsx
-import { useForm, isInRange } from '@mantine/form';
+import { isInRange, useForm } from '@mantine/form';
 
 const form = useForm({
   initialValues: {
@@ -143,7 +143,7 @@ const form = useForm({
 Note that `matchesField` can only work with primitive values (arrays and objects cannot be compared).
 
 ```tsx
-import { useForm, matchesField } from '@mantine/form';
+import { matchesField, useForm } from '@mantine/form';
 
 const form = useForm({
   initialValues: {

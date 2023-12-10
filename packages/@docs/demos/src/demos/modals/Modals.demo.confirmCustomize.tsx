@@ -1,8 +1,8 @@
 import React from 'react';
 import { Button, Text } from '@mantine/core';
 import { modals } from '@mantine/modals';
-import { MantineDemo } from '@mantinex/demo';
 import { notifications } from '@mantine/notifications';
+import { MantineDemo } from '@mantinex/demo';
 
 const code = `
 import { Button, Text } from '@mantine/core';

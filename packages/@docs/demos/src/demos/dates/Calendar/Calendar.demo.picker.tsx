@@ -1,7 +1,7 @@
 import dayjs from 'dayjs';
 import React, { useState } from 'react';
-import { MantineDemo } from '@mantinex/demo';
 import { Calendar } from '@mantine/dates';
+import { MantineDemo } from '@mantinex/demo';
 
 const code = `
 import dayjs from 'dayjs';

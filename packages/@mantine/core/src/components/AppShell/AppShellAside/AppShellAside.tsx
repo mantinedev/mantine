@@ -2,11 +2,11 @@ import React from 'react';
 import {
   Box,
   BoxProps,
-  StylesApiProps,
-  factory,
   ElementProps,
-  useProps,
+  factory,
   Factory,
+  StylesApiProps,
+  useProps,
 } from '../../../core';
 import { useAppShellContext } from '../AppShell.context';
 import classes from '../AppShell.module.css';

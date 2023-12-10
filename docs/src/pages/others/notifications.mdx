@@ -1,6 +1,6 @@
+import { NotificationDemos, NotificationsDemos } from '@docs/demos';
 import { Layout } from '@/layout';
 import { MDX_DATA } from '@/mdx';
-import { NotificationsDemos, NotificationDemos } from '@docs/demos';
 
 export default Layout(MDX_DATA.Notifications);
 
@@ -60,12 +60,12 @@ You can also import these functions separately:
 ```tsx
 // alias functions
 import {
-  showNotification, // notifications.show
-  hideNotification, // notifications.hide
-  updateNotification, // notifications.update
-  updateNotificationsState, // notifications.updateState
   cleanNotifications, // notifications.clean
   cleanNotificationsQueue, // notifications.cleanQueue
+  hideNotification, // notifications.hide
+  showNotification, // notifications.show
+  updateNotification, // notifications.update
+  updateNotificationsState, // notifications.updateState
 } from '@mantine/notifications';
 ```
 

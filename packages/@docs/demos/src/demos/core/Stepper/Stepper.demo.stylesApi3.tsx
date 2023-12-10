@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { MantineDemo } from '@mantinex/demo';
 import { Stepper } from '@mantine/core';
+import { MantineDemo } from '@mantinex/demo';
 import classes from './Stepper.demo.stylesApi3.module.css';
 
 const cssCode = `.separator {

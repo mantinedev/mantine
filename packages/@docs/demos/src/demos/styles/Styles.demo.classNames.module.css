@@ -21,7 +21,10 @@
   color: var(--mantine-color-placeholder);
   font-weight: 400;
   font-size: var(--mantine-font-size-sm);
-  transition: color 100ms ease, transform 100ms ease, font-size 100ms ease;
+  transition:
+    color 100ms ease,
+    transform 100ms ease,
+    font-size 100ms ease;
 
   &[data-floating] {
     transform: translateY(rem(-20px));

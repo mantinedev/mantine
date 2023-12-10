@@ -1,7 +1,7 @@
 import React from 'react';
-import { useMantineTheme } from '../MantineThemeProvider';
-import { keys, px, em } from '../../utils';
+import { em, keys, px } from '../../utils';
 import { useMantineStyleNonce } from '../Mantine.context';
+import { useMantineTheme } from '../MantineThemeProvider';
 
 export function MantineClasses() {
   const theme = useMantineTheme();

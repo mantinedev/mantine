@@ -3,14 +3,14 @@ import { useElementSize, useId } from '@mantine/hooks';
 import {
   Box,
   BoxProps,
-  StylesApiProps,
-  factory,
-  ElementProps,
-  useProps,
-  useStyles,
   createVarsResolver,
+  ElementProps,
+  factory,
   Factory,
   rem,
+  StylesApiProps,
+  useProps,
+  useStyles,
 } from '../../core';
 import { Anchor } from '../Anchor';
 import classes from './Spoiler.module.css';

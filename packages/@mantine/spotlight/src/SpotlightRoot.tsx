@@ -1,23 +1,23 @@
 import React from 'react';
 import {
-  StylesApiProps,
   factory,
-  useProps,
-  useStyles,
   Factory,
+  getDefaultZIndex,
   Modal,
   ModalProps,
   ModalStylesNames,
-  getDefaultZIndex,
-  resolveClassNames,
-  useMantineTheme,
-  resolveStyles,
   rem,
+  resolveClassNames,
+  resolveStyles,
+  StylesApiProps,
+  useMantineTheme,
+  useProps,
+  useStyles,
 } from '@mantine/core';
 import { useDidUpdate, useHotkeys } from '@mantine/hooks';
-import { SpotlightProvider } from './Spotlight.context';
-import { useSpotlight, SpotlightStore, spotlightStore, spotlightActions } from './spotlight.store';
 import { getHotkeys } from './get-hotkeys';
+import { SpotlightProvider } from './Spotlight.context';
+import { spotlightActions, SpotlightStore, spotlightStore, useSpotlight } from './spotlight.store';
 import classes from './Spotlight.module.css';
 
 export type SpotlightRootStylesNames =

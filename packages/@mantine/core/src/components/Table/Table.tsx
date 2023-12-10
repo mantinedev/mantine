@@ -2,18 +2,18 @@ import React from 'react';
 import {
   Box,
   BoxProps,
-  StylesApiProps,
-  factory,
+  createVarsResolver,
   ElementProps,
-  useProps,
-  useStyles,
-  MantineColor,
-  MantineSpacing,
+  factory,
+  Factory,
   getSpacing,
   getThemeColor,
-  createVarsResolver,
-  Factory,
+  MantineColor,
+  MantineSpacing,
   rem,
+  StylesApiProps,
+  useProps,
+  useStyles,
 } from '../../core';
 import {
   TableCaption,
@@ -21,12 +21,12 @@ import {
   TableTd,
   TableTfoot,
   TableTh,
-  TableTr,
   TableThead,
+  TableTr,
 } from './Table.components';
+import { TableProvider } from './Table.context';
 import { TableDataRenderer } from './TableDataRenderer';
 import { TableScrollContainer } from './TableScrollContainer';
-import { TableProvider } from './Table.context';
 import classes from './Table.module.css';
 
 export type TableStylesNames =

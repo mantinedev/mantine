@@ -1,6 +1,6 @@
 import React from 'react';
+import { Autocomplete, Button, Popover } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
-import { Popover, Button, Autocomplete } from '@mantine/core';
 
 const code = `
 import { Popover, Button, Autocomplete } from '@mantine/core';

@@ -16,18 +16,19 @@ import '@docs/demos/styles.css';
 import React from 'react';
 import { AppProps } from 'next/app';
 import Head from 'next/head';
-import { MantineProvider, DirectionProvider } from '@mantine/core';
+import { DirectionProvider, MantineProvider } from '@mantine/core';
 import { useHotkeys, useLocalStorage } from '@mantine/hooks';
 import { Notifications } from '@mantine/notifications';
 import { ShikiProvider } from '@mantinex/shiki';
-import { MdxProvider } from '@/components/MdxProvider';
-import { HotKeysHandler } from '@/components/HotKeysHandler';
-import { Search } from '@/components/Search';
-import { FontsStyle } from '@/fonts';
-import { Shell } from '@/components/Shell';
 import { GaScript } from '@/components/GaScript';
+import { HotKeysHandler } from '@/components/HotKeysHandler';
+import { MdxProvider } from '@/components/MdxProvider';
 import { ModalsProviderDemo } from '@/components/ModalsProviderDemo';
+import { Search } from '@/components/Search';
+import { Shell } from '@/components/Shell';
+import { FontsStyle } from '@/fonts';
 import { theme } from '../../theme';
+
 import '../styles/variables.css';
 import '../styles/global.css';
 

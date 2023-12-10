@@ -2,17 +2,17 @@ import React from 'react';
 import {
   BoxProps,
   CompoundStylesApiProps,
-  factory,
   ElementProps,
-  useProps,
+  factory,
   Factory,
   Input,
   InputProps,
   InputStylesNames,
+  useProps,
 } from '@mantine/core';
-import classes from './Spotlight.module.css';
 import { useSpotlightContext } from './Spotlight.context';
 import { spotlightActions } from './spotlight.store';
+import classes from './Spotlight.module.css';
 
 export type SpotlightSearchStylesNames = InputStylesNames;
 

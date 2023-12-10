@@ -1,8 +1,8 @@
 /* eslint-disable no-console */
 import React from 'react';
-import { TextInput } from '../TextInput';
 import { Button } from '../Button';
 import { ScrollArea } from '../ScrollArea';
+import { TextInput } from '../TextInput';
 import { Combobox } from './Combobox';
 import { useCombobox } from './use-combobox/use-combobox';
 

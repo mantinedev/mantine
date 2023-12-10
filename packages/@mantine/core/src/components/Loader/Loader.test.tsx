@@ -1,6 +1,6 @@
 import React, { forwardRef } from 'react';
-import { tests, render } from '@mantine-tests/core';
-import { Loader, LoaderProps, LoaderStylesNames, defaultLoaders } from './Loader';
+import { render, tests } from '@mantine-tests/core';
+import { defaultLoaders, Loader, LoaderProps, LoaderStylesNames } from './Loader';
 import { MantineLoaderComponent } from './Loader.types';
 
 const customLoader: MantineLoaderComponent = forwardRef(() => <div data-custom-loader />);

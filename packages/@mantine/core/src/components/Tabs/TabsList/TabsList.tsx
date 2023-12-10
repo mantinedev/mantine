@@ -2,11 +2,11 @@ import React from 'react';
 import {
   Box,
   BoxProps,
-  useProps,
-  factory,
-  ElementProps,
   CompoundStylesApiProps,
+  ElementProps,
+  factory,
   Factory,
+  useProps,
 } from '../../../core';
 import { useTabsContext } from '../Tabs.context';
 import classes from '../Tabs.module.css';

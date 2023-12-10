@@ -1,6 +1,6 @@
 import React from 'react';
+import { Checkbox, createTheme, MantineThemeProvider } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
-import { MantineThemeProvider, createTheme, Checkbox } from '@mantine/core';
 
 const code = `
 import { MantineProvider, createTheme, Checkbox } from '@mantine/core';

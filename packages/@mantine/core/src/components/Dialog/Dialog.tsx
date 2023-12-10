@@ -1,21 +1,21 @@
 import React from 'react';
 import {
   BoxProps,
-  StylesApiProps,
-  factory,
+  createVarsResolver,
   ElementProps,
+  factory,
+  Factory,
+  getSize,
+  MantineSize,
+  StylesApiProps,
   useProps,
   useStyles,
-  createVarsResolver,
-  Factory,
-  MantineSize,
-  getSize,
 } from '../../core';
 import { Affix, AffixBaseProps } from '../Affix';
-import { Paper, PaperBaseProps } from '../Paper';
-import classes from './Dialog.module.css';
-import { Transition, TransitionOverride } from '../Transition';
 import { CloseButton } from '../CloseButton';
+import { Paper, PaperBaseProps } from '../Paper';
+import { Transition, TransitionOverride } from '../Transition';
+import classes from './Dialog.module.css';
 
 export type DialogStylesNames = 'root' | 'closeButton';
 export type DialogCssVariables = {

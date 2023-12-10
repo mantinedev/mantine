@@ -1,15 +1,15 @@
 import React from 'react';
+import { __InputStylesNames } from '@mantine/core';
 import {
-  tests,
   inputDefaultProps,
   inputStylesApiSelectors,
   render,
+  tests,
   userEvent,
 } from '@mantine-tests/core';
-import { __InputStylesNames } from '@mantine/core';
 import { clickInput, datesTests, expectValue } from '@mantine-tests/dates';
-import { YearPickerInput, YearPickerInputProps } from './YearPickerInput';
 import { DatesProvider } from '../DatesProvider';
+import { YearPickerInput, YearPickerInputProps } from './YearPickerInput';
 
 const defaultProps = {
   popoverProps: { withinPortal: false, transitionProps: { duration: 0 } },

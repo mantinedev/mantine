@@ -1,6 +1,6 @@
 import React from 'react';
-import { MdxTitle } from '../MdxTitle/MdxTitle';
 import { MdxCodeHighlight } from '../MdxPre/MdxPre';
+import { MdxTitle } from '../MdxTitle/MdxTitle';
 
 interface MdxGetElementRefProps {
   component: string;

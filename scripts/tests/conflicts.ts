@@ -1,7 +1,7 @@
 // Validates that there are no git conflicts in package.json files
 import fs from 'fs-extra';
-import { createLogger } from '../utils/signale';
 import { getPackagesBuildOrder } from '../build/get-packages-build-order';
+import { createLogger } from '../utils/signale';
 
 const logger = createLogger('check-conflicts');
 

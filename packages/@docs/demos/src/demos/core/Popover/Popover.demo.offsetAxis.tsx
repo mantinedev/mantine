@@ -1,6 +1,6 @@
 import React from 'react';
+import { Button, Popover, Text } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
-import { Popover, Button, Text } from '@mantine/core';
 import { FLOATING_POSITION_DATA } from '../../../shared';
 
 const code = (props: any) => `

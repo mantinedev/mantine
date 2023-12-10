@@ -1,5 +1,5 @@
-import { getGradient } from './get-gradient';
 import { DEFAULT_THEME } from '../../default-theme';
+import { getGradient } from './get-gradient';
 
 describe('@mantine/core/get-gradient', () => {
   it('returns default gradient from theme if gradient is not provided', () => {

@@ -21,7 +21,10 @@
   height: 0;
   padding-bottom: 100%;
   overflow: hidden;
-  transition: transform 100ms ease, box-shadow 100ms ease, border-radius 100ms ease;
+  transition:
+    transform 100ms ease,
+    box-shadow 100ms ease,
+    border-radius 100ms ease;
 
   &[data-base] {
     transform: scale(1.2) translateY(rem(-5px));

@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, tests } from '@mantine-tests/core';
-import { ListItem } from './ListItem/ListItem';
 import { List, ListProps, ListStylesNames } from './List';
+import { ListItem } from './ListItem/ListItem';
 
 const defaultProps: ListProps = {
   children: [

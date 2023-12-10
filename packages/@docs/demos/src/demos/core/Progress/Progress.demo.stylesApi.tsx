@@ -1,6 +1,6 @@
 import React from 'react';
-import { MantineDemo } from '@mantinex/demo';
 import { Progress } from '@mantine/core';
+import { MantineDemo } from '@mantinex/demo';
 import { ProgressStylesApi } from '@docs/styles-api';
 
 const code = `

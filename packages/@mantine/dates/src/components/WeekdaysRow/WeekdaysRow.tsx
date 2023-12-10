@@ -2,16 +2,16 @@ import React from 'react';
 import {
   Box,
   BoxProps,
-  StylesApiProps,
-  factory,
-  ElementProps,
-  useProps,
-  useStyles,
   createVarsResolver,
+  ElementProps,
+  factory,
   Factory,
-  MantineSize,
   getFontSize,
   getSpacing,
+  MantineSize,
+  StylesApiProps,
+  useProps,
+  useStyles,
 } from '@mantine/core';
 import type { DayOfWeek } from '../../types';
 import { useDatesContext } from '../DatesProvider';

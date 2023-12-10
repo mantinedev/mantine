@@ -1,32 +1,32 @@
 import React from 'react';
 import {
-  useDropzone,
-  FileRejection,
   Accept,
-  FileWithPath,
   DropEvent,
   FileError,
+  FileRejection,
+  FileWithPath,
+  useDropzone,
 } from 'react-dropzone-esm';
 import {
   Box,
   BoxProps,
-  StylesApiProps,
-  factory,
+  createVarsResolver,
   ElementProps,
+  factory,
+  Factory,
+  getRadius,
+  LoaderProps,
+  LoadingOverlay,
+  MantineColor,
+  MantineRadius,
+  StylesApiProps,
   useProps,
   useStyles,
-  createVarsResolver,
-  Factory,
-  MantineRadius,
-  LoadingOverlay,
-  getRadius,
-  MantineColor,
-  LoaderProps,
 } from '@mantine/core';
 import { assignRef } from '@mantine/hooks';
 import { DropzoneProvider } from './Dropzone.context';
-import { DropzoneAccept, DropzoneIdle, DropzoneReject } from './DropzoneStatus';
 import type { DropzoneFullScreenType } from './DropzoneFullScreen';
+import { DropzoneAccept, DropzoneIdle, DropzoneReject } from './DropzoneStatus';
 import classes from './Dropzone.module.css';
 
 export type DropzoneStylesNames = 'root' | 'inner';

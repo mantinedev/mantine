@@ -1,6 +1,6 @@
-import { tests, createContextContainer } from '@mantine-tests/core';
-import { PaginationDots, PaginationDotsProps, PaginationDotsStylesNames } from './PaginationDots';
+import { createContextContainer, tests } from '@mantine-tests/core';
 import { PaginationRoot } from '../PaginationRoot/PaginationRoot';
+import { PaginationDots, PaginationDotsProps, PaginationDotsStylesNames } from './PaginationDots';
 
 const TestContainer = createContextContainer(PaginationDots, PaginationRoot, { total: 10 });
 

@@ -1,7 +1,7 @@
 import React from 'react';
-import { MantineDemo } from '@mantinex/demo';
-import { TextInput, rem } from '@mantine/core';
 import { IconExclamationCircle } from '@tabler/icons-react';
+import { rem, TextInput } from '@mantine/core';
+import { MantineDemo } from '@mantinex/demo';
 
 const code = `
 import { TextInput, rem } from '@mantine/core';

@@ -1,9 +1,9 @@
 import React from 'react';
+import { MdxLink } from '../MdxLink/MdxLink';
 import { Template } from '../MdxTemplatesList/data';
 import { MdxTemplatesList } from '../MdxTemplatesList/MdxTemplatesList';
 import { MdxTitle } from '../MdxTitle/MdxTitle';
 import { MdxParagraph } from '../MdxTypography/MdxTypography';
-import { MdxLink } from '../MdxLink/MdxLink';
 
 interface MdxGetTemplatesProps {
   type: Template['type'];

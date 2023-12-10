@@ -1,6 +1,6 @@
 import React, { cloneElement } from 'react';
-import { upperFirst } from '@mantine/hooks';
 import { isElement, useProps } from '@mantine/core';
+import { upperFirst } from '@mantine/hooks';
 import { DropzoneContextValue, useDropzoneContext } from './Dropzone.context';
 
 export interface DropzoneStatusProps {

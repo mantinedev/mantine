@@ -1,6 +1,6 @@
 import React from 'react';
+import { MantineThemeProvider, Title } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
-import { Title, MantineThemeProvider } from '@mantine/core';
 import classes from './Theming.demo.headingStyles.module.css';
 
 const code = `

@@ -1,8 +1,8 @@
 import React from 'react';
 import { Button } from '../Button';
+import { Switch } from '../Switch';
 import { Tooltip } from '../Tooltip';
 import { HoverCard } from './HoverCard';
-import { Switch } from '../Switch';
 
 export default { title: 'HoverCard' };
 

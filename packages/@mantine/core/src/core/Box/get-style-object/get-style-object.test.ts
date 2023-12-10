@@ -1,5 +1,5 @@
-import { getStyleObject } from './get-style-object';
 import { DEFAULT_THEME } from '../../MantineProvider';
+import { getStyleObject } from './get-style-object';
 
 describe('@mantine/core/Box/get-style-object', () => {
   it('returns empty object if style is undefined', () => {

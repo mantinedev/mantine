@@ -1,7 +1,7 @@
-import { Layout } from '@/layout';
-import { MDX_DATA } from '@/mdx';
 import { FrameworksGuides } from '@/components/FrameworksGuides';
 import { SocialCards } from '@/components/SocialCards';
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
 
 export default Layout(MDX_DATA.GettingStarted);
 
@@ -98,7 +98,7 @@ import '@mantine/core/styles.css';
 Wrap your application with [MantineProvider](/theming/mantine-provider/):
 
 ```tsx
-import { MantineProvider, createTheme } from '@mantine/core';
+import { createTheme, MantineProvider } from '@mantine/core';
 
 const theme = createTheme({
   /** Put your mantine theme override here */

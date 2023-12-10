@@ -1,7 +1,7 @@
 import React, { useRef } from 'react';
+import { Box, Paper, Text } from '@mantine/core';
 import { useIntersection } from '@mantine/hooks';
 import { MantineDemo } from '@mantinex/demo';
-import { Text, Paper, Box } from '@mantine/core';
 
 const code = `
 import { useRef } from 'react';

@@ -1,6 +1,6 @@
 import { useRef } from 'react';
-import { useWindowScroll } from '../use-window-scroll/use-window-scroll';
 import { useIsomorphicEffect } from '../use-isomorphic-effect/use-isomorphic-effect';
+import { useWindowScroll } from '../use-window-scroll/use-window-scroll';
 
 export const isFixed = (current: number, fixedAt: number) => current <= fixedAt;
 export const isPinned = (current: number, previous: number) => current <= previous;

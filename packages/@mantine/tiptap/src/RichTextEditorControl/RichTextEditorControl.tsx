@@ -1,16 +1,16 @@
 import React, { forwardRef } from 'react';
 import {
-  UnstyledButton,
   BoxProps,
   CompoundStylesApiProps,
-  factory,
   ElementProps,
-  useProps,
+  factory,
   Factory,
   rem,
+  UnstyledButton,
+  useProps,
 } from '@mantine/core';
-import { useRichTextEditorContext } from '../RichTextEditor.context';
 import { RichTextEditorLabels } from '../labels';
+import { useRichTextEditorContext } from '../RichTextEditor.context';
 import classes from '../RichTextEditor.module.css';
 
 export type RichTextEditorControlStylesNames = 'control';

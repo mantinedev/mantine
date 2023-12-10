@@ -1,4 +1,4 @@
-import { useCallback, useRef, useState, useEffect } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 
 function getFullscreenElement(): HTMLElement | null {
   const _document = window.document as any;

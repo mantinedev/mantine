@@ -1,11 +1,11 @@
 import { tests } from '@mantine-tests/core';
 import { Spotlight, SpotlightProps, SpotlightStylesNames } from './Spotlight';
+import { spotlight } from './spotlight.store';
 import { SpotlightAction } from './SpotlightAction';
 import { SpotlightActionsList } from './SpotlightActionsList';
 import { SpotlightEmpty } from './SpotlightEmpty';
 import { SpotlightFooter } from './SpotlightFooter';
 import { SpotlightSearch } from './SpotlightSearch';
-import { spotlight } from './spotlight.store';
 
 const defaultProps: SpotlightProps = {
   forceOpened: true,

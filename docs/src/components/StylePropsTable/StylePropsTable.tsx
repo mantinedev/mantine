@@ -1,5 +1,5 @@
 import React from 'react';
-import { STYlE_PROPS_DATA, Code, Breadcrumbs } from '@mantine/core';
+import { Breadcrumbs, Code, STYlE_PROPS_DATA } from '@mantine/core';
 import { MdxDataTable } from '@/components/MdxProvider';
 
 const THEME_KEYS: Record<string, string> = {

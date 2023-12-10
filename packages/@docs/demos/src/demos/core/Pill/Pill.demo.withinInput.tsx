@@ -1,6 +1,6 @@
 import React from 'react';
+import { InputBase, Pill } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
-import { Pill, InputBase } from '@mantine/core';
 
 const code = `
 import { Pill, InputBase } from '@mantine/core';

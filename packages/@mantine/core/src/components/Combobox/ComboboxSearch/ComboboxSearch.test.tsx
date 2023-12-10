@@ -1,4 +1,4 @@
-import { tests, createContextContainer } from '@mantine-tests/core';
+import { createContextContainer, tests } from '@mantine-tests/core';
 import { Combobox } from '../Combobox';
 import { ComboboxSearch, ComboboxSearchProps, ComboboxSearchStylesNames } from './ComboboxSearch';
 

@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
 import React from 'react';
-import { render } from '../render';
 import { patchConsoleError } from '../patch-console-error';
+import { render } from '../render';
 
 interface Options<Props = any> {
   component: React.ComponentType<Props>;

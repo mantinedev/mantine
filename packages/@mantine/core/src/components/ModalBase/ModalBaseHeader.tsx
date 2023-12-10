@@ -1,8 +1,8 @@
 import React, { forwardRef } from 'react';
 import cx from 'clsx';
 import { Box, BoxProps, ElementProps } from '../../core';
-import classes from './ModalBase.module.css';
 import { useModalBaseContext } from './ModalBase.context';
+import classes from './ModalBase.module.css';
 
 export interface ModalBaseHeaderProps extends BoxProps, ElementProps<'header'> {}
 

@@ -1,4 +1,4 @@
-import { useIsomorphicEffect, useCallbackRef } from '@mantine/hooks';
+import { useCallbackRef, useIsomorphicEffect } from '@mantine/hooks';
 
 export function useResizeObserver(element: HTMLElement | null, onResize: () => void) {
   const handleResize = useCallbackRef(onResize);

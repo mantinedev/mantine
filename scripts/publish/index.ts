@@ -1,15 +1,15 @@
-import fs from 'fs-extra';
 import path from 'node:path';
-import yargs from 'yargs/yargs';
-import { hideBin } from 'yargs/helpers';
-import simpleGit from 'simple-git';
 import chalk from 'chalk';
+import fs from 'fs-extra';
+import simpleGit from 'simple-git';
 import { PackageJson } from 'type-fest';
 import { getNextVersion } from 'version-next';
+import { hideBin } from 'yargs/helpers';
+import yargs from 'yargs/yargs';
 import { buildPackage } from '../build/build-package';
-import { createLogger } from '../utils/signale';
-import { locatePackage } from '../packages/locate-package';
 import { getPackageName } from '../packages/get-package-name';
+import { locatePackage } from '../packages/locate-package';
+import { createLogger } from '../utils/signale';
 import { publishPackage } from './publish-package';
 
 const git = simpleGit();

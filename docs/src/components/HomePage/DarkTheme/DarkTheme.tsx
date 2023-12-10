@@ -1,10 +1,10 @@
 import React from 'react';
-import { Button, Image, SimpleGrid, Text, useMantineColorScheme, Group } from '@mantine/core';
-import { CodeHighlight } from '@mantinex/shiki';
 import { IconMoonStars, IconSun } from '@tabler/icons-react';
+import { Button, Group, Image, SimpleGrid, Text, useMantineColorScheme } from '@mantine/core';
+import { CodeHighlight } from '@mantinex/shiki';
 import { PageSection } from '../PageSection/PageSection';
-import classes from './DarkTheme.module.css';
 import image from './dark-theme-image.png';
+import classes from './DarkTheme.module.css';
 
 export function DarkTheme() {
   const { toggleColorScheme } = useMantineColorScheme();

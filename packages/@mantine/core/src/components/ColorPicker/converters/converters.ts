@@ -1,4 +1,4 @@
-import { HsvaColor, RgbaColor, ColorFormat } from '../ColorPicker.types';
+import { ColorFormat, HsvaColor, RgbaColor } from '../ColorPicker.types';
 import { round } from './parsers';
 
 export function hsvaToRgbaObject({ h, s, v, a }: HsvaColor): RgbaColor {

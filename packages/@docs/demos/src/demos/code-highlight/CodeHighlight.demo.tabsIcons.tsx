@@ -1,7 +1,7 @@
 import React from 'react';
-import { MantineDemo } from '@mantinex/demo';
-import { TypeScriptIcon, CssIcon } from '@mantinex/dev-icons';
 import { CodeHighlightTabs } from '@mantine/code-highlight';
+import { MantineDemo } from '@mantinex/demo';
+import { CssIcon, TypeScriptIcon } from '@mantinex/dev-icons';
 
 const tsxCode = `
 function Button() {

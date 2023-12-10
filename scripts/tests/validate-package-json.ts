@@ -1,7 +1,7 @@
 // Validates all package.json files have all the required properties
 import { PackageJson } from 'type-fest';
-import { createLogger } from '../utils/signale';
 import { getPackagesBuildOrder } from '../build/get-packages-build-order';
+import { createLogger } from '../utils/signale';
 
 const logger = createLogger('validate-package-json');
 

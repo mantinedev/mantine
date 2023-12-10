@@ -1,6 +1,6 @@
-import React, { useState, useRef } from 'react';
+import React, { useRef, useState } from 'react';
+import { ScrollArea, TextInput, UnstyledButton } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
-import { ScrollArea, UnstyledButton, TextInput } from '@mantine/core';
 
 const code = `
 import { useState, useRef } from 'react';

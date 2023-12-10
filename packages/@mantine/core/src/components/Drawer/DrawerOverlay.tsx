@@ -1,5 +1,5 @@
 import React from 'react';
-import { CompoundStylesApiProps, factory, useProps, Factory } from '../../core';
+import { CompoundStylesApiProps, factory, Factory, useProps } from '../../core';
 import { ModalBaseOverlay, ModalBaseOverlayProps } from '../ModalBase';
 import { useDrawerContext } from './Drawer.context';
 import classes from './Drawer.module.css';

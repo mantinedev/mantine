@@ -2,17 +2,17 @@ import React from 'react';
 import {
   Box,
   BoxProps,
-  StylesApiProps,
-  polymorphicFactory,
-  useProps,
-  useStyles,
   createVarsResolver,
-  PolymorphicFactory,
-  MantineRadius,
-  rgba,
   getDefaultZIndex,
   getRadius,
+  MantineRadius,
+  polymorphicFactory,
+  PolymorphicFactory,
   rem,
+  rgba,
+  StylesApiProps,
+  useProps,
+  useStyles,
 } from '../../core';
 import classes from './Overlay.module.css';
 

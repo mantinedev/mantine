@@ -1,4 +1,4 @@
-import { useRef, useEffect, useCallback } from 'react';
+import { useCallback, useEffect, useRef } from 'react';
 
 export function useTimeout(
   callback: (...callbackParams: any[]) => void,

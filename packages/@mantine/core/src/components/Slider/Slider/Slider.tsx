@@ -2,31 +2,31 @@ import React, { useCallback, useRef, useState } from 'react';
 import { clamp, useMergedRef, useMove, useUncontrolled } from '@mantine/hooks';
 import {
   BoxProps,
-  StylesApiProps,
-  factory,
+  createVarsResolver,
   ElementProps,
-  useProps,
+  factory,
+  Factory,
+  getRadius,
+  getSize,
+  getThemeColor,
   MantineColor,
   MantineRadius,
   MantineSize,
-  useDirection,
-  Factory,
-  useStyles,
-  createVarsResolver,
-  getSize,
-  getThemeColor,
-  getRadius,
   rem,
+  StylesApiProps,
+  useDirection,
+  useProps,
+  useStyles,
 } from '../../../core';
 import { TransitionOverride } from '../../Transition';
+import { SliderCssVariables, SliderProvider, SliderStylesNames } from '../Slider.context';
 import { SliderRoot } from '../SliderRoot/SliderRoot';
-import { Track } from '../Track/Track';
 import { Thumb } from '../Thumb/Thumb';
-import { getPosition } from '../utils/get-position/get-position';
+import { Track } from '../Track/Track';
 import { getChangeValue } from '../utils/get-change-value/get-change-value';
 import { getFloatingValue } from '../utils/get-floating-value/get-gloating-value';
+import { getPosition } from '../utils/get-position/get-position';
 import { getPrecision } from '../utils/get-precision/get-precision';
-import { SliderCssVariables, SliderProvider, SliderStylesNames } from '../Slider.context';
 import classes from '../Slider.module.css';
 
 export interface SliderProps

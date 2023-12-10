@@ -1,6 +1,6 @@
 import React from 'react';
-import { MantineDemo } from '@mantinex/demo';
 import { CodeHighlightTabs } from '@mantine/code-highlight';
+import { MantineDemo } from '@mantinex/demo';
 
 const tsxCode = `
 import { Group, Button, MantineProvider, createTheme } from '@mantine/core';

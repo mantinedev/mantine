@@ -1,6 +1,6 @@
 import React from 'react';
-import { Frontmatter } from '@/types';
 import { MdxPage } from '@/components/MdxPage';
+import { Frontmatter } from '@/types';
 import { PageHead } from '../PageHead';
 
 interface MdxLayoutProps {

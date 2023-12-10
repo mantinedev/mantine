@@ -1,6 +1,6 @@
+import React from 'react';
 import { Box, Textarea } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
-import React from 'react';
 
 const code = `
 import { Textarea } from '@mantine/core';

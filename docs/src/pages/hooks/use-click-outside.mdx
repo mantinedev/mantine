@@ -1,6 +1,6 @@
+import { HooksDemos } from '@docs/demos';
 import { Layout } from '@/layout';
 import { MDX_DATA } from '@/mdx';
-import { HooksDemos } from '@docs/demos';
 
 export default Layout(MDX_DATA.useClickOutside);
 
@@ -42,8 +42,8 @@ you can change these events by passing an array of events as second argument:
 ```tsx
 // Will work only with useState, not useRef
 import { useState } from 'react';
-import { useClickOutside } from '@mantine/hooks';
 import { Portal } from '@mantine/core';
+import { useClickOutside } from '@mantine/hooks';
 
 function Demo() {
   const [dropdown, setDropdown] = useState<HTMLDivElement | null>(

@@ -1,14 +1,14 @@
 import React from 'react';
 import {
-  factory,
   Box,
   BoxProps,
+  createVarsResolver,
+  factory,
+  Factory,
+  rem,
   StylesApiProps,
   useProps,
   useStyles,
-  rem,
-  createVarsResolver,
-  Factory,
 } from '../../../core';
 import classes from '../ActionIcon.module.css';
 

@@ -1,7 +1,7 @@
 import React from 'react';
-import { MantineDemo } from '@mantinex/demo';
-import { Input } from '@mantine/core';
 import { IMaskInput } from 'react-imask';
+import { Input } from '@mantine/core';
+import { MantineDemo } from '@mantinex/demo';
 
 const code = `
 import { Input } from '@mantine/core';

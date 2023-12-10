@@ -2,15 +2,15 @@ import React from 'react';
 import {
   Box,
   BoxProps,
-  StylesApiProps,
-  factory,
+  createVarsResolver,
   ElementProps,
+  factory,
+  Factory,
+  getSpacing,
+  MantineSpacing,
+  StylesApiProps,
   useProps,
   useStyles,
-  MantineSpacing,
-  getSpacing,
-  createVarsResolver,
-  Factory,
 } from '../../core';
 import classes from './Stack.module.css';
 

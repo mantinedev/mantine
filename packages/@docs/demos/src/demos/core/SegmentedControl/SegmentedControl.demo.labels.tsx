@@ -1,7 +1,7 @@
 import React from 'react';
-import { IconEye, IconCode, IconExternalLink } from '@tabler/icons-react';
+import { IconCode, IconExternalLink, IconEye } from '@tabler/icons-react';
+import { Center, rem, SegmentedControl } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
-import { Center, SegmentedControl, rem } from '@mantine/core';
 
 const code = `
 import { Center, SegmentedControl, rem } from '@mantine/core';

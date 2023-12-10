@@ -1,5 +1,5 @@
-import fs from 'fs-extra';
 import path from 'node:path';
+import fs from 'fs-extra';
 import { removeReactImport } from './remove-react-import';
 
 export function generateExamplesCode(examplesFolder: string) {

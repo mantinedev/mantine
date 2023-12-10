@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { MantineDemo } from '@mantinex/demo';
 import { Button, Group, MantineProvider, useMantineColorScheme } from '@mantine/core';
+import { MantineDemo } from '@mantinex/demo';
 
 const code = (props: any) => `
 import { MantineProvider, Button, Group } from '@mantine/core';

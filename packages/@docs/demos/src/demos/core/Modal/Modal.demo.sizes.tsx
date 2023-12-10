@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Modal, Group, Button } from '@mantine/core';
+import { Button, Group, Modal } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
 import { AuthenticationForm } from '../../../shared/AuthenticationForm/AuthenticationForm';
 

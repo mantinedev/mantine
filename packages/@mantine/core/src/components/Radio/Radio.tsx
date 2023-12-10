@@ -3,26 +3,26 @@ import { useId } from '@mantine/hooks';
 import {
   Box,
   BoxProps,
-  StylesApiProps,
-  factory,
-  ElementProps,
-  useProps,
-  useStyles,
   createVarsResolver,
+  ElementProps,
+  extractStyleProps,
+  factory,
   Factory,
-  getSize,
   getRadius,
+  getSize,
   getThemeColor,
   MantineColor,
-  MantineSize,
   MantineRadius,
-  extractStyleProps,
+  MantineSize,
   parseThemeColor,
+  StylesApiProps,
+  useProps,
+  useStyles,
 } from '../../core';
 import { InlineInput, InlineInputStylesNames } from '../InlineInput';
-import { RadioIcon, RadioIconProps } from './RadioIcon';
-import { RadioGroup } from './RadioGroup/RadioGroup';
 import { useRadioGroupContext } from './RadioGroup.context';
+import { RadioGroup } from './RadioGroup/RadioGroup';
+import { RadioIcon, RadioIconProps } from './RadioIcon';
 import classes from './Radio.module.css';
 
 export type RadioVariant = 'filled' | 'outline';

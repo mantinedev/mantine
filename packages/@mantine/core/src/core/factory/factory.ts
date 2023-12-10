@@ -1,6 +1,6 @@
 import { forwardRef } from 'react';
 import type { MantineThemeComponent } from '../MantineProvider';
-import type { Styles, ClassNames, PartialVarsResolver } from '../styles-api';
+import type { ClassNames, PartialVarsResolver, Styles } from '../styles-api';
 
 export type DataAttributes = Record<`data-${string}`, any>;
 

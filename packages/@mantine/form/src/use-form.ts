@@ -1,12 +1,11 @@
 import { useCallback, useRef, useState } from 'react';
 import isEqual from 'fast-deep-equal';
-import { getInputOnChange } from './get-input-on-change';
-import { getPath, insertPath, removePath, reorderPath, setPath } from './paths';
+import { useFormActions } from './actions';
 import { filterErrors } from './filter-errors';
-import { shouldValidateOnChange, validateFieldValue, validateValues } from './validate';
+import { getInputOnChange } from './get-input-on-change';
 import { getStatus } from './get-status';
 import { changeErrorIndices, clearListState, reorderErrors } from './lists';
-import { useFormActions } from './actions';
+import { getPath, insertPath, removePath, reorderPath, setPath } from './paths';
 import {
   _TransformValues,
   ClearErrors,
@@ -32,6 +31,7 @@ import {
   Validate,
   ValidateField,
 } from './types';
+import { shouldValidateOnChange, validateFieldValue, validateValues } from './validate';
 
 export function useForm<
   Values = Record<string, unknown>,

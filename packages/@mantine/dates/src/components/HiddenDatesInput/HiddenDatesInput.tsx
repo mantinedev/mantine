@@ -1,5 +1,5 @@
 import React from 'react';
-import { DatesRangeValue, DateValue, DatePickerType } from '../../types';
+import { DatePickerType, DatesRangeValue, DateValue } from '../../types';
 
 export type HiddenDatesInputValue = DatesRangeValue | DateValue | DateValue[];
 

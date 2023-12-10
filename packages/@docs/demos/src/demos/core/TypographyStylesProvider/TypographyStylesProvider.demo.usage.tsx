@@ -1,6 +1,6 @@
 import React from 'react';
+import { Box, TypographyStylesProvider } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
-import { TypographyStylesProvider, Box } from '@mantine/core';
 
 const html = `
 <h1>Example article</h1>

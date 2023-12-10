@@ -1,7 +1,7 @@
 import React, { cloneElement } from 'react';
 import cx from 'clsx';
 import { useMergedRef } from '@mantine/hooks';
-import { isElement, useProps, factory, Factory } from '../../../core';
+import { factory, Factory, isElement, useProps } from '../../../core';
 import { usePopoverContext } from '../Popover.context';
 
 export interface PopoverTargetProps {

@@ -1,6 +1,6 @@
 import React from 'react';
-import { MdxParagraph, MdxCode } from '../MdxTypography/MdxTypography';
 import { MdxLink } from '../MdxLink/MdxLink';
+import { MdxCode, MdxParagraph } from '../MdxTypography/MdxTypography';
 
 interface MdxInputFeaturesProps {
   component: string;

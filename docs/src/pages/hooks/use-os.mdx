@@ -1,6 +1,6 @@
+import { HooksDemos } from '@docs/demos';
 import { Layout } from '@/layout';
 import { MDX_DATA } from '@/mdx';
-import { HooksDemos } from '@docs/demos';
 
 export default Layout(MDX_DATA.useOs);
 
@@ -17,6 +17,7 @@ You can import `OS` union type from `@mantine/hooks`:
 
 ```tsx
 import type { OS } from '@mantine/hooks';
+
 // OS type is 'undetermined' | 'macos' | 'ios' | 'windows' | 'android' | 'linux'
 ```
 

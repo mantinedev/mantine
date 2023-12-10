@@ -54,8 +54,8 @@
     "stylelint": "stylelint '**/*.css' --cache",
     "syncpack": "syncpack list-mismatches",
     "syncpack:format": "syncpack format",
-    "prettier:test": "prettier --check \"**/*.{ts,tsx,mdx}\"",
-    "prettier:write": "prettier --write \"**/*.{ts,tsx,mdx}\""
+    "prettier:test": "prettier --check \"**/*.{ts,tsx,mdx,css}\"",
+    "prettier:write": "prettier --write \"**/*.{ts,tsx,mdx,css}\""
   },
   "dependencies": {
     "@floating-ui/react": "^0.24.8",
@@ -101,6 +101,7 @@
     "@babel/preset-react": "^7.23.3",
     "@babel/preset-typescript": "^7.23.3",
     "@hello-pangea/dnd": "^16.3.0",
+    "@ianvs/prettier-plugin-sort-imports": "^4.1.1",
     "@rollup/plugin-alias": "^5.0.1",
     "@rollup/plugin-node-resolve": "^15.2.3",
     "@rollup/plugin-replace": "^5.0.5",

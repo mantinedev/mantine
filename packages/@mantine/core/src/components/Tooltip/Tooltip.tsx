@@ -1,18 +1,18 @@
 import React, { cloneElement, useRef } from 'react';
-import { useMergedRef } from '@mantine/hooks';
 import cx from 'clsx';
+import { useMergedRef } from '@mantine/hooks';
 import {
   Box,
-  factory,
-  getDefaultZIndex,
-  isElement,
-  useProps,
-  useDirection,
-  useStyles,
-  getThemeColor,
-  getRadius,
   createVarsResolver,
+  factory,
   Factory,
+  getDefaultZIndex,
+  getRadius,
+  getThemeColor,
+  isElement,
+  useDirection,
+  useProps,
+  useStyles,
 } from '../../core';
 import {
   ArrowPosition,
@@ -21,8 +21,8 @@ import {
   FloatingPosition,
   getFloatingPosition,
 } from '../Floating';
-import { Transition, TransitionOverride, getTransitionProps } from '../Transition';
 import { OptionalPortal } from '../Portal';
+import { getTransitionProps, Transition, TransitionOverride } from '../Transition';
 import { TooltipBaseProps, TooltipCssVariables, TooltipStylesNames } from './Tooltip.types';
 import { TooltipFloating } from './TooltipFloating/TooltipFloating';
 import { TooltipGroup } from './TooltipGroup/TooltipGroup';

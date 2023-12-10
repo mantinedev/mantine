@@ -5,12 +5,12 @@ import {
   CompoundStylesApiProps,
   ElementProps,
   factory,
-  useProps,
-  FactoryPayload,
   Factory,
+  FactoryPayload,
+  useProps,
 } from '../../core';
-import { useTableContext, TableContextValue } from './Table.context';
 import type { TableFactory } from './Table';
+import { TableContextValue, useTableContext } from './Table.context';
 import classes from './Table.module.css';
 
 export interface TableElementProps<Selector extends string>

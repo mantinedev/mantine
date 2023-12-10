@@ -1,5 +1,5 @@
-import { getTransitionStyles } from './get-transition-styles';
 import { transitions } from '../transitions';
+import { getTransitionStyles } from './get-transition-styles';
 
 const customTransition = {
   in: { opacity: 1, backgroundColor: 'red' },

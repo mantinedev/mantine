@@ -1,7 +1,7 @@
-import { Layout } from '@/layout';
-import { MDX_DATA } from '@/mdx';
 import { DEFAULT_THEME, px } from '@mantine/core';
 import { StylesDemos } from '@docs/demos';
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
 
 export default Layout(MDX_DATA.ResponsiveStyles);
 
@@ -17,7 +17,7 @@ export default Layout(MDX_DATA.ResponsiveStyles);
 You can configure these values with [MantineProvider](/theming/mantine-provider/):
 
 ```tsx
-import { MantineProvider, createTheme } from '@mantine/core';
+import { createTheme, MantineProvider } from '@mantine/core';
 
 const theme = createTheme({
   breakpoints: {

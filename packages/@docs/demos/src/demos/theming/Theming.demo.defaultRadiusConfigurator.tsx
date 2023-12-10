@@ -1,6 +1,6 @@
 import React from 'react';
+import { Button, TextInput } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
-import { TextInput, Button } from '@mantine/core';
 
 const code = (props: Record<string, any>) => `
 import { MantineProvider, TextInput, Button } from '@mantine/core';

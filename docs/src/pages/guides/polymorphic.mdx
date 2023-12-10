@@ -1,6 +1,6 @@
+import { GuidesDemos } from '@docs/demos';
 import { Layout } from '@/layout';
 import { MDX_DATA } from '@/mdx';
-import { GuidesDemos } from '@docs/demos';
 
 export default Layout(MDX_DATA.Polymorphic);
 
@@ -125,8 +125,8 @@ incompatible with Mantine `component` prop, but you can use `renderRoot` prop in
 
 ```tsx
 import cx from 'clsx';
-import { Button } from '@mantine/core';
 import { NavLink } from 'react-router-dom';
+import { Button } from '@mantine/core';
 
 function Demo() {
   return (
@@ -203,9 +203,9 @@ as in the previous example:
 
 ```tsx
 import {
+  createPolymorphicComponent,
   Group,
   GroupProps,
-  createPolymorphicComponent,
 } from '@mantine/core';
 
 const PolymorphicGroup = createPolymorphicComponent<

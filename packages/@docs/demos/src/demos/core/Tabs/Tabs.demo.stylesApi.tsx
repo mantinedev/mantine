@@ -1,7 +1,7 @@
 import React from 'react';
+import { IconMessageCircle, IconPhoto, IconSettings } from '@tabler/icons-react';
+import { rem, Tabs, TabsProps } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
-import { Tabs, TabsProps, rem } from '@mantine/core';
-import { IconPhoto, IconMessageCircle, IconSettings } from '@tabler/icons-react';
 import { TabsStylesApi } from '@docs/styles-api';
 
 const code = `

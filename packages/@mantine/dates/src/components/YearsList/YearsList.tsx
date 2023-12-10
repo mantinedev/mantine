@@ -3,19 +3,19 @@ import React from 'react';
 import {
   Box,
   BoxProps,
-  StylesApiProps,
-  factory,
   ElementProps,
-  useProps,
-  useStyles,
+  factory,
   Factory,
   MantineSize,
+  StylesApiProps,
+  useProps,
+  useStyles,
 } from '@mantine/core';
 import { ControlsGroupSettings } from '../../types';
-import { PickerControl, PickerControlProps } from '../PickerControl';
-import { getYearsData } from './get-years-data/get-years-data';
-import { getYearInTabOrder } from './get-year-in-tab-order/get-year-in-tab-order';
 import { useDatesContext } from '../DatesProvider';
+import { PickerControl, PickerControlProps } from '../PickerControl';
+import { getYearInTabOrder } from './get-year-in-tab-order/get-year-in-tab-order';
+import { getYearsData } from './get-years-data/get-years-data';
 import { isYearDisabled } from './is-year-disabled/is-year-disabled';
 import classes from './YearsList.module.css';
 

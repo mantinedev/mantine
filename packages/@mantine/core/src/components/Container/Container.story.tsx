@@ -1,6 +1,6 @@
 import React from 'react';
+import { createTheme, MantineThemeProvider, rem } from '../../core';
 import { Container } from './Container';
-import { MantineThemeProvider, createTheme, rem } from '../../core';
 
 const CONTAINER_SIZES: Record<string, string> = {
   xxs: rem(200),

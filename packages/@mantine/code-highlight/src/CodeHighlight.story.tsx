@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { CodeHighlightTabs } from './CodeHighlightTabs';
 import { CodeHighlight } from './CodeHighlight';
+import { CodeHighlightTabs } from './CodeHighlightTabs';
 import { InlineCodeHighlight } from './InlineCodeHighlight';
 
 export default { title: 'CodeHighlight' };

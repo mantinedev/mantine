@@ -1,5 +1,5 @@
 import React from 'react';
-import { Modal, Button } from '@mantine/core';
+import { Button, Modal } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import { MantineDemo } from '@mantinex/demo';
 

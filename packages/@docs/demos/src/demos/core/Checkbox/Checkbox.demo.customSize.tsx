@@ -1,6 +1,6 @@
 import React from 'react';
+import { Checkbox, createTheme, MantineThemeProvider } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
-import { MantineThemeProvider, Checkbox, createTheme } from '@mantine/core';
 import classes from './Checkbox.demo.customSize.module.css';
 
 const cssCode = `.root {

@@ -1,7 +1,7 @@
 import React from 'react';
 import cx from 'clsx';
-import { polymorphicFactory, useProps, PolymorphicFactory } from '../../core';
-import { Text, TextProps, TextCssVariables, TextStylesNames, TextVariant } from '../Text';
+import { polymorphicFactory, PolymorphicFactory, useProps } from '../../core';
+import { Text, TextCssVariables, TextProps, TextStylesNames, TextVariant } from '../Text';
 import classes from './Anchor.module.css';
 
 export type AnchorStylesNames = TextStylesNames;

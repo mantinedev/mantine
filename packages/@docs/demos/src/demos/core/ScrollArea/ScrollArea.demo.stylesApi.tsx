@@ -1,5 +1,5 @@
 import React from 'react';
-import { ScrollArea, Box } from '@mantine/core';
+import { Box, ScrollArea } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
 import { Content } from './_content';
 import classes from './ScrollArea.demo.stylesApi.module.css';

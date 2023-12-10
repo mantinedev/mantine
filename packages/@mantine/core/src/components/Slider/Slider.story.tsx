@@ -1,6 +1,6 @@
 import React from 'react';
-import { Slider } from './Slider/Slider';
 import { RangeSlider } from './RangeSlider/RangeSlider';
+import { Slider } from './Slider/Slider';
 
 export default { title: 'Slider' };
 

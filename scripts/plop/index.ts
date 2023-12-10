@@ -1,10 +1,10 @@
-import fs from 'fs-extra';
 import path from 'node:path';
-import { argv } from 'yargs';
 import chalk from 'chalk';
 import { execa } from 'execa';
-import { createLogger } from '../utils/signale';
+import fs from 'fs-extra';
+import { argv } from 'yargs';
 import { getPath } from '../utils/get-path';
+import { createLogger } from '../utils/signale';
 
 const logger = createLogger('plop');
 

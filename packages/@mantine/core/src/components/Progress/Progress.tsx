@@ -1,20 +1,20 @@
 import React from 'react';
 import {
-  StylesApiProps,
   factory,
-  useProps,
   Factory,
-  useResolvedStylesApi,
   MantineColor,
+  StylesApiProps,
+  useProps,
+  useResolvedStylesApi,
 } from '../../core';
+import { ProgressLabel } from './ProgressLabel/ProgressLabel';
 import {
-  ProgressRoot,
-  ProgressRootStylesNames,
-  ProgressRootCssVariables,
   __ProgressRootProps,
+  ProgressRoot,
+  ProgressRootCssVariables,
+  ProgressRootStylesNames,
 } from './ProgressRoot/ProgressRoot';
 import { ProgressSection } from './ProgressSection/ProgressSection';
-import { ProgressLabel } from './ProgressLabel/ProgressLabel';
 import classes from './Progress.module.css';
 
 export type ProgressStylesNames = ProgressRootStylesNames;

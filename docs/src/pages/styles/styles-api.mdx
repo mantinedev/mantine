@@ -1,5 +1,3 @@
-import { Layout } from '@/layout';
-import { MDX_DATA } from '@/mdx';
 import { Button } from '@mantine/core';
 import { StylesDemos } from '@docs/demos';
 import { ButtonStylesApi } from '@docs/styles-api';
@@ -7,6 +5,8 @@ import {
   SelectorsTable,
   VariablesTable,
 } from '@/components/StylesApiTable';
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
 
 export default Layout(MDX_DATA.StylesApi);
 
@@ -108,9 +108,9 @@ components of a specific type:
 ```tsx
 import { useState } from 'react';
 import {
-  TextInput,
-  MantineProvider,
   createTheme,
+  MantineProvider,
+  TextInput,
 } from '@mantine/core';
 // Styles are the same as in previous example
 import classes from './Demo.module.css';

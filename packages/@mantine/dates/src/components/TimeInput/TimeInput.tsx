@@ -1,16 +1,16 @@
 import React from 'react';
 import cx from 'clsx';
 import {
+  __BaseInputProps,
+  __InputStylesNames,
+  BoxProps,
+  ElementProps,
   factory,
-  useProps,
-  useResolvedStylesApi,
   Factory,
   InputBase,
-  __BaseInputProps,
-  BoxProps,
   StylesApiProps,
-  __InputStylesNames,
-  ElementProps,
+  useProps,
+  useResolvedStylesApi,
 } from '@mantine/core';
 import classes from './TimeInput.module.css';
 

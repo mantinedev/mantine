@@ -1,7 +1,7 @@
 import React from 'react';
-import { render, tests, createContextContainer } from '@mantine-tests/core';
-import { CardSection, CardSectionProps, CardSectionStylesNames } from './CardSection';
+import { createContextContainer, render, tests } from '@mantine-tests/core';
 import { Card } from '../Card';
+import { CardSection, CardSectionProps, CardSectionStylesNames } from './CardSection';
 
 const TestContainer = createContextContainer<any>(CardSection, Card, {});
 

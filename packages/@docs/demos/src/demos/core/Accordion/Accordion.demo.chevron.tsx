@@ -1,7 +1,7 @@
 import React from 'react';
-import { MantineDemo } from '@mantinex/demo';
-import { Accordion } from '@mantine/core';
 import { IconPlus } from '@tabler/icons-react';
+import { Accordion } from '@mantine/core';
+import { MantineDemo } from '@mantinex/demo';
 import { groceries } from './_base';
 import classes from './Accordion.demo.chevron.module.css';
 

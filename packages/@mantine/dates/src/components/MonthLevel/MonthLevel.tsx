@@ -3,19 +3,19 @@ import React from 'react';
 import {
   Box,
   BoxProps,
-  StylesApiProps,
-  factory,
   ElementProps,
-  useProps,
+  factory,
   Factory,
+  StylesApiProps,
+  useProps,
 } from '@mantine/core';
-import { Month, MonthSettings, MonthStylesNames } from '../Month';
 import {
   CalendarHeader,
   CalendarHeaderSettings,
   CalendarHeaderStylesNames,
 } from '../CalendarHeader';
 import { useDatesContext } from '../DatesProvider';
+import { Month, MonthSettings, MonthStylesNames } from '../Month';
 
 export type MonthLevelStylesNames = MonthStylesNames | CalendarHeaderStylesNames;
 

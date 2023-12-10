@@ -1,14 +1,14 @@
 import React from 'react';
 import {
-  getSortedBreakpoints,
-  useMantineTheme,
-  keys,
-  getSpacing,
-  MantineBreakpoint,
   filterProps,
-  InlineStyles,
   getBaseValue,
+  getSortedBreakpoints,
+  getSpacing,
+  InlineStyles,
+  keys,
+  MantineBreakpoint,
   rem,
+  useMantineTheme,
 } from '@mantine/core';
 import type { CarouselProps } from '../Carousel';
 

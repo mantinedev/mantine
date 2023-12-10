@@ -1,5 +1,5 @@
 import React from 'react';
-import { Notification, NotificationProps, Box } from '@mantine/core';
+import { Box, Notification, NotificationProps } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
 
 function Wrapper(props: NotificationProps) {

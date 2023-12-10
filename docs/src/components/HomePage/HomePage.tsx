@@ -1,18 +1,18 @@
 import React from 'react';
 import Head from 'next/head';
-import { Shell } from '../Shell';
 import { Footer } from '../Footer';
-import { Jumbotron } from './Jumbotron/Jumbotron';
-import { Waves } from './Waves/Waves';
-import { Components } from './Components/Components';
-import { DarkTheme } from './DarkTheme/DarkTheme';
-import { CustomizeWithProps } from './CustomizeWithProps/CustomizeWithProps';
-import { CustomizeStyles } from './CustomizeStyles/CustomizeStyles';
-import { Theming } from './Theming/Theming';
+import { Shell } from '../Shell';
 import { Banner } from './Banner/Banner';
+import { Components } from './Components/Components';
+import { CustomizeStyles } from './CustomizeStyles/CustomizeStyles';
+import { CustomizeWithProps } from './CustomizeWithProps/CustomizeWithProps';
+import { DarkTheme } from './DarkTheme/DarkTheme';
 import { Hooks } from './Hooks/Hooks';
-import { Usage } from './Usage/Usage';
 import { JoinCommunity } from './JoinCommunity/JoinCommunity';
+import { Jumbotron } from './Jumbotron/Jumbotron';
+import { Theming } from './Theming/Theming';
+import { Usage } from './Usage/Usage';
+import { Waves } from './Waves/Waves';
 import classes from './HomePage.module.css';
 
 export function HomePage() {

@@ -1,7 +1,7 @@
 import React from 'react';
-import { MantineDemo } from '@mantinex/demo';
-import { NumberInput, rem } from '@mantine/core';
 import { IconAt } from '@tabler/icons-react';
+import { NumberInput, rem } from '@mantine/core';
+import { MantineDemo } from '@mantinex/demo';
 import { NumberInputStylesApi } from '@docs/styles-api';
 
 const code = `

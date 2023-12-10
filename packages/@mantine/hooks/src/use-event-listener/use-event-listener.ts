@@ -1,4 +1,4 @@
-import { useRef, useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 
 export function useEventListener<K extends keyof HTMLElementEventMap, T extends HTMLElement = any>(
   type: K,

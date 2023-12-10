@@ -1,6 +1,6 @@
 import React from 'react';
-import { MantineDemo } from '@mantinex/demo';
 import { Pill } from '@mantine/core';
+import { MantineDemo } from '@mantinex/demo';
 import { PillStylesApi } from '@docs/styles-api';
 import classes from './_demo.module.css';
 

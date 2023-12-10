@@ -1,6 +1,6 @@
 import React from 'react';
 import cx from 'clsx';
-import { Title, FOCUS_CLASS_NAMES } from '@mantine/core';
+import { FOCUS_CLASS_NAMES, Title } from '@mantine/core';
 import classes from './MdxTitle.module.css';
 
 export function MdxTitle({

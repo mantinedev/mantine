@@ -1,13 +1,13 @@
 import React from 'react';
 import TextareaAutosize from 'react-textarea-autosize';
 import {
-  factory,
-  ElementProps,
-  useProps,
-  Factory,
   BoxProps,
-  StylesApiProps,
+  ElementProps,
+  factory,
+  Factory,
   getEnv,
+  StylesApiProps,
+  useProps,
 } from '../../core';
 import { __BaseInputProps, __InputStylesNames } from '../Input';
 import { InputBase } from '../InputBase';

@@ -1,6 +1,6 @@
 import React from 'react';
+import { AppShell, Group, rem, Text } from '@mantine/core';
 import { useHeadroom } from '@mantine/hooks';
-import { AppShell, Group, Text, rem } from '@mantine/core';
 import { MantineLogo } from '@mantinex/mantine-logo';
 
 const lorem =

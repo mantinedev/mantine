@@ -2,20 +2,20 @@ import dayjs from 'dayjs';
 import React from 'react';
 import {
   BoxProps,
-  StylesApiProps,
-  factory,
+  createVarsResolver,
   ElementProps,
+  factory,
+  Factory,
+  getSize,
+  MantineSize,
+  StylesApiProps,
+  UnstyledButton,
   useProps,
   useStyles,
-  createVarsResolver,
-  Factory,
-  MantineSize,
-  UnstyledButton,
-  getSize,
 } from '@mantine/core';
-import classes from './Day.module.css';
 import { shiftTimezone } from '../../utils';
 import { useDatesContext } from '../DatesProvider';
+import classes from './Day.module.css';
 
 export type DayStylesNames = 'day';
 export type DayCssVariables = {

@@ -1,8 +1,8 @@
 import React from 'react';
-import { MantineDemo } from '@mantinex/demo';
-import { Button, rem } from '@mantine/core';
-import { ButtonStylesApi } from '@docs/styles-api';
 import { IconAt } from '@tabler/icons-react';
+import { Button, rem } from '@mantine/core';
+import { MantineDemo } from '@mantinex/demo';
+import { ButtonStylesApi } from '@docs/styles-api';
 
 const code = `
 import { Button, rem } from '@mantine/core';

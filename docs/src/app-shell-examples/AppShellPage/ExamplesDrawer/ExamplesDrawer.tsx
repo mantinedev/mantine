@@ -1,9 +1,9 @@
 import React from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
+import { IconArrowLeft, IconCode, IconLayoutBoard, IconMenu2 } from '@tabler/icons-react';
+import { Affix, Button, Drawer, Group, rem, ScrollArea, Text, UnstyledButton } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
-import { Button, Affix, Drawer, Group, rem, UnstyledButton, Text, ScrollArea } from '@mantine/core';
-import { IconMenu2, IconArrowLeft, IconCode, IconLayoutBoard } from '@tabler/icons-react';
 import { APP_SHELL_EXAMPLES_DATA } from '../../app-shell-examples-data';
 import classes from './ExamplesDrawer.module.css';
 

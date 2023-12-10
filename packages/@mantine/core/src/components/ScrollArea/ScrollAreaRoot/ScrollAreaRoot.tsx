@@ -1,6 +1,6 @@
-import React, { useState, forwardRef } from 'react';
+import React, { forwardRef, useState } from 'react';
 import { useMergedRef } from '@mantine/hooks';
-import { Box, BoxProps, ElementProps, useProps, Factory } from '../../../core';
+import { Box, BoxProps, ElementProps, Factory, useProps } from '../../../core';
 import { ScrollAreaProvider } from '../ScrollArea.context';
 
 export type ScrollAreaRootStylesNames =

@@ -1,6 +1,6 @@
+import { StylesDemos, ThemingDemos } from '@docs/demos';
 import { Layout } from '@/layout';
 import { MDX_DATA } from '@/mdx';
-import { ThemingDemos, StylesDemos } from '@docs/demos';
 
 export default Layout(MDX_DATA.ColorSchemes);
 
@@ -149,7 +149,7 @@ Set `defaultColorScheme="auto"` on `MantineProvider` and `ColorSchemeScript` to 
 In this case color scheme value will be controlled by the user OS:
 
 ```tsx
-import { MantineProvider, ColorSchemeScript } from '@mantine/core';
+import { ColorSchemeScript, MantineProvider } from '@mantine/core';
 
 function Demo() {
   return (
@@ -196,9 +196,9 @@ configure it. Default local storage based color scheme manager example:
 
 ```tsx
 import {
+  isMantineColorScheme,
   MantineColorScheme,
   MantineColorSchemeManager,
-  isMantineColorScheme,
 } from '@mantine/core';
 
 export interface LocalStorageColorSchemeManagerOptions {
@@ -290,7 +290,7 @@ It is required to be set both on [MantineProvider](/theming/mantine-provider/) a
 `ColorSchemeScript`. If `defaultColorScheme` is not set, then `light` is used.
 
 ```tsx
-import { MantineProvider, ColorSchemeScript } from '@mantine/core';
+import { ColorSchemeScript, MantineProvider } from '@mantine/core';
 
 function Demo() {
   return (
@@ -312,7 +312,7 @@ It is required to be set both on [MantineProvider](/theming/mantine-provider/) a
 When `forceColorScheme` is set, it is not possible to change color scheme value with `setColorScheme` function.
 
 ```tsx
-import { MantineProvider, ColorSchemeScript } from '@mantine/core';
+import { ColorSchemeScript, MantineProvider } from '@mantine/core';
 
 function Demo() {
   return (
@@ -342,7 +342,8 @@ Example with Next.js app router that supports disabled JavaScript:
 
 ```tsx
 import '@mantine/core/styles.css';
-import { MantineProvider, ColorSchemeScript } from '@mantine/core';
+
+import { ColorSchemeScript, MantineProvider } from '@mantine/core';
 
 export const metadata = {
   title: 'My Mantine app',

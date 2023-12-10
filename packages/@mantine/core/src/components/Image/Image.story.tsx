@@ -1,6 +1,6 @@
 import React from 'react';
-import { Image } from './Image';
 import { Group } from '../Group';
+import { Image } from './Image';
 
 export default { title: 'Image' };
 

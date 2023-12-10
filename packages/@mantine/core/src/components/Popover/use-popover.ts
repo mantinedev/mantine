@@ -1,18 +1,18 @@
-import { useDidUpdate, useUncontrolled } from '@mantine/hooks';
 import {
-  useFloating,
-  shift,
-  flip,
   arrow,
-  offset,
-  size,
-  Middleware,
+  flip,
   inline,
   limitShift,
+  Middleware,
+  offset,
+  shift,
+  size,
+  useFloating,
   UseFloatingReturn,
 } from '@floating-ui/react';
+import { useDidUpdate, useUncontrolled } from '@mantine/hooks';
 import { FloatingAxesOffsets, FloatingPosition, useFloatingAutoUpdate } from '../Floating';
-import { PopoverWidth, PopoverMiddlewares } from './Popover.types';
+import { PopoverMiddlewares, PopoverWidth } from './Popover.types';
 
 interface UsePopoverOptions {
   offset: number | FloatingAxesOffsets;

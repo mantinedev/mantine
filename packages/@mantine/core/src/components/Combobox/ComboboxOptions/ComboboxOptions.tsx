@@ -4,10 +4,10 @@ import {
   Box,
   BoxProps,
   CompoundStylesApiProps,
-  factory,
   ElementProps,
-  useProps,
+  factory,
   Factory,
+  useProps,
 } from '../../../core';
 import { useComboboxContext } from '../Combobox.context';
 import classes from '../Combobox.module.css';

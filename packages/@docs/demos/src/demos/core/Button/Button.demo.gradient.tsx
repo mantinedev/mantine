@@ -1,6 +1,6 @@
 import React from 'react';
-import { MantineDemo } from '@mantinex/demo';
 import { Button } from '@mantine/core';
+import { MantineDemo } from '@mantinex/demo';
 import { gradientControls } from '../../../shared';
 
 const code = (props: any) => `

@@ -1,4 +1,4 @@
-import { GetStylesApi, createOptionalContext } from '../../core';
+import { createOptionalContext, GetStylesApi } from '../../core';
 import type { InputWrapperFactory } from './InputWrapper/InputWrapper';
 
 interface InputWrapperContextValue {

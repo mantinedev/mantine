@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { Text, Image, SimpleGrid } from '@mantine/core';
+import { Image, SimpleGrid, Text } from '@mantine/core';
+import { Dropzone, FileWithPath, IMAGE_MIME_TYPE } from '@mantine/dropzone';
 import { MantineDemo } from '@mantinex/demo';
-import { Dropzone, IMAGE_MIME_TYPE, FileWithPath } from '@mantine/dropzone';
 
 const code = `
 import { useState } from 'react';

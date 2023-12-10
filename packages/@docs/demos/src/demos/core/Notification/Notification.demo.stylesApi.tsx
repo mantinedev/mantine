@@ -1,8 +1,8 @@
 import React from 'react';
-import { MantineDemo } from '@mantinex/demo';
-import { Box, Notification } from '@mantine/core';
-import { NotificationStylesApi } from '@docs/styles-api';
 import { IconCheck } from '@tabler/icons-react';
+import { Box, Notification } from '@mantine/core';
+import { MantineDemo } from '@mantinex/demo';
+import { NotificationStylesApi } from '@docs/styles-api';
 
 const code = `
 import { Notification } from '@mantine/core';

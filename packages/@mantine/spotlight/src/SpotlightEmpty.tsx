@@ -3,10 +3,10 @@ import {
   Box,
   BoxProps,
   CompoundStylesApiProps,
-  factory,
   ElementProps,
-  useProps,
+  factory,
   Factory,
+  useProps,
 } from '@mantine/core';
 import { useSpotlightContext } from './Spotlight.context';
 import classes from './Spotlight.module.css';

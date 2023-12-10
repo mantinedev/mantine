@@ -1,6 +1,6 @@
 import React from 'react';
-import { MantineDemo } from '@mantinex/demo';
 import { Input, TextInput } from '@mantine/core';
+import { MantineDemo } from '@mantinex/demo';
 import classes from './Input.demo.focusStyles.module.css';
 
 const code = `

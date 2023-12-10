@@ -1,6 +1,6 @@
 import React, { createContext, useContext } from 'react';
+import { _TransformValues, UseForm, UseFormReturnType } from '../types';
 import { useForm } from '../use-form';
-import { UseFormReturnType, UseForm, _TransformValues } from '../types';
 
 export interface FormProviderProps<Form> {
   form: Form;

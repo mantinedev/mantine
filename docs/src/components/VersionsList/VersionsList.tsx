@@ -1,8 +1,8 @@
 import React from 'react';
-import { Code, Group, Text, Button } from '@mantine/core';
-import { allVersions } from '@mantinex/mantine-meta';
-import { GithubIcon } from '@mantinex/dev-icons';
 import { IconFileInvoice } from '@tabler/icons-react';
+import { Button, Code, Group, Text } from '@mantine/core';
+import { GithubIcon } from '@mantinex/dev-icons';
+import { allVersions } from '@mantinex/mantine-meta';
 import classes from './VersionsList.module.css';
 
 function getMinorXVersion(version: string) {

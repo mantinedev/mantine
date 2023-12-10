@@ -1,11 +1,11 @@
 import React, { useEffect } from 'react';
 import {
-  OptionalPortal,
-  Progress,
+  ElementProps,
   getDefaultZIndex,
   MantineColor,
+  OptionalPortal,
   PortalProps,
-  ElementProps,
+  Progress,
 } from '@mantine/core';
 import {
   NprogressStore,

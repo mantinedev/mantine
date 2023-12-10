@@ -1,6 +1,6 @@
-import { tests, createContextContainer } from '@mantine-tests/core';
-import { AccordionItem, AccordionItemProps, AccordionItemStylesNames } from './AccordionItem';
+import { createContextContainer, tests } from '@mantine-tests/core';
 import { Accordion } from '../Accordion';
+import { AccordionItem, AccordionItemProps, AccordionItemStylesNames } from './AccordionItem';
 
 const defaultProps: AccordionItemProps = {
   value: 'test',

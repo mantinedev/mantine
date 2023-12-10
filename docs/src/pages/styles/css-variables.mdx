@@ -1,6 +1,6 @@
+import { CssVariablesTable } from '@/components/CssVariablesTable';
 import { Layout } from '@/layout';
 import { MDX_DATA } from '@/mdx';
-import { CssVariablesTable } from '@/components/CssVariablesTable';
 
 export default Layout(MDX_DATA.CssVariables);
 
@@ -224,9 +224,9 @@ Example of adding new CSS variables based on `theme.other`:
 
 ```tsx
 import {
-  MantineProvider,
-  CSSVariablesResolver,
   createTheme,
+  CSSVariablesResolver,
+  MantineProvider,
   rem,
 } from '@mantine/core';
 

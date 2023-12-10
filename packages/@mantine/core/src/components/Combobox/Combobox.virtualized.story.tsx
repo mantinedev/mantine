@@ -1,8 +1,8 @@
 import React from 'react';
 import { Virtuoso } from 'react-virtuoso';
-import { Combobox } from './Combobox';
-import { TextInput } from '../TextInput';
 import { ScrollArea } from '../ScrollArea';
+import { TextInput } from '../TextInput';
+import { Combobox } from './Combobox';
 import { useVirtualizedCombobox } from './use-combobox/use-virtualized-combobox';
 
 export default { title: 'Combobox' };

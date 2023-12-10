@@ -1,10 +1,10 @@
 import { CSSProperties } from 'react';
-import { MantineTheme } from '../../../MantineProvider';
 import { MantineStyleProp } from '../../../Box';
+import { MantineTheme } from '../../../MantineProvider';
 import { GetStylesApiOptions } from '../../styles-api.types';
 import { getThemeStyles } from './get-theme-styles/get-theme-styles';
-import { resolveStyles } from './resolve-styles/resolve-styles';
 import { resolveStyle } from './resolve-style/resolve-style';
+import { resolveStyles } from './resolve-styles/resolve-styles';
 import { resolveVars, VarsResolver } from './resolve-vars/resolve-vars';
 
 export type _Styles =

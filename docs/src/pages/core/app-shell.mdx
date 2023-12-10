@@ -23,8 +23,8 @@ the page.
 Navbar is hidden on mobile by default and toggled with the burger button.
 
 ```tsx
-import { useDisclosure } from '@mantine/hooks';
 import { AppShell, Burger } from '@mantine/core';
+import { useDisclosure } from '@mantine/hooks';
 
 function Demo() {
   const [opened, { toggle }] = useDisclosure();
@@ -247,8 +247,8 @@ It is useful when you want to collapse `AppShell.Header` based on the scroll pos
 [use-headroom](/hooks/use-headroom) hook to collapse header when user scrolls down and expand it when user scrolls up ([example](/app-shell?e=Headroom)).
 
 ```tsx
-import { useHeadroom } from '@mantine/hooks';
 import { AppShell, rem } from '@mantine/core';
+import { useHeadroom } from '@mantine/hooks';
 
 function Demo() {
   const pinned = useHeadroom({ fixedAt: 120 });
@@ -279,8 +279,8 @@ depending on the viewport width.
 [Example](/app-shell?e=CollapseDesktop) with separate collapsed state for mobile and desktop:
 
 ```tsx
-import { useDisclosure } from '@mantine/hooks';
 import { AppShell, Button } from '@mantine/core';
+import { useDisclosure } from '@mantine/hooks';
 
 export function CollapseDesktop() {
   const [mobileOpened, { toggle: toggleMobile }] = useDisclosure();

@@ -1,6 +1,6 @@
 import React from 'react';
+import { Box, RangeSlider, Slider } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
-import { Slider, RangeSlider, Box } from '@mantine/core';
 
 const code = `
 import { Slider, RangeSlider } from '@mantine/core';

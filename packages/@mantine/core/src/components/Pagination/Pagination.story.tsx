@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { Group } from '../Group';
 import { Button } from '../Button';
+import { Group } from '../Group';
 import { Pagination } from './Pagination';
 
 export default { title: 'Pagination' };

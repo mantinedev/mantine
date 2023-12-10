@@ -1,7 +1,7 @@
 import React from 'react';
 import Link from 'next/link';
-import { UnstyledButton } from '@mantine/core';
 import { useRouter } from 'next/router';
+import { UnstyledButton } from '@mantine/core';
 import classes from './NavbarMainLink.module.css';
 
 interface NavbarMainLinkProps extends React.ComponentPropsWithoutRef<'a'> {
