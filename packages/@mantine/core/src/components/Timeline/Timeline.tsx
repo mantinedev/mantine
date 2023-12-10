@@ -6,6 +6,7 @@ import {
   ElementProps,
   factory,
   Factory,
+  getContrastColor,
   getRadius,
   getThemeColor,
   MantineColor,
@@ -21,7 +22,7 @@ import classes from './Timeline.module.css';
 
 export type TimelineStylesNames = 'root' | TimelineItemStylesNames;
 export type TimelineCssVariables = {
-  root: '--tl-line-width' | '--tl-bullet-size' | '--tl-color' | '--tl-radius';
+  root: '--tl-line-width' | '--tl-bullet-size' | '--tl-color' | '--tl-icon-color' | '--tl-radius';
 };
 
 export interface TimelineProps
@@ -51,6 +52,9 @@ export interface TimelineProps
 
   /** Determines whether the active items direction should be reversed without reversing items order, `false` by default */
   reverseActive?: boolean;
+
+  /** Determines whether icon color should depend on `background-color`. If luminosity of the `color` prop is less than `theme.luminosityThreshold`, then `theme.white` will be used for text color, otherwise `theme.black`. Override `theme.autoContrast`. */
+  autoContrast?: boolean;
 }
 
 export type TimelineFactory = Factory<{
@@ -70,12 +74,13 @@ const defaultProps: Partial<TimelineProps> = {
 };
 
 const varsResolver = createVarsResolver<TimelineFactory>(
-  (theme, { bulletSize, lineWidth, radius, color }) => ({
+  (theme, { bulletSize, lineWidth, radius, color, autoContrast }) => ({
     root: {
       '--tl-bullet-size': rem(bulletSize),
       '--tl-line-width': rem(lineWidth),
       '--tl-radius': radius === undefined ? undefined : getRadius(radius),
       '--tl-color': color ? getThemeColor(color, theme) : undefined,
+      '--tl-icon-color': autoContrast ? getContrastColor({ color, theme }) : undefined,
     },
   })
 );

@@ -182,11 +182,11 @@
   &[data-active] {
     --_bullet-border-color: var(--tli-color, var(--tl-color));
     --_bullet-bg-color: var(--mantine-color-white);
-    --_bullet-color: var(--mantine-color-white);
+    --_bullet-color: var(--tl-icon-color, var(--mantine-color-white));
 
     &[data-with-child] {
       --_bullet-bg-color: var(--tli-color, var(--tl-color));
-      --_bullet-color: var(--mantine-color-white);
+      --_bullet-color: var(--tl-icon-color, var(--mantine-color-white));
     }
   }
 }
