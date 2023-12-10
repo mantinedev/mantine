@@ -28,6 +28,14 @@ export function Usage() {
   );
 }
 
+export function AutoContrast() {
+  return (
+    <div style={{ padding: 40 }}>
+      <SegmentedControl data={['React', 'Angular', 'Vue', 'Svelte']} color="blue.9" autoContrast />
+    </div>
+  );
+}
+
 export function Unstyled() {
   return (
     <div style={{ padding: 0 }}>

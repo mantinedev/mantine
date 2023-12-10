@@ -13,6 +13,7 @@ import {
   ElementProps,
   Factory,
   factory,
+  getContrastColor,
   getEnv,
   getFontSize,
   getRadius,
@@ -95,6 +96,9 @@ export interface SegmentedControlProps
 
   /** Determines whether the value can be changed */
   readOnly?: boolean;
+
+  /** Determines whether text color should depend on `background-color` of the indicator. If luminosity of the `color` prop is less than `theme.luminosityThreshold`, then `theme.white` will be used for text color, otherwise `theme.black`. Override `theme.autoContrast`. */
+  autoContrast?: boolean;
 }
 
 export type SegmentedControlFactory = Factory<{
@@ -145,6 +149,7 @@ export const SegmentedControl = factory<SegmentedControlFactory>((_props, ref) =
     transitionDuration,
     transitionTimingFunction,
     variant,
+    autoContrast,
     ...others
   } = props;
 
@@ -263,7 +268,8 @@ export const SegmentedControl = factory<SegmentedControlFactory>((_props, ref) =
           refs.current[item.value] = node!;
         }}
         __vars={{
-          '--sc-label-color': color !== undefined ? 'var(--mantine-color-white)' : undefined,
+          '--sc-label-color':
+            color !== undefined ? getContrastColor({ color, theme, autoContrast }) : undefined,
         }}
       >
         {item.label}
