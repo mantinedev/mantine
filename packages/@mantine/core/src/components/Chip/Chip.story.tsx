@@ -17,6 +17,30 @@ export function WithTooltip() {
   );
 }
 
+export function AutoContrast() {
+  const buttons = Array(10)
+    .fill(0)
+    .map((_, index) => (
+      <Chip key={index} variant="filled" color={`red.${index}`} autoContrast defaultChecked>
+        Chip
+      </Chip>
+    ));
+
+  return (
+    <div
+      style={{
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'flex-start',
+        gap: 10,
+        padding: 40,
+      }}
+    >
+      {buttons}
+    </div>
+  );
+}
+
 export function Usage() {
   return (
     <div style={{ padding: 40, display: 'flex', gap: 40 }}>

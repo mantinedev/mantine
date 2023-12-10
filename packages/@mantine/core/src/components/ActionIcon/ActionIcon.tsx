@@ -68,6 +68,9 @@ export interface ActionIconProps extends BoxProps, StylesApiProps<ActionIconFact
 
   /** Icon displayed inside the button */
   children?: React.ReactNode;
+
+  /** Determines whether button text color with filled variant should depend on `background-color`. If luminosity of the `color` prop is less than `theme.luminosityThreshold`, then `theme.white` will be used for text color, otherwise `theme.black`. Override `theme.autoContrast`. */
+  autoContrast?: boolean;
 }
 
 export type ActionIconFactory = PolymorphicFactory<{
@@ -85,12 +88,13 @@ export type ActionIconFactory = PolymorphicFactory<{
 const defaultProps: Partial<ActionIconProps> = {};
 
 const varsResolver = createVarsResolver<ActionIconFactory>(
-  (theme, { size, radius, variant, gradient, color }) => {
+  (theme, { size, radius, variant, gradient, color, autoContrast }) => {
     const colors = theme.variantColorResolver({
       color: color || theme.primaryColor,
       theme,
       gradient,
       variant: variant || 'filled',
+      autoContrast,
     });
 
     return {
@@ -100,7 +104,7 @@ const varsResolver = createVarsResolver<ActionIconFactory>(
         '--ai-bg': color || variant ? colors.background : undefined,
         '--ai-hover': color || variant ? colors.hover : undefined,
         '--ai-hover-color': color || variant ? colors.hoverColor : undefined,
-        '--ai-color': color || variant ? colors.color : undefined,
+        '--ai-color': colors.color,
         '--ai-bd': color || variant ? colors.border : undefined,
       },
     };
@@ -127,6 +131,7 @@ export const ActionIcon = polymorphicFactory<ActionIconFactory>((_props, ref) =>
     children,
     disabled,
     'data-disabled': dataDisabled,
+    autoContrast,
     ...others
   } = props;
 

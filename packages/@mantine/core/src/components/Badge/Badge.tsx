@@ -65,6 +65,9 @@ export interface BadgeProps extends BoxProps, StylesApiProps<BadgeFactory> {
 
   /** Main badge content */
   children?: React.ReactNode;
+
+  /** Determines whether text color with filled variant should depend on `background-color`. If luminosity of the `color` prop is less than `theme.luminosityThreshold`, then `theme.white` will be used for text color, otherwise `theme.black`. Override `theme.autoContrast`. */
+  autoContrast?: boolean;
 }
 
 export type BadgeFactory = PolymorphicFactory<{
@@ -79,12 +82,13 @@ export type BadgeFactory = PolymorphicFactory<{
 const defaultProps: Partial<BadgeProps> = {};
 
 const varsResolver = createVarsResolver<BadgeFactory>(
-  (theme, { radius, color, gradient, variant, size }) => {
+  (theme, { radius, color, gradient, variant, size, autoContrast }) => {
     const colors = theme.variantColorResolver({
       color: color || theme.primaryColor,
       theme,
       gradient,
       variant: variant || 'filled',
+      autoContrast,
     });
 
     return {
@@ -119,6 +123,7 @@ export const Badge = polymorphicFactory<BadgeFactory>((_props, ref) => {
     children,
     variant,
     fullWidth,
+    autoContrast,
     ...others
   } = props;
 

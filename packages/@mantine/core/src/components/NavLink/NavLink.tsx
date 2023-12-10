@@ -80,6 +80,9 @@ export interface NavLinkProps extends BoxProps, StylesApiProps<NavLinkFactory> {
 
   /** Link `onkeydown` event */
   onKeyDown?: (event: React.KeyboardEvent<HTMLAnchorElement>) => void;
+
+  /** Determines whether button text color with filled variant should depend on `background-color`. If luminosity of the `color` prop is less than `theme.luminosityThreshold`, then `theme.white` will be used for text color, otherwise `theme.black`. Override `theme.autoContrast`. */
+  autoContrast?: boolean;
 }
 
 export type NavLinkFactory = PolymorphicFactory<{
@@ -94,11 +97,12 @@ export type NavLinkFactory = PolymorphicFactory<{
 const defaultProps: Partial<NavLinkProps> = {};
 
 const varsResolver = createVarsResolver<NavLinkFactory>(
-  (theme, { variant, color, childrenOffset }) => {
+  (theme, { variant, color, childrenOffset, autoContrast }) => {
     const colors = theme.variantColorResolver({
       color: color || theme.primaryColor,
       theme,
       variant: variant || 'light',
+      autoContrast,
     });
 
     return {
@@ -139,6 +143,7 @@ export const NavLink = polymorphicFactory<NavLinkFactory>((_props, ref) => {
     noWrap,
     childrenOffset,
     onKeyDown,
+    autoContrast,
     ...others
   } = props;
 

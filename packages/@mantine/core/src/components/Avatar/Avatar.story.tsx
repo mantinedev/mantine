@@ -17,6 +17,30 @@ export function Usage() {
   );
 }
 
+export function AutoContrast() {
+  const buttons = Array(10)
+    .fill(0)
+    .map((_, index) => (
+      <Avatar key={index} variant="filled" color={`red.${index}`} autoContrast>
+        $$
+      </Avatar>
+    ));
+
+  return (
+    <div
+      style={{
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'flex-start',
+        gap: 10,
+        padding: 40,
+      }}
+    >
+      {buttons}
+    </div>
+  );
+}
+
 export function CustomComponent() {
   return (
     <div style={{ padding: 40 }}>

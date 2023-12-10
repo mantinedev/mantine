@@ -37,16 +37,17 @@ export const defaultVariantColorsResolver: VariantColorsResolver = ({
   const _autoContrast = typeof autoContrast === 'boolean' ? autoContrast : theme.autoContrast;
 
   if (variant === 'filled') {
+    const textColor = _autoContrast
+      ? parsed.isLight
+        ? 'var(--mantine-color-black)'
+        : 'var(--mantine-color-white)'
+      : 'var(--mantine-color-white)';
     if (parsed.isThemeColor) {
       if (parsed.shade === undefined) {
         return {
           background: `var(--mantine-color-${color}-filled)`,
           hover: `var(--mantine-color-${color}-filled-hover)`,
-          color: _autoContrast
-            ? parsed.isLight
-              ? 'var(--mantine-color-black)'
-              : 'var(--mantine-color-white)'
-            : 'var(--mantine-color-white)',
+          color: textColor,
           border: `${rem(1)} solid transparent`,
         };
       }
@@ -54,11 +55,7 @@ export const defaultVariantColorsResolver: VariantColorsResolver = ({
       return {
         background: `var(--mantine-color-${parsed.color}-${parsed.shade})`,
         hover: `var(--mantine-color-${parsed.color}-${parsed.shade === 9 ? 8 : parsed.shade + 1})`,
-        color: _autoContrast
-          ? parsed.isLight
-            ? 'var(--mantine-color-black)'
-            : 'var(--mantine-color-white)'
-          : 'var(--mantine-color-white)',
+        color: textColor,
         border: `${rem(1)} solid transparent`,
       };
     }
@@ -66,7 +63,7 @@ export const defaultVariantColorsResolver: VariantColorsResolver = ({
     return {
       background: color!,
       hover: darken(color!, 0.1),
-      color: 'var(--mantine-color-white)',
+      color: textColor,
       border: `${rem(1)} solid transparent`,
     };
   }

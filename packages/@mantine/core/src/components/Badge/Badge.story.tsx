@@ -12,6 +12,30 @@ export function Usage() {
   );
 }
 
+export function AutoContrast() {
+  const buttons = Array(10)
+    .fill(0)
+    .map((_, index) => (
+      <Badge key={index} color={`blue.${index}`} autoContrast>
+        Badge
+      </Badge>
+    ));
+
+  return (
+    <div
+      style={{
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'flex-start',
+        gap: 10,
+        padding: 40,
+      }}
+    >
+      {buttons}
+    </div>
+  );
+}
+
 export function Variants() {
   return (
     <Group p={40}>

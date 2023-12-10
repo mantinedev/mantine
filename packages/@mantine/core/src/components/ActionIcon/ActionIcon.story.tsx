@@ -18,6 +18,30 @@ function Colors({ index, ...others }: ActionIconProps & { index?: number }) {
   return <div style={{ display: 'flex', gap: 20, padding: 40 }}>{colors}</div>;
 }
 
+export function AutoContrast() {
+  const buttons = Array(10)
+    .fill(0)
+    .map((_, index) => (
+      <ActionIcon key={index} color={`red.${index}`} autoContrast>
+        $$
+      </ActionIcon>
+    ));
+
+  return (
+    <div
+      style={{
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'flex-start',
+        gap: 10,
+        padding: 40,
+      }}
+    >
+      {buttons}
+    </div>
+  );
+}
+
 export function SingleButton() {
   return (
     <div style={{ padding: 40 }}>

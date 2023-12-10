@@ -79,6 +79,9 @@ export interface ChipProps
 
   /** Assigns ref of the root element, can be used with `Tooltip` and other similar components */
   rootRef?: React.ForwardedRef<HTMLDivElement>;
+
+  /** Determines whether button text color with filled variant should depend on `background-color`. If luminosity of the `color` prop is less than `theme.luminosityThreshold`, then `theme.white` will be used for text color, otherwise `theme.black`. Override `theme.autoContrast`. */
+  autoContrast?: boolean;
 }
 
 export type ChipFactory = Factory<{
@@ -96,29 +99,32 @@ const defaultProps: Partial<ChipProps> = {
   type: 'checkbox',
 };
 
-const varsResolver = createVarsResolver<ChipFactory>((theme, { size, radius, variant, color }) => {
-  const colors = theme.variantColorResolver({
-    color: color || theme.primaryColor,
-    theme,
-    variant: variant || 'filled',
-  });
+const varsResolver = createVarsResolver<ChipFactory>(
+  (theme, { size, radius, variant, color, autoContrast }) => {
+    const colors = theme.variantColorResolver({
+      color: color || theme.primaryColor,
+      theme,
+      variant: variant || 'filled',
+      autoContrast,
+    });
 
-  return {
-    root: {
-      '--chip-fz': getFontSize(size),
-      '--chip-size': getSize(size, 'chip-size'),
-      '--chip-radius': radius === undefined ? undefined : getRadius(radius),
-      '--chip-checked-padding': getSize(size, 'chip-checked-padding'),
-      '--chip-padding': getSize(size, 'chip-padding'),
-      '--chip-icon-size': getSize(size, 'chip-icon-size'),
-      '--chip-bg': color || variant ? colors.background : undefined,
-      '--chip-hover': color || variant ? colors.hover : undefined,
-      '--chip-color': color || variant ? colors.color : undefined,
-      '--chip-bd': color || variant ? colors.border : undefined,
-      '--chip-spacing': getSize(size, 'chip-spacing'),
-    },
-  };
-});
+    return {
+      root: {
+        '--chip-fz': getFontSize(size),
+        '--chip-size': getSize(size, 'chip-size'),
+        '--chip-radius': radius === undefined ? undefined : getRadius(radius),
+        '--chip-checked-padding': getSize(size, 'chip-checked-padding'),
+        '--chip-padding': getSize(size, 'chip-padding'),
+        '--chip-icon-size': getSize(size, 'chip-icon-size'),
+        '--chip-bg': color || variant ? colors.background : undefined,
+        '--chip-hover': color || variant ? colors.hover : undefined,
+        '--chip-color': color || variant ? colors.color : undefined,
+        '--chip-bd': color || variant ? colors.border : undefined,
+        '--chip-spacing': getSize(size, 'chip-spacing'),
+      },
+    };
+  }
+);
 
 export const Chip = factory<ChipFactory>((_props, ref) => {
   const props = useProps('Chip', defaultProps, _props);
@@ -142,6 +148,7 @@ export const Chip = factory<ChipFactory>((_props, ref) => {
     variant,
     icon,
     rootRef,
+    autoContrast,
     ...others
   } = props;
 

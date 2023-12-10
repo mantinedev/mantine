@@ -55,6 +55,9 @@ export interface AlertProps
 
   /** Close button `aria-label` */
   closeButtonLabel?: string;
+
+  /** Determines whether text color with filled variant should depend on `background-color`. If luminosity of the `color` prop is less than `theme.luminosityThreshold`, then `theme.white` will be used for text color, otherwise `theme.black`. Override `theme.autoContrast`. */
+  autoContrast?: boolean;
 }
 
 export type AlertFactory = Factory<{
@@ -67,22 +70,25 @@ export type AlertFactory = Factory<{
 
 const defaultProps: Partial<AlertProps> = {};
 
-const varsResolver = createVarsResolver<AlertFactory>((theme, { radius, color, variant }) => {
-  const colors = theme.variantColorResolver({
-    color: color || theme.primaryColor,
-    theme,
-    variant: variant || 'light',
-  });
+const varsResolver = createVarsResolver<AlertFactory>(
+  (theme, { radius, color, variant, autoContrast }) => {
+    const colors = theme.variantColorResolver({
+      color: color || theme.primaryColor,
+      theme,
+      variant: variant || 'light',
+      autoContrast,
+    });
 
-  return {
-    root: {
-      '--alert-radius': radius === undefined ? undefined : getRadius(radius),
-      '--alert-bg': color || variant ? colors.background : undefined,
-      '--alert-color': color || variant ? colors.color : undefined,
-      '--alert-bd': color || variant ? colors.border : undefined,
-    },
-  };
-});
+    return {
+      root: {
+        '--alert-radius': radius === undefined ? undefined : getRadius(radius),
+        '--alert-bg': color || variant ? colors.background : undefined,
+        '--alert-color': colors.color,
+        '--alert-bd': color || variant ? colors.border : undefined,
+      },
+    };
+  }
+);
 
 export const Alert = factory<AlertFactory>((_props, ref) => {
   const props = useProps('Alert', defaultProps, _props);
@@ -103,6 +109,7 @@ export const Alert = factory<AlertFactory>((_props, ref) => {
     onClose,
     closeButtonLabel,
     variant,
+    autoContrast,
     ...others
   } = props;
 

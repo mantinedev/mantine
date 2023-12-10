@@ -33,6 +33,39 @@ export function Variants() {
   );
 }
 
+export function AutoContrast() {
+  const buttons = Array(10)
+    .fill(0)
+    .map((_, index) => (
+      <Alert
+        withCloseButton
+        title="Bummer!"
+        color={`yellow.${index}`}
+        variant="filled"
+        mt="xl"
+        autoContrast
+        key={index}
+      >
+        Something terrible happened! You made a mistake and there is no going back, your data was
+        lost forever!
+      </Alert>
+    ));
+
+  return (
+    <div
+      style={{
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'flex-start',
+        gap: 10,
+        padding: 40,
+      }}
+    >
+      {buttons}
+    </div>
+  );
+}
+
 export function Unstyled() {
   return (
     <div style={{ maxWidth: 500, margin: 'auto', padding: 40 }}>
