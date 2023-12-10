@@ -7,6 +7,9 @@ describe('@mantine/core/to-rgba', () => {
     expect(toRgba('#f00')).toStrictEqual({ r: 255, g: 0, b: 0, a: 1 });
     expect(toRgba('#7048E8')).toStrictEqual({ r: 112, g: 72, b: 232, a: 1 });
     expect(toRgba('#1098AD')).toStrictEqual({ r: 16, g: 152, b: 173, a: 1 });
+    expect(toRgba('#F03E3EFF')).toStrictEqual({ r: 240, g: 62, b: 62, a: 1 });
+    expect(toRgba('#F03E3E00')).toStrictEqual({ r: 240, g: 62, b: 62, a: 0 });
+    expect(toRgba('#F03E3E84')).toStrictEqual({ r: 240, g: 62, b: 62, a: 0.5176470588235295 });
   });
 
   it('returns the correct rgba values when given an rgb string', () => {

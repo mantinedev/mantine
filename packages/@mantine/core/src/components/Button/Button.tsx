@@ -84,6 +84,9 @@ export interface ButtonProps extends BoxProps, StylesApiProps<ButtonFactory> {
 
   /** Props added to the `Loader` component (only visible when `loading` prop is set) */
   loaderProps?: LoaderProps;
+
+  /** Determines whether button text color with filled variant should depend on `background-color`. If luminosity of the `color` prop is less than `theme.luminosityThreshold`, then `theme.white` will be used for text color, otherwise `theme.black`. Override `theme.autoContrast`. */
+  autoContrast?: boolean;
 }
 
 export type ButtonFactory = PolymorphicFactory<{
@@ -101,12 +104,13 @@ export type ButtonFactory = PolymorphicFactory<{
 const defaultProps: Partial<ButtonProps> = {};
 
 const varsResolver = createVarsResolver<ButtonFactory>(
-  (theme, { radius, color, gradient, variant, size, justify }) => {
+  (theme, { radius, color, gradient, variant, size, justify, autoContrast }) => {
     const colors = theme.variantColorResolver({
       color: color || theme.primaryColor,
       theme,
       gradient,
       variant: variant || 'filled',
+      autoContrast,
     });
 
     return {

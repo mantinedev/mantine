@@ -10,6 +10,7 @@ export interface VariantColorsResolverInput {
   theme: MantineTheme;
   variant: string;
   gradient?: MantineGradient;
+  autoContrast?: boolean;
 }
 
 export interface VariantColorResolverResult {
@@ -29,8 +30,11 @@ export const defaultVariantColorsResolver: VariantColorsResolver = ({
   theme,
   variant,
   gradient,
+  autoContrast,
 }) => {
   const parsed = parseThemeColor({ color, theme });
+
+  const _autoContrast = typeof autoContrast === 'boolean' ? autoContrast : theme.autoContrast;
 
   if (variant === 'filled') {
     if (parsed.isThemeColor) {
@@ -38,7 +42,11 @@ export const defaultVariantColorsResolver: VariantColorsResolver = ({
         return {
           background: `var(--mantine-color-${color}-filled)`,
           hover: `var(--mantine-color-${color}-filled-hover)`,
-          color: 'var(--mantine-color-white)',
+          color: _autoContrast
+            ? parsed.isLight
+              ? 'var(--mantine-color-black)'
+              : 'var(--mantine-color-white)'
+            : 'var(--mantine-color-white)',
           border: `${rem(1)} solid transparent`,
         };
       }
@@ -46,7 +54,11 @@ export const defaultVariantColorsResolver: VariantColorsResolver = ({
       return {
         background: `var(--mantine-color-${parsed.color}-${parsed.shade})`,
         hover: `var(--mantine-color-${parsed.color}-${parsed.shade === 9 ? 8 : parsed.shade + 1})`,
-        color: 'var(--mantine-color-white)',
+        color: _autoContrast
+          ? parsed.isLight
+            ? 'var(--mantine-color-black)'
+            : 'var(--mantine-color-white)'
+          : 'var(--mantine-color-white)',
         border: `${rem(1)} solid transparent`,
       };
     }

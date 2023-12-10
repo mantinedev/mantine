@@ -16,6 +16,8 @@ export const DEFAULT_THEME: MantineTheme = {
   primaryShade: { light: 6, dark: 8 },
   primaryColor: 'blue',
   variantColorResolver: defaultVariantColorsResolver,
+  autoContrast: false,
+  luminanceThreshold: 0.45,
   fontFamily: DEFAULT_FONT_FAMILY,
   fontFamilyMonospace:
     'ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, Liberation Mono, Courier New, monospace',

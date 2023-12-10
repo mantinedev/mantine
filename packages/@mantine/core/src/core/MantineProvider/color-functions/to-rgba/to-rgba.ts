@@ -6,7 +6,7 @@ export interface RGBA {
 }
 
 function isHexColor(hex: string): boolean {
-  const HEX_REGEXP = /^#?([0-9A-F]{3}){1,2}$/i;
+  const HEX_REGEXP = /^#?([0-9A-F]{3}){1,2}([0-9A-F]{2})?$/i;
 
   return HEX_REGEXP.test(hex);
 }
@@ -24,6 +24,17 @@ function hexToRgba(color: string): RGBA {
       shorthandHex[2],
       shorthandHex[2],
     ].join('');
+  }
+
+  if (hexString.length === 8) {
+    const alpha = parseInt(hexString.slice(6, 8), 16) / 255;
+
+    return {
+      r: parseInt(hexString.slice(0, 2), 16),
+      g: parseInt(hexString.slice(2, 4), 16),
+      b: parseInt(hexString.slice(4, 6), 16),
+      a: alpha,
+    };
   }
 
   const parsed = parseInt(hexString, 16);

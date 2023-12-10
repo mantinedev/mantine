@@ -7,7 +7,7 @@ export { toRgba } from './to-rgba/to-rgba';
 export { rgba } from './rgba/rgba';
 export { darken } from './darken/darken';
 export { lighten } from './lighten/lighten';
-export { isLightColor } from './is-light-color/is-light-color';
+export { luminance, isLightColor } from './luminance/luminance';
 
 export type { RGBA } from './to-rgba/to-rgba';
 export type {

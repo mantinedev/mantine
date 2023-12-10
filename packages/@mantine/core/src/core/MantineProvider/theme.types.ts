@@ -49,6 +49,18 @@ export interface MantineTheme {
    * */
   variantColorResolver: VariantColorsResolver;
 
+  /** Determines whether text color must be changed based on the given `color` prop in filled variant
+   *  For example, if you pass `color="blue.1"` to Button component, text color will be changed to `var(--mantine-color-black)`
+   *  Default value – `false`
+   * */
+  autoContrast: boolean;
+
+  /** Determines which luminance value is used to determine if text color should be light or dark.
+   *  Used only if `theme.autoContrast` is set to `true`.
+   *  Default value is `0.45`
+   * */
+  luminanceThreshold: number;
+
   /** font-family used in all components, system fonts by default */
   fontFamily: string;
 

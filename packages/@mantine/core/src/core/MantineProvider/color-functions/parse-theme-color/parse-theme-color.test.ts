@@ -8,6 +8,7 @@ describe('@mantine/core/parse-theme-color', () => {
       value: DEFAULT_THEME.colors.red[6],
       shade: undefined,
       isThemeColor: true,
+      isLight: true,
       variable: '--mantine-color-red-filled',
     });
   });
@@ -18,7 +19,17 @@ describe('@mantine/core/parse-theme-color', () => {
       value: DEFAULT_THEME.colors.orange[5],
       shade: 5,
       isThemeColor: true,
+      isLight: true,
       variable: '--mantine-color-orange-5',
+    });
+
+    expect(parseThemeColor({ color: 'blue.6', theme: DEFAULT_THEME })).toStrictEqual({
+      color: 'blue',
+      value: DEFAULT_THEME.colors.blue[6],
+      shade: 6,
+      isThemeColor: true,
+      isLight: false,
+      variable: '--mantine-color-blue-6',
     });
   });
 
@@ -27,6 +38,7 @@ describe('@mantine/core/parse-theme-color', () => {
       color: '#FEFEFE',
       value: '#FEFEFE',
       isThemeColor: false,
+      isLight: true,
       shade: undefined,
       variable: undefined,
     });
@@ -37,6 +49,7 @@ describe('@mantine/core/parse-theme-color', () => {
       color: 'white',
       value: DEFAULT_THEME.white,
       isThemeColor: false,
+      isLight: true,
       shade: undefined,
       variable: '--mantine-color-white',
     });
@@ -45,6 +58,7 @@ describe('@mantine/core/parse-theme-color', () => {
       color: 'black',
       value: DEFAULT_THEME.black,
       isThemeColor: false,
+      isLight: false,
       shade: undefined,
       variable: '--mantine-color-black',
     });

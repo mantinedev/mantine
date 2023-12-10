@@ -12,6 +12,30 @@ export function RenderRoot() {
   );
 }
 
+export function AutoContrast() {
+  const buttons = Array(10)
+    .fill(0)
+    .map((_, index) => (
+      <Button key={index} color={`red.${index}`} autoContrast>
+        Button
+      </Button>
+    ));
+
+  return (
+    <div
+      style={{
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'flex-start',
+        gap: 10,
+        padding: 40,
+      }}
+    >
+      {buttons}
+    </div>
+  );
+}
+
 export function PolymorphicAlignment() {
   return (
     <div style={{ padding: 40 }}>
