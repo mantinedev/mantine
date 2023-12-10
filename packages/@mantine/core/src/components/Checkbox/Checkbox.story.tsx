@@ -26,6 +26,20 @@ export function Usage() {
   );
 }
 
+export function AutoContrast() {
+  return (
+    <div style={{ padding: 40 }}>
+      <Checkbox
+        label="Auto contrast icon color"
+        value="hello"
+        defaultChecked
+        color="lime.4"
+        autoContrast
+      />
+    </div>
+  );
+}
+
 export function OutlineVariant() {
   return (
     <div style={{ padding: 40 }}>

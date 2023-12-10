@@ -8,6 +8,7 @@ import {
   extractStyleProps,
   factory,
   Factory,
+  getContrastColor,
   getRadius,
   getSize,
   getThemeColor,
@@ -72,6 +73,9 @@ export interface RadioProps
 
   /** Key of `theme.colors` or any valid CSS color to set icon color, `theme.white` by default */
   iconColor?: MantineColor;
+
+  /** Determines whether icon color with filled variant should depend on `background-color`. If luminosity of the `color` prop is less than `theme.luminosityThreshold`, then `theme.white` will be used for text color, otherwise `theme.black`. Override `theme.autoContrast`. */
+  autoContrast?: boolean;
 }
 
 export type RadioFactory = Factory<{
@@ -90,7 +94,7 @@ const defaultProps: Partial<RadioProps> = {
 };
 
 const varsResolver = createVarsResolver<RadioFactory>(
-  (theme, { size, radius, color, iconColor, variant }) => {
+  (theme, { size, radius, color, iconColor, variant, autoContrast }) => {
     const parsedColor = parseThemeColor({ color: color || theme.primaryColor, theme });
     const outlineColor =
       parsedColor.isThemeColor && parsedColor.shade === undefined
@@ -102,7 +106,11 @@ const varsResolver = createVarsResolver<RadioFactory>(
         '--radio-size': getSize(size, 'radio-size'),
         '--radio-radius': radius === undefined ? undefined : getRadius(radius),
         '--radio-color': variant === 'outline' ? outlineColor : getThemeColor(color, theme),
-        '--radio-icon-color': iconColor ? getThemeColor(iconColor, theme) : undefined,
+        '--radio-icon-color': iconColor
+          ? getThemeColor(iconColor, theme)
+          : autoContrast
+            ? getContrastColor({ color, theme, autoContrast })
+            : undefined,
         '--radio-icon-size': getSize(size, 'radio-icon-size'),
       },
     };

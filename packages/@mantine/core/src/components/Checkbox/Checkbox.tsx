@@ -8,6 +8,7 @@ import {
   extractStyleProps,
   factory,
   Factory,
+  getContrastColor,
   getRadius,
   getSize,
   getThemeColor,
@@ -73,6 +74,9 @@ export interface CheckboxProps
 
   /** Key of `theme.colors` or any valid CSS color to set icon color, `theme.white` by default */
   iconColor?: MantineColor;
+
+  /** Determines whether icon color with filled variant should depend on `background-color`. If luminosity of the `color` prop is less than `theme.luminosityThreshold`, then `theme.white` will be used for text color, otherwise `theme.black`. Override `theme.autoContrast`. */
+  autoContrast?: boolean;
 }
 
 export type CheckboxFactory = Factory<{
@@ -92,7 +96,7 @@ const defaultProps: Partial<CheckboxProps> = {
 };
 
 const varsResolver = createVarsResolver<CheckboxFactory>(
-  (theme, { radius, color, size, iconColor, variant }) => {
+  (theme, { radius, color, size, iconColor, variant, autoContrast }) => {
     const parsedColor = parseThemeColor({ color: color || theme.primaryColor, theme });
     const outlineColor =
       parsedColor.isThemeColor && parsedColor.shade === undefined
@@ -104,7 +108,11 @@ const varsResolver = createVarsResolver<CheckboxFactory>(
         '--checkbox-size': getSize(size, 'checkbox-size'),
         '--checkbox-radius': radius === undefined ? undefined : getRadius(radius),
         '--checkbox-color': variant === 'outline' ? outlineColor : getThemeColor(color, theme),
-        '--checkbox-icon-color': iconColor ? getThemeColor(iconColor, theme) : undefined,
+        '--checkbox-icon-color': iconColor
+          ? getThemeColor(iconColor, theme)
+          : autoContrast
+            ? getContrastColor({ color, theme, autoContrast })
+            : undefined,
       },
     };
   }
@@ -137,6 +145,7 @@ export const Checkbox = factory<CheckboxFactory>((_props, ref) => {
     rootRef,
     iconColor,
     onChange,
+    autoContrast,
     ...others
   } = props;
 
