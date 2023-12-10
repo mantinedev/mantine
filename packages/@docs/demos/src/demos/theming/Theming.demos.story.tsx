@@ -107,3 +107,13 @@ export const DemoCursorType = {
   name: '⭐ Demo: cursorType',
   render: renderDemo(demos.cursorType),
 };
+
+export const DemoAutoContrast = {
+  name: '⭐ Demo: autoContrast',
+  render: renderDemo(demos.autoContrast),
+};
+
+export const DemoLuminanceThreshold = {
+  name: '⭐ Demo: luminanceThreshold',
+  render: renderDemo(demos.luminanceThreshold),
+};
