@@ -40,7 +40,7 @@
 
   &[data-selected] {
     --_control-bg: var(--mantine-primary-color-filled);
-    --_control-color: var(--mantine-color-white);
+    --_control-color: var(--mantine-primary-color-contrast, var(--mantine-color-white));
 
     @mixin hover {
       [data-mantine-color-scheme] & {

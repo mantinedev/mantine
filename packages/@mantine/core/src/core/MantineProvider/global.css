@@ -349,6 +349,7 @@ body {
 
 :root[data-mantine-color-scheme='dark'] {
   --mantine-color-scheme: dark;
+  --mantine-primary-color-contrast: var(--mantine-color-white);
   --mantine-color-bright: var(--mantine-color-white);
   --mantine-color-text: var(--mantine-color-dark-0);
   --mantine-color-body: var(--mantine-color-dark-7);
@@ -477,8 +478,9 @@ body {
 :root[data-mantine-color-scheme='light'] {
   --mantine-color-scheme: light;
   --mantine-color-bright: var(--mantine-color-black);
-  --mantine-color-text: #000;
-  --mantine-color-body: #fff;
+  --mantine-color-text: var(--mantine-color-black);
+  --mantine-color-body: var(--mantine-color-white);
+  --mantine-primary-color-contrast: var(--mantine-color-white);
   --mantine-color-error: var(--mantine-color-red-6);
   --mantine-color-placeholder: var(--mantine-color-gray-5);
   --mantine-color-anchor: var(--mantine-primary-color-filled);

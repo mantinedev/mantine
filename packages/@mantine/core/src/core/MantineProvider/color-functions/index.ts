@@ -8,7 +8,7 @@ export { rgba } from './rgba/rgba';
 export { darken } from './darken/darken';
 export { lighten } from './lighten/lighten';
 export { luminance, isLightColor } from './luminance/luminance';
-export { getContrastColor } from './get-contrast-color/get-contrast-color';
+export { getContrastColor, getPrimaryContrastColor } from './get-contrast-color/get-contrast-color';
 
 export type { RGBA } from './to-rgba/to-rgba';
 export type {

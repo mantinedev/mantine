@@ -2,6 +2,9 @@ import { createTheme, DEFAULT_THEME } from '@mantine/core';
 
 export const theme = createTheme({
   fontFamilyMonospace: `Menlo, Monaco, ${DEFAULT_THEME.fontFamilyMonospace}`,
+  primaryColor: 'lime',
+  primaryShade: 3,
+  autoContrast: true,
   colors: {
     'ocean-blue': [
       '#7AD1DD',

@@ -1,6 +1,6 @@
 /* eslint-disable prefer-destructuring */
 import { keys, rem } from '../../utils';
-import { getPrimaryShade, rgba } from '../color-functions';
+import { getPrimaryContrastColor, getPrimaryShade, rgba } from '../color-functions';
 import { ConvertCSSVariablesInput } from '../convert-css-variables';
 import { MantineTheme } from '../theme.types';
 
@@ -48,6 +48,7 @@ export const defaultCssVariablesResolver: CSSVariablesResolver = (theme) => {
       '--mantine-primary-color-light-color': `var(--mantine-color-${theme.primaryColor}-light-color)`,
     },
     light: {
+      '--mantine-primary-color-contrast': getPrimaryContrastColor(theme, 'light'),
       '--mantine-color-bright': 'var(--mantine-color-black)',
       '--mantine-color-text': theme.black,
       '--mantine-color-body': theme.white,
@@ -60,6 +61,7 @@ export const defaultCssVariablesResolver: CSSVariablesResolver = (theme) => {
       '--mantine-color-default-border': 'var(--mantine-color-gray-4)',
     },
     dark: {
+      '--mantine-primary-color-contrast': getPrimaryContrastColor(theme, 'dark'),
       '--mantine-color-bright': 'var(--mantine-color-white)',
       '--mantine-color-text': 'var(--mantine-color-dark-0)',
       '--mantine-color-body': 'var(--mantine-color-dark-7)',

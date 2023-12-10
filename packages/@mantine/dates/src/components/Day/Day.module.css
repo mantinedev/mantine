@@ -89,7 +89,7 @@
 
   &[data-selected] {
     --_day-bg: var(--mantine-primary-color-filled);
-    --_day-color: var(--mantine-color-white);
+    --_day-color: var(--mantine-primary-color-contrast);
 
     @mixin hover {
       [data-mantine-color-scheme] &:not([data-disabled], [data-static]) {
