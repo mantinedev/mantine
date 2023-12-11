@@ -9,7 +9,7 @@ export function Usage() {
       <Box bg="pink" hiddenFrom="md">
         Hidden from md
       </Box>
-      <Box bg="orange" visibleFrom="sm">
+      <Box bg="orange" visibleFrom="sm" ff="mono">
         Visible from sm
       </Box>
       <Box bg="blue" hiddenFrom="sm">

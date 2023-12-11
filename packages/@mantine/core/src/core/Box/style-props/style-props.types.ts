@@ -29,7 +29,7 @@ export interface MantineStyleProps {
   c?: StyleProp<MantineColor>;
   opacity?: StyleProp<React.CSSProperties['opacity']>;
 
-  ff?: StyleProp<React.CSSProperties['fontFamily']>;
+  ff?: StyleProp<'mono' | 'text' | 'heading' | (string & {})>;
   fz?: StyleProp<MantineFontSize | number | (string & {})>;
   fw?: StyleProp<React.CSSProperties['fontWeight']>;
   lts?: StyleProp<React.CSSProperties['letterSpacing']>;

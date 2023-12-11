@@ -27,7 +27,7 @@ export const STYlE_PROPS_DATA: Record<keyof MantineStyleProps, SystemPropData> =
   c: { type: 'color', property: 'color' },
   opacity: { type: 'identity', property: 'opacity' },
 
-  ff: { type: 'identity', property: 'fontFamily' },
+  ff: { type: 'fontFamily', property: 'fontFamily' },
   fz: { type: 'fontSize', property: 'fontSize' },
   fw: { type: 'identity', property: 'fontWeight' },
   lts: { type: 'size', property: 'letterSpacing' },
