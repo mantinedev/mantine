@@ -1,6 +1,7 @@
 import React from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
+import { IconExternalLink } from '@tabler/icons-react';
 import { UnstyledButton } from '@mantine/core';
 import classes from './NavbarMainLink.module.css';
 
@@ -30,6 +31,11 @@ export function NavbarMainLink({
     >
       <span className={classes.icon}>{icon}</span>
       <span className={classes.label}>{children}</span>
+      {external && (
+        <span className={classes.external}>
+          <IconExternalLink size={14} />
+        </span>
+      )}
     </UnstyledButton>
   );
 }

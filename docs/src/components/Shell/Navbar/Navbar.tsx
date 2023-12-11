@@ -4,6 +4,7 @@ import {
   IconBrandMantine,
   IconCompass,
   IconHeartHandshake,
+  IconHelp,
   IconPalette,
 } from '@tabler/icons-react';
 import cx from 'clsx';
@@ -67,6 +68,14 @@ export function Navbar({ navbarOpened, onNavbarClose, mobileNavbarOnly }: Navbar
             onNavbarClose={onNavbarClose}
           >
             Colors generator
+          </NavbarMainLink>
+          <NavbarMainLink
+            external
+            icon={<IconHelp style={{ width: rem(22), height: rem(22) }} stroke={1.5} />}
+            href="https://help.mantine.dev"
+            onNavbarClose={onNavbarClose}
+          >
+            Help center
           </NavbarMainLink>
           <NavbarMainLink
             external

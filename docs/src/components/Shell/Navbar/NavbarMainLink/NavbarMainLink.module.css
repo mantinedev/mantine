@@ -22,6 +22,12 @@
       background: transparent;
     }
   }
+
+  @mixin hover {
+    .external {
+      opacity: 1;
+    }
+  }
 }
 
 .icon {
@@ -45,4 +51,17 @@
     margin-left: 0;
     margin-right: var(--mantine-spacing-sm);
   }
+}
+
+.external {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: rem(34px);
+  height: rem(34px);
+  color: var(--mantine-color-dimmed);
+  border-radius: var(--mantine-radius-md);
+  opacity: 0;
+  transition: opacity 100ms ease;
 }
