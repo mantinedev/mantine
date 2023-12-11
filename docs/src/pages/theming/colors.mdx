@@ -46,6 +46,19 @@ This will allow you to use them in all components that support `color` prop, for
 > You can add more than 10 shades per color: these values will not be used by Mantine components with the default colors resolver,
 > but you can still reference them by index, for example, `color="blue.11"`.
 
+## Supported color formats
+
+You can use the following color formats in `theme.colors`:
+
+- HEX: `#fff`, `#ffffff`
+- RGB: `rgb(255, 255, 255)`, `rgba(255, 255, 255, 0.5)`
+- HSL: `hsl(0, 0%, 100%)`, `hsla(0, 0%, 100%, 0.5)`
+- OKLCH: `oklch(96.27% 0.0217 238.66)`, `oklch(96.27% 0.0217 238.66 / 0.5)`
+
+Example of adding oklch color to theme:
+
+<Demo data={ThemingDemos.oklch} />
+
 ## primaryColor
 
 `theme.primaryColor` is a key of `theme.colors`, it is used:

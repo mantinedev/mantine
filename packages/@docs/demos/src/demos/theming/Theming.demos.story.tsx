@@ -117,3 +117,8 @@ export const DemoLuminanceThreshold = {
   name: '⭐ Demo: luminanceThreshold',
   render: renderDemo(demos.luminanceThreshold),
 };
+
+export const DemoOklch = {
+  name: '⭐ Demo: oklch',
+  render: renderDemo(demos.oklch),
+};

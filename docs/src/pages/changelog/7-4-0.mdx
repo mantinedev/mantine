@@ -8,6 +8,17 @@ import { MDX_DATA } from '@/mdx';
 
 export default Layout(MDX_DATA.Changelog730);
 
+## OKLCH colors support
+
+You can now use [OKLCH](https://oklch.com/) colors in `theme.colors`.
+OKLCH color model has [88.18% browser support](https://caniuse.com/mdn-css_types_color_oklch),
+it is supported in all modern browsers. OKLCH model provides 30% more colors than HSL model and
+has [several other advantages](https://evilmartians.com/chronicles/oklch-in-css-why-quit-rgb-hsl).
+
+Example of adding OKLCH color to the theme:
+
+<Demo data={ThemingDemos.oklch} />
+
 ## autoContrast
 
 New `theme.autoContrast` property controls whether text color should be changed based on the given `color` prop
