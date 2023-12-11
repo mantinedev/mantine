@@ -325,7 +325,7 @@ export const MDX_PAGES_GROUPS: MdxPagesGroup[] = [
     ],
   },
   {
-    group: 'other packages',
+    group: 'extensions',
     pages: [
       MDX_DATA.CodeHighlight,
       MDX_DATA.Notifications,

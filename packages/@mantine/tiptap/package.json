@@ -2,7 +2,7 @@
   "name": "@mantine/tiptap",
   "version": "7.3.1",
   "description": "Rich text editor based on tiptap",
-  "homepage": "https://mantine.dev/others/tiptap",
+  "homepage": "https://mantine.dev/x/tiptap",
   "license": "MIT",
   "author": "Vitaly Rtishchev <rtivital@gmail.com>",
   "keywords": [

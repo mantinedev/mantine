@@ -41,11 +41,11 @@ in the following components:
 - [Progress](/core/progress)
 - [Indicator](/core/indicator)
 - [Timeline](/core/timeline)
-- [Spotlight](/others/spotlight)
+- [Spotlight](/x/spotlight)
 - All [@mantine/dates](/dates/getting-started) components that are based on [Calendar](/dates/calendar) component
 
 `autoContrast` can be set globally on the theme level or individually for each component via `autoContrast` prop,
-except for [Spotlight](/others/spotlight) and [@mantine/dates](/dates/getting-started) components which only support global theme setting.
+except for [Spotlight](/x/spotlight) and [@mantine/dates](/dates/getting-started) components which only support global theme setting.
 
 <Demo data={ThemingDemos.autoContrast} />
 
@@ -92,4 +92,4 @@ CSS variables for primary color are now available, you can use the following var
 
 ## Other changes
 
-- [RichTextEditor](/others/tiptap) no longer depends on `@tabler/icons` package. It is no longer required to install `@tabler/icons` package to use `RichTextEditor` component. Icons used in the editor are now a part of the `@mantine/tiptap` package. This change improves bundling performance in several cases (mostly when using `RichTextEditor` in Next.js apps).
+- [RichTextEditor](/x/tiptap) no longer depends on `@tabler/icons` package. It is no longer required to install `@tabler/icons` package to use `RichTextEditor` component. Icons used in the editor are now a part of the `@mantine/tiptap` package. This change improves bundling performance in several cases (mostly when using `RichTextEditor` in Next.js apps).

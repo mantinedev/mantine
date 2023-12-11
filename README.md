@@ -23,14 +23,14 @@
 - [`@mantine/styles`](https://mantine.dev/styles/create-styles/) – [emotion](https://emotion.sh/) based css-in-js library that is used in all Mantine components
 - `@mantine/core` – core components library – 100+ components, exports everything from `@mantine/styles`
 - [`@mantine/form`](https://mantine.dev/form/use-form) – forms management library
-- [`@mantine/notifications`](https://mantine.dev/others/notifications) – a fully featured notifications system
-- [`@mantine/spotlight`](https://mantine.dev/others/spotlight) – `Ctrl + K` command center for your application
-- [`@mantine/code-highlight`](https://mantine.dev/others/code-highlight/) – code highlight built with [highlight.js](https://highlightjs.org/)
-- [`@mantine/tiptap`](https://mantine.dev/others/tiptap) – a Tiptap based rich text editor
-- [`@mantine/dropzone`](https://mantine.dev/others/dropzone) – manages files drag 'n' drop to an area or entire screen
-- [`@mantine/carousel`](https://mantine.dev/others/carousel) – Carousel component
-- [`@mantine/nprogress`](https://mantine.dev/others/nprogress) – navigation progress
-- [`@mantine/modals`](https://mantine.dev/others/modals) – centralized modals manager
+- [`@mantine/notifications`](https://mantine.dev/x/notifications) – a fully featured notifications system
+- [`@mantine/spotlight`](https://mantine.dev/x/spotlight) – `Ctrl + K` command center for your application
+- [`@mantine/code-highlight`](https://mantine.dev/x/code-highlight/) – code highlight built with [highlight.js](https://highlightjs.org/)
+- [`@mantine/tiptap`](https://mantine.dev/x/tiptap) – a Tiptap based rich text editor
+- [`@mantine/dropzone`](https://mantine.dev/x/dropzone) – manages files drag 'n' drop to an area or entire screen
+- [`@mantine/carousel`](https://mantine.dev/x/carousel) – Carousel component
+- [`@mantine/nprogress`](https://mantine.dev/x/nprogress) – navigation progress
+- [`@mantine/modals`](https://mantine.dev/x/modals) – centralized modals manager
 - [`eslint-config-mantine`](https://www.npmjs.com/package/eslint-config-mantine) – ESLint and Prettier configuration that is used in all Mantine projects
 
 ## Getting help

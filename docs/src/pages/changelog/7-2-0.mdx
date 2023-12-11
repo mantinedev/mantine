@@ -33,8 +33,8 @@ It supports the same formatting related props as [NumberInput](/core/number-inpu
 
 `@mantine/form` package now exports `createFormActions` function that
 can be used to [change form state](/form/actions/) from anywhere in your application.
-The mechanism of form actions is similar to [notifications system](/others/notifications/),
-[modals manager](/others/modals/) and other similar packages.
+The mechanism of form actions is similar to [notifications system](/x/notifications/),
+[modals manager](/x/modals/) and other similar packages.
 
 To use form actions, set `name` property in [use-form](/form/use-form/) settings:
 
@@ -126,7 +126,7 @@ You can find examples of Mantine + Sass usage in separate branches of templates:
 ## Inline loaders
 
 [Loader](/core/loader/) component now supports `children` prop. The prop allows overriding the default
-loader with any React node. It is useful in components that support `loaderProps` ([Button](/core/button/), [LoadingOverlay](/core/loading-overlay/), [Dropzone](/others/dropzone/), etc.)
+loader with any React node. It is useful in components that support `loaderProps` ([Button](/core/button/), [LoadingOverlay](/core/loading-overlay/), [Dropzone](/x/dropzone/), etc.)
 – with `loaderProps.children` you can now display any React node instead of the loader.
 
 <Demo data={LoadingOverlayDemos.customLoader} />
@@ -170,7 +170,7 @@ Note that to use these mixins, you need to update `postcss-preset-mantine` to `1
 
 ## Other changes
 
-- [Dropzone](/others/dropzone/) now supports `loaderProps` prop to pass props down to the [Loader](/core/loader/) component
+- [Dropzone](/x/dropzone/) now supports `loaderProps` prop to pass props down to the [Loader](/core/loader/) component
 - [theme.variantColorResolver](/theming/colors/#colors-variant-resolver) now supports `hoverColor` prop, which allows controlling `color` property when the component is hovered. New property is supported in [Button](/core/button/) and [ActionIcon](/core/action-icon/) components.
 - [Flex](/core/flex/) is now a [polymorphic](/guides/polymorphic/) component – it accepts `renderRoot` and `component` props
 - [Checkbox](/core/checkbox/) root element now has `data-checked` attribute when the checkbox is checked

@@ -1,0 +1,139 @@
+import { CarouselDemos } from '@docs/demos';
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.Carousel);
+
+## Installation
+
+<InstallScript packages="embla-carousel-react@^7.1.0 @mantine/carousel" />
+
+After installation import package styles at the root of your application:
+
+```tsx
+import '@mantine/carousel/styles.css';
+```
+
+## Usage
+
+`@mantine/carousel` package is based on [embla carousel](https://www.embla-carousel.com/),
+it supports most of its features:
+
+<Demo data={CarouselDemos.usage} />
+
+## Options
+
+<Demo data={CarouselDemos.configurator} />
+
+## Size and gap
+
+Set `slideSize` and `slideGap` on `Carousel` component to control size and gap of every slide:
+
+<Demo data={CarouselDemos.multiple} />
+
+## Responsive styles
+
+`slideSize` and `slideGap` props work the same way as [style props](/styles/style-props/),
+you can pass an object with values for different breakpoints:
+
+<Demo data={CarouselDemos.breakpoints} />
+
+## Drag free
+
+`dragFree` will disable slides snap points – user will be able to stop dragging at any position:
+
+<Demo data={CarouselDemos.dragFree} />
+
+## Vertical orientation
+
+Carousel with `orientation="vertical"` requires `height` prop to be set:
+
+<Demo data={CarouselDemos.vertical} />
+
+## Controls icons
+
+You can replace default next/previous controls icons with any React nodes:
+
+<Demo data={CarouselDemos.icons} />
+
+## 100% height
+
+Set `height="100%"` to make Carousel take 100% height of the container. Note that in this case:
+
+- container element must have `display: flex` styles
+- carousel root element must have `flex: 1` styles
+- container element must have fixed height
+
+```tsx
+import { Carousel } from '@mantine/carousel';
+
+export function PercentageHeight() {
+  return (
+    <div style={{ height: 400, display: 'flex' }}>
+      <Carousel withIndicators height="100%" style={{ flex: 1 }}>
+        <Carousel.Slide>1</Carousel.Slide>
+        <Carousel.Slide>2</Carousel.Slide>
+        <Carousel.Slide>3</Carousel.Slide>
+      </Carousel>
+    </div>
+  );
+}
+```
+
+## Get embla instance
+
+You can get [embla instance](https://www.embla-carousel.com/api/methods/) with `getEmblaApi` prop.
+You will be able enhance carousel with additional logic after that using embla api methods:
+
+<Demo data={CarouselDemos.progress} />
+
+## Embla plugins
+
+Set `plugins` prop to enhance carousel with [embla plugins](https://www.embla-carousel.com/plugins/).
+Note that plugins are not installed with `@mantine/carousel` package and you will need to
+install them on your side.
+
+Example with [autoplay plugin](https://www.embla-carousel.com/plugins/autoplay/):
+
+<InstallScript packages="embla-carousel-autoplay@^7.1.0" />
+
+<Demo data={CarouselDemos.autoplay} />
+
+<StylesApiSelectors component="Carousel" />
+
+<Demo data={CarouselDemos.stylesApi} />
+
+## Indicator styles
+
+<Demo data={CarouselDemos.indicatorStyles} />
+
+## Hide inactive controls
+
+<Demo data={CarouselDemos.controlsStyles} />
+
+## Show controls on hover
+
+<Demo data={CarouselDemos.controlsHover} />
+
+## Example: Images carousel
+
+<Demo data={CarouselDemos.images} />
+
+## Example: Cards carousel
+
+<Demo data={CarouselDemos.cards} />
+
+## Carousel container animation offset
+
+Embla carousel only reads slides positions and sizes upon initialization. When you are using Carousel
+component inside animated component you may experience an issue with incorrect slides offset after
+animation finishes.
+
+Example of incorrect slides offset calculation (scroll though slides):
+
+<Demo data={CarouselDemos.brokenAnimation} />
+
+To solve this issue use `useAnimationOffsetEffect` hook exported from `@mantine/carousel` package.
+It accepts embla instance as first argument and transition duration as second:
+
+<Demo data={CarouselDemos.animationOffset} />

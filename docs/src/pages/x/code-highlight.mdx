@@ -1,0 +1,66 @@
+import { CodeHighlightDemos } from '@docs/demos';
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.CodeHighlight);
+
+## Installation
+
+<InstallScript packages="@mantine/code-highlight" />
+
+After installation import package styles at the root of your application:
+
+```tsx
+import '@mantine/code-highlight/styles.css';
+```
+
+## Usage
+
+`CodeHighlight` highlight given code with [highlight.js](https://highlightjs.org/), it accepts
+`code` prop with string of code to highlight and `language` prop with language name.
+If `language` is not provided, `CodeHighlight` will assume that the code language is `tsx` (TypeScript).
+
+<Demo data={CodeHighlightDemos.usage} />
+
+## Copy button
+
+You can customize copy button labels with `copyLabel` and `copiedLabel` props.
+In case you need to remove the copy button, set `withCopyButton={false}`.
+
+<Demo data={CodeHighlightDemos.copy} />
+
+## With tabs
+
+`CodeHighlightTabs` component allows organizing multiple code blocks into tabs:
+
+<Demo data={CodeHighlightDemos.tabs} />
+
+## Tabs with icons
+
+You can use any React node as tab icon. The example below uses TypeScript and CSS
+icons from the `@mantinex/dev-icons` package, but you can use any other icons library or custom
+icons:
+
+<Demo data={CodeHighlightDemos.tabsIcons} />
+
+## Tabs icons based on file name
+
+As an alternative to providing icons manually for each tab, you can use `getFileIcon` prop
+to assign icons based on file name. `getFileIcon` accepts file name and must React node
+or `null`.
+
+<Demo data={CodeHighlightDemos.tabsGetIcons} />
+
+## Expandable code
+
+If the code snippet is too long, you can make it expandable with `withExpandButton`
+and `defaultExpanded={false}` props. To change label of the expand/collapse control
+tooltip, use `expandCodeLabel` and `collapseCodeLabel`.
+
+<Demo data={CodeHighlightDemos.expand} />
+
+## Inline code
+
+`InlineCodeHighlight` component allows highlighting inline code snippets:
+
+<Demo data={CodeHighlightDemos.inline} />

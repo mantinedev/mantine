@@ -2,7 +2,7 @@
   "name": "@mantine/nprogress",
   "version": "7.3.1",
   "description": "Navigation progress bar",
-  "homepage": "https://mantine.dev/others/nprogress/",
+  "homepage": "https://mantine.dev/x/nprogress/",
   "license": "MIT",
   "author": "Vitaly Rtishchev <rtivital@gmail.com>",
   "keywords": [

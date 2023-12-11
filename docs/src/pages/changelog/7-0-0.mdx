@@ -446,7 +446,7 @@ all props now work the same way as [style props](/styles/style-props).
 
 ## Spotlight changes
 
-[Spotlight](/others/spotlight) changes:
+[Spotlight](/x/spotlight) changes:
 
 - The logic is no longer based on React context
 - `SpotlightProvider` was renamed to `Spotlight`
@@ -459,14 +459,14 @@ all props now work the same way as [style props](/styles/style-props).
 
 ## Carousel changes
 
-[Carousel](/others/carousel) now uses object format for responsive values in
+[Carousel](/x/carousel) now uses object format for responsive values in
 `slideSize` and `slideGap` props instead of `breakpoints` prop:
 
 <Demo data={CarouselDemos.breakpoints} />
 
 ## @mantine/prism deprecation
 
-`@mantine/prism` package was deprecated in favor of `@mantine/code-highlight` package. [The new package](/others/code-highlight) uses [highlight.js](https://highlightjs.org/) instead of [Prism](https://prismjs.com/).
+`@mantine/prism` package was deprecated in favor of `@mantine/code-highlight` package. [The new package](/x/code-highlight) uses [highlight.js](https://highlightjs.org/) instead of [Prism](https://prismjs.com/).
 
 <Demo data={CodeHighlightDemos.tabsGetIcons} />
 
@@ -520,7 +520,7 @@ viewport width is less than or greater than the specified breakpoint:
 - [DatesProvider](/dates/dates-provider) now supports setting timezone
 - All transitions are now disabled during color scheme change
 - `theme.respectReducedMotion` is now set to `false` by default – it caused a lot of confusion for users who did not know about it
-- [Notifications system](/others/notifications) now exports `notifications.updateState` function to update notifications state with a given callback
+- [Notifications system](/x/notifications) now exports `notifications.updateState` function to update notifications state with a given callback
 - [Blockquote](/core/blockquote) component has new design
 - [Breadcrumbs](/core/breadcrumbs) component now supports `separatorMargin` prop
 - [Tooltip](/core/tooltip) component now supports `mainAxis` and `crossAxis` offset configuration
@@ -554,6 +554,6 @@ viewport width is less than or greater than the specified breakpoint:
 - [Stepper](/core/stepper) no longer supports `breakpoint` prop, you can apply responsive styles with Styles API
 - [ColorInput](/core/color-input) no longer supports `dropdownZIndex`, `transitionProps`, `withinPortal`, `portalProps` and `shadow` props, you can now pass these props with `popoverProps` prop
 - [LoadingOverlay](/core/loading-overlay) props are now grouped by the component they are passed down to: `overlayProps`, `loaderProps` and `transitionProps` now replace props that were previously passed to `LoadingOverlay` directly
-- [Dropzone](/others/dropzone) component no longer supports `padding` prop, use `p` style prop instead
+- [Dropzone](/x/dropzone) component no longer supports `padding` prop, use `p` style prop instead
 - [Dialog](/core/dialog) component now supports all [Paper](/core/paper) and [Affix](/core/affix) props, `transitionDuration`, `transition` and other transition related props were replaced with `transitionProps`
 - [Checkbox](/core/checkbox), [Radio](/core/radio), [Chip](/core/chip) and [Switch](/core/switch) components now support `rootRef` prop which allows using them with [Tooltip](/core/tooltip) and other similar components

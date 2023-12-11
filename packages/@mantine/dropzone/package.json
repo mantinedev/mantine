@@ -2,7 +2,7 @@
   "name": "@mantine/dropzone",
   "version": "7.3.1",
   "description": "Dropzone component built with Mantine theme and components",
-  "homepage": "https://mantine.dev/others/dropzone/",
+  "homepage": "https://mantine.dev/x/dropzone/",
   "license": "MIT",
   "author": "Vitaly Rtishchev <rtivital@gmail.com>",
   "keywords": [
