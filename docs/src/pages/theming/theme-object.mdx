@@ -208,7 +208,8 @@ in the following components:
 `autoContrast` checks whether the given color luminosity is above or below the `luminanceThreshold` value
 and changes text color to either `theme.white` or `theme.black` accordingly.
 
-`autoContrast` can be set globally on the theme level or individually for each component via `autoContrast` prop.
+`autoContrast` can be set globally on the theme level or individually for each component via `autoContrast` prop,
+except for [Spotlight](/others/spotlight) and [@mantine/dates](/dates/getting-started) components which only support global theme setting.
 
 <Demo data={ThemingDemos.autoContrast} />
 
