@@ -65,6 +65,7 @@
     "@tiptap/extension-code-block-lowlight": "^2.1.12",
     "@tiptap/extension-color": "^2.1.12",
     "@tiptap/extension-highlight": "^2.1.12",
+    "@tiptap/extension-history": "^2.1.13",
     "@tiptap/extension-link": "^2.1.12",
     "@tiptap/extension-placeholder": "^2.1.12",
     "@tiptap/extension-subscript": "^2.1.12",

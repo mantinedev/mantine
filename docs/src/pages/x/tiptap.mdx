@@ -57,6 +57,8 @@ Included with `@tiptap/starter-kit` (should be installed by default):
 - `RichTextEditor.Code`
 - `RichTextEditor.CodeBlock`
 - `RichTextEditor.Hr`
+- `RichTextEditor.Undo`
+- `RichTextEditor.Redo`
 
 Controls that require [@tiptap/extension-link](https://www.npmjs.com/package/@tiptap/extension-link) extension:
 
@@ -364,8 +366,14 @@ export interface RichTextEditorLabels {
   /** RichTextEditor.Highlight control aria-label */
   highlightControlLabel: string;
 
+  /** RichTextEditor.Undo control aria-label */
+  undoControlLabel: string;
+
+  /** RichTextEditor.Redo control aria-label */
+  redoControlLabel: string;
+
   /** A function go get RichTextEditor.Color control aria-label based on color that control applies */
-  colorControlLabel(color: string): string;
+  colorControlLabel: (color: string) => string;
 
   /** aria-label for link editor url input */
   linkEditorInputLabel: string;
@@ -398,7 +406,7 @@ export interface RichTextEditorLabels {
   colorPickerSave: string;
 
   /** aria-label for color palette colors */
-  colorPickerColorLabel(color: string): string;
+  colorPickerColorLabel: (color: string) => string;
 }
 ```
 

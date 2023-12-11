@@ -165,6 +165,12 @@
   border-radius: var(--mantine-radius-default);
   cursor: var(--_control-cursor, default);
 
+  &[data-disabled] {
+    cursor: not-allowed;
+    background-color: var(--mantine-color-gray-1);
+    color: var(--mantine-color-gray-5);
+  }
+
   &[data-interactive] {
     --_control-cursor: pointer;
 

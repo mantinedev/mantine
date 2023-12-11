@@ -4,6 +4,8 @@ import {
   IconAlignJustified,
   IconAlignLeft,
   IconAlignRight,
+  IconArrowBackUp,
+  IconArrowForwardUp,
   IconBlockquote,
   IconBold,
   IconCircleOff,
@@ -200,4 +202,18 @@ export const UnsetColorControl = createControl({
   label: 'unsetColorControlLabel',
   icon: (props) => <IconCircleOff {...props} />,
   operation: { name: 'unsetColor' },
+});
+
+export const UndoControl = createControl({
+  label: 'undoControlLabel',
+  icon: (props) => <IconArrowBackUp {...props} />,
+  isDisabled: (editor) => !editor?.can().undo(),
+  operation: { name: 'undo' },
+});
+
+export const RedoControl = createControl({
+  label: 'redoControlLabel',
+  icon: (props) => <IconArrowForwardUp {...props} />,
+  isDisabled: (editor) => !editor?.can().redo(),
+  operation: { name: 'redo' },
 });

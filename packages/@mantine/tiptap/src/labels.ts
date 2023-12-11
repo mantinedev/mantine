@@ -83,6 +83,12 @@ export interface RichTextEditorLabels {
   /** RichTextEditor.Highlight control aria-label */
   highlightControlLabel: string;
 
+  /** RichTextEditor.Undo control aria-label */
+  undoControlLabel: string;
+
+  /** RichTextEditor.Redo control aria-label */
+  redoControlLabel: string;
+
   /** A function go get RichTextEditor.Color control aria-label based on color that control applies */
   colorControlLabel: (color: string) => string;
 
@@ -151,6 +157,8 @@ export const DEFAULT_LABELS: RichTextEditorLabels = {
   superscriptControlLabel: 'Superscript',
   unsetColorControlLabel: 'Unset color',
   hrControlLabel: 'Horizontal line',
+  undoControlLabel: 'Undo',
+  redoControlLabel: 'Redo',
 
   // Link editor
   linkEditorInputLabel: 'Enter URL',

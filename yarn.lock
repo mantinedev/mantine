@@ -7147,6 +7147,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@tiptap/extension-history@npm:^2.1.13":
+  version: 2.1.13
+  resolution: "@tiptap/extension-history@npm:2.1.13"
+  peerDependencies:
+    "@tiptap/core": ^2.0.0
+    "@tiptap/pm": ^2.0.0
+  checksum: 81ba0e1e1c075406ccb026515339866148beab173ca5c666e76627936202e0d96cde409e084db426d2207ca8fdb48f03fc3ad684107de391c96295c73db91e85
+  languageName: node
+  linkType: hard
+
 "@tiptap/extension-horizontal-rule@npm:^2.1.12":
   version: 2.1.12
   resolution: "@tiptap/extension-horizontal-rule@npm:2.1.12"
@@ -16909,6 +16919,7 @@ __metadata:
     "@tiptap/extension-code-block-lowlight": "npm:^2.1.12"
     "@tiptap/extension-color": "npm:^2.1.12"
     "@tiptap/extension-highlight": "npm:^2.1.12"
+    "@tiptap/extension-history": "npm:^2.1.13"
     "@tiptap/extension-link": "npm:^2.1.12"
     "@tiptap/extension-placeholder": "npm:^2.1.12"
     "@tiptap/extension-subscript": "npm:^2.1.12"

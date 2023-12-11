@@ -90,6 +90,8 @@ export type RichTextEditorFactory = Factory<{
     Highlight: typeof controls.HighlightControl;
     Hr: typeof controls.HrControl;
     UnsetColor: typeof controls.UnsetColorControl;
+    Undo: typeof controls.UndoControl;
+    Redo: typeof controls.RedoControl;
   };
 }>;
 
@@ -186,3 +188,5 @@ RichTextEditor.Color = controls.RichTextEditorColorControl;
 RichTextEditor.Highlight = controls.HighlightControl;
 RichTextEditor.Hr = controls.HrControl;
 RichTextEditor.UnsetColor = controls.UnsetColorControl;
+RichTextEditor.Undo = controls.UndoControl;
+RichTextEditor.Redo = controls.RedoControl;

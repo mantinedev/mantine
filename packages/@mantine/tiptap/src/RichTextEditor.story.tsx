@@ -113,6 +113,11 @@ function BasicEditor({
           </RichTextEditor.ControlsGroup>
 
           <RichTextEditor.ControlsGroup>
+            <RichTextEditor.Undo />
+            <RichTextEditor.Redo />
+          </RichTextEditor.ControlsGroup>
+
+          <RichTextEditor.ControlsGroup>
             <RichTextEditor.AlignLeft />
             <RichTextEditor.AlignCenter />
             <RichTextEditor.AlignJustify />
