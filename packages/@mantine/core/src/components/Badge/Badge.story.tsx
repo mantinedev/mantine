@@ -12,6 +12,16 @@ export function Usage() {
   );
 }
 
+export function Round() {
+  return (
+    <div style={{ padding: 40 }}>
+      <Badge circle size="md">
+        12
+      </Badge>
+    </div>
+  );
+}
+
 export function AutoContrast() {
   const buttons = Array(10)
     .fill(0)

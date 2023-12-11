@@ -45,6 +45,9 @@ export interface BadgeProps extends BoxProps, StylesApiProps<BadgeFactory> {
   /** Controls `font-size`, `height` and horizontal `padding`, `'md'` by default */
   size?: MantineSize | (string & {});
 
+  /** If set, badge `min-width` becomes equal to its `height` and horizontal padding is removed */
+  circle?: boolean;
+
   /** Key of `theme.radius` or any valid CSS value to set `border-radius`, `'xl'` by default */
   radius?: MantineRadius;
 
@@ -124,6 +127,7 @@ export const Badge = polymorphicFactory<BadgeFactory>((_props, ref) => {
     variant,
     fullWidth,
     autoContrast,
+    circle,
     ...others
   } = props;
 
@@ -143,7 +147,7 @@ export const Badge = polymorphicFactory<BadgeFactory>((_props, ref) => {
   return (
     <Box
       variant={variant}
-      mod={{ block: fullWidth }}
+      mod={{ block: fullWidth, circle }}
       {...getStyles('root', { variant })}
       ref={ref}
       {...others}

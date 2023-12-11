@@ -27,3 +27,8 @@ export const DemoStylesApi = {
   name: '⭐ Demo: stylesApi',
   render: renderDemo(demos.stylesApi),
 };
+
+export const DemoRounded = {
+  name: '⭐ Demo: rounded',
+  render: renderDemo(demos.rounded),
+};

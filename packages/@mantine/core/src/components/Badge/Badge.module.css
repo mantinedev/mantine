@@ -47,6 +47,11 @@
     --_badge-display: flex;
     --_badge-width: 100%;
   }
+
+  &[data-circle] {
+    --_badge-width: var(--badge-height);
+    --badge-padding-x: rem(2px) !important;
+  }
 }
 
 .root--dot {
