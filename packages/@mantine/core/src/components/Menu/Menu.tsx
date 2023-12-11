@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useDidUpdate, useUncontrolled } from '@mantine/hooks';
 import {
   ExtendComponent,
@@ -141,9 +141,11 @@ export function Menu(_props: MenuProps) {
     finalValue: false,
     onChange,
   });
+  const [openedViaClick, setOpenedViaClick] = useState(false);
 
   const close = () => {
     setOpened(false);
+    setOpenedViaClick(false);
     _opened && onClose?.();
   };
 
@@ -180,6 +182,8 @@ export function Menu(_props: MenuProps) {
         getItemIndex,
         hovered,
         setHovered,
+        openedViaClick,
+        setOpenedViaClick,
         closeOnItemClick,
         closeDropdown: trigger === 'click' ? close : closeDropdown,
         openDropdown: trigger === 'click' ? open : openDropdown,
