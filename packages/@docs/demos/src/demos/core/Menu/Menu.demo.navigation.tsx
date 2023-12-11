@@ -7,10 +7,9 @@ const code = `
 import { Group, Menu } from '@mantine/core';
 
 function Demo() {
-  const navMenus = 4;
   return (
     <Group>
-      {[...Array(navMenus)].map((e, i) => (
+      {Array(4).fill(0).map((e, i) => (
         <Menu
           key={i}
           trigger="click-hover"
@@ -19,7 +18,7 @@ function Demo() {
           trapFocus={false}
           menuItemTabIndex={0}
         >
-          {/* ... menu items */}
+          <DemoMenuItems />
         </Menu>
       ))}
     </Group>
@@ -28,10 +27,9 @@ function Demo() {
 `;
 
 function Demo() {
-  const navMenus = 4;
   return (
     <Group>
-      {[...Array(navMenus)].map((e, i) => (
+      {Array(4).fill(0).map((e, i) => (
         <Menu
           key={i}
           trigger="click-hover"
