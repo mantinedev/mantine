@@ -30,7 +30,7 @@ export function zodResolver<T extends Record<string, any>>(schema: ZodSchema<T>)
 
     const results: Record<string, any> = {};
 
-    (parsed as ZodParseError).error.errors.forEach((error) => {
+    (parsed as ZodParseError).error.errors.toReversed().forEach((error) => {
       results[error.path.join('.')] = error.message;
     });
 
