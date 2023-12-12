@@ -50,6 +50,9 @@ export interface __InputWrapperProps {
   /** Contents of `Input.Description` component, if not set, description is not rendered. */
   description?: React.ReactNode;
 
+  /** Contents of `Input.Placeholder` component, if not set, placeholder is not rendered. */
+  placeholder?: React.ReactNode;
+
   /** Contents of `Input.Error` component, if not set, error is not rendered. */
   error?: React.ReactNode;
 
