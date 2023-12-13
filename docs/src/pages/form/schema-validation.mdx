@@ -441,13 +441,22 @@ Basic fields validation:
 
 ```tsx
 import { valibotResolver } from 'mantine-form-valibot-resolver';
-import { object, string, minLength, email, number, minValue } from "valibot";
+import {
+  email,
+  minLength,
+  minValue,
+  number,
+  object,
+  string,
+} from 'valibot';
 import { useForm } from '@mantine/form';
 
 const schema = object({
-  name: string([minLength(2, "Name should have at least 2 letters")]),
-  email: string([email("Invalid email")]),
-  age: number([minValue(18, "You must be at least 18 to create an account")]),
+  name: string([minLength(2, 'Name should have at least 2 letters')]),
+  email: string([email('Invalid email')]),
+  age: number([
+    minValue(18, 'You must be at least 18 to create an account'),
+  ]),
 });
 
 const form = useForm({
@@ -472,12 +481,14 @@ Nested fields validation
 
 ```tsx
 import { valibotResolver } from 'mantine-form-valibot-resolver';
-import { object, string, minLength } from "valibot";
+import { minLength, object, string } from 'valibot';
 import { useForm } from '@mantine/form';
 
 const nestedSchema = object({
   nested: object({
-    field: string([minLength(2, "Field should have at least 2 letters")]),
+    field: string([
+      minLength(2, 'Field should have at least 2 letters'),
+    ]),
   }),
 });
 
@@ -501,13 +512,15 @@ List fields validation:
 
 ```tsx
 import { valibotResolver } from 'mantine-form-valibot-resolver';
-import { object, array, string, minLength } from "valibot";
+import { array, minLength, object, string } from 'valibot';
 import { useForm } from '@mantine/form';
 
 const listSchema = object({
   list: array(
     object({
-      name: string([minLength(2, "Name should have at least 2 letters")]),
+      name: string([
+        minLength(2, 'Name should have at least 2 letters'),
+      ]),
     })
   ),
 });
