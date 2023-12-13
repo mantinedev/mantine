@@ -11,6 +11,7 @@ export default Layout(MDX_DATA.formSchemaValidation);
 - [joi](https://www.npmjs.com/package/joi)
 - [yup](https://www.npmjs.com/package/yup)
 - [superstruct](https://www.npmjs.com/package/superstruct)
+- [valibot](https://www.npmjs.com/package/valibot)
 
 You need to install one of the libraries yourself, `@mantine/form` package does not depend on any of them.
 If you do not know what schema validation library to choose, use [zod](https://www.npmjs.com/package/zod),
@@ -427,5 +428,100 @@ form.validate();
 form.errors;
 // -> {
 //  'list 0 name: Expected a string with a length between `2` and `30` but received one with a length of `0`',
+// }
+```
+
+## valibot
+
+Installation:
+
+<InstallScript packages="valibot mantine-form-valibot-resolver" />
+
+Basic fields validation:
+
+```tsx
+import { valibotResolver } from 'mantine-form-valibot-resolver';
+import { object, string, minLength, email, number, minValue } from "valibot";
+import { useForm } from '@mantine/form';
+
+const schema = object({
+  name: string([minLength(2, "Name should have at least 2 letters")]),
+  email: string([email("Invalid email")]),
+  age: number([minValue(18, "You must be at least 18 to create an account")]),
+});
+
+const form = useForm({
+  initialValues: {
+    name: '',
+    email: '',
+    age: 16,
+  },
+  validate: valibotResolver(schema),
+});
+
+form.validate();
+form.errors;
+// -> {
+//  name: 'Name should have at least 2 letters',
+//  email: 'Invalid email',
+//  age: 'You must be at least 18 to create an account'
+// }
+```
+
+Nested fields validation
+
+```tsx
+import { valibotResolver } from 'mantine-form-valibot-resolver';
+import { object, string, minLength } from "valibot";
+import { useForm } from '@mantine/form';
+
+const nestedSchema = object({
+  nested: object({
+    field: string([minLength(2, "Field should have at least 2 letters")]),
+  }),
+});
+
+const form = useForm({
+  initialValues: {
+    nested: {
+      field: '',
+    },
+  },
+  validate: valibotResolver(nestedSchema),
+});
+
+form.validate();
+form.errors;
+// -> {
+//  'nested.field': 'Field should have at least 2 letters',
+// }
+```
+
+List fields validation:
+
+```tsx
+import { valibotResolver } from 'mantine-form-valibot-resolver';
+import { object, array, string, minLength } from "valibot";
+import { useForm } from '@mantine/form';
+
+const listSchema = object({
+  list: array(
+    object({
+      name: string([minLength(2, "Name should have at least 2 letters")]),
+    })
+  ),
+});
+
+const form = useForm({
+  initialValues: {
+    list: [{ name: '' }],
+  },
+  validate: valibotResolver(listSchema),
+});
+
+form.validate();
+form.errors;
+// -> {
+//  'list.0.name': 'Name should have at least 2 letters',
 // }
 ```
