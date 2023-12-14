@@ -90,6 +90,114 @@ CSS variables for primary color are now available, you can use the following var
 --mantine-primary-color-light-color
 ```
 
+## valibot form resolver
+
+`@mantine/form` now supports [validbot schema resolver](https://www.npmjs.com/package/mantine-form-valibot-resolver):
+
+<InstallScript packages="valibot mantine-form-valibot-resolver" />
+
+Basic fields validation:
+
+```tsx
+import { valibotResolver } from 'mantine-form-valibot-resolver';
+import {
+  email,
+  minLength,
+  minValue,
+  number,
+  object,
+  string,
+} from 'valibot';
+import { useForm } from '@mantine/form';
+
+const schema = object({
+  name: string([minLength(2, 'Name should have at least 2 letters')]),
+  email: string([email('Invalid email')]),
+  age: number([
+    minValue(18, 'You must be at least 18 to create an account'),
+  ]),
+});
+
+const form = useForm({
+  initialValues: {
+    name: '',
+    email: '',
+    age: 16,
+  },
+  validate: valibotResolver(schema),
+});
+
+form.validate();
+form.errors;
+// -> {
+//  name: 'Name should have at least 2 letters',
+//  email: 'Invalid email',
+//  age: 'You must be at least 18 to create an account'
+// }
+```
+
+Nested fields validation
+
+```tsx
+import { valibotResolver } from 'mantine-form-valibot-resolver';
+import { minLength, object, string } from 'valibot';
+import { useForm } from '@mantine/form';
+
+const nestedSchema = object({
+  nested: object({
+    field: string([
+      minLength(2, 'Field should have at least 2 letters'),
+    ]),
+  }),
+});
+
+const form = useForm({
+  initialValues: {
+    nested: {
+      field: '',
+    },
+  },
+  validate: valibotResolver(nestedSchema),
+});
+
+form.validate();
+form.errors;
+// -> {
+//  'nested.field': 'Field should have at least 2 letters',
+// }
+```
+
+List fields validation:
+
+```tsx
+import { valibotResolver } from 'mantine-form-valibot-resolver';
+import { array, minLength, object, string } from 'valibot';
+import { useForm } from '@mantine/form';
+
+const listSchema = object({
+  list: array(
+    object({
+      name: string([
+        minLength(2, 'Name should have at least 2 letters'),
+      ]),
+    })
+  ),
+});
+
+const form = useForm({
+  initialValues: {
+    list: [{ name: '' }],
+  },
+  validate: valibotResolver(listSchema),
+});
+
+form.validate();
+form.errors;
+// -> {
+//  'list.0.name': 'Name should have at least 2 letters',
+// }
+```
+
 ## Other changes
 
 - [RichTextEditor](/x/tiptap) no longer depends on `@tabler/icons` package. It is no longer required to install `@tabler/icons` package to use `RichTextEditor` component. Icons used in the editor are now a part of the `@mantine/tiptap` package. This change improves bundling performance in several cases (mostly when using `RichTextEditor` in Next.js apps).
