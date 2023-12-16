@@ -117,3 +117,8 @@ export const DemoValidatorsEmpty = {
   name: '⭐ Demo: validatorsEmpty',
   render: renderDemo(demos.validatorsEmpty),
 };
+
+export const DemoInitialize = {
+  name: '⭐ Demo: initialize',
+  render: renderDemo(demos.initialize),
+};
