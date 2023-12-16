@@ -83,6 +83,7 @@ export const MDX_PAGES_GROUPS: MdxPagesGroup[] = [
           MDX_DATA.useViewportSize,
           MDX_DATA.useWindowEvent,
           MDX_DATA.useWindowScroll,
+          MDX_DATA.useInViewport,
         ],
       },
 
