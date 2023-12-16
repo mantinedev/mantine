@@ -19,7 +19,7 @@ export const light = {
     'banner.iconForeground': '#fff',
     'breadcrumb.activeSelectionForeground': '#25262B',
     'breadcrumb.background': '#EBEEF5',
-    'breadcrumb.foreground': '#8E8E90',
+    'breadcrumb.foreground': '#444444',
     'breadcrumb.focusForeground': '#25262B',
     'breadcrumbPicker.background': '#E5E8EF',
     'button.background': '#25262BE5',
@@ -47,7 +47,7 @@ export const light = {
     'commandCenter.border': '#EBEEF5',
     'commandCenter.foreground': '#25262B',
     'commandCenter.inactiveBorder': '#EBEEF5',
-    'commandCenter.inactiveForeground': '#8E8E90',
+    'commandCenter.inactiveForeground': '#444444',
     'debugConsole.errorForeground': '#EC0000',
     'debugConsole.infoForeground': '#4480F4',
     'debugConsole.warningForeground': '#FF6D12',
@@ -154,7 +154,7 @@ export const light = {
     'editorRuler.foreground': '#B3B3B4',
     'editorSuggestWidget.background': '#F1F4FB',
     'editorSuggestWidget.border': '#CED1D7',
-    'editorSuggestWidget.foreground': '#8E8E90',
+    'editorSuggestWidget.foreground': '#444444',
     'editorSuggestWidget.highlightForeground': '#598DEF',
     'editorSuggestWidget.selectedBackground': '#0065FF33',
     'editorUnnecessaryCode.border': '#A9A9AA',
@@ -378,7 +378,7 @@ export const light = {
     'symbolIcon.objectForeground': '#25262B',
     'symbolIcon.operatorForeground': '#1098AD',
     'symbolIcon.packageForeground': '#CD6069',
-    'symbolIcon.propertyForeground': '#888888',
+    'symbolIcon.propertyForeground': '#444444',
     'symbolIcon.snippetForeground': '#7C4DFF',
     'symbolIcon.stringForeground': '#53A053',
     'symbolIcon.structForeground': '#1098AD',
@@ -396,7 +396,7 @@ export const light = {
     'tab.hoverBorder': '#0065FF00',
     'tab.hoverForeground': '#25262B',
     'tab.inactiveBackground': '#E1E4EB',
-    'tab.inactiveForeground': '#8E8E90',
+    'tab.inactiveForeground': '#444444',
     'tab.inactiveModifiedBorder': '#7C4DFF',
     'tab.unfocusedActiveBackground': '#EBEEF5',
     'tab.unfocusedActiveBorder': '#EBEEF500',
@@ -406,7 +406,7 @@ export const light = {
     'tab.unfocusedHoverBackground': '#0065FF33',
     'tab.unfocusedHoverBorder': '#0065FF00',
     'tab.unfocusedHoverForeground': '#25262B',
-    'tab.unfocusedInactiveForeground': '#8E8E90',
+    'tab.unfocusedInactiveForeground': '#444444',
     'tab.unfocusedInactiveModifiedBorder': '#7C4DFF',
     'terminal.ansiBlack': '#fff',
     'terminal.ansiBlue': '#4480F4',
@@ -444,7 +444,7 @@ export const light = {
     'titleBar.activeForeground': '#626264',
     'titleBar.border': '#EBEEF500',
     'titleBar.inactiveBackground': '#EBEEF5',
-    'titleBar.inactiveForeground': '#8E8E90',
+    'titleBar.inactiveForeground': '#444444',
     'toolbar.hoverBackground': '#0065FF3F',
     'toolbar.hoverOutline': '#0065FF00',
     'toolbar.activeBackground': '#0065FF3F',
@@ -731,7 +731,7 @@ export const light = {
         'support.type.property-name.css,support.type.vendored.property-name.css,meta.at-rule.each.scss support.constant.property-value.css,source.css.scss,meta.text.normal.tex,meta.function.environment.frame.latex,meta.tag meta.attribute entity.name.label,',
       settings: {
         fontStyle: '',
-        foreground: '#888888',
+        foreground: '#444444',
       },
     },
 
@@ -739,7 +739,7 @@ export const light = {
       scope: 'constant.character.escape,constant.character.entity',
       settings: {
         fontStyle: '',
-        foreground: '#888888',
+        foreground: '#444444',
       },
     },
 
@@ -748,7 +748,7 @@ export const light = {
         'meta.brace.round.css,punctuation.section.property-list.begin.bracket.curly.css,punctuation.section.property-list.end.bracket.curly.css,punctuation.section.function.begin.bracket.round.css,punctuation.section.function.end.bracket.round.css,punctuation.section.media.begin.bracket.curly.css,punctuation.section.media.end.bracket.curly.css,punctuation.definition.parameters.begin.bracket.round.css,punctuation.definition.parameters.end.bracket.round.css,punctuation.section.keyframes.begin.bracket.curly.css,punctuation.section.keyframes.end.bracket.curly.css,punctuation.definition.entity.end.bracket.square.css,punctuation.definition.entity.begin.bracket.square.css,punctuation.section.property-list.begin.bracket.curly.scss,punctuation.section.property-list.end.bracket.curly.scss,punctuation.section.function.scss,punctuation.definition.attribute-selector.begin.bracket.square.scss,punctuation.definition.attribute-selector.end.bracket.square.scss,punctuation.definition.pseudo-class.begin.bracket.round.css,punctuation.definition.pseudo-class.end.bracket.round.css,punctuation.definition.begin.entity.css,punctuation.definition.end.entity.css,',
       settings: {
         fontStyle: '',
-        foreground: '#888888D9',
+        foreground: '#444444D9',
       },
     },
 
@@ -756,7 +756,7 @@ export const light = {
       scope: 'variable.parameter.url.scss,',
       settings: {
         fontStyle: '',
-        foreground: '#8E8E90',
+        foreground: '#444444',
       },
     },
 
@@ -765,7 +765,7 @@ export const light = {
         'keyword.operator.range,punctuation.separator.key-value,keyword.operator.type.annotation,punctuation.definition.section.case-statement,punctuation.separator.colon,punctuation.separator.other,punctuation.definition.parameters,punctuation.definition.constant.ruby,punctuation.separator.dictionary.key-value,punctuation.section.function.begin.python,meta.property-list.css.sass,sass-script-maps,punctuation.colon,punctuation.separator.initializers,keyword.operator.key-value,punctuation.separator.label,keyword.operator.colon,punctuation.separator.annotation.python,source.ts.embedded.html meta.block.ts,keyword.operator.key.php,keyword.operator.arrow.julia,keyword.operator.ternary.dart,meta.property-list.css punctuation.separator.key-value.css,source.css.embedded.html punctuation.separator.key-value.css,',
       settings: {
         fontStyle: '',
-        foreground: '#8E8E90',
+        foreground: '#444444',
       },
     },
     {
@@ -773,7 +773,7 @@ export const light = {
         'invalid.illegal,invalid.illegal.expected-dictionary-separator.json,invalid.broken,invalid.deprecated,',
       settings: {
         fontStyle: '',
-        foreground: '#8E8E90',
+        foreground: '#444444',
       },
     },
     {

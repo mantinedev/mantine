@@ -214,6 +214,30 @@ Note that `light-dark` function does not work on `:root`/`html` element. Use `li
 }
 ```
 
+## alpha function
+
+`alpha` function can be used to add alpha channel to color. Note that it uses [color-mix](https://caniuse.com/mdn-css_types_color_color-mix) which is not supported in some older browsers.
+
+```scss
+.demo {
+  color: alpha(var(--mantine-color-red-4), 0.5);
+  border: 1px solid alpha(#ffc, 0.2);
+}
+```
+
+Will be transformed to:
+
+```scss
+.demo {
+  color: color-mix(
+    in srgb,
+    var(--mantine-color-red-4),
+    transparent 50%
+  );
+  border: 1px solid color-mix(in srgb, #ffc, transparent 80%);
+}
+```
+
 ## hover mixin
 
 `hover` mixin can be used to create styles that will be applied on hover.

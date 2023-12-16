@@ -7,7 +7,7 @@ import {
 import { Layout } from '@/layout';
 import { MDX_DATA } from '@/mdx';
 
-export default Layout(MDX_DATA.Changelog730);
+export default Layout(MDX_DATA.Changelog740);
 
 ## OKLCH colors support
 
@@ -54,6 +54,33 @@ except for [Spotlight](/x/spotlight) and [@mantine/dates](/dates/getting-started
 and changes text color to either `theme.white` or `theme.black` accordingly:
 
 <Demo data={ThemingDemos.luminanceThreshold} />
+
+## alpha function
+
+`alpha` function can be used to add alpha channel to color. Note that it uses [color-mix](https://caniuse.com/mdn-css_types_color_color-mix) which is not supported in some older browsers.
+
+`alpha` function example in CSS with [postcss-preset-mantine](/styles/postcss-preset) (requires version 1.12.0 or higher):
+
+```scss
+.demo {
+  color: alpha(var(--mantine-color-red-4), 0.5);
+  border: 1px solid alpha(#ffc, 0.2);
+}
+```
+
+Will be transformed to:
+
+```scss
+// test comment
+.demo {
+  color: color-mix(
+    in srgb,
+    var(--mantine-color-red-4),
+    transparent 50%
+  );
+  border: 1px solid color-mix(in srgb, #ffc, transparent 80%);
+}
+```
 
 ## enhanceGetInputProps
 
