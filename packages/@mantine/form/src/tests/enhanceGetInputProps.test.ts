@@ -6,7 +6,7 @@ describe('@mantine/form/enhanceGetInputProps', () => {
     const hook = renderHook(() =>
       useForm({
         initialValues: { fruit: 'banana', vegetable: 'carrot' },
-        enhanceGetInputProps: (field) => {
+        enhanceGetInputProps: ({ field }) => {
           if (field === 'fruit') {
             return { value: 'apple' };
           }
@@ -64,7 +64,7 @@ describe('@mantine/form/enhanceGetInputProps', () => {
     const hook = renderHook(() =>
       useForm({
         initialValues: { fruit: 'banana', vegetable: 'carrot' },
-        enhanceGetInputProps: (_field, _options, form) => ({
+        enhanceGetInputProps: ({ form }) => ({
           readOnly: !form.initialized,
         }),
       })
@@ -118,7 +118,7 @@ describe('@mantine/form/enhanceGetInputProps', () => {
     const hook = renderHook(() =>
       useForm({
         initialValues: { fruit: 'banana', vegetable: 'carrot' },
-        enhanceGetInputProps: (_field, options) => ({
+        enhanceGetInputProps: ({ options }) => ({
           readOnly: options.readOnly,
         }),
       })
@@ -137,6 +137,35 @@ describe('@mantine/form/enhanceGetInputProps', () => {
       value: 'carrot',
       error: undefined,
       readOnly: true,
+      onBlur: expect.any(Function),
+      onChange: expect.any(Function),
+      onFocus: expect.any(Function),
+    });
+  });
+
+  it('allows referencing inputProps in enhanceGetInputProps', () => {
+    const hook = renderHook(() =>
+      useForm({
+        initialValues: { fruit: 'banana', vegetable: 'carrot' },
+        enhanceGetInputProps: ({ inputProps }) => ({
+          readOnly: inputProps.value === 'banana',
+        }),
+      })
+    );
+
+    expect(hook.result.current.getInputProps('fruit')).toStrictEqual({
+      value: 'banana',
+      error: undefined,
+      readOnly: true,
+      onBlur: expect.any(Function),
+      onChange: expect.any(Function),
+      onFocus: expect.any(Function),
+    });
+
+    expect(hook.result.current.getInputProps('vegetable', { readOnly: true })).toStrictEqual({
+      value: 'carrot',
+      error: undefined,
+      readOnly: false,
       onBlur: expect.any(Function),
       onChange: expect.any(Function),
       onFocus: expect.any(Function),

@@ -122,3 +122,18 @@ export const DemoInitialize = {
   name: '⭐ Demo: initialize',
   render: renderDemo(demos.initialize),
 };
+
+export const DemoEnhanceGetInputProps = {
+  name: '⭐ Demo: enhanceGetInputProps',
+  render: renderDemo(demos.enhanceGetInputProps),
+};
+
+export const DemoEnhanceGetInputPropsOptions = {
+  name: '⭐ Demo: enhanceGetInputPropsOptions',
+  render: renderDemo(demos.enhanceGetInputPropsOptions),
+};
+
+export const DemoEnhanceGetInputPropsForm = {
+  name: '⭐ Demo: enhanceGetInputPropsForm',
+  render: renderDemo(demos.enhanceGetInputPropsForm),
+};

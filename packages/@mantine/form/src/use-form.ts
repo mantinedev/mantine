@@ -207,8 +207,6 @@ export function useForm<
     path,
     { type = 'input', withError = true, withFocus = true, ...otherOptions } = {}
   ) => {
-    const enhancedProps =
-      enhanceGetInputProps?.(path, { type, withError, withFocus, ...otherOptions }, form) || {};
     const onChange = getInputOnChange((value) => setFieldValue(path, value as any));
     const payload: any = { onChange };
 
@@ -235,7 +233,15 @@ export function useForm<
       };
     }
 
-    return { ...payload, ...enhancedProps };
+    return Object.assign(
+      payload,
+      enhanceGetInputProps?.({
+        inputProps: payload,
+        field: path,
+        options: { type, withError, withFocus, ...otherOptions },
+        form,
+      })
+    );
   };
 
   const onSubmit: OnSubmit<Values, TransformValues> =

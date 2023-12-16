@@ -71,10 +71,19 @@ export interface GetInputPropsOptions {
   [key: string]: any;
 }
 
+export interface GetInputPropsReturnType {
+  onChange: any;
+  value?: any;
+  checked?: any;
+  error?: any;
+  onFocus?: any;
+  onBlur?: any;
+}
+
 export type GetInputProps<Values> = <Field extends LooseKeys<Values>>(
   path: Field,
   options?: GetInputPropsOptions
-) => { value: any; onChange: any; checked?: any; error?: any; onFocus?: any; onBlur?: any };
+) => GetInputPropsReturnType;
 
 export type SetFieldValue<Values> = <Field extends LooseKeys<Values>>(
   path: Field,
@@ -135,11 +144,12 @@ export interface UseFormInput<
   validateInputOnChange?: boolean | LooseKeys<Values>[];
   validateInputOnBlur?: boolean | LooseKeys<Values>[];
   onValuesChange?: (values: Values) => void;
-  enhanceGetInputProps?: (
-    field: LooseKeys<Values>,
-    options: GetInputPropsOptions,
-    form: UseFormReturnType<Values, TransformValues>
-  ) => Record<string, any> | undefined | void;
+  enhanceGetInputProps?: (payload: {
+    inputProps: GetInputPropsReturnType;
+    field: LooseKeys<Values>;
+    options: GetInputPropsOptions;
+    form: UseFormReturnType<Values, TransformValues>;
+  }) => Record<string, any> | undefined | void;
 }
 
 export interface UseFormReturnType<
