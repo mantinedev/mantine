@@ -64,9 +64,16 @@ export type GetTransformedValues<Values, TransformValues extends _TransformValue
 
 export type OnReset = (event: React.FormEvent<HTMLFormElement>) => void;
 
+export interface GetInputPropsOptions {
+  type?: GetInputPropsType;
+  withError?: boolean;
+  withFocus?: boolean;
+  [key: string]: any;
+}
+
 export type GetInputProps<Values> = <Field extends LooseKeys<Values>>(
   path: Field,
-  options?: { type?: GetInputPropsType; withError?: boolean; withFocus?: boolean }
+  options?: GetInputPropsOptions
 ) => { value: any; onChange: any; checked?: any; error?: any; onFocus?: any; onBlur?: any };
 
 export type SetFieldValue<Values> = <Field extends LooseKeys<Values>>(
@@ -128,6 +135,11 @@ export interface UseFormInput<
   validateInputOnChange?: boolean | LooseKeys<Values>[];
   validateInputOnBlur?: boolean | LooseKeys<Values>[];
   onValuesChange?: (values: Values) => void;
+  enhanceGetInputProps?: (
+    field: LooseKeys<Values>,
+    options: GetInputPropsOptions,
+    form: UseFormReturnType<Values, TransformValues>
+  ) => Record<string, any> | undefined | void;
 }
 
 export interface UseFormReturnType<

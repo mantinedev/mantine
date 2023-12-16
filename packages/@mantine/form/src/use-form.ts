@@ -48,6 +48,7 @@ export function useForm<
   validateInputOnBlur = false,
   onValuesChange,
   transformValues = ((values: Values) => values) as any,
+  enhanceGetInputProps,
   validate: rules,
 }: UseFormInput<Values, TransformValues> = {}): UseFormReturnType<Values, TransformValues> {
   const [touched, setTouched] = useState(initialTouched);
@@ -204,8 +205,10 @@ export function useForm<
 
   const getInputProps: GetInputProps<Values> = (
     path,
-    { type = 'input', withError = true, withFocus = true } = {}
+    { type = 'input', withError = true, withFocus = true, ...otherOptions } = {}
   ) => {
+    const enhancedProps =
+      enhanceGetInputProps?.(path, { type, withError, withFocus, ...otherOptions }, form) || {};
     const onChange = getInputOnChange((value) => setFieldValue(path, value as any));
     const payload: any = { onChange };
 
@@ -232,7 +235,7 @@ export function useForm<
       };
     }
 
-    return payload;
+    return { ...payload, ...enhancedProps };
   };
 
   const onSubmit: OnSubmit<Values, TransformValues> =
