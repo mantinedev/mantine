@@ -264,6 +264,6 @@ export const DemoUseEyeDropperUsage = {
 };
 
 export const DemoUseInViewportUsage = {
-  name: '⭐ Demo: useIsVisibleUsage',
+  name: '⭐ Demo: useInViewportUsage',
   render: renderDemo(demos.useInViewportDemo),
 };
