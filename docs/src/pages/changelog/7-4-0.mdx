@@ -82,6 +82,22 @@ Will be transformed to:
 }
 ```
 
+`alpha` function is also exported from `@mantine/core` package. It converts color
+to rgba string if CSS color value is passed for full browser support, otherwise
+it uses `color-mix`:
+
+```tsx
+import { alpha } from '@mantine/core';
+
+alpha('#4578FC', 0.45); // -> rgba(69, 120, 252, 0.45)
+alpha('var(--mantine-color-gray-4)', 0.74);
+// -> color-mix(in srgb, var(--mantine-color-gray-4), transparent 26%)
+```
+
+Note that `alpha` function is a replacement for `rgba`. It was renamed to
+have more clear meaning as it can now be used with CSS variables and OKLCH colors.
+`rgba` function is still available as an alias for `alpha` function.
+
 ## enhanceGetInputProps
 
 `@mantine/form` now supports [enhanceGetInputProps](/form/get-input-props/#enhancegetinputprops). `enhanceGetInputProps` is a function that can be used to add additional props to the object returned by `form.getInputProps`.

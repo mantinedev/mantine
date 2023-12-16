@@ -33,4 +33,10 @@ describe('@mantine/core/rgba', () => {
       'oklch(96.27% 0.0217 238.66 / 0.74)'
     );
   });
+
+  it('supports css variables', () => {
+    expect(rgba('var(--color-primary)', 0.74)).toBe(
+      'color-mix(in srgb, var(--color-primary), transparent 26%)'
+    );
+  });
 });

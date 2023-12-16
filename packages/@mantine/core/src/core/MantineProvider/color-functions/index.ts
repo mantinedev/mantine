@@ -4,7 +4,7 @@ export { getThemeColor } from './get-theme-color/get-theme-color';
 export { defaultVariantColorsResolver } from './default-variant-colors-resolver/default-variant-colors-resolver';
 export { getGradient } from './get-gradient/get-gradient';
 export { toRgba } from './to-rgba/to-rgba';
-export { rgba } from './rgba/rgba';
+export { rgba, alpha } from './rgba/rgba';
 export { darken } from './darken/darken';
 export { lighten } from './lighten/lighten';
 export { luminance, isLightColor } from './luminance/luminance';
