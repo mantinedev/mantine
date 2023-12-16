@@ -195,23 +195,6 @@ form.setDirty({ 'user.firstName': true, 'user.lastName': false });
 form.resetDirty();
 ```
 
-### getInputProps
-
-`form.getInputProps` returns an object with `value`, `onChange`, `onFocus`, `onBlur` and `error` that should be spread on input.
-
-As second parameter options can be passed.
-
-- `type`: default `input`. Needs to be configured to `checkbox` if input requires `checked` to be set instead of `value`.
-- `withError`: default `type === 'input'`. Specifies if the returned object contains an `error` property with
-  `form.errors[path]` value.
-- `withFocus`: default `true`. Specifies if the returned object contains an `onFocus` handler. If disabled, the touched state
-  of the form can only be used if all values are set with `setFieldValue`.
-
-```tsx
-<TextInput {...form.getInputProps('path')} />
-<Checkbox {...form.getInputProps('accepted', { type: 'checkbox' })} />
-```
-
 ## UseFormReturnType
 
 `UseFormReturnType` can be used when you want to pass `form` as a prop to another component:

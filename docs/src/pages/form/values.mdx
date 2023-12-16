@@ -40,6 +40,52 @@ form.setValues({ name: 'John', age: 21 });
 form.values; // -> { name: 'John', email: '', age: 21 }
 ```
 
+## Initialize form
+
+When called `form.initialize` handler sets `initialValues` and `values` to the same value
+and marks form as initialized. It can be used only once, next `form.initialize` calls
+are ignored.
+
+`form.initialize` is useful when you want to sync form values with backend API response:
+
+<Demo data={FormDemos.initialize} />
+
+Example with [TanStack Query](https://tanstack.com/query/latest) (react-query):
+
+```tsx
+import { useEffect } from 'react';
+import { useQuery } from '@tanstack/react-query';
+import { useForm } from '@mantine/form';
+
+function Demo() {
+  const query = useQuery({
+    queryKey: ['current-user'],
+    queryFn: () => fetch('/api/users/me').then((res) => res.json()),
+  });
+
+  const form = useForm({
+    initialValues: {
+      name: '',
+      email: '',
+    },
+  });
+
+  useEffect(() => {
+    if (query.data) {
+      // Even if query.data changes, form will be initialized only once
+      form.initialize(query.data);
+    }
+  }, [query.data]);
+}
+```
+
+Note that `form.initialize` will erase all values that were set before it was called.
+It is usually a good idea to set `readOnly` or `disabled` on all form fields before
+`form.initialize` is called to prevent data loss. You can implement this with
+[enhanceGetInputProps](/form/get-input-props/#enhancegetinputprops):
+
+<Demo data={FormDemos.enhanceGetInputPropsForm} />
+
 ## setFieldValue handler
 
 `form.setFieldValue` handler allows to set value of the field at given path:

@@ -145,6 +145,7 @@ export const MDX_PAGES_GROUPS: MdxPagesGroup[] = [
     pages: [
       MDX_DATA.useForm,
       MDX_DATA.formValues,
+      MDX_DATA.formGetInputProps,
       MDX_DATA.formErrors,
       MDX_DATA.formValidation,
       MDX_DATA.formSchemaValidation,

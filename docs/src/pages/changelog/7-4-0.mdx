@@ -1,4 +1,5 @@
 import {
+  FormDemos,
   ScrollAreaDemos,
   ThemingDemos,
   TitleDemos,
@@ -54,41 +55,72 @@ and changes text color to either `theme.white` or `theme.black` accordingly:
 
 <Demo data={ThemingDemos.luminanceThreshold} />
 
-## ScrollArea scrollbars prop
+## enhanceGetInputProps
 
-[ScrollArea](/core/scroll-area) now supports `scrollbars` prop which allows to control directions at which scrollbars should be rendered.
-Supported values are `x`, `y` and `xy`. If `scrollbars="y"` is set, only vertical scrollbar will be rendered and it will not be possible to scroll horizontally:
+`@mantine/form` now supports [enhanceGetInputProps](/form/get-input-props/#enhancegetinputprops). `enhanceGetInputProps` is a function that can be used to add additional props to the object returned by `form.getInputProps`.
+You can define it in `useForm` hook options. Its argument is an object with the following properties:
 
-<Demo data={ScrollAreaDemos.scrollbars} />
+- `inputProps` – object returned by `form.getInputProps` by default
+- `field` – field path, first argument of `form.getInputProps`, for example `name`, `user.email`, `users.0.name`
+- `options` – second argument of `form.getInputProps`, for example `{ type: 'checkbox' }`, can be used to pass additional
+  options to `enhanceGetInputProps` function
+- `form` – form instance
 
-## Title lineClamp prop
+Example of using `enhanceGetInputProps` to disable input based on field path:
 
-[Title](/core/title) component now supports `lineClamp` prop which allows to truncate text after specified number of lines:
+<Demo data={FormDemos.enhanceGetInputProps} />
 
-<Demo data={TitleDemos.lineClamp} />
+Example of using `enhanceGetInputProps` to add additional props to the input based on option passed to `form.getInputProps`:
 
-## Primary color CSS variables
+<Demo data={FormDemos.enhanceGetInputPropsOptions} />
 
-CSS variables for primary color are now available, you can use the following variables in your styles:
+## form.initialize
 
-```scss
---mantine-primary-color-0
---mantine-primary-color-1
---mantine-primary-color-2
---mantine-primary-color-3
---mantine-primary-color-4
---mantine-primary-color-5
---mantine-primary-color-6
---mantine-primary-color-7
---mantine-primary-color-8
---mantine-primary-color-9
---mantine-primary-color-contrast
---mantine-primary-color-filled
---mantine-primary-color-filled-hover
---mantine-primary-color-light
---mantine-primary-color-light-hover
---mantine-primary-color-light-color
+`@mantine/form` now supports `form.initialize` handler.
+
+When called `form.initialize` handler sets `initialValues` and `values` to the same value
+and marks form as initialized. It can be used only once, next `form.initialize` calls
+are ignored.
+
+`form.initialize` is useful when you want to sync form values with backend API response:
+
+<Demo data={FormDemos.initialize} />
+
+Example with [TanStack Query](https://tanstack.com/query/latest) (react-query):
+
+```tsx
+import { useEffect } from 'react';
+import { useQuery } from '@tanstack/react-query';
+import { useForm } from '@mantine/form';
+
+function Demo() {
+  const query = useQuery({
+    queryKey: ['current-user'],
+    queryFn: () => fetch('/api/users/me').then((res) => res.json()),
+  });
+
+  const form = useForm({
+    initialValues: {
+      name: '',
+      email: '',
+    },
+  });
+
+  useEffect(() => {
+    if (query.data) {
+      // Even if query.data changes, form will be initialized only once
+      form.initialize(query.data);
+    }
+  }, [query.data]);
+}
 ```
+
+Note that `form.initialize` will erase all values that were set before it was called.
+It is usually a good idea to set `readOnly` or `disabled` on all form fields before
+`form.initialize` is called to prevent data loss. You can implement this with
+[enhanceGetInputProps](/form/get-input-props/#enhancegetinputprops):
+
+<Demo data={FormDemos.enhanceGetInputPropsForm} />
 
 ## valibot form resolver
 
@@ -197,6 +229,46 @@ form.errors;
 //  'list.0.name': 'Name should have at least 2 letters',
 // }
 ```
+
+## ScrollArea scrollbars prop
+
+[ScrollArea](/core/scroll-area) now supports `scrollbars` prop which allows to control directions at which scrollbars should be rendered.
+Supported values are `x`, `y` and `xy`. If `scrollbars="y"` is set, only vertical scrollbar will be rendered and it will not be possible to scroll horizontally:
+
+<Demo data={ScrollAreaDemos.scrollbars} />
+
+## Title lineClamp prop
+
+[Title](/core/title) component now supports `lineClamp` prop which allows to truncate text after specified number of lines:
+
+<Demo data={TitleDemos.lineClamp} />
+
+## Primary color CSS variables
+
+CSS variables for primary color are now available, you can use the following variables in your styles:
+
+```scss
+--mantine-primary-color-0
+--mantine-primary-color-1
+--mantine-primary-color-2
+--mantine-primary-color-3
+--mantine-primary-color-4
+--mantine-primary-color-5
+--mantine-primary-color-6
+--mantine-primary-color-7
+--mantine-primary-color-8
+--mantine-primary-color-9
+--mantine-primary-color-contrast
+--mantine-primary-color-filled
+--mantine-primary-color-filled-hover
+--mantine-primary-color-light
+--mantine-primary-color-light-hover
+--mantine-primary-color-light-color
+```
+
+## Documentation updates
+
+- [form.getInputProps](/form/get-input-props) guide now has a separate page. It describes `form.getInputProps`, `enhanceGetInputProps` and how to integrate `form.getInputProps` with custom inputs.
 
 ## Other changes
 

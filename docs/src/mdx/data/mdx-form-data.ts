@@ -90,4 +90,12 @@ export const MDX_FORM_DATA: Record<string, Frontmatter> = {
     description: 'Change form state from anywhere in the application',
     docs: 'form/actions.mdx',
   },
+
+  formGetInputProps: {
+    title: 'getInputProps',
+    package: '@mantine/form',
+    slug: '/form/get-input-props',
+    description: 'A handler to get input props for any field in the form',
+    docs: 'form/get-input-props.mdx',
+  },
 };
