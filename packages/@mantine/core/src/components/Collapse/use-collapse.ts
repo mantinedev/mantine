@@ -61,7 +61,7 @@ export function useCollapse({
   } {
     const _duration = transitionDuration || getAutoHeightDuration(height);
     return {
-      transition: `height ${_duration}ms ${transitionTimingFunction}`,
+      transition: `height ${_duration}ms ${transitionTimingFunction}, opacity ${_duration}ms ${transitionTimingFunction}`,
     };
   }
 
