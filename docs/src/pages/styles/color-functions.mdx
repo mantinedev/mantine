@@ -171,3 +171,15 @@ export function Demo({ color }: DemoProps) {
   );
 }
 ```
+
+## luminance
+
+`luminance` function returns color luminance, it can be used to check colors contrast:
+
+```tsx
+import { luminance } from '@mantine/core';
+
+luminance('#fff'); // -> 1
+luminance('#000'); // -> 0
+luminance('#4578FC'); // -> 0.21726425554966
+```
