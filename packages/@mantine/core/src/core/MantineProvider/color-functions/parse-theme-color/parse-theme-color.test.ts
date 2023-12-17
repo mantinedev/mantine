@@ -8,7 +8,7 @@ describe('@mantine/core/parse-theme-color', () => {
       value: DEFAULT_THEME.colors.red[6],
       shade: undefined,
       isThemeColor: true,
-      isLight: true,
+      isLight: false,
       variable: '--mantine-color-red-filled',
     });
   });
