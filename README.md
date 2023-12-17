@@ -20,8 +20,7 @@
 ## Packages
 
 - `@mantine/hooks` – collection of 50+ hooks for state and UI management
-- [`@mantine/styles`](https://mantine.dev/styles/create-styles/) – [emotion](https://emotion.sh/) based css-in-js library that is used in all Mantine components
-- `@mantine/core` – core components library – 100+ components, exports everything from `@mantine/styles`
+- `@mantine/core` – core components library – 100+ components
 - [`@mantine/form`](https://mantine.dev/form/use-form) – forms management library
 - [`@mantine/notifications`](https://mantine.dev/x/notifications) – a fully featured notifications system
 - [`@mantine/spotlight`](https://mantine.dev/x/spotlight) – `Ctrl + K` command center for your application
@@ -31,7 +30,6 @@
 - [`@mantine/carousel`](https://mantine.dev/x/carousel) – Carousel component
 - [`@mantine/nprogress`](https://mantine.dev/x/nprogress) – navigation progress
 - [`@mantine/modals`](https://mantine.dev/x/modals) – centralized modals manager
-- [`eslint-config-mantine`](https://www.npmjs.com/package/eslint-config-mantine) – ESLint and Prettier configuration that is used in all Mantine projects
 
 ## Getting help
 
