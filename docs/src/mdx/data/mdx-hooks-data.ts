@@ -16,7 +16,7 @@ function hDocs(hook: string, description: string): Frontmatter {
 export const MDX_HOOKS_DATA: Record<string, Frontmatter> = {
   useClickOutside: hDocs(
     'useClickOutside',
-    'Detects click and touch events outside of given element'
+    'Detects click and touch events outside of given element or elements group'
   ),
 
   useClipboard: hDocs('useClipboard', 'Wrapper around navigator.clipboard with feedback timeout'),
@@ -41,22 +41,28 @@ export const MDX_HOOKS_DATA: Record<string, Frontmatter> = {
 
   useElementSize: hDocs(
     'useElementSize',
-    'Returns element width and height and subscribe to changes'
+    'Returns element width and height and observes changes with ResizeObserver'
   ),
 
-  useEventListener: hDocs('useEventListener', 'Subscribes to events with a ref'),
+  useEventListener: hDocs('useEventListener', 'Subscribes to events of a given element with a ref'),
   useEyeDropper: hDocs('useEyeDropper', 'Pick color from any pixel on the screen'),
   useFavicon: hDocs('useFavicon', 'Changes favicon'),
 
   useFocusReturn: hDocs(
     'useFocusReturn',
-    'Captures last focused element on the page and returns focus to it once the condition is met'
+    'Captures last focused element on the page and returns focus to it once given condition is met'
   ),
 
-  useFocusTrap: hDocs('useFocusTrap', 'Traps focus inside given node'),
-  useFocusWithin: hDocs('useFocusWithin', 'Detects if any element within other element has focus'),
+  useFocusTrap: hDocs('useFocusTrap', 'Traps focus inside given element'),
+  useFocusWithin: hDocs(
+    'useFocusWithin',
+    'Detects if any element within the given element has focus'
+  ),
   useForceUpdate: hDocs('useForceUpdate', 'Force component to rerender without state change'),
-  useFullscreen: hDocs('useFullscreen', 'Enter/exit fullscreen mode'),
+  useFullscreen: hDocs(
+    'useFullscreen',
+    'Enter/exit fullscreen mode with given element or entire page'
+  ),
   useHash: hDocs('useHash', 'Get and set hash value in url'),
 
   useHeadroom: hDocs(
@@ -65,11 +71,14 @@ export const MDX_HOOKS_DATA: Record<string, Frontmatter> = {
   ),
 
   useHotkeys: hDocs('useHotkeys', 'Listen for keys combinations on document element'),
-  useHover: hDocs('useHover', 'Detects if element is hovered'),
+  useHover: hDocs('useHover', 'Detects if given element is hovered'),
   useId: hDocs('useId', 'Generates memoized random id'),
   useIdle: hDocs('useIdle', 'Detects if user does nothing on page'),
   useInputState: hDocs('useInputState', 'Manages input state'),
-  useIntersection: hDocs('useIntersection', 'Detects if element is visible in viewport'),
+  useIntersection: hDocs(
+    'useIntersection',
+    'Detects if given element is visible in the viewport or other element with IntersectionObserver'
+  ),
   useInterval: hDocs('useInterval', 'Calls function in given interval'),
 
   useIsomorphicEffect: hDocs(
@@ -91,7 +100,7 @@ export const MDX_HOOKS_DATA: Record<string, Frontmatter> = {
 
   useMove: hDocs(
     'useMove',
-    'Handles move behavior over any element, use to build custom sliders, color pickers, etc.'
+    'Handles move behavior over given element, can be used to build custom sliders'
   ),
 
   useNetwork: hDocs('useNetwork', 'Returns current connection status'),
@@ -99,9 +108,12 @@ export const MDX_HOOKS_DATA: Record<string, Frontmatter> = {
   usePageLeave: hDocs('usePageLeave', 'Calls given function when mouse leaves the page'),
   usePrevious: hDocs('usePrevious', 'Returns previous value of given state'),
   useQueue: hDocs('useQueue', 'Manages queue of values'),
-  useReducedMotion: hDocs('useReducedMotion', 'Detects if user prefers reduced motion'),
-  useResizeObserver: hDocs('useResizeObserver', 'Tracks element size and position changes'),
-  useScrollIntoView: hDocs('useScrollIntoView', 'Scrolls element into view'),
+  useReducedMotion: hDocs('useReducedMotion', 'Detects if user prefers to reduce motion'),
+  useResizeObserver: hDocs(
+    'useResizeObserver',
+    'Tracks element size and position changes with ResizeObserver'
+  ),
+  useScrollIntoView: hDocs('useScrollIntoView', 'Scrolls given element into view'),
   useSetState: hDocs('useSetState', 'Manages state with setState-like API'),
 
   useShallowEffect: hDocs(
@@ -119,11 +131,14 @@ export const MDX_HOOKS_DATA: Record<string, Frontmatter> = {
   ),
 
   useValidatedState: hDocs('useValidatedState', 'Manages state with validation'),
-  useViewportSize: hDocs('useViewportSize', 'Returns current viewport size'),
+  useViewportSize: hDocs(
+    'useViewportSize',
+    'Returns viewport width and height and subscribes to changes'
+  ),
 
   useWindowEvent: hDocs(
     'useWindowEvent',
-    'Adds event listener to window on component mount and removes it on unmount'
+    'Adds event listener to the window object on component mount and removes the event when the component unmounts'
   ),
 
   useWindowScroll: hDocs('useWindowScroll', 'Tracks window scroll position'),
