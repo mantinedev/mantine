@@ -25,5 +25,5 @@ jobs:
         run: npm run setup
       - name: Build public packages
         run: npm run build all
-      - name: Run syncpack, eslint, tsc and jest
+      - name: Run tests
         run: npm test
