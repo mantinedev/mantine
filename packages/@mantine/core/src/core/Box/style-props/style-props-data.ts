@@ -57,4 +57,5 @@ export const STYlE_PROPS_DATA: Record<keyof MantineStyleProps, SystemPropData> =
   inset: { type: 'size', property: 'inset' },
 
   display: { type: 'identity', property: 'display' },
+  flex: { type: 'identity', property: 'flex' },
 };

@@ -59,4 +59,5 @@ export interface MantineStyleProps {
   inset?: StyleProp<React.CSSProperties['inset']>;
 
   display?: StyleProp<React.CSSProperties['display']>;
+  flex?: StyleProp<React.CSSProperties['flex']>;
 }

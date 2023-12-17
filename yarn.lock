@@ -16981,7 +16981,7 @@ __metadata:
     klona: "npm:^2.0.6"
     lodash: "npm:^4.17.21"
     lowlight: "npm:^3.1.0"
-    mantine-docgen-script: "npm:^1.2.0"
+    mantine-docgen-script: "npm:^1.3.0"
     new-github-release-url: "npm:^2.0.0"
     open: "npm:^9.1.0"
     postcss: "npm:^8.4.31"
@@ -17021,14 +17021,14 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"mantine-docgen-script@npm:^1.2.0":
-  version: 1.2.0
-  resolution: "mantine-docgen-script@npm:1.2.0"
+"mantine-docgen-script@npm:^1.3.0":
+  version: 1.3.0
+  resolution: "mantine-docgen-script@npm:1.3.0"
   dependencies:
     chalk: "npm:^5"
     fs-extra: "npm:^11"
     react-docgen-typescript: "npm:^2.2.2"
-  checksum: cff92f2738bd780a5b4f077133431db113a679fb014aca35cb554b2ddd8b30a1a9292634debc86badeb2a3e6528b73100e8d510d9c383b95a1634a12a1935a81
+  checksum: 733bb557534161ab0d9e94cff6f046360e84ea6fbaf1d9061ab80f047204d874a1882d97cbfa8c48456bf47e5bb62bb5923bba424e961575dd189b0d87c97d57
   languageName: node
   linkType: hard
 

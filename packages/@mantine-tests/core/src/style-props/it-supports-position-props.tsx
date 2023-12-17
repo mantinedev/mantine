@@ -21,6 +21,7 @@ export function itSupportsPositionProps<Props>(
     const { container: right } = render(<options.component {...options.props} right="4rem" />);
     const { container: inset } = render(<options.component {...options.props} inset="5rem" />);
     const { container: display } = render(<options.component {...options.props} display="flex" />);
+    const { container: flex } = render(<options.component {...options.props} flex="0 0 1" />);
 
     expect(pos.querySelector(selector)).toHaveStyle({ position: 'absolute' });
     expect(top.querySelector(selector)).toHaveStyle({ top: '1rem' });
@@ -29,5 +30,6 @@ export function itSupportsPositionProps<Props>(
     expect(right.querySelector(selector)).toHaveStyle({ right: '4rem' });
     expect(inset.querySelector(selector)).toHaveStyle({ inset: '5rem' });
     expect(display.querySelector(selector)).toHaveStyle({ display: 'flex' });
+    expect(flex.querySelector(selector)).toHaveStyle({ flex: '0 0 1' });
   });
 }

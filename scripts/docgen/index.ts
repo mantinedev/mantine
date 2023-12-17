@@ -7,8 +7,5 @@ generateDeclarations({
   outputPath: getPath('docs/src/.docgen'),
   componentsPaths: DOCGEN_PATHS,
   excludeProps: [],
-  typesReplacement: {
-    'Omit<DetailedHTMLProps<InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>, "ref"> | undefined':
-      'React.ComponentPropsWithoutRef<"input">',
-  },
+  typesReplacement: {},
 });

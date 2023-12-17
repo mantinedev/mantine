@@ -154,7 +154,7 @@
     "jest-axe": "^8.0.0",
     "jest-environment-jsdom": "^29.7.0",
     "lodash": "^4.17.21",
-    "mantine-docgen-script": "^1.2.0",
+    "mantine-docgen-script": "^1.3.0",
     "new-github-release-url": "^2.0.0",
     "open": "^9.1.0",
     "postcss": "^8.4.31",
