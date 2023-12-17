@@ -55,57 +55,20 @@ and changes text color to either `theme.white` or `theme.black` accordingly:
 
 <Demo data={ThemingDemos.luminanceThreshold} />
 
-## alpha function
+## Color functions improvements
 
-`alpha` function can be used to add alpha channel to color. Note that it uses [color-mix](https://caniuse.com/mdn-css_types_color_color-mix) which is not supported in some older browsers.
+`alpha`, `lighten` and `darken` functions now support CSS variables (with [color-mix](https://caniuse.com/mdn-css_types_color_color-mix)) and OKLCH colors.
+All functions are available both in `@mantine/core` (`.ts`/`.js` files) and [postcss-preset-mantine](/styles/postcss-preset) (`.css` files, requires version 1.12.0 or higher).
 
-`alpha` function example in CSS with [postcss-preset-mantine](/styles/postcss-preset) (requires version 1.12.0 or higher):
+In `.css` files:
 
 ```scss
-.demo {
+.demo-alpha {
   color: alpha(var(--mantine-color-red-4), 0.5);
   border: 1px solid alpha(#ffc, 0.2);
 }
-```
 
-Will be transformed to:
-
-```scss
-// test comment
-.demo {
-  color: color-mix(
-    in srgb,
-    var(--mantine-color-red-4),
-    transparent 50%
-  );
-  border: 1px solid color-mix(in srgb, #ffc, transparent 80%);
-}
-```
-
-`alpha` function is also exported from `@mantine/core` package. It converts color
-to rgba string if CSS color value is passed for full browser support, otherwise
-it uses `color-mix`:
-
-```tsx
-import { alpha } from '@mantine/core';
-
-alpha('#4578FC', 0.45); // -> rgba(69, 120, 252, 0.45)
-alpha('var(--mantine-color-gray-4)', 0.74);
-// -> color-mix(in srgb, var(--mantine-color-gray-4), transparent 26%)
-```
-
-Note that `alpha` function is a replacement for `rgba`. It was renamed to
-have more clear meaning as it can now be used with CSS variables and OKLCH colors.
-`rgba` function is still available as an alias for `alpha` function.
-
-## lighten and darken functions
-
-New `lighten` and `darken` functions work similar to `alpha` function,
-but instead of adding alpha channel they add white or black color
-to the color with [color-mix](https://caniuse.com/mdn-css_types_color_color-mix).
-
-```scss
-.demo {
+.demo-lighten-darken {
   color: lighten(var(--mantine-color-red-4), 0.5);
   border: 1px solid darken(#ffc, 0.2);
 }
@@ -114,11 +77,38 @@ to the color with [color-mix](https://caniuse.com/mdn-css_types_color_color-mix)
 Will be transformed to:
 
 ```scss
-.demo {
+.demo-alpha {
+  color: color-mix(
+    in srgb,
+    var(--mantine-color-red-4),
+    transparent 50%
+  );
+  border: 1px solid color-mix(in srgb, #ffc, transparent 80%);
+}
+
+.demo-lighten-darken {
   color: color-mix(in srgb, var(--mantine-color-red-4), white 50%);
   border: 1px solid color-mix(in srgb, #ffc, black 20%);
 }
 ```
+
+In `.ts`/`.js` files:
+
+```tsx
+import { alpha, lighten } from '@mantine/core';
+
+alpha('#4578FC', 0.45); // -> rgba(69, 120, 252, 0.45)
+alpha('var(--mantine-color-gray-4)', 0.74);
+// -> color-mix(in srgb, var(--mantine-color-gray-4), transparent 26%)
+
+lighten('#4578FC', 0.45); // -> #a3c1ff
+lighten('var(--mantine-color-gray-4)', 0.74);
+// -> color-mix(in srgb, var(--mantine-color-gray-4), white 74%)
+```
+
+Note that `alpha` function is a replacement for `rgba`. It was renamed to
+have more clear meaning as it can now be used with CSS variables and OKLCH colors.
+`rgba` function is still available as an alias for `alpha` function.
 
 ## enhanceGetInputProps
 
