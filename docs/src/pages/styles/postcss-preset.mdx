@@ -238,6 +238,26 @@ Will be transformed to:
 }
 ```
 
+## lighten and darken functions
+
+`lighten` and `darken` functions work similar to `alpha` function, but instead of adding alpha channel they add white or black color to the color with [color-mix](https://caniuse.com/mdn-css_types_color_color-mix).
+
+```scss
+.demo {
+  color: lighten(var(--mantine-color-red-4), 0.5);
+  border: 1px solid darken(#ffc, 0.2);
+}
+```
+
+Will be transformed to:
+
+```scss
+.demo {
+  color: color-mix(in srgb, var(--mantine-color-red-4), white 50%);
+  border: 1px solid color-mix(in srgb, #ffc, black 20%);
+}
+```
+
 ## hover mixin
 
 `hover` mixin can be used to create styles that will be applied on hover.

@@ -23,13 +23,13 @@ export function Usage() {
 export function ColorMix() {
   return (
     <div style={{ padding: 40 }}>
-      <Box bg={rgba(DEFAULT_THEME.colors.pink[5], 0.6)} h={200} w={200}>
+      <Box bg={rgba(DEFAULT_THEME.colors.pink[5], 1)} h={200} w={200}>
         Pink.6
       </Box>
-      <Box bg="color-mix(in srgb, oklch(50.85% 0.2819 261.46), transparent 40%)" h={200} w={200}>
+      <Box bg="color-mix(in srgb, var(--mantine-color-pink-5), white 20%)" h={200} w={200}>
         Pink.6 color-mix
       </Box>
-      <Box bg="color-mix(in oklch, oklch(50.85% 0.2819 261.46), transparent 40%)" h={200} w={200}>
+      <Box bg="color-mix(in srgb, var(--mantine-color-pink-5), black 20%)" h={200} w={200}>
         Pink.6 color-mix
       </Box>
     </div>

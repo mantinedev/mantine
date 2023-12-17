@@ -98,6 +98,28 @@ Note that `alpha` function is a replacement for `rgba`. It was renamed to
 have more clear meaning as it can now be used with CSS variables and OKLCH colors.
 `rgba` function is still available as an alias for `alpha` function.
 
+## lighten and darken functions
+
+New `lighten` and `darken` functions work similar to `alpha` function,
+but instead of adding alpha channel they add white or black color
+to the color with [color-mix](https://caniuse.com/mdn-css_types_color_color-mix).
+
+```scss
+.demo {
+  color: lighten(var(--mantine-color-red-4), 0.5);
+  border: 1px solid darken(#ffc, 0.2);
+}
+```
+
+Will be transformed to:
+
+```scss
+.demo {
+  color: color-mix(in srgb, var(--mantine-color-red-4), white 50%);
+  border: 1px solid color-mix(in srgb, #ffc, black 20%);
+}
+```
+
 ## enhanceGetInputProps
 
 `@mantine/form` now supports [enhanceGetInputProps](/form/get-input-props/#enhancegetinputprops). `enhanceGetInputProps` is a function that can be used to add additional props to the object returned by `form.getInputProps`.
