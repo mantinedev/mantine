@@ -17,6 +17,9 @@ describe('@mantine/core/luminance', () => {
     expect(luminance('rgba(255, 255, 0, 0.5)')).toBe(0.9278);
     expect(luminance('hsl(60, 100%, 50%)')).toBe(0.9278);
     expect(luminance('hsla(60, 100%, 50%, 0.5)')).toBe(0.9278);
+    expect(luminance('oklch(100% 100 0 0)')).toBe(1);
+    expect(luminance('oklch(0% 100 0 0)')).toBe(0);
+    expect(luminance('oklch(55.88% 100 0 0)')).toBe(55.88 / 100);
   });
 });
 

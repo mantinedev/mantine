@@ -4,7 +4,16 @@ function gammaCorrect(c: number) {
   return c <= 0.03928 ? c / 12.92 : ((c + 0.055) / 1.055) ** 2.4;
 }
 
+function getLightnessFromOklch(oklchColor: string) {
+  const match = oklchColor.match(/oklch\((.*?)%\s/);
+  return match ? parseFloat(match[1]) : null;
+}
+
 export function luminance(color: string): number {
+  if (color.startsWith('oklch(')) {
+    return (getLightnessFromOklch(color) || 0) / 100;
+  }
+
   const { r, g, b } = toRgba(color);
 
   const sR = r / 255;
