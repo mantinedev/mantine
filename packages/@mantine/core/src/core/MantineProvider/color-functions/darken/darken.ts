@@ -2,7 +2,7 @@ import { toRgba } from '../to-rgba/to-rgba';
 
 export function darken(color: string, alpha: number) {
   if (color.startsWith('var(')) {
-    return color;
+    return `color-mix(in srgb, ${color}, black ${alpha * 100}%)`;
   }
 
   const { r, g, b, a } = toRgba(color);

@@ -23,7 +23,9 @@ describe('@mantine/core/lighten', () => {
     expect(lighten(RGBA, 1)).toBe('rgba(255, 255, 255, 0.6)');
   });
 
-  it('returns the same color color is a css variable', () => {
-    expect(lighten('var(--mantine-color-red-5)', 0.1)).toBe('var(--mantine-color-red-5)');
+  it('supports css variables', () => {
+    expect(lighten('var(--color-primary)', 0.1)).toBe(
+      'color-mix(in srgb, var(--color-primary), white 10%)'
+    );
   });
 });

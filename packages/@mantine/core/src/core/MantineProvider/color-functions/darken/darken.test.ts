@@ -23,7 +23,9 @@ describe('@mantine/core/darken', () => {
     expect(darken(RGBA, 1)).toBe('rgba(0, 0, 0, 0.6)');
   });
 
-  it('returns the same color color is a css variable', () => {
-    expect(darken('var(--mantine-color-red-5)', 0.1)).toBe('var(--mantine-color-red-5)');
+  it('supports css variables', () => {
+    expect(darken('var(--color-primary)', 0.1)).toBe(
+      'color-mix(in srgb, var(--color-primary), black 10%)'
+    );
   });
 });
