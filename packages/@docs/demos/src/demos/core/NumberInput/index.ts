@@ -14,3 +14,4 @@ export { error } from './NumberInput.demo.error';
 export { disabled } from './NumberInput.demo.disabled';
 export { stylesApi } from './NumberInput.demo.stylesApi';
 export { sections } from './NumberInput.demo.sections';
+export { hold } from './NumberInput.demo.hold';

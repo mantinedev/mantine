@@ -82,3 +82,8 @@ export const DemoSections = {
   name: '⭐ Demo: sections',
   render: renderDemo(demos.sections),
 };
+
+export const DemoHold = {
+  name: '⭐ Demo: hold',
+  render: renderDemo(demos.hold),
+};
