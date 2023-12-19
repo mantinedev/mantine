@@ -291,6 +291,19 @@ export const HOOKS_EXPORTS_REFERENCE: ExportReferenceGroup = {
       link: '/hooks/use-merged-ref/',
     },
     {
+      type: 'function',
+      name: 'assignRef',
+      description: 'Assigns ref to the given ref object or callback',
+      link: '/hooks/use-merged-ref/#assignref-function',
+    },
+    {
+      type: 'function',
+      name: 'mergeRefs',
+      description:
+        'Merges multiple refs objects or functions into one ref callback without memoization',
+      link: '/hooks/use-merged-ref/#mergerefs-function',
+    },
+    {
       type: 'hook',
       name: 'use-network',
       description: 'Returns current connection status',

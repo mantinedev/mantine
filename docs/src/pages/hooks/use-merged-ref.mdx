@@ -56,6 +56,41 @@ Use it only when you cannot use `use-merged-ref`. Note that `mergeRefs` will not
 correctly with [use-focus-trap](/hooks/use-focus-trap/) hook, you are required to
 use `use-merged-ref` with it.
 
+## assignRef function
+
+`assignRef` function can be used to assign refs that are not memoized with `useCallback`.
+It is usually used to assign refs that do not reference elements:
+
+```tsx
+import { useState } from 'react';
+import { assignRef } from '@mantine/hooks';
+
+interface NumberInputHandlers {
+  increment: () => void;
+  decrement: () => void;
+}
+
+interface DemoProps {
+  handlersRef?: React.ForwardedRef<NumberInputHandlers | undefined>;
+}
+
+function Demo({ handlersRef }: DemoProps) {
+  const [value, setValue] = useState(0);
+
+  const increment = () => setValue((v) => v + 1);
+  const decrement = () => setValue((v) => v - 1);
+
+  assignRef(handlersRef, { increment, decrement });
+
+  return (
+    <>
+      <button onClick={increment}>+</button>
+      <button onClick={decrement}>-</button>
+    </>
+  );
+}
+```
+
 ## Definition
 
 ```tsx

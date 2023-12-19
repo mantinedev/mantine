@@ -324,16 +324,17 @@ CSS variables for primary color are now available, you can use the following var
 ## Documentation updates
 
 - [form.getInputProps](/form/get-input-props) guide now has a separate page. It describes `form.getInputProps`, `enhanceGetInputProps` and how to integrate `form.getInputProps` with custom inputs.
+- [assignRef](/hooks/use-merged-ref/#assignref-function) function documentation has been added.
 
 ## Other changes
 
 - [RichTextEditor](/x/tiptap) no longer depends on `@tabler/icons` package. It is no longer required to install `@tabler/icons` package to use `RichTextEditor` component. Icons used in the editor are now a part of the `@mantine/tiptap` package. This change improves bundling performance in several cases (mostly when using `RichTextEditor` in Next.js apps).
-- [Badge](/core/badge) component now supports `circle` prop which makes the badge round
-- You can now reference theme values in `ff` [style prop](/styles/style-props) with `mono`, `text` and `heading` values: `<Box ff="mono" />`
-- [RichTextEditor](/x/tiptap) now has `RichTextEditor.Undo` and `RichTextEditor.Redo` controls
+- [Badge](/core/badge) component now supports `circle` prop which makes the badge round.
+- You can now reference theme values in `ff` [style prop](/styles/style-props) with `mono`, `text` and `heading` values: `<Box ff="mono" />`.
+- [RichTextEditor](/x/tiptap) now has `RichTextEditor.Undo` and `RichTextEditor.Redo` controls.
 - A new `luminance` [color function](/styles/color-functions) was added. It returns color luminance as a number between 0 and 1.
-- All components now support new `flex` [style prop](/styles/style-props) which allows setting `flex` CSS property on the root element
-- [Collapse](/core/collapse) markup was reduced to single element, it can now be used in contexts that were previously not supported, for example, table rows
-- `stepHoldDelay` and `stepHoldInterval` props were added to [NumberInput](/core/number-input)
+- All components now support new `flex` [style prop](/styles/style-props) which allows setting `flex` CSS property on the root element.
+- [Collapse](/core/collapse) markup was reduced to single element, it can now be used in contexts that were previously not supported, for example, table rows.
+- `stepHoldDelay` and `stepHoldInterval` props were added to [NumberInput](/core/number-input).
 - [mantine-form-zod-resolver](https://github.com/mantinedev/mantine-form-zod-resolver) now supports `errorPriority` configuration which allows controlling the order of errors specified in the schema. This feature requires updating `mantine-form-zod-resolver` to version 1.1.0 or higher.
 - New [use-in-viewport](/hooks/use-in-viewport/) hook
