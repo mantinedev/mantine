@@ -16,6 +16,8 @@ interface MenuContext {
   unstyled: boolean | undefined;
   getStyles: GetStylesApi<MenuFactory>;
   menuItemTabIndex: -1 | 0 | undefined;
+  openedViaClick: boolean;
+  setOpenedViaClick: (value: boolean) => void;
 }
 
 export const [MenuContextProvider, useMenuContext] = createSafeContext<MenuContext>(
