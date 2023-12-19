@@ -6,6 +6,7 @@ export default Layout(MDX_DATA.useInViewport);
 
 ## Usage
 
-`use-in-viewport` is a hook that returns a boolean value indicating whether the target element is visible in the viewport. It makes use of the [Intersection Observer API](https://developer.mozilla.org/en-US/docs/Web/API/Intersection_Observer_API) to determine visibility.
+`use-in-viewport` is a simpler alternative to [use-intersection](/hooks/use-intersection) that only checks if the element
+is visible in the viewport:
 
 <Demo data={HooksDemos.useInViewportDemo} />

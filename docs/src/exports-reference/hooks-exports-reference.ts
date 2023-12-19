@@ -81,6 +81,13 @@ export const HOOKS_EXPORTS_REFERENCE: ExportReferenceGroup = {
     },
     {
       type: 'hook',
+      name: 'use-in-viewport',
+      description:
+        'Detects if element is visible in the viewport, a simpler alternative to use-intersection hook',
+      link: '/hooks/use-in-viewport/',
+    },
+    {
+      type: 'hook',
       name: 'use-media-query',
       description: 'Subscribes to media queries with window.matchMedia',
       link: '/hooks/use-media-query/',
