@@ -143,4 +143,5 @@ export const MDX_HOOKS_DATA: Record<string, Frontmatter> = {
 
   useWindowScroll: hDocs('useWindowScroll', 'Tracks window scroll position'),
   usePagination: hDocs('usePagination', 'Manages pagination state'),
+  useInViewport: hDocs('useInViewport', 'Detects if element is visible in the viewport'),
 };

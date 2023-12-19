@@ -57,6 +57,7 @@ export { usePrevious } from './use-previous/use-previous';
 export { useFavicon } from './use-favicon/use-favicon';
 export { useHeadroom } from './use-headroom/use-headroom';
 export { useEyeDropper } from './use-eye-dropper/use-eye-dropper';
+export { useInViewport } from './use-in-viewport/use-in-viewport';
 
 export type { UseMovePosition } from './use-move/use-move';
 export type { OS } from './use-os/use-os';
