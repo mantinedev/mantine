@@ -6,10 +6,12 @@ export interface UseMovePosition {
   y: number;
 }
 
-export const clampUseMovePosition = (position: UseMovePosition) => ({
-  x: clamp(position.x, 0, 1),
-  y: clamp(position.y, 0, 1),
-});
+export function clampUseMovePosition(position: UseMovePosition) {
+  return {
+    x: clamp(position.x, 0, 1),
+    y: clamp(position.y, 0, 1),
+  };
+}
 
 interface useMoveHandlers {
   onScrubStart?: () => void;

@@ -46,6 +46,19 @@ Moving the slider down increases the value, to reverse that set value to `1 - y`
 
 <Demo data={HooksDemos.useMoveColor} demoProps={{ toggle: true }} />
 
+## clampUseMovePosition
+
+`clampUseMovePosition` function can be used to clamp `x` and `y` values to `0-1` range.
+It is useful when you want to use external events to change the value, for example changing value with keyboard arrows:
+
+```tsx
+import { clampUseMovePosition } from 'use-move';
+
+clampUseMovePosition({ x: 0.5, y: 0.5 }); // -> { x: 0.5, y: 0.5 }
+clampUseMovePosition({ x: 1.5, y: 0.5 }); // -> { x: 1, y: 0.5 }
+clampUseMovePosition({ x: -0.5, y: 0.5 }); // -> { x: 0, y: 0.5 }
+```
+
 ## Definition
 
 ```tsx

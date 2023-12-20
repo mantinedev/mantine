@@ -103,6 +103,12 @@ export const HOOKS_EXPORTS_REFERENCE: ExportReferenceGroup = {
       link: '/hooks/use-move/',
     },
     {
+      type: 'function',
+      name: 'clampUseMovePosition',
+      description: 'Clamps useMove position to 0-1 range',
+      link: '/hooks/use-move/#clampusemoveposition',
+    },
+    {
       type: 'hook',
       name: 'use-reduced-motion',
       description: 'Detects if user prefers to reduce motion',
