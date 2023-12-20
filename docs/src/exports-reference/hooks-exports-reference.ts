@@ -209,6 +209,14 @@ export const HOOKS_EXPORTS_REFERENCE: ExportReferenceGroup = {
       name: 'use-list-state',
       description: 'Manages array state',
       link: '/hooks/use-list-state/',
+      children: [
+        {
+          type: 'type',
+          name: 'UseListStateHandlers',
+          description: 'use-list-state handlers type',
+          link: '/hooks/use-list-state/#useliststatehandlers-type',
+        },
+      ],
     },
     {
       type: 'hook',

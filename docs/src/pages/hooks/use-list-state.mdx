@@ -89,30 +89,64 @@ The hook provides handlers to work with array data:
   demoProps={{ toggle: true }}
 />
 
+## UseListStateHandlers type
+
+`@mantine/hooks` package exports `UseListStateHandlers`. It is a generic type
+that contains all handlers from `useListState` hook. It can be used to type
+handlers in your components.
+
+`UseListStateHandlers` type:
+
+```tsx
+export interface UseListStateHandlers<T> {
+  setState: React.Dispatch<React.SetStateAction<T[]>>;
+  append: (...items: T[]) => void;
+  prepend: (...items: T[]) => void;
+  insert: (index: number, ...items: T[]) => void;
+  pop: () => void;
+  shift: () => void;
+  apply: (fn: (item: T, index?: number) => T) => void;
+  applyWhere: (
+    condition: (item: T, index: number) => boolean,
+    fn: (item: T, index?: number) => T
+  ) => void;
+  remove: (...indices: number[]) => void;
+  reorder: ({ from, to }: { from: number; to: number }) => void;
+  setItem: (index: number, item: T) => void;
+  setItemProp: <K extends keyof T, U extends T[K]>(
+    index: number,
+    prop: K,
+    value: U
+  ) => void;
+  filter: (fn: (item: T, i: number) => boolean) => void;
+}
+```
+
+The type is useful when you want to pass `use-list-state` handlers to child components
+as a prop:
+
+```tsx
+import { UseListStateHandlers } from '@mantine/hooks';
+
+interface Props {
+  handlers: UseListStateHandlers<string>;
+}
+
+function Demo({ handlers }: Props) {
+  return (
+    <button type="button" onClick={() => handlers.append('hello')}>
+      Append hello
+    </button>
+  );
+}
+```
+
 ## Definition
 
 ```tsx
-function useListState<T>(initialValue: T[] = []): [
-  T[],
-  {
-    setState: Dispatch<SetStateAction<T[]>>;
-    append: (...items: T[]) => void;
-    prepend: (...items: T[]) => void;
-    insert: (index: number, ...items: T[]) => void;
-    apply: (fn: (item: T, index?: number) => T) => void;
-    pop: () => void;
-    shift: () => void;
-    applyWhere: (
-      condition: (item: T, index?: number) => boolean,
-      fn: (item: T, index?: number) => T)
-    ) => void;
-    remove: (...indices: number[]) => void;
-    reorder: ({ from, to }: { from: number; to: number }) => void;
-    setItem: (index: number, item: T) => void;
-    setItemProp: <K extends keyof T, U extends T[K]>(index: number, prop: K, value: U) => void;
-    filter: (fn: (item: T, i: number) => boolean) => void;
-  }
-];
+function useListState<T>(
+  initialValue?: T[]
+): [T[], UseListStateHandlers<T>];
 ```
 
 ## Set item type
