@@ -57,12 +57,14 @@ export const HOOKS_EXPORTS_REFERENCE: ExportReferenceGroup = {
       name: 'use-hotkeys',
       description: 'Listen for keys combinations on document element',
       link: '/hooks/use-hotkeys/',
-    },
-    {
-      type: 'function',
-      name: 'getHotkeyHandler',
-      description: 'Add hotkey events to elements and components',
-      link: '/hooks/use-hotkeys/#targeting-elements',
+      children: [
+        {
+          type: 'function',
+          name: 'getHotkeyHandler',
+          description: 'Add hotkey events to elements and components',
+          link: '/hooks/use-hotkeys/#targeting-elements',
+        },
+      ],
     },
     {
       type: 'hook',
@@ -101,12 +103,20 @@ export const HOOKS_EXPORTS_REFERENCE: ExportReferenceGroup = {
       name: 'use-move',
       description: 'Handles move behavior over given element, can be used to build custom sliders',
       link: '/hooks/use-move/',
-    },
-    {
-      type: 'function',
-      name: 'clampUseMovePosition',
-      description: 'Clamps useMove position to 0-1 range',
-      link: '/hooks/use-move/#clampusemoveposition',
+      children: [
+        {
+          type: 'function',
+          name: 'clampUseMovePosition',
+          description: 'Clamps useMove position to 0-1 range',
+          link: '/hooks/use-move/#clampusemoveposition',
+        },
+        {
+          type: 'type',
+          name: 'UseMovePosition',
+          description: 'x, y position type assigned by useMove hook',
+          link: '/hooks/use-move/#usemoveposition',
+        },
+      ],
     },
     {
       type: 'hook',

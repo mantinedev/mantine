@@ -71,3 +71,17 @@ function useMove<T extends HTMLElement = HTMLDivElement>(
   active: boolean;
 };
 ```
+
+## UseMovePosition
+
+`@mantine/hooks` exports `UseMovePosition` type, it can be used as a type parameter for `useState`:
+
+```tsx
+import { useState } from 'react';
+import { UseMovePosition } from '@mantine/hooks';
+
+const [value, setValue] = useState<UseMovePosition>({
+  x: 0.5,
+  y: 0.5,
+});
+```

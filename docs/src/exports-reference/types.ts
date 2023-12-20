@@ -1,5 +1,5 @@
 export interface ExportReference {
-  type: 'component' | 'hook' | 'function';
+  type: 'component' | 'hook' | 'function' | 'constant' | 'type';
   name: string;
   description: string;
   link: string;
