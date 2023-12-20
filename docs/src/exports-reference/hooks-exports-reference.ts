@@ -330,6 +330,15 @@ export const HOOKS_EXPORTS_REFERENCE: ExportReferenceGroup = {
       name: 'use-os',
       description: 'Detects user operating system',
       link: '/hooks/use-os/',
+      children: [
+        {
+          type: 'type',
+          name: 'OS',
+          description:
+            'A union of all possible operating systems that can be returned by use-os hook',
+          link: '/hooks/use-os/#os-type',
+        },
+      ],
     },
     {
       type: 'hook',
