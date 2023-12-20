@@ -87,7 +87,7 @@ function Demo() {
 ## Transitions during color scheme change
 
 By default, transitions on all elements are disabled when color scheme changes to avoid
-inconsistent animations. To enable transitions during color scheme change, set `keepTransition: true`
+inconsistent animations. To enable transitions during color scheme change, set `keepTransitions: true`
 option on `useMantineColorScheme` hook:
 
 ```tsx
@@ -95,7 +95,7 @@ import { useMantineColorScheme } from '@mantine/core';
 
 function Demo() {
   const { colorScheme, setColorScheme } = useMantineColorScheme({
-    keepTransition: true,
+    keepTransitions: true,
   });
 }
 ```
