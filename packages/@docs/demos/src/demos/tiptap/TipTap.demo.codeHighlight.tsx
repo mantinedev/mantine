@@ -14,11 +14,13 @@ import { RichTextEditor } from '@mantine/tiptap';
 import { useEditor } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
 import CodeBlockLowlight from '@tiptap/extension-code-block-lowlight';
-import { lowlight } from 'lowlight';
-import tsLanguageSyntax from 'highlight.js/lib/languages/typescript';
+import { createLowlight } from 'lowlight';
+import ts from 'highlight.js/lib/languages/typescript';
 
-// register languages that your are planning to use
-lowlight.register('ts', tsLanguageSyntax);
+const lowlight = createLowlight();
+
+// register languages that you are planning to use
+lowlight.register({ ts });
 
 function escapeHtml(unsafe: string) {
   return unsafe
