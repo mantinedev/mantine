@@ -84,4 +84,12 @@ export const MDX_GUIDES_DATA: Record<string, Frontmatter> = {
     search: 'Styles migration guide from 6.x to 7.x',
     hideHeader: true,
   },
+
+  FunctionsReference: {
+    title: 'Functions reference',
+    slug: '/guides/functions-reference',
+    search:
+      'A list of functions exported from Mantine packages that are not documented anywhere else',
+    hideHeader: true,
+  },
 };
