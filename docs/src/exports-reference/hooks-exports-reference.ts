@@ -64,6 +64,18 @@ export const HOOKS_EXPORTS_REFERENCE: ExportReferenceGroup = {
           description: 'Add hotkey events to elements and components',
           link: '/hooks/use-hotkeys/#targeting-elements',
         },
+        {
+          type: 'type',
+          name: 'HotkeyItem',
+          description: 'A tuple of hotkey string, handler function and options',
+          link: '/hooks/use-hotkeys/#types',
+        },
+        {
+          type: 'type',
+          name: 'HotkeyItemOptions',
+          description: 'Options for hotkey item',
+          link: '/hooks/use-hotkeys/#types',
+        },
       ],
     },
     {

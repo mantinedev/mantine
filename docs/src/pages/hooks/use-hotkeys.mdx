@@ -12,11 +12,6 @@ export default Layout(MDX_DATA.useHotkeys);
 - `handler` - event handler called when a given combination was pressed
 - `options` - object with extra options for hotkey handler
 
-The second argument is a list of HTML tags:
-
-- `tagsToIgnore` - HTML tag names that hotkeys will not trigger on
-- `triggerOnContentEditable` - Whether shortcuts should trigger when based on contentEditable
-
 ```tsx
 import { useHotkeys } from '@mantine/hooks';
 
@@ -30,6 +25,24 @@ function Demo() {
   ]);
 
   return null;
+}
+```
+
+The second argument is a list of HTML tags on which hotkeys should be ignored.
+By default, hotkeys events are ignored if the focus is in `input`, `textarea` and `select` elements.
+
+```tsx
+import { useHotkeys } from '@mantine/hooks';
+
+function Demo() {
+  // Ignore hotkeys events only when focus is in input and textarea elements
+  useHotkeys(
+    [['ctrl+K', () => console.log('Trigger search')]],
+    ['INPUT', 'TEXTAREA']
+  );
+
+  // Empty array – do not ignore hotkeys events on any element
+  useHotkeys([['ctrl+K', () => console.log('Trigger search')]], []);
 }
 ```
 
@@ -62,17 +75,46 @@ document.body.addEventListener(
 - `alt + shift + L` – you can use whitespace inside hotkey
 - `ArrowLeft` – you can use special keys using [this format](https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent/key/Key_Values)
 
+## Types
+
+`@mantine/hooks` exports `HotkeyItemOptions` and `HotkeyItem` types:
+
+```tsx
+interface HotkeyItemOptions {
+  preventDefault?: boolean;
+}
+
+type HotkeyItem = [
+  string,
+  (event: KeyboardEvent) => void,
+  HotkeyItemOptions?,
+];
+```
+
+`HotkeyItem` type can be used to create hotkey items outside of `use-hotkeys` hook:
+
+```tsx
+import { HotkeyItem, useHotkeys } from '@mantine/hooks';
+
+const hotkeys: HotkeyItem[] = [
+  [
+    'mod+J',
+    () => console.log('Toggle color scheme'),
+    { preventDefault: false },
+  ],
+  ['ctrl+K', () => console.log('Trigger search')],
+  ['alt+mod+shift+X', () => console.log('Rick roll')],
+];
+
+useHotkeys(hotkeys);
+```
+
 ## Definition
 
 ```tsx
 function useHotkeys(
-  hotKeyItem: Array<
-    [
-      hotkey: string,
-      handler: (event: KeyboardEvent) => void,
-      options?: { preventDefault?: boolean },
-    ]
-  >,
-  tagsToIgnore?: string[]
+  hotkeys: HotkeyItem[],
+  tagsToIgnore?: string[],
+  triggerOnContentEditable?: boolean
 ): void;
 ```
