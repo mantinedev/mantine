@@ -103,6 +103,14 @@ export const HOOKS_EXPORTS_REFERENCE: ExportReferenceGroup = {
       name: 'use-media-query',
       description: 'Subscribes to media queries with window.matchMedia',
       link: '/hooks/use-media-query/',
+      children: [
+        {
+          type: 'type',
+          name: 'UseMediaQueryOptions',
+          description: 'use-media-query options type',
+          link: '/hooks/use-media-query/#usemediaqueryoptions-type',
+        },
+      ],
     },
     {
       type: 'hook',

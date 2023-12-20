@@ -31,6 +31,20 @@ function Demo() {
 }
 ```
 
+## UseMediaQueryOptions type
+
+`@mantine/hooks` package exports `UseMediaQueryOptions` type – a type of the second argument of `useMediaQuery` hook.
+
+```tsx
+import { useMediaQuery, UseMediaQueryOptions } from '@mantine/hooks';
+
+const options: UseMediaQueryOptions = {
+  getInitialValueInEffect: false,
+};
+
+const matches = useMediaQuery('(max-width: 40em)', true, options);
+```
+
 ## Definition
 
 ```tsx
