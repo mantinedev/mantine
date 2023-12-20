@@ -417,5 +417,41 @@ export const HOOKS_EXPORTS_REFERENCE: ExportReferenceGroup = {
       description: 'useEffect drop in replacement with dependencies shallow comparison',
       link: '/hooks/use-shallow-effect/',
     },
+    {
+      type: 'function',
+      name: 'clamp',
+      description: 'Clamps number within the inclusive lower and upper bounds',
+      link: '/guides/functions-reference/#clamp',
+    },
+    {
+      type: 'function',
+      name: 'lowerFirst',
+      description: 'Converts first character of the string to lower case',
+      link: '/guides/functions-reference/#lowerfirst',
+    },
+    {
+      type: 'function',
+      name: 'upperFirst',
+      description: 'Converts first character of the string to upper case',
+      link: '/guides/functions-reference/#upperfirst',
+    },
+    {
+      type: 'function',
+      name: 'randomId',
+      description: 'Generates random id with mantine- prefix',
+      link: '/guides/functions-reference/#randomid',
+    },
+    {
+      type: 'function',
+      name: 'range',
+      description: 'Generates array of numbers from start to end (inclusive)',
+      link: '/guides/functions-reference/#range',
+    },
+    {
+      type: 'function',
+      name: 'shallowEqual',
+      description: 'Performs shallow equal comparison of two objects',
+      link: '/guides/functions-reference/#shallowequal',
+    },
   ],
 };
