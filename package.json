@@ -23,6 +23,7 @@
     "format-changelogs": "esno scripts/docs/format-changelogs",
     "changelog": "esno scripts/docs/changelog",
     "storybook": "storybook dev -p 6006",
+    "dev": "npm run docs",
     "docs": "cd docs && npm run dev",
     "docs:docgen": "esno scripts/docgen",
     "docs:codegen": "esno scripts/codegen",
