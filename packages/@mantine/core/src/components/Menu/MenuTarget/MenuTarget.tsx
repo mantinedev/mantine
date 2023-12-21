@@ -26,20 +26,29 @@ export const MenuTarget = forwardRef<HTMLElement, MenuTargetProps>((props, ref) 
 
   const ctx = useMenuContext();
 
-  const onClick = createEventHandler(
-    children.props.onClick,
-    () => (ctx.trigger === 'click' || ctx.trigger === 'click-hover') && ctx.toggleDropdown()
-  );
+  const onClick = createEventHandler(children.props.onClick, () => {
+    if (ctx.trigger === 'click') {
+      ctx.toggleDropdown();
+    } else if (ctx.trigger === 'click-hover') {
+      ctx.setOpenedViaClick(true);
+      if (!ctx.opened) {
+        ctx.openDropdown();
+      }
+    }
+  });
 
   const onMouseEnter = createEventHandler(
     children.props.onMouseEnter,
     () => (ctx.trigger === 'hover' || ctx.trigger === 'click-hover') && ctx.openDropdown()
   );
 
-  const onMouseLeave = createEventHandler(
-    children.props.onMouseLeave,
-    () => (ctx.trigger === 'hover' || ctx.trigger === 'click-hover') && ctx.closeDropdown()
-  );
+  const onMouseLeave = createEventHandler(children.props.onMouseLeave, () => {
+    if (ctx.trigger === 'hover') {
+      ctx.closeDropdown();
+    } else if (ctx.trigger === 'click-hover' && !ctx.openedViaClick) {
+      ctx.closeDropdown();
+    }
+  });
 
   return (
     <Popover.Target refProp={refProp} popupType="menu" ref={ref} {...others}>

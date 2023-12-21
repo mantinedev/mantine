@@ -1,6 +1,7 @@
 // files names that should not have use client directive at the top of the output file
 export const ROLLUP_EXCLUDE_USE_CLIENT = [
   'index',
+  'core/utils/deep-merge/deep-merge',
   'core/utils/units-converters/rem',
   'core/utils/units-converters/px',
   'core/factory/create-polymorphic-component',
@@ -11,6 +12,8 @@ export const ROLLUP_EXCLUDE_USE_CLIENT = [
   'core/MantineProvider/color-functions/to-rgba/to-rgba',
   'core/MantineProvider/default-colors',
   'core/MantineProvider/default-theme',
+  'core/MantineProvider/merge-mantine-theme/merge-mantine-theme',
+  'theme-to-vars',
 ].reduce<string[]>((acc, name) => {
   acc.push(`${name}.js`, `${name}.mjs`, `${name}.cjs`);
   return acc;

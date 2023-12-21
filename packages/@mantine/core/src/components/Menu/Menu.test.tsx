@@ -65,10 +65,8 @@ describe('@mantine/core/Menu', () => {
 
   it('toggles menu when target is clicked when trigger="click"', async () => {
     render(<TestContainer />);
-
     expectClosed();
     await userEvent.click(getControl());
-
     expectOpened();
     await userEvent.click(getControl());
     expectClosed();
@@ -77,12 +75,32 @@ describe('@mantine/core/Menu', () => {
   it('toggles menu when target is hovered when trigger="hover"', async () => {
     render(<TestContainer trigger="hover" />);
     expectClosed();
-
     await userEvent.hover(getControl());
     expectOpened();
-
     await userEvent.unhover(getControl());
     expectClosed();
+  });
+
+  it('toggles menu when target is hovered when trigger="click-hover"', async () => {
+    render(<TestContainer trigger="click-hover" />);
+    expectClosed();
+    await userEvent.hover(getControl());
+    expectOpened();
+    await userEvent.unhover(getControl());
+    expectClosed();
+  });
+
+  it('menu always stays open when target is clicked when trigger="click-hover"', async () => {
+    render(<TestContainer trigger="click-hover" />);
+    expectClosed();
+    await userEvent.click(getControl());
+    expectOpened();
+    await userEvent.click(getControl());
+    expectOpened();
+    await userEvent.hover(getControl());
+    expectOpened();
+    await userEvent.unhover(getControl());
+    expectOpened();
   });
 
   it('supports defaultOpened prop', () => {

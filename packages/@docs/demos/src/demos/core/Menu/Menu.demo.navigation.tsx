@@ -4,26 +4,33 @@ import { MantineDemo } from '@mantinex/demo';
 import { DemoMenuItems } from './_menu-items';
 
 const code = `
-import { Menu, Group } from '@mantine/core';
+import { Group, Menu } from '@mantine/core';
 
 function Demo() {
-  return (
-    <Group>
-      <Menu trigger="click-hover" loop={false} withinPortal={false} trapFocus={false} menuItemTabIndex={0}>
+  const menus = Array(4)
+    .fill(0)
+    .map((e, i) => (
+      <Menu
+        key={i}
+        trigger="click-hover"
+        loop={false}
+        withinPortal={false}
+        trapFocus={false}
+        menuItemTabIndex={0}
+      >
         {/* ... menu items */}
       </Menu>
-      <Menu trigger="click-hover" loop={false} withinPortal={false} trapFocus={false} menuItemTabIndex={0}>
-        {/* ... menu items */}
-      </Menu>
-    </Group>
-  );
+    ));
+  return <Group>{menus}</Group>;
 }
 `;
 
 function Demo() {
-  return (
-    <Group>
+  const menus = Array(4)
+    .fill(0)
+    .map((e, i) => (
       <Menu
+        key={i}
         trigger="click-hover"
         loop={false}
         withinPortal={false}
@@ -32,17 +39,8 @@ function Demo() {
       >
         <DemoMenuItems />
       </Menu>
-      <Menu
-        trigger="click-hover"
-        loop={false}
-        withinPortal={false}
-        trapFocus={false}
-        menuItemTabIndex={0}
-      >
-        <DemoMenuItems />
-      </Menu>
-    </Group>
-  );
+    ));
+  return <Group>{menus}</Group>;
 }
 
 export const navigation: MantineDemo = {
