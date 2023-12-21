@@ -57,3 +57,8 @@ export const DemoOffset = {
   name: '⭐ Demo: offset',
   render: renderDemo(demos.offset),
 };
+
+export const DemoCloseIcon = {
+  name: '⭐ Demo: closeIcon',
+  render: renderDemo(demos.closeIcon),
+};

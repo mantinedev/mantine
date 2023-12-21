@@ -9,3 +9,4 @@ export { initialFocus } from './Drawer.demo.initialFocus';
 export { scrollarea } from './Drawer.demo.scrollarea';
 export { overflow } from './Drawer.demo.overflow';
 export { offset } from './Drawer.demo.offset';
+export { closeIcon } from './Drawer.demo.closeIcon';

@@ -72,3 +72,8 @@ export const DemoFullScreenMobile = {
   name: '⭐ Demo: fullScreenMobile',
   render: renderDemo(demos.fullScreenMobile),
 };
+
+export const DemoCloseIcon = {
+  name: '⭐ Demo: closeIcon',
+  render: renderDemo(demos.closeIcon),
+};

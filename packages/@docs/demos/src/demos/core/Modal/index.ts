@@ -12,3 +12,4 @@ export { composition } from './Modal.demo.composition';
 export { offset } from './Modal.demo.offset';
 export { initialFocus } from './Modal.demo.initialFocus';
 export { fullScreenMobile } from './Modal.demo.fullScreenMobile';
+export { closeIcon } from './Modal.demo.closeIcon';
