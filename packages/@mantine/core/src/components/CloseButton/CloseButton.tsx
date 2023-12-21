@@ -40,6 +40,9 @@ export interface __CloseButtonProps {
 
   /** Content rendered inside the button, for example `VisuallyHidden` with label for screen readers */
   children?: React.ReactNode;
+
+  /** Replaces default close icon. If set, `iconSize` prop is ignored. */
+  icon?: React.ReactNode;
 }
 
 export interface CloseButtonProps
@@ -83,6 +86,7 @@ export const CloseButton = polymorphicFactory<CloseButtonFactory>((_props, ref) 
     'data-disabled': dataDisabled,
     disabled,
     variant,
+    icon,
     ...others
   } = props;
 
@@ -109,7 +113,7 @@ export const CloseButton = polymorphicFactory<CloseButtonFactory>((_props, ref) 
       mod={{ disabled: disabled || dataDisabled }}
       {...getStyles('root', { variant, active: true })}
     >
-      <CloseIcon />
+      {icon || <CloseIcon />}
       {children}
     </UnstyledButton>
   );

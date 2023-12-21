@@ -28,6 +28,11 @@ describe('@mantine/core/CloseButton', () => {
     displayName: '@mantine/core/CloseButton',
     stylesApiSelectors: ['root'],
   });
+
+  it('allows rendering custom icon', () => {
+    const { container } = render(<CloseButton icon={<span data-testid="test-icon" />} />);
+    expect(container.querySelector('[data-testid="test-icon"]')).toBeInTheDocument();
+  });
 });
 
 describe('@mantine/core/CloseIcon', () => {
