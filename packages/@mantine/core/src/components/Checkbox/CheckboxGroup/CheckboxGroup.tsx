@@ -8,7 +8,7 @@ import { CheckboxGroupProvider } from '../CheckboxGroup.context';
 export type CheckboxGroupStylesNames = InputWrapperStylesNames;
 
 export interface CheckboxGroupProps extends Omit<InputWrapperProps, 'onChange'> {
-  /** `Checkbox` components */
+  /** `Checkbox` components and any other elements */
   children: React.ReactNode;
 
   /** Controlled component value */
@@ -17,10 +17,10 @@ export interface CheckboxGroupProps extends Omit<InputWrapperProps, 'onChange'> 
   /** Default value for uncontrolled component */
   defaultValue?: string[];
 
-  /** Called when value changes */
+  /** Called with an array of selected checkboxes values when value changes */
   onChange?: (value: string[]) => void;
 
-  /** Props passed down to the `Input.Wrapper` */
+  /** Props passed down to the root element (`Input.Wrapper` component) */
   wrapperProps?: Record<string, any>;
 
   /** Controls size of the `Input.Wrapper`, `'sm'` by default */

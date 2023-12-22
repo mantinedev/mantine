@@ -36,16 +36,16 @@ export interface CheckboxProps
   extends BoxProps,
     StylesApiProps<CheckboxFactory>,
     ElementProps<'input', 'size'> {
-  /** Id used to bind input and label, if not passed, unique id will be generated instead */
+  /** Id used to connect input with the label. If not set, unique id is generated instead. */
   id?: string;
 
-  /** Checkbox label */
+  /** Content of the `<label />` associated with the checkbox */
   label?: React.ReactNode;
 
   /** Key of `theme.colors` or any valid CSS color to set input background color in checked state, `theme.primaryColor` by default */
   color?: MantineColor;
 
-  /** Controls size of all elements */
+  /** Controls size of the component */
   size?: MantineSize | (string & {});
 
   /** Key of `theme.radius` or any valid CSS value to set `border-radius,` `theme.defaultRadius` by default */
@@ -60,16 +60,16 @@ export interface CheckboxProps
   /** Description displayed below the label */
   description?: React.ReactNode;
 
-  /** Error displayed below the label */
+  /** Error message displayed below the label */
   error?: React.ReactNode;
 
-  /** Indeterminate state of checkbox, if set, `checked` prop is ignored */
+  /** Indeterminate state of the checkbox. If set, `checked` prop is ignored. */
   indeterminate?: boolean;
 
-  /** Icon rendered when checkbox has checked or indeterminate state */
+  /** Icon displayed when checkbox is in checked or indeterminate state */
   icon?: React.FC<{ indeterminate: boolean | undefined; className: string }>;
 
-  /** Assigns ref of the root element, can be used with `Tooltip` and other similar components */
+  /** Assigns ref of the root element */
   rootRef?: React.ForwardedRef<HTMLDivElement>;
 
   /** Key of `theme.colors` or any valid CSS color to set icon color, `theme.white` by default */

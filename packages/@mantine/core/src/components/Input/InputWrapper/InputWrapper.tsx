@@ -44,19 +44,19 @@ export type InputWrapperStylesNames =
   | InputErrorStylesNames;
 
 export interface __InputWrapperProps {
-  /** Contents of `Input.Label` component, if not set, label is not rendered. */
+  /** Contents of `Input.Label` component. If not set, label is not rendered. */
   label?: React.ReactNode;
 
-  /** Contents of `Input.Description` component, if not set, description is not rendered. */
+  /** Contents of `Input.Description` component. If not set, description is not rendered. */
   description?: React.ReactNode;
 
-  /** Contents of `Input.Error` component, if not set, error is not rendered. */
+  /** Contents of `Input.Error` component. If not set, error is not rendered. */
   error?: React.ReactNode;
 
   /** Adds required attribute to the input and a red asterisk on the right side of label, `false` by default */
   required?: boolean;
 
-  /** Determines whether required asterisk should be rendered, overrides required prop, does not add required attribute to the input, `false` by default */
+  /** Determines whether the required asterisk should be displayed. Overrides `required` prop. Does not add required attribute to the input. `false` by default */
   withAsterisk?: boolean;
 
   /** Props passed down to the `Input.Label` component */
@@ -65,10 +65,10 @@ export interface __InputWrapperProps {
   /** Props passed down to the `Input.Description` component */
   descriptionProps?: Record<string, any>;
 
-  /** Props passed down to the `InputError` component */
+  /** Props passed down to the `Input.Error` component */
   errorProps?: Record<string, any>;
 
-  /** Input container component, defaults to `React.Fragment` */
+  /** Input container component, `React.Fragment` by default */
   inputContainer?: (children: React.ReactNode) => React.ReactNode;
 
   /** Controls order of the elements, `['label', 'description', 'input', 'error']` by default */
