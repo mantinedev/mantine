@@ -23,7 +23,7 @@ export interface FileInputProps<Multiple = false>
   /** Determines whether user can pick more than one file, `false` by default */
   multiple?: Multiple;
 
-  /** File input accept attribute, for example, "image/png,image/jpeg" */
+  /** File input accept attribute, for example, `"image/png,image/jpeg"` */
   accept?: string;
 
   /** Input name attribute */
@@ -32,7 +32,7 @@ export interface FileInputProps<Multiple = false>
   /** Input form attribute */
   form?: string;
 
-  /** Value renderer, by default file name is rendered */
+  /** Value renderer. By default, file name is displayed. */
   valueComponent?: React.FC<{ value: null | File | File[] }>;
 
   /** Determines whether clear button should be displayed in the right section, `false` by default */
@@ -41,7 +41,7 @@ export interface FileInputProps<Multiple = false>
   /** Props passed down to the clear button */
   clearButtonProps?: React.ComponentPropsWithoutRef<'button'>;
 
-  /** Read only inputs value cannot be changed */
+  /** If set, the input value cannot be changed  */
   readOnly?: boolean;
 
   /** Specifies that, optionally, a new file should be captured, and which device should be used to capture that new media of a type defined by the accept attribute. */

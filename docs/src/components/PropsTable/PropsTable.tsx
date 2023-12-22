@@ -5,6 +5,7 @@ import { DocsSection } from '@/components/DocsSection';
 import { HtmlText } from '@/components/HtmlText';
 import { TableError } from '@/components/TableError';
 import { TableInlineCode } from '@/components/TableInlineCode';
+import { REPLACE_TYPES } from './replace-types';
 
 export interface DocgenProp {
   defaultValue: {
@@ -59,7 +60,9 @@ export function PropsTable({ component, query }: PropsTableProps) {
           </Table.Td>
 
           <Table.Td>
-            <TableInlineCode>{prop.type.name}</TableInlineCode>
+            <TableInlineCode>
+              {prop.type.name in REPLACE_TYPES ? REPLACE_TYPES[prop.type.name] : prop.type.name}
+            </TableInlineCode>
           </Table.Td>
           <Table.Td>
             <HtmlText fz="sm">{prop.description}</HtmlText>

@@ -26,7 +26,7 @@ export interface InputLabelProps
     ElementProps<'label'> {
   __staticSelector?: string;
 
-  /** Determines whether required asterisk should be displayed  */
+  /** Determines whether the required asterisk should be displayed  */
   required?: boolean;
 
   /** Controls label `font-size`, `'sm'` by default */
