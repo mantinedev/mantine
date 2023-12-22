@@ -51,37 +51,37 @@ export interface RatingProps
   /** Called when value changes */
   onChange?: (value: number) => void;
 
-  /** The icon that is displayed when symbol is empty */
+  /** Icon displayed when the symbol is empty */
   emptySymbol?: React.ReactNode | ((value: number) => React.ReactNode);
 
-  /** This icon that is displayed when symbol is full */
+  /** Icon displayed when the symbol is full */
   fullSymbol?: React.ReactNode | ((value: number) => React.ReactNode);
 
-  /** Number of fractions each item can be divided into, 1 by default */
+  /** Number of fractions each item can be divided into, `1` by default */
   fractions?: number;
 
-  /** Controls component size */
+  /** Controls component size, `'sm'` by default */
   size?: MantineSize;
 
-  /** Number of controls that should be rendered */
+  /** Number of controls, `5` by default */
   count?: number;
 
-  /** Called when item is hovered */
+  /** Called when one of the controls is hovered */
   onHover?: (value: number) => void;
 
-  /** Function should return labelText for the symbols */
-  getSymbolLabel?: (value: number) => string;
+  /** A function to assign `aria-label` of the the control at index given in the argument. If not specified, control index is used as `aria-label`. */
+  getSymbolLabel?: (index: number) => string;
 
-  /** Name of rating, should be unique within the page */
+  /** `name` attribute passed down to all inputs. By default, `name` is generated randomly. */
   name?: string;
 
-  /** If true, you won't be able to interact */
+  /** If set, the user cannot interact with the component, `false` by default */
   readOnly?: boolean;
 
-  /** If true, only the selected symbol will change to full symbol */
+  /** If set, only the selected symbol changes to full symbol when selected, `false` by default */
   highlightSelectedOnly?: boolean;
 
-  /** Key of theme.colors or any CSS color value, yellow by default */
+  /** Key of `theme.colors` or any CSS color value, `'yellow'` by default */
   color?: MantineColor;
 }
 
