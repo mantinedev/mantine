@@ -84,7 +84,7 @@ export interface SliderProps
   /** Thumb `aria-label` */
   thumbLabel?: string;
 
-  /** Determines whether thumb label should be displayed when the slider is hovered, `true` by default */
+  /** Determines whether the label should be displayed when the slider is hovered, `true` by default */
   showLabelOnHover?: boolean;
 
   /** Content rendered inside thumb */

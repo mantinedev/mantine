@@ -48,13 +48,13 @@ export interface SwitchProps
   /** Id used to bind input and label, if not passed, unique id will be generated instead */
   id?: string;
 
-  /** Switch label */
+  /** Content of the `label` associated with the radio */
   label?: React.ReactNode;
 
-  /** Inner label when Switch is in unchecked state */
+  /** Inner label when the `Switch` is in unchecked state */
   offLabel?: React.ReactNode;
 
-  /** Inner label when Switch is in checked state */
+  /** Inner label when the `Switch` is in checked state */
   onLabel?: React.ReactNode;
 
   /** Key of `theme.colors` or any valid CSS color to set input color in checked state, `theme.primaryColor` by default */
@@ -66,10 +66,10 @@ export interface SwitchProps
   /** Key of `theme.radius` or any valid CSS value to set `border-radius,` "xl" by default */
   radius?: MantineRadius;
 
-  /** Props passed down to the wrapper element */
+  /** Props passed down to the root element */
   wrapperProps?: Record<string, any>;
 
-  /** Icon inside the thumb of switch */
+  /** Icon inside the thumb of the switch */
   thumbIcon?: React.ReactNode;
 
   /** Position of the label relative to the input, `'right'` by default */
@@ -81,7 +81,7 @@ export interface SwitchProps
   /** Error displayed below the label */
   error?: React.ReactNode;
 
-  /** Assigns ref of the root element, can be used with `Tooltip` and other similar components */
+  /** Assigns ref of the root element */
   rootRef?: React.ForwardedRef<HTMLDivElement>;
 }
 

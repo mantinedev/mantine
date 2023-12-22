@@ -7,5 +7,7 @@ generateDeclarations({
   outputPath: getPath('docs/src/.docgen'),
   componentsPaths: DOCGEN_PATHS,
   excludeProps: [],
-  typesReplacement: {},
+  typesReplacement: {
+    'Partial<Omit<TransitionProps, "mounted">> | undefined': 'TransitionProps',
+  },
 });

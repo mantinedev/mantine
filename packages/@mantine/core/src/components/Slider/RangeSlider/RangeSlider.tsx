@@ -84,7 +84,7 @@ export interface RangeSliderProps
   /** Determines whether the label should be visible when the slider is not being dragged or hovered, `false` by default */
   labelAlwaysOn?: boolean;
 
-  /** Determines whether thumb label should be displayed when the slider is hovered, `true` by default */
+  /** Determines whether the label should be displayed when the slider is hovered, `true` by default */
   showLabelOnHover?: boolean;
 
   /** Content rendered inside thumb */
