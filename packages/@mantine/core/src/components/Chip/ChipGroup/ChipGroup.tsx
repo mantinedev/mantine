@@ -13,10 +13,10 @@ export interface ChipGroupProps<T extends boolean = false> {
   /** Uncontrolled component initial value */
   defaultValue?: T extends true ? string[] : string | null;
 
-  /** Called when value changes */
+  /** Called when value changes. If `multiple` prop is set, called with an array of selected values. If not, called with a string value of selected chip. */
   onChange?: (value: T extends true ? string[] : string) => void;
 
-  /** `Chip` components */
+  /** `Chip` components and any other elements */
   children?: React.ReactNode;
 }
 

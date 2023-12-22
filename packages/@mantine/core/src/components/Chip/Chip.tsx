@@ -53,7 +53,7 @@ export interface ChipProps
   /** Chip input type, `'checkbox'` by default */
   type?: 'radio' | 'checkbox';
 
-  /** Chip label */
+  /** `label` element associated with the input */
   children: React.ReactNode;
 
   /** Checked state for controlled component */
@@ -65,19 +65,19 @@ export interface ChipProps
   /** Calls when checked state changes */
   onChange?: (checked: boolean) => void;
 
-  /** Key of `theme.colors` or any valid CSS color, `theme.primaryColor` by default */
+  /** Controls components colors based on `variant` prop. Key of `theme.colors` or any valid CSS color. `theme.primaryColor` by default */
   color?: MantineColor;
 
-  /** Static id to bind input with label, by default id is randomly generated */
+  /** Static id to connect input with the label, by default `id` is randomly generated */
   id?: string;
 
-  /** Props passed down to the wrapper element */
+  /** Props passed down to the root element */
   wrapperProps?: Record<string, any>;
 
-  /** Replaces default icon */
+  /** Any element or component to replace default icon */
   icon?: React.ReactNode;
 
-  /** Assigns ref of the root element, can be used with `Tooltip` and other similar components */
+  /** Assigns ref of the root element */
   rootRef?: React.ForwardedRef<HTMLDivElement>;
 
   /** Determines whether button text color with filled variant should depend on `background-color`. If luminosity of the `color` prop is less than `theme.luminosityThreshold`, then `theme.white` will be used for text color, otherwise `theme.black`. Overrides `theme.autoContrast`. */

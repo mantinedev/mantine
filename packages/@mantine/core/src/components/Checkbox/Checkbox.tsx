@@ -39,7 +39,7 @@ export interface CheckboxProps
   /** Id used to connect input with the label. If not set, unique id is generated instead. */
   id?: string;
 
-  /** Content of the `<label />` associated with the checkbox */
+  /** Content of the `label` associated with the checkbox */
   label?: React.ReactNode;
 
   /** Key of `theme.colors` or any valid CSS color to set input background color in checked state, `theme.primaryColor` by default */
