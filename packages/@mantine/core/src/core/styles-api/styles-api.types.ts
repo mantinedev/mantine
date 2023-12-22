@@ -1,5 +1,4 @@
-import type { CSSProperties } from 'react';
-import type { MantineStyleProp } from '../Box';
+import type { CSSProperties, MantineStyleProp } from '../Box';
 import type { FactoryPayload } from '../factory';
 import type { MantineTheme } from '../MantineProvider';
 import { PartialVarsResolver } from './create-vars-resolver/create-vars-resolver';
