@@ -8,7 +8,7 @@ import { RadioGroupProvider } from '../RadioGroup.context';
 export type RadioGroupStylesNames = InputWrapperStylesNames;
 
 export interface RadioGroupProps extends Omit<InputWrapperProps, 'onChange'> {
-  /** `Radio` components */
+  /** `Radio` components and any other elements */
   children: React.ReactNode;
 
   /** Controlled component value */
@@ -26,7 +26,7 @@ export interface RadioGroupProps extends Omit<InputWrapperProps, 'onChange'> {
   /** Controls size of the `Input.Wrapper`, `'sm'` by default */
   size?: MantineSize;
 
-  /** Name attribute of child radio inputs */
+  /** `name` attribute of child radio inputs. By default, `name` is generated randomly. */
   name?: string;
 }
 

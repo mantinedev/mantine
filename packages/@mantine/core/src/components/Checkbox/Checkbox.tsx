@@ -45,7 +45,7 @@ export interface CheckboxProps
   /** Key of `theme.colors` or any valid CSS color to set input background color in checked state, `theme.primaryColor` by default */
   color?: MantineColor;
 
-  /** Controls size of the component */
+  /** Controls size of the component, `'sm'` by default */
   size?: MantineSize | (string & {});
 
   /** Key of `theme.radius` or any valid CSS value to set `border-radius,` `theme.defaultRadius` by default */
@@ -72,7 +72,7 @@ export interface CheckboxProps
   /** Assigns ref of the root element */
   rootRef?: React.ForwardedRef<HTMLDivElement>;
 
-  /** Key of `theme.colors` or any valid CSS color to set icon color, `theme.white` by default */
+  /** Key of `theme.colors` or any valid CSS color to set icon color, by default value depends on `theme.autoContrast` */
   iconColor?: MantineColor;
 
   /** Determines whether icon color with filled variant should depend on `background-color`. If luminosity of the `color` prop is less than `theme.luminosityThreshold`, then `theme.white` will be used for text color, otherwise `theme.black`. Overrides `theme.autoContrast`. */

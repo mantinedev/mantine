@@ -36,16 +36,16 @@ export interface PinInputProps
   extends BoxProps,
     StylesApiProps<PinInputFactory>,
     ElementProps<'div', 'onChange'> {
-  /** Hidden input name attribute */
+  /** Hidden input `name` attribute */
   name?: string;
 
-  /** Hidden input form attribute */
+  /** Hidden input `form` attribute */
   form?: string;
 
-  /** Key of `theme.spacing` or any valid CSS value for `gap`, numbers are converted to rem, `'md'` by default */
+  /** Key of `theme.spacing` or any valid CSS value to set `gap` between inputs, numbers are converted to rem, `'md'` by default */
   gap?: MantineSpacing;
 
-  /** Key of `theme.radius` or any valid CSS value to set border-radius, numbers are converted to rem, `theme.defaultRadius` by default */
+  /** Key of `theme.radius` or any valid CSS value to set `border-radius`, numbers are converted to rem, `theme.defaultRadius` by default */
   radius?: MantineRadius;
 
   /** Controls inputs `width` and `height`, `'sm'` by default */
@@ -75,25 +75,25 @@ export interface PinInputProps
   /** Determines whether `autocomplete="one-time-code"` attribute should be set on all inputs, `true` by default */
   oneTimeCode?: boolean;
 
-  /** Base id used for all inputs, generated randomly by default */
+  /** Base id used for all inputs. By default, inputs' ids are generated randomly. */
   id?: string;
 
-  /** Disables all inputs */
+  /** If set, `disabled` attribute is added to all inputs */
   disabled?: boolean;
 
-  /** Adds error styles to all inputs */
+  /** If set, adds error styles and `aria-invalid` attribute to all inputs */
   error?: boolean;
 
-  /** Allowed values, `'alphanumeric'` by default */
+  /** Determines which values can be entered, `'alphanumeric'` by default */
   type?: 'alphanumeric' | 'number' | RegExp;
 
   /** Changes input type to `"password"`, `false` by default */
   mask?: boolean;
 
-  /** Number of input boxes, `4` by default */
+  /** Number of inputs, `4` by default */
   length?: number;
 
-  /** Determines whether input content can be edited */
+  /** If set, the user cannot edit the value */
   readOnly?: boolean;
 
   /** Inputs `type` attribute, inferred from the `type` prop if not specified */

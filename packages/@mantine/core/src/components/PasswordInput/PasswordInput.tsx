@@ -34,16 +34,16 @@ export interface PasswordInputProps
     __BaseInputProps,
     StylesApiProps<PasswordInputFactory>,
     ElementProps<'input', 'size'> {
-  /** Custom visibility toggle icon */
+  /** A component to replace visibility toggle icon */
   visibilityToggleIcon?: React.FC<{ reveal: boolean }>;
 
   /** Props passed down to the visibility toggle button */
   visibilityToggleButtonProps?: Record<string, any>;
 
-  /** Determines whether input content should be visible (controlled) */
+  /** Determines whether input content should be visible */
   visible?: boolean;
 
-  /** Determines whether input content should be visible (uncontrolled) */
+  /** Determines whether input content should be visible by default */
   defaultVisible?: boolean;
 
   /** Called when visibility changes */
