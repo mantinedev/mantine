@@ -63,7 +63,7 @@ export interface __InputProps {
   /** Left section width, used to set `width` of the section and input `padding-left`, by default equals to the input height */
   leftSectionWidth?: React.CSSProperties['width'];
 
-  /** Props added to the `leftSection` element */
+  /** Props passed down to the `leftSection` element */
   leftSectionProps?: React.ComponentPropsWithoutRef<'div'>;
 
   /** Sets `pointer-events` styles on the `leftSection` element, `'none'` by default */
@@ -75,13 +75,13 @@ export interface __InputProps {
   /** Right section width, used to set `width` of the section and input `padding-right`, by default equals to the input height */
   rightSectionWidth?: React.CSSProperties['width'];
 
-  /** Props added to the `rightSection` element */
+  /** Props passed down to the `rightSection` element */
   rightSectionProps?: React.ComponentPropsWithoutRef<'div'>;
 
   /** Sets `pointer-events` styles on the `rightSection` element, `'none'` by default */
   rightSectionPointerEvents?: React.CSSProperties['pointerEvents'];
 
-  /** Props added to the root element of the `Input` component */
+  /** Props passed down to the root element of the `Input` component */
   wrapperProps?: Record<string, any>;
 
   /** Sets `required` attribute on the `input` element */
@@ -99,7 +99,7 @@ export interface __InputProps {
   /** Determines whether the input should have `cursor: pointer` style, `false` by default */
   pointer?: boolean;
 
-  /** Determines whether the input should have red border and text color when `error` prop is set, `true` by default */
+  /** Determines whether the input should have red border and red text color when the `error` prop is set, `true` by default */
   withErrorStyles?: boolean;
 }
 

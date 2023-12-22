@@ -53,7 +53,7 @@ export interface ColorInputProps
   /** Determines whether the input value should be reset to the last known valid value when the input loses focus, `true` by default */
   fixOnBlur?: boolean;
 
-  /** Props passed down to the Popover component */
+  /** Props passed down to the `Popover` component */
   popoverProps?: PopoverProps;
 
   /** Determines whether the preview color swatch should be displayed in the left section of the input, `true` by default */
@@ -62,7 +62,7 @@ export interface ColorInputProps
   /** Determines whether eye dropper button should be displayed in the right section, `true` by default */
   withEyeDropper?: boolean;
 
-  /** An icon that will replace the default eye dropper icon */
+  /** An icon to replace the default eye dropper icon */
   eyeDropperIcon?: React.ReactNode;
 
   /** Determines whether the dropdown should be closed when one of the color swatches is clicked, `false` by default */

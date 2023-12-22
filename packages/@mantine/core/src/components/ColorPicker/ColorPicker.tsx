@@ -56,22 +56,22 @@ export interface __ColorPickerProps {
   /** Uncontrolled component default value */
   defaultValue?: string;
 
-  /** Called when color changes */
+  /** Called when value changes */
   onChange?: (value: string) => void;
 
-  /** Called when user stops dragging or changes value with arrow keys */
+  /** Called when the user stops dragging one of the sliders or changes the value with arrow keys */
   onChangeEnd?: (value: string) => void;
 
   /** Color format, `'hex'` by default */
   format?: ColorFormat;
 
-  /** Determines whether color picker should be displayed, `true` by default */
+  /** Determines whether the color picker should be displayed, `true` by default */
   withPicker?: boolean;
 
-  /** Color swatches */
+  /** An array of colors in one of the supported formats. Used to render swatches list below the color picker. */
   swatches?: string[];
 
-  /** Number of swatches displayed in one row, `7` by default */
+  /** Number of swatches per row, `7` by default */
   swatchesPerRow?: number;
 
   /** Controls size of hue, alpha and saturation sliders, `'md'` by default */

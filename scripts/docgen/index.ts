@@ -7,5 +7,7 @@ generateDeclarations({
   outputPath: getPath('docs/src/.docgen'),
   componentsPaths: DOCGEN_PATHS,
   excludeProps: [],
-  typesReplacement: {},
+  typesReplacement: {
+    'ColorFormat | undefined': '"hex" | "hexa" | "rgb" | "rgba" | "hsl" | "hsla"',
+  },
 });
