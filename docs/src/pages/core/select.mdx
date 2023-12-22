@@ -28,6 +28,31 @@ function Demo() {
 }
 ```
 
+## onChange handler
+
+`onChange` is called with two arguments:
+
+- `value` - string value of the selected option
+- `option` – selected option object
+
+If you prefer object format in state, use second argument of onChange handler:
+
+```tsx
+import { useState } from 'react';
+import { ComboboxItem, Select } from '@mantine/core';
+
+function Demo() {
+  const [value, setValue] = useState<ComboboxItem | null>(null);
+  return (
+    <Select
+      data={[{ value: 'react', label: 'React library' }]}
+      value={value ? value.value : null}
+      onChange={(_value, option) => setValue(option)}
+    />
+  );
+}
+```
+
 ## Clearable
 
 Set `clearable` prop to display the clear button in the right section. The button is not displayed

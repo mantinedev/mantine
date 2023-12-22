@@ -12,6 +12,7 @@ import {
 import { __CloseButtonProps } from '../CloseButton';
 import {
   Combobox,
+  ComboboxItem,
   ComboboxLikeProps,
   ComboboxLikeStylesNames,
   getOptionsLockup,
@@ -37,7 +38,7 @@ export interface SelectProps
   defaultValue?: string | null;
 
   /** Called when value changes */
-  onChange?: (value: string | null) => void;
+  onChange?: (value: string | null, option: ComboboxItem) => void;
 
   /** Determines whether the select should be searchable, `false` by default */
   searchable?: boolean;
@@ -191,7 +192,7 @@ export const Select = factory<SelectFactory>((_props, ref) => {
       size={size as string}
       {...clearButtonProps}
       onClear={() => {
-        setValue(null);
+        setValue(null, null);
         setSearch('');
       }}
     />
@@ -208,13 +209,16 @@ export const Select = factory<SelectFactory>((_props, ref) => {
         readOnly={readOnly}
         onOptionSubmit={(val) => {
           onOptionSubmit?.(val);
-          const nextValue = allowDeselect
+          const optionLockup = allowDeselect
             ? optionsLockup[val].value === _value
               ? null
-              : optionsLockup[val].value
-            : optionsLockup[val].value;
-          setValue(nextValue);
-          setSearch(typeof nextValue === 'string' ? optionsLockup[val].label : '');
+              : optionsLockup[val]
+            : optionsLockup[val];
+
+          const nextValue = optionLockup ? optionLockup.value : null;
+
+          setValue(nextValue, optionLockup);
+          setSearch(typeof nextValue === 'string' ? optionLockup?.label || '' : '');
           combobox.closeDropdown();
         }}
         size={size}

@@ -343,5 +343,6 @@ CSS variables for primary color are now available, you can use the following var
 - `stepHoldDelay` and `stepHoldInterval` props have been added to [NumberInput](/core/number-input).
 - [mantine-form-zod-resolver](https://github.com/mantinedev/mantine-form-zod-resolver) now supports `errorPriority` configuration which allows controlling the order of errors specified in the schema. This feature requires updating `mantine-form-zod-resolver` to version 1.1.0 or higher.
 - [CloseButton](/core/close-button) now supports `icon` prop which allows overriding default icon. It is useful when it is not possible to replace `CloseButton`, for example, in [Drawer](/core/drawer) component.
+- [Select](/core/select/#onchange-handler) component now calls `onChange` with an additional argument – option object. It contains `label`, `value` and optional `disabled` properties.
 - New [use-in-viewport](/hooks/use-in-viewport/) hook
 - All Vite templates have been updated to Vite 5.0 and Vitest 1.0
