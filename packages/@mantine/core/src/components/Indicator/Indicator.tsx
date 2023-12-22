@@ -76,7 +76,7 @@ export interface IndicatorProps
   /** Indicator z-index, `200` by default */
   zIndex?: string | number;
 
-  /** Determines whether text color should depend on `background-color`. If luminosity of the `color` prop is less than `theme.luminosityThreshold`, then `theme.white` will be used for text color, otherwise `theme.black`. Override `theme.autoContrast`. */
+  /** Determines whether text color should depend on `background-color`. If luminosity of the `color` prop is less than `theme.luminosityThreshold`, then `theme.white` will be used for text color, otherwise `theme.black`. Overrides `theme.autoContrast`. */
   autoContrast?: boolean;
 }
 

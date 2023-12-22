@@ -103,7 +103,7 @@ export interface StepperProps
   /** Determines whether steps should wrap to the next line if no space is available, `true` by default */
   wrap?: boolean;
 
-  /** Determines whether icon color with filled variant should depend on `background-color`. If luminosity of the `color` prop is less than `theme.luminosityThreshold`, then `theme.white` will be used for text color, otherwise `theme.black`. Override `theme.autoContrast`. */
+  /** Determines whether icon color with filled variant should depend on `background-color`. If luminosity of the `color` prop is less than `theme.luminosityThreshold`, then `theme.white` will be used for text color, otherwise `theme.black`. Overrides `theme.autoContrast`. */
   autoContrast?: boolean;
 }
 

@@ -59,7 +59,7 @@ export interface AvatarProps extends BoxProps, StylesApiProps<AvatarFactory> {
   /** Avatar placeholder, displayed when `src={null}` or when the image cannot be loaded */
   children?: React.ReactNode;
 
-  /** Determines whether text color with filled variant should depend on `background-color`. If luminosity of the `color` prop is less than `theme.luminosityThreshold`, then `theme.white` will be used for text color, otherwise `theme.black`. Override `theme.autoContrast`. */
+  /** Determines whether text color with filled variant should depend on `background-color`. If luminosity of the `color` prop is less than `theme.luminosityThreshold`, then `theme.white` will be used for text color, otherwise `theme.black`. Overrides `theme.autoContrast`. */
   autoContrast?: boolean;
 }
 

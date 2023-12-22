@@ -29,7 +29,7 @@ export interface __ProgressRootProps extends BoxProps, ElementProps<'div'> {
   /** Key of `theme.radius` or any valid CSS value to set `border-radius`, `theme.defaultRadius` by default */
   radius?: MantineRadius;
 
-  /** Determines whether label text color should depend on `background-color`. If luminosity of the `color` prop is less than `theme.luminosityThreshold`, then `theme.white` will be used for text color, otherwise `theme.black`. Override `theme.autoContrast`. */
+  /** Determines whether label text color should depend on `background-color`. If luminosity of the `color` prop is less than `theme.luminosityThreshold`, then `theme.white` will be used for text color, otherwise `theme.black`. Overrides `theme.autoContrast`. */
   autoContrast?: boolean;
 }
 

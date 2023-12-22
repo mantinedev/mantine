@@ -97,7 +97,7 @@ export interface SegmentedControlProps
   /** Determines whether the value can be changed */
   readOnly?: boolean;
 
-  /** Determines whether text color should depend on `background-color` of the indicator. If luminosity of the `color` prop is less than `theme.luminosityThreshold`, then `theme.white` will be used for text color, otherwise `theme.black`. Override `theme.autoContrast`. */
+  /** Determines whether text color should depend on `background-color` of the indicator. If luminosity of the `color` prop is less than `theme.luminosityThreshold`, then `theme.white` will be used for text color, otherwise `theme.black`. Overrides `theme.autoContrast`. */
   autoContrast?: boolean;
 }
 

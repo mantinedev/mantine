@@ -85,7 +85,7 @@ export interface ButtonProps extends BoxProps, StylesApiProps<ButtonFactory> {
   /** Props added to the `Loader` component (only visible when `loading` prop is set) */
   loaderProps?: LoaderProps;
 
-  /** Determines whether button text color with filled variant should depend on `background-color`. If luminosity of the `color` prop is less than `theme.luminosityThreshold`, then `theme.white` will be used for text color, otherwise `theme.black`. Override `theme.autoContrast`. */
+  /** Determines whether button text color with filled variant should depend on `background-color`. If luminosity of the `color` prop is less than `theme.luminosityThreshold`, then `theme.white` will be used for text color, otherwise `theme.black`. Overrides `theme.autoContrast`. */
   autoContrast?: boolean;
 }
 
