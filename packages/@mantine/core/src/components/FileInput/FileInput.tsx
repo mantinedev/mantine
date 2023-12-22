@@ -10,7 +10,7 @@ export interface FileInputProps<Multiple = false>
   extends BoxProps,
     __BaseInputProps,
     StylesApiProps<FileInputFactory>,
-    ElementProps<'button', 'value' | 'defaultValue' | 'onChange'> {
+    ElementProps<'button', 'value' | 'defaultValue' | 'onChange' | 'placeholder'> {
   /** Called when value changes */
   onChange?: (payload: Multiple extends true ? File[] : File | null) => void;
 
@@ -49,6 +49,9 @@ export interface FileInputProps<Multiple = false>
 
   /** Props passed down to the hidden input element which is used to capture files */
   fileInputProps?: React.ComponentPropsWithoutRef<'input'>;
+
+  /** Input placeholder */
+  placeholder?: React.ReactNode;
 }
 
 export type FileInputFactory = Factory<{

@@ -9,8 +9,8 @@ export function WithinDisabledFieldset() {
   return (
     <fieldset disabled style={{ padding: 40 }}>
       <legend>Disabled fieldset</legend>
-      <NativeSelect data={['React']} size="lg" placeholder="Disabled input within fieldset" />
-      <NativeSelect data={['React']} size="lg" placeholder="Disabled input" disabled mt="md" />
+      <NativeSelect data={['React']} size="lg" label="Disabled input within fieldset" />
+      <NativeSelect data={['React']} size="lg" label="Disabled input" disabled mt="md" />
     </fieldset>
   );
 }

@@ -31,7 +31,6 @@ function Demo() {
       <NativeSelect
         mt="md"
         label="Native select"
-        placeholder="Native select"
         data={['React', 'Angular', 'Vue', 'Svelte']}
       />
     </MantineThemeProvider>
@@ -69,13 +68,7 @@ function Demo() {
   return (
     <MantineThemeProvider theme={theme}>
       <TextInput label="Text input" placeholder="Text input" />
-
-      <NativeSelect
-        mt="md"
-        label="Native select"
-        placeholder="Native select"
-        data={['React', 'Angular', 'Vue', 'Svelte']}
-      />
+      <NativeSelect mt="md" label="Native select" data={['React', 'Angular', 'Vue', 'Svelte']} />
     </MantineThemeProvider>
   );
 }

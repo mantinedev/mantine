@@ -30,7 +30,6 @@ export function ConfiguratorSelectControl({
       value={value}
       onChange={(event) => onChange(event.currentTarget.value)}
       label={getControlLabel(prop)}
-      placeholder="Enter prop value"
       data={transformSelectData(data)}
       {...others}
     />

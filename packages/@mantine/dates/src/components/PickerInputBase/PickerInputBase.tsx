@@ -54,6 +54,9 @@ export interface DateInputSharedProps
 
   /** Separator between range value */
   labelSeparator?: string;
+
+  /** Input placeholder */
+  placeholder?: string;
 }
 
 export interface PickerInputBaseProps

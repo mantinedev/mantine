@@ -33,7 +33,6 @@ function Demo() {
       <NativeSelect
         mt="md"
         label="Native select"
-        placeholder="Native select"
         data={['React', 'Angular', 'Vue', 'Svelte']}
         description="Description below the input"
       />
@@ -70,7 +69,6 @@ function Demo() {
       <NativeSelect
         mt="md"
         label="Native select"
-        placeholder="Native select"
         data={['React', 'Angular', 'Vue', 'Svelte']}
         description="Description below the input"
       />
