@@ -85,19 +85,19 @@ export interface ColorPickerProps
     ElementProps<'div', 'onChange' | 'value' | 'defaultValue'> {
   __staticSelector?: string;
 
-  /** Determines whether component should take 100% width of its container, `false` by default */
+  /** Determines whether the component should take 100% width of its container, `false` by default */
   fullWidth?: boolean;
 
-  /** Determines whether interactive elements should be focusable, `true` by default */
+  /** Determines whether interactive elements (sliders thumbs and swatches) should be focusable, `true` by default */
   focusable?: boolean;
 
-  /** Saturation slider `aria-label` */
+  /** Saturation slider `aria-label` prop */
   saturationLabel?: string;
 
-  /** Hue slider `aria-label` */
+  /** Hue slider `aria-label` prop */
   hueLabel?: string;
 
-  /** Alpha slider `aria-label` */
+  /** Alpha slider `aria-label` prop */
   alphaLabel?: string;
 
   /** Called when one of the color swatches is clicked */
