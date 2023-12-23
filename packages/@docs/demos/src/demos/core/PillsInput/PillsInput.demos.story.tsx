@@ -3,12 +3,12 @@ import * as demos from './index';
 
 export default { title: 'PillsInput' };
 
-export const DemoUsage = {
+export const Demo_usage = {
   name: '⭐ Demo: usage',
   render: renderDemo(demos.usage),
 };
 
-export const DemoConfigurator = {
+export const Demo_configurator = {
   name: '⭐ Demo: configurator',
   render: renderDemo(demos.configurator),
 };

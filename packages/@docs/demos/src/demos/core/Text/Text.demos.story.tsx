@@ -3,32 +3,32 @@ import * as demos from './index';
 
 export default { title: 'Text' };
 
-export const DemoUsage = {
+export const Demo_usage = {
   name: '⭐ Demo: usage',
   render: renderDemo(demos.usage),
 };
 
-export const DemoLinesConfigurator = {
+export const Demo_linesConfigurator = {
   name: '⭐ Demo: linesConfigurator',
   render: renderDemo(demos.linesConfigurator),
 };
 
-export const DemoLineClamp = {
+export const Demo_lineClamp = {
   name: '⭐ Demo: lineClamp',
   render: renderDemo(demos.lineClamp),
 };
 
-export const DemoGradient = {
+export const Demo_gradient = {
   name: '⭐ Demo: gradient',
   render: renderDemo(demos.gradient),
 };
 
-export const DemoInherit = {
+export const Demo_inherit = {
   name: '⭐ Demo: inherit',
   render: renderDemo(demos.inherit),
 };
 
-export const DemoTruncate = {
+export const Demo_truncate = {
   name: '⭐ Demo: truncate',
   render: renderDemo(demos.truncate),
 };

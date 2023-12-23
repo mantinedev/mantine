@@ -3,27 +3,27 @@ import * as demos from './index';
 
 export default { title: 'Textarea' };
 
-export const DemoConfigurator = {
+export const Demo_configurator = {
   name: '⭐ Demo: configurator',
   render: renderDemo(demos.configurator),
 };
 
-export const DemoAutosize = {
+export const Demo_autosize = {
   name: '⭐ Demo: autosize',
   render: renderDemo(demos.autosize),
 };
 
-export const DemoError = {
+export const Demo_error = {
   name: '⭐ Demo: error',
   render: renderDemo(demos.error),
 };
 
-export const DemoDisabled = {
+export const Demo_disabled = {
   name: '⭐ Demo: disabled',
   render: renderDemo(demos.disabled),
 };
 
-export const DemoStylesApi = {
+export const Demo_stylesApi = {
   name: '⭐ Demo: stylesApi',
   render: renderDemo(demos.stylesApi),
 };

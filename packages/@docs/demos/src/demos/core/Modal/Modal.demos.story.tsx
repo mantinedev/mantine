@@ -3,77 +3,77 @@ import * as demos from './index';
 
 export default { title: 'Modal' };
 
-export const DemoUsage = {
+export const Demo_usage = {
   name: '⭐ Demo: usage',
   render: renderDemo(demos.usage),
 };
 
-export const DemoHeader = {
+export const Demo_header = {
   name: '⭐ Demo: header',
   render: renderDemo(demos.header),
 };
 
-export const DemoSizes = {
+export const Demo_sizes = {
   name: '⭐ Demo: sizes',
   render: renderDemo(demos.sizes),
 };
 
-export const DemoOverlay = {
+export const Demo_overlay = {
   name: '⭐ Demo: overlay',
   render: renderDemo(demos.overlay),
 };
 
-export const DemoOverflow = {
+export const Demo_overflow = {
   name: '⭐ Demo: overflow',
   render: renderDemo(demos.overflow),
 };
 
-export const DemoTransitions = {
+export const Demo_transitions = {
   name: '⭐ Demo: transitions',
   render: renderDemo(demos.transitions),
 };
 
-export const DemoCentered = {
+export const Demo_centered = {
   name: '⭐ Demo: centered',
   render: renderDemo(demos.centered),
 };
 
-export const DemoFullScreen = {
+export const Demo_fullScreen = {
   name: '⭐ Demo: fullScreen',
   render: renderDemo(demos.fullScreen),
 };
 
-export const DemoSizeAuto = {
+export const Demo_sizeAuto = {
   name: '⭐ Demo: sizeAuto',
   render: renderDemo(demos.sizeAuto),
 };
 
-export const DemoScrollarea = {
+export const Demo_scrollarea = {
   name: '⭐ Demo: scrollarea',
   render: renderDemo(demos.scrollarea),
 };
 
-export const DemoComposition = {
+export const Demo_composition = {
   name: '⭐ Demo: composition',
   render: renderDemo(demos.composition),
 };
 
-export const DemoOffset = {
+export const Demo_offset = {
   name: '⭐ Demo: offset',
   render: renderDemo(demos.offset),
 };
 
-export const DemoInitialFocus = {
+export const Demo_initialFocus = {
   name: '⭐ Demo: initialFocus',
   render: renderDemo(demos.initialFocus),
 };
 
-export const DemoFullScreenMobile = {
+export const Demo_fullScreenMobile = {
   name: '⭐ Demo: fullScreenMobile',
   render: renderDemo(demos.fullScreenMobile),
 };
 
-export const DemoCloseIcon = {
+export const Demo_closeIcon = {
   name: '⭐ Demo: closeIcon',
   render: renderDemo(demos.closeIcon),
 };

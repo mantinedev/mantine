@@ -3,37 +3,37 @@ import * as demos from './index';
 
 export default { title: 'Avatar' };
 
-export const DemoUsage = {
+export const Demo_usage = {
   name: '⭐ Demo: usage',
   render: renderDemo(demos.usage),
 };
 
-export const DemoPlaceholders = {
+export const Demo_placeholders = {
   name: '⭐ Demo: placeholders',
   render: renderDemo(demos.placeholders),
 };
 
-export const DemoConfigurator = {
+export const Demo_configurator = {
   name: '⭐ Demo: configurator',
   render: renderDemo(demos.configurator),
 };
 
-export const DemoLink = {
+export const Demo_link = {
   name: '⭐ Demo: link',
   render: renderDemo(demos.link),
 };
 
-export const DemoGroup = {
+export const Demo_group = {
   name: '⭐ Demo: group',
   render: renderDemo(demos.group),
 };
 
-export const DemoGroupTooltip = {
+export const Demo_groupTooltip = {
   name: '⭐ Demo: groupTooltip',
   render: renderDemo(demos.groupTooltip),
 };
 
-export const DemoGradient = {
+export const Demo_gradient = {
   name: '⭐ Demo: gradient',
   render: renderDemo(demos.gradient),
 };

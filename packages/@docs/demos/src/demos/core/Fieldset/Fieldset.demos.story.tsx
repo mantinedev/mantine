@@ -3,12 +3,12 @@ import * as demos from './index';
 
 export default { title: 'Fieldset' };
 
-export const DemoUsage = {
+export const Demo_usage = {
   name: '⭐ Demo: usage',
   render: renderDemo(demos.usage),
 };
 
-export const DemoDisabled = {
+export const Demo_disabled = {
   name: '⭐ Demo: disabled',
   render: renderDemo(demos.disabled),
 };

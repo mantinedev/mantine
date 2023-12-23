@@ -3,22 +3,22 @@ import * as demos from './index';
 
 export default { title: 'Calendar' };
 
-export const DemoUsage = {
+export const Demo_usage = {
   name: '⭐ Demo: usage',
   render: renderDemo(demos.usage),
 };
 
-export const DemoIsStatic = {
+export const Demo_isStatic = {
   name: '⭐ Demo: isStatic',
   render: renderDemo(demos.isStatic),
 };
 
-export const DemoPicker = {
+export const Demo_picker = {
   name: '⭐ Demo: picker',
   render: renderDemo(demos.picker),
 };
 
-export const DemoWeekPicker = {
+export const Demo_weekPicker = {
   name: '⭐ Demo: weekPicker',
   render: renderDemo(demos.weekPicker),
 };

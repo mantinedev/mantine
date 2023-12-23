@@ -3,17 +3,17 @@ import * as demos from './index';
 
 export default { title: 'List' };
 
-export const DemoConfigurator = {
+export const Demo_configurator = {
   name: '⭐ Demo: configurator',
   render: renderDemo(demos.configurator),
 };
 
-export const DemoIcon = {
+export const Demo_icon = {
   name: '⭐ Demo: icon',
   render: renderDemo(demos.icon),
 };
 
-export const DemoNested = {
+export const Demo_nested = {
   name: '⭐ Demo: nested',
   render: renderDemo(demos.nested),
 };

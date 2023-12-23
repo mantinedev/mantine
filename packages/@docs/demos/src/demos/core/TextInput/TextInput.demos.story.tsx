@@ -3,32 +3,32 @@ import * as demos from './index';
 
 export default { title: 'TextInput' };
 
-export const DemoUsage = {
+export const Demo_usage = {
   name: '⭐ Demo: usage',
   render: renderDemo(demos.usage),
 };
 
-export const DemoType = {
+export const Demo_type = {
   name: '⭐ Demo: type',
   render: renderDemo(demos.type),
 };
 
-export const DemoSections = {
+export const Demo_sections = {
   name: '⭐ Demo: sections',
   render: renderDemo(demos.sections),
 };
 
-export const DemoError = {
+export const Demo_error = {
   name: '⭐ Demo: error',
   render: renderDemo(demos.error),
 };
 
-export const DemoDisabled = {
+export const Demo_disabled = {
   name: '⭐ Demo: disabled',
   render: renderDemo(demos.disabled),
 };
 
-export const DemoStylesApi = {
+export const Demo_stylesApi = {
   name: '⭐ Demo: stylesApi',
   render: renderDemo(demos.stylesApi),
 };

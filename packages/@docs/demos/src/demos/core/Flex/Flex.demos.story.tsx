@@ -3,12 +3,12 @@ import * as demos from './index';
 
 export default { title: 'Flex' };
 
-export const DemoConfigurator = {
+export const Demo_configurator = {
   name: '⭐ Demo: configurator',
   render: renderDemo(demos.configurator),
 };
 
-export const DemoResponsive = {
+export const Demo_responsive = {
   name: '⭐ Demo: responsive',
   render: renderDemo(demos.responsive),
 };

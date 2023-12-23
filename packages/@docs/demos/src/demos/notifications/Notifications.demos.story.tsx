@@ -3,32 +3,32 @@ import * as demos from './index';
 
 export default { title: 'Notifications' };
 
-export const DemoAutoclose = {
+export const Demo_autoclose = {
   name: '⭐ Demo: autoclose',
   render: renderDemo(demos.autoclose),
 };
 
-export const DemoBase = {
+export const Demo_base = {
   name: '⭐ Demo: base',
   render: renderDemo(demos.base),
 };
 
-export const DemoClean = {
+export const Demo_clean = {
   name: '⭐ Demo: clean',
   render: renderDemo(demos.clean),
 };
 
-export const DemoLimit = {
+export const Demo_limit = {
   name: '⭐ Demo: limit',
   render: renderDemo(demos.limit),
 };
 
-export const DemoUpdate = {
+export const Demo_update = {
   name: '⭐ Demo: update',
   render: renderDemo(demos.update),
 };
 
-export const DemoCustomize = {
+export const Demo_customize = {
   name: '⭐ Demo: customize',
   render: renderDemo(demos.customize),
 };

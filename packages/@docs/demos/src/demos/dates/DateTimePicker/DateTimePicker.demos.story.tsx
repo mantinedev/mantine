@@ -3,37 +3,37 @@ import * as demos from './index';
 
 export default { title: 'DateTimePicker' };
 
-export const DemoUsage = {
+export const Demo_usage = {
   name: '⭐ Demo: usage',
   render: renderDemo(demos.usage),
 };
 
-export const DemoWithSeconds = {
+export const Demo_withSeconds = {
   name: '⭐ Demo: withSeconds',
   render: renderDemo(demos.withSeconds),
 };
 
-export const DemoModal = {
+export const Demo_modal = {
   name: '⭐ Demo: modal',
   render: renderDemo(demos.modal),
 };
 
-export const DemoConfigurator = {
+export const Demo_configurator = {
   name: '⭐ Demo: configurator',
   render: renderDemo(demos.configurator),
 };
 
-export const DemoClearable = {
+export const Demo_clearable = {
   name: '⭐ Demo: clearable',
   render: renderDemo(demos.clearable),
 };
 
-export const DemoFormat = {
+export const Demo_format = {
   name: '⭐ Demo: format',
   render: renderDemo(demos.format),
 };
 
-export const DemoDisabled = {
+export const Demo_disabled = {
   name: '⭐ Demo: disabled',
   render: renderDemo(demos.disabled),
 };

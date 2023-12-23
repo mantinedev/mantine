@@ -3,47 +3,47 @@ import * as demos from './index';
 
 export default { title: 'FileInput' };
 
-export const DemoUsage = {
+export const Demo_usage = {
   name: '⭐ Demo: usage',
   render: renderDemo(demos.usage),
 };
 
-export const DemoError = {
+export const Demo_error = {
   name: '⭐ Demo: error',
   render: renderDemo(demos.error),
 };
 
-export const DemoDisabled = {
+export const Demo_disabled = {
   name: '⭐ Demo: disabled',
   render: renderDemo(demos.disabled),
 };
 
-export const DemoStylesApi = {
+export const Demo_stylesApi = {
   name: '⭐ Demo: stylesApi',
   render: renderDemo(demos.stylesApi),
 };
 
-export const DemoClearable = {
+export const Demo_clearable = {
   name: '⭐ Demo: clearable',
   render: renderDemo(demos.clearable),
 };
 
-export const DemoAccept = {
+export const Demo_accept = {
   name: '⭐ Demo: accept',
   render: renderDemo(demos.accept),
 };
 
-export const DemoMultiple = {
+export const Demo_multiple = {
   name: '⭐ Demo: multiple',
   render: renderDemo(demos.multiple),
 };
 
-export const DemoValueComponent = {
+export const Demo_valueComponent = {
   name: '⭐ Demo: valueComponent',
   render: renderDemo(demos.valueComponent),
 };
 
-export const DemoSections = {
+export const Demo_sections = {
   name: '⭐ Demo: sections',
   render: renderDemo(demos.sections),
 };

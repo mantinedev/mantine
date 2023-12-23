@@ -3,27 +3,27 @@ import * as demos from './index';
 
 export default { title: 'Chip' };
 
-export const DemoStates = {
+export const Demo_states = {
   name: '⭐ Demo: states',
   render: renderDemo(demos.states),
 };
 
-export const DemoConfigurator = {
+export const Demo_configurator = {
   name: '⭐ Demo: configurator',
   render: renderDemo(demos.configurator),
 };
 
-export const DemoGroup = {
+export const Demo_group = {
   name: '⭐ Demo: group',
   render: renderDemo(demos.group),
 };
 
-export const DemoIcon = {
+export const Demo_icon = {
   name: '⭐ Demo: icon',
   render: renderDemo(demos.icon),
 };
 
-export const DemoTooltip = {
+export const Demo_tooltip = {
   name: '⭐ Demo: tooltip',
   render: renderDemo(demos.tooltip),
 };

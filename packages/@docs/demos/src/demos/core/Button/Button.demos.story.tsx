@@ -3,82 +3,82 @@ import * as demos from './index';
 
 export default { title: 'Button' };
 
-export const DemoConfigurator = {
+export const Demo_configurator = {
   name: '⭐ Demo: configurator',
   render: renderDemo(demos.configurator),
 };
 
-export const DemoDisabled = {
+export const Demo_disabled = {
   name: '⭐ Demo: disabled',
   render: renderDemo(demos.disabled),
 };
 
-export const DemoDisabledStyles = {
+export const Demo_disabledStyles = {
   name: '⭐ Demo: disabledStyles',
   render: renderDemo(demos.disabledStyles),
 };
 
-export const DemoCompact = {
+export const Demo_compact = {
   name: '⭐ Demo: compact',
   render: renderDemo(demos.compact),
 };
 
-export const DemoLoading = {
+export const Demo_loading = {
   name: '⭐ Demo: loading',
   render: renderDemo(demos.loading),
 };
 
-export const DemoLoaderProps = {
+export const Demo_loaderProps = {
   name: '⭐ Demo: loaderProps',
   render: renderDemo(demos.loaderProps),
 };
 
-export const DemoGradient = {
+export const Demo_gradient = {
   name: '⭐ Demo: gradient',
   render: renderDemo(demos.gradient),
 };
 
-export const DemoFullWidth = {
+export const Demo_fullWidth = {
   name: '⭐ Demo: fullWidth',
   render: renderDemo(demos.fullWidth),
 };
 
-export const DemoGroup = {
+export const Demo_group = {
   name: '⭐ Demo: group',
   render: renderDemo(demos.group),
 };
 
-export const DemoDisabledTooltip = {
+export const Demo_disabledTooltip = {
   name: '⭐ Demo: disabledTooltip',
   render: renderDemo(demos.disabledTooltip),
 };
 
-export const DemoCustomVariant = {
+export const Demo_customVariant = {
   name: '⭐ Demo: customVariant',
   render: renderDemo(demos.customVariant),
 };
 
-export const DemoSections = {
+export const Demo_sections = {
   name: '⭐ Demo: sections',
   render: renderDemo(demos.sections),
 };
 
-export const DemoSectionsJustify = {
+export const Demo_sectionsJustify = {
   name: '⭐ Demo: sectionsJustify',
   render: renderDemo(demos.sectionsJustify),
 };
 
-export const DemoDisabledLink = {
+export const Demo_disabledLink = {
   name: '⭐ Demo: disabledLink',
   render: renderDemo(demos.disabledLink),
 };
 
-export const DemoStylesApi = {
+export const Demo_stylesApi = {
   name: '⭐ Demo: stylesApi',
   render: renderDemo(demos.stylesApi),
 };
 
-export const DemoAutoContrast = {
+export const Demo_autoContrast = {
   name: '⭐ Demo: autoContrast',
   render: renderDemo(demos.autoContrast),
 };

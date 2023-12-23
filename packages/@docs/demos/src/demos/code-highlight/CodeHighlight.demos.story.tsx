@@ -3,37 +3,37 @@ import * as demos from './index';
 
 export default { title: 'CodeHighlight' };
 
-export const DemoUsage = {
+export const Demo_usage = {
   name: '⭐ Demo: usage',
   render: renderDemo(demos.usage),
 };
 
-export const DemoTabs = {
+export const Demo_tabs = {
   name: '⭐ Demo: tabs',
   render: renderDemo(demos.tabs),
 };
 
-export const DemoTabsIcons = {
+export const Demo_tabsIcons = {
   name: '⭐ Demo: tabsIcons',
   render: renderDemo(demos.tabsIcons),
 };
 
-export const DemoTabsGetIcons = {
+export const Demo_tabsGetIcons = {
   name: '⭐ Demo: tabsGetIcons',
   render: renderDemo(demos.tabsGetIcons),
 };
 
-export const DemoExpand = {
+export const Demo_expand = {
   name: '⭐ Demo: expand',
   render: renderDemo(demos.expand),
 };
 
-export const DemoCopy = {
+export const Demo_copy = {
   name: '⭐ Demo: copy',
   render: renderDemo(demos.copy),
 };
 
-export const DemoInline = {
+export const Demo_inline = {
   name: '⭐ Demo: inline',
   render: renderDemo(demos.inline),
 };

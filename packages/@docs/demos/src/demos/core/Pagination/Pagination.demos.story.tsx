@@ -3,47 +3,47 @@ import * as demos from './index';
 
 export default { title: 'Pagination' };
 
-export const DemoConfigurator = {
+export const Demo_configurator = {
   name: '⭐ Demo: configurator',
   render: renderDemo(demos.configurator),
 };
 
-export const DemoSiblings = {
+export const Demo_siblings = {
   name: '⭐ Demo: siblings',
   render: renderDemo(demos.siblings),
 };
 
-export const DemoBoundaries = {
+export const Demo_boundaries = {
   name: '⭐ Demo: boundaries',
   render: renderDemo(demos.boundaries),
 };
 
-export const DemoUsage = {
+export const Demo_usage = {
   name: '⭐ Demo: usage',
   render: renderDemo(demos.usage),
 };
 
-export const DemoStylesApi = {
+export const Demo_stylesApi = {
   name: '⭐ Demo: stylesApi',
   render: renderDemo(demos.stylesApi),
 };
 
-export const DemoComposition = {
+export const Demo_composition = {
   name: '⭐ Demo: composition',
   render: renderDemo(demos.composition),
 };
 
-export const DemoIcons = {
+export const Demo_icons = {
   name: '⭐ Demo: icons',
   render: renderDemo(demos.icons),
 };
 
-export const DemoLinks = {
+export const Demo_links = {
   name: '⭐ Demo: links',
   render: renderDemo(demos.links),
 };
 
-export const DemoWithContent = {
+export const Demo_withContent = {
   name: '⭐ Demo: withContent',
   render: renderDemo(demos.withContent),
 };

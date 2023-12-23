@@ -3,17 +3,17 @@ import * as demos from './index';
 
 export default { title: 'NavLink' };
 
-export const DemoUsage = {
+export const Demo_usage = {
   name: '⭐ Demo: usage',
   render: renderDemo(demos.usage),
 };
 
-export const DemoActive = {
+export const Demo_active = {
   name: '⭐ Demo: active',
   render: renderDemo(demos.active),
 };
 
-export const DemoNested = {
+export const Demo_nested = {
   name: '⭐ Demo: nested',
   render: renderDemo(demos.nested),
 };

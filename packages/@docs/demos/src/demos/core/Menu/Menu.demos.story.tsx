@@ -3,52 +3,52 @@ import * as demos from './index';
 
 export default { title: 'Menu' };
 
-export const DemoUsage = {
+export const Demo_usage = {
   name: '⭐ Demo: usage',
   render: renderDemo(demos.usage),
 };
 
-export const DemoTransitions = {
+export const Demo_transitions = {
   name: '⭐ Demo: transitions',
   render: renderDemo(demos.transitions),
 };
 
-export const DemoComponent = {
+export const Demo_component = {
   name: '⭐ Demo: component',
   render: renderDemo(demos.component),
 };
 
-export const DemoHover = {
+export const Demo_hover = {
   name: '⭐ Demo: hover',
   render: renderDemo(demos.hover),
 };
 
-export const DemoStylesApi = {
+export const Demo_stylesApi = {
   name: '⭐ Demo: stylesApi',
   render: renderDemo(demos.stylesApi),
 };
 
-export const DemoPositionConfigurator = {
+export const Demo_positionConfigurator = {
   name: '⭐ Demo: positionConfigurator',
   render: renderDemo(demos.positionConfigurator),
 };
 
-export const DemoDisabled = {
+export const Demo_disabled = {
   name: '⭐ Demo: disabled',
   render: renderDemo(demos.disabled),
 };
 
-export const DemoCustomControl = {
+export const Demo_customControl = {
   name: '⭐ Demo: customControl',
   render: renderDemo(demos.customControl),
 };
 
-export const DemoClickHover = {
+export const Demo_clickHover = {
   name: '⭐ Demo: clickHover',
   render: renderDemo(demos.clickHover),
 };
 
-export const DemoNavigation = {
+export const Demo_navigation = {
   name: '⭐ Demo: navigation',
   render: renderDemo(demos.navigation),
 };

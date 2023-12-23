@@ -3,22 +3,22 @@ import * as demos from './index';
 
 export default { title: 'Card' };
 
-export const DemoUsage = {
+export const Demo_usage = {
   name: '⭐ Demo: usage',
   render: renderDemo(demos.usage),
 };
 
-export const DemoLink = {
+export const Demo_link = {
   name: '⭐ Demo: link',
   render: renderDemo(demos.link),
 };
 
-export const DemoLinkSection = {
+export const Demo_linkSection = {
   name: '⭐ Demo: linkSection',
   render: renderDemo(demos.linkSection),
 };
 
-export const DemoSection = {
+export const Demo_section = {
   name: '⭐ Demo: section',
   render: renderDemo(demos.section),
 };

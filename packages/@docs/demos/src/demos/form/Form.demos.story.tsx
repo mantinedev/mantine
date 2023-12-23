@@ -3,137 +3,137 @@ import * as demos from './index';
 
 export default { title: 'Form' };
 
-export const DemoUsage = {
+export const Demo_usage = {
   name: '⭐ Demo: usage',
   render: renderDemo(demos.usage),
 };
 
-export const DemoLists = {
+export const Demo_lists = {
   name: '⭐ Demo: lists',
   render: renderDemo(demos.lists),
 };
 
-export const DemoDnd = {
+export const Demo_dnd = {
   name: '⭐ Demo: dnd',
   render: renderDemo(demos.dnd),
 };
 
-export const DemoPassword = {
+export const Demo_password = {
   name: '⭐ Demo: password',
   render: renderDemo(demos.password),
 };
 
-export const DemoValidateFunction = {
+export const Demo_validateFunction = {
   name: '⭐ Demo: validateFunction',
   render: renderDemo(demos.validateFunction),
 };
 
-export const DemoLocalStorage = {
+export const Demo_localStorage = {
   name: '⭐ Demo: localStorage',
   render: renderDemo(demos.localStorage),
 };
 
-export const DemoNested = {
+export const Demo_nested = {
   name: '⭐ Demo: nested',
   render: renderDemo(demos.nested),
 };
 
-export const DemoRulesValidation = {
+export const Demo_rulesValidation = {
   name: '⭐ Demo: rulesValidation',
   render: renderDemo(demos.rulesValidation),
 };
 
-export const DemoLiveValidation = {
+export const Demo_liveValidation = {
   name: '⭐ Demo: liveValidation',
   render: renderDemo(demos.liveValidation),
 };
 
-export const DemoLiveFieldValidation = {
+export const Demo_liveFieldValidation = {
   name: '⭐ Demo: liveFieldValidation',
   render: renderDemo(demos.liveFieldValidation),
 };
 
-export const DemoClearErrorOnChange = {
+export const Demo_clearErrorOnChange = {
   name: '⭐ Demo: clearErrorOnChange',
   render: renderDemo(demos.clearErrorOnChange),
 };
 
-export const DemoOnSubmitErrors = {
+export const Demo_onSubmitErrors = {
   name: '⭐ Demo: onSubmitErrors',
   render: renderDemo(demos.onSubmitErrors),
 };
 
-export const DemoAsyncSetValues = {
+export const Demo_asyncSetValues = {
   name: '⭐ Demo: asyncSetValues',
   render: renderDemo(demos.asyncSetValues),
 };
 
-export const DemoStepper = {
+export const Demo_stepper = {
   name: '⭐ Demo: stepper',
   render: renderDemo(demos.stepper),
 };
 
-export const DemoSetFieldValue = {
+export const Demo_setFieldValue = {
   name: '⭐ Demo: setFieldValue',
   render: renderDemo(demos.setFieldValue),
 };
 
-export const DemoSetValues = {
+export const Demo_setValues = {
   name: '⭐ Demo: setValues',
   render: renderDemo(demos.setValues),
 };
 
-export const DemoReset = {
+export const Demo_reset = {
   name: '⭐ Demo: reset',
   render: renderDemo(demos.reset),
 };
 
-export const DemoStatus = {
+export const Demo_status = {
   name: '⭐ Demo: status',
   render: renderDemo(demos.status),
 };
 
-export const DemoBlurValidation = {
+export const Demo_blurValidation = {
   name: '⭐ Demo: blurValidation',
   render: renderDemo(demos.blurValidation),
 };
 
-export const DemoBlurFieldValidation = {
+export const Demo_blurFieldValidation = {
   name: '⭐ Demo: blurFieldValidation',
   render: renderDemo(demos.blurFieldValidation),
 };
 
-export const DemoTransformValues = {
+export const Demo_transformValues = {
   name: '⭐ Demo: transformValues',
   render: renderDemo(demos.transformValues),
 };
 
-export const DemoValidators = {
+export const Demo_validators = {
   name: '⭐ Demo: validators',
   render: renderDemo(demos.validators),
 };
 
-export const DemoValidatorsEmpty = {
+export const Demo_validatorsEmpty = {
   name: '⭐ Demo: validatorsEmpty',
   render: renderDemo(demos.validatorsEmpty),
 };
 
-export const DemoInitialize = {
+export const Demo_initialize = {
   name: '⭐ Demo: initialize',
   render: renderDemo(demos.initialize),
 };
 
-export const DemoEnhanceGetInputProps = {
+export const Demo_enhanceGetInputProps = {
   name: '⭐ Demo: enhanceGetInputProps',
   render: renderDemo(demos.enhanceGetInputProps),
 };
 
-export const DemoEnhanceGetInputPropsOptions = {
+export const Demo_enhanceGetInputPropsOptions = {
   name: '⭐ Demo: enhanceGetInputPropsOptions',
   render: renderDemo(demos.enhanceGetInputPropsOptions),
 };
 
-export const DemoEnhanceGetInputPropsForm = {
+export const Demo_enhanceGetInputPropsForm = {
   name: '⭐ Demo: enhanceGetInputPropsForm',
   render: renderDemo(demos.enhanceGetInputPropsForm),
 };

@@ -3,7 +3,7 @@ import * as demos from './index';
 
 export default { title: 'Burger' };
 
-export const DemoUsage = {
+export const Demo_usage = {
   name: '⭐ Demo: usage',
   render: renderDemo(demos.usage),
 };

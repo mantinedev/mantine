@@ -3,42 +3,42 @@ import * as demos from './index';
 
 export default { title: 'TipTap' };
 
-export const DemoUsage = {
+export const Demo_usage = {
   name: '⭐ Demo: usage',
   render: renderDemo(demos.usage),
 };
 
-export const DemoColors = {
+export const Demo_colors = {
   name: '⭐ Demo: colors',
   render: renderDemo(demos.colors),
 };
 
-export const DemoCodeHighlight = {
+export const Demo_codeHighlight = {
   name: '⭐ Demo: codeHighlight',
   render: renderDemo(demos.codeHighlight),
 };
 
-export const DemoBubbleMenu = {
+export const Demo_bubbleMenu = {
   name: '⭐ Demo: bubbleMenu',
   render: renderDemo(demos.bubbleMenu),
 };
 
-export const DemoFloatingMenu = {
+export const Demo_floatingMenu = {
   name: '⭐ Demo: floatingMenu',
   render: renderDemo(demos.floatingMenu),
 };
 
-export const DemoCustomControl = {
+export const Demo_customControl = {
   name: '⭐ Demo: customControl',
   render: renderDemo(demos.customControl),
 };
 
-export const DemoIcons = {
+export const Demo_icons = {
   name: '⭐ Demo: icons',
   render: renderDemo(demos.icons),
 };
 
-export const DemoPlaceholder = {
+export const Demo_placeholder = {
   name: '⭐ Demo: placeholder',
   render: renderDemo(demos.placeholder),
 };

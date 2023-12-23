@@ -3,22 +3,22 @@ import * as demos from './index';
 
 export default { title: 'Loader' };
 
-export const DemoConfigurator = {
+export const Demo_configurator = {
   name: '⭐ Demo: configurator',
   render: renderDemo(demos.configurator),
 };
 
-export const DemoCustomType = {
+export const Demo_customType = {
   name: '⭐ Demo: customType',
   render: renderDemo(demos.customType),
 };
 
-export const DemoCssLoader = {
+export const Demo_cssLoader = {
   name: '⭐ Demo: cssLoader',
   render: renderDemo(demos.cssLoader),
 };
 
-export const DemoSize = {
+export const Demo_size = {
   name: '⭐ Demo: size',
   render: renderDemo(demos.size),
 };

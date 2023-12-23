@@ -3,37 +3,37 @@ import * as demos from './index';
 
 export default { title: 'NativeSelect' };
 
-export const DemoUsage = {
+export const Demo_usage = {
   name: '⭐ Demo: usage',
   render: renderDemo(demos.usage),
 };
 
-export const DemoOptions = {
+export const Demo_options = {
   name: '⭐ Demo: options',
   render: renderDemo(demos.options),
 };
 
-export const DemoData = {
+export const Demo_data = {
   name: '⭐ Demo: data',
   render: renderDemo(demos.data),
 };
 
-export const DemoDisabled = {
+export const Demo_disabled = {
   name: '⭐ Demo: disabled',
   render: renderDemo(demos.disabled),
 };
 
-export const DemoError = {
+export const Demo_error = {
   name: '⭐ Demo: error',
   render: renderDemo(demos.error),
 };
 
-export const DemoSections = {
+export const Demo_sections = {
   name: '⭐ Demo: sections',
   render: renderDemo(demos.sections),
 };
 
-export const DemoStylesApi = {
+export const Demo_stylesApi = {
   name: '⭐ Demo: stylesApi',
   render: renderDemo(demos.stylesApi),
 };

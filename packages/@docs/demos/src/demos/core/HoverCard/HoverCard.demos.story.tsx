@@ -3,17 +3,17 @@ import * as demos from './index';
 
 export default { title: 'HoverCard' };
 
-export const DemoUsage = {
+export const Demo_usage = {
   name: '⭐ Demo: usage',
   render: renderDemo(demos.usage),
 };
 
-export const DemoProfile = {
+export const Demo_profile = {
   name: '⭐ Demo: profile',
   render: renderDemo(demos.profile),
 };
 
-export const DemoDelay = {
+export const Demo_delay = {
   name: '⭐ Demo: delay',
   render: renderDemo(demos.delay),
 };

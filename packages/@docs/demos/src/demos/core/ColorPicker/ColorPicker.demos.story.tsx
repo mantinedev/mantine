@@ -3,52 +3,52 @@ import * as demos from './index';
 
 export default { title: 'ColorPicker' };
 
-export const DemoFormatsConfigurator = {
+export const Demo_formatsConfigurator = {
   name: '⭐ Demo: formatsConfigurator',
   render: renderDemo(demos.formatsConfigurator),
 };
 
-export const DemoSizeConfigurator = {
+export const Demo_sizeConfigurator = {
   name: '⭐ Demo: sizeConfigurator',
   render: renderDemo(demos.sizeConfigurator),
 };
 
-export const DemoSwatchesConfigurator = {
+export const Demo_swatchesConfigurator = {
   name: '⭐ Demo: swatchesConfigurator',
   render: renderDemo(demos.swatchesConfigurator),
 };
 
-export const DemoSwatches = {
+export const Demo_swatches = {
   name: '⭐ Demo: swatches',
   render: renderDemo(demos.swatches),
 };
 
-export const DemoSwatchesOnly = {
+export const Demo_swatchesOnly = {
   name: '⭐ Demo: swatchesOnly',
   render: renderDemo(demos.swatchesOnly),
 };
 
-export const DemoUsage = {
+export const Demo_usage = {
   name: '⭐ Demo: usage',
   render: renderDemo(demos.usage),
 };
 
-export const DemoFullWidth = {
+export const Demo_fullWidth = {
   name: '⭐ Demo: fullWidth',
   render: renderDemo(demos.fullWidth),
 };
 
-export const DemoStylesApi = {
+export const Demo_stylesApi = {
   name: '⭐ Demo: stylesApi',
   render: renderDemo(demos.stylesApi),
 };
 
-export const DemoHueSlider = {
+export const Demo_hueSlider = {
   name: '⭐ Demo: hueSlider',
   render: renderDemo(demos.hueSlider),
 };
 
-export const DemoAlphaSlider = {
+export const Demo_alphaSlider = {
   name: '⭐ Demo: alphaSlider',
   render: renderDemo(demos.alphaSlider),
 };

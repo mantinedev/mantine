@@ -3,47 +3,47 @@ import * as demos from './index';
 
 export default { title: 'DateInput' };
 
-export const DemoUsage = {
+export const Demo_usage = {
   name: '⭐ Demo: usage',
   render: renderDemo(demos.usage),
 };
 
-export const DemoClearable = {
+export const Demo_clearable = {
   name: '⭐ Demo: clearable',
   render: renderDemo(demos.clearable),
 };
 
-export const DemoConfigurator = {
+export const Demo_configurator = {
   name: '⭐ Demo: configurator',
   render: renderDemo(demos.configurator),
 };
 
-export const DemoFormat = {
+export const Demo_format = {
   name: '⭐ Demo: format',
   render: renderDemo(demos.format),
 };
 
-export const DemoParser = {
+export const Demo_parser = {
   name: '⭐ Demo: parser',
   render: renderDemo(demos.parser),
 };
 
-export const DemoMinMax = {
+export const Demo_minMax = {
   name: '⭐ Demo: minMax',
   render: renderDemo(demos.minMax),
 };
 
-export const DemoDeselect = {
+export const Demo_deselect = {
   name: '⭐ Demo: deselect',
   render: renderDemo(demos.deselect),
 };
 
-export const DemoTime = {
+export const Demo_time = {
   name: '⭐ Demo: time',
   render: renderDemo(demos.time),
 };
 
-export const DemoDisabled = {
+export const Demo_disabled = {
   name: '⭐ Demo: disabled',
   render: renderDemo(demos.disabled),
 };

@@ -3,22 +3,22 @@ import * as demos from './index';
 
 export default { title: 'NumberFormatter' };
 
-export const DemoUsage = {
+export const Demo_usage = {
   name: '⭐ Demo: usage',
   render: renderDemo(demos.usage),
 };
 
-export const DemoPrefixSuffix = {
+export const Demo_prefixSuffix = {
   name: '⭐ Demo: prefixSuffix',
   render: renderDemo(demos.prefixSuffix),
 };
 
-export const DemoThousandsSeparator = {
+export const Demo_thousandsSeparator = {
   name: '⭐ Demo: thousandsSeparator',
   render: renderDemo(demos.thousandsSeparator),
 };
 
-export const DemoDecimalScale = {
+export const Demo_decimalScale = {
   name: '⭐ Demo: decimalScale',
   render: renderDemo(demos.decimalScale),
 };

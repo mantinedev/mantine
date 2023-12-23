@@ -3,87 +3,87 @@ import * as demos from './index';
 
 export default { title: 'Carousel' };
 
-export const DemoUsage = {
+export const Demo_usage = {
   name: '⭐ Demo: usage',
   render: renderDemo(demos.usage),
 };
 
-export const DemoVertical = {
+export const Demo_vertical = {
   name: '⭐ Demo: vertical',
   render: renderDemo(demos.vertical),
 };
 
-export const DemoIcons = {
+export const Demo_icons = {
   name: '⭐ Demo: icons',
   render: renderDemo(demos.icons),
 };
 
-export const DemoImages = {
+export const Demo_images = {
   name: '⭐ Demo: images',
   render: renderDemo(demos.images),
 };
 
-export const DemoMultiple = {
+export const Demo_multiple = {
   name: '⭐ Demo: multiple',
   render: renderDemo(demos.multiple),
 };
 
-export const DemoBreakpoints = {
+export const Demo_breakpoints = {
   name: '⭐ Demo: breakpoints',
   render: renderDemo(demos.breakpoints),
 };
 
-export const DemoAutoplay = {
+export const Demo_autoplay = {
   name: '⭐ Demo: autoplay',
   render: renderDemo(demos.autoplay),
 };
 
-export const DemoDragFree = {
+export const Demo_dragFree = {
   name: '⭐ Demo: dragFree',
   render: renderDemo(demos.dragFree),
 };
 
-export const DemoIndicatorStyles = {
+export const Demo_indicatorStyles = {
   name: '⭐ Demo: indicatorStyles',
   render: renderDemo(demos.indicatorStyles),
 };
 
-export const DemoControlsStyles = {
+export const Demo_controlsStyles = {
   name: '⭐ Demo: controlsStyles',
   render: renderDemo(demos.controlsStyles),
 };
 
-export const DemoControlsHover = {
+export const Demo_controlsHover = {
   name: '⭐ Demo: controlsHover',
   render: renderDemo(demos.controlsHover),
 };
 
-export const DemoConfigurator = {
+export const Demo_configurator = {
   name: '⭐ Demo: configurator',
   render: renderDemo(demos.configurator),
 };
 
-export const DemoProgress = {
+export const Demo_progress = {
   name: '⭐ Demo: progress',
   render: renderDemo(demos.progress),
 };
 
-export const DemoCards = {
+export const Demo_cards = {
   name: '⭐ Demo: cards',
   render: renderDemo(demos.cards),
 };
 
-export const DemoAnimationOffset = {
+export const Demo_animationOffset = {
   name: '⭐ Demo: animationOffset',
   render: renderDemo(demos.animationOffset),
 };
 
-export const DemoBrokenAnimation = {
+export const Demo_brokenAnimation = {
   name: '⭐ Demo: brokenAnimation',
   render: renderDemo(demos.brokenAnimation),
 };
 
-export const DemoStylesApi = {
+export const Demo_stylesApi = {
   name: '⭐ Demo: stylesApi',
   render: renderDemo(demos.stylesApi),
 };

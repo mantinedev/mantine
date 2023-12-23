@@ -3,67 +3,67 @@ import * as demos from './index';
 
 export default { title: 'Tooltip' };
 
-export const DemoConfigurator = {
+export const Demo_configurator = {
   name: '⭐ Demo: configurator',
   render: renderDemo(demos.configurator),
 };
 
-export const DemoControlled = {
+export const Demo_controlled = {
   name: '⭐ Demo: controlled',
   render: renderDemo(demos.controlled),
 };
 
-export const DemoArrow = {
+export const Demo_arrow = {
   name: '⭐ Demo: arrow',
   render: renderDemo(demos.arrow),
 };
 
-export const DemoMultiline = {
+export const Demo_multiline = {
   name: '⭐ Demo: multiline',
   render: renderDemo(demos.multiline),
 };
 
-export const DemoTransitions = {
+export const Demo_transitions = {
   name: '⭐ Demo: transitions',
   render: renderDemo(demos.transitions),
 };
 
-export const DemoDelay = {
+export const Demo_delay = {
   name: '⭐ Demo: delay',
   render: renderDemo(demos.delay),
 };
 
-export const DemoFloating = {
+export const Demo_floating = {
   name: '⭐ Demo: floating',
   render: renderDemo(demos.floating),
 };
 
-export const DemoUsage = {
+export const Demo_usage = {
   name: '⭐ Demo: usage',
   render: renderDemo(demos.usage),
 };
 
-export const DemoGroup = {
+export const Demo_group = {
   name: '⭐ Demo: group',
   render: renderDemo(demos.group),
 };
 
-export const DemoOffset = {
+export const Demo_offset = {
   name: '⭐ Demo: offset',
   render: renderDemo(demos.offset),
 };
 
-export const DemoInline = {
+export const Demo_inline = {
   name: '⭐ Demo: inline',
   render: renderDemo(demos.inline),
 };
 
-export const DemoNested = {
+export const Demo_nested = {
   name: '⭐ Demo: nested',
   render: renderDemo(demos.nested),
 };
 
-export const DemoOffsetAxis = {
+export const Demo_offsetAxis = {
   name: '⭐ Demo: offsetAxis',
   render: renderDemo(demos.offsetAxis),
 };

@@ -3,17 +3,17 @@ import * as demos from './index';
 
 export default { title: 'Timeline' };
 
-export const DemoUsage = {
+export const Demo_usage = {
   name: '⭐ Demo: usage',
   render: renderDemo(demos.usage),
 };
 
-export const DemoConfigurator = {
+export const Demo_configurator = {
   name: '⭐ Demo: configurator',
   render: renderDemo(demos.configurator),
 };
 
-export const DemoBullet = {
+export const Demo_bullet = {
   name: '⭐ Demo: bullet',
   render: renderDemo(demos.bullet),
 };

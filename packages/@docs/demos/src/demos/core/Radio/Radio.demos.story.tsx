@@ -3,42 +3,42 @@ import * as demos from './index';
 
 export default { title: 'Radio' };
 
-export const DemoGroupConfigurator = {
+export const Demo_groupConfigurator = {
   name: '⭐ Demo: groupConfigurator',
   render: renderDemo(demos.groupConfigurator),
 };
 
-export const DemoConfigurator = {
+export const Demo_configurator = {
   name: '⭐ Demo: configurator',
   render: renderDemo(demos.configurator),
 };
 
-export const DemoDisabled = {
+export const Demo_disabled = {
   name: '⭐ Demo: disabled',
   render: renderDemo(demos.disabled),
 };
 
-export const DemoIcon = {
+export const Demo_icon = {
   name: '⭐ Demo: icon',
   render: renderDemo(demos.icon),
 };
 
-export const DemoIconColor = {
+export const Demo_iconColor = {
   name: '⭐ Demo: iconColor',
   render: renderDemo(demos.iconColor),
 };
 
-export const DemoStylesApi = {
+export const Demo_stylesApi = {
   name: '⭐ Demo: stylesApi',
   render: renderDemo(demos.stylesApi),
 };
 
-export const DemoTooltip = {
+export const Demo_tooltip = {
   name: '⭐ Demo: tooltip',
   render: renderDemo(demos.tooltip),
 };
 
-export const DemoStates = {
+export const Demo_states = {
   name: '⭐ Demo: states',
   render: renderDemo(demos.states),
 };

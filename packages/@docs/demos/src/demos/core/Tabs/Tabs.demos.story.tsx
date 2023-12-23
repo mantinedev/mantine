@@ -3,57 +3,57 @@ import * as demos from './index';
 
 export default { title: 'Tabs' };
 
-export const DemoUsage = {
+export const Demo_usage = {
   name: '⭐ Demo: usage',
   render: renderDemo(demos.usage),
 };
 
-export const DemoPosition = {
+export const Demo_position = {
   name: '⭐ Demo: position',
   render: renderDemo(demos.position),
 };
 
-export const DemoPull = {
+export const Demo_pull = {
   name: '⭐ Demo: pull',
   render: renderDemo(demos.pull),
 };
 
-export const DemoInverted = {
+export const Demo_inverted = {
   name: '⭐ Demo: inverted',
   render: renderDemo(demos.inverted),
 };
 
-export const DemoPlacement = {
+export const Demo_placement = {
   name: '⭐ Demo: placement',
   render: renderDemo(demos.placement),
 };
 
-export const DemoDisabled = {
+export const Demo_disabled = {
   name: '⭐ Demo: disabled',
   render: renderDemo(demos.disabled),
 };
 
-export const DemoColors = {
+export const Demo_colors = {
   name: '⭐ Demo: colors',
   render: renderDemo(demos.colors),
 };
 
-export const DemoDeactivate = {
+export const Demo_deactivate = {
   name: '⭐ Demo: deactivate',
   render: renderDemo(demos.deactivate),
 };
 
-export const DemoKeyboardActivation = {
+export const Demo_keyboardActivation = {
   name: '⭐ Demo: keyboardActivation',
   render: renderDemo(demos.keyboardActivation),
 };
 
-export const DemoCustomize = {
+export const Demo_customize = {
   name: '⭐ Demo: customize',
   render: renderDemo(demos.customize),
 };
 
-export const DemoStylesApi = {
+export const Demo_stylesApi = {
   name: '⭐ Demo: stylesApi',
   render: renderDemo(demos.stylesApi),
 };

@@ -3,17 +3,17 @@ import * as demos from './index';
 
 export default { title: 'Code' };
 
-export const DemoUsage = {
+export const Demo_usage = {
   name: '⭐ Demo: usage',
   render: renderDemo(demos.usage),
 };
 
-export const DemoColors = {
+export const Demo_colors = {
   name: '⭐ Demo: colors',
   render: renderDemo(demos.colors),
 };
 
-export const DemoBlock = {
+export const Demo_block = {
   name: '⭐ Demo: block',
   render: renderDemo(demos.block),
 };

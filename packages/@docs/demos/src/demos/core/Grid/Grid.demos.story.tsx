@@ -3,57 +3,57 @@ import * as demos from './index';
 
 export default { title: 'Grid' };
 
-export const DemoUsage = {
+export const Demo_usage = {
   name: '⭐ Demo: usage',
   render: renderDemo(demos.usage),
 };
 
-export const DemoGrowConfigurator = {
+export const Demo_growConfigurator = {
   name: '⭐ Demo: growConfigurator',
   render: renderDemo(demos.growConfigurator),
 };
 
-export const DemoOffset = {
+export const Demo_offset = {
   name: '⭐ Demo: offset',
   render: renderDemo(demos.offset),
 };
 
-export const DemoOrder = {
+export const Demo_order = {
   name: '⭐ Demo: order',
   render: renderDemo(demos.order),
 };
 
-export const DemoRows = {
+export const Demo_rows = {
   name: '⭐ Demo: rows',
   render: renderDemo(demos.rows),
 };
 
-export const DemoFlexConfigurator = {
+export const Demo_flexConfigurator = {
   name: '⭐ Demo: flexConfigurator',
   render: renderDemo(demos.flexConfigurator),
 };
 
-export const DemoResponsive = {
+export const Demo_responsive = {
   name: '⭐ Demo: responsive',
   render: renderDemo(demos.responsive),
 };
 
-export const DemoColumns = {
+export const Demo_columns = {
   name: '⭐ Demo: columns',
   render: renderDemo(demos.columns),
 };
 
-export const DemoAuto = {
+export const Demo_auto = {
   name: '⭐ Demo: auto',
   render: renderDemo(demos.auto),
 };
 
-export const DemoContent = {
+export const Demo_content = {
   name: '⭐ Demo: content',
   render: renderDemo(demos.content),
 };
 
-export const DemoGutter = {
+export const Demo_gutter = {
   name: '⭐ Demo: gutter',
   render: renderDemo(demos.gutter),
 };

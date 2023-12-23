@@ -3,57 +3,57 @@ import * as demos from './index';
 
 export default { title: 'Popover' };
 
-export const DemoUsage = {
+export const Demo_usage = {
   name: '⭐ Demo: usage',
   render: renderDemo(demos.usage),
 };
 
-export const DemoForm = {
+export const Demo_form = {
   name: '⭐ Demo: form',
   render: renderDemo(demos.form),
 };
 
-export const DemoHover = {
+export const Demo_hover = {
   name: '⭐ Demo: hover',
   render: renderDemo(demos.hover),
 };
 
-export const DemoSameWidth = {
+export const Demo_sameWidth = {
   name: '⭐ Demo: sameWidth',
   render: renderDemo(demos.sameWidth),
 };
 
-export const DemoInline = {
+export const Demo_inline = {
   name: '⭐ Demo: inline',
   render: renderDemo(demos.inline),
 };
 
-export const DemoOffsetAxis = {
+export const Demo_offsetAxis = {
   name: '⭐ Demo: offsetAxis',
   render: renderDemo(demos.offsetAxis),
 };
 
-export const DemoOffset = {
+export const Demo_offset = {
   name: '⭐ Demo: offset',
   render: renderDemo(demos.offset),
 };
 
-export const DemoArrow = {
+export const Demo_arrow = {
   name: '⭐ Demo: arrow',
   render: renderDemo(demos.arrow),
 };
 
-export const DemoClickOutsideEvents = {
+export const Demo_clickOutsideEvents = {
   name: '⭐ Demo: clickOutsideEvents',
   render: renderDemo(demos.clickOutsideEvents),
 };
 
-export const DemoDisabled = {
+export const Demo_disabled = {
   name: '⭐ Demo: disabled',
   render: renderDemo(demos.disabled),
 };
 
-export const DemoPortalChildren = {
+export const Demo_portalChildren = {
   name: '⭐ Demo: portalChildren',
   render: renderDemo(demos.portalChildren),
 };

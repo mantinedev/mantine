@@ -3,17 +3,17 @@ import * as demos from './index';
 
 export default { title: 'FileButton' };
 
-export const DemoUsage = {
+export const Demo_usage = {
   name: '⭐ Demo: usage',
   render: renderDemo(demos.usage),
 };
 
-export const DemoMultiple = {
+export const Demo_multiple = {
   name: '⭐ Demo: multiple',
   render: renderDemo(demos.multiple),
 };
 
-export const DemoReset = {
+export const Demo_reset = {
   name: '⭐ Demo: reset',
   render: renderDemo(demos.reset),
 };

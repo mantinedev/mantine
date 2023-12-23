@@ -3,17 +3,17 @@ import * as demos from './index';
 
 export default { title: 'Overlay' };
 
-export const DemoUsage = {
+export const Demo_usage = {
   name: '⭐ Demo: usage',
   render: renderDemo(demos.usage),
 };
 
-export const DemoGradient = {
+export const Demo_gradient = {
   name: '⭐ Demo: gradient',
   render: renderDemo(demos.gradient),
 };
 
-export const DemoBlur = {
+export const Demo_blur = {
   name: '⭐ Demo: blur',
   render: renderDemo(demos.blur),
 };

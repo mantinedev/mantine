@@ -3,32 +3,32 @@ import * as demos from './index';
 
 export default { title: 'Modals' };
 
-export const DemoConfirm = {
+export const Demo_confirm = {
   name: '⭐ Demo: confirm',
   render: renderDemo(demos.confirm),
 };
 
-export const DemoContext = {
+export const Demo_context = {
   name: '⭐ Demo: context',
   render: renderDemo(demos.context),
 };
 
-export const DemoConfirmCustomize = {
+export const Demo_confirmCustomize = {
   name: '⭐ Demo: confirmCustomize',
   render: renderDemo(demos.confirmCustomize),
 };
 
-export const DemoMultipleSteps = {
+export const Demo_multipleSteps = {
   name: '⭐ Demo: multipleSteps',
   render: renderDemo(demos.multipleSteps),
 };
 
-export const DemoContent = {
+export const Demo_content = {
   name: '⭐ Demo: content',
   render: renderDemo(demos.content),
 };
 
-export const DemoModalProps = {
+export const Demo_modalProps = {
   name: '⭐ Demo: modalProps',
   render: renderDemo(demos.modalProps),
 };

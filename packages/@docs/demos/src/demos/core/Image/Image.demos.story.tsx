@@ -3,22 +3,22 @@ import * as demos from './index';
 
 export default { title: 'Image' };
 
-export const DemoUsage = {
+export const Demo_usage = {
   name: '⭐ Demo: usage',
   render: renderDemo(demos.usage),
 };
 
-export const DemoHeight = {
+export const Demo_height = {
   name: '⭐ Demo: height',
   render: renderDemo(demos.height),
 };
 
-export const DemoContain = {
+export const Demo_contain = {
   name: '⭐ Demo: contain',
   render: renderDemo(demos.contain),
 };
 
-export const DemoFallback = {
+export const Demo_fallback = {
   name: '⭐ Demo: fallback',
   render: renderDemo(demos.fallback),
 };
