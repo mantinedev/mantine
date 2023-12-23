@@ -13,3 +13,4 @@ export { sections } from './Button.demo.sections';
 export { sectionsJustify } from './Button.demo.sectionsJustify';
 export { disabledLink } from './Button.demo.disabledLink';
 export { stylesApi } from './Button.demo.stylesApi';
+export { autoContrast } from './Button.demo.autoContrast';

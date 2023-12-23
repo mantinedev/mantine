@@ -77,3 +77,8 @@ export const DemoStylesApi = {
   name: '⭐ Demo: stylesApi',
   render: renderDemo(demos.stylesApi),
 };
+
+export const DemoAutoContrast = {
+  name: '⭐ Demo: autoContrast',
+  render: renderDemo(demos.autoContrast),
+};

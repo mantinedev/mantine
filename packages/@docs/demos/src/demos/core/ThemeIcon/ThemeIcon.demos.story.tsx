@@ -12,3 +12,13 @@ export const DemoGradient = {
   name: '⭐ Demo: gradient',
   render: renderDemo(demos.gradient),
 };
+
+export const DemoVariantColorsResolver = {
+  name: '⭐ Demo: variantColorsResolver',
+  render: renderDemo(demos.variantColorsResolver),
+};
+
+export const DemoAutoContrast = {
+  name: '⭐ Demo: autoContrast',
+  render: renderDemo(demos.autoContrast),
+};

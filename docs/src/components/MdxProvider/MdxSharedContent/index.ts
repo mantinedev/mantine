@@ -15,3 +15,4 @@ export { MdxComboboxProps } from './MdxComboboxProps';
 export { MdxServerComponentsIncompatible } from './MdxServerComponentsIncompatible';
 export { MdxWrapperProps } from './MdxWrapperProps';
 export { MdxInputSections } from './MdxInputSections';
+export { MdxAutoContrast } from './MdxAutoContrast';

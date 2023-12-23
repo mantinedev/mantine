@@ -11,6 +11,7 @@ import { MdxNpmScript } from './MdxNpmScript/MdxNpmScript';
 import { MdxPackagesInstallation } from './MdxPackagesInstallation/MdxPackagesInstallation';
 import { MdxPre } from './MdxPre/MdxPre';
 import {
+  MdxAutoContrast,
   MdxComboboxData,
   MdxComboboxDisclaimer,
   MdxComboboxFiltering,
@@ -62,6 +63,7 @@ export function MdxProvider({ children }: { children: React.ReactNode }) {
         ExamplesButton: MdxExamplesButton,
         WrapperProps: MdxWrapperProps,
         InputSections: MdxInputSections,
+        AutoContrast: MdxAutoContrast,
         pre: MdxPre,
         h1: h(1),
         h2: h(2),

@@ -62,3 +62,13 @@ export const DemoCustomSize = {
   name: '⭐ Demo: customSize',
   render: renderDemo(demos.customSize),
 };
+
+export const DemoVariantColorsResolver = {
+  name: '⭐ Demo: variantColorsResolver',
+  render: renderDemo(demos.variantColorsResolver),
+};
+
+export const DemoAutoContrast = {
+  name: '⭐ Demo: autoContrast',
+  render: renderDemo(demos.autoContrast),
+};

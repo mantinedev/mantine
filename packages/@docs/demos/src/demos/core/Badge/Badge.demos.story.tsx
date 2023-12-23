@@ -32,3 +32,13 @@ export const DemoRounded = {
   name: '⭐ Demo: rounded',
   render: renderDemo(demos.rounded),
 };
+
+export const DemoVariantColorsResolver = {
+  name: '⭐ Demo: variantColorsResolver',
+  render: renderDemo(demos.variantColorsResolver),
+};
+
+export const DemoAutoContrast = {
+  name: '⭐ Demo: autoContrast',
+  render: renderDemo(demos.autoContrast),
+};

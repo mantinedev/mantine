@@ -10,3 +10,5 @@ export { loading } from './ActionIcon.demo.loading';
 export { loaderProps } from './ActionIcon.demo.loaderProps';
 export { customVariant } from './ActionIcon.demo.customVariant';
 export { customSize } from './ActionIcon.demo.customSize';
+export { variantColorsResolver } from './ActionIcon.demo.variantColorsResolver';
+export { autoContrast } from './ActionIcon.demo.autoContrast';
