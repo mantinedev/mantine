@@ -9,6 +9,7 @@ interface MdxComboboxDataProps {
 
 const getStringArrayCode = (component: string) => `
 import { ${component} } from '@mantine/core';
+
 function Demo() {
   return <${component} data={['React', 'Angular']} />;
 }
