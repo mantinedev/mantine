@@ -26,9 +26,10 @@ export interface NumberInputHandlers {
 }
 
 function isValidNumber(value: number | string | undefined): value is number {
-  return typeof value === 'number'
-    ? value < Number.MAX_SAFE_INTEGER
-    : !Number.isNaN(Number(value)) && !Number.isNaN(value);
+  return (
+    (typeof value === 'number' ? value < Number.MAX_SAFE_INTEGER : !Number.isNaN(Number(value))) &&
+    !Number.isNaN(value)
+  );
 }
 
 interface GetDecrementedValueInput {
