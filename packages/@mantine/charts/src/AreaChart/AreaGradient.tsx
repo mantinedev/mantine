@@ -22,3 +22,5 @@ export function AreaGradient({ color, id, withGradient }: AreaGradientCategory) 
     </>
   );
 }
+
+AreaGradient.displayName = '@mantine/charts/AreaGradient';

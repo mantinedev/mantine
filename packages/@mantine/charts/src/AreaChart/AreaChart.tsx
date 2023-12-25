@@ -31,13 +31,21 @@ import { ChartTooltip } from '../ChartTooltip/ChartTooltip';
 import { AreaGradient } from './AreaGradient';
 import classes from './AreaChart.module.css';
 
-interface AreaChartCategory {
+export interface AreaChartSeries {
   name: string;
   color: MantineColor;
 }
 
+export type AreaChartCurveType =
+  | 'bump'
+  | 'linear'
+  | 'natural'
+  | 'monotone'
+  | 'step'
+  | 'stepBefore'
+  | 'stepAfter';
+
 export type AreaChartStylesNames = 'root' | 'container' | 'grid' | 'axis' | 'area' | 'cursor';
-export type AreaChartVariant = string;
 export type AreaChartCssVariables = {
   root: '--test';
 };
@@ -50,7 +58,7 @@ export interface AreaChartProps
   data: Record<string, any>[];
 
   /** An array of objects with `name` and `color` keys. Determines which data should be consumed from the `data` array. */
-  categories: AreaChartCategory[];
+  series: AreaChartSeries[];
 
   /** Key of the `data` object for x-axis values */
   dataKey: string;
@@ -71,7 +79,7 @@ export interface AreaChartProps
   yAxisProps?: YAxisProps;
 
   /** Type of the curve, `'monotone'` by default */
-  curveType?: 'bump' | 'linear' | 'natural' | 'monotone' | 'step' | 'stepBefore' | 'stepAfter';
+  curveType?: AreaChartCurveType;
 
   /** Props passed down to the `CartesianGrid` component */
   gridProps?: Omit<CartesianGridProps, 'ref'>;
@@ -88,7 +96,6 @@ export type AreaChartFactory = Factory<{
   ref: HTMLDivElement;
   stylesNames: AreaChartStylesNames;
   vars: AreaChartCssVariables;
-  variant: AreaChartVariant;
 }>;
 
 const defaultProps: Partial<AreaChartProps> = {
@@ -114,7 +121,7 @@ export const AreaChart = factory<AreaChartFactory>((_props, ref) => {
     unstyled,
     vars,
     data,
-    categories,
+    series,
     withGradient,
     dataKey,
     withXAxis,
@@ -143,15 +150,15 @@ export const AreaChart = factory<AreaChartFactory>((_props, ref) => {
     varsResolver,
   });
 
-  const dotsAreas = categories.map((category) => (
+  const dotsAreas = series.map((item) => (
     <Area
       {...getStyles('area')}
       activeDot={false}
       dot={false}
-      key={category.name}
-      name={category.name}
+      key={item.name}
+      name={item.name}
       type={curveType}
-      dataKey={category.name}
+      dataKey={item.name}
       fill="none"
       strokeWidth={2}
       stroke="none"
@@ -162,12 +169,12 @@ export const AreaChart = factory<AreaChartFactory>((_props, ref) => {
     />
   ));
 
-  const areas = categories.map((category) => {
-    const id = `${baseId}-${category.color.replace(/[^a-zA-Z0-9]/g, '')}`;
-    const color = getThemeColor(category.color, theme);
+  const areas = series.map((item) => {
+    const id = `${baseId}-${item.color.replace(/[^a-zA-Z0-9]/g, '')}`;
+    const color = getThemeColor(item.color, theme);
 
     return (
-      <Fragment key={category.name}>
+      <Fragment key={item.name}>
         <defs>
           <AreaGradient color={color} withGradient={withGradient} id={id} />
         </defs>
@@ -175,10 +182,10 @@ export const AreaChart = factory<AreaChartFactory>((_props, ref) => {
           {...getStyles('area')}
           activeDot={{ fill: theme.white, stroke: color, strokeWidth: 2 }}
           dot={{ fill: color, fillOpacity: 1 }}
-          key={category.name}
-          name={category.name}
+          key={item.name}
+          name={item.name}
           type={curveType}
-          dataKey={category.name}
+          dataKey={item.name}
           fill={`url(#${id})`}
           strokeWidth={2}
           stroke={color}

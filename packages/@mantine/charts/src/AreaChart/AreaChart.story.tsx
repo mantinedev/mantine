@@ -51,7 +51,7 @@ export function Usage() {
         dataKey="date"
         curveType="linear"
         withGradient
-        categories={[
+        series={[
           { name: 'Apples', color: 'indigo.6' },
           { name: 'Oranges', color: 'blue.6' },
           { name: 'Tomatoes', color: 'teal.6' },
@@ -69,7 +69,7 @@ export function Stacked() {
         data={data}
         dataKey="date"
         stacked
-        categories={[
+        series={[
           { name: 'Apples', color: 'indigo.6' },
           { name: 'Oranges', color: 'blue.6' },
           { name: 'Tomatoes', color: 'teal.6' },
@@ -87,7 +87,7 @@ export function SingleLine() {
         data={data}
         withGradient={false}
         dataKey="date"
-        categories={[{ name: 'Apples', color: 'teal.6' }]}
+        series={[{ name: 'Apples', color: 'teal.6' }]}
       />
     </div>
   );
