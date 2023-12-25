@@ -21,7 +21,13 @@
 }
 
 .axis {
-  color: alpha(var(--mantine-color-gray-5), 0.6);
+  @mixin where-light {
+    color: rgba(173, 181, 189, 0.6);
+  }
+
+  @mixin where-dark {
+    color: rgba(105, 105, 105, 0.6);
+  }
 
   & :where(text) {
     color: var(--mantine-color-dimmed);
