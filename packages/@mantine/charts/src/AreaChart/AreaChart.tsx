@@ -99,6 +99,9 @@ export interface AreaChartProps
 
   /** Specifies which lines should be displayed in the grid, `'x'` by default */
   gridAxis?: 'x' | 'y' | 'xy' | 'none';
+
+  /** Unit displayed next to each tick in y-axis */
+  unit?: string;
 }
 
 export type AreaChartFactory = Factory<{
@@ -146,6 +149,7 @@ export const AreaChart = factory<AreaChartFactory>((_props, ref) => {
     tickLine,
     strokeDasharray,
     gridAxis,
+    unit,
     ...others
   } = props;
 
@@ -248,6 +252,7 @@ export const AreaChart = factory<AreaChartFactory>((_props, ref) => {
             tickLine={withYTickLine ? { stroke: 'currentColor' } : false}
             tick={{ transform: 'translate(-10, 0)', fontSize: 12, fill: 'currentColor' }}
             allowDecimals
+            unit={unit}
             {...getStyles('axis')}
           />
 
