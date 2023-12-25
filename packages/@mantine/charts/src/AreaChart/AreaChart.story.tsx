@@ -125,7 +125,6 @@ export function SingleLine() {
       <AreaChart
         h={400}
         data={data}
-        withGradient={false}
         dataKey="date"
         series={[{ name: 'Apples', color: 'teal.6' }]}
       />

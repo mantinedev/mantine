@@ -180,6 +180,7 @@ export const AreaChart = factory<AreaChartFactory>((_props, ref) => {
   const withXTickLine = gridAxis !== 'none' && (tickLine === 'x' || tickLine === 'xy');
   const withYTickLine = gridAxis !== 'none' && (tickLine === 'y' || tickLine === 'xy');
   const isAnimationActive = (animationDuration || 0) > 0;
+  const _withGradient = typeof withGradient === 'boolean' ? withGradient : !stacked;
 
   const getStyles = useStyles<AreaChartFactory>({
     name: 'AreaChart',
@@ -222,7 +223,7 @@ export const AreaChart = factory<AreaChartFactory>((_props, ref) => {
     return (
       <Fragment key={item.name}>
         <defs>
-          <AreaGradient color={color} withGradient={withGradient} id={id} />
+          <AreaGradient color={color} withGradient={_withGradient} id={id} />
         </defs>
         <Area
           {...getStyles('area')}
