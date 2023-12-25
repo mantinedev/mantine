@@ -150,24 +150,27 @@ export const AreaChart = factory<AreaChartFactory>((_props, ref) => {
     varsResolver,
   });
 
-  const dotsAreas = series.map((item) => (
-    <Area
-      {...getStyles('area')}
-      activeDot={false}
-      dot={false}
-      key={item.name}
-      name={item.name}
-      type={curveType}
-      dataKey={item.name}
-      fill="none"
-      strokeWidth={2}
-      stroke="none"
-      isAnimationActive={false}
-      animationDuration={0}
-      connectNulls
-      stackId={stacked ? 'stack-dots' : undefined}
-    />
-  ));
+  const dotsAreas = series.map((item) => {
+    const color = getThemeColor(item.color, theme);
+    return (
+      <Area
+        {...getStyles('area')}
+        activeDot={{ fill: theme.white, stroke: color, strokeWidth: 2 }}
+        dot={{ fill: color, fillOpacity: 1 }}
+        key={item.name}
+        name={item.name}
+        type={curveType}
+        dataKey={item.name}
+        fill="none"
+        strokeWidth={2}
+        stroke="none"
+        isAnimationActive={false}
+        animationDuration={0}
+        connectNulls
+        stackId={stacked ? 'stack-dots' : undefined}
+      />
+    );
+  });
 
   const areas = series.map((item) => {
     const id = `${baseId}-${item.color.replace(/[^a-zA-Z0-9]/g, '')}`;
@@ -180,9 +183,8 @@ export const AreaChart = factory<AreaChartFactory>((_props, ref) => {
         </defs>
         <Area
           {...getStyles('area')}
-          activeDot={{ fill: theme.white, stroke: color, strokeWidth: 2 }}
-          dot={{ fill: color, fillOpacity: 1 }}
-          key={item.name}
+          activeDot={false}
+          dot={false}
           name={item.name}
           type={curveType}
           dataKey={item.name}
