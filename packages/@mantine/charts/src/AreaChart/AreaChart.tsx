@@ -3,6 +3,7 @@ import {
   Area,
   CartesianGrid,
   CartesianGridProps,
+  DotProps,
   AreaChart as ReChartsAreaChart,
   ResponsiveContainer,
   Tooltip,
@@ -102,6 +103,15 @@ export interface AreaChartProps
 
   /** Unit displayed next to each tick in y-axis */
   unit?: string;
+
+  /** Props passed down to all dots. Ignored if `withDots={false}` is set. */
+  dotProps?: DotProps;
+
+  /** Props passed down to all active dots. Ignored if `withDots={false}` is set. */
+  activeDotProps?: DotProps;
+
+  /** Stroke width for the chart areas, `2` by default */
+  strokeWidth?: number;
 }
 
 export type AreaChartFactory = Factory<{
@@ -115,6 +125,7 @@ const defaultProps: Partial<AreaChartProps> = {
   withXAxis: true,
   withYAxis: true,
   withDots: true,
+  strokeWidth: 2,
   tickLine: 'y',
   strokeDasharray: '5 5',
   curveType: 'monotone',
@@ -152,6 +163,9 @@ export const AreaChart = factory<AreaChartFactory>((_props, ref) => {
     unit,
     yAxisProps,
     xAxisProps,
+    dotProps,
+    activeDotProps,
+    strokeWidth,
     ...others
   } = props;
 
@@ -179,14 +193,14 @@ export const AreaChart = factory<AreaChartFactory>((_props, ref) => {
     return (
       <Area
         {...getStyles('area')}
-        activeDot={{ fill: theme.white, stroke: color, strokeWidth: 2, r: 4 }}
-        dot={{ fill: color, fillOpacity: 1, strokeWidth: 2, r: 4 }}
+        activeDot={{ fill: theme.white, stroke: color, strokeWidth: 2, r: 4, ...activeDotProps }}
+        dot={{ fill: color, fillOpacity: 1, strokeWidth: 2, r: 4, ...dotProps }}
         key={item.name}
         name={item.name}
         type={curveType}
         dataKey={item.name}
         fill="none"
-        strokeWidth={2}
+        strokeWidth={strokeWidth}
         stroke="none"
         isAnimationActive={false}
         animationDuration={0}
@@ -213,7 +227,7 @@ export const AreaChart = factory<AreaChartFactory>((_props, ref) => {
           type={curveType}
           dataKey={item.name}
           fill={`url(#${id})`}
-          strokeWidth={2}
+          strokeWidth={strokeWidth}
           stroke={color}
           isAnimationActive={false}
           animationDuration={0}

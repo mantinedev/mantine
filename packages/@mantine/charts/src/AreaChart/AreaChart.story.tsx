@@ -51,6 +51,8 @@ export function Usage() {
         dataKey="date"
         curveType="linear"
         withGradient
+        dotProps={{ r: 6 }}
+        strokeWidth={4}
         series={[
           { name: 'Apples', color: 'indigo.6' },
           { name: 'Oranges', color: 'blue.6' },
