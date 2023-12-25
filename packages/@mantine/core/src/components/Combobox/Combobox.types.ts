@@ -17,7 +17,9 @@ export interface ComboboxParsedItemGroup {
   items: ComboboxItem[];
 }
 
-export type ComboboxData = (string | ComboboxItem | ComboboxItemGroup)[];
+export type ComboboxData =
+  | Array<string | ComboboxItem | ComboboxItemGroup>
+  | ReadonlyArray<string | ComboboxItem | ComboboxItemGroup>;
 export type ComboboxParsedItem = ComboboxItem | ComboboxParsedItemGroup;
 
 export type ComboboxLikeStylesNames = Exclude<ComboboxStylesNames, 'header' | 'footer' | 'search'>;
