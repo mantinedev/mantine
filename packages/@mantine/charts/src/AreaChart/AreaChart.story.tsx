@@ -80,6 +80,25 @@ export function Stacked() {
   );
 }
 
+export function GridAxis() {
+  return (
+    <div style={{ padding: 40 }}>
+      <AreaChart
+        h={400}
+        data={data}
+        dataKey="date"
+        stacked
+        gridAxis="none"
+        series={[
+          { name: 'Apples', color: 'indigo.6' },
+          { name: 'Oranges', color: 'blue.6' },
+          { name: 'Tomatoes', color: 'teal.6' },
+        ]}
+      />
+    </div>
+  );
+}
+
 export function SingleLine() {
   return (
     <div style={{ padding: 40 }}>

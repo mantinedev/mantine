@@ -45,7 +45,8 @@ export type AreaChartCurveType =
   | 'stepBefore'
   | 'stepAfter';
 
-export type AreaChartStylesNames = 'root' | 'container' | 'grid' | 'axis' | 'area' | 'cursor';
+export type AreaChartStylesNames = 'root' | 'container' | 'grid' | 'axis' | 'area';
+
 export type AreaChartCssVariables = {
   root: '--test';
 };
@@ -92,6 +93,12 @@ export interface AreaChartProps
 
   /** Determines whether the tick line should be displayed, `true` by default */
   withTickLine?: boolean;
+
+  /** Dash array for the grid lines, `'5 5'` by default */
+  strokeDasharray?: string | number;
+
+  /** Specifies which lines should be displayed in the grid, `'x'` by default */
+  gridAxis?: 'x' | 'y' | 'xy' | 'none';
 }
 
 export type AreaChartFactory = Factory<{
@@ -106,7 +113,9 @@ const defaultProps: Partial<AreaChartProps> = {
   withYAxis: true,
   withDots: true,
   withTickLine: true,
+  strokeDasharray: '5 5',
   curveType: 'monotone',
+  gridAxis: 'x',
 };
 
 const varsResolver = createVarsResolver<AreaChartFactory>(() => ({
@@ -135,12 +144,15 @@ export const AreaChart = factory<AreaChartFactory>((_props, ref) => {
     gridProps,
     withDots,
     withTickLine,
+    strokeDasharray,
+    gridAxis,
     ...others
   } = props;
 
   const theme = useMantineTheme();
   const computedColorScheme = useComputedColorScheme('light');
   const baseId = useId();
+  const _withTickLine = withTickLine && gridAxis !== 'none';
 
   const getStyles = useStyles<AreaChartFactory>({
     name: 'AreaChart',
@@ -210,11 +222,13 @@ export const AreaChart = factory<AreaChartFactory>((_props, ref) => {
       <ResponsiveContainer {...getStyles('container')}>
         <ReChartsAreaChart data={data}>
           <CartesianGrid
-            strokeDasharray="4 4"
-            vertical={false}
+            strokeDasharray={strokeDasharray}
+            vertical={gridAxis === 'y' || gridAxis === 'xy'}
+            horizontal={gridAxis === 'x' || gridAxis === 'xy'}
             {...getStyles('grid')}
             {...gridProps}
           />
+
           <XAxis
             hide={!withXAxis}
             dataKey={dataKey}
@@ -224,11 +238,12 @@ export const AreaChart = factory<AreaChartFactory>((_props, ref) => {
             minTickGap={5}
             {...getStyles('axis')}
           />
+
           <YAxis
             hide={!withYAxis}
             axisLine={false}
             type="number"
-            tickLine={withTickLine ? { stroke: 'currentColor' } : false}
+            tickLine={_withTickLine ? { stroke: 'currentColor' } : false}
             tick={{ transform: 'translate(-10, 0)', fontSize: 12, fill: 'currentColor' }}
             allowDecimals
             {...getStyles('axis')}
@@ -243,7 +258,7 @@ export const AreaChart = factory<AreaChartFactory>((_props, ref) => {
                   ? theme.colors.gray[3]
                   : rgba(theme.colors.dark[3], 0.6),
               strokeWidth: 1,
-              strokeDasharray: '4 4',
+              strokeDasharray,
             }}
             content={({ label, payload }) => (
               <ChartTooltip label={label} payload={payload as any[]} />
