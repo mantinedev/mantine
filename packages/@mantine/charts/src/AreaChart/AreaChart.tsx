@@ -37,6 +37,8 @@ export interface AreaChartSeries {
   color: MantineColor;
 }
 
+export type AreaChartType = 'default' | 'stacked';
+
 export type AreaChartCurveType =
   | 'bump'
   | 'linear'
@@ -65,6 +67,9 @@ export interface AreaChartProps
   /** Key of the `data` object for x-axis values */
   dataKey: string;
 
+  /** Controls how chart areas are positioned relative to each other, `'default'` by default */
+  type?: AreaChartType;
+
   /** Determines whether the chart area should be represented with a gradient instead of the solid color, `false` by default */
   withGradient?: boolean;
 
@@ -85,9 +90,6 @@ export interface AreaChartProps
 
   /** Props passed down to the `CartesianGrid` component */
   gridProps?: Omit<CartesianGridProps, 'ref'>;
-
-  /** Determines whether the chart areas should stack on top of each other, `false` by default */
-  stacked?: boolean;
 
   /** Determines whether dots should be displayed, `true` by default */
   withDots?: boolean;
@@ -134,6 +136,7 @@ const defaultProps: Partial<AreaChartProps> = {
   strokeDasharray: '5 5',
   curveType: 'monotone',
   gridAxis: 'x',
+  type: 'default',
 };
 
 const varsResolver = createVarsResolver<AreaChartFactory>(() => ({
@@ -158,7 +161,6 @@ export const AreaChart = factory<AreaChartFactory>((_props, ref) => {
     withXAxis,
     withYAxis,
     curveType,
-    stacked,
     gridProps,
     withDots,
     tickLine,
@@ -171,6 +173,7 @@ export const AreaChart = factory<AreaChartFactory>((_props, ref) => {
     activeDotProps,
     strokeWidth,
     animationDuration,
+    type,
     ...others
   } = props;
 
@@ -180,7 +183,8 @@ export const AreaChart = factory<AreaChartFactory>((_props, ref) => {
   const withXTickLine = gridAxis !== 'none' && (tickLine === 'x' || tickLine === 'xy');
   const withYTickLine = gridAxis !== 'none' && (tickLine === 'y' || tickLine === 'xy');
   const isAnimationActive = (animationDuration || 0) > 0;
-  const _withGradient = typeof withGradient === 'boolean' ? withGradient : !stacked;
+  const _withGradient = typeof withGradient === 'boolean' ? withGradient : type === 'default';
+  const stacked = type === 'stacked';
 
   const getStyles = useStyles<AreaChartFactory>({
     name: 'AreaChart',

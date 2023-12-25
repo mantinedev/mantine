@@ -70,7 +70,7 @@ export function Stacked() {
         h={400}
         data={data}
         dataKey="date"
-        stacked
+        type="stacked"
         series={[
           { name: 'Apples', color: 'indigo.6' },
           { name: 'Oranges', color: 'blue.6' },
@@ -88,7 +88,7 @@ export function Animation() {
         h={400}
         data={data}
         dataKey="date"
-        stacked
+        type="stacked"
         animationDuration={200}
         series={[
           { name: 'Apples', color: 'indigo.6' },
@@ -107,7 +107,7 @@ export function GridAxis() {
         h={400}
         data={data}
         dataKey="date"
-        stacked
+        type="stacked"
         gridAxis="none"
         series={[
           { name: 'Apples', color: 'indigo.6' },
