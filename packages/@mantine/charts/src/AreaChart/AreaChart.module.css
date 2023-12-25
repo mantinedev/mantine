@@ -24,19 +24,9 @@
 }
 
 .axis {
-  color: var(--mantine-color-dimmed);
-  opacity: 0.6;
-}
+  color: alpha(var(--mantine-color-gray-5), 0.6);
 
-.area {
-  stroke: blue;
-}
-
-.activeDot {
-  stroke: var(--mantine-color-red-5);
-  fill: var(--mantine-color-white);
-}
-
-.cursor {
-  stroke: var(--mantine-color-orange) !important;
+  & :where(text) {
+    color: var(--mantine-color-dimmed);
+  }
 }

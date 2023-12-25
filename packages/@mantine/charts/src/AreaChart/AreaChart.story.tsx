@@ -51,6 +51,7 @@ export function Usage() {
         dataKey="date"
         curveType="linear"
         withGradient
+        withTickLine={false}
         series={[
           { name: 'Apples', color: 'indigo.6' },
           { name: 'Oranges', color: 'blue.6' },

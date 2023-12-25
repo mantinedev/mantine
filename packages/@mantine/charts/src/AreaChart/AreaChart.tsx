@@ -89,6 +89,9 @@ export interface AreaChartProps
 
   /** Determines whether dots should be displayed, `true` by default */
   withDots?: boolean;
+
+  /** Determines whether the tick line should be displayed, `true` by default */
+  withTickLine?: boolean;
 }
 
 export type AreaChartFactory = Factory<{
@@ -102,6 +105,7 @@ const defaultProps: Partial<AreaChartProps> = {
   withXAxis: true,
   withYAxis: true,
   withDots: true,
+  withTickLine: true,
   curveType: 'monotone',
 };
 
@@ -130,6 +134,7 @@ export const AreaChart = factory<AreaChartFactory>((_props, ref) => {
     stacked,
     gridProps,
     withDots,
+    withTickLine,
     ...others
   } = props;
 
@@ -155,8 +160,8 @@ export const AreaChart = factory<AreaChartFactory>((_props, ref) => {
     return (
       <Area
         {...getStyles('area')}
-        activeDot={{ fill: theme.white, stroke: color, strokeWidth: 2 }}
-        dot={{ fill: color, fillOpacity: 1 }}
+        activeDot={{ fill: theme.white, stroke: color, strokeWidth: 2, r: 4 }}
+        dot={{ fill: color, fillOpacity: 1, strokeWidth: 2, r: 4 }}
         key={item.name}
         name={item.name}
         type={curveType}
@@ -223,10 +228,10 @@ export const AreaChart = factory<AreaChartFactory>((_props, ref) => {
             hide={!withYAxis}
             axisLine={false}
             type="number"
-            tickLine={false}
+            tickLine={withTickLine ? { stroke: 'currentColor' } : false}
             tick={{ transform: 'translate(-10, 0)', fontSize: 12, fill: 'currentColor' }}
-            {...getStyles('axis')}
             allowDecimals
+            {...getStyles('axis')}
           />
 
           <Tooltip
