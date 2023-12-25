@@ -91,8 +91,8 @@ export interface AreaChartProps
   /** Determines whether dots should be displayed, `true` by default */
   withDots?: boolean;
 
-  /** Determines whether the tick line should be displayed, `true` by default */
-  withTickLine?: boolean;
+  /** Specifies which axis should have tick line, `'y'` by default */
+  tickLine?: 'x' | 'y' | 'xy' | 'none';
 
   /** Dash array for the grid lines, `'5 5'` by default */
   strokeDasharray?: string | number;
@@ -112,7 +112,7 @@ const defaultProps: Partial<AreaChartProps> = {
   withXAxis: true,
   withYAxis: true,
   withDots: true,
-  withTickLine: true,
+  tickLine: 'y',
   strokeDasharray: '5 5',
   curveType: 'monotone',
   gridAxis: 'x',
@@ -143,7 +143,7 @@ export const AreaChart = factory<AreaChartFactory>((_props, ref) => {
     stacked,
     gridProps,
     withDots,
-    withTickLine,
+    tickLine,
     strokeDasharray,
     gridAxis,
     ...others
@@ -152,7 +152,8 @@ export const AreaChart = factory<AreaChartFactory>((_props, ref) => {
   const theme = useMantineTheme();
   const computedColorScheme = useComputedColorScheme('light');
   const baseId = useId();
-  const _withTickLine = withTickLine && gridAxis !== 'none';
+  const withXTickLine = gridAxis !== 'none' && (tickLine === 'x' || tickLine === 'xy');
+  const withYTickLine = gridAxis !== 'none' && (tickLine === 'y' || tickLine === 'xy');
 
   const getStyles = useStyles<AreaChartFactory>({
     name: 'AreaChart',
@@ -235,6 +236,7 @@ export const AreaChart = factory<AreaChartFactory>((_props, ref) => {
             tick={{ transform: 'translate(0, 10)', fontSize: 12, fill: 'currentColor' }}
             stroke=""
             interval="preserveStartEnd"
+            tickLine={withXTickLine ? { stroke: 'currentColor' } : false}
             minTickGap={5}
             {...getStyles('axis')}
           />
@@ -243,7 +245,7 @@ export const AreaChart = factory<AreaChartFactory>((_props, ref) => {
             hide={!withYAxis}
             axisLine={false}
             type="number"
-            tickLine={_withTickLine ? { stroke: 'currentColor' } : false}
+            tickLine={withYTickLine ? { stroke: 'currentColor' } : false}
             tick={{ transform: 'translate(-10, 0)', fontSize: 12, fill: 'currentColor' }}
             allowDecimals
             {...getStyles('axis')}
