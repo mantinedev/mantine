@@ -1,0 +1,30 @@
+.root {
+  min-width: rem(200px);
+  border: rem(1px) solid var(--mantine-color-gray-3);
+}
+
+.label {
+  padding: rem(8px) var(--mantine-spacing-md);
+  font-size: var(--mantine-font-size-md);
+  border-bottom: rem(1px) solid var(--mantine-color-gray-3);
+  font-weight: 500;
+}
+
+.body {
+  padding: var(--mantine-spacing-sm) var(--mantine-spacing-md);
+}
+
+.item {
+  & + & {
+    margin-top: rem(5px);
+  }
+}
+
+.itemBody {
+  margin-right: var(--mantine-spacing-xl);
+}
+
+.itemName {
+  color: var(--mantine-color-gray-7);
+  font-size: var(--mantine-font-size-sm);
+}

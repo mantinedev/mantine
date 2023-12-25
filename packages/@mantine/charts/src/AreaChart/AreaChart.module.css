@@ -1,0 +1,42 @@
+.root {
+  display: block;
+  width: 100%;
+}
+
+.container {
+  height: 100%;
+  width: 100%;
+}
+
+.grid {
+  stroke: var(--_grid-stroke);
+  opacity: var(--_grid-opacity);
+
+  @mixin light {
+    --_grid-stroke: var(--mantine-color-gray-4);
+    --_grid-opacity: 1;
+  }
+
+  @mixin dark {
+    --_grid-stroke: var(--mantine-color-dark-3);
+    --_grid-opacity: 0.6;
+  }
+}
+
+.axis {
+  color: var(--mantine-color-dimmed);
+  opacity: 0.6;
+}
+
+.area {
+  stroke: blue;
+}
+
+.activeDot {
+  stroke: var(--mantine-color-red-5);
+  fill: var(--mantine-color-white);
+}
+
+.cursor {
+  stroke: var(--mantine-color-orange) !important;
+}
