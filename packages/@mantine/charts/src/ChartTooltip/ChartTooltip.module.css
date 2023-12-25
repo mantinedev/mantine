@@ -1,22 +1,35 @@
 .root {
   min-width: rem(200px);
-  border: rem(1px) solid var(--mantine-color-gray-3);
+  background-color: var(--mantine-color-body);
+  box-shadow: var(--mantine-shadow-md);
+  border-radius: var(--mantine-radius-default);
+
+  @mixin where-light {
+    border: rem(1px) solid var(--mantine-color-gray-3);
+  }
+
+  @mixin where-dark {
+    border: rem(1px) solid var(--mantine-color-dark-4);
+  }
 }
 
 .label {
-  padding: rem(8px) var(--mantine-spacing-md);
+  padding: var(--mantine-spacing-xs) var(--mantine-spacing-md);
   font-size: var(--mantine-font-size-md);
-  border-bottom: rem(1px) solid var(--mantine-color-gray-3);
   font-weight: 500;
+  color: var(--mantine-color-bright);
 }
 
 .body {
   padding: var(--mantine-spacing-sm) var(--mantine-spacing-md);
+  padding-top: 0;
 }
 
 .item {
-  & + & {
-    margin-top: rem(5px);
+  font-size: var(--mantine-font-size-sm);
+
+  &:where(& + &) {
+    margin-top: calc(var(--mantine-spacing-sm) / 2);
   }
 }
 
@@ -25,6 +38,10 @@
 }
 
 .itemName {
-  color: var(--mantine-color-gray-7);
+  color: var(--mantine-color-text);
   font-size: var(--mantine-font-size-sm);
+}
+
+.itemData {
+  color: var(--mantine-color-bright);
 }

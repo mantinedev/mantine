@@ -1,12 +1,12 @@
 import React from 'react';
 import {
+  Box,
   BoxProps,
   ColorSwatch,
   ElementProps,
   factory,
   Factory,
   Group,
-  Paper,
   StylesApiProps,
   useProps,
   useStyles,
@@ -74,10 +74,10 @@ export const ChartTooltip = factory<ChartTooltipFactory>((_props, ref) => {
   ));
 
   return (
-    <Paper shadow="lg" {...getStyles('root')} ref={ref} {...others}>
+    <Box {...getStyles('root')} ref={ref} {...others}>
       {label && <div {...getStyles('label')}>{label}</div>}
       <div {...getStyles('body')}>{items}</div>
-    </Paper>
+    </Box>
   );
 });
 
