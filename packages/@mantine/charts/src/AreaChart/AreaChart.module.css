@@ -9,17 +9,14 @@
 }
 
 .grid {
-  stroke: var(--_grid-stroke);
-  opacity: var(--_grid-opacity);
-
   @mixin where-light {
-    --_grid-stroke: var(--mantine-color-gray-4);
-    --_grid-opacity: 1;
+    stroke: var(--mantine-color-gray-4);
+    opacity: 1;
   }
 
   @mixin where-dark {
-    --_grid-stroke: var(--mantine-color-dark-3);
-    --_grid-opacity: 0.6;
+    stroke: var(--mantine-color-dark-3);
+    opacity: 0.6;
   }
 }
 
