@@ -2,6 +2,7 @@ import React, { Fragment, useId } from 'react';
 import {
   Area,
   CartesianGrid,
+  CartesianGridProps,
   AreaChart as ReChartsAreaChart,
   ResponsiveContainer,
   Tooltip,
@@ -54,19 +55,29 @@ export interface AreaChartProps
   /** Key of the `data` object for x-axis values */
   dataKey: string;
 
+  /** Determines whether the chart area should be represented with a gradient instead of the solid color, `false` by default */
   withGradient?: boolean;
 
-  /** Determines whether x-axis should be hidden, `false` by default */
-  hideXAxis?: boolean;
+  /** Determines whether x-axis should be hidden, `true` by default */
+  withXAxis?: boolean;
 
-  /** Determines whether y-axis should be hidden, `false` by default */
-  hideYAxis?: boolean;
+  /** Determines whether y-axis should be hidden, `true` by default */
+  withYAxis?: boolean;
 
   /** Props passed down to the `XAxis` recharts component */
   xAxisProps?: XAxisProps;
 
   /** Props passed down to the `YAxis` recharts component */
   yAxisProps?: YAxisProps;
+
+  /** Type of the curve, `'monotone'` by default */
+  curveType?: 'bump' | 'linear' | 'natural' | 'monotone' | 'step' | 'stepBefore' | 'stepAfter';
+
+  /** Props passed down to the `CartesianGrid` component */
+  gridProps?: Omit<CartesianGridProps, 'ref'>;
+
+  /** Determines whether the chart areas should stack on top of each other, `false` by default */
+  stacked?: boolean;
 }
 
 export type AreaChartFactory = Factory<{
@@ -77,7 +88,11 @@ export type AreaChartFactory = Factory<{
   variant: AreaChartVariant;
 }>;
 
-const defaultProps: Partial<AreaChartProps> = {};
+const defaultProps: Partial<AreaChartProps> = {
+  withXAxis: true,
+  withYAxis: true,
+  curveType: 'monotone',
+};
 
 const varsResolver = createVarsResolver<AreaChartFactory>(() => ({
   root: {
@@ -96,10 +111,13 @@ export const AreaChart = factory<AreaChartFactory>((_props, ref) => {
     vars,
     data,
     categories,
-    withGradient = true,
+    withGradient,
     dataKey,
-    hideXAxis,
-    hideYAxis,
+    withXAxis,
+    withYAxis,
+    curveType,
+    stacked,
+    gridProps,
     ...others
   } = props;
 
@@ -135,7 +153,7 @@ export const AreaChart = factory<AreaChartFactory>((_props, ref) => {
           dot={{ fill: color, fillOpacity: 1 }}
           key={category.name}
           name={category.name}
-          type="linear"
+          type={curveType}
           dataKey={category.name}
           fill={`url(#${id})`}
           strokeWidth={2}
@@ -143,6 +161,7 @@ export const AreaChart = factory<AreaChartFactory>((_props, ref) => {
           isAnimationActive={false}
           animationDuration={0}
           connectNulls
+          stackId={stacked ? 'stack' : undefined}
         />
       </Fragment>
     );
@@ -152,9 +171,14 @@ export const AreaChart = factory<AreaChartFactory>((_props, ref) => {
     <Box ref={ref} {...getStyles('root')} {...others}>
       <ResponsiveContainer {...getStyles('container')}>
         <ReChartsAreaChart data={data}>
-          <CartesianGrid strokeDasharray="4 4" vertical={false} {...getStyles('grid')} />
+          <CartesianGrid
+            strokeDasharray="4 4"
+            vertical={false}
+            {...getStyles('grid')}
+            {...gridProps}
+          />
           <XAxis
-            hide={hideXAxis}
+            hide={!withXAxis}
             dataKey={dataKey}
             tick={{ transform: 'translate(0, 10)', fontSize: 12, fill: 'currentColor' }}
             stroke=""
@@ -163,7 +187,7 @@ export const AreaChart = factory<AreaChartFactory>((_props, ref) => {
             {...getStyles('axis')}
           />
           <YAxis
-            hide={hideYAxis}
+            hide={!withYAxis}
             axisLine={false}
             type="number"
             tickLine={false}

@@ -50,9 +50,27 @@ export function Usage() {
         data={data}
         dataKey="date"
         categories={[
-          { name: 'Apples', color: 'teal' },
-          { name: 'Oranges', color: 'blue' },
-          { name: 'Tomatoes', color: 'pink' },
+          { name: 'Apples', color: 'indigo.6' },
+          { name: 'Oranges', color: 'blue.6' },
+          { name: 'Tomatoes', color: 'teal.6' },
+        ]}
+      />
+    </div>
+  );
+}
+
+export function Stacked() {
+  return (
+    <div style={{ padding: 40 }}>
+      <AreaChart
+        h={400}
+        data={data}
+        dataKey="date"
+        stacked
+        categories={[
+          { name: 'Apples', color: 'indigo.6' },
+          { name: 'Oranges', color: 'blue.6' },
+          { name: 'Tomatoes', color: 'teal.6' },
         ]}
       />
     </div>
@@ -65,8 +83,9 @@ export function SingleLine() {
       <AreaChart
         h={400}
         data={data}
+        withGradient={false}
         dataKey="date"
-        categories={[{ name: 'Apples', color: 'teal' }]}
+        categories={[{ name: 'Apples', color: 'teal.6' }]}
       />
     </div>
   );
