@@ -112,6 +112,9 @@ export interface AreaChartProps
 
   /** Stroke width for the chart areas, `2` by default */
   strokeWidth?: number;
+
+  /** Tooltip position animation duration in ms, `0` by default */
+  animationDuration?: number;
 }
 
 export type AreaChartFactory = Factory<{
@@ -126,6 +129,7 @@ const defaultProps: Partial<AreaChartProps> = {
   withYAxis: true,
   withDots: true,
   strokeWidth: 2,
+  animationDuration: 0,
   tickLine: 'y',
   strokeDasharray: '5 5',
   curveType: 'monotone',
@@ -166,6 +170,7 @@ export const AreaChart = factory<AreaChartFactory>((_props, ref) => {
     dotProps,
     activeDotProps,
     strokeWidth,
+    animationDuration,
     ...others
   } = props;
 
@@ -174,6 +179,7 @@ export const AreaChart = factory<AreaChartFactory>((_props, ref) => {
   const baseId = useId();
   const withXTickLine = gridAxis !== 'none' && (tickLine === 'x' || tickLine === 'xy');
   const withYTickLine = gridAxis !== 'none' && (tickLine === 'y' || tickLine === 'xy');
+  const isAnimationActive = (animationDuration || 0) > 0;
 
   const getStyles = useStyles<AreaChartFactory>({
     name: 'AreaChart',
@@ -203,7 +209,6 @@ export const AreaChart = factory<AreaChartFactory>((_props, ref) => {
         strokeWidth={strokeWidth}
         stroke="none"
         isAnimationActive={false}
-        animationDuration={0}
         connectNulls
         stackId={stacked ? 'stack-dots' : undefined}
       />
@@ -230,7 +235,6 @@ export const AreaChart = factory<AreaChartFactory>((_props, ref) => {
           strokeWidth={strokeWidth}
           stroke={color}
           isAnimationActive={false}
-          animationDuration={0}
           connectNulls
           stackId={stacked ? 'stack' : undefined}
         />
@@ -275,7 +279,8 @@ export const AreaChart = factory<AreaChartFactory>((_props, ref) => {
           />
 
           <Tooltip
-            isAnimationActive={false}
+            animationDuration={animationDuration}
+            isAnimationActive={isAnimationActive}
             position={{ y: 0 }}
             cursor={{
               stroke:
