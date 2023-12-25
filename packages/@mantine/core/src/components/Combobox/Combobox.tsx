@@ -156,12 +156,7 @@ export function Combobox(_props: ComboboxProps) {
         readOnly,
       }}
     >
-      <Popover
-        opened={store.dropdownOpened}
-        {...others}
-        withRoles={false}
-        unstyled={unstyled}
-      >
+      <Popover opened={store.dropdownOpened} {...others} withRoles={false} unstyled={unstyled}>
         {children}
       </Popover>
     </ComboboxProvider>
