@@ -81,6 +81,24 @@ export function Stacked() {
   );
 }
 
+export function PercentType() {
+  return (
+    <div style={{ padding: 40 }}>
+      <AreaChart
+        h={400}
+        data={data}
+        dataKey="date"
+        type="percent"
+        series={[
+          { name: 'Apples', color: 'indigo.6' },
+          { name: 'Oranges', color: 'blue.6' },
+          { name: 'Tomatoes', color: 'teal.6' },
+        ]}
+      />
+    </div>
+  );
+}
+
 export function Animation() {
   return (
     <div style={{ padding: 40 }}>

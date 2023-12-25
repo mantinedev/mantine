@@ -6,4 +6,5 @@ export type {
   AreaChartProps,
   AreaChartStylesNames,
   AreaChartSeries,
+  AreaChartType,
 } from './AreaChart';

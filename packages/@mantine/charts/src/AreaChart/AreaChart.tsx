@@ -32,12 +32,16 @@ import { ChartTooltip } from '../ChartTooltip/ChartTooltip';
 import { AreaGradient } from './AreaGradient';
 import classes from './AreaChart.module.css';
 
+function valueToPercent(value: number) {
+  return `${(value * 100).toFixed(0)}%`;
+}
+
 export interface AreaChartSeries {
   name: string;
   color: MantineColor;
 }
 
-export type AreaChartType = 'default' | 'stacked';
+export type AreaChartType = 'default' | 'stacked' | 'percent';
 
 export type AreaChartCurveType =
   | 'bump'
@@ -184,7 +188,7 @@ export const AreaChart = factory<AreaChartFactory>((_props, ref) => {
   const withYTickLine = gridAxis !== 'none' && (tickLine === 'y' || tickLine === 'xy');
   const isAnimationActive = (animationDuration || 0) > 0;
   const _withGradient = typeof withGradient === 'boolean' ? withGradient : type === 'default';
-  const stacked = type === 'stacked';
+  const stacked = type === 'stacked' || type === 'percent';
 
   const getStyles = useStyles<AreaChartFactory>({
     name: 'AreaChart',
@@ -250,7 +254,7 @@ export const AreaChart = factory<AreaChartFactory>((_props, ref) => {
   return (
     <Box ref={ref} {...getStyles('root')} {...others}>
       <ResponsiveContainer {...getStyles('container')}>
-        <ReChartsAreaChart data={data}>
+        <ReChartsAreaChart data={data} stackOffset={type === 'percent' ? 'expand' : undefined}>
           <CartesianGrid
             strokeDasharray={strokeDasharray}
             vertical={gridAxis === 'y' || gridAxis === 'xy'}
@@ -279,6 +283,7 @@ export const AreaChart = factory<AreaChartFactory>((_props, ref) => {
             tick={{ transform: 'translate(-10, 0)', fontSize: 12, fill: 'currentColor' }}
             allowDecimals
             unit={unit}
+            tickFormatter={type === 'percent' ? valueToPercent : undefined}
             {...getStyles('axis')}
             {...yAxisProps}
           />
