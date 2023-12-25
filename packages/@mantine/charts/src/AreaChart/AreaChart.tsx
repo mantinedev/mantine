@@ -78,6 +78,9 @@ export interface AreaChartProps
 
   /** Determines whether the chart areas should stack on top of each other, `false` by default */
   stacked?: boolean;
+
+  /** Determines whether dots should be displayed, `true` by default */
+  withDots?: boolean;
 }
 
 export type AreaChartFactory = Factory<{
@@ -91,6 +94,7 @@ export type AreaChartFactory = Factory<{
 const defaultProps: Partial<AreaChartProps> = {
   withXAxis: true,
   withYAxis: true,
+  withDots: true,
   curveType: 'monotone',
 };
 
@@ -118,6 +122,7 @@ export const AreaChart = factory<AreaChartFactory>((_props, ref) => {
     curveType,
     stacked,
     gridProps,
+    withDots,
     ...others
   } = props;
 
@@ -138,6 +143,25 @@ export const AreaChart = factory<AreaChartFactory>((_props, ref) => {
     varsResolver,
   });
 
+  const dotsAreas = categories.map((category) => (
+    <Area
+      {...getStyles('area')}
+      activeDot={false}
+      dot={false}
+      key={category.name}
+      name={category.name}
+      type={curveType}
+      dataKey={category.name}
+      fill="none"
+      strokeWidth={2}
+      stroke="none"
+      isAnimationActive={false}
+      animationDuration={0}
+      connectNulls
+      stackId={stacked ? 'stack-dots' : undefined}
+    />
+  ));
+
   const areas = categories.map((category) => {
     const id = `${baseId}-${category.color.replace(/[^a-zA-Z0-9]/g, '')}`;
     const color = getThemeColor(category.color, theme);
@@ -149,7 +173,7 @@ export const AreaChart = factory<AreaChartFactory>((_props, ref) => {
         </defs>
         <Area
           {...getStyles('area')}
-          activeDot={{ fill: theme.white, stroke: color }}
+          activeDot={{ fill: theme.white, stroke: color, strokeWidth: 2 }}
           dot={{ fill: color, fillOpacity: 1 }}
           key={category.name}
           name={category.name}
@@ -213,6 +237,7 @@ export const AreaChart = factory<AreaChartFactory>((_props, ref) => {
           />
 
           {areas}
+          {withDots && dotsAreas}
         </ReChartsAreaChart>
       </ResponsiveContainer>
     </Box>

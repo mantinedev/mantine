@@ -49,6 +49,8 @@ export function Usage() {
         h={400}
         data={data}
         dataKey="date"
+        curveType="linear"
+        withGradient
         categories={[
           { name: 'Apples', color: 'indigo.6' },
           { name: 'Oranges', color: 'blue.6' },
