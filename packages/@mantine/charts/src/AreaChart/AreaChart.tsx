@@ -150,6 +150,8 @@ export const AreaChart = factory<AreaChartFactory>((_props, ref) => {
     strokeDasharray,
     gridAxis,
     unit,
+    yAxisProps,
+    xAxisProps,
     ...others
   } = props;
 
@@ -243,6 +245,7 @@ export const AreaChart = factory<AreaChartFactory>((_props, ref) => {
             tickLine={withXTickLine ? { stroke: 'currentColor' } : false}
             minTickGap={5}
             {...getStyles('axis')}
+            {...xAxisProps}
           />
 
           <YAxis
@@ -254,6 +257,7 @@ export const AreaChart = factory<AreaChartFactory>((_props, ref) => {
             allowDecimals
             unit={unit}
             {...getStyles('axis')}
+            {...yAxisProps}
           />
 
           <Tooltip
