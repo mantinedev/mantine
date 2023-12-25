@@ -1,39 +1,84 @@
 import React from 'react';
-import cx from 'clsx';
-import { ColorSwatch, ElementProps, Group, Paper, PaperProps } from '@mantine/core';
+import {
+  BoxProps,
+  ColorSwatch,
+  ElementProps,
+  factory,
+  Factory,
+  Group,
+  Paper,
+  StylesApiProps,
+  useProps,
+  useStyles,
+} from '@mantine/core';
 import classes from './ChartTooltip.module.css';
 
 function filterPayload(payload: Record<string, any>[]) {
   return payload.filter((item) => item.fill !== 'none');
 }
 
-interface ChartTooltipProps extends PaperProps, ElementProps<'div'> {
+export type ChartTooltipStylesNames =
+  | 'root'
+  | 'item'
+  | 'itemBody'
+  | 'itemColor'
+  | 'itemName'
+  | 'itemData'
+  | 'label'
+  | 'body';
+export type ChartTooltipCssVariables = {
+  root: '--test';
+};
+
+export interface ChartTooltipProps
+  extends BoxProps,
+    StylesApiProps<ChartTooltipFactory>,
+    ElementProps<'div'> {
   label?: React.ReactNode;
   payload: Record<string, any>[];
 }
 
-export function ChartTooltip({ payload, label, className, ...others }: ChartTooltipProps) {
+export type ChartTooltipFactory = Factory<{
+  props: ChartTooltipProps;
+  ref: HTMLDivElement;
+  stylesNames: ChartTooltipStylesNames;
+}>;
+
+const defaultProps: Partial<ChartTooltipProps> = {};
+
+export const ChartTooltip = factory<ChartTooltipFactory>((_props, ref) => {
+  const props = useProps('ChartTooltip', defaultProps, _props);
+  const { classNames, className, style, styles, unstyled, vars, payload, label, ...others } = props;
+
+  const getStyles = useStyles<ChartTooltipFactory>({
+    name: 'ChartTooltip',
+    classes,
+    props,
+    className,
+    style,
+    classNames,
+    styles,
+    unstyled,
+  });
+
   const filteredPayload = filterPayload(payload);
 
   const items = filteredPayload.map((item) => (
-    <Group key={item.name} justify="space-between" gap={0} className={classes.item}>
-      <Group className={classes.itemBody}>
-        <ColorSwatch
-          color={item.color}
-          size={12}
-          className={classes.itemColor}
-          withShadow={false}
-        />
-        <div className={classes.itemName}>{item.name}</div>
+    <Group key={item.name} justify="space-between" gap={0} {...getStyles('item')}>
+      <Group {...getStyles('itemBody')}>
+        <ColorSwatch color={item.color} size={12} {...getStyles('itemColor')} withShadow={false} />
+        <div {...getStyles('itemName')}>{item.name}</div>
       </Group>
-      <div className={classes.itemData}>{item.payload[item.dataKey]}</div>
+      <div {...getStyles('itemData')}>{item.payload[item.dataKey]}</div>
     </Group>
   ));
 
   return (
-    <Paper shadow="lg" radius="md" className={cx(classes.root, className)} {...others}>
-      {label && <div className={classes.label}>{label}</div>}
-      <div className={classes.body}>{items}</div>
+    <Paper shadow="lg" {...getStyles('root')} ref={ref} {...others}>
+      {label && <div {...getStyles('label')}>{label}</div>}
+      <div {...getStyles('body')}>{items}</div>
     </Paper>
   );
-}
+});
+
+ChartTooltip.displayName = '@mantine/charts/ChartTooltip';
