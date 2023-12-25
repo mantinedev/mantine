@@ -45,13 +45,17 @@ export interface AreaChartProps
     StylesApiProps<AreaChartFactory>,
     ElementProps<'div'> {
   /** Data used to display chart */
-  data: any[];
+  data: Record<string, any>[];
 
   categories: AreaChartCategory[];
 
   withGradient?: boolean;
 
   dataKey: string;
+
+  hideXAxis?: boolean;
+
+  hideYAxis?: boolean;
 }
 
 export type AreaChartFactory = Factory<{
@@ -83,6 +87,8 @@ export const AreaChart = factory<AreaChartFactory>((_props, ref) => {
     categories,
     withGradient = true,
     dataKey,
+    hideXAxis,
+    hideYAxis,
     ...others
   } = props;
 
@@ -103,37 +109,61 @@ export const AreaChart = factory<AreaChartFactory>((_props, ref) => {
     varsResolver,
   });
 
+  const areas = categories.map((category) => {
+    const id = `${baseId}-${category.color.replace(/[^a-zA-Z0-9]/g, '')}`;
+    const color = getThemeColor(category.color, theme);
+
+    return (
+      <Fragment key={category.name}>
+        <defs>
+          <AreaGradient color={color} withGradient={withGradient} id={id} />
+        </defs>
+        <Area
+          {...getStyles('area')}
+          activeDot={{ fill: theme.white, stroke: color }}
+          dot={{ fill: color, fillOpacity: 1 }}
+          key={category.name}
+          name={category.name}
+          type="linear"
+          dataKey={category.name}
+          fill={`url(#${id})`}
+          strokeWidth={2}
+          stroke={color}
+          isAnimationActive={false}
+          animationDuration={0}
+          connectNulls
+        />
+      </Fragment>
+    );
+  });
+
   return (
     <Box ref={ref} {...getStyles('root')} {...others}>
       <ResponsiveContainer {...getStyles('container')}>
         <ReChartsAreaChart data={data}>
           <CartesianGrid strokeDasharray="4 4" vertical={false} {...getStyles('grid')} />
           <XAxis
-            // hide={!showXAxis}
+            hide={hideXAxis}
             dataKey={dataKey}
             tick={{ transform: 'translate(0, 10)', fontSize: 12, fill: 'currentColor' }}
-            // ticks={startEndOnly ? [data[0][index], data[data.length - 1][index]] : undefined}
             stroke=""
             interval="preserveStartEnd"
-            // axisLine={{ stroke: 'blue' }}
             minTickGap={5}
             {...getStyles('axis')}
           />
           <YAxis
-            // hide={!showYAxis}
+            hide={hideYAxis}
             axisLine={false}
             type="number"
             tickLine={false}
-            // axisLine={{ stroke: 'blue' }}
-            // domain={yAxisDomain as AxisDomain}
             tick={{ transform: 'translate(-10, 0)', fontSize: 12, fill: 'currentColor' }}
             {...getStyles('axis')}
-            // tickFormatter={(value) => value.toString()}
             allowDecimals
           />
 
           <Tooltip
             isAnimationActive={false}
+            position={{ y: 0 }}
             cursor={{
               stroke:
                 computedColorScheme === 'light'
@@ -145,36 +175,9 @@ export const AreaChart = factory<AreaChartFactory>((_props, ref) => {
             content={({ label, payload }) => (
               <ChartTooltip label={label} payload={payload as any[]} />
             )}
-            position={{ y: 0 }}
           />
 
-          {categories.map((category) => {
-            const id = `${baseId}-${category.color.replace(/[^a-zA-Z0-9]/g, '')}`;
-            const color = getThemeColor(category.color, theme);
-
-            return (
-              <Fragment key={category.name}>
-                <defs>
-                  <AreaGradient color={color} withGradient={withGradient} id={id} />
-                </defs>
-                <Area
-                  {...getStyles('area')}
-                  activeDot={{ fill: theme.white, stroke: color }}
-                  dot={{ fill: color, fillOpacity: 1 }}
-                  key={category.name}
-                  name={category.name}
-                  type="linear"
-                  dataKey={category.name}
-                  fill={`url(#${id})`}
-                  strokeWidth={2}
-                  stroke={color}
-                  isAnimationActive={false}
-                  animationDuration={0}
-                  connectNulls
-                />
-              </Fragment>
-            );
-          })}
+          {areas}
         </ReChartsAreaChart>
       </ResponsiveContainer>
     </Box>

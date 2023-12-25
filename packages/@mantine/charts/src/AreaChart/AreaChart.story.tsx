@@ -58,3 +58,16 @@ export function Usage() {
     </div>
   );
 }
+
+export function SingleLine() {
+  return (
+    <div style={{ padding: 40 }}>
+      <AreaChart
+        h={400}
+        data={data}
+        dataKey="date"
+        categories={[{ name: 'Apples', color: 'teal' }]}
+      />
+    </div>
+  );
+}
