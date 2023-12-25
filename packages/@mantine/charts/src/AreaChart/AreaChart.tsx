@@ -2,12 +2,13 @@ import React, { Fragment, useId } from 'react';
 import {
   Area,
   CartesianGrid,
-  // Legend,
   AreaChart as ReChartsAreaChart,
   ResponsiveContainer,
   Tooltip,
   XAxis,
+  XAxisProps,
   YAxis,
+  YAxisProps,
 } from 'recharts';
 import {
   Box,
@@ -47,15 +48,25 @@ export interface AreaChartProps
   /** Data used to display chart */
   data: Record<string, any>[];
 
+  /** An array of objects with `name` and `color` keys. Determines which data should be consumed from the `data` array. */
   categories: AreaChartCategory[];
+
+  /** Key of the `data` object for x-axis values */
+  dataKey: string;
 
   withGradient?: boolean;
 
-  dataKey: string;
-
+  /** Determines whether x-axis should be hidden, `false` by default */
   hideXAxis?: boolean;
 
+  /** Determines whether y-axis should be hidden, `false` by default */
   hideYAxis?: boolean;
+
+  /** Props passed down to the `XAxis` recharts component */
+  xAxisProps?: XAxisProps;
+
+  /** Props passed down to the `YAxis` recharts component */
+  yAxisProps?: YAxisProps;
 }
 
 export type AreaChartFactory = Factory<{
