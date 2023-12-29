@@ -49,7 +49,7 @@ export interface TextProps extends BoxProps, StylesApiProps<TextFactory> {
   /** Number of lines after which Text will be truncated */
   lineClamp?: number;
 
-  /** Side on which Text must be truncated, if `true`, text in truncated from the start */
+  /** Side on which Text must be truncated, if `true`, text is truncated from the start */
   truncate?: TextTruncate;
 
   /** Sets `line-height` to 1 for centering, `false` by default */
