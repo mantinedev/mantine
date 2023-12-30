@@ -20,6 +20,11 @@ export const PACKAGES_DATA = [
     dependencies: ['@mantine/hooks', '@mantine/core', '@mantine/dates', 'dayjs'],
   },
   {
+    package: '@mantine/charts',
+    description: 'Recharts based charts library',
+    dependencies: ['@mantine/hooks', '@mantine/core', '@mantine/charts', 'recharts@2'],
+  },
+  {
     package: '@mantine/notifications',
     description: 'Notifications system',
     dependencies: ['@mantine/hooks', '@mantine/core', '@mantine/notifications'],
