@@ -22,8 +22,9 @@ body:
       label: What package has an issue?
       options:
         - '@mantine/core'
-        - '@mantine/dates'
         - '@mantine/hooks'
+        - '@mantine/dates'
+        - '@mantine/charts'
         - '@mantine/form'
         - '@mantine/notifications'
         - '@mantine/tiptap'
