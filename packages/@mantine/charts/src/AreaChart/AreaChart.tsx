@@ -131,6 +131,9 @@ export interface AreaChartProps
 
   /** Props passed down to the `Tooltip` component */
   tooltipProps?: Omit<TooltipProps<any, any>, 'ref'>;
+
+  /** Determines whether chart legend should be displayed, `false` by default */
+  withLegend?: boolean;
 }
 
 export type AreaChartFactory = Factory<{
@@ -190,6 +193,7 @@ export const AreaChart = factory<AreaChartFactory>((_props, ref) => {
     type,
     legendProps,
     tooltipProps,
+    withLegend,
     ...others
   } = props;
 
@@ -267,12 +271,14 @@ export const AreaChart = factory<AreaChartFactory>((_props, ref) => {
     <Box ref={ref} {...getStyles('root')} {...others}>
       <ResponsiveContainer {...getStyles('container')}>
         <ReChartsAreaChart data={data} stackOffset={type === 'percent' ? 'expand' : undefined}>
-          <Legend
-            verticalAlign="top"
-            content={(payload) => <ChartLegend payload={payload.payload} />}
-            height={40}
-            {...legendProps}
-          />
+          {withLegend && (
+            <Legend
+              verticalAlign="top"
+              content={(payload) => <ChartLegend payload={payload.payload} />}
+              height={40}
+              {...legendProps}
+            />
+          )}
           <CartesianGrid
             strokeDasharray={strokeDasharray}
             vertical={gridAxis === 'y' || gridAxis === 'xy'}
