@@ -13,8 +13,6 @@ function Demo() {
       h={300}
       data={data}
       dataKey="date"
-      curveType="linear"
-      withGradient
       series={[
         { name: 'Apples', color: 'indigo.6' },
         { name: 'Oranges', color: 'blue.6' },
@@ -32,8 +30,6 @@ function Wrapper(props: any) {
       h={300}
       data={data}
       dataKey="date"
-      curveType="linear"
-      withGradient
       series={[
         { name: 'Apples', color: 'indigo.6' },
         { name: 'Oranges', color: 'blue.6' },

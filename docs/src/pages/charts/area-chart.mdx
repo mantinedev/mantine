@@ -6,4 +6,24 @@ export default Layout(MDX_DATA.AreaChart);
 
 ## Usage
 
+Use `AreaChart` component without `type` prop to render a regular area chart.
+In a regular area chart, each data series is plotted on its own and does
+not interact with other series.
+
 <Demo data={AreaChartDemos.usage} />
+
+## Stacked area chart
+
+Set `type="stacked"` to render a stacked area chart. In this type of area chart
+stacking is applied along the vertical axis, allowing you to see the overall trend
+as well as the contribution of each individual series to the total.
+
+<Demo data={AreaChartDemos.stacked} />
+
+## Percent area chart
+
+Set `type="percent"` to render a percent area chart. In this type of area chart
+the y-axis scale is always normalized to 100%, making it easier to compare the
+contribution of each series in terms of percentages.
+
+<Demo data={AreaChartDemos.percent} />
