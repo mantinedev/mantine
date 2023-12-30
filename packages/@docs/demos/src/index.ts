@@ -117,7 +117,10 @@ export * as DateTimePickerDemos from './demos/dates/DateTimePicker';
 export * as DateInputDemos from './demos/dates/DateInput';
 export * as CalendarDemos from './demos/dates/Calendar';
 
-// Other demos
+// @mantine/charts
+export * as AreaChartDemos from './demos/charts/AreaChart';
+
+// Extensions demos
 export * as NotificationsDemos from './demos/notifications';
 export * as CarouselDemos from './demos/carousel';
 export * as SpotlightDemos from './demos/spotlight';

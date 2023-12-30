@@ -43,7 +43,8 @@
     "embla-carousel-react": "*",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "shikiji": "^0.7.4"
+    "shikiji": "^0.7.4",
+    "recharts": "^2.10.3"
   },
   "devDependencies": {
     "@docs/styles-api": "workspace:*",
@@ -54,6 +55,7 @@
     "@mantine/dropzone": "workspace:*",
     "@mantine/form": "workspace:*",
     "@mantine/hooks": "workspace:*",
+    "@mantine/charts": "workspace:*",
     "@mantine/notifications": "workspace:*",
     "@mantine/nprogress": "workspace:*",
     "@mantine/spotlight": "workspace:*",
