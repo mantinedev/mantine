@@ -1,4 +1,4 @@
-.root {
+.tooltip {
   min-width: rem(200px);
   background-color: var(--mantine-color-body);
   box-shadow: var(--mantine-shadow-md);
@@ -13,19 +13,19 @@
   }
 }
 
-.label {
+.tooltipLabel {
   padding: var(--mantine-spacing-xs) var(--mantine-spacing-md);
   font-size: var(--mantine-font-size-md);
   font-weight: 500;
   color: var(--mantine-color-bright);
 }
 
-.body {
+.tooltipBody {
   padding: var(--mantine-spacing-sm) var(--mantine-spacing-md);
   padding-top: 0;
 }
 
-.item {
+.tooltipItem {
   font-size: var(--mantine-font-size-sm);
 
   &:where(& + &) {
@@ -33,15 +33,15 @@
   }
 }
 
-.itemBody {
+.tooltipItemBody {
   margin-right: var(--mantine-spacing-xl);
 }
 
-.itemName {
+.tooltipItemName {
   color: var(--mantine-color-text);
   font-size: var(--mantine-font-size-sm);
 }
 
-.itemData {
+.tooltipItemData {
   color: var(--mantine-color-bright);
 }

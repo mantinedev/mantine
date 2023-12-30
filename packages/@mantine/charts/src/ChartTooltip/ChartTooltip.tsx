@@ -18,14 +18,14 @@ function filterPayload(payload: Record<string, any>[]) {
 }
 
 export type ChartTooltipStylesNames =
-  | 'root'
-  | 'item'
-  | 'itemBody'
-  | 'itemColor'
-  | 'itemName'
-  | 'itemData'
-  | 'label'
-  | 'body';
+  | 'tooltip'
+  | 'tooltipItem'
+  | 'tooltipItemBody'
+  | 'tooltipItemColor'
+  | 'tooltipItemName'
+  | 'tooltipItemData'
+  | 'tooltipLabel'
+  | 'tooltipBody';
 
 export interface ChartTooltipProps
   extends BoxProps,
@@ -65,19 +65,24 @@ export const ChartTooltip = factory<ChartTooltipFactory>((_props, ref) => {
   const filteredPayload = filterPayload(payload);
 
   const items = filteredPayload.map((item) => (
-    <Group key={item.name} justify="space-between" gap={0} {...getStyles('item')}>
-      <Group {...getStyles('itemBody')}>
-        <ColorSwatch color={item.color} size={12} {...getStyles('itemColor')} withShadow={false} />
-        <div {...getStyles('itemName')}>{item.name}</div>
+    <Group key={item.name} justify="space-between" gap={0} {...getStyles('tooltipItem')}>
+      <Group {...getStyles('tooltipItemBody')}>
+        <ColorSwatch
+          color={item.color}
+          size={12}
+          {...getStyles('tooltipItemColor')}
+          withShadow={false}
+        />
+        <div {...getStyles('tooltipItemName')}>{item.name}</div>
       </Group>
-      <div {...getStyles('itemData')}>{item.payload[item.dataKey]}</div>
+      <div {...getStyles('tooltipItemData')}>{item.payload[item.dataKey]}</div>
     </Group>
   ));
 
   return (
-    <Box {...getStyles('root')} ref={ref} {...others}>
-      {label && <div {...getStyles('label')}>{label}</div>}
-      <div {...getStyles('body')}>{items}</div>
+    <Box {...getStyles('tooltip')} ref={ref} {...others}>
+      {label && <div {...getStyles('tooltipLabel')}>{label}</div>}
+      <div {...getStyles('tooltipBody')}>{items}</div>
     </Box>
   );
 });
