@@ -13,7 +13,7 @@ import {
 } from '@mantine/core';
 import classes from './ChartTooltip.module.css';
 
-function filterPayload(payload: Record<string, any>[]) {
+export function getFilteredChartTooltipPayload(payload: Record<string, any>[]) {
   return payload.filter((item) => item.fill !== 'none');
 }
 
@@ -69,7 +69,7 @@ export const ChartTooltip = factory<ChartTooltipFactory>((_props, ref) => {
     return null;
   }
 
-  const filteredPayload = filterPayload(payload);
+  const filteredPayload = getFilteredChartTooltipPayload(payload);
 
   const items = filteredPayload.map((item) => (
     <Group key={item.name} justify="space-between" gap={0} {...getStyles('tooltipItem')}>

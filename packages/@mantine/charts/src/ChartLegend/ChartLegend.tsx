@@ -12,7 +12,7 @@ import {
 } from '@mantine/core';
 import classes from './ChartLegend.module.css';
 
-function filterPayload(payload: Record<string, any>[]) {
+export function getFilteredChartLegendPayload(payload: Record<string, any>[]) {
   return payload.filter((item) => item.color !== 'none');
 }
 
@@ -52,7 +52,7 @@ export const ChartLegend = factory<ChartLegendFactory>((_props, ref) => {
     return null;
   }
 
-  const filteredPayload = filterPayload(payload);
+  const filteredPayload = getFilteredChartLegendPayload(payload);
 
   const items = filteredPayload.map((item) => (
     <div key={item.name} {...getStyles('legendItem')}>

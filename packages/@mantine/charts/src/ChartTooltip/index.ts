@@ -1,4 +1,4 @@
-export { ChartTooltip } from './ChartTooltip';
+export { ChartTooltip, getFilteredChartTooltipPayload } from './ChartTooltip';
 export type {
   ChartTooltipFactory,
   ChartTooltipProps,
