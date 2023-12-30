@@ -27,3 +27,17 @@ the y-axis scale is always normalized to 100%, making it easier to compare the
 contribution of each series in terms of percentages.
 
 <Demo data={AreaChartDemos.percent} />
+
+## Legend
+
+To display chart legend, set `withLegend` prop:
+
+<Demo data={AreaChartDemos.legend} />
+
+## Legend position
+
+You can pass props down to recharts [Legend](https://recharts.org/en-US/api/Legend)
+component with `legendProps` prop. For example, setting `legendProps={{ verticalAlign: 'bottom', height: 50 }}`
+will render the legend at the bottom of the chart and set its height to 50px.
+
+<Demo data={AreaChartDemos.legendPosition} />

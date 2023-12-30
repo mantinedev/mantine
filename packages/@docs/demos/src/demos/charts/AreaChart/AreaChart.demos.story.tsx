@@ -17,3 +17,13 @@ export const Demo_percent = {
   name: '⭐ Demo: percent',
   render: renderDemo(demos.percent),
 };
+
+export const Demo_legend = {
+  name: '⭐ Demo: legend',
+  render: renderDemo(demos.legend),
+};
+
+export const Demo_legendPosition = {
+  name: '⭐ Demo: legendPosition',
+  render: renderDemo(demos.legendPosition),
+};

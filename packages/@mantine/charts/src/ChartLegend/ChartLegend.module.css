@@ -2,8 +2,9 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: flex-end;
+  align-items: center;
+  height: 100%;
   gap: var(--mantine-spacing-lg);
-  padding-bottom: var(--mantine-spacing-md);
 }
 
 .legendItem {
