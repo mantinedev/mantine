@@ -8,6 +8,7 @@ interface UseDatesRangeInput<Type extends DatePickerType = 'default'>
   extends PickerBaseProps<Type> {
   level: 'year' | 'month' | 'day';
   type: Type;
+  allowSameDay?: boolean;
   onMouseLeave?: (event: React.MouseEvent<HTMLDivElement>) => void;
   applyTimezone?: boolean;
 }
@@ -18,6 +19,7 @@ export function useDatesState<Type extends DatePickerType = 'default'>({
   value,
   defaultValue,
   onChange,
+  allowSameDay,
   allowSingleDateInRange,
   allowDeselect,
   onMouseLeave,
@@ -39,7 +41,7 @@ export function useDatesState<Type extends DatePickerType = 'default'>({
   const onDateChange = (date: Date) => {
     if (type === 'range') {
       if (pickedDate instanceof Date && !_value[1]) {
-        if (dayjs(date).isSame(pickedDate, level) && !allowSingleDateInRange) {
+        if (!allowSameDay && dayjs(date).isSame(pickedDate, level) && !allowSingleDateInRange) {
           setPickedDate(null);
           setHoveredDate(null);
           setValue([null, null]);

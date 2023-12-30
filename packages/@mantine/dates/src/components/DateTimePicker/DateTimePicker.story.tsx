@@ -40,6 +40,14 @@ export function WithSeconds() {
   );
 }
 
+export function Range() {
+  return (
+    <div style={{ padding: 40, maxWidth: 400 }}>
+      <DateTimePicker placeholder="Date time picker" withSeconds type="range" />
+    </div>
+  );
+}
+
 export function MinDate() {
   return (
     <div style={{ padding: 40, maxWidth: 400 }}>
