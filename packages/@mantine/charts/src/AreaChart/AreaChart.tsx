@@ -4,9 +4,12 @@ import {
   CartesianGrid,
   CartesianGridProps,
   DotProps,
+  Legend,
+  LegendProps,
   AreaChart as ReChartsAreaChart,
   ResponsiveContainer,
   Tooltip,
+  TooltipProps,
   XAxis,
   XAxisProps,
   YAxis,
@@ -28,7 +31,8 @@ import {
   useProps,
   useStyles,
 } from '@mantine/core';
-import { ChartTooltip } from '../ChartTooltip/ChartTooltip';
+import { ChartLegend } from '../ChartLegend';
+import { ChartTooltip } from '../ChartTooltip';
 import { AreaGradient } from './AreaGradient';
 import classes from './AreaChart.module.css';
 
@@ -121,6 +125,12 @@ export interface AreaChartProps
 
   /** Tooltip position animation duration in ms, `0` by default */
   animationDuration?: number;
+
+  /** Props passed down to the `Legend` component */
+  legendProps?: Omit<LegendProps, 'ref'>;
+
+  /** Props passed down to the `Tooltip` component */
+  tooltipProps?: Omit<TooltipProps<any, any>, 'ref'>;
 }
 
 export type AreaChartFactory = Factory<{
@@ -178,6 +188,8 @@ export const AreaChart = factory<AreaChartFactory>((_props, ref) => {
     strokeWidth,
     animationDuration,
     type,
+    legendProps,
+    tooltipProps,
     ...others
   } = props;
 
@@ -255,6 +267,12 @@ export const AreaChart = factory<AreaChartFactory>((_props, ref) => {
     <Box ref={ref} {...getStyles('root')} {...others}>
       <ResponsiveContainer {...getStyles('container')}>
         <ReChartsAreaChart data={data} stackOffset={type === 'percent' ? 'expand' : undefined}>
+          <Legend
+            verticalAlign="top"
+            content={(payload) => <ChartLegend payload={payload.payload} />}
+            height={40}
+            {...legendProps}
+          />
           <CartesianGrid
             strokeDasharray={strokeDasharray}
             vertical={gridAxis === 'y' || gridAxis === 'xy'}
@@ -300,9 +318,8 @@ export const AreaChart = factory<AreaChartFactory>((_props, ref) => {
               strokeWidth: 1,
               strokeDasharray,
             }}
-            content={({ label, payload }) => (
-              <ChartTooltip label={label} payload={payload as any[]} />
-            )}
+            content={({ label, payload }) => <ChartTooltip label={label} payload={payload} />}
+            {...tooltipProps}
           />
 
           {areas}
@@ -314,4 +331,4 @@ export const AreaChart = factory<AreaChartFactory>((_props, ref) => {
 });
 
 AreaChart.classes = classes;
-AreaChart.displayName = '@mantine/core/AreaChart';
+AreaChart.displayName = '@mantine/charts/AreaChart';

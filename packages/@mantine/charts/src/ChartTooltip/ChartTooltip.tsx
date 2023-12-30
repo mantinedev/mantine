@@ -26,16 +26,13 @@ export type ChartTooltipStylesNames =
   | 'itemData'
   | 'label'
   | 'body';
-export type ChartTooltipCssVariables = {
-  root: '--test';
-};
 
 export interface ChartTooltipProps
   extends BoxProps,
     StylesApiProps<ChartTooltipFactory>,
     ElementProps<'div'> {
   label?: React.ReactNode;
-  payload: Record<string, any>[];
+  payload: Record<string, any>[] | undefined;
 }
 
 export type ChartTooltipFactory = Factory<{
@@ -60,6 +57,10 @@ export const ChartTooltip = factory<ChartTooltipFactory>((_props, ref) => {
     styles,
     unstyled,
   });
+
+  if (!payload) {
+    return null;
+  }
 
   const filteredPayload = filterPayload(payload);
 

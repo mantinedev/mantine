@@ -1,0 +1,19 @@
+.legend {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: var(--mantine-spacing-lg);
+  padding-bottom: var(--mantine-spacing-md);
+}
+
+.legendItem {
+  display: flex;
+  align-items: center;
+  gap: rem(7px);
+}
+
+.legendItemName {
+  font-size: var(--mantine-font-size-sm);
+  margin: 0;
+  padding: 0;
+}
