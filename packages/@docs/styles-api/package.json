@@ -42,6 +42,7 @@
     "@mantine/core": "workspace:*",
     "@mantine/dates": "workspace:*",
     "@mantine/dropzone": "workspace:*",
+    "@mantine/charts": "workspace:*",
     "@mantine/notifications": "workspace:*",
     "@mantine/nprogress": "workspace:*",
     "@mantine/spotlight": "workspace:*",

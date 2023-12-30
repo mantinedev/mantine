@@ -6,6 +6,7 @@ export * from './data/Affix.styles-api';
 export * from './data/Alert.styles-api';
 export * from './data/Anchor.styles-api';
 export * from './data/AppShell.styles-api';
+export * from './data/AreaChart.styles-api';
 export * from './data/AspectRatio.styles-api';
 export * from './data/Autocomplete.styles-api';
 export * from './data/Avatar.styles-api';

@@ -7,6 +7,7 @@ const code = `
 import { data } from './data';
 import { AreaChart } from '@mantine/charts';
 
+
 function Demo() {
   return (
     <AreaChart

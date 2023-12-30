@@ -18,7 +18,6 @@ import {
 import {
   Box,
   BoxProps,
-  createVarsResolver,
   ElementProps,
   factory,
   Factory,
@@ -57,10 +56,6 @@ export type AreaChartCurveType =
   | 'stepAfter';
 
 export type AreaChartStylesNames = 'root' | 'container' | 'grid' | 'axis' | 'area';
-
-export type AreaChartCssVariables = {
-  root: '--test';
-};
 
 export interface AreaChartProps
   extends BoxProps,
@@ -140,7 +135,6 @@ export type AreaChartFactory = Factory<{
   props: AreaChartProps;
   ref: HTMLDivElement;
   stylesNames: AreaChartStylesNames;
-  vars: AreaChartCssVariables;
 }>;
 
 const defaultProps: Partial<AreaChartProps> = {
@@ -155,12 +149,6 @@ const defaultProps: Partial<AreaChartProps> = {
   gridAxis: 'x',
   type: 'default',
 };
-
-const varsResolver = createVarsResolver<AreaChartFactory>(() => ({
-  root: {
-    '--test': 'test',
-  },
-}));
 
 export const AreaChart = factory<AreaChartFactory>((_props, ref) => {
   const props = useProps('AreaChart', defaultProps, _props);
@@ -215,8 +203,6 @@ export const AreaChart = factory<AreaChartFactory>((_props, ref) => {
     classNames,
     styles,
     unstyled,
-    vars,
-    varsResolver,
   });
 
   const dotsAreas = series.map((item) => {
