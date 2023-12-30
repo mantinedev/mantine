@@ -88,10 +88,10 @@ export interface AreaChartProps
   withYAxis?: boolean;
 
   /** Props passed down to the `XAxis` recharts component */
-  xAxisProps?: XAxisProps;
+  xAxisProps?: Omit<XAxisProps, 'ref'>;
 
   /** Props passed down to the `YAxis` recharts component */
-  yAxisProps?: YAxisProps;
+  yAxisProps?: Omit<YAxisProps, 'ref'>;
 
   /** Type of the curve, `'monotone'` by default */
   curveType?: AreaChartCurveType;
@@ -115,10 +115,10 @@ export interface AreaChartProps
   unit?: string;
 
   /** Props passed down to all dots. Ignored if `withDots={false}` is set. */
-  dotProps?: DotProps;
+  dotProps?: Omit<DotProps, 'ref'>;
 
   /** Props passed down to all active dots. Ignored if `withDots={false}` is set. */
-  activeDotProps?: DotProps;
+  activeDotProps?: Omit<DotProps, 'ref'>;
 
   /** Stroke width for the chart areas, `2` by default */
   strokeWidth?: number;

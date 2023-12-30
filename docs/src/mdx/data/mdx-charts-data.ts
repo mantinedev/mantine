@@ -13,6 +13,8 @@ export const MDX_CHARTS_DATA: Record<string, Frontmatter> = {
 
   AreaChart: {
     title: 'AreaChart',
+    props: ['AreaChart'],
+    styles: ['AreaChart'],
     package: '@mantine/charts',
     slug: '/charts/area-chart',
     description: 'Area chart component with stacked and percentage variants',

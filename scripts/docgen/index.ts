@@ -9,5 +9,6 @@ generateDeclarations({
   excludeProps: [],
   typesReplacement: {
     'Partial<Omit<TransitionProps, "mounted">> | undefined': 'TransitionProps',
+    'Omit<Props, "ref"> | undefined': 'RechartsProps',
   },
 });
