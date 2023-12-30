@@ -310,7 +310,9 @@ export const AreaChart = factory<AreaChartFactory>((_props, ref) => {
               strokeWidth: 1,
               strokeDasharray,
             }}
-            content={({ label, payload }) => <ChartTooltip label={label} payload={payload} />}
+            content={({ label, payload }) => (
+              <ChartTooltip label={label} payload={payload} unit={unit} />
+            )}
             {...tooltipProps}
           />
 

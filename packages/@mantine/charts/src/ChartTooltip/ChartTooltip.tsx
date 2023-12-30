@@ -31,8 +31,14 @@ export interface ChartTooltipProps
   extends BoxProps,
     StylesApiProps<ChartTooltipFactory>,
     ElementProps<'div'> {
+  /** Main tooltip label */
   label?: React.ReactNode;
+
+  /** Chart data provided by recharts */
   payload: Record<string, any>[] | undefined;
+
+  /** Data units, provided by parent component */
+  unit?: string;
 }
 
 export type ChartTooltipFactory = Factory<{
@@ -45,7 +51,8 @@ const defaultProps: Partial<ChartTooltipProps> = {};
 
 export const ChartTooltip = factory<ChartTooltipFactory>((_props, ref) => {
   const props = useProps('ChartTooltip', defaultProps, _props);
-  const { classNames, className, style, styles, unstyled, vars, payload, label, ...others } = props;
+  const { classNames, className, style, styles, unstyled, vars, payload, label, unit, ...others } =
+    props;
 
   const getStyles = useStyles<ChartTooltipFactory>({
     name: 'ChartTooltip',
@@ -75,7 +82,10 @@ export const ChartTooltip = factory<ChartTooltipFactory>((_props, ref) => {
         />
         <div {...getStyles('tooltipItemName')}>{item.name}</div>
       </Group>
-      <div {...getStyles('tooltipItemData')}>{item.payload[item.dataKey]}</div>
+      <div {...getStyles('tooltipItemData')}>
+        {item.payload[item.dataKey]}
+        {unit}
+      </div>
     </Group>
   ));
 
