@@ -4,7 +4,6 @@ import { DemoAreaProps } from '../DemoArea';
 import { DemoCode } from '../DemoCode';
 import { DemoColumns } from '../DemoColumns';
 import { DemoRoot } from '../DemoRoot';
-import { clearProps } from './clear-props';
 import {
   ConfiguratorBooleanControl,
   ConfiguratorBooleanControlOptions,
@@ -21,7 +20,7 @@ import {
   ConfiguratorStringControl,
   ConfiguratorStringControlOptions,
 } from './controls';
-import { injectProps } from './inject-props';
+import { Code, getCodeArray } from './get-code-array';
 import classes from './ConfiguratorDemo.module.css';
 
 const ControlComponents = {
@@ -44,7 +43,7 @@ export type ConfiguratorControlOptions =
   | ConfiguratorNumberControlOptions;
 
 export interface ConfiguratorDemoProps extends DemoAreaProps {
-  code: string | ((props: Record<string, any>) => string);
+  code: Code;
   controls: ConfiguratorControlOptions[];
 }
 
@@ -98,18 +97,7 @@ export function ConfiguratorDemo({
       >
         {React.cloneElement(children as JSX.Element, state)}
       </DemoColumns>
-      <DemoCode
-        code={[
-          {
-            fileName: 'Demo.tsx',
-            language: 'tsx',
-            code:
-              typeof code === 'function'
-                ? code(clearProps(controls, state))
-                : injectProps(clearProps(controls, state), code),
-          },
-        ]}
-      />
+      <DemoCode code={getCodeArray({ code, controls, state })} />
     </DemoRoot>
   );
 }

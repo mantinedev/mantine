@@ -16,6 +16,7 @@ export interface ConfiguratorSegmentedControlProps
   value: string;
   onChange: (value: string) => void;
   prop: string;
+  transformLabel?: boolean;
 }
 
 export function ConfiguratorSegmentedControl({
@@ -23,12 +24,13 @@ export function ConfiguratorSegmentedControl({
   value,
   onChange,
   prop,
+  transformLabel = true,
   ...others
 }: ConfiguratorSegmentedControlProps) {
   return (
     <Input.Wrapper labelElement="div" label={getControlLabel(prop)} {...others}>
       <SegmentedControl
-        data={transformSelectData(data)}
+        data={transformLabel ? transformSelectData(data) : data}
         value={value}
         onChange={onChange}
         fullWidth

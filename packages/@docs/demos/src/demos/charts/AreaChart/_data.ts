@@ -25,12 +25,6 @@ export const data = [
   },
   {
     date: 'March 26',
-    Apples: 3475,
-    Oranges: 1812,
-    Tomatoes: 2917,
-  },
-  {
-    date: 'March 27',
     Apples: 3129,
     Oranges: 1726,
     Tomatoes: 2290,
@@ -65,12 +59,6 @@ export const data = [
   },
   {
     date: 'March 26',
-    Apples: 3475,
-    Oranges: 1812,
-    Tomatoes: 2917,
-  },
-  {
-    date: 'March 27',
     Apples: 3129,
     Oranges: 1726,
     Tomatoes: 2290,

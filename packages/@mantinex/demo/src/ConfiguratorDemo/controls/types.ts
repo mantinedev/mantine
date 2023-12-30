@@ -2,4 +2,5 @@ export type ConfiguratorControl<Type extends string, Params extends Record<strin
   type: Type;
   prop: string;
   libraryValue: any;
+  transformLabel?: boolean;
 } & Params;
