@@ -8,7 +8,7 @@ export const MDX_CORE_DATA: Record<string, Frontmatter> = {
     description: 'Base component for all Mantine components',
     import: "import { Box } from '@mantine/core';",
     source: '@mantine/core/src/components/Box/Box.tsx',
-    docs: 'core/button.mdx',
+    docs: 'core/box.mdx',
   },
 
   Button: {

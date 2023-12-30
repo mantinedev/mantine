@@ -3,6 +3,7 @@ import { Frontmatter } from '@/types';
 export const MDX_DATES_DATA: Record<string, Frontmatter> = {
   GettingStartedDates: {
     title: 'Getting started',
+    description: 'Get started with @mantine/dates package',
     package: '@mantine/dates',
     license: 'MIT',
     slug: '/dates/getting-started',
