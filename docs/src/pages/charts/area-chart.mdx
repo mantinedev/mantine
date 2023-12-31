@@ -41,3 +41,32 @@ component with `legendProps` prop. For example, setting `legendProps={{ vertical
 will render the legend at the bottom of the chart and set its height to 50px.
 
 <Demo data={AreaChartDemos.legendPosition} />
+
+## Area color
+
+You can reference colors from [theme](/theming/theme-object) the same way as in
+other components, for example, `blue`, `red.5`, `orange.7`, etc. Any valid CSS
+color value is also accepted.
+
+<Demo data={AreaChartDemos.color} />
+
+## Stroke dash array
+
+Set `strokeDasharray` prop to control the stroke dash array of the grid and cursor
+lines. The value represent the lengths of alternating dashes and gaps. For example,
+`strokeDasharray="10 5"` will render a dashed line with 10px dashes and 5px gaps.
+
+<Demo data={AreaChartDemos.strokeDasharray} />
+
+## Tooltip animation
+
+By default, tooltip animation is disabled. To enable it, set `tooltipAnimationDuration`
+prop to a number of milliseconds to animate the tooltip position change.
+
+<Demo data={AreaChartDemos.tooltipAnimation} />
+
+## Units
+
+Set `unit` prop to render a unit label next to the y-axis ticks and tooltip values:
+
+<Demo data={AreaChartDemos.unit} />

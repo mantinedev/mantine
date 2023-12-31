@@ -119,7 +119,7 @@ export interface AreaChartProps
   strokeWidth?: number;
 
   /** Tooltip position animation duration in ms, `0` by default */
-  animationDuration?: number;
+  tooltipAnimationDuration?: number;
 
   /** Props passed down to the `Legend` component */
   legendProps?: Omit<LegendProps, 'ref'>;
@@ -129,6 +129,9 @@ export interface AreaChartProps
 
   /** Determines whether chart legend should be displayed, `false` by default */
   withLegend?: boolean;
+
+  /** Determines whether chart tooltip should be displayed, `true` by default */
+  withTooltip?: boolean;
 }
 
 export type AreaChartFactory = Factory<{
@@ -141,8 +144,9 @@ const defaultProps: Partial<AreaChartProps> = {
   withXAxis: true,
   withYAxis: true,
   withDots: true,
+  withTooltip: true,
   strokeWidth: 2,
-  animationDuration: 0,
+  tooltipAnimationDuration: 0,
   tickLine: 'y',
   strokeDasharray: '5 5',
   curveType: 'monotone',
@@ -177,11 +181,12 @@ export const AreaChart = factory<AreaChartFactory>((_props, ref) => {
     dotProps,
     activeDotProps,
     strokeWidth,
-    animationDuration,
+    tooltipAnimationDuration,
     type,
     legendProps,
     tooltipProps,
     withLegend,
+    withTooltip,
     ...others
   } = props;
 
@@ -190,7 +195,7 @@ export const AreaChart = factory<AreaChartFactory>((_props, ref) => {
   const baseId = useId();
   const withXTickLine = gridAxis !== 'none' && (tickLine === 'x' || tickLine === 'xy');
   const withYTickLine = gridAxis !== 'none' && (tickLine === 'y' || tickLine === 'xy');
-  const isAnimationActive = (animationDuration || 0) > 0;
+  const isAnimationActive = (tooltipAnimationDuration || 0) > 0;
   const _withGradient = typeof withGradient === 'boolean' ? withGradient : type === 'default';
   const stacked = type === 'stacked' || type === 'percent';
 
@@ -298,23 +303,25 @@ export const AreaChart = factory<AreaChartFactory>((_props, ref) => {
             {...yAxisProps}
           />
 
-          <Tooltip
-            animationDuration={animationDuration}
-            isAnimationActive={isAnimationActive}
-            position={{ y: 0 }}
-            cursor={{
-              stroke:
-                computedColorScheme === 'light'
-                  ? theme.colors.gray[3]
-                  : rgba(theme.colors.dark[3], 0.6),
-              strokeWidth: 1,
-              strokeDasharray,
-            }}
-            content={({ label, payload }) => (
-              <ChartTooltip label={label} payload={payload} unit={unit} />
-            )}
-            {...tooltipProps}
-          />
+          {withTooltip && (
+            <Tooltip
+              animationDuration={tooltipAnimationDuration}
+              isAnimationActive={isAnimationActive}
+              position={{ y: 0 }}
+              cursor={{
+                stroke:
+                  computedColorScheme === 'light'
+                    ? theme.colors.gray[3]
+                    : rgba(theme.colors.dark[3], 0.6),
+                strokeWidth: 1,
+                strokeDasharray,
+              }}
+              content={({ label, payload }) => (
+                <ChartTooltip label={label} payload={payload} unit={unit} />
+              )}
+              {...tooltipProps}
+            />
+          )}
 
           {areas}
           {withDots && dotsAreas}

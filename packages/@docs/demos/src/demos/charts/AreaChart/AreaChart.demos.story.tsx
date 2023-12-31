@@ -27,3 +27,23 @@ export const Demo_legendPosition = {
   name: '⭐ Demo: legendPosition',
   render: renderDemo(demos.legendPosition),
 };
+
+export const Demo_strokeDasharray = {
+  name: '⭐ Demo: strokeDasharray',
+  render: renderDemo(demos.strokeDasharray),
+};
+
+export const Demo_color = {
+  name: '⭐ Demo: color',
+  render: renderDemo(demos.color),
+};
+
+export const Demo_tooltipAnimation = {
+  name: '⭐ Demo: tooltipAnimation',
+  render: renderDemo(demos.tooltipAnimation),
+};
+
+export const Demo_unit = {
+  name: '⭐ Demo: unit',
+  render: renderDemo(demos.unit),
+};

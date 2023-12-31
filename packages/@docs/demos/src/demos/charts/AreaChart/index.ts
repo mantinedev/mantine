@@ -3,3 +3,7 @@ export { percent } from './AreaChart.demo.percent';
 export { usage } from './AreaChart.demo.usage';
 export { legend } from './AreaChart.demo.legend';
 export { legendPosition } from './AreaChart.demo.legendPosition';
+export { strokeDasharray } from './AreaChart.demo.strokeDasharray';
+export { color } from './AreaChart.demo.color';
+export { tooltipAnimation } from './AreaChart.demo.tooltipAnimation';
+export { unit } from './AreaChart.demo.unit';
