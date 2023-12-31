@@ -53,6 +53,7 @@ export function Usage() {
         withGradient
         dotProps={{ r: 6 }}
         strokeWidth={4}
+        fillOpacity={0.4}
         series={[
           { name: 'Apples', color: 'indigo.6' },
           { name: 'Oranges', color: 'blue.6' },
@@ -126,7 +127,7 @@ export function Animation() {
         data={data}
         dataKey="date"
         type="stacked"
-        animationDuration={200}
+        tooltipAnimationDuration={200}
         series={[
           { name: 'Apples', color: 'indigo.6' },
           { name: 'Oranges', color: 'blue.6' },

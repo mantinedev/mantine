@@ -135,6 +135,9 @@ export interface AreaChartProps
 
   /** Props passed down to recharts `AreaChart` component */
   areaChartProps?: React.ComponentPropsWithoutRef<typeof ReChartsAreaChart>;
+
+  /** Controls fill opacity of all areas, `0.6` by default */
+  fillOpacity?: number;
 }
 
 export type AreaChartFactory = Factory<{
@@ -150,6 +153,7 @@ const defaultProps: Partial<AreaChartProps> = {
   withTooltip: true,
   strokeWidth: 2,
   tooltipAnimationDuration: 0,
+  fillOpacity: 0.6,
   tickLine: 'y',
   strokeDasharray: '5 5',
   curveType: 'monotone',
@@ -191,6 +195,7 @@ export const AreaChart = factory<AreaChartFactory>((_props, ref) => {
     withLegend,
     withTooltip,
     areaChartProps,
+    fillOpacity,
     ...others
   } = props;
 
@@ -257,6 +262,7 @@ export const AreaChart = factory<AreaChartFactory>((_props, ref) => {
           isAnimationActive={false}
           connectNulls
           stackId={stacked ? 'stack' : undefined}
+          fillOpacity={fillOpacity}
         />
       </Fragment>
     );
