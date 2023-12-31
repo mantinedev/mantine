@@ -67,3 +67,8 @@ export const Demo_dotProps = {
   name: '⭐ Demo: dotProps',
   render: renderDemo(demos.dotProps),
 };
+
+export const Demo_strokeWidth = {
+  name: '⭐ Demo: strokeWidth',
+  render: renderDemo(demos.strokeWidth),
+};
