@@ -62,3 +62,8 @@ export const Demo_noTooltip = {
   name: '⭐ Demo: noTooltip',
   render: renderDemo(demos.noTooltip),
 };
+
+export const Demo_dotProps = {
+  name: '⭐ Demo: dotProps',
+  render: renderDemo(demos.dotProps),
+};

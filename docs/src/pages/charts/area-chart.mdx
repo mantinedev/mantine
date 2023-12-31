@@ -94,3 +94,10 @@ To remove tooltip, set `withTooltip={false}`. It also removes the cursor line
 and disables interactions with the chart.
 
 <Demo data={AreaChartDemos.noTooltip} />
+
+## Customize dots
+
+Use `dotProps` to pass props down to recharts dot in regular state and `activeDotProps`
+to pass props down to recharts dot in active state (when cursor is over the current series).
+
+<Demo data={AreaChartDemos.dotProps} />

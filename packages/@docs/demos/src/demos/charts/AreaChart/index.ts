@@ -10,3 +10,4 @@ export { unit } from './AreaChart.demo.unit';
 export { colorSchemeColor } from './AreaChart.demo.colorSchemeColor';
 export { customTooltip } from './AreaChart.demo.customTooltip';
 export { noTooltip } from './AreaChart.demo.noTooltip';
+export { dotProps } from './AreaChart.demo.dotProps';
