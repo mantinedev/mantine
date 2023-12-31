@@ -72,3 +72,8 @@ export const Demo_strokeWidth = {
   name: '⭐ Demo: strokeWidth',
   render: renderDemo(demos.strokeWidth),
 };
+
+export const Demo_sync = {
+  name: '⭐ Demo: sync',
+  render: renderDemo(demos.sync),
+};

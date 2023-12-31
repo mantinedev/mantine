@@ -107,3 +107,11 @@ to pass props down to recharts dot in active state (when cursor is over the curr
 Use `strokeWidth` prop to control the stroke width of all areas:
 
 <Demo data={AreaChartDemos.strokeWidth} />
+
+## Sync multiple AreaCharts
+
+You can pass props down to recharts [AreaChart](https://recharts.org/en-US/api/AreaChart)
+component with `areaChartProps` prop. For example, setting `areaChartProps={{ syncId: 'any-id' }}`
+will sync tooltip of multiple `AreaChart` components with the same `syncId` prop.
+
+<Demo data={AreaChartDemos.sync} />
