@@ -77,3 +77,8 @@ export const Demo_sync = {
   name: '⭐ Demo: sync',
   render: renderDemo(demos.sync),
 };
+
+export const Demo_fillOpacity = {
+  name: '⭐ Demo: fillOpacity',
+  render: renderDemo(demos.fillOpacity),
+};

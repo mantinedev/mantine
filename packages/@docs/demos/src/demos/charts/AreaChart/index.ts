@@ -13,3 +13,4 @@ export { noTooltip } from './AreaChart.demo.noTooltip';
 export { dotProps } from './AreaChart.demo.dotProps';
 export { strokeWidth } from './AreaChart.demo.strokeWidth';
 export { sync } from './AreaChart.demo.sync';
+export { fillOpacity } from './AreaChart.demo.fillOpacity';
