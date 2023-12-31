@@ -7,3 +7,4 @@ export { strokeDasharray } from './AreaChart.demo.strokeDasharray';
 export { color } from './AreaChart.demo.color';
 export { tooltipAnimation } from './AreaChart.demo.tooltipAnimation';
 export { unit } from './AreaChart.demo.unit';
+export { colorSchemeColor } from './AreaChart.demo.colorSchemeColor';

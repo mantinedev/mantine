@@ -47,3 +47,8 @@ export const Demo_unit = {
   name: '⭐ Demo: unit',
   render: renderDemo(demos.unit),
 };
+
+export const Demo_colorSchemeColor = {
+  name: '⭐ Demo: colorSchemeColor',
+  render: renderDemo(demos.colorSchemeColor),
+};
