@@ -79,3 +79,18 @@ prop to a number of milliseconds to animate the tooltip position change.
 Set `unit` prop to render a unit label next to the y-axis ticks and tooltip values:
 
 <Demo data={AreaChartDemos.unit} />
+
+## Custom tooltip
+
+Use `tooltipProps.content` to pass custom tooltip renderer to recharts [Tooltip](https://recharts.org/en-US/api/Tooltip)
+component. Note that it is required to filter recharts payload with `getFilteredChartTooltipPayload`
+function to remove empty values that are used for styling purposes only.
+
+<Demo data={AreaChartDemos.customTooltip} />
+
+## Remove tooltip
+
+To remove tooltip, set `withTooltip={false}`. It also removes the cursor line
+and disables interactions with the chart.
+
+<Demo data={AreaChartDemos.noTooltip} />

@@ -52,3 +52,13 @@ export const Demo_colorSchemeColor = {
   name: '⭐ Demo: colorSchemeColor',
   render: renderDemo(demos.colorSchemeColor),
 };
+
+export const Demo_customTooltip = {
+  name: '⭐ Demo: customTooltip',
+  render: renderDemo(demos.customTooltip),
+};
+
+export const Demo_noTooltip = {
+  name: '⭐ Demo: noTooltip',
+  render: renderDemo(demos.noTooltip),
+};
