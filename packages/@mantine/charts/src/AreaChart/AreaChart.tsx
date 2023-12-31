@@ -132,6 +132,9 @@ export interface AreaChartProps
 
   /** Determines whether chart tooltip should be displayed, `true` by default */
   withTooltip?: boolean;
+
+  /** Props passed down to recharts `AreaChart` component */
+  areaChartProps?: React.ComponentPropsWithoutRef<typeof ReChartsAreaChart>;
 }
 
 export type AreaChartFactory = Factory<{
@@ -187,6 +190,7 @@ export const AreaChart = factory<AreaChartFactory>((_props, ref) => {
     tooltipProps,
     withLegend,
     withTooltip,
+    areaChartProps,
     ...others
   } = props;
 
@@ -261,7 +265,11 @@ export const AreaChart = factory<AreaChartFactory>((_props, ref) => {
   return (
     <Box ref={ref} {...getStyles('root')} {...others}>
       <ResponsiveContainer {...getStyles('container')}>
-        <ReChartsAreaChart data={data} stackOffset={type === 'percent' ? 'expand' : undefined}>
+        <ReChartsAreaChart
+          data={data}
+          stackOffset={type === 'percent' ? 'expand' : undefined}
+          {...areaChartProps}
+        >
           {withLegend && (
             <Legend
               verticalAlign="top"
