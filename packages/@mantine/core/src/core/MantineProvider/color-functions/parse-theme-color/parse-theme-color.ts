@@ -29,6 +29,20 @@ export function parseThemeColor({
     );
   }
 
+  if (color === 'bright') {
+    return {
+      color,
+      value: colorScheme === 'dark' ? theme.white : theme.black,
+      shade: undefined,
+      isThemeColor: false,
+      isLight: isLightColor(
+        colorScheme === 'dark' ? theme.white : theme.black,
+        theme.luminanceThreshold
+      ),
+      variable: '--mantine-color-bright',
+    };
+  }
+
   if (color === 'white' || color === 'black') {
     return {
       color,

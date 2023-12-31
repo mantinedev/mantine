@@ -42,6 +42,33 @@ const data = [
   },
 ];
 
+const splitData = [
+  {
+    date: 'March 22',
+    Apples: 110,
+  },
+  {
+    date: 'March 23',
+    Apples: 60,
+  },
+  {
+    date: 'March 24',
+    Apples: -40,
+  },
+  {
+    date: 'March 25',
+    Apples: 40,
+  },
+  {
+    date: 'March 26',
+    Apples: -40,
+  },
+  {
+    date: 'March 27',
+    Apples: 80,
+  },
+];
+
 export function Usage() {
   return (
     <div style={{ padding: 40 }}>
@@ -59,6 +86,24 @@ export function Usage() {
           { name: 'Oranges', color: 'blue.6' },
           { name: 'Tomatoes', color: 'teal.6' },
         ]}
+      />
+    </div>
+  );
+}
+
+export function Split() {
+  return (
+    <div style={{ padding: 40 }}>
+      <AreaChart
+        h={400}
+        data={splitData}
+        dataKey="date"
+        strokeWidth={1}
+        type="split"
+        fillOpacity={0.25}
+        dotProps={{ r: 2, strokeWidth: 1 }}
+        activeDotProps={{ r: 3, strokeWidth: 1 }}
+        series={[{ name: 'Apples', color: 'bright' }]}
       />
     </div>
   );

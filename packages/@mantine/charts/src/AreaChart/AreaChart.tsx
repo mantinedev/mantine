@@ -33,6 +33,8 @@ import {
 import { ChartLegend } from '../ChartLegend';
 import { ChartTooltip } from '../ChartTooltip';
 import { AreaGradient } from './AreaGradient';
+import { AreaSplit } from './AreaSplit';
+import { getDefaultSplitOffset } from './get-split-offset';
 import classes from './AreaChart.module.css';
 
 function valueToPercent(value: number) {
@@ -44,7 +46,7 @@ export interface AreaChartSeries {
   color: MantineColor;
 }
 
-export type AreaChartType = 'default' | 'stacked' | 'percent';
+export type AreaChartType = 'default' | 'stacked' | 'percent' | 'split';
 
 export type AreaChartCurveType =
   | 'bump'
@@ -138,6 +140,12 @@ export interface AreaChartProps
 
   /** Controls fill opacity of all areas, `0.6` by default */
   fillOpacity?: number;
+
+  /** A tuple of colors used when `type="split"` is set, ignored in all other cases. A tuple may include theme colors reference or any valid CSS colors `['green.7', 'red.7']` by default. */
+  splitColors?: [MantineColor, MantineColor];
+
+  /** Offset for the split gradient. By default, value is inferred from `data` and `series` if possible. Must be generated from the data array with `getSplitOffset` function. */
+  splitOffset?: number;
 }
 
 export type AreaChartFactory = Factory<{
@@ -159,6 +167,7 @@ const defaultProps: Partial<AreaChartProps> = {
   curveType: 'monotone',
   gridAxis: 'x',
   type: 'default',
+  splitColors: ['green.7', 'red.7'],
 };
 
 export const AreaChart = factory<AreaChartFactory>((_props, ref) => {
@@ -196,12 +205,15 @@ export const AreaChart = factory<AreaChartFactory>((_props, ref) => {
     withTooltip,
     areaChartProps,
     fillOpacity,
+    splitColors,
+    splitOffset,
     ...others
   } = props;
 
   const theme = useMantineTheme();
   const computedColorScheme = useComputedColorScheme('light');
   const baseId = useId();
+  const splitId = 'test-split';
   const withXTickLine = gridAxis !== 'none' && (tickLine === 'x' || tickLine === 'xy');
   const withYTickLine = gridAxis !== 'none' && (tickLine === 'y' || tickLine === 'xy');
   const isAnimationActive = (tooltipAnimationDuration || 0) > 0;
@@ -256,7 +268,7 @@ export const AreaChart = factory<AreaChartFactory>((_props, ref) => {
           name={item.name}
           type={curveType}
           dataKey={item.name}
-          fill={`url(#${id})`}
+          fill={type === 'split' ? `url(#${splitId})` : `url(#${id})`}
           strokeWidth={strokeWidth}
           stroke={color}
           isAnimationActive={false}
@@ -335,6 +347,16 @@ export const AreaChart = factory<AreaChartFactory>((_props, ref) => {
               )}
               {...tooltipProps}
             />
+          )}
+
+          {type === 'split' && (
+            <defs>
+              <AreaSplit
+                colors={splitColors!}
+                id={splitId}
+                offset={splitOffset ?? getDefaultSplitOffset({ data: data!, series })}
+              />
+            </defs>
           )}
 
           {areas}

@@ -1,12 +1,12 @@
 import React from 'react';
 
-interface AreaGradientCategory {
+interface AreaGradientProps {
   color: string;
   id: string;
   withGradient: boolean | undefined;
 }
 
-export function AreaGradient({ color, id, withGradient }: AreaGradientCategory) {
+export function AreaGradient({ color, id, withGradient }: AreaGradientProps) {
   return (
     <>
       {withGradient ? (
