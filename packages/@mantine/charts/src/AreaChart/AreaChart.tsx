@@ -146,6 +146,9 @@ export interface AreaChartProps
 
   /** Offset for the split gradient. By default, value is inferred from `data` and `series` if possible. Must be generated from the data array with `getSplitOffset` function. */
   splitOffset?: number;
+
+  /** Determines whether points with `null` values should be connected, `true` by default */
+  connectNulls?: boolean;
 }
 
 export type AreaChartFactory = Factory<{
@@ -159,6 +162,7 @@ const defaultProps: Partial<AreaChartProps> = {
   withYAxis: true,
   withDots: true,
   withTooltip: true,
+  connectNulls: true,
   strokeWidth: 2,
   tooltipAnimationDuration: 0,
   fillOpacity: 0.2,
@@ -207,6 +211,7 @@ export const AreaChart = factory<AreaChartFactory>((_props, ref) => {
     fillOpacity,
     splitColors,
     splitOffset,
+    connectNulls,
     ...others
   } = props;
 
@@ -246,7 +251,7 @@ export const AreaChart = factory<AreaChartFactory>((_props, ref) => {
         strokeWidth={strokeWidth}
         stroke="none"
         isAnimationActive={false}
-        connectNulls
+        connectNulls={connectNulls}
         stackId={stacked ? 'stack-dots' : undefined}
       />
     );
@@ -277,7 +282,7 @@ export const AreaChart = factory<AreaChartFactory>((_props, ref) => {
           strokeWidth={strokeWidth}
           stroke={color}
           isAnimationActive={false}
-          connectNulls
+          connectNulls={connectNulls}
           stackId={stacked ? 'stack' : undefined}
           fillOpacity={1}
         />

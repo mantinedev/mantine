@@ -69,6 +69,41 @@ const splitData = [
   },
 ];
 
+const connectNullsData = [
+  {
+    date: 'March 22',
+    Apples: 110,
+  },
+  {
+    date: 'March 23',
+    Apples: 60,
+  },
+  {
+    date: 'March 24',
+    Apples: 80,
+  },
+  {
+    date: 'March 25',
+    Apples: null,
+  },
+  {
+    date: 'March 26',
+    Apples: null,
+  },
+  {
+    date: 'March 27',
+    Apples: 40,
+  },
+  {
+    date: 'March 28',
+    Apples: 120,
+  },
+  {
+    date: 'March 29',
+    Apples: 80,
+  },
+];
+
 export function Usage() {
   return (
     <div style={{ padding: 40 }}>
@@ -83,6 +118,20 @@ export function Usage() {
           { name: 'Oranges', color: 'blue.6' },
           { name: 'Tomatoes', color: 'teal.6' },
         ]}
+      />
+    </div>
+  );
+}
+export function ConnectNulls() {
+  return (
+    <div style={{ padding: 40 }}>
+      <AreaChart
+        h={400}
+        data={connectNullsData}
+        dataKey="date"
+        withGradient
+        connectNulls={false}
+        series={[{ name: 'Apples', color: 'indigo.6' }]}
       />
     </div>
   );
