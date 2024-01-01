@@ -102,3 +102,8 @@ export const Demo_gridColor = {
   name: '⭐ Demo: gridColor',
   render: renderDemo(demos.gridColor),
 };
+
+export const Demo_axisProps = {
+  name: '⭐ Demo: axisProps',
+  render: renderDemo(demos.axisProps),
+};

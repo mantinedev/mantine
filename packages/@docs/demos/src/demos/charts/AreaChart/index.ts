@@ -18,3 +18,4 @@ export { split } from './AreaChart.demo.split';
 export { splitColors } from './AreaChart.demo.splitColors';
 export { connectNulls } from './AreaChart.demo.connectNulls';
 export { gridColor } from './AreaChart.demo.gridColor';
+export { axisProps } from './AreaChart.demo.axisProps';
