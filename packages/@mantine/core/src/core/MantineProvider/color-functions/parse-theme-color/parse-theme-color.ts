@@ -43,6 +43,20 @@ export function parseThemeColor({
     };
   }
 
+  if (color === 'dimmed') {
+    return {
+      color,
+      value: colorScheme === 'dark' ? theme.colors.dark[2] : theme.colors.gray[7],
+      shade: undefined,
+      isThemeColor: false,
+      isLight: isLightColor(
+        colorScheme === 'dark' ? theme.colors.dark[2] : theme.colors.gray[6],
+        theme.luminanceThreshold
+      ),
+      variable: '--mantine-color-dimmed',
+    };
+  }
+
   if (color === 'white' || color === 'black') {
     return {
       color,
