@@ -15,7 +15,13 @@ const simpleData = [
 export function Usage() {
   return (
     <div style={{ padding: 40 }}>
-      <BarChart data={simpleData} dataKey="product" series={[{ name: 'Product', color: 'blue' }]} />
+      <BarChart
+        h={300}
+        data={simpleData}
+        dataKey="product"
+        series={[{ name: 'sales', color: 'indigo.6' }]}
+        withLegend
+      />
     </div>
   );
 }
