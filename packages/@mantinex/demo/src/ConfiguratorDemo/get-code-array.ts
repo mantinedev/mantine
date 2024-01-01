@@ -27,10 +27,10 @@ function transformCodePayload({ code, controls, state }: TransformCodePayloadInp
 
 export function getCodeArray({ code, controls, state }: GetCodeArrayInput) {
   if (typeof code === 'string' || typeof code === 'function') {
-    [
+    return [
       {
         fileName: 'Demo.tsx',
-        language: 'tsx',
+        language: 'tsx' as const,
         code: transformCodePayload({ code, controls, state }),
       },
     ];
