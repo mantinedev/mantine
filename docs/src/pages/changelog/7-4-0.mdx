@@ -1,4 +1,5 @@
 import {
+  AreaChartDemos,
   FormDemos,
   ScrollAreaDemos,
   ThemingDemos,
@@ -8,6 +9,19 @@ import { Layout } from '@/layout';
 import { MDX_DATA } from '@/mdx';
 
 export default Layout(MDX_DATA.Changelog740);
+
+## @mantine/charts
+
+New [@mantine/charts](/charts/getting-started/) package provides a set of components
+to build charts and graphs. All components are based on [recharts](https://recharts.org/en-US/).
+Currently the package provides [AreaChart](/charts/area-chart), [BarChart](/charts/bar-chart)
+and [LineChart](/charts/line-chart) components. More components will be added in next minor releases.
+
+## AreaChart component
+
+New [AreaChart](/charts/area-chart) component:
+
+<Demo data={AreaChartDemos.stacked} />
 
 ## OKLCH colors support
 
