@@ -30,6 +30,6 @@
   }
 
   & :where(text) {
-    color: var(--mantine-color-dimmed);
+    color: var(--area-chart-text-color, var(--mantine-color-dimmed));
   }
 }

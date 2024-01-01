@@ -18,6 +18,7 @@ import {
 import {
   Box,
   BoxProps,
+  createVarsResolver,
   ElementProps,
   factory,
   Factory,
@@ -58,6 +59,10 @@ export type AreaChartCurveType =
   | 'stepAfter';
 
 export type AreaChartStylesNames = 'root' | 'container' | 'grid' | 'axis' | 'area';
+
+export type AreaChartCSSVariables = {
+  root: '--area-chart-text-color';
+};
 
 export interface AreaChartProps
   extends BoxProps,
@@ -149,12 +154,16 @@ export interface AreaChartProps
 
   /** Determines whether points with `null` values should be connected, `true` by default */
   connectNulls?: boolean;
+
+  /** Color of the text displayed inside the chart, `'dimmed'` by default */
+  textColor?: MantineColor;
 }
 
 export type AreaChartFactory = Factory<{
   props: AreaChartProps;
   ref: HTMLDivElement;
   stylesNames: AreaChartStylesNames;
+  vars: AreaChartCSSVariables;
 }>;
 
 const defaultProps: Partial<AreaChartProps> = {
@@ -173,6 +182,12 @@ const defaultProps: Partial<AreaChartProps> = {
   type: 'default',
   splitColors: ['green.7', 'red.7'],
 };
+
+const varsResolver = createVarsResolver<AreaChartFactory>((theme, { textColor }) => ({
+  root: {
+    '--area-chart-text-color': textColor ? getThemeColor(textColor, theme) : undefined,
+  },
+}));
 
 export const AreaChart = factory<AreaChartFactory>((_props, ref) => {
   const props = useProps('AreaChart', defaultProps, _props);
@@ -241,6 +256,8 @@ export const AreaChart = factory<AreaChartFactory>((_props, ref) => {
     classNames,
     styles,
     unstyled,
+    vars,
+    varsResolver,
   });
 
   const dotsAreas = series.map((item) => {
