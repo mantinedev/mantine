@@ -14,3 +14,5 @@ export { dotProps } from './AreaChart.demo.dotProps';
 export { strokeWidth } from './AreaChart.demo.strokeWidth';
 export { sync } from './AreaChart.demo.sync';
 export { fillOpacity } from './AreaChart.demo.fillOpacity';
+export { split } from './AreaChart.demo.split';
+export { splitColors } from './AreaChart.demo.splitColors';

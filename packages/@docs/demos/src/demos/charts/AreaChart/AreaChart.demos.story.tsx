@@ -82,3 +82,13 @@ export const Demo_fillOpacity = {
   name: '⭐ Demo: fillOpacity',
   render: renderDemo(demos.fillOpacity),
 };
+
+export const Demo_split = {
+  name: '⭐ Demo: split',
+  render: renderDemo(demos.split),
+};
+
+export const Demo_splitColors = {
+  name: '⭐ Demo: splitColors',
+  render: renderDemo(demos.splitColors),
+};

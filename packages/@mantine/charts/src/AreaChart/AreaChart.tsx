@@ -213,7 +213,7 @@ export const AreaChart = factory<AreaChartFactory>((_props, ref) => {
   const theme = useMantineTheme();
   const computedColorScheme = useComputedColorScheme('light');
   const baseId = useId();
-  const splitId = 'test-split';
+  const splitId = `${baseId}-split`;
   const withXTickLine = gridAxis !== 'none' && (tickLine === 'x' || tickLine === 'xy');
   const withYTickLine = gridAxis !== 'none' && (tickLine === 'y' || tickLine === 'xy');
   const isAnimationActive = (tooltipAnimationDuration || 0) > 0;

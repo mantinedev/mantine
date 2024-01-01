@@ -65,3 +65,59 @@ export const data = [
   },
 ];
 `;
+
+export const splitData = [
+  {
+    date: 'March 22',
+    Apples: 110,
+  },
+  {
+    date: 'March 23',
+    Apples: 60,
+  },
+  {
+    date: 'March 24',
+    Apples: -80,
+  },
+  {
+    date: 'March 25',
+    Apples: 40,
+  },
+  {
+    date: 'March 26',
+    Apples: -40,
+  },
+  {
+    date: 'March 27',
+    Apples: 80,
+  },
+];
+
+export const splitDataCode = `
+export const data = [
+  {
+    date: 'March 22',
+    Apples: 110,
+  },
+  {
+    date: 'March 23',
+    Apples: 60,
+  },
+  {
+    date: 'March 24',
+    Apples: -80,
+  },
+  {
+    date: 'March 25',
+    Apples: 40,
+  },
+  {
+    date: 'March 26',
+    Apples: -40,
+  },
+  {
+    date: 'March 27',
+    Apples: 80,
+  },
+];
+`;

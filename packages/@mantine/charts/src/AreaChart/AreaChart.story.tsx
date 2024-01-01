@@ -102,6 +102,18 @@ export function Split() {
         activeDotProps={{ r: 3, strokeWidth: 1 }}
         series={[{ name: 'Apples', color: 'bright' }]}
       />
+      <AreaChart
+        h={400}
+        data={splitData}
+        dataKey="date"
+        strokeWidth={1}
+        type="split"
+        fillOpacity={0.2}
+        dotProps={{ r: 2, strokeWidth: 1 }}
+        activeDotProps={{ r: 3, strokeWidth: 1 }}
+        series={[{ name: 'Apples', color: 'bright' }]}
+        splitColors={['violet', 'orange']}
+      />
     </div>
   );
 }

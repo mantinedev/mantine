@@ -28,6 +28,22 @@ contribution of each series in terms of percentages.
 
 <Demo data={AreaChartDemos.percent} />
 
+## Split area chart
+
+Set `type="split"` to render a split area chart. In this type of area chart
+fill color is split into two colors, one for positive values and one for negative
+values. Split area chart supports only one data series.
+
+<Demo data={AreaChartDemos.split} />
+
+## Split colors
+
+Set `splitColors` prop to an array of two colors to customize the fill color of
+split area chart. The first color is used for positive values and the second color
+for negative values. `splitColors` prop is ignored in other types of area charts.
+
+<Demo data={AreaChartDemos.splitColors} />
+
 ## Legend
 
 To display chart legend, set `withLegend` prop:
