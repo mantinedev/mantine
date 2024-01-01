@@ -16,8 +16,8 @@ function Demo() {
       dataKey="date"
       series={[
         { name: 'Apples', color: 'indigo.6' },
-        { name: 'Oranges', color: 'blue.6' },
         { name: 'Tomatoes', color: 'teal.6' },
+        { name: 'Oranges', color: 'blue.6' },
       ]}
       {{props}}
     />
@@ -33,8 +33,8 @@ function Wrapper(props: any) {
       dataKey="date"
       series={[
         { name: 'Apples', color: 'indigo.6' },
-        { name: 'Oranges', color: 'blue.6' },
         { name: 'Tomatoes', color: 'teal.6' },
+        { name: 'Oranges', color: 'blue.6' },
       ]}
       {...props}
     />
@@ -50,9 +50,20 @@ export const fillOpacity: MantineDemo = {
   ],
   controls: [
     {
+      type: 'segmented',
+      prop: 'type',
+      initialValue: 'default',
+      libraryValue: 'default',
+      transformLabel: false,
+      data: [
+        { value: 'default', label: 'default' },
+        { value: 'stacked', label: 'stacked' },
+      ],
+    },
+    {
       type: 'number',
       prop: 'fillOpacity',
-      initialValue: 0.6,
+      initialValue: 0.2,
       libraryValue: null,
       step: 0.01,
       min: 0,

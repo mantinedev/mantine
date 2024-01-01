@@ -78,9 +78,6 @@ export function Usage() {
         dataKey="date"
         curveType="linear"
         withGradient
-        dotProps={{ r: 6 }}
-        strokeWidth={4}
-        fillOpacity={0.4}
         series={[
           { name: 'Apples', color: 'indigo.6' },
           { name: 'Oranges', color: 'blue.6' },
@@ -100,7 +97,7 @@ export function Split() {
         dataKey="date"
         strokeWidth={1}
         type="split"
-        fillOpacity={0.25}
+        fillOpacity={0.2}
         dotProps={{ r: 2, strokeWidth: 1 }}
         activeDotProps={{ r: 3, strokeWidth: 1 }}
         series={[{ name: 'Apples', color: 'bright' }]}

@@ -138,7 +138,7 @@ export interface AreaChartProps
   /** Props passed down to recharts `AreaChart` component */
   areaChartProps?: React.ComponentPropsWithoutRef<typeof ReChartsAreaChart>;
 
-  /** Controls fill opacity of all areas, `0.6` by default */
+  /** Controls fill opacity of all areas, `0.2` by default */
   fillOpacity?: number;
 
   /** A tuple of colors used when `type="split"` is set, ignored in all other cases. A tuple may include theme colors reference or any valid CSS colors `['green.7', 'red.7']` by default. */
@@ -161,7 +161,7 @@ const defaultProps: Partial<AreaChartProps> = {
   withTooltip: true,
   strokeWidth: 2,
   tooltipAnimationDuration: 0,
-  fillOpacity: 0.6,
+  fillOpacity: 0.2,
   tickLine: 'y',
   strokeDasharray: '5 5',
   curveType: 'monotone',
@@ -259,7 +259,12 @@ export const AreaChart = factory<AreaChartFactory>((_props, ref) => {
     return (
       <Fragment key={item.name}>
         <defs>
-          <AreaGradient color={color} withGradient={_withGradient} id={id} />
+          <AreaGradient
+            color={color}
+            withGradient={_withGradient}
+            id={id}
+            fillOpacity={fillOpacity}
+          />
         </defs>
         <Area
           {...getStyles('area')}
@@ -274,7 +279,7 @@ export const AreaChart = factory<AreaChartFactory>((_props, ref) => {
           isAnimationActive={false}
           connectNulls
           stackId={stacked ? 'stack' : undefined}
-          fillOpacity={fillOpacity}
+          fillOpacity={1}
         />
       </Fragment>
     );
@@ -355,6 +360,7 @@ export const AreaChart = factory<AreaChartFactory>((_props, ref) => {
                 colors={splitColors!}
                 id={splitId}
                 offset={splitOffset ?? getDefaultSplitOffset({ data: data!, series })}
+                fillOpacity={fillOpacity}
               />
             </defs>
           )}
