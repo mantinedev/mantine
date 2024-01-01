@@ -107,3 +107,8 @@ export const Demo_axisProps = {
   name: '⭐ Demo: axisProps',
   render: renderDemo(demos.axisProps),
 };
+
+export const Demo_vertical = {
+  name: '⭐ Demo: vertical',
+  render: renderDemo(demos.vertical),
+};
