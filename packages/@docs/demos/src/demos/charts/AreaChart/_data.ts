@@ -68,27 +68,27 @@ export const data = [
 
 export const splitData = [
   {
-    date: 'March 22',
+    date: 'Mar 22',
     Apples: 110,
   },
   {
-    date: 'March 23',
+    date: 'Mar 23',
     Apples: 60,
   },
   {
-    date: 'March 24',
+    date: 'Mar 24',
     Apples: -80,
   },
   {
-    date: 'March 25',
+    date: 'Mar 25',
     Apples: 40,
   },
   {
-    date: 'March 26',
+    date: 'Mar 26',
     Apples: -40,
   },
   {
-    date: 'March 27',
+    date: 'Mar 27',
     Apples: 80,
   },
 ];
@@ -96,27 +96,99 @@ export const splitData = [
 export const splitDataCode = `
 export const data = [
   {
-    date: 'March 22',
+    date: 'Mar 22',
     Apples: 110,
   },
   {
-    date: 'March 23',
+    date: 'Mar 23',
     Apples: 60,
   },
   {
-    date: 'March 24',
+    date: 'Mar 24',
     Apples: -80,
   },
   {
-    date: 'March 25',
+    date: 'Mar 25',
     Apples: 40,
   },
   {
-    date: 'March 26',
+    date: 'Mar 26',
     Apples: -40,
   },
   {
-    date: 'March 27',
+    date: 'Mar 27',
+    Apples: 80,
+  },
+];
+`;
+
+export const connectNullsData = [
+  {
+    date: 'Mar 22',
+    Apples: 110,
+  },
+  {
+    date: 'Mar 23',
+    Apples: 60,
+  },
+  {
+    date: 'Mar 24',
+    Apples: 80,
+  },
+  {
+    date: 'Mar 25',
+    Apples: null,
+  },
+  {
+    date: 'Mar 26',
+    Apples: null,
+  },
+  {
+    date: 'Mar 27',
+    Apples: 40,
+  },
+  {
+    date: 'Mar 28',
+    Apples: 120,
+  },
+  {
+    date: 'Mar 29',
+    Apples: 80,
+  },
+];
+
+export const connectNullsDataCode = `
+export const data = [
+  {
+    date: 'Mar 22',
+    Apples: 110,
+  },
+  {
+    date: 'Mar 23',
+    Apples: 60,
+  },
+  {
+    date: 'Mar 24',
+    Apples: 80,
+  },
+  {
+    date: 'Mar 25',
+    Apples: null,
+  },
+  {
+    date: 'Mar 26',
+    Apples: null,
+  },
+  {
+    date: 'Mar 27',
+    Apples: 40,
+  },
+  {
+    date: 'Mar 28',
+    Apples: 120,
+  },
+  {
+    date: 'Mar 29',
     Apples: 80,
   },
 ];

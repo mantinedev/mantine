@@ -92,3 +92,8 @@ export const Demo_splitColors = {
   name: '⭐ Demo: splitColors',
   render: renderDemo(demos.splitColors),
 };
+
+export const Demo_connectNulls = {
+  name: '⭐ Demo: connectNulls',
+  render: renderDemo(demos.connectNulls),
+};
