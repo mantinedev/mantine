@@ -27,10 +27,11 @@ import {
   StylesApiProps,
   useMantineTheme,
   useProps,
+  useResolvedStylesApi,
   useStyles,
 } from '@mantine/core';
-import { ChartLegend } from '../ChartLegend';
-import { ChartTooltip } from '../ChartTooltip';
+import { ChartLegend, ChartLegendStylesNames } from '../ChartLegend';
+import { ChartTooltip, ChartTooltipStylesNames } from '../ChartTooltip';
 import { AreaGradient } from './AreaGradient';
 import { AreaSplit } from './AreaSplit';
 import { getDefaultSplitOffset } from './get-split-offset';
@@ -56,7 +57,14 @@ export type AreaChartCurveType =
   | 'stepBefore'
   | 'stepAfter';
 
-export type AreaChartStylesNames = 'root' | 'container' | 'grid' | 'axis' | 'area';
+export type AreaChartStylesNames =
+  | 'root'
+  | 'container'
+  | 'grid'
+  | 'axis'
+  | 'area'
+  | ChartLegendStylesNames
+  | ChartTooltipStylesNames;
 
 export type AreaChartCSSVariables = {
   root: '--area-chart-text-color' | '--area-chart-grid-color';
@@ -248,6 +256,12 @@ export const AreaChart = factory<AreaChartFactory>((_props, ref) => {
     onMouseLeave?.(event);
   };
 
+  const { resolvedClassNames, resolvedStyles } = useResolvedStylesApi<AreaChartFactory>({
+    classNames,
+    styles,
+    props,
+  });
+
   const getStyles = useStyles<AreaChartFactory>({
     name: 'AreaChart',
     classes: classes as any,
@@ -334,6 +348,8 @@ export const AreaChart = factory<AreaChartFactory>((_props, ref) => {
                   payload={payload.payload}
                   onHighlight={setHighlightedArea}
                   legendPosition={legendProps?.verticalAlign || 'top'}
+                  classNames={resolvedClassNames}
+                  styles={resolvedStyles}
                 />
               )}
               height={44}
@@ -385,7 +401,13 @@ export const AreaChart = factory<AreaChartFactory>((_props, ref) => {
                 strokeDasharray,
               }}
               content={({ label, payload }) => (
-                <ChartTooltip label={label} payload={payload} unit={unit} />
+                <ChartTooltip
+                  label={label}
+                  payload={payload}
+                  unit={unit}
+                  classNames={resolvedClassNames}
+                  styles={resolvedStyles}
+                />
               )}
               {...tooltipProps}
             />
