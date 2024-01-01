@@ -166,6 +166,9 @@ export interface AreaChartProps
 
   /** Color of the grid and cursor lines, by default depends on color scheme */
   gridColor?: MantineColor;
+
+  /** Chart orientation, `'horizontal'` by default */
+  orientation?: 'horizontal' | 'vertical';
 }
 
 export type AreaChartFactory = Factory<{
@@ -190,6 +193,7 @@ const defaultProps: Partial<AreaChartProps> = {
   gridAxis: 'x',
   type: 'default',
   splitColors: ['green.7', 'red.7'],
+  orientation: 'horizontal',
 };
 
 const varsResolver = createVarsResolver<AreaChartFactory>((theme, { textColor, gridColor }) => ({
@@ -238,6 +242,7 @@ export const AreaChart = factory<AreaChartFactory>((_props, ref) => {
     splitOffset,
     connectNulls,
     onMouseLeave,
+    orientation,
     ...others
   } = props;
 
@@ -338,6 +343,7 @@ export const AreaChart = factory<AreaChartFactory>((_props, ref) => {
         <ReChartsAreaChart
           data={data}
           stackOffset={type === 'percent' ? 'expand' : undefined}
+          layout={orientation}
           {...areaChartProps}
         >
           {withLegend && (
@@ -367,7 +373,7 @@ export const AreaChart = factory<AreaChartFactory>((_props, ref) => {
 
           <XAxis
             hide={!withXAxis}
-            dataKey={dataKey}
+            {...(orientation === 'vertical' ? { type: 'number' } : { dataKey })}
             tick={{ transform: 'translate(0, 10)', fontSize: 12, fill: 'currentColor' }}
             stroke=""
             interval="preserveStartEnd"
@@ -380,7 +386,7 @@ export const AreaChart = factory<AreaChartFactory>((_props, ref) => {
           <YAxis
             hide={!withYAxis}
             axisLine={false}
-            type="number"
+            {...(orientation === 'vertical' ? { dataKey, type: 'category' } : { type: 'number' })}
             tickLine={withYTickLine ? { stroke: 'currentColor' } : false}
             tick={{ transform: 'translate(-10, 0)', fontSize: 12, fill: 'currentColor' }}
             allowDecimals
