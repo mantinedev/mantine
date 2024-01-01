@@ -44,6 +44,7 @@ function valueToPercent(value: number) {
 export interface AreaChartSeries {
   name: string;
   color: MantineColor;
+  strokeDasharray?: string | number;
 }
 
 export type AreaChartType = 'default' | 'stacked' | 'percent' | 'split';
@@ -332,6 +333,7 @@ export const AreaChart = factory<AreaChartFactory>((_props, ref) => {
           stackId={stacked ? 'stack' : undefined}
           fillOpacity={dimmed ? 0 : 1}
           strokeOpacity={dimmed ? 0.5 : 1}
+          strokeDasharray={item.strokeDasharray}
         />
       </Fragment>
     );
