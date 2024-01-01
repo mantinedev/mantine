@@ -10,5 +10,7 @@ generateDeclarations({
   typesReplacement: {
     'Partial<Omit<TransitionProps, "mounted">> | undefined': 'TransitionProps',
     'Omit<Props, "ref"> | undefined': 'RechartsProps',
+    '[DefaultMantineColor, DefaultMantineColor] | undefined': '[MantineColor, MantineColor]',
+    'CategoricalChartProps | undefined': 'RechartsProps',
   },
 });
