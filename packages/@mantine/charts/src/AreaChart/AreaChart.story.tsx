@@ -114,6 +114,7 @@ export function Usage() {
         curveType="linear"
         withGradient
         withLegend
+        xAxisProps={{ padding: { left: 20, right: 20 } }}
         series={[
           { name: 'Apples', color: 'indigo.6', strokeDasharray: '5 5' },
           { name: 'Oranges', color: 'blue.6' },

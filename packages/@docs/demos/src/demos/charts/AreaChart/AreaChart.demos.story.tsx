@@ -117,3 +117,8 @@ export const Demo_lineDasharray = {
   name: '⭐ Demo: lineDasharray',
   render: renderDemo(demos.lineDasharray),
 };
+
+export const Demo_xAxisOffset = {
+  name: '⭐ Demo: xAxisOffset',
+  render: renderDemo(demos.xAxisOffset),
+};
