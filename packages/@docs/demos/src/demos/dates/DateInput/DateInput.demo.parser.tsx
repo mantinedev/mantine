@@ -12,7 +12,7 @@ const dateParser: DateInputProps['dateParser'] = (input) => {
     return new Date(1939, 8, 1);
   }
 
-  return return dayjs(input, 'DD/MM/YYYY').toDate();
+  return dayjs(input, 'DD/MM/YYYY').toDate();
 };
 
 function Demo() {
