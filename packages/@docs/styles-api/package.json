@@ -38,11 +38,11 @@
   },
   "devDependencies": {
     "@mantine/carousel": "workspace:*",
+    "@mantine/charts": "workspace:*",
     "@mantine/code-highlight": "workspace:*",
     "@mantine/core": "workspace:*",
     "@mantine/dates": "workspace:*",
     "@mantine/dropzone": "workspace:*",
-    "@mantine/charts": "workspace:*",
     "@mantine/notifications": "workspace:*",
     "@mantine/nprogress": "workspace:*",
     "@mantine/spotlight": "workspace:*",

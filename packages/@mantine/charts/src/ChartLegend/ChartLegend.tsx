@@ -23,6 +23,8 @@ export interface ChartLegendProps
     StylesApiProps<ChartLegendFactory>,
     ElementProps<'div'> {
   payload: Record<string, any>[] | undefined;
+  onHighlight: (area: string | null) => void;
+  legendPosition: 'top' | 'bottom' | 'middle';
 }
 
 export type ChartLegendFactory = Factory<{
@@ -35,7 +37,18 @@ const defaultProps: Partial<ChartLegendProps> = {};
 
 export const ChartLegend = factory<ChartLegendFactory>((_props, ref) => {
   const props = useProps('ChartLegend', defaultProps, _props);
-  const { classNames, className, style, styles, unstyled, vars, payload, ...others } = props;
+  const {
+    classNames,
+    className,
+    style,
+    styles,
+    unstyled,
+    vars,
+    payload,
+    onHighlight,
+    legendPosition,
+    ...others
+  } = props;
 
   const getStyles = useStyles<ChartLegendFactory>({
     name: 'ChartLegend',
@@ -54,8 +67,13 @@ export const ChartLegend = factory<ChartLegendFactory>((_props, ref) => {
 
   const filteredPayload = getFilteredChartLegendPayload(payload);
 
-  const items = filteredPayload.map((item) => (
-    <div key={item.name} {...getStyles('legendItem')}>
+  const items = filteredPayload.map((item, index) => (
+    <div
+      key={index}
+      {...getStyles('legendItem')}
+      onMouseEnter={() => onHighlight(item.dataKey)}
+      onMouseLeave={() => onHighlight(null)}
+    >
       <ColorSwatch
         color={item.color}
         size={12}
@@ -67,7 +85,7 @@ export const ChartLegend = factory<ChartLegendFactory>((_props, ref) => {
   ));
 
   return (
-    <Box ref={ref} {...getStyles('legend')} {...others}>
+    <Box ref={ref} mod={{ position: legendPosition }} {...getStyles('legend')} {...others}>
       {items}
     </Box>
   );

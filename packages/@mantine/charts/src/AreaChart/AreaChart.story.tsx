@@ -123,6 +123,27 @@ export function Usage() {
   );
 }
 
+export function WithLegend() {
+  return (
+    <div style={{ padding: 40 }}>
+      <AreaChart
+        h={400}
+        data={data}
+        dataKey="date"
+        curveType="linear"
+        type="stacked"
+        withGradient
+        withLegend
+        series={[
+          { name: 'Apples', color: 'indigo.6' },
+          { name: 'Oranges', color: 'blue.6' },
+          { name: 'Tomatoes', color: 'teal.6' },
+        ]}
+      />
+    </div>
+  );
+}
+
 export function ConnectNulls() {
   return (
     <div style={{ padding: 40 }}>

@@ -1,4 +1,4 @@
-import React, { Fragment, useId } from 'react';
+import React, { Fragment, useId, useState } from 'react';
 import {
   Area,
   CartesianGrid,
@@ -212,6 +212,7 @@ export const AreaChart = factory<AreaChartFactory>((_props, ref) => {
     splitColors,
     splitOffset,
     connectNulls,
+    onMouseLeave,
     ...others
   } = props;
 
@@ -224,6 +225,12 @@ export const AreaChart = factory<AreaChartFactory>((_props, ref) => {
   const isAnimationActive = (tooltipAnimationDuration || 0) > 0;
   const _withGradient = typeof withGradient === 'boolean' ? withGradient : type === 'default';
   const stacked = type === 'stacked' || type === 'percent';
+  const [highlightedArea, setHighlightedArea] = useState<string | null>(null);
+  const shouldHighlight = highlightedArea !== null;
+  const handleMouseLeave = (event: React.MouseEvent<HTMLDivElement>) => {
+    setHighlightedArea(null);
+    onMouseLeave?.(event);
+  };
 
   const getStyles = useStyles<AreaChartFactory>({
     name: 'AreaChart',
@@ -238,11 +245,12 @@ export const AreaChart = factory<AreaChartFactory>((_props, ref) => {
 
   const dotsAreas = series.map((item) => {
     const color = getThemeColor(item.color, theme);
+    const dimmed = shouldHighlight && highlightedArea !== item.name;
     return (
       <Area
         {...getStyles('area')}
         activeDot={{ fill: theme.white, stroke: color, strokeWidth: 2, r: 4, ...activeDotProps }}
-        dot={{ fill: color, fillOpacity: 1, strokeWidth: 2, r: 4, ...dotProps }}
+        dot={{ fill: color, fillOpacity: dimmed ? 0 : 1, strokeWidth: 2, r: 4, ...dotProps }}
         key={item.name}
         name={item.name}
         type={curveType}
@@ -260,6 +268,7 @@ export const AreaChart = factory<AreaChartFactory>((_props, ref) => {
   const areas = series.map((item) => {
     const id = `${baseId}-${item.color.replace(/[^a-zA-Z0-9]/g, '')}`;
     const color = getThemeColor(item.color, theme);
+    const dimmed = shouldHighlight && highlightedArea !== item.name;
 
     return (
       <Fragment key={item.name}>
@@ -284,14 +293,15 @@ export const AreaChart = factory<AreaChartFactory>((_props, ref) => {
           isAnimationActive={false}
           connectNulls={connectNulls}
           stackId={stacked ? 'stack' : undefined}
-          fillOpacity={1}
+          fillOpacity={dimmed ? 0 : 1}
+          strokeOpacity={dimmed ? 0.5 : 1}
         />
       </Fragment>
     );
   });
 
   return (
-    <Box ref={ref} {...getStyles('root')} {...others}>
+    <Box ref={ref} {...getStyles('root')} onMouseLeave={handleMouseLeave} {...others}>
       <ResponsiveContainer {...getStyles('container')}>
         <ReChartsAreaChart
           data={data}
@@ -301,11 +311,18 @@ export const AreaChart = factory<AreaChartFactory>((_props, ref) => {
           {withLegend && (
             <Legend
               verticalAlign="top"
-              content={(payload) => <ChartLegend payload={payload.payload} />}
-              height={40}
+              content={(payload) => (
+                <ChartLegend
+                  payload={payload.payload}
+                  onHighlight={setHighlightedArea}
+                  legendPosition={legendProps?.verticalAlign || 'top'}
+                />
+              )}
+              height={44}
               {...legendProps}
             />
           )}
+
           <CartesianGrid
             strokeDasharray={strokeDasharray}
             vertical={gridAxis === 'y' || gridAxis === 'xy'}
