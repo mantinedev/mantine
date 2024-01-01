@@ -97,3 +97,8 @@ export const Demo_connectNulls = {
   name: '⭐ Demo: connectNulls',
   render: renderDemo(demos.connectNulls),
 };
+
+export const Demo_gridColor = {
+  name: '⭐ Demo: gridColor',
+  render: renderDemo(demos.gridColor),
+};

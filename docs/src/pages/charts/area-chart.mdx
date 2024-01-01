@@ -91,6 +91,40 @@ lines. The value represent the lengths of alternating dashes and gaps. For examp
 
 <Demo data={AreaChartDemos.strokeDasharray} />
 
+## Grid and text colors
+
+Use `--area-chart-grid-color` and `--area-chart-text-color` to change colors of
+grid lines and text within the chart. With [CSS modules](/styles/css-modules/), you can change colors
+depending on color scheme:
+
+<Demo data={AreaChartDemos.gridColor} />
+
+If your application has only one color scheme, you can use `gridColor` and `textColor`
+props instead of CSS variables:
+
+```tsx
+import { AreaChart } from '@mantine/charts';
+import { data } from './data';
+
+function Demo() {
+  return (
+    <AreaChart
+      h={300}
+      data={data}
+      dataKey="date"
+      type="stacked"
+      gridColor="gray.5"
+      textColor="gray.9"
+      series={[
+        { name: 'Apples', color: 'indigo.6' },
+        { name: 'Oranges', color: 'blue.6' },
+        { name: 'Tomatoes', color: 'teal.6' },
+      ]}
+    />
+  );
+}
+```
+
 ## Tooltip animation
 
 By default, tooltip animation is disabled. To enable it, set `tooltipAnimationDuration`
