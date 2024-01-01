@@ -112,3 +112,8 @@ export const Demo_vertical = {
   name: '⭐ Demo: vertical',
   render: renderDemo(demos.vertical),
 };
+
+export const Demo_lineDasharray = {
+  name: '⭐ Demo: lineDasharray',
+  render: renderDemo(demos.lineDasharray),
+};
