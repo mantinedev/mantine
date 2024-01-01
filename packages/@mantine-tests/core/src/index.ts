@@ -83,7 +83,7 @@ export const tests = {
 
 export { render, renderWithAct } from './render';
 export { wait } from './wait';
-export { patchConsoleError } from './patch-console-error';
+export { patchConsoleError, patchConsoleWarn } from './patch-console-error';
 export { createContextContainer } from './create-context-container';
 export { inputDefaultProps, inputStylesApiSelectors } from './inputs/inputs-test-props';
 export * from './queries';
