@@ -6,7 +6,6 @@ import {
   ElementProps,
   factory,
   Factory,
-  Group,
   StylesApiProps,
   useProps,
   useStyles,
@@ -72,8 +71,8 @@ export const ChartTooltip = factory<ChartTooltipFactory>((_props, ref) => {
   const filteredPayload = getFilteredChartTooltipPayload(payload);
 
   const items = filteredPayload.map((item) => (
-    <Group key={item.name} justify="space-between" gap={0} {...getStyles('tooltipItem')}>
-      <Group {...getStyles('tooltipItemBody')}>
+    <div key={item.name} {...getStyles('tooltipItem')}>
+      <div {...getStyles('tooltipItemBody')}>
         <ColorSwatch
           color={item.color}
           size={12}
@@ -81,12 +80,12 @@ export const ChartTooltip = factory<ChartTooltipFactory>((_props, ref) => {
           withShadow={false}
         />
         <div {...getStyles('tooltipItemName')}>{item.name}</div>
-      </Group>
+      </div>
       <div {...getStyles('tooltipItemData')}>
         {item.payload[item.dataKey]}
         {unit}
       </div>
-    </Group>
+    </div>
   ));
 
   return (
