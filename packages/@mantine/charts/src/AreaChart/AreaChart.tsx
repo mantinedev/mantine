@@ -24,9 +24,7 @@ import {
   Factory,
   getThemeColor,
   MantineColor,
-  rgba,
   StylesApiProps,
-  useComputedColorScheme,
   useMantineTheme,
   useProps,
   useStyles,
@@ -61,7 +59,7 @@ export type AreaChartCurveType =
 export type AreaChartStylesNames = 'root' | 'container' | 'grid' | 'axis' | 'area';
 
 export type AreaChartCSSVariables = {
-  root: '--area-chart-text-color';
+  root: '--area-chart-text-color' | '--area-chart-grid-color';
 };
 
 export interface AreaChartProps
@@ -157,6 +155,9 @@ export interface AreaChartProps
 
   /** Color of the text displayed inside the chart, `'dimmed'` by default */
   textColor?: MantineColor;
+
+  /** Color of the grid and cursor lines, by default depends on color scheme */
+  gridColor?: MantineColor;
 }
 
 export type AreaChartFactory = Factory<{
@@ -183,9 +184,10 @@ const defaultProps: Partial<AreaChartProps> = {
   splitColors: ['green.7', 'red.7'],
 };
 
-const varsResolver = createVarsResolver<AreaChartFactory>((theme, { textColor }) => ({
+const varsResolver = createVarsResolver<AreaChartFactory>((theme, { textColor, gridColor }) => ({
   root: {
     '--area-chart-text-color': textColor ? getThemeColor(textColor, theme) : undefined,
+    '--area-chart-grid-color': gridColor ? getThemeColor(gridColor, theme) : undefined,
   },
 }));
 
@@ -232,7 +234,6 @@ export const AreaChart = factory<AreaChartFactory>((_props, ref) => {
   } = props;
 
   const theme = useMantineTheme();
-  const computedColorScheme = useComputedColorScheme('light');
   const baseId = useId();
   const splitId = `${baseId}-split`;
   const withXTickLine = gridAxis !== 'none' && (tickLine === 'x' || tickLine === 'xy');
@@ -379,10 +380,7 @@ export const AreaChart = factory<AreaChartFactory>((_props, ref) => {
               isAnimationActive={isAnimationActive}
               position={{ y: 0 }}
               cursor={{
-                stroke:
-                  computedColorScheme === 'light'
-                    ? theme.colors.gray[3]
-                    : rgba(theme.colors.dark[3], 0.6),
+                stroke: 'var(--area-chart-grid-color)',
                 strokeWidth: 1,
                 strokeDasharray,
               }}

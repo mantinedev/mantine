@@ -113,6 +113,8 @@ export function Usage() {
         dataKey="date"
         curveType="linear"
         withGradient
+        gridColor="dimmed"
+        textColor="dimmed"
         series={[
           { name: 'Apples', color: 'indigo.6' },
           { name: 'Oranges', color: 'blue.6' },

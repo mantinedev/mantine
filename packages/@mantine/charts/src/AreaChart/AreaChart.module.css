@@ -1,6 +1,14 @@
 .root {
   display: block;
   width: 100%;
+
+  @mixin where-light {
+    --area-chart-grid-color: rgba(173, 181, 189, 0.6);
+  }
+
+  @mixin where-dark {
+    --area-chart-grid-color: rgba(105, 105, 105, 0.6);
+  }
 }
 
 .container {
@@ -9,25 +17,11 @@
 }
 
 .grid {
-  @mixin where-light {
-    stroke: var(--mantine-color-gray-4);
-    opacity: 1;
-  }
-
-  @mixin where-dark {
-    stroke: var(--mantine-color-dark-3);
-    opacity: 0.6;
-  }
+  stroke: var(--area-chart-grid-color);
 }
 
 .axis {
-  @mixin where-light {
-    color: rgba(173, 181, 189, 0.6);
-  }
-
-  @mixin where-dark {
-    color: rgba(105, 105, 105, 0.6);
-  }
+  color: var(--area-chart-grid-color);
 
   & :where(text) {
     color: var(--area-chart-text-color, var(--mantine-color-dimmed));
