@@ -18,6 +18,7 @@ import {
   factory,
   Factory,
   getThemeColor,
+  MantineColor,
   StylesApiProps,
   useMantineTheme,
   useProps,
@@ -38,7 +39,7 @@ export type BarChartStylesNames =
   | ChartTooltipStylesNames;
 
 export type BarChartCssVariables = {
-  root: '--chart-text-color' | '--chart-grid-color';
+  root: '--chart-text-color' | '--chart-grid-color' | '--chart-cursor-fill';
 };
 
 export interface BarChartProps
@@ -52,8 +53,11 @@ export interface BarChartProps
   /** An array of objects with `name` and `color` keys. Determines which data should be consumed from the `data` array. */
   series: BarChartSeries[];
 
-  /** Controls fill opacity of all bars, `0.2` by default */
+  /** Controls fill opacity of all bars, `1` by default */
   fillOpacity?: number;
+
+  /** Fill of hovered bar section, by default value is based on color scheme */
+  cursorFill?: MantineColor;
 }
 
 export type BarChartFactory = Factory<{
@@ -68,18 +72,21 @@ const defaultProps: Partial<BarChartProps> = {
   withYAxis: true,
   withTooltip: true,
   tooltipAnimationDuration: 0,
-  fillOpacity: 0.2,
+  fillOpacity: 1,
   tickLine: 'y',
   strokeDasharray: '5 5',
   gridAxis: 'x',
 };
 
-const varsResolver = createVarsResolver<BarChartFactory>((theme, { textColor, gridColor }) => ({
-  root: {
-    '--chart-text-color': textColor ? getThemeColor(textColor, theme) : undefined,
-    '--chart-grid-color': gridColor ? getThemeColor(gridColor, theme) : undefined,
-  },
-}));
+const varsResolver = createVarsResolver<BarChartFactory>(
+  (theme, { textColor, gridColor, cursorFill }) => ({
+    root: {
+      '--chart-text-color': textColor ? getThemeColor(textColor, theme) : undefined,
+      '--chart-grid-color': gridColor ? getThemeColor(gridColor, theme) : undefined,
+      '--chart-cursor-fill': cursorFill ? getThemeColor(cursorFill, theme) : undefined,
+    },
+  })
+);
 
 export const BarChart = factory<BarChartFactory>((_props, ref) => {
   const props = useProps('BarChart', defaultProps, _props);
@@ -240,6 +247,7 @@ export const BarChart = factory<BarChartFactory>((_props, ref) => {
                 stroke: 'var(--chart-grid-color)',
                 strokeWidth: 1,
                 strokeDasharray,
+                fill: 'var(--chart-cursor-fill)',
               }}
               content={({ label, payload }) => (
                 <ChartTooltip

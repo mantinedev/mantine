@@ -4,9 +4,11 @@
 
   @mixin where-light {
     --chart-grid-color: rgba(173, 181, 189, 0.6);
+    --chart-cursor-fill: rgba(173, 181, 189, 0.15);
   }
 
   @mixin where-dark {
+    --chart-cursor-fill: rgba(105, 105, 105, 0.15);
     --chart-grid-color: rgba(105, 105, 105, 0.6);
   }
 
