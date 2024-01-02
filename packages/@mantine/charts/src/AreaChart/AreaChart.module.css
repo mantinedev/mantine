@@ -9,6 +9,11 @@
   @mixin where-dark {
     --area-chart-grid-color: rgba(105, 105, 105, 0.6);
   }
+
+  & :where(text) {
+    font-family: var(--mantine-font-family);
+    color: var(--area-chart-text-color, var(--mantine-color-dimmed));
+  }
 }
 
 .container {
@@ -22,8 +27,4 @@
 
 .axis {
   color: var(--area-chart-grid-color);
-
-  & :where(text) {
-    color: var(--area-chart-text-color, var(--mantine-color-dimmed));
-  }
 }

@@ -114,7 +114,29 @@ export function Usage() {
         curveType="linear"
         withGradient
         withLegend
-        xAxisProps={{ padding: { left: 20, right: 20 } }}
+        series={[
+          { name: 'Apples', color: 'indigo.6', strokeDasharray: '5 5' },
+          { name: 'Oranges', color: 'blue.6' },
+          { name: 'Tomatoes', color: 'teal.6' },
+        ]}
+      />
+    </div>
+  );
+}
+
+export function ReferenceLines() {
+  return (
+    <div style={{ padding: 40 }}>
+      <AreaChart
+        h={400}
+        data={data}
+        dataKey="date"
+        curveType="linear"
+        withGradient
+        referenceLines={[
+          { x: 'March 24', label: 'Ref' },
+          { y: 3000, label: 'Profit reached', color: 'red.5' },
+        ]}
         series={[
           { name: 'Apples', color: 'indigo.6', strokeDasharray: '5 5' },
           { name: 'Oranges', color: 'blue.6' },

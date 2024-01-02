@@ -7,6 +7,8 @@ import {
   Legend,
   LegendProps,
   AreaChart as ReChartsAreaChart,
+  ReferenceLine,
+  ReferenceLineProps,
   ResponsiveContainer,
   Tooltip,
   TooltipProps,
@@ -41,6 +43,11 @@ function valueToPercent(value: number) {
   return `${(value * 100).toFixed(0)}%`;
 }
 
+export interface AreaChartReferenceLineProps extends Omit<ReferenceLineProps, 'ref' | 'label'> {
+  color?: MantineColor;
+  label?: string;
+}
+
 export interface AreaChartSeries {
   name: string;
   color: MantineColor;
@@ -64,6 +71,7 @@ export type AreaChartStylesNames =
   | 'grid'
   | 'axis'
   | 'area'
+  | 'referenceLine'
   | ChartLegendStylesNames
   | ChartTooltipStylesNames;
 
@@ -83,6 +91,9 @@ export interface AreaChartProps
 
   /** Key of the `data` object for x-axis values */
   dataKey: string;
+
+  /** Reference lines that should be displayed on the chart */
+  referenceLines?: AreaChartReferenceLineProps[];
 
   /** Controls how chart areas are positioned relative to each other, `'default'` by default */
   type?: AreaChartType;
@@ -244,6 +255,7 @@ export const AreaChart = factory<AreaChartFactory>((_props, ref) => {
     connectNulls,
     onMouseLeave,
     orientation,
+    referenceLines,
     ...others
   } = props;
 
@@ -339,6 +351,25 @@ export const AreaChart = factory<AreaChartFactory>((_props, ref) => {
     );
   });
 
+  const referenceLinesItems = referenceLines?.map((line, index) => {
+    const color = getThemeColor(line.color, theme);
+    return (
+      <ReferenceLine
+        key={index}
+        stroke={line.color ? color : 'var(--area-chart-grid-color)'}
+        strokeWidth={1}
+        {...line}
+        label={{
+          value: line.label,
+          fill: line.color ? color : 'currentColor',
+          fontSize: 12,
+          position: 'insideBottomLeft',
+        }}
+        {...getStyles('referenceLine')}
+      />
+    );
+  });
+
   return (
     <Box ref={ref} {...getStyles('root')} onMouseLeave={handleMouseLeave} {...others}>
       <ResponsiveContainer {...getStyles('container')}>
@@ -348,6 +379,7 @@ export const AreaChart = factory<AreaChartFactory>((_props, ref) => {
           layout={orientation}
           {...areaChartProps}
         >
+          {referenceLinesItems}
           {withLegend && (
             <Legend
               verticalAlign="top"
