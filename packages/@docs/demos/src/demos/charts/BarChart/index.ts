@@ -16,3 +16,4 @@ export { xAxisOffset } from './BarChart.demo.xAxisOffset';
 export { yScale } from './BarChart.demo.yScale';
 export { stacked } from './BarChart.demo.stacked';
 export { percent } from './BarChart.demo.percent';
+export { vertical } from './BarChart.demo.vertical';

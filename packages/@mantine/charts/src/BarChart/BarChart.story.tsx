@@ -74,6 +74,27 @@ export function Stacked() {
   );
 }
 
+export function Vertical() {
+  return (
+    <div style={{ padding: 40 }}>
+      <BarChart
+        h={300}
+        data={data}
+        dataKey="month"
+        type="stacked"
+        fillOpacity={0.6}
+        orientation="vertical"
+        series={[
+          { name: 'Smartphones', color: 'indigo.6' },
+          { name: 'Laptops', color: 'blue.6' },
+          { name: 'Tablets', color: 'teal.6' },
+        ]}
+        withLegend
+      />
+    </div>
+  );
+}
+
 export function Percent() {
   return (
     <div style={{ padding: 40 }}>

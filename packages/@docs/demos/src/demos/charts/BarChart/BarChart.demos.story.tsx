@@ -92,3 +92,8 @@ export const Demo_percent = {
   name: '⭐ Demo: percent',
   render: renderDemo(demos.percent),
 };
+
+export const Demo_vertical = {
+  name: '⭐ Demo: vertical',
+  render: renderDemo(demos.vertical),
+};

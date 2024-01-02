@@ -132,6 +132,7 @@ export const BarChart = factory<BarChartFactory>((_props, ref) => {
     fillOpacity,
     barChartProps,
     type,
+    orientation,
     ...others
   } = props;
 
@@ -209,6 +210,7 @@ export const BarChart = factory<BarChartFactory>((_props, ref) => {
         <ReChartsBarChart
           data={data}
           stackOffset={type === 'percent' ? 'expand' : undefined}
+          layout={orientation}
           {...barChartProps}
         >
           {withLegend && (
@@ -230,7 +232,7 @@ export const BarChart = factory<BarChartFactory>((_props, ref) => {
 
           <XAxis
             hide={!withXAxis}
-            dataKey={dataKey}
+            {...(orientation === 'vertical' ? { type: 'number' } : { dataKey })}
             tick={{ transform: 'translate(0, 10)', fontSize: 12, fill: 'currentColor' }}
             stroke=""
             interval="preserveStartEnd"
@@ -243,7 +245,7 @@ export const BarChart = factory<BarChartFactory>((_props, ref) => {
           <YAxis
             hide={!withYAxis}
             axisLine={false}
-            type="number"
+            {...(orientation === 'vertical' ? { dataKey, type: 'category' } : { type: 'number' })}
             tickLine={withYTickLine ? { stroke: 'currentColor' } : false}
             tick={{ transform: 'translate(-10, 0)', fontSize: 12, fill: 'currentColor' }}
             allowDecimals
