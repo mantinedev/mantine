@@ -20,7 +20,7 @@ function Demo() {
         h={180}
         data={data}
         dataKey="month"
-        series={[{ name: 'Smartphones', color: 'indigo.6' }]}
+        series={[{ name: 'Smartphones', color: 'violet.6' }]}
         barChartProps={{ syncId: 'tech' }}
       />
 
@@ -51,7 +51,7 @@ function Demo() {
         h={180}
         data={data}
         dataKey="month"
-        series={[{ name: 'Smartphones', color: 'indigo.6' }]}
+        series={[{ name: 'Smartphones', color: 'violet.6' }]}
         barChartProps={{ syncId: 'tech' }}
       />
 

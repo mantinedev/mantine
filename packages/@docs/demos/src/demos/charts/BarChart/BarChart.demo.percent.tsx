@@ -13,14 +13,7 @@ function Demo() {
       h={300}
       data={data}
       dataKey="month"
-      referenceLines={[
-        {
-          y: 130,
-          color: 'red.5',
-          label: 'Profit reached',
-          labelPosition: 'insideTopRight',
-        },
-      ]}
+      type="percent"
       series={[
         { name: 'Smartphones', color: 'violet.6' },
         { name: 'Laptops', color: 'blue.6' },
@@ -37,14 +30,7 @@ function Demo() {
       h={300}
       data={data}
       dataKey="month"
-      referenceLines={[
-        {
-          y: 130,
-          color: 'red.5',
-          label: 'Profit reached',
-          labelPosition: 'insideTopRight',
-        },
-      ]}
+      type="percent"
       series={[
         { name: 'Smartphones', color: 'violet.6' },
         { name: 'Laptops', color: 'blue.6' },
@@ -54,7 +40,7 @@ function Demo() {
   );
 }
 
-export const referenceLines: MantineDemo = {
+export const percent: MantineDemo = {
   type: 'code',
   component: Demo,
   code: [

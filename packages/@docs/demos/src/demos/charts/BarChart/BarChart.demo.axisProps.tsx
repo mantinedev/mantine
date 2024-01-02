@@ -17,7 +17,7 @@ function Demo() {
       yAxisProps={{ tickMargin: 15, orientation: 'right' }}
       xAxisProps={{ tickMargin: 15, orientation: 'top' }}
       series={[
-        { name: 'Smartphones', color: 'indigo.6' },
+        { name: 'Smartphones', color: 'violet.6' },
         { name: 'Laptops', color: 'blue.6' },
         { name: 'Tablets', color: 'teal.6' },
       ]}
@@ -36,7 +36,7 @@ function Demo() {
       yAxisProps={{ tickMargin: 15, orientation: 'right' }}
       xAxisProps={{ tickMargin: 15, orientation: 'top' }}
       series={[
-        { name: 'Smartphones', color: 'indigo.6' },
+        { name: 'Smartphones', color: 'violet.6' },
         { name: 'Laptops', color: 'blue.6' },
         { name: 'Tablets', color: 'teal.6' },
       ]}

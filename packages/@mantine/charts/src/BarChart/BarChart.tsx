@@ -30,9 +30,13 @@ import { ChartTooltip, ChartTooltipStylesNames } from '../ChartTooltip';
 import type { BaseChartStylesNames, ChartSeries, GridChartBaseProps } from '../types';
 import classes from '../grid-chart.module.css';
 
+function valueToPercent(value: number) {
+  return `${(value * 100).toFixed(0)}%`;
+}
+
 export interface BarChartSeries extends ChartSeries {}
 
-export type BarChartType = 'default' | 'stacked';
+export type BarChartType = 'default' | 'stacked' | 'percent';
 
 export type BarChartStylesNames =
   | 'bar'
@@ -136,6 +140,7 @@ export const BarChart = factory<BarChartFactory>((_props, ref) => {
   const withYTickLine = gridAxis !== 'none' && (tickLine === 'y' || tickLine === 'xy');
   const [highlightedArea, setHighlightedArea] = useState<string | null>(null);
   const shouldHighlight = highlightedArea !== null;
+  const stacked = type === 'stacked' || type === 'percent';
   const handleMouseLeave = (event: React.MouseEvent<HTMLDivElement>) => {
     setHighlightedArea(null);
     onMouseLeave?.(event);
@@ -174,7 +179,7 @@ export const BarChart = factory<BarChartFactory>((_props, ref) => {
         isAnimationActive={false}
         fillOpacity={dimmed ? 0.1 : fillOpacity}
         strokeOpacity={dimmed ? 0.2 : 0}
-        stackId={type === 'stacked' ? 'stack' : undefined}
+        stackId={stacked ? 'stack' : undefined}
       />
     );
   });
@@ -201,7 +206,11 @@ export const BarChart = factory<BarChartFactory>((_props, ref) => {
   return (
     <Box ref={ref} {...getStyles('root')} onMouseLeave={handleMouseLeave} {...others}>
       <ResponsiveContainer {...getStyles('container')}>
-        <ReChartsBarChart data={data} {...barChartProps}>
+        <ReChartsBarChart
+          data={data}
+          stackOffset={type === 'percent' ? 'expand' : undefined}
+          {...barChartProps}
+        >
           {withLegend && (
             <Legend
               verticalAlign="top"
@@ -239,6 +248,7 @@ export const BarChart = factory<BarChartFactory>((_props, ref) => {
             tick={{ transform: 'translate(-10, 0)', fontSize: 12, fill: 'currentColor' }}
             allowDecimals
             unit={unit}
+            tickFormatter={type === 'percent' ? valueToPercent : undefined}
             {...getStyles('axis')}
             {...yAxisProps}
           />

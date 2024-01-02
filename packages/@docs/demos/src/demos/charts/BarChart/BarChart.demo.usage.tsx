@@ -15,7 +15,7 @@ function Demo() {
       data={data}
       dataKey="month"
       series={[
-        { name: 'Smartphones', color: 'indigo.6' },
+        { name: 'Smartphones', color: 'violet.6' },
         { name: 'Laptops', color: 'blue.6' },
         { name: 'Tablets', color: 'teal.6' },
       ]}
@@ -32,7 +32,7 @@ function Wrapper(props: any) {
       data={data}
       dataKey="month"
       series={[
-        { name: 'Smartphones', color: 'indigo.6' },
+        { name: 'Smartphones', color: 'violet.6' },
         { name: 'Laptops', color: 'blue.6' },
         { name: 'Tablets', color: 'teal.6' },
       ]}

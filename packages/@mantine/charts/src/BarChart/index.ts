@@ -5,4 +5,5 @@ export type {
   BarChartFactory,
   BarChartSeries,
   BarChartStylesNames,
+  BarChartType,
 } from './BarChart';
