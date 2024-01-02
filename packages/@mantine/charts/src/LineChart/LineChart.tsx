@@ -39,7 +39,9 @@ export type LineChartCurveType =
   | 'stepBefore'
   | 'stepAfter';
 
-export interface LineChartSeries extends ChartSeries {}
+export interface LineChartSeries extends ChartSeries {
+  strokeDasharray?: string | number;
+}
 
 export type LineChartStylesNames =
   | 'line'
@@ -208,6 +210,7 @@ export const LineChart = factory<LineChartFactory>((_props, ref) => {
         strokeOpacity={dimmed ? 0.5 : fillOpacity}
         connectNulls={connectNulls}
         type={curveType}
+        strokeDasharray={item.strokeDasharray}
       />
     );
   });
