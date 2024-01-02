@@ -4,6 +4,7 @@ import {
   Legend,
   Line,
   LineChart as ReChartsLineChart,
+  ReferenceLine,
   ResponsiveContainer,
   Tooltip,
   XAxis,
@@ -107,6 +108,7 @@ export const LineChart = factory<LineChartFactory>((_props, ref) => {
     strokeDasharray,
     gridProps,
     tooltipProps,
+    referenceLines,
     ...others
   } = props;
 
@@ -153,6 +155,25 @@ export const LineChart = factory<LineChartFactory>((_props, ref) => {
         isAnimationActive={false}
         fillOpacity={dimmed ? 0 : 1}
         strokeOpacity={dimmed ? 0.5 : 1}
+      />
+    );
+  });
+
+  const referenceLinesItems = referenceLines?.map((line, index) => {
+    const color = getThemeColor(line.color, theme);
+    return (
+      <ReferenceLine
+        key={index}
+        stroke={line.color ? color : 'var(--line-chart-grid-color)'}
+        strokeWidth={1}
+        {...line}
+        label={{
+          value: line.label,
+          fill: line.color ? color : 'currentColor',
+          fontSize: 12,
+          position: line.labelPosition ?? 'insideBottomLeft',
+        }}
+        {...getStyles('referenceLine')}
       />
     );
   });
@@ -234,6 +255,7 @@ export const LineChart = factory<LineChartFactory>((_props, ref) => {
           )}
 
           {lines}
+          {referenceLinesItems}
         </ReChartsLineChart>
       </ResponsiveContainer>
     </Box>

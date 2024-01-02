@@ -288,7 +288,7 @@ export const AreaChart = factory<AreaChartFactory>((_props, ref) => {
           value: line.label,
           fill: line.color ? color : 'currentColor',
           fontSize: 12,
-          position: 'insideBottomLeft',
+          position: line.labelPosition ?? 'insideBottomLeft',
         }}
         {...getStyles('referenceLine')}
       />

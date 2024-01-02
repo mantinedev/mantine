@@ -59,3 +59,22 @@ export function Usage() {
     </div>
   );
 }
+
+export function ReferenceLines() {
+  return (
+    <div style={{ padding: 40 }}>
+      <LineChart
+        h={300}
+        data={data}
+        dataKey="date"
+        series={[
+          { name: 'Apples', color: 'indigo.6' },
+          { name: 'Oranges', color: 'blue.6' },
+          { name: 'Tomatoes', color: 'teal.6' },
+        ]}
+        referenceLines={[{ y: 2500, color: 'red.5', label: 'Reference line' }]}
+        withLegend
+      />
+    </div>
+  );
+}

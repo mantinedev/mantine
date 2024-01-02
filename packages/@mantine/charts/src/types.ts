@@ -1,5 +1,6 @@
 import type {
   CartesianGridProps,
+  LabelProps,
   LegendProps,
   ReferenceLineProps,
   TooltipProps,
@@ -11,6 +12,7 @@ import type { MantineColor } from '@mantine/core';
 export interface ChartReferenceLineProps extends Omit<ReferenceLineProps, 'ref' | 'label'> {
   color?: MantineColor;
   label?: string;
+  labelPosition?: LabelProps['position'];
 }
 
 export interface ChartSeries {

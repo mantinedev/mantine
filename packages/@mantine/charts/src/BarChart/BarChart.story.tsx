@@ -25,3 +25,18 @@ export function Usage() {
     </div>
   );
 }
+
+export function ReferenceLines() {
+  return (
+    <div style={{ padding: 40 }}>
+      <BarChart
+        h={300}
+        data={simpleData}
+        dataKey="product"
+        series={[{ name: 'sales', color: 'indigo.6' }]}
+        referenceLines={[{ y: 500, color: 'red.5', label: 'Reference line' }]}
+        withLegend
+      />
+    </div>
+  );
+}
