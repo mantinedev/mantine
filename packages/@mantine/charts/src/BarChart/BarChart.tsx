@@ -58,6 +58,9 @@ export interface BarChartProps
 
   /** Fill of hovered bar section, by default value is based on color scheme */
   cursorFill?: MantineColor;
+
+  /** Props passed down to recharts `BarChart` component */
+  barChartProps?: React.ComponentPropsWithoutRef<typeof ReChartsBarChart>;
 }
 
 export type BarChartFactory = Factory<{
@@ -117,6 +120,7 @@ export const BarChart = factory<BarChartFactory>((_props, ref) => {
     tooltipProps,
     referenceLines,
     fillOpacity,
+    barChartProps,
     ...others
   } = props;
 
@@ -189,7 +193,7 @@ export const BarChart = factory<BarChartFactory>((_props, ref) => {
   return (
     <Box ref={ref} {...getStyles('root')} onMouseLeave={handleMouseLeave} {...others}>
       <ResponsiveContainer {...getStyles('container')}>
-        <ReChartsBarChart data={data}>
+        <ReChartsBarChart data={data} {...barChartProps}>
           {withLegend && (
             <Legend
               verticalAlign="top"

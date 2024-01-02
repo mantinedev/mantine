@@ -53,7 +53,7 @@ export const usage: MantineDemo = {
       type: 'segmented',
       prop: 'tickLine',
       initialValue: 'y',
-      libraryValue: 'y',
+      libraryValue: '__',
       transformLabel: false,
       data: [
         { value: 'x', label: 'x' },

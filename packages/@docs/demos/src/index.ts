@@ -119,6 +119,7 @@ export * as CalendarDemos from './demos/dates/Calendar';
 
 // @mantine/charts
 export * as AreaChartDemos from './demos/charts/AreaChart';
+export * as BarChartDemos from './demos/charts/BarChart';
 
 // Extensions demos
 export * as NotificationsDemos from './demos/notifications';

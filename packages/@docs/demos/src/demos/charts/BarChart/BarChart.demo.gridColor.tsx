@@ -1,8 +1,8 @@
 import React from 'react';
-import { AreaChart } from '@mantine/charts';
+import { BarChart } from '@mantine/charts';
 import { MantineDemo } from '@mantinex/demo';
 import { data, dataCode } from './_data';
-import classes from './AreaChart.demo.gridColor.module.css';
+import classes from './BarChart.demo.gridColor.module.css';
 
 const cssCode = `
 .root {
@@ -19,22 +19,22 @@ const cssCode = `
 `;
 
 const code = `
-import { AreaChart } from '@mantine/charts';
+import { BarChart } from '@mantine/charts';
 import { data } from './data';
 import classes from './Demo.module.css';
 
 function Demo() {
   return (
-    <AreaChart
+    <BarChart
       h={300}
       data={data}
       dataKey="date"
       type="stacked"
       className={classes.root}
       series={[
-        { name: 'Apples', color: 'indigo.6' },
-        { name: 'Oranges', color: 'blue.6' },
-        { name: 'Tomatoes', color: 'teal.6' },
+        { name: 'Smartphones', color: 'indigo.6' },
+        { name: 'Laptops', color: 'blue.6' },
+        { name: 'Tablets', color: 'teal.6' },
       ]}
     />
   );
@@ -43,16 +43,15 @@ function Demo() {
 
 function Demo() {
   return (
-    <AreaChart
+    <BarChart
       h={300}
       data={data}
-      dataKey="date"
-      type="stacked"
+      dataKey="month"
       className={classes.root}
       series={[
-        { name: 'Apples', color: 'indigo.6' },
-        { name: 'Oranges', color: 'blue.6' },
-        { name: 'Tomatoes', color: 'teal.6' },
+        { name: 'Smartphones', color: 'indigo.6' },
+        { name: 'Laptops', color: 'blue.6' },
+        { name: 'Tablets', color: 'teal.6' },
       ]}
     />
   );

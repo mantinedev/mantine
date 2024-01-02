@@ -1,0 +1,9 @@
+.root {
+  @mixin light {
+    --bar-color: var(--mantine-color-orange-8);
+  }
+
+  @mixin dark {
+    --bar-color: var(--mantine-color-lime-4);
+  }
+}
