@@ -60,6 +60,25 @@ export function Usage() {
   );
 }
 
+export function Vertical() {
+  return (
+    <div style={{ padding: 40 }}>
+      <LineChart
+        h={300}
+        data={data}
+        dataKey="date"
+        orientation="vertical"
+        series={[
+          { name: 'Apples', color: 'indigo.6' },
+          { name: 'Oranges', color: 'blue.6' },
+          { name: 'Tomatoes', color: 'teal.6' },
+        ]}
+        withLegend
+      />
+    </div>
+  );
+}
+
 export function ReferenceLines() {
   return (
     <div style={{ padding: 40 }}>

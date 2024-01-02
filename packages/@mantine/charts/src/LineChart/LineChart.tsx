@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import {
   CartesianGrid,
+  DotProps,
   Legend,
   Line,
   LineChart as ReChartsLineChart,
@@ -29,6 +30,15 @@ import { ChartTooltip, ChartTooltipStylesNames } from '../ChartTooltip';
 import type { BaseChartStylesNames, ChartSeries, GridChartBaseProps } from '../types';
 import classes from '../grid-chart.module.css';
 
+export type LineChartCurveType =
+  | 'bump'
+  | 'linear'
+  | 'natural'
+  | 'monotone'
+  | 'step'
+  | 'stepBefore'
+  | 'stepAfter';
+
 export interface LineChartSeries extends ChartSeries {}
 
 export type LineChartStylesNames =
@@ -52,8 +62,29 @@ export interface LineChartProps
   /** An array of objects with `name` and `color` keys. Determines which data should be consumed from the `data` array. */
   series: LineChartSeries[];
 
-  /** Controls fill opacity of all lines, `0.2` by default */
+  /** Type of the curve, `'monotone'` by default */
+  curveType?: LineChartCurveType;
+
+  /** Controls fill opacity of all lines, `1` by default */
   fillOpacity?: number;
+
+  /** Determines whether dots should be displayed, `true` by default */
+  withDots?: boolean;
+
+  /** Props passed down to all dots. Ignored if `withDots={false}` is set. */
+  dotProps?: Omit<DotProps, 'ref'>;
+
+  /** Props passed down to all active dots. Ignored if `withDots={false}` is set. */
+  activeDotProps?: Omit<DotProps, 'ref'>;
+
+  /** Stroke width for the chart lines, `2` by default */
+  strokeWidth?: number;
+
+  /** Props passed down to recharts `LineChart` component */
+  lineChartProps?: React.ComponentPropsWithoutRef<typeof ReChartsLineChart>;
+
+  /** Determines whether points with `null` values should be connected, `true` by default */
+  connectNulls?: boolean;
 }
 
 export type LineChartFactory = Factory<{
@@ -68,10 +99,14 @@ const defaultProps: Partial<LineChartProps> = {
   withYAxis: true,
   withTooltip: true,
   tooltipAnimationDuration: 0,
-  fillOpacity: 0.2,
+  fillOpacity: 1,
   tickLine: 'y',
   strokeDasharray: '5 5',
   gridAxis: 'x',
+  withDots: true,
+  connectNulls: true,
+  strokeWidth: 2,
+  curveType: 'monotone',
 };
 
 const varsResolver = createVarsResolver<LineChartFactory>((theme, { textColor, gridColor }) => ({
@@ -109,6 +144,15 @@ export const LineChart = factory<LineChartFactory>((_props, ref) => {
     gridProps,
     tooltipProps,
     referenceLines,
+    withDots,
+    dotProps,
+    activeDotProps,
+    strokeWidth,
+    lineChartProps,
+    connectNulls,
+    fillOpacity,
+    curveType,
+    orientation,
     ...others
   } = props;
 
@@ -150,11 +194,20 @@ export const LineChart = factory<LineChartFactory>((_props, ref) => {
         key={item.name}
         name={item.name}
         dataKey={item.name}
+        dot={
+          withDots
+            ? { fillOpacity: dimmed ? 0 : 1, strokeOpacity: dimmed ? 0 : 1, ...dotProps }
+            : false
+        }
+        activeDot={withDots ? { fill: color, stroke: color, ...activeDotProps } : false}
         fill={color}
         stroke={color}
+        strokeWidth={strokeWidth}
         isAnimationActive={false}
-        fillOpacity={dimmed ? 0 : 1}
-        strokeOpacity={dimmed ? 0.5 : 1}
+        fillOpacity={dimmed ? 0 : fillOpacity}
+        strokeOpacity={dimmed ? 0.5 : fillOpacity}
+        connectNulls={connectNulls}
+        type={curveType}
       />
     );
   });
@@ -181,7 +234,7 @@ export const LineChart = factory<LineChartFactory>((_props, ref) => {
   return (
     <Box ref={ref} {...getStyles('root')} onMouseLeave={handleMouseLeave} {...others}>
       <ResponsiveContainer {...getStyles('container')}>
-        <ReChartsLineChart data={data}>
+        <ReChartsLineChart data={data} layout={orientation} {...lineChartProps}>
           {withLegend && (
             <Legend
               verticalAlign="top"
@@ -201,7 +254,7 @@ export const LineChart = factory<LineChartFactory>((_props, ref) => {
 
           <XAxis
             hide={!withXAxis}
-            dataKey={dataKey}
+            {...(orientation === 'vertical' ? { type: 'number' } : { dataKey })}
             tick={{ transform: 'translate(0, 10)', fontSize: 12, fill: 'currentColor' }}
             stroke=""
             interval="preserveStartEnd"
@@ -214,7 +267,7 @@ export const LineChart = factory<LineChartFactory>((_props, ref) => {
           <YAxis
             hide={!withYAxis}
             axisLine={false}
-            type="number"
+            {...(orientation === 'vertical' ? { dataKey, type: 'category' } : { type: 'number' })}
             tickLine={withYTickLine ? { stroke: 'currentColor' } : false}
             tick={{ transform: 'translate(-10, 0)', fontSize: 12, fill: 'currentColor' }}
             allowDecimals

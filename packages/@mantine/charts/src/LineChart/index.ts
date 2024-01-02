@@ -5,4 +5,5 @@ export type {
   LineChartFactory,
   LineChartSeries,
   LineChartStylesNames,
+  LineChartCurveType,
 } from './LineChart';
