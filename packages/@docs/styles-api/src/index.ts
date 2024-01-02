@@ -48,6 +48,7 @@ export * from './data/Input.styles-api';
 export * from './data/InputBase.styles-api';
 export * from './data/JsonInput.styles-api';
 export * from './data/Kbd.styles-api';
+export * from './data/LineChart.styles-api';
 export * from './data/List.styles-api';
 export * from './data/Loader.styles-api';
 export * from './data/LoadingOverlay.styles-api';
