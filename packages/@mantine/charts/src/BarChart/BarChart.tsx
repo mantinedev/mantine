@@ -27,7 +27,7 @@ import {
 import { ChartLegend, ChartLegendStylesNames } from '../ChartLegend';
 import { ChartTooltip, ChartTooltipStylesNames } from '../ChartTooltip';
 import type { BaseChartStylesNames, ChartSeries, GridChartBaseProps } from '../types';
-import classes from './BarChart.module.css';
+import classes from '../grid-chart.module.css';
 
 export interface BarChartSeries extends ChartSeries {}
 
@@ -38,7 +38,7 @@ export type BarChartStylesNames =
   | ChartTooltipStylesNames;
 
 export type BarChartCssVariables = {
-  root: '--bar-chart-text-color' | '--bar-chart-grid-color';
+  root: '--chart-text-color' | '--chart-grid-color';
 };
 
 export interface BarChartProps
@@ -76,8 +76,8 @@ const defaultProps: Partial<BarChartProps> = {
 
 const varsResolver = createVarsResolver<BarChartFactory>((theme, { textColor, gridColor }) => ({
   root: {
-    '--bar-chart-text-color': textColor ? getThemeColor(textColor, theme) : undefined,
-    '--bar-chart-grid-color': gridColor ? getThemeColor(gridColor, theme) : undefined,
+    '--chart-text-color': textColor ? getThemeColor(textColor, theme) : undefined,
+    '--chart-grid-color': gridColor ? getThemeColor(gridColor, theme) : undefined,
   },
 }));
 
@@ -164,7 +164,7 @@ export const BarChart = factory<BarChartFactory>((_props, ref) => {
     return (
       <ReferenceLine
         key={index}
-        stroke={line.color ? color : 'var(--bar-chart-grid-color)'}
+        stroke={line.color ? color : 'var(--chart-grid-color)'}
         strokeWidth={1}
         {...line}
         label={{
@@ -237,7 +237,7 @@ export const BarChart = factory<BarChartFactory>((_props, ref) => {
               isAnimationActive={tooltipAnimationDuration !== 0}
               position={{ y: 0 }}
               cursor={{
-                stroke: 'var(--bar-chart-grid-color)',
+                stroke: 'var(--chart-grid-color)',
                 strokeWidth: 1,
                 strokeDasharray,
               }}

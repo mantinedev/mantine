@@ -32,7 +32,7 @@ import type { BaseChartStylesNames, ChartSeries, GridChartBaseProps } from '../t
 import { AreaGradient } from './AreaGradient';
 import { AreaSplit } from './AreaSplit';
 import { getDefaultSplitOffset } from './get-split-offset';
-import classes from './AreaChart.module.css';
+import classes from '../grid-chart.module.css';
 
 function valueToPercent(value: number) {
   return `${(value * 100).toFixed(0)}%`;
@@ -60,7 +60,7 @@ export type AreaChartStylesNames =
   | ChartTooltipStylesNames;
 
 export type AreaChartCSSVariables = {
-  root: '--area-chart-text-color' | '--area-chart-grid-color';
+  root: '--chart-text-color' | '--chart-grid-color';
 };
 
 export interface AreaChartProps
@@ -135,8 +135,8 @@ const defaultProps: Partial<AreaChartProps> = {
 
 const varsResolver = createVarsResolver<AreaChartFactory>((theme, { textColor, gridColor }) => ({
   root: {
-    '--area-chart-text-color': textColor ? getThemeColor(textColor, theme) : undefined,
-    '--area-chart-grid-color': gridColor ? getThemeColor(gridColor, theme) : undefined,
+    '--chart-text-color': textColor ? getThemeColor(textColor, theme) : undefined,
+    '--chart-grid-color': gridColor ? getThemeColor(gridColor, theme) : undefined,
   },
 }));
 
@@ -281,7 +281,7 @@ export const AreaChart = factory<AreaChartFactory>((_props, ref) => {
     return (
       <ReferenceLine
         key={index}
-        stroke={line.color ? color : 'var(--area-chart-grid-color)'}
+        stroke={line.color ? color : 'var(--chart-grid-color)'}
         strokeWidth={1}
         {...line}
         label={{
@@ -361,7 +361,7 @@ export const AreaChart = factory<AreaChartFactory>((_props, ref) => {
               isAnimationActive={isAnimationActive}
               position={{ y: 0 }}
               cursor={{
-                stroke: 'var(--area-chart-grid-color)',
+                stroke: 'var(--chart-grid-color)',
                 strokeWidth: 1,
                 strokeDasharray,
               }}
