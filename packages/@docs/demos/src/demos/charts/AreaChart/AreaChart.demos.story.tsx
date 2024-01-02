@@ -122,3 +122,13 @@ export const Demo_xAxisOffset = {
   name: '⭐ Demo: xAxisOffset',
   render: renderDemo(demos.xAxisOffset),
 };
+
+export const Demo_yScale = {
+  name: '⭐ Demo: yScale',
+  render: renderDemo(demos.yScale),
+};
+
+export const Demo_referenceLines = {
+  name: '⭐ Demo: referenceLines',
+  render: renderDemo(demos.referenceLines),
+};

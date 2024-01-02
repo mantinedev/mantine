@@ -80,6 +80,13 @@ Use `xAxisProps` to set padding between the charts ends and the x-axis:
 
 <Demo data={AreaChartDemos.xAxisOffset} />
 
+## Y axis scale
+
+Use `yAxisProps` to change domain of the Y axis. For example, if you know that
+your data will always be in the range of 0 to 100, you can set domain to `[0, 100]`:
+
+<Demo data={AreaChartDemos.yScale} />
+
 ## Area color
 
 You can reference colors from [theme](/theming/theme-object) the same way as in
@@ -205,3 +212,10 @@ Set `orientation="vertical"` to render a vertical area chart:
 Set `strokeDasharray` property in `series` to change line style to dashed:
 
 <Demo data={AreaChartDemos.lineDasharray} />
+
+## Reference lines
+
+Use `referenceLines` prop to render reference lines. Reference lines are always
+rendered behind the chart.
+
+<Demo data={AreaChartDemos.referenceLines} />

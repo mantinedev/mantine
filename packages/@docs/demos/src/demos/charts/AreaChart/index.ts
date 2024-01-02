@@ -22,3 +22,5 @@ export { axisProps } from './AreaChart.demo.axisProps';
 export { vertical } from './AreaChart.demo.vertical';
 export { lineDasharray } from './AreaChart.demo.lineDasharray';
 export { xAxisOffset } from './AreaChart.demo.xAxisOffset';
+export { yScale } from './AreaChart.demo.yScale';
+export { referenceLines } from './AreaChart.demo.referenceLines';
