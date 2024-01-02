@@ -32,6 +32,8 @@ import classes from '../grid-chart.module.css';
 
 export interface BarChartSeries extends ChartSeries {}
 
+export type BarChartType = 'default' | 'stacked';
+
 export type BarChartStylesNames =
   | 'bar'
   | BaseChartStylesNames
@@ -52,6 +54,9 @@ export interface BarChartProps
 
   /** An array of objects with `name` and `color` keys. Determines which data should be consumed from the `data` array. */
   series: BarChartSeries[];
+
+  /** Controls how bars are positioned relative to each other, `'default'` by default */
+  type?: BarChartType;
 
   /** Controls fill opacity of all bars, `1` by default */
   fillOpacity?: number;
@@ -79,6 +84,7 @@ const defaultProps: Partial<BarChartProps> = {
   tickLine: 'y',
   strokeDasharray: '5 5',
   gridAxis: 'x',
+  type: 'default',
 };
 
 const varsResolver = createVarsResolver<BarChartFactory>(
@@ -121,6 +127,7 @@ export const BarChart = factory<BarChartFactory>((_props, ref) => {
     referenceLines,
     fillOpacity,
     barChartProps,
+    type,
     ...others
   } = props;
 
@@ -167,6 +174,7 @@ export const BarChart = factory<BarChartFactory>((_props, ref) => {
         isAnimationActive={false}
         fillOpacity={dimmed ? 0.1 : fillOpacity}
         strokeOpacity={dimmed ? 0.2 : 0}
+        stackId={type === 'stacked' ? 'stack' : undefined}
       />
     );
   });
