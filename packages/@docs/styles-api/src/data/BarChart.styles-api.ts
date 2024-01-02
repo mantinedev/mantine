@@ -1,10 +1,10 @@
-import type { AreaChartFactory } from '@mantine/charts';
+import type { BarChartFactory } from '@mantine/charts';
 import type { StylesApiData } from '../types';
 
-export const AreaChartStylesApi: StylesApiData<AreaChartFactory> = {
+export const BarChartStylesApi: StylesApiData<BarChartFactory> = {
   selectors: {
     root: 'Root element',
-    area: 'Area of the chart',
+    bar: 'Bar of the chart',
     axis: 'X and Y axis of the chart',
     container: 'Recharts ResponsiveContainer component',
     grid: 'Recharts CartesianGrid component',
@@ -27,6 +27,7 @@ export const AreaChartStylesApi: StylesApiData<AreaChartFactory> = {
     root: {
       '--chart-grid-color': 'Controls color of the grid and cursor lines',
       '--chart-text-color': 'Controls color of the axis labels',
+      '--chart-cursor-fill': 'Controls fill color of the cursor line',
     },
   },
 
