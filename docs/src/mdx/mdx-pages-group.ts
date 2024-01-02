@@ -329,7 +329,12 @@ export const MDX_PAGES_GROUPS: MdxPagesGroup[] = [
   },
   {
     group: 'mantine-charts',
-    pages: [MDX_DATA.GettingStartedCharts, MDX_DATA.AreaChart],
+    pages: [
+      MDX_DATA.GettingStartedCharts,
+      MDX_DATA.AreaChart,
+      MDX_DATA.BarChart,
+      MDX_DATA.LineChart,
+    ],
   },
   {
     group: 'extensions',
