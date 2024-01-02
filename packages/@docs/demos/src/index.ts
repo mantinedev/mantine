@@ -121,6 +121,7 @@ export * as CalendarDemos from './demos/dates/Calendar';
 export * as AreaChartDemos from './demos/charts/AreaChart';
 export * as BarChartDemos from './demos/charts/BarChart';
 export * as LineChartDemos from './demos/charts/LineChart';
+export * as SparklineDemos from './demos/charts/Sparkline';
 
 // Extensions demos
 export * as NotificationsDemos from './demos/notifications';

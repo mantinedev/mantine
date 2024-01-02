@@ -46,4 +46,16 @@ export const MDX_CHARTS_DATA: Record<string, Frontmatter> = {
     source: '@mantine/charts/src/LineChart/LineChart.tsx',
     docs: 'charts/line-chart.mdx',
   },
+
+  Sparkline: {
+    title: 'Sparkline',
+    props: ['Sparkline'],
+    styles: ['Sparkline'],
+    package: '@mantine/charts',
+    slug: '/charts/sparkline',
+    description: 'Simplified area chart to show trends',
+    import: "import { Sparkline } from '@mantine/charts';",
+    source: '@mantine/charts/src/Sparkline/Sparkline.tsx',
+    docs: 'charts/sparkline.mdx',
+  },
 };

@@ -38,7 +38,7 @@ export interface SparklineProps
   /** Controls fill opacity of the area, `0.6` by default */
   fillOpacity?: number;
 
-  /** Type of the curve, `'monotone'` by default */
+  /** Type of the curve, `'linear'` by default */
   curveType?: AreaChartCurveType;
 
   /** Area stroke width, `2` by default */
@@ -56,6 +56,7 @@ const defaultProps: Partial<SparklineProps> = {
   withGradient: true,
   fillOpacity: 0.6,
   strokeWidth: 2,
+  curveType: 'linear',
 };
 
 const varsResolver = createVarsResolver<SparklineFactory>((theme, { color }) => ({
@@ -109,6 +110,7 @@ export const Sparkline = factory<SparklineFactory>((_props, ref) => {
             isAnimationActive={false}
             connectNulls
             strokeWidth={strokeWidth}
+            fillOpacity={1}
           />
 
           <defs>
