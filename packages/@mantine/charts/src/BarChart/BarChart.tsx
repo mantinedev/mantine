@@ -116,6 +116,7 @@ export const BarChart = factory<BarChartFactory>((_props, ref) => {
     gridProps,
     tooltipProps,
     referenceLines,
+    fillOpacity,
     ...others
   } = props;
 
@@ -160,8 +161,8 @@ export const BarChart = factory<BarChartFactory>((_props, ref) => {
         fill={color}
         stroke={color}
         isAnimationActive={false}
-        fillOpacity={dimmed ? 0 : 1}
-        strokeOpacity={dimmed ? 0.5 : 1}
+        fillOpacity={dimmed ? 0.1 : fillOpacity}
+        strokeOpacity={dimmed ? 0.2 : 0}
       />
     );
   });

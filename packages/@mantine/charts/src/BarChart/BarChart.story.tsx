@@ -12,6 +12,15 @@ const simpleData = [
   { product: 'Camera', sales: 110 },
 ];
 
+const data = [
+  { month: 'January', Smartphones: 120, Laptops: 150, Tablets: 180 },
+  { month: 'February', Smartphones: 80, Laptops: 100, Tablets: 120 },
+  { month: 'March', Smartphones: 50, Laptops: 60, Tablets: 75 },
+  { month: 'April', Smartphones: 30, Laptops: 40, Tablets: 50 },
+  { month: 'May', Smartphones: 20, Laptops: 25, Tablets: 30 },
+  { month: 'June', Smartphones: 40, Laptops: 45, Tablets: 50 },
+];
+
 export function Usage() {
   return (
     <div style={{ padding: 40 }}>
@@ -20,6 +29,25 @@ export function Usage() {
         data={simpleData}
         dataKey="product"
         series={[{ name: 'sales', color: 'indigo.6' }]}
+        withLegend
+      />
+    </div>
+  );
+}
+
+export function MultipleBars() {
+  return (
+    <div style={{ padding: 40 }}>
+      <BarChart
+        h={300}
+        data={data}
+        dataKey="month"
+        fillOpacity={0.6}
+        series={[
+          { name: 'Smartphones', color: 'indigo.6' },
+          { name: 'Laptops', color: 'blue.6' },
+          { name: 'Tablets', color: 'teal.6' },
+        ]}
         withLegend
       />
     </div>
