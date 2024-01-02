@@ -1,0 +1,30 @@
+.root {
+  display: block;
+  width: 100%;
+
+  @mixin where-light {
+    --bar-chart-grid-color: rgba(173, 181, 189, 0.6);
+  }
+
+  @mixin where-dark {
+    --bar-chart-grid-color: rgba(105, 105, 105, 0.6);
+  }
+
+  & :where(text) {
+    font-family: var(--mantine-font-family);
+    color: var(--bar-chart-text-color, var(--mantine-color-dimmed));
+  }
+}
+
+.container {
+  height: 100%;
+  width: 100%;
+}
+
+.grid {
+  stroke: var(--bar-chart-grid-color);
+}
+
+.axis {
+  color: var(--bar-chart-grid-color);
+}

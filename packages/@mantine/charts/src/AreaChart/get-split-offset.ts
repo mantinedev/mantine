@@ -1,7 +1,8 @@
+import type { ChartData } from '../types';
 import type { AreaChartSeries } from './AreaChart';
 
 interface GetSplitOffsetInput {
-  data: Record<string, any>[];
+  data: ChartData;
   dataKey: string;
 }
 
@@ -20,7 +21,7 @@ export function getSplitOffset({ data, dataKey }: GetSplitOffsetInput) {
 }
 
 interface GetDefaultSplitOffsetInput {
-  data: Record<string, any>[];
+  data: ChartData;
   series: AreaChartSeries[];
 }
 

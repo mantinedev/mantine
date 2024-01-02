@@ -1,18 +1,13 @@
 import React, { useState } from 'react';
 import {
   CartesianGrid,
-  CartesianGridProps,
   Legend,
-  LegendProps,
   Line,
   LineChart as ReChartsLineChart,
   ResponsiveContainer,
   Tooltip,
-  TooltipProps,
   XAxis,
-  XAxisProps,
   YAxis,
-  YAxisProps,
 } from 'recharts';
 import {
   Box,
@@ -22,29 +17,32 @@ import {
   factory,
   Factory,
   getThemeColor,
-  MantineColor,
   StylesApiProps,
   useMantineTheme,
   useProps,
   useResolvedStylesApi,
   useStyles,
 } from '@mantine/core';
-import { ChartLegend } from '../ChartLegend';
-import { ChartTooltip } from '../ChartTooltip';
+import { ChartLegend, ChartLegendStylesNames } from '../ChartLegend';
+import { ChartTooltip, ChartTooltipStylesNames } from '../ChartTooltip';
+import type { BaseChartStylesNames, ChartSeries, GridChartBaseProps } from '../types';
 import classes from './LineChart.module.css';
 
-export interface LineChartSeries {
-  name: string;
-  color: MantineColor;
-}
+export interface LineChartSeries extends ChartSeries {}
 
-export type LineChartStylesNames = 'root' | 'container' | 'axis' | 'bar' | 'grid';
+export type LineChartStylesNames =
+  | 'line'
+  | BaseChartStylesNames
+  | ChartLegendStylesNames
+  | ChartTooltipStylesNames;
+
 export type LineChartCssVariables = {
-  root: '--test';
+  root: '--line-chart-text-color' | '--line-chart-grid-color';
 };
 
 export interface LineChartProps
   extends BoxProps,
+    GridChartBaseProps,
     StylesApiProps<LineChartFactory>,
     ElementProps<'div'> {
   /** Data used to display chart */
@@ -53,59 +51,8 @@ export interface LineChartProps
   /** An array of objects with `name` and `color` keys. Determines which data should be consumed from the `data` array. */
   series: LineChartSeries[];
 
-  /** Key of the `data` object for x-axis values */
-  dataKey: string;
-
-  /** Determines whether chart legend should be displayed, `false` by default */
-  withLegend?: boolean;
-
-  /** Props passed down to the `Legend` component */
-  legendProps?: Omit<LegendProps, 'ref'>;
-
-  /** Color of the text displayed inside the chart, `'dimmed'` by default */
-  textColor?: MantineColor;
-
-  /** Color of the grid and cursor lines, by default depends on color scheme */
-  gridColor?: MantineColor;
-
-  /** Determines whether chart tooltip should be displayed, `true` by default */
-  withTooltip?: boolean;
-
-  /** Controls fill opacity of all bars, `0.2` by default */
+  /** Controls fill opacity of all lines, `0.2` by default */
   fillOpacity?: number;
-
-  /** Specifies which axis should have tick line, `'y'` by default */
-  tickLine?: 'x' | 'y' | 'xy' | 'none';
-
-  /** Specifies which lines should be displayed in the grid, `'x'` by default */
-  gridAxis?: 'x' | 'y' | 'xy' | 'none';
-
-  /** Unit displayed next to each tick in y-axis */
-  unit?: string;
-
-  /** Tooltip position animation duration in ms, `0` by default */
-  tooltipAnimationDuration?: number;
-
-  /** Props passed down to the `Tooltip` component */
-  tooltipProps?: Omit<TooltipProps<any, any>, 'ref'>;
-
-  /** Determines whether x-axis should be hidden, `true` by default */
-  withXAxis?: boolean;
-
-  /** Determines whether y-axis should be hidden, `true` by default */
-  withYAxis?: boolean;
-
-  /** Props passed down to the `XAxis` recharts component */
-  xAxisProps?: Omit<XAxisProps, 'ref'>;
-
-  /** Props passed down to the `YAxis` recharts component */
-  yAxisProps?: Omit<YAxisProps, 'ref'>;
-
-  /** Props passed down to the `CartesianGrid` component */
-  gridProps?: Omit<CartesianGridProps, 'ref'>;
-
-  /** Dash array for the grid lines, `'5 5'` by default */
-  strokeDasharray?: string | number;
 }
 
 export type LineChartFactory = Factory<{
@@ -126,9 +73,10 @@ const defaultProps: Partial<LineChartProps> = {
   gridAxis: 'x',
 };
 
-const varsResolver = createVarsResolver<LineChartFactory>(() => ({
+const varsResolver = createVarsResolver<LineChartFactory>((theme, { textColor, gridColor }) => ({
   root: {
-    '--test': 'test',
+    '--line-chart-text-color': textColor ? getThemeColor(textColor, theme) : undefined,
+    '--line-chart-grid-color': gridColor ? getThemeColor(gridColor, theme) : undefined,
   },
 }));
 
@@ -190,13 +138,13 @@ export const LineChart = factory<LineChartFactory>((_props, ref) => {
     varsResolver,
   });
 
-  const bars = series.map((item) => {
+  const lines = series.map((item) => {
     const color = getThemeColor(item.color, theme);
     const dimmed = shouldHighlight && highlightedArea !== item.name;
 
     return (
       <Line
-        {...getStyles('bar')}
+        {...getStyles('line')}
         key={item.name}
         name={item.name}
         dataKey={item.name}
@@ -268,7 +216,7 @@ export const LineChart = factory<LineChartFactory>((_props, ref) => {
               isAnimationActive={tooltipAnimationDuration !== 0}
               position={{ y: 0 }}
               cursor={{
-                stroke: 'var(--area-chart-grid-color)',
+                stroke: 'var(--line-chart-grid-color)',
                 strokeWidth: 1,
                 strokeDasharray,
               }}
@@ -285,7 +233,7 @@ export const LineChart = factory<LineChartFactory>((_props, ref) => {
             />
           )}
 
-          {bars}
+          {lines}
         </ReChartsLineChart>
       </ResponsiveContainer>
     </Box>

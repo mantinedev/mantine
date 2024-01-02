@@ -2,20 +2,14 @@ import React, { Fragment, useId, useState } from 'react';
 import {
   Area,
   CartesianGrid,
-  CartesianGridProps,
   DotProps,
   Legend,
-  LegendProps,
   AreaChart as ReChartsAreaChart,
   ReferenceLine,
-  ReferenceLineProps,
   ResponsiveContainer,
   Tooltip,
-  TooltipProps,
   XAxis,
-  XAxisProps,
   YAxis,
-  YAxisProps,
 } from 'recharts';
 import {
   Box,
@@ -34,6 +28,7 @@ import {
 } from '@mantine/core';
 import { ChartLegend, ChartLegendStylesNames } from '../ChartLegend';
 import { ChartTooltip, ChartTooltipStylesNames } from '../ChartTooltip';
+import type { BaseChartStylesNames, ChartSeries, GridChartBaseProps } from '../types';
 import { AreaGradient } from './AreaGradient';
 import { AreaSplit } from './AreaSplit';
 import { getDefaultSplitOffset } from './get-split-offset';
@@ -43,14 +38,7 @@ function valueToPercent(value: number) {
   return `${(value * 100).toFixed(0)}%`;
 }
 
-export interface AreaChartReferenceLineProps extends Omit<ReferenceLineProps, 'ref' | 'label'> {
-  color?: MantineColor;
-  label?: string;
-}
-
-export interface AreaChartSeries {
-  name: string;
-  color: MantineColor;
+export interface AreaChartSeries extends ChartSeries {
   strokeDasharray?: string | number;
 }
 
@@ -66,12 +54,8 @@ export type AreaChartCurveType =
   | 'stepAfter';
 
 export type AreaChartStylesNames =
-  | 'root'
-  | 'container'
-  | 'grid'
-  | 'axis'
   | 'area'
-  | 'referenceLine'
+  | BaseChartStylesNames
   | ChartLegendStylesNames
   | ChartTooltipStylesNames;
 
@@ -81,19 +65,11 @@ export type AreaChartCSSVariables = {
 
 export interface AreaChartProps
   extends BoxProps,
+    GridChartBaseProps,
     StylesApiProps<AreaChartFactory>,
     ElementProps<'div'> {
-  /** Data used to display chart */
-  data: Record<string, any>[];
-
   /** An array of objects with `name` and `color` keys. Determines which data should be consumed from the `data` array. */
   series: AreaChartSeries[];
-
-  /** Key of the `data` object for x-axis values */
-  dataKey: string;
-
-  /** Reference lines that should be displayed on the chart */
-  referenceLines?: AreaChartReferenceLineProps[];
 
   /** Controls how chart areas are positioned relative to each other, `'default'` by default */
   type?: AreaChartType;
@@ -101,38 +77,11 @@ export interface AreaChartProps
   /** Determines whether the chart area should be represented with a gradient instead of the solid color, `false` by default */
   withGradient?: boolean;
 
-  /** Determines whether x-axis should be hidden, `true` by default */
-  withXAxis?: boolean;
-
-  /** Determines whether y-axis should be hidden, `true` by default */
-  withYAxis?: boolean;
-
-  /** Props passed down to the `XAxis` recharts component */
-  xAxisProps?: Omit<XAxisProps, 'ref'>;
-
-  /** Props passed down to the `YAxis` recharts component */
-  yAxisProps?: Omit<YAxisProps, 'ref'>;
-
   /** Type of the curve, `'monotone'` by default */
   curveType?: AreaChartCurveType;
 
-  /** Props passed down to the `CartesianGrid` component */
-  gridProps?: Omit<CartesianGridProps, 'ref'>;
-
   /** Determines whether dots should be displayed, `true` by default */
   withDots?: boolean;
-
-  /** Specifies which axis should have tick line, `'y'` by default */
-  tickLine?: 'x' | 'y' | 'xy' | 'none';
-
-  /** Dash array for the grid lines, `'5 5'` by default */
-  strokeDasharray?: string | number;
-
-  /** Specifies which lines should be displayed in the grid, `'x'` by default */
-  gridAxis?: 'x' | 'y' | 'xy' | 'none';
-
-  /** Unit displayed next to each tick in y-axis */
-  unit?: string;
 
   /** Props passed down to all dots. Ignored if `withDots={false}` is set. */
   dotProps?: Omit<DotProps, 'ref'>;
@@ -142,21 +91,6 @@ export interface AreaChartProps
 
   /** Stroke width for the chart areas, `2` by default */
   strokeWidth?: number;
-
-  /** Tooltip position animation duration in ms, `0` by default */
-  tooltipAnimationDuration?: number;
-
-  /** Props passed down to the `Legend` component */
-  legendProps?: Omit<LegendProps, 'ref'>;
-
-  /** Props passed down to the `Tooltip` component */
-  tooltipProps?: Omit<TooltipProps<any, any>, 'ref'>;
-
-  /** Determines whether chart legend should be displayed, `false` by default */
-  withLegend?: boolean;
-
-  /** Determines whether chart tooltip should be displayed, `true` by default */
-  withTooltip?: boolean;
 
   /** Props passed down to recharts `AreaChart` component */
   areaChartProps?: React.ComponentPropsWithoutRef<typeof ReChartsAreaChart>;
@@ -172,15 +106,6 @@ export interface AreaChartProps
 
   /** Determines whether points with `null` values should be connected, `true` by default */
   connectNulls?: boolean;
-
-  /** Color of the text displayed inside the chart, `'dimmed'` by default */
-  textColor?: MantineColor;
-
-  /** Color of the grid and cursor lines, by default depends on color scheme */
-  gridColor?: MantineColor;
-
-  /** Chart orientation, `'horizontal'` by default */
-  orientation?: 'horizontal' | 'vertical';
 }
 
 export type AreaChartFactory = Factory<{

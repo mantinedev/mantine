@@ -12,5 +12,6 @@ generateDeclarations({
     'Omit<Props, "ref"> | undefined': 'RechartsProps',
     '[DefaultMantineColor, DefaultMantineColor] | undefined': '[MantineColor, MantineColor]',
     'CategoricalChartProps | undefined': 'RechartsProps',
+    'Omit<TooltipProps<any, any>, "ref"> | undefined': 'RechartsProps',
   },
 });
