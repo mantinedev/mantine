@@ -99,7 +99,7 @@ export const Sparkline = factory<SparklineFactory>((_props, ref) => {
   const mappedData = useMemo(() => data.map((value, index) => ({ value, index })), [data]);
 
   return (
-    <Box ref={ref} {...getStyles('root')} {...others}>
+    <Box ref={ref} {...getStyles('root')} {...others} dir="ltr">
       <ResponsiveContainer>
         <ReChartsAreaChart data={mappedData}>
           <Area

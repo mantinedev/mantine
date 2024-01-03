@@ -133,6 +133,7 @@ export const BarChart = factory<BarChartFactory>((_props, ref) => {
     barChartProps,
     type,
     orientation,
+    dir,
     ...others
   } = props;
 
@@ -205,7 +206,13 @@ export const BarChart = factory<BarChartFactory>((_props, ref) => {
   });
 
   return (
-    <Box ref={ref} {...getStyles('root')} onMouseLeave={handleMouseLeave} {...others}>
+    <Box
+      ref={ref}
+      {...getStyles('root')}
+      onMouseLeave={handleMouseLeave}
+      dir={dir || 'ltr'}
+      {...others}
+    >
       <ResponsiveContainer {...getStyles('container')}>
         <ReChartsBarChart
           data={data}
