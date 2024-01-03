@@ -206,7 +206,7 @@ export const ScrollAreaAutosize = factory<ScrollAreaFactory>((props, ref) => {
   } = useProps('ScrollAreaAutosize', defaultProps, props);
 
   return (
-    <Box {...others} ref={ref} style={[{ display: 'flex' }, style]}>
+    <Box {...others} ref={ref} style={[{ display: 'flex', overflow: 'auto' }, style]}>
       <Box style={{ display: 'flex', flexDirection: 'column', flex: 1 }}>
         <ScrollArea
           classNames={classNames}
