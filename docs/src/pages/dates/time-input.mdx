@@ -12,7 +12,9 @@ export default Layout(MDX_DATA.TimeInput);
 
 ## Show browser picker
 
-You can show browser picker by calling `showPicker` method of input element:
+You can show browser picker by calling `showPicker` method of input element.
+Note that some browsers (desktop Safari) do not support this feature and the
+method will do nothing.
 
 <Demo data={TimeInputDemos.picker} />
 

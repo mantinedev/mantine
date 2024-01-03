@@ -49,6 +49,7 @@
   &:disabled {
     --_control-bg: transparent !important;
     --_control-cursor: not-allowed;
+    --_control-opacity: 0.6;
 
     @mixin light {
       --_ni-control-color: var(--mantine-color-gray-4);

@@ -155,6 +155,7 @@ export const LineChart = factory<LineChartFactory>((_props, ref) => {
     fillOpacity,
     curveType,
     orientation,
+    dir,
     ...others
   } = props;
 
@@ -235,7 +236,13 @@ export const LineChart = factory<LineChartFactory>((_props, ref) => {
   });
 
   return (
-    <Box ref={ref} {...getStyles('root')} onMouseLeave={handleMouseLeave} {...others}>
+    <Box
+      ref={ref}
+      {...getStyles('root')}
+      onMouseLeave={handleMouseLeave}
+      dir={dir || 'ltr'}
+      {...others}
+    >
       <ResponsiveContainer {...getStyles('container')}>
         <ReChartsLineChart data={data} layout={orientation} {...lineChartProps}>
           {withLegend && (

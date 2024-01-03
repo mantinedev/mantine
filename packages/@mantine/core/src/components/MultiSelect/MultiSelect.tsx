@@ -171,6 +171,7 @@ export const MultiSelect = factory<MultiSelectFactory>((_props, ref) => {
     hiddenInputProps,
     placeholder,
     hiddenInputValuesDivider,
+    required,
     ...others
   } = props;
 
@@ -325,11 +326,17 @@ export const MultiSelect = factory<MultiSelectFactory>((_props, ref) => {
             error={error}
             multiline
             withErrorStyles={withErrorStyles}
-            __stylesApiProps={{ ...props, multiline: true }}
+            __stylesApiProps={{
+              ...props,
+              rightSectionPointerEvents:
+                rightSectionPointerEvents || (clearButton ? 'all' : 'none'),
+              multiline: true,
+            }}
             pointer={!searchable}
             onClick={() => (searchable ? combobox.openDropdown() : combobox.toggleDropdown())}
             data-expanded={combobox.dropdownOpened || undefined}
             id={_id}
+            required={required}
           >
             <Pill.Group disabled={disabled} unstyled={unstyled} {...getStyles('pillsList')}>
               {values}

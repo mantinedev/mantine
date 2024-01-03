@@ -14,6 +14,12 @@ export const COMMUNITY_TEMPLATES_DATA: Template[] = [
     description: 'Next.js template with pages router and tss (emotion based) setup',
   },
   {
+    type: 'next',
+    name: 't3-template',
+    link: 'https://github.com/WillKirkmanM/mantine-t3-template',
+    description: 'Next.js app router T3 stack template',
+  },
+  {
     type: 'vite',
     name: 'nx-vite-monorepo-template',
     link: 'https://github.com/dipiash/nx-vite-react-ts-mantine-boilerplate',

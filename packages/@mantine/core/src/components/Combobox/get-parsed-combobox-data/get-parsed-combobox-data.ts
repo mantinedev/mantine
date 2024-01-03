@@ -4,13 +4,19 @@ import {
   ComboboxItemGroup,
   ComboboxParsedItem,
   ComboboxParsedItemGroup,
+  ComboboxStringData,
+  ComboboxStringItem,
 } from '../Combobox.types';
 
 function parseItem(
-  item: string | ComboboxItem | ComboboxItemGroup
+  item: string | ComboboxItem | ComboboxStringItem | ComboboxItemGroup
 ): ComboboxItem | ComboboxParsedItemGroup {
   if (typeof item === 'string') {
     return { value: item, label: item };
+  }
+
+  if ('value' in item && !('label' in item)) {
+    return { value: item.value, label: item.value, disabled: item.disabled };
   }
 
   if (typeof item === 'number') {
@@ -27,10 +33,12 @@ function parseItem(
   return item;
 }
 
-export function getParsedComboboxData(data: ComboboxData | undefined): ComboboxParsedItem[] {
+export function getParsedComboboxData(
+  data: ComboboxData | ComboboxStringData | undefined
+): ComboboxParsedItem[] {
   if (!data) {
     return [];
   }
 
-  return data.map(parseItem);
+  return data.map((item) => parseItem(item as ComboboxItem));
 }

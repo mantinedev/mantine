@@ -24,6 +24,23 @@ export function Usage() {
   );
 }
 
+export function AllowLeadingZeros() {
+  const [value, setValue] = useState<number | string>('');
+  return (
+    <div style={{ padding: 40 }}>
+      <NumberInput
+        value={value}
+        label="Number input"
+        placeholder="Number input"
+        onChange={setValue}
+        allowLeadingZeros
+      />
+      {typeof value === 'number' ? `${value} number` : `${value === '' ? 'empty' : value} string`}
+      <Button onClick={() => setValue(245.32)}>Set value to float</Button>
+    </div>
+  );
+}
+
 export function MinWithStartValue() {
   return (
     <div style={{ padding: 40 }}>

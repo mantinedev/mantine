@@ -13,6 +13,7 @@ import {
   Combobox,
   ComboboxLikeProps,
   ComboboxLikeStylesNames,
+  ComboboxStringData,
   getOptionsLockup,
   getParsedComboboxData,
   OptionsDropdown,
@@ -26,9 +27,12 @@ export type AutocompleteStylesNames = __InputStylesNames | ComboboxLikeStylesNam
 export interface AutocompleteProps
   extends BoxProps,
     __BaseInputProps,
-    ComboboxLikeProps,
+    Omit<ComboboxLikeProps, 'data'>,
     StylesApiProps<AutocompleteFactory>,
     ElementProps<'input', 'onChange' | 'size'> {
+  /** Data displayed in the dropdown */
+  data?: ComboboxStringData;
+
   /** Controlled component value */
   value?: string;
 

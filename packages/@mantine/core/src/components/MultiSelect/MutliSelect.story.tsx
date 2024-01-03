@@ -11,6 +11,8 @@ export function Usage() {
     <div style={{ padding: 40 }}>
       <MultiSelect
         placeholder="MultiSelect something"
+        required
+        label="Some label"
         data={[
           { value: '1', label: 'React' },
           { value: '2', label: 'Angular' },

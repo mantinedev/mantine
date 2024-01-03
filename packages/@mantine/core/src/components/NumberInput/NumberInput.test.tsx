@@ -132,4 +132,47 @@ describe('@mantine/core/NumberInput', () => {
     await enterText('{arrowdown}');
     expect(spy).toHaveBeenCalledTimes(2);
   });
+
+  it('checks whether the data entered is larger than Number.MAX_SAFE_INT', async () => {
+    const spy = jest.fn();
+    render(<NumberInput value={9007199254740991} onChange={spy} />);
+
+    focusInput();
+    await enterText('{backspace}');
+    expect(spy).toHaveBeenLastCalledWith(900719925474099);
+    expect(spy).toHaveBeenCalledTimes(1);
+
+    await enterText('2');
+    expect(spy).toHaveBeenLastCalledWith('9007199254740992');
+    expect(spy).toHaveBeenCalledTimes(2);
+
+    await enterText('7');
+    expect(spy).toHaveBeenLastCalledWith('90071992547409927');
+    expect(spy).toHaveBeenCalledTimes(3);
+
+    await enterText('{backspace}');
+    await enterText('{backspace}');
+    await enterText('{backspace}');
+    await enterText('{backspace}');
+    await enterText('{backspace}');
+    expect(spy).toHaveBeenLastCalledWith(900719925474);
+    expect(spy).toHaveBeenCalledTimes(8);
+  });
+
+  it('allows leading zeros if allowLeadingZeros prop is set', async () => {
+    const spy = jest.fn();
+    render(<NumberInput onChange={spy} allowLeadingZeros />);
+
+    focusInput();
+    await enterText('0');
+    expect(spy).toHaveBeenLastCalledWith(0);
+
+    await enterText('01');
+    expect(spy).toHaveBeenLastCalledWith('001');
+
+    await enterText('{backspace}');
+    await enterText('{backspace}');
+
+    expect(spy).toHaveBeenLastCalledWith(0);
+  });
 });
