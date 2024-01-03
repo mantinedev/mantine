@@ -1,6 +1,10 @@
 import { useMemo } from 'react';
 import { useUncontrolled } from '../use-uncontrolled/use-uncontrolled';
-import { range } from '../utils';
+
+function range(start: number, end: number) {
+  const length = end - start + 1;
+  return Array.from({ length }, (_, index) => index + start);
+}
 
 export const DOTS = 'dots';
 
