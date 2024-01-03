@@ -23,6 +23,9 @@ import classes from './NumberInput.module.css';
 // re for -0, -0., -0.0, -0.00, -0.000 ... strings
 const partialNegativeNumberPattern = /^-0(\.0*)?$/;
 
+// re for 01, 006, 0002 ... and negative counterparts
+const leadingZerosPattern = /^-?0\d+$/;
+
 export interface NumberInputHandlers {
   increment: () => void;
   decrement: () => void;
@@ -218,6 +221,7 @@ export const NumberInput = factory<NumberInputFactory>((_props, ref) => {
     rightSectionWidth,
     stepHoldInterval,
     stepHoldDelay,
+    allowLeadingZeros,
     ...others
   } = props;
 
@@ -252,7 +256,9 @@ export const NumberInput = factory<NumberInputFactory>((_props, ref) => {
   const handleValueChange: OnValueChange = (payload, event) => {
     if (event.source === 'event') {
       setValue(
-        isValidNumber(payload.floatValue) && !partialNegativeNumberPattern.test(payload.value)
+        isValidNumber(payload.floatValue) &&
+          !partialNegativeNumberPattern.test(payload.value) &&
+          !(allowLeadingZeros ? leadingZerosPattern.test(payload.value) : false)
           ? payload.floatValue
           : payload.value
       );
@@ -397,6 +403,7 @@ export const NumberInput = factory<NumberInputFactory>((_props, ref) => {
       onKeyDown={handleKeyDown}
       rightSectionPointerEvents={rightSectionPointerEvents ?? disabled ? 'none' : undefined}
       rightSectionWidth={rightSectionWidth ?? `var(--ni-right-section-width-${size || 'sm'})`}
+      allowLeadingZeros={allowLeadingZeros}
       onBlur={(event) => {
         onBlur?.(event);
         if (clampBehavior === 'blur' && typeof _value === 'number') {

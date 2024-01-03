@@ -158,4 +158,21 @@ describe('@mantine/core/NumberInput', () => {
     expect(spy).toHaveBeenLastCalledWith(900719925474);
     expect(spy).toHaveBeenCalledTimes(8);
   });
+
+  it('allows leading zeros if allowLeadingZeros prop is set', async () => {
+    const spy = jest.fn();
+    render(<NumberInput onChange={spy} allowLeadingZeros />);
+
+    focusInput();
+    await enterText('0');
+    expect(spy).toHaveBeenLastCalledWith(0);
+
+    await enterText('01');
+    expect(spy).toHaveBeenLastCalledWith('001');
+
+    await enterText('{backspace}');
+    await enterText('{backspace}');
+
+    expect(spy).toHaveBeenLastCalledWith(0);
+  });
 });
