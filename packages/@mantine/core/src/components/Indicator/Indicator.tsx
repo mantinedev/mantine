@@ -129,6 +129,7 @@ export const Indicator = factory<IndicatorFactory>((_props, ref) => {
     disabled,
     processing,
     zIndex,
+    autoContrast,
     ...others
   } = props;
 
