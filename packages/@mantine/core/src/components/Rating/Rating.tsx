@@ -61,7 +61,7 @@ export interface RatingProps
   fractions?: number;
 
   /** Controls component size, `'sm'` by default */
-  size?: MantineSize;
+  size?: MantineSize | number | (string & {});
 
   /** Number of controls, `5` by default */
   count?: number;
@@ -278,7 +278,6 @@ export const Rating = factory<RatingFactory>((_props, ref) => {
             return (
               <RatingItem
                 key={`${integerValue}-${symbolValue}`}
-                size={size!}
                 getSymbolLabel={getSymbolLabel}
                 emptyIcon={emptySymbol}
                 fullIcon={fullSymbol}

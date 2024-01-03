@@ -1,10 +1,9 @@
 import React from 'react';
-import { Box, BoxProps, ElementProps, MantineSize, useDirection } from '../../../core';
+import { Box, BoxProps, ElementProps, useDirection } from '../../../core';
 import { useRatingContext } from '../Rating.context';
 import { StarSymbol } from '../StarSymbol/StarSymbol';
 
 export interface RatingItemProps extends BoxProps, ElementProps<'input', 'value' | 'size'> {
-  size: MantineSize;
   getSymbolLabel: ((value: number) => string) | undefined;
   emptyIcon?: React.ReactNode | ((value: number) => React.ReactNode);
   fullIcon?: React.ReactNode | ((value: number) => React.ReactNode);
@@ -18,7 +17,6 @@ export interface RatingItemProps extends BoxProps, ElementProps<'input', 'value'
 }
 
 export function RatingItem({
-  size,
   getSymbolLabel,
   emptyIcon,
   fullIcon,
