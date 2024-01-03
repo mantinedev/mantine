@@ -11,10 +11,10 @@ function Demo() {
       label="Your favorite library"
       placeholder="Pick value or enter anything"
       data={[
-        { value: 'react', label: 'React' },
-        { value: 'ng', label: 'Angular' },
-        { value: 'vue', label: 'Vue', disabled: true },
-        { value: 'svelte', label: 'Svelte', disabled: true },
+        { value: 'React' },
+        { value: 'Angular' },
+        { value: 'Vue', disabled: true },
+        { value: 'Svelte', disabled: true },
       ]}
     />
   );
@@ -27,10 +27,10 @@ function Demo() {
       label="Your favorite library"
       placeholder="Pick value or enter anything"
       data={[
-        { value: 'react', label: 'React' },
-        { value: 'ng', label: 'Angular' },
-        { value: 'vue', label: 'Vue', disabled: true },
-        { value: 'svelte', label: 'Svelte', disabled: true },
+        { value: 'React' },
+        { value: 'Angular' },
+        { value: 'Vue', disabled: true },
+        { value: 'Svelte', disabled: true },
       ]}
     />
   );

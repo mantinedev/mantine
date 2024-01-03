@@ -16,6 +16,7 @@ import {
   Combobox,
   ComboboxLikeProps,
   ComboboxLikeStylesNames,
+  ComboboxStringData,
   getOptionsLockup,
   getParsedComboboxData,
   OptionsDropdown,
@@ -38,9 +39,12 @@ export type TagsInputStylesNames =
 export interface TagsInputProps
   extends BoxProps,
     __BaseInputProps,
-    ComboboxLikeProps,
+    Omit<ComboboxLikeProps, 'data'>,
     StylesApiProps<TagsInputFactory>,
     ElementProps<'input', 'size' | 'value' | 'defaultValue' | 'onChange'> {
+  /** Data displayed in the dropdown */
+  data?: ComboboxStringData;
+
   /** Controlled component value */
   value?: string[];
 

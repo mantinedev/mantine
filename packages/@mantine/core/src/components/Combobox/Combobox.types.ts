@@ -1,21 +1,28 @@
 import type { ComboboxProps, ComboboxStylesNames } from './Combobox';
 import type { OptionsFilter } from './OptionsDropdown/OptionsDropdown';
 
-export interface ComboboxItem {
+export interface ComboboxStringItem {
   value: string;
-  label: string;
   disabled?: boolean;
 }
 
-export interface ComboboxItemGroup {
+export interface ComboboxItem extends ComboboxStringItem {
+  label: string;
+}
+
+export interface ComboboxItemGroup<T = ComboboxItem | string> {
   group: string;
-  items: (ComboboxItem | string)[];
+  items: T[];
 }
 
 export interface ComboboxParsedItemGroup {
   group: string;
   items: ComboboxItem[];
 }
+
+export type ComboboxStringData =
+  | Array<string | ComboboxStringItem | ComboboxItemGroup<string | ComboboxStringItem>>
+  | ReadonlyArray<string | ComboboxStringItem | ComboboxItemGroup<string | ComboboxStringItem>>;
 
 export type ComboboxData =
   | Array<string | ComboboxItem | ComboboxItemGroup>

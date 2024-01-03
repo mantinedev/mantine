@@ -72,4 +72,14 @@ describe('@mantine/core/Combobox/getParsedComboboxData', () => {
       },
     ]);
   });
+
+  it('parses data with value but without label', () => {
+    expect(getParsedComboboxData([{ value: 'value' }])).toStrictEqual([
+      { value: 'value', label: 'value', disabled: undefined },
+    ]);
+
+    expect(getParsedComboboxData([{ value: 'value', disabled: true }])).toStrictEqual([
+      { value: 'value', label: 'value', disabled: true },
+    ]);
+  });
 });
