@@ -34,6 +34,16 @@ interface ScrollIntoViewParams {
   isList?: boolean;
 }
 
+interface ScrollIntoViewReturnType<
+  Target extends HTMLElement,
+  Parent extends HTMLElement | null = null,
+> {
+  scrollableRef: React.MutableRefObject<Parent>;
+  targetRef: React.MutableRefObject<Target>;
+  scrollIntoView: (params?: ScrollIntoViewAnimation) => void;
+  cancel: () => void;
+}
+
 export function useScrollIntoView<
   Target extends HTMLElement,
   Parent extends HTMLElement | null = null,
@@ -142,5 +152,5 @@ export function useScrollIntoView<
     targetRef,
     scrollIntoView,
     cancel,
-  };
+  } as ScrollIntoViewReturnType<Target, Parent>;
 }
