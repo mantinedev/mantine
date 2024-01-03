@@ -74,7 +74,7 @@
     "recharts": "^2.10.3",
     "remark-slug": "^7.0.1",
     "shikiji": "^0.7.4",
-    "typescript": "5.2.2"
+    "typescript": "5.3.3"
   },
   "devDependencies": {
     "@types/chroma-js": "^2.4.3",
