@@ -20,6 +20,9 @@ import { UnstyledButton } from '../UnstyledButton';
 import { NumberInputChevron } from './NumberInputChevron';
 import classes from './NumberInput.module.css';
 
+// re for -0, -0., -0.0, -0.00, -0.000 ... strings
+const partialNegativeNumberPattern = /^-0(\.0*)?$/;
+
 export interface NumberInputHandlers {
   increment: () => void;
   decrement: () => void;
@@ -249,7 +252,7 @@ export const NumberInput = factory<NumberInputFactory>((_props, ref) => {
   const handleValueChange: OnValueChange = (payload, event) => {
     if (event.source === 'event') {
       setValue(
-        isValidNumber(payload.floatValue) && payload.value !== '-0' && payload.value !== '-0.'
+        isValidNumber(payload.floatValue) && !partialNegativeNumberPattern.test(payload.value)
           ? payload.floatValue
           : payload.value
       );
