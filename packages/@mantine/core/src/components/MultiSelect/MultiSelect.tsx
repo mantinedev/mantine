@@ -171,6 +171,7 @@ export const MultiSelect = factory<MultiSelectFactory>((_props, ref) => {
     hiddenInputProps,
     placeholder,
     hiddenInputValuesDivider,
+    required,
     ...others
   } = props;
 
@@ -335,6 +336,7 @@ export const MultiSelect = factory<MultiSelectFactory>((_props, ref) => {
             onClick={() => (searchable ? combobox.openDropdown() : combobox.toggleDropdown())}
             data-expanded={combobox.dropdownOpened || undefined}
             id={_id}
+            required={required}
           >
             <Pill.Group disabled={disabled} unstyled={unstyled} {...getStyles('pillsList')}>
               {values}
