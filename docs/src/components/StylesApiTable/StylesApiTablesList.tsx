@@ -1,6 +1,6 @@
 import React from 'react';
-import { Code } from '@mantine/core';
-import { MdxLink, MdxParagraph, MdxTitle } from '@/components/MdxProvider';
+import { Code, Title } from '@mantine/core';
+import { MdxLink, MdxParagraph } from '@/components/MdxProvider';
 import { StylesApiTable } from './StylesApiTable';
 import classes from './StylesApiTable.module.css';
 
@@ -19,7 +19,9 @@ export function StylesApiTablesList({ components, componentPrefix }: StylesApiTa
   return (
     <>
       <div className={classes.groupsHeader}>
-        <MdxTitle style={{ marginTop: 0 }}>Styles API</MdxTitle>
+        <Title order={2} className={classes.title}>
+          Styles API
+        </Title>
         <MdxParagraph style={{ marginTop: 0 }}>
           <Code>{components[0]}</Code> component supports{' '}
           <MdxLink href="/styles/styles-api">Styles API</MdxLink>. With Styles API, you can
