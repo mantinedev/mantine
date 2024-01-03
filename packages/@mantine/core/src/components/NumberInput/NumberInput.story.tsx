@@ -14,6 +14,7 @@ export function Usage() {
     <div style={{ padding: 40 }}>
       <NumberInput
         value={value}
+        disabled
         label="Number input"
         placeholder="Number input"
         onChange={setValue}
