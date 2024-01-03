@@ -123,6 +123,7 @@ export function Combobox(_props: ComboboxProps) {
     store: controlledStore,
     vars,
     onOptionSubmit,
+    onClose,
     size,
     dropdownPadding,
     resetSelectionOnOptionHover,
@@ -159,7 +160,7 @@ export function Combobox(_props: ComboboxProps) {
       <Popover
         opened={store.dropdownOpened}
         {...others}
-        onClose={store.closeDropdown}
+        onClose={onClose || store.closeDropdown}
         withRoles={false}
         unstyled={unstyled}
       >
