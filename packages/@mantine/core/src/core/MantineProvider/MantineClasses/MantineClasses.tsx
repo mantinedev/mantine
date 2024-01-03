@@ -8,13 +8,12 @@ export function MantineClasses() {
   const nonce = useMantineStyleNonce();
 
   const classes = keys(theme.breakpoints).reduce<string>((acc, breakpoint) => {
+    const isPxBreakpoint = theme.breakpoints[breakpoint].includes('px');
     const pxValue = px(theme.breakpoints[breakpoint]) as number;
+    const maxWidthBreakpoint = isPxBreakpoint ? `${pxValue - 0.1}px` : em(pxValue - 0.1);
+    const minWidthBreakpoint = isPxBreakpoint ? `${pxValue}px` : em(pxValue);
 
-    return `${acc}@media (max-width: ${em(
-      pxValue - 0.1
-    )}) {.mantine-visible-from-${breakpoint} {display: none !important;}}@media (min-width: ${em(
-      pxValue
-    )}) {.mantine-hidden-from-${breakpoint} {display: none !important;}}`;
+    return `${acc}@media (max-width: ${maxWidthBreakpoint}) {.mantine-visible-from-${breakpoint} {display: none !important;}}@media (min-width: ${minWidthBreakpoint}) {.mantine-hidden-from-${breakpoint} {display: none !important;}}`;
   }, '');
 
   return (
