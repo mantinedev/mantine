@@ -18,7 +18,7 @@ export type TitleSize = `h${TitleOrder}` | React.CSSProperties['fontSize'];
 
 export type TitleStylesNames = 'root';
 export type TitleCssVariables = {
-  root: '--title-fw' | '--title-lh' | '--title-fz' | '--title-line-clamp';
+  root: '--title-fw' | '--title-lh' | '--title-fz' | '--title-line-clamp' | '--title-text-wrap';
 };
 
 export interface TitleProps
@@ -33,6 +33,9 @@ export interface TitleProps
 
   /** Number of lines after which Text will be truncated */
   lineClamp?: number;
+
+  /** Controls `text-wrap` property, `'wrap'` by default */
+  textWrap?: 'wrap' | 'nowrap' | 'balance' | 'pretty' | 'stable';
 }
 
 export type TitleFactory = Factory<{
@@ -46,7 +49,7 @@ const defaultProps: Partial<TitleProps> = {
   order: 1,
 };
 
-const varsResolver = createVarsResolver<TitleFactory>((_, { order, size, lineClamp }) => {
+const varsResolver = createVarsResolver<TitleFactory>((_, { order, size, lineClamp, textWrap }) => {
   const sizeVariables = getTitleSize(order!, size);
   return {
     root: {
@@ -54,6 +57,7 @@ const varsResolver = createVarsResolver<TitleFactory>((_, { order, size, lineCla
       '--title-lh': sizeVariables.lineHeight,
       '--title-fz': sizeVariables.fontSize,
       '--title-line-clamp': typeof lineClamp === 'number' ? lineClamp.toString() : undefined,
+      '--title-text-wrap': textWrap,
     },
   };
 });

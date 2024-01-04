@@ -7,6 +7,7 @@
   & h6 {
     margin-top: calc(1.55 * var(--mantine-spacing-xl));
     margin-bottom: var(--mantine-spacing-xs);
+    text-wrap: var(--mantine-heading-text-wrap);
   }
 
   & h1 {

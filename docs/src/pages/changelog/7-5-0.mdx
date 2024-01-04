@@ -1,7 +1,37 @@
+import { TitleDemos } from '@docs/demos';
 import { Layout } from '@/layout';
 import { MDX_DATA } from '@/mdx';
 
 export default Layout(MDX_DATA.Changelog750);
+
+## Headings text wrap
+
+New [Title](/core/title) `textWrap` prop sets [text-wrap](https://developer.mozilla.org/en-US/docs/Web/CSS/text-wrap)
+CSS property. It controls how text inside an element is wrapped.
+
+<Demo data={TitleDemos.textWrap} />
+
+You can also set `textWrap` on [theme](/theming/theme-object):
+
+```tsx
+import { createTheme, MantineProvider } from '@mantine/core';
+
+const theme = createTheme({
+  headings: {
+    textWrap: 'wrap',
+  },
+});
+
+function Demo() {
+  return (
+    <MantineProvider theme={theme}>
+      <Title>Some very long title that should wrap</Title>
+    </MantineProvider>
+  );
+}
+```
+
+If set on theme, `textWrap` is also applied to headings in [TypographyStylesProvider](/core/typography-styles-provider)
 
 ## Documentation updates
 
