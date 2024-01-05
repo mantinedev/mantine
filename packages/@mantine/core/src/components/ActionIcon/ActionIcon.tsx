@@ -1,5 +1,6 @@
 import React from 'react';
 import {
+  Box,
   BoxProps,
   createVarsResolver,
   getRadius,
@@ -29,7 +30,7 @@ export type ActionIconVariant =
   | 'default'
   | 'gradient';
 
-export type ActionIconStylesNames = 'root' | 'loader';
+export type ActionIconStylesNames = 'root' | 'loader' | 'icon';
 export type ActionIconCssVariables = {
   root:
     | '--ai-radius'
@@ -159,16 +160,13 @@ export const ActionIcon = polymorphicFactory<ActionIconFactory>((_props, ref) =>
       ref={ref}
       mod={{ loading, disabled: disabled || dataDisabled }}
     >
-      {loading ? (
-        <Loader
-          {...getStyles('loader')}
-          color="var(--ai-color)"
-          size="calc(var(--ai-size) * 0.55)"
-          {...loaderProps}
-        />
-      ) : (
-        children
-      )}
+      <Box component="span" {...getStyles('loader')} aria-hidden>
+        <Loader color="var(--ai-color)" size="calc(var(--ai-size) * 0.55)" {...loaderProps} />
+      </Box>
+
+      <Box component="span" mod={{ loading }} {...getStyles('icon')}>
+        {children}
+      </Box>
     </UnstyledButton>
   );
 });
