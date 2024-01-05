@@ -146,6 +146,11 @@ export function Combobox(_props: ComboboxProps) {
     varsResolver,
   });
 
+  const onDropdownClose = () => {
+    onClose?.();
+    store.closeDropdown();
+  };
+
   return (
     <ComboboxProvider
       value={{
@@ -160,10 +165,7 @@ export function Combobox(_props: ComboboxProps) {
       <Popover
         opened={store.dropdownOpened}
         {...others}
-        onClose={() => {
-          onClose?.();
-          store.closeDropdown();
-        }}
+        onClose={onDropdownClose}
         withRoles={false}
         unstyled={unstyled}
       >
