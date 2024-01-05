@@ -28,7 +28,7 @@ export function Usage() {
         collapsed: { desktop: !asideOpened, mobile: !asideMobileOpened },
       }}
       header={{
-        height: 50,
+        height: 0,
         collapsed: !headerOpened,
       }}
       footer={{
