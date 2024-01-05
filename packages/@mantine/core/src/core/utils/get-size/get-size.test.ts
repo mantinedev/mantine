@@ -24,7 +24,7 @@ describe('@mantine/core/get-size', () => {
 describe('@mantine/core/get-spacing', () => {
   it('returns correct values', () => {
     expect(getSpacing(10)).toBe('calc(0.625rem * var(--mantine-scale))');
-    expect(getSpacing(0)).toBe('0');
+    expect(getSpacing(0)).toBe('0rem');
     expect(getSpacing('10')).toBe('calc(0.625rem * var(--mantine-scale))');
     expect(getSpacing('10px')).toBe('calc(0.625rem * var(--mantine-scale))');
     expect(getSpacing('10rem')).toBe('calc(10rem * var(--mantine-scale))');
@@ -37,7 +37,7 @@ describe('@mantine/core/get-spacing', () => {
 describe('@mantine/core/get-radius', () => {
   it('returns correct values', () => {
     expect(getRadius(10)).toBe('calc(0.625rem * var(--mantine-scale))');
-    expect(getRadius(0)).toBe('0');
+    expect(getRadius(0)).toBe('0rem');
     expect(getRadius('10')).toBe('calc(0.625rem * var(--mantine-scale))');
     expect(getRadius('10px')).toBe('calc(0.625rem * var(--mantine-scale))');
     expect(getRadius('10rem')).toBe('calc(10rem * var(--mantine-scale))');
@@ -54,7 +54,7 @@ describe('@mantine/core/get-radius', () => {
 describe('@mantine/core/get-font-size', () => {
   it('returns correct values', () => {
     expect(getFontSize(10)).toBe('calc(0.625rem * var(--mantine-scale))');
-    expect(getFontSize(0)).toBe('0');
+    expect(getFontSize(0)).toBe('0rem');
     expect(getFontSize('10')).toBe('calc(0.625rem * var(--mantine-scale))');
     expect(getFontSize('10px')).toBe('calc(0.625rem * var(--mantine-scale))');
     expect(getFontSize('10rem')).toBe('calc(10rem * var(--mantine-scale))');

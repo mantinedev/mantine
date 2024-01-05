@@ -5,7 +5,7 @@ function scaleRem(remValue: string) {
 function createConverter(units: string, { shouldScale = false } = {}) {
   function converter(value: unknown): string {
     if (value === 0 || value === '0') {
-      return '0';
+      return `0${units}`;
     }
 
     if (typeof value === 'number') {
