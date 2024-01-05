@@ -1,0 +1,5 @@
+.root {
+  & :where(path) {
+    outline: 0;
+  }
+}

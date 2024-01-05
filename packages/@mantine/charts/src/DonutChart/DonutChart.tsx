@@ -1,4 +1,5 @@
 import React from 'react';
+import { Cell, Pie, PieChart, ResponsiveContainer } from 'recharts';
 import {
   Box,
   BoxProps,
@@ -6,11 +7,20 @@ import {
   ElementProps,
   factory,
   Factory,
+  getThemeColor,
+  MantineColor,
   StylesApiProps,
+  useMantineTheme,
   useProps,
   useStyles,
 } from '@mantine/core';
 import classes from './DonutChart.module.css';
+
+interface DonutChartCell {
+  name: string;
+  value: number;
+  color: MantineColor;
+}
 
 export type DonutChartStylesNames = 'root';
 export type DonutChartCssVariables = {
@@ -20,7 +30,10 @@ export type DonutChartCssVariables = {
 export interface DonutChartProps
   extends BoxProps,
     StylesApiProps<DonutChartFactory>,
-    ElementProps<'div'> {}
+    ElementProps<'div'> {
+  /** Data used to render chart */
+  data: DonutChartCell[];
+}
 
 export type DonutChartFactory = Factory<{
   props: DonutChartProps;
@@ -39,7 +52,8 @@ const varsResolver = createVarsResolver<DonutChartFactory>(() => ({
 
 export const DonutChart = factory<DonutChartFactory>((_props, ref) => {
   const props = useProps('DonutChart', defaultProps, _props);
-  const { classNames, className, style, styles, unstyled, vars, ...others } = props;
+  const { classNames, className, style, styles, unstyled, vars, data, ...others } = props;
+  const theme = useMantineTheme();
 
   const getStyles = useStyles<DonutChartFactory>({
     name: 'DonutChart',
@@ -54,7 +68,27 @@ export const DonutChart = factory<DonutChartFactory>((_props, ref) => {
     varsResolver,
   });
 
-  return <Box ref={ref} {...getStyles('root')} {...others} />;
+  const cells = data.map((item, index) => (
+    <Cell key={index} fill={getThemeColor(item.color, theme)} />
+  ));
+
+  return (
+    <Box ref={ref} {...getStyles('root')} {...others}>
+      <ResponsiveContainer>
+        <PieChart>
+          <Pie
+            data={data}
+            innerRadius={60}
+            outerRadius={80}
+            dataKey="value"
+            isAnimationActive={false}
+          >
+            {cells}
+          </Pie>
+        </PieChart>
+      </ResponsiveContainer>
+    </Box>
+  );
 });
 
 DonutChart.displayName = '@mantine/charts/DonutChart';
