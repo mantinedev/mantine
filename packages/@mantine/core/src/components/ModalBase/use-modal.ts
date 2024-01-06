@@ -32,7 +32,7 @@ export function useModal({
   const shouldLockScroll = useLockScroll({ opened, transitionDuration });
 
   useWindowEvent('keydown', (event) => {
-    if (!trapFocus && event.key === 'Escape' && closeOnEscape) {
+    if (event.key === 'Escape' && (!trapFocus || closeOnEscape)) {
       onClose();
     }
   });
