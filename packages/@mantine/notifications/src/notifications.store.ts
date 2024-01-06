@@ -72,7 +72,7 @@ export function showNotification(
 
 export function hideNotification(id: string, store: NotificationsStore = notificationsStore) {
   updateNotificationsState(store, (notifications) =>
-    notifications.filter((notification) => {
+    return notifications.filter((notification) => {
       if (notification.id === id) {
         notification.onClose?.(notification);
         return false;
