@@ -49,7 +49,7 @@ export function useComboboxTargetProps({
         }
       }
 
-      if (event.nativeEvent.code === 'Enter') {
+      if (event.nativeEvent.code === 'Enter' || event.nativeEvent.code === 'NumpadEnter') {
         const selectedOptionIndex = ctx.store.getSelectedOptionIndex();
 
         if (ctx.store.dropdownOpened && selectedOptionIndex !== -1) {
