@@ -77,6 +77,9 @@ export interface DonutChartProps
 
   /** Controls chart width and height, height is increased by 40 if `withLabels` prop is set. Cannot be less than `thickness`. `80` by default */
   size?: number;
+
+  /** Controls width of cells stroke, `1` by default */
+  strokeWidth?: number;
 }
 
 export type DonutChartFactory = Factory<{
@@ -92,6 +95,7 @@ const defaultProps: Partial<DonutChartProps> = {
   paddingAngle: 0,
   thickness: 20,
   size: 160,
+  strokeWidth: 1,
 };
 
 const varsResolver = createVarsResolver<DonutChartFactory>(
@@ -123,6 +127,7 @@ export const DonutChart = factory<DonutChartFactory>((_props, ref) => {
     withLabelsLine,
     size,
     thickness,
+    strokeWidth,
     ...others
   } = props;
 
@@ -152,6 +157,7 @@ export const DonutChart = factory<DonutChartFactory>((_props, ref) => {
       key={index}
       fill={getThemeColor(item.color, theme)}
       stroke="var(--chart-stroke-color, var(--mantine-color-body))"
+      strokeWidth={strokeWidth}
     />
   ));
 
