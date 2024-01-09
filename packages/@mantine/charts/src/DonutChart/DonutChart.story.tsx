@@ -13,7 +13,7 @@ const data = [
 export function Usage() {
   return (
     <div style={{ padding: 40 }}>
-      <DonutChart data={data} w={200} h={200} />
+      <DonutChart data={data} h={200} />
     </div>
   );
 }

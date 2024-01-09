@@ -1,5 +1,13 @@
 import React from 'react';
-import { Cell, Pie, PieChart, ResponsiveContainer } from 'recharts';
+import {
+  Cell,
+  Pie,
+  PieChart,
+  PieProps,
+  ResponsiveContainer,
+  Tooltip,
+  TooltipProps,
+} from 'recharts';
 import {
   Box,
   BoxProps,
@@ -12,8 +20,10 @@ import {
   StylesApiProps,
   useMantineTheme,
   useProps,
+  useResolvedStylesApi,
   useStyles,
 } from '@mantine/core';
+import { ChartTooltip } from '../ChartTooltip/ChartTooltip';
 import classes from './DonutChart.module.css';
 
 interface DonutChartCell {
@@ -33,6 +43,18 @@ export interface DonutChartProps
     ElementProps<'div'> {
   /** Data used to render chart */
   data: DonutChartCell[];
+
+  /** Determines whether the tooltip should be displayed when one of the section is hovered, `true` by default */
+  withTooltip?: boolean;
+
+  /** Tooltip animation duration in ms, `0` by default */
+  tooltipAnimationDuration?: number;
+
+  /** Props passed down to `Tooltip` recharts component */
+  tooltipProps?: Omit<TooltipProps<any, any>, 'ref'>;
+
+  /** Props passed down to recharts `Pie` component */
+  pieProps?: Omit<PieProps, 'ref'>;
 }
 
 export type DonutChartFactory = Factory<{
@@ -42,7 +64,9 @@ export type DonutChartFactory = Factory<{
   vars: DonutChartCssVariables;
 }>;
 
-const defaultProps: Partial<DonutChartProps> = {};
+const defaultProps: Partial<DonutChartProps> = {
+  withTooltip: true,
+};
 
 const varsResolver = createVarsResolver<DonutChartFactory>(() => ({
   root: {
@@ -52,7 +76,21 @@ const varsResolver = createVarsResolver<DonutChartFactory>(() => ({
 
 export const DonutChart = factory<DonutChartFactory>((_props, ref) => {
   const props = useProps('DonutChart', defaultProps, _props);
-  const { classNames, className, style, styles, unstyled, vars, data, ...others } = props;
+  const {
+    classNames,
+    className,
+    style,
+    styles,
+    unstyled,
+    vars,
+    data,
+    withTooltip,
+    tooltipAnimationDuration,
+    tooltipProps,
+    pieProps,
+    ...others
+  } = props;
+
   const theme = useMantineTheme();
 
   const getStyles = useStyles<DonutChartFactory>({
@@ -68,8 +106,14 @@ export const DonutChart = factory<DonutChartFactory>((_props, ref) => {
     varsResolver,
   });
 
+  const { resolvedClassNames, resolvedStyles } = useResolvedStylesApi<DonutChartFactory>({
+    classNames,
+    styles,
+    props,
+  });
+
   const cells = data.map((item, index) => (
-    <Cell key={index} fill={getThemeColor(item.color, theme)} />
+    <Cell key={index} fill={getThemeColor(item.color, theme)} stroke="red" />
   ));
 
   return (
@@ -82,9 +126,32 @@ export const DonutChart = factory<DonutChartFactory>((_props, ref) => {
             outerRadius={80}
             dataKey="value"
             isAnimationActive={false}
+            label={{
+              fill: 'var(--mantine-color-dimmed)',
+              fontSize: 12,
+              fontFamily: 'var(--mantine-font-family)',
+            }}
+            labelLine={{ stroke: 'var(--mantine-color-dimmed)' }}
+            {...pieProps}
           >
             {cells}
           </Pie>
+
+          {withTooltip && (
+            <Tooltip
+              animationDuration={tooltipAnimationDuration}
+              isAnimationActive={false}
+              content={({ label, payload }) => (
+                <ChartTooltip
+                  label={label}
+                  payload={payload}
+                  classNames={resolvedClassNames}
+                  styles={resolvedStyles}
+                />
+              )}
+              {...tooltipProps}
+            />
+          )}
         </PieChart>
       </ResponsiveContainer>
     </Box>
