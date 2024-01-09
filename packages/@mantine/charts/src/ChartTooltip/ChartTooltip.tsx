@@ -38,6 +38,9 @@ export interface ChartTooltipProps
 
   /** Data units, provided by parent component */
   unit?: string;
+
+  /** Tooltip type that determines the content and styles, `area` for LineChart, AreaChart and BarChart, `radial` for DonutChart and PieChart, `'area'` by default */
+  type?: 'area' | 'radial';
 }
 
 export type ChartTooltipFactory = Factory<{
@@ -46,12 +49,25 @@ export type ChartTooltipFactory = Factory<{
   stylesNames: ChartTooltipStylesNames;
 }>;
 
-const defaultProps: Partial<ChartTooltipProps> = {};
+const defaultProps: Partial<ChartTooltipProps> = {
+  type: 'area',
+};
 
 export const ChartTooltip = factory<ChartTooltipFactory>((_props, ref) => {
   const props = useProps('ChartTooltip', defaultProps, _props);
-  const { classNames, className, style, styles, unstyled, vars, payload, label, unit, ...others } =
-    props;
+  const {
+    classNames,
+    className,
+    style,
+    styles,
+    unstyled,
+    vars,
+    payload,
+    label,
+    unit,
+    type,
+    ...others
+  } = props;
 
   const getStyles = useStyles<ChartTooltipFactory>({
     name: 'ChartTooltip',
@@ -89,7 +105,7 @@ export const ChartTooltip = factory<ChartTooltipFactory>((_props, ref) => {
   ));
 
   return (
-    <Box {...getStyles('tooltip')} ref={ref} {...others}>
+    <Box {...getStyles('tooltip')} mod={{ type }} ref={ref} {...others}>
       {label && <div {...getStyles('tooltipLabel')}>{label}</div>}
       <div {...getStyles('tooltipBody')}>{items}</div>
     </Box>

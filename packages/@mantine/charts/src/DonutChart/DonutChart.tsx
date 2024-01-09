@@ -34,7 +34,7 @@ interface DonutChartCell {
 
 export type DonutChartStylesNames = 'root';
 export type DonutChartCssVariables = {
-  root: '--chart-stroke-color';
+  root: '--chart-stroke-color' | '--chart-label-color';
 };
 
 export interface DonutChartProps
@@ -55,6 +55,12 @@ export interface DonutChartProps
 
   /** Props passed down to recharts `Pie` component */
   pieProps?: Omit<PieProps, 'ref'>;
+
+  /** Controls color of the cells stroke, by default depends on color scheme */
+  strokeColor?: MantineColor;
+
+  /** Controls text color of all labels, by default depends on color scheme */
+  labelColor?: MantineColor;
 }
 
 export type DonutChartFactory = Factory<{
@@ -68,11 +74,14 @@ const defaultProps: Partial<DonutChartProps> = {
   withTooltip: true,
 };
 
-const varsResolver = createVarsResolver<DonutChartFactory>(() => ({
-  root: {
-    '--chart-stroke-color': undefined,
-  },
-}));
+const varsResolver = createVarsResolver<DonutChartFactory>(
+  (theme, { strokeColor, labelColor }) => ({
+    root: {
+      '--chart-stroke-color': strokeColor ? getThemeColor(strokeColor, theme) : undefined,
+      '--chart-label-color': labelColor ? getThemeColor(labelColor, theme) : undefined,
+    },
+  })
+);
 
 export const DonutChart = factory<DonutChartFactory>((_props, ref) => {
   const props = useProps('DonutChart', defaultProps, _props);
@@ -131,11 +140,11 @@ export const DonutChart = factory<DonutChartFactory>((_props, ref) => {
             dataKey="value"
             isAnimationActive={false}
             label={{
-              fill: 'var(--mantine-color-dimmed)',
+              fill: 'var(--chart-label-color, var(--mantine-color-dimmed))',
               fontSize: 12,
               fontFamily: 'var(--mantine-font-family)',
             }}
-            labelLine={{ stroke: 'var(--mantine-color-dimmed)' }}
+            labelLine={{ stroke: 'var(--chart-label-color, var(--mantine-color-dimmed))' }}
             {...pieProps}
           >
             {cells}
@@ -151,6 +160,7 @@ export const DonutChart = factory<DonutChartFactory>((_props, ref) => {
                   payload={payload}
                   classNames={resolvedClassNames}
                   styles={resolvedStyles}
+                  type="radial"
                 />
               )}
               {...tooltipProps}
