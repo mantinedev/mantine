@@ -34,7 +34,7 @@ interface DonutChartCell {
 
 export type DonutChartStylesNames = 'root';
 export type DonutChartCssVariables = {
-  root: '--test';
+  root: '--chart-stroke-color';
 };
 
 export interface DonutChartProps
@@ -70,7 +70,7 @@ const defaultProps: Partial<DonutChartProps> = {
 
 const varsResolver = createVarsResolver<DonutChartFactory>(() => ({
   root: {
-    '--test': 'test',
+    '--chart-stroke-color': undefined,
   },
 }));
 
@@ -113,7 +113,11 @@ export const DonutChart = factory<DonutChartFactory>((_props, ref) => {
   });
 
   const cells = data.map((item, index) => (
-    <Cell key={index} fill={getThemeColor(item.color, theme)} stroke="red" />
+    <Cell
+      key={index}
+      fill={getThemeColor(item.color, theme)}
+      stroke="var(--chart-stroke-color, var(--mantine-color-body))"
+    />
   ));
 
   return (
