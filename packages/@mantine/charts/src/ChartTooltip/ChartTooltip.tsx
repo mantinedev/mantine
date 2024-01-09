@@ -6,14 +6,24 @@ import {
   ElementProps,
   factory,
   Factory,
+  getThemeColor,
   StylesApiProps,
+  useMantineTheme,
   useProps,
   useStyles,
 } from '@mantine/core';
 import classes from './ChartTooltip.module.css';
 
 export function getFilteredChartTooltipPayload(payload: Record<string, any>[]) {
-  return payload.filter((item) => item.fill !== 'none');
+  return payload.filter((item) => item.fill !== 'none' || !item.color);
+}
+
+function getData(item: Record<string, any>, type: 'area' | 'radial') {
+  if (type === 'radial') {
+    return item.value;
+  }
+
+  return item.payload[item.dataKey];
 }
 
 export type ChartTooltipStylesNames =
@@ -69,6 +79,8 @@ export const ChartTooltip = factory<ChartTooltipFactory>((_props, ref) => {
     ...others
   } = props;
 
+  const theme = useMantineTheme();
+
   const getStyles = useStyles<ChartTooltipFactory>({
     name: 'ChartTooltip',
     classes,
@@ -90,7 +102,7 @@ export const ChartTooltip = factory<ChartTooltipFactory>((_props, ref) => {
     <div key={item.name} {...getStyles('tooltipItem')}>
       <div {...getStyles('tooltipItemBody')}>
         <ColorSwatch
-          color={item.color}
+          color={getThemeColor(item.color, theme)}
           size={12}
           {...getStyles('tooltipItemColor')}
           withShadow={false}
@@ -98,7 +110,7 @@ export const ChartTooltip = factory<ChartTooltipFactory>((_props, ref) => {
         <div {...getStyles('tooltipItemName')}>{item.name}</div>
       </div>
       <div {...getStyles('tooltipItemData')}>
-        {item.payload[item.dataKey]}
+        {getData(item, type!)}
         {unit}
       </div>
     </div>

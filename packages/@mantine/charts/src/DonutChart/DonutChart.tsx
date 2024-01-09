@@ -195,10 +195,9 @@ export const DonutChart = factory<DonutChartFactory>((_props, ref) => {
             <Tooltip
               animationDuration={tooltipAnimationDuration}
               isAnimationActive={false}
-              content={({ label, payload }) => (
+              content={() => (
                 <ChartTooltip
-                  label={label}
-                  payload={payload}
+                  payload={data}
                   classNames={resolvedClassNames}
                   styles={resolvedStyles}
                   type="radial"
