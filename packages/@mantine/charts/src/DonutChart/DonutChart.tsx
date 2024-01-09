@@ -34,7 +34,7 @@ interface DonutChartCell {
 
 export type DonutChartStylesNames = 'root';
 export type DonutChartCssVariables = {
-  root: '--chart-stroke-color' | '--chart-label-color';
+  root: '--chart-stroke-color' | '--chart-label-color' | '--chart-height';
 };
 
 export interface DonutChartProps
@@ -61,6 +61,15 @@ export interface DonutChartProps
 
   /** Controls text color of all labels, by default depends on color scheme */
   labelColor?: MantineColor;
+
+  /** Controls padding between cells, `0` by default */
+  paddingAngle?: number;
+
+  /** Determines whether each cell should have associated label, `false` by default */
+  withLabels?: boolean;
+
+  /** Determines whether cells labels should have lines that connect the cell with the label, `true` by default */
+  withLabelsLine?: boolean;
 }
 
 export type DonutChartFactory = Factory<{
@@ -72,6 +81,8 @@ export type DonutChartFactory = Factory<{
 
 const defaultProps: Partial<DonutChartProps> = {
   withTooltip: true,
+  withLabelsLine: true,
+  paddingAngle: 0,
 };
 
 const varsResolver = createVarsResolver<DonutChartFactory>(
@@ -97,6 +108,9 @@ export const DonutChart = factory<DonutChartFactory>((_props, ref) => {
     tooltipAnimationDuration,
     tooltipProps,
     pieProps,
+    paddingAngle,
+    withLabels,
+    withLabelsLine,
     ...others
   } = props;
 
@@ -135,16 +149,25 @@ export const DonutChart = factory<DonutChartFactory>((_props, ref) => {
         <PieChart>
           <Pie
             data={data}
-            innerRadius={60}
+            innerRadius={40}
             outerRadius={80}
             dataKey="value"
             isAnimationActive={false}
-            label={{
-              fill: 'var(--chart-label-color, var(--mantine-color-dimmed))',
-              fontSize: 12,
-              fontFamily: 'var(--mantine-font-family)',
-            }}
-            labelLine={{ stroke: 'var(--chart-label-color, var(--mantine-color-dimmed))' }}
+            paddingAngle={paddingAngle}
+            label={
+              withLabels
+                ? {
+                    fill: 'var(--chart-label-color, var(--mantine-color-dimmed))',
+                    fontSize: 12,
+                    fontFamily: 'var(--mantine-font-family)',
+                  }
+                : false
+            }
+            labelLine={
+              withLabelsLine
+                ? { stroke: 'var(--chart-label-color, var(--mantine-color-dimmed))' }
+                : false
+            }
             {...pieProps}
           >
             {cells}
