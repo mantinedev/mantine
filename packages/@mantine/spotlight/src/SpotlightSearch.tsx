@@ -57,7 +57,7 @@ export const SpotlightSearch = factory<SpotlightSearchFactory>((props, ref) => {
       spotlightActions.selectPreviousAction(ctx.store);
     }
 
-    if (event.nativeEvent.code === 'Enter') {
+    if (event.nativeEvent.code === 'Enter' || event.nativeEvent.code === 'NumpadEnter') {
       event.preventDefault();
       spotlightActions.triggerSelectedAction(ctx.store);
     }
