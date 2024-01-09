@@ -122,15 +122,15 @@ function Demo() {
       label="Your favorite library"
       placeholder="Pick value or enter anything"
       data={[
-        { value: 'react', label: 'React' },
-        { value: 'ng', label: 'Angular' },
-        { value: 'vue', label: 'Vue', disabled: true },
-        { value: 'svelte', label: 'Svelte', disabled: true },
+        { value: 'React' },
+        { value: 'Angular' },
+        { value: 'Vue', disabled: true },
+        { value: 'Svelte', disabled: true },
       ]}
     />
   );
 }
-`,E={type:"code",component:function(){return a.createElement(l.F,{label:"Your favorite library",placeholder:"Pick value or enter anything",data:[{value:"react",label:"React"},{value:"ng",label:"Angular"},{value:"vue",label:"Vue",disabled:!0},{value:"svelte",label:"Svelte",disabled:!0}]})},code:j,maxWidth:340,centered:!0};var P=o(63433),V=o(8671);let S=`
+`,E={type:"code",component:function(){return a.createElement(l.F,{label:"Your favorite library",placeholder:"Pick value or enter anything",data:[{value:"React"},{value:"Angular"},{value:"Vue",disabled:!0},{value:"Svelte",disabled:!0}]})},code:j,maxWidth:340,centered:!0};var P=o(63433),V=o(8671);let S=`
 import { Popover, Button, Autocomplete } from '@mantine/core';
 
 function Demo() {

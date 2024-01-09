@@ -168,15 +168,15 @@ function Demo() {
       label="Enter tags"
       placeholder="Some tags are disabled"
       data={[
-        { value: 'react', label: 'React' },
-        { value: 'ng', label: 'Angular' },
-        { value: 'vue', label: 'Vue', disabled: true },
-        { value: 'svelte', label: 'Svelte', disabled: true },
+        { value: 'React' },
+        { value: 'Angular' },
+        { value: 'Vue', disabled: true },
+        { value: 'Svelte', disabled: true },
       ]}
     />
   );
 }
-`,C={type:"code",component:function(){return r.createElement(l.B,{label:"Enter tags",placeholder:"Some tags are disabled",data:[{value:"react",label:"React"},{value:"ng",label:"Angular"},{value:"vue",label:"Vue",disabled:!0},{value:"svelte",label:"Svelte",disabled:!0}]})},code:k,maxWidth:340,centered:!0};var R=n(63433),W=n(8671);let F=`
+`,C={type:"code",component:function(){return r.createElement(l.B,{label:"Enter tags",placeholder:"Some tags are disabled",data:[{value:"React"},{value:"Angular"},{value:"Vue",disabled:!0},{value:"Svelte",disabled:!0}]})},code:k,maxWidth:340,centered:!0};var R=n(63433),W=n(8671);let F=`
 import { Popover, Button, TagsInput } from '@mantine/core';
 
 function Demo() {
