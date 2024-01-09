@@ -14,10 +14,6 @@ import { useAppShellContext } from '../AppShell.context';
 import classes from '../AppShell.module.css';
 
 export type AppShellFooterStylesNames = 'footer';
-export type AppShellFooterVariant = string;
-export type AppShellFooterCssVariables = {
-  root: '--test';
-};
 
 export interface AppShellFooterProps
   extends BoxProps,
@@ -34,8 +30,6 @@ export type AppShellFooterFactory = Factory<{
   props: AppShellFooterProps;
   ref: HTMLElement;
   stylesNames: AppShellFooterStylesNames;
-  vars: AppShellFooterCssVariables;
-  variant: AppShellFooterVariant;
 }>;
 
 const defaultProps: Partial<AppShellFooterProps> = {};

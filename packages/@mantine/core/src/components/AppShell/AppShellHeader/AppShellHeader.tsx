@@ -14,10 +14,6 @@ import { useAppShellContext } from '../AppShell.context';
 import classes from '../AppShell.module.css';
 
 export type AppShellHeaderStylesNames = 'header';
-export type AppShellHeaderVariant = string;
-export type AppShellHeaderCssVariables = {
-  root: '--test';
-};
 
 export interface AppShellHeaderProps
   extends BoxProps,
@@ -34,8 +30,6 @@ export type AppShellHeaderFactory = Factory<{
   props: AppShellHeaderProps;
   ref: HTMLElement;
   stylesNames: AppShellHeaderStylesNames;
-  vars: AppShellHeaderCssVariables;
-  variant: AppShellHeaderVariant;
 }>;
 
 const defaultProps: Partial<AppShellHeaderProps> = {};
