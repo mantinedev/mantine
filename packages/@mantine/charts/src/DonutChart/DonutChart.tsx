@@ -17,6 +17,7 @@ import {
   Factory,
   getThemeColor,
   MantineColor,
+  rem,
   StylesApiProps,
   useMantineTheme,
   useProps,
@@ -70,6 +71,12 @@ export interface DonutChartProps
 
   /** Determines whether cells labels should have lines that connect the cell with the label, `true` by default */
   withLabelsLine?: boolean;
+
+  /** Controls thickness of the chart cells, `20` by default */
+  thickness?: number;
+
+  /** Controls chart width and height, height is increased by 40 if `withLabels` prop is set. Cannot be less than `thickness`. `80` by default */
+  size?: number;
 }
 
 export type DonutChartFactory = Factory<{
@@ -83,13 +90,16 @@ const defaultProps: Partial<DonutChartProps> = {
   withTooltip: true,
   withLabelsLine: true,
   paddingAngle: 0,
+  thickness: 20,
+  size: 160,
 };
 
 const varsResolver = createVarsResolver<DonutChartFactory>(
-  (theme, { strokeColor, labelColor }) => ({
+  (theme, { strokeColor, labelColor, withLabels, size }) => ({
     root: {
       '--chart-stroke-color': strokeColor ? getThemeColor(strokeColor, theme) : undefined,
       '--chart-label-color': labelColor ? getThemeColor(labelColor, theme) : undefined,
+      '--chart-height': withLabels ? rem(size! + 40) : rem(size!),
     },
   })
 );
@@ -111,6 +121,8 @@ export const DonutChart = factory<DonutChartFactory>((_props, ref) => {
     paddingAngle,
     withLabels,
     withLabelsLine,
+    size,
+    thickness,
     ...others
   } = props;
 
@@ -149,8 +161,8 @@ export const DonutChart = factory<DonutChartFactory>((_props, ref) => {
         <PieChart>
           <Pie
             data={data}
-            innerRadius={40}
-            outerRadius={80}
+            innerRadius={size! / 2 - thickness!}
+            outerRadius={size! / 2}
             dataKey="value"
             isAnimationActive={false}
             paddingAngle={paddingAngle}

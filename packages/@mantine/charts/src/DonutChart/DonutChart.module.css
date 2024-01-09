@@ -1,4 +1,6 @@
 .root {
+  height: var(--chart-height, auto);
+
   & :where(*) {
     outline: 0;
   }

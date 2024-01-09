@@ -13,7 +13,7 @@ const data = [
 export function Usage() {
   return (
     <div style={{ padding: 40 }}>
-      <DonutChart data={data} h={160} bg="red" withLabels />
+      <DonutChart data={data} />
     </div>
   );
 }
@@ -21,7 +21,7 @@ export function Usage() {
 export function WithLabels() {
   return (
     <div style={{ padding: 40 }}>
-      <DonutChart data={data} h={240} withLabels />
+      <DonutChart data={data} withLabels size={200} thickness={40} />
     </div>
   );
 }
