@@ -17,3 +17,8 @@ export const Demo_size = {
   name: '⭐ Demo: size',
   render: renderDemo(demos.size),
 };
+
+export const Demo_paddingAngle = {
+  name: '⭐ Demo: paddingAngle',
+  render: renderDemo(demos.paddingAngle),
+};
