@@ -27,3 +27,8 @@ export const Demo_color = {
   name: '⭐ Demo: color',
   render: renderDemo(demos.color),
 };
+
+export const Demo_tooltipDataSource = {
+  name: '⭐ Demo: tooltipDataSource',
+  render: renderDemo(demos.tooltipDataSource),
+};
