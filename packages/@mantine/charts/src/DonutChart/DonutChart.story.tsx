@@ -33,3 +33,11 @@ export function Semicircle() {
     </div>
   );
 }
+
+export function SegmentTooltip() {
+  return (
+    <div style={{ padding: 40 }}>
+      <DonutChart data={data} tooltipDataSource="segment" />
+    </div>
+  );
+}

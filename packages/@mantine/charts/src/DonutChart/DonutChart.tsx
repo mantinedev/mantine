@@ -57,28 +57,28 @@ export interface DonutChartProps
   /** Props passed down to recharts `Pie` component */
   pieProps?: Omit<PieProps, 'ref'>;
 
-  /** Controls color of the cells stroke, by default depends on color scheme */
+  /** Controls color of the segments stroke, by default depends on color scheme */
   strokeColor?: MantineColor;
 
   /** Controls text color of all labels, by default depends on color scheme */
   labelColor?: MantineColor;
 
-  /** Controls padding between cells, `0` by default */
+  /** Controls padding between segments, `0` by default */
   paddingAngle?: number;
 
-  /** Determines whether each cell should have associated label, `false` by default */
+  /** Determines whether each segment should have associated label, `false` by default */
   withLabels?: boolean;
 
-  /** Determines whether cells labels should have lines that connect the cell with the label, `true` by default */
+  /** Determines whether segments labels should have lines that connect the segment with the label, `true` by default */
   withLabelsLine?: boolean;
 
-  /** Controls thickness of the chart cells, `20` by default */
+  /** Controls thickness of the chart segments, `20` by default */
   thickness?: number;
 
   /** Controls chart width and height, height is increased by 40 if `withLabels` prop is set. Cannot be less than `thickness`. `80` by default */
   size?: number;
 
-  /** Controls width of cells stroke, `1` by default */
+  /** Controls width of segments stroke, `1` by default */
   strokeWidth?: number;
 
   /** Controls angle at which chart starts, `0` by default. Set to `180` to render the chart as semicircle. */
@@ -86,6 +86,9 @@ export interface DonutChartProps
 
   /** Controls angle at which charts ends, `360` by default. Set to `0` to render the chart as semicircle. */
   endAngle?: number;
+
+  /** Determines which data is displayed in the tooltip. `'all'` – display all values, `'segment'` – display only hovered segment. `'all'` by default. */
+  tooltipDataSource?: 'segment' | 'all';
 }
 
 export type DonutChartFactory = Factory<{
@@ -104,6 +107,7 @@ const defaultProps: Partial<DonutChartProps> = {
   strokeWidth: 1,
   startAngle: 0,
   endAngle: 360,
+  tooltipDataSource: 'all',
 };
 
 const varsResolver = createVarsResolver<DonutChartFactory>(
@@ -138,6 +142,7 @@ export const DonutChart = factory<DonutChartFactory>((_props, ref) => {
     strokeWidth,
     startAngle,
     endAngle,
+    tooltipDataSource,
     ...others
   } = props;
 
@@ -207,12 +212,13 @@ export const DonutChart = factory<DonutChartFactory>((_props, ref) => {
             <Tooltip
               animationDuration={tooltipAnimationDuration}
               isAnimationActive={false}
-              content={() => (
+              content={({ payload }) => (
                 <ChartTooltip
                   payload={data}
                   classNames={resolvedClassNames}
                   styles={resolvedStyles}
                   type="radial"
+                  segmentId={tooltipDataSource === 'segment' ? payload?.[0]?.name : undefined}
                 />
               )}
               {...tooltipProps}

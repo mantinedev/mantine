@@ -14,8 +14,17 @@ import {
 } from '@mantine/core';
 import classes from './ChartTooltip.module.css';
 
-export function getFilteredChartTooltipPayload(payload: Record<string, any>[]) {
-  return payload.filter((item) => item.fill !== 'none' || !item.color);
+export function getFilteredChartTooltipPayload(
+  payload: Record<string, any>[],
+  segmentId: string | undefined
+) {
+  const duplicatesFilter = payload.filter((item) => item.fill !== 'none' || !item.color);
+
+  if (!segmentId) {
+    return duplicatesFilter;
+  }
+
+  return duplicatesFilter.filter((item) => item.name === segmentId);
 }
 
 function getData(item: Record<string, any>, type: 'area' | 'radial') {
@@ -51,6 +60,9 @@ export interface ChartTooltipProps
 
   /** Tooltip type that determines the content and styles, `area` for LineChart, AreaChart and BarChart, `radial` for DonutChart and PieChart, `'area'` by default */
   type?: 'area' | 'radial';
+
+  /** Id of the segment to display data for. Only applicable when `type="radial"`. If not set, all data is rendered. */
+  segmentId?: string;
 }
 
 export type ChartTooltipFactory = Factory<{
@@ -76,6 +88,7 @@ export const ChartTooltip = factory<ChartTooltipFactory>((_props, ref) => {
     label,
     unit,
     type,
+    segmentId,
     ...others
   } = props;
 
@@ -96,7 +109,7 @@ export const ChartTooltip = factory<ChartTooltipFactory>((_props, ref) => {
     return null;
   }
 
-  const filteredPayload = getFilteredChartTooltipPayload(payload);
+  const filteredPayload = getFilteredChartTooltipPayload(payload, segmentId);
 
   const items = filteredPayload.map((item) => (
     <div key={item.name} {...getStyles('tooltipItem')}>
