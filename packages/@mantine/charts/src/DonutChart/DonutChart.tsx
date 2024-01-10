@@ -35,7 +35,7 @@ interface DonutChartCell {
 
 export type DonutChartStylesNames = 'root';
 export type DonutChartCssVariables = {
-  root: '--chart-stroke-color' | '--chart-label-color' | '--chart-height';
+  root: '--chart-stroke-color' | '--chart-label-color' | '--chart-size';
 };
 
 export interface DonutChartProps
@@ -115,7 +115,7 @@ const varsResolver = createVarsResolver<DonutChartFactory>(
     root: {
       '--chart-stroke-color': strokeColor ? getThemeColor(strokeColor, theme) : undefined,
       '--chart-label-color': labelColor ? getThemeColor(labelColor, theme) : undefined,
-      '--chart-height': withLabels ? rem(size! + 40) : rem(size!),
+      '--chart-size': withLabels ? rem(size! + 80) : rem(size!),
     },
   })
 );

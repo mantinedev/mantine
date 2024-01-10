@@ -1,5 +1,8 @@
 .root {
-  height: var(--chart-height, auto);
+  min-height: var(--chart-size, auto);
+  height: var(--chart-size, auto);
+  width: var(--chart-size, auto);
+  min-width: var(--chart-size, auto);
 
   & :where(*) {
     outline: 0;
