@@ -1,28 +1,16 @@
 import React from 'react';
 import { DonutChart } from '@mantine/charts';
 import { MantineDemo } from '@mantinex/demo';
+import { data, dataCode } from './_data';
 
 const code = `
 import { DonutChart } from '@mantine/charts';
-
-const data = [
-  { name: 'USA', value: 400, color: 'indigo.6' },
-  { name: 'India', value: 300, color: 'yellow.6' },
-  { name: 'Japan', value: 100, color: 'teal.6' },
-  { name: 'Other', value: 200, color: 'gray.6' },
-];
+import { data } from './data';
 
 function Demo() {
   return <DonutChart data={data} />;
 }
 `;
-
-const data = [
-  { name: 'USA', value: 400, color: 'indigo.6' },
-  { name: 'India', value: 300, color: 'yellow.6' },
-  { name: 'Japan', value: 100, color: 'teal.6' },
-  { name: 'Other', value: 200, color: 'gray.6' },
-];
 
 function Demo() {
   return <DonutChart data={data} />;
@@ -31,6 +19,9 @@ function Demo() {
 export const usage: MantineDemo = {
   type: 'code',
   component: Demo,
-  code,
+  code: [
+    { code, language: 'tsx', fileName: 'Demo.tsx' },
+    { code: dataCode, language: 'tsx', fileName: 'data.ts' },
+  ],
   centered: true,
 };
