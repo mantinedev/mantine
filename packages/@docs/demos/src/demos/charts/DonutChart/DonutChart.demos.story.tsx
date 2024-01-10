@@ -22,3 +22,8 @@ export const Demo_paddingAngle = {
   name: '⭐ Demo: paddingAngle',
   render: renderDemo(demos.paddingAngle),
 };
+
+export const Demo_color = {
+  name: '⭐ Demo: color',
+  render: renderDemo(demos.color),
+};
