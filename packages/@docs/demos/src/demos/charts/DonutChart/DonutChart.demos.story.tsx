@@ -12,3 +12,8 @@ export const Demo_withLabels = {
   name: '⭐ Demo: withLabels',
   render: renderDemo(demos.withLabels),
 };
+
+export const Demo_size = {
+  name: '⭐ Demo: size',
+  render: renderDemo(demos.size),
+};
