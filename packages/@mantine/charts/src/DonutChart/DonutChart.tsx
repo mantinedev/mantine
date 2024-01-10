@@ -80,6 +80,12 @@ export interface DonutChartProps
 
   /** Controls width of cells stroke, `1` by default */
   strokeWidth?: number;
+
+  /** Controls angle at which chart starts, `0` by default. Set to `180` to render the chart as semicircle. */
+  startAngle?: number;
+
+  /** Controls angle at which charts ends, `360` by default. Set to `0` to render the chart as semicircle. */
+  endAngle?: number;
 }
 
 export type DonutChartFactory = Factory<{
@@ -96,6 +102,8 @@ const defaultProps: Partial<DonutChartProps> = {
   thickness: 20,
   size: 160,
   strokeWidth: 1,
+  startAngle: 0,
+  endAngle: 360,
 };
 
 const varsResolver = createVarsResolver<DonutChartFactory>(
@@ -128,6 +136,8 @@ export const DonutChart = factory<DonutChartFactory>((_props, ref) => {
     size,
     thickness,
     strokeWidth,
+    startAngle,
+    endAngle,
     ...others
   } = props;
 
@@ -172,6 +182,8 @@ export const DonutChart = factory<DonutChartFactory>((_props, ref) => {
             dataKey="value"
             isAnimationActive={false}
             paddingAngle={paddingAngle}
+            startAngle={startAngle}
+            endAngle={endAngle}
             label={
               withLabels
                 ? {

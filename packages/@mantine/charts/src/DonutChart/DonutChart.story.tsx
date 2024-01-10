@@ -25,3 +25,11 @@ export function WithLabels() {
     </div>
   );
 }
+
+export function Semicircle() {
+  return (
+    <div style={{ padding: 40 }}>
+      <DonutChart data={data} startAngle={180} endAngle={0} h={250} withLabels bg="red" />
+    </div>
+  );
+}
