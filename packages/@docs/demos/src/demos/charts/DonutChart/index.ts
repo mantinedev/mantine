@@ -5,3 +5,4 @@ export { paddingAngle } from './DonutChart.demo.paddingAngle';
 export { color } from './DonutChart.demo.color';
 export { tooltipDataSource } from './DonutChart.demo.tooltipDataSource';
 export { strokeWidth } from './DonutChart.demo.strokeWidth';
+export { angle } from './DonutChart.demo.angle';
