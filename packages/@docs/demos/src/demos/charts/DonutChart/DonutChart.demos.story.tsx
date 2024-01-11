@@ -32,3 +32,8 @@ export const Demo_tooltipDataSource = {
   name: '⭐ Demo: tooltipDataSource',
   render: renderDemo(demos.tooltipDataSource),
 };
+
+export const Demo_strokeWidth = {
+  name: '⭐ Demo: strokeWidth',
+  render: renderDemo(demos.strokeWidth),
+};

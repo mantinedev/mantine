@@ -200,7 +200,10 @@ export const DonutChart = factory<DonutChartFactory>((_props, ref) => {
             }
             labelLine={
               withLabelsLine
-                ? { stroke: 'var(--chart-label-color, var(--mantine-color-dimmed))' }
+                ? {
+                    stroke: 'var(--chart-label-color, var(--mantine-color-dimmed))',
+                    strokeWidth: 1,
+                  }
                 : false
             }
             {...pieProps}
