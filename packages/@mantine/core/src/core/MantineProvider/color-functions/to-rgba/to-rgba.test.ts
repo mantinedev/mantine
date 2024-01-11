@@ -23,6 +23,9 @@ describe('@mantine/core/to-rgba', () => {
     expect(toRgba('rgb(240, 62, 62, 0.8)')).toStrictEqual({ r: 240, g: 62, b: 62, a: 0.8 });
     expect(toRgba('rgb(214, 51, 108, 1)')).toStrictEqual({ r: 214, g: 51, b: 108, a: 1 });
     expect(toRgba('rgb(112, 72, 232, .2)')).toStrictEqual({ r: 112, g: 72, b: 232, a: 0.2 });
+    expect(toRgba('rgb(240, 62, 62 / 0.8)')).toStrictEqual({ r: 240, g: 62, b: 62, a: 0.8 });
+    expect(toRgba('rgb(214, 51, 108 / 1)')).toStrictEqual({ r: 214, g: 51, b: 108, a: 1 });
+    expect(toRgba('rgb(112, 72, 232 / .2)')).toStrictEqual({ r: 112, g: 72, b: 232, a: 0.2 });
   });
 
   it('returns the correct rgba values when given an hsl string', () => {
