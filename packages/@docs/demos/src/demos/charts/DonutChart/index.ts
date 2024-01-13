@@ -8,3 +8,4 @@ export { strokeWidth } from './DonutChart.demo.strokeWidth';
 export { angle } from './DonutChart.demo.angle';
 export { chartLabel } from './DonutChart.demo.chartLabel';
 export { noTooltip } from './DonutChart.demo.noTooltip';
+export { strokeColor } from './DonutChart.demo.strokeColor';

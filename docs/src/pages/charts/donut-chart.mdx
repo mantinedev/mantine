@@ -74,15 +74,20 @@ Use `strokeWidth` prop to control the width of the stroke around each segment:
 
 <Demo data={DonutChartDemos.strokeWidth} />
 
-To change color of the stroke, use `strokeColor` prop:
+To change color of the stroke, use `strokeColor` prop. You can reference colors from [theme](/theming/theme-object) the same way as in
+other components, for example, `blue`, `red.5`, `orange.7`, etc. Any valid CSS
+color value is also accepted.
 
 ```tsx
 import { DonutChart } from '@mantine/charts';
 
 function Demo() {
-  return <DonutChart data={data} strokeColor="blue" />;
+  return <DonutChart data={data} strokeColor="red.5" />;
 }
 ```
 
 By default, segments stroke color is the same as the background color of the body element
-(`--mantine-color-body` CSS variable).
+(`--mantine-color-body` CSS variable). If you want to change it depending on the color scheme,
+define CSS variable and pass it to the `strokeColor` prop:
+
+<Demo data={DonutChartDemos.strokeColor} />

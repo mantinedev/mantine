@@ -52,3 +52,8 @@ export const Demo_noTooltip = {
   name: '⭐ Demo: noTooltip',
   render: renderDemo(demos.noTooltip),
 };
+
+export const Demo_strokeColor = {
+  name: '⭐ Demo: strokeColor',
+  render: renderDemo(demos.strokeColor),
+};
