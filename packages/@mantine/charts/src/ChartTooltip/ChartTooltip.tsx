@@ -14,10 +14,7 @@ import {
 } from '@mantine/core';
 import classes from './ChartTooltip.module.css';
 
-export function getFilteredChartTooltipPayload(
-  payload: Record<string, any>[],
-  segmentId: string | undefined
-) {
+export function getFilteredChartTooltipPayload(payload: Record<string, any>[], segmentId?: string) {
   const duplicatesFilter = payload.filter((item) => item.fill !== 'none' || !item.color);
 
   if (!segmentId) {
