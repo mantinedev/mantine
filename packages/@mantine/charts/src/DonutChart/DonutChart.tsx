@@ -95,6 +95,9 @@ export interface DonutChartProps
 
   /** Additional elements rendered inside `PieChart` component */
   children?: React.ReactNode;
+
+  /** Props passed down to recharts `PieChart` component */
+  pieChartProps?: React.ComponentPropsWithoutRef<typeof PieChart>;
 }
 
 export type DonutChartFactory = Factory<{
@@ -151,6 +154,7 @@ export const DonutChart = factory<DonutChartFactory>((_props, ref) => {
     tooltipDataSource,
     chartLabel,
     children,
+    pieChartProps,
     ...others
   } = props;
 
@@ -187,7 +191,7 @@ export const DonutChart = factory<DonutChartFactory>((_props, ref) => {
   return (
     <Box ref={ref} {...getStyles('root')} {...others}>
       <ResponsiveContainer>
-        <PieChart>
+        <PieChart {...pieChartProps}>
           <Pie
             data={data}
             innerRadius={size! / 2 - thickness!}
