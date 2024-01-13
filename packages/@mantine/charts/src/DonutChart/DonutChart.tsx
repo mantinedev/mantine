@@ -33,7 +33,7 @@ interface DonutChartCell {
   color: MantineColor;
 }
 
-export type DonutChartStylesNames = 'root';
+export type DonutChartStylesNames = 'root' | 'label';
 export type DonutChartCssVariables = {
   root: '--chart-stroke-color' | '--chart-label-color' | '--chart-size';
 };
@@ -89,6 +89,12 @@ export interface DonutChartProps
 
   /** Determines which data is displayed in the tooltip. `'all'` – display all values, `'segment'` – display only hovered segment. `'all'` by default. */
   tooltipDataSource?: 'segment' | 'all';
+
+  /** Chart label, displayed in the center of the chart */
+  chartLabel?: string;
+
+  /** Additional elements rendered inside `PieChart` component */
+  children?: React.ReactNode;
 }
 
 export type DonutChartFactory = Factory<{
@@ -143,6 +149,8 @@ export const DonutChart = factory<DonutChartFactory>((_props, ref) => {
     startAngle,
     endAngle,
     tooltipDataSource,
+    chartLabel,
+    children,
     ...others
   } = props;
 
@@ -211,6 +219,18 @@ export const DonutChart = factory<DonutChartFactory>((_props, ref) => {
             {cells}
           </Pie>
 
+          {chartLabel && (
+            <text
+              x="50%"
+              y="50%"
+              textAnchor="middle"
+              dominantBaseline="middle"
+              {...getStyles('label')}
+            >
+              {chartLabel}
+            </text>
+          )}
+
           {withTooltip && (
             <Tooltip
               animationDuration={tooltipAnimationDuration}
@@ -227,6 +247,8 @@ export const DonutChart = factory<DonutChartFactory>((_props, ref) => {
               {...tooltipProps}
             />
           )}
+
+          {children}
         </PieChart>
       </ResponsiveContainer>
     </Box>

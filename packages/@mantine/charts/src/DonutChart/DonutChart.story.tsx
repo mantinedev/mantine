@@ -18,6 +18,14 @@ export function Usage() {
   );
 }
 
+export function ChartLabel() {
+  return (
+    <div style={{ padding: 40 }}>
+      <DonutChart data={data} chartLabel="Some label" />
+    </div>
+  );
+}
+
 export function WithLabels() {
   return (
     <div style={{ padding: 40 }}>
