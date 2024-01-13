@@ -91,7 +91,7 @@ export interface DonutChartProps
   tooltipDataSource?: 'segment' | 'all';
 
   /** Chart label, displayed in the center of the chart */
-  chartLabel?: string;
+  chartLabel?: string | number;
 
   /** Additional elements rendered inside `PieChart` component */
   children?: React.ReactNode;

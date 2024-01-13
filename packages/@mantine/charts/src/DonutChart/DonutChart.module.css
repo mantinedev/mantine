@@ -11,4 +11,5 @@
 
 .label {
   fill: var(--mantine-color-text);
+  font-size: var(--mantine-font-size-sm);
 }

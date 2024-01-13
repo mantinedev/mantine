@@ -6,3 +6,5 @@ export { color } from './DonutChart.demo.color';
 export { tooltipDataSource } from './DonutChart.demo.tooltipDataSource';
 export { strokeWidth } from './DonutChart.demo.strokeWidth';
 export { angle } from './DonutChart.demo.angle';
+export { chartLabel } from './DonutChart.demo.chartLabel';
+export { noTooltip } from './DonutChart.demo.noTooltip';

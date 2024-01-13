@@ -42,3 +42,13 @@ export const Demo_angle = {
   name: '⭐ Demo: angle',
   render: renderDemo(demos.angle),
 };
+
+export const Demo_chartLabel = {
+  name: '⭐ Demo: chartLabel',
+  render: renderDemo(demos.chartLabel),
+};
+
+export const Demo_noTooltip = {
+  name: '⭐ Demo: noTooltip',
+  render: renderDemo(demos.noTooltip),
+};
