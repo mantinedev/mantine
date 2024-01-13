@@ -58,4 +58,16 @@ export const MDX_CHARTS_DATA: Record<string, Frontmatter> = {
     source: '@mantine/charts/src/Sparkline/Sparkline.tsx',
     docs: 'charts/sparkline.mdx',
   },
+
+  DonutChart: {
+    title: 'DonutChart',
+    props: ['DonutChart'],
+    styles: ['DonutChart'],
+    package: '@mantine/charts',
+    slug: '/charts/donut-chart',
+    description: 'Donut chart component',
+    import: "import { DonutChart } from '@mantine/charts';",
+    source: '@mantine/charts/src/DonutChart/DonutChart.tsx',
+    docs: 'charts/donut-chart.mdx',
+  },
 };
