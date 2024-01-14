@@ -1,9 +1,9 @@
 import dayjs from 'dayjs';
-import { DatePickerValue } from '../types';
+import { DatePickerType, DatePickerValue } from '../types';
 
 interface GetFormattedDate {
-  type: 'default' | 'multiple' | 'range';
-  date: DatePickerValue<'default' | 'multiple' | 'range'>;
+  type: DatePickerType;
+  date: DatePickerValue<DatePickerType>;
   locale: string;
   format: string;
   labelSeparator: string;
