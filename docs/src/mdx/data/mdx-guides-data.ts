@@ -78,6 +78,13 @@ export const MDX_GUIDES_DATA: Record<string, Frontmatter> = {
     hideHeader: true,
   },
 
+  Vitest: {
+    title: 'Testing with Vitest',
+    slug: '/guides/vitest',
+    search: 'Testing with Vitest and React Testing Library',
+    hideHeader: true,
+  },
+
   SixToSeven: {
     title: '6.x to 7.x migration',
     slug: '/guides/6x-to-7x',
