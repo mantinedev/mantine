@@ -10,12 +10,13 @@
 
 .root {
   --progress-radius: var(--mantine-radius-default);
+  --progress-size: var(--progress-size-md);
+
   --progress-size-xs: rem(3px);
   --progress-size-sm: rem(5px);
   --progress-size-md: rem(8px);
   --progress-size-lg: rem(12px);
   --progress-size-xl: rem(16px);
-  --progress-size: var(--progress-size-md);
 
   position: relative;
   height: var(--progress-size);
@@ -45,6 +46,7 @@
   background-size: rem(20px) rem(20px);
   background-image: var(--_section-gradient);
   animation: var(--_section-animation);
+  transition: width var(--progress-transition-duration, 100ms) ease;
 
   &[data-striped] {
     --_section-gradient: linear-gradient(

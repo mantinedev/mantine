@@ -75,6 +75,7 @@ export const Title = factory<TitleFactory>((_props, ref) => {
     size,
     variant,
     lineClamp,
+    textWrap,
     ...others
   } = props;
 
