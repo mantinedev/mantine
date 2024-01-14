@@ -6,15 +6,15 @@ const code = `
 import { Textarea } from '@mantine/core';
 
 function Demo() {
-  return <Textarea label="Disabled" placeholder="Your comment" disabled />;
+  return <Textarea resize="vertical" label="Disabled" placeholder="Your comment" />;
 }
 `;
 
 function Demo() {
-  return <Textarea label="Disabled" placeholder="Your comment" disabled />;
+  return <Textarea resize="vertical" label="Disabled" placeholder="Your comment" />;
 }
 
-export const disabled: MantineDemo = {
+export const resize: MantineDemo = {
   type: 'code',
   code,
   component: Demo,
