@@ -15,11 +15,12 @@ interface GridVariablesProps extends GridProps {
   selector: string;
 }
 
-export function GridVariables({ gutter, selector }: GridVariablesProps) {
+export function GridVariables({ gutter, selector, columns }: GridVariablesProps) {
   const theme = useMantineTheme();
 
   const baseStyles: Record<string, string | undefined> = filterProps({
     '--grid-gutter': getSpacing(getBaseValue(gutter)),
+    '--grid-columns': getBaseValue(columns)?.toString(),
   });
 
   const queries = keys(theme.breakpoints).reduce<Record<string, Record<string, any>>>(
@@ -30,6 +31,10 @@ export function GridVariables({ gutter, selector }: GridVariablesProps) {
 
       if (typeof gutter === 'object' && gutter[breakpoint] !== undefined) {
         acc[breakpoint]['--grid-gutter'] = getSpacing(gutter[breakpoint]);
+      }
+
+      if (typeof columns === 'object' && columns[breakpoint] !== undefined) {
+        acc[breakpoint]['--grid-columns'] = columns[breakpoint];
       }
 
       return acc;
