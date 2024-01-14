@@ -1,8 +1,10 @@
 import 'dayjs/locale/ru';
 
-import { getFormattedDate } from './get-formatted-date';
+import { DateFormatter, getFormattedDate } from './get-formatted-date';
 
 const TEST_DATES = [new Date(2021, 8, 13), new Date(2021, 9, 8)];
+const customFormatter: DateFormatter = ({ date }) =>
+  date instanceof Date ? date.toISOString() : '';
 
 describe('@mantine/dates/get-formatted-date', () => {
   it('formats default date type with given format', () => {
@@ -63,5 +65,18 @@ describe('@mantine/dates/get-formatted-date', () => {
         labelSeparator: '–',
       })
     ).toBe('13 сентября 2021');
+  });
+
+  it('supports custom formatter', () => {
+    expect(
+      getFormattedDate({
+        type: 'default',
+        date: TEST_DATES[0],
+        locale: 'en',
+        format: 'MM/DD/YYYY',
+        labelSeparator: '–',
+        formatter: customFormatter,
+      })
+    ).toBe(TEST_DATES[0].toISOString());
   });
 });

@@ -1,7 +1,7 @@
 import dayjs from 'dayjs';
 import { DatePickerType, DatePickerValue } from '../types';
 
-interface GetFormattedDate {
+interface DateFormatterInput {
   type: DatePickerType;
   date: DatePickerValue<DatePickerType>;
   locale: string;
@@ -9,7 +9,15 @@ interface GetFormattedDate {
   labelSeparator: string;
 }
 
-export function getFormattedDate({ type, date, locale, format, labelSeparator }: GetFormattedDate) {
+export type DateFormatter = (input: DateFormatterInput) => string;
+
+export function defaultDateFormatter({
+  type,
+  date,
+  locale,
+  format,
+  labelSeparator,
+}: DateFormatterInput) {
   const formatDate = (value: Date) => dayjs(value).locale(locale).format(format);
 
   if (type === 'default') {
@@ -33,4 +41,12 @@ export function getFormattedDate({ type, date, locale, format, labelSeparator }:
   }
 
   return '';
+}
+
+interface GetFormattedDateInput extends DateFormatterInput {
+  formatter?: DateFormatter;
+}
+
+export function getFormattedDate({ formatter, ...others }: GetFormattedDateInput) {
+  return (formatter || defaultDateFormatter)(others);
 }
