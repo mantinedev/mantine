@@ -72,6 +72,7 @@ export const YearPickerInput: YearPickerInputComponent = factory<YearPickerInput
       minDate,
       maxDate,
       vars,
+      valueFormatter,
       ...rest
     } = props;
 
@@ -102,6 +103,7 @@ export const YearPickerInput: YearPickerInputComponent = factory<YearPickerInput
       labelSeparator,
       closeOnChange,
       sortDates,
+      valueFormatter,
     });
 
     return (
