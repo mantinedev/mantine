@@ -1,5 +1,6 @@
 import {
   DatePickerInputDemos,
+  DatesProviderDemos,
   DonutChartDemos,
   TitleDemos,
 } from '@docs/demos';
@@ -27,6 +28,14 @@ The function is the same for all component types (`default`, `multiple` and `ran
 Example of using a custom formatter function with `type="multiple"`:
 
 <Demo data={DatePickerInputDemos.valueFormatter} />
+
+## @mantine/dates consistent weeks
+
+You can now force each month to have 6 weeks by setting `consistentWeeks: true` on
+[DatesProvider](/dates/getting-started). This is useful if you want to avoid layout
+shifts when month changes.
+
+<Demo data={DatesProviderDemos.consistentWeeks} />
 
 ## Headings text wrap
 
