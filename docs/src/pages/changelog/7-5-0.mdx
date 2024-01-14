@@ -1,4 +1,8 @@
-import { DonutChartDemos, TitleDemos } from '@docs/demos';
+import {
+  DatePickerInputDemos,
+  DonutChartDemos,
+  TitleDemos,
+} from '@docs/demos';
 import { Layout } from '@/layout';
 import { MDX_DATA } from '@/mdx';
 
@@ -9,6 +13,20 @@ export default Layout(MDX_DATA.Changelog750);
 New [DonutChart](/charts/donut-chart) component:
 
 <Demo data={DonutChartDemos.usage} />
+
+## @mantine/dates value formatter
+
+[DatePickerInput](/dates/date-picker-input), [MonthPickerInput](/dates/month-picker-input) and
+[YearPickerInput](/dates/year-picker-input) now support `valueFormatter` prop.
+
+`valueFormatter` is a more powerful alternative to `valueFormat` prop.
+It allows formatting value label with a custom function.
+The function is the same for all component types (`default`, `multiple` and `range`)
+– you need to perform additional checks inside the function to handle different types.
+
+Example of using a custom formatter function with `type="multiple"`:
+
+<Demo data={DatePickerInputDemos.valueFormatter} />
 
 ## Headings text wrap
 
