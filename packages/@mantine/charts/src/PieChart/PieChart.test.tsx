@@ -1,5 +1,5 @@
 import { patchConsoleWarn, tests } from '@mantine-tests/core';
-import { DonutChart, DonutChartProps, DonutChartStylesNames } from './DonutChart';
+import { PieChart, PieChartProps, PieChartStylesNames } from './PieChart';
 
 const data = [
   { name: 'Group A', value: 400, color: 'indigo.6' },
@@ -8,11 +8,11 @@ const data = [
   { name: 'Group D', value: 200, color: 'pink.6' },
 ];
 
-const defaultProps: DonutChartProps = {
+const defaultProps: PieChartProps = {
   data,
 };
 
-describe('@mantine/charts/DonutChart', () => {
+describe('@mantine/charts/PieChart', () => {
   beforeAll(() => {
     patchConsoleWarn();
   });
@@ -21,8 +21,8 @@ describe('@mantine/charts/DonutChart', () => {
     patchConsoleWarn.release();
   });
 
-  tests.itSupportsSystemProps<DonutChartProps, DonutChartStylesNames>({
-    component: DonutChart,
+  tests.itSupportsSystemProps<PieChartProps, PieChartStylesNames>({
+    component: PieChart,
     props: defaultProps,
     styleProps: true,
     extend: true,
@@ -30,7 +30,7 @@ describe('@mantine/charts/DonutChart', () => {
     size: true,
     classes: true,
     refType: HTMLDivElement,
-    displayName: '@mantine/charts/DonutChart',
+    displayName: '@mantine/charts/PieChart',
     stylesApiSelectors: ['root'],
   });
 });

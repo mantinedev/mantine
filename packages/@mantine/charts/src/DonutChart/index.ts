@@ -4,4 +4,5 @@ export type {
   DonutChartFactory,
   DonutChartProps,
   DonutChartStylesNames,
+  DonutChartCell,
 } from './DonutChart';
