@@ -336,6 +336,7 @@ export const MDX_PAGES_GROUPS: MdxPagesGroup[] = [
       MDX_DATA.BarChart,
       MDX_DATA.LineChart,
       MDX_DATA.DonutChart,
+      MDX_DATA.PieChart,
       MDX_DATA.Sparkline,
     ],
   },
