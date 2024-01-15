@@ -127,7 +127,7 @@ const varsResolver = createVarsResolver<PieChartFactory>(
   })
 );
 
-const insideLabel: PieLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, percent }) => {
+const insideLabel: PieLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, value }) => {
   const RADIAN = Math.PI / 180;
   const radius = innerRadius + (outerRadius - innerRadius) * 0.5;
   const x = cx + radius * Math.cos(-midAngle * RADIAN);
@@ -141,7 +141,7 @@ const insideLabel: PieLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, per
       dominantBaseline="central"
       className={classes.label}
     >
-      {`${(percent * 100).toFixed(0)}%`}
+      {value}
     </text>
   );
 };
