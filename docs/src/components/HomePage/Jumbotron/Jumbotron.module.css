@@ -7,8 +7,8 @@ $jumbotron-breakpoint: em(960px);
 
 .inner {
   position: relative;
-  padding-top: rem(220px);
-  padding-bottom: rem(180px);
+  padding-top: rem(80px);
+  padding-bottom: rem(120px);
 
   @media (max-width: $jumbotron-breakpoint) {
     padding-top: rem(60px);
