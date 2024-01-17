@@ -158,7 +158,7 @@ export function Menu(props: MenuProps) {
         opened={_opened}
         onChange={toggleDropdown}
         defaultOpened={defaultOpened}
-        trapFocus={trigger === 'click'}
+        trapFocus={trigger === 'click' && _opened}
         closeOnEscape={closeOnEscape && trigger === 'click'}
         __staticSelector="Menu"
         classNames={{ ...classNames, dropdown: cx(classes.dropdown, classNames?.dropdown) }}
