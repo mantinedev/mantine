@@ -1,4 +1,4 @@
-import { colorResolver } from './color-resolver/color-resolver';
+import { colorResolver, textColorResolver } from './color-resolver/color-resolver';
 import { fontFamilyResolver } from './font-family-resolver/font-family-resolver';
 import { fontSizeResolver } from './font-size-resolver/font-size-resolver';
 import { identityResolver } from './identity-resolver/identity-resolver';
@@ -8,6 +8,7 @@ import { spacingResolver } from './spacing-resolver/spacing-resolver';
 
 export const resolvers = {
   color: colorResolver,
+  textColor: textColorResolver,
   fontSize: fontSizeResolver,
   spacing: spacingResolver,
   identity: identityResolver,
