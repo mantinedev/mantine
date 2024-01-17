@@ -2,7 +2,7 @@ import React from 'react';
 import { render } from '@testing-library/react';
 import { useColorScheme } from './use-color-scheme';
 
-describe('@maintine/hooks/use-color-scheme', () => {
+describe('@mantine/hooks/use-color-scheme', () => {
   let trace = jest.fn<(colorScheme: string) => void, string[]>();
   const mockmatchMedia = jest.fn().mockImplementation(() => ({
     matches: true,
