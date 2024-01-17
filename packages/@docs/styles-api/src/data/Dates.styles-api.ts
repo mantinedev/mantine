@@ -67,14 +67,6 @@ export const MonthStylesApi: StylesApiData<MonthFactory> = {
   ],
 };
 
-// export const UnstyledButtonStylesApi: StylesApiData<UnstyledButtonFactory> = {
-//   selectors: {
-//     root: 'Root element',
-//   },
-
-//   vars: {},
-// };
-
 export const CalendarHeaderStylesApi: StylesApiData<CalendarHeaderFactory> = {
   selectors: {
     calendarHeader: 'Calendar header root element',
@@ -193,6 +185,7 @@ export const YearPickerInputStylesApi: StylesApiData<YearPickerInputFactory> = {
   selectors: {
     ...InputBaseStylesApi.selectors,
     ...YearPickerStylesApi.selectors,
+    placeholder: 'Placeholder element',
   },
 
   vars: {},
@@ -204,6 +197,7 @@ export const MonthPickerInputStylesApi: StylesApiData<MonthPickerInputFactory> =
   selectors: {
     ...InputBaseStylesApi.selectors,
     ...MonthPickerStylesApi.selectors,
+    placeholder: 'Placeholder element',
   },
 
   vars: {},
@@ -215,6 +209,7 @@ export const DatePickerInputStylesApi: StylesApiData<DatePickerInputFactory> = {
   selectors: {
     ...InputBaseStylesApi.selectors,
     ...DatePickerStylesApi.selectors,
+    placeholder: 'Placeholder element',
   },
 
   vars: {},
