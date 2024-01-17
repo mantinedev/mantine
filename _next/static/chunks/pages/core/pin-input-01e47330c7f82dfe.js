@@ -4,7 +4,7 @@ import { PinInput } from '@mantine/core';
 function Demo() {
   return <PinInput{{props}} />
 }
-`,w={type:"configurator",component:function(e){return o.createElement(P,{...e})},code:k,centered:!0,controls:[{prop:"size",type:"size",initialValue:"sm",libraryValue:"sm"},{prop:"length",type:"number",initialValue:4,libraryValue:4,min:1,max:10},{prop:"mask",type:"boolean",initialValue:!1,libraryValue:!1},{prop:"placeholder",type:"string",initialValue:"○",libraryValue:"○"},{prop:"disabled",type:"boolean",initialValue:!1,libraryValue:!1},{prop:"error",type:"boolean",initialValue:!1,libraryValue:!1},{prop:"type",type:"select",initialValue:"alphanumeric",libraryValue:"alphanumeric",data:["alphanumeric","number"]}]},_=`
+`,w={type:"configurator",component:function(e){return o.createElement(P,{...e})},code:k,centered:!0,controls:[{prop:"size",type:"size",initialValue:"sm",libraryValue:"sm"},{prop:"length",type:"number",initialValue:4,libraryValue:4,min:1,max:5},{prop:"mask",type:"boolean",initialValue:!1,libraryValue:!1},{prop:"placeholder",type:"string",initialValue:"○",libraryValue:"○"},{prop:"disabled",type:"boolean",initialValue:!1,libraryValue:!1},{prop:"error",type:"boolean",initialValue:!1,libraryValue:!1},{prop:"type",type:"select",initialValue:"alphanumeric",libraryValue:"alphanumeric",data:["alphanumeric","number"]}]},_=`
 import { PinInput } from '@mantine/core';
 
 function Demo() {

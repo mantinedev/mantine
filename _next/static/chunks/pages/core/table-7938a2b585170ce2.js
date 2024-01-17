@@ -8,7 +8,7 @@ function Demo() {
     </Table>
   );
 }
-`,d={type:"configurator",component:function(e){return m.createElement(T.i,{...e},m.createElement(T.i.Thead,null,m.createElement(T.i.Tr,null,m.createElement(T.i.Th,null,"Position"),m.createElement(T.i.Th,null,"Name"),m.createElement(T.i.Th,null,"Symbol"),m.createElement(T.i.Th,null,"Mass"))),m.createElement(T.i.Tbody,null,s.R.map(e=>m.createElement(T.i.Tr,{key:e.name},m.createElement(T.i.Td,null,e.position),m.createElement(T.i.Td,null,e.name),m.createElement(T.i.Td,null,e.symbol),m.createElement(T.i.Td,null,e.mass)))))},code:c,controls:[{prop:"horizontalSpacing",type:"size",libraryValue:"xs",initialValue:"xs"},{prop:"verticalSpacing",type:"size",initialValue:"xs",libraryValue:"xs"}]},b=`
+`,d={type:"configurator",component:function(e){return m.createElement(T.i,{...e},m.createElement(T.i.Thead,null,m.createElement(T.i.Tr,null,m.createElement(T.i.Th,null,"Position"),m.createElement(T.i.Th,null,"Name"),m.createElement(T.i.Th,null,"Symbol"))),m.createElement(T.i.Tbody,null,s.R.map(e=>m.createElement(T.i.Tr,{key:e.name},m.createElement(T.i.Td,null,e.position),m.createElement(T.i.Td,null,e.name),m.createElement(T.i.Td,null,e.symbol)))))},code:c,controls:[{prop:"horizontalSpacing",type:"size",libraryValue:"xs",initialValue:"xs"},{prop:"verticalSpacing",type:"size",initialValue:"xs",libraryValue:"xs"}]},b=`
 import { Table } from '@mantine/core';
 
 function Demo() {
