@@ -401,7 +401,7 @@ export const NumberInput = factory<NumberInputFactory>((_props, ref) => {
       __staticSelector="NumberInput"
       decimalScale={allowDecimal ? decimalScale : 0}
       onKeyDown={handleKeyDown}
-      rightSectionPointerEvents={rightSectionPointerEvents ?? disabled ? 'none' : undefined}
+      rightSectionPointerEvents={rightSectionPointerEvents ?? (disabled ? 'none' : undefined)}
       rightSectionWidth={rightSectionWidth ?? `var(--ni-right-section-width-${size || 'sm'})`}
       allowLeadingZeros={allowLeadingZeros}
       onBlur={(event) => {
