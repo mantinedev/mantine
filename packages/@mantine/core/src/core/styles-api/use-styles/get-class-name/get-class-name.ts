@@ -81,7 +81,12 @@ export function getClassName({
     getOptionsClassNames({ selector, stylesCtx, options, props, theme }),
     getRootClassName({ rootSelector, selector, className }),
     getSelectorClassName({ selector, classes, unstyled }),
-    getStaticClassNames({ themeName, classNamesPrefix, selector }),
+    getStaticClassNames({
+      themeName,
+      classNamesPrefix,
+      selector,
+      withStaticClass: options?.withStaticClass,
+    }),
     options?.className
   );
 }

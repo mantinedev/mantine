@@ -21,7 +21,7 @@ export const configurator: MantineDemo = {
   centered: true,
   controls: [
     { prop: 'size', type: 'size', initialValue: 'sm', libraryValue: 'sm' },
-    { prop: 'length', type: 'number', initialValue: 4, libraryValue: 4, min: 1, max: 10 },
+    { prop: 'length', type: 'number', initialValue: 4, libraryValue: 4, min: 1, max: 5 },
     { prop: 'mask', type: 'boolean', initialValue: false, libraryValue: false },
     { prop: 'placeholder', type: 'string', initialValue: '○', libraryValue: '○' },
     { prop: 'disabled', type: 'boolean', initialValue: false, libraryValue: false },

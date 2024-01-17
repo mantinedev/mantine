@@ -9,6 +9,7 @@ import {
   useDirection,
   useMantineColorScheme,
 } from '@mantine/core';
+import { ModalsProvider } from '@mantine/modals';
 import { ShikiProvider } from '@mantinex/shiki';
 import { theme } from '../docs/theme';
 
@@ -63,5 +64,13 @@ export const decorators = [
   (renderStory: any) => <DirectionWrapper>{renderStory()}</DirectionWrapper>,
   (renderStory: any) => <ColorSchemeWrapper>{renderStory()}</ColorSchemeWrapper>,
   (renderStory: any) => <ShikiProvider loadShiki={loadShiki}>{renderStory()}</ShikiProvider>,
+  (renderStory: any) => (
+    <ModalsProvider
+      labels={{ confirm: 'Confirm', cancel: 'Cancel' }}
+      modalProps={{ trapFocus: false }}
+    >
+      {renderStory()}
+    </ModalsProvider>
+  ),
   (renderStory: any) => <MantineProvider theme={theme}>{renderStory()}</MantineProvider>,
 ];

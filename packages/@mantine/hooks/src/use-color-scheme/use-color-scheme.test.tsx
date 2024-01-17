@@ -1,9 +1,8 @@
 import React from 'react';
-// import { renderHook } from '@testing-library/react-hooks';
 import { render } from '@testing-library/react';
 import { useColorScheme } from './use-color-scheme';
 
-describe('@maintine/hooks/use-color-scheme', () => {
+describe('@mantine/hooks/use-color-scheme', () => {
   let trace = jest.fn<(colorScheme: string) => void, string[]>();
   const mockmatchMedia = jest.fn().mockImplementation(() => ({
     matches: true,
@@ -31,12 +30,6 @@ describe('@maintine/hooks/use-color-scheme', () => {
     return <>{colorScheme}</>;
   }
 
-  it('correctly returns initial dark state without useEffect', async () => {
-    render(<WrapperComponent initialValue="dark" getInitialValueInEffect={false} />);
-    expect(trace).toHaveBeenCalledTimes(2);
-    expect(trace.mock.calls[0][0]).toBe('dark');
-    expect(trace.mock.calls[1][0]).toBe('light');
-  });
   it('correctly returns initial dark state state without useEffect', async () => {
     window.matchMedia = mockmatchMedia;
     render(<WrapperComponent initialValue="dark" getInitialValueInEffect={false} />);

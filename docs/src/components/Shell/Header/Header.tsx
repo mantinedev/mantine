@@ -38,7 +38,7 @@ export function Header({ navbarOpened, onNavbarToggle, headerControlsProps }: He
       <header className={cx(classes.header, RemoveScroll.classNames.fullWidth)} data-desktop>
         <div className={classes.logo}>
           <Logo />
-          <Menu width={180}>
+          <Menu width={180} withinPortal={false}>
             <Menu.Target>
               <UnstyledButton>
                 <Code fw="bold" className={classes.version}>

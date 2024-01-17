@@ -7,11 +7,11 @@
   --divider-size: var(--divider-size-xs);
 
   @mixin light {
-    --_divider-color: var(--mantine-color-gray-4);
+    --_divider-color: var(--mantine-color-gray-3);
   }
 
   @mixin dark {
-    --_divider-color: var(--mantine-color-dark-3);
+    --_divider-color: var(--mantine-color-dark-4);
   }
 
   &[data-orientation='horizontal'] {

@@ -18,7 +18,7 @@ import { DatePicker, DatePickerBaseProps } from '../DatePicker';
 import { useDatesContext } from '../DatesProvider';
 import { DateInputSharedProps, PickerInputBase } from '../PickerInputBase';
 
-export type DatePickerInputStylesNames = __InputStylesNames | CalendarStylesNames;
+export type DatePickerInputStylesNames = __InputStylesNames | 'placeholder' | CalendarStylesNames;
 
 export interface DatePickerInputProps<Type extends DatePickerType = 'default'>
   extends BoxProps,

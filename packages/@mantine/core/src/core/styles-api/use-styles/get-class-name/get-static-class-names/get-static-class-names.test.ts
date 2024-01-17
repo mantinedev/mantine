@@ -20,4 +20,15 @@ describe('@mantine/core/get-static-class-names', () => {
       })
     ).toStrictEqual(['mantine-Input-wrapper', 'mantine-Select-wrapper']);
   });
+
+  it('returns empty array if withStaticClass is false', () => {
+    expect(
+      getStaticClassNames({
+        themeName: ['Input', 'Select'],
+        selector: 'wrapper',
+        classNamesPrefix: 'mantine',
+        withStaticClass: false,
+      })
+    ).toStrictEqual([]);
+  });
 });

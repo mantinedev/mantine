@@ -165,10 +165,18 @@
   border-radius: var(--mantine-radius-default);
   cursor: var(--_control-cursor, default);
 
-  &[data-disabled] {
+  &:where([data-disabled]) {
     cursor: not-allowed;
-    background-color: var(--mantine-color-gray-1);
-    color: var(--mantine-color-gray-5);
+
+    @mixin where-light {
+      background-color: var(--mantine-color-gray-1);
+      color: var(--mantine-color-gray-5);
+    }
+
+    @mixin where-dark {
+      background-color: var(--mantine-color-dark-5);
+      color: var(--mantine-color-dark-3);
+    }
   }
 
   &[data-interactive] {

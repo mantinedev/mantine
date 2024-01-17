@@ -12,6 +12,7 @@ export interface GetStylesApiOptions {
   styles?: Styles<{ props: any; stylesNames: string }>;
   variant?: string;
   props?: Record<string, any>;
+  withStaticClass?: boolean;
 }
 
 export type StylesApiRecord<

@@ -188,7 +188,12 @@ export const PickerInputBase = factory<PickerInputBaseFactory>((_props, ref) => 
               {...others}
             >
               {formattedValue || (
-                <Input.Placeholder error={inputProps.error} unstyled={unstyled}>
+                <Input.Placeholder
+                  error={inputProps.error}
+                  unstyled={unstyled}
+                  className={(classNames as any)?.placeholder}
+                  style={(styles as any)?.placeholder}
+                >
                   {placeholder}
                 </Input.Placeholder>
               )}
