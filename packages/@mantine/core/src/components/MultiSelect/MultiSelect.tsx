@@ -356,7 +356,6 @@ export const MultiSelect = factory<MultiSelectFactory>((_props, ref) => {
                   onBlur={(event) => {
                     onBlur?.(event);
                     combobox.closeDropdown();
-                    searchable && combobox.closeDropdown();
                     setSearchValue('');
                   }}
                   onKeyDown={handleInputKeydown}
