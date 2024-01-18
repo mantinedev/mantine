@@ -9,7 +9,7 @@ export function Variants() {
   return (
     <div style={{ maxWidth: 500, margin: 'auto', padding: 40, background: 'rgba(0, 0, 0, 0.1)' }}>
       <Alert
-        // icon={<IconPhoto stroke={1.5} />}
+        icon={<IconPhoto stroke={1.5} />}
         title="Bummer!"
         color="red"
         variant="light"

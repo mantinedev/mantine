@@ -1,11 +1,16 @@
 .root {
+  --alert-radius: var(--mantine-radius-default);
+  --alert-bg: var(--mantine-primary-color-light);
+  --alert-bd: rem(1px) solid transparent;
+  --alert-color: var(--mantine-primary-color-light-color);
+
   padding: var(--mantine-spacing-md) var(--mantine-spacing-md);
-  border-radius: var(--alert-radius, var(--mantine-radius-default));
+  border-radius: var(--alert-radius);
   position: relative;
   overflow: hidden;
-  background-color: var(--alert-bg, var(--mantine-primary-color-light));
-  border: var(--alert-bd, rem(1px) solid transparent);
-  color: var(--alert-color, var(--mantine-primary-color-light-color));
+  background-color: var(--alert-bg);
+  border: var(--alert-bd);
+  color: var(--alert-color);
 }
 
 .wrapper {
@@ -72,7 +77,7 @@
   }
 
   &:where([data-variant='filled']) {
-    color: var(--alert-color, var(--mantine-primary-color-light-color));
+    color: var(--alert-color);
   }
 
   &:where([data-variant='white']) {
@@ -83,5 +88,5 @@
 .closeButton {
   width: rem(20px);
   height: rem(20px);
-  color: var(--alert-color, var(--mantine-primary-color-light-color));
+  color: var(--alert-color);
 }
