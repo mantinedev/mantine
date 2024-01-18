@@ -8,14 +8,6 @@
   color: var(--alert-color, var(--mantine-primary-color-light-color));
 }
 
-.root--filled {
-  --_message-color: var(--alert-color, var(--mantine-primary-color-light-color));
-}
-
-.root--white {
-  --_message-color: var(--mantine-color-black);
-}
-
 .wrapper {
   display: flex;
 }
@@ -34,10 +26,10 @@
   font-size: var(--mantine-font-size-sm);
   font-weight: 700;
 
-  &[data-with-close-button] {
+  &:where([data-with-close-button]) {
     padding-right: var(--mantine-spacing-md);
 
-    @mixin rtl {
+    @mixin where-rtl {
       padding-left: var(--mantine-spacing-md);
       padding-right: 0;
     }
@@ -60,7 +52,7 @@
   margin-right: var(--mantine-spacing-md);
   margin-top: rem(1px);
 
-  @mixin rtl {
+  @mixin where-rtl {
     margin-right: 0;
     margin-left: var(--mantine-spacing-md);
   }
@@ -70,20 +62,26 @@
   text-overflow: ellipsis;
   overflow: hidden;
   font-size: var(--mantine-font-size-sm);
-  color: var(--_message-color, var(--__message-color));
 
-  @mixin light {
-    --__message-color: var(--mantine-color-black);
+  @mixin where-light {
+    color: var(--mantine-color-black);
   }
 
-  @mixin dark {
-    --__message-color: var(--mantine-color-white);
+  @mixin where-dark {
+    color: var(--mantine-color-white);
+  }
+
+  &:where([data-variant='filled']) {
+    color: var(--alert-color, var(--mantine-primary-color-light-color));
+  }
+
+  &:where([data-variant='white']) {
+    color: var(--mantine-color-black);
   }
 }
 
 .closeButton {
   width: rem(20px);
   height: rem(20px);
-  margin-top: calc(var(--mantine-spacing-sm) * -0.5);
   color: var(--alert-color, var(--mantine-primary-color-light-color));
 }
