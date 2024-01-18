@@ -15,7 +15,7 @@
     clear: both;
   }
 
-  & > *:not(style) {
+  & > :where(*:not(style)) {
     position: absolute;
     inset: 0;
     width: 100%;
@@ -25,8 +25,7 @@
     justify-content: center;
   }
 
-  & > img,
-  & > video {
+  & > :where(img, video) {
     object-fit: cover;
   }
 }
