@@ -18,12 +18,12 @@
   width: var(--col-width);
   max-width: var(--col-max-width);
   flex-grow: var(--col-flex-grow, 0);
-  margin-left: var(--_col-ml, var(--col-offset, 0));
-  margin-right: var(--_col-mr, 0);
+  margin-left: var(--col-offset, 0);
+  margin-right: 0;
   padding: calc(var(--grid-gutter) / 2);
 
-  @mixin rtl {
-    --_col-ml: 0;
-    --_col-mr: var(--col-offset, 0);
+  @mixin where-rtl {
+    margin-left: 0;
+    margin-right: var(--col-offset, 0);
   }
 }
