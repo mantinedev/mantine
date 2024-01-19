@@ -15,14 +15,14 @@
 }
 
 .curve {
-  stroke: var(--curve-color, var(--_curve-root-color));
+  stroke: var(--curve-color, var(--rp-curve-root-color));
 
   @mixin light {
-    --_curve-root-color: var(--mantine-color-gray-2);
+    --rp-curve-root-color: var(--mantine-color-gray-2);
   }
 
   @mixin dark {
-    --_curve-root-color: var(--mantine-color-dark-4);
+    --rp-curve-root-color: var(--mantine-color-dark-4);
   }
 }
 

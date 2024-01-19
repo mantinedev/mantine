@@ -7,6 +7,7 @@
 
   --cb-size: var(--cb-size-md);
   --cb-icon-size: 70%;
+  --cb-radius: var(--mantine-radius-default);
 
   line-height: 1;
   display: inline-flex;
@@ -19,28 +20,26 @@
   height: var(--cb-size);
   min-width: var(--cb-size);
   min-height: var(--cb-size);
-  border-radius: var(--cb-radius, var(--mantine-radius-default));
+  border-radius: var(--cb-radius);
   color: var(--_cb-color);
 
-  @mixin light {
-    --_cb-color: var(--mantine-color-gray-7);
+  @mixin where-light {
+    color: var(--mantine-color-gray-7);
   }
 
-  @mixin dark {
-    --_cb-color: var(--mantine-color-dark-1);
+  @mixin where-dark {
+    color: var(--mantine-color-dark-1);
   }
 }
 
 .root--subtle {
-  background-color: var(--_cb-bg);
-
   @mixin hover {
-    @mixin light {
-      --_cb-bg: var(--mantine-color-gray-0);
+    @mixin where-light {
+      background-color: var(--mantine-color-gray-0);
     }
 
-    @mixin dark {
-      --_cb-bg: var(--mantine-color-dark-6);
+    @mixin where-dark {
+      background-color: var(--mantine-color-dark-6);
     }
   }
 }

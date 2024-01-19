@@ -6,27 +6,25 @@
   --divider-size-xl: rem(5px);
   --divider-size: var(--divider-size-xs);
 
-  @mixin light {
-    --_divider-color: var(--mantine-color-gray-3);
+  @mixin where-light {
+    --divider-color: var(--mantine-color-gray-3);
   }
 
-  @mixin dark {
-    --_divider-color: var(--mantine-color-dark-4);
+  @mixin where-dark {
+    --divider-color: var(--mantine-color-dark-4);
   }
 
-  &[data-orientation='horizontal'] {
-    border-top: var(--divider-size) var(--divider-border-style, solid)
-      var(--divider-color, var(--_divider-color));
+  &:where([data-orientation='horizontal']) {
+    border-top: var(--divider-size) var(--divider-border-style, solid) var(--divider-color);
   }
 
-  &[data-orientation='vertical'] {
-    border-left: var(--divider-size) var(--divider-border-style, solid)
-      var(--divider-color, var(--_divider-color));
+  &:where([data-orientation='vertical']) {
+    border-left: var(--divider-size) var(--divider-border-style, solid) var(--divider-color);
     height: auto;
     align-self: stretch;
   }
 
-  &[data-with-label] {
+  &:where([data-with-label]) {
     border: 0;
   }
 }
@@ -38,16 +36,12 @@
   color: var(--divider-color, var(--mantine-color-dimmed));
   white-space: nowrap;
 
-  &[data-position='left'] {
-    &::before {
-      display: none;
-    }
+  &:where([data-position='left'])::before {
+    display: none;
   }
 
-  &[data-position='right'] {
-    &::after {
-      display: none;
-    }
+  &:where([data-position='right'])::after {
+    display: none;
   }
 
   &::before {
@@ -72,7 +66,7 @@
       var(--divider-color, var(--_divider-color));
     margin-left: var(--mantine-spacing-xs);
 
-    @mixin rtl {
+    @mixin where-rtl {
       margin-left: 0;
       margin-right: var(--mantine-spacing-xs);
     }
