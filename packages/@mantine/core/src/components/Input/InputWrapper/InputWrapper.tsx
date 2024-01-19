@@ -150,6 +150,7 @@ export const InputWrapper = factory<InputWrapperFactory>((_props, ref) => {
     id,
     required,
     __stylesApiProps,
+    mod,
     ...others
   } = props;
 
@@ -252,7 +253,7 @@ export const InputWrapper = factory<InputWrapperFactory>((_props, ref) => {
         ref={ref}
         variant={variant}
         size={size}
-        mod={{ error: !!error }}
+        mod={[{ error: !!error }, mod]}
         {...getStyles('root')}
         {...others}
       >

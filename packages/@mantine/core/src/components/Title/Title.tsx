@@ -76,6 +76,7 @@ export const Title = factory<TitleFactory>((_props, ref) => {
     variant,
     lineClamp,
     textWrap,
+    mod,
     ...others
   } = props;
 
@@ -102,7 +103,7 @@ export const Title = factory<TitleFactory>((_props, ref) => {
       component={`h${order!}`}
       variant={variant}
       ref={ref}
-      mod={{ order, 'data-line-clamp': typeof lineClamp === 'number' }}
+      mod={[{ order, 'data-line-clamp': typeof lineClamp === 'number' }, mod]}
       size={size}
       {...others}
     />

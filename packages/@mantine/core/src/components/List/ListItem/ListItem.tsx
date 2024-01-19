@@ -35,7 +35,7 @@ const defaultProps: Partial<ListItemProps> = {};
 
 export const ListItem = factory<ListItemFactory>((_props, ref) => {
   const props = useProps('ListItem', defaultProps, _props);
-  const { classNames, className, style, styles, vars, icon, children, ...others } = props;
+  const { classNames, className, style, styles, vars, icon, children, mod, ...others } = props;
 
   const ctx = useListContext();
   const _icon = icon || ctx.icon;
@@ -45,7 +45,7 @@ export const ListItem = factory<ListItemFactory>((_props, ref) => {
     <Box
       {...ctx.getStyles('item', { ...stylesApiProps, className, style })}
       component="li"
-      mod={{ 'with-icon': !!_icon, centered: ctx.center }}
+      mod={[{ 'with-icon': !!_icon, centered: ctx.center }, mod]}
       ref={ref}
       {...others}
     >

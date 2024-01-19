@@ -32,7 +32,7 @@ export type AccordionItemFactory = Factory<{
 const defaultProps: Partial<AccordionItemProps> = {};
 
 export const AccordionItem = factory<AccordionItemFactory>((props, ref) => {
-  const { classNames, className, style, styles, vars, value, ...others } = useProps(
+  const { classNames, className, style, styles, vars, value, mod, ...others } = useProps(
     'AccordionItem',
     defaultProps,
     props
@@ -43,7 +43,7 @@ export const AccordionItem = factory<AccordionItemFactory>((props, ref) => {
     <AccordionItemProvider value={{ value }}>
       <Box
         ref={ref}
-        mod={{ active: ctx.isItemActive(value) }}
+        mod={[{ active: ctx.isItemActive(value) }, mod]}
         {...ctx.getStyles('item', { className, classNames, styles, style, variant: ctx.variant })}
         {...others}
       />

@@ -47,6 +47,7 @@ export const ChartLegend = factory<ChartLegendFactory>((_props, ref) => {
     payload,
     onHighlight,
     legendPosition,
+    mod,
     ...others
   } = props;
 
@@ -85,7 +86,7 @@ export const ChartLegend = factory<ChartLegendFactory>((_props, ref) => {
   ));
 
   return (
-    <Box ref={ref} mod={{ position: legendPosition }} {...getStyles('legend')} {...others}>
+    <Box ref={ref} mod={[{ position: legendPosition }, mod]} {...getStyles('legend')} {...others}>
       {items}
     </Box>
   );

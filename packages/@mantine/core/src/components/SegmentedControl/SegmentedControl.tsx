@@ -156,6 +156,7 @@ export const SegmentedControl = factory<SegmentedControlFactory>((_props, ref) =
     variant,
     autoContrast,
     withItemsBorders,
+    mod,
     ...others
   } = props;
 
@@ -294,12 +295,15 @@ export const SegmentedControl = factory<SegmentedControlFactory>((_props, ref) =
       variant={variant}
       size={size}
       ref={mergedRef}
-      mod={{
-        'full-width': fullWidth,
-        orientation,
-        initialization: !initialized,
-        'with-items-borders': withItemsBorders,
-      }}
+      mod={[
+        {
+          'full-width': fullWidth,
+          orientation,
+          initialization: !initialized,
+          'with-items-borders': withItemsBorders,
+        },
+        mod,
+      ]}
       {...others}
       role="radiogroup"
     >

@@ -145,6 +145,7 @@ export const Tabs = factory<TabsFactory>((_props, ref) => {
     style,
     vars,
     autoContrast,
+    mod,
     ...others
   } = props;
 
@@ -196,11 +197,14 @@ export const Tabs = factory<TabsFactory>((_props, ref) => {
         ref={ref}
         id={uid}
         variant={variant}
-        mod={{
-          orientation,
-          inverted: orientation === 'horizontal' && inverted,
-          placement: orientation === 'vertical' && placement,
-        }}
+        mod={[
+          {
+            orientation,
+            inverted: orientation === 'horizontal' && inverted,
+            placement: orientation === 'vertical' && placement,
+          },
+          mod,
+        ]}
         {...getStyles('root')}
         {...others}
       >

@@ -36,8 +36,18 @@ const defaultProps: Partial<AppShellFooterProps> = {};
 
 export const AppShellFooter = factory<AppShellFooterFactory>((_props, ref) => {
   const props = useProps('AppShellFooter', defaultProps, _props);
-  const { classNames, className, style, styles, unstyled, vars, withBorder, zIndex, ...others } =
-    props;
+  const {
+    classNames,
+    className,
+    style,
+    styles,
+    unstyled,
+    vars,
+    withBorder,
+    zIndex,
+    mod,
+    ...others
+  } = props;
   const ctx = useAppShellContext();
 
   if (ctx.disabled) {
@@ -48,7 +58,7 @@ export const AppShellFooter = factory<AppShellFooterFactory>((_props, ref) => {
     <Box
       component="footer"
       ref={ref}
-      mod={{ 'with-border': withBorder ?? ctx.withBorder }}
+      mod={[{ 'with-border': withBorder ?? ctx.withBorder }, mod]}
       {...ctx.getStyles('footer', {
         className: cx({ [RemoveScroll.classNames.zeroRight]: ctx.offsetScrollbars }, className),
         classNames,

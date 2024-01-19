@@ -144,6 +144,7 @@ export const NavLink = polymorphicFactory<NavLinkFactory>((_props, ref) => {
     childrenOffset,
     onKeyDown,
     autoContrast,
+    mod,
     ...others
   } = props;
 
@@ -194,7 +195,7 @@ export const NavLink = polymorphicFactory<NavLinkFactory>((_props, ref) => {
           }
         }}
         unstyled={unstyled}
-        mod={{ disabled, active, expanded: _opened }}
+        mod={[{ disabled, active, expanded: _opened }, mod]}
         {...others}
       >
         {leftSection && (

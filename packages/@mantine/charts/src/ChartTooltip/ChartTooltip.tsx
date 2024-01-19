@@ -86,6 +86,7 @@ export const ChartTooltip = factory<ChartTooltipFactory>((_props, ref) => {
     unit,
     type,
     segmentId,
+    mod,
     ...others
   } = props;
 
@@ -127,7 +128,7 @@ export const ChartTooltip = factory<ChartTooltipFactory>((_props, ref) => {
   ));
 
   return (
-    <Box {...getStyles('tooltip')} mod={{ type }} ref={ref} {...others}>
+    <Box {...getStyles('tooltip')} mod={[{ type }, mod]} ref={ref} {...others}>
       {label && <div {...getStyles('tooltipLabel')}>{label}</div>}
       <div {...getStyles('tooltipBody')}>{items}</div>
     </Box>

@@ -128,6 +128,7 @@ export const StepperStep = factory<StepperStepFactory>((props, ref) => {
     allowStepSelect,
     iconPosition,
     orientation,
+    mod,
     ...others
   } = useProps('StepperStep', defaultProps, props);
 
@@ -144,7 +145,10 @@ export const StepperStep = factory<StepperStepFactory>((props, ref) => {
   return (
     <UnstyledButton
       {...ctx.getStyles('step', { className, style, variant: ctx.orientation, ...stylesApi })}
-      mod={{ 'icon-position': iconPosition || ctx.iconPosition, 'allow-click': allowStepClick }}
+      mod={[
+        { 'icon-position': iconPosition || ctx.iconPosition, 'allow-click': allowStepClick },
+        mod,
+      ]}
       ref={ref}
       {...dataAttributes}
       {...others}
