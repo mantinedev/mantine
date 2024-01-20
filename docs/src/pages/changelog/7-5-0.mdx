@@ -73,6 +73,30 @@ function Demo() {
 
 If set on theme, `textWrap` is also applied to headings in [TypographyStylesProvider](/core/typography-styles-provider)
 
+## mod prop
+
+All components now support `mod` prop, which allows adding data attributes to
+the root element:
+
+```tsx
+import { Box } from '@mantine/core';
+
+<Box mod="data-button" />;
+// -> <div data-button />
+
+<Box mod={{ opened: true }} />;
+// -> <div data-opened />
+
+<Box mod={{ opened: false }} />;
+// -> <div />
+
+<Box mod={['button', { opened: true }]} />;
+// -> <div data-button data-opened />
+
+<Box mod={{ orientation: 'horizontal' }} />;
+// -> <div data-orientation="horizontal" />
+```
+
 ## Documentation updates
 
 - New [testing with Vitest guide](/guides/vitest/)
