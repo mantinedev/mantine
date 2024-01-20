@@ -107,3 +107,8 @@ export const Demo_yScale = {
   name: '⭐ Demo: yScale',
   render: renderDemo(demos.yScale),
 };
+
+export const Demo_seriesLabels = {
+  name: '⭐ Demo: seriesLabels',
+  render: renderDemo(demos.seriesLabels),
+};

@@ -97,3 +97,8 @@ export const Demo_vertical = {
   name: '⭐ Demo: vertical',
   render: renderDemo(demos.vertical),
 };
+
+export const Demo_seriesLabels = {
+  name: '⭐ Demo: seriesLabels',
+  render: renderDemo(demos.seriesLabels),
+};

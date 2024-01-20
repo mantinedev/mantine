@@ -132,3 +132,8 @@ export const Demo_referenceLines = {
   name: '⭐ Demo: referenceLines',
   render: renderDemo(demos.referenceLines),
 };
+
+export const Demo_seriesLabels = {
+  name: '⭐ Demo: seriesLabels',
+  render: renderDemo(demos.seriesLabels),
+};
