@@ -12,3 +12,8 @@ export const Demo_decoration = {
   name: '⭐ Demo: decoration',
   render: renderDemo(demos.decoration),
 };
+
+export const Demo_textProps = {
+  name: '⭐ Demo: textProps',
+  render: renderDemo(demos.textProps),
+};
