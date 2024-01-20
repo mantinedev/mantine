@@ -17,6 +17,7 @@ describe('@mantine/core/Tooltip', () => {
   tests.itSupportsSystemProps<TooltipProps, TooltipStylesNames>({
     component: Tooltip,
     props: defaultProps,
+    mod: true,
     styleProps: true,
     extend: true,
     size: true,

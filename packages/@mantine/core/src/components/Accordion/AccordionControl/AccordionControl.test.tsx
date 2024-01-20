@@ -20,6 +20,7 @@ describe('@mantine/core/AccordionControl', () => {
   tests.itSupportsSystemProps<AccordionControlProps, AccordionControlStylesNames>({
     component: ContextContainer,
     props: defaultProps,
+    mod: true,
     styleProps: true,
     children: true,
     extend: true,

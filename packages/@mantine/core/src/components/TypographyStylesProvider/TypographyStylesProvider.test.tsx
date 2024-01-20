@@ -11,6 +11,7 @@ describe('@mantine/core/TypographyStylesProvider', () => {
   tests.itSupportsSystemProps<TypographyStylesProviderProps, TypographyStylesProviderStylesNames>({
     component: TypographyStylesProvider,
     props: defaultProps,
+    mod: true,
     styleProps: true,
     children: true,
     extend: true,

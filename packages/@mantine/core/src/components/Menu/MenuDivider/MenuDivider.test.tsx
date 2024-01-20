@@ -10,6 +10,7 @@ describe('@mantine/core/MenuDivider', () => {
   tests.itSupportsSystemProps<MenuDividerProps, MenuDividerStylesNames>({
     component: TestContainer,
     props: defaultProps,
+    mod: true,
     styleProps: true,
     children: true,
     extend: true,

@@ -11,6 +11,7 @@ describe('@mantine/core/AppShellFooter', () => {
   tests.itSupportsSystemProps<AppShellFooterProps, AppShellFooterStylesNames>({
     component: TestContainer,
     props: defaultProps,
+    mod: true,
     styleProps: true,
     children: true,
     extend: true,

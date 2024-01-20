@@ -24,6 +24,7 @@ describe('@mantine/charts/DonutChart', () => {
   tests.itSupportsSystemProps<DonutChartProps, DonutChartStylesNames>({
     component: DonutChart,
     props: defaultProps,
+    mod: true,
     styleProps: true,
     extend: true,
     variant: true,

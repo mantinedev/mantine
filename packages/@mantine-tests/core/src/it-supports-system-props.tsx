@@ -6,6 +6,7 @@ import { itSupportsClassName } from './shared/it-supports-classname';
 import { itSupportsHiddenVisible } from './shared/it-supports-hidden-visible';
 import { itSupportsId } from './shared/it-supports-id';
 import { itSupportsLightDarkHidden } from './shared/it-supports-light-dark-hidden';
+import { itSupportsMod } from './shared/it-supports-mod';
 import { itSupportsOthers } from './shared/it-supports-others';
 import { itSupportsProviderDefaultProps } from './shared/it-supports-provider-default-props';
 import { itSupportsRef } from './shared/it-supports-ref';
@@ -24,6 +25,7 @@ import { itSupportsSizeProps } from './style-props/it-supports-size-props';
 interface Options<Props extends Record<string, any>, StylesApiSelectors extends string> {
   component: React.ComponentType<Props>;
   props: Props;
+  mod?: boolean;
   classes?: boolean;
   styleProps?: boolean;
   polymorphic?: boolean;
@@ -87,6 +89,10 @@ export function itSupportsSystemProps<
 
     if (options.size) {
       itSupportsSize({ ...options, selector: options.sizeSelector || options.selector });
+    }
+
+    if (options.mod) {
+      itSupportsMod({ ...options, selector: options.sizeSelector || options.selector });
     }
 
     if (Array.isArray(options.stylesApiSelectors) && stylesApiName) {

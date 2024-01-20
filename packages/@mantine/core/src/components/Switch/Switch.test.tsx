@@ -17,6 +17,7 @@ describe('@mantine/core/Switch', () => {
   tests.itSupportsSystemProps<SwitchProps, SwitchStylesNames>({
     component: Switch,
     props: defaultProps,
+    mod: true,
     styleProps: true,
     extend: true,
     size: true,

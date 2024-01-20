@@ -8,6 +8,7 @@ describe('@mantine/core/Indicator', () => {
   tests.itSupportsSystemProps<IndicatorProps, IndicatorStylesNames>({
     component: Indicator,
     props: defaultProps,
+    mod: true,
     styleProps: true,
     children: true,
     extend: true,

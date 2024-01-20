@@ -30,6 +30,7 @@ describe('@mantine/core/Drawer', () => {
   tests.itSupportsSystemProps<DrawerProps, DrawerStylesNames>({
     component: Drawer,
     props: defaultProps,
+    mod: true,
     styleProps: true,
     children: true,
     extend: true,
@@ -85,6 +86,7 @@ describe('@mantine/core/DrawerRoot', () => {
   tests.itSupportsSystemProps<DrawerRootProps, 'root'>({
     component: DrawerRoot,
     props: defaultProps,
+    mod: true,
     styleProps: true,
     children: true,
     extend: true,

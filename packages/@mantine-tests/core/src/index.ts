@@ -22,6 +22,7 @@ import { itSupportsFocusEvents } from './shared/it-supports-focus-events';
 import { itSupportsHiddenVisible } from './shared/it-supports-hidden-visible';
 import { itSupportsId } from './shared/it-supports-id';
 import { itSupportsLightDarkHidden } from './shared/it-supports-light-dark-hidden';
+import { itSupportsMod } from './shared/it-supports-mod';
 import { itSupportsOthers } from './shared/it-supports-others';
 import { itSupportsProviderDefaultProps } from './shared/it-supports-provider-default-props';
 import { itSupportsRef } from './shared/it-supports-ref';
@@ -57,6 +58,7 @@ export const tests = {
   itSupportsHiddenVisible,
   itSupportsLightDarkHidden,
   itSupportsId,
+  itSupportsMod,
 
   itSupportsMarginsProps,
   itSupportsPaddingsProps,

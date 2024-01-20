@@ -10,6 +10,7 @@ describe('@mantine/core/Fieldset', () => {
   tests.itSupportsSystemProps<FieldsetProps, FieldsetStylesNames>({
     component: Fieldset,
     props: defaultProps,
+    mod: true,
     styleProps: true,
     children: true,
     extend: true,

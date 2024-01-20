@@ -11,6 +11,7 @@ describe('@mantine/dates/YearsList', () => {
   tests.itSupportsSystemProps<YearsListProps, YearsListStylesNames>({
     component: YearsList,
     props: defaultProps,
+    mod: true,
     styleProps: true,
     extend: true,
     variant: true,

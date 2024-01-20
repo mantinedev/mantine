@@ -107,6 +107,7 @@ export const PasswordInput = factory<PasswordInputFactory>((_props, ref) => {
     rightSectionProps,
     leftSectionProps,
     leftSectionPointerEvents,
+    mod,
     ...others
   } = props;
 
@@ -190,6 +191,7 @@ export const PasswordInput = factory<PasswordInputFactory>((_props, ref) => {
       inputContainer={inputContainer}
       variant={variant}
       labelProps={{ ...labelProps, htmlFor: uuid }}
+      mod={mod}
       {...getStyles('root')}
       {...styleProps}
       {...wrapperProps}

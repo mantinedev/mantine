@@ -21,6 +21,7 @@ describe('@mantine/core/ColorPicker', () => {
   tests.itSupportsSystemProps<ColorPickerProps, ColorPickerStylesNames>({
     component: ColorPicker,
     props: defaultProps,
+    mod: true,
     styleProps: true,
     extend: true,
     size: true,

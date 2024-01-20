@@ -133,6 +133,7 @@ export const ActionIcon = polymorphicFactory<ActionIconFactory>((_props, ref) =>
     disabled,
     'data-disabled': dataDisabled,
     autoContrast,
+    mod,
     ...others
   } = props;
 
@@ -158,7 +159,7 @@ export const ActionIcon = polymorphicFactory<ActionIconFactory>((_props, ref) =>
       size={size}
       disabled={disabled || loading}
       ref={ref}
-      mod={{ loading, disabled: disabled || dataDisabled }}
+      mod={[{ loading, disabled: disabled || dataDisabled }, mod]}
     >
       <Box component="span" {...getStyles('loader')} aria-hidden>
         <Loader color="var(--ai-color)" size="calc(var(--ai-size) * 0.55)" {...loaderProps} />

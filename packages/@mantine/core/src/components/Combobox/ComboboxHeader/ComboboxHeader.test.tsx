@@ -10,6 +10,7 @@ describe('@mantine/core/ComboboxHeader', () => {
   tests.itSupportsSystemProps<ComboboxHeaderProps, ComboboxHeaderStylesNames>({
     component: TestContainer,
     props: defaultProps,
+    mod: true,
     styleProps: true,
     children: true,
     extend: true,

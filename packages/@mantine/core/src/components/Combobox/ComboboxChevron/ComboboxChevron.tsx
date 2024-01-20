@@ -46,7 +46,8 @@ const varsResolver = createVarsResolver<ComboboxChevronFactory>((_, { size }) =>
 
 export const ComboboxChevron = factory<ComboboxChevronFactory>((_props, ref) => {
   const props = useProps('ComboboxChevron', defaultProps, _props);
-  const { size, error, style, className, classNames, styles, unstyled, vars, ...others } = props;
+  const { size, error, style, className, classNames, styles, unstyled, vars, mod, ...others } =
+    props;
 
   const getStyles = useStyles<ComboboxChevronFactory>({
     name: 'ComboboxChevron',
@@ -71,7 +72,7 @@ export const ComboboxChevron = factory<ComboboxChevronFactory>((_props, ref) => 
       viewBox="0 0 15 15"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
-      mod={['combobox-chevron', { error }]}
+      mod={['combobox-chevron', { error }, mod]}
       ref={ref}
     >
       <path

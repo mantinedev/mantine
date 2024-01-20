@@ -14,6 +14,7 @@ describe('@mantine/core/Dialog', () => {
   tests.itSupportsSystemProps<DialogProps, DialogStylesNames>({
     component: Dialog,
     props: defaultProps,
+    mod: true,
     styleProps: true,
     children: true,
     extend: true,

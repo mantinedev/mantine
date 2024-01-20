@@ -15,6 +15,7 @@ describe('@mantine/core/ComboboxDropdown', () => {
   tests.itSupportsSystemProps<ComboboxDropdownProps, ComboboxDropdownStylesNames>({
     component: TestContainer,
     props: defaultProps,
+    mod: true,
     styleProps: true,
     children: true,
     extend: true,

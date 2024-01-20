@@ -110,6 +110,7 @@ export const Image = polymorphicFactory<ImageFactory>((_props, ref) => {
         onError?.(event);
         setError(true);
       }}
+      mod={mod}
       {...others}
     />
   );

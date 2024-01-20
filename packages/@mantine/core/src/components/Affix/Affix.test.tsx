@@ -9,6 +9,7 @@ describe('@mantine/core/Affix', () => {
   tests.itSupportsSystemProps<AffixProps, AffixStylesNames>({
     component: Affix,
     props: defaultProps,
+    mod: true,
     styleProps: true,
     children: true,
     extend: true,

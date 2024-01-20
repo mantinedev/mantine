@@ -52,6 +52,7 @@ describe('@mantine/core/Tabs', () => {
     refType: HTMLDivElement,
     displayName: '@mantine/core/Tabs',
     children: true,
+    mod: true,
     styleProps: true,
     extend: true,
     size: true,

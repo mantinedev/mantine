@@ -16,6 +16,7 @@ describe('@mantine/core/Burger', () => {
   tests.itSupportsSystemProps<BurgerProps, BurgerStylesNames>({
     component: Burger,
     props: defaultProps,
+    mod: true,
     styleProps: true,
     extend: true,
     children: true,

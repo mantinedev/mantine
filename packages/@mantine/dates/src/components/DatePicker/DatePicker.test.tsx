@@ -12,6 +12,7 @@ describe('@mantine/dates/DatePicker', () => {
   tests.itSupportsSystemProps<DatePickerProps, DatePickerStylesNames>({
     component: DatePicker,
     props: defaultProps,
+    mod: true,
     styleProps: true,
     extend: true,
     variant: true,

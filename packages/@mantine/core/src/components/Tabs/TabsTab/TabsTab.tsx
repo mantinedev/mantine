@@ -62,6 +62,7 @@ export const TabsTab = factory<TabsTabFactory>((_props, ref) => {
     classNames,
     styles,
     vars,
+    mod,
     ...others
   } = props;
 
@@ -83,13 +84,16 @@ export const TabsTab = factory<TabsTabFactory>((_props, ref) => {
       disabled={disabled}
       unstyled={ctx.unstyled}
       variant={ctx.variant}
-      mod={{
-        active,
-        disabled,
-        orientation: ctx.orientation,
-        inverted: ctx.inverted,
-        placement: ctx.orientation === 'vertical' && ctx.placement,
-      }}
+      mod={[
+        {
+          active,
+          disabled,
+          orientation: ctx.orientation,
+          inverted: ctx.inverted,
+          placement: ctx.orientation === 'vertical' && ctx.placement,
+        },
+        mod,
+      ]}
       ref={ref}
       role="tab"
       id={ctx.getTabId(value)}

@@ -87,6 +87,7 @@ export const CloseButton = polymorphicFactory<CloseButtonFactory>((_props, ref) 
     disabled,
     variant,
     icon,
+    mod,
     ...others
   } = props;
 
@@ -110,7 +111,7 @@ export const CloseButton = polymorphicFactory<CloseButtonFactory>((_props, ref) 
       unstyled={unstyled}
       variant={variant}
       disabled={disabled}
-      mod={{ disabled: disabled || dataDisabled }}
+      mod={[{ disabled: disabled || dataDisabled }, mod]}
       {...getStyles('root', { variant, active: true })}
     >
       {icon || <CloseIcon />}

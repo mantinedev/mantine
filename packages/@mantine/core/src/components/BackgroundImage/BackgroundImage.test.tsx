@@ -13,6 +13,7 @@ describe('@mantine/core/BackgroundImage', () => {
   tests.itSupportsSystemProps<BackgroundImageProps, BackgroundImageStylesNames>({
     component: BackgroundImage,
     props: defaultProps,
+    mod: true,
     polymorphic: true,
     styleProps: true,
     children: true,
