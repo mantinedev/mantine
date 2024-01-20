@@ -259,7 +259,7 @@ export const BarChart = factory<BarChartFactory>((_props, ref) => {
             tick={{ transform: 'translate(-10, 0)', fontSize: 12, fill: 'currentColor' }}
             allowDecimals
             unit={unit}
-            tickFormatter={type === 'percent' ? valueToPercent : undefined}
+            tickFormatter={type === 'percent' ? valueToPercent : valueFormatter}
             {...getStyles('axis')}
             {...yAxisProps}
           />

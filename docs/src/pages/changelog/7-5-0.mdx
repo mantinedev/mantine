@@ -45,13 +45,20 @@ shifts when month changes.
 
 <Demo data={DatesProviderDemos.consistentWeeks} />
 
-## Series label
+## Charts series label
 
 It is now possible to change series labels with `label` property
 in `series` object. This feature is supported in [AreaChart](/charts/area-chart),
 [BarChart](/charts/bar-chart) and [LineChart](/charts/line-chart) components.
 
 <Demo data={AreaChartDemos.seriesLabels} />
+
+## Charts value formatter
+
+All `@mantine/charts` components now support `valueFormatter` prop, which allows
+formatting value that is displayed on the y axis and inside the tooltip.
+
+<Demo data={AreaChartDemos.valueFormatter} />
 
 ## Headings text wrap
 

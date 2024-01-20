@@ -102,3 +102,8 @@ export const Demo_seriesLabels = {
   name: '⭐ Demo: seriesLabels',
   render: renderDemo(demos.seriesLabels),
 };
+
+export const Demo_valueFormatter = {
+  name: '⭐ Demo: valueFormatter',
+  render: renderDemo(demos.valueFormatter),
+};

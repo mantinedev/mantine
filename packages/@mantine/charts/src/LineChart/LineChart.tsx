@@ -284,6 +284,7 @@ export const LineChart = factory<LineChartFactory>((_props, ref) => {
             tick={{ transform: 'translate(-10, 0)', fontSize: 12, fill: 'currentColor' }}
             allowDecimals
             unit={unit}
+            tickFormatter={valueFormatter}
             {...getStyles('axis')}
             {...yAxisProps}
           />

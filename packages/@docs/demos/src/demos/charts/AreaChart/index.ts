@@ -25,3 +25,4 @@ export { xAxisOffset } from './AreaChart.demo.xAxisOffset';
 export { yScale } from './AreaChart.demo.yScale';
 export { referenceLines } from './AreaChart.demo.referenceLines';
 export { seriesLabels } from './AreaChart.demo.seriesLabels';
+export { valueFormatter } from './AreaChart.demo.valueFormatter';

@@ -94,6 +94,13 @@ your data will always be in the range of 0 to 100, you can set domain to `[0, 10
 
 <Demo data={AreaChartDemos.yScale} />
 
+## Value formatter
+
+To format values in the tooltip and axis ticks, use `valueFormat` prop. It accepts
+a function that takes number value as an argument and returns formatted value:
+
+<Demo data={AreaChartDemos.valueFormatter} />
+
 ## Area color
 
 You can reference colors from [theme](/theming/theme-object) the same way as in
