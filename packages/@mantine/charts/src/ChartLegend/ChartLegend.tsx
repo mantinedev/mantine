@@ -24,9 +24,16 @@ export interface ChartLegendProps
   extends BoxProps,
     StylesApiProps<ChartLegendFactory>,
     ElementProps<'div'> {
+  /** Chart data provided by recharts */
   payload: Record<string, any>[] | undefined;
+
+  /** Function called when mouse enters/leaves one of the legend items */
   onHighlight: (area: string | null) => void;
+
+  /** Position of the legend relative to the chart, used to apply margin on the corresponding side */
   legendPosition: 'top' | 'bottom' | 'middle';
+
+  /** Data used for labels, only applicable for area charts: AreaChart, LineChart, BarChart */
   series?: ChartSeries[];
 }
 
