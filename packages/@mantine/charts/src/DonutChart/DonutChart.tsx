@@ -98,6 +98,9 @@ export interface DonutChartProps
 
   /** Props passed down to recharts `PieChart` component */
   pieChartProps?: React.ComponentPropsWithoutRef<typeof ReChartsPieChart>;
+
+  /** A function to format values inside the tooltip */
+  valueFormatter?: (value: number) => string;
 }
 
 export type DonutChartFactory = Factory<{
@@ -155,6 +158,7 @@ export const DonutChart = factory<DonutChartFactory>((_props, ref) => {
     chartLabel,
     children,
     pieChartProps,
+    valueFormatter,
     ...others
   } = props;
 
@@ -246,6 +250,7 @@ export const DonutChart = factory<DonutChartFactory>((_props, ref) => {
                   styles={resolvedStyles}
                   type="radial"
                   segmentId={tooltipDataSource === 'segment' ? payload?.[0]?.name : undefined}
+                  valueFormatter={valueFormatter}
                 />
               )}
               {...tooltipProps}

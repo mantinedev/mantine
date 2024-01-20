@@ -96,6 +96,9 @@ export interface PieChartProps
 
   /** Controls labels position relative to the segment, `'outside'` by default */
   labelsPosition?: 'inside' | 'outside';
+
+  /** A function to format values inside the tooltip */
+  valueFormatter?: (value: number) => string;
 }
 
 export type PieChartFactory = Factory<{
@@ -171,6 +174,7 @@ export const PieChart = factory<PieChartFactory>((_props, ref) => {
     children,
     pieChartProps,
     labelsPosition,
+    valueFormatter,
     ...others
   } = props;
 
@@ -252,6 +256,7 @@ export const PieChart = factory<PieChartFactory>((_props, ref) => {
                   styles={resolvedStyles}
                   type="radial"
                   segmentId={tooltipDataSource === 'segment' ? payload?.[0]?.name : undefined}
+                  valueFormatter={valueFormatter}
                 />
               )}
               {...tooltipProps}

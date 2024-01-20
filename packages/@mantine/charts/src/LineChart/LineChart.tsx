@@ -156,6 +156,7 @@ export const LineChart = factory<LineChartFactory>((_props, ref) => {
     curveType,
     orientation,
     dir,
+    valueFormatter,
     ...others
   } = props;
 
@@ -313,6 +314,7 @@ export const LineChart = factory<LineChartFactory>((_props, ref) => {
                   classNames={resolvedClassNames}
                   styles={resolvedStyles}
                   series={series}
+                  valueFormatter={valueFormatter}
                 />
               )}
               {...tooltipProps}

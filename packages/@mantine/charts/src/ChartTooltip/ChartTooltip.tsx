@@ -65,6 +65,9 @@ export interface ChartTooltipProps
 
   /** Chart series data, applicable only for `area` type */
   series?: ChartSeries[];
+
+  /** A function to format values */
+  valueFormatter?: (value: number) => string;
 }
 
 export type ChartTooltipFactory = Factory<{
@@ -93,6 +96,7 @@ export const ChartTooltip = factory<ChartTooltipFactory>((_props, ref) => {
     segmentId,
     mod,
     series,
+    valueFormatter,
     ...others
   } = props;
 
@@ -128,7 +132,9 @@ export const ChartTooltip = factory<ChartTooltipFactory>((_props, ref) => {
         <div {...getStyles('tooltipItemName')}>{labels[item.name] || item.name}</div>
       </div>
       <div {...getStyles('tooltipItemData')}>
-        {getData(item, type!)}
+        {typeof valueFormatter === 'function'
+          ? valueFormatter(getData(item, type!))
+          : getData(item, type!)}
         {unit}
       </div>
     </div>

@@ -85,4 +85,7 @@ export interface GridChartBaseProps {
 
   /** Chart orientation, `'horizontal'` by default */
   orientation?: 'horizontal' | 'vertical';
+
+  /** A function to format values on Y axis and inside the tooltip */
+  valueFormatter?: (value: number) => string;
 }

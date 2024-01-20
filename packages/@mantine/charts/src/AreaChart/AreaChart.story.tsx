@@ -115,7 +115,28 @@ export function Usage() {
         withGradient
         withLegend
         series={[
-          { name: 'Apples', color: 'indigo.6', strokeDasharray: '5 5', label: 'test label' },
+          { name: 'Apples', color: 'indigo.6', strokeDasharray: '5 5' },
+          { name: 'Oranges', color: 'blue.6' },
+          { name: 'Tomatoes', color: 'teal.6' },
+        ]}
+      />
+    </div>
+  );
+}
+
+export function ValueFormatter() {
+  return (
+    <div style={{ padding: 40 }}>
+      <AreaChart
+        h={400}
+        data={data}
+        dataKey="date"
+        curveType="linear"
+        withGradient
+        withLegend
+        valueFormatter={(value) => `$ ${new Intl.NumberFormat('en-US').format(value)}`}
+        series={[
+          { name: 'Apples', color: 'indigo.6', strokeDasharray: '5 5' },
           { name: 'Oranges', color: 'blue.6' },
           { name: 'Tomatoes', color: 'teal.6' },
         ]}

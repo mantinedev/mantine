@@ -134,6 +134,7 @@ export const BarChart = factory<BarChartFactory>((_props, ref) => {
     type,
     orientation,
     dir,
+    valueFormatter,
     ...others
   } = props;
 
@@ -290,6 +291,7 @@ export const BarChart = factory<BarChartFactory>((_props, ref) => {
                   classNames={resolvedClassNames}
                   styles={resolvedStyles}
                   series={series}
+                  valueFormatter={valueFormatter}
                 />
               )}
               {...tooltipProps}
