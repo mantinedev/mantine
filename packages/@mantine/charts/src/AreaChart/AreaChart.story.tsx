@@ -115,7 +115,7 @@ export function Usage() {
         withGradient
         withLegend
         series={[
-          { name: 'Apples', color: 'indigo.6', strokeDasharray: '5 5' },
+          { name: 'Apples', color: 'indigo.6', strokeDasharray: '5 5', label: 'test label' },
           { name: 'Oranges', color: 'blue.6' },
           { name: 'Tomatoes', color: 'teal.6' },
         ]}

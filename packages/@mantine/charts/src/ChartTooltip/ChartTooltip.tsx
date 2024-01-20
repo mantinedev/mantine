@@ -12,6 +12,8 @@ import {
   useProps,
   useStyles,
 } from '@mantine/core';
+import { ChartSeries } from '../types';
+import { getSeriesLabels } from '../utils';
 import classes from './ChartTooltip.module.css';
 
 export function getFilteredChartTooltipPayload(payload: Record<string, any>[], segmentId?: string) {
@@ -60,6 +62,9 @@ export interface ChartTooltipProps
 
   /** Id of the segment to display data for. Only applicable when `type="radial"`. If not set, all data is rendered. */
   segmentId?: string;
+
+  /** Chart series data, applicable only for `area` type */
+  series?: ChartSeries[];
 }
 
 export type ChartTooltipFactory = Factory<{
@@ -87,6 +92,7 @@ export const ChartTooltip = factory<ChartTooltipFactory>((_props, ref) => {
     type,
     segmentId,
     mod,
+    series,
     ...others
   } = props;
 
@@ -108,6 +114,7 @@ export const ChartTooltip = factory<ChartTooltipFactory>((_props, ref) => {
   }
 
   const filteredPayload = getFilteredChartTooltipPayload(payload, segmentId);
+  const labels = getSeriesLabels(series);
 
   const items = filteredPayload.map((item) => (
     <div key={item.name} {...getStyles('tooltipItem')}>
@@ -118,7 +125,7 @@ export const ChartTooltip = factory<ChartTooltipFactory>((_props, ref) => {
           {...getStyles('tooltipItemColor')}
           withShadow={false}
         />
-        <div {...getStyles('tooltipItemName')}>{item.name}</div>
+        <div {...getStyles('tooltipItemName')}>{labels[item.name] || item.name}</div>
       </div>
       <div {...getStyles('tooltipItemData')}>
         {getData(item, type!)}

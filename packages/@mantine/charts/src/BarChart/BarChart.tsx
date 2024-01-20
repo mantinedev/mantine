@@ -230,6 +230,7 @@ export const BarChart = factory<BarChartFactory>((_props, ref) => {
                   legendPosition={legendProps?.verticalAlign || 'top'}
                   classNames={resolvedClassNames}
                   styles={resolvedStyles}
+                  series={series}
                 />
               )}
               height={44}
@@ -288,6 +289,7 @@ export const BarChart = factory<BarChartFactory>((_props, ref) => {
                   unit={unit}
                   classNames={resolvedClassNames}
                   styles={resolvedStyles}
+                  series={series}
                 />
               )}
               {...tooltipProps}

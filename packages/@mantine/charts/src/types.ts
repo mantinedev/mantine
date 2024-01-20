@@ -18,6 +18,7 @@ export interface ChartReferenceLineProps extends Omit<ReferenceLineProps, 'ref' 
 export interface ChartSeries {
   name: string;
   color: MantineColor;
+  label?: string;
 }
 
 export type BaseChartStylesNames = 'root' | 'container' | 'axis' | 'grid' | 'referenceLine';

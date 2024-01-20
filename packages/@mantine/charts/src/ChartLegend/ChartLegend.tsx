@@ -10,6 +10,8 @@ import {
   useProps,
   useStyles,
 } from '@mantine/core';
+import { ChartSeries } from '../types';
+import { getSeriesLabels } from '../utils';
 import classes from './ChartLegend.module.css';
 
 export function getFilteredChartLegendPayload(payload: Record<string, any>[]) {
@@ -25,6 +27,7 @@ export interface ChartLegendProps
   payload: Record<string, any>[] | undefined;
   onHighlight: (area: string | null) => void;
   legendPosition: 'top' | 'bottom' | 'middle';
+  series?: ChartSeries[];
 }
 
 export type ChartLegendFactory = Factory<{
@@ -48,6 +51,7 @@ export const ChartLegend = factory<ChartLegendFactory>((_props, ref) => {
     onHighlight,
     legendPosition,
     mod,
+    series,
     ...others
   } = props;
 
@@ -67,6 +71,7 @@ export const ChartLegend = factory<ChartLegendFactory>((_props, ref) => {
   }
 
   const filteredPayload = getFilteredChartLegendPayload(payload);
+  const labels = getSeriesLabels(series);
 
   const items = filteredPayload.map((item, index) => (
     <div
@@ -81,7 +86,7 @@ export const ChartLegend = factory<ChartLegendFactory>((_props, ref) => {
         {...getStyles('legendItemColor')}
         withShadow={false}
       />
-      <p {...getStyles('legendItemName')}>{item.dataKey}</p>
+      <p {...getStyles('legendItemName')}>{labels[item.dataKey] || item.dataKey}</p>
     </div>
   ));
 

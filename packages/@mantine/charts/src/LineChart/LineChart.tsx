@@ -255,6 +255,7 @@ export const LineChart = factory<LineChartFactory>((_props, ref) => {
                   legendPosition={legendProps?.verticalAlign || 'top'}
                   classNames={resolvedClassNames}
                   styles={resolvedStyles}
+                  series={series}
                 />
               )}
               height={44}
@@ -311,6 +312,7 @@ export const LineChart = factory<LineChartFactory>((_props, ref) => {
                   unit={unit}
                   classNames={resolvedClassNames}
                   styles={resolvedStyles}
+                  series={series}
                 />
               )}
               {...tooltipProps}
