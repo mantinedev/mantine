@@ -7,3 +7,4 @@ export { composition } from './Pagination.demo.composition';
 export { icons } from './Pagination.demo.icons';
 export { links } from './Pagination.demo.links';
 export { withContent } from './Pagination.demo.withContent';
+export { autoContrast } from './Pagination.demo.autoContrast';
