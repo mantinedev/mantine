@@ -48,6 +48,11 @@ export const Demo_legend = {
   render: renderDemo(demos.legend),
 };
 
+export const Demo_legendFormatter = {
+  name: '⭐ Demo: legendFormatter',
+  render: renderDemo(demos.legendFormatter),
+};
+
 export const Demo_legendPosition = {
   name: '⭐ Demo: legendPosition',
   render: renderDemo(demos.legendPosition),
@@ -86,6 +91,11 @@ export const Demo_sync = {
 export const Demo_tooltipAnimation = {
   name: '⭐ Demo: tooltipAnimation',
   render: renderDemo(demos.tooltipAnimation),
+};
+
+export const Demo_tooltipFormatter = {
+  name: '⭐ Demo: tooltipFormatter',
+  render: renderDemo(demos.tooltipFormatter),
 };
 
 export const Demo_unit = {
