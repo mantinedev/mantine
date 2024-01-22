@@ -1,0 +1,94 @@
+import { AvatarDemos } from '@docs/demos';
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.Avatar);
+
+## Usage
+
+<Demo data={AvatarDemos.usage} />
+
+## Placeholder
+
+If the image cannot be loaded or not provided, `Avatar` will display a placeholder instead. By default,
+placeholder is an icon, but it can be changed to any React node:
+
+<Demo data={AvatarDemos.placeholders} />
+
+## Variants
+
+<Demo data={AvatarDemos.configurator} />
+
+## Avatar.Group
+
+`Avatar.Group` component combines multiple avatars into a stack:
+
+<Demo data={AvatarDemos.group} />
+
+Note that you must not wrap child `Avatar` components with any additional elements,
+but you can use wrap `Avatar` with components that do not render any HTML elements
+in the current tree, for example [Tooltip](/core/tooltip).
+
+```tsx
+import { Avatar } from '@mantine/core';
+
+// Will not work correctly
+function Demo() {
+  return (
+    <Avatar.Group spacing="sm">
+      <div>
+        <Avatar src="image.png" radius="xl" />
+      </div>
+      <Avatar src="image.png" radius="xl" />
+      <Avatar src="image.png" radius="xl" />
+      <Avatar radius="xl">+5</Avatar>
+    </Avatar.Group>
+  );
+}
+```
+
+Example of usage with [Tooltip](/core/tooltip/):
+
+<Demo data={AvatarDemos.groupTooltip} />
+
+<Polymorphic
+  defaultElement="div"
+  changeToElement="button"
+  component="Avatar"
+  withNext
+/>
+
+<Demo data={AvatarDemos.link} />
+
+You can combine it with [Tooltip](/core/tooltip/) or [Popover](/core/popover/) to show additional information on hover
+
+<Demo data={AvatarDemos.groupTooltip} />
+
+## Accessibility
+
+Avatar renders `<img />` HTML element. Set `alt` prop to describe image,
+it is also used as `title` attribute for avatar placeholder when the image cannot be loaded.
+
+```tsx
+import { Avatar } from '@mantine/core';
+
+function NotOk() {
+  // Not ok, no alt for image
+  return <Avatar src="./image.png" />;
+}
+
+function Ok() {
+  // Ok, alt is set on <img /> tag
+  return <Avatar src="./image.png" alt="Rob Johnson" />;
+}
+
+function Ehh() {
+  // Ehh, title is not required, but still recommended
+  return <Avatar>RJ</Avatar>;
+}
+
+function OkPlaceholder() {
+  // Ok, title is set on placeholder
+  return <Avatar alt="Rob Johnson">RJ</Avatar>;
+}
+```

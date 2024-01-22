@@ -1,35 +1,19 @@
 import React from 'react';
-import { Text, Box } from '@mantine/core';
-import { AccordionDemo, TimelineBase } from '@mantine/demos';
+import { Box, Text } from '@mantine/core';
+import { AccordionDemo, TimelineBase } from '@docs/demos';
 
 export function Content() {
   return (
     <div>
-      <Text
-        mb="sm"
-        size="lg"
-        weight={700}
-        sx={(theme) => ({ fontFamily: `Greycliff CF, ${theme.fontFamily}` })}
-      >
+      <Text mb="sm" size="lg" fw={700} style={{ fontFamily: 'var(--docs-font-primary)' }}>
         Accordion component
       </Text>
 
-      <Box
-        sx={(theme) => ({
-          backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.white,
-          borderRadius: theme.radius.sm,
-        })}
-      >
+      <Box bg="var(--mantine-color-body)" style={{ borderRadius: 'var(--mantine-radius-sm)' }}>
         <AccordionDemo />
       </Box>
 
-      <Text
-        mb="sm"
-        mt={40}
-        size="lg"
-        weight={700}
-        sx={(theme) => ({ fontFamily: `Greycliff CF, ${theme.fontFamily}` })}
-      >
+      <Text mb="sm" mt={40} size="lg" fw={700} style={{ fontFamily: 'var(--docs-font-primary)' }}>
         Timeline component
       </Text>
       <TimelineBase />

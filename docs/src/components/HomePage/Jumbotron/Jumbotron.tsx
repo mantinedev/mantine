@@ -1,26 +1,23 @@
 import React from 'react';
-import { Link } from 'gatsby';
-import { Container, Group, Button, Text, useMantineTheme, SimpleGrid, rem } from '@mantine/core';
-import { GithubIcon } from '@mantine/ds';
-import { Hero } from './Hero';
+import Link from 'next/link';
+import { Button, Container, Group, rem, SimpleGrid, Text } from '@mantine/core';
+import { GithubIcon } from '@mantinex/dev-icons';
 import { FEATURES_DATA } from './features';
-import useStyles from './Jumbotron.styles';
+import { Hero } from './Hero';
+import classes from './Jumbotron.module.css';
 
 export function Jumbotron() {
-  const { classes, cx } = useStyles();
-  const theme = useMantineTheme();
-
   const features = FEATURES_DATA.map((feature) => (
     <div className={classes.feature} key={feature.title}>
       <div className={classes.featureIcon}>
-        <feature.icon size={rem(28)} stroke={1.5} />
+        <feature.icon style={{ width: rem(28), height: rem(28) }} stroke={1.5} />
       </div>
 
       <div className={classes.featureBody}>
-        <Text weight={500} className={classes.featureTitle}>
+        <Text fw={500} className={classes.featureTitle}>
           {feature.title}
         </Text>
-        <Text size="sm" color="dimmed" mt={4}>
+        <Text size="sm" c="dimmed" mt={4}>
           {feature.description}
         </Text>
       </div>
@@ -37,23 +34,18 @@ export function Jumbotron() {
           more than 100 customizable components and 50 hooks to cover you in any situation
         </Text>
 
-        <SimpleGrid
-          cols={3}
-          sx={{ maxWidth: rem(800) }}
-          spacing={30}
-          mt={40}
-          breakpoints={[{ maxWidth: 800, cols: 1 }]}
-        >
+        <SimpleGrid cols={{ base: 1, md: 3 }} style={{ maxWidth: rem(800) }} spacing={30} mt={40}>
           {features}
         </SimpleGrid>
 
         <Group className={classes.controls}>
           <Button
             component={Link}
-            to="/pages/getting-started/"
+            href="/getting-started/"
             size="xl"
             radius="md"
-            className={cx(classes.control, classes.controlPrimary)}
+            className={classes.control}
+            data-primary
             variant="gradient"
           >
             Get started
@@ -65,10 +57,9 @@ export function Jumbotron() {
             size="xl"
             variant="outline"
             radius="md"
-            className={cx(classes.control, classes.githubControl)}
-            color={theme.colorScheme === 'dark' ? 'gray' : 'dark'}
-            leftIcon={<GithubIcon size={22} />}
-            styles={{ leftIcon: { marginRight: rem(12) } }}
+            className={classes.control}
+            data-github
+            leftSection={<GithubIcon size={22} />}
           >
             GitHub
           </Button>

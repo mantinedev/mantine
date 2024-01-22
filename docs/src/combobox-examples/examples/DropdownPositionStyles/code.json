@@ -1,0 +1,12 @@
+[
+  {
+    "fileName": "DropdownPositionStyles.tsx",
+    "language": "tsx",
+    "code": "import { useState } from 'react';\nimport { Combobox, Input, InputBase, useCombobox } from '@mantine/core';\nimport classes from './DropdownPositionStyles.module.css';\n\nconst groceries = [\n  '🍎 Apples',\n  '🍌 Bananas',\n  '🥦 Broccoli',\n  '🥕 Carrots',\n  '🍫 Chocolate',\n  '🍇 Grapes',\n];\n\nexport function DropdownPositionStyles() {\n  const combobox = useCombobox({\n    onDropdownClose: () => combobox.resetSelectedOption(),\n  });\n\n  const [value, setValue] = useState<string | null>(null);\n\n  const options = groceries.map((item) => (\n    <Combobox.Option value={item} key={item}>\n      {item}\n    </Combobox.Option>\n  ));\n\n  return (\n    <Combobox\n      store={combobox}\n      withinPortal={false}\n      offset={0}\n      onOptionSubmit={(val) => {\n        setValue(val);\n        combobox.closeDropdown();\n      }}\n    >\n      <Combobox.Target>\n        <InputBase\n          component=\"button\"\n          type=\"button\"\n          pointer\n          rightSection={<Combobox.Chevron />}\n          onClick={() => combobox.toggleDropdown()}\n          rightSectionPointerEvents=\"none\"\n          classNames={{ input: classes.input }}\n        >\n          {value || <Input.Placeholder>Pick value</Input.Placeholder>}\n        </InputBase>\n      </Combobox.Target>\n\n      <Combobox.Dropdown className={classes.dropdown}>\n        <Combobox.Options>{options}</Combobox.Options>\n      </Combobox.Dropdown>\n    </Combobox>\n  );\n}\n"
+  },
+  {
+    "fileName": "DropdownPositionStyles.module.css",
+    "language": "css",
+    "code": ".dropdown {\n  border-top: 0;\n  border-top-right-radius: 0;\n  border-top-left-radius: 0;\n  border-color: light-dark(var(--mantine-color-gray-4), var(--mantine-color-dark-4));\n}\n\n.input {\n  &[data-expanded] {\n    border-bottom-right-radius: 0;\n    border-bottom-left-radius: 0;\n  }\n}\n"
+  }
+]

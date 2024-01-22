@@ -1,0 +1,41 @@
+import { TooltipDemos, TransitionDemos } from '@docs/demos';
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.Transition);
+
+## Premade transitions
+
+Mantine includes several premade transitions:
+
+<Demo data={TooltipDemos.transitions} />
+
+To use one of them set `transition` property to one of these values:
+
+```tsx
+import { Transition } from '@mantine/core';
+
+function Demo({ opened }: { opened: boolean }) {
+  return (
+    <Transition
+      mounted={opened}
+      transition="fade"
+      duration={400}
+      timingFunction="ease"
+    >
+      {(styles) => <div style={styles}>Your modal</div>}
+    </Transition>
+  );
+}
+```
+
+## Custom transitions
+
+You can create your own transition. `transition` is an object with 4 properties:
+
+- `in` – styles for mounted state
+- `out` – styles for unmounted state
+- `common` (optional) – styles for both mounted and unmounted states
+- `transitionProperty` – properties which participate in transition
+
+<Demo data={TransitionDemos.custom} />

@@ -1,31 +1,19 @@
 import React from 'react';
-import { MdxPageHeader } from './MdxPageHeader/MdxPageHeader';
-import { MdxPageTabs } from './MdxPageTabs/MdxPageTabs';
-import { MdxRawContent } from './MdxRawContent/MdxRawContent';
-import { MdxErrorPage } from './MdxErrorPage/MdxErrorPage';
-import { MdxPageProps, Frontmatter } from '../../types';
+import { MdxPageHeader } from '@/components/MdxPageHeader';
+import { MdxRawContent } from '@/components/MdxRawContent';
+import { MdxTabs } from '@/components/MdxTabs';
+import { Frontmatter } from '@/types';
 
-interface _MdxPageProps extends MdxPageProps {
-  siblings: {
-    next: Frontmatter;
-    prev: Frontmatter;
-  };
+interface MdxPageProps {
+  meta: Frontmatter;
+  children: React.ReactNode;
 }
 
-export function MdxPage(props: _MdxPageProps) {
-  if (props.frontmatter.error) {
-    return <MdxErrorPage {...props} />;
-  }
-
+export function MdxPage(props: MdxPageProps) {
   return (
     <>
       <MdxPageHeader {...props} />
-
-      {Array.isArray(props.frontmatter.props) ? (
-        <MdxPageTabs {...props} />
-      ) : (
-        <MdxRawContent {...props} />
-      )}
+      {Array.isArray(props.meta.props) ? <MdxTabs {...props} /> : <MdxRawContent {...props} />}
     </>
   );
 }

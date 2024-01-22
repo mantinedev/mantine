@@ -1,20 +1,13 @@
-import React from 'react';
-import { Paper, SimpleGrid, Input } from '@mantine/core';
-import { DatePickerInput, TimeInput, DatePicker, DateTimePicker } from '@mantine/dates';
 import dayjs from 'dayjs';
+import React from 'react';
+import { Input, Paper, SimpleGrid } from '@mantine/core';
+import { DatePicker, DatePickerInput, DateTimePicker, TimeInput } from '@mantine/dates';
+import classes from './Demos.module.css';
 
 function CalendarWrapper() {
   return (
     <Input.Wrapper labelElement="div" label="Calendar">
-      <Paper
-        withBorder
-        p="md"
-        sx={(theme) => ({
-          display: 'flex',
-          justifyContent: 'center',
-          backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.white,
-        })}
-      >
+      <Paper withBorder p="md" className={classes.calendarWrapper}>
         <DatePicker />
       </Paper>
     </Input.Wrapper>
@@ -24,15 +17,7 @@ function CalendarWrapper() {
 function RangeCalendarWrapper() {
   return (
     <Input.Wrapper labelElement="div" label="Range calendar">
-      <Paper
-        withBorder
-        p="md"
-        sx={(theme) => ({
-          display: 'flex',
-          justifyContent: 'center',
-          backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.white,
-        })}
-      >
+      <Paper withBorder p="md" className={classes.calendarWrapper}>
         <DatePicker
           type="range"
           defaultValue={[
@@ -48,9 +33,8 @@ function RangeCalendarWrapper() {
 export function Dates() {
   return (
     <SimpleGrid
-      cols={2}
-      breakpoints={[{ maxWidth: 'sm', cols: 1 }]}
-      sx={(theme) => ({ rowGap: theme.spacing.md })}
+      cols={{ base: 1, sm: 2 }}
+      style={{ rowGap: 'var(--mantine-spacing-md' }}
       spacing="xl"
     >
       <DatePickerInput label="Date picker input" placeholder="Pick one date" />

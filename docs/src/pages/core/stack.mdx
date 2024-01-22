@@ -1,0 +1,14 @@
+import { StackDemos } from '@docs/demos';
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.Stack);
+
+## Usage
+
+`Stack` is a vertical flex container. If you need a horizontal flex container, use [Group](/core/group)
+component instead. If you need to have full control over flex container properties, use [Flex](/core/flex) component.
+
+<Demo data={StackDemos.configurator} />
+
+<FlexboxGapSupport component="Stack" />

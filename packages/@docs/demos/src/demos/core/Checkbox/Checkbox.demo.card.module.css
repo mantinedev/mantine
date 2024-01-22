@@ -1,0 +1,43 @@
+.root {
+  position: relative;
+}
+
+.control {
+  background-color: light-dark(var(--mantine-color-white), var(--mantine-color-dark-7));
+  border: rem(1px) solid light-dark(var(--mantine-color-gray-3), var(--mantine-color-dark-4));
+  padding: var(--mantine-spacing-md);
+  padding-left: rem(60px);
+  border-radius: var(--mantine-radius-md);
+  transition: border-color 100ms ease;
+
+  &[data-checked] {
+    border-color: var(--mantine-color-blue-filled);
+  }
+}
+
+.checkboxWrapper {
+  position: absolute;
+  top: var(--mantine-spacing-md);
+  left: var(--mantine-spacing-md);
+  pointer-events: none;
+}
+
+.checkbox {
+  &:not(:checked) {
+    background-color: var(--mantine-color-body);
+  }
+}
+
+.label {
+  font-family: var(--mantine-font-family-monospace);
+  font-weight: bold;
+  font-size: var(--mantine-font-size-md);
+  line-height: 1.3;
+  color: var(--mantine-color-bright);
+}
+
+.description {
+  margin-top: rem(8px);
+  color: var(--mantine-color-dimmed);
+  font-size: var(--mantine-font-size-xs);
+}

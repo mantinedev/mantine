@@ -1,0 +1,67 @@
+{
+  "name": "@docs/demos",
+  "version": "1.0.0",
+  "description": "Mantine components demos used on mantine.dev website",
+  "homepage": "https://mantine.dev",
+  "license": "MIT",
+  "author": "Vitaly Rtishchev <rtivital@gmail.com>",
+  "keywords": [
+    "jest",
+    "mantine",
+    "tests"
+  ],
+  "sideEffects": [
+    "*.css"
+  ],
+  "main": "./cjs/index.cjs",
+  "module": "./esm/index.mjs",
+  "types": "./lib/index.d.ts",
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./lib/index.d.mts",
+        "default": "./esm/index.mjs"
+      },
+      "require": {
+        "types": "./lib/index.d.ts",
+        "default": "./cjs/index.cjs"
+      }
+    },
+    "./styles.css": "./styles.css",
+    "./styles.layer.css": "./styles.layer.css"
+  },
+  "repository": {
+    "url": "https://github.com/mantinedev/mantine.git",
+    "type": "git",
+    "directory": "packages/@docs/demos"
+  },
+  "peerDependencies": {
+    "@tabler/icons-react": "*",
+    "@tiptap/extension-link": "*",
+    "@tiptap/react": "*",
+    "dayjs": "*",
+    "embla-carousel-react": "*",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "recharts": "^2.10.3",
+    "shikiji": "^0.7.4"
+  },
+  "devDependencies": {
+    "@docs/styles-api": "workspace:*",
+    "@mantine/carousel": "workspace:*",
+    "@mantine/charts": "workspace:*",
+    "@mantine/code-highlight": "workspace:*",
+    "@mantine/core": "workspace:*",
+    "@mantine/dates": "workspace:*",
+    "@mantine/dropzone": "workspace:*",
+    "@mantine/form": "workspace:*",
+    "@mantine/hooks": "workspace:*",
+    "@mantine/notifications": "workspace:*",
+    "@mantine/nprogress": "workspace:*",
+    "@mantine/spotlight": "workspace:*",
+    "@mantine/tiptap": "workspace:*",
+    "@mantinex/demo": "workspace:*",
+    "@mantinex/dev-icons": "workspace:*",
+    "@mantinex/shiki": "workspace:*"
+  }
+}

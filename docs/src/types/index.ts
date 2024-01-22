@@ -1,2 +1,2 @@
-export type { Frontmatter } from './Frontmatter';
-export type { MdxPageProps } from './MdxPageProps';
+export * from './NavbarData';
+export * from './MdxContent';

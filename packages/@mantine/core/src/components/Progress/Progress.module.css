@@ -1,0 +1,94 @@
+@keyframes stripes-animation {
+  0% {
+    background-position: 0 0;
+  }
+
+  100% {
+    background-position: rem(40px) 0;
+  }
+}
+
+.root {
+  --progress-radius: var(--mantine-radius-default);
+  --progress-size-xs: rem(3px);
+  --progress-size-sm: rem(5px);
+  --progress-size-md: rem(8px);
+  --progress-size-lg: rem(12px);
+  --progress-size-xl: rem(16px);
+  --progress-size: var(--progress-size-md);
+
+  position: relative;
+  height: var(--progress-size);
+  border-radius: var(--progress-radius);
+  overflow: hidden;
+  background-color: var(--_track-bg);
+  display: flex;
+
+  @mixin light {
+    --_track-bg: var(--mantine-color-gray-2);
+  }
+
+  @mixin dark {
+    --_track-bg: var(--mantine-color-dark-4);
+  }
+}
+
+.section {
+  background-color: var(--progress-section-color);
+  height: 100%;
+  width: var(--progress-section-width);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  border-radius: var(--_section-radius);
+  background-size: rem(20px) rem(20px);
+  background-image: var(--_section-gradient);
+  animation: var(--_section-animation);
+
+  &[data-striped] {
+    --_section-gradient: linear-gradient(
+      45deg,
+      rgba(255, 255, 255, 0.15) 25%,
+      transparent 25%,
+      transparent 50%,
+      rgba(255, 255, 255, 0.15) 50%,
+      rgba(255, 255, 255, 0.15) 75%,
+      transparent 75%,
+      transparent
+    );
+  }
+
+  &[data-animated] {
+    --_section-animation: stripes-animation 1s linear infinite;
+  }
+
+  &:last-of-type {
+    --_section-radius: 0 var(--progress-radius) var(--progress-radius) 0;
+
+    @mixin rtl {
+      --_section-radius: var(--progress-radius) 0 0 var(--progress-radius);
+    }
+  }
+
+  &:first-of-type {
+    --_section-radius: var(--progress-radius) 0 0 var(--progress-radius);
+
+    @mixin rtl {
+      --_section-radius: 0 var(--progress-radius) var(--progress-radius) 0;
+    }
+  }
+}
+
+.label {
+  color: var(--progress-label-color, var(--mantine-color-white));
+  font-weight: bold;
+  user-select: none;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  font-size: min(calc(var(--progress-size) * 0.65), rem(18px));
+  line-height: 1;
+  padding-left: rem(4px);
+  padding-right: rem(4px);
+}

@@ -11,31 +11,25 @@
 ## Links
 
 - [Documentation](https://mantine.dev/)
-- [Contributing](https://mantine.dev/pages/contributing/)
+- [Contribute](https://mantine.dev/contribute)
 - [Ask question or give feedback](https://github.com/mantinedev/mantine/discussions)
-- [Changelog](https://mantine.dev/pages/changelog/)
+- [Changelog](https://mantine.dev/changelog/previous-versions)
 - [Follow on Twitter](https://twitter.com/mantinedev)
 - [Join Discord community](https://discord.gg/wbH82zuWMN)
 
 ## Packages
 
 - `@mantine/hooks` – collection of 50+ hooks for state and UI management
-- [`@mantine/styles`](https://mantine.dev/styles/create-styles/) – [emotion](https://emotion.sh/) based css-in-js library that is used in all Mantine components
-- `@mantine/core` – core components library – 100+ components, exports everything from `@mantine/styles`
-- [`@mantine/form`](https://mantine.dev/form/use-form/) – forms management library
-- [`@mantine/notifications`](https://mantine.dev/others/notifications/) – a fully featured notifications system
-- [`@mantine/spotlight`](https://mantine.dev/others/spotlight/) – `Ctrl + K` command center for your application
-- [`@mantine/prism`](https://mantine.dev/others/prism/) – code highlight built with [prism-react-renderer](https://github.com/FormidableLabs/prism-react-renderer)
-- [`@mantine/tiptap`](https://mantine.dev/others/tiptap/) – a Tiptap based rich text editor
-- [`@mantine/dropzone`](https://mantine.dev/others/dropzone/) – manages files drag 'n' drop to an area or entire screen
-- [`@mantine/carousel`](https://mantine.dev/others/carousel/) – Carousel component
-- [`@mantine/nprogress`](https://mantine.dev/others/nprogress/) – navigation progress
-- [`@mantine/modals`](https://mantine.dev/others/modals/) – centralized modals manager
-- [`@mantine/ssr`](https://mantine.dev/guides/ssr/) – server side rendering utilities
-- [`@mantine/next`](https://mantine.dev/guides/next/) – server side rendering utilities for Next.js
-- [`@mantine/remix`](https://mantine.dev/guides/remix/) – server side rendering utilities for Remix
-- [`gatsby-plugin-mantine`](https://mantine.dev/guides/gatsby/) – Gatsby plugin to setup server side rendering
-- [`eslint-config-mantine`](https://www.npmjs.com/package/eslint-config-mantine) – ESLint and Prettier configuration that is used in all Mantine projects
+- `@mantine/core` – core components library – 100+ components
+- [`@mantine/form`](https://mantine.dev/form/use-form) – forms management library
+- [`@mantine/notifications`](https://mantine.dev/x/notifications) – a fully featured notifications system
+- [`@mantine/spotlight`](https://mantine.dev/x/spotlight) – `Ctrl + K` command center for your application
+- [`@mantine/code-highlight`](https://mantine.dev/x/code-highlight/) – code highlight built with [highlight.js](https://highlightjs.org/)
+- [`@mantine/tiptap`](https://mantine.dev/x/tiptap) – a Tiptap based rich text editor
+- [`@mantine/dropzone`](https://mantine.dev/x/dropzone) – manages files drag 'n' drop to an area or entire screen
+- [`@mantine/carousel`](https://mantine.dev/x/carousel) – Carousel component
+- [`@mantine/nprogress`](https://mantine.dev/x/nprogress) – navigation progress
+- [`@mantine/modals`](https://mantine.dev/x/modals) – centralized modals manager
 
 ## Getting help
 
@@ -50,7 +44,7 @@ Mantine has a very friendly community, we are always happy to help you get start
   <img src="https://contrib.rocks/image?repo=mantinedev/mantine" />
 </a>
 
-[Become a contributor](https://mantine.dev/pages/contributing/)
+[Become a contributor](https://mantine.dev/contribute)
 
 ## License
 

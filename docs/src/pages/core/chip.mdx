@@ -1,0 +1,90 @@
+import { ChipDemos } from '@docs/demos';
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.Chip);
+
+## Usage
+
+<Demo data={ChipDemos.configurator} />
+
+## Controlled
+
+```tsx
+import { useState } from 'react';
+import { Chip } from '@mantine/core';
+
+function Demo() {
+  const [checked, setChecked] = useState(false);
+
+  return (
+    <Chip checked={checked} onChange={() => setChecked((v) => !v)}>
+      My chip
+    </Chip>
+  );
+}
+```
+
+## Change checked icon
+
+<Demo data={ChipDemos.icon} />
+
+## States
+
+<Demo data={ChipDemos.states} />
+
+## Chip with tooltip
+
+To use `Chip` with [Tooltip](/core/tooltip/) and other similar components, set `refProp="rootRef"`
+on the Tooltip component:
+
+<Demo data={ChipDemos.tooltip} />
+
+<WrapperProps component="Chip" />
+
+## Chip.Group
+
+`Chip.Group` component manages state of child Chip components,
+set `multiple` prop to allow multiple chips to be selected at a time:
+
+<Demo data={ChipDemos.group} />
+
+## Controlled Chip.Group
+
+```tsx
+import { useState } from 'react';
+import { Chip } from '@mantine/core';
+
+function Single() {
+  // string value when multiple is false (default)
+  const [value, setValue] = useState('react');
+
+  return (
+    <Chip.Group multiple={false} value={value} onChange={setValue}>
+      <Chip value="react">React</Chip>
+      <Chip value="ng">Angular</Chip>
+      <Chip value="svelte">Svelte</Chip>
+      <Chip value="vue">Vue</Chip>
+    </Chip.Group>
+  );
+}
+
+function Multiple() {
+  // array of strings value when multiple is true
+  const [value, setValue] = useState(['react']);
+
+  return (
+    <Chip.Group multiple value={value} onChange={setValue}>
+      <Chip value="react">React</Chip>
+      <Chip value="ng">Angular</Chip>
+      <Chip value="svelte">Svelte</Chip>
+      <Chip value="vue">Vue</Chip>
+    </Chip.Group>
+  );
+}
+```
+
+## Accessibility
+
+`Chip` and `Chip.Group` components are accessible by default – they are built with native radio/checkbox inputs,
+all keyboard events work the same as with native controls.

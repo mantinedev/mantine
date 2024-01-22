@@ -1,0 +1,27 @@
+import { HooksDemos } from '@docs/demos';
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.useColorScheme);
+
+## Usage
+
+`use-color-scheme` hook returns system color scheme value i.e. either `dark` or `light`:
+
+<Demo data={HooksDemos.useColorSchemeDemo} />
+
+Hook uses [use-media-query](/hooks/use-media-query/) hook under the hood.
+It relies on `window.matchMedia()` [API](https://developer.mozilla.org/en-US/docs/Web/API/Window/matchMedia)
+and always returns `light` if the API is not available (e.g. during server side rendering)
+unless an initial value is provided in the first argument.
+
+## Definition
+
+```tsx
+function useColorScheme(
+  initialValue?: 'dark' | 'light',
+  options?: {
+    getInitialValueInEffect: boolean;
+  }
+): 'dark' | 'light';
+```

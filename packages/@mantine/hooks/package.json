@@ -1,0 +1,42 @@
+{
+  "name": "@mantine/hooks",
+  "version": "7.4.2",
+  "description": "A collection of 50+ hooks for state and UI management",
+  "homepage": "https://mantine.dev",
+  "license": "MIT",
+  "author": "Vitaly Rtishchev <rtivital@gmail.com>",
+  "keywords": [
+    "frontend",
+    "hooks",
+    "library",
+    "next",
+    "nextjs",
+    "react",
+    "react-hooks",
+    "state"
+  ],
+  "sideEffects": false,
+  "main": "./cjs/index.cjs",
+  "module": "./esm/index.mjs",
+  "types": "./lib/index.d.ts",
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./lib/index.d.mts",
+        "default": "./esm/index.mjs"
+      },
+      "require": {
+        "types": "./lib/index.d.ts",
+        "default": "./cjs/index.cjs"
+      }
+    }
+  },
+  "repository": {
+    "url": "https://github.com/mantinedev/mantine.git",
+    "type": "git",
+    "directory": "packages/@mantine/hooks"
+  },
+  "peerDependencies": {
+    "react": "^18.2.0"
+  }
+}

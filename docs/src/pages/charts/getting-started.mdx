@@ -1,0 +1,20 @@
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.GettingStartedCharts);
+
+## Installation
+
+<InstallScript packages="@mantine/charts recharts@2" />
+
+After installation import package styles at the root of your application:
+
+```tsx
+import '@mantine/charts/styles.css';
+```
+
+## Based on recharts
+
+Most of the components in `@mantine/charts` package are based on [recharts](https://recharts.org/) library.
+If you need advanced features that are not covered in `@mantine/charts`
+documentation, reference [recharts documentation](https://recharts.org/en-US/api) for more information.

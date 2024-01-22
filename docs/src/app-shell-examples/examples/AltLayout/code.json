@@ -1,0 +1,7 @@
+[
+  {
+    "fileName": "AltLayout.tsx",
+    "language": "tsx",
+    "code": "import { AppShell, Burger, Group, Skeleton, Text } from '@mantine/core';\nimport { useDisclosure } from '@mantine/hooks';\nimport { MantineLogo } from '@mantinex/mantine-logo';\n\nexport function AltLayout() {\n  const [opened, { toggle }] = useDisclosure();\n\n  return (\n    <AppShell\n      layout=\"alt\"\n      header={{ height: 60 }}\n      footer={{ height: 60 }}\n      navbar={{ width: 300, breakpoint: 'sm', collapsed: { mobile: !opened } }}\n      aside={{ width: 300, breakpoint: 'md', collapsed: { desktop: false, mobile: true } }}\n      padding=\"md\"\n    >\n      <AppShell.Header>\n        <Group h=\"100%\" px=\"md\">\n          <Burger opened={opened} onClick={toggle} hiddenFrom=\"sm\" size=\"sm\" />\n          <MantineLogo size={30} />\n        </Group>\n      </AppShell.Header>\n      <AppShell.Navbar p=\"md\">\n        <Group>\n          <Burger opened={opened} onClick={toggle} hiddenFrom=\"sm\" size=\"sm\" />\n          <Text>Navbar</Text>\n        </Group>\n        {Array(15)\n          .fill(0)\n          .map((_, index) => (\n            <Skeleton key={index} h={28} mt=\"sm\" animate={false} />\n          ))}\n      </AppShell.Navbar>\n      <AppShell.Main>\n        Alt layout – Navbar and Aside are rendered on top on Header and Footer\n      </AppShell.Main>\n      <AppShell.Aside p=\"md\">Aside</AppShell.Aside>\n      <AppShell.Footer p=\"md\">Footer</AppShell.Footer>\n    </AppShell>\n  );\n}\n"
+  }
+]

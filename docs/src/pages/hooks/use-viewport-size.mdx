@@ -1,0 +1,21 @@
+import { HooksDemos } from '@docs/demos';
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.useViewportSize);
+
+## Usage
+
+`use-viewport-size` returns current viewport's `width` and `height`, it subscribes to `resize` and `orientationchange` events,
+during ssr hook will return `{ width: 0, height: 0 }`:
+
+<Demo data={HooksDemos.useViewportSizeDemo} />
+
+## Definition
+
+```tsx
+function useViewportSize(): {
+  height: number;
+  width: number;
+};
+```

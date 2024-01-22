@@ -1,0 +1,74 @@
+import { CssFilesList } from '@/components/CssFilesList';
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.CSSFilesList);
+
+# CSS files list
+
+This page contains a list of CSS files that you can import from `@mantine/core` package
+as a replacement for `@mantine/core/styles.css`.
+
+## Components dependencies
+
+Some components require additional styles to work properly. For example, [Button](/core/button/)
+component is based on [UnstyledButton](/core/unstyled-button/). If you want to use [Button](/core/button/),
+you need to import styles for `UnstyledButton` as well.
+
+```tsx
+import '@mantine/core/styles/UnstyledButton.css';
+import '@mantine/core/styles/Button.css';
+```
+
+Some components like [Select](/core/select/) do not have any styles on their own – they are built
+on top of other components. To find out which components are used in a particular component, check
+the component source code.
+
+If you are not sure which components are used in a particular component, you can import
+all styles for components that are reused in other components:
+
+```tsx
+import '@mantine/core/styles/ScrollArea.css';
+import '@mantine/core/styles/UnstyledButton.css';
+import '@mantine/core/styles/VisuallyHidden.css';
+import '@mantine/core/styles/Paper.css';
+import '@mantine/core/styles/Popover.css';
+import '@mantine/core/styles/CloseButton.css';
+import '@mantine/core/styles/Group.css';
+import '@mantine/core/styles/Loader.css';
+import '@mantine/core/styles/Overlay.css';
+import '@mantine/core/styles/ModalBase.css';
+import '@mantine/core/styles/Input.css';
+import '@mantine/core/styles/Flex.css';
+```
+
+## Global styles
+
+All Mantine components depend on global styles, you need to import them before
+all other styles:
+
+```tsx
+import '@mantine/core/styles/global.css';
+```
+
+## Import order
+
+It is important to keep correct styles import order. For example, if you want to use
+[Button](/core/button/) component, you need to import styles for
+[UnstyledButton](/core/unstyled-button/) first and then import styles for [Button](/core/button/).
+
+```tsx
+// ✅ Correct order – Button styles will override UnstyledButton styles
+import '@mantine/core/styles/UnstyledButton.css';
+import '@mantine/core/styles/Button.css';
+```
+
+```tsx
+// ❌ Incorrect order – UnstyledButton styles will override Button styles
+import '@mantine/core/styles/Button.css';
+import '@mantine/core/styles/UnstyledButton.css';
+```
+
+## Files list
+
+<CssFilesList />

@@ -1,0 +1,178 @@
+import { MonthPickerDemos } from '@docs/demos';
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.MonthPicker);
+
+## Usage
+
+<Demo data={MonthPickerDemos.usage} />
+
+## Allow deselect
+
+Set `allowDeselect` to allow user to deselect current selected date by clicking on it.
+`allowDeselect` is disregarded when `type` prop is `range` or `multiple`. When date is
+deselected `onChange` is called with `null`.
+
+<Demo data={MonthPickerDemos.deselect} />
+
+## Multiple dates
+
+Set `type="multiple"` to allow user to pick multiple dates:
+
+<Demo data={MonthPickerDemos.multiple} />
+
+## Dates range
+
+Set `type="range"` to allow user to pick dates range:
+
+<Demo data={MonthPickerDemos.range} />
+
+## Single date in range
+
+By default, it is not allowed to select single date as range – when user clicks the same date second time it is deselected.
+To change this behavior set `allowSingleDateInRange` prop. `allowSingleDateInRange` is ignored when
+`type` prop is not `range`.
+
+<Demo data={MonthPickerDemos.singleRange} />
+
+## Default date
+
+Use `defaultDate` prop to set date value that will be used to determine which year should be displayed initially.
+For example to display `2015` year set `defaultDate={new Date(2015, 1)}`. If value is not specified,
+then `defaultDate` will use `new Date()`. Month, day, minutes and seconds are ignored in provided date object, only year is used –
+you can specify any date value.
+
+Note that if you set `date` prop, then `defaultDate` value will be ignored.
+
+<Demo data={MonthPickerDemos.defaultDate} />
+
+## Controlled date
+
+Set `date`, and `onDateChange` props to make currently displayed year and decade controlled.
+By doing so, you can customize date picking experience, for example, when user selects first date in range,
+you can add one year to current date value:
+
+<Demo data={MonthPickerDemos.controlledDate} />
+
+## Min and max date
+
+Set `minDate` and `maxDate` props to define min and max dates. If previous/next page is not available
+then corresponding control will be disabled.
+
+<Demo data={MonthPickerDemos.minMax} />
+
+## Add props to year and month control
+
+You can add props to year and month controls with `getYearControlProps` and `getMonthControlProps` functions. Both functions accept date as single argument,
+props returned from the function will be added to year/month control. For example, it can be used to disable specific
+control or add styles:
+
+<Demo data={MonthPickerDemos.controlProps} />
+
+## Number of columns
+
+Set `numberOfColumns` prop to define number of pickers that will be rendered side by side:
+
+<Demo data={MonthPickerDemos.numberOfColumns} />
+
+## Max level
+
+To disallow user going to the decade level set `maxLevel="year"`:
+
+<Demo data={MonthPickerDemos.maxLevel} />
+
+## Size
+
+<Demo data={MonthPickerDemos.sizeConfigurator} />
+
+## Change year and months controls format
+
+Use `yearsListFormat` and `monthsListFormat` props to change [dayjs format](https://day.js.org/docs/en/display/format) of year/month controls:
+
+<Demo data={MonthPickerDemos.listFormat} />
+
+## Change label format
+
+Use `decadeLabelFormat` and `yearLabelFormat` to change [dayjs format](https://day.js.org/docs/en/display/format) of decade/year label:
+
+<Demo data={MonthPickerDemos.labelFormat} />
+
+## Localization
+
+Usually it is better to specify `@mantine/dates` package locale in [DatesProvider](/dates/dates-provider/),
+but you can also override locale per component:
+
+<Demo data={MonthPickerDemos.locale} />
+
+## Accessibility
+
+### Aria labels
+
+Set `ariaLabels` prop to specify `aria-label` attributes for next/previous controls:
+
+```tsx
+import { MonthPicker } from '@mantine/dates';
+
+function Demo() {
+  return (
+    <MonthPicker
+      ariaLabels={{
+        nextDecade: 'Next decade',
+        previousDecade: 'Previous decade',
+        nextYear: 'Next year',
+        previousYear: 'Previous year',
+        yearLevelControl: 'Change to decade view',
+      }}
+    />
+  );
+}
+```
+
+### Year/month control aria-label
+
+Use `getYearControlProps`/`getMonthControlProps` to customize `aria-label` attribute:
+
+```tsx
+import { MonthPicker } from '@mantine/dates';
+
+function Demo() {
+  return (
+    <MonthPicker
+      getYearControlProps={(date) => ({
+        'aria-label': `Select year ${date.getFullYear()}`,
+      })}
+      getMonthControlProps={(date) => ({
+        'aria-label': `Select month ${date.getFullYear()}/${date.getMonth()}`,
+      })}
+    />
+  );
+}
+```
+
+### Keyboard interactions
+
+Note that the following events will only trigger if focus is on month control.
+
+<KeyboardEventsTable
+  data={[
+    {
+      key: 'ArrowRight',
+      description: 'Focuses next non-disabled month',
+    },
+    {
+      key: 'ArrowLeft',
+      description: 'Focuses previous non-disabled month',
+    },
+    {
+      key: 'ArrowDown',
+      description:
+        'Focuses next non-disabled month in the same column',
+    },
+    {
+      key: 'ArrowUp',
+      description:
+        'Focuses previous non-disabled month in the same column',
+    },
+  ]}
+/>

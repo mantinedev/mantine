@@ -1,0 +1,24 @@
+import { ThemeIconDemos } from '@docs/demos';
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.ThemeIcon);
+
+## Usage
+
+<Demo data={ThemeIconDemos.usage} />
+
+<Gradient component="ThemeIcon" />
+
+<Demo data={ThemeIconDemos.gradient} />
+
+## Customize variants colors
+
+You can customize colors for `ThemeIcon` and other components variants by adding
+[variantColorResolver](/theming/colors#colors-variant-resolver) to your theme.
+
+<Demo data={ThemeIconDemos.variantColorsResolver} />
+
+<AutoContrast component="ThemeIcon" />
+
+<Demo data={ThemeIconDemos.autoContrast} />

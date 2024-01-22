@@ -1,0 +1,155 @@
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.Changelog710);
+
+## CSS layers
+
+Starting from 7.1.0 it is possible to import all `@mantine/*` packages styles with rules
+defined in `mantine` [CSS layer](https://developer.mozilla.org/en-US/docs/Web/CSS/@layer).
+CSS rules within a layer are grouped together and applied before rules without a layer. This means that
+even if you do not have control over styles import order, you can still override Mantine styles with
+regular styles.
+
+```tsx
+// If your styles are not wrapped in @layer directive,
+// they will be applied after Mantine styles.
+// Import order does not affect styles in this case
+import classes from './Demo.module.css';
+
+import '@mantine/core/styles.layer.css';
+```
+
+You can import styles within a layer by importing `@mantine/*/styles.layer.css` files.
+Note that these files are a full replacement for `@mantine/*/styles.css` files –
+you should not import both of them.
+
+```tsx
+import '@mantine/core/styles.layer.css';
+import '@mantine/dates/styles.layer.css';
+
+// ... other styles
+```
+
+CSS layers are also useful if you want to combine Mantine components with other libraries which also
+provide styles. You can use `@layer` directive to control the order of styles:
+
+```scss
+@layer base, mantine, components;
+```
+
+In this example, Mantine styles will take precedence over other library `base` styles, but other library
+`components` styles will take precedence over Mantine component styles.
+
+As of September 2023, CSS layers are supported in all modern browsers and have [90% browser support](https://caniuse.com/css-cascade-layers).
+
+## renderRoot prop
+
+All [polymorphic](/guides/polymorphic) components now support `renderRoot` prop, which
+is an alternative to `component` prop. `renderRoot` prop allows changing the root element
+to any other component or HTML tag with a callback function. It can be used in cases when
+`component` prop is not flexible enough:
+
+- Target component props are incompatible with Mantine component. For example, [Button](/core/button) component expects `className`
+  to be a string, but [react-router-dom NavLink](https://reactrouter.com/en/6.16.0/components/nav-link) expects
+  `className` to be a function.
+- Target component is a generic – it either accepts type as a parameter or its type changes depending
+  on its props. Examples: [typed Next.js Link](https://nextjs.org/docs/app/building-your-application/configuring/typescript#statically-typed-links), [TanStack router Link](https://tanstack.com/router/v1)
+
+`renderRoot` example with [react-router-dom NavLink](https://reactrouter.com/en/6.16.0/components/nav-link):
+
+```tsx
+import cx from 'clsx';
+import { NavLink } from 'react-router-dom';
+import { Button } from '@mantine/core';
+
+function Demo() {
+  return (
+    <Button
+      renderRoot={({ className, ...others }) => (
+        <NavLink
+          className={({ isActive }) =>
+            cx(className, { 'active-class': isActive })
+          }
+          {...others}
+        />
+      )}
+    >
+      React router NavLink
+    </Button>
+  );
+}
+```
+
+`renderRoot` example with [typed Next.js Link](https://nextjs.org/docs/app/building-your-application/configuring/typescript#statically-typed-links):
+
+```tsx
+import Link from 'next/link';
+import { Button } from '@mantine/core';
+
+function Demo() {
+  return (
+    <Button renderRoot={(props) => <Link href="/hello" {...props} />}>
+      Typed Next link button
+    </Button>
+  );
+}
+```
+
+## Improved ESM support
+
+All `@mantine/*` packages now have improved ESM support:
+
+- Files in `esm` folder now have `.mjs` extension
+- You can use `@mantine/*` packages with `type: module` in `package.json` without any additional configuration
+- All packages are now fully compatible with [Remix v2](https://remix.run/blog/remix-v2)
+- Tree shaking was improved for some bundlers
+
+## CSS variables in style prop
+
+It is now possible to define CSS variables in `style` prop in all Mantine components –
+[style](/styles/style) prop is no longer restricted by `React.CSSProperties` type:
+
+```tsx
+import { Box } from '@mantine/core';
+
+function Demo() {
+  return (
+    <Box
+      style={{ '--radius': '0.5rem', borderRadius: 'var(--radius)' }}
+    />
+  );
+}
+```
+
+## form.setInitialValues
+
+[@mantine/form](/form/values/#setinitialvalues-handler) now supports `form.setInitialValues` method
+which allows updating initial values after the form was initialized. This method is useful when you
+want to update values that are used in `form.reset` and to compare values for dirty fields state:
+
+```tsx
+import { useEffect } from 'react';
+import { useForm } from '@mantine/form';
+
+function Demo() {
+  const form = useForm({
+    initialValues: {
+      name: '',
+      email: '',
+    },
+  });
+
+  useEffect(() => {
+    fetch('/api/user')
+      .then((res) => res.json())
+      .then((data) => {
+        // Update initial values after form was initialized
+        // These values will be used in form.reset
+        // and to compare values to get dirty state
+        form.setInitialValues(data);
+        form.setValues(data);
+      });
+  }, []);
+}
+```

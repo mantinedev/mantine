@@ -1,0 +1,47 @@
+import { DatesProviderDemos } from '@docs/demos';
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.DatesProvider);
+
+## Usage
+
+`DatesProvider` component lets you set various settings that are shared across all
+components exported from `@mantine/dates` package. `DatesProvider` supports the following settings:
+
+- `locale` – dayjs locale, note that you also need to import corresponding locale module from dayjs. Default value is `en`.
+- `firstDayOfWeek` – number from 0 to 6, where 0 is Sunday and 6 is Saturday. Default value is 1 – Monday.
+- `weekendDays` – an array of numbers from 0 to 6, where 0 is Sunday and 6 is Saturday. Default value is `[0, 6]` – Saturday and Sunday.
+- `timezone` – a textual representation of a time zone, for example, `UTC`.
+
+<Demo data={DatesProviderDemos.usage} />
+
+## Timezone
+
+When working with the `DatesProvider`, parsing the `timezone` parameter offers a valuable feature for controlling how
+dates and times are displayed within your application. By specifying a timezone of your choice, you can ensure
+that date information is presented in the desired timezone, rather than relying on the user's browser settings.
+If you don't provide a `timezone` parameter or explicitly set it to `undefined`, the application will default to using
+the user's browser timezone.
+
+The `timezone` parameter sets the timezone context for all components integrated within the `DatesProvider`. This means
+that all date and time-related data displayed within your application will adhere to the specified timezone. This simplifies
+the process of maintaining consistency in how dates and times are presented to users across various parts of your application.
+
+## Accessing the timezone information
+
+If you need to access the current timezone information from other parts of your application, you can leverage the
+`getTimezone()` function provided by the `useDatesContext()` hook. This function allows you to retrieve the active
+timezone setting and use it as needed.
+
+## Date format considerations
+
+It's important to note that the `DatesProvider` system supports the provision of dates in the user's local timezone.
+However, many backend systems and data sources use Coordinated Universal Time (UTC) timestamps. In such cases, you can
+easily convert and parse UTC timestamps into the user's timezone using JavaScript, as demonstrated by
+the example: `new Date('2000-10-03 02:10:00Z')`.
+
+By effectively utilizing the `timezone` parameter and the provided functions, you can tailor the presentation of date
+and time data to meet the specific requirements of your application while maintaining compatibility with various data sources.
+
+<Demo data={DatesProviderDemos.timezone} />

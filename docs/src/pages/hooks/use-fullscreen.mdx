@@ -1,0 +1,29 @@
+import { HooksDemos } from '@docs/demos';
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.useFullscreen);
+
+## Usage
+
+`use-fullscreen` allows to enter/exit fullscreen for given element using the [Fullscreen API](https://developer.mozilla.org/en-US/docs/Web/API/Fullscreen_API).
+By default, if you don't provide `ref`, the hook will target `document.documentElement`:
+
+<Demo data={HooksDemos.useFullscreenDemo} />
+
+## Custom target element
+
+The hook returns an optional `ref` function that can be passed to an element to act as root.
+Be sure to follow best practices to not [confuse or trap the end user](https://developer.mozilla.org/en-US/docs/Web/API/Fullscreen_API/Guide#things_your_users_want_to_know):
+
+<Demo data={HooksDemos.useFullscreenRefDemo} />
+
+## Definition
+
+```tsx
+function useFullscreen<T extends HTMLElement = any>(): {
+  readonly ref: (element: T | null) => void;
+  readonly toggle: () => Promise<void>;
+  readonly fullscreen: boolean;
+};
+```

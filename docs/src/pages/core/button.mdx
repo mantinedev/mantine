@@ -1,0 +1,157 @@
+import { ButtonDemos, StylesDemos, ThemingDemos } from '@docs/demos';
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.Button);
+
+## Usage
+
+<Demo data={ButtonDemos.configurator} />
+
+## Full width
+
+If `fullWidth` prop is set `Button` will take 100% of parent width:
+
+<Demo data={ButtonDemos.fullWidth} />
+
+## Left and right sections
+
+`leftSection` and `rightSection` allow adding icons or any other element to the left and right side of the button.
+When a section is added, padding on the corresponding side is reduced.
+
+Note that `leftSection` and `rightSection` are flipped in [RTL](/styles/rtl) mode
+(`leftSection` is displayed on the right and `rightSection` is displayed on the left).
+
+<Demo data={ButtonDemos.sections} />
+
+## Sections position
+
+`justify` prop sets `justify-content` of `inner` element. You can use it to change the alignment of
+left and right sections. For example, to spread them across the button set `justify="space-between"`.
+
+If you need to align just one section to the side of the button set `justify` to `space-between`
+and add empty `<span />` to the opposite section.
+
+<Demo data={ButtonDemos.sectionsJustify} />
+
+## Compact size
+
+`Button` supports `xs` – `xl` and `compact-xs` – `compact-xl` sizes. `compact` sizes have
+the same font-size as `xs` – `xl` but reduced padding and height.
+
+<Demo data={ButtonDemos.compact} />
+
+<Gradient component="Button" />
+
+<Demo data={ButtonDemos.gradient} />
+
+## Disabled state
+
+To make `Button` disabled, set `disabled` prop, this will prevent any interactions with the button
+and add disabled styles. If you want the button to just look disabled but still be interactive,
+set `data-disabled` prop instead. Note that disabled styles are the same for all variants.
+
+<Demo data={ButtonDemos.disabled} />
+
+## Disabled state when Button is link
+
+`<a />` element does not support `disabled` attribute. To make `Button` disabled when it is
+rendered as a link, set `data-disabled` attribute instead and prevent default behavior in
+`onClick` event handler.
+
+<Demo data={ButtonDemos.disabledLink} />
+
+## Customize disabled styles
+
+To customize disabled styles, it is recommended to use both `&:disabled` and `&[data-disabled]`
+selectors:
+
+- `&:disabled` is used to style the button when `disabled` prop is set and
+  also when the button is disabled by the parent component (for example, when `disabled` prop is set on a
+  `<fieldset />` element which contains `Button`).
+- `&[data-disabled]` is used to style the button when it is not actually disabled but should look like
+  it is (for example, `data-disabled` should be used if you need to use [Tooltip](/core/tooltip) with disabled `Button`
+  or when `Button` is used as a link)
+
+<Demo data={ButtonDemos.disabledStyles} />
+
+## Disabled button with Tooltip
+
+`onMouseLeave` event [is not triggered](https://github.com/facebook/react/issues/18753) when `Button` is disabled, so if you need to use
+[Tooltip](/core/tooltip) with disabled `Button` you need to set `data-disabled` prop on `Button`
+instead of `disabled`. Note that it is also required to change `onClick` event handler to
+`(event) => event.preventDefault()` as `Button` is not actually disabled and will still trigger
+`onClick` event.
+
+<Demo data={ButtonDemos.disabledTooltip} />
+
+## Loading state
+
+When `loading` prop is set, `Button` will be disabled and [Loader](/core/loader) with overlay will be rendered
+in the center of the button. [Loader](/core/loader) color depends on `Button` variant.
+
+<Demo data={ButtonDemos.loading} />
+
+## Loader props
+
+You can customize [Loader](/core/loader) with `loaderProps` prop, it accepts all props that
+[Loader](/core/loader) component has:
+
+<Demo data={ButtonDemos.loaderProps} />
+
+<StylesApiSelectors component="Button" />
+
+<Demo data={ButtonDemos.stylesApi} />
+
+Example of customizing `Button` with [Styles API](/styles/styles-api) and [data-\* attributes](/styles/data-attributes):
+
+<Demo data={StylesDemos.dataAttributes} />
+
+## Custom variants
+
+To add new `Button` variants, use [data-variant](/styles/variants-sizes) attribute.
+Usually new variants are added on [theme](/theming/theme-object), this way they are
+available in all `Button` components in your application.
+
+<Demo data={ButtonDemos.customVariant} />
+
+## Customize variants colors
+
+You can customize colors for `Button` and other components variants by adding
+[variantColorResolver](/theming/colors#colors-variant-resolver) to your theme.
+
+<Demo data={ThemingDemos.variantColorsResolver} />
+
+<AutoContrast component="Button" />
+
+<Demo data={ButtonDemos.autoContrast} />
+
+## Button.Group
+
+<Demo data={ButtonDemos.group} />
+
+Note that you must not wrap child `Button` components with any additional elements:
+
+```tsx
+import { Button } from '@mantine/core';
+
+function Demo() {
+  return (
+    <Button.Group>
+      <div>
+        <Button>This will not work</Button>
+      </div>
+      <Button>Buttons will have incorrect borders</Button>
+    </Button.Group>
+  );
+}
+```
+
+<Polymorphic
+  defaultElement="button"
+  changeToElement="a"
+  component="Button"
+  withNext
+/>
+
+<GetElementRef component="Button" refType="button" />

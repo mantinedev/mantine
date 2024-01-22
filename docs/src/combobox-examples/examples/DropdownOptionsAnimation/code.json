@@ -1,0 +1,12 @@
+[
+  {
+    "fileName": "DropdownOptionsAnimation.tsx",
+    "language": "tsx",
+    "code": "import { useState } from 'react';\nimport cx from 'clsx';\nimport { Combobox, Input, InputBase, useCombobox } from '@mantine/core';\nimport classes from './DropdownOptionsAnimation.module.css';\n\nconst groceries = [\n  '🍎 Apples',\n  '🍌 Bananas',\n  '🥦 Broccoli',\n  '🥕 Carrots',\n  '🍫 Chocolate',\n  '🍇 Grapes',\n];\n\nexport function DropdownOptionsAnimation() {\n  const [animating, setAnimating] = useState(false);\n\n  const combobox = useCombobox({\n    onDropdownClose: () => {\n      combobox.resetSelectedOption();\n      setAnimating(false);\n    },\n\n    onDropdownOpen: () => setAnimating(true),\n  });\n\n  const [value, setValue] = useState<string | null>(null);\n\n  const options = groceries.map((item, index) => (\n    <Combobox.Option\n      value={item}\n      key={item}\n      className={cx({ [classes.animateOption]: animating })}\n      style={{ animationDelay: `${index * 30}ms` }}\n    >\n      {item}\n    </Combobox.Option>\n  ));\n\n  return (\n    <Combobox\n      store={combobox}\n      withinPortal={false}\n      onOptionSubmit={(val) => {\n        setValue(val);\n        combobox.closeDropdown();\n      }}\n    >\n      <Combobox.Target>\n        <InputBase\n          component=\"button\"\n          type=\"button\"\n          pointer\n          rightSection={<Combobox.Chevron />}\n          onClick={() => combobox.toggleDropdown()}\n          rightSectionPointerEvents=\"none\"\n        >\n          {value || <Input.Placeholder>Pick value</Input.Placeholder>}\n        </InputBase>\n      </Combobox.Target>\n\n      <Combobox.Dropdown>\n        <Combobox.Options>{options}</Combobox.Options>\n      </Combobox.Dropdown>\n    </Combobox>\n  );\n}\n"
+  },
+  {
+    "fileName": "DropdownOptionsAnimation.module.css",
+    "language": "css",
+    "code": "@keyframes option-animation {\n  from {\n    opacity: 0;\n    transform: translateX(rem(-20px));\n  }\n\n  to {\n    opacity: 1;\n    transform: translateX(0);\n  }\n}\n\n.animateOption {\n  opacity: 0;\n  animation: option-animation 200ms ease;\n  animation-fill-mode: forwards;\n}\n"
+  }
+]

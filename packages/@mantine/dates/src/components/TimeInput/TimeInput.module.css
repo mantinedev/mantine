@@ -1,0 +1,26 @@
+.input {
+  padding-top: 0;
+  padding-bottom: 0;
+  appearance: none;
+
+  &::-webkit-calendar-picker-indicator {
+    display: none;
+  }
+
+  &::-webkit-clear-button {
+    display: none;
+  }
+
+  &::-webkit-datetime-edit-hour-field,
+  &::-webkit-datetime-edit-minute-field,
+  &::-webkit-datetime-edit-second-field {
+    padding-top: 0;
+    max-height: rem(30px);
+    display: inline;
+
+    &:focus {
+      background-color: var(--mantine-primary-color-filled);
+      color: var(--mantine-color-white);
+    }
+  }
+}

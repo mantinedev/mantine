@@ -1,0 +1,24 @@
+import { CodeDemos } from '@docs/demos';
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.Code);
+
+## Usage
+
+By default, Code component renders inline `code` html element:
+
+<Demo data={CodeDemos.usage} />
+
+## Block code
+
+To render code in `pre` element pass `block` prop to Code component:
+
+<Demo data={CodeDemos.block} />
+
+## Custom color
+
+By default, code color is gray, you can change it to any valid CSS color or to one
+of the [theme.colors](/theming/colors):
+
+<Demo data={CodeDemos.colors} />

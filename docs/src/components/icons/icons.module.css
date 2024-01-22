@@ -1,0 +1,9 @@
+.nextIcon {
+  color: light-dark(var(--mantine-color-black), var(--mantine-color-white));
+  width: var(--icon-size);
+}
+
+.icon {
+  width: var(--icon-size);
+  height: var(--icon-size);
+}

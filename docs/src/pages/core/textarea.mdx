@@ -1,0 +1,51 @@
+import { TextareaDemos } from '@docs/demos';
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.Textarea);
+
+## Usage
+
+<InputFeatures component="Textarea" element="textarea" />
+
+<Demo data={TextareaDemos.configurator} />
+
+## Autosize
+
+Autosize textarea uses [react-textarea-autosize](https://www.npmjs.com/package/react-textarea-autosize) package.
+Textarea height will grow until maxRows are reached or indefinitely if maxRows not set.
+
+<Demo data={TextareaDemos.autosize} />
+
+## Controlled
+
+```tsx
+import { useState } from 'react';
+import { Textarea } from '@mantine/core';
+
+function Demo() {
+  const [value, setValue] = useState('');
+  return (
+    <Textarea
+      value={value}
+      onChange={(event) => setValue(event.currentTarget.value)}
+    />
+  );
+}
+```
+
+## Error state
+
+<Demo data={TextareaDemos.error} />
+
+## Disabled state
+
+<Demo data={TextareaDemos.disabled} />
+
+<StylesApiSelectors component="Textarea" />
+
+<Demo data={TextareaDemos.stylesApi} />
+
+<GetElementRef component="Textarea" refType="textarea" />
+
+<InputAccessibility component="Textarea" />

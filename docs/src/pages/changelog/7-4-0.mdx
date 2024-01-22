@@ -1,0 +1,406 @@
+import {
+  AreaChartDemos,
+  BarChartDemos,
+  FormDemos,
+  LineChartDemos,
+  ScrollAreaDemos,
+  SparklineDemos,
+  ThemingDemos,
+  TitleDemos,
+} from '@docs/demos';
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.Changelog740);
+
+## @mantine/charts
+
+New [@mantine/charts](/charts/getting-started/) package provides a set of components
+to build charts and graphs. All components are based on [recharts](https://recharts.org/en-US/).
+Currently, the package provides [AreaChart](/charts/area-chart), [BarChart](/charts/bar-chart),
+[LineChart](/charts/line-chart) and [Sparkline](/charts/sparkline) components.
+More components will be added in the next minor releases.
+
+## AreaChart component
+
+New [AreaChart](/charts/area-chart) component:
+
+<Demo data={AreaChartDemos.stacked} />
+
+## LineChart component
+
+New [LineChart](/charts/line-chart) component:
+
+<Demo data={LineChartDemos.legend} />
+
+## BarChart component
+
+New [BarChart](/charts/bar-chart) component:
+
+<Demo data={BarChartDemos.vertical} />
+
+## Sparkline component
+
+New [Sparkline](/charts/sparkline) component:
+
+<Demo data={SparklineDemos.usage} />
+
+## OKLCH colors support
+
+You can now use [OKLCH](https://oklch.com/) colors in `theme.colors`.
+OKLCH color model has [88.18% browser support](https://caniuse.com/mdn-css_types_color_oklch),
+it is supported in all modern browsers. OKLCH model provides 30% more colors than HSL model and
+has [several other advantages](https://evilmartians.com/chronicles/oklch-in-css-why-quit-rgb-hsl).
+
+Example of adding OKLCH color to the theme:
+
+<Demo data={ThemingDemos.oklch} />
+
+## autoContrast
+
+New `theme.autoContrast` property controls whether text color should be changed based on the given `color` prop
+in the following components:
+
+- [ActionIcon](/core/action-icon) with `variant="filled"` only
+- [Alert](/core/alert) with `variant="filled"` only
+- [Avatar](/core/avatar) with `variant="filled"` only
+- [Badge](/core/badge) with `variant="filled"` only
+- [Button](/core/button) with `variant="filled"` only
+- [Chip](/core/chip) with `variant="filled"` only
+- [NavLink](/core/nav-link) with `variant="filled"` only
+- [ThemeIcon](/core/theme-icon) with `variant="filled"` only
+- [Checkbox](/core/checkbox) with `variant="filled"` only
+- [Radio](/core/radio) with `variant="filled"` only
+- [Tabs](/core/tabs) with `variant="pills"` only
+- [SegmentedControl](/core/segmented-control)
+- [Stepper](/core/stepper)
+- [Pagination](/core/pagination)
+- [Progress](/core/progress)
+- [Indicator](/core/indicator)
+- [Timeline](/core/timeline)
+- [Spotlight](/x/spotlight)
+- All [@mantine/dates](/dates/getting-started) components that are based on [Calendar](/dates/calendar) component
+
+`autoContrast` can be set globally on the theme level or individually for each component via `autoContrast` prop,
+except for [Spotlight](/x/spotlight) and [@mantine/dates](/dates/getting-started) components, which only support global theme setting.
+
+<Demo data={ThemingDemos.autoContrast} />
+
+`autoContrast` checks whether the given color luminosity is above or below the `luminanceThreshold` value
+and changes text color to either `theme.white` or `theme.black` accordingly:
+
+<Demo data={ThemingDemos.luminanceThreshold} />
+
+## Color functions improvements
+
+`alpha`, `lighten` and `darken` functions now support CSS variables (with [color-mix](https://caniuse.com/mdn-css_types_color_color-mix)) and OKLCH colors.
+All functions are available both in `@mantine/core` (`.ts`/`.js` files) and [postcss-preset-mantine](/styles/postcss-preset) (`.css` files, requires version 1.12.0 or higher).
+
+In `.css` files:
+
+```scss
+.demo-alpha {
+  color: alpha(var(--mantine-color-red-4), 0.5);
+  border: 1px solid alpha(#ffc, 0.2);
+}
+
+.demo-lighten-darken {
+  color: lighten(var(--mantine-color-red-4), 0.5);
+  border: 1px solid darken(#ffc, 0.2);
+}
+```
+
+Will be transformed to:
+
+```scss
+.demo-alpha {
+  color: color-mix(
+    in srgb,
+    var(--mantine-color-red-4),
+    transparent 50%
+  );
+  border: 1px solid color-mix(in srgb, #ffc, transparent 80%);
+}
+
+.demo-lighten-darken {
+  color: color-mix(in srgb, var(--mantine-color-red-4), white 50%);
+  border: 1px solid color-mix(in srgb, #ffc, black 20%);
+}
+```
+
+In `.ts`/`.js` files:
+
+```tsx
+import { alpha, lighten } from '@mantine/core';
+
+alpha('#4578FC', 0.45); // -> rgba(69, 120, 252, 0.45)
+alpha('var(--mantine-color-gray-4)', 0.74);
+// -> color-mix(in srgb, var(--mantine-color-gray-4), transparent 26%)
+
+lighten('#4578FC', 0.45); // -> #a3c1ff
+lighten('var(--mantine-color-gray-4)', 0.74);
+// -> color-mix(in srgb, var(--mantine-color-gray-4), white 74%)
+```
+
+Note that `alpha` function is a replacement for `rgba`. It was renamed to
+have a more clear meaning, as it can now be used with CSS variables and OKLCH colors.
+`rgba` function is still available as an alias for `alpha` function.
+
+## enhanceGetInputProps
+
+`@mantine/form` now supports [enhanceGetInputProps](/form/get-input-props/#enhancegetinputprops). `enhanceGetInputProps` is a function that can be used to add additional props to the object returned by `form.getInputProps`.
+You can define it in `useForm` hook options. Its argument is an object with the following properties:
+
+- `inputProps` – object returned by `form.getInputProps` by default
+- `field` – field path, first argument of `form.getInputProps`, for example `name`, `user.email`, `users.0.name`
+- `options` – second argument of `form.getInputProps`, for example `{ type: 'checkbox' }`, can be used to pass additional
+  options to `enhanceGetInputProps` function
+- `form` – form instance
+
+Example of using `enhanceGetInputProps` to disable input based on field path:
+
+<Demo data={FormDemos.enhanceGetInputProps} />
+
+Example of using `enhanceGetInputProps` to add additional props to the input based on option passed to `form.getInputProps`:
+
+<Demo data={FormDemos.enhanceGetInputPropsOptions} />
+
+## form.initialize
+
+`@mantine/form` now supports `form.initialize` handler.
+
+When called `form.initialize` handler sets `initialValues` and `values` to the same value
+and marks form as initialized. It can be used only once, next `form.initialize` calls
+are ignored.
+
+`form.initialize` is useful when you want to sync form values with backend API response:
+
+<Demo data={FormDemos.initialize} />
+
+Example with [TanStack Query](https://tanstack.com/query/latest) (react-query):
+
+```tsx
+import { useEffect } from 'react';
+import { useQuery } from '@tanstack/react-query';
+import { useForm } from '@mantine/form';
+
+function Demo() {
+  const query = useQuery({
+    queryKey: ['current-user'],
+    queryFn: () => fetch('/api/users/me').then((res) => res.json()),
+  });
+
+  const form = useForm({
+    initialValues: {
+      name: '',
+      email: '',
+    },
+  });
+
+  useEffect(() => {
+    if (query.data) {
+      // Even if query.data changes, form will be initialized only once
+      form.initialize(query.data);
+    }
+  }, [query.data]);
+}
+```
+
+Note that `form.initialize` will erase all values that were set before it was called.
+It is usually a good idea to set `readOnly` or `disabled` on all form fields before
+`form.initialize` is called to prevent data loss. You can implement this with
+[enhanceGetInputProps](/form/get-input-props/#enhancegetinputprops):
+
+<Demo data={FormDemos.enhanceGetInputPropsForm} />
+
+## valibot form resolver
+
+`@mantine/form` now supports [validbot schema resolver](https://www.npmjs.com/package/mantine-form-valibot-resolver):
+
+<InstallScript packages="valibot mantine-form-valibot-resolver" />
+
+Basic fields validation:
+
+```tsx
+import { valibotResolver } from 'mantine-form-valibot-resolver';
+import {
+  email,
+  minLength,
+  minValue,
+  number,
+  object,
+  string,
+} from 'valibot';
+import { useForm } from '@mantine/form';
+
+const schema = object({
+  name: string([minLength(2, 'Name should have at least 2 letters')]),
+  email: string([email('Invalid email')]),
+  age: number([
+    minValue(18, 'You must be at least 18 to create an account'),
+  ]),
+});
+
+const form = useForm({
+  initialValues: {
+    name: '',
+    email: '',
+    age: 16,
+  },
+  validate: valibotResolver(schema),
+});
+
+form.validate();
+form.errors;
+// -> {
+//  name: 'Name should have at least 2 letters',
+//  email: 'Invalid email',
+//  age: 'You must be at least 18 to create an account'
+// }
+```
+
+Nested fields validation
+
+```tsx
+import { valibotResolver } from 'mantine-form-valibot-resolver';
+import { minLength, object, string } from 'valibot';
+import { useForm } from '@mantine/form';
+
+const nestedSchema = object({
+  nested: object({
+    field: string([
+      minLength(2, 'Field should have at least 2 letters'),
+    ]),
+  }),
+});
+
+const form = useForm({
+  initialValues: {
+    nested: {
+      field: '',
+    },
+  },
+  validate: valibotResolver(nestedSchema),
+});
+
+form.validate();
+form.errors;
+// -> {
+//  'nested.field': 'Field should have at least 2 letters',
+// }
+```
+
+List fields validation:
+
+```tsx
+import { valibotResolver } from 'mantine-form-valibot-resolver';
+import { array, minLength, object, string } from 'valibot';
+import { useForm } from '@mantine/form';
+
+const listSchema = object({
+  list: array(
+    object({
+      name: string([
+        minLength(2, 'Name should have at least 2 letters'),
+      ]),
+    })
+  ),
+});
+
+const form = useForm({
+  initialValues: {
+    list: [{ name: '' }],
+  },
+  validate: valibotResolver(listSchema),
+});
+
+form.validate();
+form.errors;
+// -> {
+//  'list.0.name': 'Name should have at least 2 letters',
+// }
+```
+
+## ScrollArea scrollbars prop
+
+[ScrollArea](/core/scroll-area) now supports `scrollbars` prop, which allows controlling directions at which scrollbars should be rendered.
+Supported values are `x`, `y` and `xy`. If `scrollbars="y"` is set, only the vertical scrollbar will be rendered, and it will not be possible to scroll horizontally:
+
+<Demo data={ScrollAreaDemos.scrollbars} />
+
+## Title lineClamp prop
+
+[Title](/core/title) component now supports `lineClamp` prop, which allows truncating text after a specified number of lines:
+
+<Demo data={TitleDemos.lineClamp} />
+
+## Primary color CSS variables
+
+CSS variables for primary color are now available, you can use the following variables in your styles:
+
+```scss
+--mantine-primary-color-0
+--mantine-primary-color-1
+--mantine-primary-color-2
+--mantine-primary-color-3
+--mantine-primary-color-4
+--mantine-primary-color-5
+--mantine-primary-color-6
+--mantine-primary-color-7
+--mantine-primary-color-8
+--mantine-primary-color-9
+--mantine-primary-color-contrast
+--mantine-primary-color-filled
+--mantine-primary-color-filled-hover
+--mantine-primary-color-light
+--mantine-primary-color-light-hover
+--mantine-primary-color-light-color
+```
+
+## Help center
+
+[Help center](https://help.mantine.dev/) is a new website with guides, tutorials and frequently
+asked questions. Currently, it has 14 questions, more FAQs will be added in the next releases.
+
+- [Is there DataGrid component that I can use with Mantine?](https://help.mantine.dev/q/data-grid-i-need)
+- [MantineProvider was not found in component tree. What should I do?](https://help.mantine.dev/q/mantine-provider-missing)
+- [Can I use Mantine components as server components?](https://help.mantine.dev/q/server-components)
+- [Can I use Mantine with Create React App (CRA)?](https://help.mantine.dev/q/can-i-use-mantine-with-cra)
+- [How can I lint CSS files?](https://help.mantine.dev/q/how-to-setup-stylelint)
+- [How to update Mantine dependencies?](https://help.mantine.dev/q/how-to-update-dependencies)
+- [How can I add hover styles to an element?](https://help.mantine.dev/q/how-to-add-hover-styles)
+- [How can I get current color scheme value in JavaScript?](https://help.mantine.dev/q/how-to-get-color-scheme-value-in-js)
+- [Can I use private CSS variables to style components?](https://help.mantine.dev/q/private-css-variables)
+- [How can I disable all inputs/inputs group inside form?](https://help.mantine.dev/q/disable-all-inputs-in-form)
+- [How to use Dropzone with @mantine/form?](https://help.mantine.dev/q/how-to-use-dropzone-with-form)
+- [How to call a function when Modal/Drawer closes and animation completes?](https://help.mantine.dev/q/how-to-call-function-when-modal-closes)
+- [How to prevent Modal from closing?](https://help.mantine.dev/q/how-to-prevent-modal-from-closing)
+- [What is the difference between searchable Select and Autocomplete?](https://help.mantine.dev/q/select-autocomplete-difference)
+
+## Documentation updates
+
+- [form.getInputProps](/form/get-input-props) guide now has a separate page. It describes `form.getInputProps`, `enhanceGetInputProps` and how to integrate `form.getInputProps` with custom inputs.
+- [assignRef](/hooks/use-merged-ref/#assignref-function) function documentation has been added.
+- [clampUseMovePosition](/hooks/use-move/#clampusemoveposition) function documentation has been added.
+- Additional documentation about hook arguments and types has been added to [use-hotkeys](/hooks/use-hotkeys).
+- [UseListStateHandlers type](/hooks/use-list-state/#useliststatehandlers-type) documentation has been added.
+- [Functions reference](/guides/functions-reference) page has been added. Currently, it contains all functions that are exported from `@mantine/hooks` package. It is planned to document functions from other packages in next releases.
+- Examples on how to change the close icon have been added to [Drawer](/core/drawer/#change-close-icon) and [Modal](/core/modal/#change-close-icon) components.
+- `variantColorsResolver` demos have been added to [ActionIcon](/core/action-icon), [ThemeIcon](/core/theme-icon) and [Badge](/core/badge) components.
+
+## Other changes
+
+- [RichTextEditor](/x/tiptap) no longer depends on `@tabler/icons` package. It is no longer required to install `@tabler/icons` package to use `RichTextEditor` component. Icons used in the editor are now a part of the `@mantine/tiptap` package. This change improves bundling performance in several cases (mostly when using `RichTextEditor` in Next.js apps).
+- [Badge](/core/badge) component now supports `circle` prop which makes the badge round.
+- You can now reference theme values in `ff` [style prop](/styles/style-props) with `mono`, `text` and `heading` values: `<Box ff="mono" />`.
+- [RichTextEditor](/x/tiptap) now has `RichTextEditor.Undo` and `RichTextEditor.Redo` controls.
+- A new `luminance` [color function](/styles/color-functions) was added. It returns color luminance as a number between 0 and 1.
+- All components now support new `flex` [style prop](/styles/style-props) which allows setting `flex` CSS property on the root element.
+- [Collapse](/core/collapse) markup was reduced to single element, it can now be used in contexts that were previously not supported, for example, table rows.
+- `stepHoldDelay` and `stepHoldInterval` props have been added to [NumberInput](/core/number-input).
+- [mantine-form-zod-resolver](https://github.com/mantinedev/mantine-form-zod-resolver) now supports `errorPriority` configuration which allows controlling the order of errors specified in the schema. This feature requires updating `mantine-form-zod-resolver` to version 1.1.0 or higher.
+- [CloseButton](/core/close-button) now supports `icon` prop, which allows overriding default icon. It is useful when it is not possible to replace `CloseButton`, for example, in [Drawer](/core/drawer) component.
+- [Select](/core/select/#onchange-handler) component now calls `onChange` with an additional argument – option object. It contains `label`, `value` and optional `disabled` properties.
+- It is now possible to define CSS variables in `styles` prop of all components.
+- New [use-in-viewport](/hooks/use-in-viewport/) hook
+- All Vite templates have been updated to Vite 5.0 and Vitest 1.0

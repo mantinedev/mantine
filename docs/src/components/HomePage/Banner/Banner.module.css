@@ -1,0 +1,109 @@
+.wrapper {
+  position: relative;
+  min-height: rem(580px);
+  background-color: light-dark(var(--mantine-color-white), var(--mantine-color-dark-8));
+
+  @media (max-width: $mantine-breakpoint-sm) {
+    min-height: auto;
+    padding-bottom: var(--mantine-spacing-xl);
+  }
+}
+
+.overlay {
+  background-color: transparent;
+  background-image: linear-gradient(
+    45deg,
+    light-dark(var(--mantine-color-white), var(--mantine-color-dark-8)) 25%,
+    rgba(0, 0, 0, 0) 95%
+  );
+}
+
+.supTitle {
+  font-size: var(--mantine-font-size-sm);
+  text-transform: uppercase;
+  font-weight: bold;
+  color: light-dark(var(--mantine-color-black), var(--mantine-color-white));
+  opacity: 0.8;
+  margin-bottom: var(--mantine-spacing-sm);
+
+  @media (max-width: $mantine-breakpoint-sm) {
+    font-size: var(--mantine-font-size-xs);
+  }
+}
+
+.title {
+  color: light-dark(var(--mantine-color-black), var(--mantine-color-white));
+  font-family: var(--docs-font-primary);
+  font-size: rem(44px);
+  line-height: 1.2;
+  font-weight: 900;
+
+  @media (max-width: $mantine-breakpoint-sm) {
+    font-size: rem(26px);
+  }
+}
+
+.highlight {
+  color: light-dark(var(--mantine-color-cyan-6), var(--mantine-color-yellow-4));
+  background: var(--docs-home-page-gradient-text);
+  -webkit-text-fill-color: transparent;
+  -webkit-background-clip: text;
+  background-clip: text;
+}
+
+.description {
+  color: light-dark(var(--mantine-color-gray-7), var(--mantine-color-dark-2));
+  line-height: 1.5;
+  max-width: rem(580px);
+  margin-top: var(--mantine-spacing-md);
+}
+
+.body {
+  flex: 0 0 rem(300px);
+  padding-top: rem(140px);
+  position: relative;
+  z-index: 1;
+
+  @media (max-width: $mantine-breakpoint-sm) {
+    padding-top: calc(var(--mantine-spacing-xl) * 2);
+  }
+}
+
+.image {
+  min-height: rem(500px);
+  width: rem(800px);
+  flex: 1;
+  background-size: auto 100%;
+  background-repeat: no-repeat;
+  background-position: right;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  z-index: 0;
+
+  @mixin rtl {
+    display: none;
+  }
+
+  @media (max-width: $mantine-breakpoint-md) {
+    display: none;
+  }
+}
+
+.controls {
+  margin-top: var(--mantine-spacing-md);
+  display: flex;
+  gap: var(--mantine-spacing-md);
+  flex-wrap: wrap;
+
+  & > * {
+    @media (max-width: $mantine-breakpoint-sm) {
+      flex: 1;
+    }
+  }
+}
+
+.control {
+  background: var(--docs-home-page-gradient);
+}

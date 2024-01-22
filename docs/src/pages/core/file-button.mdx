@@ -1,0 +1,24 @@
+import { FileButtonDemos } from '@docs/demos';
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.FileButton);
+
+## Usage
+
+<Demo data={FileButtonDemos.usage} />
+
+## Multiple files
+
+Set `multiple` prop to allow picking multiple files:
+
+<Demo data={FileButtonDemos.multiple} />
+
+## Reset file
+
+`resetRef` should be used to fix issue with stale value on hidden input element as input type file cannot be controlled.
+Call `resetRef` when user selection is cleared:
+
+<Demo data={FileButtonDemos.reset} />
+
+<ServerComponentsIncompatible component="FileButton" />

@@ -1,0 +1,45 @@
+import { RingProgressDemos } from '@docs/demos';
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.RingProgress);
+
+## Usage
+
+Set `sections` prop to an array of:
+
+- `value` – number between 0 and 100 – amount of space filled by segment
+- `color` – segment color from theme or any other css color value
+
+<Demo data={RingProgressDemos.usage} />
+
+## Size, thickness & rounded caps
+
+Use `size`, `thickness` & `roundCaps` props to configure RingProgress, size and thickness values:
+
+<Demo data={RingProgressDemos.configurator} />
+
+## Sections tooltips
+
+Add `tooltip` property to section to display floating [Tooltip](/core/tooltip/) when user hovers over it:
+
+<Demo data={RingProgressDemos.tooltip} />
+
+## Root color
+
+Use `rootColor` property to change the root color:
+
+<Demo data={RingProgressDemos.rootColor} />
+
+## Sections props
+
+You can add any additional props to sections:
+
+<Demo data={RingProgressDemos.sectionsProps} />
+
+## Customize label
+
+You can add any React node as label, e.g. [Text](/core/text/) component with some additional styles
+or [ThemeIcon](/core/theme-icon/):
+
+<Demo data={RingProgressDemos.label} />

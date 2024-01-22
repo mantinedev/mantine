@@ -1,0 +1,51 @@
+import { BadgeDemos } from '@docs/demos';
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.Badge);
+
+## Usage
+
+<Demo data={BadgeDemos.usage} />
+
+<Gradient component="Badge" />
+
+<Demo data={BadgeDemos.gradient} />
+
+## Rounded
+
+Set `circle` prop, to reduce horizontal padding and make badge width equal to its height:
+
+<Demo data={BadgeDemos.rounded} />
+
+## Left and right sections
+
+<Demo data={BadgeDemos.sections} />
+
+## Full width
+
+Set `fullWidth` to make badge span full width of its parent element:
+
+<Demo data={BadgeDemos.fullWidth} />
+
+## Customize variants colors
+
+You can customize colors for `Badge` and other components variants by adding
+[variantColorResolver](/theming/colors#colors-variant-resolver) to your theme.
+
+<Demo data={BadgeDemos.variantColorsResolver} />
+
+<AutoContrast component="Badge" />
+
+<Demo data={BadgeDemos.autoContrast} />
+
+<StylesApiSelectors component="Badge" />
+
+<Demo data={BadgeDemos.stylesApi} />
+
+<Polymorphic
+  defaultElement="div"
+  changeToElement="a"
+  component="Badge"
+  withNext
+/>

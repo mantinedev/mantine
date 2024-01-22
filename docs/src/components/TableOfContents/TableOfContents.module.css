@@ -1,0 +1,120 @@
+.wrapper {
+  padding-left: var(--mantine-spacing-md);
+  position: sticky;
+  top: var(--mantine-spacing-xl);
+  right: 0;
+  padding-top: rem(55px);
+  flex: 0 0 calc(var(--docs-table-of-contents-width) - rem(20px));
+
+  @media (max-width: $docs-mdx-breakpoint) {
+    display: none;
+  }
+
+  @mixin rtl {
+    padding-left: 0;
+    padding-right: var(--mantine-spacing-md);
+    right: auto;
+    left: 0;
+  }
+
+  &[data-with-tabs] {
+    padding-top: 0;
+    top: calc(var(--mantine-spacing-xl) + rem(60px));
+  }
+}
+
+.inner {
+  padding-bottom: var(--mantine-spacing-xl);
+  padding-left: var(--mantine-spacing-md);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  @mixin rtl {
+    padding-left: 0;
+    padding-right: var(--mantine-spacing-md);
+  }
+}
+
+.link {
+  display: block;
+  border-left: rem(1px) solid transparent;
+  padding: rem(8px) var(--mantine-spacing-md);
+  margin-left: rem(-1px);
+  padding-left: calc(var(--toc-link-offset) * var(--mantine-spacing-lg));
+  border-top-right-radius: var(--mantine-radius-sm);
+  border-bottom-right-radius: var(--mantine-radius-sm);
+
+  @mixin light {
+    color: var(--mantine-color-gray-7);
+  }
+
+  @mixin dark {
+    color: var(--mantine-color-dark-1);
+  }
+
+  @mixin rtl {
+    border-left: 0;
+    border-right: rem(1px) solid transparent;
+    margin-left: 0;
+    margin-right: rem(-1px);
+    border-top-left-radius: var(--mantine-radius-sm);
+    border-bottom-left-radius: var(--mantine-radius-sm);
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+  }
+
+  &[data-active] {
+    border-color: var(--mantine-color-blue-5);
+
+    @mixin light {
+      color: var(--mantine-color-blue-8);
+      background-color: var(--mantine-color-blue-0);
+    }
+
+    @mixin dark {
+      color: var(--mantine-color-blue-1);
+      background-color: rgba(24, 100, 171, 0.45);
+    }
+  }
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  margin-bottom: var(--mantine-spacing-md);
+}
+
+.title {
+  margin-left: var(--mantine-spacing-md);
+
+  @mixin rtl {
+    margin-left: 0;
+    margin-right: var(--mantine-spacing-md);
+  }
+}
+
+.items {
+  border-left: rem(1px) solid;
+
+  @mixin light {
+    border-color: var(--mantine-color-gray-3) !important;
+  }
+
+  @mixin dark {
+    border-color: var(--mantine-color-dark-4) !important;
+  }
+
+  @mixin rtl {
+    border-left: 0;
+    border-right: rem(1px) solid;
+
+    @mixin light {
+      border-color: var(--mantine-color-gray-3) !important;
+    }
+
+    @mixin dark {
+      border-color: var(--mantine-color-dark-4) !important;
+    }
+  }
+}

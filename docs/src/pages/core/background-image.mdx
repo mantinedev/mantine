@@ -1,0 +1,15 @@
+import { BackgroundImageDemos } from '@docs/demos';
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.BackgroundImage);
+
+## Usage
+
+<Demo data={BackgroundImageDemos.usage} />
+
+<Polymorphic
+  defaultElement="div"
+  changeToElement="button"
+  component="BackgroundImage"
+/>

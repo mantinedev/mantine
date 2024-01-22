@@ -1,6 +1,14 @@
 # os
 .DS_Store
 
+## yarn
+.yarn-integrity
+.yarn/cache
+.yarn/unplugged
+.yarn/build-state.yml
+.yarn/install-state.gz
+.pnp.*
+
 # editor
 .idea/
 .vscode/
@@ -26,7 +34,7 @@ lerna-debug.log*
 lib/
 cjs/
 esm/
-docs/.docgen/
+docs/src/.docgen/
 
 # typescript
 *.tsbuildinfo
@@ -34,9 +42,11 @@ docs/.docgen/
 # project
 .eslintcache
 docs/.cache
-docs/public
 storybook-static
 .next
-docs/src/components/Test.tsx
-____*.internal.ts
-____*.internal.tsx
+docs/components/___test.internal.tsx
+packages/*/*/styles.css
+packages/*/*/styles.layer.css
+packages/@mantine/core/styles
+.stylelintcache
+____test.*

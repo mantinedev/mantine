@@ -1,0 +1,178 @@
+import {
+  LoadingOverlayDemos,
+  NumberFormatterDemos,
+  StylesDemos,
+  TableDemos,
+} from '@docs/demos';
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.Changelog720);
+
+## Community templates
+
+You are welcome to share your GitHub templates with the community. Community templates are
+featured on the [getting started](/getting-started/) page. You can find a guide on how to
+create and submit a template [here](/submit-template/).
+
+Examples of templates that you can submit:
+
+- Next.js pages router + MDX + Mantine blog template
+- Next.js app router + Mantine + styled-components template
+- Vite + Mantine + Emotion template
+
+## NumberFormatter component
+
+New [NumberFormatter](/core/number-formatter/) component allows to format numbers
+with thousands separators, decimal separators, and custom number of decimal places.
+It supports the same formatting related props as [NumberInput](/core/number-input/) component.
+
+<Demo data={NumberFormatterDemos.usage} />
+
+## Form actions
+
+`@mantine/form` package now exports `createFormActions` function that
+can be used to [change form state](/form/actions/) from anywhere in your application.
+The mechanism of form actions is similar to [notifications system](/x/notifications/),
+[modals manager](/x/modals/) and other similar packages.
+
+To use form actions, set `name` property in [use-form](/form/use-form/) settings:
+
+```tsx
+import { useForm } from '@mantine/form';
+
+export interface DemoFormValues {
+  name: string;
+  age: number;
+}
+
+function Demo() {
+  const form = useForm<DemoFormValues>({
+    name: 'demo-form',
+    initialValues: {
+      name: '',
+      age: 0,
+    },
+  });
+}
+```
+
+Then call `createFormActions` function with the same form name as specified in `useForm` settings:
+
+```tsx
+// Import type of form values from the file where you defined useForm
+import { createFormActions } from '@mantine/form';
+import type { DemoFormValues } from './DemoForm';
+
+export const demoFormActions =
+  createFormActions<DemoFormValues>('demo-form');
+```
+
+After that, you can use `demoFormActions` to change form state from anywhere in your application.
+For example, after a fetch request or after a user interaction with a component that does not have access
+to the form state:
+
+```tsx
+import { useEffect } from 'react';
+import { Button } from '@mantine/core';
+import { demoFormActions } from './demoFormActions';
+
+function ExternalComponent() {
+  useEffect(() => {
+    fetch('/api/user')
+      .then((res) => res.json())
+      .then((res) =>
+        demoFormActions.setValues({
+          name: res.name,
+          age: res.age,
+        })
+      );
+  }, []);
+
+  return (
+    <Button onClick={() => demoFormActions.reset()}>
+      Reset demo form
+    </Button>
+  );
+}
+```
+
+## Table data prop
+
+[Table](/core/table/) component now supports `data` prop which can be used to generate table rows
+from given data:
+
+<Demo data={TableDemos.data} />
+
+## Table sticky header
+
+[Table](/core/table/) component now supports `stickyHeader` prop, which can be used to make the table header
+stick to the top of the table:
+
+<Demo data={TableDemos.stickyHeader} />
+
+## Usage with Sass
+
+It is now possible to use Mantine with [Sass](https://sass-lang.com/). You can find documentation
+on [this page](/styles/sass/). Note that it is still required to set up [postcss-preset-mantine](/styles/postcss-preset/)
+in order for all functions to work properly. Sass can be used as a replacement for [CSS modules](/styles/css-modules/)
+– it supports all features that CSS modules support.
+
+You can find examples of Mantine + Sass usage in separate branches of templates:
+
+- [Next.js app router + Sass example](https://github.com/mantinedev/next-app-template/tree/sass)
+- [Vite + Sass example](https://github.com/mantinedev/vite-template/tree/sass)
+
+## Inline loaders
+
+[Loader](/core/loader/) component now supports `children` prop. The prop allows overriding the default
+loader with any React node. It is useful in components that support `loaderProps` ([Button](/core/button/), [LoadingOverlay](/core/loading-overlay/), [Dropzone](/x/dropzone/), etc.)
+– with `loaderProps.children` you can now display any React node instead of the loader.
+
+<Demo data={LoadingOverlayDemos.customLoader} />
+
+## lightHidden and darkHidden props
+
+All Mantine components now support `lightHidden` and `darkHidden` props that can be used to hide
+components in a specific color scheme:
+
+<Demo data={StylesDemos.lightDarkHidden} />
+
+## light-root and dark-root mixins
+
+New `light-root` and `dark-root` mixins were added to [postcss-preset-mantine](/styles/postcss-preset/).
+These mixins can be used to add color scheme specific styles to the `:root`/`html` element.
+Note that to use these mixins, you need to update `postcss-preset-mantine` to `1.9.0` or higher.
+
+```scss
+:root {
+  @mixin light-root {
+    --color: red;
+  }
+
+  @mixin dark-root {
+    --color: blue;
+  }
+}
+```
+
+## Documentation updates
+
+- New [Styles overview](/styles/styles-overview/) guide
+- New [Usage with Sass](/styles/sass/) guide
+- [Storybook guide](/guides/storybook/) was updated to use new [@storybook/addon-styling-webpack](https://storybook.js.org/addons/@storybook/addon-styling-webpack) with separate instructions for Vite and other frameworks
+- [CSS modules](/styles/css-modules/) guide now includes new section about global class names reference with `:global` selector
+- [Getting started](/getting-started/#set-up-vs-code) guide now includes new section about setting up VS Code with [PostCSS Language Support](https://marketplace.visualstudio.com/items?itemName=csstools.postcss) and [CSS Variable Autocomplete](https://marketplace.visualstudio.com/items?itemName=vunguyentuan.vscode-css-variables) extensions
+- [Popover](/core/popover/#nested-popovers) documentation now includes a guide on how to use nested popovers
+- [AspectRatio](/core/aspect-ratio/) documentation now includes a guide on how to use it in flexbox containers
+- Additional [AppShell.Section](/core/app-shell/) documentation was added
+- 8 new [Checkbox](/core/checkbox/) examples and demos were added
+
+## Other changes
+
+- [Dropzone](/x/dropzone/) now supports `loaderProps` prop to pass props down to the [Loader](/core/loader/) component
+- [theme.variantColorResolver](/theming/colors/#colors-variant-resolver) now supports `hoverColor` prop, which allows controlling `color` property when the component is hovered. New property is supported in [Button](/core/button/) and [ActionIcon](/core/action-icon/) components.
+- [Flex](/core/flex/) is now a [polymorphic](/guides/polymorphic/) component – it accepts `renderRoot` and `component` props
+- [Checkbox](/core/checkbox/) root element now has `data-checked` attribute when the checkbox is checked
+- [Checkbox](/core/checkbox/) and [Radio](/core/radio/) components now support changing icon color with `iconColor` prop
+- [use-form](/form/use-form/) now supports `onValuesChange` option which can be used to sync form values with external state

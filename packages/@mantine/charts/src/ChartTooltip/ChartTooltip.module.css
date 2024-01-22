@@ -1,0 +1,52 @@
+.tooltip {
+  min-width: rem(200px);
+  background-color: var(--mantine-color-body);
+  box-shadow: var(--mantine-shadow-md);
+  border-radius: var(--mantine-radius-default);
+
+  @mixin where-light {
+    border: rem(1px) solid var(--mantine-color-gray-3);
+  }
+
+  @mixin where-dark {
+    border: rem(1px) solid var(--mantine-color-dark-4);
+  }
+}
+
+.tooltipLabel {
+  padding: var(--mantine-spacing-xs) var(--mantine-spacing-md);
+  font-size: var(--mantine-font-size-md);
+  font-weight: 500;
+  color: var(--mantine-color-bright);
+}
+
+.tooltipBody {
+  padding: var(--mantine-spacing-sm) var(--mantine-spacing-md);
+  padding-top: 0;
+}
+
+.tooltipItem {
+  font-size: var(--mantine-font-size-sm);
+  display: flex;
+  justify-content: space-between;
+
+  &:where(& + &) {
+    margin-top: calc(var(--mantine-spacing-sm) / 2);
+  }
+}
+
+.tooltipItemBody {
+  display: flex;
+  align-items: center;
+  gap: var(--mantine-spacing-sm);
+  margin-right: var(--mantine-spacing-xl);
+}
+
+.tooltipItemName {
+  color: var(--mantine-color-text);
+  font-size: var(--mantine-font-size-sm);
+}
+
+.tooltipItemData {
+  color: var(--mantine-color-bright);
+}

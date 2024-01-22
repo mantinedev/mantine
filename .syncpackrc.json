@@ -1,6 +1,0 @@
-{
-  "dev": true,
-  "peer": false,
-  "prod": true,
-  "source": ["package.json", "src/*/package.json", "docs/package.json"]
-}

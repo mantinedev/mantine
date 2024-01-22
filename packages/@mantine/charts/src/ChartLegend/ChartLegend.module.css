@@ -1,0 +1,40 @@
+.legend {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-end;
+  height: 100%;
+
+  &:where([data-position='top']) {
+    padding-bottom: var(--mantine-spacing-md);
+  }
+
+  &:where([data-position='bottom']) {
+    padding-top: var(--mantine-spacing-md);
+  }
+}
+
+.legendItem {
+  display: flex;
+  align-items: center;
+  gap: rem(7px);
+  padding: rem(7px) var(--mantine-spacing-xs);
+  border-radius: var(--mantine-radius-default);
+  line-height: 1;
+
+  @mixin where-hover {
+    @mixin where-light {
+      background-color: var(--mantine-color-gray-0);
+    }
+
+    @mixin where-dark {
+      background-color: var(--mantine-color-dark-5);
+    }
+  }
+}
+
+.legendItemName {
+  font-size: var(--mantine-font-size-sm);
+  margin: 0;
+  padding: 0;
+}

@@ -1,0 +1,25 @@
+.demo {
+  & [data-with-padding] {
+    background-color: light-dark(var(--mantine-color-white), var(--mantine-color-dark-8));
+  }
+
+  & :global(textarea) {
+    @mixin light {
+      background-color: var(--mantine-color-gray-1) !important;
+    }
+
+    @mixin dark {
+      background-color: var(--mantine-color-dark-6) !important;
+    }
+  }
+
+  & :global(.mantine-CodeHighlightTabs-root) {
+    background-color: light-dark(var(--mantine-color-white), var(--mantine-color-dark-8));
+  }
+}
+
+.demoWrapper {
+  box-shadow: var(--mantine-shadow-md);
+  margin-bottom: var(--mantine-spacing-xl);
+  border-radius: var(--mantine-radius-md);
+}

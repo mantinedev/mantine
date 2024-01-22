@@ -1,7 +1,6 @@
 import React from 'react';
-import { PageHead } from '../components/PageHead/PageHead';
+import { HomePage } from '@/components/HomePage';
 
-// eslint-disable-next-line no-restricted-exports
-export { HomePage as default } from '../components/HomePage/HomePage';
-
-export const Head = () => <PageHead title="Mantine" disableTitleTemplate />;
+export default function Home() {
+  return <HomePage />;
+}

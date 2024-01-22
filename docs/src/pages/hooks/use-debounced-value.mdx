@@ -1,0 +1,48 @@
+import { HooksDemos } from '@docs/demos';
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.useDebouncedValue);
+
+## Usage
+
+`use-debounced-value` hook debounces value changes.
+This can be useful in case you want to perform a heavy operation based on react state,
+for example, send search request. Unlike [use-debounced-state](/hooks/use-debounced-state/) it
+is designed to work with controlled components.
+
+<Demo data={HooksDemos.useDebouncedValueUsage} />
+
+## Differences from use-debounced-state
+
+- You have direct access to the non-debounced value.
+- It is used for controlled inputs (`value` prop instead of `defaultValue`), e.g. renders on every state change like a character typed in an input.
+- It works with props or other state providers, and it does not force use of `useState`.
+
+## Leading update
+
+You can immediately update value with first call with `{ leading: true }` options:
+
+<Demo data={HooksDemos.useDebouncedValueLeading} />
+
+## Cancel update
+
+Hook provides `cancel` callback, you can use it to cancel update.
+Update cancels automatically on component unmount.
+
+In this example, type in some text and click the cancel button
+within a second to cancel debounced value change:
+
+<Demo data={HooksDemos.useDebouncedValueCancel} />
+
+## Definition
+
+```tsx
+function useDebouncedValue<T = any>(
+  value: T,
+  wait: number,
+  options?: {
+    leading: boolean;
+  }
+): readonly [T, () => void];
+```

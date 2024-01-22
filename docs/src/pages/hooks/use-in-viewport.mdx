@@ -1,0 +1,12 @@
+import { HooksDemos } from '@docs/demos';
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.useInViewport);
+
+## Usage
+
+`use-in-viewport` is a simpler alternative to [use-intersection](/hooks/use-intersection) that only checks if the element
+is visible in the viewport:
+
+<Demo data={HooksDemos.useInViewportDemo} />

@@ -1,0 +1,27 @@
+import { ListDemos } from '@docs/demos';
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.List);
+
+## Usage
+
+<Demo data={ListDemos.configurator} />
+
+## With icons
+
+You can replace list bullets with icon. To do so provide following props:
+
+- `icon` on List component will be used as default icon for all list elements
+- `icon` on List.Item component will override context icon from List
+- `spacing` – spacing between list items from theme or any valid CSS value to set spacing, defaults to `0`
+- `center` – center item content with icon
+- `size` – set font size from theme
+
+<Demo data={ListDemos.icon} />
+
+## Nested lists
+
+Set `withPadding` prop to offset nested lists and `listStyleType` to control bullet type:
+
+<Demo data={ListDemos.nested} />

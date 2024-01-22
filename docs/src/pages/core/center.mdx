@@ -1,0 +1,22 @@
+import { CenterDemos } from '@docs/demos';
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.Center);
+
+## Usage
+
+<Demo data={CenterDemos.usage} />
+
+## Inline
+
+To use `Center` with inline elements set `inline` prop.
+For example, you can center link icon and label:
+
+<Demo data={CenterDemos.inline} />
+
+<Polymorphic
+  defaultElement="div"
+  changeToElement="button"
+  component="Center"
+/>

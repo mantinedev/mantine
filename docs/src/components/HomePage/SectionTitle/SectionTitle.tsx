@@ -1,5 +1,6 @@
 import React from 'react';
-import useStyles from './SectionTitle.styles';
+import cx from 'clsx';
+import classes from './SectionTitle.module.css';
 
 interface SectionTitleProps extends React.ComponentProps<'h1'> {
   type?: 'white' | 'default';
@@ -11,10 +12,8 @@ export function SectionTitle({
   type = 'default',
   ...others
 }: SectionTitleProps) {
-  const { classes, cx } = useStyles();
-
   return (
-    <h2 className={cx(classes.title, classes[type], className)} {...others}>
+    <h2 data-type={type} className={cx(classes.title, className)} {...others}>
       {children}
     </h2>
   );

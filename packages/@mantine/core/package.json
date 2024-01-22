@@ -1,0 +1,62 @@
+{
+  "name": "@mantine/core",
+  "version": "7.4.2",
+  "description": "React components library focused on usability, accessibility and developer experience",
+  "homepage": "https://mantine.dev/",
+  "license": "MIT",
+  "author": "Vitaly Rtishchev <rtivital@gmail.com>",
+  "keywords": [
+    "components",
+    "design",
+    "frontend",
+    "library",
+    "next",
+    "nextjs",
+    "react",
+    "ui",
+    "ui-kit"
+  ],
+  "sideEffects": [
+    "*.css"
+  ],
+  "main": "./cjs/index.cjs",
+  "module": "./esm/index.mjs",
+  "types": "./lib/index.d.ts",
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./lib/index.d.mts",
+        "default": "./esm/index.mjs"
+      },
+      "require": {
+        "types": "./lib/index.d.ts",
+        "default": "./cjs/index.cjs"
+      }
+    },
+    "./styles.css": "./styles.css",
+    "./styles.layer.css": "./styles.layer.css",
+    "./styles/*": "./styles/*"
+  },
+  "repository": {
+    "url": "https://github.com/mantinedev/mantine.git",
+    "type": "git",
+    "directory": "packages/@mantine/core"
+  },
+  "peerDependencies": {
+    "@mantine/hooks": "7.4.2",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  },
+  "dependencies": {
+    "@floating-ui/react": "^0.24.8",
+    "clsx": "2.0.0",
+    "react-number-format": "^5.3.1",
+    "react-remove-scroll": "^2.5.7",
+    "react-textarea-autosize": "8.5.3",
+    "type-fest": "^3.13.1"
+  },
+  "devDependencies": {
+    "@mantine-tests/core": "workspace:*",
+    "@mantine/hooks": "workspace:*"
+  }
+}

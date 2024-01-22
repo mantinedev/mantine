@@ -1,0 +1,16 @@
+import { PaperDemos } from '@docs/demos';
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.Paper);
+
+## Usage
+
+<Demo data={PaperDemos.usage} />
+
+<Polymorphic
+  defaultElement="div"
+  changeToElement="button"
+  component="Paper"
+  withNext
+/>

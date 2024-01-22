@@ -1,0 +1,29 @@
+import { HooksDemos } from '@docs/demos';
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.useCounter);
+
+## Usage
+
+<Demo data={HooksDemos.useCounterDemo} />
+
+## Definition
+
+```tsx
+function useCounter(
+  initialValue?: number,
+  options?: Partial<{
+    min: number;
+    max: number;
+  }>
+): [
+  number,
+  {
+    increment: () => void;
+    decrement: () => void;
+    set: (value: number) => void;
+    reset: () => void;
+  },
+];
+```

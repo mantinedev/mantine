@@ -1,0 +1,165 @@
+import { MenuDemos } from '@docs/demos';
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.Menu);
+
+## Usage
+
+<Demo data={MenuDemos.usage} />
+
+## Controlled
+
+Dropdown opened state can be controlled with `opened` and `onChange` props:
+
+```tsx
+import { useState } from 'react';
+import { Menu } from '@mantine/core';
+
+function Demo() {
+  const [opened, setOpened] = useState(false);
+  return (
+    <Menu opened={opened} onChange={setOpened}>
+      {/* Menu content */}
+    </Menu>
+  );
+}
+```
+
+## Show menu on hover
+
+Set `trigger="hover"` to reveal dropdown when hovers over menu target and dropdown.
+`closeDelay` and `openDelay` props can be used to control open and close delay in ms.
+Note that:
+
+- If you set `closeDelay={0}` then menu will close before user will reach dropdown, set `offset={0}` to remove space between target element and dropdown.
+- Menu with `trigger="hover"` is not accessible – users that navigate with keyboard will not be able to use it. If you need click-hover hover and click triggers, use `trigger="click-hover"`.
+
+<Demo data={MenuDemos.hover} />
+
+To make `Menu` that is revealed on hover accessible on all devices, use `trigger="click-hover"` instead.
+The dropdown will be revealed on hover on desktop and on click on mobile devices.
+
+<Demo data={MenuDemos.clickHover} />
+
+## Disabled items
+
+<Demo data={MenuDemos.disabled} />
+
+## Dropdown position
+
+<Demo data={MenuDemos.positionConfigurator} />
+
+## Transitions
+
+Menu dropdown can be animated with any of premade transitions from [Transition](/core/transition/) component:
+
+<Demo data={MenuDemos.transitions} />
+
+## Custom component as Menu.Item
+
+By default, `Menu.Item` renders as button element, to change that set `component` prop:
+
+<Demo data={MenuDemos.component} />
+
+Note that the component you pass to `component` prop should allow spreading props to its root element:
+
+```tsx
+import { Menu } from '@mantine/core';
+
+// ❌ Will not work with Menu.Item
+function IncorrectItem() {
+  return <button type="button">My custom Menu item</button>;
+}
+
+// ✅ Will work correctly with Menu.Item
+function CorrectItem(
+  props: React.ComponentPropsWithoutRef<'button'>
+) {
+  return (
+    <button type="button" {...props}>
+      My custom Menu item
+    </button>
+  );
+}
+
+function Demo() {
+  // ❌ Will not work
+  const incorrect = <Menu.Item component={IncorrectItem} />;
+
+  // ✅ Will work
+  const correct = <Menu.Item component={CorrectItem} />;
+}
+```
+
+## Custom component as target
+
+<Demo data={MenuDemos.customControl} />
+
+<StylesApiSelectors component="Menu" />
+
+<Demo data={MenuDemos.stylesApi} />
+
+<TargetComponent component="Menu" />
+
+## Accessibility
+
+Menu follows [WAI-ARIA recommendations](https://www.w3.org/WAI/ARIA/apg/patterns/menu-button/examples/menu-button-links/):
+
+- Dropdown element has `role="menu"` and `aria-labelledby="target-id"` attributes
+- Target element has `aria-haspopup="menu"`, `aria-expanded`, `aria-controls="dropdown-id"` attributes
+- Menu item has `role="menuitem"` attribute
+
+### Supported target elements
+
+Uncontrolled Menu with `trigger="click"` (default) will be accessible only when used with `button` element or component that renders it ([Button](/core/button/), [ActionIcon](/core/action-icon/), etc.).
+Other elements will not support `Space` and `Enter` key presses.
+
+### Hover menu
+
+Menu with `trigger="hover"` is not accessible – it cannot be accessed with keyboard, use it only if you do not care about accessibility. If you need click-hover hover and click triggers, use `trigger="click-hover"`.
+
+### Navigation
+
+If you are using the Menu to build a Navigation, you can use the options from the demo below to follow the [WAI-ARIA recommendations for navigation](https://www.w3.org/WAI/ARIA/apg/patterns/disclosure/examples/disclosure-navigation/).
+
+<Demo data={MenuDemos.navigation} />
+
+### Keyboard interactions
+
+<KeyboardEventsTable
+  data={[
+    {
+      key: 'Escape',
+      description: 'Closes dropdown',
+      condition: 'Focus within dropdown',
+    },
+    {
+      key: 'Space/Enter',
+      description: 'Opens/closes dropdown',
+      condition: 'Focus on target element',
+    },
+    {
+      key: 'ArrowUp',
+      description: 'Moves focus to previous menu item',
+      condition: 'Focus within dropdown',
+    },
+    {
+      key: 'ArrowDown',
+      description: 'Moves focus to next menu item',
+      condition: 'Focus within dropdown',
+    },
+    {
+      key: 'Home',
+      description: 'Moves focus to first menu item',
+      condition: 'Focus within dropdown',
+    },
+    {
+      key: 'End',
+      description: 'Moves focus to last menu item',
+      condition: 'Focus within dropdown',
+    },
+  ]}
+/>
+
+If you also need to support `Tab` and `Shift + Tab` then set `menuItemTabIndex={0}`.

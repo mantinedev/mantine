@@ -1,0 +1,128 @@
+import { SwitchDemos } from '@docs/demos';
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.Switch);
+
+## Usage
+
+<Demo data={SwitchDemos.configurator} />
+
+## Controlled
+
+```tsx
+import { useState } from 'react';
+import { Switch } from '@mantine/core';
+
+function Demo() {
+  const [checked, setChecked] = useState(false);
+  return (
+    <Switch
+      checked={checked}
+      onChange={(event) => setChecked(event.currentTarget.checked)}
+    />
+  );
+}
+```
+
+## Inner Labels
+
+<Demo data={SwitchDemos.labels} />
+
+## Icon labels
+
+<Demo data={SwitchDemos.iconLabels} />
+
+## Thumb icon
+
+<Demo data={SwitchDemos.thumbIcon} />
+
+## With tooltip
+
+Set `refProp="rootRef"` on [Tooltip](/core/tooltip/) and other similar components to make them work with `Switch`:
+
+<Demo data={SwitchDemos.tooltip} />
+
+## Pointer cursor
+
+By default, switch input and label have `cursor: default` (same as native `input[type="checkbox"]`).
+To change cursor to pointer, set `cursorType` on [theme](/theming/theme-object/):
+
+```tsx
+import { createTheme, MantineProvider, Switch } from '@mantine/core';
+
+const theme = createTheme({
+  cursorType: 'pointer',
+});
+
+function Demo() {
+  return (
+    <MantineProvider theme={theme}>
+      <Switch label="Pointer cursor" />
+    </MantineProvider>
+  );
+}
+```
+
+<WrapperProps component="Switch" />
+
+## Switch.Group
+
+<Demo data={SwitchDemos.groupConfigurator} />
+
+## Controlled Switch.Group
+
+```tsx
+import { useState } from 'react';
+import { Switch } from '@mantine/core';
+
+function Demo() {
+  const [value, setValue] = useState<string[]>([]);
+
+  return (
+    <Switch.Group value={value} onChange={setValue}>
+      <Switch value="react" label="React" />
+      <Switch value="svelte" label="Svelte" />
+    </Switch.Group>
+  );
+}
+```
+
+<StylesApiSelectors component="Switch" />
+
+<Demo data={SwitchDemos.stylesApi} />
+
+## Get input ref
+
+```tsx
+import { useRef } from 'react';
+import { Switch } from '@mantine/core';
+
+function Demo() {
+  const ref = useRef<HTMLInputElement>(null);
+  return <Switch ref={ref} />;
+}
+```
+
+## Accessibility
+
+`Switch` is a regular `input[type="checkbox"]`. Set `aria-label` if the `Switch` is used without `label` prop:
+
+```tsx
+import { Switch } from '@mantine/core';
+
+// -> not ok, input is not labeled
+function Bad() {
+  return <Switch />;
+}
+
+// -> ok, input has aria-label
+function Good() {
+  return <Switch aria-label="I agree to everything" />;
+}
+
+// -> ok, input has associated label
+function AlsoGood() {
+  return <Switch label="I agree to everything" />;
+}
+```

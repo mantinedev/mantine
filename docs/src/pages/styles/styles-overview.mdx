@@ -1,0 +1,245 @@
+import { ButtonDemos } from '@docs/demos';
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.StylesOverview);
+
+# Styles overview
+
+This guide will help you understand how to apply styles to Mantine and custom components.
+
+## Component specific props
+
+Most of the components provide props that allow you to customize their styles. For example,
+[Button](/core/button/) component has `color`, `variant`, `size` and `radius` props that control its
+appearance:
+
+<Demo data={ButtonDemos.configurator} />
+
+These props usually control multiple CSS properties, for example `color` and variant props control `color`,
+`background-color` and `border` properties. In most cases, changing components props is the most optimal way to customize Mantine components.
+
+## Style props
+
+[Style props](/styles/style-props/) work similar to component specific props, but with several differences:
+
+- Style props are not component specific, they can be used with any component.
+- Style props always control a single CSS property. For example, `c` prop controls CSS `color` property, while `color` prop controls a set of properties: `color`, `background-color` and `border-color`.
+- Style props are set in `style` attribute. It is not possible to override them with CSS without using `!important`.
+
+[Style props](/styles/style-props/) are useful when you need to change a single CSS property without creating a separate file for styles.
+Some of the most common use cases are:
+
+- Changing text color and font-size
+
+```tsx
+import { Text } from '@mantine/core';
+
+function Demo() {
+  return (
+    <div>
+      <Text c="blue.8" fz="lg">
+        Card title
+      </Text>
+      <Text c="dimmed" fz="sm">
+        Card description
+      </Text>
+    </div>
+  );
+}
+```
+
+- Applying margins to inputs inside a form:
+
+```tsx
+import { TextInput } from '@mantine/core';
+
+function Demo() {
+  return (
+    <form>
+      <TextInput label="First name" />
+      <TextInput label="Last name" mt="md" />
+      <TextInput label="Email" mt="md" />
+    </form>
+  );
+}
+```
+
+- Adding padding to various elements:
+
+```tsx
+import { Paper } from '@mantine/core';
+
+function Demo() {
+  return <Paper p="xl">My custom card</Paper>;
+}
+```
+
+Note that [style props](/styles/style-props/) were never intended to be used
+as a primary way of styling components. In most cases, it is better to limit
+the number of style props used per component to 3-4. If you find yourself using
+more than 4 style props, consider creating a separate file with styles – it
+will be easier to maintain and will be more [performant](/styles/styles-performance/).
+
+## Style prop
+
+[Style prop](/styles/style/) is supported by all Mantine components and allows setting
+CSS properties as well as CSS variables. It is useful in the following cases:
+
+- You want to apply a single CSS property to a component:
+
+```tsx
+import { Button, Flex } from '@mantine/core';
+
+function Demo() {
+  return (
+    <Flex>
+      <Button style={{ flex: 1 }}>Large button</Button>
+      <Button>Small button</Button>
+    </Flex>
+  );
+}
+```
+
+- You want to set a CSS variable based on component prop:
+
+```tsx
+import { Box } from '@mantine/core';
+
+function Demo({ color }: { color: string }) {
+  // Later you will be able to use var(--my-color) in any nested element
+  return <Box style={{ '--my-color': color }}>My box</Box>;
+}
+```
+
+[Style prop](/styles/style/) works the same way as React `style` prop. It is not
+recommended to use it as a primary way of styling components. In most cases, it is
+better to create a separate file with styles – it will be easier to maintain and
+will be more [performant](/styles/styles-performance/).
+
+## CSS modules
+
+[CSS modules](/styles/css-modules/) is the recommended way of applying most of the styles to Mantine components.
+CSS modules are the most performant and flexible way of styling components.
+
+```scss
+// Demo.module.css
+
+.root {
+  padding-right: rem(100px);
+
+  &[data-collapsed] {
+    padding-right: rem(40px);
+
+    & .control {
+      max-width: rem(200px);
+    }
+  }
+}
+
+.control {
+  background-color: var(--mantine-color-blue-1);
+  color: var(--mantine-color-blue-filled);
+  padding: var(--mantine-spacing-xl);
+  margin-left: rem(40px);
+
+  @media (max-width: $mantine-breakpoint-sm) {
+    margin-left: 0;
+    margin-top: var(--mantine-spacing-md);
+  }
+
+  @mixin hover {
+    background-color: light-dark(
+      var(--mantine-color-blue-1),
+      var(--mantine-color-blue-9)
+    );
+  }
+}
+```
+
+```tsx
+// Demo.tsx
+import classes from './Demo.module.css';
+
+function Demo({ collapsed }: { collapsed: boolean }) {
+  return (
+    <div
+      className={classes.root}
+      data-collapsed={collapsed || undefined}
+    >
+      <button type="button" className={classes.control}>
+        Control
+      </button>
+    </div>
+  );
+}
+```
+
+## Theme tokens
+
+You can reference Mantine [theme](/theming/theme-object/) values in any styles with
+[CSS variables](/styles/css-variables/):
+
+- In [CSS modules](/styles/css-modules/):
+
+```scss
+.root {
+  // references theme.colors.red[5]
+  background: var(--mantine-color-red-5);
+
+  // references theme.spacing.md
+  margin-top: var(--mantine-spacing-md);
+
+  // references theme.headings.fontFamily
+  font-family: var(--mantine-font-family-headings);
+}
+```
+
+- In [style props](/styles/style-props/):
+
+```tsx
+import { Box } from '@mantine/core';
+
+function Demo() {
+  // bg="red.5" references theme.colors.red[5]
+  // "red.5" is a shorthand for var(--mantine-color-red-5)
+
+  // mt="xl" references theme.spacing.xl
+  // "xl" is a shorthand for var(--mantine-spacing-xl)
+  return (
+    <Box bg="red.5" mt="xl">
+      My box
+    </Box>
+  );
+}
+```
+
+- In [style prop](/styles/style/):
+
+```tsx
+import { Box } from '@mantine/core';
+
+function Demo() {
+  return (
+    <>
+      <Box
+        style={{
+          margin: 'var(--mantine-spacing-xl)',
+          color: 'var(--mantine-color-orange-5)',
+        }}
+      >
+        With CSS variables
+      </Box>
+
+      <Box
+        style={(theme) => ({
+          margin: theme.spacing.xl,
+          color: theme.colors.orange[5],
+        })}
+      >
+        With theme object
+      </Box>
+    </>
+  );
+}
+```

@@ -1,0 +1,37 @@
+import { HooksDemos } from '@docs/demos';
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.useNetwork);
+
+## Usage
+
+`use-network` hook returns an object with current connection status:
+
+<Demo data={HooksDemos.useNetworkDemo} />
+
+## Browser support
+
+`use-network` uses experimental `navigator.connection`, see [browser compatibility table](https://developer.mozilla.org/en-US/docs/Web/API/Navigator/connection#browser_compatibility).
+
+## Definition
+
+```tsx
+function useNetwork(): {
+  online: boolean;
+  downlink?: number;
+  downlinkMax?: number;
+  effectiveType?: 'slow-2g' | '2g' | '3g' | '4g';
+  rtt?: number;
+  saveData?: boolean;
+  type?:
+    | 'bluetooth'
+    | 'cellular'
+    | 'ethernet'
+    | 'wifi'
+    | 'wimax'
+    | 'none'
+    | 'other'
+    | 'unknown';
+};
+```

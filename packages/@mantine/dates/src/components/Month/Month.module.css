@@ -1,0 +1,12 @@
+.month {
+  border-collapse: collapse;
+  table-layout: fixed;
+}
+
+.monthCell {
+  padding: var(--_month-cell-padding, 0);
+
+  &[data-with-spacing] {
+    --_month-cell-padding: rem(0.5px);
+  }
+}

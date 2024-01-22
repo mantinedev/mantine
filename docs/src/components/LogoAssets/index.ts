@@ -1,0 +1,1 @@
+export { LogoAssets } from './LogoAssets';

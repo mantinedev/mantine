@@ -1,0 +1,112 @@
+import { SegmentedControlDemos } from '@docs/demos';
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.SegmentedControl);
+
+## Usage
+
+<Demo data={SegmentedControlDemos.usage} />
+
+## Controlled
+
+```tsx
+import { useState } from 'react';
+import { SegmentedControl } from '@mantine/core';
+
+function Demo() {
+  const [value, setValue] = useState('react');
+
+  return (
+    <SegmentedControl
+      value={value}
+      onChange={setValue}
+      data={[
+        { label: 'React', value: 'react' },
+        { label: 'Angular', value: 'ng' },
+        { label: 'Vue', value: 'vue' },
+        { label: 'Svelte', value: 'svelte' },
+      ]}
+    />
+  );
+}
+```
+
+## Data prop
+
+`SegmentedControl` support two different data formats:
+
+1. An array of strings – used when `value` and `label` are the same
+2. An array of objects – used when `value` and `label` are different
+
+```tsx
+import { SegmentedControl } from '@mantine/core';
+
+function ArrayOfStrings() {
+  return (
+    <SegmentedControl data={['React', 'Angular', 'Svelte', 'Vue']} />
+  );
+}
+
+function ArrayOfObjects() {
+  return (
+    <SegmentedControl
+      data={[
+        { value: 'React', label: 'React' },
+        { value: 'Angular', label: 'Angular' },
+        { value: 'Svelte', label: 'Svelte' },
+        { value: 'Vue', label: 'Vue' },
+      ]}
+    />
+  );
+}
+```
+
+## Disabled
+
+To disable `SegmentedControl` item, use array of objects `data` format and set `disabled: true`
+on the item that you want to disable. To disable the entire component, use `disabled` prop.
+
+<Demo data={SegmentedControlDemos.disabled} />
+
+## React node as label
+
+You can use any React node as label:
+
+<Demo data={SegmentedControlDemos.labels} />
+
+## Color
+
+By default, `SegmentedControl` uses `theme.white` with shadow in light color scheme and `var(--mantine-color-dark-6)` background color for indicator.
+Set `color` prop to change indicator `background-color`:
+
+<Demo data={SegmentedControlDemos.configurator} />
+
+## Transitions
+
+Change transition properties with:
+
+- `transitionDuration` – all transitions duration in ms, `200` by default
+- `transitionTimingFunction` – all transitions timing function, `ease` by default
+
+<Demo data={SegmentedControlDemos.transitions} />
+
+## readOnly
+
+Set `readOnly` prop to prevent value from being changed:
+
+<Demo data={SegmentedControlDemos.readOnly} />
+
+<StylesApiSelectors component="SegmentedControl" />
+
+<Demo data={SegmentedControlDemos.stylesApi} />
+
+## Accessibility and usability
+
+`SegmentedControl` uses radio inputs under the hood, it is accessible by default with no extra steps required if you have text in labels.
+Component support the same keyboard events as a regular radio group.
+
+In case you do not have text in labels (for example, when you want to use `SegmentedControl` with icons only),
+use [VisuallyHidden](/core/visually-hidden) to make component accessible:
+
+<Demo data={SegmentedControlDemos.iconsOnly} />

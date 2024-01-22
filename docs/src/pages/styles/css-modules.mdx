@@ -1,0 +1,176 @@
+import { StylesDemos } from '@docs/demos';
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.CSSModules);
+
+# CSS modules
+
+All Mantine components use CSS modules for styling.
+It is recommended to use CSS modules in your project as well, but it is not required –
+Mantine components are fully compatible with any third-party styling solution and native CSS.
+
+## Usage
+
+CSS modules are supported out of the box by all major frameworks and build tools. Usually, all you need
+to do is to create `*.module.css` file:
+
+```css
+/* Button.module.css */
+.button {
+  color: red;
+}
+```
+
+And then import it in your component:
+
+```tsx
+import classes from './Button.module.css';
+
+function Demo() {
+  return (
+    <button className={classes.button} type="button">
+      Button
+    </button>
+  );
+}
+```
+
+## How CSS modules work
+
+When you create a `*.module.css` file, your build tool will generate a unique class name for each class in your file.
+For example, when you import the following file in your `.js`/`.ts` file:
+
+```css
+/* Button.module.css */
+.button {
+  color: red;
+}
+
+.text {
+  color: blue;
+}
+```
+
+You will get an object with unique class names:
+
+```tsx
+import classes from './Button.module.css';
+
+console.log(classes);
+// -> Object of scoped class names: key is a class name, value is a generated unique class name
+// { button: 'button-Xh3s7ER', text: 'text-js65s3Se' }
+// Note that generated class names may vary depending on your build tool
+```
+
+With CSS modules, you do not need to worry about class name collisions, you can use any class name you want.
+
+## Referencing global class names
+
+To reference global class names in CSS Modules, you can use `:global` selector:
+
+```scss
+.test {
+  & :global(.global-class-name) {
+    color: red;
+  }
+}
+```
+
+The code above will compile to the following CSS:
+
+```css
+.m-dj3w33 .global-class-name {
+  color: red;
+}
+```
+
+## Adding styles to Mantine components
+
+You can add styles to most of Mantine components using `className` prop
+– the same way as you would do with a regular HTML element.
+To set properties to your [theme](/theming/theme-object) values, you can use [Mantine CSS variables](/styles/css-variables):
+
+<Demo data={StylesDemos.className} />
+
+To apply styles to inner elements of Mantine components with CSS modules, you can use `classNames` prop
+(see [Styles API](/styles/styles-api) for more information):
+
+<Demo data={StylesDemos.classNames} />
+
+## Styling Mantine components without CSS modules
+
+All Mantine components are fully compatible with any third-party styling solution and native CSS.
+There are two main strategies to apply styles with a third-party library:
+
+- `className`, `classNames`, `style` and `styles` props
+- with static selectors, for example `.mantine-Text-root`
+
+Example of applying styles with a utility CSS library:
+
+```tsx
+import { TextInput } from '@mantine/core';
+
+function Demo() {
+  return (
+    <TextInput
+      classNames={{
+        root: 'mt-4',
+        input: 'bg-red-500 text-white',
+      }}
+    />
+  );
+}
+```
+
+Example of applying styles with global CSS:
+
+```css
+/* styles.css */
+
+/* Note that these styles are not scoped and
+   will be applied to all TextInput components */
+.mantine-TextInput-root {
+  margin-top: 0.8rem;
+}
+
+.mantine-TextInput-input {
+  background-color: var(--mantine-color-red-filled);
+  color: var(--mantine-color-white);
+}
+```
+
+You can combine both approaches to achieve desired results, for example,
+`@emotion/styled` and `styled-components` packages will pass `className` prop to
+a given component, and you can use static selectors to style inner elements:
+
+```tsx
+import styled from '@emotion/styled';
+import { Slider } from '@mantine/core';
+
+const StyledSlider = styled(Slider)`
+  & .mantine-Slider-bar {
+    background-color: var(--mantine-color-pink-5);
+  }
+
+  & .mantine-Slider-thumb {
+    border-color: var(--mantine-color-pink-5);
+    background-color: white;
+    width: 1.5rem;
+    height: 1.5rem;
+  }
+`;
+
+function Demo() {
+  return <StyledSlider defaultValue={40} />;
+}
+```
+
+> **Consider using CSS modules first**
+>
+> CSS modules are the recommended way of styling Mantine components.
+> Before choosing another styling solution, make sure that CSS modules do not fit your needs.
+> Other solutions have limitations, for example:
+>
+> - It is hard to customize styles based on [data-\* attributes](/styles/data-attributes) when using utility-based CSS libraries
+> - It is impossible to style inner elements of Mantine components with static selectors when using styled-components and other similar libraries if component uses [Portal](/core/portal) because some elements will be rendered outside of the component root and inner elements are not part of the component tree

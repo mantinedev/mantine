@@ -1,0 +1,20 @@
+import { PillDemos } from '@docs/demos';
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.Pill);
+
+## Usage
+
+<Demo data={PillDemos.usage} />
+
+## Inside inputs
+
+`Pill` component is designed to be used inside inputs. It can be used to create custom
+multi select or tag inputs.
+
+<Demo data={PillDemos.withinInput} />
+
+<StylesApiSelectors component="Pill" />
+
+<Demo data={PillDemos.stylesApi} />

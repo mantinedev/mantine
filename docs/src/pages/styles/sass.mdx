@@ -1,0 +1,247 @@
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.UsageWithSass);
+
+# Usage with Sass
+
+This guide will explain how to use [Sass](https://sass-lang.com/) in combination with
+[postcss-preset-mantine](/styles/postcss-preset). Note that examples on mantine.dev website
+use only `postcss-preset-mantine` – you will need to modify them to use with Sass.
+
+## Sass modules
+
+You can use Sass modules the same way as [CSS modules](/styles/css-modules):
+
+- Use `*.module.scss`/`*.module.sass` extension for your files to enable modules
+- Use `*.scss`/`*.sass` extension for global styles
+
+## Usage with Vite
+
+Install `sass`:
+
+<InstallScript packages="sass" dev />
+
+Add mantine resources in your `vite.config.js` file:
+
+```tsx
+export default defineConfig({
+  plugins: [react()],
+  css: {
+    preprocessorOptions: {
+      scss: {
+        additionalData: `@import "./src/_mantine";`,
+      },
+    },
+  },
+});
+```
+
+Create `_mantine.scss` file in your `src` folder:
+
+```scss
+@use 'sass:math';
+
+// Define variables for your breakpoints,
+// values must be the same as in your theme
+$mantine-breakpoint-xs: '36em';
+$mantine-breakpoint-sm: '48em';
+$mantine-breakpoint-md: '62em';
+$mantine-breakpoint-lg: '75em';
+$mantine-breakpoint-xl: '88em';
+
+@function rem($value) {
+  @return #{math.div(math.div($value, $value * 0 + 1), 16)}rem;
+}
+
+@mixin light {
+  [data-mantine-color-scheme='light'] & {
+    @content;
+  }
+}
+
+@mixin dark {
+  [data-mantine-color-scheme='dark'] & {
+    @content;
+  }
+}
+
+@mixin hover {
+  @media (hover: hover) {
+    &:hover {
+      @content;
+    }
+  }
+
+  @media (hover: none) {
+    &:active {
+      @content;
+    }
+  }
+}
+
+@mixin smaller-than($breakpoint) {
+  @media (max-width: $breakpoint) {
+    @content;
+  }
+}
+
+@mixin larger-than($breakpoint) {
+  @media (min-width: $breakpoint) {
+    @content;
+  }
+}
+
+// Add direction mixins if you need rtl support
+@mixin rtl {
+  [dir='rtl'] & {
+    @content;
+  }
+}
+
+@mixin ltr {
+  [dir='ltr'] & {
+    @content;
+  }
+}
+```
+
+All done! you can now use breakpoint variables, `rem` function, `hover`, `light`/`dark` mixins:
+
+```scss
+// example.module.scss
+.title {
+  color: light-dark(
+    var(--mantine-color-black),
+    var(--mantine-color-white)
+  );
+  font-size: rem(100px);
+  font-weight: 900;
+  letter-spacing: rem(-2px);
+
+  @include light {
+    background-color: red;
+  }
+
+  @include dark {
+    background-color: blue;
+  }
+
+  @include smaller-than($mantine-breakpoint-md) {
+    font-size: rem(50px);
+  }
+}
+```
+
+## Usage with Next.js
+
+Install `sass`:
+
+<InstallScript packages="sass" dev />
+
+Add mantine resources in your `next.config.mjs` file:
+
+```tsx
+export default {
+  // ...other config
+  sassOptions: {
+    prependData: `@import "./_mantine.scss";`,
+  },
+};
+```
+
+Create `_mantine.scss` file in the root folder of your project:
+
+```scss
+@use 'sass:math';
+
+// Define variables for your breakpoints,
+// values must be the same as in your theme
+$mantine-breakpoint-xs: '36em';
+$mantine-breakpoint-sm: '48em';
+$mantine-breakpoint-md: '62em';
+$mantine-breakpoint-lg: '75em';
+$mantine-breakpoint-xl: '88em';
+
+@function rem($value) {
+  @return #{math.div(math.div($value, $value * 0 + 1), 16)}rem;
+}
+
+@mixin light {
+  [data-mantine-color-scheme='light'] & {
+    @content;
+  }
+}
+
+@mixin dark {
+  [data-mantine-color-scheme='dark'] & {
+    @content;
+  }
+}
+
+@mixin hover {
+  @media (hover: hover) {
+    &:hover {
+      @content;
+    }
+  }
+
+  @media (hover: none) {
+    &:active {
+      @content;
+    }
+  }
+}
+
+@mixin smaller-than($breakpoint) {
+  @media (max-width: $breakpoint) {
+    @content;
+  }
+}
+
+@mixin larger-than($breakpoint) {
+  @media (min-width: $breakpoint) {
+    @content;
+  }
+}
+
+// Add direction mixins if you need rtl support
+@mixin rtl {
+  [dir='rtl'] & {
+    @content;
+  }
+}
+
+@mixin ltr {
+  [dir='ltr'] & {
+    @content;
+  }
+}
+```
+
+All done! you can now use breakpoint variables, `rem` function, `hover`, `light`/`dark` mixins:
+
+```scss
+// example.module.scss
+.title {
+  color: light-dark(
+    var(--mantine-color-black),
+    var(--mantine-color-white)
+  );
+  font-size: rem(100px);
+  font-weight: 900;
+  letter-spacing: rem(-2px);
+
+  @include light {
+    background-color: red;
+  }
+
+  @include dark {
+    background-color: blue;
+  }
+
+  @include smaller-than($mantine-breakpoint-md) {
+    font-size: rem(50px);
+  }
+}
+```

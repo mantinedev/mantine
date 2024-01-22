@@ -1,0 +1,23 @@
+import { HooksDemos } from '@docs/demos';
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.useEyeDropper);
+
+## Usage
+
+`use-eye-dropper` hook provides an interface to work with [EyeDropper API](https://developer.mozilla.org/en-US/docs/Web/API/EyeDropper_API).
+Check [browser support](https://caniuse.com/mdn-api_eyedropper) to learn which browsers support the API.
+
+<Demo data={HooksDemos.useEyeDropperUsage} />
+
+## Definition
+
+```tsx
+function useEyeDropper(): {
+  supported: boolean;
+  open: (options?: {
+    signal?: AbortSignal;
+  }) => Promise<{ sRGBHex: string }>;
+};
+```

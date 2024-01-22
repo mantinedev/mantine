@@ -1,0 +1,7 @@
+[
+  {
+    "fileName": "AutocompleteDynamic.tsx",
+    "language": "tsx",
+    "code": "import { useState } from 'react';\nimport { Combobox, TextInput, useCombobox } from '@mantine/core';\n\nexport function AutocompleteDynamic() {\n  const combobox = useCombobox();\n  const [value, setValue] = useState('');\n\n  const options = ['gmail.com', 'outlook.com', 'mantine.dev'].map((item) => (\n    <Combobox.Option value={`${value}@${item}`} key={item}>\n      {`${value}@${item}`}\n    </Combobox.Option>\n  ));\n\n  return (\n    <Combobox\n      onOptionSubmit={(optionValue) => {\n        setValue(optionValue);\n        combobox.closeDropdown();\n      }}\n      store={combobox}\n      withinPortal={false}\n    >\n      <Combobox.Target>\n        <TextInput\n          label=\"Your email\"\n          placeholder=\"Your email\"\n          value={value}\n          onChange={(event) => {\n            setValue(event.currentTarget.value);\n            combobox.openDropdown();\n            combobox.updateSelectedOptionIndex();\n          }}\n          onClick={() => combobox.openDropdown()}\n          onFocus={() => combobox.openDropdown()}\n          onBlur={() => combobox.closeDropdown()}\n        />\n      </Combobox.Target>\n\n      <Combobox.Dropdown hidden={value.trim().length === 0 || value.includes('@')}>\n        <Combobox.Options>\n          {options.length === 0 ? <Combobox.Empty>Nothing found</Combobox.Empty> : options}\n        </Combobox.Options>\n      </Combobox.Dropdown>\n    </Combobox>\n  );\n}\n"
+  }
+]

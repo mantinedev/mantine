@@ -1,0 +1,18 @@
+import { HooksDemos } from '@docs/demos';
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.useLogger);
+
+## Usage
+
+`use-logger` logs given values to the console each time component renders.
+Open devtools to see state changes in console:
+
+<Demo data={HooksDemos.useLoggerDemo} />
+
+## Definition
+
+```tsx
+function useLogger(componentName: string, props: any[]): any;
+```

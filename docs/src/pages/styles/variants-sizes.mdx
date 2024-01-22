@@ -1,0 +1,108 @@
+import {
+  ActionIconDemos,
+  StylesDemos,
+  ThemingDemos,
+} from '@docs/demos';
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.VariantsAndSizes);
+
+# Variants and sizes
+
+## Adding custom variants
+
+Most of Mantine components support `variant` prop, it can be used in CSS variables resolver,
+and it is also exposed as `data-variant="{value}"` attribute on the root element of the component.
+The easiest way to add custom variants is to add styles that use `[data-variant="{value}"]`.
+
+Example of adding a new variant to the [Input](/core/input) component:
+
+- `underline` variant styles are added
+- `filled` variant is a default variant – you do not need to define any additional styles for it
+
+<Demo data={StylesDemos.customVariant} />
+
+Note that you can add custom variants to every Mantine component that supports [Styles API](/styles/styles-api)
+even if there are no variants defined on the library side.
+
+> **Overriding existing variants styles**
+>
+> Apart from adding new variants, you can also override existing ones, for example, you can change the
+> `filled` variant of the [Input](/core/input) component with `.input[data-variant="filled"]` selector.
+
+## variantColorResolver
+
+[Button](/core/button), [Badge](/core/badge), [ActionIcon](/core/action-icon) and other
+components support custom variants with [variantColorResolver](/theming/colors#colors-variant-resolver)
+– it supports both changing colors and adding new variants. Note that `theme.variantColorResolver` is
+responsible only for colors, if you need to change other properties, use `data-variant` attribute.
+
+<Demo data={ThemingDemos.variantColorsResolver} />
+
+## Sizes with components CSS variables
+
+You can add custom sizes to any component that supports `size` prop by providing a custom
+CSS variables resolver, usually it is done in `theme.components`:
+
+<Demo data={StylesDemos.vars} />
+
+## Sizes with data-size attribute
+
+Every component that supports `size` prop exposes it as `data-size="{value}"` attribute on the root element.
+You can use it to add custom sizes:
+
+<Demo data={StylesDemos.dataSize} />
+
+## Sizes with static CSS variables
+
+Mantine components sizes are defined with CSS variables (usually on root element), for example,
+[ActionIcon](/core/action-icon) component has the following CSS variables:
+
+```css
+.root {
+  --ai-size-xs: rem(18px);
+  --ai-size-sm: rem(22px);
+  --ai-size-md: rem(28px);
+  --ai-size-lg: rem(34px);
+  --ai-size-xl: rem(44px);
+}
+```
+
+You can override these values with [Styles API](/styles/styles-api) or add new sizes values:
+
+<Demo data={ActionIconDemos.customSize} />
+
+Note that some components have more than one CSS variable for size, for example,
+the [Button](/core/button) component has the following CSS variables:
+
+```css
+.root {
+  --button-height-xs: rem(30px);
+  --button-height-sm: rem(36px);
+  --button-height-md: rem(42px);
+  --button-height-lg: rem(50px);
+  --button-height-xl: rem(60px);
+
+  --button-height-compact-xs: rem(22px);
+  --button-height-compact-sm: rem(26px);
+  --button-height-compact-md: rem(30px);
+  --button-height-compact-lg: rem(34px);
+  --button-height-compact-xl: rem(40px);
+
+  --button-padding-x-xs: rem(14px);
+  --button-padding-x-sm: rem(18px);
+  --button-padding-x-md: rem(22px);
+  --button-padding-x-lg: rem(26px);
+  --button-padding-x-xl: rem(32px);
+
+  --button-padding-x-compact-xs: rem(7px);
+  --button-padding-x-compact-sm: rem(8px);
+  --button-padding-x-compact-md: rem(10px);
+  --button-padding-x-compact-lg: rem(12px);
+  --button-padding-x-compact-xl: rem(14px);
+}
+```
+
+Usually, it is more convenient to use `data-size` attribute or `vars` on [theme](/theming/theme-object)
+to customize sizes in this case.

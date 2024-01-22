@@ -1,0 +1,12 @@
+[
+  {
+    "fileName": "SelectList.tsx",
+    "language": "tsx",
+    "code": "import { useState } from 'react';\nimport { Checkbox, Combobox, Group, TextInput, useCombobox } from '@mantine/core';\nimport classes from './SelectList.module.css';\n\nconst groceries = ['🍎 Apples', '🍌 Bananas', '🥦 Broccoli', '🥕 Carrots', '🍫 Chocolate'];\n\nexport function SelectList() {\n  const combobox = useCombobox();\n\n  const [value, setValue] = useState<string[]>([]);\n  const [search, setSearch] = useState('');\n\n  const handleValueSelect = (val: string) =>\n    setValue((current) =>\n      current.includes(val) ? current.filter((v) => v !== val) : [...current, val]\n    );\n\n  const options = groceries\n    .filter((item) => item.toLowerCase().includes(search.toLowerCase().trim()))\n    .map((item) => (\n      <Combobox.Option\n        value={item}\n        key={item}\n        active={value.includes(item)}\n        onMouseOver={() => combobox.resetSelectedOption()}\n      >\n        <Group gap=\"sm\">\n          <Checkbox\n            checked={value.includes(item)}\n            onChange={() => {}}\n            aria-hidden\n            tabIndex={-1}\n            style={{ pointerEvents: 'none' }}\n          />\n          <span>{item}</span>\n        </Group>\n      </Combobox.Option>\n    ));\n\n  return (\n    <Combobox store={combobox} onOptionSubmit={handleValueSelect}>\n      <Combobox.EventsTarget>\n        <TextInput\n          placeholder=\"Search groceries\"\n          classNames={{ input: classes.input }}\n          value={search}\n          onChange={(event) => {\n            setSearch(event.currentTarget.value);\n            combobox.updateSelectedOptionIndex();\n          }}\n        />\n      </Combobox.EventsTarget>\n\n      <div className={classes.list}>\n        <Combobox.Options>\n          {options.length > 0 ? options : <Combobox.Empty>Nothing found....</Combobox.Empty>}\n        </Combobox.Options>\n      </div>\n    </Combobox>\n  );\n}\n"
+  },
+  {
+    "fileName": "SelectList.module.css",
+    "language": "css",
+    "code": ".list {\n  background-color: var(--mantine-color-body);\n  padding: var(--mantine-spacing-xs) rem(6px);\n  border: rem(1px) solid light-dark(var(--mantine-color-gray-4), var(--mantine-color-dark-4));\n  border-top: 0;\n  border-bottom-left-radius: var(--mantine-radius-md);\n  border-bottom-right-radius: var(--mantine-radius-md);\n  min-height: rem(190px);\n}\n\n.input {\n  border-bottom-left-radius: 0;\n  border-bottom-right-radius: 0;\n}\n"
+  }
+]

@@ -1,0 +1,24 @@
+import { HooksDemos } from '@docs/demos';
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.useFocusWithin);
+
+## Usage
+
+`use-focus-within` hook detects if any element within the other element has focus.
+It works the same way as `:focus-within` CSS selector:
+
+<Demo data={HooksDemos.useFocusWithinDemo} />
+
+## Definition
+
+```tsx
+function useFocusWithin<T extends HTMLElement = any>(handlers?: {
+  onFocus?(event: FocusEvent): void;
+  onBlur?(event: FocusEvent): void;
+}): {
+  ref: React.MutableRefObject<T>;
+  focused: boolean;
+};
+```

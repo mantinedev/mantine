@@ -1,13 +1,13 @@
-import { meta } from '@mantine/ds';
+import { meta } from '@mantinex/mantine-meta';
 import { LinksGroupProps } from './LinksGroup/LinksGroup';
 
 export const FOOTER_LINKS_DATA: LinksGroupProps[] = [
   {
     title: 'About',
     data: [
-      { type: 'gatsby', label: 'Contribute', link: '/pages/contributing/' },
-      { type: 'gatsby', label: 'About Mantine', link: '/pages/about/' },
-      { type: 'gatsby', label: 'Changelog', link: '/pages/changelog/' },
+      { type: 'next', label: 'Contribute', link: '/contribute' },
+      { type: 'next', label: 'About Mantine', link: '/about' },
+      { type: 'next', label: 'Changelog', link: '/changelog/previous-versions' },
       { type: 'link', label: 'Releases', link: meta.gitHubLinks.releases },
     ],
   },

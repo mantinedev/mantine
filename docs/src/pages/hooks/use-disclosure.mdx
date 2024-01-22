@@ -1,0 +1,77 @@
+import { HooksDemos } from '@docs/demos';
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.useDisclosure);
+
+## Usage
+
+`use-disclosure` hook manages boolean state. It provides `open`, `close` and `toggle` handlers
+and accepts optional `onOpen` and `onClose` callbacks. It can be used to manage controlled modals,
+popovers and other similar components:
+
+```tsx
+import { useDisclosure } from '@mantine/hooks';
+
+function Demo() {
+  const [opened, handlers] = useDisclosure(false);
+
+  // Sets opened to true
+  handlers.open();
+
+  // Sets opened to false
+  handlers.close();
+
+  // Sets opened to true if it was false and vice versa
+  handlers.toggle();
+}
+```
+
+## Callbacks
+
+`onOpen` and `onClose` callbacks are called when opened state changes:
+
+```tsx
+import { useDisclosure } from '@mantine/hooks';
+
+function Demo() {
+  const [opened, handlers] = useDisclosure(false, {
+    onOpen: () => console.log('Opened'),
+    onClose: () => console.log('Closed'),
+  });
+
+  // Calls onOpen callback and sets opened to true
+  handlers.open();
+
+  // Does nothing, opened is already true
+  handlers.open();
+
+  // Calls onClose callback and sets opened to false
+  handlers.close();
+
+  // Does nothing, opened is already false
+  handlers.close();
+
+  // Calls onOpen or onClose depending on next state
+  handlers.toggle();
+}
+```
+
+## Definition
+
+```tsx
+function useDisclosure(
+  initialState: boolean,
+  callbacks?: {
+    onOpen?(): void;
+    onClose?(): void;
+  }
+): [
+  boolean,
+  {
+    open: () => void;
+    close: () => void;
+    toggle: () => void;
+  },
+];
+```

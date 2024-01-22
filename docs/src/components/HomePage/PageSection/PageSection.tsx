@@ -1,22 +1,21 @@
 import React from 'react';
-import { Container, Text, DefaultProps, Box } from '@mantine/core';
+import { Box, BoxProps, Container, ElementProps, Text } from '@mantine/core';
 import { SectionTitle } from '../SectionTitle/SectionTitle';
-import useStyles from './PageSection.styles';
+import classes from './PageSection.module.css';
 
-interface PageSectionProps extends DefaultProps {
+interface PageSectionProps extends BoxProps, ElementProps<'div'> {
   title: string;
   description?: string;
   children: React.ReactNode;
-  white?: boolean;
+  alt?: boolean;
 }
 
-export function PageSection({ title, description, children, white, ...others }: PageSectionProps) {
-  const { classes } = useStyles({ white });
-
+export function PageSection({ title, description, children, alt, ...others }: PageSectionProps) {
   return (
-    <Box className={classes.wrapper} {...others}>
+    <Box className={classes.wrapper} mod={{ alt }} {...others}>
       <Container size={1100}>
-        <SectionTitle type={white ? 'white' : 'default'}>{title}</SectionTitle>
+        <SectionTitle>{title}</SectionTitle>
+
         {description && (
           <Text className={classes.description} size="xl">
             {description}

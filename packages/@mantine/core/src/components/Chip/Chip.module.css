@@ -1,0 +1,175 @@
+.root {
+  --chip-size-xs: rem(23px);
+  --chip-size-sm: rem(28px);
+  --chip-size-md: rem(32px);
+  --chip-size-lg: rem(36px);
+  --chip-size-xl: rem(40px);
+
+  --chip-icon-size-xs: rem(10px);
+  --chip-icon-size-sm: rem(12px);
+  --chip-icon-size-md: rem(14px);
+  --chip-icon-size-lg: rem(16px);
+  --chip-icon-size-xl: rem(18px);
+
+  --chip-padding-xs: rem(16px);
+  --chip-padding-sm: rem(20px);
+  --chip-padding-md: rem(24px);
+  --chip-padding-lg: rem(28px);
+  --chip-padding-xl: rem(32px);
+
+  --chip-checked-padding-xs: rem(7.5px);
+  --chip-checked-padding-sm: rem(10px);
+  --chip-checked-padding-md: rem(11.7px);
+  --chip-checked-padding-lg: rem(13.5px);
+  --chip-checked-padding-xl: rem(12.5px);
+
+  --chip-spacing-xs: rem(10px);
+  --chip-spacing-sm: rem(12px);
+  --chip-spacing-md: rem(16px);
+  --chip-spacing-lg: rem(20px);
+  --chip-spacing-xl: rem(22px);
+
+  --chip-size: var(--chip-size-sm);
+  --chip-icon-size: var(--chip-icon-size-sm);
+  --chip-padding: var(--chip-padding-sm);
+  --chip-spacing: var(--chip-spacing-sm);
+  --chip-checked-padding: var(--chip-checked-padding-sm);
+  --chip-bg: var(--mantine-primary-color-filled);
+  --chip-hover: var(--mantine-primary-color-filled-hover);
+  --chip-color: var(--mantine-color-white);
+  --chip-bd: rem(1px) solid transparent;
+}
+
+.label {
+  display: inline-flex;
+  align-items: center;
+  user-select: none;
+  border-radius: var(--chip-radius, rem(1000px));
+  height: var(--chip-size);
+  font-size: var(--chip-fz, var(--mantine-font-size-sm));
+  line-height: calc(var(--chip-size) - rem(2px));
+  padding-left: var(--_chip-padding, var(--chip-padding));
+  padding-right: var(--_chip-padding, var(--chip-padding));
+  cursor: var(--_chip-cursor, pointer);
+  white-space: nowrap;
+  -webkit-tap-highlight-color: transparent;
+  border: rem(1px) solid transparent;
+  background-color: var(--_chip-bg);
+  color: var(--_chip-color, var(--mantine-color-text));
+
+  &[data-checked] {
+    --_chip-padding: var(--chip-checked-padding);
+  }
+
+  &[data-disabled] {
+    @mixin light {
+      --_chip-bg: var(--mantine-color-gray-2);
+      --_chip-color: var(--mantine-color-gray-5);
+    }
+
+    @mixin dark {
+      --_chip-bg: var(--mantine-color-dark-6);
+      --_chip-color: var(--mantine-color-dark-3);
+    }
+
+    --_chip-cursor: not-allowed;
+  }
+}
+
+.label--outline:not([data-disabled]) {
+  background-color: var(--_chip-bg);
+  border: var(--_chip-bd);
+
+  @mixin hover {
+    @mixin light {
+      --_chip-bg: var(--mantine-color-gray-0);
+    }
+
+    @mixin dark {
+      --_chip-bg: var(--mantine-color-dark-5);
+    }
+  }
+
+  @mixin light {
+    --_chip-bg: var(--mantine-color-white);
+    --_chip-bd: rem(1px) solid var(--mantine-color-gray-3);
+  }
+
+  @mixin dark {
+    --_chip-bg: var(--mantine-color-dark-6);
+    --_chip-bd: rem(1px) solid var(--mantine-color-dark-4);
+  }
+
+  [data-mantine-color-scheme] &[data-checked] {
+    --_chip-bd: var(--chip-bd);
+    --_chip-icon-color: var(--chip-color);
+
+    @mixin hover {
+      --_chip-bg: var(--chip-hover);
+    }
+  }
+}
+
+.label--filled:not([data-disabled]),
+.label--light:not([data-disabled]) {
+  background-color: var(--_chip-bg);
+  border: rem(1px) solid transparent;
+  color: var(--_chip-color, var(--mantine-color-text));
+
+  @mixin hover {
+    @mixin light {
+      --_chip-bg: var(--mantine-color-gray-2);
+    }
+
+    @mixin dark {
+      --_chip-bg: var(--mantine-color-dark-4);
+    }
+  }
+
+  @mixin light {
+    --_chip-bg: var(--mantine-color-gray-1);
+  }
+
+  @mixin dark {
+    --_chip-bg: var(--mantine-color-dark-5);
+  }
+
+  [data-mantine-color-scheme] &[data-checked] {
+    --_chip-icon-color: var(--chip-color);
+    --_chip-color: var(--chip-color);
+    --_chip-bg: var(--chip-bg);
+
+    @mixin hover {
+      --_chip-bg: var(--chip-hover);
+    }
+  }
+}
+
+.iconWrapper {
+  width: calc(var(--chip-icon-size) + (var(--chip-spacing) / 1.5));
+  max-width: calc(var(--chip-icon-size) + (var(--chip-spacing) / 1.5));
+  height: var(--chip-icon-size);
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+}
+
+.checkIcon {
+  width: var(--chip-icon-size);
+  height: var(--chip-icon-size);
+  display: block;
+  color: var(--_chip-icon-color, inherit);
+}
+
+.input {
+  width: 0;
+  height: 0;
+  padding: 0;
+  opacity: 0;
+  margin: 0;
+
+  &:focus-visible + .label {
+    outline: rem(2px) solid var(--mantine-primary-color-filled);
+    outline-offset: rem(2px);
+  }
+}

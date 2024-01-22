@@ -1,0 +1,15 @@
+.root {
+  margin: 0;
+  font-weight: var(--title-fw);
+  font-size: var(--title-fz);
+  line-height: var(--title-lh);
+  font-family: var(--mantine-font-family-headings);
+
+  &[data-line-clamp] {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: var(--title-line-clamp);
+    -webkit-box-orient: vertical;
+  }
+}

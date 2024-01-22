@@ -1,0 +1,13 @@
+.demo {
+  text-align: center;
+  color: var(--mantine-color-white);
+  padding: var(--mantine-spacing-md);
+
+  /* LTR styles */
+  background-color: var(--mantine-color-blue-filled);
+
+  @mixin rtl {
+    /* RTL styles override LTR styles */
+    background-color: var(--mantine-color-red-filled);
+  }
+}

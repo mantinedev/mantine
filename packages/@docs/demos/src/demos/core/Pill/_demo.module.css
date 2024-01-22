@@ -1,0 +1,7 @@
+.demoWrapper {
+  padding: rem(10px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: light-dark(var(--mantine-color-white), var(--mantine-color-dark-5));
+}

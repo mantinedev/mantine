@@ -1,0 +1,298 @@
+import { TabsDemos } from '@docs/demos';
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.Tabs);
+
+## Usage
+
+<Demo data={TabsDemos.usage} />
+
+## Controlled Tabs
+
+To control Tabs state, use `value` and `onChange` props:
+
+```tsx
+import { useState } from 'react';
+import { Tabs } from '@mantine/core';
+
+function Demo() {
+  const [activeTab, setActiveTab] = useState<string | null>('first');
+
+  return (
+    <Tabs value={activeTab} onChange={setActiveTab}>
+      <Tabs.List>
+        <Tabs.Tab value="first">First tab</Tabs.Tab>
+        <Tabs.Tab value="second">Second tab</Tabs.Tab>
+      </Tabs.List>
+
+      <Tabs.Panel value="first">First panel</Tabs.Panel>
+      <Tabs.Panel value="second">Second panel</Tabs.Panel>
+    </Tabs>
+  );
+}
+```
+
+## Uncontrolled Tabs
+
+If you do not need to subscribe to Tabs state changes, use `defaultValue`:
+
+```tsx
+import { Tabs } from '@mantine/core';
+
+function Demo() {
+  return (
+    <Tabs defaultValue="first">
+      <Tabs.List>
+        <Tabs.Tab value="first">First tab</Tabs.Tab>
+        <Tabs.Tab value="second">Second tab</Tabs.Tab>
+      </Tabs.List>
+
+      <Tabs.Panel value="first">First panel</Tabs.Panel>
+      <Tabs.Panel value="second">Second panel</Tabs.Panel>
+    </Tabs>
+  );
+}
+```
+
+## Change colors
+
+To change colors of all tabs, set `color` on `Tabs` component, to change color of the individual tab,
+set `color` on `Tabs.Tab`.
+
+<Demo data={TabsDemos.colors} />
+
+## Tabs position
+
+<Demo data={TabsDemos.position} />
+
+To display tab on the opposite side, set `margin-left: auto` with `ml="auto"` prop ot with `className`:
+
+<Demo data={TabsDemos.pull} />
+
+## Inverted tabs
+
+To make tabs inverted, place `Tabs.Panel` components before `Tabs.List` and add `inverted` prop to `Tabs` component:
+
+<Demo data={TabsDemos.inverted} />
+
+## Vertical tabs placement
+
+To change placement of `Tabs.List` in vertical orientation set `placement` prop:
+
+<Demo data={TabsDemos.placement} />
+
+## Disabled tabs
+
+Set `disabled` prop on `Tabs.Tab` component to disable tab.
+Disabled tab cannot be activated with mouse or keyboard, and they will be skipped when user navigates with arrow keys:
+
+<Demo data={TabsDemos.disabled} />
+
+## Activation mode
+
+By default, tabs are activated when user presses arrows keys or Home/End keys.
+To disable that set `activateTabWithKeyboard={false}` on `Tabs` component:
+
+<Demo data={TabsDemos.keyboardActivation} />
+
+## Tab deactivation
+
+By default, active tab cannot be deactivated. To allow that set `allowTabDeactivation` on `Tabs` component:
+
+<Demo data={TabsDemos.deactivate} />
+
+## Unmount inactive tabs
+
+By default, inactive `Tabs.Panel` will stay mounted, to unmount inactive tabs, set `keepMounted={false}` on Tabs.
+This is useful when you want to render components that impact performance inside `Tabs.Panel`. Note that
+components that are rendered inside `Tabs.Panel` will reset their state on each mount (tab change).
+
+```tsx
+import { Tabs } from '@mantine/core';
+
+// Second tab panel will be mounted only when user activates second tab
+function Demo() {
+  return (
+    <Tabs keepMounted={false} defaultValue="first">
+      <Tabs.List>
+        <Tabs.Tab value="first">First tab</Tabs.Tab>
+        <Tabs.Tab value="second">Second tab</Tabs.Tab>
+      </Tabs.List>
+
+      <Tabs.Panel value="first">First panel</Tabs.Panel>
+      <Tabs.Panel value="second">Second panel</Tabs.Panel>
+    </Tabs>
+  );
+}
+```
+
+## Get tab control ref
+
+```tsx
+import { useRef } from 'react';
+import { Tabs } from '@mantine/core';
+
+function Demo() {
+  const secondTabRef = useRef<HTMLButtonElement>(null);
+
+  return (
+    <Tabs defaultValue="first">
+      <Tabs.List>
+        <Tabs.Tab value="first">First tab</Tabs.Tab>
+        <Tabs.Tab value="Second" ref={secondTabRef}>
+          Second tab
+        </Tabs.Tab>
+        <Tabs.Tab value="third">Third tab</Tabs.Tab>
+      </Tabs.List>
+    </Tabs>
+  );
+}
+```
+
+## Usage with react-router
+
+```tsx
+<Route path="/tabs/:tabValue" element={<Demo />} />
+```
+
+```tsx
+import { useNavigate, useParams } from 'react-router-dom';
+import { Tabs } from '@mantine/core';
+
+function Demo() {
+  const navigate = useNavigate();
+  const { tabValue } = useParams();
+
+  return (
+    <Tabs
+      value={tabValue}
+      onChange={(value) => navigate(`/tabs/${value}`)}
+    >
+      <Tabs.List>
+        <Tabs.Tab value="first">First tab</Tabs.Tab>
+        <Tabs.Tab value="second">Second tab</Tabs.Tab>
+      </Tabs.List>
+    </Tabs>
+  );
+}
+```
+
+## Usage with Next.js router
+
+```tsx
+// For file /tabs/[activeTab].tsx
+import { useRouter } from 'next/router';
+import { Tabs } from '@mantine/core';
+
+function Demo() {
+  const router = useRouter();
+
+  return (
+    <Tabs
+      value={router.query.activeTab as string}
+      onChange={(value) => router.push(`/tabs/${value}`)}
+    >
+      <Tabs.List>
+        <Tabs.Tab value="first">First tab</Tabs.Tab>
+        <Tabs.Tab value="second">Second tab</Tabs.Tab>
+      </Tabs.List>
+    </Tabs>
+  );
+}
+```
+
+<StylesApiSelectors component="Tabs" />
+
+<Demo data={TabsDemos.stylesApi} />
+
+Example of Styles API usage to customize tab styles:
+
+<Demo data={TabsDemos.customize} />
+
+## Accessibility
+
+Tabs component follows [WAI-ARIA recommendations](https://www.w3.org/TR/wai-aria-practices/examples/tabs/tabs-2/tabs.html) on accessibility.
+
+If you use `Tabs.Tab` without text content, for example, only with icon, then set `aria-label`
+or use [VisuallyHidden](/core/visually-hidden) component:
+
+```tsx
+import { IconCoin } from '@tabler/icons-react';
+import { Tabs, VisuallyHidden } from '@mantine/core';
+
+function Demo() {
+  return (
+    <Tabs defaultValue="chat">
+      <Tabs.List>
+        {/* aria-label is not required, tab is labelled by children */}
+        <Tabs.Tab value="chat">Chat</Tabs.Tab>
+
+        {/* aria-label is required, tab is not labelled by children */}
+        <Tabs.Tab
+          value="money"
+          aria-label="Get money"
+          leftSection={<IconCoin size={14} />}
+        />
+
+        {/* You can use VisuallyHidden instead of aria-label */}
+        <Tabs.Tab value="money" leftSection={<IconCoin size={14} />}>
+          <VisuallyHidden>Get money</VisuallyHidden>
+        </Tabs.Tab>
+      </Tabs.List>
+    </Tabs>
+  );
+}
+```
+
+To set tabs list label, set `aria-label` on `Tabs.List` component, it will be announced by screen reader:
+
+```tsx
+import { Tabs } from '@mantine/core';
+
+function Demo() {
+  return (
+    <Tabs defaultValue="recent">
+      {/* Tabs.List aria-label will be announced when tab is focused for the first time */}
+      <Tabs.List aria-label="Chats">
+        <Tabs.Tab value="recent">Most recent</Tabs.Tab>
+        <Tabs.Tab value="recent">Unanswered</Tabs.Tab>
+        <Tabs.Tab value="archived">Archived</Tabs.Tab>
+      </Tabs.List>
+    </Tabs>
+  );
+}
+```
+
+## Keyboard interactions
+
+<KeyboardEventsTable
+  data={[
+    {
+      key: 'ArrowRight',
+      description:
+        'Focuses and activates next tab that is not disabled',
+      condition: 'orientation="horizontal"',
+    },
+    {
+      key: 'ArrowLeft',
+      description:
+        'Focuses and activates previous tab that is not disabled',
+      condition: 'orientation="horizontal"',
+    },
+    {
+      key: 'ArrowDown',
+      description:
+        'Focuses and activates next tab that is not disabled',
+      condition: 'orientation="vertical"',
+    },
+    {
+      key: 'ArrowUp',
+      description:
+        'Focuses and activates previous tab that is not disabled',
+      condition: 'orientation="vertical"',
+    },
+    { key: 'Home', description: 'Focuses and activates first tab' },
+    { key: 'End', description: 'Focuses and activates last tab' },
+  ]}
+/>

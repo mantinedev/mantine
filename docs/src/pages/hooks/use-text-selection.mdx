@@ -1,0 +1,17 @@
+import { HooksDemos } from '@docs/demos';
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.useTextSelection);
+
+## Usage
+
+`use-text-selection` returns current text selection:
+
+<Demo data={HooksDemos.useTextSelectionUsage} />
+
+## Definition
+
+```tsx
+function useTextSelection(): Selection | null;
+```

@@ -1,0 +1,34 @@
+import { IndicatorDemos } from '@docs/demos';
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.Indicator);
+
+## Usage
+
+<Demo data={IndicatorDemos.configurator} />
+
+## Inline
+
+When the target element has a fixed width, set `inline` prop to add `display: inline-block;` styles to
+Indicator container. Alternatively, you can set width and height with `style` prop if you still want the root
+element to keep `display: block`.
+
+<Demo data={IndicatorDemos.inline} />
+
+## Offset
+
+Set `offset` to change indicator position. It is useful when Indicator component is
+used with children that have border-radius:
+
+<Demo data={IndicatorDemos.offset} />
+
+## Processing animation
+
+<Demo data={IndicatorDemos.processing} />
+
+## Disabled
+
+Set `disabled` to hide the indicator:
+
+<Demo data={IndicatorDemos.disabled} />

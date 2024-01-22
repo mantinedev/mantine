@@ -1,0 +1,73 @@
+import { TableDemos } from '@docs/demos';
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.Table);
+
+## Usage
+
+Table data for all examples:
+
+```tsx
+const elements = [
+  { position: 6, mass: 12.011, symbol: 'C', name: 'Carbon' },
+  { position: 7, mass: 14.007, symbol: 'N', name: 'Nitrogen' },
+  { position: 39, mass: 88.906, symbol: 'Y', name: 'Yttrium' },
+  { position: 56, mass: 137.33, symbol: 'Ba', name: 'Barium' },
+  { position: 58, mass: 140.12, symbol: 'Ce', name: 'Cerium' },
+];
+```
+
+<Demo data={TableDemos.usage} />
+
+## data prop
+
+You can use `data` prop to automatically generate table rows from array of React nodes.
+`data` prop accepts an object with the following properties:
+
+- `head` – an array of React nodes (`React.ReactNode[]`) to render `Table.Th` in `Table.Thead`
+- `foot` – an array of React nodes (`React.ReactNode[]`) to render `Table.Th` in `Table.Tfoot`
+- `body` - an array of arrays of React nodes (`React.ReactNode[][]`) to render `Table.Td` in `Table.Tbody`
+- `caption` – a React node to render `Table.Caption`
+
+<Demo data={TableDemos.data} />
+
+## Sticky header
+
+Set `stickyHeader` to make table header sticky. To customize top position of the header use `stickyHeaderOffset` prop:
+it is useful when you have a fixed header in your application. For example, Mantine documentation website has a fixed
+header with 60px height:
+
+<Demo data={TableDemos.stickyHeader} />
+
+## Spacing
+
+To control spacing use `horizontalSpacing` and `verticalSpacing` props. Both props support spacing from `theme.spacing` and any valid CSS value to set cell padding:
+
+<Demo data={TableDemos.spacingConfigurator} />
+
+## Caption and tfoot
+
+Table support tfoot and caption elements. Set `captionSide` prop (top or bottom) to change caption position.
+
+<Demo data={TableDemos.captions} />
+
+## Striped and rows hover
+
+<Demo data={TableDemos.configurator} />
+
+## Scroll container
+
+To prevent viewport overflow wrap `Table` with `Table.ScrollContainer`.
+The component accepts `minWidth` prop which sets minimum width below which table will be scrollable.
+
+<Demo data={TableDemos.scrollContainer} />
+
+By default, `Table.ScrollContainer` uses [ScrollArea](/core/scroll-area), you can change it
+to native scrollbars by setting `type="native"`:
+
+<Demo data={TableDemos.scrollContainerNative} />
+
+## Example: Table with row selection
+
+<Demo data={TableDemos.rowSelection} />

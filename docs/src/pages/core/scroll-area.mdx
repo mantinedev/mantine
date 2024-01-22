@@ -1,0 +1,63 @@
+import { ScrollAreaDemos } from '@docs/demos';
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.ScrollArea);
+
+## Usage
+
+`ScrollArea` component supports the following props:
+
+- `type` defines scrollbars behavior:
+  - `hover` – scrollbars are visible on hover
+  - `scroll` – scrollbars are visible on scroll
+  - `auto` – similar to `overflow: auto` – scrollbars are always visible when the content is overflowing
+  - `always` – same as `auto`, but scrollbars are always visible regardless of whether the content is overflowing
+  - `never` – scrollbars are always hidden
+- `offsetScrollbars` – offset scrollbars with padding
+- `scrollbarSize` – scrollbar size, controls scrollbar and thumb width/height
+- `scrollHideDelay` – delay in ms to hide scrollbars, applicable only when type is `hover` or `scroll`
+
+<Demo data={ScrollAreaDemos.usage} />
+
+## Horizontal scrollbars
+
+<Demo data={ScrollAreaDemos.horizontal} />
+
+## Disable horizontal scrollbars
+
+To disable horizontal scrollbars set `scrollbars="y"` prop:
+
+<Demo data={ScrollAreaDemos.scrollbars} />
+
+## Subscribe to scroll position changes
+
+Set `onScrollPositionChange` function to subscribe to scroll position changes,
+it will be called each time user scrolls with x and y coordinates:
+
+<Demo data={ScrollAreaDemos.scrollPosition} />
+
+## Scroll to position
+
+To programmatically scroll to any position,
+get viewport element ref with `viewportRef` prop and call `scrollTo` method:
+
+<Demo data={ScrollAreaDemos.scrollTo} />
+
+## Styles API
+
+<Demo data={ScrollAreaDemos.stylesApi} />
+
+## Scroll element into view
+
+<Demo data={ScrollAreaDemos.scrollIntoView} />
+
+## ScrollArea.Autosize
+
+`ScrollArea.Autosize` component allows to create scrollable containers when given max-height is reached:
+
+<Demo data={ScrollAreaDemos.maxHeight} />
+
+## ScrollArea.Autosize with Popover
+
+<Demo data={ScrollAreaDemos.autosizePopover} />

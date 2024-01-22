@@ -1,0 +1,15 @@
+import { FieldsetDemos } from '@docs/demos';
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.Fieldset);
+
+## Usage
+
+<Demo data={FieldsetDemos.usage} />
+
+## Disabled
+
+Set `disabled` prop to disable all inputs and buttons inside the fieldset:
+
+<Demo data={FieldsetDemos.disabled} />

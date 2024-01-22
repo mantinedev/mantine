@@ -1,0 +1,39 @@
+import { HooksDemos } from '@docs/demos';
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.useClipboard);
+
+## Usage
+
+`use-clipboard` hook provides interface to work with `navigator.clipboard`:
+
+<Demo data={HooksDemos.useClipboardDemo} />
+
+## navigator.clipboard limitations
+
+Due to security reasons `use-clipboard` hook will not work in iframes and may not work with local files opened with `file://` protocol
+(hook will work fine with local websites that are using `http://` protocol). You can learn more about `navigator.clipboard` [here](https://web.dev/async-clipboard/).
+
+## API
+
+`use-clipboard` hook accepts one argument `options` in which copied status timeout duration is defined (defaults to `2000`).
+Hook returns object with properties:
+
+- `copy` – function to copy value to the clipboard
+- `copied` – value that indicates that `copy` handler was called less than `options.timeout` ms ago
+- `reset` – function to clear timeout and reset `copied` to `false`
+- `error` – contains `Error` object if something goes wrong
+
+## Definition
+
+```tsx
+function useClipboard(
+  options: { timeout: number } = { timeout: 2000 }
+): {
+  copy: (valueToCopy: any) => void;
+  reset: () => void;
+  error: Error;
+  copied: boolean;
+};
+```

@@ -1,0 +1,12 @@
+export { configurator } from './Checkbox.demo.configurator';
+export { indeterminate } from './Checkbox.demo.indeterminate';
+export { states } from './Checkbox.demo.states';
+export { icon } from './Checkbox.demo.icon';
+export { groupConfigurator } from './Checkbox.demo.groupConfigurator';
+export { anchor } from './Checkbox.demo.anchor';
+export { card } from './Checkbox.demo.card';
+export { stylesApi } from './Checkbox.demo.stylesApi';
+export { customize } from './Checkbox.demo.customize';
+export { iconColor } from './Checkbox.demo.iconColor';
+export { tooltip } from './Checkbox.demo.tooltip';
+export { customSize } from './Checkbox.demo.customSize';

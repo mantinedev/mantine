@@ -1,0 +1,35 @@
+import { ContainerDemos } from '@docs/demos';
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.Container);
+
+## Usage
+
+`Container` centers content and limits its `max-width` to the value specified in `size` prop.
+Note that the `size` prop does not make `max-width` responsive, for example,
+when it set to `lg` it will always be `lg` regardless of screen size.
+
+<Demo data={ContainerDemos.usage} />
+
+## Fluid
+
+Set `fluid` prop to make container fluid, it will take 100% of available width,
+it is the same as setting `size="100%"`.
+
+<Demo data={ContainerDemos.fluid} />
+
+## Customize sizes
+
+You can customize existing `Container` sizes and add new ones with [CSS variables](/styles/styles-api)
+on [theme](/theming/theme-object):
+
+<Demo data={ContainerDemos.sizes} />
+
+## Responsive max-width
+
+To make `Container` `max-width` responsive, use [Styles API](/styles/styles-api) to set
+`classNames`. For example, you can add `responsive` size that will make `Container`
+`max-width` different depending on screen size:
+
+<Demo data={ContainerDemos.responsive} />

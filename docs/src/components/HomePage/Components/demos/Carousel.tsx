@@ -1,18 +1,11 @@
-import React, { useEffect, useState } from 'react';
-import { CarouselCardsDemos } from '@mantine/demos';
-import { Embla } from '@mantine/carousel';
+import React, { useState } from 'react';
+import { Embla, useAnimationOffsetEffect } from '@mantine/carousel';
+import { CarouselCardsDemos } from '@docs/demos';
 
 export function Carousel() {
-  const [embla, setEmbla] = useState<Embla>(null);
+  const [embla, setEmbla] = useState<Embla | null>(null);
 
-  // required to fix incorrect carousel slides position after animation
-  useEffect(() => {
-    if (embla) {
-      window.setTimeout(() => {
-        embla.reInit();
-      }, 200);
-    }
-  }, [embla]);
+  useAnimationOffsetEffect(embla, 300);
 
   return (
     <div>

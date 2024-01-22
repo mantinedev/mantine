@@ -1,0 +1,7 @@
+[
+  {
+    "fileName": "NoTransitions.tsx",
+    "language": "tsx",
+    "code": "import { AppShell, Burger, Group, Skeleton } from '@mantine/core';\nimport { useDisclosure } from '@mantine/hooks';\nimport { MantineLogo } from '@mantinex/mantine-logo';\n\nexport function NoTransitions() {\n  const [opened, { toggle }] = useDisclosure();\n\n  return (\n    <AppShell\n      header={{ height: 60 }}\n      navbar={{ width: 300, breakpoint: 'sm', collapsed: { mobile: !opened } }}\n      transitionDuration={0}\n      padding=\"md\"\n    >\n      <AppShell.Header>\n        <Group h=\"100%\" px=\"md\">\n          <Burger opened={opened} onClick={toggle} hiddenFrom=\"sm\" size=\"sm\" />\n          <MantineLogo size={30} />\n        </Group>\n      </AppShell.Header>\n      <AppShell.Navbar p=\"md\">\n        Navbar\n        {Array(15)\n          .fill(0)\n          .map((_, index) => (\n            <Skeleton key={index} h={28} mt=\"sm\" animate={false} />\n          ))}\n      </AppShell.Navbar>\n      <AppShell.Main>Main</AppShell.Main>\n    </AppShell>\n  );\n}\n"
+  }
+]

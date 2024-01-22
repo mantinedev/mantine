@@ -1,22 +1,15 @@
 import React from 'react';
-import { Title, Overlay, Text, Button, Container } from '@mantine/core';
-import { GithubIcon } from '@mantine/ds';
-import useStyles from './Banner.styles';
+import { Button, Container, Overlay, Text, Title } from '@mantine/core';
+import { GithubIcon } from '@mantinex/dev-icons';
+import banner from './banner.webp';
+import classes from './Banner.module.css';
 
 export function Banner() {
-  const { classes, theme } = useStyles();
-
   return (
     <div className={classes.wrapper}>
       <Container size={1100} px="md">
-        <div className={classes.image} />
-        <Overlay
-          gradient={`linear-gradient(45deg, ${
-            theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.colors.gray[2]
-          } 25%, rgba(0, 0, 0, 0) 95%)`}
-          opacity={0.5}
-          zIndex={1}
-        />
+        <div className={classes.image} style={{ backgroundImage: `url(${banner.src})` }} />
+        <Overlay className={classes.overlay} opacity={1} zIndex={1} />
 
         <div className={classes.body}>
           <Text className={classes.supTitle}>Build even faster with Mantine UI</Text>
@@ -43,7 +36,7 @@ export function Banner() {
               Explore components
             </Button>
             <Button
-              leftIcon={<GithubIcon size={18} />}
+              leftSection={<GithubIcon size={18} />}
               component="a"
               radius="md"
               href="https://github.com/mantinedev/ui.mantine.dev"

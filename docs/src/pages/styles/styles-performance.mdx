@@ -1,0 +1,96 @@
+import { StylesDemos } from '@docs/demos';
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.StylesPerformance);
+
+# Styles performance
+
+## CSS modules
+
+[CSS modules](/styles/css-modules) is the most performant way to apply styles –
+this approach generates static CSS that is never re-evaluated. 99% of Mantine components
+styles are generated with CSS modules – components are optimized out of the box.
+
+In most cases, it is recommended to use [CSS modules](/styles/css-modules) to style your components as well.
+You can apply styles to HTML elements with `className` prop and to Mantine components with `className`,
+`classNames` props.
+
+Applying styles with `className`:
+
+<Demo data={StylesDemos.className} />
+
+Applying styles with `classNames` (see [Styles API guide](/styles/styles-api) to learn more):
+
+<Demo data={StylesDemos.classNames} />
+
+## Inline styles
+
+Inline styles (`style` and `styles` props) are less performant than CSS modules, but still
+performant enough to be used in most cases if it is your preferred way of styling in your project.
+
+Inline styles caveats:
+
+- Styles are not reused between components, each component will generate its own styles, for example,
+  if you have 100 buttons with the same styles, CSS modules will generate 1 class for all of them,
+  inline styles will generate 100 `style` attributes
+- If inline styles are overused, it can increase bundle size and output HTML size
+- _Not performance related_: inline styles have higher specificity than CSS modules, so if you want
+  to override inline styles you will have to use `!important` or use another inline styles
+
+Example of inline styles:
+
+<Demo data={StylesDemos.styles} />
+
+## Style props
+
+[Style props](/styles/style-props) transform component props into inline styles. Style props have
+the same caveats as inline styles, it is not recommended to use them as the primary means of styling
+your components. Usually, style props are used to apply 1–3 styles to a component – using them
+this way does not impact performance.
+
+## Responsive style props
+
+Responsive [style props](/styles/style-props) have worse performance than regular style props
+because they require injecting `<style />` tag next to the component. It is fine to use responsive
+style props to apply styles to several components, but it is not recommended to use
+them in large lists of components, for example, if you have 1000 inputs with responsive margins,
+it is better to refactor to use `classNames` prop:
+
+```tsx
+import { TextInput } from '@mantine/core';
+
+// Ok, style props are used to apply margin-top property to several components
+function StyleProps() {
+  return (
+    <>
+      <TextInput label="Input 1" />
+      <TextInput label="Input 2" mt={{ base: 10, md: 20 }} />
+      <TextInput label="Input 3" mt={{ base: 10, md: 20 }} />
+    </>
+  );
+}
+
+// Worse, 1000 separate `<style />` tags will be generated
+// Better to refactor to use className prop
+function StylePropsArray() {
+  const inputs = Array(1000)
+    .fill(0)
+    .map((_, index) => (
+      <TextInput
+        key={index}
+        label={`Input ${index}`}
+        mt={{ base: 10, md: 20 }}
+      />
+    ));
+
+  return <>{inputs}</>;
+}
+```
+
+## Components responsive props
+
+Some components, like [SimpleGrid](/core/simple-grid) and [Grid](/core/grid)
+rely on the same mechanism as responsive style props to apply styles. The limitations are the same
+– it is fine to use these several of these components on a page, but it is not recommended to use
+them in large lists of components.

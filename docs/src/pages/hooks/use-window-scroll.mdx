@@ -1,0 +1,20 @@
+import { HooksDemos } from '@docs/demos';
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.useWindowScroll);
+
+## Usage
+
+`use-window-scroll` returns current scroll position and a function to scroll smoothly to given position:
+
+<Demo data={HooksDemos.useWindowScrollDemo} />
+
+## Definition
+
+```tsx
+function useWindowScroll(): readonly [
+  { x: number; y: number },
+  (position: { x?: number; y?: number }) => void,
+];
+```

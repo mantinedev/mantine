@@ -1,0 +1,25 @@
+.root {
+  outline: 0;
+  -webkit-tap-highlight-color: transparent;
+  display: block;
+  touch-action: manipulation;
+  text-decoration: none;
+  border-radius: var(--paper-radius, var(--mantine-radius-default));
+  box-shadow: var(--paper-shadow, none);
+  background-color: var(--mantine-color-body);
+  border: var(--_paper-border, none);
+
+  &[data-with-border] {
+    @mixin light {
+      --_paper-border: rem(1px) solid var(--mantine-color-gray-3);
+    }
+
+    @mixin dark {
+      --_paper-border: rem(1px) solid var(--mantine-color-dark-4);
+    }
+  }
+
+  &:not([data-with-border]) {
+    --_paper-border: none !important;
+  }
+}

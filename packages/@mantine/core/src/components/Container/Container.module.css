@@ -1,0 +1,18 @@
+.root {
+  --container-size-xs: rem(540px);
+  --container-size-sm: rem(720px);
+  --container-size-md: rem(960px);
+  --container-size-lg: rem(1140px);
+  --container-size-xl: rem(1320px);
+  --container-size: var(--container-size-md);
+
+  padding-left: var(--mantine-spacing-md);
+  padding-right: var(--mantine-spacing-md);
+  max-width: var(--container-size);
+  margin-left: auto;
+  margin-right: auto;
+
+  &[data-fluid] {
+    --container-size: 100%;
+  }
+}

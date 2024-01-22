@@ -1,0 +1,51 @@
+{
+  "name": "@docs/styles-api",
+  "version": "1.0.0",
+  "description": "Mantine components styles api data",
+  "homepage": "https://mantine.dev",
+  "license": "MIT",
+  "author": "Vitaly Rtishchev <rtivital@gmail.com>",
+  "keywords": [],
+  "sideEffects": false,
+  "main": "./cjs/index.cjs",
+  "module": "./esm/index.mjs",
+  "types": "./lib/index.d.ts",
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./lib/index.d.mts",
+        "default": "./esm/index.mjs"
+      },
+      "require": {
+        "types": "./lib/index.d.ts",
+        "default": "./cjs/index.cjs"
+      }
+    }
+  },
+  "repository": {
+    "url": "https://github.com/mantinedev/mantine.git",
+    "type": "git",
+    "directory": "packages/@docs/styles-api"
+  },
+  "peerDependencies": {
+    "@tabler/icons-react": "*",
+    "@tiptap/extension-link": "*",
+    "@tiptap/react": "*",
+    "dayjs": "*",
+    "embla-carousel-react": "*",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  },
+  "devDependencies": {
+    "@mantine/carousel": "workspace:*",
+    "@mantine/charts": "workspace:*",
+    "@mantine/code-highlight": "workspace:*",
+    "@mantine/core": "workspace:*",
+    "@mantine/dates": "workspace:*",
+    "@mantine/dropzone": "workspace:*",
+    "@mantine/notifications": "workspace:*",
+    "@mantine/nprogress": "workspace:*",
+    "@mantine/spotlight": "workspace:*",
+    "@mantine/tiptap": "workspace:*"
+  }
+}

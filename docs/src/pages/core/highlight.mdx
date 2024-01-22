@@ -1,0 +1,34 @@
+import { HighlightDemos } from '@docs/demos';
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.Highlight);
+
+## Usage
+
+Use Highlight component to highlight a substring in a given string with a mark tag.
+
+Pass the main string as children to Highlight component and string part that should be highlighted to `highlight` prop.
+If the main string does not include `highlight` part, it will be ignored.
+`Highlight` ignores trailing whitespace and highlights all matched characters sequences.
+
+<Demo data={HighlightDemos.usage} />
+
+## Highlight multiple substrings
+
+To highlight multiple substrings, provide an array of values:
+
+<Demo data={HighlightDemos.multiple} />
+
+## Change highlight styles
+
+Default [Mark](/core/mark/) styles can be overwritten with `highlightStyles` prop, it accepts either a function with a subscription to theme
+or an object with styles:
+
+<Demo data={HighlightDemos.styles} />
+
+## Text props
+
+Highlight is based on [Text](/core/text/) component, all its props are available:
+
+<Demo data={HighlightDemos.props} />

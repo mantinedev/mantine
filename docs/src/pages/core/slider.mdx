@@ -1,0 +1,167 @@
+import { SliderDemos } from '@docs/demos';
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.Slider);
+
+## Usage
+
+<Demo data={SliderDemos.configurator} />
+
+## Controlled
+
+Controlled `Slider`:
+
+```tsx
+import { useState } from 'react';
+import { Slider } from '@mantine/core';
+
+function Demo() {
+  const [value, setValue] = useState(40);
+  return <Slider value={value} onChange={setValue} />;
+}
+```
+
+Controlled `RangeSlider`:
+
+```tsx
+import { useState } from 'react';
+import { RangeSlider } from '@mantine/core';
+
+function Demo() {
+  const [value, setValue] = useState<[number, number]>([20, 80]);
+  return <RangeSlider value={value} onChange={setValue} />;
+}
+```
+
+## Disabled
+
+<Demo data={SliderDemos.disabled} />
+
+## onChangeEnd
+
+`onChangeEnd` callback is called when user the slider is stopped from being dragged or value is changed with keyboard.
+You can use it as a debounced callback to avoid too frequent updates.
+
+<Demo data={SliderDemos.changeEnd} />
+
+## Control label
+
+To change label behavior and appearance, set the following props:
+
+- `label` – formatter function, accepts value as an argument, set null to disable label, defaults to `f => f`
+- `labelAlwaysOn` – if true – label will always be displayed, by default label is visible only when user is dragging
+- `labelTransitionProps` – props passed down to the [Transition](/core/transition) component, can be used to customize label animation
+
+<Demo data={SliderDemos.label} />
+
+## Min, max and step
+
+<Demo data={SliderDemos.step} />
+
+## Decimal values
+
+To use `Slider` with decimal values, set `min`, `max` and `step` props:
+
+<Demo data={SliderDemos.decimal} />
+
+## minRange
+
+Use `minRange` prop to control minimum range between `from` and `to` values
+in `RangeSlider`. The default value is `10`. The example below shows how to
+use `minRange` prop to capture decimal values from the user:
+
+<Demo data={SliderDemos.decimalRange} />
+
+## Marks
+
+Add any number of marks to slider by setting `marks` prop to an array of objects:
+
+```tsx
+const marks = [
+  { value: 20 }, // -> displays mark on slider track
+  { value: 40, label: '40%' }, // -> adds mark label below slider track
+];
+```
+
+Note that mark value is relative to slider value, not width:
+
+<Demo data={SliderDemos.marks} />
+
+## Thumb size
+
+<Demo data={SliderDemos.thumbSize} />
+
+## Thumb children
+
+<Demo data={SliderDemos.thumbChildren} />
+
+## Scale
+
+You can use the `scale` prop to represent the value on a different scale.
+
+In the following demo, the value `x` represents the value `2^x`. Increasing `x` by one increases the represented value by 2 to the power of `x`.
+
+<Demo data={SliderDemos.scale} />
+
+## Inverted
+
+You can invert the track with the `inverted` prop:
+
+<Demo data={SliderDemos.inverted} />
+
+<StylesApiSelectors component="Slider" />
+
+<Demo data={SliderDemos.stylesApi} />
+
+Example of using [Styles API](/styles/styles-api/) to change `Slider` styles:
+
+<Demo data={SliderDemos.customize} />
+
+## Vertical slider
+
+`Slider` and `RangeSlider` do not provide vertical orientation as it is very rarely used.
+If you need this feature you can build it yourself with [use-move](/hooks/use-move/) hook.
+
+## Accessibility
+
+`Slider` and `RangeSlider` components are accessible by default:
+
+- Thumbs are focusable
+- When the user uses mouse to interact with the slider, focus is moved to the slider track, when the user presses arrows focus is moved to the thumb
+- Value can be changed with arrows with step increment/decrement
+
+To label component for screen readers, add labels to thumbs:
+
+```tsx
+import { RangeSlider, Slider } from '@mantine/core';
+
+function Demo() {
+  return (
+    <>
+      <Slider thumbLabel="Thumb aria-label" />
+      <RangeSlider
+        thumbFromLabel="First thumb aria-label"
+        thumbToLabel="Second thumb aria-label"
+      />
+    </>
+  );
+}
+```
+
+## Keyboard interactions
+
+<KeyboardEventsTable
+  data={[
+    {
+      key: 'ArrowRight/ArrowUp',
+      description: 'Increases slider value by one step',
+    },
+    {
+      key: 'ArrowLeft/ArrowDown',
+      description: 'Decreases slider value by one step',
+    },
+    { key: 'Home', description: 'Sets slider value to min value' },
+    { key: 'End', description: 'Sets slider value to max value' },
+  ]}
+/>

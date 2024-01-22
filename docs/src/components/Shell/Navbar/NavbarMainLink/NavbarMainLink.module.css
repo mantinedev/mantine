@@ -1,0 +1,67 @@
+.link {
+  --offset: rem(6px);
+
+  height: rem(48px);
+  display: flex;
+  align-items: center;
+  padding-left: calc(var(--mantine-spacing-md) - var(--offset));
+  padding-right: calc(var(--mantine-spacing-md) - var(--offset));
+  margin-left: var(--offset);
+  margin-right: var(--offset);
+  border-radius: var(--mantine-radius-md);
+  color: var(--mantine-color-black);
+
+  @mixin dark {
+    color: var(--mantine-color-white);
+  }
+
+  &[data-active] {
+    background-color: var(--mantine-color-blue-light-hover);
+
+    & > .icon {
+      background: transparent;
+    }
+  }
+
+  @mixin hover {
+    .external {
+      opacity: 1;
+    }
+  }
+}
+
+.icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: rem(4px);
+  border-radius: var(--mantine-radius-md);
+  background-color: var(--mantine-color-blue-light-hover);
+  color: var(--mantine-color-blue-light-color);
+  width: rem(34px);
+  height: rem(34px);
+}
+
+.label {
+  font-size: var(--mantine-font-size-sm);
+  margin-left: var(--mantine-spacing-sm);
+  font-weight: 500;
+
+  @mixin rtl {
+    margin-left: 0;
+    margin-right: var(--mantine-spacing-sm);
+  }
+}
+
+.external {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: rem(34px);
+  height: rem(34px);
+  color: var(--mantine-color-dimmed);
+  border-radius: var(--mantine-radius-md);
+  opacity: 0;
+  transition: opacity 100ms ease;
+}

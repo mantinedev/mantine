@@ -1,0 +1,36 @@
+import { BurgerDemos } from '@docs/demos';
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.Burger);
+
+## Usage
+
+`Burger` component renders open/close menu button.
+Set `opened` and `onClick` props to control Burger state.
+If `opened` prop is set, cross will be rendered, otherwise – burger.
+
+<Demo data={BurgerDemos.usage} />
+
+<GetElementRef component="Burger" refType="button" />
+
+## Accessibility
+
+To make `Burger` accessible for screen readers, you need to either set `aria-label` or
+use [VisuallyHidden](/core/visually-hidden) component:
+
+```tsx
+import { Burger, VisuallyHidden } from '@mantine/core';
+
+function Demo() {
+  return (
+    <>
+      <Burger aria-label="Toggle navigation" />
+
+      <Burger>
+        <VisuallyHidden>Toggle navigation</VisuallyHidden>
+      </Burger>
+    </>
+  );
+}
+```

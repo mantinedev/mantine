@@ -1,0 +1,24 @@
+import { SkeletonDemos } from '@docs/demos';
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.Skeleton);
+
+## Usage
+
+Use `Skeleton` to create a placeholder for loading content. `Skeleton` support the following props:
+
+- `height` – height – any valid CSS value
+- `width` – width - any valid CSS value
+- `radius` – key of `theme.radius` or any valid CSS value to set border-radius
+- `circle` – if true width, height and border-radius will equal to value specified in `height` prop
+- `animate` – true by default, controls animation
+
+<Demo data={SkeletonDemos.configurator} />
+
+## With content
+
+If you want to indicate the loading state of content that is already on page, wrap it with Skeleton
+and control loading overlay visibility with `visible` prop:
+
+<Demo data={SkeletonDemos.content} />

@@ -1,0 +1,37 @@
+.columns {
+  display: flex;
+
+  @media (max-width: 55em) {
+    flex-direction: column;
+  }
+}
+
+.controls {
+  flex: 0 0 rem(250px);
+  border-left: rem(1px) solid var(--_demo-border);
+  padding: rem(4px);
+  padding-bottom: var(--mantine-spacing-xs);
+
+  @mixin rtl {
+    border-left: none;
+    border-right: rem(1px) solid var(--_demo-border);
+  }
+
+  @media (max-width: 55em) {
+    flex: unset;
+    border-left: none;
+    border-right: none !important;
+    border-top: rem(1px) solid var(--_demo-border);
+  }
+}
+
+.header {
+  padding-top: calc(var(--mantine-spacing-md) - rem(4px));
+  margin-left: rem(-4px);
+  margin-right: rem(-4px);
+  border-bottom: rem(1px) solid var(--_demo-border);
+  padding-left: var(--mantine-spacing-md);
+  padding-right: var(--mantine-spacing-md);
+  padding-bottom: var(--mantine-spacing-xs);
+  margin-bottom: var(--mantine-spacing-xs);
+}

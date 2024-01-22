@@ -1,0 +1,42 @@
+import { JsonInputDemos } from '@docs/demos';
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.JsonInput);
+
+## Usage
+
+`JsonInput` is based on [Textarea](/core/textarea/) component,
+it includes json validation logic and option to format input value on blur:
+
+<Demo data={JsonInputDemos.usage} />
+
+## Controlled
+
+```tsx
+import { useState } from 'react';
+import { JsonInput } from '@mantine/core';
+
+function Demo() {
+  const [value, setValue] = useState('');
+  return <JsonInput value={value} onChange={setValue} />;
+}
+```
+
+## Input props
+
+<InputFeatures component="JsonInput" element="textarea" />
+
+<Demo data={JsonInputDemos.configurator} />
+
+## Disabled state
+
+<Demo data={JsonInputDemos.disabled} />
+
+<StylesApiSelectors component="JsonInput" />
+
+<Demo data={JsonInputDemos.stylesApi} />
+
+<GetElementRef component="JsonInput" refType="textarea" />
+
+<InputAccessibility component="JsonInput" />

@@ -1,0 +1,31 @@
+.track {
+  &::before {
+    background-color: light-dark(var(--mantine-color-blue-1), var(--mantine-color-dark-3));
+  }
+}
+
+.mark {
+  width: rem(6px);
+  height: rem(6px);
+  border-radius: rem(6px);
+  transform: translateX(rem(-3px)) translateY(rem(-2px));
+  border-color: light-dark(var(--mantine-color-blue-1), var(--mantine-color-dark-3));
+
+  &[data-filled] {
+    border-color: var(--mantine-color-blue-6);
+  }
+}
+
+.markLabel {
+  font-size: var(--mantine-font-size-xs);
+  margin-bottom: rem(5px);
+  margin-top: 0;
+}
+
+.thumb {
+  height: rem(16px);
+  width: rem(16px);
+  background-color: var(--mantine-color-white);
+  border-width: rem(1px);
+  box-shadow: var(--mantine-shadow-sm);
+}

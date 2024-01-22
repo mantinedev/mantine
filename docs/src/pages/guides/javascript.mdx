@@ -1,0 +1,57 @@
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.JavaScript);
+
+# Usage with JavaScript
+
+## Is it possible to use Mantine with JavaScript?
+
+Yes, it is possible to use all `@mantine/*` packages (as well as all other npm packages) with JavaScript.
+`@mantine/*` packages are written in TypeScript and have type definitions, so you will get some the benefits
+of TypeScript (like autocompletion in your IDE) when using them with JavaScript.
+
+## Transforming demos code to JavaScript
+
+All demos in Mantine documentation are written in TypeScript. In most cases there is no difference between
+TypeScript and JavaScript code – you do not have to do anything.
+
+To transform TypeScript code to JavaScript you can use [TypeScript playground](https://www.typescriptlang.org/play?jsx=1&preserveValueImports=false#code/Q)
+– paste demo code into the playground and all types will be removed. Note that you will also need
+to remove type imports from the code.
+
+Example of transformed code:
+
+```tsx
+// TypeScript code
+import { Button, ButtonProps } from '@mantine/core';
+
+interface MyButtonProps extends ButtonProps {
+  myProp: string;
+}
+
+function MyButton({ myProp, ...others }: MyButtonProps) {
+  return <Button {...others} />;
+}
+```
+
+```tsx
+// JavaScript code
+import { Button } from '@mantine/core';
+
+function MyButton({ myProp, ...others }) {
+  return <Button {...others} />;
+}
+```
+
+## Should Mantine be used with JavaScript?
+
+It is recommended to use Mantine with TypeScript, it does not require deep knowledge of TypeScript
+and will make your code more robust and easier to maintain. For example, you will get type errors
+when you pass invalid props to components or when you use non-existing props. TypeScript will also
+help you during migration to new versions of Mantine – you will get type errors when props/components
+that you have in your code are removed/renamed/changed.
+
+If you are not familiar with TypeScript yet, using Mantine with TypeScript will be a great opportunity
+to learn it. You can use any of [templates](/getting-started) to get started – all of them include
+TypeScript support out of the box.

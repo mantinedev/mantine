@@ -1,0 +1,17 @@
+import { HooksDemos } from '@docs/demos';
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.useForceUpdate);
+
+## Usage
+
+`use-force-update` returns a function, which when called rerenders the component:
+
+<Demo data={HooksDemos.useForceUpdateDemo} />
+
+## Definition
+
+```tsx
+function useForceUpdate(): () => void;
+```

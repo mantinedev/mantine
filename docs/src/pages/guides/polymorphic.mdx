@@ -1,0 +1,221 @@
+import { GuidesDemos } from '@docs/demos';
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.Polymorphic);
+
+# Polymorphic components
+
+## What is a polymorphic component
+
+A polymorphic component is a component which root element can be changed with `component` prop.
+All polymorphic components have a default element which is used when `component` prop is not provided.
+For example, the [Button](/core/button) component default element is `button` and
+it can be changed to `a` or any other element or component:
+
+<Demo data={GuidesDemos.polymorphic} />
+
+## renderRoot prop
+
+`renderRoot` is an alternative to the `component` prop, which accepts a function that should return
+a React element. It is useful in cases when `component` prop cannot be used, for example,
+when the component that you want to pass to the `component` is generic
+(accepts type or infers it from props, for example `<Link<'/'> />`).
+
+Example of using `renderRoot` prop, the result is the same as in the previous demo:
+
+```tsx
+import { Button } from '@mantine/core';
+
+function Demo() {
+  return (
+    <Button
+      renderRoot={(props) => (
+        <a href="https://mantine.dev/" target="_blank" {...props} />
+      )}
+    >
+      Mantine website
+    </Button>
+  );
+}
+```
+
+**!important** It is required to spread `props` argument into the root element. Otherwise
+there will be no styles and the component might not be accessible.
+
+## Polymorphic components as other React components
+
+You can pass any other React component to `component` prop.
+For example, you can pass `Link` component from `react-router-dom`:
+
+```tsx
+import { Link } from 'react-router-dom';
+import { Button } from '@mantine/core';
+
+function Demo() {
+  return (
+    <Button component={Link} to="/react-router">
+      React router link
+    </Button>
+  );
+}
+```
+
+## Polymorphic components as Next.js Link
+
+Next.js link does not work in the same way as other similar components in all Next.js versions.
+
+With Next.js 12 and below:
+
+```tsx
+import Link from 'next/link';
+import { Button } from '@mantine/core';
+
+function Demo() {
+  return (
+    <Link href="/hello" passHref>
+      <Button component="a">Next link button</Button>
+    </Link>
+  );
+}
+```
+
+With Next.js 13 and above:
+
+```tsx
+import Link from 'next/link';
+import { Button } from '@mantine/core';
+
+function Demo() {
+  return (
+    <Button component={Link} href="/hello">
+      Next link button
+    </Button>
+  );
+}
+```
+
+## Polymorphic components with generic components
+
+You cannot pass generic components to `component` prop because it is not possible to infer generic types
+from the component prop. For example, you cannot pass [typed Next.js Link](https://nextjs.org/docs/app/building-your-application/configuring/typescript#statically-typed-links)
+to `component` prop because it is not possible to infer `href` type from the component prop. The component itself
+will work correctly, but you will have a TypeScript error.
+
+To make generic components work with polymorphic components, use `renderRoot` prop instead of `component`:
+
+```tsx
+import Link from 'next/link';
+import { Button } from '@mantine/core';
+
+function Demo() {
+  return (
+    <Button renderRoot={(props) => <Link href="/hello" {...props} />}>
+      Typed Next link button
+    </Button>
+  );
+}
+```
+
+## Polymorphic components with react-router NavLink
+
+[react-router-dom](https://reactrouter.com/en/main) [NavLink](https://reactrouter.com/en/main/components/nav-link) component
+`className` prop accepts a function based on which you can add an active class to the link. This feature is
+incompatible with Mantine `component` prop, but you can use `renderRoot` prop instead:
+
+```tsx
+import cx from 'clsx';
+import { NavLink } from 'react-router-dom';
+import { Button } from '@mantine/core';
+
+function Demo() {
+  return (
+    <Button
+      renderRoot={({ className, ...others }) => (
+        <NavLink
+          className={({ isActive }) =>
+            cx(className, { 'active-class': isActive })
+          }
+          {...others}
+        />
+      )}
+    >
+      React router NavLink
+    </Button>
+  );
+}
+```
+
+## Wrapping polymorphic components
+
+Non-polymorphic components include `React.ComponentPropsWithoutRef<'x'>` as a part of their props type,
+where `x` is a root element of the component. For example, [Container](/core/container) component
+is not polymorphic – its root element is always `div`, so its props type includes `React.ComponentPropsWithoutRef<'div'>`.
+
+Polymorphic components do not include `React.ComponentPropsWithoutRef<'x'>` as a part of their props type
+because their root element can be changed, and thus props type can be inferred only after the component was rendered.
+
+Example of creating a non-polymorphic wrapper component for Mantine polymorphic component:
+
+<Demo data={GuidesDemos.staticPolymorphic} />
+
+Example of creating a polymorphic wrapper component for Mantine polymorphic component:
+
+<Demo data={GuidesDemos.createPolymorphic} />
+
+## Dynamic component prop
+
+You can use dynamic value in the `component` prop, but in this case, you need to either provide types manually
+or disable type checking by passing `any` as a type argument to the polymorphic component:
+
+```tsx
+import { Box } from '@mantine/core';
+
+function KeepTypes() {
+  return (
+    <Box<'input'>
+      component={(Math.random() > 0.5 ? 'input' : 'div') as any}
+    />
+  );
+}
+
+function NukeTypes() {
+  return (
+    <Box<any> component={Math.random() > 0.5 ? 'input' : 'div'} />
+  );
+}
+```
+
+## Create your own polymorphic components
+
+Use `createPolymorphicComponent` function and [Box](/core/box) component to create new polymorphic components:
+
+<Demo data={GuidesDemos.newPolymorphic} />
+
+## Make Mantine component polymorphic
+
+Polymorphic components have performance overhead for tsserver (no impact on runtime performance),
+because of that not all Mantine components have polymorphic types, but all components still
+accept `component` prop – root element can be changed.
+
+To make Mantine component polymorphic, use `createPolymorphicComponent` function the same way
+as in the previous example:
+
+```tsx
+import {
+  createPolymorphicComponent,
+  Group,
+  GroupProps,
+} from '@mantine/core';
+
+const PolymorphicGroup = createPolymorphicComponent<
+  'button',
+  GroupProps
+>(Group);
+
+function Demo() {
+  return (
+    <PolymorphicGroup component="a" href="https://mantine.dev" />
+  );
+}
+```

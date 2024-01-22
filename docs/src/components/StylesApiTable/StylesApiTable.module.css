@@ -1,0 +1,32 @@
+.groupsHeader {
+  margin-bottom: rem(30px);
+}
+
+.group {
+  --_group-spacing: rem(40px);
+
+  & + & {
+    margin-top: var(--_group-spacing);
+    padding-top: var(--_group-spacing);
+    border-top: rem(1px) solid light-dark(var(--mantine-color-gray-3), var(--mantine-color-dark-3));
+  }
+}
+
+.title {
+  font-family: var(--docs-font-primary);
+  margin-bottom: var(--mantine-spacing-sm);
+
+  @mixin light {
+    color: var(--mantine-color-black);
+  }
+
+  @mixin dark {
+    color: var(--mantine-color-white);
+  }
+}
+
+.section {
+  & + & {
+    margin-top: rem(40px);
+  }
+}

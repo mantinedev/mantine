@@ -1,21 +1,20 @@
 import React from 'react';
 import {
+  Autocomplete,
+  ColorInput,
+  MultiSelect,
+  NativeSelect,
+  PasswordInput,
+  Select,
   SimpleGrid,
   TextInput,
-  PasswordInput,
-  ColorInput,
-  Select,
-  NativeSelect,
-  MultiSelect,
-  Autocomplete,
 } from '@mantine/core';
 
 export function Inputs() {
   return (
     <SimpleGrid
-      cols={2}
-      breakpoints={[{ maxWidth: 'sm', cols: 1 }]}
-      sx={(theme) => ({ rowGap: theme.spacing.md })}
+      cols={{ base: 1, sm: 2 }}
+      style={{ rowGap: 'var(--mantine-spacing-md' }}
       spacing="xl"
     >
       <TextInput label="Text input" placeholder="Text input" required />
@@ -25,6 +24,7 @@ export function Inputs() {
         defaultValue="rgba(34, 138, 230, 0.8)"
         format="rgba"
         placeholder="What other library has that?"
+        eyeDropperButtonProps={{ 'aria-label': 'Pick color' }}
       />
       <NativeSelect label="Native select" data={['React', 'Angular', 'Svelte', 'Vue']} />
       <Select
@@ -36,6 +36,7 @@ export function Inputs() {
         label="Searchable select"
         placeholder="Search me"
         searchable
+        nothingFoundMessage="Nothing found..."
         data={['React', 'Angular', 'Svelte', 'Vue']}
       />
       <MultiSelect

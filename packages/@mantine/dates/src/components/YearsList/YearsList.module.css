@@ -1,0 +1,12 @@
+.yearsList {
+  border-collapse: collapse;
+  border-width: 0;
+}
+
+.yearsListCell {
+  padding: var(--_cell-padding, 0);
+
+  &[data-with-spacing] {
+    --_cell-padding: rem(0.5px);
+  }
+}

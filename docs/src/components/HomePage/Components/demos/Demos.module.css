@@ -1,0 +1,9 @@
+.calendarWrapper {
+  display: flex;
+  justify-content: center;
+  background-color: light-dark(var(--mantine-color-white), var(--mantine-color-dark-6));
+}
+
+.richTextWrapper :global(.mantine-RichTextEditor-toolbar) {
+  position: static;
+}

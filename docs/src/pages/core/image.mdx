@@ -1,0 +1,48 @@
+import { ImageDemos } from '@docs/demos';
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.Image);
+
+## Usage
+
+`Image` is a wrapper for `img` with minimal styles. By default, the image
+will take 100% of parent width. The image size can be controlled with `w`
+and `h` [style props](/styles/style-props).
+
+<Demo data={ImageDemos.usage} />
+
+## Image height
+
+In most case, you will need to set image height to prevent layout jumps when
+image is loading. You can do so with `h` [style props](/styles/style-props).
+
+<Demo data={ImageDemos.height} />
+
+## Image fit
+
+By default the image has `object-fit: cover` style - it will
+resize to cover parent element. To change this behavior, set `w="auto"` and `fit="contain"` props.
+
+<Demo data={ImageDemos.contain} />
+
+## Fallback image
+
+Set `fallbackSrc` prop to display fallback image when image fails to load:
+
+<Demo data={ImageDemos.fallback} />
+
+## Usage with Next.js Image
+
+`Image` component is a [polymorphic component](/guides/polymorphic), its root element can be changed with `component` prop.
+You can use it with `next/image` and other similar components.
+
+```tsx
+import NextImage from 'next/image';
+import { Image } from '@mantine/core';
+import myImage from './my-image.jpg';
+
+function Demo() {
+  return <Image component={NextImage} src={myImage} alt="My image" />;
+}
+```

@@ -1,0 +1,11 @@
+.codeHighlight {
+  & pre,
+  & :global(.mantine-CodeHighlightTabs-header) {
+    background-color: light-dark(var(--mantine-color-gray-0), var(--mantine-color-dark-7));
+    overflow: hidden;
+  }
+}
+
+.control {
+  background: var(--docs-home-page-gradient);
+}

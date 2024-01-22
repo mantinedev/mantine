@@ -1,0 +1,225 @@
+import { InputDemos } from '@docs/demos';
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.Input);
+
+## Disclaimer
+
+**!important:** In most cases, you should not use `Input` in your application.
+`Input` is a base for other inputs and was not designed to be used directly.
+Use `Input` to create custom inputs, for other cases prefer [TextInput](/core/text-input/)
+or other component.
+
+```tsx
+import { Input, TextInput } from '@mantine/core';
+
+// Incorrect usage, input is not accessible
+function Incorrect() {
+  return (
+    <Input.Wrapper label="Input label">
+      <Input />
+    </Input.Wrapper>
+  );
+}
+
+// Use TextInput instead of Input everywhere you want to use Input,
+// it is accessible by default and includes Input.Wrapper
+function Correct() {
+  return (
+    <TextInput label="Input label" description="Input description" />
+  );
+}
+```
+
+## Usage
+
+`Input` component is used as base for some other inputs ([NativeSelect](/core/native-select/), [TextInput](/core/text-input/), [Textarea](/core/textarea/), etc.).
+The purpose of the `Input` is to provide shared styles and features to other inputs.
+
+<Demo data={InputDemos.usage} />
+
+<InputSections component="Input" />
+
+<Demo data={InputDemos.sections} />
+
+## Change input element
+
+Input is a [polymorphic component](/guides/polymorphic), the default root element is `input`,
+but it can be changed to any other element or component.
+
+Example of using `Input` as `button` and `select`:
+
+<Demo data={InputDemos.component} />
+
+Example of using [react-imask](https://github.com/uNmAnNeR/imaskjs/tree/master/packages/react-imask) with `Input`:
+
+<Demo data={InputDemos.mask} />
+
+## Input.Wrapper component
+
+`Input.Wrapper` component is used in all other inputs
+([TextInput](/core/text-input/), [NativeSelect](/core/native-select/), [Textarea](/core/textarea/), etc.)
+under the hood, you _do not need to wrap your inputs with it, as it is already included in all of them_.
+Use `Input.Wrapper` only when you want to create custom inputs.
+
+<Demo data={InputDemos.wrapper} />
+
+## inputWrapperOrder
+
+`inputWrapperOrder` allows configuring the order of `Input.Wrapper` parts.
+It accepts an array of four elements: `label`, `input`, `error` and `description`.
+Note that it is not required to include all of them, you can use only those that you need
+– parts that are not included will not be rendered.
+
+<Demo data={InputDemos.inputWrapperOrder} />
+
+## inputContainer
+
+With `inputContainer` prop, you can enhance inputs that use `Input.Wrapper` under the hood,
+for example, you can add [Tooltip](/core/tooltip/) to the [TextInput](/core/text-input/) when
+the input is focused:
+
+<Demo data={InputDemos.inputContainer} />
+
+## required and withAsterisk props
+
+All components that are based on `Input.Wrapper` support `required` and `withAsterisk` props.
+When set to true, both of these props will add a red asterisk to the end of the label.
+The only difference is whether input element will have `required` attribute, example with
+[TextInput](/core/text-input/) component:
+
+```tsx
+import { TextInput } from '@mantine/core';
+
+// Will display required asterisk and add `required` attribute to the input element
+function RequiredDemo() {
+  return <TextInput label="test-label" required />;
+}
+
+// Will only display the asterisk, `required` attribute is not added to the input element
+function AsteriskDemo() {
+  return <TextInput label="test-label" withAsterisk />;
+}
+```
+
+## error prop
+
+All inputs that use `Input.Wrapper` under the hood support `error` prop.
+When set to `true`, it will add a red border to the input. You can also pass a React node to display
+an error message below the input. To only display error message without a red border, set `error` prop
+to React node and `withErrorStyles={false}`:
+
+<Demo data={InputDemos.error} />
+
+## Input.Label, Input.Description and Input.Error components
+
+`Input.Label`, `Input.Error` and `Input.Description` components can be used to create custom
+form layouts if the default `Input.Wrapper` layout does not meet your requirements.
+
+<Demo data={InputDemos.compound} />
+
+## Input.Placeholder component
+
+`Input.Placeholder` component can be used to add placeholder to `Input` and `InputBase` components that are based on `button` element
+or do not support placeholder property natively:
+
+<Demo data={InputDemos.placeholder} />
+
+## Default props on theme
+
+You can add [default props](/theming/default-props/) on [theme](/theming/theme-object/)
+to `Input` and `Input.Wrapper` components. These default props will be inherited by all inputs
+that use `Input` and `Input.Wrapper` under the hood ([TextInput](/core/text-input/), [NativeSelect](/core/native-select/), [Textarea](/core/textarea/), etc.):
+
+<Demo data={InputDemos.defaultProps} />
+
+## Styles on theme
+
+Same as with default props, you can use `Input` and `Input.Wrapper` [Styles API](/styles/styles-api/)
+on [theme](/theming/theme-object/) to add styles to all inputs:
+
+<Demo data={InputDemos.sharedStyles} />
+
+## Change focus styles
+
+Use `&:focus-within` selector to change inputs focus styles. You can apply these styles to
+one component with `classNames` prop or to all inputs with [Styles API](/styles/styles-api/)
+on [theme](/theming/theme-object/).
+
+<Demo data={InputDemos.focusStyles} />
+
+## InputBase component
+
+`InputBase` component combines `Input` and `Input.Wrapper` components and supports `component` prop:
+
+<Demo data={InputDemos.inputBase} />
+
+## Styles API
+
+`Input` and `Input.Wrapper` components support [Styles API](/styles/styles-api) –
+you can customize styles of any inner element with `classNames` and `styles` props.
+
+`Input` Styles API selectors:
+
+<Demo data={InputDemos.stylesApi} />
+
+`Input.Wrapper` Styles API selectors:
+
+<Demo data={InputDemos.wrapperStylesApi} />
+
+<GetElementRef component="Input" refType="input" />
+
+## Accessibility
+
+If you use `Input` component without associated label element, set `aria-label`:
+
+```tsx
+import { Input } from '@mantine/core';
+
+// ok – the input is labelled by the aria-label
+function WithAriaLabel() {
+  return <Input aria-label="Your email" />;
+}
+
+// ok – the input is labelled by the label element
+function WithLabel() {
+  return (
+    <>
+      <label htmlFor="my-email">Your email</label>
+      <Input id="my-email" />
+    </>
+  );
+}
+```
+
+When you use `Input` with `Input.Wrapper` it is required to set `id` on both components
+to connect label and other elements with the input:
+
+```tsx
+import { Input } from '@mantine/core';
+
+function Demo() {
+  return (
+    <Input.Wrapper label="Your email" id="your-email">
+      <Input id="your-email" />
+    </Input.Wrapper>
+  );
+}
+```
+
+You can use [use-id](/hooks/use-id) to generate unique ids:
+
+```tsx
+import { Input } from '@mantine/core';
+import { useId } from '@mantine/hooks';
+
+function Demo() {
+  const id = useId();
+  return (
+    <Input.Wrapper label="Your email" id={id}>
+      <Input id={id} />
+    </Input.Wrapper>
+  );
+}
+```

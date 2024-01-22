@@ -1,0 +1,134 @@
+import { RadioDemos } from '@docs/demos';
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.Radio);
+
+## Usage
+
+<Demo data={RadioDemos.configurator} />
+
+## Controlled
+
+```tsx
+import { useState } from 'react';
+import { Radio } from '@mantine/core';
+
+function Demo() {
+  const [checked, setChecked] = useState(false);
+  return (
+    <Radio
+      checked={checked}
+      onChange={(event) => setChecked(event.currentTarget.checked)}
+    />
+  );
+}
+```
+
+## States
+
+<Demo data={RadioDemos.states} />
+
+## Change icon
+
+<Demo data={RadioDemos.icon} />
+
+## Change icon color
+
+<Demo data={RadioDemos.iconColor} />
+
+## Disabled state
+
+<Demo data={RadioDemos.disabled} />
+
+## Pointer cursor
+
+By default, radio input and label have `cursor: default` (same as native `input[type="radio"]`).
+To change cursor to pointer, set `cursorType` on [theme](/theming/theme-object/):
+
+```tsx
+import { createTheme, MantineProvider, Radio } from '@mantine/core';
+
+const theme = createTheme({
+  cursorType: 'pointer',
+});
+
+function Demo() {
+  return (
+    <MantineProvider theme={theme}>
+      <Radio label="Pointer cursor" />
+    </MantineProvider>
+  );
+}
+```
+
+## Radio with tooltip
+
+You can change target element to which tooltip is attached with `refProp`:
+
+- If `refProp` is not set, the tooltip is attached to the checkbox input
+- If `refProp="rootRef"` is set, the tooltip is attached to the root element (contains label, input and other elements)
+
+<Demo data={RadioDemos.tooltip} />
+
+<WrapperProps component="Radio" />
+
+## Radio.Group component
+
+<Demo data={RadioDemos.groupConfigurator} />
+
+## Controlled Radio.Group
+
+```tsx
+import { useState } from 'react';
+import { Radio } from '@mantine/core';
+
+function Demo() {
+  const [value, setValue] = useState('react');
+
+  return (
+    <Radio.Group
+      value={value}
+      onChange={setValue}
+      name="favoriteFramework"
+      label="Select your favorite framework/library"
+      description="This is anonymous"
+      withAsterisk
+    >
+      <Radio value="react" label="React" />
+      <Radio value="svelte" label="Svelte" />
+      <Radio value="ng" label="Angular" />
+      <Radio value="vue" label="Vue" />
+    </Radio.Group>
+  );
+}
+```
+
+<GetElementRef component="Radio" refType="input" />
+
+<StylesApiSelectors component="Radio" />
+
+<Demo data={RadioDemos.stylesApi} />
+
+## Accessibility
+
+Set `aria-label` or `label` prop to make the radio accessible:
+
+```tsx
+import { Radio } from '@mantine/core';
+
+// Not ok, input is not labeled
+function Bad() {
+  return <Radio />;
+}
+
+// Ok, input is labelled by aria-label
+function GoodAriaLabel() {
+  return <Radio aria-label="My radio" />;
+}
+
+// Ok, input is labelled by label element
+function GoodLabel() {
+  return <Radio label="My radio" />;
+}
+```

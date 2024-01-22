@@ -1,18 +1,13 @@
-import { Space } from '@mantine/core';
 import React from 'react';
-import { Community } from '../../Community/Community';
+import { Space } from '@mantine/core';
+import { SocialCards } from '../../SocialCards';
 import { PageSection } from '../PageSection/PageSection';
 
 export function JoinCommunity() {
   return (
-    <PageSection
-      title="Join the community"
-      sx={(theme) => ({
-        backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.white,
-      })}
-    >
+    <PageSection title="Join the community">
       <Space h="md" />
-      <Community />
+      <SocialCards />
       <Space h={120} />
     </PageSection>
   );

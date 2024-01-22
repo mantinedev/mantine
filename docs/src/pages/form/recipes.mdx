@@ -1,0 +1,21 @@
+import { FormDemos } from '@docs/demos';
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.formRecipes);
+
+## Set initial values with async request
+
+<Demo data={FormDemos.asyncSetValues} />
+
+## Save form values to local storage
+
+<Demo data={FormDemos.localStorage} />
+
+## List items reordering
+
+<Demo data={FormDemos.dnd} />
+
+## Form with multiple steps
+
+<Demo data={FormDemos.stepper} />

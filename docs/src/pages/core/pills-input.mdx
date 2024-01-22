@@ -1,0 +1,73 @@
+import { ComboboxDemos, PillsInputDemos } from '@docs/demos';
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.PillsInput);
+
+## Usage
+
+`PillsInput` is a utility component that can be used to create custom tag inputs, multi selects and
+other similar components. By itself it does not include any logic, it only renders given children.
+Usually, `PillsInput` is used in combination with [Pill](/core/pill) component.
+
+<Demo data={PillsInputDemos.usage} />
+
+## Input props
+
+<InputFeatures component="PillsInput" element="div" />
+
+<Demo data={PillsInputDemos.configurator} />
+
+## Searchable select example
+
+Combine `PillsInput` with [Combobox](/core/combobox) to create searchable multiselect:
+
+<Demo data={ComboboxDemos.searchableMultiselect} />
+
+## Accessibility
+
+If `PillsInput` is used without label prop, it will not be announced properly by screen reader:
+
+```tsx
+import { PillsInput } from '@mantine/core';
+
+// Inaccessible input – screen reader will not announce it properly
+function Demo() {
+  return (
+    <PillsInput>
+      <PillsInput.Field />
+    </PillsInput>
+  );
+}
+```
+
+Set `aria-label` on the `PillsInput.Field` component to make the input accessible.
+In this case label will not be visible, but screen reader will announce it:
+
+```tsx
+import { PillsInput } from '@mantine/core';
+
+// Accessible input – it has aria-label
+function Demo() {
+  return (
+    <PillsInput>
+      <PillsInput.Field aria-label="Enter tags" />
+    </PillsInput>
+  );
+}
+```
+
+If `label` prop is set, the input will be accessible it is not required to set `aria-label`:
+
+```tsx
+import { PillsInput } from '@mantine/core';
+
+// Accessible input – it has associated label element
+function Demo() {
+  return (
+    <PillsInput label="Enter tags">
+      <PillsInput.Field />
+    </PillsInput>
+  );
+}
+```

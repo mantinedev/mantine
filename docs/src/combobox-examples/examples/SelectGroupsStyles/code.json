@@ -1,0 +1,12 @@
+[
+  {
+    "fileName": "SelectGroupsStyles.tsx",
+    "language": "tsx",
+    "code": "import { useState } from 'react';\nimport { Combobox, Input, InputBase, useCombobox } from '@mantine/core';\nimport classes from './SelectGroupsStyles.module.css';\n\nexport function SelectGroupsStyles() {\n  const combobox = useCombobox({\n    onDropdownClose: () => combobox.resetSelectedOption(),\n  });\n\n  const [value, setValue] = useState<string | null>(null);\n\n  return (\n    <Combobox\n      classNames={classes}\n      store={combobox}\n      withinPortal={false}\n      onOptionSubmit={(val) => {\n        setValue(val);\n        combobox.closeDropdown();\n      }}\n    >\n      <Combobox.Target>\n        <InputBase\n          component=\"button\"\n          type=\"button\"\n          pointer\n          rightSection={<Combobox.Chevron />}\n          onClick={() => combobox.toggleDropdown()}\n          rightSectionPointerEvents=\"none\"\n        >\n          {value || <Input.Placeholder>Pick value</Input.Placeholder>}\n        </InputBase>\n      </Combobox.Target>\n\n      <Combobox.Dropdown>\n        <Combobox.Options>\n          <Combobox.Group label=\"Fruits\">\n            <Combobox.Option value=\"🍎 Apples\">🍎 Apples</Combobox.Option>\n            <Combobox.Option value=\"🍌 Bananas\">🍌 Bananas</Combobox.Option>\n          </Combobox.Group>\n\n          <Combobox.Group label=\"Vegetables\">\n            <Combobox.Option value=\"🥦 Broccoli\">🥦 Broccoli</Combobox.Option>\n            <Combobox.Option value=\"🥕 Carrots\">🥕 Carrots</Combobox.Option>\n          </Combobox.Group>\n\n          <Combobox.Option value=\"🥩 Steak\">🥩 Steak</Combobox.Option>\n          <Combobox.Option value=\"🍗 Chicken\">🍗 Chicken</Combobox.Option>\n        </Combobox.Options>\n      </Combobox.Dropdown>\n    </Combobox>\n  );\n}\n"
+  },
+  {
+    "fileName": "SelectGroupsStyles.module.css",
+    "language": "css",
+    "code": ".group {\n  background-color: light-dark(var(--mantine-color-gray-1), var(--mantine-color-dark-5));\n  border-radius: var(--mantine-radius-sm);\n  margin-bottom: var(--mantine-spacing-xs);\n}\n\n.groupLabel {\n  color: light-dark(var(--mantine-color-black), var(--mantine-color-white));\n\n  &::after {\n    display: none;\n  }\n}\n"
+  }
+]

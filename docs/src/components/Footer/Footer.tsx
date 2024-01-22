@@ -1,30 +1,33 @@
 import React from 'react';
-import { Container, Text, Group } from '@mantine/core';
-import { TwitterButton, DiscordButton } from '@mantine/ds';
+import cx from 'clsx';
+import { Box, Container, Group, RemoveScroll, Text } from '@mantine/core';
 import { Logo } from '../Logo/Logo';
-import { LinksGroup } from './LinksGroup/LinksGroup';
+import { DiscordButton, TwitterButton } from '../SocialButton';
 import { FOOTER_LINKS_DATA } from './data';
-import useStyles from './Footer.styles';
+import { LinksGroup } from './LinksGroup/LinksGroup';
+import classes from './Footer.module.css';
 
 interface FooterProps {
   withNavbar?: boolean;
 }
 
 export function Footer({ withNavbar }: FooterProps) {
-  const { classes, cx } = useStyles();
   const groups = FOOTER_LINKS_DATA.map((group) => (
     <LinksGroup data={group.data} title={group.title} key={group.title} />
   ));
 
   return (
-    <>
+    <div className={classes.root}>
       <div className={classes.spacer} />
-      <div className={cx(classes.wrapper, { [classes.withNavbar]: withNavbar })}>
+      <Box
+        mod={{ 'with-navbar': withNavbar }}
+        className={cx(classes.wrapper, RemoveScroll.classNames.fullWidth)}
+      >
         <Container size={1100}>
           <div className={classes.inner}>
             <div className={classes.logoSection}>
               <Logo />
-              <Text className={classes.description} size="sm">
+              <Text className={classes.description} fz="sm">
                 Build fully functional accessible web applications faster than ever
               </Text>
             </div>
@@ -33,8 +36,8 @@ export function Footer({ withNavbar }: FooterProps) {
           </div>
 
           <div className={classes.afterFooter}>
-            <Group position="apart">
-              <Text size="xs" className={classes.afterFooterNote}>
+            <Group justify="space-between" wrap="wrap">
+              <Text fz="xs" className={classes.afterFooterNote}>
                 Built by <a href="https://github.com/rtivital">Vitaly Rtishchev</a> and{' '}
                 <a href="https://github.com/mantinedev/mantine/graphs/contributors">
                   these awesome people
@@ -42,12 +45,12 @@ export function Footer({ withNavbar }: FooterProps) {
               </Text>
               <div className={classes.social}>
                 <DiscordButton className={classes.socialButton} />
-                <TwitterButton className={classes.socialButton} ml="md" />
+                <TwitterButton className={classes.socialButton} />
               </div>
             </Group>
           </div>
         </Container>
-      </div>
-    </>
+      </Box>
+    </div>
   );
 }

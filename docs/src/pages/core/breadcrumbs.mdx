@@ -1,0 +1,12 @@
+import { BreadcrumbsDemos } from '@docs/demos';
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.Breadcrumbs);
+
+## Usage
+
+`Breadcrumbs` component accepts any number of React nodes as children
+and adds a given separator (defaults to `/`) between them:
+
+<Demo data={BreadcrumbsDemos.usage} />

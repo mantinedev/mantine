@@ -1,0 +1,36 @@
+import { NotificationDemos } from '@docs/demos';
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.Notification);
+
+## Usage
+
+Notification is a base component for notification system.
+Build your own or use [@mantine/notifications](/x/notifications/) package.
+
+<Demo data={NotificationDemos.configurator} />
+
+## With icon
+
+<Demo data={NotificationDemos.icon} />
+
+<StylesApiSelectors component="Notification" />
+
+<Demo data={NotificationDemos.stylesApi} />
+
+## Accessibility
+
+To support screen readers, set close button aria-label or title with `closeButtonProps`:
+
+```tsx
+import { Notification } from '@mantine/core';
+
+function Demo() {
+  return (
+    <Notification
+      closeButtonProps={{ 'aria-label': 'Hide notification' }}
+    />
+  );
+}
+```

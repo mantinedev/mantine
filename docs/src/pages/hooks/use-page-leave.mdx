@@ -1,0 +1,17 @@
+import { HooksDemos } from '@docs/demos';
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.usePageLeave);
+
+## Usage
+
+`use-page-leave` calls given function when mouse leaves the page:
+
+<Demo data={HooksDemos.usePageLeaveDemo} />
+
+## Definition
+
+```tsx
+function usePageLeave(onPageLeave: () => void): void;
+```

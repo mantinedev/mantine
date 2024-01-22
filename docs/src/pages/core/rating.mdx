@@ -1,0 +1,37 @@
+import { RatingDemos } from '@docs/demos';
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.Rating);
+
+## Usage
+
+<Demo data={RatingDemos.configurator} />
+
+## Controlled
+
+```tsx
+import { useState } from 'react';
+import { Rating } from '@mantine/core';
+
+function Demo() {
+  const [value, setValue] = useState(0);
+  return <Rating value={value} onChange={setValue} />;
+}
+```
+
+## Read only
+
+<Demo data={RatingDemos.readOnly} />
+
+## Fractions
+
+<Demo data={RatingDemos.fractions} />
+
+## Custom symbol
+
+<Demo data={RatingDemos.symbol} />
+
+## Symbols for each item
+
+<Demo data={RatingDemos.customSymbol} />

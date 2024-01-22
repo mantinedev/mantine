@@ -1,0 +1,11 @@
+.root {
+  @mixin light {
+    --chart-grid-color: alpha(var(--mantine-color-black), 0.15);
+    --chart-text-color: var(--mantine-color-gray-7);
+  }
+
+  @mixin dark {
+    --chart-grid-color: alpha(var(--mantine-color-white), 0.15);
+    --chart-text-color: var(--mantine-color-dark-0);
+  }
+}

@@ -1,0 +1,281 @@
+import { TooltipDemos } from '@docs/demos';
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.Tooltip);
+
+## Usage
+
+<Demo data={TooltipDemos.usage} />
+
+## Tooltip children
+
+Tooltip requires an element or a component as a single child –
+strings, fragments, numbers and multiple elements/components are not supported and **will throw error**.
+Custom components must provide a prop to get root element ref,
+all Mantine components support ref out of the box.
+
+```tsx
+import { Badge, Tooltip } from '@mantine/core';
+
+function Demo() {
+  return (
+    <>
+      <Tooltip label="OK">
+        <button>Native button – ok</button>
+      </Tooltip>
+
+      <Tooltip label="OK">
+        <Badge>Mantine component – ok</Badge>
+      </Tooltip>
+
+      <Tooltip label="Throws">
+        Raw string, NOT OK – will throw error
+      </Tooltip>
+
+      {/* Number, NOT OK – will throw error */}
+      <Tooltip label="Throws">{2}</Tooltip>
+
+      <Tooltip label="Throws">
+        <>Fragment, NOT OK, will throw error</>
+      </Tooltip>
+
+      <Tooltip label="Throws">
+        <div>More that one node</div>
+        <div>NOT OK, will throw error</div>
+      </Tooltip>
+    </>
+  );
+}
+```
+
+## Required ref prop
+
+Custom components that are rendered inside `Tooltip` are required to support `ref` prop:
+
+```tsx
+// Example of code that WILL NOT WORK
+import { Tooltip } from '@mantine/core';
+
+function MyComponent() {
+  return <div>My component</div>;
+}
+
+// This will not work – MyComponent does not support ref
+function Demo() {
+  return (
+    <Tooltip label="Does not work">
+      <MyComponent />
+    </Tooltip>
+  );
+}
+```
+
+Use `forwardRef` function to forward ref to root element:
+
+```tsx
+// Example of code that will work
+import { forwardRef } from 'react';
+import { Tooltip } from '@mantine/core';
+
+const MyComponent = forwardRef<HTMLDivElement>((props, ref) => (
+  <div ref={ref} {...props}>
+    My component
+  </div>
+));
+
+// Works correctly – ref is forwarded
+function Demo() {
+  return (
+    <Tooltip label="Works fine">
+      <MyComponent />
+    </Tooltip>
+  );
+}
+```
+
+## Color
+
+<Demo data={TooltipDemos.configurator} />
+
+## Offset
+
+Set `offset` prop to a number to change tooltip position relative to the target element.
+This way you can control tooltip offset on main axis only.
+
+<Demo data={TooltipDemos.offset} />
+
+To control offset on both axis, pass object with `mainAxis` and `crossAxis` properties:
+
+<Demo data={TooltipDemos.offsetAxis} />
+
+## Arrow
+
+Set `withArrow` prop to add an arrow to the tooltip. Arrow is a `div` element rotated with `transform: rotate(45deg)`.
+
+`arrowPosition` prop determines how arrow is position relative to the target element when `position` is set to `*-start` and `*-end` values on `Popover` component.
+By default, the value is `center` – the arrow is positioned in the center of the target element if it is possible.
+
+If you change `arrowPosition` to `side`, then the arrow will be positioned on the side of the target element,
+and you will be able to control arrow offset with `arrowOffset` prop. Note that when `arrowPosition` is set to `center`,
+`arrowOffset` prop is ignored.
+
+<Demo data={TooltipDemos.arrow} />
+
+## Controlled
+
+<Demo data={TooltipDemos.controlled} />
+
+## Change events
+
+Events that trigger tooltip can be changed with `events` prop, it accepts an object
+with the following properties that determine which events will trigger tooltip:
+
+- `hover` – mouse hover event, `true` by default
+- `focus` – focus/blur events excluding clicks on the target element, `false` by default
+- `touch` – events for touchscreen devices, `false` by default
+
+```tsx
+import { Tooltip } from '@mantine/core';
+
+function Demo() {
+  return (
+    <Tooltip
+      label="Tooltip"
+      events={{ hover: true, focus: true, touch: false }}
+    >
+      <button>target</button>
+    </Tooltip>
+  );
+}
+```
+
+## Multiline
+
+To enable multiline mode, set `multiline` prop to enable line breaks and `w` [style prop](/styles/style-props) to set tooltip width:
+
+<Demo data={TooltipDemos.multiline} />
+
+## Inline
+
+Set `inline` prop to use `Tooltip` with inline elements:
+
+<Demo data={TooltipDemos.inline} />
+
+## Change transition
+
+Tooltip is built with [Transition](/core/transition/) component, it supports `transitionProps` props:
+
+```tsx
+import { Button, Tooltip } from '@mantine/core';
+
+function Demo() {
+  return (
+    <Tooltip
+      label="Tooltip with custom transition"
+      transitionProps={{ transition: 'skew-up', duration: 300 }}
+    >
+      <Button>Button with tooltip</Button>
+    </Tooltip>
+  );
+}
+```
+
+All available premade transitions:
+
+<Demo data={TooltipDemos.transitions} />
+
+## Close and open delay
+
+You can delay tooltip open/close events by setting `openDelay` and `closeDelay` props in ms:
+
+<Demo data={TooltipDemos.delay} />
+
+## Tooltip delay group
+
+`Tooltip.Group` component can be used to sync open and close delays for multiple tooltips:
+
+<Demo data={TooltipDemos.group} />
+
+## Floating tooltip
+
+`Tooltip.Floating` component has the same API as Tooltip component but tooltip will follow mouse:
+
+<Demo data={TooltipDemos.floating} />
+
+## Custom components with Tooltip
+
+If you want to build a component that can be used with Tooltip use
+[forwardRef](https://reactjs.org/docs/forwarding-refs.html) or other prop that will allow to get root element ref.
+This logic is applied to Tooltip and Tooltip.Floating components:
+
+```tsx
+import { forwardRef } from 'react';
+import { Tooltip } from '@mantine/core';
+
+// forwardRef function will allow to get root element ref
+const MyBadge = forwardRef<HTMLDivElement, { color: string }>(
+  ({ color }, ref) => (
+    <div ref={ref} color={color}>
+      Badge
+    </div>
+  )
+);
+
+// other props can also be used
+function MyOtherBadge({
+  color,
+  innerRef,
+}: {
+  color: string;
+  innerRef?: React.ForwardedRef<HTMLDivElement>;
+}) {
+  return (
+    <div ref={innerRef} color={color}>
+      Badge
+    </div>
+  );
+}
+
+function Demo() {
+  return (
+    <>
+      <Tooltip label="Can be used as is">
+        <MyBadge color="red" />
+      </Tooltip>
+
+      <Tooltip label="refProp is required" refProp="innerRef">
+        <MyOtherBadge color="orange" />
+      </Tooltip>
+    </>
+  );
+}
+```
+
+## Accessibility
+
+Tooltip follows [WAI-ARIA recommendations](https://www.w3.org/TR/wai-aria-practices/#tooltip):
+
+- Tooltip body has `role="tooltip"` attribute
+- Target element has `aria-describedby` attribute
+- `Tooltip.Floating` is ignored by screen readers
+
+By default, Tooltip is not triggered by focus events and thus users who use a screen reader
+or navigate with keyboard will not be able to get tooltip content. Set `events` prop to enable
+focus/blur tooltip events:
+
+```tsx
+import { Button, Tooltip } from '@mantine/core';
+
+// Tooltip will be visible for screen readers
+function Demo() {
+  return (
+    <Tooltip
+      label="Tooltip"
+      events={{ hover: true, focus: true, touch: false }}
+    >
+      <Button>Button with tooltip</Button>
+    </Tooltip>
+  );
+}
+```

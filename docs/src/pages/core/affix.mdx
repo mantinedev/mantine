@@ -1,0 +1,12 @@
+import { AffixDemos } from '@docs/demos';
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.Affix);
+
+## Usage
+
+`Affix` renders a div element with a fixed position inside the [Portal](/core/portal) component.
+Use it to display elements fixed at any position on the screen, for example, scroll to top button:
+
+<Demo data={AffixDemos.usage} />

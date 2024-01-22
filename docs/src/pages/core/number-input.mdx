@@ -1,0 +1,124 @@
+import { NumberInputDemos } from '@docs/demos';
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.NumberInput);
+
+## Usage
+
+`NumberInput` is based on [react-number-format](https://www.npmjs.com/package/react-number-format).
+It supports most of the props from the `NumericFormat` component in the original package.
+
+<InputFeatures component="NumberInput" element="input" />
+
+<Demo data={NumberInputDemos.usage} />
+
+## Controlled
+
+```tsx
+import { useState } from 'react';
+import { NumberInput } from '@mantine/core';
+
+function Demo() {
+  const [value, setValue] = useState<string | number>('');
+  return <NumberInput value={value} onChange={setValue} />;
+}
+```
+
+## min and max
+
+Set `min` and `max` props to limit the input value:
+
+<Demo data={NumberInputDemos.minMax} />
+
+## Clamp behavior
+
+By default, the value is clamped when the input is blurred. If you set `clampBehavior="strict"`,
+it will not be possible to enter value outside of min/max range. Note that this option
+may cause issues if you have tight `min` and `max`, for example `min={10}` and `max={20}`.
+If you need to disable value clamping entirely, set `clampBehavior="none"`.
+
+<Demo data={NumberInputDemos.strictClamp} />
+
+## Prefix and suffix
+
+Set `prefix` and `suffix` props to add given string to the start or end of the input value:
+
+<Demo data={NumberInputDemos.prefixSuffix} />
+
+## Negative numbers
+
+By default, negative numbers are allowed. Set `allowNegative={false}` to allow only positive numbers.
+
+<Demo data={NumberInputDemos.allowNegative} />
+
+## Decimal numbers
+
+By default, decimal numbers are allowed. Set `allowDecimal={false}` to allow only integers.
+
+<Demo data={NumberInputDemos.allowDecimal} />
+
+## Decimal scale
+
+`decimalScale` controls how many decimal places are allowed:
+
+<Demo data={NumberInputDemos.decimalScale} />
+
+## Fixed decimal scale
+
+Set `fixedDecimalScale` to always display fixed number of decimal places:
+
+<Demo data={NumberInputDemos.fixedDecimalScale} />
+
+## Decimal separator
+
+Set `decimalSeparator` to change decimal separator character:
+
+<Demo data={NumberInputDemos.decimalSeparator} />
+
+## Thousand separator
+
+Set `thousandSeparator` prop to separate thousands with a character. You can control
+grouping logic with `thousandsGroupStyle`, it accepts: `thousand`, `lakh`, `wan`, `none` values.
+
+<Demo data={NumberInputDemos.thousandsSeparator} />
+
+<InputSections component="NumberInput" />
+
+<Demo data={NumberInputDemos.sections} />
+
+## Increment/decrement controls
+
+By default, the right section is occupied by increment and decrement buttons.
+To hide them, set `hideControls` prop. You can also use `rightSection` prop to render anything
+in the right section to replace the default controls.
+
+<Demo data={NumberInputDemos.rightSection} />
+
+## Increment/decrement on hold
+
+Set `stepHoldDelay` and `stepHoldInterval` props to define behavior when increment/decrement controls are clicked and hold:
+
+<Demo data={NumberInputDemos.hold} />
+
+## Custom increment and decrement controls
+
+You can get a ref with `increment` and `decrement` functions to create custom controls:
+
+<Demo data={NumberInputDemos.handlers} />
+
+## Error state
+
+<Demo data={NumberInputDemos.error} />
+
+## Disabled state
+
+<Demo data={NumberInputDemos.disabled} />
+
+<StylesApiSelectors component="NumberInput" />
+
+<Demo data={NumberInputDemos.stylesApi} />
+
+<GetElementRef component="NumberInput" refType="input" />
+
+<InputAccessibility component="NumberInput" />

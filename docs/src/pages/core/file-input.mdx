@@ -1,0 +1,93 @@
+import { FileInputDemos } from '@docs/demos';
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.FileInput);
+
+## Usage
+
+<InputFeatures component="FileInput" element="input" />
+
+<Demo data={FileInputDemos.usage} />
+
+## Controlled
+
+When `multiple` is `false`:
+
+```tsx
+import { useState } from 'react';
+import { FileInput } from '@mantine/core';
+
+function Demo() {
+  const [value, setValue] = useState<File | null>(null);
+  return <FileInput value={value} onChange={setValue} />;
+}
+```
+
+When `multiple` is `true`:
+
+```tsx
+import { useState } from 'react';
+import { FileInput } from '@mantine/core';
+
+function Demo() {
+  const [value, setValue] = useState<File[]>([]);
+  return <FileInput multiple value={value} onChange={setValue} />;
+}
+```
+
+## Multiple
+
+Set `multiple` to allow user to pick more than one file:
+
+<Demo data={FileInputDemos.multiple} />
+
+## Accept
+
+Set `accept` prop to restrict files selection to specific mime types:
+
+<Demo data={FileInputDemos.accept} />
+
+## Clearable
+
+Set `clearable` prop to display clear button in the right section of the input
+when file is selected. Note that if you define custom right section, clear button
+will not be rendered.
+
+<Demo data={FileInputDemos.clearable} />
+
+## Custom value component
+
+<Demo data={FileInputDemos.valueComponent} />
+
+## Error state
+
+<Demo data={FileInputDemos.error} />
+
+## Disabled state
+
+<Demo data={FileInputDemos.disabled} />
+
+<InputSections component="FileInput" />
+
+<Demo data={FileInputDemos.sections} />
+
+<StylesApiSelectors component="FileInput" />
+
+<Demo data={FileInputDemos.stylesApi} />
+
+<GetElementRef component="FileInput" refType="button" />
+
+<InputAccessibility component="FileInput" />
+
+## FileInputProps type
+
+`FileInputProps` type is a generic interface which accepts a single type argument:
+`multiple` value.
+
+```tsx
+import type { FileInputProps } from '@mantine/core';
+
+type SingleInputProps = FileInputProps<false>;
+type MultipleInputProps = FileInputProps<true>;
+```
