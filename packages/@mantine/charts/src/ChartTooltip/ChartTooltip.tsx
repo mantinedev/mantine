@@ -1,4 +1,5 @@
 import React from 'react';
+import { Formatter, Payload } from 'recharts/types/component/DefaultTooltipContent';
 import {
   Box,
   BoxProps,
@@ -12,7 +13,9 @@ import {
 } from '@mantine/core';
 import classes from './ChartTooltip.module.css';
 
-export function getFilteredChartTooltipPayload(payload: Record<string, any>[]) {
+type MantinePayload = Payload<string, any> & { fill?: string };
+
+export function getFilteredChartTooltipPayload(payload: MantinePayload[]) {
   return payload.filter((item) => item.fill !== 'none');
 }
 
@@ -34,10 +37,13 @@ export interface ChartTooltipProps
   label?: React.ReactNode;
 
   /** Chart data provided by recharts */
-  payload: Record<string, any>[] | undefined;
+  payload: MantinePayload[] | undefined;
 
   /** Data units, provided by parent component */
   unit?: string;
+
+  /** Function used to format the display content */
+  formatter?: Formatter<string, any>;
 }
 
 export type ChartTooltipFactory = Factory<{
@@ -50,8 +56,19 @@ const defaultProps: Partial<ChartTooltipProps> = {};
 
 export const ChartTooltip = factory<ChartTooltipFactory>((_props, ref) => {
   const props = useProps('ChartTooltip', defaultProps, _props);
-  const { classNames, className, style, styles, unstyled, vars, payload, label, unit, ...others } =
-    props;
+  const {
+    classNames,
+    className,
+    style,
+    styles,
+    unstyled,
+    vars,
+    payload,
+    label,
+    unit,
+    formatter,
+    ...others
+  } = props;
 
   const getStyles = useStyles<ChartTooltipFactory>({
     name: 'ChartTooltip',
@@ -70,23 +87,39 @@ export const ChartTooltip = factory<ChartTooltipFactory>((_props, ref) => {
 
   const filteredPayload = getFilteredChartTooltipPayload(payload);
 
-  const items = filteredPayload.map((item) => (
-    <div key={item.name} {...getStyles('tooltipItem')}>
-      <div {...getStyles('tooltipItemBody')}>
-        <ColorSwatch
-          color={item.color}
-          size={12}
-          {...getStyles('tooltipItemColor')}
-          withShadow={false}
-        />
-        <div {...getStyles('tooltipItemName')}>{item.name}</div>
+  const items = filteredPayload.map((item, index) => {
+    let finalValue: React.ReactNode | string = item.value;
+    let finalName: React.ReactNode | any = item.name;
+
+    if (formatter !== undefined && item.value !== undefined) {
+      const formatted = formatter(item.value, item.name, item, index, payload);
+      if (Array.isArray(formatted)) {
+        [finalValue, finalName] = formatted;
+      } else {
+        finalValue = formatted;
+      }
+    }
+
+    return (
+      <div key={index} {...getStyles('tooltipItem')}>
+        <div {...getStyles('tooltipItemBody')}>
+          {item.color ? (
+            <ColorSwatch
+              color={item.color}
+              size={12}
+              {...getStyles('tooltipItemColor')}
+              withShadow={false}
+            />
+          ) : undefined}
+          <div {...getStyles('tooltipItemName')}>{finalName}</div>
+        </div>
+        <div {...getStyles('tooltipItemData')}>
+          {finalValue}
+          {unit}
+        </div>
       </div>
-      <div {...getStyles('tooltipItemData')}>
-        {item.payload[item.dataKey]}
-        {unit}
-      </div>
-    </div>
-  ));
+    );
+  });
 
   return (
     <Box {...getStyles('tooltip')} ref={ref} {...others}>

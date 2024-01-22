@@ -223,13 +223,14 @@ export const BarChart = factory<BarChartFactory>((_props, ref) => {
           {withLegend && (
             <Legend
               verticalAlign="top"
-              content={(payload) => (
+              content={({ payload }) => (
                 <ChartLegend
-                  payload={payload.payload}
+                  payload={payload}
                   onHighlight={setHighlightedArea}
                   legendPosition={legendProps?.verticalAlign || 'top'}
                   classNames={resolvedClassNames}
                   styles={resolvedStyles}
+                  formatter={legendProps?.formatter}
                 />
               )}
               height={44}
@@ -288,6 +289,7 @@ export const BarChart = factory<BarChartFactory>((_props, ref) => {
                   unit={unit}
                   classNames={resolvedClassNames}
                   styles={resolvedStyles}
+                  formatter={tooltipProps?.formatter}
                 />
               )}
               {...tooltipProps}

@@ -1,4 +1,5 @@
 import React from 'react';
+import { Formatter, Payload } from 'recharts/types/component/DefaultLegendContent';
 import {
   Box,
   BoxProps,
@@ -12,7 +13,7 @@ import {
 } from '@mantine/core';
 import classes from './ChartLegend.module.css';
 
-export function getFilteredChartLegendPayload(payload: Record<string, any>[]) {
+export function getFilteredChartLegendPayload(payload: Payload[]) {
   return payload.filter((item) => item.color !== 'none');
 }
 
@@ -22,9 +23,10 @@ export interface ChartLegendProps
   extends BoxProps,
     StylesApiProps<ChartLegendFactory>,
     ElementProps<'div'> {
-  payload: Record<string, any>[] | undefined;
+  payload: Payload[] | undefined;
   onHighlight: (area: string | null) => void;
   legendPosition: 'top' | 'bottom' | 'middle';
+  formatter?: Formatter;
 }
 
 export type ChartLegendFactory = Factory<{
@@ -47,6 +49,7 @@ export const ChartLegend = factory<ChartLegendFactory>((_props, ref) => {
     payload,
     onHighlight,
     legendPosition,
+    formatter,
     ...others
   } = props;
 
@@ -71,16 +74,20 @@ export const ChartLegend = factory<ChartLegendFactory>((_props, ref) => {
     <div
       key={index}
       {...getStyles('legendItem')}
-      onMouseEnter={() => onHighlight(item.dataKey)}
+      onMouseEnter={() => onHighlight(item.value)}
       onMouseLeave={() => onHighlight(null)}
     >
-      <ColorSwatch
-        color={item.color}
-        size={12}
-        {...getStyles('legendItemColor')}
-        withShadow={false}
-      />
-      <p {...getStyles('legendItemName')}>{item.dataKey}</p>
+      {item.color ? (
+        <ColorSwatch
+          color={item.color}
+          size={12}
+          {...getStyles('legendItemColor')}
+          withShadow={false}
+        />
+      ) : undefined}
+      <p {...getStyles('legendItemName')}>
+        {formatter ? formatter(item.value, item, index) : item.value}
+      </p>
     </div>
   ));
 
