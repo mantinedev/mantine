@@ -377,7 +377,7 @@ export const MDX_CORE_DATA: Record<string, Frontmatter> = {
     styles: ['Slider'],
     description: 'Slider and RangeSlider components',
     import: "import { Slider } from '@mantine/core';",
-    source: '@mantine/core/src/components/Slider/Slider.tsx',
+    source: '@mantine/core/src/components/Slider/Slider/Slider.tsx',
     docs: 'core/slider.mdx',
   },
   Stack: {
