@@ -28,6 +28,9 @@ export interface RadioGroupProps extends Omit<InputWrapperProps, 'onChange'> {
 
   /** `name` attribute of child radio inputs. By default, `name` is generated randomly. */
   name?: string;
+
+  /** If set, value cannot be changed */
+  readOnly?: boolean;
 }
 
 export type RadioGroupFactory = Factory<{
@@ -39,11 +42,8 @@ export type RadioGroupFactory = Factory<{
 const defaultProps: Partial<RadioGroupProps> = {};
 
 export const RadioGroup = factory<RadioGroupFactory>((props, ref) => {
-  const { value, defaultValue, onChange, size, wrapperProps, children, name, ...others } = useProps(
-    'RadioGroup',
-    defaultProps,
-    props
-  );
+  const { value, defaultValue, onChange, size, wrapperProps, children, name, readOnly, ...others } =
+    useProps('RadioGroup', defaultProps, props);
 
   const _name = useId(name);
 
@@ -55,7 +55,7 @@ export const RadioGroup = factory<RadioGroupFactory>((props, ref) => {
   });
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) =>
-    setValue(event.currentTarget.value);
+    !readOnly && setValue(event.currentTarget.value);
 
   return (
     <RadioGroupProvider value={{ value: _value, onChange: handleChange, size, name: _name }}>

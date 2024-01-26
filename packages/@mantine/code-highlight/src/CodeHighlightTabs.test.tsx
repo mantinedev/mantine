@@ -16,6 +16,7 @@ describe('@mantine/code-highlight/CodeHighlightTabs', () => {
   tests.itSupportsSystemProps<CodeHighlightTabsProps, CodeHighlightTabsStylesNames>({
     component: CodeHighlightTabs,
     props: defaultProps,
+    mod: true,
     polymorphic: true,
     styleProps: true,
     extend: true,

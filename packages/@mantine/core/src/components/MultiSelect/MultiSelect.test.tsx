@@ -19,6 +19,7 @@ describe('@mantine/core/MultiSelect', () => {
   tests.itSupportsSystemProps<MultiSelectProps, MultiSelectStylesNames>({
     component: MultiSelect,
     props: defaultProps,
+    mod: true,
     styleProps: true,
     extend: true,
     size: true,

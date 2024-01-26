@@ -44,8 +44,19 @@ const varsResolver = createVarsResolver<CodeFactory>((theme, { color }) => ({
 
 export const Code = factory<CodeFactory>((_props, ref) => {
   const props = useProps('Code', defaultProps, _props);
-  const { classNames, className, style, styles, unstyled, vars, color, block, variant, ...others } =
-    props;
+  const {
+    classNames,
+    className,
+    style,
+    styles,
+    unstyled,
+    vars,
+    color,
+    block,
+    variant,
+    mod,
+    ...others
+  } = props;
 
   const getStyles = useStyles<CodeFactory>({
     name: 'Code',
@@ -65,7 +76,7 @@ export const Code = factory<CodeFactory>((_props, ref) => {
       component={block ? 'pre' : 'code'}
       variant={variant}
       ref={ref}
-      mod={{ block }}
+      mod={[{ block }, mod]}
       {...getStyles('root')}
       {...others}
       dir="ltr"

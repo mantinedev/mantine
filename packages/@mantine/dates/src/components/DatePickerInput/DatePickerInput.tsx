@@ -73,6 +73,7 @@ export const DatePickerInput: DatePickerInputComponent = factory<DatePickerInput
       maxDate,
       vars,
       defaultDate,
+      valueFormatter,
       ...rest
     } = props;
 
@@ -102,6 +103,7 @@ export const DatePickerInput: DatePickerInputComponent = factory<DatePickerInput
       labelSeparator,
       closeOnChange,
       sortDates,
+      valueFormatter,
     });
 
     const _defaultDate = Array.isArray(_value) ? _value[0] || defaultDate : _value || defaultDate;

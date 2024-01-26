@@ -1,6 +1,6 @@
 .root {
   color: var(--mantine-color-anchor);
-  text-decoration: var(--_text-decoration, none);
+  text-decoration: none;
   appearance: none;
   border: none;
   display: inline;
@@ -9,13 +9,13 @@
   background-color: transparent;
   cursor: pointer;
 
-  &[data-underline='hover'] {
+  &:where([data-underline='hover']) {
     @mixin hover {
-      --_text-decoration: underline;
+      text-decoration: underline;
     }
   }
 
-  &[data-underline='always'] {
-    --_text-decoration: underline;
+  &:where([data-underline='always']) {
+    text-decoration: underline;
   }
 }

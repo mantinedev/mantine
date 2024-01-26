@@ -1,19 +1,19 @@
 export const data = [
-  { month: 'January', Smartphones: 120, Laptops: 80, Tablets: 10 },
-  { month: 'February', Smartphones: 90, Laptops: 120, Tablets: 40 },
-  { month: 'March', Smartphones: 40, Laptops: 100, Tablets: 20 },
-  { month: 'April', Smartphones: 100, Laptops: 20, Tablets: 80 },
-  { month: 'May', Smartphones: 80, Laptops: 140, Tablets: 120 },
-  { month: 'June', Smartphones: 75, Laptops: 60, Tablets: 100 },
+  { month: 'January', Smartphones: 1200, Laptops: 900, Tablets: 200 },
+  { month: 'February', Smartphones: 1900, Laptops: 1200, Tablets: 400 },
+  { month: 'March', Smartphones: 400, Laptops: 1000, Tablets: 200 },
+  { month: 'April', Smartphones: 1000, Laptops: 200, Tablets: 800 },
+  { month: 'May', Smartphones: 800, Laptops: 1400, Tablets: 1200 },
+  { month: 'June', Smartphones: 750, Laptops: 600, Tablets: 1000 },
 ];
 
 export const dataCode = `
 export const data = [
-  { month: 'January', Smartphones: 120, Laptops: 80, Tablets: 10 },
-  { month: 'February', Smartphones: 90, Laptops: 120, Tablets: 40 },
-  { month: 'March', Smartphones: 40, Laptops: 100, Tablets: 20 },
-  { month: 'April', Smartphones: 100, Laptops: 20, Tablets: 80 },
-  { month: 'May', Smartphones: 80, Laptops: 140, Tablets: 120 },
-  { month: 'June', Smartphones: 75, Laptops: 60, Tablets: 100 },
+  { month: 'January', Smartphones: 1200, Laptops: 900, Tablets: 200 },
+  { month: 'February', Smartphones: 1900, Laptops: 1200, Tablets: 400 },
+  { month: 'March', Smartphones: 400, Laptops: 1000, Tablets: 200 },
+  { month: 'April', Smartphones: 1000, Laptops: 200, Tablets: 800 },
+  { month: 'May', Smartphones: 800, Laptops: 1400, Tablets: 1200 },
+  { month: 'June', Smartphones: 750, Laptops: 600, Tablets: 1000 },
 ];
 `;

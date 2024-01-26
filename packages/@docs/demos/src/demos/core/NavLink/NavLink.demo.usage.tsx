@@ -40,7 +40,7 @@ function Demo() {
         label="With description"
         description="Additional information"
         leftSection={
-          <Badge size="xs" variant="filled" color="red" w={16} h={16} p={0}>
+          <Badge size="xs" color="red" circle>
             3
           </Badge>
         }
@@ -106,7 +106,7 @@ function Demo() {
         label="With description"
         description="Additional information"
         leftSection={
-          <Badge size="xs" variant="filled" color="red" w={16} h={16} p={0}>
+          <Badge size="xs" color="red" circle>
             3
           </Badge>
         }

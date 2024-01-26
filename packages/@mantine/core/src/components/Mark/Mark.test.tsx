@@ -7,6 +7,7 @@ describe('@mantine/core/Mark', () => {
   tests.itSupportsSystemProps<MarkProps, MarkStylesNames>({
     component: Mark,
     props: defaultProps,
+    mod: true,
     styleProps: true,
     children: true,
     extend: true,

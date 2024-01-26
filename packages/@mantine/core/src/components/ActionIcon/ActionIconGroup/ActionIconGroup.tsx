@@ -55,6 +55,7 @@ export const ActionIconGroup = factory<ActionIconGroupFactory>((_props, ref) => 
     vars,
     borderWidth,
     variant,
+    mod,
     ...others
   } = useProps('ActionIconGroup', defaultProps, _props);
 
@@ -77,7 +78,7 @@ export const ActionIconGroup = factory<ActionIconGroupFactory>((_props, ref) => 
       {...getStyles('group')}
       ref={ref}
       variant={variant}
-      mod={{ 'data-orientation': orientation }}
+      mod={[{ 'data-orientation': orientation }, mod]}
       role="group"
       {...others}
     />

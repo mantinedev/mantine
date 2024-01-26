@@ -38,6 +38,17 @@ Use `valueFormat` prop to change [dayjs format](https://day.js.org/docs/en/displ
 
 <Demo data={YearPickerInputDemos.valueFormat} />
 
+## Value formatter
+
+`valueFormatter` is a more powerful alternative to `valueFormat` prop.
+It allows formatting value label with a custom function.
+The function is the same for all component types (`default`, `multiple` and `range`)
+– you need to perform additional checks inside the function to handle different types.
+
+Example of using a custom formatter function with `type="multiple"`:
+
+<Demo data={YearPickerInputDemos.valueFormatter} />
+
 ## Clearable
 
 Set `clearable` prop to display clear button in the right section. Note that if you set `rightSection`

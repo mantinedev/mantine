@@ -18,6 +18,7 @@ describe('@mantine/dates/DecadeLevel', () => {
   tests.itSupportsSystemProps<DecadeLevelProps, DecadeLevelStylesNames>({
     component: DecadeLevel,
     props: defaultProps,
+    mod: true,
     styleProps: true,
     extend: true,
     variant: true,

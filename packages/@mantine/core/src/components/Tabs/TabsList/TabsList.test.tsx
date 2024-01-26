@@ -15,6 +15,7 @@ describe('@mantine/core/TabsList', () => {
     props: defaultProps,
     refType: HTMLDivElement,
     displayName: '@mantine/core/TabsList',
+    mod: true,
     extend: true,
     styleProps: true,
     children: true,

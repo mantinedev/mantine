@@ -19,21 +19,19 @@
   padding: var(--kbd-padding);
   font-size: var(--kbd-fz);
   border-radius: var(--mantine-radius-sm);
-  border: rem(1px) solid var(--_kbd-border-color);
+  border: rem(1px) solid;
   border-bottom-width: rem(3px);
-  background-color: var(--_kbd-bg);
-  color: var(--_kbd-color);
   unicode-bidi: embed;
 
-  @mixin light {
-    --_kbd-border-color: var(--mantine-color-gray-3);
-    --_kbd-color: var(--mantine-color-gray-7);
-    --_kbd-bg: var(--mantine-color-gray-0);
+  @mixin where-light {
+    border-color: var(--mantine-color-gray-3);
+    color: var(--mantine-color-gray-7);
+    background-color: var(--mantine-color-gray-0);
   }
 
   @mixin dark {
-    --_kbd-border-color: var(--mantine-color-dark-3);
-    --_kbd-color: var(--mantine-color-dark-0);
-    --_kbd-bg: var(--mantine-color-dark-5);
+    border-color: var(--mantine-color-dark-4);
+    color: var(--mantine-color-dark-0);
+    background-color: var(--mantine-color-dark-6);
   }
 }

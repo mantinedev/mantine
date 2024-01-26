@@ -39,6 +39,7 @@ export function useInputProps<T extends BaseProps, U extends Partial<T>>(
     withAsterisk,
     variant,
     vars,
+    mod,
     ...others
   } = props;
 
@@ -65,6 +66,7 @@ export function useInputProps<T extends BaseProps, U extends Partial<T>>(
     withAsterisk,
     variant,
     id,
+    mod,
     ..._wrapperProps,
   };
 

@@ -27,6 +27,7 @@ describe('@mantine/core/Button', () => {
     component: Button,
     props: defaultProps,
     polymorphic: true,
+    mod: true,
     styleProps: true,
     children: true,
     extend: true,

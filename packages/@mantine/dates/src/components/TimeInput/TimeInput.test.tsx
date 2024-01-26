@@ -19,6 +19,7 @@ describe('@mantine/dates/TimeInput', () => {
   tests.itSupportsSystemProps<TimeInputProps, __InputStylesNames>({
     component: TimeInput,
     props: defaultProps,
+    mod: true,
     styleProps: true,
     extend: true,
     size: true,

@@ -12,6 +12,7 @@ describe('@mantine/dropzone/Dropzone', () => {
   tests.itSupportsSystemProps<DropzoneProps, DropzoneStylesNames>({
     component: Dropzone,
     props: defaultProps,
+    mod: true,
     styleProps: true,
     children: true,
     extend: true,

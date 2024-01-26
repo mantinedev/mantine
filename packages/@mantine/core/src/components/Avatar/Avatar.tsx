@@ -116,6 +116,7 @@ export const Avatar = polymorphicFactory<AvatarFactory>((_props, ref) => {
     imageProps,
     children,
     autoContrast,
+    mod,
     ...others
   } = props;
   const ctx = useAvatarGroupContext();
@@ -137,7 +138,12 @@ export const Avatar = polymorphicFactory<AvatarFactory>((_props, ref) => {
   useEffect(() => setError(!src), [src]);
 
   return (
-    <Box {...getStyles('root')} mod={{ 'within-group': ctx.withinGroup }} ref={ref} {...others}>
+    <Box
+      {...getStyles('root')}
+      mod={[{ 'within-group': ctx.withinGroup }, mod]}
+      ref={ref}
+      {...others}
+    >
       {error ? (
         <span {...getStyles('placeholder')} title={alt}>
           {children || <AvatarPlaceholderIcon />}

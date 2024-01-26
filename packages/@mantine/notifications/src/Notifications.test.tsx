@@ -9,6 +9,7 @@ describe('@mantine/core/Notifications', () => {
   tests.itSupportsSystemProps<NotificationsProps, NotificationsStylesNames>({
     component: Notifications,
     props: defaultProps,
+    mod: true,
     styleProps: true,
     extend: true,
     variant: true,

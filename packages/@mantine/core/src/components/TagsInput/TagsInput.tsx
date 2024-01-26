@@ -168,6 +168,7 @@ export const TagsInput = factory<TagsInputFactory>((_props, ref) => {
     clearButtonProps,
     hiddenInputProps,
     hiddenInputValuesDivider,
+    mod,
     ...others
   } = props;
 
@@ -357,6 +358,7 @@ export const TagsInput = factory<TagsInputFactory>((_props, ref) => {
             withErrorStyles={withErrorStyles}
             __stylesApiProps={{ ...props, multiline: true }}
             id={_id}
+            mod={mod}
           >
             <Pill.Group disabled={disabled} unstyled={unstyled} {...getStyles('pillsList')}>
               {values}

@@ -1,7 +1,6 @@
 .dropdown {
   position: absolute;
-  background-color: var(--_popover-bg);
-  border: rem(1px) solid var(--_popover-bd);
+  border: rem(1px) solid var(--popover-border-color);
   padding: var(--mantine-spacing-sm) var(--mantine-spacing-md);
   box-shadow: var(--popover-shadow, none);
   border-radius: var(--popover-radius, var(--mantine-radius-default));
@@ -11,18 +10,18 @@
   }
 
   @mixin light {
-    --_popover-bg: var(--mantine-color-white);
-    --_popover-bd: var(--mantine-color-gray-2);
+    --popover-border-color: var(--mantine-color-gray-2);
+    background-color: var(--mantine-color-white);
   }
 
   @mixin dark {
-    --_popover-bg: var(--mantine-color-dark-6);
-    --_popover-bd: var(--mantine-color-dark-4);
+    --popover-border-color: var(--mantine-color-dark-4);
+    background-color: var(--mantine-color-dark-6);
   }
 }
 
 .arrow {
   background-color: inherit;
-  border: rem(1px) solid var(--_popover-bd);
+  border: rem(1px) solid var(--popover-border-color);
   z-index: 1;
 }

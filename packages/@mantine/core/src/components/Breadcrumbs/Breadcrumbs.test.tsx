@@ -10,6 +10,7 @@ describe('@mantine/core/Breadcrumbs', () => {
   tests.itSupportsSystemProps<BreadcrumbsProps, BreadcrumbsStylesNames>({
     component: Breadcrumbs,
     props: defaultProps,
+    mod: true,
     styleProps: true,
     children: true,
     extend: true,

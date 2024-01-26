@@ -14,8 +14,7 @@
     opacity: 1;
   }
 
-  &[data-type='hidden'],
-  &[data-type='auto'] {
+  &:where([data-type='hidden'], [data-type='auto']) {
     height: rem(1px);
     width: rem(1px);
     top: 0;
@@ -29,19 +28,18 @@
     outline: none;
   }
 
-  &[data-type='auto']:focus {
+  &:where([data-type='auto']:focus) {
     height: 1.6em;
     visibility: visible;
     opacity: 1;
     position: static;
   }
 
-  &[data-pointer]:not([data-disabled], :disabled) {
+  &:where([data-pointer]:not([data-disabled], :disabled)) {
     cursor: pointer;
   }
 
-  &[data-disabled],
-  &:disabled {
+  &:where([data-disabled], :disabled) {
     cursor: not-allowed;
   }
 }

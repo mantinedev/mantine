@@ -28,6 +28,14 @@ export function Usage() {
   );
 }
 
+export function WithoutItemsBorders() {
+  return (
+    <div style={{ padding: 40 }}>
+      <SegmentedControl data={['React', 'Angular', 'Vue', 'Svelte']} withItemsBorders={false} />
+    </div>
+  );
+}
+
 export function AutoContrast() {
   return (
     <div style={{ padding: 40 }}>

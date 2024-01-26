@@ -12,6 +12,7 @@ describe('@mantine/core/ComboboxGroup', () => {
   tests.itSupportsSystemProps<ComboboxGroupProps, ComboboxGroupStylesNames>({
     component: TestContainer,
     props: defaultProps,
+    mod: true,
     styleProps: true,
     children: true,
     extend: true,

@@ -19,6 +19,7 @@ describe('@mantine/core/Autocomplete', () => {
   tests.itSupportsSystemProps<AutocompleteProps, AutocompleteStylesNames>({
     component: Autocomplete,
     props: defaultProps,
+    mod: true,
     styleProps: true,
     extend: true,
     size: true,

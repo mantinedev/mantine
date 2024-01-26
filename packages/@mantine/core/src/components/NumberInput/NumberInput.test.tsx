@@ -35,6 +35,7 @@ describe('@mantine/core/NumberInput', () => {
   tests.itSupportsSystemProps<NumberInputProps, __InputStylesNames>({
     component: NumberInput,
     props: defaultProps,
+    mod: true,
     styleProps: true,
     extend: true,
     size: true,

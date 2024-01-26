@@ -1,3 +1,18 @@
+/* Avatar.Group root element */
+.group {
+  --ag-spacing: var(--mantine-spacing-sm);
+  --ag-offset: calc(var(--ag-spacing) * -1);
+
+  display: flex;
+  padding-left: var(--ag-spacing);
+
+  @mixin where-rtl {
+    padding-left: 0;
+    padding-right: var(--ag-spacing);
+  }
+}
+
+/* Avatar root element */
 .root {
   --avatar-size-xs: rem(16px);
   --avatar-size-sm: rem(26px);
@@ -5,32 +20,33 @@
   --avatar-size-lg: rem(56px);
   --avatar-size-xl: rem(84px);
 
-  --_avatar-size: var(--avatar-size, var(--avatar-size-md));
+  --avatar-size: var(--avatar-size-md);
+  --avatar-radius: rem(1000px);
+  --avatar-bg: var(--mantine-color-gray-light);
+  --avatar-bd: rem(1px) solid transparent;
+  --avatar-color: var(--mantine-color-gray-light-color);
+  --avatar-placeholder-fz: calc(var(--avatar-size) / 2.5);
 
   -webkit-tap-highlight-color: transparent;
   position: relative;
   display: block;
   user-select: none;
   overflow: hidden;
-  border-radius: var(--avatar-radius, rem(1000px));
+  border-radius: var(--avatar-radius);
   text-decoration: none;
-  border: var(--_avatar-border, none);
-  background-color: var(--_avatar-bg);
   padding: 0;
-  width: var(--_avatar-size);
-  height: var(--_avatar-size);
-  min-width: var(--_avatar-size);
-  margin-left: var(--_avatar-ml, unset);
-  margin-right: var(--_avatar-mr, unset);
+  width: var(--avatar-size);
+  height: var(--avatar-size);
+  min-width: var(--avatar-size);
 
-  &[data-within-group] {
-    --_avatar-ml: calc(var(--ag-spacing, var(--mantine-spacing-sm)) * -1);
-    --_avatar-border: rem(2px) solid var(--mantine-color-body);
-    --_avatar-bg: var(--mantine-color-body);
+  &:where([data-within-group]) {
+    margin-left: var(--ag-offset);
+    border: rem(2px) solid var(--mantine-color-body);
+    background: var(--mantine-color-body);
 
-    @mixin rtl {
-      --_avatar-mr: calc(var(--ag-spacing, var(--mantine-spacing-sm)) * -1);
-      --_avatar-ml: unset;
+    @mixin where-rtl {
+      margin-right: var(--ag-offset);
+      margin-left: unset;
     }
   }
 }
@@ -51,23 +67,13 @@
   height: 100%;
   user-select: none;
   border-radius: var(--avatar-radius);
-  font-size: calc(var(--_avatar-size) / 2.5);
-  background: var(--avatar-bg, var(--mantine-color-gray-light));
-  border: var(--avatar-bd, rem(1px) solid transparent);
-  color: var(--avatar-color, var(--mantine-color-gray-light-color));
+  font-size: var(--avatar-placeholder-fz);
+  background: var(--avatar-bg);
+  border: var(--avatar-bd);
+  color: var(--avatar-color);
 
   & > [data-avatar-placeholder-icon] {
     width: 70%;
     height: 70%;
-  }
-}
-
-.group {
-  display: flex;
-  padding-left: var(--ag-spacing, var(--mantine-spacing-sm));
-
-  @mixin rtl {
-    padding-left: 0;
-    padding-right: var(--ag-spacing, var(--mantine-spacing-sm));
   }
 }

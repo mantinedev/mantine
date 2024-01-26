@@ -11,7 +11,7 @@
   touch-action: manipulation;
   -webkit-tap-highlight-color: transparent;
 
-  @mixin rtl {
+  @mixin where-rtl {
     text-align: right;
   }
 }

@@ -149,6 +149,7 @@ export const Chip = factory<ChipFactory>((_props, ref) => {
     icon,
     rootRef,
     autoContrast,
+    mod,
     ...others
   } = props;
 
@@ -194,6 +195,7 @@ export const Chip = factory<ChipFactory>((_props, ref) => {
       size={size}
       variant={variant}
       ref={rootRef}
+      mod={mod}
       {...getStyles('root')}
       {...styleProps}
       {...wrapperProps}

@@ -105,6 +105,7 @@ export const Notification = factory<NotificationFactory>((_props, ref) => {
     unstyled,
     variant,
     vars,
+    mod,
     ...others
   } = props;
 
@@ -124,10 +125,7 @@ export const Notification = factory<NotificationFactory>((_props, ref) => {
   return (
     <Box
       {...getStyles('root')}
-      mod={{
-        'data-with-icon': !!icon || loading,
-        'data-with-border': withBorder,
-      }}
+      mod={[{ 'data-with-icon': !!icon || loading, 'data-with-border': withBorder }, mod]}
       ref={ref}
       variant={variant}
       {...others}

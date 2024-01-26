@@ -167,3 +167,14 @@ const [value, setValue] = useLocalStorage<'dark' | 'light'>({
   defaultValue: 'light',
 });
 ```
+
+## Read storage value
+
+To read value from storage without using hook, use `readLocalStorageValue`/`readSessionStorageValue` functions.
+Functions accept the same arguments as `use-local-storage`/`use-session-storage` hooks:
+
+```tsx
+import { readLocalStorageValue } from '@mantine/hooks';
+
+const value = readLocalStorageValue({ key: 'color-scheme' });
+```

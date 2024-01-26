@@ -47,3 +47,8 @@ export const Demo_disabled = {
   name: '⭐ Demo: disabled',
   render: renderDemo(demos.disabled),
 };
+
+export const Demo_valueFormatter = {
+  name: '⭐ Demo: valueFormatter',
+  render: renderDemo(demos.valueFormatter),
+};

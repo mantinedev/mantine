@@ -18,6 +18,7 @@ describe('@mantine/dates/YearLevel', () => {
   tests.itSupportsSystemProps<YearLevelProps, YearLevelStylesNames>({
     component: YearLevel,
     props: defaultProps,
+    mod: true,
     styleProps: true,
     extend: true,
     variant: true,

@@ -82,6 +82,7 @@ export const TimelineItem = factory<TimelineItemFactory>((_props, ref) => {
     lineVariant,
     children,
     title,
+    mod,
     ...others
   } = props;
 
@@ -93,7 +94,7 @@ export const TimelineItem = factory<TimelineItemFactory>((_props, ref) => {
   return (
     <Box
       {...ctx.getStyles('item', { ...stylesApiProps, className, style })}
-      mod={{ 'line-active': __lineActive, active: __active }}
+      mod={[{ 'line-active': __lineActive, active: __active }, mod]}
       ref={ref}
       __vars={{
         '--tli-radius': radius ? getRadius(radius) : undefined,

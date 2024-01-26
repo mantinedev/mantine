@@ -231,6 +231,28 @@ export const HOOKS_EXPORTS_REFERENCE: ExportReferenceGroup = {
       name: 'use-local-storage',
       description: 'Exposes localStorage value as react state, syncs state across opened tabs',
       link: '/hooks/use-local-storage/',
+      children: [
+        {
+          type: 'function',
+          name: 'readLocalStorageValue',
+          description: 'Read local storage value outside of React components',
+          link: '/hooks/use-local-storage/#read-storage-value',
+        },
+      ],
+    },
+    {
+      type: 'hook',
+      name: 'use-session-storage',
+      description: 'Exposes sessionStorage value as react state, syncs state across opened tabs',
+      link: '/hooks/use-local-storage/',
+      children: [
+        {
+          type: 'function',
+          name: 'readSessionStorageValue',
+          description: 'Read local storage value outside of React components',
+          link: '/hooks/use-local-storage/#read-storage-value',
+        },
+      ],
     },
     {
       type: 'hook',

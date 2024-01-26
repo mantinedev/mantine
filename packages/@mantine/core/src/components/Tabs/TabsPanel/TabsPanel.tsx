@@ -38,7 +38,7 @@ const defaultProps: Partial<TabsPanelProps> = {};
 
 export const TabsPanel = factory<TabsPanelFactory>((_props, ref) => {
   const props = useProps('TabsPanel', defaultProps, _props);
-  const { children, className, value, classNames, styles, style, ...others } = props;
+  const { children, className, value, classNames, styles, style, mod, ...others } = props;
 
   const ctx = useTabsContext();
 
@@ -56,7 +56,7 @@ export const TabsPanel = factory<TabsPanelFactory>((_props, ref) => {
         props,
       })}
       ref={ref}
-      mod={{ orientation: ctx.orientation }}
+      mod={[{ orientation: ctx.orientation }, mod]}
       role="tabpanel"
       id={ctx.getPanelId(value)}
       aria-labelledby={ctx.getTabId(value)}

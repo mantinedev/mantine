@@ -7,6 +7,7 @@ describe('@mantine/core/VisuallyHidden', () => {
   tests.itSupportsSystemProps<VisuallyHiddenProps, VisuallyHiddenStylesNames>({
     component: VisuallyHidden,
     props: defaultProps,
+    mod: true,
     styleProps: true,
     children: true,
     extend: true,

@@ -71,6 +71,7 @@ export interface MantineTheme {
   headings: {
     fontFamily: string;
     fontWeight: string;
+    textWrap: 'wrap' | 'nowrap' | 'balance' | 'pretty' | 'stable';
     sizes: {
       h1: HeadingStyle;
       h2: HeadingStyle;

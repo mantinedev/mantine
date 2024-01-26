@@ -9,6 +9,7 @@ describe('@mantine/core/Blockquote', () => {
   tests.itSupportsSystemProps<BlockquoteProps, BlockquoteStylesNames>({
     component: Blockquote,
     props: defaultProps,
+    mod: true,
     styleProps: true,
     children: true,
     extend: true,

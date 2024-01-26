@@ -23,6 +23,13 @@ will render the legend at the bottom of the chart and set its height to 50px.
 
 <Demo data={LineChartDemos.legendPosition} />
 
+## Series labels
+
+By default, series `name` is used as a label. To change it, set `label`
+property in `series` object:
+
+<Demo data={LineChartDemos.seriesLabels} />
+
 ## Connect nulls
 
 Use `connectNulls` prop to specify whether to connect a data point across null
@@ -50,6 +57,13 @@ Use `yAxisProps` to change domain of the Y axis. For example, if you know that
 your data will always be in the range of 0 to 100, you can set domain to `[0, 100]`:
 
 <Demo data={LineChartDemos.yScale} />
+
+## Value formatter
+
+To format values in the tooltip and axis ticks, use `valueFormat` prop. It accepts
+a function that takes number value as an argument and returns formatted value:
+
+<Demo data={LineChartDemos.valueFormatter} />
 
 ## Line color
 

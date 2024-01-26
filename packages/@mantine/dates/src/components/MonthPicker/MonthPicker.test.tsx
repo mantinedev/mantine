@@ -12,6 +12,7 @@ describe('@mantine/dates/MonthPicker', () => {
   tests.itSupportsSystemProps<MonthPickerProps, MonthPickerStylesNames>({
     component: MonthPicker,
     props: defaultProps,
+    mod: true,
     styleProps: true,
     extend: true,
     variant: true,
