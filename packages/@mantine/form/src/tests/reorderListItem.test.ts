@@ -50,12 +50,21 @@ describe('@mantine/form/reorderListItem', () => {
     );
 
     act(() => hook.result.current.reorderListItem('a.1.b', { from: 1, to: 0 }));
-    expect(spy).toHaveBeenCalledWith({
-      a: [
-        { b: [{ c: 1 }, { c: 2 }, { c: 3 }] },
-        { b: [{ c: 5 }, { c: 4 }, { c: 6 }] },
-        { b: [{ c: 7 }, { c: 8 }, { c: 9 }] },
-      ],
-    });
+    expect(spy).toHaveBeenCalledWith(
+      {
+        a: [
+          { b: [{ c: 1 }, { c: 2 }, { c: 3 }] },
+          { b: [{ c: 5 }, { c: 4 }, { c: 6 }] },
+          { b: [{ c: 7 }, { c: 8 }, { c: 9 }] },
+        ],
+      },
+      {
+        a: [
+          { b: [{ c: 1 }, { c: 2 }, { c: 3 }] },
+          { b: [{ c: 4 }, { c: 5 }, { c: 6 }] },
+          { b: [{ c: 7 }, { c: 8 }, { c: 9 }] },
+        ],
+      }
+    );
   });
 });
