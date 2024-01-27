@@ -240,7 +240,7 @@ export const MultiSelect = factory<MultiSelectFactory>((_props, ref) => {
   const values = _value.map((item, index) => (
     <Pill
       key={`${item}-${index}`}
-      withRemoveButton={!readOnly}
+      withRemoveButton={!readOnly && !optionsLockup[item]?.disabled}
       onRemove={() => setValue(_value.filter((i) => item !== i))}
       unstyled={unstyled}
       {...getStyles('pill')}
