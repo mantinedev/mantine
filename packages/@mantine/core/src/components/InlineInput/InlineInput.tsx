@@ -63,6 +63,7 @@ export const InlineInput = forwardRef<HTMLDivElement, InlineInputProps>(
       variant,
       style,
       vars,
+      mod,
       ...others
     },
     ref
@@ -86,7 +87,7 @@ export const InlineInput = forwardRef<HTMLDivElement, InlineInputProps>(
           '--label-fz': getFontSize(size),
           '--label-lh': getSize(size, 'label-lh'),
         }}
-        mod={{ 'label-position': labelPosition }}
+        mod={[{ 'label-position': labelPosition }, mod]}
         variant={variant}
         size={size}
         {...others}
