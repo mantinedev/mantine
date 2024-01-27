@@ -224,7 +224,7 @@ export const Chip = factory<ChipFactory>((_props, ref) => {
             {icon || <CheckIcon {...getStyles('checkIcon')} />}
           </span>
         )}
-        {children}
+        <span>{children}</span>
       </label>
     </Box>
   );
