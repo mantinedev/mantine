@@ -1,5 +1,5 @@
 name: Report an issue with @mantine/* or @mantinex/* scoped package
-description: Use this template to report issues with the library, to ask questions or to suggest new features, use GitHub discussions instead
+description: Use this template to report issues with the library. To ask questions or to suggest new features, use GitHub discussions instead
 body:
   - type: checkboxes
     id: dependencies
