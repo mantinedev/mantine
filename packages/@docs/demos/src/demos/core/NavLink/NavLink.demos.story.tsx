@@ -17,3 +17,8 @@ export const Demo_nested = {
   name: '⭐ Demo: nested',
   render: renderDemo(demos.nested),
 };
+
+export const Demo_autoContrast = {
+  name: '⭐ Demo: autoContrast',
+  render: renderDemo(demos.autoContrast),
+};

@@ -1,4 +1,5 @@
 export * from './types';
+export * from './utils';
 
 export * from './components/DatesProvider';
 export * from './components/HiddenDatesInput';

@@ -11,6 +11,7 @@ describe('@mantine/core/Avatar', () => {
   tests.itSupportsSystemProps<AvatarProps, AvatarStylesNames>({
     component: Avatar,
     props: defaultProps,
+    mod: true,
     polymorphic: true,
     styleProps: true,
     children: true,

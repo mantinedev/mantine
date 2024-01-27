@@ -46,6 +46,13 @@ const FILES_PATHS = getPaths([
   // PillsInput
   'packages/@mantine/core/src/components/PillsInput/PillsInputField/PillsInputField.tsx',
 
+  // Pagination
+  'packages/@mantine/core/src/components/Pagination/PaginationRoot/PaginationRoot.tsx',
+  'packages/@mantine/core/src/components/Pagination/PaginationItems/PaginationItems.tsx',
+  'packages/@mantine/core/src/components/Pagination/PaginationDots/PaginationDots.tsx',
+  'packages/@mantine/core/src/components/Pagination/PaginationEdges/PaginationEdges.tsx',
+  'packages/@mantine/core/src/components/Pagination/PaginationControl/PaginationControl.tsx',
+
   // Combobox
   'packages/@mantine/core/src/components/Combobox/ComboboxOption/ComboboxOption.tsx',
   'packages/@mantine/core/src/components/Combobox/ComboboxDropdown/ComboboxDropdown.tsx',

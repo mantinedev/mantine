@@ -44,6 +44,7 @@ describe('@mantine/core/Table', () => {
   tests.itSupportsSystemProps<TableProps, TableStylesNames>({
     component: Table,
     props: defaultProps,
+    mod: true,
     styleProps: true,
     extend: true,
     size: true,

@@ -19,3 +19,5 @@ export { unit } from './LineChart.demo.unit';
 export { vertical } from './LineChart.demo.vertical';
 export { xAxisOffset } from './LineChart.demo.xAxisOffset';
 export { yScale } from './LineChart.demo.yScale';
+export { seriesLabels } from './LineChart.demo.seriesLabels';
+export { valueFormatter } from './LineChart.demo.valueFormatter';

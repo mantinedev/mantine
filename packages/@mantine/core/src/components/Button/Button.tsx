@@ -154,6 +154,7 @@ export const Button = polymorphicFactory<ButtonFactory>((_props, ref) => {
     unstyled,
     'data-disabled': dataDisabled,
     autoContrast,
+    mod,
     ...others
   } = props;
 
@@ -180,13 +181,16 @@ export const Button = polymorphicFactory<ButtonFactory>((_props, ref) => {
       unstyled={unstyled}
       variant={variant}
       disabled={disabled || loading}
-      mod={{
-        disabled: disabled || dataDisabled,
-        loading,
-        block: fullWidth,
-        'with-left-section': hasLeftSection,
-        'with-right-section': hasRightSection,
-      }}
+      mod={[
+        {
+          disabled: disabled || dataDisabled,
+          loading,
+          block: fullWidth,
+          'with-left-section': hasLeftSection,
+          'with-right-section': hasRightSection,
+        },
+        mod,
+      ]}
       {...others}
     >
       <Box component="span" {...getStyles('loader')} aria-hidden>

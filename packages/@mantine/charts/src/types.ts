@@ -18,6 +18,7 @@ export interface ChartReferenceLineProps extends Omit<ReferenceLineProps, 'ref' 
 export interface ChartSeries {
   name: string;
   color: MantineColor;
+  label?: string;
 }
 
 export type BaseChartStylesNames = 'root' | 'container' | 'axis' | 'grid' | 'referenceLine';
@@ -84,4 +85,7 @@ export interface GridChartBaseProps {
 
   /** Chart orientation, `'horizontal'` by default */
   orientation?: 'horizontal' | 'vertical';
+
+  /** A function to format values on Y axis and inside the tooltip */
+  valueFormatter?: (value: number) => string;
 }

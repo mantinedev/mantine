@@ -18,6 +18,7 @@ describe('@mantine/dates/MonthLevelGroup', () => {
   tests.itSupportsSystemProps<MonthLevelGroupProps, MonthLevelGroupStylesNames>({
     component: MonthLevelGroup,
     props: defaultProps,
+    mod: true,
     styleProps: true,
     extend: true,
     variant: true,

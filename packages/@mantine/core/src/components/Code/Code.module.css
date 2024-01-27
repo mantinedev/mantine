@@ -1,25 +1,23 @@
 .root {
   font-family: var(--mantine-font-family-monospace);
   line-height: var(--mantine-line-height);
-  padding: var(--_code-padding, rem(2px) calc(var(--mantine-spacing-xs) / 2));
+  padding: rem(2px) calc(var(--mantine-spacing-xs) / 2);
   border-radius: var(--mantine-radius-sm);
   font-size: var(--mantine-font-size-xs);
-  background-color: var(--_code-bg);
-  color: var(--_code-color);
   margin: 0;
   overflow: auto;
 
   @mixin light {
-    --_code-bg: var(--code-bg, var(--mantine-color-gray-1));
-    --_code-color: var(--mantine-color-black);
+    background-color: var(--code-bg, var(--mantine-color-gray-1));
+    color: var(--mantine-color-black);
   }
 
   @mixin dark {
-    --_code-bg: var(--code-bg, var(--mantine-color-dark-5));
-    --_code-color: var(--mantine-color-white);
+    background-color: var(--code-bg, var(--mantine-color-dark-5));
+    color: var(--mantine-color-white);
   }
 
   &[data-block] {
-    --_code-padding: var(--mantine-spacing-xs);
+    padding: var(--mantine-spacing-xs);
   }
 }

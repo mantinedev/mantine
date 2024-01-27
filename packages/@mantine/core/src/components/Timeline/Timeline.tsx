@@ -102,6 +102,7 @@ export const Timeline = factory<TimelineFactory>((_props, ref) => {
     align,
     lineWidth,
     reverseActive,
+    mod,
     ...others
   } = props;
 
@@ -134,7 +135,7 @@ export const Timeline = factory<TimelineFactory>((_props, ref) => {
 
   return (
     <TimelineProvider value={{ getStyles }}>
-      <Box {...getStyles('root')} mod={{ align }} ref={ref} {...others}>
+      <Box {...getStyles('root')} mod={[{ align }, mod]} ref={ref} {...others}>
         {items}
       </Box>
     </TimelineProvider>

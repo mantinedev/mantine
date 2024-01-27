@@ -12,6 +12,7 @@ describe('@mantine/core/ActionIconGroup', () => {
   tests.itSupportsSystemProps<ActionIconGroupProps, ActionIconGroupStylesNames>({
     component: ActionIconGroup,
     props: defaultProps,
+    mod: true,
     styleProps: true,
     children: true,
     extend: true,

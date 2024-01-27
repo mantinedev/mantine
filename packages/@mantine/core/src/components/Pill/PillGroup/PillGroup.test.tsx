@@ -7,6 +7,7 @@ describe('@mantine/core/PillGroup', () => {
   tests.itSupportsSystemProps<PillGroupProps, PillGroupStylesNames>({
     component: PillGroup,
     props: defaultProps,
+    mod: true,
     styleProps: true,
     children: true,
     extend: true,

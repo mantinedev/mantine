@@ -1,4 +1,5 @@
 import React from 'react';
+import { IconPhoto } from '@tabler/icons-react';
 import { MantineThemeProvider } from '../../core';
 import { Alert } from './Alert';
 
@@ -6,26 +7,72 @@ export default { title: 'Alert' };
 
 export function Variants() {
   return (
-    <div style={{ maxWidth: 500, margin: 'auto', padding: 40 }}>
-      <Alert title="Bummer!" color="red" variant="light" withCloseButton>
+    <div style={{ maxWidth: 500, margin: 'auto', padding: 40, background: 'rgba(0, 0, 0, 0.1)' }}>
+      <Alert
+        icon={<IconPhoto stroke={1.5} />}
+        title="Bummer!"
+        color="red"
+        variant="light"
+        withCloseButton
+      >
         Something terrible happened! You made a mistake and there is no going back, your data was
         lost forever!
       </Alert>
-      <Alert withCloseButton title="Bummer!" color="red" variant="filled" mt="xl">
+      <Alert
+        icon={<IconPhoto stroke={1.5} />}
+        withCloseButton
+        title="Bummer!"
+        color="red"
+        variant="filled"
+        mt="xl"
+      >
         Something terrible happened! You made a mistake and there is no going back, your data was
         lost forever!
       </Alert>
-      <Alert withCloseButton title="Bummer!" color="red" variant="outline" mt="xl">
+      <Alert
+        icon={<IconPhoto stroke={1.5} />}
+        withCloseButton
+        title="Bummer!"
+        color="red"
+        variant="outline"
+        mt="xl"
+      >
         Something terrible happened! You made a mistake and there is no going back, your data was
         lost forever!
       </Alert>
 
-      <Alert withCloseButton title="Bummer!" color="red" variant="default" mt="xl">
+      <Alert
+        icon={<IconPhoto stroke={1.5} />}
+        withCloseButton
+        title="Bummer!"
+        color="red"
+        variant="default"
+        mt="xl"
+      >
         Something terrible happened! You made a mistake and there is no going back, your data was
         lost forever!
       </Alert>
 
-      <Alert withCloseButton title="Bummer!" color="red" variant="transparent" mt="xl">
+      <Alert
+        icon={<IconPhoto stroke={1.5} />}
+        withCloseButton
+        title="Bummer!"
+        color="red"
+        variant="white"
+        mt="xl"
+      >
+        Something terrible happened! You made a mistake and there is no going back, your data was
+        lost forever!
+      </Alert>
+
+      <Alert
+        icon={<IconPhoto stroke={1.5} />}
+        withCloseButton
+        title="Bummer!"
+        color="red"
+        variant="transparent"
+        mt="xl"
+      >
         Something terrible happened! You made a mistake and there is no going back, your data was
         lost forever!
       </Alert>

@@ -154,7 +154,7 @@ export const Alert = factory<AlertFactory>((_props, ref) => {
           )}
 
           {children && (
-            <div id={bodyId} {...getStyles('message')}>
+            <div id={bodyId} {...getStyles('message')} data-variant={variant}>
               {children}
             </div>
           )}

@@ -9,6 +9,7 @@ describe('@mantine/core/PaginationRoot', () => {
   tests.itSupportsSystemProps<PaginationRootProps, PaginationRootStylesNames>({
     component: PaginationRoot,
     props: defaultProps,
+    mod: true,
     styleProps: true,
     children: true,
     extend: true,

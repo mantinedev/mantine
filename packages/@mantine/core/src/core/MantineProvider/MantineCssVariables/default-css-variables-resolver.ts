@@ -38,6 +38,7 @@ export const defaultCssVariablesResolver: CSSVariablesResolver = (theme) => {
       '--mantine-font-family-monospace': theme.fontFamilyMonospace,
       '--mantine-font-family-headings': theme.headings.fontFamily,
       '--mantine-heading-font-weight': theme.headings.fontWeight,
+      '--mantine-heading-text-wrap': theme.headings.textWrap,
       '--mantine-radius-default': defaultRadius,
 
       // Primary colors

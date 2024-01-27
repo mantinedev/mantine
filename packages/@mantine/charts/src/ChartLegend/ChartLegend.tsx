@@ -10,6 +10,8 @@ import {
   useProps,
   useStyles,
 } from '@mantine/core';
+import { ChartSeries } from '../types';
+import { getSeriesLabels } from '../utils';
 import classes from './ChartLegend.module.css';
 
 export function getFilteredChartLegendPayload(payload: Record<string, any>[]) {
@@ -22,9 +24,17 @@ export interface ChartLegendProps
   extends BoxProps,
     StylesApiProps<ChartLegendFactory>,
     ElementProps<'div'> {
+  /** Chart data provided by recharts */
   payload: Record<string, any>[] | undefined;
+
+  /** Function called when mouse enters/leaves one of the legend items */
   onHighlight: (area: string | null) => void;
+
+  /** Position of the legend relative to the chart, used to apply margin on the corresponding side */
   legendPosition: 'top' | 'bottom' | 'middle';
+
+  /** Data used for labels, only applicable for area charts: AreaChart, LineChart, BarChart */
+  series?: ChartSeries[];
 }
 
 export type ChartLegendFactory = Factory<{
@@ -47,6 +57,8 @@ export const ChartLegend = factory<ChartLegendFactory>((_props, ref) => {
     payload,
     onHighlight,
     legendPosition,
+    mod,
+    series,
     ...others
   } = props;
 
@@ -66,6 +78,7 @@ export const ChartLegend = factory<ChartLegendFactory>((_props, ref) => {
   }
 
   const filteredPayload = getFilteredChartLegendPayload(payload);
+  const labels = getSeriesLabels(series);
 
   const items = filteredPayload.map((item, index) => (
     <div
@@ -80,12 +93,12 @@ export const ChartLegend = factory<ChartLegendFactory>((_props, ref) => {
         {...getStyles('legendItemColor')}
         withShadow={false}
       />
-      <p {...getStyles('legendItemName')}>{item.dataKey}</p>
+      <p {...getStyles('legendItemName')}>{labels[item.dataKey] || item.dataKey}</p>
     </div>
   ));
 
   return (
-    <Box ref={ref} mod={{ position: legendPosition }} {...getStyles('legend')} {...others}>
+    <Box ref={ref} mod={[{ position: legendPosition }, mod]} {...getStyles('legend')} {...others}>
       {items}
     </Box>
   );

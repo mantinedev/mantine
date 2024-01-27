@@ -87,6 +87,7 @@ export const Pill = factory<PillFactory>((_props, ref) => {
     radius,
     size,
     disabled,
+    mod,
     ...others
   } = props;
 
@@ -116,7 +117,7 @@ export const Pill = factory<PillFactory>((_props, ref) => {
       variant={_variant}
       size={_size}
       {...getStyles('root', { variant: _variant })}
-      mod={{ 'with-remove': withRemoveButton, disabled: disabled || ctx?.disabled }}
+      mod={[{ 'with-remove': withRemoveButton, disabled: disabled || ctx?.disabled }, mod]}
       {...others}
     >
       <span {...getStyles('label')}>{children}</span>

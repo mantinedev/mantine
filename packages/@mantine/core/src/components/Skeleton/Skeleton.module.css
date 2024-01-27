@@ -17,11 +17,11 @@
   transform: translateZ(0);
   -webkit-transform: translateZ(0);
 
-  &[data-animate]::after {
+  &:where([data-animate])::after {
     animation: skeleton-fade 1500ms linear infinite;
   }
 
-  &[data-visible] {
+  &:where([data-visible]) {
     overflow: hidden;
 
     &::before {
@@ -38,11 +38,11 @@
       inset: 0;
       z-index: 11;
 
-      @mixin light {
+      @mixin where-light {
         background-color: var(--mantine-color-gray-3);
       }
 
-      @mixin dark {
+      @mixin where-dark {
         background-color: var(--mantine-color-dark-4);
       }
     }

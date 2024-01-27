@@ -55,6 +55,7 @@ export const ButtonGroup = factory<ButtonGroupFactory>((_props, ref) => {
     vars,
     borderWidth,
     variant,
+    mod,
     ...others
   } = useProps('ButtonGroup', defaultProps, _props);
 
@@ -77,7 +78,7 @@ export const ButtonGroup = factory<ButtonGroupFactory>((_props, ref) => {
       {...getStyles('group')}
       ref={ref}
       variant={variant}
-      mod={{ 'data-orientation': orientation }}
+      mod={[{ 'data-orientation': orientation }, mod]}
       role="group"
       {...others}
     />

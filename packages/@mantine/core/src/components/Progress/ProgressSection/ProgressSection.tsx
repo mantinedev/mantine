@@ -60,6 +60,7 @@ export const ProgressSection = factory<ProgressSectionFactory>((props, ref) => {
     color,
     striped,
     animated,
+    mod,
     ...others
   } = useProps('ProgressSection', defaultProps, props);
 
@@ -82,7 +83,7 @@ export const ProgressSection = factory<ProgressSectionFactory>((props, ref) => {
       {...ctx.getStyles('section', { className, classNames, styles, style })}
       {...others}
       {...ariaAttributes}
-      mod={{ striped: striped || animated, animated }}
+      mod={[{ striped: striped || animated, animated }, mod]}
       __vars={{
         '--progress-section-width': `${value}%`,
         '--progress-section-color': getThemeColor(color, theme),

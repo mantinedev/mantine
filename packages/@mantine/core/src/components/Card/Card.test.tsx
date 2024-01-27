@@ -11,6 +11,7 @@ describe('@mantine/core/Card', () => {
   tests.itSupportsSystemProps<CardProps, CardStylesNames>({
     component: Card,
     props: defaultProps,
+    mod: true,
     polymorphic: true,
     styleProps: true,
     children: true,

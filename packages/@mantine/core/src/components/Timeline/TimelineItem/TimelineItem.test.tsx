@@ -14,6 +14,7 @@ describe('@mantine/core/TimelineItem', () => {
   tests.itSupportsSystemProps<TimelineItemProps, TimelineItemStylesNames>({
     component: TestContainer,
     props: defaultProps,
+    mod: true,
     styleProps: true,
     children: true,
     extend: true,

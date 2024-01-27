@@ -11,6 +11,7 @@ describe('@mantine/core/InputPlaceholder', () => {
   tests.itSupportsSystemProps<InputPlaceholderProps, InputPlaceholderStylesNames>({
     component: InputPlaceholder,
     props: defaultProps,
+    mod: true,
     styleProps: true,
     children: true,
     extend: true,

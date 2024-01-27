@@ -10,6 +10,7 @@ describe('@mantine/core/Divider', () => {
   tests.itSupportsSystemProps<DividerProps, DividerStylesNames>({
     component: Divider,
     props: defaultProps,
+    mod: true,
     styleProps: true,
     extend: true,
     variant: true,

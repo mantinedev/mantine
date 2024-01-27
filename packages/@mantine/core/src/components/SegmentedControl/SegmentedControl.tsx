@@ -99,6 +99,9 @@ export interface SegmentedControlProps
 
   /** Determines whether text color should depend on `background-color` of the indicator. If luminosity of the `color` prop is less than `theme.luminosityThreshold`, then `theme.white` will be used for text color, otherwise `theme.black`. Overrides `theme.autoContrast`. */
   autoContrast?: boolean;
+
+  /** Determines whether there should be borders between items, `true` by default */
+  withItemsBorders?: boolean;
 }
 
 export type SegmentedControlFactory = Factory<{
@@ -108,7 +111,9 @@ export type SegmentedControlFactory = Factory<{
   vars: SegmentedControlCssVariables;
 }>;
 
-const defaultProps: Partial<SegmentedControlProps> = {};
+const defaultProps: Partial<SegmentedControlProps> = {
+  withItemsBorders: true,
+};
 
 const varsResolver = createVarsResolver<SegmentedControlFactory>(
   (theme, { radius, color, transitionDuration, size, transitionTimingFunction }) => ({
@@ -150,6 +155,8 @@ export const SegmentedControl = factory<SegmentedControlFactory>((_props, ref) =
     transitionTimingFunction,
     variant,
     autoContrast,
+    withItemsBorders,
+    mod,
     ...others
   } = props;
 
@@ -288,7 +295,15 @@ export const SegmentedControl = factory<SegmentedControlFactory>((_props, ref) =
       variant={variant}
       size={size}
       ref={mergedRef}
-      mod={{ 'full-width': fullWidth, orientation, initialization: !initialized }}
+      mod={[
+        {
+          'full-width': fullWidth,
+          orientation,
+          initialization: !initialized,
+          'with-items-borders': withItemsBorders,
+        },
+        mod,
+      ]}
       {...others}
       role="radiogroup"
     >

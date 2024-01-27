@@ -7,6 +7,7 @@ describe('@mantine/core/ThemeIcon', () => {
   tests.itSupportsSystemProps<ThemeIconProps, ThemeIconStylesNames>({
     component: ThemeIcon,
     props: defaultProps,
+    mod: true,
     styleProps: true,
     children: true,
     extend: true,

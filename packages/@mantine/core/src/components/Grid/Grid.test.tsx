@@ -11,6 +11,7 @@ describe('@mantine/core/Grid', () => {
   tests.itSupportsSystemProps<GridProps, GridStylesNames>({
     component: Grid,
     props: defaultProps,
+    mod: true,
     styleProps: true,
     children: true,
     extend: true,

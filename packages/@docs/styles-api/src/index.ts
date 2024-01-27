@@ -33,6 +33,7 @@ export * from './data/Container.styles-api';
 export * from './data/Dates.styles-api';
 export * from './data/Dialog.styles-api';
 export * from './data/Divider.styles-api';
+export * from './data/DonutChart.styles-api';
 export * from './data/Drawer.styles-api';
 export * from './data/Dropzone.styles-api';
 export * from './data/Fieldset.styles-api';

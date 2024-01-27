@@ -12,6 +12,7 @@ describe('@mantine/core/ComboboxSearch', () => {
   tests.itSupportsSystemProps<ComboboxSearchProps, ComboboxSearchStylesNames>({
     component: TestContainer,
     props: defaultProps,
+    mod: true,
     styleProps: true,
     extend: true,
     variant: true,

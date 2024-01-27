@@ -16,6 +16,18 @@ export function Usage() {
   );
 }
 
+export function TextWrap() {
+  return (
+    <div style={{ padding: 40 }}>
+      <Title order={1} textWrap="balance">
+        Lorem ipsum dolor sit amet consectetur, adipisicing elit. Nobis reiciendis, commodi placeat
+        doloribus iusto autem, odit maxime, at dolor blanditiis est ea incidunt nostrum esse quod
+        rerum error ipsum laboriosam?
+      </Title>
+    </div>
+  );
+}
+
 export function LineClamp() {
   return (
     <div style={{ padding: 40 }}>

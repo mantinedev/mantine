@@ -3,11 +3,19 @@ import { shiftTimezone } from '../../../utils';
 import { getEndOfWeek } from '../get-end-of-week/get-end-of-week';
 import { getStartOfWeek } from '../get-start-of-week/get-start-of-week';
 
-export function getMonthDays(
-  month: Date,
-  firstDayOfWeek: DayOfWeek = 1,
-  timezone: string | undefined = undefined
-): Date[][] {
+interface GetMonthDaysInput {
+  month: Date;
+  firstDayOfWeek: DayOfWeek | undefined;
+  timezone: string | undefined;
+  consistentWeeks: boolean | undefined;
+}
+
+export function getMonthDays({
+  month,
+  firstDayOfWeek = 1,
+  timezone = undefined,
+  consistentWeeks,
+}: GetMonthDaysInput): Date[][] {
   const currentMonth = month.getMonth();
   const startOfMonth = shiftTimezone(
     'add',
@@ -32,6 +40,24 @@ export function getMonthDays(
     }
 
     weeks.push(days);
+  }
+
+  if (consistentWeeks && weeks.length < 6) {
+    const lastWeek = weeks[weeks.length - 1];
+    const lastDay = lastWeek[lastWeek.length - 1];
+    const nextDay = new Date(lastDay);
+    nextDay.setDate(nextDay.getDate() + 1);
+
+    while (weeks.length < 6) {
+      const days: Date[] = [];
+
+      for (let i = 0; i < 7; i += 1) {
+        days.push(new Date(nextDay));
+        nextDay.setDate(nextDay.getDate() + 1);
+      }
+
+      weeks.push(days);
+    }
   }
 
   return weeks;

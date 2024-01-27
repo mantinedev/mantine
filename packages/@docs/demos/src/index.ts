@@ -122,6 +122,8 @@ export * as AreaChartDemos from './demos/charts/AreaChart';
 export * as BarChartDemos from './demos/charts/BarChart';
 export * as LineChartDemos from './demos/charts/LineChart';
 export * as SparklineDemos from './demos/charts/Sparkline';
+export * as DonutChartDemos from './demos/charts/DonutChart';
+export * as PieChartDemos from './demos/charts/PieChart';
 
 // Extensions demos
 export * as NotificationsDemos from './demos/notifications';

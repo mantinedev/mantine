@@ -182,6 +182,7 @@ export const AreaChart = factory<AreaChartFactory>((_props, ref) => {
     orientation,
     referenceLines,
     dir,
+    valueFormatter,
     ...others
   } = props;
 
@@ -322,6 +323,7 @@ export const AreaChart = factory<AreaChartFactory>((_props, ref) => {
                   legendPosition={legendProps?.verticalAlign || 'top'}
                   classNames={resolvedClassNames}
                   styles={resolvedStyles}
+                  series={series}
                 />
               )}
               height={44}
@@ -357,7 +359,7 @@ export const AreaChart = factory<AreaChartFactory>((_props, ref) => {
             tick={{ transform: 'translate(-10, 0)', fontSize: 12, fill: 'currentColor' }}
             allowDecimals
             unit={unit}
-            tickFormatter={type === 'percent' ? valueToPercent : undefined}
+            tickFormatter={type === 'percent' ? valueToPercent : valueFormatter}
             {...getStyles('axis')}
             {...yAxisProps}
           />
@@ -379,6 +381,8 @@ export const AreaChart = factory<AreaChartFactory>((_props, ref) => {
                   unit={unit}
                   classNames={resolvedClassNames}
                   styles={resolvedStyles}
+                  series={series}
+                  valueFormatter={valueFormatter}
                 />
               )}
               {...tooltipProps}

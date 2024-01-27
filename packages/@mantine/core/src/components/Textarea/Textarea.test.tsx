@@ -19,6 +19,7 @@ describe('@mantine/core/Textarea', () => {
   tests.itSupportsSystemProps<TextareaProps, __InputStylesNames>({
     component: Textarea,
     props: defaultProps,
+    mod: true,
     styleProps: true,
     extend: true,
     size: true,

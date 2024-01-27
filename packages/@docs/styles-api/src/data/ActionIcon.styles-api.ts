@@ -5,6 +5,7 @@ export const ActionIconStylesApi: StylesApiData<ActionIconFactory> = {
   selectors: {
     root: 'Root element',
     loader: '`Loader` component, rendered inside root element when `loading` prop is set',
+    icon: 'Inner icon wrapper',
   },
 
   vars: {
@@ -21,7 +22,7 @@ export const ActionIconStylesApi: StylesApiData<ActionIconFactory> = {
 
   modifiers: [
     { modifier: 'data-disabled', selector: 'root', condition: '`disabled` prop is set' },
-    { modifier: 'data-loading', selector: 'root', condition: '`loading` prop is set' },
+    { modifier: 'data-loading', selector: ['root', 'icon'], condition: '`loading` prop is set' },
   ],
 };
 

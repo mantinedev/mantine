@@ -5,16 +5,15 @@
   overflow: hidden;
   display: flex;
   flex-direction: column;
-  background-color: var(--_card-bg);
   padding: var(--card-padding);
   color: var(--mantine-color-text);
 
-  @mixin light {
-    --_card-bg: var(--mantine-color-white);
+  @mixin where-light {
+    background-color: var(--mantine-color-white);
   }
 
-  @mixin dark {
-    --_card-bg: var(--mantine-color-dark-6);
+  @mixin where-dark {
+    background-color: var(--mantine-color-dark-6);
   }
 }
 
@@ -22,41 +21,36 @@
   display: block;
   margin-left: calc(var(--card-padding) * -1);
   margin-right: calc(var(--card-padding) * -1);
-  padding-left: var(--_card-section-padding, 0);
-  padding-right: var(--_card-section-padding, 0);
-  border-top: var(--_card-section-border-top, unset);
-  border-bottom: var(--_card-section-border-bottom, unset);
-  margin-top: var(--_card-section-mt, 0);
-  margin-bottom: var(--_card-section-mb, 0);
 
-  &[data-first-section] {
-    --_card-section-mt: calc(var(--card-padding) * -1);
-    --_card-section-border-top: none !important;
+  &:where([data-first-section]) {
+    margin-top: calc(var(--card-padding) * -1);
+    border-top: none !important;
   }
 
-  &[data-last-section] {
-    --_card-section-mb: calc(var(--card-padding) * -1);
-    --_card-section-border-bottom: none !important;
+  &:where([data-last-section]) {
+    margin-bottom: calc(var(--card-padding) * -1);
+    border-bottom: none !important;
   }
 
-  &[data-inherit-padding] {
-    --_card-section-padding: var(--card-padding);
+  &:where([data-inherit-padding]) {
+    padding-left: var(--card-padding);
+    padding-right: var(--card-padding);
   }
 
-  &[data-with-border] {
-    --_card-section-border-top: rem(1px) solid var(--_card-section-border-color);
-    --_card-section-border-bottom: rem(1px) solid var(--_card-section-border-color);
+  &:where([data-with-border]) {
+    border-top: rem(1px) solid;
+    border-bottom: rem(1px) solid;
+  }
+
+  @mixin where-light {
+    border-color: var(--mantine-color-gray-3);
+  }
+
+  @mixin where-dark {
+    border-color: var(--mantine-color-dark-4);
   }
 
   & + & {
-    --_card-section-border-top: none !important;
-  }
-
-  @mixin light {
-    --_card-section-border-color: var(--mantine-color-gray-3);
-  }
-
-  @mixin dark {
-    --_card-section-border-color: var(--mantine-color-dark-4);
+    border-top: none !important;
   }
 }

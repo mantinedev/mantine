@@ -10,6 +10,7 @@ describe('@mantine/core/ComboboxFooter', () => {
   tests.itSupportsSystemProps<ComboboxFooterProps, ComboboxFooterStylesNames>({
     component: TestContainer,
     props: defaultProps,
+    mod: true,
     styleProps: true,
     children: true,
     extend: true,

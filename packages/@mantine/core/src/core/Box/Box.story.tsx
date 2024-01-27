@@ -10,6 +10,7 @@ export function Usage() {
       <Box bg="pink" hiddenFrom="md">
         Hidden from md
       </Box>
+      <Box bg="indigo">Indigo</Box>
       <Box bg="orange" visibleFrom="sm" ff="mono">
         Visible from sm
       </Box>

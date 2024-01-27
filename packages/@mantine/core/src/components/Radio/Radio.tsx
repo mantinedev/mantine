@@ -141,6 +141,7 @@ export const Radio = factory<RadioFactory>((_props, ref) => {
     rootRef,
     iconColor,
     onChange,
+    mod,
     ...others
   } = props;
 
@@ -194,6 +195,7 @@ export const Radio = factory<RadioFactory>((_props, ref) => {
       data-checked={contextProps.checked || undefined}
       variant={variant}
       ref={rootRef}
+      mod={mod}
       {...styleProps}
       {...wrapperProps}
     >

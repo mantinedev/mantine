@@ -13,7 +13,7 @@
 - [Documentation](https://mantine.dev/)
 - [Contribute](https://mantine.dev/contribute)
 - [Ask question or give feedback](https://github.com/mantinedev/mantine/discussions)
-- [Changelog](https://mantine.dev/changelog/previous-versions)
+- [Changelog](https://mantine.dev/changelog/all-releases)
 - [Follow on Twitter](https://twitter.com/mantinedev)
 - [Join Discord community](https://discord.gg/wbH82zuWMN)
 
@@ -22,6 +22,7 @@
 - `@mantine/hooks` – collection of 50+ hooks for state and UI management
 - `@mantine/core` – core components library – 100+ components
 - [`@mantine/form`](https://mantine.dev/form/use-form) – forms management library
+- [`@mantine/charts`](https://mantine.dev/charts/getting-started/) – recharts based charts library
 - [`@mantine/notifications`](https://mantine.dev/x/notifications) – a fully featured notifications system
 - [`@mantine/spotlight`](https://mantine.dev/x/spotlight) – `Ctrl + K` command center for your application
 - [`@mantine/code-highlight`](https://mantine.dev/x/code-highlight/) – code highlight built with [highlight.js](https://highlightjs.org/)

@@ -10,6 +10,7 @@ describe('@mantine/core/MenuLabel', () => {
   tests.itSupportsSystemProps<MenuLabelProps, MenuLabelStylesNames>({
     component: TestContainer,
     props: defaultProps,
+    mod: true,
     styleProps: true,
     children: true,
     extend: true,
