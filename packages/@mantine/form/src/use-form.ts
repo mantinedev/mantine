@@ -67,6 +67,7 @@ export function useForm<
       if (!initialized) {
         setInitialized(true);
         _setValues(_values);
+        setValuesSnapshot(_values);
       }
     },
     [initialized]
