@@ -16,6 +16,7 @@
   height: var(--checkbox-size);
   order: var(--_checkbox-inner-order, 1);
   margin-left: rem(7px);
+  
   &[data-label-position='left'] {
     --_checkbox-inner-order: 2;
   }
