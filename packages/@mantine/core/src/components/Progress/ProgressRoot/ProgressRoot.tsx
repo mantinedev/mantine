@@ -19,7 +19,7 @@ import classes from '../Progress.module.css';
 
 export type ProgressRootStylesNames = 'root' | 'section' | 'label';
 export type ProgressRootCssVariables = {
-  root: '--progress-size' | '--progress-radius';
+  root: '--progress-size' | '--progress-radius' | '--progress-transition-duration';
 };
 
 export interface __ProgressRootProps extends BoxProps, ElementProps<'div'> {
@@ -31,6 +31,9 @@ export interface __ProgressRootProps extends BoxProps, ElementProps<'div'> {
 
   /** Determines whether label text color should depend on `background-color`. If luminosity of the `color` prop is less than `theme.luminosityThreshold`, then `theme.white` will be used for text color, otherwise `theme.black`. Overrides `theme.autoContrast`. */
   autoContrast?: boolean;
+
+  /** Controls sections width transition duration, value is specified in ms, `100` by default */
+  transitionDuration?: number;
 }
 
 export interface ProgressRootProps
@@ -46,16 +49,30 @@ export type ProgressRootFactory = Factory<{
 
 const defaultProps: Partial<ProgressRootProps> = {};
 
-const varsResolver = createVarsResolver<ProgressRootFactory>((_, { size, radius }) => ({
-  root: {
-    '--progress-size': getSize(size, 'progress-size'),
-    '--progress-radius': radius === undefined ? undefined : getRadius(radius),
-  },
-}));
+const varsResolver = createVarsResolver<ProgressRootFactory>(
+  (_, { size, radius, transitionDuration }) => ({
+    root: {
+      '--progress-size': getSize(size, 'progress-size'),
+      '--progress-radius': radius === undefined ? undefined : getRadius(radius),
+      '--progress-transition-duration':
+        typeof transitionDuration === 'number' ? `${transitionDuration}ms` : undefined,
+    },
+  })
+);
 
 export const ProgressRoot = factory<ProgressRootFactory>((_props, ref) => {
   const props = useProps('ProgressRoot', defaultProps, _props);
-  const { classNames, className, style, styles, unstyled, vars, autoContrast, ...others } = props;
+  const {
+    classNames,
+    className,
+    style,
+    styles,
+    unstyled,
+    vars,
+    autoContrast,
+    transitionDuration,
+    ...others
+  } = props;
 
   const getStyles = useStyles<ProgressRootFactory>({
     name: 'Progress',

@@ -1,4 +1,5 @@
 import React from 'react';
+import { DatesProvider } from '../DatesProvider';
 import { Calendar } from './Calendar';
 
 export default { title: 'Calendar' };
@@ -15,6 +16,16 @@ export function Unstyled() {
   return (
     <div style={{ padding: 40 }}>
       <Calendar unstyled />
+    </div>
+  );
+}
+
+export function ConsistentWeeks() {
+  return (
+    <div style={{ padding: 40 }}>
+      <DatesProvider settings={{ consistentWeeks: true }}>
+        <Calendar />
+      </DatesProvider>
     </div>
   );
 }

@@ -13,6 +13,7 @@ describe('@mantine/core/FileInput', () => {
   tests.itSupportsSystemProps<FileInputProps, __InputStylesNames>({
     component: FileInput,
     props: defaultProps,
+    mod: true,
     styleProps: true,
     extend: true,
     size: true,

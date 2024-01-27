@@ -19,81 +19,79 @@
   width: 100%;
   height: calc(var(--_input-height) - rem(2px));
   max-width: calc(var(--ni-chevron-size) * 1.7);
-  margin-left: var(--_controls-ml, auto);
-  margin-right: var(--_controls-mr, 0);
+  margin-left: auto;
+  margin-right: 0;
 
-  @mixin rtl {
-    --_controls-ml: 0;
-    --_controls-mr: auto;
+  @mixin where-rtl {
+    margin-left: 0;
+    margin-right: auto;
   }
 }
 
 .control {
-  --_control-bd: rem(1px) solid var(--_input-bd);
-  --_control-radius: calc(var(--_input-radius) - rem(1px));
+  --control-border: rem(1px) solid var(--_input-bd);
+  --control-radius: calc(var(--_input-radius) - rem(1px));
 
   flex: 0 0 50%;
   width: 100%;
   padding: 0;
   height: calc(var(--_input-height) / 2 - rem(1px));
-  border-left: var(--_control-bdl, var(--_control-bd));
-  border-right: var(--_control-bdr, none);
+  border-left: var(--control-border);
   display: flex;
   align-items: center;
   justify-content: center;
-  color: var(--_ni-control-color, var(--mantine-color-text));
-  background-color: var(--_control-bg, transparent);
-  opacity: var(--_control-opacity, 1);
-  cursor: var(--_control-cursor, pointer);
+  color: var(--mantine-color-text);
+  background-color: transparent;
+  cursor: pointer;
 
-  &:disabled {
-    --_control-bg: transparent !important;
-    --_control-cursor: not-allowed;
-    --_control-opacity: 0.6;
+  &:where(:disabled) {
+    background-color: transparent;
+    cursor: not-allowed;
+    opacity: 0.6;
 
-    @mixin light {
-      --_ni-control-color: var(--mantine-color-gray-4);
+    @mixin where-light {
+      color: var(--mantine-color-gray-4);
     }
 
-    @mixin dark {
-      --_ni-control-color: var(--mantine-color-dark-3);
+    @mixin where-dark {
+      color: var(--mantine-color-dark-3);
     }
   }
 
-  .root[data-error] & {
-    --_ni-control-color: var(--mantine-color-error);
+  .root[data-error] :where(&) {
+    color: var(--mantine-color-error);
   }
 
-  @mixin rtl {
-    --_control-bdl: none;
-    --_control-bdr: var(--_control-bd);
+  @mixin where-rtl {
+    border-left: none;
+    border-right: var(--control-border);
   }
 
   @mixin hover {
-    @mixin light {
-      --_control-bg: var(--mantine-color-gray-0);
+    @mixin where-light {
+      background-color: var(--mantine-color-gray-0);
     }
 
-    @mixin dark {
-      --_control-bg: var(--mantine-color-dark-4);
+    @mixin where-dark {
+      background-color: var(--mantine-color-dark-4);
     }
   }
 
-  &:first-of-type {
+  &:where(:first-of-type) {
     border-bottom: rem(0.5px) solid var(--_input-bd);
-    border-radius: 0 var(--_control-radius) 0 0;
+    border-radius: 0 var(--control-radius) 0 0;
 
-    @mixin rtl {
-      border-radius: var(--_control-radius) 0 0 0;
+    @mixin where-rtl {
+      border-radius: var(--control-radius) 0 0 0;
     }
   }
 
   &:last-of-type {
     border-top: rem(0.5px) solid var(--_input-bd);
-    border-radius: 0 0 var(--_control-radius) 0;
+    border-radius: 0 0 var(--control-radius) 0;
 
     @mixin rtl {
-      border-radius: 0 0 0 var(--_control-radius);
+      border-radius: 0 0 0 var(--control-radius);
     }
   }
 }

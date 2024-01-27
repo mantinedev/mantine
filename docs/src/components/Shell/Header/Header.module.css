@@ -10,7 +10,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  z-index: 100;
+  z-index: 101;
 
   @mixin light {
     border-bottom: rem(1px) solid var(--mantine-color-gray-2);

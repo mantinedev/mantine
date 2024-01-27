@@ -7,6 +7,7 @@ describe('@mantine/core/Container', () => {
   tests.itSupportsSystemProps<ContainerProps, ContainerStylesNames>({
     component: Container,
     props: defaultProps,
+    mod: true,
     styleProps: true,
     children: true,
     extend: true,

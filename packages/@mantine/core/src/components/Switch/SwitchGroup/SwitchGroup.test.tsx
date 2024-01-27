@@ -27,6 +27,7 @@ describe('@mantine/core/SwitchGroup', () => {
   tests.itSupportsSystemProps<SwitchGroupProps, SwitchGroupStylesNames>({
     component: SwitchGroup,
     props: defaultProps,
+    mod: true,
     styleProps: true,
     children: true,
     extend: true,

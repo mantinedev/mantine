@@ -22,6 +22,7 @@ describe('@mantine/dates/WeekdaysRow', () => {
   tests.itSupportsSystemProps<WeekdaysRowProps, WeekdaysRowStylesNames>({
     component: WeekdaysRow,
     props: defaultProps,
+    mod: true,
     styleProps: true,
     extend: true,
     variant: true,

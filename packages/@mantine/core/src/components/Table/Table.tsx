@@ -188,6 +188,7 @@ export const Table = factory<TableFactory>((_props, ref) => {
     children,
     stickyHeader,
     stickyHeaderOffset,
+    mod,
     ...others
   } = props;
 
@@ -221,7 +222,7 @@ export const Table = factory<TableFactory>((_props, ref) => {
         component="table"
         variant={variant}
         ref={ref}
-        mod={{ 'data-with-table-border': withTableBorder }}
+        mod={[{ 'data-with-table-border': withTableBorder }, mod]}
         {...getStyles('table')}
         {...others}
       >

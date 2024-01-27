@@ -54,6 +54,7 @@ export const ComboboxOption = factory<ComboboxOptionFactory>((_props, ref) => {
     onMouseOver,
     disabled,
     selected,
+    mod,
     ...others
   } = props;
 
@@ -70,6 +71,7 @@ export const ComboboxOption = factory<ComboboxOptionFactory>((_props, ref) => {
       mod={[
         'combobox-option',
         { 'combobox-active': active, 'combobox-disabled': disabled, 'combobox-selected': selected },
+        mod,
       ]}
       role="option"
       onClick={(event) => {

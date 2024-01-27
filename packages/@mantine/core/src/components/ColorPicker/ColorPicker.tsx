@@ -155,6 +155,7 @@ export const ColorPicker = factory<ColorPickerFactory>((_props, ref) => {
     fullWidth,
     onColorSwatchClick,
     __staticSelector,
+    mod,
     ...others
   } = props;
 
@@ -226,7 +227,7 @@ export const ColorPicker = factory<ColorPickerFactory>((_props, ref) => {
         ref={ref}
         {...getStyles('wrapper')}
         size={size}
-        mod={{ 'full-width': fullWidth }}
+        mod={[{ 'full-width': fullWidth }, mod]}
         {...others}
       >
         {withPicker && (

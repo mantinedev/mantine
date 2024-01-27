@@ -7,24 +7,24 @@
   --label-lh: var(--label-lh-sm);
 
   &[data-label-position='left'] {
-    --_label-order: 1;
-    --_offset-right: var(--mantine-spacing-sm);
-    --_offset-left: 0;
+    --label-order: 1;
+    --label-offset-right: var(--mantine-spacing-sm);
+    --label-offset-left: 0;
 
     @mixin rtl {
-      --_offset-right: 0;
-      --_offset-left: var(--mantine-spacing-sm);
+      --label-offset-right: 0;
+      --label-offset-left: var(--mantine-spacing-sm);
     }
   }
 
   &[data-label-position='right'] {
-    --_label-order: 2;
-    --_offset-right: 0;
-    --_offset-left: var(--mantine-spacing-sm);
+    --label-order: 2;
+    --label-offset-right: 0;
+    --label-offset-left: var(--mantine-spacing-sm);
 
     @mixin rtl {
-      --_offset-right: var(--mantine-spacing-sm);
-      --_offset-left: 0;
+      --label-offset-right: var(--mantine-spacing-sm);
+      --label-offset-left: 0;
     }
   }
 }
@@ -34,48 +34,48 @@
 }
 
 .labelWrapper {
-  --_label-cursor: var(--mantine-cursor-type);
+  --label-cursor: var(--mantine-cursor-type);
 
   -webkit-tap-highlight-color: transparent;
   display: inline-flex;
   flex-direction: column;
   font-size: var(--label-fz, var(--mantine-font-size-sm));
   line-height: var(--label-lh);
-  cursor: var(--_label-cursor);
-  order: var(--_label-order);
+  cursor: var(--label-cursor);
+  order: var(--label-order);
 
   fieldset:disabled &,
   &[data-disabled] {
-    --_label-cursor: not-allowed;
+    --label-cursor: not-allowed;
   }
 }
 
 .label {
-  cursor: var(--_label-cursor);
-  color: var(--_label-color, inherit);
-  padding-left: var(--_offset-left);
-  padding-right: var(--_offset-right);
+  cursor: var(--label-cursor);
+  color: inherit;
+  padding-left: var(--label-offset-left);
+  padding-right: var(--label-offset-right);
 
   fieldset:disabled &,
-  &[data-disabled] {
-    @mixin light {
-      --_label-color: var(--mantine-color-gray-5);
+  &:where([data-disabled]) {
+    @mixin where-light {
+      color: var(--mantine-color-gray-5);
     }
 
-    @mixin dark {
-      --_label-color: var(--mantine-color-dark-3);
+    @mixin where-dark {
+      color: var(--mantine-color-dark-3);
     }
   }
 }
 
 .description {
   margin-top: calc(var(--mantine-spacing-xs) / 2);
-  padding-left: var(--_offset-left);
-  padding-right: var(--_offset-right);
+  padding-left: var(--label-offset-left);
+  padding-right: var(--label-offset-right);
 }
 
 .error {
   margin-top: calc(var(--mantine-spacing-xs) / 2);
-  padding-left: var(--_offset-left);
-  padding-right: var(--_offset-right);
+  padding-left: var(--label-offset-left);
+  padding-right: var(--label-offset-right);
 }

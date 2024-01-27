@@ -10,6 +10,7 @@ describe('@mantine/core/ProgressLabel', () => {
   tests.itSupportsSystemProps<ProgressLabelProps, ProgressLabelStylesNames>({
     component: TestContainer,
     props: defaultProps,
+    mod: true,
     styleProps: true,
     children: true,
     extend: true,

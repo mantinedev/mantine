@@ -1,105 +1,107 @@
 .root {
+  --notification-radius: var(--mantine-radius-default);
+  --notification-color: var(--mantine-primary-color-filled);
+
   overflow: hidden;
   box-sizing: border-box;
   position: relative;
   display: flex;
   align-items: center;
-  padding-left: var(--_root-padding-left, rem(22px));
-  padding-right: var(--_root-padding-right, var(--mantine-spacing-xs));
+  padding-left: rem(22px);
+  padding-right: var(--mantine-spacing-xs);
   padding-top: var(--mantine-spacing-xs);
   padding-bottom: var(--mantine-spacing-xs);
-  border: var(--_border, none);
-  border-radius: var(--notification-radius, var(--mantine-radius-default));
+  border-radius: var(--notification-radius);
   box-shadow: var(--mantine-shadow-lg);
-  background-color: var(--_bg);
 
   &::before {
     content: '';
     display: block;
     position: absolute;
     width: rem(6px);
-    top: var(--notification-radius, var(--mantine-radius-default));
-    bottom: var(--notification-radius, var(--mantine-radius-default));
+    top: var(--notification-radius);
+    bottom: var(--notification-radius);
     left: rem(4px);
-    border-radius: var(--notification-radius, var(--mantine-radius-default));
-    background-color: var(--notification-color, var(--mantine-primary-color-filled));
+    border-radius: var(--notification-radius);
+    background-color: var(--notification-color);
 
-    @mixin rtl {
+    @mixin where-rtl {
       right: rem(4px);
       left: auto;
     }
   }
 
-  &[data-with-icon] {
-    --_root-padding-left: var(--mantine-spacing-xs);
+  @mixin where-light {
+    background-color: var(--mantine-color-white);
+  }
+
+  @mixin where-dark {
+    background-color: var(--mantine-color-dark-6);
+  }
+
+  &:where([data-with-icon]) {
+    padding-left: var(--mantine-spacing-xs);
+
+    @mixin where-rtl {
+      padding-right: var(--mantine-spacing-xs);
+    }
 
     &::before {
       display: none;
     }
+  }
 
-    @mixin rtl {
-      --_root-padding-right: var(--mantine-spacing-xs);
+  &:where([data-with-border]) {
+    @mixin where-light {
+      border: rem(1px) solid var(--mantine-color-gray-3);
+    }
+
+    @mixin where-dark {
+      border: rem(1px) solid var(--mantine-color-dark-4);
     }
   }
 
-  &[data-with-border] {
-    --_border: rem(1px) solid var(--_border-color);
-  }
-
-  @mixin rtl {
-    --_root-padding-right: rem(22px);
-    --_root-padding-left: var(--mantine-spacing-xs);
-  }
-
-  @mixin light {
-    --_border-color: var(--mantine-color-gray-3);
-    --_bg: var(--mantine-color-white);
-  }
-
-  @mixin dark {
-    --_border-color: var(--mantine-color-dark-4);
-    --_bg: var(--mantine-color-dark-6);
+  @mixin where-rtl {
+    padding-right: rem(22px);
+    padding-left: var(--mantine-spacing-xs);
   }
 }
 
 .icon {
   box-sizing: border-box;
-  margin-right: var(--_icon-margin-right, var(--mantine-spacing-md));
-  margin-left: var(--_icon-margin-left, 0);
+  margin-right: var(--mantine-spacing-md);
   width: rem(28px);
   height: rem(28px);
   border-radius: rem(28px);
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: var(--notification-color, var(--mantine-primary-color-filled));
+  background-color: var(--notification-color);
   color: var(--mantine-color-white);
 
-  @mixin rtl {
-    --_icon-margin-right: 0;
-    --_icon-margin-left: var(--mantine-spacing-md);
+  @mixin where-rtl {
+    margin-right: 0;
+    margin-left: var(--mantine-spacing-md);
   }
 }
 
 .loader {
-  margin-right: var(--_icon-margin-right, var(--mantine-spacing-md));
-  margin-left: var(--_icon-margin-left, 0);
+  margin-right: var(--mantine-spacing-md);
 
-  @mixin rtl {
-    --_icon-margin-right: 0;
-    --_icon-margin-left: var(--mantine-spacing-md);
+  @mixin where-rtl {
+    margin-right: 0;
+    margin-left: var(--mantine-spacing-md);
   }
 }
 
 .body {
   flex: 1;
   overflow: hidden;
-  margin-right: var(--_body-margin-right, var(--mantine-spacing-xs));
-  margin-left: var(--_body-margin-left, 0);
+  margin-right: var(--mantine-spacing-xs);
 
-  @mixin rtl {
-    --_body-margin-right: 0;
-    --_body-margin-left: var(--mantine-spacing-xs);
+  @mixin where-rtl {
+    margin-right: 0;
+    margin-left: var(--mantine-spacing-xs);
   }
 }
 
@@ -107,17 +109,16 @@
   margin-bottom: rem(2px);
   overflow: hidden;
   text-overflow: ellipsis;
-  color: var(--_title-color);
   font-size: var(--mantine-font-size-sm);
   line-height: var(--mantine-line-height-sm);
   font-weight: 500;
 
-  @mixin light {
-    --_title-color: var(--mantine-color-gray-9);
+  @mixin where-light {
+    color: var(--mantine-color-gray-9);
   }
 
-  @mixin dark {
-    --_title-color: var(--mantine-color-white);
+  @mixin where-dark {
+    color: var(--mantine-color-white);
   }
 }
 
@@ -128,33 +129,33 @@
   overflow: hidden;
   text-overflow: ellipsis;
 
-  &[data-with-title] {
+  @mixin light {
+    color: var(--mantine-color-black);
+  }
+
+  @mixin dark {
+    color: var(--mantine-color-dark-0);
+  }
+
+  &:where([data-with-title]) {
     @mixin light {
-      --_description-color: var(--mantine-color-gray-6);
+      color: var(--mantine-color-gray-6);
     }
 
     @mixin dark {
-      --_description-color: var(--mantine-color-dark-2);
+      color: var(--mantine-color-dark-2);
     }
-  }
-
-  @mixin light {
-    --_description-color: var(--mantine-color-black);
-  }
-
-  @mixin dark {
-    --_description-color: var(--mantine-color-dark-0);
   }
 }
 
-.closeButton:hover {
-  background-color: var(--_close-button-hover-bg);
+.closeButton {
+  @mixin hover {
+    @mixin light {
+      background-color: var(--mantine-color-gray-0);
+    }
 
-  @mixin light {
-    --_close-button-hover-bg: var(--mantine-color-gray-0);
-  }
-
-  @mixin dark {
-    --_close-button-hover-bg: var(--mantine-color-dark-8);
+    @mixin dark {
+      background-color: var(--mantine-color-dark-8);
+    }
   }
 }

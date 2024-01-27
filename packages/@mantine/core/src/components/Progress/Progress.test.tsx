@@ -16,6 +16,7 @@ describe('@mantine/core/Progress', () => {
   tests.itSupportsSystemProps<ProgressProps, ProgressStylesNames>({
     component: Progress,
     props: defaultProps,
+    mod: true,
     styleProps: true,
     extend: true,
     variant: true,

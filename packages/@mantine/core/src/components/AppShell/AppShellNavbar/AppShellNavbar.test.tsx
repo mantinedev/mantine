@@ -11,6 +11,7 @@ describe('@mantine/core/AppShellNavbar', () => {
   tests.itSupportsSystemProps<AppShellNavbarProps, AppShellNavbarStylesNames>({
     component: TestContainer,
     props: defaultProps,
+    mod: true,
     styleProps: true,
     children: true,
     extend: true,

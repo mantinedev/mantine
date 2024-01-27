@@ -10,6 +10,7 @@ describe('@mantine/core/CarouselSlide', () => {
   tests.itSupportsSystemProps<CarouselSlideProps, CarouselSlideStylesNames>({
     component: TestContainer,
     props: defaultProps,
+    mod: true,
     styleProps: true,
     children: true,
     extend: true,

@@ -8,6 +8,7 @@ describe('@mantine/core/Box', () => {
   tests.itSupportsSystemProps<BoxProps>({
     component: Box,
     props: defaultProps,
+    mod: true,
     polymorphic: true,
     styleProps: true,
     children: true,

@@ -47,3 +47,8 @@ export const Demo_withContent = {
   name: '⭐ Demo: withContent',
   render: renderDemo(demos.withContent),
 };
+
+export const Demo_autoContrast = {
+  name: '⭐ Demo: autoContrast',
+  render: renderDemo(demos.autoContrast),
+};

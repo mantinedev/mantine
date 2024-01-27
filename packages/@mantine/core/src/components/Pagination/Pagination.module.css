@@ -13,49 +13,53 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  border: rem(1px) solid var(--_control-border-color);
-  cursor: var(--_control-cursor, pointer);
-  color: var(--_control-color, var(--mantine-color-text));
+  border: rem(1px) solid;
+  cursor: pointer;
+  color: var(--mantine-color-text);
   height: var(--pagination-control-size);
   min-width: var(--pagination-control-size);
   font-size: var(--pagination-control-fz);
-  padding: var(--_control-padding, 0);
   line-height: 1;
-  background-color: var(--_control-bg-color);
   border-radius: var(--pagination-control-radius, var(--mantine-radius-default));
-  opacity: var(--_control-opacity, 1);
 
-  &[data-with-padding] {
-    --_control-padding: calc(var(--pagination-control-size) / 4);
+  &:where([data-with-padding]) {
+    padding: calc(var(--pagination-control-size) / 4);
   }
 
-  &:disabled,
-  &[data-disabled] {
-    --_control-cursor: not-allowed;
-    --_control-opacity: 0.4;
+  &:where(:disabled, [data-disabled]) {
+    cursor: not-allowed;
+    opacity: 0.4;
   }
 
-  &[data-active] {
-    --_control-bg-color: var(--pagination-active-bg) !important;
-    --_control-border-color: var(--pagination-active-bg) !important;
-    --_control-color: var(--pagination-active-color, var(--mantine-color-white));
+  @mixin where-light {
+    border-color: var(--mantine-color-gray-4);
+    background-color: var(--mantine-color-white);
+
+    @mixin hover {
+      &:where(:not(:disabled, [data-disabled])) {
+        background-color: var(--mantine-color-gray-0);
+      }
+    }
   }
 
-  @mixin light {
-    --_control-border-color: var(--mantine-color-gray-4);
-    --_control-bg-color: var(--mantine-color-white);
-    --_control-bg-hover: var(--mantine-color-gray-0);
+  @mixin where-dark {
+    border-color: var(--mantine-color-dark-4);
+    background-color: var(--mantine-color-dark-6);
+
+    @mixin hover {
+      &:where(:not(:disabled, [data-disabled])) {
+        background-color: var(--mantine-color-dark-5);
+      }
+    }
   }
 
-  @mixin dark {
-    --_control-border-color: var(--mantine-color-dark-4);
-    --_control-bg-color: var(--mantine-color-dark-6);
-    --_control-bg-hover: var(--mantine-color-dark-5);
-  }
+  &:where([data-active]) {
+    background-color: var(--pagination-active-bg);
+    border-color: var(--pagination-active-bg);
+    color: var(--pagination-active-color, var(--mantine-color-white));
 
-  @mixin hover {
-    &:not(:disabled, [data-disabled]) {
-      --_control-bg-color: var(--_control-bg-hover);
+    @mixin hover {
+      background-color: var(--pagination-active-bg);
     }
   }
 

@@ -12,7 +12,7 @@
   margin-left: auto;
   margin-right: auto;
 
-  &[data-fluid] {
-    --container-size: 100%;
+  &:where([data-fluid]) {
+    max-width: 100%;
   }
 }

@@ -146,6 +146,7 @@ export const Checkbox = factory<CheckboxFactory>((_props, ref) => {
     iconColor,
     onChange,
     autoContrast,
+    mod,
     ...others
   } = props;
 
@@ -197,6 +198,7 @@ export const Checkbox = factory<CheckboxFactory>((_props, ref) => {
       data-checked={contextProps.checked || checked || undefined}
       variant={variant}
       ref={rootRef}
+      mod={mod}
       {...styleProps}
       {...wrapperProps}
     >

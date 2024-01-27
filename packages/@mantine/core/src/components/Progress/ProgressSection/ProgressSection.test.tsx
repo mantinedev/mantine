@@ -19,6 +19,7 @@ describe('@mantine/core/ProgressSection', () => {
   tests.itSupportsSystemProps<ProgressSectionProps, ProgressSectionStylesNames>({
     component: TestContainer,
     props: defaultProps,
+    mod: true,
     styleProps: true,
     children: true,
     extend: true,

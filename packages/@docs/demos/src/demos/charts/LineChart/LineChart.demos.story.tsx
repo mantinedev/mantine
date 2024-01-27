@@ -107,3 +107,13 @@ export const Demo_yScale = {
   name: '⭐ Demo: yScale',
   render: renderDemo(demos.yScale),
 };
+
+export const Demo_seriesLabels = {
+  name: '⭐ Demo: seriesLabels',
+  render: renderDemo(demos.seriesLabels),
+};
+
+export const Demo_valueFormatter = {
+  name: '⭐ Demo: valueFormatter',
+  render: renderDemo(demos.valueFormatter),
+};

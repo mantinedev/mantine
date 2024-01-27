@@ -75,6 +75,7 @@ export const MonthPickerInput: MonthPickerInputComponent = factory<MonthPickerIn
       minDate,
       maxDate,
       vars,
+      valueFormatter,
       ...rest
     } = props;
 
@@ -104,7 +105,9 @@ export const MonthPickerInput: MonthPickerInputComponent = factory<MonthPickerIn
       labelSeparator,
       closeOnChange,
       sortDates,
+      valueFormatter,
     });
+
     const ctx = useDatesContext();
 
     return (

@@ -12,6 +12,7 @@ describe('@mantine/core/Highlight', () => {
   tests.itSupportsSystemProps<HighlightProps, TextStylesNames>({
     component: Highlight,
     props: defaultProps,
+    mod: true,
     polymorphic: true,
     styleProps: true,
     extend: true,

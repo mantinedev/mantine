@@ -27,3 +27,8 @@ export const Demo_stylesApi = {
   name: '⭐ Demo: stylesApi',
   render: renderDemo(demos.stylesApi),
 };
+
+export const Demo_resize = {
+  name: '⭐ Demo: resize',
+  render: renderDemo(demos.resize),
+};

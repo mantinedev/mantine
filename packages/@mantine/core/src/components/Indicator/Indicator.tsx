@@ -130,6 +130,7 @@ export const Indicator = factory<IndicatorFactory>((_props, ref) => {
     processing,
     zIndex,
     autoContrast,
+    mod,
     ...others
   } = props;
 
@@ -147,7 +148,7 @@ export const Indicator = factory<IndicatorFactory>((_props, ref) => {
   });
 
   return (
-    <Box ref={ref} {...getStyles('root')} mod={{ inline }} {...others}>
+    <Box ref={ref} {...getStyles('root')} mod={[{ inline }, mod]} {...others}>
       {!disabled && (
         <>
           <Box

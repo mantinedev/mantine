@@ -63,12 +63,22 @@
       color: var(--mantine-color-black);
       border-color: var(--mantine-color-gray-2);
       border-bottom-color: transparent;
+
+      &::before,
+      &::after {
+        background-color: var(--mantine-color-gray-2);
+      }
     }
 
     @mixin dark {
       color: var(--mantine-color-white);
       border-color: var(--mantine-color-dark-6);
       border-bottom-color: transparent;
+
+      &::before,
+      &::after {
+        background-color: var(--mantine-color-dark-6);
+      }
     }
   }
 }

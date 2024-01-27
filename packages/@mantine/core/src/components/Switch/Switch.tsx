@@ -139,6 +139,7 @@ export const Switch = factory<SwitchFactory>((_props, ref) => {
     disabled,
     variant,
     rootRef,
+    mod,
     ...others
   } = props;
 
@@ -192,6 +193,7 @@ export const Switch = factory<SwitchFactory>((_props, ref) => {
       data-checked={contextProps.checked || undefined}
       variant={variant}
       ref={rootRef}
+      mod={mod}
       {...styleProps}
       {...wrapperProps}
     >

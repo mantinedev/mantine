@@ -23,6 +23,33 @@ You can change Title `size` independent of its `order`:
 
 <Demo data={TitleDemos.size} />
 
+## Text wrap
+
+Use `textWrap` prop to control [text-wrap](https://developer.mozilla.org/en-US/docs/Web/CSS/text-wrap)
+CSS property. It controls how text inside an element is wrapped.
+
+<Demo data={TitleDemos.textWrap} />
+
+You can also set `textWrap` on [theme](/theming/theme-object):
+
+```tsx
+import { createTheme, MantineProvider } from '@mantine/core';
+
+const theme = createTheme({
+  headings: {
+    textWrap: 'wrap',
+  },
+});
+
+function Demo() {
+  return (
+    <MantineProvider theme={theme}>
+      <Title>Some very long title that should wrap</Title>
+    </MantineProvider>
+  );
+}
+```
+
 ## Line clamp
 
 Set `lineClamp` prop to truncate text after specified number of lines:

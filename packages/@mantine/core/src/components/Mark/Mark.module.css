@@ -1,12 +1,11 @@
 .root {
-  background-color: var(--_mark-bg);
   color: var(--mantine-color-black);
 
-  @mixin light {
-    --_mark-bg: var(--mark-bg-light);
+  @mixin where-light {
+    background-color: var(--mark-bg-light);
   }
 
-  @mixin dark {
-    --_mark-bg: var(--mark-bg-dark);
+  @mixin where-dark {
+    background-color: var(--mark-bg-dark);
   }
 }

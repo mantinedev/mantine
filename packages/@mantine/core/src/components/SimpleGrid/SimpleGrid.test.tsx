@@ -7,6 +7,7 @@ describe('@mantine/core/SimpleGrid', () => {
   tests.itSupportsSystemProps<SimpleGridProps, SimpleGridStylesNames>({
     component: SimpleGrid,
     props: defaultProps,
+    mod: true,
     styleProps: true,
     children: true,
     extend: true,

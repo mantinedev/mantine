@@ -8,6 +8,7 @@ describe('@mantine/core/Text', () => {
   tests.itSupportsSystemProps<TextProps, TextStylesNames>({
     component: Text,
     props: defaultProps,
+    mod: true,
     polymorphic: true,
     styleProps: true,
     children: true,

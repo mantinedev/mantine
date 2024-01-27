@@ -20,6 +20,7 @@ describe('@mantine/core/SegmentedControl', () => {
   tests.itSupportsSystemProps<SegmentedControlProps, SegmentedControlStylesNames>({
     component: SegmentedControl,
     props: defaultProps,
+    mod: true,
     styleProps: true,
     extend: true,
     size: true,

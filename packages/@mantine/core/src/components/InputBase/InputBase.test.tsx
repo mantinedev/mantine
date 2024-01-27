@@ -19,6 +19,7 @@ describe('@mantine/core/InputBase', () => {
   tests.itSupportsSystemProps<InputBaseProps, __InputStylesNames>({
     component: InputBase,
     props: defaultProps,
+    mod: true,
     polymorphic: true,
     styleProps: true,
     extend: true,

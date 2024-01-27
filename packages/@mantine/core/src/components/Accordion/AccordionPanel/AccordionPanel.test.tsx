@@ -12,6 +12,7 @@ describe('@mantine/core/AccordionPanel', () => {
   tests.itSupportsSystemProps<AccordionPanelProps, AccordionPanelStylesNames>({
     component: ContextContainer,
     props: defaultProps,
+    mod: true,
     styleProps: true,
     children: true,
     extend: true,

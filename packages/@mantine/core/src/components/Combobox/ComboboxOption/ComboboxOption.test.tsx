@@ -13,6 +13,7 @@ describe('@mantine/core/ComboboxOption', () => {
   tests.itSupportsSystemProps<ComboboxOptionProps, ComboboxOptionStylesNames>({
     component: TestContainer,
     props: defaultProps,
+    mod: true,
     styleProps: true,
     children: true,
     extend: true,

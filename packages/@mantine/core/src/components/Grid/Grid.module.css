@@ -1,5 +1,9 @@
 .root {
-  overflow: var(--grid-overflow, visible);
+  --grid-overflow: visible;
+  --grid-margin: calc(var(--grid-gutter) / -2);
+  --grid-col-padding: calc(var(--grid-gutter) / 2);
+
+  overflow: var(--grid-overflow);
 }
 
 .inner {
@@ -8,22 +12,25 @@
   flex-wrap: wrap;
   justify-content: var(--grid-justify);
   align-items: var(--grid-align);
-  margin: calc(var(--grid-gutter) / -2);
+  margin: var(--grid-margin);
 }
 
 .col {
+  --col-flex-grow: 0;
+  --col-offset: 0rem;
+
   flex-shrink: 0;
   order: var(--col-order);
   flex-basis: var(--col-flex-basis);
   width: var(--col-width);
   max-width: var(--col-max-width);
-  flex-grow: var(--col-flex-grow, 0);
-  margin-left: var(--_col-ml, var(--col-offset, 0));
-  margin-right: var(--_col-mr, 0);
-  padding: calc(var(--grid-gutter) / 2);
+  flex-grow: var(--col-flex-grow);
+  margin-left: var(--col-offset);
+  margin-right: 0;
+  padding: var(--grid-col-padding);
 
-  @mixin rtl {
-    --_col-ml: 0;
-    --_col-mr: var(--col-offset, 0);
+  @mixin where-rtl {
+    margin-left: 0;
+    margin-right: var(--col-offset);
   }
 }

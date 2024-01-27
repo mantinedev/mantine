@@ -35,6 +35,7 @@ describe('@mantine/core/PasswordInput', () => {
   tests.itSupportsSystemProps<PasswordInputProps, __InputStylesNames>({
     component: PasswordInput,
     props: defaultProps,
+    mod: true,
     styleProps: true,
     extend: true,
     size: true,

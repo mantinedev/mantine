@@ -1,7 +1,6 @@
 import React from 'react';
 import {
   Box,
-  BoxMod,
   BoxProps,
   createVarsResolver,
   getFontSize,
@@ -41,7 +40,6 @@ export type TextCssVariables = {
 
 export interface TextProps extends BoxProps, StylesApiProps<TextFactory> {
   __staticSelector?: string;
-  mod?: BoxMod;
 
   /** Controls `font-size` and `line-height`, `'md'` by default */
   size?: MantineSize | (string & {});

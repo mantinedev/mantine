@@ -10,13 +10,6 @@ export default Layout(MDX_DATA.Textarea);
 
 <Demo data={TextareaDemos.configurator} />
 
-## Autosize
-
-Autosize textarea uses [react-textarea-autosize](https://www.npmjs.com/package/react-textarea-autosize) package.
-Textarea height will grow until maxRows are reached or indefinitely if maxRows not set.
-
-<Demo data={TextareaDemos.autosize} />
-
 ## Controlled
 
 ```tsx
@@ -33,6 +26,20 @@ function Demo() {
   );
 }
 ```
+
+## Autosize
+
+Autosize textarea uses [react-textarea-autosize](https://www.npmjs.com/package/react-textarea-autosize) package.
+Textarea height will grow until maxRows are reached or indefinitely if maxRows not set.
+
+<Demo data={TextareaDemos.autosize} />
+
+## Enable resize
+
+By default, [resize](https://developer.mozilla.org/en-US/docs/Web/CSS/resize) is `none`,
+to enable it set `resize` prop to `vertical` or `both`:
+
+<Demo data={TextareaDemos.resize} />
 
 ## Error state
 

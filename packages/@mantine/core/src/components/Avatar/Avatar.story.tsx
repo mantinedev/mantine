@@ -13,6 +13,9 @@ export function Usage() {
   return (
     <div style={{ padding: 40 }}>
       <Avatar>AN</Avatar>
+      <Avatar src="https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/avatars/avatar-7.png">
+        AN
+      </Avatar>
     </div>
   );
 }

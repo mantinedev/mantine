@@ -165,7 +165,7 @@
 .input {
   -webkit-tap-highlight-color: transparent;
   appearance: none;
-  resize: none;
+  resize: var(--input-resize, none);
   display: block;
   width: 100%;
   transition: border-color 100ms ease;

@@ -13,14 +13,14 @@
 .divider {
   margin-top: rem(4px);
   margin-bottom: rem(4px);
-  border-top: rem(1px) solid var(--_divider-color);
+  border-top: rem(1px) solid;
 
   @mixin light {
-    --_divider-color: var(--mantine-color-gray-2);
+    border-color: var(--mantine-color-gray-2);
   }
 
   @mixin dark {
-    --_divider-color: var(--mantine-color-dark-4);
+    border-color: var(--mantine-color-dark-4);
   }
 }
 
@@ -34,25 +34,20 @@
   align-items: center;
   user-select: none;
   background-color: var(--_item-bg, transparent);
-  opacity: var(--_item-opacity, 1);
-  pointer-events: var(--_item-pointer-events, auto);
 
-  &[data-disabled],
-  &:disabled {
-    --menu-item-color: var(--mantine-color-dimmed) !important;
-    --_item-opacity: 0.6;
-    --_item-pointer-events: none;
+  &:where([data-disabled], :disabled) {
+    color: var(--mantine-color-dimmed);
+    opacity: 0.6;
+    pointer-events: none;
   }
 
-  &[data-hovered] {
-    --_item-bg: var(--menu-item-hover, var(--_item-bg-hover));
-
-    @mixin light {
-      --_item-bg-hover: var(--mantine-color-gray-1);
+  &:where([data-hovered]) {
+    @mixin where-light {
+      background-color: var(--menu-item-hover, var(--mantine-color-gray-1));
     }
 
-    @mixin dark {
-      --_item-bg-hover: var(--mantine-color-dark-4);
+    @mixin where-dark {
+      background-color: var(--menu-item-hover, var(--mantine-color-dark-4));
     }
   }
 }
@@ -69,26 +64,24 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-left: var(--_section-ml);
-  margin-right: var(--_section-mr);
 
-  &[data-position='left'] {
-    --_section-ml: 0;
-    --_section-mr: var(--mantine-spacing-xs);
+  &:where([data-position='left']) {
+    margin-left: 0;
+    margin-right: var(--mantine-spacing-xs);
 
-    @mixin rtl {
-      --_section-ml: var(--mantine-spacing-xs);
-      --_section-mr: 0;
+    @mixin where-rtl {
+      margin-left: var(--mantine-spacing-xs);
+      margin-right: 0;
     }
   }
 
-  &[data-position='right'] {
-    --_section-ml: var(--mantine-spacing-xs);
-    --_section-mr: 0;
+  &:where([data-position='right']) {
+    margin-left: var(--mantine-spacing-xs);
+    margin-right: 0;
 
-    @mixin rtl {
-      --_section-ml: 0;
-      --_section-mr: var(--mantine-spacing-xs);
+    @mixin where-rtl {
+      margin-left: 0;
+      margin-right: var(--mantine-spacing-xs);
     }
   }
 }

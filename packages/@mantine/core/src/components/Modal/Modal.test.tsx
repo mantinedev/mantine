@@ -30,6 +30,7 @@ describe('@mantine/core/Modal', () => {
   tests.itSupportsSystemProps<ModalProps, ModalStylesNames>({
     component: Modal,
     props: defaultProps,
+    mod: true,
     styleProps: true,
     children: true,
     extend: true,
@@ -101,6 +102,7 @@ describe('@mantine/core/ModalRoot', () => {
   tests.itSupportsSystemProps<ModalRootProps, 'root'>({
     component: ModalRoot,
     props: defaultProps,
+    mod: true,
     styleProps: true,
     children: true,
     extend: true,

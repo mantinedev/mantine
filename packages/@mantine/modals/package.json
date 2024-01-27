@@ -1,6 +1,6 @@
 {
   "name": "@mantine/modals",
-  "version": "7.4.2",
+  "version": "7.5.0",
   "description": "Modals manager based on Mantine components",
   "homepage": "https://mantine.dev/x/modals/",
   "license": "MIT",
@@ -39,8 +39,8 @@
     "directory": "packages/@mantine/modals"
   },
   "peerDependencies": {
-    "@mantine/core": "7.4.2",
-    "@mantine/hooks": "7.4.2",
+    "@mantine/core": "7.5.0",
+    "@mantine/hooks": "7.5.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },

@@ -10,6 +10,7 @@ describe('@mantine/core/GridCol', () => {
   tests.itSupportsSystemProps<GridColProps, GridColStylesNames>({
     component: TestContainer,
     props: defaultProps,
+    mod: true,
     styleProps: true,
     children: true,
     extend: true,

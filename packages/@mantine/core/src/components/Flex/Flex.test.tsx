@@ -8,6 +8,7 @@ describe('@mantine/core/Flex', () => {
   tests.itSupportsSystemProps<FlexProps, FlexStylesNames>({
     component: Flex,
     props: defaultProps,
+    mod: true,
     styleProps: true,
     children: true,
     extend: true,

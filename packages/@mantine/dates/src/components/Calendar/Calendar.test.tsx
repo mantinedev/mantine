@@ -40,6 +40,7 @@ describe('@mantine/dates/Calendar', () => {
   tests.itSupportsSystemProps<CalendarProps, CalendarStylesNames>({
     component: Calendar,
     props: defaultProps,
+    mod: true,
     styleProps: true,
     extend: true,
     variant: true,

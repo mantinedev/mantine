@@ -15,10 +15,10 @@
   --indicator-color: var(--mantine-primary-color-filled);
 
   position: relative;
-  display: var(--_indicator-display, block);
+  display: block;
 
-  &[data-inline] {
-    --_indicator-display: inline-block;
+  &:where([data-inline]) {
+    display: inline-block;
   }
 }
 
@@ -37,10 +37,7 @@
   align-items: center;
   justify-content: center;
   font-size: var(--mantine-font-size-xs);
-  padding-left: var(--_indicator-padding, 0);
-  padding-right: var(--_indicator-padding, 0);
   background-color: var(--indicator-color);
-  border: var(--_indicator-border);
   color: var(--indicator-text-color, var(--mantine-color-white));
   white-space: nowrap;
 
@@ -53,12 +50,13 @@
     z-index: -1;
   }
 
-  &[data-with-label] {
-    --_indicator-padding: calc(var(--mantine-spacing-xs) / 2);
+  &:where([data-with-label]) {
+    padding-left: calc(var(--mantine-spacing-xs) / 2);
+    padding-right: calc(var(--mantine-spacing-xs) / 2);
   }
 
-  &[data-with-border] {
-    --_indicator-border: rem(2px) solid var(--mantine-color-body);
+  &:where([data-with-border]) {
+    border: rem(2px) solid var(--mantine-color-body);
   }
 
   &[data-processing] {
