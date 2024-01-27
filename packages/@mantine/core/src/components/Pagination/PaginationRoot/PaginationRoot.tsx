@@ -99,15 +99,24 @@ const defaultProps: Partial<PaginationRootProps> = {
 };
 
 const varsResolver = createVarsResolver<PaginationRootFactory>(
-  (theme, { size, radius, color, autoContrast }) => ({
-    root: {
-      '--pagination-control-radius': radius === undefined ? undefined : getRadius(radius),
-      '--pagination-control-size': getSize(size, 'pagination-control-size'),
-      '--pagination-control-fz': getFontSize(size),
-      '--pagination-active-bg': color ? getThemeColor(color, theme) : undefined,
-      '--pagination-active-color': autoContrast ? getContrastColor({ color, theme }) : undefined,
-    },
-  })
+  (theme, { size, radius, color, autoContrast }) => {
+    const colors = theme.variantColorResolver({
+      color: color || theme.primaryColor,
+      theme,
+      variant: 'filled',
+      autoContrast,
+    });
+
+    return {
+      root: {
+        '--pagination-control-radius': radius === undefined ? undefined : getRadius(radius),
+        '--pagination-control-size': getSize(size, 'pagination-control-size'),
+        '--pagination-control-fz': getFontSize(size),
+        '--pagination-active-bg': color ? getThemeColor(color, theme) : undefined,
+        '--pagination-active-color': colors.color,
+      },
+    };
+  }
 );
 
 export const PaginationRoot = factory<PaginationRootFactory>((_props, ref) => {

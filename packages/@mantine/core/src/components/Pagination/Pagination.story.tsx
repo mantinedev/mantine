@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { MantineProvider } from '../../core';
 import { Button } from '../Button';
 import { Group } from '../Group';
 import { Pagination } from './Pagination';
@@ -20,6 +21,17 @@ export function DynamicTotal() {
 
 export function AutoContrast() {
   return <Pagination total={45} color="lime.3" autoContrast />;
+}
+
+export function AutoContrastFromProvider() {
+  return (
+    <>
+      <MantineProvider theme={{ autoContrast: true }}>
+        <Button color="lime.3">test</Button>
+        <Pagination total={45} color="lime.3" />
+      </MantineProvider>
+    </>
+  );
 }
 
 export function Controlled() {
