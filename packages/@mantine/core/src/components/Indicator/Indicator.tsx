@@ -6,6 +6,7 @@ import {
   ElementProps,
   factory,
   Factory,
+  getAutoContrastValue,
   getContrastColor,
   getRadius,
   getThemeColor,
@@ -100,7 +101,9 @@ const varsResolver = createVarsResolver<IndicatorFactory>(
   (theme, { color, position, offset, size, radius, zIndex, autoContrast }) => ({
     root: {
       '--indicator-color': color ? getThemeColor(color, theme) : undefined,
-      '--indicator-text-color': autoContrast ? getContrastColor({ color, theme }) : undefined,
+      '--indicator-text-color': getAutoContrastValue(autoContrast, theme)
+        ? getContrastColor({ color, theme })
+        : undefined,
       '--indicator-size': rem(size),
       '--indicator-radius': radius === undefined ? undefined : getRadius(radius),
       '--indicator-z-index': zIndex?.toString(),

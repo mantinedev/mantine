@@ -8,6 +8,7 @@ import {
   extractStyleProps,
   factory,
   Factory,
+  getAutoContrastValue,
   getContrastColor,
   getRadius,
   getSize,
@@ -108,7 +109,7 @@ const varsResolver = createVarsResolver<RadioFactory>(
         '--radio-color': variant === 'outline' ? outlineColor : getThemeColor(color, theme),
         '--radio-icon-color': iconColor
           ? getThemeColor(iconColor, theme)
-          : autoContrast
+          : getAutoContrastValue(autoContrast, theme)
             ? getContrastColor({ color, theme })
             : undefined,
         '--radio-icon-size': getSize(size, 'radio-icon-size'),

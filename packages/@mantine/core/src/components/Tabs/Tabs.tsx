@@ -7,6 +7,7 @@ import {
   ElementProps,
   factory,
   Factory,
+  getAutoContrastValue,
   getContrastColor,
   getRadius,
   getSafeId,
@@ -116,7 +117,9 @@ const varsResolver = createVarsResolver<TabsFactory>((theme, { radius, color, au
   root: {
     '--tabs-radius': getRadius(radius),
     '--tabs-color': getThemeColor(color, theme),
-    '--tabs-text-color': autoContrast ? getContrastColor({ color, theme }) : undefined,
+    '--tabs-text-color': getAutoContrastValue(autoContrast, theme)
+      ? getContrastColor({ color, theme })
+      : undefined,
   },
 }));
 

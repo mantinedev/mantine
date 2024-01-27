@@ -8,6 +8,7 @@ import {
   extractStyleProps,
   factory,
   Factory,
+  getAutoContrastValue,
   getContrastColor,
   getRadius,
   getSize,
@@ -110,7 +111,7 @@ const varsResolver = createVarsResolver<CheckboxFactory>(
         '--checkbox-color': variant === 'outline' ? outlineColor : getThemeColor(color, theme),
         '--checkbox-icon-color': iconColor
           ? getThemeColor(iconColor, theme)
-          : autoContrast
+          : getAutoContrastValue(autoContrast, theme)
             ? getContrastColor({ color, theme })
             : undefined,
       },
