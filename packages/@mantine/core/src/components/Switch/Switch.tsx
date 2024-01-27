@@ -193,7 +193,7 @@ export const Switch = factory<SwitchFactory>((_props, ref) => {
       data-checked={contextProps.checked || undefined}
       variant={variant}
       ref={rootRef}
-      mod={mod}
+      mod={[mod, { 'data-label-position': labelPosition }]}
       {...styleProps}
       {...wrapperProps}
     >

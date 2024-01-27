@@ -198,7 +198,7 @@ export const Checkbox = factory<CheckboxFactory>((_props, ref) => {
       data-checked={contextProps.checked || checked || undefined}
       variant={variant}
       ref={rootRef}
-      mod={mod}
+      mod={[mod, { 'data-label-position': labelPosition }]}
       {...styleProps}
       {...wrapperProps}
     >
