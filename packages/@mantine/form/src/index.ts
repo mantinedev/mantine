@@ -1,9 +1,9 @@
 export { useForm } from './use-form';
 export { createFormContext } from './FormProvider/FormProvider';
-export { createFormActions } from './actions';
+export { createFormActions } from './actions/index.js';
 export { Form } from './Form/Form';
 export { FORM_INDEX } from './form-index';
-export * from './validators';
+export * from './validators/index.js';
 
 export { zodResolver } from './resolvers/zod-resolver/zod-resolver';
 export { superstructResolver } from './resolvers/superstruct-resolver/superstruct-resolver';
