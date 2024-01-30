@@ -134,7 +134,6 @@ export function OptionsDropdown({
             type="scroll"
             scrollbarSize="var(--_combobox-padding)"
             offsetScrollbars="y"
-            className={classes.optionsDropdownScrollArea}
           >
             {options}
           </ScrollArea.Autosize>
