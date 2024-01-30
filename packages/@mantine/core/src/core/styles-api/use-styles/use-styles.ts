@@ -1,7 +1,8 @@
-import { CSSProperties } from 'react';
+import { CSSProperties, useCallback, useMemo } from 'react';
 import type { MantineStyleProp } from '../../Box';
 import { FactoryPayload } from '../../factory';
 import { useMantineClassNamesPrefix, useMantineTheme } from '../../MantineProvider';
+import { useMemoObject } from '../../utils/use-memo-object/use-memo-object';
 import { PartialVarsResolver, VarsResolver } from '../create-vars-resolver/create-vars-resolver';
 import { ClassNames, ClassNamesArray, GetStylesApiOptions, Styles } from '../styles-api.types';
 import { getClassName } from './get-class-name/get-class-name';
@@ -30,6 +31,18 @@ export type GetStylesApi<Payload extends FactoryPayload> = (
   style: CSSProperties;
 };
 
+// Omit objects from props to avoid unnecessary rerenders
+function omitObjectProps(props: Record<string, any>): Record<string, any> {
+  const result: Record<string, any> = {};
+  for (const [key, value] of Object.entries(props)) {
+    if (!value || (typeof value !== 'object' && typeof value !== 'function')) {
+      result[key] = props[key];
+    }
+  }
+
+  return result;
+}
+
 export function useStyles<Payload extends FactoryPayload>({
   name,
   classes,
@@ -46,36 +59,58 @@ export function useStyles<Payload extends FactoryPayload>({
 }: UseStylesInput<Payload>): GetStylesApi<Payload> {
   const theme = useMantineTheme();
   const classNamesPrefix = useMantineClassNamesPrefix();
-  const themeName = (Array.isArray(name) ? name : [name]).filter((n) => n) as string[];
+  const themeName = useMemo(
+    () => (Array.isArray(name) ? name : [name]).filter((n) => n) as string[],
+    [String(name)]
+  );
+  const memoizedProps = useMemoObject(omitObjectProps(props));
 
-  return (selector, options) => ({
-    className: getClassName({
+  return useCallback(
+    (selector, options) => ({
+      className: getClassName({
+        theme,
+        options,
+        themeName,
+        selector,
+        classNamesPrefix,
+        classNames,
+        classes,
+        unstyled,
+        className,
+        rootSelector,
+        props: memoizedProps,
+        stylesCtx,
+      }),
+
+      style: getStyle({
+        theme,
+        themeName,
+        selector,
+        options,
+        props: memoizedProps,
+        stylesCtx,
+        rootSelector,
+        styles,
+        style,
+        vars,
+        varsResolver,
+      }),
+    }),
+    [
       theme,
-      options,
       themeName,
-      selector,
       classNamesPrefix,
       classNames,
       classes,
       unstyled,
       className,
       rootSelector,
-      props,
+      memoizedProps,
       stylesCtx,
-    }),
-
-    style: getStyle({
-      theme,
-      themeName,
-      selector,
-      options,
-      props,
-      stylesCtx,
-      rootSelector,
       styles,
       style,
       vars,
       varsResolver,
-    }),
-  });
+    ]
+  );
 }
