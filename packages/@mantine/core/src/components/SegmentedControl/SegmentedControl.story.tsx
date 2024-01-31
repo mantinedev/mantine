@@ -111,3 +111,19 @@ export function SelectedItemRemoved() {
     </div>
   );
 }
+
+export function Unselect() {
+  const [value, setValue] = useState('');
+
+  const dataList = ['1', '2', '3'];
+
+  return (
+    <div style={{ padding: 40 }}>
+      <SegmentedControl value={value} onChange={setValue} data={dataList} mr={10} />
+
+      <button type="button" onClick={() => setValue('')}>
+        Unselect
+      </button>
+    </div>
+  );
+}
