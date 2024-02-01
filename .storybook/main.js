@@ -45,6 +45,10 @@ module.exports = {
   webpackFinal: async (config) => {
     config.resolve = {
       ...config.resolve,
+      // handle modules with .js extensions
+      extensionAlias: {
+        ".js": [".ts", ".tsx", ".js"],
+      },
       plugins: [
         ...(config.resolve.plugins || []),
         new TsconfigPathsPlugin({
