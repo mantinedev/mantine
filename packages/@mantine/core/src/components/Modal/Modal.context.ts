@@ -4,6 +4,7 @@ import type { ModalRootFactory } from './ModalRoot';
 export type ScrollAreaComponent = React.FC<any>;
 
 interface ModalContext {
+  fullScreen: boolean | undefined;
   yOffset: string | number | undefined;
   scrollAreaComponent: ScrollAreaComponent | undefined;
   getStyles: GetStylesApi<ModalRootFactory>;

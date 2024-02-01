@@ -156,6 +156,37 @@ export function WithScroll() {
   );
 }
 
+export function FullscreenWithScroll() {
+  return (
+    <div style={{ padding: 40 }}>
+      <Modal opened onClose={() => {}} title="Just a Modal" size="md" fullScreen>
+        {content}
+        {content}
+        {content}
+      </Modal>
+    </div>
+  );
+}
+
+export function FullscreenWithScrollArea() {
+  return (
+    <div style={{ padding: 40 }}>
+      <Modal
+        opened
+        onClose={() => {}}
+        title="Just a Modal"
+        size="md"
+        fullScreen
+        scrollAreaComponent={ScrollArea.Autosize}
+      >
+        {content}
+        {content}
+        {content}
+      </Modal>
+    </div>
+  );
+}
+
 export function AutosizeScrollarea() {
   return (
     <div style={{ padding: 40 }}>
