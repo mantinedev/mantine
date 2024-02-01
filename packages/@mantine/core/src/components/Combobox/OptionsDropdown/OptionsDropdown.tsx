@@ -45,6 +45,7 @@ function Option({ data, withCheckIcon, value, checkIconPosition, unstyled }: Opt
         data-reverse={checkIconPosition === 'right' || undefined}
         data-checked={isValueChecked(value, data.value) || undefined}
         aria-selected={isValueChecked(value, data.value)}
+        active={isValueChecked(value, data.value)}
       >
         {checkIconPosition === 'left' && check}
         <span>{data.label}</span>

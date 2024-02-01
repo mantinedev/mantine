@@ -158,7 +158,10 @@ export const Select = factory<SelectFactory>((_props, ref) => {
   const combobox = useCombobox({
     opened: dropdownOpened,
     defaultOpened: defaultDropdownOpened,
-    onDropdownOpen,
+    onDropdownOpen: () => {
+      onDropdownOpen?.();
+      combobox.updateSelectedOptionIndex('active', { scrollIntoView: true });
+    },
     onDropdownClose: () => {
       onDropdownClose?.();
       combobox.resetSelectedOption();
