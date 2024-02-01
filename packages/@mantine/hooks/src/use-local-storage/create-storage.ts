@@ -150,7 +150,7 @@ export function createStorage<T>(type: StorageType, hookName: string) {
 
     useEffect(() => {
       if (getInitialValueInEffect) {
-        setValue(readStorageValue());
+        setStorageValue(readStorageValue());
       }
     }, []);
 
