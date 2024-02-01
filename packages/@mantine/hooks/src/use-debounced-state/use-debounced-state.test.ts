@@ -40,6 +40,12 @@ describe('use-debounced-state', () => {
     act(() => timeoutCallback());
     expect(hook.result.current[0]).toEqual('test3');
 
+    act(() => hook.result.current[1]((prev) => `${prev}0`));
+    expect(hook.result.current[0]).toEqual('test3');
+
+    act(() => timeoutCallback());
+    expect(hook.result.current[0]).toEqual('test30');
+
     clearTimeout.mockReset();
     expect(clearTimeout).toHaveBeenCalledTimes(0);
     act(() => hook.unmount());
