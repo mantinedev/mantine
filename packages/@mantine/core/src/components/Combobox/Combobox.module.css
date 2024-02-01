@@ -189,15 +189,6 @@
 }
 
 /* ------- OptionsDropdown ------- */
-.optionsDropdownScrollArea {
-  margin-right: calc(var(--_combobox-padding) * -1);
-
-  @mixin rtl {
-    margin-left: calc(var(--_combobox-padding) * -1);
-    margin-right: 0;
-  }
-}
-
 .optionsDropdownOption {
   display: flex;
   align-items: center;
