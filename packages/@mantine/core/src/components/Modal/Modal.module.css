@@ -42,6 +42,10 @@
   max-height: var(--_content-max-height, calc(100dvh - var(--modal-y-offset) * 2));
   height: var(--_content-height, auto);
   overflow-y: auto;
+
+  &[data-full-screen] {
+    border-radius: 0;
+  }
 }
 
 .inner {
