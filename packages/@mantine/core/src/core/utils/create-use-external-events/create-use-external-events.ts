@@ -1,4 +1,3 @@
-import { useEffect, useLayoutEffect } from 'react';
 import { useIsomorphicEffect } from '@mantine/hooks';
 
 function dispatchEvent<T>(type: string, detail?: T) {
