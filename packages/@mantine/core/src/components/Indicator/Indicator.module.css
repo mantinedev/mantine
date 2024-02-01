@@ -1,12 +1,12 @@
 @keyframes processing {
   0% {
     opacity: 0.6;
-    box-shadow: 0 0 rem(0.5px) 0 var(--indicator-color);
+    box-shadow: 0 0 0 0 var(--indicator-color);
   }
 
   100% {
     opacity: 0;
-    box-shadow: 0 0 rem(0.5px) rem(4.4px) var(--indicator-color);
+    box-shadow: 0 0 0 rem(8px) var(--indicator-color);
   }
 }
 
