@@ -1,5 +1,5 @@
 import { useEffect, useLayoutEffect } from 'react';
-import { useIsomorphicEffect } from '../use-isomorphic-effect/use-isomorphic-effect';
+import { useIsomorphicEffect } from '@mantine/hooks';
 
 function dispatchEvent<T>(type: string, detail?: T) {
   window.dispatchEvent(new CustomEvent(type, { detail }));
