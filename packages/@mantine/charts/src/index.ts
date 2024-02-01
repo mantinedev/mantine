@@ -6,4 +6,5 @@ export * from './LineChart';
 export * from './Sparkline';
 export * from './DonutChart';
 export * from './PieChart';
+export * from './RadarChart';
 export * from './types';
