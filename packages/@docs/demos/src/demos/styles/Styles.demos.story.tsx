@@ -97,3 +97,8 @@ export const Demo_lightDarkHidden = {
   name: '⭐ Demo: lightDarkHidden',
   render: renderDemo(demos.lightDarkHidden),
 };
+
+export const Demo_containers = {
+  name: '⭐ Demo: containers',
+  render: renderDemo(demos.containers),
+};
