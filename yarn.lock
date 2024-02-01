@@ -17208,7 +17208,7 @@ __metadata:
     open: "npm:^9.1.0"
     postcss: "npm:^8.4.31"
     postcss-loader: "npm:^7.3.3"
-    postcss-preset-mantine: "npm:1.12.3"
+    postcss-preset-mantine: "npm:1.13.0"
     postcss-simple-vars: "npm:^7.0.1"
     prettier: "npm:^3.1.0"
     react: "npm:^18.2.0"
@@ -20041,15 +20041,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"postcss-preset-mantine@npm:1.12.3":
-  version: 1.12.3
-  resolution: "postcss-preset-mantine@npm:1.12.3"
+"postcss-preset-mantine@npm:1.13.0":
+  version: 1.13.0
+  resolution: "postcss-preset-mantine@npm:1.13.0"
   dependencies:
     postcss-mixins: "npm:^9.0.4"
     postcss-nested: "npm:^6.0.1"
   peerDependencies:
     postcss: ">=8.0.0"
-  checksum: 45dba9a9a04d96a3730ca3593c72a6eda0d35fd3e519c72ef8723add4e91dc28d4550c77461a3d0ba84c2ef4601e112e93cb24268c38ecd853ff427e3377ebb9
+  checksum: 750c9b0b8350320ec5ddf77a4a8cdf4c88ce41609ca7d4648afd5d7feedfe4e6d778a84e722233ed99f7487de7558c7b9cd3a25f92be2460ec5d4cd26e23ceb2
   languageName: node
   linkType: hard
 
