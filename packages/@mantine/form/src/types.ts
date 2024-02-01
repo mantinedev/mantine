@@ -87,7 +87,7 @@ export type GetInputProps<Values> = <Field extends LooseKeys<Values>>(
 
 export type SetFieldValue<Values> = <Field extends LooseKeys<Values>>(
   path: Field,
-  value: Field extends keyof Values ? Values[Field] : unknown
+  value: Field extends keyof Values ? Values[Field] | ((prev: Values[Field]) => Values[Field]) : unknown
 ) => void;
 
 export type ClearFieldError = (path: unknown) => void;

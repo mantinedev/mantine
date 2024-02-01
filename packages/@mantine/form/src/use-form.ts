@@ -127,12 +127,12 @@ export function useForm<
     []
   );
 
-  const setFieldValue: SetFieldValue<Values> = useCallback((path, value) => {
+  const setFieldValue: SetFieldValue<Values> = useCallback((path, payload) => {
     const shouldValidate = shouldValidateOnChange(path, validateInputOnChange);
     clearFieldDirty(path);
     setTouched((currentTouched) => ({ ...currentTouched, [path]: true }));
     _setValues((current) => {
-      const result = setPath(path, value, current);
+      const result = setPath(path, payload instanceof Function ? payload(current) : payload, current);
 
       if (shouldValidate) {
         const validationResults = validateFieldValue(path, rules, result);
@@ -151,7 +151,7 @@ export function useForm<
 
   const setValues: SetValues<Values> = useCallback((payload) => {
     _setValues((currentValues) => {
-      const valuesPartial = typeof payload === 'function' ? payload(currentValues) : payload;
+      const valuesPartial = payload instanceof Function ? payload(currentValues) : payload;
       const result = { ...currentValues, ...valuesPartial };
       onValuesChange?.(result, currentValues);
       return result;
