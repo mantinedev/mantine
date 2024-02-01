@@ -307,6 +307,7 @@ export const MDX_PAGES_GROUPS: MdxPagesGroup[] = [
           MDX_DATA.VisuallyHidden,
           MDX_DATA.Divider,
           MDX_DATA.Box,
+          MDX_DATA.Composite,
         ],
       },
     ],

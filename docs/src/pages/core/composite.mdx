@@ -1,0 +1,173 @@
+import {
+  CompositeDemos,
+  StylesDemos,
+  ThemingDemos,
+} from '@docs/demos';
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.Composite);
+
+## Usage
+
+<Demo data={CompositeDemos.basicList} />
+
+### Focus behavior
+
+`Composite` component applies different focus movement and selection strategies based on the layout ([Keyboard navigation](#keyboard-navigation)).
+Currently, it provides focus behaviors for vertical lists, horizontal lists, and layout grids.
+
+## Options
+
+<Demo data={CompositeDemos.imageGrid} />
+
+## Selection state
+
+<Demo data={CompositeDemos.controlledComposite} />
+
+### Defining custom keys
+
+By default, `Composite` uses `id` or `key` property of items as their unique identifier.
+If your items do not contain any of these properties, you can use `getItemKey` property to define a custom key.
+
+```tsx
+<Composite
+  ...
+  getItemKey={(item) => item.slug}
+/>
+```
+
+## Disabled items
+
+You can disable items in a `Composite` component by setting the `disabledKeys` option.
+Disabled options can not be selected and the focus movement skips these items.
+
+Additionaly, `aria-disabled` HTML attribute is set to `true` for these items, which can be used for custom styling.
+
+```scss
+.listItem {
+  &[aria-disabled='true'] {
+    @mixin light {
+      background: var(--mantine-color-gray-2);
+    }
+    @mixin dark {
+      background: var(--mantine-color-dark-7);
+    }
+  }
+  &[aria-disabled='true'] * {
+    text-decoration: none;
+    @mixin light {
+      color: var(--mantine-color-gray-6);
+    }
+    @mixin dark {
+      color: var(--mantine-color-gray-7);
+    }
+  }
+}
+```
+
+## Composite context
+
+`CompositeContext` provides two boolean values `multiple` and `selectionMode` to identify the selection type and
+whether the component in the selection mode. `selectionMode` changes only if `selectionOptions.trackSelectioMode` is set to true.
+
+The following example shows how items can change based on these values.
+If nothing is selected (`selectionMode: false`), an overlay and checkbox is shown only if an item is hovered.
+After an item is selected (`selectionMode: true`), all items render their overlays.
+
+```tsx
+const ctx = useCompositeContext();
+...
+<Overlay display={ctx.selectionMode ? 'block' : undefined}>
+  <Checkbox
+    tabIndex={-1}
+    checked={selected}
+    disabled={disabled}
+    readOnly
+    aria-hidden
+    size="md"
+    radius={ctx.multiple ? 'sm' : 'lg'}
+  />
+</Overlay>
+...
+```
+
+<Demo data={CompositeDemos.cardGrid} />
+
+## Keyboard navigation
+
+### Vertical/Horizontal List
+
+**Focus:**
+
+- `Down Arrow` / `Right Arrow`: Moves focus to the next option.
+  - If focus is on the last item and `focusOptions.loop: true`, focus moves to the first item.
+- `Up Arrow` / `Left Arrow`: Moves focus to the previous option.
+  - If focus is on the first item and `focusOptions.loop: true`, focus moves to the last item.
+- `Page Down`: Moves focus down `focusOptions.pageSize` number of items. If focus is in the last item of the list, focus does not move.
+- `Page Up`: Moves focus up `focusOptions.pageSize` number of items. If focus is in the first item of the list, focus does not move.
+- `Home`: Moves focus to first option.
+- `End`: Moves focus to last option.
+
+**Selection:**
+
+- `Space`: changes the selection state of the focused option.
+- `Control + A`: Selects all options in the list. If all options are selected, it unselect all options.
+
+  > In a single-select list, selection also move with focus when `selectionOptions.followFocus` options is set `true`.
+
+  > In a multi-select list, focus movements with `Shift` modifier, selects contiguous items from the most recently selected item to the focused item.
+  > For example, `Shift + Home` selects the focused option and all options up to the first option, and moves focus to the first option.
+
+### Layout Grid
+
+**Focus:**
+
+- `Right Arrow`: Moves focus one cell to the right.
+  - If focus is on the right-most cell in the row and
+    - `focusOptions.moveToNextRow: true`, focus moves to the first cell in the following row.
+    - `focusOptions.moveToNextRow: false` and `focusOptions.loop: true`, focus moves to the first cell in the same row.
+    - `focusOptions.moveToNextRow: false` and `focusOptions.loop: false`, focus does not move.
+  - If focus is on the last cell in the grid and `focusOptions.loop: true`, focus moves to the first cell in the grid; otherwise, focus does not move.
+- `Left Arrow`: Moves focus one cell to the left.
+  - If focus is on the left-most cell in the row and
+    - `focusOptions.moveToNextRow: true`, focus moves to the last cell in the previous row.
+    - `focusOptions.moveToNextRow: false` and `focusOptions.loop: true`, focus moves to the first cell in the same row.
+    - `focusOptions.moveToNextRow: false` and `focusOptions.loop: false`, focus does not move.
+  - If focus is on the first cell in the grid and `focusOptions.loop: true`, focus moves to the last cell in the grid; otherwise, focus does not move.
+- `Down Arrow`: Moves focus one cell down.
+  - If focus is on the bottom cell in the column and
+    - `focusOptions.moveToNextColumn: true`, focus moves to the top cell in the following column.
+    - `focusOptions.moveToNextColumn: false` and `focusOptions.loop: true`, focus moves to the top cell in the same column.
+    - `focusOptions.moveToNextColumn: false` and `focusOptions.loop: false`, focus does not move.
+  - If focus is on the bottom cell in the last column and `focusOptions.loop: true`, focus moves to the first cell in the grid; otherwise, focus does not move.
+- `Up Arrow`: Moves focus one cell up.
+  - If focus is on the top cell in the column and
+    - `focusOptions.moveToNextColumn: true`, focus moves to the bottom cell in the previous column.
+    - `focusOptions.moveToNextColumn: false` and `focusOptions.loop: true`, focus moves to the bottom cell in the same column.
+    - `focusOptions.moveToNextColumn: false` and `focusOptions.loop: false`, focus does not move.
+  - If focus is on the first cell in the grid and `focusOptions.loop: true`, focus moves to the bottom cell in the last column; otherwise, focus does not move.
+- `Page Down`: Moves focus down `focusOptions.pageSize` number of rows. If focus is in the last row of the grid, focus does not move.
+- `Page Up`: Moves focus up `focusOptions.pageSize` number of rows. If focus is in the first row of the grid, focus does not move.
+- `Home`: moves focus to the first cell in the row that contains focus.
+- `End`: moves focus to the last cell in the row that contains focus.
+- `Control + Home`: moves focus to the first cell in the first row.
+- `Control + End`: moves focus to the last cell in the last row.
+
+**Selection:**
+
+- `Space`: Changes the selection state of the focused option.
+- `Control + A`: Selects all options in the list. If all options are selected, it unselect all options.
+
+  > In a single-select grid, selection also move with focus when `selectionOptions.followFocus` options is set `true`.
+
+  > In a multi-select grid, focus movements with `Shift` modifier, selects contiguous items from the most recently selected item to the focused item.
+  > For example, `Control + Shift + Home` selects the focused option and all options up to the first option in the grid, and moves focus to the first option.
+
+<Polymorphic
+  defaultElement="div"
+  changeToElement="Flex"
+  component="Composite"
+/>
+
+<GetElementRef component="Composite" refType="div" />

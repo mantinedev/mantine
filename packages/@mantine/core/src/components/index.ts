@@ -14,6 +14,7 @@ export * from './ModalBase';
 export * from './Input';
 export * from './InputBase';
 export * from './Flex';
+export * from './Composite';
 
 // regular components
 export * from './Accordion';

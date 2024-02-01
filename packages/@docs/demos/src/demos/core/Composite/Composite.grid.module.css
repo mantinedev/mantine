@@ -1,0 +1,98 @@
+.grid {
+  border-radius: var(--mantine-radius-default);
+  padding: 0.25rem 0.5rem;
+  gap: 0.5rem;
+
+  @mixin light {
+    background: var(--mantine-color-white);
+  }
+
+  @mixin dark {
+    background: var(--mantine-color-dark-7);
+  }
+
+  &:focus-visible {
+    outline: none;
+    border-color: transparent;
+  }
+}
+
+.row {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(20%, 1fr));
+  gap: 1rem;
+  padding: 0.5rem;
+}
+
+.gridcellCard {
+  @mixin light {
+    background: var(--mantine-color-gray-2);
+  }
+
+  @mixin dark {
+    background: var(--mantine-color-dark-9);
+  }
+
+  &:focus-visible {
+    outline: rem(2px) solid var(--mantine-color-blue-filled);
+    border-color: transparent;
+  }
+
+  & > div {
+    transition: transform 100ms ease-in-out;
+  }
+
+  &[aria-selected='true'] > div {
+    transform: scale(0.85);
+  }
+
+  &:not([aria-selected='true']) :global(.mantine-Overlay-root) {
+    display: none;
+  }
+
+  & :global(.mantine-Overlay-root) {
+    --overlay-bg: linear-gradient(170deg, rgba(0, 0, 0, 0.5) 0%, rgba(0, 0, 0, 0) 50%);
+    --overlay-z-index: 200;
+    padding: calc(1rem * var(--mantine-scale));
+  }
+
+  &:hover :global(.mantine-Overlay-root) {
+    display: block;
+  }
+
+  &[aria-disabled='true'] :global(.mantine-Overlay-root) {
+    display: block;
+    padding: calc(1rem * var(--mantine-scale));
+    --overlay-z-index: 200;
+
+    @mixin light {
+      --overlay-bg: rgba(233, 236, 239, 0.75);
+    }
+
+    @mixin dark {
+      --overlay-bg: rgba(36, 36, 36, 0.75);
+    }
+  }
+}
+
+.gridcellImage {
+  transition: transform 100ms ease-in-out;
+
+  @mixin light {
+    background: var(--mantine-color-gray-2);
+  }
+
+  @mixin dark {
+    background: var(--mantine-color-dark-9);
+  }
+
+  &:focus-visible {
+    outline: 0.25rem solid var(--mantine-color-blue-filled);
+    outline-offset: 0.25rem;
+    border-color: transparent;
+  }
+
+  &[aria-selected='true'] {
+    transform: scale(0.85);
+  }
+}

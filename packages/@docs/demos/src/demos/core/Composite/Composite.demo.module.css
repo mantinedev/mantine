@@ -1,0 +1,5 @@
+.compositeItem {
+  &:focus-visible {
+    outline: 0.125rem solid var(--mantine-primary-color-filled-hover);
+  }
+}

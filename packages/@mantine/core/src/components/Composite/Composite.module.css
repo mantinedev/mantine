@@ -1,0 +1,53 @@
+.mantine-Composite-root {
+  gap: rem(4px);
+
+  @mixin light {
+    background: var(--mantine-color-gray-0);
+  }
+
+  @mixin dark {
+    background: var(--mantine-color-dark-7);
+  }
+
+  &:focus-visible {
+    outline: none;
+    border-color: transparent;
+  }
+}
+
+.mantine-Composite-item {
+  padding: 0.25rem;
+  border: rem(2px) solid var(--mantine-color-gray-4);
+
+  &:focus-visible {
+    outline: rem(2px) solid var(--mantine-primary-color-filled);
+    outline-offset: rem(-2px);
+    border-color: transparent;
+  }
+
+  &[aria-selected='true'] {
+    background: var(--mantine-primary-color-light);
+  }
+
+  &[aria-disabled='true'] {
+    @mixin light {
+      background: var(--mantine-color-gray-2);
+    }
+
+    @mixin dark {
+      background: var(--mantine-color-dark-7);
+    }
+  }
+
+  &[aria-disabled='true'] * {
+    text-decoration: none;
+
+    @mixin light {
+      color: var(--mantine-color-gray-6);
+    }
+
+    @mixin dark {
+      color: var(--mantine-color-gray-7);
+    }
+  }
+}

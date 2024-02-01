@@ -1139,4 +1139,15 @@ export const MDX_CORE_DATA: Record<string, Frontmatter> = {
     source: '@mantine/core/src/components/NumberFormatter/NumberFormatter.tsx',
     docs: 'core/number-formatter.mdx',
   },
+
+  Composite: {
+    title: 'Composite',
+    package: '@mantine/core',
+    slug: '/core/composite',
+    props: ['Composite'],
+    description: 'Create a Composite components with focus and selection management',
+    import: "import { Composite } from '@mantine/core';",
+    source: '@mantine/core/src/components/Composite/Composite.tsx',
+    docs: 'core/composite.mdx',
+  },
 };

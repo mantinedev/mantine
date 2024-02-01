@@ -103,6 +103,7 @@ export * as UnstyledButtonDemos from './demos/core/UnstyledButton';
 export * as NotificationDemos from './demos/core/Notification';
 export * as NumberInputDemos from './demos/core/NumberInput';
 export * as NumberFormatterDemos from './demos/core/NumberFormatter';
+export * as CompositeDemos from './demos/core/Composite';
 
 // @mantine/dates
 export * as YearPickerDemos from './demos/dates/YearPicker';
