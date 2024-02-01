@@ -148,3 +148,45 @@ in container queries. Note that CSS variables do not work in container queries a
 it is better to define breakpoints in `px` units.
 
 <Demo data={StylesDemos.containers} />
+
+## Responsive style props
+
+You can use object syntax to add responsive styles with [style props](/styles/style-props).
+Note that responsive style props are [less performant](/styles/styles-performance) than regular style props,
+it is not recommended to use them in large lists of elements.
+
+<Demo data={StylesDemos.responsiveStyleProps} />
+
+Responsive values are calculated the following way:
+
+- `base` value is used when none of breakpoint values are applied
+- `xs`, `sm`, `md`, `lg`, `xl` values are used when the viewport width is larger that the value of corresponding breakpoint specified in [theme.breakpoints](/styles/responsive/)
+
+```tsx
+import { Box } from '@mantine/core';
+
+<Box w={{ base: 320, sm: 480, lg: 640 }}} />
+```
+
+In this case the element will have the following styles:
+
+```css
+/* Base styles added to element and then get overwritten with responsive values */
+.element {
+  width: 20rem;
+}
+
+/* 48em is theme.breakpoints.sm by default */
+@media (min-width: 48em) {
+  .element {
+    width: 30rem;
+  }
+}
+
+/* 75em is theme.breakpoints.lg by default */
+@media (min-width: 75em) {
+  .element {
+    width: 40rem;
+  }
+}
+```
