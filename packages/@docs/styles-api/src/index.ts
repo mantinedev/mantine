@@ -66,6 +66,7 @@ export * from './data/Overlay.styles-api';
 export * from './data/Pagination.styles-api';
 export * from './data/Paper.styles-api';
 export * from './data/PasswordInput.styles-api';
+export * from './data/PieChart.styles-api';
 export * from './data/Pill.styles-api';
 export * from './data/PillsInput.styles-api';
 export * from './data/PinInput.styles-api';
