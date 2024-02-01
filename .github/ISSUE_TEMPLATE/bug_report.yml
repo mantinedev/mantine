@@ -82,7 +82,7 @@ body:
     id: link
     attributes:
       label: If possible, include a link to a codesandbox with a minimal reproduction
-      description: Codesandbox template – https://codesandbox.io/p/sandbox/mantine-template-kczll7. Note that issues that cannot be reproduced by maintainers will be closed.
+      description: Codesandbox template – https://codesandbox.io/p/sandbox/mantine-react-template-q4dd5d. Note that issues that cannot be reproduced by maintainers will be closed.
   - type: textarea
     id: possibleFix
     attributes:
