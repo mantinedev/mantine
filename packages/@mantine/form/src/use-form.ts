@@ -132,7 +132,11 @@ export function useForm<
     clearFieldDirty(path);
     setTouched((currentTouched) => ({ ...currentTouched, [path]: true }));
     _setValues((current) => {
-      const result = setPath(path, payload instanceof Function ? payload(current) : payload, current);
+      const result = setPath(
+        path,
+        payload instanceof Function ? payload(current) : payload,
+        current
+      );
 
       if (shouldValidate) {
         const validationResults = validateFieldValue(path, rules, result);
