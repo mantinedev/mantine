@@ -53,7 +53,7 @@
     "typecheck": "tsc --noEmit && cd docs && npm run typecheck",
     "lint": "npm run eslint && npm run stylelint",
     "eslint": "eslint packages docs/src scripts --ext .ts,.tsx --cache",
-    "stylelint": "stylelint '**/*.css' --cache",
+    "stylelint": "stylelint \"**/*.css\" --cache",
     "syncpack": "syncpack list-mismatches",
     "syncpack:format": "syncpack format",
     "prettier:test": "prettier --check \"**/*.{ts,tsx,mdx,css}\"",
