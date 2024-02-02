@@ -32,7 +32,7 @@
     "docs:deploy": "npm run docs:build && gh-pages -d docs/out -t true",
     "docs:deploy:alpha": "npm run docs:build:alpha && esno scripts/docs/deploy-alpha",
     "docs:count": "esno scripts/docs/count",
-    "clean": "rimraf packages/*/*/{esm,cjs,lib,dist} packages/*/*/*.tsbuildinfo packages/*/*/styles.css packages/*/*/styles.layer.css packages/@mantine/core/styles",
+    "clean": "rimraf --glob packages/*/*/{esm,cjs,lib,dist} packages/*/*/*.tsbuildinfo packages/*/*/styles.css packages/*/*/styles.layer.css packages/@mantine/core/styles",
     "build": "esno scripts/build",
     "publish:package": "esno scripts/publish",
     "publish:package:alpha": "esno scripts/publish --stage alpha --tag next",
