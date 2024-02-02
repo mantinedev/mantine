@@ -19,6 +19,7 @@ import {
   IsValid,
   OnReset,
   OnSubmit,
+  PathValue,
   RemoveListItem,
   ReorderListItem,
   Reset,
@@ -132,9 +133,10 @@ export function useForm<
     clearFieldDirty(path);
     setTouched((currentTouched) => ({ ...currentTouched, [path]: true }));
     _setValues((current) => {
+      const currentValue = getPath(path, current) as PathValue<Values, typeof path>;
       const result = setPath(
         path,
-        payload instanceof Function ? payload(current) : payload,
+        payload instanceof Function ? payload(currentValue) : payload,
         current
       );
 

@@ -85,11 +85,19 @@ export type GetInputProps<Values> = <Field extends LooseKeys<Values>>(
   options?: GetInputPropsOptions
 ) => GetInputPropsReturnType;
 
+export type PathValue<T, P extends LooseKeys<T>> = P extends `${infer K}.${infer Rest}`
+  ? K extends keyof T
+    ? PathValue<T[K], Rest>
+    : unknown
+  : P extends keyof T
+    ? T[P]
+    : unknown;
+
 export type SetFieldValue<Values> = <Field extends LooseKeys<Values>>(
   path: Field,
-  value: Field extends keyof Values
-    ? Values[Field] | ((prev: Values[Field]) => Values[Field])
-    : unknown
+  value:
+    | PathValue<Values, Field>
+    | ((prevValue: PathValue<Values, Field>) => PathValue<Values, Field>)
 ) => void;
 
 export type ClearFieldError = (path: unknown) => void;
