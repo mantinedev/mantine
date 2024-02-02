@@ -8,6 +8,7 @@ describe('@mantine/core/Image', () => {
   tests.itSupportsSystemProps<ImageProps, ImageStylesNames>({
     component: Image,
     props: defaultProps,
+    mod: true,
     styleProps: true,
     extend: true,
     variant: true,

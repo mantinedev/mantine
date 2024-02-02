@@ -8,6 +8,7 @@ describe('@mantine/core/Paper', () => {
   tests.itSupportsSystemProps<PaperProps, PaperStylesNames>({
     component: Paper,
     props: defaultProps,
+    mod: true,
     polymorphic: true,
     styleProps: true,
     children: true,

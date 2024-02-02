@@ -7,6 +7,7 @@ describe('@mantine/core/Rating', () => {
   tests.itSupportsSystemProps<RatingProps, RatingStylesNames>({
     component: Rating,
     props: defaultProps,
+    mod: true,
     styleProps: true,
     extend: true,
     variant: true,

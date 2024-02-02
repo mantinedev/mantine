@@ -67,6 +67,10 @@ export function useProviderColorScheme({
       return () => {};
     }
 
+    if (forceColorScheme === undefined) {
+      setColorSchemeAttribute(value, getRootElement);
+    }
+
     media.current = window.matchMedia('(prefers-color-scheme: dark)');
     const listener: MediaQueryCallback = (event) => {
       if (value === 'auto') {

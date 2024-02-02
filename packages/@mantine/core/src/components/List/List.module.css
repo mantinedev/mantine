@@ -1,61 +1,60 @@
 .root {
+  --list-fz: var(--mantine-font-size-md);
+  --list-lh: var(--mantine-line-height-md);
+
   list-style-position: inside;
-  font-size: var(--list-fz, var(--mantine-fz-md));
-  line-height: var(--list-lh, var(--mantine-line-height-md));
+  font-size: var(--list-fz);
+  line-height: var(--list-lh);
   margin: 0;
   padding: 0;
-  padding-left: var(--_list-pl, 0);
-  padding-right: var(--_list-pr, 0);
 
-  &[data-with-padding] {
-    --_list-pl: var(--mantine-spacing-md);
+  &:where([data-with-padding]) {
+    padding-left: var(--mantine-spacing-md);
 
     @mixin rtl {
-      --_list-pl: 0;
-      --_list-pr: var(--mantine-spacing-md);
+      padding-left: 0;
+      padding-right: var(--mantine-spacing-md);
     }
   }
 }
 
 .item {
   white-space: nowrap;
-  line-height: var(--_item-lh, var(--list-lh));
-  margin-top: var(--_item-mt, 0);
-  list-style: var(--_item-list-style);
+  line-height: var(--list-lh);
 
-  &[data-with-icon] {
-    --_item-list-style: none;
+  &:where([data-with-icon]) {
+    list-style: none;
 
     & .itemWrapper {
-      --_item-wrapper-direction: row;
-      --_item-wrapper-align: center;
+      --li-direction: row;
+      --li-align: center;
     }
   }
 
-  &:not(:first-of-type) {
-    --_item-mt: var(--list-spacing, 0);
+  &:where(:not(:first-of-type)) {
+    margin-top: var(--list-spacing, 0);
   }
 
-  &[data-centered] {
-    --_item-lh: 1;
+  &:where([data-centered]) {
+    line-height: 1;
   }
 }
 
 .itemWrapper {
   display: inline-flex;
-  flex-direction: var(--_item-wrapper-direction, column);
-  align-items: var(--_item-wrapper-align, flex-start);
+  flex-direction: var(--li-direction, column);
+  align-items: var(--li-align, flex-start);
   white-space: normal;
 }
 
 .itemIcon {
   display: inline-block;
   vertical-align: middle;
-  margin-right: var(--_item-icon-mr, var(--mantine-spacing-sm));
-  margin-left: var(--_item-icon-ml, 0);
+  margin-right: var(--mantine-spacing-sm);
+  margin-left: 0;
 
   @mixin rtl {
-    --_item-icon-mr: 0;
-    --_item-icon-ml: var(--mantine-spacing-sm);
+    margin-right: 0;
+    margin-left: var(--mantine-spacing-sm);
   }
 }

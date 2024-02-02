@@ -6,6 +6,7 @@ import {
   ElementProps,
   factory,
   Factory,
+  getAutoContrastValue,
   getContrastColor,
   getThemeColor,
   MantineColor,
@@ -60,6 +61,7 @@ export const ProgressSection = factory<ProgressSectionFactory>((props, ref) => {
     color,
     striped,
     animated,
+    mod,
     ...others
   } = useProps('ProgressSection', defaultProps, props);
 
@@ -82,11 +84,13 @@ export const ProgressSection = factory<ProgressSectionFactory>((props, ref) => {
       {...ctx.getStyles('section', { className, classNames, styles, style })}
       {...others}
       {...ariaAttributes}
-      mod={{ striped: striped || animated, animated }}
+      mod={[{ striped: striped || animated, animated }, mod]}
       __vars={{
         '--progress-section-width': `${value}%`,
         '--progress-section-color': getThemeColor(color, theme),
-        '--progress-label-color': ctx.autoContrast ? getContrastColor({ color, theme }) : undefined,
+        '--progress-label-color': getAutoContrastValue(ctx.autoContrast, theme)
+          ? getContrastColor({ color, theme })
+          : undefined,
       }}
     />
   );

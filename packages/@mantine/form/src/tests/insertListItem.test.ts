@@ -82,6 +82,11 @@ describe('@mantine/form/insertListItem', () => {
     );
 
     act(() => hook.result.current.insertListItem('a', { b: 3 }, 1));
-    expect(spy).toHaveBeenCalledWith({ a: [{ b: 1 }, { b: 3 }, { b: 2 }] });
+    expect(spy).toHaveBeenCalledWith(
+      { a: [{ b: 1 }, { b: 3 }, { b: 2 }] },
+      {
+        a: [{ b: 1 }, { b: 2 }],
+      }
+    );
   });
 });

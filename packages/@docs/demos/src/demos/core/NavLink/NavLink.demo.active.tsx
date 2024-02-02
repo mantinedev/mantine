@@ -29,7 +29,7 @@ function Demo() {
       label={item.label}
       description={item.description}
       rightSection={item.rightSection}
-      icon={<item.icon size="1rem" stroke={1.5} />}
+      leftSection={<item.icon size="1rem" stroke={1.5} />}
       onClick={() => setActive(index)}
       {{props}}
     />
@@ -60,7 +60,7 @@ function Demo(props: any) {
       label={item.label}
       description={item.description}
       rightSection={item.rightSection}
-      icon={<item.icon size="1rem" stroke={1.5} />}
+      leftSection={<item.icon size="1rem" stroke={1.5} />}
       onClick={() => setActive(index)}
       {...props}
     />

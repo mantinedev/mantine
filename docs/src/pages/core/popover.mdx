@@ -65,6 +65,35 @@ To control offset on both axis, pass object with `mainAxis` and `crossAxis` prop
 
 <Demo data={PopoverDemos.offsetAxis} />
 
+## Middlewares
+
+You can enable or disable [Floating UI](https://floating-ui.com/) middlewares with
+`middlewares` prop:
+
+- [shift](https://floating-ui.com/docs/shift) middleware shifts the dropdown to keep it in view. It is enabled by default
+- [flip](https://floating-ui.com/docs/flip) middleware changes the placement of the dropdown to keep it in view. It is enabled by default.
+- [inline](https://floating-ui.com/docs/inline) middleware improves positioning for inline reference elements that span over multiple lines. It is disabled by default.
+
+Example of turning off `shift` and `flip` middlewares:
+
+```tsx
+import { Popover } from '@mantine/core';
+
+function Demo() {
+  return (
+    <Popover
+      middlewares={{ flip: false, shift: false }}
+      position="bottom"
+    >
+      {/* Popover content */}
+    </Popover>
+  );
+}
+```
+
+In this example Popover dropdown will always be below the element – it will not
+shift of flip if there is not enough space in the viewport.
+
 ## Dropdown arrow
 
 Set `withArrow` prop to add an arrow to the dropdown. Arrow is a `div` element rotated with `transform: rotate(45deg)`.

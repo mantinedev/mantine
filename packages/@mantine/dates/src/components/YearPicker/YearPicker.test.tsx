@@ -11,6 +11,7 @@ describe('@mantine/dates/YearPicker', () => {
   tests.itSupportsSystemProps<YearPickerProps, YearPickerStylesNames>({
     component: YearPicker,
     props: defaultProps,
+    mod: true,
     styleProps: true,
     extend: true,
     variant: true,

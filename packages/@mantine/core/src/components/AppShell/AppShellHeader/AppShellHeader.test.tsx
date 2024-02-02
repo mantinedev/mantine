@@ -11,6 +11,7 @@ describe('@mantine/core/AppShellHeader', () => {
   tests.itSupportsSystemProps<AppShellHeaderProps, AppShellHeaderStylesNames>({
     component: TestContainer,
     props: defaultProps,
+    mod: true,
     styleProps: true,
     children: true,
     extend: true,

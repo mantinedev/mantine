@@ -181,7 +181,7 @@
   z-index: 2;
   transition: border-color var(--sc-transition-duration) var(--sc-transition-timing-function);
 
-  &::before {
+  .root[data-with-items-borders] :where(&)::before {
     content: '';
     position: absolute;
     top: 0;

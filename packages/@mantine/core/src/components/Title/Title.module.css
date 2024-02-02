@@ -4,8 +4,9 @@
   font-size: var(--title-fz);
   line-height: var(--title-lh);
   font-family: var(--mantine-font-family-headings);
+  text-wrap: var(--title-text-wrap, var(--mantine-heading-text-wrap));
 
-  &[data-line-clamp] {
+  &:where([data-line-clamp]) {
     overflow: hidden;
     text-overflow: ellipsis;
     display: -webkit-box;

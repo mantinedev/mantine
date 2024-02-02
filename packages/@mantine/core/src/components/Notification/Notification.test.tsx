@@ -16,7 +16,7 @@ describe('@mantine/core/Notification', () => {
   tests.itSupportsSystemProps<NotificationProps, NotificationStylesNames>({
     component: Notification,
     props: defaultProps,
-    polymorphic: true,
+    mod: true,
     styleProps: true,
     children: true,
     extend: true,

@@ -14,6 +14,7 @@ describe('@mantine/core/Chip', () => {
   tests.itSupportsSystemProps<ChipProps, ChipStylesNames>({
     component: Chip,
     props: defaultProps,
+    mod: true,
     styleProps: true,
     children: true,
     extend: true,

@@ -16,6 +16,22 @@ export function Usage() {
   );
 }
 
+export function ScrollToSelected() {
+  return (
+    <div style={{ padding: 40 }}>
+      <Select
+        data={['React', 'Angular', 'Svelte'].flatMap((value) =>
+          Array(10)
+            .fill(0)
+            .map((_, index) => `${value} ${index}`)
+        )}
+        placeholder="Select something"
+        defaultValue="First"
+      />
+    </div>
+  );
+}
+
 export function EmptyOptionValue() {
   return (
     <div style={{ padding: 40 }}>

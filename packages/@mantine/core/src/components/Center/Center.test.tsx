@@ -10,6 +10,7 @@ describe('@mantine/core/Center', () => {
   tests.itSupportsSystemProps<CenterProps, CenterStylesNames>({
     component: Center,
     props: defaultProps,
+    mod: true,
     polymorphic: true,
     styleProps: true,
     children: true,

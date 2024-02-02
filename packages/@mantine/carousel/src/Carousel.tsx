@@ -216,6 +216,7 @@ export const Carousel = factory<CarouselFactory>((_props, ref) => {
     skipSnaps,
     containScroll,
     withKeyboardEvents,
+    mod,
     ...others
   } = props;
 
@@ -340,7 +341,7 @@ export const Carousel = factory<CarouselFactory>((_props, ref) => {
         ref={ref}
         {...getStyles('root', { className: responsiveClassName })}
         {...others}
-        mod={{ orientation, 'include-gap-in-size': includeGapInSize }}
+        mod={[{ orientation, 'include-gap-in-size': includeGapInSize }, mod]}
         onKeyDownCapture={handleKeydown}
       >
         <div {...getStyles('viewport')} ref={emblaRefElement}>

@@ -143,7 +143,7 @@ export interface UseFormInput<
   clearInputErrorOnChange?: boolean;
   validateInputOnChange?: boolean | LooseKeys<Values>[];
   validateInputOnBlur?: boolean | LooseKeys<Values>[];
-  onValuesChange?: (values: Values) => void;
+  onValuesChange?: (values: Values, previous: Values) => void;
   enhanceGetInputProps?: (payload: {
     inputProps: GetInputPropsReturnType;
     field: LooseKeys<Values>;

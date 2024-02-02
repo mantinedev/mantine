@@ -13,6 +13,7 @@ describe('@mantine/core/Pill', () => {
   tests.itSupportsSystemProps<PillProps, PillStylesNames>({
     component: Pill,
     props: defaultProps,
+    mod: true,
     styleProps: true,
     children: true,
     extend: true,

@@ -11,7 +11,6 @@ function Wrapper(props: TableProps) {
           <Table.Th>Position</Table.Th>
           <Table.Th>Name</Table.Th>
           <Table.Th>Symbol</Table.Th>
-          <Table.Th>Mass</Table.Th>
         </Table.Tr>
       </Table.Thead>
       <Table.Tbody>
@@ -20,7 +19,6 @@ function Wrapper(props: TableProps) {
             <Table.Td>{element.position}</Table.Td>
             <Table.Td>{element.name}</Table.Td>
             <Table.Td>{element.symbol}</Table.Td>
-            <Table.Td>{element.mass}</Table.Td>
           </Table.Tr>
         ))}
       </Table.Tbody>

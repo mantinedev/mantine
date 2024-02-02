@@ -23,6 +23,7 @@ describe('@mantine/charts/LineChart', () => {
   tests.itSupportsSystemProps<LineChartProps, LineChartStylesNames>({
     component: LineChart,
     props: defaultProps,
+    mod: true,
     styleProps: true,
     extend: true,
     variant: true,

@@ -14,10 +14,6 @@ import { useAppShellContext } from '../AppShell.context';
 import classes from '../AppShell.module.css';
 
 export type AppShellHeaderStylesNames = 'header';
-export type AppShellHeaderVariant = string;
-export type AppShellHeaderCssVariables = {
-  root: '--test';
-};
 
 export interface AppShellHeaderProps
   extends BoxProps,
@@ -34,16 +30,24 @@ export type AppShellHeaderFactory = Factory<{
   props: AppShellHeaderProps;
   ref: HTMLElement;
   stylesNames: AppShellHeaderStylesNames;
-  vars: AppShellHeaderCssVariables;
-  variant: AppShellHeaderVariant;
 }>;
 
 const defaultProps: Partial<AppShellHeaderProps> = {};
 
 export const AppShellHeader = factory<AppShellHeaderFactory>((_props, ref) => {
   const props = useProps('AppShellHeader', defaultProps, _props);
-  const { classNames, className, style, styles, unstyled, vars, withBorder, zIndex, ...others } =
-    props;
+  const {
+    classNames,
+    className,
+    style,
+    styles,
+    unstyled,
+    vars,
+    withBorder,
+    zIndex,
+    mod,
+    ...others
+  } = props;
   const ctx = useAppShellContext();
 
   if (ctx.disabled) {
@@ -54,7 +58,7 @@ export const AppShellHeader = factory<AppShellHeaderFactory>((_props, ref) => {
     <Box
       component="header"
       ref={ref}
-      mod={{ 'with-border': withBorder ?? ctx.withBorder }}
+      mod={[{ 'with-border': withBorder ?? ctx.withBorder }, mod]}
       {...ctx.getStyles('header', {
         className: cx({ [RemoveScroll.classNames.zeroRight]: ctx.offsetScrollbars }, className),
         classNames,

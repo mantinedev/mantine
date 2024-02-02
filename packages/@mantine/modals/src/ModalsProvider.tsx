@@ -208,7 +208,7 @@ export function ModalsProvider({ children, modalProps, labels, modals }: ModalsP
         {...modalProps}
         {...currentModalProps}
         opened={state.modals.length > 0}
-        onClose={() => closeModal(state.current!.id)}
+        onClose={() => closeModal(state.current?.id as any)}
       >
         {content}
       </Modal>

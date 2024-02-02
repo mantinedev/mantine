@@ -12,14 +12,12 @@
   padding: calc(var(--mantine-spacing-xs) / 2);
   cursor: pointer;
 
-  --_burger-color: var(--burger-color, var(--__burger-color));
-
-  @mixin light {
-    --__burger-color: var(--mantine-color-black);
+  @mixin where-light {
+    --burger-color: var(--mantine-color-black);
   }
 
-  @mixin dark {
-    --__burger-color: var(--mantine-color-white);
+  @mixin where-dark {
+    --burger-color: var(--mantine-color-white);
   }
 }
 
@@ -33,7 +31,7 @@
     display: block;
     width: var(--burger-size);
     height: calc(var(--burger-size) / 12);
-    background-color: var(--_burger-color);
+    background-color: var(--burger-color);
     outline: rem(1px) solid transparent;
     transition-property: background-color, transform;
     transition-duration: var(--burger-transition-duration, 300ms);

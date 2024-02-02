@@ -45,6 +45,7 @@ function Option({ data, withCheckIcon, value, checkIconPosition, unstyled }: Opt
         data-reverse={checkIconPosition === 'right' || undefined}
         data-checked={isValueChecked(value, data.value) || undefined}
         aria-selected={isValueChecked(value, data.value)}
+        active={isValueChecked(value, data.value)}
       >
         {checkIconPosition === 'left' && check}
         <span>{data.label}</span>
@@ -134,7 +135,6 @@ export function OptionsDropdown({
             type="scroll"
             scrollbarSize="var(--_combobox-padding)"
             offsetScrollbars="y"
-            className={classes.optionsDropdownScrollArea}
           >
             {options}
           </ScrollArea.Autosize>

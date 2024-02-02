@@ -18,7 +18,7 @@ import { useDatesContext } from '../DatesProvider';
 import { DateInputSharedProps, PickerInputBase } from '../PickerInputBase';
 import { YearPicker, YearPickerBaseProps, YearPickerStylesNames } from '../YearPicker';
 
-export type YearPickerInputStylesNames = __InputStylesNames | YearPickerStylesNames;
+export type YearPickerInputStylesNames = __InputStylesNames | 'placeholder' | YearPickerStylesNames;
 
 export interface YearPickerInputProps<Type extends DatePickerType = 'default'>
   extends BoxProps,
@@ -72,6 +72,7 @@ export const YearPickerInput: YearPickerInputComponent = factory<YearPickerInput
       minDate,
       maxDate,
       vars,
+      valueFormatter,
       ...rest
     } = props;
 
@@ -102,6 +103,7 @@ export const YearPickerInput: YearPickerInputComponent = factory<YearPickerInput
       labelSeparator,
       closeOnChange,
       sortDates,
+      valueFormatter,
     });
 
     return (

@@ -7,42 +7,40 @@
 
   display: flex;
   width: max-content;
-  pointer-events: var(--_pointer-events);
 
-  &:has(input:disabled) {
-    --_pointer-events: none;
+  &:where(:has(input:disabled)) {
+    pointer-events: none;
   }
 }
 
 .symbolGroup {
   position: relative;
   transition: transform 100ms ease;
-  z-index: var(--_z-index);
-  transform: var(--_transform);
 
-  &[data-active] {
-    --_z-index: 1;
-    --_transform: scale(1.1);
+  &:where([data-active]) {
+    z-index: 1;
+    transform: scale(1.1);
   }
 }
 
 .starSymbol {
   width: var(--rating-size);
   height: var(--rating-size);
-  stroke: var(--_star-color);
-  fill: var(--_star-color);
   display: block;
 
-  @mixin light {
-    --_star-color: var(--mantine-color-gray-3);
+  @mixin where-light {
+    fill: var(--mantine-color-gray-3);
+    stroke: var(--mantine-color-gray-3);
   }
 
-  @mixin dark {
-    --_star-color: var(--mantine-color-dark-3);
+  @mixin where-dark {
+    fill: var(--mantine-color-dark-3);
+    stroke: var(--mantine-color-dark-3);
   }
 
-  [data-mantine-color-scheme] &[data-filled] {
-    --_star-color: var(--rating-color);
+  &:where([data-filled]) {
+    fill: var(--rating-color);
+    stroke: var(--rating-color);
   }
 }
 
@@ -70,11 +68,11 @@
   z-index: var(--rating-item-z-index, 0);
   -webkit-tap-highlight-color: transparent;
 
-  &[data-read-only] {
+  &:where([data-read-only]) {
     cursor: default;
   }
 
-  &:last-of-type {
+  &:where(:last-of-type) {
     position: relative;
   }
 }

@@ -1,7 +1,7 @@
 import { DatePickerInput } from '@mantine/dates';
 import { getSharedPickerInputDemos } from '../_shared';
 
-export const { usage, multiple, range, configurator, modal, icon, clearable } =
+export const { usage, multiple, range, configurator, modal, icon, clearable, valueFormatter } =
   getSharedPickerInputDemos(DatePickerInput);
 
 export { valueFormat } from './DatePickerInput.demo.valueFormat';

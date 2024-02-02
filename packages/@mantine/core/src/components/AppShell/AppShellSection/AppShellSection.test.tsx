@@ -15,6 +15,7 @@ describe('@mantine/core/AppShellSection', () => {
   tests.itSupportsSystemProps<any, AppShellSectionStylesNames>({
     component: TestContainer,
     props: defaultProps,
+    mod: true,
     polymorphic: true,
     styleProps: true,
     children: true,

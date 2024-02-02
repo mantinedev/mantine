@@ -27,6 +27,9 @@ export interface TextareaProps
 
   /** Minimum rows of autosize textarea, ignored if `autosize` prop is not set */
   minRows?: number;
+
+  /** Controls `resize` CSS property, `'none'` by default */
+  resize?: React.CSSProperties['resize'];
 }
 
 export type TextareaFactory = Factory<{
@@ -38,7 +41,7 @@ export type TextareaFactory = Factory<{
 const defaultProps: Partial<TextareaProps> = {};
 
 export const Textarea = factory<TextareaFactory>((props, ref) => {
-  const { autosize, maxRows, minRows, __staticSelector, ...others } = useProps(
+  const { autosize, maxRows, minRows, __staticSelector, resize, ...others } = useProps(
     'Textarea',
     defaultProps,
     props
@@ -55,6 +58,7 @@ export const Textarea = factory<TextareaFactory>((props, ref) => {
       __staticSelector={__staticSelector || 'Textarea'}
       multiline
       data-no-overflow={(autosize && maxRows === undefined) || undefined}
+      __vars={{ '--input-resize': resize }}
       {...autosizeProps}
     />
   );

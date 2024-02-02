@@ -23,6 +23,7 @@ describe('@mantine/charts/AreaChart', () => {
   tests.itSupportsSystemProps<AreaChartProps, AreaChartStylesNames>({
     component: AreaChart,
     props: defaultProps,
+    mod: true,
     styleProps: true,
     extend: true,
     variant: true,

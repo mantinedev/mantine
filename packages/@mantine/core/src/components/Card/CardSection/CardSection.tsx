@@ -32,14 +32,14 @@ const defaultProps: Partial<CardSectionProps> = {};
 
 export const CardSection = polymorphicFactory<CardSectionFactory>((_props, ref) => {
   const props = useProps('CardSection', defaultProps, _props);
-  const { classNames, className, style, styles, vars, withBorder, inheritPadding, ...others } =
+  const { classNames, className, style, styles, vars, withBorder, inheritPadding, mod, ...others } =
     props;
   const ctx = useCardContext();
 
   return (
     <Box
       ref={ref}
-      mod={{ 'with-border': withBorder, 'inherit-padding': inheritPadding }}
+      mod={[{ 'with-border': withBorder, 'inherit-padding': inheritPadding }, mod]}
       {...ctx.getStyles('section', { className, style, styles, classNames })}
       {...others}
     />

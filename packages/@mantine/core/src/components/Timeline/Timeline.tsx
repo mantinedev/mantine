@@ -6,6 +6,7 @@ import {
   ElementProps,
   factory,
   Factory,
+  getAutoContrastValue,
   getContrastColor,
   getRadius,
   getThemeColor,
@@ -80,7 +81,9 @@ const varsResolver = createVarsResolver<TimelineFactory>(
       '--tl-line-width': rem(lineWidth),
       '--tl-radius': radius === undefined ? undefined : getRadius(radius),
       '--tl-color': color ? getThemeColor(color, theme) : undefined,
-      '--tl-icon-color': autoContrast ? getContrastColor({ color, theme }) : undefined,
+      '--tl-icon-color': getAutoContrastValue(autoContrast, theme)
+        ? getContrastColor({ color, theme })
+        : undefined,
     },
   })
 );
@@ -102,6 +105,7 @@ export const Timeline = factory<TimelineFactory>((_props, ref) => {
     align,
     lineWidth,
     reverseActive,
+    mod,
     ...others
   } = props;
 
@@ -134,7 +138,7 @@ export const Timeline = factory<TimelineFactory>((_props, ref) => {
 
   return (
     <TimelineProvider value={{ getStyles }}>
-      <Box {...getStyles('root')} mod={{ align }} ref={ref} {...others}>
+      <Box {...getStyles('root')} mod={[{ align }, mod]} ref={ref} {...others}>
         {items}
       </Box>
     </TimelineProvider>

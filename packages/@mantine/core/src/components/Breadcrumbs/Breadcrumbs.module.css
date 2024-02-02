@@ -12,17 +12,16 @@
 .separator {
   margin-left: var(--bc-separator-margin, var(--mantine-spacing-xs));
   margin-right: var(--bc-separator-margin, var(--mantine-spacing-xs));
-  color: var(--_separator-color);
   line-height: 1;
   display: flex;
   align-items: center;
   justify-content: center;
 
-  @mixin light {
-    --_separator-color: var(--mantine-color-gray-7);
+  @mixin where-light {
+    color: var(--mantine-color-gray-7);
   }
 
-  @mixin dark {
-    --_separator-color: var(--mantine-color-dark-2);
+  @mixin where-dark {
+    color: var(--mantine-color-dark-2);
   }
 }

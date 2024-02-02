@@ -73,7 +73,13 @@ export const MenuDropdown = factory<MenuDropdownFactory>((props, ref) => {
       role="menu"
       aria-orientation="vertical"
       ref={useMergedRef(ref, wrapperRef)}
-      {...ctx.getStyles('dropdown', { className, style, styles, classNames })}
+      {...ctx.getStyles('dropdown', {
+        className,
+        style,
+        styles,
+        classNames,
+        withStaticClass: false,
+      })}
       tabIndex={-1}
       data-menu-dropdown
       onKeyDown={handleKeyDown}

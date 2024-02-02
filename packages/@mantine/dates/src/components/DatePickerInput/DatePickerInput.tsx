@@ -18,7 +18,7 @@ import { DatePicker, DatePickerBaseProps } from '../DatePicker';
 import { useDatesContext } from '../DatesProvider';
 import { DateInputSharedProps, PickerInputBase } from '../PickerInputBase';
 
-export type DatePickerInputStylesNames = __InputStylesNames | CalendarStylesNames;
+export type DatePickerInputStylesNames = __InputStylesNames | 'placeholder' | CalendarStylesNames;
 
 export interface DatePickerInputProps<Type extends DatePickerType = 'default'>
   extends BoxProps,
@@ -73,6 +73,7 @@ export const DatePickerInput: DatePickerInputComponent = factory<DatePickerInput
       maxDate,
       vars,
       defaultDate,
+      valueFormatter,
       ...rest
     } = props;
 
@@ -102,6 +103,7 @@ export const DatePickerInput: DatePickerInputComponent = factory<DatePickerInput
       labelSeparator,
       closeOnChange,
       sortDates,
+      valueFormatter,
     });
 
     const _defaultDate = Array.isArray(_value) ? _value[0] || defaultDate : _value || defaultDate;

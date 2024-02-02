@@ -67,6 +67,7 @@ export function useForm<
       if (!initialized) {
         setInitialized(true);
         _setValues(_values);
+        setValuesSnapshot(_values);
       }
     },
     [initialized]
@@ -140,7 +141,7 @@ export function useForm<
           : clearFieldError(path);
       }
 
-      onValuesChange?.(result);
+      onValuesChange?.(result, current);
 
       return result;
     });
@@ -152,7 +153,7 @@ export function useForm<
     _setValues((currentValues) => {
       const valuesPartial = typeof payload === 'function' ? payload(currentValues) : payload;
       const result = { ...currentValues, ...valuesPartial };
-      onValuesChange?.(result);
+      onValuesChange?.(result, currentValues);
       return result;
     });
     clearInputErrorOnChange && clearErrors();
@@ -162,7 +163,7 @@ export function useForm<
     clearFieldDirty(path);
     _setValues((current) => {
       const result = reorderPath(path, payload, current);
-      onValuesChange?.(result);
+      onValuesChange?.(result, current);
       return result;
     });
     _setErrors((errs) => reorderErrors(path, payload, errs));
@@ -172,7 +173,7 @@ export function useForm<
     clearFieldDirty(path);
     _setValues((current) => {
       const result = removePath(path, index, current);
-      onValuesChange?.(result);
+      onValuesChange?.(result, current);
       return result;
     });
     _setErrors((errs) => changeErrorIndices(path, index, errs, -1));
@@ -182,7 +183,7 @@ export function useForm<
     clearFieldDirty(path);
     _setValues((current) => {
       const result = insertPath(path, item, index, current);
-      onValuesChange?.(result);
+      onValuesChange?.(result, current);
       return result;
     });
     _setErrors((errs) => changeErrorIndices(path, index, errs, 1));

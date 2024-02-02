@@ -30,10 +30,17 @@ export const ModalContent = factory<ModalContentFactory>((_props, ref) => {
     <ModalBaseContent
       {...ctx.getStyles('content', { className, style, styles, classNames })}
       innerProps={ctx.getStyles('inner', { className, style, styles, classNames })}
+      data-full-screen={ctx.fullScreen || undefined}
       ref={ref}
       {...others}
     >
-      <Scroll style={{ maxHeight: `calc(100vh - (${rem(ctx.yOffset)} * 2))` }}>{children}</Scroll>
+      <Scroll
+        style={{
+          maxHeight: ctx.fullScreen ? '100dvh' : `calc(100dvh - (${rem(ctx.yOffset)} * 2))`,
+        }}
+      >
+        {children}
+      </Scroll>
     </ModalBaseContent>
   );
 });

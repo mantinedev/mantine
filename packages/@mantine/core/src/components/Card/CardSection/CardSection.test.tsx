@@ -11,6 +11,7 @@ describe('@mantine/core/CardSection', () => {
   tests.itSupportsSystemProps<any, CardSectionStylesNames>({
     component: TestContainer,
     props: defaultProps,
+    mod: true,
     polymorphic: true,
     styleProps: true,
     children: true,

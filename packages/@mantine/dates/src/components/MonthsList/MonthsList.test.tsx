@@ -11,6 +11,7 @@ describe('@mantine/dates/MonthsList', () => {
   tests.itSupportsSystemProps<MonthsListProps, MonthsListStylesNames>({
     component: MonthsList,
     props: defaultProps,
+    mod: true,
     styleProps: true,
     extend: true,
     variant: true,

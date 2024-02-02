@@ -13,6 +13,7 @@ describe('@mantine/core/MenuDropdown', () => {
   tests.itSupportsSystemProps<MenuDropdownProps, MenuDropdownStylesNames>({
     component: TestContainer,
     props: defaultProps,
+    mod: true,
     styleProps: true,
     children: true,
     extend: true,

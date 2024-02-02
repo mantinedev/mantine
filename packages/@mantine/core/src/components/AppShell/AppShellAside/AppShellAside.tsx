@@ -34,8 +34,18 @@ const defaultProps: Partial<AppShellAsideProps> = {};
 
 export const AppShellAside = factory<AppShellAsideFactory>((_props, ref) => {
   const props = useProps('AppShellAside', defaultProps, _props);
-  const { classNames, className, style, styles, unstyled, vars, withBorder, zIndex, ...others } =
-    props;
+  const {
+    classNames,
+    className,
+    style,
+    styles,
+    unstyled,
+    vars,
+    withBorder,
+    zIndex,
+    mod,
+    ...others
+  } = props;
   const ctx = useAppShellContext();
 
   if (ctx.disabled) {
@@ -46,7 +56,7 @@ export const AppShellAside = factory<AppShellAsideFactory>((_props, ref) => {
     <Box
       component="aside"
       ref={ref}
-      mod={{ 'with-border': withBorder ?? ctx.withBorder }}
+      mod={[{ 'with-border': withBorder ?? ctx.withBorder }, mod]}
       {...ctx.getStyles('aside', { className, classNames, styles, style })}
       {...others}
       __vars={{

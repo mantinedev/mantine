@@ -11,6 +11,7 @@ describe('@mantine/core/AppShellAside', () => {
   tests.itSupportsSystemProps<AppShellAsideProps, AppShellAsideStylesNames>({
     component: TestContainer,
     props: defaultProps,
+    mod: true,
     styleProps: true,
     children: true,
     extend: true,

@@ -150,6 +150,7 @@ export const Tooltip = factory<TooltipFactory>((_props, ref) => {
     keepMounted,
     vars,
     portalProps,
+    mod,
     ...others
   } = useProps('Tooltip', defaultProps, props);
 
@@ -205,7 +206,7 @@ export const Tooltip = factory<TooltipFactory>((_props, ref) => {
             <Box
               {...others}
               variant={variant}
-              mod={{ multiline }}
+              mod={[{ multiline }, mod]}
               {...tooltip.getFloatingProps({
                 ref: tooltip.floating,
                 className: getStyles('tooltip').className,

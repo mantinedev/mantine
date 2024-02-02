@@ -9,7 +9,6 @@ import {
 import {
   Box,
   BoxProps,
-  createVarsResolver,
   ElementProps,
   factory,
   Factory,
@@ -25,10 +24,6 @@ import { Thumb } from '../Thumb/Thumb';
 import classes from '../ColorPicker.module.css';
 
 export type ColorSliderStylesNames = 'slider' | 'sliderOverlay' | 'thumb';
-export type ColorSliderVariant = string;
-export type ColorSliderCssVariables = {
-  root: '--test';
-};
 
 export interface __ColorSliderProps extends ElementProps<'div', 'onChange'> {
   value: number;
@@ -56,17 +51,9 @@ export type ColorSliderFactory = Factory<{
   props: ColorSliderProps;
   ref: HTMLDivElement;
   stylesNames: ColorSliderStylesNames;
-  vars: ColorSliderCssVariables;
-  variant: ColorSliderVariant;
 }>;
 
 const defaultProps: Partial<ColorSliderProps> = {};
-
-const varsResolver = createVarsResolver<ColorSliderFactory>(() => ({
-  root: {
-    '--test': 'test',
-  },
-}));
 
 export const ColorSlider = factory<ColorSliderFactory>((_props, ref) => {
   const props = useProps('ColorSlider', defaultProps, _props);
@@ -101,8 +88,6 @@ export const ColorSlider = factory<ColorSliderFactory>((_props, ref) => {
     classNames,
     styles,
     unstyled,
-    vars,
-    varsResolver,
   });
 
   const ctxGetStyles = useColorPickerContext()?.getStyles;

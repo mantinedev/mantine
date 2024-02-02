@@ -57,7 +57,7 @@ export function Unstyled() {
 export function RadioGroup() {
   return (
     <div style={{ padding: 20 }}>
-      <Radio.Group defaultValue="ng">
+      <Radio.Group defaultValue="ng" readOnly>
         <Radio label="React" value="react" />
         <Radio label="Angular" value="ng" />
         <Radio label="Svelte" value="sv" />

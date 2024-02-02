@@ -24,7 +24,7 @@ export const STYlE_PROPS_DATA: Record<keyof MantineStyleProps, SystemPropData> =
   py: { type: 'spacing', property: ['paddingTop', 'paddingBottom'] },
 
   bg: { type: 'color', property: 'background' },
-  c: { type: 'color', property: 'color' },
+  c: { type: 'textColor', property: 'color' },
   opacity: { type: 'identity', property: 'opacity' },
 
   ff: { type: 'fontFamily', property: 'fontFamily' },

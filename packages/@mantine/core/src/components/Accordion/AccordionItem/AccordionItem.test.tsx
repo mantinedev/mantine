@@ -12,6 +12,7 @@ describe('@mantine/core/AccordionItem', () => {
   tests.itSupportsSystemProps<AccordionItemProps, AccordionItemStylesNames>({
     component: ContextContainer,
     props: defaultProps,
+    mod: true,
     styleProps: true,
     children: true,
     extend: true,

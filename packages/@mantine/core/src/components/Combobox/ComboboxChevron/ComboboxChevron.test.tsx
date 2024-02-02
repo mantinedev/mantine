@@ -11,6 +11,7 @@ describe('@mantine/core/ComboboxChevron', () => {
   tests.itSupportsSystemProps<ComboboxChevronProps, ComboboxChevronStylesNames>({
     component: ComboboxChevron,
     props: defaultProps,
+    mod: true,
     styleProps: true,
     extend: true,
     variant: true,

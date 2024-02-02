@@ -19,6 +19,7 @@ describe('@mantine/core/ColorInput', () => {
   tests.itSupportsSystemProps<ColorInputProps, __InputStylesNames>({
     component: ColorInput,
     props: defaultProps,
+    mod: true,
     styleProps: true,
     extend: true,
     size: true,

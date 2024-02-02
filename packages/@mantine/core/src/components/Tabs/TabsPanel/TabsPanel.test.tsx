@@ -16,6 +16,7 @@ describe('@mantine/core/TabsPanel', () => {
     props: defaultProps,
     refType: HTMLDivElement,
     displayName: '@mantine/core/TabsPanel',
+    mod: true,
     extend: true,
     styleProps: true,
     children: true,

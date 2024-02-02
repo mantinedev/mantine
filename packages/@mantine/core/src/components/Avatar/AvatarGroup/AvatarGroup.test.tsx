@@ -7,6 +7,7 @@ describe('@mantine/core/AvatarGroup', () => {
   tests.itSupportsSystemProps<AvatarGroupProps, AvatarGroupStylesNames>({
     component: AvatarGroup,
     props: defaultProps,
+    mod: true,
     styleProps: true,
     children: true,
     extend: true,

@@ -8,6 +8,7 @@ describe('@mantine/core/Overlay', () => {
   tests.itSupportsSystemProps<OverlayProps, OverlayStylesNames>({
     component: Overlay,
     props: defaultProps,
+    mod: true,
     polymorphic: true,
     styleProps: true,
     children: true,

@@ -1,9 +1,4 @@
 /* ----- CSS reset ----- */
-html,
-body {
-  height: 100%;
-}
-
 *,
 *::before,
 *::after {

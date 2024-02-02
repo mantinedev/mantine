@@ -1,25 +1,25 @@
 .tooltip {
+  --tooltip-radius: var(--mantine-radius-default);
+
   position: absolute;
   padding: calc(var(--mantine-spacing-xs) / 2) var(--mantine-spacing-xs);
   pointer-events: none;
   font-size: var(--mantine-font-size-sm);
-  white-space: var(--_tooltip-white-space, nowrap);
-  background-color: var(--_tooltip-bg);
-  color: var(--tooltip-color, var(--_tooltip-color));
-  border-radius: var(--tooltip-radius, var(--mantine-radius-default));
+  white-space: nowrap;
+  border-radius: var(--tooltip-radius);
 
-  @mixin light {
-    --_tooltip-bg: var(--tooltip-bg, var(--mantine-color-gray-9));
-    --_tooltip-color: var(--mantine-color-white);
+  @mixin where-light {
+    background-color: var(--tooltip-bg, var(--mantine-color-gray-9));
+    color: var(--tooltip-color, var(--mantine-color-white));
   }
 
-  @mixin dark {
-    --_tooltip-bg: var(--tooltip-bg, var(--mantine-color-gray-2));
-    --_tooltip-color: var(--mantine-color-black);
+  @mixin where-dark {
+    background-color: var(--tooltip-bg, var(--mantine-color-gray-2));
+    color: var(--tooltip-color, var(--mantine-color-black));
   }
 
-  &[data-multiline] {
-    --_tooltip-white-space: normal;
+  &:where([data-multiline]) {
+    white-space: normal;
   }
 }
 

@@ -1,17 +1,17 @@
 .root {
   inset: 0;
-  position: var(--_overlay-position, absolute);
+  position: absolute;
   background: var(--overlay-bg, rgba(0, 0, 0, 0.6));
   backdrop-filter: var(--overlay-filter);
   -webkit-backdrop-filter: var(--overlay-filter);
   border-radius: var(--overlay-radius, 0);
   z-index: var(--overlay-z-index);
 
-  &[data-fixed] {
-    --_overlay-position: fixed;
+  &:where([data-fixed]) {
+    position: fixed;
   }
 
-  &[data-center] {
+  &:where([data-center]) {
     display: flex;
     align-items: center;
     justify-content: center;

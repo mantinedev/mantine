@@ -10,6 +10,7 @@ describe('@mantine/core/InputLabel', () => {
   tests.itSupportsSystemProps<InputLabelProps, InputLabelStylesNames>({
     component: InputLabel,
     props: defaultProps,
+    mod: true,
     styleProps: true,
     children: true,
     extend: true,

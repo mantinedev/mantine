@@ -7,6 +7,7 @@ describe('@mantine/core/InputError', () => {
   tests.itSupportsSystemProps<InputErrorProps, InputErrorStylesNames>({
     component: InputError,
     props: defaultProps,
+    mod: true,
     styleProps: true,
     children: true,
     extend: true,

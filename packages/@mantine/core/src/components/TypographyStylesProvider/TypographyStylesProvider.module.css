@@ -1,61 +1,70 @@
 .root {
-  & h1,
-  & h2,
-  & h3,
-  & h4,
-  & h5,
-  & h6 {
-    margin-top: calc(1.55 * var(--mantine-spacing-xl));
-    margin-bottom: var(--mantine-spacing-xs);
+  & :first-child {
+    margin-top: 0;
   }
 
-  & h1 {
+  & :last-child {
+    margin-bottom: 0;
+  }
+
+  & :where(h1, h2, h3, h4, h5, h6) {
+    margin-bottom: var(--mantine-spacing-xs);
+    text-wrap: var(--mantine-heading-text-wrap);
+  }
+
+  & :where(h1) {
+    margin-top: calc(1.5 * var(--mantine-spacing-xl));
     font-size: var(--mantine-h1-font-size);
     line-height: var(--mantine-h1-line-height);
     font-weight: var(--mantine-h1-font-weight);
   }
 
-  & h2 {
+  & :where(h2) {
+    margin-top: var(--mantine-spacing-xl);
     font-size: var(--mantine-h2-font-size);
     line-height: var(--mantine-h2-line-height);
     font-weight: var(--mantine-h2-font-weight);
   }
 
-  & h3 {
+  & :where(h3) {
+    margin-top: calc(0.8 * var(--mantine-spacing-xl));
     font-size: var(--mantine-h3-font-size);
     line-height: var(--mantine-h3-line-height);
     font-weight: var(--mantine-h3-font-weight);
   }
 
-  & h4 {
+  & :where(h4) {
+    margin-top: calc(0.8 * var(--mantine-spacing-xl));
     font-size: var(--mantine-h4-font-size);
     line-height: var(--mantine-h4-line-height);
     font-weight: var(--mantine-h4-font-weight);
   }
 
-  & h5 {
+  & :where(h5) {
+    margin-top: calc(0.5 * var(--mantine-spacing-xl));
     font-size: var(--mantine-h5-font-size);
     line-height: var(--mantine-h5-line-height);
     font-weight: var(--mantine-h5-font-weight);
   }
 
-  & h6 {
+  & :where(h6) {
+    margin-top: calc(0.5 * var(--mantine-spacing-xl));
     font-size: var(--mantine-h6-font-size);
     line-height: var(--mantine-h6-line-height);
     font-weight: var(--mantine-h6-font-weight);
   }
 
-  & img {
+  & :where(img) {
     max-width: 100%;
     margin-bottom: var(--mantine-spacing-xs);
   }
 
-  & p {
+  & :where(p) {
     margin-top: 0;
     margin-bottom: var(--mantine-spacing-lg);
   }
 
-  & mark {
+  & :where(mark) {
     @mixin light {
       background-color: var(--mantine-color-yellow-2);
       color: inherit;
@@ -67,7 +76,7 @@
     }
   }
 
-  & a {
+  & :where(a) {
     color: var(--mantine-color-anchor);
     text-decoration: none;
 
@@ -76,7 +85,7 @@
     }
   }
 
-  & hr {
+  & :where(hr) {
     margin-top: var(--mantine-spacing-md);
     margin-bottom: var(--mantine-spacing-md);
     border: 0;
@@ -91,7 +100,7 @@
     }
   }
 
-  & pre {
+  & :where(pre) {
     padding: var(--mantine-spacing-xs);
     line-height: var(--mantine-line-height);
     margin: 0;
@@ -110,7 +119,7 @@
       background-color: var(--mantine-color-dark-8);
     }
 
-    & code {
+    & :where(code) {
       background-color: transparent;
       padding: 0;
       border-radius: 0;
@@ -119,7 +128,7 @@
     }
   }
 
-  & kbd {
+  & :where(kbd) {
     --kbd-fz: rem(12px);
     --kbd-padding: rem(3px) rem(5px);
 
@@ -129,25 +138,23 @@
     padding: var(--kbd-padding);
     font-size: var(--kbd-fz);
     border-radius: var(--mantine-radius-sm);
-    border: rem(1px) solid var(--_kbd-border-color);
+    border: rem(1px) solid;
     border-bottom-width: rem(3px);
-    background-color: var(--_kbd-bg);
-    color: var(--_kbd-color);
 
-    @mixin light {
-      --_kbd-border-color: var(--mantine-color-gray-3);
-      --_kbd-color: var(--mantine-color-gray-7);
-      --_kbd-bg: var(--mantine-color-gray-0);
+    @mixin where-light {
+      border-color: var(--mantine-color-gray-3);
+      color: var(--mantine-color-gray-7);
+      background-color: var(--mantine-color-gray-0);
     }
 
     @mixin dark {
-      --_kbd-border-color: var(--mantine-color-dark-3);
-      --_kbd-color: var(--mantine-color-dark-0);
-      --_kbd-bg: var(--mantine-color-dark-5);
+      border-color: var(--mantine-color-dark-3);
+      color: var(--mantine-color-dark-0);
+      background-color: var(--mantine-color-dark-5);
     }
   }
 
-  & code {
+  & :where(code) {
     line-height: var(--mantine-line-height);
     padding: rem(1px) rem(5px);
     border-radius: var(--mantine-radius-sm);
@@ -165,30 +172,28 @@
     }
   }
 
-  & ul,
-  &,
-  ol {
+  & :where(ul, ol) {
     margin-bottom: var(--mantine-spacing-md);
     padding-left: rem(38px);
 
-    & li {
+    & :where(li) {
       margin-bottom: var(--mantine-spacing-xs);
     }
   }
 
-  & table {
+  & :where(table) {
     width: 100%;
     border-collapse: collapse;
     caption-side: bottom;
     margin-bottom: var(--mantine-spacing-md);
 
-    & caption {
+    & :where(caption) {
       margin-top: var(--mantine-spacing-xs);
       font-size: var(--mantine-font-size-sm);
       color: var(--mantine-color-gray-6);
     }
 
-    & th {
+    & :where(th) {
       text-align: left;
       font-weight: bold;
       color: var(--mantine-color-gray-7);
@@ -196,40 +201,40 @@
       padding: var(--mantine-spacing-xs) var(--mantine-spacing-sm);
     }
 
-    & thead th {
+    & :where(thead th) {
       border-bottom: rem(1px) solid;
       border-color: var(--mantine-color-gray-3);
     }
 
-    & tfoot th {
+    & :where(tfoot th) {
       border-top: rem(1px) solid;
       border-color: var(--mantine-color-gray-3);
     }
 
-    & td {
+    & :where(td) {
       padding: var(--mantine-spacing-xs) var(--mantine-spacing-sm);
       border-bottom: rem(1px) solid;
       border-color: var(--mantine-color-gray-3);
       font-size: var(--mantine-font-size-sm);
     }
 
-    & tr:last-of-type td {
+    & :where(tr:last-of-type td) {
       border-bottom: 0;
     }
   }
 
-  & blockquote {
+  & :where(blockquote) {
     font-size: var(--mantine-font-size-lg);
     line-height: var(--mantine-line-height);
     margin: var(--mantine-spacing-md) 0;
     border-radius: var(--mantine-radius-sm);
     padding: var(--mantine-spacing-md) var(--mantine-spacing-lg);
 
-    @mixin light {
+    @mixin where-light {
       background-color: var(--mantine-color-gray-0);
     }
 
-    @mixin dark {
+    @mixin where-dark {
       background-color: var(--mantine-color-dark-8);
     }
   }

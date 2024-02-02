@@ -142,6 +142,7 @@ export const CodeHighlightTabs = factory<CodeHighlightTabsFactory>((_props, ref)
     expandCodeLabel,
     collapseCodeLabel,
     withExpandButton,
+    mod,
     ...others
   } = props;
 
@@ -197,7 +198,13 @@ export const CodeHighlightTabs = factory<CodeHighlightTabsFactory>((_props, ref)
   ));
 
   return (
-    <Box {...getStyles('root')} mod={{ collapsed: !_expanded }} ref={ref} {...others} dir="ltr">
+    <Box
+      {...getStyles('root')}
+      mod={[{ collapsed: !_expanded }, mod]}
+      ref={ref}
+      {...others}
+      dir="ltr"
+    >
       {withHeader && (
         <div {...getStyles('header')}>
           <ScrollArea type="never" dir="ltr" offsetScrollbars={false}>

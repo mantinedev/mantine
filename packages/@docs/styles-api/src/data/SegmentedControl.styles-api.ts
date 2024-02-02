@@ -26,6 +26,11 @@ export const SegmentedControlStylesApi: StylesApiData<SegmentedControlFactory> =
 
   modifiers: [
     { modifier: 'data-full-width', selector: 'root', condition: '`fullWidth` prop is set' },
+    {
+      modifier: 'data-with-items-border',
+      selector: 'root',
+      condition: '`withItemsBorder` prop is not `false`',
+    },
     { modifier: 'data-orientation', selector: 'control', value: 'Value of `orientation` prop' },
     {
       modifier: 'data-active',

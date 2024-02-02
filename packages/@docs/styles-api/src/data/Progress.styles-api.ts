@@ -12,6 +12,7 @@ export const ProgressStylesApi: StylesApiData<ProgressFactory> = {
     root: {
       '--progress-radius': 'Controls `border-radius` of track and sections',
       '--progress-size': 'Controls height of progress bar',
+      '--progress-transition-duration': 'Controls width `transition-duration` of progress bar',
     },
   },
 

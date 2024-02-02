@@ -7,6 +7,7 @@ import {
   ElementProps,
   factory,
   Factory,
+  getAutoContrastValue,
   getContrastColor,
   getRadius,
   getSafeId,
@@ -116,7 +117,9 @@ const varsResolver = createVarsResolver<TabsFactory>((theme, { radius, color, au
   root: {
     '--tabs-radius': getRadius(radius),
     '--tabs-color': getThemeColor(color, theme),
-    '--tabs-text-color': autoContrast ? getContrastColor({ color, theme }) : undefined,
+    '--tabs-text-color': getAutoContrastValue(autoContrast, theme)
+      ? getContrastColor({ color, theme })
+      : undefined,
   },
 }));
 
@@ -145,6 +148,7 @@ export const Tabs = factory<TabsFactory>((_props, ref) => {
     style,
     vars,
     autoContrast,
+    mod,
     ...others
   } = props;
 
@@ -196,11 +200,14 @@ export const Tabs = factory<TabsFactory>((_props, ref) => {
         ref={ref}
         id={uid}
         variant={variant}
-        mod={{
-          orientation,
-          inverted: orientation === 'horizontal' && inverted,
-          placement: orientation === 'vertical' && placement,
-        }}
+        mod={[
+          {
+            orientation,
+            inverted: orientation === 'horizontal' && inverted,
+            placement: orientation === 'vertical' && placement,
+          },
+          mod,
+        ]}
         {...getStyles('root')}
         {...others}
       >

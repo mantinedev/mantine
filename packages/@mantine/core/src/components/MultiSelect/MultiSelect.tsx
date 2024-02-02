@@ -172,6 +172,7 @@ export const MultiSelect = factory<MultiSelectFactory>((_props, ref) => {
     placeholder,
     hiddenInputValuesDivider,
     required,
+    mod,
     ...others
   } = props;
 
@@ -239,7 +240,7 @@ export const MultiSelect = factory<MultiSelectFactory>((_props, ref) => {
   const values = _value.map((item, index) => (
     <Pill
       key={`${item}-${index}`}
-      withRemoveButton={!readOnly}
+      withRemoveButton={!readOnly && !optionsLockup[item]?.disabled}
       onRemove={() => setValue(_value.filter((i) => item !== i))}
       unstyled={unstyled}
       {...getStyles('pill')}
@@ -337,6 +338,7 @@ export const MultiSelect = factory<MultiSelectFactory>((_props, ref) => {
             data-expanded={combobox.dropdownOpened || undefined}
             id={_id}
             required={required}
+            mod={mod}
           >
             <Pill.Group disabled={disabled} unstyled={unstyled} {...getStyles('pillsList')}>
               {values}
@@ -356,7 +358,6 @@ export const MultiSelect = factory<MultiSelectFactory>((_props, ref) => {
                   onBlur={(event) => {
                     onBlur?.(event);
                     combobox.closeDropdown();
-                    searchable && combobox.closeDropdown();
                     setSearchValue('');
                   }}
                   onKeyDown={handleInputKeydown}

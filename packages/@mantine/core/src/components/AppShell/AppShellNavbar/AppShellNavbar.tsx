@@ -34,8 +34,18 @@ const defaultProps: Partial<AppShellNavbarProps> = {};
 
 export const AppShellNavbar = factory<AppShellNavbarFactory>((_props, ref) => {
   const props = useProps('AppShellNavbar', defaultProps, _props);
-  const { classNames, className, style, styles, unstyled, vars, withBorder, zIndex, ...others } =
-    props;
+  const {
+    classNames,
+    className,
+    style,
+    styles,
+    unstyled,
+    vars,
+    withBorder,
+    zIndex,
+    mod,
+    ...others
+  } = props;
   const ctx = useAppShellContext();
 
   if (ctx.disabled) {
@@ -46,7 +56,7 @@ export const AppShellNavbar = factory<AppShellNavbarFactory>((_props, ref) => {
     <Box
       component="nav"
       ref={ref}
-      mod={{ 'with-border': withBorder ?? ctx.withBorder }}
+      mod={[{ 'with-border': withBorder ?? ctx.withBorder }, mod]}
       {...ctx.getStyles('navbar', { className, classNames, styles, style })}
       {...others}
       __vars={{

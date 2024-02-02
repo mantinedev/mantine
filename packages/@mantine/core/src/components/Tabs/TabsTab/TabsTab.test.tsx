@@ -18,6 +18,7 @@ describe('@mantine/core/TabsTab', () => {
     props: defaultProps,
     refType: HTMLButtonElement,
     displayName: '@mantine/core/TabsTab',
+    mod: true,
     extend: true,
     styleProps: true,
     children: true,

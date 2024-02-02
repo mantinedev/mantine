@@ -39,6 +39,9 @@ export interface BoxProps extends MantineStyleProps {
 
   /** Determines whether component should be hidden in dark color scheme with `display: none` */
   darkHidden?: boolean;
+
+  /** Element modifiers transformed into `data-` attributes, for example, `{ 'data-size': 'xl' }`, falsy values are removed */
+  mod?: BoxMod;
 }
 
 export type ElementProps<
@@ -52,9 +55,6 @@ export interface BoxComponentProps extends BoxProps {
 
   /** Size passed from parent component, sets `data-size` if value is not number like */
   size?: string | number;
-
-  /** Element modifiers transformed into `data-` attributes, for example, `{ 'data-size': 'xl' }`, falsy values are removed */
-  mod?: BoxMod;
 }
 
 const _Box = forwardRef<
