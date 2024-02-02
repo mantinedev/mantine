@@ -32,9 +32,7 @@ describe('@mantine/core/PinInput', () => {
 
   it('onChange is called after typing', () => {
     const spy = jest.fn();
-    const { container } = render(
-      <PinInput type="number" length={6} onChange={spy} />,
-    );
+    const { container } = render(<PinInput type="number" length={6} onChange={spy} />);
 
     fireEvent.input(container.querySelectorAll('.mantine-PinInput-input')[1], {
       target: {
