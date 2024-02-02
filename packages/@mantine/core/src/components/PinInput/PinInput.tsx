@@ -207,8 +207,8 @@ export const PinInput = factory<PinInputFactory>((props, ref) => {
     onChange:
       typeof onChange === 'function'
         ? (val) => {
-            onChange(val.join('').trim());
-          }
+          onChange(val.join('').trim());
+        }
         : undefined,
   });
   const _valueToString = _value.join('').trim();
