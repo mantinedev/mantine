@@ -1,7 +1,7 @@
 import React, { forwardRef, useCallback, useMemo, useRef, useState } from 'react';
 import type { ForwardedRef, Key, KeyboardEventHandler, MouseEventHandler } from 'react';
-import { Box, createPolymorphicComponent, createSafeContext } from '@mantine/core';
 import { mergeRefs, useDidUpdate, useId } from '@mantine/hooks';
+import { Box, createPolymorphicComponent, createSafeContext } from '../../core';
 import type { CompositeContextValue, CompositeProps } from './Composite.types';
 import type { FocusOptions } from './FocusManager/FocusManager.types';
 import { useFocusManager } from './FocusManager/useFocusManager';

@@ -1,5 +1,5 @@
 import { AriaRole, Key, MouseEvent, ReactElement } from 'react';
-import { BoxProps } from '@mantine/core';
+import { BoxProps } from '../../core';
 import type { FocusOptions } from './FocusManager/FocusManager.types';
 import { SelectionOptions } from './SelectionManager/SelectionManager';
 
