@@ -30,6 +30,21 @@ describe('@mantine/core/PinInput', () => {
     expect(container.querySelectorAll('.mantine-PinInput-input')).toHaveLength(5);
   });
 
+  it('onChange is called after typing', () => {
+    const spy = jest.fn();
+    const { container } = render(
+      <PinInput type="number" length={6} onChange={spy} />,
+    );
+
+    fireEvent.input(container.querySelectorAll('.mantine-PinInput-input')[1], {
+      target: {
+        value: '1',
+      },
+    });
+
+    expect(spy).toHaveBeenCalled();
+  });
+
   it('onComplete is called on last input', () => {
     const spy = jest.fn();
     const { container } = render(<PinInput {...defaultProps} onComplete={spy} />);
@@ -41,6 +56,11 @@ describe('@mantine/core/PinInput', () => {
     });
 
     expect(spy).toHaveBeenCalledWith('1111');
+  });
+
+  it('focus first input on mount with `autoFocus` property', () => {
+    const { container } = render(<PinInput length={6} autoFocus />);
+    expect(container.querySelectorAll('.mantine-PinInput-input')[0]).toHaveFocus();
   });
 
   it('stay focused on last element on initial backspace press', async () => {
@@ -88,5 +108,15 @@ describe('@mantine/core/PinInput', () => {
     const expectedValue = '123456';
     fireEvent.change(element, { target: { value: expectedValue } });
     expect(spy).toHaveBeenCalledWith(expectedValue);
+  });
+
+  it('display only one character in an input', () => {
+    const { container } = render(<PinInput length={6} />);
+    expect(container.querySelectorAll('.mantine-PinInput-input')[0].value.length).toBeLessThan(2);
+  });
+
+  it('display only one character in an input with `defaultValue` property', () => {
+    const { container } = render(<PinInput length={6} defaultValue="123456" />);
+    expect(container.querySelectorAll('.mantine-PinInput-input')[2].value.length).toBe(1);
   });
 });
