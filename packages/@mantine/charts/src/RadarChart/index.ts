@@ -4,4 +4,5 @@ export type {
   RadarChartCssVariables,
   RadarChartFactory,
   RadarChartStylesNames,
+  RadarChartSeries,
 } from './RadarChart';
