@@ -1,9 +1,13 @@
 import React from 'react';
 import {
   PolarAngleAxis,
+  PolarAngleAxisProps,
   PolarGrid,
+  PolarGridProps,
   PolarRadiusAxis,
+  PolarRadiusAxisProps,
   Radar,
+  RadarProps,
   RadarChart as ReChartsRadarChart,
   ResponsiveContainer,
 } from 'recharts';
@@ -30,7 +34,7 @@ export interface RadarChartSeries {
   opacity?: number;
 }
 
-export type RadarChartStylesNames = 'root';
+export type RadarChartStylesNames = 'root' | 'container';
 export type RadarChartCssVariables = {
   root: '--chart-grid-color' | '--chart-text-color';
 };
@@ -53,6 +57,30 @@ export interface RadarChartProps
 
   /** Controls color of all text elements. By default, color depends on the color scheme. */
   textColor?: MantineColor;
+
+  /** Determines whether PolarGrid component should be displayed, `true` by default. */
+  withPolarGrid?: boolean;
+
+  /** Determines whether PolarAngleAxis component should be displayed, `true` by default */
+  withPolarAngleAxis?: boolean;
+
+  /** Determines whether PolarRadiusAxisProps component should be displayed, `false` by default */
+  withPolarRadiusAxis?: boolean;
+
+  /** Props passed down to recharts Radar component */
+  radarProps?: ((series: RadarChartSeries) => Omit<RadarProps, 'ref'>) | Omit<RadarProps, 'ref'>;
+
+  /** Props passed down to recharts RadarChart component */
+  radarChartProps?: React.ComponentPropsWithoutRef<typeof ReChartsRadarChart>;
+
+  /** Props passed down to recharts PolarGrid component */
+  polarGridProps?: Omit<PolarGridProps, 'ref'>;
+
+  /** Props passed down to recharts PolarAngleAxis component */
+  polarAngleAxisProps?: Omit<PolarAngleAxisProps, 'ref'>;
+
+  /** Props passed down to recharts PolarRadiusAxis component */
+  polarRadiusAxisProps?: Omit<PolarRadiusAxisProps, 'ref'>;
 }
 
 export type RadarChartFactory = Factory<{
@@ -62,7 +90,11 @@ export type RadarChartFactory = Factory<{
   vars: RadarChartCssVariables;
 }>;
 
-const defaultProps: Partial<RadarChartProps> = {};
+const defaultProps: Partial<RadarChartProps> = {
+  withPolarGrid: true,
+  withPolarAngleAxis: true,
+  withPolarRadiusAxis: false,
+};
 
 const varsResolver = createVarsResolver<RadarChartFactory>((theme, { gridColor, textColor }) => ({
   root: {
@@ -85,6 +117,14 @@ export const RadarChart = factory<RadarChartFactory>((_props, ref) => {
     dataKey,
     gridColor,
     textColor,
+    radarProps,
+    radarChartProps,
+    polarGridProps,
+    polarAngleAxisProps,
+    polarRadiusAxisProps,
+    withPolarGrid,
+    withPolarAngleAxis,
+    withPolarRadiusAxis,
     ...others
   } = props;
 
@@ -112,16 +152,19 @@ export const RadarChart = factory<RadarChartFactory>((_props, ref) => {
       fill={getThemeColor(item.color, theme)}
       fillOpacity={item.opacity || 0.4}
       isAnimationActive={false}
+      {...(typeof radarProps === 'function' ? radarProps(item) : radarProps)}
     />
   ));
 
   return (
     <Box ref={ref} {...getStyles('root')} {...others}>
-      <ResponsiveContainer width="100%" height="100%">
-        <ReChartsRadarChart data={data}>
-          <PolarGrid stroke="var(--chart-grid-color)" />
-          <PolarAngleAxis dataKey={dataKey} />
-          <PolarRadiusAxis stroke="var(--chart-grid-color)" />
+      <ResponsiveContainer {...getStyles('container')}>
+        <ReChartsRadarChart data={data} {...radarChartProps}>
+          {withPolarGrid && <PolarGrid stroke="var(--chart-grid-color)" {...polarGridProps} />}
+          {withPolarAngleAxis && <PolarAngleAxis dataKey={dataKey} {...polarAngleAxisProps} />}
+          {withPolarRadiusAxis && (
+            <PolarRadiusAxis stroke="var(--chart-grid-color)" {...polarRadiusAxisProps} />
+          )}
           {radars}
         </ReChartsRadarChart>
       </ResponsiveContainer>
