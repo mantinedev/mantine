@@ -1,4 +1,8 @@
-import { RadarChartDemos, StylesDemos } from '@docs/demos';
+import {
+  ModalDemos,
+  RadarChartDemos,
+  StylesDemos,
+} from '@docs/demos';
 import { Layout } from '@/layout';
 import { MDX_DATA } from '@/mdx';
 
@@ -17,6 +21,16 @@ are available in container queries staring from `postcss-preset-mantine@1.13.0`.
 New [RadarChart](/charts/radar-chart/) component:
 
 <Demo data={RadarChartDemos.multiple} />
+
+## FocusTrap.InitialFocus component
+
+[FocusTrap.InitialFocus](/core/focus-trap) is a new component that adds a visually hidden
+element which will receive the focus when the focus trap is activated.
+Once `FocusTrap.InitialFocus` loses focus, it is remove from the tab order.
+
+For example, it is useful if you do not want to focus any elements inside the [Modal](/core/modal) when it is opened:
+
+<Demo data={ModalDemos.initialFocusTrap} />
 
 ## Documentation updates
 
