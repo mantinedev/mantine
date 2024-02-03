@@ -1,5 +1,13 @@
 import React from 'react';
 import {
+  PolarAngleAxis,
+  PolarGrid,
+  PolarRadiusAxis,
+  Radar,
+  RadarChart as ReChartsRadarChart,
+  ResponsiveContainer,
+} from 'recharts';
+import {
   Box,
   BoxProps,
   createVarsResolver,
@@ -41,7 +49,7 @@ const varsResolver = createVarsResolver<RadarChartFactory>(() => ({
 
 export const RadarChart = factory<RadarChartFactory>((_props, ref) => {
   const props = useProps('RadarChart', defaultProps, _props);
-  const { classNames, className, style, styles, unstyled, vars, ...others } = props;
+  const { classNames, className, style, styles, unstyled, vars, data, ...others } = props;
 
   const getStyles = useStyles<RadarChartFactory>({
     name: 'RadarChart',
@@ -56,7 +64,18 @@ export const RadarChart = factory<RadarChartFactory>((_props, ref) => {
     varsResolver,
   });
 
-  return <Box ref={ref} {...getStyles('root')} {...others} />;
+  return (
+    <Box ref={ref} {...getStyles('root')} {...others}>
+      <ResponsiveContainer width="100%" height="100%">
+        <ReChartsRadarChart data={data}>
+          <PolarGrid />
+          <PolarAngleAxis dataKey="subject" />
+          <PolarRadiusAxis />
+          <Radar name="Mike" dataKey="A" stroke="#8884d8" fill="#8884d8" fillOpacity={0.6} />
+        </ReChartsRadarChart>
+      </ResponsiveContainer>
+    </Box>
+  );
 });
 
 RadarChart.displayName = '@mantine/charts/RadarChart';

@@ -1,0 +1,6 @@
+.root {
+  & :where(text) {
+    font-size: var(--mantine-font-size-sm);
+    fill: var(--mantine-color-dimmed);
+  }
+}

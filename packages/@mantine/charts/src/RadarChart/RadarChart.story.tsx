@@ -45,7 +45,7 @@ const data = [
 export function Usage() {
   return (
     <div style={{ padding: 40 }}>
-      <RadarChart data={data} />
+      <RadarChart data={data} h={300} />
     </div>
   );
 }
