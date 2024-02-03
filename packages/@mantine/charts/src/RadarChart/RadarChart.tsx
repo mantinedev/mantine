@@ -14,11 +14,21 @@ import {
   ElementProps,
   factory,
   Factory,
+  getThemeColor,
+  MantineColor,
   StylesApiProps,
+  useMantineTheme,
   useProps,
   useStyles,
 } from '@mantine/core';
 import classes from './RadarChart.module.css';
+
+export interface RadarChartSeries {
+  name: string;
+  color: MantineColor;
+  strokeColor?: MantineColor;
+  opacity?: number;
+}
 
 export type RadarChartStylesNames = 'root';
 export type RadarChartCssVariables = {
@@ -29,7 +39,14 @@ export interface RadarChartProps
   extends BoxProps,
     StylesApiProps<RadarChartFactory>,
     ElementProps<'div'> {
+  /** Data used in the chart */
   data: Record<string, any>[];
+
+  /** Determines which data should be consumed from the `data` array. */
+  series: RadarChartSeries[];
+
+  /** Key of the `data` object for axis values */
+  dataKey: string;
 }
 
 export type RadarChartFactory = Factory<{
@@ -49,7 +66,9 @@ const varsResolver = createVarsResolver<RadarChartFactory>(() => ({
 
 export const RadarChart = factory<RadarChartFactory>((_props, ref) => {
   const props = useProps('RadarChart', defaultProps, _props);
-  const { classNames, className, style, styles, unstyled, vars, data, ...others } = props;
+  const { classNames, className, style, styles, unstyled, vars, data, series, dataKey, ...others } =
+    props;
+  const theme = useMantineTheme();
 
   const getStyles = useStyles<RadarChartFactory>({
     name: 'RadarChart',
@@ -64,14 +83,26 @@ export const RadarChart = factory<RadarChartFactory>((_props, ref) => {
     varsResolver,
   });
 
+  const radars = series.map((item, index) => (
+    <Radar
+      key={index}
+      name={item.name}
+      dataKey={item.name}
+      stroke={getThemeColor(item.strokeColor || item.color, theme)}
+      fill={getThemeColor(item.color, theme)}
+      fillOpacity={item.opacity || 0.4}
+      isAnimationActive={false}
+    />
+  ));
+
   return (
     <Box ref={ref} {...getStyles('root')} {...others}>
       <ResponsiveContainer width="100%" height="100%">
         <ReChartsRadarChart data={data}>
           <PolarGrid />
-          <PolarAngleAxis dataKey="subject" />
-          <PolarRadiusAxis />
-          <Radar name="Mike" dataKey="A" stroke="#8884d8" fill="#8884d8" fillOpacity={0.6} />
+          <PolarAngleAxis dataKey={dataKey} />
+          <PolarRadiusAxis stroke="red" />
+          {radars}
         </ReChartsRadarChart>
       </ResponsiveContainer>
     </Box>

@@ -45,7 +45,7 @@ const data = [
 export function Usage() {
   return (
     <div style={{ padding: 40 }}>
-      <RadarChart data={data} h={300} />
+      <RadarChart data={data} h={300} series={[{ name: 'A', color: 'lime.4' }]} dataKey="subject" />
     </div>
   );
 }
