@@ -110,11 +110,15 @@ describe('@mantine/core/PinInput', () => {
 
   it('display only one character in an input', () => {
     const { container } = render(<PinInput length={6} />);
-    expect(container.querySelectorAll('.mantine-PinInput-input')[0].value.length).toBeLessThan(2);
+    expect(
+      (container.querySelectorAll('.mantine-PinInput-input')[0] as HTMLInputElement).value.length
+    ).toBeLessThan(2);
   });
 
   it('display only one character in an input with `defaultValue` property', () => {
     const { container } = render(<PinInput length={6} defaultValue="123456" />);
-    expect(container.querySelectorAll('.mantine-PinInput-input')[2].value.length).toBe(1);
+    expect(
+      (container.querySelectorAll('.mantine-PinInput-input')[2] as HTMLInputElement).value.length
+    ).toBe(1);
   });
 });
