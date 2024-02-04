@@ -65,7 +65,7 @@ export const transitions: Record<MantineTransitionName, MantineTransitionStyles>
 
   'skew-up': {
     in: { opacity: 1, transform: 'translateY(0) skew(0deg, 0deg)' },
-    out: { opacity: 0, transform: `translateY(-${rem(20)}) skew(-10deg, -5deg)` },
+    out: { opacity: 0, transform: `translateY(${rem(-20)}) skew(-10deg, -5deg)` },
     common: { transformOrigin: 'top' },
     transitionProperty: 'transform, opacity',
   },
