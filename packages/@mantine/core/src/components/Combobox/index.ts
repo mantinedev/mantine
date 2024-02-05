@@ -35,6 +35,7 @@ export type {
   ComboboxLikeProps,
   ComboboxLikeStylesNames,
   ComboboxStringData,
+  ComboboxLikeRenderOptionInput,
 } from './Combobox.types';
 export type { ComboboxFactory, ComboboxProps, ComboboxStylesNames } from './Combobox';
 export type { ComboboxDropdownProps } from './ComboboxDropdown/ComboboxDropdown';

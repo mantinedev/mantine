@@ -14,6 +14,7 @@ import {
   Combobox,
   ComboboxItem,
   ComboboxLikeProps,
+  ComboboxLikeRenderOptionInput,
   ComboboxLikeStylesNames,
   getOptionsLockup,
   getParsedComboboxData,
@@ -72,6 +73,9 @@ export interface SelectProps
 
   /** Props passed down to the hidden input */
   hiddenInputProps?: React.ComponentPropsWithoutRef<'input'>;
+
+  /** A function to render content of the option */
+  renderOption?: (item: ComboboxLikeRenderOptionInput<ComboboxItem>) => React.ReactNode;
 }
 
 export type SelectFactory = Factory<{
@@ -133,6 +137,7 @@ export const Select = factory<SelectFactory>((_props, ref) => {
     clearable,
     clearButtonProps,
     hiddenInputProps,
+    renderOption,
     ...others
   } = props;
 
@@ -283,6 +288,7 @@ export const Select = factory<SelectFactory>((_props, ref) => {
           nothingFoundMessage={nothingFoundMessage}
           unstyled={unstyled}
           labelId={`${_id}-label`}
+          renderOption={renderOption}
         />
       </Combobox>
       <input
