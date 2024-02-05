@@ -102,4 +102,5 @@ export const renderOption: MantineDemo = {
   code,
   centered: true,
   maxWidth: 340,
+  defaultExpanded: false,
 };

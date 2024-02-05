@@ -1,8 +1,10 @@
 import {
   ModalDemos,
   RadarChartDemos,
+  SelectDemos,
   SparklineDemos,
   StylesDemos,
+  TagsInputDemos,
   TipTapDemos,
 } from '@docs/demos';
 import { Layout } from '@/layout';
@@ -147,6 +149,17 @@ The prop accepts an object with `positive`, `negative` and `neutral` properties:
 [RichTextEditor](/x/tiptap/#tasks) now supports tasks [tiptap extension](https://tiptap.dev/docs/editor/api/nodes/task-list):
 
 <Demo data={TipTapDemos.tasks} />
+
+## renderOption prop
+
+[Select](/core/select), [MultiSelect](/core/multi-select), [TagsInput](/inputs/tags-input) and [Autocomplete](/inputs/autocomplete)
+components now support `renderOption` prop that allows to customize option rendering:
+
+<Demo data={SelectDemos.renderOption} />
+
+<br />
+
+<Demo data={TagsInputDemos.renderOption} />
 
 ## Documentation updates
 
