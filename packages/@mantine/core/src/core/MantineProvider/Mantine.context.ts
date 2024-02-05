@@ -1,5 +1,4 @@
 import { createContext, useContext } from 'react';
-import type { MantineColorSchemeManager } from './color-scheme-managers';
 import { ConvertCSSVariablesInput } from './convert-css-variables';
 import type { MantineColorScheme, MantineTheme } from './theme.types';
 
@@ -7,13 +6,13 @@ interface MantineContextValue {
   colorScheme: MantineColorScheme;
   setColorScheme: (colorScheme: MantineColorScheme) => void;
   clearColorScheme: () => void;
-  colorSchemeManager: MantineColorSchemeManager;
   getRootElement: () => HTMLElement | undefined;
   classNamesPrefix: string;
   getStyleNonce?: () => string | undefined;
   cssVariablesResolver?: (theme: MantineTheme) => ConvertCSSVariablesInput;
   cssVariablesSelector: string;
   withStaticClasses: boolean;
+  headless?: boolean;
 }
 
 export const MantineContext = createContext<MantineContextValue | null>(null);
@@ -42,4 +41,8 @@ export function useMantineStyleNonce() {
 
 export function useMantineWithStaticClasses() {
   return useMantineContext().withStaticClasses;
+}
+
+export function useMantineIsHeadless() {
+  return useMantineContext().headless;
 }

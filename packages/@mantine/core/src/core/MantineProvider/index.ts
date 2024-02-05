@@ -5,7 +5,7 @@ export * from './use-mantine-color-scheme';
 export * from './ColorSchemeScript';
 export { DEFAULT_THEME } from './default-theme';
 export { validateMantineTheme, mergeMantineTheme } from './merge-mantine-theme';
-export { MantineProvider } from './MantineProvider';
+export { MantineProvider, HeadlessMantineProvider } from './MantineProvider';
 export {
   MantineContext,
   useMantineContext,
@@ -13,6 +13,7 @@ export {
   useMantineStyleNonce,
   useMantineCssVariablesResolver,
   useMantineWithStaticClasses,
+  useMantineIsHeadless,
 } from './Mantine.context';
 export {
   useMantineTheme,
@@ -21,7 +22,7 @@ export {
   MantineThemeProvider,
 } from './MantineThemeProvider';
 export type { MantineThemeProviderProps } from './MantineThemeProvider';
-export type { MantineProviderProps } from './MantineProvider';
+export type { MantineProviderProps, HeadlessMantineProviderProps } from './MantineProvider';
 export { useProps } from './use-props/use-props';
 export { convertCssVariables } from './convert-css-variables';
 export type { ConvertCSSVariablesInput } from './convert-css-variables';

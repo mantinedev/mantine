@@ -88,7 +88,6 @@ export function MantineProvider({
   return (
     <MantineContext.Provider
       value={{
-        colorSchemeManager,
         colorScheme,
         setColorScheme,
         clearColorScheme,
@@ -115,3 +114,32 @@ export function MantineProvider({
 }
 
 MantineProvider.displayName = '@mantine/core/MantineProvider';
+
+export interface HeadlessMantineProviderProps {
+  /** Theme override object */
+  theme?: MantineThemeOverride;
+
+  /** Your application */
+  children: React.ReactNode;
+}
+
+export function HeadlessMantineProvider({ children, theme }: HeadlessMantineProviderProps) {
+  return (
+    <MantineContext.Provider
+      value={{
+        colorScheme: 'auto',
+        setColorScheme: () => {},
+        clearColorScheme: () => {},
+        getRootElement: () => document.documentElement,
+        classNamesPrefix: 'mantine',
+        cssVariablesSelector: ':root',
+        withStaticClasses: false,
+        headless: true,
+      }}
+    >
+      <MantineThemeProvider theme={theme}>{children}</MantineThemeProvider>
+    </MantineContext.Provider>
+  );
+}
+
+HeadlessMantineProvider.displayName = '@mantine/core/HeadlessMantineProvider';
