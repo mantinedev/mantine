@@ -14,7 +14,9 @@ import {
 import { __CloseButtonProps } from '../CloseButton';
 import {
   Combobox,
+  ComboboxItem,
   ComboboxLikeProps,
+  ComboboxLikeRenderOptionInput,
   ComboboxLikeStylesNames,
   getOptionsLockup,
   getParsedComboboxData,
@@ -87,6 +89,9 @@ export interface MultiSelectProps
 
   /** Divider used to separate values in the hidden input `value` attribute, `','` by default */
   hiddenInputValuesDivider?: string;
+
+  /** A function to render content of the option, replaces the default content of the option */
+  renderOption?: (item: ComboboxLikeRenderOptionInput<ComboboxItem>) => React.ReactNode;
 }
 
 export type MultiSelectFactory = Factory<{
@@ -173,6 +178,7 @@ export const MultiSelect = factory<MultiSelectFactory>((_props, ref) => {
     hiddenInputValuesDivider,
     required,
     mod,
+    renderOption,
     ...others
   } = props;
 
@@ -396,6 +402,7 @@ export const MultiSelect = factory<MultiSelectFactory>((_props, ref) => {
           nothingFoundMessage={nothingFoundMessage}
           unstyled={unstyled}
           labelId={`${_id}-label`}
+          renderOption={renderOption}
         />
       </Combobox>
       <input
