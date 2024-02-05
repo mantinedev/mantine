@@ -339,7 +339,7 @@
   }
 
   & :where(ul) {
-    padding-left: var(--mantine-spacing-lg);
+    margin-top: rem(5px);
   }
 
   & p {

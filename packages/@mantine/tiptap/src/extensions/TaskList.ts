@@ -11,10 +11,6 @@ export const TaskList = TipTapTaskList.extend({
       editor.chain().focus().sinkListItem('taskItem').run();
       return true;
     },
-    Tab: ({ editor }) => {
-      editor.chain().focus().sinkListItem('taskItem').run();
-      return true;
-    },
   }),
 }).configure({
   HTMLAttributes: {

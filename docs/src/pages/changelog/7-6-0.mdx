@@ -3,6 +3,7 @@ import {
   RadarChartDemos,
   SparklineDemos,
   StylesDemos,
+  TipTapDemos,
 } from '@docs/demos';
 import { Layout } from '@/layout';
 import { MDX_DATA } from '@/mdx';
@@ -140,6 +141,12 @@ The prop accepts an object with `positive`, `negative` and `neutral` properties:
 `neutral` is optional, if not provided, the color will be the same as `positive`.
 
 <Demo data={SparklineDemos.trendColors} />
+
+## RichTextEditor tasks extension
+
+[RichTextEditor](/x/tiptap/#tasks) now supports tasks [tiptap extension](https://tiptap.dev/docs/editor/api/nodes/task-list):
+
+<Demo data={TipTapDemos.tasks} />
 
 ## Documentation updates
 
