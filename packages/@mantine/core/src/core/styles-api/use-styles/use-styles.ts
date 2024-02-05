@@ -3,6 +3,7 @@ import type { MantineStyleProp } from '../../Box';
 import { FactoryPayload } from '../../factory';
 import {
   useMantineClassNamesPrefix,
+  useMantineIsHeadless,
   useMantineTheme,
   useMantineWithStaticClasses,
 } from '../../MantineProvider';
@@ -51,6 +52,7 @@ export function useStyles<Payload extends FactoryPayload>({
   const theme = useMantineTheme();
   const classNamesPrefix = useMantineClassNamesPrefix();
   const withStaticClasses = useMantineWithStaticClasses();
+  const headless = useMantineIsHeadless();
   const themeName = (Array.isArray(name) ? name : [name]).filter((n) => n) as string[];
 
   return (selector, options) => ({
@@ -68,6 +70,7 @@ export function useStyles<Payload extends FactoryPayload>({
       props,
       stylesCtx,
       withStaticClasses,
+      headless,
     }),
 
     style: getStyle({
@@ -82,6 +85,7 @@ export function useStyles<Payload extends FactoryPayload>({
       style,
       vars,
       varsResolver,
+      headless,
     }),
   });
 }
