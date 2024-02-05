@@ -79,7 +79,7 @@ export function useTooltip(settings: UseTooltip) {
       delay: withinGroup ? groupDelay : { open: settings.openDelay, close: settings.closeDelay },
       mouseOnly: !settings.events?.touch,
     }),
-    useFocus(context, { enabled: settings.events?.focus, keyboardOnly: true }),
+    useFocus(context, { enabled: settings.events?.focus, visibleOnly: true }),
     useRole(context, { role: 'tooltip' }),
     // cannot be used with controlled tooltip, page jumps
     useDismiss(context, { enabled: typeof settings.opened === 'undefined' }),

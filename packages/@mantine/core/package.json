@@ -48,7 +48,7 @@
     "react-dom": "^18.2.0"
   },
   "dependencies": {
-    "@floating-ui/react": "^0.24.8",
+    "@floating-ui/react": "^0.26.9",
     "clsx": "2.0.0",
     "react-number-format": "^5.3.1",
     "react-remove-scroll": "^2.5.7",

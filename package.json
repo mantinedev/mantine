@@ -60,7 +60,7 @@
     "prettier:write": "prettier --write \"**/*.{ts,tsx,mdx,css}\""
   },
   "dependencies": {
-    "@floating-ui/react": "^0.24.8",
+    "@floating-ui/react": "^0.26.9",
     "@tabler/icons-react": "^2.40.0",
     "@tiptap/core": "^2.2.1",
     "@tiptap/extension-code-block": "^2.2.1",

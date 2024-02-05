@@ -3956,13 +3956,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@floating-ui/core@npm:^1.3.1":
-  version: 1.3.1
-  resolution: "@floating-ui/core@npm:1.3.1"
-  checksum: 894bc3637c03beda184a4460cb53155fd30c2a0956569e1c714b7df9e3439517b1c34ad9a8114ea15a6c08d1e3f1d40741d259f0f1087fc3ea96fae7dfeb697e
-  languageName: node
-  linkType: hard
-
 "@floating-ui/core@npm:^1.4.2":
   version: 1.5.0
   resolution: "@floating-ui/core@npm:1.5.0"
@@ -3972,12 +3965,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@floating-ui/dom@npm:^1.3.0":
-  version: 1.4.5
-  resolution: "@floating-ui/dom@npm:1.4.5"
+"@floating-ui/core@npm:^1.6.0":
+  version: 1.6.0
+  resolution: "@floating-ui/core@npm:1.6.0"
   dependencies:
-    "@floating-ui/core": "npm:^1.3.1"
-  checksum: 2c406920221d99ba585f769c7aea450299cbd4d316b307151a214c861bd4deda3f724589d94b1bc676a9a33958d5a9d40b4b1e1065350e8699cc7a79f74f506e
+    "@floating-ui/utils": "npm:^0.2.1"
+  checksum: 667a68036f7dd5ed19442c7792a6002ca02d1799221c4396691bbe0b6008b48f6ccad581225e81fa266bb91232f6c66838a5f825f554217e1ec886178b93381b
   languageName: node
   linkType: hard
 
@@ -3988,6 +3981,16 @@ __metadata:
     "@floating-ui/core": "npm:^1.4.2"
     "@floating-ui/utils": "npm:^0.1.3"
   checksum: e5f30b911f939e40003851077bba441f269ae689bdc43c674bee43aa98fc6b7a5f59be432d27b7be599b1e4ab7b15c752875ea777a89cff01d157e593b78b25b
+  languageName: node
+  linkType: hard
+
+"@floating-ui/dom@npm:^1.6.1":
+  version: 1.6.1
+  resolution: "@floating-ui/dom@npm:1.6.1"
+  dependencies:
+    "@floating-ui/core": "npm:^1.6.0"
+    "@floating-ui/utils": "npm:^0.2.1"
+  checksum: f810ab62280e86f5f9199cf7f6123b1dd2a7b44b3b273caa7d3a23cf70ad12c3fb689053e6d3db7acf4f724dbd6d43693e2fc538e5d30d805dcabb9647f8f494
   languageName: node
   linkType: hard
 
@@ -4003,29 +4006,29 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@floating-ui/react-dom@npm:^2.0.1":
-  version: 2.0.1
-  resolution: "@floating-ui/react-dom@npm:2.0.1"
+"@floating-ui/react-dom@npm:^2.0.8":
+  version: 2.0.8
+  resolution: "@floating-ui/react-dom@npm:2.0.8"
   dependencies:
-    "@floating-ui/dom": "npm:^1.3.0"
+    "@floating-ui/dom": "npm:^1.6.1"
   peerDependencies:
     react: ">=16.8.0"
     react-dom: ">=16.8.0"
-  checksum: 856c0c9de0a9117bcc69b1363fd9fa188133b9714394609db937903ab4330e9851becfd2a83453f40834de1a18377caf329b6b71afc1c69d7c5687f87da80ed4
+  checksum: 4d87451e2dcc54b4753a0d81181036e47821cfd0d4c23f7e9c31590c7c91fb15fb0a5a458969a5ddabd61601eca5875ebd4e40bff37cee31f373b8f1ccc64518
   languageName: node
   linkType: hard
 
-"@floating-ui/react@npm:^0.24.8":
-  version: 0.24.8
-  resolution: "@floating-ui/react@npm:0.24.8"
+"@floating-ui/react@npm:^0.26.9":
+  version: 0.26.9
+  resolution: "@floating-ui/react@npm:0.26.9"
   dependencies:
-    "@floating-ui/react-dom": "npm:^2.0.1"
-    aria-hidden: "npm:^1.2.3"
+    "@floating-ui/react-dom": "npm:^2.0.8"
+    "@floating-ui/utils": "npm:^0.2.1"
     tabbable: "npm:^6.0.1"
   peerDependencies:
     react: ">=16.8.0"
     react-dom: ">=16.8.0"
-  checksum: b9fd32e736f2a17f575dd4159535f6570a82e2f1a321c68a42f8b4161db257597e88e11c948563f78b80e3450ed20a0ed9c511e9372b4b8a904784f62d87d57e
+  checksum: 769a6bc33c4fa6c8c38b2e1c91622854e5e8fdf39cb92b0998a7ca099dc831a551a005cd0aec7e98edf9bfed4f697397335f03034b5f41a0f4fb17c97fce6d20
   languageName: node
   linkType: hard
 
@@ -4033,6 +4036,13 @@ __metadata:
   version: 0.1.6
   resolution: "@floating-ui/utils@npm:0.1.6"
   checksum: 0a089db0e0526b89e83cb0a773a903517db5c9067cd473febfd8fa91a3a2ccbc3a835234796c1bb528def21dbb67be50e28d9c473cb58a6d90679d7e549b9c0c
+  languageName: node
+  linkType: hard
+
+"@floating-ui/utils@npm:^0.2.1":
+  version: 0.2.1
+  resolution: "@floating-ui/utils@npm:0.2.1"
+  checksum: ee77756712cf5b000c6bacf11992ffb364f3ea2d0d51cc45197a7e646a17aeb86ea4b192c0b42f3fbb29487aee918a565e84f710b8c3645827767f406a6b4cc9
   languageName: node
   linkType: hard
 
@@ -4644,7 +4654,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@mantine/core@workspace:packages/@mantine/core"
   dependencies:
-    "@floating-ui/react": "npm:^0.24.8"
+    "@floating-ui/react": "npm:^0.26.9"
     "@mantine-tests/core": "workspace:*"
     "@mantine/hooks": "workspace:*"
     clsx: "npm:2.0.0"
@@ -8929,7 +8939,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"aria-hidden@npm:^1.1.1, aria-hidden@npm:^1.2.3":
+"aria-hidden@npm:^1.1.1":
   version: 1.2.3
   resolution: "aria-hidden@npm:1.2.3"
   dependencies:
@@ -11568,7 +11578,7 @@ __metadata:
   dependencies:
     "@docs/demos": "workspace:*"
     "@docs/styles-api": "workspace:*"
-    "@floating-ui/react": "npm:^0.24.8"
+    "@floating-ui/react": "npm:^0.26.9"
     "@hello-pangea/dnd": "npm:^16.3.0"
     "@mantine/carousel": "workspace:*"
     "@mantine/charts": "workspace:*"
@@ -17008,7 +17018,7 @@ __metadata:
     "@babel/preset-env": "npm:^7.23.3"
     "@babel/preset-react": "npm:^7.23.3"
     "@babel/preset-typescript": "npm:^7.23.3"
-    "@floating-ui/react": "npm:^0.24.8"
+    "@floating-ui/react": "npm:^0.26.9"
     "@hello-pangea/dnd": "npm:^16.3.0"
     "@ianvs/prettier-plugin-sort-imports": "npm:^4.1.1"
     "@rollup/plugin-alias": "npm:^5.0.1"

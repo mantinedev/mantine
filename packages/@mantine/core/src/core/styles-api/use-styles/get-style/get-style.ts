@@ -28,7 +28,7 @@ export interface GetStyleInput {
   style: MantineStyleProp | undefined;
   vars: VarsResolver | undefined;
   varsResolver: VarsResolver | undefined;
-  headless: boolean | undefined;
+  headless?: boolean;
 }
 
 export function getStyle({
