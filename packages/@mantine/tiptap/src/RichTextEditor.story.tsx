@@ -6,6 +6,7 @@ import Highlight from '@tiptap/extension-highlight';
 import Placeholder from '@tiptap/extension-placeholder';
 import SubScript from '@tiptap/extension-subscript';
 import Superscript from '@tiptap/extension-superscript';
+import TaskItem from '@tiptap/extension-task-item';
 import TextAlign from '@tiptap/extension-text-align';
 import TextStyle from '@tiptap/extension-text-style';
 import Underline from '@tiptap/extension-underline';
@@ -18,6 +19,7 @@ import html from 'highlight.js/lib/languages/xml';
 import { createLowlight } from 'lowlight';
 import { AppShell } from '@mantine/core';
 import { Link } from './extensions/Link';
+import { TaskList } from './extensions/TaskList';
 import { RichTextEditor, RichTextEditorProps } from './RichTextEditor';
 import { RichTextEditorToolbarProps } from './RichTextEditorToolbar/RichTextEditorToolbar';
 
@@ -328,6 +330,42 @@ export function ControlStylesApi() {
             <RichTextEditor.Bold />
             <RichTextEditor.Link icon={() => <div>$</div>} />
           </RichTextEditor.ControlsGroup>
+        </RichTextEditor.Toolbar>
+
+        <RichTextEditor.Content />
+      </RichTextEditor>
+    </div>
+  );
+}
+
+export function Tasks() {
+  const editor = useEditor({
+    extensions: [
+      StarterKit,
+      Link,
+      TaskList,
+      TaskItem.configure({
+        nested: true,
+        HTMLAttributes: {
+          class: 'test-item',
+        },
+      }),
+    ],
+    content: `
+        <p>Some text</p>
+        <ul data-type="taskList">
+          <li data-type="taskItem" data-checked="true">A list item</li>
+          <li data-type="taskItem" data-checked="false">And another one</li>
+        </ul>
+        <p>And a paragraph</p>
+      `,
+  });
+
+  return (
+    <div style={{ padding: 40 }}>
+      <RichTextEditor editor={editor}>
+        <RichTextEditor.Toolbar>
+          <RichTextEditor.ControlsGroup></RichTextEditor.ControlsGroup>
         </RichTextEditor.Toolbar>
 
         <RichTextEditor.Content />
