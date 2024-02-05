@@ -1,21 +1,22 @@
 import React from 'react';
 import TaskItem from '@tiptap/extension-task-item';
+import TipTapTaskList from '@tiptap/extension-task-list';
 import { useEditor } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
-import { RichTextEditor, TaskList } from '@mantine/tiptap';
+import { getTaskListExtension, RichTextEditor } from '@mantine/tiptap';
 import { MantineDemo } from '@mantinex/demo';
 
 const code = `
 import TaskItem from '@tiptap/extension-task-item';
 import { useEditor } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
-import { RichTextEditor, TaskList } from '@mantine/tiptap';
+import { RichTextEditor, getTaskListExtension } from '@mantine/tiptap';
 
 function Demo() {
   const editor = useEditor({
     extensions: [
       StarterKit,
-      TaskList,
+      getTaskListExtension(TipTapTaskList),
       TaskItem.configure({
         nested: true,
         HTMLAttributes: {
@@ -53,7 +54,7 @@ function Demo() {
   const editor = useEditor({
     extensions: [
       StarterKit,
-      TaskList,
+      getTaskListExtension(TipTapTaskList),
       TaskItem.configure({
         nested: true,
         HTMLAttributes: {

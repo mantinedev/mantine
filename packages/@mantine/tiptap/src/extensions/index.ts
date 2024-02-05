@@ -1,2 +1,2 @@
 export { Link } from './Link';
-export { TaskList } from './TaskList';
+export { getTaskListExtension } from './TaskList';
