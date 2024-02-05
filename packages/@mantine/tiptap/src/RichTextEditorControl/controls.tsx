@@ -18,6 +18,8 @@ import {
   IconH5,
   IconH6,
   IconHighlight,
+  IconIndentDecrease,
+  IconIndentIncrease,
   IconItalic,
   IconLineDashed,
   IconList,
@@ -224,4 +226,18 @@ export const TaskListControl = createControl({
   icon: (props) => <IconListCheck {...props} />,
   isActive: { name: 'taskList' },
   operation: { name: 'toggleTaskList' },
+});
+
+export const TaskListSinkControl = createControl({
+  label: 'tasksSinkLabel',
+  icon: (props) => <IconIndentIncrease {...props} />,
+  operation: { name: 'sinkListItem', attributes: 'taskItem' },
+  isDisabled: (editor) => !editor?.can().sinkListItem('taskItem'),
+});
+
+export const TaskListLiftControl = createControl({
+  label: 'tasksLiftLabel',
+  icon: (props) => <IconIndentDecrease {...props} />,
+  operation: { name: 'liftListItem', attributes: 'taskItem' },
+  isDisabled: (editor) => !editor?.can().liftListItem('taskItem'),
 });

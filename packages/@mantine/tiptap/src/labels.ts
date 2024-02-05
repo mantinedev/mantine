@@ -127,6 +127,12 @@ export interface RichTextEditorLabels {
 
   /** aria-label for task list control */
   tasksControlLabel: string;
+
+  /** aria-label for task list sink task */
+  tasksSinkLabel: string;
+
+  /** aria-label for task list lift task */
+  tasksLiftLabel: string;
 }
 
 export const DEFAULT_LABELS: RichTextEditorLabels = {
@@ -162,7 +168,11 @@ export const DEFAULT_LABELS: RichTextEditorLabels = {
   hrControlLabel: 'Horizontal line',
   undoControlLabel: 'Undo',
   redoControlLabel: 'Redo',
+
+  // Task list
   tasksControlLabel: 'Task list',
+  tasksSinkLabel: 'Decrease task level',
+  tasksLiftLabel: 'Increase task level',
 
   // Link editor
   linkEditorInputLabel: 'Enter URL',

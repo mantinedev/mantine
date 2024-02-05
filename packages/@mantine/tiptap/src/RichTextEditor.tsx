@@ -93,6 +93,8 @@ export type RichTextEditorFactory = Factory<{
     Undo: typeof controls.UndoControl;
     Redo: typeof controls.RedoControl;
     TaskList: typeof controls.TaskListControl;
+    TaskListSink: typeof controls.TaskListSinkControl;
+    TaskListLift: typeof controls.TaskListLiftControl;
   };
 }>;
 
@@ -192,3 +194,5 @@ RichTextEditor.UnsetColor = controls.UnsetColorControl;
 RichTextEditor.Undo = controls.UndoControl;
 RichTextEditor.Redo = controls.RedoControl;
 RichTextEditor.TaskList = controls.TaskListControl;
+RichTextEditor.TaskListSink = controls.TaskListSinkControl;
+RichTextEditor.TaskListLift = controls.TaskListLiftControl;

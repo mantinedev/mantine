@@ -367,6 +367,8 @@ export function Tasks() {
         <RichTextEditor.Toolbar>
           <RichTextEditor.ControlsGroup>
             <RichTextEditor.TaskList />
+            <RichTextEditor.TaskListLift />
+            <RichTextEditor.TaskListSink />
           </RichTextEditor.ControlsGroup>
         </RichTextEditor.Toolbar>
 
