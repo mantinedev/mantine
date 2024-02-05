@@ -109,6 +109,7 @@ export const Sparkline = factory<SparklineFactory>((_props, ref) => {
     fillOpacity,
     curveType,
     strokeWidth,
+    trendColors,
     ...others
   } = props;
 
