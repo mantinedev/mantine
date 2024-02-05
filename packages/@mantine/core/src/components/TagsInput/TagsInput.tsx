@@ -15,8 +15,10 @@ import { __CloseButtonProps } from '../CloseButton';
 import {
   Combobox,
   ComboboxLikeProps,
+  ComboboxLikeRenderOptionInput,
   ComboboxLikeStylesNames,
   ComboboxStringData,
+  ComboboxStringItem,
   getOptionsLockup,
   getParsedComboboxData,
   OptionsDropdown,
@@ -86,6 +88,9 @@ export interface TagsInputProps
 
   /** Divider used to separate values in the hidden input `value` attribute, `','` by default */
   hiddenInputValuesDivider?: string;
+
+  /** A function to render content of the option, replaces the default content of the option */
+  renderOption?: (input: ComboboxLikeRenderOptionInput<ComboboxStringItem>) => React.ReactNode;
 }
 
 export type TagsInputFactory = Factory<{
@@ -169,6 +174,7 @@ export const TagsInput = factory<TagsInputFactory>((_props, ref) => {
     hiddenInputProps,
     hiddenInputValuesDivider,
     mod,
+    renderOption,
     ...others
   } = props;
 
@@ -401,6 +407,7 @@ export const TagsInput = factory<TagsInputFactory>((_props, ref) => {
           maxDropdownHeight={maxDropdownHeight}
           unstyled={unstyled}
           labelId={`${_id}-label`}
+          renderOption={renderOption}
         />
       </Combobox>
       <input

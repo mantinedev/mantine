@@ -122,3 +122,8 @@ export const Demo_withinPopover = {
   name: '⭐ Demo: withinPopover',
   render: renderDemo(demos.withinPopover),
 };
+
+export const Demo_renderOption = {
+  name: '⭐ Demo: renderOption',
+  render: renderDemo(demos.renderOption),
+};
