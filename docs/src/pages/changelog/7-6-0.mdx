@@ -32,6 +32,25 @@ For example, it is useful if you do not want to focus any elements inside the [M
 
 <Demo data={ModalDemos.initialFocusTrap} />
 
+## deduplicateCssVariables
+
+[MantineProvider](/theming/mantine-provider) now supports `deduplicateCssVariables` prop which
+determines whether CSS variables should be deduplicated: if CSS variable has the same value as in default theme, it is not added in the runtime.
+By default, it is set to `true`. If set to `false`, all Mantine CSS variables will be added in `<style />` tag
+even if they have the same value as in the default theme.
+
+```tsx
+import { MantineProvider } from '@mantine/core';
+
+function Demo() {
+  return (
+    <MantineProvider deduplicateCssVariables={false}>
+      <App />
+    </MantineProvider>
+  );
+}
+```
+
 ## Documentation updates
 
 - [Responsive styles guide](/styles/responsive) now includes new sections about responsive props and container queries

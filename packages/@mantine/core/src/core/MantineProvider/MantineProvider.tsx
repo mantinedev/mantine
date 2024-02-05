@@ -32,6 +32,9 @@ export interface MantineProviderProps {
   /** Determines whether theme CSS variables should be added to given `cssVariablesSelector`, `true` by default */
   withCssVariables?: boolean;
 
+  /** Determines whether CSS variables should be deduplicated: if CSS variable has the same value as in default theme, it is not added in the runtime. `true` by default. */
+  deduplicateCssVariables?: boolean;
+
   /** Function to resolve root element to set `data-mantine-color-scheme` attribute, must return undefined on server, `() => document.documentElement` by default */
   getRootElement?: () => HTMLElement | undefined;
 
@@ -52,6 +55,7 @@ export function MantineProvider({
   theme,
   children,
   getStyleNonce,
+  deduplicateCssVariables = true,
   withCssVariables = true,
   cssVariablesSelector = ':root',
   classNamesPrefix = 'mantine',
@@ -88,7 +92,12 @@ export function MantineProvider({
       }}
     >
       <MantineThemeProvider theme={theme}>
-        {withCssVariables && <MantineCssVariables cssVariablesSelector={cssVariablesSelector} />}
+        {withCssVariables && (
+          <MantineCssVariables
+            cssVariablesSelector={cssVariablesSelector}
+            deduplicateCssVariables={deduplicateCssVariables}
+          />
+        )}
         <MantineClasses />
         {children}
       </MantineThemeProvider>
