@@ -1,6 +1,7 @@
 import {
   ModalDemos,
   RadarChartDemos,
+  SparklineDemos,
   StylesDemos,
 } from '@docs/demos';
 import { Layout } from '@/layout';
@@ -126,6 +127,19 @@ function App() {
   );
 }
 ```
+
+## Sparkline trendColors
+
+[Sparkline](/charts/sparkline/) now supports `trendColors` prop to change chart color depending on the trend.
+The prop accepts an object with `positive`, `negative` and `neutral` properties:
+
+- `positive` - color for positive trend (first value is less than the last value in `data` array)
+- `negative` - color for negative trend (first value is greater than the last value in `data` array)
+- `neutral` - color for neutral trend (first and last values are equal)
+
+`neutral` is optional, if not provided, the color will be the same as `positive`.
+
+<Demo data={SparklineDemos.trendColors} />
 
 ## Documentation updates
 
