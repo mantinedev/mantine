@@ -328,5 +328,66 @@
 }
 
 .taskList {
-  background-color: red;
+  list-style-type: none;
+  padding: 0;
+  padding-left: 0;
+
+  & :where(li) {
+    margin: 0;
+    padding: 0;
+    display: flex;
+  }
+
+  & :where(ul) {
+    padding-left: var(--mantine-spacing-lg);
+  }
+
+  & p {
+    margin: 0;
+    padding: 0;
+  }
+
+  & :where(label) {
+    display: inline-block;
+  }
+
+  & :where(input) {
+    cursor: pointer;
+    appearance: none;
+    width: rem(18px);
+    height: rem(18px);
+    border: rem(1px) solid;
+    border-radius: var(--mantine-radius-default);
+    vertical-align: middle;
+    position: relative;
+
+    @mixin where-light {
+      background-color: var(--mantine-color-white);
+      border-color: var(--mantine-color-gray-4);
+    }
+
+    @mixin where-dark {
+      background-color: var(--mantine-color-dark-6);
+      border-color: var(--mantine-color-dark-4);
+    }
+
+    &:checked {
+      background-color: var(--mantine-primary-color-filled);
+      border-color: var(--mantine-primary-color-filled);
+
+      &::before {
+        position: absolute;
+        content: '';
+        inset: 0;
+        background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIGZpbGw9Im5vbmUiIHZpZXdCb3g9IjAgMCAxMCA3Ij48cGF0aCBmaWxsPSIjZmZmIiBkPSJNNCA0LjU4NkwxLjcwNyAyLjI5M0ExIDEgMCAxMC4yOTMgMy43MDdsMyAzYS45OTcuOTk3IDAgMDAxLjQxNCAwbDUtNUExIDEgMCAxMDguMjkzLjI5M0w0IDQuNTg2eiIvPjwvc3ZnPg==');
+        background-repeat: no-repeat;
+        background-size: rem(10px);
+        background-position: center;
+      }
+    }
+  }
+
+  & :where(li > label) {
+    margin-right: var(--mantine-spacing-sm);
+  }
 }

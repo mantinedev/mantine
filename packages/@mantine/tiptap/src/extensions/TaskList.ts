@@ -18,6 +18,6 @@ export const TaskList = TipTapTaskList.extend({
   }),
 }).configure({
   HTMLAttributes: {
-    class: classes.taskList,
+    class: `${classes.taskList} mantine-RichTextEditor-taskList`,
   },
 });

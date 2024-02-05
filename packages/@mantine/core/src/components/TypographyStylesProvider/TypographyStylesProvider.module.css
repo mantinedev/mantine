@@ -172,7 +172,7 @@
     }
   }
 
-  & :where(ul, ol) {
+  & :where(ul, ol):not([data-type='taskList']) {
     margin-bottom: var(--mantine-spacing-md);
     padding-left: rem(38px);
 
