@@ -71,5 +71,5 @@ export interface ComboboxLikeProps {
 
 export interface ComboboxLikeRenderOptionInput<T> {
   option: T;
-  checked: boolean;
+  checked?: boolean;
 }
