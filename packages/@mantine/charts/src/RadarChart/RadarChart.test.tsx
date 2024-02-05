@@ -3,6 +3,8 @@ import { RadarChart, RadarChartProps, RadarChartStylesNames } from './RadarChart
 
 const defaultProps: RadarChartProps = {
   data: [],
+  series: [],
+  dataKey: 'test',
 };
 
 describe('@mantine/charts/RadarChart', () => {
@@ -20,7 +22,6 @@ describe('@mantine/charts/RadarChart', () => {
     mod: true,
     polymorphic: true,
     styleProps: true,
-    children: true,
     extend: true,
     variant: true,
     size: true,
