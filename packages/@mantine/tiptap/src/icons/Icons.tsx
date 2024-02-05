@@ -404,12 +404,27 @@ export function IconArrowBackUp(props: IconProps) {
     </IconBase>
   );
 }
+
 export function IconArrowForwardUp(props: IconProps) {
   return (
     <IconBase {...props}>
       <path stroke="none" d="M0 0h24v24H0z" fill="none" />
       <path d="M15 14l4 -4l-4 -4" />
       <path d="M19 10h-11a4 4 0 1 0 0 8h1" />
+    </IconBase>
+  );
+}
+
+export function IconListCheck(props: IconProps) {
+  return (
+    <IconBase {...props}>
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M3.5 5.5l1.5 1.5l2.5 -2.5" />
+      <path d="M3.5 11.5l1.5 1.5l2.5 -2.5" />
+      <path d="M3.5 17.5l1.5 1.5l2.5 -2.5" />
+      <path d="M11 6l9 0" />
+      <path d="M11 12l9 0" />
+      <path d="M11 18l9 0" />
     </IconBase>
   );
 }

@@ -124,6 +124,9 @@ export interface RichTextEditorLabels {
 
   /** aria-label for color palette colors */
   colorPickerColorLabel: (color: string) => string;
+
+  /** aria-label for task list control */
+  tasksControlLabel: string;
 }
 
 export const DEFAULT_LABELS: RichTextEditorLabels = {
@@ -159,6 +162,7 @@ export const DEFAULT_LABELS: RichTextEditorLabels = {
   hrControlLabel: 'Horizontal line',
   undoControlLabel: 'Undo',
   redoControlLabel: 'Redo',
+  tasksControlLabel: 'Task list',
 
   // Link editor
   linkEditorInputLabel: 'Enter URL',

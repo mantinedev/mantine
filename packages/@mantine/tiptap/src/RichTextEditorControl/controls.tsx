@@ -21,6 +21,7 @@ import {
   IconItalic,
   IconLineDashed,
   IconList,
+  IconListCheck,
   IconListNumbers,
   IconStrikethrough,
   IconSubscript,
@@ -216,4 +217,11 @@ export const RedoControl = createControl({
   icon: (props) => <IconArrowForwardUp {...props} />,
   isDisabled: (editor) => !editor?.can().redo(),
   operation: { name: 'redo' },
+});
+
+export const TaskListControl = createControl({
+  label: 'tasksControlLabel',
+  icon: (props) => <IconListCheck {...props} />,
+  isActive: { name: 'taskList' },
+  operation: { name: 'toggleTaskList' },
 });

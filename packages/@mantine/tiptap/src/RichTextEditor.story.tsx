@@ -365,7 +365,9 @@ export function Tasks() {
     <div style={{ padding: 40 }}>
       <RichTextEditor editor={editor}>
         <RichTextEditor.Toolbar>
-          <RichTextEditor.ControlsGroup></RichTextEditor.ControlsGroup>
+          <RichTextEditor.ControlsGroup>
+            <RichTextEditor.TaskList />
+          </RichTextEditor.ControlsGroup>
         </RichTextEditor.Toolbar>
 
         <RichTextEditor.Content />
