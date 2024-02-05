@@ -4772,8 +4772,6 @@ __metadata:
     "@mantine-tests/core": "workspace:*"
     "@mantine/core": "workspace:*"
     "@mantine/hooks": "workspace:*"
-    "@tiptap/extension-task-item": "npm:^2.2.1"
-    "@tiptap/extension-task-list": "npm:^2.2.1"
   peerDependencies:
     "@mantine/core": 7.6.0-alpha.0
     "@mantine/hooks": 7.6.0-alpha.0
@@ -4781,11 +4779,6 @@ __metadata:
     "@tiptap/react": ">=2.1.12"
     react: ^18.2.0
     react-dom: ^18.2.0
-  dependenciesMeta:
-    "@tiptap/extension-task-item":
-      optional: true
-    "@tiptap/extension-task-list":
-      optional: true
   languageName: unknown
   linkType: soft
 

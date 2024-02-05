@@ -51,10 +51,6 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },
-  "optionalDependencies": {
-    "@tiptap/extension-task-item": "^2.2.1",
-    "@tiptap/extension-task-list": "^2.2.1"
-  },
   "devDependencies": {
     "@mantine-tests/core": "workspace:*",
     "@mantine/core": "workspace:*",
