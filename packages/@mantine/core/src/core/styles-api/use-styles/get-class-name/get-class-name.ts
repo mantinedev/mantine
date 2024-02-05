@@ -57,6 +57,9 @@ export interface GetClassNameOptions {
 
   /** Component styles context, used as context for `classNames` and `options.classNames` */
   stylesCtx?: Record<string, any> | undefined;
+
+  /** Determines whether static classes should be added */
+  withStaticClasses?: boolean;
 }
 
 export function getClassName({
@@ -72,6 +75,7 @@ export function getClassName({
   rootSelector,
   props,
   stylesCtx,
+  withStaticClasses,
 }: GetClassNameOptions) {
   return cx(
     getGlobalClassNames({ theme, options, unstyled }),
@@ -81,12 +85,13 @@ export function getClassName({
     getOptionsClassNames({ selector, stylesCtx, options, props, theme }),
     getRootClassName({ rootSelector, selector, className }),
     getSelectorClassName({ selector, classes, unstyled }),
-    getStaticClassNames({
-      themeName,
-      classNamesPrefix,
-      selector,
-      withStaticClass: options?.withStaticClass,
-    }),
+    withStaticClasses &&
+      getStaticClassNames({
+        themeName,
+        classNamesPrefix,
+        selector,
+        withStaticClass: options?.withStaticClass,
+      }),
     options?.className
   );
 }

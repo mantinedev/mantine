@@ -12,6 +12,7 @@ export {
   useMantineClassNamesPrefix,
   useMantineStyleNonce,
   useMantineCssVariablesResolver,
+  useMantineWithStaticClasses,
 } from './Mantine.context';
 export {
   useMantineTheme,

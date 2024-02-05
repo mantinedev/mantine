@@ -32,10 +32,15 @@ For example, it is useful if you do not want to focus any elements inside the [M
 
 <Demo data={ModalDemos.initialFocusTrap} />
 
-## deduplicateCssVariables
+## New MantineProvider props
 
-[MantineProvider](/theming/mantine-provider) now supports `deduplicateCssVariables` prop which
-determines whether CSS variables should be deduplicated: if CSS variable has the same value as in default theme, it is not added in the runtime.
+[MantineProvider](/theming/mantine-provider) now includes more props to control how styles
+are generated and injected. These props are useful if you use Mantine as a headless library
+and in test environments.
+
+### deduplicateCssVariables
+
+`deduplicateCssVariables` prop determines whether CSS variables should be deduplicated: if CSS variable has the same value as in default theme, it is not added in the runtime.
 By default, it is set to `true`. If set to `false`, all Mantine CSS variables will be added in `<style />` tag
 even if they have the same value as in the default theme.
 
@@ -45,6 +50,42 @@ import { MantineProvider } from '@mantine/core';
 function Demo() {
   return (
     <MantineProvider deduplicateCssVariables={false}>
+      <App />
+    </MantineProvider>
+  );
+}
+```
+
+### withStaticClasses
+
+`withStaticClasses` determines whether components should have static classes, for example, `mantine-Button-root`.
+By default, static classes are enabled, to disable them set `withStaticClasses` to `false`:
+
+```tsx
+import { MantineProvider } from '@mantine/core';
+
+function Demo() {
+  return (
+    <MantineProvider withStaticClasses={false}>
+      <App />
+    </MantineProvider>
+  );
+}
+```
+
+### withGlobalClasses
+
+`withGlobalClasses` determines whether global classes should be added with `<style />` tag.
+Global classes are required for `hiddenFrom`/`visibleFrom` and `lightHidden`/`darkHidden` props to work.
+By default, global classes are enabled, to disable them set `withGlobalClasses` to `false`. Note that
+disabling global classes may break styles of some components.
+
+```tsx
+import { MantineProvider } from '@mantine/core';
+
+function Demo() {
+  return (
+    <MantineProvider withGlobalClasses={false}>
       <App />
     </MantineProvider>
   );

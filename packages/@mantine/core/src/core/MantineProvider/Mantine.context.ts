@@ -13,6 +13,7 @@ interface MantineContextValue {
   getStyleNonce?: () => string | undefined;
   cssVariablesResolver?: (theme: MantineTheme) => ConvertCSSVariablesInput;
   cssVariablesSelector: string;
+  withStaticClasses: boolean;
 }
 
 export const MantineContext = createContext<MantineContextValue | null>(null);
@@ -37,4 +38,8 @@ export function useMantineClassNamesPrefix() {
 
 export function useMantineStyleNonce() {
   return useMantineContext().getStyleNonce;
+}
+
+export function useMantineWithStaticClasses() {
+  return useMantineContext().withStaticClasses;
 }

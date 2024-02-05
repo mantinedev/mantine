@@ -47,6 +47,12 @@ export interface MantineProviderProps {
   /** Function to generate CSS variables based on theme object */
   cssVariablesResolver?: CSSVariablesResolver;
 
+  /** Determines whether components should have static classes, for example, `mantine-Button-root`. `true` by default */
+  withStaticClasses?: boolean;
+
+  /** Determines whether global classes should be added with `<style />` tag. Global classes are required for `hiddenFrom`/`visibleFrom` and `lightHidden`/`darkHidden` props to work. `true` by default. */
+  withGlobalClasses?: boolean;
+
   /** Your application */
   children?: React.ReactNode;
 }
@@ -55,6 +61,8 @@ export function MantineProvider({
   theme,
   children,
   getStyleNonce,
+  withStaticClasses = true,
+  withGlobalClasses = true,
   deduplicateCssVariables = true,
   withCssVariables = true,
   cssVariablesSelector = ':root',
@@ -89,6 +97,7 @@ export function MantineProvider({
         getStyleNonce,
         cssVariablesResolver,
         cssVariablesSelector,
+        withStaticClasses,
       }}
     >
       <MantineThemeProvider theme={theme}>
@@ -98,7 +107,7 @@ export function MantineProvider({
             deduplicateCssVariables={deduplicateCssVariables}
           />
         )}
-        <MantineClasses />
+        {withGlobalClasses && <MantineClasses />}
         {children}
       </MantineThemeProvider>
     </MantineContext.Provider>
