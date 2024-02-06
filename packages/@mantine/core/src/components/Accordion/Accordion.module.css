@@ -77,7 +77,7 @@
   padding-top: var(--mantine-spacing-sm);
   padding-bottom: var(--mantine-spacing-sm);
 
-  @mixin rtl {
+  @mixin where-rtl {
     text-align: right;
   }
 }
