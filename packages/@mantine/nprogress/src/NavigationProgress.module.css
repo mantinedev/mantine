@@ -7,11 +7,11 @@
   background-color: transparent;
   transition: opacity 150ms ease;
   transition-delay: 50ms;
-  opacity: var(--_nprogress-opacity, 0);
+  opacity: 0;
   overflow: visible;
 
-  &[data-mounted] {
-    --_nprogress-opacity: 1;
+  &:where([data-mounted]) {
+    opacity: 1;
   }
 }
 
