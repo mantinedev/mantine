@@ -1,6 +1,6 @@
 import { Frontmatter } from '@/types';
 
-function hDocs(hook: string, description: string): Frontmatter {
+function hDocs(hook: string, description: string, parent?: string): Frontmatter {
   const name = hook.replace(/[A-Z]/g, (letter) => `-${letter.toLowerCase()}`);
   return {
     title: name,
@@ -8,7 +8,7 @@ function hDocs(hook: string, description: string): Frontmatter {
     slug: `/hooks/${name}`,
     description,
     import: `import { ${hook} } from '@mantine/hooks';`,
-    source: `@mantine/hooks/src/${name}/${name}.ts`,
+    source: `@mantine/hooks/src/${parent ?? name}/${name}.ts`,
     docs: `hooks/${name}.mdx`,
   };
 }
@@ -44,7 +44,8 @@ export const MDX_HOOKS_DATA: Record<string, Frontmatter> = {
 
   useElementSize: hDocs(
     'useElementSize',
-    'Returns element width and height and observes changes with ResizeObserver'
+    'Returns element width and height and observes changes with ResizeObserver',
+    'useResizeObserver'
   ),
 
   useEventListener: hDocs('useEventListener', 'Subscribes to events of a given element with a ref'),
