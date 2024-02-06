@@ -154,17 +154,18 @@
 .root {
   margin-top: 0;
   position: relative;
+  background-color: var(--code-background);
 
   &:where([data-collapsed]) :global(.mantine-ScrollArea-viewport > div) {
     display: block !important;
   }
 
   @mixin where-light {
-    background-color: var(--mantine-color-gray-0);
+    --code-background: var(--mantine-color-gray-0);
   }
 
   @mixin where-dark {
-    background-color: var(--mantine-color-dark-8);
+    --code-background: var(--mantine-color-dark-8);
   }
 }
 
