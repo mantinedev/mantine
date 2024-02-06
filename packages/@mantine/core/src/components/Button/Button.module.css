@@ -34,49 +34,45 @@
   text-align: center;
   overflow: hidden;
 
-  width: var(--_button-width, auto);
-  cursor: var(--_button-cursor, pointer);
-  display: var(--_button-display, inline-block);
+  width: auto;
+  cursor: pointer;
+  display: inline-block;
   border-radius: var(--button-radius, var(--mantine-radius-default));
   font-size: var(--button-fz, var(--mantine-font-size-sm));
-  background: var(--_button-bg, var(--button-bg, var(--mantine-primary-color-filled)));
-  border: var(--_button-bd, var(--button-bd, rem(1px) solid transparent));
-  color: var(--_button-color, var(--button-color, var(--mantine-color-white)));
+  background: var(--button-bg, var(--mantine-primary-color-filled));
+  border: var(--button-bd, rem(1px) solid transparent);
+  color: var(--button-color, var(--mantine-color-white));
   height: var(--button-height, var(--button-height-sm));
-  padding-left: var(--_button-padding-left, var(--button-padding-x, var(--button-padding-x-sm)));
-  padding-right: var(--_button-padding-right, var(--button-padding-x, var(--button-padding-x-sm)));
+  padding-inline: var(--button-padding-x, var(--button-padding-x-sm));
   vertical-align: middle;
 
-  &[data-block] {
-    --_button-display: block;
-    --_button-width: 100%;
+  &:where([data-block]) {
+    display: block;
+    width: 100%;
   }
 
-  &[data-with-left-section] {
-    --_button-padding-left: calc(var(--button-padding-x) / 1.5);
-
-    @mixin rtl {
-      --_button-padding-left: var(--button-padding-x);
-      --_button-padding-right: calc(var(--button-padding-x) / 1.5);
-    }
+  &:where([data-with-left-section]) {
+    padding-inline-start: calc(var(--button-padding-x) / 1.5);
   }
 
-  &[data-with-right-section] {
-    --_button-padding-right: calc(var(--button-padding-x) / 1.5);
-
-    @mixin rtl {
-      --_button-padding-right: var(--button-padding-x);
-      --_button-padding-left: calc(var(--button-padding-x) / 1.5);
-    }
+  &:where([data-with-right-section]) {
+    padding-inline-end: calc(var(--button-padding-x) / 1.5);
   }
 
-  &:disabled:not([data-loading]),
-  &[data-disabled]:not([data-loading]) {
-    --_button-cursor: not-allowed;
-    --_button-bg: var(--_disabled-bg);
-    --_button-color: var(--_disabled-color);
-    --_button-bd: rem(1px) solid transparent;
+  &:where(:disabled:not([data-loading]), [data-disabled]:not([data-loading])) {
+    cursor: not-allowed;
+    border: rem(1px) solid transparent;
     transform: none;
+
+    @mixin where-light {
+      color: var(--mantine-color-gray-5);
+      background: var(--mantine-color-gray-1);
+    }
+
+    @mixin where-dark {
+      color: var(--mantine-color-dark-3);
+      background: var(--mantine-color-dark-6);
+    }
   }
 
   &::before {
@@ -86,16 +82,23 @@
     inset: rem(-1px);
     border-radius: var(--button-radius, var(--mantine-radius-default));
     transform: translateY(-100%);
-    background-color: var(--_button-loading-overlay-bg);
     opacity: 0;
     filter: blur(12px);
     transition:
       transform 150ms ease,
       opacity 100ms ease;
+
+    @mixin where-light {
+      background-color: rgba(255, 255, 255, 0.15);
+    }
+
+    @mixin where-dark {
+      background-color: rgba(0, 0, 0, 0.15);
+    }
   }
 
-  &[data-loading] {
-    --_button-cursor: not-allowed;
+  &:where([data-loading]) {
+    cursor: not-allowed;
     transform: none;
 
     &::before {
@@ -115,22 +118,10 @@
   }
 
   @mixin hover {
-    &:not([data-loading]):not(:disabled):not([data-disabled]) {
-      --_button-bg: var(--button-hover, var(--mantine-primary-color-filled-hover));
-      --_button-color: var(--button-hover-color);
+    &:where(:not([data-loading], :disabled, [data-disabled])) {
+      background-color: var(--button-hover, var(--mantine-primary-color-filled-hover));
+      color: var(--button-hover-color, var(--button-color));
     }
-  }
-
-  @mixin light {
-    --_disabled-color: var(--mantine-color-gray-5);
-    --_disabled-bg: var(--mantine-color-gray-1);
-    --_button-loading-overlay-bg: rgba(255, 255, 255, 0.15);
-  }
-
-  @mixin dark {
-    --_disabled-color: var(--mantine-color-dark-3);
-    --_disabled-bg: var(--mantine-color-dark-6);
-    --_button-loading-overlay-bg: rgba(0, 0, 0, 0.15);
   }
 }
 
@@ -151,35 +142,23 @@
   overflow: hidden;
   display: flex;
   align-items: center;
-  opacity: var(--_button-label-opacity, 1);
+  opacity: 1;
 
-  &[data-loading] {
-    --_button-label-opacity: 0.2;
+  &:where([data-loading]) {
+    opacity: 0.2;
   }
 }
 
 .section {
   display: flex;
   align-items: center;
-  margin-right: var(--_button-section-margin-right);
-  margin-left: var(--_button-section-margin-left);
 
-  &[data-position='left'] {
-    --_button-section-margin-right: var(--mantine-spacing-xs);
-
-    @mixin rtl {
-      --_button-section-margin-right: 0;
-      --_button-section-margin-left: var(--mantine-spacing-xs);
-    }
+  &:where([data-position='left']) {
+    margin-inline-end: var(--mantine-spacing-xs);
   }
 
-  &[data-position='right'] {
-    --_button-section-margin-left: var(--mantine-spacing-xs);
-
-    @mixin rtl {
-      --_button-section-margin-left: 0;
-      --_button-section-margin-right: var(--mantine-spacing-xs);
-    }
+  &:where([data-position='right']) {
+    margin-inline-start: var(--mantine-spacing-xs);
   }
 }
 
@@ -195,8 +174,8 @@
 }
 
 .group {
-  display: flex;
   --button-border-width: rem(1px);
+  display: flex;
 
   &[data-orientation='horizontal'] {
     flex-direction: row;
@@ -220,9 +199,9 @@
         border-left-width: calc(var(--button-border-width) / 2);
       }
 
-      @mixin rtl {
+      @mixin where-rtl {
         &:not(:only-child):first-child {
-          border: var(--_button-bd, var(--button-bd, rem(1px) solid transparent));
+          border: var(--button-bd, rem(1px) solid transparent);
           border-radius: var(--button-radius, var(--mantine-radius-default));
           border-bottom-left-radius: 0;
           border-top-left-radius: 0;
@@ -230,7 +209,7 @@
         }
 
         &:not(:only-child):last-child {
-          border: var(--_button-bd, var(--button-bd, rem(1px) solid transparent));
+          border: var(--button-bd, rem(1px) solid transparent);
           border-radius: var(--button-radius, var(--mantine-radius-default));
           border-bottom-right-radius: 0;
           border-top-right-radius: 0;
