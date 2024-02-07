@@ -1,18 +1,3 @@
-import {
-  Box,
-  BoxProps,
-  ElementProps,
-  Factory,
-  MantineColor,
-  StylesApiProps,
-  createVarsResolver,
-  factory,
-  getThemeColor,
-  useMantineTheme,
-  useProps,
-  useResolvedStylesApi,
-  useStyles,
-} from '@mantine/core';
 import React, { useState } from 'react';
 import {
   Bar,
@@ -26,10 +11,25 @@ import {
   XAxis,
   YAxis,
 } from 'recharts';
+import {
+  Box,
+  BoxProps,
+  createVarsResolver,
+  ElementProps,
+  Factory,
+  factory,
+  getThemeColor,
+  MantineColor,
+  StylesApiProps,
+  useMantineTheme,
+  useProps,
+  useResolvedStylesApi,
+  useStyles,
+} from '@mantine/core';
 import { ChartLegend, ChartLegendStylesNames } from '../ChartLegend';
 import { ChartTooltip, ChartTooltipStylesNames } from '../ChartTooltip';
-import classes from '../grid-chart.module.css';
 import type { BaseChartStylesNames, ChartSeries, GridChartBaseProps } from '../types';
+import classes from '../grid-chart.module.css';
 
 function valueToPercent(value: number) {
   return `${(value * 100).toFixed(0)}%`;
@@ -72,7 +72,7 @@ export interface BarChartProps
   /** Props passed down to recharts `BarChart` component */
   barChartProps?: React.ComponentPropsWithoutRef<typeof ReChartsBarChart>;
 
-    /** with label list */
+  /** with label list */
   labelList?: React.ComponentPropsWithoutRef<typeof LabelList>[];
 }
 
@@ -189,7 +189,7 @@ export const BarChart = factory<BarChartFactory>((_props, ref) => {
         strokeOpacity={dimmed ? 0.2 : 0}
         stackId={stacked ? 'stack' : undefined}
       >
-         {labelList && (
+        {labelList && (
           <>
             {labelList.map((labelListProps, index) => (
               <LabelList
