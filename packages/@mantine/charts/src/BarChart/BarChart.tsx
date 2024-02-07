@@ -1,7 +1,23 @@
+import {
+  Box,
+  BoxProps,
+  ElementProps,
+  Factory,
+  MantineColor,
+  StylesApiProps,
+  createVarsResolver,
+  factory,
+  getThemeColor,
+  useMantineTheme,
+  useProps,
+  useResolvedStylesApi,
+  useStyles,
+} from '@mantine/core';
 import React, { useState } from 'react';
 import {
   Bar,
   CartesianGrid,
+  LabelList,
   Legend,
   BarChart as ReChartsBarChart,
   ReferenceLine,
@@ -10,25 +26,10 @@ import {
   XAxis,
   YAxis,
 } from 'recharts';
-import {
-  Box,
-  BoxProps,
-  createVarsResolver,
-  ElementProps,
-  factory,
-  Factory,
-  getThemeColor,
-  MantineColor,
-  StylesApiProps,
-  useMantineTheme,
-  useProps,
-  useResolvedStylesApi,
-  useStyles,
-} from '@mantine/core';
 import { ChartLegend, ChartLegendStylesNames } from '../ChartLegend';
 import { ChartTooltip, ChartTooltipStylesNames } from '../ChartTooltip';
-import type { BaseChartStylesNames, ChartSeries, GridChartBaseProps } from '../types';
 import classes from '../grid-chart.module.css';
+import type { BaseChartStylesNames, ChartSeries, GridChartBaseProps } from '../types';
 
 function valueToPercent(value: number) {
   return `${(value * 100).toFixed(0)}%`;
@@ -70,6 +71,9 @@ export interface BarChartProps
 
   /** Props passed down to recharts `BarChart` component */
   barChartProps?: React.ComponentPropsWithoutRef<typeof ReChartsBarChart>;
+
+    /** with label list */
+  labelList?: React.ComponentPropsWithoutRef<typeof LabelList>[];
 }
 
 export type BarChartFactory = Factory<{
@@ -135,6 +139,7 @@ export const BarChart = factory<BarChartFactory>((_props, ref) => {
     orientation,
     dir,
     valueFormatter,
+    labelList,
     ...others
   } = props;
 
@@ -183,7 +188,19 @@ export const BarChart = factory<BarChartFactory>((_props, ref) => {
         fillOpacity={dimmed ? 0.1 : fillOpacity}
         strokeOpacity={dimmed ? 0.2 : 0}
         stackId={stacked ? 'stack' : undefined}
-      />
+      >
+         {labelList && (
+          <>
+            {labelList.map((labelListProps, index) => (
+              <LabelList
+                // eslint-disable-next-line react/no-array-index-key
+                key={index}
+                {...labelListProps}
+              />
+            ))}
+          </>
+        )}
+      </Bar>
     );
   });
 
