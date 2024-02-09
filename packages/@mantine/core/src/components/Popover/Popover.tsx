@@ -53,7 +53,7 @@ export interface __PopoverProps {
   /** Called when dropdown opens */
   onOpen?: () => void;
 
-  /** If set dropdown will not be unmounted from the DOM when it is hidden, `display: none` styles will be added instead, `false` by default */
+  /** If set dropdown will not be unmounted from the DOM when it is hidden, `display: none` styles will be added instead */
   keepMounted?: boolean;
 
   /** Props passed down to the `Transition` component that used to animate dropdown presence, use to configure duration and animation type, `{ duration: 150, transition: 'fade' }` by default */
