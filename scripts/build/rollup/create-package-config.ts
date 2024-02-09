@@ -58,6 +58,7 @@ export async function createPackageConfig(packagePath: string): Promise<RollupOp
         dir: path.resolve(packagePath, 'cjs'),
         preserveModules: true,
         sourcemap: true,
+        interop: 'auto',
       },
     ],
     external: ROLLUP_EXTERNALS,
