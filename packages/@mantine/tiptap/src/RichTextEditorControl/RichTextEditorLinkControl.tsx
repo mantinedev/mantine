@@ -81,7 +81,7 @@ export const RichTextEditorLinkControl = factory<RichTextEditorLinkControlFactor
       open();
       const linkData = ctx.editor?.getAttributes('link');
       setUrl(linkData?.href || '');
-      setExternal(linkData?.target === '_blank');
+      setExternal(linkData?.href ? linkData?.target === '_blank' : initialExternal);
     };
 
     const handleClose = () => {

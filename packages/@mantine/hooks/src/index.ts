@@ -1,4 +1,4 @@
-export * from './utils';
+export * from './utils/index.js';
 
 export { useCallbackRef } from './use-callback-ref/use-callback-ref';
 export { useDebounceCallback } from './use-debounced-callback/use-debounced-callback';
