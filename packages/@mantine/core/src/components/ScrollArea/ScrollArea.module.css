@@ -16,7 +16,7 @@
     display: none;
   }
 
-  &:where([data-scrollbars='xy'] [data-scrollbars='y']) {
+  &:where([data-scrollbars='xy'], [data-scrollbars='y']) {
     &:where([data-offset-scrollbars='xy'], [data-offset-scrollbars='y']) {
       padding-right: var(--scrollarea-scrollbar-size);
       padding-left: unset;
