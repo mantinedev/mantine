@@ -43,4 +43,11 @@ describe('@mantine/form/setFieldValue', () => {
     act(() => hook.result.current.setFieldValue('a.0.b.c', 10));
     expect(hook.result.current.values).toStrictEqual({ a: [{ b: { c: 10 } }, { b: { c: 20 } }] });
   });
+
+  it('sets value at path based on previous value', () => {
+    const hook = renderHook(() => useForm({ initialValues: { a: { d: 2, b: { c: 1 } } } }));
+
+    act(() => hook.result.current.setFieldValue('a.b.c', (prev) => prev + 1));
+    expect(hook.result.current.values).toStrictEqual({ a: { d: 2, b: { c: 2 } } });
+  });
 });
