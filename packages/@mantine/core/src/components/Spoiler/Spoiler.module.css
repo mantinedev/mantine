@@ -1,9 +1,8 @@
 .root {
   position: relative;
-  margin-bottom: var(--_spoiler-margin-bottom);
 
-  &[data-has-spoiler] {
-    --_spoiler-margin-bottom: rem(24px);
+  &:where([data-has-spoiler]) {
+    margin-bottom: rem(24px);
   }
 }
 
@@ -20,7 +19,7 @@
   top: 100%;
   height: rem(24px);
 
-  @mixin rtl {
+  @mixin where-rtl {
     left: auto;
     right: 0;
   }
