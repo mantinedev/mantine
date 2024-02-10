@@ -161,6 +161,14 @@ components now support `renderOption` prop that allows to customize option rende
 
 <Demo data={TagsInputDemos.renderOption} />
 
+## Styles improvements
+
+All Mantine components have been migrated to [logical CSS properties](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_logical_properties_and_values)
+(as a replacement for rtl styles) and [:where](https://developer.mozilla.org/en-US/docs/Web/CSS/:where) pseudo-class
+(as a replacement for [private CSS variables](https://help.mantine.dev/q/private-css-variables)). These changes
+should not impact the usage of Mantine components, but now Mantine CSS files have smaller size. For example,
+`@mantine/core/styles.css` now has ~ 8% smaller size (192kb -> 177kb).
+
 ## Documentation updates
 
 - [Responsive styles guide](/styles/responsive) now includes new sections about responsive props and container queries
