@@ -350,8 +350,8 @@ export const PinInput = factory<PinInputFactory>((props, ref) => {
             component="input"
             {...getStyles('pinInput', {
               style: {
-                '--_input-padding': '0',
-                '--_input-text-align': 'center',
+                '--input-padding': '0',
+                '--input-text-align': 'center',
               } as React.CSSProperties,
             })}
             classNames={resolvedClassNames}
