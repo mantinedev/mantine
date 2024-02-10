@@ -13,8 +13,8 @@
 
   --tabs-list-line-bottom: 0;
   --tabs-list-line-top: unset;
-  --tabs-list-line-left: 0;
-  --tabs-list-line-right: 0;
+  --tabs-list-line-start: 0;
+  --tabs-list-line-end: 0;
 
   --tab-radius: var(--tabs-radius) var(--tabs-radius) 0 0;
   --tab-border-width: 0 0 var(--tabs-list-border-width) 0;
@@ -32,8 +32,8 @@
   }
 
   &[data-orientation='vertical'] {
-    --tabs-list-line-left: unset;
-    --tabs-list-line-right: 0;
+    --tabs-list-line-start: unset;
+    --tabs-list-line-end: 0;
     --tabs-list-line-top: 0;
     --tabs-list-line-bottom: 0;
     --tabs-list-border-size: 0 var(--tabs-list-border-width) 0 0;
@@ -44,8 +44,6 @@
     --tabs-display: flex;
 
     @mixin rtl {
-      --tabs-list-line-left: 0;
-      --tabs-list-line-right: unset;
       --tabs-list-border-size: 0 0 0 var(--tabs-list-border-width);
       --tab-border-width: 0 0 0 var(--tabs-list-border-width);
       --tab-radius: 0 var(--tabs-radius) var(--tabs-radius) 0;
@@ -53,15 +51,13 @@
 
     &[data-placement='right'] {
       --tabs-flex-direction: row-reverse;
-      --tabs-list-line-left: 0;
-      --tabs-list-line-right: unset;
+      --tabs-list-line-start: 0;
+      --tabs-list-line-end: unset;
       --tabs-list-border-size: 0 0 0 var(--tabs-list-border-width);
       --tab-border-width: 0 0 0 var(--tabs-list-border-width);
       --tab-radius: 0 var(--tabs-radius) var(--tabs-radius) 0;
 
       @mixin rtl {
-        --tabs-list-line-left: unset;
-        --tabs-list-line-right: 0;
         --tabs-list-border-size: 0 var(--tabs-list-border-width) 0 0;
         --tab-border-width: 0 var(--tabs-list-border-width) 0 0;
         --tab-radius: var(--tabs-radius) 0 0 var(--tabs-radius);
@@ -193,8 +189,8 @@
     border-width: var(--tabs-list-border-size);
     border-style: solid;
     bottom: var(--tabs-list-line-bottom);
-    left: var(--tabs-list-line-left);
-    right: var(--tabs-list-line-right);
+    inset-inline-start: var(--tabs-list-line-start);
+    inset-inline-end: var(--tabs-list-line-end);
     top: var(--tabs-list-line-top);
   }
 }
@@ -239,8 +235,8 @@
     border-width: var(--tabs-list-border-size);
     border-style: solid;
     bottom: var(--tabs-list-line-bottom);
-    left: var(--tabs-list-line-left);
-    right: var(--tabs-list-line-right);
+    inset-inline-start: var(--tabs-list-line-start);
+    inset-inline-end: var(--tabs-list-line-end);
     top: var(--tabs-list-line-top);
   }
 }
@@ -249,15 +245,15 @@
   border: rem(1px) solid transparent;
   border-top-color: var(--tab-border-top-color);
   border-bottom-color: var(--tab-border-bottom-color);
-  border-left-color: var(--tab-border-left-color);
-  border-right-color: var(--tab-border-right-color);
+  border-inline-start-color: var(--tab-border-inline-start-color);
+  border-inline-end-color: var(--tab-border-inline-end-color);
   border-radius: var(--tab-radius);
   position: relative;
 
   --tab-border-bottom-color: transparent;
   --tab-border-top-color: transparent;
-  --tab-border-right-color: transparent;
-  --tab-border-left-color: transparent;
+  --tab-border-inline-end-color: transparent;
+  --tab-border-inline-start-color: transparent;
 
   &[data-active] {
     &::before {
@@ -285,8 +281,8 @@
     }
 
     --tab-border-top-color: var(--tab-border-color);
-    --tab-border-left-color: var(--tab-border-color);
-    --tab-border-right-color: var(--tab-border-color);
+    --tab-border-inline-start-color: var(--tab-border-color);
+    --tab-border-inline-end-color: var(--tab-border-color);
     --tab-border-bottom-color: var(--mantine-color-body);
 
     &[data-inverted] {
@@ -301,8 +297,8 @@
 
     &[data-orientation='vertical'] {
       &[data-placement='left'] {
-        --tab-border-right-color: var(--mantine-color-body);
-        --tab-border-left-color: var(--tab-border-color);
+        --tab-border-inline-end-color: var(--mantine-color-body);
+        --tab-border-inline-start-color: var(--tab-border-color);
         --tab-border-bottom-color: var(--tab-border-color);
 
         --tab-before-right: rem(-1px);
@@ -313,9 +309,6 @@
         --tab-after-right: rem(-1px);
 
         @mixin rtl {
-          --tab-border-right-color: var(--tab-border-color);
-          --tab-border-left-color: var(--mantine-color-body);
-
           --tab-before-right: auto;
           --tab-before-left: rem(-1px);
           --tab-after-left: rem(-1px);
@@ -324,8 +317,8 @@
       }
 
       &[data-placement='right'] {
-        --tab-border-left-color: var(--mantine-color-body);
-        --tab-border-right-color: var(--tab-border-color);
+        --tab-border-inline-start-color: var(--mantine-color-body);
+        --tab-border-inline-end-color: var(--tab-border-color);
         --tab-border-bottom-color: var(--tab-border-color);
 
         --tab-before-left: rem(-1px);
@@ -336,9 +329,6 @@
         --tab-after-left: rem(-1px);
 
         @mixin rtl {
-          --tab-border-left-color: var(--tab-border-color);
-          --tab-border-right-color: var(--mantine-color-body);
-
           --tab-before-left: auto;
           --tab-before-right: rem(-1px);
           --tab-after-right: rem(-1px);

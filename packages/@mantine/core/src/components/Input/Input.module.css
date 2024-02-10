@@ -22,8 +22,8 @@
   --input-text-align: left;
   --input-line-height: calc(var(--input-height) - rem(2px));
   --input-padding: calc(var(--input-height) / 3);
-  --input-padding-left: var(--input-padding);
-  --input-padding-right: var(--input-padding);
+  --input-padding-inline-start: var(--input-padding);
+  --input-padding-inline-end: var(--input-padding);
   --input-placeholder-color: var(--mantine-color-placeholder);
   --input-color: var(--mantine-color-text);
 
@@ -37,19 +37,17 @@
   --input-size: var(--input-height);
 
   --section-y: rem(1px);
-  --left-section-left: rem(1px);
-  --left-section-right: unset;
+  --left-section-start: rem(1px);
   --left-section-border-radius: var(--input-radius) 0 0 var(--input-radius);
 
-  --right-section-left: unset;
-  --right-section-right: rem(1px);
+  --right-section-end: rem(1px);
   --right-section-border-radius: 0 var(--input-radius) var(--input-radius) 0;
 
   &[data-variant='unstyled'] {
     --input-padding: 0;
     --input-padding-y: 0;
-    --input-padding-left: 0;
-    --input-padding-right: 0;
+    --input-padding-inline-start: 0;
+    --input-padding-inline-end: 0;
   }
 
   &[data-pointer] {
@@ -69,27 +67,11 @@
   }
 
   &[data-with-left-section] {
-    --input-padding-left: var(--input-left-section-size);
-
-    @mixin rtl {
-      --input-padding-right: var(--input-left-section-size);
-
-      &:not([data-with-right-section]) {
-        --input-padding-left: var(--input-padding);
-      }
-    }
+    --input-padding-inline-start: var(--input-left-section-size);
   }
 
   &[data-with-right-section] {
-    --input-padding-right: var(--input-right-section-size);
-
-    @mixin rtl {
-      --input-padding-left: var(--input-right-section-size);
-
-      &:not([data-with-left-section]) {
-        --input-padding-right: var(--input-padding);
-      }
-    }
+    --input-padding-inline-end: var(--input-right-section-size);
   }
 
   @mixin light {
@@ -148,13 +130,9 @@
     --input-section-color: var(--mantine-color-error);
   }
 
-  @mixin rtl {
+  @mixin where-rtl {
     --input-text-align: right;
-    --left-section-left: unset;
-    --left-section-right: rem(1px);
     --left-section-border-radius: 0 var(--input-radius) var(--input-radius) 0;
-    --right-section-left: rem(1px);
-    --right-section-right: unset;
     --right-section-border-radius: var(--input-radius) 0 0 var(--input-radius);
   }
 }
@@ -177,8 +155,8 @@
   line-height: var(--input-line-height);
   font-size: var(--input-fz, var(--input-fz, var(--mantine-font-size-sm)));
   border-radius: var(--input-radius);
-  padding-left: var(--input-padding-left);
-  padding-right: var(--input-padding-right);
+  padding-inline-start: var(--input-padding-inline-start);
+  padding-inline-end: var(--input-padding-inline-end);
   padding-top: var(--input-padding-y, 0rem);
   padding-bottom: var(--input-padding-y, 0rem);
   cursor: var(--input-cursor);
@@ -244,8 +222,8 @@
   pointer-events: var(--section-pointer-events);
   position: absolute;
   z-index: 1;
-  left: var(--section-left);
-  right: var(--section-right);
+  inset-inline-start: var(--section-start);
+  inset-inline-end: var(--section-end);
   bottom: var(--section-y);
   top: var(--section-y);
   display: flex;
@@ -257,16 +235,14 @@
 
   &[data-position='right'] {
     --section-pointer-events: var(--input-right-section-pointer-events);
-    --section-left: var(--right-section-left);
-    --section-right: var(--right-section-right);
+    --section-end: var(--right-section-end);
     --section-size: var(--input-right-section-size);
     --section-border-radius: var(--right-section-border-radius);
   }
 
   &[data-position='left'] {
     --section-pointer-events: var(--input-left-section-pointer-events);
-    --section-left: var(--left-section-left);
-    --section-right: var(--left-section-right);
+    --section-start: var(--left-section-start);
     --section-size: var(--input-left-section-size);
     --section-border-radius: var(--left-section-border-radius);
   }

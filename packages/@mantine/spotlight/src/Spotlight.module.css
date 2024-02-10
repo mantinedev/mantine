@@ -29,12 +29,7 @@
   flex: 1;
   padding: var(--spotlight-actions-list-padding);
   max-height: calc(100% - rem(3.125rem));
-  margin-right: calc(var(--spotlight-actions-list-padding) * -1);
-
-  @mixin where-rtl {
-    margin-right: 0;
-    margin-left: calc(var(--spotlight-actions-list-padding) * -1);
-  }
+  margin-inline-end: calc(var(--spotlight-actions-list-padding) * -1);
 
   @mixin where-light {
     border-color: var(--mantine-color-gray-2);
@@ -93,23 +88,11 @@
   }
 
   &:where([data-position='left']) {
-    margin-right: var(--mantine-spacing-md);
+    margin-inline-end: var(--mantine-spacing-md);
   }
 
   &:where([data-position='right']) {
-    margin-left: var(--mantine-spacing-md);
-  }
-
-  @mixin where-rtl {
-    &:where([data-position='left']) {
-      margin-right: unset;
-      margin-left: var(--mantine-spacing-md);
-    }
-
-    &:where([data-position='right']) {
-      margin-left: unset;
-      margin-right: var(--mantine-spacing-md);
-    }
+    margin-inline-start: var(--mantine-spacing-md);
   }
 
   & > svg {
@@ -158,12 +141,7 @@
     font-size: var(--mantine-font-size-xs);
     font-weight: 700;
     color: var(--mantine-color-dimmed);
-    padding-left: var(--mantine-spacing-md);
-
-    @mixin where-rtl {
-      padding-left: 0;
-      padding-right: var(--mantine-spacing-md);
-    }
+    padding-inline-start: var(--mantine-spacing-md);
   }
 
   &:empty {

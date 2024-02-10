@@ -43,79 +43,54 @@
 }
 
 .navbar {
-  left: 0;
+  inset-inline-start: 0;
   width: var(--app-shell-navbar-width);
   transition-property: transform, top, height;
   transform: var(--app-shell-navbar-transform);
   z-index: var(--app-shell-navbar-z-index);
 
   @mixin where-rtl {
-    left: auto;
-    right: 0;
     transform: var(--app-shell-navbar-transform-rtl);
   }
 
   &:where([data-with-border]) {
-    border-right: rem(1px) solid var(--app-shell-border-color);
-
-    @mixin where-rtl {
-      border-right: none;
-      border-left: rem(1px) solid var(--app-shell-border-color);
-    }
+    border-inline-end: rem(1px) solid var(--app-shell-border-color);
   }
 }
 
 .aside {
-  right: 0;
+  inset-inline-end: 0;
   width: var(--app-shell-aside-width);
   transform: var(--app-shell-aside-transform);
   z-index: var(--app-shell-aside-z-index);
 
   @mixin where-rtl {
-    left: 0px;
-    right: auto;
     transform: var(--app-shell-aside-transform-rtl);
   }
 
   &:where([data-with-border]) {
-    border-left: rem(1px) solid var(--app-shell-border-color);
-
-    @mixin where-rtl {
-      border-left: none;
-      border-right: rem(1px) solid var(--app-shell-border-color);
-    }
+    border-inline-start: rem(1px) solid var(--app-shell-border-color);
   }
 }
 
 .main {
-  padding-left: calc(var(--app-shell-navbar-offset, 0px) + var(--app-shell-padding));
-  padding-right: calc(var(--app-shell-aside-offset, 0px) + var(--app-shell-padding));
+  padding-inline-start: calc(var(--app-shell-navbar-offset, 0px) + var(--app-shell-padding));
+  padding-inline-end: calc(var(--app-shell-aside-offset, 0px) + var(--app-shell-padding));
   padding-top: calc(var(--app-shell-header-offset, 0px) + var(--app-shell-padding));
   padding-bottom: calc(var(--app-shell-footer-offset, 0px) + var(--app-shell-padding));
   min-height: 100dvh;
   transition-property: padding;
-
-  @mixin where-rtl {
-    padding-left: calc(var(--app-shell-aside-offset, 0px) + var(--app-shell-padding));
-    padding-right: calc(var(--app-shell-navbar-offset, 0px) + var(--app-shell-padding));
-  }
 }
 
 .header,
 .footer {
   position: fixed;
-  left: 0;
-  right: 0;
+  inset-inline: 0;
   transition-property: transform, left, right;
   background-color: var(--mantine-color-body);
 
   :where([data-layout='alt']) & {
-    left: var(--app-shell-navbar-offset, 0px);
-
-    @mixin where-rtl {
-      right: var(--app-shell-navbar-offset, 0px);
-      left: 0px;
-    }
+    inset-inline-start: var(--app-shell-navbar-offset, 0px);
   }
 }
 

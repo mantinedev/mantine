@@ -60,8 +60,7 @@
 
   &:where([data-orientation='horizontal']) {
     height: rem(2px);
-    margin-left: var(--mantine-spacing-md);
-    margin-right: var(--mantine-spacing-md);
+    margin-inline: var(--mantine-spacing-md);
   }
 
   &:where([data-orientation='vertical']) {
@@ -129,10 +128,10 @@
 
 .verticalSeparator {
   top: calc(var(--stepper-icon-size) + var(--separator-spacing));
-  left: calc(var(--stepper-icon-size) / 2);
+  inset-inline-start: calc(var(--stepper-icon-size) / 2);
   height: 100vh;
   position: absolute;
-  border-left: rem(2px) solid;
+  border-inline-start: rem(2px) solid;
 
   @mixin where-light {
     border-color: var(--mantine-color-gray-1);
@@ -201,12 +200,7 @@
   flex-direction: column;
 
   &:where([data-icon-position='left']) {
-    text-align: left;
     margin-inline-start: var(--mantine-spacing-sm);
-
-    @mixin where-rtl {
-      text-align: right;
-    }
   }
 
   &:where([data-icon-position='right']) {

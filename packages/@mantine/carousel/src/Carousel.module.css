@@ -19,12 +19,7 @@
     }
 
     &:where([data-orientation='horizontal']) {
-      margin-right: calc(var(--carousel-slide-gap) * -1);
-
-      @mixin where-rtl {
-        margin-left: calc(var(--carousel-slide-gap) * -1);
-        margin-right: 0;
-      }
+      margin-inline-end: calc(var(--carousel-slide-gap) * -1);
     }
   }
 
@@ -42,7 +37,7 @@
   pointer-events: none;
 
   .root:where([data-orientation='vertical']) & {
-    left: calc(50% - var(--carousel-control-size) / 2);
+    inset-inline-start: calc(50% - var(--carousel-control-size) / 2);
     top: 0;
     bottom: 0;
     flex-direction: column;
@@ -50,8 +45,8 @@
   }
 
   .root:where([data-orientation='horizontal']) & {
-    left: 0;
-    right: 0;
+    inset-inline-start: 0;
+    inset-inline-end: 0;
     top: calc(50% - var(--carousel-control-size) / 2);
     flex-direction: row;
     padding: 0 var(--carousel-controls-offset);
@@ -95,14 +90,14 @@
   .root:where([data-orientation='vertical']) & {
     bottom: 0;
     top: 0;
-    right: var(--mantine-spacing-md);
+    inset-inline-end: var(--mantine-spacing-md);
     flex-direction: column;
   }
 
   .root:where([data-orientation='horizontal']) & {
     bottom: var(--mantine-spacing-md);
-    left: 0;
-    right: 0;
+    inset-inline-start: 0;
+    inset-inline-end: 0;
     flex-direction: row;
   }
 }
@@ -143,12 +138,7 @@
     }
 
     &:where([data-orientation='horizontal']) {
-      padding-right: var(--carousel-slide-gap);
-
-      @mixin where-rtl {
-        padding-left: var(--carousel-slide-gap);
-        padding-right: 0;
-      }
+      padding-inline-end: var(--carousel-slide-gap);
     }
   }
 
@@ -158,12 +148,7 @@
     }
 
     &:where([data-orientation='horizontal']) {
-      margin-right: var(--carousel-slide-gap);
-
-      @mixin where-rtl {
-        margin-left: var(--carousel-slide-gap);
-        margin-right: 0;
-      }
+      margin-inline-end: var(--carousel-slide-gap);
     }
   }
 }

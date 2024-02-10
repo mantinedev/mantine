@@ -15,11 +15,5 @@
 .closeButton {
   position: absolute;
   top: calc(var(--mantine-spacing-md) / 2);
-  right: calc(var(--mantine-spacing-md) / 2);
-  left: auto;
-
-  @mixin where-rtl {
-    right: auto;
-    left: calc(var(--mantine-spacing-md) / 2);
-  }
+  inset-inline-end: calc(var(--mantine-spacing-md) / 2);
 }

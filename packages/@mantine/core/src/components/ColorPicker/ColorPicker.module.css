@@ -51,7 +51,7 @@
   flex: 1;
 
   &:not(:only-child) {
-    margin-right: var(--mantine-spacing-xs);
+    margin-inline-end: var(--mantine-spacing-xs);
   }
 }
 
@@ -80,8 +80,7 @@
 
 .swatches {
   margin-top: rem(5px);
-  margin-left: rem(-2px);
-  margin-right: rem(-2px);
+  margin-inline: rem(-2px);
   display: flex;
   flex-wrap: wrap;
 }
@@ -132,8 +131,7 @@
 
   position: relative;
   height: calc(var(--cp-thumb-size) + rem(2px));
-  margin-left: calc(var(--cp-thumb-size) / 2);
-  margin-right: calc(var(--cp-thumb-size) / 2);
+  margin-inline: calc(var(--cp-thumb-size) / 2);
   outline: none;
 
   & + & {
@@ -169,7 +167,6 @@
   position: absolute;
   top: 0;
   bottom: 0;
-  left: calc(var(--cp-thumb-size) * -1 / 2 - rem(1px));
-  right: calc(var(--cp-thumb-size) * -1 / 2 - rem(1px));
+  inset-inline: calc(var(--cp-thumb-size) * -1 / 2 - rem(1px));
   border-radius: 10000rem;
 }

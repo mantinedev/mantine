@@ -53,10 +53,6 @@
 
 .itemLabel {
   flex: 1;
-
-  @mixin rtl {
-    text-align: right;
-  }
 }
 
 .itemSection {
@@ -65,22 +61,10 @@
   align-items: center;
 
   &:where([data-position='left']) {
-    margin-left: 0;
-    margin-right: var(--mantine-spacing-xs);
-
-    @mixin where-rtl {
-      margin-left: var(--mantine-spacing-xs);
-      margin-right: 0;
-    }
+    margin-inline-end: var(--mantine-spacing-xs);
   }
 
   &:where([data-position='right']) {
-    margin-left: var(--mantine-spacing-xs);
-    margin-right: 0;
-
-    @mixin where-rtl {
-      margin-left: 0;
-      margin-right: var(--mantine-spacing-xs);
-    }
+    margin-inline-start: var(--mantine-spacing-xs);
   }
 }

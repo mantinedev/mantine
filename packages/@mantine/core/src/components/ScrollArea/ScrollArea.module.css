@@ -18,13 +18,8 @@
 
   &:where([data-scrollbars='xy'], [data-scrollbars='y']) {
     &:where([data-offset-scrollbars='xy'], [data-offset-scrollbars='y']) {
-      padding-right: var(--scrollarea-scrollbar-size);
-      padding-left: unset;
-
-      @mixin where-rtl {
-        padding-right: unset;
-        padding-left: var(--scrollarea-scrollbar-size);
-      }
+      padding-inline-end: var(--scrollarea-scrollbar-size);
+      padding-inline-start: unset;
     }
   }
 
@@ -77,29 +72,17 @@
 
   &:where([data-orientation='vertical']) {
     width: var(--scrollarea-scrollbar-size);
-
     top: 0;
     bottom: var(--sa-corner-width);
-    right: 0;
-
-    @mixin rtl {
-      right: unset;
-      left: 0;
-    }
+    inset-inline-end: 0;
   }
 
   &:where([data-orientation='horizontal']) {
     height: var(--scrollarea-scrollbar-size);
     flex-direction: column;
-
     bottom: 0;
-    left: 0;
-    right: var(--sa-corner-height);
-
-    @mixin rtl {
-      right: 0;
-      left: var(--sa-corner-height);
-    }
+    inset-inline-end: 0;
+    inset-inline-start: var(--sa-corner-height);
   }
 }
 
@@ -136,14 +119,8 @@
   opacity: 0;
   transition: opacity 150ms ease;
   display: block;
-  right: 0;
+  inset-inline-end: 0;
   bottom: 0;
-
-  @mixin rtl {
-    right: unset;
-    left: 0;
-    bottom: 0;
-  }
 
   @mixin where-light {
     background-color: var(--mantine-color-gray-0);

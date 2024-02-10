@@ -9,12 +9,7 @@
   padding: 0;
 
   &:where([data-with-padding]) {
-    padding-left: var(--mantine-spacing-md);
-
-    @mixin rtl {
-      padding-left: 0;
-      padding-right: var(--mantine-spacing-md);
-    }
+    padding-inline-start: var(--mantine-spacing-md);
   }
 }
 
@@ -50,11 +45,5 @@
 .itemIcon {
   display: inline-block;
   vertical-align: middle;
-  margin-right: var(--mantine-spacing-sm);
-  margin-left: 0;
-
-  @mixin rtl {
-    margin-right: 0;
-    margin-left: var(--mantine-spacing-sm);
-  }
+  margin-inline-end: var(--mantine-spacing-sm);
 }

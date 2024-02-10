@@ -217,36 +217,17 @@
     border-radius: 0;
 
     &:not(:last-of-type) {
-      border-right-width: 0;
-
-      @mixin rtl {
-        border-right-width: rem(1px);
-        border-left-width: 0;
-      }
+      border-inline-end-width: 0;
     }
 
     &:last-of-type {
-      border-top-right-radius: var(--mantine-radius-default);
-      border-bottom-right-radius: var(--mantine-radius-default);
-
-      @mixin where-rtl {
-        border-top-right-radius: 0;
-        border-bottom-right-radius: 0;
-        border-top-left-radius: var(--mantine-radius-default);
-        border-bottom-left-radius: var(--mantine-radius-default);
-      }
+      border-start-end-radius: var(--mantine-radius-default);
+      border-end-end-radius: var(--mantine-radius-default);
     }
 
     &:first-of-type {
-      border-top-left-radius: var(--mantine-radius-default);
-      border-bottom-left-radius: var(--mantine-radius-default);
-
-      @mixin where-rtl {
-        border-top-left-radius: 0;
-        border-bottom-left-radius: 0;
-        border-top-right-radius: var(--mantine-radius-default);
-        border-bottom-right-radius: var(--mantine-radius-default);
-      }
+      border-start-start-radius: var(--mantine-radius-default);
+      border-end-start-radius: var(--mantine-radius-default);
     }
   }
 }
@@ -256,9 +237,9 @@
 }
 
 .linkEditorInput {
-  border-top-right-radius: 0;
-  border-bottom-right-radius: 0;
-  border-right: 0;
+  border-start-end-radius: 0;
+  border-end-end-radius: 0;
+  border-inline-end: 0;
 }
 
 .linkEditorExternalControl {
@@ -292,8 +273,8 @@
 }
 
 .linkEditorSave {
-  border-top-left-radius: 0;
-  border-bottom-left-radius: 0;
+  border-start-start-radius: 0;
+  border-end-start-radius: 0;
 }
 
 .toolbar {
@@ -303,8 +284,8 @@
   top: var(--rte-sticky-offset, 0);
   background-color: var(--mantine-color-body);
   z-index: 1;
-  border-top-right-radius: var(--mantine-radius-default);
-  border-top-left-radius: var(--mantine-radius-default);
+  border-start-end-radius: var(--mantine-radius-default);
+  border-start-start-radius: var(--mantine-radius-default);
   border-bottom: rem(1px) solid;
   padding: var(--mantine-spacing-xs) var(--mantine-spacing-md);
 
@@ -324,7 +305,7 @@
 .taskList {
   list-style-type: none;
   padding: 0;
-  padding-left: 0;
+  padding-inline-start: 0;
 
   & :where(li) {
     margin: 0;
@@ -382,6 +363,6 @@
   }
 
   & :where(li > label) {
-    margin-right: var(--mantine-spacing-sm);
+    margin-inline-end: var(--mantine-spacing-sm);
   }
 }

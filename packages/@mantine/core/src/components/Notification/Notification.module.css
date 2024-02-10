@@ -7,8 +7,8 @@
   position: relative;
   display: flex;
   align-items: center;
-  padding-left: rem(22px);
-  padding-right: var(--mantine-spacing-xs);
+  padding-inline-start: rem(22px);
+  padding-inline-end: var(--mantine-spacing-xs);
   padding-top: var(--mantine-spacing-xs);
   padding-bottom: var(--mantine-spacing-xs);
   border-radius: var(--notification-radius);
@@ -21,14 +21,9 @@
     width: rem(6px);
     top: var(--notification-radius);
     bottom: var(--notification-radius);
-    left: rem(4px);
+    inset-inline-start: rem(4px);
     border-radius: var(--notification-radius);
     background-color: var(--notification-color);
-
-    @mixin where-rtl {
-      right: rem(4px);
-      left: auto;
-    }
   }
 
   @mixin where-light {
@@ -40,11 +35,7 @@
   }
 
   &:where([data-with-icon]) {
-    padding-left: var(--mantine-spacing-xs);
-
-    @mixin where-rtl {
-      padding-right: var(--mantine-spacing-xs);
-    }
+    padding-inline-start: var(--mantine-spacing-xs);
 
     &::before {
       display: none;
@@ -60,16 +51,11 @@
       border: rem(1px) solid var(--mantine-color-dark-4);
     }
   }
-
-  @mixin where-rtl {
-    padding-right: rem(22px);
-    padding-left: var(--mantine-spacing-xs);
-  }
 }
 
 .icon {
   box-sizing: border-box;
-  margin-right: var(--mantine-spacing-md);
+  margin-inline-end: var(--mantine-spacing-md);
   width: rem(28px);
   height: rem(28px);
   border-radius: rem(28px);
@@ -78,31 +64,16 @@
   justify-content: center;
   background-color: var(--notification-color);
   color: var(--mantine-color-white);
-
-  @mixin where-rtl {
-    margin-right: 0;
-    margin-left: var(--mantine-spacing-md);
-  }
 }
 
 .loader {
-  margin-right: var(--mantine-spacing-md);
-
-  @mixin where-rtl {
-    margin-right: 0;
-    margin-left: var(--mantine-spacing-md);
-  }
+  margin-inline-end: var(--mantine-spacing-md);
 }
 
 .body {
   flex: 1;
   overflow: hidden;
-  margin-right: var(--mantine-spacing-xs);
-
-  @mixin where-rtl {
-    margin-right: 0;
-    margin-left: var(--mantine-spacing-xs);
-  }
+  margin-inline-end: var(--mantine-spacing-xs);
 }
 
 .title {

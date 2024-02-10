@@ -43,7 +43,7 @@
   display: flex;
   align-items: center;
   gap: var(--mantine-spacing-sm);
-  margin-right: var(--mantine-spacing-xl);
+  margin-inline-end: var(--mantine-spacing-xl);
 }
 
 .tooltipItemName {

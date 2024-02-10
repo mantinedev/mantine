@@ -15,12 +15,7 @@
 
 .control {
   position: absolute;
-  left: 0;
+  inset-inline-start: 0;
   top: 100%;
   height: rem(24px);
-
-  @mixin where-rtl {
-    left: auto;
-    right: 0;
-  }
 }

@@ -48,8 +48,7 @@
   height: var(--chip-size);
   font-size: var(--chip-fz, var(--mantine-font-size-sm));
   line-height: calc(var(--chip-size) - rem(2px));
-  padding-left: var(--chip-padding);
-  padding-right: var(--chip-padding);
+  padding-inline: var(--chip-padding);
   cursor: pointer;
   white-space: nowrap;
   -webkit-tap-highlight-color: transparent;

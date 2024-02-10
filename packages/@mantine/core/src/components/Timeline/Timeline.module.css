@@ -34,13 +34,8 @@
     left: var(--timeline-line-left, 0);
     right: var(--timeline-line-right, 0);
     bottom: calc(var(--mantine-spacing-xl) * -1);
-    border-left: var(--item-border);
+    border-inline-start: var(--item-border);
     display: var(--timeline-line-display, none);
-
-    @mixin where-rtl {
-      border-left: 0;
-      border-right: var(--item-border);
-    }
 
     .root[data-align='left'] & {
       --timeline-line-left: calc(var(--tl-line-width) * -1);

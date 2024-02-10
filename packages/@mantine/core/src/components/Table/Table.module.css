@@ -52,12 +52,7 @@
   padding: var(--table-vertical-spacing) var(--table-horizontal-spacing, var(--mantine-spacing-xs));
 
   &:where([data-with-column-border]:not(:last-child)) {
-    border-right: rem(1px) solid var(--table-border-color);
-
-    @mixin where-rtl {
-      border-left: rem(1px) solid var(--table-border-color);
-      border-right: none;
-    }
+    border-inline-end: rem(1px) solid var(--table-border-color);
   }
 }
 

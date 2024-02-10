@@ -56,19 +56,15 @@
   }
 
   &:where([data-first-in-range]) {
-    border-radius: var(--mantine-radius-default) 0 0 var(--mantine-radius-default);
-
-    @mixin where-rtl {
-      border-radius: 0 var(--mantine-radius-default) var(--mantine-radius-default) 0;
-    }
+    border-radius: 0;
+    border-start-start-radius: var(--mantine-radius-default);
+    border-end-start-radius: var(--mantine-radius-default);
   }
 
   &:where([data-last-in-range]) {
-    border-radius: 0 var(--mantine-radius-default) var(--mantine-radius-default) 0;
-
-    @mixin where-rtl {
-      border-radius: var(--mantine-radius-default) 0 0 var(--mantine-radius-default);
-    }
+    border-radius: 0;
+    border-end-end-radius: var(--mantine-radius-default);
+    border-start-end-radius: var(--mantine-radius-default);
   }
 
   &:where([data-first-in-range][data-last-in-range]) {

@@ -12,8 +12,7 @@
   -webkit-tap-highlight-color: transparent;
   outline: none;
   height: calc(var(--slider-size) * 2);
-  padding-left: var(--slider-size);
-  padding-right: var(--slider-size);
+  padding-inline: var(--slider-size);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -133,8 +132,7 @@
     top: 0;
     bottom: 0;
     border-radius: var(--slider-radius);
-    right: calc(var(--slider-size) * -1);
-    left: calc(var(--slider-size) * -1);
+    inset-inline: calc(var(--slider-size) * -1);
     background-color: var(--track-bg, var(--slider-track-bg));
     z-index: 0;
   }
@@ -148,12 +146,7 @@
   background-color: var(--slider-color);
   border-radius: var(--slider-radius);
   width: var(--slider-bar-width);
-  left: var(--slider-bar-offset);
-
-  @mixin where-rtl {
-    left: auto;
-    right: var(--slider-bar-offset);
-  }
+  inset-inline-start: var(--slider-bar-offset);
 
   &:where([data-inverted]) {
     background-color: var(--slider-track-bg);
@@ -173,16 +166,11 @@
 
 .markWrapper {
   position: absolute;
-  left: calc(var(--mark-offset) - var(--slider-size) / 2);
+  inset-inline-start: calc(var(--mark-offset) - var(--slider-size) / 2);
   top: 0;
   z-index: 2;
   height: 0;
   pointer-events: none;
-
-  @mixin rtl {
-    left: unset;
-    right: calc(var(--mark-offset) - var(--slider-size) / 2);
-  }
 }
 
 .mark {

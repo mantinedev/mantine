@@ -19,8 +19,7 @@
 
 .section {
   display: block;
-  margin-left: calc(var(--card-padding) * -1);
-  margin-right: calc(var(--card-padding) * -1);
+  margin-inline: calc(var(--card-padding) * -1);
 
   &:where([data-first-section]) {
     margin-top: calc(var(--card-padding) * -1);
@@ -33,8 +32,7 @@
   }
 
   &:where([data-inherit-padding]) {
-    padding-left: var(--card-padding);
-    padding-right: var(--card-padding);
+    padding-inline: var(--card-padding);
   }
 
   &:where([data-with-border]) {

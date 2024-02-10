@@ -32,8 +32,8 @@
 }
 
 .header {
-  border-top-left-radius: var(--modal-radius, var(--mantine-radius-default));
-  border-top-right-radius: var(--modal-radius, var(--mantine-radius-default));
+  border-start-start-radius: var(--modal-radius, var(--mantine-radius-default));
+  border-start-end-radius: var(--modal-radius, var(--mantine-radius-default));
 }
 
 .content {
@@ -54,6 +54,5 @@
   align-items: var(--modal-inner-align, flex-start);
   padding-top: var(--modal-inner-y-offset, var(--modal-y-offset));
   padding-bottom: var(--modal-inner-y-offset, var(--modal-y-offset));
-  padding-left: var(--modal-inner-x-offset, var(--modal-x-offset));
-  padding-right: var(--modal-inner-x-offset, var(--modal-x-offset));
+  padding-inline: var(--modal-inner-x-offset, var(--modal-x-offset));
 }

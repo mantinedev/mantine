@@ -182,22 +182,16 @@
     position: absolute;
     top: 0;
     bottom: 0;
-    left: 0;
+    inset-inline-start: 0;
     background-color: var(--separator-color);
     width: rem(1px);
     transition: background-color var(--sc-transition-duration) var(--sc-transition-timing-function);
-
-    @mixin rtl {
-      right: 0;
-      left: auto;
-    }
   }
 
   &[data-orientation='vertical'] {
     &::before {
       top: 0;
-      left: 0;
-      right: 0;
+      inset-inline: 0;
       bottom: auto;
       height: rem(1px);
       width: auto;

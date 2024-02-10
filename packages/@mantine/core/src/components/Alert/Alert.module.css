@@ -32,12 +32,7 @@
   font-weight: 700;
 
   &:where([data-with-close-button]) {
-    padding-right: var(--mantine-spacing-md);
-
-    @mixin where-rtl {
-      padding-left: var(--mantine-spacing-md);
-      padding-right: 0;
-    }
+    padding-inline-end: var(--mantine-spacing-md);
   }
 }
 
@@ -54,13 +49,8 @@
   display: flex;
   align-items: center;
   justify-content: flex-start;
-  margin-right: var(--mantine-spacing-md);
+  margin-inline-end: var(--mantine-spacing-md);
   margin-top: rem(1px);
-
-  @mixin where-rtl {
-    margin-right: 0;
-    margin-left: var(--mantine-spacing-md);
-  }
 }
 
 .message {
