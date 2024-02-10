@@ -123,7 +123,6 @@
 }
 
 .description {
-  color: var(--_description-color);
   font-size: var(--mantine-font-size-sm);
   line-height: var(--mantine-line-height-sm);
   overflow: hidden;

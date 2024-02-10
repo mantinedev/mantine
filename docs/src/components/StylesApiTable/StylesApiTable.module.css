@@ -3,11 +3,11 @@
 }
 
 .group {
-  --_group-spacing: rem(40px);
+  --group-spacing: rem(40px);
 
   & + & {
-    margin-top: var(--_group-spacing);
-    padding-top: var(--_group-spacing);
+    margin-top: var(--group-spacing);
+    padding-top: var(--group-spacing);
     border-top: rem(1px) solid light-dark(var(--mantine-color-gray-3), var(--mantine-color-dark-3));
   }
 }

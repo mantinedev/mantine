@@ -203,21 +203,20 @@
   border-radius: var(--tab-radius);
   border-width: var(--tab-border-width);
   border-style: solid;
-  border-color: var(--__tab-border-color);
+  border-color: transparent;
   background-color: var(--tab-bg);
 
-  --__tab-border-color: transparent;
   --tab-bg: transparent;
 
-  &[data-active] {
-    --__tab-border-color: var(--tabs-color);
+  &:where([data-active]) {
+    border-color: var(--tabs-color);
   }
 
   @mixin hover {
     --tab-bg: var(--tab-hover-color);
 
-    &:not([data-active]) {
-      --__tab-border-color: var(--tab-border-color);
+    &:where(:not([data-active])) {
+      border-color: var(--tab-border-color);
     }
   }
 

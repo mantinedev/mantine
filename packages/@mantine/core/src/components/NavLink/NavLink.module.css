@@ -33,8 +33,8 @@
     }
 
     .description {
-      opacity: 0.9;
-      color: var(--nl-color);
+      --description-opacity: 0.9;
+      --description-color: var(--nl-color);
     }
   }
 }
@@ -79,8 +79,8 @@
 .description {
   display: block;
   font-size: var(--mantine-font-size-xs);
-  opacity: var(--_description-opacity, 1);
-  color: var(--_description-color, var(--mantine-color-dimmed));
+  opacity: var(--description-opacity, 1);
+  color: var(--description-color, var(--mantine-color-dimmed));
   overflow: hidden;
   text-overflow: ellipsis;
 

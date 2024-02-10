@@ -48,8 +48,7 @@
     content: '';
     flex: 1;
     height: rem(1px);
-    border-top: var(--divider-size) var(--divider-border-style, solid)
-      var(--divider-color, var(--_divider-color));
+    border-top: var(--divider-size) var(--divider-border-style, solid) var(--divider-color);
     margin-right: var(--mantine-spacing-xs);
 
     @mixin rtl {
@@ -62,8 +61,7 @@
     content: '';
     flex: 1;
     height: rem(1px);
-    border-top: var(--divider-size) var(--divider-border-style, solid)
-      var(--divider-color, var(--_divider-color));
+    border-top: var(--divider-size) var(--divider-border-style, solid) var(--divider-color);
     margin-left: var(--mantine-spacing-xs);
 
     @mixin where-rtl {

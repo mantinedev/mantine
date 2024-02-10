@@ -21,7 +21,6 @@
   min-width: var(--cb-size);
   min-height: var(--cb-size);
   border-radius: var(--cb-radius);
-  color: var(--_cb-color);
 
   @mixin where-light {
     color: var(--mantine-color-gray-7);

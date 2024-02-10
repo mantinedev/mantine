@@ -33,7 +33,6 @@
   display: flex;
   align-items: center;
   user-select: none;
-  background-color: var(--_item-bg, transparent);
 
   &:where([data-disabled], :disabled) {
     color: var(--mantine-color-dimmed);

@@ -54,7 +54,7 @@
 
 .thumb {
   position: absolute;
-  display: var(--_thumb-display, flex);
+  display: flex;
   height: var(--slider-thumb-size);
   width: var(--slider-thumb-size);
   border: rem(4px) solid;
