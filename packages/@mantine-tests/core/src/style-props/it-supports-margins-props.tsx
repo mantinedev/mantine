@@ -26,8 +26,8 @@ export function itSupportsMarginsProps<Props>(
 
     expect(m.querySelector(selector)).toHaveStyle({ margin: rem(45) });
     expect(theme.querySelector(selector)).toHaveStyle({ margin: 'var(--mantine-spacing-xl)' });
-    expect(mx.querySelector(selector)).toHaveStyle({ marginLeft: rem(34), marginRight: rem(34) });
-    expect(my.querySelector(selector)).toHaveStyle({ marginTop: rem(22), marginBottom: rem(22) });
+    expect(mx.querySelector(selector)).toHaveStyle({ marginInline: rem(34) });
+    expect(my.querySelector(selector)).toHaveStyle({ marginBlock: rem(22) });
     expect(mt.querySelector(selector)).toHaveStyle({ marginTop: rem(13) });
     expect(mb.querySelector(selector)).toHaveStyle({ marginBottom: rem(43) });
     expect(mr.querySelector(selector)).toHaveStyle({ marginRight: rem(98) });

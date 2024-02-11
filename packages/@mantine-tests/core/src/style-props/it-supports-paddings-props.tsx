@@ -23,8 +23,8 @@ export function itSupportsPaddingsProps<Props>(
     const { container: pl } = render(<options.component {...options.props} pl="70%" />);
 
     expect(p.querySelector(selector)).toHaveStyle({ padding: '10%' });
-    expect(px.querySelector(selector)).toHaveStyle({ paddingLeft: '20%', paddingRight: '20%' });
-    expect(py.querySelector(selector)).toHaveStyle({ paddingTop: '30%', paddingBottom: '30%' });
+    expect(px.querySelector(selector)).toHaveStyle({ paddingInline: '20%' });
+    expect(py.querySelector(selector)).toHaveStyle({ paddingBlock: '30%' });
     expect(pt.querySelector(selector)).toHaveStyle({ paddingTop: '40%' });
     expect(pb.querySelector(selector)).toHaveStyle({ paddingBottom: '50%' });
     expect(pr.querySelector(selector)).toHaveStyle({ paddingRight: '60%' });
