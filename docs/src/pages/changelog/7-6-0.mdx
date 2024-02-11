@@ -1,4 +1,5 @@
 import {
+  BarChartDemos,
   ModalDemos,
   RadarChartDemos,
   SelectDemos,
@@ -168,6 +169,16 @@ All Mantine components have been migrated to [logical CSS properties](https://de
 (as a replacement for [private CSS variables](https://help.mantine.dev/q/private-css-variables)). These changes
 should not impact the usage of Mantine components, but now Mantine CSS files have smaller size. For example,
 `@mantine/core/styles.css` now has ~ 8% smaller size (192kb -> 177kb).
+
+## Pass props to inner recharts components
+
+You can now pass props down to recharts [Bar](https://recharts.org/en-US/api/Bar), [Area](https://recharts.org/en-US/api/Area) and [Line](https://recharts.org/en-US/api/Line) components
+with `barProps`, `areaProps` and `lineProps` props on [BarChart](/charts/bar-chart), [AreaChart](/charts/area-chart) and [LineChart](/charts/line-chart) components.
+
+All props accepts either an object with props or a function that receives
+series data as an argument and returns an object with props.
+
+<Demo data={BarChartDemos.barProps} />
 
 ## Documentation updates
 

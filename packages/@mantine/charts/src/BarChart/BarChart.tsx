@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import {
   Bar,
+  BarProps,
   CartesianGrid,
   Legend,
   BarChart as ReChartsBarChart,
@@ -73,6 +74,11 @@ export interface BarChartProps
 
   /** Additional components that are rendered inside recharts `BarChart` component */
   children?: React.ReactNode;
+
+  /** Props passed down to recharts `Bar` component */
+  barProps?:
+    | ((series: BarChartSeries) => Partial<Omit<BarProps, 'ref'>>)
+    | Partial<Omit<BarProps, 'ref'>>;
 }
 
 export type BarChartFactory = Factory<{
@@ -139,6 +145,7 @@ export const BarChart = factory<BarChartFactory>((_props, ref) => {
     dir,
     valueFormatter,
     children,
+    barProps,
     ...others
   } = props;
 
@@ -187,6 +194,7 @@ export const BarChart = factory<BarChartFactory>((_props, ref) => {
         fillOpacity={dimmed ? 0.1 : fillOpacity}
         strokeOpacity={dimmed ? 0.2 : 0}
         stackId={stacked ? 'stack' : undefined}
+        {...(typeof barProps === 'function' ? barProps(item) : barProps)}
       />
     );
   });
