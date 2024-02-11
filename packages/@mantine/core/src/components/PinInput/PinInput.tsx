@@ -211,6 +211,7 @@ export const PinInput = factory<PinInputFactory>((props, ref) => {
           }
         : undefined,
   });
+
   const _valueToString = _value.join('').trim();
 
   const inputsRef = useRef<Array<HTMLInputElement>>([]);
@@ -325,6 +326,10 @@ export const PinInput = factory<PinInputFactory>((props, ref) => {
       focusInputField('next', copyValueToPinArray.length - 1);
     }
   };
+
+  useEffect(() => {
+    setValues(createPinArray(length ?? 0, _valueToString));
+  }, [length]);
 
   useEffect(() => {
     if (_valueToString.length !== length) return;
