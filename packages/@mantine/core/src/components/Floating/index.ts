@@ -9,4 +9,5 @@ export type {
   FloatingSide,
   ArrowPosition,
   FloatingAxesOffsets,
+  FloatingStrategy,
 } from './types';

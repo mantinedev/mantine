@@ -31,7 +31,6 @@ import { FontsStyle } from '@/fonts';
 import { theme } from '../../theme';
 
 import '../styles/variables.css';
-import '../styles/global.css';
 
 const excludeShell = ['/', '/combobox', '/app-shell'];
 
