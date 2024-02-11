@@ -81,6 +81,9 @@ export interface RadarChartProps
 
   /** Props passed down to recharts PolarRadiusAxis component */
   polarRadiusAxisProps?: Omit<PolarRadiusAxisProps, 'ref'>;
+
+  /** Additional components that are rendered inside recharts `RadarChart` component */
+  children?: React.ReactNode;
 }
 
 export type RadarChartFactory = Factory<{
@@ -125,6 +128,7 @@ export const RadarChart = factory<RadarChartFactory>((_props, ref) => {
     withPolarGrid,
     withPolarAngleAxis,
     withPolarRadiusAxis,
+    children,
     ...others
   } = props;
 
@@ -166,6 +170,7 @@ export const RadarChart = factory<RadarChartFactory>((_props, ref) => {
             <PolarRadiusAxis stroke="var(--chart-grid-color)" {...polarRadiusAxisProps} />
           )}
           {radars}
+          {children}
         </ReChartsRadarChart>
       </ResponsiveContainer>
     </Box>

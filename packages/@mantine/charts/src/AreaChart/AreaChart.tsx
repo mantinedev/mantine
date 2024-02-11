@@ -106,6 +106,9 @@ export interface AreaChartProps
 
   /** Determines whether points with `null` values should be connected, `true` by default */
   connectNulls?: boolean;
+
+  /** Additional components that are rendered inside recharts `AreaChart` component */
+  children?: React.ReactNode;
 }
 
 export type AreaChartFactory = Factory<{
@@ -183,6 +186,7 @@ export const AreaChart = factory<AreaChartFactory>((_props, ref) => {
     referenceLines,
     dir,
     valueFormatter,
+    children,
     ...others
   } = props;
 
@@ -402,6 +406,7 @@ export const AreaChart = factory<AreaChartFactory>((_props, ref) => {
 
           {areas}
           {withDots && dotsAreas}
+          {children}
         </ReChartsAreaChart>
       </ResponsiveContainer>
     </Box>

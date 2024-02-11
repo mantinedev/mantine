@@ -87,6 +87,9 @@ export interface LineChartProps
 
   /** Determines whether points with `null` values should be connected, `true` by default */
   connectNulls?: boolean;
+
+  /** Additional components that are rendered inside recharts `AreaChart` component */
+  children?: React.ReactNode;
 }
 
 export type LineChartFactory = Factory<{
@@ -157,6 +160,7 @@ export const LineChart = factory<LineChartFactory>((_props, ref) => {
     orientation,
     dir,
     valueFormatter,
+    children,
     ...others
   } = props;
 
@@ -324,6 +328,7 @@ export const LineChart = factory<LineChartFactory>((_props, ref) => {
 
           {lines}
           {referenceLinesItems}
+          {children}
         </ReChartsLineChart>
       </ResponsiveContainer>
     </Box>

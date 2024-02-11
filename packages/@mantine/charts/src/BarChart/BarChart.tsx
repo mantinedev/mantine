@@ -70,6 +70,9 @@ export interface BarChartProps
 
   /** Props passed down to recharts `BarChart` component */
   barChartProps?: React.ComponentPropsWithoutRef<typeof ReChartsBarChart>;
+
+  /** Additional components that are rendered inside recharts `BarChart` component */
+  children?: React.ReactNode;
 }
 
 export type BarChartFactory = Factory<{
@@ -135,6 +138,7 @@ export const BarChart = factory<BarChartFactory>((_props, ref) => {
     orientation,
     dir,
     valueFormatter,
+    children,
     ...others
   } = props;
 
@@ -300,6 +304,7 @@ export const BarChart = factory<BarChartFactory>((_props, ref) => {
 
           {bars}
           {referenceLinesItems}
+          {children}
         </ReChartsBarChart>
       </ResponsiveContainer>
     </Box>
