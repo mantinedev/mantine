@@ -7,15 +7,8 @@ export default { title: 'Box' };
 export function Usage() {
   return (
     <div style={{ padding: 40 }}>
-      <Box bg="pink" hiddenFrom="md">
-        Hidden from md
-      </Box>
-      <Box bg="indigo">Indigo</Box>
-      <Box bg="orange" visibleFrom="sm" ff="mono">
+      <Box bg="orange.4" ms="xl">
         Visible from sm
-      </Box>
-      <Box bg="blue" hiddenFrom="sm">
-        Hidden from sm
       </Box>
     </div>
   );
