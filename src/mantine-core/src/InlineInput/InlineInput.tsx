@@ -18,6 +18,8 @@ export interface InlineInputProps
   error: React.ReactNode;
   size: MantineNumberSize;
   labelPosition: 'left' | 'right';
+  bodyElement?: any;
+  labelElement?: any;
 }
 
 export const InlineInput = forwardRef<HTMLDivElement, InlineInputProps>(
@@ -36,6 +38,8 @@ export const InlineInput = forwardRef<HTMLDivElement, InlineInputProps>(
       error,
       size,
       labelPosition,
+      bodyElement = 'div',
+      labelElement = 'label',
       variant,
       ...others
     },
@@ -48,14 +52,23 @@ export const InlineInput = forwardRef<HTMLDivElement, InlineInputProps>(
 
     return (
       <Box className={cx(classes.root, className)} ref={ref} {...others}>
-        <div className={cx(classes.body)}>
+        <Box
+          component={bodyElement}
+          htmlFor={bodyElement === 'label' ? id : undefined}
+          className={cx(classes.body)}
+        >
           {children}
 
           <div className={classes.labelWrapper}>
             {label != null && (
-              <label className={classes.label} data-disabled={disabled || undefined} htmlFor={id}>
+              <Box
+                component={labelElement}
+                htmlFor={labelElement === 'label' ? id : undefined}
+                className={classes.label}
+                data-disabled={disabled || undefined}
+              >
                 {label}
-              </label>
+              </Box>
             )}
 
             {description && (
@@ -66,7 +79,7 @@ export const InlineInput = forwardRef<HTMLDivElement, InlineInputProps>(
               <Input.Error className={classes.error}>{error}</Input.Error>
             )}
           </div>
-        </div>
+        </Box>
       </Box>
     );
   }

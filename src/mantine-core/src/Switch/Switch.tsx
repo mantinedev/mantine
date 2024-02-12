@@ -134,6 +134,8 @@ export const Switch: SwitchComponent = forwardRef<HTMLInputElement, SwitchProps>
       description={description}
       error={error}
       disabled={disabled}
+      bodyElement="label"
+      labelElement="span"
       __staticSelector="Switch"
       classNames={classNames}
       styles={styles}
@@ -154,13 +156,14 @@ export const Switch: SwitchComponent = forwardRef<HTMLInputElement, SwitchProps>
         id={uuid}
         ref={ref}
         type="checkbox"
+        role="switch"
         className={classes.input}
       />
 
-      <label htmlFor={uuid} className={classes.track}>
+      <div className={classes.track} aria-hidden>
         <div className={classes.thumb}>{thumbIcon}</div>
         <div className={classes.trackLabel}>{_checked ? onLabel : offLabel}</div>
-      </label>
+      </div>
     </InlineInput>
   );
 }) as any;
