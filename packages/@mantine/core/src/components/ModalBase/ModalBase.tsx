@@ -21,7 +21,7 @@ type RemoveScrollProps = Omit<React.ComponentProps<typeof RemoveScroll>, 'childr
 export interface ModalBaseProps extends BoxProps, ElementProps<'div', 'title'> {
   unstyled?: boolean;
 
-  /** If set modal/drawer will not be unmounted from the DOM when it is hidden, `display: none` styles will be added instead, `false` by default */
+  /** If set modal/drawer will not be unmounted from the DOM when it is hidden, `display: none` styles will be added instead */
   keepMounted?: boolean;
 
   /** Determines whether modal/drawer is opened */
