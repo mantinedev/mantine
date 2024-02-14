@@ -1,6 +1,7 @@
 import {
   BarChartDemos,
   ModalDemos,
+  PieChartDemos,
   RadarChartDemos,
   SelectDemos,
   SparklineDemos,
@@ -179,6 +180,12 @@ All props accepts either an object with props or a function that receives
 series data as an argument and returns an object with props.
 
 <Demo data={BarChartDemos.barProps} />
+
+## PieChart percent labels
+
+[PieChart](/charts/pie-chart/) now supports `percent` labels:
+
+<Demo data={PieChartDemos.withLabels} />
 
 ## Documentation updates
 
