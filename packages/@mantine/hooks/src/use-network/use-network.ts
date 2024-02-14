@@ -35,7 +35,7 @@ function getConnection(): NetworkStatus {
 
 export function useNetwork() {
   const [status, setStatus] = useState<{ online: boolean } & NetworkStatus>({
-    online: typeof navigator?.onLine === 'boolean' ? navigator.onLine : true,
+    online: true,
   });
   const handleConnectionChange = useCallback(
     () => setStatus((current) => ({ ...current, ...getConnection() })),
@@ -52,6 +52,10 @@ export function useNetwork() {
       setStatus({ online: _navigator.onLine, ...getConnection() });
       _navigator.connection.addEventListener('change', handleConnectionChange);
       return () => _navigator.connection.removeEventListener('change', handleConnectionChange);
+    } else if (typeof _navigator.onLine === 'boolean') {
+      // Set online status without navigator.connection information.
+      // https://caniuse.com/netinfo
+      setStatus({ online: _navigator.onLine });
     }
 
     return undefined;
