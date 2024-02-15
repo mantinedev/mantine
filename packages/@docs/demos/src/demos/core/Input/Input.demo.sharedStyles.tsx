@@ -4,7 +4,7 @@ import { MantineDemo } from '@mantinex/demo';
 import classes from './Input.demo.sharedStyles.module.css';
 
 const code = `
-import { TextInput, NativeSelect, MantineThemeProvider, createTheme, Input } from '@mantine/core';
+import { TextInput, NativeSelect, MantineProvider, createTheme, Input } from '@mantine/core';
 import classes from './Demo.module.css';
 
 const theme = createTheme({
@@ -25,7 +25,7 @@ const theme = createTheme({
 
 function Demo() {
   return (
-    <MantineThemeProvider theme={theme}>
+    <MantineProvider theme={theme}>
       <TextInput label="Text input" placeholder="Text input" />
 
       <NativeSelect
@@ -33,7 +33,7 @@ function Demo() {
         label="Native select"
         data={['React', 'Angular', 'Vue', 'Svelte']}
       />
-    </MantineThemeProvider>
+    </MantineProvider>
   );
 }
 `;
