@@ -22,12 +22,12 @@
   margin-left: calc(var(--card-padding) * -1);
   margin-right: calc(var(--card-padding) * -1);
 
-  &:where([data-first-section]) {
+  &:where(:first-child) {
     margin-top: calc(var(--card-padding) * -1);
     border-top: none !important;
   }
 
-  &:where([data-last-section]) {
+  &:where(:last-child) {
     margin-bottom: calc(var(--card-padding) * -1);
     border-bottom: none !important;
   }
