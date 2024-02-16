@@ -54,6 +54,11 @@ export function useNetwork() {
       return () => _navigator.connection.removeEventListener('change', handleConnectionChange);
     }
 
+    if (typeof _navigator.onLine === 'boolean') {
+      // Required for Firefox and other browsers that don't support navigator.connection
+      setStatus((current) => ({ ...current, online: _navigator.onLine }));
+    }
+
     return undefined;
   }, []);
 
