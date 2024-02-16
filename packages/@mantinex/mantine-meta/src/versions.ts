@@ -33,6 +33,10 @@ export const allVersions = [
         version: '7.5.2',
         date: 'February 9, 2023',
       },
+      {
+        version: '7.5.3',
+        date: 'February 16, 2023',
+      },
     ],
   },
   {
