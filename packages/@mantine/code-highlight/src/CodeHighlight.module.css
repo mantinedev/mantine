@@ -35,6 +35,8 @@
 
   @mixin hover {
     opacity: 1;
+    background-color: transparent;
+    color: var(--mantine-color-dimmed);
   }
 
   @media (max-width: 40em) {
