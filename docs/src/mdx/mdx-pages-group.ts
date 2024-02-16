@@ -357,6 +357,7 @@ export const MDX_PAGES_GROUPS: MdxPagesGroup[] = [
   {
     group: 'changelog',
     pages: [
+      MDX_DATA.Changelog770,
       MDX_DATA.Changelog760,
       MDX_DATA.Changelog750,
       MDX_DATA.Changelog740,
