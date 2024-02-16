@@ -78,7 +78,7 @@
   }
 
   &:where(:first-of-type) {
-    border-bottom: rem(0.5px) solid var(--_input-bd);
+    border-bottom: rem(1px) solid var(--_input-bd);
     border-radius: 0 var(--control-radius) 0 0;
 
     @mixin where-rtl {
@@ -87,7 +87,6 @@
   }
 
   &:last-of-type {
-    border-top: rem(0.5px) solid var(--_input-bd);
     border-radius: 0 0 var(--control-radius) 0;
 
     @mixin rtl {
