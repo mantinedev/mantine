@@ -34,11 +34,13 @@ to store current color scheme in the `localStorage`:
 
 ```tsx
 import { IconMoonStars, IconSun } from '@tabler/icons-react';
-import { ActionIcon, ColorScheme } from '@mantine/core';
+import { ActionIcon } from '@mantine/core';
 import { useLocalStorage } from '@mantine/hooks';
 
 function ColorSchemeToggle() {
-  const [colorScheme, setColorScheme] = useLocalStorage<ColorScheme>({
+  const [colorScheme, setColorScheme] = useLocalStorage<
+    'light' | 'dark'
+  >({
     key: 'color-scheme',
     defaultValue: 'light',
   });
