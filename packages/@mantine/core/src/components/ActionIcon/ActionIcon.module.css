@@ -171,4 +171,6 @@
   transition:
     transform 150ms ease,
     opacity 100ms ease;
+  width: 100%;
+  height: 100%;
 }

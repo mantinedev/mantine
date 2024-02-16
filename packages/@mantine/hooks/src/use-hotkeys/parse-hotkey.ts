@@ -79,11 +79,7 @@ export interface HotkeyItemOptions {
   preventDefault?: boolean;
 }
 
-type HotkeyItem = [
-  string,
-  (event: React.KeyboardEvent<HTMLElement> | KeyboardEvent) => void,
-  HotkeyItemOptions?,
-];
+type HotkeyItem = [string, (event: any) => void, HotkeyItemOptions?];
 
 export function getHotkeyHandler(hotkeys: HotkeyItem[]) {
   return (event: React.KeyboardEvent<HTMLElement> | KeyboardEvent) => {

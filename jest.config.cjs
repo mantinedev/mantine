@@ -10,5 +10,6 @@ module.exports = {
     '@mantine/(.*)': '<rootDir>/packages/@mantine/$1/src',
     '@mantine-tests/(.*)': '<rootDir>/packages/@mantine-tests/$1/src',
     '\\.(css)$': 'identity-obj-proxy',
+    "(\\.+/.+)\\.js$": "$1",  // handle relative imports with .js extensions
   },
 };

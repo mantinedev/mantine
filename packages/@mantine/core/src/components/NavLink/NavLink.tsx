@@ -25,6 +25,7 @@ export type NavLinkStylesNames =
   | 'label'
   | 'description'
   | 'chevron'
+  | 'collapse'
   | 'children';
 export type NavLinkVariant = 'filled' | 'light' | 'subtle';
 export type NavLinkCssVariables = {
@@ -223,7 +224,7 @@ export const NavLink = polymorphicFactory<NavLinkFactory>((_props, ref) => {
           </Box>
         )}
       </UnstyledButton>
-      <Collapse in={_opened}>
+      <Collapse in={_opened} {...getStyles('collapse')}>
         <div {...getStyles('children')}>{children}</div>
       </Collapse>
     </>
