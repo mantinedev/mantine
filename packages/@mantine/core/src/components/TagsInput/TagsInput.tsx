@@ -56,6 +56,12 @@ export interface TagsInputProps
   /** Called whe value changes */
   onChange?: (value: string[]) => void;
 
+  /** Called when tag is removed */
+  onRemove?: (value: string) => void;
+
+  /** Called whe the clear button is clicked */
+  onClear?: () => void;
+
   /** Controlled search value */
   searchValue?: string;
 
@@ -175,6 +181,8 @@ export const TagsInput = factory<TagsInputFactory>((_props, ref) => {
     hiddenInputValuesDivider,
     mod,
     renderOption,
+    onRemove,
+    onClear,
     ...others
   } = props;
 
@@ -265,6 +273,7 @@ export const TagsInput = factory<TagsInputFactory>((_props, ref) => {
     }
 
     if (event.key === 'Backspace' && length === 0 && _value.length > 0) {
+      onRemove?.(_value[_value.length - 1]);
       setValue(_value.slice(0, _value.length - 1));
     }
   };
@@ -292,7 +301,10 @@ export const TagsInput = factory<TagsInputFactory>((_props, ref) => {
     <Pill
       key={`${item}-${index}`}
       withRemoveButton={!readOnly}
-      onRemove={() => setValue(_value.filter((i) => item !== i))}
+      onRemove={() => {
+        setValue(_value.filter((i) => item !== i));
+        onRemove?.(item);
+      }}
       unstyled={unstyled}
       {...getStyles('pill')}
     >
@@ -307,6 +319,7 @@ export const TagsInput = factory<TagsInputFactory>((_props, ref) => {
       onClear={() => {
         setValue([]);
         setSearchValue('');
+        onClear?.();
       }}
     />
   );

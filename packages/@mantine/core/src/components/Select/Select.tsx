@@ -41,6 +41,9 @@ export interface SelectProps
   /** Called when value changes */
   onChange?: (value: string | null, option: ComboboxItem) => void;
 
+  /** Called when the clear button is clicked */
+  onClear?: () => void;
+
   /** Determines whether the select should be searchable, `false` by default */
   searchable?: boolean;
 
@@ -138,6 +141,7 @@ export const Select = factory<SelectFactory>((_props, ref) => {
     clearButtonProps,
     hiddenInputProps,
     renderOption,
+    onClear,
     ...others
   } = props;
 
@@ -202,6 +206,7 @@ export const Select = factory<SelectFactory>((_props, ref) => {
       onClear={() => {
         setValue(null, null);
         setSearch('');
+        onClear?.();
       }}
     />
   );
