@@ -29,7 +29,7 @@
   }
 
   &:where([data-scrollbars='xy'], [data-scrollbars='x']) {
-    &:where([data-offset-scrollbars='xy'] [data-offset-scrollbars='x']) {
+    &:where([data-offset-scrollbars='xy'], [data-offset-scrollbars='x']) {
       padding-bottom: var(--scrollarea-scrollbar-size);
     }
   }
