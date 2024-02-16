@@ -10,6 +10,7 @@ export const NavLinkStylesApi: StylesApiData<NavLinkFactory> = {
     description: 'Dimmed description displayed below the label',
     children: 'Wrapper around nested links',
     chevron: 'Default chevron icon',
+    collapse: 'Nested links Collapse container',
   },
 
   vars: {
