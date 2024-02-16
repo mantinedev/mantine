@@ -13,7 +13,7 @@ Follow [Redwood getting started guide](https://redwoodjs.com/docs/quick-start) g
 create new Redwood application:
 
 ```bash
-yarn create redwood-app my-redwood-project
+yarn create redwood-app my-redwood-project --typescript
 ```
 
 ## Installation
@@ -33,11 +33,11 @@ cd web
 Install PostCSS plugins and [postcss-preset-mantine](/styles/postcss-preset):
 
 <InstallScript
-  packages="postcss postcss-preset-mantine postcss-simple-vars postcss-loader"
+  packages="postcss postcss-preset-mantine postcss-simple-vars"
   dev
 />
 
-Create `postcss.config.cjs` file in `web` directory with the following content:
+Create `postcss.config.js` file in `web` directory with the following content:
 
 ```js
 module.exports = {
@@ -53,28 +53,6 @@ module.exports = {
       },
     },
   },
-};
-```
-
-Create `web/config/webpack.config.js` file with the following content:
-
-```js
-/** @returns {import('webpack').Configuration} Webpack Configuration */
-module.exports = (config) => {
-  const stylesRules = [
-    '\\.css$',
-    '\\.module\\.css$',
-    '\\.scss$',
-    '\\.module\\.scss$',
-  ];
-
-  config.module.rules[0].oneOf.forEach((rule) => {
-    if (stylesRules.includes(rule.test.source)) {
-      rule.use.push('postcss-loader');
-    }
-  });
-
-  return config;
 };
 ```
 
