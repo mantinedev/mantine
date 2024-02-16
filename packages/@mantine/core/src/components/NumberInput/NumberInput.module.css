@@ -67,13 +67,12 @@
   }
 
   &:where(:first-of-type) {
-    border-bottom: rem(0.5px) solid var(--input-bd);
     border-radius: 0;
     border-start-end-radius: var(--control-radius);
   }
 
   &:last-of-type {
-    border-top: rem(0.5px) solid var(--input-bd);
+    border-top: rem(1) solid var(--input-bd);
     border-radius: 0;
     border-end-end-radius: var(--control-radius);
   }

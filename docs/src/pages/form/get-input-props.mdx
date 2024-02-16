@@ -24,7 +24,7 @@ import { Checkbox, TextInput, useForm } from '@mantine/core';
 function Demo() {
   const form = useForm({
     initialValues: { name: '', accepted: false },
-    validationRules: {
+    validate: {
       name: (value) => value.trim().length > 2,
     },
   });

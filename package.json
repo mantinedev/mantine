@@ -1,6 +1,6 @@
 {
   "name": "mantine-a91763c0e2",
-  "version": "7.5.2",
+  "version": "7.5.3",
   "description": "Mantine Components Monorepo",
   "packageManager": "yarn@4.0.2",
   "license": "MIT",
@@ -18,6 +18,7 @@
     "docs"
   ],
   "scripts": {
+    "chmod": "sh scripts/utils/chmod.sh",
     "setup": "npm run docs:docgen && esno scripts/docs/generate-css-exports",
     "plop": "esno scripts/plop",
     "format-changelogs": "esno scripts/docs/format-changelogs",

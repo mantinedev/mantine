@@ -328,9 +328,14 @@ export const PinInput = factory<PinInputFactory>((props, ref) => {
 
   useEffect(() => {
     if (_valueToString.length !== length) return;
-
     onComplete?.(_valueToString);
-  }, [length, onComplete, _valueToString]);
+  }, [length, _valueToString]);
+
+  useEffect(() => {
+    if (length !== _value.length) {
+      setValues(createPinArray(length ?? 0, _value.join('')));
+    }
+  }, [length, _value]);
 
   return (
     <>
