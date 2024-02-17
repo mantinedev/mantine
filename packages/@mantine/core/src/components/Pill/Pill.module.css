@@ -17,8 +17,8 @@
   font-size: var(--pill-fz);
   flex: 0;
   height: var(--pill-height);
-  padding-left: 0.8em;
-  padding-right: 0.8em;
+  padding-inline-start: 0.8em;
+  padding-inline-end: 0.8em;
   display: inline-flex;
   align-items: center;
   border-radius: var(--pill-radius, rem(1000px));
@@ -37,13 +37,8 @@
     color: var(--mantine-color-black);
   }
 
-  @mixin where-rtl {
-    padding-right: 0.8em;
-    padding-left: 0.8em;
-  }
-
   &:where([data-with-remove]) {
-    padding-right: 0;
+    padding-inline-end: 0;
   }
 
   &:where([data-disabled], :has(button:disabled)) {
@@ -87,8 +82,8 @@
   min-width: 2em;
   width: unset;
   border-radius: 0;
-  padding-left: 0.1em;
-  padding-right: 0.3em;
+  padding-inline-start: 0.1em;
+  padding-inline-end: 0.3em;
   flex: 0;
 
   .root[data-disabled] > &,
