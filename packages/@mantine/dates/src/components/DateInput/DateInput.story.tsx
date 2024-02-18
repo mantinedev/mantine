@@ -241,3 +241,17 @@ export function Size() {
     </div>
   );
 }
+
+export function MinimumDateOnly() {
+  const [value, setValue] = useState<Date | null>(null);
+  return (
+    <div style={{ padding: 40, maxWidth: 400 }}>
+      <DateInput
+        placeholder="Enter date"
+        value={value}
+        onChange={setValue}
+        minDate={new Date('2024-05-01')}
+      />
+    </div>
+  );
+}
