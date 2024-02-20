@@ -7,6 +7,23 @@ export const isPinned = (current: number, previous: number) => current <= previo
 export const isReleased = (current: number, previous: number, fixedAt: number) =>
   !isPinned(current, previous) && !isFixed(current, fixedAt);
 
+export const isPinnedOrReleased = (
+  current: number,
+  fixedAt: number,
+  isCurrentlyPinnedRef: React.MutableRefObject<boolean>,
+  onPin?: () => void,
+  onRelease?: () => void
+) => {
+  const isInFixedPosition = isFixed(current, fixedAt);
+  if (isInFixedPosition && !isCurrentlyPinnedRef.current) {
+    isCurrentlyPinnedRef.current = true;
+    onPin?.();
+  } else if (!isInFixedPosition && isCurrentlyPinnedRef.current) {
+    isCurrentlyPinnedRef.current = false;
+    onRelease?.();
+  }
+};
+
 interface UseHeadroomInput {
   /** Number in px at which element should be fixed */
   fixedAt?: number;
@@ -22,34 +39,18 @@ interface UseHeadroomInput {
 }
 
 export function useHeadroom({ fixedAt = 0, onPin, onFix, onRelease }: UseHeadroomInput = {}) {
-  const scrollRef = useRef(0);
+  const isCurrentlyPinnedRef = useRef(false);
   const [{ y: scrollPosition }] = useWindowScroll();
 
   useIsomorphicEffect(() => {
-    if (isPinned(scrollPosition, scrollRef.current)) {
-      onPin?.();
-    }
-  }, [scrollPosition, onPin]);
+    isPinnedOrReleased(scrollPosition, fixedAt, isCurrentlyPinnedRef, onPin, onRelease);
+  }, [scrollPosition]);
 
   useIsomorphicEffect(() => {
     if (isFixed(scrollPosition, fixedAt)) {
       onFix?.();
     }
   }, [scrollPosition, fixedAt, onFix]);
-
-  useIsomorphicEffect(() => {
-    if (isReleased(scrollPosition, scrollRef.current, fixedAt)) {
-      onRelease?.();
-    }
-  }, [scrollPosition, onRelease]);
-
-  useIsomorphicEffect(() => {
-    scrollRef.current = window.scrollY;
-  }, [scrollPosition]);
-
-  if (isPinned(scrollPosition, scrollRef.current)) {
-    return true;
-  }
 
   if (isFixed(scrollPosition, fixedAt)) {
     return true;
