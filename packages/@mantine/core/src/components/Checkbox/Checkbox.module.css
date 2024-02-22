@@ -94,7 +94,7 @@
     --_checkbox-icon-color: var(--checkbox-color);
   }
 
-  &[data-indeterminate],
+  &[data-indeterminate]:not(:disabled),
   &:checked:not(:disabled) {
     [data-mantine-color-scheme] & {
       --_checkbox-bg: transparent;
