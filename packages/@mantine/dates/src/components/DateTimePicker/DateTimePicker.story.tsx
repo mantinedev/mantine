@@ -41,9 +41,20 @@ export function WithSeconds() {
 }
 
 export function MinDate() {
+  const minDate = new Date();
+  minDate.setHours(0, 30, 0, 0);
+
+  const maxDate = new Date();
+  maxDate.setDate(maxDate.getDate() + 5);
+  maxDate.setHours(22, 30, 0, 0);
   return (
     <div style={{ padding: 40, maxWidth: 400 }}>
-      <DateTimePicker placeholder="Date time picker" withSeconds minDate={new Date()} />
+      <DateTimePicker
+        placeholder="Date time picker"
+        withSeconds
+        minDate={minDate}
+        maxDate={maxDate}
+      />
     </div>
   );
 }
