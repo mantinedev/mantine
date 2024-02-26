@@ -42,6 +42,17 @@ export function OnComplete() {
   );
 }
 
+export function ResetControlled() {
+  const [value, setValue] = useState('1234');
+
+  return (
+    <div style={{ padding: 40 }}>
+      <PinInput value={value} onChange={setValue} />
+      <Button onClick={() => setValue('')}>Reset</Button>
+    </div>
+  );
+}
+
 export function ReadOnly() {
   return (
     <div style={{ padding: 40 }}>

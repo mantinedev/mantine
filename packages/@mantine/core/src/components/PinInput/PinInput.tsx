@@ -337,6 +337,12 @@ export const PinInput = factory<PinInputFactory>((props, ref) => {
     }
   }, [length, _value]);
 
+  useEffect(() => {
+    if (value === '') {
+      setValues(createPinArray(length ?? 0, value));
+    }
+  }, [value]);
+
   return (
     <>
       <Group
