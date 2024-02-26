@@ -40,15 +40,20 @@ export function WithSeconds() {
   );
 }
 
-export function MinDate() {
+export function MinMaxDate() {
   const minDate = new Date();
   minDate.setHours(0, 30, 0, 0);
 
   const maxDate = new Date();
   maxDate.setDate(maxDate.getDate() + 5);
   maxDate.setHours(22, 30, 0, 0);
+
   return (
     <div style={{ padding: 40, maxWidth: 400 }}>
+      <div style={{ marginBottom: 20 }}>
+        <div>Min date: {minDate.toLocaleString()}</div>
+        <div>Max date: {maxDate.toLocaleString()}</div>
+      </div>
       <DateTimePicker
         placeholder="Date time picker"
         withSeconds

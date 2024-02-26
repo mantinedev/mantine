@@ -59,7 +59,7 @@ export const TimeInput = factory<TimeInputFactory>((_props, ref) => {
   });
 
   const onTimeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    if (minTime !== undefined && maxTime !== undefined) {
+    if (minTime !== undefined || maxTime !== undefined) {
       const val = event.currentTarget.value;
 
       if (val) {
@@ -108,6 +108,7 @@ export const TimeInput = factory<TimeInputFactory>((_props, ref) => {
       styles={resolvedStyles}
       unstyled={unstyled}
       ref={ref}
+      value={value}
       {...others}
       step={withSeconds ? 1 : 60}
       onChange={onTimeChange}
