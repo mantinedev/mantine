@@ -18,3 +18,11 @@ export function WithSeconds() {
     </div>
   );
 }
+
+export function WithMinMaxDates() {
+  return (
+    <div style={{ padding: 40, maxWidth: 400 }}>
+      <TimeInput minTime="10:00" maxTime="18:00" />
+    </div>
+  );
+}

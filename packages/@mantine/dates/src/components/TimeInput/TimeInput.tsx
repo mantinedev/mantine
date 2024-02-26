@@ -58,47 +58,59 @@ export const TimeInput = factory<TimeInputFactory>((_props, ref) => {
     props,
   });
 
-  const onTimeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  /**
+   * Check if time is within limits or not
+   * If the given value is within limits, return 0
+   * If the given value is greater than the maxTime, return 1
+   * If the given value is less than the minTime, return -1
+   */
+  const checkIfTimeLimitExceeded = (val: string) => {
     if (minTime !== undefined || maxTime !== undefined) {
-      const val = event.currentTarget.value;
+      const [hours, minutes, seconds] = val.split(':').map(Number);
 
-      if (val) {
-        const [hours, minutes, seconds] = val.split(':').map(Number);
-        const isValid =
-          (hours.toString().length === 2 || hours === 0) &&
-          (minutes.toString().length === 2 || minutes === 0) &&
-          (withSeconds ? seconds.toString().length === 2 || seconds === 0 : true);
+      if (minTime) {
+        const [minHours, minMinutes, minSeconds] = minTime.split(':').map(Number);
 
-        if (isValid) {
-          if (minTime) {
-            const [minHours, minMinutes, minSeconds] = minTime.split(':').map(Number);
+        if (
+          hours < minHours ||
+          (hours === minHours && minutes < minMinutes) ||
+          (withSeconds && hours === minHours && minutes === minMinutes && seconds < minSeconds)
+        ) {
+          return -1;
+        }
+      }
 
-            if (
-              hours < minHours ||
-              (hours === minHours && minutes < minMinutes) ||
-              (withSeconds && hours === minHours && minutes === minMinutes && seconds < minSeconds)
-            ) {
-              event.currentTarget.value = minTime;
-            }
-          }
+      if (maxTime) {
+        const [maxHours, maxMinutes, maxSeconds] = maxTime.split(':').map(Number);
 
-          if (maxTime) {
-            const [maxHours, maxMinutes, maxSeconds] = maxTime.split(':').map(Number);
-
-            if (
-              hours > maxHours ||
-              (hours === maxHours && minutes > maxMinutes) ||
-              (withSeconds && hours === maxHours && minutes === maxMinutes && seconds > maxSeconds)
-            ) {
-              event.currentTarget.value = maxTime;
-            }
-          }
+        if (
+          hours > maxHours ||
+          (hours === maxHours && minutes > maxMinutes) ||
+          (withSeconds && hours === maxHours && minutes === maxMinutes && seconds > maxSeconds)
+        ) {
+          return 1;
         }
       }
     }
 
-    if (onChange) {
-      onChange(event);
+    return 0;
+  };
+
+  const onTimeBlur = (event: React.FocusEvent<HTMLInputElement>) => {
+    props.onBlur?.(event);
+    if (minTime !== undefined || maxTime !== undefined) {
+      const val = event.currentTarget.value;
+
+      if (val) {
+        const check = checkIfTimeLimitExceeded(val);
+        if (check === 1) {
+          event.currentTarget.value = maxTime!;
+          props.onChange?.(event);
+        } else if (check === -1) {
+          event.currentTarget.value = minTime!;
+          props.onChange?.(event);
+        }
+      }
     }
   };
 
@@ -111,7 +123,8 @@ export const TimeInput = factory<TimeInputFactory>((_props, ref) => {
       value={value}
       {...others}
       step={withSeconds ? 1 : 60}
-      onChange={onTimeChange}
+      onChange={onChange}
+      onBlur={onTimeBlur}
       type="time"
       __staticSelector="TimeInput"
     />
