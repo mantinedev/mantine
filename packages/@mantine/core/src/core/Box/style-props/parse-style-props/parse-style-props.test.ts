@@ -14,8 +14,7 @@ describe('@mantine/core/Box/parse-style-props', () => {
       hasResponsiveStyles: false,
       inlineStyles: {
         padding: 'calc(1.5rem * var(--mantine-scale))',
-        marginLeft: 'calc(2rem * var(--mantine-scale))',
-        marginRight: 'calc(2rem * var(--mantine-scale))',
+        marginInline: 'calc(2rem * var(--mantine-scale))',
         color: 'var(--mantine-color-red-5)',
         opacity: 0.65,
       },
@@ -41,8 +40,7 @@ describe('@mantine/core/Box/parse-style-props', () => {
       inlineStyles: {},
       styles: {
         padding: 'calc(1.5rem * var(--mantine-scale))',
-        marginLeft: 'calc(2rem * var(--mantine-scale))',
-        marginRight: 'calc(2rem * var(--mantine-scale))',
+        marginInline: 'calc(2rem * var(--mantine-scale))',
         color: 'var(--mantine-color-red-5)',
         opacity: 0.65,
       },
@@ -51,8 +49,7 @@ describe('@mantine/core/Box/parse-style-props', () => {
           query: `(min-width: ${DEFAULT_THEME.breakpoints.xs})`,
           styles: {
             padding: 'calc(2rem * var(--mantine-scale))',
-            marginLeft: 'calc(4rem * var(--mantine-scale))',
-            marginRight: 'calc(4rem * var(--mantine-scale))',
+            marginInline: 'calc(4rem * var(--mantine-scale))',
             color: 'var(--mantine-color-red-6)',
             opacity: 0.85,
           },
@@ -76,8 +73,7 @@ describe('@mantine/core/Box/parse-style-props', () => {
     ).toStrictEqual({
       hasResponsiveStyles: true,
       inlineStyles: {
-        marginLeft: 'calc(4rem * var(--mantine-scale))',
-        marginRight: 'calc(4rem * var(--mantine-scale))',
+        marginInline: 'calc(4rem * var(--mantine-scale))',
         color: 'var(--mantine-color-red-6)',
       },
       styles: {
@@ -113,8 +109,7 @@ describe('@mantine/core/Box/parse-style-props', () => {
       inlineStyles: {},
       styles: {
         padding: 'calc(1.5rem * var(--mantine-scale))',
-        marginLeft: 'calc(2rem * var(--mantine-scale))',
-        marginRight: 'calc(2rem * var(--mantine-scale))',
+        marginInline: 'calc(2rem * var(--mantine-scale))',
         color: 'var(--mantine-color-red-5)',
         opacity: 0.65,
       },
@@ -123,8 +118,7 @@ describe('@mantine/core/Box/parse-style-props', () => {
           query: `(min-width: ${DEFAULT_THEME.breakpoints.xs})`,
           styles: {
             padding: 'calc(2rem * var(--mantine-scale))',
-            marginLeft: 'calc(4rem * var(--mantine-scale))',
-            marginRight: 'calc(4rem * var(--mantine-scale))',
+            marginInline: 'calc(4rem * var(--mantine-scale))',
             color: 'var(--mantine-color-red-6)',
             opacity: 0.85,
           },
@@ -133,8 +127,7 @@ describe('@mantine/core/Box/parse-style-props', () => {
           query: `(min-width: ${DEFAULT_THEME.breakpoints.md})`,
           styles: {
             padding: 'calc(3rem * var(--mantine-scale))',
-            marginLeft: 'calc(8rem * var(--mantine-scale))',
-            marginRight: 'calc(8rem * var(--mantine-scale))',
+            marginInline: 'calc(8rem * var(--mantine-scale))',
             color: 'var(--mantine-color-red-7)',
             opacity: 1,
           },
