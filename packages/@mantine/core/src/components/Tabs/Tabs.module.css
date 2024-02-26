@@ -242,11 +242,12 @@
 }
 
 .tab--outline {
-  border: rem(1px) solid transparent;
+  border-top: rem(1px) solid transparent;
+  border-bottom: rem(1px) solid transparent;
+  border-right: rem(1px) solid transparent;
+  border-left: rem(1px) solid transparent;
   border-top-color: var(--tab-border-top-color);
   border-bottom-color: var(--tab-border-bottom-color);
-  border-inline-start-color: var(--tab-border-inline-start-color);
-  border-inline-end-color: var(--tab-border-inline-end-color);
   border-radius: var(--tab-radius);
   position: relative;
 
@@ -255,7 +256,7 @@
   --tab-border-inline-end-color: transparent;
   --tab-border-inline-start-color: transparent;
 
-  &[data-active] {
+  &:where([data-active]) {
     &::before {
       content: '';
       position: absolute;
@@ -279,6 +280,11 @@
       width: rem(1px);
       height: rem(1px);
     }
+
+    border-top-color: var(--tab-border-top-color);
+    border-bottom-color: var(--tab-border-bottom-color);
+    border-inline-start-color: var(--tab-border-inline-start-color);
+    border-inline-end-color: var(--tab-border-inline-end-color);
 
     --tab-border-top-color: var(--tab-border-color);
     --tab-border-inline-start-color: var(--tab-border-color);
