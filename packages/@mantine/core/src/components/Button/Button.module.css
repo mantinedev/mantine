@@ -110,11 +110,6 @@
       opacity: 0;
       transform: translateY(100%);
     }
-
-    & .loader {
-      opacity: 1;
-      transform: translate(-50%, calc(-50% + rem(1px)));
-    }
   }
 
   @mixin hover {
@@ -166,11 +161,8 @@
   position: absolute;
   left: 50%;
   top: 50%;
-  transition:
-    transform 150ms ease,
-    opacity 100ms ease;
-  opacity: 0;
-  transform: translate(-50%, -200%);
+  /* opacity: 1 !important; */
+  /* transform: translate(-50%, -200%); */
 }
 
 .group {
