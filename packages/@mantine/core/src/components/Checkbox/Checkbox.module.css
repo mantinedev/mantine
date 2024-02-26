@@ -91,7 +91,7 @@
     color: var(--checkbox-color);
   }
 
-  &[data-indeterminate],
+  &[data-indeterminate]:not(:disabled),
   &:checked:not(:disabled) {
     background-color: transparent;
     border-color: var(--checkbox-color);
