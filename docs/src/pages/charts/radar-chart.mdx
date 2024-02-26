@@ -1,0 +1,42 @@
+import { RadarChartDemos } from '@docs/demos';
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.RadarChart);
+
+## Usage
+
+`RadarChart` is based on recharts [RadarChart](https://recharts.org/en-US/api/RadarChart) component:
+
+<Demo data={RadarChartDemos.usage} />
+
+## Multiple series
+
+You can display multiple series on the same radar chart:
+
+<Demo data={RadarChartDemos.multiple} />
+
+## Change color
+
+You can reference colors from [theme](/theming/theme-object) the same way as in
+other components, for example, `blue`, `red.5`, `orange.7`, etc. Any valid CSS
+color value is also accepted.
+
+<Demo data={RadarChartDemos.color} />
+
+## Hide/show chart parts
+
+<Demo data={RadarChartDemos.parts} />
+
+## Recharts props
+
+To pass props down to the underlying recharts components, use the following props:
+
+- `radarChartProps` passed props to [RadarChart](https://recharts.org/en-US/api/RadarChart) component
+- `polarGridProps` passed props to [PolarGrid](https://recharts.org/en-US/api/PolarGrid) component
+- `polarAngleAxisProps` passed props to [PolarAngleAxis](https://recharts.org/en-US/api/PolarAngleAxis) component
+- `polarRadiusAxisProps` passed props to [PolarRadiusAxis](https://recharts.org/en-US/api/PolarRadiusAxis) component
+
+Example of passing props down to [PolarRadiusAxis](https://recharts.org/en-US/api/PolarRadiusAxis) component:
+
+<Demo data={RadarChartDemos.rechartsProps} />

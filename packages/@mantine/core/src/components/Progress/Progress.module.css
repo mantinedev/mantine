@@ -62,19 +62,15 @@
   }
 
   &:where(:last-of-type) {
-    border-radius: 0 var(--progress-radius) var(--progress-radius) 0;
-
-    @mixin where-rtl {
-      border-radius: var(--progress-radius) 0 0 var(--progress-radius);
-    }
+    border-radius: 0;
+    border-start-end-radius: var(--progress-radius);
+    border-end-end-radius: var(--progress-radius);
   }
 
   &:where(:first-of-type) {
-    border-radius: var(--progress-radius) 0 0 var(--progress-radius);
-
-    @mixin where-rtl {
-      border-radius: 0 var(--progress-radius) var(--progress-radius) 0;
-    }
+    border-radius: 0;
+    border-start-start-radius: var(--progress-radius);
+    border-end-start-radius: var(--progress-radius);
   }
 }
 
@@ -87,6 +83,5 @@
   text-overflow: ellipsis;
   font-size: min(calc(var(--progress-size) * 0.65), rem(18px));
   line-height: 1;
-  padding-left: rem(4px);
-  padding-right: rem(4px);
+  padding-inline: rem(4px);
 }

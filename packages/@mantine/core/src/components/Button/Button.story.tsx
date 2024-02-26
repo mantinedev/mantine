@@ -5,11 +5,7 @@ import { Button, ButtonProps } from './Button';
 export default { title: 'Button' };
 
 export function RenderRoot() {
-  return (
-    <Button renderRoot={(props) => <a {...props} href="#" />} className="test">
-      Some content
-    </Button>
-  );
+  return <Button renderRoot={(props) => <a {...props} href="#" />}>Some content</Button>;
 }
 
 export function AutoContrast() {

@@ -18,6 +18,7 @@ import {
   ArrowPosition,
   FloatingAxesOffsets,
   FloatingPosition,
+  FloatingStrategy,
   getFloatingPosition,
 } from '../Floating';
 import { PortalProps } from '../Portal';
@@ -100,6 +101,9 @@ export interface __PopoverProps {
 
   /** Determines whether focus should be automatically returned to control when dropdown closes, `false` by default */
   returnFocus?: boolean;
+
+  /** Changes floating ui [position strategy](https://floating-ui.com/docs/usefloating#strategy), `'absolute'` by default */
+  floatingStrategy?: FloatingStrategy;
 }
 
 export interface PopoverProps extends __PopoverProps, StylesApiProps<PopoverFactory> {
@@ -212,6 +216,7 @@ export function Popover(_props: PopoverProps) {
     variant,
     keepMounted,
     vars,
+    floatingStrategy,
     ...others
   } = props;
 
@@ -247,6 +252,7 @@ export function Popover(_props: PopoverProps) {
     onChange,
     onOpen,
     onClose,
+    strategy: floatingStrategy,
   });
 
   useClickOutside(() => closeOnClickOutside && popover.onClose(), clickOutsideEvents, [

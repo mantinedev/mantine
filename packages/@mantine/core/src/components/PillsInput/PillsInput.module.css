@@ -10,7 +10,7 @@
   padding: 0;
 
   &::placeholder {
-    color: var(--_input-placeholder-color);
+    color: var(--input-placeholder-color);
     opacity: 1;
   }
 

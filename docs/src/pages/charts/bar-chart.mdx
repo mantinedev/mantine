@@ -86,6 +86,15 @@ color value is also accepted.
 
 <Demo data={BarChartDemos.color} />
 
+## Bar props
+
+You can pass props down to recharts [Bar](https://recharts.org/en-US/api/Bar)
+component with `barProps` prop. `barProps` accepts either an object with props
+or a function that receives series data as an argument and returns an object with
+props.
+
+<Demo data={BarChartDemos.barProps} />
+
 ## Change bar color depending on color scheme
 
 You can use CSS variables in `color` property. To define a CSS variable that

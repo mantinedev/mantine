@@ -1,11 +1,10 @@
 .demo {
-  padding: var(--_demo-spacing, 0rem);
   flex: 1;
   border-top-left-radius: calc(var(--mantine-radius-md) - rem(1px));
   border-top-right-radius: calc(var(--mantine-radius-md) - rem(1px));
 
-  &[data-with-padding] {
-    --_demo-spacing: var(--mantine-spacing-md);
+  &:where([data-with-padding]) {
+    padding: var(--mantine-spacing-md);
   }
 
   &[data-dimmed] {

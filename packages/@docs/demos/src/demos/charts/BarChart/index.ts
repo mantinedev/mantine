@@ -19,3 +19,4 @@ export { percent } from './BarChart.demo.percent';
 export { vertical } from './BarChart.demo.vertical';
 export { seriesLabels } from './BarChart.demo.seriesLabels';
 export { valueFormatter } from './BarChart.demo.valueFormatter';
+export { barProps } from './BarChart.demo.barProps';

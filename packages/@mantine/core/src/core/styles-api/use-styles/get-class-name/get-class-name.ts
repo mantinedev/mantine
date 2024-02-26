@@ -57,6 +57,12 @@ export interface GetClassNameOptions {
 
   /** Component styles context, used as context for `classNames` and `options.classNames` */
   stylesCtx?: Record<string, any> | undefined;
+
+  /** Determines whether static classes should be added */
+  withStaticClasses?: boolean;
+
+  /** If set, removes all Mantine classes */
+  headless?: boolean;
 }
 
 export function getClassName({
@@ -72,21 +78,25 @@ export function getClassName({
   rootSelector,
   props,
   stylesCtx,
+  withStaticClasses,
+  headless,
 }: GetClassNameOptions) {
   return cx(
-    getGlobalClassNames({ theme, options, unstyled }),
+    getGlobalClassNames({ theme, options, unstyled: unstyled || headless }),
     getThemeClassNames({ theme, themeName, selector, props, stylesCtx }),
     getVariantClassName({ options, classes, selector, unstyled }),
     getResolvedClassNames({ selector, stylesCtx, theme, classNames, props }),
     getOptionsClassNames({ selector, stylesCtx, options, props, theme }),
     getRootClassName({ rootSelector, selector, className }),
-    getSelectorClassName({ selector, classes, unstyled }),
-    getStaticClassNames({
-      themeName,
-      classNamesPrefix,
-      selector,
-      withStaticClass: options?.withStaticClass,
-    }),
+    getSelectorClassName({ selector, classes, unstyled: unstyled || headless }),
+    withStaticClasses &&
+      !headless &&
+      getStaticClassNames({
+        themeName,
+        classNamesPrefix,
+        selector,
+        withStaticClass: options?.withStaticClass,
+      }),
     options?.className
   );
 }

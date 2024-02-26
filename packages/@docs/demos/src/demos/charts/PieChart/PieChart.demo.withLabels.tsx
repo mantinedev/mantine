@@ -13,7 +13,7 @@ function Demo() {
 `;
 
 function Wrapper(props: any) {
-  return <PieChart {...props} withLabels data={data} />;
+  return <PieChart {...props} withLabels data={data} miw={300} />;
 }
 
 export const withLabels: MantineDemo = {
@@ -32,6 +32,13 @@ export const withLabels: MantineDemo = {
       initialValue: 'outside',
       libraryValue: '__',
       data: ['inside', 'outside'],
+    },
+    {
+      type: 'segmented',
+      prop: 'labelsType',
+      initialValue: 'value',
+      libraryValue: '__',
+      data: ['value', 'percent'],
     },
   ],
 };

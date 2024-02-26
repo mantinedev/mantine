@@ -142,3 +142,8 @@ export const Demo_valueFormatter = {
   name: '⭐ Demo: valueFormatter',
   render: renderDemo(demos.valueFormatter),
 };
+
+export const Demo_rotateLabels = {
+  name: '⭐ Demo: rotateLabels',
+  render: renderDemo(demos.rotateLabels),
+};

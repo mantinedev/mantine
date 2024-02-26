@@ -28,7 +28,9 @@ See also [use-element-size](https://mantine.dev/hooks/use-element-size/) hook in
 ## Definition
 
 ```tsx
-function useResizeObserver<T extends HTMLElement = any>(): [
+function useResizeObserver<T extends HTMLElement = any>(
+  options?: ResizeObserverOptions
+): [
   MutableRefObject<T>,
   {
     x: number;

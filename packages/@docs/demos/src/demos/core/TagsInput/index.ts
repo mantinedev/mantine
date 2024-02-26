@@ -22,3 +22,4 @@ export { dropdownAnimation } from './TagsInput.demo.dropdownAnimation';
 export { dropdownPadding } from './TagsInput.demo.dropdownPadding';
 export { dropdownShadow } from './TagsInput.demo.dropdownShadow';
 export { withinPopover } from './TagsInput.demo.withinPopover';
+export { renderOption } from './TagsInput.demo.renderOption';

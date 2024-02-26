@@ -62,12 +62,6 @@
       background-color: var(--pagination-active-bg);
     }
   }
-
-  @mixin rtl {
-    & > svg {
-      transform: rotate(180deg);
-    }
-  }
 }
 
 .dots {

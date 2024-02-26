@@ -4,12 +4,7 @@
   --ag-offset: calc(var(--ag-spacing) * -1);
 
   display: flex;
-  padding-left: var(--ag-spacing);
-
-  @mixin where-rtl {
-    padding-left: 0;
-    padding-right: var(--ag-spacing);
-  }
+  padding-inline-start: var(--ag-spacing);
 }
 
 /* Avatar root element */
@@ -40,14 +35,9 @@
   min-width: var(--avatar-size);
 
   &:where([data-within-group]) {
-    margin-left: var(--ag-offset);
+    margin-inline-start: var(--ag-offset);
     border: rem(2px) solid var(--mantine-color-body);
     background: var(--mantine-color-body);
-
-    @mixin where-rtl {
-      margin-right: var(--ag-offset);
-      margin-left: unset;
-    }
   }
 }
 

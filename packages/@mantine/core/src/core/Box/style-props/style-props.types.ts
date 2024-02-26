@@ -14,6 +14,8 @@ export interface MantineStyleProps {
   mx?: StyleProp<MantineSpacing>;
   mt?: StyleProp<MantineSpacing>;
   mb?: StyleProp<MantineSpacing>;
+  ms?: StyleProp<MantineSpacing>;
+  me?: StyleProp<MantineSpacing>;
   ml?: StyleProp<MantineSpacing>;
   mr?: StyleProp<MantineSpacing>;
 
@@ -22,6 +24,8 @@ export interface MantineStyleProps {
   px?: StyleProp<MantineSpacing>;
   pt?: StyleProp<MantineSpacing>;
   pb?: StyleProp<MantineSpacing>;
+  ps?: StyleProp<MantineSpacing>;
+  pe?: StyleProp<MantineSpacing>;
   pl?: StyleProp<MantineSpacing>;
   pr?: StyleProp<MantineSpacing>;
 

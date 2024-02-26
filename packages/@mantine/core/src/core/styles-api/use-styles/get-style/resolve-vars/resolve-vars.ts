@@ -19,6 +19,7 @@ interface ResolveVarsInput {
   stylesCtx: Record<string, any> | undefined;
   selector: string;
   themeName: string[];
+  headless?: boolean;
 }
 
 export function resolveVars({
@@ -29,9 +30,10 @@ export function resolveVars({
   stylesCtx,
   selector,
   themeName,
+  headless,
 }: ResolveVarsInput) {
   return mergeVars([
-    varsResolver?.(theme, props, stylesCtx),
+    headless ? {} : varsResolver?.(theme, props, stylesCtx),
     ...themeName.map((name) => theme.components?.[name]?.vars?.(theme, props, stylesCtx)),
     vars?.(theme, props, stylesCtx),
   ])?.[selector] as CSSProperties;

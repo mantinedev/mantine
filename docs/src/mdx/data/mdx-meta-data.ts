@@ -99,6 +99,13 @@ export const MDX_META_DATA: Record<string, Frontmatter> = {
     date: 'January 26th, 2024',
   },
 
+  Changelog760: {
+    title: 'Version v7.6.0',
+    slug: '/changelog/7-6-0',
+    release: 'https://github.com/mantinedev/mantine/releases/tag/7.6.0',
+    date: 'February 27th, 2024',
+  },
+
   PreviousChangelogs: {
     title: 'All releases',
     slug: '/changelog/previous-versions',

@@ -32,6 +32,9 @@ export interface MantineProviderProps {
   /** Determines whether theme CSS variables should be added to given `cssVariablesSelector`, `true` by default */
   withCssVariables?: boolean;
 
+  /** Determines whether CSS variables should be deduplicated: if CSS variable has the same value as in default theme, it is not added in the runtime. `true` by default. */
+  deduplicateCssVariables?: boolean;
+
   /** Function to resolve root element to set `data-mantine-color-scheme` attribute, must return undefined on server, `() => document.documentElement` by default */
   getRootElement?: () => HTMLElement | undefined;
 
@@ -44,6 +47,12 @@ export interface MantineProviderProps {
   /** Function to generate CSS variables based on theme object */
   cssVariablesResolver?: CSSVariablesResolver;
 
+  /** Determines whether components should have static classes, for example, `mantine-Button-root`. `true` by default */
+  withStaticClasses?: boolean;
+
+  /** Determines whether global classes should be added with `<style />` tag. Global classes are required for `hiddenFrom`/`visibleFrom` and `lightHidden`/`darkHidden` props to work. `true` by default. */
+  withGlobalClasses?: boolean;
+
   /** Your application */
   children?: React.ReactNode;
 }
@@ -52,6 +61,9 @@ export function MantineProvider({
   theme,
   children,
   getStyleNonce,
+  withStaticClasses = true,
+  withGlobalClasses = true,
+  deduplicateCssVariables = true,
   withCssVariables = true,
   cssVariablesSelector = ':root',
   classNamesPrefix = 'mantine',
@@ -76,7 +88,6 @@ export function MantineProvider({
   return (
     <MantineContext.Provider
       value={{
-        colorSchemeManager,
         colorScheme,
         setColorScheme,
         clearColorScheme,
@@ -85,11 +96,17 @@ export function MantineProvider({
         getStyleNonce,
         cssVariablesResolver,
         cssVariablesSelector,
+        withStaticClasses,
       }}
     >
       <MantineThemeProvider theme={theme}>
-        {withCssVariables && <MantineCssVariables cssVariablesSelector={cssVariablesSelector} />}
-        <MantineClasses />
+        {withCssVariables && (
+          <MantineCssVariables
+            cssVariablesSelector={cssVariablesSelector}
+            deduplicateCssVariables={deduplicateCssVariables}
+          />
+        )}
+        {withGlobalClasses && <MantineClasses />}
         {children}
       </MantineThemeProvider>
     </MantineContext.Provider>
@@ -97,3 +114,32 @@ export function MantineProvider({
 }
 
 MantineProvider.displayName = '@mantine/core/MantineProvider';
+
+export interface HeadlessMantineProviderProps {
+  /** Theme override object */
+  theme?: MantineThemeOverride;
+
+  /** Your application */
+  children: React.ReactNode;
+}
+
+export function HeadlessMantineProvider({ children, theme }: HeadlessMantineProviderProps) {
+  return (
+    <MantineContext.Provider
+      value={{
+        colorScheme: 'auto',
+        setColorScheme: () => {},
+        clearColorScheme: () => {},
+        getRootElement: () => document.documentElement,
+        classNamesPrefix: 'mantine',
+        cssVariablesSelector: ':root',
+        withStaticClasses: false,
+        headless: true,
+      }}
+    >
+      <MantineThemeProvider theme={theme}>{children}</MantineThemeProvider>
+    </MantineContext.Provider>
+  );
+}
+
+HeadlessMantineProvider.displayName = '@mantine/core/HeadlessMantineProvider';

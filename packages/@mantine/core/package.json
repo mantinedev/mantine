@@ -48,8 +48,8 @@
     "react-dom": "^18.2.0"
   },
   "dependencies": {
-    "@floating-ui/react": "^0.24.8",
-    "clsx": "2.0.0",
+    "@floating-ui/react": "^0.26.9",
+    "clsx": "2.1.0",
     "react-number-format": "^5.3.1",
     "react-remove-scroll": "^2.5.7",
     "react-textarea-autosize": "8.5.3",

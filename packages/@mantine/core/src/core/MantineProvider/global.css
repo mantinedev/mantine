@@ -82,7 +82,7 @@ body {
 }
 
 .mantine-rotate-rtl {
-  @mixin rtl {
+  @mixin where-rtl {
     transform: rotate(180deg);
   }
 }

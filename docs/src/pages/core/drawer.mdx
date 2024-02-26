@@ -75,6 +75,14 @@ attribute to the element that should receive initial focus.
 
 <Demo data={DrawerDemos.initialFocus} />
 
+If you do not want to focus any elements when the drawer is opened, use `FocusTrap.InitialFocus`
+component to create a visually hidden element that will receive initial focus:
+
+<Demo data={DrawerDemos.initialFocusTrap} />
+
+If you do not add `data-autofocus` attribute and do not use `FocusTrap.InitialFocus`,
+drawer will focus the first focusable element inside it which is usually the close button.
+
 ## Control behavior
 
 The following props can be used to control `Drawer` behavior.

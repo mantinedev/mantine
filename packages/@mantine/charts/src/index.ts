@@ -6,4 +6,5 @@ export * from './LineChart/index.js';
 export * from './Sparkline/index.js';
 export * from './DonutChart/index.js';
 export * from './PieChart/index.js';
+export * from './RadarChart/index.js';
 export * from './types';

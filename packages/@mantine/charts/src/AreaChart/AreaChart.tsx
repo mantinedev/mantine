@@ -1,6 +1,7 @@
 import React, { Fragment, useId, useState } from 'react';
 import {
   Area,
+  AreaProps,
   CartesianGrid,
   DotProps,
   Legend,
@@ -106,6 +107,14 @@ export interface AreaChartProps
 
   /** Determines whether points with `null` values should be connected, `true` by default */
   connectNulls?: boolean;
+
+  /** Additional components that are rendered inside recharts `AreaChart` component */
+  children?: React.ReactNode;
+
+  /** Props passed down to recharts `Area` component */
+  areaProps?:
+    | ((series: AreaChartSeries) => Partial<Omit<AreaProps, 'ref'>>)
+    | Partial<Omit<AreaProps, 'ref'>>;
 }
 
 export type AreaChartFactory = Factory<{
@@ -183,6 +192,8 @@ export const AreaChart = factory<AreaChartFactory>((_props, ref) => {
     referenceLines,
     dir,
     valueFormatter,
+    children,
+    areaProps,
     ...others
   } = props;
 
@@ -238,6 +249,7 @@ export const AreaChart = factory<AreaChartFactory>((_props, ref) => {
         isAnimationActive={false}
         connectNulls={connectNulls}
         stackId={stacked ? 'stack-dots' : undefined}
+        {...(typeof areaProps === 'function' ? areaProps(item) : areaProps)}
       />
     );
   });
@@ -402,6 +414,7 @@ export const AreaChart = factory<AreaChartFactory>((_props, ref) => {
 
           {areas}
           {withDots && dotsAreas}
+          {children}
         </ReChartsAreaChart>
       </ResponsiveContainer>
     </Box>

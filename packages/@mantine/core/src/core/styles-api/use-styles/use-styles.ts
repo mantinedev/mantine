@@ -1,7 +1,12 @@
 import { CSSProperties } from 'react';
 import type { MantineStyleProp } from '../../Box';
 import { FactoryPayload } from '../../factory';
-import { useMantineClassNamesPrefix, useMantineTheme } from '../../MantineProvider';
+import {
+  useMantineClassNamesPrefix,
+  useMantineIsHeadless,
+  useMantineTheme,
+  useMantineWithStaticClasses,
+} from '../../MantineProvider';
 import { PartialVarsResolver, VarsResolver } from '../create-vars-resolver/create-vars-resolver';
 import { ClassNames, ClassNamesArray, GetStylesApiOptions, Styles } from '../styles-api.types';
 import { getClassName } from './get-class-name/get-class-name';
@@ -46,6 +51,8 @@ export function useStyles<Payload extends FactoryPayload>({
 }: UseStylesInput<Payload>): GetStylesApi<Payload> {
   const theme = useMantineTheme();
   const classNamesPrefix = useMantineClassNamesPrefix();
+  const withStaticClasses = useMantineWithStaticClasses();
+  const headless = useMantineIsHeadless();
   const themeName = (Array.isArray(name) ? name : [name]).filter((n) => n) as string[];
 
   return (selector, options) => ({
@@ -62,6 +69,8 @@ export function useStyles<Payload extends FactoryPayload>({
       rootSelector,
       props,
       stylesCtx,
+      withStaticClasses,
+      headless,
     }),
 
     style: getStyle({
@@ -76,6 +85,7 @@ export function useStyles<Payload extends FactoryPayload>({
       style,
       vars,
       varsResolver,
+      headless,
     }),
   });
 }

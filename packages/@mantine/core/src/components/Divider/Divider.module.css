@@ -19,7 +19,7 @@
   }
 
   &:where([data-orientation='vertical']) {
-    border-left: var(--divider-size) var(--divider-border-style, solid) var(--divider-color);
+    border-inline-start: var(--divider-size) var(--divider-border-style, solid) var(--divider-color);
     height: auto;
     align-self: stretch;
   }
@@ -48,27 +48,15 @@
     content: '';
     flex: 1;
     height: rem(1px);
-    border-top: var(--divider-size) var(--divider-border-style, solid)
-      var(--divider-color, var(--_divider-color));
-    margin-right: var(--mantine-spacing-xs);
-
-    @mixin rtl {
-      margin-right: 0;
-      margin-left: var(--mantine-spacing-xs);
-    }
+    border-top: var(--divider-size) var(--divider-border-style, solid) var(--divider-color);
+    margin-inline-end: var(--mantine-spacing-xs);
   }
 
   &::after {
     content: '';
     flex: 1;
     height: rem(1px);
-    border-top: var(--divider-size) var(--divider-border-style, solid)
-      var(--divider-color, var(--_divider-color));
-    margin-left: var(--mantine-spacing-xs);
-
-    @mixin where-rtl {
-      margin-left: 0;
-      margin-right: var(--mantine-spacing-xs);
-    }
+    border-top: var(--divider-size) var(--divider-border-style, solid) var(--divider-color);
+    margin-inline-start: var(--mantine-spacing-xs);
   }
 }

@@ -51,8 +51,7 @@
   }
 
   &:where([data-with-label]) {
-    padding-left: calc(var(--mantine-spacing-xs) / 2);
-    padding-right: calc(var(--mantine-spacing-xs) / 2);
+    padding-inline: calc(var(--mantine-spacing-xs) / 2);
   }
 
   &:where([data-with-border]) {

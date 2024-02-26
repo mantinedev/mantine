@@ -21,7 +21,7 @@ const { ref, width, height } = useElementSize();
 ## Definition
 
 ```tsx
-function useElementSize<T extends HTMLElement = any>(): {
+function useElementSize<T extends HTMLElement = any>(options?: ResizeObserverOptions): {
   MutableRefObject<T>,
   width: number,
   height: number

@@ -13,5 +13,7 @@ generateDeclarations({
     '[DefaultMantineColor, DefaultMantineColor] | undefined': '[MantineColor, MantineColor]',
     'CategoricalChartProps | undefined': 'RechartsProps',
     'Omit<TooltipProps<any, any>, "ref"> | undefined': 'RechartsProps',
+    '((series: RadarChartSeries) => Omit<Props, "ref">) | Omit<Props, "ref"> | undefined':
+      '((series: RadarChartSeries) => RechartsProps) | RechartsProps',
   },
 });

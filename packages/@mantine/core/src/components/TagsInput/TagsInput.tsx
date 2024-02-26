@@ -15,8 +15,10 @@ import { __CloseButtonProps } from '../CloseButton';
 import {
   Combobox,
   ComboboxLikeProps,
+  ComboboxLikeRenderOptionInput,
   ComboboxLikeStylesNames,
   ComboboxStringData,
+  ComboboxStringItem,
   getOptionsLockup,
   getParsedComboboxData,
   OptionsDropdown,
@@ -54,6 +56,12 @@ export interface TagsInputProps
   /** Called whe value changes */
   onChange?: (value: string[]) => void;
 
+  /** Called when tag is removed */
+  onRemove?: (value: string) => void;
+
+  /** Called whe the clear button is clicked */
+  onClear?: () => void;
+
   /** Controlled search value */
   searchValue?: string;
 
@@ -86,6 +94,9 @@ export interface TagsInputProps
 
   /** Divider used to separate values in the hidden input `value` attribute, `','` by default */
   hiddenInputValuesDivider?: string;
+
+  /** A function to render content of the option, replaces the default content of the option */
+  renderOption?: (input: ComboboxLikeRenderOptionInput<ComboboxStringItem>) => React.ReactNode;
 }
 
 export type TagsInputFactory = Factory<{
@@ -169,6 +180,9 @@ export const TagsInput = factory<TagsInputFactory>((_props, ref) => {
     hiddenInputProps,
     hiddenInputValuesDivider,
     mod,
+    renderOption,
+    onRemove,
+    onClear,
     ...others
   } = props;
 
@@ -259,6 +273,7 @@ export const TagsInput = factory<TagsInputFactory>((_props, ref) => {
     }
 
     if (event.key === 'Backspace' && length === 0 && _value.length > 0) {
+      onRemove?.(_value[_value.length - 1]);
       setValue(_value.slice(0, _value.length - 1));
     }
   };
@@ -286,7 +301,10 @@ export const TagsInput = factory<TagsInputFactory>((_props, ref) => {
     <Pill
       key={`${item}-${index}`}
       withRemoveButton={!readOnly}
-      onRemove={() => setValue(_value.filter((i) => item !== i))}
+      onRemove={() => {
+        setValue(_value.filter((i) => item !== i));
+        onRemove?.(item);
+      }}
       unstyled={unstyled}
       {...getStyles('pill')}
     >
@@ -301,6 +319,7 @@ export const TagsInput = factory<TagsInputFactory>((_props, ref) => {
       onClear={() => {
         setValue([]);
         setSearchValue('');
+        onClear?.();
       }}
     />
   );
@@ -401,6 +420,7 @@ export const TagsInput = factory<TagsInputFactory>((_props, ref) => {
           maxDropdownHeight={maxDropdownHeight}
           unstyled={unstyled}
           labelId={`${_id}-label`}
+          renderOption={renderOption}
         />
       </Combobox>
       <input

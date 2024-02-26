@@ -12,8 +12,10 @@ import {
 import {
   Combobox,
   ComboboxLikeProps,
+  ComboboxLikeRenderOptionInput,
   ComboboxLikeStylesNames,
   ComboboxStringData,
+  ComboboxStringItem,
   getOptionsLockup,
   getParsedComboboxData,
   OptionsDropdown,
@@ -41,6 +43,9 @@ export interface AutocompleteProps
 
   /** Called when value changes */
   onChange?: (value: string) => void;
+
+  /** A function to render content of the option, replaces the default content of the option */
+  renderOption?: (input: ComboboxLikeRenderOptionInput<ComboboxStringItem>) => React.ReactNode;
 }
 
 export type AutocompleteFactory = Factory<{
@@ -81,6 +86,7 @@ export const Autocomplete = factory<AutocompleteFactory>((_props, ref) => {
     maxDropdownHeight,
     size,
     id,
+    renderOption,
     ...others
   } = props;
 
@@ -176,6 +182,7 @@ export const Autocomplete = factory<AutocompleteFactory>((_props, ref) => {
         maxDropdownHeight={maxDropdownHeight}
         unstyled={unstyled}
         labelId={`${_id}-label`}
+        renderOption={renderOption}
       />
     </Combobox>
   );

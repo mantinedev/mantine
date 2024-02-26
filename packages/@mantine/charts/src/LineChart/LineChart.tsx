@@ -4,6 +4,7 @@ import {
   DotProps,
   Legend,
   Line,
+  LineProps,
   LineChart as ReChartsLineChart,
   ReferenceLine,
   ResponsiveContainer,
@@ -87,6 +88,14 @@ export interface LineChartProps
 
   /** Determines whether points with `null` values should be connected, `true` by default */
   connectNulls?: boolean;
+
+  /** Additional components that are rendered inside recharts `AreaChart` component */
+  children?: React.ReactNode;
+
+  /** Props passed down to recharts `Area` component */
+  lineProps?:
+    | ((series: LineChartSeries) => Partial<Omit<LineProps, 'ref'>>)
+    | Partial<Omit<LineProps, 'ref'>>;
 }
 
 export type LineChartFactory = Factory<{
@@ -157,6 +166,8 @@ export const LineChart = factory<LineChartFactory>((_props, ref) => {
     orientation,
     dir,
     valueFormatter,
+    children,
+    lineProps,
     ...others
   } = props;
 
@@ -213,6 +224,7 @@ export const LineChart = factory<LineChartFactory>((_props, ref) => {
         connectNulls={connectNulls}
         type={curveType}
         strokeDasharray={item.strokeDasharray}
+        {...(typeof lineProps === 'function' ? lineProps(item) : lineProps)}
       />
     );
   });
@@ -324,6 +336,7 @@ export const LineChart = factory<LineChartFactory>((_props, ref) => {
 
           {lines}
           {referenceLinesItems}
+          {children}
         </ReChartsLineChart>
       </ResponsiveContainer>
     </Box>

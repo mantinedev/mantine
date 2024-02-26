@@ -13,6 +13,7 @@ export function Usage() {
         placeholder="MultiSelect something"
         required
         label="Some label"
+        defaultValue={['1', '2']}
         data={[
           { value: '1', label: 'React' },
           { value: '2', label: 'Angular' },

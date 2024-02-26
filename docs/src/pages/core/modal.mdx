@@ -93,6 +93,14 @@ attribute to the element that should receive initial focus.
 
 <Demo data={ModalDemos.initialFocus} />
 
+If you do not want to focus any elements when the modal is opened, use `FocusTrap.InitialFocus`
+component to create a visually hidden element that will receive initial focus:
+
+<Demo data={ModalDemos.initialFocusTrap} />
+
+If you do not add `data-autofocus` attribute and do not use `FocusTrap.InitialFocus`,
+modal will focus the first focusable element inside it which is usually the close button.
+
 ## Control behavior
 
 The following props can be used to control `Modal` behavior.

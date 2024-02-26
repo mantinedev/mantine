@@ -82,4 +82,16 @@ export const MDX_CHARTS_DATA: Record<string, Frontmatter> = {
     source: '@mantine/charts/src/PieChart/PieChart.tsx',
     docs: 'charts/pie-chart.mdx',
   },
+
+  RadarChart: {
+    title: 'RadarChart',
+    props: ['RadarChart'],
+    styles: ['RadarChart'],
+    package: '@mantine/charts',
+    slug: '/charts/radar-chart',
+    description: 'Radar chart component',
+    import: "import { RadarChart } from '@mantine/charts';",
+    source: '@mantine/charts/src/RadarChart/RadarChart.tsx',
+    docs: 'charts/radar-chart.mdx',
+  },
 };

@@ -53,8 +53,7 @@
   }
 
   &:where([data-circle]) {
-    padding-left: rem(2px);
-    padding-right: rem(2px);
+    padding-inline: rem(2px);
     width: var(--badge-height);
   }
 }
@@ -81,12 +80,7 @@
     height: var(--badge-dot-size);
     border-radius: var(--badge-dot-size);
     background-color: var(--badge-dot-color);
-    margin-right: var(--badge-dot-size);
-
-    @mixin where-rtl {
-      margin-right: 0;
-      margin-left: var(--badge-dot-size);
-    }
+    margin-inline-end: var(--badge-dot-size);
   }
 }
 
@@ -104,22 +98,10 @@
   align-items: center;
 
   &:where([data-position='left']) {
-    margin-left: 0;
-    margin-right: var(--badge-section-margin);
-
-    @mixin where-rtl {
-      margin-left: var(--badge-section-margin);
-      margin-right: 0;
-    }
+    margin-inline-end: var(--badge-section-margin);
   }
 
   &:where([data-position='right']) {
-    margin-left: var(--badge-section-margin);
-    margin-right: 0;
-
-    @mixin rtl {
-      margin-right: var(--badge-section-margin);
-      margin-left: 0;
-    }
+    margin-inline-start: var(--badge-section-margin);
   }
 }

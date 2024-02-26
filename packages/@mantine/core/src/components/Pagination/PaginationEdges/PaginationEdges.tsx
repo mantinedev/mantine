@@ -40,6 +40,7 @@ export function createEdgeComponent({ icon, name, action, type }: CreateEdgeComp
         {...others}
       >
         <Icon
+          className="mantine-rotate-rtl"
           style={{
             width: 'calc(var(--pagination-control-size) / 1.8)',
             height: 'calc(var(--pagination-control-size) / 1.8)',
