@@ -87,6 +87,7 @@ export const Autocomplete = factory<AutocompleteFactory>((_props, ref) => {
     size,
     id,
     renderOption,
+    autoComplete,
     ...others
   } = props;
 
@@ -139,7 +140,7 @@ export const Autocomplete = factory<AutocompleteFactory>((_props, ref) => {
       size={size}
       {...comboboxProps}
     >
-      <Combobox.Target>
+      <Combobox.Target autoComplete={autoComplete}>
         <InputBase
           ref={ref}
           {...others}

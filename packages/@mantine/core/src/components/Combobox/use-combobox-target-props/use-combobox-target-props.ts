@@ -7,6 +7,7 @@ interface UseComboboxTargetPropsInput {
   withKeyboardNavigation: boolean | undefined;
   withExpandedAttribute: boolean | undefined;
   onKeyDown: React.KeyboardEventHandler<HTMLInputElement> | undefined;
+  autoComplete: string | undefined;
 }
 
 export function useComboboxTargetProps({
@@ -15,6 +16,7 @@ export function useComboboxTargetProps({
   withAriaAttributes,
   withExpandedAttribute,
   targetType,
+  autoComplete,
 }: UseComboboxTargetPropsInput) {
   const ctx = useComboboxContext();
   const [selectedOptionId, setSelectedOptionId] = useState<string | null>(null);
@@ -83,7 +85,7 @@ export function useComboboxTargetProps({
         'aria-activedescendant': ctx.store.dropdownOpened
           ? selectedOptionId || undefined
           : undefined,
-        autoComplete: 'off',
+        autoComplete,
         'data-expanded': ctx.store.dropdownOpened ? true : undefined,
       }
     : {};
