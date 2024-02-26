@@ -2,7 +2,7 @@ import React from 'react';
 import { render, screen } from '@testing-library/react';
 import {
   checkAccessibility,
-  itHandlesBooleanState,
+  itHandlesSwitchCheckboxState,
   itSupportsSystemProps,
   itConnectsLabelAndInput,
   itSupportsWrapperProps,
@@ -20,7 +20,7 @@ const defaultProps: SwitchProps = {
 
 describe('@mantine/core/Switch', () => {
   checkAccessibility([<Switch aria-label="Switch without label" />, <Switch label="With label" />]);
-  itHandlesBooleanState(Switch, defaultProps);
+  itHandlesSwitchCheckboxState(Switch, defaultProps);
   itConnectsLabelAndInput(Switch, defaultProps);
   itSupportsWrapperProps(Switch, defaultProps);
   itSupportsFocusEvents(Switch, defaultProps, 'input');
@@ -55,6 +55,6 @@ describe('@mantine/core/Switch', () => {
 
   it('sets disabled attribute on input based on disabled prop', () => {
     render(<Switch disabled />);
-    expect(screen.getByRole('checkbox')).toBeDisabled();
+    expect(screen.getByRole('switch')).toBeDisabled();
   });
 });

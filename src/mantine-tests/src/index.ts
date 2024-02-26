@@ -12,6 +12,7 @@ export { itSupportsFocusEvents } from './it-supports-focus-events';
 export { itSupportsSystemProps } from './it-supports-system-props';
 export { itConnectsLabelAndInput } from './it-connects-label-and-input';
 export { itHandlesBooleanState } from './it-handles-boolean-state';
+export { itHandlesSwitchCheckboxState } from './it-handles-switch-checkbox-state';
 export { createContextContainer } from './create-context-container';
 export { itThrowsContextError } from './it-throws-context-error';
 export { itSupportsProviderDefaultProps } from './it-supports-provider-default-props';
