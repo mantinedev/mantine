@@ -50,6 +50,7 @@ export const ComboboxSearch = factory<ComboboxSearchFactory>((_props, ref) => {
     withKeyboardNavigation,
     withExpandedAttribute: false,
     onKeyDown,
+    autoComplete: 'off',
   });
 
   return (
