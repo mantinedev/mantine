@@ -86,7 +86,8 @@ export function useComboboxTargetProps({
           ? selectedOptionId || undefined
           : undefined,
         autoComplete,
-        'data-expanded': ctx.store.dropdownOpened ? true : undefined,
+        'data-expanded': ctx.store.dropdownOpened || undefined,
+        'data-mantine-stop-propagation': ctx.store.dropdownOpened || undefined,
       }
     : {};
 
