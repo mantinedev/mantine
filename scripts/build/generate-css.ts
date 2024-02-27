@@ -1,6 +1,5 @@
 // Generates separate css files for each @mantine/core component
 import path from 'node:path';
-import cssnano from 'cssnano';
 import glob from 'fast-glob';
 import fs from 'fs-extra';
 import { generateScopedName } from 'hash-css-selector';
@@ -21,7 +20,6 @@ async function processFile(
   const result = await postcss([
     postcssPresetMantine,
     postcssModules({ generateScopedName, getJSON: () => {}, scopeBehaviour }),
-    cssnano({ preset: 'default' }),
   ]).process(fs.readFileSync(filePath, 'utf-8'), { from: path.basename(filePath) });
 
   const fileName = transformFileName(filePath);
