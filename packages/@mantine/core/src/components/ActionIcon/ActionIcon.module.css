@@ -89,6 +89,13 @@
   --ai-border-width: rem(1px);
   display: flex;
 
+  & :where(*) {
+    &:focus {
+      position: relative;
+      z-index: 1;
+    }
+  }
+
   &[data-orientation='horizontal'] {
     flex-direction: row;
 

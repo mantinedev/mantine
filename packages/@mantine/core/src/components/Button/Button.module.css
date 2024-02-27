@@ -161,13 +161,18 @@
   position: absolute;
   left: 50%;
   top: 50%;
-  /* opacity: 1 !important; */
-  /* transform: translate(-50%, -200%); */
 }
 
 .group {
   --button-border-width: rem(1px);
   display: flex;
+
+  & :where(*) {
+    &:focus {
+      position: relative;
+      z-index: 1;
+    }
+  }
 
   &[data-orientation='horizontal'] {
     flex-direction: row;
