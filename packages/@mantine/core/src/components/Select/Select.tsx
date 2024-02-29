@@ -142,6 +142,7 @@ export const Select = factory<SelectFactory>((_props, ref) => {
     hiddenInputProps,
     renderOption,
     onClear,
+    autoComplete,
     ...others
   } = props;
 
@@ -237,7 +238,7 @@ export const Select = factory<SelectFactory>((_props, ref) => {
         size={size}
         {...comboboxProps}
       >
-        <Combobox.Target targetType={searchable ? 'input' : 'button'}>
+        <Combobox.Target targetType={searchable ? 'input' : 'button'} autoComplete={autoComplete}>
           <InputBase
             id={_id}
             ref={ref}

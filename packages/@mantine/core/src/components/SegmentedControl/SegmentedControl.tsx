@@ -201,7 +201,7 @@ export const SegmentedControl = factory<SegmentedControlFactory>((_props, ref) =
   const [observerRef, containerRect] = useResizeObserver();
 
   useEffect(() => {
-    if (_value in refs.current && observerRef.current) {
+    if (observerRef.current) {
       const element = refs.current[_value];
       if (element) {
         const rootPadding = getRootPadding(rootRef.current!, WRAPPER_PADDING);

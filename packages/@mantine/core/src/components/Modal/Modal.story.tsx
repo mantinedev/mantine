@@ -2,6 +2,7 @@ import React from 'react';
 import { useDisclosure } from '@mantine/hooks';
 import { Button } from '../Button';
 import { ScrollArea } from '../ScrollArea';
+import { Select } from '../Select';
 import { Tabs } from '../Tabs';
 import { Modal } from './Modal';
 
@@ -31,6 +32,18 @@ export function Usage() {
       <Button onClick={open}>Open modal</Button>
       <Modal opened={opened} onClose={close} title="Just a Modal" zIndex={73812}>
         <input data-autofocus />
+      </Modal>
+    </div>
+  );
+}
+
+export function WithSelect() {
+  const [opened, { open, close }] = useDisclosure(true);
+  return (
+    <div style={{ padding: 40 }}>
+      <Button onClick={open}>Open modal</Button>
+      <Modal opened={opened} onClose={close} title="Just a Modal">
+        <Select data={['React', 'Angular']} searchable />
       </Modal>
     </div>
   );

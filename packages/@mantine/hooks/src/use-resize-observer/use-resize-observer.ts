@@ -53,7 +53,7 @@ export function useResizeObserver<T extends HTMLElement = any>(options?: ResizeO
     };
   }, [ref.current]);
 
-  return [ref, rect] as const;
+  return [ref as any, rect] as const;
 }
 
 export function useElementSize<T extends HTMLElement = any>(options?: ResizeObserverOptions) {

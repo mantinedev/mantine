@@ -43,7 +43,8 @@
 .label {
   cursor: var(--label-cursor);
   color: inherit;
-  padding-inline: var(--label-offset-start);
+  padding-inline-start: var(--label-offset-start);
+  padding-inline-end: var(--label-offset-end);
 
   fieldset:disabled &,
   &:where([data-disabled]) {

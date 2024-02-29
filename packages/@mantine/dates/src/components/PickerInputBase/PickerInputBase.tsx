@@ -161,12 +161,15 @@ export const PickerInputBase = factory<PickerInputBaseFactory>((_props, ref) => 
         <Popover
           position="bottom-start"
           opened={dropdownOpened}
-          onClose={handleClose}
-          disabled={dropdownType === 'modal' || readOnly}
           trapFocus
           returnFocus
           unstyled={unstyled}
           {...popoverProps}
+          disabled={popoverProps?.disabled || dropdownType === 'modal' || readOnly}
+          onClose={() => {
+            popoverProps?.onClose?.();
+            handleClose();
+          }}
         >
           <Popover.Target>
             <Input

@@ -21,44 +21,44 @@ export const allVersions = [
   },
   {
     version: '7.6.0',
-    date: 'February 27, 2023',
+    date: 'February 27, 2024',
     github: 'https://github.com/mantinedev/mantine/releases/tag/7.6.0',
     link: 'https://mantine.dev/changelog/7-6-0',
     patches: [],
   },
   {
     version: '7.5.0',
-    date: 'January 26, 2023',
+    date: 'January 26, 2024',
     github: 'https://github.com/mantinedev/mantine/releases/tag/7.5.0',
     link: 'https://mantine.dev/changelog/7-5-0',
     patches: [
       {
         version: '7.5.1',
-        date: 'February 2, 2023',
+        date: 'February 2, 2024',
       },
       {
         version: '7.5.2',
-        date: 'February 9, 2023',
+        date: 'February 9, 2024',
       },
       {
         version: '7.5.3',
-        date: 'February 16, 2023',
+        date: 'February 16, 2024',
       },
     ],
   },
   {
     version: '7.4.0',
-    date: 'January 3, 2023',
+    date: 'January 3, 2024',
     github: 'https://github.com/mantinedev/mantine/releases/tag/7.4.0',
     link: 'https://mantine.dev/changelog/7-4-0',
     patches: [
       {
         version: '7.4.1',
-        date: 'January 9, 2023',
+        date: 'January 9, 2024',
       },
       {
         version: '7.4.2',
-        date: 'January 18, 2023',
+        date: 'January 18, 2024',
       },
     ],
   },

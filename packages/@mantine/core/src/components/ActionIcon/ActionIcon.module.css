@@ -42,11 +42,6 @@
   &[data-loading] {
     cursor: not-allowed;
 
-    & .loader {
-      opacity: 1;
-      transform: none;
-    }
-
     & .icon {
       opacity: 0;
       transform: translateY(100%);
@@ -75,16 +70,11 @@
 
 .loader {
   inset: rem(-1px);
-  transition:
-    transform 150ms ease,
-    opacity 100ms ease;
-  opacity: 0;
   position: absolute;
   border-radius: var(--ai-radius, var(--mantine-radius-default));
   display: flex;
   align-items: center;
   justify-content: center;
-  transform: translateY(-100%);
 
   @mixin where-light {
     background-color: rgba(255, 255, 255, 0.35);
@@ -98,6 +88,13 @@
 .group {
   --ai-border-width: rem(1px);
   display: flex;
+
+  & :where(*) {
+    &:focus {
+      position: relative;
+      z-index: 1;
+    }
+  }
 
   &[data-orientation='horizontal'] {
     flex-direction: row;
