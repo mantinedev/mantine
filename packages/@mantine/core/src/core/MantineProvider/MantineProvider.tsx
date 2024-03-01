@@ -58,26 +58,22 @@ export interface MantineProviderProps {
 }
 
 export function MantineProvider({
-                                  theme: initialTheme,
-                                  children,
-                                  getStyleNonce,
-                                  withStaticClasses = true,
-                                  withGlobalClasses = true,
-                                  deduplicateCssVariables = true,
-                                  withCssVariables = true,
-                                  cssVariablesSelector = ':root',
-                                  classNamesPrefix = 'mantine',
-                                  colorSchemeManager = localStorageColorSchemeManager(),
-                                  defaultColorScheme = 'light',
-                                  getRootElement = () => document.documentElement,
-                                  cssVariablesResolver,
-                                  forceColorScheme,
-                                }: MantineProviderProps) {
-  const {
-    colorScheme,
-    setColorScheme,
-    clearColorScheme,
-  } = useProviderColorScheme({
+  theme: initialTheme,
+  children,
+  getStyleNonce,
+  withStaticClasses = true,
+  withGlobalClasses = true,
+  deduplicateCssVariables = true,
+  withCssVariables = true,
+  cssVariablesSelector = ':root',
+  classNamesPrefix = 'mantine',
+  colorSchemeManager = localStorageColorSchemeManager(),
+  defaultColorScheme = 'light',
+  getRootElement = () => document.documentElement,
+  cssVariablesResolver,
+  forceColorScheme,
+}: MantineProviderProps) {
+  const { colorScheme, setColorScheme, clearColorScheme } = useProviderColorScheme({
     defaultColorScheme,
     forceColorScheme,
     manager: colorSchemeManager,
@@ -128,18 +124,13 @@ export interface HeadlessMantineProviderProps {
   children: React.ReactNode;
 }
 
-export function HeadlessMantineProvider({
-                                          children,
-                                          theme,
-                                        }: HeadlessMantineProviderProps) {
+export function HeadlessMantineProvider({ children, theme }: HeadlessMantineProviderProps) {
   return (
     <MantineContext.Provider
       value={{
         colorScheme: 'auto',
-        setColorScheme: () => {
-        },
-        clearColorScheme: () => {
-        },
+        setColorScheme: () => {},
+        clearColorScheme: () => {},
         getRootElement: () => document.documentElement,
         classNamesPrefix: 'mantine',
         cssVariablesSelector: ':root',
