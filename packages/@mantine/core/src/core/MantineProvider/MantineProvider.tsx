@@ -15,7 +15,7 @@ suppressNextjsWarning();
 
 export interface MantineProviderProps {
   /** Theme override object */
-  theme?: MantineThemeOverride;
+  theme?: MantineThemeOverride | ((colorScheme: MantineColorScheme) => MantineThemeOverride);
 
   /** Used to retrieve/set color scheme value in external storage, by default uses `window.localStorage` */
   colorSchemeManager?: MantineColorSchemeManager;
@@ -58,27 +58,32 @@ export interface MantineProviderProps {
 }
 
 export function MantineProvider({
-  theme,
-  children,
-  getStyleNonce,
-  withStaticClasses = true,
-  withGlobalClasses = true,
-  deduplicateCssVariables = true,
-  withCssVariables = true,
-  cssVariablesSelector = ':root',
-  classNamesPrefix = 'mantine',
-  colorSchemeManager = localStorageColorSchemeManager(),
-  defaultColorScheme = 'light',
-  getRootElement = () => document.documentElement,
-  cssVariablesResolver,
-  forceColorScheme,
-}: MantineProviderProps) {
-  const { colorScheme, setColorScheme, clearColorScheme } = useProviderColorScheme({
+                                  theme: initialTheme,
+                                  children,
+                                  getStyleNonce,
+                                  withStaticClasses = true,
+                                  withGlobalClasses = true,
+                                  deduplicateCssVariables = true,
+                                  withCssVariables = true,
+                                  cssVariablesSelector = ':root',
+                                  classNamesPrefix = 'mantine',
+                                  colorSchemeManager = localStorageColorSchemeManager(),
+                                  defaultColorScheme = 'light',
+                                  getRootElement = () => document.documentElement,
+                                  cssVariablesResolver,
+                                  forceColorScheme,
+                                }: MantineProviderProps) {
+  const {
+    colorScheme,
+    setColorScheme,
+    clearColorScheme,
+  } = useProviderColorScheme({
     defaultColorScheme,
     forceColorScheme,
     manager: colorSchemeManager,
     getRootElement,
   });
+  const theme = typeof initialTheme === 'function' ? initialTheme(colorScheme) : initialTheme;
 
   useRespectReduceMotion({
     respectReducedMotion: theme?.respectReducedMotion || false,
@@ -123,13 +128,18 @@ export interface HeadlessMantineProviderProps {
   children: React.ReactNode;
 }
 
-export function HeadlessMantineProvider({ children, theme }: HeadlessMantineProviderProps) {
+export function HeadlessMantineProvider({
+                                          children,
+                                          theme,
+                                        }: HeadlessMantineProviderProps) {
   return (
     <MantineContext.Provider
       value={{
         colorScheme: 'auto',
-        setColorScheme: () => {},
-        clearColorScheme: () => {},
+        setColorScheme: () => {
+        },
+        clearColorScheme: () => {
+        },
         getRootElement: () => document.documentElement,
         classNamesPrefix: 'mantine',
         cssVariablesSelector: ':root',
