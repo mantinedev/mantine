@@ -85,6 +85,20 @@ export function Usage() {
   );
 }
 
+export function AxisLabels() {
+  return (
+    <div style={{ padding: 40 }}>
+      <ScatterChart
+        data={data}
+        dataKey={{ x: 'age', y: 'BMI' }}
+        h={400}
+        xAxisLabel="Age"
+        yAxisLabel="Body Mass Index"
+      />
+    </div>
+  );
+}
+
 export function ReferenceLines() {
   return (
     <div style={{ padding: 40 }}>

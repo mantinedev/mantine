@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import {
   CartesianGrid,
+  Label,
   Legend,
   ScatterChart as ReChartsScatterChart,
   ReferenceLine,
@@ -41,7 +42,7 @@ export type ScatterChartStylesNames =
   | BaseChartStylesNames
   | ChartLegendStylesNames
   | ChartTooltipStylesNames;
-export type ScatterChartVariant = string;
+
 export type ScatterChartCssVariables = {
   root: '--chart-text-color' | '--chart-grid-color';
 };
@@ -61,7 +62,6 @@ export type ScatterChartFactory = Factory<{
   ref: HTMLDivElement;
   stylesNames: ScatterChartStylesNames;
   vars: ScatterChartCssVariables;
-  variant: ScatterChartVariant;
 }>;
 
 const defaultProps: Partial<ScatterChartProps> = {
@@ -113,6 +113,8 @@ export const ScatterChart = factory<ScatterChartFactory>((_props, ref) => {
     dataKey,
     textColor,
     gridColor,
+    xAxisLabel,
+    yAxisLabel,
     ...others
   } = props;
 
@@ -192,7 +194,9 @@ export const ScatterChart = factory<ScatterChartFactory>((_props, ref) => {
       {...others}
     >
       <ResponsiveContainer {...getStyles('container')}>
-        <ReChartsScatterChart>
+        <ReChartsScatterChart
+          margin={{ bottom: xAxisLabel ? 30 : undefined, left: yAxisLabel ? 5 : undefined }}
+        >
           <CartesianGrid
             strokeDasharray={strokeDasharray}
             vertical={gridAxis === 'y' || gridAxis === 'xy'}
@@ -211,7 +215,13 @@ export const ScatterChart = factory<ScatterChartFactory>((_props, ref) => {
             minTickGap={5}
             {...getStyles('axis')}
             {...xAxisProps}
-          />
+          >
+            {xAxisLabel && (
+              <Label position="insideBottom" offset={-20} fontSize={12} {...getStyles('axisLabel')}>
+                {xAxisLabel}
+              </Label>
+            )}
+          </XAxis>
           <YAxis
             type="number"
             hide={!withYAxis}
@@ -222,7 +232,19 @@ export const ScatterChart = factory<ScatterChartFactory>((_props, ref) => {
             allowDecimals
             {...getStyles('axis')}
             {...yAxisProps}
-          />
+          >
+            {yAxisLabel && (
+              <Label
+                position="insideLeft"
+                angle={-90}
+                textAnchor="middle"
+                fontSize={12}
+                {...getStyles('axisLabel')}
+              >
+                {yAxisLabel}
+              </Label>
+            )}
+          </YAxis>
 
           {withTooltip && (
             <Tooltip

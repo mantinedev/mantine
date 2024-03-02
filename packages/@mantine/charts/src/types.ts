@@ -21,7 +21,13 @@ export interface ChartSeries {
   label?: string;
 }
 
-export type BaseChartStylesNames = 'root' | 'container' | 'axis' | 'grid' | 'referenceLine';
+export type BaseChartStylesNames =
+  | 'root'
+  | 'container'
+  | 'axis'
+  | 'grid'
+  | 'referenceLine'
+  | 'axisLabel';
 
 export type ChartData = Record<string, any>[];
 
@@ -88,4 +94,10 @@ export interface GridChartBaseProps {
 
   /** A function to format values on Y axis and inside the tooltip */
   valueFormatter?: (value: number) => string;
+
+  /** A label to display below the x-axis */
+  xAxisLabel?: string;
+
+  /** A label to display next to the y-axis */
+  yAxisLabel?: string;
 }

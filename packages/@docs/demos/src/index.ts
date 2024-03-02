@@ -125,6 +125,7 @@ export * as SparklineDemos from './demos/charts/Sparkline';
 export * as DonutChartDemos from './demos/charts/DonutChart';
 export * as PieChartDemos from './demos/charts/PieChart';
 export * as RadarChartDemos from './demos/charts/RadarChart';
+export * as ScatterChartDemos from './demos/charts/ScatterChart';
 
 // Extensions demos
 export * as NotificationsDemos from './demos/notifications';

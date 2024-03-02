@@ -4,4 +4,5 @@ export type {
   ScatterChartCssVariables,
   ScatterChartFactory,
   ScatterChartStylesNames,
+  ScatterChartSeries,
 } from './ScatterChart';
