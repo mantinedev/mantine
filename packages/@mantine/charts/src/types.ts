@@ -35,10 +35,10 @@ export interface GridChartBaseProps {
   /** Reference lines that should be displayed on the chart */
   referenceLines?: ChartReferenceLineProps[];
 
-  /** Determines whether x-axis should be hidden, `true` by default */
+  /** Determines whether x-axis should be displayed, `true` by default */
   withXAxis?: boolean;
 
-  /** Determines whether y-axis should be hidden, `true` by default */
+  /** Determines whether y-axis should be displayed, `true` by default */
   withYAxis?: boolean;
 
   /** Props passed down to the `XAxis` recharts component */

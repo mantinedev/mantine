@@ -37,6 +37,10 @@
   &:where(& + &) {
     margin-top: calc(var(--mantine-spacing-sm) / 2);
   }
+
+  &[data-type='scatter'] .tooltipItemColor {
+    display: none;
+  }
 }
 
 .tooltipItemBody {
