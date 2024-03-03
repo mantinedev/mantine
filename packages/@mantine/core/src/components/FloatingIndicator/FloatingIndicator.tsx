@@ -26,10 +26,16 @@ function useMutationObserver<Element extends HTMLLIElement>(
       observer.current?.disconnect();
     };
   }, [callback, options]);
+
+  return ref;
 }
 
-export function FloatingIndicator({ target, parent }: FloatingIndicatorProps) {
-  const calculate = useCallback(() => {
+function useElementPosition(
+  target: HTMLElement | null | undefined,
+  parent: HTMLElement | null | undefined,
+  ref: RefObject<HTMLDivElement>
+) {
+  const updatePosition = () => {
     if (!target || !parent) {
       return { top: 0, left: 0, width: 0, height: 0 };
     }
@@ -37,19 +43,35 @@ export function FloatingIndicator({ target, parent }: FloatingIndicatorProps) {
     const targetRect = target.getBoundingClientRect();
     const parentRect = parent.getBoundingClientRect();
 
-    return {
+    const position = {
       top: targetRect.top - parentRect.top,
       left: targetRect.left - parentRect.left,
       width: targetRect.width,
       height: targetRect.height,
     };
-  }, [target, parent]);
 
-  const [position, setPosition] = useState(calculate());
-  const updatePosition = useCallback(() => setPosition(calculate()), [calculate]);
+    ref.current!.style.transform = `translateY(${position.top}px) translateX(${position.left}px)`;
+    ref.current!.style.width = `${position.width}px`;
+    ref.current!.style.height = `${position.height}px`;
+  };
+
+  const targetResizeObserver = useRef<ResizeObserver>();
+  const parentResizeObserver = useRef<ResizeObserver>();
 
   useEffect(() => {
     updatePosition();
+
+    if (target) {
+      targetResizeObserver.current = new ResizeObserver(updatePosition);
+      targetResizeObserver.current.observe(target!);
+      parentResizeObserver.current = new ResizeObserver(updatePosition);
+      parentResizeObserver.current.observe(parent!);
+
+      return () => {
+        targetResizeObserver.current?.disconnect();
+        parentResizeObserver.current?.disconnect();
+      };
+    }
   }, [parent, target]);
 
   useMutationObserver(
@@ -63,20 +85,18 @@ export function FloatingIndicator({ target, parent }: FloatingIndicatorProps) {
     { attributes: true, attributeFilter: ['dir'] },
     () => document.documentElement
   );
+}
+
+export function FloatingIndicator({ target, parent }: FloatingIndicatorProps) {
+  const ref = useRef<HTMLDivElement>(null);
+  useElementPosition(target, parent, ref);
 
   if (!target || !parent) {
     return null;
   }
 
   return (
-    <div
-      className={classes.root}
-      style={{
-        transform: `translateY(${position.top}px) translateX(${position.left}px)`,
-        width: position.width,
-        height: position.height,
-      }}
-    >
+    <div className={classes.root} ref={ref} style={{ color: 'red' }}>
       Indicator
     </div>
   );
