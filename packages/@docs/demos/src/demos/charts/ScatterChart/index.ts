@@ -8,3 +8,4 @@ export { noTooltip } from './ScatterChart.demo.noTooltip';
 export { referenceLines } from './ScatterChart.demo.referenceLines';
 export { strokeDasharray } from './ScatterChart.demo.strokeDasharray';
 export { tooltipAnimation } from './ScatterChart.demo.tooltipAnimation';
+export { units } from './ScatterChart.demo.units';

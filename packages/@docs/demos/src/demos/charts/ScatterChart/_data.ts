@@ -111,6 +111,45 @@ export const doubleData = [
   },
 ];
 
+export const spendingsData = [
+  {
+    color: 'cyan',
+    name: 'Average monthly spending',
+    data: [
+      { age: 25, average_monthly_spending: 1400 },
+      { age: 30, average_monthly_spending: 2100 },
+      { age: 35, average_monthly_spending: 1800 },
+      { age: 40, average_monthly_spending: 2400 },
+      { age: 45, average_monthly_spending: 2300 },
+      { age: 28, average_monthly_spending: 1600 },
+      { age: 22, average_monthly_spending: 1200 },
+      { age: 50, average_monthly_spending: 3200 },
+      { age: 32, average_monthly_spending: 1900 },
+      { age: 48, average_monthly_spending: 2700 },
+      { age: 26, average_monthly_spending: 1700 },
+      { age: 38, average_monthly_spending: 2200 },
+      { age: 42, average_monthly_spending: 2600 },
+      { age: 29, average_monthly_spending: 1500 },
+      { age: 34, average_monthly_spending: 2000 },
+      { age: 44, average_monthly_spending: 2500 },
+      { age: 23, average_monthly_spending: 1300 },
+      { age: 37, average_monthly_spending: 2100 },
+      { age: 49, average_monthly_spending: 2900 },
+      { age: 27, average_monthly_spending: 1600 },
+      { age: 41, average_monthly_spending: 2500 },
+      { age: 31, average_monthly_spending: 1800 },
+      { age: 46, average_monthly_spending: 2700 },
+      { age: 24, average_monthly_spending: 1400 },
+      { age: 33, average_monthly_spending: 2100 },
+      { age: 39, average_monthly_spending: 2400 },
+      { age: 47, average_monthly_spending: 2800 },
+      { age: 36, average_monthly_spending: 2200 },
+      { age: 43, average_monthly_spending: 2600 },
+      { age: 21, average_monthly_spending: 1100 },
+    ],
+  },
+];
+
 export const doubleDataCode = `
 export const data = [
   {
@@ -222,6 +261,45 @@ export const dataCode = `export const data = [
       { age: 36, BMI: 25 },
       { age: 43, BMI: 29 },
       { age: 21, BMI: 11 },
+    ],
+  },
+];`;
+
+export const spendingsDataCode = `export const spendingsData = [
+  {
+    color: 'cyan',
+    name: 'Average monthly spending',
+    data: [
+      { age: 25, average_monthly_spending: 1400 },
+      { age: 30, average_monthly_spending: 2100 },
+      { age: 35, average_monthly_spending: 1800 },
+      { age: 40, average_monthly_spending: 2400 },
+      { age: 45, average_monthly_spending: 2300 },
+      { age: 28, average_monthly_spending: 1600 },
+      { age: 22, average_monthly_spending: 1200 },
+      { age: 50, average_monthly_spending: 3200 },
+      { age: 32, average_monthly_spending: 1900 },
+      { age: 48, average_monthly_spending: 2700 },
+      { age: 26, average_monthly_spending: 1700 },
+      { age: 38, average_monthly_spending: 2200 },
+      { age: 42, average_monthly_spending: 2600 },
+      { age: 29, average_monthly_spending: 1500 },
+      { age: 34, average_monthly_spending: 2000 },
+      { age: 44, average_monthly_spending: 2500 },
+      { age: 23, average_monthly_spending: 1300 },
+      { age: 37, average_monthly_spending: 2100 },
+      { age: 49, average_monthly_spending: 2900 },
+      { age: 27, average_monthly_spending: 1600 },
+      { age: 41, average_monthly_spending: 2500 },
+      { age: 31, average_monthly_spending: 1800 },
+      { age: 46, average_monthly_spending: 2700 },
+      { age: 24, average_monthly_spending: 1400 },
+      { age: 33, average_monthly_spending: 2100 },
+      { age: 39, average_monthly_spending: 2400 },
+      { age: 47, average_monthly_spending: 2800 },
+      { age: 36, average_monthly_spending: 2200 },
+      { age: 43, average_monthly_spending: 2600 },
+      { age: 21, average_monthly_spending: 1100 },
     ],
   },
 ];`;

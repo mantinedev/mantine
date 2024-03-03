@@ -52,3 +52,8 @@ export const Demo_tooltipAnimation = {
   name: '⭐ Demo: tooltipAnimation',
   render: renderDemo(demos.tooltipAnimation),
 };
+
+export const Demo_units = {
+  name: '⭐ Demo: units',
+  render: renderDemo(demos.units),
+};

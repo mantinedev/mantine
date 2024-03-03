@@ -48,13 +48,14 @@ export type ScatterChartCssVariables = {
 };
 
 export interface ScatterChartProps
-  extends Omit<GridChartBaseProps, 'dataKey' | 'data'>,
+  extends Omit<GridChartBaseProps, 'dataKey' | 'data' | 'unit'>,
     BoxProps,
     StylesApiProps<ScatterChartFactory>,
     ElementProps<'div'> {
   dataKey: { x: string; y: string };
   data: ScatterChartSeries[];
   scatterChartProps?: React.ComponentPropsWithoutRef<typeof ReChartsScatterChart>;
+  unit?: { x?: string; y?: string };
 }
 
 export type ScatterChartFactory = Factory<{
@@ -115,6 +116,7 @@ export const ScatterChart = factory<ScatterChartFactory>((_props, ref) => {
     gridColor,
     xAxisLabel,
     yAxisLabel,
+    unit,
     ...others
   } = props;
 
@@ -213,6 +215,7 @@ export const ScatterChart = factory<ScatterChartFactory>((_props, ref) => {
             interval="preserveStartEnd"
             tickLine={withXTickLine ? { stroke: 'currentColor' } : false}
             minTickGap={5}
+            unit={unit?.x}
             {...getStyles('axis')}
             {...xAxisProps}
           >
@@ -230,6 +233,7 @@ export const ScatterChart = factory<ScatterChartFactory>((_props, ref) => {
             tickLine={withYTickLine ? { stroke: 'currentColor' } : false}
             tick={{ transform: 'translate(-10, 0)', fontSize: 12, fill: 'currentColor' }}
             allowDecimals
+            unit={unit?.y}
             {...getStyles('axis')}
             {...yAxisProps}
           >
