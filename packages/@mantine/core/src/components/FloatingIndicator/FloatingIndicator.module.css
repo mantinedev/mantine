@@ -1,0 +1,10 @@
+.root {
+  background-color: red;
+  top: 0;
+  left: 0;
+  position: absolute;
+  transition:
+    transform 200ms ease,
+    width 200ms ease,
+    height 200ms ease;
+}
