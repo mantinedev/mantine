@@ -1,4 +1,4 @@
-import React, { RefObject, useCallback, useEffect, useRef, useState } from 'react';
+import React, { RefObject, useEffect, useRef } from 'react';
 import classes from './FloatingIndicator.module.css';
 
 interface FloatingIndicatorProps {
@@ -30,14 +30,16 @@ function useMutationObserver<Element extends HTMLLIElement>(
   return ref;
 }
 
-function useElementPosition(
+function useFloatingIndicator(
   target: HTMLElement | null | undefined,
   parent: HTMLElement | null | undefined,
   ref: RefObject<HTMLDivElement>
 ) {
+  const transitionTimeout = useRef<number>();
+
   const updatePosition = () => {
     if (!target || !parent) {
-      return { top: 0, left: 0, width: 0, height: 0 };
+      return;
     }
 
     const targetRect = target.getBoundingClientRect();
@@ -55,6 +57,15 @@ function useElementPosition(
     ref.current!.style.height = `${position.height}px`;
   };
 
+  const updatePositionWithoutAnimation = () => {
+    window.clearTimeout(transitionTimeout.current);
+    ref.current!.style.transitionDuration = '0ms';
+    updatePosition();
+    transitionTimeout.current = window.setTimeout(() => {
+      ref.current!.style.transitionDuration = '';
+    }, 30);
+  };
+
   const targetResizeObserver = useRef<ResizeObserver>();
   const parentResizeObserver = useRef<ResizeObserver>();
 
@@ -62,9 +73,9 @@ function useElementPosition(
     updatePosition();
 
     if (target) {
-      targetResizeObserver.current = new ResizeObserver(updatePosition);
+      targetResizeObserver.current = new ResizeObserver(updatePositionWithoutAnimation);
       targetResizeObserver.current.observe(target!);
-      parentResizeObserver.current = new ResizeObserver(updatePosition);
+      parentResizeObserver.current = new ResizeObserver(updatePositionWithoutAnimation);
       parentResizeObserver.current.observe(parent!);
 
       return () => {
@@ -72,13 +83,15 @@ function useElementPosition(
         parentResizeObserver.current?.disconnect();
       };
     }
+
+    return undefined;
   }, [parent, target]);
 
   useMutationObserver(
     (mutations) => {
       mutations.forEach((mutation) => {
         if (mutation.type === 'attributes' && mutation.attributeName === 'dir') {
-          updatePosition();
+          updatePositionWithoutAnimation();
         }
       });
     },
@@ -89,7 +102,7 @@ function useElementPosition(
 
 export function FloatingIndicator({ target, parent }: FloatingIndicatorProps) {
   const ref = useRef<HTMLDivElement>(null);
-  useElementPosition(target, parent, ref);
+  useFloatingIndicator(target, parent, ref);
 
   if (!target || !parent) {
     return null;
