@@ -1,4 +1,6 @@
-import React, { RefObject, useEffect, useRef } from 'react';
+import React, { RefObject, useEffect, useRef, useState } from 'react';
+import { useTimeout } from '@mantine/hooks';
+import { Box, getEnv } from '../../core';
 import classes from './FloatingIndicator.module.css';
 
 interface FloatingIndicatorProps {
@@ -36,6 +38,7 @@ function useFloatingIndicator(
   ref: RefObject<HTMLDivElement>
 ) {
   const transitionTimeout = useRef<number>();
+  const [initialized, setInitialized] = useState(false);
 
   const updatePosition = () => {
     if (!target || !parent) {
@@ -87,6 +90,17 @@ function useFloatingIndicator(
     return undefined;
   }, [parent, target]);
 
+  useTimeout(
+    () => {
+      // Prevents warning about state update without act
+      if (getEnv() !== 'test') {
+        setInitialized(true);
+      }
+    },
+    20,
+    { autoInvoke: true }
+  );
+
   useMutationObserver(
     (mutations) => {
       mutations.forEach((mutation) => {
@@ -98,19 +112,21 @@ function useFloatingIndicator(
     { attributes: true, attributeFilter: ['dir'] },
     () => document.documentElement
   );
+
+  return { initialized };
 }
 
 export function FloatingIndicator({ target, parent }: FloatingIndicatorProps) {
   const ref = useRef<HTMLDivElement>(null);
-  useFloatingIndicator(target, parent, ref);
+  const { initialized } = useFloatingIndicator(target, parent, ref);
 
   if (!target || !parent) {
     return null;
   }
 
   return (
-    <div className={classes.root} ref={ref} style={{ color: 'red' }}>
+    <Box mod={{ initialized }} className={classes.root} ref={ref} style={{ color: 'red' }}>
       Indicator
-    </div>
+    </Box>
   );
 }

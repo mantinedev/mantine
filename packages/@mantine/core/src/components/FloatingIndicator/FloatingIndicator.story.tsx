@@ -4,7 +4,7 @@ import { FloatingIndicator } from './FloatingIndicator';
 export default { title: 'FloatingIndicator' };
 
 export function Usage() {
-  const [active, setActive] = React.useState(0);
+  const [active, setActive] = React.useState(1);
   const [refs, setRefs] = React.useState<HTMLElement[]>([]);
   const [parentRef, setParentRef] = React.useState<HTMLDivElement | null>(null);
 
