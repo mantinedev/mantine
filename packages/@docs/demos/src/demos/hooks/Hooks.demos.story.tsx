@@ -267,3 +267,13 @@ export const Demo_useInViewportUsage = {
   name: '⭐ Demo: useInViewportUsage',
   render: renderDemo(demos.useInViewportDemo),
 };
+
+export const Demo_useMutationObserverUsage = {
+  name: '⭐ Demo: useMutationObserverUsage',
+  render: renderDemo(demos.useMutationObserverUsage),
+};
+
+export const Demo_useMutationObserverTarget = {
+  name: '⭐ Demo: useMutationObserverTarget',
+  render: renderDemo(demos.useMutationObserverTarget),
+};

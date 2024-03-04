@@ -1,6 +1,6 @@
 import { RefObject, useEffect, useRef } from 'react';
 
-export function useMutationObserver<Element extends HTMLLIElement>(
+export function useMutationObserver<Element extends HTMLElement>(
   callback: MutationCallback,
   options: MutationObserverInit,
   target?: HTMLElement | (() => HTMLElement) | null

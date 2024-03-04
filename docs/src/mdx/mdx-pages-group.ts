@@ -81,6 +81,7 @@ export const MDX_PAGES_GROUPS: MdxPagesGroup[] = [
           MDX_DATA.useMove,
           MDX_DATA.useReducedMotion,
           MDX_DATA.useResizeObserver,
+          MDX_DATA.useMutationObserver,
           MDX_DATA.useScrollIntoView,
           MDX_DATA.useViewportSize,
           MDX_DATA.useWindowEvent,
