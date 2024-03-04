@@ -14,6 +14,7 @@ export * from './ModalBase';
 export * from './Input';
 export * from './InputBase';
 export * from './Flex';
+export * from './FloatingIndicator';
 
 // regular components
 export * from './Accordion';

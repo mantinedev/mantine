@@ -1,24 +1,95 @@
 import React, { useRef } from 'react';
-import { Box } from '../../core';
+import { useMergedRef } from '@mantine/hooks';
+import {
+  Box,
+  BoxProps,
+  createVarsResolver,
+  ElementProps,
+  factory,
+  Factory,
+  StylesApiProps,
+  useProps,
+  useStyles,
+} from '../../core';
 import { useFloatingIndicator } from './use-floating-indicator';
 import classes from './FloatingIndicator.module.css';
 
-interface FloatingIndicatorProps {
+export type FloatingIndicatorStylesNames = 'root';
+export type FloatingIndicatorCssVariables = {
+  root: '--transition-duration';
+};
+
+export interface FloatingIndicatorProps
+  extends BoxProps,
+    StylesApiProps<FloatingIndicatorFactory>,
+    ElementProps<'div'> {
+  /** Target element over which indicator should be displayed */
   target: HTMLElement | null | undefined;
+
+  /** Parent element with relative position based on which indicator position should be calculated */
   parent: HTMLElement | null | undefined;
+
+  /** Transition duration in ms, `150` by default */
+  transitionDuration?: number;
 }
 
-export function FloatingIndicator({ target, parent }: FloatingIndicatorProps) {
-  const ref = useRef<HTMLDivElement>(null);
-  const { initialized } = useFloatingIndicator(target, parent, ref);
+export type FloatingIndicatorFactory = Factory<{
+  props: FloatingIndicatorProps;
+  ref: HTMLDivElement;
+  stylesNames: FloatingIndicatorStylesNames;
+  vars: FloatingIndicatorCssVariables;
+}>;
+
+const defaultProps: Partial<FloatingIndicatorProps> = {};
+
+const varsResolver = createVarsResolver<FloatingIndicatorFactory>(
+  (_theme, { transitionDuration }) => ({
+    root: {
+      '--transition-duration':
+        typeof transitionDuration === 'number' ? `${transitionDuration}ms` : undefined,
+    },
+  })
+);
+
+export const FloatingIndicator = factory<FloatingIndicatorFactory>((_props, ref) => {
+  const props = useProps('FloatingIndicator', defaultProps, _props);
+  const {
+    classNames,
+    className,
+    style,
+    styles,
+    unstyled,
+    vars,
+    target,
+    parent,
+    transitionDuration,
+    mod,
+    ...others
+  } = props;
+
+  const getStyles = useStyles<FloatingIndicatorFactory>({
+    name: 'FloatingIndicator',
+    classes,
+    props,
+    className,
+    style,
+    classNames,
+    styles,
+    unstyled,
+    vars,
+    varsResolver,
+  });
+
+  const innerRef = useRef<HTMLDivElement>(null);
+  const { initialized } = useFloatingIndicator(target, parent, innerRef);
+  const mergedRef = useMergedRef(ref, innerRef);
 
   if (!target || !parent) {
     return null;
   }
 
-  return (
-    <Box mod={{ initialized }} className={classes.root} ref={ref} style={{ color: 'red' }}>
-      Indicator
-    </Box>
-  );
-}
+  return <Box ref={mergedRef} mod={[{ initialized }, mod]} {...getStyles('root')} {...others} />;
+});
+
+FloatingIndicator.displayName = '@mantine/core/FloatingIndicator';
+FloatingIndicator.classes = classes;

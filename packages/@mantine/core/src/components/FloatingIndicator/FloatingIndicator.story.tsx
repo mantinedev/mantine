@@ -55,7 +55,9 @@ export function Usage() {
         >
           El 3
         </button>
-        <FloatingIndicator target={refs[active]} parent={parentRef} />
+        <FloatingIndicator target={refs[active]} parent={parentRef} c="red" bg="gray">
+          Indicator
+        </FloatingIndicator>
       </div>
     </div>
   );
@@ -71,7 +73,9 @@ export function ResizableTarget() {
         <div ref={(node) => setTargetRef(node!)} style={{ padding: 20, background: 'pink' }}>
           Resizable target
         </div>
-        <FloatingIndicator target={targetRef} parent={parentRef} />
+        <FloatingIndicator target={targetRef} parent={parentRef} c="red" bg="gray">
+          Indicator
+        </FloatingIndicator>
       </div>
     </div>
   );
@@ -103,7 +107,11 @@ export function ScaledElement() {
         >
           Resizable target
         </div>
-        <FloatingIndicator target={targetRef} parent={parentRef} />
+        <FloatingIndicator
+          target={targetRef}
+          parent={parentRef}
+          style={{ background: 'rgba(0, 0, 0, 0.2)' }}
+        />
       </div>
     </div>
   );

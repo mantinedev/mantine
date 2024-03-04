@@ -1,14 +1,15 @@
 .root {
-  background-color: rgba(0, 0, 0, 0.1);
+  --transition-duration: 150ms;
+
   top: 0;
   left: 0;
   position: absolute;
   z-index: 0;
+  transition-property: transform, width, height;
+  transition-timing-function: ease;
+  transition-duration: 0ms;
 
   &:where([data-initialized]) {
-    transition:
-      transform 200ms ease,
-      width 200ms ease,
-      height 200ms ease;
+    transition-duration: var(--transition-duration);
   }
 }
