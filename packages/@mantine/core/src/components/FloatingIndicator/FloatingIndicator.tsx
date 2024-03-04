@@ -1,35 +1,11 @@
 import React, { RefObject, useEffect, useRef, useState } from 'react';
-import { useTimeout } from '@mantine/hooks';
+import { useMutationObserver, useTimeout } from '@mantine/hooks';
 import { Box, getEnv } from '../../core';
 import classes from './FloatingIndicator.module.css';
 
 interface FloatingIndicatorProps {
   target: HTMLElement | null | undefined;
   parent: HTMLElement | null | undefined;
-}
-
-function useMutationObserver<Element extends HTMLLIElement>(
-  callback: MutationCallback,
-  options: MutationObserverInit,
-  target?: HTMLElement | (() => HTMLElement) | null
-) {
-  const observer = useRef<MutationObserver>();
-  const ref: RefObject<Element> = useRef(null);
-
-  useEffect(() => {
-    const targetElement = typeof target === 'function' ? target() : target;
-
-    if (targetElement || ref.current) {
-      observer.current = new MutationObserver(callback);
-      observer.current.observe(targetElement || ref.current!, options);
-    }
-
-    return () => {
-      observer.current?.disconnect();
-    };
-  }, [callback, options]);
-
-  return ref;
 }
 
 function useFloatingIndicator(
