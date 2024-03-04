@@ -1,4 +1,5 @@
 import React from 'react';
+import { useInterval } from '@mantine/hooks';
 import { FloatingIndicator } from './FloatingIndicator';
 
 export default { title: 'FloatingIndicator' };
@@ -68,6 +69,38 @@ export function ResizableTarget() {
     <div style={{ padding: 40 }}>
       <div ref={(node) => setParentRef(node!)} style={{ position: 'relative' }}>
         <div ref={(node) => setTargetRef(node!)} style={{ padding: 20, background: 'pink' }}>
+          Resizable target
+        </div>
+        <FloatingIndicator target={targetRef} parent={parentRef} />
+      </div>
+    </div>
+  );
+}
+
+export function ScaledElement() {
+  const [targetRef, setTargetRef] = React.useState<HTMLDivElement | null>(null);
+  const [parentRef, setParentRef] = React.useState<HTMLDivElement | null>(null);
+  const [scale, setScale] = React.useState(1);
+  const interval = useInterval(() => setScale(Math.random()), 500);
+
+  React.useEffect(() => {
+    interval.start();
+  }, []);
+
+  return (
+    <div style={{ padding: 40 }}>
+      <div ref={(node) => setParentRef(node!)} style={{ position: 'relative' }}>
+        <div
+          ref={(node) => setTargetRef(node!)}
+          style={{
+            padding: 20,
+            background: 'pink',
+            width: 200,
+            height: 200,
+            transition: 'transform 100ms',
+            transform: `scale(${scale})`,
+          }}
+        >
           Resizable target
         </div>
         <FloatingIndicator target={targetRef} parent={parentRef} />
