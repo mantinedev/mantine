@@ -262,6 +262,7 @@ export const MDX_PAGES_GROUPS: MdxPagesGroup[] = [
           MDX_DATA.Menu,
           MDX_DATA.LoadingOverlay,
           MDX_DATA.Dialog,
+          MDX_DATA.FloatingIndicator,
         ],
       },
       {

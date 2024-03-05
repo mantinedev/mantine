@@ -1139,4 +1139,16 @@ export const MDX_CORE_DATA: Record<string, Frontmatter> = {
     source: '@mantine/core/src/components/NumberFormatter/NumberFormatter.tsx',
     docs: 'core/number-formatter.mdx',
   },
+
+  FloatingIndicator: {
+    title: 'FloatingIndicator',
+    package: '@mantine/core',
+    slug: '/core/floating-indicator',
+    props: ['FloatingIndicator'],
+    styles: ['FloatingIndicator'],
+    description: 'Display a floating indicator over a group of elements',
+    import: "import { FloatingIndicator } from '@mantine/core';",
+    source: '@mantine/core/src/components/FloatingIndicator/FloatingIndicator.tsx',
+    docs: 'core/floating-indicator.mdx',
+  },
 };
