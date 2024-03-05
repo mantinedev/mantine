@@ -175,6 +175,18 @@ describe('@mantine/hooks/use-list-state', () => {
     expect(state).toStrictEqual([TEST_STATE[1], TEST_STATE[2], TEST_STATE[0]]);
   });
 
+  it('swap items positions with handlers.swap', () => {
+    const hook = renderHook(() => useListState(TEST_STATE));
+
+    act(() => {
+      const [, handlers] = hook.result.current;
+      handlers.swap({ from: 0, to: 2 });
+    });
+
+    const [state] = hook.result.current;
+    expect(state).toStrictEqual([TEST_STATE[2], TEST_STATE[1], TEST_STATE[0]]);
+  });
+
   it('sets item at given position with handlers.setItem', () => {
     const hook = renderHook(() => useListState(TEST_STATE));
 

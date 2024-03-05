@@ -23,6 +23,10 @@
 .tooltipBody {
   padding: var(--mantine-spacing-sm) var(--mantine-spacing-md);
   padding-top: 0;
+
+  .tooltip:where([data-type='radial']) :where(&) {
+    padding-top: var(--mantine-spacing-sm);
+  }
 }
 
 .tooltipItem {
@@ -39,7 +43,7 @@
   display: flex;
   align-items: center;
   gap: var(--mantine-spacing-sm);
-  margin-right: var(--mantine-spacing-xl);
+  margin-inline-end: var(--mantine-spacing-xl);
 }
 
 .tooltipItemName {

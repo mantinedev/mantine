@@ -23,6 +23,16 @@ export function Usage() {
   );
 }
 
+export function OffsetScrollbars() {
+  return (
+    <div style={{ background: 'pink', maxWidth: 300 }}>
+      <ScrollArea h={200} type="always" offsetScrollbars>
+        <div style={{ background: 'pink' }}>{content}</div>
+      </ScrollArea>
+    </div>
+  );
+}
+
 export function Unstyled() {
   return (
     <div style={{ padding: 40, maxWidth: 300 }}>

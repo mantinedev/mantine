@@ -13,6 +13,7 @@ describe('@mantine/core/Pagination', () => {
   tests.itSupportsSystemProps<PaginationProps, PaginationStylesNames>({
     component: Pagination,
     props: defaultProps,
+    mod: true,
     styleProps: true,
     extend: true,
     variant: true,

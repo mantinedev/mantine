@@ -9,7 +9,11 @@ export default { title: 'DatePickerInput' };
 export function Usage() {
   return (
     <div style={{ padding: 40, maxWidth: 400 }}>
-      <DatePickerInput label="Date picker input" />
+      <DatePickerInput
+        placeholder="Date picker input"
+        // eslint-disable-next-line no-console
+        popoverProps={{ onClose: () => console.log('close') }}
+      />
     </div>
   );
 }

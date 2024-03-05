@@ -10,6 +10,7 @@ describe('@mantine/core/ComboboxEmpty', () => {
   tests.itSupportsSystemProps<ComboboxEmptyProps, ComboboxEmptyStylesNames>({
     component: TestContainer,
     props: defaultProps,
+    mod: true,
     styleProps: true,
     children: true,
     extend: true,

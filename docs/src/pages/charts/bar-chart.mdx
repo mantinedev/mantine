@@ -43,6 +43,13 @@ will render the legend at the bottom of the chart and set its height to 50px.
 
 <Demo data={BarChartDemos.legendPosition} />
 
+## Series labels
+
+By default, series `name` is used as a label. To change it, set `label`
+property in `series` object:
+
+<Demo data={BarChartDemos.seriesLabels} />
+
 ## X and Y axis props
 
 Use `xAxisProps` and `yAxisProps` to pass props down to recharts [XAxis](https://recharts.org/en-US/api/XAxis)
@@ -64,6 +71,13 @@ your data will always be in the range of 0 to 150, you can set domain to `[0, 15
 
 <Demo data={BarChartDemos.yScale} />
 
+## Value formatter
+
+To format values in the tooltip and axis ticks, use `valueFormat` prop. It accepts
+a function that takes number value as an argument and returns formatted value:
+
+<Demo data={BarChartDemos.valueFormatter} />
+
 ## Area color
 
 You can reference colors from [theme](/theming/theme-object) the same way as in
@@ -71,6 +85,15 @@ other components, for example, `blue`, `red.5`, `orange.7`, etc. Any valid CSS
 color value is also accepted.
 
 <Demo data={BarChartDemos.color} />
+
+## Bar props
+
+You can pass props down to recharts [Bar](https://recharts.org/en-US/api/Bar)
+component with `barProps` prop. `barProps` accepts either an object with props
+or a function that receives series data as an argument and returns an object with
+props.
+
+<Demo data={BarChartDemos.barProps} />
 
 ## Change bar color depending on color scheme
 

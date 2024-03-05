@@ -41,9 +41,12 @@ function Demo(props: any) {
   );
 }
 
+const data = { ...AutocompleteStylesApi };
+delete (data as any).selectors.empty;
+
 export const stylesApi: MantineDemo = {
   type: 'styles-api',
-  data: AutocompleteStylesApi,
+  data,
   component: Demo,
   code,
   centered: true,

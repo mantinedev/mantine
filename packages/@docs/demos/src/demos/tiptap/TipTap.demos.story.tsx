@@ -42,3 +42,8 @@ export const Demo_placeholder = {
   name: '⭐ Demo: placeholder',
   render: renderDemo(demos.placeholder),
 };
+
+export const Demo_tasks = {
+  name: '⭐ Demo: tasks',
+  render: renderDemo(demos.tasks),
+};

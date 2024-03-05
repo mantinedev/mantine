@@ -21,6 +21,7 @@ describe('@mantine/core/Timeline', () => {
   tests.itSupportsSystemProps<TimelineProps, TimelineStylesNames>({
     component: Timeline,
     props: defaultProps,
+    mod: true,
     styleProps: true,
     extend: true,
     variant: true,

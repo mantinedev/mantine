@@ -7,6 +7,7 @@ describe('@mantine/core/Kbd', () => {
   tests.itSupportsSystemProps<KbdProps, KbdStylesNames>({
     component: Kbd,
     props: defaultProps,
+    mod: true,
     styleProps: true,
     children: true,
     extend: true,

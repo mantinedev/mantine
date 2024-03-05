@@ -15,7 +15,12 @@ import {
   useRole,
 } from '@floating-ui/react';
 import { useDidUpdate, useId } from '@mantine/hooks';
-import { FloatingAxesOffsets, FloatingPosition, useFloatingAutoUpdate } from '../Floating';
+import {
+  FloatingAxesOffsets,
+  FloatingPosition,
+  FloatingStrategy,
+  useFloatingAutoUpdate,
+} from '../Floating';
 import { useTooltipGroupContext } from './TooltipGroup/TooltipGroup.context';
 
 interface UseTooltip {
@@ -30,6 +35,7 @@ interface UseTooltip {
   events?: { hover: boolean; focus: boolean; touch: boolean };
   positionDependencies: any[];
   inline?: boolean;
+  strategy?: FloatingStrategy;
 }
 
 export function useTooltip(settings: UseTooltip) {
@@ -61,6 +67,7 @@ export function useTooltip(settings: UseTooltip) {
     placement,
     middlewareData: { arrow: { x: arrowX, y: arrowY } = {} },
   } = useFloating({
+    strategy: settings.strategy,
     placement: settings.position,
     open: opened,
     onOpenChange: onChange,
@@ -79,7 +86,7 @@ export function useTooltip(settings: UseTooltip) {
       delay: withinGroup ? groupDelay : { open: settings.openDelay, close: settings.closeDelay },
       mouseOnly: !settings.events?.touch,
     }),
-    useFocus(context, { enabled: settings.events?.focus, keyboardOnly: true }),
+    useFocus(context, { enabled: settings.events?.focus, visibleOnly: true }),
     useRole(context, { role: 'tooltip' }),
     // cannot be used with controlled tooltip, page jumps
     useDismiss(context, { enabled: typeof settings.opened === 'undefined' }),

@@ -31,9 +31,8 @@ export type ExtendComponent<Payload extends FactoryPayload> = Payload['compound'
   ? ExtendCompoundComponent<Payload>
   : ExtendsRootComponent<Payload>;
 
-export type StaticComponents<Input> = Input extends Record<string, any>
-  ? Input
-  : Record<string, never>;
+export type StaticComponents<Input> =
+  Input extends Record<string, any> ? Input : Record<string, never>;
 
 export interface ThemeExtend<Payload extends FactoryPayload> {
   extend: (input: ExtendComponent<Payload>) => MantineThemeComponent;

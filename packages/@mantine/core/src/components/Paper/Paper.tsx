@@ -63,6 +63,7 @@ export const Paper = polymorphicFactory<PaperFactory>((_props, ref) => {
     radius,
     shadow,
     variant,
+    mod,
     ...others
   } = props;
 
@@ -82,7 +83,7 @@ export const Paper = polymorphicFactory<PaperFactory>((_props, ref) => {
   return (
     <Box
       ref={ref}
-      mod={{ 'data-with-border': withBorder }}
+      mod={[{ 'data-with-border': withBorder }, mod]}
       {...getStyles('root')}
       variant={variant}
       {...others}

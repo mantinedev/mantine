@@ -127,6 +127,7 @@ export const TooltipFloating = factory<TooltipFloatingFactory>((_props, ref) => 
           })}
           variant={variant}
           ref={floating}
+          mod={{ multiline }}
         >
           {label}
         </Box>

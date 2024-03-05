@@ -6,13 +6,11 @@
   --container-size-xl: rem(1320px);
   --container-size: var(--container-size-md);
 
-  padding-left: var(--mantine-spacing-md);
-  padding-right: var(--mantine-spacing-md);
   max-width: var(--container-size);
-  margin-left: auto;
-  margin-right: auto;
+  padding-inline: var(--mantine-spacing-md);
+  margin-inline: auto;
 
-  &[data-fluid] {
-    --container-size: 100%;
+  &:where([data-fluid]) {
+    max-width: 100%;
   }
 }

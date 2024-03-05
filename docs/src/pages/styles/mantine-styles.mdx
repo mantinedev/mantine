@@ -124,3 +124,25 @@ In this example, Mantine styles will take precedence over other library `base` s
 `components` styles will take precedence over Mantine component styles.
 
 As of September 2023, CSS layers are supported in all modern browsers and have [90% browser support](https://caniuse.com/css-cascade-layers).
+
+## Loading styles from CDN
+
+You can also load Mantine styles from unpkg CDN. Note that in this case it is
+recommended to specify exact version of `@mantine/*` packages both in your
+`package.json` and in CDN links.
+
+```html
+<!-- Regular styles -->
+<link
+  rel="stylesheet"
+  href="https://unpkg.com/@mantine/core@7.4.2/styles.css"
+/>
+
+<!-- Styles with @layer directive -->
+<link
+  rel="stylesheet"
+  href="https://unpkg.com/@mantine/core@7.4.2/styles.layer.css"
+/>
+```
+
+Styles on unpkg CDN are available for all Mantine packages that export styles.

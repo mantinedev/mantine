@@ -1,4 +1,6 @@
 .root {
+  --ar-ratio: 1;
+
   position: relative;
   max-width: 100%;
 
@@ -6,7 +8,7 @@
     content: '';
     height: 0;
     display: block;
-    padding-bottom: calc((1 / var(--ar-ratio, 1)) * 100%);
+    padding-bottom: calc((1 / var(--ar-ratio)) * 100%);
   }
 
   &::after {
@@ -15,7 +17,7 @@
     clear: both;
   }
 
-  & > *:not(style) {
+  & > :where(*:not(style)) {
     position: absolute;
     inset: 0;
     width: 100%;
@@ -25,8 +27,7 @@
     justify-content: center;
   }
 
-  & > img,
-  & > video {
+  & > :where(img, video) {
     object-fit: cover;
   }
 }

@@ -66,6 +66,7 @@ export const Image = polymorphicFactory<ImageFactory>((_props, ref) => {
     radius,
     fit,
     fallbackSrc,
+    mod,
     ...others
   } = props;
 
@@ -93,7 +94,7 @@ export const Image = polymorphicFactory<ImageFactory>((_props, ref) => {
         src={fallbackSrc}
         {...getStyles('root')}
         onError={onError}
-        mod="fallback"
+        mod={['fallback', mod]}
         {...others}
       />
     );
@@ -109,6 +110,7 @@ export const Image = polymorphicFactory<ImageFactory>((_props, ref) => {
         onError?.(event);
         setError(true);
       }}
+      mod={mod}
       {...others}
     />
   );

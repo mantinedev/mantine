@@ -8,6 +8,7 @@ import {
   ElementProps,
   factory,
   Factory,
+  getAutoContrastValue,
   getContrastColor,
   getFontSize,
   getRadius,
@@ -105,7 +106,9 @@ const varsResolver = createVarsResolver<PaginationRootFactory>(
       '--pagination-control-size': getSize(size, 'pagination-control-size'),
       '--pagination-control-fz': getFontSize(size),
       '--pagination-active-bg': color ? getThemeColor(color, theme) : undefined,
-      '--pagination-active-color': autoContrast ? getContrastColor({ color, theme }) : undefined,
+      '--pagination-active-color': getAutoContrastValue(autoContrast, theme)
+        ? getContrastColor({ color, theme })
+        : undefined,
     },
   })
 );

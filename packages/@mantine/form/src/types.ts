@@ -21,17 +21,18 @@ export interface ReorderPayload {
 
 type Rule<Value, Values> = (value: Value, values: Values, path: string) => React.ReactNode;
 
-export type FormRule<Value, Values> = NonNullable<Value> extends Array<infer ListValue>
-  ?
-      | Partial<{
-          [Key in keyof ListValue]: ListValue[Key] extends Array<infer NestedListItem>
-            ? FormRulesRecord<NestedListItem, Values> | Rule<ListValue[Key], Values>
-            : FormRulesRecord<ListValue[Key], Values> | Rule<ListValue[Key], Values>;
-        }>
-      | Rule<Value, Values>
-  : NonNullable<Value> extends Record<string, any>
-    ? FormRulesRecord<Value, Values> | Rule<Value, Values>
-    : Rule<Value, Values>;
+export type FormRule<Value, Values> =
+  NonNullable<Value> extends Array<infer ListValue>
+    ?
+        | Partial<{
+            [Key in keyof ListValue]: ListValue[Key] extends Array<infer NestedListItem>
+              ? FormRulesRecord<NestedListItem, Values> | Rule<ListValue[Key], Values>
+              : FormRulesRecord<ListValue[Key], Values> | Rule<ListValue[Key], Values>;
+          }>
+        | Rule<Value, Values>
+    : NonNullable<Value> extends Record<string, any>
+      ? FormRulesRecord<Value, Values> | Rule<Value, Values>
+      : Rule<Value, Values>;
 
 export type FormRulesRecord<Values, InitValues = Values> = Partial<{
   [Key in keyof Values]: FormRule<Values[Key], InitValues>;
@@ -85,9 +86,19 @@ export type GetInputProps<Values> = <Field extends LooseKeys<Values>>(
   options?: GetInputPropsOptions
 ) => GetInputPropsReturnType;
 
+export type PathValue<T, P extends LooseKeys<T>> = P extends `${infer K}.${infer Rest}`
+  ? K extends keyof T
+    ? PathValue<T[K], Rest>
+    : unknown
+  : P extends keyof T
+    ? T[P]
+    : unknown;
+
 export type SetFieldValue<Values> = <Field extends LooseKeys<Values>>(
   path: Field,
-  value: Field extends keyof Values ? Values[Field] : unknown
+  value:
+    | PathValue<Values, Field>
+    | ((prevValue: PathValue<Values, Field>) => PathValue<Values, Field>)
 ) => void;
 
 export type ClearFieldError = (path: unknown) => void;
@@ -143,7 +154,7 @@ export interface UseFormInput<
   clearInputErrorOnChange?: boolean;
   validateInputOnChange?: boolean | LooseKeys<Values>[];
   validateInputOnBlur?: boolean | LooseKeys<Values>[];
-  onValuesChange?: (values: Values) => void;
+  onValuesChange?: (values: Values, previous: Values) => void;
   enhanceGetInputProps?: (payload: {
     inputProps: GetInputPropsReturnType;
     field: LooseKeys<Values>;

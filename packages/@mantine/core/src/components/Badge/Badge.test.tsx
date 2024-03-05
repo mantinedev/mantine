@@ -11,6 +11,7 @@ describe('@mantine/core/Badge', () => {
   tests.itSupportsSystemProps<BadgeProps, BadgeStylesNames>({
     component: Badge,
     props: defaultProps,
+    mod: true,
     polymorphic: true,
     styleProps: true,
     children: true,

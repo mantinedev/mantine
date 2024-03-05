@@ -1,7 +1,7 @@
 import userEvent from '@testing-library/user-event';
 import { axe } from './axe';
 import { itConnectsLabelAndInput } from './inputs/it-connects-label-and-input';
-import { itHandlesCheckboxState } from './inputs/it-handles-checkbox-state';
+import { itHandlesSwitchCheckboxState } from './inputs/it-handles-switch-checkbox-state';
 import { itSupportsInputAsterisk } from './inputs/it-supports-input-asterisk';
 import { itSupportsInputContainer } from './inputs/it-supports-input-container';
 import { itSupportsInputProps } from './inputs/it-supports-input-props';
@@ -22,6 +22,7 @@ import { itSupportsFocusEvents } from './shared/it-supports-focus-events';
 import { itSupportsHiddenVisible } from './shared/it-supports-hidden-visible';
 import { itSupportsId } from './shared/it-supports-id';
 import { itSupportsLightDarkHidden } from './shared/it-supports-light-dark-hidden';
+import { itSupportsMod } from './shared/it-supports-mod';
 import { itSupportsOthers } from './shared/it-supports-others';
 import { itSupportsProviderDefaultProps } from './shared/it-supports-provider-default-props';
 import { itSupportsRef } from './shared/it-supports-ref';
@@ -57,6 +58,7 @@ export const tests = {
   itSupportsHiddenVisible,
   itSupportsLightDarkHidden,
   itSupportsId,
+  itSupportsMod,
 
   itSupportsMarginsProps,
   itSupportsPaddingsProps,
@@ -71,7 +73,7 @@ export const tests = {
   itSupportsInputAsterisk,
   itSupportsInputWrapperOrder,
   itSupportsInputWrapperElements,
-  itHandlesCheckboxState,
+  itHandlesSwitchCheckboxState,
   itConnectsLabelAndInput,
 
   itSupportsSystemProps,

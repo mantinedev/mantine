@@ -21,7 +21,7 @@ export interface StorageProperties<T> {
   deserialize?: (value: string | undefined) => T;
 }
 
-function serializeJSON<T>(value: T, hookName: string) {
+function serializeJSON<T>(value: T, hookName: string = 'use-local-storage') {
   try {
     return JSON.stringify(value);
   } catch (error) {
@@ -149,9 +149,7 @@ export function createStorage<T>(type: StorageType, hookName: string) {
     }, [defaultValue, value, setStorageValue]);
 
     useEffect(() => {
-      if (getInitialValueInEffect) {
-        setValue(readStorageValue());
-      }
+      setStorageValue(readStorageValue());
     }, []);
 
     return [value === undefined ? defaultValue : value, setStorageValue, removeStorageValue] as [
@@ -159,5 +157,31 @@ export function createStorage<T>(type: StorageType, hookName: string) {
       (val: T | ((prevState: T) => T)) => void,
       () => void,
     ];
+  };
+}
+
+export function readValue(type: StorageType) {
+  const { getItem } = createStorageHandler(type);
+
+  return function read<T>({
+    key,
+    defaultValue,
+    deserialize = deserializeJSON,
+  }: StorageProperties<T>) {
+    let storageBlockedOrSkipped;
+
+    try {
+      storageBlockedOrSkipped =
+        typeof window === 'undefined' || !(type in window) || window[type] === null;
+    } catch (_e) {
+      storageBlockedOrSkipped = true;
+    }
+
+    if (storageBlockedOrSkipped) {
+      return defaultValue as T;
+    }
+
+    const storageValue = getItem(key);
+    return storageValue !== null ? deserialize(storageValue) : (defaultValue as T);
   };
 }

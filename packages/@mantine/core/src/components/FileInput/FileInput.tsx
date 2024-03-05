@@ -167,10 +167,10 @@ const _FileInput = factory<FileInputFactory>((_props, ref) => {
 _FileInput.classes = InputBase.classes;
 _FileInput.displayName = '@mantine/core/FileInput';
 
-type FileInputComponent = <Multiple extends boolean = false>(
+type FileInputComponent = (<Multiple extends boolean = false>(
   props: FileInputProps<Multiple> & {
     ref?: React.ForwardedRef<HTMLButtonElement>;
   }
-) => JSX.Element;
+) => JSX.Element) & { extend: typeof _FileInput.extend };
 
 export const FileInput: FileInputComponent = _FileInput as any;

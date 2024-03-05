@@ -38,7 +38,7 @@ const defaultProps: Partial<TabsListProps> = {};
 
 export const TabsList = factory<TabsListFactory>((_props, ref) => {
   const props = useProps('TabsList', defaultProps, _props);
-  const { children, className, grow, justify, classNames, styles, style, ...others } = props;
+  const { children, className, grow, justify, classNames, styles, style, mod, ...others } = props;
 
   const ctx = useTabsContext();
 
@@ -56,12 +56,15 @@ export const TabsList = factory<TabsListFactory>((_props, ref) => {
       ref={ref}
       role="tablist"
       variant={ctx.variant}
-      mod={{
-        grow,
-        orientation: ctx.orientation,
-        placement: ctx.orientation === 'vertical' && ctx.placement,
-        inverted: ctx.inverted,
-      }}
+      mod={[
+        {
+          grow,
+          orientation: ctx.orientation,
+          placement: ctx.orientation === 'vertical' && ctx.placement,
+          inverted: ctx.inverted,
+        },
+        mod,
+      ]}
       aria-orientation={ctx.orientation}
       __vars={{ '--tabs-justify': justify }}
     >

@@ -228,6 +228,7 @@ export const Dropzone = factory<DropzoneFactory>((_props, ref) => {
     acceptColor,
     enablePointerEvents,
     loaderProps,
+    mod,
     ...others
   } = props;
 
@@ -279,13 +280,16 @@ export const Dropzone = factory<DropzoneFactory>((_props, ref) => {
         {...getRootProps({ ref })}
         {...getStyles('root', { focusable: true })}
         {...others}
-        mod={{
-          accept: isDragAccept,
-          reject: isDragReject,
-          idle: isIdle,
-          loading,
-          'activate-on-click': activateOnClick,
-        }}
+        mod={[
+          {
+            accept: isDragAccept,
+            reject: isDragReject,
+            idle: isIdle,
+            loading,
+            'activate-on-click': activateOnClick,
+          },
+          mod,
+        ]}
       >
         <LoadingOverlay
           visible={loading}

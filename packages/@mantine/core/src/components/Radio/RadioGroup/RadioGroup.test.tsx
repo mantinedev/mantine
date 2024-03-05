@@ -27,6 +27,7 @@ describe('@mantine/core/RadioGroup', () => {
   tests.itSupportsSystemProps<RadioGroupProps, RadioGroupStylesNames>({
     component: RadioGroup,
     props: defaultProps,
+    mod: true,
     styleProps: true,
     children: true,
     extend: true,

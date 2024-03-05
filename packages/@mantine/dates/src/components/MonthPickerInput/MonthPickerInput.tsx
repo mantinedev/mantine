@@ -18,7 +18,10 @@ import { useDatesContext } from '../DatesProvider';
 import { MonthPicker, MonthPickerBaseProps, MonthPickerStylesNames } from '../MonthPicker';
 import { DateInputSharedProps, PickerInputBase } from '../PickerInputBase';
 
-export type MonthPickerInputStylesNames = __InputStylesNames | MonthPickerStylesNames;
+export type MonthPickerInputStylesNames =
+  | __InputStylesNames
+  | 'placeholder'
+  | MonthPickerStylesNames;
 
 export interface MonthPickerInputProps<Type extends DatePickerType = 'default'>
   extends BoxProps,
@@ -72,6 +75,7 @@ export const MonthPickerInput: MonthPickerInputComponent = factory<MonthPickerIn
       minDate,
       maxDate,
       vars,
+      valueFormatter,
       ...rest
     } = props;
 
@@ -101,7 +105,9 @@ export const MonthPickerInput: MonthPickerInputComponent = factory<MonthPickerIn
       labelSeparator,
       closeOnChange,
       sortDates,
+      valueFormatter,
     });
+
     const ctx = useDatesContext();
 
     return (

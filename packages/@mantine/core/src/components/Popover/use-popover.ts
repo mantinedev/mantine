@@ -11,7 +11,12 @@ import {
   UseFloatingReturn,
 } from '@floating-ui/react';
 import { useDidUpdate, useUncontrolled } from '@mantine/hooks';
-import { FloatingAxesOffsets, FloatingPosition, useFloatingAutoUpdate } from '../Floating';
+import {
+  FloatingAxesOffsets,
+  FloatingPosition,
+  FloatingStrategy,
+  useFloatingAutoUpdate,
+} from '../Floating';
 import { PopoverMiddlewares, PopoverWidth } from './Popover.types';
 
 interface UsePopoverOptions {
@@ -28,6 +33,7 @@ interface UsePopoverOptions {
   middlewares: PopoverMiddlewares | undefined;
   arrowRef: React.RefObject<HTMLDivElement>;
   arrowOffset: number;
+  strategy?: FloatingStrategy;
 }
 
 function getPopoverMiddlewares(
@@ -103,6 +109,7 @@ export function usePopover(options: UsePopoverOptions) {
   };
 
   const floating: UseFloatingReturn<Element> = useFloating({
+    strategy: options.strategy,
     placement: options.position,
     middleware: getPopoverMiddlewares(options, () => floating),
   });

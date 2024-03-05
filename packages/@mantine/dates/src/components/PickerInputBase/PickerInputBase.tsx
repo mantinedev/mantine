@@ -20,6 +20,7 @@ import {
 } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import { DatePickerType } from '../../types';
+import { DateFormatter } from '../../utils';
 import { HiddenDatesInput, HiddenDatesInputValue } from '../HiddenDatesInput';
 import classes from './PickerInputBase.module.css';
 
@@ -57,6 +58,9 @@ export interface DateInputSharedProps
 
   /** Input placeholder */
   placeholder?: string;
+
+  /** A function to format selected dates values into a string. By default, date is formatted based on the input type. */
+  valueFormatter?: DateFormatter;
 }
 
 export interface PickerInputBaseProps
@@ -157,12 +161,15 @@ export const PickerInputBase = factory<PickerInputBaseFactory>((_props, ref) => 
         <Popover
           position="bottom-start"
           opened={dropdownOpened}
-          onClose={handleClose}
-          disabled={dropdownType === 'modal' || readOnly}
           trapFocus
           returnFocus
           unstyled={unstyled}
           {...popoverProps}
+          disabled={popoverProps?.disabled || dropdownType === 'modal' || readOnly}
+          onClose={() => {
+            popoverProps?.onClose?.();
+            handleClose();
+          }}
         >
           <Popover.Target>
             <Input
@@ -184,7 +191,12 @@ export const PickerInputBase = factory<PickerInputBaseFactory>((_props, ref) => 
               {...others}
             >
               {formattedValue || (
-                <Input.Placeholder error={inputProps.error} unstyled={unstyled}>
+                <Input.Placeholder
+                  error={inputProps.error}
+                  unstyled={unstyled}
+                  className={(classNames as any)?.placeholder}
+                  style={(styles as any)?.placeholder}
+                >
                   {placeholder}
                 </Input.Placeholder>
               )}

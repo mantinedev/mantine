@@ -32,6 +32,7 @@ const defaultOptions: GetClassNameOptions = {
   unstyled: false,
   className: undefined,
   options: undefined,
+  withStaticClasses: true,
 };
 
 describe('@mantine/core/get-class-name', () => {
@@ -236,5 +237,18 @@ describe('@mantine/core/get-class-name', () => {
       classes: { test: '__test-library' },
     });
     expect(output.includes('__test-library')).toBe(true);
+  });
+
+  it('does not add static classes if withStaticClasses is false', () => {
+    const output = getClassName({
+      ...defaultOptions,
+      withStaticClasses: false,
+      classes: { root: 'test-root' },
+      themeName: ['Test', 'AnotherTest'],
+    });
+
+    expect(output.includes('mantine-Test-root')).toBe(false);
+    expect(output.includes('mantine-AnotherTest-root')).toBe(false);
+    expect(output.includes('test-root')).toBe(true);
   });
 });

@@ -31,6 +31,7 @@ export const DEFAULT_THEME: MantineTheme = {
   headings: {
     fontFamily: DEFAULT_FONT_FAMILY,
     fontWeight: '700',
+    textWrap: 'wrap',
     sizes: {
       h1: { fontSize: rem(34), lineHeight: '1.3' },
       h2: { fontSize: rem(26), lineHeight: '1.35' },

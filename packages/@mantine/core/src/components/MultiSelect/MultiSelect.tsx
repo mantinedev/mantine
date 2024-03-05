@@ -14,7 +14,9 @@ import {
 import { __CloseButtonProps } from '../CloseButton';
 import {
   Combobox,
+  ComboboxItem,
   ComboboxLikeProps,
+  ComboboxLikeRenderOptionInput,
   ComboboxLikeStylesNames,
   getOptionsLockup,
   getParsedComboboxData,
@@ -48,6 +50,12 @@ export interface MultiSelectProps
 
   /** Called whe value changes */
   onChange?: (value: string[]) => void;
+
+  /** Called with `value` of the removed item */
+  onRemove?: (value: string) => void;
+
+  /** Called when the clear button is clicked */
+  onClear?: () => void;
 
   /** Controlled search value */
   searchValue?: string;
@@ -87,6 +95,9 @@ export interface MultiSelectProps
 
   /** Divider used to separate values in the hidden input `value` attribute, `','` by default */
   hiddenInputValuesDivider?: string;
+
+  /** A function to render content of the option, replaces the default content of the option */
+  renderOption?: (item: ComboboxLikeRenderOptionInput<ComboboxItem>) => React.ReactNode;
 }
 
 export type MultiSelectFactory = Factory<{
@@ -172,6 +183,10 @@ export const MultiSelect = factory<MultiSelectFactory>((_props, ref) => {
     placeholder,
     hiddenInputValuesDivider,
     required,
+    mod,
+    renderOption,
+    onRemove,
+    onClear,
     ...others
   } = props;
 
@@ -191,7 +206,7 @@ export const MultiSelect = factory<MultiSelectFactory>((_props, ref) => {
 
   const {
     styleProps,
-    rest: { type, ...rest },
+    rest: { type, autoComplete, ...rest },
   } = extractStyleProps(others);
 
   const [_value, setValue] = useUncontrolled({
@@ -232,6 +247,7 @@ export const MultiSelect = factory<MultiSelectFactory>((_props, ref) => {
     }
 
     if (event.key === 'Backspace' && _searchValue.length === 0 && _value.length > 0) {
+      onRemove?.(_value[_value.length - 1]);
       setValue(_value.slice(0, _value.length - 1));
     }
   };
@@ -239,8 +255,11 @@ export const MultiSelect = factory<MultiSelectFactory>((_props, ref) => {
   const values = _value.map((item, index) => (
     <Pill
       key={`${item}-${index}`}
-      withRemoveButton={!readOnly}
-      onRemove={() => setValue(_value.filter((i) => item !== i))}
+      withRemoveButton={!readOnly && !optionsLockup[item]?.disabled}
+      onRemove={() => {
+        setValue(_value.filter((i) => item !== i));
+        onRemove?.(item);
+      }}
       unstyled={unstyled}
       {...getStyles('pill')}
     >
@@ -259,6 +278,7 @@ export const MultiSelect = factory<MultiSelectFactory>((_props, ref) => {
       size={size as string}
       {...clearButtonProps}
       onClear={() => {
+        onClear?.();
         setValue([]);
         setSearchValue('');
       }}
@@ -284,6 +304,7 @@ export const MultiSelect = factory<MultiSelectFactory>((_props, ref) => {
 
           if (_value.includes(optionsLockup[val].value)) {
             setValue(_value.filter((v) => v !== optionsLockup[val].value));
+            onRemove?.(optionsLockup[val].value);
           } else if (_value.length < maxValues!) {
             setValue([..._value, optionsLockup[val].value]);
           }
@@ -337,10 +358,11 @@ export const MultiSelect = factory<MultiSelectFactory>((_props, ref) => {
             data-expanded={combobox.dropdownOpened || undefined}
             id={_id}
             required={required}
+            mod={mod}
           >
             <Pill.Group disabled={disabled} unstyled={unstyled} {...getStyles('pillsList')}>
               {values}
-              <Combobox.EventsTarget>
+              <Combobox.EventsTarget autoComplete={autoComplete}>
                 <PillsInput.Field
                   {...rest}
                   ref={ref}
@@ -356,7 +378,6 @@ export const MultiSelect = factory<MultiSelectFactory>((_props, ref) => {
                   onBlur={(event) => {
                     onBlur?.(event);
                     combobox.closeDropdown();
-                    searchable && combobox.closeDropdown();
                     setSearchValue('');
                   }}
                   onKeyDown={handleInputKeydown}
@@ -395,6 +416,7 @@ export const MultiSelect = factory<MultiSelectFactory>((_props, ref) => {
           nothingFoundMessage={nothingFoundMessage}
           unstyled={unstyled}
           labelId={`${_id}-label`}
+          renderOption={renderOption}
         />
       </Combobox>
       <input

@@ -28,6 +28,7 @@ export interface GetStyleInput {
   style: MantineStyleProp | undefined;
   vars: VarsResolver | undefined;
   varsResolver: VarsResolver | undefined;
+  headless?: boolean;
 }
 
 export function getStyle({
@@ -42,6 +43,7 @@ export function getStyle({
   style,
   vars,
   varsResolver,
+  headless,
 }: GetStyleInput): CSSProperties {
   return {
     ...getThemeStyles({ theme, themeName, props, stylesCtx, selector }),
@@ -49,7 +51,7 @@ export function getStyle({
     ...resolveStyles({ theme, styles: options?.styles, props: options?.props || props, stylesCtx })[
       selector
     ],
-    ...resolveVars({ theme, props, stylesCtx, vars, varsResolver, selector, themeName }),
+    ...resolveVars({ theme, props, stylesCtx, vars, varsResolver, selector, themeName, headless }),
     ...(rootSelector === selector ? resolveStyle({ style, theme }) : null),
     ...resolveStyle({ style: options?.style, theme }),
   };

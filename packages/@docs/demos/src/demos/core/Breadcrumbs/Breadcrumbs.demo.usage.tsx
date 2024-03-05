@@ -19,7 +19,9 @@ function Demo() {
   return (
     <>
       <Breadcrumbs>{items}</Breadcrumbs>
-      <Breadcrumbs separator="→" mt="xs">{items}</Breadcrumbs>
+      <Breadcrumbs separator="→" separatorMargin="md" mt="xs">
+        {items}
+      </Breadcrumbs>
     </>
   );
 }
@@ -39,7 +41,12 @@ function Demo() {
   return (
     <>
       <Breadcrumbs>{items}</Breadcrumbs>
-      <Breadcrumbs separator="→" mt="xs" classNames={{ separator: 'mantine-rotate-rtl' }}>
+      <Breadcrumbs
+        separator="→"
+        mt="xs"
+        separatorMargin="md"
+        classNames={{ separator: 'mantine-rotate-rtl' }}
+      >
         {items}
       </Breadcrumbs>
     </>

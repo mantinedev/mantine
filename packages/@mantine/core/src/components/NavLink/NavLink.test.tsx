@@ -13,6 +13,7 @@ describe('@mantine/core/NavLink', () => {
   tests.itSupportsSystemProps<NavLinkProps, NavLinkStylesNames>({
     component: NavLink,
     props: defaultProps,
+    mod: true,
     polymorphic: true,
     styleProps: true,
     children: true,

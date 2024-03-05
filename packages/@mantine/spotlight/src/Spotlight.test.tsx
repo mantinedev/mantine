@@ -25,6 +25,7 @@ describe('@mantine/core/Spotlight', () => {
   tests.itSupportsSystemProps<SpotlightProps, SpotlightStylesNames>({
     component: Spotlight,
     props: defaultProps,
+    mod: true,
     styleProps: true,
     extend: true,
     variant: true,

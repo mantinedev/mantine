@@ -45,6 +45,13 @@ with `filter` function:
 
 <Demo data={AutocompleteDemos.limit} />
 
+## renderOption
+
+`renderOption` callback allows you to customize option rendering. It is called with option object.
+The function must return a React node.
+
+<Demo data={AutocompleteDemos.renderOption} />
+
 ## Scrollable dropdown
 
 By default, the options list is wrapped with [ScrollArea.Autosize](/core/scroll-area).

@@ -54,6 +54,7 @@ export const MDX_PAGES_GROUPS: MdxPagesGroup[] = [
       MDX_DATA.TypeScript,
       MDX_DATA.JavaScript,
       MDX_DATA.Jest,
+      MDX_DATA.Vitest,
       MDX_DATA.FunctionsReference,
       MDX_DATA.SixToSeven,
     ],
@@ -334,6 +335,9 @@ export const MDX_PAGES_GROUPS: MdxPagesGroup[] = [
       MDX_DATA.AreaChart,
       MDX_DATA.BarChart,
       MDX_DATA.LineChart,
+      MDX_DATA.DonutChart,
+      MDX_DATA.PieChart,
+      MDX_DATA.RadarChart,
       MDX_DATA.Sparkline,
     ],
   },
@@ -353,6 +357,8 @@ export const MDX_PAGES_GROUPS: MdxPagesGroup[] = [
   {
     group: 'changelog',
     pages: [
+      MDX_DATA.Changelog760,
+      MDX_DATA.Changelog750,
       MDX_DATA.Changelog740,
       MDX_DATA.Changelog730,
       MDX_DATA.Changelog720,

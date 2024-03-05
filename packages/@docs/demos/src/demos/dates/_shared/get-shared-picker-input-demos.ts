@@ -6,6 +6,7 @@ import { getPickerInputModalDemo } from './picker-input-modal.demo';
 import { getPickerInputMultipleDemo } from './picker-input-multiple.demo';
 import { getPickerInputRangeDemo } from './picker-input-range.demo';
 import { getPickerInputUsageDemo } from './picker-input-usage.demo';
+import { getPickerInputValueFormatterDemo } from './picker-input-value-formatter.demo';
 
 export function getSharedPickerInputDemos(component: React.FC<any>) {
   return {
@@ -16,5 +17,6 @@ export function getSharedPickerInputDemos(component: React.FC<any>) {
     modal: getPickerInputModalDemo(component),
     icon: getPickerInputIconDemo(component),
     clearable: getPickerInputClearableDemo(component),
+    valueFormatter: getPickerInputValueFormatterDemo(component),
   };
 }

@@ -17,6 +17,7 @@ describe('@mantine/core/Sparkline', () => {
   tests.itSupportsSystemProps<SparklineProps, SparklineStylesNames>({
     component: Sparkline,
     props: defaultProps,
+    mod: true,
     styleProps: true,
     extend: true,
     variant: true,

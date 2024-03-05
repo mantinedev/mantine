@@ -6,7 +6,7 @@
   align-items: var(--group-align, center);
   gap: var(--group-gap, var(--mantine-spacing-md));
 
-  &[data-grow] {
+  &:where([data-grow]) {
     & > * {
       flex-grow: 1;
       max-width: var(--group-child-width);

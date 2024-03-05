@@ -34,7 +34,7 @@ export function AutoContrast() {
         value="hello"
         defaultChecked
         color="lime.4"
-        autoContrast
+        // autoContrast
       />
     </div>
   );

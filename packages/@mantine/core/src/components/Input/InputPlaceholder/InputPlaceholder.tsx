@@ -43,6 +43,7 @@ export const InputPlaceholder = factory<InputPlaceholderFactory>((_props, ref) =
     __staticSelector,
     variant,
     error,
+    mod,
     ...others
   } = useProps('InputPlaceholder', defaultProps, props);
 
@@ -61,7 +62,7 @@ export const InputPlaceholder = factory<InputPlaceholderFactory>((_props, ref) =
   return (
     <Box
       {...getStyles('placeholder')}
-      mod={{ error: !!error }}
+      mod={[{ error: !!error }, mod]}
       component="span"
       variant={variant}
       ref={ref}

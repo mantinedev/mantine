@@ -25,6 +25,9 @@ export interface SwitchGroupProps extends Omit<InputWrapperProps, 'onChange'> {
 
   /** Controls size of the `Input.Wrapper`, `'sm'` by default */
   size?: MantineSize | (string & {});
+
+  /** If set, value cannot be changed */
+  readOnly?: boolean;
 }
 
 export type SwitchGroupFactory = Factory<{
@@ -36,11 +39,8 @@ export type SwitchGroupFactory = Factory<{
 const defaultProps: Partial<SwitchGroupProps> = {};
 
 export const SwitchGroup = factory<SwitchGroupFactory>((props, ref) => {
-  const { value, defaultValue, onChange, size, wrapperProps, children, ...others } = useProps(
-    'SwitchGroup',
-    defaultProps,
-    props
-  );
+  const { value, defaultValue, onChange, size, wrapperProps, children, readOnly, ...others } =
+    useProps('SwitchGroup', defaultProps, props);
 
   const [_value, setValue] = useUncontrolled({
     value,
@@ -51,11 +51,12 @@ export const SwitchGroup = factory<SwitchGroupFactory>((props, ref) => {
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const itemValue = event.currentTarget.value;
-    setValue(
-      _value.includes(itemValue)
-        ? _value.filter((item) => item !== itemValue)
-        : [..._value, itemValue]
-    );
+    !readOnly &&
+      setValue(
+        _value.includes(itemValue)
+          ? _value.filter((item) => item !== itemValue)
+          : [..._value, itemValue]
+      );
   };
 
   return (

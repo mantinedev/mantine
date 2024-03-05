@@ -2,7 +2,12 @@ import dayjs from 'dayjs';
 import { getMonthDays } from '../get-month-days/get-month-days';
 import { getDateInTabOrder } from './get-date-in-tab-order';
 
-const defaultDates = getMonthDays(new Date(2010, 5, 1));
+const defaultDates = getMonthDays({
+  month: new Date(2010, 5, 1),
+  firstDayOfWeek: 1,
+  consistentWeeks: false,
+  timezone: undefined,
+});
 const defaultMinDate = new Date(2000, 0);
 const defaultMaxDate = new Date(2100, 0);
 const defaultSelectedDate = new Date(2010, 5, 5);
@@ -31,7 +36,12 @@ describe('@mantine/dates/get-date-in-tab-order', () => {
   it('returns current day', () => {
     expect(
       getDateInTabOrder(
-        getMonthDays(new Date()),
+        getMonthDays({
+          month: new Date(),
+          firstDayOfWeek: 1,
+          consistentWeeks: false,
+          timezone: undefined,
+        }),
         defaultMinDate,
         defaultMaxDate,
         defaultControlProps,
@@ -47,7 +57,12 @@ describe('@mantine/dates/get-date-in-tab-order', () => {
   it('returns first non-disabled day in month', () => {
     expect(
       getDateInTabOrder(
-        getMonthDays(new Date(2010, 1, 1)),
+        getMonthDays({
+          month: new Date(2010, 1, 1),
+          firstDayOfWeek: 1,
+          consistentWeeks: false,
+          timezone: undefined,
+        }),
         defaultMinDate,
         defaultMaxDate,
         defaultControlProps,
@@ -72,7 +87,12 @@ describe('@mantine/dates/get-date-in-tab-order', () => {
   it('handles excluded date', () => {
     expect(
       getDateInTabOrder(
-        getMonthDays(new Date(2010, 1, 1)),
+        getMonthDays({
+          month: new Date(2010, 1, 1),
+          firstDayOfWeek: 1,
+          consistentWeeks: false,
+          timezone: undefined,
+        }),
         defaultMinDate,
         defaultMaxDate,
         defaultControlProps,

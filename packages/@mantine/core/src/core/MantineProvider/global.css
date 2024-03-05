@@ -1,9 +1,4 @@
 /* ----- CSS reset ----- */
-html,
-body {
-  height: 100%;
-}
-
 *,
 *::before,
 *::after {
@@ -87,7 +82,7 @@ body {
 }
 
 .mantine-rotate-rtl {
-  @mixin rtl {
+  @mixin where-rtl {
     transform: rotate(180deg);
   }
 }

@@ -37,6 +37,7 @@ export function useTransition({
   const [transitionDuration, setTransitionDuration] = useState(reduceMotion ? 0 : duration);
   const [transitionStatus, setStatus] = useState<TransitionStatus>(mounted ? 'entered' : 'exited');
   const timeoutRef = useRef<number>(-1);
+  const rafRef = useRef(-1);
 
   const handleStateChange = (shouldMount: boolean) => {
     const preHandler = shouldMount ? onEnter : onExit;
@@ -53,16 +54,18 @@ export function useTransition({
       typeof handler === 'function' && handler();
       setStatus(shouldMount ? 'entered' : 'exited');
     } else {
-      const preStateTimeout = window.setTimeout(() => {
-        typeof preHandler === 'function' && preHandler();
-        setStatus(shouldMount ? 'entering' : 'exiting');
-      }, 10);
+      // Make sure new status won't be set within the same frame as this would disrupt animation #3126
+      rafRef.current = requestAnimationFrame(() => {
+        rafRef.current = requestAnimationFrame(() => {
+          typeof preHandler === 'function' && preHandler();
+          setStatus(shouldMount ? 'entering' : 'exiting');
 
-      timeoutRef.current = window.setTimeout(() => {
-        window.clearTimeout(preStateTimeout);
-        typeof handler === 'function' && handler();
-        setStatus(shouldMount ? 'entered' : 'exited');
-      }, newTransitionDuration);
+          timeoutRef.current = window.setTimeout(() => {
+            typeof handler === 'function' && handler();
+            setStatus(shouldMount ? 'entered' : 'exited');
+          }, newTransitionDuration);
+        });
+      });
     }
   };
 
@@ -70,7 +73,13 @@ export function useTransition({
     handleStateChange(mounted);
   }, [mounted]);
 
-  useEffect(() => () => window.clearTimeout(timeoutRef.current), []);
+  useEffect(
+    () => () => {
+      window.clearTimeout(timeoutRef.current);
+      cancelAnimationFrame(rafRef.current);
+    },
+    []
+  );
 
   return {
     transitionDuration,

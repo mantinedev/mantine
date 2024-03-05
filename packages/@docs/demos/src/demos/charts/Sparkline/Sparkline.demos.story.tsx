@@ -12,3 +12,8 @@ export const Demo_colorSchemeColor = {
   name: '⭐ Demo: colorSchemeColor',
   render: renderDemo(demos.colorSchemeColor),
 };
+
+export const Demo_trendColors = {
+  name: '⭐ Demo: trendColors',
+  render: renderDemo(demos.trendColors),
+};

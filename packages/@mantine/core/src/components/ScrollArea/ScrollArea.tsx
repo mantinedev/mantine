@@ -130,7 +130,7 @@ export const ScrollArea = factory<ScrollAreaFactory>((_props, ref) => {
     >
       <ScrollAreaViewport
         {...viewportProps}
-        {...getStyles('viewport')}
+        {...getStyles('viewport', { style: viewportProps?.style })}
         ref={viewportRef}
         data-offset-scrollbars={offsetScrollbars === true ? 'xy' : offsetScrollbars || undefined}
         data-scrollbars={scrollbars || undefined}

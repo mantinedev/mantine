@@ -28,6 +28,14 @@ export function Usage() {
   );
 }
 
+export function WithoutItemsBorders() {
+  return (
+    <div style={{ padding: 40 }}>
+      <SegmentedControl data={['React', 'Angular', 'Vue', 'Svelte']} withItemsBorders={false} />
+    </div>
+  );
+}
+
 export function AutoContrast() {
   return (
     <div style={{ padding: 40 }}>
@@ -99,6 +107,22 @@ export function SelectedItemRemoved() {
 
       <button type="button" onClick={() => setBreakingThings(!breakingThings)}>
         Click here to break things
+      </button>
+    </div>
+  );
+}
+
+export function Unselect() {
+  const [value, setValue] = useState('');
+
+  const dataList = ['1', '2', '3'];
+
+  return (
+    <div style={{ padding: 40 }}>
+      <SegmentedControl value={value} onChange={setValue} data={dataList} mr={10} />
+
+      <button type="button" onClick={() => setValue('')}>
+        Unselect
       </button>
     </div>
   );

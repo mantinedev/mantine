@@ -31,7 +31,7 @@ const defaultProps: Partial<CenterProps> = {};
 
 export const Center = polymorphicFactory<CenterFactory>((_props, ref) => {
   const props = useProps('Center', defaultProps, _props);
-  const { classNames, className, style, styles, unstyled, vars, inline, ...others } = props;
+  const { classNames, className, style, styles, unstyled, vars, inline, mod, ...others } = props;
 
   const getStyles = useStyles<CenterFactory>({
     name: 'Center',
@@ -45,7 +45,7 @@ export const Center = polymorphicFactory<CenterFactory>((_props, ref) => {
     vars,
   });
 
-  return <Box ref={ref} mod={{ inline }} {...getStyles('root')} {...others} />;
+  return <Box ref={ref} mod={[{ inline }, mod]} {...getStyles('root')} {...others} />;
 });
 
 Center.classes = classes;

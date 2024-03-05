@@ -132,3 +132,18 @@ export const Demo_referenceLines = {
   name: '⭐ Demo: referenceLines',
   render: renderDemo(demos.referenceLines),
 };
+
+export const Demo_seriesLabels = {
+  name: '⭐ Demo: seriesLabels',
+  render: renderDemo(demos.seriesLabels),
+};
+
+export const Demo_valueFormatter = {
+  name: '⭐ Demo: valueFormatter',
+  render: renderDemo(demos.valueFormatter),
+};
+
+export const Demo_rotateLabels = {
+  name: '⭐ Demo: rotateLabels',
+  render: renderDemo(demos.rotateLabels),
+};

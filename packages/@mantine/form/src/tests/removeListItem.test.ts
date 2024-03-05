@@ -80,6 +80,9 @@ describe('@mantine/form/removeListItem', () => {
     );
 
     act(() => hook.result.current.removeListItem('a', 1));
-    expect(spy).toHaveBeenCalledWith({ a: [{ b: 1 }, { b: 3 }] });
+    expect(spy).toHaveBeenCalledWith(
+      { a: [{ b: 1 }, { b: 3 }] },
+      { a: [{ b: 1 }, { b: 2 }, { b: 3 }] }
+    );
   });
 });

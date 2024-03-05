@@ -12,6 +12,7 @@ describe('@mantine/core/ListItem', () => {
   tests.itSupportsSystemProps<ListItemProps, ListItemStylesNames>({
     component: TestContainer,
     props: defaultProps,
+    mod: true,
     styleProps: true,
     children: true,
     extend: true,

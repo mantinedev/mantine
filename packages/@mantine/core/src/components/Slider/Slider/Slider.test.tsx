@@ -23,6 +23,7 @@ describe('@mantine/core/Slider', () => {
   tests.itSupportsSystemProps<SliderProps, SliderStylesNames>({
     component: Slider,
     props: defaultProps,
+    mod: true,
     styleProps: true,
     extend: true,
     variant: true,

@@ -25,6 +25,7 @@ export type NavLinkStylesNames =
   | 'label'
   | 'description'
   | 'chevron'
+  | 'collapse'
   | 'children';
 export type NavLinkVariant = 'filled' | 'light' | 'subtle';
 export type NavLinkCssVariables = {
@@ -33,10 +34,10 @@ export type NavLinkCssVariables = {
 };
 
 export interface NavLinkProps extends BoxProps, StylesApiProps<NavLinkFactory> {
-  /** Link content */
+  /** Main link label */
   label?: React.ReactNode;
 
-  /** Link description */
+  /** Link description, displayed below the label */
   description?: React.ReactNode;
 
   /** Section displayed on the left side of the label */
@@ -69,7 +70,7 @@ export interface NavLinkProps extends BoxProps, StylesApiProps<NavLinkFactory> {
   /** If set, right section will not be rotated when collapse is opened, `false` by default */
   disableRightSectionRotation?: boolean;
 
-  /** Key of `theme.spacing` or any valid CSS value to set collapsed links padding-left, `'lg'` by default */
+  /** Key of `theme.spacing` or any valid CSS value to set collapsed links `padding-left`, `'lg'` by default */
   childrenOffset?: MantineSize | (string & {}) | number;
 
   /** If set, disabled styles will be added to the root element, `false` by default */
@@ -144,6 +145,7 @@ export const NavLink = polymorphicFactory<NavLinkFactory>((_props, ref) => {
     childrenOffset,
     onKeyDown,
     autoContrast,
+    mod,
     ...others
   } = props;
 
@@ -194,7 +196,7 @@ export const NavLink = polymorphicFactory<NavLinkFactory>((_props, ref) => {
           }
         }}
         unstyled={unstyled}
-        mod={{ disabled, active, expanded: _opened }}
+        mod={[{ disabled, active, expanded: _opened }, mod]}
         {...others}
       >
         {leftSection && (
@@ -222,7 +224,7 @@ export const NavLink = polymorphicFactory<NavLinkFactory>((_props, ref) => {
           </Box>
         )}
       </UnstyledButton>
-      <Collapse in={_opened}>
+      <Collapse in={_opened} {...getStyles('collapse')}>
         <div {...getStyles('children')}>{children}</div>
       </Collapse>
     </>

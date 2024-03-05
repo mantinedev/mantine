@@ -139,6 +139,7 @@ export const Switch = factory<SwitchFactory>((_props, ref) => {
     disabled,
     variant,
     rootRef,
+    mod,
     ...others
   } = props;
 
@@ -186,12 +187,15 @@ export const Switch = factory<SwitchFactory>((_props, ref) => {
       description={description}
       error={error}
       disabled={disabled}
+      bodyElement="label"
+      labelElement="span"
       classNames={classNames}
       styles={styles}
       unstyled={unstyled}
       data-checked={contextProps.checked || undefined}
       variant={variant}
       ref={rootRef}
+      mod={mod}
       {...styleProps}
       {...wrapperProps}
     >
@@ -206,12 +210,12 @@ export const Switch = factory<SwitchFactory>((_props, ref) => {
         id={uuid}
         ref={ref}
         type="checkbox"
+        role="switch"
         {...getStyles('input')}
       />
 
       <Box
-        component="label"
-        htmlFor={uuid}
+        aria-hidden="true"
         mod={{ error, 'label-position': labelPosition }}
         {...getStyles('track')}
       >

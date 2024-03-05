@@ -14,6 +14,7 @@ import {
   Combobox,
   ComboboxItem,
   ComboboxLikeProps,
+  ComboboxLikeRenderOptionInput,
   ComboboxLikeStylesNames,
   getOptionsLockup,
   getParsedComboboxData,
@@ -39,6 +40,9 @@ export interface SelectProps
 
   /** Called when value changes */
   onChange?: (value: string | null, option: ComboboxItem) => void;
+
+  /** Called when the clear button is clicked */
+  onClear?: () => void;
 
   /** Determines whether the select should be searchable, `false` by default */
   searchable?: boolean;
@@ -72,6 +76,9 @@ export interface SelectProps
 
   /** Props passed down to the hidden input */
   hiddenInputProps?: React.ComponentPropsWithoutRef<'input'>;
+
+  /** A function to render content of the option, replaces the default content of the option */
+  renderOption?: (item: ComboboxLikeRenderOptionInput<ComboboxItem>) => React.ReactNode;
 }
 
 export type SelectFactory = Factory<{
@@ -133,6 +140,9 @@ export const Select = factory<SelectFactory>((_props, ref) => {
     clearable,
     clearButtonProps,
     hiddenInputProps,
+    renderOption,
+    onClear,
+    autoComplete,
     ...others
   } = props;
 
@@ -158,7 +168,10 @@ export const Select = factory<SelectFactory>((_props, ref) => {
   const combobox = useCombobox({
     opened: dropdownOpened,
     defaultOpened: defaultDropdownOpened,
-    onDropdownOpen,
+    onDropdownOpen: () => {
+      onDropdownOpen?.();
+      combobox.updateSelectedOptionIndex('active', { scrollIntoView: true });
+    },
     onDropdownClose: () => {
       onDropdownClose?.();
       combobox.resetSelectedOption();
@@ -194,6 +207,7 @@ export const Select = factory<SelectFactory>((_props, ref) => {
       onClear={() => {
         setValue(null, null);
         setSearch('');
+        onClear?.();
       }}
     />
   );
@@ -224,7 +238,7 @@ export const Select = factory<SelectFactory>((_props, ref) => {
         size={size}
         {...comboboxProps}
       >
-        <Combobox.Target targetType={searchable ? 'input' : 'button'}>
+        <Combobox.Target targetType={searchable ? 'input' : 'button'} autoComplete={autoComplete}>
           <InputBase
             id={_id}
             ref={ref}
@@ -280,6 +294,7 @@ export const Select = factory<SelectFactory>((_props, ref) => {
           nothingFoundMessage={nothingFoundMessage}
           unstyled={unstyled}
           labelId={`${_id}-label`}
+          renderOption={renderOption}
         />
       </Combobox>
       <input

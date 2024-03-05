@@ -12,11 +12,13 @@ import {
   MantineSize,
   polymorphicFactory,
   PolymorphicFactory,
+  rem,
   StylesApiProps,
   useProps,
   useStyles,
 } from '../../core';
 import { Loader, LoaderProps } from '../Loader';
+import { MantineTransition, Transition } from '../Transition';
 import { UnstyledButton } from '../UnstyledButton';
 import { ButtonGroup } from './ButtonGroup/ButtonGroup';
 import classes from './Button.module.css';
@@ -101,6 +103,13 @@ export type ButtonFactory = PolymorphicFactory<{
   };
 }>;
 
+const loaderTransition: MantineTransition = {
+  in: { opacity: 1, transform: `translate(-50%, calc(-50% + ${rem(1)}))` },
+  out: { opacity: 0, transform: 'translate(-50%, -200%)' },
+  common: { transformOrigin: 'center' },
+  transitionProperty: 'transform, opacity',
+};
+
 const defaultProps: Partial<ButtonProps> = {};
 
 const varsResolver = createVarsResolver<ButtonFactory>(
@@ -154,6 +163,7 @@ export const Button = polymorphicFactory<ButtonFactory>((_props, ref) => {
     unstyled,
     'data-disabled': dataDisabled,
     autoContrast,
+    mod,
     ...others
   } = props;
 
@@ -180,22 +190,29 @@ export const Button = polymorphicFactory<ButtonFactory>((_props, ref) => {
       unstyled={unstyled}
       variant={variant}
       disabled={disabled || loading}
-      mod={{
-        disabled: disabled || dataDisabled,
-        loading,
-        block: fullWidth,
-        'with-left-section': hasLeftSection,
-        'with-right-section': hasRightSection,
-      }}
+      mod={[
+        {
+          disabled: disabled || dataDisabled,
+          loading,
+          block: fullWidth,
+          'with-left-section': hasLeftSection,
+          'with-right-section': hasRightSection,
+        },
+        mod,
+      ]}
       {...others}
     >
-      <Box component="span" {...getStyles('loader')} aria-hidden>
-        <Loader
-          color="var(--button-color)"
-          size="calc(var(--button-height) / 1.8)"
-          {...loaderProps}
-        />
-      </Box>
+      <Transition mounted={!!loading} transition={loaderTransition} duration={150}>
+        {(transitionStyles) => (
+          <Box component="span" {...getStyles('loader', { style: transitionStyles })} aria-hidden>
+            <Loader
+              color="var(--button-color)"
+              size="calc(var(--button-height) / 1.8)"
+              {...loaderProps}
+            />
+          </Box>
+        )}
+      </Transition>
 
       <span {...getStyles('inner')}>
         {leftSection && (

@@ -8,6 +8,7 @@ describe('@mantine/core/AppShell', () => {
   tests.itSupportsSystemProps<AppShellProps, AppShellStylesNames>({
     component: AppShell,
     props: defaultProps,
+    mod: true,
     styleProps: true,
     children: true,
     extend: true,

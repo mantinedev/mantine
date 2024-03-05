@@ -68,3 +68,8 @@ export interface ComboboxLikeProps {
   /** `max-height` of the dropdown, only applicable when `withScrollArea` prop is `true`, `250` by default */
   maxDropdownHeight?: number | string;
 }
+
+export interface ComboboxLikeRenderOptionInput<T> {
+  option: T;
+  checked?: boolean;
+}

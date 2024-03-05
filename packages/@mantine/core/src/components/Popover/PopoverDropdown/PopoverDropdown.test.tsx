@@ -14,6 +14,7 @@ describe('@mantine/core/PopoverDropdown', () => {
   tests.itSupportsSystemProps<PopoverDropdownProps>({
     component: TestContainer,
     props: defaultProps,
+    mod: true,
     styleProps: true,
     children: true,
     extend: true,

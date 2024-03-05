@@ -36,6 +36,8 @@ export interface InlineInputProps
   error: React.ReactNode;
   size: MantineSize | (string & {}) | undefined;
   labelPosition?: 'left' | 'right';
+  bodyElement?: any;
+  labelElement?: any;
 }
 
 export type InlineInputFactory = Factory<{
@@ -60,9 +62,12 @@ export const InlineInput = forwardRef<HTMLDivElement, InlineInputProps>(
       error,
       size,
       labelPosition = 'left',
+      bodyElement = 'div',
+      labelElement = 'label',
       variant,
       style,
       vars,
+      mod,
       ...others
     },
     ref
@@ -86,19 +91,28 @@ export const InlineInput = forwardRef<HTMLDivElement, InlineInputProps>(
           '--label-fz': getFontSize(size),
           '--label-lh': getSize(size, 'label-lh'),
         }}
-        mod={{ 'label-position': labelPosition }}
+        mod={[{ 'label-position': labelPosition }, mod]}
         variant={variant}
         size={size}
         {...others}
       >
-        <div {...getStyles('body')}>
+        <Box
+          component={bodyElement}
+          htmlFor={bodyElement === 'label' ? id : undefined}
+          {...getStyles('body')}
+        >
           {children}
 
           <div {...getStyles('labelWrapper')} data-disabled={disabled || undefined}>
             {label && (
-              <label {...getStyles('label')} data-disabled={disabled || undefined} htmlFor={id}>
+              <Box
+                component={labelElement}
+                htmlFor={labelElement === 'label' ? id : undefined}
+                {...getStyles('label')}
+                data-disabled={disabled || undefined}
+              >
                 {label}
-              </label>
+              </Box>
             )}
 
             {description && (
@@ -113,7 +127,7 @@ export const InlineInput = forwardRef<HTMLDivElement, InlineInputProps>(
               </Input.Error>
             )}
           </div>
-        </div>
+        </Box>
       </Box>
     );
   }

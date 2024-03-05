@@ -17,67 +17,56 @@
   font-size: var(--pill-fz);
   flex: 0;
   height: var(--pill-height);
-  padding-left: 0.8em;
-  padding-right: var(--_pill-padding-right, 0.8em);
+  padding-inline: 0.8em;
   display: inline-flex;
   align-items: center;
   border-radius: var(--pill-radius, rem(1000px));
-  background-color: var(--_pill-bg);
   line-height: 1;
   white-space: nowrap;
   user-select: none;
   -webkit-user-select: none;
   max-width: 100%;
-  color: var(--_pill-color);
 
-  @mixin dark {
-    --_pill-bg: var(--mantine-color-dark-7);
-    --_pill-color: var(--mantine-color-dark-0);
+  @mixin where-dark {
+    background-color: var(--mantine-color-dark-7);
+    color: var(--mantine-color-dark-0);
   }
 
-  @mixin light {
-    --_pill-color: var(--mantine-color-black);
+  @mixin where-light {
+    color: var(--mantine-color-black);
   }
 
-  @mixin rtl {
-    padding-right: 0.8em;
-    padding-left: var(--_pill-padding-right, 0.8em);
+  &:where([data-with-remove]) {
+    padding-inline-end: 0;
   }
 
-  &[data-with-remove] {
-    --_pill-padding-right: 0;
-  }
-
-  &[data-disabled],
-  &:has(button:disabled) {
-    --_pill-cursor: not-allowed;
+  &:where([data-disabled], :has(button:disabled)) {
+    cursor: not-allowed;
   }
 }
 
 .root--default {
-  @mixin light {
-    --_pill-bg: var(--mantine-color-gray-1);
+  @mixin where-light {
+    background-color: var(--mantine-color-gray-1);
 
-    &[data-disabled],
-    &:has(button:disabled) {
-      --_pill-bg: var(--mantine-color-gray-3);
+    &:where([data-disabled], :has(button:disabled)) {
+      background-color: var(--mantine-color-gray-3);
     }
   }
 }
 
 .root--contrast {
-  @mixin light {
-    --_pill-bg: var(--mantine-color-white);
+  @mixin where-light {
+    background-color: var(--mantine-color-white);
 
-    &[data-disabled],
-    &:has(button:disabled) {
-      --_pill-bg: var(--mantine-color-gray-3);
+    &:where([data-disabled], :has(button:disabled)) {
+      background-color: var(--mantine-color-gray-3);
     }
   }
 }
 
 .label {
-  cursor: var(--_pill-cursor, default);
+  cursor: inherit;
   overflow: hidden;
   height: 100%;
   line-height: var(--pill-height);
@@ -92,8 +81,8 @@
   min-width: 2em;
   width: unset;
   border-radius: 0;
-  padding-left: 0.1em;
-  padding-right: 0.3em;
+  padding-inline-start: 0.1em;
+  padding-inline-end: 0.3em;
   flex: 0;
 
   .root[data-disabled] > &,

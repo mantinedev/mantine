@@ -10,8 +10,8 @@ export const Thumb = forwardRef<HTMLDivElement, ThumbProps>(({ position, ...othe
   <Box
     ref={ref}
     __vars={{
-      '--_thumb-y-offset': `${position.y * 100}%`,
-      '--_thumb-x-offset': `${position.x * 100}%`,
+      '--thumb-y-offset': `${position.y * 100}%`,
+      '--thumb-x-offset': `${position.x * 100}%`,
     }}
     {...others}
   />

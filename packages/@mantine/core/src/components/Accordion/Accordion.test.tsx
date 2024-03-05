@@ -32,6 +32,7 @@ describe('@mantine/core/Accordion', () => {
   tests.itSupportsSystemProps<AccordionProps, AccordionStylesNames>({
     component: Accordion,
     props: defaultProps,
+    mod: true,
     styleProps: true,
     children: true,
     extend: true,

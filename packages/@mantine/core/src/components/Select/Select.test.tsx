@@ -19,6 +19,7 @@ describe('@mantine/core/Select', () => {
   tests.itSupportsSystemProps<SelectProps, SelectStylesNames>({
     component: Select,
     props: defaultProps,
+    mod: true,
     styleProps: true,
     extend: true,
     size: true,

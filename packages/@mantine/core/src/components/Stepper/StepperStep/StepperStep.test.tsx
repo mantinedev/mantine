@@ -15,6 +15,7 @@ describe('@mantine/core/StepperStep', () => {
   tests.itSupportsSystemProps<StepperStepProps, StepperStepStylesNames>({
     component: TestContainer,
     props: defaultProps,
+    mod: true,
     styleProps: true,
     children: true,
     extend: true,

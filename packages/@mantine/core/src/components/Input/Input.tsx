@@ -195,6 +195,7 @@ export const Input = polymorphicFactory<InputFactory>((_props, ref) => {
     id,
     withAria,
     withErrorStyles,
+    mod,
     ...others
   } = props;
 
@@ -232,14 +233,17 @@ export const Input = polymorphicFactory<InputFactory>((_props, ref) => {
       {...getStyles('wrapper')}
       {...styleProps}
       {...wrapperProps}
-      mod={{
-        error: !!error && withErrorStyles,
-        pointer,
-        disabled,
-        multiline,
-        'data-with-right-section': !!rightSection,
-        'data-with-left-section': !!leftSection,
-      }}
+      mod={[
+        {
+          error: !!error && withErrorStyles,
+          pointer,
+          disabled,
+          multiline,
+          'data-with-right-section': !!rightSection,
+          'data-with-left-section': !!leftSection,
+        },
+        mod,
+      ]}
       variant={variant}
       size={size}
     >

@@ -18,6 +18,7 @@ export interface CreateEdgeComponent {
 }
 
 export interface PaginationEdgeProps extends BoxProps {
+  /** An icon component to replace the default icon */
   icon?: React.FC<PaginationIconProps>;
 }
 
@@ -39,6 +40,7 @@ export function createEdgeComponent({ icon, name, action, type }: CreateEdgeComp
         {...others}
       >
         <Icon
+          className="mantine-rotate-rtl"
           style={{
             width: 'calc(var(--pagination-control-size) / 1.8)',
             height: 'calc(var(--pagination-control-size) / 1.8)',

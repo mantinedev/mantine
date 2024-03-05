@@ -12,11 +12,12 @@ const defaultProps: SwitchProps = {
 describe('@mantine/core/Switch', () => {
   tests.axe([<Switch label="test-label" />, <Switch aria-label="test-label" />]);
   tests.itSupportsFocusEvents({ component: Switch, props: defaultProps, selector: 'input' });
-  tests.itHandlesCheckboxState({ component: Switch, props: defaultProps });
+  tests.itHandlesSwitchCheckboxState({ component: Switch, props: defaultProps });
   tests.itConnectsLabelAndInput({ component: Switch, props: defaultProps });
   tests.itSupportsSystemProps<SwitchProps, SwitchStylesNames>({
     component: Switch,
     props: defaultProps,
+    mod: true,
     styleProps: true,
     extend: true,
     size: true,
@@ -58,7 +59,7 @@ describe('@mantine/core/Switch', () => {
 
   it('sets disabled attribute on input based on disabled prop', () => {
     render(<Switch disabled />);
-    expect(screen.getByRole('checkbox')).toBeDisabled();
+    expect(screen.getByRole('switch')).toBeDisabled();
   });
 
   it('exposes SwitchGroup component', () => {

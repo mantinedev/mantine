@@ -15,6 +15,7 @@ describe('@mantine/core/UnstyledButton', () => {
   tests.itSupportsSystemProps<UnstyledButtonProps, UnstyledButtonStylesNames>({
     component: UnstyledButton,
     props: defaultProps,
+    mod: true,
     polymorphic: true,
     size: true,
     variant: true,

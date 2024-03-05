@@ -7,6 +7,7 @@ describe('@mantine/core/ProgressRoot', () => {
   tests.itSupportsSystemProps<ProgressRootProps, ProgressRootStylesNames>({
     component: ProgressRoot,
     props: defaultProps,
+    mod: true,
     styleProps: true,
     children: true,
     extend: true,

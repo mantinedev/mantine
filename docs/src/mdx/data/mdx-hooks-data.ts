@@ -42,10 +42,15 @@ export const MDX_HOOKS_DATA: Record<string, Frontmatter> = {
   useDocumentTitle: hDocs('useDocumentTitle', 'Sets document.title to given string'),
   useDocumentVisibility: hDocs('useDocumentVisibility', 'Detects if the current tab is active'),
 
-  useElementSize: hDocs(
-    'useElementSize',
-    'Returns element width and height and observes changes with ResizeObserver'
-  ),
+  useElementSize: {
+    title: 'useElementSize',
+    package: '@mantine/hooks',
+    slug: '/hooks/use-element-size',
+    description: 'Returns element width and height and observes changes with ResizeObserver',
+    import: "import { useElementSize } from '@mantine/hooks';",
+    source: '@mantine/hooks/src/use-resize-observer/use-resize-observer.ts',
+    docs: 'hooks/use-element-size.mdx',
+  },
 
   useEventListener: hDocs('useEventListener', 'Subscribes to events of a given element with a ref'),
   useEyeDropper: hDocs('useEyeDropper', 'Pick color from any pixel on the screen'),

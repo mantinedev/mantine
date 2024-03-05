@@ -6,6 +6,7 @@ import {
   ElementProps,
   factory,
   Factory,
+  getAutoContrastValue,
   getContrastColor,
   getRadius,
   getThemeColor,
@@ -100,7 +101,9 @@ const varsResolver = createVarsResolver<IndicatorFactory>(
   (theme, { color, position, offset, size, radius, zIndex, autoContrast }) => ({
     root: {
       '--indicator-color': color ? getThemeColor(color, theme) : undefined,
-      '--indicator-text-color': autoContrast ? getContrastColor({ color, theme }) : undefined,
+      '--indicator-text-color': getAutoContrastValue(autoContrast, theme)
+        ? getContrastColor({ color, theme })
+        : undefined,
       '--indicator-size': rem(size),
       '--indicator-radius': radius === undefined ? undefined : getRadius(radius),
       '--indicator-z-index': zIndex?.toString(),
@@ -130,6 +133,7 @@ export const Indicator = factory<IndicatorFactory>((_props, ref) => {
     processing,
     zIndex,
     autoContrast,
+    mod,
     ...others
   } = props;
 
@@ -147,7 +151,7 @@ export const Indicator = factory<IndicatorFactory>((_props, ref) => {
   });
 
   return (
-    <Box ref={ref} {...getStyles('root')} mod={{ inline }} {...others}>
+    <Box ref={ref} {...getStyles('root')} mod={[{ inline }, mod]} {...others}>
       {!disabled && (
         <>
           <Box

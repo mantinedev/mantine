@@ -24,7 +24,7 @@ import { Checkbox, TextInput, useForm } from '@mantine/core';
 function Demo() {
   const form = useForm({
     initialValues: { name: '', accepted: false },
-    validationRules: {
+    validate: {
       name: (value) => value.trim().length > 2,
     },
   });
@@ -151,7 +151,7 @@ export function CustomInput({
 Then use it with `form.getInputProps`:
 
 ```tsx
-import { useForm } from '@mantine/core';
+import { useForm } from '@mantine/form';
 import { CustomInput } from './CustomInput';
 
 function Demo() {

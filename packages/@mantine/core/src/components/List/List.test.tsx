@@ -21,6 +21,7 @@ describe('@mantine/core/List', () => {
   tests.itSupportsSystemProps<ListProps, ListStylesNames>({
     component: List,
     props: defaultProps,
+    mod: true,
     styleProps: true,
     children: true,
     extend: true,

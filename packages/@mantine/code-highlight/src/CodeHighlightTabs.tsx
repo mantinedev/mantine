@@ -99,6 +99,9 @@ export interface CodeHighlightTabsProps
 
   /** Determines whether to show the expand button, `false` by default */
   withExpandButton?: boolean;
+
+  /** Determines whether copy button should be displayed, `true` by default */
+  withCopyButton?: boolean;
 }
 
 export type CodeHighlightTabsFactory = Factory<{
@@ -114,6 +117,7 @@ const defaultProps: Partial<CodeHighlightTabsProps> = {
   maxCollapsedHeight: rem('8rem'),
   expandCodeLabel: 'Expand code',
   collapseCodeLabel: 'Collapse code',
+  withCopyButton: true,
 };
 
 const varsResolver = createVarsResolver<CodeHighlightTabsFactory>((_, { maxCollapsedHeight }) => ({
@@ -145,6 +149,8 @@ export const CodeHighlightTabs = factory<CodeHighlightTabsFactory>((_props, ref)
     expandCodeLabel,
     collapseCodeLabel,
     withExpandButton,
+    withCopyButton,
+    mod,
     ...others
   } = props;
 
@@ -200,7 +206,13 @@ export const CodeHighlightTabs = factory<CodeHighlightTabsFactory>((_props, ref)
   ));
 
   return (
-    <Box {...getStyles('root')} mod={{ collapsed: !_expanded }} ref={ref} {...others} dir="ltr">
+    <Box
+      {...getStyles('root')}
+      mod={[{ collapsed: !_expanded }, mod]}
+      ref={ref}
+      {...others}
+      dir="ltr"
+    >
       {withHeader && (
         <div {...getStyles('header')}>
           <ScrollArea type="never" dir="ltr" offsetScrollbars={false}>
@@ -224,20 +236,22 @@ export const CodeHighlightTabs = factory<CodeHighlightTabsFactory>((_props, ref)
               </Tooltip>
             )}
 
-            <CopyButton value={currentCode.code.trim()}>
-              {({ copied, copy }) => (
-                <Tooltip label={copied ? copiedLabel : copyLabel} fz="sm" position="left">
-                  <ActionIcon
-                    onClick={copy}
-                    variant="none"
-                    {...getStyles('control')}
-                    aria-label={copied ? copiedLabel : copyLabel}
-                  >
-                    <CopyIcon copied={copied} />
-                  </ActionIcon>
-                </Tooltip>
-              )}
-            </CopyButton>
+            {withCopyButton && (
+              <CopyButton value={currentCode.code.trim()}>
+                {({ copied, copy }) => (
+                  <Tooltip label={copied ? copiedLabel : copyLabel} fz="sm" position="left">
+                    <ActionIcon
+                      onClick={copy}
+                      variant="none"
+                      {...getStyles('control')}
+                      aria-label={copied ? copiedLabel : copyLabel}
+                    >
+                      <CopyIcon copied={copied} />
+                    </ActionIcon>
+                  </Tooltip>
+                )}
+              </CopyButton>
+            )}
           </div>
         </div>
       )}

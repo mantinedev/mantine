@@ -17,3 +17,8 @@ export const Demo_lineClamp = {
   name: '⭐ Demo: lineClamp',
   render: renderDemo(demos.lineClamp),
 };
+
+export const Demo_textWrap = {
+  name: '⭐ Demo: textWrap',
+  render: renderDemo(demos.textWrap),
+};
