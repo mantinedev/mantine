@@ -21,6 +21,7 @@ export const AreaChartStylesApi: StylesApiData<AreaChartFactory> = {
     tooltipItemData: 'Tooltip item data',
     tooltipLabel: 'Label of the tooltip',
     referenceLine: 'Reference line',
+    axisLabel: 'X and Y axis labels',
   },
 
   vars: {
