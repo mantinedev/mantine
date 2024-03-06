@@ -322,7 +322,6 @@ export const SegmentedControl = factory<SegmentedControlFactory>((_props, ref) =
 
         {controls}
       </Box>
-      {activePosition.width}
     </>
   );
 });
