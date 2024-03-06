@@ -136,7 +136,7 @@ export interface DropzoneProps
   loaderProps?: LoaderProps;
 
   /** Props passed down to the internal Input component */
-  inputProps?: InputProps;
+  inputProps?: React.InputHTMLAttributes<HTMLInputElement>;
 }
 
 export type DropzoneFactory = Factory<{
