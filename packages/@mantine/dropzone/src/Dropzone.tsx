@@ -133,6 +133,9 @@ export interface DropzoneProps
 
   /** Props passed down to the Loader component */
   loaderProps?: LoaderProps;
+
+  /** Props passed down to the internal Input component */
+  inputProps?: React.InputHTMLAttributes<HTMLInputElement>;
 }
 
 export type DropzoneFactory = Factory<{
@@ -228,6 +231,7 @@ export const Dropzone = factory<DropzoneFactory>((_props, ref) => {
     acceptColor,
     enablePointerEvents,
     loaderProps,
+    inputProps,
     mod,
     ...others
   } = props;
@@ -297,7 +301,7 @@ export const Dropzone = factory<DropzoneFactory>((_props, ref) => {
           unstyled={unstyled}
           loaderProps={loaderProps}
         />
-        <input {...getInputProps()} name={name} />
+        <input {...getInputProps(inputProps)} name={name} />
         <div {...getStyles('inner')} data-enable-pointer-events={enablePointerEvents || undefined}>
           {children}
         </div>
