@@ -290,39 +290,37 @@ export const SegmentedControl = factory<SegmentedControlFactory>((_props, ref) =
   }
 
   return (
-    <>
-      <Box
-        {...getStyles('root')}
-        variant={variant}
-        size={size}
-        ref={mergedRef}
-        mod={[
-          {
-            'full-width': fullWidth,
-            orientation,
-            initialization: !initialized,
-            'with-items-borders': withItemsBorders,
-          },
-          mod,
-        ]}
-        {...others}
-        role="radiogroup"
-      >
-        {typeof _value === 'string' && (
-          <Box
-            component="span"
-            {...getStyles('indicator')}
-            __vars={{
-              '--sc-indicator-width': `${activePosition.width}px`,
-              '--sc-indicator-height': `${activePosition.height}px`,
-              '--sc-indicator-transform': `translate(${activePosition.translate[0]}px, ${activePosition.translate[1]}px)`,
-            }}
-          />
-        )}
+    <Box
+      {...getStyles('root')}
+      variant={variant}
+      size={size}
+      ref={mergedRef}
+      mod={[
+        {
+          'full-width': fullWidth,
+          orientation,
+          initialization: !initialized,
+          'with-items-borders': withItemsBorders,
+        },
+        mod,
+      ]}
+      {...others}
+      role="radiogroup"
+    >
+      {typeof _value === 'string' && (
+        <Box
+          component="span"
+          {...getStyles('indicator')}
+          __vars={{
+            '--sc-indicator-width': `${activePosition.width}px`,
+            '--sc-indicator-height': `${activePosition.height}px`,
+            '--sc-indicator-transform': `translate(${activePosition.translate[0]}px, ${activePosition.translate[1]}px)`,
+          }}
+        />
+      )}
 
-        {controls}
-      </Box>
-    </>
+      {controls}
+    </Box>
   );
 });
 
