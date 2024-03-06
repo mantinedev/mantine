@@ -15,7 +15,6 @@ import {
   factory,
   Factory,
   getRadius,
-  InputProps,
   LoaderProps,
   LoadingOverlay,
   MantineColor,
