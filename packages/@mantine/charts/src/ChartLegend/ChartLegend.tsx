@@ -14,7 +14,7 @@ import { ChartSeries } from '../types';
 import { getSeriesLabels } from '../utils';
 import classes from './ChartLegend.module.css';
 
-function updateChartLegendPayload(payload: Record<string, any>[]) {
+function updateChartLegendPayload(payload: Record<string, any>[]): Record<string, any>[] {
   return payload.map((item) => {
     const newDataKey = item.dataKey.split('.').pop();
     return {

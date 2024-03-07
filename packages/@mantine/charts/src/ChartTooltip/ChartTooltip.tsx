@@ -16,7 +16,7 @@ import { ChartSeries } from '../types';
 import { getSeriesLabels } from '../utils';
 import classes from './ChartTooltip.module.css';
 
-function updateChartTooltipPayload(payload: Record<string, any>[]) {
+function updateChartTooltipPayload(payload: Record<string, any>[]): Record<string, any>[] {
   return payload.map((item) => {
     const newDataKey = item.name.split('.').pop();
     return {
