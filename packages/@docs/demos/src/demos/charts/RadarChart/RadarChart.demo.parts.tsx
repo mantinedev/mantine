@@ -5,8 +5,10 @@ import { multiData, multiDataCode } from './_data';
 
 const code = `
 import { RadarChart } from '@mantine/charts';
+import { multiData } from './data';
 
-function Wrapper() {
+
+function Demo() {
   return (
     <RadarChart
       h={300}
@@ -23,7 +25,7 @@ function Wrapper() {
 }
 `;
 
-function Wrapper(props: any) {
+function Demo(props: any) {
   return (
     <RadarChart
       h={300}
@@ -41,7 +43,7 @@ function Wrapper(props: any) {
 
 export const parts: MantineDemo = {
   type: 'configurator',
-  component: Wrapper,
+  component: Demo,
   code: [
     { code, language: 'tsx', fileName: 'Demo.tsx' },
     { code: multiDataCode, language: 'tsx', fileName: 'data.ts' },
