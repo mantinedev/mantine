@@ -5,13 +5,13 @@ import { multiData, multiDataCode } from './_data';
 
 const code = `
 import { RadarChart } from '@mantine/charts';
-import { multiData } from './data';
+import { data } from './data';
 
 function Demo() {
   return (
     <RadarChart
       h={300}
-      data={multiData}
+      data={data}
       dataKey="product"
       withPolarRadiusAxis
       polarRadiusAxisProps={{ angle: 30, tickFormatter: (value) => \`\${value}$\` }}

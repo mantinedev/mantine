@@ -88,7 +88,7 @@ export const multiData = [
 ];
 
 export const multiDataCode = `
-export const multiData = [
+export const data = [
   {
     product: 'Apples',
     sales_january: 120,
