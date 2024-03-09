@@ -4633,7 +4633,7 @@ __metadata:
     react-number-format: "npm:^5.3.1"
     react-remove-scroll: "npm:^2.5.7"
     react-textarea-autosize: "npm:8.5.3"
-    type-fest: "npm:^3.13.1"
+    type-fest: "npm:^4.12.0"
   peerDependencies:
     "@mantine/hooks": 7.6.1
     react: ^18.2.0
@@ -17048,7 +17048,7 @@ __metadata:
     stylelint-config-standard-scss: "npm:^13.0.0"
     syncpack: "npm:^12.3.0"
     tsconfig-paths-webpack-plugin: "npm:^4.1.0"
-    type-fest: "npm:^3.13.1"
+    type-fest: "npm:^4.12.0"
     typescript: "npm:5.3.3"
     version-next: "npm:^1.0.2"
     webpack: "npm:^5.89.0"
@@ -23439,10 +23439,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"type-fest@npm:^3.13.1":
-  version: 3.13.1
-  resolution: "type-fest@npm:3.13.1"
-  checksum: 10c0/547d22186f73a8c04590b70dcf63baff390078c75ea8acd366bbd510fd0646e348bd1970e47ecf795b7cff0b41d26e9c475c1fedd6ef5c45c82075fbf916b629
+"type-fest@npm:^4.12.0":
+  version: 4.12.0
+  resolution: "type-fest@npm:4.12.0"
+  checksum: 10c0/00a7a178d98974449a48f2f2fab1ee33c5ead38fb85eee284de0217de824416e6cbf6dce5d55e12a5d9ac1b557bff96f83e345a2c5983b56619095aba6743625
   languageName: node
   linkType: hard
 
