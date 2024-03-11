@@ -1,8 +1,29 @@
 import React from 'react';
-import { useInterval } from '@mantine/hooks';
+import { useDisclosure, useInterval } from '@mantine/hooks';
+import { Button } from '../Button';
+import { Modal } from '../Modal';
 import { FloatingIndicator } from './FloatingIndicator';
 
 export default { title: 'FloatingIndicator' };
+
+export function WithinModal() {
+  const [opened, { open, close }] = useDisclosure(false);
+
+  return (
+    <>
+      <Modal
+        opened={opened}
+        onClose={close}
+        title="Authentication"
+        transitionProps={{ transition: 'pop' }}
+      >
+        <Usage />
+      </Modal>
+
+      <Button onClick={open}>Open modal</Button>
+    </>
+  );
+}
 
 export function Usage() {
   const [active, setActive] = React.useState(1);

@@ -12,4 +12,9 @@
   &:where([data-initialized]) {
     transition-duration: var(--transition-duration);
   }
+
+  &:where([data-hidden]) {
+    background-color: red;
+    display: none;
+  }
 }

@@ -31,6 +31,7 @@ export const ModalContent = factory<ModalContentFactory>((_props, ref) => {
       {...ctx.getStyles('content', { className, style, styles, classNames })}
       innerProps={ctx.getStyles('inner', { className, style, styles, classNames })}
       data-full-screen={ctx.fullScreen || undefined}
+      data-modal-content
       ref={ref}
       {...others}
     >

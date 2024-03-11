@@ -2,13 +2,43 @@ import { RefObject, useEffect, useRef, useState } from 'react';
 import { useMutationObserver, useTimeout } from '@mantine/hooks';
 import { getEnv } from '../../core';
 
-export function useFloatingIndicator(
-  target: HTMLElement | null | undefined,
-  parent: HTMLElement | null | undefined,
-  ref: RefObject<HTMLDivElement>
+function isParent(
+  parentElement: HTMLElement | EventTarget | null,
+  childElement: HTMLElement | null
 ) {
+  if (!childElement || !parentElement) {
+    return false;
+  }
+
+  let parent = childElement.parentNode;
+  while (parent != null) {
+    if (parent === parentElement) {
+      return true;
+    }
+    parent = parent.parentNode;
+  }
+  return false;
+}
+
+interface UseFloatingIndicatorInput {
+  target: HTMLElement | null | undefined;
+  parent: HTMLElement | null | undefined;
+  ref: RefObject<HTMLDivElement>;
+  displayAfterTransitionEnd?: boolean;
+}
+
+export function useFloatingIndicator({
+  target,
+  parent,
+  ref,
+  displayAfterTransitionEnd,
+}: UseFloatingIndicatorInput) {
   const transitionTimeout = useRef<number>();
   const [initialized, setInitialized] = useState(false);
+
+  const [hidden, setHidden] = useState(
+    typeof displayAfterTransitionEnd === 'boolean' ? displayAfterTransitionEnd : false
+  );
 
   const updatePosition = () => {
     if (!target || !parent) {
@@ -25,17 +55,23 @@ export function useFloatingIndicator(
       height: targetRect.height,
     };
 
-    ref.current!.style.transform = `translateY(${position.top}px) translateX(${position.left}px)`;
-    ref.current!.style.width = `${position.width}px`;
-    ref.current!.style.height = `${position.height}px`;
+    if (ref.current) {
+      ref.current.style.transform = `translateY(${position.top}px) translateX(${position.left}px)`;
+      ref.current.style.width = `${position.width}px`;
+      ref.current.style.height = `${position.height}px`;
+    }
   };
 
   const updatePositionWithoutAnimation = () => {
     window.clearTimeout(transitionTimeout.current);
-    ref.current!.style.transitionDuration = '0ms';
+    if (ref.current) {
+      ref.current.style.transitionDuration = '0ms';
+    }
     updatePosition();
     transitionTimeout.current = window.setTimeout(() => {
-      ref.current!.style.transitionDuration = '';
+      if (ref.current) {
+        ref.current.style.transitionDuration = '';
+      }
     }, 30);
   };
 
@@ -60,6 +96,24 @@ export function useFloatingIndicator(
     return undefined;
   }, [parent, target]);
 
+  useEffect(() => {
+    if (parent) {
+      const handleTransitionEnd = (event: TransitionEvent) => {
+        if (isParent(event.target, parent)) {
+          updatePositionWithoutAnimation();
+          setHidden(false);
+        }
+      };
+
+      document.addEventListener('transitionend', handleTransitionEnd);
+      return () => {
+        document.removeEventListener('transitionend', handleTransitionEnd);
+      };
+    }
+
+    return undefined;
+  }, [parent]);
+
   useTimeout(
     () => {
       // Prevents warning about state update without act
@@ -83,5 +137,5 @@ export function useFloatingIndicator(
     () => document.documentElement
   );
 
-  return { initialized };
+  return { initialized, hidden };
 }

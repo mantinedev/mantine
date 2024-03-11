@@ -31,6 +31,9 @@ export interface FloatingIndicatorProps
 
   /** Transition duration in ms, `150` by default */
   transitionDuration?: number;
+
+  /** Determines whether indicator should be displayed after transition ends, should be set if used inside a container that has `transform: scale(n)` styles */
+  displayAfterTransitionEnd?: boolean;
 }
 
 export type FloatingIndicatorFactory = Factory<{
@@ -64,6 +67,7 @@ export const FloatingIndicator = factory<FloatingIndicatorFactory>((_props, ref)
     parent,
     transitionDuration,
     mod,
+    displayAfterTransitionEnd,
     ...others
   } = props;
 
@@ -81,14 +85,21 @@ export const FloatingIndicator = factory<FloatingIndicatorFactory>((_props, ref)
   });
 
   const innerRef = useRef<HTMLDivElement>(null);
-  const { initialized } = useFloatingIndicator(target, parent, innerRef);
+  const { initialized, hidden } = useFloatingIndicator({
+    target,
+    parent,
+    ref: innerRef,
+    displayAfterTransitionEnd,
+  });
   const mergedRef = useMergedRef(ref, innerRef);
 
   if (!target || !parent) {
     return null;
   }
 
-  return <Box ref={mergedRef} mod={[{ initialized }, mod]} {...getStyles('root')} {...others} />;
+  return (
+    <Box ref={mergedRef} mod={[{ initialized, hidden }, mod]} {...getStyles('root')} {...others} />
+  );
 });
 
 FloatingIndicator.displayName = '@mantine/core/FloatingIndicator';
