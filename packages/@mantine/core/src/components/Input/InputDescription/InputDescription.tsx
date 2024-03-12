@@ -87,7 +87,7 @@ export const InputDescription = factory<InputDescriptionFactory>((_props, ref) =
       ref={ref}
       variant={variant}
       size={size}
-      {...getStyles('description')}
+      {...getStyles('description', ctx?.getStyles ? { className, style } : undefined)}
       {...others}
     />
   );
