@@ -149,7 +149,8 @@ export function createStorage<T>(type: StorageType, hookName: string) {
     }, [defaultValue, value, setStorageValue]);
 
     useEffect(() => {
-      setStorageValue(readStorageValue());
+      const val = readStorageValue();
+      val !== undefined && setStorageValue(val);
     }, []);
 
     return [value === undefined ? defaultValue : value, setStorageValue, removeStorageValue] as [
