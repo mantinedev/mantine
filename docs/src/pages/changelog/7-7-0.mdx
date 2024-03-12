@@ -25,3 +25,7 @@ New [ScatterChart](/charts/scatter-chart) component:
 New [useMutationObserver](/hooks/use-mutation-observer) hook:
 
 <Demo data={HooksDemos.useMutationObserverTarget} />
+
+## Other changes
+
+- [SegmentedControl](/core/segmented-control) indicator positioning logic has been migrated to [FloatingIndicator](/core/floating-indicator). It is now more performant and works better when used inside elements with `transform: scale()`.
