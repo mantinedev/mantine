@@ -15,11 +15,11 @@
   margin-bottom: rem(4px);
   border-top: rem(1px) solid;
 
-  @mixin light {
+  @mixin where-light {
     border-color: var(--mantine-color-gray-2);
   }
 
-  @mixin dark {
+  @mixin where-dark {
     border-color: var(--mantine-color-dark-4);
   }
 }
