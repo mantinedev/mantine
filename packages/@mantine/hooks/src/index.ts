@@ -62,6 +62,7 @@ export { useHeadroom } from './use-headroom/use-headroom';
 export { useEyeDropper } from './use-eye-dropper/use-eye-dropper';
 export { useInViewport } from './use-in-viewport/use-in-viewport';
 export { useMutationObserver } from './use-mutation-observer/use-mutation-observer';
+export { useMounted } from './use-mounted/use-mounted';
 
 export type { UseMovePosition } from './use-move/use-move';
 export type { OS } from './use-os/use-os';

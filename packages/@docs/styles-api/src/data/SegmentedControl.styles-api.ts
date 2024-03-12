@@ -8,6 +8,7 @@ export const SegmentedControlStylesApi: StylesApiData<SegmentedControlFactory> =
     input: 'Input element (`input[type="radio"]`), hidden by default',
     label: 'Label element associated with input',
     indicator: 'Floating indicator that moves between items',
+    innerLabel: 'Wrapper of label element children',
   },
 
   vars: {

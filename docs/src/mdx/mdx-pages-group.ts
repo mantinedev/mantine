@@ -140,6 +140,7 @@ export const MDX_PAGES_GROUPS: MdxPagesGroup[] = [
           MDX_DATA.useIsomorphicEffect,
           MDX_DATA.useLogger,
           MDX_DATA.useShallowEffect,
+          MDX_DATA.useMounted,
         ],
       },
     ],
