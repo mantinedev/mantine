@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
+import ReactDOM from 'react-dom';
 import { useDidUpdate, useReducedMotion } from '@mantine/hooks';
 import { useMantineTheme } from '../../core';
 
@@ -43,7 +44,6 @@ export function useTransition({
     const preHandler = shouldMount ? onEnter : onExit;
     const handler = shouldMount ? onEntered : onExited;
 
-    setStatus(shouldMount ? 'pre-entering' : 'pre-exiting');
     window.clearTimeout(timeoutRef.current);
 
     const newTransitionDuration = reduceMotion ? 0 : shouldMount ? duration : exitDuration;
@@ -56,6 +56,10 @@ export function useTransition({
     } else {
       // Make sure new status won't be set within the same frame as this would disrupt animation #3126
       rafRef.current = requestAnimationFrame(() => {
+        ReactDOM.flushSync(() => {
+          setStatus(shouldMount ? 'pre-entering' : 'pre-exiting');
+        });
+
         rafRef.current = requestAnimationFrame(() => {
           typeof preHandler === 'function' && preHandler();
           setStatus(shouldMount ? 'entering' : 'exiting');
