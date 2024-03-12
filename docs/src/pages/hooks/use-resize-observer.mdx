@@ -31,7 +31,7 @@ See also [use-element-size](https://mantine.dev/hooks/use-element-size/) hook in
 function useResizeObserver<T extends HTMLElement = any>(
   options?: ResizeObserverOptions
 ): [
-  MutableRefObject<T>,
+  RefObject<T>,
   {
     x: number;
     y: number;

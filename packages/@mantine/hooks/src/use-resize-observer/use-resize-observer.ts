@@ -15,7 +15,7 @@ const defaultState: ObserverRect = {
 
 export function useResizeObserver<T extends HTMLElement = any>(options?: ResizeObserverOptions) {
   const frameID = useRef(0);
-  const ref = useRef<T>();
+  const ref = useRef<T>(null);
 
   const [rect, setRect] = useState<ObserverRect>(defaultState);
 
@@ -53,7 +53,7 @@ export function useResizeObserver<T extends HTMLElement = any>(options?: ResizeO
     };
   }, [ref.current]);
 
-  return [ref as any, rect] as const;
+  return [ref, rect] as const;
 }
 
 export function useElementSize<T extends HTMLElement = any>(options?: ResizeObserverOptions) {
