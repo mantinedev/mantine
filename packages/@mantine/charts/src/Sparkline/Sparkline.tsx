@@ -1,5 +1,5 @@
 import React, { useId, useMemo } from 'react';
-import { Area, AreaChart as ReChartsAreaChart, ResponsiveContainer } from 'recharts';
+import { Area, AreaProps, AreaChart as ReChartsAreaChart, ResponsiveContainer } from 'recharts';
 import {
   Box,
   BoxProps,
@@ -52,6 +52,12 @@ export interface SparklineProps
 
   /** If set, `color` prop is ignored and chart color is determined by the difference between first and last value. */
   trendColors?: SparklineTrendColors;
+
+  /** Determines whether null values should be connected with other values, `true` by default */
+  connectNulls?: boolean;
+
+  /** Props passed down to the underlying recharts `Area` component */
+  areaProps?: Omit<AreaProps, 'data' | 'dataKey' | 'ref'>;
 }
 
 export type SparklineFactory = Factory<{
@@ -63,6 +69,7 @@ export type SparklineFactory = Factory<{
 
 const defaultProps: Partial<SparklineProps> = {
   withGradient: true,
+  connectNulls: true,
   fillOpacity: 0.6,
   strokeWidth: 2,
   curveType: 'linear',
@@ -110,6 +117,8 @@ export const Sparkline = factory<SparklineFactory>((_props, ref) => {
     curveType,
     strokeWidth,
     trendColors,
+    connectNulls,
+    areaProps,
     ...others
   } = props;
 
@@ -139,9 +148,10 @@ export const Sparkline = factory<SparklineFactory>((_props, ref) => {
             fill={`url(#${id})`}
             stroke="var(--chart-color, var(--mantine-color-blue-filled))"
             isAnimationActive={false}
-            connectNulls
+            connectNulls={connectNulls}
             strokeWidth={strokeWidth}
             fillOpacity={1}
+            {...areaProps}
           />
 
           <defs>
