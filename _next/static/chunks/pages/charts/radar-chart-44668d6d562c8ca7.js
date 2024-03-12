@@ -29,12 +29,14 @@ function Demo() {
 }
 `,language:"tsx",fileName:"Demo.tsx"},{code:l.op,language:"tsx",fileName:"data.ts"}],controls:[{type:"color",prop:"color",initialValue:"blue",libraryValue:!0},{type:"color",prop:"strokeColor",initialValue:"blue",libraryValue:!0}]},p=`
 import { RadarChart } from '@mantine/charts';
+import { data } from './data';
 
-function Wrapper() {
+
+function Demo() {
   return (
     <RadarChart
       h={300}
-      data={multiData}
+      data={data}
       dataKey="product"
       withPolarRadiusAxis
       series={[
@@ -53,7 +55,7 @@ function Demo() {
   return (
     <RadarChart
       h={300}
-      data={multiData}
+      data={data}
       dataKey="product"
       withPolarRadiusAxis
       polarRadiusAxisProps={{ angle: 30, tickFormatter: (value) => \`\${value}$\` }}
@@ -72,7 +74,7 @@ function Demo() {
   return (
     <RadarChart
       h={300}
-      data={multiData}
+      data={data}
       dataKey="product"
       withPolarRadiusAxis
       series={[
@@ -110,7 +112,7 @@ export const data = [
   },
 ];
 `,s=[{product:"Apples",sales_january:120,sales_february:100},{product:"Oranges",sales_january:98,sales_february:90},{product:"Tomatoes",sales_january:86,sales_february:70},{product:"Grapes",sales_january:99,sales_february:80},{product:"Bananas",sales_january:85,sales_february:120},{product:"Lemons",sales_january:65,sales_february:150}],n=`
-export const multiData = [
+export const data = [
   {
     product: 'Apples',
     sales_january: 120,
@@ -141,4 +143,4 @@ export const multiData = [
     sales_january: 65,
     sales_february: 150,
   },
-];`},36590:function(a,e,r){"use strict";r.d(e,{H:function(){return _}});var t=r(27378),o=r(45249),s=r(9911),n=r(35487),l=r(39027),i=r(68676),c=r(12690),d=r(83453),u=r(89738),p=r(20410),h=r(96739),m=r(2256),y=r(6231),f=r(56589),x={root:"m-1f271cf7",container:"m-cf06f58c"};let g={withPolarGrid:!0,withPolarAngleAxis:!0,withPolarRadiusAxis:!1},j=(0,d.Z)((a,{gridColor:e,textColor:r})=>({root:{"--chart-grid-color":e?(0,u.p)(e,a):void 0,"--chart-text-color":r?(0,u.p)(r,a):void 0}})),_=(0,p.d)((a,e)=>{let r=(0,h.w)("RadarChart",g,a),{classNames:d,className:p,style:_,styles:b,unstyled:R,vars:A,data:C,series:P,dataKey:w,gridColor:v,textColor:E,radarProps:k,radarChartProps:N,polarGridProps:D,polarAngleAxisProps:H,polarRadiusAxisProps:K,withPolarGrid:T,withPolarAngleAxis:V,withPolarRadiusAxis:G,children:S,...O}=r,U=(0,m.rZ)(),$=(0,y.y)({name:"RadarChart",classes:x,props:r,className:p,style:_,classNames:d,styles:b,unstyled:R,vars:A,varsResolver:j}),q=P.map((a,e)=>t.createElement(o.F,{key:e,name:a.name,dataKey:a.name,stroke:(0,u.p)(a.strokeColor||a.color,U),fill:(0,u.p)(a.color,U),fillOpacity:a.opacity||.4,isAnimationActive:!1,..."function"==typeof k?k(a):k}));return t.createElement(f.x,{ref:e,...$("root"),...O},t.createElement(s.h,{...$("container")},t.createElement(n.H,{data:C,...N},T&&t.createElement(l.n,{stroke:"var(--chart-grid-color)",...D}),V&&t.createElement(i.I,{dataKey:w,...H}),G&&t.createElement(c.S,{stroke:"var(--chart-grid-color)",...K}),q,S)))});_.displayName="@mantine/charts/RadarChart",_.classes=x}},function(a){a.O(0,[30370,60898,84889,38934,15819,2775,49774,92888,40179],function(){return a(a.s=18336)}),_N_E=a.O()}]);
+];`},36590:function(a,e,r){"use strict";r.d(e,{H:function(){return _}});var t=r(27378),o=r(45249),s=r(9911),n=r(35487),l=r(39027),i=r(68676),c=r(12690),d=r(83453),u=r(89738),p=r(20410),h=r(96739),m=r(2256),y=r(6231),f=r(56589),x={root:"m-1f271cf7",container:"m-cf06f58c"};let g={withPolarGrid:!0,withPolarAngleAxis:!0,withPolarRadiusAxis:!1},j=(0,d.Z)((a,{gridColor:e,textColor:r})=>({root:{"--chart-grid-color":e?(0,u.p)(e,a):void 0,"--chart-text-color":r?(0,u.p)(r,a):void 0}})),_=(0,p.d)((a,e)=>{let r=(0,h.w)("RadarChart",g,a),{classNames:d,className:p,style:_,styles:b,unstyled:R,vars:A,data:C,series:P,dataKey:w,gridColor:v,textColor:E,radarProps:k,radarChartProps:N,polarGridProps:H,polarAngleAxisProps:D,polarRadiusAxisProps:K,withPolarGrid:T,withPolarAngleAxis:V,withPolarRadiusAxis:G,children:S,...O}=r,U=(0,m.rZ)(),$=(0,y.y)({name:"RadarChart",classes:x,props:r,className:p,style:_,classNames:d,styles:b,unstyled:R,vars:A,varsResolver:j}),q=P.map((a,e)=>t.createElement(o.F,{key:e,name:a.name,dataKey:a.name,stroke:(0,u.p)(a.strokeColor||a.color,U),fill:(0,u.p)(a.color,U),fillOpacity:a.opacity||.4,isAnimationActive:!1,..."function"==typeof k?k(a):k}));return t.createElement(f.x,{ref:e,...$("root"),...O},t.createElement(s.h,{...$("container")},t.createElement(n.H,{data:C,...N},T&&t.createElement(l.n,{stroke:"var(--chart-grid-color)",...H}),V&&t.createElement(i.I,{dataKey:w,...D}),G&&t.createElement(c.S,{stroke:"var(--chart-grid-color)",...K}),q,S)))});_.displayName="@mantine/charts/RadarChart",_.classes=x}},function(a){a.O(0,[30370,60898,84889,38934,15819,2775,49774,92888,40179],function(){return a(a.s=18336)}),_N_E=a.O()}]);
