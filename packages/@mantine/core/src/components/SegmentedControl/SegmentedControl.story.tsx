@@ -1,8 +1,25 @@
 import React, { useState } from 'react';
+import { useDisclosure } from '@mantine/hooks';
 import { MantineThemeProvider } from '../../core';
+import { Button } from '../Button';
+import { Modal } from '../Modal';
 import { SegmentedControl } from './SegmentedControl';
 
 export default { title: 'SegmentedControl' };
+
+export function WithinModal() {
+  const [opened, { open, close }] = useDisclosure(false);
+
+  return (
+    <>
+      <Modal opened={opened} onClose={close} title="Within Modal">
+        <SegmentedControl data={['React', 'Angular', 'Vue', 'Svelte']} />
+      </Modal>
+
+      <Button onClick={open}>Open modal</Button>
+    </>
+  );
+}
 
 export function WithinDisabledFieldset() {
   return (

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useId, useMergedRef, useUncontrolled } from '@mantine/hooks';
+import { useId, useMergedRef, useMounted, useUncontrolled } from '@mantine/hooks';
 import {
   Box,
   BoxProps,
@@ -23,7 +23,13 @@ import {
 import { FloatingIndicator } from '../FloatingIndicator';
 import classes from './SegmentedControl.module.css';
 
-export type SegmentedControlStylesNames = 'root' | 'input' | 'label' | 'control' | 'indicator';
+export type SegmentedControlStylesNames =
+  | 'root'
+  | 'input'
+  | 'label'
+  | 'control'
+  | 'indicator'
+  | 'innerLabel';
 export type SegmentedControlCssVariables = {
   root:
     | '--sc-radius'
@@ -169,6 +175,7 @@ export const SegmentedControl = factory<SegmentedControlFactory>((_props, ref) =
     typeof item === 'string' ? { label: item, value: item } : item
   );
 
+  const initialized = useMounted();
   const [parent, setParent] = useState<HTMLElement | null>(null);
   const [refs, setRefs] = useState<Record<string, HTMLElement | null>>({});
   const setElementRef = (element: HTMLElement | null, val: string) => {
@@ -220,7 +227,7 @@ export const SegmentedControl = factory<SegmentedControlFactory>((_props, ref) =
             color !== undefined ? getContrastColor({ color, theme, autoContrast }) : undefined,
         }}
       >
-        {item.label}
+        <span {...getStyles('innerLabel')}>{item.label}</span>
       </Box>
     </Box>
   ));
@@ -241,6 +248,7 @@ export const SegmentedControl = factory<SegmentedControlFactory>((_props, ref) =
         {
           'full-width': fullWidth,
           orientation,
+          initialized,
           'with-items-borders': withItemsBorders,
         },
         mod,

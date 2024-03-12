@@ -109,6 +109,27 @@
     @mixin where-dark {
       color: var(--sc-label-color, var(--mantine-color-white));
     }
+
+    &::before {
+      .root:where([data-initialized]) & {
+        display: none;
+      }
+      content: '';
+      inset: 0;
+      z-index: 0;
+      position: absolute;
+      border-radius: var(--sc-radius, var(--mantine-radius-default));
+
+      @mixin where-light {
+        box-shadow: var(--sc-shadow, none);
+        background-color: var(--sc-color, var(--mantine-color-white));
+      }
+
+      @mixin where-dark {
+        box-shadow: none;
+        background-color: var(--sc-color, var(--mantine-color-dark-5));
+      }
+    }
   }
 
   &:where(:not([data-disabled], [data-active], [data-read-only])) {
@@ -212,4 +233,9 @@
       }
     }
   }
+}
+
+.innerLabel {
+  position: relative;
+  z-index: 2;
 }
