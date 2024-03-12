@@ -30,7 +30,7 @@ export interface FloatingIndicatorProps
   parent: HTMLElement | null | undefined;
 
   /** Transition duration in ms, `150` by default */
-  transitionDuration?: number;
+  transitionDuration?: number | string;
 
   /** Determines whether indicator should be displayed after transition ends, should be set if used inside a container that has `transform: scale(n)` styles */
   displayAfterTransitionEnd?: boolean;
@@ -49,7 +49,7 @@ const varsResolver = createVarsResolver<FloatingIndicatorFactory>(
   (_theme, { transitionDuration }) => ({
     root: {
       '--transition-duration':
-        typeof transitionDuration === 'number' ? `${transitionDuration}ms` : undefined,
+        typeof transitionDuration === 'number' ? `${transitionDuration}ms` : transitionDuration,
     },
   })
 );
