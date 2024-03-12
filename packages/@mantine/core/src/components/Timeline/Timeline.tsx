@@ -106,6 +106,7 @@ export const Timeline = factory<TimelineFactory>((_props, ref) => {
     lineWidth,
     reverseActive,
     mod,
+    autoContrast,
     ...others
   } = props;
 
