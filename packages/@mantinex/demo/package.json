@@ -41,7 +41,7 @@
     "@mantinex/shiki": ">=1.0.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "shikiji": "^0.7.4"
+    "shiki": "^1.1.7"
   },
   "devDependencies": {
     "@mantine-tests/core": "workspace:*",

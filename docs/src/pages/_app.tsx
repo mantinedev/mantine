@@ -35,9 +35,10 @@ import '../styles/variables.css';
 const excludeShell = ['/', '/combobox', '/app-shell'];
 
 async function loadShiki() {
-  const { getHighlighter } = await import('shikiji');
+  const { getHighlighter } = await import('shiki');
   const shiki = await getHighlighter({
     langs: ['tsx', 'scss', 'html', 'bash', 'json'],
+    themes: [],
   });
 
   return shiki;

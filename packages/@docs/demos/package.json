@@ -44,7 +44,7 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "recharts": "^2.10.3",
-    "shikiji": "^0.7.4"
+    "shiki": "^1.1.7"
   },
   "devDependencies": {
     "@docs/styles-api": "workspace:*",
