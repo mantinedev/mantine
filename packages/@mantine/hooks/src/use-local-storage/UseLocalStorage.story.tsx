@@ -3,11 +3,11 @@ import { readLocalStorageValue, useLocalStorage } from './use-local-storage';
 
 export default { title: 'use-local-storage' };
 
-const key = Math.random().toString(36).substr(2, 5);
+const key = 'mantine-use-local-storage-1';
 
 export function Usage() {
-  const [id] = useLocalStorage({
-    defaultValue: 123,
+  const [id, set] = useLocalStorage({
+    // defaultValue: 123,
     getInitialValueInEffect: false,
     key,
   });
@@ -24,6 +24,9 @@ export function Usage() {
     <div style={{ padding: 40 }}>
       <p>Hook value: {id}</p>
       <p>Local storage value: {storedValue}</p>
+      <button type="button" onClick={() => set('test-value')}>
+        set
+      </button>
     </div>
   );
 }

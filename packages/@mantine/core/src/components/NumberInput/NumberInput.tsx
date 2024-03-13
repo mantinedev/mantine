@@ -268,22 +268,38 @@ export const NumberInput = factory<NumberInputFactory>((_props, ref) => {
 
   const incrementRef = useRef<() => void>();
   incrementRef.current = () => {
+    let val: number;
+
     if (typeof _value !== 'number' || Number.isNaN(_value)) {
-      setValue(clamp(startValue!, min, max));
+      val = clamp(startValue!, min, max);
     } else if (max !== undefined) {
-      setValue(_value + step! <= max ? _value + step! : max);
+      val = _value + step! <= max ? _value + step! : max;
     } else {
-      setValue(_value + step!);
+      val = _value + step!;
     }
+
+    setValue(val);
+    onValueChange?.(
+      { floatValue: val, formattedValue: val.toString(), value: val.toString() },
+      { source: 'increment' as any }
+    );
   };
 
   const decrementRef = useRef<() => void>();
   decrementRef.current = () => {
+    let val: number;
+
     if (typeof _value !== 'number' || Number.isNaN(_value)) {
-      setValue(clamp(startValue!, min, max));
+      val = clamp(startValue!, min, max);
     } else {
-      setValue(getDecrementedValue({ value: _value, min, step, allowNegative }));
+      val = getDecrementedValue({ value: _value, min, step, allowNegative });
     }
+
+    setValue(val);
+    onValueChange?.(
+      { floatValue: val, formattedValue: val.toString(), value: val.toString() },
+      { source: 'decrement' as any }
+    );
   };
 
   const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {

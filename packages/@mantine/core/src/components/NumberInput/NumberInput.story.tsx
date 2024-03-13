@@ -17,6 +17,7 @@ export function Usage() {
         label="Number input"
         placeholder="Number input"
         onChange={setValue}
+        onValueChange={console.log}
       />
       {typeof value === 'number' ? `${value} number` : `${value === '' ? 'empty' : value} string`}
       <Button onClick={() => setValue(245.32)}>Set value to float</Button>

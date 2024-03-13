@@ -9,12 +9,12 @@
     outline: none;
   }
 
-  @mixin light {
+  @mixin where-light {
     --popover-border-color: var(--mantine-color-gray-2);
     background-color: var(--mantine-color-white);
   }
 
-  @mixin dark {
+  @mixin where-dark {
     --popover-border-color: var(--mantine-color-dark-4);
     background-color: var(--mantine-color-dark-6);
   }

@@ -99,20 +99,20 @@
   overflow: hidden;
   text-overflow: ellipsis;
 
-  @mixin light {
+  @mixin where-light {
     color: var(--mantine-color-black);
   }
 
-  @mixin dark {
+  @mixin where-dark {
     color: var(--mantine-color-dark-0);
   }
 
   &:where([data-with-title]) {
-    @mixin light {
+    @mixin where-light {
       color: var(--mantine-color-gray-6);
     }
 
-    @mixin dark {
+    @mixin where-dark {
       color: var(--mantine-color-dark-2);
     }
   }
@@ -120,11 +120,11 @@
 
 .closeButton {
   @mixin hover {
-    @mixin light {
+    @mixin where-light {
       background-color: var(--mantine-color-gray-0);
     }
 
-    @mixin dark {
+    @mixin where-dark {
       background-color: var(--mantine-color-dark-8);
     }
   }

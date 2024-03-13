@@ -105,11 +105,11 @@
     min-height: rem(44px);
   }
 
-  @mixin light {
+  @mixin where-light {
     background-color: rgba(0, 0, 0, 0.4);
   }
 
-  @mixin dark {
+  @mixin where-dark {
     background-color: rgba(255, 255, 255, 0.4);
   }
 }

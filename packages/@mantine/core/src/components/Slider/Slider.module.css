@@ -193,12 +193,12 @@
   &:where([data-filled]) {
     border-color: var(--slider-color);
 
-    &[data-disabled] {
-      @mixin light {
+    &:where([data-disabled]) {
+      @mixin where-light {
         border-color: var(--mantine-color-gray-4);
       }
 
-      @mixin dark {
+      @mixin where-dark {
         border-color: var(--mantine-color-dark-3);
       }
     }

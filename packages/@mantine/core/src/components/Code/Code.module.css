@@ -7,12 +7,12 @@
   margin: 0;
   overflow: auto;
 
-  @mixin light {
+  @mixin where-light {
     background-color: var(--code-bg, var(--mantine-color-gray-1));
     color: var(--mantine-color-black);
   }
 
-  @mixin dark {
+  @mixin where-dark {
     background-color: var(--code-bg, var(--mantine-color-dark-5));
     color: var(--mantine-color-white);
   }

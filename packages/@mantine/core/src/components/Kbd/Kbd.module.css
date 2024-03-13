@@ -29,7 +29,7 @@
     background-color: var(--mantine-color-gray-0);
   }
 
-  @mixin dark {
+  @mixin where-dark {
     border-color: var(--mantine-color-dark-4);
     color: var(--mantine-color-dark-0);
     background-color: var(--mantine-color-dark-6);

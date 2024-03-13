@@ -11,7 +11,7 @@ function Demo() {
   return (
     <RadarChart
       h={300}
-      data={multiData}
+      data={data}
       dataKey="product"
       withPolarRadiusAxis
       polarRadiusAxisProps={{ angle: 30, tickFormatter: (value) => \`\${value}$\` }}
