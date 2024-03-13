@@ -1,9 +1,35 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { useId, useMergedRef, useResizeObserver, useTimeout, useUncontrolled } from '@mantine/hooks';
-import { Box, BoxProps, createVarsResolver, ElementProps, Factory, factory, getContrastColor, getEnv, getFontSize, getRadius, getSize, getThemeColor, MantineColor, MantineRadius, MantineSize, StylesApiProps, useDirection, useMantineTheme, useProps, useStyles } from '../../core';
+import {
+  useId,
+  useMergedRef,
+  useResizeObserver,
+  useTimeout,
+  useUncontrolled,
+} from '@mantine/hooks';
+import {
+  Box,
+  BoxProps,
+  createVarsResolver,
+  ElementProps,
+  Factory,
+  factory,
+  getContrastColor,
+  getEnv,
+  getFontSize,
+  getRadius,
+  getSize,
+  getThemeColor,
+  MantineColor,
+  MantineRadius,
+  MantineSize,
+  StylesApiProps,
+  useDirection,
+  useMantineTheme,
+  useProps,
+  useStyles,
+} from '../../core';
 import { getRootPadding } from './get-root-padding';
 import classes from './SegmentedControl.module.css';
-
 
 const WRAPPER_PADDING = 4;
 
