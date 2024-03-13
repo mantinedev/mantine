@@ -1,35 +1,9 @@
 import React, { useEffect, useRef, useState } from 'react';
-import {
-  useId,
-  useMergedRef,
-  useResizeObserver,
-  useTimeout,
-  useUncontrolled,
-} from '@mantine/hooks';
-import {
-  Box,
-  BoxProps,
-  createVarsResolver,
-  ElementProps,
-  Factory,
-  factory,
-  getContrastColor,
-  getEnv,
-  getFontSize,
-  getRadius,
-  getSize,
-  getThemeColor,
-  MantineColor,
-  MantineRadius,
-  MantineSize,
-  StylesApiProps,
-  useDirection,
-  useMantineTheme,
-  useProps,
-  useStyles,
-} from '../../core';
+import { useId, useMergedRef, useResizeObserver, useTimeout, useUncontrolled } from '@mantine/hooks';
+import { Box, BoxProps, createVarsResolver, ElementProps, Factory, factory, getContrastColor, getEnv, getFontSize, getRadius, getSize, getThemeColor, MantineColor, MantineRadius, MantineSize, StylesApiProps, useDirection, useMantineTheme, useProps, useStyles } from '../../core';
 import { getRootPadding } from './get-root-padding';
 import classes from './SegmentedControl.module.css';
+
 
 const WRAPPER_PADDING = 4;
 
@@ -205,7 +179,8 @@ export const SegmentedControl = factory<SegmentedControlFactory>((_props, ref) =
       const element = refs.current[_value];
       if (element) {
         const rootPadding = getRootPadding(rootRef.current!, WRAPPER_PADDING);
-        const scaledValue = element.offsetWidth / element.clientWidth;
+        const elementRect = element.getBoundingClientRect();
+        const scaledValue = element.offsetWidth / elementRect.width;
         const width = element.clientWidth * scaledValue || 0;
         const height = element.clientHeight * scaledValue || 0;
 
