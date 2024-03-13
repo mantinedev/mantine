@@ -1,0 +1,21 @@
+import { FloatingActionButtonDemo } from '@/demos/FloatingActionButton.demo';
+import { Layout } from '@/layout';
+
+export const meta = {
+  title: 'Is there a floating action button component?',
+  description:
+    'No, but you can build it with Affix and ActionIcon components',
+  slug: 'floating-action-button',
+  category: 'components',
+  tags: ['fab', 'component'],
+  created_at: 'January 17, 2024',
+  last_updated_at: 'January 17, 2024',
+};
+
+export default Layout(meta);
+
+Mantine does not include floating action button component,
+but you can build it with [Affix](https://mantine.dev/core/affix) and
+[ActionIcon](https://mantine.dev/core/action-icon) components:
+
+<Demo data={FloatingActionButtonDemo} />

@@ -7841,6 +7841,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/mdx@npm:2.0.10":
+  version: 2.0.10
+  resolution: "@types/mdx@npm:2.0.10"
+  checksum: 10c0/a2a5d71967c44c650e883eaaeb61db9c0758b9c1d675e04b7a3cfeeaee6efd5044dc9c78d780aa3fe408a2f85680bf3b723c92a1772bb6c2da35ef346d766de2
+  languageName: node
+  linkType: hard
+
 "@types/mdx@npm:^2.0.0":
   version: 2.0.8
   resolution: "@types/mdx@npm:2.0.8"
@@ -13701,6 +13708,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"fuse.js@npm:7.0.0":
+  version: 7.0.0
+  resolution: "fuse.js@npm:7.0.0"
+  checksum: 10c0/3574b7fc2e0ccb047e05dbe5f8f04e8f0754f62fa209669ef426ea1354a32ae7355620788af8f1d29f94e1fdecd513f1f3787f012848a31ec90bb4e0e6092504
+  languageName: node
+  linkType: hard
+
 "generic-names@npm:^4.0.0":
   version: 4.0.0
   resolution: "generic-names@npm:4.0.0"
@@ -14277,6 +14291,41 @@ __metadata:
   checksum: 10c0/a27d478befe3c8192f006cdd0639a66798979dfa6e2125c6ac582a19a5ebfec62ad83e8382e6036170d873f46e4536a7e795bf8b95bf7c247f4cc0825ccc8c17
   languageName: node
   linkType: hard
+
+"help.mantine.dev@workspace:apps/help.mantine.dev":
+  version: 0.0.0-use.local
+  resolution: "help.mantine.dev@workspace:apps/help.mantine.dev"
+  dependencies:
+    "@mantine/core": "workspace:*"
+    "@mantine/dates": "workspace:*"
+    "@mantine/dropzone": "workspace:*"
+    "@mantine/form": "workspace:*"
+    "@mantine/hooks": "workspace:*"
+    "@mantinex/demo": "workspace:*"
+    "@mantinex/dev-icons": "workspace:*"
+    "@mantinex/mantine-header": "workspace:*"
+    "@mantinex/mantine-logo": "workspace:*"
+    "@mantinex/mantine-meta": "workspace:*"
+    "@mantinex/shiki": "workspace:*"
+    "@mdx-js/loader": "npm:^3.0.0"
+    "@mdx-js/react": "npm:^3.0.0"
+    "@next/mdx": "npm:^14.0.2"
+    "@tabler/icons-react": "npm:^2.40.0"
+    "@types/mdx": "npm:2.0.10"
+    "@types/node": "npm:^20.9.0"
+    "@types/react": "npm:18.2.37"
+    "@types/react-dom": "npm:18.2.15"
+    dayjs: "npm:^1.11.10"
+    fuse.js: "npm:7.0.0"
+    next: "npm:14.0.2"
+    react: "npm:^18.2.0"
+    react-dom: "npm:^18.2.0"
+    react-imask: "npm:^7.1.3"
+    remark-slug: "npm:^7.0.1"
+    shiki: "npm:^1.1.7"
+    typescript: "npm:5.3.3"
+  languageName: unknown
+  linkType: soft
 
 "highlight.js@npm:^11.9.0, highlight.js@npm:~11.9.0":
   version: 11.9.0

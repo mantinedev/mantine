@@ -1,0 +1,57 @@
+import { Text } from '@mantine/core';
+import { Layout } from '@/layout';
+
+export const meta = {
+  title: 'Can I use private CSS variables to style components?',
+  description:
+    'No, it is not safe and will not work with future versions of Mantine.',
+  slug: 'private-css-variables',
+  category: 'styles',
+  tags: ['styles', 'variables', 'css-variables'],
+  created_at: 'December 28, 2023',
+  last_updated_at: 'December 28, 2023',
+};
+
+export default Layout(meta);
+
+## What are private CSS variables?
+
+Private CSS variables start with `--_`, for example `--_input-bd-focus`.
+These variables are a part of internal Mantine API and are not intended to
+be used by end users. In most cases private CSS variables are used to
+reduce specificity of styles and make them easier to override.
+
+## Should I use private CSS variables to apply styles?
+
+Absolutely not. Private CSS variables can be changed or removed in minor
+and patch releases without any notice. In this case, if you use private
+variables to style components, styles of your application will **silently**
+(no errors will be reported by any tools) break after update. Private
+CSS variables were implemented to reduce specificity of styles when
+[:where](https://developer.mozilla.org/en-US/docs/Web/CSS/:where) selector
+was not widely available. Now when `:where` is supported by all major browsers
+private CSS variables will be removed over time in most components.
+
+## But what should I do instead?
+
+Use regular styles instead. For example, to change input border color on focus:
+
+```scss
+.input {
+  // ❌ do not use private CSS variables
+  --_input-bd-focus: red;
+  --_input-placeholder-color: red;
+}
+
+.input {
+  // ✅ use regular styles
+  &:focus,
+  &:focus-within {
+    border-color: red;
+  }
+
+  &::placeholder {
+    color: red;
+  }
+}
+```

@@ -1,0 +1,22 @@
+import { InputPlaceholderColorDemo } from '@/demos/InputPlaceholderColor.demo';
+import { Layout } from '@/layout';
+
+export const meta = {
+  title: 'How to change inputs placeholder color?',
+  description:
+    'Learn how to change placeholder color with Styles API',
+  slug: 'inputs-placeholder-color',
+  category: 'styles',
+  tags: ['inputs', 'dates', 'placeholder'],
+  created_at: 'January 17, 2023',
+  last_updated_at: 'January 17, 2023',
+};
+
+export default Layout(meta);
+
+All Mantine inputs can be divided in two groups:
+
+- Inputs that are based on `<input />` HTML element (for example, [TextInput](https://mantine.dev/core/text-input)). For these inputs use `&:placeholder` selector to change placeholder color.
+- Inputs that are based on `<button />` HTML element (for example, [DatePickerInput](https://mantine.dev/dates/date-picker-input)). For these inputs use [Styles API](https://mantine.dev/styles/styles-api) to change placeholder color.
+
+<Demo data={InputPlaceholderColorDemo} />

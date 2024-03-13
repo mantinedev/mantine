@@ -1,0 +1,37 @@
+import { Layout } from '@/layout';
+
+export const meta = {
+  title: 'Can I use Mantine with Astro?',
+  description: 'No, Astro does not support React context',
+  slug: 'can-i-use-mantine-with-astro',
+  category: 'tooling',
+  tags: ['astro'],
+  created_at: 'January 3, 2024',
+  last_updated_at: 'January 3, 2024',
+};
+
+export default Layout(meta);
+
+## If you need Astro, you do not need a component library
+
+[Astro](https://astro.build/) is designed to minimize
+the amount of JavaScript required to build a website. All component
+libraries require quite a bit of JavaScript to work, so if you are
+planning to use Astro, the best option is to build your own components
+that do not have large footprint.
+
+## I need Mantine, what should I use instead?
+
+In case you need Mantine and SSG application, you can use [Next.js](https://nextjs.org/)
+or [Gatsby](https://www.gatsbyjs.com/). Both of them support all React features
+that are required for Mantine to work.
+
+## No! I need Astro and Mantine!
+
+Not a chance, according to [Astro documentation](https://docs.astro.build/en/core-concepts/sharing-state/),
+Astro does not support React context, which is required for Mantine to work.
+
+> **From Astro documentation:**
+>
+> UI frameworks like React or Vue may encourage “context” providers for other components to consume.
+> But when partially hydrating components within Astro or Markdown, you can’t use these context wrappers.

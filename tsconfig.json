@@ -5,7 +5,8 @@
     "./packages/@mantine-tests/*/src",
     "./packages/@docs/*/src",
     "./packages/@mantine/*/src",
-    "./packages/@mantinex/*/src"
+    "./packages/@mantinex/*/src",
+    "./apps/*"
   ],
   "exclude": [
     "node_modules",

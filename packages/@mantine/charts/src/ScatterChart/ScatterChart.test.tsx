@@ -1,7 +1,10 @@
 import { patchConsoleWarn, tests } from '@mantine-tests/core';
 import { ScatterChart, ScatterChartProps, ScatterChartStylesNames } from './ScatterChart';
 
-const defaultProps: ScatterChartProps = {};
+const defaultProps: ScatterChartProps = {
+  data: [],
+  dataKey: { x: 'x', y: 'y' },
+};
 
 describe('@mantine/charts/ScatterChart', () => {
   beforeAll(() => {

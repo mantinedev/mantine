@@ -1,0 +1,12 @@
+.root {
+  position: relative;
+}
+
+.error {
+  position: absolute;
+  bottom: rem(-18px);
+}
+
+.wrapper {
+  margin-bottom: 0;
+}

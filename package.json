@@ -15,9 +15,13 @@
     "packages/@mantinex/*",
     "packages/@mantine-tests/*",
     "packages/@docs/*",
+    "apps/*",
     "docs"
   ],
   "scripts": {
+    "hc": "cd apps/help.mantine.dev && npm run dev",
+    "hc:build": "cd apps/help.mantine.dev && npm run build",
+    "hc:exports": "esno scripts/docs/hc-exports",
     "chmod": "sh scripts/utils/chmod.sh",
     "setup": "npm run docs:docgen && esno scripts/docs/generate-css-exports",
     "plop": "esno scripts/plop",
@@ -51,7 +55,7 @@
     "test:validate-package-json": "esno scripts/tests/validate-package-json",
     "test:validate-packages-files": "esno scripts/tests/validate-packages-files",
     "jest": "jest",
-    "typecheck": "tsc --noEmit && cd docs && npm run typecheck",
+    "typecheck": "tsc --noEmit && cd docs && npm run typecheck && cd ../apps/help.mantine.dev && npm run typecheck",
     "lint": "npm run eslint && npm run stylelint",
     "eslint": "eslint packages docs/src scripts --ext .ts,.tsx --cache",
     "stylelint": "stylelint \"**/*.css\" --cache",

@@ -1,0 +1,35 @@
+import { Layout } from '@/layout';
+
+export const meta = {
+  title:
+    'It is not possible to pinch to zoom when Modal is opened. What should I do?',
+  description:
+    'Use removeScrollProps to configure react-remove-scroll options',
+  slug: 'pinch-to-zoom-modal',
+  category: 'components',
+  tags: ['modal', 'drawer', 'zoom', 'lockScroll', 'scroll lock'],
+  created_at: 'February 15, 2024',
+  last_updated_at: 'February 15, 2024',
+};
+
+export default Layout(meta);
+
+[Modal](https://mantine.dev/core/modal) and [Drawer](https://mantine.dev/core/drawer) components use [react-remove-scroll](https://github.com/theKashey/react-remove-scroll)
+to lock scroll when they are opened. By default, `react-remove-scroll` will lock scroll and prevent pinch to zoom on mobile devices.
+To change various scroll lock options, you can use `removeScrollProps` prop:
+
+```tsx
+import { Modal } from '@mantine/core';
+
+function Demo() {
+  return (
+    <Modal
+      removeScrollProps={{
+        allowPinchZoom: true, // Allow pinch to zoom on mobile devices
+      }}
+    >
+      {/* Modal content */}
+    </Modal>
+  );
+}
+```

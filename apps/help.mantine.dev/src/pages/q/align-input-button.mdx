@@ -1,0 +1,34 @@
+import {
+  AlignInputButton,
+  AlignInputButtonCorrect,
+  AlignInputButtonStyles,
+} from '@/demos/AlignInputButton.demo';
+import { Layout } from '@/layout';
+
+export const meta = {
+  title: 'How to align input with a button in a flex container?',
+  description:
+    'Lean how to align Mantine inputs with buttons using Group component',
+  slug: 'align-input-button',
+  category: 'styles',
+  tags: ['inputs', 'button', 'flexbox', 'centering'],
+  created_at: 'February 15, 2024',
+  last_updated_at: 'February 15, 2024',
+};
+
+export default Layout(meta);
+
+If you try to align one of Mantine inputs in a flex container with a button,
+you will notice that input is not aligned with the button. This happens because
+Mantine inputs have associated elements: label, description and error message.
+
+<Demo data={AlignInputButton} />
+
+To align input with a button, you can either use `inputContainer` prop to wrap the button
+next to the in a flex container:
+
+<Demo data={AlignInputButtonCorrect} />
+
+Or change error/description position to absolute with [Styles API](https://mantine.dev/styles/styles-api/):
+
+<Demo data={AlignInputButtonStyles} />

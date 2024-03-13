@@ -1,0 +1,33 @@
+import { Layout } from '@/layout';
+
+export const meta = {
+  title: 'How can I lock scroll in my application?',
+  description:
+    'Use react-remove-scroll library to lock scroll in your application',
+  slug: 'how-to-lock-scroll',
+  category: 'common',
+  tags: ['lockScroll', 'scroll lock', 'remove scroll', 'scrollbar'],
+  created_at: 'February 15, 2024',
+  last_updated_at: 'February 15, 2024',
+};
+
+export default Layout(meta);
+
+Mantine components use [react-remove-scroll](https://github.com/theKashey/react-remove-scroll)
+library to lock scroll. You can use it in your application to lock scroll. For your
+convenience, `@mantine/core` package exports `RemoveScroll` component:
+
+```tsx
+import { RemoveScroll } from '@mantine/core';
+
+function App() {
+  return (
+    <RemoveScroll>
+      <div>Content</div>
+    </RemoveScroll>
+  );
+}
+```
+
+The component supports all props that are supported by `react-remove-scroll` library,
+you can find the full list of props in the [official documentation](https://github.com/theKashey/react-remove-scroll).

@@ -1,0 +1,22 @@
+import { ModalDoNotClose } from '@/demos/ModalDoNotClose.demo';
+import { Layout } from '@/layout';
+
+export const meta = {
+  title: 'How to prevent Modal from closing?',
+  description:
+    'Learn how to prevent Modal from closing when user clicks outside of it or presses Escape key',
+  slug: 'how-to-prevent-modal-from-closing',
+  category: 'components',
+  tags: ['modal', 'drawer', 'close', 'click outside'],
+  created_at: 'December 1, 2023',
+  last_updated_at: 'December 1, 2023',
+};
+
+export default Layout(meta);
+
+[Modal](https://mantine.dev/core/modal/) and [Drawer](https://mantine.dev/core/drawer/) components
+opened state is controlled by `opened` prop. You can use it to prevent modal from closing by setting
+it to `true`. For example, it can be useful if you have an async operation inside the modal and want to
+prevent user from closing it before the operation is finished:
+
+<Demo data={ModalDoNotClose} />

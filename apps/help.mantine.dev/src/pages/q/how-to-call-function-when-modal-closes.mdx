@@ -1,0 +1,42 @@
+import { Layout } from '@/layout';
+
+export const meta = {
+  title:
+    'How to call a function when Modal/Drawer closes and animation completes?',
+  description:
+    'How to use transitionProps in Modal/Drawer components',
+  slug: 'how-to-call-function-when-modal-closes',
+  category: 'components',
+  tags: ['modal', 'drawer', 'close', 'transition', 'transitionProps'],
+  created_at: 'December 26, 2023',
+  last_updated_at: 'December 26, 2023',
+};
+
+export default Layout(meta);
+
+[Modal](https://mantine.dev/core/modal/) and [Drawer](https://mantine.dev/core/drawer/) components
+use [Transition](https://mantine.dev/core/transition/) component under the hood to animate
+presence. You can use `transitionProps` property to pass props to `Transition` component:
+
+```tsx
+import { Modal } from '@mantine/core';
+import { useDisclosure } from '@mantine/hooks';
+
+function Demo() {
+  const [opened, handlers] = useDisclosure();
+
+  return (
+    <Modal
+      title="Modal title"
+      opened={opened}
+      onClose={handlers.close}
+      transitionProps={{
+        onEntered: () => console.log('Modal opened, animation done'),
+        onExited: () => console.log('Modal closed, animation done'),
+      }}
+    >
+      Modal content
+    </Modal>
+  );
+}
+```

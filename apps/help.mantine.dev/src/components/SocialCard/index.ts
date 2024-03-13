@@ -1,0 +1,1 @@
+export { SocialCard } from './SocialCard';
