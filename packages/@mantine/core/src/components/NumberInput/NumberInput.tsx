@@ -38,31 +38,6 @@ function isValidNumber(value: number | string | undefined): value is number {
   );
 }
 
-interface GetDecrementedValueInput {
-  value: number;
-  min: number | undefined;
-  step: number | undefined;
-  allowNegative: boolean | undefined;
-}
-
-function getDecrementedValue({ value, min, step = 1, allowNegative }: GetDecrementedValueInput) {
-  const nextValue = value - step;
-
-  if (min !== undefined && nextValue < min) {
-    return min;
-  }
-
-  if (!allowNegative && nextValue < 0 && min === undefined) {
-    return value;
-  }
-
-  if (min !== undefined && min >= 0 && nextValue <= min) {
-    return nextValue;
-  }
-
-  return nextValue;
-}
-
 function isInRange(value: number | undefined, min: number | undefined, max: number | undefined) {
   if (value === undefined) {
     return true;
@@ -81,9 +56,9 @@ export type NumberInputCssVariables = {
 
 export interface NumberInputProps
   extends BoxProps,
-    __BaseInputProps,
-    StylesApiProps<NumberInputFactory>,
-    ElementProps<'input', 'size' | 'type' | 'onChange'> {
+  BaseInputProps,
+  ylesApiProps<NumberInputFactory>,
+  ementProps<'input', 'size' | 'type' | 'onChange'> {
   /** Controlled component value */
   value?: number | string;
 
@@ -266,21 +241,35 @@ export const NumberInput = factory<NumberInputFactory>((_props, ref) => {
     onValueChange?.(payload, event);
   };
 
+  const getDecimalPlaces = (inputValue: number | string): number => {
+    const match = String(inputValue).match(/(?:\.(\d+))?(?:[eE]([+-]?\d+))?$/);
+    if (!match) {
+      return 0;
+    }
+    return Math.max(0, (match[1] ? match[1].length : 0) - (match[2] ? +match[2] : 0));
+  };
+
   const incrementRef = useRef<() => void>();
   incrementRef.current = () => {
     let val: number;
+    const currentValuePrecision = getDecimalPlaces(_value);
+    const stepPrecision = getDecimalPlaces(step!);
+    const maxPrecision = Math.max(currentValuePrecision, stepPrecision);
+    const factor = 10 ** maxPrecision;
 
     if (typeof _value !== 'number' || Number.isNaN(_value)) {
       val = clamp(startValue!, min, max);
     } else if (max !== undefined) {
-      val = _value + step! <= max ? _value + step! : max;
+      const incrementedValue = (Math.round(_value * factor) + Math.round(step! * factor)) / factor;
+      val = incrementedValue <= max ? incrementedValue : max;
     } else {
-      val = _value + step!;
+      val = (Math.round(_value * factor) + Math.round(step! * factor)) / factor;
     }
 
-    setValue(val);
+    const formattedValue = val.toFixed(maxPrecision);
+    setValue(parseFloat(formattedValue));
     onValueChange?.(
-      { floatValue: val, formattedValue: val.toString(), value: val.toString() },
+      { floatValue: parseFloat(formattedValue), formattedValue, value: formattedValue },
       { source: 'increment' as any }
     );
   };
@@ -288,16 +277,22 @@ export const NumberInput = factory<NumberInputFactory>((_props, ref) => {
   const decrementRef = useRef<() => void>();
   decrementRef.current = () => {
     let val: number;
+    const currentValuePrecision = getDecimalPlaces(_value);
+    const stepPrecision = getDecimalPlaces(step!);
+    const maxPrecision = Math.max(currentValuePrecision, stepPrecision);
+    const factor = 10 ** maxPrecision;
 
     if (typeof _value !== 'number' || Number.isNaN(_value)) {
       val = clamp(startValue!, min, max);
     } else {
-      val = getDecrementedValue({ value: _value, min, step, allowNegative });
+      const decrementedValue = (Math.round(_value * factor) - Math.round(step! * factor)) / factor;
+      val = min !== undefined && decrementedValue < min ? min : decrementedValue;
     }
 
-    setValue(val);
+    const formattedValue = val.toFixed(maxPrecision);
+    setValue(parseFloat(formattedValue));
     onValueChange?.(
-      { floatValue: val, formattedValue: val.toString(), value: val.toString() },
+      { floatValue: parseFloat(formattedValue), formattedValue, value: formattedValue },
       { source: 'decrement' as any }
     );
   };
