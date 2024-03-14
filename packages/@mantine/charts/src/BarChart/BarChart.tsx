@@ -246,7 +246,6 @@ export const BarChart = factory<BarChartFactory>((_props, ref) => {
                   series={series}
                 />
               )}
-              height={44}
               {...legendProps}
             />
           )}

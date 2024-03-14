@@ -271,7 +271,6 @@ export const LineChart = factory<LineChartFactory>((_props, ref) => {
                   series={series}
                 />
               )}
-              height={44}
               {...legendProps}
             />
           )}
