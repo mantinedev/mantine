@@ -56,9 +56,9 @@ export type NumberInputCssVariables = {
 
 export interface NumberInputProps
   extends BoxProps,
-  BaseInputProps,
-  ylesApiProps<NumberInputFactory>,
-  ementProps<'input', 'size' | 'type' | 'onChange'> {
+    __BaseInputProps,
+    StylesApiProps<NumberInputFactory>,
+    ElementProps<'input', 'size' | 'type' | 'onChange'> {
   /** Controlled component value */
   value?: number | string;
 
