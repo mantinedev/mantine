@@ -105,6 +105,7 @@ export type ClearFieldError = (path: unknown) => void;
 export type ClearFieldDirty = (path: unknown) => void;
 export type ClearErrors = () => void;
 export type Reset = () => void;
+export type ResetField<Values> = <Field extends LooseKeys<Values>>(path: Field) => void;
 export type Validate = () => FormValidationResult;
 export type ValidateField<Values> = <Field extends LooseKeys<Values>>(
   path: Field
@@ -179,6 +180,7 @@ export interface UseFormReturnType<
   clearFieldError: ClearFieldError;
   clearErrors: ClearErrors;
   reset: Reset;
+  resetField: ResetField<Values>;
   validate: Validate;
   validateField: ValidateField<Values>;
   reorderListItem: ReorderListItem<Values>;

@@ -88,6 +88,11 @@ export const Demo_reset = {
   render: renderDemo(demos.reset),
 };
 
+export const Demo_resetField = {
+  name: '⭐ Demo: resetField',
+  render: renderDemo(demos.resetField),
+};
+
 export const Demo_status = {
   name: '⭐ Demo: status',
   render: renderDemo(demos.status),
