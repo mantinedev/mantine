@@ -266,14 +266,26 @@ export const NumberInput = factory<NumberInputFactory>((_props, ref) => {
     onValueChange?.(payload, event);
   };
 
+  function getDecimalPlaces(num: number) {
+    if (!isFinite(num)) return 0;
+    let e = 1,
+      p = 0;
+    while (Math.round(num * e) / e !== num) {
+      e *= 10;
+      p++;
+    }
+    return p;
+  }
+
   const incrementRef = useRef<() => void>();
   incrementRef.current = () => {
     if (typeof _value !== 'number' || Number.isNaN(_value)) {
       setValue(clamp(startValue!, min, max));
-    } else if (max !== undefined) {
-      setValue(_value + step! <= max ? _value + step! : max);
     } else {
-      setValue(_value + step!);
+      const decimalPlaces = Math.max(getDecimalPlaces(_value), getDecimalPlaces(step!));
+      const factor = Math.pow(10, decimalPlaces);
+      const incrementedValue = Math.round(_value * factor + step! * factor) / factor;
+      setValue(max !== undefined && incrementedValue > max ? max : incrementedValue);
     }
   };
 
@@ -282,7 +294,11 @@ export const NumberInput = factory<NumberInputFactory>((_props, ref) => {
     if (typeof _value !== 'number' || Number.isNaN(_value)) {
       setValue(clamp(startValue!, min, max));
     } else {
-      setValue(getDecrementedValue({ value: _value, min, step, allowNegative }));
+      const decimalPlaces = Math.max(getDecimalPlaces(_value), getDecimalPlaces(step!));
+      const factor = Math.pow(10, decimalPlaces);
+      const decrementedValue = Math.round(_value * factor - step! * factor) / factor;
+      const newValue = min !== undefined && decrementedValue < min ? min : decrementedValue;
+      setValue(newValue);
     }
   };
 
