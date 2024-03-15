@@ -1,0 +1,205 @@
+import { Layout } from '@/layout';
+
+export const meta = {
+  title: 'How can I test Select/MultiSelect components?',
+  description:
+    'Learn how to use react-testing-library to test Select and MultiSelect components.',
+  slug: 'combobox-testing',
+  category: 'testing',
+  tags: [
+    'select',
+    'multi-select',
+    'tags-input',
+    'TagsInput',
+    'autocomplete',
+    'combobox',
+    'jest',
+    'vitest',
+  ],
+  created_at: 'March 15, 2024',
+  last_updated_at: 'March 15, 2024',
+};
+
+export default Layout(meta);
+
+## Getting started
+
+Before jumping into the testing part, make sure that you've configured
+[Jest](https://mantine.dev/guides/jest) or [Vitest](https://mantine.dev/guides/vitest) in your project
+as specified in the documentation. Assume that `render`, `screen` and `userEvent` variables
+are imported from your project `test-utils` file.
+
+This guide is applicable to:
+
+- [Select](https://mantine.dev/core/select)
+- [MultiSelect](https://mantine.dev/core/multi-select)
+- [Autocomplete](https://mantine.dev/core/autocomplete)
+- [TagsInput](https://mantine.dev/core/tags-input)
+- Most custom components built with [Combobox](https://mantine.dev/core/combobox)
+
+## Selecting one option (Select, Autocomplete)
+
+To select one of the options in [Select](https://mantine.dev/core/select) or
+[Autocomplete](https://mantine.dev/core/autocomplete) components, you need to:
+
+1. Click the input to open the options list
+2. Click the option you want to select
+
+Note that:
+
+- If you use an array of strings in the `data` prop, options will have the same value and label
+- It is recommended to set `name` attribute on all form components that you are planning to test
+
+```tsx
+import { Select } from '@mantine/core';
+
+function MyForm() {
+  return (
+    <Select
+      name="age"
+      label="Select your age"
+      data={[
+        { value: 'ok', label: 'I am 18 or older' },
+        { value: 'not-ok', label: 'I am under 18' },
+      ]}
+    />
+  );
+}
+
+it('selects option', () => {
+  render(<MyForm />);
+
+  // Click Select to open the options list
+  // Note that the dropdown is closed when one of the options is selected
+  // If you want to select several options one after another,
+  // you need to click the input again to open the dropdown
+  await userEvent.click(screen.getByRole('textbox', { name: 'Select your age' }));
+
+  // Get option by its label and click it
+  await userEvent.click(screen.getByRole('option', { name: 'I am 18 or older' }));
+
+  // Verify that the option is selected
+  // This is what user sees in the input
+  expect(screen.getByRole('textbox')).toHaveValue('I am 18 or older');
+
+  // This is what will be submitted with the form
+  expect(document.querySelector('input[name="age"]')).toHaveValue('ok');
+});
+```
+
+## Selecting multiple options (MultiSelect, TagsInput)
+
+Selecting options in [MultiSelect](https://mantine.dev/core/multi-select) and
+[TagsInput](https://mantine.dev/core/tags-input) components is similar to
+`Select` and `Autocomplete`. The main difference is that the dropdown does not close
+when one of the options is selected, so you can select several options one after another
+without clicking the input again.
+
+```tsx
+import { MultiSelect } from '@mantine/core';
+
+function MyForm() {
+  return (
+    <MultiSelect
+      name="groceries"
+      label="Select groceries"
+      data={[
+        { value: 'banana', label: 'Banana' },
+        { value: 'apple', label: 'Apple' },
+        { value: 'orange', label: 'Orange' },
+      ]}
+    />
+  );
+}
+
+it('selects multiple options', () => {
+  render(<MyForm />);
+
+  // Click Select to open the options list
+  // Note that unlike Select, MultiSelect does not close the dropdown when one of the options is selected
+  // You can select several options one after another without clicking the input again
+  await userEvent.click(screen.getByRole('textbox', { name: 'Select groceries' }));
+
+  // Click several options to select them
+  await userEvent.click(screen.getByRole('option', { name: 'Banana' }));
+  await userEvent.click(screen.getByRole('option', { name: 'Apple' }));
+
+  // The best way to verify that options are selected is to check the hidden input value
+  expect(document.querySelector('input[name="groceries"]')).toHaveValue('banana,apple');
+});
+```
+
+## Searching
+
+You can verify that the component is searchable by typing search query and checking
+that only relevant options are visible.
+
+```tsx
+import { MultiSelect } from '@mantine/core';
+
+function MyForm() {
+  return (
+    <MultiSelect
+      name="groceries"
+      searchable
+      label="Select groceries"
+      data={[
+        { value: 'banana', label: 'Banana' },
+        { value: 'apple', label: 'Apple' },
+        { value: 'orange', label: 'Orange' },
+      ]}
+    />
+  );
+}
+
+it('searches for options', () => {
+  render(<MyForm />);
+
+  // Click Select to open the options list
+  await userEvent.click(screen.getByRole('textbox', { name: 'Select groceries' }));
+
+  // Type search query
+  await userEvent.type(screen.getByRole('textbox', { name: 'Select groceries' }), 'banana');
+
+  // Verify that only one option is visible
+  expect(screen.getByRole('option', { name: 'Banana' })).toBeVisible();
+  expect(screen.queryByRole('option', { name: 'Apple' })).toBeNull();
+  expect(screen.queryByRole('option', { name: 'Orange' })).toBeNull();
+});
+```
+
+## Dropdown opened state
+
+To verify that the dropdown is opened, you can check that the listbox with the same name
+as the input is visible.
+
+```tsx
+import { Select } from '@mantine/core';
+
+function MyForm() {
+  return (
+    <Select
+      name="age"
+      label="Select your age"
+      data={[
+        { value: 'ok', label: 'I am 18 or older' },
+        { value: 'not-ok', label: 'I am under 18' },
+      ]}
+    />
+  );
+}
+
+it('verifies dropdown opened state', () => {
+  render(<MyForm />);
+
+  // Verify that dropdown is closed
+  // Listbox has the same name as the textbox
+  expect(screen.queryByRole('listbox', { name: 'Select your age' })).toBeNull();
+
+  // Click Select to open the options list
+  await userEvent.click(screen.getByRole('textbox', { name: 'Select your age' }));
+
+  // Verify that dropdown is open
+  expect(screen.getByRole('listbox', { name: 'Select your age' })).toBeVisible();
+});
+```

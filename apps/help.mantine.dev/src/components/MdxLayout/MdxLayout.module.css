@@ -32,9 +32,14 @@
   display: flex;
   align-items: flex-start;
   position: relative;
+
+  @mixin smaller-than $md {
+    --table-of-contents-width: 0;
+  }
 }
 
 .content {
-  flex: 1;
+  flex: 0 0 calc(100% - var(--table-of-contents-width));
+  overflow: hidden;
   max-width: 100%;
 }
