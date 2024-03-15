@@ -39,7 +39,7 @@ export function MdxLayout({ meta, children }: MdxLayoutProps) {
             <nav className={classes.links}>
               <PageHeaderLink
                 icon={<IconPencil size={18} stroke={1.5} />}
-                link={`https://github.com/mantinedev/help.mantine.dev/blob/master/src/pages/q/${meta.slug}.mdx`}
+                link={`https://github.com/mantinedev/mantine/blob/master/apps/help.mantine.dev/src/pages/q/${meta.slug}.mdx`}
               >
                 Edit this page on GitHub
               </PageHeaderLink>

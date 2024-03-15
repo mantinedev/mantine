@@ -8,7 +8,7 @@ import { LinkItem } from './LinkItem/LinkItem';
 import classes from './MdxPageHeader.module.css';
 
 const REPO_BASE = 'https://github.com/mantinedev/mantine/blob/master';
-const DOCS_BASE = `${REPO_BASE}/docs/src/pages`;
+const DOCS_BASE = `${REPO_BASE}/apps/mantine.dev/src/pages`;
 const SOURCE_BASE = `${REPO_BASE}/packages`;
 
 interface MdxPageHeaderProps {
