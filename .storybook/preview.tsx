@@ -11,7 +11,7 @@ import {
 } from '@mantine/core';
 import { ModalsProvider } from '@mantine/modals';
 import { ShikiProvider } from '@mantinex/shiki';
-import { theme } from '../docs/theme';
+import { theme } from '../apps/mantine.dev/theme';
 
 export const parameters = { layout: 'fullscreen' };
 

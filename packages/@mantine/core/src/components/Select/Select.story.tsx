@@ -16,6 +16,14 @@ export function Usage() {
   );
 }
 
+export function FixedValue() {
+  return (
+    <div style={{ padding: 40 }}>
+      <Select data={['React', 'Angular', 'Svelte']} placeholder="Select something" value="React" />
+    </div>
+  );
+}
+
 export function ScrollToSelected() {
   return (
     <div style={{ padding: 40 }}>

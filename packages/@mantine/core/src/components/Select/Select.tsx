@@ -150,7 +150,7 @@ export const Select = factory<SelectFactory>((_props, ref) => {
   const optionsLockup = useMemo(() => getOptionsLockup(parsedData), [parsedData]);
   const _id = useId(id);
 
-  const [_value, setValue] = useUncontrolled({
+  const [_value, setValue, controlled] = useUncontrolled({
     value,
     defaultValue,
     finalValue: null,
@@ -232,7 +232,7 @@ export const Select = factory<SelectFactory>((_props, ref) => {
           const nextValue = optionLockup ? optionLockup.value : null;
 
           setValue(nextValue, optionLockup);
-          setSearch(typeof nextValue === 'string' ? optionLockup?.label || '' : '');
+          !controlled && setSearch(typeof nextValue === 'string' ? optionLockup?.label || '' : '');
           combobox.closeDropdown();
         }}
         size={size}
