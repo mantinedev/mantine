@@ -76,7 +76,7 @@ export interface SelectProps
   clearButtonProps?: __CloseButtonProps & ElementProps<'button'>;
 
   /** Props passed down to the hidden input */
-  hiddenInputProps?: React.ComponentPropsWithoutRef<'input'>;
+  hiddenInputProps?: Omit<React.ComponentPropsWithoutRef<'input'>, 'value'>;
 
   /** A function to render content of the option, replaces the default content of the option */
   renderOption?: (item: ComboboxLikeRenderOptionInput<ComboboxItem>) => React.ReactNode;
@@ -303,10 +303,9 @@ export const Select = factory<SelectFactory>((_props, ref) => {
           scrollAreaProps={scrollAreaProps}
         />
       </Combobox>
-      <input
-        type="hidden"
+      <Combobox.HiddenInput
+        value={_value}
         name={name}
-        value={_value || ''}
         form={form}
         disabled={disabled}
         {...hiddenInputProps}

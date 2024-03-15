@@ -91,7 +91,7 @@ export interface TagsInputProps
   clearButtonProps?: __CloseButtonProps & ElementProps<'button'>;
 
   /** Props passed down to the hidden input */
-  hiddenInputProps?: React.ComponentPropsWithoutRef<'input'>;
+  hiddenInputProps?: Omit<React.ComponentPropsWithoutRef<'input'>, 'value'>;
 
   /** Divider used to separate values in the hidden input `value` attribute, `','` by default */
   hiddenInputValuesDivider?: string;
@@ -429,11 +429,11 @@ export const TagsInput = factory<TagsInputFactory>((_props, ref) => {
           scrollAreaProps={scrollAreaProps}
         />
       </Combobox>
-      <input
-        type="hidden"
+      <Combobox.HiddenInput
         name={name}
         form={form}
-        value={_value.join(hiddenInputValuesDivider)}
+        value={_value}
+        valuesDivider={hiddenInputValuesDivider}
         disabled={disabled}
         {...hiddenInputProps}
       />
