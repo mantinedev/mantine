@@ -22,6 +22,7 @@ import { meta as inputMask } from './pages/q/input-mask.mdx';
 import { meta as inputsPlaceholderColor } from './pages/q/inputs-placeholder-color.mdx';
 import { meta as mantineProviderMissing } from './pages/q/mantine-provider-missing.mdx';
 import { meta as nextLoadFonts } from './pages/q/next-load-fonts.mdx';
+import { meta as otherLibs } from './pages/q/other-libs.mdx';
 import { meta as pinchToZoomModal } from './pages/q/pinch-to-zoom-modal.mdx';
 import { meta as privateCssVariables } from './pages/q/private-css-variables.mdx';
 import { meta as roadmap } from './pages/q/roadmap.mdx';
@@ -57,6 +58,7 @@ export const MDX_DATA = [
   inputsPlaceholderColor,
   mantineProviderMissing,
   nextLoadFonts,
+  otherLibs,
   pinchToZoomModal,
   privateCssVariables,
   roadmap,
