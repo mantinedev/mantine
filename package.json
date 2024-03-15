@@ -22,7 +22,7 @@
     "hc": "cd apps/help.mantine.dev && npm run dev",
     "hc:build": "cd apps/help.mantine.dev && npm run build",
     "hc:exports": "esno scripts/docs/hc-exports",
-    "hc:deploy": "npm run hc:build && wrangler pages deploy apps/help.mantine.dev/out",
+    "hc:deploy": "npm run hc:build && wrangler pages deploy apps/help.mantine.dev/out --branch master --project-name help-mantine-dev",
     "chmod": "sh scripts/utils/chmod.sh",
     "setup": "npm run docs:docgen && esno scripts/docs/generate-css-exports",
     "plop": "esno scripts/plop",
