@@ -1,0 +1,34 @@
+import { Layout } from '@/layout';
+
+export const meta = {
+  title: 'Can I use SegmentedControl with empty value?',
+  description: 'SegmentedControl cannot be used without a value',
+  slug: 'segmented-control-no-value',
+  category: 'components',
+  tags: ['segmented control', 'components'],
+  created_at: 'March 15, 2024',
+  last_updated_at: 'March 15, 2024',
+};
+
+export default Layout(meta);
+
+## Can I use SegmentedControl with initial empty value?
+
+[SegmentedControl](https://mantine.dev/core/segmented-control/) cannot be used without a value.
+It is based on [FloatingIndicator](https://mantine.dev/core/floating-indicator/) and requires a value to work properly.
+If neither `value` nor `defaultValue` is provided, `SegmentedControl` will automatically set first item as active.
+
+## Can I deselect value in SegmentedControl?
+
+No, `SegmentedControl` is designed to always have a value.
+This constraint is required for the component animations and floating indicator to work properly.
+
+## What should I use instead if I need deselect functionality?
+
+If you need to have a control that can be deselected, consider using [Radio](https://mantine.dev/core/radio/) or [Checkbox](https://mantine.dev/core/checkbox/) components.
+Both `Radio` and `Checkbox` can be deselected by setting `checked={false}` prop.
+
+## I want a component that looks like SegmentedControl but can be deselected
+
+You can build a custom component that works similar to `SegmentedControl`
+with [FloatingIndicator](https://mantine.dev/core/floating-indicator/).
