@@ -17,6 +17,7 @@ const defaultProps: SelectProps = {
 describe('@mantine/core/Select', () => {
   tests.axe([
     <Select aria-label="test-label" data={['test-1', 'test-2']} />,
+    <Select aria-label="test-label" dropdownOpened data={['test-1', 'test-2']} />,
     <Select label="test-label" data={['test-1', 'test-2']} />,
     <Select label="test-label" error data={['test-1', 'test-2']} />,
     <Select label="test-label" error="test-error" id="test" data={['test-1', 'test-2']} />,
