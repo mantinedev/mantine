@@ -52,7 +52,7 @@
     "test:validate-package-json": "esno scripts/tests/validate-package-json",
     "test:validate-packages-files": "esno scripts/tests/validate-packages-files",
     "jest": "jest",
-    "typecheck": "tsc --noEmit && cd apps/mantine.dev && npm run typecheck && cd ../apps/help.mantine.dev && npm run typecheck",
+    "typecheck": "tsc --noEmit && cd apps/mantine.dev && npm run typecheck && cd ../help.mantine.dev && npm run typecheck",
     "lint": "npm run eslint && npm run stylelint",
     "eslint": "eslint packages apps/mantine.dev/src apps/help.mantine.dev/src scripts --ext .ts,.tsx --cache",
     "stylelint": "stylelint \"**/*.css\" --cache",

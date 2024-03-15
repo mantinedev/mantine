@@ -8,4 +8,4 @@ public
 *.js
 *.cjs
 *.mjs
-docs/src/components/____test.component.tsx
+apps/mantine.dev/src/components/____test.component.tsx
