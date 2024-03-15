@@ -23,6 +23,7 @@ import {
 } from '../Combobox';
 import { __BaseInputProps, __InputStylesNames, InputVariant } from '../Input';
 import { InputBase } from '../InputBase';
+import { ScrollAreaProps } from '../ScrollArea';
 
 export type AutocompleteStylesNames = __InputStylesNames | ComboboxLikeStylesNames;
 
@@ -46,6 +47,9 @@ export interface AutocompleteProps
 
   /** A function to render content of the option, replaces the default content of the option */
   renderOption?: (input: ComboboxLikeRenderOptionInput<ComboboxStringItem>) => React.ReactNode;
+
+  /** Props passed down to the underlying `ScrollArea` component in the dropdown */
+  scrollAreaProps?: ScrollAreaProps;
 }
 
 export type AutocompleteFactory = Factory<{
@@ -88,6 +92,7 @@ export const Autocomplete = factory<AutocompleteFactory>((_props, ref) => {
     id,
     renderOption,
     autoComplete,
+    scrollAreaProps,
     ...others
   } = props;
 
@@ -184,6 +189,7 @@ export const Autocomplete = factory<AutocompleteFactory>((_props, ref) => {
         unstyled={unstyled}
         labelId={`${_id}-label`}
         renderOption={renderOption}
+        scrollAreaProps={scrollAreaProps}
       />
     </Combobox>
   );

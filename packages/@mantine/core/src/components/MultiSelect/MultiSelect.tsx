@@ -27,6 +27,7 @@ import { __BaseInputProps, __InputStylesNames } from '../Input';
 import { InputBase } from '../InputBase';
 import { Pill } from '../Pill';
 import { PillsInput } from '../PillsInput';
+import { ScrollAreaProps } from '../ScrollArea';
 import { filterPickedValues } from './filter-picked-values';
 
 export type MultiSelectStylesNames =
@@ -98,6 +99,9 @@ export interface MultiSelectProps
 
   /** A function to render content of the option, replaces the default content of the option */
   renderOption?: (item: ComboboxLikeRenderOptionInput<ComboboxItem>) => React.ReactNode;
+
+  /** Props passed down to the underlying `ScrollArea` component in the dropdown */
+  scrollAreaProps?: ScrollAreaProps;
 }
 
 export type MultiSelectFactory = Factory<{
@@ -187,6 +191,7 @@ export const MultiSelect = factory<MultiSelectFactory>((_props, ref) => {
     renderOption,
     onRemove,
     onClear,
+    scrollAreaProps,
     ...others
   } = props;
 
@@ -417,6 +422,7 @@ export const MultiSelect = factory<MultiSelectFactory>((_props, ref) => {
           unstyled={unstyled}
           labelId={`${_id}-label`}
           renderOption={renderOption}
+          scrollAreaProps={scrollAreaProps}
         />
       </Combobox>
       <input
