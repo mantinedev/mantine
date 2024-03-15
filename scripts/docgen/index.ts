@@ -4,7 +4,7 @@ import { DOCGEN_PATHS } from './docgen-paths';
 
 generateDeclarations({
   tsConfigPath: getPath('tsconfig.json'),
-  outputPath: getPath('docs/src/.docgen'),
+  outputPath: getPath('apps/mantine.dev/src/.docgen'),
   componentsPaths: DOCGEN_PATHS,
   excludeProps: [],
   typesReplacement: {

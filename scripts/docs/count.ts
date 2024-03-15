@@ -5,13 +5,13 @@ import { createLogger } from '../utils/signale';
 const logger = createLogger('count');
 
 const components = fg.sync([
-  getPath('docs/src/pages/core/*.mdx'),
-  getPath('docs/src/pages/dates/*.mdx'),
-  getPath('docs/src/pages/x/*.mdx'),
+  getPath('apps/mantine.dev/src/pages/core/*.mdx'),
+  getPath('apps/mantine.dev/src/pages/dates/*.mdx'),
+  getPath('apps/mantine.dev/src/pages/x/*.mdx'),
 ]);
 
-const hooks = fg.sync([getPath('docs/src/pages/hooks/*.mdx')]);
-const pages = fg.sync([getPath('docs/src/pages/**/*.mdx')]);
+const hooks = fg.sync([getPath('apps/mantine.dev/src/pages/hooks/*.mdx')]);
+const pages = fg.sync([getPath('apps/mantine.dev/src/pages/**/*.mdx')]);
 const demos = fg.sync([getPath('packages/@docs/demos/src/**/*.demo.*.tsx')]);
 
 logger.info('%d components', components.length);
