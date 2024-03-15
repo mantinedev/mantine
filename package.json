@@ -11,12 +11,8 @@
     "node": ">=20.9.0"
   },
   "workspaces": [
-    "packages/@mantine/*",
-    "packages/@mantinex/*",
-    "packages/@mantine-tests/*",
-    "packages/@docs/*",
-    "apps/*",
-    "docs"
+    "packages/**/*",
+    "apps/*"
   ],
   "scripts": {
     "hc": "cd apps/help.mantine.dev && npm run dev",
@@ -30,12 +26,12 @@
     "changelog": "esno scripts/docs/changelog",
     "storybook": "storybook dev -p 6006",
     "dev": "npm run docs",
-    "docs": "cd docs && npm run dev",
+    "docs": "cd apps/mantine.dev && npm run dev",
     "docs:docgen": "esno scripts/docgen",
     "docs:codegen": "esno scripts/codegen",
-    "docs:build": "npm run docs:docgen && cd docs && npm run build",
-    "docs:build:alpha": "npm run docs:docgen && cd docs && npm run build:alpha",
-    "docs:deploy": "npm run docs:build && gh-pages -d docs/out -t true",
+    "docs:build": "npm run docs:docgen && cd apps/mantine.dev && npm run build",
+    "docs:build:alpha": "npm run docs:docgen && cd apps/mantine.dev && npm run build:alpha",
+    "docs:deploy": "npm run docs:build && gh-pages -d app/mantine.dev/out -t true",
     "docs:deploy:alpha": "npm run docs:build:alpha && esno scripts/docs/deploy-alpha",
     "docs:count": "esno scripts/docs/count",
     "clean": "rimraf --glob packages/*/*/{esm,cjs,lib,dist} packages/*/*/*.tsbuildinfo packages/*/*/styles.css packages/*/*/styles.layer.css packages/@mantine/core/styles",
@@ -56,9 +52,9 @@
     "test:validate-package-json": "esno scripts/tests/validate-package-json",
     "test:validate-packages-files": "esno scripts/tests/validate-packages-files",
     "jest": "jest",
-    "typecheck": "tsc --noEmit && cd docs && npm run typecheck && cd ../apps/help.mantine.dev && npm run typecheck",
+    "typecheck": "tsc --noEmit && cd apps/mantine.dev && npm run typecheck && cd ../apps/help.mantine.dev && npm run typecheck",
     "lint": "npm run eslint && npm run stylelint",
-    "eslint": "eslint packages docs/src scripts --ext .ts,.tsx --cache",
+    "eslint": "eslint packages apps/mantine.dev/src apps/help.mantine.dev/src scripts --ext .ts,.tsx --cache",
     "stylelint": "stylelint \"**/*.css\" --cache",
     "syncpack": "syncpack list-mismatches",
     "syncpack:format": "syncpack format",

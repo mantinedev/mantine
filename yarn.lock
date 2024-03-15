@@ -11847,9 +11847,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"docs@workspace:docs":
+"docs@workspace:apps/mantine.dev":
   version: 0.0.0-use.local
-  resolution: "docs@workspace:docs"
+  resolution: "docs@workspace:apps/mantine.dev"
   dependencies:
     "@docs/demos": "workspace:*"
     "@docs/styles-api": "workspace:*"
