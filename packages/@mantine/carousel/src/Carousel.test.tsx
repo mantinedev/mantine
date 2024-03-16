@@ -14,7 +14,7 @@ const defaultProps: CarouselProps = {
   withIndicators: true,
 };
 
-describe('@mantine/core/Carousel', () => {
+describe('@mantine/carousel/Carousel', () => {
   tests.itSupportsSystemProps<CarouselProps, CarouselStylesNames>({
     component: Carousel,
     props: defaultProps,
@@ -27,7 +27,7 @@ describe('@mantine/core/Carousel', () => {
     classes: true,
     id: true,
     refType: HTMLDivElement,
-    displayName: '@mantine/core/Carousel',
+    displayName: '@mantine/carousel/Carousel',
     stylesApiSelectors: [
       'root',
       'container',
