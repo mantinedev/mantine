@@ -15,12 +15,12 @@ First of all, thank you for showing interest in contributing to Mantine! All you
 - **Contribute to the codebase:** Propose new features via [GitHub Issues](https://github.com/mantinedev/mantine/issues/new), or find an [existing issue](https://github.com/mantinedev/mantine/labels/help%20wanted) that you are interested in and work on it!
 - **Give us a code review:** Help us identify problems with the [source code](https://github.com/mantinedev/mantine/tree/master/packages) or make Mantine more performant.
 
-## Contributing workflow
+## Contribution workflow
 
 - Decide on what you want to contribute.
 - If you would like to implement a new feature, discuss it with the maintainer ([GitHub Discussions](https://github.com/mantinedev/mantine/discussions/new) or [Discord](https://discord.gg/wbH82zuWMN)) before jumping into coding.
-- After finalizing issue details, as you begin working on the code, please make sure to follow commit conventions.
-- Run tests with `npm test` and submit a PR once all tests have passed.
+- After finalizing the issue details, as you begin working on the code, please make sure to follow commit conventions.
+- Run tests with `yarn test` and submit a PR once all tests have passed.
 - Get a code review and fix all issues noticed by the maintainer.
 - If you cannot finish your task or if you change your mind – that's totally fine! Just let us know in the GitHub issue that you created during the first step of this process. The Mantine community is friendly – we won't judge or ask any questions if you decide to cancel your submission.
 - Your PR is merged. You are awesome ❤️!
@@ -29,34 +29,36 @@ First of all, thank you for showing interest in contributing to Mantine! All you
 
 - Install the [editorconfig](https://editorconfig.org/) extension for your editor.
 - Fork the [repository](https://github.com/mantinedev/mantine), then clone or download your fork.
-- Run `nvm use` to switch to the Node version specified in `.nvmrc` file ([install nvm](https://github.com/nvm-sh/nvm)).
-- Install dependencies with yarn – `yarn`
-- Setup project – `npm run setup`
-- Build local version of all packages – `npm run build all`
-- To start storybook – `npm run storybook`
-- To start docs – `npm run docs`
-- To rebuild props descriptions – `npm run docs:docgen`
+- Install [nvm](https://github.com/nvm-sh/nvm) on your system.
+- In the project's root folder, run `nvm use` to switch to the Node version specified in the `.nvmrc` file.
+- Run `corepack enable` to have the package managers (Yarn in our case) set up.
+- Install dependencies with yarn – `yarn`.
+- Run the setup script – `yarn setup`.
+- Build a local version of all packages – `yarn build all`.
+- To start Storybook – `yarn storybook`.
+- To start the documentation site – `yarn docs`.
+- To rebuild the prop descriptions – `yarn docs:docgen`.
 
 ## npm scripts
 
-All npm scripts are located at [main package.json](https://github.com/mantinedev/mantine/blob/master/package.json).
+All npm scripts are located at the [main package.json](https://github.com/mantinedev/mantine/blob/master/package.json).
 Individual packages do not have dedicated scripts.
 
 ### Development scripts
 
-- `storybook` – Starts the storybook development server. To start storybook for a specific component, use the `npm run storybook Tooltip` command.
-- `docs` – Starts the docs development server.
+- `storybook` – Starts the Storybook development server. To start it for a specific component, run something like `yarn storybook Tooltip`.
+- `docs` – Starts the development server for the documentation site.
 
 ### Testing scripts
 
-- `syncpack` – runs [syncpack](https://www.npmjs.com/package/syncpack)
-- `typecheck` – runs TypeScript typechecking with `tsc --noEmit` on all packages and docs
-- `lint` – runs ESLint on src folder
-- `jest` – runs tests with jest
-- `test` – runs all above testing scripts
+- `syncpack` – runs [syncpack](https://www.npmjs.com/package/syncpack).
+- `typecheck` – runs TypeScript type checking with `tsc --noEmit` on all packages and docs.
+- `lint` – runs ESLint on the src folder.
+- `jest` – runs tests with Jest.
+- `test` – runs all of the above testing scripts.
 
 ### Docs scripts
 
-- `docs:docgen` – generates components types information with [docgen script](https://github.com/mantinedev/mantine/blob/master/scripts/docgen.ts)
-- `docs:build` – builds docs for production
-- `docs:deploy` – builds and deploys docs to the GitHub Pages
+- `docs:docgen` – generates component type information with the [docgen script](https://github.com/mantinedev/mantine/blob/master/scripts/docgen.ts).
+- `docs:build` – builds docs for production.
+- `docs:deploy` – builds and deploys the docs to GitHub Pages.
