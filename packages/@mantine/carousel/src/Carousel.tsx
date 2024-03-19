@@ -1,5 +1,5 @@
 import React, { Children, useCallback, useEffect, useState } from 'react';
-import useEmblaCarousel, { EmblaCarouselType, EmblaPluginType } from 'embla-carousel-react';
+import useEmblaCarousel, { UseEmblaCarouselType, EmblaPluginType } from 'embla-carousel-react';
 import {
   AccordionChevron,
   Box,
