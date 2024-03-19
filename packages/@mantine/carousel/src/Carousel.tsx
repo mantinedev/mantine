@@ -58,7 +58,7 @@ export interface CarouselProps
   onSlideChange?: (index: number) => void;
 
   /** Get embla API as ref */
-  getEmblaApi?: (embla: EmblaCarouselType) => void;
+  getEmblaApi?: (embla: UseEmblaCarouselType) => void;
 
   /** Props passed down to next control */
   nextControlProps?: React.ComponentPropsWithoutRef<'button'>;
