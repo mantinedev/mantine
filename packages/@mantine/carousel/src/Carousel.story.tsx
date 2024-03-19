@@ -109,7 +109,7 @@ export function DynamicSlides() {
 export function AnimationOffsetEffect() {
   const TRANSITION_DURATION = 200;
   const [opened, setOpened] = useState(false);
-  const [embla, setEmbla] = useState<EmblaCarouselType | null>(null);
+  const [embla, setEmbla] = useState<UseEmblaCarouselType | null>(null);
 
   useAnimationOffsetEffect(embla, TRANSITION_DURATION);
 
