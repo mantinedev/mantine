@@ -200,7 +200,7 @@ export const Carousel = factory<CarouselFactory>((_props, ref) => {
     slideGap,
     orientation,
     height,
-    align: typeof align === 'number' ? undefined : align,
+    align: align === 'number' ? undefined : align,
     slidesToScroll,
     includeGapInSize,
     draggable,
