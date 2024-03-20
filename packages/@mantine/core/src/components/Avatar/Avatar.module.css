@@ -17,9 +17,9 @@
 
   --avatar-size: var(--avatar-size-md);
   --avatar-radius: rem(1000px);
-  --avatar-bg: var(--mantine-color-gray-light);
+  --avatar-bg: var(--mantine-primary-color-light);
   --avatar-bd: rem(1px) solid transparent;
-  --avatar-color: var(--mantine-color-gray-light-color);
+  --avatar-color: var(--mantine-primary-color-light-color);
   --avatar-placeholder-fz: calc(var(--avatar-size) / 2.5);
 
   -webkit-tap-highlight-color: transparent;

@@ -80,7 +80,7 @@ const defaultProps: Partial<AvatarProps> = {};
 const varsResolver = createVarsResolver<AvatarFactory>(
   (theme, { size, radius, variant, gradient, color, autoContrast }) => {
     const colors = theme.variantColorResolver({
-      color: color || 'gray',
+      color: color || theme.primaryColor,
       theme,
       gradient,
       variant: variant || 'light',
