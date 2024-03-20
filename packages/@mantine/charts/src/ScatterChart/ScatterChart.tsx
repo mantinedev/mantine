@@ -197,7 +197,12 @@ export const ScatterChart = factory<ScatterChartFactory>((_props, ref) => {
     >
       <ResponsiveContainer {...getStyles('container')}>
         <ReChartsScatterChart
-          margin={{ bottom: xAxisLabel ? 30 : undefined, left: yAxisLabel ? 5 : undefined }}
+          margin={{
+            bottom: xAxisLabel ? 30 : undefined,
+            left: yAxisLabel ? 10 : undefined,
+            right: yAxisLabel ? 5 : undefined,
+          }}
+          {...scatterChartProps}
         >
           <CartesianGrid
             strokeDasharray={strokeDasharray}
@@ -224,6 +229,7 @@ export const ScatterChart = factory<ScatterChartFactory>((_props, ref) => {
                 {xAxisLabel}
               </Label>
             )}
+            {xAxisProps?.children}
           </XAxis>
           <YAxis
             type="number"
@@ -243,11 +249,13 @@ export const ScatterChart = factory<ScatterChartFactory>((_props, ref) => {
                 angle={-90}
                 textAnchor="middle"
                 fontSize={12}
+                offset={-5}
                 {...getStyles('axisLabel')}
               >
                 {yAxisLabel}
               </Label>
             )}
+            {yAxisProps?.children}
           </YAxis>
 
           {withTooltip && (

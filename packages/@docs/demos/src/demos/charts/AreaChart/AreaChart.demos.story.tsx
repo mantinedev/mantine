@@ -147,3 +147,8 @@ export const Demo_rotateLabels = {
   name: '⭐ Demo: rotateLabels',
   render: renderDemo(demos.rotateLabels),
 };
+
+export const Demo_axisLabels = {
+  name: '⭐ Demo: axisLabels',
+  render: renderDemo(demos.axisLabels),
+};

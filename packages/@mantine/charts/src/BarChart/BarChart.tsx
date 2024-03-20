@@ -3,6 +3,7 @@ import {
   Bar,
   BarProps,
   CartesianGrid,
+  Label,
   Legend,
   BarChart as ReChartsBarChart,
   ReferenceLine,
@@ -146,6 +147,8 @@ export const BarChart = factory<BarChartFactory>((_props, ref) => {
     valueFormatter,
     children,
     barProps,
+    xAxisLabel,
+    yAxisLabel,
     ...others
   } = props;
 
@@ -231,6 +234,11 @@ export const BarChart = factory<BarChartFactory>((_props, ref) => {
           data={data}
           stackOffset={type === 'percent' ? 'expand' : undefined}
           layout={orientation}
+          margin={{
+            bottom: xAxisLabel ? 30 : undefined,
+            left: yAxisLabel ? 10 : undefined,
+            right: yAxisLabel ? 5 : undefined,
+          }}
           {...barChartProps}
         >
           {withLegend && (
@@ -261,7 +269,14 @@ export const BarChart = factory<BarChartFactory>((_props, ref) => {
             minTickGap={5}
             {...getStyles('axis')}
             {...xAxisProps}
-          />
+          >
+            {xAxisLabel && (
+              <Label position="insideBottom" offset={-20} fontSize={12} {...getStyles('axisLabel')}>
+                {xAxisLabel}
+              </Label>
+            )}
+            {xAxisProps?.children}
+          </XAxis>
 
           <YAxis
             hide={!withYAxis}
@@ -274,7 +289,21 @@ export const BarChart = factory<BarChartFactory>((_props, ref) => {
             tickFormatter={type === 'percent' ? valueToPercent : valueFormatter}
             {...getStyles('axis')}
             {...yAxisProps}
-          />
+          >
+            {yAxisLabel && (
+              <Label
+                position="insideLeft"
+                angle={-90}
+                textAnchor="middle"
+                fontSize={12}
+                offset={-5}
+                {...getStyles('axisLabel')}
+              >
+                {yAxisLabel}
+              </Label>
+            )}
+            {yAxisProps?.children}
+          </YAxis>
 
           <CartesianGrid
             strokeDasharray={strokeDasharray}

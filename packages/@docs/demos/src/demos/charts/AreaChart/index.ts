@@ -27,3 +27,4 @@ export { referenceLines } from './AreaChart.demo.referenceLines';
 export { seriesLabels } from './AreaChart.demo.seriesLabels';
 export { valueFormatter } from './AreaChart.demo.valueFormatter';
 export { rotateLabels } from './AreaChart.demo.rotateLabels';
+export { axisLabels } from './AreaChart.demo.axisLabels';

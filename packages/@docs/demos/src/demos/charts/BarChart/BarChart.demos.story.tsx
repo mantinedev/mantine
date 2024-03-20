@@ -112,3 +112,8 @@ export const Demo_barProps = {
   name: '⭐ Demo: barProps',
   render: renderDemo(demos.barProps),
 };
+
+export const Demo_axisLabels = {
+  name: '⭐ Demo: axisLabels',
+  render: renderDemo(demos.axisLabels),
+};

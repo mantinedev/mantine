@@ -4,6 +4,7 @@ import {
   AreaProps,
   CartesianGrid,
   DotProps,
+  Label,
   Legend,
   AreaChart as ReChartsAreaChart,
   ReferenceLine,
@@ -194,6 +195,8 @@ export const AreaChart = factory<AreaChartFactory>((_props, ref) => {
     valueFormatter,
     children,
     areaProps,
+    xAxisLabel,
+    yAxisLabel,
     ...others
   } = props;
 
@@ -285,6 +288,7 @@ export const AreaChart = factory<AreaChartFactory>((_props, ref) => {
           fillOpacity={dimmed ? 0 : 1}
           strokeOpacity={dimmed ? 0.5 : 1}
           strokeDasharray={item.strokeDasharray}
+          {...(typeof areaProps === 'function' ? areaProps(item) : areaProps)}
         />
       </Fragment>
     );
@@ -322,6 +326,11 @@ export const AreaChart = factory<AreaChartFactory>((_props, ref) => {
           data={data}
           stackOffset={type === 'percent' ? 'expand' : undefined}
           layout={orientation}
+          margin={{
+            bottom: xAxisLabel ? 30 : undefined,
+            left: yAxisLabel ? 10 : undefined,
+            right: yAxisLabel ? 5 : undefined,
+          }}
           {...areaChartProps}
         >
           {referenceLinesItems}
@@ -361,7 +370,14 @@ export const AreaChart = factory<AreaChartFactory>((_props, ref) => {
             minTickGap={5}
             {...getStyles('axis')}
             {...xAxisProps}
-          />
+          >
+            {xAxisLabel && (
+              <Label position="insideBottom" offset={-20} fontSize={12} {...getStyles('axisLabel')}>
+                {xAxisLabel}
+              </Label>
+            )}
+            {xAxisProps?.children}
+          </XAxis>
 
           <YAxis
             hide={!withYAxis}
@@ -374,7 +390,21 @@ export const AreaChart = factory<AreaChartFactory>((_props, ref) => {
             tickFormatter={type === 'percent' ? valueToPercent : valueFormatter}
             {...getStyles('axis')}
             {...yAxisProps}
-          />
+          >
+            {yAxisLabel && (
+              <Label
+                position="insideLeft"
+                angle={-90}
+                textAnchor="middle"
+                fontSize={12}
+                offset={-5}
+                {...getStyles('axisLabel')}
+              >
+                {yAxisLabel}
+              </Label>
+            )}
+            {yAxisProps?.children}
+          </YAxis>
 
           {withTooltip && (
             <Tooltip

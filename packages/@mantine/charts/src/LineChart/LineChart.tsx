@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import {
   CartesianGrid,
   DotProps,
+  Label,
   Legend,
   Line,
   LineProps,
@@ -168,6 +169,8 @@ export const LineChart = factory<LineChartFactory>((_props, ref) => {
     valueFormatter,
     children,
     lineProps,
+    xAxisLabel,
+    yAxisLabel,
     ...others
   } = props;
 
@@ -257,7 +260,16 @@ export const LineChart = factory<LineChartFactory>((_props, ref) => {
       {...others}
     >
       <ResponsiveContainer {...getStyles('container')}>
-        <ReChartsLineChart data={data} layout={orientation} {...lineChartProps}>
+        <ReChartsLineChart
+          data={data}
+          layout={orientation}
+          margin={{
+            bottom: xAxisLabel ? 30 : undefined,
+            left: yAxisLabel ? 10 : undefined,
+            right: yAxisLabel ? 5 : undefined,
+          }}
+          {...lineChartProps}
+        >
           {withLegend && (
             <Legend
               verticalAlign="top"
@@ -286,7 +298,14 @@ export const LineChart = factory<LineChartFactory>((_props, ref) => {
             minTickGap={5}
             {...getStyles('axis')}
             {...xAxisProps}
-          />
+          >
+            {xAxisLabel && (
+              <Label position="insideBottom" offset={-20} fontSize={12} {...getStyles('axisLabel')}>
+                {xAxisLabel}
+              </Label>
+            )}
+            {xAxisProps?.children}
+          </XAxis>
 
           <YAxis
             hide={!withYAxis}
@@ -299,7 +318,21 @@ export const LineChart = factory<LineChartFactory>((_props, ref) => {
             tickFormatter={valueFormatter}
             {...getStyles('axis')}
             {...yAxisProps}
-          />
+          >
+            {yAxisLabel && (
+              <Label
+                position="insideLeft"
+                angle={-90}
+                textAnchor="middle"
+                fontSize={12}
+                offset={-5}
+                {...getStyles('axisLabel')}
+              >
+                {yAxisLabel}
+              </Label>
+            )}
+            {yAxisProps?.children}
+          </YAxis>
 
           <CartesianGrid
             strokeDasharray={strokeDasharray}
