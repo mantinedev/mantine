@@ -95,3 +95,20 @@ export function Sizes() {
   ));
   return <div style={{ padding: 40 }}>{sizes}</div>;
 }
+
+export function InputModeNumeric() {
+  return (
+    <div style={{ padding: 40 }}>
+      <PinInput inputMode="numeric" />
+    </div>
+  );
+}
+
+export function InputModeTab() {
+  return (
+    <div style={{ padding: 40 }}>
+      <PinInput />
+      <PinInput mt="md" />
+    </div>
+  );
+}

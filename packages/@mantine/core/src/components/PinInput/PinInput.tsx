@@ -221,18 +221,32 @@ export const PinInput = factory<PinInputFactory>((props, ref) => {
     return re?.test(code);
   };
 
-  const focusInputField = (dir: 'next' | 'prev', index: number) => {
-    if (!manageFocus) return;
+  const focusInputField = (
+    dir: 'next' | 'prev',
+    index: number,
+    event?: React.KeyboardEvent<HTMLInputElement>
+  ) => {
+    if (!manageFocus) {
+      event?.preventDefault();
+      return;
+    }
 
     if (dir === 'next') {
       const nextIndex = index + 1;
-      inputsRef.current[nextIndex < (length ?? 0) ? nextIndex : index].focus();
+      const canFocusNext = nextIndex < (length ?? 0);
+      if (canFocusNext) {
+        event?.preventDefault();
+        inputsRef.current[nextIndex].focus();
+      }
     }
 
     if (dir === 'prev') {
       const nextIndex = index - 1;
-
-      inputsRef.current[nextIndex > -1 ? nextIndex : index].focus();
+      const canFocusNext = nextIndex > -1;
+      if (canFocusNext) {
+        event?.preventDefault();
+        inputsRef.current[nextIndex].focus();
+      }
     }
   };
 
@@ -262,7 +276,7 @@ export const PinInput = factory<PinInputFactory>((props, ref) => {
   };
 
   const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>, index: number) => {
-    const { ctrlKey, key, shiftKey, target } = event;
+    const { ctrlKey, metaKey, key, shiftKey, target } = event;
     const inputValue = (target as HTMLInputElement).value;
 
     if (inputMode === 'numeric') {
@@ -271,7 +285,8 @@ export const PinInput = factory<PinInputFactory>((props, ref) => {
         key === 'Tab' ||
         key === 'Control' ||
         key === 'Delete' ||
-        (ctrlKey && key === 'v')
+        (ctrlKey && key === 'v') ||
+        (metaKey && key === 'v')
           ? true
           : !Number.isNaN(Number(key));
 
@@ -281,27 +296,22 @@ export const PinInput = factory<PinInputFactory>((props, ref) => {
     }
 
     if (key === 'ArrowLeft' || (shiftKey && key === 'Tab')) {
-      event.preventDefault();
-      focusInputField('prev', index);
+      focusInputField('prev', index, event);
     } else if (key === 'ArrowRight' || key === 'Tab' || key === ' ') {
-      event.preventDefault();
-      focusInputField('next', index);
+      focusInputField('next', index, event);
     } else if (key === 'Delete') {
-      event.preventDefault();
       setFieldValue('', index);
     } else if (key === 'Backspace') {
-      event.preventDefault();
       setFieldValue('', index);
       if (length === index + 1) {
         if ((event.target as HTMLInputElement).value === '') {
-          focusInputField('prev', index);
+          focusInputField('prev', index, event);
         }
       } else {
-        focusInputField('prev', index);
+        focusInputField('prev', index, event);
       }
     } else if (inputValue.length > 0 && key === _value[index]) {
-      event.preventDefault();
-      focusInputField('next', index);
+      focusInputField('next', index, event);
     }
   };
 
@@ -322,7 +332,7 @@ export const PinInput = factory<PinInputFactory>((props, ref) => {
     if (isValid) {
       const copyValueToPinArray = createPinArray(length ?? 0, copyValue);
       setValues(copyValueToPinArray);
-      focusInputField('next', copyValueToPinArray.length - 1);
+      focusInputField('next', copyValueToPinArray.length - 2);
     }
   };
 
