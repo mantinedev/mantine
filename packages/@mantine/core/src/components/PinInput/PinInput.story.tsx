@@ -96,15 +96,15 @@ export function Sizes() {
   return <div style={{ padding: 40 }}>{sizes}</div>;
 }
 
-export function InputModeNumeric() {
+export function Number() {
   return (
     <div style={{ padding: 40 }}>
-      <PinInput inputMode="numeric" />
+      <PinInput type="number" />
     </div>
   );
 }
 
-export function InputModeTab() {
+export function Tab() {
   return (
     <div style={{ padding: 40 }}>
       <PinInput />
