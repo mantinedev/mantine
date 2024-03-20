@@ -10,6 +10,10 @@ export interface MantineTransitionStyles {
 
 export type MantineTransitionName =
   | 'fade'
+  | 'fade-down'
+  | 'fade-up'
+  | 'fade-left'
+  | 'fade-right'
   | 'skew-up'
   | 'skew-down'
   | 'rotate-right'
@@ -40,6 +44,30 @@ export const transitions: Record<MantineTransitionName, MantineTransitionStyles>
     in: { opacity: 1 },
     out: { opacity: 0 },
     transitionProperty: 'opacity',
+  },
+
+  'fade-up': {
+    in: { opacity: 1, transform: 'translateY(0)' },
+    out: { opacity: 0, transform: `translateY(${rem(30)}` },
+    transitionProperty: 'opacity, transform',
+  },
+
+  'fade-down': {
+    in: { opacity: 1, transform: 'translateY(0)' },
+    out: { opacity: 0, transform: `translateY(${rem(-30)}` },
+    transitionProperty: 'opacity, transform',
+  },
+
+  'fade-left': {
+    in: { opacity: 1, transform: 'translateX(0)' },
+    out: { opacity: 0, transform: `translateX(${rem(30)}` },
+    transitionProperty: 'opacity, transform',
+  },
+
+  'fade-right': {
+    in: { opacity: 1, transform: 'translateX(0)' },
+    out: { opacity: 0, transform: `translateX(${rem(-30)}` },
+    transitionProperty: 'opacity, transform',
   },
 
   scale: {

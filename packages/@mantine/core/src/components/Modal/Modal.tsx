@@ -65,7 +65,7 @@ const defaultProps: Partial<ModalProps> = {
   closeOnEscape: true,
   keepMounted: false,
   zIndex: getDefaultZIndex('modal'),
-  transitionProps: { duration: 200, transition: 'pop' },
+  transitionProps: { duration: 200, transition: 'fade-down' },
   withOverlay: true,
   withCloseButton: true,
 };
