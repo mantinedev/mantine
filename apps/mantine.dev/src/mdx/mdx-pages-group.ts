@@ -108,6 +108,7 @@ export const MDX_PAGES_GROUPS: MdxPagesGroup[] = [
           MDX_DATA.useUncontrolled,
           MDX_DATA.useValidatedState,
           MDX_DATA.usePagination,
+          MDX_DATA.useStateHistory,
         ],
       },
 

@@ -53,3 +53,4 @@ export { useEyeDropperUsage } from './use-eye-dropper.demo.usage';
 export { useInViewportDemo } from './use-in-viewport.demo.usage';
 export { useMutationObserverUsage } from './use-mutation-observer.demo.usage';
 export { useMutationObserverTarget } from './use-mutation-observer.demo.target';
+export { useStateHistoryUsage } from './use-state-history.demo.usage';

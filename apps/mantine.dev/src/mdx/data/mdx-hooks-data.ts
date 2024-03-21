@@ -157,4 +157,5 @@ export const MDX_HOOKS_DATA: Record<string, Frontmatter> = {
     'Subscribe to changes being made to the DOM tree'
   ),
   useMounted: hDocs('useMounted', 'Returns true if the component is mounted'),
+  useStateHistory: hDocs('useStateHistory', 'Move back/forward in state history'),
 };
