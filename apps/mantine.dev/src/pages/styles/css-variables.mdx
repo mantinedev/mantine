@@ -1,3 +1,4 @@
+import { CssVariablesGroup } from '@/components/CssVariablesGroup';
 import { CssVariablesTable } from '@/components/CssVariablesTable';
 import { Layout } from '@/layout';
 import { MDX_DATA } from '@/mdx';
@@ -10,181 +11,143 @@ export default Layout(MDX_DATA.CssVariables);
 You can use these variables in [CSS](/styles/css-modules) files, [style prop](/styles/style) or any other styles.
 Note that not all values are documented on this page, you can find full list of variables on [this page](/styles/css-variables-list).
 
-## Typography CSS variables
+## Typography variables
 
-The following CSS variables are used to control all typography styles (`font-family`, `font-size`, `line-height`)
-in all Mantine components:
+Typography variables control font family, font size, line height, font weight, and other text-related properties
+of all Mantine components.
 
-<CssVariablesTable
-  variables={[
-    '--mantine-font-family',
-    '--mantine-font-family-monospace',
-    '--mantine-font-family-headings',
-    '--mantine-font-size-xs',
-    '--mantine-font-size-sm',
-    '--mantine-font-size-md',
-    '--mantine-font-size-lg',
-    '--mantine-font-size-xl',
-    '--mantine-line-height-xs',
-    '--mantine-line-height-sm',
-    '--mantine-line-height-md',
-    '--mantine-line-height-lg',
-    '--mantine-line-height-xl',
+### Font family variables
+
+The following CSS variables are used to assign font families to all Mantine components:
+
+<CssVariablesGroup
+  data={[
+    {
+      variable: '--mantine-font-family',
+      description:
+        'Controls font-family property of most Mantine components',
+      defaultValue: 'system sans-serif fonts',
+    },
+    {
+      variable: '--mantine-font-family-monospace',
+      description: 'Controls font-family property of code blocks',
+      defaultValue: 'system monospace fonts',
+    },
+    {
+      variable: '--mantine-font-family-headings',
+      description: 'Controls font-family property of headings',
+      defaultValue: 'system sans-serif fonts',
+    },
   ]}
 />
 
-Usage:
+You can control these variables in the [theme](/theming/theme-object). Note that if
+`theme.headings.fontFamily` is not set, `--mantine-font-family-headings` value
+will be the same as `--mantine-font-family`.
 
-```css
-.demo {
+```tsx
+import { createTheme } from '@mantine/core';
+
+const theme = createTheme({
+  // Controls --mantine-font-family
+  fontFamily: 'Arial, sans-serif',
+
+  // Controls --mantine-font-family-monospace
+  fontFamilyMonospace: 'Courier New, monospace',
+
+  headings: {
+    // Controls --mantine-font-family-headings
+    fontFamily: 'Georgia, serif',
+  },
+});
+```
+
+If you want to use system fonts as a fallback for custom fonts, you can reference `DEFAULT_THEME`
+value instead of defining it manually:
+
+```tsx
+import { createTheme, DEFAULT_THEME } from '@mantine/core';
+
+const theme = createTheme({
+  fontFamily: `Roboto, ${DEFAULT_THEME.fontFamily}`,
+});
+```
+
+You can reference font family variables in your CSS:
+
+```scss
+.text {
   font-family: var(--mantine-font-family);
-  font-size: var(--mantine-font-size-md);
-  line-height: var(--mantine-line-height-md);
+}
+
+.code {
+  font-family: var(--mantine-font-family-monospace);
+}
+
+.heading {
+  font-family: var(--mantine-font-family-headings);
 }
 ```
 
-## Spacing
+And in [ff style prop](/styles/style-props):
 
-Spacing CSS variables are used to control margins and paddings in most of Mantine components.
-They are also used in `p` and `m` [style props](/styles/style-props):
+- `ff="text"` will use `--mantine-font-family` variable
+- `ff="monospace"` will use `--mantine-font-family-monospace` variable
+- `ff="heading"` will use `--mantine-font-family-headings` variable
 
-<CssVariablesTable
-  variables={[
-    '--mantine-spacing-xs',
-    '--mantine-spacing-sm',
-    '--mantine-spacing-md',
-    '--mantine-spacing-lg',
-    '--mantine-spacing-xl',
+```tsx
+import { Text } from '@mantine/core';
+
+function Demo() {
+  return (
+    <Text ff="monospace">
+      This text uses --mantine-font-family-monospace variable
+    </Text>
+  );
+}
+```
+
+### Font size variables
+
+### Font smoothing variables
+
+Font smoothing variables control [-webkit-font-smoothing and moz-osx-font-smoothing](https://developer.mozilla.org/en-US/docs/Web/CSS/font-smooth)
+CSS properties. These variables are used to make text look better on screens with high pixel density.
+
+Font smoothing variables are controlled by `theme.fontSmoothing` [theme](/theming/theme-object) property, it is `true` by default. If `theme.fontSmoothing` is `false`, both variables will be set to `unset`.
+
+<CssVariablesGroup
+  data={[
+    {
+      variable: '--mantine-webkit-font-smoothing',
+      description: 'Controls -webkit-font-smoothing CSS property',
+      defaultValue: 'antialiased',
+    },
+    {
+      variable: '--mantine-moz-font-smoothing',
+      description: 'Controls -moz-osx-font-smoothing CSS property',
+      defaultValue: 'grayscale',
+    },
   ]}
 />
 
-Usage:
+If you need to override font smoothing values, the best way is to disable `theme.fontSmoothing` and set [global styles](/styles/global)
+on the body element:
 
-```css
-.demo {
-  margin: var(--mantine-spacing-md);
+```tsx
+import { createTheme } from '@mantine/core';
 
-  /* With calc */
-  padding: calc(var(--mantine-spacing-xl) * 1.5);
-
-  /* Negative value */
-  margin-left: calc(var(--mantine-spacing-md) * -1);
-}
+// Disable font smoothing in your theme
+const theme = createTheme({
+  fontSmoothing: false,
+});
 ```
 
-## Shadows
-
-Shadows CSS variables are used to control shadows in all Mantine components that support `shadow` prop:
-
-<CssVariablesTable
-  variables={[
-    '--mantine-shadow-xs',
-    '--mantine-shadow-sm',
-    '--mantine-shadow-md',
-    '--mantine-shadow-lg',
-    '--mantine-shadow-xl',
-  ]}
-/>
-
-Usage:
-
-```css
-.demo {
-  box-shadow: var(--mantine-shadow-md);
-}
-```
-
-## Radius
-
-Radius CSS variables are used to control border-radius in all Mantine components that support `radius` prop:
-
-<CssVariablesTable
-  variables={[
-    '--mantine-radius-default',
-    '--mantine-radius-xs',
-    '--mantine-radius-sm',
-    '--mantine-radius-md',
-    '--mantine-radius-lg',
-    '--mantine-radius-xl',
-  ]}
-/>
-
-Usage:
-
-```css
-.demo {
-  border-radius: var(--mantine-radius-md);
-}
-```
-
-## Colors
-
-All `theme.colors` values are exposed as CSS variables in `--mantine-color-{x}-{y}` format,
-where `x` is the color name and `y` is the color shade. For example, `--mantine-color-red-6` is `theme.colors.red[6]`.
-You can find the full default colors list in the [colors guide](/theming/colors/#default-colors).
-
-Usage:
-
-```css
-.demo {
-  color: var(--mantine-color-red-6);
-  background-color: var(--mantine-color-red-0);
-}
-```
-
-## Variant specific colors
-
-Variant specific variables for each color are exposed in the following format
-(`x` is the color name):
-
-- `--mantine-color-{x}-filled` – filled variant background-color
-- `--mantine-color-{x}-filled-hover` – filled variant background-color on hover
-- `--mantine-color-{x}-light` – light variant background-color
-- `--mantine-color-{x}-light-hover` – light variant background-color on hover
-- `--mantine-color-{x}-light-color` – light variant text color
-- `--mantine-color-{x}-outline` – outline variant border-color and text color
-- `--mantine-color-{x}-outline-hover` – outline variant background-color on hover
-
-Usage:
-
-```css
-.demo {
-  background-color: var(--mantine-color-blue-filled);
-  color: var(--mantine-color-white);
-
-  @mixin hover {
-    background-color: var(--mantine-color-blue-filled-hover);
-  }
-}
-```
-
-## Other colors variables
-
-- `--mantine-color-white` – value of `theme.white`
-- `--mantine-color-black` – value of `theme.black`
-- `--mantine-color-text` – text color set on `body` element
-- `--mantine-color-body` – `body` element background-color
-- `--mantine-color-error` – error color, used in [Input](/core/input) and other similar components
-- `--mantine-color-placeholder` – placeholder color, used in [Input](/core/input) and other similar components to set text color of placeholder
-- `--mantine-color-anchor` – anchor color, used in [Anchor](/core/anchor) component
-- `--mantine-color-default` – default variant background-color
-- `--mantine-color-default-hover` – default variant background-color on hover
-- `--mantine-color-default-color` – default variant text color
-- `--mantine-color-default-border` – default variant border-color
-
-Usage:
-
-```css
-.demo {
-  background-color: var(--mantine-color-body);
-
-  &[data-error] {
-    color: var(--mantine-color-error);
-  }
-
-  &::placeholder {
-    color: var(--mantine-color-placeholder);
-  }
+```scss
+// Add global styles to your project with desired font smoothing values
+body {
+  -webkit-font-smoothing: subpixel-antialiased;
+  -moz-osx-font-smoothing: auto;
 }
 ```
 
