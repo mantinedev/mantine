@@ -4,3 +4,26 @@
     display: none;
   }
 }
+
+.thead {
+  transition: box-shadow 200ms ease;
+
+  &:where([data-sticky]) {
+    & :where(tr) {
+      position: relative;
+
+      &::after {
+        content: '';
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: rem(-1.5px);
+        border-bottom: rem(1px) solid var(--table-border-color);
+      }
+    }
+  }
+
+  &:where([data-stuck]) {
+    box-shadow: var(--mantine-shadow-sm);
+  }
+}

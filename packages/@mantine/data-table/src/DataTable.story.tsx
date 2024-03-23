@@ -112,3 +112,38 @@ export const ColumnGroups = () => {
     </div>
   );
 };
+
+export const StickyHeader = () => {
+  const data = useMemo(() => makeData(100), []);
+
+  const columns = useMemo(() => [
+    columnHelper.group({
+      header: 'Hello',
+      columns: [
+        columnHelper.accessor('firstName', { header: 'First Name' }),
+        columnHelper.accessor('lastName', { header: 'Last Name' }),
+      ],
+    }),
+    columnHelper.group({
+      header: 'Info',
+      columns: [
+        columnHelper.accessor('age', { header: 'Age' }),
+        columnHelper.accessor('visits', { header: 'Visits' }),
+        columnHelper.accessor('status', { header: 'Status' }),
+        columnHelper.accessor('progress', { header: 'Profile Progress' }),
+      ],
+    }),
+  ], []);
+
+  const table = useReactTable({
+    data,
+    columns,
+    getCoreRowModel: getCoreRowModel(),
+  });
+
+  return (
+    <div style={{ padding: 40 }}>
+      <DataTable table={table} stickyHeader />
+    </div>
+  );
+};

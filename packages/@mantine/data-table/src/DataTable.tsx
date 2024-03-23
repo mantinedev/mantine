@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { flexRender, RowData, Table as TableDefinition } from '@tanstack/react-table';
 import {
   factory,
@@ -17,6 +17,7 @@ import {
   useProps,
   useStyles,
 } from '@mantine/core';
+import { mergeRefs, useIntersection } from '@mantine/hooks';
 import classes from './DataTable.module.css';
 
 export type DataTableStylesNames = TableStylesNames;
@@ -67,14 +68,26 @@ export const DataTable: DataTableComponent = factory<DataTableFactory>(
       vars,
     });
 
+    const tableRef = useRef(null);
+
+    const theadIntersection = useIntersection({
+      root: tableRef.current,
+      rootMargin: '-1px 0px 0px 0px',
+      threshold: 1,
+    });
+
     return (
       <Table
-        ref={ref}
+        ref={mergeRefs(ref, tableRef)}
         {...getStyles('table')}
         {...others}
       >
         <TableThead
+          ref={theadIntersection.ref}
           {...getStyles('thead')}
+          mod={{
+            stuck: props.stickyHeader && theadIntersection.entry?.isIntersecting,
+          }}
         >
           {table.getHeaderGroups().map((group) => (
             <TableTr
