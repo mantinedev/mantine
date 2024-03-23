@@ -1,0 +1,6 @@
+.thead,
+.tfoot {
+  & :where(tr):not(:has(:not(:empty.th))) {
+    display: none;
+  }
+}
