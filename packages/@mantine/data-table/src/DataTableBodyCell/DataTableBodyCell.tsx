@@ -13,31 +13,22 @@ export type DataTableBodyCellFactory = Factory<{
   stylesNames: 'td';
 }>;
 
-export const DataTableBodyCell = factory<DataTableBodyCellFactory>(
-  (_props, ref) => {
-    const props = useProps('DataTableBodyCell', {}, _props);
+export const DataTableBodyCell = factory<DataTableBodyCellFactory>((_props, ref) => {
+  const props = useProps('DataTableBodyCell', {}, _props);
 
-    const {
-      className,
-      style,
-      classNames,
-      styles,
-      cell,
-      ...others
-    } = props;
+  const { className, style, classNames, styles, cell, ...others } = props;
 
-    const { getStyles } = useDataTableContext();
+  const { getStyles } = useDataTableContext();
 
-    return (
-      <TableTd
-        ref={ref}
-        {...getStyles('td', { className, style, classNames, styles, props })}
-        {...others}
-      >
-        {flexRender(cell.column.columnDef.cell, cell.getContext())}
-      </TableTd>
-    );
-  }
-);
+  return (
+    <TableTd
+      ref={ref}
+      {...getStyles('td', { className, style, classNames, styles, props })}
+      {...others}
+    >
+      {flexRender(cell.column.columnDef.cell, cell.getContext())}
+    </TableTd>
+  );
+});
 
 DataTableBodyCell.displayName = '@mantine/data-table/DataTableBodyCell';

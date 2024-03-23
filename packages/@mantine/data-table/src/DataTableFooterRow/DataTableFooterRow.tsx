@@ -14,33 +14,24 @@ export type DataTableFooterRowFactory = Factory<{
   stylesNames: 'tr';
 }>;
 
-export const DataTableFooterRow = factory<DataTableFooterRowFactory>(
-  (_props, ref) => {
-    const props = useProps('DataTableFooterRow', {}, _props);
+export const DataTableFooterRow = factory<DataTableFooterRowFactory>((_props, ref) => {
+  const props = useProps('DataTableFooterRow', {}, _props);
 
-    const {
-      className,
-      style,
-      classNames,
-      styles,
-      group,
-      ...others
-    } = props;
+  const { className, style, classNames, styles, group, ...others } = props;
 
-    const { getStyles } = useDataTableContext();
+  const { getStyles } = useDataTableContext();
 
-    return (
-      <TableTr
-        ref={ref}
-        {...getStyles('tr', { className, style, classNames, styles, props })}
-        {...others}
-      >
-        {group.headers.map((header) => (
-          <DataTableFooterCell key={header.id} header={header} />
-        ))}
-      </TableTr>
-    );
-  }
-);
+  return (
+    <TableTr
+      ref={ref}
+      {...getStyles('tr', { className, style, classNames, styles, props })}
+      {...others}
+    >
+      {group.headers.map((header) => (
+        <DataTableFooterCell key={header.id} header={header} />
+      ))}
+    </TableTr>
+  );
+});
 
 DataTableFooterRow.displayName = '@mantine/data-table/DataTableFooterRow';

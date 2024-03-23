@@ -1,5 +1,5 @@
-import { factory, Factory, TableTbody, TableTbodyProps, useProps } from '@mantine/core';
 import React from 'react';
+import { factory, Factory, TableTbody, TableTbodyProps, useProps } from '@mantine/core';
 import { useDataTableContext } from '../DataTable.context';
 import { DataTableBodyRow } from '../DataTableBodyRow';
 
@@ -11,32 +11,24 @@ export type DataTableBodyFactory = Factory<{
   stylesNames: 'tbody';
 }>;
 
-export const DataTableBody = factory<DataTableBodyFactory>(
-  (_props, ref) => {
-    const props = useProps('DataTableBody', {}, _props);
+export const DataTableBody = factory<DataTableBodyFactory>((_props, ref) => {
+  const props = useProps('DataTableBody', {}, _props);
 
-    const {
-      className,
-      style,
-      classNames,
-      styles,
-      ...others
-    } = props;
+  const { className, style, classNames, styles, ...others } = props;
 
-    const { table, getStyles } = useDataTableContext();
+  const { table, getStyles } = useDataTableContext();
 
-    return (
-      <TableTbody
-        ref={ref}
-        {...getStyles('tbody', { className, style, classNames, styles, props })}
-        {...others}
-      >
-        {table.getRowModel().rows.map((row) => (
-          <DataTableBodyRow key={row.id} row={row} />
-        ))}
-      </TableTbody>
-    );
-  }
-);
+  return (
+    <TableTbody
+      ref={ref}
+      {...getStyles('tbody', { className, style, classNames, styles, props })}
+      {...others}
+    >
+      {table.getRowModel().rows.map((row) => (
+        <DataTableBodyRow key={row.id} row={row} />
+      ))}
+    </TableTbody>
+  );
+});
 
 DataTableBody.displayName = '@mantine/data-table/DataTableBody';

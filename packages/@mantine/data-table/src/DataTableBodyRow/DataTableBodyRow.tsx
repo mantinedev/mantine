@@ -14,40 +14,30 @@ export type DataTableBodyRowFactory = Factory<{
   stylesNames: 'tbody';
 }>;
 
-export const DataTableBodyRow = factory<DataTableBodyRowFactory>(
-  (_props, ref) => {
-    const props = useProps('DataTableBodyRow', {}, _props);
+export const DataTableBodyRow = factory<DataTableBodyRowFactory>((_props, ref) => {
+  const props = useProps('DataTableBodyRow', {}, _props);
 
-    const {
-      className,
-      style,
-      classNames,
-      styles,
-      mod,
-      row,
-      ...others
-    } = props;
+  const { className, style, classNames, styles, mod, row, ...others } = props;
 
-    const { getStyles, highlightOnSelect } = useDataTableContext();
+  const { getStyles, highlightOnSelect } = useDataTableContext();
 
-    return (
-      <TableTr
-        ref={ref}
-        {...getStyles('tr', { className, style, classNames, styles, props })}
-        mod={[
-          {
-            selected: highlightOnSelect && row.getIsSelected(),
-          },
-          mod,
-        ]}
-        {...others}
-      >
-        {row.getVisibleCells().map((cell) => (
-          <DataTableBodyCell key={cell.id} cell={cell} />
-        ))}
-      </TableTr>
-    );
-  }
-);
+  return (
+    <TableTr
+      ref={ref}
+      {...getStyles('tr', { className, style, classNames, styles, props })}
+      mod={[
+        {
+          selected: highlightOnSelect && row.getIsSelected(),
+        },
+        mod,
+      ]}
+      {...others}
+    >
+      {row.getVisibleCells().map((cell) => (
+        <DataTableBodyCell key={cell.id} cell={cell} />
+      ))}
+    </TableTr>
+  );
+});
 
 DataTableBodyRow.displayName = '@mantine/data-table/DataTableBodyRow';

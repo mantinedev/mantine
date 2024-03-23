@@ -11,32 +11,24 @@ export type DataTableHeaderFactory = Factory<{
   stylesNames: 'thead';
 }>;
 
-export const DataTableHeader = factory<DataTableHeaderFactory>(
-  (_props, ref) => {
-    const props = useProps('DataTableHeader', {}, _props);
+export const DataTableHeader = factory<DataTableHeaderFactory>((_props, ref) => {
+  const props = useProps('DataTableHeader', {}, _props);
 
-    const {
-      className,
-      style,
-      classNames,
-      styles,
-      ...others
-    } = props;
+  const { className, style, classNames, styles, ...others } = props;
 
-    const { table, getStyles } = useDataTableContext();
+  const { table, getStyles } = useDataTableContext();
 
-    return (
-      <TableThead
-        ref={ref}
-        {...getStyles('thead', { className, style, classNames, styles, props })}
-        {...others}
-      >
-        {table.getHeaderGroups().map((group) => (
-          <DataTableHeaderRow key={group.id} group={group} />
-        ))}
-      </TableThead>
-    );
-  }
-);
+  return (
+    <TableThead
+      ref={ref}
+      {...getStyles('thead', { className, style, classNames, styles, props })}
+      {...others}
+    >
+      {table.getHeaderGroups().map((group) => (
+        <DataTableHeaderRow key={group.id} group={group} />
+      ))}
+    </TableThead>
+  );
+});
 
 DataTableHeader.displayName = '@mantine/data-table/DataTableHeader';
