@@ -1,5 +1,5 @@
 import React, { useRef } from 'react';
-import { flexRender, RowData, Table as TableDefinition } from '@tanstack/react-table';
+import { RowData, Table as TableDefinition } from '@tanstack/react-table';
 import {
   factory,
   Factory,
@@ -8,18 +8,15 @@ import {
   TableCssVariables,
   TableProps,
   TableStylesNames,
-  TableTbody,
-  TableTd,
-  TableTfoot,
-  TableTh,
-  TableThead,
-  TableTr,
   useProps,
   useStyles,
 } from '@mantine/core';
 import { mergeRefs, useIntersection } from '@mantine/hooks';
 import { DataTableProvider } from './DataTable.context';
+import { DataTableHeader } from './DataTableHeader';
 import classes from './DataTable.module.css';
+import { DataTableBody } from './DataTableBody';
+import { DataTableFooter } from './DataTableFooter';
 
 export type DataTableStylesNames = TableStylesNames;
 
@@ -74,7 +71,7 @@ export const DataTable: DataTableComponent = factory<DataTableFactory>(
 
     const tableRef = useRef(null);
 
-    const theadIntersection = useIntersection({
+    const headerIntersection = useIntersection({
       root: tableRef.current,
       rootMargin: '-1px 0px 0px 0px',
       threshold: 1,
@@ -92,79 +89,14 @@ export const DataTable: DataTableComponent = factory<DataTableFactory>(
           {...getStyles('table')}
           {...others}
         >
-          <TableThead
-            ref={theadIntersection.ref}
-            {...getStyles('thead')}
+          <DataTableHeader
+            ref={headerIntersection.ref}
             mod={{
-              stuck: props.stickyHeader && theadIntersection.entry?.isIntersecting,
+              stuck: props.stickyHeader && headerIntersection.entry?.isIntersecting,
             }}
-          >
-            {table.getHeaderGroups().map((group) => (
-              <TableTr
-                key={group.id}
-                {...getStyles('tr')}
-              >
-                {group.headers.map((header) => (
-                  <TableTh
-                    key={header.id}
-                    {...getStyles('th')}
-                    colSpan={header.colSpan}
-                  >
-                    {header.isPlaceholder
-                      ? null
-                      : flexRender(
-                        header.column.columnDef.header,
-                        header.getContext()
-                      )}
-                  </TableTh>
-                ))}
-              </TableTr>
-            ))}
-          </TableThead>
-          <TableTbody
-            {...getStyles('tbody')}
-          >
-            {table.getRowModel().rows.map((row) => (
-              <TableTr
-                key={row.id}
-                {...getStyles('tr')}
-              >
-                {row.getVisibleCells().map((cell) => (
-                  <TableTd
-                    key={cell.id}
-                    {...getStyles('td')}
-                  >
-                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                  </TableTd>
-                ))}
-              </TableTr>
-            ))}
-          </TableTbody>
-          <TableTfoot
-            {...getStyles('tfoot')}
-          >
-            {table.getFooterGroups().map((group) => (
-              <TableTr
-                key={group.id}
-                {...getStyles('tr')}
-              >
-                {group.headers.map((header) => (
-                  <TableTh
-                    key={header.id}
-                    {...getStyles('th')}
-                    colSpan={header.colSpan}
-                  >
-                    {header.isPlaceholder
-                      ? null
-                      : flexRender(
-                        header.column.columnDef.footer,
-                        header.getContext()
-                      )}
-                  </TableTh>
-                ))}
-              </TableTr>
-            ))}
-          </TableTfoot>
+          />
+          <DataTableBody />
+          <DataTableFooter />
         </Table>
       </DataTableProvider>
     );
