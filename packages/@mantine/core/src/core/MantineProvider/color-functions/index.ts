@@ -10,6 +10,7 @@ export { lighten } from './lighten/lighten';
 export { luminance, isLightColor } from './luminance/luminance';
 export { getContrastColor, getPrimaryContrastColor } from './get-contrast-color/get-contrast-color';
 export { getAutoContrastValue } from './get-auto-contrast-value/get-auto-contrast-value';
+export { colorsTuple } from './colors-tuple/colors-tuple';
 
 export type { RGBA } from './to-rgba/to-rgba';
 export type {

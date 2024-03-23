@@ -46,6 +46,26 @@ This will allow you to use them in all components that support `color` prop, for
 > You can add more than 10 shades per color: these values will not be used by Mantine components with the default colors resolver,
 > but you can still reference them by index, for example, `color="blue.11"`.
 
+## colorsTuple
+
+Use `colorsTuple` function to:
+
+- Use single color as the same color for all shades
+- Transform dynamic string arrays to Mantine color tuple (the array should still have 10 values)
+
+```tsx
+import { colorsTuple, createTheme } from '@mantine/core';
+
+const theme = createTheme({
+  colors: {
+    custom: colorsTuple('#FFC0CB'),
+    dynamic: colorsTuple(
+      Array.from({ length: 10 }, (_, index) => '#FFC0CB')
+    ),
+  },
+});
+```
+
 ## Supported color formats
 
 You can use the following color formats in `theme.colors`:

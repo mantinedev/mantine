@@ -21,6 +21,26 @@ New [ScatterChart](/charts/scatter-chart) component:
 
 <Demo data={ScatterChartDemos.usage} />
 
+## colorsTuple function
+
+New `colorsTuple` function can be used to:
+
+- Use single color as the same color for all shades
+- Transform dynamic string arrays to Mantine color tuple (the array should still have 10 values)
+
+```tsx
+import { colorsTuple, createTheme } from '@mantine/core';
+
+const theme = createTheme({
+  colors: {
+    custom: colorsTuple('#FFC0CB'),
+    dynamic: colorsTuple(
+      Array.from({ length: 10 }, (_, index) => '#FFC0CB')
+    ),
+  },
+});
+```
+
 ## use-mutation-observer hook
 
 New [useMutationObserver](/hooks/use-mutation-observer) hook:
