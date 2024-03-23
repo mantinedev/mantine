@@ -16,9 +16,11 @@ export function CssVariablesGroup({ data }: CssVariablesGroupProps) {
     <Table.Tr key={item.variable}>
       <Table.Td>
         <Code>{item.variable}</Code>
-        <Text fz="xs" mt={3}>
-          {item.description}
-        </Text>
+        {item.description && (
+          <Text fz="xs" mt={3}>
+            {item.description}
+          </Text>
+        )}
       </Table.Td>
       <Table.Td>{item.defaultValue}</Table.Td>
     </Table.Tr>
