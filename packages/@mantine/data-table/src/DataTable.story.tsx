@@ -1,7 +1,7 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useState } from 'react';
 import { faker } from '@faker-js/faker';
 import { createColumnHelper, getCoreRowModel, getSortedRowModel, useReactTable } from '@tanstack/react-table';
-import { Checkbox } from '@mantine/core';
+import { Checkbox, Table } from '@mantine/core';
 import { DataTable } from './DataTable';
 
 type Person = {
@@ -216,6 +216,68 @@ export const RowSelection = () => {
   return (
     <div style={{ padding: 40 }}>
       <DataTable table={table} />
+    </div>
+  );
+};
+
+export const InfinityScroll = () => {
+  const [data, setData] = useState(makeData(50));
+
+  const columns = useMemo(() => [
+    columnHelper.accessor('firstName', { header: 'First Name' }),
+    columnHelper.accessor('lastName', { header: 'Last Name' }),
+    columnHelper.accessor('age', { header: 'Age' }),
+    columnHelper.accessor('visits', { header: 'Visits' }),
+    columnHelper.accessor('status', { header: 'Status' }),
+    columnHelper.accessor('progress', { header: 'Profile Progress' }),
+  ], []);
+
+  const loadMore = () => {
+    if (data.length > 149) return;
+    setData(current => [...current, ...makeData(50)]);
+  };
+
+  const table = useReactTable({
+    data,
+    columns,
+    getCoreRowModel: getCoreRowModel(),
+  });
+
+  return (
+    <div style={{ padding: 40 }}>
+      <DataTable table={table} onScrollToBottom={loadMore} />
+    </div>
+  );
+};
+
+export const ScrollContainer = () => {
+  const [data, setData] = useState(makeData(50));
+
+  const columns = useMemo(() => [
+    columnHelper.accessor('firstName', { header: 'First Name' }),
+    columnHelper.accessor('lastName', { header: 'Last Name' }),
+    columnHelper.accessor('age', { header: 'Age' }),
+    columnHelper.accessor('visits', { header: 'Visits' }),
+    columnHelper.accessor('status', { header: 'Status' }),
+    columnHelper.accessor('progress', { header: 'Profile Progress' }),
+  ], []);
+
+  const loadMore = () => {
+    if (data.length > 149) return;
+    setData(current => [...current, ...makeData(50)]);
+  };
+
+  const table = useReactTable({
+    data,
+    columns,
+    getCoreRowModel: getCoreRowModel(),
+  });
+
+  return (
+    <div style={{ padding: 40 }}>
+      <Table.ScrollContainer h={300} minWidth={500}>
+        <DataTable table={table} stickyHeader onScrollToBottom={loadMore} />
+      </Table.ScrollContainer>
     </div>
   );
 };

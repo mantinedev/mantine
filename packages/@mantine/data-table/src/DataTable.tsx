@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { RowData, Table as TableDefinition } from '@tanstack/react-table';
 import {
   createVarsResolver,
@@ -40,6 +40,9 @@ export type DataTableProps<TData extends RowData = RowData> = Omit<TableProps, '
 
   /** Background color of table rows when selected, key of `theme.colors` or any valid CSS color, `primary-light` by default */
   highlightOnSelectColor?: MantineColor;
+
+  /** Called when reaching bottom */
+  onScrollToBottom?: () => void;
 };
 
 export type DataTableFactory = Factory<{
@@ -90,6 +93,7 @@ export const DataTable: DataTableComponent = factory<DataTableFactory>(
       table,
       highlightOnSelect,
       highlightOnSelectColor,
+      onScrollToBottom,
       ...others
     } = props;
 
@@ -115,6 +119,14 @@ export const DataTable: DataTableComponent = factory<DataTableFactory>(
       threshold: 1,
     });
 
+    const footerIntersection = useIntersection({
+      root: null,
+    });
+
+    useEffect(() => {
+      footerIntersection.entry?.isIntersecting && onScrollToBottom?.();
+    }, [footerIntersection.entry?.isIntersecting]);
+
     return (
       <DataTableProvider
         value={{
@@ -135,7 +147,7 @@ export const DataTable: DataTableComponent = factory<DataTableFactory>(
             }}
           />
           <DataTableBody />
-          <DataTableFooter />
+          <DataTableFooter ref={footerIntersection.ref} />
         </Table>
       </DataTableProvider>
     );
