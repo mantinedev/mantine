@@ -63,6 +63,7 @@
   "dependencies": {
     "@floating-ui/react": "^0.26.9",
     "@tabler/icons-react": "^2.40.0",
+    "@tanstack/react-table": "^8.15.0",
     "@tiptap/core": "^2.2.1",
     "@tiptap/extension-code-block": "^2.2.1",
     "@tiptap/extension-code-block-lowlight": "^2.2.1",

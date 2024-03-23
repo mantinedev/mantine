@@ -4641,6 +4641,22 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@mantine/data-table@workspace:packages/@mantine/data-table":
+  version: 0.0.0-use.local
+  resolution: "@mantine/data-table@workspace:packages/@mantine/data-table"
+  dependencies:
+    "@mantine-tests/core": "workspace:*"
+    "@mantine/core": "workspace:*"
+    "@mantine/hooks": "workspace:*"
+  peerDependencies:
+    "@mantine/core": ">=7.0.0"
+    "@mantine/hooks": ">=7.0.0"
+    "@tanstack/react-table": ">=8.0.0"
+    react: ^18.2.0
+    react-dom: ^18.2.0
+  languageName: unknown
+  linkType: soft
+
 "@mantine/dates@workspace:*, @mantine/dates@workspace:packages/@mantine/dates":
   version: 0.0.0-use.local
   resolution: "@mantine/dates@workspace:packages/@mantine/dates"
@@ -6841,6 +6857,25 @@ __metadata:
   version: 2.40.0
   resolution: "@tabler/icons@npm:2.40.0"
   checksum: 10c0/a59adf9b071fb3b54f507c3a7c8adaeb74ccb5af5834c92d312829f7564f1e4255086091fe43dbfeae256510d073bce8476f2171655b337050b08b7521786400
+  languageName: node
+  linkType: hard
+
+"@tanstack/react-table@npm:^8.15.0":
+  version: 8.15.0
+  resolution: "@tanstack/react-table@npm:8.15.0"
+  dependencies:
+    "@tanstack/table-core": "npm:8.14.0"
+  peerDependencies:
+    react: ">=16.8"
+    react-dom: ">=16.8"
+  checksum: 10c0/fa82e413d66127090b33ff4a8e13cbad275bc3c3295c37031a7cccd5fa881ee36fa627c2b7a65300cb0c0e889fca6055939802776f2df8a997533d71686fde98
+  languageName: node
+  linkType: hard
+
+"@tanstack/table-core@npm:8.14.0":
+  version: 8.14.0
+  resolution: "@tanstack/table-core@npm:8.14.0"
+  checksum: 10c0/1ace39fd500c32f110512c4ba519d7c0e3c57d3b4f353e114d1ec12d069265678fb37b9063cfcfe1cb1fb35f57959a6e2536914093b0b33d3aef9861be32b117
   languageName: node
   linkType: hard
 
@@ -16942,6 +16977,7 @@ __metadata:
     "@storybook/react": "npm:^7.5.3"
     "@storybook/react-webpack5": "npm:7.5.3"
     "@tabler/icons-react": "npm:^2.40.0"
+    "@tanstack/react-table": "npm:^8.15.0"
     "@testing-library/dom": "npm:9.3.3"
     "@testing-library/jest-dom": "npm:6.1.4"
     "@testing-library/react": "npm:14.1.0"
