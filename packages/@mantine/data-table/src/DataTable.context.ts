@@ -5,6 +5,7 @@ import type { DataTableFactory } from './DataTable';
 export type DataTableContextValue<TData extends RowData = RowData> = {
   table: TableDefinition<TData>;
   getStyles: GetStylesApi<DataTableFactory>;
+  highlightOnSelect?: boolean;
 };
 
 export const [DataTableProvider, useDataTableContext] = createSafeContext<DataTableContextValue>(

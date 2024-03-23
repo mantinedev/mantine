@@ -1,11 +1,14 @@
 import React, { useRef } from 'react';
 import { RowData, Table as TableDefinition } from '@tanstack/react-table';
 import {
+  createVarsResolver,
   factory,
   Factory,
+  getThemeColor,
+  MantineColor,
   MantineComponentStaticProperties,
+  StylesApiProps,
   Table,
-  TableCssVariables,
   TableProps,
   TableStylesNames,
   useProps,
@@ -22,10 +25,21 @@ export type DataTableStylesNames = TableStylesNames
   | 'columnHeader'
   | 'columnTitle';
 
-export type DataTableCssVariables = TableCssVariables;
+export type DataTableCssVariables = {
+  table:
+    | '--table-highlight-on-select-color';
+};
 
-export type DataTableProps<TData extends RowData = RowData> = Omit<TableProps, 'data'> & {
+export type DataTableProps<TData extends RowData = RowData> = Omit<TableProps, 'data'>
+  & StylesApiProps<DataTableFactory>
+  & {
   table: TableDefinition<TData>;
+
+  /** Determines whether table rows background should change to `highlightOnSelectColor` when selected, `true` by default */
+  highlightOnSelect?: boolean;
+
+  /** Background color of table rows when selected, key of `theme.colors` or any valid CSS color, `primary-light` by default */
+  highlightOnSelectColor?: MantineColor;
 };
 
 export type DataTableFactory = Factory<{
@@ -35,7 +49,26 @@ export type DataTableFactory = Factory<{
   vars: DataTableCssVariables;
 }>;
 
-const defaultProps: Partial<DataTableProps> = {};
+const defaultProps: Partial<DataTableProps> = {
+  highlightOnSelect: true,
+};
+
+const varsResolver = createVarsResolver<DataTableFactory>(
+  (
+    theme,
+    {
+      highlightOnSelect,
+      highlightOnSelectColor,
+    }
+  ) => ({
+    table: {
+      '--table-highlight-on-select-color':
+        highlightOnSelect && highlightOnSelectColor
+          ? getThemeColor(highlightOnSelectColor, theme)
+          : undefined,
+    },
+  })
+);
 
 type DataTableComponent = (<TData extends RowData>(
   props: DataTableProps<TData> & { ref?: React.ForwardedRef<HTMLTableElement> }
@@ -55,6 +88,8 @@ export const DataTable: DataTableComponent = factory<DataTableFactory>(
       unstyled,
       vars,
       table,
+      highlightOnSelect,
+      highlightOnSelectColor,
       ...others
     } = props;
 
@@ -69,6 +104,7 @@ export const DataTable: DataTableComponent = factory<DataTableFactory>(
       unstyled,
       rootSelector: 'table',
       vars,
+      varsResolver,
     });
 
     const tableRef = useRef(null);
@@ -84,6 +120,7 @@ export const DataTable: DataTableComponent = factory<DataTableFactory>(
         value={{
           table,
           getStyles,
+          highlightOnSelect,
         }}
       >
         <Table

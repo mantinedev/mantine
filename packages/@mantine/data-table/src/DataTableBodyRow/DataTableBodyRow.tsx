@@ -23,16 +23,23 @@ export const DataTableBodyRow = factory<DataTableBodyRowFactory>(
       style,
       classNames,
       styles,
+      mod,
       row,
       ...others
     } = props;
 
-    const { getStyles } = useDataTableContext();
+    const { getStyles, highlightOnSelect } = useDataTableContext();
 
     return (
       <TableTr
         ref={ref}
         {...getStyles('tr', { className, style, classNames, styles, props })}
+        mod={[
+          {
+            selected: highlightOnSelect && row.getIsSelected(),
+          },
+          mod,
+        ]}
         {...others}
       >
         {row.getVisibleCells().map((cell) => (

@@ -1,4 +1,5 @@
 .table {
+  --table-highlight-on-select-color: var(--mantine-primary-color-light);
   --table-icon-size: rem(16px);
 }
 
@@ -29,6 +30,12 @@
 
   &:where([data-stuck]) {
     box-shadow: var(--mantine-shadow-sm);
+  }
+}
+
+.tr {
+  &:where([data-selected]) {
+    background-color: var(--table-highlight-on-select-color);
   }
 }
 

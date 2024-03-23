@@ -1,6 +1,7 @@
 import React, { useMemo } from 'react';
 import { faker } from '@faker-js/faker';
 import { createColumnHelper, getCoreRowModel, getSortedRowModel, useReactTable } from '@tanstack/react-table';
+import { Checkbox } from '@mantine/core';
 import { DataTable } from './DataTable';
 
 type Person = {
@@ -166,6 +167,50 @@ export const Sorting = () => {
     getCoreRowModel: getCoreRowModel(),
     enableSorting: true,
     getSortedRowModel: getSortedRowModel(),
+  });
+
+  return (
+    <div style={{ padding: 40 }}>
+      <DataTable table={table} />
+    </div>
+  );
+};
+
+export const RowSelection = () => {
+  const data = useMemo(() => makeData(10), []);
+
+  const columns = useMemo(() => [
+    columnHelper.display({
+      id: 'select',
+      header: ({ table }) => (
+        <Checkbox
+          checked={table.getIsAllRowsSelected()}
+          indeterminate={table.getIsSomeRowsSelected()}
+          onChange={table.getToggleAllRowsSelectedHandler()}
+        />
+      ),
+      cell: ({ row }) => (
+        <Checkbox
+          checked={row.getIsSelected()}
+          disabled={!row.getCanSelect()}
+          indeterminate={row.getIsSomeSelected()}
+          onChange={row.getToggleSelectedHandler()}
+        />
+      ),
+    }),
+    columnHelper.accessor('firstName', { header: 'First Name' }),
+    columnHelper.accessor('lastName', { header: 'Last Name' }),
+    columnHelper.accessor('age', { header: 'Age' }),
+    columnHelper.accessor('visits', { header: 'Visits' }),
+    columnHelper.accessor('status', { header: 'Status' }),
+    columnHelper.accessor('progress', { header: 'Profile Progress' }),
+  ], []);
+
+  const table = useReactTable({
+    data,
+    columns,
+    getCoreRowModel: getCoreRowModel(),
+    enableRowSelection: (row) => row.original.status === 'single',
   });
 
   return (
