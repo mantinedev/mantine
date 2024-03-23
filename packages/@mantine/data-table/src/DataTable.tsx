@@ -85,6 +85,7 @@ export const DataTable: DataTableComponent = factory<DataTableFactory>(
                 <TableTh
                   key={header.id}
                   {...getStyles('th')}
+                  colSpan={header.colSpan}
                 >
                   {header.isPlaceholder
                     ? null
@@ -128,6 +129,7 @@ export const DataTable: DataTableComponent = factory<DataTableFactory>(
                 <TableTh
                   key={header.id}
                   {...getStyles('th')}
+                  colSpan={header.colSpan}
                 >
                   {header.isPlaceholder
                     ? null
