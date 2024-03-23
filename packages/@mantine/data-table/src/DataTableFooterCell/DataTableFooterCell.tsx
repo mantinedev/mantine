@@ -32,7 +32,7 @@ export const DataTableFooterCell = factory<DataTableFooterCellFactory>(
       <TableTh
         ref={ref}
         {...getStyles('th', { className, style, classNames, styles, props })}
-        colSpan={header.colSpan}
+        colSpan={header.colSpan > 1 ? header.colSpan : undefined}
         {...others}
       >
         {header.isPlaceholder

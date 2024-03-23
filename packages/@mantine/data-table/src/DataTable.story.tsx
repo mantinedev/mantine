@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react';
 import { faker } from '@faker-js/faker';
-import { createColumnHelper, getCoreRowModel, useReactTable } from '@tanstack/react-table';
+import { createColumnHelper, getCoreRowModel, getSortedRowModel, useReactTable } from '@tanstack/react-table';
 import { DataTable } from './DataTable';
 
 type Person = {
@@ -144,6 +144,33 @@ export const StickyHeader = () => {
   return (
     <div style={{ padding: 40 }}>
       <DataTable table={table} stickyHeader />
+    </div>
+  );
+};
+
+export const Sorting = () => {
+  const data = useMemo(() => makeData(10), []);
+
+  const columns = useMemo(() => [
+    columnHelper.accessor('firstName', { header: 'First Name' }),
+    columnHelper.accessor('lastName', { header: 'Last Name' }),
+    columnHelper.accessor('age', { header: 'Age' }),
+    columnHelper.accessor('visits', { header: 'Visits' }),
+    columnHelper.accessor('status', { header: 'Status', enableSorting: false }),
+    columnHelper.accessor('progress', { header: 'Profile Progress', enableSorting: false }),
+  ], []);
+
+  const table = useReactTable({
+    data,
+    columns,
+    getCoreRowModel: getCoreRowModel(),
+    enableSorting: true,
+    getSortedRowModel: getSortedRowModel(),
+  });
+
+  return (
+    <div style={{ padding: 40 }}>
+      <DataTable table={table} />
     </div>
   );
 };

@@ -18,7 +18,9 @@ import classes from './DataTable.module.css';
 import { DataTableBody } from './DataTableBody';
 import { DataTableFooter } from './DataTableFooter';
 
-export type DataTableStylesNames = TableStylesNames;
+export type DataTableStylesNames = TableStylesNames
+  | 'columnHeader'
+  | 'columnTitle';
 
 export type DataTableCssVariables = TableCssVariables;
 

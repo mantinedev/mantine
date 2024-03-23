@@ -1,3 +1,7 @@
+.table {
+  --table-icon-size: rem(16px);
+}
+
 .thead,
 .tfoot {
   & :where(tr):not(:has(:not(:empty.th))) {
@@ -26,4 +30,25 @@
   &:where([data-stuck]) {
     box-shadow: var(--mantine-shadow-sm);
   }
+}
+
+.th {
+  &:where([data-has-sorter]) {
+    cursor: pointer;
+
+    @mixin hover {
+      background-color: var(--table-hover-color);
+    }
+  }
+}
+
+.columnHeader {
+  display: flex;
+  align-items: center;
+  flex-wrap: nowrap;
+  gap: var(--table-horizontal-spacing, var(--mantine-spacing-xs));
+}
+
+.columnTitle {
+  flex: 1;
 }
