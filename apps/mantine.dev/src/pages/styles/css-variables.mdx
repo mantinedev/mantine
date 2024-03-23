@@ -16,7 +16,7 @@ Note that not all values are documented on this page, you can find full list of 
 Typography variables control font family, font size, line height, font weight, and other text-related properties
 of all Mantine components.
 
-### Font family variables
+### Font family
 
 The following CSS variables are used to assign font families to all Mantine components:
 
@@ -107,7 +107,7 @@ function Demo() {
 }
 ```
 
-### Font size variables
+### Font size
 
 Font size variables are used in most Mantine components to control text size. The
 variable that is chosen depends on the component and its `size` prop.
@@ -218,7 +218,76 @@ After defining `theme.fontSizes`, you can reference these variables in your CSS:
 > If you define `theme.fontSizes` with camelCase keys, you need to reference them in camelCase format.
 > For example, if you define `{ customSize: '1rem' }`, you need to reference it as `--mantine-font-size-customSize`.
 
-### Font smoothing variables
+### Line height
+
+Line height variables are used in [Text](/core/text) component. In other components,
+line-height is either calculated based on font size or set to `--mantine-line-height`,
+which is an alias for `--mantine-line-height-md`.
+
+<CssVariablesGroup
+  data={[
+    {
+      variable: '--mantine-line-height-xs',
+      defaultValue: '1.4',
+    },
+    {
+      variable: '--mantine-line-height-sm',
+      defaultValue: '1.45',
+    },
+    {
+      variable: '--mantine-line-height-md',
+      defaultValue: '1.55',
+    },
+    {
+      variable: '--mantine-line-height-lg',
+      defaultValue: '1.6',
+    },
+    {
+      variable: '--mantine-line-height-xl',
+      defaultValue: '1.65',
+    },
+  ]}
+/>
+
+You can reference line height variables in your CSS:
+
+```scss
+.demo {
+  line-height: var(--mantine-line-height-md);
+}
+```
+
+And in [lh style prop](/styles/style-props):
+
+```tsx
+import { Text } from '@mantine/core';
+
+function Demo() {
+  return (
+    <Text lh="xl">
+      This text uses --mantine-line-height-xl variable
+    </Text>
+  );
+}
+```
+
+To define custom line heights, you can use `theme.lineHeights` property:
+
+```tsx
+import { createTheme } from '@mantine/core';
+
+const theme = createTheme({
+  lineHeights: {
+    xs: 1.2,
+    sm: 1.3,
+    md: 1.4,
+    lg: 1.5,
+    xl: 1.6,
+  },
+});
+```
+
+### Font smoothing
 
 Font smoothing variables control [-webkit-font-smoothing and moz-osx-font-smoothing](https://developer.mozilla.org/en-US/docs/Web/CSS/font-smooth)
 CSS properties. These variables are used to make text look better on screens with high pixel density.
