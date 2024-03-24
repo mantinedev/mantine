@@ -72,3 +72,8 @@ export const Demo_valueFormatter = {
   name: '⭐ Demo: valueFormatter',
   render: renderDemo(demos.valueFormatter),
 };
+
+export const Demo_dotSize = {
+  name: '⭐ Demo: dotSize',
+  render: renderDemo(demos.dotSize),
+};

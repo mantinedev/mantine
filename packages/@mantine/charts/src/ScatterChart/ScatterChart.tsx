@@ -7,6 +7,7 @@ import {
   ReferenceLine,
   ResponsiveContainer,
   Scatter,
+  ScatterProps,
   Tooltip,
   XAxis,
   YAxis,
@@ -60,6 +61,7 @@ export interface ScatterChartProps
   valueFormatter?:
     | GridChartBaseProps['valueFormatter']
     | { x?: GridChartBaseProps['valueFormatter']; y?: GridChartBaseProps['valueFormatter'] };
+  scatterProps?: Omit<ScatterProps, 'ref'>;
 }
 
 function getAxis(key: string, dataKey: { x: string; y: string }) {
@@ -127,6 +129,7 @@ export const ScatterChart = factory<ScatterChartFactory>((_props, ref) => {
     unit,
     labels,
     valueFormatter,
+    scatterProps,
     ...others
   } = props;
 
@@ -198,6 +201,7 @@ export const ScatterChart = factory<ScatterChartFactory>((_props, ref) => {
         key={index}
         isAnimationActive={false}
         fillOpacity={dimmed ? 0.1 : 1}
+        {...scatterProps}
       />
     );
   });
