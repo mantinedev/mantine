@@ -3,11 +3,26 @@ import {
   FloatingIndicatorDemos,
   HooksDemos,
   ScatterChartDemos,
+  ThemingDemos,
 } from '@docs/demos';
 import { Layout } from '@/layout';
 import { MDX_DATA } from '@/mdx';
 
 export default Layout(MDX_DATA.Changelog770);
+
+## Virtual colors
+
+Virtual color is a special color which values should be different for light and dark color schemes.
+To define a virtual color, use `virtualColor` function which accepts an object with the following
+properties as a single argument:
+
+- `name` – color name, must be the same as the key in `theme.colors` object
+- `light` – a key of `theme.colors` object for light color scheme
+- `dark` – a key of `theme.colors` object for dark color scheme
+
+To see the demo in action, switch between light and dark color schemes (`Ctrl + J`):
+
+<Demo data={ThemingDemos.virtualColors} />
 
 ## FloatingIndicator component
 

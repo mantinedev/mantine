@@ -122,3 +122,8 @@ export const Demo_oklch = {
   name: '⭐ Demo: oklch',
   render: renderDemo(demos.oklch),
 };
+
+export const Demo_virtualColors = {
+  name: '⭐ Demo: virtualColors',
+  render: renderDemo(demos.virtualColors),
+};

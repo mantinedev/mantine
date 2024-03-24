@@ -46,6 +46,20 @@ This will allow you to use them in all components that support `color` prop, for
 > You can add more than 10 shades per color: these values will not be used by Mantine components with the default colors resolver,
 > but you can still reference them by index, for example, `color="blue.11"`.
 
+## Virtual colors
+
+Virtual color is a special color which values should be different for light and dark color schemes.
+To define a virtual color, use `virtualColor` function which accepts an object with the following
+properties as a single argument:
+
+- `name` – color name, must be the same as the key in `theme.colors` object
+- `light` – a key of `theme.colors` object for light color scheme
+- `dark` – a key of `theme.colors` object for dark color scheme
+
+To see the demo in action, switch between light and dark color schemes (`Ctrl + J`):
+
+<Demo data={ThemingDemos.virtualColors} />
+
 ## colorsTuple
 
 Use `colorsTuple` function to:
