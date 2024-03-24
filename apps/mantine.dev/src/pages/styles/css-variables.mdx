@@ -506,6 +506,288 @@ body {
 }
 ```
 
+## Colors variables
+
+Colors variables are controlled by `theme.colors` and `theme.primaryColor`. Each color
+defined in `theme.colors` object is required to have 10 shades. Theme color can be
+referenced by its name and shade index, for example, `--mantine-color-red-6`.
+
+You can define new colors on the theme object or override existing colors:
+
+```tsx
+import { createTheme } from '@mantine/core';
+
+const theme = createTheme({
+  colors: {
+    demo: [
+      '#FF0000',
+      '#FF3333',
+      '#FF6666',
+      '#FF9999',
+      '#FFCCCC',
+      '#FFEEEE',
+      '#FFFAFA',
+      '#FFF5F5',
+      '#FFF0F0',
+      '#FFEBEB',
+    ],
+  },
+});
+```
+
+The code above will define the following CSS variables:
+
+<CssVariablesGroup
+  data={[
+    {
+      variable: '--mantine-color-demo-0',
+      defaultValue: '#FF0000',
+    },
+    {
+      variable: '--mantine-color-demo-1',
+      defaultValue: '#FF3333',
+    },
+    {
+      variable: '--mantine-color-demo-2',
+      defaultValue: '#FF6666',
+    },
+    {
+      variable: '--mantine-color-demo-3',
+      defaultValue: '#FF9999',
+    },
+    {
+      variable: '--mantine-color-demo-4',
+      defaultValue: '#FFCCCC',
+    },
+    {
+      variable: '--mantine-color-demo-5',
+      defaultValue: '#FFEEEE',
+    },
+    {
+      variable: '--mantine-color-demo-6',
+      defaultValue: '#FFFAFA',
+    },
+    {
+      variable: '--mantine-color-demo-7',
+      defaultValue: '#FFF5F5',
+    },
+    {
+      variable: '--mantine-color-demo-8',
+      defaultValue: '#FFF0F0',
+    },
+    {
+      variable: '--mantine-color-demo-9',
+      defaultValue: '#FFEBEB',
+    },
+  ]}
+/>
+
+### Variant colors
+
+Some Mantine components like [Button](/core/button) or [Badge](/core/badge) have `variant` prop
+that in combination with `color` prop controls the component text, background and border colors.
+For each variant and color, Mantine defines a set of CSS variables that control these colors.
+For example, for the default `blue` color the following CSS variables are defined:
+
+<CssVariablesGroup
+  data={[
+    { group: 'Filled variant' },
+    {
+      variable: '--mantine-color-blue-filled',
+      description: 'Background color of filled variant',
+      defaultValue: 'var(--mantine-color-blue-6)',
+    },
+    {
+      variable: '--mantine-color-blue-filled-hover',
+      description: 'Background color of filled variant on hover',
+      defaultValue: 'var(--mantine-color-blue-7)',
+    },
+    { group: 'Light variant' },
+    {
+      variable: '--mantine-color-blue-light',
+      description: 'Background color of light variant',
+      defaultValue: 'rgba(34, 139, 230, 0.1)',
+    },
+    {
+      variable: '--mantine-color-blue-light-hover',
+      description: 'Background color of light variant on hover',
+      defaultValue: 'rgba(34, 139, 230, 0.12)',
+    },
+    {
+      variable: '--mantine-color-blue-light-color',
+      description: 'Text color of light variant',
+      defaultValue: 'var(--mantine-color-blue-6)',
+    },
+    { group: 'Outline variant' },
+    {
+      variable: '--mantine-color-blue-outline',
+      description: 'Border color of outline variant',
+      defaultValue: 'var(--mantine-color-blue-6)',
+    },
+    {
+      variable: '--mantine-color-blue-outline-hover',
+      description: 'Border color of outline variant',
+      defaultValue: 'rgba(34, 139, 230, 0.05)',
+    },
+  ]}
+/>
+
+For example, if you use [Button](/core/button) component the following way:
+
+```tsx
+import { Button } from '@mantine/core';
+
+function Demo() {
+  return (
+    <Button color="pink" variant="filled">
+      Filled pink button
+    </Button>
+  );
+}
+```
+
+The component will have the following styles:
+
+- Background color will be `var(--mantine-color-pink-filled)`
+- Background color on hover will be `var(--mantine-color-pink-filled-hover)`
+- Text color will be `var(--mantine-color-white)`
+- Border color will be `transparent`
+
+Note that the variables above are not static, they are generated based on the values of
+`theme.colors` and `theme.primaryShade`. Additionally, their values are different for
+dark and light color schemes.
+
+Variant colors variables are used in all components that support `color` prop, for example,
+[Button](/core/button), [Badge](/core/badge), [Avatar](/core/avatar) and [Pagination](/core/pagination).
+Colors values that are used by these components are determined by `cssVariablesResolver` described below
+and [variantColorResolver](/styles/variants-sizes/#variantcolorresolver).
+
+### Primary color variables
+
+Primary color variables are defined by `theme.primaryColor` (which must be a key of `theme.colors`).
+The following CSS variables are defined for the primary color:
+
+<CssVariablesGroup
+  data={[
+    {
+      variable: '--mantine-primary-color-{shade}',
+      description:
+        'Shade is 0-9 to reference specific primary color shade',
+      defaultValue: 'var(--mantine-color-{primaryColor}-{shade})',
+    },
+    {
+      variable: '--mantine-primary-color-filled',
+      description: 'Background color of filled variant',
+      defaultValue: 'var(--mantine-color-{primaryColor}-filled)',
+    },
+    {
+      variable: '--mantine-primary-color-filled-hover',
+      description: 'Background color of filled variant on hover',
+      defaultValue:
+        'var(--mantine-color-{primaryColor}-filled-hover)',
+    },
+    {
+      variable: '--mantine-primary-color-light',
+      description: 'Background color of light variant',
+      defaultValue: 'var(--mantine-color-{primaryColor}-light)',
+    },
+    {
+      variable: '--mantine-primary-color-light-hover',
+      description: 'Background color of light variant on hover',
+      defaultValue: 'var(--mantine-color-{primaryColor}-light-hover)',
+    },
+    {
+      variable: '--mantine-primary-color-light-color',
+      description: 'Text color of light variant',
+      defaultValue: 'var(--mantine-color-{primaryColor}-light-color)',
+    },
+  ]}
+/>
+
+You can reference primary color variables in CSS:
+
+```scss
+.demo {
+  color: var(--mantine-primary-color-0);
+  background-color: var(--mantine-primary-color-filled);
+}
+```
+
+### Other color variables
+
+The following colors are used in various Mantine components. Note that default values
+are provided for the light color scheme, dark color scheme values are different.
+
+<CssVariablesGroup
+  data={[
+    {
+      variable: '--mantine-color-white',
+      description: 'Value of theme.white',
+      defaultValue: '#fff',
+    },
+    {
+      variable: '--mantine-color-black',
+      description: 'Value of theme.black',
+      defaultValue: '#000',
+    },
+    {
+      variable: '--mantine-color-text',
+      description: 'Color used for text in the body element',
+      defaultValue: 'var(--mantine-color-black)',
+    },
+    {
+      variable: '--mantine-color-body',
+      description: 'Body background color',
+      defaultValue: 'var(--mantine-color-white)',
+    },
+    {
+      variable: '--mantine-color-error',
+      description: 'Color used for error messages and states',
+      defaultValue: 'var(--mantine-color-red-6)',
+    },
+    {
+      variable: '--mantine-color-placeholder',
+      description: 'Color used for input placeholders',
+      defaultValue: 'var(--mantine-color-gray-5)',
+    },
+    {
+      variable: '--mantine-color-dimmed',
+      description: 'Color used for dimmed text',
+      defaultValue: 'var(--mantine-color-gray-6)',
+    },
+    {
+      variable: '--mantine-color-bright',
+      description: 'Color used for bright text',
+      defaultValue: 'var(--mantine-color-black)',
+    },
+    {
+      variable: '--mantine-color-anchor',
+      description: 'Color used for links',
+      defaultValue: 'var(--mantine-primary-color-6)',
+    },
+    {
+      variable: '--mantine-color-default',
+      description: 'Background color of default variant',
+      defaultValue: 'var(--mantine-color-white)',
+    },
+    {
+      variable: '--mantine-color-default-hover',
+      description: 'Background color of default variant on hover',
+      defaultValue: 'var(--mantine-color-gray-0)',
+    },
+    {
+      variable: '--mantine-color-default-color',
+      description: 'Text color of default variant',
+      defaultValue: 'var(--mantine-color-black)',
+    },
+    {
+      variable: '--mantine-color-default-border',
+      description: 'Border color of default variant',
+      defaultValue: 'var(--mantine-color-gray-4)',
+    },
+  ]}
+/>
+
 ## z-index variables
 
 z-index variables are defined in `@mantine/core/styles.css`. Unlike other variables,
