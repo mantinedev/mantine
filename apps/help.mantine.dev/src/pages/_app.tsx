@@ -12,7 +12,7 @@ import Head from 'next/head';
 import { MantineProvider } from '@mantine/core';
 import { ShikiProvider } from '@mantinex/shiki';
 import { Shell } from '../components/Shell';
-import { cssVariablesResolver, theme } from '../theme';
+import { theme } from '../theme';
 
 async function loadShiki() {
   const { getHighlighter } = await import('shiki');
@@ -27,7 +27,7 @@ async function loadShiki() {
 export default function App({ Component, pageProps }: any) {
   const title = 'Help Center | Mantine';
   return (
-    <MantineProvider theme={theme} cssVariablesResolver={cssVariablesResolver}>
+    <MantineProvider theme={theme}>
       <Head>
         <title>{title}</title>
         <meta itemProp="name" content={title} key="item-title" />
