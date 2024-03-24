@@ -788,6 +788,153 @@ are provided for the light color scheme, dark color scheme values are different.
   ]}
 />
 
+## Spacing variables
+
+`theme.spacing` values are used in most Mantine components to control paddings, margins, and other
+spacing-related properties. The following CSS variables are defined based on `theme.spacing`:
+
+<CssVariablesGroup
+  data={[
+    {
+      variable: '--mantine-spacing-xs',
+      defaultValue: '0.625rem (10px)',
+    },
+    {
+      variable: '--mantine-spacing-sm',
+      defaultValue: '0.75rem (12px)',
+    },
+    {
+      variable: '--mantine-spacing-md',
+      defaultValue: '1rem (16px)',
+    },
+    {
+      variable: '--mantine-spacing-lg',
+      defaultValue: '1.25rem (20px)',
+    },
+    {
+      variable: '--mantine-spacing-xl',
+      defaultValue: '2rem (32px)',
+    },
+  ]}
+/>
+
+To define custom spacing values, use `theme.spacing` property:
+
+```tsx
+import { createTheme } from '@mantine/core';
+
+const theme = createTheme({
+  spacing: {
+    xs: '0.5rem',
+    sm: '0.75rem',
+    md: '1rem',
+    lg: '1.5rem',
+    xl: '2rem',
+  },
+});
+```
+
+## Border radius variables
+
+Mantine components that support `radius` prop use border radius variables to control border radius.
+The following CSS variables are defined based on `theme.radius`:
+
+<CssVariablesGroup
+  data={[
+    {
+      variable: '--mantine-radius-xs',
+      defaultValue: '0.125rem (2px)',
+    },
+    {
+      variable: '--mantine-radius-sm',
+      defaultValue: '0.25rem (4px)',
+    },
+    {
+      variable: '--mantine-radius-md',
+      defaultValue: '0.5rem (8px)',
+    },
+    {
+      variable: '--mantine-radius-lg',
+      defaultValue: '1rem (16px)',
+    },
+    {
+      variable: '--mantine-radius-xl',
+      defaultValue: '2rem (32px)',
+    },
+  ]}
+/>
+
+Additionally, `--mantine-radius-default` variable is defined based on `theme.defaultRadius`
+value. If `radius` prop on components is not set explicitly, `--mantine-radius-default` is used instead.
+
+To define custom border radius values, use `theme.radius` and `theme.defaultRadius` properties:
+
+```tsx
+import { createTheme } from '@mantine/core';
+
+const theme = createTheme({
+  defaultRadius: 'sm',
+  radius: {
+    xs: '0.25rem',
+    sm: '0.5rem',
+    md: '1rem',
+    lg: '2rem',
+    xl: '3rem',
+  },
+});
+```
+
+## Shadow variables
+
+Shadow variables are used in all Mantine components that support `shadow` prop. The following CSS
+variables are defined based on `theme.shadows`:
+
+<CssVariablesGroup
+  data={[
+    {
+      variable: '--mantine-shadow-xs',
+      defaultValue:
+        '0 1px 3px rgba(0, 0, 0, 0.05), 0 1px 2px rgba(0, 0, 0, 0.1)',
+    },
+    {
+      variable: '--mantine-shadow-sm',
+      defaultValue:
+        '0 1px 3px rgba(0, 0, 0, 0.05), rgba(0, 0, 0, 0.05) 0 10px 15px -5px, rgba(0, 0, 0, 0.04) 0 7px 7px -5px',
+    },
+    {
+      variable: '--mantine-shadow-md',
+      defaultValue:
+        '0 1px 3px rgba(0, 0, 0, 0.05), rgba(0, 0, 0, 0.05) 0 20px 25px -5px, rgba(0, 0, 0, 0.04) 0 10px 10px -5px',
+    },
+    {
+      variable: '--mantine-shadow-lg',
+      defaultValue:
+        '0 1px 3px rgba(0, 0, 0, 0.05), rgba(0, 0, 0, 0.05) 0 28px 23px -7px, rgba(0, 0, 0, 0.04) 0 12px 12px -7px',
+    },
+    {
+      variable: '--mantine-shadow-xl',
+      defaultValue:
+        '0 1px 3px rgba(0, 0, 0, 0.05), rgba(0, 0, 0, 0.05) 0 36px 28px -7px, rgba(0, 0, 0, 0.04) 0 17px 17px -7px',
+    },
+  ]}
+/>
+
+To define custom shadow values, use `theme.shadows` property:
+
+```tsx
+import { createTheme } from '@mantine/core';
+
+const theme = createTheme({
+  shadows: {
+    xs: '0 1px 2px rgba(0, 0, 0, 0.1)',
+    sm: '0 1px 3px rgba(0, 0, 0, 0.1)',
+    md: '0 2px 4px rgba(0, 0, 0, 0.1)',
+    lg: '0 4px 8px rgba(0, 0, 0, 0.1)',
+    xl: '0 8px 16px rgba(0, 0, 0, 0.1)',
+  },
+});
+```
+
 ## z-index variables
 
 z-index variables are defined in `@mantine/core/styles.css`. Unlike other variables,
