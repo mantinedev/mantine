@@ -15,7 +15,7 @@ function Demo() {
       dataKey={{ x: 'age', y: 'BMI' }}
       xAxisLabel="Age"
       yAxisLabel="BMI"
-      labels={{ age: 'Age', BMI: 'Body mass index' }}
+      labels={{ x: 'Age', y: 'Body mass index' }}
     />
   );
 }
@@ -29,7 +29,7 @@ function Demo() {
       dataKey={{ x: 'age', y: 'BMI' }}
       xAxisLabel="Age"
       yAxisLabel="BMI"
-      labels={{ age: 'Age', BMI: 'Body mass index' }}
+      labels={{ x: 'Age', y: 'Body mass index' }}
     />
   );
 }

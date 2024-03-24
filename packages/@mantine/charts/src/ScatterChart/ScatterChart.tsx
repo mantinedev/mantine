@@ -53,14 +53,27 @@ export interface ScatterChartProps
     BoxProps,
     StylesApiProps<ScatterChartFactory>,
     ElementProps<'div'> {
+  /** Keys that should be used to retrieve data from the data array on x and y axis */
   dataKey: { x: string; y: string };
+
+  /** Data that is used to build the chart */
   data: ScatterChartSeries[];
-  scatterChartProps?: React.ComponentPropsWithoutRef<typeof ReChartsScatterChart>;
+
+  /** Units displayed after value on axis and inside the tooltip */
   unit?: { x?: string; y?: string };
-  labels?: Record<string, string>;
+
+  /** Labels that should be used instead of keys names in the tooltip */
+  labels?: { x?: string; y?: string };
+
+  /** A function to format values on x/y axis and in the tooltip */
   valueFormatter?:
     | GridChartBaseProps['valueFormatter']
     | { x?: GridChartBaseProps['valueFormatter']; y?: GridChartBaseProps['valueFormatter'] };
+
+  /** Props passed down to recharts `ScatterChart` component */
+  scatterChartProps?: React.ComponentPropsWithoutRef<typeof ReChartsScatterChart>;
+
+  /** Props passed down to recharts `Scatter` component */
   scatterProps?: Omit<ScatterProps, 'ref'>;
 }
 
@@ -297,7 +310,7 @@ export const ScatterChart = factory<ScatterChartFactory>((_props, ref) => {
                     labels
                       ? payload?.map((item) => ({
                           ...item,
-                          name: labels[item.name] || item.name,
+                          name: labels[getAxis(item.name, dataKey)] || item.name,
                           value:
                             getFormatter(getAxis(item.name, dataKey))?.(item.value) ?? item.value,
                         }))
