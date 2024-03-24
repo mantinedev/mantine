@@ -9,3 +9,5 @@ export { referenceLines } from './ScatterChart.demo.referenceLines';
 export { strokeDasharray } from './ScatterChart.demo.strokeDasharray';
 export { tooltipAnimation } from './ScatterChart.demo.tooltipAnimation';
 export { units } from './ScatterChart.demo.units';
+export { labels } from './ScatterChart.demo.labels';
+export { customTooltip } from './ScatterChart.demo.customTooltip';

@@ -57,3 +57,13 @@ export const Demo_units = {
   name: '⭐ Demo: units',
   render: renderDemo(demos.units),
 };
+
+export const Demo_labels = {
+  name: '⭐ Demo: labels',
+  render: renderDemo(demos.labels),
+};
+
+export const Demo_customTooltip = {
+  name: '⭐ Demo: customTooltip',
+  render: renderDemo(demos.customTooltip),
+};
