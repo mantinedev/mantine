@@ -1,13 +1,22 @@
-import { MantineColor } from '../../theme.types';
+import { colorsTuple } from '../../color-functions';
+import { MantineColor, MantineColorsTuple } from '../../theme.types';
 
-interface VirtualColor {
+interface VirtualColorInput {
+  dark: MantineColor;
+  light: MantineColor;
+  name: string;
+}
+
+type VirtualColor = MantineColorsTuple & {
   'mantine-virtual-color': true;
   dark: MantineColor;
   light: MantineColor;
-}
+};
 
-export function virtualColor(input: { dark: MantineColor; light: MantineColor }): VirtualColor {
-  const result = { ...input };
+export function virtualColor(input: VirtualColorInput): MantineColorsTuple {
+  const result = colorsTuple(
+    Array.from({ length: 10 }).map((_, i) => `var(--mantine-color-${input.name}-${i})`)
+  );
 
   Object.defineProperty(result, 'mantine-virtual-color', {
     enumerable: false,
@@ -16,7 +25,21 @@ export function virtualColor(input: { dark: MantineColor; light: MantineColor })
     value: true,
   });
 
-  return result as VirtualColor;
+  Object.defineProperty(result, 'dark', {
+    enumerable: false,
+    writable: false,
+    configurable: false,
+    value: input.dark,
+  });
+
+  Object.defineProperty(result, 'light', {
+    enumerable: false,
+    writable: false,
+    configurable: false,
+    value: input.light,
+  });
+
+  return result;
 }
 
 export function isVirtualColor(value: unknown): value is VirtualColor {
