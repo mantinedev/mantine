@@ -4,6 +4,7 @@ import { getPrimaryContrastColor, getPrimaryShade } from '../color-functions';
 import { ConvertCSSVariablesInput } from '../convert-css-variables';
 import { MantineTheme } from '../theme.types';
 import { getCSSColorVariables } from './get-css-color-variables';
+import { isVirtualColor } from './virtual-color/virtual-color';
 
 export type CSSVariablesResolver = (theme: MantineTheme) => ConvertCSSVariablesInput;
 
@@ -91,7 +92,35 @@ export const defaultCssVariablesResolver: CSSVariablesResolver = (theme) => {
   });
 
   keys(theme.colors).forEach((color) => {
-    theme.colors[color].forEach((shade, index) => {
+    const value = theme.colors[color];
+
+    if (isVirtualColor(value)) {
+      Object.assign(
+        result.light,
+        getCSSColorVariables({
+          theme,
+          name: value.name,
+          color: value.light,
+          colorScheme: 'light',
+          withColorValues: true,
+        })
+      );
+
+      Object.assign(
+        result.dark,
+        getCSSColorVariables({
+          theme,
+          name: value.name,
+          color: value.dark,
+          colorScheme: 'dark',
+          withColorValues: true,
+        })
+      );
+
+      return;
+    }
+
+    value.forEach((shade, index) => {
       result.variables[`--mantine-color-${color}-${index}`] = shade;
     });
 

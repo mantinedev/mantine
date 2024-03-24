@@ -9,6 +9,7 @@ interface VirtualColorInput {
 
 type VirtualColor = MantineColorsTuple & {
   'mantine-virtual-color': true;
+  name: string;
   dark: MantineColor;
   light: MantineColor;
 };
@@ -37,6 +38,13 @@ export function virtualColor(input: VirtualColorInput): MantineColorsTuple {
     writable: false,
     configurable: false,
     value: input.light,
+  });
+
+  Object.defineProperty(result, 'name', {
+    enumerable: false,
+    writable: false,
+    configurable: false,
+    value: input.name,
   });
 
   return result;

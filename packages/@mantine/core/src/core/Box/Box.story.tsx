@@ -13,6 +13,15 @@ export function Usage() {
     </div>
   );
 }
+export function VirtualColor() {
+  return (
+    <div style={{ padding: 40 }}>
+      <Box bg="virtual.4" p="xl">
+        Virtual bg
+      </Box>
+    </div>
+  );
+}
 
 export function ColorMix() {
   return (
