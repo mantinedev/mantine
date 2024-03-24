@@ -128,6 +128,7 @@ export const Pill = factory<PillFactory>((_props, ref) => {
           tabIndex={-1}
           aria-hidden
           unstyled={unstyled}
+          disabled={disabled}
           {...removeButtonProps}
           {...getStyles('remove', {
             className: removeButtonProps?.className,
@@ -139,6 +140,10 @@ export const Pill = factory<PillFactory>((_props, ref) => {
             removeButtonProps?.onMouseDown?.(event);
           }}
           onClick={(event) => {
+            if (disabled) {
+              event.preventDefault();
+              return;
+            }
             event.stopPropagation();
             onRemove?.();
             removeButtonProps?.onClick?.(event);

@@ -301,6 +301,7 @@ export const TagsInput = factory<TagsInputFactory>((_props, ref) => {
     <Pill
       key={`${item}-${index}`}
       withRemoveButton={!readOnly}
+      disabled={disabled}
       onRemove={() => {
         setValue(_value.filter((i) => item !== i));
         onRemove?.(item);
