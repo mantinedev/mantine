@@ -15,6 +15,7 @@ function Demo() {
       dataKey={{ x: 'age', y: 'average_monthly_spending' }}
       yAxisProps={{ domain: [800, 3500] }}
       unit={{ y: '$' }}
+      labels={{ x: 'Age', y: 'Spending' }}
     />
   );
 }
@@ -28,7 +29,7 @@ function Demo() {
       dataKey={{ x: 'age', y: 'average_monthly_spending' }}
       yAxisProps={{ domain: [800, 3500] }}
       unit={{ y: '$' }}
-      labels={{ age: 'Age', average_monthly_spending: 'Spending' }}
+      labels={{ x: 'Age', y: 'Spending' }}
     />
   );
 }

@@ -15,6 +15,7 @@ function Demo() {
       dataKey={{ x: 'age', y: 'BMI' }}
       xAxisLabel="Age"
       yAxisLabel="BMI"
+      scatterProps={{ shape: <circle r={3} /> }}
     />
   );
 }

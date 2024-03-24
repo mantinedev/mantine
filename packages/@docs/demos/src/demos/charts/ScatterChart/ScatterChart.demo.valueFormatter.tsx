@@ -13,6 +13,7 @@ function Demo() {
       h={350}
       data={spendingsData}
       dataKey={{ x: 'age', y: 'average_monthly_spending' }}
+      yAxisProps={{ domain: [800, 3400] }}
       valueFormatter={{
         x: (value) => \`\${value} years\`,
         y: (value) => \`$\${new Intl.NumberFormat('en-US').format(value)}\`,
@@ -28,6 +29,7 @@ function Demo() {
       h={350}
       data={spendingsData}
       dataKey={{ x: 'age', y: 'average_monthly_spending' }}
+      yAxisProps={{ domain: [800, 3400] }}
       valueFormatter={{
         x: (value) => `${value} years`,
         y: (value) => `$${new Intl.NumberFormat('en-US').format(value)}`,

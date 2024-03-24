@@ -10,18 +10,14 @@ import { Paper, Text } from '@mantine/core';
 import { data } from './data';
 
 interface ChartTooltipProps {
-  label: string;
   payload: Record<string, any>[] | undefined;
 }
 
-function ChartTooltip({ label, payload }: ChartTooltipProps) {
+function ChartTooltip({ payload }: ChartTooltipProps) {
   if (!payload) return null;
 
   return (
     <Paper px="md" py="sm" withBorder shadow="md" radius="md">
-      <Text fw={500} mb={5}>
-        {label}
-      </Text>
       {payload.map((item: any) => (
         <Text key={item.name} fz="sm">
           {item.name}: {item.value}
@@ -40,7 +36,7 @@ function Demo() {
       xAxisLabel="Age"
       yAxisLabel="BMI"
       tooltipProps={{
-        content: ({ label, payload }) => <ChartTooltip label={label} payload={payload} />,
+        content: ({ payload }) => <ChartTooltip payload={payload} />,
       }}
     />
   );
@@ -48,18 +44,14 @@ function Demo() {
 `;
 
 interface ChartTooltipProps {
-  label: string;
   payload: Record<string, any>[] | undefined;
 }
 
-function ChartTooltip({ label, payload }: ChartTooltipProps) {
+function ChartTooltip({ payload }: ChartTooltipProps) {
   if (!payload) return null;
 
   return (
     <Paper px="md" py="sm" withBorder shadow="md" radius="md">
-      <Text fw={500} mb={5}>
-        {label}
-      </Text>
       {payload.map((item: any) => (
         <Text key={item.name} fz="sm">
           {item.name}: {item.value}
@@ -78,7 +70,7 @@ function Demo() {
       xAxisLabel="Age"
       yAxisLabel="BMI"
       tooltipProps={{
-        content: ({ label, payload }) => <ChartTooltip label={label} payload={payload} />,
+        content: ({ payload }) => <ChartTooltip payload={payload} />,
       }}
     />
   );
