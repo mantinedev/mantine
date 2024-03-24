@@ -67,3 +67,8 @@ export const Demo_customTooltip = {
   name: '⭐ Demo: customTooltip',
   render: renderDemo(demos.customTooltip),
 };
+
+export const Demo_valueFormatter = {
+  name: '⭐ Demo: valueFormatter',
+  render: renderDemo(demos.valueFormatter),
+};

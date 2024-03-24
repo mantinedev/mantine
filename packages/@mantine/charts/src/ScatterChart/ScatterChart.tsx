@@ -48,7 +48,7 @@ export type ScatterChartCssVariables = {
 };
 
 export interface ScatterChartProps
-  extends Omit<GridChartBaseProps, 'dataKey' | 'data' | 'unit'>,
+  extends Omit<GridChartBaseProps, 'dataKey' | 'data' | 'unit' | 'valueFormatter'>,
     BoxProps,
     StylesApiProps<ScatterChartFactory>,
     ElementProps<'div'> {
@@ -57,6 +57,13 @@ export interface ScatterChartProps
   scatterChartProps?: React.ComponentPropsWithoutRef<typeof ReChartsScatterChart>;
   unit?: { x?: string; y?: string };
   labels?: Record<string, string>;
+  valueFormatter?:
+    | GridChartBaseProps['valueFormatter']
+    | { x?: GridChartBaseProps['valueFormatter']; y?: GridChartBaseProps['valueFormatter'] };
+}
+
+function getAxis(key: string, dataKey: { x: string; y: string }) {
+  return key === dataKey.x ? 'x' : 'y';
 }
 
 export type ScatterChartFactory = Factory<{
@@ -119,8 +126,14 @@ export const ScatterChart = factory<ScatterChartFactory>((_props, ref) => {
     yAxisLabel,
     unit,
     labels,
+    valueFormatter,
     ...others
   } = props;
+
+  const getFormatter = (axis: 'x' | 'y') =>
+    typeof valueFormatter === 'function' ? valueFormatter : valueFormatter?.[axis];
+  const xFormatter = getFormatter('x');
+  const yFormatter = getFormatter('y');
 
   const theme = useMantineTheme();
 
@@ -223,6 +236,7 @@ export const ScatterChart = factory<ScatterChartFactory>((_props, ref) => {
             tickLine={withXTickLine ? { stroke: 'currentColor' } : false}
             minTickGap={5}
             unit={unit?.x}
+            tickFormatter={xFormatter}
             {...getStyles('axis')}
             {...xAxisProps}
           >
@@ -242,6 +256,7 @@ export const ScatterChart = factory<ScatterChartFactory>((_props, ref) => {
             tick={{ transform: 'translate(-10, 0)', fontSize: 12, fill: 'currentColor' }}
             allowDecimals
             unit={unit?.y}
+            tickFormatter={yFormatter}
             {...getStyles('axis')}
             {...yAxisProps}
           >
@@ -276,8 +291,17 @@ export const ScatterChart = factory<ScatterChartFactory>((_props, ref) => {
                   label={label}
                   payload={
                     labels
-                      ? payload?.map((item) => ({ ...item, name: labels[item.name] || item.name }))
-                      : payload
+                      ? payload?.map((item) => ({
+                          ...item,
+                          name: labels[item.name] || item.name,
+                          value:
+                            getFormatter(getAxis(item.name, dataKey))?.(item.value) ?? item.value,
+                        }))
+                      : payload?.map((item) => ({
+                          ...item,
+                          value:
+                            getFormatter(getAxis(item.name, dataKey))?.(item.value) ?? item.value,
+                        }))
                   }
                   classNames={resolvedClassNames}
                   styles={resolvedStyles}

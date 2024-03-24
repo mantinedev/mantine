@@ -11,3 +11,4 @@ export { tooltipAnimation } from './ScatterChart.demo.tooltipAnimation';
 export { units } from './ScatterChart.demo.units';
 export { labels } from './ScatterChart.demo.labels';
 export { customTooltip } from './ScatterChart.demo.customTooltip';
+export { valueFormatter } from './ScatterChart.demo.valueFormatter';
