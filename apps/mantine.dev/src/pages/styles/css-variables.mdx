@@ -506,17 +506,37 @@ body {
 }
 ```
 
-## z-index
+## z-index variables
 
-The following CSS variables are used to control z-index in Mantine components:
+z-index variables are defined in `@mantine/core/styles.css`. Unlike other variables,
+z-index variables are not controlled by the theme and are not exposed in the theme object.
 
-- `--mantine-z-index-app` – value `100`
-- `--mantine-z-index-modal` – value `200`
-- `--mantine-z-index-popover` – value `300`
-- `--mantine-z-index-overlay` – value `400`
-- `--mantine-z-index-max` – value `9999`
+<CssVariablesGroup
+  data={[
+    {
+      variable: '--mantine-z-index-app',
+      defaultValue: '100',
+    },
+    {
+      variable: '--mantine-z-index-modal',
+      defaultValue: '200',
+    },
+    {
+      variable: '--mantine-z-index-popover',
+      defaultValue: '300',
+    },
+    {
+      variable: '--mantine-z-index-overlay',
+      defaultValue: '400',
+    },
+    {
+      variable: '--mantine-z-index-max',
+      defaultValue: '9999',
+    },
+  ]}
+/>
 
-Example of using `--mantine-z-index-modal` variable:
+You can reference z-index variables in CSS:
 
 ```css
 /* Display content above the modal */
@@ -525,7 +545,17 @@ Example of using `--mantine-z-index-modal` variable:
 }
 ```
 
-Note that z-index variables are static and cannot be changed in theme object.
+And in components by referencing CSS variable:
+
+```tsx
+import { Modal } from '@mantine/core';
+
+function Demo() {
+  return (
+    <Modal zIndex="var(--mantine-z-index-max)">Modal content</Modal>
+  );
+}
+```
 
 ## CSS variables resolver
 
