@@ -137,7 +137,7 @@ export const ChartTooltip = factory<ChartTooltipFactory>((_props, ref) => {
         {typeof valueFormatter === 'function'
           ? valueFormatter(getData(item, type!))
           : getData(item, type!)}
-        {unit}
+        {unit || item.unit}
       </div>
     </div>
   ));

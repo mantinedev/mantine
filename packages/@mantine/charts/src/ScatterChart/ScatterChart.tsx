@@ -56,6 +56,7 @@ export interface ScatterChartProps
   data: ScatterChartSeries[];
   scatterChartProps?: React.ComponentPropsWithoutRef<typeof ReChartsScatterChart>;
   unit?: { x?: string; y?: string };
+  labels?: Record<string, string>;
 }
 
 export type ScatterChartFactory = Factory<{
@@ -117,6 +118,7 @@ export const ScatterChart = factory<ScatterChartFactory>((_props, ref) => {
     xAxisLabel,
     yAxisLabel,
     unit,
+    labels,
     ...others
   } = props;
 
@@ -272,7 +274,11 @@ export const ScatterChart = factory<ScatterChartFactory>((_props, ref) => {
                 <ChartTooltip
                   type="scatter"
                   label={label}
-                  payload={payload}
+                  payload={
+                    labels
+                      ? payload?.map((item) => ({ ...item, name: labels[item.name] || item.name }))
+                      : payload
+                  }
                   classNames={resolvedClassNames}
                   styles={resolvedStyles}
                   series={data}

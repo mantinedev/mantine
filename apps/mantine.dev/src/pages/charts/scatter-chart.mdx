@@ -7,3 +7,49 @@ export default Layout(MDX_DATA.ScatterChart);
 ## Usage
 
 <Demo data={ScatterChartDemos.usage} />
+
+## Multiple series
+
+<Demo data={ScatterChartDemos.multipleSeries} />
+
+## X and Y axis props
+
+Use `xAxisProps` and `yAxisProps` to pass props down to recharts [XAxis](https://recharts.org/en-US/api/XAxis)
+and [YAxis](https://recharts.org/en-US/api/YAxis) components. For example, these props
+can be used to change orientation of axis:
+
+<Demo data={ScatterChartDemos.axisProps} />
+
+## Grid and text colors
+
+Use `--chart-grid-color` and `--chart-text-color` to change colors of
+grid lines and text within the chart. With [CSS modules](/styles/css-modules/), you can change colors
+depending on color scheme:
+
+<Demo data={ScatterChartDemos.gridColor} />
+
+If your application has only one color scheme, you can use `gridColor` and `textColor`
+props instead of CSS variables:
+
+```tsx
+import { ScatterChart } from '@mantine/charts';
+import { data } from './data';
+
+function Demo() {
+  return (
+    <ScatterChart
+      h={350}
+      data={data}
+      dataKey={{ x: 'age', y: 'BMI' }}
+      gridColor="gray.5"
+      textColor="gray.9"
+    />
+  );
+}
+```
+
+## Units
+
+Set `unit` prop to render a unit label next to the axis ticks and tooltip values:
+
+<Demo data={ScatterChartDemos.units} />

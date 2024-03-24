@@ -11,10 +11,10 @@ function Demo() {
   return (
     <ScatterChart
       h={350}
-      data={data}
-      dataKey={{ x: 'age', y: 'BMI' }}
-      xAxisLabel="Age"
-      yAxisLabel="BMI"
+      data={spendingsData}
+      dataKey={{ x: 'age', y: 'average_monthly_spending' }}
+      yAxisProps={{ domain: [800, 3500] }}
+      unit={{ y: '$' }}
     />
   );
 }
@@ -28,6 +28,7 @@ function Demo() {
       dataKey={{ x: 'age', y: 'average_monthly_spending' }}
       yAxisProps={{ domain: [800, 3500] }}
       unit={{ y: '$' }}
+      labels={{ age: 'Age', average_monthly_spending: 'Spending' }}
     />
   );
 }
