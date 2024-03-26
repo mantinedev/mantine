@@ -91,6 +91,7 @@
 
   :where([data-layout='alt']) & {
     inset-inline-start: var(--app-shell-navbar-offset, 0px);
+    inset-inline-end: var(--app-shell-aside-offset, 0px);
   }
 }
 

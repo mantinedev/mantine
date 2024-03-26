@@ -71,8 +71,8 @@ export function AltLayout() {
     <AppShell
       padding="md"
       layout="alt"
-      navbar={{
-        width: { base: 200, md: 300 },
+      aside={{
+        width: { base: 140 },
         breakpoint: 'sm',
         collapsed: { desktop: !opened, mobile: !mobileOpened },
       }}
@@ -85,11 +85,12 @@ export function AltLayout() {
         collapsed: !headerOpened,
       }}
     >
-      <AppShell.Navbar>
-        <Button>Focusable element 1</Button>
-        <Button>Focusable element 2</Button>
-      </AppShell.Navbar>
-      <AppShell.Header>Header</AppShell.Header>
+      <AppShell.Aside>Aside</AppShell.Aside>
+      <AppShell.Header>
+        <Group justify="flex-end">
+          <Button>Button hidden by the aside</Button>
+        </Group>
+      </AppShell.Header>
       <AppShell.Main>
         <Group>
           <Button onClick={toggleHeader}>Toggle header</Button>
