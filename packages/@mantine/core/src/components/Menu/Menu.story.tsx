@@ -11,7 +11,7 @@ export default { title: 'Menu' };
 
 export function DisabledFirstItem() {
   return (
-    <Menu>
+    <Menu trigger="hover">
       <Menu.Target>
         <Button>Toggle menu</Button>
       </Menu.Target>
