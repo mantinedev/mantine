@@ -150,3 +150,20 @@ export function Sizes() {
   ));
   return <div style={{ padding: 40 }}>{sizes}</div>;
 }
+
+export function Number() {
+  return (
+    <div style={{ padding: 40 }}>
+      <PinInput type="number" />
+    </div>
+  );
+}
+
+export function Tab() {
+  return (
+    <div style={{ padding: 40 }}>
+      <PinInput />
+      <PinInput mt="md" />
+    </div>
+  );
+}
