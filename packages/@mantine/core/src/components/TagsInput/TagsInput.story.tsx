@@ -12,6 +12,26 @@ export function Usage() {
   );
 }
 
+export function Disabled() {
+  return (
+    <div style={{ padding: 40 }}>
+      <TagsInput
+        disabled
+        label="disabled"
+        defaultValue={['React', 'Angular']}
+        placeholder="Enter tags"
+      />
+      <fieldset disabled>
+        <TagsInput
+          label="disabled fieldset"
+          defaultValue={['React', 'Angular']}
+          placeholder="Enter tags"
+        />
+      </fieldset>
+    </div>
+  );
+}
+
 export function Clearable() {
   return (
     <div style={{ padding: 40 }}>

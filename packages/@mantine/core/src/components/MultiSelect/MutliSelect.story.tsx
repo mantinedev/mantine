@@ -24,6 +24,26 @@ export function Usage() {
   );
 }
 
+export function Disabled() {
+  return (
+    <div style={{ padding: 40 }}>
+      <MultiSelect
+        disabled
+        label="disabled"
+        defaultValue={['React', 'Angular']}
+        placeholder="Enter tags"
+      />
+      <fieldset disabled>
+        <MultiSelect
+          label="disabled fieldset"
+          defaultValue={['React', 'Angular']}
+          placeholder="Enter tags"
+        />
+      </fieldset>
+    </div>
+  );
+}
+
 export function EmptyStringValue() {
   return (
     <div style={{ padding: 40 }}>
