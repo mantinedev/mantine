@@ -175,7 +175,6 @@ export const Month = factory<MonthFactory>((_props, ref) => {
   const dates = getMonthDays({
     month,
     firstDayOfWeek: ctx.getFirstDayOfWeek(firstDayOfWeek),
-    timezone: ctx.timezone || undefined,
     consistentWeeks: ctx.consistentWeeks,
   });
 
@@ -243,6 +242,7 @@ export const Month = factory<MonthFactory>((_props, ref) => {
             }}
             onClick={(event) => {
               dayProps?.onClick?.(event);
+
               __onDayClick?.(event, date);
             }}
             onMouseDown={(event) => {

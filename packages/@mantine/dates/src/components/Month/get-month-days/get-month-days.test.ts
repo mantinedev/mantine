@@ -7,7 +7,6 @@ describe('@mantine/dates/get-month-days', () => {
       month: new Date(2021, 1, 2),
       firstDayOfWeek: 1,
       consistentWeeks: false,
-      timezone: undefined,
     });
     expect(monthDays).toHaveLength(4);
 
@@ -24,7 +23,6 @@ describe('@mantine/dates/get-month-days', () => {
     const monthDays = getMonthDays({
       month: new Date(2021, 1, 2),
       firstDayOfWeek: 0,
-      timezone: undefined,
       consistentWeeks: false,
     });
     expect(monthDays).toHaveLength(5);
@@ -42,7 +40,6 @@ describe('@mantine/dates/get-month-days', () => {
       month: new Date(2021, 3, 2),
       firstDayOfWeek: 1,
       consistentWeeks: false,
-      timezone: undefined,
     });
 
     expect(monthDays).toHaveLength(5);
@@ -58,7 +55,6 @@ describe('@mantine/dates/get-month-days', () => {
       month: new Date(2021, 3, 2),
       firstDayOfWeek: 0,
       consistentWeeks: false,
-      timezone: undefined,
     });
 
     expect(monthDays).toHaveLength(5);
@@ -74,7 +70,6 @@ describe('@mantine/dates/get-month-days', () => {
       month: new Date(2021, 1, 2),
       firstDayOfWeek: 1,
       consistentWeeks: true,
-      timezone: undefined,
     });
 
     expect(monthDays).toHaveLength(6);
