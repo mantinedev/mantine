@@ -1,7 +1,7 @@
 import React from 'react';
 import { ColorSwatch } from '@mantine/core';
 
-const colorVariableRegex = /^(var\(--mantine-color[\w-]+\)|#\w+|rgba?\([\w\,\. ]+\))$/gm;
+const colorVariableRegex = /^(var\(--mantine-color[\w-]+\)|#\w+|rgba?\([\w,. ]+\))$/gm;
 
 export interface CssVariableColorSwatchProps {
   variable: string;
