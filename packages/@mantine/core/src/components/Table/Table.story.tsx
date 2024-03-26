@@ -118,7 +118,7 @@ export function Striped() {
 export function HighlightOnHover() {
   return (
     <div style={{ padding: 40 }}>
-      <Table highlightOnHover highlightOnHoverColor="cyan.0">
+      <Table highlightOnHover highlightOnHoverColor="red">
         <Table.Thead>
           <Table.Tr>
             <Table.Th>Element position</Table.Th>
