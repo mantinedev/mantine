@@ -343,6 +343,12 @@ export const PinInput = factory<PinInputFactory>((props, ref) => {
     }
   }, [value]);
 
+  useEffect(() => {
+    if (disabled) {
+      setFocusedIndex(-1);
+    }
+  }, [disabled]);
+
   return (
     <>
       <Group
