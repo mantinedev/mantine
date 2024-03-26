@@ -36,7 +36,7 @@
   z-index: 1;
   pointer-events: none;
 
-  .root:where([data-orientation='vertical']) & {
+  &:where([data-orientation='vertical']) {
     inset-inline-start: calc(50% - var(--carousel-control-size) / 2);
     top: 0;
     bottom: 0;
@@ -44,7 +44,7 @@
     padding: var(--carousel-controls-offset) 0;
   }
 
-  .root:where([data-orientation='horizontal']) & {
+  &:where([data-orientation='horizontal']) {
     inset-inline-start: 0;
     inset-inline-end: 0;
     top: calc(50% - var(--carousel-control-size) / 2);
@@ -87,14 +87,14 @@
   gap: rem(8px);
   pointer-events: none;
 
-  .root:where([data-orientation='vertical']) & {
+  &:where([data-orientation='vertical']) {
     bottom: 0;
     top: 0;
     inset-inline-end: var(--mantine-spacing-md);
     flex-direction: column;
   }
 
-  .root:where([data-orientation='horizontal']) & {
+  &:where([data-orientation='horizontal']) {
     bottom: var(--mantine-spacing-md);
     inset-inline-start: 0;
     inset-inline-end: 0;
@@ -117,12 +117,12 @@
     opacity: 1;
   }
 
-  .root:where([data-orientation='vertical']) & {
+  &:where([data-orientation='vertical']) {
     width: rem(5px);
     height: rem(25px);
   }
 
-  .root:where([data-orientation='horizontal']) & {
+  &:where([data-orientation='horizontal']) {
     width: rem(25px);
     height: rem(5px);
   }

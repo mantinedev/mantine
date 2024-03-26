@@ -331,6 +331,7 @@ export const Carousel = factory<CarouselFactory>((_props, ref) => {
         aria-hidden
         tabIndex={-1}
         onClick={() => handleScroll(index)}
+        data-orientation={orientation}
       />
     ));
 
@@ -350,10 +351,14 @@ export const Carousel = factory<CarouselFactory>((_props, ref) => {
           </div>
         </div>
 
-        {withIndicators && <div {...getStyles('indicators')}>{indicators}</div>}
+        {withIndicators && (
+          <div {...getStyles('indicators')} data-orientation={orientation}>
+            {indicators}
+          </div>
+        )}
 
         {withControls && (
-          <div {...getStyles('controls')}>
+          <div {...getStyles('controls')} data-orientation={orientation}>
             <UnstyledButton
               {...previousControlProps}
               {...getStyles('control', {
