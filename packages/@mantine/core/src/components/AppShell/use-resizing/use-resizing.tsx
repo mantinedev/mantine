@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { startTransition, useRef, useState } from 'react';
 import { useIsomorphicEffect, useWindowEvent } from '@mantine/hooks';
 
 interface UseResizingInput {
@@ -7,7 +7,7 @@ interface UseResizingInput {
 }
 
 export function useResizing({ transitionDuration, disabled }: UseResizingInput) {
-  const [resizing, setResizing] = useState(false);
+  const [resizing, setResizing] = useState(true);
   const resizingTimeout = useRef<number>();
   const disabledTimeout = useRef<number>();
 
@@ -18,9 +18,14 @@ export function useResizing({ transitionDuration, disabled }: UseResizingInput) 
   });
 
   useIsomorphicEffect(() => {
-    setResizing(true);
-    clearTimeout(disabledTimeout.current);
-    disabledTimeout.current = window.setTimeout(() => setResizing(false), transitionDuration || 0);
+    startTransition(() => {
+      setResizing(true);
+      clearTimeout(disabledTimeout.current);
+      disabledTimeout.current = window.setTimeout(
+        () => setResizing(false),
+        transitionDuration || 0
+      );
+    });
   }, [disabled, transitionDuration]);
 
   return resizing;
