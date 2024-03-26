@@ -422,5 +422,5 @@ export const Carousel = factory<CarouselFactory>((_props, ref) => {
 });
 
 Carousel.classes = classes;
-Carousel.displayName = '@mantine/core/Carousel';
+Carousel.displayName = '@mantine/carousel/Carousel';
 Carousel.Slide = CarouselSlide;
