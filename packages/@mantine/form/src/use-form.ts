@@ -24,6 +24,7 @@ import {
   ReorderListItem,
   Reset,
   ResetDirty,
+  ResetField,
   SetErrors,
   SetFieldError,
   SetFieldValue,
@@ -93,6 +94,20 @@ export function useForm<
     clearErrors();
     setDirty({});
     resetTouched();
+  }, []);
+
+  const resetField: ResetField<Values> = useCallback((path) => {
+    _setValues((current) => {
+      const initialValue = getPath(path, valuesSnapshot.current) as PathValue<Values, typeof path>;
+      const result = setPath(path, initialValue, current);
+
+      onValuesChange?.(result, current);
+
+      return result;
+    });
+    clearFieldError(path);
+    clearFieldDirty(path);
+    setTouched((currentTouched) => ({ ...currentTouched, [path]: false }));
   }, []);
 
   const setFieldError: SetFieldError<Values> = useCallback(
@@ -323,6 +338,7 @@ export function useForm<
     clearFieldError,
     clearErrors,
     reset,
+    resetField,
     validate,
     validateField,
     reorderListItem,
