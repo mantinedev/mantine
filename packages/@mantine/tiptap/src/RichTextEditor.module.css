@@ -279,6 +279,7 @@
 
 .toolbar {
   display: flex;
+  align-items: center;
   flex-wrap: wrap;
   gap: var(--mantine-spacing-sm);
   top: var(--rte-sticky-offset, 0);
