@@ -37,7 +37,7 @@ export interface GridProps extends BoxProps, StylesApiProps<GridFactory>, Elemen
   align?: React.CSSProperties['alignItems'];
 
   /** Number of columns in each row, `12` by default */
-  columns?: number;
+  columns?: StyleProp<number>;
 
   /** Sets `overflow` CSS property on the root element, `'visible'` by default */
   overflow?: React.CSSProperties['overflow'];
