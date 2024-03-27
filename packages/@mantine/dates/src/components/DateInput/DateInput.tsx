@@ -167,7 +167,7 @@ export const DateInput = factory<DateInputFactory>((_props, ref) => {
 
   useEffect(() => {
     if (controlled) {
-      setDate(value!);
+      setDate(value ? value! : minDate!);
     }
   }, [controlled, value]);
 
