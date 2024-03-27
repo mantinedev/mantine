@@ -91,6 +91,7 @@
 
   :where([data-layout='alt']) & {
     inset-inline-start: var(--app-shell-navbar-offset, 0px);
+    inset-inline-end: var(--app-shell-aside-offset, 0px);
   }
 }
 
@@ -107,7 +108,7 @@
 }
 
 .footer {
-  bottom: 0;
+  bottom: env(safe-area-inset-bottom);
   height: var(--app-shell-footer-height);
   transform: var(--app-shell-footer-transform);
   z-index: var(--app-shell-footer-z-index);

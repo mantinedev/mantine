@@ -311,6 +311,7 @@ export const TagsInput = factory<TagsInputFactory>((_props, ref) => {
         onRemove?.(item);
       }}
       unstyled={unstyled}
+      disabled={disabled}
       {...getStyles('pill')}
     >
       {item}

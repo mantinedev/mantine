@@ -19,7 +19,8 @@ You can pass the following options to `form.getInputProps` as second argument:
 - Any additional props that can be accessed with `enhanceGetInputProps` function. These props are not passed to the input.
 
 ```tsx
-import { Checkbox, TextInput, useForm } from '@mantine/core';
+import { Checkbox, TextInput } from '@mantine/core';
+import { useForm } from '@mantine/form';
 
 function Demo() {
   const form = useForm({

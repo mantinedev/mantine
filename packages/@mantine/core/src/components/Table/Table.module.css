@@ -71,7 +71,7 @@
     }
 
     &[data-hover] {
-      --tr-hover-bg: var(--table-hover-color);
+      --tr-hover-bg: var(--table-highlight-on-hover-color, var(--table-hover-color));
     }
   }
 }

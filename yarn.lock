@@ -14621,10 +14621,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"hash-css-selector@npm:^1.0.0":
-  version: 1.0.0
-  resolution: "hash-css-selector@npm:1.0.0"
-  checksum: 10c0/55d1b9ffb97ee38441f318e64e0a094a556b3c53d69b88230f07eb3d55de1cb8e8d68f2ad04fcf265663e2ac715a739bcf3f76aabc3ae481f92e8271c6217fca
+"hash-css-selector@npm:^1.1.0":
+  version: 1.1.0
+  resolution: "hash-css-selector@npm:1.1.0"
+  checksum: 10c0/e3efc325c337e9f279df0296c8128696aae49a1759eb293546de1473cf10c371837dd851847fb980b2eb0ecf432888b31d501c7eae87f8d346b1b343fc26b2fc
   languageName: node
   linkType: hard
 
@@ -17374,7 +17374,7 @@ __metadata:
     fast-glob: "npm:^3.3.2"
     fs-extra: "npm:^11.1.1"
     gh-pages: "npm:^6.0.0"
-    hash-css-selector: "npm:^1.0.0"
+    hash-css-selector: "npm:^1.1.0"
     highlight.js: "npm:^11.9.0"
     identity-obj-proxy: "npm:^3.0.0"
     jest: "npm:^29.7.0"

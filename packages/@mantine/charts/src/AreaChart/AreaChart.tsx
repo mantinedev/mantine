@@ -347,7 +347,6 @@ export const AreaChart = factory<AreaChartFactory>((_props, ref) => {
                   series={series}
                 />
               )}
-              height={44}
               {...legendProps}
             />
           )}

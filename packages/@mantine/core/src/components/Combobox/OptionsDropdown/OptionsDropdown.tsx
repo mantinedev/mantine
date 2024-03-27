@@ -79,6 +79,7 @@ function Option({
       unstyled={unstyled}
       withCheckIcon={withCheckIcon}
       checkIconPosition={checkIconPosition}
+      renderOption={renderOption}
     />
   ));
 

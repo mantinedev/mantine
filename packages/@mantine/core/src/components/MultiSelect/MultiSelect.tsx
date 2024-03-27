@@ -266,6 +266,7 @@ export const MultiSelect = factory<MultiSelectFactory>((_props, ref) => {
         onRemove?.(item);
       }}
       unstyled={unstyled}
+      disabled={disabled}
       {...getStyles('pill')}
     >
       {optionsLockup[item]?.label || item}

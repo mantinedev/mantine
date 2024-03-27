@@ -36,7 +36,7 @@
     color: var(--mantine-color-black);
   }
 
-  &:where([data-with-remove]) {
+  &:where([data-with-remove]:not(:has(button:disabled))) {
     padding-inline-end: 0;
   }
 
@@ -87,6 +87,7 @@
 
   .root[data-disabled] > &,
   &:disabled {
+    display: none;
     background-color: transparent;
     width: 0.8em;
     min-width: 0.8em;
