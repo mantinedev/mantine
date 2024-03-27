@@ -91,6 +91,7 @@ export const Image = polymorphicFactory<ImageFactory>((_props, ref) => {
     return (
       <Box
         component="img"
+        ref={ref}
         src={fallbackSrc}
         {...getStyles('root')}
         onError={onError}
