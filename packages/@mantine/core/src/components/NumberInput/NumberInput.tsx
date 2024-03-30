@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useRef } from 'react';
 import cx from 'clsx';
 import { NumberFormatValues, NumericFormat, OnValueChange } from 'react-number-format';
 import { assignRef, clamp, useMergedRef, useUncontrolled } from '@mantine/hooks';
@@ -249,8 +249,8 @@ export const NumberInput = factory<NumberInputFactory>((_props, ref) => {
     return Math.max(0, (match[1] ? match[1].length : 0) - (match[2] ? +match[2] : 0));
   };
 
-  const adjustCursor = (position) => {
-    if (inputRef.current) {
+  const adjustCursor = (position?: number) => {
+    if (inputRef.current && position) {
       inputRef.current.setSelectionRange(position, position);
     }
   };
