@@ -43,7 +43,11 @@ function getPopoverMiddlewares(
   const middlewares: Middleware[] = [offset(options.offset)];
 
   if (options.middlewares?.shift) {
+    if (typeof options.middlewares.shift === 'object') {
+    middlewares.push(shift({ limiter: limitShift(), ...options.middlewares.shift }));
+    } else {
     middlewares.push(shift({ limiter: limitShift() }));
+    }
   }
 
   if (options.middlewares?.flip) {
