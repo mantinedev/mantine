@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import cx from 'clsx';
 import { NumberFormatValues, NumericFormat, OnValueChange } from 'react-number-format';
 import { assignRef, clamp, useMergedRef, useUncontrolled } from '@mantine/hooks';
@@ -357,6 +357,13 @@ export const NumberInput = factory<NumberInputFactory>((_props, ref) => {
     onStepTimeoutRef.current = null;
     stepCountRef.current = 0;
   };
+
+  useEffect(() => {
+    if (inputRef.current) {
+      const { length } = inputRef.current.value;
+      inputRef.current.setSelectionRange(length, length);
+    }
+  }, [_value]);
 
   const controls = (
     <div {...getStyles('controls')}>
