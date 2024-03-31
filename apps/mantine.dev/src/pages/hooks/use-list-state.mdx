@@ -9,6 +9,8 @@ export default Layout(MDX_DATA.useListState);
 `use-list-state` provides an API to work with list state:
 
 ```tsx
+import { useListState } from '@mantine/hooks';
+
 const [values, handlers] = useListState([{ a: 1 }]);
 
 // add one or more items to the end of the list
@@ -147,21 +149,23 @@ function Demo({ handlers }: Props) {
 }
 ```
 
-## Definition
-
-```tsx
-function useListState<T>(
-  initialValue?: T[]
-): [T[], UseListStateHandlers<T>];
-```
-
 ## Set item type
 
 By default, `use-list-state` will use type from `initialValues`.
 If you call the hook with an empty array, you must specify item type:
 
 ```tsx
+import { useListState } from '@mantine/hooks';
+
 useListState(['hello']); // ok, item type is string
 useListState([]); // not ok, item type is any
 useListState<string>([]); // ok, item type is string
+```
+
+## Definition
+
+```tsx
+function useListState<T>(
+  initialValue?: T[]
+): [T[], UseListStateHandlers<T>];
 ```

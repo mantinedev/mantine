@@ -14,9 +14,22 @@ Colors are exposed on the [theme object](/theming/theme-object) as an array of s
 you can access color shade by color name and index (0-9), colors with larger index are darker:
 
 ```tsx
-theme.colors.red[5];
-theme.colors.gray[9];
-theme.colors.blue[0];
+import { useMantineTheme } from '@mantine/core';
+
+function Demo() {
+  const theme = useMantineTheme();
+
+  return (
+    <div
+      style={{
+        backgroundColor: theme.colors.blue[1],
+        color: theme.colors.blue[9],
+      }}
+    >
+      This is a blue theme
+    </div>
+  );
+}
 ```
 
 Colors are also exposed as [CSS variables](/styles/css-variables):
@@ -117,7 +130,7 @@ Example of adding oklch color to theme:
 >         primaryColor: '#CEFEDC', // This will throw an error
 >       }}
 >     >
->       <App />
+>       {/* Your app here */}
 >     </MantineProvider>
 >   );
 > }
@@ -137,7 +150,7 @@ import { MantineProvider } from '@mantine/core';
 function Demo() {
   return (
     <MantineProvider theme={{ primaryShade: { light: 6, dark: 8 } }}>
-      <App />
+      {/* Your app here */}
     </MantineProvider>
   );
 }
@@ -242,7 +255,7 @@ function Demo() {
         },
       }}
     >
-      <App />
+      {/* Your app here */}
     </MantineProvider>
   );
 }

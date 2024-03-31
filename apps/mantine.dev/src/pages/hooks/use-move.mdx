@@ -16,10 +16,12 @@ The hook accepts a callback that is called when user moves pressed mouse over th
 and returns an object with `ref` and active state:
 
 ```tsx
+import { useMove } from '@mantine/hooks';
+
 const {
   ref, // -> pass ref to target element
   active, // -> is user changing something right now?
-} = useMove(({ x, y }) => setValue({ x, y }));
+} = useMove(({ x, y }) => console.log({ x, y }));
 ```
 
 `x` and `y` values are always between `0` and `1`, you can use them to calculate value in your boundaries.
@@ -52,24 +54,11 @@ Moving the slider down increases the value, to reverse that set value to `1 - y`
 It is useful when you want to use external events to change the value, for example changing value with keyboard arrows:
 
 ```tsx
-import { clampUseMovePosition } from 'use-move';
+import { clampUseMovePosition } from '@mantine/hooks';
 
 clampUseMovePosition({ x: 0.5, y: 0.5 }); // -> { x: 0.5, y: 0.5 }
 clampUseMovePosition({ x: 1.5, y: 0.5 }); // -> { x: 1, y: 0.5 }
 clampUseMovePosition({ x: -0.5, y: 0.5 }); // -> { x: 0, y: 0.5 }
-```
-
-## Definition
-
-```tsx
-function useMove<T extends HTMLElement = HTMLDivElement>(
-  onChange: (value: UseMovePosition) => void,
-  handlers?: useMoveHandlers,
-  dir?: 'ltr' | 'rtl'
-): {
-  ref: MutableRefObject<T>;
-  active: boolean;
-};
 ```
 
 ## UseMovePosition
@@ -84,4 +73,27 @@ const [value, setValue] = useState<UseMovePosition>({
   x: 0.5,
   y: 0.5,
 });
+```
+
+## Definition
+
+```tsx
+interface UseMovePosition {
+  x: number;
+  y: number;
+}
+
+interface useMoveHandlers {
+  onScrubStart?: () => void;
+  onScrubEnd?: () => void;
+}
+
+function useMove<T extends HTMLElement = HTMLDivElement>(
+  onChange: (value: UseMovePosition) => void,
+  handlers?: useMoveHandlers,
+  dir?: 'ltr' | 'rtl'
+): {
+  ref: React.RefObject<T>;
+  active: boolean;
+};
 ```

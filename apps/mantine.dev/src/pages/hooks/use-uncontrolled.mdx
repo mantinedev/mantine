@@ -11,7 +11,17 @@ export default Layout(MDX_DATA.useUncontrolled);
 ```tsx
 import { useUncontrolled } from '@mantine/hooks';
 
-function CustomInput({ value, defaultValue, onChange }) {
+interface CustomInputProps {
+  value?: string;
+  defaultValue?: string;
+  onChange?: (value: string) => void;
+}
+
+function CustomInput({
+  value,
+  defaultValue,
+  onChange,
+}: CustomInputProps) {
   const [_value, handleChange] = useUncontrolled({
     value,
     defaultValue,
@@ -34,12 +44,16 @@ function CustomInput({ value, defaultValue, onChange }) {
 By default, the hook will set type automatically, but you can provide your own type:
 
 ```tsx
-useUncontrolled<number>({
-  value: 10,
-  defaultValue: 5,
-  finalValue: 20,
-  onChange: (val) => console.log(val > 10),
-});
+import { useUncontrolled } from '@mantine/hooks';
+
+function Demo() {
+  const [_value, handleChange] = useUncontrolled<number>({
+    value: 10,
+    defaultValue: 5,
+    finalValue: 20,
+    onChange: (val) => console.log(val > 10),
+  });
+}
 ```
 
 ## Definition
@@ -56,7 +70,7 @@ interface UseUncontrolledInput<T> {
   finalValue?: T;
 
   /** Controlled state onChange handler */
-  onChange?(value: T): void;
+  onChange?: (value: T) => void;
 }
 
 function useUncontrolled<T>(input: UseUncontrolledInput<T>): [

@@ -22,8 +22,8 @@ clamp(100, 0, 5); // 5
 clamp(-100, 0, 5); // 0
 
 // With only min boundary
-clamp(10, 0); // 10
-clamp(-100, 0); // 0
+clamp(10, 0, undefined); // 10
+clamp(-100, 0, undefined); // 0
 
 // With only max boundary
 clamp(0, undefined, 5); // 0

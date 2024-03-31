@@ -16,17 +16,19 @@ after user scrolled up.
 ## Definition
 
 ```tsx
-function useHeadroom(input?: {
+interface UseHeadroomInput {
   /** Number in px at which element should be fixed */
   fixedAt?: number;
 
   /** Called when element is pinned */
-  onPin?(): void;
+  onPin?: () => void;
 
   /** Called when element is at fixed position */
-  onFix?(): void;
+  onFix?: () => void;
 
   /** Called when element is unpinned */
-  onRelease?(): void;
-}): boolean;
+  onRelease?: () => void;
+}
+
+function useHeadroom(input?: UseHeadroomInput): boolean;
 ```

@@ -152,9 +152,31 @@ import { createTheme, MantineProvider, rem } from '@mantine/core';
 const theme = createTheme({
   colors: {
     // Add your color
-    deepBlue: ['#E9EDFC', '#C1CCF6', '#99ABF0' /* ... */],
+    deepBlue: [
+      '#eef3ff',
+      '#dce4f5',
+      '#b9c7e2',
+      '#94a8d0',
+      '#748dc1',
+      '#5f7cb8',
+      '#5474b4',
+      '#44639f',
+      '#39588f',
+      '#2d4b81',
+    ],
     // or replace default theme color
-    blue: ['#E9EDFC', '#C1CCF6', '#99ABF0' /* ... */],
+    blue: [
+      '#eef3ff',
+      '#dee2f2',
+      '#bdc2de',
+      '#98a0ca',
+      '#7a84ba',
+      '#6672b0',
+      '#5c68ac',
+      '#4c5897',
+      '#424e88',
+      '#364379',
+    ],
   },
 
   shadows: {
@@ -173,7 +195,7 @@ const theme = createTheme({
 function Demo() {
   return (
     <MantineProvider theme={theme}>
-      <App />
+      {/* Your app here */}
     </MantineProvider>
   );
 }
@@ -304,7 +326,7 @@ function Demo() {
         },
       }}
     >
-      <App />
+      {/* Your app here */}
     </MantineProvider>
   );
 }
@@ -325,7 +347,7 @@ const myTheme = createTheme({
 function Demo() {
   return (
     <MantineProvider theme={myTheme}>
-      <App />
+      {/* Your app here */}
     </MantineProvider>
   );
 }
@@ -358,7 +380,7 @@ const myTheme = mergeThemeOverrides(theme1, theme2);
 function Demo() {
   return (
     <MantineProvider theme={myTheme}>
-      <App />
+      {/* Your app here */}
     </MantineProvider>
   );
 }
@@ -413,5 +435,5 @@ export const theme = mergeMantineTheme(DEFAULT_THEME, themeOverride);
 Then your will be able to import it anywhere in your application:
 
 ```tsx
-import { theme } from './theme.ts';
+import { theme } from './theme';
 ```

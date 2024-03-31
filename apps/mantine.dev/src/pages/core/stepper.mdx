@@ -142,8 +142,20 @@ function Demo() {
 to make component visible for screen readers in case you do not specify `label` or `description`:
 
 ```tsx
-<Stepper.Step /> // -> not ok, empty labels for screen reader
-<Stepper.Step label="Step 1" description="Create an account" /> // -> ok
-<Stepper.Step aria-label="Create an account" /> // -> ok
-<Stepper.Step title="Create an account" /> // -> ok
+import { Stepper } from '@mantine/core';
+
+function Demo() {
+  return (
+    <Stepper active={0}>
+      {/* Not ok, no label for screen reader */}
+      <Stepper.Step />
+
+      {/* Ok, label and description */}
+      <Stepper.Step label="Step 1" description="Create an account" />
+
+      {/* Ok, aria-label */}
+      <Stepper.Step aria-label="Create an account" />
+    </Stepper>
+  );
+}
 ```

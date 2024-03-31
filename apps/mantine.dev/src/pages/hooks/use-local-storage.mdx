@@ -86,6 +86,8 @@ If you need to store data in local storage that cannot be serialized with `JSON.
 – provide your own serialization handlers:
 
 ```tsx
+import { useLocalStorage } from '@mantine/hooks';
+
 const [value, setValue] = useLocalStorage({
   key: 'color-scheme',
   serialize: (value) => {
@@ -103,9 +105,12 @@ const [value, setValue] = useLocalStorage({
 
 ```tsx
 import superjson from 'superjson';
+import { useLocalStorage } from '@mantine/hooks';
+
+const defaultValue = { name: 'John', age: 25 };
 
 const [value, setValue] = useLocalStorage({
-  key,
+  key: 'data',
   defaultValue,
   serialize: superjson.stringify,
   deserialize: (str) =>
@@ -140,10 +145,10 @@ interface UseLocalStorage<T> {
   getInitialValueInEffect: boolean;
 
   /** Function to serialize value into a string to be saved in local storage */
-  serialize?(value: T): string;
+  serialize?: (value: T) => string;
 
   /** Function to deserialize string value from local storage to value */
-  deserialize?(value: string): T;
+  deserialize?: (value: string) => T;
 }
 
 function useLocalStorage<T = string>({
@@ -164,6 +169,8 @@ function useLocalStorage<T = string>({
 You can specify value type same as in `useState` hook:
 
 ```tsx
+import { useLocalStorage } from '@mantine/hooks';
+
 const [value, setValue] = useLocalStorage<'dark' | 'light'>({
   key: 'color-scheme',
   defaultValue: 'light',

@@ -27,6 +27,8 @@ function Demo() {
 The hook accepts focus trap active state as a single argument:
 
 ```tsx
+import { useFocusTrap } from '@mantine/hooks';
+
 useFocusTrap(); // -> focus trap inactive
 useFocusTrap(true); // -> focus trap active
 
@@ -36,13 +38,22 @@ useFocusTrap(false); // -> focus trap disabled
 The hook returns `ref` that should be passed to the element:
 
 ```tsx
-const focusTrapRef = useFocusTrap();
+import { Paper } from '@mantine/core';
+import { useFocusTrap } from '@mantine/hooks';
 
-// With regular element:
-<div ref={focusTrapRef} />
+function Demo() {
+  const focusTrapRef = useFocusTrap();
 
-// With Mantine component:
-<Paper ref={focusTrapRef} />
+  return (
+    <>
+      {/* With regular element: */}
+      <div ref={focusTrapRef} />
+
+      {/* With Mantine component: */}
+      <Paper ref={focusTrapRef} />
+    </>
+  );
+}
 ```
 
 ## Combine with other ref based hooks

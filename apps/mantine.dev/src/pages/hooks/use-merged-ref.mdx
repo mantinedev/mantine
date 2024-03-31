@@ -91,16 +91,18 @@ function Demo({ handlersRef }: DemoProps) {
 }
 ```
 
+## Set node type
+
+```tsx
+import { useMergedRef } from '@mantine/hooks';
+
+const ref = useMergedRef<HTMLDivElement>();
+```
+
 ## Definition
 
 ```tsx
 function useMergedRef<T = any>(
   ...refs: React.ForwardedRef<T>[]
 ): (node: T) => void;
-```
-
-## Set node type
-
-```tsx
-useMergedRef<HTMLDivElement>();
 ```

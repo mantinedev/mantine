@@ -16,7 +16,7 @@ import { modalsReducer } from './reducer';
 
 export interface ModalsProviderProps {
   /** Your app */
-  children: React.ReactNode;
+  children?: React.ReactNode;
 
   /** Predefined modals */
   modals?: Record<string, React.FC<ContextModalProps<any>>>;

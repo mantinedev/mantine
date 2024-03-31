@@ -8,6 +8,7 @@ import { MantineDemo } from '@mantinex/demo';
 
 const code = `
 import TaskItem from '@tiptap/extension-task-item';
+import TipTapTaskList from '@tiptap/extension-task-list';
 import { useEditor } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
 import { RichTextEditor, getTaskListExtension } from '@mantine/tiptap';

@@ -20,7 +20,11 @@ import { Dropzone } from '@mantine/dropzone';
 import classes from './Demo.module.css';
 
 function Demo() {
-  return <BaseDemo disabled className={classes.disabled} />;
+  return (
+    <Dropzone disabled className={classes.disabled} onDrop={() => {}}>
+      {/* children... */}
+    </Dropzone>
+  );
 }
 `;
 

@@ -16,6 +16,8 @@ Close the modal with the `Escape` key and see how focus returns to the button af
 In most cases, you should use this hook with [use-focus-trap](/hooks/use-focus-trap/).
 
 ```tsx
+import { useFocusReturn } from '@mantine/hooks';
+
 useFocusReturn({
   // Is region with focus trap active?
   // When it activates hook saves document.activeElement to the internal state
@@ -30,6 +32,8 @@ useFocusReturn({
 If `shouldReturnFocus` option is set to `false` you can call returned function to focus last active element:
 
 ```tsx
+import { useFocusReturn } from '@mantine/hooks';
+
 const returnFocus = useFocusReturn({
   opened: false,
   shouldReturnFocus: false,

@@ -34,11 +34,7 @@ import { Timeline } from '@mantine/core';
 
 // This will not work, step children will not render
 function WillNotWork() {
-  return (
-    <Timeline.Item label="Nope" description="It will not work">
-      This part will not render
-    </Timeline.Item>
-  );
+  return <Timeline.Item title="Nope">It will not work</Timeline.Item>;
 }
 
 // Create a separate component for children

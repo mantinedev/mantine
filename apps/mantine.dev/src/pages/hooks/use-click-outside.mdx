@@ -68,6 +68,16 @@ function Demo() {
 }
 ```
 
+## Set ref type
+
+```tsx
+import { useClickOutside } from '@mantine/hooks';
+
+const ref = useClickOutside<HTMLDivElement>(() =>
+  console.log('Click outside')
+);
+```
+
 ## Definition
 
 ```tsx
@@ -76,12 +86,4 @@ function useClickOutside<T extends HTMLElement = any>(
   events?: string[] | null,
   nodes?: HTMLElement[]
 ): React.MutableRefObject<T>;
-```
-
-## Set ref type
-
-```tsx
-import { useClickOutside } from '@mantine/hooks';
-
-const ref = useClickOutside<HTMLDivElement>(onClickOutside);
 ```

@@ -12,7 +12,7 @@ export default Layout(MDX_DATA.useWindowEvent);
 import { useEffect } from 'react';
 import { useWindowEvent } from '@mantine/hooks';
 
-const handler = (event) => console.log(event);
+const handler = (event: KeyboardEvent) => console.log(event);
 
 // regular way
 useEffect(() => {
@@ -33,12 +33,12 @@ import { useRef } from 'react';
 import { useWindowEvent } from '@mantine/hooks';
 
 function Demo() {
-  const inputRef = useRef<HTMLInputElement>();
+  const inputRef = useRef<HTMLInputElement>(null);
 
   useWindowEvent('keydown', (event) => {
     if (event.code === 'KeyK' && (event.ctrlKey || event.metaKey)) {
       event.preventDefault();
-      inputRef.current.focus();
+      inputRef.current?.focus();
     }
   });
 

@@ -15,15 +15,17 @@ Hook returns a `ref` object that should be passed to the observed element, and t
 On the first render (as well as during SSR), or when no element is being observed, `width` and `height` properties are equal to `0`.
 
 ```tsx
+import { useElementSize } from '@mantine/hooks';
+
 const { ref, width, height } = useElementSize();
 ```
 
 ## Definition
 
 ```tsx
-function useElementSize<T extends HTMLElement = any>(options?: ResizeObserverOptions): {
-  MutableRefObject<T>,
-  width: number,
-  height: number
-};
+type ObserverRect = Omit<DOMRectReadOnly, 'toJSON'>;
+
+function useResizeObserver<T extends HTMLElement = any>(
+  options?: ResizeObserverOptions
+): readonly [React.RefObject<T>, ObserverRect];
 ```

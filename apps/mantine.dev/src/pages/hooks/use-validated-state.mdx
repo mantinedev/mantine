@@ -10,8 +10,10 @@ export default Layout(MDX_DATA.useValidatedState);
 It returns an object with current validation state, last valid value and current value:
 
 ```tsx
+import { useValidatedState } from '@mantine/hooks';
+
 const [{ lastValidValue, value, valid }, setValue] =
-  useValidatedState('valid', (value) => value === 'valid');
+  useValidatedState('valid', (state) => state === 'valid');
 
 lastValidValue; // -> valid
 value; // -> valid

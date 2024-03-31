@@ -10,6 +10,8 @@ export default Layout(MDX_DATA.useSetState);
 into current state.
 
 ```tsx
+import { useSetState } from '@mantine/hooks';
+
 const [state, setState] = useSetState({
   name: 'John',
   age: 35,
@@ -26,6 +28,8 @@ setState((current) => ({ age: current.age + 7 })); // -> { name: 'Jane', age: 32
 Note that it can work only with objects: primitive values and arrays are not supported:
 
 ```tsx
+import { useSetState } from '@mantine/hooks';
+
 useSetState([1, 2, 3]); // -> will not work
 useSetState(1); // -> will not work
 useSetState({ skills: ['JavaScript', 'TypeScript'] }); // -> works fine

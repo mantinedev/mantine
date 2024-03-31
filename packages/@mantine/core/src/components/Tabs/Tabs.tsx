@@ -67,7 +67,7 @@ export interface TabsProps
   allowTabDeactivation?: boolean;
 
   /** Tabs content */
-  children: React.ReactNode;
+  children?: React.ReactNode;
 
   /** Changes colors of `Tabs.Tab` components when variant is `pills` or `default`, does nothing for other variants */
   color?: MantineColor;

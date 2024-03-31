@@ -184,7 +184,7 @@ import { createTheme } from '@mantine/core';
 
 // Changes only xs font size,
 // other values will be taken from the DEFAULT_THEME
-import theme = createTheme({
+const theme = createTheme({
   fontSizes: {
     xs: '0.5rem',
   },
@@ -283,11 +283,11 @@ import { createTheme } from '@mantine/core';
 
 const theme = createTheme({
   lineHeights: {
-    xs: 1.2,
-    sm: 1.3,
-    md: 1.4,
-    lg: 1.5,
-    xl: 1.6,
+    xs: '1.2',
+    sm: '1.3',
+    md: '1.4',
+    lg: '1.5',
+    xl: '1.6',
   },
 });
 ```
@@ -432,15 +432,17 @@ import { createTheme } from '@mantine/core';
 
 const theme = createTheme({
   headings: {
-    h1: {
-      fontSize: '2rem',
-      lineHeight: 1.5,
-      fontWeight: 500,
-    },
-    h2: {
-      fontSize: '1.5rem',
-      lineHeight: 1.6,
-      fontWeight: 500,
+    sizes: {
+      h1: {
+        fontSize: '2rem',
+        lineHeight: '1.5',
+        fontWeight: '500',
+      },
+      h2: {
+        fontSize: '1.5rem',
+        lineHeight: '1.6',
+        fontWeight: '500',
+      },
     },
     // ...
   },
@@ -457,8 +459,10 @@ import { createTheme } from '@mantine/core';
 // other values will be taken from the DEFAULT_THEME
 const theme = createTheme({
   headings: {
-    h1: {
-      fontSize: '2rem',
+    sizes: {
+      h1: {
+        fontSize: '2rem',
+      },
     },
   },
 });
@@ -981,7 +985,13 @@ import { Modal } from '@mantine/core';
 
 function Demo() {
   return (
-    <Modal zIndex="var(--mantine-z-index-max)">Modal content</Modal>
+    <Modal
+      zIndex="var(--mantine-z-index-max)"
+      opened
+      onClose={() => {}}
+    >
+      Modal content
+    </Modal>
   );
 }
 ```
@@ -1033,7 +1043,7 @@ function Demo() {
       theme={themeOverride}
       cssVariablesResolver={resolver}
     >
-      <App />
+      {/* Your app here */}
     </MantineProvider>
   );
 }

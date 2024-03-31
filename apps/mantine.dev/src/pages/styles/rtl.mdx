@@ -24,7 +24,7 @@ export interface DirectionProviderProps {
   children: React.ReactNode;
 
   /** Direction set as a default value, `ltr` by default */
-  initialDirection?: Direction;
+  initialDirection?: 'rtl' | 'ltr';
 
   /** Determines whether direction should be updated on mount based on `dir` attribute set on root element (usually html element), `true` by default  */
   detectDirection?: boolean;
@@ -39,9 +39,7 @@ import { DirectionProvider, MantineProvider } from '@mantine/core';
 function Demo() {
   return (
     <DirectionProvider>
-      <MantineProvider>
-        <App />
-      </MantineProvider>
+      <MantineProvider>{/* Your app here */}</MantineProvider>
     </DirectionProvider>
   );
 }

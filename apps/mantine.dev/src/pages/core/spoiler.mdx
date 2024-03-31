@@ -29,6 +29,12 @@ import { Spoiler } from '@mantine/core';
 
 function Demo() {
   const spoilerControlRef = useRef<HTMLButtonElement>(null);
-  return <Spoiler controlRef={spoilerControlRef} />;
+  return (
+    <Spoiler
+      controlRef={spoilerControlRef}
+      hideLabel="Hide"
+      showLabel="Show"
+    />
+  );
 }
 ```

@@ -68,7 +68,7 @@ function Demo() {
     <>
       <ColorSchemeScript defaultColorScheme="auto" />
       <MantineProvider defaultColorScheme="auto">
-        <App />
+        {/* Your app here */}
       </MantineProvider>
     </>
   );
@@ -121,7 +121,7 @@ const theme = createTheme({
 function Demo() {
   return (
     <MantineProvider theme={theme}>
-      <App />
+      {/* Your app here */}
     </MantineProvider>
   );
 }
@@ -134,18 +134,22 @@ All components that support [default props](/theming/default-props) or [Styles A
 on [theme](/theming/theme-object):
 
 ```tsx
-import { useState } from 'react';
-import { TextInput, MantineProvider, createTheme } from '@mantine/core';
+import {
+  createTheme,
+  MantineProvider,
+  TextInput,
+} from '@mantine/core';
 import classes from './Demo.module.css';
 
 const theme = createTheme({
   components: {
     TextInput: TextInput.extend({
-      styles: (theme, props) => ({
+      styles: (t, props) => ({
         input: {
-          fontSize: props.size === 'compact' ? theme.fontSizes.sm : undefined,
-        }
-      })
+          fontSize:
+            props.size === 'compact' ? t.fontSizes.sm : undefined,
+        },
+      }),
       classNames: {
         root: classes.root,
         input: classes.input,
@@ -162,7 +166,7 @@ const theme = createTheme({
 function Demo() {
   return (
     <MantineProvider theme={theme}>
-      <App />
+      {/* Your app here */}
     </MantineProvider>
   );
 }
@@ -231,7 +235,7 @@ const theme = createTheme({
 function Demo() {
   return (
     <MantineProvider theme={theme}>
-      <App />
+      {/* Your app here */}
     </MantineProvider>
   );
 }
@@ -304,7 +308,7 @@ function Demo() {
         },
       }}
     >
-      <App />
+      {/* Your app here */}
     </MantineProvider>
   );
 }

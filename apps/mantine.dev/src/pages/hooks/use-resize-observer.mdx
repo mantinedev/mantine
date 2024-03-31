@@ -28,19 +28,9 @@ See also [use-element-size](https://mantine.dev/hooks/use-element-size/) hook in
 ## Definition
 
 ```tsx
+type ObserverRect = Omit<DOMRectReadOnly, 'toJSON'>;
+
 function useResizeObserver<T extends HTMLElement = any>(
   options?: ResizeObserverOptions
-): [
-  RefObject<T>,
-  {
-    x: number;
-    y: number;
-    top: number;
-    left: number;
-    right: number;
-    bottom: number;
-    height: number;
-    width: number;
-  },
-];
+): readonly [React.RefObject<T>, ObserverRect];
 ```

@@ -6,7 +6,7 @@ import { MantineDemo } from '@mantinex/demo';
 const code = `
 import { useState } from 'react';
 import { Button, Modal, rem } from '@mantine/core';
-import { Carousel, useAnimationOffsetEffect } from '@mantine/carousel';
+import { Carousel, Embla, useAnimationOffsetEffect } from '@mantine/carousel';
 
 function Demo() {
   const TRANSITION_DURATION = 200;

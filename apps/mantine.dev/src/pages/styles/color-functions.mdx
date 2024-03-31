@@ -38,6 +38,8 @@ Note that `color-mix` is not supported in some older browsers, you can check [ca
 for more information.
 
 ```tsx
+import { alpha } from '@mantine/core';
+
 alpha('#4578FC', 0.45); // -> rgba(69, 120, 252, 0.45)
 alpha('var(--mantine-color-gray-4)', 0.74);
 // -> color-mix(in srgb, var(--mantine-color-gray-4), transparent 26%)

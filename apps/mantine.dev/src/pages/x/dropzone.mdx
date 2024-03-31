@@ -86,6 +86,7 @@ function Demo() {
         'image/*': [], // All images
         'text/html': ['.html', '.htm'],
       }}
+      onDrop={() => {}}
     >
       {/* children */}
     </Dropzone>
@@ -107,6 +108,7 @@ function Demo() {
         'image/sgv+xml',
         'image/gif',
       ]}
+      onDrop={() => {}}
     >
       {/* children */}
     </Dropzone>
@@ -128,6 +130,7 @@ function Demo() {
         MIME_TYPES.svg,
         MIME_TYPES.gif,
       ]}
+      onDrop={() => {}}
     >
       {/* children */}
     </Dropzone>
@@ -160,7 +163,9 @@ import { Dropzone, IMAGE_MIME_TYPE } from '@mantine/dropzone';
 
 function Demo() {
   return (
-    <Dropzone accept={IMAGE_MIME_TYPE}>{/* children */}</Dropzone>
+    <Dropzone accept={IMAGE_MIME_TYPE} onDrop={() => {}}>
+      {/* children */}
+    </Dropzone>
   );
 }
 ```
@@ -190,10 +195,14 @@ function Demo() {
   const dropzoneRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    dropzoneRef.current.focus();
+    dropzoneRef.current?.focus();
   }, []);
 
-  return <Dropzone ref={dropzoneRef}>{/* children */}</Dropzone>;
+  return (
+    <Dropzone ref={dropzoneRef} onDrop={() => {}}>
+      {/* children */}
+    </Dropzone>
+  );
 }
 ```
 

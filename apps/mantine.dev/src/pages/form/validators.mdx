@@ -118,7 +118,7 @@ const form = useForm({
 Strings are trimmed before validation.
 
 ```tsx
-import { useForm, hasLength } from '@mantine/form';
+import { hasLength, useForm } from '@mantine/form';
 
 const form = useForm({
   initialValues: {
@@ -129,10 +129,19 @@ const form = useForm({
   },
 
   validate: {
-    exact: hasLength(5, 'Values must have exactly 5 characters')
-    maxLength: hasLength({ max: 20 }, 'Value must have 20 or less characters'),
-    minLength: hasLength({ min: 10 }, 'Value must have 10  or more characters'),
-    minMaxLength: hasLength({ min: 10, max: 20 }, 'Value must have 10-20 characters'),
+    exact: hasLength(5, 'Values must have exactly 5 characters'),
+    maxLength: hasLength(
+      { max: 20 },
+      'Value must have 20 or less characters'
+    ),
+    minLength: hasLength(
+      { min: 10 },
+      'Value must have 10  or more characters'
+    ),
+    minMaxLength: hasLength(
+      { min: 10, max: 20 },
+      'Value must have 10-20 characters'
+    ),
   },
 });
 ```

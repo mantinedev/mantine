@@ -29,11 +29,7 @@ It is responsible for:
 import { MantineProvider } from '@mantine/core';
 
 function Demo() {
-  return (
-    <MantineProvider>
-      <App />
-    </MantineProvider>
-  );
+  return <MantineProvider>{/* Your app here */}</MantineProvider>;
 }
 ```
 
@@ -55,7 +51,7 @@ const theme = createTheme({
 function Demo() {
   return (
     <MantineProvider theme={theme}>
-      <App />
+      {/* Your app here */}
     </MantineProvider>
   );
 }
@@ -236,7 +232,7 @@ import { MantineProvider } from '@mantine/core';
 function Demo() {
   return (
     <MantineProvider defaultColorScheme="dark">
-      <App />
+      {/* Your app here */}
     </MantineProvider>
   );
 }
