@@ -1,5 +1,5 @@
 import { useEffect, useLayoutEffect } from 'react';
 
-// useLayoutEffect will show warning if used during ssr, e.g. with Next.js
-// useIsomorphicEffect removes it by replacing useLayoutEffect with useEffect during ssr
+// useEffect will show warning if used during ssr, e.g. with Next.js
+// useIsomorphicEffect avoids it by replacing useEffect with useLayoutEffect during ssr
 export const useIsomorphicEffect = typeof document !== 'undefined' ? useLayoutEffect : useEffect;
