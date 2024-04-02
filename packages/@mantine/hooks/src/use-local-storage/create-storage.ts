@@ -77,7 +77,7 @@ export function createStorage<T>(type: StorageType, hookName: string) {
     defaultValue,
     getInitialValueInEffect = true,
     deserialize = deserializeJSON,
-    serialize = (value: T) => serializeJSON(value, hookName),
+    serialize = useCallback((value: T) => serializeJSON(value, hookName), [hookName]),
   }: StorageProperties<T>) {
     const readStorageValue = useCallback(
       (skipStorage?: boolean): T => {
