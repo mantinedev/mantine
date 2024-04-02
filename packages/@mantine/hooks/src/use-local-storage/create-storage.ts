@@ -100,7 +100,7 @@ export function createStorage<T>(type: StorageType, hookName: string) {
         const storageValue = getItem(key);
         return storageValue !== null ? deserialize(storageValue) : (defaultValue as T);
       },
-      [key, deserialize, defaultValue]
+      [key, defaultValue]
     );
 
     const [value, setValue] = useState<T>(readStorageValue(getInitialValueInEffect));
@@ -122,13 +122,13 @@ export function createStorage<T>(type: StorageType, hookName: string) {
           setValue(val);
         }
       },
-      [key, serialize]
+      [key]
     );
 
     const removeStorageValue = useCallback(() => {
       removeItem(key);
       window.dispatchEvent(new CustomEvent(eventName, { detail: { key, value: defaultValue } }));
-    }, [defaultValue, key]);
+    }, []);
 
     useWindowEvent('storage', (event) => {
       if (event.storageArea === window[type] && event.key === key) {
@@ -151,7 +151,7 @@ export function createStorage<T>(type: StorageType, hookName: string) {
     useEffect(() => {
       const val = readStorageValue();
       val !== undefined && setStorageValue(val);
-    }, [readStorageValue, setStorageValue]);
+    }, []);
 
     return [value === undefined ? defaultValue : value, setStorageValue, removeStorageValue] as [
       T,
