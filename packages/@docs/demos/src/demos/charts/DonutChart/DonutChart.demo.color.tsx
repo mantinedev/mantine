@@ -4,12 +4,10 @@ import { MantineDemo } from '@mantinex/demo';
 
 const code = (props: any) => `
 import { DonutChart } from '@mantine/charts';
-import { data } from './data';
 
 function Demo() {
   return (
     <DonutChart
-      {...props}
       data={[
         { name: 'USA', value: 400, color: '${props.color}' },
         { name: 'Other', value: 200, color: 'gray.6' },

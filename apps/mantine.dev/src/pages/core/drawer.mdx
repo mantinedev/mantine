@@ -104,7 +104,15 @@ with `removeScrollProps`:
 import { Drawer } from '@mantine/core';
 
 function Demo() {
-  return <Drawer removeScrollProps={{ allowPinchZoom: true }} />;
+  return (
+    <Drawer
+      removeScrollProps={{ allowPinchZoom: true }}
+      opened
+      onClose={() => {}}
+    >
+      {/* Drawer content */}
+    </Drawer>
+  );
 }
 ```
 

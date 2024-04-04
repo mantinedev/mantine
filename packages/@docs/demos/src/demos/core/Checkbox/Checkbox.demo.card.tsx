@@ -49,6 +49,7 @@ const cssCode = `.root {
 `;
 
 const code = `
+import { useState } from 'react';
 import { Checkbox, UnstyledButton, Text } from '@mantine/core';
 import classes from './Demo.module.css';
 
