@@ -34,3 +34,7 @@
 .axisLabel {
   color: var(--chart-text-color, var(--mantine-color-dimmed));
 }
+
+svg {
+  overflow: visible;
+}
