@@ -26,7 +26,7 @@ export interface MantineThemeProviderProps {
   theme?: MantineThemeOverride;
 
   /** Your application or part of the application that requires different theme */
-  children: React.ReactNode;
+  children?: React.ReactNode;
 }
 
 export function MantineThemeProvider({

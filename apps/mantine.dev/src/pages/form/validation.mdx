@@ -56,6 +56,8 @@ from the validation results.
 To validate all fields on change set `validateInputOnChange` option to `true`:
 
 ```tsx
+import { useForm } from '@mantine/form';
+
 const form = useForm({ validateInputOnChange: true });
 ```
 
@@ -85,6 +87,8 @@ const form = useForm({
 To validate all fields on blur set `validateInputOnBlur` option to `true`:
 
 ```tsx
+import { useForm } from '@mantine/form';
+
 const form = useForm({ validateInputOnBlur: true });
 ```
 
@@ -110,6 +114,8 @@ const form = useForm({
 By default, field error is cleared when value changes. To change this, set `clearInputErrorOnChange` to `false`:
 
 ```tsx
+import { useForm } from '@mantine/form';
+
 const form = useForm({ clearInputErrorOnChange: false });
 ```
 

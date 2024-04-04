@@ -19,9 +19,7 @@ import { ModalsProvider } from '@mantine/modals';
 function Demo() {
   return (
     <MantineProvider>
-      <ModalsProvider>
-        <App />
-      </ModalsProvider>
+      <ModalsProvider>{/* Your app here */}</ModalsProvider>
     </MantineProvider>
   );
 }
@@ -60,7 +58,7 @@ import { ModalsProvider } from '@mantine/modals';
 function Demo() {
   return (
     <ModalsProvider labels={{ confirm: 'Submit', cancel: 'Cancel' }}>
-      <App />
+      {/* Your app here */}
     </ModalsProvider>
   );
 }
@@ -92,7 +90,7 @@ function Demo() {
     <ModalsProvider
       modals={{ demonstration: TestModal /* ...other modals */ }}
     >
-      <App />
+      {/* Your app here */}
     </ModalsProvider>
   );
 }
@@ -132,7 +130,7 @@ declare module '@mantine/modals' {
 function Demo() {
   return (
     <ModalsProvider modals={modals}>
-      <App />
+      {/* Your app here */}
     </ModalsProvider>
   );
 }

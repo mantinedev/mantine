@@ -120,7 +120,7 @@ export interface HeadlessMantineProviderProps {
   theme?: MantineThemeOverride;
 
   /** Your application */
-  children: React.ReactNode;
+  children?: React.ReactNode;
 }
 
 export function HeadlessMantineProvider({ children, theme }: HeadlessMantineProviderProps) {

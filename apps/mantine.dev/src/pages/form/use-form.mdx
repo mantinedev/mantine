@@ -155,12 +155,44 @@ Wrapper function for form `onSubmit` and `onReset` event handler. `onSubmit` han
 that will be called with errors object when validation fails.
 
 ```tsx
-<form onSubmit={form.onSubmit(setFormValues)}></form>
-<form onSubmit={form.onSubmit(
-    (values, _event) => { setFormValues(values) },
-    (validationErrors, _values, _event) => { console.log(validationErrors) }
-)}></form>
-<form onReset={form.onReset}></form>
+import { useForm } from '@mantine/form';
+
+function Demo() {
+  const form = useForm();
+
+  const handleSubmit = (values: typeof form.values) => {
+    console.log(values);
+  };
+
+  return (
+    <>
+      {/* Supply handle submit as a single argument to receive validated values */}
+      <form onSubmit={form.onSubmit(handleSubmit)} />
+
+      {/* Supply second argument to handle errors */}
+      <form
+        onSubmit={form.onSubmit(
+          (values, event) => {
+            console.log(
+              values, // <- form.values at the moment of submit
+              event // <- form element submit event
+            );
+          },
+          (validationErrors, values, event) => {
+            console.log(
+              validationErrors, // <- form.errors at the moment of submit
+              values, // <- form.values at the moment of submit
+              event // <- form element submit event
+            );
+          }
+        )}
+      />
+
+      {/* form.onReset calls form.reset */}
+      <form onReset={form.onReset}></form>
+    </>
+  );
+}
 ```
 
 ### Touched and dirty

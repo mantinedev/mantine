@@ -11,6 +11,8 @@ export default Layout(MDX_DATA.useTimeout);
 ## API
 
 ```tsx
+import { useTimeout } from '@mantine/hooks';
+
 const { start, clear } = useTimeout(callback, delay, {
   autoInvoke: true,
 });

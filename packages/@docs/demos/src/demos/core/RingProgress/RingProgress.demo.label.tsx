@@ -4,7 +4,7 @@ import { ActionIcon, Center, Group, rem, RingProgress, Text } from '@mantine/cor
 import { MantineDemo } from '@mantinex/demo';
 
 const code = `
-import { ActionIcon, RingProgress, Text, Center } from '@mantine/core';
+import { ActionIcon, RingProgress, Text, Center, rem } from '@mantine/core';
 import { IconCheck } from '@tabler/icons-react';
 
 function Demo() {

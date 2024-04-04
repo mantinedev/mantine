@@ -23,21 +23,6 @@ To remove header set `withCloseButton={false}`:
 You can change modal width by setting `size` prop to predefined size or any valid width, for example, `55%` or `50rem`.
 `Modal` width cannot exceed `100vw`.
 
-```tsx
-import { Modal } from '@mantine/core';
-
-function Demo() {
-  return (
-    <>
-      <Modal size="sm" />
-      <Modal size={320} />
-      <Modal size="55%" />
-      <Modal size="calc(100vw - 3rem)" />
-    </>
-  );
-}
-```
-
 <Demo data={ModalDemos.sizes} />
 
 ## Size auto
@@ -122,7 +107,13 @@ with `removeScrollProps`:
 import { Modal } from '@mantine/core';
 
 function Demo() {
-  return <Modal removeScrollProps={{ allowPinchZoom: true }} />;
+  return (
+    <Modal
+      removeScrollProps={{ allowPinchZoom: true }}
+      opened
+      onClose={() => {}}
+    />
+  );
 }
 ```
 
@@ -154,11 +145,18 @@ package to lock scroll. To properly size these `elements` add a `className` to t
 ```tsx
 import { RemoveScroll } from '@mantine/core';
 
-// to make "width: 100%"
-<div className={RemoveScroll.classNames.fullWidth} />
-
-// to make "right: 0"
-<div className={RemoveScroll.classNames.zeroRight} />
+function Demo() {
+  return (
+    <>
+      <div className={RemoveScroll.classNames.fullWidth}>
+        width: 100%
+      </div>
+      <div className={RemoveScroll.classNames.zeroRight}>
+        right: 0
+      </div>
+    </>
+  );
+}
 ```
 
 ## Accessibility

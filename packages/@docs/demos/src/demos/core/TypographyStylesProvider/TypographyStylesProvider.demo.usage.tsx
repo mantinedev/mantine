@@ -29,6 +29,8 @@ const html = `
 const code = `
 import { TypographyStylesProvider } from '@mantine/core';
 
+const html = '...html content here...';
+
 function Demo() {
   return (
     <TypographyStylesProvider>

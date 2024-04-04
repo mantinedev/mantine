@@ -180,9 +180,16 @@ package to lock scroll. To properly size these `elements` add a `className` to t
 ```tsx
 import { RemoveScroll } from '@mantine/core';
 
-// to make "width: 100%"
-<div className={RemoveScroll.classNames.fullWidth} />
-
-// to make "right: 0"
-<div className={RemoveScroll.classNames.zeroRight} />
+function Demo() {
+  return (
+    <>
+      <div className={RemoveScroll.classNames.fullWidth}>
+        width: 100%
+      </div>
+      <div className={RemoveScroll.classNames.zeroRight}>
+        right: 0
+      </div>
+    </>
+  );
+}
 ```

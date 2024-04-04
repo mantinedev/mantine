@@ -16,8 +16,10 @@ of a given element with its scroll container or body element with [Intersection 
 The hook accepts `IntersectionObserver`'s options as its only optional argument:
 
 ```tsx
+import { useIntersection } from '@mantine/hooks';
+
 useIntersection({
-  root: someDomElement,
+  root: document.querySelector('#some-element'),
   rootMargin: '0rem',
   threshold: 1.0,
 });
@@ -29,13 +31,22 @@ See [Intersection Observer API](https://developer.mozilla.org/en-US/docs/Web/API
 On the first render (as well as during SSR), or when no element is being observed, the entry is `null`.
 
 ```tsx
-const { ref, entry } = useIntersection();
+import { Paper } from '@mantine/core';
+import { useIntersection } from '@mantine/hooks';
 
-// With regular element:
-<div ref={ref}>Observed</div>
+function Demo() {
+  const { ref } = useIntersection();
 
-// With Mantine component:
-<Paper ref={ref}>Observed</Paper>
+  return (
+    <>
+      {/* With regular element: */}
+      <div ref={ref} />
+
+      {/* With Mantine component: */}
+      <Paper ref={ref} />
+    </>
+  );
+}
 ```
 
 ## Definition

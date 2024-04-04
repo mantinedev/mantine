@@ -16,7 +16,7 @@ import { MantineProvider } from '@mantine/core';
 function Demo() {
   return (
     <MantineProvider defaultColorScheme="dark">
-      <App />
+      {/* Your app here */}
     </MantineProvider>
   );
 }
@@ -156,7 +156,7 @@ function Demo() {
     <>
       <ColorSchemeScript defaultColorScheme="auto" />
       <MantineProvider defaultColorScheme="auto">
-        <App />
+        {/* Your app here */}
       </MantineProvider>
     </>
   );
@@ -173,21 +173,21 @@ Color scheme manager must have the following methods:
 ```tsx
 interface MantineColorSchemeManager {
   /** Function to retrieve color scheme value from external storage, for example window.localStorage */
-  get(defaultValue: MantineColorScheme): MantineColorScheme;
+  get: (defaultValue: MantineColorScheme) => MantineColorScheme;
 
   /** Function to set color scheme value in external storage, for example window.localStorage */
-  set(value: MantineColorScheme): void;
+  set: (value: MantineColorScheme) => void;
 
   /** Function to subscribe to color scheme changes triggered by external events */
-  subscribe(
+  subscribe: (
     onUpdate: (colorScheme: MantineColorScheme) => void
-  ): void;
+  ) => void;
 
   /** Function to unsubscribe from color scheme changes triggered by external events */
-  unsubscribe(): void;
+  unsubscribe: () => void;
 
   /** Function to clear value from external storage */
-  clear(): void;
+  clear: () => void;
 }
 ```
 
@@ -277,7 +277,7 @@ const colorSchemeManager = localStorageColorSchemeManager({
 function Demo() {
   return (
     <MantineProvider colorSchemeManager={colorSchemeManager}>
-      <App />
+      {/* Your app here */}
     </MantineProvider>
   );
 }
@@ -297,7 +297,7 @@ function Demo() {
     <>
       <ColorSchemeScript defaultColorScheme="dark" />
       <MantineProvider defaultColorScheme="dark">
-        <App />
+        {/* Your app here */}
       </MantineProvider>
     </>
   );
@@ -319,7 +319,7 @@ function Demo() {
     <>
       <ColorSchemeScript forceColorScheme="light" />
       <MantineProvider forceColorScheme="light">
-        <App />
+        {/* Your app here */}
       </MantineProvider>
     </>
   );

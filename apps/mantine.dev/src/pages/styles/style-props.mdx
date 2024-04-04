@@ -37,20 +37,26 @@ if you set `xs`, `sm`, `md`, `lg`, `xl`:
 ```tsx
 import { Box } from '@mantine/core';
 
-// margin-top: theme.spacing.xs
-<Box mt="xs" />
+function Demo() {
+  return (
+    <>
+      {/* margin-top: theme.spacing.xs */}
+      <Box mt="xs" />
 
-// margin-top: theme.spacing.md * -1
-<Box mt="-md" />
+      {/* margin-top: theme.spacing.md * -1 */}
+      <Box mt="-md" />
 
-// margin-top: auto
-<Box mt="auto" />
+      {/* margin-top: auto */}
+      <Box mt="auto" />
 
-// margin-top: 1rem
-<Box mt={16} />
+      {/* margin-top: 1rem */}
+      <Box mt={16} />
 
-// margin-top: 5rem
-<Box mt="5rem" />
+      {/* margin-top: 5rem */}
+      <Box mt="5rem" />
+    </>
+  );
+}
 ```
 
 In `c` and `bg` props you can reference colors from `theme.colors`:
@@ -58,26 +64,31 @@ In `c` and `bg` props you can reference colors from `theme.colors`:
 ```tsx
 import { Box } from '@mantine/core';
 
-// color: theme.colors.blue[theme.fn.primaryShade()]
-<Box c="blue" />
+function Demo() {
+  return (
+    <>
+      {/* color: theme.colors.blue[theme.primaryShade] */}
+      <Box c="blue" />
 
-// background: theme.colors.orange[1]
-<Box bg="orange.1" />
+      {/* background: theme.colors.orange[1] */}
+      <Box bg="orange.1" />
 
-// color: if colorScheme is dark `var(--mantine-color-dark-2)`,
-// if color scheme is light `var(--mantine-color-gray-6)`
-<Box c="dimmed" />
+      {/* color: if colorScheme is dark `var(--mantine-color-dark-2)`,
+      if color scheme is light `var(--mantine-color-gray-6)` */}
+      <Box c="dimmed" />
 
-// color: if colorScheme is dark `var(--mantine-color-white)`,
-// if color scheme is light `var(--mantine-color-black)`
-<Box c="bright" />
+      {/* color: if colorScheme is dark `var(--mantine-color-white)`,
+      if color scheme is light `var(--mantine-color-black)` */}
+      <Box c="bright" />
 
+      {/* background: #EDFEFF */}
+      <Box bg="#EDFEFF" />
 
-// background: #EDFEFF
-<Box bg="#EDFEFF" />
-
-// background: rgba(0, 34, 45, 0.6)
-<Box bg="rgba(0, 34, 45, 0.6)" />
+      {/* background: rgba(0, 34, 45, 0.6) */}
+      <Box bg="rgba(0, 34, 45, 0.6)" />
+    </>
+  );
+}
 ```
 
 ## Responsive styles
@@ -96,7 +107,9 @@ Responsive values are calculated the following way:
 ```tsx
 import { Box } from '@mantine/core';
 
-<Box w={{ base: 320, sm: 480, lg: 640 }}} />
+function Demo() {
+  return <Box w={{ base: 320, sm: 480, lg: 640 }} />;
+}
 ```
 
 In this case the element will have the following styles:

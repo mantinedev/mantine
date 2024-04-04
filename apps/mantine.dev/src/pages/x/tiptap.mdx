@@ -112,7 +112,9 @@ function Demo() {
   });
 
   return (
-    <RichTextEditor editor={editor}>{/* content */}</RichTextEditor>
+    <RichTextEditor editor={editor}>
+      <RichTextEditor.Content />
+    </RichTextEditor>
   );
 }
 ```
@@ -165,7 +167,7 @@ function Demo() {
 
   return (
     <RichTextEditor editor={editor} withTypographyStyles={false}>
-      {/* content */}
+      <RichTextEditor.Content />
     </RichTextEditor>
   );
 }
@@ -187,7 +189,7 @@ or with [Styles API](/styles/styles-api/):
     },
   }}
 >
-  {/* content */}
+  <RichTextEditor.Content />
 </RichTextEditor>
 ```
 
@@ -275,7 +277,7 @@ function Demo() {
         // ...other labels
       }}
     >
-      {/* content */}
+      <RichTextEditor.Content />
     </RichTextEditor>
   );
 }
@@ -421,6 +423,8 @@ export interface RichTextEditorLabels {
 Default labels (can be imported from `@mantine/tiptap` package):
 
 ```tsx
+import { RichTextEditorLabels } from '@mantine/tiptap';
+
 export const DEFAULT_LABELS: RichTextEditorLabels = {
   // Controls labels
   linkControlLabel: 'Link',
@@ -452,6 +456,13 @@ export const DEFAULT_LABELS: RichTextEditorLabels = {
   superscriptControlLabel: 'Superscript',
   unsetColorControlLabel: 'Unset color',
   hrControlLabel: 'Horizontal line',
+  undoControlLabel: 'Undo',
+  redoControlLabel: 'Redo',
+
+  // Task list
+  tasksControlLabel: 'Task list',
+  tasksSinkLabel: 'Decrease task level',
+  tasksLiftLabel: 'Increase task level',
 
   // Link editor
   linkEditorInputLabel: 'Enter URL',

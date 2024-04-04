@@ -11,7 +11,7 @@ function Demo() {
   return (
     <ScatterChart
       h={350}
-      data={spendingsData}
+      data={data}
       dataKey={{ x: 'age', y: 'average_monthly_spending' }}
       yAxisProps={{ domain: [800, 3400] }}
       valueFormatter={{

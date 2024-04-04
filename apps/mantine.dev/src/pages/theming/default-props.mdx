@@ -38,10 +38,10 @@ function Demo() {
   return (
     <>
       <MantineThemeProvider theme={theme}>
-        <AppPart />
+        {/* Part of the app with theme */}
       </MantineThemeProvider>
 
-      <AnotherAppPart />
+      {/* Another part without theme */}
     </>
   );
 }
@@ -72,7 +72,7 @@ function Demo() {
         },
       }}
     >
-      <App />
+      {/* Your app here */}
     </MantineProvider>
   );
 }

@@ -12,6 +12,8 @@ it manages pagination with controlled and uncontrolled state:
 <Demo data={PaginationDemos.usage} />
 
 ```tsx
+import { usePagination } from '@mantine/hooks';
+
 const pagination = usePagination({ total: 10, initialPage: 1 });
 
 pagination.range; // -> [1, 2, 3, 4, 5, 'dots', 10];
@@ -37,6 +39,9 @@ pagination.range; // -> [1, 2, 3, 4, 5, 'dots', 10];
 The hook supports controlled mode, provide `page` and `onChange` props to manage state from outside:
 
 ```tsx
+import { useState } from 'react';
+import { usePagination } from '@mantine/hooks';
+
 const [page, onChange] = useState(1);
 const pagination = usePagination({ total: 10, page, onChange });
 
@@ -52,6 +57,8 @@ pagination.range; // -> [1, 'dots', 4, 5, 6, 'dots', 10];
 Control number of active item siblings with `siblings`:
 
 ```tsx
+import { usePagination } from '@mantine/hooks';
+
 const pagination = usePagination({ total: 20, siblings: 3 });
 ```
 
@@ -62,6 +69,8 @@ const pagination = usePagination({ total: 20, siblings: 3 });
 Control number of items on each boundary with `boundaries`:
 
 ```tsx
+import { usePagination } from '@mantine/hooks';
+
 const pagination = usePagination({ total: 20, boundaries: 3 });
 ```
 
@@ -73,17 +82,17 @@ const pagination = usePagination({ total: 20, boundaries: 3 });
 ## Definition
 
 ```tsx
-function usePagination(settings: {
+interface PaginationParams {
   /** Page selected on initial render, defaults to 1 */
   initialPage?: number;
 
   /** Controlled active page number */
   page?: number;
 
-  /** Total number of pages */
+  /** Total amount of pages */
   total: number;
 
-  /** Siblings number on left/right side of selected page, defaults to 1 */
+  /** Siblings amount on left/right side of selected page, defaults to 1 */
   siblings?: number;
 
   /** Amount of elements visible on left/right edges, defaults to 1  */
@@ -91,10 +100,12 @@ function usePagination(settings: {
 
   /** Callback fired after change of each page */
   onChange?: (page: number) => void;
-}): {
+}
+
+function usePagination(settings: PaginationParams): {
   range: (number | 'dots')[];
   active: number;
-  setPage: (page: number) => void;
+  setPage: (pageNumber: number) => void;
   next: () => void;
   previous: () => void;
   first: () => void;

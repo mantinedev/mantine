@@ -24,7 +24,7 @@ function Demo() {
         {/* ...other content */}
       </Box>
 
-      <Group position="center">
+      <Group justify="center">
         <Button onClick={toggle}>Toggle overlay</Button>
       </Group>
     </>

@@ -22,6 +22,8 @@ useShallowEffect(() => {}, [{ a: 1 }]);
 Hook works with primitive values, arrays and objects:
 
 ```tsx
+import { useShallowEffect } from '@mantine/hooks';
+
 // Primitive values are handled like in useEffect
 useShallowEffect(() => {}, [1, 2, 3]);
 

@@ -18,6 +18,7 @@ function Demo() {
       Box with responsive style props
     </Box>
   );
+}
 `;
 
 function Demo() {

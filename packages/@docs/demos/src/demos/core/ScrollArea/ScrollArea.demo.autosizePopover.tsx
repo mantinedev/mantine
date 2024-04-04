@@ -4,7 +4,7 @@ import { MantineDemo } from '@mantinex/demo';
 
 const code = `
 import { useState, useRef } from 'react';
-import { ScrollArea, Popover, TextInput, UnstyledButton, Text } from '@mantine/core';
+import { ScrollArea, Popover, TextInput, UnstyledButton, Text, Box } from '@mantine/core';
 
 const groceries = [
   'Apples',

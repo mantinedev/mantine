@@ -3,7 +3,7 @@ import { Group, Radio, RadioGroupProps } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
 
 const code = `
-import { Radio } from '@mantine/core';
+import { Radio, Group } from '@mantine/core';
 
 
 function Demo() {

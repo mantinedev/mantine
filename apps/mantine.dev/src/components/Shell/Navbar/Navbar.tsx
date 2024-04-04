@@ -28,6 +28,7 @@ export function Navbar({ navbarOpened, onNavbarClose, mobileNavbarOnly }: Navbar
 
   return (
     <Box
+      id="mantine-navbar"
       component="nav"
       className={cx(classes.navbar, { [RemoveScroll.classNames.zeroRight]: dir === 'rtl' })}
       mod={{ hidden: !navbarOpened, 'mobile-only': mobileNavbarOnly }}

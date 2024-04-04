@@ -33,6 +33,10 @@ Hook returns an object with:
 Returned `scrollIntoView` function accepts single optional argument `alignment` - optional target element alignment relatively to parent based on current axis.
 
 ```tsx
+import { useScrollIntoView } from '@mantine/hooks';
+
+const { scrollIntoView } = useScrollIntoView();
+
 scrollIntoView({ alignment: 'center' });
 ```
 
@@ -45,10 +49,10 @@ Default easing is `easeInOutQuad` - more info [here](https://easings.net/#easeIn
 You can find other popular examples on [easings.net](https://easings.net/)
 
 ```tsx
+import { useScrollIntoView } from '@mantine/hooks';
+
 useScrollIntoView({
-  target: someDomElement,
-  easing: (t) =>
-    t < 0.5 ? 16 * Math.pow(t, 5) : 1 - Math.pow(-2 * x + 2, 5) / 2, // easeInOutQuint
+  easing: (t) => (t < 0.5 ? 16 * t ** 5 : 1 - (-2 * t + 2) ** 5 / 2), // easeInOutQuint
 });
 ```
 
@@ -63,23 +67,54 @@ useScrollIntoView({
 ## Definition
 
 ```tsx
+interface ScrollIntoViewAnimation {
+  /** target element alignment relatively to parent based on current axis */
+  alignment?: 'start' | 'end' | 'center';
+}
+
+interface ScrollIntoViewParams {
+  /** callback fired after scroll */
+  onScrollFinish?: () => void;
+
+  /** duration of scroll in milliseconds */
+  duration?: number;
+
+  /** axis of scroll */
+  axis?: 'x' | 'y';
+
+  /** custom mathematical easing function */
+  easing?: (t: number) => number;
+
+  /** additional distance between nearest edge and element */
+  offset?: number;
+
+  /** indicator if animation may be interrupted by user scrolling */
+  cancelable?: boolean;
+
+  /** prevents content jumping in scrolling lists with multiple targets */
+  isList?: boolean;
+}
+
+interface ScrollIntoViewReturnType<
+  Target extends HTMLElement,
+  Parent extends HTMLElement | null = null,
+> {
+  scrollableRef: React.MutableRefObject<Parent>;
+  targetRef: React.MutableRefObject<Target>;
+  scrollIntoView: (params?: ScrollIntoViewAnimation) => void;
+  cancel: () => void;
+}
+
 function useScrollIntoView<
   Target extends HTMLElement,
-  Parent extends HTMLElement | null = null
+  Parent extends HTMLElement | null = null,
 >({
-  onScrollFinish?: () => void;
-  duration?: number;
-  axis?: 'x' | 'y';
-  easing?: (t: number) => number;
-  offset?: number;
-  cancelable?: boolean;
-  isList?: boolean;
-}): {
-  targetRef: MutableRefObject<Target>;
-  scrollableRef: MutableRefObject<Parent>;
-  scrollIntoView: ({
-    alignment?: 'start' | 'end' | 'center';
-  }) => void;
-  cancel: () => void;
-};
+  duration,
+  axis,
+  onScrollFinish,
+  easing,
+  offset,
+  cancelable,
+  isList,
+}?: ScrollIntoViewParams): ScrollIntoViewReturnType<Target, Parent>;
 ```

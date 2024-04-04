@@ -68,6 +68,8 @@ Return value:
 By default, the hook will get types information from `initialValues` automatically:
 
 ```tsx
+import { useQueue } from '@mantine/hooks';
+
 const q = useQueue({
   limit: 2,
   initialValues: [
@@ -82,6 +84,8 @@ typeof q.state[number]; // -> { name: string; id: number; }
 If you do not provide `initialValues`, pass in type for state item:
 
 ```tsx
+import { useQueue } from '@mantine/hooks';
+
 const q = useQueue<{ name: string; id: number }>({
   limit: 2,
   initialValues: [],

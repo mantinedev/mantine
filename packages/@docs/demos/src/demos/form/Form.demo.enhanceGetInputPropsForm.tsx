@@ -4,7 +4,7 @@ import { useForm } from '@mantine/form';
 import { MantineDemo } from '@mantinex/demo';
 
 const code = `
-import { NumberInput, TextInput } from '@mantine/core';
+import { NumberInput, TextInput, Button } from '@mantine/core';
 import { useForm } from '@mantine/form';
 
 interface FormValues {

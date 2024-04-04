@@ -20,7 +20,7 @@ const theme = createTheme({
 function Demo() {
   return (
     <MantineProvider theme={theme}>
-      <App />
+      {/* Your app here */}
     </MantineProvider>
   );
 }`;

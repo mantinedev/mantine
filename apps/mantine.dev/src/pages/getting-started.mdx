@@ -107,7 +107,7 @@ const theme = createTheme({
 function Demo() {
   return (
     <MantineProvider theme={theme}>
-      <App />
+      {/* Your app here */}
     </MantineProvider>
   );
 }
@@ -123,7 +123,7 @@ function Demo() {
   return (
     <html lang="en">
       <head>
-        <meta charset="UTF-8" />
+        <meta charSet="UTF-8" />
         <meta
           name="viewport"
           content="width=device-width, initial-scale=1.0"
@@ -132,9 +132,7 @@ function Demo() {
 
         <ColorSchemeScript />
       </head>
-      <body>
-        <App />
-      </body>
+      <body>{/* Your app here */}</body>
     </html>
   );
 }
