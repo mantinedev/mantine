@@ -115,6 +115,16 @@ export type SetFieldError<Values> = <Field extends LooseKeys<Values>>(
   error: React.ReactNode
 ) => void;
 
+export type SetFieldTouched<Values> = <Field extends LooseKeys<Values>>(
+  path: Field,
+  touched: boolean
+) => void;
+
+export type SetFieldDirty<Values> = <Field extends LooseKeys<Values>>(
+  path: Field,
+  dirty: boolean
+) => void;
+
 export type ReorderListItem<Values> = <Field extends LooseKeys<Values>>(
   path: Field,
   payload: ReorderPayload
