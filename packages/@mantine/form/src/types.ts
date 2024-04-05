@@ -155,6 +155,7 @@ export interface UseFormInput<
   TransformValues extends _TransformValues<Values> = (values: Values) => Values,
 > {
   name?: string;
+  mode?: 'controlled' | 'uncontrolled';
   initialValues?: Values;
   initialErrors?: FormErrors;
   initialTouched?: FormStatus;
@@ -205,6 +206,7 @@ export interface UseFormReturnType<
   resetDirty: ResetDirty<Values>;
   isValid: IsValid<Values>;
   getTransformedValues: GetTransformedValues<Values, TransformValues>;
+  getValues: () => Values;
 }
 
 export type UseForm<

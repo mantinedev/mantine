@@ -17,7 +17,7 @@ export function ValidateOnChange() {
         { item: '2', noValidate: '' },
       ],
     },
-    validateInputOnChange: ['email', `array.${FORM_INDEX}.item`],
+    validateInputOnChange: ['name', 'email', `array.${FORM_INDEX}.item`],
     validate: {
       name: (value) => (value.length < 6 ? 'Less than 6' : null),
       email: (value) => (value.length > 6 ? 'More than 6' : null),

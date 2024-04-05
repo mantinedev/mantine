@@ -23,19 +23,20 @@ export function useFormErrors<Values extends Record<string, any>>(
 
   const clearErrors: ClearErrors = useCallback(() => setErrorsState({}), []);
 
-  const clearFieldError: ClearFieldError = useCallback((path) => {
-    setErrors((current) => {
-      const currentError = current[path as string];
-
-      if (currentError === undefined) {
-        return current;
+  const clearFieldError: ClearFieldError = useCallback(
+    (path) => {
+      if (errorsState[path as string] === undefined) {
+        return;
       }
 
-      const errors = { ...current };
-      delete errors[path as string];
-      return errors;
-    });
-  }, []);
+      setErrors((current) => {
+        const errors = { ...current };
+        delete errors[path as string];
+        return errors;
+      });
+    },
+    [errorsState]
+  );
 
   const setFieldError: SetFieldError<Values> = useCallback((path, error) => {
     if (error == null || error === false) {

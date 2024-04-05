@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import React from 'react';
 import { Button, Checkbox, NativeSelect, Textarea, TextInput } from '@mantine/core';
 import { useForm } from '../use-form';
@@ -7,6 +8,7 @@ export default { title: 'Form' };
 
 export function Usage() {
   const form = useForm({
+    validateInputOnChange: true,
     initialValues: { name: '', terms: false, area: '', select: '' },
     validate: {
       name: (value) => (value.length === 0 ? 'Required' : null),
@@ -79,7 +81,8 @@ export function Initialize() {
 
 export function ControlMode() {
   const form = useForm({
-    initialValues: { name: '', terms: false, area: '', select: '' },
+    mode: 'uncontrolled',
+    initialValues: { name: 'initial', terms: false, area: 'test', select: 'Angular' },
     validate: {
       name: (value) => (value.length === 0 ? 'Required' : null),
     },
@@ -101,6 +104,10 @@ export function ControlMode() {
         data={['React', 'Angular']}
         {...form.getInputProps('select')}
       />
+
+      <Button onClick={() => console.log(form.getValues())} mt="xl">
+        Get form values
+      </Button>
     </FormBase>
   );
 }

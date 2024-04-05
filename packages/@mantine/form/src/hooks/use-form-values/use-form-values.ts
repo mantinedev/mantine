@@ -11,6 +11,7 @@ export interface $FormValues<Values extends Record<PropertyKey, any>> {
   resetValues: () => void;
   setValuesSnapshot: (payload: Values) => void;
   initialize: (values: Values) => void;
+  getValues: () => Values;
 }
 
 export interface SetValuesSubscriberPayload<Values> {
@@ -109,6 +110,8 @@ export function useFormValues<Values extends Record<PropertyKey, any>>({
     });
   }, []);
 
+  const getValues = useCallback(() => refValues.current, []);
+
   return {
     initialized,
     stateValues,
@@ -119,5 +122,6 @@ export function useFormValues<Values extends Record<PropertyKey, any>>({
     resetValues,
     setValuesSnapshot,
     initialize,
+    getValues,
   };
 }

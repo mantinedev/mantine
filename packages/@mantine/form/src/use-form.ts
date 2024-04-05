@@ -28,6 +28,7 @@ export function useForm<
   TransformValues extends _TransformValues<Values> = (values: Values) => Values,
 >({
   name,
+  mode = 'controlled',
   initialValues,
   initialErrors = {},
   initialDirty = {},
@@ -40,8 +41,8 @@ export function useForm<
   enhanceGetInputProps,
   validate: rules,
 }: UseFormInput<Values, TransformValues> = {}): UseFormReturnType<Values, TransformValues> {
-  const $values = useFormValues<Values>({ initialValues, onValuesChange });
   const $errors = useFormErrors<Values>(initialErrors);
+  const $values = useFormValues<Values>({ initialValues, onValuesChange });
   const $status = useFormStatus<Values>({ initialDirty, initialTouched, $values });
   const $list = useFormList<Values>({ $values, $errors, $status });
 
@@ -63,7 +64,7 @@ export function useForm<
       $values.setFieldValue({
         path,
         value,
-        updateState: true,
+        updateState: mode === 'controlled',
         subscribers: [
           shouldValidate
             ? (payload) => {
@@ -76,12 +77,12 @@ export function useForm<
         ],
       });
     },
-    [onValuesChange]
+    [onValuesChange, rules]
   );
 
   const setValues: SetValues<Values> = useCallback(
     (values) => {
-      $values.setValues({ values, updateState: true });
+      $values.setValues({ values, updateState: mode === 'controlled' });
       clearInputErrorOnChange && $errors.clearErrors();
     },
     [onValuesChange, clearInputErrorOnChange]
@@ -114,9 +115,15 @@ export function useForm<
     }
 
     if (type === 'checkbox') {
-      payload.checked = getPath(path, $values.refValues.current);
+      payload[mode === 'controlled' ? 'checked' : 'defaultChecked'] = getPath(
+        path,
+        $values.refValues.current
+      );
     } else {
-      payload.value = getPath(path, $values.refValues.current);
+      payload[mode === 'controlled' ? 'value' : 'defaultValue'] = getPath(
+        path,
+        $values.refValues.current
+      );
     }
 
     if (withFocus) {
@@ -174,6 +181,7 @@ export function useForm<
   const form: UseFormReturnType<Values, TransformValues> = {
     initialized: $values.initialized.current,
     values: $values.stateValues,
+    getValues: $values.getValues,
     initialize: $values.initialize,
     setInitialValues: $values.setValuesSnapshot,
     setValues,
