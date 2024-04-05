@@ -1,6 +1,18 @@
 import { useCallback, useRef, useState } from 'react';
 import { getPath, setPath } from '../../paths';
 
+export interface $FormValues<Values extends Record<PropertyKey, any>> {
+  initialized: React.MutableRefObject<boolean>;
+  stateValues: Values;
+  refValues: React.MutableRefObject<Values>;
+  valuesSnapshot: React.MutableRefObject<Values>;
+  setValues: (payload: SetValuesInput<Values>) => void;
+  setFieldValue: (payload: SetFieldValueInput<Values>) => void;
+  resetValues: () => void;
+  setValuesSnapshot: (payload: Values) => void;
+  initialize: (values: Values) => void;
+}
+
 export interface SetValuesSubscriberPayload<Values> {
   path?: PropertyKey;
   updatedValues: Values;
@@ -31,7 +43,7 @@ interface UseFormValuesInput<Values extends Record<PropertyKey, any>> {
 export function useFormValues<Values extends Record<PropertyKey, any>>({
   initialValues,
   onValuesChange,
-}: UseFormValuesInput<Values>) {
+}: UseFormValuesInput<Values>): $FormValues<Values> {
   const initialized = useRef(false);
   const [stateValues, setStateValues] = useState<Values>(initialValues || ({} as Values));
   const refValues = useRef(stateValues);

@@ -2,7 +2,17 @@ import { useCallback, useState } from 'react';
 import { ClearErrors, ClearFieldError, FormErrors, SetErrors, SetFieldError } from '../../types';
 import { filterErrors } from './filter-errors/filter-errors';
 
-export function useFormErrors<Values extends Record<string, any>>(initialErrors: FormErrors) {
+export interface $FormErrors<Values extends Record<string, any>> {
+  errorsState: FormErrors;
+  setErrors: SetErrors;
+  clearErrors: ClearErrors;
+  setFieldError: SetFieldError<Values>;
+  clearFieldError: ClearFieldError;
+}
+
+export function useFormErrors<Values extends Record<string, any>>(
+  initialErrors: FormErrors
+): $FormErrors<Values> {
   const [errorsState, setErrorsState] = useState(filterErrors(initialErrors));
 
   const setErrors: SetErrors = useCallback((errors) => {
