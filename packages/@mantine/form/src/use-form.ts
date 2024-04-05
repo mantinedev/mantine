@@ -2,20 +2,17 @@ import { useCallback } from 'react';
 import { useFormActions } from './actions';
 import { getInputOnChange } from './get-input-on-change';
 import { useFormErrors } from './hooks/use-form-errors/use-form-errors';
+import { useFormList } from './hooks/use-form-list/use-form-list';
 import { useFormStatus } from './hooks/use-form-status/use-form-status';
 import { useFormValues } from './hooks/use-form-values/use-form-values';
-import { changeErrorIndices, reorderErrors } from './lists';
-import { getPath, insertPath, removePath, reorderPath } from './paths';
+import { getPath } from './paths';
 import {
   _TransformValues,
   GetInputProps,
   GetTransformedValues,
-  InsertListItem,
   IsValid,
   OnReset,
   OnSubmit,
-  RemoveListItem,
-  ReorderListItem,
   Reset,
   SetFieldValue,
   SetValues,
@@ -46,6 +43,7 @@ export function useForm<
   const $values = useFormValues<Values>({ initialValues, onValuesChange });
   const $errors = useFormErrors<Values>(initialErrors);
   const $status = useFormStatus<Values>({ initialDirty, initialTouched, $values });
+  const $list = useFormList<Values>({ $values, $errors, $status });
 
   const reset: Reset = useCallback(() => {
     $values.resetValues();
@@ -88,33 +86,6 @@ export function useForm<
     },
     [onValuesChange, clearInputErrorOnChange]
   );
-
-  const reorderListItem: ReorderListItem<Values> = useCallback((path, payload) => {
-    $status.clearFieldDirty(path);
-    $errors.setErrors((errs) => reorderErrors(path, payload, errs));
-    $values.setValues({
-      values: reorderPath(path, payload, $values.refValues.current),
-      updateState: true,
-    });
-  }, []);
-
-  const removeListItem: RemoveListItem<Values> = useCallback((path, index) => {
-    $status.clearFieldDirty(path);
-    $errors.setErrors((errs) => changeErrorIndices(path, index, errs, -1));
-    $values.setValues({
-      values: removePath(path, index, $values.refValues.current),
-      updateState: true,
-    });
-  }, []);
-
-  const insertListItem: InsertListItem<Values> = useCallback((path, item, index) => {
-    $status.clearFieldDirty(path);
-    $errors.setErrors((errs) => changeErrorIndices(path, index, errs, 1));
-    $values.setValues({
-      values: insertPath(path, item, index, $values.refValues.current),
-      updateState: true,
-    });
-  }, []);
 
   const validate: Validate = useCallback(() => {
     const results = validateValues(rules, $values.refValues.current);
@@ -221,12 +192,13 @@ export function useForm<
     resetTouched: $status.resetTouched,
     isDirty: $status.isDirty,
 
+    reorderListItem: $list.reorderListItem,
+    insertListItem: $list.insertListItem,
+    removeListItem: $list.removeListItem,
+
     reset,
     validate,
     validateField,
-    reorderListItem,
-    removeListItem,
-    insertListItem,
     getInputProps,
     onSubmit,
     onReset,

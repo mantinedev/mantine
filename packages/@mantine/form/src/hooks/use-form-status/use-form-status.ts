@@ -14,7 +14,7 @@ import {
 } from '../../types';
 import type { $FormValues } from '../use-form-values/use-form-values';
 
-interface $FormStatus<Values extends Record<string, any>> {
+export interface $FormStatus<Values extends Record<string, any>> {
   touchedState: FormStatus;
   dirtyState: FormStatus;
   resetDirty: ResetStatus;
@@ -96,25 +96,28 @@ export function useFormStatus<Values extends Record<string, any>>({
     []
   );
 
-  const isDirty: GetFieldStatus<Values> = (path) => {
-    if (path) {
-      const overriddenValue = getPath(path, dirtyState);
-      if (typeof overriddenValue === 'boolean') {
-        return overriddenValue;
+  const isDirty: GetFieldStatus<Values> = useCallback(
+    (path) => {
+      if (path) {
+        const overriddenValue = getPath(path, dirtyState);
+        if (typeof overriddenValue === 'boolean') {
+          return overriddenValue;
+        }
+
+        const sliceOfValues = getPath(path, $values.refValues.current);
+        const sliceOfInitialValues = getPath(path, $values.valuesSnapshot.current);
+        return !isEqual(sliceOfValues, sliceOfInitialValues);
       }
 
-      const sliceOfValues = getPath(path, $values.refValues.current);
-      const sliceOfInitialValues = getPath(path, $values.valuesSnapshot.current);
-      return !isEqual(sliceOfValues, sliceOfInitialValues);
-    }
+      const isOverridden = Object.keys(dirtyState).length > 0;
+      if (isOverridden) {
+        return getStatus(dirtyState);
+      }
 
-    const isOverridden = Object.keys(dirtyState).length > 0;
-    if (isOverridden) {
-      return getStatus(dirtyState);
-    }
-
-    return !isEqual($values.refValues.current, $values.valuesSnapshot.current);
-  };
+      return !isEqual($values.refValues.current, $values.valuesSnapshot.current);
+    },
+    [dirtyState]
+  );
 
   return {
     touchedState,
