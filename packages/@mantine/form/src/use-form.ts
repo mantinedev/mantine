@@ -1,17 +1,15 @@
 import { useCallback, useState } from 'react';
 import isEqual from 'fast-deep-equal';
 import { useFormActions } from './actions';
-import { filterErrors } from './filter-errors';
 import { getInputOnChange } from './get-input-on-change';
 import { getStatus } from './get-status';
+import { useFormErrors } from './hooks/use-form-errors/use-form-errors';
 import { useFormValues } from './hooks/use-form-values/use-form-values';
 import { changeErrorIndices, clearListState, reorderErrors } from './lists';
 import { getPath, insertPath, removePath, reorderPath } from './paths';
 import {
   _TransformValues,
-  ClearErrors,
   ClearFieldDirty,
-  ClearFieldError,
   GetFieldStatus,
   GetInputProps,
   GetTransformedValues,
@@ -23,8 +21,6 @@ import {
   ReorderListItem,
   Reset,
   ResetDirty,
-  SetErrors,
-  SetFieldError,
   SetFieldValue,
   SetValues,
   UseFormInput,
@@ -52,9 +48,9 @@ export function useForm<
   validate: rules,
 }: UseFormInput<Values, TransformValues> = {}): UseFormReturnType<Values, TransformValues> {
   const $values = useFormValues<Values>({ initialValues, onValuesChange });
+  const $errors = useFormErrors<Values>(initialErrors);
   const [touched, setTouched] = useState(initialTouched);
   const [dirty, setDirty] = useState(initialDirty);
-  const [errors, _setErrors] = useState(filterErrors(initialErrors));
 
   const resetTouched = useCallback(() => setTouched({}), []);
   const resetDirty: ResetDirty<Values> = (values) => {
@@ -65,38 +61,12 @@ export function useForm<
     setDirty({});
   };
 
-  const setErrors: SetErrors = useCallback(
-    (errs) =>
-      _setErrors((current) => filterErrors(typeof errs === 'function' ? errs(current) : errs)),
-    []
-  );
-
-  const clearErrors: ClearErrors = useCallback(() => _setErrors({}), []);
   const reset: Reset = useCallback(() => {
     $values.resetValues();
-    clearErrors();
+    $errors.clearErrors();
     setDirty({});
     resetTouched();
   }, []);
-
-  const setFieldError: SetFieldError<Values> = useCallback(
-    (path, error) => setErrors((current) => ({ ...current, [path]: error })),
-    []
-  );
-
-  const clearFieldError: ClearFieldError = useCallback(
-    (path) =>
-      setErrors((current) => {
-        if (typeof path !== 'string') {
-          return current;
-        }
-
-        const clone = { ...current };
-        delete clone[path];
-        return clone;
-      }),
-    []
-  );
 
   const clearFieldDirty: ClearFieldDirty = useCallback(
     (path) =>
@@ -118,7 +88,7 @@ export function useForm<
 
       clearFieldDirty(path);
       setTouched((currentTouched) => ({ ...currentTouched, [path]: true }));
-      !shouldValidate && clearInputErrorOnChange && setFieldError(path, null);
+      !shouldValidate && clearInputErrorOnChange && $errors.clearFieldError(path);
 
       $values.setFieldValue({
         path,
@@ -129,8 +99,8 @@ export function useForm<
             ? (payload) => {
                 const validationResults = validateFieldValue(path, rules, payload.updatedValues);
                 validationResults.hasError
-                  ? setFieldError(path, validationResults.error)
-                  : clearFieldError(path);
+                  ? $errors.setFieldError(path, validationResults.error)
+                  : $errors.clearFieldError(path);
               }
             : null,
         ],
@@ -142,14 +112,14 @@ export function useForm<
   const setValues: SetValues<Values> = useCallback(
     (values) => {
       $values.setValues({ values, updateState: true });
-      clearInputErrorOnChange && clearErrors();
+      clearInputErrorOnChange && $errors.clearErrors();
     },
     [onValuesChange, clearInputErrorOnChange]
   );
 
   const reorderListItem: ReorderListItem<Values> = useCallback((path, payload) => {
     clearFieldDirty(path);
-    _setErrors((errs) => reorderErrors(path, payload, errs));
+    $errors.setErrors((errs) => reorderErrors(path, payload, errs));
     $values.setValues({
       values: reorderPath(path, payload, $values.refValues.current),
       updateState: true,
@@ -158,7 +128,7 @@ export function useForm<
 
   const removeListItem: RemoveListItem<Values> = useCallback((path, index) => {
     clearFieldDirty(path);
-    _setErrors((errs) => changeErrorIndices(path, index, errs, -1));
+    $errors.setErrors((errs) => changeErrorIndices(path, index, errs, -1));
     $values.setValues({
       values: removePath(path, index, $values.refValues.current),
       updateState: true,
@@ -167,7 +137,7 @@ export function useForm<
 
   const insertListItem: InsertListItem<Values> = useCallback((path, item, index) => {
     clearFieldDirty(path);
-    _setErrors((errs) => changeErrorIndices(path, index, errs, 1));
+    $errors.setErrors((errs) => changeErrorIndices(path, index, errs, 1));
     $values.setValues({
       values: insertPath(path, item, index, $values.refValues.current),
       updateState: true,
@@ -176,14 +146,14 @@ export function useForm<
 
   const validate: Validate = useCallback(() => {
     const results = validateValues(rules, $values.refValues.current);
-    _setErrors(results.errors);
+    $errors.setErrors(results.errors);
     return results;
   }, [rules]);
 
   const validateField: ValidateField<Values> = useCallback(
     (path) => {
       const results = validateFieldValue(path, rules, $values.refValues.current);
-      results.hasError ? setFieldError(path, results.error) : clearFieldError(path);
+      results.hasError ? $errors.setFieldError(path, results.error) : $errors.clearFieldError(path);
       return results;
     },
     [rules]
@@ -197,7 +167,7 @@ export function useForm<
     const payload: any = { onChange };
 
     if (withError) {
-      payload.error = errors[path];
+      payload.error = $errors.errorsState[path];
     }
 
     if (type === 'checkbox') {
@@ -213,8 +183,8 @@ export function useForm<
           const validationResults = validateFieldValue(path, rules, $values.refValues.current);
 
           validationResults.hasError
-            ? setFieldError(path, validationResults.error)
-            : clearFieldError(path);
+            ? $errors.setFieldError(path, validationResults.error)
+            : $errors.clearFieldError(path);
         }
       };
     }
@@ -288,14 +258,15 @@ export function useForm<
     values: $values.stateValues,
     initialize: $values.initialize,
     setInitialValues: $values.setValuesSnapshot,
-
-    errors,
     setValues,
-    setErrors,
     setFieldValue,
-    setFieldError,
-    clearFieldError,
-    clearErrors,
+
+    errors: $errors.errorsState,
+    setErrors: $errors.setErrors,
+    setFieldError: $errors.setFieldError,
+    clearFieldError: $errors.clearFieldError,
+    clearErrors: $errors.clearErrors,
+
     reset,
     validate,
     validateField,

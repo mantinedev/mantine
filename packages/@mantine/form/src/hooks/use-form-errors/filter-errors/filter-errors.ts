@@ -1,4 +1,4 @@
-import type { FormErrors } from '../types';
+import type { FormErrors } from '../../../types';
 
 export function filterErrors(errors: FormErrors): FormErrors {
   if (errors === null || typeof errors !== 'object') {
