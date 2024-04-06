@@ -1,10 +1,11 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useRef, useState } from 'react';
 import isEqual from 'fast-deep-equal';
 import { getStatus } from '../../get-status';
 import { clearListState } from '../../lists';
 import { getPath } from '../../paths';
 import {
   ClearFieldDirty,
+  FormMode,
   FormStatus,
   GetFieldStatus,
   ResetDirty,
@@ -17,6 +18,10 @@ import type { $FormValues } from '../use-form-values/use-form-values';
 export interface $FormStatus<Values extends Record<string, any>> {
   touchedState: FormStatus;
   dirtyState: FormStatus;
+  touchedRef: React.MutableRefObject<FormStatus>;
+  dirtyRef: React.MutableRefObject<FormStatus>;
+  setTouched: React.Dispatch<React.SetStateAction<FormStatus>>;
+  setDirty: React.Dispatch<React.SetStateAction<FormStatus>>;
   resetDirty: ResetStatus;
   resetTouched: ResetStatus;
   isTouched: GetFieldStatus<Values>;
@@ -26,34 +31,59 @@ export interface $FormStatus<Values extends Record<string, any>> {
   setDirtyState: React.Dispatch<React.SetStateAction<FormStatus>>;
   clearFieldDirty: ClearFieldDirty;
   isDirty: GetFieldStatus<Values>;
+  getDirty: () => FormStatus;
+  getTouched: () => FormStatus;
 }
 
 interface UseFormStatusInput<Values extends Record<string, any>> {
   initialDirty: FormStatus;
   initialTouched: FormStatus;
+  mode: FormMode;
   $values: $FormValues<Values>;
 }
 
 export function useFormStatus<Values extends Record<string, any>>({
   initialDirty,
   initialTouched,
+  mode,
   $values,
 }: UseFormStatusInput<Values>): $FormStatus<Values> {
   const [touchedState, setTouchedState] = useState(initialTouched);
   const [dirtyState, setDirtyState] = useState(initialDirty);
 
-  const resetTouched: ResetStatus = useCallback(() => setTouchedState({}), []);
+  const touchedRef = useRef(initialTouched);
+  const dirtyRef = useRef(initialDirty);
+
+  const setTouched = useCallback((values: FormStatus | ((current: FormStatus) => FormStatus)) => {
+    const resolvedValues = typeof values === 'function' ? values(touchedRef.current) : values;
+    touchedRef.current = resolvedValues;
+
+    if (mode === 'controlled') {
+      setTouchedState(resolvedValues);
+    }
+  }, []);
+
+  const setDirty = useCallback((values: FormStatus | ((current: FormStatus) => FormStatus)) => {
+    const resolvedValues = typeof values === 'function' ? values(dirtyRef.current) : values;
+    dirtyRef.current = resolvedValues;
+
+    if (mode === 'controlled') {
+      setDirtyState(resolvedValues);
+    }
+  }, []);
+
+  const resetTouched: ResetStatus = useCallback(() => setTouched({}), []);
 
   const resetDirty: ResetDirty<Values> = (values) => {
     const newSnapshot = values
       ? { ...values, ...$values.refValues.current }
       : $values.refValues.current;
     $values.setValuesSnapshot(newSnapshot);
-    setDirtyState({});
+    setDirty({});
   };
 
   const setFieldTouched: SetFieldTouched<Values> = useCallback((path, touched) => {
-    setTouchedState((currentTouched) => {
+    setTouched((currentTouched) => {
       if (getStatus(currentTouched, path) === touched) {
         return currentTouched;
       }
@@ -63,7 +93,7 @@ export function useFormStatus<Values extends Record<string, any>>({
   }, []);
 
   const setFieldDirty: SetFieldDirty<Values> = useCallback((path, dirty) => {
-    setDirtyState((currentDirty) => {
+    setDirty((currentDirty) => {
       if (getStatus(currentDirty, path) === dirty) {
         return currentDirty;
       }
@@ -73,13 +103,13 @@ export function useFormStatus<Values extends Record<string, any>>({
   }, []);
 
   const isTouched: GetFieldStatus<Values> = useCallback(
-    (path) => getStatus(touchedState, path),
-    [touchedState]
+    (path) => getStatus(touchedRef.current, path),
+    []
   );
 
   const clearFieldDirty: ClearFieldDirty = useCallback(
     (path) =>
-      setDirtyState((current) => {
+      setDirty((current) => {
         if (typeof path !== 'string') {
           return current;
         }
@@ -96,32 +126,36 @@ export function useFormStatus<Values extends Record<string, any>>({
     []
   );
 
-  const isDirty: GetFieldStatus<Values> = useCallback(
-    (path) => {
-      if (path) {
-        const overriddenValue = getPath(path, dirtyState);
-        if (typeof overriddenValue === 'boolean') {
-          return overriddenValue;
-        }
-
-        const sliceOfValues = getPath(path, $values.refValues.current);
-        const sliceOfInitialValues = getPath(path, $values.valuesSnapshot.current);
-        return !isEqual(sliceOfValues, sliceOfInitialValues);
+  const isDirty: GetFieldStatus<Values> = useCallback((path) => {
+    if (path) {
+      const overriddenValue = getPath(path, dirtyRef.current);
+      if (typeof overriddenValue === 'boolean') {
+        return overriddenValue;
       }
 
-      const isOverridden = Object.keys(dirtyState).length > 0;
-      if (isOverridden) {
-        return getStatus(dirtyState);
-      }
+      const sliceOfValues = getPath(path, $values.refValues.current);
+      const sliceOfInitialValues = getPath(path, $values.valuesSnapshot.current);
+      return !isEqual(sliceOfValues, sliceOfInitialValues);
+    }
 
-      return !isEqual($values.refValues.current, $values.valuesSnapshot.current);
-    },
-    [dirtyState]
-  );
+    const isOverridden = Object.keys(dirtyRef.current).length > 0;
+    if (isOverridden) {
+      return getStatus(dirtyRef.current);
+    }
+
+    return !isEqual($values.refValues.current, $values.valuesSnapshot.current);
+  }, []);
+
+  const getDirty = useCallback(() => dirtyRef.current, []);
+  const getTouched = useCallback(() => touchedRef.current, []);
 
   return {
     touchedState,
     dirtyState,
+    touchedRef,
+    dirtyRef,
+    setTouched,
+    setDirty,
     resetDirty,
     resetTouched,
     isTouched,
@@ -131,5 +165,7 @@ export function useFormStatus<Values extends Record<string, any>>({
     setDirtyState,
     clearFieldDirty,
     isDirty,
+    getDirty,
+    getTouched,
   };
 }

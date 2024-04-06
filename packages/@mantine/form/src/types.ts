@@ -1,4 +1,5 @@
 export type GetInputPropsType = 'input' | 'checkbox';
+export type FormMode = 'controlled' | 'uncontrolled';
 
 export type FormStatus = Record<string, boolean>;
 
@@ -143,6 +144,7 @@ export type RemoveListItem<Values> = <Field extends LooseKeys<Values>>(
 
 export type GetFieldStatus<Values> = <Field extends LooseKeys<Values>>(path?: Field) => boolean;
 export type ResetStatus = () => void;
+export type GetStatus = () => FormStatus;
 
 export type ResetDirty<Values> = (values?: Values) => void;
 export type IsValid<Values> = <Field extends LooseKeys<Values>>(path?: Field) => boolean;
@@ -155,7 +157,7 @@ export interface UseFormInput<
   TransformValues extends _TransformValues<Values> = (values: Values) => Values,
 > {
   name?: string;
-  mode?: 'controlled' | 'uncontrolled';
+  mode?: FormMode;
   initialValues?: Values;
   initialErrors?: FormErrors;
   initialTouched?: FormStatus;
@@ -207,6 +209,8 @@ export interface UseFormReturnType<
   isValid: IsValid<Values>;
   getTransformedValues: GetTransformedValues<Values, TransformValues>;
   getValues: () => Values;
+  getTouched: GetStatus;
+  getDirty: GetStatus;
 }
 
 export type UseForm<

@@ -43,7 +43,7 @@ export function useForm<
 }: UseFormInput<Values, TransformValues> = {}): UseFormReturnType<Values, TransformValues> {
   const $errors = useFormErrors<Values>(initialErrors);
   const $values = useFormValues<Values>({ initialValues, onValuesChange });
-  const $status = useFormStatus<Values>({ initialDirty, initialTouched, $values });
+  const $status = useFormStatus<Values>({ initialDirty, initialTouched, $values, mode });
   const $list = useFormList<Values>({ $values, $errors, $status });
 
   const reset: Reset = useCallback(() => {
@@ -194,11 +194,13 @@ export function useForm<
     clearErrors: $errors.clearErrors,
 
     resetDirty: $status.resetDirty,
-    setTouched: $status.setTouchedState,
-    setDirty: $status.setDirtyState,
+    setTouched: $status.setTouched,
+    setDirty: $status.setDirty,
     isTouched: $status.isTouched,
     resetTouched: $status.resetTouched,
     isDirty: $status.isDirty,
+    getTouched: $status.getTouched,
+    getDirty: $status.getDirty,
 
     reorderListItem: $list.reorderListItem,
     insertListItem: $list.insertListItem,
