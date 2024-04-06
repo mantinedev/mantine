@@ -10,6 +10,7 @@ import {
   _TransformValues,
   GetInputProps,
   GetTransformedValues,
+  Initialize,
   IsValid,
   OnReset,
   OnSubmit,
@@ -42,7 +43,7 @@ export function useForm<
   validate: rules,
 }: UseFormInput<Values, TransformValues> = {}): UseFormReturnType<Values, TransformValues> {
   const $errors = useFormErrors<Values>(initialErrors);
-  const $values = useFormValues<Values>({ initialValues, onValuesChange });
+  const $values = useFormValues<Values>({ initialValues, onValuesChange, mode });
   const $status = useFormStatus<Values>({ initialDirty, initialTouched, $values, mode });
   const $list = useFormList<Values>({ $values, $errors, $status });
   const [formKey, setFormKey] = useState(0);
@@ -52,6 +53,11 @@ export function useForm<
     $errors.clearErrors();
     $status.resetDirty();
     $status.resetTouched();
+    mode === 'uncontrolled' && setFormKey((key) => key + 1);
+  }, []);
+
+  const initialize: Initialize<Values> = useCallback((values) => {
+    $values.initialize(values);
     mode === 'uncontrolled' && setFormKey((key) => key + 1);
   }, []);
 
@@ -89,6 +95,7 @@ export function useForm<
     (values) => {
       $values.setValues({ values, updateState: mode === 'controlled' });
       clearInputErrorOnChange && $errors.clearErrors();
+      mode === 'uncontrolled' && setFormKey((key) => key + 1);
     },
     [onValuesChange, clearInputErrorOnChange]
   );
@@ -194,8 +201,8 @@ export function useForm<
     initialized: $values.initialized.current,
     values: $values.stateValues,
     getValues: $values.getValues,
-    initialize: $values.initialize,
     setInitialValues: $values.setValuesSnapshot,
+    initialize,
     setValues,
     setFieldValue,
 

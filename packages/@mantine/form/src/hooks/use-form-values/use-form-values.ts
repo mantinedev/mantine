@@ -1,5 +1,6 @@
 import { useCallback, useRef, useState } from 'react';
 import { getPath, setPath } from '../../paths';
+import { FormMode } from '../../types';
 
 export interface $FormValues<Values extends Record<PropertyKey, any>> {
   initialized: React.MutableRefObject<boolean>;
@@ -38,12 +39,14 @@ export interface SetFieldValueInput<Values> {
 
 interface UseFormValuesInput<Values extends Record<PropertyKey, any>> {
   initialValues: Values | undefined;
+  mode: FormMode;
   onValuesChange?: ((values: Values, previousValues: Values) => void) | undefined;
 }
 
 export function useFormValues<Values extends Record<PropertyKey, any>>({
   initialValues,
   onValuesChange,
+  mode,
 }: UseFormValuesInput<Values>): $FormValues<Values> {
   const initialized = useRef(false);
   const [stateValues, setStateValues] = useState<Values>(initialValues || ({} as Values));
@@ -97,7 +100,7 @@ export function useFormValues<Values extends Record<PropertyKey, any>>({
   const initialize = useCallback((values: Values) => {
     if (!initialized.current) {
       initialized.current = true;
-      setValues({ values, updateState: true });
+      setValues({ values, updateState: mode === 'controlled' });
       setValuesSnapshot(values);
     }
   }, []);

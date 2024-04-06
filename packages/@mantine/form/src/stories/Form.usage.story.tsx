@@ -1,6 +1,6 @@
 /* eslint-disable no-console */
 import React from 'react';
-import { Button, Checkbox, NativeSelect, Textarea, TextInput } from '@mantine/core';
+import { Button, Checkbox, Group, NativeSelect, Textarea, TextInput } from '@mantine/core';
 import { useForm } from '../use-form';
 import { FormBase } from './_base';
 
@@ -107,21 +107,23 @@ export function ControlMode() {
         {...form.getInputProps('select')}
       />
 
-      <Button onClick={() => console.log(form.getValues())} mt="xl">
-        Get form values
-      </Button>
-      <Button onClick={() => console.log(form.getTouched())} mt="xl">
-        Get touched values
-      </Button>
-      <Button onClick={() => console.log(form.getDirty())} mt="xl">
-        Get dirty values
-      </Button>
-      <Button onClick={() => form.setFieldValue('name', 'updated')} mt="xl">
-        Set name
-      </Button>
-      <Button onClick={() => form.setFieldValue('area', 'updated-area')} mt="xl">
-        Set area
-      </Button>
+      <Group mt="xl">
+        <Button onClick={() => console.log(form.getValues())}>Get form values</Button>
+        <Button
+          onClick={() =>
+            form.setValues({ name: 'updated', terms: true, area: 'updated', select: 'React' })
+          }
+        >
+          Set form values
+        </Button>
+        <Button
+          onClick={() =>
+            form.initialize({ name: 'updated', terms: true, area: 'updated', select: 'React' })
+          }
+        >
+          Initialize
+        </Button>
+      </Group>
     </FormBase>
   );
 }
