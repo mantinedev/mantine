@@ -1,16 +1,17 @@
 import { act, renderHook } from '@testing-library/react';
+import { FormMode } from '../types';
 import { useForm } from '../use-form';
 
-describe('@mantine/form/dirty', () => {
+function tests(mode: FormMode) {
   it('accepts initial dirty state', () => {
-    const hook = renderHook(() => useForm({ initialDirty: { a: true, b: false } }));
+    const hook = renderHook(() => useForm({ mode, initialDirty: { a: true, b: false } }));
     expect(hook.result.current.isDirty('a')).toBe(true);
     expect(hook.result.current.isDirty('b')).toBe(false);
     expect(hook.result.current.isDirty()).toBe(true);
   });
 
   it('sets field as dirty if value changes', () => {
-    const hook = renderHook(() => useForm({ initialValues: { a: 1 } }));
+    const hook = renderHook(() => useForm({ mode, initialValues: { a: 1 } }));
     expect(hook.result.current.isDirty('a')).toBe(false);
     expect(hook.result.current.isDirty()).toBe(false);
 
@@ -34,7 +35,7 @@ describe('@mantine/form/dirty', () => {
   });
 
   it('resets status with resetDirty handler', () => {
-    const hook = renderHook(() => useForm({ initialDirty: { a: true } }));
+    const hook = renderHook(() => useForm({ mode, initialDirty: { a: true } }));
     expect(hook.result.current.isDirty()).toBe(true);
 
     act(() => hook.result.current.resetDirty());
@@ -42,7 +43,7 @@ describe('@mantine/form/dirty', () => {
   });
 
   it('sets list field as dirty if list item changes', () => {
-    const hook = renderHook(() => useForm({ initialValues: { a: [{ b: 1 }, { b: 2 }] } }));
+    const hook = renderHook(() => useForm({ mode, initialValues: { a: [{ b: 1 }, { b: 2 }] } }));
     act(() => hook.result.current.setFieldValue('a.0', 3));
     expect(hook.result.current.isDirty('a.0')).toBe(true);
     expect(hook.result.current.isDirty('a')).toBe(true);
@@ -59,4 +60,12 @@ describe('@mantine/form/dirty', () => {
     expect(hook.result.current.isDirty('a.2')).toBe(false);
     expect(hook.result.current.isDirty('a')).toBe(false);
   });
+}
+
+describe('@mantine/form/dirty-controlled', () => {
+  tests('controlled');
+});
+
+describe('@mantine/form/dirty-uncontrolled', () => {
+  tests('uncontrolled');
 });

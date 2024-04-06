@@ -1,10 +1,12 @@
 import { act, renderHook } from '@testing-library/react';
+import { FormMode } from '../types';
 import { useForm } from '../use-form';
 
-describe('@mantine/form/isValid', () => {
+function tests(mode: FormMode) {
   it('returns correct form validation state', () => {
     const hook = renderHook(() =>
       useForm({
+        mode,
         initialValues: { a: 1 },
         validate: {
           a: (value) => (value < 2 ? 'error' : null),
@@ -22,6 +24,7 @@ describe('@mantine/form/isValid', () => {
   it('returns correct field validation state', () => {
     const hook = renderHook(() =>
       useForm({
+        mode,
         initialValues: { a: 1, b: 2 },
         validate: {
           a: (value) => (value < 2 ? 'error' : null),
@@ -37,4 +40,12 @@ describe('@mantine/form/isValid', () => {
     expect(hook.result.current.isValid('a')).toBe(true);
     expect(hook.result.current.isValid('b')).toBe(true);
   });
+}
+
+describe('@mantine/form/isValid-controlled', () => {
+  tests('controlled');
+});
+
+describe('@mantine/form/isValid-uncontrolled', () => {
+  tests('uncontrolled');
 });

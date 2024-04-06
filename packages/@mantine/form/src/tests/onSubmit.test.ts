@@ -1,12 +1,13 @@
 import { act, renderHook } from '@testing-library/react';
+import { FormMode } from '../types';
 import { useForm } from '../use-form';
 
 const getFormEvent = () => ({ preventDefault: jest.fn() }) as any;
 
-describe('@mantine/form/onSubmit', () => {
+function tests(mode: FormMode) {
   it('calls handleSubmit with values and event when all values are valid', () => {
     const hook = renderHook(() =>
-      useForm({ initialValues: { banana: 'test banana', apple: 'test apple' } })
+      useForm({ mode, initialValues: { banana: 'test banana', apple: 'test apple' } })
     );
 
     const event = getFormEvent();
@@ -27,6 +28,7 @@ describe('@mantine/form/onSubmit', () => {
   it('calls handleValidationFailure when values are not valid', () => {
     const hook = renderHook(() =>
       useForm({
+        mode,
         initialValues: {
           banana: '',
           orange: '',
@@ -70,9 +72,17 @@ describe('@mantine/form/onSubmit', () => {
   });
 
   it('allows to call onSubmit without event', () => {
-    const hook = renderHook(() => useForm({ initialValues: { a: 1 } }));
+    const hook = renderHook(() => useForm({ mode, initialValues: { a: 1 } }));
     const handleSubmit = jest.fn();
     act(() => hook.result.current.onSubmit(handleSubmit)());
     expect(handleSubmit).toHaveBeenCalledWith({ a: 1 }, undefined);
   });
+}
+
+describe('@mantine/form/onSubmit-controlled', () => {
+  tests('controlled');
+});
+
+describe('@mantine/form/onSubmit-uncontrolled', () => {
+  tests('uncontrolled');
 });
