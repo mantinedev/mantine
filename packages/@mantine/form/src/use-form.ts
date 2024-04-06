@@ -47,6 +47,7 @@ export function useForm<
   const $status = useFormStatus<Values>({ initialDirty, initialTouched, $values, mode });
   const $list = useFormList<Values>({ $values, $errors, $status });
   const [formKey, setFormKey] = useState(0);
+  const [fieldKeys, setFieldKeys] = useState<Record<string, number>>({});
 
   const reset: Reset = useCallback(() => {
     $values.resetValues();
@@ -83,7 +84,11 @@ export function useForm<
               }
             : null,
           options?.forceUpdate !== false && mode !== 'controlled'
-            ? () => setFormKey((key) => key + 1)
+            ? () =>
+                setFieldKeys((keys) => ({
+                  ...keys,
+                  [path as string]: (keys[path as string] || 0) + 1,
+                }))
             : null,
         ],
       });
@@ -126,7 +131,7 @@ export function useForm<
     const payload: any = { onChange };
 
     if (mode === 'uncontrolled') {
-      payload.key = `${formKey}-${path as string}`;
+      payload.key = `${formKey}-${path as string}-${fieldKeys[path as string] || 0}`;
     }
 
     if (withError) {

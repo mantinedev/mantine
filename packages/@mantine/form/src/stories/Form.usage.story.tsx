@@ -1,6 +1,6 @@
 /* eslint-disable no-console */
 import React from 'react';
-import { Button, Checkbox, Group, NativeSelect, Textarea, TextInput } from '@mantine/core';
+import { Button, Checkbox, Group, NativeSelect, Select, Textarea, TextInput } from '@mantine/core';
 import { useForm } from '../use-form';
 import { FormBase } from './_base';
 
@@ -88,12 +88,17 @@ export function ControlMode() {
     },
   });
 
-  // const [key, setKey] = useState('initial');
-
   console.log('render');
 
   return (
     <FormBase form={form}>
+      <Select
+        label="select"
+        defaultDropdownOpened
+        data={['React', 'Angular']}
+        {...form.getInputProps('select')}
+      />
+
       <TextInput label="Name" {...form.getInputProps('name')} />
       <Checkbox
         mt="md"
@@ -101,14 +106,8 @@ export function ControlMode() {
         {...form.getInputProps('terms', { type: 'checkbox' })}
       />
       <Textarea label="area" {...form.getInputProps('area')} />
-      <NativeSelect
-        label="native select"
-        data={['React', 'Angular']}
-        {...form.getInputProps('select')}
-      />
-
       <Group mt="xl">
-        <Button onClick={() => console.log(form.getValues())}>Get form values</Button>
+        <Button onClick={() => form.setFieldValue('name', 'test-name')}>Set name</Button>
         <Button
           onClick={() =>
             form.setValues({ name: 'updated', terms: true, area: 'updated', select: 'React' })
