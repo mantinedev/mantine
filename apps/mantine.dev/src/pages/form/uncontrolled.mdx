@@ -1,0 +1,114 @@
+import { FormDemos } from '@docs/demos';
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.formUncontrolled);
+
+## Controlled mode
+
+Controlled mode is the default mode of the form. In this mode, the form data is
+stored in React state and all components are rerendered when form data changes.
+Controlled mode is not recommended for large forms.
+
+Example of a form with controlled mode:
+
+<Demo data={FormDemos.controlled} />
+
+As you can see in the example above, `form.values` update on every change. This
+means that every component that uses `form.values` will rerender on every change.
+
+## Uncontrolled mode
+
+Uncontrolled mode is an alternative mode of the form introduced in 7.8.0 release.
+It is now the recommended mode for all forms.
+Uncontrolled mode provides significant performance improvements for large forms.
+
+With uncontrolled mode, the form data is stored in a ref instead of React state
+and `form.values` are not updated on every change.
+
+Example of a form with uncontrolled mode:
+
+<Demo data={FormDemos.uncontrolled} />
+
+As you can see in the example above, `form.values` do not update at all.
+
+## form.getValues
+
+`form.getValues` function returns current form values. It can be
+used anywhere in the component to get the current form values. It can
+be used in both controlled and uncontrolled modes.
+
+```tsx
+import { useForm } from '@mantine/form';
+
+const form = useForm({
+  initialValues: { name: 'John Doe' },
+});
+
+form.getValues(); // { name: 'John Doe' }
+
+form.setValues({ name: 'John Smith' });
+form.getValues(); // { name: 'John Smith' }
+```
+
+Although `form.values` can be used to get the current form values, it is
+recommended to use `form.getValues` instead as it always returns the latest
+values while `form.values` is outdated in uncontrolled mode and before state
+update in controlled mode.
+
+```tsx
+import { useForm } from '@mantine/form';
+
+const form = useForm({
+  initialValues: { name: 'John Doe' },
+});
+
+const handleNameChange = () => {
+  form.setFieldValue('name', 'Test Name');
+
+  // ❌ Do not use form.values to get the current form values
+  // form.values has stale name value until next rerender in controlled mode
+  // and is always outdated in uncontrolled mode
+  console.log(form.values); // { name: 'John Doe' }
+
+  // ✅ Use form.getValues to get the current form values
+  // form.getValues always returns the latest form values
+  console.log(form.getValues()); // { name: 'Test Name' }
+};
+```
+
+`form.getValues()` returns a ref value of the current form values. This means that
+you cannot pass it to `useEffect` dependencies array as it will always be the same
+reference.
+
+```tsx
+import { useEffect } from 'react';
+import { useForm } from '@mantine/form';
+
+const form = useForm();
+
+useEffect(() => {
+  // ❌ This will not work as form.getValues() is a ref value
+  // and will always be the same reference
+}, [form.getValues()]);
+```
+
+Instead of observing form values with `useEffect`, use `onValuesChange` callback
+to listen to form values changes:
+
+```tsx
+import { useForm } from '@mantine/form';
+
+const form = useForm({
+  initialValues: { name: 'John Doe' },
+  onValuesChange: (values) => {
+    // ✅ This will be called on every form values change
+    console.log(values);
+  },
+});
+```
+
+## form.getInputProps
+
+[form.getInputProps](/form/get-input-props/) behaves differently in controlled and
+uncontrolled modes.

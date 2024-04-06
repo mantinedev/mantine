@@ -150,6 +150,7 @@ export const MDX_PAGES_GROUPS: MdxPagesGroup[] = [
     group: 'mantine-form',
     pages: [
       MDX_DATA.useForm,
+      MDX_DATA.formUncontrolled,
       MDX_DATA.formValues,
       MDX_DATA.formGetInputProps,
       MDX_DATA.formErrors,

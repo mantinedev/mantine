@@ -98,4 +98,12 @@ export const MDX_FORM_DATA: Record<string, Frontmatter> = {
     description: 'A handler to get input props for any field in the form',
     docs: 'form/get-input-props.mdx',
   },
+
+  formUncontrolled: {
+    title: 'Uncontrolled mode',
+    package: '@mantine/form',
+    slug: '/form/uncontrolled',
+    description: 'use-form uncontrolled mode to improve performance',
+    docs: 'form/uncontrolled.mdx',
+  },
 };
