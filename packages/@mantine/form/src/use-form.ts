@@ -52,6 +52,7 @@ export function useForm<
     $errors.clearErrors();
     $status.resetDirty();
     $status.resetTouched();
+    mode === 'uncontrolled' && setFormKey((key) => key + 1);
   }, []);
 
   const setFieldValue: SetFieldValue<Values> = useCallback(
