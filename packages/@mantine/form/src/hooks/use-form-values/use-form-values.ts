@@ -11,7 +11,7 @@ export interface $FormValues<Values extends Record<PropertyKey, any>> {
   setFieldValue: (payload: SetFieldValueInput<Values>) => void;
   resetValues: () => void;
   setValuesSnapshot: (payload: Values) => void;
-  initialize: (values: Values) => void;
+  initialize: (values: Values, onInitialize: () => void) => void;
   getValues: () => Values;
 }
 
@@ -97,11 +97,12 @@ export function useFormValues<Values extends Record<PropertyKey, any>>({
     valuesSnapshot.current = payload;
   }, []);
 
-  const initialize = useCallback((values: Values) => {
+  const initialize = useCallback((values: Values, onInitialize: () => void) => {
     if (!initialized.current) {
       initialized.current = true;
       setValues({ values, updateState: mode === 'controlled' });
       setValuesSnapshot(values);
+      onInitialize();
     }
   }, []);
 

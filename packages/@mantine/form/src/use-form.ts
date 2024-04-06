@@ -58,8 +58,7 @@ export function useForm<
   }, []);
 
   const initialize: Initialize<Values> = useCallback((values) => {
-    $values.initialize(values);
-    mode === 'uncontrolled' && setFormKey((key) => key + 1);
+    $values.initialize(values, () => mode === 'uncontrolled' && setFormKey((key) => key + 1));
   }, []);
 
   const setFieldValue: SetFieldValue<Values> = useCallback(

@@ -77,9 +77,9 @@ export function ListsUncontrolled() {
     mode: 'uncontrolled',
     initialValues: {
       employees: [
-        { name: '', active: false, key: randomId() },
-        { name: '', active: false, key: randomId() },
-        { name: '', active: false, key: randomId() },
+        { name: 'First', active: false, key: randomId() },
+        { name: 'Second', active: false, key: randomId() },
+        { name: 'Third', active: false, key: randomId() },
       ],
     },
 
@@ -133,6 +133,9 @@ export function ListsUncontrolled() {
           }
         >
           Add employee
+        </Button>
+        <Button onClick={() => form.reorderListItem('employees', { from: 0, to: 2 })}>
+          Reorder
         </Button>
       </Group>
     </FormBase>
