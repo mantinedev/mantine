@@ -1,5 +1,5 @@
 /* eslint-disable no-console */
-import React, { useState } from 'react';
+import React from 'react';
 import { Button, Checkbox, NativeSelect, Textarea, TextInput } from '@mantine/core';
 import { useForm } from '../use-form';
 import { FormBase } from './_base';
@@ -88,13 +88,13 @@ export function ControlMode() {
     },
   });
 
-  const [key, setKey] = useState('initial');
+  // const [key, setKey] = useState('initial');
 
   console.log('render');
 
   return (
     <FormBase form={form}>
-      <TextInput label="Name" key={key} {...form.getInputProps('name')} />
+      <TextInput label="Name" {...form.getInputProps('name')} />
       <Checkbox
         mt="md"
         label="Accept terms of use"
@@ -116,14 +116,11 @@ export function ControlMode() {
       <Button onClick={() => console.log(form.getDirty())} mt="xl">
         Get dirty values
       </Button>
-      <Button
-        onClick={() => {
-          form.setFieldValue('name', 'updated');
-          setKey(Math.random().toString());
-        }}
-        mt="xl"
-      >
+      <Button onClick={() => form.setFieldValue('name', 'updated')} mt="xl">
         Set name
+      </Button>
+      <Button onClick={() => form.setFieldValue('area', 'updated-area')} mt="xl">
+        Set area
       </Button>
     </FormBase>
   );

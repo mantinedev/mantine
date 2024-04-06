@@ -99,7 +99,8 @@ export type SetFieldValue<Values> = <Field extends LooseKeys<Values>>(
   path: Field,
   value:
     | PathValue<Values, Field>
-    | ((prevValue: PathValue<Values, Field>) => PathValue<Values, Field>)
+    | ((prevValue: PathValue<Values, Field>) => PathValue<Values, Field>),
+  options?: { forceUpdate: boolean }
 ) => void;
 
 export type ClearFieldError = (path: unknown) => void;

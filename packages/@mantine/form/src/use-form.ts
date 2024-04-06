@@ -1,4 +1,4 @@
-import { useCallback } from 'react';
+import { useCallback, useState } from 'react';
 import { useFormActions } from './actions';
 import { getInputOnChange } from './get-input-on-change';
 import { useFormErrors } from './hooks/use-form-errors/use-form-errors';
@@ -45,6 +45,7 @@ export function useForm<
   const $values = useFormValues<Values>({ initialValues, onValuesChange });
   const $status = useFormStatus<Values>({ initialDirty, initialTouched, $values, mode });
   const $list = useFormList<Values>({ $values, $errors, $status });
+  const [formKey, setFormKey] = useState(0);
 
   const reset: Reset = useCallback(() => {
     $values.resetValues();
@@ -54,7 +55,7 @@ export function useForm<
   }, []);
 
   const setFieldValue: SetFieldValue<Values> = useCallback(
-    (path, value) => {
+    (path, value, options) => {
       const shouldValidate = shouldValidateOnChange(path, validateInputOnChange);
 
       $status.clearFieldDirty(path);
@@ -73,6 +74,9 @@ export function useForm<
                   ? $errors.setFieldError(path, validationResults.error)
                   : $errors.clearFieldError(path);
               }
+            : null,
+          options?.forceUpdate !== false && mode !== 'controlled'
+            ? () => setFormKey((key) => key + 1)
             : null,
         ],
       });
@@ -107,8 +111,15 @@ export function useForm<
     path,
     { type = 'input', withError = true, withFocus = true, ...otherOptions } = {}
   ) => {
-    const onChange = getInputOnChange((value) => setFieldValue(path, value as any));
+    const onChange = getInputOnChange((value) =>
+      setFieldValue(path, value as any, { forceUpdate: false })
+    );
+
     const payload: any = { onChange };
+
+    if (mode === 'uncontrolled') {
+      payload.key = `${formKey}-${path as string}`;
+    }
 
     if (withError) {
       payload.error = $errors.errorsState[path];
