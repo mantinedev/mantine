@@ -38,19 +38,16 @@ export function useFormErrors<Values extends Record<string, any>>(
     [errorsState]
   );
 
-  const setFieldError: SetFieldError<Values> = useCallback((path, error) => {
-    if (error == null || error === false) {
-      clearFieldError(path);
-    } else {
-      setErrors((current) => {
-        if (current[path as string] === error) {
-          return current;
-        }
-
-        return { ...current, [path]: error };
-      });
-    }
-  }, []);
+  const setFieldError: SetFieldError<Values> = useCallback(
+    (path, error) => {
+      if (error == null || error === false) {
+        clearFieldError(path);
+      } else if (errorsState[path as string] !== error) {
+        setErrors((current) => ({ ...current, [path]: error }));
+      }
+    },
+    [errorsState]
+  );
 
   return {
     errorsState,
