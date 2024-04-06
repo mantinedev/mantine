@@ -1,12 +1,13 @@
+/* eslint-disable no-console */
 import React, { useEffect } from 'react';
-import { Box, Checkbox, TextInput } from '@mantine/core';
+import { Checkbox, TextInput } from '@mantine/core';
 import { useForm } from '@mantine/form';
 import { MantineDemo } from '@mantinex/demo';
 
 const code = `
 import { useEffect } from 'react';
 import { useForm } from '@mantine/form';
-import { TextInput, Checkbox, Box } from '@mantine/core';
+import { TextInput, Checkbox } from '@mantine/core';
 
 interface FormValues {
   email: string;
@@ -20,7 +21,10 @@ function loadInitialValues(): Promise<FormValues> {
 }
 
 function Demo() {
-  const form = useForm<FormValues>({ initialValues: { email: '', terms: false } });
+  const form = useForm<FormValues>({
+    mode: 'uncontrolled',
+    initialValues: { email: '', terms: false },
+  });
 
   useEffect(() => {
     loadInitialValues().then((values) => {
@@ -30,14 +34,14 @@ function Demo() {
   }, []);
 
   return (
-    <Box maw={320} mx="auto">
+    <form onSubmit={form.onSubmit(console.log)}>
       <TextInput label="Email" placeholder="Email" {...form.getInputProps('email')} />
       <Checkbox
         mt="sm"
         label="I accept terms and conditions"
         {...form.getInputProps('terms', { type: 'checkbox' })}
       />
-    </Box>
+    </form>
   );
 }
 `;
@@ -54,7 +58,10 @@ function loadInitialValues(): Promise<FormValues> {
 }
 
 function Demo() {
-  const form = useForm<FormValues>({ initialValues: { email: '', terms: false } });
+  const form = useForm<FormValues>({
+    mode: 'uncontrolled',
+    initialValues: { email: '', terms: false },
+  });
 
   useEffect(() => {
     loadInitialValues().then((values) => {
@@ -64,14 +71,14 @@ function Demo() {
   }, []);
 
   return (
-    <Box maw={340} mx="auto">
+    <form onSubmit={form.onSubmit(console.log)}>
       <TextInput label="Email" placeholder="Email" {...form.getInputProps('email')} />
       <Checkbox
         mt="sm"
         label="I accept terms and conditions"
         {...form.getInputProps('terms', { type: 'checkbox' })}
       />
-    </Box>
+    </form>
   );
 }
 
@@ -79,4 +86,6 @@ export const asyncSetValues: MantineDemo = {
   type: 'code',
   component: Demo,
   code,
+  centered: true,
+  maxWidth: 340,
 };

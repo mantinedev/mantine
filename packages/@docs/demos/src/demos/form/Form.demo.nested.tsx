@@ -1,14 +1,15 @@
 import React from 'react';
-import { Box, Checkbox, Code, Text, TextInput } from '@mantine/core';
+import { Box, Checkbox, TextInput } from '@mantine/core';
 import { useForm } from '@mantine/form';
 import { MantineDemo } from '@mantinex/demo';
 
 const code = `
 import { useForm } from '@mantine/form';
-import { TextInput, Checkbox, Code, Text, Box } from '@mantine/core';
+import { Box, Checkbox, TextInput } from '@mantine/core';
 
 function Demo() {
   const form = useForm({
+    mode: 'uncontrolled',
     initialValues: {
       terms: false,
       user: {
@@ -36,13 +37,6 @@ function Demo() {
         mt="sm"
         {...form.getInputProps('terms', { type: 'checkbox' })}
       />
-
-      <Text size="sm" fw={500} mt="xl">
-        Form values:
-      </Text>
-      <Code block mt={5}>
-        {JSON.stringify(form.values, null, 2)}
-      </Code>
     </Box>
   );
 }
@@ -50,6 +44,7 @@ function Demo() {
 
 function Demo() {
   const form = useForm({
+    mode: 'uncontrolled',
     initialValues: {
       terms: false,
       user: {
@@ -77,13 +72,6 @@ function Demo() {
         mt="sm"
         {...form.getInputProps('terms', { type: 'checkbox' })}
       />
-
-      <Text size="sm" fw={500} mt="xl">
-        Form values:
-      </Text>
-      <Code block mt={5}>
-        {JSON.stringify(form.values, null, 2)}
-      </Code>
     </Box>
   );
 }

@@ -137,3 +137,13 @@ export const Demo_enhanceGetInputPropsForm = {
   name: '⭐ Demo: enhanceGetInputPropsForm',
   render: renderDemo(demos.enhanceGetInputPropsForm),
 };
+
+export const Demo_controlled = {
+  name: '⭐ Demo: controlled',
+  render: renderDemo(demos.controlled),
+};
+
+export const Demo_uncontrolled = {
+  name: '⭐ Demo: uncontrolled',
+  render: renderDemo(demos.uncontrolled),
+};

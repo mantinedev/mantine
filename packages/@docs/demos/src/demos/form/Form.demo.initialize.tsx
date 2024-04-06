@@ -22,6 +22,7 @@ function apiRequest(): Promise<FormValues> {
 
 function Demo() {
   const form = useForm<FormValues>({
+    mode: 'uncontrolled',
     initialValues: { name: '', age: 0 },
     validate: {
       name: isNotEmpty('Name is required'),
@@ -56,6 +57,7 @@ function apiRequest(): Promise<FormValues> {
 
 function Demo() {
   const form = useForm<FormValues>({
+    mode: 'uncontrolled',
     initialValues: { name: '', age: 0 },
     validate: {
       name: isNotEmpty('Name is required'),

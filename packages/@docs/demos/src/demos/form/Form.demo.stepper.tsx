@@ -84,7 +84,7 @@ function Demo() {
         <Stepper.Completed>
           Completed! Form values:
           <Code block mt="xl">
-            {JSON.stringify(form.values, null, 2)}
+            {JSON.stringify(form.getValues(), null, 2)}
           </Code>
         </Stepper.Completed>
       </Stepper>
@@ -106,6 +106,7 @@ function Demo() {
   const [active, setActive] = useState(0);
 
   const form = useForm({
+    mode: 'uncontrolled',
     initialValues: {
       username: '',
       password: '',
@@ -178,7 +179,7 @@ function Demo() {
         <Stepper.Completed>
           Completed! Form values:
           <Code block mt="xl">
-            {JSON.stringify(form.values, null, 2)}
+            {JSON.stringify(form.getValues(), null, 2)}
           </Code>
         </Stepper.Completed>
       </Stepper>

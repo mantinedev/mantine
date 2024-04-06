@@ -9,7 +9,13 @@ import { useForm } from '@mantine/form';
 import { TextInput, Box } from '@mantine/core';
 
 function Demo() {
-  const form = useForm({ initialValues: { name: '', occupation: '' } });
+  const form = useForm({
+    mode: 'uncontrolled',
+    initialValues: { name: '', occupation: '' },
+    onValuesChange: (values) => {
+      window.localStorage.setItem('user-form', JSON.stringify(values));
+    },
+  });
 
   useEffect(() => {
     const storedValue = window.localStorage.getItem('user-form');
@@ -21,10 +27,6 @@ function Demo() {
       }
     }
   }, []);
-
-  useEffect(() => {
-    window.localStorage.setItem('user-form', JSON.stringify(form.values));
-  }, [form.values]);
 
   return (
     <Box maw={340} mx="auto">
@@ -41,7 +43,13 @@ function Demo() {
 `;
 
 function Demo() {
-  const form = useForm({ initialValues: { name: '', occupation: '' } });
+  const form = useForm({
+    mode: 'uncontrolled',
+    initialValues: { name: '', occupation: '' },
+    onValuesChange: (values) => {
+      window.localStorage.setItem('user-form', JSON.stringify(values));
+    },
+  });
 
   useEffect(() => {
     const storedValue = window.localStorage.getItem('user-form');
@@ -54,10 +62,6 @@ function Demo() {
       }
     }
   }, []);
-
-  useEffect(() => {
-    window.localStorage.setItem('user-form', JSON.stringify(form.values));
-  }, [form.values]);
 
   return (
     <Box maw={340} mx="auto">

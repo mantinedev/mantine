@@ -1,14 +1,15 @@
 import React from 'react';
-import { Box, Button, Group, NumberInput, TextInput } from '@mantine/core';
+import { Button, Group, NumberInput, TextInput } from '@mantine/core';
 import { hasLength, isEmail, isInRange, isNotEmpty, matches, useForm } from '@mantine/form';
 import { MantineDemo } from '@mantinex/demo';
 
 const code = `
 import { useForm, isNotEmpty, isEmail, isInRange, hasLength, matches } from '@mantine/form';
-import { Button, Group, TextInput, NumberInput, Box } from '@mantine/core';
+import { Button, Group, TextInput, NumberInput } from '@mantine/core';
 
 function Demo() {
   const form = useForm({
+    mode: 'uncontrolled',
     initialValues: {
       name: '',
       job: '',
@@ -27,7 +28,7 @@ function Demo() {
   });
 
   return (
-    <Box component="form" maw={400} mx="auto" onSubmit={form.onSubmit(() => {})}>
+    <form onSubmit={form.onSubmit(() => {})}>
       <TextInput label="Name" placeholder="Name" withAsterisk {...form.getInputProps('name')} />
       <TextInput
         label="Your job"
@@ -61,13 +62,14 @@ function Demo() {
       <Group justify="flex-end" mt="md">
         <Button type="submit">Submit</Button>
       </Group>
-    </Box>
+    </form>
   );
 }
 `;
 
 function Demo() {
   const form = useForm({
+    mode: 'uncontrolled',
     initialValues: {
       name: '',
       job: '',
@@ -86,7 +88,7 @@ function Demo() {
   });
 
   return (
-    <Box component="form" maw={400} mx="auto" onSubmit={form.onSubmit(() => {})}>
+    <form onSubmit={form.onSubmit(() => {})}>
       <TextInput label="Name" placeholder="Name" withAsterisk {...form.getInputProps('name')} />
       <TextInput
         label="Your job"
@@ -120,7 +122,7 @@ function Demo() {
       <Group justify="flex-end" mt="md">
         <Button type="submit">Submit</Button>
       </Group>
-    </Box>
+    </form>
   );
 }
 
@@ -128,4 +130,6 @@ export const validatorsEmpty: MantineDemo = {
   type: 'code',
   component: Demo,
   code,
+  centered: true,
+  maxWidth: 340,
 };

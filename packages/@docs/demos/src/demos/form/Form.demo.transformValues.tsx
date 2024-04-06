@@ -1,17 +1,18 @@
 import React, { useState } from 'react';
-import { Box, Button, Code, TextInput } from '@mantine/core';
+import { Button, Code, TextInput } from '@mantine/core';
 import { useForm } from '@mantine/form';
 import { MantineDemo } from '@mantinex/demo';
 
 const code = `
 import { useState } from 'react';
 import { useForm } from '@mantine/form';
-import { TextInput, Button, Box, Code } from '@mantine/core';
+import { TextInput, Button, Code } from '@mantine/core';
 
 function Demo() {
   const [submittedValues, setSubmittedValues] = useState('');
 
   const form = useForm({
+    mode: 'uncontrolled',
     initialValues: {
       firstName: 'Jane',
       lastName: 'Doe',
@@ -25,7 +26,7 @@ function Demo() {
   });
 
   return (
-    <Box maw={340} mx="auto">
+    <>
       <form
         onSubmit={form.onSubmit((values) => setSubmittedValues(JSON.stringify(values, null, 2)))}
       >
@@ -52,8 +53,12 @@ function Demo() {
         </Button>
       </form>
 
-      {submittedValues && <Code block>{submittedValues}</Code>}
-    </Box>
+      {submittedValues && (
+        <Code block mt="md">
+          {submittedValues}
+        </Code>
+      )}
+    </>
   );
 }
 `;
@@ -62,6 +67,7 @@ function Demo() {
   const [submittedValues, setSubmittedValues] = useState('');
 
   const form = useForm({
+    mode: 'uncontrolled',
     initialValues: {
       firstName: 'Jane',
       lastName: 'Doe',
@@ -75,7 +81,7 @@ function Demo() {
   });
 
   return (
-    <Box maw={340} mx="auto">
+    <>
       <form
         onSubmit={form.onSubmit((values) => setSubmittedValues(JSON.stringify(values, null, 2)))}
       >
@@ -102,8 +108,12 @@ function Demo() {
         </Button>
       </form>
 
-      {submittedValues && <Code block>{submittedValues}</Code>}
-    </Box>
+      {submittedValues && (
+        <Code block mt="md">
+          {submittedValues}
+        </Code>
+      )}
+    </>
   );
 }
 
@@ -111,4 +121,6 @@ export const transformValues: MantineDemo = {
   type: 'code',
   component: Demo,
   code,
+  centered: true,
+  maxWidth: 340,
 };

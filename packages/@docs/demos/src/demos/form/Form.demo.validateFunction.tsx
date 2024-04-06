@@ -10,6 +10,7 @@ import { Box, TextInput, NumberInput, Button, Group } from '@mantine/core';
 
 function Demo() {
   const form = useForm<{ name: string; age: number | undefined }>({
+    mode: 'uncontrolled',
     initialValues: { name: '', age: undefined },
     validate: (values) => ({
       name: values.name.length < 2 ? 'Too short name' : null,
@@ -39,6 +40,7 @@ function Demo() {
 
 function Demo() {
   const form = useForm<{ name: string; age: number | undefined }>({
+    mode: 'uncontrolled',
     initialValues: { name: '', age: undefined },
     validate: (values) => ({
       name: values.name.length < 2 ? 'Too short name' : null,

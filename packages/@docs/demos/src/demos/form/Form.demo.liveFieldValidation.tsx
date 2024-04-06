@@ -1,15 +1,16 @@
 /* eslint-disable no-console */
 import React from 'react';
-import { Box, Button, NumberInput, TextInput } from '@mantine/core';
+import { Button, NumberInput, TextInput } from '@mantine/core';
 import { FORM_INDEX, useForm } from '@mantine/form';
 import { MantineDemo } from '@mantinex/demo';
 
 const code = `
 import { useForm, FORM_INDEX } from '@mantine/form';
-import { NumberInput, TextInput, Button, Box } from '@mantine/core';
+import { NumberInput, TextInput, Button } from '@mantine/core';
 
 function Demo() {
   const form = useForm({
+    mode: 'uncontrolled',
     validateInputOnChange: [
       'email',
       'name',
@@ -30,35 +31,33 @@ function Demo() {
   });
 
   return (
-    <Box maw={340} mx="auto">
-      <form onSubmit={form.onSubmit(console.log)}>
-        <TextInput label="Name" placeholder="Name" {...form.getInputProps('name')} />
-        <TextInput mt="sm" label="Email" placeholder="Email" {...form.getInputProps('email')} />
-        <NumberInput
-          mt="sm"
-          label="Age"
-          placeholder="Age"
-          min={0}
-          max={99}
-          {...form.getInputProps('age')}
-        />
-        <TextInput
-          mt="sm"
-          label="Job 1"
-          placeholder="Job 1"
-          {...form.getInputProps('jobs.0.title')}
-        />
-        <TextInput
-          mt="sm"
-          label="Job 2"
-          placeholder="Job 2"
-          {...form.getInputProps('jobs.1.title')}
-        />
-        <Button type="submit" mt="sm">
-          Submit
-        </Button>
-      </form>
-    </Box>
+    <form onSubmit={form.onSubmit(console.log)}>
+      <TextInput label="Name" placeholder="Name" {...form.getInputProps('name')} />
+      <TextInput mt="sm" label="Email" placeholder="Email" {...form.getInputProps('email')} />
+      <NumberInput
+        mt="sm"
+        label="Age"
+        placeholder="Age"
+        min={0}
+        max={99}
+        {...form.getInputProps('age')}
+      />
+      <TextInput
+        mt="sm"
+        label="Job 1"
+        placeholder="Job 1"
+        {...form.getInputProps('jobs.0.title')}
+      />
+      <TextInput
+        mt="sm"
+        label="Job 2"
+        placeholder="Job 2"
+        {...form.getInputProps('jobs.1.title')}
+      />
+      <Button type="submit" mt="sm">
+        Submit
+      </Button>
+    </form>
   );
 }
 `;
@@ -85,35 +84,33 @@ function Demo() {
   });
 
   return (
-    <Box maw={340} mx="auto">
-      <form onSubmit={form.onSubmit(console.log)}>
-        <TextInput label="Name" placeholder="Name" {...form.getInputProps('name')} />
-        <TextInput mt="sm" label="Email" placeholder="Email" {...form.getInputProps('email')} />
-        <NumberInput
-          mt="sm"
-          label="Age"
-          placeholder="Age"
-          min={0}
-          max={99}
-          {...form.getInputProps('age')}
-        />
-        <TextInput
-          mt="sm"
-          label="Job 1"
-          placeholder="Job 1"
-          {...form.getInputProps('jobs.0.title')}
-        />
-        <TextInput
-          mt="sm"
-          label="Job 2"
-          placeholder="Job 2"
-          {...form.getInputProps('jobs.1.title')}
-        />
-        <Button type="submit" mt="sm">
-          Submit
-        </Button>
-      </form>
-    </Box>
+    <form onSubmit={form.onSubmit(console.log)}>
+      <TextInput label="Name" placeholder="Name" {...form.getInputProps('name')} />
+      <TextInput mt="sm" label="Email" placeholder="Email" {...form.getInputProps('email')} />
+      <NumberInput
+        mt="sm"
+        label="Age"
+        placeholder="Age"
+        min={0}
+        max={99}
+        {...form.getInputProps('age')}
+      />
+      <TextInput
+        mt="sm"
+        label="Job 1"
+        placeholder="Job 1"
+        {...form.getInputProps('jobs.0.title')}
+      />
+      <TextInput
+        mt="sm"
+        label="Job 2"
+        placeholder="Job 2"
+        {...form.getInputProps('jobs.1.title')}
+      />
+      <Button type="submit" mt="sm">
+        Submit
+      </Button>
+    </form>
   );
 }
 
@@ -121,4 +118,6 @@ export const liveFieldValidation: MantineDemo = {
   type: 'code',
   component: Demo,
   code,
+  centered: true,
+  maxWidth: 340,
 };
