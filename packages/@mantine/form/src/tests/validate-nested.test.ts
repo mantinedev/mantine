@@ -1,10 +1,12 @@
 import { act, renderHook } from '@testing-library/react';
+import { FormMode } from '../types';
 import { useForm } from '../use-form';
 
-describe('@mantine/form/validate with nested rules', () => {
+function tests(mode: FormMode) {
   it('validates object with nested values', () => {
     const hook = renderHook(() =>
       useForm({
+        mode,
         clearInputErrorOnChange: false,
         initialValues: {
           a: { b: { c: 1 } },
@@ -41,6 +43,7 @@ describe('@mantine/form/validate with nested rules', () => {
   it('validates array with nested values', () => {
     const hook = renderHook(() =>
       useForm({
+        mode,
         clearInputErrorOnChange: false,
         initialValues: { a: [{ b: 1 }, { b: 1 }, { b: 3 }] },
         validate: { a: { b: (value) => (value < 2 ? 'error-b' : null) } },
@@ -74,4 +77,12 @@ describe('@mantine/form/validate with nested rules', () => {
 
     expect(hook.result.current.errors).toStrictEqual({});
   });
+}
+
+describe('@mantine/form/validate with nested rules controlled', () => {
+  tests('controlled');
+});
+
+describe('@mantine/form/validate with nested rules uncontrolled', () => {
+  tests('uncontrolled');
 });

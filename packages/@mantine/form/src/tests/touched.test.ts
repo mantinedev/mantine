@@ -1,16 +1,17 @@
 import { act, renderHook } from '@testing-library/react';
+import { FormMode } from '../types';
 import { useForm } from '../use-form';
 
-describe('@mantine/form/touched', () => {
+function tests(mode: FormMode) {
   it('accepts initial touched state', () => {
-    const hook = renderHook(() => useForm({ initialTouched: { a: true, b: false } }));
+    const hook = renderHook(() => useForm({ mode, initialTouched: { a: true, b: false } }));
     expect(hook.result.current.isTouched('a')).toBe(true);
     expect(hook.result.current.isTouched('b')).toBe(false);
     expect(hook.result.current.isTouched()).toBe(true);
   });
 
   it('sets field as touched if value changes', () => {
-    const hook = renderHook(() => useForm({ initialValues: { a: 1 } }));
+    const hook = renderHook(() => useForm({ mode, initialValues: { a: 1 } }));
     expect(hook.result.current.isTouched('a')).toBe(false);
     expect(hook.result.current.isTouched()).toBe(false);
 
@@ -20,7 +21,7 @@ describe('@mantine/form/touched', () => {
   });
 
   it('allows to set touched state with setTouched handler', () => {
-    const hook = renderHook(() => useForm());
+    const hook = renderHook(() => useForm({ mode }));
     expect(hook.result.current.isTouched()).toBe(false);
     expect(hook.result.current.isTouched('a')).toBe(false);
 
@@ -30,7 +31,7 @@ describe('@mantine/form/touched', () => {
   });
 
   it('resets status with resetTouched handler', () => {
-    const hook = renderHook(() => useForm({ initialTouched: { a: true } }));
+    const hook = renderHook(() => useForm({ mode, initialTouched: { a: true } }));
     expect(hook.result.current.isTouched()).toBe(true);
 
     act(() => hook.result.current.resetTouched());
@@ -38,7 +39,7 @@ describe('@mantine/form/touched', () => {
   });
 
   it('sets field as touched with getInputProps onFocus', () => {
-    const hook = renderHook(() => useForm({ initialValues: { a: 1 } }));
+    const hook = renderHook(() => useForm({ mode, initialValues: { a: 1 } }));
     expect(hook.result.current.isTouched()).toBe(false);
     expect(hook.result.current.isTouched('a')).toBe(false);
 
@@ -46,4 +47,12 @@ describe('@mantine/form/touched', () => {
     expect(hook.result.current.isTouched()).toBe(true);
     expect(hook.result.current.isTouched('a')).toBe(true);
   });
+}
+
+describe('@mantine/form/touched-controlled', () => {
+  tests('controlled');
+});
+
+describe('@mantine/form/touched-uncontrolled', () => {
+  tests('uncontrolled');
 });

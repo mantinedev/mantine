@@ -1,10 +1,12 @@
 import { act, renderHook } from '@testing-library/react';
+import { FormMode } from '../types';
 import { useForm } from '../use-form';
 
-describe('@mantine/form/validate with record rules', () => {
+function tests(mode: FormMode) {
   it('validates all fields with validate handler', () => {
     const hook = renderHook(() =>
       useForm<{ banana: string; orange: string; bar: number }>({
+        mode,
         initialValues: {
           banana: '',
           orange: '',
@@ -59,6 +61,7 @@ describe('@mantine/form/validate with record rules', () => {
   it('validates single field with validateField handler', () => {
     const hook = renderHook(() =>
       useForm({
+        mode,
         initialValues: {
           banana: '',
           orange: '',
@@ -90,6 +93,7 @@ describe('@mantine/form/validate with record rules', () => {
   it('allows to validate values based on their path', () => {
     const hook = renderHook(() =>
       useForm({
+        mode,
         initialValues: { a: [{ b: 1 }, { b: 2 }] },
         validate: {
           a: {
@@ -109,4 +113,12 @@ describe('@mantine/form/validate with record rules', () => {
       });
     });
   });
+}
+
+describe('@mantine/form/validate with record rules controlled', () => {
+  tests('controlled');
+});
+
+describe('@mantine/form/validate with record rules uncontrolled', () => {
+  tests('uncontrolled');
 });

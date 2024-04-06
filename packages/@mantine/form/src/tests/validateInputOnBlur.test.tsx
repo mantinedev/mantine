@@ -1,10 +1,12 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import { FormMode } from '../types';
 import { useForm } from '../use-form';
 
-function TestComponent() {
+function TestComponent({ mode }: any) {
   const form = useForm({
+    mode,
     initialValues: {
       firstName: '',
       lastName: '',
@@ -25,9 +27,9 @@ function TestComponent() {
   );
 }
 
-describe('@mantine/form/validateInputOnBlur', () => {
+function tests(mode: FormMode) {
   it('validates specified field on blur', async () => {
-    render(<TestComponent />);
+    render(<TestComponent mode={mode} />);
     expect(screen.getByTestId('errors').textContent).toBe('{}');
 
     await userEvent.type(screen.getByTestId('firstName'), 'a');
@@ -46,4 +48,12 @@ describe('@mantine/form/validateInputOnBlur', () => {
     await userEvent.tab();
     expect(screen.getByTestId('errors').textContent).toBe('{}');
   });
+}
+
+describe('@mantine/form/validateInputOnBlur-controlled', () => {
+  tests('controlled');
+});
+
+describe('@mantine/form/validateInputOnBlur-uncontrolled', () => {
+  tests('uncontrolled');
 });

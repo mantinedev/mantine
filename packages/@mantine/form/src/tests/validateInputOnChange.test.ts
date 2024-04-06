@@ -1,10 +1,12 @@
 import { act, renderHook } from '@testing-library/react';
+import { FormMode } from '../types';
 import { useForm } from '../use-form';
 
-describe('@mantine/form/validateInputOnChange', () => {
+function tests(mode: FormMode) {
   it('validates root property on change', () => {
     const hook = renderHook(() =>
       useForm({
+        mode,
         validateInputOnChange: true,
         initialValues: { a: '', b: '' },
         validate: {
@@ -33,6 +35,7 @@ describe('@mantine/form/validateInputOnChange', () => {
   it('validates only specified fields', () => {
     const hook = renderHook(() =>
       useForm({
+        mode,
         validateInputOnChange: ['a'],
         initialValues: { a: '', b: '' },
         validate: {
@@ -61,6 +64,7 @@ describe('@mantine/form/validateInputOnChange', () => {
   it('validates nested property on change', () => {
     const hook = renderHook(() =>
       useForm({
+        mode,
         validateInputOnChange: true,
         initialValues: { nested: { a: '', b: '' } },
         validate: {
@@ -90,4 +94,12 @@ describe('@mantine/form/validateInputOnChange', () => {
 
     expect(hook.result.current.errors).toStrictEqual({});
   });
+}
+
+describe('@mantine/form/validateInputOnChange-controlled', () => {
+  tests('controlled');
+});
+
+describe('@mantine/form/validateInputOnChange-uncontrolled', () => {
+  tests('uncontrolled');
 });

@@ -1,9 +1,10 @@
 import { act, renderHook } from '@testing-library/react';
+import { FormMode } from '../types';
 import { useForm } from '../use-form';
 
-describe('@mantine/form/resetDirty', () => {
+function tests(mode: FormMode) {
   it('memoizes values that were used in resetDirty', () => {
-    const hook = renderHook(() => useForm({ initialValues: { a: 1, b: 2 } }));
+    const hook = renderHook(() => useForm({ mode, initialValues: { a: 1, b: 2 } }));
     expect(hook.result.current.isDirty()).toBe(false);
 
     act(() => hook.result.current.setFieldValue('a', 3));
@@ -21,7 +22,7 @@ describe('@mantine/form/resetDirty', () => {
 
   it('correctly handles partial values', () => {
     const hook = renderHook(() =>
-      useForm<{ a: number; b?: number }>({ initialValues: { a: 1, b: 2 } })
+      useForm<{ a: number; b?: number }>({ mode, initialValues: { a: 1, b: 2 } })
     );
 
     expect(hook.result.current.isDirty()).toBe(false);
@@ -33,4 +34,12 @@ describe('@mantine/form/resetDirty', () => {
 
     expect(hook.result.current.isDirty()).toBe(false);
   });
+}
+
+describe('@mantine/form/resetDirty-controlled', () => {
+  tests('controlled');
+});
+
+describe('@mantine/form/resetDirty-uncontrolled', () => {
+  tests('uncontrolled');
 });

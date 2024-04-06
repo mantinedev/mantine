@@ -1,10 +1,12 @@
 import { act, renderHook } from '@testing-library/react';
+import { FormMode } from '../types';
 import { useForm } from '../use-form';
 
-describe('@mantine/form/validate with function rules', () => {
+function tests(mode: FormMode) {
   it('validates all fields with validate handler', () => {
     const hook = renderHook(() =>
       useForm({
+        mode,
         initialValues: {
           banana: '',
           orange: '',
@@ -58,6 +60,7 @@ describe('@mantine/form/validate with function rules', () => {
   it('validates single field with validateField handler', () => {
     const hook = renderHook(() =>
       useForm({
+        mode,
         initialValues: {
           banana: '',
           orange: '',
@@ -85,4 +88,12 @@ describe('@mantine/form/validate with function rules', () => {
 
     expect(hook.result.current.errors).toStrictEqual({});
   });
+}
+
+describe('@mantine/form/validate with function rules controlled', () => {
+  tests('controlled');
+});
+
+describe('@mantine/form/validate with function rules uncontrolled', () => {
+  tests('uncontrolled');
 });
