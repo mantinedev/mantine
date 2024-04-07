@@ -22,6 +22,7 @@ All examples below use the following example use-form hook.
 import { useForm } from '@mantine/form';
 
 const form = useForm({
+  mode: 'uncontrolled',
   initialValues: {
     path: '',
     path2: '',
@@ -44,7 +45,7 @@ const form = useForm({
 
 ```tsx
 // get current form values
-form.values;
+form.getValues();
 
 // Set all form values
 form.setValues(values);
@@ -96,6 +97,7 @@ form.reorderListItem('fruits', { from: 1, to: 0 });
 import { useForm } from '@mantine/form';
 
 const form = useForm({
+  mode: 'uncontrolled',
   initialValues: {
     email: '',
     user: {
@@ -158,7 +160,7 @@ that will be called with errors object when validation fails.
 import { useForm } from '@mantine/form';
 
 function Demo() {
-  const form = useForm();
+  const form = useForm({ mode: 'uncontrolled' });
 
   const handleSubmit = (values: typeof form.values) => {
     console.log(values);
@@ -258,6 +260,7 @@ function OccupationInput({
 
 function Demo() {
   const form = useForm<FormValues>({
+    mode: 'uncontrolled',
     initialValues: { name: '', occupation: '' },
   });
   return (

@@ -12,6 +12,7 @@ In most cases you should set `initialValues`:
 import { useForm } from '@mantine/form';
 
 const form = useForm({
+  mode: 'uncontrolled',
   initialValues: {
     name: '',
     email: '',
@@ -33,11 +34,12 @@ With `form.setValues` you can set all form values, for example you can set value
 import { useForm } from '@mantine/form';
 
 const form = useForm({
+  mode: 'uncontrolled',
   initialValues: { name: '', email: '', age: 0 },
 });
 
 form.setValues({ name: 'John', age: 21 });
-form.values; // -> { name: 'John', email: '', age: 21 }
+form.getValues(); // -> { name: 'John', email: '', age: 21 }
 ```
 
 ## Initialize form
@@ -64,6 +66,7 @@ function Demo() {
   });
 
   const form = useForm({
+    mode: 'uncontrolled',
     initialValues: {
       name: '',
       email: '',
@@ -108,6 +111,7 @@ import { useForm } from '@mantine/form';
 
 function Demo() {
   const form = useForm({
+    mode: 'uncontrolled',
     initialValues: {
       name: '',
       email: '',
@@ -146,6 +150,7 @@ import { useForm } from '@mantine/form';
 
 function Demo() {
   const form = useForm({
+    mode: 'uncontrolled',
     initialValues: {
       firstName: 'John',
       lastName: 'Doe',
@@ -190,6 +195,7 @@ import { TransformedValues, useForm } from '@mantine/form';
 
 function Demo() {
   const form = useForm({
+    mode: 'uncontrolled',
     initialValues: {
       name: '',
       locationId: '2',
@@ -234,6 +240,7 @@ interface FormValues {
 
 function Demo() {
   const form = useForm<FormValues>({
+    mode: 'uncontrolled',
     initialValues: {
       name: '',
       role: 'user',

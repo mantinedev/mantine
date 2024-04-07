@@ -41,6 +41,7 @@ const schema = z.object({
 });
 
 const form = useForm({
+  mode: 'uncontrolled',
   initialValues: {
     name: '',
     email: '',
@@ -74,6 +75,7 @@ const nestedSchema = z.object({
 });
 
 const form = useForm({
+  mode: 'uncontrolled',
   initialValues: {
     nested: {
       field: '',
@@ -107,6 +109,7 @@ const listSchema = z.object({
 });
 
 const form = useForm({
+  mode: 'uncontrolled',
   initialValues: {
     list: [{ name: '' }],
   },
@@ -145,6 +148,7 @@ const schema = yup.object().shape({
 });
 
 const form = useForm({
+  mode: 'uncontrolled',
   initialValues: {
     name: '',
     email: '',
@@ -178,6 +182,7 @@ const nestedSchema = yup.object().shape({
 });
 
 const form = useForm({
+  mode: 'uncontrolled',
   initialValues: {
     nested: {
       field: '',
@@ -211,6 +216,7 @@ const listSchema = yup.object().shape({
 });
 
 const form = useForm({
+  mode: 'uncontrolled',
   initialValues: {
     list: [{ name: '' }],
   },
@@ -254,6 +260,7 @@ const schema = Joi.object({
 });
 
 const form = useForm({
+  mode: 'uncontrolled',
   initialValues: {
     name: '',
     email: '',
@@ -287,6 +294,7 @@ const nestedSchema = Joi.object({
   }),
 });
 const form = useForm({
+  mode: 'uncontrolled',
   initialValues: {
     nested: {
       field: '',
@@ -321,6 +329,7 @@ const listSchema = Joi.object({
 });
 
 const form = useForm({
+  mode: 'uncontrolled',
   initialValues: {
     list: [{ name: '' }],
   },
@@ -356,6 +365,7 @@ const schema = s.object({
 });
 
 const form = useForm({
+  mode: 'uncontrolled',
   initialValues: {
     name: '',
     email: '',
@@ -387,6 +397,7 @@ const nestedSchema = s.object({
 });
 
 const form = useForm({
+  mode: 'uncontrolled',
   initialValues: {
     nested: {
       field: '',
@@ -418,6 +429,7 @@ const listSchema = s.object({
 });
 
 const form = useForm({
+  mode: 'uncontrolled',
   initialValues: {
     list: [{ name: '' }],
   },
@@ -460,6 +472,7 @@ const schema = object({
 });
 
 const form = useForm({
+  mode: 'uncontrolled',
   initialValues: {
     name: '',
     email: '',
@@ -493,6 +506,7 @@ const nestedSchema = object({
 });
 
 const form = useForm({
+  mode: 'uncontrolled',
   initialValues: {
     nested: {
       field: '',
@@ -526,6 +540,7 @@ const listSchema = object({
 });
 
 const form = useForm({
+  mode: 'uncontrolled',
   initialValues: {
     list: [{ name: '' }],
   },

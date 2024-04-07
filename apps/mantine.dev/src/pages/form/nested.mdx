@@ -13,6 +13,7 @@ Property path includes keys/indices of objects/arrays at which target property i
 import { useForm } from '@mantine/form';
 
 const form = useForm({
+  mode: 'uncontrolled',
   initialValues: {
     user: {
       firstName: 'John',
@@ -52,6 +53,7 @@ form.validateField('deeply.nested.object.0.item');
 import { useForm } from '@mantine/form';
 
 const form = useForm({
+  mode: 'uncontrolled',
   initialValues: {
     user: {
       name: '',
@@ -74,6 +76,7 @@ form.setFieldValue('user', { name: 'Jane', occupation: 'Architect' });
 import { useForm } from '@mantine/form';
 
 const form = useForm({
+  mode: 'uncontrolled',
   initialValues: {
     user: {
       name: '',
@@ -113,6 +116,7 @@ form.errors; // -> { 'user.name': 'Name is too short', 'user.occupation': 'Occup
 import { useForm } from '@mantine/form';
 
 const form = useForm({
+  mode: 'uncontrolled',
   initialValues: {
     users: [
       { name: 'John', age: 12 },

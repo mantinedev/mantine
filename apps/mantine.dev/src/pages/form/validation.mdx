@@ -26,6 +26,7 @@ for example you can get index of array element:
 import { useForm } from '@mantine/form';
 
 const form = useForm({
+  mode: 'uncontrolled',
   initialValues: { a: [{ b: 1 }, { b: 2 }] },
   validate: {
     a: {
@@ -58,7 +59,10 @@ To validate all fields on change set `validateInputOnChange` option to `true`:
 ```tsx
 import { useForm } from '@mantine/form';
 
-const form = useForm({ validateInputOnChange: true });
+const form = useForm({
+  mode: 'uncontrolled',
+  validateInputOnChange: true,
+});
 ```
 
 <Demo data={FormDemos.liveValidation} demoProps={{ toggle: true }} />
@@ -69,6 +73,7 @@ You can also provide an array of fields paths to validate only those values:
 import { FORM_INDEX, useForm } from '@mantine/form';
 
 const form = useForm({
+  mode: 'uncontrolled',
   validateInputOnChange: [
     'name',
     'email',
@@ -89,7 +94,10 @@ To validate all fields on blur set `validateInputOnBlur` option to `true`:
 ```tsx
 import { useForm } from '@mantine/form';
 
-const form = useForm({ validateInputOnBlur: true });
+const form = useForm({
+  mode: 'uncontrolled',
+  validateInputOnBlur: true,
+});
 ```
 
 <Demo data={FormDemos.blurValidation} demoProps={{ toggle: true }} />
@@ -100,6 +108,7 @@ You can also provide an array of fields paths to validate only those values:
 import { FORM_INDEX, useForm } from '@mantine/form';
 
 const form = useForm({
+  mode: 'uncontrolled',
   validateInputOnBlur: ['name', 'email', `jobs.${FORM_INDEX}.title`],
 });
 ```
@@ -116,7 +125,10 @@ By default, field error is cleared when value changes. To change this, set `clea
 ```tsx
 import { useForm } from '@mantine/form';
 
-const form = useForm({ clearInputErrorOnChange: false });
+const form = useForm({
+  mode: 'uncontrolled',
+  clearInputErrorOnChange: false,
+});
 ```
 
 <Demo
@@ -143,6 +155,7 @@ for example, you can show a notification:
 import { useForm } from '@mantine/form';
 
 const form = useForm({
+  mode: 'uncontrolled',
   initialValues: { name: '', age: 0 },
   validate: {
     name: (value) => (value.trim().length < 2 ? 'Too short' : null),

@@ -12,6 +12,7 @@ export default Layout(MDX_DATA.formErrors);
 import { useForm } from '@mantine/form';
 
 const form = useForm({
+  mode: 'uncontrolled',
   initialValues: { firstName: '', lastName: '' },
   validate: {
     firstName: (value) =>
@@ -43,6 +44,7 @@ Same as with [initial values](/form/values/) you can set initial form errors:
 import { useForm } from '@mantine/form';
 
 const form = useForm({
+  mode: 'uncontrolled',
   initialValues: { firstName: '', lastName: '' },
   initialErrors: {
     firstName: 'First name is too short',
@@ -56,7 +58,7 @@ const form = useForm({
 ```tsx
 import { useForm } from '@mantine/form';
 
-const form = useForm();
+const form = useForm({ mode: 'uncontrolled' });
 form.setErrors({ firstName: 'Too short', email: 'Invalid email' });
 
 form.errors;
@@ -70,7 +72,11 @@ form.errors;
 ```tsx
 import { useForm } from '@mantine/form';
 
-const form = useForm({ initialValues: { name: '', email: '' } });
+const form = useForm({
+  mode: 'uncontrolled',
+  initialValues: { name: '', email: '' },
+});
+
 form.setFieldError('email', 'Invalid email');
 
 form.errors; // -> { email: 'Invalid email' }
@@ -84,12 +90,13 @@ form.errors; // -> { email: 'Invalid email' }
 import { useForm } from '@mantine/form';
 
 const form = useForm({
+  mode: 'uncontrolled',
   initialErrors: { name: 'Too short', email: 'Invalid email' },
 });
+
 form.clearErrors();
 
-console.log(form.errors);
-// -> {}
+form.errors; // -> {}
 ```
 
 ## clearFieldError handler
@@ -100,12 +107,12 @@ console.log(form.errors);
 import { useForm } from '@mantine/form';
 
 const form = useForm({
+  mode: 'uncontrolled',
   initialErrors: { name: 'Too short', email: 'Invalid email' },
 });
 form.clearFieldError('name');
 
-console.log(form.errors);
-// -> { email: 'Invalid email' }
+form.errors; // -> { email: 'Invalid email' }
 ```
 
 ## Errors as react node
@@ -116,6 +123,7 @@ You can use any React node as an error message:
 import { useForm } from '@mantine/form';
 
 const form = useForm({
+  mode: 'uncontrolled',
   initialValues: { name: '', email: '' },
   initialErrors: {
     name: <p>Paragraph error</p>, // -> error as a react element
@@ -130,8 +138,10 @@ Note that errors that are `false`, `null` or `undefined` will be automatically r
 import { useForm } from '@mantine/form';
 
 const form = useForm({
+  mode: 'uncontrolled',
   initialErrors: { name: 'name-error', email: null },
 });
+
 form.errors; // -> { name: 'name-error' }, email error is not included in errors object
 ```
 
@@ -148,7 +158,7 @@ You can also get type directly from the `form` instance:
 ```tsx
 import { useForm } from '@mantine/form';
 
-const form = useForm();
+const form = useForm({ mode: 'uncontrolled' });
 
 const handleErrors = (errors: typeof form.errors) => {};
 ```

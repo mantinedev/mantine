@@ -27,6 +27,7 @@ values are considered to be empty. Strings are trimmed before validation.
 import { isNotEmpty, useForm } from '@mantine/form';
 
 const form = useForm({
+  mode: 'uncontrolled',
   initialValues: {
     name: '',
     acceptTermsOfUse: false,
@@ -58,6 +59,7 @@ const form = useForm({
 import { isEmail, useForm } from '@mantine/form';
 
 const form = useForm({
+  mode: 'uncontrolled',
   initialValues: {
     email: '',
   },
@@ -76,6 +78,7 @@ const form = useForm({
 import { matches, useForm } from '@mantine/form';
 
 const form = useForm({
+  mode: 'uncontrolled',
   initialValues: {
     color: '',
   },
@@ -94,6 +97,7 @@ const form = useForm({
 import { isInRange, useForm } from '@mantine/form';
 
 const form = useForm({
+  mode: 'uncontrolled',
   initialValues: {
     maxRange: 0,
     minRange: 0,
@@ -121,6 +125,7 @@ Strings are trimmed before validation.
 import { hasLength, useForm } from '@mantine/form';
 
 const form = useForm({
+  mode: 'uncontrolled',
   initialValues: {
     exact: '',
     maxLength: '',
@@ -155,6 +160,7 @@ Note that `matchesField` can only work with primitive values (arrays and objects
 import { matchesField, useForm } from '@mantine/form';
 
 const form = useForm({
+  mode: 'uncontrolled',
   initialValues: {
     password: '',
     confirmPassword: '',

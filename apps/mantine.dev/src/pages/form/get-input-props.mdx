@@ -24,6 +24,7 @@ import { useForm } from '@mantine/form';
 
 function Demo() {
   const form = useForm({
+    mode: 'uncontrolled',
     initialValues: { name: '', accepted: false },
     validate: {
       name: (value) => value.trim().length > 2,
@@ -89,6 +90,7 @@ function Demo() {
   });
 
   const form = useForm({
+    mode: 'uncontrolled',
     initialValues: {
       name: '',
       email: '',
@@ -109,6 +111,7 @@ function Demo() {
 `form.getInputProps` returns an object with the following properties:
 
 - `value`
+- `defaultValue`
 - `onChange`
 - `onFocus`
 - `onBlur`
@@ -121,15 +124,17 @@ Example of creating a custom input component:
 
 ```tsx
 interface CustomInputProps {
-  value: string;
-  onChange(event: React.ChangeEvent<HTMLInputElement>): void;
-  onFocus(event: React.FocusEvent<HTMLInputElement>): void;
-  onBlur(event: React.FocusEvent<HTMLInputElement>): void;
-  error: string;
+  value?: string;
+  defaultValue?: string;
+  onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  onFocus?: (event: React.FocusEvent<HTMLInputElement>) => void;
+  onBlur?: (event: React.FocusEvent<HTMLInputElement>) => void;
+  error?: string;
 }
 
 export function CustomInput({
   value,
+  defaultValue,
   onChange,
   onFocus,
   onBlur,
@@ -139,6 +144,7 @@ export function CustomInput({
     <div>
       <input
         value={value}
+        defaultValue={defaultValue}
         onChange={onChange}
         onFocus={onFocus}
         onBlur={onBlur}
@@ -157,6 +163,7 @@ import { CustomInput } from './CustomInput';
 
 function Demo() {
   const form = useForm({
+    mode: 'uncontrolled',
     initialValues: { name: '' },
   });
 

@@ -19,6 +19,7 @@ export default Layout(MDX_DATA.formStatus);
 import { useForm } from '@mantine/form';
 
 const form = useForm({
+  mode: 'uncontrolled',
   initialValues: { a: 1, nested: { field: '' } },
 });
 
@@ -42,6 +43,7 @@ Both properties support [the same fields path format as errors](/form/errors/):
 import { useForm } from '@mantine/form';
 
 const form = useForm({
+  mode: 'uncontrolled',
   initialValues: { a: 1, nested: { field: '' } },
   initialTouched: { a: true, 'nested.field': true },
   initialDirty: { a: true, 'nested.field': true },
@@ -57,6 +59,7 @@ Note that `form.reset` will also reset `touched` and `dirty` state:
 import { useForm } from '@mantine/form';
 
 const form = useForm({
+  mode: 'uncontrolled',
   initialValues: { a: 1 },
   initialTouched: { a: true },
   initialDirty: { a: true },
@@ -78,6 +81,7 @@ To reset values that are used for dirty check call `form.resetDirty` with new va
 import { useForm } from '@mantine/form';
 
 const form = useForm({
+  mode: 'uncontrolled',
   initialValues: { a: 1 },
 });
 
