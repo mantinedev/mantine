@@ -7,12 +7,23 @@ import { FormBase } from './_base';
 export default { title: 'Form' };
 
 export function Usage() {
+  const [counter, setCounter] = React.useState(0);
   const form = useForm({
+    mode: 'uncontrolled',
     validateInputOnChange: true,
-    initialValues: { name: '', terms: false, area: '', select: '' },
+    initialValues: { name: '', terms: false, area: '', select: '', nested: { field: 'test' } },
     validate: {
       name: (value) => (value.length === 0 ? 'Required' : null),
     },
+  });
+
+  form.watch('name', (value) => {
+    setCounter((c) => c + 1);
+    console.log('name', value, { counter });
+  });
+
+  form.watch('area', (value) => {
+    console.log('area', value, { counter });
   });
 
   return (
@@ -29,6 +40,8 @@ export function Usage() {
         data={['React', 'Angular']}
         {...form.getInputProps('select')}
       />
+
+      <Button onClick={() => form.setValues({ name: 'test' })}>Set values</Button>
     </FormBase>
   );
 }

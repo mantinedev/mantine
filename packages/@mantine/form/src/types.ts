@@ -153,6 +153,18 @@ export type Initialize<Values> = (values: Values) => void;
 
 export type _TransformValues<Values> = (values: Values) => unknown;
 
+export type FormFieldSubscriber<Values, Field extends LooseKeys<Values>> = (input: {
+  previousValue: PathValue<Values, Field>;
+  value: PathValue<Values, Field>;
+  touched: boolean;
+  dirty: boolean;
+}) => void;
+
+export type Watch<Values> = <Field extends LooseKeys<Values>>(
+  path: Field,
+  subscriber: FormFieldSubscriber<Values, Field>
+) => void;
+
 export interface UseFormInput<
   Values,
   TransformValues extends _TransformValues<Values> = (values: Values) => Values,
@@ -212,6 +224,7 @@ export interface UseFormReturnType<
   getValues: () => Values;
   getTouched: GetStatus;
   getDirty: GetStatus;
+  watch: Watch<Values>;
 }
 
 export type UseForm<

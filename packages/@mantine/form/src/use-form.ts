@@ -5,6 +5,7 @@ import { useFormErrors } from './hooks/use-form-errors/use-form-errors';
 import { useFormList } from './hooks/use-form-list/use-form-list';
 import { useFormStatus } from './hooks/use-form-status/use-form-status';
 import { useFormValues } from './hooks/use-form-values/use-form-values';
+import { useFormWatch } from './hooks/use-form-watch/use-form-watch';
 import { getPath } from './paths';
 import {
   _TransformValues,
@@ -46,6 +47,7 @@ export function useForm<
   const $values = useFormValues<Values>({ initialValues, onValuesChange, mode });
   const $status = useFormStatus<Values>({ initialDirty, initialTouched, $values, mode });
   const $list = useFormList<Values>({ $values, $errors, $status });
+  const $watch = useFormWatch<Values>({ $status });
   const [formKey, setFormKey] = useState(0);
   const [fieldKeys, setFieldKeys] = useState<Record<string, number>>({});
 
@@ -74,6 +76,7 @@ export function useForm<
         value,
         updateState: mode === 'controlled',
         subscribers: [
+          ...$watch.getFieldSubscribers(path),
           shouldValidate
             ? (payload) => {
                 const validationResults = validateFieldValue(path, rules, payload.updatedValues);
@@ -97,9 +100,21 @@ export function useForm<
 
   const setValues: SetValues<Values> = useCallback(
     (values) => {
+      const previousValues = $values.refValues.current;
       $values.setValues({ values, updateState: mode === 'controlled' });
       clearInputErrorOnChange && $errors.clearErrors();
       mode === 'uncontrolled' && setFormKey((key) => key + 1);
+
+      Object.keys($watch.subscribers.current).forEach((path) => {
+        const value = getPath(path, $values.refValues.current);
+        const previousValue = getPath(path, previousValues);
+
+        if (value !== previousValue) {
+          $watch
+            .getFieldSubscribers(path)
+            .forEach((cb) => cb({ previousValues, updatedValues: $values.refValues.current }));
+        }
+      });
     },
     [onValuesChange, clearInputErrorOnChange]
   );
@@ -202,6 +217,8 @@ export function useForm<
   );
 
   const form: UseFormReturnType<Values, TransformValues> = {
+    watch: $watch.watch,
+
     initialized: $values.initialized.current,
     values: $values.stateValues,
     getValues: $values.getValues,
