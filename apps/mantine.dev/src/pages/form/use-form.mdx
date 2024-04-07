@@ -59,7 +59,7 @@ form.setFieldValue('path', value);
 // Set value of nested field
 form.setFieldValue('user.firstName', 'Jane');
 
-// Resets form.values to initialValues,
+// Resets form values to `initialValues`,
 // clears all validation errors,
 // resets touched and dirty state
 form.reset();
@@ -176,14 +176,14 @@ function Demo() {
         onSubmit={form.onSubmit(
           (values, event) => {
             console.log(
-              values, // <- form.values at the moment of submit
+              values, // <- form.getValues() at the moment of submit
               event // <- form element submit event
             );
           },
           (validationErrors, values, event) => {
             console.log(
               validationErrors, // <- form.errors at the moment of submit
-              values, // <- form.values at the moment of submit
+              values, // <- form.getValues() at the moment of submit
               event // <- form element submit event
             );
           }
@@ -225,7 +225,7 @@ form.setDirty({ 'user.firstName': true, 'user.lastName': false });
 
 // Clears dirty status of all fields, saves form.values snapshot
 // After form.resetDirty is called, form.isDirty will compare
-// form.values to snapshot instead of initialValues
+// form.getValues() to snapshot instead of initialValues
 form.resetDirty();
 ```
 
