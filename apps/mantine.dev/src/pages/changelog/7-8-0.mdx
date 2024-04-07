@@ -1,5 +1,37 @@
-import { ThemingDemos } from '@docs/demos';
+import { FormDemos } from '@docs/demos';
 import { Layout } from '@/layout';
 import { MDX_DATA } from '@/mdx';
 
 export default Layout(MDX_DATA.Changelog780);
+
+## Uncontrolled form mode
+
+[useForm](/form/use-form) hook now supports [uncontrolled mode](/form/uncontrolled).
+Uncontrolled mode provides a significant performance improvement by reducing
+the number of re-renders and the amount of state updates almost to 0. Uncontrolled
+mode is now the recommended way to use the `useForm` hook for almost all use cases.
+
+Example of uncontrolled form:
+
+<Demo data={FormDemos.uncontrolled} />
+
+As you can see in the example above, `form.values` are not updated. In uncontrolled mode,
+you cannot access the form values directly because components are not re-rendered when
+the form values change.
+
+Instead of getting values from the form state, you can now use `form.getValues()`
+method to get the form values at any time:
+
+```tsx
+import { useForm } from '@mantine/form';
+
+const form = useForm({
+  mode: 'uncontrolled',
+  initialValues: { name: 'John Doe' },
+});
+
+form.getValues(); // { name: 'John Doe' }
+
+form.setValues({ name: 'John Smith' });
+form.getValues(); // { name: 'John Smith' }
+```

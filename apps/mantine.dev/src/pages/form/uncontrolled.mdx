@@ -42,6 +42,7 @@ be used in both controlled and uncontrolled modes.
 import { useForm } from '@mantine/form';
 
 const form = useForm({
+  mode: 'uncontrolled',
   initialValues: { name: 'John Doe' },
 });
 
@@ -60,6 +61,7 @@ update in controlled mode.
 import { useForm } from '@mantine/form';
 
 const form = useForm({
+  mode: 'uncontrolled',
   initialValues: { name: 'John Doe' },
 });
 
@@ -85,7 +87,7 @@ reference.
 import { useEffect } from 'react';
 import { useForm } from '@mantine/form';
 
-const form = useForm();
+const form = useForm({ mode: 'uncontrolled' });
 
 useEffect(() => {
   // ❌ This will not work as form.getValues() is a ref value
@@ -100,6 +102,7 @@ to listen to form values changes:
 import { useForm } from '@mantine/form';
 
 const form = useForm({
+  mode: 'uncontrolled',
   initialValues: { name: 'John Doe' },
   onValuesChange: (values) => {
     // ✅ This will be called on every form values change
@@ -110,5 +113,122 @@ const form = useForm({
 
 ## form.getInputProps
 
-[form.getInputProps](/form/get-input-props/) behaves differently in controlled and
-uncontrolled modes.
+[form.getInputProps](/form/get-input-props/) returns different props for controlled
+and uncontrolled modes. In controlled mode, the returned object has `value` prop,
+while in uncontrolled mode it has `defaultValue` and `key` props.
+
+Uncontrolled mode relies on `key` returned from `form.getInputProps` to update
+components when `form.setFieldValue` or `form.setValues` are called. You should
+not override `key` supplied by `form.getInputProps`:
+
+```tsx
+import { useForm } from '@mantine/form';
+
+function Demo() {
+  const form = useForm({
+    mode: 'uncontrolled',
+    initialValues: { text: '' },
+  });
+
+  // ❌ Do not override key prop
+  return <input {...form.getInputProps('text')} key="my-key" />;
+}
+```
+
+In case you need to have a [list of fields](/form/nested/#nested-arrays),
+do not pass `key` to the input component directly, instead add a wrapper
+element and pass `key` to it:
+
+```tsx
+import { useForm } from '@mantine/form';
+import { randomId } from '@mantine/hooks';
+
+// ❌ Incorrect: Do not override key prop, even in lists
+function Demo() {
+  const form = useForm({
+    mode: 'uncontrolled',
+    initialValues: {
+      jobs: [{ company: 'Google' }, { company: 'Facebook' }],
+    },
+  });
+
+  const fields = form.getValues().jobs.map((_, index) => (
+      <input
+        {...form.getInputProps(`jobs.${index}.company`)}
+        key={index}
+      />
+    ));
+
+  return <form>{fields}</form>;
+}
+
+// ✅ Correct: Add wrapper element and pass key to it
+function Demo() {
+  const form = useForm({
+    mode: 'uncontrolled',
+    initialValues: {
+      jobs: [
+        { company: 'Google', key: randomId() },
+        { company: 'Facebook', key: randomId() },
+      ],
+    },
+  });
+
+  const fields = form.getValues().jobs.map((item, index) => (
+      <div key={item.key}>
+        <input {...form.getInputProps(`jobs.${index}.company`)} />
+      </div>
+    ));
+
+  return <form>{fields}</form>;
+}
+```
+
+## Uncontrolled mode in custom components
+
+If you want to build a custom component that supports uncontrolled form mode,
+you must add support for `defaultValue` prop. The best way to add support for
+`defaultValue` is to use [use-uncontrolled](/hooks/use-uncontrolled/) hook:
+
+```tsx
+import { useUncontrolled } from '@mantine/hooks';
+
+interface CustomInputProps {
+  value?: string;
+  defaultValue?: string;
+  onChange?: (value: string) => void;
+}
+
+// ✅ CustomInput supports both controlled and uncontrolled modes
+function CustomInput({
+  value,
+  defaultValue,
+  onChange,
+}: CustomInputProps) {
+  const [_value, handleChange] = useUncontrolled({
+    value,
+    defaultValue,
+    finalValue: 'Final',
+    onChange,
+  });
+
+  return (
+    <input
+      type="text"
+      value={_value}
+      onChange={(event) => handleChange(event.currentTarget.value)}
+    />
+  );
+}
+
+function Demo() {
+  const form = useForm({
+    mode: 'uncontrolled',
+    initialValues: { text: 'Initial' },
+  });
+
+  // ✅ CustomInput supports `defaultValue` prop,
+  // it can be used in uncontrolled mode
+  return <CustomInput {...form.getInputProps('text')} />;
+}
+```

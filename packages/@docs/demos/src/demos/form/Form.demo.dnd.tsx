@@ -136,5 +136,5 @@ export const dnd: MantineDemo = {
   component: Demo,
   code,
   centered: true,
-  maxWidth: 340,
+  maxWidth: 440,
 };
