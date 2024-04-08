@@ -139,6 +139,9 @@ export interface NumberInputProps
 
   /** Initial delay in milliseconds before stepping the value. */
   stepHoldDelay?: number;
+
+  /** Determines whether up/down keyboard events should be handled to increment/decrement value, `true` by default */
+  withKeyboardEvents?: boolean;
 }
 
 export type NumberInputFactory = Factory<{
@@ -154,6 +157,7 @@ const defaultProps: Partial<NumberInputProps> = {
   clampBehavior: 'blur',
   allowDecimal: true,
   allowNegative: true,
+  withKeyboardEvents: true,
   startValue: 0,
 };
 
@@ -197,6 +201,7 @@ export const NumberInput = factory<NumberInputFactory>((_props, ref) => {
     stepHoldInterval,
     stepHoldDelay,
     allowLeadingZeros,
+    withKeyboardEvents,
     ...others
   } = props;
 
@@ -300,7 +305,7 @@ export const NumberInput = factory<NumberInputFactory>((_props, ref) => {
   const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
     onKeyDown?.(event);
 
-    if (readOnly) {
+    if (readOnly || !withKeyboardEvents) {
       return;
     }
 
