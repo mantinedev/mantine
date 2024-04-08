@@ -65,6 +65,7 @@ export { useMutationObserver } from './use-mutation-observer/use-mutation-observ
 export { useMounted } from './use-mounted/use-mounted';
 export { useStateHistory } from './use-state-history/use-state-history';
 export { useMap } from './use-map/use-map';
+export { useSet } from './use-set/use-set';
 
 export type { UseMovePosition } from './use-move/use-move';
 export type { OS } from './use-os/use-os';
