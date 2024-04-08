@@ -1,5 +1,5 @@
 import React, { forwardRef, useEffect } from 'react';
-import { useCallbackRef, useDebounceCallback, useMergedRef } from '@mantine/hooks';
+import { useCallbackRef, useDebouncedCallback, useMergedRef } from '@mantine/hooks';
 import { useScrollAreaContext } from '../ScrollArea.context';
 import { Sizes } from '../ScrollArea.types';
 import { useResizeObserver } from '../use-resize-observer';
@@ -44,7 +44,7 @@ export const Scrollbar = forwardRef<HTMLDivElement, ScrollbarProps>((props, forw
   const maxScrollPos = sizes.content - sizes.viewport;
   const handleWheelScroll = useCallbackRef(onWheelScroll);
   const handleThumbPositionChange = useCallbackRef(onThumbPositionChange);
-  const handleResize = useDebounceCallback(onResize, 10);
+  const handleResize = useDebouncedCallback(onResize, 10);
 
   const handleDragScroll = (event: React.PointerEvent<HTMLElement>) => {
     if (rectRef.current) {
