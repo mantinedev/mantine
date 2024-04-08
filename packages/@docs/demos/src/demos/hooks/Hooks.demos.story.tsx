@@ -287,3 +287,8 @@ export const Demo_useFetchUsage = {
   name: '⭐ Demo: useFetchUsage',
   render: renderDemo(demos.useFetchUsage),
 };
+
+export const Demo_useMapUsage = {
+  name: '⭐ Demo: useMapUsage',
+  render: renderDemo(demos.useMapUsage),
+};
