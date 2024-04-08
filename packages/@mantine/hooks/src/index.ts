@@ -1,7 +1,7 @@
 export * from './utils/index.js';
 
 export { useCallbackRef } from './use-callback-ref/use-callback-ref';
-export { useDebounceCallback } from './use-debounced-callback/use-debounced-callback';
+export { useDebouncedCallback } from './use-debounced-callback/use-debounced-callback';
 export { useClickOutside } from './use-click-outside/use-click-outside';
 export { useClipboard } from './use-clipboard/use-clipboard';
 export { useColorScheme } from './use-color-scheme/use-color-scheme';
@@ -66,6 +66,7 @@ export { useMounted } from './use-mounted/use-mounted';
 export { useStateHistory } from './use-state-history/use-state-history';
 export { useMap } from './use-map/use-map';
 export { useSet } from './use-set/use-set';
+export { useThrottledCallback } from './use-throttled-callback/use-throttled-callback';
 
 export type { UseMovePosition } from './use-move/use-move';
 export type { OS } from './use-os/use-os';
