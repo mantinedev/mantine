@@ -69,6 +69,7 @@ export { useSet } from './use-set/use-set';
 export { useThrottledCallback } from './use-throttled-callback/use-throttled-callback';
 export { useThrottledState } from './use-throttled-state/use-throttled-state';
 export { useThrottledValue } from './use-throttled-value/use-throttled-value';
+export { useIsFirstRender } from './use-is-first-render/use-is-first-render';
 
 export type { UseMovePosition } from './use-move/use-move';
 export type { OS } from './use-os/use-os';
