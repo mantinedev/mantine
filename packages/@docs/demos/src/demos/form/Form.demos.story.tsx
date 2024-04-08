@@ -147,3 +147,13 @@ export const Demo_uncontrolled = {
   name: '⭐ Demo: uncontrolled',
   render: renderDemo(demos.uncontrolled),
 };
+
+export const Demo_onValuesChange = {
+  name: '⭐ Demo: onValuesChange',
+  render: renderDemo(demos.onValuesChange),
+};
+
+export const Demo_watch = {
+  name: '⭐ Demo: watch',
+  render: renderDemo(demos.watch),
+};
