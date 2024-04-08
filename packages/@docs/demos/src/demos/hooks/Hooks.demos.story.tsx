@@ -282,3 +282,8 @@ export const Demo_useStateHistoryUsage = {
   name: '⭐ Demo: useStateHistoryUsage',
   render: renderDemo(demos.useStateHistoryUsage),
 };
+
+export const Demo_useFetchUsage = {
+  name: '⭐ Demo: useFetchUsage',
+  render: renderDemo(demos.useFetchUsage),
+};

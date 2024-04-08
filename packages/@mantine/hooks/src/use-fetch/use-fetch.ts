@@ -1,10 +1,10 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 
-export interface UseFetchOptions {
+export interface UseFetchOptions extends RequestInit {
   autoInvoke?: boolean;
 }
 
-export function useFetch<T>(url: string, options: UseFetchOptions = { autoInvoke: true }) {
+export function useFetch<T>(url: string, { autoInvoke = true, ...options }: UseFetchOptions = {}) {
   const [data, setData] = useState<T | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<Error | null>(null);
@@ -23,7 +23,7 @@ export function useFetch<T>(url: string, options: UseFetchOptions = { autoInvoke
 
     setLoading(true);
 
-    return fetch(url, { signal: controller.current.signal })
+    return fetch(url, { signal: controller.current.signal, ...options })
       .then((res) => res.json())
       .then((res) => {
         setData(res);
@@ -48,7 +48,7 @@ export function useFetch<T>(url: string, options: UseFetchOptions = { autoInvoke
   }, []);
 
   useEffect(() => {
-    if (options.autoInvoke) {
+    if (autoInvoke) {
       refetch();
     }
 
@@ -57,7 +57,7 @@ export function useFetch<T>(url: string, options: UseFetchOptions = { autoInvoke
         controller.current.abort();
       }
     };
-  }, [refetch, options.autoInvoke]);
+  }, [refetch, autoInvoke]);
 
   return { data, loading, error, refetch, abort };
 }
