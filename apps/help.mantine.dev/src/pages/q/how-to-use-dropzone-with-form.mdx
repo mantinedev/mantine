@@ -9,7 +9,7 @@ export const meta = {
   category: 'forms',
   tags: ['form', '@mantine/form', 'dropzone'],
   created_at: 'December 1, 2023',
-  last_updated_at: 'December 1, 2023',
+  last_updated_at: 'April 8, 2024',
 };
 
 export default Layout(meta);
@@ -23,7 +23,7 @@ does not display selected files and does not upload them to the server.
 error messages and form submission. You can integrate any input or React component
 with `use-form` hook using the following form object properties:
 
-- `form.values.x` – value of the input
+- `form.getValues().x` – value of the input
 - `form.errors.x` – error message for the input
 - `form.setFieldValue('x', value)` – function to set input value
 - `form.setFieldError('x', 'error-message')` – function to set input error message

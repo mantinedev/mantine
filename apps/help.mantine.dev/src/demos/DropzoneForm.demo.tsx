@@ -15,10 +15,11 @@ interface FormValues {
 
 function Demo() {
   const form = useForm<FormValues>({
+    mode: 'uncontrolled',
     initialValues: { files: [] },
   });
 
-  const selectedFiles = form.values.files.map((file, index) => (
+  const selectedFiles = form.getValues().files.map((file, index) => (
     <Text key={file.name}>
       <b>{file.name}</b> ({(file.size / 1024).toFixed(2)} kb)
       <CloseButton
@@ -75,10 +76,11 @@ interface FormValues {
 
 function Demo() {
   const form = useForm<FormValues>({
+    mode: 'uncontrolled',
     initialValues: { files: [] },
   });
 
-  const selectedFiles = form.values.files.map((file, index) => (
+  const selectedFiles = form.getValues().files.map((file, index) => (
     <Text key={file.name}>
       <b>{file.name}</b> ({(file.size / 1024).toFixed(2)} kb)
       <CloseButton
