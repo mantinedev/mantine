@@ -87,6 +87,7 @@ export const MDX_PAGES_GROUPS: MdxPagesGroup[] = [
           MDX_DATA.useWindowEvent,
           MDX_DATA.useWindowScroll,
           MDX_DATA.useInViewport,
+          MDX_DATA.useOrientation,
         ],
       },
 
@@ -96,6 +97,10 @@ export const MDX_PAGES_GROUPS: MdxPagesGroup[] = [
           MDX_DATA.useCounter,
           MDX_DATA.useDebouncedState,
           MDX_DATA.useDebouncedValue,
+          MDX_DATA.useDebouncedCallback,
+          MDX_DATA.useThrottledState,
+          MDX_DATA.useThrottledValue,
+          MDX_DATA.useThrottledCallback,
           MDX_DATA.useDisclosure,
           MDX_DATA.useId,
           MDX_DATA.useInputState,
@@ -109,6 +114,8 @@ export const MDX_PAGES_GROUPS: MdxPagesGroup[] = [
           MDX_DATA.useValidatedState,
           MDX_DATA.usePagination,
           MDX_DATA.useStateHistory,
+          MDX_DATA.useMap,
+          MDX_DATA.useSet,
         ],
       },
 
@@ -130,6 +137,7 @@ export const MDX_PAGES_GROUPS: MdxPagesGroup[] = [
           MDX_DATA.usePageLeave,
           MDX_DATA.useTextSelection,
           MDX_DATA.useTimeout,
+          MDX_DATA.useFetch,
         ],
       },
 
@@ -142,6 +150,7 @@ export const MDX_PAGES_GROUPS: MdxPagesGroup[] = [
           MDX_DATA.useLogger,
           MDX_DATA.useShallowEffect,
           MDX_DATA.useMounted,
+          MDX_DATA.useIsFirstRender,
         ],
       },
     ],

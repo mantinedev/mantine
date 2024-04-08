@@ -158,4 +158,19 @@ export const MDX_HOOKS_DATA: Record<string, Frontmatter> = {
   ),
   useMounted: hDocs('useMounted', 'Returns true if the component is mounted'),
   useStateHistory: hDocs('useStateHistory', 'Move back/forward in state history'),
+  useOrientation: hDocs(
+    'useOrientation',
+    'Detects device orientation and subscribe to its changes'
+  ),
+  useFetch: hDocs('useFetch', 'Fetch data with built-in loading and error states'),
+  useIsFirstRender: hDocs(
+    'useIsFirstRender',
+    'Detects if the component is rendered for the first time'
+  ),
+  useThrottledState: hDocs('useThrottledState', 'Throttles state changes'),
+  useThrottledValue: hDocs('useThrottledValue', 'Throttles value changes'),
+  useThrottledCallback: hDocs('useThrottledCallback', 'Throttles function calls'),
+  useDebouncedCallback: hDocs('useDebouncedCallback', 'Debounces function calls'),
+  useSet: hDocs('useSet', 'Use Set as React state'),
+  useMap: hDocs('useMap', 'Use Map as React state'),
 };
