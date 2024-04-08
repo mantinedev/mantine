@@ -64,6 +64,7 @@ export { useInViewport } from './use-in-viewport/use-in-viewport';
 export { useMutationObserver } from './use-mutation-observer/use-mutation-observer';
 export { useMounted } from './use-mounted/use-mounted';
 export { useStateHistory } from './use-state-history/use-state-history';
+export { useMap } from './use-map/use-map';
 
 export type { UseMovePosition } from './use-move/use-move';
 export type { OS } from './use-os/use-os';
