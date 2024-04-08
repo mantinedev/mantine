@@ -11,16 +11,14 @@ Uncontrolled mode provides a significant performance improvement by reducing
 the number of re-renders and the amount of state updates almost to 0. Uncontrolled
 mode is now the recommended way to use the `useForm` hook for almost all use cases.
 
-Example of uncontrolled form:
+Example of uncontrolled form (`form.values` are not updated):
 
 <Demo data={FormDemos.uncontrolled} />
 
-As you can see in the example above, `form.values` are not updated. In uncontrolled mode,
-you cannot access the form values directly because components are not re-rendered when
-the form values change.
+## form.getValues
 
-Instead of getting values from the form state, you can now use `form.getValues()`
-method to get the form values at any time:
+With uncontrolled mode, you can not access `form.values` as a state variable,
+instead, you can use `form.getValues()` method to get current form values at any time:
 
 ```tsx
 import { useForm } from '@mantine/form';
@@ -35,3 +33,36 @@ form.getValues(); // { name: 'John Doe' }
 form.setValues({ name: 'John Smith' });
 form.getValues(); // { name: 'John Smith' }
 ```
+
+`form.getValues()` always returns the latest form values, it is safe to use it
+after state updates:
+
+```tsx
+import { useForm } from '@mantine/form';
+
+const form = useForm({
+  mode: 'uncontrolled',
+  initialValues: { name: 'John Doe' },
+});
+
+const handleNameChange = () => {
+  form.setFieldValue('name', 'Test Name');
+
+  // ❌ Do not use form.values to get the current form values
+  // form.values has stale name value until next rerender in controlled mode
+  // and is always outdated in uncontrolled mode
+  console.log(form.values); // { name: 'John Doe' }
+
+  // ✅ Use form.getValues to get the current form values
+  // form.getValues always returns the latest form values
+  console.log(form.getValues()); // { name: 'Test Name' }
+};
+```
+
+## form.watch
+
+`form.watch` is an effect function that allows subscribing to changes of a
+specific form field. It accepts field path and a callback function that is
+called with new value, previous value, touched and dirty field states:
+
+<Demo data={FormDemos.watch} />

@@ -169,6 +169,40 @@ function Demo() {
 }
 ```
 
+## onValuesChange
+
+`onValuesChange` function is called every time form values change, use it
+instead of `useEffect` to subscribe to form values changes:
+
+<Demo data={FormDemos.onValuesChange} />
+
+## form.watch
+
+`form.watch` is an effect function that allows subscribing to changes of a
+specific form field. It accepts field path and a callback function that is
+called with new value, previous value, touched and dirty field states:
+
+<Demo data={FormDemos.watch} />
+
+Note that `form.watch` uses `useEffect` under the hood – all hooks rules apply.
+For example, you cannot use `form.watch` conditionally or inside loops.
+
+```tsx
+function Demo() {
+  const form = useForm({
+    mode: 'uncontrolled',
+    initialValues: { name: '' },
+  });
+
+  // ❌ This will not work
+  if (Math.random() > 0.5) {
+    form.watch('name', ({ previousValue, value, touched, dirty }) => {
+      console.log({ previousValue, value, touched, dirty });
+    });
+  }
+}
+```
+
 ## Get values type
 
 ```tsx

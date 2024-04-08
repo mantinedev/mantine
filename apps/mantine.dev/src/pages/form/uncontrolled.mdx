@@ -52,7 +52,7 @@ form.setValues({ name: 'John Smith' });
 form.getValues(); // { name: 'John Smith' }
 ```
 
-Although `form.values` can be used to get the current form values, it is
+Although `form.values` can be used to get the current form values in controlled mode, it is
 recommended to use `form.getValues` instead as it always returns the latest
 values while `form.values` is outdated in uncontrolled mode and before state
 update in controlled mode.
