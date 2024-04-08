@@ -176,22 +176,7 @@ function Demo() {
 Then you will be able to add your own styles either with [global styles](/styles/global-styles/)
 or with [Styles API](/styles/styles-api/):
 
-```tsx
-// ...
-<RichTextEditor
-  editor={editor}
-  withTypographyStyles={false}
-  styles={{
-    content: {
-      '& p': {
-        color: 'silver',
-      },
-    },
-  }}
->
-  <RichTextEditor.Content />
-</RichTextEditor>
-```
+<Demo data={TipTapDemos.typographyStyles} />
 
 ## Bubble menu
 

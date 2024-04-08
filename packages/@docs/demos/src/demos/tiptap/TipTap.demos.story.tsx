@@ -47,3 +47,8 @@ export const Demo_tasks = {
   name: '⭐ Demo: tasks',
   render: renderDemo(demos.tasks),
 };
+
+export const Demo_typographyStyles = {
+  name: '⭐ Demo: typographyStyles',
+  render: renderDemo(demos.typographyStyles),
+};
