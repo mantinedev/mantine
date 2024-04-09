@@ -322,3 +322,8 @@ export const Demo_useOrientationUsage = {
   name: '⭐ Demo: useOrientationUsage',
   render: renderDemo(demos.useOrientationUsage),
 };
+
+export const Demo_useIsFirstRenderUsage = {
+  name: '⭐ Demo: useIsFirstRenderUsage',
+  render: renderDemo(demos.useIsFirstRenderUsage),
+};
