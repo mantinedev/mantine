@@ -317,3 +317,8 @@ export const Demo_useThrottledCallbackUsage = {
   name: '⭐ Demo: useThrottledCallbackUsage',
   render: renderDemo(demos.useThrottledCallbackUsage),
 };
+
+export const Demo_useOrientationUsage = {
+  name: '⭐ Demo: useOrientationUsage',
+  render: renderDemo(demos.useOrientationUsage),
+};
