@@ -292,3 +292,8 @@ export const Demo_useMapUsage = {
   name: '⭐ Demo: useMapUsage',
   render: renderDemo(demos.useMapUsage),
 };
+
+export const Demo_useSetUsage = {
+  name: '⭐ Demo: useSetUsage',
+  render: renderDemo(demos.useSetUsage),
+};
