@@ -297,3 +297,8 @@ export const Demo_useSetUsage = {
   name: '⭐ Demo: useSetUsage',
   render: renderDemo(demos.useSetUsage),
 };
+
+export const Demo_useDebouncedCallbackUsage = {
+  name: '⭐ Demo: useDebouncedCallbackUsage',
+  render: renderDemo(demos.useDebouncedCallbackUsage),
+};
