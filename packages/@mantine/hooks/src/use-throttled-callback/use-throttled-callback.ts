@@ -1,25 +1,23 @@
 import { useCallback, useRef } from 'react';
 import { useCallbackRef } from '../use-callback-ref/use-callback-ref';
 
-export function useThrottledCallback<T extends (...args: any[]) => any>(
-  callback: T,
-  delay: number
-) {
+export function useThrottledCallback<T extends (...args: any[]) => any>(callback: T, wait: number) {
   const handleCallback = useCallbackRef(callback);
-  const lastCallTime = useRef(0);
-  const lastCallArgs = useRef<Parameters<T>>([] as any);
+  const active = useRef(true);
+  const timeout = useRef<number>(-1);
 
-  return useCallback(
+  const throttled = useCallback(
     (...args: Parameters<T>) => {
-      const now = Date.now();
-      const timeSinceLastCall = now - lastCallTime.current;
-
-      if (timeSinceLastCall >= delay) {
-        lastCallTime.current = now;
-        lastCallArgs.current = args;
+      if (active.current) {
+        active.current = false;
         handleCallback(...args);
+        timeout.current = window.setTimeout(() => {
+          active.current = true;
+        }, wait);
       }
     },
-    [handleCallback, delay]
+    [wait]
   );
+
+  return throttled;
 }

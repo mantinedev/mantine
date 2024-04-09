@@ -5,7 +5,7 @@ import { MantineDemo } from '@mantinex/demo';
 
 const code = `
 import { Text, TextInput } from '@mantine/core';
-import { useThrottledState } from '@mantine/hooks';
+import { useThrottledValue } from '@mantine/hooks';
 
 function Demo() {
   const [value, setValue] = useState('');

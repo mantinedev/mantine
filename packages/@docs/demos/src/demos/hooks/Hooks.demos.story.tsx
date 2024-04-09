@@ -312,3 +312,8 @@ export const Demo_useThrottledValueUsage = {
   name: '⭐ Demo: useThrottledValueUsage',
   render: renderDemo(demos.useThrottledValueUsage),
 };
+
+export const Demo_useThrottledCallbackUsage = {
+  name: '⭐ Demo: useThrottledCallbackUsage',
+  render: renderDemo(demos.useThrottledCallbackUsage),
+};

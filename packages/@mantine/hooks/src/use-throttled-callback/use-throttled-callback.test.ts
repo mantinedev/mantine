@@ -1,30 +1,51 @@
-import { renderHook } from '@testing-library/react';
+import { act, renderHook } from '@testing-library/react';
 import { useThrottledCallback } from './use-throttled-callback';
 
-describe('@mantine/hooks/use-throttled-callback', () => {
+describe('useThrottledCallback', () => {
   beforeEach(() => {
     jest.useFakeTimers();
   });
 
-  it('throttles callback with given delay', () => {
+  afterAll(() => {
+    jest.useRealTimers();
+  });
+
+  it('should throttle the callback', () => {
     const callback = jest.fn();
     const { result } = renderHook(() => useThrottledCallback(callback, 100));
-    result.current();
-    result.current();
-    result.current();
+
+    act(() => {
+      result.current();
+      jest.advanceTimersByTime(50);
+      result.current();
+      jest.advanceTimersByTime(50);
+    });
+
     expect(callback).toHaveBeenCalledTimes(1);
-    jest.advanceTimersByTime(100);
-    result.current();
+  });
+
+  it('should allow callback after throttle period', () => {
+    const callback = jest.fn();
+    const { result } = renderHook(() => useThrottledCallback(callback, 100));
+
+    act(() => {
+      result.current();
+      jest.advanceTimersByTime(100);
+      result.current();
+    });
+
     expect(callback).toHaveBeenCalledTimes(2);
   });
 
-  it('calls callback with correct arguments', () => {
+  it('should call the callback with correct arguments', () => {
     const callback = jest.fn();
     const { result } = renderHook(() => useThrottledCallback(callback, 100));
-    result.current(1);
-    result.current(2);
-    result.current(3);
-    jest.advanceTimersByTime(100);
-    expect(callback).toHaveBeenCalledWith(1);
+
+    act(() => {
+      result.current('test');
+      jest.advanceTimersByTime(100);
+    });
+
+    expect(callback).toHaveBeenCalledWith('test');
   });
 });

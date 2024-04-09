@@ -60,3 +60,4 @@ export { useSetUsage } from './use-set.demo.usage';
 export { useDebouncedCallbackUsage } from './use-debounced-callback.demo.usage';
 export { useThrottledStateUsage } from './use-throttled-state.demo.usage';
 export { useThrottledValueUsage } from './use-throttled-value.demo.usage';
+export { useThrottledCallbackUsage } from './use-throttled-callback.demo.usage';
