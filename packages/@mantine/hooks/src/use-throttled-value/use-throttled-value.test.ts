@@ -6,55 +6,49 @@ describe('useThrottledValue', () => {
     jest.useFakeTimers();
   });
 
-  afterEach(() => {
+  afterAll(() => {
     jest.useRealTimers();
   });
 
-  it('returns the initial value', () => {
-    const { result } = renderHook(() => useThrottledValue(10, 100));
-    expect(result.current).toBe(10);
+  it('should return the initial value', () => {
+    const { result } = renderHook(() => useThrottledValue('initial', 1000));
+    expect(result.current).toBe('initial');
   });
 
-  it('updates the throttled value after delay', () => {
+  it('should throttle the value update', () => {
     const { result, rerender } = renderHook(({ value, delay }) => useThrottledValue(value, delay), {
-      initialProps: { value: 10, delay: 100 },
+      initialProps: { value: 'initial', delay: 1000 },
     });
-
-    expect(result.current).toBe(10);
 
     act(() => {
-      rerender({ value: 20, delay: 100 });
-      jest.advanceTimersByTime(50);
+      rerender({ value: 'updated', delay: 1000 });
     });
 
-    expect(result.current).toBe(10);
+    expect(result.current).toBe('updated');
+
+    jest.advanceTimersByTime(1000);
 
     act(() => {
-      jest.advanceTimersByTime(100);
+      rerender({ value: 'updated-2', delay: 1000 });
     });
 
-    expect(result.current).toBe(20);
+    act(() => {
+      rerender({ value: 'updated-3', delay: 1000 });
+    });
+
+    act(() => {
+      jest.advanceTimersByTime(3000);
+    });
+
+    expect(result.current).toBe('updated-2');
   });
 
-  it('does not update the throttled value if value changes frequently', () => {
-    const { result, rerender } = renderHook(({ value, delay }) => useThrottledValue(value, delay), {
-      initialProps: { value: 10, delay: 100 },
-    });
+  it('should clear timeout on unmount', () => {
+    const clearTimeoutSpy = jest.spyOn(window, 'clearTimeout');
+    const { unmount } = renderHook(() => useThrottledValue('initial', 1000));
 
-    expect(result.current).toBe(10);
+    unmount();
 
-    act(() => {
-      rerender({ value: 20, delay: 100 });
-      jest.advanceTimersByTime(50);
-    });
-
-    expect(result.current).toBe(10);
-
-    act(() => {
-      rerender({ value: 30, delay: 100 });
-      jest.advanceTimersByTime(50);
-    });
-
-    expect(result.current).toBe(10);
+    expect(clearTimeoutSpy).toHaveBeenCalledTimes(1);
   });
 });

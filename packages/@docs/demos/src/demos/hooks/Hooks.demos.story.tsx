@@ -302,3 +302,13 @@ export const Demo_useDebouncedCallbackUsage = {
   name: '⭐ Demo: useDebouncedCallbackUsage',
   render: renderDemo(demos.useDebouncedCallbackUsage),
 };
+
+export const Demo_useThrottledStateUsage = {
+  name: '⭐ Demo: useThrottledStateUsage',
+  render: renderDemo(demos.useThrottledStateUsage),
+};
+
+export const Demo_useThrottledValueUsage = {
+  name: '⭐ Demo: useThrottledValueUsage',
+  render: renderDemo(demos.useThrottledValueUsage),
+};

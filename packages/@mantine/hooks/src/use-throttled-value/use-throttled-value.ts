@@ -1,24 +1,25 @@
 import { useEffect, useRef, useState } from 'react';
 
-export function useThrottledValue<T>(value: T, delay: number) {
+export function useThrottledValue<T>(value: T, wait: number) {
   const [throttledValue, setThrottledValue] = useState(value);
-  const lastUpdated = useRef(0);
+  const valueRef = useRef(value);
+  const active = useRef(true);
+  const timeoutRef = useRef<number>(-1);
 
   useEffect(() => {
-    const now = Date.now();
-
-    if (lastUpdated.current && now >= lastUpdated.current + delay) {
-      lastUpdated.current = now;
+    if (active.current && valueRef.current !== value) {
       setThrottledValue(value);
-    } else {
-      const id = window.setTimeout(() => {
-        lastUpdated.current = now;
-        setThrottledValue(value);
-      }, delay);
+      valueRef.current = value;
+      window.clearTimeout(timeoutRef.current);
+      active.current = false;
 
-      return () => window.clearTimeout(id);
+      timeoutRef.current = window.setTimeout(() => {
+        active.current = true;
+      }, wait);
     }
-  }, [value, delay]);
+  }, [value]);
+
+  useEffect(() => () => window.clearTimeout(timeoutRef.current), []);
 
   return throttledValue;
 }

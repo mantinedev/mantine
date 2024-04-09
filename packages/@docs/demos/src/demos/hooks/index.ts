@@ -58,3 +58,5 @@ export { useFetchUsage } from './use-fetch.demo.usage';
 export { useMapUsage } from './use-map.demo.usage';
 export { useSetUsage } from './use-set.demo.usage';
 export { useDebouncedCallbackUsage } from './use-debounced-callback.demo.usage';
+export { useThrottledStateUsage } from './use-throttled-state.demo.usage';
+export { useThrottledValueUsage } from './use-throttled-value.demo.usage';
