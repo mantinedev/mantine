@@ -51,6 +51,22 @@ describe('@mantine/units-converters/rem', () => {
       'calc(1rem * var(--mantine-scale)) solid var(--mantine-color-primary)'
     );
   });
+
+  it('converts all values in space separated string and leaves non px values untouched', () => {
+    expect(rem('10px 5px 1rem 2em')).toBe(
+      'calc(0.625rem * var(--mantine-scale)) calc(0.3125rem * var(--mantine-scale)) calc(1rem * var(--mantine-scale)) 2em'
+    );
+
+    expect(rem('1px solid red')).toBe('calc(0.0625rem * var(--mantine-scale)) solid red');
+
+    expect(rem('1px 1px 5px rgba(0, 0, 0, 0.5)')).toBe(
+      'calc(0.0625rem * var(--mantine-scale)) calc(0.0625rem * var(--mantine-scale)) calc(0.3125rem * var(--mantine-scale)) rgba(0, 0, 0, 0.5)'
+    );
+
+    expect(rem('0 0 5px 10px rgba(0, 0, 0, 0.5)')).toBe(
+      '0rem 0rem calc(0.3125rem * var(--mantine-scale)) calc(0.625rem * var(--mantine-scale)) rgba(0, 0, 0, 0.5)'
+    );
+  });
 });
 
 describe('@mantine/units-converters/em', () => {
