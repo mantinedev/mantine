@@ -116,6 +116,9 @@ export interface PinInputProps
 
   /** Props passed down to the hidden input */
   hiddenInputProps?: React.ComponentPropsWithoutRef<'input'>;
+
+  /** Assigns ref of the root element */
+  rootRef?: React.ForwardedRef<HTMLDivElement>;
 }
 
 export type PinInputFactory = Factory<{
@@ -174,6 +177,7 @@ export const PinInput = factory<PinInputFactory>((props, ref) => {
     vars,
     id,
     hiddenInputProps,
+    rootRef,
     ...others
   } = useProps('PinInput', defaultProps, props);
 
@@ -364,6 +368,7 @@ export const PinInput = factory<PinInputFactory>((props, ref) => {
       <Group
         {...others}
         {...getStyles('root')}
+        ref={rootRef}
         role="group"
         id={uuid}
         gap={gap}
