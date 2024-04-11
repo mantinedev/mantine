@@ -2,6 +2,10 @@
   display: block;
   width: 100%;
 
+  svg {
+    overflow: visible;
+  }
+
   @mixin where-light {
     --chart-grid-color: rgba(173, 181, 189, 0.6);
     --chart-cursor-fill: rgba(173, 181, 189, 0.15);

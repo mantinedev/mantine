@@ -81,8 +81,8 @@
     height: var(--scrollarea-scrollbar-size);
     flex-direction: column;
     bottom: 0;
-    inset-inline-end: 0;
-    inset-inline-start: var(--sa-corner-height);
+    inset-inline-start: 0;
+    inset-inline-end: var(--sa-corner-width);
   }
 }
 

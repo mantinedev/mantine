@@ -11,6 +11,14 @@ export function SingleButton() {
   );
 }
 
+export function Disabled() {
+  return (
+    <div style={{ padding: 40 }}>
+      <CloseButton disabled />
+    </div>
+  );
+}
+
 export function Usage() {
   return (
     <div style={{ padding: 40 }}>

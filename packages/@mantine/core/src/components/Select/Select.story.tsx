@@ -11,6 +11,7 @@ export function Usage() {
         data={['React', 'Angular', 'Svelte']}
         placeholder="Select something"
         defaultValue="First"
+        name="usage-select"
       />
     </div>
   );

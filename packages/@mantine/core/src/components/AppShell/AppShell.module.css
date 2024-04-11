@@ -110,8 +110,9 @@
 }
 
 .footer {
-  bottom: env(safe-area-inset-bottom);
-  height: var(--app-shell-footer-height);
+  bottom: 0;
+  height: calc(var(--app-shell-footer-height) + env(safe-area-inset-bottom));
+  padding-bottom: env(safe-area-inset-bottom);
   transform: var(--app-shell-footer-transform);
   z-index: var(--app-shell-footer-z-index);
 

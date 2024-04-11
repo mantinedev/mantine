@@ -6,6 +6,11 @@ import { AppShell } from './AppShell';
 
 export default { title: 'AppShell' };
 
+const lorem =
+  'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam eget felis eget nunc Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam eget felis eget nunc Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam eget felis eget nunc';
+
+const longContent = Array(30).fill(lorem).join('\n\n');
+
 export function Usage() {
   const [navbarOpened, { toggle: toggleNavbar }] = useDisclosure(true);
   const [navbarMobileOpened, { toggle: toggleNavbarMobile }] = useDisclosure(false);
@@ -28,7 +33,7 @@ export function Usage() {
         collapsed: { desktop: !asideOpened, mobile: !asideMobileOpened },
       }}
       header={{
-        height: 0,
+        height: 60,
         collapsed: !headerOpened,
       }}
       footer={{
@@ -53,7 +58,7 @@ export function Usage() {
           <Button onClick={toggleAside}>Toggle aside</Button>
           <Button onClick={toggleAsideMobile}>Toggle aside mobile</Button>
         </Group>
-        <p>Other content</p>
+        <p>{longContent}</p>
       </AppShell.Main>
 
       <AppShell.Aside>Aside</AppShell.Aside>
