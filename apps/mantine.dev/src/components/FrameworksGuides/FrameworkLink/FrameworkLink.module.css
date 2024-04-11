@@ -1,9 +1,9 @@
 .link {
-  flex: 1 1 rem(120px);
-  min-width: rem(120px);
+  flex: 1 1 120px;
+  min-width: 120px;
   text-decoration: none;
   color: light-dark(var(--mantine-color-black), var(--mantine-color-white));
-  border: rem(1px) solid light-dark(var(--mantine-color-gray-3), var(--mantine-color-dark-4));
+  border: 1px solid light-dark(var(--mantine-color-gray-3), var(--mantine-color-dark-4));
   border-radius: var(--mantine-radius-md);
   padding: var(--mantine-spacing-md);
   display: flex;
@@ -19,10 +19,10 @@
 
 .icon {
   width: 100%;
-  max-width: rem(60px);
+  max-width: 60px;
 
   &[data-large] {
-    max-width: rem(100px);
+    max-width: 100px;
   }
 }
 

@@ -1,8 +1,8 @@
 .root {
   --offset: calc(var(--tl-bullet-size) / 2 + var(--tl-line-width) / 2);
-  --tl-bullet-size: rem(20px);
-  --tl-line-width: rem(4px);
-  --tl-radius: rem(1000px);
+  --tl-bullet-size: 20px;
+  --tl-line-width: 4px;
+  --tl-radius: 1000px;
   --tl-color: var(--mantine-primary-color-filled);
 
   &:where([data-align='left']) {

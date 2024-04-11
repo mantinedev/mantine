@@ -1,6 +1,6 @@
 .searchIcon {
-  width: rem(22px);
-  height: rem(22px);
+  width: 22px;
+  height: 22px;
 
   @mixin light {
     color: var(--mantine-color-gray-4);
@@ -26,7 +26,7 @@
 
 .section {
   & + & {
-    margin-top: rem(50px);
+    margin-top: 50px;
   }
 }
 

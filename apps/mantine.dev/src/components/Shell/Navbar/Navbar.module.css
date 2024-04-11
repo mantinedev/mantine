@@ -1,5 +1,5 @@
 .navbar {
-  border-right: rem(1px) solid var(--navbar-border-color);
+  border-right: 1px solid var(--navbar-border-color);
   position: fixed;
   top: var(--docs-header-height);
   bottom: 0;
@@ -20,7 +20,7 @@
   }
 
   @mixin rtl {
-    border-left: rem(1px) solid var(--navbar-border-color);
+    border-left: 1px solid var(--navbar-border-color);
     border-right: 0;
     left: unset;
     right: 0;
@@ -53,7 +53,7 @@
 
 .body {
   padding-top: var(--mantine-spacing-md);
-  padding-bottom: rem(100px);
+  padding-bottom: 100px;
 }
 
 .groups {

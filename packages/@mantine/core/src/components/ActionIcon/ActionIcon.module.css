@@ -1,15 +1,15 @@
 .root {
-  --ai-size-xs: rem(18px);
-  --ai-size-sm: rem(22px);
-  --ai-size-md: rem(28px);
-  --ai-size-lg: rem(34px);
-  --ai-size-xl: rem(44px);
+  --ai-size-xs: 18px;
+  --ai-size-sm: 22px;
+  --ai-size-md: 28px;
+  --ai-size-lg: 34px;
+  --ai-size-xl: 44px;
 
-  --ai-size-input-xs: rem(30px);
-  --ai-size-input-sm: rem(36px);
-  --ai-size-input-md: rem(42px);
-  --ai-size-input-lg: rem(50px);
-  --ai-size-input-xl: rem(60px);
+  --ai-size-input-xs: 30px;
+  --ai-size-input-sm: 36px;
+  --ai-size-input-md: 42px;
+  --ai-size-input-lg: 50px;
+  --ai-size-input-xl: 60px;
 
   --ai-size: var(--ai-size-md);
   --ai-color: var(--mantine-color-white);
@@ -50,7 +50,7 @@
 
   &:where(:disabled:not([data-loading]), [data-disabled]:not([data-loading])) {
     cursor: not-allowed;
-    border: rem(1px) solid transparent;
+    border: 1px solid transparent;
 
     @mixin where-light {
       background-color: var(--mantine-color-gray-1);
@@ -69,7 +69,7 @@
 }
 
 .loader {
-  inset: rem(-1px);
+  inset: -1px;
   position: absolute;
   border-radius: var(--ai-radius, var(--mantine-radius-default));
   display: flex;
@@ -86,7 +86,7 @@
 }
 
 .group {
-  --ai-border-width: rem(1px);
+  --ai-border-width: 1px;
   display: flex;
 
   & :where(*) {

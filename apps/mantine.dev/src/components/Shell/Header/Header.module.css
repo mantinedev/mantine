@@ -13,11 +13,11 @@
   z-index: 101;
 
   @mixin light {
-    border-bottom: rem(1px) solid var(--mantine-color-gray-2);
+    border-bottom: 1px solid var(--mantine-color-gray-2);
   }
 
   @mixin dark {
-    border-bottom: rem(1px) solid var(--mantine-color-dark-8);
+    border-bottom: 1px solid var(--mantine-color-dark-8);
   }
 
   &[data-desktop] {
@@ -39,15 +39,15 @@
 }
 
 .version {
-  margin-top: rem(4px);
+  margin-top: 4px;
   margin-left: var(--mantine-spacing-md);
   font-weight: bold;
   display: flex;
   align-items: center;
   justify-content: center;
   line-height: 1;
-  padding: rem(4px) rem(10px);
-  padding-right: rem(8px);
+  padding: 4px 10px;
+  padding-right: 8px;
   border-radius: var(--mantine-radius-xl);
 
   @mixin rtl {
@@ -62,13 +62,13 @@
 
 .versionChevron {
   display: block;
-  width: rem(14px);
-  height: rem(14px);
-  margin-left: rem(5px);
+  width: 14px;
+  height: 14px;
+  margin-left: 5px;
 }
 
 .versionExternalIcon {
-  width: rem(14px);
-  height: rem(14px);
+  width: 14px;
+  height: 14px;
   color: var(--mantine-color-dimmed);
 }

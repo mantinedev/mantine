@@ -1,8 +1,8 @@
 .content {
-  min-height: calc(100vh - rem(350px));
+  min-height: calc(100vh - 350px);
   position: relative;
   z-index: 1;
-  padding-bottom: rem(80px);
+  padding-bottom: 80px;
 
   @mixin light {
     background-color: var(--mantine-color-white);

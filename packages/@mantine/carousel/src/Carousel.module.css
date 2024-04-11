@@ -64,7 +64,7 @@
   background-color: var(--mantine-color-white);
   color: var(--mantine-color-black);
   box-shadow: var(--mantine-shadow-md);
-  border: rem(1px) solid var(--mantine-color-gray-3);
+  border: 1px solid var(--mantine-color-gray-3);
   transition: opacity 100ms ease;
 
   @mixin where-light {
@@ -84,7 +84,7 @@
   position: absolute;
   display: flex;
   justify-content: center;
-  gap: rem(8px);
+  gap: 8px;
   pointer-events: none;
 
   &:where([data-orientation='vertical']) {
@@ -118,13 +118,13 @@
   }
 
   &:where([data-orientation='vertical']) {
-    width: rem(5px);
-    height: rem(25px);
+    width: 5px;
+    height: 25px;
   }
 
   &:where([data-orientation='horizontal']) {
-    width: rem(25px);
-    height: rem(5px);
+    width: 25px;
+    height: 5px;
   }
 }
 

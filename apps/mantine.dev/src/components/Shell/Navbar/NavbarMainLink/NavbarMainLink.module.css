@@ -1,7 +1,7 @@
 .link {
-  --offset: rem(6px);
+  --offset: 6px;
 
-  height: rem(48px);
+  height: 48px;
   display: flex;
   align-items: center;
   padding-left: calc(var(--mantine-spacing-md) - var(--offset));
@@ -34,12 +34,12 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: rem(4px);
+  padding: 4px;
   border-radius: var(--mantine-radius-md);
   background-color: var(--mantine-color-blue-light-hover);
   color: var(--mantine-color-blue-light-color);
-  width: rem(34px);
-  height: rem(34px);
+  width: 34px;
+  height: 34px;
 }
 
 .label {
@@ -58,8 +58,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  width: rem(34px);
-  height: rem(34px);
+  width: 34px;
+  height: 34px;
   color: var(--mantine-color-dimmed);
   border-radius: var(--mantine-radius-md);
   opacity: 0;

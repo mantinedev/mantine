@@ -1,7 +1,7 @@
 .item {
   display: flex;
   align-items: center;
-  min-height: rem(20px);
+  min-height: 20px;
   overflow-x: hidden;
 
   & + & {
@@ -10,10 +10,10 @@
 }
 
 .label {
-  width: rem(100px);
-  min-width: rem(100px);
-  height: rem(20px);
-  line-height: rem(20px);
+  width: 100px;
+  min-width: 100px;
+  height: 20px;
+  line-height: 20px;
 
   @media (max-width: 31em) {
     display: none;

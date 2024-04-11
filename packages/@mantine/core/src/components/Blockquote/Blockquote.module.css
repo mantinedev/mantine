@@ -1,5 +1,5 @@
 .root {
-  --blockquote-border: rem(3px) solid var(--bq-bd);
+  --blockquote-border: 3px solid var(--bq-bd);
 
   position: relative;
   margin: 0;

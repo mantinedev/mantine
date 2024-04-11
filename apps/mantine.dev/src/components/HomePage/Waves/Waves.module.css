@@ -12,7 +12,7 @@
   fill: light-dark(var(--mantine-color-white), var(--mantine-color-dark-8));
   width: var(--waves-width);
   height: var(--waves-height);
-  filter: drop-shadow(rem(10px) rem(5px) rem(5px) rgba(0, 0, 0, 0.03));
+  filter: drop-shadow(10px 5px 5px rgba(0, 0, 0, 0.03));
   display: block;
 
   &[data-flip] {
@@ -29,6 +29,6 @@
   }
 
   @media (max-width: $mantine-breakpoint-sm) {
-    height: rem(18px);
+    height: 18px;
   }
 }

@@ -143,7 +143,7 @@ const cssCode = `.root {
   background-color: light-dark(var(--mantine-color-white), var(--mantine-color-dark-6));
   border-radius: var(--mantine-radius-md);
   box-shadow: var(--mantine-shadow-md);
-  border: rem(1px) solid light-dark(var(--mantine-color-gray-2), var(--mantine-color-dark-4));
+  border: 1px solid light-dark(var(--mantine-color-gray-2), var(--mantine-color-dark-4));
 }
 
 .controlsGroup {
@@ -151,8 +151,8 @@ const cssCode = `.root {
 }
 
 .control {
-  width: rem(50px);
-  height: rem(50px);
+  width: 50px;
+  height: 50px;
   display: flex;
   align-items: center;
   justify-content: center;

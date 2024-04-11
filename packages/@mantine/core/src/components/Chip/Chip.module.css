@@ -1,33 +1,33 @@
 .root {
-  --chip-size-xs: rem(23px);
-  --chip-size-sm: rem(28px);
-  --chip-size-md: rem(32px);
-  --chip-size-lg: rem(36px);
-  --chip-size-xl: rem(40px);
+  --chip-size-xs: 23px;
+  --chip-size-sm: 28px;
+  --chip-size-md: 32px;
+  --chip-size-lg: 36px;
+  --chip-size-xl: 40px;
 
-  --chip-icon-size-xs: rem(10px);
-  --chip-icon-size-sm: rem(12px);
-  --chip-icon-size-md: rem(14px);
-  --chip-icon-size-lg: rem(16px);
-  --chip-icon-size-xl: rem(18px);
+  --chip-icon-size-xs: 10px;
+  --chip-icon-size-sm: 12px;
+  --chip-icon-size-md: 14px;
+  --chip-icon-size-lg: 16px;
+  --chip-icon-size-xl: 18px;
 
-  --chip-padding-xs: rem(16px);
-  --chip-padding-sm: rem(20px);
-  --chip-padding-md: rem(24px);
-  --chip-padding-lg: rem(28px);
-  --chip-padding-xl: rem(32px);
+  --chip-padding-xs: 16px;
+  --chip-padding-sm: 20px;
+  --chip-padding-md: 24px;
+  --chip-padding-lg: 28px;
+  --chip-padding-xl: 32px;
 
-  --chip-checked-padding-xs: rem(7.5px);
-  --chip-checked-padding-sm: rem(10px);
-  --chip-checked-padding-md: rem(11.7px);
-  --chip-checked-padding-lg: rem(13.5px);
-  --chip-checked-padding-xl: rem(12.5px);
+  --chip-checked-padding-xs: 7.5px;
+  --chip-checked-padding-sm: 10px;
+  --chip-checked-padding-md: 11.7px;
+  --chip-checked-padding-lg: 13.5px;
+  --chip-checked-padding-xl: 12.5px;
 
-  --chip-spacing-xs: rem(10px);
-  --chip-spacing-sm: rem(12px);
-  --chip-spacing-md: rem(16px);
-  --chip-spacing-lg: rem(20px);
-  --chip-spacing-xl: rem(22px);
+  --chip-spacing-xs: 10px;
+  --chip-spacing-sm: 12px;
+  --chip-spacing-md: 16px;
+  --chip-spacing-lg: 20px;
+  --chip-spacing-xl: 22px;
 
   --chip-size: var(--chip-size-sm);
   --chip-icon-size: var(--chip-icon-size-sm);
@@ -37,14 +37,14 @@
   --chip-bg: var(--mantine-primary-color-filled);
   --chip-hover: var(--mantine-primary-color-filled-hover);
   --chip-color: var(--mantine-color-white);
-  --chip-bd: rem(1px) solid transparent;
+  --chip-bd: 1px solid transparent;
 }
 
 .label {
   display: inline-flex;
   align-items: center;
   user-select: none;
-  border-radius: var(--chip-radius, rem(1000px));
+  border-radius: var(--chip-radius, 1000rem);
   height: var(--chip-size);
   font-size: var(--chip-fz, var(--mantine-font-size-sm));
   line-height: calc(var(--chip-size) - rem(2px));
@@ -52,7 +52,7 @@
   cursor: pointer;
   white-space: nowrap;
   -webkit-tap-highlight-color: transparent;
-  border: rem(1px) solid transparent;
+  border: 1px solid transparent;
   color: var(--mantine-color-text);
 
   &:where([data-checked]) {
@@ -77,12 +77,12 @@
 .label--outline:not([data-disabled]) {
   @mixin where-light {
     background-color: var(--mantine-color-white);
-    border: rem(1px) solid var(--mantine-color-gray-3);
+    border: 1px solid var(--mantine-color-gray-3);
   }
 
   @mixin where-dark {
     background-color: var(--mantine-color-dark-6);
-    border: rem(1px) solid var(--mantine-color-dark-4);
+    border: 1px solid var(--mantine-color-dark-4);
   }
 
   @mixin hover {
@@ -107,7 +107,7 @@
 
 .label--filled:not([data-disabled]),
 .label--light:not([data-disabled]) {
-  border: rem(1px) solid transparent;
+  border: 1px solid transparent;
   color: var(--mantine-color-text);
 
   @mixin where-light {
@@ -163,7 +163,7 @@
   margin: 0;
 
   &:focus-visible + .label {
-    outline: rem(2px) solid var(--mantine-primary-color-filled);
-    outline-offset: rem(2px);
+    outline: 2px solid var(--mantine-primary-color-filled);
+    outline-offset: 2px;
   }
 }

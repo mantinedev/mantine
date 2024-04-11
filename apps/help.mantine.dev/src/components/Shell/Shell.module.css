@@ -1,5 +1,5 @@
 .root {
-  --footer-height: rem(120px);
+  --footer-height: 120px;
 }
 
 .inner {
@@ -17,7 +17,7 @@
   position: relative;
   z-index: 1;
   background-color: var(--mantine-color-body);
-  padding-bottom: rem(120px);
+  padding-bottom: 120px;
   box-shadow: var(--mantine-shadow-md);
   min-height: calc(100vh - var(--app-shell-header-height));
 }

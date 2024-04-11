@@ -2,7 +2,7 @@
   position: relative;
 
   &:where([data-has-spoiler]) {
-    margin-bottom: rem(24px);
+    margin-bottom: 24px;
   }
 }
 
@@ -17,5 +17,5 @@
   position: absolute;
   inset-inline-start: 0;
   top: 100%;
-  height: rem(24px);
+  height: 24px;
 }

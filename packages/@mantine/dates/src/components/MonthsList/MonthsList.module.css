@@ -8,6 +8,6 @@
   padding: 0;
 
   &:where([data-with-spacing]) {
-    padding: rem(0.5px);
+    padding: 0.5px;
   }
 }

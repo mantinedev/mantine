@@ -1,14 +1,14 @@
 .groupsHeader {
-  margin-bottom: rem(30px);
+  margin-bottom: 30px;
 }
 
 .group {
-  --group-spacing: rem(40px);
+  --group-spacing: 40px;
 
   & + & {
     margin-top: var(--group-spacing);
     padding-top: var(--group-spacing);
-    border-top: rem(1px) solid light-dark(var(--mantine-color-gray-3), var(--mantine-color-dark-3));
+    border-top: 1px solid light-dark(var(--mantine-color-gray-3), var(--mantine-color-dark-3));
   }
 }
 
@@ -27,6 +27,6 @@
 
 .section {
   & + & {
-    margin-top: rem(40px);
+    margin-top: 40px;
   }
 }

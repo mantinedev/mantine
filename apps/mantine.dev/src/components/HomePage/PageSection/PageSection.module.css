@@ -1,6 +1,6 @@
 .wrapper {
-  padding-top: rem(120px);
-  padding-bottom: rem(60px);
+  padding-top: 120px;
+  padding-bottom: 60px;
   background-color: light-dark(var(--mantine-color-gray-0), var(--mantine-color-dark-7));
 
   &[data-alt] {

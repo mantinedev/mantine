@@ -1,9 +1,9 @@
 .root {
-  --loader-size-xs: rem(18px);
-  --loader-size-sm: rem(22px);
-  --loader-size-md: rem(36px);
-  --loader-size-lg: rem(44px);
-  --loader-size-xl: rem(58px);
+  --loader-size-xs: 18px;
+  --loader-size-sm: 22px;
+  --loader-size-md: 36px;
+  --loader-size-lg: 44px;
+  --loader-size-xl: 58px;
   --loader-size: var(--loader-size-md);
   --loader-color: var(--mantine-primary-color-filled);
 }
@@ -33,7 +33,7 @@
   flex: 1;
   background: var(--loader-color);
   animation: bars-loader-animation 1.2s cubic-bezier(0, 0.5, 0.5, 1) infinite;
-  border-radius: rem(2px);
+  border-radius: 2px;
 
   &:nth-of-type(1) {
     animation-delay: -240ms;
@@ -105,7 +105,7 @@
     display: block;
     width: var(--loader-size);
     height: var(--loader-size);
-    border-radius: rem(10000px);
+    border-radius: 10000px;
     border-width: calc(var(--loader-size) / 8);
     border-style: solid;
     border-color: var(--loader-color) var(--loader-color) var(--loader-color) transparent;

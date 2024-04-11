@@ -7,7 +7,7 @@
   --tabs-panel-grow: unset;
   --tabs-display: block;
   --tabs-flex-direction: row;
-  --tabs-list-border-width: rem(0);
+  --tabs-list-border-width: 0;
   --tabs-list-border-size: 0 0 var(--tabs-list-border-width) 0;
   --tabs-list-gap: unset;
 
@@ -78,7 +78,7 @@
   }
 
   &[data-variant='default'] {
-    --tabs-list-border-width: rem(2px);
+    --tabs-list-border-width: 2px;
 
     @mixin light {
       --tab-hover-color: var(--mantine-color-gray-0);
@@ -90,7 +90,7 @@
   }
 
   &[data-variant='outline'] {
-    --tabs-list-border-width: rem(1px);
+    --tabs-list-border-width: 1px;
   }
 
   &[data-variant='pills'] {
@@ -242,10 +242,10 @@
 }
 
 .tab--outline {
-  border-top: rem(1px) solid transparent;
-  border-bottom: rem(1px) solid transparent;
-  border-right: rem(1px) solid transparent;
-  border-left: rem(1px) solid transparent;
+  border-top: 1px solid transparent;
+  border-bottom: 1px solid transparent;
+  border-right: 1px solid transparent;
+  border-left: 1px solid transparent;
   border-top-color: var(--tab-border-top-color);
   border-bottom-color: var(--tab-border-bottom-color);
   border-radius: var(--tab-radius);
@@ -265,8 +265,8 @@
       left: var(--tab-before-left, rem(-1px));
       right: var(--tab-before-right, auto);
       top: var(--tab-before-top, auto);
-      width: rem(1px);
-      height: rem(1px);
+      width: 1px;
+      height: 1px;
     }
 
     &::after {
@@ -277,8 +277,8 @@
       right: var(--tab-after-right, rem(-1px));
       left: var(--tab-after-left, auto);
       top: var(--tab-after-top, auto);
-      width: rem(1px);
-      height: rem(1px);
+      width: 1px;
+      height: 1px;
     }
 
     border-top-color: var(--tab-border-top-color);
@@ -296,9 +296,9 @@
       --tab-border-top-color: var(--mantine-color-body);
 
       --tab-before-bottom: auto;
-      --tab-before-top: rem(-1px);
+      --tab-before-top: -1px;
       --tab-after-bottom: auto;
-      --tab-after-top: rem(-1px);
+      --tab-after-top: -1px;
     }
 
     &[data-orientation='vertical'] {
@@ -307,17 +307,17 @@
         --tab-border-inline-start-color: var(--tab-border-color);
         --tab-border-bottom-color: var(--tab-border-color);
 
-        --tab-before-right: rem(-1px);
+        --tab-before-right: -1px;
         --tab-before-left: auto;
         --tab-before-bottom: auto;
-        --tab-before-top: rem(-1px);
+        --tab-before-top: -1px;
         --tab-after-left: auto;
-        --tab-after-right: rem(-1px);
+        --tab-after-right: -1px;
 
         @mixin rtl {
           --tab-before-right: auto;
-          --tab-before-left: rem(-1px);
-          --tab-after-left: rem(-1px);
+          --tab-before-left: -1px;
+          --tab-after-left: -1px;
           --tab-after-right: auto;
         }
       }
@@ -327,17 +327,17 @@
         --tab-border-inline-end-color: var(--tab-border-color);
         --tab-border-bottom-color: var(--tab-border-color);
 
-        --tab-before-left: rem(-1px);
+        --tab-before-left: -1px;
         --tab-before-right: auto;
         --tab-before-bottom: auto;
-        --tab-before-top: rem(-1px);
+        --tab-before-top: -1px;
         --tab-after-right: auto;
-        --tab-after-left: rem(-1px);
+        --tab-after-left: -1px;
 
         @mixin rtl {
           --tab-before-left: auto;
-          --tab-before-right: rem(-1px);
-          --tab-after-right: rem(-1px);
+          --tab-before-right: -1px;
+          --tab-after-right: -1px;
           --tab-after-left: auto;
         }
       }

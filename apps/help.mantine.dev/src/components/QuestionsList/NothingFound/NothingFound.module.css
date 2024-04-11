@@ -1,5 +1,5 @@
 .description {
-  max-width: rem(600px);
+  max-width: 600px;
   font-size: var(--mantine-font-size-xl);
   margin-top: var(--mantine-spacing-md);
 }

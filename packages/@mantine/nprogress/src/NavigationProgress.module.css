@@ -22,7 +22,7 @@
   &::before {
     content: '';
     position: absolute;
-    width: rem(100px);
+    width: 100px;
     height: var(--progress-size);
     top: 0;
     inset-inline-end: 1px;

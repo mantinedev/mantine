@@ -1,5 +1,5 @@
 .dropdown {
-  padding: rem(4px);
+  padding: 4px;
 }
 
 .label {
@@ -11,9 +11,9 @@
 }
 
 .divider {
-  margin-top: rem(4px);
-  margin-bottom: rem(4px);
-  border-top: rem(1px) solid;
+  margin-top: 4px;
+  margin-bottom: 4px;
+  border-top: 1px solid;
 
   @mixin where-light {
     border-color: var(--mantine-color-gray-2);

@@ -1,9 +1,9 @@
 .root {
-  --divider-size-xs: rem(1px);
-  --divider-size-sm: rem(2px);
-  --divider-size-md: rem(3px);
-  --divider-size-lg: rem(4px);
-  --divider-size-xl: rem(5px);
+  --divider-size-xs: 1px;
+  --divider-size-sm: 2px;
+  --divider-size-md: 3px;
+  --divider-size-lg: 4px;
+  --divider-size-xl: 5px;
   --divider-size: var(--divider-size-xs);
 
   @mixin where-light {
@@ -47,7 +47,7 @@
   &::before {
     content: '';
     flex: 1;
-    height: rem(1px);
+    height: 1px;
     border-top: var(--divider-size) var(--divider-border-style, solid) var(--divider-color);
     margin-inline-end: var(--mantine-spacing-xs);
   }
@@ -55,7 +55,7 @@
   &::after {
     content: '';
     flex: 1;
-    height: rem(1px);
+    height: 1px;
     border-top: var(--divider-size) var(--divider-border-style, solid) var(--divider-color);
     margin-inline-start: var(--mantine-spacing-xs);
   }

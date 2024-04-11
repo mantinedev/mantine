@@ -1,16 +1,16 @@
 .root {
-  --radio-size-xs: rem(16px);
-  --radio-size-sm: rem(20px);
-  --radio-size-md: rem(24px);
-  --radio-size-lg: rem(30px);
-  --radio-size-xl: rem(36px);
+  --radio-size-xs: 16px;
+  --radio-size-sm: 20px;
+  --radio-size-md: 24px;
+  --radio-size-lg: 30px;
+  --radio-size-xl: 36px;
   --radio-size: var(--radio-size-sm);
 
-  --radio-icon-size-xs: rem(6px);
-  --radio-icon-size-sm: rem(8px);
-  --radio-icon-size-md: rem(10px);
-  --radio-icon-size-lg: rem(14px);
-  --radio-icon-size-xl: rem(16px);
+  --radio-icon-size-xs: 6px;
+  --radio-icon-size-sm: 8px;
+  --radio-icon-size-md: 10px;
+  --radio-icon-size-lg: 14px;
+  --radio-icon-size-xl: 16px;
   --radio-icon-size: var(--radio-icon-size-sm);
   --radio-icon-color: var(--mantine-color-white);
 }
@@ -42,7 +42,7 @@
 }
 
 .radio {
-  border: rem(1px) solid;
+  border: 1px solid;
   position: relative;
   appearance: none;
   width: var(--radio-size);

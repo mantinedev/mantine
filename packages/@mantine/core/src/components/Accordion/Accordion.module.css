@@ -114,11 +114,11 @@
 }
 
 .item--default {
-  border-bottom: rem(1px) solid var(--item-border-color);
+  border-bottom: 1px solid var(--item-border-color);
 }
 
 .item--contained {
-  border: rem(1px) solid var(--item-border-color);
+  border: 1px solid var(--item-border-color);
   transition: background-color 150ms ease;
 
   &:where([data-active]) {
@@ -161,7 +161,7 @@
 .item--separated {
   background-color: var(--item-filled-color);
   border-radius: var(--accordion-radius);
-  border: rem(1px) solid transparent;
+  border: 1px solid transparent;
   transition: background-color 150ms ease;
 
   &[data-active] {

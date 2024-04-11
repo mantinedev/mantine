@@ -7,24 +7,24 @@ $jumbotron-breakpoint: em(960px);
 
 .inner {
   position: relative;
-  padding-top: rem(220px);
-  padding-bottom: rem(180px);
+  padding-top: 220px;
+  padding-bottom: 180px;
 
   @media (max-width: $jumbotron-breakpoint) {
-    padding-top: rem(60px);
-    padding-bottom: rem(90px);
+    padding-top: 60px;
+    padding-bottom: 90px;
   }
 }
 
 .description {
   margin-top: calc(var(--mantine-spacing-xl) * 1.5);
-  font-size: rem(24px);
-  max-width: rem(800px);
+  font-size: 24px;
+  max-width: 800px;
   color: light-dark(var(--mantine-color-gray-7), var(--mantine-color-dark-1));
 
   @media (max-width: $jumbotron-breakpoint) {
     margin-top: var(--mantine-spacing-lg);
-    font-size: rem(18px);
+    font-size: 18px;
   }
 }
 
@@ -37,17 +37,17 @@ $jumbotron-breakpoint: em(960px);
 }
 
 .control {
-  height: rem(64px);
-  padding-left: rem(46px);
-  padding-right: rem(46px);
-  font-size: rem(20px);
+  height: 64px;
+  padding-left: 46px;
+  padding-right: 46px;
+  font-size: 20px;
   font-weight: 700;
   border: 0;
 
   @media (max-width: $jumbotron-breakpoint) {
-    height: rem(54px);
-    padding-left: rem(18px);
-    padding-right: rem(18px);
+    height: 54px;
+    padding-left: 18px;
+    padding-right: 18px;
     flex: 1;
   }
 
@@ -60,11 +60,11 @@ $jumbotron-breakpoint: em(960px);
     color: var(--mantine-color-white);
 
     & :global(.mantine-Button-section) {
-      margin-right: rem(16px);
+      margin-right: 16px;
 
       @mixin rtl {
         margin-right: 0;
-        margin-left: rem(16px);
+        margin-left: 16px;
       }
     }
 
@@ -108,8 +108,8 @@ $jumbotron-breakpoint: em(960px);
   display: flex;
   justify-content: center;
   align-items: center;
-  min-width: rem(50px);
-  height: rem(50px);
+  min-width: 50px;
+  height: 50px;
   background-image: var(--docs-home-page-gradient);
 
   & svg {

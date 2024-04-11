@@ -1,6 +1,6 @@
 .root {
   position: relative;
-  border: rem(1px) solid;
+  border: 1px solid;
   border-radius: var(--mantine-radius-default);
 
   @mixin where-light {
@@ -22,11 +22,11 @@
 
   & ul li,
   & ol li {
-    margin-top: rem(2px);
+    margin-top: 2px;
   }
 
   & p {
-    margin-bottom: rem(7px);
+    margin-bottom: 7px;
   }
 
   & h1,
@@ -152,12 +152,12 @@
 }
 
 .control {
-  min-width: rem(26px);
-  height: rem(26px);
+  min-width: 26px;
+  height: 26px;
   display: flex;
   justify-content: center;
   align-items: center;
-  border: rem(1px) solid;
+  border: 1px solid;
   border-radius: var(--mantine-radius-default);
   cursor: default;
 
@@ -243,10 +243,10 @@
 }
 
 .linkEditorExternalControl {
-  border: rem(1px) solid;
+  border: 1px solid;
   color: var(--mantine-color-text);
-  height: rem(24px);
-  width: rem(24px);
+  height: 24px;
+  width: 24px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -287,7 +287,7 @@
   z-index: 1;
   border-start-end-radius: var(--mantine-radius-default);
   border-start-start-radius: var(--mantine-radius-default);
-  border-bottom: rem(1px) solid;
+  border-bottom: 1px solid;
   padding: var(--mantine-spacing-xs) var(--mantine-spacing-md);
 
   @mixin where-light {
@@ -315,7 +315,7 @@
   }
 
   & :where(ul) {
-    margin-top: rem(5px);
+    margin-top: 5px;
   }
 
   & p {
@@ -330,9 +330,9 @@
   & :where(input) {
     cursor: pointer;
     appearance: none;
-    width: rem(18px);
-    height: rem(18px);
-    border: rem(1px) solid;
+    width: 18px;
+    height: 18px;
+    border: 1px solid;
     border-radius: var(--mantine-radius-default);
     vertical-align: middle;
     position: relative;
@@ -357,7 +357,7 @@
         inset: 0;
         background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIGZpbGw9Im5vbmUiIHZpZXdCb3g9IjAgMCAxMCA3Ij48cGF0aCBmaWxsPSIjZmZmIiBkPSJNNCA0LjU4NkwxLjcwNyAyLjI5M0ExIDEgMCAxMC4yOTMgMy43MDdsMyAzYS45OTcuOTk3IDAgMDAxLjQxNCAwbDUtNUExIDEgMCAxMDguMjkzLjI5M0w0IDQuNTg2eiIvPjwvc3ZnPg==');
         background-repeat: no-repeat;
-        background-size: rem(10px);
+        background-size: 10px;
         background-position: center;
       }
     }

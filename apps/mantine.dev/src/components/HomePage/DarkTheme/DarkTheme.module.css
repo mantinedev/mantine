@@ -1,13 +1,13 @@
 .image {
   box-shadow: var(--mantine-shadow-md);
   border-radius: var(--mantine-radius-md);
-  border: rem(1px) solid light-dark(var(--mantine-color-gray-3), var(--mantine-color-dark-5));
+  border: 1px solid light-dark(var(--mantine-color-gray-3), var(--mantine-color-dark-5));
 }
 
 .darkIcon,
 .lightIcon {
-  width: rem(16px);
-  height: rem(16px);
+  width: 16px;
+  height: 16px;
 }
 
 .darkIcon {

@@ -3,17 +3,17 @@
   margin-top: var(--input-margin-top, 0rem);
   margin-bottom: var(--input-margin-bottom, 0rem);
 
-  --input-height-xs: rem(30px);
-  --input-height-sm: rem(36px);
-  --input-height-md: rem(42px);
-  --input-height-lg: rem(50px);
-  --input-height-xl: rem(60px);
+  --input-height-xs: 30px;
+  --input-height-sm: 36px;
+  --input-height-md: 42px;
+  --input-height-lg: 50px;
+  --input-height-xl: 60px;
 
-  --input-padding-y-xs: rem(5px);
-  --input-padding-y-sm: rem(6px);
-  --input-padding-y-md: rem(8px);
-  --input-padding-y-lg: rem(10px);
-  --input-padding-y-xl: rem(13px);
+  --input-padding-y-xs: 5px;
+  --input-padding-y-sm: 6px;
+  --input-padding-y-md: 8px;
+  --input-padding-y-lg: 10px;
+  --input-padding-y-xl: 13px;
 
   --input-height: var(--input-height-sm);
   --input-radius: var(--mantine-radius-default);
@@ -36,11 +36,11 @@
 
   --input-size: var(--input-height);
 
-  --section-y: rem(1px);
-  --left-section-start: rem(1px);
+  --section-y: 1px;
+  --left-section-start: 1px;
   --left-section-border-radius: var(--input-radius) 0 0 var(--input-radius);
 
-  --right-section-end: rem(1px);
+  --right-section-end: 1px;
   --right-section-border-radius: 0 var(--input-radius) var(--input-radius) 0;
 
   &[data-variant='unstyled'] {
@@ -55,11 +55,11 @@
   }
 
   &[data-multiline] {
-    --input-padding-y-xs: rem(4.5px);
-    --input-padding-y-sm: rem(5.5px);
-    --input-padding-y-md: rem(7px);
-    --input-padding-y-lg: rem(9.5px);
-    --input-padding-y-xl: rem(13px);
+    --input-padding-y-xs: 4.5px;
+    --input-padding-y-sm: 5.5px;
+    --input-padding-y-md: 7px;
+    --input-padding-y-lg: 9.5px;
+    --input-padding-y-xl: 13px;
 
     --input-size: auto;
     --input-line-height: var(--mantine-line-height);
@@ -147,7 +147,7 @@
 
   text-align: var(--input-text-align);
   color: var(--input-color);
-  border: rem(1px) solid var(--input-bd);
+  border: 1px solid var(--input-bd);
   background-color: var(--input-bg);
   font-family: var(--input-font-family, var(--mantine-font-family));
   height: var(--input-size);

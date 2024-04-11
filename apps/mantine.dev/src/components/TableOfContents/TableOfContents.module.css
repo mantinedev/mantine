@@ -3,8 +3,8 @@
   position: sticky;
   top: var(--mantine-spacing-xl);
   right: 0;
-  padding-top: rem(55px);
-  flex: 0 0 calc(var(--docs-table-of-contents-width) - rem(20px));
+  padding-top: 55px;
+  flex: 0 0 calc(var(--docs-table-of-contents-width) - 20px);
 
   @media (max-width: $docs-mdx-breakpoint) {
     display: none;
@@ -19,7 +19,7 @@
 
   &[data-with-tabs] {
     padding-top: 0;
-    top: calc(var(--mantine-spacing-xl) + rem(60px));
+    top: calc(var(--mantine-spacing-xl) + 60px);
   }
 }
 
@@ -38,9 +38,9 @@
 
 .link {
   display: block;
-  border-left: rem(1px) solid transparent;
-  padding: rem(8px) var(--mantine-spacing-md);
-  margin-left: rem(-1px);
+  border-left: 1px solid transparent;
+  padding: 8px var(--mantine-spacing-md);
+  margin-left: -1px;
   padding-left: calc(var(--toc-link-offset) * var(--mantine-spacing-lg));
   border-top-right-radius: var(--mantine-radius-sm);
   border-bottom-right-radius: var(--mantine-radius-sm);
@@ -55,9 +55,9 @@
 
   @mixin rtl {
     border-left: 0;
-    border-right: rem(1px) solid transparent;
+    border-right: 1px solid transparent;
     margin-left: 0;
-    margin-right: rem(-1px);
+    margin-right: -1px;
     border-top-left-radius: var(--mantine-radius-sm);
     border-bottom-left-radius: var(--mantine-radius-sm);
     border-top-right-radius: 0;
@@ -95,7 +95,7 @@
 }
 
 .items {
-  border-left: rem(1px) solid;
+  border-left: 1px solid;
 
   @mixin light {
     border-color: var(--mantine-color-gray-3) !important;
@@ -107,7 +107,7 @@
 
   @mixin rtl {
     border-left: 0;
-    border-right: rem(1px) solid;
+    border-right: 1px solid;
 
     @mixin light {
       border-color: var(--mantine-color-gray-3) !important;

@@ -11,7 +11,7 @@
 
 .label {
   color: var(--mantine-color-dimmed);
-  flex: 0 0 rem(80px);
+  flex: 0 0 80px;
 
   @mixin smaller-than $sm {
     display: none;
@@ -31,12 +31,12 @@
   }
 
   @mixin smaller-than $sm {
-    min-height: rem(24px);
+    min-height: 24px;
   }
 }
 
 .icon {
-  width: rem(18px);
+  width: 18px;
 
   & svg {
     display: block;

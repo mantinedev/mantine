@@ -1,15 +1,15 @@
 .root {
-  --stepper-icon-size-xs: rem(34px);
-  --stepper-icon-size-sm: rem(36px);
-  --stepper-icon-size-md: rem(42px);
-  --stepper-icon-size-lg: rem(48px);
-  --stepper-icon-size-xl: rem(52px);
+  --stepper-icon-size-xs: 34px;
+  --stepper-icon-size-sm: 36px;
+  --stepper-icon-size-md: 42px;
+  --stepper-icon-size-lg: 48px;
+  --stepper-icon-size-xl: 52px;
 
   --stepper-icon-size: var(--stepper-icon-size-md);
   --stepper-color: var(--mantine-primary-color-filled);
   --stepper-content-padding: var(--mantine-spacing-md);
   --stepper-spacing: var(--mantine-spacing-md);
-  --stepper-radius: rem(1000px);
+  --stepper-radius: 1000px;
   --stepper-fz: var(--mantine-font-size-md);
 }
 
@@ -59,12 +59,12 @@
   }
 
   &:where([data-orientation='horizontal']) {
-    height: rem(2px);
+    height: 2px;
     margin-inline: var(--mantine-spacing-md);
   }
 
   &:where([data-orientation='vertical']) {
-    width: rem(2px);
+    width: 2px;
     margin-top: calc(var(--mantine-spacing-xs) / 2);
     margin-bottom: calc(var(--mantine-spacing-xs) - rem(2px));
 
@@ -131,7 +131,7 @@
   inset-inline-start: calc(var(--stepper-icon-size) / 2);
   height: 100vh;
   position: absolute;
-  border-inline-start: rem(2px) solid;
+  border-inline-start: 2px solid;
 
   @mixin where-light {
     border-color: var(--mantine-color-gray-1);
@@ -161,7 +161,7 @@
   transition:
     background-color 150ms ease,
     border-color 150ms ease;
-  border: rem(2px) solid;
+  border: 2px solid;
 
   @mixin where-light {
     background-color: var(--mantine-color-gray-1);

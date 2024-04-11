@@ -1,5 +1,5 @@
 .code {
-  border: rem(1px) solid;
+  border: 1px solid;
   border-radius: var(--mantine-radius-md);
   margin-top: var(--mantine-spacing-md);
   margin-bottom: var(--mantine-spacing-md);

@@ -23,12 +23,12 @@
 
 .actionsList {
   /* Used in child ScrollArea */
-  --spotlight-actions-list-padding: rem(4px);
+  --spotlight-actions-list-padding: 4px;
 
-  border-top: rem(1px) solid;
+  border-top: 1px solid;
   flex: 1;
   padding: var(--spotlight-actions-list-padding);
-  max-height: calc(100% - rem(3.125rem));
+  max-height: calc(100% - 3.125rem);
   margin-inline-end: calc(var(--spotlight-actions-list-padding) * -1);
 
   @mixin where-light {
@@ -44,7 +44,7 @@
   display: flex;
   align-items: center;
   width: 100%;
-  padding: rem(7px) var(--mantine-spacing-md);
+  padding: 7px var(--mantine-spacing-md);
   border-radius: var(--mantine-radius-default);
   background-color: transparent;
   color: inherit;
@@ -119,7 +119,7 @@
 
 .footer {
   padding: var(--mantine-spacing-xs) calc(var(--mantine-spacing-md) + rem(4px));
-  border-top: rem(1px) solid;
+  border-top: 1px solid;
 
   @mixin where-light {
     border-color: var(--mantine-color-gray-2);

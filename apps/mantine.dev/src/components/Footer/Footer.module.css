@@ -2,14 +2,14 @@ $footer-breakpoint-tablet: 62.5em;
 $footer-breakpoint-mobile: 40em;
 
 .root {
-  --docs-footer-height: rem(400px);
+  --docs-footer-height: 400px;
 
   @media (max-width: $footer-breakpoint-tablet) {
-    --docs-footer-height: rem(520px);
+    --docs-footer-height: 520px;
   }
 
   @media (max-width: $footer-breakpoint-mobile) {
-    --docs-footer-height: rem(380px);
+    --docs-footer-height: 380px;
   }
 }
 
@@ -79,7 +79,7 @@ $footer-breakpoint-mobile: 40em;
 }
 
 .logoSection {
-  max-width: rem(300px);
+  max-width: 300px;
 
   @media (max-width: $footer-breakpoint-tablet) {
     margin-bottom: var(--mantine-spacing-xl);
@@ -108,7 +108,7 @@ $footer-breakpoint-mobile: 40em;
 }
 
 .afterFooter {
-  border-top: rem(1px) solid;
+  border-top: 1px solid;
   padding-top: var(--mantine-spacing-md);
 
   @mixin light {

@@ -1,6 +1,6 @@
 .group {
   & + & {
-    margin-top: rem(50px);
+    margin-top: 50px;
   }
 }
 
@@ -34,8 +34,8 @@
 .questionDescription {
   font-size: var(--mantine-font-size-md);
   color: var(--mantine-color-dimmed);
-  margin-top: rem(5px);
-  max-width: rem(600px);
+  margin-top: 5px;
+  max-width: 600px;
 }
 
 .category {

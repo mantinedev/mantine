@@ -1,9 +1,9 @@
 .root {
-  --drawer-size-xs: rem(320px);
-  --drawer-size-sm: rem(380px);
-  --drawer-size-md: rem(440px);
-  --drawer-size-lg: rem(620px);
-  --drawer-size-xl: rem(780px);
+  --drawer-size-xs: 320px;
+  --drawer-size-sm: 380px;
+  --drawer-size-md: 440px;
+  --drawer-size-lg: 620px;
+  --drawer-size-xl: 780px;
   --drawer-size: var(--drawer-size-md);
   --drawer-offset: 0rem;
 }

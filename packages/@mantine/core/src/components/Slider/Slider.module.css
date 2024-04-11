@@ -1,12 +1,12 @@
 .root {
-  --slider-size-xs: rem(4px);
-  --slider-size-sm: rem(6px);
-  --slider-size-md: rem(8px);
-  --slider-size-lg: rem(10px);
-  --slider-size-xl: rem(12px);
+  --slider-size-xs: 4px;
+  --slider-size-sm: 6px;
+  --slider-size-md: 8px;
+  --slider-size-lg: 10px;
+  --slider-size-xl: 12px;
 
   --slider-size: var(--slider-size-md);
-  --slider-radius: rem(1000px);
+  --slider-radius: 1000px;
   --slider-color: var(--mantine-primary-color-filled);
 
   -webkit-tap-highlight-color: transparent;
@@ -32,7 +32,7 @@
 
 .label {
   position: absolute;
-  top: rem(-36px);
+  top: -36px;
   font-size: var(--mantine-font-size-xs);
   color: var(--mantine-color-white);
   padding: calc(var(--mantine-spacing-xs) / 2);
@@ -56,7 +56,7 @@
   display: flex;
   height: var(--slider-thumb-size);
   width: var(--slider-thumb-size);
-  border: rem(4px) solid;
+  border: 4px solid;
   transform: translate(-50%, -50%);
   color: var(--slider-color);
   top: 50%;
@@ -70,7 +70,7 @@
   z-index: 3;
   user-select: none;
   touch-action: none;
-  outline-offset: rem(2px);
+  outline-offset: 2px;
   left: var(--slider-thumb-offset);
 
   @mixin where-rtl {
@@ -174,10 +174,10 @@
 }
 
 .mark {
-  border: rem(2px) solid;
+  border: 2px solid;
   height: var(--slider-size);
   width: var(--slider-size);
-  border-radius: rem(1000px);
+  border-radius: 1000px;
   transform: translateX((calc(var(--slider-size) / -2)));
   background-color: var(--mantine-color-white);
   pointer-events: none;

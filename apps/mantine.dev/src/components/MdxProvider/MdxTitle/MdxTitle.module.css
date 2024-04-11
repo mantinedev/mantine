@@ -22,7 +22,7 @@
 
   &[data-h1] {
     font-weight: 900;
-    font-size: rem(40px);
+    font-size: 40px;
     margin-top: 0;
   }
 }
@@ -34,14 +34,14 @@
 
 .offset {
   position: relative;
-  top: rem(-62px);
+  top: -62px;
 }
 
 .copyButton {
   display: flex;
   align-items: flex-start;
   justify-content: flex-start;
-  min-width: rem(18px);
+  min-width: 18px;
   color: var(--mantine-color-dimmed);
   border-radius: var(--mantine-radius-sm);
   opacity: 0.2;
@@ -49,10 +49,10 @@
   position: absolute;
   top: 0;
   bottom: 0;
-  left: rem(-28px);
-  padding-right: rem(10px);
-  padding-top: rem(8px);
-  padding-bottom: rem(4px);
+  left: -28px;
+  padding-right: 10px;
+  padding-top: 8px;
+  padding-bottom: 4px;
 
   @mixin hover {
     color: var(--mantine-color-blue-5);
@@ -64,6 +64,6 @@
 }
 
 .copyIcon {
-  width: rem(18px);
-  height: rem(18px);
+  width: 18px;
+  height: 18px;
 }

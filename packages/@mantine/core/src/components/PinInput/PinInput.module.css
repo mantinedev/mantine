@@ -1,9 +1,9 @@
 .root {
-  --pin-input-size-xs: rem(30px);
-  --pin-input-size-sm: rem(36px);
-  --pin-input-size-md: rem(42px);
-  --pin-input-size-lg: rem(50px);
-  --pin-input-size-xl: rem(60px);
+  --pin-input-size-xs: 30px;
+  --pin-input-size-sm: 36px;
+  --pin-input-size-md: 42px;
+  --pin-input-size-lg: 50px;
+  --pin-input-size-xl: 60px;
   --pin-input-size: var(--pin-input-size-sm);
 }
 

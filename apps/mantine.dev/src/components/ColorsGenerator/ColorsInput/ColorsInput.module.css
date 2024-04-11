@@ -1,6 +1,6 @@
 .root {
   display: flex;
-  gap: rem(50px);
+  gap: 50px;
 
   @media (max-width: em(950px)) {
     flex-direction: column;
@@ -20,7 +20,7 @@
 }
 
 .input {
-  max-width: rem(280px);
+  max-width: 280px;
   margin-bottom: var(--mantine-spacing-sm);
 
   @media (max-width: em(950px)) {

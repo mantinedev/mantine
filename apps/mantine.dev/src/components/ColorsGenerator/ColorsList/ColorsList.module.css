@@ -1,5 +1,5 @@
 .root {
-  margin-top: rem(50px);
+  margin-top: 50px;
 }
 
 .item {
@@ -27,7 +27,7 @@
     border-radius 100ms ease;
 
   &[data-base] {
-    transform: scale(1.2) translateY(rem(-5px));
+    transform: scale(1.2) translateY(-5px);
     z-index: 1;
     box-shadow: var(--mantine-shadow-md);
     border-radius: var(--mantine-radius-md);
@@ -44,7 +44,7 @@
   display: flex;
   flex-direction: column;
   text-align: center;
-  gap: rem(5px);
+  gap: 5px;
 
   @media (max-width: em(600px)) {
     display: none;
@@ -55,7 +55,7 @@
   font-weight: 700;
   text-transform: uppercase;
   font-family: var(--mantine-font-family-monospace);
-  font-size: rem(10px);
+  font-size: 10px;
 }
 
 .index {

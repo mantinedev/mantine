@@ -3,5 +3,5 @@
   border-radius: var(--mantine-radius-md);
   background-color: var(--mantine-color-body);
   margin-top: var(--mantine-spacing-xl);
-  margin-bottom: rem(60px);
+  margin-bottom: 60px;
 }

@@ -1,6 +1,6 @@
 .wrapper {
   position: relative;
-  min-height: rem(580px);
+  min-height: 580px;
   background-color: light-dark(var(--mantine-color-white), var(--mantine-color-dark-8));
 
   @media (max-width: $mantine-breakpoint-sm) {
@@ -34,12 +34,12 @@
 .title {
   color: light-dark(var(--mantine-color-black), var(--mantine-color-white));
   font-family: var(--docs-font-primary);
-  font-size: rem(44px);
+  font-size: 44px;
   line-height: 1.2;
   font-weight: 900;
 
   @media (max-width: $mantine-breakpoint-sm) {
-    font-size: rem(26px);
+    font-size: 26px;
   }
 }
 
@@ -54,13 +54,13 @@
 .description {
   color: light-dark(var(--mantine-color-gray-7), var(--mantine-color-dark-2));
   line-height: 1.5;
-  max-width: rem(580px);
+  max-width: 580px;
   margin-top: var(--mantine-spacing-md);
 }
 
 .body {
-  flex: 0 0 rem(300px);
-  padding-top: rem(140px);
+  flex: 0 0 300px;
+  padding-top: 140px;
   position: relative;
   z-index: 1;
 
@@ -70,8 +70,8 @@
 }
 
 .image {
-  min-height: rem(500px);
-  width: rem(800px);
+  min-height: 500px;
+  width: 800px;
   flex: 1;
   background-size: auto 100%;
   background-repeat: no-repeat;

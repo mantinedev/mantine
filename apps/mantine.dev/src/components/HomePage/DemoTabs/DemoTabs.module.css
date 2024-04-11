@@ -1,7 +1,7 @@
 @keyframes fade-in-demo-tabs {
   0% {
     opacity: 0;
-    transform: translateY(rem(-20px)) scale(0.95) skewX(-2deg);
+    transform: translateY(-20px) scale(0.95) skewX(-2deg);
   }
 
   100% {
@@ -11,13 +11,13 @@
 }
 
 .root {
-  padding-top: rem(100px);
-  padding-bottom: rem(100px);
+  padding-top: 100px;
+  padding-bottom: 100px;
   background-color: light-dark(var(--mantine-color-gray-0), var(--mantine-color-dark-7));
 
   @media (max-width: $mantine-breakpoint-sm) {
-    padding-top: rem(60px);
-    padding-bottom: rem(60px);
+    padding-top: 60px;
+    padding-bottom: 60px;
   }
 }
 
@@ -31,7 +31,7 @@
   left: 0;
   right: 0;
   background-color: light-dark(var(--mantine-color-white), var(--mantine-color-dark-6));
-  border: rem(1px) solid light-dark(var(--mantine-color-gray-4), var(--mantine-color-dark-4));
+  border: 1px solid light-dark(var(--mantine-color-gray-4), var(--mantine-color-dark-4));
   box-shadow: var(--mantine-shadow-md);
   border-radius: var(--mantine-radius-md);
   transition: transform 250ms ease;
@@ -43,14 +43,14 @@
   padding: var(--mantine-spacing-md) var(--mantine-spacing-lg);
   border-radius: var(--mantine-radius-md);
   position: relative;
-  height: rem(80px);
+  height: 80px;
 
   @mixin hover {
     background-color: light-dark(var(--mantine-color-gray-1), var(--mantine-color-dark-8));
   }
 
   @media (max-width: $mantine-breakpoint-sm) {
-    height: rem(60px);
+    height: 60px;
     padding: var(--mantine-spacing-xs) var(--mantine-spacing-md);
   }
 }

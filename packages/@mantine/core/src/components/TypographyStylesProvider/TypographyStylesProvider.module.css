@@ -89,7 +89,7 @@
     margin-top: var(--mantine-spacing-md);
     margin-bottom: var(--mantine-spacing-md);
     border: 0;
-    border-top: rem(1px) solid;
+    border-top: 1px solid;
 
     @mixin where-light {
       border-color: var(--mantine-color-gray-3);
@@ -129,8 +129,8 @@
   }
 
   & :where(kbd) {
-    --kbd-fz: rem(12px);
-    --kbd-padding: rem(3px) rem(5px);
+    --kbd-fz: 12px;
+    --kbd-padding: 3px 5px;
 
     font-family: var(--mantine-font-family-monospace);
     line-height: var(--mantine-line-height);
@@ -138,8 +138,8 @@
     padding: var(--kbd-padding);
     font-size: var(--kbd-fz);
     border-radius: var(--mantine-radius-sm);
-    border: rem(1px) solid;
-    border-bottom-width: rem(3px);
+    border: 1px solid;
+    border-bottom-width: 3px;
 
     @mixin where-light {
       border-color: var(--mantine-color-gray-3);
@@ -156,7 +156,7 @@
 
   & :where(code) {
     line-height: var(--mantine-line-height);
-    padding: rem(1px) rem(5px);
+    padding: 1px 5px;
     border-radius: var(--mantine-radius-sm);
     font-family: var(--mantine-font-family-monospace);
     font-size: var(--mantine-font-size-xs);
@@ -174,7 +174,7 @@
 
   & :where(ul, ol):not([data-type='taskList']) {
     margin-bottom: var(--mantine-spacing-md);
-    padding-inline-start: rem(38px);
+    padding-inline-start: 38px;
 
     & :where(li) {
       margin-bottom: var(--mantine-spacing-xs);
@@ -202,18 +202,18 @@
     }
 
     & :where(thead th) {
-      border-bottom: rem(1px) solid;
+      border-bottom: 1px solid;
       border-color: var(--mantine-color-gray-3);
     }
 
     & :where(tfoot th) {
-      border-top: rem(1px) solid;
+      border-top: 1px solid;
       border-color: var(--mantine-color-gray-3);
     }
 
     & :where(td) {
       padding: var(--mantine-spacing-xs) var(--mantine-spacing-sm);
-      border-bottom: rem(1px) solid;
+      border-bottom: 1px solid;
       border-color: var(--mantine-color-gray-3);
       font-size: var(--mantine-font-size-sm);
     }

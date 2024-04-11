@@ -9,9 +9,9 @@ const cssCode = `.root {
 
 .control {
   background-color: light-dark(var(--mantine-color-white), var(--mantine-color-dark-7));
-  border: rem(1px) solid light-dark(var(--mantine-color-gray-3), var(--mantine-color-dark-4));
+  border: 1px solid light-dark(var(--mantine-color-gray-3), var(--mantine-color-dark-4));
   padding: var(--mantine-spacing-md);
-  padding-left: rem(60px);
+  padding-left: 60px;
   border-radius: var(--mantine-radius-md);
   transition: border-color 100ms ease;
 
@@ -42,7 +42,7 @@ const cssCode = `.root {
 }
 
 .description {
-  margin-top: rem(8px);
+  margin-top: 8px;
   color: var(--mantine-color-dimmed);
   font-size: var(--mantine-font-size-xs);
 }

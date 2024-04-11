@@ -6,7 +6,7 @@ import { MantineDemo } from '@mantinex/demo';
 import classes from './Carousel.demo.cards.module.css';
 
 const cssCode = `.card {
-  height: rem(440px);
+  height: 440px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -19,7 +19,7 @@ const cssCode = `.card {
   font-weight: 900;
   color: var(--mantine-color-white);
   line-height: 1.2;
-  font-size: rem(32px);
+  font-size: 32px;
   margin-top: var(--mantine-spacing-xs);
   cursor: default;
 }

@@ -3,12 +3,12 @@
 
   @mixin light {
     background-color: var(--mantine-color-gray-0);
-    border-bottom: rem(1px) solid var(--mantine-color-gray-2);
+    border-bottom: 1px solid var(--mantine-color-gray-2);
   }
 
   @mixin dark {
     background-color: var(--mantine-color-dark-8);
-    border-bottom: rem(1px) solid var(--mantine-color-dark-6);
+    border-bottom: 1px solid var(--mantine-color-dark-6);
   }
 
   @media (max-width: $docs-mdx-breakpoint) {
@@ -21,10 +21,10 @@
 }
 
 .tabsList {
-  max-width: rem(1082px);
+  max-width: 1082px;
   margin-left: auto;
   margin-right: auto;
-  margin-bottom: rem(-1px);
+  margin-bottom: -1px;
 
   @media (max-width: $docs-mdx-breakpoint) {
     max-width: 100%;
@@ -45,7 +45,7 @@
 .tab {
   font-size: var(--mantine-font-size-md);
   font-weight: 500;
-  height: rem(46px);
+  height: 46px;
   padding-left: var(--mantine-spacing-lg);
   padding-right: var(--mantine-spacing-lg);
   background-color: transparent;

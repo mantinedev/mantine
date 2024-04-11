@@ -38,10 +38,10 @@
 
 .menuButton {
   @mixin not-rtl {
-    padding-right: rem(5px);
+    padding-right: 5px;
   }
 
   @mixin rtl {
-    padding-left: rem(5px);
+    padding-left: 5px;
   }
 }

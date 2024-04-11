@@ -11,7 +11,7 @@
 }
 
 .root {
-  --indicator-size: rem(10px);
+  --indicator-size: 10px;
   --indicator-color: var(--mantine-primary-color-filled);
 
   position: relative;
@@ -31,7 +31,7 @@
   transform: translate(var(--indicator-translate-x), var(--indicator-translate-y));
   min-width: var(--indicator-size);
   height: var(--indicator-size);
-  border-radius: var(--indicator-radius, rem(1000px));
+  border-radius: var(--indicator-radius, 1000rem);
   z-index: var(--indicator-z-index, 200);
   display: flex;
   align-items: center;
@@ -46,7 +46,7 @@
     position: absolute;
     inset: 0;
     background-color: var(--indicator-color);
-    border-radius: var(--indicator-radius, rem(1000px));
+    border-radius: var(--indicator-radius, 1000rem);
     z-index: -1;
   }
 
@@ -55,7 +55,7 @@
   }
 
   &:where([data-with-border]) {
-    border: rem(2px) solid var(--mantine-color-body);
+    border: 2px solid var(--mantine-color-body);
   }
 
   &[data-processing] {

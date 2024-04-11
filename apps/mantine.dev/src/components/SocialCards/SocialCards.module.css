@@ -6,7 +6,7 @@
 
 .card {
   flex: 1;
-  min-width: rem(300px);
+  min-width: 300px;
   display: flex;
   color: var(--mantine-color-white);
   border-radius: var(--mantine-radius-md);
@@ -36,9 +36,9 @@
 
 .icon {
   margin-right: var(--mantine-spacing-lg);
-  height: rem(30px);
-  width: rem(30px);
-  min-width: rem(30px);
+  height: 30px;
+  width: 30px;
+  min-width: 30px;
 }
 
 .title {
@@ -47,5 +47,5 @@
 
 .description {
   font-size: var(--mantine-font-size-xs);
-  margin-top: rem(5px);
+  margin-top: 5px;
 }

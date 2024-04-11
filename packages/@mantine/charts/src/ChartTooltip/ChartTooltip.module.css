@@ -1,15 +1,15 @@
 .tooltip {
-  min-width: rem(200px);
+  min-width: 200px;
   background-color: var(--mantine-color-body);
   box-shadow: var(--mantine-shadow-md);
   border-radius: var(--mantine-radius-default);
 
   @mixin where-light {
-    border: rem(1px) solid var(--mantine-color-gray-3);
+    border: 1px solid var(--mantine-color-gray-3);
   }
 
   @mixin where-dark {
-    border: rem(1px) solid var(--mantine-color-dark-4);
+    border: 1px solid var(--mantine-color-dark-4);
   }
 }
 

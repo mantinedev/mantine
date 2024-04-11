@@ -1,9 +1,9 @@
 .root {
-  --ti-size-xs: rem(18px);
-  --ti-size-sm: rem(22px);
-  --ti-size-md: rem(28px);
-  --ti-size-lg: rem(34px);
-  --ti-size-xl: rem(44px);
+  --ti-size-xs: 18px;
+  --ti-size-sm: 22px;
+  --ti-size-md: 28px;
+  --ti-size-lg: 34px;
+  --ti-size-xl: 44px;
   --ti-size: var(--ti-size-md);
 
   line-height: 1;
@@ -20,5 +20,5 @@
   border-radius: var(--ti-radius, var(--mantine-radius-default));
   background: var(--ti-bg, var(--mantine-primary-color-filled));
   color: var(--ti-color, var(--mantine-color-white));
-  border: var(--ti-bd, rem(1px) solid transparent);
+  border: var(--ti-bd, 1px solid transparent);
 }

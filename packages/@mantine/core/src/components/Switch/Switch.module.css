@@ -1,40 +1,40 @@
 .root {
-  --switch-height-xs: rem(16px);
-  --switch-height-sm: rem(20px);
-  --switch-height-md: rem(24px);
-  --switch-height-lg: rem(30px);
-  --switch-height-xl: rem(36px);
+  --switch-height-xs: 16px;
+  --switch-height-sm: 20px;
+  --switch-height-md: 24px;
+  --switch-height-lg: 30px;
+  --switch-height-xl: 36px;
 
-  --switch-width-xs: rem(32px);
-  --switch-width-sm: rem(38px);
-  --switch-width-md: rem(46px);
-  --switch-width-lg: rem(56px);
-  --switch-width-xl: rem(72px);
+  --switch-width-xs: 32px;
+  --switch-width-sm: 38px;
+  --switch-width-md: 46px;
+  --switch-width-lg: 56px;
+  --switch-width-xl: 72px;
 
-  --switch-thumb-size-xs: rem(12px);
-  --switch-thumb-size-sm: rem(14px);
-  --switch-thumb-size-md: rem(18px);
-  --switch-thumb-size-lg: rem(22px);
-  --switch-thumb-size-xl: rem(28px);
+  --switch-thumb-size-xs: 12px;
+  --switch-thumb-size-sm: 14px;
+  --switch-thumb-size-md: 18px;
+  --switch-thumb-size-lg: 22px;
+  --switch-thumb-size-xl: 28px;
 
-  --switch-label-font-size-xs: rem(5px);
-  --switch-label-font-size-sm: rem(6px);
-  --switch-label-font-size-md: rem(7px);
-  --switch-label-font-size-lg: rem(9px);
-  --switch-label-font-size-xl: rem(11px);
+  --switch-label-font-size-xs: 5px;
+  --switch-label-font-size-sm: 6px;
+  --switch-label-font-size-md: 7px;
+  --switch-label-font-size-lg: 9px;
+  --switch-label-font-size-xl: 11px;
 
-  --switch-track-label-padding-xs: rem(1px);
-  --switch-track-label-padding-sm: rem(2px);
-  --switch-track-label-padding-md: rem(2px);
-  --switch-track-label-padding-lg: rem(3px);
-  --switch-track-label-padding-xl: rem(3px);
+  --switch-track-label-padding-xs: 1px;
+  --switch-track-label-padding-sm: 2px;
+  --switch-track-label-padding-md: 2px;
+  --switch-track-label-padding-lg: 3px;
+  --switch-track-label-padding-xl: 3px;
 
   --switch-height: var(--switch-height-sm);
   --switch-width: var(--switch-width-sm);
   --switch-thumb-size: var(--switch-thumb-size-sm);
   --switch-label-font-size: var(--switch-label-font-size-sm);
   --switch-track-label-padding: var(--switch-track-label-padding-sm);
-  --switch-radius: rem(1000px);
+  --switch-radius: 1000px;
   --switch-color: var(--mantine-primary-color-filled);
 
   position: relative;
@@ -58,7 +58,7 @@
   position: relative;
   border-radius: var(--switch-radius);
   background-color: var(--switch-bg);
-  border: rem(1px) solid var(--switch-bd);
+  border: 1px solid var(--switch-bd);
   height: var(--switch-height);
   min-width: var(--switch-width);
   margin: 0;
@@ -77,8 +77,8 @@
   color: var(--switch-text-color);
 
   .input:focus-visible + & {
-    outline: rem(2px) solid var(--mantine-primary-color-filled);
-    outline-offset: rem(2px);
+    outline: 2px solid var(--mantine-primary-color-filled);
+    outline-offset: 2px;
   }
 
   .input:checked + & {
@@ -125,7 +125,7 @@
   background-color: var(--switch-thumb-bg, var(--mantine-color-white));
   height: var(--switch-thumb-size);
   width: var(--switch-thumb-size);
-  border: rem(1px) solid var(--switch-thumb-bd);
+  border: 1px solid var(--switch-thumb-bd);
   inset-inline-start: var(--switch-thumb-start, var(--switch-track-label-padding));
   transition: inset-inline-start 150ms ease;
 

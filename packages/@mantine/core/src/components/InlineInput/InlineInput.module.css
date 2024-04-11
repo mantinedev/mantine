@@ -1,9 +1,9 @@
 .root {
-  --label-lh-xs: rem(16px);
-  --label-lh-sm: rem(20px);
-  --label-lh-md: rem(24px);
-  --label-lh-lg: rem(30px);
-  --label-lh-xl: rem(36px);
+  --label-lh-xs: 16px;
+  --label-lh-sm: 20px;
+  --label-lh-md: 24px;
+  --label-lh-lg: 30px;
+  --label-lh-xl: 36px;
   --label-lh: var(--label-lh-sm);
 
   &[data-label-position='left'] {

@@ -12,7 +12,7 @@
   display: flex;
   align-items: center;
   width: 100%;
-  height: rem(32px);
+  height: 32px;
   cursor: pointer;
 
   @mixin light {
@@ -25,8 +25,8 @@
 }
 
 .chevron {
-  width: rem(15px);
-  height: rem(15px);
+  width: 15px;
+  height: 15px;
   margin-right: var(--mantine-spacing-md);
   transition: transform 150ms ease;
 
@@ -45,9 +45,9 @@
   font-weight: 700;
   font-family: var(--docs-font-primary);
   line-height: 1;
-  padding-top: rem(4px);
-  letter-spacing: rem(0.5px);
-  word-spacing: rem(1px);
+  padding-top: 4px;
+  letter-spacing: 0.5px;
+  word-spacing: 1px;
   text-transform: uppercase;
   font-size: var(--mantine-font-size-xs);
 }
@@ -56,12 +56,12 @@
   --border-color: light-dark(var(--mantine-color-gray-3), var(--mantine-color-dark-6));
 
   display: block;
-  border-left: rem(1px) solid var(--border-color);
-  padding-left: rem(23px);
+  border-left: 1px solid var(--border-color);
+  padding-left: 23px;
   padding-right: var(--mantine-spacing-md);
-  padding-top: rem(8px);
-  padding-bottom: rem(8px);
-  margin-left: rem(7px);
+  padding-top: 8px;
+  padding-bottom: 8px;
+  margin-left: 7px;
   border-top-right-radius: var(--mantine-radius-sm);
   border-bottom-right-radius: var(--mantine-radius-sm);
   font-size: var(--mantine-font-size-sm);
@@ -82,11 +82,11 @@
 
   @mixin rtl {
     padding-left: var(--mantine-spacing-md);
-    padding-right: rem(23px);
+    padding-right: 23px;
     border-left: 0;
-    border-right: rem(1px) solid var(--border-color);
+    border-right: 1px solid var(--border-color);
     margin-left: 0;
-    margin-right: rem(7px);
+    margin-right: 7px;
     border-radius: 0;
     border-top-left-radius: var(--mantine-radius-sm);
     border-bottom-left-radius: var(--mantine-radius-sm);
@@ -118,6 +118,6 @@
 .linkDescription {
   font-size: var(--mantine-font-size-xs);
   opacity: 0.6;
-  margin-top: rem(4px);
+  margin-top: 4px;
   line-height: 1.4;
 }

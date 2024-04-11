@@ -1,23 +1,23 @@
 .paragraph {
   line-height: 1.65;
-  font-size: rem(15px);
+  font-size: 15px;
 }
 
 .link {
-  font-size: rem(15px);
+  font-size: 15px;
 }
 
 .ul {
   line-height: 1.65;
-  margin-bottom: rem(20px);
-  margin-top: rem(10px);
-  font-size: rem(15px);
+  margin-bottom: 20px;
+  margin-top: 10px;
+  font-size: 15px;
   padding-left: var(--mantine-spacing-xl);
 }
 
 .li {
-  margin-top: rem(4px);
-  font-size: rem(15px);
+  margin-top: 4px;
+  font-size: 15px;
 }
 
 .title {
@@ -42,11 +42,11 @@
 
 .titleOffset {
   position: relative;
-  top: rem(-62px);
+  top: -62px;
 }
 
 .code {
-  border: rem(1px) solid;
+  border: 1px solid;
   border-radius: var(--mantine-radius-md);
   margin-top: var(--mantine-spacing-md);
   margin-bottom: var(--mantine-spacing-md);

@@ -1,6 +1,6 @@
 .root {
   position: relative;
-  border: rem(1px) dashed;
+  border: 1px dashed;
   color: var(--mantine-color-text);
   padding: var(--mantine-spacing-md);
   border-radius: var(--dropzone-radius);

@@ -1,24 +1,24 @@
 .header {
-  padding-top: rem(20px);
-  padding-bottom: rem(60px);
+  padding-top: 20px;
+  padding-bottom: 60px;
   background-color: light-dark(var(--mantine-color-gray-0), var(--mantine-color-dark-8));
   margin-bottom: var(--mantine-spacing-xl);
 
   @mixin smaller-than $sm {
-    padding-top: rem(60px);
-    padding-bottom: rem(40px);
+    padding-top: 60px;
+    padding-bottom: 40px;
   }
 }
 
 .title {
-  margin-top: rem(30px);
-  font-size: rem(50px);
+  margin-top: 30px;
+  font-size: 50px;
   line-height: 1.1;
   text-wrap: balance;
   color: var(--mantine-color-bright);
 
   @mixin smaller-than $sm {
-    font-size: rem(32px);
+    font-size: 32px;
   }
 }
 
@@ -27,7 +27,7 @@
 }
 
 .inner {
-  --table-of-contents-width: rem(300px);
+  --table-of-contents-width: 300px;
 
   display: flex;
   align-items: flex-start;

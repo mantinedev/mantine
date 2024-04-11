@@ -1,24 +1,24 @@
 .wrapper {
-  margin-right: rem(60px);
+  margin-right: 60px;
 
   &:last-of-type {
     margin-right: 0;
   }
 
   @media (max-width: 62.5em) {
-    margin-right: rem(40px);
+    margin-right: 40px;
   }
 
   @mixin rtl {
     margin-right: 0;
-    margin-left: rem(60px);
+    margin-left: 60px;
 
     &:last-of-type {
       margin-left: 0;
     }
 
     @media (max-width: 62.5em) {
-      margin-left: rem(40px);
+      margin-left: 40px;
     }
   }
 }
@@ -26,8 +26,8 @@
 .link {
   display: block;
   font-size: var(--mantine-font-size-sm);
-  padding-top: rem(3px);
-  padding-bottom: rem(3px);
+  padding-top: 3px;
+  padding-bottom: 3px;
 
   @mixin hover {
     text-decoration: underline;

@@ -18,12 +18,12 @@
 }
 
 .icon {
-  margin-right: rem(12px);
+  margin-right: 12px;
   display: flex;
   align-items: center;
 
   @mixin rtl {
-    margin-left: rem(12px);
+    margin-left: 12px;
     margin-right: 0;
   }
 }

@@ -6,12 +6,12 @@ import classes from './Carousel.demo.indicatorStyles.module.css';
 
 const cssCode = `
 .indicator {
-  width: rem(12px);
-  height: rem(4px);
+  width: 12px;
+  height: 4px;
   transition: width 250ms ease;
 
   &[data-active] {
-    width: rem(40px);
+    width: 40px;
   }
 }`;
 

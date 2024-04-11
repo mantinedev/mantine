@@ -41,8 +41,8 @@ const cssCode = `
 }
 
 .icon {
-  width: rem(16px);
-  height: rem(16px);
+  width: 16px;
+  height: 16px;
 }
 `;
 

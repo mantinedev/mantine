@@ -1,9 +1,9 @@
 .root {
-  --rating-size-xs: rem(14px);
-  --rating-size-sm: rem(18px);
-  --rating-size-md: rem(20px);
-  --rating-size-lg: rem(28px);
-  --rating-size-xl: rem(32px);
+  --rating-size-xs: 14px;
+  --rating-size-sm: 18px;
+  --rating-size-md: 20px;
+  --rating-size-lg: 28px;
+  --rating-size-xl: 32px;
 
   display: flex;
   width: max-content;
@@ -54,8 +54,8 @@
   -webkit-tap-highlight-color: transparent;
 
   &:focus-visible + label {
-    outline: rem(2px) solid var(--mantine-primary-color-filled);
-    outline-offset: rem(2px);
+    outline: 2px solid var(--mantine-primary-color-filled);
+    outline-offset: 2px;
   }
 }
 

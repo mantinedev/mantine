@@ -3,9 +3,9 @@ import { MantineDemo } from '@mantinex/demo';
 import classes from './Styles.demo.containers.module.css';
 
 const cssCode = `.root {
-  min-width: rem(200px);
+  min-width: 200px;
   max-width: 100%;
-  min-height: rem(120px);
+  min-height: 120px;
   container-type: inline-size;
   overflow: auto;
   resize: horizontal;
@@ -16,11 +16,11 @@ const cssCode = `.root {
   color: var(--mantine-color-white);
   padding: var(--mantine-spacing-md);
 
-  @container (max-width: rem(500px)) {
+  @container (max-width: 500px) {
     background-color: var(--mantine-color-blue-filled);
   }
 
-  @container (max-width: rem(300px)) {
+  @container (max-width: 300px) {
     background-color: var(--mantine-color-red-filled);
   }
 }`;

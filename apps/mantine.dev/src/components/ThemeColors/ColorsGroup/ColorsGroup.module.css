@@ -9,10 +9,10 @@ $theme-colors-breakpoint: em(820px);
 .color {
   display: flex;
   flex-direction: column;
-  flex: 0 0 calc(10% - rem(7px));
+  flex: 0 0 calc(10% - 7px);
 
   @media (max-width: $theme-colors-breakpoint) {
-    flex: 0 0 calc(20% - rem(7px));
+    flex: 0 0 calc(20% - 7px);
   }
 }
 
@@ -29,7 +29,7 @@ $theme-colors-breakpoint: em(820px);
 
 .group {
   display: flex;
-  gap: rem(7px);
+  gap: 7px;
 
   @media (max-width: $theme-colors-breakpoint) {
     flex-wrap: wrap;

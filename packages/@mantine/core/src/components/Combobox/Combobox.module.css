@@ -1,5 +1,5 @@
 .dropdown {
-  --combobox-padding: rem(4px);
+  --combobox-padding: 4px;
   padding: var(--combobox-padding);
 
   &[data-hidden] {
@@ -10,11 +10,11 @@
 /* Variables must be both on dropdown and options to support usage of Combobox.Options without Combobox.Dropdown */
 .dropdown,
 .options {
-  --combobox-option-padding-xs: rem(4px) rem(8px);
-  --combobox-option-padding-sm: rem(6px) rem(10px);
-  --combobox-option-padding-md: rem(8px) rem(12px);
-  --combobox-option-padding-lg: rem(10px) rem(16px);
-  --combobox-option-padding-xl: rem(14px) rem(20px);
+  --combobox-option-padding-xs: 4px 8px;
+  --combobox-option-padding-sm: 6px 10px;
+  --combobox-option-padding-md: 8px 12px;
+  --combobox-option-padding-lg: 10px 16px;
+  --combobox-option-padding-xl: 14px 20px;
   --combobox-option-padding: var(--combobox-option-padding-sm);
 }
 
@@ -105,13 +105,13 @@
 }
 
 .footer {
-  border-top-width: rem(1px);
+  border-top-width: 1px;
   margin-top: var(--combobox-padding);
   margin-bottom: calc(var(--combobox-padding) * -1);
 }
 
 .header {
-  border-bottom-width: rem(1px);
+  border-bottom-width: 1px;
   margin-bottom: var(--combobox-padding);
   margin-top: calc(var(--combobox-padding) * -1);
 }
@@ -135,7 +135,7 @@
     content: '';
     flex: 1;
     inset-inline: 0;
-    height: rem(1px);
+    height: 1px;
     margin-inline-start: var(--mantine-spacing-xs);
 
     @mixin where-light {
@@ -154,11 +154,11 @@
 
 /* ------- Combobox.Chevron ------- */
 .chevron {
-  --combobox-chevron-size-xs: rem(14px);
-  --combobox-chevron-size-sm: rem(18px);
-  --combobox-chevron-size-md: rem(20px);
-  --combobox-chevron-size-lg: rem(24px);
-  --combobox-chevron-size-xl: rem(28px);
+  --combobox-chevron-size-xs: 14px;
+  --combobox-chevron-size-sm: 18px;
+  --combobox-chevron-size-md: 20px;
+  --combobox-chevron-size-lg: 24px;
+  --combobox-chevron-size-xl: 28px;
   --combobox-chevron-size: var(--combobox-chevron-size-sm);
 
   width: var(--combobox-chevron-size);
@@ -181,7 +181,7 @@
 .optionsDropdownOption {
   display: flex;
   align-items: center;
-  gap: rem(8px);
+  gap: 8px;
 
   &:where([data-reverse]) {
     justify-content: space-between;

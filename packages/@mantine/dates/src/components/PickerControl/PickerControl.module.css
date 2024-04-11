@@ -1,9 +1,9 @@
 .pickerControl {
-  --dpc-size-xs: rem(30px);
-  --dpc-size-sm: rem(36px);
-  --dpc-size-md: rem(42px);
-  --dpc-size-lg: rem(48px);
-  --dpc-size-xl: rem(54px);
+  --dpc-size-xs: 30px;
+  --dpc-size-sm: 36px;
+  --dpc-size-md: 42px;
+  --dpc-size-lg: 48px;
+  --dpc-size-xl: 54px;
   --dpc-size: var(--dpc-size-sm);
 
   font-size: var(--dpc-fz, var(--mantine-font-size-sm));

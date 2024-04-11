@@ -31,8 +31,8 @@ function Demo() {
 
 const cssCode = `
 .icon {
-  width: rem(22px);
-  height: rem(22px);
+  width: 22px;
+  height: 22px;
 }
 
 .dark {

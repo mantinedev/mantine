@@ -1,5 +1,5 @@
 .root {
-  border: rem(1px) solid;
+  border: 1px solid;
   border-radius: var(--mantine-radius-md);
   overflow: hidden;
   margin-bottom: var(--mantine-spacing-xl);
@@ -14,10 +14,10 @@
 }
 
 .icon {
-  margin-right: rem(5px);
+  margin-right: 5px;
 
   @mixin rtl {
     margin-right: 0;
-    margin-left: rem(5px);
+    margin-left: 5px;
   }
 }

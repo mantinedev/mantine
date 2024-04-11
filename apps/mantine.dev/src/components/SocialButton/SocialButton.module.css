@@ -1,8 +1,8 @@
 .socialButton {
   border: 0;
-  height: rem(42px);
-  padding-left: rem(20px);
-  padding-right: rem(20px);
+  height: 42px;
+  padding-left: 20px;
+  padding-right: 20px;
 }
 
 .socialButtonSection {

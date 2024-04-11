@@ -1,9 +1,9 @@
 .root {
-  --sc-padding-xs: rem(3px) rem(6px);
-  --sc-padding-sm: rem(5px) rem(10px);
-  --sc-padding-md: rem(7px) rem(14px);
-  --sc-padding-lg: rem(9px) rem(16px);
-  --sc-padding-xl: rem(12px) rem(20px);
+  --sc-padding-xs: 3px 6px;
+  --sc-padding-sm: 5px 10px;
+  --sc-padding-md: 7px 14px;
+  --sc-padding-lg: 9px 16px;
+  --sc-padding-xl: 12px 20px;
 
   --sc-transition-duration: 200ms;
   --sc-padding: var(--sc-padding-sm);
@@ -16,7 +16,7 @@
   width: auto;
   border-radius: var(--sc-radius, var(--mantine-radius-default));
   overflow: hidden;
-  padding: 4px; /* px required for correct indicator calculations */
+  padding: 4px;
 
   &:where([data-full-width]) {
     display: flex;
@@ -168,7 +168,7 @@
   &[data-focus-ring='auto'] {
     &:focus:focus-visible {
       & + .label {
-        --segmented-control-outline: rem(2px) solid var(--mantine-color-blue-filled);
+        --segmented-control-outline: 2px solid var(--mantine-color-blue-filled);
       }
     }
   }
@@ -176,7 +176,7 @@
   &[data-focus-ring='always'] {
     &:focus {
       & + .label {
-        --segmented-control-outline: rem(2px) solid var(--mantine-color-blue-filled);
+        --segmented-control-outline: 2px solid var(--mantine-color-blue-filled);
       }
     }
   }
@@ -195,7 +195,7 @@
     bottom: 0;
     inset-inline-start: 0;
     background-color: var(--separator-color);
-    width: rem(1px);
+    width: 1px;
     transition: background-color var(--sc-transition-duration) var(--sc-transition-timing-function);
   }
 
@@ -204,7 +204,7 @@
       top: 0;
       inset-inline: 0;
       bottom: auto;
-      height: rem(1px);
+      height: 1px;
       width: auto;
     }
   }

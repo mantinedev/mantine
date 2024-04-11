@@ -1,17 +1,17 @@
 .root {
-  --ni-right-section-width-xs: rem(17px);
-  --ni-right-section-width-sm: rem(24px);
-  --ni-right-section-width-md: rem(27px);
-  --ni-right-section-width-lg: rem(31px);
-  --ni-right-section-width-xl: rem(34px);
+  --ni-right-section-width-xs: 17px;
+  --ni-right-section-width-sm: 24px;
+  --ni-right-section-width-md: 27px;
+  --ni-right-section-width-lg: 31px;
+  --ni-right-section-width-xl: 34px;
 }
 
 .controls {
-  --ni-chevron-size-xs: rem(10px);
-  --ni-chevron-size-sm: rem(14px);
-  --ni-chevron-size-md: rem(16px);
-  --ni-chevron-size-lg: rem(18px);
-  --ni-chevron-size-xl: rem(20px);
+  --ni-chevron-size-xs: 10px;
+  --ni-chevron-size-sm: 14px;
+  --ni-chevron-size-md: 16px;
+  --ni-chevron-size-lg: 18px;
+  --ni-chevron-size-xl: 20px;
   --ni-chevron-size: var(--ni-chevron-size-sm);
 
   display: flex;
@@ -23,7 +23,7 @@
 }
 
 .control {
-  --control-border: rem(1px) solid var(--input-bd);
+  --control-border: 1px solid var(--input-bd);
   --control-radius: calc(var(--input-radius) - rem(1px));
 
   flex: 0 0 50%;
@@ -72,7 +72,7 @@
   }
 
   &:last-of-type {
-    border-top: rem(1) solid var(--input-bd);
+    border-top: 1 solid var(--input-bd);
     border-radius: 0;
     border-end-end-radius: var(--control-radius);
   }

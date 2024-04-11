@@ -4,7 +4,7 @@
 
 .error {
   position: absolute;
-  bottom: rem(-18px);
+  bottom: -18px;
 }
 
 .wrapper {

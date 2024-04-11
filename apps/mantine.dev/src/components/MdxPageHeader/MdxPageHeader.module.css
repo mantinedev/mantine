@@ -20,7 +20,7 @@
 
 .header {
   padding-top: var(--mantine-spacing-xl);
-  max-width: rem(1082px);
+  max-width: 1082px;
   margin-left: auto;
   margin-right: auto;
   padding-bottom: calc(var(--mantine-spacing-xl) * 1.5);
@@ -36,13 +36,13 @@
 }
 
 .title {
-  font-size: rem(44px);
-  margin-bottom: rem(5px);
+  font-size: 44px;
+  margin-bottom: 5px;
   font-weight: 900;
   font-family: var(--docs-font-primary);
 
   @media (max-width: $docs-mdx-breakpoint) {
-    font-size: rem(32px);
+    font-size: 32px;
   }
 
   @mixin light {
@@ -55,7 +55,7 @@
 }
 
 .description {
-  max-width: rem(450px);
+  max-width: 450px;
   margin-bottom: var(--mantine-spacing-xl);
   font-size: var(--mantine-font-size-lg);
 

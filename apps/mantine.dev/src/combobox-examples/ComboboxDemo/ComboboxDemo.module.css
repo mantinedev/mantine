@@ -1,5 +1,5 @@
 .root {
-  --preview-size: rem(600px);
+  --preview-size: 600px;
   padding-top: var(--preview-size);
 }
 
@@ -24,12 +24,12 @@
   justify-content: space-between;
   padding: var(--mantine-spacing-md) var(--mantine-spacing-lg);
   background-color: light-dark(var(--mantine-color-white), var(--mantine-color-dark-7));
-  border-bottom: rem(1px) solid light-dark(var(--mantine-color-gray-2), var(--mantine-color-dark-8));
+  border-bottom: 1px solid light-dark(var(--mantine-color-gray-2), var(--mantine-color-dark-8));
 
   @media (max-width: $docs-navbar-breakpoint) {
     flex-direction: column-reverse;
     align-items: flex-start;
-    gap: rem(7px);
+    gap: 7px;
   }
 }
 
@@ -46,25 +46,25 @@
 .description {
   font-size: var(--mantine-font-size-xs);
   color: var(--mantine-color-gray-6);
-  margin-top: rem(3px);
+  margin-top: 3px;
 }
 
 .inner {
   display: flex;
   justify-content: center;
   height: 100%;
-  padding-top: rem(180px);
+  padding-top: 180px;
 }
 
 .wrapper {
   flex: 1;
-  max-width: rem(420px);
-  padding-left: rem(20px);
-  padding-right: rem(20px);
+  max-width: 420px;
+  padding-left: 20px;
+  padding-right: 20px;
 }
 
 .code {
-  border-top: rem(1px) solid light-dark(var(--mantine-color-gray-2), var(--mantine-color-dark-6));
+  border-top: 1px solid light-dark(var(--mantine-color-gray-2), var(--mantine-color-dark-6));
   position: relative;
   z-index: 2;
   background-color: light-dark(var(--mantine-color-white), var(--mantine-color-dark-7));

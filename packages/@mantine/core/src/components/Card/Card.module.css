@@ -36,8 +36,8 @@
   }
 
   &:where([data-with-border]) {
-    border-top: rem(1px) solid;
-    border-bottom: rem(1px) solid;
+    border-top: 1px solid;
+    border-bottom: 1px solid;
   }
 
   @mixin where-light {

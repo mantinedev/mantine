@@ -1,9 +1,9 @@
 .calendarHeader {
-  --dch-control-size-xs: rem(30px);
-  --dch-control-size-sm: rem(36px);
-  --dch-control-size-md: rem(42px);
-  --dch-control-size-lg: rem(48px);
-  --dch-control-size-xl: rem(54px);
+  --dch-control-size-xs: 30px;
+  --dch-control-size-sm: 36px;
+  --dch-control-size-md: 42px;
+  --dch-control-size-lg: 48px;
+  --dch-control-size-xl: 54px;
   --dch-control-size: var(--dch-control-size-sm);
 
   display: flex;

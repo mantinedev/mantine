@@ -1,9 +1,9 @@
 .root {
-  --cb-size-xs: rem(18px);
-  --cb-size-sm: rem(22px);
-  --cb-size-md: rem(28px);
-  --cb-size-lg: rem(34px);
-  --cb-size-xl: rem(44px);
+  --cb-size-xs: 18px;
+  --cb-size-sm: 22px;
+  --cb-size-md: 28px;
+  --cb-size-lg: 34px;
+  --cb-size-xl: 44px;
 
   --cb-size: var(--cb-size-md);
   --cb-icon-size: 70%;

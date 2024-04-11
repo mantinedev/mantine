@@ -36,8 +36,8 @@ function Demo() {
 
 const cssCode = `
 .root {
-  --ai-size-xxs: rem(16px);
-  --ai-size-xxl: rem(50px);
+  --ai-size-xxs: 16px;
+  --ai-size-xxl: 50px;
 }
 `;
 

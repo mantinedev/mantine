@@ -2,7 +2,7 @@
   display: flex;
   align-items: center;
   gap: var(--mantine-spacing-xl);
-  margin-top: rem(50px);
+  margin-top: 50px;
 
   @media (max-width: em(700px)) {
     flex-direction: column;
@@ -24,7 +24,7 @@
   @mixin light {
     color: var(--mantine-colors-black);
     background-color: var(--mantine-color-white);
-    border: rem(1px) solid var(--mantine-color-gray-3);
+    border: 1px solid var(--mantine-color-gray-3);
 
     @mixin hover {
       background-color: var(--mantine-color-gray-0);
@@ -34,7 +34,7 @@
   @mixin dark {
     color: var(--mantine-colors-white);
     background-color: var(--mantine-color-dark-6);
-    border: rem(1px) solid var(--mantine-color-dark-4);
+    border: 1px solid var(--mantine-color-dark-4);
 
     @mixin hover {
       background-color: var(--mantine-color-dark-5);
@@ -75,8 +75,8 @@
 }
 
 .icon {
-  width: rem(25px);
-  height: rem(25px);
+  width: 25px;
+  height: 25px;
 
   @mixin rtl {
     transform: rotate(180deg);

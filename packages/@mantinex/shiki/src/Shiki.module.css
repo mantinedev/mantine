@@ -1,7 +1,7 @@
 .code {
   display: inline-block;
-  padding: rem(1px) rem(3px);
-  font-size: rem(13px);
+  padding: 1px 3px;
+  font-size: 13px;
   border-radius: var(--mantine-radius-xs);
   line-height: var(--code-line-height, var(--mantine-line-height));
   font-family: var(--mantine-font-family-monospace);
@@ -22,8 +22,8 @@
 
 .controls {
   display: flex;
-  margin-top: rem(7px);
-  margin-right: rem(7px);
+  margin-top: 7px;
+  margin-right: 7px;
 }
 
 .copy,
@@ -46,8 +46,8 @@
 
 .copy {
   position: absolute;
-  top: rem(5px);
-  right: rem(5px);
+  top: 5px;
+  right: 5px;
   z-index: 1;
 }
 
@@ -56,15 +56,15 @@
   align-items: center;
   justify-content: center;
   font-size: var(--mantine-font-size-xs);
-  gap: rem(7px);
-  padding: rem(7px) rem(12px);
+  gap: 7px;
+  padding: 7px 12px;
   font-family: var(--mantine-font-family-monospace);
   font-weight: 700;
   line-height: 1;
   user-select: none;
   cursor: pointer;
   opacity: 0.8;
-  border: rem(1px) solid;
+  border: 1px solid;
   border-top: 0;
   border-left: 0;
   white-space: nowrap;
@@ -123,7 +123,7 @@
     inset: 0;
     pointer-events: none;
     background-image: linear-gradient(0deg, var(--code-background) 16%, rgba(0, 0, 0, 0) 100%);
-    border-radius: calc(var(--mantine-radius-md) - rem(1px));
+    border-radius: calc(var(--mantine-radius-md) - 1px);
   }
 
   &:where([data-expanded]) {

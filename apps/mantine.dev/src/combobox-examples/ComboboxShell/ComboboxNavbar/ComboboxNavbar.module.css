@@ -6,11 +6,11 @@
   bottom: 0;
   width: var(--combobox-shell-navbar-width);
   background-color: light-dark(var(--mantine-color-white), var(--mantine-color-dark-8));
-  border-right: rem(1px) solid var(--border-color);
+  border-right: 1px solid var(--border-color);
 
   @mixin rtl {
     border-right: none;
-    border-left: rem(1px) solid var(--border-color);
+    border-left: 1px solid var(--border-color);
   }
 
   @media (max-width: $docs-navbar-breakpoint) {
@@ -28,7 +28,7 @@
 }
 
 .scroll {
-  height: calc(100vh - rem(134px));
+  height: calc(100vh - 134px);
 }
 
 .search {
@@ -44,15 +44,15 @@
 }
 
 .searchIcon {
-  width: rem(18px);
-  height: rem(18px);
+  width: 18px;
+  height: 18px;
 }
 
 .item {
   padding: var(--mantine-spacing-xs) var(--mantine-spacing-md);
 
   & + & {
-    border-top: rem(1px) solid light-dark(var(--mantine-color-gray-2), var(--mantine-color-dark-8));
+    border-top: 1px solid light-dark(var(--mantine-color-gray-2), var(--mantine-color-dark-8));
   }
 
   &[data-active] {
@@ -82,7 +82,7 @@
 .itemDescription {
   color: var(--mantine-color-dimmed);
   font-size: var(--mantine-font-size-xs);
-  margin-top: rem(2px);
+  margin-top: 2px;
 }
 
 .empty {

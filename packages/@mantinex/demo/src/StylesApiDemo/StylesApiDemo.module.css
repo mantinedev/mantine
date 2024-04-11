@@ -2,7 +2,7 @@
   display: block;
   width: 100%;
   font-size: var(--mantine-font-size-sm);
-  padding: rem(6px) var(--mantine-spacing-sm);
+  padding: 6px var(--mantine-spacing-sm);
   border-radius: var(--mantine-radius-sm);
   cursor: help;
 

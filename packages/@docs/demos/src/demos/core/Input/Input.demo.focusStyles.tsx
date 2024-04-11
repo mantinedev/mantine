@@ -27,7 +27,7 @@ const cssCode = `
   transition: none;
 
   &:focus-within {
-    outline: rem(2px) solid var(--mantine-color-blue-filled);
+    outline: 2px solid var(--mantine-color-blue-filled);
     border-color: transparent;
   }
 }

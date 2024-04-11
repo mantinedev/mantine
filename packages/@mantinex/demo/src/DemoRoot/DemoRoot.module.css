@@ -1,5 +1,5 @@
 .root {
-  border: rem(1px) solid var(--demo-border);
+  border: 1px solid var(--demo-border);
   border-radius: var(--mantine-radius-md);
 
   @mixin light {

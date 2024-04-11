@@ -4,7 +4,7 @@
 
   & > p {
     line-height: 1.65;
-    font-size: rem(15px);
+    font-size: 15px;
   }
 
   /* Considered to be a heading of the info */
@@ -57,6 +57,6 @@
 }
 
 .icon {
-  width: rem(28px);
-  height: rem(28px);
+  width: 28px;
+  height: 28px;
 }

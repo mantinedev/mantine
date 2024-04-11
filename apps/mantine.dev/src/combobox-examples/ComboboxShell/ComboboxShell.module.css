@@ -1,5 +1,5 @@
 .root {
-  --combobox-shell-navbar-width: rem(300px);
+  --combobox-shell-navbar-width: 300px;
 
   @media (max-width: $docs-navbar-breakpoint) {
     --combobox-shell-navbar-width: 0;

@@ -1,24 +1,24 @@
 .root {
   background-color: light-dark(var(--mantine-color-blue-6), var(--mantine-color-dark-8));
-  padding-top: rem(120px);
-  padding-bottom: rem(40px);
+  padding-top: 120px;
+  padding-bottom: 40px;
 }
 
 .title {
   color: var(--mantine-color-white);
-  font-size: rem(52px);
-  letter-spacing: rem(-0.5px);
+  font-size: 52px;
+  letter-spacing: -0.5px;
   line-height: 1;
-  text-shadow: rem(1px) rem(1px) rem(3px) rgba(0, 0, 0, 0.1);
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
 
   @mixin smaller-than $sm {
-    font-size: rem(32px);
+    font-size: 32px;
   }
 }
 
 .description {
   color: var(--mantine-color-white);
-  font-size: rem(20px);
+  font-size: 20px;
   margin-top: var(--mantine-spacing-xs);
   margin-bottom: var(--mantine-spacing-xl);
   opacity: 0.8;

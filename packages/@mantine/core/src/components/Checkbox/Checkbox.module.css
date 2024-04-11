@@ -1,9 +1,9 @@
 .root {
-  --checkbox-size-xs: rem(16px);
-  --checkbox-size-sm: rem(20px);
-  --checkbox-size-md: rem(24px);
-  --checkbox-size-lg: rem(30px);
-  --checkbox-size-xl: rem(36px);
+  --checkbox-size-xs: 16px;
+  --checkbox-size-sm: 20px;
+  --checkbox-size-md: 24px;
+  --checkbox-size-lg: 30px;
+  --checkbox-size-xl: 36px;
 
   --checkbox-size: var(--checkbox-size-sm);
   --checkbox-color: var(--mantine-primary-color-filled);
@@ -23,7 +23,7 @@
 
 .input {
   appearance: none;
-  border: rem(1px) solid transparent;
+  border: 1px solid transparent;
   width: var(--checkbox-size);
   height: var(--checkbox-size);
   border-radius: var(--checkbox-radius, var(--mantine-radius-default));

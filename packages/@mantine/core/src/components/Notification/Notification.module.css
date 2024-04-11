@@ -7,7 +7,7 @@
   position: relative;
   display: flex;
   align-items: center;
-  padding-inline-start: rem(22px);
+  padding-inline-start: 22px;
   padding-inline-end: var(--mantine-spacing-xs);
   padding-top: var(--mantine-spacing-xs);
   padding-bottom: var(--mantine-spacing-xs);
@@ -18,10 +18,10 @@
     content: '';
     display: block;
     position: absolute;
-    width: rem(6px);
+    width: 6px;
     top: var(--notification-radius);
     bottom: var(--notification-radius);
-    inset-inline-start: rem(4px);
+    inset-inline-start: 4px;
     border-radius: var(--notification-radius);
     background-color: var(--notification-color);
   }
@@ -44,11 +44,11 @@
 
   &:where([data-with-border]) {
     @mixin where-light {
-      border: rem(1px) solid var(--mantine-color-gray-3);
+      border: 1px solid var(--mantine-color-gray-3);
     }
 
     @mixin where-dark {
-      border: rem(1px) solid var(--mantine-color-dark-4);
+      border: 1px solid var(--mantine-color-dark-4);
     }
   }
 }
@@ -56,9 +56,9 @@
 .icon {
   box-sizing: border-box;
   margin-inline-end: var(--mantine-spacing-md);
-  width: rem(28px);
-  height: rem(28px);
-  border-radius: rem(28px);
+  width: 28px;
+  height: 28px;
+  border-radius: 28px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -77,7 +77,7 @@
 }
 
 .title {
-  margin-bottom: rem(2px);
+  margin-bottom: 2px;
   overflow: hidden;
   text-overflow: ellipsis;
   font-size: var(--mantine-font-size-sm);

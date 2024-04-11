@@ -67,6 +67,28 @@ describe('@mantine/units-converters/rem', () => {
       '0rem 0rem calc(0.3125rem * var(--mantine-scale)) calc(0.625rem * var(--mantine-scale)) rgba(0, 0, 0, 0.5)'
     );
   });
+
+  it('transforms values in CSS variables fallback', () => {
+    expect(rem('var(--ai-bd, 1px solid transparent)')).toBe(
+      'var(--ai-bd, calc(0.0625rem * var(--mantine-scale)) solid transparent)'
+    );
+
+    expect(rem('var(--ai-bd-10px, 1px solid transparent)')).toBe(
+      'var(--ai-bd-10px, calc(0.0625rem * var(--mantine-scale)) solid transparent)'
+    );
+  });
+
+  it('correctly transforms values that are part of CSS variables', () => {
+    expect(rem('var(--mantine-size-xs) 16px')).toBe(
+      'var(--mantine-size-xs) calc(1rem * var(--mantine-scale))'
+    );
+  });
+
+  it('correctly transforms a list of coma separated values', () => {
+    expect(rem('0 0, 0 4px, 4px -4px, -4px 0')).toBe(
+      '0rem 0rem,0rem 0rem calc(0.25rem * var(--mantine-scale)),0rem calc(0.25rem * var(--mantine-scale)) calc(-0.25rem * var(--mantine-scale)),0rem calc(-0.25rem * var(--mantine-scale)) 0rem'
+    );
+  });
 });
 
 describe('@mantine/units-converters/em', () => {

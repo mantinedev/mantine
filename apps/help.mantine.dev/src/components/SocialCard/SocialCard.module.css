@@ -1,6 +1,6 @@
 .root {
   position: relative;
-  height: rem(280px);
+  height: 280px;
   padding: var(--mantine-spacing-lg);
   border-radius: var(--mantine-radius-md);
   color: var(--mantine-color-white);
@@ -49,8 +49,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  width: rem(60px);
-  height: rem(60px);
+  width: 60px;
+  height: 60px;
   border-radius: var(--mantine-radius-md);
 }
 
@@ -71,6 +71,6 @@
   padding: 0;
   font-size: var(--mantine-font-size-sm);
   opacity: 0.8;
-  max-width: rem(360px);
-  margin-top: rem(7px);
+  max-width: 360px;
+  margin-top: 7px;
 }

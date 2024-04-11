@@ -44,7 +44,7 @@ const cssCode = `
 }
 
 .input {
-  border: rem(1px) solid var(--mantine-color-violet-filled);
+  border: 1px solid var(--mantine-color-violet-filled);
 }
 `;
 

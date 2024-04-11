@@ -1,9 +1,9 @@
 .root {
-  --modal-size-xs: rem(320px);
-  --modal-size-sm: rem(380px);
-  --modal-size-md: rem(440px);
-  --modal-size-lg: rem(620px);
-  --modal-size-xl: rem(780px);
+  --modal-size-xs: 320px;
+  --modal-size-sm: 380px;
+  --modal-size-md: 440px;
+  --modal-size-lg: 620px;
+  --modal-size-xl: 780px;
   --modal-size: var(--modal-size-md);
 
   --modal-y-offset: 5dvh;

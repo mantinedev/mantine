@@ -1,7 +1,7 @@
 .root {
   font-family: var(--mantine-font-family-monospace);
   line-height: var(--mantine-line-height);
-  padding: rem(2px) calc(var(--mantine-spacing-xs) / 2);
+  padding: 2px calc(var(--mantine-spacing-xs) / 2);
   border-radius: var(--mantine-radius-sm);
   font-size: var(--mantine-font-size-xs);
   margin: 0;
