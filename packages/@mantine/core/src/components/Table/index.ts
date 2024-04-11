@@ -32,4 +32,3 @@ export type {
   TableScrollContainerCssVariables,
   TableScrollContainerFactory,
 } from './TableScrollContainer';
-export type { TableDataRendererProps } from './TableDataRenderer';
