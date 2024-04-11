@@ -29,9 +29,15 @@
   @mixin where-dark {
     color: var(--mantine-color-dark-1);
   }
+
+  &[data-disabled],
+  &:disabled {
+    cursor: not-allowed;
+    opacity: 0.6;
+  }
 }
 
-.root--subtle {
+.root--subtle:not([data-disabled], :disabled) {
   @mixin hover {
     @mixin where-light {
       background-color: var(--mantine-color-gray-0);
