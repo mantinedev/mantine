@@ -28,7 +28,7 @@ export type {
 } from './Table.components';
 export type { 
   TableScrollContainerProps,
-  TableScrollContainerStyleNames,
+  TableScrollContainerStylesNames,
   TableScrollContainerCssVariables,
   TableScrollContainerFactory,
 } from './TableScrollContainer';
