@@ -27,6 +27,10 @@
   --button-padding-x: var(--button-padding-x-sm);
   --button-color: var(--mantine-color-white);
 
+  transition-property: all;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+
   user-select: none;
   font-weight: 600;
   position: relative;
