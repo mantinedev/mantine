@@ -9,7 +9,6 @@ export {
   TableThead,
 } from './Table.components';
 export { TableScrollContainer } from './TableScrollContainer';
-export { TableDataRenderer } from './TableDataRenderer';
 export type {
   TableProps,
   TableStylesNames,
