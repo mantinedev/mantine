@@ -277,7 +277,12 @@ export const TagsInput = factory<TagsInputFactory>((_props, ref) => {
       }
     }
 
-    if (event.key === 'Backspace' && length === 0 && _value.length > 0) {
+    if (
+      event.key === 'Backspace' &&
+      length === 0 &&
+      _value.length > 0 &&
+      !event.nativeEvent.isComposing
+    ) {
       onRemove?.(_value[_value.length - 1]);
       setValue(_value.slice(0, _value.length - 1));
     }
