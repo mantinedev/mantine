@@ -249,6 +249,12 @@ export const NumberInput = factory<NumberInputFactory>((_props, ref) => {
     return Math.max(0, (match[1] ? match[1].length : 0) - (match[2] ? +match[2] : 0));
   };
 
+  const adjustCursor = (position?: number) => {
+    if (inputRef.current && position) {
+      inputRef.current.setSelectionRange(position, position);
+    }
+  };
+
   const incrementRef = useRef<() => void>();
   incrementRef.current = () => {
     let val: number;
@@ -272,6 +278,7 @@ export const NumberInput = factory<NumberInputFactory>((_props, ref) => {
       { floatValue: parseFloat(formattedValue), formattedValue, value: formattedValue },
       { source: 'increment' as any }
     );
+    setTimeout(() => adjustCursor(inputRef.current?.value.length), 0);
   };
 
   const decrementRef = useRef<() => void>();
@@ -295,6 +302,7 @@ export const NumberInput = factory<NumberInputFactory>((_props, ref) => {
       { floatValue: parseFloat(formattedValue), formattedValue, value: formattedValue },
       { source: 'decrement' as any }
     );
+    setTimeout(() => adjustCursor(inputRef.current?.value.length), 0);
   };
 
   const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
