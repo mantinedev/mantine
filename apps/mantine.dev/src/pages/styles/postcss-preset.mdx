@@ -65,6 +65,56 @@ Will be transformed to:
 }
 ```
 
+## Auto convert px to rem
+
+`autoRem` option can be used to automatically convert all pixel values to rem units
+in `.css` files:
+
+```js
+module.exports = {
+  plugins: {
+    'postcss-preset-mantine': {
+      autoRem: true,
+    },
+  },
+};
+```
+
+This option works similar to `rem` function. The following code:
+
+```scss
+.demo {
+  font-size: 16px;
+
+  @media (min-width: 320px) {
+    font-size: 32px;
+  }
+}
+```
+
+Will be transformed to:
+
+```scss
+.demo {
+  font-size: calc(1rem * var(--mantine-scale));
+
+  @media (min-width: 320px) {
+    font-size: calc(2rem * var(--mantine-scale));
+  }
+}
+```
+
+Note that `autoRem` converts only CSS properties, values in `@media` queries are
+not converted automatically – you still need to use `em` function to convert them.
+
+`autoRem` option does not convert values in the following cases:
+
+- Values in `calc()`, `var()`, `clamp()` and `url()` functions
+- Values in `content` property
+- Values that contain `rgb()`, `rgba()`, `hsl()`, `hsla()` colors
+
+If you want to convert above values to rem units, use `rem` function manually.
+
 ## dark and light mixins
 
 `dark` and `light` mixins can be used to create styles that will be applied only in dark or light color scheme.

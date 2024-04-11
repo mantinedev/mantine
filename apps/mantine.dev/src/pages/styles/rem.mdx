@@ -131,3 +131,18 @@ You can use `rem` and `em` function in [css files](/styles/css-modules) if
   }
 }
 ```
+
+## Convert px to rem automatically in css files
+
+To convert `px` to `rem` automatically in css files, enable `autoRem` option in
+[postcss-preset-mantine](/styles/postcss-preset) configuration:
+
+```js
+module.exports = {
+  plugins: {
+    'postcss-preset-mantine': {
+      autoRem: true,
+    },
+  },
+};
+```
