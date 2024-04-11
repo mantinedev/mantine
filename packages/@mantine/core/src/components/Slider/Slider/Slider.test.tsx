@@ -129,4 +129,27 @@ describe('@mantine/core/Slider', () => {
     const { container } = render(<Slider defaultValue={120} max={100} />);
     expectInputValue('100', container);
   });
+
+  it('will call onChange before onChangeEvent', async () => {
+    const changeSpy = jest.fn();
+    const endSpy = jest.fn();
+    render(
+      <Slider
+        value={50}
+        step={10}
+        onChange={() => changeSpy(performance.now())}
+        onChangeEnd={() => endSpy(performance.now())}
+      />
+    );
+
+    await pressArrow('right');
+    expect(changeSpy.mock.calls[0][0]).toBeLessThan(
+      endSpy.mock.calls[endSpy.mock.calls.length - 1][0]
+    );
+
+    await pressArrow('left');
+    expect(changeSpy.mock.calls[1][0]).toBeLessThan(
+      endSpy.mock.calls[endSpy.mock.calls.length - 1][0]
+    );
+  });
 });
