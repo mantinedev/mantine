@@ -46,7 +46,7 @@ export const configurator: MantineDemo = {
         { label: 'flex-end', value: 'flex-end' },
       ],
       initialValue: 'stretch',
-      libraryValue: 'stretch',
+      libraryValue: null,
     },
     {
       prop: 'justify',
@@ -59,8 +59,8 @@ export const configurator: MantineDemo = {
         { label: 'space-around', value: 'space-around' },
       ],
       initialValue: 'center',
-      libraryValue: 'center',
+      libraryValue: null,
     },
-    { prop: 'gap', type: 'size', initialValue: 'md', libraryValue: 'md' },
+    { prop: 'gap', type: 'size', initialValue: 'md', libraryValue: null },
   ],
 };
