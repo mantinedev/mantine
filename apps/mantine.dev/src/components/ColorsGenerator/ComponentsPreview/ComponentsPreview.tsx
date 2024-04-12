@@ -30,7 +30,7 @@ export function ComponentsPreview({ colors }: ComponentsPreviewProps) {
             <Table.Tbody>
               <Table.Tr>
                 <Table.Td>
-                  <Button color="__colors-generator__" fullWidth>
+                  <Button color="__colors-generator__" fullWidth autoContrast>
                     Button
                   </Button>
                 </Table.Td>
