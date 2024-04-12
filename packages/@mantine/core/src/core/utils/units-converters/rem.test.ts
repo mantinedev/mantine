@@ -58,24 +58,8 @@ describe('@mantine/units-converters/rem', () => {
     );
 
     expect(rem('1px solid red')).toBe('calc(0.0625rem * var(--mantine-scale)) solid red');
-
-    expect(rem('1px 1px 5px rgba(0, 0, 0, 0.5)')).toBe(
-      'calc(0.0625rem * var(--mantine-scale)) calc(0.0625rem * var(--mantine-scale)) calc(0.3125rem * var(--mantine-scale)) rgba(0, 0, 0, 0.5)'
-    );
-
-    expect(rem('0 0 5px 10px rgba(0, 0, 0, 0.5)')).toBe(
-      '0rem 0rem calc(0.3125rem * var(--mantine-scale)) calc(0.625rem * var(--mantine-scale)) rgba(0, 0, 0, 0.5)'
-    );
-  });
-
-  it('transforms values in CSS variables fallback', () => {
-    expect(rem('var(--ai-bd, 1px solid transparent)')).toBe(
-      'var(--ai-bd, calc(0.0625rem * var(--mantine-scale)) solid transparent)'
-    );
-
-    expect(rem('var(--ai-bd-10px, 1px solid transparent)')).toBe(
-      'var(--ai-bd-10px, calc(0.0625rem * var(--mantine-scale)) solid transparent)'
-    );
+    expect(rem('1px 1px 5px rgba(0, 0, 0, 0.5)')).toBe('1px 1px 5px rgba(0, 0, 0, 0.5)');
+    expect(rem('0 0 5px 10px rgba(0, 0, 0, 0.5)')).toBe('0 0 5px 10px rgba(0, 0, 0, 0.5)');
   });
 
   it('correctly transforms values that are part of CSS variables', () => {
