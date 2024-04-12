@@ -123,7 +123,7 @@ export const ChartTooltip = factory<ChartTooltipFactory>((_props, ref) => {
   const _label = label || scatterLabel;
 
   const items = filteredPayload.map((item) => (
-    <div key={item.name} data-type={type} {...getStyles('tooltipItem')}>
+    <div key={item?.key ?? item.name} data-type={type} {...getStyles('tooltipItem')}>
       <div {...getStyles('tooltipItemBody')}>
         <ColorSwatch
           color={getThemeColor(item.color, theme)}
