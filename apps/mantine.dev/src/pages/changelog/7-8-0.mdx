@@ -118,6 +118,31 @@ called with new value, previous value, touched and dirty field states:
 
 <Demo data={FormDemos.watch} />
 
+## Customize Popover middlewares
+
+You can now customize `middlewares` options in [Popover](/core/popover) component and
+in other components ([Menu](/core/menu), [Select](/core/select), [Combobox](/core/combobox), etc.)
+based on Popover.
+
+To customize [Floating UI](https://floating-ui.com/) middlewares options, pass them as
+an object to the `middlewares` prop. For example, to change [shift](https://floating-ui.com/docs/shift)
+middleware padding to `20px` use the following configuration:
+
+```tsx
+import { Popover } from '@mantine/core';
+
+function Demo() {
+  return (
+    <Popover
+      middlewares={{ shift: { padding: 20 } }}
+      position="bottom"
+    >
+      {/* Popover content */}
+    </Popover>
+  );
+}
+```
+
 ## use-fetch hook
 
 New [use-fetch](/hooks/use-fetch) hook:

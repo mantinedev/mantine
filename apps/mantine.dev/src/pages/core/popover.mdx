@@ -73,6 +73,7 @@ You can enable or disable [Floating UI](https://floating-ui.com/) middlewares wi
 - [shift](https://floating-ui.com/docs/shift) middleware shifts the dropdown to keep it in view. It is enabled by default
 - [flip](https://floating-ui.com/docs/flip) middleware changes the placement of the dropdown to keep it in view. It is enabled by default.
 - [inline](https://floating-ui.com/docs/inline) middleware improves positioning for inline reference elements that span over multiple lines. It is disabled by default.
+- [size](https://floating-ui.com/docs/size) middleware manipulates dropdown size. It is disabled by default.
 
 Example of turning off `shift` and `flip` middlewares:
 
@@ -91,8 +92,26 @@ function Demo() {
 }
 ```
 
-In this example Popover dropdown will always be below the element – it will not
-shift of flip if there is not enough space in the viewport.
+## Customize middleware options
+
+To customize [Floating UI](https://floating-ui.com/) middlewares options, pass them as
+an object to the `middlewares` prop. For example, to change [shift](https://floating-ui.com/docs/shift)
+middleware padding to `20px` use the following configuration:
+
+```tsx
+import { Popover } from '@mantine/core';
+
+function Demo() {
+  return (
+    <Popover
+      middlewares={{ shift: { padding: 20 } }}
+      position="bottom"
+    >
+      {/* Popover content */}
+    </Popover>
+  );
+}
+```
 
 ## Dropdown arrow
 
