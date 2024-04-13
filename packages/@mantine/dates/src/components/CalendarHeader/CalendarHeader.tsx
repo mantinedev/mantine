@@ -53,10 +53,10 @@ export interface CalendarHeaderSettings {
   /** Called when level button is clicked */
   onLevelClick?: () => void;
 
-  /** Determines whether next control should be disabled, defaults to true */
+  /** Determines whether next control should be disabled, defaults to false */
   nextDisabled?: boolean;
 
-  /** Determines whether previous control should be disabled, defaults to true */
+  /** Determines whether previous control should be disabled, defaults to false */
   previousDisabled?: boolean;
 
   /** Determines whether next level button should be enabled, defaults to true */
