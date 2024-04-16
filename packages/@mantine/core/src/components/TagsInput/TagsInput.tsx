@@ -54,13 +54,13 @@ export interface TagsInputProps
   /** Default value for uncontrolled component */
   defaultValue?: string[];
 
-  /** Called whe value changes */
+  /** Called when value changes */
   onChange?: (value: string[]) => void;
 
   /** Called when tag is removed */
   onRemove?: (value: string) => void;
 
-  /** Called whe the clear button is clicked */
+  /** Called when the clear button is clicked */
   onClear?: () => void;
 
   /** Controlled search value */
