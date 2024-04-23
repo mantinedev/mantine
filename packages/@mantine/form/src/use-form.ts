@@ -13,6 +13,7 @@ import {
   GetTransformedValues,
   Initialize,
   IsValid,
+  Key,
   OnReset,
   OnSubmit,
   Reset,
@@ -144,10 +145,6 @@ export function useForm<
 
     const payload: any = { onChange };
 
-    if (mode === 'uncontrolled') {
-      payload.key = `${formKey}-${path as string}-${fieldKeys[path as string] || 0}`;
-    }
-
     if (withError) {
       payload.error = $errors.errorsState[path];
     }
@@ -216,6 +213,9 @@ export function useForm<
     [rules]
   );
 
+  const key: Key<Values> = (path) =>
+    `${formKey}-${path as string}-${fieldKeys[path as string] || 0}`;
+
   const form: UseFormReturnType<Values, TransformValues> = {
     watch: $watch.watch,
 
@@ -254,6 +254,7 @@ export function useForm<
     onReset,
     isValid,
     getTransformedValues,
+    key,
   };
 
   useFormActions(name, form);

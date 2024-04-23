@@ -13,10 +13,6 @@ function getInputProps(mode: FormMode, input: Record<string, any>) {
     onFocus: expect.any(Function),
   };
 
-  if (mode === 'uncontrolled') {
-    result.key = expect.any(String);
-  }
-
   return result;
 }
 

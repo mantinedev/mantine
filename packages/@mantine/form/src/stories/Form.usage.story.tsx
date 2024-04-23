@@ -109,16 +109,18 @@ export function ControlMode() {
         label="select"
         defaultDropdownOpened
         data={['React', 'Angular']}
+        key={form.key('select')}
         {...form.getInputProps('select')}
       />
 
-      <TextInput label="Name" {...form.getInputProps('name')} />
+      <TextInput label="Name" key={form.key('name')} {...form.getInputProps('name')} />
       <Checkbox
         mt="md"
         label="Accept terms of use"
+        key={form.key('terms')}
         {...form.getInputProps('terms', { type: 'checkbox' })}
       />
-      <Textarea label="area" {...form.getInputProps('area')} />
+      <Textarea label="area" key={form.key('area')} {...form.getInputProps('area')} />
       <Group mt="xl">
         <Button onClick={() => form.setFieldValue('name', 'test-name')}>Set name</Button>
         <Button

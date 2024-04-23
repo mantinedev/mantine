@@ -165,6 +165,8 @@ export type Watch<Values> = <Field extends LooseKeys<Values>>(
   subscriber: FormFieldSubscriber<Values, Field>
 ) => void;
 
+export type Key<Values> = <Field extends LooseKeys<Values>>(path: Field) => string;
+
 export interface UseFormInput<
   Values,
   TransformValues extends _TransformValues<Values> = (values: Values) => Values,
@@ -225,6 +227,7 @@ export interface UseFormReturnType<
   getTouched: GetStatus;
   getDirty: GetStatus;
   watch: Watch<Values>;
+  key: Key<Values>;
 }
 
 export type UseForm<
