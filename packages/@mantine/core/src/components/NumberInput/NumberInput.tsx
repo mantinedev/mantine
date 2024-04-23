@@ -331,13 +331,11 @@ export const NumberInput = factory<NumberInputFactory>((_props, ref) => {
 
   const handleKeyDownCapture = (event: React.KeyboardEvent<HTMLInputElement>) => {
     onKeyDownCapture?.(event);
-    // prevent cursor jumping to end of input when pressing backspace on pos 0
-    // https://github.com/mantinedev/mantine/issues/6056
     if (event.key === 'Backspace') {
       const input = inputRef.current!;
       if (input.selectionStart === 0 && input.selectionStart === input.selectionEnd) {
         event.preventDefault();
-        setTimeout(() => adjustCursor(0), 0);
+        window.setTimeout(() => adjustCursor(0), 0);
       }
     }
   };
