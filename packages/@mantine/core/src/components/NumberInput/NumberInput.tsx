@@ -190,6 +190,7 @@ export const NumberInput = factory<NumberInputFactory>((_props, ref) => {
     allowDecimal,
     decimalScale,
     onKeyDown,
+    onKeyDownCapture,
     handlersRef,
     startValue,
     disabled,
@@ -255,7 +256,7 @@ export const NumberInput = factory<NumberInputFactory>((_props, ref) => {
   };
 
   const adjustCursor = (position?: number) => {
-    if (inputRef.current && position) {
+    if (inputRef.current && typeof position !== 'undefined') {
       inputRef.current.setSelectionRange(position, position);
     }
   };
@@ -325,6 +326,19 @@ export const NumberInput = factory<NumberInputFactory>((_props, ref) => {
     if (event.key === 'ArrowDown') {
       event.preventDefault();
       decrementRef.current!();
+    }
+  };
+
+  const handleKeyDownCapture = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    onKeyDownCapture?.(event);
+    // prevent cursor jumping to end of input when pressing backspace on pos 0
+    // https://github.com/mantinedev/mantine/issues/6056
+    if (event.key === 'Backspace') {
+      const input = inputRef.current!;
+      if (input.selectionStart === 0 && input.selectionStart === input.selectionEnd) {
+        event.preventDefault();
+        setTimeout(() => adjustCursor(0), 0);
+      }
     }
   };
 
@@ -425,6 +439,7 @@ export const NumberInput = factory<NumberInputFactory>((_props, ref) => {
       __staticSelector="NumberInput"
       decimalScale={allowDecimal ? decimalScale : 0}
       onKeyDown={handleKeyDown}
+      onKeyDownCapture={handleKeyDownCapture}
       rightSectionPointerEvents={rightSectionPointerEvents ?? (disabled ? 'none' : undefined)}
       rightSectionWidth={rightSectionWidth ?? `var(--ni-right-section-width-${size || 'sm'})`}
       allowLeadingZeros={allowLeadingZeros}
