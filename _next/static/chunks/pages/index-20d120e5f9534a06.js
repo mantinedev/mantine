@@ -199,12 +199,14 @@ function Demo() {
           withAsterisk
           label="Email"
           placeholder="your@email.com"
+          key={form.key('email')}
           {...form.getInputProps('email')}
         />
 
         <Checkbox
           mt="md"
           label="I agree to sell my privacy"
+          key={form.key('termsOfService')}
           {...form.getInputProps('termsOfService', { type: 'checkbox' })}
         />
 
@@ -215,7 +217,7 @@ function Demo() {
     </Box>
   );
 }
-`,m={type:"code",component:function(){let e=(0,c.c)({mode:"uncontrolled",initialValues:{email:"",termsOfService:!1},validate:{email:e=>/^\S+@\S+$/.test(e)?null:"Invalid email"}});return n.createElement(o.x,{maw:340,mx:"auto"},n.createElement("form",{onSubmit:e.onSubmit(e=>console.log(e))},n.createElement(i.o,{withAsterisk:!0,label:"Email",placeholder:"your@email.com",...e.getInputProps("email")}),n.createElement(a.X,{mt:"md",label:"I agree to sell my privacy",...e.getInputProps("termsOfService",{type:"checkbox"})}),n.createElement(l.Z,{justify:"flex-end",mt:"md"},n.createElement(s.z,{type:"submit"},"Submit"))))},code:d}},77506:function(e,t,r){"use strict";r.d(t,{w:function(){return c}});var n=r(2784),o=r(28559),i=r(74770),a=r(8582),l=r(34089);let s=`
+`,m={type:"code",component:function(){let e=(0,c.c)({mode:"uncontrolled",initialValues:{email:"",termsOfService:!1},validate:{email:e=>/^\S+@\S+$/.test(e)?null:"Invalid email"}});return n.createElement(o.x,{maw:340,mx:"auto"},n.createElement("form",{onSubmit:e.onSubmit(e=>console.log(e))},n.createElement(i.o,{withAsterisk:!0,label:"Email",placeholder:"your@email.com",key:e.key("email"),...e.getInputProps("email")}),n.createElement(a.X,{mt:"md",label:"I agree to sell my privacy",key:e.key("termsOfService"),...e.getInputProps("termsOfService",{type:"checkbox"})}),n.createElement(l.Z,{justify:"flex-end",mt:"md"},n.createElement(s.z,{type:"submit"},"Submit"))))},code:d}},77506:function(e,t,r){"use strict";r.d(t,{w:function(){return c}});var n=r(2784),o=r(28559),i=r(74770),a=r(8582),l=r(34089);let s=`
 import { useState } from 'react';
 import { useDebouncedValue } from '@mantine/hooks';
 import { TextInput, Text } from '@mantine/core';
