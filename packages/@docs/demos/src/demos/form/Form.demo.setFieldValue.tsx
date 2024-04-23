@@ -11,7 +11,7 @@ import { randomId } from '@mantine/hooks';
 
 function Demo() {
   const form = useForm({
-    mode: 'uncontrolled
+    mode: 'uncontrolled',
     initialValues: {
       name: '',
       email: '',
@@ -20,13 +20,22 @@ function Demo() {
 
   return (
     <div>
-      <TextInput label="Name" placeholder="Name" {...form.getInputProps('name')} />
-      <TextInput mt="md" label="Email" placeholder="Email" {...form.getInputProps('email')} />
+      <TextInput
+        label="Name"
+        placeholder="Name"
+        key={form.key('name')}
+        {...form.getInputProps('name')}
+      />
+      <TextInput
+        mt="md"
+        label="Email"
+        placeholder="Email"
+        key={form.key('email')}
+        {...form.getInputProps('email')}
+      />
 
       <Group justify="center" mt="xl">
-        <Button onClick={() => form.setFieldValue('name', randomId())}>
-          Random name
-        </Button>
+        <Button onClick={() => form.setFieldValue('name', randomId())}>Random name</Button>
         <Button onClick={() => form.setFieldValue('email', \`\${randomId()}@test.com\`)}>
           Random email
         </Button>
@@ -47,8 +56,19 @@ function Demo() {
 
   return (
     <div>
-      <TextInput label="Name" placeholder="Name" {...form.getInputProps('name')} />
-      <TextInput mt="md" label="Email" placeholder="Email" {...form.getInputProps('email')} />
+      <TextInput
+        label="Name"
+        placeholder="Name"
+        key={form.key('name')}
+        {...form.getInputProps('name')}
+      />
+      <TextInput
+        mt="md"
+        label="Email"
+        placeholder="Email"
+        key={form.key('email')}
+        {...form.getInputProps('email')}
+      />
 
       <Group justify="center" mt="xl">
         <Button onClick={() => form.setFieldValue('name', randomId())}>Random name</Button>

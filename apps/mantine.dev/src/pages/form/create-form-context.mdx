@@ -28,7 +28,11 @@ const [FormProvider, useFormContext, useForm] =
 function ContextField() {
   const form = useFormContext();
   return (
-    <TextInput label="Your name" {...form.getInputProps('name')} />
+    <TextInput
+      label="Your name"
+      key={form.key('name')}
+      {...form.getInputProps('name')}
+    />
   );
 }
 
@@ -80,7 +84,13 @@ import { useUserFormContext } from './form-context';
 
 export function NameInput() {
   const form = useUserFormContext();
-  return <TextInput label="Name" {...form.getInputProps('name')} />;
+  return (
+    <TextInput
+      label="Name"
+      key={form.key('name')}
+      {...form.getInputProps('name')}
+    />
+  );
 }
 ```
 
@@ -102,7 +112,11 @@ function UserForm() {
   return (
     <UserFormProvider form={form}>
       <form onSubmit={form.onSubmit(() => {})}>
-        <NumberInput label="Age" {...form.getInputProps('age')} />
+        <NumberInput
+          label="Age"
+          key={form.key('age')}
+          {...form.getInputProps('age')}
+        />
         <NameInput />
       </form>
     </UserFormProvider>

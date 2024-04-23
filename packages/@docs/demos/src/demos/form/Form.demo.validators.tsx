@@ -29,12 +29,19 @@ function Demo() {
 
   return (
     <form onSubmit={form.onSubmit(() => {})}>
-      <TextInput label="Name" placeholder="Name" withAsterisk {...form.getInputProps('name')} />
+      <TextInput
+        label="Name"
+        placeholder="Name"
+        withAsterisk
+        key={form.key('name')}
+        {...form.getInputProps('name')}
+      />
       <TextInput
         label="Your job"
         placeholder="Your job"
         withAsterisk
         mt="md"
+        key={form.key('job')}
         {...form.getInputProps('job')}
       />
       <TextInput
@@ -42,6 +49,7 @@ function Demo() {
         placeholder="Your email"
         withAsterisk
         mt="md"
+        key={form.key('email')}
         {...form.getInputProps('email')}
       />
       <TextInput
@@ -49,6 +57,7 @@ function Demo() {
         placeholder="Your favorite color"
         withAsterisk
         mt="md"
+        key={form.key('favoriteColor')}
         {...form.getInputProps('favoriteColor')}
       />
       <NumberInput
@@ -56,6 +65,7 @@ function Demo() {
         placeholder="Your age"
         withAsterisk
         mt="md"
+        key={form.key('age')}
         {...form.getInputProps('age')}
       />
 
@@ -79,7 +89,7 @@ function Demo() {
     },
 
     validate: {
-      name: hasLength({ min: 2, max: 10 }, 'Name must be 2-22 characters long'),
+      name: hasLength({ min: 2, max: 10 }, 'Name must be 2-10 characters long'),
       job: isNotEmpty('Enter your current job'),
       email: isEmail('Invalid email'),
       favoriteColor: matches(/^#([0-9a-f]{3}){1,2}$/, 'Enter a valid hex color'),
@@ -89,12 +99,19 @@ function Demo() {
 
   return (
     <form onSubmit={form.onSubmit(() => {})}>
-      <TextInput label="Name" placeholder="Name" withAsterisk {...form.getInputProps('name')} />
+      <TextInput
+        label="Name"
+        placeholder="Name"
+        withAsterisk
+        key={form.key('name')}
+        {...form.getInputProps('name')}
+      />
       <TextInput
         label="Your job"
         placeholder="Your job"
         withAsterisk
         mt="md"
+        key={form.key('job')}
         {...form.getInputProps('job')}
       />
       <TextInput
@@ -102,6 +119,7 @@ function Demo() {
         placeholder="Your email"
         withAsterisk
         mt="md"
+        key={form.key('email')}
         {...form.getInputProps('email')}
       />
       <TextInput
@@ -109,6 +127,7 @@ function Demo() {
         placeholder="Your favorite color"
         withAsterisk
         mt="md"
+        key={form.key('favoriteColor')}
         {...form.getInputProps('favoriteColor')}
       />
       <NumberInput
@@ -116,6 +135,7 @@ function Demo() {
         placeholder="Your age"
         withAsterisk
         mt="md"
+        key={form.key('age')}
         {...form.getInputProps('age')}
       />
 

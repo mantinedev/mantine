@@ -115,11 +115,12 @@ const form = useForm({
 
 [form.getInputProps](/form/get-input-props/) returns different props for controlled
 and uncontrolled modes. In controlled mode, the returned object has `value` prop,
-while in uncontrolled mode it has `defaultValue` and `key` props.
+while in uncontrolled mode it has `defaultValue` prop.
 
-Uncontrolled mode relies on `key` returned from `form.getInputProps` to update
+Uncontrolled mode relies on `key` returned from `form.key()` to update
 components when `form.setFieldValue` or `form.setValues` are called. You should
-not override `key` supplied by `form.getInputProps`:
+set `key` supplied by `form.key()` to the input component to ensure that it has
+updated value:
 
 ```tsx
 import { useForm } from '@mantine/form';
@@ -130,8 +131,9 @@ function Demo() {
     initialValues: { text: '' },
   });
 
-  // ❌ Do not override key prop
-  return <input {...form.getInputProps('text')} key="my-key" />;
+  return (
+    <input {...form.getInputProps('text')} key={form.key('text')} />
+  );
 }
 ```
 
@@ -176,7 +178,10 @@ function Demo() {
 
   const fields = form.getValues().jobs.map((item, index) => (
       <div key={item.key}>
-        <input {...form.getInputProps(`jobs.${index}.company`)} />
+        <input
+          {...form.getInputProps(`jobs.${index}.company`)}
+          key={form.key(`jobs.${index}.company`)}
+        />
       </div>
     ));
 
@@ -229,6 +234,11 @@ function Demo() {
 
   // ✅ CustomInput supports `defaultValue` prop,
   // it can be used in uncontrolled mode
-  return <CustomInput {...form.getInputProps('text')} />;
+  return (
+    <CustomInput
+      {...form.getInputProps('text')}
+      key={form.key('text')}
+    />
+  );
 }
 ```

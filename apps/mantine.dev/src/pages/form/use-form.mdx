@@ -247,7 +247,12 @@ function NameInput({
 }: {
   form: UseFormReturnType<FormValues>;
 }) {
-  return <TextInput {...form.getInputProps('name')} />;
+  return (
+    <TextInput
+      key={form.key('name')}
+      {...form.getInputProps('name')}
+    />
+  );
 }
 
 function OccupationInput({
@@ -255,7 +260,12 @@ function OccupationInput({
 }: {
   form: UseFormReturnType<FormValues>;
 }) {
-  return <TextInput {...form.getInputProps('occupation')} />;
+  return (
+    <TextInput
+      key={form.key('occupation')}
+      {...form.getInputProps('occupation')}
+    />
+  );
 }
 
 function Demo() {
