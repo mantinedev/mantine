@@ -1,5 +1,5 @@
 import dayjs from 'dayjs';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { DatePickerType, PickerBaseProps } from '../../types';
 import { useUncontrolledDates } from '../use-uncontrolled-dates/use-uncontrolled-dates';
 import { isInRange } from './is-in-range/is-in-range';
@@ -160,6 +160,12 @@ export function useDatesState<Type extends DatePickerType = 'default'>({
   };
 
   const onHoveredDateChange = type === 'range' && pickedDate ? setHoveredDate : () => {};
+
+  useEffect(() => {
+    if (type === 'range' && !_value[0] && !_value[1]) {
+      setPickedDate(null);
+    }
+  }, [value]);
 
   return {
     onDateChange,
