@@ -5,7 +5,7 @@ import { shouldValidateOnChange } from './validate';
 
 type UseFieldErrorResolver = (error: unknown) => React.ReactNode;
 
-interface UseFieldInput<T> {
+export interface UseFieldInput<T> {
   mode?: 'controlled' | 'uncontrolled';
   initialValue: T;
   initialTouched?: boolean;
@@ -22,6 +22,24 @@ interface UseFieldInput<T> {
 interface SetValueOptions {
   updateState?: boolean;
   updateKey?: boolean;
+}
+
+export interface UseFieldReturnType<T> {
+  key: number;
+  getValue: () => T;
+  setValue: (value: T, options?: SetValueOptions) => void;
+  reset: () => void;
+  getInputProps: (options?: {
+    type?: GetInputPropsType;
+    withError?: boolean;
+    withFocus?: boolean;
+  }) => Record<string, any>;
+  isValidating: boolean;
+  validate: () => Promise<React.ReactNode | void>;
+  error: React.ReactNode;
+  setError: (error: React.ReactNode) => void;
+  isTouched: () => boolean;
+  isDirty: () => boolean;
 }
 
 export function useField<T>(options: UseFieldInput<T>) {
