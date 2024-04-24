@@ -1,6 +1,6 @@
 import { act, renderHook } from '@testing-library/react';
-import { FormMode } from '../types';
-import { useForm } from '../use-form';
+import { FormMode } from '../../types';
+import { useForm } from '../../use-form';
 
 function tests(mode: FormMode) {
   it('validates root property on change', () => {

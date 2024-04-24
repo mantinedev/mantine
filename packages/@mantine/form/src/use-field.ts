@@ -25,6 +25,7 @@ interface SetValueOptions {
 }
 
 export function useField<T>(options: UseFieldInput<T>) {
+  const mode = options.mode || 'controlled';
   const [valueState, setValueState] = useState(options.initialValue);
   const valueRef = useRef(valueState);
   const [key, setKey] = useState(0);
@@ -40,8 +41,8 @@ export function useField<T>(options: UseFieldInput<T>) {
     (
       value: T,
       {
-        updateKey = options.mode === 'uncontrolled',
-        updateState = options.mode === 'controlled',
+        updateKey = mode === 'uncontrolled',
+        updateState = mode === 'controlled',
       }: SetValueOptions = {}
     ) => {
       valueRef.current = value;
@@ -102,9 +103,9 @@ export function useField<T>(options: UseFieldInput<T>) {
     }
 
     if (type === 'checkbox') {
-      payload[options.mode === 'controlled' ? 'checked' : 'defaultChecked'] = valueRef.current;
+      payload[mode === 'controlled' ? 'checked' : 'defaultChecked'] = valueRef.current;
     } else {
-      payload[options.mode === 'controlled' ? 'value' : 'defaultValue'] = valueRef.current;
+      payload[mode === 'controlled' ? 'value' : 'defaultValue'] = valueRef.current;
     }
 
     if (withFocus) {

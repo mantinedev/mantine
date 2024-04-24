@@ -1,8 +1,8 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import type { FormFieldSubscriber } from '../types';
-import { useForm } from '../use-form';
+import type { FormFieldSubscriber } from '../../types';
+import { useForm } from '../../use-form';
 
 function TestComponent({ watch }: { watch: FormFieldSubscriber<any, any> }) {
   const form = useForm({ initialValues: { name: 'test', area: 'area' } });

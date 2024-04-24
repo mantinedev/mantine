@@ -1,22 +1,21 @@
 import { act, renderHook } from '@testing-library/react';
-import { FormMode } from '../types';
-import { useForm } from '../use-form';
+import { FormMode } from '../../types';
+import { useForm } from '../../use-form';
 
 function tests(mode: FormMode) {
   it('validates all fields with validate handler', () => {
     const hook = renderHook(() =>
-      useForm<{ banana: string; orange: string; bar: number }>({
+      useForm({
         mode,
         initialValues: {
           banana: '',
           orange: '',
-          bar: 42,
         },
 
-        validate: {
-          banana: (value) => (value !== 'test-banana' ? 'invalid banana' : null),
-          orange: (value) => (value !== 'test-orange' ? 'invalid orange' : null),
-        },
+        validate: (values) => ({
+          banana: values.banana !== 'test-banana' ? 'invalid banana' : null,
+          orange: values.orange !== 'test-orange' ? 'invalid orange' : null,
+        }),
       })
     );
 
@@ -67,10 +66,10 @@ function tests(mode: FormMode) {
           orange: '',
         },
 
-        validate: {
-          banana: (value) => (value !== 'test-banana' ? 'invalid banana' : null),
-          orange: (value) => (value !== 'test-orange' ? 'invalid orange' : null),
-        },
+        validate: (values) => ({
+          banana: values.banana !== 'test-banana' ? 'invalid banana' : null,
+          orange: values.orange !== 'test-orange' ? 'invalid orange' : null,
+        }),
       })
     );
 
@@ -89,36 +88,12 @@ function tests(mode: FormMode) {
 
     expect(hook.result.current.errors).toStrictEqual({});
   });
-
-  it('allows to validate values based on their path', () => {
-    const hook = renderHook(() =>
-      useForm({
-        mode,
-        initialValues: { a: [{ b: 1 }, { b: 2 }] },
-        validate: {
-          a: {
-            b: (_value, _values, path) => (path === 'a.0.b' ? 'error' : null),
-          },
-        },
-      })
-    );
-
-    act(() => {
-      const result = hook.result.current.validate();
-      expect(result).toStrictEqual({
-        hasErrors: true,
-        errors: {
-          'a.0.b': 'error',
-        },
-      });
-    });
-  });
 }
 
-describe('@mantine/form/validate with record rules controlled', () => {
+describe('@mantine/form/validate with function rules controlled', () => {
   tests('controlled');
 });
 
-describe('@mantine/form/validate with record rules uncontrolled', () => {
+describe('@mantine/form/validate with function rules uncontrolled', () => {
   tests('uncontrolled');
 });

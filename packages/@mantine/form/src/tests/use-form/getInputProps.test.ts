@@ -1,6 +1,6 @@
 import { act, renderHook } from '@testing-library/react';
-import { FormMode } from '../types';
-import { useForm } from '../use-form';
+import { FormMode } from '../../types';
+import { useForm } from '../../use-form';
 
 function getInputProps(mode: FormMode, input: Record<string, any>) {
   const { value, error, ...others } = input;

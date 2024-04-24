@@ -1,6 +1,6 @@
 import { act, renderHook } from '@testing-library/react';
-import { FormMode } from '../types';
-import { useForm } from '../use-form';
+import { FormMode } from '../../types';
+import { useForm } from '../../use-form';
 
 const getFormEvent = () => ({ preventDefault: jest.fn() }) as any;
 

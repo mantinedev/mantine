@@ -1,8 +1,8 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { FormMode } from '../types';
-import { useForm } from '../use-form';
+import { FormMode } from '../../types';
+import { useForm } from '../../use-form';
 
 function TestComponent({ mode }: any) {
   const form = useForm({

@@ -1,5 +1,5 @@
 import { act, renderHook } from '@testing-library/react';
-import { useForm } from '../use-form';
+import { useForm } from '../../use-form';
 
 describe('@mantine/form/values', () => {
   it('sets given initial values', () => {
