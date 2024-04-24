@@ -1,5 +1,7 @@
 import { useCallback, useMemo, useRef, useState } from 'react';
+import { getInputOnChange } from './get-input-on-change';
 import { GetInputPropsType } from './types';
+import { shouldValidateOnChange } from './validate';
 
 type UseFieldErrorResolver = (error: unknown) => React.ReactNode;
 
@@ -90,11 +92,42 @@ export function useField<T>(options: UseFieldInput<T>) {
     }
   }, []);
 
+  const getInputProps = ({ type = 'input', withError = true, withFocus = true } = {}) => {
+    const onChange = getInputOnChange<T>((val) => setValue(val as any));
+
+    const payload: Record<string, any> = { onChange };
+
+    if (withError) {
+      payload.error = error;
+    }
+
+    if (type === 'checkbox') {
+      payload[options.mode === 'controlled' ? 'checked' : 'defaultChecked'] = valueRef.current;
+    } else {
+      payload[options.mode === 'controlled' ? 'value' : 'defaultValue'] = valueRef.current;
+    }
+
+    if (withFocus) {
+      payload.onFocus = () => {
+        touched.current = true;
+      };
+      payload.onBlur = async () => {
+        if (shouldValidateOnChange('', !!options.validateOnBlur)) {
+          const validationResults = await validate();
+          setError(validationResults || null);
+        }
+      };
+    }
+
+    return payload;
+  };
+
   return {
     key,
     getValue,
     setValue,
     reset,
+    getInputProps,
 
     isValidating,
     validate,
