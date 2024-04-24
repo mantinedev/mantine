@@ -29,8 +29,8 @@ export function useField<T>(options: UseFieldInput<T>) {
   const [valueState, setValueState] = useState(options.initialValue);
   const valueRef = useRef(valueState);
   const [key, setKey] = useState(0);
-  const [error, setError] = useState(options.initialError);
-  const touched = useRef(options.initialTouched);
+  const [error, setError] = useState<React.ReactNode>(options.initialError || null);
+  const touched = useRef(options.initialTouched || false);
   const [isValidating, setIsValidating] = useState(false);
   const errorResolver: UseFieldErrorResolver = useMemo(
     () => options.resolveValidationError || ((err) => err as React.ReactNode),
