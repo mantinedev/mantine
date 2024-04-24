@@ -9,11 +9,11 @@ export interface UseFieldInput<T> {
   mode?: 'controlled' | 'uncontrolled';
   initialValue: T;
   initialTouched?: boolean;
-  initialDirty?: boolean;
   initialError?: React.ReactNode;
   onValueChange?: (value: T) => void;
   validateOnChange?: boolean;
   validateOnBlur?: boolean;
+  clearErrorOnChange?: boolean;
   validate?: (value: T) => React.ReactNode | Promise<React.ReactNode>;
   type?: GetInputPropsType;
   resolveValidationError?: UseFieldErrorResolver;
@@ -42,17 +42,28 @@ export interface UseFieldReturnType<T> {
   isDirty: () => boolean;
 }
 
-export function useField<T>(options: UseFieldInput<T>) {
-  const mode = options.mode || 'controlled';
-  const [valueState, setValueState] = useState(options.initialValue);
+export function useField<T>({
+  mode = 'controlled',
+  clearErrorOnChange = true,
+  initialValue,
+  initialError = null,
+  initialTouched = false,
+  onValueChange,
+  validateOnChange = false,
+  validateOnBlur = false,
+  validate,
+  resolveValidationError,
+  type = 'input',
+}: UseFieldInput<T>) {
+  const [valueState, setValueState] = useState(initialValue);
   const valueRef = useRef(valueState);
   const [key, setKey] = useState(0);
-  const [error, setError] = useState<React.ReactNode>(options.initialError || null);
-  const touched = useRef(options.initialTouched || false);
+  const [error, setError] = useState<React.ReactNode>(initialError || null);
+  const touched = useRef(initialTouched || false);
   const [isValidating, setIsValidating] = useState(false);
   const errorResolver: UseFieldErrorResolver = useMemo(
-    () => options.resolveValidationError || ((err) => err as React.ReactNode),
-    [options.resolveValidationError]
+    () => resolveValidationError || ((err) => err as React.ReactNode),
+    [resolveValidationError]
   );
 
   const setValue = useCallback(
@@ -63,7 +74,17 @@ export function useField<T>(options: UseFieldInput<T>) {
         updateState = mode === 'controlled',
       }: SetValueOptions = {}
     ) => {
+      if (valueRef.current === value) {
+        return;
+      }
+
       valueRef.current = value;
+
+      onValueChange?.(value);
+
+      if (clearErrorOnChange && error !== null) {
+        setError(null);
+      }
 
       if (updateState) {
         setValueState(value);
@@ -72,26 +93,27 @@ export function useField<T>(options: UseFieldInput<T>) {
       if (updateKey) {
         setKey((currentKey) => currentKey + 1);
       }
+
+      if (validateOnChange) {
+        _validate();
+      }
     },
-    []
+    [error, clearErrorOnChange]
   );
 
   const reset = useCallback(() => {
-    setValue(options.initialValue);
+    setValue(initialValue);
     setError(null);
-  }, [options.initialValue]);
+  }, [initialValue]);
 
   const getValue = useCallback(() => valueRef.current, []);
 
   const isTouched = useCallback(() => touched.current, []);
 
-  const isDirty = useCallback(
-    () => valueRef.current !== options.initialValue,
-    [options.initialValue]
-  );
+  const isDirty = useCallback(() => valueRef.current !== initialValue, [initialValue]);
 
-  const validate = useCallback(async () => {
-    const validationResult = options.validate?.(valueRef.current);
+  const _validate = useCallback(async () => {
+    const validationResult = validate?.(valueRef.current);
 
     if (validationResult instanceof Promise) {
       setIsValidating(true);
@@ -111,7 +133,7 @@ export function useField<T>(options: UseFieldInput<T>) {
     }
   }, []);
 
-  const getInputProps = ({ type = 'input', withError = true, withFocus = true } = {}) => {
+  const getInputProps = ({ withError = true, withFocus = true } = {}) => {
     const onChange = getInputOnChange<T>((val) => setValue(val as any));
 
     const payload: Record<string, any> = { onChange };
@@ -130,10 +152,10 @@ export function useField<T>(options: UseFieldInput<T>) {
       payload.onFocus = () => {
         touched.current = true;
       };
-      payload.onBlur = async () => {
-        if (shouldValidateOnChange('', !!options.validateOnBlur)) {
-          const validationResults = await validate();
-          setError(validationResults || null);
+
+      payload.onBlur = () => {
+        if (shouldValidateOnChange('', !!validateOnBlur)) {
+          _validate();
         }
       };
     }
@@ -149,7 +171,7 @@ export function useField<T>(options: UseFieldInput<T>) {
     getInputProps,
 
     isValidating,
-    validate,
+    validate: _validate,
 
     error,
     setError,
