@@ -134,6 +134,7 @@ export * as CarouselDemos from './demos/carousel';
 export * as SpotlightDemos from './demos/spotlight';
 export * as HooksDemos from './demos/hooks';
 export * as FormDemos from './demos/form';
+export * as FieldDemos from './demos/form-field';
 export * as NprogressDemos from './demos/nprogress';
 export * as CodeHighlightDemos from './demos/code-highlight';
 export * as DropzoneDemos from './demos/dropzone';

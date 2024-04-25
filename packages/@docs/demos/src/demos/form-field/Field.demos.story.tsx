@@ -42,3 +42,8 @@ export const Demo_uncontrolled = {
   name: '⭐ Demo: uncontrolled',
   render: renderDemo(demos.uncontrolled),
 };
+
+export const Demo_clearErrorOnChange = {
+  name: '⭐ Demo: clearErrorOnChange',
+  render: renderDemo(demos.clearErrorOnChange),
+};

@@ -6,3 +6,4 @@ export { asyncValidationOnBlur } from './Field.demo.asyncValidationOnBlur';
 export { statusUncontrolled } from './Field.demo.statusUncontrolled';
 export { statusControlled } from './Field.demo.statusControlled';
 export { uncontrolled } from './Field.demo.uncontrolled';
+export { clearErrorOnChange } from './Field.demo.clearErrorOnChange';
