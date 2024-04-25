@@ -32,3 +32,13 @@ export const Demo_statusUncontrolled = {
   name: '⭐ Demo: statusUncontrolled',
   render: renderDemo(demos.statusUncontrolled),
 };
+
+export const Demo_statusControlled = {
+  name: '⭐ Demo: statusControlled',
+  render: renderDemo(demos.statusControlled),
+};
+
+export const Demo_uncontrolled = {
+  name: '⭐ Demo: uncontrolled',
+  render: renderDemo(demos.uncontrolled),
+};
