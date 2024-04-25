@@ -1,12 +1,16 @@
 import { useCallback, useMemo, useRef, useState } from 'react';
 import { getInputOnChange } from './get-input-on-change';
-import { GetInputPropsType } from './types';
+import { FormMode, GetInputPropsType } from './types';
 import { shouldValidateOnChange } from './validate';
 
 type UseFieldErrorResolver = (error: unknown) => React.ReactNode;
 
-export interface UseFieldInput<T> {
-  mode?: 'controlled' | 'uncontrolled';
+export interface UseFieldInput<
+  T,
+  FieldType extends GetInputPropsType = 'input',
+  Mode extends FormMode = 'controlled',
+> {
+  mode?: Mode;
   initialValue: T;
   initialTouched?: boolean;
   initialError?: React.ReactNode;
@@ -15,9 +19,8 @@ export interface UseFieldInput<T> {
   validateOnBlur?: boolean;
   clearErrorOnChange?: boolean;
   validate?: (value: T) => React.ReactNode | Promise<React.ReactNode>;
-  type?: GetInputPropsType;
+  type?: FieldType;
   resolveValidationError?: UseFieldErrorResolver;
-  resetTouched?: () => void;
 }
 
 interface SetValueOptions {
@@ -25,26 +28,61 @@ interface SetValueOptions {
   updateKey?: boolean;
 }
 
-export interface UseFieldReturnType<T> {
+interface GetInputPropsOptions {
+  withError?: boolean;
+  withFocus?: boolean;
+}
+
+interface GetInputPropsSharedReturn {
+  error?: React.ReactNode;
+  onFocus?: () => void;
+  onBlur: () => void;
+  onChange: (value: any) => void;
+}
+
+type GetInputPropsTypeValue<
+  T,
+  FieldType extends GetInputPropsType,
+  Mode extends FormMode,
+> = FieldType extends 'checkbox'
+  ? Mode extends 'controlled'
+    ? { checked: boolean }
+    : { defaultChecked: boolean }
+  : Mode extends 'controlled'
+    ? { value: T }
+    : { defaultValue: T };
+
+type GetInputPropsReturnType<
+  T,
+  FieldType extends GetInputPropsType,
+  Mode extends FormMode,
+> = GetInputPropsSharedReturn & GetInputPropsTypeValue<T, FieldType, Mode>;
+
+export interface UseFieldReturnType<
+  T,
+  FieldType extends GetInputPropsType = 'input',
+  Mode extends FormMode = 'controlled',
+> {
   key: number;
   getValue: () => T;
   setValue: (value: T, options?: SetValueOptions) => void;
   reset: () => void;
-  getInputProps: (options?: {
-    type?: GetInputPropsType;
-    withError?: boolean;
-    withFocus?: boolean;
-  }) => Record<string, any>;
+  getInputProps: (options?: GetInputPropsOptions) => GetInputPropsReturnType<T, FieldType, Mode>;
   isValidating: boolean;
   validate: () => Promise<React.ReactNode | void>;
   error: React.ReactNode;
   setError: (error: React.ReactNode) => void;
   isTouched: () => boolean;
   isDirty: () => boolean;
+  resetTouched: () => void;
 }
 
-export function useField<T>({
-  mode = 'controlled',
+export function useField<
+  T,
+  Mode extends FormMode = 'controlled',
+  FieldType extends GetInputPropsType = 'input',
+>({
+  mode = 'controlled' as Mode,
   clearErrorOnChange = true,
   initialValue,
   initialError = null,
@@ -54,8 +92,8 @@ export function useField<T>({
   validateOnBlur = false,
   validate,
   resolveValidationError,
-  type = 'input',
-}: UseFieldInput<T>) {
+  type = 'input' as FieldType,
+}: UseFieldInput<T, FieldType, Mode>): UseFieldReturnType<T, FieldType, Mode> {
   const [valueState, setValueState] = useState(initialValue);
   const valueRef = useRef(valueState);
   const [key, setKey] = useState(0);
@@ -74,7 +112,7 @@ export function useField<T>({
   }, []);
 
   const setValue = useCallback(
-    (
+    async (
       value: T,
       {
         updateKey = mode === 'uncontrolled',
@@ -111,6 +149,7 @@ export function useField<T>({
   const reset = useCallback(() => {
     setValue(initialValue);
     setError(null);
+    setTouched(false);
   }, [initialValue]);
 
   const getValue = useCallback(() => valueRef.current, []);
@@ -143,7 +182,7 @@ export function useField<T>({
   const getInputProps = ({ withError = true, withFocus = true } = {}) => {
     const onChange = getInputOnChange<T>((val) => setValue(val as any, { updateKey: false }));
 
-    const payload: Record<string, any> = { onChange };
+    const payload: any = { onChange };
 
     if (withError) {
       payload.error = error;
@@ -170,9 +209,9 @@ export function useField<T>({
     return payload;
   };
 
-  return {
-    value: valueState,
+  const resetTouched = useCallback(() => setTouched(false), []);
 
+  return {
     key,
     getValue,
     setValue,
@@ -187,6 +226,6 @@ export function useField<T>({
 
     isTouched,
     isDirty,
-    resetTouched: () => setTouched(false),
+    resetTouched,
   };
 }
