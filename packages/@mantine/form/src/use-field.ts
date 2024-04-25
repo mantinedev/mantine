@@ -17,6 +17,7 @@ export interface UseFieldInput<T> {
   validate?: (value: T) => React.ReactNode | Promise<React.ReactNode>;
   type?: GetInputPropsType;
   resolveValidationError?: UseFieldErrorResolver;
+  resetTouched?: () => void;
 }
 
 interface SetValueOptions {
@@ -59,12 +60,18 @@ export function useField<T>({
   const valueRef = useRef(valueState);
   const [key, setKey] = useState(0);
   const [error, setError] = useState<React.ReactNode>(initialError || null);
-  const touched = useRef(initialTouched || false);
+  const touchedRef = useRef(initialTouched || false);
+  const [, setTouchedState] = useState(touchedRef.current);
   const [isValidating, setIsValidating] = useState(false);
   const errorResolver: UseFieldErrorResolver = useMemo(
     () => resolveValidationError || ((err) => err as React.ReactNode),
     [resolveValidationError]
   );
+
+  const setTouched = useCallback((val: boolean, { updateState = mode === 'controlled' } = {}) => {
+    touchedRef.current = val;
+    updateState && setTouchedState(val);
+  }, []);
 
   const setValue = useCallback(
     (
@@ -108,7 +115,7 @@ export function useField<T>({
 
   const getValue = useCallback(() => valueRef.current, []);
 
-  const isTouched = useCallback(() => touched.current, []);
+  const isTouched = useCallback(() => touchedRef.current, []);
 
   const isDirty = useCallback(() => valueRef.current !== initialValue, [initialValue]);
 
@@ -134,7 +141,7 @@ export function useField<T>({
   }, []);
 
   const getInputProps = ({ withError = true, withFocus = true } = {}) => {
-    const onChange = getInputOnChange<T>((val) => setValue(val as any));
+    const onChange = getInputOnChange<T>((val) => setValue(val as any, { updateKey: false }));
 
     const payload: Record<string, any> = { onChange };
 
@@ -150,7 +157,7 @@ export function useField<T>({
 
     if (withFocus) {
       payload.onFocus = () => {
-        touched.current = true;
+        setTouched(true);
       };
 
       payload.onBlur = () => {
@@ -164,6 +171,8 @@ export function useField<T>({
   };
 
   return {
+    value: valueState,
+
     key,
     getValue,
     setValue,
@@ -178,5 +187,6 @@ export function useField<T>({
 
     isTouched,
     isDirty,
+    resetTouched: () => setTouched(false),
   };
 }
