@@ -1,0 +1,22 @@
+import { FieldDemos } from '@docs/demos';
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.Changelog790);
+
+## use-field hook
+
+New [use-field](/form/use-field) hook is now available in `@mantine/form` package.
+It can be used as a simpler alternative to [use-form](/form/use-form) hook to manage state of a single input without the need to create a form.
+The hook supports most of `use-form` hook features: validation with function, touched and
+dirty state, error message, validation on change/blur and more.
+
+<Demo data={FieldDemos.validateOnChange} />
+
+`use-field` hook also supports async validation:
+
+<Demo data={FieldDemos.asyncValidation} />
+
+## Documentation updates
+
+- [use-field](/form/use-field) hook documentation
