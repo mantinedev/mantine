@@ -1,5 +1,6 @@
 .root {
   --notification-radius: var(--mantine-radius-default);
+  --notification-bg: var(--mantine-color-default);
   --notification-color: var(--mantine-primary-color-filled);
 
   overflow: hidden;
@@ -13,6 +14,8 @@
   padding-bottom: var(--mantine-spacing-xs);
   border-radius: var(--notification-radius);
   box-shadow: var(--mantine-shadow-lg);
+  background-color: var(--notification-bg);
+  color: var(--notification-color);
 
   &::before {
     content: '';
@@ -24,14 +27,6 @@
     inset-inline-start: 4px;
     border-radius: var(--notification-radius);
     background-color: var(--notification-color);
-  }
-
-  @mixin where-light {
-    background-color: var(--mantine-color-white);
-  }
-
-  @mixin where-dark {
-    background-color: var(--mantine-color-dark-6);
   }
 
   &:where([data-with-icon]) {
@@ -49,6 +44,27 @@
 
     @mixin where-dark {
       border: 1px solid var(--mantine-color-dark-4);
+    }
+  }
+
+  &:where([data-variant='filled']),
+  &:where([data-variant='light']) {
+    .title {
+      color: var(--notification-color);
+    }
+
+    .closeButton {
+      color: var(--notification-color);
+    }
+  }
+
+  &:where([data-variant='filled']) {
+    .icon {
+      background-color: transparent;
+    }
+
+    .description {
+      color: var(--notification-color);
     }
   }
 }
@@ -83,14 +99,7 @@
   font-size: var(--mantine-font-size-sm);
   line-height: var(--mantine-line-height-sm);
   font-weight: 500;
-
-  @mixin where-light {
-    color: var(--mantine-color-gray-9);
-  }
-
-  @mixin where-dark {
-    color: var(--mantine-color-white);
-  }
+  color: var(--mantine-color-text);
 }
 
 .description {
@@ -119,13 +128,5 @@
 }
 
 .closeButton {
-  @mixin hover {
-    @mixin where-light {
-      background-color: var(--mantine-color-gray-0);
-    }
-
-    @mixin where-dark {
-      background-color: var(--mantine-color-dark-8);
-    }
-  }
+  color: var(--mantine-color-text);
 }

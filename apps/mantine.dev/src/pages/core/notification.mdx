@@ -11,6 +11,10 @@ Build your own or use [@mantine/notifications](/x/notifications/) package.
 
 <Demo data={NotificationDemos.configurator} />
 
+## Variants
+
+<Demo data={NotificationDemos.variants} />
+
 ## With icon
 
 <Demo data={NotificationDemos.icon} />
@@ -27,10 +31,6 @@ To support screen readers, set close button aria-label or title with `closeButto
 import { Notification } from '@mantine/core';
 
 function Demo() {
-  return (
-    <Notification
-      closeButtonProps={{ 'aria-label': 'Hide notification' }}
-    />
-  );
+  return <Notification closeButtonProps={{ 'aria-label': 'Hide notification' }} />;
 }
 ```

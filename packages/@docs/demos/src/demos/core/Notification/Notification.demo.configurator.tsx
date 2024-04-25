@@ -29,6 +29,13 @@ export const configurator: MantineDemo = {
   code,
   dimmed: true,
   controls: [
+    {
+      prop: 'variant',
+      type: 'select',
+      initialValue: 'outline',
+      libraryValue: 'outline',
+      data: ['outline', 'filled', 'light'],
+    },
     { prop: 'loading', type: 'boolean', initialValue: false, libraryValue: false },
     { prop: 'withCloseButton', type: 'boolean', initialValue: true, libraryValue: true },
     { prop: 'withBorder', type: 'boolean', initialValue: false, libraryValue: false },

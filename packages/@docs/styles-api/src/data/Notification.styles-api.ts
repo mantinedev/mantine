@@ -15,7 +15,8 @@ export const NotificationStylesApi: StylesApiData<NotificationFactory> = {
   vars: {
     root: {
       '--notification-radius': 'Controls `border-radius`',
-      '--notification-color': 'Controls icon color or notification line color',
+      '--notification-color': 'Controls `color`',
+      '--notification-bg': 'Controls `background`',
     },
   },
 

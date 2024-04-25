@@ -1,5 +1,5 @@
 import React from 'react';
-import { IconPhoto } from '@tabler/icons-react';
+import { IconMoodSmile, IconPhoto } from '@tabler/icons-react';
 import { MantineThemeProvider } from '../../core';
 import { Alert } from './Alert';
 
@@ -85,9 +85,10 @@ export function AutoContrast() {
     .fill(0)
     .map((_, index) => (
       <Alert
+        icon={<IconMoodSmile stroke={1.5} />}
         withCloseButton
         title="Bummer!"
-        color={`yellow.${index}`}
+        color={`blue.${index}`}
         variant="filled"
         mt="xl"
         autoContrast

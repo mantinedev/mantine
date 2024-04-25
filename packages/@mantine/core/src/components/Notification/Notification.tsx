@@ -7,7 +7,6 @@ import {
   factory,
   Factory,
   getRadius,
-  getThemeColor,
   MantineColor,
   MantineRadius,
   StylesApiProps,
@@ -18,6 +17,8 @@ import { CloseButton } from '../CloseButton';
 import { Loader } from '../Loader';
 import classes from './Notification.module.css';
 
+export type NotificationVariants = 'outline@' | 'filled' | 'light';
+
 export type NotificationStylesNames =
   | 'root'
   | 'icon'
@@ -27,14 +28,14 @@ export type NotificationStylesNames =
   | 'description'
   | 'closeButton';
 export type NotificationCssVariables = {
-  root: '--notification-radius' | '--notification-color';
+  root: '--notification-radius' | '--notification-color' | '--notification-bg';
 };
 
 export interface NotificationProps
   extends BoxProps,
     StylesApiProps<NotificationFactory>,
     ElementProps<'div', 'title'> {
-  variant?: string;
+  variant?: NotificationVariants | string;
 
   /** Called when close button is clicked */
   onClose?: () => void;
@@ -65,6 +66,9 @@ export interface NotificationProps
 
   /** Props passed down to the close button */
   closeButtonProps?: Record<string, any>;
+
+  /** Determines whether text color with filled variant should depend on `background-color`. If luminosity of the `color` prop is less than `theme.luminosityThreshold`, then `theme.white` will be used for text color, otherwise `theme.black`. Overrides `theme.autoContrast`. */
+  autoContrast?: boolean;
 }
 
 export type NotificationFactory = Factory<{
@@ -78,12 +82,24 @@ const defaultProps: Partial<NotificationProps> = {
   withCloseButton: true,
 };
 
-const varsResolver = createVarsResolver<NotificationFactory>((theme, { radius, color }) => ({
-  root: {
-    '--notification-radius': radius === undefined ? undefined : getRadius(radius),
-    '--notification-color': color ? getThemeColor(color, theme) : undefined,
-  },
-}));
+const varsResolver = createVarsResolver<NotificationFactory>(
+  (theme, { radius, color, variant, autoContrast }) => {
+    const colors = theme.variantColorResolver({
+      color: color || theme.primaryColor,
+      theme,
+      variant: variant || 'outline',
+      autoContrast,
+    });
+
+    return {
+      root: {
+        '--notification-radius': radius === undefined ? undefined : getRadius(radius),
+        '--notification-color': colors.color,
+        '--notification-bg': color || variant ? colors.background : undefined,
+      },
+    };
+  }
+);
 
 export const Notification = factory<NotificationFactory>((_props, ref) => {
   const props = useProps('Notification', defaultProps, _props);
@@ -132,7 +148,7 @@ export const Notification = factory<NotificationFactory>((_props, ref) => {
       role="alert"
     >
       {icon && !loading && <div {...getStyles('icon')}>{icon}</div>}
-      {loading && <Loader size={28} color={color} {...getStyles('loader')} />}
+      {loading && <Loader color={'var(--notification-color)'} size={28} {...getStyles('loader')} />}
 
       <div {...getStyles('body')}>
         {title && <div {...getStyles('title')}>{title}</div>}
@@ -146,6 +162,7 @@ export const Notification = factory<NotificationFactory>((_props, ref) => {
         <CloseButton
           iconSize={16}
           color="gray"
+          variant={variant !== 'outline' ? 'transparent' : undefined}
           {...closeButtonProps}
           unstyled={unstyled}
           onClick={onClose}
