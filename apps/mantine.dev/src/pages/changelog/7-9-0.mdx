@@ -1,4 +1,4 @@
-import { FieldDemos } from '@docs/demos';
+import { BarChartDemos, FieldDemos } from '@docs/demos';
 import { Layout } from '@/layout';
 import { MDX_DATA } from '@/mdx';
 
@@ -58,6 +58,13 @@ Then you can use these mixins in your styles:
   @mixin circle 100px;
 }
 ```
+
+## BarChart value label
+
+[BarChart](/charts/bar-chart) now supports `withBarValueLabel` prop that allows
+displaying value label on top of each bar:
+
+<Demo data={BarChartDemos.barValueLabel} />
 
 ## Documentation updates
 

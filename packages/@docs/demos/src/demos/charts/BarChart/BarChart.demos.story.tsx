@@ -117,3 +117,8 @@ export const Demo_axisLabels = {
   name: '⭐ Demo: axisLabels',
   render: renderDemo(demos.axisLabels),
 };
+
+export const Demo_barValueLabel = {
+  name: '⭐ Demo: barValueLabel',
+  render: renderDemo(demos.barValueLabel),
+};

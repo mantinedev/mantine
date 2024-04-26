@@ -80,6 +80,9 @@ export interface BarChartProps
   barProps?:
     | ((series: BarChartSeries) => Partial<Omit<BarProps, 'ref'>>)
     | Partial<Omit<BarProps, 'ref'>>;
+
+  /** Determines whether a label with bar value should be displayed on top of each bar, incompatible with `type="stacked"` and `type="percent"`, `false` by default */
+  withBarValueLabel?: boolean;
 }
 
 export type BarChartFactory = Factory<{
@@ -110,6 +113,20 @@ const varsResolver = createVarsResolver<BarChartFactory>(
     },
   })
 );
+
+function BarLabel({ value, valueFormatter, ...others }: Record<string, any>) {
+  return (
+    <text
+      {...others}
+      dy={-10}
+      fontSize={12}
+      fill="var(--chart-text-color, var(--mantine-color-dimmed))"
+      textAnchor="center"
+    >
+      {typeof valueFormatter === 'function' ? valueFormatter(value) : value}
+    </text>
+  );
+}
 
 export const BarChart = factory<BarChartFactory>((_props, ref) => {
   const props = useProps('BarChart', defaultProps, _props);
@@ -149,6 +166,7 @@ export const BarChart = factory<BarChartFactory>((_props, ref) => {
     barProps,
     xAxisLabel,
     yAxisLabel,
+    withBarValueLabel,
     ...others
   } = props;
 
@@ -197,6 +215,7 @@ export const BarChart = factory<BarChartFactory>((_props, ref) => {
         fillOpacity={dimmed ? 0.1 : fillOpacity}
         strokeOpacity={dimmed ? 0.2 : 0}
         stackId={stacked ? 'stack' : undefined}
+        label={withBarValueLabel ? <BarLabel valueFormatter={valueFormatter} /> : undefined}
         {...(typeof barProps === 'function' ? barProps(item) : barProps)}
       />
     );
