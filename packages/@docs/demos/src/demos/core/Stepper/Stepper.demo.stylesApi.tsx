@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Button, Group, Stepper } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
 import { StepperStylesApi } from '@docs/styles-api';

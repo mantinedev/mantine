@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Box, Button, Code, Group, rem } from '@mantine/core';
 
 export function FormBase({ children, form }: any) {

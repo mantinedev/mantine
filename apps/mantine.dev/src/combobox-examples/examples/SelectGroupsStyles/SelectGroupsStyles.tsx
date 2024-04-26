@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Combobox, Input, InputBase, useCombobox } from '@mantine/core';
 import classes from './SelectGroupsStyles.module.css';
 

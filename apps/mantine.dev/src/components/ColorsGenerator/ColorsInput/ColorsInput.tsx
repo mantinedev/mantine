@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useRouter } from 'next/router';
 import { IconCheck, IconCopy } from '@tabler/icons-react';
 import chroma from 'chroma-js';

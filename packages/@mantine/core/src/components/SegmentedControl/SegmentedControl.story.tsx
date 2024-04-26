@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useDisclosure } from '@mantine/hooks';
 import { MantineThemeProvider } from '../../core';
 import { Button } from '../Button';

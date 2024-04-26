@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { MantineProvider } from './MantineProvider';
 
 export default { title: 'MantineProvider' };

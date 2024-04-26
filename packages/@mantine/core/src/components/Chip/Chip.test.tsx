@@ -1,4 +1,4 @@
-import React, { createRef } from 'react';
+import { createRef } from 'react';
 import { render, tests } from '@mantine-tests/core';
 import { Chip, ChipProps, ChipStylesNames } from './Chip';
 

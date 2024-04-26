@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Combobox, Input, InputBase, ScrollArea, useCombobox } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
 

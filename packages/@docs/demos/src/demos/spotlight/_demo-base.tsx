@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import { useMemo } from 'react';
 import { Button, Group } from '@mantine/core';
 import { createSpotlight, Spotlight, SpotlightProps } from '@mantine/spotlight';
 

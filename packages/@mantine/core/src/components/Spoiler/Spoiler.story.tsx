@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Accordion } from '../Accordion/Accordion';
 import { Spoiler } from './Spoiler';
 

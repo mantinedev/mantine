@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Loader, Text, TextInput } from '@mantine/core';
 import { useDebouncedCallback } from '@mantine/hooks';
 import { MantineDemo } from '@mantinex/demo';

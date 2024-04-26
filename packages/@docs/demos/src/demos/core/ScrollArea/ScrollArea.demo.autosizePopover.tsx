@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import { Box, Popover, ScrollArea, Text, TextInput, UnstyledButton } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
 

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { FloatingIndicator, UnstyledButton } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
 import classes from './FloatingIndicator.demo.segmented.module.css';

@@ -1,4 +1,4 @@
-import React, { forwardRef } from 'react';
+import { forwardRef } from 'react';
 import cx from 'clsx';
 import { Box, MantineLoaderComponent } from '@mantine/core';
 import classes from './CssLoader.module.css';

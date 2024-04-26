@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { MantineDemo } from '@mantinex/demo';
 
 const getCode = (name: string) => `

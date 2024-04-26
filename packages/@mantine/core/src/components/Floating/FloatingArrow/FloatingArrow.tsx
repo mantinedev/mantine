@@ -1,4 +1,4 @@
-import React, { forwardRef } from 'react';
+import { forwardRef } from 'react';
 import { useDirection } from '../../../core';
 import { ArrowPosition, FloatingPosition } from '../types';
 import { getArrowPositionStyles } from './get-arrow-position-styles';

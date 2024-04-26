@@ -1,4 +1,4 @@
-import React, { forwardRef } from 'react';
+import { forwardRef } from 'react';
 import { BoxProps, createPolymorphicComponent, useProps } from '../../../core';
 import { usePaginationContext } from '../Pagination.context';
 import {

@@ -1,4 +1,4 @@
-import React, { createContext, useCallback, useContext, useEffect, useState } from 'react';
+import { createContext, useCallback, useContext, useEffect, useState } from 'react';
 import type { HighlighterGeneric } from 'shiki';
 import { useComputedColorScheme } from '@mantine/core';
 import { dark, light } from './themes';

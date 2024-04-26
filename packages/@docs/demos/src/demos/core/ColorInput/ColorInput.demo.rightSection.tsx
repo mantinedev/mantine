@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { IconRefresh } from '@tabler/icons-react';
 import { ActionIcon, ColorInput, rem } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';

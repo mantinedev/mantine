@@ -1,4 +1,4 @@
-import React, { useCallback, useRef, useState } from 'react';
+import { useCallback, useRef, useState } from 'react';
 import { clamp, useMergedRef, useMove, useUncontrolled } from '@mantine/hooks';
 import {
   BoxProps,

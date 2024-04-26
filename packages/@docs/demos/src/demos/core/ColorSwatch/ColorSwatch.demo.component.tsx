@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { CheckIcon, ColorSwatch, rem } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
 

@@ -1,5 +1,5 @@
 function transformImportStatement(input: string) {
-  const regex = /import React, (\{[^}]+\}) from 'react';/g;
+  const regex = /import (\{[^}]+\}) from 'react';/g;
   const match = regex.exec(input);
   if (!match) {
     return input;

@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useMemo } from 'react';
+import { createContext, useContext, useMemo } from 'react';
 import { DEFAULT_THEME } from '../default-theme';
 import { mergeMantineTheme } from '../merge-mantine-theme';
 import { MantineTheme, MantineThemeOverride } from '../theme.types';

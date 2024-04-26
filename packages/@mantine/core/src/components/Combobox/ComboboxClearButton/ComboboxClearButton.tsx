@@ -1,4 +1,4 @@
-import React, { forwardRef } from 'react';
+import { forwardRef } from 'react';
 import { ElementProps, MantineSize } from '../../../core';
 import { __CloseButtonProps, CloseButton } from '../../CloseButton';
 

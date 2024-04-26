@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Button, Group, Modal } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
 import { AuthenticationForm } from '../../../shared/AuthenticationForm/AuthenticationForm';

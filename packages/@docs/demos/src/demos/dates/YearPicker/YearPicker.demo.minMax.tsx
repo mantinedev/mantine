@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { YearPicker } from '@mantine/dates';
 import { MantineDemo } from '@mantinex/demo';
 

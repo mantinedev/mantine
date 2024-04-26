@@ -1,4 +1,4 @@
-import React, { cloneElement, forwardRef } from 'react';
+import { cloneElement, forwardRef } from 'react';
 import { createEventHandler, isElement, useProps } from '../../../core';
 import { Popover, PopoverTargetProps } from '../../Popover';
 import { useHoverCardContext } from '../HoverCard.context';

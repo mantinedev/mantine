@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 
 export interface UseListStateHandlers<T> {
   setState: React.Dispatch<React.SetStateAction<T[]>>;

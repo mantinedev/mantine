@@ -1,5 +1,5 @@
 import dayjs from 'dayjs';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { DateFormatter } from '@mantine/dates';
 import { MantineDemo } from '@mantinex/demo';
 

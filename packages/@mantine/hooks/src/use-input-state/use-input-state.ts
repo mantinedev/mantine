@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 
 export function getInputOnChange<T>(
   setValue: (value: null | undefined | T | ((current: T) => T)) => void

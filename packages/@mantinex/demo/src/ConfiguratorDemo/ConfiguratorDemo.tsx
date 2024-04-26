@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { cloneElement, useState } from 'react';
 import { Stack } from '@mantine/core';
 import { DemoAreaProps } from '../DemoArea';
 import { DemoCode } from '../DemoCode';
@@ -95,7 +95,7 @@ export function ConfiguratorDemo({
         dimmed={dimmed}
         striped={striped}
       >
-        {React.cloneElement(children as JSX.Element, state)}
+        {cloneElement(children as JSX.Element, state)}
       </DemoColumns>
       <DemoCode code={getCodeArray({ code, controls, state })} />
     </DemoRoot>

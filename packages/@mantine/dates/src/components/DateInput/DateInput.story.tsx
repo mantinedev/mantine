@@ -3,7 +3,7 @@ import dayjs from 'dayjs';
 import 'dayjs/locale/ru';
 
 import customParseFormat from 'dayjs/plugin/customParseFormat';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Button, Group, TextInput } from '@mantine/core';
 import { DatePickerInput } from '../DatePickerInput';
 import { DatesProvider } from '../DatesProvider';

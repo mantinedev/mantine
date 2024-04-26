@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import { useRef } from 'react';
 import cx from 'clsx';
 import { NumberFormatValues, NumericFormat, OnValueChange } from 'react-number-format';
 import { assignRef, clamp, useMergedRef, useUncontrolled } from '@mantine/hooks';

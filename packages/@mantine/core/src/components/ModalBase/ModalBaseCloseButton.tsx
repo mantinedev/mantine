@@ -1,4 +1,4 @@
-import React, { forwardRef } from 'react';
+import { forwardRef } from 'react';
 import cx from 'clsx';
 import { BoxProps, ElementProps } from '../../core';
 import { __CloseButtonProps, CloseButton } from '../CloseButton';

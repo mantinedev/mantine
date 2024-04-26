@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { IconSearch } from '@tabler/icons-react';
 import { ScrollArea, Text, TextInput } from '@mantine/core';
 import { useHotkeys } from '@mantine/hooks';

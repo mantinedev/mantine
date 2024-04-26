@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { CheckIcon, Combobox, Group, Pill, PillsInput, useCombobox } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
 

@@ -1,4 +1,4 @@
-import React, { forwardRef } from 'react';
+import { forwardRef } from 'react';
 import { RemoveScroll } from 'react-remove-scroll';
 import {
   Box,

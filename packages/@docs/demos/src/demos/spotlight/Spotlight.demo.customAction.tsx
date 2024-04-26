@@ -1,5 +1,5 @@
 /* eslint-disable no-console */
-import React, { useMemo, useState } from 'react';
+import { useMemo, useState } from 'react';
 import { IconSearch } from '@tabler/icons-react';
 import { Badge, Button, Center, Group, Text } from '@mantine/core';
 import { createSpotlight, Spotlight } from '@mantine/spotlight';

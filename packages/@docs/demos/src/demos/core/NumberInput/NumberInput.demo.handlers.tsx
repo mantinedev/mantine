@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import { useRef } from 'react';
 import { Button, Group, NumberInput, NumberInputHandlers } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
 

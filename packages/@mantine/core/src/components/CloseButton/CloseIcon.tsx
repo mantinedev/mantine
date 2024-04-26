@@ -1,4 +1,4 @@
-import React, { forwardRef } from 'react';
+import { forwardRef } from 'react';
 
 export interface CloseIconProps extends React.ComponentPropsWithoutRef<'svg'> {
   /** Icon width and height, `var(--icon-size)` by default */

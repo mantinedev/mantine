@@ -1,4 +1,4 @@
-import React, { forwardRef, useEffect } from 'react';
+import { forwardRef, useEffect, useRef, useState } from 'react';
 import { useCallbackRef, useDebouncedCallback, useMergedRef } from '@mantine/hooks';
 import { useScrollAreaContext } from '../ScrollArea.context';
 import { Sizes } from '../ScrollArea.types';
@@ -36,10 +36,10 @@ export const Scrollbar = forwardRef<HTMLDivElement, ScrollbarProps>((props, forw
     ...scrollbarProps
   } = props;
   const context = useScrollAreaContext();
-  const [scrollbar, setScrollbar] = React.useState<HTMLDivElement | null>(null);
+  const [scrollbar, setScrollbar] = useState<HTMLDivElement | null>(null);
   const composeRefs = useMergedRef(forwardedRef, (node) => setScrollbar(node));
-  const rectRef = React.useRef<ClientRect | null>(null);
-  const prevWebkitUserSelectRef = React.useRef<string>('');
+  const rectRef = useRef<ClientRect | null>(null);
+  const prevWebkitUserSelectRef = useRef<string>('');
   const { viewport } = context;
   const maxScrollPos = sizes.content - sizes.viewport;
   const handleWheelScroll = useCallbackRef(onWheelScroll);

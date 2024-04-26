@@ -1,4 +1,4 @@
-import React, { forwardRef, useState } from 'react';
+import { forwardRef, useState } from 'react';
 import { Box } from '../../../core';
 import { Transition, TransitionOverride } from '../../Transition';
 import { useSliderContext } from '../Slider.context';

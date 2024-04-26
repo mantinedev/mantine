@@ -1,5 +1,5 @@
 /* eslint-disable no-console */
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { IconSearch } from '@tabler/icons-react';
 import { Button } from '@mantine/core';
 import { Spotlight, SpotlightActionData } from './Spotlight';

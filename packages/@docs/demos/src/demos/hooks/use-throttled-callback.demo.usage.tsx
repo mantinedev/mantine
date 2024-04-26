@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Text, TextInput } from '@mantine/core';
 import { useThrottledCallback } from '@mantine/hooks';
 import { MantineDemo } from '@mantinex/demo';

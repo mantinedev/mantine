@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Group, rem, Text } from '@mantine/core';
 import { useMove } from '@mantine/hooks';
 import { MantineDemo } from '@mantinex/demo';

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Button, Text, TextInput } from '@mantine/core';
 import { useField } from '@mantine/form';
 import { MantineDemo } from '@mantinex/demo';

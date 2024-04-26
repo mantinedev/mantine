@@ -1,4 +1,4 @@
-import React, { forwardRef, useRef, useState } from 'react';
+import { forwardRef, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { assignRef, useIsomorphicEffect } from '@mantine/hooks';
 import { useProps } from '../../core';

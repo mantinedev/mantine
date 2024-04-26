@@ -1,4 +1,4 @@
-import React, { forwardRef } from 'react';
+import { forwardRef } from 'react';
 import { createTheme, MantineProvider } from '@mantine/core';
 import { defaultLoaders, Loader } from './Loader';
 import { MantineLoaderComponent } from './Loader.types';

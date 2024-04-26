@@ -1,4 +1,4 @@
-import React, { forwardRef, useRef, useState } from 'react';
+import { forwardRef, useRef, useState } from 'react';
 import { useDirection } from '../../../core';
 import { useScrollAreaContext } from '../ScrollArea.context';
 import {

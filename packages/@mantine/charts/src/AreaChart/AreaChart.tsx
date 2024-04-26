@@ -1,4 +1,4 @@
-import React, { Fragment, useId, useState } from 'react';
+import { Fragment, useId, useState } from 'react';
 import {
   Area,
   AreaProps,

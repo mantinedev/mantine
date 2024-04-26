@@ -1,4 +1,4 @@
-import React, { forwardRef } from 'react';
+import { forwardRef } from 'react';
 import { Button, ButtonProps, createPolymorphicComponent, Group } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
 

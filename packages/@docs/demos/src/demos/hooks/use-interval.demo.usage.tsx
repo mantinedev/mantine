@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Button, Stack, Text } from '@mantine/core';
 import { useInterval } from '@mantine/hooks';
 import { MantineDemo } from '@mantinex/demo';

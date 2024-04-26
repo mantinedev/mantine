@@ -1,4 +1,4 @@
-import React, { forwardRef, useRef } from 'react';
+import { forwardRef, useRef } from 'react';
 import { assignRef, useMergedRef } from '@mantine/hooks';
 import { useProps } from '../../core';
 

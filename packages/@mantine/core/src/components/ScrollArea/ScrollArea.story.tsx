@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { ScrollArea } from './ScrollArea';
 
 export default { title: 'ScrollArea' };

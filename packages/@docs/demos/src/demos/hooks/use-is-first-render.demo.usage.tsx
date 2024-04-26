@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Button, Text } from '@mantine/core';
 import { useIsFirstRender } from '@mantine/hooks';
 import { MantineDemo } from '@mantinex/demo';

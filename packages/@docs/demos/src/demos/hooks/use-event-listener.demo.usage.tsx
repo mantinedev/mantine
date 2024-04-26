@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import { useCallback, useState } from 'react';
 import { Button } from '@mantine/core';
 import { useEventListener } from '@mantine/hooks';
 import { MantineDemo } from '@mantinex/demo';

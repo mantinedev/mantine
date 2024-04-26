@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { TextInput } from '@mantine/core';
 import { getHotkeyHandler, useHotkeys } from '@mantine/hooks';
 import { notifications } from '@mantine/notifications';

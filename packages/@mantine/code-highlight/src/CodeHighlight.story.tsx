@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { CodeHighlight } from './CodeHighlight';
 import { CodeHighlightTabs } from './CodeHighlightTabs';
 import { InlineCodeHighlight } from './InlineCodeHighlight';

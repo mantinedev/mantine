@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { IconChevronRight } from '@tabler/icons-react';
 import { ActionIcon, Checkbox, Combobox, Group, TextInput, useCombobox } from '@mantine/core';
 import classes from './TransferList.module.css';

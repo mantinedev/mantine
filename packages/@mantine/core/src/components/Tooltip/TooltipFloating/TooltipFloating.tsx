@@ -1,4 +1,4 @@
-import React, { cloneElement } from 'react';
+import { cloneElement } from 'react';
 import { useMergedRef } from '@mantine/hooks';
 import {
   Box,

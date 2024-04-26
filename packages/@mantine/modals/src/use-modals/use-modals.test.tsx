@@ -1,4 +1,4 @@
-import React, { PropsWithChildren, useEffect } from 'react';
+import { PropsWithChildren, useEffect } from 'react';
 import { render, renderHook, screen } from '@testing-library/react';
 import { MantineProvider } from '@mantine/core';
 import { ContextModalProps } from '../context';

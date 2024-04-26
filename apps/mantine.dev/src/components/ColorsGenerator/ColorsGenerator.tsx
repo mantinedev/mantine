@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import { generateColorsMap } from '@mantine/colors-generator';
 import { useLocalStorage } from '@mantine/hooks';

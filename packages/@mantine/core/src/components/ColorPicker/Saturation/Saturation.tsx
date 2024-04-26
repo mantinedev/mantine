@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { clampUseMovePosition, useMove, UseMovePosition } from '@mantine/hooks';
 import { Box, ElementProps, MantineSize } from '../../../core';
 import { useColorPickerContext } from '../ColorPicker.context';

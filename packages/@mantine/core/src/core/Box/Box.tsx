@@ -1,4 +1,4 @@
-import React, { forwardRef } from 'react';
+import { forwardRef } from 'react';
 import cx from 'clsx';
 import { createPolymorphicComponent } from '../factory';
 import { InlineStyles } from '../InlineStyles';
