@@ -1,4 +1,4 @@
-import { BarChartDemos, FieldDemos } from '@docs/demos';
+import { BarChartDemos, FieldDemos, StylesDemos } from '@docs/demos';
 import { Layout } from '@/layout';
 import { MDX_DATA } from '@/mdx';
 
@@ -59,6 +59,23 @@ Then you can use these mixins in your styles:
 }
 ```
 
+## use-matches hook
+
+New `use-matches` hook exported from `@mantine/core` is an alternative to [use-media-query](/hooks/use-media-query/)
+if you need to match multiple media queries and values. It accepts an object with media queries as keys and
+values at given breakpoint as values.
+
+Note that `use-matches` hook uses the same logic as [use-media-query](/hooks/use-media-query/) under the hood,
+it is not recommended to be used as a primary source of responsive styles, especially if you have ssr in your application.
+
+In the following example:
+
+- Starting from `theme.breakpoints.lg`, color will be `red.9`
+- Between `theme.breakpoints.sm` and `theme.breakpoints.lg`, color will be `orange.9`
+- Below `theme.breakpoints.sm`, color will be `blue.9`
+
+<Demo data={StylesDemos.useMatchesHook} />
+
 ## BarChart value label
 
 [BarChart](/charts/bar-chart) now supports `withBarValueLabel` prop that allows
@@ -71,6 +88,7 @@ displaying value label on top of each bar:
 - [use-field](/form/use-field) hook documentation
 - [Uncontrolled form mode](/form/uncontrolled) examples now include usage of `form.key()` function
 - [Custom PostCSS mixins](/styles/postcss-preset/#custom-mixins) documentation
+- [use-matches](/styles/responsive/#use-matches-hook) hook documentation has been added to the responsive guide
 
 ## Other changes
 

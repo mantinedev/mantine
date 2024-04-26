@@ -31,3 +31,4 @@ export { mergeThemeOverrides } from './merge-theme-overrides/merge-theme-overrid
 export { defaultCssVariablesResolver } from './MantineCssVariables/default-css-variables-resolver';
 export type { CSSVariablesResolver } from './MantineCssVariables/default-css-variables-resolver';
 export { virtualColor, getCSSColorVariables, isVirtualColor } from './MantineCssVariables';
+export { useMatches } from './use-matches/use-matches';
