@@ -1,4 +1,3 @@
-import React from 'react';
 import { NumericFormat } from 'react-number-format';
 import { ExtendComponent, Factory, MantineThemeComponent, useProps } from '../../core';
 

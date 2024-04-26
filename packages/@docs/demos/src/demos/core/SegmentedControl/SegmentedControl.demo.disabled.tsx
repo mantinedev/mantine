@@ -1,4 +1,3 @@
-import React from 'react';
 import { SegmentedControl, Stack, Text } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
 

@@ -1,4 +1,3 @@
-import React from 'react';
 import { Button, Stack } from '@mantine/core';
 import { useFullscreen } from '@mantine/hooks';
 import { MantineDemo } from '@mantinex/demo';

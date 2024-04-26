@@ -1,4 +1,3 @@
-import React from 'react';
 import cx from 'clsx';
 import { useId, useUncontrolled } from '@mantine/hooks';
 import {

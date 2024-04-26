@@ -1,5 +1,3 @@
-import React from 'react';
-
 export interface StepperCompletedProps {
   /** Label content */
   children: React.ReactNode;

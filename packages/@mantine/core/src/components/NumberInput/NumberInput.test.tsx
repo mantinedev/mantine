@@ -1,4 +1,4 @@
-import React from 'react';
+import { createRef } from 'react';
 import { act, fireEvent } from '@testing-library/react';
 import {
   inputDefaultProps,
@@ -55,7 +55,7 @@ describe('@mantine/core/NumberInput', () => {
   });
 
   it('exposes increment/decrement handlers with handlersRef prop', () => {
-    const ref = React.createRef<NumberInputHandlers>();
+    const ref = createRef<NumberInputHandlers>();
     const spy = jest.fn();
     render(<NumberInput {...defaultProps} step={2} onChange={spy} handlersRef={ref} />);
 

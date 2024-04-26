@@ -1,4 +1,3 @@
-import React from 'react';
 import { rem } from '../../core';
 
 export interface CheckboxIconProps extends React.ComponentPropsWithoutRef<'svg'> {

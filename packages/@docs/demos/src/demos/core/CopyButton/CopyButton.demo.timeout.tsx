@@ -1,4 +1,3 @@
-import React from 'react';
 import { IconCheck, IconCopy } from '@tabler/icons-react';
 import { ActionIcon, CopyButton, rem, Tooltip } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';

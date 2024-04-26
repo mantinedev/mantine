@@ -1,4 +1,3 @@
-import React from 'react';
 import cx from 'clsx';
 import { CheckIcon } from '../../Checkbox';
 import { ScrollArea, ScrollAreaProps } from '../../ScrollArea/ScrollArea';

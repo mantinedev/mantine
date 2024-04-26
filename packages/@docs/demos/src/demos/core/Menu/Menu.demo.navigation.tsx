@@ -1,4 +1,3 @@
-import React from 'react';
 import { Group, Menu } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
 import { DemoMenuItems } from './_menu-items';

@@ -1,4 +1,3 @@
-import React from 'react';
 import { CompoundStylesApiProps, factory, Factory, rem, useProps } from '../../core';
 import { ModalBaseContent, ModalBaseContentProps, NativeScrollArea } from '../ModalBase';
 import { useModalContext } from './Modal.context';

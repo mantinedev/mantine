@@ -1,4 +1,3 @@
-import React from 'react';
 import { CheckIcon, Radio } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
 

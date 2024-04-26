@@ -1,4 +1,3 @@
-import React from 'react';
 import { IconStar } from '@tabler/icons-react';
 import { Avatar, Group } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';

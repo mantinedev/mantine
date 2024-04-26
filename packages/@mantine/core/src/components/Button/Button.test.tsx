@@ -1,4 +1,3 @@
-import React from 'react';
 import { render, tests } from '@mantine-tests/core';
 import { Button, ButtonProps, ButtonStylesNames } from './Button';
 import { ButtonGroup } from './ButtonGroup/ButtonGroup';

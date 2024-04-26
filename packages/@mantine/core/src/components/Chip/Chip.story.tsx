@@ -1,4 +1,3 @@
-import React from 'react';
 import { IconCheck } from '@tabler/icons-react';
 import { Tooltip } from '../Tooltip';
 import { Chip } from './Chip';

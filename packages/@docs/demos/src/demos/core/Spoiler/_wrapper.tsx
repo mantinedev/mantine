@@ -1,4 +1,3 @@
-import React from 'react';
 import { Box, Spoiler, SpoilerProps, Text } from '@mantine/core';
 
 const content = (

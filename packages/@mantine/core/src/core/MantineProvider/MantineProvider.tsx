@@ -1,6 +1,5 @@
 import './global.css';
 
-import React from 'react';
 import { localStorageColorSchemeManager, MantineColorSchemeManager } from './color-scheme-managers';
 import { MantineContext } from './Mantine.context';
 import { MantineClasses } from './MantineClasses';

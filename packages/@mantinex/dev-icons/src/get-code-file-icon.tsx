@@ -1,4 +1,3 @@
-import React from 'react';
 import { CssIcon } from './CssIcon';
 import { TypeScriptIcon } from './TypeScriptIcon';
 

@@ -1,4 +1,3 @@
-import React from 'react';
 import { IconFocus2 } from '@tabler/icons-react';
 import { ColorInput, rem } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';

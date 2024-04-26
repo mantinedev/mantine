@@ -1,4 +1,3 @@
-import React from 'react';
 import { LineChart } from '@mantine/charts';
 import { MantineDemo } from '@mantinex/demo';
 import { connectNullsData, connectNullsDataCode } from './_data';

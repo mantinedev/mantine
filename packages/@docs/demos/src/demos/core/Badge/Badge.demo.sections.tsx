@@ -1,4 +1,3 @@
-import React from 'react';
 import { IconAt } from '@tabler/icons-react';
 import { Badge, Group, rem } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';

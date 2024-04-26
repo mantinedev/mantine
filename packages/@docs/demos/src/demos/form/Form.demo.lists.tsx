@@ -1,4 +1,3 @@
-import React from 'react';
 import { IconTrash } from '@tabler/icons-react';
 import { ActionIcon, Box, Button, Group, Switch, Text, TextInput } from '@mantine/core';
 import { useForm } from '@mantine/form';

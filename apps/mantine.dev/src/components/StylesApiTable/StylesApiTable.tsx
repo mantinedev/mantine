@@ -1,4 +1,3 @@
-import React from 'react';
 import { Title } from '@mantine/core';
 import * as stylesData from '@docs/styles-api';
 import type { Modifier } from '@docs/styles-api';

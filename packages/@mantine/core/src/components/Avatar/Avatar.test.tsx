@@ -1,4 +1,3 @@
-import React from 'react';
 import { fireEvent } from '@testing-library/react';
 import { render, tests } from '@mantine-tests/core';
 import { Avatar, AvatarProps, AvatarStylesNames } from './Avatar';

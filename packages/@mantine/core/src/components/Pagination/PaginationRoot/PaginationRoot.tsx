@@ -1,4 +1,3 @@
-import React from 'react';
 import { usePagination } from '@mantine/hooks';
 import {
   Box,

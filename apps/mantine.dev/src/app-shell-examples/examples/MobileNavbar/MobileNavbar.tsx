@@ -1,4 +1,3 @@
-import React from 'react';
 import { AppShell, Burger, Group, UnstyledButton } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import { MantineLogo } from '@mantinex/mantine-logo';

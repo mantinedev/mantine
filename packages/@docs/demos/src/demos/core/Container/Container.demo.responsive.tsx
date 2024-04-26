@@ -1,4 +1,3 @@
-import React from 'react';
 import cx from 'clsx';
 import { Container, createTheme, MantineThemeProvider } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';

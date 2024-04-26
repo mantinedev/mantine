@@ -1,4 +1,3 @@
-import React from 'react';
 import { Button } from '@mantine/core';
 import { useClipboard } from '@mantine/hooks';
 import { MantineDemo } from '@mantinex/demo';

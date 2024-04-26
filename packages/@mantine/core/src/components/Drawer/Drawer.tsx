@@ -1,4 +1,3 @@
-import React from 'react';
 import { factory, Factory, getDefaultZIndex, useProps } from '../../core';
 import { ModalBaseCloseButtonProps, ModalBaseOverlayProps } from '../ModalBase';
 import { DrawerBody } from './DrawerBody';

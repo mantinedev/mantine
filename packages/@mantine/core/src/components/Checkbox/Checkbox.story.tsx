@@ -1,4 +1,3 @@
-import React from 'react';
 import { MantineThemeProvider } from '../../core';
 import { Stack } from '../Stack';
 import { Tooltip } from '../Tooltip';

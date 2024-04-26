@@ -1,4 +1,3 @@
-import React from 'react';
 import { createContextContainer, render, screen, tests } from '@mantine-tests/core';
 import { Stepper } from '../Stepper';
 import { StepperStep, StepperStepProps, StepperStepStylesNames } from './StepperStep';

@@ -1,5 +1,3 @@
-import React from 'react';
-
 interface ChevronProps extends React.ComponentPropsWithoutRef<'svg'> {
   direction: 'up' | 'down';
 }

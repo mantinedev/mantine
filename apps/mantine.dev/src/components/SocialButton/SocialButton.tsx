@@ -1,4 +1,3 @@
-import React from 'react';
 import cx from 'clsx';
 import { BoxProps, Button, ElementProps } from '@mantine/core';
 import { DiscordIcon, TwitterIcon } from '@mantinex/dev-icons';

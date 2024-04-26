@@ -1,4 +1,3 @@
-import React from 'react';
 import { PieChart } from '@mantine/charts';
 import { Group, Text } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';

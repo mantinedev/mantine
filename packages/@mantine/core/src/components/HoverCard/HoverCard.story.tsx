@@ -1,4 +1,3 @@
-import React from 'react';
 import { Button } from '../Button';
 import { Switch } from '../Switch';
 import { Tooltip } from '../Tooltip';

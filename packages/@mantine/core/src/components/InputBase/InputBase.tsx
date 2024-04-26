@@ -1,4 +1,3 @@
-import React from 'react';
 import { BoxProps, polymorphicFactory, PolymorphicFactory, StylesApiProps } from '../../core';
 import { __BaseInputProps, __InputStylesNames, Input, InputVariant, useInputProps } from '../Input';
 

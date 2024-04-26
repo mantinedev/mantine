@@ -1,4 +1,3 @@
-import React from 'react';
 import { ActionIcon } from '../ActionIcon';
 import { VisuallyHidden } from './VisuallyHidden';
 

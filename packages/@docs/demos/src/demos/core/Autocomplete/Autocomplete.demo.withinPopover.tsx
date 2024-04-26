@@ -1,4 +1,3 @@
-import React from 'react';
 import { Autocomplete, Button, Popover } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
 

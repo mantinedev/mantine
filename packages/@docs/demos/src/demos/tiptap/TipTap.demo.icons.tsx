@@ -1,4 +1,3 @@
-import React from 'react';
 import { IconBold, IconItalic } from '@tabler/icons-react';
 import { useEditor } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';

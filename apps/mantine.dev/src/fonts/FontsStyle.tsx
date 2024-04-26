@@ -1,4 +1,3 @@
-import React from 'react';
 import Head from 'next/head';
 import { DEFAULT_THEME } from '@mantine/core';
 import { greycliffCF } from './GreycliffCF/GreycliffCF';

@@ -1,4 +1,3 @@
-import React from 'react';
 import { render, tests } from '@mantine-tests/core';
 import { TextStylesNames } from '../Text';
 import { Highlight, HighlightProps } from './Highlight';

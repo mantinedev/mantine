@@ -1,4 +1,3 @@
-import React from 'react';
 import { IconInfoCircle } from '@tabler/icons-react';
 import cx from 'clsx';
 import { Blockquote, BlockquoteProps, rgba, useMantineTheme } from '@mantine/core';

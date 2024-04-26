@@ -1,4 +1,3 @@
-import React from 'react';
 import { useMantineTheme } from '@mantine/core';
 import classes from './Jumbotron.module.css';
 

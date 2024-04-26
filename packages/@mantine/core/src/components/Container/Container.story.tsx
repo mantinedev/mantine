@@ -1,4 +1,3 @@
-import React from 'react';
 import { createTheme, MantineThemeProvider, rem } from '../../core';
 import { Container } from './Container';
 

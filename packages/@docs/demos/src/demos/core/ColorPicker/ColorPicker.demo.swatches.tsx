@@ -1,4 +1,3 @@
-import React from 'react';
 import { ColorPicker, DEFAULT_THEME, Stack } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
 

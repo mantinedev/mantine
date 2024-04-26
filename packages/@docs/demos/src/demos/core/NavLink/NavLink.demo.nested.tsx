@@ -1,4 +1,3 @@
-import React from 'react';
 import { IconFingerprint, IconGauge } from '@tabler/icons-react';
 import { NavLink } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';

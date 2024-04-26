@@ -1,5 +1,3 @@
-import React from 'react';
-
 interface FileIconProps {
   fileName: string | undefined;
   getFileIcon?: ((fileName: string) => React.ReactNode) | undefined;

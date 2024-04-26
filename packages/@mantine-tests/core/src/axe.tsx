@@ -1,4 +1,3 @@
-import React from 'react';
 import { axe as Axe, toHaveNoViolations } from 'jest-axe';
 import { renderWithAct } from './render';
 

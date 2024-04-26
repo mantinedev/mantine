@@ -1,5 +1,5 @@
 /* eslint-disable no-console */
-import React from 'react';
+
 import { patchConsoleError } from '../patch-console-error';
 import { render } from '../render';
 

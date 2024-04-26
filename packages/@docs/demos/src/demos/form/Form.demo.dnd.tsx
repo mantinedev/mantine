@@ -1,4 +1,3 @@
-import React from 'react';
 import { DragDropContext, Draggable, Droppable } from '@hello-pangea/dnd';
 import { IconGripVertical } from '@tabler/icons-react';
 import { Button, Center, Group, TextInput } from '@mantine/core';

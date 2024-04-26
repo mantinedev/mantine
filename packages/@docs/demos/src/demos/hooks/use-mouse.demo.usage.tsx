@@ -1,4 +1,3 @@
-import React from 'react';
 import { Code, Text } from '@mantine/core';
 import { useMouse } from '@mantine/hooks';
 import { MantineDemo } from '@mantinex/demo';

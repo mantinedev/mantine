@@ -1,4 +1,3 @@
-import React from 'react';
 import { IconMoonStars, IconSun } from '@tabler/icons-react';
 import { Button, Group, Image, SimpleGrid, Text, useMantineColorScheme } from '@mantine/core';
 import { CodeHighlight } from '@mantinex/shiki';

@@ -1,4 +1,3 @@
-import React from 'react';
 import { useDisclosure } from '@mantine/hooks';
 import { ExtendComponent, Factory, useProps } from '../../core';
 import { useDelayedHover } from '../Floating';

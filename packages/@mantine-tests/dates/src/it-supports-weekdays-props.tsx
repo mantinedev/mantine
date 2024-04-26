@@ -1,7 +1,6 @@
 import 'dayjs/locale/ru';
 
 import dayjs from 'dayjs';
-import React from 'react';
 import { screen } from '@testing-library/react';
 import { DatesProvider } from '@mantine/dates';
 import { render } from '@mantine-tests/core';

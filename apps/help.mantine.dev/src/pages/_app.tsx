@@ -7,7 +7,6 @@ import '@mantinex/mantine-logo/styles.css';
 import '@mantinex/mantine-header/styles.css';
 import '../fonts/GreycliffCF/styles.css';
 
-import React from 'react';
 import Head from 'next/head';
 import { MantineProvider } from '@mantine/core';
 import { ShikiProvider } from '@mantinex/shiki';

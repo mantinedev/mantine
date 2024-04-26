@@ -1,4 +1,3 @@
-import React from 'react';
 import { Pill, PillsInput } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
 

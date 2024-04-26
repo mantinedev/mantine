@@ -1,4 +1,3 @@
-import React from 'react';
 import { Button, Code, Group, MantineThemeProvider, Text } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
 

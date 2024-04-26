@@ -1,4 +1,3 @@
-import React from 'react';
 import { IconHeart, IconHeartBroken } from '@tabler/icons-react';
 import { RangeSlider, rem, Slider } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';

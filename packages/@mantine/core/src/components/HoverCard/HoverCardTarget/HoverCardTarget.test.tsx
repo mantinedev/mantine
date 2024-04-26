@@ -1,4 +1,3 @@
-import React from 'react';
 import { createContextContainer, patchConsoleError, render, tests } from '@mantine-tests/core';
 import { HoverCard } from '../HoverCard';
 import { HoverCardTarget, HoverCardTargetProps } from './HoverCardTarget';

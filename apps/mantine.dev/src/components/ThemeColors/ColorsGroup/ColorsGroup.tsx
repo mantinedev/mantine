@@ -1,4 +1,3 @@
-import React from 'react';
 import { Box, ColorSwatch, Text, useMantineTheme } from '@mantine/core';
 import classes from './ColorsGroup.module.css';
 

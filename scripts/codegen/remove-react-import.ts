@@ -10,7 +10,7 @@ function transformImportStatement(input: string) {
 export function removeReactImport(input: string) {
   const lines = input.split('\n');
 
-  if (lines[0].includes("import React from 'react';")) {
+  if (lines[0].includes('')) {
     lines.shift();
   } else if (lines[0].includes('import React')) {
     const remainingImports = transformImportStatement(lines[0]);

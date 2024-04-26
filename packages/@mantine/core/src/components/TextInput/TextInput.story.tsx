@@ -1,4 +1,3 @@
-import React from 'react';
 import { IconPhone } from '@tabler/icons-react';
 import { TextInput } from './TextInput';
 

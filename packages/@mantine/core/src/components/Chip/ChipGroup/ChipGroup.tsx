@@ -1,4 +1,3 @@
-import React from 'react';
 import { useUncontrolled } from '@mantine/hooks';
 import { useProps } from '../../../core';
 import { ChipGroupProvider } from '../ChipGroup.context';

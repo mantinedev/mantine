@@ -1,5 +1,3 @@
-import React from 'react';
-
 export function StarIcon(props: React.ComponentPropsWithoutRef<'svg'>) {
   const { width, height, style, ...others } = props;
   return (

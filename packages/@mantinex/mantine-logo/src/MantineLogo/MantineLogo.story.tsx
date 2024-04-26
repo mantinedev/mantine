@@ -1,4 +1,3 @@
-import React from 'react';
 import { MantineLogoRounded } from './MantineLogoRounded';
 import { MantineLogoText } from './MantineLogoText';
 

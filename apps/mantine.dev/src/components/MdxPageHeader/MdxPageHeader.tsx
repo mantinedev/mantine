@@ -1,4 +1,3 @@
-import React from 'react';
 import { IconCalendar, IconLicense, IconPencil, IconSwitch2 } from '@tabler/icons-react';
 import { Box, rem, Text, Title } from '@mantine/core';
 import { GithubIcon, NpmIcon } from '@mantinex/dev-icons';

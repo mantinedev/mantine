@@ -1,4 +1,3 @@
-import React from 'react';
 import { createTheme, Input, MantineThemeProvider, NativeSelect, TextInput } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
 

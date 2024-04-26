@@ -1,4 +1,3 @@
-import React from 'react';
 import { IconSearch } from '@tabler/icons-react';
 import cx from 'clsx';
 import { BoxProps, ElementProps, Group, rem, Text, UnstyledButton } from '@mantine/core';

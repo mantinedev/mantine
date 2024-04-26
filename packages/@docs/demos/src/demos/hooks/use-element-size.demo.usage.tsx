@@ -1,4 +1,3 @@
-import React from 'react';
 import { Group, rem, Text, useMantineTheme } from '@mantine/core';
 import { useElementSize } from '@mantine/hooks';
 import { MantineDemo } from '@mantinex/demo';

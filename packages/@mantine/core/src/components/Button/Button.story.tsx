@@ -1,4 +1,4 @@
-import React from 'react';
+import { useState } from 'react';
 import { DEFAULT_THEME, rem } from '../../core';
 import { Button, ButtonProps } from './Button';
 
@@ -271,7 +271,7 @@ export function Loading() {
 }
 
 export function ToggleLoading() {
-  const [loading, setLoading] = React.useState(false);
+  const [loading, setLoading] = useState(false);
   return (
     <div style={{ padding: 40, display: 'flex', gap: 20 }}>
       <Button loading={loading} size="lg">

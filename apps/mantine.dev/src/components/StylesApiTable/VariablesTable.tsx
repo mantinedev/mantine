@@ -1,4 +1,3 @@
-import React from 'react';
 import { Table, TableProps } from '@mantine/core';
 import { HtmlText } from '@/components/HtmlText';
 import { TableInlineCode } from '@/components/TableInlineCode';

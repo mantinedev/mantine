@@ -1,4 +1,3 @@
-import React from 'react';
 import { Box, Button, ButtonProps, Group, GroupProps } from '@mantine/core';
 import { ConfirmLabels } from './context';
 import { useModals } from './use-modals/use-modals';

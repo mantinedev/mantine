@@ -1,4 +1,3 @@
-import React from 'react';
 import { Box, Slider } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
 import classes from './Slider.demo.customize.module.css';

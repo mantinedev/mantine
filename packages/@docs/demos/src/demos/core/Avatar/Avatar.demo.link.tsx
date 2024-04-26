@@ -1,4 +1,3 @@
-import React from 'react';
 import { Avatar } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
 import { avatars } from './_mockdata';

@@ -1,4 +1,3 @@
-import React from 'react';
 import { BoxProps, ElementProps, factory, Factory, StylesApiProps, useProps } from '../../core';
 import { __BaseInputProps, __InputStylesNames } from '../Input';
 import { InputBase } from '../InputBase';

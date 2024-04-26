@@ -1,4 +1,3 @@
-import React from 'react';
 import { createContextContainer, patchConsoleError, render, tests } from '@mantine-tests/core';
 import { Combobox } from '../Combobox';
 import { ComboboxEventsTarget, ComboboxEventsTargetProps } from './ComboboxEventsTarget';

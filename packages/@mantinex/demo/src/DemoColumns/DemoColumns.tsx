@@ -1,4 +1,3 @@
-import React from 'react';
 import { Text } from '@mantine/core';
 import { DemoArea, DemoAreaProps } from '../DemoArea';
 import classes from './DemoColumns.module.css';

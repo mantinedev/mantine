@@ -1,4 +1,3 @@
-import React from 'react';
 import { Button, Group, Text } from '@mantine/core';
 import { useWindowScroll } from '@mantine/hooks';
 import { MantineDemo } from '@mantinex/demo';

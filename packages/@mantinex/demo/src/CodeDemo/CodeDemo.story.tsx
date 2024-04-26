@@ -1,10 +1,9 @@
-import React from 'react';
 import { CodeHighlightTabsCode } from '@mantinex/shiki';
 import { CodeDemo } from './CodeDemo';
 
 export default { title: 'DS/CodeDemo' };
 
-const reactCode = `import React from 'react';
+const reactCode = `
 import { MantineLogoRounded } from './MantineLogoRounded';
 import { MantineLogoText } from './MantineLogoText';
 import { LogoProps } from './use-mantine-logo-colors';

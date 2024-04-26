@@ -1,4 +1,3 @@
-import React from 'react';
 import { DatesProvider } from '../DatesProvider';
 import { Calendar } from './Calendar';
 

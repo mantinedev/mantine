@@ -1,5 +1,4 @@
 import dayjs from 'dayjs';
-import React from 'react';
 import { Input, Paper, SimpleGrid } from '@mantine/core';
 import { DatePicker, DatePickerInput, DateTimePicker, TimeInput } from '@mantine/dates';
 import classes from './Demos.module.css';

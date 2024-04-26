@@ -1,4 +1,3 @@
-import React from 'react';
 import { cleanup } from '@testing-library/react';
 import { render, screen, tests, userEvent } from '@mantine-tests/core';
 import { Menu, MenuProps } from './Menu';

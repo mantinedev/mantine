@@ -1,4 +1,3 @@
-import React from 'react';
 import { tests } from '@mantine-tests/core';
 import { TextInput } from '../TextInput';
 import { Combobox } from './Combobox';

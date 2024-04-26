@@ -1,5 +1,3 @@
-import React from 'react';
-
 interface IconProps extends React.ComponentPropsWithoutRef<'svg'> {}
 
 export function IconBase(props: IconProps) {

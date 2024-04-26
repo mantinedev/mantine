@@ -1,4 +1,3 @@
-import React from 'react';
 import { tests } from '@mantine-tests/core';
 import { Progress, ProgressProps, ProgressStylesNames } from './Progress';
 import { ProgressLabel } from './ProgressLabel/ProgressLabel';

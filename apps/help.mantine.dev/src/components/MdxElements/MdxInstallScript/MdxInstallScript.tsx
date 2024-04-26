@@ -1,4 +1,3 @@
-import React from 'react';
 import { MdxNpmScript } from '../MdxNpmScript/MdxNpmScript';
 
 interface MdxInstallScriptProps {

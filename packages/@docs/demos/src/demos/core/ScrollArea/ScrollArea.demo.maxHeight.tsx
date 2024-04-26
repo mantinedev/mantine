@@ -1,4 +1,3 @@
-import React from 'react';
 import { Button, Group, ScrollArea } from '@mantine/core';
 import { useCounter } from '@mantine/hooks';
 import { MantineDemo } from '@mantinex/demo';

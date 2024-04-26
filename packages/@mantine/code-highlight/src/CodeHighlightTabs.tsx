@@ -1,4 +1,3 @@
-import React from 'react';
 import cx from 'clsx';
 import hljs from 'highlight.js';
 import {

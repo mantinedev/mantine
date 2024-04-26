@@ -1,4 +1,3 @@
-import React from 'react';
 import { useRouter } from 'next/router';
 import cx from 'clsx';
 import { Badge, RemoveScroll, Text } from '@mantine/core';

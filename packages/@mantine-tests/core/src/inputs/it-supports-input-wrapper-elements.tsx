@@ -1,4 +1,3 @@
-import React from 'react';
 import { inputWrapperQueries } from '../queries';
 import { render } from '../render';
 

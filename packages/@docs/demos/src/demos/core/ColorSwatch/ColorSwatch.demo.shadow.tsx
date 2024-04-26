@@ -1,4 +1,3 @@
-import React from 'react';
 import { ColorSwatch } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
 

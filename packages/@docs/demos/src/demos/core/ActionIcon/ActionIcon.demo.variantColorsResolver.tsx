@@ -1,4 +1,3 @@
-import React from 'react';
 import { IconError404, IconFingerprint, IconPhoto } from '@tabler/icons-react';
 import {
   ActionIcon,

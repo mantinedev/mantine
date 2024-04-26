@@ -1,4 +1,3 @@
-import React from 'react';
 import { InlineStyles, useMantineContext, useMantineTheme } from '../../../core';
 import type { AppShellProps } from '../AppShell';
 import { getVariables } from './get-variables/get-variables';

@@ -1,5 +1,3 @@
-import React from 'react';
-
 export function matchesField(field: string, error?: React.ReactNode) {
   const _error = error || true;
 

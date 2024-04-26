@@ -1,4 +1,3 @@
-import React from 'react';
 import { IconComponents } from '@tabler/icons-react';
 import { rem, TagsInput } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';

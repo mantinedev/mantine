@@ -1,4 +1,3 @@
-import React from 'react';
 import { Box, BoxProps, Container, ElementProps, Text } from '@mantine/core';
 import { SectionTitle } from '../SectionTitle/SectionTitle';
 import classes from './PageSection.module.css';

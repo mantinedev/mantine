@@ -1,4 +1,3 @@
-import React from 'react';
 import { IconChevronDown, IconHash } from '@tabler/icons-react';
 import { NativeSelect, rem } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';

@@ -1,4 +1,3 @@
-import React from 'react';
 import { ComboboxItem, MultiSelect, OptionsFilter } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
 

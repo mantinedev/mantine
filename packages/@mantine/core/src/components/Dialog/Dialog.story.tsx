@@ -1,4 +1,3 @@
-import React from 'react';
 import { Button, Group, Text, TextInput } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import { Dialog } from './Dialog';

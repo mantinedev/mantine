@@ -68,7 +68,6 @@ export const theme = createTheme({
 Create `gatsby-ssr.tsx` with the following content:
 
 ```tsx
-import React from 'react';
 import { ColorSchemeScript, MantineProvider } from '@mantine/core';
 import { theme } from './src/theme';
 
@@ -95,7 +94,6 @@ Create `gatsby-browser.tsx` with the following content:
 // All packages except `@mantine/hooks` require styles imports
 import '@mantine/core/styles.css';
 
-import React from 'react';
 import { MantineProvider } from '@mantine/core';
 import { theme } from './src/theme';
 

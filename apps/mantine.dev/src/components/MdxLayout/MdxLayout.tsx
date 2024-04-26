@@ -1,4 +1,3 @@
-import React from 'react';
 import { MdxPage } from '@/components/MdxPage';
 import { Frontmatter } from '@/types';
 import { PageHead } from '../PageHead';

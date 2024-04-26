@@ -1,4 +1,3 @@
-import React from 'react';
 import { Button, Popover, Text } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
 import { FLOATING_POSITION_DATA } from '../../../shared';

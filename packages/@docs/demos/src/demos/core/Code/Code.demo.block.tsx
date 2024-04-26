@@ -1,11 +1,10 @@
-import React from 'react';
 import { Code } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
 
 const code = `
 import { Code } from '@mantine/core';
 
-const codeForPreviousDemo = \`import React from 'react';
+const codeForPreviousDemo = \`
 import { Code } from '@mantine/core';
 
 function Demo() {
@@ -17,7 +16,7 @@ function Demo() {
 }
 `;
 
-const codeForPreviousDemo = `import React from 'react';
+const codeForPreviousDemo = `
 import { Code } from '@mantine/core';
 
 function Demo() {

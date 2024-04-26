@@ -1,6 +1,5 @@
 import 'dayjs/locale/ru';
 
-import React from 'react';
 import { WeekdaysRow, WeekdaysRowProps } from './WeekdaysRow';
 
 export default { title: 'WeekdaysRow' };

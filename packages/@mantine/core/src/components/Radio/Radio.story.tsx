@@ -1,4 +1,3 @@
-import React from 'react';
 import { Checkbox } from '../Checkbox';
 import { Stack } from '../Stack';
 import { Radio } from './Radio';

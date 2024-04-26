@@ -1,4 +1,3 @@
-import React from 'react';
 import cx from 'clsx';
 import { Code } from '@mantine/core';
 import classes from './MdxTypography.module.css';

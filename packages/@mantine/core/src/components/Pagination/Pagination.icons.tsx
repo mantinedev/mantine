@@ -1,5 +1,3 @@
-import React from 'react';
-
 interface _PaginationIconProps extends React.ComponentPropsWithoutRef<'svg'> {
   path: string;
 }

@@ -1,4 +1,3 @@
-import React from 'react';
 import { Button } from '@mantine/core';
 import { notifications } from '@mantine/notifications';
 import { MantineDemo } from '@mantinex/demo';

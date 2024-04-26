@@ -1,4 +1,3 @@
-import React from 'react';
 import { getPickerInputClearableDemo } from './picker-input-clearable.demo';
 import { getPickerInputConfiguratorDemo } from './picker-input-configurator.demo';
 import { getPickerInputIconDemo } from './picker-input-icon.demo';

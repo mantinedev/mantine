@@ -1,4 +1,3 @@
-import React from 'react';
 import { useMantineStyleNonce } from '../MantineProvider';
 import { InlineStylesInput, stylesToString } from './styles-to-string/styles-to-string';
 

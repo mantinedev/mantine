@@ -1,4 +1,3 @@
-import React from 'react';
 import { FloatingMenu, useEditor } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
 import { Link, RichTextEditor } from '@mantine/tiptap';

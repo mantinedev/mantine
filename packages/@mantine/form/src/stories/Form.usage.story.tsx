@@ -1,5 +1,6 @@
 /* eslint-disable no-console */
-import React from 'react';
+
+import { useState } from 'react';
 import { Button, Checkbox, Group, NativeSelect, Select, Textarea, TextInput } from '@mantine/core';
 import { useForm } from '../use-form';
 import { FormBase } from './_base';
@@ -7,7 +8,7 @@ import { FormBase } from './_base';
 export default { title: 'Form' };
 
 export function Usage() {
-  const [counter, setCounter] = React.useState(0);
+  const [counter, setCounter] = useState(0);
   const form = useForm({
     mode: 'uncontrolled',
     validateInputOnChange: true,

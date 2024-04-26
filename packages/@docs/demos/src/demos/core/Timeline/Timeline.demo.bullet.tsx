@@ -1,4 +1,3 @@
-import React from 'react';
 import { IconSun, IconVideo } from '@tabler/icons-react';
 import { Avatar, Text, ThemeIcon, Timeline } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';

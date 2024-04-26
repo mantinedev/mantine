@@ -1,4 +1,3 @@
-import React from 'react';
 import { DiscordIcon } from '@mantinex/dev-icons';
 import { HeaderControl } from './HeaderControl';
 import classes from './DiscordControl.module.css';

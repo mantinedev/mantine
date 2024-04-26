@@ -1,4 +1,3 @@
-import React from 'react';
 import { Code, DEFAULT_THEME, defaultCssVariablesResolver } from '@mantine/core';
 import { MdxDataTable } from '../MdxProvider';
 

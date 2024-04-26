@@ -1,4 +1,3 @@
-import React from 'react';
 import { IconFingerprint } from '@tabler/icons-react';
 import { ActionIcon, Group } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';

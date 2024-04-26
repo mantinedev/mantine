@@ -1,4 +1,3 @@
-import React from 'react';
 import cx from 'clsx';
 import { DiscordIcon, GithubIcon, TwitterIcon } from '@mantinex/dev-icons';
 import { meta } from '@mantinex/mantine-meta';

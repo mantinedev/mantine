@@ -1,4 +1,4 @@
-import React from 'react';
+import { createRef } from 'react';
 import { render, tests } from '@mantine-tests/core';
 import { DropzoneFullScreen } from './DropzoneFullScreen';
 import { DropzoneAccept, DropzoneIdle, DropzoneReject } from './DropzoneStatus';
@@ -42,7 +42,7 @@ describe('@mantine/dropzone/Dropzone', () => {
   });
 
   it('assigns open function to given openRef', () => {
-    const ref = React.createRef<any>();
+    const ref = createRef<any>();
     render(<Dropzone {...defaultProps} openRef={ref} />);
     expect(ref.current).toBeInstanceOf(Function);
   });

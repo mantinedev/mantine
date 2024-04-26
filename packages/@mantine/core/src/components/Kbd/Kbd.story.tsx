@@ -1,4 +1,3 @@
-import React from 'react';
 import { Kbd } from './Kbd';
 
 export default { title: 'Kbd' };

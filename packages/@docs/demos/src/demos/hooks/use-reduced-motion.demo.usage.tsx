@@ -1,4 +1,3 @@
-import React from 'react';
 import { Badge } from '@mantine/core';
 import { useReducedMotion } from '@mantine/hooks';
 import { MantineDemo } from '@mantinex/demo';

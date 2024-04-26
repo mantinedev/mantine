@@ -1,4 +1,3 @@
-import React from 'react';
 import { TextInput } from '@mantine/core';
 import { isEmail, useField } from '@mantine/form';
 import { MantineDemo } from '@mantinex/demo';

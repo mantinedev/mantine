@@ -1,4 +1,3 @@
-import React from 'react';
 import { Avatar, Group, MultiSelect, MultiSelectProps, Text } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
 

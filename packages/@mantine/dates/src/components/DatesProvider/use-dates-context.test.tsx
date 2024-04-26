@@ -1,4 +1,3 @@
-import React from 'react';
 import { renderHook } from '@testing-library/react';
 import { DatesProvider } from './DatesProvider';
 import { useDatesContext } from './use-dates-context';

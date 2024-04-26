@@ -1,4 +1,3 @@
-import React from 'react';
 import { Box, Button, Collapse, Group, Text } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import { MantineDemo } from '@mantinex/demo';

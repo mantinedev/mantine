@@ -1,4 +1,3 @@
-import React from 'react';
 import { Radio, RadioProps } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
 

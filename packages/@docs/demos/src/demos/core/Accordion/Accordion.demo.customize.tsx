@@ -1,4 +1,3 @@
-import React from 'react';
 import { Accordion } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
 import { groceries } from './_base';

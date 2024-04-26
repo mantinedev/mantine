@@ -1,4 +1,3 @@
-import React from 'react';
 import { render, screen } from '@mantine-tests/core';
 import { FocusTrap } from './FocusTrap';
 

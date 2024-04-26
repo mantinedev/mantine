@@ -1,4 +1,3 @@
-import React from 'react';
 import { Box, Text } from '@mantine/core';
 import { AccordionDemo, TimelineBase } from '@docs/demos';
 

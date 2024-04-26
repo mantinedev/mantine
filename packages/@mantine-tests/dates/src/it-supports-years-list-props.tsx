@@ -1,5 +1,4 @@
 import dayjs from 'dayjs';
-import React from 'react';
 import { DatesProvider } from '@mantine/dates';
 import { render } from '@mantine-tests/core';
 

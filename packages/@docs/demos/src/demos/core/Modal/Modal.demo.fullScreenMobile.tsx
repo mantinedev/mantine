@@ -1,4 +1,3 @@
-import React from 'react';
 import { Button, em, Modal } from '@mantine/core';
 import { useDisclosure, useMediaQuery } from '@mantine/hooks';
 import { MantineDemo } from '@mantinex/demo';

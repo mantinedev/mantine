@@ -1,4 +1,3 @@
-import React from 'react';
 import { SegmentedControl } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
 import { SegmentedControlStylesApi } from '@docs/styles-api';

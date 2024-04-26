@@ -1,4 +1,3 @@
-import React from 'react';
 import { convertCssVariables } from '../convert-css-variables/convert-css-variables';
 import { useMantineCssVariablesResolver, useMantineStyleNonce } from '../Mantine.context';
 import { useMantineTheme } from '../MantineThemeProvider';

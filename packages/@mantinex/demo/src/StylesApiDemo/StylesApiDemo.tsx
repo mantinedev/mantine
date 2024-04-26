@@ -1,4 +1,4 @@
-import React from 'react';
+import { cloneElement, useState } from 'react';
 import { Text, UnstyledButton } from '@mantine/core';
 import { DemoAreaProps } from '../DemoArea';
 import { DemoCode } from '../DemoCode';
@@ -27,7 +27,7 @@ export function StylesApiDemo({
   dimmed,
   striped,
 }: StylesApiDemoProps) {
-  const [hovered, setHovered] = React.useState<string | null>(null);
+  const [hovered, setHovered] = useState<string | null>(null);
 
   const selectors = Object.keys(data.selectors);
   const controls = selectors.map((selector) => (
@@ -60,7 +60,7 @@ export function StylesApiDemo({
           title="Component Styles API"
           description="Hover over selectors to highlight corresponding elements"
         >
-          {React.cloneElement(children as JSX.Element, {
+          {cloneElement(children as JSX.Element, {
             classNames: selectors.reduce<Record<string, string>>((acc, item) => {
               acc[item] = item;
               return acc;

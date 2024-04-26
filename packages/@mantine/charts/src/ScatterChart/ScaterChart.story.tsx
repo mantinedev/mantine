@@ -1,4 +1,3 @@
-import React from 'react';
 import { ScatterChart } from './ScatterChart';
 
 export default { title: 'ScatterChart' };

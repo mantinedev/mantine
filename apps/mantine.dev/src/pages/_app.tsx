@@ -14,7 +14,6 @@ import '@mantinex/mantine-header/styles.css';
 import '@mantinex/shiki/styles.css';
 import '@docs/demos/styles.css';
 
-import React from 'react';
 import { AppProps } from 'next/app';
 import Head from 'next/head';
 import { DirectionProvider, MantineProvider } from '@mantine/core';

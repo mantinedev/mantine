@@ -1,4 +1,3 @@
-import React from 'react';
 import { Box, Button, Group, Text } from '@mantine/core';
 import { useScrollIntoView } from '@mantine/hooks';
 import { MantineDemo } from '@mantinex/demo';

@@ -1,4 +1,3 @@
-import React from 'react';
 import { IconHeart } from '@tabler/icons-react';
 import { ActionIcon, Group, Switch } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';

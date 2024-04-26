@@ -1,4 +1,3 @@
-import React from 'react';
 import { IconCurrencyDram } from '@tabler/icons-react';
 import { NumberInput, rem } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';

@@ -1,4 +1,3 @@
-import React from 'react';
 import { EditorContent } from '@tiptap/react';
 import {
   Box,

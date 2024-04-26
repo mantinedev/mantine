@@ -1,4 +1,3 @@
-import React from 'react';
 import { ElementProps, Text, TextProps } from '@mantine/core';
 import classes from './HtmlText.module.css';
 

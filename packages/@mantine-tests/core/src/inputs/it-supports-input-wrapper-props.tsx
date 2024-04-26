@@ -1,4 +1,3 @@
-import React from 'react';
 import { itSupportsInputAsterisk } from './it-supports-input-asterisk';
 import { itSupportsInputContainer } from './it-supports-input-container';
 import { itSupportsInputWrapperElements } from './it-supports-input-wrapper-elements';

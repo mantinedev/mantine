@@ -1,4 +1,3 @@
-import React from 'react';
 import { Button, NumberInput, TextInput } from '@mantine/core';
 import { isInRange, isNotEmpty, useForm } from '@mantine/form';
 import { MantineDemo } from '@mantinex/demo';

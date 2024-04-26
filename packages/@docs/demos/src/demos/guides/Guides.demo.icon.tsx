@@ -1,4 +1,3 @@
-import React from 'react';
 import { IconBrandMantine } from '@tabler/icons-react';
 import { rem } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';

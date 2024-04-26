@@ -1,4 +1,3 @@
-import React from 'react';
 import cx from 'clsx';
 import { Box, Container, Group, RemoveScroll, Text } from '@mantine/core';
 import { Logo } from '../Logo/Logo';

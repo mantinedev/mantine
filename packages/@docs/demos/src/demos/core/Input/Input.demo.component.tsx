@@ -1,4 +1,3 @@
-import React from 'react';
 import { IconChevronDown } from '@tabler/icons-react';
 import { Input } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';

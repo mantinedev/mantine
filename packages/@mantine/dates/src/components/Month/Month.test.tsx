@@ -1,4 +1,3 @@
-import React from 'react';
 import { render, tests } from '@mantine-tests/core';
 import { datesTests } from '@mantine-tests/dates';
 import { Month, MonthProps, MonthStylesNames } from './Month';

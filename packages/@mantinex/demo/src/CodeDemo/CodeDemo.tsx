@@ -1,4 +1,3 @@
-import React from 'react';
 import { DemoArea, DemoAreaProps } from '../DemoArea';
 import { DemoCode, DemoCodeProps } from '../DemoCode';
 import { DemoRoot } from '../DemoRoot';

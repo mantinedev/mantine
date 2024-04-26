@@ -1,4 +1,3 @@
-import React from 'react';
 import { BoxProps, ElementProps, NativeSelect } from '@mantine/core';
 import { getControlLabel } from './get-control-label';
 import { SelectData, transformSelectData } from './transform-select-data';

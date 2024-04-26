@@ -1,4 +1,4 @@
-import React from 'react';
+import { useRef, useState } from 'react';
 import { Virtuoso } from 'react-virtuoso';
 import { ScrollArea } from '../ScrollArea';
 import { TextInput } from '../TextInput';
@@ -17,11 +17,11 @@ const largeData = Array(10000)
   }));
 
 export function Virtualized() {
-  const [opened, setOpened] = React.useState(false);
-  const [selectedOptionIndex, setSelectedOptionIndex] = React.useState(0);
-  const [value, setValue] = React.useState('');
-  const virtuoso = React.useRef<any>(null);
-  const viewportRef = React.useRef<HTMLDivElement>(null);
+  const [opened, setOpened] = useState(false);
+  const [selectedOptionIndex, setSelectedOptionIndex] = useState(0);
+  const [value, setValue] = useState('');
+  const virtuoso = useRef<any>(null);
+  const viewportRef = useRef<HTMLDivElement>(null);
 
   const store = useVirtualizedCombobox({
     opened,

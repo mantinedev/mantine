@@ -1,4 +1,3 @@
-import React from 'react';
 import { Box, RangeSlider, Slider } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
 

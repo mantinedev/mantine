@@ -1,4 +1,3 @@
-import React from 'react';
 import { Checkbox, createTheme, MantineThemeProvider } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
 

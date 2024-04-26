@@ -1,4 +1,3 @@
-import React from 'react';
 import { Box } from '../../../core';
 import { useSliderContext } from '../Slider.context';
 import { getPosition } from '../utils/get-position/get-position';

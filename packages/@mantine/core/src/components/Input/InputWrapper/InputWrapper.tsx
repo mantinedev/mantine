@@ -1,4 +1,4 @@
-import React from 'react';
+import { Fragment } from 'react';
 import { useId } from '@mantine/hooks';
 import {
   Box,
@@ -210,7 +210,7 @@ export const InputWrapper = factory<InputWrapperFactory>((_props, ref) => {
     </InputDescription>
   );
 
-  const _input = <React.Fragment key="input">{inputContainer!(children)}</React.Fragment>;
+  const _input = <Fragment key="input">{inputContainer!(children)}</Fragment>;
 
   const _error = hasError && (
     <InputError

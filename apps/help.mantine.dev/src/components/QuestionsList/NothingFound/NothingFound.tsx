@@ -1,4 +1,3 @@
-import React from 'react';
 import { SimpleGrid, Text, Title } from '@mantine/core';
 import { SocialCard } from '@/components/SocialCard';
 import classes from './NothingFound.module.css';

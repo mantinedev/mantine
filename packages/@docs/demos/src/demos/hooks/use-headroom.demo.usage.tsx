@@ -1,4 +1,3 @@
-import React from 'react';
 import { Box, Portal, rem, Text } from '@mantine/core';
 import { useHeadroom } from '@mantine/hooks';
 import { MantineDemo } from '@mantinex/demo';

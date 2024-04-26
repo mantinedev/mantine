@@ -1,4 +1,3 @@
-import React from 'react';
 import { createContextContainer, render, tests } from '@mantine-tests/core';
 import { Card } from '../Card';
 import { CardSection, CardSectionProps, CardSectionStylesNames } from './CardSection';

@@ -1,4 +1,3 @@
-import React from 'react';
 import type { MantineColorScheme } from '../theme.types';
 
 export interface ColorSchemeScriptProps extends React.ComponentPropsWithoutRef<'script'> {

@@ -1,4 +1,3 @@
-import React from 'react';
 import { TipTapDemos } from '@docs/demos';
 import classes from './Demos.module.css';
 

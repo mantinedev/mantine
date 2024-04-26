@@ -1,4 +1,3 @@
-import React from 'react';
 import { Breadcrumbs, Code, STYlE_PROPS_DATA } from '@mantine/core';
 import { MdxDataTable } from '@/components/MdxProvider';
 

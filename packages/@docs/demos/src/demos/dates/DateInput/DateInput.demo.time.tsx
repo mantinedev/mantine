@@ -1,6 +1,5 @@
 import dayjs from 'dayjs';
 import customParseFormat from 'dayjs/plugin/customParseFormat';
-import React from 'react';
 import { DateInput } from '@mantine/dates';
 import { MantineDemo } from '@mantinex/demo';
 

@@ -1,4 +1,3 @@
-import React from 'react';
 import { RadarChart } from './RadarChart';
 
 export default { title: 'RadarChart' };

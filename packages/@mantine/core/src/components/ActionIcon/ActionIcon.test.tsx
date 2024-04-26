@@ -1,4 +1,3 @@
-import React from 'react';
 import { render, tests } from '@mantine-tests/core';
 import { ActionIcon, ActionIconProps, ActionIconStylesNames } from './ActionIcon';
 import { ActionIconGroup } from './ActionIconGroup/ActionIconGroup';

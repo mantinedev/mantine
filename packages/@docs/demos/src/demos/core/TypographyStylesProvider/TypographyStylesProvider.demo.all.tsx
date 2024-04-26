@@ -1,4 +1,3 @@
-import React from 'react';
 import { TypographyStylesProvider } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
 
@@ -33,7 +32,7 @@ const html = `<h1>Heading 1</h1>
 
 <p>This is <code>code</code>, <kbd>kbd</kbd> and <mark>mark</mark> inside paragraph</p>
 
-<pre>import React from 'react';
+<pre>
 import { Avatar } from '@mantine/core';
 import image from './image.png';
 

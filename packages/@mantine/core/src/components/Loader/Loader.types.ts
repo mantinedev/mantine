@@ -1,5 +1,3 @@
-import React from 'react';
-
 export interface SvgLoaderProps extends React.ComponentPropsWithoutRef<any> {}
 
 export type MantineLoaderComponent = React.ForwardRefExoticComponent<

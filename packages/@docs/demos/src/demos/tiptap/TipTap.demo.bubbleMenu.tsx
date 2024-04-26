@@ -1,4 +1,3 @@
-import React from 'react';
 import { BubbleMenu, useEditor } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
 import { Link, RichTextEditor } from '@mantine/tiptap';

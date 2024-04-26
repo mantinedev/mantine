@@ -1,4 +1,3 @@
-import React from 'react';
 import { itSupportsFocusEvents } from '../shared/it-supports-focus-events';
 import { itSupportsInputSections } from './it-supports-input-sections';
 import { itSupportsInputWrapperProps } from './it-supports-input-wrapper-props';

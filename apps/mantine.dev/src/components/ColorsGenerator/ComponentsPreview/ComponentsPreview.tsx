@@ -1,4 +1,3 @@
-import React from 'react';
 import { Button, Input, MantineColorsTuple, MantineProvider, Table } from '@mantine/core';
 import { useDebouncedValue } from '@mantine/hooks';
 

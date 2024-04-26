@@ -1,4 +1,3 @@
-import React from 'react';
 import { rem } from '../../core';
 import { TextInput } from '../TextInput';
 import { NativeSelect } from './NativeSelect';

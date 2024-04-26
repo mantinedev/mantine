@@ -1,4 +1,3 @@
-import React from 'react';
 import { DatesProvider, DateTimePicker } from '@mantine/dates';
 import { MantineDemo } from '@mantinex/demo';
 

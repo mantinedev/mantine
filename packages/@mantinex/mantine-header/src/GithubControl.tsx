@@ -1,4 +1,3 @@
-import React from 'react';
 import { GithubIcon } from '@mantinex/dev-icons';
 import { HeaderControl } from './HeaderControl';
 

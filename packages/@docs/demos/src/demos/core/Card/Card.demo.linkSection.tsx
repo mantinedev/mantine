@@ -1,4 +1,3 @@
-import React from 'react';
 import { Badge, Button, Card, Group, Image, Text } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
 

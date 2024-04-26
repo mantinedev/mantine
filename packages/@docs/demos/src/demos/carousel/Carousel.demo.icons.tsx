@@ -1,4 +1,3 @@
-import React from 'react';
 import { IconArrowLeft, IconArrowRight } from '@tabler/icons-react';
 import { Carousel } from '@mantine/carousel';
 import { rem } from '@mantine/core';

@@ -1,4 +1,3 @@
-import React from 'react';
 import { IconClock } from '@tabler/icons-react';
 import { rem } from '@mantine/core';
 import { TimeInput } from '@mantine/dates';

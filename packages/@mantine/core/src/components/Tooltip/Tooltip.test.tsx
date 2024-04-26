@@ -1,4 +1,3 @@
-import React from 'react';
 import { patchConsoleError, render, screen, tests, userEvent } from '@mantine-tests/core';
 import { Tooltip, TooltipProps } from './Tooltip';
 import { TooltipStylesNames } from './Tooltip.types';

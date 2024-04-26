@@ -1,4 +1,3 @@
-import React from 'react';
 import { Loader, MantineThemeProvider } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
 import { CssLoader, cssLoaderModuleCssCode, cssLoaderTsxCode } from './_CssLoader';

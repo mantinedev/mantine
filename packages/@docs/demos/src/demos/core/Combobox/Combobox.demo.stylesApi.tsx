@@ -1,4 +1,3 @@
-import React from 'react';
 import { Combobox, TextInput, useCombobox } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
 import { ComboboxStylesApi } from '@docs/styles-api';

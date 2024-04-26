@@ -1,4 +1,3 @@
-import React from 'react';
 import { BarChart } from '@mantine/charts';
 import { Text } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';

@@ -1,4 +1,3 @@
-import React from 'react';
 import { useRatingContext } from '../Rating.context';
 import { StarIcon } from './StarIcon';
 

@@ -1,4 +1,3 @@
-import React from 'react';
 import lodash from 'lodash';
 import { render, screen, tests } from '@mantine-tests/core';
 import { Day, DayProps, DayStylesNames } from './Day';

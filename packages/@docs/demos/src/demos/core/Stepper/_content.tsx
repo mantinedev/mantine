@@ -1,4 +1,3 @@
-import React from 'react';
 import { Box, BoxProps, ElementProps } from '@mantine/core';
 
 export function Content(props: BoxProps & ElementProps<'div'>) {

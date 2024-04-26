@@ -1,4 +1,3 @@
-import React from 'react';
 import { render, tests, userEvent } from '@mantine-tests/core';
 import { Pill, PillProps, PillStylesNames } from './Pill';
 

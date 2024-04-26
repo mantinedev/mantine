@@ -1,4 +1,3 @@
-import React from 'react';
 import { InputBase } from './InputBase';
 
 export default { title: 'InputBase' };

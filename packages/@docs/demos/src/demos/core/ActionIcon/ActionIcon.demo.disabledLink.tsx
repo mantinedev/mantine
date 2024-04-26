@@ -1,4 +1,3 @@
-import React from 'react';
 import { IconExternalLink } from '@tabler/icons-react';
 import { ActionIcon } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';

@@ -1,4 +1,3 @@
-import React from 'react';
 import { Anchor, Text } from '@mantine/core';
 
 interface TableErrorProps {

@@ -1,4 +1,3 @@
-import React from 'react';
 import { Button, Group, TextInput } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
 import classes from './AlignInputButton.demo.module.css';

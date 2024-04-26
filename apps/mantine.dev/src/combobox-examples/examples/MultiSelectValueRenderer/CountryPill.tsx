@@ -1,4 +1,3 @@
-import React from 'react';
 import { CloseButton } from '@mantine/core';
 import { countriesData, flags } from './countries-data';
 import classes from './CountryPill.module.css';

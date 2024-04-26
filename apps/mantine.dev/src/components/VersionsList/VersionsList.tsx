@@ -1,4 +1,3 @@
-import React from 'react';
 import { IconFileInvoice } from '@tabler/icons-react';
 import { Button, Code, Group, Text } from '@mantine/core';
 import { GithubIcon } from '@mantinex/dev-icons';

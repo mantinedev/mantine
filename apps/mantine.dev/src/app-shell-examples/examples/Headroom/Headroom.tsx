@@ -1,4 +1,3 @@
-import React from 'react';
 import { AppShell, Group, rem, Text } from '@mantine/core';
 import { useHeadroom } from '@mantine/hooks';
 import { MantineLogo } from '@mantinex/mantine-logo';

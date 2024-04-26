@@ -1,4 +1,3 @@
-import React from 'react';
 import { Button, Modal, ScrollArea } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import { MantineDemo } from '@mantinex/demo';

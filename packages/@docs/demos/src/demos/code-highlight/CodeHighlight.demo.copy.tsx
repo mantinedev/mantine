@@ -1,4 +1,3 @@
-import React from 'react';
 import { CodeHighlight } from '@mantine/code-highlight';
 import { MantineDemo } from '@mantinex/demo';
 

@@ -1,4 +1,3 @@
-import React from 'react';
 import { Progress } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
 import { ProgressStylesApi } from '@docs/styles-api';

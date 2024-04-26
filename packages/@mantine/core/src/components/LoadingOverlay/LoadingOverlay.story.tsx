@@ -1,4 +1,3 @@
-import React from 'react';
 import { LoadingOverlay } from './LoadingOverlay';
 
 export default { title: 'LoadingOverlay' };

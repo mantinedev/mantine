@@ -1,4 +1,3 @@
-import React from 'react';
 import { Group } from './Group';
 
 export default { title: 'Group' };

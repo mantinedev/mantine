@@ -1,4 +1,3 @@
-import React from 'react';
 import { FRAMEWORKS_GUIDES_DATA } from './data';
 import { FrameworkLink } from './FrameworkLink/FrameworkLink';
 import classes from './FrameworksGuides.module.css';

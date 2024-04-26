@@ -1,5 +1,3 @@
-import React from 'react';
-
 interface AreaGradientProps {
   color: string;
   id: string;

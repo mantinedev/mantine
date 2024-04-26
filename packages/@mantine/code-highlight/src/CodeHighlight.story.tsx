@@ -244,11 +244,10 @@ export function Inline() {
   return (
     <div style={{ padding: 40 }}>
       <p>
-        Hello there! this is{' '}
-        <InlineCodeHighlight code="import React from 'react';" language="tsx" /> some code Lorem
-        ipsum dolor sit amet consectetur adipisicing elit. Aliquid reiciendis, facilis repudiandae
-        vero mollitia non dolorum cupiditate assumenda odio unde quaerat beatae explicabo veritatis
-        nam temporibus! Quibusdam quod enim voluptatibus?
+        Hello there! this is <InlineCodeHighlight code="" language="tsx" /> some code Lorem ipsum
+        dolor sit amet consectetur adipisicing elit. Aliquid reiciendis, facilis repudiandae vero
+        mollitia non dolorum cupiditate assumenda odio unde quaerat beatae explicabo veritatis nam
+        temporibus! Quibusdam quod enim voluptatibus?
       </p>
     </div>
   );

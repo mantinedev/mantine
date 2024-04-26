@@ -1,4 +1,3 @@
-import React from 'react';
 import { Group } from '../Group';
 import { Pill } from '../Pill';
 import { TextInput } from '../TextInput';

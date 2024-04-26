@@ -1,4 +1,3 @@
-import React from 'react';
 import { __InputStylesNames } from '@mantine/core';
 import { inputDefaultProps, inputStylesApiSelectors, tests } from '@mantine-tests/core';
 import { TimeInput, TimeInputProps } from './TimeInput';

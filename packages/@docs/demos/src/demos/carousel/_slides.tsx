@@ -1,4 +1,3 @@
-import React from 'react';
 import { Carousel } from '@mantine/carousel';
 import { Box, rem } from '@mantine/core';
 

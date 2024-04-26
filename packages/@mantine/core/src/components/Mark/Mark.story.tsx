@@ -1,4 +1,3 @@
-import React from 'react';
 import { Mark } from './Mark';
 
 export default { title: 'Mark' };

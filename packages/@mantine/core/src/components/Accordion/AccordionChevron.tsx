@@ -1,4 +1,3 @@
-import React from 'react';
 import { rem } from '../../core';
 
 export interface AccordionChevronProps extends React.ComponentPropsWithoutRef<'svg'> {

@@ -1,4 +1,3 @@
-import React from 'react';
 import cx from 'clsx';
 import { Text } from '@mantine/core';
 import classes from './HeaderItem.module.css';

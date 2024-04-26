@@ -1,4 +1,3 @@
-import React from 'react';
 import { MantineThemeProvider } from '../../core';
 import { Button } from '../Button';
 import { Grid } from './Grid';

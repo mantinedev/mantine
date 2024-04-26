@@ -1,4 +1,3 @@
-import React from 'react';
 import { CodeHighlight } from './CodeHighlight';
 import { CodeHighlightTabs } from './CodeHighlightTabs';
 

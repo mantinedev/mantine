@@ -1,4 +1,3 @@
-import React from 'react';
 import { Code, Table, Text } from '@mantine/core';
 import classes from './CssVariablesGroup.module.css';
 

@@ -1,4 +1,3 @@
-import React from 'react';
 import { Accordion, AccordionProps } from '@mantine/core';
 
 export const groceries = [

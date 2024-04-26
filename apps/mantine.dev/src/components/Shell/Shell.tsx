@@ -1,4 +1,3 @@
-import React from 'react';
 import { useUncontrolled } from '@mantine/hooks';
 import { Header, HeaderControlsProps } from './Header/Header';
 import { Navbar } from './Navbar/Navbar';

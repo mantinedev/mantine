@@ -1,4 +1,3 @@
-import React from 'react';
 import { CodeDemo, CodeDemoProps } from '../CodeDemo/CodeDemo';
 import { ConfiguratorDemo, ConfiguratorDemoProps } from '../ConfiguratorDemo/ConfiguratorDemo';
 import { StylesApiDemo, StylesApiDemoProps } from '../StylesApiDemo/StylesApiDemo';

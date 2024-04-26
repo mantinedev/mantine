@@ -1,4 +1,3 @@
-import React from 'react';
 import { Button, MantineThemeProvider } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
 import classes from './Theming.demo.activeClassName.module.css';

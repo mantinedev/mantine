@@ -1,4 +1,3 @@
-import React from 'react';
 import { Space } from '@mantine/core';
 import { FrameworksGuides } from '../../FrameworksGuides';
 import { PageSection } from '../PageSection/PageSection';

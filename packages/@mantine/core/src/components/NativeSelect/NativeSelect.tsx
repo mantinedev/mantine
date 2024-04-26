@@ -1,4 +1,3 @@
-import React from 'react';
 import { BoxProps, ElementProps, factory, Factory, StylesApiProps, useProps } from '../../core';
 import { ComboboxChevron, ComboboxData, getParsedComboboxData } from '../Combobox';
 import { __BaseInputProps, __InputStylesNames } from '../Input';

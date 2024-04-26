@@ -1,4 +1,3 @@
-import React from 'react';
 import { BoxProps, Group, Tooltip } from '@mantine/core';
 import { ColorSchemeControl } from './ColorSchemeControl';
 import { DirectionControl } from './DirectionControl';

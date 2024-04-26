@@ -1,4 +1,3 @@
-import React from 'react';
 import { ColorSwatch } from '@mantine/core';
 
 const colorVariableRegex = /^(var\(--mantine-color[\w-]+\)|#\w+|rgba?\([\w,. ]+\))$/gm;

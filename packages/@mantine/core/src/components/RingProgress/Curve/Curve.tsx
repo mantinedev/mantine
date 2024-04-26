@@ -1,4 +1,3 @@
-import React from 'react';
 import { Box, GetStylesApi, getThemeColor, MantineColor, useMantineTheme } from '../../../core';
 import { Tooltip } from '../../Tooltip';
 import type { RingProgressFactory } from '../RingProgress';

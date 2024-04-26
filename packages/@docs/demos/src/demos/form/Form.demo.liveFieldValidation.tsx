@@ -1,5 +1,5 @@
 /* eslint-disable no-console */
-import React from 'react';
+
 import { Button, NumberInput, TextInput } from '@mantine/core';
 import { FORM_INDEX, useForm } from '@mantine/form';
 import { MantineDemo } from '@mantinex/demo';

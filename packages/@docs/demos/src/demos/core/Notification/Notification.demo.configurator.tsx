@@ -1,4 +1,3 @@
-import React from 'react';
 import { Box, Notification, NotificationProps } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
 

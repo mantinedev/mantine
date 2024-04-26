@@ -1,4 +1,3 @@
-import React from 'react';
 import { rem } from '../../core';
 
 export interface RadioIconProps extends React.ComponentPropsWithoutRef<'svg'> {

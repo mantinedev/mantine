@@ -1,4 +1,3 @@
-import React from 'react';
 import { CalendarHeader } from './CalendarHeader';
 
 export default { title: 'CalendarHeader' };

@@ -1,4 +1,3 @@
-import React from 'react';
 import { Button, Popover, Select } from '@mantine/core';
 import { DatePickerInput } from '@mantine/dates';
 import { MantineDemo } from '@mantinex/demo';

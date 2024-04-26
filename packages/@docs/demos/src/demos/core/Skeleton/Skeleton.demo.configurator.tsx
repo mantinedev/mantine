@@ -1,4 +1,3 @@
-import React from 'react';
 import { Skeleton, SkeletonProps } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
 

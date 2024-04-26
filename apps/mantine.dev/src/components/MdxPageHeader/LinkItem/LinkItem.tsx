@@ -1,4 +1,3 @@
-import React from 'react';
 import Link from 'next/link';
 import { Anchor } from '@mantine/core';
 import { HeaderItem } from '../HeaderItem/HeaderItem';

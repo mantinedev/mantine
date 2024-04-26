@@ -1,4 +1,3 @@
-import React from 'react';
 import { CodeHighlightTabs } from '@mantine/code-highlight';
 import { MantineDemo } from '@mantinex/demo';
 import { CssIcon, TypeScriptIcon } from '@mantinex/dev-icons';

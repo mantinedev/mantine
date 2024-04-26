@@ -1,4 +1,3 @@
-import React from 'react';
 import { ComboboxParsedItem, ComboboxParsedItemGroup } from '../Combobox';
 
 export interface NativeSelectOptionProps {
