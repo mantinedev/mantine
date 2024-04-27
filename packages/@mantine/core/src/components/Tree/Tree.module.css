@@ -1,0 +1,18 @@
+.root {
+  --level-offset: var(--mantine-spacing-lg);
+  margin: 0;
+  padding: 0;
+}
+
+.subtree {
+  margin: 0;
+  padding: 0;
+  padding-inline-start: var(--level-offset);
+}
+
+.node {
+  cursor: pointer;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
