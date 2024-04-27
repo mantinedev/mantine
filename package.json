@@ -183,6 +183,7 @@
     "stylelint": "^16.2.1",
     "stylelint-config-standard-scss": "^13.0.0",
     "syncpack": "^12.3.0",
+    "ts-node": "^10.9.2",
     "tsconfig-paths-webpack-plugin": "^4.1.0",
     "tsx": "^4.7.3",
     "typescript": "5.3.3",
