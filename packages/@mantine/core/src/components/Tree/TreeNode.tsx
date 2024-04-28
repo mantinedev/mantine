@@ -1,4 +1,4 @@
-import { GetStylesApi } from '../../core';
+import { findElementAncestor, GetStylesApi } from '../../core';
 import type { TreeFactory, TreeNodeData, TreeValue } from './Tree';
 import type { TreeController } from './use-tree';
 
@@ -9,6 +9,7 @@ interface TreeNodeProps {
   rootIndex: number | undefined;
   controller: TreeController;
   expandOnClick: boolean | undefined;
+  isSubtree?: boolean;
   level?: number;
 }
 
@@ -19,6 +20,7 @@ export function TreeNode({
   rootIndex,
   controller,
   expandOnClick,
+  isSubtree,
   level = 1,
 }: TreeNodeProps) {
   const nested = (node.children || []).map((child) => (
@@ -31,8 +33,55 @@ export function TreeNode({
       level={level + 1}
       controller={controller}
       expandOnClick={expandOnClick}
+      isSubtree
     />
   ));
+
+  const handleKeyDown = (event: React.KeyboardEvent) => {
+    if (event.nativeEvent.code === 'ArrowRight') {
+      event.stopPropagation();
+      event.preventDefault();
+
+      if (controller.state[node.value]) {
+        event.currentTarget.querySelector<HTMLLIElement>('[role=treeitem]')?.focus();
+      } else {
+        controller.expandNode(node.value);
+      }
+    }
+
+    if (event.nativeEvent.code === 'ArrowLeft') {
+      event.stopPropagation();
+      event.preventDefault();
+      if (controller.state[node.value] && (node.children || []).length > 0) {
+        controller.collapseNode(node.value);
+      } else if (isSubtree) {
+        findElementAncestor(event.currentTarget as HTMLElement, '[role=treeitem]')?.focus();
+      }
+    }
+
+    if (event.nativeEvent.code === 'ArrowDown' || event.nativeEvent.code === 'ArrowUp') {
+      const root = findElementAncestor(event.currentTarget as HTMLElement, '[data-tree-root]');
+
+      if (!root) {
+        return;
+      }
+
+      event.stopPropagation();
+      event.preventDefault();
+      const nodes = Array.from(root.querySelectorAll<HTMLLIElement>('[role=treeitem]'));
+      const index = nodes.indexOf(event.currentTarget as HTMLLIElement);
+
+      if (index === -1) {
+        return;
+      }
+
+      const nextIndex = event.nativeEvent.code === 'ArrowDown' ? index + 1 : index - 1;
+      const focusIndex =
+        nextIndex === -1 ? nodes.length - 1 : nextIndex === nodes.length ? 0 : nextIndex;
+      const nextNode = nodes[focusIndex];
+      nextNode.focus();
+    }
+  };
 
   return (
     <li
@@ -45,7 +94,7 @@ export function TreeNode({
         expandOnClick && controller.toggleNode(node.value);
         event.currentTarget.focus();
       }}
-      onKeyDown={() => console.log('keydown')}
+      onKeyDown={handleKeyDown}
       data-level={level}
     >
       <div {...getStyles('label')}>{node.label}</div>

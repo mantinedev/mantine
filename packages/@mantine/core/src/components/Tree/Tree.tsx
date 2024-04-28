@@ -129,6 +129,7 @@ export const Tree = factory<TreeFactory>((_props, ref) => {
       {...others}
       role="tree"
       aria-multiselectable={multiple}
+      data-tree-root
     >
       {nodes}
     </Box>
