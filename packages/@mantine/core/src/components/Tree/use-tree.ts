@@ -69,5 +69,8 @@ export function useTree(initialState: TreeState = {}) {
     expandNode,
     expandAllNodes,
     collapseAllNodes,
+    setExpandedState: setState,
   };
 }
+
+export type TreeController = ReturnType<typeof useTree>;

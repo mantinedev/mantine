@@ -1,15 +1,26 @@
 import { GetStylesApi } from '../../core';
 import type { TreeFactory, TreeNodeData, TreeValue } from './Tree';
+import type { TreeController } from './use-tree';
 
 interface TreeNodeProps {
   node: TreeNodeData;
   getStyles: GetStylesApi<TreeFactory>;
   value: TreeValue;
   rootIndex: number | undefined;
+  controller: TreeController;
+  expandOnClick: boolean | undefined;
   level?: number;
 }
 
-export function TreeNode({ node, value, getStyles, rootIndex, level = 1 }: TreeNodeProps) {
+export function TreeNode({
+  node,
+  value,
+  getStyles,
+  rootIndex,
+  controller,
+  expandOnClick,
+  level = 1,
+}: TreeNodeProps) {
   const nested = (node.children || []).map((child) => (
     <TreeNode
       key={child.value}
@@ -18,6 +29,8 @@ export function TreeNode({ node, value, getStyles, rootIndex, level = 1 }: TreeN
       value={value}
       rootIndex={undefined}
       level={level + 1}
+      controller={controller}
+      expandOnClick={expandOnClick}
     />
   ));
 
@@ -27,13 +40,17 @@ export function TreeNode({ node, value, getStyles, rootIndex, level = 1 }: TreeN
       role="treeitem"
       aria-selected={node.value === value}
       tabIndex={rootIndex === 0 ? 0 : -1}
-      onClick={() => console.log('click')}
+      onClick={(event) => {
+        event.stopPropagation();
+        expandOnClick && controller.toggleNode(node.value);
+        event.currentTarget.focus();
+      }}
       onKeyDown={() => console.log('keydown')}
       data-level={level}
     >
       <div {...getStyles('label')}>{node.label}</div>
 
-      {nested.length > 0 && (
+      {controller.state[node.value] && nested.length > 0 && (
         <ul role="group" {...getStyles('subtree')} data-level={level}>
           {nested}
         </ul>

@@ -12,6 +12,7 @@ import {
   useStyles,
 } from '../../core';
 import { TreeNode } from './TreeNode';
+import { TreeController, TreeState, useTree } from './use-tree';
 import classes from './Tree.module.css';
 
 export type TreeValue = string | string[] | undefined;
@@ -46,6 +47,15 @@ export interface TreeProps extends BoxProps, StylesApiProps<TreeFactory>, Elemen
 
   /** Horizontal padding of each subtree level, key of `theme.spacing` or any valid CSS value, `'lg'` by default */
   levelOffset?: MantineSpacing;
+
+  /** Determines whether tree node with children should be expanded on click, `true` by default */
+  expandOnClick?: boolean;
+
+  /** use-tree hook instance that can be used to manipulate component state */
+  tree?: TreeController;
+
+  /** Default expanded state for uncontrolled component */
+  initialExpandedState?: TreeState;
 }
 
 export type TreeFactory = Factory<{
@@ -55,7 +65,9 @@ export type TreeFactory = Factory<{
   vars: TreeCssVariables;
 }>;
 
-const defaultProps: Partial<TreeProps> = {};
+const defaultProps: Partial<TreeProps> = {
+  expandOnClick: true,
+};
 
 const varsResolver = createVarsResolver<TreeFactory>((_theme, { levelOffset }) => ({
   root: {
@@ -65,8 +77,24 @@ const varsResolver = createVarsResolver<TreeFactory>((_theme, { levelOffset }) =
 
 export const Tree = factory<TreeFactory>((_props, ref) => {
   const props = useProps('Tree', defaultProps, _props);
-  const { classNames, className, style, styles, unstyled, vars, data, multiple, value, ...others } =
-    props;
+  const {
+    classNames,
+    className,
+    style,
+    styles,
+    unstyled,
+    vars,
+    data,
+    multiple,
+    value,
+    expandOnClick,
+    tree,
+    initialExpandedState,
+    ...others
+  } = props;
+
+  const defaultController = useTree(initialExpandedState);
+  const controller = tree || defaultController;
 
   const getStyles = useStyles<TreeFactory>({
     name: 'Tree',
@@ -82,7 +110,15 @@ export const Tree = factory<TreeFactory>((_props, ref) => {
   });
 
   const nodes = data.map((node, index) => (
-    <TreeNode key={node.value} node={node} getStyles={getStyles} value={value} rootIndex={index} />
+    <TreeNode
+      key={node.value}
+      node={node}
+      getStyles={getStyles}
+      value={value}
+      rootIndex={index}
+      expandOnClick={expandOnClick}
+      controller={controller}
+    />
   ));
 
   return (
