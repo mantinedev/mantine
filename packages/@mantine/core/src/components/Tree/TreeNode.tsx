@@ -6,9 +6,10 @@ interface TreeNodeProps {
   getStyles: GetStylesApi<TreeFactory>;
   value: TreeValue;
   rootIndex: number | undefined;
+  level?: number;
 }
 
-export function TreeNode({ node, value, getStyles, rootIndex }: TreeNodeProps) {
+export function TreeNode({ node, value, getStyles, rootIndex, level = 1 }: TreeNodeProps) {
   const nested = (node.children || []).map((child) => (
     <TreeNode
       key={child.value}
@@ -16,6 +17,7 @@ export function TreeNode({ node, value, getStyles, rootIndex }: TreeNodeProps) {
       getStyles={getStyles}
       value={value}
       rootIndex={undefined}
+      level={level + 1}
     />
   ));
 
@@ -27,11 +29,12 @@ export function TreeNode({ node, value, getStyles, rootIndex }: TreeNodeProps) {
       tabIndex={rootIndex === 0 ? 0 : -1}
       onClick={() => console.log('click')}
       onKeyDown={() => console.log('keydown')}
+      data-level={level}
     >
       <div {...getStyles('label')}>{node.label}</div>
 
       {nested.length > 0 && (
-        <ul role="group" {...getStyles('subtree')}>
+        <ul role="group" {...getStyles('subtree')} data-level={level}>
           {nested}
         </ul>
       )}
