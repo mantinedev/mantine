@@ -15,4 +15,12 @@
   list-style: none;
   margin: 0;
   padding: 0;
+  outline: 0;
+
+  &:focus-visible {
+    > .label {
+      outline: 2px solid var(--mantine-primary-color-filled);
+      outline-offset: 2px;
+    }
+  }
 }

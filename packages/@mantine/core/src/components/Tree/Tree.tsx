@@ -29,7 +29,7 @@ export interface RenderNodePayload {
   node: TreeNodeData;
 }
 
-export type TreeStylesNames = 'root' | 'node' | 'subtree';
+export type TreeStylesNames = 'root' | 'node' | 'subtree' | 'label';
 export type TreeCssVariables = {
   root: '--level-offset';
 };
@@ -81,8 +81,8 @@ export const Tree = factory<TreeFactory>((_props, ref) => {
     varsResolver,
   });
 
-  const nodes = data.map((node) => (
-    <TreeNode key={node.value} node={node} getStyles={getStyles} value={value} />
+  const nodes = data.map((node, index) => (
+    <TreeNode key={node.value} node={node} getStyles={getStyles} value={value} rootIndex={index} />
   ));
 
   return (
