@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import {
   Box,
   BoxProps,
@@ -108,6 +109,10 @@ export const Tree = factory<TreeFactory>((_props, ref) => {
     vars,
     varsResolver,
   });
+
+  useEffect(() => {
+    controller.initialize(data, value);
+  }, [data]);
 
   const nodes = data.map((node, index) => (
     <TreeNode

@@ -1,4 +1,6 @@
+import { Button } from '../Button';
 import { Tree, TreeNodeData } from './Tree';
+import { useTree } from './use-tree';
 
 export default { title: 'Tree' };
 
@@ -48,6 +50,17 @@ export function Usage() {
   return (
     <div style={{ padding: 40 }}>
       <Tree data={data} />
+    </div>
+  );
+}
+
+export function Controller() {
+  const tree = useTree();
+  return (
+    <div style={{ padding: 40 }}>
+      <Tree data={data} tree={tree} />
+      <Button onClick={() => tree.expandAllNodes()}>Expand all</Button>
+      <Button onClick={() => tree.collapseAllNodes()}>Collapse all</Button>
     </div>
   );
 }
