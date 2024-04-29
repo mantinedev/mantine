@@ -30,6 +30,9 @@ export interface RenderNodePayload {
   expanded: boolean;
   hasChildren: boolean;
   node: TreeNodeData;
+  className: string;
+  style: React.CSSProperties;
+  onClick: (event: React.MouseEvent) => void;
 }
 
 export type RenderNode = (payload: RenderNodePayload) => React.ReactNode;

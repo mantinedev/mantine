@@ -1,3 +1,5 @@
+/* eslint-disable jsx-a11y/no-static-element-interactions, jsx-a11y/click-events-have-key-events */
+import { useRef } from 'react';
 import { findElementAncestor, GetStylesApi } from '../../core';
 import type { RenderNode, TreeFactory, TreeNodeData, TreeValue } from './Tree';
 import type { TreeController } from './use-tree';
@@ -25,6 +27,7 @@ export function TreeNode({
   level = 1,
   renderNode,
 }: TreeNodeProps) {
+  const ref = useRef<HTMLLIElement>(null);
   const nested = (node.children || []).map((child) => (
     <TreeNode
       key={child.value}
@@ -86,30 +89,37 @@ export function TreeNode({
     }
   };
 
+  const handleNodeClick = (event: React.MouseEvent) => {
+    event.stopPropagation();
+    expandOnClick && controller.toggleNode(node.value);
+    ref.current?.focus();
+  };
+
   return (
     <li
       {...getStyles('node')}
       role="treeitem"
       aria-selected={node.value === value}
       tabIndex={rootIndex === 0 ? 0 : -1}
-      onClick={(event) => {
-        event.stopPropagation();
-        expandOnClick && controller.toggleNode(node.value);
-        event.currentTarget.focus();
-      }}
       onKeyDown={handleKeyDown}
       data-level={level}
+      ref={ref}
     >
-      <div {...getStyles('label')}>
-        {typeof renderNode === 'function'
-          ? renderNode({
-              node,
-              level,
-              expanded: controller.state[node.value] || false,
-              hasChildren: Array.isArray(node.children) && node.children.length > 0,
-            })
-          : node.label}
-      </div>
+      {typeof renderNode === 'function' ? (
+        renderNode({
+          node,
+          level,
+          expanded: controller.state[node.value] || false,
+          hasChildren: Array.isArray(node.children) && node.children.length > 0,
+          className: getStyles('label').className,
+          style: getStyles('label').style,
+          onClick: handleNodeClick,
+        })
+      ) : (
+        <div {...getStyles('label')} onClick={handleNodeClick}>
+          {node.label}
+        </div>
+      )}
 
       {controller.state[node.value] && nested.length > 0 && (
         <ul role="group" {...getStyles('subtree')} data-level={level}>

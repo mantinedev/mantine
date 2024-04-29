@@ -72,9 +72,8 @@ export function RenderNode() {
     <div style={{ padding: 40 }}>
       <Tree
         data={data}
-        expandOnClick={false}
-        renderNode={({ node, expanded, hasChildren }) => (
-          <Group gap="xs">
+        renderNode={({ node, expanded, hasChildren, ...others }) => (
+          <Group gap="xs" {...others}>
             <span>{node.label}</span>
             {hasChildren && (
               <IconChevronDown
