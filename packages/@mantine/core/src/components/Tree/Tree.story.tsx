@@ -116,3 +116,29 @@ export function ExpandOnDoubleClick() {
     </div>
   );
 }
+
+export function SelectOnClick() {
+  const tree = useTree();
+
+  return (
+    <div style={{ padding: 40 }}>
+      <Tree
+        tree={tree}
+        data={data}
+        selectOnClick
+        clearSelectionOnOutsideClick
+        renderNode={({ node, expanded, hasChildren, elementProps }) => (
+          <Group gap="xs" {...elementProps} onDoubleClick={() => tree.toggleExpanded(node.value)}>
+            <span>{node.label}</span>
+            {hasChildren && (
+              <IconChevronDown
+                size={18}
+                style={{ transform: expanded ? 'rotate(180deg)' : 'rotate(0deg)' }}
+              />
+            )}
+          </Group>
+        )}
+      />
+    </div>
+  );
+}

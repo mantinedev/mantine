@@ -29,7 +29,7 @@ export interface UseTreeInput {
 export function useTree({
   initialSelectedState = [],
   initialExpandedState = {},
-  multiple = true,
+  multiple = false,
 }: UseTreeInput = {}) {
   const [expandedState, setExpandedState] = useState(initialExpandedState);
   const [selectedState, setSelectedState] = useState(initialSelectedState);
@@ -78,6 +78,10 @@ export function useTree({
   const toggleSelected = useCallback(
     (value: string) =>
       setSelectedState((current) => {
+        if (!multiple) {
+          return current.includes(value) ? [] : [value];
+        }
+
         if (current.includes(value)) {
           return current.filter((item) => item !== value);
         }
@@ -100,6 +104,8 @@ export function useTree({
     []
   );
 
+  const clearSelected = useCallback(() => setSelectedState([]), []);
+
   return {
     multiple,
     expandedState,
@@ -116,6 +122,7 @@ export function useTree({
     toggleSelected,
     selectNode,
     deselectNode,
+    clearSelected,
     setSelectedState,
   };
 }

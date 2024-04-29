@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+import { useClickOutside, useMergedRef } from '@mantine/hooks';
 import {
   Box,
   BoxProps,
@@ -33,6 +34,7 @@ export interface RenderNodePayload {
     className: string;
     style: React.CSSProperties;
     onClick: (event: React.MouseEvent) => void;
+    'data-selected': boolean | undefined;
   };
 }
 
@@ -53,11 +55,17 @@ export interface TreeProps extends BoxProps, StylesApiProps<TreeFactory>, Elemen
   /** Determines whether tree node with children should be expanded on click, `true` by default */
   expandOnClick?: boolean;
 
+  /** Determines whether node should be selected on click, `false` by default */
+  selectOnClick?: boolean;
+
   /** use-tree hook instance that can be used to manipulate component state */
   tree: TreeController;
 
   /** A function to render tree node label */
   renderNode?: RenderNode;
+
+  /** Determines whether selection should be cleared when user clicks outside of the tree, `false` by default */
+  clearSelectionOnOutsideClick?: boolean;
 }
 
 export type TreeFactory = Factory<{
@@ -90,6 +98,8 @@ export const Tree = factory<TreeFactory>((_props, ref) => {
     expandOnClick,
     tree,
     renderNode,
+    selectOnClick,
+    clearSelectionOnOutsideClick,
     ...others
   } = props;
 
@@ -106,6 +116,11 @@ export const Tree = factory<TreeFactory>((_props, ref) => {
     varsResolver,
   });
 
+  const clickOutsideRef = useClickOutside(
+    () => clearSelectionOnOutsideClick && tree.clearSelected()
+  );
+  const mergedRef = useMergedRef(ref, clickOutsideRef);
+
   useEffect(() => {
     tree.initialize(data);
   }, [data]);
@@ -117,6 +132,7 @@ export const Tree = factory<TreeFactory>((_props, ref) => {
       getStyles={getStyles}
       rootIndex={index}
       expandOnClick={expandOnClick}
+      selectOnClick={selectOnClick}
       controller={tree}
       renderNode={renderNode}
     />
@@ -125,7 +141,7 @@ export const Tree = factory<TreeFactory>((_props, ref) => {
   return (
     <Box
       component="ul"
-      ref={ref}
+      ref={mergedRef}
       {...getStyles('root')}
       {...others}
       role="tree"

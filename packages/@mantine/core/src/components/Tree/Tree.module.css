@@ -7,7 +7,6 @@
 .subtree {
   margin: 0;
   padding: 0;
-  padding-inline-start: var(--level-offset);
 }
 
 .node {
@@ -21,6 +20,20 @@
     > .label {
       outline: 2px solid var(--mantine-primary-color-filled);
       outline-offset: 2px;
+    }
+  }
+}
+
+.label {
+  padding-inline-start: var(--label-offset);
+
+  &:where([data-selected]) {
+    @mixin where-light {
+      background-color: var(--mantine-color-gray-1);
+    }
+
+    @mixin where-dark {
+      background-color: var(--mantine-color-dark-5);
     }
   }
 }

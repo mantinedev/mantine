@@ -13,6 +13,7 @@ interface TreeNodeProps {
   isSubtree?: boolean;
   level?: number;
   renderNode: RenderNode | undefined;
+  selectOnClick: boolean | undefined;
 }
 
 export function TreeNode({
@@ -21,6 +22,7 @@ export function TreeNode({
   rootIndex,
   controller,
   expandOnClick,
+  selectOnClick,
   isSubtree,
   level = 1,
   renderNode,
@@ -37,6 +39,7 @@ export function TreeNode({
       expandOnClick={expandOnClick}
       isSubtree
       renderNode={renderNode}
+      selectOnClick={selectOnClick}
     />
   ));
 
@@ -89,14 +92,22 @@ export function TreeNode({
   const handleNodeClick = (event: React.MouseEvent) => {
     event.stopPropagation();
     expandOnClick && controller.toggleExpanded(node.value);
+    selectOnClick && controller.toggleSelected(node.value);
     ref.current?.focus();
   };
 
   const selected = controller.selectedState.includes(node.value);
+  const elementProps = {
+    ...getStyles('label'),
+    onClick: handleNodeClick,
+    'data-selected': selected || undefined,
+  };
 
   return (
     <li
-      {...getStyles('node')}
+      {...getStyles('node', {
+        style: { '--label-offset': `calc(var(--level-offset) * ${level - 1})` },
+      })}
       role="treeitem"
       aria-selected={selected}
       data-selected={selected || undefined}
@@ -112,20 +123,10 @@ export function TreeNode({
           selected,
           expanded: controller.expandedState[node.value] || false,
           hasChildren: Array.isArray(node.children) && node.children.length > 0,
-          elementProps: {
-            className: getStyles('label').className,
-            style: getStyles('label').style,
-            onClick: handleNodeClick,
-          },
+          elementProps,
         })
       ) : (
-        <div
-          {...getStyles('label')}
-          onClick={handleNodeClick}
-          data-selected={selected || undefined}
-        >
-          {node.label}
-        </div>
+        <div {...elementProps}>{node.label}</div>
       )}
 
       {controller.expandedState[node.value] && nested.length > 0 && (
