@@ -87,3 +87,29 @@ export function RenderNode() {
     </div>
   );
 }
+
+export function ExpandOnDoubleClick() {
+  const tree = useTree();
+
+  return (
+    <div style={{ padding: 40 }}>
+      <Tree
+        tree={tree}
+        data={data}
+        expandOnClick={false}
+        style={{ userSelect: 'none' }}
+        renderNode={({ node, expanded, hasChildren, ...others }) => (
+          <Group gap="xs" {...others} onDoubleClick={() => tree.toggleNode(node.value)}>
+            <span>{node.label}</span>
+            {hasChildren && (
+              <IconChevronDown
+                size={18}
+                style={{ transform: expanded ? 'rotate(180deg)' : 'rotate(0deg)' }}
+              />
+            )}
+          </Group>
+        )}
+      />
+    </div>
+  );
+}
