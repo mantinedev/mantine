@@ -1,13 +1,13 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions, jsx-a11y/click-events-have-key-events */
 import { useRef } from 'react';
 import { findElementAncestor, GetStylesApi } from '../../core';
-import type { RenderNode, TreeFactory, TreeNodeData, TreeValue } from './Tree';
+import type { RenderNode, TreeFactory, TreeNodeData } from './Tree';
 import type { TreeController } from './use-tree';
 
 interface TreeNodeProps {
   node: TreeNodeData;
   getStyles: GetStylesApi<TreeFactory>;
-  value: TreeValue;
+  selected: string[] | undefined;
   rootIndex: number | undefined;
   controller: TreeController;
   expandOnClick: boolean | undefined;
@@ -18,7 +18,7 @@ interface TreeNodeProps {
 
 export function TreeNode({
   node,
-  value,
+  selected,
   getStyles,
   rootIndex,
   controller,
@@ -33,7 +33,7 @@ export function TreeNode({
       key={child.value}
       node={child}
       getStyles={getStyles}
-      value={value}
+      selected={selected}
       rootIndex={undefined}
       level={level + 1}
       controller={controller}
@@ -48,18 +48,18 @@ export function TreeNode({
       event.stopPropagation();
       event.preventDefault();
 
-      if (controller.state[node.value]) {
+      if (controller.expandedState[node.value]) {
         event.currentTarget.querySelector<HTMLLIElement>('[role=treeitem]')?.focus();
       } else {
-        controller.expandNode(node.value);
+        controller.expand(node.value);
       }
     }
 
     if (event.nativeEvent.code === 'ArrowLeft') {
       event.stopPropagation();
       event.preventDefault();
-      if (controller.state[node.value] && (node.children || []).length > 0) {
-        controller.collapseNode(node.value);
+      if (controller.expandedState[node.value] && (node.children || []).length > 0) {
+        controller.collapse(node.value);
       } else if (isSubtree) {
         findElementAncestor(event.currentTarget as HTMLElement, '[role=treeitem]')?.focus();
       }
@@ -91,7 +91,7 @@ export function TreeNode({
 
   const handleNodeClick = (event: React.MouseEvent) => {
     event.stopPropagation();
-    expandOnClick && controller.toggleNode(node.value);
+    expandOnClick && controller.toggleExpanded(node.value);
     ref.current?.focus();
   };
 
@@ -99,7 +99,7 @@ export function TreeNode({
     <li
       {...getStyles('node')}
       role="treeitem"
-      aria-selected={node.value === value}
+      aria-selected={selected?.includes(node.value) || false}
       tabIndex={rootIndex === 0 ? 0 : -1}
       onKeyDown={handleKeyDown}
       data-level={level}
@@ -109,7 +109,7 @@ export function TreeNode({
         renderNode({
           node,
           level,
-          expanded: controller.state[node.value] || false,
+          expanded: controller.expandedState[node.value] || false,
           hasChildren: Array.isArray(node.children) && node.children.length > 0,
           className: getStyles('label').className,
           style: getStyles('label').style,
@@ -121,7 +121,7 @@ export function TreeNode({
         </div>
       )}
 
-      {controller.state[node.value] && nested.length > 0 && (
+      {controller.expandedState[node.value] && nested.length > 0 && (
         <ul role="group" {...getStyles('subtree')} data-level={level}>
           {nested}
         </ul>

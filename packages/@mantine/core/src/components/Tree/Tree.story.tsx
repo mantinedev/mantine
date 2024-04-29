@@ -49,9 +49,10 @@ const data: TreeNodeData[] = [
 ];
 
 export function Usage() {
+  const tree = useTree();
   return (
     <div style={{ padding: 40 }}>
-      <Tree data={data} />
+      <Tree data={data} tree={tree} />
     </div>
   );
 }
@@ -68,9 +69,11 @@ export function Controller() {
 }
 
 export function RenderNode() {
+  const tree = useTree();
   return (
     <div style={{ padding: 40 }}>
       <Tree
+        tree={tree}
         data={data}
         renderNode={({ node, expanded, hasChildren, ...others }) => (
           <Group gap="xs" {...others}>
@@ -99,7 +102,7 @@ export function ExpandOnDoubleClick() {
         expandOnClick={false}
         style={{ userSelect: 'none' }}
         renderNode={({ node, expanded, hasChildren, ...others }) => (
-          <Group gap="xs" {...others} onDoubleClick={() => tree.toggleNode(node.value)}>
+          <Group gap="xs" {...others} onDoubleClick={() => tree.toggleExpanded(node.value)}>
             <span>{node.label}</span>
             {hasChildren && (
               <IconChevronDown

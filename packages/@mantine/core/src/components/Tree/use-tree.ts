@@ -1,13 +1,13 @@
 import { useCallback, useState } from 'react';
 import type { TreeNodeData } from './Tree';
 
-export type TreeState = Record<string, boolean>;
+export type TreeExpandedState = Record<string, boolean>;
 
 function getInitialState(
-  initialState: TreeState,
+  initialState: TreeExpandedState,
   data: TreeNodeData[],
   value: string | string[] | undefined,
-  acc: TreeState = {}
+  acc: TreeExpandedState = {}
 ) {
   data.forEach((node) => {
     acc[node.value] = node.value in initialState ? initialState[node.value] : node.value === value;
@@ -20,27 +20,41 @@ function getInitialState(
   return acc;
 }
 
-export function useTree(initialState: TreeState = {}) {
-  const [state, setState] = useState(initialState);
+export interface UseTreeInput {
+  initialExpandedState?: TreeExpandedState;
+  initialSelectedState?: string[];
+  multiple?: boolean;
+}
 
-  const initialize = useCallback((data: TreeNodeData[], value: string | string[] | undefined) => {
-    setState((current) => getInitialState(current, data, value));
+export function useTree({
+  initialSelectedState = [],
+  initialExpandedState = {},
+  multiple = true,
+}: UseTreeInput = {}) {
+  const [expandedState, setExpandedState] = useState(initialExpandedState);
+  const [selectedState, setSelectedState] = useState(initialSelectedState);
+
+  const initialize = useCallback(
+    (data: TreeNodeData[]) => {
+      setExpandedState((current) => getInitialState(current, data, selectedState));
+    },
+    [selectedState]
+  );
+
+  const toggleExpanded = useCallback((value: string) => {
+    setExpandedState((current) => ({ ...current, [value]: !current[value] }));
   }, []);
 
-  const toggleNode = useCallback((value: string) => {
-    setState((current) => ({ ...current, [value]: !current[value] }));
+  const collapse = useCallback((value: string) => {
+    setExpandedState((current) => ({ ...current, [value]: false }));
   }, []);
 
-  const collapseNode = useCallback((value: string) => {
-    setState((current) => ({ ...current, [value]: false }));
-  }, []);
-
-  const expandNode = useCallback((value: string) => {
-    setState((current) => ({ ...current, [value]: true }));
+  const expand = useCallback((value: string) => {
+    setExpandedState((current) => ({ ...current, [value]: true }));
   }, []);
 
   const expandAllNodes = useCallback(() => {
-    setState((current) => {
+    setExpandedState((current) => {
       const next = { ...current };
       Object.keys(next).forEach((key) => {
         next[key] = true;
@@ -51,7 +65,7 @@ export function useTree(initialState: TreeState = {}) {
   }, []);
 
   const collapseAllNodes = useCallback(() => {
-    setState((current) => {
+    setExpandedState((current) => {
       const next = { ...current };
       Object.keys(next).forEach((key) => {
         next[key] = false;
@@ -61,15 +75,48 @@ export function useTree(initialState: TreeState = {}) {
     });
   }, []);
 
+  const toggleSelected = useCallback(
+    (value: string) =>
+      setSelectedState((current) => {
+        if (current.includes(value)) {
+          return current.filter((item) => item !== value);
+        }
+
+        return [...current, value];
+      }),
+    []
+  );
+
+  const selectNode = useCallback(
+    (value: string) =>
+      setSelectedState((current) =>
+        current.includes(value) ? current : multiple ? [...current, value] : [value]
+      ),
+    []
+  );
+
+  const deselectNode = useCallback(
+    (value: string) => setSelectedState((current) => current.filter((item) => item !== value)),
+    []
+  );
+
   return {
-    state,
+    multiple,
+    expandedState,
+    selectedState,
     initialize,
-    toggleNode,
-    collapseNode,
-    expandNode,
+
+    toggleExpanded,
+    collapse,
+    expand,
     expandAllNodes,
     collapseAllNodes,
-    setExpandedState: setState,
+    setExpandedState,
+
+    toggleSelected,
+    selectNode,
+    deselectNode,
+    setSelectedState,
   };
 }
 

@@ -13,10 +13,8 @@ import {
   useStyles,
 } from '../../core';
 import { TreeNode } from './TreeNode';
-import { TreeController, TreeState, useTree } from './use-tree';
+import { TreeController } from './use-tree';
 import classes from './Tree.module.css';
-
-export type TreeValue = string | string[] | undefined;
 
 export interface TreeNodeData {
   label: React.ReactNode;
@@ -46,12 +44,6 @@ export interface TreeProps extends BoxProps, StylesApiProps<TreeFactory>, Elemen
   /** Data used to render nodes */
   data: TreeNodeData[];
 
-  /** Determines whether multiple nodes can be selected at a time, used to set `aria-*` attribute, `false` by default */
-  multiple?: boolean;
-
-  /** Value of the node (or multiple nodes) that is currently selected */
-  value?: TreeValue;
-
   /** Horizontal padding of each subtree level, key of `theme.spacing` or any valid CSS value, `'lg'` by default */
   levelOffset?: MantineSpacing;
 
@@ -59,10 +51,7 @@ export interface TreeProps extends BoxProps, StylesApiProps<TreeFactory>, Elemen
   expandOnClick?: boolean;
 
   /** use-tree hook instance that can be used to manipulate component state */
-  tree?: TreeController;
-
-  /** Default expanded state for uncontrolled component */
-  initialExpandedState?: TreeState;
+  tree: TreeController;
 
   /** A function to render tree node label */
   renderNode?: RenderNode;
@@ -95,17 +84,11 @@ export const Tree = factory<TreeFactory>((_props, ref) => {
     unstyled,
     vars,
     data,
-    multiple,
-    value,
     expandOnClick,
     tree,
-    initialExpandedState,
     renderNode,
     ...others
   } = props;
-
-  const defaultController = useTree(initialExpandedState);
-  const controller = tree || defaultController;
 
   const getStyles = useStyles<TreeFactory>({
     name: 'Tree',
@@ -121,7 +104,7 @@ export const Tree = factory<TreeFactory>((_props, ref) => {
   });
 
   useEffect(() => {
-    controller.initialize(data, value);
+    tree.initialize(data);
   }, [data]);
 
   const nodes = data.map((node, index) => (
@@ -129,10 +112,10 @@ export const Tree = factory<TreeFactory>((_props, ref) => {
       key={node.value}
       node={node}
       getStyles={getStyles}
-      value={value}
+      selected={tree.selectedState}
       rootIndex={index}
       expandOnClick={expandOnClick}
-      controller={controller}
+      controller={tree}
       renderNode={renderNode}
     />
   ));
@@ -144,7 +127,7 @@ export const Tree = factory<TreeFactory>((_props, ref) => {
       {...getStyles('root')}
       {...others}
       role="tree"
-      aria-multiselectable={multiple}
+      aria-multiselectable={tree.multiple}
       data-tree-root
     >
       {nodes}
