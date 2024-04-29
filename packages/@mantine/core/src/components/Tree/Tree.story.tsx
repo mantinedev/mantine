@@ -75,8 +75,8 @@ export function RenderNode() {
       <Tree
         tree={tree}
         data={data}
-        renderNode={({ node, expanded, hasChildren, ...others }) => (
-          <Group gap="xs" {...others}>
+        renderNode={({ node, expanded, hasChildren, elementProps }) => (
+          <Group gap="xs" {...elementProps}>
             <span>{node.label}</span>
             {hasChildren && (
               <IconChevronDown
@@ -101,8 +101,8 @@ export function ExpandOnDoubleClick() {
         data={data}
         expandOnClick={false}
         style={{ userSelect: 'none' }}
-        renderNode={({ node, expanded, hasChildren, ...others }) => (
-          <Group gap="xs" {...others} onDoubleClick={() => tree.toggleExpanded(node.value)}>
+        renderNode={({ node, expanded, hasChildren, elementProps }) => (
+          <Group gap="xs" {...elementProps} onDoubleClick={() => tree.toggleExpanded(node.value)}>
             <span>{node.label}</span>
             {hasChildren && (
               <IconChevronDown

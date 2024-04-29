@@ -27,10 +27,13 @@ export interface RenderNodePayload {
   level: number;
   expanded: boolean;
   hasChildren: boolean;
+  selected: boolean;
   node: TreeNodeData;
-  className: string;
-  style: React.CSSProperties;
-  onClick: (event: React.MouseEvent) => void;
+  elementProps: {
+    className: string;
+    style: React.CSSProperties;
+    onClick: (event: React.MouseEvent) => void;
+  };
 }
 
 export type RenderNode = (payload: RenderNodePayload) => React.ReactNode;
@@ -112,7 +115,6 @@ export const Tree = factory<TreeFactory>((_props, ref) => {
       key={node.value}
       node={node}
       getStyles={getStyles}
-      selected={tree.selectedState}
       rootIndex={index}
       expandOnClick={expandOnClick}
       controller={tree}

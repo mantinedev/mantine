@@ -7,7 +7,6 @@ import type { TreeController } from './use-tree';
 interface TreeNodeProps {
   node: TreeNodeData;
   getStyles: GetStylesApi<TreeFactory>;
-  selected: string[] | undefined;
   rootIndex: number | undefined;
   controller: TreeController;
   expandOnClick: boolean | undefined;
@@ -18,7 +17,6 @@ interface TreeNodeProps {
 
 export function TreeNode({
   node,
-  selected,
   getStyles,
   rootIndex,
   controller,
@@ -33,7 +31,6 @@ export function TreeNode({
       key={child.value}
       node={child}
       getStyles={getStyles}
-      selected={selected}
       rootIndex={undefined}
       level={level + 1}
       controller={controller}
@@ -95,11 +92,14 @@ export function TreeNode({
     ref.current?.focus();
   };
 
+  const selected = controller.selectedState.includes(node.value);
+
   return (
     <li
       {...getStyles('node')}
       role="treeitem"
-      aria-selected={selected?.includes(node.value) || false}
+      aria-selected={selected}
+      data-selected={selected || undefined}
       tabIndex={rootIndex === 0 ? 0 : -1}
       onKeyDown={handleKeyDown}
       data-level={level}
@@ -109,14 +109,21 @@ export function TreeNode({
         renderNode({
           node,
           level,
+          selected,
           expanded: controller.expandedState[node.value] || false,
           hasChildren: Array.isArray(node.children) && node.children.length > 0,
-          className: getStyles('label').className,
-          style: getStyles('label').style,
-          onClick: handleNodeClick,
+          elementProps: {
+            className: getStyles('label').className,
+            style: getStyles('label').style,
+            onClick: handleNodeClick,
+          },
         })
       ) : (
-        <div {...getStyles('label')} onClick={handleNodeClick}>
+        <div
+          {...getStyles('label')}
+          onClick={handleNodeClick}
+          data-selected={selected || undefined}
+        >
           {node.label}
         </div>
       )}
