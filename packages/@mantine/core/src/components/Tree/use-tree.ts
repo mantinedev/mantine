@@ -33,6 +33,7 @@ export function useTree({
 }: UseTreeInput = {}) {
   const [expandedState, setExpandedState] = useState(initialExpandedState);
   const [selectedState, setSelectedState] = useState(initialSelectedState);
+  const [anchorNode, setAnchorNode] = useState<string | null>(null);
 
   const initialize = useCallback(
     (data: TreeNodeData[]) => {
@@ -79,37 +80,49 @@ export function useTree({
     (value: string) =>
       setSelectedState((current) => {
         if (!multiple) {
-          return current.includes(value) ? [] : [value];
+          if (current.includes(value)) {
+            setAnchorNode(null);
+            return [];
+          }
+
+          setAnchorNode(value);
+          return [value];
         }
 
         if (current.includes(value)) {
+          setAnchorNode(null);
           return current.filter((item) => item !== value);
         }
+
+        setAnchorNode(value);
 
         return [...current, value];
       }),
     []
   );
 
-  const selectNode = useCallback(
-    (value: string) =>
-      setSelectedState((current) =>
-        current.includes(value) ? current : multiple ? [...current, value] : [value]
-      ),
-    []
-  );
+  const select = useCallback((value: string) => {
+    setAnchorNode(value);
+    setSelectedState((current) =>
+      current.includes(value) ? current : multiple ? [...current, value] : [value]
+    );
+  }, []);
 
-  const deselectNode = useCallback(
-    (value: string) => setSelectedState((current) => current.filter((item) => item !== value)),
-    []
-  );
+  const deselect = useCallback((value: string) => {
+    anchorNode === value && setAnchorNode(null);
+    setSelectedState((current) => current.filter((item) => item !== value));
+  }, []);
 
-  const clearSelected = useCallback(() => setSelectedState([]), []);
+  const clearSelected = useCallback(() => {
+    setSelectedState([]);
+    setAnchorNode(null);
+  }, []);
 
   return {
     multiple,
     expandedState,
     selectedState,
+    anchorNode,
     initialize,
 
     toggleExpanded,
@@ -120,8 +133,8 @@ export function useTree({
     setExpandedState,
 
     toggleSelected,
-    selectNode,
-    deselectNode,
+    select,
+    deselect,
     clearSelected,
     setSelectedState,
   };

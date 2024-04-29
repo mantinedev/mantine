@@ -66,6 +66,9 @@ export interface TreeProps extends BoxProps, StylesApiProps<TreeFactory>, Elemen
 
   /** Determines whether selection should be cleared when user clicks outside of the tree, `false` by default */
   clearSelectionOnOutsideClick?: boolean;
+
+  /** Determines whether tree nodes range can be selected with click when `Shift` key is pressed, `true` by default */
+  allowRangeSelection?: boolean;
 }
 
 export type TreeFactory = Factory<{
@@ -77,6 +80,7 @@ export type TreeFactory = Factory<{
 
 const defaultProps: Partial<TreeProps> = {
   expandOnClick: true,
+  allowRangeSelection: true,
 };
 
 const varsResolver = createVarsResolver<TreeFactory>((_theme, { levelOffset }) => ({
@@ -100,6 +104,7 @@ export const Tree = factory<TreeFactory>((_props, ref) => {
     renderNode,
     selectOnClick,
     clearSelectionOnOutsideClick,
+    allowRangeSelection,
     ...others
   } = props;
 
@@ -135,6 +140,7 @@ export const Tree = factory<TreeFactory>((_props, ref) => {
       selectOnClick={selectOnClick}
       controller={tree}
       renderNode={renderNode}
+      allowRangeSelection={allowRangeSelection}
     />
   ));
 

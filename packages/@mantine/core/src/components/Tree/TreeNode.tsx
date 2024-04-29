@@ -14,6 +14,7 @@ interface TreeNodeProps {
   level?: number;
   renderNode: RenderNode | undefined;
   selectOnClick: boolean | undefined;
+  allowRangeSelection: boolean | undefined;
 }
 
 export function TreeNode({
@@ -26,6 +27,7 @@ export function TreeNode({
   isSubtree,
   level = 1,
   renderNode,
+  allowRangeSelection,
 }: TreeNodeProps) {
   const ref = useRef<HTMLLIElement>(null);
   const nested = (node.children || []).map((child) => (
@@ -40,6 +42,7 @@ export function TreeNode({
       isSubtree
       renderNode={renderNode}
       selectOnClick={selectOnClick}
+      allowRangeSelection={allowRangeSelection}
     />
   ));
 
@@ -92,7 +95,7 @@ export function TreeNode({
   const handleNodeClick = (event: React.MouseEvent) => {
     event.stopPropagation();
     expandOnClick && controller.toggleExpanded(node.value);
-    selectOnClick && controller.toggleSelected(node.value);
+    selectOnClick && controller.select(node.value);
     ref.current?.focus();
   };
 

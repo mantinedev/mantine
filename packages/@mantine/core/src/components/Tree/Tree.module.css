@@ -2,6 +2,7 @@
   --level-offset: var(--mantine-spacing-lg);
   margin: 0;
   padding: 0;
+  user-select: none;
 }
 
 .subtree {
