@@ -113,9 +113,10 @@
     "@rollup/plugin-alias": "^5.0.1",
     "@rollup/plugin-node-resolve": "^15.2.3",
     "@rollup/plugin-replace": "^5.0.5",
-    "@storybook/addon-styling-webpack": "^0.0.5",
-    "@storybook/react": "^7.5.3",
-    "@storybook/react-webpack5": "7.5.3",
+    "@storybook/addon-styling-webpack": "^1.0.0",
+    "@storybook/addon-webpack5-compiler-babel": "^3.0.3",
+    "@storybook/nextjs": "^8.0.9",
+    "@storybook/react": "^8.0.9",
     "@testing-library/dom": "9.3.3",
     "@testing-library/jest-dom": "6.1.4",
     "@testing-library/react": "14.1.0",
@@ -128,6 +129,7 @@
     "@types/lodash": "^4.14.201",
     "@types/react": "18.2.37",
     "@types/react-dom": "18.2.15",
+    "@types/react-refresh": "^0.14.6",
     "@types/react-transition-group": "^4.4.9",
     "@types/resize-observer-browser": "^0.1.10",
     "@types/rimraf": "^3.0.2",
@@ -170,6 +172,7 @@
     "postcss-simple-vars": "^7.0.1",
     "prettier": "^3.2.5",
     "react-dom": "^18.2.0",
+    "react-refresh": "^0.14.2",
     "react-virtuoso": "^4.6.2",
     "rimraf": "^5.0.5",
     "rollup": "^4.4.1",
@@ -178,8 +181,8 @@
     "rollup-plugin-postcss": "^4.0.2",
     "signale": "^1.4.0",
     "simple-git": "^3.20.0",
-    "storybook": "^7.5.3",
-    "storybook-dark-mode": "^3.0.1",
+    "storybook": "^8.0.9",
+    "storybook-dark-mode": "^4.0.1",
     "style-loader": "^3.3.3",
     "stylelint": "^16.2.1",
     "stylelint-config-standard-scss": "^13.0.0",
@@ -192,6 +195,7 @@
     "yargs": "^17.7.2"
   },
   "resolutions": {
-    "prosemirror-model": "1.18.1"
+    "prosemirror-model": "1.18.1",
+    "default-browser-id": "5.0.0"
   }
 }
