@@ -6,7 +6,7 @@ export function render(
   ui: React.ReactNode,
   themeOverride?: MantineThemeOverride,
   providerProps?: Omit<MantineProviderProps, 'theme'>
-) {
+) : RenderResult {
   return testingLibraryRender(<>{ui}</>, {
     wrapper: ({ children }: { children: React.ReactNode }) => (
       <MantineProvider theme={themeOverride} {...providerProps}>
@@ -16,7 +16,7 @@ export function render(
   });
 }
 
-export async function renderWithAct(ui: React.ReactNode) {
+export async function renderWithAct(ui: React.ReactNode): Promise<RenderResult> {
   let result: RenderResult | null = null;
   await act(async () => {
     result = render(ui);

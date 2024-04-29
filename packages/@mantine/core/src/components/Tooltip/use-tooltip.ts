@@ -5,7 +5,7 @@ import {
   inline,
   offset,
   shift,
-  useDelayGroup,
+  // useDelayGroup,
   useDelayGroupContext,
   useDismiss,
   useFloating,
@@ -90,7 +90,7 @@ export function useTooltip(settings: UseTooltip) {
     useRole(context, { role: 'tooltip' }),
     // cannot be used with controlled tooltip, page jumps
     useDismiss(context, { enabled: typeof settings.opened === 'undefined' }),
-    useDelayGroup(context, { id: uid }),
+    // useDelayGroup(context, { id: uid }),
   ]);
 
   useFloatingAutoUpdate({
