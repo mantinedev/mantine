@@ -1,4 +1,6 @@
+import { IconChevronDown } from '@tabler/icons-react';
 import { Button } from '../Button';
+import { Group } from '../Group';
 import { Tree, TreeNodeData } from './Tree';
 import { useTree } from './use-tree';
 
@@ -61,6 +63,28 @@ export function Controller() {
       <Tree data={data} tree={tree} />
       <Button onClick={() => tree.expandAllNodes()}>Expand all</Button>
       <Button onClick={() => tree.collapseAllNodes()}>Collapse all</Button>
+    </div>
+  );
+}
+
+export function RenderNode() {
+  return (
+    <div style={{ padding: 40 }}>
+      <Tree
+        data={data}
+        expandOnClick={false}
+        renderNode={({ node, expanded, hasChildren }) => (
+          <Group gap="xs">
+            <span>{node.label}</span>
+            {hasChildren && (
+              <IconChevronDown
+                size={18}
+                style={{ transform: expanded ? 'rotate(180deg)' : 'rotate(0deg)' }}
+              />
+            )}
+          </Group>
+        )}
+      />
     </div>
   );
 }

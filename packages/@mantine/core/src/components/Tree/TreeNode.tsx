@@ -1,5 +1,5 @@
 import { findElementAncestor, GetStylesApi } from '../../core';
-import type { TreeFactory, TreeNodeData, TreeValue } from './Tree';
+import type { RenderNode, TreeFactory, TreeNodeData, TreeValue } from './Tree';
 import type { TreeController } from './use-tree';
 
 interface TreeNodeProps {
@@ -11,6 +11,7 @@ interface TreeNodeProps {
   expandOnClick: boolean | undefined;
   isSubtree?: boolean;
   level?: number;
+  renderNode: RenderNode | undefined;
 }
 
 export function TreeNode({
@@ -22,6 +23,7 @@ export function TreeNode({
   expandOnClick,
   isSubtree,
   level = 1,
+  renderNode,
 }: TreeNodeProps) {
   const nested = (node.children || []).map((child) => (
     <TreeNode
@@ -34,6 +36,7 @@ export function TreeNode({
       controller={controller}
       expandOnClick={expandOnClick}
       isSubtree
+      renderNode={renderNode}
     />
   ));
 
@@ -97,7 +100,16 @@ export function TreeNode({
       onKeyDown={handleKeyDown}
       data-level={level}
     >
-      <div {...getStyles('label')}>{node.label}</div>
+      <div {...getStyles('label')}>
+        {typeof renderNode === 'function'
+          ? renderNode({
+              node,
+              level,
+              expanded: controller.state[node.value] || false,
+              hasChildren: Array.isArray(node.children) && node.children.length > 0,
+            })
+          : node.label}
+      </div>
 
       {controller.state[node.value] && nested.length > 0 && (
         <ul role="group" {...getStyles('subtree')} data-level={level}>

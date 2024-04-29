@@ -21,15 +21,18 @@ export type TreeValue = string | string[] | undefined;
 export interface TreeNodeData {
   label: React.ReactNode;
   value: string;
-  payload?: Record<string, any>;
+  nodeProps?: Record<string, any>;
   children?: TreeNodeData[];
 }
 
 export interface RenderNodePayload {
   level: number;
-  nodeProps: Record<string, any>;
+  expanded: boolean;
+  hasChildren: boolean;
   node: TreeNodeData;
 }
+
+export type RenderNode = (payload: RenderNodePayload) => React.ReactNode;
 
 export type TreeStylesNames = 'root' | 'node' | 'subtree' | 'label';
 export type TreeCssVariables = {
@@ -57,6 +60,9 @@ export interface TreeProps extends BoxProps, StylesApiProps<TreeFactory>, Elemen
 
   /** Default expanded state for uncontrolled component */
   initialExpandedState?: TreeState;
+
+  /** A function to render tree node label */
+  renderNode?: RenderNode;
 }
 
 export type TreeFactory = Factory<{
@@ -91,6 +97,7 @@ export const Tree = factory<TreeFactory>((_props, ref) => {
     expandOnClick,
     tree,
     initialExpandedState,
+    renderNode,
     ...others
   } = props;
 
@@ -123,6 +130,7 @@ export const Tree = factory<TreeFactory>((_props, ref) => {
       rootIndex={index}
       expandOnClick={expandOnClick}
       controller={controller}
+      renderNode={renderNode}
     />
   ));
 
