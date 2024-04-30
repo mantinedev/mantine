@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useMemo } from 'react';
 import { useClickOutside, useMergedRef } from '@mantine/hooks';
 import {
   Box,
@@ -35,6 +35,7 @@ export interface RenderNodePayload {
     style: React.CSSProperties;
     onClick: (event: React.MouseEvent) => void;
     'data-selected': boolean | undefined;
+    'data-value': string;
   };
 }
 
@@ -69,6 +70,16 @@ export interface TreeProps extends BoxProps, StylesApiProps<TreeFactory>, Elemen
 
   /** Determines whether tree nodes range can be selected with click when `Shift` key is pressed, `true` by default */
   allowRangeSelection?: boolean;
+}
+
+function getFlatValues(data: TreeNodeData[]): string[] {
+  return data.reduce<string[]>((acc, item) => {
+    acc.push(item.value);
+    if (item.children) {
+      acc.push(...getFlatValues(item.children));
+    }
+    return acc;
+  }, []);
 }
 
 export type TreeFactory = Factory<{
@@ -124,7 +135,10 @@ export const Tree = factory<TreeFactory>((_props, ref) => {
   const clickOutsideRef = useClickOutside(
     () => clearSelectionOnOutsideClick && tree.clearSelected()
   );
+
   const mergedRef = useMergedRef(ref, clickOutsideRef);
+
+  const flatValues = useMemo(() => getFlatValues(data), [data]);
 
   useEffect(() => {
     tree.initialize(data);
@@ -140,6 +154,7 @@ export const Tree = factory<TreeFactory>((_props, ref) => {
       selectOnClick={selectOnClick}
       controller={tree}
       renderNode={renderNode}
+      flatValues={flatValues}
       allowRangeSelection={allowRangeSelection}
     />
   ));

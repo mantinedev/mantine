@@ -4,12 +4,22 @@ import { findElementAncestor, GetStylesApi } from '../../core';
 import type { RenderNode, TreeFactory, TreeNodeData } from './Tree';
 import type { TreeController } from './use-tree';
 
+function getValuesRange(anchor: string, value: string, flatValues: string[]) {
+  const anchorIndex = flatValues.indexOf(anchor);
+  const valueIndex = flatValues.indexOf(value);
+  const start = Math.min(anchorIndex, valueIndex);
+  const end = Math.max(anchorIndex, valueIndex);
+
+  return flatValues.slice(start, end + 1);
+}
+
 interface TreeNodeProps {
   node: TreeNodeData;
   getStyles: GetStylesApi<TreeFactory>;
   rootIndex: number | undefined;
   controller: TreeController;
   expandOnClick: boolean | undefined;
+  flatValues: string[];
   isSubtree?: boolean;
   level?: number;
   renderNode: RenderNode | undefined;
@@ -27,6 +37,7 @@ export function TreeNode({
   isSubtree,
   level = 1,
   renderNode,
+  flatValues,
   allowRangeSelection,
 }: TreeNodeProps) {
   const ref = useRef<HTMLLIElement>(null);
@@ -34,6 +45,7 @@ export function TreeNode({
     <TreeNode
       key={child.value}
       node={child}
+      flatValues={flatValues}
       getStyles={getStyles}
       rootIndex={undefined}
       level={level + 1}
@@ -94,9 +106,15 @@ export function TreeNode({
 
   const handleNodeClick = (event: React.MouseEvent) => {
     event.stopPropagation();
-    expandOnClick && controller.toggleExpanded(node.value);
-    selectOnClick && controller.select(node.value);
-    ref.current?.focus();
+
+    if (allowRangeSelection && event.shiftKey && controller.anchorNode) {
+      controller.setSelectedState(getValuesRange(controller.anchorNode, node.value, flatValues));
+      ref.current?.focus();
+    } else {
+      expandOnClick && controller.toggleExpanded(node.value);
+      selectOnClick && controller.select(node.value);
+      ref.current?.focus();
+    }
   };
 
   const selected = controller.selectedState.includes(node.value);
@@ -104,6 +122,7 @@ export function TreeNode({
     ...getStyles('label'),
     onClick: handleNodeClick,
     'data-selected': selected || undefined,
+    'data-value': node.value,
   };
 
   return (

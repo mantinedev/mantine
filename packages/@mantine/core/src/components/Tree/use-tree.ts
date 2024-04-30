@@ -104,7 +104,7 @@ export function useTree({
   const select = useCallback((value: string) => {
     setAnchorNode(value);
     setSelectedState((current) =>
-      current.includes(value) ? current : multiple ? [...current, value] : [value]
+      multiple ? (current.includes(value) ? current : [...current, value]) : [value]
     );
   }, []);
 
