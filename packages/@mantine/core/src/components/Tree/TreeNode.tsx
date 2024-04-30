@@ -97,10 +97,7 @@ export function TreeNode({
       }
 
       const nextIndex = event.nativeEvent.code === 'ArrowDown' ? index + 1 : index - 1;
-      const focusIndex =
-        nextIndex === -1 ? nodes.length - 1 : nextIndex === nodes.length ? 0 : nextIndex;
-      const nextNode = nodes[focusIndex];
-      nextNode.focus();
+      nodes[nextIndex]?.focus();
     }
   };
 
