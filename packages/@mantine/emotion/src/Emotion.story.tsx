@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
 import createCache from '@emotion/cache';
 import { CacheProvider } from '@emotion/react';
-import { createStyles } from './create-styles';
+import { createStyles, getStylesRef } from './create-styles';
 import { Global } from './Global';
 import { MantineEmotionProvider, useEmotionCache } from './MantineEmotionProvider';
 
@@ -41,15 +41,19 @@ const useStyles = createStyles((theme) => ({
   root: {
     backgroundColor: theme.colors.blue[9],
     padding: theme.spacing.xl,
+
+    '[data-mantine-color-scheme="dark"] &': {
+      [`&:hover .${getStylesRef('inner')}`]: {
+        backgroundColor: theme.colors.violet[6],
+      },
+    },
   },
+
   inner: {
     backgroundColor: theme.colors.blue[5],
     fontSize: theme.fontSizes.lg,
     color: theme.white,
-
-    '[data-mantine-color-scheme="dark"] &': {
-      backgroundColor: theme.colors.red[7],
-    },
+    ref: getStylesRef('inner'),
 
     '@media (max-width: 700px)': {
       backgroundColor: theme.colors.red[3],
@@ -68,8 +72,10 @@ function CreateStylesConsumer() {
 
 export function CreateStyles() {
   return (
-    <MantineEmotionProvider>
-      <CreateStylesConsumer />
-    </MantineEmotionProvider>
+    <CacheProvider value={testCache}>
+      <MantineEmotionProvider>
+        <CreateStylesConsumer />
+      </MantineEmotionProvider>
+    </CacheProvider>
   );
 }

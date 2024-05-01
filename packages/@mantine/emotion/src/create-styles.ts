@@ -3,6 +3,10 @@ import { MantineTheme, useMantineTheme } from '@mantine/core';
 // prettier-ignore
 import { useCss } from './use-css';
 
+export function getStylesRef(refName: string) {
+  return `___ref-${refName || ''}`;
+}
+
 export function createStyles<
   Key extends string = string,
   Params = void,
