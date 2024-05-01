@@ -1,9 +1,9 @@
 /* eslint-disable no-console */
 import createCache from '@emotion/cache';
 import { CacheProvider } from '@emotion/react';
-import { Box, MantineProvider } from '@mantine/core';
+import { Box, Button, MantineProvider } from '@mantine/core';
 import { createStyles, getStylesRef } from './create-styles';
-import { emotionSxTransform } from './emotion-sx-transform';
+import { emotionTransform } from './emotion-transform';
 import { Global } from './Global';
 import { MantineEmotionProvider, useEmotionCache } from './MantineEmotionProvider';
 
@@ -32,7 +32,11 @@ export function GlobalStyles() {
     <CacheProvider value={testCache}>
       <MantineEmotionProvider>
         <Global styles={{ body: { background: 'silver' } }} />
-        <Global styles={(theme) => ({ body: { color: theme.colors.red[9] } })} />
+        <Global
+          styles={(theme) => ({
+            body: { color: theme.colors.red[9] },
+          })}
+        />
         <p>GlobalStyles</p>
       </MantineEmotionProvider>
     </CacheProvider>
@@ -85,9 +89,57 @@ export function CreateStyles() {
 export function EmotionSxTransform() {
   return (
     <CacheProvider value={testCache}>
-      <MantineProvider sxTransform={emotionSxTransform}>
+      <MantineProvider stylesTransform={emotionTransform}>
         <MantineEmotionProvider>
-          <Box<any> sx={(theme: any) => ({ color: theme.colors.blue[7] })}>EmotionSxTransform</Box>
+          <Box<any>
+            sx={(theme: any) => ({
+              color: theme.colors.blue[7],
+              '&:hover': { background: theme.colors.gray[3] },
+            })}
+          >
+            EmotionSxTransform
+          </Box>
+        </MantineEmotionProvider>
+      </MantineProvider>
+    </CacheProvider>
+  );
+}
+
+export function EmotionStylesTransform() {
+  return (
+    <CacheProvider value={testCache}>
+      <MantineProvider
+        stylesTransform={emotionTransform}
+        theme={{
+          components: {
+            Button: Button.extend({
+              styles: (theme, props) => ({
+                label: {
+                  backgroundColor: theme.colors[props.color || 'cyan'][5],
+                  '&:hover': {
+                    color: theme.colors[props.color || 'cyan'][9],
+                    backgroundColor: theme.colors[props.color || 'cyan'][8],
+                  },
+                },
+              }),
+            }),
+          },
+        }}
+      >
+        <MantineEmotionProvider>
+          <Button
+            color="orange"
+            styles={(theme) => ({
+              root: {
+                backgroundColor: theme.colors.red[7],
+                '&:hover': {
+                  backgroundColor: theme.colors.red[8],
+                },
+              },
+            })}
+          >
+            Button
+          </Button>
         </MantineEmotionProvider>
       </MantineProvider>
     </CacheProvider>
