@@ -74,7 +74,11 @@ export function parseStyleProps({
       media: Record<string, Record<string, unknown>>;
     }>(
       (acc, styleProp) => {
-        if ((styleProp as string) === 'hiddenFrom' || (styleProp as string) === 'visibleFrom') {
+        if (
+          (styleProp as string) === 'hiddenFrom' ||
+          (styleProp as string) === 'visibleFrom' ||
+          (styleProp as string) === 'sx'
+        ) {
           return acc;
         }
 

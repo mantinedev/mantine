@@ -14,6 +14,7 @@ export {
   useMantineCssVariablesResolver,
   useMantineWithStaticClasses,
   useMantineIsHeadless,
+  useMantineSxTransform,
 } from './Mantine.context';
 export {
   useMantineTheme,

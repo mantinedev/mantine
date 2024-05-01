@@ -2,7 +2,7 @@ import { forwardRef } from 'react';
 import cx from 'clsx';
 import { createPolymorphicComponent } from '../factory';
 import { InlineStyles } from '../InlineStyles';
-import { MantineBreakpoint, useMantineTheme } from '../MantineProvider';
+import { MantineBreakpoint, useMantineSxTransform, useMantineTheme } from '../MantineProvider';
 import { isNumberLike } from '../utils';
 import type { CssVarsProp, MantineStyleProp } from './Box.types';
 import { getBoxMod } from './get-box-mod/get-box-mod';
@@ -82,6 +82,8 @@ const _Box = forwardRef<
     const theme = useMantineTheme();
     const Element = component || 'div';
     const { styleProps, rest } = extractStyleProps(others);
+    const useSxTransform = useMantineSxTransform();
+    const transformedSx = useSxTransform?.(styleProps.sx);
     const responsiveClassName = useRandomClassName();
     const parsedStyleProps = parseStyleProps({
       styleProps,
@@ -97,7 +99,7 @@ const _Box = forwardRef<
         vars: __vars,
         styleProps: parsedStyleProps.inlineStyles,
       }),
-      className: cx(className, {
+      className: cx(className, transformedSx, {
         [responsiveClassName]: parsedStyleProps.hasResponsiveStyles,
         'mantine-light-hidden': lightHidden,
         'mantine-dark-hidden': darkHidden,

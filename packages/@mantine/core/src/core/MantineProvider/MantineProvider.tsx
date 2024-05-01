@@ -52,6 +52,9 @@ export interface MantineProviderProps {
   /** Determines whether global classes should be added with `<style />` tag. Global classes are required for `hiddenFrom`/`visibleFrom` and `lightHidden`/`darkHidden` props to work. `true` by default. */
   withGlobalClasses?: boolean;
 
+  /** A function to transform `sx` prop, used with CSS-in-JS libraries like emotion, does nothing by default */
+  sxTransform?: (sx: any) => string;
+
   /** Your application */
   children?: React.ReactNode;
 }
@@ -71,6 +74,7 @@ export function MantineProvider({
   getRootElement = () => document.documentElement,
   cssVariablesResolver,
   forceColorScheme,
+  sxTransform,
 }: MantineProviderProps) {
   const { colorScheme, setColorScheme, clearColorScheme } = useProviderColorScheme({
     defaultColorScheme,
@@ -96,6 +100,7 @@ export function MantineProvider({
         cssVariablesResolver,
         cssVariablesSelector,
         withStaticClasses,
+        sxTransform,
       }}
     >
       <MantineThemeProvider theme={theme}>

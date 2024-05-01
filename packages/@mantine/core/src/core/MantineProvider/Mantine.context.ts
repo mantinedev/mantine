@@ -13,6 +13,7 @@ interface MantineContextValue {
   cssVariablesSelector: string;
   withStaticClasses: boolean;
   headless?: boolean;
+  sxTransform?: (value: any) => any;
 }
 
 export const MantineContext = createContext<MantineContextValue | null>(null);
@@ -45,4 +46,8 @@ export function useMantineWithStaticClasses() {
 
 export function useMantineIsHeadless() {
   return useMantineContext().headless;
+}
+
+export function useMantineSxTransform() {
+  return useMantineContext().sxTransform;
 }
