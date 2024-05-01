@@ -1,7 +1,9 @@
 /* eslint-disable no-console */
 import createCache from '@emotion/cache';
 import { CacheProvider } from '@emotion/react';
+import { Box, MantineProvider } from '@mantine/core';
 import { createStyles, getStylesRef } from './create-styles';
+import { emotionSxTransform } from './emotion-sx-transform';
 import { Global } from './Global';
 import { MantineEmotionProvider, useEmotionCache } from './MantineEmotionProvider';
 
@@ -76,6 +78,18 @@ export function CreateStyles() {
       <MantineEmotionProvider>
         <CreateStylesConsumer />
       </MantineEmotionProvider>
+    </CacheProvider>
+  );
+}
+
+export function EmotionSxTransform() {
+  return (
+    <CacheProvider value={testCache}>
+      <MantineProvider sxTransform={emotionSxTransform}>
+        <MantineEmotionProvider>
+          <Box<any> sx={(theme: any) => ({ color: theme.colors.blue[7] })}>EmotionSxTransform</Box>
+        </MantineEmotionProvider>
+      </MantineProvider>
     </CacheProvider>
   );
 }
