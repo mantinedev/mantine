@@ -1,7 +1,7 @@
 {
   "name": "@mantine/emotion",
-  "version": "1.0.0",
-  "description": "Emotion bindings for @mantine/core",
+  "version": "7.8.1",
+  "description": "Emotion bindings for Mantine",
   "homepage": "https://mantine.dev/",
   "license": "MIT",
   "author": "Vitaly Rtishchev <rtivital@gmail.com>",
@@ -9,9 +9,7 @@
     "react",
     "ui"
   ],
-  "sideEffects": [
-    "*.css"
-  ],
+  "sideEffects": false,
   "main": "./cjs/index.cjs",
   "module": "./esm/index.mjs",
   "types": "./lib/index.d.ts",
@@ -25,9 +23,7 @@
         "types": "./lib/index.d.ts",
         "default": "./cjs/index.cjs"
       }
-    },
-    "./styles.css": "./styles.css",
-    "./styles.layer.css": "./styles.layer.css"
+    }
   },
   "repository": {
     "url": "https://github.com/mantinedev/mantine.git",
@@ -44,6 +40,9 @@
     "@mantine/hooks": ">=7.0.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
+  },
+  "dependencies": {
+    "html-react-parser": "^5.1.10"
   },
   "devDependencies": {
     "@mantine-tests/core": "workspace:*",
