@@ -1,4 +1,7 @@
 import * as CSSType from 'csstype';
+import type { MantineTheme } from '@mantine/core';
+
+export type Sx = CSSObject | ((theme: MantineTheme) => CSSObject);
 
 export interface CSS {
   (template: TemplateStringsArray, ...args: CSSInterpolation[]): string;

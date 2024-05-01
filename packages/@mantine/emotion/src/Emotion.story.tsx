@@ -1,8 +1,8 @@
 /* eslint-disable no-console */
 import createCache from '@emotion/cache';
 import { CacheProvider } from '@emotion/react';
-import { Box, Button, MantineProvider } from '@mantine/core';
-import { createStyles } from './create-styles';
+import { Box, Button, ButtonProps, MantineProvider, MantineTheme } from '@mantine/core';
+import { createStyles, EmotionHelpers } from './create-styles';
 import { emotionTransform } from './emotion-transform';
 import { Global } from './Global';
 import { MantineEmotionProvider, useEmotionCache } from './MantineEmotionProvider';
@@ -112,17 +112,22 @@ export function EmotionStylesTransform() {
         stylesTransform={emotionTransform}
         theme={{
           components: {
-            Button: Button.extend({
-              styles: (theme, props) => ({
+            Button: {
+              styles: (theme: MantineTheme, props: ButtonProps, u: EmotionHelpers) => ({
                 label: {
                   backgroundColor: theme.colors[props.color || 'cyan'][5],
+
+                  [u.dark]: {
+                    padding: 20,
+                  },
+
                   '&:hover': {
                     color: theme.colors[props.color || 'cyan'][9],
                     backgroundColor: theme.colors[props.color || 'cyan'][8],
                   },
                 },
               }),
-            }),
+            },
           },
         }}
       >
