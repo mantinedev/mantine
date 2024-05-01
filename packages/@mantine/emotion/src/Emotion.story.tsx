@@ -2,7 +2,7 @@
 import createCache from '@emotion/cache';
 import { CacheProvider } from '@emotion/react';
 import { Box, Button, MantineProvider } from '@mantine/core';
-import { createStyles, getStylesRef } from './create-styles';
+import { createStyles } from './create-styles';
 import { emotionTransform } from './emotion-transform';
 import { Global } from './Global';
 import { MantineEmotionProvider, useEmotionCache } from './MantineEmotionProvider';
@@ -43,13 +43,13 @@ export function GlobalStyles() {
   );
 }
 
-const useStyles = createStyles((theme) => ({
+const useStyles = createStyles((theme, _, u) => ({
   root: {
     backgroundColor: theme.colors.blue[9],
     padding: theme.spacing.xl,
 
-    '[data-mantine-color-scheme="dark"] &': {
-      [`&:hover .${getStylesRef('inner')}`]: {
+    [u.dark]: {
+      [`&:hover .${u.ref('inner')}`]: {
         backgroundColor: theme.colors.violet[6],
       },
     },
@@ -59,9 +59,9 @@ const useStyles = createStyles((theme) => ({
     backgroundColor: theme.colors.blue[5],
     fontSize: theme.fontSizes.lg,
     color: theme.white,
-    ref: getStylesRef('inner'),
+    ref: u.ref('inner'),
 
-    '@media (max-width: 700px)': {
+    [u.smallerThan('sm')]: {
       backgroundColor: theme.colors.red[3],
     },
   },
