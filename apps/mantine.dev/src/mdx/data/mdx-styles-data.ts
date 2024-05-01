@@ -140,4 +140,11 @@ export const MDX_STYLES_DATA: Record<string, Frontmatter> = {
     search: 'Headless/unstyled components',
     hideHeader: true,
   },
+
+  Emotion: {
+    title: 'Usage with Emotion',
+    slug: '/styles/emotion',
+    search: 'sx props, createStyles, emotion integration',
+    hideHeader: true,
+  },
 };
