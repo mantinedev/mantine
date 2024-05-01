@@ -1,5 +1,8 @@
-import { Head, Html, Main, NextScript } from 'next/document';
+import NextDocument, { Head, Html, Main, NextScript } from 'next/document';
+import createCache from '@emotion/cache';
+import createEmotionServer from '@emotion/server/create-instance';
 import { ColorSchemeScript } from '@mantine/core';
+import { createGetInitialProps } from '@mantine/emotion';
 
 export default function Document() {
   return (
@@ -14,3 +17,8 @@ export default function Document() {
     </Html>
   );
 }
+
+const cache = createCache({ key: 'mantine' });
+const stylesServer = createEmotionServer(cache);
+
+Document.getInitialProps = createGetInitialProps(NextDocument, stylesServer);
