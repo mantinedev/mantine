@@ -29,6 +29,7 @@ export interface GetStyleInput {
   vars: VarsResolver | undefined;
   varsResolver: VarsResolver | undefined;
   headless?: boolean;
+  withStylesTransform?: boolean;
 }
 
 export function getStyle({
@@ -44,13 +45,15 @@ export function getStyle({
   vars,
   varsResolver,
   headless,
+  withStylesTransform,
 }: GetStyleInput): CSSProperties {
   return {
-    ...getThemeStyles({ theme, themeName, props, stylesCtx, selector }),
-    ...resolveStyles({ theme, styles, props, stylesCtx })[selector],
-    ...resolveStyles({ theme, styles: options?.styles, props: options?.props || props, stylesCtx })[
-      selector
-    ],
+    ...(!withStylesTransform && getThemeStyles({ theme, themeName, props, stylesCtx, selector })),
+    ...(!withStylesTransform && resolveStyles({ theme, styles, props, stylesCtx })[selector]),
+    ...(!withStylesTransform &&
+      resolveStyles({ theme, styles: options?.styles, props: options?.props || props, stylesCtx })[
+        selector
+      ]),
     ...resolveVars({ theme, props, stylesCtx, vars, varsResolver, selector, themeName, headless }),
     ...(rootSelector === selector ? resolveStyle({ style, theme }) : null),
     ...resolveStyle({ style: options?.style, theme }),

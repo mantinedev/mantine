@@ -15,6 +15,7 @@ export {
   useMantineWithStaticClasses,
   useMantineIsHeadless,
   useMantineSxTransform,
+  useMantineStylesTransform,
 } from './Mantine.context';
 export {
   useMantineTheme,
@@ -33,3 +34,4 @@ export { defaultCssVariablesResolver } from './MantineCssVariables/default-css-v
 export type { CSSVariablesResolver } from './MantineCssVariables/default-css-variables-resolver';
 export { virtualColor, getCSSColorVariables, isVirtualColor } from './MantineCssVariables';
 export { useMatches } from './use-matches/use-matches';
+export type { MantineStylesTransform } from './Mantine.context';
