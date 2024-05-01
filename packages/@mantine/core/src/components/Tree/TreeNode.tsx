@@ -99,6 +99,12 @@ export function TreeNode({
       const nextIndex = event.nativeEvent.code === 'ArrowDown' ? index + 1 : index - 1;
       nodes[nextIndex]?.focus();
     }
+
+    if (event.nativeEvent.code === 'Space' && expandOnClick) {
+      event.stopPropagation();
+      event.preventDefault();
+      controller.toggleExpanded(node.value);
+    }
   };
 
   const handleNodeClick = (event: React.MouseEvent) => {
