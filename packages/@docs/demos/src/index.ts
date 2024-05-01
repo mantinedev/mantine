@@ -9,6 +9,7 @@ export { CarouselCardsDemos } from './demos/carousel/Carousel.demo.cards';
 export * as ThemingDemos from './demos/theming';
 export * as StylesDemos from './demos/styles';
 export * as GuidesDemos from './demos/guides';
+export * as EmotionDemos from './demos/emotion';
 
 // Core demos
 export * as AccordionDemos from './demos/core/Accordion';

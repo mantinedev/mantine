@@ -17,10 +17,11 @@ export function useEmotionCache() {
 
 interface EmotionCacheProviderProps {
   children: React.ReactNode;
+  cache?: EmotionCache;
 }
 
 export const MantineEmotionProvider = withEmotionCache<EmotionCacheProviderProps>(
-  ({ children }, ctx) => (
-    <EmotionCacheContext.Provider value={ctx}>{children}</EmotionCacheContext.Provider>
+  ({ children, cache }, ctx) => (
+    <EmotionCacheContext.Provider value={cache || ctx}>{children}</EmotionCacheContext.Provider>
   )
 );

@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { addons } from '@storybook/preview-api';
 import { IconTextDirectionLtr, IconTextDirectionRtl } from '@tabler/icons-react';
 import { DARK_MODE_EVENT_NAME } from 'storybook-dark-mode';
@@ -9,6 +9,7 @@ import {
   useDirection,
   useMantineColorScheme,
 } from '@mantine/core';
+import { MantineEmotionProvider } from '@mantine/emotion';
 import { ModalsProvider } from '@mantine/modals';
 import { ShikiProvider } from '@mantinex/shiki';
 import { theme } from '../apps/mantine.dev/theme';
@@ -73,5 +74,9 @@ export const decorators = [
       {renderStory()}
     </ModalsProvider>
   ),
-  (renderStory: any) => <MantineProvider theme={theme}>{renderStory()}</MantineProvider>,
+  (renderStory: any) => (
+    <MantineProvider theme={theme}>
+      <MantineEmotionProvider>{renderStory()}</MantineEmotionProvider>
+    </MantineProvider>
+  ),
 ];
