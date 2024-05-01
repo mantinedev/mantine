@@ -65,4 +65,5 @@ export const media: MantineDemo = {
   type: 'code',
   component: Demo,
   code,
+  defaultExpanded: false,
 };

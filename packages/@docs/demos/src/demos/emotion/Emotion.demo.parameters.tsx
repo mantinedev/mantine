@@ -79,4 +79,5 @@ export const parameters: MantineDemo = {
   type: 'code',
   component: Demo,
   code,
+  defaultExpanded: false,
 };

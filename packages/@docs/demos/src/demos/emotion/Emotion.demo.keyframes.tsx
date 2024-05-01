@@ -56,4 +56,5 @@ export const _keyframes: MantineDemo = {
   type: 'code',
   component: Demo,
   code,
+  defaultExpanded: false,
 };

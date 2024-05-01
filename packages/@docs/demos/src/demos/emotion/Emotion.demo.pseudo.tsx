@@ -96,4 +96,5 @@ export const pseudo: MantineDemo = {
   type: 'code',
   component: Demo,
   code,
+  defaultExpanded: false,
 };

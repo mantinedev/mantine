@@ -2,8 +2,98 @@ import { EmotionDemos } from '@docs/demos';
 import { Layout } from '@/layout';
 import { MDX_DATA } from '@/mdx';
 
-export default Layout(MDX_DATA.DataAttributes);
+export default Layout(MDX_DATA.Emotion);
+
+# Usage with Emotion
+
+Prior to version 7.0 Mantine used [Emotion](https://emotion.sh/) as a styling solution.
+It was replaced with [CSS modules](/styles/css-modules/) in version 7.0, but you can still
+use Emotion with Mantine if you prefer it over CSS modules.
+
+Note that `createStyles` function, `sx` and `styles` prop work different from the same
+features in [version 6.x](https://v6.mantine.dev/styles/create-styles/). If you are planning
+to upgrade from version 6.x to 7.x, follow the [migration guide](/guides/6x-to-7x/).
+
+## Caveats and support
+
+[Emotion](https://emotion.sh/) is a runtime CSS-in-JS library – styles are generated
+and injected into the DOM at runtime. This approach has some limitations:
+
+- **Limited server-side rendering support** – modern frameworks like Next.js with app router
+  do not fully support emotion or require additional configuration.
+- **Runtime overhead** – styles are generated and injected at runtime, which can lead to
+  performance issues on pages with a lot of components.
+- **Additional bundle size** – your bundle will include `@emotion/react` (21.2kB minified),
+  `@mantine/emotion` (~2kb minified) and all styles that you use in your components.
+
+`@mantine/emotion` package can be used with the following frameworks:
+
+- **Vite** and **CRA** with basic setup
+- **Next.js with pages router** with additional setup for server side rendering provided by the package
+- **Next.js with app router** with additional setup for server side rendering provided by Emotion
+- Any other framework that does not require server-side rendering with basic setup
+
+There is no official support (the package probably can be used but it's not tested and documentation is not provided) for:
+
+- **Remix**
+- **Gatsby**
+- **Redwood**
+- Any other framework that has server-side rendering
+
+Note that Emotion is recommended for new projects, if you are starting a new project with Mantine,
+consider using [CSS modules](/styles/css-modules/) instead.
 
 ## createStyles
 
+`createStyles` function accepts a function to generate styles with [Emotion](https://emotion.sh/).
+The function receives 3 arguments that will be described more detailed in the following demos:
+
+- `theme` – [Mantine theme object](/theming/theme-object)
+- `params` – object with additional parameters that can be passed to the function in `useStyles` hook
+- `u` - object with utilities to generate selectors
+
+`createStyles` function returns `useStyles` hook that should be called in the component
+that uses given styles:
+
 <Demo data={EmotionDemos.usage} />
+
+### Pseudo-classes
+
+You can add pseudo-classes the same way as in any css-preprocessor like Sass:
+
+<Demo data={EmotionDemos.pseudo} />
+
+### Styles parameters
+
+You can receive any amount of parameters as second argument of `createStyles` function,
+latter you will need to pass those parameters as argument to `useStyles` hook:
+
+<Demo data={EmotionDemos.parameters} />
+
+### Composition and nested selectors
+
+Since `createStyles` produces scoped class names you will need to create a reference to selector
+in order to get static selector. Use `u.ref` function to assign static selectors:
+
+<Demo data={EmotionDemos.composition} />
+
+### Classes merging (cx function)
+
+To merge class names use `cx` function, it has the same api as [clsx](https://www.npmjs.com/package/clsx) package.
+
+**!important:** Do not use external libraries like [classnames](https://www.npmjs.com/package/classnames)
+or [clsx](https://www.npmjs.com/package/clsx) with class names created with `createStyles` function
+as it will produce styles collisions.
+
+<Demo data={EmotionDemos.cx} />
+
+### Media queries
+
+You can use nested media queries like in Sass. Within query body you can use `theme.breakpoints`
+defined with [MantineProvider](/theming/mantine-provider) or just static values:
+
+<Demo data={EmotionDemos.media} />
+
+### Keyframes
+
+<Demo data={EmotionDemos.keyframes} />

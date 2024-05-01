@@ -119,4 +119,5 @@ export const cx: MantineDemo = {
   type: 'code',
   component: Demo,
   code,
+  defaultExpanded: false,
 };
