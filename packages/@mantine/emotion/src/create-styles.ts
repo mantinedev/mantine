@@ -13,7 +13,7 @@ function getBreakpointValue(theme: MantineTheme, breakpoint: MantineBreakpoint |
     : (px(breakpoint) as number);
 }
 
-const getHelpers = (theme: MantineTheme) => ({
+export const getHelpers = (theme: MantineTheme) => ({
   light: '[data-mantine-color-scheme="light"] &',
   dark: '[data-mantine-color-scheme="dark"] &',
   rtl: '[dir="rtl"] &',
@@ -27,13 +27,13 @@ const getHelpers = (theme: MantineTheme) => ({
     `@media (min-width: ${em(getBreakpointValue(theme, breakpoint))})`,
 });
 
-type Helpers = ReturnType<typeof getHelpers>;
+export type EmotionHelpers = ReturnType<typeof getHelpers>;
 
 export function createStyles<
   Key extends string = string,
   Params = void,
   Input extends Record<Key, CSSObject> = Record<Key, CSSObject>,
->(input: ((theme: MantineTheme, params: Params, helpers: Helpers) => Input) | Input) {
+>(input: ((theme: MantineTheme, params: Params, helpers: EmotionHelpers) => Input) | Input) {
   const getCssObject = typeof input === 'function' ? input : () => input;
 
   return function useStyles(params: Params) {
