@@ -115,9 +115,132 @@ function Demo() {
 
 ## Usage with Next.js pages router
 
+[View example repository with full setup](https://github.com/mantinedev/next-pages-min-template/tree/emotion)
+
 Install dependencies:
 
 <InstallScript packages="@mantine/emotion @emotion/react @emotion/cache @emotion/serialize @emotion/utils @emotion/server" />
+
+Create `emotion` folder with `cache.ts` and `emotion.d.ts` files.
+
+`cache.ts` file:
+
+```tsx
+import createCache from '@emotion/cache';
+
+export const emotionCache = createCache({ key: 'css' });
+```
+
+`emotion.d.ts` file:
+
+```tsx
+import '@mantine/core';
+
+import type { EmotionStyles, EmotionSx } from '@mantine/emotion';
+
+declare module '@mantine/core' {
+  export interface BoxProps {
+    sx?: EmotionSx;
+    styles?: EmotionStyles;
+  }
+}
+```
+
+Add the following content to `pages/_document.tsx` file:
+
+```tsx
+import NextDocument, {
+  Head,
+  Html,
+  Main,
+  NextScript,
+} from 'next/document';
+import createEmotionServer from '@emotion/server/create-instance';
+import { ColorSchemeScript } from '@mantine/core';
+import { createGetInitialProps } from '@mantine/emotion';
+// Import cache created in the previous step
+import { emotionCache } from '../emotion/cache';
+
+export default function Document() {
+  return (
+    <Html lang="en">
+      <Head>
+        <ColorSchemeScript />
+      </Head>
+      <body>
+        <Main />
+        <NextScript />
+      </body>
+    </Html>
+  );
+}
+
+const stylesServer = createEmotionServer(emotionCache);
+
+Document.getInitialProps = createGetInitialProps(
+  NextDocument,
+  stylesServer
+);
+```
+
+Add `MantineEmotionProvider` and `emotionTransform` to `pages/_app.tsx` file:
+
+```tsx
+import '@mantine/core/styles.css';
+
+import Head from 'next/head';
+import { MantineProvider } from '@mantine/core';
+import {
+  emotionTransform,
+  MantineEmotionProvider,
+} from '@mantine/emotion';
+import { emotionCache } from '../emotion/cache';
+
+export default function App({ Component, pageProps }: any) {
+  return (
+    <MantineEmotionProvider cache={emotionCache}>
+      <MantineProvider stylesTransform={emotionTransform}>
+        <Head>
+          <title>Mantine Template</title>
+          <meta
+            name="viewport"
+            content="minimum-scale=1, initial-scale=1, width=device-width, user-scalable=no"
+          />
+          <link rel="shortcut icon" href="/favicon.svg" />
+        </Head>
+        <Component {...pageProps} />
+      </MantineProvider>
+    </MantineEmotionProvider>
+  );
+}
+```
+
+Done! You can now use `sx`, `styles` props and `createStyles` in your application:
+
+```tsx
+import { Box } from '@mantine/core';
+
+function Demo() {
+  return (
+    <Box
+      sx={(theme, u) => ({
+        padding: 40,
+
+        [u.light]: {
+          backgroundColor: theme.colors.blue[0],
+          color: theme.colors.blue[9],
+
+          '&:hover': {
+            backgroundColor: theme.colors.blue[1],
+          },
+        },
+      })}
+    >
+      Box with emotion sx prop
+    </Box>
+  );
+}
+```
 
 ## createStyles
 
