@@ -3,8 +3,8 @@ import { ConvertCSSVariablesInput } from './convert-css-variables';
 import type { MantineColorScheme, MantineTheme } from './theme.types';
 
 export interface MantineStylesTransform {
-  sx?: (sx: any) => string;
-  styles?: (styles: any, payload: any) => Record<string, string>;
+  sx?: () => (sx: any) => string;
+  styles?: () => (styles: any, payload: any) => Record<string, string>;
 }
 
 interface MantineContextValue {

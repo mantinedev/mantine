@@ -1,7 +1,14 @@
 /* eslint-disable no-console */
 import createCache from '@emotion/cache';
 import { CacheProvider } from '@emotion/react';
-import { Box, Button, ButtonProps, MantineProvider, MantineTheme } from '@mantine/core';
+import {
+  Box,
+  Button,
+  ButtonProps,
+  MantineProvider,
+  MantineTheme,
+  SegmentedControl,
+} from '@mantine/core';
 import { createStyles, EmotionHelpers } from './create-styles';
 import { emotionTransform } from './emotion-transform';
 import { Global } from './Global';
@@ -99,6 +106,8 @@ export function EmotionSxTransform() {
           >
             EmotionSxTransform
           </Box>
+
+          <SegmentedControl data={['React', 'Angular', 'Vue']} />
         </MantineEmotionProvider>
       </MantineProvider>
     </CacheProvider>

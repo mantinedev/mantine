@@ -8,7 +8,7 @@ interface UseTransformedStylesInput {
 
 export function useStylesTransform({ props, stylesCtx, themeName }: UseTransformedStylesInput) {
   const theme = useMantineTheme();
-  const stylesTransform = useMantineStylesTransform();
+  const stylesTransform = useMantineStylesTransform()?.();
 
   const getTransformedStyles = (styles: any[]) => {
     if (!stylesTransform) {

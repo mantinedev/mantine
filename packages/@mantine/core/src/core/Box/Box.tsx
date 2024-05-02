@@ -83,7 +83,7 @@ const _Box = forwardRef<
     const Element = component || 'div';
     const { styleProps, rest } = extractStyleProps(others);
     const useSxTransform = useMantineSxTransform();
-    const transformedSx = useSxTransform?.(styleProps.sx);
+    const transformedSx = useSxTransform?.()?.(styleProps.sx);
     const responsiveClassName = useRandomClassName();
     const parsedStyleProps = parseStyleProps({
       styleProps,
