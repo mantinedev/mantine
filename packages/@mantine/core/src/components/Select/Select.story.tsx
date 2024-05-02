@@ -17,6 +17,19 @@ export function Usage() {
   );
 }
 
+export function WithAreaLabel() {
+  return (
+    <div style={{ padding: 40 }}>
+      <Select
+        data={['React', 'Angular', 'Svelte']}
+        aria-label="Library"
+        placeholder="Select something"
+        dropdownOpened
+      />
+    </div>
+  );
+}
+
 export function FixedValue() {
   return (
     <div style={{ padding: 40 }}>

@@ -100,7 +100,8 @@ export interface OptionsDropdownProps {
   checkIconPosition?: 'left' | 'right';
   nothingFoundMessage?: React.ReactNode;
   unstyled: boolean | undefined;
-  labelId: string;
+  labelId: string | undefined;
+  'aria-label': string | undefined;
   renderOption?: (input: ComboboxLikeRenderOptionInput<any>) => React.ReactNode;
   scrollAreaProps: ScrollAreaProps | undefined;
 }
@@ -123,6 +124,7 @@ export function OptionsDropdown({
   labelId,
   renderOption,
   scrollAreaProps,
+  'aria-label': ariaLabel,
 }: OptionsDropdownProps) {
   validateOptions(data);
 
@@ -150,7 +152,7 @@ export function OptionsDropdown({
 
   return (
     <Combobox.Dropdown hidden={hidden || (hiddenWhenEmpty && isEmpty)}>
-      <Combobox.Options labelledBy={labelId}>
+      <Combobox.Options labelledBy={labelId} aria-label={ariaLabel}>
         {withScrollArea ? (
           <ScrollArea.Autosize
             mah={maxDropdownHeight ?? 220}

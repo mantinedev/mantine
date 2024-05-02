@@ -298,7 +298,8 @@ export const Select = factory<SelectFactory>((_props, ref) => {
           withCheckIcon={withCheckIcon}
           nothingFoundMessage={nothingFoundMessage}
           unstyled={unstyled}
-          labelId={`${_id}-label`}
+          labelId={others.label ? `${_id}-label` : undefined}
+          aria-label={others.label ? undefined : others['aria-label']}
           renderOption={renderOption}
           scrollAreaProps={scrollAreaProps}
         />
