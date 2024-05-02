@@ -67,7 +67,7 @@ These APIs are not available in `jest-environment-jsdom` environment and you wil
 Create `jest.setup.js` file in your project root and add the following code to it:
 
 ```tsx
-import '@testing-library/jest-dom/extend-expect';
+import '@testing-library/jest-dom';
 
 const { getComputedStyle } = window;
 window.getComputedStyle = (elt) => getComputedStyle(elt);
