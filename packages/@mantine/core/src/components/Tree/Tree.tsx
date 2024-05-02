@@ -14,7 +14,7 @@ import {
   useStyles,
 } from '../../core';
 import { TreeNode } from './TreeNode';
-import { TreeController } from './use-tree';
+import { TreeController, useTree } from './use-tree';
 import classes from './Tree.module.css';
 
 export interface TreeNodeData {
@@ -60,7 +60,7 @@ export interface TreeProps extends BoxProps, StylesApiProps<TreeFactory>, Elemen
   selectOnClick?: boolean;
 
   /** use-tree hook instance that can be used to manipulate component state */
-  tree: TreeController;
+  tree?: TreeController;
 
   /** A function to render tree node label */
   renderNode?: RenderNode;
@@ -119,6 +119,9 @@ export const Tree = factory<TreeFactory>((_props, ref) => {
     ...others
   } = props;
 
+  const defaultController = useTree();
+  const controller = tree || defaultController;
+
   const getStyles = useStyles<TreeFactory>({
     name: 'Tree',
     classes,
@@ -133,7 +136,7 @@ export const Tree = factory<TreeFactory>((_props, ref) => {
   });
 
   const clickOutsideRef = useClickOutside(
-    () => clearSelectionOnOutsideClick && tree.clearSelected()
+    () => clearSelectionOnOutsideClick && controller.clearSelected()
   );
 
   const mergedRef = useMergedRef(ref, clickOutsideRef);
@@ -141,7 +144,7 @@ export const Tree = factory<TreeFactory>((_props, ref) => {
   const flatValues = useMemo(() => getFlatValues(data), [data]);
 
   useEffect(() => {
-    tree.initialize(data);
+    controller.initialize(data);
   }, [data]);
 
   const nodes = data.map((node, index) => (
@@ -152,7 +155,7 @@ export const Tree = factory<TreeFactory>((_props, ref) => {
       rootIndex={index}
       expandOnClick={expandOnClick}
       selectOnClick={selectOnClick}
-      controller={tree}
+      controller={controller}
       renderNode={renderNode}
       flatValues={flatValues}
       allowRangeSelection={allowRangeSelection}
@@ -166,7 +169,7 @@ export const Tree = factory<TreeFactory>((_props, ref) => {
       {...getStyles('root')}
       {...others}
       role="tree"
-      aria-multiselectable={tree.multiple}
+      aria-multiselectable={controller.multiple}
       data-tree-root
     >
       {nodes}
