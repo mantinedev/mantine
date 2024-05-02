@@ -10,7 +10,7 @@ function Demo() {
   const [visible, setVisible] = useState(true);
   return (
     <>
-      <AspectRatio ratio={16 / 9} maw={400} mx="auto">
+      <AspectRatio ratio={16 / 9} maw={400} mx="auto" pos="relative">
         <img
           src="https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/images/bg-1.png"
           alt="Demo"
@@ -29,7 +29,7 @@ function Demo() {
   const [visible, setVisible] = useState(true);
   return (
     <>
-      <AspectRatio ratio={16 / 9} maw={400} mx="auto">
+      <AspectRatio ratio={16 / 9} maw={400} mx="auto" pos="relative">
         <img
           src="https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/images/bg-1.png"
           alt="Demo"
