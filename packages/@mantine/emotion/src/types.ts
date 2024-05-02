@@ -1,7 +1,15 @@
 import * as CSSType from 'csstype';
 import type { MantineTheme } from '@mantine/core';
+import type { EmotionHelpers } from './create-styles';
 
-export type Sx = CSSObject | ((theme: MantineTheme) => CSSObject);
+export type EmotionSx = CSSObject | ((theme: MantineTheme, u: EmotionHelpers) => CSSObject);
+export type EmotionStyles =
+  | Record<string, CSSObject>
+  | ((
+      theme: MantineTheme,
+      props: Record<string, any>,
+      u: EmotionHelpers
+    ) => Record<string, CSSObject>);
 
 export interface CSS {
   (template: TemplateStringsArray, ...args: CSSInterpolation[]): string;

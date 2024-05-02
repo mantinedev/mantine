@@ -43,6 +43,82 @@ There is no official support (the package probably can be used but it's not test
 Note that Emotion is recommended for new projects, if you are starting a new project with Mantine,
 consider using [CSS modules](/styles/css-modules/) instead.
 
+## Usage with Vite
+
+[View example repository with full setup](https://github.com/mantinedev/vite-min-template/tree/emotion)
+
+Install dependencies:
+
+<InstallScript packages="@mantine/emotion @emotion/react @emotion/cache @emotion/serialize @emotion/utils" />
+
+Create `emotion.d.ts` file in `src` directory to add types support for `sx` and `styles` props:
+
+```tsx
+import '@mantine/core';
+
+import type { EmotionStyles, EmotionSx } from '@mantine/emotion';
+
+declare module '@mantine/core' {
+  export interface BoxProps {
+    sx?: EmotionSx;
+    styles?: EmotionStyles;
+  }
+}
+```
+
+Wrap your application with `MantineEmotionProvider` and add `emotionTransform` to `MantineProvider`:
+
+```tsx
+import '@mantine/core/styles.css';
+
+import { MantineProvider } from '@mantine/core';
+import {
+  emotionTransform,
+  MantineEmotionProvider,
+} from '@mantine/emotion';
+
+export default function App() {
+  return (
+    <MantineProvider stylesTransform={emotionTransform}>
+      <MantineEmotionProvider>App</MantineEmotionProvider>
+    </MantineProvider>
+  );
+}
+```
+
+Done! You can now use `sx`, `styles` props and `createStyles` in your application:
+
+```tsx
+import { Box } from '@mantine/core';
+
+function Demo() {
+  return (
+    <Box
+      sx={(theme, u) => ({
+        padding: 40,
+
+        [u.light]: {
+          backgroundColor: theme.colors.blue[0],
+          color: theme.colors.blue[9],
+
+          '&:hover': {
+            backgroundColor: theme.colors.blue[1],
+          },
+        },
+      })}
+    >
+      Box with emotion sx prop
+    </Box>
+  );
+}
+```
+
+## Usage with Next.js pages router
+
+Install dependencies:
+
+<InstallScript packages="@mantine/emotion @emotion/react @emotion/cache @emotion/serialize @emotion/utils @emotion/server" />
+
 ## createStyles
 
 `createStyles` function accepts a function to generate styles with [Emotion](https://emotion.sh/).
@@ -97,3 +173,32 @@ defined with [MantineProvider](/theming/mantine-provider) or just static values:
 ### Keyframes
 
 <Demo data={EmotionDemos.keyframes} />
+
+## Emotion styles in Styles API
+
+You can add styles to Mantine components with [Styles API](/styles/styles-api/) using
+Emotion with `styles` prop. Note that to avoid types collisions, you should not use
+`Component.extend` method and just pass component configuration object directly.
+
+```tsx
+import { createTheme, MantineTheme, TextProps } from '@mantine/core';
+import { EmotionHelpers } from '@mantine/emotion';
+
+export const theme = createTheme({
+  components: {
+    Text: {
+      styles: (
+        theme: MantineTheme,
+        _props: TextProps,
+        u: EmotionHelpers
+      ) => ({
+        root: {
+          [u.light]: {
+            color: theme.colors.blue[7],
+          },
+        },
+      }),
+    },
+  },
+});
+```

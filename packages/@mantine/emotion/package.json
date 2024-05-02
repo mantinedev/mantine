@@ -1,6 +1,6 @@
 {
   "name": "@mantine/emotion",
-  "version": "7.8.1",
+  "version": "7.8.1-alpha.1",
   "description": "Emotion bindings for Mantine",
   "homepage": "https://mantine.dev/",
   "license": "MIT",
@@ -34,7 +34,6 @@
     "@emotion/cache": "^11.11.0",
     "@emotion/react": "^11.11.4",
     "@emotion/serialize": "^1.1.4",
-    "@emotion/server": "^11.11.0",
     "@emotion/utils": "^1.2.1",
     "@mantine/core": ">=7.0.0",
     "@mantine/hooks": ">=7.0.0",
