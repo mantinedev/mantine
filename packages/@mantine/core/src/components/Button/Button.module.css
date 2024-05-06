@@ -65,13 +65,12 @@
     transform: none;
 
     @mixin where-light {
-      color: var(--mantine-color-gray-5);
-      background: var(--mantine-color-gray-1);
+      color: var(--button-disabled-color, var(--mantine-color-gray-5));
+      background: var(--button-disabled-bg, var(--mantine-color-gray-1));
     }
-
     @mixin where-dark {
-      color: var(--mantine-color-dark-3);
-      background: var(--mantine-color-dark-6);
+      color: var(--button-disabled-color, --mantine-color-dark-3);
+      background: var(--button-disabled-bg, --mantine-color-dark-6);
     }
   }
 

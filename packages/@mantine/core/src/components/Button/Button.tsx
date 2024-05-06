@@ -19,8 +19,8 @@ import {
 import { Loader, LoaderProps } from '../Loader';
 import { MantineTransition, Transition } from '../Transition';
 import { UnstyledButton } from '../UnstyledButton';
-import { ButtonGroup } from './ButtonGroup/ButtonGroup';
 import classes from './Button.module.css';
+import { ButtonGroup } from './ButtonGroup/ButtonGroup';
 
 export type ButtonStylesNames = 'root' | 'inner' | 'loader' | 'section' | 'label';
 export type ButtonVariant =
@@ -44,7 +44,9 @@ export type ButtonCssVariables = {
     | '--button-hover'
     | '--button-hover-color'
     | '--button-color'
-    | '--button-bd';
+    | '--button-bd'
+    | '--button-disabled-color'
+    | '--button-disabled-bg';
 };
 
 export interface ButtonProps extends BoxProps, StylesApiProps<ButtonFactory> {
@@ -135,6 +137,8 @@ const varsResolver = createVarsResolver<ButtonFactory>(
         '--button-color': colors.color,
         '--button-bd': color || variant ? colors.border : undefined,
         '--button-hover-color': color || variant ? colors.hoverColor : undefined,
+        '--button-disabled-color': undefined,
+        '--button-disabled-bg': undefined,
       },
     };
   }

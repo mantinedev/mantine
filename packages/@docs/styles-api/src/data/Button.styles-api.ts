@@ -22,6 +22,8 @@ export const ButtonStylesApi: StylesApiData<ButtonFactory> = {
       '--button-padding-x': 'Controls horizontal `padding` of the button',
       '--button-fz': 'Controls `font-size` of the button',
       '--button-justify': 'Controls `justify-content` of `inner` element',
+      '--button-disabled-color': 'Control text `color` when disabled',
+      '--button-disabled-bg': 'Controls `background` when disabled',
     },
   },
 
