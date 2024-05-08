@@ -290,16 +290,17 @@ export const NumberInput = factory<NumberInputFactory>((_props, ref) => {
   const decrementRef = useRef<() => void>();
   decrementRef.current = () => {
     let val: number;
+    const minValue = min !== undefined ? min : !allowNegative ? 0 : Number.MIN_SAFE_INTEGER;
     const currentValuePrecision = getDecimalPlaces(_value);
     const stepPrecision = getDecimalPlaces(step!);
     const maxPrecision = Math.max(currentValuePrecision, stepPrecision);
     const factor = 10 ** maxPrecision;
 
     if (typeof _value !== 'number' || Number.isNaN(_value)) {
-      val = clamp(startValue!, min, max);
+      val = clamp(startValue!, minValue, max);
     } else {
       const decrementedValue = (Math.round(_value * factor) - Math.round(step! * factor)) / factor;
-      val = min !== undefined && decrementedValue < min ? min : decrementedValue;
+      val = minValue !== undefined && decrementedValue < minValue ? minValue : decrementedValue;
     }
 
     const formattedValue = val.toFixed(maxPrecision);

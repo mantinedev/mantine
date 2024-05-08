@@ -18,6 +18,9 @@ const defaultProps: NumberInputProps = {
 const clickIncrement = (container: HTMLElement) =>
   userEvent.click(container.querySelector('.mantine-NumberInput-control[data-direction="up"]')!);
 
+const clickDecrement = (container: HTMLElement) =>
+  userEvent.click(container.querySelector('.mantine-NumberInput-control[data-direction="down"]')!);
+
 const getInput = () => screen.getByRole('textbox');
 const enterText = (text: string) => userEvent.type(getInput(), text);
 const expectValue = (value: string) => expect(getInput()).toHaveValue(value);
@@ -174,6 +177,16 @@ describe('@mantine/core/NumberInput', () => {
     await enterText('{backspace}');
     await enterText('{backspace}');
 
+    expect(spy).toHaveBeenLastCalledWith(0);
+  });
+
+  it('does not allow negative numbers if the allowNegative prop is false', async () => {
+    const spy = jest.fn();
+    const { container } = render(<NumberInput onChange={spy} value={0} allowNegative={false} />);
+
+    await clickDecrement(container);
+
+    expectValue('0');
     expect(spy).toHaveBeenLastCalledWith(0);
   });
 });
