@@ -12,11 +12,11 @@
 
   &:where([data-with-border]) {
     @mixin where-light {
-      border: 1px solid var(--mantine-color-gray-3);
+      border: rem(1px) solid var(--mantine-color-gray-3);
     }
 
     @mixin where-dark {
-      border: 1px solid var(--mantine-color-dark-4);
+      border: rem(1px) solid var(--mantine-color-dark-4);
     }
   }
 }

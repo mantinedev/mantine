@@ -20,7 +20,7 @@
   }
 
   &:where([data-with-table-border]) {
-    border: 1px solid var(--table-border-color);
+    border: rem(1px) solid var(--table-border-color);
   }
 }
 
@@ -43,7 +43,7 @@
   }
 
   &:where([data-with-row-border]) {
-    border-bottom: 1px solid var(--table-border-color);
+    border-bottom: rem(1px) solid var(--table-border-color);
   }
 }
 
@@ -52,7 +52,7 @@
   padding: var(--table-vertical-spacing) var(--table-horizontal-spacing, var(--mantine-spacing-xs));
 
   &:where([data-with-column-border]:not(:last-child)) {
-    border-inline-end: 1px solid var(--table-border-color);
+    border-inline-end: rem(1px) solid var(--table-border-color);
   }
 }
 
