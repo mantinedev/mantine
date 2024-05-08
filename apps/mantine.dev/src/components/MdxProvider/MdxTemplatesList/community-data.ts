@@ -44,4 +44,10 @@ export const COMMUNITY_TEMPLATES_DATA: Template[] = [
     link: 'https://github.com/auronvila/mantine-template',
     description: 'Vite + Redux + i18next + auth + Mantine dashboard template',
   },
+  {
+    type: 'vite',
+    name: 'supabase-template',
+    link: 'https://github.com/LanVukusic/mantine-supabase-template',
+    description: 'Vite + Supabase + Mantine template',
+  },
 ];
