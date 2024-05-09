@@ -388,6 +388,9 @@ export const TagsInput = factory<TagsInputFactory>((_props, ref) => {
             __stylesApiProps={{ ...props, multiline: true }}
             id={_id}
             mod={mod}
+            openDropdown={combobox.openDropdown}
+            dropdownOpened={combobox.dropdownOpened}
+            parsedData={parsedData}
           >
             <Pill.Group disabled={disabled} unstyled={unstyled} {...getStyles('pillsList')}>
               {values}

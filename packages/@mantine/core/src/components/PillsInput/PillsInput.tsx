@@ -4,6 +4,7 @@ import { __BaseInputProps, __InputStylesNames } from '../Input';
 import { InputBase } from '../InputBase';
 import { PillsInputProvider } from './PillsInput.context';
 import { PillsInputField } from './PillsInputField/PillsInputField';
+import { ComboboxParsedItem } from '../Combobox';
 
 export interface PillsInputProps
   extends BoxProps,
@@ -13,6 +14,9 @@ export interface PillsInputProps
   __stylesApiProps?: Record<string, any>;
   __staticSelector?: string;
   multiline?: boolean;
+  openDropdown: () => void;
+  dropdownOpened: boolean;
+  parsedData: ComboboxParsedItem[];
 }
 
 export type PillsInputFactory = Factory<{
@@ -32,8 +36,11 @@ export const PillsInput = factory<PillsInputFactory>((_props, ref) => {
     children,
     onMouseDown,
     onClick,
+    openDropdown,
     size,
     disabled,
+    dropdownOpened,
+    parsedData,
     __staticSelector,
     error,
     variant,
@@ -59,6 +66,9 @@ export const PillsInput = factory<PillsInputFactory>((_props, ref) => {
           event.preventDefault();
           onClick?.(event);
           fieldRef.current?.focus();
+          if(!dropdownOpened && parsedData.length > 0) {
+            openDropdown();
+          }
         }}
         {...others}
         multiline
