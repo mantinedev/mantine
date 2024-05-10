@@ -34,7 +34,7 @@ export interface DividerProps
   /** Divider label, visible only when `orientation` is `horizontal` */
   label?: React.ReactNode;
 
-  /** Controls label position, `'left'` by default */
+  /** Controls label position, `'center'` by default */
   labelPosition?: 'left' | 'center' | 'right';
 
   /** Controls orientation, `'horizontal'` by default */
