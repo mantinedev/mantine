@@ -124,6 +124,15 @@ export function Clearable() {
       />
 
       <MultiSelect
+        placeholder="Searchable"
+        data={['React', 'Angular', 'Svelte']}
+        defaultValue={['React']}
+        clearable
+        searchable
+        mt="md"
+      />
+
+      <MultiSelect
         placeholder="Disabled"
         data={['React', 'Angular', 'Svelte']}
         defaultValue={['React']}
