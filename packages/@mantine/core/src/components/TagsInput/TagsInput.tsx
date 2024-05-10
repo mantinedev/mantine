@@ -301,7 +301,7 @@ export const TagsInput = factory<TagsInputFactory>((_props, ref) => {
           splitChars,
           allowDuplicates,
           maxTags,
-          value: pastedText,
+          value: `${_searchValue}${pastedText}`,
           currentTags: _value,
         })
       );
