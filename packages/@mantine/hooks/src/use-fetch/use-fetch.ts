@@ -1,63 +1,39 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useMemo, useRef, useState } from 'react';
 
-export interface UseFetchOptions extends RequestInit {
-  autoInvoke?: boolean;
-}
-
-export function useFetch<T>(url: string, { autoInvoke = true, ...options }: UseFetchOptions = {}) {
+export const useFetch = <T>(fn: (controllerController: AbortController) => Promise<T>) => {
   const [data, setData] = useState<T | null>(null);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<Error | null>(null);
+
   const controller = useRef<AbortController | null>(null);
 
-  const refetch = useCallback(() => {
-    if (!url) {
-      return;
-    }
+  const fetch = useCallback(async () => {
+    if (!fn) throw new Error('Missing function parameter');
 
-    if (controller.current) {
-      controller.current.abort();
-    }
+    if (controller.current) controller.current.abort();
 
-    controller.current = new AbortController();
-
+    setError(null);
     setLoading(true);
 
-    return fetch(url, { signal: controller.current.signal, ...options })
-      .then((res) => res.json())
-      .then((res) => {
-        setData(res);
-        setLoading(false);
-        return res as T;
-      })
+    const newController = new AbortController();
+    controller.current = newController;
+    fn(newController)
+      .then(setData)
       .catch((err) => {
+        setError(err);
+      })
+      .finally(() => {
         setLoading(false);
-
-        if (err.name !== 'AbortError') {
-          setError(err);
-        }
-
-        throw err;
+        controller.current = null;
       });
-  }, [url]);
+  }, [fn]);
 
   const abort = useCallback(() => {
     if (controller.current) {
-      controller.current?.abort('');
+      controller.current.abort('aborted');
+      controller.current = null;
     }
   }, []);
 
-  useEffect(() => {
-    if (autoInvoke) {
-      refetch();
-    }
-
-    return () => {
-      if (controller.current) {
-        controller.current.abort('');
-      }
-    };
-  }, [refetch, autoInvoke]);
-
-  return { data, loading, error, refetch, abort };
-}
+  return useMemo(() => ({ loading, error, data, fetch, abort }), [loading]);
+};
