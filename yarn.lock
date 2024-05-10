@@ -7445,10 +7445,28 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@tabler/icons-react@npm:^3.3.0":
+  version: 3.3.0
+  resolution: "@tabler/icons-react@npm:3.3.0"
+  dependencies:
+    "@tabler/icons": "npm:3.3.0"
+  peerDependencies:
+    react: ">= 16"
+  checksum: 10c0/c5debd4afe94179759662e31a54d9bc7be5ffd081a87b2d5d220b15f2ad92220e016577f61b3df611ae8d42df57bfbca9c5b1ffa404f38e17678cccac42e8ddc
+  languageName: node
+  linkType: hard
+
 "@tabler/icons@npm:2.40.0":
   version: 2.40.0
   resolution: "@tabler/icons@npm:2.40.0"
   checksum: 10c0/a59adf9b071fb3b54f507c3a7c8adaeb74ccb5af5834c92d312829f7564f1e4255086091fe43dbfeae256510d073bce8476f2171655b337050b08b7521786400
+  languageName: node
+  linkType: hard
+
+"@tabler/icons@npm:3.3.0":
+  version: 3.3.0
+  resolution: "@tabler/icons@npm:3.3.0"
+  checksum: 10c0/8151654fcdd58c948c5594ae6ff297e32b5ca82eaba950c7b00e002f13f2b856ba7867f9a898df8df63425b6c8aff0000534317dd9b6d1ab9efd9abb67c57f6d
   languageName: node
   linkType: hard
 
@@ -17846,7 +17864,7 @@ __metadata:
     "@storybook/addon-styling-webpack": "npm:^0.0.5"
     "@storybook/react": "npm:^7.5.3"
     "@storybook/react-webpack5": "npm:7.5.3"
-    "@tabler/icons-react": "npm:^2.40.0"
+    "@tabler/icons-react": "npm:^3.3.0"
     "@testing-library/dom": "npm:10.1.0"
     "@testing-library/jest-dom": "npm:6.4.2"
     "@testing-library/react": "npm:15.0.6"

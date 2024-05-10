@@ -1,5 +1,6 @@
 interface _PaginationIconProps extends React.ComponentPropsWithoutRef<'svg'> {
   path: string;
+  stroke?: any;
 }
 
 export type PaginationIconProps = Omit<_PaginationIconProps, 'path'>;
