@@ -48,8 +48,8 @@ export const CheckboxGroup = factory<CheckboxGroupFactory>((props, ref) => {
     onChange,
   });
 
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const itemValue = event.currentTarget.value;
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement> | string) => {
+    const itemValue = typeof event === 'string' ? event : event.currentTarget.value;
     !readOnly &&
       setValue(
         _value.includes(itemValue)

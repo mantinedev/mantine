@@ -1,6 +1,8 @@
 .card {
   --card-radius: var(--mantine-radius-default);
 
+  display: block;
+  width: 100%;
   border: 1px solid transparent;
   border-radius: var(--card-radius);
   cursor: pointer;

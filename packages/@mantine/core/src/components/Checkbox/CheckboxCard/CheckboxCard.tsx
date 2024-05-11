@@ -12,6 +12,7 @@ import {
   useStyles,
 } from '../../../core';
 import { UnstyledButton } from '../../UnstyledButton';
+import { useCheckboxGroupContext } from '../CheckboxGroup.context';
 import classes from './CheckboxCard.module.css';
 
 export interface CheckboxCardContextValue {
@@ -38,6 +39,9 @@ export interface CheckboxCardProps
 
   /** Key of `theme.radius` or any valid CSS value to set `border-radius`, numbers are converted to rem, `theme.defaultRadius` by default */
   radius?: MantineRadius;
+
+  /** Value of the checkbox, used with `Checkbox.Group` */
+  value?: string;
 }
 
 export type CheckboxCardFactory = Factory<{
@@ -67,6 +71,8 @@ export const CheckboxCard = factory<CheckboxCardFactory>((_props, ref) => {
     checked,
     mod,
     withBorder,
+    value,
+    onClick,
     ...others
   } = props;
 
@@ -84,15 +90,23 @@ export const CheckboxCard = factory<CheckboxCardFactory>((_props, ref) => {
     rootSelector: 'card',
   });
 
+  const ctx = useCheckboxGroupContext();
+  const _checked =
+    typeof checked === 'boolean' ? checked : ctx?.value.includes(value || '') || false;
+
   return (
-    <CheckboxCardProvider value={{ checked: checked || false }}>
+    <CheckboxCardProvider value={{ checked: _checked }}>
       <UnstyledButton
         ref={ref}
-        mod={[{ 'with-border': withBorder, checked }, mod]}
+        mod={[{ 'with-border': withBorder, checked: _checked }, mod]}
         {...getStyles('card')}
         {...others}
         role="checkbox"
-        aria-checked={checked}
+        aria-checked={_checked}
+        onClick={(event) => {
+          onClick?.(event);
+          ctx?.onChange(value || '');
+        }}
       />
     </CheckboxCardProvider>
   );

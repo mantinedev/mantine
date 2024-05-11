@@ -3,6 +3,7 @@ export { CheckboxGroup } from './CheckboxGroup/CheckboxGroup';
 export { CheckIcon } from './CheckIcon';
 export { CheckboxIndicator } from './CheckboxIndicator/CheckboxIndicator';
 export { CheckboxCard, useCheckboxCardContext } from './CheckboxCard/CheckboxCard';
+export { useCheckboxGroupContext } from './CheckboxGroup.context';
 
 export type { CheckboxIconProps, CheckIconProps } from './CheckIcon';
 
