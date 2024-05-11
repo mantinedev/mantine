@@ -62,3 +62,13 @@ export const Demo_customSize = {
   name: '⭐ Demo: customSize',
   render: renderDemo(demos.customSize),
 };
+
+export const Demo_cardGroup = {
+  name: '⭐ Demo: cardGroup',
+  render: renderDemo(demos.cardGroup),
+};
+
+export const Demo_indicator = {
+  name: '⭐ Demo: indicator',
+  render: renderDemo(demos.indicator),
+};
