@@ -12,7 +12,9 @@
   position: relative;
   border: 1px solid transparent;
   width: var(--checkbox-size);
+  min-width: var(--checkbox-size);
   height: var(--checkbox-size);
+  min-height: var(--checkbox-size);
   border-radius: var(--checkbox-radius, var(--mantine-radius-default));
   transition:
     border-color 100ms ease,

@@ -3,7 +3,6 @@
 
   display: block;
   width: 100%;
-  border: 1px solid transparent;
   border-radius: var(--card-radius);
   cursor: pointer;
 
@@ -11,11 +10,15 @@
     cursor: inherit;
   }
 
-  @mixin where-light {
-    border-color: var(--mantine-color-gray-3);
-  }
+  &:where([data-with-border]) {
+    border: 1px solid transparent;
 
-  @mixin where-dark {
-    border-color: var(--mantine-color-dark-4);
+    @mixin where-light {
+      border-color: var(--mantine-color-gray-3);
+    }
+
+    @mixin where-dark {
+      border-color: var(--mantine-color-dark-4);
+    }
   }
 }

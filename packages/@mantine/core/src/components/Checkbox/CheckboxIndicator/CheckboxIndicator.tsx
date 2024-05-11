@@ -133,7 +133,10 @@ export const CheckboxIndicator = factory<CheckboxIndicatorFactory>((_props, ref)
   });
 
   const ctx = useCheckboxCardContext();
-  const _checked = typeof checked === 'boolean' ? checked : ctx?.checked || false;
+  const _checked =
+    typeof checked === 'boolean' || typeof indeterminate === 'boolean'
+      ? checked || indeterminate
+      : ctx?.checked || false;
 
   return (
     <Box
