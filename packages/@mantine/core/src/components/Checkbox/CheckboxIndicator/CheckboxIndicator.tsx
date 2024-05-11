@@ -18,6 +18,7 @@ import {
   useProps,
   useStyles,
 } from '../../../core';
+import { useCheckboxCardContext } from '../CheckboxCard/CheckboxCard';
 import { CheckboxIcon } from '../CheckIcon';
 import classes from './CheckboxIndicator.module.css';
 
@@ -131,12 +132,15 @@ export const CheckboxIndicator = factory<CheckboxIndicatorFactory>((_props, ref)
     rootSelector: 'indicator',
   });
 
+  const ctx = useCheckboxCardContext();
+  const _checked = typeof checked === 'boolean' ? checked : ctx?.checked || false;
+
   return (
     <Box
       ref={ref}
       {...getStyles('indicator', { variant })}
       variant={variant}
-      mod={[{ checked, disabled }, mod]}
+      mod={[{ checked: _checked, disabled }, mod]}
       {...others}
     >
       <Icon indeterminate={indeterminate} {...getStyles('icon')} />

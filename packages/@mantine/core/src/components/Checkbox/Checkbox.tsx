@@ -21,6 +21,7 @@ import {
   useStyles,
 } from '../../core';
 import { InlineInput, InlineInputClasses, InlineInputStylesNames } from '../InlineInput';
+import { CheckboxCard } from './CheckboxCard/CheckboxCard';
 import { useCheckboxGroupContext } from './CheckboxGroup.context';
 import { CheckboxGroup } from './CheckboxGroup/CheckboxGroup';
 import { CheckboxIndicator } from './CheckboxIndicator/CheckboxIndicator';
@@ -89,6 +90,7 @@ export type CheckboxFactory = Factory<{
   staticComponents: {
     Group: typeof CheckboxGroup;
     Indicator: typeof CheckboxIndicator;
+    Card: typeof CheckboxCard;
   };
 }>;
 
@@ -229,3 +231,4 @@ Checkbox.classes = { ...classes, ...InlineInputClasses };
 Checkbox.displayName = '@mantine/core/Checkbox';
 Checkbox.Group = CheckboxGroup;
 Checkbox.Indicator = CheckboxIndicator;
+Checkbox.Card = CheckboxCard;
