@@ -1,12 +1,15 @@
 import { useCallback, useContext, useEffect, useRef } from 'react';
 import { useColorScheme } from '@mantine/hooks';
-import { MantineContext } from '../Mantine.context';
+import { MantineContext, useMantineStyleNonce } from '../Mantine.context';
 import { MantineColorScheme } from '../theme.types';
 
-function disableTransition() {
+function disableTransition(nonce: string | undefined) {
   const style = document.createElement('style');
+  style.setAttribute('data-mantine-styles', 'inline');
   style.innerHTML = '*, *::before, *::after {transition: none !important;}';
   style.setAttribute('data-mantine-disable-transition', 'true');
+  nonce && style.setAttribute('nonce', nonce);
+
   document.head.appendChild(style);
   const clear = () =>
     document
@@ -19,6 +22,8 @@ export function useMantineColorScheme({ keepTransitions }: { keepTransitions?: b
   const clearStylesRef = useRef<() => void>();
   const timeoutRef = useRef<number>();
   const ctx = useContext(MantineContext);
+  const nonce = useMantineStyleNonce();
+  const nonceValue = useRef(nonce?.());
 
   if (!ctx) {
     throw new Error('[@mantine/core] MantineProvider was not found in tree');
@@ -26,7 +31,7 @@ export function useMantineColorScheme({ keepTransitions }: { keepTransitions?: b
 
   const setColorScheme = (value: MantineColorScheme) => {
     ctx.setColorScheme(value);
-    clearStylesRef.current = keepTransitions ? () => {} : disableTransition();
+    clearStylesRef.current = keepTransitions ? () => {} : disableTransition(nonceValue.current);
     window.clearTimeout(timeoutRef.current);
     timeoutRef.current = window.setTimeout(() => {
       clearStylesRef.current?.();
@@ -35,7 +40,7 @@ export function useMantineColorScheme({ keepTransitions }: { keepTransitions?: b
 
   const clearColorScheme = () => {
     ctx.clearColorScheme();
-    clearStylesRef.current = keepTransitions ? () => {} : disableTransition();
+    clearStylesRef.current = keepTransitions ? () => {} : disableTransition(nonceValue.current);
     window.clearTimeout(timeoutRef.current);
     timeoutRef.current = window.setTimeout(() => {
       clearStylesRef.current?.();

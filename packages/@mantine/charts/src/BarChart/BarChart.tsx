@@ -335,7 +335,7 @@ export const BarChart = factory<BarChartFactory>((_props, ref) => {
             <Tooltip
               animationDuration={tooltipAnimationDuration}
               isAnimationActive={tooltipAnimationDuration !== 0}
-              position={{ y: 0 }}
+              position={orientation === 'vertical' ? {} : { y: 0 }}
               cursor={{
                 stroke: 'var(--chart-grid-color)',
                 strokeWidth: 1,

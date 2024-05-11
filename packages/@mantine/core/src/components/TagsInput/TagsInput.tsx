@@ -1,4 +1,5 @@
-import { useId, useUncontrolled } from '@mantine/hooks';
+import { useRef } from 'react';
+import { useId, useMergedRef, useUncontrolled } from '@mantine/hooks';
 import {
   BoxProps,
   ElementProps,
@@ -193,6 +194,8 @@ export const TagsInput = factory<TagsInputFactory>((_props, ref) => {
   const _id = useId(id);
   const parsedData = getParsedComboboxData(data);
   const optionsLockup = getOptionsLockup(parsedData);
+  const inputRef = useRef<HTMLInputElement>(null);
+  const _ref = useMergedRef(inputRef, ref);
 
   const combobox = useCombobox({
     opened: dropdownOpened,
@@ -298,7 +301,7 @@ export const TagsInput = factory<TagsInputFactory>((_props, ref) => {
           splitChars,
           allowDuplicates,
           maxTags,
-          value: pastedText,
+          value: `${_searchValue}${pastedText}`,
           currentTags: _value,
         })
       );
@@ -329,6 +332,8 @@ export const TagsInput = factory<TagsInputFactory>((_props, ref) => {
       onClear={() => {
         setValue([]);
         setSearchValue('');
+        inputRef.current?.focus();
+        combobox.openDropdown();
         onClear?.();
       }}
     />
@@ -394,7 +399,7 @@ export const TagsInput = factory<TagsInputFactory>((_props, ref) => {
               <Combobox.EventsTarget autoComplete={autoComplete}>
                 <PillsInput.Field
                   {...rest}
-                  ref={ref}
+                  ref={_ref}
                   {...getStyles('inputField')}
                   unstyled={unstyled}
                   onKeyDown={handleInputKeydown}
