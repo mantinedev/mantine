@@ -1,4 +1,9 @@
-import type { CheckboxFactory, CheckboxGroupFactory } from '@mantine/core';
+import type {
+  CheckboxCardFactory,
+  CheckboxFactory,
+  CheckboxGroupFactory,
+  CheckboxIndicatorFactory,
+} from '@mantine/core';
 import type { StylesApiData } from '../types';
 import { InputWrapperStylesApi } from './Input.styles-api';
 
@@ -38,4 +43,37 @@ export const CheckboxGroupStylesApi: StylesApiData<CheckboxGroupFactory> = {
   },
 
   vars: {},
+};
+
+export const CheckboxIndicatorStylesApi: StylesApiData<CheckboxIndicatorFactory> = {
+  selectors: {
+    indicator: 'Root element',
+    icon: 'Checkbox icon',
+  },
+
+  vars: {
+    indicator: CheckboxStylesApi.vars.root,
+  },
+
+  modifiers: [
+    { modifier: 'data-checked', selector: 'indicator', condition: '`checked` prop is set' },
+    { modifier: 'data-disabled', selector: 'indicator', condition: '`disabled` prop is set' },
+  ],
+};
+
+export const CheckboxCardStylesApi: StylesApiData<CheckboxCardFactory> = {
+  selectors: {
+    card: 'Root element',
+  },
+
+  vars: {
+    card: {
+      '--card-radius': 'Controls card `border-radius`',
+    },
+  },
+
+  modifiers: [
+    { modifier: 'data-checked', selector: 'card', condition: '`checked` prop is set' },
+    { modifier: 'data-with-border', selector: 'card', condition: '`withBorder` prop is set' },
+  ],
 };

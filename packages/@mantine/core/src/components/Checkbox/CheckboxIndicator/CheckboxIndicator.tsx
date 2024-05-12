@@ -18,7 +18,7 @@ import {
   useProps,
   useStyles,
 } from '../../../core';
-import { useCheckboxCardContext } from '../CheckboxCard/CheckboxCard';
+import { useCheckboxCardContext } from '../CheckboxCard/CheckboxCard.context';
 import { CheckboxIcon } from '../CheckIcon';
 import classes from './CheckboxIndicator.module.css';
 

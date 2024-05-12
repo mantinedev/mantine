@@ -1,6 +1,5 @@
 import {
   BoxProps,
-  createOptionalContext,
   createVarsResolver,
   ElementProps,
   factory,
@@ -14,14 +13,8 @@ import {
 } from '../../../core';
 import { UnstyledButton } from '../../UnstyledButton';
 import { useRadioGroupContext } from '../RadioGroup.context';
+import { RadioCardProvider } from './RadioCard.context';
 import classes from './RadioCard.module.css';
-
-export interface RadioCardContextValue {
-  checked: boolean;
-}
-
-export const [RadioCardProvider, useRadioCardContext] =
-  createOptionalContext<RadioCardContextValue>();
 
 export type RadioCardStylesNames = 'card';
 export type RadioCardCssVariables = {

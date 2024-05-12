@@ -18,7 +18,7 @@ import {
   useProps,
   useStyles,
 } from '../../../core';
-import { useRadioCardContext } from '../RadioCard/RadioCard';
+import { useRadioCardContext } from '../RadioCard/RadioCard.context';
 import { RadioIcon, RadioIconProps } from '../RadioIcon';
 import classes from './RadioIndicator.module.css';
 

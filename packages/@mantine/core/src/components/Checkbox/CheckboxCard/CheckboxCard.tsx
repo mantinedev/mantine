@@ -1,6 +1,5 @@
 import {
   BoxProps,
-  createOptionalContext,
   createVarsResolver,
   ElementProps,
   factory,
@@ -13,14 +12,8 @@ import {
 } from '../../../core';
 import { UnstyledButton } from '../../UnstyledButton';
 import { useCheckboxGroupContext } from '../CheckboxGroup.context';
+import { CheckboxCardProvider } from './CheckboxCard.context';
 import classes from './CheckboxCard.module.css';
-
-export interface CheckboxCardContextValue {
-  checked: boolean;
-}
-
-export const [CheckboxCardProvider, useCheckboxCardContext] =
-  createOptionalContext<CheckboxCardContextValue>();
 
 export type CheckboxCardStylesNames = 'card';
 export type CheckboxCardCssVariables = {

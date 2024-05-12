@@ -27,9 +27,13 @@ const FILES_PATHS = getPaths([
 
   // Checkbox
   'packages/@mantine/core/src/components/Checkbox/CheckboxGroup/CheckboxGroup.tsx',
+  'packages/@mantine/core/src/components/Checkbox/CheckboxIndicator/CheckboxIndicator.tsx',
+  'packages/@mantine/core/src/components/Checkbox/CheckboxCard/CheckboxCard.tsx',
 
   // Radio
   'packages/@mantine/core/src/components/Radio/RadioGroup/RadioGroup.tsx',
+  'packages/@mantine/core/src/components/Radio/RadioIndicator/RadioIndicator.tsx',
+  'packages/@mantine/core/src/components/Radio/RadioCard/RadioCard.tsx',
 
   // Tabs
   'packages/@mantine/core/src/components/Tabs/TabsTab/TabsTab.tsx',
