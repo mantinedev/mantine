@@ -42,3 +42,18 @@ export const Demo_states = {
   name: '⭐ Demo: states',
   render: renderDemo(demos.states),
 };
+
+export const Demo_card = {
+  name: '⭐ Demo: card',
+  render: renderDemo(demos.card),
+};
+
+export const Demo_cardGroup = {
+  name: '⭐ Demo: cardGroup',
+  render: renderDemo(demos.cardGroup),
+};
+
+export const Demo_indicator = {
+  name: '⭐ Demo: indicator',
+  render: renderDemo(demos.indicator),
+};
