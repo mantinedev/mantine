@@ -21,4 +21,17 @@ describe('@mantine/core/InlineStyles', () => {
       'body{color:red;}@media(min-width:500px){body{color:blue;}}'
     );
   });
+
+  it('renders container styles', () => {
+    const { container } = render(
+      <InlineStyles
+        selector="body"
+        styles={{ color: 'red' }}
+        container={[{ query: 'aside (min-width:500px)', styles: { color: 'blue' } }]}
+      />
+    );
+    expect(container.querySelector('[data-mantine-styles="inline"]')).toHaveTextContent(
+      'body{color:red;}@container aside (min-width:500px){body{color:blue;}}'
+    );
+  });
 });
