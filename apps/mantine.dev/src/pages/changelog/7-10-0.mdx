@@ -54,4 +54,20 @@ You can use `Radio.Card` with `Radio.Group` the same way as `Radio` component:
 
 <Demo data={RadioDemos.cardGroup} />
 
+## bd style prop
+
+New [bd style prop](/styles/style-props/) can be used to set `border` CSS property.
+It is available in all components that support style props.
+
+Border width value is automatically converted to rem. For border color you can reference
+theme colors similar to other style props:
+
+```tsx
+import { Box } from '@mantine/core';
+
+function Demo() {
+  return <Box bd="1px solid red.5" />;
+}
+```
+
 ## Other changes

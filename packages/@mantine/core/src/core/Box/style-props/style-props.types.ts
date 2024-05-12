@@ -29,6 +29,7 @@ export interface MantineStyleProps {
   pl?: StyleProp<MantineSpacing>;
   pr?: StyleProp<MantineSpacing>;
 
+  bd?: StyleProp<React.CSSProperties['border']>;
   bg?: StyleProp<MantineColor>;
   c?: StyleProp<MantineColor>;
   opacity?: StyleProp<React.CSSProperties['opacity']>;

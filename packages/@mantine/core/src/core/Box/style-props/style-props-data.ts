@@ -27,6 +27,7 @@ export const STYlE_PROPS_DATA: Record<keyof MantineStyleProps, SystemPropData> =
   px: { type: 'spacing', property: 'paddingInline' },
   py: { type: 'spacing', property: 'paddingBlock' },
 
+  bd: { type: 'border', property: 'border' },
   bg: { type: 'color', property: 'background' },
   c: { type: 'textColor', property: 'color' },
   opacity: { type: 'identity', property: 'opacity' },
