@@ -1,0 +1,107 @@
+.indicator {
+  --radio-size-xs: 16px;
+  --radio-size-sm: 20px;
+  --radio-size-md: 24px;
+  --radio-size-lg: 30px;
+  --radio-size-xl: 36px;
+
+  --radio-icon-size-xs: 6px;
+  --radio-icon-size-sm: 8px;
+  --radio-icon-size-md: 10px;
+  --radio-icon-size-lg: 14px;
+  --radio-icon-size-xl: 16px;
+
+  --radio-icon-size: var(--radio-icon-size-sm);
+  --radio-size: var(--radio-size-sm);
+  --radio-color: var(--mantine-primary-color-filled);
+  --radio-icon-color: var(--mantine-color-white);
+
+  position: relative;
+  border: 1px solid transparent;
+  width: var(--radio-size);
+  min-width: var(--radio-size);
+  height: var(--radio-size);
+  min-height: var(--radio-size);
+  border-radius: var(--radio-radius, 10000px);
+  transition:
+    border-color 100ms ease,
+    background-color 100ms ease;
+  cursor: var(--mantine-cursor-type);
+  -webkit-tap-highlight-color: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  @mixin where-light {
+    background-color: var(--mantine-color-white);
+    border-color: var(--mantine-color-gray-4);
+  }
+
+  @mixin where-dark {
+    background-color: var(--mantine-color-dark-6);
+    border-color: var(--mantine-color-dark-4);
+  }
+
+  &[data-indeterminate],
+  &[data-checked] {
+    background-color: var(--radio-color);
+    border-color: var(--radio-color);
+
+    & > .icon {
+      opacity: 1;
+      transform: none;
+      color: var(--radio-icon-color);
+    }
+  }
+
+  &[data-disabled] {
+    cursor: not-allowed;
+
+    @mixin where-light {
+      background-color: var(--mantine-color-gray-2);
+      border-color: var(--mantine-color-gray-3);
+    }
+
+    @mixin where-dark {
+      background-color: var(--mantine-color-dark-6);
+      border-color: var(--mantine-color-dark-6);
+    }
+
+    &[data-checked] > .icon {
+      @mixin light {
+        color: var(--mantine-color-gray-5);
+      }
+
+      @mixin dark {
+        color: var(--mantine-color-dark-3);
+      }
+    }
+  }
+}
+
+.indicator--outline {
+  &[data-indeterminate]:not([data-disabled]),
+  &[data-checked]:not([data-disabled]) {
+    background-color: transparent;
+    border-color: var(--radio-color);
+
+    & > .icon {
+      color: var(--radio-color);
+      opacity: 1;
+      transform: none;
+    }
+  }
+}
+
+.icon {
+  display: block;
+  width: var(--radio-icon-size);
+  height: var(--radio-icon-size);
+  color: transparent;
+  pointer-events: none;
+  transform: translateY(rem(5px)) scale(0.5);
+  opacity: 1;
+  transition:
+    transform 100ms ease,
+    opacity 100ms ease;
+}

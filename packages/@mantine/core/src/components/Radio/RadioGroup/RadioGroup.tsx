@@ -54,8 +54,8 @@ export const RadioGroup = factory<RadioGroupFactory>((props, ref) => {
     onChange,
   });
 
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) =>
-    !readOnly && setValue(event.currentTarget.value);
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement> | string) =>
+    !readOnly && setValue(typeof event === 'string' ? event : event.currentTarget.value);
 
   return (
     <RadioGroupProvider value={{ value: _value, onChange: handleChange, size, name: _name }}>

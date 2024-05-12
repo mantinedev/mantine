@@ -1,0 +1,24 @@
+.card {
+  --card-radius: var(--mantine-radius-default);
+
+  display: block;
+  width: 100%;
+  border-radius: var(--card-radius);
+  cursor: pointer;
+
+  & :where(*) {
+    cursor: inherit;
+  }
+
+  &:where([data-with-border]) {
+    border: 1px solid transparent;
+
+    @mixin where-light {
+      border-color: var(--mantine-color-gray-3);
+    }
+
+    @mixin where-dark {
+      border-color: var(--mantine-color-dark-4);
+    }
+  }
+}
