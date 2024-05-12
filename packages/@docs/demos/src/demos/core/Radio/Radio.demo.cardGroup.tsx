@@ -72,8 +72,8 @@ function Demo() {
       <Radio.Group
         value={value}
         onChange={setValue}
-        label="Pick packages to install"
-        description="Choose all packages that you will need in your application"
+        label="Pick one package to install"
+        description="Choose a package that you will need in your application"
       >
         <Stack pt="md" gap="xs">
           {cards}
@@ -117,8 +117,8 @@ function Demo() {
       <Radio.Group
         value={value}
         onChange={setValue}
-        label="Pick packages to install"
-        description="Choose all packages that you will need in your application"
+        label="Pick one package to install"
+        description="Choose a package that you will need in your application"
       >
         <Stack pt="md" gap="xs">
           {cards}
