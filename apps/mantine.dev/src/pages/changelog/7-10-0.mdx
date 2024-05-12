@@ -1,8 +1,23 @@
-import { CheckboxDemos, RadioDemos } from '@docs/demos';
+import {
+  CheckboxDemos,
+  RadioDemos,
+  SimpleGridDemos,
+} from '@docs/demos';
 import { Layout } from '@/layout';
 import { MDX_DATA } from '@/mdx';
 
 export default Layout(MDX_DATA.Changelog7100);
+
+## Container queries in SimpleGrid and Grid
+
+You can now use [container queries](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_containment/Container_queries)
+in [SimpleGrid](/core/simple-grid) and [Grid](/core/grid) components. With container queries, grid columns and spacing
+will be adjusted based on the container width, not the viewport width.
+
+Example of using container queries in `SimpleGrid`. To see how the grid changes, resize the root element
+of the demo with the resize handle located at the bottom right corner of the demo:
+
+<Demo data={SimpleGridDemos.container} />
 
 ## Checkbox.Indicator component
 
