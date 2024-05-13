@@ -56,6 +56,9 @@ export interface TreeProps extends BoxProps, StylesApiProps<TreeFactory>, Elemen
   /** Determines whether tree node with children should be expanded on click, `true` by default */
   expandOnClick?: boolean;
 
+  /** Determines whether tree node with children should be expanded on space key press, `true` by default */
+  expandOnSpace?: boolean;
+
   /** Determines whether node should be selected on click, `false` by default */
   selectOnClick?: boolean;
 
@@ -92,6 +95,7 @@ export type TreeFactory = Factory<{
 const defaultProps: Partial<TreeProps> = {
   expandOnClick: true,
   allowRangeSelection: true,
+  expandOnSpace: true,
 };
 
 const varsResolver = createVarsResolver<TreeFactory>((_theme, { levelOffset }) => ({
@@ -116,6 +120,7 @@ export const Tree = factory<TreeFactory>((_props, ref) => {
     selectOnClick,
     clearSelectionOnOutsideClick,
     allowRangeSelection,
+    expandOnSpace,
     ...others
   } = props;
 
@@ -159,6 +164,7 @@ export const Tree = factory<TreeFactory>((_props, ref) => {
       renderNode={renderNode}
       flatValues={flatValues}
       allowRangeSelection={allowRangeSelection}
+      expandOnSpace={expandOnSpace}
     />
   ));
 

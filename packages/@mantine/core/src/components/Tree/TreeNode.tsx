@@ -29,6 +29,7 @@ interface TreeNodeProps {
   renderNode: RenderNode | undefined;
   selectOnClick: boolean | undefined;
   allowRangeSelection: boolean | undefined;
+  expandOnSpace: boolean | undefined;
 }
 
 export function TreeNode({
@@ -43,6 +44,7 @@ export function TreeNode({
   renderNode,
   flatValues,
   allowRangeSelection,
+  expandOnSpace,
 }: TreeNodeProps) {
   const ref = useRef<HTMLLIElement>(null);
   const nested = (node.children || []).map((child) => (
@@ -59,6 +61,7 @@ export function TreeNode({
       renderNode={renderNode}
       selectOnClick={selectOnClick}
       allowRangeSelection={allowRangeSelection}
+      expandOnSpace={expandOnSpace}
     />
   ));
 
@@ -114,7 +117,7 @@ export function TreeNode({
       }
     }
 
-    if (event.nativeEvent.code === 'Space' && expandOnClick) {
+    if (event.nativeEvent.code === 'Space' && expandOnSpace) {
       event.stopPropagation();
       event.preventDefault();
       controller.toggleExpanded(node.value);

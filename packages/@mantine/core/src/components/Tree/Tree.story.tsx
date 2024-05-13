@@ -126,6 +126,7 @@ export function SelectOnClick() {
         tree={tree}
         data={data}
         selectOnClick
+        expandOnSpace={false}
         clearSelectionOnOutsideClick
         renderNode={({ node, expanded, hasChildren, elementProps }) => (
           <Group gap="xs" {...elementProps} onDoubleClick={() => tree.toggleExpanded(node.value)}>
