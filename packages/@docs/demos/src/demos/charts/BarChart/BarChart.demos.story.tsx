@@ -88,6 +88,11 @@ export const Demo_stacked = {
   render: renderDemo(demos.stacked),
 };
 
+export const Demo_waterfall = {
+  name: '⭐ Demo: waterfall',
+  render: renderDemo(demos.waterfall),
+};
+
 export const Demo_percent = {
   name: '⭐ Demo: percent',
   render: renderDemo(demos.percent),

@@ -28,6 +28,16 @@ contribution of each series in terms of percentages.
 
 <Demo data={BarChartDemos.percent} />
 
+## Waterfall bar chart
+
+Set `type="waterfall"` to render a waterfall bar chart. This chart type illustrates how an
+initial value is influenced by subsequent positive or negative values,
+with each bar starting where the previous one ended.
+Use the `color` prop inside data to color each bar individually. Note that the series color gets overwritten for this specific bar.
+Use the `standalone` prop inside data to decouple the bar from the flow.
+
+<Demo data={BarChartDemos.waterfall} />
+
 ## Legend
 
 To display chart legend, set `withLegend` prop. When one of the items in the legend

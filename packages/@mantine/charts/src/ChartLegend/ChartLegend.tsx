@@ -34,6 +34,9 @@ export interface ChartLegendProps
 
   /** Data used for labels, only applicable for area charts: AreaChart, LineChart, BarChart */
   series?: ChartSeries[];
+
+  /** Show color swatch next to the legend item */
+  showColor?: boolean;
 }
 
 export type ChartLegendFactory = Factory<{
@@ -58,6 +61,7 @@ export const ChartLegend = factory<ChartLegendFactory>((_props, ref) => {
     legendPosition,
     mod,
     series,
+    showColor,
     ...others
   } = props;
 
@@ -85,6 +89,7 @@ export const ChartLegend = factory<ChartLegendFactory>((_props, ref) => {
       {...getStyles('legendItem')}
       onMouseEnter={() => onHighlight(item.dataKey)}
       onMouseLeave={() => onHighlight(null)}
+      data-type={showColor === false ? 'no-colorSwatch' : 'colorSwatch'}
     >
       <ColorSwatch
         color={item.color}

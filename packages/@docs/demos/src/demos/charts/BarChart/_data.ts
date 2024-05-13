@@ -17,3 +17,28 @@ export const data = [
   { month: 'June', Smartphones: 750, Laptops: 600, Tablets: 1000 },
 ];
 `;
+
+export const waterfallData = [
+  { item: 'TaxRate', 'Effective tax rate in %': 21, color: 'blue.3' },
+  { item: 'Foreign inc.', 'Effective tax rate in %': -15.5, color: 'green' },
+  { item: 'Perm. diff.', 'Effective tax rate in %': -3, color: 'green' },
+  { item: 'Credits', 'Effective tax rate in %': -3, color: 'green' },
+  { item: 'Loss carryf. ', 'Effective tax rate in %': -2, color: 'green' },
+  { item: 'Law changes', 'Effective tax rate in %': 2, color: 'red' },
+  { item: 'Reven. adj.', 'Effective tax rate in %': 4, color: 'red' },
+  { item: 'ETR', 'Effective tax rate in %': 3.5, color: 'blue.3', standalone: true },
+];
+
+export const waterfallCode = `
+export const data =
+[
+  { item: 'TaxRate', 'Effective tax rate in %': 21, color: 'blue.3' },
+  { item: 'Foreign inc.', 'Effective tax rate in %': -15.5, color: 'green' },
+  { item: 'Perm. diff.', 'Effective tax rate in %': -3, color: 'green' },
+  { item: 'Credits', 'Effective tax rate in %': -3, color: 'green' },
+  { item: 'Loss carryf. ', 'Effective tax rate in %': -2, color: 'green' },
+  { item: 'Law changes', 'Effective tax rate in %': 2, color: 'red' },
+  { item: 'Reven. adj.', 'Effective tax rate in %': 4, color: 'red' },
+  { item: 'ETR', 'Effective tax rate in %': 3.5, color: 'blue.3', standalone: true },
+];
+`;
