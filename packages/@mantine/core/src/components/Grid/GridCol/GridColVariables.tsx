@@ -62,14 +62,15 @@ export function GridColVariables({ span, order, offset, selector }: GridColVaria
 
   const baseValue = getBaseValue(span);
   const baseSpan = baseValue === undefined ? 12 : getBaseValue(span);
+  const baseColumns = getBaseValue(ctx.columns) ?? 12;
 
   const baseStyles: Record<string, string | undefined> = filterProps({
     '--col-order': getBaseValue(order)?.toString(),
     '--col-flex-grow': getColumnFlexGrow(baseSpan, ctx.grow),
-    '--col-flex-basis': getColumnFlexBasis(baseSpan, ctx.columns),
+    '--col-flex-basis': getColumnFlexBasis(baseSpan, baseColumns),
     '--col-width': baseSpan === 'content' ? 'auto' : undefined,
-    '--col-max-width': getColumnMaxWidth(baseSpan, ctx.columns, ctx.grow),
-    '--col-offset': getColumnOffset(getBaseValue(offset), ctx.columns),
+    '--col-max-width': getColumnMaxWidth(baseSpan, baseColumns, ctx.grow),
+    '--col-offset': getColumnOffset(getBaseValue(offset), baseColumns),
   });
 
   const queries = keys(theme.breakpoints).reduce<Record<string, Record<string, any>>>(
@@ -82,19 +83,25 @@ export function GridColVariables({ span, order, offset, selector }: GridColVaria
         acc[breakpoint]['--col-order'] = order[breakpoint]?.toString();
       }
 
+      const breakpointColumns =
+        typeof ctx.columns === 'object' ? ctx.columns[breakpoint] ?? baseColumns : baseColumns;
+
       if (typeof span === 'object' && span[breakpoint] !== undefined) {
         acc[breakpoint]['--col-flex-grow'] = getColumnFlexGrow(span[breakpoint], ctx.grow);
-        acc[breakpoint]['--col-flex-basis'] = getColumnFlexBasis(span[breakpoint], ctx.columns);
+        acc[breakpoint]['--col-flex-basis'] = getColumnFlexBasis(
+          span[breakpoint],
+          breakpointColumns
+        );
         acc[breakpoint]['--col-width'] = span[breakpoint] === 'content' ? 'auto' : undefined;
         acc[breakpoint]['--col-max-width'] = getColumnMaxWidth(
           span[breakpoint],
-          ctx.columns,
+          breakpointColumns,
           ctx.grow
         );
       }
 
       if (typeof offset === 'object' && offset[breakpoint] !== undefined) {
-        acc[breakpoint]['--col-offset'] = getColumnOffset(offset[breakpoint], ctx.columns);
+        acc[breakpoint]['--col-offset'] = getColumnOffset(offset[breakpoint], breakpointColumns);
       }
 
       return acc;
