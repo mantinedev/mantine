@@ -4,7 +4,11 @@ import { findElementAncestor, GetStylesApi } from '../../core';
 import type { RenderNode, TreeFactory, TreeNodeData } from './Tree';
 import type { TreeController } from './use-tree';
 
-function getValuesRange(anchor: string, value: string, flatValues: string[]) {
+function getValuesRange(anchor: string | null, value: string | undefined, flatValues: string[]) {
+  if (!anchor || !value) {
+    return [];
+  }
+
   const anchorIndex = flatValues.indexOf(anchor);
   const valueIndex = flatValues.indexOf(value);
   const start = Math.min(anchorIndex, valueIndex);
@@ -98,6 +102,16 @@ export function TreeNode({
 
       const nextIndex = event.nativeEvent.code === 'ArrowDown' ? index + 1 : index - 1;
       nodes[nextIndex]?.focus();
+
+      if (event.shiftKey) {
+        const selectNode = nodes[nextIndex];
+
+        if (selectNode) {
+          controller.setSelectedState(
+            getValuesRange(controller.anchorNode, selectNode.dataset.value, flatValues)
+          );
+        }
+      }
     }
 
     if (event.nativeEvent.code === 'Space' && expandOnClick) {
@@ -135,6 +149,7 @@ export function TreeNode({
       })}
       role="treeitem"
       aria-selected={selected}
+      data-value={node.value}
       data-selected={selected || undefined}
       tabIndex={rootIndex === 0 ? 0 : -1}
       onKeyDown={handleKeyDown}
