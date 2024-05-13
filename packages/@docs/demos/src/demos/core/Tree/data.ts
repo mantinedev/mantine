@@ -24,7 +24,7 @@ export const data: TreeNodeData[] = [
         label: 'react',
         value: 'node_modules/react',
         children: [
-          { label: 'index.js', value: 'node_modules/react/index.js' },
+          { label: 'index.d.ts', value: 'node_modules/react/index.d.ts' },
           { label: 'package.json', value: 'node_modules/react/package.json' },
         ],
       },
@@ -36,7 +36,6 @@ export const data: TreeNodeData[] = [
             label: 'core',
             value: 'node_modules/@mantine/core',
             children: [
-              { label: 'index.js', value: 'node_modules/@mantine/core/index.js' },
               { label: 'index.d.ts', value: 'node_modules/@mantine/core/index.d.ts' },
               { label: 'package.json', value: 'node_modules/@mantine/core/package.json' },
             ],
@@ -45,18 +44,16 @@ export const data: TreeNodeData[] = [
             label: 'hooks',
             value: 'node_modules/@mantine/hooks',
             children: [
-              { label: 'index.js', value: 'node_modules/@mantine/core/index.js' },
-              { label: 'index.d.ts', value: 'node_modules/@mantine/core/index.d.ts' },
-              { label: 'package.json', value: 'node_modules/@mantine/core/package.json' },
+              { label: 'index.d.ts', value: 'node_modules/@mantine/hooks/index.d.ts' },
+              { label: 'package.json', value: 'node_modules/@mantine/hooks/package.json' },
             ],
           },
           {
             label: 'form',
             value: 'node_modules/@mantine/form',
             children: [
-              { label: 'index.js', value: 'node_modules/@mantine/core/index.js' },
-              { label: 'index.d.ts', value: 'node_modules/@mantine/core/index.d.ts' },
-              { label: 'package.json', value: 'node_modules/@mantine/core/package.json' },
+              { label: 'index.d.ts', value: 'node_modules/@mantine/form/index.d.ts' },
+              { label: 'package.json', value: 'node_modules/@mantine/form/package.json' },
             ],
           },
         ],
@@ -99,7 +96,7 @@ export const data: TreeNodeData[] = [
         label: 'react',
         value: 'node_modules/react',
         children: [
-          { label: 'index.js', value: 'node_modules/react/index.js' },
+          { label: 'index.d.ts', value: 'node_modules/react/index.d.ts' },
           { label: 'package.json', value: 'node_modules/react/package.json' },
         ],
       },
@@ -111,7 +108,6 @@ export const data: TreeNodeData[] = [
             label: 'core',
             value: 'node_modules/@mantine/core',
             children: [
-              { label: 'index.js', value: 'node_modules/@mantine/core/index.js' },
               { label: 'index.d.ts', value: 'node_modules/@mantine/core/index.d.ts' },
               { label: 'package.json', value: 'node_modules/@mantine/core/package.json' },
             ],
@@ -120,7 +116,6 @@ export const data: TreeNodeData[] = [
             label: 'hooks',
             value: 'node_modules/@mantine/hooks',
             children: [
-              { label: 'index.js', value: 'node_modules/@mantine/core/index.js' },
               { label: 'index.d.ts', value: 'node_modules/@mantine/core/index.d.ts' },
               { label: 'package.json', value: 'node_modules/@mantine/core/package.json' },
             ],
@@ -129,7 +124,6 @@ export const data: TreeNodeData[] = [
             label: 'form',
             value: 'node_modules/@mantine/form',
             children: [
-              { label: 'index.js', value: 'node_modules/@mantine/core/index.js' },
               { label: 'index.d.ts', value: 'node_modules/@mantine/core/index.d.ts' },
               { label: 'package.json', value: 'node_modules/@mantine/core/package.json' },
             ],
