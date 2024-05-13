@@ -34,6 +34,7 @@ export function useTree({
   const [expandedState, setExpandedState] = useState(initialExpandedState);
   const [selectedState, setSelectedState] = useState(initialSelectedState);
   const [anchorNode, setAnchorNode] = useState<string | null>(null);
+  const [hoveredNode, setHoveredNode] = useState<string | null>(null);
 
   const initialize = useCallback(
     (data: TreeNodeData[]) => {
@@ -137,6 +138,9 @@ export function useTree({
     deselect,
     clearSelected,
     setSelectedState,
+
+    hoveredNode,
+    setHoveredNode,
   };
 }
 

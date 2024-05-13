@@ -143,6 +143,7 @@ export function TreeNode({
     onClick: handleNodeClick,
     'data-selected': selected || undefined,
     'data-value': node.value,
+    'data-hovered': controller.hoveredNode === node.value || undefined,
   };
 
   return (
@@ -154,10 +155,19 @@ export function TreeNode({
       aria-selected={selected}
       data-value={node.value}
       data-selected={selected || undefined}
+      data-hovered={controller.hoveredNode === node.value || undefined}
       tabIndex={rootIndex === 0 ? 0 : -1}
       onKeyDown={handleKeyDown}
       data-level={level}
       ref={ref}
+      onMouseOver={(event) => {
+        event.stopPropagation();
+        controller.setHoveredNode(node.value);
+      }}
+      onMouseLeave={(event) => {
+        event.stopPropagation();
+        controller.setHoveredNode(null);
+      }}
     >
       {typeof renderNode === 'function' ? (
         renderNode({

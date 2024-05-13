@@ -24,7 +24,7 @@ export interface TreeNodeData {
   children?: TreeNodeData[];
 }
 
-export interface RenderNodePayload {
+export interface RenderTreeNodePayload {
   level: number;
   expanded: boolean;
   hasChildren: boolean;
@@ -36,10 +36,11 @@ export interface RenderNodePayload {
     onClick: (event: React.MouseEvent) => void;
     'data-selected': boolean | undefined;
     'data-value': string;
+    'data-hovered': boolean | undefined;
   };
 }
 
-export type RenderNode = (payload: RenderNodePayload) => React.ReactNode;
+export type RenderNode = (payload: RenderTreeNodePayload) => React.ReactNode;
 
 export type TreeStylesNames = 'root' | 'node' | 'subtree' | 'label';
 export type TreeCssVariables = {

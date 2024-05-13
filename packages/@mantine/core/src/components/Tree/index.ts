@@ -6,5 +6,6 @@ export type {
   TreeProps,
   TreeStylesNames,
   TreeNodeData,
+  RenderTreeNodePayload,
 } from './Tree';
 export type { UseTreeInput } from './use-tree';
