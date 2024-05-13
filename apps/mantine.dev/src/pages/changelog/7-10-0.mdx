@@ -8,64 +8,51 @@ import { MDX_DATA } from '@/mdx';
 
 export default Layout(MDX_DATA.Changelog7100);
 
-## Container queries in SimpleGrid and Grid
+## Container queries in SimpleGrid
 
 You can now use [container queries](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_containment/Container_queries)
-in [SimpleGrid](/core/simple-grid) and [Grid](/core/grid) components. With container queries, grid columns and spacing
+in [SimpleGrid](/core/simple-grid) component. With container queries, grid columns and spacing
 will be adjusted based on the container width, not the viewport width.
 
-Example of using container queries in `SimpleGrid`. To see how the grid changes, resize the root element
+Example of using container queries. To see how the grid changes, resize the root element
 of the demo with the resize handle located at the bottom right corner of the demo:
 
 <Demo data={SimpleGridDemos.container} />
 
-## Checkbox.Indicator component
+## Checkbox and Radio indicators
 
-New [Checkbox.Indicator](/core/checkbox/#checkboxindicator) looks exactly the same as `Checkbox` component, but it does not
-have any semantic meaning, it's just a visual representation of checkbox state. You
-can use it in any place where you need to display checkbox state without any interaction
-related to the indicator. For example, it is useful in cards based on buttons, trees, etc.
+New [Checkbox.Indicator](/core/checkbox/#checkboxindicator) and [Radio.Indicator](/core/radio/#radioindicator)
+components look exactly the same as `Checkbox` and `Radio` components, but they do not
+have any semantic meaning, they are just visual representations of checkbox and radio states.
 
-Note that `Checkbox.Indicator` cannot be focused or selected with keyboard. It is not
-accessible and should not be used as a replacement for `Checkbox` component.
+`Checkbox.Indicator` component:
 
 <Demo data={CheckboxDemos.indicator} />
 
-## Checkbox.Card component
-
-[Checkbox.Card](/core/checkbox/#checkboxcard-component) component can be used as a replacement for `Checkbox` to build custom
-cards/buttons/other things that work as checkboxes. The root element of the component
-has `role="checkbox"` attribute, it is accessible by default and supports the same
-keyboard interactions as `input[type="checkbox"]`.
-
-<Demo data={CheckboxDemos.card} />
-
-You can use `Checkbox.Card` with `Checkbox.Group` the same way as `Checkbox` component:
-
-<Demo data={CheckboxDemos.cardGroup} />
-
-## Radio.Indicator
-
-New [Radio.Indicator](/core/radio/#radioindicator) looks exactly the same as `Radio` component, but it does not
-have any semantic meaning, it's just a visual representation of radio state. You
-can use it in any place where you need to display radio state without any interaction
-related to the indicator. For example, it is useful in cards based on buttons, trees, etc.
-
-Note that `Radio.Indicator` cannot be focused or selected with keyboard. It is not
-accessible and should not be used as a replacement for `Radio` component.
+`Radio.Indicator` component:
 
 <Demo data={RadioDemos.indicator} />
 
-## Radio.Card component
+## Checkbox and Radio cards
 
-[Radio.Card](/core/radio/#radiocard-component) component can be used as a replacement for `Radio` to build custom
-cards/buttons/other things that work as radios. The root element of the component
-has `role="radio"` attribute, it is accessible by default and supports the same
-keyboard interactions as `input[type="radio"]`.
+New [Checkbox.Card](/core/checkbox/#checkboxcard-component) and [Radio.Card](/core/radio/#radiocard-component)
+components can be used as replacements for `Checkbox` and `Radio` to build custom cards/buttons/etc.
+that work as checkboxes and radios. Components are accessible by default and support the same
+keyboard interactions as `input[type="checkbox"]` and `input[type="radio"]`.
+
+`Checkbox.Card` component:
+
+<Demo data={CheckboxDemos.card} />
+
+`Checkbox.Card` component with `Checkbox.Group`:
+
+<Demo data={CheckboxDemos.cardGroup} />
+
+`Radio.Card` component:
 
 <Demo data={RadioDemos.card} />
 
-You can use `Radio.Card` with `Radio.Group` the same way as `Radio` component:
+`Radio.Card` component with `Radio.Group`:
 
 <Demo data={RadioDemos.cardGroup} />
 
