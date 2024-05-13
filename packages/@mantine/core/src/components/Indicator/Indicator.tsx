@@ -101,7 +101,7 @@ const varsResolver = createVarsResolver<IndicatorFactory>(
     root: {
       '--indicator-color': color ? getThemeColor(color, theme) : undefined,
       '--indicator-text-color': getAutoContrastValue(autoContrast, theme)
-        ? getContrastColor({ color, theme })
+        ? getContrastColor({ color, theme, autoContrast })
         : undefined,
       '--indicator-size': rem(size),
       '--indicator-radius': radius === undefined ? undefined : getRadius(radius),

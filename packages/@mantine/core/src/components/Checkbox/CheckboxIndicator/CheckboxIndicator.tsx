@@ -88,7 +88,7 @@ const varsResolver = createVarsResolver<CheckboxIndicatorFactory>(
         '--checkbox-icon-color': iconColor
           ? getThemeColor(iconColor, theme)
           : getAutoContrastValue(autoContrast, theme)
-            ? getContrastColor({ color, theme })
+            ? getContrastColor({ color, theme, autoContrast })
             : undefined,
       },
     };

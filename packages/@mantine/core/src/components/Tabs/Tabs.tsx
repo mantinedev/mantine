@@ -117,7 +117,7 @@ const varsResolver = createVarsResolver<TabsFactory>((theme, { radius, color, au
     '--tabs-radius': getRadius(radius),
     '--tabs-color': getThemeColor(color, theme),
     '--tabs-text-color': getAutoContrastValue(autoContrast, theme)
-      ? getContrastColor({ color, theme })
+      ? getContrastColor({ color, theme, autoContrast })
       : undefined,
   },
 }));

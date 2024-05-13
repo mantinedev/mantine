@@ -91,7 +91,7 @@ const varsResolver = createVarsResolver<RadioIndicatorFactory>(
         '--radio-icon-color': iconColor
           ? getThemeColor(iconColor, theme)
           : getAutoContrastValue(autoContrast, theme)
-            ? getContrastColor({ color, theme })
+            ? getContrastColor({ color, theme, autoContrast })
             : undefined,
       },
     };
