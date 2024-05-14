@@ -35,6 +35,25 @@ module.exports = {
 };
 ```
 
+It is also possible that you are working in a project that uses a PostCSS config style where the plugins are defined as an Array.
+If this is the case, then you may add `postcss-preset-mantine` in the following manner:
+
+```js
+// Creating a function to maintain consistency with other plugins
+function mantineCSS() {
+  return {
+    postcssPlugin: 'postcss-preset-mantine',
+    plugins: {},
+  };
+}
+
+module.exports = {
+  plugins: [
+    mantineCSS()
+  ],
+};
+```
+
 All done! You can now use all the features of the preset.
 
 ## rem/em functions
