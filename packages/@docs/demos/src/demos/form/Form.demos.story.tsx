@@ -157,3 +157,8 @@ export const Demo_watch = {
   name: '⭐ Demo: watch',
   render: renderDemo(demos.watch),
 };
+
+export const Demo_focusError = {
+  name: '⭐ Demo: focusError',
+  render: renderDemo(demos.focusError),
+};

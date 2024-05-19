@@ -1,5 +1,6 @@
 import {
   CheckboxDemos,
+  FormDemos,
   RadioDemos,
   SimpleGridDemos,
   TreeDemos,
@@ -14,6 +15,13 @@ export default Layout(MDX_DATA.Changelog7100);
 New [Tree](/core/tree) component:
 
 <Demo data={TreeDemos.files} />
+
+## form.getInputNode
+
+New `form.getInputNode(path)` handler returns input DOM node for the given field path.
+Form example, it can be used to focus input on form submit if there is an error:
+
+<Demo data={FormDemos.focusError} />
 
 ## Container queries in SimpleGrid
 

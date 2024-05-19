@@ -29,3 +29,4 @@ export { controlled } from './Form.demo.controlled';
 export { uncontrolled } from './Form.demo.uncontrolled';
 export { onValuesChange } from './Form.demo.onValuesChange';
 export { watch } from './Form.demo.watch';
+export { focusError } from './Form.demo.focusError';
