@@ -168,6 +168,10 @@ export type Watch<Values> = <Field extends LooseKeys<Values>>(
 
 export type Key<Values> = <Field extends LooseKeys<Values>>(path: Field) => string;
 
+export type GetInputNode<Values> = <NodeType extends HTMLElement, Field extends LooseKeys<Values>>(
+  path: Field
+) => NodeType | null;
+
 export interface UseFormInput<
   Values,
   TransformValues extends _TransformValues<Values> = (values: Values) => Values,
@@ -229,6 +233,7 @@ export interface UseFormReturnType<
   getDirty: GetStatus;
   watch: Watch<Values>;
   key: Key<Values>;
+  getInputNode: GetInputNode<Values>;
 }
 
 export type UseForm<
