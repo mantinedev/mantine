@@ -29,7 +29,7 @@ const cssCode = `.root {
 
     @mixin light {
       background-color: var(--mantine-color-blue-0);
-      color: var(--mantine-color-blue-9);
+      color: var(--mantine-color-black);
     }
 
     @mixin dark {
