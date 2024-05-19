@@ -40,15 +40,30 @@ describe('useThrottledValue', () => {
       jest.advanceTimersByTime(3000);
     });
 
-    expect(result.current).toBe('updated-2');
+    expect(result.current).toBe('updated-3');
   });
 
   it('should clear timeout on unmount', () => {
     const clearTimeoutSpy = jest.spyOn(window, 'clearTimeout');
-    const { unmount } = renderHook(() => useThrottledValue('initial', 1000));
+    const { result, rerender, unmount } = renderHook(
+      ({ value, delay }) => useThrottledValue(value, delay),
+      {
+        initialProps: { value: 'initial', delay: 1000 },
+      }
+    );
+
+    act(() => {
+      rerender({ value: 'updated', delay: 1000 });
+    });
+
+    act(() => {
+      rerender({ value: 'updated-2', delay: 1000 });
+    });
 
     unmount();
+    jest.advanceTimersByTime(1000);
 
+    expect(result.current).toBe('updated');
     expect(clearTimeoutSpy).toHaveBeenCalledTimes(1);
   });
 });
