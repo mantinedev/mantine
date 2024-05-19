@@ -156,9 +156,9 @@ export function TreeNode({
       data-value={node.value}
       data-selected={selected || undefined}
       data-hovered={controller.hoveredNode === node.value || undefined}
+      data-level={level}
       tabIndex={rootIndex === 0 ? 0 : -1}
       onKeyDown={handleKeyDown}
-      data-level={level}
       ref={ref}
       onMouseOver={(event) => {
         event.stopPropagation();
