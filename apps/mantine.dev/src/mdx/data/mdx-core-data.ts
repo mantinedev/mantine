@@ -1151,4 +1151,16 @@ export const MDX_CORE_DATA: Record<string, Frontmatter> = {
     source: '@mantine/core/src/components/FloatingIndicator/FloatingIndicator.tsx',
     docs: 'core/floating-indicator.mdx',
   },
+
+  Tree: {
+    title: 'Tree',
+    package: '@mantine/core',
+    slug: '/core/tree',
+    props: ['Tree'],
+    styles: ['Tree'],
+    description: 'Display a Tree structure',
+    import: "import { Tree } from '@mantine/core';",
+    source: '@mantine/core/src/components/Tree/Tree.tsx',
+    docs: 'core/tree.mdx',
+  },
 };

@@ -250,6 +250,7 @@ export const MDX_PAGES_GROUPS: MdxPagesGroup[] = [
           MDX_DATA.Pagination,
           MDX_DATA.Stepper,
           MDX_DATA.NavLink,
+          MDX_DATA.Tree,
         ],
       },
       {

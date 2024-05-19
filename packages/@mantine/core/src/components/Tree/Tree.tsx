@@ -25,11 +25,22 @@ export interface TreeNodeData {
 }
 
 export interface RenderTreeNodePayload {
+  /** Node level in the tree */
   level: number;
+
+  /** `true` if the node is expanded, applicable only for nodes with `children` */
   expanded: boolean;
+
+  /** `true` if the node has non-empty `children` array */
   hasChildren: boolean;
+
+  /** `true` if the node is selected */
   selected: boolean;
+
+  /** Node data from the `data` prop of `Tree` */
   node: TreeNodeData;
+
+  /** Props to spread into the root node element */
   elementProps: {
     className: string;
     style: React.CSSProperties;

@@ -8,4 +8,4 @@ export type {
   TreeNodeData,
   RenderTreeNodePayload,
 } from './Tree';
-export type { UseTreeInput } from './use-tree';
+export type { UseTreeInput, UseTreeReturnType } from './use-tree';
