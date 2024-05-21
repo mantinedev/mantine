@@ -30,7 +30,7 @@ export interface ProgressSectionProps
   /** Key of `theme.colors` or any valid CSS value, `theme.primaryColor` by default */
   color?: MantineColor;
 
-  /** Determines whether the section should have stipes, `false` by default */
+  /** Determines whether the section should have stripes, `false` by default */
   striped?: boolean;
 
   /** Determines whether the sections stripes should be animated, if set, `striped` prop is ignored, `false` by default */
