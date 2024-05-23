@@ -11,6 +11,7 @@ function getInputProps(mode: FormMode, input: Record<string, any>) {
     onBlur: expect.any(Function),
     onChange: expect.any(Function),
     onFocus: expect.any(Function),
+    'data-path': expect.any(String),
   };
 
   return result;
