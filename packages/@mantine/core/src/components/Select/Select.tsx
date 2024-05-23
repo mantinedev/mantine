@@ -162,7 +162,10 @@ export const Select = factory<SelectFactory>((_props, ref) => {
     onChange,
   });
 
-  const selectedOption = typeof _value === 'string' ? optionsLockup[_value] : undefined;
+  const selectedOption = useMemo(
+    () => typeof _value === 'string' ? optionsLockup[_value] : undefined,
+    [_value]
+  );
   const [search, setSearch] = useUncontrolled({
     value: searchValue,
     defaultValue: defaultSearchValue,
