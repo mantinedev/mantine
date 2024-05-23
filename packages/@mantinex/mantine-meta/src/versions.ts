@@ -29,6 +29,10 @@ export const allVersions = [
         version: '7.9.1',
         date: 'May 8, 2024',
       },
+      {
+        version: '7.9.2',
+        date: 'May 17, 2024',
+      },
     ],
   },
   {
