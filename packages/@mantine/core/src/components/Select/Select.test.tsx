@@ -1,3 +1,4 @@
+import { useState} from 'react';
 import {
   inputDefaultProps,
   inputStylesApiSelectors,
@@ -149,4 +150,30 @@ describe('@mantine/core/Select', () => {
     await userEvent.click(screen.getByRole('textbox', { name: 'Second' }));
     expect(screen.queryByRole('listbox', { name: 'Second' })).toBeVisible();
   });
+
+  it('allows to change controlled search value when value is controlled and selected', async () => {
+    const Wrapper : React.FunctionComponent = () => {
+      const [value, setValue] = useState<string | null>("Angular");
+      const [searchValue, setSearchValue] = useState("");
+
+      return (
+        <Select
+          {...defaultProps}
+          value={value}
+          onChange={setValue}
+          searchable
+          searchValue={searchValue}
+          onSearchChange={setSearchValue}
+          data={['React', 'Angular', 'Svelte']}
+        />
+      );
+    }
+
+    render(<Wrapper />);
+
+    await userEvent.click(screen.getByRole('textbox'));
+    // type backspace to remove last character
+    await userEvent.type(screen.getByRole('textbox'), '{backspace}');
+    expect(screen.getByRole('textbox')).toHaveValue('Angula');
+  })
 });
