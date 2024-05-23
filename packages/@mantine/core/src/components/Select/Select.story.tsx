@@ -199,23 +199,22 @@ export function SearchControlledValue() {
 }
 
 export function ControlledSearchAndValue() {
-  const [value, setValue] = useState<string | null>("Angular");
-  const [searchValue, setSearchValue] = useState("");
+  const [value, setValue] = useState<string | null>('Angular');
+  const [searchValue, setSearchValue] = useState('');
 
   return (
     <div style={{ padding: 40 }}>
       <Select
-          searchable
-          searchValue={searchValue}
-          onSearchChange={setSearchValue}
-          data={["React", "Angular", "Svelte"]}
-          value={value}
-          onChange={setValue}
+        searchable
+        searchValue={searchValue}
+        onSearchChange={setSearchValue}
+        data={['React', 'Angular', 'Svelte']}
+        value={value}
+        onChange={setValue}
       />
-      </div>
+    </div>
   );
 }
-
 
 export function AllowDeselectFalse() {
   return (

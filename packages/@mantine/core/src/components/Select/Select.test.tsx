@@ -1,4 +1,4 @@
-import { useState} from 'react';
+import { useState } from 'react';
 import {
   inputDefaultProps,
   inputStylesApiSelectors,
@@ -152,9 +152,9 @@ describe('@mantine/core/Select', () => {
   });
 
   it('allows to change controlled search value when value is controlled and selected', async () => {
-    const Wrapper : React.FunctionComponent = () => {
-      const [value, setValue] = useState<string | null>("Angular");
-      const [searchValue, setSearchValue] = useState("");
+    const Wrapper: React.FunctionComponent = () => {
+      const [value, setValue] = useState<string | null>('Angular');
+      const [searchValue, setSearchValue] = useState('');
 
       return (
         <Select
@@ -167,7 +167,7 @@ describe('@mantine/core/Select', () => {
           data={['React', 'Angular', 'Svelte']}
         />
       );
-    }
+    };
 
     render(<Wrapper />);
 
@@ -175,5 +175,5 @@ describe('@mantine/core/Select', () => {
     // type backspace to remove last character
     await userEvent.type(screen.getByRole('textbox'), '{backspace}');
     expect(screen.getByRole('textbox')).toHaveValue('Angula');
-  })
+  });
 });
