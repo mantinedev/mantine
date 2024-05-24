@@ -1,5 +1,5 @@
 import { useEffect, useMemo } from 'react';
-import { useId, useUncontrolled } from '@mantine/hooks';
+import { useId, useUncontrolled, useMemoWithDeepComparison } from '@mantine/hooks';
 import {
   BoxProps,
   ElementProps,
@@ -162,9 +162,9 @@ export const Select = factory<SelectFactory>((_props, ref) => {
     onChange,
   });
 
-  const selectedOption = useMemo(
+  const selectedOption = useMemoWithDeepComparison(
     () => (typeof _value === 'string' ? optionsLockup[_value] : undefined),
-    [_value]
+    [_value, data]
   );
   const [search, setSearch] = useUncontrolled({
     value: searchValue,
