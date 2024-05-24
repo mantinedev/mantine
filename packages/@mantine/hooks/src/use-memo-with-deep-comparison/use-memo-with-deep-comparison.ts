@@ -10,6 +10,6 @@ function useDeepCompareMemoize(dependencies: DependencyList) {
 }
 
 export function useMemoWithDeepComparison<T>(factory: () => T, dependencies: DependencyList): T {
-    const deepComparedDependencies = useDeepCompareMemoize(dependencies);
-    return useMemo<T>(factory, [deepComparedDependencies]);
+  const deepComparedDependencies = useDeepCompareMemoize(dependencies);
+  return useMemo<T>(factory, [deepComparedDependencies]);
 }

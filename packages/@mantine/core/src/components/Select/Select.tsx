@@ -1,5 +1,5 @@
 import { useEffect, useMemo } from 'react';
-import { useId, useUncontrolled, useMemoWithDeepComparison } from '@mantine/hooks';
+import { useId, useMemoWithDeepComparison, useUncontrolled } from '@mantine/hooks';
 import {
   BoxProps,
   ElementProps,
