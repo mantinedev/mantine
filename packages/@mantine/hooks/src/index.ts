@@ -8,6 +8,7 @@ export { useColorScheme } from './use-color-scheme/use-color-scheme';
 export { useCounter } from './use-counter/use-counter';
 export { useDebouncedState } from './use-debounced-state/use-debounced-state';
 export { useDebouncedValue } from './use-debounced-value/use-debounced-value';
+export { useMemoWithDeepComparison } from './use-memo-with-deep-comparison/use-memo-with-deep-comparison.js';
 export { useDocumentTitle } from './use-document-title/use-document-title';
 export { useDocumentVisibility } from './use-document-visibility/use-document-visibility';
 export { useFocusReturn } from './use-focus-return/use-focus-return';
