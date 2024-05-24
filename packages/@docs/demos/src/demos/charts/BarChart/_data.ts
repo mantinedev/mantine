@@ -19,26 +19,26 @@ export const data = [
 `;
 
 export const waterfallData = [
-  { item: 'TaxRate', 'Effective tax rate in %': 21, color: 'blue.3' },
-  { item: 'Foreign inc.', 'Effective tax rate in %': -15.5, color: 'green' },
-  { item: 'Perm. diff.', 'Effective tax rate in %': -3, color: 'green' },
-  { item: 'Credits', 'Effective tax rate in %': -3, color: 'green' },
-  { item: 'Loss carryf. ', 'Effective tax rate in %': -2, color: 'green' },
+  { item: 'TaxRate', 'Effective tax rate in %': 21, color: 'blue' },
+  { item: 'Foreign inc.', 'Effective tax rate in %': -15.5, color: 'teal' },
+  { item: 'Perm. diff.', 'Effective tax rate in %': -3, color: 'teal' },
+  { item: 'Credits', 'Effective tax rate in %': -3, color: 'teal' },
+  { item: 'Loss carryf. ', 'Effective tax rate in %': -2, color: 'teal' },
   { item: 'Law changes', 'Effective tax rate in %': 2, color: 'red' },
   { item: 'Reven. adj.', 'Effective tax rate in %': 4, color: 'red' },
-  { item: 'ETR', 'Effective tax rate in %': 3.5, color: 'blue.3', standalone: true },
+  { item: 'ETR', 'Effective tax rate in %': 3.5, color: 'blue', standalone: true },
 ];
 
 export const waterfallCode = `
 export const data =
 [
-  { item: 'TaxRate', 'Effective tax rate in %': 21, color: 'blue.3' },
-  { item: 'Foreign inc.', 'Effective tax rate in %': -15.5, color: 'green' },
-  { item: 'Perm. diff.', 'Effective tax rate in %': -3, color: 'green' },
-  { item: 'Credits', 'Effective tax rate in %': -3, color: 'green' },
-  { item: 'Loss carryf. ', 'Effective tax rate in %': -2, color: 'green' },
+  { item: 'TaxRate', 'Effective tax rate in %': 21, color: 'blue' },
+  { item: 'Foreign inc.', 'Effective tax rate in %': -15.5, color: 'teal' },
+  { item: 'Perm. diff.', 'Effective tax rate in %': -3, color: 'teal' },
+  { item: 'Credits', 'Effective tax rate in %': -3, color: 'teal' },
+  { item: 'Loss carryf. ', 'Effective tax rate in %': -2, color: 'teal' },
   { item: 'Law changes', 'Effective tax rate in %': 2, color: 'red' },
   { item: 'Reven. adj.', 'Effective tax rate in %': 4, color: 'red' },
-  { item: 'ETR', 'Effective tax rate in %': 3.5, color: 'blue.3', standalone: true },
+  { item: 'ETR', 'Effective tax rate in %': 3.5, color: 'blue', standalone: true },
 ];
 `;
