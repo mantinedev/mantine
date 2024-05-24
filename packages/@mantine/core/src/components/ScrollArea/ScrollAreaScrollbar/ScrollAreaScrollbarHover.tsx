@@ -25,6 +25,7 @@ export const ScrollAreaScrollbarHover = forwardRef<HTMLDivElement, ScrollAreaScr
         };
         scrollArea.addEventListener('pointerenter', handlePointerEnter);
         scrollArea.addEventListener('pointerleave', handlePointerLeave);
+
         return () => {
           window.clearTimeout(hideTimer);
           scrollArea.removeEventListener('pointerenter', handlePointerEnter);

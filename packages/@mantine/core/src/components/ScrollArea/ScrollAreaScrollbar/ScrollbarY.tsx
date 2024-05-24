@@ -14,8 +14,10 @@ export const ScrollAreaScrollbarY = forwardRef<HTMLDivElement, ScrollAreaScrollb
     const composeRefs = useMergedRef(forwardedRef, ref, context.onScrollbarYChange);
 
     useEffect(() => {
-      if (ref.current) setComputedStyle(getComputedStyle(ref.current));
-    }, [ref]);
+      if (ref.current) {
+        setComputedStyle(window.getComputedStyle(ref.current));
+      }
+    }, []);
 
     return (
       <Scrollbar
