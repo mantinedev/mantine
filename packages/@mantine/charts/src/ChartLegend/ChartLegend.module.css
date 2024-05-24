@@ -31,6 +31,10 @@
       background-color: var(--mantine-color-dark-5);
     }
   }
+
+  &[data-without-color] .legendItemColor {
+    display: none;
+  }
 }
 
 .legendItemName {

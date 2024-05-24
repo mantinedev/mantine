@@ -15,6 +15,7 @@ export { unit } from './BarChart.demo.unit';
 export { xAxisOffset } from './BarChart.demo.xAxisOffset';
 export { yScale } from './BarChart.demo.yScale';
 export { stacked } from './BarChart.demo.stacked';
+export { waterfall } from './BarChart.demo.waterfall';
 export { percent } from './BarChart.demo.percent';
 export { vertical } from './BarChart.demo.vertical';
 export { seriesLabels } from './BarChart.demo.seriesLabels';

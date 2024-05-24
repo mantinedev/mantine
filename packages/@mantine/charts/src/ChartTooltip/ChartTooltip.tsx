@@ -27,9 +27,15 @@ export function getFilteredChartTooltipPayload(payload: Record<string, any>[], s
 
 function getData(item: Record<string, any>, type: 'area' | 'radial' | 'scatter') {
   if (type === 'radial' || type === 'scatter') {
+    if (Array.isArray(item.value)) {
+      return item.value[1] - item.value[0];
+    }
     return item.value;
   }
 
+  if (Array.isArray(item.payload[item.dataKey])) {
+    return item.payload[item.dataKey][1] - item.payload[item.dataKey][0];
+  }
   return item.payload[item.dataKey];
 }
 
