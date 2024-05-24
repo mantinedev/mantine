@@ -20,8 +20,9 @@ import { UnstyledButton } from '../UnstyledButton';
 import { NumberInputChevron } from './NumberInputChevron';
 import classes from './NumberInput.module.css';
 
-// re for -0, -0., -0.0, -0.00, -0.000 ... strings
-const partialNegativeNumberPattern = /^-0(\.0*)?$/;
+// re for negative -0, -0., -0.0, -0.00, -0.000 ... strings
+// and for positive 0., 0.0, 0.00, 0.000 ... strings
+const leadingDecimalZeroPattern = /^(0\.0*|-0(\.0*)?)$/;
 
 // re for 01, 006, 0002 ... and negative counterparts
 const leadingZerosPattern = /^-?0\d+$/;
@@ -238,7 +239,7 @@ export const NumberInput = factory<NumberInputFactory>((_props, ref) => {
     if (event.source === 'event') {
       setValue(
         isValidNumber(payload.floatValue) &&
-          !partialNegativeNumberPattern.test(payload.value) &&
+          !leadingDecimalZeroPattern.test(payload.value) &&
           !(allowLeadingZeros ? leadingZerosPattern.test(payload.value) : false)
           ? payload.floatValue
           : payload.value
