@@ -42,6 +42,7 @@ function valueToPercent(value: number) {
 
 export interface AreaChartSeries extends ChartSeries {
   strokeDasharray?: string | number;
+  color: MantineColor;
 }
 
 export type AreaChartType = 'default' | 'stacked' | 'percent' | 'split';

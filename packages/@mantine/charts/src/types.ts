@@ -17,7 +17,7 @@ export interface ChartReferenceLineProps extends Omit<ReferenceLineProps, 'ref' 
 
 export interface ChartSeries {
   name: string;
-  color: MantineColor;
+  color?: MantineColor;
   label?: string;
 }
 

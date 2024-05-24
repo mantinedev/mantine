@@ -32,7 +32,7 @@
     }
   }
 
-  &[data-type='no-colorSwatch'] .legendItemColor {
+  &[data-without-color] .legendItemColor {
     display: none;
   }
 }

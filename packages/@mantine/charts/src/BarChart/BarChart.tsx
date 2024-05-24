@@ -56,7 +56,7 @@ export interface BarChartProps
     GridChartBaseProps,
     StylesApiProps<BarChartFactory>,
     ElementProps<'div'> {
-  /** Data used to display chart. Special keys: `color`: to adjust color on per Bar level. `standalone`: Opt out of the flow if `type="waterfall"` is set.  */
+  /** Data used to display chart. */
   data: Record<string, any>[];
 
   /** An array of objects with `name` and `color` keys. Determines which data should be consumed from the `data` array. */
@@ -129,6 +129,29 @@ function BarLabel({ value, valueFormatter, ...others }: Record<string, any>) {
   );
 }
 
+function calculateCumulativeTotal(waterfallData: Record<string, any>[], dataKey: string) {
+  let start: number = 0;
+  let end: number = 0;
+  return waterfallData.map((item) => {
+    if (item.standalone) {
+      for (const prop in item) {
+        if (typeof item[prop] === 'number' && prop !== dataKey) {
+          item[prop] = [0, item[prop]];
+        }
+      }
+    } else {
+      for (const prop in item) {
+        if (typeof item[prop] === 'number' && prop !== dataKey) {
+          end += item[prop];
+          item[prop] = [start, end];
+          start = end;
+        }
+      }
+    }
+    return item;
+  });
+}
+
 export const BarChart = factory<BarChartFactory>((_props, ref) => {
   const props = useProps('BarChart', defaultProps, _props);
   const {
@@ -187,30 +210,7 @@ export const BarChart = factory<BarChartFactory>((_props, ref) => {
     props,
   });
 
-  function calculateCumulativeTotal(waterfallData: Record<string, any>[]) {
-    let start: number = 0;
-    let end: number = 0;
-    return waterfallData.map((item) => {
-      if (item.standalone) {
-        for (const prop in item) {
-          if (typeof item[prop] === 'number' && prop !== dataKey) {
-            item[prop] = [0, item[prop]];
-          }
-        }
-      } else {
-        for (const prop in item) {
-          if (typeof item[prop] === 'number' && prop !== dataKey) {
-            end += item[prop];
-            item[prop] = [start, end];
-            start = end;
-          }
-        }
-      }
-      return item;
-    });
-  }
-
-  const inputData = type === 'waterfall' ? calculateCumulativeTotal(data) : data;
+  const inputData = type === 'waterfall' ? calculateCumulativeTotal(data, dataKey) : data;
 
   const getStyles = useStyles<BarChartFactory>({
     name: 'BarChart',
