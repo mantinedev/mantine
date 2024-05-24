@@ -47,6 +47,30 @@ export function Usage() {
   );
 }
 
+export function ErrorOnSubmit() {
+  const form = useForm({
+    mode: 'uncontrolled',
+    initialValues: {
+      email: 'a@a',
+    },
+    validate: {
+      email: (value) => (value.includes('@') ? null : 'Invalid email'),
+    },
+  });
+
+  return (
+    <form
+      onSubmit={form.onSubmit(() => {
+        form.setFieldError('email', 'Server error');
+      })}
+    >
+      <TextInput label="Email" {...form.getInputProps('email')} />
+
+      <Button type="submit">Submit</Button>
+    </form>
+  );
+}
+
 interface FormValues {
   name: string;
   terms: boolean;

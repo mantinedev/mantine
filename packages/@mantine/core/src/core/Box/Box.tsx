@@ -28,6 +28,9 @@ export interface BoxProps extends MantineStyleProps {
   /** CSS variables defined on root component element */
   __vars?: CssVarsProp;
 
+  /** `size` property passed down the HTML element */
+  __size?: string;
+
   /** Breakpoint above which the component is hidden with `display: none` */
   hiddenFrom?: MantineBreakpoint;
 
@@ -75,6 +78,7 @@ const _Box = forwardRef<
       lightHidden,
       darkHidden,
       renderRoot,
+      __size,
       ...others
     },
     ref
@@ -108,6 +112,7 @@ const _Box = forwardRef<
       }),
       'data-variant': variant,
       'data-size': isNumberLike(size) ? undefined : size || undefined,
+      size: __size,
       ...getBoxMod(mod),
       ...rest,
     };

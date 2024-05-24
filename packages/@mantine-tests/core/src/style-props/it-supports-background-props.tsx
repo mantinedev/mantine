@@ -17,7 +17,6 @@ export function itSupportsBackgroundProps<Props>(
     const { container: bgp } = render(<options.component {...options.props} bgp="center" />);
     const { container: bgr } = render(<options.component {...options.props} bgr="repeat" />);
     const { container: bga } = render(<options.component {...options.props} bga="fixed" />);
-    const { container: bd } = render(<options.component {...options.props} bd="1rem solid red" />);
 
     expect(bgsz.querySelector(selector)).toHaveStyle({
       backgroundSize: 'calc(2rem * var(--mantine-scale))',
@@ -25,8 +24,5 @@ export function itSupportsBackgroundProps<Props>(
     expect(bgp.querySelector(selector)).toHaveStyle({ backgroundPosition: 'center' });
     expect(bgr.querySelector(selector)).toHaveStyle({ backgroundRepeat: 'repeat' });
     expect(bga.querySelector(selector)).toHaveStyle({ backgroundAttachment: 'fixed' });
-    expect(bd.querySelector(selector)).toHaveStyle({
-      border: 'calc(1rem * var(--mantine-scale)) solid var(--mantine-color-red-filled)',
-    });
   });
 }

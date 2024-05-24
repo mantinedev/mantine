@@ -37,7 +37,7 @@ export function useFetch<T>(url: string, { autoInvoke = true, ...options }: UseF
           setError(err);
         }
 
-        throw err;
+        return err;
       });
   }, [url]);
 

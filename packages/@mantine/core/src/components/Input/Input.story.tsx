@@ -15,7 +15,7 @@ export function WithinDisabledFieldset() {
 export function Error() {
   return (
     <div style={{ padding: 40, maxWidth: 400 }}>
-      <Input placeholder="With error" error />
+      <Input placeholder="With error" error inputSize="5" />
     </div>
   );
 }

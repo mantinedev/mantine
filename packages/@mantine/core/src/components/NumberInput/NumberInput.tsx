@@ -20,11 +20,12 @@ import { UnstyledButton } from '../UnstyledButton';
 import { NumberInputChevron } from './NumberInputChevron';
 import classes from './NumberInput.module.css';
 
-// re for -0, -0., -0.0, -0.00, -0.000 ... strings
-const partialNegativeNumberPattern = /^-0(\.0*)?$/;
+// re for negative -0, -0., -0.0, -0.00, -0.000 ... strings
+// and for positive 0., 0.0, 0.00, 0.000 ... strings
+const leadingDecimalZeroPattern = /^(0\.0*|-0(\.0*)?)$/;
 
-// re for 01, 006, 0002 ... and negative counterparts
-const leadingZerosPattern = /^-?0\d+$/;
+// re for 01, 006, 00.02, -0010, -000.293 ... and negative counterparts
+const leadingZerosPattern = /^-?0\d+(\.\d+)?\.?$/;
 
 export interface NumberInputHandlers {
   increment: () => void;
@@ -71,7 +72,7 @@ export interface NumberInputProps
   /** Called when value changes with `react-number-format` payload */
   onValueChange?: OnValueChange;
 
-  /** Determines whether leading zeros are allowed. If not set, leading zeros are removed when the input is blurred. `false` by default */
+  /** Determines whether leading zeros are allowed. If set to `false`, leading zeros are removed when the input value becomes a valid number. `true` by default */
   allowLeadingZeros?: boolean;
 
   /** Determines whether negative values are allowed, `true` by default */
@@ -142,6 +143,9 @@ export interface NumberInputProps
 
   /** Determines whether up/down keyboard events should be handled to increment/decrement value, `true` by default */
   withKeyboardEvents?: boolean;
+
+  /** Determines whether leading zeros (e.g. `00100` -> `100`) should be removed on blur, `true` by default */
+  trimLeadingZeroesOnBlur?: boolean;
 }
 
 export type NumberInputFactory = Factory<{
@@ -158,6 +162,8 @@ const defaultProps: Partial<NumberInputProps> = {
   allowDecimal: true,
   allowNegative: true,
   withKeyboardEvents: true,
+  allowLeadingZeros: true,
+  trimLeadingZeroesOnBlur: true,
   startValue: 0,
 };
 
@@ -203,6 +209,7 @@ export const NumberInput = factory<NumberInputFactory>((_props, ref) => {
     stepHoldDelay,
     allowLeadingZeros,
     withKeyboardEvents,
+    trimLeadingZeroesOnBlur,
     ...others
   } = props;
 
@@ -238,7 +245,7 @@ export const NumberInput = factory<NumberInputFactory>((_props, ref) => {
     if (event.source === 'event') {
       setValue(
         isValidNumber(payload.floatValue) &&
-          !partialNegativeNumberPattern.test(payload.value) &&
+          !leadingDecimalZeroPattern.test(payload.value) &&
           !(allowLeadingZeros ? leadingZerosPattern.test(payload.value) : false)
           ? payload.floatValue
           : payload.value
@@ -449,6 +456,11 @@ export const NumberInput = factory<NumberInputFactory>((_props, ref) => {
           if (clampedValue !== _value) {
             setValue(clamp(_value, min, max));
           }
+        }
+        if (trimLeadingZeroesOnBlur && typeof _value === 'string') {
+          const replaced = _value.replace(/^0+/, '');
+          const parsedValue = parseFloat(replaced);
+          setValue(Number.isNaN(parsedValue) ? replaced : parsedValue);
         }
       }}
       isAllowed={(val) => {

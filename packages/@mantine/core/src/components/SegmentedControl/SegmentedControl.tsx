@@ -210,6 +210,7 @@ export const SegmentedControl = factory<SegmentedControlFactory>((_props, ref) =
         checked={_value === item.value}
         onChange={() => !readOnly && handleValueChange(item.value)}
         data-focus-ring={theme.focusRing}
+        key={`${item.value}-input`}
       />
 
       <Box
@@ -226,6 +227,7 @@ export const SegmentedControl = factory<SegmentedControlFactory>((_props, ref) =
           '--sc-label-color':
             color !== undefined ? getContrastColor({ color, theme, autoContrast }) : undefined,
         }}
+        key={`${item.value}-label`}
       >
         <span {...getStyles('innerLabel')}>{item.label}</span>
       </Box>

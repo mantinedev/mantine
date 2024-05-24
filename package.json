@@ -1,6 +1,6 @@
 {
   "name": "mantine-a91763c0e2",
-  "version": "7.9.2",
+  "version": "7.10.0",
   "description": "Mantine Components Monorepo",
   "packageManager": "yarn@4.2.2",
   "license": "MIT",
@@ -24,7 +24,7 @@
     "plop": "tsx scripts/plop",
     "format-changelogs": "tsx scripts/docs/format-changelogs",
     "changelog": "tsx scripts/docs/changelog",
-    "storybook": "storybook dev -p 6006",
+    "storybook": "storybook dev -p 2356",
     "dev": "npm run docs",
     "docs": "cd apps/mantine.dev && npm run dev",
     "docs:docgen": "tsx scripts/docgen",

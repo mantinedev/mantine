@@ -157,6 +157,11 @@ describe('@mantine/core/Input', () => {
     expect(screen.getByRole('textbox')).not.toHaveAttribute('disabled');
   });
 
+  it('allows setting size attribute on the input element', () => {
+    render(<Input inputSize="5" />);
+    expect(screen.getByRole('textbox')).toHaveAttribute('size', '5');
+  });
+
   it('exposes compound components', () => {
     expect(Input.Wrapper).toBe(InputWrapper);
     expect(Input.Label).toBe(InputLabel);

@@ -59,7 +59,7 @@ export interface NotificationsProps
     | 'bottom-right'
     | 'bottom-center';
 
-  /** Auto close timeout for all notifications in ms, `false` to disable auto close, can be overwritten for individual notifications in `notifications.show` function, `4000` by defualt */
+  /** Auto close timeout for all notifications in ms, `false` to disable auto close, can be overwritten for individual notifications in `notifications.show` function, `4000` by default */
   autoClose?: number | false;
 
   /** Notification transition duration in ms, `250` by default */
