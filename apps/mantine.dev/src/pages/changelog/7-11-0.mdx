@@ -1,7 +1,12 @@
-import { CheckboxDemos } from '@docs/demos';
+import { BarChartDemos } from '@docs/demos';
 import { Layout } from '@/layout';
 import { MDX_DATA } from '@/mdx';
 
 export default Layout(MDX_DATA.Changelog7110);
 
-## Other changes
+## Waterfall BarChart type
+
+[BarChart](/charts/bar-chart) component now supports `waterfall` type
+which is useful for visualizing changes in values over time:
+
+<Demo data={BarChartDemos.waterfall} />
