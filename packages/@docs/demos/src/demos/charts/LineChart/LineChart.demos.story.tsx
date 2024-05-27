@@ -122,3 +122,8 @@ export const Demo_axisLabels = {
   name: '⭐ Demo: axisLabels',
   render: renderDemo(demos.axisLabels),
 };
+
+export const Demo_gradient = {
+  name: '⭐ Demo: gradient',
+  render: renderDemo(demos.gradient),
+};

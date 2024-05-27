@@ -22,3 +22,4 @@ export { yScale } from './LineChart.demo.yScale';
 export { seriesLabels } from './LineChart.demo.seriesLabels';
 export { valueFormatter } from './LineChart.demo.valueFormatter';
 export { axisLabels } from './LineChart.demo.axisLabels';
+export { gradient } from './LineChart.demo.gradient';

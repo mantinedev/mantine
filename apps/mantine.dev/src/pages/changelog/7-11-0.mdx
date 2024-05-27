@@ -1,15 +1,22 @@
-import { BarChartDemos } from '@docs/demos';
+import { BarChartDemos, LineChartDemos } from '@docs/demos';
 import { Layout } from '@/layout';
 import { MDX_DATA } from '@/mdx';
 
 export default Layout(MDX_DATA.Changelog7110);
 
-## Waterfall BarChart type
+## BarChart waterfall type
 
 [BarChart](/charts/bar-chart) component now supports `waterfall` type
 which is useful for visualizing changes in values over time:
 
 <Demo data={BarChartDemos.waterfall} />
+
+## LineChart gradient type
+
+[LineChart](/charts/line-chart) component now supports `gradient` type
+which renders line chart with gradient fill:
+
+<Demo data={LineChartDemos.gradient} />
 
 ## Documentation updates
 
