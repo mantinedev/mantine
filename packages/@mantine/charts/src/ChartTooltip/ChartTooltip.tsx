@@ -73,6 +73,9 @@ export interface ChartTooltipProps
 
   /** A function to format values */
   valueFormatter?: (value: number) => string;
+
+  /** Determines whether the color swatch should be visible, `true` by default */
+  showColor?: boolean;
 }
 
 export type ChartTooltipFactory = Factory<{
@@ -83,6 +86,7 @@ export type ChartTooltipFactory = Factory<{
 
 const defaultProps: Partial<ChartTooltipProps> = {
   type: 'area',
+  showColor: true,
 };
 
 export const ChartTooltip = factory<ChartTooltipFactory>((_props, ref) => {
@@ -102,6 +106,7 @@ export const ChartTooltip = factory<ChartTooltipFactory>((_props, ref) => {
     mod,
     series,
     valueFormatter,
+    showColor,
     ...others
   } = props;
 
@@ -130,12 +135,14 @@ export const ChartTooltip = factory<ChartTooltipFactory>((_props, ref) => {
   const items = filteredPayload.map((item) => (
     <div key={item.name} data-type={type} {...getStyles('tooltipItem')}>
       <div {...getStyles('tooltipItemBody')}>
-        <ColorSwatch
-          color={getThemeColor(item.color, theme)}
-          size={12}
-          {...getStyles('tooltipItemColor')}
-          withShadow={false}
-        />
+        {showColor && (
+          <ColorSwatch
+            color={getThemeColor(item.color, theme)}
+            size={12}
+            {...getStyles('tooltipItemColor')}
+            withShadow={false}
+          />
+        )}
         <div {...getStyles('tooltipItemName')}>{labels[item.name] || item.name}</div>
       </div>
       <div {...getStyles('tooltipItemData')}>
