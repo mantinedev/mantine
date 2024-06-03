@@ -157,7 +157,9 @@ describe('@mantine/core/Select', () => {
       return (
         <>
           <Select label="First" data={data} value="1" />
-          <button type="button" onClick={() => setData([{ value: '1', label: 'new-label' }])}>Set Data</button>
+          <button type="button" onClick={() => setData([{ value: '1', label: 'new-label' }])}>
+            Set Data
+          </button>
         </>
       );
     };

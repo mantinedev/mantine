@@ -1,5 +1,5 @@
 import { useEffect, useMemo } from 'react';
-import { useId, useUncontrolled } from '@mantine/hooks';
+import { useId, usePrevious, useUncontrolled } from '@mantine/hooks';
 import {
   BoxProps,
   ElementProps,
@@ -162,10 +162,9 @@ export const Select = factory<SelectFactory>((_props, ref) => {
     onChange,
   });
 
-  const selectedOption = useMemo(
-    () => (typeof _value === 'string' ? optionsLockup[_value] : undefined),
-    [_value]
-  );
+  const selectedOption = typeof _value === 'string' ? optionsLockup[_value] : undefined;
+  const previousSelectedOption = usePrevious(selectedOption);
+
   const [search, setSearch] = useUncontrolled({
     value: searchValue,
     defaultValue: defaultSearchValue,
@@ -203,7 +202,12 @@ export const Select = factory<SelectFactory>((_props, ref) => {
       setSearch('');
     }
 
-    if (typeof value === 'string' && selectedOption) {
+    if (
+      typeof value === 'string' &&
+      selectedOption &&
+      (previousSelectedOption?.value !== selectedOption.value ||
+        previousSelectedOption?.label !== selectedOption.label)
+    ) {
       setSearch(selectedOption.label);
     }
   }, [value, selectedOption]);
