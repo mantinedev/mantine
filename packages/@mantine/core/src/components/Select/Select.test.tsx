@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import {
   inputDefaultProps,
   inputStylesApiSelectors,
@@ -149,6 +149,24 @@ describe('@mantine/core/Select', () => {
 
     await userEvent.click(screen.getByRole('textbox', { name: 'Second' }));
     expect(screen.queryByRole('listbox', { name: 'Second' })).toBeVisible();
+  });
+
+  it('supports dynamically changing data', async () => {
+    const Wrapper: React.FunctionComponent = () => {
+      const [data, setData] = useState([{ value: '1', label: 'initial-label' }]);
+      return (
+        <>
+          <Select label="First" data={data} value="1" />
+          <button type="button" onClick={() => setData([{ value: '1', label: 'new-label' }])}>Set Data</button>
+        </>
+      );
+    };
+
+    render(<Wrapper />);
+
+    expect(screen.getByRole('textbox')).toHaveValue('initial-label');
+    await userEvent.click(screen.getByRole('button'));
+    expect(screen.getByRole('textbox')).toHaveValue('new-label');
   });
 
   it('allows to change controlled search value when value is controlled and selected', async () => {
