@@ -16,6 +16,7 @@ import {
 import { TreeNode } from './TreeNode';
 import { TreeController, useTree } from './use-tree';
 import classes from './Tree.module.css';
+import { CollapseProps } from '../Collapse';
 
 export interface TreeNodeData {
   label: React.ReactNode;
@@ -85,6 +86,9 @@ export interface TreeProps extends BoxProps, StylesApiProps<TreeFactory>, Elemen
 
   /** Determines whether tree nodes range can be selected with click when `Shift` key is pressed, `true` by default */
   allowRangeSelection?: boolean;
+
+  /** Determines whether child trees will collapse with animation or not. Uses the <a href="/core/collapse/?t=props">`Collapse`</a> component's props, except `in` and `onAnimationEnd` */
+  animation?: Omit<CollapseProps, 'in' | 'onAnimationEnd'>;
 }
 
 function getFlatValues(data: TreeNodeData[]): string[] {
@@ -108,6 +112,10 @@ const defaultProps: Partial<TreeProps> = {
   expandOnClick: true,
   allowRangeSelection: true,
   expandOnSpace: true,
+  animation: {
+    transitionDuration: 0,
+    animateOpacity: false,
+  },
 };
 
 const varsResolver = createVarsResolver<TreeFactory>((_theme, { levelOffset }) => ({
@@ -133,6 +141,7 @@ export const Tree = factory<TreeFactory>((_props, ref) => {
     clearSelectionOnOutsideClick,
     allowRangeSelection,
     expandOnSpace,
+    animation,
     ...others
   } = props;
 
@@ -177,6 +186,7 @@ export const Tree = factory<TreeFactory>((_props, ref) => {
       flatValues={flatValues}
       allowRangeSelection={allowRangeSelection}
       expandOnSpace={expandOnSpace}
+      animation={animation}
     />
   ));
 
