@@ -108,6 +108,16 @@ export interface RenderTreeNodePayload {
 
 <Demo data={TreeDemos.renderNode} />
 
+## Animation
+
+Use the `animation` prop to customize the collapse animation behaviour, which gets the props of the `Collapse` component (except the `in` and `onAnimationEnd`)
+
+- `transitionDuration` – duration in ms, defaults to `0`
+- `transitionTimingFunction` – timing function (ease, linear, etc.), defaults to `ease`
+- `animateOpacity` – Determines whether opacity should be animated, `true` by default
+
+<Demo data={TreeDemos.animation} animation={{ transitionDuration: 200 }} />
+
 ## useTree hook
 
 `useTree` hook can be used to control selected and expanded state of the tree.
