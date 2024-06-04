@@ -564,7 +564,13 @@ You can use the `InferInput` type from the `valibot` library to get the type of 
 
 ```tsx
 import { valibotResolver } from 'mantine-form-valibot-resolver';
-import { email, object, pipe, string, type InferInput } from 'valibot';
+import {
+  email,
+  object,
+  pipe,
+  string,
+  type InferInput,
+} from 'valibot';
 import { useForm } from '@mantine/form';
 
 export const userSchema = object({
