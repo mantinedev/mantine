@@ -453,26 +453,18 @@ Basic fields validation:
 
 ```tsx
 import { valibotResolver } from 'mantine-form-valibot-resolver';
-import {
-  email,
-  minLength,
-  minValue,
-  number,
-  object,
-  pipe,
-  string,
-} from 'valibot';
+import * as v from 'valibot';
 import { useForm } from '@mantine/form';
 
-const schema = object({
-  name: pipe(
-    string(),
-    minLength(2, 'Name should have at least 2 letters')
+const schema = v.object({
+  name: v.pipe(
+    v.string(),
+    v.minLength(2, 'Name should have at least 2 letters')
   ),
-  email: pipe(string(), email('Invalid email')),
-  age: pipe(
-    number(),
-    minValue(18, 'You must be at least 18 to create an account')
+  email: v.pipe(v.string(), v.email('Invalid email')),
+  age: v.pipe(
+    v.number(),
+    v.minValue(18, 'You must be at least 18 to create an account')
   ),
 });
 
@@ -498,14 +490,14 @@ Nested fields validation:
 
 ```tsx
 import { valibotResolver } from 'mantine-form-valibot-resolver';
-import { minLength, object, pipe, string } from 'valibot';
+import * as v from 'valibot';
 import { useForm } from '@mantine/form';
 
-const nestedSchema = object({
-  nested: object({
-    field: pipe(
-      string(),
-      minLength(2, 'Field should have at least 2 letters')
+const nestedSchema = v.object({
+  nested: v.object({
+    field: v.pipe(
+      v.string(),
+      v.minLength(2, 'Field should have at least 2 letters')
     ),
   }),
 });
@@ -530,15 +522,15 @@ List fields validation:
 
 ```tsx
 import { valibotResolver } from 'mantine-form-valibot-resolver';
-import { array, minLength, object, pipe, string } from 'valibot';
+import * as v from 'valibot';
 import { useForm } from '@mantine/form';
 
-const listSchema = object({
-  list: array(
-    object({
-      name: pipe(
-        string(),
-        minLength(2, 'Name should have at least 2 letters')
+const listSchema = v.object({
+  list: v.array(
+    v.object({
+      name: v.pipe(
+        v.string(),
+        v.minLength(2, 'Name should have at least 2 letters')
       ),
     })
   ),
@@ -564,20 +556,14 @@ You can use the `InferInput` type from the `valibot` library to get the type of 
 
 ```tsx
 import { valibotResolver } from 'mantine-form-valibot-resolver';
-import {
-  email,
-  object,
-  pipe,
-  string,
-  type InferInput,
-} from 'valibot';
+import * as v from 'valibot';
 import { useForm } from '@mantine/form';
 
-export const userSchema = object({
-  email: pipe(string(), email()),
+export const userSchema = v.object({
+  email: v.pipe(v.string(), v.email()),
 });
 
-type FormData = InferInput<typeof userSchema>;
+type FormData = v.InferInput<typeof userSchema>;
 
 const form = useForm<FormData>({
   initialValues: {
