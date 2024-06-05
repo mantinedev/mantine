@@ -1,14 +1,14 @@
 /* eslint-disable no-console */
 
 import { useState } from 'react';
+import { Anchor } from '../Anchor';
 import { Button } from '../Button';
+import { Popover } from '../Popover';
 import { ScrollArea } from '../ScrollArea';
+import { Text } from '../Text';
 import { TextInput } from '../TextInput';
 import { Combobox } from './Combobox';
 import { useCombobox } from './use-combobox/use-combobox';
-import { Anchor } from '../Anchor';
-import { Popover } from '../Popover';
-import { Text } from '../Text';
 
 export default { title: 'Combobox' };
 
@@ -378,7 +378,10 @@ export function InteractiveHeaderAndFooter() {
                 <Button size="compact-xs">Toggle popover</Button>
               </Popover.Target>
               <Popover.Dropdown>
-                <Text size="xs">The TextInput remains focused and the ComboBox stays visible, even though we expect the `onBlur` event to close the dropdown</Text>
+                <Text size="xs">
+                  The TextInput remains focused and the ComboBox stays visible, even though we
+                  expect the `onBlur` event to close the dropdown
+                </Text>
               </Popover.Dropdown>
             </Popover>
           </Combobox.Header>
