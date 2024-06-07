@@ -83,8 +83,10 @@ export const Scrollbar = forwardRef<HTMLDivElement, ScrollbarProps>((props, forw
       <div
         {...scrollbarProps}
         ref={composeRefs}
-        style={{ position: 'absolute', ...scrollbarProps.style }}
+        style={{ position: 'absolute', zIndex: 1001, ...scrollbarProps.style }}
         onPointerDown={composeEventHandlers(props.onPointerDown, (event) => {
+          event.preventDefault();
+
           const mainPointer = 0;
           if (event.button === mainPointer) {
             const element = event.target as HTMLElement;
@@ -97,6 +99,8 @@ export const Scrollbar = forwardRef<HTMLDivElement, ScrollbarProps>((props, forw
         })}
         onPointerMove={composeEventHandlers(props.onPointerMove, handleDragScroll)}
         onPointerUp={composeEventHandlers(props.onPointerUp, (event) => {
+          event.preventDefault();
+
           const element = event.target as HTMLElement;
           if (element.hasPointerCapture(event.pointerId)) {
             element.releasePointerCapture(event.pointerId);
