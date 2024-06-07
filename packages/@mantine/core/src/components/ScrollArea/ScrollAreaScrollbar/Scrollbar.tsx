@@ -83,7 +83,7 @@ export const Scrollbar = forwardRef<HTMLDivElement, ScrollbarProps>((props, forw
       <div
         {...scrollbarProps}
         ref={composeRefs}
-        style={{ position: 'absolute', ...scrollbarProps.style }}
+        style={{ position: 'absolute', zIndex: 1001, ...scrollbarProps.style }}
         onPointerDown={composeEventHandlers(props.onPointerDown, (event) => {
           const mainPointer = 0;
           if (event.button === mainPointer) {
