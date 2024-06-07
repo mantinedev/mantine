@@ -83,7 +83,7 @@ export const Scrollbar = forwardRef<HTMLDivElement, ScrollbarProps>((props, forw
       <div
         {...scrollbarProps}
         ref={composeRefs}
-        style={{ position: 'absolute', zIndex: 1001, ...scrollbarProps.style }}
+        style={{ position: 'absolute', ...scrollbarProps.style }}
         onPointerDown={composeEventHandlers(props.onPointerDown, (event) => {
           event.preventDefault();
 
