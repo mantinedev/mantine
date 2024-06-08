@@ -7,8 +7,8 @@ import { NavLink } from '@mantine/core';
 function Demo() {
   return (
     <>
-      <NavLink color="lime.4" variant="filled" active label="Default" />
-      <NavLink color="lime.4" variant="filled" active autoContrast label="Auto contrast" />
+      <NavLink c="lime.4" variant="filled" active label="Default" />
+      <NavLink c="lime.4" variant="filled" active autoContrast label="Auto contrast" />
     </>
   );
 }
@@ -17,8 +17,8 @@ function Demo() {
 function Demo() {
   return (
     <>
-      <NavLink color="lime.4" variant="filled" active label="Default" />
-      <NavLink color="lime.4" variant="filled" active autoContrast label="Auto contrast" />
+      <NavLink c="lime.4" variant="filled" active label="Default" />
+      <NavLink c="lime.4" variant="filled" active autoContrast label="Auto contrast" />
     </>
   );
 }
