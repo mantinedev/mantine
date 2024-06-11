@@ -43,7 +43,9 @@ export const ModalContent = factory<ModalContentFactory>((_props, ref) => {
         >
           {children}
         </Scroll>
-      ) : children}
+      ) : (
+        children
+      )}
     </ModalBaseContent>
   );
 });

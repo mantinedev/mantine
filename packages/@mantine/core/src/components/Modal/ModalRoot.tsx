@@ -29,11 +29,11 @@ export interface ModalRootProps extends StylesApiProps<ModalRootFactory>, ModalB
   /** Left/right modal offset, `5vw` by default */
   xOffset?: React.CSSProperties['marginLeft'];
 
-  /** Scroll area component, native `div` element by default */
-  scrollAreaComponent?: ScrollAreaComponent;
-
   /** Determines whether the modal should have scroll area, `true` by default */
   withScrollArea?: boolean;
+
+  /** Scroll area component, native `div` element by default */
+  scrollAreaComponent?: ScrollAreaComponent;
 
   /** Key of `theme.radius` or any valid CSS value to set `border-radius`, `theme.defaultRadius` by default */
   radius?: MantineRadius;
