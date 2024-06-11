@@ -32,6 +32,9 @@ export interface ModalRootProps extends StylesApiProps<ModalRootFactory>, ModalB
   /** Scroll area component, native `div` element by default */
   scrollAreaComponent?: ScrollAreaComponent;
 
+  /** Determines whether the modal should have scroll area, `true` by default */
+  withScrollArea?: boolean;
+
   /** Key of `theme.radius` or any valid CSS value to set `border-radius`, `theme.defaultRadius` by default */
   radius?: MantineRadius;
 
@@ -59,6 +62,7 @@ const defaultProps: Partial<ModalRootProps> = {
   returnFocus: true,
   closeOnEscape: true,
   keepMounted: false,
+  withScrollArea: true,
   zIndex: getDefaultZIndex('modal'),
   transitionProps: { duration: 200, transition: 'pop' },
   yOffset: '5dvh',
@@ -85,6 +89,7 @@ export const ModalRoot = factory<ModalRootFactory>((_props, ref) => {
     unstyled,
     vars,
     yOffset,
+    withScrollArea,
     scrollAreaComponent,
     radius,
     fullScreen,
@@ -108,7 +113,7 @@ export const ModalRoot = factory<ModalRootFactory>((_props, ref) => {
   });
 
   return (
-    <ModalProvider value={{ yOffset, scrollAreaComponent, getStyles, fullScreen }}>
+    <ModalProvider value={{ yOffset, scrollAreaComponent, withScrollArea, getStyles, fullScreen }}>
       <ModalBase
         ref={ref}
         {...getStyles('root')}

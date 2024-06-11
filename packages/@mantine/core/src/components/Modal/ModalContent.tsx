@@ -24,6 +24,7 @@ export const ModalContent = factory<ModalContentFactory>((_props, ref) => {
 
   const ctx = useModalContext();
   const Scroll: React.FC<any> = ctx.scrollAreaComponent || NativeScrollArea;
+  const withScrollArea = ctx.withScrollArea !== false;
 
   return (
     <ModalBaseContent
@@ -34,13 +35,15 @@ export const ModalContent = factory<ModalContentFactory>((_props, ref) => {
       ref={ref}
       {...others}
     >
-      <Scroll
-        style={{
-          maxHeight: ctx.fullScreen ? '100dvh' : `calc(100dvh - (${rem(ctx.yOffset)} * 2))`,
-        }}
-      >
-        {children}
-      </Scroll>
+      {withScrollArea ? (
+        <Scroll
+          style={{
+            maxHeight: ctx.fullScreen ? '100dvh' : `calc(100dvh - (${rem(ctx.yOffset)} * 2))`,
+          }}
+        >
+          {children}
+        </Scroll>
+      ) : children}
     </ModalBaseContent>
   );
 });
