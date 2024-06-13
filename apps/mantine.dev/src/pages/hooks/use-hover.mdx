@@ -12,7 +12,7 @@ export default Layout(MDX_DATA.useHover);
 
 ```tsx
 function useHover<T extends HTMLElement = HTMLDivElement>(): {
-  ref: React.MutableRefObject<T>;
+  ref: React.RefObject<T>;
   hovered: boolean;
 };
 ```

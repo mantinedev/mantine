@@ -134,7 +134,7 @@ const varsResolver = createVarsResolver<PieChartFactory>(
 );
 
 const getInsideLabel =
-  (labelsType: 'value' | 'percent'): PieLabel =>
+  (labelsType: 'value' | 'percent', valueFormatter?: PieChartProps['valueFormatter']): PieLabel =>
   ({ cx, cy, midAngle, innerRadius, outerRadius, value, percent }) => {
     const RADIAN = Math.PI / 180;
     const radius = innerRadius + (outerRadius - innerRadius) * 0.5;
@@ -149,7 +149,11 @@ const getInsideLabel =
         dominantBaseline="central"
         className={classes.label}
       >
-        {labelsType === 'percent' ? `${(percent * 100).toFixed(0)}%` : value}
+        {labelsType === 'percent'
+          ? `${(percent * 100).toFixed(0)}%`
+          : typeof valueFormatter === 'function'
+            ? valueFormatter(value)
+            : value}
       </text>
     );
   };
@@ -230,7 +234,7 @@ export const PieChart = factory<PieChartFactory>((_props, ref) => {
             label={
               withLabels
                 ? labelsPosition === 'inside'
-                  ? getInsideLabel(labelsType || 'value')
+                  ? getInsideLabel(labelsType || 'value', valueFormatter)
                   : labelsType === 'percent'
                     ? ({ percent, x, y, cx, cy }) => (
                         <text
