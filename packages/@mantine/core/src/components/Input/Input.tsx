@@ -1,3 +1,5 @@
+import { useRef } from 'react';
+import { useMergeRefs } from '@floating-ui/react';
 import {
   Box,
   BoxProps,
@@ -38,16 +40,16 @@ export type InputStylesNames = 'input' | 'wrapper' | 'section';
 export type InputVariant = 'default' | 'filled' | 'unstyled';
 export type InputCssVariables = {
   wrapper:
-    | '--input-height'
-    | '--input-fz'
-    | '--input-radius'
-    | '--input-left-section-width'
-    | '--input-right-section-width'
-    | '--input-left-section-pointer-events'
-    | '--input-right-section-pointer-events'
-    | '--input-padding-y'
-    | '--input-margin-top'
-    | '--input-margin-bottom';
+  | '--input-height'
+  | '--input-fz'
+  | '--input-radius'
+  | '--input-left-section-width'
+  | '--input-right-section-width'
+  | '--input-left-section-pointer-events'
+  | '--input-right-section-pointer-events'
+  | '--input-padding-y'
+  | '--input-margin-top'
+  | '--input-margin-bottom';
 };
 
 export interface InputStylesCtx {
@@ -206,6 +208,9 @@ export const Input = polymorphicFactory<InputFactory>((_props, ref) => {
   const ctx = useInputWrapperContext();
   const stylesCtx: InputStylesCtx = { offsetBottom: ctx?.offsetBottom, offsetTop: ctx?.offsetTop };
 
+  const inputRef = useRef<HTMLInputElement>(null);
+  const inputMergedRef = useMergeRefs([ref, inputRef]);
+
   const getStyles = useStyles<InputFactory>({
     name: ['Input', __staticSelector],
     props: __stylesApiProps || props,
@@ -223,12 +228,12 @@ export const Input = polymorphicFactory<InputFactory>((_props, ref) => {
 
   const ariaAttributes = withAria
     ? {
-        required,
-        disabled,
-        'aria-invalid': !!error,
-        'aria-describedby': ctx?.describedBy,
-        id: ctx?.inputId || id,
-      }
+      required,
+      disabled,
+      'aria-invalid': !!error,
+      'aria-describedby': ctx?.describedBy,
+      id: ctx?.inputId || id,
+    }
     : {};
 
   return (
@@ -263,17 +268,24 @@ export const Input = polymorphicFactory<InputFactory>((_props, ref) => {
         </div>
       )}
 
-      <Box
-        component="input"
-        {...rest}
-        {...ariaAttributes}
-        ref={ref}
-        required={required}
-        mod={{ disabled, error: !!error && withErrorStyles }}
-        variant={variant}
-        __size={inputSize}
-        {...getStyles('input')}
-      />
+      <Box onClick={() => {
+        if (!inputRef?.current?.readOnly) return;
+        inputRef?.current?.focus();
+      }}>
+        <Box
+          component="input"
+          {...rest}
+          {...ariaAttributes}
+          ref={inputMergedRef}
+          required={required}
+          mod={{ disabled, error: !!error && withErrorStyles }}
+          variant={variant}
+          __size={inputSize}
+          {...getStyles('input', {
+            style: { pointerEvents: inputRef?.current?.readOnly ? 'none' : 'auto' },
+          })}
+        />
+      </Box>
 
       {rightSection && (
         <div
