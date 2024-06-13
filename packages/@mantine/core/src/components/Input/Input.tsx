@@ -40,16 +40,16 @@ export type InputStylesNames = 'input' | 'wrapper' | 'section';
 export type InputVariant = 'default' | 'filled' | 'unstyled';
 export type InputCssVariables = {
   wrapper:
-  | '--input-height'
-  | '--input-fz'
-  | '--input-radius'
-  | '--input-left-section-width'
-  | '--input-right-section-width'
-  | '--input-left-section-pointer-events'
-  | '--input-right-section-pointer-events'
-  | '--input-padding-y'
-  | '--input-margin-top'
-  | '--input-margin-bottom';
+    | '--input-height'
+    | '--input-fz'
+    | '--input-radius'
+    | '--input-left-section-width'
+    | '--input-right-section-width'
+    | '--input-left-section-pointer-events'
+    | '--input-right-section-pointer-events'
+    | '--input-padding-y'
+    | '--input-margin-top'
+    | '--input-margin-bottom';
 };
 
 export interface InputStylesCtx {
@@ -228,12 +228,12 @@ export const Input = polymorphicFactory<InputFactory>((_props, ref) => {
 
   const ariaAttributes = withAria
     ? {
-      required,
-      disabled,
-      'aria-invalid': !!error,
-      'aria-describedby': ctx?.describedBy,
-      id: ctx?.inputId || id,
-    }
+        required,
+        disabled,
+        'aria-invalid': !!error,
+        'aria-describedby': ctx?.describedBy,
+        id: ctx?.inputId || id,
+      }
     : {};
 
   return (
@@ -268,10 +268,12 @@ export const Input = polymorphicFactory<InputFactory>((_props, ref) => {
         </div>
       )}
 
-      <Box onClick={() => {
-        if (!inputRef?.current?.readOnly) return;
-        inputRef?.current?.focus();
-      }}>
+      <Box
+        onClick={() => {
+          if (!inputRef?.current?.readOnly) return;
+          inputRef?.current?.focus();
+        }}
+      >
         <Box
           component="input"
           {...rest}
