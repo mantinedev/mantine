@@ -56,4 +56,10 @@ export const COMMUNITY_TEMPLATES_DATA: Template[] = [
     link: 'https://github.com/LanVukusic/mantine-supabase-template',
     description: 'Vite + Supabase + Mantine template',
   },
+  {
+    type: 'vite',
+    name: 'waku-template',
+    link: 'https://github.com/doiska/waku-mantine-starter',
+    description: 'Vite + Waku + Mantine template',
+  },
 ];
