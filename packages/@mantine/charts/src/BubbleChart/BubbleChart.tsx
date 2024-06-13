@@ -19,7 +19,10 @@ import {
   ElementProps,
   factory,
   Factory,
+  getThemeColor,
+  MantineColor,
   StylesApiProps,
+  useMantineTheme,
   useProps,
   useStyles,
 } from '@mantine/core';
@@ -63,6 +66,9 @@ export interface BubbleChartProps
     ElementProps<'div'> {
   /** Chart data */
   data: Record<string, any>[];
+
+  /** Color of the chart items. Key of `theme.colors` or any valid CSS color, `theme.primaryColor` by default. */
+  color?: MantineColor;
 
   /** Props passed down to the `XAxis` recharts component */
   xAxisProps?: Omit<XAxisProps, 'ref'>;
@@ -110,8 +116,11 @@ export const BubbleChart = factory<BubbleChartFactory>((_props, ref) => {
     zAxisProps,
     tooltipProps,
     scatterProps,
+    color,
     ...others
   } = props;
+
+  const theme = useMantineTheme();
 
   const getStyles = useStyles<BubbleChartFactory>({
     name: 'BubbleChart',
@@ -167,7 +176,7 @@ export const BubbleChart = factory<BubbleChartFactory>((_props, ref) => {
             {...tooltipProps}
           />
 
-          <Scatter data={data} fill="#8884d8" {...scatterProps} />
+          <Scatter data={data} fill={getThemeColor(color, theme)} {...scatterProps} />
         </ScatterChart>
       </ResponsiveContainer>
     </Box>
