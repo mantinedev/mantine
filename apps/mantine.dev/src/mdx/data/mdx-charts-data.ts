@@ -101,9 +101,21 @@ export const MDX_CHARTS_DATA: Record<string, Frontmatter> = {
     styles: ['ScatterChart'],
     package: '@mantine/charts',
     slug: '/charts/scatter-chart',
-    description: 'Radar chart component',
+    description: 'Scatter chart component',
     import: "import { ScatterChart } from '@mantine/charts';",
     source: '@mantine/charts/src/ScatterChart/ScatterChart.tsx',
     docs: 'charts/scatter-chart.mdx',
+  },
+
+  BubbleChart: {
+    title: 'BubbleChart',
+    props: ['BubbleChart'],
+    styles: ['BubbleChart'],
+    package: '@mantine/charts',
+    slug: '/charts/bubble-chart',
+    description: 'Bubble chart component',
+    import: "import { BubbleChart } from '@mantine/charts';",
+    source: '@mantine/charts/src/BubbleChart/BubbleChart.tsx',
+    docs: 'charts/bubble-chart.mdx',
   },
 };

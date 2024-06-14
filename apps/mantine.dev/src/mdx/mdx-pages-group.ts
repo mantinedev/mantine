@@ -356,6 +356,7 @@ export const MDX_PAGES_GROUPS: MdxPagesGroup[] = [
       MDX_DATA.PieChart,
       MDX_DATA.RadarChart,
       MDX_DATA.ScatterChart,
+      MDX_DATA.BubbleChart,
       MDX_DATA.Sparkline,
     ],
   },

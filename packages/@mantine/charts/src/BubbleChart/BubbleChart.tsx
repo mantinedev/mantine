@@ -40,10 +40,17 @@ interface BubbleChartTooltipProps {
   payload: any;
   active: boolean | undefined;
   getStyles: GetStylesApi<BubbleChartFactory>;
+  valueFormatter?: (value: number) => string;
   dataKey: BubbleChartDataKey;
 }
 
-function BubbleChartTooltip({ active, payload, getStyles, dataKey }: BubbleChartTooltipProps) {
+function BubbleChartTooltip({
+  active,
+  payload,
+  getStyles,
+  dataKey,
+  valueFormatter,
+}: BubbleChartTooltipProps) {
   if (active && payload && payload.length) {
     const data = payload[0] && payload[0].payload;
 
@@ -51,7 +58,7 @@ function BubbleChartTooltip({ active, payload, getStyles, dataKey }: BubbleChart
       <div {...getStyles('tooltip')}>
         <Group justify="space-between">
           <Text fz="sm">{data[dataKey.x]}</Text>
-          <Text fz="sm">{data[dataKey.z]}</Text>
+          <Text fz="sm">{valueFormatter ? valueFormatter(data[dataKey.z]) : data[dataKey.z]}</Text>
         </Group>
       </div>
     );
@@ -113,6 +120,9 @@ export interface BubbleChartProps
 
   /** Determines whether the tooltip should be displayed, `true` by default */
   withTooltip?: boolean;
+
+  /** Function to format z axis values */
+  valueFormatter?: (value: number) => string;
 }
 
 export type BubbleChartFactory = Factory<{
@@ -154,6 +164,7 @@ export const BubbleChart = factory<BubbleChartFactory>((_props, ref) => {
     withTooltip,
     dataKey,
     range,
+    valueFormatter,
     ...others
   } = props;
 
@@ -219,6 +230,7 @@ export const BubbleChart = factory<BubbleChartFactory>((_props, ref) => {
                   active={payload.active}
                   payload={payload.payload}
                   getStyles={getStyles}
+                  valueFormatter={valueFormatter}
                 />
               )}
               {...tooltipProps}
