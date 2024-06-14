@@ -28,13 +28,13 @@ const data = [
   { hour: '10p', index: 1, value: 170 },
   { hour: '11p', index: 1, value: 180 },
 ];
-
 export function Usage() {
   return (
     <div style={{ padding: 40 }}>
       <BubbleChart
         data={data}
         h={60}
+        range={[16, 225]}
         label="Sunday"
         color="lime.6"
         dataKey={{

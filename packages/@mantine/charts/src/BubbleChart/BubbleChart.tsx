@@ -31,6 +31,11 @@ import {
 } from '@mantine/core';
 import classes from '../grid-chart.module.css';
 
+function getDomain(data: Record<string, any>[], key: string) {
+  const values = data.map((item) => item[key]);
+  return [Math.min(...values), Math.max(...values)];
+}
+
 interface BubbleChartTooltipProps {
   payload: any;
   active: boolean | undefined;
@@ -75,6 +80,9 @@ export interface BubbleChartProps
 
   /** Data keys for x, y and z axis */
   dataKey: BubbleChartDataKey;
+
+  /** Z axis range */
+  range: [number, number];
 
   /** Color of the chart items. Key of `theme.colors` or any valid CSS color, `blue.6` by default. */
   color?: MantineColor;
@@ -145,6 +153,7 @@ export const BubbleChart = factory<BubbleChartFactory>((_props, ref) => {
     label,
     withTooltip,
     dataKey,
+    range,
     ...others
   } = props;
 
@@ -194,8 +203,8 @@ export const BubbleChart = factory<BubbleChartFactory>((_props, ref) => {
           <ZAxis
             type="number"
             dataKey={dataKey.z}
-            domain={[120, 200]}
-            range={[16, 225]}
+            domain={getDomain(data, dataKey.z)}
+            range={range}
             {...zAxisProps}
           />
 
@@ -216,7 +225,12 @@ export const BubbleChart = factory<BubbleChartFactory>((_props, ref) => {
             />
           )}
 
-          <Scatter data={data} fill={getThemeColor(color, theme)} {...scatterProps} />
+          <Scatter
+            data={data}
+            fill={getThemeColor(color, theme)}
+            isAnimationActive={false}
+            {...scatterProps}
+          />
         </ScatterChart>
       </ResponsiveContainer>
     </Box>

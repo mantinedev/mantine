@@ -44,7 +44,7 @@
   background-color: var(--mantine-color-body);
   box-shadow: var(--mantine-shadow-md);
   border-radius: var(--mantine-radius-default);
-  padding: var(--mantine-spacing-md);
+  padding: var(--mantine-spacing-sm);
 
   @mixin where-light {
     border: 1px solid var(--mantine-color-gray-3);
