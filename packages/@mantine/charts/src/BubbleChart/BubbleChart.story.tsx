@@ -32,7 +32,7 @@ const data = [
 export function Usage() {
   return (
     <div style={{ padding: 40 }}>
-      <BubbleChart data={data} h={60} />
+      <BubbleChart data={data} h={60} label="Sunday" />
     </div>
   );
 }

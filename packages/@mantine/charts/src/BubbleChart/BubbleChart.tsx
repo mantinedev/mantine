@@ -55,9 +55,9 @@ const renderTooltip = (props: any) => {
   return null;
 };
 
-export type BubbleChartStylesNames = 'root';
+export type BubbleChartStylesNames = 'root' | 'axis';
 export type BubbleChartCssVariables = {
-  root: '--test';
+  root: '--chart-text-color' | '--chart-grid-color';
 };
 
 export interface BubbleChartProps
@@ -67,7 +67,7 @@ export interface BubbleChartProps
   /** Chart data */
   data: Record<string, any>[];
 
-  /** Color of the chart items. Key of `theme.colors` or any valid CSS color, `theme.primaryColor` by default. */
+  /** Color of the chart items. Key of `theme.colors` or any valid CSS color, `blue.6` by default. */
   color?: MantineColor;
 
   /** Props passed down to the `XAxis` recharts component */
@@ -84,6 +84,15 @@ export interface BubbleChartProps
 
   /** Props passed down to the `Scatter` component */
   scatterProps?: Omit<ScatterProps, 'ref'>;
+
+  /** Color of the text displayed inside the chart, `'dimmed'` by default */
+  textColor?: MantineColor;
+
+  /** Color of the grid and cursor lines, by default depends on color scheme */
+  gridColor?: MantineColor;
+
+  /** Chart label displayed next to the x axis */
+  label?: string;
 }
 
 export type BubbleChartFactory = Factory<{
@@ -93,11 +102,14 @@ export type BubbleChartFactory = Factory<{
   vars: BubbleChartCssVariables;
 }>;
 
-const defaultProps: Partial<BubbleChartProps> = {};
+const defaultProps: Partial<BubbleChartProps> = {
+  color: 'blue.6',
+};
 
-const varsResolver = createVarsResolver<BubbleChartFactory>(() => ({
+const varsResolver = createVarsResolver<BubbleChartFactory>((theme, { textColor, gridColor }) => ({
   root: {
-    '--test': 'test',
+    '--chart-text-color': textColor ? getThemeColor(textColor, theme) : undefined,
+    '--chart-grid-color': gridColor ? getThemeColor(gridColor, theme) : undefined,
   },
 }));
 
@@ -117,6 +129,7 @@ export const BubbleChart = factory<BubbleChartFactory>((_props, ref) => {
     tooltipProps,
     scatterProps,
     color,
+    label,
     ...others
   } = props;
 
@@ -143,8 +156,10 @@ export const BubbleChart = factory<BubbleChartFactory>((_props, ref) => {
             type="category"
             dataKey="hour"
             interval={0}
-            tick={{ fontSize: 12 }}
-            tickLine={{ transform: 'translate(0, -6)' }}
+            tick={{ fontSize: 12, fill: 'currentColor' }}
+            tickLine={{ transform: 'translate(0, -6)', stroke: 'currentColor' }}
+            stroke="currentColor"
+            {...getStyles('axis')}
             {...xAxisProps}
           />
 
@@ -152,11 +167,12 @@ export const BubbleChart = factory<BubbleChartFactory>((_props, ref) => {
             type="number"
             dataKey="index"
             height={10}
-            width={80}
+            width={label ? undefined : 0}
             tick={false}
             tickLine={false}
             axisLine={false}
-            label={{ value: 'Sunday', position: 'insideRight', fontSize: 12 }}
+            label={{ value: label, position: 'insideRight', fontSize: 12, fill: 'currentColor' }}
+            {...getStyles('axis')}
             {...yAxisProps}
           />
 
