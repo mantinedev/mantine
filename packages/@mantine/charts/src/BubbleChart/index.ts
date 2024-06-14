@@ -4,4 +4,5 @@ export type {
   BubbleChartFactory,
   BubbleChartProps,
   BubbleChartStylesNames,
+  BubbleChartDataKey,
 } from './BubbleChart';
