@@ -28,6 +28,11 @@ import {
 } from '@mantine/core';
 import classes from '../grid-chart.module.css';
 
+interface BubbleChartTooltipProps {
+  payload: any;
+  active: boolean;
+}
+
 const renderTooltip = (props: any) => {
   const { active, payload } = props;
 
@@ -60,12 +65,21 @@ export type BubbleChartCssVariables = {
   root: '--chart-text-color' | '--chart-grid-color';
 };
 
+export interface BubbleChartDataKey {
+  x: string;
+  y: string;
+  z: string;
+}
+
 export interface BubbleChartProps
   extends BoxProps,
     StylesApiProps<BubbleChartFactory>,
     ElementProps<'div'> {
   /** Chart data */
   data: Record<string, any>[];
+
+  /** Data keys for x, y and z axis */
+  dataKey: BubbleChartDataKey;
 
   /** Color of the chart items. Key of `theme.colors` or any valid CSS color, `blue.6` by default. */
   color?: MantineColor;
@@ -93,6 +107,9 @@ export interface BubbleChartProps
 
   /** Chart label displayed next to the x axis */
   label?: string;
+
+  /** Determines whether the tooltip should be displayed, `true` by default */
+  withTooltip?: boolean;
 }
 
 export type BubbleChartFactory = Factory<{
@@ -104,6 +121,7 @@ export type BubbleChartFactory = Factory<{
 
 const defaultProps: Partial<BubbleChartProps> = {
   color: 'blue.6',
+  withTooltip: true,
 };
 
 const varsResolver = createVarsResolver<BubbleChartFactory>((theme, { textColor, gridColor }) => ({
@@ -130,6 +148,8 @@ export const BubbleChart = factory<BubbleChartFactory>((_props, ref) => {
     scatterProps,
     color,
     label,
+    withTooltip,
+    dataKey,
     ...others
   } = props;
 
@@ -154,7 +174,7 @@ export const BubbleChart = factory<BubbleChartFactory>((_props, ref) => {
         <ScatterChart>
           <XAxis
             type="category"
-            dataKey="hour"
+            dataKey={dataKey.x}
             interval={0}
             tick={{ fontSize: 12, fill: 'currentColor' }}
             tickLine={{ transform: 'translate(0, -6)', stroke: 'currentColor' }}
@@ -165,7 +185,7 @@ export const BubbleChart = factory<BubbleChartFactory>((_props, ref) => {
 
           <YAxis
             type="number"
-            dataKey="index"
+            dataKey={dataKey.y}
             height={10}
             width={label ? undefined : 0}
             tick={false}
@@ -178,19 +198,21 @@ export const BubbleChart = factory<BubbleChartFactory>((_props, ref) => {
 
           <ZAxis
             type="number"
-            dataKey="value"
+            dataKey={dataKey.z}
             domain={[120, 200]}
             range={[16, 225]}
             {...zAxisProps}
           />
 
-          <Tooltip
-            cursor={{ strokeDasharray: '3 3' }}
-            wrapperStyle={{ zIndex: 100 }}
-            content={renderTooltip}
-            isAnimationActive={false}
-            {...tooltipProps}
-          />
+          {withTooltip && (
+            <Tooltip
+              animationDuration={100}
+              isAnimationActive={false}
+              cursor={{ stroke: 'var(--chart-grid-color)', strokeWidth: 1, strokeDasharray: '3 3' }}
+              content={renderTooltip}
+              {...tooltipProps}
+            />
+          )}
 
           <Scatter data={data} fill={getThemeColor(color, theme)} {...scatterProps} />
         </ScatterChart>
