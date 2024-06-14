@@ -19,9 +19,12 @@ import {
   ElementProps,
   factory,
   Factory,
+  GetStylesApi,
   getThemeColor,
+  Group,
   MantineColor,
   StylesApiProps,
+  Text,
   useMantineTheme,
   useProps,
   useStyles,
@@ -30,37 +33,29 @@ import classes from '../grid-chart.module.css';
 
 interface BubbleChartTooltipProps {
   payload: any;
-  active: boolean;
+  active: boolean | undefined;
+  getStyles: GetStylesApi<BubbleChartFactory>;
+  dataKey: BubbleChartDataKey;
 }
 
-const renderTooltip = (props: any) => {
-  const { active, payload } = props;
-
+function BubbleChartTooltip({ active, payload, getStyles, dataKey }: BubbleChartTooltipProps) {
   if (active && payload && payload.length) {
     const data = payload[0] && payload[0].payload;
 
     return (
-      <div
-        style={{
-          backgroundColor: '#fff',
-          border: '1px solid #999',
-          margin: 0,
-          padding: 10,
-        }}
-      >
-        <p>{data.hour}</p>
-        <p>
-          <span>value: </span>
-          {data.value}
-        </p>
+      <div {...getStyles('tooltip')}>
+        <Group justify="space-between">
+          <Text fz="sm">{data[dataKey.x]}</Text>
+          <Text fz="sm">{data[dataKey.z]}</Text>
+        </Group>
       </div>
     );
   }
 
   return null;
-};
+}
 
-export type BubbleChartStylesNames = 'root' | 'axis';
+export type BubbleChartStylesNames = 'root' | 'axis' | 'tooltip';
 export type BubbleChartCssVariables = {
   root: '--chart-text-color' | '--chart-grid-color';
 };
@@ -209,7 +204,14 @@ export const BubbleChart = factory<BubbleChartFactory>((_props, ref) => {
               animationDuration={100}
               isAnimationActive={false}
               cursor={{ stroke: 'var(--chart-grid-color)', strokeWidth: 1, strokeDasharray: '3 3' }}
-              content={renderTooltip}
+              content={(payload) => (
+                <BubbleChartTooltip
+                  dataKey={dataKey}
+                  active={payload.active}
+                  payload={payload.payload}
+                  getStyles={getStyles}
+                />
+              )}
               {...tooltipProps}
             />
           )}
