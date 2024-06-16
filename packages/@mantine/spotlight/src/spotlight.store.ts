@@ -52,9 +52,37 @@ export function setListId(id: string, store: SpotlightStore) {
   store.updateState((state) => ({ ...state, listId: id }));
 }
 
+function findElementByQuerySelector<T extends HTMLElement>(
+  root: Document | Element | ShadowRoot,
+  selector: string
+): T | null {
+  // Directly try to find the element in the current root.
+  const element = root.querySelector(selector);
+  if (element) return element as T;
+
+  // Iterate through all children of the current root.
+  const children = root instanceof ShadowRoot ? root.host.children : root.children;
+  for (let i = 0; i < children.length; i++) {
+    const child = children[i];
+
+    // Recursively search in the child's shadow root if it exists.
+    if (child.shadowRoot) {
+      const shadowElement = findElementByQuerySelector(child.shadowRoot, selector);
+      if (shadowElement) return shadowElement as T;
+    }
+
+    // Also, search recursively in the child itself if it does not have a shadow root or the element wasn't found in its shadow root.
+    const nestedElement = findElementByQuerySelector(child, selector);
+    if (nestedElement) return nestedElement as T;
+  }
+
+  // Return null if the element isn't found in the current root or any of its shadow DOMs.
+  return null;
+}
+
 export function selectAction(index: number, store: SpotlightStore): number {
   const state = store.getState();
-  const actionsList = document.getElementById(state.listId);
+  const actionsList = findElementByQuerySelector(document, `#${state.listId}`);
   const selected = actionsList?.querySelector<HTMLButtonElement>('[data-selected]');
   const actions = actionsList?.querySelectorAll<HTMLButtonElement>('[data-action]') ?? [];
   const nextIndex = index === -1 ? actions.length - 1 : index === actions.length ? 0 : index;
@@ -78,7 +106,10 @@ export function selectPreviousAction(store: SpotlightStore) {
 
 export function triggerSelectedAction(store: SpotlightStore) {
   const state = store.getState();
-  const selected = document.querySelector<HTMLButtonElement>(`#${state.listId} [data-selected]`);
+  const selected = findElementByQuerySelector<HTMLButtonElement>(
+    document,
+    `#${state.listId} [data-selected]`
+  );
   selected?.click();
 }
 
