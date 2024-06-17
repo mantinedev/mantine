@@ -62,7 +62,7 @@ function findElementByQuerySelector<T extends HTMLElement>(
 
   // Iterate through all children of the current root.
   const children = root instanceof ShadowRoot ? root.host.children : root.children;
-  for (let i = 0; i < children.length; i++) {
+  for (let i = 0; i < children.length; i += 1) {
     const child = children[i];
 
     // Recursively search in the child's shadow root if it exists.
