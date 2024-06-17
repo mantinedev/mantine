@@ -57,8 +57,8 @@ function findElementByQuerySelector<T extends HTMLElement>(
   selector: string
 ): T | null {
   // Directly try to find the element in the current root.
-  const element = root.querySelector(selector);
-  if (element) return element as T;
+  const element = root.querySelector<T>(selector);
+  if (element) return element;
 
   // Iterate through all children of the current root.
   const children = root instanceof ShadowRoot ? root.host.children : root.children;
@@ -67,13 +67,13 @@ function findElementByQuerySelector<T extends HTMLElement>(
 
     // Recursively search in the child's shadow root if it exists.
     if (child.shadowRoot) {
-      const shadowElement = findElementByQuerySelector(child.shadowRoot, selector);
-      if (shadowElement) return shadowElement as T;
+      const shadowElement = findElementByQuerySelector<T>(child.shadowRoot, selector);
+      if (shadowElement) return shadowElement;
     }
 
     // Also, search recursively in the child itself if it does not have a shadow root or the element wasn't found in its shadow root.
-    const nestedElement = findElementByQuerySelector(child, selector);
-    if (nestedElement) return nestedElement as T;
+    const nestedElement = findElementByQuerySelector<T>(child, selector);
+    if (nestedElement) return nestedElement;
   }
 
   // Return null if the element isn't found in the current root or any of its shadow DOMs.
